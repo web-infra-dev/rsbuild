@@ -1,5 +1,5 @@
-import { createStubRsbuild } from '@scripts/test-helper';
 import { pluginBabel } from '@rsbuild/plugin-babel';
+import { createStubRsbuild } from '@scripts/test-helper';
 import { pluginSourceBuild } from '../src';
 
 describe('plugin-source-build', () => {

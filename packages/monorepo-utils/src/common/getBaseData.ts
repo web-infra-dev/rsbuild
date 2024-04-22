@@ -1,7 +1,7 @@
 import path from 'node:path';
 import type { MonorepoAnalyzer } from '../types';
-import { isMonorepo, type IsMonorepoFn } from './isMonorepo';
 import type { GetProjectsFunc } from './getProjects';
+import { type IsMonorepoFn, isMonorepo } from './isMonorepo';
 
 export interface IMonorepoBaseData {
   isMonorepo: boolean;

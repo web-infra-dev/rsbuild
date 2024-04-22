@@ -1,8 +1,8 @@
 import { join } from 'node:path';
-import { generateBaseConfig } from './base';
-import type { BabelConfig, WebPresetOptions } from './types';
 import type { PresetEnvOptions } from '@rsbuild/plugin-babel';
+import { generateBaseConfig } from './base';
 import { getCoreJsVersion } from './pluginLockCorejsVersion';
+import type { BabelConfig, WebPresetOptions } from './types';
 
 const getDefaultPresetEnvOption = (
   options: WebPresetOptions,

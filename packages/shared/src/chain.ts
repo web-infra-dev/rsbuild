@@ -1,32 +1,32 @@
 import { posix } from 'node:path';
-import { getDistPath, getFilename } from './fs';
-import { addTrailingSlash, isPlainObject, removeTailingSlash } from './utils';
-import { castArray, ensureAbsolutePath } from './utils';
-import { debug } from './logger';
+import type { EntryDescription } from '@rspack/core';
 import {
-  DEFAULT_PORT,
-  TS_AND_JSX_REGEX,
-  DEFAULT_DEV_HOST,
-  NODE_MODULES_REGEX,
   DEFAULT_ASSET_PREFIX,
+  DEFAULT_DEV_HOST,
+  DEFAULT_PORT,
+  NODE_MODULES_REGEX,
+  TS_AND_JSX_REGEX,
 } from './constants';
+import { getDistPath, getFilename } from './fs';
+import { debug } from './logger';
+import { mergeChainedOptions } from './mergeChainedOptions';
 import type {
+  BuiltinSwcLoaderOptions,
   BundlerChain,
-  RsbuildEntry,
-  RspackConfig,
-  RsbuildConfig,
-  RsbuildTarget,
-  RsbuildContext,
-  CreateAsyncHook,
   BundlerChainRule,
-  NormalizedConfig,
-  RsbuildPluginAPI,
+  CreateAsyncHook,
   ModifyBundlerChainFn,
   ModifyBundlerChainUtils,
-  BuiltinSwcLoaderOptions,
+  NormalizedConfig,
+  RsbuildConfig,
+  RsbuildContext,
+  RsbuildEntry,
+  RsbuildPluginAPI,
+  RsbuildTarget,
+  RspackConfig,
 } from './types';
-import { mergeChainedOptions } from './mergeChainedOptions';
-import type { EntryDescription } from '@rspack/core';
+import { addTrailingSlash, isPlainObject, removeTailingSlash } from './utils';
+import { castArray, ensureAbsolutePath } from './utils';
 
 export async function getBundlerChain() {
   const { default: WebpackChain } = await import('../compiled/webpack-chain');

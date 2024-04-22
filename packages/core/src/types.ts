@@ -1,10 +1,10 @@
 import type {
-  RsbuildConfig,
-  RsbuildPlugin,
-  RsbuildPlugins,
-  RsbuildContext,
   NormalizedConfig,
+  RsbuildConfig,
+  RsbuildContext,
+  RsbuildPlugin,
   RsbuildPluginAPI,
+  RsbuildPlugins,
   TransformHandler,
 } from '@rsbuild/shared';
 import type { Hooks } from './initHooks';

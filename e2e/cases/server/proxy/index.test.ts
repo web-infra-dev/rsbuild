@@ -1,6 +1,6 @@
 import { join } from 'node:path';
-import { expect, test } from '@playwright/test';
 import { dev } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 
 const prj1 = join(__dirname, 'project1');
 const prj2 = join(__dirname, 'project2');

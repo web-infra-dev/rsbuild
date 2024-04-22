@@ -1,17 +1,17 @@
 import { join } from 'node:path';
 import {
-  getDistPath,
-  removeLeadingSlash,
-  type TransformFn,
   type BundlerChain,
+  type GetRsbuildConfig,
   type PluginManager,
   type RsbuildPluginAPI,
-  type GetRsbuildConfig,
+  type TransformFn,
   type TransformHandler,
+  getDistPath,
+  removeLeadingSlash,
 } from '@rsbuild/shared';
+import type { Compiler } from '@rspack/core';
 import { createPublicContext } from './createContext';
 import type { InternalContext, NormalizedConfig } from './types';
-import type { Compiler } from '@rspack/core';
 
 export function getHTMLPathByEntry(
   entryName: string,

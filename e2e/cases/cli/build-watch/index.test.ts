@@ -1,8 +1,8 @@
-import path from 'node:path';
 import { exec } from 'node:child_process';
-import { test, expect } from '@playwright/test';
-import { fse } from '@rsbuild/shared';
+import path from 'node:path';
 import { awaitFileExists } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
+import { fse } from '@rsbuild/shared';
 
 test('should support watch mode for build command', async () => {
   const indexFile = path.join(__dirname, 'src/index.js');

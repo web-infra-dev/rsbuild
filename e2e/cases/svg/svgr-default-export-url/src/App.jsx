@@ -1,5 +1,5 @@
-import largeImg, { ReactComponent as Logo } from '@assets/mobile.svg';
 import smallImg from '@assets/circle.svg';
+import largeImg, { ReactComponent as Logo } from '@assets/mobile.svg';
 import './App.css';
 
 function App() {

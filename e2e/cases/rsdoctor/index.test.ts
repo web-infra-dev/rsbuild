@@ -1,6 +1,6 @@
 import path from 'node:path';
-import { expect } from '@playwright/test';
 import { build, proxyConsole, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
 
 const packagePath = path.join(

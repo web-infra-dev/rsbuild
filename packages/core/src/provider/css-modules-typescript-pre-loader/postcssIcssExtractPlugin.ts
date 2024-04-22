@@ -1,6 +1,6 @@
+import { type CssModuleLocalsConvention, camelCase } from '@rsbuild/shared';
 // @ts-expect-error
 import { extractICSS } from '@rsbuild/shared/icss-utils';
-import { camelCase, type CssModuleLocalsConvention } from '@rsbuild/shared';
 
 import type { AcceptedPlugin as PostCSSPlugin } from 'postcss';
 

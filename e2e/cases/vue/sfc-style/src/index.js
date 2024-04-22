@@ -1,5 +1,5 @@
 import { createApp } from 'vue';
-import './a.less';
 import App from './App.vue';
+import './a.less';
 
 createApp(App).mount('#root');

@@ -1,13 +1,13 @@
 import {
-  color,
-  castArray,
-  createVirtualModule,
-  mergeChainedOptions,
   type RsbuildEntry,
   type RsbuildTarget,
+  castArray,
+  color,
+  createVirtualModule,
+  mergeChainedOptions,
 } from '@rsbuild/shared';
-import type { NormalizedConfig, RsbuildConfig, RsbuildPlugin } from '../types';
 import type { EntryDescription } from '@rspack/core';
+import type { NormalizedConfig, RsbuildConfig, RsbuildPlugin } from '../types';
 
 export function getEntryObject(
   config: RsbuildConfig | NormalizedConfig,

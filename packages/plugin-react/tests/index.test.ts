@@ -1,6 +1,6 @@
-import { expect, describe, it, vi } from 'vitest';
-import { pluginReact } from '../src';
 import { createStubRsbuild } from '@scripts/test-helper';
+import { describe, expect, it, vi } from 'vitest';
+import { pluginReact } from '../src';
 
 describe('plugins/react', () => {
   it('should work with swc-loader', async () => {

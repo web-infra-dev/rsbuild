@@ -1,12 +1,12 @@
-import type {
-  RsbuildConfig,
-  NormalizedConfig,
-  InspectConfigOptions,
-} from './types';
-import { logger } from './logger';
 import { join } from 'node:path';
 import fse from '../compiled/fs-extra';
-import { pick, color, upperFirst } from './utils';
+import { logger } from './logger';
+import type {
+  InspectConfigOptions,
+  NormalizedConfig,
+  RsbuildConfig,
+} from './types';
+import { color, pick, upperFirst } from './utils';
 
 export async function outputInspectConfigFiles({
   rsbuildConfig,

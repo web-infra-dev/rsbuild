@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
 import { build, gotoPage } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 
 // https://github.com/web-infra-dev/rsbuild/issues/1766
 test('should import default from SVG with react query and dynamic import correctly', async ({

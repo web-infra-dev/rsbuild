@@ -1,11 +1,11 @@
-import type { RspackConfig } from '../rspack';
-import type { RsbuildTarget } from '../rsbuild';
 import type {
   CopyRspackPluginOptions,
   Externals,
   SwcJsMinimizerRspackPluginOptions,
 } from '@rspack/core';
 import type { HTMLPluginOptions } from '../../types';
+import type { RsbuildTarget } from '../rsbuild';
+import type { RspackConfig } from '../rspack';
 
 export type DistPathConfig = {
   /**

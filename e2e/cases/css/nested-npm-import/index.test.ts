@@ -1,6 +1,6 @@
 import path from 'node:path';
-import { expect, test } from '@playwright/test';
 import { build, proxyConsole } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
 
 test('should compile nested npm import correctly', async () => {

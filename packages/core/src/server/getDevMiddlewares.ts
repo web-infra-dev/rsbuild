@@ -1,12 +1,13 @@
+import { isAbsolute, join } from 'node:path';
 import url from 'node:url';
 import type {
-  ServerAPIs,
-  Middlewares,
-  UpgradeEvent,
-  RequestHandler,
-  ServerConfig,
   CompileMiddlewareAPI,
   DevConfig,
+  Middlewares,
+  RequestHandler,
+  ServerAPIs,
+  ServerConfig,
+  UpgradeEvent,
 } from '@rsbuild/shared';
 import { isDebug } from '@rsbuild/shared';
 import {
@@ -14,7 +15,6 @@ import {
   getHtmlFallbackMiddleware,
   getRequestLoggerMiddleware,
 } from './middlewares';
-import { join, isAbsolute } from 'node:path';
 
 export type RsbuildDevMiddlewareOptions = {
   pwd: string;

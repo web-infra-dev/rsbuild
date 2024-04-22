@@ -1,6 +1,6 @@
-import { expect, test } from '@playwright/test';
-import { build } from '@e2e/helper';
 import { join } from 'node:path';
+import { build } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
 
 test('should compile Node addons correctly', async () => {

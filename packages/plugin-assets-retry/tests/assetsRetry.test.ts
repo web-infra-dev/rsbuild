@@ -1,5 +1,5 @@
-import { pluginAssetsRetry } from '../src';
 import { createStubRsbuild } from '../../compat/webpack/tests/helper';
+import { pluginAssetsRetry } from '../src';
 
 describe('plugin-assets-retry', () => {
   it('should add assets retry plugin', async () => {

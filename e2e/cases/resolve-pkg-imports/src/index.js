@@ -1,5 +1,5 @@
-import { foo } from '#foo';
 import { test } from '#common/test';
+import { foo } from '#foo';
 
 const fooEl = document.createElement('div');
 fooEl.id = foo;

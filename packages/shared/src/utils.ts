@@ -1,24 +1,24 @@
 import path from 'node:path';
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import type {
-  Stats,
-  NodeEnv,
-  MultiStats,
-  CacheGroups,
-  CompilerTapFn,
-  RsbuildTarget,
-  ModifyChainUtils,
-  NormalizedConfig,
-  SharedCompiledPkgNames,
-} from './types';
-import fse from '../compiled/fs-extra';
-import deepmerge from '../compiled/deepmerge';
-import color from '../compiled/picocolors';
-import { DEFAULT_ASSET_PREFIX } from './constants';
-import type {
   Compiler as WebpackCompiler,
   MultiCompiler as WebpackMultiCompiler,
 } from 'webpack';
+import deepmerge from '../compiled/deepmerge';
+import fse from '../compiled/fs-extra';
+import color from '../compiled/picocolors';
+import { DEFAULT_ASSET_PREFIX } from './constants';
+import type {
+  CacheGroups,
+  CompilerTapFn,
+  ModifyChainUtils,
+  MultiStats,
+  NodeEnv,
+  NormalizedConfig,
+  RsbuildTarget,
+  SharedCompiledPkgNames,
+  Stats,
+} from './types';
 
 export { color, deepmerge };
 

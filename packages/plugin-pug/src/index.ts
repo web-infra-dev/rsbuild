@@ -1,5 +1,5 @@
-import { mergeChainedOptions } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '@rsbuild/core';
+import { mergeChainedOptions } from '@rsbuild/shared';
 import type { Options as PugOptions } from 'pug';
 
 export type PluginPugOptions = {

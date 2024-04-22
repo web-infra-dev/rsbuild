@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import Foo from './Foo';
 import Bar from './Bar';
+import Foo from './Foo';
 
 const container = document.getElementById('root');
 if (container) {

@@ -1,7 +1,7 @@
-import os from 'node:os';
-import { URL } from 'node:url';
-import { posix } from 'node:path';
 import { isIPv6 } from 'node:net';
+import os from 'node:os';
+import { posix } from 'node:path';
+import { URL } from 'node:url';
 import { DEFAULT_DEV_HOST } from './constants';
 
 // remove repeat '/'

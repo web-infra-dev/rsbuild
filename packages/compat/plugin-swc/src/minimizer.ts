@@ -1,16 +1,16 @@
-import type { webpack } from '@rsbuild/webpack';
-import { merge } from 'lodash';
 import { logger } from '@rsbuild/core';
 import {
-  color,
   CSS_REGEX,
+  type NormalizedConfig,
+  color,
   getSwcMinimizerOptions,
   parseMinifyOptions,
-  type NormalizedConfig,
 } from '@rsbuild/shared';
-import type { Output, JsMinifyOptions, CssMinifyOptions } from './types';
+import type { webpack } from '@rsbuild/webpack';
+import { merge } from 'lodash';
 import { minify, minifyCss } from './binding';
 import { JS_REGEX } from './constants';
+import type { CssMinifyOptions, JsMinifyOptions, Output } from './types';
 
 export interface NormalizedSwcMinifyOption {
   jsMinify?: JsMinifyOptions;

@@ -1,21 +1,21 @@
 import net from 'node:net';
 import {
-  color,
-  logger,
-  deepmerge,
-  isFunction,
-  getUrlLabel,
-  normalizeUrl,
-  DEFAULT_PORT,
   DEFAULT_DEV_HOST,
+  DEFAULT_PORT,
+  color,
+  deepmerge,
+  getUrlLabel,
+  isFunction,
+  logger,
+  normalizeUrl,
 } from '@rsbuild/shared';
 import type {
-  Routes,
   DevConfig,
-  PrintUrls,
-  RsbuildEntry,
-  RsbuildConfig,
   OutputStructure,
+  PrintUrls,
+  Routes,
+  RsbuildConfig,
+  RsbuildEntry,
 } from '@rsbuild/shared';
 
 /**

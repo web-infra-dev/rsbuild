@@ -1,11 +1,11 @@
-import type { PluginManager, RsbuildPluginAPI } from './plugin';
-import type { RsbuildContext } from './context';
 import type { Compiler, MultiCompiler } from '@rspack/core';
-import type { RsbuildMode, CreateRsbuildOptions } from './rsbuild';
-import type { StartServerResult, RsbuildDevServer } from './server';
 import type { NormalizedConfig } from './config';
-import type { WebpackConfig } from './thirdParty';
+import type { RsbuildContext } from './context';
+import type { PluginManager, RsbuildPluginAPI } from './plugin';
+import type { CreateRsbuildOptions, RsbuildMode } from './rsbuild';
 import type { RspackConfig } from './rspack';
+import type { RsbuildDevServer, StartServerResult } from './server';
+import type { WebpackConfig } from './thirdParty';
 
 export type Bundler = 'rspack' | 'webpack';
 

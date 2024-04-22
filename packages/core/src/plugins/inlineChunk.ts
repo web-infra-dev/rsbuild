@@ -1,9 +1,9 @@
 import {
-  pick,
-  JS_REGEX,
   CSS_REGEX,
-  isHtmlDisabled,
   type InlineChunkTest,
+  JS_REGEX,
+  isHtmlDisabled,
+  pick,
 } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 

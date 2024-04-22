@@ -1,7 +1,7 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import type { VueJSXPluginOptions } from '@vue/babel-plugin-jsx';
 import { modifyBabelLoaderOptions } from '@rsbuild/plugin-babel';
 import { isUsingHMR } from '@rsbuild/shared';
+import type { VueJSXPluginOptions } from '@vue/babel-plugin-jsx';
 
 export type PluginVueJsxOptions = {
   /**

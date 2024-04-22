@@ -1,9 +1,9 @@
 import os from 'node:os';
 import _ from 'lodash';
 import {
-  splitPathString,
   compilePathMatcherRegExp,
   getRealTemporaryDirectory,
+  splitPathString,
 } from './path';
 
 /** Different from  */

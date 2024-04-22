@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
 import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 
 test('should use legacy decorators by default', async ({ page }) => {

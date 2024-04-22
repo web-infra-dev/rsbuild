@@ -1,5 +1,5 @@
+import type { RsbuildConfig, RspackConfig } from '@rsbuild/shared';
 import { mergeRsbuildConfig } from '../src/mergeConfig';
-import type { RspackConfig, RsbuildConfig } from '@rsbuild/shared';
 
 describe('mergeRsbuildConfig', () => {
   it('should use `false` to replace empty object', () => {

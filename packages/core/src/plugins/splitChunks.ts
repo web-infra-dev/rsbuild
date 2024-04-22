@@ -1,12 +1,12 @@
 import assert from 'node:assert';
 import {
-  NODE_MODULES_REGEX,
-  createDependenciesRegExp,
-  type Polyfill,
   type CacheGroups,
-  type SplitChunks,
   type ForceSplitting,
+  NODE_MODULES_REGEX,
+  type Polyfill,
   type RsbuildChunkSplit,
+  type SplitChunks,
+  createDependenciesRegExp,
 } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 

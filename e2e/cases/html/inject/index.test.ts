@@ -1,6 +1,6 @@
 import path from 'node:path';
-import { expect, test } from '@playwright/test';
 import { build } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 import { pluginRem } from '@rsbuild/plugin-rem';
 
 test('injection script order should be as expected', async () => {

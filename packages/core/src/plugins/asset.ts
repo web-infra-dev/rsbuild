@@ -1,15 +1,15 @@
 import path from 'node:path';
 import {
-  getDistPath,
-  getFilename,
+  AUDIO_EXTENSIONS,
+  type BundlerChainRule,
   FONT_EXTENSIONS,
   IMAGE_EXTENSIONS,
   VIDEO_EXTENSIONS,
-  AUDIO_EXTENSIONS,
-  type BundlerChainRule,
+  getDistPath,
+  getFilename,
 } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../types';
 import type { GeneratorOptionsByModuleType } from '@rspack/core';
+import type { RsbuildPlugin } from '../types';
 
 const chainStaticAssetRule = ({
   emit,

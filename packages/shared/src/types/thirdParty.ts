@@ -1,18 +1,18 @@
+import type { LoaderContext } from '@rspack/core';
 import type {
-  Options as SassOptions,
+  LoaderOptions as MiniCSSExtractLoaderOptions,
+  PluginOptions as MiniCSSExtractPluginOptions,
+} from 'mini-css-extract-plugin';
+import type { AcceptedPlugin, ProcessOptions } from 'postcss';
+import type { MinifyOptions } from 'terser';
+import type { Configuration as WebpackConfig } from 'webpack';
+import type { Options as AutoprefixerOptions } from '../../compiled/autoprefixer';
+import type Less from '../../compiled/less';
+import type {
   LegacyOptions as LegacySassOptions,
+  Options as SassOptions,
 } from '../../compiled/sass';
 import type * as SassLoader from '../../compiled/sass-loader';
-import type Less from '../../compiled/less';
-import type { LoaderContext } from '@rspack/core';
-import type { AcceptedPlugin, ProcessOptions } from 'postcss';
-import type { Configuration as WebpackConfig } from 'webpack';
-import type {
-  PluginOptions as MiniCSSExtractPluginOptions,
-  LoaderOptions as MiniCSSExtractLoaderOptions,
-} from 'mini-css-extract-plugin';
-import type { Options as AutoprefixerOptions } from '../../compiled/autoprefixer';
-import type { MinifyOptions } from 'terser';
 
 export interface CSSExtractOptions {
   pluginOptions?: MiniCSSExtractPluginOptions;

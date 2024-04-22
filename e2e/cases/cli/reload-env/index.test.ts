@@ -1,8 +1,8 @@
-import path from 'node:path';
 import { exec } from 'node:child_process';
-import { test, expect } from '@playwright/test';
+import path from 'node:path';
+import { awaitFileExists, getRandomPort } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
-import { getRandomPort, awaitFileExists } from '@e2e/helper';
 
 // Skipped as it occasionally failed in CI
 test.skip('should restart dev server when .env file is changed', async () => {

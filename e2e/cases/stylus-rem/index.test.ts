@@ -1,7 +1,7 @@
-import { expect, test } from '@playwright/test';
 import { build } from '@e2e/helper';
-import { pluginStylus } from '@rsbuild/plugin-stylus';
+import { expect, test } from '@playwright/test';
 import { pluginRem } from '@rsbuild/plugin-rem';
+import { pluginStylus } from '@rsbuild/plugin-stylus';
 
 test('should compile stylus and rem correctly', async () => {
   const rsbuild = await build({

@@ -1,6 +1,6 @@
-import type { MockInstance } from 'vitest';
-import { createStubRsbuild } from '@scripts/test-helper';
 import { getBrowserslist } from '@rsbuild/shared';
+import { createStubRsbuild } from '@scripts/test-helper';
+import type { MockInstance } from 'vitest';
 import { pluginTarget } from '../src/plugins/target';
 
 vi.mock('@rsbuild/shared', async (importOriginal) => {
