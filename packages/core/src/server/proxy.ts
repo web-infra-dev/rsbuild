@@ -62,6 +62,8 @@ export const createProxyMiddleware = (proxyOptions: ProxyOptions) => {
       } else if (typeof bypassUrl === 'string') {
         req.url = bypassUrl;
         next();
+      } else if (bypassUrl === true) {
+        next();
       } else {
         (proxyMiddleware as Middleware)(req, res, next);
       }
