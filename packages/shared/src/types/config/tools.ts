@@ -1,3 +1,4 @@
+import type { SwcLoaderOptions } from '@rspack/core';
 import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
 import type { BundlerChain } from '../bundlerConfig';
 import type { BundlerPluginInstance } from '../bundlerConfig';
@@ -6,11 +7,7 @@ import type {
   ModifyWebpackChainUtils,
   ModifyWebpackConfigUtils,
 } from '../plugin';
-import type {
-  BuiltinSwcLoaderOptions,
-  RspackConfig,
-  RspackRule,
-} from '../rspack';
+import type { RspackConfig, RspackRule } from '../rspack';
 import type {
   AutoprefixerOptions,
   CSSExtractOptions,
@@ -32,7 +29,7 @@ import type {
 
 export type { HTMLPluginOptions };
 
-export type ToolsSwcConfig = ChainedConfig<BuiltinSwcLoaderOptions>;
+export type ToolsSwcConfig = ChainedConfig<SwcLoaderOptions>;
 
 export type ToolsAutoprefixerConfig = ChainedConfig<AutoprefixerOptions>;
 

@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "@rspack/plugin-react-refresh": "0.6.2",
+    "@rspack/plugin-react-refresh": "0.6.2-canary-73bf70c-20240422091802",
     "react-refresh": "^0.14.0"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
-import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
-import { type SwcReactConfig, getNodeEnv } from '@rsbuild/shared';
+import type { RsbuildConfig, RsbuildPlugin, Rspack } from '@rsbuild/core';
+import { getNodeEnv } from '@rsbuild/shared';
 
 export type PluginPreactOptions = {
   /**
@@ -18,7 +18,7 @@ export const pluginPreact = (
     const { reactAliasesEnabled = true } = options;
 
     api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
-      const reactOptions: SwcReactConfig = {
+      const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
         development: getNodeEnv() === 'development',
         runtime: 'automatic',
         importSource: 'preact',

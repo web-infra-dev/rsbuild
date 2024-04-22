@@ -1,5 +1,6 @@
 import { posix } from 'node:path';
 import type { EntryDescription } from '@rspack/core';
+import type { SwcLoaderOptions } from '@rspack/core';
 import {
   DEFAULT_ASSET_PREFIX,
   DEFAULT_DEV_HOST,
@@ -11,7 +12,6 @@ import { getDistPath, getFilename } from './fs';
 import { debug } from './logger';
 import { mergeChainedOptions } from './mergeChainedOptions';
 import type {
-  BuiltinSwcLoaderOptions,
   BundlerChain,
   BundlerChainRule,
   CreateAsyncHook,
@@ -533,7 +533,7 @@ export const modifySwcLoaderOptions = ({
   modifier,
 }: {
   chain: BundlerChain;
-  modifier: (config: BuiltinSwcLoaderOptions) => BuiltinSwcLoaderOptions;
+  modifier: (config: SwcLoaderOptions) => SwcLoaderOptions;
 }) => {
   const ruleIds = [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI];
 
