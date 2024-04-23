@@ -1,6 +1,5 @@
 import path from 'node:path';
 import {
-  type BuiltinSwcLoaderOptions,
   type BundlerChain,
   type Polyfill,
   type RsbuildTarget,
@@ -13,6 +12,7 @@ import {
   isWebTarget,
   mergeChainedOptions,
 } from '@rsbuild/shared';
+import type { SwcLoaderOptions } from '@rspack/core';
 import { PLUGIN_SWC_NAME } from '../../constants';
 import type {
   NormalizedConfig,
@@ -26,7 +26,7 @@ export async function getDefaultSwcConfig(
   config: NormalizedConfig,
   rootPath: string,
   target: RsbuildTarget,
-): Promise<BuiltinSwcLoaderOptions> {
+): Promise<SwcLoaderOptions> {
   return {
     jsc: {
       externalHelpers: true,
@@ -136,7 +136,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
 });
 
 async function applyCoreJs(
-  swcConfig: BuiltinSwcLoaderOptions,
+  swcConfig: SwcLoaderOptions,
   chain: BundlerChain,
   polyfillMode: Polyfill,
 ) {
@@ -158,7 +158,7 @@ async function applyCoreJs(
 }
 
 function applyTransformImport(
-  swcConfig: BuiltinSwcLoaderOptions,
+  swcConfig: SwcLoaderOptions,
   pluginImport?: NormalizedSourceConfig['transformImport'],
 ) {
   if (pluginImport !== false && pluginImport) {
@@ -169,7 +169,7 @@ function applyTransformImport(
 }
 
 export function applySwcDecoratorConfig(
-  swcConfig: BuiltinSwcLoaderOptions,
+  swcConfig: SwcLoaderOptions,
   config: NormalizedConfig,
 ) {
   swcConfig.jsc ||= {};

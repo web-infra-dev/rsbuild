@@ -1,5 +1,4 @@
-import type { RsbuildPlugin } from '@rsbuild/core';
-import type { SwcReactConfig } from '@rsbuild/shared';
+import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
 import { getNodeEnv } from '@rsbuild/shared';
 import { applyBasicReactSupport, applyReactProfiler } from './react';
 import { applySplitChunksRule } from './splitChunks';
@@ -24,7 +23,7 @@ export type PluginReactOptions = {
    * Configure the behavior of SWC to transform React code,
    * the same as SWC's [jsc.transform.react](https://swc.rs/docs/configuration/compilation#jsctransformreact).
    */
-  swcReactOptions?: SwcReactConfig;
+  swcReactOptions?: Rspack.SwcLoaderTransformConfig['react'];
   /**
    * Configuration for chunk splitting of React-related dependencies.
    */

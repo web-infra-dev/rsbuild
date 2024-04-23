@@ -1,8 +1,7 @@
 import path from 'node:path';
-import type { RsbuildConfig, RsbuildPluginAPI } from '@rsbuild/core';
+import type { RsbuildConfig, RsbuildPluginAPI, Rspack } from '@rsbuild/core';
 import {
   SCRIPT_REGEX,
-  type SwcReactConfig,
   isUsingHMR,
   modifySwcLoaderOptions,
 } from '@rsbuild/shared';
@@ -17,7 +16,7 @@ export const applyBasicReactSupport = (
   api.modifyBundlerChain(async (chain, { CHAIN_ID, isDev, isProd, target }) => {
     const config = api.getNormalizedConfig();
     const usingHMR = isUsingHMR(config, { isProd, target });
-    const reactOptions: SwcReactConfig = {
+    const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
       development: isDev,
       refresh: usingHMR,
       runtime: 'automatic',
