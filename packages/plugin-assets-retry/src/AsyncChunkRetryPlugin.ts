@@ -1,8 +1,8 @@
+import path from 'node:path';
 import { fse, pick } from '@rsbuild/shared';
 import { Rspack } from '@rsbuild/shared/rspack';
-import path from 'node:path';
-import type { PluginAssetsRetryOptions, RuntimeRetryOptions } from './types';
 import serialize from 'serialize-javascript';
+import type { PluginAssetsRetryOptions, RuntimeRetryOptions } from './types';
 
 const { RuntimeGlobals } = Rspack;
 
