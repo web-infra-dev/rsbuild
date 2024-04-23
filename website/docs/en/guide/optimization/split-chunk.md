@@ -98,7 +98,7 @@ export default {
 - This configuration will bundle all the generated JS code into one file (except for dynamically imported chunks).
 - The size of a single JS file may be very large, leading to a decrease in page loading performance.
 
-If you need to bundle the chunks split by dynamic import into the single file, you can set the [output.asyncChunks](https://rspack.dev/config/output#outputasyncchunks) option in Rspack to `false`：
+If you need to bundle the chunks split by dynamic import into the single file, you can set the [output.asyncChunks](https://rspack.dev/config/output#outputasyncchunks) option in Rspack to `false`:
 
 ```js
 export default defineConfig({
