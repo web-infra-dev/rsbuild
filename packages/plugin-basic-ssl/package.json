@@ -1,7 +1,7 @@
 {
   "name": "@rsbuild/plugin-basic-ssl",
   "version": "0.6.5",
-  "description": "Ssl plugin for Rsbuild",
+  "description": "SSL plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
     "type": "git",

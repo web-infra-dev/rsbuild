@@ -23,9 +23,22 @@ HTTPS:
 
 You can manually pass in the certificate and the private key required in the `server.https` option. This parameter will be directly passed to the `createServer` method of the https module in Node.js.
 
-For basic configuration needs, you can add @rsbuild/plugin-basic-ssl to your project plugins, which will automatically create and cache a self-signed certificate. However, we recommend creating and using your own certificate.
-
 For details, please refer to [https.createServer](https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener).
+
+```ts
+import fs from 'node:fs';
+
+export default {
+  server: {
+    https: {
+      key: fs.readFileSync('certificates/private.pem'),
+      cert: fs.readFileSync('certificates/public.pem'),
+    },
+  },
+};
+```
+
+For basic usage configuration needs, you can add @rsbuild/plugin-basic-ssl to your project plugins, and it will automatically create and cache a self-signed certificate while also enabling HTTPS configuration by default.
 
 ```ts
 import fs from 'node:fs';
@@ -33,9 +46,6 @@ import { pluginBasicSsl } from '@rsbuild/plugin-basic-ssl';
 
 export default {
   plugins: [pluginBasicSsl()],
-  server: {
-    https: {},
-  },
 };
 ```
 

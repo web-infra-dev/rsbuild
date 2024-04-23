@@ -4,7 +4,7 @@ import type { ServerConfig } from '@rsbuild/shared';
 import selfsigned from 'selfsigned';
 
 export const resolveHttpsConfig = (config: ServerConfig['https']) => {
-  const { key, cert } = config!;
+  const { key, cert } = config ?? {};
   if (key && cert) return { key, cert };
   const certPath = path.join(__dirname, 'fake-cert.pem');
   if (fs.existsSync(certPath)) {
