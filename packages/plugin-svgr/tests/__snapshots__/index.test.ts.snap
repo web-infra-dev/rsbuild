@@ -52,7 +52,6 @@ exports[`svgr > 'configure SVGR options' 1`] = `
                 "useDefineForClassFields": false,
               },
             },
-            "sourceMaps": true,
           },
         },
         {
@@ -146,7 +145,6 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
                 "useDefineForClassFields": false,
               },
             },
-            "sourceMaps": true,
           },
         },
         {
@@ -212,7 +210,6 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
                 "useDefineForClassFields": false,
               },
             },
-            "sourceMaps": true,
           },
         },
         {
@@ -305,7 +302,6 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
                 "useDefineForClassFields": false,
               },
             },
-            "sourceMaps": true,
           },
         },
         {
@@ -371,7 +367,6 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
                 "useDefineForClassFields": false,
               },
             },
-            "sourceMaps": true,
           },
         },
         {
@@ -464,7 +459,6 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
                 "useDefineForClassFields": false,
               },
             },
-            "sourceMaps": true,
           },
         },
         {
@@ -530,7 +524,6 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
                 "useDefineForClassFields": false,
               },
             },
-            "sourceMaps": true,
           },
         },
         {
@@ -623,7 +616,6 @@ exports[`svgr > 'exportType named / mixedImport true' 1`] = `
                 "useDefineForClassFields": false,
               },
             },
-            "sourceMaps": true,
           },
         },
         {
@@ -689,7 +681,6 @@ exports[`svgr > 'exportType named / mixedImport true' 1`] = `
                 "useDefineForClassFields": false,
               },
             },
-            "sourceMaps": true,
           },
         },
         {
