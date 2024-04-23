@@ -64,7 +64,7 @@ export type PublicDir =
        */
       copyOnBuild?: boolean;
       /**
-       * whether to watch the publicDir files and reload the server when the files change
+       * whether to watch the public directory and reload the page when the files change
        * @default false
        */
       watch?: boolean;
