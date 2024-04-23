@@ -6,6 +6,8 @@ import { fse } from '@rsbuild/shared';
 const cwd = __dirname;
 
 test('should serve publicDir for dev server correctly', async ({ page }) => {
+  await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'aaaa');
+
   const rsbuild = await dev({
     cwd,
     rsbuildConfig: {
@@ -22,7 +24,9 @@ test('should serve publicDir for dev server correctly', async ({ page }) => {
     },
   });
 
-  const res = await page.goto(`http://localhost:${rsbuild.port}/aa.txt`);
+  const res = await page.goto(
+    `http://localhost:${rsbuild.port}/test-temp-file.txt`,
+  );
 
   expect((await res?.body())?.toString().trim()).toBe('aaaa');
 
@@ -32,6 +36,11 @@ test('should serve publicDir for dev server correctly', async ({ page }) => {
 test('should serve custom publicDir for dev server correctly', async ({
   page,
 }) => {
+  await fse.outputFile(
+    join(__dirname, 'public1', 'test-temp-file.txt'),
+    'aaaa111',
+  );
+
   const rsbuild = await dev({
     cwd,
     rsbuildConfig: {
@@ -53,7 +62,9 @@ test('should serve custom publicDir for dev server correctly', async ({
     },
   });
 
-  const res = await page.goto(`http://localhost:${rsbuild.port}/aa.txt`);
+  const res = await page.goto(
+    `http://localhost:${rsbuild.port}/test-temp-file.txt`,
+  );
 
   expect((await res?.body())?.toString().trim()).toBe('aaaa111');
 
@@ -81,7 +92,9 @@ test('should not serve publicDir when publicDir is false', async ({ page }) => {
     },
   });
 
-  const res = await page.goto(`http://localhost:${rsbuild.port}/aa.txt`);
+  const res = await page.goto(
+    `http://localhost:${rsbuild.port}/test-temp-file.txt`,
+  );
 
   expect(res?.status()).toBe(404);
 
@@ -91,6 +104,8 @@ test('should not serve publicDir when publicDir is false', async ({ page }) => {
 test('should serve publicDir for preview server correctly', async ({
   page,
 }) => {
+  await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'aaaa');
+
   const rsbuild = await build({
     cwd,
     runServer: true,
@@ -108,7 +123,9 @@ test('should serve publicDir for preview server correctly', async ({
     },
   });
 
-  const res = await page.goto(`http://localhost:${rsbuild.port}/aa.txt`);
+  const res = await page.goto(
+    `http://localhost:${rsbuild.port}/test-temp-file.txt`,
+  );
 
   expect((await res?.body())?.toString().trim()).toBe('aaaa');
 
@@ -129,16 +146,16 @@ test('should reload page when publicDir file changes', async ({ page }) => {
 
   await gotoPage(page, rsbuild);
 
-  const file = path.join(__dirname, '/public/aa.txt');
+  const file = path.join(__dirname, '/public/test-temp-file.txt');
 
-  await fse.writeFile(file, 'test');
+  await fse.outputFile(file, 'test');
   // check the page is reloaded
   await new Promise((resolve) => {
     page.waitForURL(page.url()).then(resolve);
   });
 
   // reset file
-  await fse.writeFile(file, 'aaaa');
+  await fse.outputFile(file, 'aaaa');
   await rsbuild.close();
 });
 
@@ -159,15 +176,15 @@ test('should reload page when custom publicDir file changes', async ({
 
   await gotoPage(page, rsbuild);
 
-  const file = path.join(__dirname, '/public1/aa.txt');
+  const file = path.join(__dirname, '/public1/test-temp-file.txt');
 
-  await fse.writeFile(file, 'test');
+  await fse.outputFile(file, 'test');
   // check the page is reloaded
   await new Promise((resolve) => {
     page.waitForURL(page.url()).then(resolve);
   });
 
   // reset file
-  await fse.writeFile(file, 'aaaa111');
+  await fse.outputFile(file, 'aaaa111');
   await rsbuild.close();
 });
