@@ -78,6 +78,7 @@ rslog
 rspack
 rspress
 selfsign
+selfsigned
 sirv
 sokra
 speedscope
