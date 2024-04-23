@@ -11,6 +11,7 @@
   "plugin-solid",
   "plugin-assets-retry",
   "plugin-babel",
+  "plugin-basic-ssl",
   "plugin-eslint",
   "plugin-type-check",
   "plugin-image-compress",

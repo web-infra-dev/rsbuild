@@ -7,14 +7,14 @@ After configuring this option, you can enable HTTPS Server, and disabling the HT
 
 HTTP:
 
-```bash
+```
   > Local: http://localhost:3000/
   > Network: http://192.168.0.1:3000/
 ```
 
 HTTPS:
 
-```bash
+```
   > Local: https://localhost:3000/
   > Network: https://192.168.0.1:3000/
 ```
@@ -38,15 +38,18 @@ export default {
 };
 ```
 
-For basic usage configuration needs, you can add @rsbuild/plugin-basic-ssl to your project plugins, and it will automatically create and cache a self-signed certificate while also enabling HTTPS configuration by default.
+:::tip
+The certificates used for local development are typically generated using [mkcert](https://github.com/FiloSottile/mkcert). Please read ["How to use HTTPS for local development"](https://web.dev/articles/how-to-use-local-https?hl=en) to learn how to use it.
+:::
+
+## Self-signed Certificate
+
+For basic configuration requirements, you can add the [@rsbuild/plugin-basic-ssl](/plugins/list/plugin-basic-ssl) plugin, which will automatically create a self-signed certificate and set `server.https` option by default.
 
 ```ts
-import fs from 'node:fs';
 import { pluginBasicSsl } from '@rsbuild/plugin-basic-ssl';
 
 export default {
   plugins: [pluginBasicSsl()],
 };
 ```
-
-The certificates used for local development are typically generated using [mkcert](https://github.com/FiloSottile/mkcert). Please read ["How to use HTTPS for local development"](https://web.dev/articles/how-to-use-local-https?hl=en) to learn how to use it.

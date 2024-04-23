@@ -55,6 +55,7 @@ The following are common framework-agnostic plugins:
 
 - [Assets Retry Plugin](/plugins/list/plugin-assets-retry): Used to automatically resend requests when static assets fail to load.
 - [Babel Plugin](/plugins/list/plugin-babel): Provides support for Babel transpilation capabilities.
+- [Basic SSL Plugin](/plugins/list/plugin-basic-ssl): Generate an untrusted, self-signed certificate for the HTTPS server.
 - [ESLint Plugin](/plugins/list/plugin-eslint): Used to run ESLint checks during the compilation.
 - [Type Check Plugin](/plugins/list/plugin-type-check): Used to run TypeScript type checker on a separate process.
 - [Image Compress Plugin](/plugins/list/plugin-image-compress): Compress the image resources used in the project.

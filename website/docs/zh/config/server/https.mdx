@@ -7,14 +7,14 @@
 
 开启前：
 
-```bash
+```
   > Local:    http://localhost:3000/
   > Network:  http://192.168.0.1:3000/
 ```
 
 开启后：
 
-```bash
+```
   > Local:    https://localhost:3000/
   > Network:  https://192.168.0.1:3000/
 ```
@@ -38,17 +38,18 @@ export default {
 };
 ```
 
-对基本使用的配置需求来说，你可以添加 @rsbuild/plugin-basic-ssl 到项目插件中，它会自动创建和缓存一个自签名的证书，并默认开启 https 配置。
+:::tip
+本地开发所使用的证书通常使用 [mkcert](https://github.com/FiloSottile/mkcert) 生成，请阅读 ["如何使用 HTTPS 进行本地开发"](https://web.dev/articles/how-to-use-local-https?hl=zh-cn) 来了解如何使用。
+:::
+
+## 自签名证书
+
+对基本的配置需求，你可以添加 [@rsbuild/plugin-basic-ssl](/plugins/list/plugin-basic-ssl) 插件，它会自动创建一个自签名的证书，并默认设置 `server.https` 选项。
 
 ```ts
-import fs from 'node:fs';
 import { pluginBasicSsl } from '@rsbuild/plugin-basic-ssl';
 
 export default {
   plugins: [pluginBasicSsl()],
 };
 ```
-
-:::tip
-本地开发所使用的证书通常使用 [mkcert](https://github.com/FiloSottile/mkcert) 生成，请阅读 ["如何使用 HTTPS 进行本地开发"](https://web.dev/articles/how-to-use-local-https?hl=zh-cn) 来了解如何使用。
-:::
