@@ -39,7 +39,6 @@ export async function getDefaultSwcConfig(
       // https://github.com/swc-project/swc/issues/6403
       preserveAllComments: true,
     },
-    // @ts-expect-error TODO
     isModule: 'unknown',
     env: {
       targets: await getBrowserslistWithDefault(rootPath, config, target),
@@ -165,7 +164,6 @@ function applyTransformImport(
   if (pluginImport !== false && pluginImport) {
     swcConfig.rspackExperiments ??= {};
     swcConfig.rspackExperiments.import ??= [];
-    // @ts-expect-error TODO
     swcConfig.rspackExperiments.import.push(...pluginImport);
   }
 }
