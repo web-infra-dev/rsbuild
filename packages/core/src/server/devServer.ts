@@ -124,7 +124,11 @@ export async function createDevServer<
 
   const compileMiddlewareAPI = runCompile ? await startCompile() : undefined;
 
-  const fileWatcher = await setupWatchFiles(devConfig, compileMiddlewareAPI);
+  const fileWatcher = await setupWatchFiles({
+    dev: devConfig,
+    server: serverConfig,
+    compileMiddlewareAPI,
+  });
 
   const devMiddlewares = await getMiddlewares({
     pwd: options.context.rootPath,

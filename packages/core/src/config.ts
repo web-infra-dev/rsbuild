@@ -62,6 +62,7 @@ const getDefaultServerConfig = (): NormalizedServerConfig => ({
   publicDir: {
     name: 'public',
     copyOnBuild: true,
+    watch: false,
   },
 });
 

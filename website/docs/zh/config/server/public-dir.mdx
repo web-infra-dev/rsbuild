@@ -16,6 +16,11 @@ type PublicDir =
        * @default true
        */
       copyOnBuild?: boolean;
+      /**
+       * 是否监听 public 目录，并在文件发生变化时重新加载页面
+       * @default false
+       */
+      watch?: boolean;
     };
 ```
 
@@ -25,6 +30,7 @@ type PublicDir =
 const defaultValue = {
   name: 'public',
   copyOnBuild: true,
+  watch: false,
 };
 ```
 
@@ -62,6 +68,21 @@ export default {
 ```
 
 需要注意的是，将 `copyOnBuild` 的值为 false 后，如果执行 `rsbuild preview` 进行生产环境预览，将无法访问对应的静态资源文件。
+
+设置 `watch` 为 `true` 后，开发环境下会监控指定公共目录下的文件变化，并在文件发生变化时重新加载页面：
+
+```ts
+export default {
+  server: {
+    publicDir: {
+      name: 'static',
+      watch: true,
+    },
+  },
+};
+```
+
+需要注意的是，`watch` 选项只有在开发环境下有效。如果 `dev.hmr` 和 `dev.liveReload` 都设置为 false，则 `watch` 将被忽略。
 
 ### 路径类型
 

@@ -1,6 +1,7 @@
-import { join } from 'node:path';
-import { build, dev } from '@e2e/helper';
+import path, { join } from 'node:path';
+import { build, dev, gotoPage } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
+import { fse } from '@rsbuild/shared';
 
 const cwd = __dirname;
 
@@ -111,5 +112,62 @@ test('should serve publicDir for preview server correctly', async ({
 
   expect((await res?.body())?.toString().trim()).toBe('aaaa');
 
+  await rsbuild.close();
+});
+
+test('should reload page when publicDir file changes', async ({ page }) => {
+  const rsbuild = await dev({
+    cwd,
+    rsbuildConfig: {
+      server: {
+        publicDir: {
+          watch: true,
+        },
+      },
+    },
+  });
+
+  await gotoPage(page, rsbuild);
+
+  const file = path.join(__dirname, '/public/aa.txt');
+
+  await fse.writeFile(file, 'test');
+  // check the page is reloaded
+  await new Promise((resolve) => {
+    page.waitForURL(page.url()).then(resolve);
+  });
+
+  // reset file
+  await fse.writeFile(file, 'aaaa');
+  await rsbuild.close();
+});
+
+test('should reload page when custom publicDir file changes', async ({
+  page,
+}) => {
+  const rsbuild = await dev({
+    cwd,
+    rsbuildConfig: {
+      server: {
+        publicDir: {
+          name: 'public1',
+          watch: true,
+        },
+      },
+    },
+  });
+
+  await gotoPage(page, rsbuild);
+
+  const file = path.join(__dirname, '/public1/aa.txt');
+
+  await fse.writeFile(file, 'test');
+  // check the page is reloaded
+  await new Promise((resolve) => {
+    page.waitForURL(page.url()).then(resolve);
+  });
+
+  // reset file
+  await fse.writeFile(file, 'aaaa111');
   await rsbuild.close();
 });
