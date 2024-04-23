@@ -11,7 +11,7 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rspress/plugin-rss": "^1.18.3",
-    "@types/node": "16.x",
+    "@types/node": "18.x",
     "@types/react": "^18.2.75",
     "@types/react-dom": "^18.2.24",
     "fast-glob": "^3.3.2",

@@ -35,7 +35,7 @@
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "@types/node": "16.x",
+    "@types/node": "18.x",
     "typescript": "^5.4.2",
     "webpack": "^5.91.0"
   },

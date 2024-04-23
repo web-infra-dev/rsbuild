@@ -33,7 +33,7 @@
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "@types/lodash": "^4.17.0",
-    "@types/node": "16.x",
+    "@types/node": "18.x",
     "typescript": "^5.4.2"
   },
   "peerDependencies": {

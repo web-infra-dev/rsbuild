@@ -30,7 +30,7 @@
     "fast-glob": "^3.3.2"
   },
   "devDependencies": {
-    "@types/node": "16.x",
+    "@types/node": "18.x",
     "typescript": "^5.4.2"
   },
   "publishConfig": {
