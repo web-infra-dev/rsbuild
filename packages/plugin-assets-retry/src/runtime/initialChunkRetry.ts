@@ -1,9 +1,6 @@
 // rsbuild/runtime/initial-chunk-retry
 import type { CrossOrigin } from '@rsbuild/shared';
-import type {
-  AssetsRetryHookContext,
-  PluginAssetsRetryOptions,
-} from '../types';
+import type { AssetsRetryHookContext, RuntimeRetryOptions } from '../types';
 
 interface ScriptElementAttributes {
   url: string;
@@ -54,7 +51,7 @@ function getRequestUrl(element: HTMLElement) {
   return null;
 }
 
-const defaultConfig: PluginAssetsRetryOptions = {
+const defaultConfig: RuntimeRetryOptions = {
   max: 3,
   type: TYPES,
   domain: [],
@@ -62,7 +59,7 @@ const defaultConfig: PluginAssetsRetryOptions = {
 };
 
 function validateTargetInfo(
-  config: PluginAssetsRetryOptions,
+  config: RuntimeRetryOptions,
   e: Event,
 ): { target: HTMLElement; tagName: string; url: string } | false {
   const target: HTMLElement = e.target as HTMLElement;
@@ -163,7 +160,7 @@ function reloadElementResource(
   }
 }
 
-function retry(config: PluginAssetsRetryOptions, e: Event) {
+function retry(config: RuntimeRetryOptions, e: Event) {
   const targetInfo = validateTargetInfo(config, e);
   if (targetInfo === false) {
     return;
@@ -251,7 +248,7 @@ function retry(config: PluginAssetsRetryOptions, e: Event) {
   reloadElementResource(target, element, attributes);
 }
 
-function load(config: PluginAssetsRetryOptions, e: Event) {
+function load(config: RuntimeRetryOptions, e: Event) {
   const targetInfo = validateTargetInfo(config, e);
   if (targetInfo === false) {
     return;
@@ -301,8 +298,8 @@ function resourceMonitor(
 }
 
 // @ts-expect-error init is a global function, ignore ts(6133)
-function init(options: PluginAssetsRetryOptions) {
-  const config: PluginAssetsRetryOptions = {};
+function init(options: RuntimeRetryOptions) {
+  const config: RuntimeRetryOptions = {};
 
   for (const key in defaultConfig) {
     // @ts-ignore

@@ -24,10 +24,6 @@ export type PluginAssetsRetryOptions = {
    */
   crossOrigin?: boolean | CrossOrigin;
   /**
-   * Whether to inline the runtime JavaScript code of Assets Retry plugin into the HTML file.
-   */
-  inlineScript?: boolean;
-  /**
    * The callback function when the asset is failed to be retried.
    */
   onFail?: (options: AssetsRetryHookContext) => void;
@@ -40,6 +36,10 @@ export type PluginAssetsRetryOptions = {
    */
   onSuccess?: (options: AssetsRetryHookContext) => void;
   /**
+   * Whether to inline the runtime JavaScript code of Assets Retry plugin into the HTML file.
+   */
+  inlineScript?: boolean;
+  /**
    * Whether to minify the runtime JavaScript code of Assets Retry plugin.
    */
   minify?: boolean;
@@ -47,7 +47,7 @@ export type PluginAssetsRetryOptions = {
 
 export type RuntimeRetryOptions = Omit<
   PluginAssetsRetryOptions,
-  'crossOrigin' | 'inlineScript' | 'minify'
+  'inlineScript' | 'minify'
 >;
 
 export type AssetsRetryHookContext = {
