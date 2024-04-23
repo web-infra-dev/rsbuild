@@ -55,7 +55,7 @@
     "@rsbuild/webpack": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "@types/lodash": "^4.17.0",
-    "@types/node": "16.x",
+    "@types/node": "18.x",
     "@types/react": "^18.2.75",
     "@types/react-dom": "^18.2.24",
     "fast-glob": "^3.3.2",
