@@ -446,9 +446,6 @@ importers:
       '@rsbuild/core':
         specifier: link:../../packages/core
         version: link:../../packages/core
-      '@rsbuild/plugin-babel':
-        specifier: workspace:*
-        version: link:../../packages/plugin-babel
       '@rsbuild/plugin-react':
         specifier: link:../../packages/plugin-react
         version: link:../../packages/plugin-react
