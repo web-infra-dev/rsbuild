@@ -10,7 +10,6 @@ import {
   deepmerge,
   getBrowserslistWithDefault,
   getCoreJsVersion,
-  getJsSourceMap,
   isWebTarget,
   mergeChainedOptions,
 } from '@rsbuild/shared';
@@ -44,7 +43,6 @@ export async function getDefaultSwcConfig(
     env: {
       targets: await getBrowserslistWithDefault(rootPath, config, target),
     },
-    sourceMaps: Boolean(getJsSourceMap(config)),
   };
 }
 
