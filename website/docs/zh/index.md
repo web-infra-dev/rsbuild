@@ -1,5 +1,6 @@
 ---
 pageType: home
+titleSuffix: ' - 基于 Rspack 的构建工具'
 
 link-rss:
   - releases-rss-zh
