@@ -63,6 +63,11 @@ export type PublicDir =
        * @default true
        */
       copyOnBuild?: boolean;
+      /**
+       * whether to watch the publicDir files and reload the server when the files change
+       * @default false
+       */
+      watch?: boolean;
     };
 
 export interface ServerConfig {
