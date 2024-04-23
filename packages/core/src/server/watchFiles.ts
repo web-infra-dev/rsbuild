@@ -16,7 +16,9 @@ export async function setupWatchFiles(options: WatchFilesOptions) {
   const { dev, server, compileMiddlewareAPI } = options;
 
   const { hmr, liveReload } = dev;
-  if (!hmr && !liveReload) return;
+  if ((!hmr && !liveReload) || !compileMiddlewareAPI) {
+    return;
+  }
 
   const devFilesWatcher = await watchDevFiles(dev, compileMiddlewareAPI);
   const serverFilesWatcher = await watchServerFiles(
@@ -36,10 +38,12 @@ export async function setupWatchFiles(options: WatchFilesOptions) {
 
 async function watchDevFiles(
   devConfig: DevConfig,
-  compileMiddlewareAPI?: CompileMiddlewareAPI,
+  compileMiddlewareAPI: CompileMiddlewareAPI,
 ) {
   const { watchFiles } = devConfig;
-  if (!watchFiles) return;
+  if (!watchFiles) {
+    return;
+  }
 
   const watchOptions = prepareWatchOptions(
     watchFiles.paths,
@@ -50,10 +54,12 @@ async function watchDevFiles(
 
 function watchServerFiles(
   serverConfig: ServerConfig,
-  compileMiddlewareAPI?: CompileMiddlewareAPI,
+  compileMiddlewareAPI: CompileMiddlewareAPI,
 ) {
   const { publicDir } = serverConfig;
-  if (!publicDir || !publicDir.watch || !publicDir.name) return;
+  if (!publicDir || !publicDir.watch || !publicDir.name) {
+    return;
+  }
 
   const watchOptions = prepareWatchOptions(publicDir.name);
   return startWatchFiles(watchOptions, compileMiddlewareAPI);
@@ -61,23 +67,23 @@ function watchServerFiles(
 
 function prepareWatchOptions(
   paths: string | string[],
-  options?: ChokidarWatchOptions,
+  options: ChokidarWatchOptions = {},
 ) {
   return {
     paths: typeof paths === 'string' ? [paths] : paths,
-    options: options ?? {},
+    options,
   };
 }
 
 async function startWatchFiles(
   { paths, options }: WatchFiles,
-  compileMiddlewareAPI?: CompileMiddlewareAPI,
+  compileMiddlewareAPI: CompileMiddlewareAPI,
 ) {
   const chokidar = await import('@rsbuild/shared/chokidar');
   const watcher = chokidar.watch(paths, options);
 
   watcher.on('change', () => {
-    compileMiddlewareAPI?.sockWrite('static-changed');
+    compileMiddlewareAPI.sockWrite('static-changed');
   });
 
   return watcher;
