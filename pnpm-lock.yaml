@@ -54,7 +54,7 @@ importers:
         version: 2.11.1
       vitest:
         specifier: ^1.4.0
-        version: 1.5.0(@types/node@16.18.96)(less@4.2.0)(lightningcss@1.24.1)(sass@1.75.0)(stylus@0.63.0)(terser@5.30.3)
+        version: 1.5.0(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.75.0)(stylus@0.63.0)(terser@5.30.3)
 
   e2e:
     dependencies:
@@ -195,8 +195,8 @@ importers:
         specifier: ^4.17.0
         version: 4.17.0
       '@types/node':
-        specifier: 16.x
-        version: 16.18.96
+        specifier: 18.x
+        version: 18.19.31
       '@types/react':
         specifier: ^18.2.75
         version: 18.2.79
@@ -412,8 +412,8 @@ importers:
         specifier: link:../../packages/core
         version: link:../../packages/core
       '@types/node':
-        specifier: 16.x
-        version: 16.18.96
+        specifier: 18.x
+        version: 18.19.31
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -594,8 +594,8 @@ importers:
         specifier: workspace:*
         version: link:../../plugin-babel
       '@types/node':
-        specifier: 16.x
-        version: 16.18.96
+        specifier: 18.x
+        version: 18.19.31
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -671,8 +671,8 @@ importers:
         specifier: workspace:*
         version: link:../../../scripts/test-helper
       '@types/node':
-        specifier: 16.x
-        version: 16.18.96
+        specifier: 18.x
+        version: 18.19.31
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -699,8 +699,8 @@ importers:
         version: 8.4.38
     devDependencies:
       '@types/node':
-        specifier: 16.x
-        version: 16.18.96
+        specifier: 18.x
+        version: 18.19.31
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -714,8 +714,8 @@ importers:
         specifier: ^0.7.0
         version: 0.7.0
       '@types/node':
-        specifier: 16.x
-        version: 16.18.96
+        specifier: 18.x
+        version: 18.19.31
       rslog:
         specifier: ^1.2.1
         version: 1.2.1
@@ -733,8 +733,8 @@ importers:
         version: 3.3.2
     devDependencies:
       '@types/node':
-        specifier: 16.x
-        version: 16.18.96
+        specifier: 18.x
+        version: 18.19.31
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -807,8 +807,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: 16.x
-        version: 16.18.96
+        specifier: 18.x
+        version: 18.19.31
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -873,8 +873,8 @@ importers:
         specifier: ^4.17.0
         version: 4.17.0
       '@types/node':
-        specifier: 16.x
-        version: 16.18.96
+        specifier: 18.x
+        version: 18.19.31
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -926,8 +926,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: 16.x
-        version: 16.18.96
+        specifier: 18.x
+        version: 18.19.31
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -951,8 +951,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: 16.x
-        version: 16.18.96
+        specifier: 18.x
+        version: 18.19.31
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1068,8 +1068,8 @@ importers:
         specifier: link:../core
         version: link:../core
       '@types/node':
-        specifier: 16.x
-        version: 16.18.96
+        specifier: 18.x
+        version: 18.19.31
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1112,8 +1112,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: 16.x
-        version: 16.18.96
+        specifier: 18.x
+        version: 18.19.31
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1203,8 +1203,8 @@ importers:
         specifier: link:../core
         version: link:../core
       '@types/node':
-        specifier: 16.x
-        version: 16.18.96
+        specifier: 18.x
+        version: 18.19.31
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1256,8 +1256,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: 16.x
-        version: 16.18.96
+        specifier: 18.x
+        version: 18.19.31
       svelte:
         specifier: ^4.2.12
         version: 4.2.15
@@ -1290,8 +1290,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: 16.x
-        version: 16.18.96
+        specifier: 18.x
+        version: 18.19.31
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1479,8 +1479,8 @@ importers:
         version: 8.4.38
     devDependencies:
       '@types/node':
-        specifier: 16.x
-        version: 16.18.96
+        specifier: 18.x
+        version: 18.19.31
       html-webpack-plugin:
         specifier: npm:html-rspack-plugin@5.6.2
         version: html-rspack-plugin@5.6.2(@rspack/core@0.6.2(@swc/helpers@0.5.3))
@@ -1507,8 +1507,8 @@ importers:
         version: 1.1.3
     devDependencies:
       '@types/node':
-        specifier: 16.x
-        version: 16.18.96
+        specifier: 18.x
+        version: 18.19.31
       tsx:
         specifier: ^4.7.2
         version: 4.7.2
@@ -1519,8 +1519,8 @@ importers:
         specifier: ^7.24.4
         version: 7.24.4
       '@types/node':
-        specifier: 16.x
-        version: 16.18.96
+        specifier: 18.x
+        version: 18.19.31
       '@types/ws':
         specifier: ^8.5.10
         version: 8.5.10
@@ -1724,8 +1724,8 @@ importers:
         specifier: ^4.17.0
         version: 4.17.0
       '@types/node':
-        specifier: 16.x
-        version: 16.18.96
+        specifier: 18.x
+        version: 18.19.31
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -1744,11 +1744,11 @@ importers:
         specifier: link:../packages/core
         version: link:../packages/core
       '@rspress/plugin-rss':
-        specifier: ^1.18.2
-        version: 1.18.2(react@18.2.0)(rspress@1.18.2(webpack@5.91.0))
+        specifier: ^1.18.3
+        version: 1.18.3(react@18.2.0)(rspress@1.18.3(webpack@5.91.0))
       '@types/node':
-        specifier: 16.x
-        version: 16.18.96
+        specifier: 18.x
+        version: 18.19.31
       '@types/react':
         specifier: ^18.2.75
         version: 18.2.79
@@ -1774,8 +1774,8 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
       rspress:
-        specifier: ^1.18.2
-        version: 1.18.2(webpack@5.91.0)
+        specifier: ^1.18.3
+        version: 1.18.3(webpack@5.91.0)
       rspress-plugin-font-open-sans:
         specifier: 1.0.0
         version: 1.0.0
@@ -2865,11 +2865,11 @@ packages:
   '@lit/reactive-element@2.0.4':
     resolution: {integrity: sha512-GFn91inaUa2oHLak8awSIigYz0cU0Payr1rcFsrkf5OJ5eSPxElyZfKh0f2p9FsTiZWXQdWGJeXZICEfXXYSXQ==}
 
-  '@loadable/component@5.15.2':
-    resolution: {integrity: sha512-ryFAZOX5P2vFkUdzaAtTG88IGnr9qxSdvLRvJySXcUA4B4xVWurUNADu3AnKPksxOZajljqTrDEDcYjeL4lvLw==}
+  '@loadable/component@5.16.4':
+    resolution: {integrity: sha512-fJWxx9b5WHX90QKmizo9B+es2so8DnBthI1mbflwCoOyvzEwxiZ/SVDCTtXEnHG72/kGBdzr297SSIekYtzSOQ==}
     engines: {node: '>=8'}
     peerDependencies:
-      react: '>=16.3.0'
+      react: ^16.3.0 || ^17.0.0 || ^18.0.0
 
   '@manypkg/find-root@1.1.0':
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
@@ -3389,8 +3389,8 @@ packages:
       react-refresh:
         optional: true
 
-  '@rspress/core@1.18.2':
-    resolution: {integrity: sha512-9y/mRFXk6gEszTJxV89yJ7awxaL2AgtbWa2eJUDd3uB1X4xiN8eilWJoj5qg7S8u/BumGv1uR/HkNupS3ohqNg==}
+  '@rspress/core@1.18.3':
+    resolution: {integrity: sha512-UocNiprjPDzDxara1PMAMAJzR86kebN7tyqQKNmRKiQZCXidOw7wq3jOQTea+aus+mhbxQcvRcgGXjTtyYdz/A==}
     engines: {node: '>=14.17.6'}
 
   '@rspress/mdx-rs-darwin-arm64@0.5.1':
@@ -3445,40 +3445,40 @@ packages:
     resolution: {integrity: sha512-mZ0DCqmUgx7vgYGURfY2WYpBRZi4JuGxd3vT10vtAn4fX48bwyDmFELFMvWmwaFJLbuKHJJhEd77a+ehwcwSeQ==}
     engines: {node: '>= 10'}
 
-  '@rspress/plugin-auto-nav-sidebar@1.18.2':
-    resolution: {integrity: sha512-DwpA3rSXUDVvI6+ruaGlwDgVDP5yB5j8KgihOfyzo469L8XJDIYxuagSMkY1n+3KA9cMjIuSimNRJoKQ5PFOEQ==}
+  '@rspress/plugin-auto-nav-sidebar@1.18.3':
+    resolution: {integrity: sha512-7lFA6kM8tMU0lZPPRK0DX5GypF8d+sKavmXC2lplU3HH0rZp3oH1iSn8JyhoKMaKjHyBe2n2fo3eK0MP0dK+Ng==}
     engines: {node: '>=14.17.6'}
 
-  '@rspress/plugin-container-syntax@1.18.2':
-    resolution: {integrity: sha512-8FQJLk1dNFQuoYyYWPxKYjs2hLxe5LI4WBPn1t3OFyCaVGgJaA7cisAhcPA9jW4swIie4BfGoqccKI33GYNgCw==}
+  '@rspress/plugin-container-syntax@1.18.3':
+    resolution: {integrity: sha512-c/tVdLdyEXYUZgzUZYPleUVFxqK8QGjjMbiSUWUM2rM4a38RBIcj+RrYkinYrPOc59y5BqPsQEanFTlm7Q4JBg==}
     engines: {node: '>=14.17.6'}
 
-  '@rspress/plugin-last-updated@1.18.2':
-    resolution: {integrity: sha512-KyCzUWmxOw8b58myFzl9TkOcWy0mbvMJ7zGxUPxJNl0r9PkbXb7qNsjDIqHsiObLgnLmGFLFLB9lHaN88cTtuw==}
+  '@rspress/plugin-last-updated@1.18.3':
+    resolution: {integrity: sha512-TcAxLpmXPdv/7xugjRmmz+1TISNGQr8fi2/D8lylJtj3pRd0Y+9X6/HQaCSaVSdqFfsuZIoREQFvazS5fCMtdQ==}
     engines: {node: '>=14.17.6'}
 
-  '@rspress/plugin-medium-zoom@1.18.2':
-    resolution: {integrity: sha512-t8IEXGJgT7SbiPje3bewbC3Pg5tb+ozltFMhGNeoLMy1A5ECHqBs5YpzuAstmoeUubg8/LZ49NkEIu2H3Mti4w==}
+  '@rspress/plugin-medium-zoom@1.18.3':
+    resolution: {integrity: sha512-99TwPKl4QxYZWjxi4BlMAYOyh5yJWWgrrzGIOI+XJesX9RUYUPyyi4cHO0NBCQ1pJ7HwadkhdwZRyZpbjb9cTA==}
     engines: {node: '>=14.17.6'}
     peerDependencies:
       '@rspress/runtime': ^1.0.2
 
-  '@rspress/plugin-rss@1.18.2':
-    resolution: {integrity: sha512-DgyU9dRIh1CuHAAC6jrwvJqJqIZSuDaKk+qp2jm1VW952n1bTJLWJemfh4tM9r6i1C2+YhuP4h0MPw17hC6Ffw==}
+  '@rspress/plugin-rss@1.18.3':
+    resolution: {integrity: sha512-7GuL82rnw50GL/LdZV/yLey2jh2zUhhS2oGfO5VLLBpwaRkA55QzKBXKU85kUXU3KzY22I2eArNKjfboU/Zb9Q==}
     engines: {node: '>=14.17.6'}
     peerDependencies:
       react: '>=17.0.0'
       rspress: ^1.17.0
 
-  '@rspress/runtime@1.18.2':
-    resolution: {integrity: sha512-2lAG7i1AEe+uClTxrJKG079ZjCa6jSAEimLRvSZO3t4G9BbY71j9ODl8XwC4rTc8JzHONdX1UYv4sKN3BQYRvw==}
+  '@rspress/runtime@1.18.3':
+    resolution: {integrity: sha512-0BRYzX3VUfPrmAmnant3dKs+ONik3Ckf4EJ0q0cBlI13909tFpl18iDp5tNbmHhsD5NE7HyCDUAT5iYNTpOZfQ==}
     engines: {node: '>=14.17.6'}
 
-  '@rspress/shared@1.18.2':
-    resolution: {integrity: sha512-/siTFxmA5Aj9x6dXpZSrY7lAqd3aAvI5gZiQZ+HnfDuLBJDPndf073jRFJcAILLupWrSUnrIDUsuGIqDUAZu+w==}
+  '@rspress/shared@1.18.3':
+    resolution: {integrity: sha512-V8AiM35WW580SI/roaxP7I08YapUnZON4DlXAeESnwf6hI0dbao7etlfbuEhumKB/oQURS7QmMNuM1FdnTDEBQ==}
 
-  '@rspress/theme-default@1.18.2':
-    resolution: {integrity: sha512-CEPqkWqASLpxUevhf89aqgK0u++EItWIDGMHO8aYquxFbv9iMPVEnjd9xUKiUwBlpueELyRmrHxH1GTz+nTctQ==}
+  '@rspress/theme-default@1.18.3':
+    resolution: {integrity: sha512-ITeMFzmxhWif7v+LtMNBcXh5cL5WfDO68opfrosTR9TRLr7pko89hu022KItcapH5C7RIlzAf0+46NUauUbKmw==}
     engines: {node: '>=14.17.6'}
 
   '@selderee/plugin-htmlparser2@0.11.0':
@@ -3687,8 +3687,8 @@ packages:
   '@types/node@12.20.55':
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
 
-  '@types/node@16.18.96':
-    resolution: {integrity: sha512-84iSqGXoO+Ha16j8pRZ/L90vDMKX04QTYMTfYeE1WrjWaZXuchBehGUZEpNgx7JnmlrIHdnABmpjrQjhCnNldQ==}
+  '@types/node@18.19.31':
+    resolution: {integrity: sha512-ArgCD39YpyyrtFKIqMDvjz79jto5fcI/SVUs2HwB+f0dAzq68yqOdyaSivLiLugSziTpNXLQrVb7RZFmdZzbhA==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -6364,8 +6364,8 @@ packages:
   mdn-data@2.0.30:
     resolution: {integrity: sha512-GaqWWShW4kv/G9IEucWScBx9G1/vsFZZJUO+tD26M8J8z3Kw5RDQjaoZe03YAClgeS/SWPOcb4nkFBTEi5DUEA==}
 
-  medium-zoom@1.0.8:
-    resolution: {integrity: sha512-CjFVuFq/IfrdqesAXfg+hzlDKu6A2n80ZIq0Kl9kWjoHh9j1N9Uvk5X0/MmN0hOfm5F9YBswlClhcwnmtwz7gA==}
+  medium-zoom@1.1.0:
+    resolution: {integrity: sha512-ewyDsp7k4InCUp3jRmwHBRFGyjBimKps/AJLjRSox+2q/2H4p/PNpQf+pwONWlJiOudkBXtbdmVbFjqyybfTmQ==}
 
   memfs@3.5.3:
     resolution: {integrity: sha512-UERzLsxzllchadvbPs5aolHh65ISpKpM+ccLbOJ8/vvpBKmAWf+la7dXFy7Mr0ySHbdHrFv5kGFCUHHe6GFEmw==}
@@ -7681,8 +7681,8 @@ packages:
   rspress-plugin-font-open-sans@1.0.0:
     resolution: {integrity: sha512-4GP0pd7h3W8EWdqE0VkA62nzUJZNy4ZnYK7be8+lOKHQKsQ5nZ+22A/VurNssi1eZFx3kjwbmIuoAkgb5W8S9Q==}
 
-  rspress@1.18.2:
-    resolution: {integrity: sha512-fzAR0m8A1n7D3pPRblGEsws7J9XSgzDf6PXUH5CRKr0sVgGF80SxMF79V1AEiI3cgCzumqqBoXDzHWpQQU3AKg==}
+  rspress@1.18.3:
+    resolution: {integrity: sha512-GI1WZzNA4XcY8JfvjVzNTT+RyC5ZPrpPmG0cA6TdDOGKe1ZZmMka2wHhDNg23qNLs/ZYQPO4cjzDLGNJdaDFjA==}
     hasBin: true
 
   run-parallel@1.2.0:
@@ -8326,6 +8326,9 @@ packages:
 
   ufo@1.5.3:
     resolution: {integrity: sha512-Y7HYmWaFwPUmkoQCUIAYpKqkOf+SbVj/2fJJZ4RJMCfZp0rTGwRbzQD+HghfnhKOjL9E01okqz+ncJskGYfBNw==}
+
+  undici-types@5.26.5:
+    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
   unicode-canonical-property-names-ecmascript@2.0.0:
     resolution: {integrity: sha512-yY5PpDlfVIU5+y/BSCxAJRBIS1Zc2dDG3Ujq+sR0U+JjUevW2JhocOF+soROYDSaAezOzOKuyyixhD6mBknSmQ==}
@@ -10013,7 +10016,7 @@ snapshots:
       '@jest/schemas': 29.6.3
       '@types/istanbul-lib-coverage': 2.0.6
       '@types/istanbul-reports': 3.0.4
-      '@types/node': 16.18.96
+      '@types/node': 18.19.31
       '@types/yargs': 17.0.32
       chalk: 4.1.2
 
@@ -10045,7 +10048,7 @@ snapshots:
     dependencies:
       '@lit-labs/ssr-dom-shim': 1.2.0
 
-  '@loadable/component@5.15.2(react@18.2.0)':
+  '@loadable/component@5.16.4(react@18.2.0)':
     dependencies:
       '@babel/runtime': 7.24.4
       hoist-non-react-statics: 3.3.2
@@ -10567,9 +10570,9 @@ snapshots:
     optionalDependencies:
       react-refresh: 0.14.0
 
-  '@rspress/core@1.18.2(webpack@5.91.0)':
+  '@rspress/core@1.18.3(webpack@5.91.0)':
     dependencies:
-      '@loadable/component': 5.15.2(react@18.2.0)
+      '@loadable/component': 5.16.4(react@18.2.0)
       '@mdx-js/loader': 2.3.0(webpack@5.91.0)
       '@mdx-js/mdx': 2.3.0
       '@mdx-js/react': 2.3.0(react@18.2.0)
@@ -10577,18 +10580,17 @@ snapshots:
       '@rsbuild/core': link:packages/core
       '@rsbuild/plugin-react': link:packages/plugin-react
       '@rspress/mdx-rs': 0.5.1
-      '@rspress/plugin-auto-nav-sidebar': 1.18.2
-      '@rspress/plugin-container-syntax': 1.18.2
-      '@rspress/plugin-last-updated': 1.18.2
-      '@rspress/plugin-medium-zoom': 1.18.2(@rspress/runtime@1.18.2)
-      '@rspress/runtime': 1.18.2
-      '@rspress/shared': 1.18.2
-      '@rspress/theme-default': 1.18.2
+      '@rspress/plugin-auto-nav-sidebar': 1.18.3
+      '@rspress/plugin-container-syntax': 1.18.3
+      '@rspress/plugin-last-updated': 1.18.3
+      '@rspress/plugin-medium-zoom': 1.18.3(@rspress/runtime@1.18.3)
+      '@rspress/runtime': 1.18.3
+      '@rspress/shared': 1.18.3
+      '@rspress/theme-default': 1.18.3
       body-scroll-lock: 4.0.0-beta.0
       copy-to-clipboard: 3.3.3
       enhanced-resolve: 5.16.0
       flexsearch: 0.6.32
-      fs-extra: 10.1.0
       github-slugger: 2.0.0
       hast-util-from-html: 1.0.2
       hast-util-heading-rank: 3.0.0
@@ -10657,39 +10659,39 @@ snapshots:
       '@rspress/mdx-rs-win32-arm64-msvc': 0.5.1
       '@rspress/mdx-rs-win32-x64-msvc': 0.5.1
 
-  '@rspress/plugin-auto-nav-sidebar@1.18.2':
+  '@rspress/plugin-auto-nav-sidebar@1.18.3':
     dependencies:
-      '@rspress/shared': 1.18.2
+      '@rspress/shared': 1.18.3
 
-  '@rspress/plugin-container-syntax@1.18.2':
+  '@rspress/plugin-container-syntax@1.18.3':
     dependencies:
-      '@rspress/shared': 1.18.2
+      '@rspress/shared': 1.18.3
 
-  '@rspress/plugin-last-updated@1.18.2':
+  '@rspress/plugin-last-updated@1.18.3':
     dependencies:
-      '@rspress/shared': 1.18.2
+      '@rspress/shared': 1.18.3
 
-  '@rspress/plugin-medium-zoom@1.18.2(@rspress/runtime@1.18.2)':
+  '@rspress/plugin-medium-zoom@1.18.3(@rspress/runtime@1.18.3)':
     dependencies:
-      '@rspress/runtime': 1.18.2
-      medium-zoom: 1.0.8
+      '@rspress/runtime': 1.18.3
+      medium-zoom: 1.1.0
 
-  '@rspress/plugin-rss@1.18.2(react@18.2.0)(rspress@1.18.2(webpack@5.91.0))':
+  '@rspress/plugin-rss@1.18.3(react@18.2.0)(rspress@1.18.3(webpack@5.91.0))':
     dependencies:
-      '@rspress/shared': 1.18.2
+      '@rspress/shared': 1.18.3
       feed: 4.2.2
       react: 18.2.0
-      rspress: 1.18.2(webpack@5.91.0)
+      rspress: 1.18.3(webpack@5.91.0)
 
-  '@rspress/runtime@1.18.2':
+  '@rspress/runtime@1.18.3':
     dependencies:
-      '@rspress/shared': 1.18.2
+      '@rspress/shared': 1.18.3
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-helmet-async: 1.3.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-router-dom: 6.22.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
 
-  '@rspress/shared@1.18.2':
+  '@rspress/shared@1.18.3':
     dependencies:
       '@rsbuild/core': link:packages/core
       chalk: 4.1.2
@@ -10698,11 +10700,11 @@ snapshots:
       gray-matter: 4.0.3
       unified: 10.1.2
 
-  '@rspress/theme-default@1.18.2':
+  '@rspress/theme-default@1.18.3':
     dependencies:
       '@mdx-js/react': 2.3.0(react@18.2.0)
-      '@rspress/runtime': 1.18.2
-      '@rspress/shared': 1.18.2
+      '@rspress/runtime': 1.18.3
+      '@rspress/shared': 1.18.3
       body-scroll-lock: 4.0.0-beta.0
       copy-to-clipboard: 3.3.3
       flexsearch: 0.6.32
@@ -10859,12 +10861,12 @@ snapshots:
     dependencies:
       '@types/http-cache-semantics': 4.0.4
       '@types/keyv': 3.1.4
-      '@types/node': 16.18.96
+      '@types/node': 18.19.31
       '@types/responselike': 1.0.3
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 16.18.96
+      '@types/node': 18.19.31
 
   '@types/debug@4.1.12':
     dependencies:
@@ -10889,7 +10891,7 @@ snapshots:
   '@types/fs-extra@11.0.4':
     dependencies:
       '@types/jsonfile': 6.1.4
-      '@types/node': 16.18.96
+      '@types/node': 18.19.31
 
   '@types/hast@2.3.10':
     dependencies:
@@ -10903,7 +10905,7 @@ snapshots:
 
   '@types/http-proxy@1.17.14':
     dependencies:
-      '@types/node': 16.18.96
+      '@types/node': 18.19.31
 
   '@types/istanbul-lib-coverage@2.0.6': {}
 
@@ -10921,11 +10923,11 @@ snapshots:
 
   '@types/jsonfile@6.1.4':
     dependencies:
-      '@types/node': 16.18.96
+      '@types/node': 18.19.31
 
   '@types/keyv@3.1.4':
     dependencies:
-      '@types/node': 16.18.96
+      '@types/node': 18.19.31
 
   '@types/less@3.0.6': {}
 
@@ -10947,21 +10949,23 @@ snapshots:
 
   '@types/node-forge@1.3.11':
     dependencies:
-      '@types/node': 16.18.96
+      '@types/node': 18.19.31
 
   '@types/node-sass@4.11.7':
     dependencies:
-      '@types/node': 16.18.96
+      '@types/node': 18.19.31
 
   '@types/node@12.20.55': {}
 
-  '@types/node@16.18.96': {}
+  '@types/node@18.19.31':
+    dependencies:
+      undici-types: 5.26.5
 
   '@types/normalize-package-data@2.4.4': {}
 
   '@types/on-finished@2.3.4':
     dependencies:
-      '@types/node': 16.18.96
+      '@types/node': 18.19.31
 
   '@types/parse5@6.0.3': {}
 
@@ -10980,11 +10984,11 @@ snapshots:
 
   '@types/responselike@1.0.3':
     dependencies:
-      '@types/node': 16.18.96
+      '@types/node': 18.19.31
 
   '@types/sass-loader@8.0.8':
     dependencies:
-      '@types/node': 16.18.96
+      '@types/node': 18.19.31
       '@types/node-sass': 4.11.7
       '@types/webpack': 4.41.38
       sass: 1.75.0
@@ -11011,7 +11015,7 @@ snapshots:
 
   '@types/webpack-bundle-analyzer@4.7.0':
     dependencies:
-      '@types/node': 16.18.96
+      '@types/node': 18.19.31
       tapable: 2.2.1
       webpack: 5.91.0
     transitivePeerDependencies:
@@ -11022,13 +11026,13 @@ snapshots:
 
   '@types/webpack-sources@3.2.3':
     dependencies:
-      '@types/node': 16.18.96
+      '@types/node': 18.19.31
       '@types/source-list-map': 0.1.6
       source-map: 0.7.4
 
   '@types/webpack@4.41.38':
     dependencies:
-      '@types/node': 16.18.96
+      '@types/node': 18.19.31
       '@types/tapable': 1.0.12
       '@types/uglify-js': 3.17.5
       '@types/webpack-sources': 3.2.3
@@ -11037,7 +11041,7 @@ snapshots:
 
   '@types/ws@8.5.10':
     dependencies:
-      '@types/node': 16.18.96
+      '@types/node': 18.19.31
 
   '@types/yargs-parser@21.0.3': {}
 
@@ -13452,7 +13456,7 @@ snapshots:
   jest-util@29.7.0:
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 16.18.96
+      '@types/node': 18.19.31
       chalk: 4.1.2
       ci-info: 3.9.0
       graceful-fs: 4.2.11
@@ -13460,13 +13464,13 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 16.18.96
+      '@types/node': 18.19.31
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
   jest-worker@29.7.0:
     dependencies:
-      '@types/node': 16.18.96
+      '@types/node': 18.19.31
       jest-util: 29.7.0
       merge-stream: 2.0.0
       supports-color: 8.1.1
@@ -14037,7 +14041,7 @@ snapshots:
 
   mdn-data@2.0.30: {}
 
-  medium-zoom@1.0.8: {}
+  medium-zoom@1.1.0: {}
 
   memfs@3.5.3:
     dependencies:
@@ -15750,11 +15754,11 @@ snapshots:
 
   rspress-plugin-font-open-sans@1.0.0: {}
 
-  rspress@1.18.2(webpack@5.91.0):
+  rspress@1.18.3(webpack@5.91.0):
     dependencies:
       '@rsbuild/core': link:packages/core
-      '@rspress/core': 1.18.2(webpack@5.91.0)
-      '@rspress/shared': 1.18.2
+      '@rspress/core': 1.18.3(webpack@5.91.0)
+      '@rspress/shared': 1.18.3
       cac: 6.7.14
       chalk: 5.3.0
       chokidar: 3.6.0
@@ -16406,6 +16410,8 @@ snapshots:
 
   ufo@1.5.3: {}
 
+  undici-types@5.26.5: {}
+
   unicode-canonical-property-names-ecmascript@2.0.0: {}
 
   unicode-match-property-ecmascript@2.0.0:
@@ -16593,13 +16599,13 @@ snapshots:
       unist-util-stringify-position: 4.0.0
       vfile-message: 4.0.2
 
-  vite-node@1.5.0(@types/node@16.18.96)(less@4.2.0)(lightningcss@1.24.1)(sass@1.75.0)(stylus@0.63.0)(terser@5.30.3):
+  vite-node@1.5.0(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.75.0)(stylus@0.63.0)(terser@5.30.3):
     dependencies:
       cac: 6.7.14
       debug: 4.3.4
       pathe: 1.1.2
       picocolors: 1.0.0
-      vite: 5.2.9(@types/node@16.18.96)(less@4.2.0)(lightningcss@1.24.1)(sass@1.75.0)(stylus@0.63.0)(terser@5.30.3)
+      vite: 5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.75.0)(stylus@0.63.0)(terser@5.30.3)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -16610,13 +16616,13 @@ snapshots:
       - supports-color
       - terser
 
-  vite@5.2.9(@types/node@16.18.96)(less@4.2.0)(lightningcss@1.24.1)(sass@1.75.0)(stylus@0.63.0)(terser@5.30.3):
+  vite@5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.75.0)(stylus@0.63.0)(terser@5.30.3):
     dependencies:
       esbuild: 0.19.12
       postcss: 8.4.38
       rollup: 4.14.3
     optionalDependencies:
-      '@types/node': 16.18.96
+      '@types/node': 18.19.31
       fsevents: 2.3.3
       less: 4.2.0
       lightningcss: 1.24.1
@@ -16624,7 +16630,7 @@ snapshots:
       stylus: 0.63.0
       terser: 5.30.3
 
-  vitest@1.5.0(@types/node@16.18.96)(less@4.2.0)(lightningcss@1.24.1)(sass@1.75.0)(stylus@0.63.0)(terser@5.30.3):
+  vitest@1.5.0(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.75.0)(stylus@0.63.0)(terser@5.30.3):
     dependencies:
       '@vitest/expect': 1.5.0
       '@vitest/runner': 1.5.0
@@ -16643,11 +16649,11 @@ snapshots:
       strip-literal: 2.1.0
       tinybench: 2.7.0
       tinypool: 0.8.4
-      vite: 5.2.9(@types/node@16.18.96)(less@4.2.0)(lightningcss@1.24.1)(sass@1.75.0)(stylus@0.63.0)(terser@5.30.3)
-      vite-node: 1.5.0(@types/node@16.18.96)(less@4.2.0)(lightningcss@1.24.1)(sass@1.75.0)(stylus@0.63.0)(terser@5.30.3)
+      vite: 5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.75.0)(stylus@0.63.0)(terser@5.30.3)
+      vite-node: 1.5.0(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.75.0)(stylus@0.63.0)(terser@5.30.3)
       why-is-node-running: 2.2.2
     optionalDependencies:
-      '@types/node': 16.18.96
+      '@types/node': 18.19.31
     transitivePeerDependencies:
       - less
       - lightningcss

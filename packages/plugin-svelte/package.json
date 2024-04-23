@@ -33,7 +33,7 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "16.x",
+    "@types/node": "18.x",
     "svelte": "^4.2.12",
     "typescript": "^5.4.2"
   },

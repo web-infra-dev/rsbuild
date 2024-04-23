@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.24.4",
-    "@types/node": "16.x",
+    "@types/node": "18.x",
     "@types/ws": "^8.5.10",
     "@vercel/ncc": "0.38.1",
     "dts-packer": "0.0.3",
