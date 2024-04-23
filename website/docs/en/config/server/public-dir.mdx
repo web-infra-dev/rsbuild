@@ -16,6 +16,11 @@ type PublicDir =
        * @default true
        */
       copyOnBuild?: boolean;
+      /**
+       * whether to watch the public directory and reload the page when the files change
+       * @default false
+       */
+      watch?: boolean;
     };
 ```
 
@@ -62,6 +67,21 @@ export default {
 ```
 
 Note that setting the value of `copyOnBuild` to false means that when you run `rsbuild preview` for a production preview, you will not be able to access the corresponding static resources.
+
+Setting `watch` to `true` allows the development environment to watch changes to files in the specified public directory and reload the page when the files are changed:
+
+```ts
+export default {
+  server: {
+    publicDir: {
+      name: 'static',
+      watch: true,
+    },
+  },
+};
+```
+
+Note that the `watch` option is only valid in the development build. If `dev.hmr` and `dev.liveReload` are both set to false, `watch` will be ignored.
 
 ### Path Types
 

@@ -1,5 +1,6 @@
 ---
 pageType: home
+titleSuffix: ' - Rspack based build tool'
 
 link-rss:
   - releases-rss

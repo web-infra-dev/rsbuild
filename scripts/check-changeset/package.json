@@ -11,7 +11,7 @@
     "@manypkg/get-packages": "^1.1.3"
   },
   "devDependencies": {
-    "@types/node": "16.x",
+    "@types/node": "18.x",
     "tsx": "^4.7.2"
   }
 }

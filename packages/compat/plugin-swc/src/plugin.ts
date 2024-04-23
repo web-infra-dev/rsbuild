@@ -173,7 +173,6 @@ export function getDefaultSwcConfig(): TransformConfig {
       // https://github.com/swc-project/swc/issues/6403
       preserveAllComments: true,
     },
-    sourceMaps: true,
     env: {
       targets: DEFAULT_BROWSERSLIST.web.join(', '),
     },

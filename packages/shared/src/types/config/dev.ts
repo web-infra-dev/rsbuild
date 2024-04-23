@@ -1,4 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
+import type { WatchOptions } from '../../../compiled/chokidar';
 import type { ArrayOrNot } from '../utils';
 
 export type ProgressBarConfig = {
@@ -27,6 +28,13 @@ export type ClientConfig = {
   protocol?: 'ws' | 'wss';
   /** Shows an overlay in the browser when there are compiler errors. */
   overlay?: boolean;
+};
+
+export type ChokidarWatchOptions = WatchOptions;
+
+export type WatchFiles = {
+  paths: string | string[];
+  options?: WatchOptions;
 };
 
 export interface DevConfig {
@@ -76,6 +84,10 @@ export interface DevConfig {
    * Used to control whether the build artifacts of the development environment are written to the disk.
    */
   writeToDisk?: boolean | ((filename: string) => boolean);
+  /**
+   * This option allows you to configure a list of globs/directories/files to watch for file changes.
+   */
+  watchFiles?: WatchFiles;
 }
 
 export type NormalizedDevConfig = DevConfig &

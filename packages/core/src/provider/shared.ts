@@ -212,11 +212,11 @@ export function formatStats(
     };
   }
 
-  if (stats.hasWarnings()) {
+  if (warnings.length) {
     const title = color.bold(color.yellow('Compile Warning: \n'));
 
     return {
-      message: `${title}${`${warnings.join('\n\n') || color.yellow("For more details, please setting 'stats.warnings: true'")}\n`}`,
+      message: `${title}${warnings.join('\n\n')}\n`,
       level: 'warning',
     };
   }

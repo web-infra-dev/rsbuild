@@ -9,6 +9,8 @@ import type {
 } from './config/dev';
 import type { RspackCompiler, RspackMultiCompiler } from './rspack';
 
+export type { FSWatcher } from '../../compiled/chokidar';
+
 export type Middleware = (
   req: IncomingMessage,
   res: ServerResponse,

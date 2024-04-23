@@ -53,14 +53,14 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "@rspack/core": "0.6.2-canary-73bf70c-20240422091802",
+    "@rspack/core": "0.6.3",
     "@swc/helpers": "0.5.3",
     "core-js": "~3.36.0",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.6.2",
     "postcss": "^8.4.38"
   },
   "devDependencies": {
-    "@types/node": "16.x",
+    "@types/node": "18.x",
     "typescript": "^5.4.2",
     "webpack": "^5.91.0"
   },

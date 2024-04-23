@@ -44,9 +44,13 @@ export const globContentJSON = async (path: string, options?: GlobOptions) => {
   const files = await glob(convertPath(join(path, '**/*')), options);
   const ret: Record<string, string> = {};
 
-  for await (const file of files) {
-    ret[file] = await fse.readFile(file, 'utf-8');
-  }
+  await Promise.all(
+    files.map((file) =>
+      fse.readFile(file, 'utf-8').then((content) => {
+        ret[file] = content;
+      }),
+    ),
+  );
 
   return ret;
 };
