@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { build, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
+import { mergeRsbuildConfig } from '@rsbuild/core';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 import type { RsbuildConfig } from '@rsbuild/shared';
 import { normalizeToPosixPath } from '@scripts/test-helper';
@@ -27,6 +28,49 @@ test('should throw error when exist syntax errors', async () => {
     build({
       cwd,
       rsbuildConfig: getCommonBuildConfig(cwd),
+      plugins: [pluginCheckSyntax()],
+    }),
+  ).rejects.toThrowError('[Syntax Checker]');
+
+  restore();
+
+  expect(logs.find((log) => log.includes('ERROR 1'))).toBeTruthy();
+  expect(
+    logs.find((log) => log.includes('source:') && log.includes('src/test.js')),
+  ).toBeTruthy();
+  expect(
+    logs.find(
+      (log) =>
+        log.includes('output:') &&
+        normalizeToPosixPath(log).includes('/dist/static/js/index'),
+    ),
+  ).toBeTruthy();
+  expect(logs.find((log) => log.includes('reason:'))).toBeTruthy();
+  expect(
+    logs.find((log) => log.includes('> 1 | export const printLog = () => {')),
+  ).toBeTruthy();
+});
+
+// TODO Rspack occasionally generates invalid comments
+// such as:
+// /*! ./test */se information please see index.js?v=fc0ca1e8.LICENSE.txt */
+test.skip('should check assets with query correctly', async () => {
+  const cwd = path.join(__dirname, 'fixtures/basic');
+  const { logs, restore } = proxyConsole();
+
+  const rsbuildConfig = mergeRsbuildConfig(getCommonBuildConfig(cwd), {
+    output: {
+      filename: {
+        js: '[name].js?v=[contenthash:8]',
+        css: '[name].css?v=[contenthash:8]',
+      },
+    },
+  });
+
+  await expect(
+    build({
+      cwd,
+      rsbuildConfig,
       plugins: [pluginCheckSyntax()],
     }),
   ).rejects.toThrowError('[Syntax Checker]');
