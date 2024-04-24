@@ -1,10 +1,10 @@
 import path from 'node:path';
 import { build, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
+import { mergeRsbuildConfig } from '@rsbuild/core';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 import type { RsbuildConfig } from '@rsbuild/shared';
 import { normalizeToPosixPath } from '@scripts/test-helper';
-import { mergeRsbuildConfig } from '@rsbuild/core';
 
 function getCommonBuildConfig(cwd: string): RsbuildConfig {
   return {
