@@ -52,19 +52,21 @@ export class CheckSyntaxPlugin {
     complier.hooks.afterEmit.tapPromise(
       CheckSyntaxPlugin.name,
       async (compilation: Compilation) => {
-        const JS_WITH_QUERY_REGEX = /\.(?:js|mjs|cjs|jsx)(\?.*)?$/;
-        const QUERY_REGEX = /\?.*$/;
         const outputPath = compilation.outputOptions.path || 'dist';
+
         // not support compilation.emittedAssets in Rspack
         const emittedAssets = compilation
           .getAssets()
           .filter((a) => a.source)
-          .map((a) => a.name)
-          .map((p) => resolve(outputPath, p));
+          .map((a) => {
+            // remove query from name
+            const resourcePath = a.name.split('?')[0];
+            return resolve(outputPath, resourcePath);
+          });
 
         const files = emittedAssets.filter(
-          (assets) => HTML_REGEX.test(assets) || JS_REGEX.test(assets) || JS_WITH_QUERY_REGEX.test(assets),
-        ).map(file => file.replace(QUERY_REGEX, ''));
+          (assets) => HTML_REGEX.test(assets) || JS_REGEX.test(assets),
+        );
         await Promise.all(
           files.map(async (file) => {
             await this.check(file);
