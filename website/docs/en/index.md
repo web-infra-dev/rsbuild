@@ -8,8 +8,10 @@ link-rss:
 
 hero:
   name: Rsbuild
-  text: The Rspack-based Build Tool
-  tagline: Speed up your webpack application
+  text: |
+    The Rspack Powered
+    Build Tool
+  tagline: Build your web application instantly
   actions:
     - theme: brand
       text: Introduction
