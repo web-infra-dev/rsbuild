@@ -1,5 +1,6 @@
 import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
 import { getNodeEnv } from '@rsbuild/shared';
+import type { PluginOptions as ReactRefreshOptions } from '@rspack/plugin-react-refresh';
 import { applyBasicReactSupport, applyReactProfiler } from './react';
 import { applySplitChunksRule } from './splitChunks';
 
@@ -28,7 +29,16 @@ export type PluginReactOptions = {
    * Configuration for chunk splitting of React-related dependencies.
    */
   splitChunks?: SplitReactChunkOptions;
+  /**
+   * When set to `true`, enables the React Profiler for performance analysis in production builds.
+   * @default false
+   */
   enableProfiler?: boolean;
+  /**
+   * Options passed to `@rspack/plugin-react-refresh`
+   * @see https://rspack.dev/guide/tech/react#rspackplugin-react-refresh
+   */
+  reactRefreshOptions?: ReactRefreshOptions;
 };
 
 export const PLUGIN_REACT_NAME = 'rsbuild:react';
@@ -40,12 +50,11 @@ export const pluginReact = ({
   name: PLUGIN_REACT_NAME,
 
   setup(api) {
-    const isEnvProductionProfile =
-      enableProfiler && getNodeEnv() === 'production';
     if (api.context.bundlerType === 'rspack') {
       applyBasicReactSupport(api, options);
 
-      if (isEnvProductionProfile) {
+      const isProdProfile = enableProfiler && getNodeEnv() === 'production';
+      if (isProdProfile) {
         applyReactProfiler(api);
       }
     }

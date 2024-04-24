@@ -170,3 +170,36 @@ REACT_PROFILER=true npx rsbuild build
 ```
 
 > 关于使用 React DevTools 进行性能分析的详细信息，请参见 [React 文档](https://legacy.reactjs.org/docs/optimizing-performance.html#profiling-components-with-the-devtools-profiler)。
+
+### reactRefreshOptions
+
+- **类型：**
+
+```ts
+type ReactRefreshOptions = {
+  include?: string | RegExp | (string | RegExp)[] | null;
+  exclude?: string | RegExp | (string | RegExp)[] | null;
+  library?: string;
+  forceEnable?: boolean;
+};
+```
+
+- **默认值：**
+
+```js
+const defaultOptions = {
+  include: [/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/],
+};
+```
+
+设置 [@rspack/plugin-react-refresh](https://www.rspack.dev/guide/tech/react#rspackplugin-react-refresh) 的选项，传入的值会与默认值进行浅合并。
+
+- **示例：**
+
+```js
+pluginReact({
+  reactRefreshOptions: {
+    exclude: [/some-module-to-exclude/],
+  },
+});
+```

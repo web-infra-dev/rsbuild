@@ -168,3 +168,36 @@ REACT_PROFILER=true npx rsbuild build
 ```
 
 > See the [React docs](https://legacy.reactjs.org/docs/optimizing-performance.html#profiling-components-with-the-devtools-profiler) for details about profiling using the React DevTools.
+
+### reactRefreshOptions
+
+- **Type:**
+
+```ts
+type ReactRefreshOptions = {
+  include?: string | RegExp | (string | RegExp)[] | null;
+  exclude?: string | RegExp | (string | RegExp)[] | null;
+  library?: string;
+  forceEnable?: boolean;
+};
+```
+
+- **Default:**
+
+```js
+const defaultOptions = {
+  include: [/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/],
+};
+```
+
+Set the options for [@rspack/plugin-react-refresh](https://www.rspack.dev/guide/tech/react#rspackplugin-react-refresh). The passed value will be shallowly merged with the default value.
+
+- **Example:**
+
+```js
+pluginReact({
+  reactRefreshOptions: {
+    exclude: [/some-module-to-exclude/],
+  },
+});
+```
