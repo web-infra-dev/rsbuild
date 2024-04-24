@@ -8,8 +8,10 @@ link-rss:
 
 hero:
   name: Rsbuild
-  text: 基于 Rspack 的 Web 构建工具
-  tagline: 加速你的 webpack 应用
+  text: |
+    由 Rspack 驱动的
+    构建工具
+  tagline: 在瞬息之间构建你的 web 应用
   actions:
     - theme: brand
       text: 介绍
