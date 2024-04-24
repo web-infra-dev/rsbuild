@@ -136,7 +136,10 @@ function ensureChunk(chunkId: string): Promise<unknown> {
   const originalScriptFilename = originalGetChunkScriptFilename(chunkId);
 
   // mark the async chunk name in the global variables and share it with initial chunk retry
-  if (window && !window.__ASYNC_CHUNK_FILENAME_LIST__[originalScriptFilename]) {
+  if (
+    typeof window !== 'undefined' &&
+    !window.__ASYNC_CHUNK_FILENAME_LIST__[originalScriptFilename]
+  ) {
     window.__ASYNC_CHUNK_FILENAME_LIST__[originalScriptFilename] = true;
   }
 
@@ -219,7 +222,7 @@ function loadScript(
 
 function registerAsyncChunkRetry() {
   // init global variables shared with async chunk
-  if (window && !window.__ASYNC_CHUNK_FILENAME_LIST__) {
+  if (typeof window !== 'undefined' && !window.__ASYNC_CHUNK_FILENAME_LIST__) {
     window.__ASYNC_CHUNK_FILENAME_LIST__ = {};
   }
 

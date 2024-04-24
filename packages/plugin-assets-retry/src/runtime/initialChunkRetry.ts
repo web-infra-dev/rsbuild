@@ -170,7 +170,7 @@ function retry(config: RuntimeRetryOptions, e: Event) {
 
   // If the requested failed chunk is async chunk，skip it, because async chunk will be retried by asyncChunkRetry runtime
   if (
-    window &&
+    typeof window !== 'undefined' &&
     Object.keys(window.__ASYNC_CHUNK_FILENAME_LIST__ || {}).some(
       (chunkName) => {
         return url.indexOf(chunkName) !== -1;
@@ -324,7 +324,7 @@ function init(options: RuntimeRetryOptions) {
   }
 
   // init global variables shared with async chunk
-  if (window && !window.__ASYNC_CHUNK_FILENAME_LIST__) {
+  if (typeof window !== 'undefined' && !window.__ASYNC_CHUNK_FILENAME_LIST__) {
     window.__ASYNC_CHUNK_FILENAME_LIST__ = {};
   }
   // Bind event in window
