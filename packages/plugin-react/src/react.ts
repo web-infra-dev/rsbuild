@@ -48,7 +48,12 @@ export const applyBasicReactSupport = (
 
     chain
       .plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)
-      .use(ReactRefreshRspackPlugin, [{ include: [SCRIPT_REGEX] }]);
+      .use(ReactRefreshRspackPlugin, [
+        {
+          include: [SCRIPT_REGEX],
+          ...options.reactRefreshOptions,
+        },
+      ]);
   });
 };
 
