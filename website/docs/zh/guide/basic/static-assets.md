@@ -198,7 +198,7 @@ import myFile from './static/myFile.pdf';
 console.log(myFile); // "/static/myFile.6c12aba3.pdf"
 ```
 
-关于 asset modules 的更多介绍，请参考 [Rspack - Asset modules](https://rspack.dev/guide/asset-module#asset-modules)。
+关于 asset modules 的更多介绍，请参考 [Rspack - Asset modules](https://rspack.dev/guide/features/asset-module)。
 
 ## 自定义规则
 

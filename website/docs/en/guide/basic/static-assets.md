@@ -198,7 +198,7 @@ import myFile from './static/myFile.pdf';
 console.log(myFile); // "/static/myFile.6c12aba3.pdf"
 ```
 
-For more information about asset modules, please refer to [Rspack - Asset modules](https://rspack.dev/guide/asset-module#asset-modules).
+For more information about asset modules, please refer to [Rspack - Asset modules](https://rspack.dev/guide/features/asset-module).
 
 ## Custom Rules
 
