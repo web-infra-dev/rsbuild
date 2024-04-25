@@ -1273,7 +1273,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.node\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/core/dist/rspack/nodeAddonsLoader",
+            "loader": "<ROOT>/packages/core/dist/rspack/transformRawLoader",
+            "options": {
+              "id": "rsbuild-transform-0",
+            },
           },
         ],
       },
@@ -1403,6 +1406,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "hints": false,
   },
   "plugins": [
+    RsbuildTransformPlugin {},
     DefinePlugin {
       "definitions": {
         "process.env.ASSET_PREFIX": """",
