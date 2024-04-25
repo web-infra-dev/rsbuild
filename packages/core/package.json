@@ -59,7 +59,7 @@
     "core-js": "~3.36.0",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.6.2",
     "postcss": "^8.4.38",
-    "prebundle": "0.0.4"
+    "prebundle": "1.0.3"
   },
   "devDependencies": {
     "@types/node": "18.x",

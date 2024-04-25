@@ -34,7 +34,7 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
-    "prebundle": "0.0.4",
+    "prebundle": "1.0.3",
     "typescript": "^5.4.2",
     "yaml-loader": "^0.8.1"
   },
