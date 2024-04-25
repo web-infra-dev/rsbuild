@@ -9,6 +9,10 @@
       "{projectRoot}/package.json",
       "{projectRoot}/modern.config.*",
       "{projectRoot}/scripts/**/*"
+    ],
+    "prebundle": [
+      "{projectRoot}/package.json",
+      "{projectRoot}/prebundle.config.mjs"
     ]
   },
   "targetDefaults": {
@@ -16,6 +20,10 @@
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["build", "^build"]
+    },
+    "prebundle": {
+      "cache": true,
+      "inputs": ["prebundle"]
     }
   },
   "defaultBase": "main"
