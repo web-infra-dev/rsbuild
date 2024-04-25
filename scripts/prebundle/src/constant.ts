@@ -297,20 +297,6 @@ export const TASKS: TaskConfig[] = [
     ],
   },
   {
-    packageDir: 'plugin-babel',
-    packageName: '@rsbuild/plugin-babel',
-    dependencies: [
-      {
-        name: 'babel-loader',
-        ignoreDts: true,
-        externals: {
-          'schema-utils': './schema-utils',
-        },
-        afterBundle: writeEmptySchemaUtils,
-      },
-    ],
-  },
-  {
     packageDir: 'plugin-svgr',
     packageName: '@rsbuild/plugin-svgr',
     dependencies: [

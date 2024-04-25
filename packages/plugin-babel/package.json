@@ -24,7 +24,8 @@
   ],
   "scripts": {
     "build": "modern build",
-    "dev": "modern build --watch"
+    "dev": "modern build --watch",
+    "prebundle": "prebundle"
   },
   "dependencies": {
     "@babel/core": "^7.24.4",
@@ -39,6 +40,8 @@
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "18.x",
+    "babel-loader": "9.1.3",
+    "prebundle": "0.0.4",
     "typescript": "^5.4.2"
   },
   "peerDependencies": {
