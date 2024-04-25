@@ -17,23 +17,29 @@ Rsbuild 默认支持使用 CSS Modules，无需添加额外的配置。我们约
 
 - 编写样式：
 
-```css
-/* button.module.css */
-.error {
+```css title="button.module.css"
+.red {
   background: red;
 }
 ```
 
 - 使用样式：
 
-```tsx
-// Button.tsx
-import React, { Component } from 'react';
-// 引入样式文件
+```tsx title="Button.tsx"
 import styles from './button.module.css';
 
 export default () => {
-  return <button className={styles.error}>Error Button</button>;
+  return <button className={styles.red}>Button</button>;
+};
+```
+
+- 你也可以通过具名导入来引用类名：
+
+```tsx title="Button.tsx"
+import { red } from './button.module.css';
+
+export default () => {
+  return <button className={red}>Button</button>;
 };
 ```
 

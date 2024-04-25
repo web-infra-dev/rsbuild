@@ -17,23 +17,29 @@ The following style files are considered CSS Modules:
 
 - Write style:
 
-```css
-/* button.module.css */
-.error {
+```css title="button.module.css"
+.red {
   background: red;
 }
 ```
 
 - Using styles:
 
-```tsx
-// Button.tsx
-import React, { Component } from 'react';
-// import style file
+```tsx title="Button.tsx"
 import styles from './button.module.css';
 
 export default () => {
-  return <button className={styles.error}>Error Button</button>;
+  return <button className={styles.red}>Button</button>;
+};
+```
+
+- You can also reference class names through named imports:
+
+```tsx title="Button.tsx"
+import { red } from './button.module.css';
+
+export default () => {
+  return <button className={red}>Button</button>;
 };
 ```
 
