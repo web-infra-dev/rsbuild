@@ -36,46 +36,6 @@ const writeEmptySchemaUtils = (task: ParsedTask) => {
 
 export const TASKS: TaskConfig[] = [
   {
-    packageDir: 'core',
-    packageName: '@rsbuild/core',
-    dependencies: [
-      'open',
-      'commander',
-      'dotenv',
-      'dotenv-expand',
-      'ws',
-      'on-finished',
-      {
-        name: 'launch-editor-middleware',
-        ignoreDts: true,
-        externals: {
-          picocolors: '@rsbuild/shared/picocolors',
-        },
-      },
-      {
-        name: 'sirv',
-        afterBundle(task) {
-          replaceFileContent(
-            join(task.distPath, 'sirv.d.ts'),
-            (content) =>
-              `${content.replace(
-                "declare module 'sirv'",
-                'declare namespace sirv',
-              )}\nexport = sirv;`,
-          );
-        },
-      },
-      {
-        name: 'http-compression',
-        ignoreDts: true,
-      },
-      {
-        name: 'connect-history-api-fallback',
-        ignoreDts: true,
-      },
-    ],
-  },
-  {
     packageDir: 'shared',
     packageName: '@rsbuild/shared',
     dependencies: [

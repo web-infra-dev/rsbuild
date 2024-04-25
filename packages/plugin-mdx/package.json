@@ -27,8 +27,8 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@rsbuild/shared": "workspace:*",
-    "@mdx-js/loader": "^3.0.1"
+    "@mdx-js/loader": "^3.0.1",
+    "@rsbuild/shared": "workspace:*"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",

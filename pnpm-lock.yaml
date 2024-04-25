@@ -697,16 +697,55 @@ importers:
       postcss:
         specifier: ^8.4.38
         version: 8.4.38
+      prebundle:
+        specifier: 0.0.4
+        version: 0.0.4
     devDependencies:
       '@types/node':
         specifier: 18.x
         version: 18.19.31
+      '@types/on-finished':
+        specifier: 2.3.4
+        version: 2.3.4
+      '@types/ws':
+        specifier: ^8.5.10
+        version: 8.5.10
+      commander:
+        specifier: ^12.0.0
+        version: 12.0.0
+      connect-history-api-fallback:
+        specifier: ^2.0.0
+        version: 2.0.0
+      dotenv:
+        specifier: 16.4.5
+        version: 16.4.5
+      dotenv-expand:
+        specifier: 11.0.6
+        version: 11.0.6
+      http-compression:
+        specifier: 1.0.19
+        version: 1.0.19
+      launch-editor-middleware:
+        specifier: ^2.6.1
+        version: 2.6.1
+      on-finished:
+        specifier: 2.4.1
+        version: 2.4.1
+      open:
+        specifier: ^8.4.0
+        version: 8.4.2
+      sirv:
+        specifier: ^2.0.4
+        version: 2.0.4
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
       webpack:
         specifier: ^5.91.0
         version: 5.91.0
+      ws:
+        specifier: ^8.16.0
+        version: 8.16.0
 
   packages/create-rsbuild:
     devDependencies:
@@ -1548,9 +1587,6 @@ importers:
       '@types/node':
         specifier: 18.x
         version: 18.19.31
-      '@types/ws':
-        specifier: ^8.5.10
-        version: 8.5.10
       '@vercel/ncc':
         specifier: 0.38.1
         version: 0.38.1
@@ -1576,9 +1612,6 @@ importers:
       '@types/less':
         specifier: 3.0.6
         version: 3.0.6
-      '@types/on-finished':
-        specifier: 2.3.4
-        version: 2.3.4
       '@types/sass-loader':
         specifier: 8.0.8
         version: 8.0.8
@@ -1594,36 +1627,21 @@ importers:
       chokidar:
         specifier: 3.6.0
         version: 3.6.0
-      commander:
-        specifier: ^12.0.0
-        version: 12.0.0
       connect:
         specifier: 3.7.0
         version: 3.7.0
-      connect-history-api-fallback:
-        specifier: ^2.0.0
-        version: 2.0.0
       css-loader:
         specifier: 7.1.1
         version: 7.1.1(@rspack/core@0.6.3(@swc/helpers@0.5.3))(webpack@5.91.0)
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
-      dotenv:
-        specifier: 16.4.5
-        version: 16.4.5
-      dotenv-expand:
-        specifier: 11.0.6
-        version: 11.0.6
       fs-extra:
         specifier: ^11.2.0
         version: 11.2.0
       gzip-size:
         specifier: ^6.0.0
         version: 6.0.0
-      http-compression:
-        specifier: 1.0.19
-        version: 1.0.19
       http-proxy-middleware:
         specifier: ^2.0.6
         version: 2.0.6
@@ -1636,9 +1654,6 @@ importers:
       json5:
         specifier: ^2.2.3
         version: 2.2.3
-      launch-editor-middleware:
-        specifier: ^2.6.1
-        version: 2.6.1
       less:
         specifier: 4.2.0
         version: 4.2.0
@@ -1654,12 +1669,6 @@ importers:
       mime-types:
         specifier: ^2.1.35
         version: 2.1.35
-      on-finished:
-        specifier: 2.4.1
-        version: 2.4.1
-      open:
-        specifier: ^8.4.0
-        version: 8.4.2
       picocolors:
         specifier: 1.0.0
         version: 1.0.0
@@ -1699,9 +1708,6 @@ importers:
       semver:
         specifier: ^7.6.0
         version: 7.6.0
-      sirv:
-        specifier: ^2.0.4
-        version: 2.0.4
       style-loader:
         specifier: 3.3.4
         version: 3.3.4(webpack@5.91.0)
@@ -1717,9 +1723,6 @@ importers:
       webpack-merge:
         specifier: 5.10.0
         version: 5.10.0
-      ws:
-        specifier: ^8.16.0
-        version: 8.16.0
       yaml:
         specifier: ^2.4.1
         version: 2.4.1
