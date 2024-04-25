@@ -10,6 +10,7 @@
   },
   "scripts": {
     "build": "cross-env NX_DAEMON=false nx run-many -t build --exclude @examples/* @e2e/* rsbuild-* --parallel=10",
+    "prebundle": "nx run-many -t prebundle",
     "change": "changeset",
     "changeset": "changeset",
     "check-changeset": "cd ./scripts/check-changeset && pnpm start",
