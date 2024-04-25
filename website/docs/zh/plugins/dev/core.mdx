@@ -224,6 +224,7 @@ descriptor 参数是一个对象，用于描述模块的匹配条件。
 ```ts
 type TransformDescriptor = {
   test?: RuleSetCondition;
+  targets?: RsbuildTarget[];
   resourceQuery?: RuleSetCondition;
 };
 ```
@@ -234,6 +235,14 @@ descriptor 参数支持设置以下匹配条件：
 
 ```js
 api.transform({ test: /\.pug$/ }, ({ code }) => {
+  // ...
+});
+```
+
+- `targets`：匹配 Rsbuild [output.targets](/config/output/targets)，仅对匹配的 targets 应用当前 transform 函数。
+
+```js
+api.transform({ test: /\.pug$/, targets: ['web'] }, ({ code }) => {
   // ...
 });
 ```

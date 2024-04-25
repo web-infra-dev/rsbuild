@@ -112,7 +112,11 @@ export function getPluginAPI({
 
     transformer[id] = handler;
 
-    hooks.modifyBundlerChain.tap((chain) => {
+    hooks.modifyBundlerChain.tap((chain, { target }) => {
+      if (descriptor.targets && !descriptor.targets.includes(target)) {
+        return;
+      }
+
       const rule = chain.module.rule(id);
 
       if (descriptor.test) {

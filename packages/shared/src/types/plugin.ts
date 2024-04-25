@@ -28,6 +28,7 @@ import type {
   OnDevCompileDoneFn,
   OnExitFn,
 } from './hooks';
+import type { RsbuildTarget } from './rsbuild';
 import type { RspackConfig, RspackSourceMap } from './rspack';
 import type { Falsy, WebpackChain } from './utils';
 import type { MaybePromise } from './utils';
@@ -203,6 +204,11 @@ export type TransformDescriptor = {
    * @see https://rspack.dev/config/module#ruleresourcequery
    */
   resourceQuery?: RuleSetCondition;
+  /**
+   * Match based on the Rsbuild targets and only apply the transform to certain targets.
+   * @see https://rsbuild.dev/config/output/targets
+   */
+  targets?: RsbuildTarget[];
 };
 
 export type TransformFn = (
