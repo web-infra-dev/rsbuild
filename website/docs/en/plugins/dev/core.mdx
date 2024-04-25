@@ -257,6 +257,14 @@ api.transform({ resourceQuery: /raw/ }, ({ code }) => {
 });
 ```
 
+- `raw`: if raw is `true`, the transform handler will receive the Buffer type code instead of the string type.
+
+```js
+api.transform({ test: /\.node$/, raw: true }, ({ code }) => {
+  // ...
+});
+```
+
 ### Handler Param
 
 The handler param is a transformation function that takes the current module code and returns the transformed code.

@@ -226,6 +226,7 @@ type TransformDescriptor = {
   test?: RuleSetCondition;
   targets?: RsbuildTarget[];
   resourceQuery?: RuleSetCondition;
+  raw?: boolean;
 };
 ```
 
@@ -251,6 +252,14 @@ api.transform({ test: /\.pug$/, targets: ['web'] }, ({ code }) => {
 
 ```js
 api.transform({ resourceQuery: /raw/ }, ({ code }) => {
+  // ...
+});
+```
+
+- `raw`：如果 `raw` 为 `true`，则 transform 函数将接收到 Buffer 类型的代码，而不是 string 类型。
+
+```js
+api.transform({ test: /\.node$/, raw: true }, ({ code }) => {
   // ...
 });
 ```
