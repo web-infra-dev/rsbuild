@@ -1,10 +1,8 @@
 import path from 'node:path';
+import { type Rspack, rspack } from '@rsbuild/core';
 import { fse, pick } from '@rsbuild/shared';
-import { Rspack } from '@rsbuild/shared/rspack';
 import serialize from 'serialize-javascript';
 import type { PluginAssetsRetryOptions, RuntimeRetryOptions } from './types';
-
-const { RuntimeGlobals } = Rspack;
 
 // https://github.com/web-infra-dev/rspack/pull/5370
 function appendWebpackScript(module: any, appendSource: string) {
@@ -48,6 +46,7 @@ class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
   }
 
   getRawRuntimeRetryCode() {
+    const { RuntimeGlobals } = rspack;
     const filename = 'asyncChunkRetry';
     const minify =
       this.options?.minify ?? process.env.NODE_ENV === 'production';

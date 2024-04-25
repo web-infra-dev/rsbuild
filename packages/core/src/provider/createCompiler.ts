@@ -14,6 +14,7 @@ import {
   onCompileDone,
   prettyTime,
 } from '@rsbuild/shared';
+import { rspack } from '@rspack/core';
 import type { StatsCompilation } from '@rspack/core';
 import type { InternalContext } from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
@@ -35,8 +36,6 @@ export async function createCompiler({
   await context.hooks.onBeforeCreateCompiler.call({
     bundlerConfigs: rspackConfigs,
   });
-
-  const { rspack } = await import('@rspack/core');
 
   if (!(await isSatisfyRspackVersion(rspack.rspackVersion))) {
     throw new Error(
@@ -119,13 +118,11 @@ export async function createCompiler({
     isFirstCompile = false;
   };
 
-  const { MultiStats: MultiStatsStor } = await import('@rspack/core');
-
   onCompileDone(
     compiler,
     done,
     // @ts-expect-error type mismatch
-    MultiStatsStor,
+    rspack.MultiStats,
   );
 
   await context.hooks.onAfterCreateCompiler.call({ compiler });

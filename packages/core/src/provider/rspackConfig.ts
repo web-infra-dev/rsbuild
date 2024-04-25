@@ -11,6 +11,7 @@ import {
   mergeChainedOptions,
   modifyBundlerChain,
 } from '@rsbuild/shared';
+import { rspack } from '@rspack/core';
 import { getHTMLPlugin } from '../htmlUtils';
 import type { InternalContext } from '../types';
 import { getCompiledPath } from './shared';
@@ -44,7 +45,6 @@ async function getConfigUtils(
   chainUtils: ModifyChainUtils,
 ): Promise<ModifyRspackConfigUtils> {
   const { merge } = await import('@rsbuild/shared/webpack-merge');
-  const rspack = await import('@rspack/core');
 
   return {
     ...chainUtils,
@@ -121,7 +121,7 @@ export async function generateRspackConfig({
     IgnorePlugin,
     ProvidePlugin,
     HotModuleReplacementPlugin,
-  } = await import('@rspack/core');
+  } = rspack;
 
   const chain = await modifyBundlerChain(context, {
     ...chainUtils,
