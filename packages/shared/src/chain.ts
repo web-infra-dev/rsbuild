@@ -100,8 +100,6 @@ export const CHAIN_ID = {
     YAML: 'yaml',
     /** Rule for wasm */
     WASM: 'wasm',
-    /** Rule for node */
-    NODE: 'node',
     /** Rule for svelte */
     SVELTE: 'svelte',
   },
@@ -139,8 +137,6 @@ export const CHAIN_ID = {
     SVGO: 'svgo',
     /** yaml-loader */
     YAML: 'yaml',
-    /** node-loader */
-    NODE: 'node',
     /** babel-loader */
     BABEL: 'babel',
     /** style-loader */

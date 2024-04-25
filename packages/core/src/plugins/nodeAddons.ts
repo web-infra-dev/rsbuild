@@ -1,20 +1,47 @@
-import { join } from 'node:path';
+import path from 'node:path';
 import type { RsbuildPlugin } from '../types';
+
+const getFilename = (resourcePath: string) => {
+  let basename = '';
+
+  if (resourcePath) {
+    const parsed = path.parse(resourcePath);
+    if (parsed.dir) {
+      basename = parsed.name;
+    }
+  }
+
+  if (basename) {
+    return `${basename}.node`;
+  }
+
+  return null;
+};
 
 export const pluginNodeAddons = (): RsbuildPlugin => ({
   name: 'rsbuild:node-addons',
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { isServer, CHAIN_ID }) => {
-      if (!isServer) {
-        return;
-      }
+    api.transform(
+      { test: /\.node$/, targets: ['node'], raw: true },
+      ({ code, emitFile, resourcePath }) => {
+        const name = getFilename(resourcePath);
 
-      chain.module
-        .rule(CHAIN_ID.RULE.NODE)
-        .test(/\.node$/)
-        .use(CHAIN_ID.USE.NODE)
-        .loader(join(__dirname, '../rspack/nodeAddonsLoader'));
-    });
+        if (name === null) {
+          throw new Error(`Failed to load Node.js addon: "${resourcePath}"`);
+        }
+
+        emitFile(name, code);
+
+        return `
+try {
+const path = require("path");
+process.dlopen(module, path.join(__dirname, "${name}"));
+} catch (error) {
+throw new Error('Failed to load Node.js addon: "${name}"\\n' + error);
+}
+`;
+      },
+    );
   },
 });
