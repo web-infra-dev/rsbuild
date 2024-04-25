@@ -126,10 +126,12 @@ export function getPluginAPI({
         rule.resourceQuery(descriptor.resourceQuery);
       }
 
-      rule
-        .use(id)
-        .loader(join(__dirname, './rspack/transformLoader'))
-        .options({ id });
+      const loaderName = descriptor.raw
+        ? 'transformRawLoader'
+        : 'transformLoader';
+      const loaderPath = join(__dirname, `./rspack/${loaderName}`);
+
+      rule.use(id).loader(loaderPath).options({ id });
 
       applyTransformPlugin(chain, transformer);
     });
