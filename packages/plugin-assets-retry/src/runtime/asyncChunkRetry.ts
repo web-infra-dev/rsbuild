@@ -147,9 +147,23 @@ function ensureChunk(chunkId: string): Promise<unknown> {
     const { existRetryTimes, originalSrcUrl, nextRetryUrl, nextDomain } =
       nextRetry(chunkId);
 
+    const context: AssetsRetryHookContext = {
+      times: existRetryTimes,
+      domain: nextDomain,
+      url: nextRetryUrl,
+      tagName: 'script',
+    };
+
+    const reject = () => {
+      if (typeof config.onFail === 'function') {
+        config.onFail(context);
+      }
+      throw error;
+    };
+
     if (existRetryTimes > maxRetries) {
       error.message = `Loading chunk ${chunkId} from ${originalSrcUrl} failed after ${maxRetries} retries.`;
-      throw error;
+      reject();
     }
 
     // Filter by config.test and config.domain
@@ -161,7 +175,7 @@ function ensureChunk(chunkId: string): Promise<unknown> {
       }
 
       if (typeof tester !== 'function' || !tester(nextRetryUrl)) {
-        throw error;
+        reject();
       }
     }
 
@@ -170,15 +184,8 @@ function ensureChunk(chunkId: string): Promise<unknown> {
       config.domain.length > 0 &&
       config.domain.indexOf(nextDomain) === -1
     ) {
-      throw error;
+      reject();
     }
-
-    const context: AssetsRetryHookContext = {
-      times: existRetryTimes,
-      domain: nextDomain,
-      url: nextRetryUrl,
-      tagName: 'script',
-    };
 
     if (config.onRetry && typeof config.onRetry === 'function') {
       config.onRetry(context);
@@ -198,9 +205,6 @@ function ensureChunk(chunkId: string): Promise<unknown> {
         return result;
       })
       .catch((error) => {
-        if (typeof config.onFail === 'function') {
-          config.onFail(context);
-        }
         throw error;
       });
   });
