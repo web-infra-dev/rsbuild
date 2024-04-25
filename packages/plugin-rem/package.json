@@ -36,8 +36,8 @@
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.6.2",
-    "prebundle": "0.0.4",
     "postcss-pxtorem": "6.1.0",
+    "prebundle": "0.0.4",
     "typescript": "^5.4.2"
   },
   "peerDependencies": {
