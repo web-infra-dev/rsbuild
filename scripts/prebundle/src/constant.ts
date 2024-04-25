@@ -296,38 +296,4 @@ export const TASKS: TaskConfig[] = [
       },
     ],
   },
-  {
-    packageDir: 'plugin-svgr',
-    packageName: '@rsbuild/plugin-svgr',
-    dependencies: [
-      {
-        name: 'file-loader',
-        ignoreDts: true,
-        externals: {
-          'schema-utils': './schema-utils',
-          'loader-utils': '@rsbuild/shared/loader-utils2',
-        },
-        afterBundle: writeEmptySchemaUtils,
-      },
-      {
-        name: 'url-loader',
-        ignoreDts: true,
-        externals: {
-          'schema-utils': './schema-utils',
-          'loader-utils': '@rsbuild/shared/loader-utils2',
-          'mime-types': '@rsbuild/shared/mime-types',
-        },
-        afterBundle(task) {
-          writeEmptySchemaUtils(task);
-          replaceFileContent(join(task.distPath, 'index.js'), (content) => {
-            // use prebundle file-loader
-            return content.replace(
-              '"file-loader"',
-              'require.resolve("../file-loader")',
-            );
-          });
-        },
-      },
-    ],
-  },
 ];

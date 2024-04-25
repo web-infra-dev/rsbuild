@@ -1,5 +1,5 @@
-import { writeFileSync } from 'node:fs';
 // @ts-check
+import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 // The package size of `schema-utils` is large, and validate has a performance overhead of tens of ms.

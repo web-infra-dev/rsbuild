@@ -1304,9 +1304,18 @@ importers:
       '@types/node':
         specifier: 18.x
         version: 18.19.31
+      file-loader:
+        specifier: 6.2.0
+        version: 6.2.0(webpack@5.91.0)
+      prebundle:
+        specifier: 0.0.4
+        version: 0.0.4
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
+      url-loader:
+        specifier: 4.1.1
+        version: 4.1.1(file-loader@6.2.0(webpack@5.91.0))(webpack@5.91.0)
 
   packages/plugin-toml:
     dependencies:
@@ -1606,9 +1615,6 @@ importers:
       dotenv-expand:
         specifier: 11.0.6
         version: 11.0.6
-      file-loader:
-        specifier: 6.2.0
-        version: 6.2.0(webpack@5.91.0)
       fs-extra:
         specifier: ^11.2.0
         version: 11.2.0
@@ -1699,9 +1705,6 @@ importers:
       style-loader:
         specifier: 3.3.4
         version: 3.3.4(webpack@5.91.0)
-      url-loader:
-        specifier: 4.1.1
-        version: 4.1.1(file-loader@6.2.0(webpack@5.91.0))(webpack@5.91.0)
       webpack-bundle-analyzer:
         specifier: ^4.10.1
         version: 4.10.2

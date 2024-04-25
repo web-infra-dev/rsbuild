@@ -24,7 +24,8 @@
   ],
   "scripts": {
     "build": "modern build",
-    "dev": "modern build --watch"
+    "dev": "modern build --watch",
+    "prebundle": "prebundle"
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
@@ -37,7 +38,10 @@
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "18.x",
-    "typescript": "^5.4.2"
+    "file-loader": "6.2.0",
+    "prebundle": "0.0.4",
+    "typescript": "^5.4.2",
+    "url-loader": "4.1.1"
   },
   "peerDependencies": {
     "@rsbuild/core": "workspace:^0.6.6"
