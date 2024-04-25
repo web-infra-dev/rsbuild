@@ -116,6 +116,7 @@ export class CompilerDevMiddleware {
       callbacks,
       clientPaths: clientPaths,
       clientConfig: devConfig.client,
+      liveReload: devConfig.liveReload,
       writeToDisk: devConfig.writeToDisk,
       serverSideRender: true,
       // weak is enough in dev

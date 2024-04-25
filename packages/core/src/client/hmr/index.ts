@@ -14,6 +14,7 @@ const options: ClientConfig = RSBUILD_CLIENT_CONFIG;
 const socketUrl = createSocketUrl(options);
 
 const enableOverlay = !!options.overlay;
+const enableLiveReload = RSBUILD_DEV_LIVE_RELOAD;
 
 // Remember some state related to hot module replacement.
 let isFirstCompilation = true;
@@ -145,7 +146,7 @@ function tryApplyUpdates() {
 
   if (!import.meta.webpackHot) {
     // HotModuleReplacementPlugin is not in Rspack configuration.
-    window.location.reload();
+    reloadPage();
     return;
   }
 
@@ -167,7 +168,7 @@ function tryApplyUpdates() {
         console.error('[HMR] Forced reload caused by: ', err);
       }
 
-      window.location.reload();
+      reloadPage();
       return;
     }
 
@@ -213,11 +214,11 @@ function onMessage(e: MessageEvent<string>) {
       handleSuccess();
       break;
     case 'static-changed':
-      window.location.reload();
+      reloadPage();
       break;
     case 'content-changed':
       // Triggered when a file from `contentBase` changed.
-      window.location.reload();
+      reloadPage();
       break;
     case 'warnings':
       handleWarnings(message.data);
@@ -297,6 +298,12 @@ function reconnect() {
     connection = null;
   }
   connect();
+}
+
+function reloadPage() {
+  if (enableLiveReload) {
+    window.location.reload();
+  }
 }
 
 connect();

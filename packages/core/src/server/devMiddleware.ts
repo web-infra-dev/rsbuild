@@ -12,10 +12,12 @@ function applyHMREntry({
   compiler,
   clientPaths,
   clientConfig = {},
+  liveReload = true,
 }: {
   compiler: Compiler;
   clientPaths: string[];
   clientConfig: DevConfig['client'];
+  liveReload: DevConfig['liveReload'];
 }) {
   if (!isClientCompiler(compiler)) {
     return;
@@ -23,6 +25,7 @@ function applyHMREntry({
 
   new compiler.webpack.DefinePlugin({
     RSBUILD_CLIENT_CONFIG: JSON.stringify(clientConfig),
+    RSBUILD_DEV_LIVE_RELOAD: liveReload,
   }).apply(compiler);
 
   for (const clientPath of clientPaths) {
@@ -35,7 +38,8 @@ function applyHMREntry({
 export const getDevMiddleware =
   (multiCompiler: Compiler | MultiCompiler): NonNullable<DevMiddleware> =>
   (options) => {
-    const { clientPaths, clientConfig, callbacks, ...restOptions } = options;
+    const { clientPaths, clientConfig, callbacks, liveReload, ...restOptions } =
+      options;
 
     const setupCompiler = (compiler: Compiler) => {
       if (clientPaths) {
@@ -43,6 +47,7 @@ export const getDevMiddleware =
           compiler,
           clientPaths,
           clientConfig,
+          liveReload,
         });
       }
       // register hooks for each compilation, update socket stats if recompiled

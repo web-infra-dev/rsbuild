@@ -32,6 +32,9 @@ export type DevMiddlewareOptions = {
   clientConfig: DevConfig['client'];
   publicPath?: string;
 
+  /** When liveReload is disabled, the page does not reload. */
+  liveReload?: boolean;
+
   etag?: 'weak' | 'strong';
 
   /** The options need by compiler middleware (like webpackMiddleware) */
