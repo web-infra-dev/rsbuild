@@ -2,6 +2,7 @@ import inspector from 'node:inspector';
 import path from 'node:path';
 import { fse } from '@rsbuild/shared';
 import { logger } from '@rsbuild/shared';
+import { rspack } from '@rspack/core';
 import type { RsbuildPlugin } from '../../types';
 
 export const stopProfiler = (
@@ -11,6 +12,7 @@ export const stopProfiler = (
   if (!profileSession) {
     return;
   }
+
   profileSession.post('Profiler.stop', (error, param) => {
     if (error) {
       logger.error('Failed to generate JS CPU profile:', error);
@@ -35,11 +37,6 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
     if (!RSPACK_PROFILE) {
       return;
     }
-
-    const {
-      experimental_registerGlobalTrace: registerGlobalTrace,
-      experimental_cleanupGlobalTrace: cleanupGlobalTrace,
-    } = await import('@rspack/core');
 
     const timestamp = Date.now();
     const profileDir = path.join(
@@ -66,7 +63,11 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
       fse.ensureDirSync(profileDir);
 
       if (enableProfileTrace) {
-        registerGlobalTrace('trace', 'chrome', traceFilePath);
+        rspack.experimental_registerGlobalTrace(
+          'trace',
+          'chrome',
+          traceFilePath,
+        );
       }
 
       if (enableCPUProfile) {
@@ -92,7 +93,9 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
     });
 
     api.onExit(() => {
-      enableProfileTrace && cleanupGlobalTrace();
+      if (enableProfileTrace) {
+        rspack.experimental_cleanupGlobalTrace();
+      }
 
       stopProfiler(cpuProfilePath, profileSession);
 

@@ -7,6 +7,7 @@ import type {
   RspackMultiCompiler,
   Stats,
 } from '@rsbuild/shared';
+import { rspack } from '@rspack/core';
 import { createCompiler } from './createCompiler';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
@@ -45,13 +46,11 @@ export const build = async (
     await p;
   };
 
-  const { MultiStats: MultiStatsStor } = await import('@rspack/core');
-
   onCompileDone(
     compiler,
     onDone,
     // @ts-expect-error type mismatch
-    MultiStatsStor,
+    rspack.MultiStats,
   );
 
   if (watch) {

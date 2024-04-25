@@ -207,7 +207,7 @@ type ModifyRspackConfigUtils = {
   target: RsbuildTarget;
   isServer: boolean;
   isWebWorker: boolean;
-  rspack: typeof import('@rspack/core');
+  rspack: Rspack;
 };
 
 function ModifyRspackConfig(

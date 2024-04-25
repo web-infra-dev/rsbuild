@@ -308,6 +308,24 @@ logger.override({
 logger.info('hello'); // [info] hello
 ```
 
+## rspack
+
+The `rspack` object exported from `@rspack/core`.
+
+You can import to the `rspack` object from `@rsbuild/core` without the need to install the `@rspack/core` dependency.
+
+- **Type:** `Rspack`
+- **Example:**
+
+```ts
+import { rspack } from '@rsbuild/core';
+
+console.log(rspack.rspackVersion); // 1.0.0
+console.log(rspack.util.createHash);
+```
+
+> Please refer to [Rspack - Node API](https://rspack.dev/api/node-api) for more information.
+
 ## version
 
 The version of `@rsbuild/core` currently in use.

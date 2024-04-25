@@ -1,5 +1,6 @@
 import { posix } from 'node:path';
 import { applyOutputPlugin, getDistPath, getFilename } from '@rsbuild/shared';
+import { rspack } from '@rspack/core';
 import type { RsbuildPlugin } from '../../types';
 
 export const pluginOutput = (): RsbuildPlugin => ({
@@ -12,11 +13,12 @@ export const pluginOutput = (): RsbuildPlugin => ({
       const config = api.getNormalizedConfig();
 
       if (config.output.copy) {
-        const { CopyRspackPlugin } = await import('@rspack/core');
         const { copy } = config.output;
         const options = Array.isArray(copy) ? { patterns: copy } : copy;
 
-        chain.plugin(CHAIN_ID.PLUGIN.COPY).use(CopyRspackPlugin, [options]);
+        chain
+          .plugin(CHAIN_ID.PLUGIN.COPY)
+          .use(rspack.CopyRspackPlugin, [options]);
       }
     });
 

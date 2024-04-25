@@ -3,6 +3,7 @@ import {
   DEFAULT_ASSET_PREFIX,
   type RspackCompiler,
 } from '@rsbuild/shared';
+import { rspack } from '@rspack/core';
 import type { RspackPluginInstance } from '@rspack/core';
 import type { RsbuildPlugin } from '../types';
 
@@ -120,7 +121,6 @@ export function pluginModuleFederation(): RsbuildPlugin {
         }
 
         const { options } = config.moduleFederation;
-        const { rspack } = await import('@rspack/core');
 
         chain
           .plugin(CHAIN_ID.PLUGIN.MODULE_FEDERATION)
