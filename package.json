@@ -40,29 +40,29 @@
     "package.json": "pnpm run check-dependency-version"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.7.0",
+    "@biomejs/biome": "1.7.1",
     "@changesets/cli": "^2.27.1",
-    "@modern-js/module-tools": "^2.48.4",
+    "@modern-js/module-tools": "^2.49.1",
     "@rsbuild/tsconfig": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "check-dependency-version-consistency": "^4.1.0",
     "cross-env": "^7.0.3",
     "cspell-ban-words": "^0.0.3",
     "nano-staged": "^0.8.0",
-    "nx": "^18.2.3",
+    "nx": "^18.3.3",
     "prettier": "^3.2.5",
     "simple-git-hooks": "^2.11.1",
-    "vitest": "^1.4.0"
+    "vitest": "^1.5.2"
   },
-  "packageManager": "pnpm@9.0.2",
+  "packageManager": "pnpm@9.0.6",
   "engines": {
     "node": ">=18.0.0",
-    "pnpm": ">=9.0.0"
+    "pnpm": ">=9.0.6"
   },
   "pnpm": {
     "overrides": {
       "esbuild": "~0.19.0",
-      "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@1.0.24",
+      "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@1.0.28",
       "@rsbuild/core": "link:packages/core",
       "@rsbuild/plugin-react": "link:packages/plugin-react"
     },
