@@ -1,9 +1,6 @@
-// rsbuild/initial-chunk/retry
+// rsbuild/runtime/initial-chunk-retry
 import type { CrossOrigin } from '@rsbuild/shared';
-import type {
-  AssetsRetryHookContext,
-  PluginAssetsRetryOptions,
-} from '../types';
+import type { AssetsRetryHookContext, RuntimeRetryOptions } from '../types';
 
 interface ScriptElementAttributes {
   url: string;
@@ -18,6 +15,11 @@ const TAG_TYPE: { [propName: string]: new () => HTMLElement } = {
   img: HTMLImageElement,
 };
 const TYPES = Object.keys(TAG_TYPE);
+
+declare global {
+  // global variables shared with async chunk
+  var __ASYNC_CHUNK_FILENAME_LIST__: Record<string, boolean>;
+}
 
 function findCurrentDomain(url: string, domainList: string[]) {
   let domain = '';
@@ -49,7 +51,7 @@ function getRequestUrl(element: HTMLElement) {
   return null;
 }
 
-const defaultConfig: PluginAssetsRetryOptions = {
+const defaultConfig: RuntimeRetryOptions = {
   max: 3,
   type: TYPES,
   domain: [],
@@ -57,7 +59,7 @@ const defaultConfig: PluginAssetsRetryOptions = {
 };
 
 function validateTargetInfo(
-  config: PluginAssetsRetryOptions,
+  config: RuntimeRetryOptions,
   e: Event,
 ): { target: HTMLElement; tagName: string; url: string } | false {
   const target: HTMLElement = e.target as HTMLElement;
@@ -158,12 +160,26 @@ function reloadElementResource(
   }
 }
 
-function retry(config: PluginAssetsRetryOptions, e: Event) {
+function retry(config: RuntimeRetryOptions, e: Event) {
   const targetInfo = validateTargetInfo(config, e);
   if (targetInfo === false) {
     return;
   }
+
   const { target, tagName, url } = targetInfo;
+
+  // If the requested failed chunk is async chunk，skip it, because async chunk will be retried by asyncChunkRetry runtime
+  if (
+    typeof window !== 'undefined' &&
+    Object.keys(window.__ASYNC_CHUNK_FILENAME_LIST__ || {}).some(
+      (chunkName) => {
+        return url.indexOf(chunkName) !== -1;
+      },
+    )
+  ) {
+    return;
+  }
+
   // Filter by config.test and config.domain
   let tester = config.test;
   if (tester) {
@@ -216,6 +232,7 @@ function retry(config: PluginAssetsRetryOptions, e: Event) {
     crossOrigin: config.crossOrigin,
     isAsync,
   };
+
   const element = createElement(target, attributes)!;
 
   if (config.onRetry && typeof config.onRetry === 'function') {
@@ -231,7 +248,7 @@ function retry(config: PluginAssetsRetryOptions, e: Event) {
   reloadElementResource(target, element, attributes);
 }
 
-function load(config: PluginAssetsRetryOptions, e: Event) {
+function load(config: RuntimeRetryOptions, e: Event) {
   const targetInfo = validateTargetInfo(config, e);
   if (targetInfo === false) {
     return;
@@ -281,8 +298,8 @@ function resourceMonitor(
 }
 
 // @ts-expect-error init is a global function, ignore ts(6133)
-function init(options: PluginAssetsRetryOptions) {
-  const config: PluginAssetsRetryOptions = {};
+function init(options: RuntimeRetryOptions) {
+  const config: RuntimeRetryOptions = {};
 
   for (const key in defaultConfig) {
     // @ts-ignore
@@ -306,6 +323,10 @@ function init(options: PluginAssetsRetryOptions) {
     config.domain = config.domain.filter(Boolean);
   }
 
+  // init global variables shared with async chunk
+  if (typeof window !== 'undefined' && !window.__ASYNC_CHUNK_FILENAME_LIST__) {
+    window.__ASYNC_CHUNK_FILENAME_LIST__ = {};
+  }
   // Bind event in window
   try {
     resourceMonitor(

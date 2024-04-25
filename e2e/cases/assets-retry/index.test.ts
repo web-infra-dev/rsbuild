@@ -101,3 +101,78 @@ test('@rsbuild/plugin-assets-retry should work with minified runtime code when b
   restore();
   delete process.env.DEBUG;
 });
+
+test('@rsbuild/plugin-assets-retry should work when blocking async chunk`', async ({
+  page,
+}) => {
+  process.env.DEBUG = 'rsbuild';
+  const { logs, restore } = proxyConsole();
+  const blockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/js/async/src_AsyncCompTest_tsx.js',
+  });
+  const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {});
+
+  await gotoPage(page, rsbuild);
+  const compTestElement = page.locator('#async-comp-test');
+  await expect(compTestElement).toHaveText('Hello AsyncCompTest');
+  const blockedResponseCount = count404Response(
+    logs,
+    '/static/js/async/src_AsyncCompTest_tsx.js',
+  );
+  expect(blockedResponseCount).toBe(3);
+  await rsbuild.close();
+  restore();
+  delete process.env.DEBUG;
+});
+
+test('@rsbuild/plugin-assets-retry should work with minified runtime code when blocking async chunk`', async ({
+  page,
+}) => {
+  process.env.DEBUG = 'rsbuild';
+  const { logs, restore } = proxyConsole();
+  const blockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/js/async/src_AsyncCompTest_tsx.js',
+  });
+  const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {
+    minify: true,
+  });
+
+  await gotoPage(page, rsbuild);
+  const compTestElement = page.locator('#async-comp-test');
+  await expect(compTestElement).toHaveText('Hello AsyncCompTest');
+  const blockedResponseCount = count404Response(
+    logs,
+    '/static/js/async/src_AsyncCompTest_tsx.js',
+  );
+  expect(blockedResponseCount).toBe(3);
+  await rsbuild.close();
+  restore();
+  delete process.env.DEBUG;
+});
+
+test('@rsbuild/plugin-assets-retry should catch error by react ErrorBoundary when all retries failed`', async ({
+  page,
+}) => {
+  process.env.DEBUG = 'rsbuild';
+  const { logs, restore } = proxyConsole();
+  const blockedMiddleware = createBlockMiddleware({
+    blockNum: 100,
+    urlPrefix: '/static/js/async/src_AsyncCompTest_tsx.js',
+  });
+  const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {});
+
+  await gotoPage(page, rsbuild);
+  const compTestElement = page.locator('#async-comp-test-error');
+  await expect(compTestElement).toHaveText(
+    'ChunkLoadError: Loading chunk src_AsyncCompTest_tsx from /static/js/async/src_AsyncCompTest_tsx.js failed after 3 retries.',
+  );
+  const blockedResponseCount = count404Response(logs, '/static/js/async');
+  // 1 first request failed
+  // 2 3 4 retried again three times and failed all of them
+  expect(blockedResponseCount).toBe(4);
+  await rsbuild.close();
+  restore();
+  delete process.env.DEBUG;
+});

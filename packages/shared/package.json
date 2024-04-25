@@ -15,6 +15,10 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./rspack": {
+      "types": "./dist/rspack.d.ts",
+      "default": "./dist/rspack.js"
+    },
     "./jiti": {
       "types": "./compiled/jiti/types/jiti.d.ts",
       "default": "./compiled/jiti/index.js"

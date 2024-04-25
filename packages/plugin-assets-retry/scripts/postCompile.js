@@ -1,14 +1,24 @@
 const path = require('node:path');
-const { readFile, writeFile } = require('node:fs/promises');
+const { readFile, writeFile, mkdir } = require('node:fs/promises');
 const { transformAsync } = require('@babel/core');
 const { performance } = require('node:perf_hooks');
 
-async function compileRetryRuntime() {
+/**
+ * transform ../src/runtime/${filename}.ts
+ *  to ../dist/runtime/${filename}.js
+ * and ../dist/runtime/${filename}.min.js
+ * @param {string} filename
+ */
+async function compileRuntimeFile(filename) {
+  const sourceFilePath = path.join(__dirname, `../src/runtime/${filename}.ts`);
+
   const { minify } = await import('terser');
-  const source = path.join(__dirname, '../src/runtime/index.ts');
-  const runtimeCode = await readFile(source, 'utf8');
-  const distPath = path.join(__dirname, '../dist/runtime.js');
-  const distMinPath = path.join(__dirname, '../dist/runtime.min.js');
+  const runtimeCode = await readFile(sourceFilePath, 'utf8');
+  const distPath = path.join(__dirname, `../dist/runtime/${filename}.js`);
+  const distMinPath = path.join(
+    __dirname,
+    `../dist/runtime/${filename}.min.js`,
+  );
   const { code } = await transformAsync(runtimeCode, {
     presets: [
       '@babel/preset-typescript',
@@ -20,7 +30,7 @@ async function compileRetryRuntime() {
         },
       ],
     ],
-    filename: source,
+    filename: sourceFilePath,
   });
   const { code: minifiedRuntimeCode } = await minify(
     {
@@ -38,7 +48,11 @@ async function compileRetryRuntime() {
 
 async function compile() {
   const startTime = performance.now();
-  await compileRetryRuntime();
+  await mkdir(path.join(__dirname, '../dist/runtime'));
+  await Promise.all([
+    compileRuntimeFile('initialChunkRetry'),
+    compileRuntimeFile('asyncChunkRetry'),
+  ]);
   console.log(
     `Compiled assets retry runtime code. Time cost: ${(
       performance.now() - startTime

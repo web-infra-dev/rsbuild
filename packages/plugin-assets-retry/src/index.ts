@@ -1,5 +1,6 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 import { getDistPath, isHtmlDisabled } from '@rsbuild/shared';
+import { AsyncChunkRetryPlugin } from './AsyncChunkRetryPlugin';
 import type { PluginAssetsRetryOptions } from './types';
 
 export type { PluginAssetsRetryOptions };
@@ -39,6 +40,11 @@ export const pluginAssetsRetry = (
           HtmlPlugin,
         },
       ]);
+
+      const isRspack = api.context.bundlerType === 'rspack';
+      chain
+        .plugin(CHAIN_ID.PLUGIN.ASYNC_CHUNK_RETRY)
+        .use(AsyncChunkRetryPlugin, [{ ...options, isRspack }]);
     });
   },
 });

@@ -212,6 +212,8 @@ export const CHAIN_ID = {
     SUBRESOURCE_INTEGRITY: 'subresource-integrity',
     /** AssetsRetryPlugin */
     ASSETS_RETRY: 'assets-retry',
+    /** AsyncChunkRetryPlugin */
+    ASYNC_CHUNK_RETRY: 'async-chunk-retry',
     /** AutoSetRootFontSizePlugin */
     AUTO_SET_ROOT_SIZE: 'auto-set-root-size',
     /** VueLoader15PitchFixPlugin */
