@@ -344,24 +344,4 @@ export const TASKS: TaskConfig[] = [
       },
     ],
   },
-  {
-    packageDir: 'plugin-yaml',
-    packageName: '@rsbuild/plugin-yaml',
-    dependencies: [
-      {
-        name: 'yaml-loader',
-        ignoreDts: true,
-      },
-    ],
-  },
-  {
-    packageDir: 'plugin-rem',
-    packageName: '@rsbuild/plugin-rem',
-    dependencies: [
-      {
-        name: 'postcss-pxtorem',
-        ignoreDts: true,
-      },
-    ],
-  },
 ];
