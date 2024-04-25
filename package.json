@@ -26,7 +26,7 @@
     "ut:watch": "vitest",
     "e2e": "cd ./e2e && pnpm test",
     "e2e:rspack": "cd ./e2e && pnpm test:rspack",
-    "e2e:webpack": "cd ./e2e && pnpm test:webpack1"
+    "e2e:webpack": "cd ./e2e && pnpm test:webpack"
   },
   "simple-git-hooks": {
     "pre-commit": "npx nano-staged"
