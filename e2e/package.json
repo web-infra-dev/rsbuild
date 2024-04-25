@@ -14,9 +14,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
-    "solid-js": "^1.8.16",
+    "solid-js": "^1.8.17",
     "vue": "^3.4.19",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.2"
   },
   "devDependencies": {
     "@e2e/helper": "workspace:*",
@@ -56,8 +56,8 @@
     "@scripts/test-helper": "workspace:*",
     "@types/lodash": "^4.17.0",
     "@types/node": "18.x",
-    "@types/react": "^18.2.75",
-    "@types/react-dom": "^18.2.24",
+    "@types/react": "^18.2.79",
+    "@types/react-dom": "^18.2.25",
     "fast-glob": "^3.3.2",
     "playwright": "1.43.1",
     "tailwindcss": "^3.4.3",
