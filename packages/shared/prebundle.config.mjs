@@ -23,12 +23,9 @@ export default {
     // External caniuse-lite data, so users can update it manually.
     'caniuse-lite': 'caniuse-lite',
     '/^caniuse-lite(/.*)/': 'caniuse-lite$1',
-    // External webpack, it's hard to bundle.
     webpack: 'webpack',
-    '/^webpack(/.*)/': 'webpack$1',
     postcss: 'postcss',
     typescript: 'typescript',
-    '@babel/core': '@babel/core',
   },
   dependencies: [
     'jiti',
