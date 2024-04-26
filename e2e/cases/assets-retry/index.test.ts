@@ -168,8 +168,8 @@ test('@rsbuild/plugin-assets-retry should catch error by react ErrorBoundary whe
 
   await gotoPage(page, rsbuild);
   const compTestElement = page.locator('#async-comp-test-error');
-  expect(await compTestElement.textContent()).toContain(
-    'ChunkLoadError: Loading chunk src_AsyncCompTest_tsx from /static/js/async/src_AsyncCompTest_tsx.js failed after 3 retries. The error message of the last retry is "Loading chunk src_AsyncCompTest_tsx failed',
+  await expect(compTestElement).toHaveText(
+    /ChunkLoadError: Loading chunk src_AsyncCompTest_tsx from \/static\/js\/async\/src_AsyncCompTest_tsx\.js failed after 3 retries\. The error message of the last retry is "Loading chunk src_AsyncCompTest_tsx failed.*/,
   );
   const blockedResponseCount = count404Response(
     logs,
@@ -293,8 +293,8 @@ test('@rsbuild/plugin-assets-retry onRetry and onFail options should work in fai
     if (msg.type() !== 'info') {
       return;
     }
-    const typeValue = await msg.args()[0].jsonValue();
-    const contextValue = await msg.args()[1].jsonValue();
+    const typeValue = await msg.args()?.[0].jsonValue();
+    const contextValue = await msg.args()?.[1].jsonValue();
 
     if (typeValue === 'onRetry') {
       onRetryContextList.push(contextValue);
@@ -307,8 +307,8 @@ test('@rsbuild/plugin-assets-retry onRetry and onFail options should work in fai
 
   await gotoPage(page, rsbuild);
   const compTestElement = page.locator('#async-comp-test-error');
-  expect(await compTestElement.textContent()).toContain(
-    'ChunkLoadError: Loading chunk src_AsyncCompTest_tsx from /static/js/async/src_AsyncCompTest_tsx.js failed after 3 retries. The error message of the last retry is "Loading chunk src_AsyncCompTest_tsx failed',
+  await expect(compTestElement).toHaveText(
+    /ChunkLoadError: Loading chunk src_AsyncCompTest_tsx from \/static\/js\/async\/src_AsyncCompTest_tsx\.js failed after 3 retries\. The error message of the last retry is "Loading chunk src_AsyncCompTest_tsx failed.*/,
   );
   expect({
     onRetryContextList,
