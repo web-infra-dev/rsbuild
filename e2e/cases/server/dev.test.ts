@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { dev, getRandomPort, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { fse } from '@rsbuild/shared';
@@ -101,6 +101,7 @@ rspackOnlyTest(
       join(fixtures, 'hmr/test-temp-src-1'),
     );
     const cwd = join(fixtures, 'hmr');
+    const port = await getRandomPort();
     const rsbuild = await dev({
       cwd,
       plugins: [pluginReact()],
@@ -116,7 +117,7 @@ rspackOnlyTest(
           },
         },
         server: {
-          port: 3001,
+          port,
         },
         dev: {
           client: {
@@ -127,7 +128,7 @@ rspackOnlyTest(
     });
 
     await gotoPage(page, rsbuild);
-    expect(rsbuild.port).toBe(3001);
+    expect(rsbuild.port).toBe(port);
 
     const appPath = join(fixtures, 'hmr', 'test-temp-src-1/App.tsx');
 
