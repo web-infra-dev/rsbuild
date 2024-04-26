@@ -1,14 +1,14 @@
 import { posix } from 'node:path';
 import {
+  applyOutputPlugin,
   getDistPath,
   getFilename,
-  applyOutputPlugin,
   isUseCssExtract,
   mergeChainedOptions,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
-import type { RsbuildPlugin } from '../../types';
 import { CssExtractRspackPlugin } from '@rspack/core';
+import type { RsbuildPlugin } from '../../types';
 
 export const pluginOutput = (): RsbuildPlugin => ({
   name: 'rsbuild:output',

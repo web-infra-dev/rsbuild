@@ -1,21 +1,21 @@
 import path from 'node:path';
-import { CSS_MODULES_REGEX, NODE_MODULES_REGEX } from './constants';
 import type { AcceptedPlugin } from 'postcss';
 import deepmerge from '../compiled/deepmerge';
-import { mergeChainedOptions } from './mergeChainedOptions';
-import { isFunction, isPlainObject, getSharedPkgCompiledPath } from './utils';
+import { CSS_MODULES_REGEX, NODE_MODULES_REGEX } from './constants';
 import { getBrowserslistWithDefault } from './getBrowserslist';
+import { mergeChainedOptions } from './mergeChainedOptions';
 import type {
+  BundlerChainRule,
+  CSSExtractOptions,
   CSSLoaderOptions,
+  ModifyChainUtils,
   NormalizedConfig,
   PostCSSLoaderOptions,
-  BundlerChainRule,
-  RsbuildContext,
-  ModifyChainUtils,
-  CSSExtractOptions,
   PostCSSOptions,
+  RsbuildContext,
   RsbuildTarget,
 } from './types';
+import { getSharedPkgCompiledPath, isFunction, isPlainObject } from './utils';
 
 export const getCssModuleLocalIdentName = (
   config: NormalizedConfig,

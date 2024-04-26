@@ -1,11 +1,11 @@
 import {
+  type BundlerChainRule,
   CSS_REGEX,
-  applyCSSRule,
+  type ModifyChainUtils,
+  type NormalizedConfig,
   type RsbuildContext,
   type RsbuildPlugin,
-  type NormalizedConfig,
-  type BundlerChainRule,
-  type ModifyChainUtils,
+  applyCSSRule,
 } from '@rsbuild/shared';
 
 export async function applyBaseCSSRule({
