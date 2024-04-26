@@ -181,6 +181,7 @@ function ensureChunk(chunkId: string): Promise<unknown> {
       throw error;
     }
 
+    // Start retry
     if (config.onRetry && typeof config.onRetry === 'function') {
       const context: AssetsRetryHookContext = {
         times: existRetryTimes - 1,

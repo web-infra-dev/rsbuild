@@ -1,9 +1,9 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 import { getDistPath, isHtmlDisabled } from '@rsbuild/shared';
 import { AsyncChunkRetryPlugin } from './AsyncChunkRetryPlugin';
-import type { PluginAssetsRetryOptions } from './types';
+import type { PluginAssetsRetryOptions, AssetsRetryHookContext } from './types';
 
-export type { PluginAssetsRetryOptions };
+export type { PluginAssetsRetryOptions, AssetsRetryHookContext };
 
 export const pluginAssetsRetry = (
   options: PluginAssetsRetryOptions = {},
