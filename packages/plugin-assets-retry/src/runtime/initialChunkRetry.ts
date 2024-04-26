@@ -18,7 +18,7 @@ const TYPES = Object.keys(TAG_TYPE);
 
 declare global {
   // global variables shared with async chunk
-  var __ASYNC_CHUNK_FILENAME_LIST__: Record<string, boolean>;
+  var __RB_ASYNC_CHUNKS__: Record<string, boolean>;
 }
 
 function findCurrentDomain(url: string, domainList: string[]) {
@@ -171,11 +171,9 @@ function retry(config: RuntimeRetryOptions, e: Event) {
   // If the requested failed chunk is async chunk，skip it, because async chunk will be retried by asyncChunkRetry runtime
   if (
     typeof window !== 'undefined' &&
-    Object.keys(window.__ASYNC_CHUNK_FILENAME_LIST__ || {}).some(
-      (chunkName) => {
-        return url.indexOf(chunkName) !== -1;
-      },
-    )
+    Object.keys(window.__RB_ASYNC_CHUNKS__ || {}).some((chunkName) => {
+      return url.indexOf(chunkName) !== -1;
+    })
   ) {
     return;
   }
@@ -324,11 +322,8 @@ function init(options: RuntimeRetryOptions) {
   }
 
   // init global variables shared with async chunk
-  if (
-    typeof window !== 'undefined' &&
-    !window.__ASYNC_CHUNK_FILENAME_LIST__
-  ) {
-    window.__ASYNC_CHUNK_FILENAME_LIST__ = {};
+  if (typeof window !== 'undefined' && !window.__RB_ASYNC_CHUNKS__) {
+    window.__RB_ASYNC_CHUNKS__ = {};
   }
   // Bind event in window
   try {
