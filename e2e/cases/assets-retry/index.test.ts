@@ -279,6 +279,7 @@ test('@rsbuild/plugin-assets-retry onRetry and onFail options should work in fai
   });
 
   const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {
+    minify: true,
     onRetry(context) {
       console.info('onRetry', context);
     },
