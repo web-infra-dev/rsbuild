@@ -165,6 +165,7 @@ export const mergeDevOptions = ({
       protocol: undefined,
     },
     writeToDisk: false,
+    liveReload: true,
   };
 
   const devConfig = rsbuildConfig.dev
@@ -276,11 +277,14 @@ export const getDevOptions = async ({
 
   const devConfig = mergeDevOptions({ rsbuildConfig, port });
 
+  const liveReload = devConfig.liveReload;
+
   return {
     devConfig,
     serverConfig,
     port,
     host,
     https,
+    liveReload,
   };
 };
