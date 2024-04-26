@@ -59,7 +59,7 @@ exports[`plugin-assets-retry > should add assets retry plugin 1`] = `
       "HtmlPlugin": [Function],
       "distDir": "static/js",
       "inlineScript": true,
-      "minify": true,
+      "minify": false,
       "name": "AssetsRetryPlugin",
       "scriptPath": "",
     },
@@ -68,7 +68,7 @@ exports[`plugin-assets-retry > should add assets retry plugin 1`] = `
       "options": {
         "crossOrigin": false,
         "isRspack": false,
-        "minify": true,
+        "minify": false,
       },
       "runtimeOptions": {},
     },

@@ -48,12 +48,10 @@ class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
   getRawRuntimeRetryCode() {
     const { RuntimeGlobals } = rspack;
     const filename = 'asyncChunkRetry';
-    const minify =
-      this.options?.minify ?? process.env.NODE_ENV === 'production';
     const runtimeFilePath = path.join(
       __dirname,
       'runtime',
-      minify ? `${filename}.min.js` : `${filename}.js`,
+      this.options.minify ? `${filename}.min.js` : `${filename}.js`,
     );
     const rawText = fse.readFileSync(runtimeFilePath, 'utf-8');
 
