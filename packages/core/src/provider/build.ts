@@ -1,14 +1,15 @@
-import { createCompiler } from './createCompiler';
-import { initConfigs, type InitConfigsOptions } from './initConfigs';
-import { logger, getNodeEnv, setNodeEnv, onCompileDone } from '@rsbuild/shared';
+import { getNodeEnv, logger, onCompileDone, setNodeEnv } from '@rsbuild/shared';
 import type {
-  Stats,
-  MultiStats,
   BuildOptions,
-  RspackConfig,
+  MultiStats,
   RspackCompiler,
+  RspackConfig,
   RspackMultiCompiler,
+  Stats,
 } from '@rsbuild/shared';
+import { rspack } from '@rspack/core';
+import { createCompiler } from './createCompiler';
+import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
 export const build = async (
   initOptions: InitConfigsOptions,
@@ -45,13 +46,11 @@ export const build = async (
     await p;
   };
 
-  const { MultiStats: MultiStatsStor } = await import('@rspack/core');
-
   onCompileDone(
     compiler,
     onDone,
     // @ts-expect-error type mismatch
-    MultiStatsStor,
+    rspack.MultiStats,
   );
 
   if (watch) {

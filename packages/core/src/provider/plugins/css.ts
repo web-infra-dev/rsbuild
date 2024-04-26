@@ -1,13 +1,15 @@
+import { CssExtractRspackPlugin } from '@rspack/core';
 import {
   CSS_REGEX,
   applyCSSRule,
   type RsbuildContext,
-  type RsbuildPlugin,
-  type NormalizedConfig,
   type BundlerChainRule,
   type ModifyChainUtils,
 } from '@rsbuild/shared';
-import { CssExtractRspackPlugin } from '@rspack/core';
+import type { NormalizedConfig, RsbuildPlugin } from '../../types';
+
+export const enableNativeCss = (config: NormalizedConfig) =>
+  !config.output.injectStyles;
 
 export async function applyBaseCSSRule({
   rule,

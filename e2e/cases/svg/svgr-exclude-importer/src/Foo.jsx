@@ -1,4 +1,4 @@
-import Logo from './small.svg';
+import Logo from '@assets/circle.svg';
 
 function Foo() {
   return <Logo id="foo" />;

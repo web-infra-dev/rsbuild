@@ -1,11 +1,10 @@
 import {
-  pick,
-  debug,
+  type CreateRsbuildOptions,
   type RsbuildInstance,
   type RsbuildProvider,
-  type CreateRsbuildOptions,
+  debug,
+  pick,
 } from '@rsbuild/shared';
-import { plugins } from './plugins';
 import { createPluginManager } from './pluginManager';
 
 const getRspackProvider = async () => {
@@ -40,7 +39,6 @@ export async function createRsbuild(
     startDevServer,
     applyDefaultPlugins,
   } = await provider({
-    plugins,
     pluginManager,
     rsbuildOptions,
   });

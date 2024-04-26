@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
 import { dev, getRandomPort, gotoPage } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 
 test('should allow to set port via server.port', async ({ page }) => {
   const errors: string[] = [];

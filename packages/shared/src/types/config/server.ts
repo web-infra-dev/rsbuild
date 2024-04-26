@@ -13,7 +13,7 @@ export type ProxyDetail = BaseProxyOptions & {
     req: IncomingMessage,
     res: ServerResponse,
     proxyOptions: ProxyOptions,
-  ) => string | undefined | null | false;
+  ) => string | undefined | null | boolean;
   context?: ProxyFilter;
 };
 
@@ -63,6 +63,11 @@ export type PublicDir =
        * @default true
        */
       copyOnBuild?: boolean;
+      /**
+       * whether to watch the public directory and reload the page when the files change
+       * @default false
+       */
+      watch?: boolean;
     };
 
 export interface ServerConfig {

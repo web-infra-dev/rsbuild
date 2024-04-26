@@ -1,10 +1,11 @@
 import {
-  DEFAULT_ASSET_PREFIX,
   type CacheGroup,
+  DEFAULT_ASSET_PREFIX,
   type RspackCompiler,
 } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../types';
+import { rspack } from '@rspack/core';
 import type { RspackPluginInstance } from '@rspack/core';
+import type { RsbuildPlugin } from '../types';
 
 /**
  * Force remote entry not be affected by user's chunkSplit strategy,
@@ -120,7 +121,6 @@ export function pluginModuleFederation(): RsbuildPlugin {
         }
 
         const { options } = config.moduleFederation;
-        const { rspack } = await import('@rspack/core');
 
         chain
           .plugin(CHAIN_ID.PLUGIN.MODULE_FEDERATION)

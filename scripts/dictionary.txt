@@ -11,6 +11,7 @@ caniuse
 chunkhash
 Chunktmp
 classname
+codesandbox
 compat
 consolas
 contentful
@@ -30,6 +31,7 @@ flexbox
 flexbugs
 fnames
 fullhash
+gzipped
 icss
 idents
 iife
@@ -76,6 +78,7 @@ rslog
 rspack
 rspress
 selfsign
+selfsigned
 sirv
 sokra
 speedscope

@@ -1,5 +1,5 @@
-import url from './small.svg?url';
-import Component from './small.svg?react';
+import Component from '@assets/circle.svg?react';
+import url from '@assets/circle.svg?url';
 
 function App() {
   return (

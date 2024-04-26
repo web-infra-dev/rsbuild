@@ -1,0 +1,101 @@
+# source.entry
+
+- **Type:**
+
+```ts
+type Entry = Record<string, string | string[] | EntryDescription> | Function;
+```
+
+- **Default:**
+
+```ts
+const defaultEntry = {
+  // default support for other suffixes such as ts, tsx, jsx, mjs, cjs
+  index: 'src/index.js',
+};
+```
+
+Used to set the entry modules for building.
+
+The usage of `source.entry` is similar to the `entry` option in [Rspack](https://rspack.dev/config/entry). The main difference is that Rsbuild will register [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin) for each entry in `source.entry` to generate the corresponding HTML files.
+
+- **Example:**
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    entry: {
+      foo: './src/pages/foo/index.ts',
+      bar: './src/pages/bar/index.ts',
+    },
+  },
+};
+```
+
+The generated directory structure is as follows:
+
+```text
+.
+├── foo.html
+├── bar.html
+└── static
+    ├── css
+    │   ├── foo.css
+    │   └── bar.css
+    └── js
+        ├── foo.js
+        └── bar.js
+```
+
+If you do not need to generate HTML files, you can set [tools.htmlPlugin](/config/tools/html-plugin) to `false` to disable this behavior.
+
+## Description Object
+
+`source.entry` also supports Rspack's entry description object. For example:
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    entry: {
+      foo: {
+        import: './src/foo.js',
+        runtime: 'foo',
+      },
+      bar: {
+        import: './src/bar.js',
+        runtime: 'bar',
+      },
+    },
+  },
+};
+```
+
+For the complete usage of the description object, please refer to [Rspack - Entry Description Object](https://rspack.dev/config/entry#entry-description-object).
+
+## Function Usage
+
+`source.entry` supports setting as a function, which is commonly used to set different entry objects for different build target.
+
+For example, set entry for web target and node target separately:
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    entry({ target }) {
+      if (target === 'web') {
+        return {
+          index: './src/index.client.js',
+        };
+      }
+      if (target === 'node') {
+        return {
+          index: './src/index.server.js',
+        };
+      }
+    },
+  },
+  output: {
+    targets: ['web', 'node'],
+  },
+};
+```

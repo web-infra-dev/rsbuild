@@ -1,6 +1,6 @@
 {
   "name": "create-rsbuild",
-  "version": "0.6.1",
+  "version": "0.6.6",
   "description": "Create a new Rsbuild project",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -15,9 +15,6 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
-  },
-  "engines": {
-    "node": ">=16.0.0"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -35,9 +32,12 @@
   },
   "devDependencies": {
     "@clack/prompts": "^0.7.0",
-    "@types/node": "16.x",
+    "@types/node": "18.x",
     "rslog": "^1.2.1",
     "typescript": "^5.4.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
   },
   "publishConfig": {
     "access": "public",

@@ -1,9 +1,9 @@
 import {
   SASS_REGEX,
-  getSassLoaderOptions,
-  patchCompilerGlobalLocation,
   getResolveUrlJoinFn,
+  getSassLoaderOptions,
   getSharedPkgCompiledPath,
+  patchCompilerGlobalLocation,
 } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../../types';
 

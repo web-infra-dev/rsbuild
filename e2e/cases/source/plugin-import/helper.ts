@@ -1,8 +1,8 @@
 import path from 'node:path';
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { fse } from '@rsbuild/shared';
 import type { RsbuildConfig } from '@rsbuild/core';
+import { fse } from '@rsbuild/shared';
 import type { TransformImport } from '@rsbuild/shared';
 
 export const cases: Parameters<typeof shareTest>[] = [

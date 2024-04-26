@@ -1,13 +1,13 @@
 import path from 'node:path';
+import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
+import { PLUGIN_REACT_NAME } from '@rsbuild/plugin-react';
 import {
+  SCRIPT_REGEX,
   SVG_REGEX,
   deepmerge,
   getDistPath,
   getFilename,
-  SCRIPT_REGEX,
 } from '@rsbuild/shared';
-import { PLUGIN_REACT_NAME } from '@rsbuild/plugin-react';
-import type { Rspack, RsbuildPlugin } from '@rsbuild/core';
 import type { Config } from '@svgr/core';
 
 export type SvgDefaultExport = 'component' | 'url';
@@ -75,8 +75,18 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
       const maxSize =
         typeof dataUriLimit === 'number' ? dataUriLimit : dataUriLimit.svg;
 
-      // delete Rsbuild builtin SVG rules
-      chain.module.rules.delete(CHAIN_ID.RULE.SVG);
+      let generatorOptions: Rspack.GeneratorOptionsByModuleType['asset/resource'] =
+        {};
+
+      if (chain.module.rules.has(CHAIN_ID.RULE.SVG)) {
+        generatorOptions = chain.module.rules
+          .get(CHAIN_ID.RULE.SVG)
+          .oneOfs.get(CHAIN_ID.ONE_OF.SVG_URL)
+          .get('generator');
+
+        // delete Rsbuild builtin SVG rules
+        chain.module.rules.delete(CHAIN_ID.RULE.SVG);
+      }
 
       const rule = chain.module.rule(CHAIN_ID.RULE.SVG).test(SVG_REGEX);
 
@@ -93,9 +103,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         .oneOf(CHAIN_ID.ONE_OF.SVG_URL)
         .type('asset/resource')
         .resourceQuery(/(__inline=false|url)/)
-        .set('generator', {
-          filename: outputName,
-        });
+        .set('generator', generatorOptions);
 
       // force to inline: "foo.svg?inline"
       rule
@@ -169,9 +177,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
             maxSize,
           },
         })
-        .set('generator', {
-          filename: outputName,
-        });
+        .set('generator', generatorOptions);
 
       // apply current JS transform rule to SVGR rules
       const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);

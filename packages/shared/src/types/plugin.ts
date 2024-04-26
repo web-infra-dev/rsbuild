@@ -1,35 +1,37 @@
-import type { Falsy, WebpackChain } from './utils';
-import type {
-  OnExitFn,
-  OnAfterBuildFn,
-  OnBeforeBuildFn,
-  OnCloseDevServerFn,
-  OnDevCompileDoneFn,
-  OnAfterStartDevServerFn,
-  OnBeforeStartDevServerFn,
-  OnAfterStartProdServerFn,
-  OnBeforeStartProdServerFn,
-  OnAfterCreateCompilerFn,
-  OnBeforeCreateCompilerFn,
-  ModifyRsbuildConfigFn,
-  ModifyBundlerChainFn,
-  ModifyChainUtils,
-} from './hooks';
-import type { RsbuildContext } from './context';
-import type {
-  RsbuildConfig,
-  NormalizedConfig,
-  ModifyRspackConfigUtils,
-} from './config';
-import type { MaybePromise } from './utils';
-import type { RspackConfig, RspackSourceMap } from './rspack';
 import type { RuleSetCondition } from '@rspack/core';
 import type {
   RuleSetRule,
-  WebpackPluginInstance,
   Configuration as WebpackConfig,
+  WebpackPluginInstance,
 } from 'webpack';
 import type { ChainIdentifier } from '../chain';
+import type {
+  ModifyRspackConfigUtils,
+  NormalizedConfig,
+  RsbuildConfig,
+} from './config';
+import type { RsbuildContext } from './context';
+import type {
+  ModifyBundlerChainFn,
+  ModifyChainUtils,
+  ModifyHTMLTagsFn,
+  ModifyRsbuildConfigFn,
+  OnAfterBuildFn,
+  OnAfterCreateCompilerFn,
+  OnAfterStartDevServerFn,
+  OnAfterStartProdServerFn,
+  OnBeforeBuildFn,
+  OnBeforeCreateCompilerFn,
+  OnBeforeStartDevServerFn,
+  OnBeforeStartProdServerFn,
+  OnCloseDevServerFn,
+  OnDevCompileDoneFn,
+  OnExitFn,
+} from './hooks';
+import type { RsbuildTarget } from './rsbuild';
+import type { RspackConfig, RspackSourceMap } from './rspack';
+import type { Falsy, WebpackChain } from './utils';
+import type { MaybePromise } from './utils';
 
 type HookOrder = 'pre' | 'post' | 'default';
 
@@ -129,36 +131,6 @@ export type RsbuildPlugins = (
   | Promise<RsbuildPlugin | Falsy>
 )[];
 
-type PluginsFn<T = undefined> = T extends undefined
-  ? () => Promise<RsbuildPlugin>
-  : (arg: T) => Promise<RsbuildPlugin>;
-
-export type Plugins = {
-  basic: PluginsFn;
-  cleanOutput: PluginsFn;
-  startUrl: PluginsFn;
-  fileSize: PluginsFn;
-  target: PluginsFn;
-  entry: PluginsFn;
-  cache: PluginsFn;
-  splitChunks: PluginsFn;
-  inlineChunk: PluginsFn;
-  bundleAnalyzer: PluginsFn;
-  rsdoctor: PluginsFn;
-  asset: PluginsFn;
-  html: PluginsFn;
-  wasm: PluginsFn;
-  moment: PluginsFn;
-  nodeAddons: PluginsFn;
-  externals: PluginsFn;
-  networkPerformance: PluginsFn;
-  preloadOrPrefetch: PluginsFn;
-  performance: PluginsFn;
-  define: PluginsFn;
-  server: PluginsFn;
-  moduleFederation: PluginsFn;
-};
-
 export type GetRsbuildConfig = {
   (): Readonly<RsbuildConfig>;
   (type: 'original' | 'current'): Readonly<RsbuildConfig>;
@@ -221,14 +193,31 @@ export type TransformHandler = (
   context: TransformContext,
 ) => MaybePromise<TransformResult>;
 
+export type TransformDescriptor = {
+  /**
+   * Include modules that match the test assertion, the same as `rule.test`
+   * @see https://rspack.dev/config/module#ruletest
+   */
+  test?: RuleSetCondition;
+  /**
+   * A condition that matches the resource query.
+   * @see https://rspack.dev/config/module#ruleresourcequery
+   */
+  resourceQuery?: RuleSetCondition;
+  /**
+   * Match based on the Rsbuild targets and only apply the transform to certain targets.
+   * @see https://rsbuild.dev/config/output/targets
+   */
+  targets?: RsbuildTarget[];
+  /**
+   * If raw is `true`, the transform handler will receive the Buffer type code instead of the string type.
+   * @see https://rspack.dev/api/loader-api#raw-loader
+   */
+  raw?: boolean;
+};
+
 export type TransformFn = (
-  descriptor: {
-    /**
-     * Include modules that match the test assertion, the same as `rule.test`
-     * @see https://rspack.dev/config/module#ruletest
-     */
-    test?: RuleSetCondition;
-  },
+  descriptor: TransformDescriptor,
   handler: TransformHandler,
 ) => void;
 
@@ -251,6 +240,7 @@ export type RsbuildPluginAPI = Readonly<{
   onAfterCreateCompiler: PluginHook<OnAfterCreateCompilerFn>;
   onBeforeCreateCompiler: PluginHook<OnBeforeCreateCompilerFn>;
 
+  modifyHTMLTags: PluginHook<ModifyHTMLTagsFn>;
   modifyRsbuildConfig: PluginHook<ModifyRsbuildConfigFn>;
   modifyBundlerChain: PluginHook<ModifyBundlerChainFn>;
   /** Only works when bundler is Rspack */

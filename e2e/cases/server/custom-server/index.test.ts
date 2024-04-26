@@ -1,7 +1,7 @@
-import { expect, test } from '@playwright/test';
 import { gotoPage } from '@e2e/helper';
-import { startDevServer } from './scripts/server.mjs';
+import { expect, test } from '@playwright/test';
 import { startDevServerPure } from './scripts/pureServer.mjs';
+import { startDevServer } from './scripts/server.mjs';
 
 test('custom server', async ({ page }) => {
   const { config, close } = await startDevServer(__dirname);

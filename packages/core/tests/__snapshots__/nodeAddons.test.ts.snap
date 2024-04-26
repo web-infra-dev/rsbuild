@@ -8,11 +8,17 @@ exports[`plugin-node-addons > should add node addons rule properly 1`] = `
         "test": /\\\\\\.node\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/core/src/rspack/nodeAddonsLoader",
+            "loader": "<ROOT>/packages/core/dist/rspack/transformRawLoader",
+            "options": {
+              "id": "rsbuild-transform-0",
+            },
           },
         ],
       },
     ],
   },
+  "plugins": [
+    RsbuildTransformPlugin {},
+  ],
 }
 `;

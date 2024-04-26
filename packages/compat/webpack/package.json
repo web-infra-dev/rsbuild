@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/webpack",
-  "version": "0.6.1",
+  "version": "0.6.6",
   "homepage": "https://rsbuild.dev",
   "repository": {
     "type": "git",
@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "16.x",
+    "@types/node": "18.x",
     "typescript": "^5.4.2"
   },
   "publishConfig": {

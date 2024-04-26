@@ -1,25 +1,25 @@
 import { resolve } from 'node:path';
+import type { Rspack } from '@rsbuild/core';
+import {
+  HTML_REGEX,
+  JS_REGEX,
+  browserslistToESVersion,
+  fse,
+} from '@rsbuild/shared';
 import { parse } from 'acorn';
 import {
-  printErrors,
+  checkIsExcludeSource,
   generateError,
   generateHtmlScripts,
-  checkIsExcludeSource,
+  printErrors,
 } from './helpers';
-import {
-  fse,
-  JS_REGEX,
-  HTML_REGEX,
-  browserslistToESVersion,
-} from '@rsbuild/shared';
 import type {
+  AcornParseError,
+  CheckSyntaxExclude,
+  CheckSyntaxOptions,
   ECMASyntaxError,
   EcmaVersion,
-  CheckSyntaxOptions,
-  CheckSyntaxExclude,
-  AcornParseError,
 } from './types';
-import type { Rspack } from '@rsbuild/core';
 
 type Compiler = Rspack.Compiler;
 type Compilation = Rspack.Compilation;
@@ -53,12 +53,16 @@ export class CheckSyntaxPlugin {
       CheckSyntaxPlugin.name,
       async (compilation: Compilation) => {
         const outputPath = compilation.outputOptions.path || 'dist';
+
         // not support compilation.emittedAssets in Rspack
         const emittedAssets = compilation
           .getAssets()
           .filter((a) => a.source)
-          .map((a) => a.name)
-          .map((p) => resolve(outputPath, p));
+          .map((a) => {
+            // remove query from name
+            const resourcePath = a.name.split('?')[0];
+            return resolve(outputPath, resourcePath);
+          });
 
         const files = emittedAssets.filter(
           (assets) => HTML_REGEX.test(assets) || JS_REGEX.test(assets),

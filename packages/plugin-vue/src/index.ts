@@ -1,6 +1,6 @@
+import type { RsbuildPlugin } from '@rsbuild/core';
 import { deepmerge } from '@rsbuild/shared';
 import { VueLoaderPlugin } from 'vue-loader';
-import type { RsbuildPlugin } from '@rsbuild/core';
 import type { VueLoaderOptions } from 'vue-loader';
 import { applySplitChunksRule } from './splitChunks';
 

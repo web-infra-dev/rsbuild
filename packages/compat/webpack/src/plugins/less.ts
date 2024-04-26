@@ -1,9 +1,9 @@
 import {
+  type FileFilterUtil,
   LESS_REGEX,
+  type RsbuildPlugin,
   getLessLoaderOptions,
   getSharedPkgCompiledPath,
-  type RsbuildPlugin,
-  type FileFilterUtil,
 } from '@rsbuild/shared';
 
 export type LessLoaderUtils = {

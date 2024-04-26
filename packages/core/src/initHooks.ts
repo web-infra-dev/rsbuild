@@ -1,23 +1,24 @@
 import { isFunction } from '@rsbuild/shared';
 import type {
-  OnExitFn,
   AsyncHook,
   HookDescriptor,
-  OnAfterBuildFn,
-  OnBeforeBuildFn,
-  OnCloseDevServerFn,
-  OnDevCompileDoneFn,
   ModifyBundlerChainFn,
+  ModifyHTMLTagsFn,
+  ModifyRsbuildConfigFn,
   ModifyRspackConfigFn,
   ModifyWebpackChainFn,
   ModifyWebpackConfigFn,
-  ModifyRsbuildConfigFn,
-  OnAfterStartDevServerFn,
-  OnBeforeStartDevServerFn,
-  OnAfterStartProdServerFn,
-  OnBeforeStartProdServerFn,
+  OnAfterBuildFn,
   OnAfterCreateCompilerFn,
+  OnAfterStartDevServerFn,
+  OnAfterStartProdServerFn,
+  OnBeforeBuildFn,
   OnBeforeCreateCompilerFn,
+  OnBeforeStartDevServerFn,
+  OnBeforeStartProdServerFn,
+  OnCloseDevServerFn,
+  OnDevCompileDoneFn,
+  OnExitFn,
 } from '@rsbuild/shared';
 
 export function createAsyncHook<
@@ -62,25 +63,23 @@ export function createAsyncHook<
 
 export function initHooks() {
   return {
-    /** parameters are not bundler-related */
     onExit: createAsyncHook<OnExitFn>(),
+    onAfterBuild: createAsyncHook<OnAfterBuildFn>(),
+    onBeforeBuild: createAsyncHook<OnBeforeBuildFn>(),
     onDevCompileDone: createAsyncHook<OnDevCompileDoneFn>(),
     onCloseDevServer: createAsyncHook<OnCloseDevServerFn>(),
     onAfterStartDevServer: createAsyncHook<OnAfterStartDevServerFn>(),
     onBeforeStartDevServer: createAsyncHook<OnBeforeStartDevServerFn>(),
     onAfterStartProdServer: createAsyncHook<OnAfterStartProdServerFn>(),
     onBeforeStartProdServer: createAsyncHook<OnBeforeStartProdServerFn>(),
-
-    /** parameters are bundler-related */
-    onAfterBuild: createAsyncHook<OnAfterBuildFn>(),
-    onBeforeBuild: createAsyncHook<OnBeforeBuildFn>(),
+    onAfterCreateCompiler: createAsyncHook<OnAfterCreateCompilerFn>(),
+    onBeforeCreateCompiler: createAsyncHook<OnBeforeCreateCompilerFn>(),
+    modifyHTMLTags: createAsyncHook<ModifyHTMLTagsFn>(),
     modifyRspackConfig: createAsyncHook<ModifyRspackConfigFn>(),
     modifyBundlerChain: createAsyncHook<ModifyBundlerChainFn>(),
     modifyWebpackChain: createAsyncHook<ModifyWebpackChainFn>(),
     modifyWebpackConfig: createAsyncHook<ModifyWebpackConfigFn>(),
     modifyRsbuildConfig: createAsyncHook<ModifyRsbuildConfigFn>(),
-    onAfterCreateCompiler: createAsyncHook<OnAfterCreateCompilerFn>(),
-    onBeforeCreateCompiler: createAsyncHook<OnBeforeCreateCompilerFn>(),
   };
 }
 

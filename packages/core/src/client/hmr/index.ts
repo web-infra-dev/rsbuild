@@ -4,7 +4,7 @@
  *
  * Tips: this package will be bundled and running in the browser, do not import any Node.js modules.
  */
-import type { StatsError, ClientConfig } from '@rsbuild/shared';
+import type { ClientConfig, StatsError } from '@rsbuild/shared';
 import { formatStatsMessages } from '../formatStats';
 import { createSocketUrl } from './createSocketUrl';
 
@@ -14,6 +14,7 @@ const options: ClientConfig = RSBUILD_CLIENT_CONFIG;
 const socketUrl = createSocketUrl(options);
 
 const enableOverlay = !!options.overlay;
+const enableLiveReload = RSBUILD_DEV_LIVE_RELOAD;
 
 // Remember some state related to hot module replacement.
 let isFirstCompilation = true;
@@ -145,7 +146,7 @@ function tryApplyUpdates() {
 
   if (!import.meta.webpackHot) {
     // HotModuleReplacementPlugin is not in Rspack configuration.
-    window.location.reload();
+    reloadPage();
     return;
   }
 
@@ -159,7 +160,15 @@ function tryApplyUpdates() {
   ) {
     const wantsForcedReload = err || !updatedModules;
     if (wantsForcedReload) {
-      window.location.reload();
+      if (
+        err &&
+        typeof console !== 'undefined' &&
+        typeof console.error === 'function'
+      ) {
+        console.error('[HMR] Forced reload caused by: ', err);
+      }
+
+      reloadPage();
       return;
     }
 
@@ -169,7 +178,7 @@ function tryApplyUpdates() {
     }
   }
 
-  // https://webpack.js.org/concepts/hot-module-replacement
+  // https://rspack.dev/api/modules#importmetawebpackhot-webpack-specific
   import.meta.webpackHot.check(true).then(
     (updatedModules) => {
       handleApplyUpdates(null, updatedModules);
@@ -205,9 +214,11 @@ function onMessage(e: MessageEvent<string>) {
       handleSuccess();
       break;
     case 'static-changed':
+      reloadPage();
+      break;
     case 'content-changed':
       // Triggered when a file from `contentBase` changed.
-      window.location.reload();
+      reloadPage();
       break;
     case 'warnings':
       handleWarnings(message.data);
@@ -287,6 +298,12 @@ function reconnect() {
     connection = null;
   }
   connect();
+}
+
+function reloadPage() {
+  if (enableLiveReload) {
+    window.location.reload();
+  }
 }
 
 connect();

@@ -1,20 +1,15 @@
 import type {
-  RspackConfig,
-  RsbuildProvider,
-  RsbuildPlugin,
-  RsbuildInstance,
-  CreateRsbuildOptions,
   BundlerPluginInstance,
+  CreateRsbuildOptions,
+  RsbuildInstance,
+  RsbuildPlugin,
+  RsbuildProvider,
+  RspackConfig,
 } from '@rsbuild/shared';
 
 const getRspackProvider = async () => {
   const { rspackProvider } = await import('@rsbuild/core/internal');
   return rspackProvider;
-};
-
-export const getRsbuildPlugins = async () => {
-  const { plugins } = await import('@rsbuild/core/internal');
-  return plugins;
 };
 
 export function baseMatchLoader({
@@ -125,7 +120,6 @@ export async function createStubRsbuild({
   } = await provider({
     pluginManager,
     rsbuildOptions,
-    plugins: await getRsbuildPlugins(),
   });
 
   if (plugins) {

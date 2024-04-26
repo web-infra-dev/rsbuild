@@ -1,0 +1,114 @@
+# server.publicDir
+
+- **Type:**
+
+```ts
+type PublicDir =
+  | false
+  | {
+      /**
+       * The name of the public directory, can be set as a relative path or an absolute path.
+       * @default 'public'
+       */
+      name?: string;
+      /**
+       * Whether to copy files from the publicDir to the distDir on production build
+       * @default true
+       */
+      copyOnBuild?: boolean;
+      /**
+       * whether to watch the public directory and reload the page when the files change
+       * @default false
+       */
+      watch?: boolean;
+    };
+```
+
+- **Default:**
+
+```js
+const defaultValue = {
+  name: 'public',
+  copyOnBuild: true,
+};
+```
+
+By default, Rsbuild will use the `public` directory as the directory for serving public assets, files in this directory will be served at `/`.
+
+> Related document: [Public Folder](/guide/basic/static-assets#public-folder).
+
+### Boolean Type
+
+The ability to serve public assets can be disabled by setting `publicDir` to `false`:
+
+```ts
+export default {
+  server: {
+    publicDir: false,
+  },
+};
+```
+
+### Object Type
+
+When the value of `publicDir` is of object type, Rsbuild will merge the current configuration with the default configuration.
+
+For example, to set the public folder name as `static` and disable `copyOnBuild`:
+
+```ts
+export default {
+  server: {
+    publicDir: {
+      name: 'static',
+      copyOnBuild: false,
+    },
+  },
+};
+```
+
+Note that setting the value of `copyOnBuild` to false means that when you run `rsbuild preview` for a production preview, you will not be able to access the corresponding static resources.
+
+Setting `watch` to `true` allows the development environment to watch changes to files in the specified public directory and reload the page when the files are changed:
+
+```ts
+export default {
+  server: {
+    publicDir: {
+      name: 'static',
+      watch: true,
+    },
+  },
+};
+```
+
+Note that the `watch` option is only valid in the development build. If `dev.hmr` and `dev.liveReload` are both set to false, `watch` will be ignored.
+
+### Path Types
+
+The value of `name` can be set to a relative path or an absolute path. Relative path will be resolved relative to the project root directory.
+
+- Relative path example:
+
+```ts
+export default {
+  server: {
+    publicDir: {
+      name: '../some-public',
+    },
+  },
+};
+```
+
+- Absolute path example:
+
+```ts
+import path from 'node:path';
+
+export default {
+  server: {
+    publicDir: {
+      name: path.join(__dirname, '../some-public'),
+    },
+  },
+};
+```

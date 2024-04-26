@@ -1,5 +1,5 @@
+import { isAbsolute, join } from 'node:path';
 import { fse } from '@rsbuild/shared';
-import { join, isAbsolute } from 'node:path';
 import type { RsbuildPlugin } from '../types';
 
 // For Rsbuild Server Config

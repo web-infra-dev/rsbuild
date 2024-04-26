@@ -1,8 +1,8 @@
-import './minify.css';
-import './transform.css';
 import a from './a.module.less';
 import b from './b.module.scss';
 import c from './c.module.styl';
+import './minify.css';
+import './transform.css';
 
 const lessDom = document.getElementById('test-less');
 lessDom.innerHTML = JSON.stringify(a);

@@ -1,11 +1,10 @@
 import path from 'node:path';
-import WebpackSources from '@rsbuild/shared/webpack-sources';
 import {
+  type Rspack,
   fse,
-  withPublicPath,
   generateScriptTag,
   getPublicPathFromCompiler,
-  type Rspack,
+  withPublicPath,
 } from '@rsbuild/shared';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { PluginAssetsRetryOptions } from './types';
@@ -49,9 +48,11 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
 
   async getRetryCode() {
     const { default: serialize } = await import('serialize-javascript');
+    const filename = 'initialChunkRetry';
     const runtimeFilePath = path.join(
       __dirname,
-      this.minify ? 'runtime.min.js' : 'runtime.js',
+      'runtime',
+      this.minify ? `${filename}.min.js` : `${filename}.js`,
     );
     const runtimeCode = await fse.readFile(runtimeFilePath, 'utf-8');
     return `(function(){${runtimeCode};init(${serialize(
@@ -80,11 +81,12 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
               stage:
                 compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
             },
-            async (assets) => {
+            async () => {
               const scriptPath = await this.getScriptPath();
-              assets[scriptPath] = new WebpackSources.RawSource(
-                await this.getRetryCode(),
-                false,
+              const code = await this.getRetryCode();
+              compilation.emitAsset(
+                scriptPath,
+                new compiler.webpack.sources.RawSource(code, false),
               );
             },
           );

@@ -1,25 +1,28 @@
 import path, { isAbsolute } from 'node:path';
 import {
-  fse,
-  color,
-  isNil,
-  isURL,
+  applyToCompiler,
   castArray,
-  getHtmlMinifyOptions,
+  color,
+  createVirtualModule,
+  fse,
   getDistPath,
-  isFileExists,
-  isPlainObject,
-  isHtmlDisabled,
-  mergeChainedOptions,
+  getHtmlMinifyOptions,
   getPublicPathFromChain,
+  isFileExists,
+  isHtmlDisabled,
+  isNil,
+  isPlainObject,
+  isURL,
+  mergeChainedOptions,
+} from '@rsbuild/shared';
+import type {
+  HTMLPluginOptions,
+  HtmlConfig,
+  ModifyHTMLTagsFn,
+  NormalizedConfig,
+  RsbuildPluginAPI,
 } from '@rsbuild/shared';
 import type { EntryDescription } from '@rspack/core';
-import type {
-  HtmlConfig,
-  RsbuildPluginAPI,
-  NormalizedConfig,
-  HTMLPluginOptions,
-} from '@rsbuild/shared';
 import type { HtmlInfo, TagConfig } from '../rspack/HtmlBasicPlugin';
 import type { RsbuildPlugin } from '../types';
 
@@ -161,11 +164,7 @@ function getChunks(
   entryValue: string | string[] | EntryDescription,
 ): string[] {
   if (isPlainObject(entryValue)) {
-    const { dependOn } = entryValue as EntryDescription & {
-      // TODO: remove this after bumping Rspack v0.6
-      // https://github.com/web-infra-dev/rspack/pull/6069
-      dependOn?: string | string[] | undefined;
-    };
+    const { dependOn } = entryValue as EntryDescription;
     if (Array.isArray(dependOn)) {
       return [...dependOn, entryName];
     }
@@ -191,7 +190,7 @@ const getTagConfig = (api: RsbuildPluginAPI): TagConfig | undefined => {
   };
 };
 
-export const pluginHtml = (): RsbuildPlugin => ({
+export const pluginHtml = (modifyTagsFn: ModifyHTMLTagsFn): RsbuildPlugin => ({
   name: 'rsbuild:html',
 
   setup(api) {
@@ -297,39 +296,14 @@ export const pluginHtml = (): RsbuildPlugin => ({
 
         chain
           .plugin(CHAIN_ID.PLUGIN.HTML_BASIC)
-          .use(HtmlBasicPlugin, [htmlInfoMap]);
-
-        if (config.security) {
-          const { nonce } = config.security;
-
-          if (nonce) {
-            const { HtmlNoncePlugin } = await import(
-              '../rspack/HtmlNoncePlugin'
-            );
-
-            chain
-              .plugin(CHAIN_ID.PLUGIN.HTML_NONCE)
-              .use(HtmlNoncePlugin, [{ nonce }]);
-          }
-        }
+          .use(HtmlBasicPlugin, [htmlInfoMap, modifyTagsFn]);
 
         if (config.html) {
           const { appIcon, crossorigin } = config.html;
 
           if (crossorigin) {
-            const { HtmlCrossOriginPlugin } = await import(
-              '../rspack/HtmlCrossOriginPlugin'
-            );
-
             const formattedCrossorigin =
               crossorigin === true ? 'anonymous' : crossorigin;
-
-            chain
-              .plugin(CHAIN_ID.PLUGIN.HTML_CROSS_ORIGIN)
-              .use(HtmlCrossOriginPlugin, [
-                { crossOrigin: formattedCrossorigin },
-              ]);
-
             chain.output.crossOriginLoading(formattedCrossorigin);
           }
 
@@ -350,5 +324,69 @@ export const pluginHtml = (): RsbuildPlugin => ({
         }
       },
     );
+
+    api.onAfterCreateCompiler(({ compiler }) => {
+      const { nonce } = api.getNormalizedConfig().security;
+
+      if (!nonce) {
+        return;
+      }
+
+      applyToCompiler(compiler, (compiler) => {
+        const { plugins } = compiler.options;
+        const hasHTML = plugins.some(
+          (plugin) => plugin && plugin.constructor.name === 'HtmlBasicPlugin',
+        );
+        if (!hasHTML) {
+          return;
+        }
+
+        // apply __webpack_nonce__
+        // https://webpack.js.org/guides/csp/
+        const injectCode = createVirtualModule(
+          `__webpack_nonce__ = "${nonce}";`,
+        );
+        new compiler.webpack.EntryPlugin(compiler.context, injectCode, {
+          name: undefined,
+        }).apply(compiler);
+      });
+    });
+
+    api.modifyHTMLTags({
+      // ensure `crossorigin` and `nonce` can be applied to all tags
+      order: 'post',
+      handler: ({ headTags, bodyTags }) => {
+        const config = api.getNormalizedConfig();
+        const { crossorigin } = config.html;
+        const { nonce } = config.security;
+        const allTags = [...headTags, ...bodyTags];
+
+        if (crossorigin) {
+          const formattedCrossorigin =
+            crossorigin === true ? 'anonymous' : crossorigin;
+
+          for (const tag of allTags) {
+            if (
+              (tag.tag === 'script' && tag.attrs?.src) ||
+              (tag.tag === 'link' && tag.attrs?.rel === 'stylesheet')
+            ) {
+              tag.attrs ||= {};
+              tag.attrs.crossorigin ??= formattedCrossorigin;
+            }
+          }
+        }
+
+        if (nonce) {
+          for (const tag of allTags) {
+            if (tag.tag === 'script' || tag.tag === 'style') {
+              tag.attrs ??= {};
+              tag.attrs.nonce = nonce;
+            }
+          }
+        }
+
+        return { headTags, bodyTags };
+      },
+    });
   },
 });

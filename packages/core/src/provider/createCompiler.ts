@@ -1,27 +1,28 @@
 import {
+  type CreateDevMiddlewareReturns,
+  type MultiStats,
+  type RspackCompiler,
+  type RspackConfig,
+  type RspackMultiCompiler,
+  type Stats,
+  TARGET_ID_MAP,
+  color,
+  debug,
   isDev,
   isProd,
-  debug,
-  color,
   logger,
-  prettyTime,
-  TARGET_ID_MAP,
   onCompileDone,
-  type Stats,
-  type MultiStats,
-  type RspackConfig,
-  type RspackCompiler,
-  type RspackMultiCompiler,
-  type CreateDevMiddlewareReturns,
+  prettyTime,
 } from '@rsbuild/shared';
-import { initConfigs, type InitConfigsOptions } from './initConfigs';
-import type { InternalContext } from '../types';
+import { rspack } from '@rspack/core';
 import type { StatsCompilation } from '@rspack/core';
+import type { InternalContext } from '../types';
+import { type InitConfigsOptions, initConfigs } from './initConfigs';
 import {
   formatStats,
   getStatsOptions,
-  rspackMinVersion,
   isSatisfyRspackVersion,
+  rspackMinVersion,
 } from './shared';
 
 export async function createCompiler({
@@ -35,8 +36,6 @@ export async function createCompiler({
   await context.hooks.onBeforeCreateCompiler.call({
     bundlerConfigs: rspackConfigs,
   });
-
-  const { rspack } = await import('@rspack/core');
 
   if (!(await isSatisfyRspackVersion(rspack.rspackVersion))) {
     throw new Error(
@@ -119,13 +118,11 @@ export async function createCompiler({
     isFirstCompile = false;
   };
 
-  const { MultiStats: MultiStatsStor } = await import('@rspack/core');
-
   onCompileDone(
     compiler,
     done,
     // @ts-expect-error type mismatch
-    MultiStatsStor,
+    rspack.MultiStats,
   );
 
   await context.hooks.onAfterCreateCompiler.call({ compiler });
@@ -149,7 +146,7 @@ export async function createDevMiddleware(
     });
   }
 
-  const { getDevMiddleware } = await import('./devMiddleware');
+  const { getDevMiddleware } = await import('../server/devMiddleware');
   return {
     devMiddleware: getDevMiddleware(compiler),
     compiler,

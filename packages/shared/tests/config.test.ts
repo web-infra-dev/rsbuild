@@ -1,5 +1,5 @@
 import webpack from 'webpack';
-import { stringifyConfig, pickRsbuildConfig } from '../src/config';
+import { pickRsbuildConfig, stringifyConfig } from '../src/config';
 
 describe('stringifyConfig', () => {
   it('should stringify webpack config correctly', async () => {

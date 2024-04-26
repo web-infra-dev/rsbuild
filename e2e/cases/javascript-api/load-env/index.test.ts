@@ -1,5 +1,5 @@
-import { expect } from '@playwright/test';
 import { rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 import { loadEnv } from '@rsbuild/core';
 
 rspackOnlyTest('should load env files correctly', () => {

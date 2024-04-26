@@ -165,17 +165,7 @@ For VS Code users, you can install the [Biome VS Code extension](https://marketp
 
 ## Documentation
 
-Currently Rsbuild provides documentation in English and Chinese. If you can use Chinese, please update both documents at the same time. Otherwise, just update the English documentation.
-
-You can find all the documentation in the `packages/document` folder:
-
-```bash
-root
-└─ packages
-   └─ document
-```
-
-This website is built with [Rspress](https://github.com/web-infra-dev/rspress), the document content can be written using markdown or mdx syntax. You can refer to the [Rspress Website](https://rspress.dev/) for detailed usage.
+You can find the Rsbuild documentation in the [website](./website) folder.
 
 ---
 

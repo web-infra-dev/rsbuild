@@ -1,13 +1,13 @@
 import path from 'node:path';
-import { expect, test } from '@playwright/test';
 import { build } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 
 test('should emit local favicon to dist path', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
       html: {
-        favicon: './src/icon.png',
+        favicon: '../../../assets/icon.png',
       },
     },
   });
@@ -28,7 +28,7 @@ test('should apply asset prefix to favicon URL', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       html: {
-        favicon: './src/icon.png',
+        favicon: '../../../assets/icon.png',
       },
       output: {
         assetPrefix: 'https://www.example.com',

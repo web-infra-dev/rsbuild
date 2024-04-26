@@ -30,6 +30,9 @@ exports[`plugins/react > should work with swc-loader 1`] = `
     "asyncWebAssembly": true,
     "css": false,
   },
+  "ignoreWarnings": [
+    /Conflicting order/,
+  ],
   "infrastructureLogging": {
     "level": "error",
   },
@@ -96,7 +99,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                   "useDefineForClassFields": false,
                 },
               },
-              "sourceMaps": true,
             },
           },
         ],
@@ -146,7 +148,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                   "useDefineForClassFields": false,
                 },
               },
-              "sourceMaps": true,
             },
           },
         ],
@@ -577,6 +578,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
+      "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
         "index": {},

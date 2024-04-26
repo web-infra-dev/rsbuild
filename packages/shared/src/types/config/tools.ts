@@ -1,38 +1,36 @@
-import type {
-  ArrayOrNot,
-  WebpackChain,
-  ChainedConfig,
-  FileFilterUtil,
-  ChainedConfigWithUtils,
-} from '../utils';
-import type {
-  WebpackConfig,
-  PostCSSPlugin,
-  CSSLoaderOptions,
-  SassLoaderOptions,
-  LessLoaderOptions,
-  CSSExtractOptions,
-  StyleLoaderOptions,
-  AutoprefixerOptions,
-  PostCSSLoaderOptions,
-} from '../thirdParty';
-import type { BundlerChain } from '../bundlerConfig';
-import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
-import type {
-  RspackRule,
-  RspackConfig,
-  BuiltinSwcLoaderOptions,
-} from '../rspack';
+import type { rspack } from '@rspack/core';
+import type { SwcLoaderOptions } from '@rspack/core';
 import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
+import type { BundlerChain } from '../bundlerConfig';
 import type { BundlerPluginInstance } from '../bundlerConfig';
+import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
 import type {
   ModifyWebpackChainUtils,
   ModifyWebpackConfigUtils,
 } from '../plugin';
+import type { RspackConfig, RspackRule } from '../rspack';
+import type {
+  AutoprefixerOptions,
+  CSSExtractOptions,
+  CSSLoaderOptions,
+  LessLoaderOptions,
+  PostCSSLoaderOptions,
+  PostCSSPlugin,
+  SassLoaderOptions,
+  StyleLoaderOptions,
+  WebpackConfig,
+} from '../thirdParty';
+import type {
+  ArrayOrNot,
+  ChainedConfig,
+  ChainedConfigWithUtils,
+  FileFilterUtil,
+  WebpackChain,
+} from '../utils';
 
 export type { HTMLPluginOptions };
 
-export type ToolsSwcConfig = ChainedConfig<BuiltinSwcLoaderOptions>;
+export type ToolsSwcConfig = ChainedConfig<SwcLoaderOptions>;
 
 export type ToolsAutoprefixerConfig = ChainedConfig<AutoprefixerOptions>;
 
@@ -77,7 +75,7 @@ export type ModifyRspackConfigUtils = ModifyChainUtils & {
   ) => void;
   removePlugin: (pluginName: string) => void;
   mergeConfig: typeof import('../../../compiled/webpack-merge').merge;
-  rspack: typeof import('@rspack/core');
+  rspack: typeof rspack;
 };
 
 export type ToolsRspackConfig = ChainedConfigWithUtils<

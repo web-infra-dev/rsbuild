@@ -1,9 +1,9 @@
-import type { RsbuildPlugin } from '../../types';
 import {
   LESS_REGEX,
   getLessLoaderOptions,
   getSharedPkgCompiledPath,
 } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../../types';
 
 export function pluginLess(): RsbuildPlugin {
   return {

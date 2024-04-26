@@ -6,6 +6,7 @@ import {
   isUseCssExtract,
   mergeChainedOptions,
 } from '@rsbuild/shared';
+import { rspack } from '@rspack/core';
 import type { RsbuildPlugin } from '../../types';
 import { CssExtractRspackPlugin } from '@rspack/core';
 
@@ -19,11 +20,12 @@ export const pluginOutput = (): RsbuildPlugin => ({
       const config = api.getNormalizedConfig();
 
       if (config.output.copy) {
-        const { CopyRspackPlugin } = await import('@rspack/core');
         const { copy } = config.output;
         const options = Array.isArray(copy) ? { patterns: copy } : copy;
 
-        chain.plugin(CHAIN_ID.PLUGIN.COPY).use(CopyRspackPlugin, [options]);
+        chain
+          .plugin(CHAIN_ID.PLUGIN.COPY)
+          .use(rspack.CopyRspackPlugin, [options]);
       }
 
       const cssPath = getDistPath(config, 'css');

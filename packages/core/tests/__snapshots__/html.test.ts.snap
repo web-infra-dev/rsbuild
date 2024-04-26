@@ -116,6 +116,7 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
+      "modifyTagsFn": undefined,
       "name": "HtmlBasicPlugin",
       "options": {
         "foo": {
@@ -191,6 +192,7 @@ exports[`plugin-html > should allow to modify plugin options by tools.htmlPlugin
       "version": 5,
     },
     HtmlBasicPlugin {
+      "modifyTagsFn": undefined,
       "name": "HtmlBasicPlugin",
       "options": {
         "index": {},
@@ -262,6 +264,7 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
       "version": 5,
     },
     HtmlBasicPlugin {
+      "modifyTagsFn": undefined,
       "name": "HtmlBasicPlugin",
       "options": {
         "index": {},
@@ -332,6 +335,7 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
+      "modifyTagsFn": undefined,
       "name": "HtmlBasicPlugin",
       "options": {
         "index": {},
@@ -440,6 +444,7 @@ exports[`plugin-html > should enable minify in production 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
+      "modifyTagsFn": undefined,
       "name": "HtmlBasicPlugin",
       "options": {
         "index": {},
@@ -510,6 +515,7 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
+      "modifyTagsFn": undefined,
       "name": "HtmlBasicPlugin",
       "options": {
         "index": {},
@@ -580,6 +586,7 @@ exports[`plugin-html > should stop injecting <script> if inject is '() => false'
       "version": 5,
     },
     HtmlBasicPlugin {
+      "modifyTagsFn": undefined,
       "name": "HtmlBasicPlugin",
       "options": {
         "index": {},
@@ -650,6 +657,7 @@ exports[`plugin-html > should stop injecting <script> if inject is 'false' 1`] =
       "version": 5,
     },
     HtmlBasicPlugin {
+      "modifyTagsFn": undefined,
       "name": "HtmlBasicPlugin",
       "options": {
         "index": {},
@@ -775,6 +783,7 @@ exports[`plugin-html > should support multi entry 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
+      "modifyTagsFn": undefined,
       "name": "HtmlBasicPlugin",
       "options": {
         "foo": {},

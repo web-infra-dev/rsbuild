@@ -1,8 +1,9 @@
-import type { Plugins } from '@rsbuild/shared';
+import type { ModifyHTMLTagsFn } from '@rsbuild/shared';
 
-export const plugins: Plugins = {
+export const plugins = {
   basic: () => import('./basic').then((m) => m.pluginBasic()),
-  html: () => import('./html').then((m) => m.pluginHtml()),
+  html: (modifyTagsFn: ModifyHTMLTagsFn) =>
+    import('./html').then((m) => m.pluginHtml(modifyTagsFn)),
   cleanOutput: () => import('./cleanOutput').then((m) => m.pluginCleanOutput()),
   startUrl: () => import('./startUrl').then((m) => m.pluginStartUrl()),
   fileSize: () => import('./fileSize').then((m) => m.pluginFileSize()),
@@ -19,10 +20,8 @@ export const plugins: Plugins = {
   moment: () => import('./moment').then((m) => m.pluginMoment()),
   nodeAddons: () => import('./nodeAddons').then((m) => m.pluginNodeAddons()),
   externals: () => import('./externals').then((m) => m.pluginExternals()),
-  networkPerformance: () =>
-    import('./networkPerformance').then((m) => m.pluginNetworkPerformance()),
-  preloadOrPrefetch: () =>
-    import('./preloadOrPrefetch').then((m) => m.pluginPreloadOrPrefetch()),
+  resourceHints: () =>
+    import('./resourceHints').then((m) => m.pluginResourceHints()),
   performance: () => import('./performance').then((m) => m.pluginPerformance()),
   define: () => import('./define').then((m) => m.pluginDefine()),
   server: () => import('./server').then((m) => m.pluginServer()),

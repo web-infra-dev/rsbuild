@@ -1,26 +1,26 @@
 import type { Server } from 'node:http';
-import connect from '@rsbuild/shared/connect';
 import { join } from 'node:path';
-import sirv from '../../compiled/sirv';
 import {
-  getNodeEnv,
-  setNodeEnv,
-  ROOT_DIST_DIR,
-  getAddressUrls,
-  isDebug,
-  type ServerConfig,
-  type RsbuildConfig,
-  type RequestHandler,
-  type StartServerResult,
   type PreviewServerOptions,
+  ROOT_DIST_DIR,
+  type RequestHandler,
+  type RsbuildConfig,
+  type ServerConfig,
+  type StartServerResult,
+  getAddressUrls,
+  getNodeEnv,
+  isDebug,
+  setNodeEnv,
 } from '@rsbuild/shared';
+import connect from '@rsbuild/shared/connect';
+import sirv from '../../compiled/sirv';
+import type { InternalContext } from '../types';
 import { formatRoutes, getServerOptions, printServerURLs } from './helper';
+import { createHttpServer } from './httpServer';
 import {
   faviconFallbackMiddleware,
   getRequestLoggerMiddleware,
 } from './middlewares';
-import type { InternalContext } from '../types';
-import { createHttpServer } from './httpServer';
 
 type RsbuildProdServerOptions = {
   pwd: string;

@@ -6,8 +6,6 @@ import { mergeChainedOptions } from './mergeChainedOptions';
 import { isFunction, isPlainObject, getSharedPkgCompiledPath } from './utils';
 import { getBrowserslistWithDefault } from './getBrowserslist';
 import type {
-  RsbuildTarget,
-  PostCSSOptions,
   CSSLoaderOptions,
   NormalizedConfig,
   PostCSSLoaderOptions,
@@ -15,6 +13,8 @@ import type {
   RsbuildContext,
   ModifyChainUtils,
   CSSExtractOptions,
+  PostCSSOptions,
+  RsbuildTarget,
 } from './types';
 
 export const getCssModuleLocalIdentName = (
@@ -236,10 +236,11 @@ export const getCssLoaderOptions = ({
 }) => {
   const { cssModules } = config.output;
 
-  const defaultOptions = {
+  const defaultOptions: CSSLoaderOptions = {
     importLoaders,
     modules: {
       auto: cssModules.auto,
+      namedExport: false,
       exportLocalsConvention: cssModules.exportLocalsConvention,
       localIdentName,
     },

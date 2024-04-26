@@ -1,22 +1,22 @@
 import path from 'node:path';
 import {
-  SCRIPT_REGEX,
   DEFAULT_BROWSERSLIST,
-  applyScriptCondition,
   type RsbuildPlugin,
+  SCRIPT_REGEX,
+  applyScriptCondition,
   parseMinifyOptions,
 } from '@rsbuild/shared';
+import { SwcMinimizerPlugin } from './minimizer';
 import type {
-  TransformConfig,
-  PluginSwcOptions,
   ObjPluginSwcOptions,
+  PluginSwcOptions,
+  TransformConfig,
 } from './types';
 import {
   applyPluginConfig,
   checkUseMinify,
   removeUselessOptions,
 } from './utils';
-import { SwcMinimizerPlugin } from './minimizer';
 
 /**
  * In this plugin, we do:
@@ -173,7 +173,6 @@ export function getDefaultSwcConfig(): TransformConfig {
       // https://github.com/swc-project/swc/issues/6403
       preserveAllComments: true,
     },
-    sourceMaps: true,
     env: {
       targets: DEFAULT_BROWSERSLIST.web.join(', '),
     },

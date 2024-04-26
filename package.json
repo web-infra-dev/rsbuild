@@ -10,14 +10,15 @@
   },
   "scripts": {
     "build": "cross-env NX_DAEMON=false nx run-many -t build --exclude @examples/* @e2e/* rsbuild-* --parallel=10",
+    "prebundle": "nx run-many -t prebundle",
     "change": "changeset",
     "changeset": "changeset",
     "check-changeset": "cd ./scripts/check-changeset && pnpm start",
     "check-dependency-version": "check-dependency-version-consistency . --ignore-dep vue-loader",
     "check-spell": "npx cspell",
-    "dev:doc": "cd packages/document && pnpm run dev",
-    "build:doc": "cd packages/document && pnpm run build:doc",
-    "lint": "biome lint . --diagnostic-level=warn && pnpm run check-spell",
+    "dev:doc": "cd website && pnpm run dev",
+    "build:doc": "cd website && pnpm run build",
+    "lint": "biome check . --diagnostic-level=warn && pnpm run check-spell",
     "prepare": "pnpm run build && simple-git-hooks",
     "sort-package-json": "npx sort-package-json \"packages/*/package.json\" \"packages/compat/*/package.json\"",
     "test": "pnpm run ut",
@@ -33,37 +34,36 @@
   "nano-staged": {
     "*.{md,mdx,json,css,less,scss}": "prettier --write",
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
+      "biome check --apply --formatter-enabled=false --linter-enabled=false --no-errors-on-unmatched",
       "prettier --write"
     ],
     "package.json": "pnpm run check-dependency-version"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.6.4",
+    "@biomejs/biome": "1.7.1",
     "@changesets/cli": "^2.27.1",
-    "@modern-js/module-tools": "^2.48.4",
+    "@modern-js/module-tools": "^2.49.1",
     "@rsbuild/tsconfig": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "check-dependency-version-consistency": "^4.1.0",
     "cross-env": "^7.0.3",
     "cspell-ban-words": "^0.0.3",
     "nano-staged": "^0.8.0",
-    "nx": "^18.2.3",
+    "nx": "^18.3.3",
     "prettier": "^3.2.5",
     "simple-git-hooks": "^2.11.1",
-    "vitest": "^1.4.0"
+    "vitest": "^1.5.2"
   },
-  "packageManager": "pnpm@8.15.6",
+  "packageManager": "pnpm@9.0.6",
   "engines": {
     "node": ">=18.0.0",
-    "pnpm": ">=8.7.0"
+    "pnpm": ">=9.0.6"
   },
   "pnpm": {
     "overrides": {
       "esbuild": "~0.19.0",
-      "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@1.0.24",
+      "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@1.0.28",
       "@rsbuild/core": "link:packages/core",
-      "@rspack/core": "0.6.1-canary-e0da4a1-20240411083406",
-      "@rspack/plugin-react-refresh": "0.6.1-canary-e0da4a1-20240411083406",
       "@rsbuild/plugin-react": "link:packages/plugin-react"
     },
     "allowedDeprecatedVersions": {

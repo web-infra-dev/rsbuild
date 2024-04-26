@@ -1,24 +1,24 @@
 import path from 'node:path';
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import type {
-  Stats,
-  NodeEnv,
-  MultiStats,
-  CacheGroups,
-  CompilerTapFn,
-  RsbuildTarget,
-  ModifyChainUtils,
-  NormalizedConfig,
-  SharedCompiledPkgNames,
-} from './types';
-import fse from '../compiled/fs-extra';
-import deepmerge from '../compiled/deepmerge';
-import color from '../compiled/picocolors';
-import { DEFAULT_ASSET_PREFIX } from './constants';
-import type {
   Compiler as WebpackCompiler,
   MultiCompiler as WebpackMultiCompiler,
 } from 'webpack';
+import deepmerge from '../compiled/deepmerge';
+import fse from '../compiled/fs-extra';
+import color from '../compiled/picocolors';
+import { DEFAULT_ASSET_PREFIX } from './constants';
+import type {
+  CacheGroups,
+  CompilerTapFn,
+  ModifyChainUtils,
+  MultiStats,
+  NodeEnv,
+  NormalizedConfig,
+  RsbuildTarget,
+  SharedCompiledPkgNames,
+  Stats,
+} from './types';
 
 export { color, deepmerge };
 
@@ -281,16 +281,6 @@ const colorList: Colors[] = ['green', 'cyan', 'yellow', 'blue', 'magenta'];
 export const getProgressColor = (index: number) =>
   colorList[index % colorList.length];
 
-export function onExitProcess(listener: NodeJS.ExitListener) {
-  process.on('exit', listener);
-
-  // listen to 'SIGINT' and trigger a exit
-  // 'SIGINT' from the terminal is supported on all platforms, and can usually be generated with Ctrl + C
-  process.on('SIGINT', () => {
-    process.exit(0);
-  });
-}
-
 export const isHtmlDisabled = (
   config: NormalizedConfig,
   target: RsbuildTarget,
@@ -309,13 +299,7 @@ export function isUsingHMR(
   config: NormalizedConfig,
   { isProd, target }: Pick<ModifyChainUtils, 'isProd' | 'target'>,
 ) {
-  return (
-    !isProd &&
-    target !== 'node' &&
-    target !== 'web-worker' &&
-    target !== 'service-worker' &&
-    config.dev.hmr
-  );
+  return !isProd && config.dev.hmr && target === 'web';
 }
 
 export const isClientCompiler = (compiler: {
@@ -366,6 +350,17 @@ export const isMultiCompiler = <
   compiler: C | M,
 ): compiler is M => {
   return compiler.constructor.name === 'MultiCompiler';
+};
+
+export const applyToCompiler = (
+  compiler: Compiler | MultiCompiler,
+  apply: (c: Compiler) => void,
+) => {
+  if (isMultiCompiler(compiler)) {
+    compiler.compilers.forEach(apply);
+  } else {
+    apply(compiler);
+  }
 };
 
 export const onCompileDone = (

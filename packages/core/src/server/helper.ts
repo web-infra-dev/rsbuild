@@ -1,21 +1,21 @@
 import net from 'node:net';
 import {
-  color,
-  logger,
-  deepmerge,
-  isFunction,
-  getUrlLabel,
-  normalizeUrl,
-  DEFAULT_PORT,
   DEFAULT_DEV_HOST,
+  DEFAULT_PORT,
+  color,
+  deepmerge,
+  getUrlLabel,
+  isFunction,
+  logger,
+  normalizeUrl,
 } from '@rsbuild/shared';
 import type {
-  Routes,
   DevConfig,
-  PrintUrls,
-  RsbuildEntry,
-  RsbuildConfig,
   OutputStructure,
+  PrintUrls,
+  Routes,
+  RsbuildConfig,
+  RsbuildEntry,
 } from '@rsbuild/shared';
 
 /**
@@ -165,6 +165,7 @@ export const mergeDevOptions = ({
       protocol: undefined,
     },
     writeToDisk: false,
+    liveReload: true,
   };
 
   const devConfig = rsbuildConfig.dev
@@ -276,11 +277,14 @@ export const getDevOptions = async ({
 
   const devConfig = mergeDevOptions({ rsbuildConfig, port });
 
+  const liveReload = devConfig.liveReload;
+
   return {
     devConfig,
     serverConfig,
     port,
     host,
     https,
+    liveReload,
   };
 };

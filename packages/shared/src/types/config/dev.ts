@@ -1,5 +1,6 @@
-import type { ArrayOrNot } from '../utils';
 import type { IncomingMessage, ServerResponse } from 'node:http';
+import type { WatchOptions } from '../../../compiled/chokidar';
+import type { ArrayOrNot } from '../utils';
 
 export type ProgressBarConfig = {
   id?: string;
@@ -29,6 +30,13 @@ export type ClientConfig = {
   overlay?: boolean;
 };
 
+export type ChokidarWatchOptions = WatchOptions;
+
+export type WatchFiles = {
+  paths: string | string[];
+  options?: WatchOptions;
+};
+
 export interface DevConfig {
   /**
    * Whether to enable Hot Module Replacement.
@@ -50,7 +58,7 @@ export interface DevConfig {
   beforeStartUrl?: ArrayOrNot<() => Promise<void> | void>;
   /**
    * Set the URL prefix of static assets during development,
-   * similar to the [output.publicPath](https://webpack.js.org/guides/public-path/) config of webpack.
+   * similar to the [output.publicPath](https://rspack.dev/config/output#outputpublicpath) config of webpack.
    */
   assetPrefix?: string | boolean;
   /**
@@ -76,6 +84,10 @@ export interface DevConfig {
    * Used to control whether the build artifacts of the development environment are written to the disk.
    */
   writeToDisk?: boolean | ((filename: string) => boolean);
+  /**
+   * This option allows you to configure a list of globs/directories/files to watch for file changes.
+   */
+  watchFiles?: WatchFiles;
 }
 
 export type NormalizedDevConfig = DevConfig &

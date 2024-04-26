@@ -1,10 +1,10 @@
+import { isClientCompiler, setupServerHooks } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import {
-  mergeDevOptions,
   formatRoutes,
+  mergeDevOptions,
   printServerURLs,
 } from '../src/server/helper';
-import { isClientCompiler, setupServerHooks } from '@rsbuild/shared';
 
 test('formatRoutes', () => {
   expect(
@@ -316,6 +316,7 @@ describe('test dev server', () => {
           "port": "3000",
           "protocol": undefined,
         },
+        "liveReload": true,
         "writeToDisk": false,
       }
     `);
@@ -342,6 +343,7 @@ describe('test dev server', () => {
           "protocol": undefined,
         },
         "hmr": false,
+        "liveReload": true,
         "writeToDisk": false,
       }
     `);

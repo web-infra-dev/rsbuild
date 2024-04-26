@@ -1,8 +1,8 @@
-import { pluginRem } from '../src';
 import { createStubRsbuild } from '@scripts/test-helper';
 import { pluginCss } from '../../core/src/provider/plugins/css';
 import { pluginLess } from '../../core/src/provider/plugins/less';
 import { pluginSass } from '../../core/src/provider/plugins/sass';
+import { pluginRem } from '../src';
 
 describe('plugin-rem', () => {
   it('should run rem plugin with default config', async () => {

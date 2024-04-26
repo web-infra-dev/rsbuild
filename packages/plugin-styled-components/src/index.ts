@@ -1,14 +1,14 @@
 import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
 import {
+  type ChainedConfig,
+  getDefaultStyledComponentsConfig,
   getNodeEnv,
   isServerTarget,
   mergeChainedOptions,
-  getDefaultStyledComponentsConfig,
-  type ChainedConfig,
 } from '@rsbuild/shared';
 
 /**
- * the options of [babel-plugin-styled-components](https://github.com/styled-components/babel-plugin-styled-components) or [rspackExperiments.styledComponents](https://rspack.dev/guide/loader#optionsrspackexperimentsstyledcomponents).
+ * the options of [rspackExperiments.styledComponents](https://rspack.dev/guide/features/builtin-swc-loader#rspackexperimentsstyledcomponents).
  */
 export type PluginStyledComponentsOptions = {
   displayName?: boolean;

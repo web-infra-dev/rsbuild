@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/core",
-  "version": "0.6.1",
+  "version": "0.6.6",
   "description": "The Rspack-based build tool.",
   "homepage": "https://rsbuild.dev",
   "bugs": {
@@ -49,20 +49,34 @@
   ],
   "scripts": {
     "build": "modern build",
-    "dev": "modern build --watch"
+    "dev": "modern build --watch",
+    "prebundle": "prebundle"
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "@rspack/core": "0.6.1",
+    "@rspack/core": "0.6.3",
     "@swc/helpers": "0.5.3",
     "core-js": "~3.36.0",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.6.2",
     "postcss": "^8.4.38"
   },
   "devDependencies": {
-    "@types/node": "16.x",
+    "@types/node": "18.x",
+    "@types/on-finished": "2.3.4",
+    "@types/ws": "^8.5.10",
+    "commander": "^12.0.0",
+    "connect-history-api-fallback": "^2.0.0",
+    "dotenv": "16.4.5",
+    "dotenv-expand": "11.0.6",
+    "http-compression": "1.0.19",
+    "launch-editor-middleware": "^2.6.1",
+    "on-finished": "2.4.1",
+    "open": "^8.4.0",
+    "prebundle": "1.0.3",
+    "sirv": "^2.0.4",
     "typescript": "^5.4.2",
-    "webpack": "^5.91.0"
+    "webpack": "^5.91.0",
+    "ws": "^8.16.0"
   },
   "engines": {
     "node": ">=16.0.0"

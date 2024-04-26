@@ -1,11 +1,11 @@
 import type { ChainIdentifier } from '../chain';
-import type { Stats, MultiStats } from './stats';
-import type { NodeEnv, MaybePromise } from './utils';
-import type { RsbuildTarget } from './rsbuild';
 import type { BundlerChain } from './bundlerConfig';
+import type { HtmlBasicTag, RsbuildConfig } from './config';
+import type { RsbuildTarget } from './rsbuild';
 import type { Rspack, RspackConfig } from './rspack';
-import type { RsbuildConfig } from './config';
+import type { MultiStats, Stats } from './stats';
 import type { WebpackConfig } from './thirdParty';
+import type { MaybePromise, NodeEnv } from './utils';
 
 export type OnBeforeBuildFn<B = 'rspack'> = (params: {
   bundlerConfigs?: B extends 'rspack' ? RspackConfig[] : WebpackConfig[];
@@ -52,6 +52,13 @@ export type OnAfterCreateCompilerFn<
 
 export type OnExitFn = () => void;
 
+type HTMLTags = {
+  headTags: HtmlBasicTag[];
+  bodyTags: HtmlBasicTag[];
+};
+
+export type ModifyHTMLTagsFn = (tags: HTMLTags) => MaybePromise<HTMLTags>;
+
 export type ModifyRsbuildConfigUtils = {
   /** Merge multiple Rsbuild config objects into one. */
   mergeRsbuildConfig: (...configs: RsbuildConfig[]) => RsbuildConfig;
@@ -87,6 +94,7 @@ export type ModifyBundlerChainUtils = ModifyChainUtils & {
   bundler: {
     BannerPlugin: PluginInstance;
     DefinePlugin: PluginInstance;
+    IgnorePlugin: PluginInstance;
     ProvidePlugin: PluginInstance;
     HotModuleReplacementPlugin: PluginInstance;
   };

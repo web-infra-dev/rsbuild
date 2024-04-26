@@ -1,25 +1,24 @@
+import path from 'node:path';
 import {
+  type BundlerChain,
+  type Polyfill,
+  type RsbuildTarget,
+  SCRIPT_REGEX,
+  applyScriptCondition,
   cloneDeep,
   deepmerge,
-  isWebTarget,
-  SCRIPT_REGEX,
-  getJsSourceMap,
-  getCoreJsVersion,
-  mergeChainedOptions,
-  applyScriptCondition,
   getBrowserslistWithDefault,
-  type Polyfill,
-  type BundlerChain,
-  type RsbuildTarget,
-  type BuiltinSwcLoaderOptions,
+  getCoreJsVersion,
+  isWebTarget,
+  mergeChainedOptions,
 } from '@rsbuild/shared';
-import path from 'node:path';
+import type { SwcLoaderOptions } from '@rspack/core';
+import { PLUGIN_SWC_NAME } from '../../constants';
 import type {
-  RsbuildPlugin,
   NormalizedConfig,
   NormalizedSourceConfig,
+  RsbuildPlugin,
 } from '../../types';
-import { PLUGIN_SWC_NAME } from '../../constants';
 
 const builtinSwcLoaderName = 'builtin:swc-loader';
 
@@ -27,7 +26,7 @@ export async function getDefaultSwcConfig(
   config: NormalizedConfig,
   rootPath: string,
   target: RsbuildTarget,
-): Promise<BuiltinSwcLoaderOptions> {
+): Promise<SwcLoaderOptions> {
   return {
     jsc: {
       externalHelpers: true,
@@ -44,7 +43,6 @@ export async function getDefaultSwcConfig(
     env: {
       targets: await getBrowserslistWithDefault(rootPath, config, target),
     },
-    sourceMaps: Boolean(getJsSourceMap(config)),
   };
 }
 
@@ -93,7 +91,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
         if (isWebTarget(target)) {
           const polyfillMode = config.output.polyfill;
 
-          if (polyfillMode === 'off' || polyfillMode === 'ua') {
+          if (polyfillMode === 'off') {
             swcConfig.env!.mode = undefined;
           } else {
             swcConfig.env!.mode = polyfillMode;
@@ -138,7 +136,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
 });
 
 async function applyCoreJs(
-  swcConfig: BuiltinSwcLoaderOptions,
+  swcConfig: SwcLoaderOptions,
   chain: BundlerChain,
   polyfillMode: Polyfill,
 ) {
@@ -160,7 +158,7 @@ async function applyCoreJs(
 }
 
 function applyTransformImport(
-  swcConfig: BuiltinSwcLoaderOptions,
+  swcConfig: SwcLoaderOptions,
   pluginImport?: NormalizedSourceConfig['transformImport'],
 ) {
   if (pluginImport !== false && pluginImport) {
@@ -171,7 +169,7 @@ function applyTransformImport(
 }
 
 export function applySwcDecoratorConfig(
-  swcConfig: BuiltinSwcLoaderOptions,
+  swcConfig: SwcLoaderOptions,
   config: NormalizedConfig,
 ) {
   swcConfig.jsc ||= {};

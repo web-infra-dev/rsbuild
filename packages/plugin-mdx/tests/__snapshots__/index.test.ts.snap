@@ -33,7 +33,6 @@ exports[`plugin-mdx > should allow to configure mdx loader 1`] = `
             "useDefineForClassFields": false,
           },
         },
-        "sourceMaps": true,
       },
     },
     {
@@ -79,7 +78,6 @@ exports[`plugin-mdx > should register mdx loader correctly 1`] = `
             "useDefineForClassFields": false,
           },
         },
-        "sourceMaps": true,
       },
     },
     {

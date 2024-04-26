@@ -1,5 +1,5 @@
+import small from '@assets/icon.png?url';
 import './index.css';
-import small from './small.png?url';
 
 import(/* webpackChunkName: "foo" */ './async');
 

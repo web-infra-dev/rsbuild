@@ -1,7 +1,7 @@
 {
   "name": "@scripts/test-helper",
   "private": true,
-  "version": "0.6.1",
+  "version": "0.6.6",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild"
@@ -27,7 +27,7 @@
     "@rsbuild/core": "workspace:*",
     "@rsbuild/shared": "workspace:*",
     "@types/lodash": "^4.17.0",
-    "@types/node": "16.x",
+    "@types/node": "18.x",
     "lodash": "^4.17.21",
     "typescript": "^5.4.2",
     "upath": "2.0.1"

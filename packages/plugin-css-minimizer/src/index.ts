@@ -1,9 +1,9 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 import {
-  mergeChainedOptions,
   type BundlerChain,
-  type ChainedConfig,
   type ChainIdentifier,
+  type ChainedConfig,
+  mergeChainedOptions,
   parseMinifyOptions,
 } from '@rsbuild/shared';
 import CssMinimizerWebpackPlugin from 'css-minimizer-webpack-plugin';

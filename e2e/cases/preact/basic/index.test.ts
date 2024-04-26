@@ -1,5 +1,5 @@
+import { build, dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
-import { dev, build, gotoPage, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should render basic Preact component in development correctly',

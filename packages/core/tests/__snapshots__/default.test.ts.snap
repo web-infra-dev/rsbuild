@@ -13,6 +13,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "asyncWebAssembly": true,
     "css": false,
   },
+  "ignoreWarnings": [
+    /Conflicting order/,
+  ],
   "infrastructureLogging": {
     "level": "error",
   },
@@ -74,7 +77,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "useDefineForClassFields": false,
                 },
               },
-              "sourceMaps": true,
             },
           },
         ],
@@ -119,7 +121,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "useDefineForClassFields": false,
                 },
               },
-              "sourceMaps": true,
             },
           },
         ],
@@ -539,6 +540,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
+      "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
         "index": {},
@@ -588,6 +590,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "asyncWebAssembly": true,
     "css": false,
   },
+  "ignoreWarnings": [
+    /Conflicting order/,
+  ],
   "infrastructureLogging": {
     "level": "error",
   },
@@ -649,7 +654,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                   "useDefineForClassFields": false,
                 },
               },
-              "sourceMaps": false,
             },
           },
         ],
@@ -694,7 +698,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                   "useDefineForClassFields": false,
                 },
               },
-              "sourceMaps": false,
             },
           },
         ],
@@ -1171,6 +1174,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "version": 5,
     },
     HtmlBasicPlugin {
+      "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
         "index": {},
@@ -1228,6 +1232,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "asyncWebAssembly": true,
     "css": false,
   },
+  "ignoreWarnings": [
+    /Conflicting order/,
+  ],
   "infrastructureLogging": {
     "level": "error",
   },
@@ -1283,7 +1290,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "useDefineForClassFields": false,
                 },
               },
-              "sourceMaps": true,
             },
           },
         ],
@@ -1322,7 +1328,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "useDefineForClassFields": false,
                 },
               },
-              "sourceMaps": true,
             },
           },
         ],
@@ -1447,7 +1452,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.node\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/core/dist/rspack/nodeAddonsLoader",
+            "loader": "<ROOT>/packages/core/dist/rspack/transformRawLoader",
+            "options": {
+              "id": "rsbuild-transform-0",
+            },
           },
         ],
       },
@@ -1574,6 +1582,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "hints": false,
   },
   "plugins": [
+    RsbuildTransformPlugin {},
     DefinePlugin {
       "_options": {
         "process.env.ASSET_PREFIX": """",
@@ -1614,6 +1623,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "asyncWebAssembly": true,
     "css": false,
   },
+  "ignoreWarnings": [
+    /Conflicting order/,
+  ],
   "infrastructureLogging": {
     "level": "error",
   },
@@ -1683,7 +1695,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "useDefineForClassFields": false,
                 },
               },
-              "sourceMaps": true,
             },
           },
         ],
@@ -1728,7 +1739,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "useDefineForClassFields": false,
                 },
               },
-              "sourceMaps": true,
             },
           },
         ],
@@ -2151,6 +2161,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
+      "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
         "index": {},

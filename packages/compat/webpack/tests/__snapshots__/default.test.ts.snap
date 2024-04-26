@@ -25,6 +25,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   "experiments": {
     "asyncWebAssembly": true,
   },
+  "ignoreWarnings": [
+    /Conflicting order/,
+  ],
   "infrastructureLogging": {
     "level": "error",
   },
@@ -176,6 +179,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "auto": true,
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                "namedExport": false,
               },
               "sourceMap": false,
             },
@@ -231,6 +235,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "auto": true,
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                "namedExport": false,
               },
               "sourceMap": false,
             },
@@ -300,6 +305,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "auto": true,
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                "namedExport": false,
               },
               "sourceMap": false,
             },
@@ -465,6 +471,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
+      "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
         "index": {},
@@ -555,6 +562,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
   "experiments": {
     "asyncWebAssembly": true,
   },
+  "ignoreWarnings": [
+    /Conflicting order/,
+  ],
   "infrastructureLogging": {
     "level": "error",
   },
@@ -706,6 +716,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                 "auto": true,
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[local]-[hash:base64:6]",
+                "namedExport": false,
               },
               "sourceMap": false,
             },
@@ -761,6 +772,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                 "auto": true,
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[local]-[hash:base64:6]",
+                "namedExport": false,
               },
               "sourceMap": false,
             },
@@ -830,6 +842,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                 "auto": true,
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[local]-[hash:base64:6]",
+                "namedExport": false,
               },
               "sourceMap": false,
             },
@@ -1029,6 +1042,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
       "version": 5,
     },
     HtmlBasicPlugin {
+      "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
         "index": {},
@@ -1119,6 +1133,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "experiments": {
     "asyncWebAssembly": true,
   },
+  "ignoreWarnings": [
+    /Conflicting order/,
+  ],
   "infrastructureLogging": {
     "level": "error",
   },
@@ -1256,7 +1273,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.node\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/core/dist/rspack/nodeAddonsLoader",
+            "loader": "<ROOT>/packages/core/dist/rspack/transformRawLoader",
+            "options": {
+              "id": "rsbuild-transform-0",
+            },
           },
         ],
       },
@@ -1279,6 +1299,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 "exportLocalsConvention": "camelCase",
                 "exportOnlyLocals": true,
                 "localIdentName": "[local]-[hash:base64:6]",
+                "namedExport": false,
               },
               "sourceMap": false,
             },
@@ -1304,6 +1325,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 "exportLocalsConvention": "camelCase",
                 "exportOnlyLocals": true,
                 "localIdentName": "[local]-[hash:base64:6]",
+                "namedExport": false,
               },
               "sourceMap": false,
             },
@@ -1343,6 +1365,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 "exportLocalsConvention": "camelCase",
                 "exportOnlyLocals": true,
                 "localIdentName": "[local]-[hash:base64:6]",
+                "namedExport": false,
               },
               "sourceMap": false,
             },
@@ -1383,6 +1406,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "hints": false,
   },
   "plugins": [
+    RsbuildTransformPlugin {},
     DefinePlugin {
       "definitions": {
         "process.env.ASSET_PREFIX": """",
@@ -1465,6 +1489,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "experiments": {
     "asyncWebAssembly": true,
   },
+  "ignoreWarnings": [
+    /Conflicting order/,
+  ],
   "infrastructureLogging": {
     "level": "error",
   },
@@ -1618,6 +1645,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 "exportLocalsConvention": "camelCase",
                 "exportOnlyLocals": true,
                 "localIdentName": "[local]-[hash:base64:6]",
+                "namedExport": false,
               },
               "sourceMap": false,
             },
@@ -1643,6 +1671,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 "exportLocalsConvention": "camelCase",
                 "exportOnlyLocals": true,
                 "localIdentName": "[local]-[hash:base64:6]",
+                "namedExport": false,
               },
               "sourceMap": false,
             },
@@ -1682,6 +1711,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 "exportLocalsConvention": "camelCase",
                 "exportOnlyLocals": true,
                 "localIdentName": "[local]-[hash:base64:6]",
+                "namedExport": false,
               },
               "sourceMap": false,
             },

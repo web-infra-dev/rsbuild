@@ -1,8 +1,8 @@
 import {
+  type RsbuildConfig,
   castArray,
   isFunction,
   isPlainObject,
-  type RsbuildConfig,
 } from '@rsbuild/shared';
 
 const OVERRIDE_PATH = [
@@ -11,6 +11,7 @@ const OVERRIDE_PATH = [
   'output.inlineStyles',
   'output.cssModules.auto',
   'output.targets',
+  'output.emitAssets',
   'server.printUrls',
   'dev.startUrl',
   'provider',

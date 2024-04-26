@@ -1,4 +1,5 @@
 import { TARGET_ID_MAP, isProd } from '@rsbuild/shared';
+import { rspack } from '@rspack/core';
 import type { RsbuildPlugin } from '../../types';
 
 export const pluginProgress = (): RsbuildPlugin => ({
@@ -20,8 +21,7 @@ export const pluginProgress = (): RsbuildPlugin => ({
           ? options.id
           : TARGET_ID_MAP[target];
 
-      const { ProgressPlugin } = await import('@rspack/core');
-      chain.plugin(CHAIN_ID.PLUGIN.PROGRESS).use(ProgressPlugin, [
+      chain.plugin(CHAIN_ID.PLUGIN.PROGRESS).use(rspack.ProgressPlugin, [
         {
           prefix,
           ...(options === true ? {} : options),

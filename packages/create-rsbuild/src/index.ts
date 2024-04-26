@@ -2,8 +2,8 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { cancel, isCancel, note, outro, select, text } from '@clack/prompts';
 import { logger } from 'rslog';
-import { text, select, isCancel, cancel, note, outro } from '@clack/prompts';
 
 function checkCancel(value: unknown) {
   if (isCancel(value)) {

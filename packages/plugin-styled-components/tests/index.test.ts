@@ -1,7 +1,7 @@
-import { expect, describe, it } from 'vitest';
-import { pluginStyledComponents } from '../src';
 import { createRsbuild } from '@rsbuild/core';
 import { SCRIPT_REGEX } from '@rsbuild/shared';
+import { describe, expect, it } from 'vitest';
+import { pluginStyledComponents } from '../src';
 
 describe('plugins/styled-components', () => {
   it('should apply styledComponents option to swc-loader', async () => {

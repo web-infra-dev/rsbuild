@@ -1,0 +1,456 @@
+# Plugin Core
+
+This section describes the core plugin types and APIs.
+
+## RsbuildPlugin
+
+The type of the plugin object. The plugin object contains the following properties:
+
+- `name`: The name of the plugin, a unique identifier.
+- `setup`: The setup function of the plugin, which can be an async function. This function is called once when the plugin is initialized. The plugin API provides the context info, utility functions and lifecycle hooks. For a complete introduction to lifecycle hooks, please read the [Plugin Hooks](/plugins/dev/hooks) chapter.
+- `pre`: Declare the names of pre-plugins, which will be executed before the current plugin.
+- `post`: Declare the names of post-plugins, which will be executed after the current plugin.
+- `remove`: Declare the plugins that need to be removed, you can pass an array of plugin names.
+
+The type of the plugin object, which contains the following properties:
+
+```ts
+type RsbuildPlugin = {
+  name: string;
+  pre?: string[];
+  post?: string[];
+  remove?: string[];
+  setup: (api: RsbuildPluginAPI) => Promise<void> | void;
+};
+```
+
+You can import this type from `@rsbuild/core`:
+
+```ts
+import type { RsbuildPlugin } from '@rsbuild/core';
+
+export default (): RsbuildPlugin => ({
+  name: 'plugin-foo',
+
+  pre: ['plugin-bar'],
+
+  setup: (api) => {
+    api.onAfterBuild(() => {
+      console.log('after build!');
+    });
+  },
+});
+```
+
+### Pre-Plugins
+
+By default, plugins are executed in the order they are added. You can declare pre-execution plugins using the `pre` field.
+
+For example, consider the following two plugins:
+
+```ts
+const pluginFoo = {
+  name: 'plugin-foo',
+};
+
+const pluginBar = {
+  name: 'plugin-bar',
+  pre: ['plugin-foo'],
+};
+```
+
+The Bar plugin is configured with the Foo plugin in its `pre` field, so the Foo plugin will always be executed before the Bar plugin.
+
+### Post-Plugins
+
+Similarly, you can declare post-execution plugins using the `post` field.
+
+```ts
+const pluginFoo = {
+  name: 'plugin-foo',
+};
+
+const pluginBar = {
+  name: 'plugin-bar',
+  post: ['plugin-foo'],
+};
+```
+
+The Bar plugin is configured with the Foo plugin in its `post` field, so the Foo plugin will always be executed after the Bar plugin.
+
+### Removing Plugins
+
+You can remove other plugins within a plugin using the `remove` field.
+
+```ts
+const pluginFoo = {
+  name: 'plugin-foo',
+};
+
+const pluginBar = {
+  name: 'plugin-bar',
+  remove: ['plugin-foo'],
+};
+```
+
+For example, if you register both the Foo and Bar plugins mentioned above, the Foo plugin will not take effect because the Bar plugin declares the removal of the Foo plugin.
+
+## api.context
+
+`api.context` is a read-only object that provides some context information.
+
+The content of `api.context` is exactly the same as `rsbuild.context`, please refer to [rsbuild.context](/api/javascript-api/instance#rsbuild-context).
+
+- **Example:**
+
+```ts
+const pluginFoo = () => ({
+  setup(api) {
+    console.log(api.context.distPath);
+  },
+});
+```
+
+## api.getRsbuildConfig
+
+import GetRsbuildConfig from '@en/shared/getRsbuildConfig.md';
+
+<GetRsbuildConfig />
+
+- **Example:**
+
+```ts
+const pluginFoo = () => ({
+  setup(api) {
+    const config = api.getRsbuildConfig();
+    console.log(config.html?.title);
+  },
+});
+```
+
+## api.getNormalizedConfig
+
+import GetNormalizedConfig from '@en/shared/getNormalizedConfig.md';
+
+<GetNormalizedConfig />
+
+- **Example:**
+
+```ts
+const pluginFoo = () => ({
+  setup(api) {
+    const config = api.getNormalizedConfig();
+    console.log(config.html.title);
+  },
+});
+```
+
+## api.isPluginExists
+
+import IsPluginExists from '@en/shared/isPluginExists.md';
+
+<IsPluginExists />
+
+- **Example:**
+
+```ts
+export default () => ({
+  setup: (api) => {
+    console.log(api.isPluginExists('plugin-foo'));
+  },
+});
+```
+
+## api.getHTMLPaths
+
+import GetHTMLPaths from '@en/shared/getHtmlPaths.md';
+
+<GetHTMLPaths />
+
+- **Example:**
+
+```ts
+const pluginFoo = () => ({
+  setup(api) {
+    api.modifyRspackConfig(() => {
+      const htmlPaths = api.getHTMLPaths();
+      console.log(htmlPaths); // { index: 'index.html' };
+    });
+  },
+});
+```
+
+## api.transform
+
+Used to transform the code of modules.
+
+- **Version:** `>= 0.6.0`
+- **Type:**
+
+```ts
+function Transform(
+  descriptor: { test?: RuleSetCondition | undefined },
+  handler: TransformHandler,
+): void;
+```
+
+`api.transform` accepts two params:
+
+- `descriptor`: an object describing the module's matching conditions.
+- `handler`: a transformation function that takes the current module code and returns the transformed code.
+
+### Example
+
+For example, match modules with the `.pug` extension and transform them to JavaScript code:
+
+```js
+import pug from 'pug';
+
+const pluginPug = () => ({
+  name: 'my-pug-plugin',
+  setup(api) {
+    api.transform({ test: /\.pug$/ }, ({ code }) => {
+      const templateCode = pug.compileClient(code, {});
+      return `${templateCode}; module.exports = template;`;
+    });
+  },
+});
+```
+
+### Descriptor Param
+
+The descriptor param is an object describing the module's matching conditions.
+
+- **Type:**
+
+```ts
+type TransformDescriptor = {
+  test?: RuleSetCondition;
+  targets?: RsbuildTarget[];
+  resourceQuery?: RuleSetCondition;
+  raw?: boolean;
+};
+```
+
+The `descriptor` param supports the following matching conditions:
+
+- `test`: matches module's path (without query), the same as Rspack's [Rule.test](https://rspack.dev/config/module#ruletest).
+
+```js
+api.transform({ test: /\.pug$/ }, ({ code }) => {
+  // ...
+});
+```
+
+- `targets`: matches the Rsbuild [output.targets](/config/output/targets), and applies the current transform function only to the matched targets.
+
+```js
+api.transform({ test: /\.pug$/, targets: ['web'] }, ({ code }) => {
+  // ...
+});
+```
+
+- `resourceQuery`: matches module's query, the same as Rspack's [Rule.resourceQuery](https://rspack.dev/config/module#ruleresourcequery).
+
+```js
+api.transform({ resourceQuery: /raw/ }, ({ code }) => {
+  // ...
+});
+```
+
+- `raw`: if raw is `true`, the transform handler will receive the Buffer type code instead of the string type.
+
+```js
+api.transform({ test: /\.node$/, raw: true }, ({ code }) => {
+  // ...
+});
+```
+
+### Handler Param
+
+The handler param is a transformation function that takes the current module code and returns the transformed code.
+
+- **Type:**
+
+```ts
+type TransformContext = {
+  code: string;
+  resource: string;
+  resourcePath: string;
+  resourceQuery: string;
+  addDependency: (file: string) => void;
+  emitFile: (
+    name: string,
+    content: string | Buffer,
+    sourceMap?: string,
+    assetInfo?: Record<string, any>,
+  ) => void;
+};
+
+type TransformResult =
+  | string
+  | {
+      code: string;
+      map?: string | RspackSourceMap | null;
+    };
+
+type TransformHandler = (
+  context: TransformContext,
+) => MaybePromise<TransformResult>;
+```
+
+The `handler` function provides the following params:
+
+- `code`: The code of the module.
+- `resource`: The absolute path of the module, including the query.
+- `resourcePath`: The absolute path of the module, without the query.
+- `resourceQuery`: The query of the module.
+- `addDependency`: Add an additional file as the dependency. The file will be watched and changes to the file will trigger rebuild.
+- `emitFile`: Emits a file to the build output.
+
+For example:
+
+```js
+api.transform(
+  { test: /\.pug$/ },
+  ({ code, resource, resourcePath, resourceQuery }) => {
+    console.log(code); // -> some code
+    console.log(resource); // -> '/home/user/project/src/template.pug?foo=123'
+    console.log(resourcePath); // -> '/home/user/project/src/template.pug'
+    console.log(resourceQuery); // -> '?foo=123'
+  },
+);
+```
+
+### Difference with loader
+
+`api.transform` can be thought of as a lightweight implementation of Rspack loader. It provides a simple and easy to use API and automatically calls Rspack loader at the backend to transform the code.
+
+In Rsbuild plugins, you can quickly implement code transformation functions using `api.transform`, which can handle the majority of common scenarios without having to learn how to write an Rspack loader.
+
+Note that for some complex code transformation scenarios, `api.transform` may not be sufficient. In such situations, you can implement it using the Rspack loader.
+
+## api.expose
+
+Used for plugin communication.
+
+`api.expose` can explicitly expose some properties or methods of the current plugin, and other plugins can get these APIs through `api.useExposed`.
+
+- **Type:**
+
+```ts
+/**
+ * @param id Unique identifier, using Symbol can avoid naming conflicts
+ * @param api Properties or methods to be exposed, it is recommended to use object format
+ */
+function expose<T = any>(id: string | symbol, api: T): void;
+```
+
+- **Example:**
+
+```ts
+const pluginParent = () => ({
+  name: 'plugin-parent',
+  setup(api) {
+    api.expose('plugin-parent', {
+      value: 1,
+      double: (val: number) => val * 2,
+    });
+  },
+});
+```
+
+## api.useExposed
+
+Used for plugin communication.
+
+`api.useExposed` can get the properties or methods exposed by other plugins.
+
+- **Type:**
+
+```ts
+/**
+ * @param id Unique identifier
+ * @returns The properties or methods obtained
+ */
+function useExposed<T = any>(id: string | symbol): T | undefined;
+```
+
+- **Example:**
+
+```ts
+const pluginChild = () => ({
+  name: 'plugin-child',
+  pre: ['plugin-parent'],
+  setup(api) {
+    const parentApi = api.useExposed('plugin-parent');
+    if (parentApi) {
+      console.log(parentApi.value); // -> 1
+      console.log(parentApi.double(1)); // -> 2
+    }
+  },
+});
+```
+
+### Identifiers
+
+You can use Symbol as a unique identifier to avoid potential naming conflicts:
+
+```ts
+// pluginParent.ts
+export const PARENT_API_ID = Symbol('plugin-parent');
+
+const pluginParent = () => ({
+  name: 'plugin-parent',
+  setup(api) {
+    api.expose(PARENT_API_ID, {
+      // some api
+    });
+  },
+});
+
+// pluginChild.ts
+import { PARENT_API_ID } from './pluginParent';
+
+const pluginChild = () => ({
+  name: 'plugin-child',
+  setup(api) {
+    const parentApi = api.useExposed(PARENT_API_ID);
+    if (parentApi) {
+      console.log(parentApi);
+    }
+  },
+});
+```
+
+### Type Declaration
+
+You can declare types through the generics of the function:
+
+```ts
+// pluginParent.ts
+export type ParentAPI = {
+  // ...
+};
+
+// pluginChild.ts
+import type { ParentAPI } from './pluginParent';
+
+const pluginChild = () => ({
+  name: 'plugin-child',
+  setup(api) {
+    const parentApi = api.useExposed<ParentAPI>(PARENT_API_ID);
+    if (parentApi) {
+      console.log(parentApi);
+    }
+  },
+});
+```
+
+### Execution Order
+
+When communicating between plugins, you need to be aware of the order in which the plugins are executed.
+
+For example, in the above example, if `pluginParent` is not registered, or registers after `pluginChild`, then `api.useExposed('plugin-parent')` will return an `undefined`.
+
+You can use the `pre`, `post` options of the plugin object, and the `order` option of the plugin hook to ensure the order is correct.

@@ -1,19 +1,20 @@
 import {
-  debug,
   CHAIN_ID,
-  castArray,
-  getNodeEnv,
-  chainToConfig,
-  modifyBundlerChain,
-  mergeChainedOptions,
-  type RspackConfig,
-  type RsbuildTarget,
   type ModifyChainUtils,
   type ModifyRspackConfigUtils,
+  type RsbuildTarget,
+  type RspackConfig,
+  castArray,
+  chainToConfig,
+  debug,
+  getNodeEnv,
+  mergeChainedOptions,
+  modifyBundlerChain,
 } from '@rsbuild/shared';
-import { getCompiledPath } from './shared';
-import type { InternalContext } from '../types';
+import { rspack } from '@rspack/core';
 import { getHTMLPlugin } from '../htmlUtils';
+import type { InternalContext } from '../types';
+import { getCompiledPath } from './shared';
 
 async function modifyRspackConfig(
   context: InternalContext,
@@ -44,7 +45,6 @@ async function getConfigUtils(
   chainUtils: ModifyChainUtils,
 ): Promise<ModifyRspackConfigUtils> {
   const { merge } = await import('@rsbuild/shared/webpack-merge');
-  const rspack = await import('@rspack/core');
 
   return {
     ...chainUtils,
@@ -118,15 +118,17 @@ export async function generateRspackConfig({
   const {
     BannerPlugin,
     DefinePlugin,
+    IgnorePlugin,
     ProvidePlugin,
     HotModuleReplacementPlugin,
-  } = await import('@rspack/core');
+  } = rspack;
 
   const chain = await modifyBundlerChain(context, {
     ...chainUtils,
     bundler: {
       BannerPlugin,
       DefinePlugin,
+      IgnorePlugin,
       ProvidePlugin,
       HotModuleReplacementPlugin,
     },

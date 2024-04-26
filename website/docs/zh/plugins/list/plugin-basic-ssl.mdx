@@ -1,0 +1,33 @@
+# Basic SSL 插件
+
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-basic-ssl" />
+
+为 HTTPS server 生成不受信任的自签名证书。
+
+Basic SSL 插件会自动生成 self-signed 证书，并设置 [server.https](/config/server/https) 选项。当你访问页面时，浏览器会提示该证书是不受信任的，你可以在手动确认后访问 HTTPS 页面。
+
+## 快速开始
+
+### 安装插件
+
+你可以通过如下的命令安装插件:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-basic-ssl -D" />
+
+### 注册插件
+
+你可以在 `rsbuild.config.ts` 文件中注册插件：
+
+```ts title="rsbuild.config.ts"
+import { pluginBasicSsl } from '@rsbuild/plugin-basic-ssl';
+
+export default {
+  plugins: [pluginBasicSsl()],
+};
+```
+
+然后访问页面的 https URL，并在浏览器中确认即可。

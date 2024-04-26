@@ -1,13 +1,15 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Socket } from 'node:net';
+import type { Server as ConnectServer } from '../../compiled/connect';
 import type {
+  DevConfig,
   NextFunction,
   RequestHandler,
   ServerAPIs,
-  DevConfig,
 } from './config/dev';
 import type { RspackCompiler, RspackMultiCompiler } from './rspack';
-import type { Server as ConnectServer } from '../../compiled/connect';
+
+export type { FSWatcher } from '../../compiled/chokidar';
 
 export type Middleware = (
   req: IncomingMessage,
@@ -29,6 +31,9 @@ export type DevMiddlewareOptions = {
   clientPaths?: string[];
   clientConfig: DevConfig['client'];
   publicPath?: string;
+
+  /** When liveReload is disabled, the page does not reload. */
+  liveReload?: boolean;
 
   etag?: 'weak' | 'strong';
 

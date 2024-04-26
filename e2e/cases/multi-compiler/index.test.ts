@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
 import { build, dev, gotoPage } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 
 test('multi compiler build', async ({ page }) => {
   const rsbuild = await build({

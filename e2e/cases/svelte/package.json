@@ -3,11 +3,11 @@
   "name": "@e2e/svelte",
   "version": "1.0.0",
   "dependencies": {
-    "svelte": "^4.2.12"
+    "svelte": "^4.2.15"
   },
   "devDependencies": {
     "less": "^4.2.0",
-    "sass": "^1.74.1",
+    "sass": "^1.75.0",
     "stylus": "0.63.0"
   }
 }

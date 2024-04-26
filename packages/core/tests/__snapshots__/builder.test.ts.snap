@@ -13,6 +13,9 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
     "asyncWebAssembly": true,
     "css": false,
   },
+  "ignoreWarnings": [
+    /Conflicting order/,
+  ],
   "infrastructureLogging": {
     "level": "error",
   },
@@ -74,7 +77,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "useDefineForClassFields": false,
                 },
               },
-              "sourceMaps": true,
             },
           },
         ],
@@ -119,7 +121,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "useDefineForClassFields": false,
                 },
               },
-              "sourceMaps": true,
             },
           },
         ],
@@ -539,6 +540,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
+      "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
         "index": {},

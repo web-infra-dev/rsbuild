@@ -1,11 +1,10 @@
 import path from 'node:path';
+import type { RsbuildConfig, RsbuildPluginAPI, Rspack } from '@rsbuild/core';
 import {
-  isUsingHMR,
   SCRIPT_REGEX,
+  isUsingHMR,
   modifySwcLoaderOptions,
-  type SwcReactConfig,
 } from '@rsbuild/shared';
-import type { RsbuildPluginAPI } from '@rsbuild/core';
 import type { PluginReactOptions } from '.';
 
 export const applyBasicReactSupport = (
@@ -17,7 +16,7 @@ export const applyBasicReactSupport = (
   api.modifyBundlerChain(async (chain, { CHAIN_ID, isDev, isProd, target }) => {
     const config = api.getNormalizedConfig();
     const usingHMR = isUsingHMR(config, { isProd, target });
-    const reactOptions: SwcReactConfig = {
+    const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
       development: isDev,
       refresh: usingHMR,
       runtime: 'automatic',
@@ -49,6 +48,37 @@ export const applyBasicReactSupport = (
 
     chain
       .plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)
-      .use(ReactRefreshRspackPlugin, [{ include: [SCRIPT_REGEX] }]);
+      .use(ReactRefreshRspackPlugin, [
+        {
+          include: [SCRIPT_REGEX],
+          ...options.reactRefreshOptions,
+        },
+      ]);
+  });
+};
+
+export const applyReactProfiler = (api: RsbuildPluginAPI) => {
+  api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
+    const enableProfilerConfig: RsbuildConfig = {
+      output: {
+        minify: {
+          jsOptions: {
+            // Need to keep classnames and function names like Components for debugging purposes.
+            mangle: {
+              keep_classnames: true,
+              keep_fnames: true,
+            },
+          },
+        },
+      },
+    };
+    return mergeRsbuildConfig(config, enableProfilerConfig);
+  });
+
+  api.modifyBundlerChain((chain) => {
+    // Replace react-dom with the profiling version.
+    // Reference: https://gist.github.com/bvaughn/25e6233aeb1b4f0cdb8d8366e54a3977
+    chain.resolve.alias.set('react-dom$', 'react-dom/profiling');
+    chain.resolve.alias.set('scheduler/tracing', 'scheduler/tracing-profiling');
   });
 };

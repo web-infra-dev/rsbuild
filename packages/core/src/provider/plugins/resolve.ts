@@ -1,5 +1,5 @@
-import type { RsbuildPlugin } from '../../types';
 import { applyResolvePlugin } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../../types';
 
 export const pluginResolve = (): RsbuildPlugin => ({
   name: 'rsbuild:resolve',

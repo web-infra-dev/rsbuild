@@ -1,12 +1,12 @@
-import { expect, test } from '@playwright/test';
 import { build } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 
 test('should emit app icon to dist path', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
       html: {
-        appIcon: './src/icon.png',
+        appIcon: '../../../assets/icon.png',
       },
     },
   });
@@ -29,7 +29,7 @@ test('should apply asset prefix to app icon URL', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       html: {
-        appIcon: './src/icon.png',
+        appIcon: '../../../assets/icon.png',
       },
       output: {
         assetPrefix: 'https://www.example.com',
@@ -42,7 +42,7 @@ test('should apply asset prefix to app icon URL', async () => {
     origin: { bundlerConfigs },
   } = await rsbuild.instance.inspectConfig();
 
-  expect(bundlerConfigs[0].output.publicPath).toBe('https://www.example.com/');
+  expect(bundlerConfigs[0].output?.publicPath).toBe('https://www.example.com/');
 
   const html =
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];

@@ -1,11 +1,11 @@
-import type { RspackConfig } from '../rspack';
-import type { RsbuildTarget } from '../rsbuild';
 import type {
   CopyRspackPluginOptions,
   Externals,
   SwcJsMinimizerRspackPluginOptions,
 } from '@rspack/core';
 import type { HTMLPluginOptions } from '../../types';
+import type { RsbuildTarget } from '../rsbuild';
+import type { RspackConfig } from '../rspack';
 
 export type DistPathConfig = {
   /**
@@ -129,7 +129,7 @@ export type LegalComments = 'none' | 'inline' | 'linked';
 
 export type NormalizedDataUriLimit = Required<DataUriLimit>;
 
-export type Polyfill = 'usage' | 'entry' | 'ua' | 'off';
+export type Polyfill = 'usage' | 'entry' | 'off';
 
 export type SourceMap = {
   js?: RspackConfig['devtool'];
@@ -186,6 +186,8 @@ export type InlineChunkTestFunction = (params: {
 
 export type InlineChunkTest = RegExp | InlineChunkTestFunction;
 
+export type EmitAssets = (params: { target: RsbuildTarget }) => boolean;
+
 export interface OutputConfig {
   /**
    * Specify build targets to run in different target environments.
@@ -193,7 +195,7 @@ export interface OutputConfig {
   targets?: RsbuildTarget[];
   /**
    * At build time, prevent some `import` dependencies from being packed into bundles in your code, and instead fetch them externally at runtime.
-   * For more information, please see: [webpack Externals](https://webpack.js.org/configuration/externals/)
+   * For more information, please see: [Rspack Externals](https://rspack.dev/config/externals)
    */
   externals?: Externals;
   /**
@@ -281,6 +283,11 @@ export interface OutputConfig {
    * Copies the specified file or directory to the dist directory.
    */
   copy?: CopyPluginOptions | CopyPluginOptions['patterns'];
+  /**
+   * Whether to emit static assets such as image, font, etc.
+   * Return `false` to avoid outputting unnecessary assets for some scenarios such as SSR.
+   */
+  emitAssets?: EmitAssets;
 }
 
 export type OverrideBrowserslist =
@@ -309,4 +316,5 @@ export interface NormalizedOutputConfig extends OutputConfig {
     exportLocalsConvention: CssModuleLocalsConvention;
     auto?: CssModules['auto'];
   };
+  emitAssets: EmitAssets;
 }

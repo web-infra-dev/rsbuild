@@ -1,11 +1,11 @@
-import { isObject } from './utils';
-import type {
-  MinifyJSOptions,
-  NormalizedConfig,
-  HTMLPluginOptions,
-} from './types';
 import type { SwcJsMinimizerRspackPluginOptions } from '@rspack/core';
 import deepmerge from '../compiled/deepmerge';
+import type {
+  HTMLPluginOptions,
+  MinifyJSOptions,
+  NormalizedConfig,
+} from './types';
+import { isObject } from './utils';
 
 function applyRemoveConsole(
   options: MinifyJSOptions,

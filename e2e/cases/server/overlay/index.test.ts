@@ -1,6 +1,6 @@
-import { expect, test } from '@playwright/test';
-import { dev, gotoPage, proxyConsole } from '@e2e/helper';
 import { join } from 'node:path';
+import { dev, gotoPage, proxyConsole } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
 
 const cwd = __dirname;
@@ -13,14 +13,14 @@ test('should show overlay correctly', async ({ page }) => {
 
   const { restore } = proxyConsole();
 
-  await fse.copy(join(cwd, 'src'), join(cwd, 'test-src'));
+  await fse.copy(join(cwd, 'src'), join(cwd, 'test-temp-src'));
 
   const rsbuild = await dev({
     cwd,
     rsbuildConfig: {
       source: {
         entry: {
-          index: join(cwd, 'test-src/index.tsx'),
+          index: join(cwd, 'test-temp-src/index.tsx'),
         },
       },
     },
@@ -32,7 +32,7 @@ test('should show overlay correctly', async ({ page }) => {
 
   expect(await errorOverlay.locator('.title').count()).toBe(0);
 
-  const appPath = join(cwd, 'test-src/App.tsx');
+  const appPath = join(cwd, 'test-temp-src/App.tsx');
 
   await fse.writeFile(
     appPath,

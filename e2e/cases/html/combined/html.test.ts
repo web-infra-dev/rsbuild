@@ -1,7 +1,7 @@
 import { join } from 'node:path';
+import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { fse } from '@rsbuild/shared';
-import { build } from '@e2e/helper';
 
 test.describe('should combine multiple html config correctly', () => {
   let rsbuild: Awaited<ReturnType<typeof build>>;
@@ -24,8 +24,8 @@ test.describe('should combine multiple html config correctly', () => {
             description: 'a description of the page',
           },
           inject: 'body',
-          appIcon: './src/assets/icon.png',
-          favicon: './src/assets/icon.png',
+          appIcon: '../../../assets/icon.png',
+          favicon: '../../../assets/icon.png',
         },
       },
     });

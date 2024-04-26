@@ -1,5 +1,5 @@
-import { test, type Page, expect } from '@playwright/test';
 import { build, gotoPage } from '@e2e/helper';
+import { type Page, expect, test } from '@playwright/test';
 import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
 import { pluginStylus } from '@rsbuild/plugin-stylus';
 import { pluginSwc } from '@rsbuild/plugin-swc';

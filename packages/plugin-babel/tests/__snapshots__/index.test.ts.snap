@@ -49,7 +49,6 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
             "useDefineForClassFields": false,
           },
         },
-        "sourceMaps": true,
       },
     },
     {

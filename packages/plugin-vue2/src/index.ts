@@ -1,7 +1,8 @@
+import type { RsbuildPlugin } from '@rsbuild/core';
 import { deepmerge } from '@rsbuild/shared';
 import { VueLoaderPlugin } from 'vue-loader';
-import type { RsbuildPlugin } from '@rsbuild/core';
 import type { VueLoaderOptions } from 'vue-loader';
+import { VueLoader15PitchFixPlugin } from './VueLoader15PitchFixPlugin';
 import { applySplitChunksRule } from './splitChunks';
 
 export type SplitVueChunkOptions = {
@@ -60,6 +61,10 @@ export function pluginVue2(options: PluginVueOptions = {}): RsbuildPlugin {
           .options(vueLoaderOptions);
 
         chain.plugin(CHAIN_ID.PLUGIN.VUE_LOADER_PLUGIN).use(VueLoaderPlugin);
+        // we could remove this once a new vue-loader@15 is released with https://github.com/vuejs/vue-loader/pull/2071 shipped
+        chain
+          .plugin(CHAIN_ID.PLUGIN.VUE_LOADER_15_PITCH_FIX_PLUGIN)
+          .use(VueLoader15PitchFixPlugin);
       });
 
       applySplitChunksRule(api, options.splitChunks);

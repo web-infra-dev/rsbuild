@@ -15,22 +15,22 @@
  * limitations under the License.
  */
 
-import type { Compiler, RspackPluginInstance, Compilation } from '@rspack/core';
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import {
+  type PreloadOrPreFetchOption,
+  getPublicPathFromCompiler,
   upperFirst,
   withPublicPath,
-  getPublicPathFromCompiler,
-  type PreloadOrPreFetchOption,
 } from '@rsbuild/shared';
-import {
-  extractChunks,
-  doesChunkBelongToHtml,
-  determineAsValue,
-  type BeforeAssetTagGenerationHtmlPluginData,
-  type As,
-} from './helpers';
+import type { Compilation, Compiler, RspackPluginInstance } from '@rspack/core';
+import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import { getHTMLPlugin } from '../../htmlUtils';
+import {
+  type As,
+  type BeforeAssetTagGenerationHtmlPluginData,
+  determineAsValue,
+  doesChunkBelongToHtml,
+  extractChunks,
+} from './helpers';
 
 const defaultOptions = {
   type: 'async-chunks' as const,

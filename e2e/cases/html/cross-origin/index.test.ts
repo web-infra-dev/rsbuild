@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
 import { build } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 
 test('should not apply crossOrigin by default', async () => {
   const rsbuild = await build({
@@ -7,43 +7,6 @@ test('should not apply crossOrigin by default', async () => {
     rsbuildConfig: {
       html: {
         scriptLoading: 'blocking',
-      },
-    },
-  });
-  const files = await rsbuild.unwrapOutputJSON();
-  const html =
-    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
-
-  expect(html).not.toContain('crossorigin');
-});
-
-test('should not apply crossOrigin when same origin', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    rsbuildConfig: {
-      html: {
-        scriptLoading: 'blocking',
-        crossorigin: 'anonymous',
-      },
-    },
-  });
-  const files = await rsbuild.unwrapOutputJSON();
-  const html =
-    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
-
-  expect(html).not.toContain('crossorigin');
-});
-
-test('should not apply crossOrigin if assetPrefix is auto', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    rsbuildConfig: {
-      html: {
-        scriptLoading: 'blocking',
-        crossorigin: 'anonymous',
-      },
-      output: {
-        assetPrefix: 'auto',
       },
     },
   });

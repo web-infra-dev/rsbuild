@@ -1,9 +1,9 @@
 import type { RsbuildPluginAPI } from '@rsbuild/core';
 import {
-  isProd,
-  isPlainObject,
-  createCacheGroups,
   type SplitChunks,
+  createCacheGroups,
+  isPlainObject,
+  isProd,
 } from '@rsbuild/shared';
 import type { SplitReactChunkOptions } from '.';
 

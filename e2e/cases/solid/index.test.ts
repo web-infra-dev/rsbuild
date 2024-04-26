@@ -1,9 +1,9 @@
 import path from 'node:path';
+import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginSolid } from '@rsbuild/plugin-solid';
 import { pluginStylus } from '@rsbuild/plugin-stylus';
-import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
 
 const buildFixture = (rootDir: string): ReturnType<typeof build> => {
   const root = path.join(__dirname, rootDir);

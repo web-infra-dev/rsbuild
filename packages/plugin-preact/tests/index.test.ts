@@ -1,6 +1,6 @@
-import { expect, describe, it } from 'vitest';
-import { pluginPreact } from '../src';
 import { createRsbuild } from '@rsbuild/core';
+import { describe, expect, it } from 'vitest';
+import { pluginPreact } from '../src';
 
 describe('plugins/preact', () => {
   const preactAlias = {

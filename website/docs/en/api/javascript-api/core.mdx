@@ -1,0 +1,340 @@
+# Rsbuild Core
+
+This section describes some of the core methods provided by Rsbuild.
+
+## createRsbuild
+
+Create a Rsbuild instance object.
+
+- **Type:**
+
+```ts
+function createRsbuild(
+  options?: CreateRsbuildOptions,
+): Promise<RsbuildInstance>;
+```
+
+- **Example:**
+
+```ts
+import { createRsbuild } from '@rsbuild/core';
+
+const rsbuild = await createRsbuild({
+  rsbuildConfig: {
+    // rsbuild configs
+  },
+});
+```
+
+### options
+
+The first parameter of `createRsbuild` is a options object, you can pass in the following options:
+
+```ts
+type CreateRsbuildOptions = {
+  cwd?: string;
+  rsbuildConfig?: RsbuildConfig;
+};
+```
+
+Description:
+
+- `cwd`: The root path of the current build, the default value is `process.cwd()`.
+- `rsbuildConfig`: Rsbuild configuration object. Rsbuild provides a rich set of configuration options that allow you to customize the build behavior flexibly. You can find all available configuration options in the [Configuration](/config/) section.
+
+## loadConfig
+
+Load Rsbuild configuration file.
+
+- **Type:**
+
+```ts
+function loadConfig(params?: {
+  // Default is process.cwd()
+  cwd?: string;
+  // Specify the configuration file, can be a relative or absolute path
+  path?: string;
+}): Promise<{
+  content: RsbuildConfig;
+  filePath: string | null;
+}>;
+```
+
+- **Example:**
+
+```ts
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig();
+
+console.log(content); // -> Rsbuild config object
+
+const rsbuild = await createRsbuild({
+  rsbuildConfig: content,
+});
+```
+
+If the Rsbuild config file does not exist in the cwd directory, the return value of the loadConfig method is `{ content: {}, filePath: null }`.
+
+## loadEnv
+
+Load the `.env` file and return all environment variables starting with the specified prefixes.
+
+- **Type:**
+
+```ts
+type LoadEnvOptions = {
+  /**
+   * The root path to load the env file
+   * @default process.cwd()
+   */
+  cwd?: string;
+  /**
+   * Used to specify the name of the .env.[mode] file
+   * @default process.env.NODE_ENV
+   */
+  mode?: string;
+  /**
+   * The prefix of public variables
+   * @default ['PUBLIC_']
+   */
+  prefixes?: string[];
+};
+
+function loadEnv(options: LoadEnvOptions): {
+  /** All environment variables in the .env file */
+  parsed: Record<string, string>;
+  /** The absolute paths to all env files */
+  filePaths: string[];
+  /** Environment variables that start with prefixes */
+  publicVars: Record<string, string>;
+  /** Clear the environment variables mounted on `process.env` */
+  cleanup: () => void;
+};
+```
+
+- **Example:**
+
+```ts
+import { loadEnv, mergeRsbuildConfig } from '@rsbuild/core';
+
+const { parsed, publicVars } = loadEnv();
+
+const mergedConfig = mergeRsbuildConfig(
+  {
+    source: {
+      define: publicVars,
+    },
+  },
+  userConfig,
+);
+```
+
+This method will also load files such as `.env.local` and `.env.[mode]`, see [Environment Variables](/guide/advanced/env-vars) for details.
+
+## mergeRsbuildConfig
+
+Used to merge multiple Rsbuild configuration objects.
+
+The `mergeRsbuildConfig` function takes multiple configuration objects as parameters. It deep merges each configuration object, automatically combining multiple function values into an array of sequentially executed functions, and returns a merged configuration object.
+
+- **Type:**
+
+```ts
+function mergeRsbuildConfig(...configs: RsbuildConfig[]): RsbuildConfig;
+```
+
+### Basic Example
+
+```ts
+import { mergeRsbuildConfig } from '@rsbuild/core';
+
+const config1 = {
+  dev: {
+    https: false,
+  },
+};
+const config2 = {
+  dev: {
+    https: true,
+  },
+};
+
+const mergedConfig = mergeRsbuildConfig(config1, config2);
+
+console.log(mergedConfig); // { dev: { https: true } }
+```
+
+> This method will not modify the config object in the input parameter.
+
+### Merge Rules
+
+In addition to deep merging, the `mergeRsbuildConfig` function also handles some options in a special way.
+
+For example, [tools.rspack](/config/tools/rspack) can be set as a function. When multiple configuration objects contain `tools.rspack`, `mergeRsbuildConfig` will not simply retain the last function. On the contrary, it will merge all `tools.rspack` functions or objects into an array.
+
+```ts
+import { mergeRsbuildConfig } from '@rsbuild/core';
+
+const config1 = {
+  tools: {
+    rspack: {
+      someOption: true,
+    },
+  },
+};
+const config2 = {
+  tools: {
+    rspack: (config) => {
+      console.log('function 1');
+      return config;
+    },
+  },
+};
+const config3 = {
+  tools: {
+    rspack: (config) => {
+      console.log('function 2');
+      return config;
+    },
+  },
+};
+
+const mergedConfig = mergeRsbuildConfig(config1, config2, config3);
+```
+
+In the above example, the merged configuration is in the following format. The array first contains an object `{ someOption: true }`, followed by two functions in the order they were merged.
+
+Each item in the array will be executed in sequence, and the output of the previous function will serve as the input to the next one, ultimately generating an Rspack configuration.
+
+```ts
+const mergedConfig = {
+  tools: {
+    rspack: [
+      {
+        someOption: true,
+      },
+      (config) => {
+        console.log('function 1');
+        return config;
+      },
+      (config) => {
+        console.log('function 2');
+        return config;
+      },
+    ],
+  },
+};
+```
+
+By this way, we can ensure that when merging multiple configuration objects, the same multiple `tools.rspack` fields can all be effective.
+
+In Rsbuild, most options that support function values use this rule, such as `tools.postcss`, `tools.less`, `tools.bundlerChain`, etc.
+
+## logger
+
+Used to output log information in a unified format, based on [rslog](https://github.com/rspack-contrib/rslog).
+
+- **Example:**
+
+```ts
+import { logger } from '@rsbuild/core';
+
+// A gradient welcome log
+logger.greet(`\n➜ Rsbuild v1.0.0\n`);
+
+// Info
+logger.info('This is a info message');
+
+// Start
+logger.start('This is a start message');
+
+// Warn
+logger.warn('This is a warn message');
+
+// Ready
+logger.ready('This is a ready message');
+
+// Success
+logger.success('This is a success message');
+
+// Error
+logger.error('This is a error message');
+logger.error(new Error('This is a error message with stack'));
+
+// Debug
+logger.debug('This is a debug message');
+
+// Same as console.log
+logger.log('This is a log message');
+```
+
+### Custom Logger
+
+You can use the `logger.override` method to override partial or all methods of the default logger:
+
+```ts
+import { logger } from '@rsbuild/core';
+
+logger.override({
+  log: (message) => {
+    console.log(`[log] ${message}`);
+  },
+  info: (message) => {
+    console.log(`[info] ${message}`);
+  },
+  warn: (message) => {
+    console.warn(`[warn] ${message}`);
+  },
+  start: (message) => {
+    console.log(`[start] ${message}`);
+  },
+  ready: (message) => {
+    console.log(`[ready] ${message}`);
+  },
+  error: (message) => {
+    console.error(`[error] ${message}`);
+  },
+  success: (message) => {
+    console.error(`[success] ${message}`);
+  },
+  debug: (message) => {
+    if (process.env.DEBUG) {
+      console.log(`[debug] ${message}`);
+    }
+  },
+});
+
+logger.info('hello'); // [info] hello
+```
+
+## rspack
+
+The `rspack` object exported from `@rspack/core`.
+
+You can import to the `rspack` object from `@rsbuild/core` without the need to install the `@rspack/core` dependency.
+
+- **Type:** `Rspack`
+- **Example:**
+
+```ts
+import { rspack } from '@rsbuild/core';
+
+console.log(rspack.rspackVersion); // 1.0.0
+console.log(rspack.util.createHash);
+```
+
+> Please refer to [Rspack - Node API](https://rspack.dev/api/node-api) for more information.
+
+## version
+
+The version of `@rsbuild/core` currently in use.
+
+- **Type:** `string`
+- **Example:**
+
+```ts
+import { version } from '@rsbuild/core';
+
+console.log(version); // 1.0.0
+```

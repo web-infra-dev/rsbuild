@@ -1,4 +1,4 @@
-import svgImg from './app.svg?url';
+import svgImg from '@assets/mobile.svg?url';
 import './App.css';
 
 const testEl = document.createElement('div');

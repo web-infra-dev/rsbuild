@@ -1,6 +1,6 @@
 import { URL } from 'node:url';
-import { expect, test } from '@playwright/test';
 import { dev } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 
 test('should allow to listen ipv6 host', async ({ page }) => {
   const rsbuild = await dev({

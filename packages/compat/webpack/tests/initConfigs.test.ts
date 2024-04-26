@@ -1,5 +1,5 @@
-import { createStubRsbuild } from './helper';
 import type { RsbuildConfig, RsbuildPluginAPI } from '@rsbuild/shared';
+import { createStubRsbuild } from './helper';
 
 describe('modifyRsbuildConfig', () => {
   it.skip('should not allow to modify Rsbuild config', async () => {

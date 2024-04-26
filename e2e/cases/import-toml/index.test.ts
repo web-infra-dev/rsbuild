@@ -1,5 +1,5 @@
-import { expect } from '@playwright/test';
 import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
 rspackOnlyTest('should import TOML correctly', async ({ page }) => {
   const rsbuild = await build({

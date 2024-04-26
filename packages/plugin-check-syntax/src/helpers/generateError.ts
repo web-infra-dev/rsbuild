@@ -1,11 +1,11 @@
-import { fse, color } from '@rsbuild/shared';
+import { color, fse } from '@rsbuild/shared';
 import { SourceMapConsumer } from 'source-map';
-import { checkIsExcludeSource } from './utils';
 import {
-  ECMASyntaxError,
   type AcornParseError,
   type CheckSyntaxExclude,
+  ECMASyntaxError,
 } from '../types';
+import { checkIsExcludeSource } from './utils';
 
 export function displayCodePointer(code: string, pos: number) {
   const SUB_LEN = 80;

@@ -3,6 +3,7 @@ import {
   getSwcMinimizerOptions,
   parseMinifyOptions,
 } from '@rsbuild/shared';
+import { rspack } from '@rspack/core';
 import type { RsbuildPlugin } from '../../types';
 
 export const pluginMinimize = (): RsbuildPlugin => ({
@@ -18,7 +19,7 @@ export const pluginMinimize = (): RsbuildPlugin => ({
       }
 
       const { SwcJsMinimizerRspackPlugin, SwcCssMinimizerRspackPlugin } =
-        await import('@rspack/core');
+        rspack;
 
       const { minifyJs, minifyCss } = parseMinifyOptions(config);
 

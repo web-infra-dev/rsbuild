@@ -1,7 +1,7 @@
-import path from 'node:path';
 import fs from 'node:fs';
-import { test, expect } from '@playwright/test';
+import path from 'node:path';
 import { build, dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
 import { pluginSvelte } from '@rsbuild/plugin-svelte';
 
 const buildFixture = (

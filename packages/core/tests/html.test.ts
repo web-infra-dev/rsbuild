@@ -1,7 +1,7 @@
-import { pluginHtml } from '../src/plugins/html';
-import { pluginEntry } from '../src/plugins/entry';
-import { createStubRsbuild } from '@scripts/test-helper';
 import type { HtmlConfig } from '@rsbuild/shared';
+import { createStubRsbuild } from '@scripts/test-helper';
+import { pluginEntry } from '../src/plugins/entry';
+import { pluginHtml } from '../src/plugins/html';
 
 vi.mock('@rsbuild/shared', async (importOriginal) => {
   const mod = await importOriginal<any>();
@@ -56,36 +56,6 @@ describe('plugin-html', () => {
       },
     });
     expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toBeFalsy();
-  });
-
-  it('should register nonce plugin when using security.nonce', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
-      rsbuildConfig: {
-        security: {
-          nonce: 'test-nonce',
-        },
-      },
-    });
-
-    expect(await rsbuild.matchBundlerPlugin('HtmlNoncePlugin')).toBeTruthy();
-  });
-
-  it('should register crossorigin plugin when using html.crossorigin', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
-      rsbuildConfig: {
-        html: {
-          crossorigin: true,
-        },
-      },
-    });
-
-    const config = await rsbuild.unwrapConfig();
-    expect(
-      await rsbuild.matchBundlerPlugin('HtmlCrossOriginPlugin'),
-    ).toBeTruthy();
-    expect(config.output?.crossOriginLoading).toEqual('anonymous');
   });
 
   it('should register appIcon plugin when using html.appIcon', async () => {

@@ -1,32 +1,32 @@
 import { posix } from 'node:path';
-import { getDistPath, getFilename } from './fs';
-import { addTrailingSlash, isPlainObject, removeTailingSlash } from './utils';
-import { castArray, ensureAbsolutePath } from './utils';
-import { debug } from './logger';
+import type { EntryDescription } from '@rspack/core';
+import type { SwcLoaderOptions } from '@rspack/core';
 import {
-  DEFAULT_PORT,
-  TS_AND_JSX_REGEX,
-  DEFAULT_DEV_HOST,
-  NODE_MODULES_REGEX,
   DEFAULT_ASSET_PREFIX,
+  DEFAULT_DEV_HOST,
+  DEFAULT_PORT,
+  NODE_MODULES_REGEX,
+  TS_AND_JSX_REGEX,
 } from './constants';
+import { getDistPath, getFilename } from './fs';
+import { debug } from './logger';
+import { mergeChainedOptions } from './mergeChainedOptions';
 import type {
   BundlerChain,
-  RsbuildEntry,
-  RspackConfig,
-  RsbuildConfig,
-  RsbuildTarget,
-  RsbuildContext,
-  CreateAsyncHook,
   BundlerChainRule,
-  NormalizedConfig,
-  RsbuildPluginAPI,
+  CreateAsyncHook,
   ModifyBundlerChainFn,
   ModifyBundlerChainUtils,
-  BuiltinSwcLoaderOptions,
+  NormalizedConfig,
+  RsbuildConfig,
+  RsbuildContext,
+  RsbuildEntry,
+  RsbuildPluginAPI,
+  RsbuildTarget,
+  RspackConfig,
 } from './types';
-import { mergeChainedOptions } from './mergeChainedOptions';
-import type { EntryDescription } from '@rspack/core';
+import { addTrailingSlash, isPlainObject, removeTailingSlash } from './utils';
+import { castArray, ensureAbsolutePath } from './utils';
 
 export async function getBundlerChain() {
   const { default: WebpackChain } = await import('../compiled/webpack-chain');
@@ -100,8 +100,6 @@ export const CHAIN_ID = {
     YAML: 'yaml',
     /** Rule for wasm */
     WASM: 'wasm',
-    /** Rule for node */
-    NODE: 'node',
     /** Rule for svelte */
     SVELTE: 'svelte',
   },
@@ -139,8 +137,6 @@ export const CHAIN_ID = {
     SVGO: 'svgo',
     /** yaml-loader */
     YAML: 'yaml',
-    /** node-loader */
-    NODE: 'node',
     /** babel-loader */
     BABEL: 'babel',
     /** style-loader */
@@ -192,10 +188,6 @@ export const CHAIN_ID = {
     MODULE_FEDERATION: 'module-federation',
     /** HtmlBasicPlugin */
     HTML_BASIC: 'html-basic-plugin',
-    /** HtmlNoncePlugin */
-    HTML_NONCE: 'html-nonce-plugin',
-    /** HtmlCrossOriginPlugin */
-    HTML_CROSS_ORIGIN: 'html-cross-origin-plugin',
     /** htmlPreconnectPlugin */
     HTML_PRECONNECT: 'html-preconnect-plugin',
     /** htmlDnsPrefetchPlugin */
@@ -216,8 +208,12 @@ export const CHAIN_ID = {
     SUBRESOURCE_INTEGRITY: 'subresource-integrity',
     /** AssetsRetryPlugin */
     ASSETS_RETRY: 'assets-retry',
+    /** AsyncChunkRetryPlugin */
+    ASYNC_CHUNK_RETRY: 'async-chunk-retry',
     /** AutoSetRootFontSizePlugin */
     AUTO_SET_ROOT_SIZE: 'auto-set-root-size',
+    /** VueLoader15PitchFixPlugin */
+    VUE_LOADER_15_PITCH_FIX_PLUGIN: 'vue-loader-15-pitch-fix',
   },
   /** Predefined minimizers */
   MINIMIZER: {
@@ -535,7 +531,7 @@ export const modifySwcLoaderOptions = ({
   modifier,
 }: {
   chain: BundlerChain;
-  modifier: (config: BuiltinSwcLoaderOptions) => BuiltinSwcLoaderOptions;
+  modifier: (config: SwcLoaderOptions) => SwcLoaderOptions;
 }) => {
   const ruleIds = [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI];
 

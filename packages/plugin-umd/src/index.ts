@@ -1,5 +1,5 @@
-import { isProd } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '@rsbuild/core';
+import { isProd } from '@rsbuild/shared';
 
 export type PluginUmdOptions = {
   /**
