@@ -3,7 +3,7 @@ import { getDistPath, isHtmlDisabled } from '@rsbuild/shared';
 import { AsyncChunkRetryPlugin } from './AsyncChunkRetryPlugin';
 import type { AssetsRetryHookContext, PluginAssetsRetryOptions } from './types';
 
-export type { PluginAssetsRetryOptions, AssetsRetryHookContext };
+export type { AssetsRetryHookContext, PluginAssetsRetryOptions };
 
 export const pluginAssetsRetry = (
   options: PluginAssetsRetryOptions = {},
