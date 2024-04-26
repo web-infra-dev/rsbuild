@@ -1,10 +1,7 @@
 import { dev, gotoPage, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
-import type {
-  AssetsRetryHookContext,
-  PluginAssetsRetryOptions,
-} from '@rsbuild/plugin-assets-retry';
+import type { PluginAssetsRetryOptions } from '@rsbuild/plugin-assets-retry';
 import { pluginReact } from '@rsbuild/plugin-react';
 import type { RequestHandler } from '@rsbuild/shared';
 
@@ -17,6 +14,13 @@ function count404Response(logs: string[], urlPrefix: string): number {
   }
   return count;
 }
+
+type AssetsRetryHookContext = {
+  url: string;
+  times: number;
+  domain: string;
+  tagName: string;
+};
 
 function createBlockMiddleware({
   urlPrefix,
