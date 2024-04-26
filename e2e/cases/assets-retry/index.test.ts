@@ -61,7 +61,7 @@ async function createRsbuildWithMiddleware(
   return rsbuild;
 }
 
-test('@rsbuild/plugin-assets-retry should work when blocking initial chunk index.js`', async ({
+test('@rsbuild/plugin-assets-retry should work when blocking initial chunk index.js', async ({
   page,
 }) => {
   process.env.DEBUG = 'rsbuild';
@@ -82,7 +82,7 @@ test('@rsbuild/plugin-assets-retry should work when blocking initial chunk index
   delete process.env.DEBUG;
 });
 
-test('@rsbuild/plugin-assets-retry should work with minified runtime code when blocking initial chunk index.js`', async ({
+test('@rsbuild/plugin-assets-retry should work with minified runtime code when blocking initial chunk index.js', async ({
   page,
 }) => {
   process.env.DEBUG = 'rsbuild';
@@ -129,7 +129,7 @@ test('@rsbuild/plugin-assets-retry should work when blocking async chunk`', asyn
   delete process.env.DEBUG;
 });
 
-test('@rsbuild/plugin-assets-retry should work with minified runtime code when blocking async chunk`', async ({
+test('@rsbuild/plugin-assets-retry should work with minified runtime code when blocking async chunk', async ({
   page,
 }) => {
   process.env.DEBUG = 'rsbuild';
@@ -155,7 +155,7 @@ test('@rsbuild/plugin-assets-retry should work with minified runtime code when b
   delete process.env.DEBUG;
 });
 
-test('@rsbuild/plugin-assets-retry should catch error by react ErrorBoundary when all retries failed`', async ({
+test('@rsbuild/plugin-assets-retry should catch error by react ErrorBoundary when all retries failed', async ({
   page,
 }) => {
   process.env.DEBUG = 'rsbuild';
@@ -183,7 +183,7 @@ test('@rsbuild/plugin-assets-retry should catch error by react ErrorBoundary whe
   delete process.env.DEBUG;
 });
 
-test('@rsbuild/plugin-assets-retry onRetry and onSuccess options should work in successfully retrying async chunk`', async ({
+test('@rsbuild/plugin-assets-retry onRetry and onSuccess options should work in successfully retrying async chunk', async ({
   page,
 }) => {
   const blockedMiddleware = createBlockMiddleware({
@@ -266,7 +266,7 @@ test('@rsbuild/plugin-assets-retry onRetry and onSuccess options should work in 
   await rsbuild.close();
 });
 
-test('@rsbuild/plugin-assets-retry onRetry and onFail options should work in failed retrying async chunk`', async ({
+test('@rsbuild/plugin-assets-retry onRetry and onFail options should work in failed retrying async chunk', async ({
   page,
 }) => {
   const blockedMiddleware = createBlockMiddleware({
