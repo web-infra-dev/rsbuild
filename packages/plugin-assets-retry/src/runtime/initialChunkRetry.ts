@@ -324,7 +324,10 @@ function init(options: RuntimeRetryOptions) {
   }
 
   // init global variables shared with async chunk
-  if (typeof window !== 'undefined' && !window.__ASYNC_CHUNK_FILENAME_LIST__) {
+  if (
+    typeof window !== 'undefined' &&
+    !window.__ASYNC_CHUNK_FILENAME_LIST__
+  ) {
     window.__ASYNC_CHUNK_FILENAME_LIST__ = {};
   }
   // Bind event in window

@@ -1,3 +1,4 @@
+// rsbuild/runtime/async-chunk-retry
 import type { AssetsRetryHookContext, RuntimeRetryOptions } from '../types';
 
 type ChunkId = string; // e.g: src_AsyncCompTest_tsx
@@ -38,8 +39,6 @@ declare global {
   var __ASYNC_CHUNK_FILENAME_LIST__: Record<ChunkFilename, boolean>;
 }
 
-// rsbuild/runtime/async-chunk-retry
-
 // init retryCollector and nextRetry function
 const config = __RETRY_OPTIONS__ || {};
 const maxRetries = config.max || 3;
@@ -68,6 +67,20 @@ function findNextDomain(url: string) {
 // function getUrlRetryQuery(existRetryTimes: number): string {
 //   return `?retry-attempt=${existRetryTimes}`;
 // }
+
+function createAssetsRetryContext(
+  times: number,
+  domain: string,
+  url: string,
+  tagName: string,
+): AssetsRetryHookContext {
+  return {
+    times,
+    domain,
+    url,
+    tagName,
+  };
+}
 
 function getCurrentRetry(chunkId: string): Retry | undefined {
   return retryCollector[chunkId];
@@ -147,8 +160,18 @@ function ensureChunk(chunkId: string): Promise<unknown> {
     const { existRetryTimes, originalSrcUrl, nextRetryUrl, nextDomain } =
       nextRetry(chunkId);
 
+    const context = createAssetsRetryContext(
+      existRetryTimes - 1,
+      nextDomain,
+      nextRetryUrl,
+      'script',
+    );
+
     if (existRetryTimes > maxRetries) {
-      error.message = `Loading chunk ${chunkId} from ${originalSrcUrl} failed after ${maxRetries} retries.`;
+      error.message = `Loading chunk ${chunkId} from ${originalSrcUrl} failed after ${maxRetries} retries: "${error.message}"`;
+      if (typeof config.onFail === 'function') {
+        config.onFail(context);
+      }
       throw error;
     }
 
@@ -173,36 +196,29 @@ function ensureChunk(chunkId: string): Promise<unknown> {
       throw error;
     }
 
-    const context: AssetsRetryHookContext = {
-      times: existRetryTimes,
-      domain: nextDomain,
-      url: nextRetryUrl,
-      tagName: 'script',
-    };
-
+    // Start retry
     if (config.onRetry && typeof config.onRetry === 'function') {
       config.onRetry(context);
     }
 
     // biome-ignore lint/complexity/useArrowFunction: use function instead of () => {}
-    return new Promise(function (resolve) {
-      // TODO: options to set retryDelay
-      // setTimeout(() => {
-      resolve(ensureChunk(chunkId));
-      // }, 300);
-    })
-      .then((result) => {
-        if (typeof config.onSuccess === 'function') {
+    return ensureChunk(chunkId).then((result) => {
+      if (typeof config.onSuccess === 'function') {
+        const context = createAssetsRetryContext(
+          existRetryTimes,
+          nextDomain,
+          nextRetryUrl,
+          'script',
+        );
+        const { existRetryTimes: currRetryTimes } =
+          getCurrentRetry(chunkId) ?? {};
+
+        if (currRetryTimes === existRetryTimes) {
           config.onSuccess(context);
         }
-        return result;
-      })
-      .catch((error) => {
-        if (typeof config.onFail === 'function') {
-          config.onFail(context);
-        }
-        throw error;
-      });
+      }
+      return result;
+    });
   });
 }
 
