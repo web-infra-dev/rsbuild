@@ -5,10 +5,13 @@ import type { PluginAssetsRetryOptions } from '@rsbuild/plugin-assets-retry';
 import { pluginReact } from '@rsbuild/plugin-react';
 import type { RequestHandler } from '@rsbuild/shared';
 
-function count404Response(logs: string[], urlPrefix: string): number {
+function count404Response(logs: string[], url: string): number {
   let count = 0;
   for (const log of logs) {
-    if (log.includes('404') && log.includes(urlPrefix)) {
+    //  use a space to match
+    // e.g: 18:09:23 404 GET /static/js/index.js 4.443 ms
+    if (log.includes('404') && log.includes(url.concat(' '))) {
+      process.stdout.write(`${log}1111111111\n`);
       count++;
     }
   }
@@ -59,6 +62,12 @@ async function createRsbuildWithMiddleware(
             middlewares.unshift(middleware);
           },
         ],
+      },
+      output: {
+        sourceMap: {
+          css: false,
+          js: false,
+        },
       },
     },
   });
