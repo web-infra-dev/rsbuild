@@ -36,11 +36,11 @@ declare global {
   // user options
   var __RETRY_OPTIONS__: RuntimeRetryOptions;
   // global variables shared with initial chunk retry runtime
-  var __ASYNC_CHUNK_FILENAME_LIST__: Record<ChunkFilename, boolean>;
+  var __RB_ASYNC_CHUNKS__: Record<ChunkFilename, boolean>;
 }
 
 // init retryCollector and nextRetry function
-const config = __RETRY_OPTIONS__ || {};
+const config = __RETRY_OPTIONS__;
 const maxRetries = config.max || 3;
 const retryCollector: RetryCollector = {};
 
@@ -68,20 +68,6 @@ function findNextDomain(url: string) {
 //   return `?retry-attempt=${existRetryTimes}`;
 // }
 
-function createAssetsRetryContext(
-  times: number,
-  domain: string,
-  url: string,
-  tagName: string,
-): AssetsRetryHookContext {
-  return {
-    times,
-    domain,
-    url,
-    tagName,
-  };
-}
-
 function getCurrentRetry(chunkId: string): Retry | undefined {
   return retryCollector[chunkId];
 }
@@ -101,7 +87,7 @@ function initRetry(chunkId: string): Retry {
     nextDomain,
     nextRetryUrl:
       nextDomain +
-      (nextDomain.endsWith('/') ? '' : '/') +
+      (nextDomain[nextDomain.length - 1] === '/' ? '' : '/') +
       originalScriptFilename,
     // + getUrlRetryQuery(existRetryTimes),
 
@@ -124,7 +110,7 @@ function nextRetry(chunkId: string): Retry {
       nextDomain,
       nextRetryUrl:
         nextDomain +
-        (nextDomain.endsWith('/') ? '' : '/') +
+        (nextDomain[nextDomain.length - 1] === '/' ? '' : '/') +
         currRetry.originalScriptFilename,
       // + getUrlRetryQuery(existRetryTimes),
 
@@ -151,21 +137,23 @@ function ensureChunk(chunkId: string): Promise<unknown> {
   // mark the async chunk name in the global variables and share it with initial chunk retry
   if (
     typeof window !== 'undefined' &&
-    !window.__ASYNC_CHUNK_FILENAME_LIST__[originalScriptFilename]
+    !window.__RB_ASYNC_CHUNKS__[originalScriptFilename]
   ) {
-    window.__ASYNC_CHUNK_FILENAME_LIST__[originalScriptFilename] = true;
+    window.__RB_ASYNC_CHUNKS__[originalScriptFilename] = true;
   }
 
   return result.catch(function (error: Error) {
     const { existRetryTimes, originalSrcUrl, nextRetryUrl, nextDomain } =
       nextRetry(chunkId);
 
-    const context = createAssetsRetryContext(
-      existRetryTimes - 1,
-      nextDomain,
-      nextRetryUrl,
-      'script',
-    );
+    const createContext = (times: number): AssetsRetryHookContext => ({
+      times,
+      domain: nextDomain,
+      url: nextRetryUrl,
+      tagName: 'script',
+    });
+
+    const context = createContext(existRetryTimes - 1);
 
     if (existRetryTimes > maxRetries) {
       error.message = `Loading chunk ${chunkId} from ${originalSrcUrl} failed after ${maxRetries} retries: "${error.message}"`;
@@ -197,19 +185,14 @@ function ensureChunk(chunkId: string): Promise<unknown> {
     }
 
     // Start retry
-    if (config.onRetry && typeof config.onRetry === 'function') {
+    if (typeof config.onRetry === 'function') {
       config.onRetry(context);
     }
 
     // biome-ignore lint/complexity/useArrowFunction: use function instead of () => {}
     return ensureChunk(chunkId).then((result) => {
       if (typeof config.onSuccess === 'function') {
-        const context = createAssetsRetryContext(
-          existRetryTimes,
-          nextDomain,
-          nextRetryUrl,
-          'script',
-        );
+        const context = createContext(existRetryTimes);
         const { existRetryTimes: currRetryTimes } =
           getCurrentRetry(chunkId) ?? {};
 
@@ -229,17 +212,18 @@ function loadScript(
   chunkId: ChunkId,
 ) {
   const retry = getCurrentRetry(chunkId);
-  if (retry) {
-    return originalLoadScript(retry.nextRetryUrl, done, key, chunkId);
-  }
-
-  return originalLoadScript(originalUrl, done, key, chunkId);
+  return originalLoadScript(
+    retry ? retry.nextRetryUrl : originalUrl,
+    done,
+    key,
+    chunkId,
+  );
 }
 
 function registerAsyncChunkRetry() {
   // init global variables shared with async chunk
-  if (typeof window !== 'undefined' && !window.__ASYNC_CHUNK_FILENAME_LIST__) {
-    window.__ASYNC_CHUNK_FILENAME_LIST__ = {};
+  if (typeof window !== 'undefined' && !window.__RB_ASYNC_CHUNKS__) {
+    window.__RB_ASYNC_CHUNKS__ = {};
   }
 
   if (typeof __RUNTIME_GLOBALS_REQUIRE__ !== 'undefined') {
