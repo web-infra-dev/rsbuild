@@ -153,7 +153,7 @@ function ensureChunk(chunkId: string): Promise<unknown> {
         url: nextRetryUrl,
         tagName: 'script',
       };
-      error.message = `Loading chunk ${chunkId} from ${originalSrcUrl} failed after ${maxRetries} retries. The error message of the last retry is "${error.message}"`;
+      error.message = `Loading chunk ${chunkId} from ${originalSrcUrl} failed after ${maxRetries} retries: "${error.message}"`;
       if (typeof config.onFail === 'function') {
         config.onFail(context);
       }
