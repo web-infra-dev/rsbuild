@@ -131,6 +131,17 @@ declare module '*.module.stylus' {
 }
 ```
 
+- Method 3: If you need to use **named imports** to reference class names, you can use a looser type declaration:
+
+```ts title="src/env.d.ts"
+declare module '*.module.css';
+declare module '*.module.scss';
+declare module '*.module.sass';
+declare module '*.module.less';
+declare module '*.module.styl';
+declare module '*.module.stylus';
+```
+
 After adding the type declaration, if the type error still exists, you can try to restart the current IDE, or adjust the directory where `env.d.ts` is located, making sure the TypeScript can correctly identify the type definition.
 
 ### Related configuration
