@@ -68,6 +68,20 @@ function findNextDomain(url: string) {
 //   return `?retry-attempt=${existRetryTimes}`;
 // }
 
+function createAssetsRetryContext(
+  times: number,
+  domain: string,
+  url: string,
+  tagName: string,
+): AssetsRetryHookContext {
+  return {
+    times,
+    domain,
+    url,
+    tagName,
+  };
+}
+
 function getCurrentRetry(chunkId: string): Retry | undefined {
   return retryCollector[chunkId];
 }
@@ -146,17 +160,17 @@ function ensureChunk(chunkId: string): Promise<unknown> {
     const { existRetryTimes, originalSrcUrl, nextRetryUrl, nextDomain } =
       nextRetry(chunkId);
 
-    const currContext: AssetsRetryHookContext = {
-      times: existRetryTimes - 1,
-      domain: nextDomain,
-      url: nextRetryUrl,
-      tagName: 'script',
-    };
+    const context = createAssetsRetryContext(
+      existRetryTimes - 1,
+      nextDomain,
+      nextRetryUrl,
+      'script',
+    );
 
     if (existRetryTimes > maxRetries) {
       error.message = `Loading chunk ${chunkId} from ${originalSrcUrl} failed after ${maxRetries} retries: "${error.message}"`;
       if (typeof config.onFail === 'function') {
-        config.onFail(currContext);
+        config.onFail(context);
       }
       throw error;
     }
@@ -184,16 +198,18 @@ function ensureChunk(chunkId: string): Promise<unknown> {
 
     // Start retry
     if (config.onRetry && typeof config.onRetry === 'function') {
-      config.onRetry(currContext);
+      config.onRetry(context);
     }
 
     // biome-ignore lint/complexity/useArrowFunction: use function instead of () => {}
     return ensureChunk(chunkId).then((result) => {
       if (typeof config.onSuccess === 'function') {
-        const context = {
-          ...currContext,
-          times: existRetryTimes,
-        };
+        const context = createAssetsRetryContext(
+          existRetryTimes,
+          nextDomain,
+          nextRetryUrl,
+          'script',
+        );
         const { existRetryTimes: currRetryTimes } =
           getCurrentRetry(chunkId) ?? {};
 
