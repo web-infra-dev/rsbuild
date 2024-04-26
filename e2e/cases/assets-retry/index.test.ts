@@ -187,10 +187,10 @@ test('@rsbuild/plugin-assets-retry should catch error by react ErrorBoundary whe
   delete process.env.DEBUG;
 });
 
-function delay(ms: number = 300) {
+function delay(ms = 300) {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve;
+      resolve(1);
     }, ms);
   });
 }
