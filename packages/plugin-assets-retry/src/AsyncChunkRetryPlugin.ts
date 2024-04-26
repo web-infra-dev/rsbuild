@@ -30,10 +30,10 @@ function appendRspackScript(
 
 class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
   readonly name = 'ASYNC_CHUNK_RETRY_PLUGIN';
-  readonly options: PluginAssetsRetryOptions & { isRspack?: boolean };
+  readonly options: PluginAssetsRetryOptions & { isRspack: boolean };
   readonly runtimeOptions: RuntimeRetryOptions;
 
-  constructor(options: PluginAssetsRetryOptions & { isRspack?: boolean }) {
+  constructor(options: PluginAssetsRetryOptions & { isRspack: boolean }) {
     this.options = options;
     this.runtimeOptions = pick(options, [
       'domain',
@@ -72,23 +72,26 @@ class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
 
   apply(compiler: Rspack.Compiler) {
     compiler.hooks.thisCompilation.tap(this.name, (compilation) => {
-      compilation.hooks.runtimeModule.tap(this.name, (module, _chunk) => {
+      compilation.hooks.runtimeModule.tap(this.name, (module) => {
+        const { isRspack } = this.options;
+        const constructorName = isRspack
+          ? module.constructorName
+          : module.constructor?.name;
+        const isPublicPathModule =
+          module.name === 'publicPath' ||
+          constructorName === 'PublicPathRuntimeModule';
+        if (!isPublicPathModule) {
+          return;
+        }
+
         const runtimeCode = this.getRawRuntimeRetryCode();
-        // Rspack currently does not have module.addRuntimeModule on the js side, so we insert our runtime code after PublicPathRuntimeModule
-        if (this.options.isRspack === false) {
-          if (
-            module.name === 'publicPath' ||
-            module.constructor?.name === 'PublicPathRuntimeModule'
-          ) {
-            appendWebpackScript(module, runtimeCode);
-          }
+
+        // Rspack currently does not have module.addRuntimeModule on the js side,
+        // so we insert our runtime code after PublicPathRuntimeModule.
+        if (isRspack) {
+          appendRspackScript(module, runtimeCode);
         } else {
-          if (
-            module.name === 'publicPath' ||
-            module.constructorName === 'PublicPathRuntimeModule'
-          ) {
-            appendRspackScript(module, runtimeCode);
-          }
+          appendWebpackScript(module, runtimeCode);
         }
       });
     });
