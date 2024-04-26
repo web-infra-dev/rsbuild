@@ -231,6 +231,8 @@ test('@rsbuild/plugin-assets-retry onRetry and onSuccess options should work in 
   await gotoPage(page, rsbuild);
   const compTestElement = page.locator('#async-comp-test');
   await expect(compTestElement).toHaveText('Hello AsyncCompTest');
+
+  await rsbuild.close();
   expect({
     onRetryContextList,
     onFailContextList,
@@ -266,8 +268,6 @@ test('@rsbuild/plugin-assets-retry onRetry and onSuccess options should work in 
       },
     ],
   });
-
-  await rsbuild.close();
 });
 
 test('@rsbuild/plugin-assets-retry onRetry and onFail options should work in failed retrying async chunk', async ({
@@ -315,6 +315,8 @@ test('@rsbuild/plugin-assets-retry onRetry and onFail options should work in fai
   await expect(compTestElement).toHaveText(
     /ChunkLoadError: Loading chunk src_AsyncCompTest_tsx from \/static\/js\/async\/src_AsyncCompTest_tsx\.js failed after 3 retries: "Loading chunk src_AsyncCompTest_tsx failed.*/,
   );
+
+  await rsbuild.close();
   expect({
     onRetryContextList,
     onFailContextList,
@@ -350,6 +352,4 @@ test('@rsbuild/plugin-assets-retry onRetry and onFail options should work in fai
     ],
     onSuccessContextList: [],
   });
-
-  await rsbuild.close();
 });
