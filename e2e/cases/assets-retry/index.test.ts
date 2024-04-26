@@ -2,8 +2,8 @@ import { dev, gotoPage, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 import type {
-  PluginAssetsRetryOptions,
   AssetsRetryHookContext,
+  PluginAssetsRetryOptions,
 } from '@rsbuild/plugin-assets-retry';
 import { pluginReact } from '@rsbuild/plugin-react';
 import type { RequestHandler } from '@rsbuild/shared';
