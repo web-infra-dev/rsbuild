@@ -131,7 +131,18 @@ declare module '*.module.stylus' {
 }
 ```
 
-添加类型声明后，如果依然存在上述错误提示，请尝试重启当前 IDE，或者调整 `env.d.ts` 所在的目录，使 TypeScript 能够正确识别类型定义。
+- 方法三：如果你需要使用**具名导入**来引用类名，可以更松散的类型定义：
+
+```ts title="src/env.d.ts"
+declare module '*.module.css';
+declare module '*.module.scss';
+declare module '*.module.sass';
+declare module '*.module.less';
+declare module '*.module.styl';
+declare module '*.module.stylus';
+```
+
+添加类型声明后，如果依然存在类型错误，请尝试重启当前 IDE，或者调整 `env.d.ts` 所在的目录，使 TypeScript 能够正确识别类型定义。
 
 ### 相关配置
 
