@@ -173,7 +173,7 @@ test('@rsbuild/plugin-assets-retry should catch error by react ErrorBoundary whe
   await gotoPage(page, rsbuild);
   const compTestElement = page.locator('#async-comp-test-error');
   await expect(compTestElement).toHaveText(
-    /ChunkLoadError: Loading chunk src_AsyncCompTest_tsx from \/static\/js\/async\/src_AsyncCompTest_tsx\.js failed after 3 retries\. The error message of the last retry is "Loading chunk src_AsyncCompTest_tsx failed.*/,
+    /ChunkLoadError: Loading chunk src_AsyncCompTest_tsx from \/static\/js\/async\/src_AsyncCompTest_tsx\.js failed after 3 retries: "Loading chunk src_AsyncCompTest_tsx failed.*/,
   );
   const blockedResponseCount = count404Response(
     logs,
@@ -312,7 +312,7 @@ test('@rsbuild/plugin-assets-retry onRetry and onFail options should work in fai
   await gotoPage(page, rsbuild);
   const compTestElement = page.locator('#async-comp-test-error');
   await expect(compTestElement).toHaveText(
-    /ChunkLoadError: Loading chunk src_AsyncCompTest_tsx from \/static\/js\/async\/src_AsyncCompTest_tsx\.js failed after 3 retries\. The error message of the last retry is "Loading chunk src_AsyncCompTest_tsx failed.*/,
+    /ChunkLoadError: Loading chunk src_AsyncCompTest_tsx from \/static\/js\/async\/src_AsyncCompTest_tsx\.js failed after 3 retries: "Loading chunk src_AsyncCompTest_tsx failed.*/,
   );
   expect({
     onRetryContextList,
