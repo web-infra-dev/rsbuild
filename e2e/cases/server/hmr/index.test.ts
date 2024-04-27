@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { fse } from '@rsbuild/shared';
 
-const fixtures = __dirname;
+const cwd = __dirname;
 
 // hmr test will timeout in CI
 rspackOnlyTest('default & hmr (default true)', async ({ page }) => {
@@ -13,17 +13,15 @@ rspackOnlyTest('default & hmr (default true)', async ({ page }) => {
     test.skip();
   }
 
-  await fse.copy(
-    join(fixtures, 'hmr/src'),
-    join(fixtures, 'hmr/test-temp-src'),
-  );
+  await fse.copy(join(cwd, 'src'), join(cwd, 'test-temp-src'));
+
   const rsbuild = await dev({
-    cwd: join(fixtures, 'hmr'),
+    cwd,
     plugins: [pluginReact()],
     rsbuildConfig: {
       source: {
         entry: {
-          index: join(fixtures, 'hmr', 'test-temp-src/index.ts'),
+          index: join(cwd, 'test-temp-src/index.ts'),
         },
       },
       output: {
@@ -49,7 +47,7 @@ rspackOnlyTest('default & hmr (default true)', async ({ page }) => {
   const locatorKeep = page.locator('#test-keep');
   const keepNum = await locatorKeep.innerHTML();
 
-  const appPath = join(fixtures, 'hmr', 'test-temp-src/App.tsx');
+  const appPath = join(cwd, 'test-temp-src/App.tsx');
 
   await fse.writeFile(
     appPath,
@@ -61,7 +59,7 @@ rspackOnlyTest('default & hmr (default true)', async ({ page }) => {
   // #test-keep should unchanged when app.tsx hmr
   await expect(locatorKeep.innerHTML()).resolves.toBe(keepNum);
 
-  const cssPath = join(fixtures, 'hmr', 'test-temp-src/App.css');
+  const cssPath = join(cwd, 'test-temp-src/App.css');
 
   await fse.writeFile(
     cssPath,
@@ -96,11 +94,8 @@ rspackOnlyTest(
       test.skip();
     }
 
-    await fse.copy(
-      join(fixtures, 'hmr/src'),
-      join(fixtures, 'hmr/test-temp-src-1'),
-    );
-    const cwd = join(fixtures, 'hmr');
+    await fse.copy(join(cwd, 'src'), join(cwd, 'test-temp-src-1'));
+
     const port = await getRandomPort();
     const rsbuild = await dev({
       cwd,
@@ -130,7 +125,7 @@ rspackOnlyTest(
     await gotoPage(page, rsbuild);
     expect(rsbuild.port).toBe(port);
 
-    const appPath = join(fixtures, 'hmr', 'test-temp-src-1/App.tsx');
+    const appPath = join(cwd, 'test-temp-src-1/App.tsx');
 
     const locator = page.locator('#test');
     await expect(locator).toHaveText('Hello Rsbuild!');
@@ -151,64 +146,3 @@ rspackOnlyTest(
     await rsbuild.close();
   },
 );
-
-// hmr will timeout in CI
-test('devServer', async ({ page }) => {
-  // HMR cases will fail in Windows
-  if (process.platform === 'win32') {
-    test.skip();
-  }
-
-  let i = 0;
-  let reloadFn: undefined | (() => void);
-
-  // Only tested to see if it works, not all configurations.
-  const rsbuild = await dev({
-    cwd: join(fixtures, 'basic'),
-    rsbuildConfig: {
-      output: {
-        distPath: {
-          root: 'dist-dev-server',
-        },
-      },
-      dev: {
-        setupMiddlewares: [
-          (middlewares, server) => {
-            middlewares.unshift((req, res, next) => {
-              i++;
-              next();
-            });
-            reloadFn = () => server.sockWrite('content-changed');
-          },
-        ],
-      },
-    },
-  });
-
-  await gotoPage(page, rsbuild);
-
-  const locator = page.locator('#test');
-  await expect(locator).toHaveText('Hello Rsbuild!');
-
-  expect(i).toBeGreaterThanOrEqual(1);
-  expect(reloadFn).toBeDefined();
-
-  i = 0;
-  reloadFn!();
-
-  // check value of `i`
-  const maxChecks = 100;
-  let checks = 0;
-  while (checks < maxChecks) {
-    if (i === 0) {
-      checks++;
-      await new Promise((resolve) => setTimeout(resolve, 50));
-    } else {
-      break;
-    }
-  }
-
-  expect(i).toBeGreaterThanOrEqual(1);
-
-  await rsbuild.close();
-});
