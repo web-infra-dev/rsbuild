@@ -5,13 +5,23 @@ import type { PluginAssetsRetryOptions } from '@rsbuild/plugin-assets-retry';
 import { pluginReact } from '@rsbuild/plugin-react';
 import type { RequestHandler } from '@rsbuild/shared';
 
+const pattern = [
+  '[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)',
+  '(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))',
+].join('|');
+
+const ansiRegex = new RegExp(pattern, 'g');
+
+function stripAnsi(content: string) {
+  return content.replace(ansiRegex, '');
+}
+
 function count404Response(logs: string[], urlPrefix: string): number {
   let count = 0;
   for (const log of logs) {
-    //  use a space to match
+    const rawLog = stripAnsi(log);
     // e.g: 18:09:23 404 GET /static/js/index.js 4.443 ms
-    if (log.includes('404') && log.includes(urlPrefix)) {
-      process.stdout.write(`${log}1111111111\n`);
+    if (rawLog.includes('404 GET') && rawLog.includes(urlPrefix)) {
       count++;
     }
   }
