@@ -1,12 +1,11 @@
-import { join } from 'node:path';
 import { dev, gotoPage } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-const fixtures = __dirname;
+const cwd = __dirname;
 
 test('writeToDisk default', async ({ page }) => {
   const rsbuild = await dev({
-    cwd: join(fixtures, 'basic'),
+    cwd,
     rsbuildConfig: {
       output: {
         distPath: {
@@ -26,7 +25,7 @@ test('writeToDisk default', async ({ page }) => {
 
 test('writeToDisk false', async ({ page }) => {
   const rsbuild = await dev({
-    cwd: join(fixtures, 'basic'),
+    cwd,
     rsbuildConfig: {
       output: {
         distPath: {
@@ -49,7 +48,7 @@ test('writeToDisk false', async ({ page }) => {
 
 test('writeToDisk true', async ({ page }) => {
   const rsbuild = await dev({
-    cwd: join(fixtures, 'basic'),
+    cwd,
     rsbuildConfig: {
       output: {
         distPath: {

@@ -3,13 +3,13 @@ import { join } from 'node:path';
 import { dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-const fixtures = __dirname;
+const cwd = __dirname;
 
 test('should access / success and htmlFallback success by default', async ({
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: join(fixtures, 'basic'),
+    cwd,
     rsbuildConfig: {
       dev: {
         writeToDisk: true,
@@ -41,7 +41,7 @@ test('should access / success and htmlFallback success by default', async ({
 
 test('should return 404 when htmlFallback false', async ({ page }) => {
   const rsbuild = await dev({
-    cwd: join(fixtures, 'basic'),
+    cwd,
     rsbuildConfig: {
       dev: {
         writeToDisk: true,
@@ -68,11 +68,11 @@ test('should return 404 when htmlFallback false', async ({ page }) => {
 
 test('should access /main with query or hash success', async ({ page }) => {
   const rsbuild = await dev({
-    cwd: join(fixtures, 'basic'),
+    cwd,
     rsbuildConfig: {
       source: {
         entry: {
-          main: join(fixtures, 'basic', 'src/index.ts'),
+          main: join(cwd, 'src/index.js'),
         },
       },
     },
@@ -100,11 +100,11 @@ test('should access /main.html success when entry is main', async ({
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: join(fixtures, 'basic'),
+    cwd,
     rsbuildConfig: {
       source: {
         entry: {
-          main: join(fixtures, 'basic', 'src/index.ts'),
+          main: join(cwd, 'src/index.js'),
         },
       },
       output: {
@@ -130,11 +130,11 @@ test('should access /main.html success when entry is main', async ({
 
 test('should access /main success when entry is main', async ({ page }) => {
   const rsbuild = await dev({
-    cwd: join(fixtures, 'basic'),
+    cwd,
     rsbuildConfig: {
       source: {
         entry: {
-          main: join(fixtures, 'basic', 'src/index.ts'),
+          main: join(cwd, 'src/index.js'),
         },
       },
       output: {
@@ -164,11 +164,11 @@ test('should access /main success when entry is main and use memoryFs', async ({
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: join(fixtures, 'basic'),
+    cwd,
     rsbuildConfig: {
       source: {
         entry: {
-          main: join(fixtures, 'basic', 'src/index.ts'),
+          main: join(cwd, 'src/index.js'),
         },
       },
       output: {
@@ -196,11 +196,11 @@ test('should access /main success when entry is main and set assetPrefix', async
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: join(fixtures, 'basic'),
+    cwd,
     rsbuildConfig: {
       source: {
         entry: {
-          main: join(fixtures, 'basic', 'src/index.ts'),
+          main: join(cwd, 'src/index.js'),
         },
       },
       output: {
@@ -229,11 +229,11 @@ test('should access /main success when entry is main and outputPath is /main/ind
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: join(fixtures, 'basic'),
+    cwd,
     rsbuildConfig: {
       source: {
         entry: {
-          main: join(fixtures, 'basic', 'src/index.ts'),
+          main: join(cwd, 'src/index.js'),
         },
       },
       output: {
@@ -262,11 +262,11 @@ test('should access /main success when entry is main and outputPath is /main/ind
 
 test('should return 404 when page is not found', async ({ page }) => {
   const rsbuild = await dev({
-    cwd: join(fixtures, 'basic'),
+    cwd,
     rsbuildConfig: {
       source: {
         entry: {
-          main: join(fixtures, 'basic', 'src/index.ts'),
+          main: join(cwd, 'src/index.js'),
         },
       },
       output: {
@@ -293,11 +293,11 @@ test('should access /html/main success when entry is main and outputPath is /htm
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: join(fixtures, 'basic'),
+    cwd,
     rsbuildConfig: {
       source: {
         entry: {
-          main: join(fixtures, 'basic', 'src/index.ts'),
+          main: join(cwd, 'src/index.js'),
         },
       },
       output: {
@@ -334,11 +334,11 @@ test('should access /main success when modify publicPath in compiler', async ({
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: join(fixtures, 'basic'),
+    cwd,
     rsbuildConfig: {
       source: {
         entry: {
-          main: join(fixtures, 'basic', 'src/index.ts'),
+          main: join(cwd, 'src/index.js'),
         },
       },
       output: {
@@ -370,7 +370,7 @@ test('should access /main success when modify publicPath in compiler', async ({
   await expect(locator).toHaveText('Hello Rsbuild!');
 
   const content = fs.readFileSync(
-    join(fixtures, 'basic', 'dist-html-fallback-6', 'main.html'),
+    join(cwd, 'dist-html-fallback-6', 'main.html'),
     'utf-8',
   );
 
@@ -383,16 +383,16 @@ test('should access /main success when distPath is absolute', async ({
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: join(fixtures, 'basic'),
+    cwd,
     rsbuildConfig: {
       source: {
         entry: {
-          main: join(fixtures, 'basic', 'src/index.ts'),
+          main: join(cwd, 'src/index.js'),
         },
       },
       output: {
         distPath: {
-          root: join(fixtures, 'basic', 'dist-html-fallback-7'),
+          root: join(cwd, 'dist-html-fallback-7'),
         },
       },
     },
