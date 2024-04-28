@@ -244,4 +244,4 @@ function clearOverlay() {
   document.querySelectorAll<ErrorOverlay>(overlayId).forEach((n) => n.close());
 }
 
-registerOverlay({ createOverlay, clearOverlay });
+registerOverlay(createOverlay, clearOverlay);
