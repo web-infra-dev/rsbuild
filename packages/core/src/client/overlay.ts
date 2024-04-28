@@ -220,28 +220,21 @@ if (customElements && !customElements.get(overlayId)) {
   customElements.define(overlayId, ErrorOverlay);
 }
 
-const documentAvailable = typeof document !== 'undefined';
-
 function createOverlay(err: string[]) {
-  if (!documentAvailable) {
-    console.info(
-      '[Rsbuild] Failed to display error overlay as document is not available, you can disable the `dev.client.overlay` option.',
-    );
-    return;
-  }
-
   clearOverlay();
   document.body.appendChild(new ErrorOverlay(err));
 }
 
 function clearOverlay() {
-  if (!documentAvailable) {
-    return;
-  }
-
   // use NodeList's forEach api instead of dom.iterable
   // biome-ignore lint/complexity/noForEach: <explanation>
   document.querySelectorAll<ErrorOverlay>(overlayId).forEach((n) => n.close());
 }
 
-registerOverlay(createOverlay, clearOverlay);
+if (typeof document !== 'undefined') {
+  registerOverlay(createOverlay, clearOverlay);
+} else {
+  console.info(
+    '[Rsbuild] Failed to display error overlay as document is not available, you can disable the `dev.client.overlay` option.',
+  );
+}

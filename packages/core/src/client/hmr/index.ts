@@ -4,27 +4,18 @@
  *
  * Tips: this package will be bundled and running in the browser, do not import any Node.js modules.
  */
-import type { ClientConfig, StatsError } from '@rsbuild/shared';
+import type { StatsError } from '@rsbuild/shared';
 import { formatStatsMessages } from '../formatStats';
-import { createSocketUrl } from './createSocketUrl';
-
-const options: ClientConfig = RSBUILD_CLIENT_CONFIG;
-
-// Connect to Dev Server
-const socketUrl = createSocketUrl(options);
+import { getSocketUrl } from './url';
 
 // Remember some state related to hot module replacement.
 let isFirstCompilation = true;
-let mostRecentCompilationHash: string | null = null;
+let lastCompilationHash: string | null = null;
 let hasCompileErrors = false;
 
 function clearOutdatedErrors() {
   // Clean up outdated compile errors, if any.
-  if (
-    typeof console !== 'undefined' &&
-    typeof console.clear === 'function' &&
-    hasCompileErrors
-  ) {
+  if (console.clear && hasCompileErrors) {
     console.clear();
   }
 }
@@ -62,28 +53,20 @@ function handleWarnings(warnings: StatsError[]) {
   isFirstCompilation = false;
   hasCompileErrors = false;
 
-  function printWarnings() {
-    // Print warnings to the console.
-    const formatted = formatStatsMessages({
-      warnings,
-      errors: [],
-    });
+  const formatted = formatStatsMessages({
+    warnings,
+    errors: [],
+  });
 
-    if (typeof console !== 'undefined' && typeof console.warn === 'function') {
-      for (let i = 0; i < formatted.warnings.length; i++) {
-        if (i === 5) {
-          console.warn(
-            'There were more warnings in other files.\n' +
-              'You can find a complete log in the terminal.',
-          );
-          break;
-        }
-        console.warn(formatted.warnings[i]);
-      }
+  for (let i = 0; i < formatted.warnings.length; i++) {
+    if (i === 5) {
+      console.warn(
+        'There were more warnings in other files, you can find a complete log in the terminal.',
+      );
+      break;
     }
+    console.warn(formatted.warnings[i]);
   }
-
-  printWarnings();
 
   // Attempt to apply hot updates or reload.
   if (isHotUpdate) {
@@ -105,10 +88,8 @@ function handleErrors(errors: StatsError[]) {
   });
 
   // Also log them to the console.
-  if (typeof console !== 'undefined' && typeof console.error === 'function') {
-    for (const error of formatted.errors) {
-      console.error(error);
-    }
+  for (const error of formatted.errors) {
+    console.error(error);
   }
 
   if (createOverlay) {
@@ -119,21 +100,10 @@ function handleErrors(errors: StatsError[]) {
   // We will reload on next success instead.
 }
 
-// There is a newer version of the code available.
-function handleAvailableHash(hash: string) {
-  // Update last known compilation hash.
-  mostRecentCompilationHash = hash;
-}
-
 function isUpdateAvailable() {
   // __webpack_hash__ is the hash of the current compilation.
   // It's a global variable injected by webpack / Rspack.
-  return mostRecentCompilationHash !== __webpack_hash__;
-}
-
-// webpack disallows updates in other states.
-function canApplyUpdates() {
-  return import.meta.webpackHot.status() === 'idle';
+  return lastCompilationHash !== __webpack_hash__;
 }
 
 // Attempt to update code on the fly, fall back to a hard reload.
@@ -149,7 +119,8 @@ function tryApplyUpdates() {
     return;
   }
 
-  if (!canApplyUpdates()) {
+  // webpack disallows updates in other states.
+  if (import.meta.webpackHot.status() !== 'idle') {
     return;
   }
 
@@ -157,13 +128,9 @@ function tryApplyUpdates() {
     err: unknown,
     updatedModules: (string | number)[] | null,
   ) {
-    const wantsForcedReload = err || !updatedModules;
-    if (wantsForcedReload) {
-      if (
-        err &&
-        typeof console !== 'undefined' &&
-        typeof console.error === 'function'
-      ) {
+    const forcedReload = err || !updatedModules;
+    if (forcedReload) {
+      if (err) {
         console.error('[HMR] Forced reload caused by: ', err);
       }
 
@@ -190,20 +157,20 @@ function tryApplyUpdates() {
 
 const MAX_RETRIES = 100;
 let connection: WebSocket | null = null;
-let retryCounter = 0;
+let retryCount = 0;
 
 function onOpen() {
-  if (typeof console !== 'undefined' && typeof console.info === 'function') {
-    // Notify users that the HMR has successfully connected.
-    console.info('[HMR] connected.');
-  }
+  // Notify users that the HMR has successfully connected.
+  console.info('[HMR] connected.');
 }
 
 function onMessage(e: MessageEvent<string>) {
   const message = JSON.parse(e.data);
   switch (message.type) {
     case 'hash':
-      handleAvailableHash(message.data);
+      // Update the last compilation hash
+      lastCompilationHash = message.data;
+
       if (clearOverlay && isUpdateAvailable()) {
         clearOverlay();
       }
@@ -212,11 +179,9 @@ function onMessage(e: MessageEvent<string>) {
     case 'ok':
       handleSuccess();
       break;
+    // Triggered when static files changed
     case 'static-changed':
-      reloadPage();
-      break;
     case 'content-changed':
-      // Triggered when a file from `contentBase` changed.
       reloadPage();
       break;
     case 'warnings':
@@ -225,44 +190,38 @@ function onMessage(e: MessageEvent<string>) {
     case 'errors':
       handleErrors(message.data);
       break;
-    default:
-    // Do nothing.
   }
 }
 
-async function sleep(msec = 1000) {
+function sleep(msec = 1000) {
   return new Promise((resolve) => {
     setTimeout(resolve, msec);
   });
 }
 
 async function onClose() {
-  if (typeof console !== 'undefined' && typeof console.info === 'function') {
-    console.info('[HMR] disconnected. Attempting to reconnect.');
-  }
+  console.info('[HMR] disconnected. Attempting to reconnect.');
 
   removeListeners();
 
   await sleep(1000);
-  retryCounter++;
+  retryCount++;
 
   if (
     connection &&
     (connection.readyState === connection.CONNECTING ||
       connection.readyState === connection.OPEN)
   ) {
-    retryCounter = 0;
+    retryCount = 0;
     return;
   }
 
   // Exceeded max retry attempts, stop retry.
-  if (retryCounter > MAX_RETRIES) {
-    if (typeof console !== 'undefined' && typeof console.info === 'function') {
-      console.info(
-        '[HMR] Unable to establish a connection after exceeding the maximum retry attempts.',
-      );
-    }
-    retryCounter = 0;
+  if (retryCount > MAX_RETRIES) {
+    console.info(
+      '[HMR] Unable to establish a connection after exceeding the maximum retry attempts.',
+    );
+    retryCount = 0;
     return;
   }
 
@@ -271,6 +230,8 @@ async function onClose() {
 
 // Establishing a WebSocket connection with the server.
 function connect() {
+  const socketUrl = getSocketUrl(RSBUILD_CLIENT_CONFIG);
+
   connection = new WebSocket(socketUrl);
   connection.addEventListener('open', onOpen);
   // Attempt to reconnect after disconnection
