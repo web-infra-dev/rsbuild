@@ -16,16 +16,15 @@ function isLikelyASyntaxError(message: string) {
 }
 
 function resolveFileName(stats: webpack.StatsError) {
-  const regex = /(?:\!|^)([^!]+)$/;
-
   // Get the real source file path with stats.moduleIdentifier.
-  // e.g. moduleIdentifier is builtin:react-refresh-loader!/Users/x/src/App.jsx"
-  let fileName = stats.moduleIdentifier?.match(regex)?.at(-1) ?? '';
-
-  // add default column add lines
-  if (fileName) fileName = `File: ${fileName}:1:1\n`;
-
-  return fileName;
+  // e.g. moduleIdentifier is "builtin:react-refresh-loader!/Users/x/src/App.jsx"
+  const regex = /(?:\!|^)([^!]+)$/;
+  const fileName = stats.moduleIdentifier?.match(regex)?.at(-1) ?? '';
+  return fileName
+    ? // add default column add lines for linking
+      `File: ${fileName}:1:1\n`
+    : // fallback to moduleName if moduleIdentifier parse failed
+      `File: ${stats.moduleName}\n`;
 }
 
 // Cleans up webpack error messages.
