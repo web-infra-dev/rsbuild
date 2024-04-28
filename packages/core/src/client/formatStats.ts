@@ -20,14 +20,11 @@ function resolveFileName(stats: webpack.StatsError) {
   // e.g. moduleIdentifier is "builtin:react-refresh-loader!/Users/x/src/App.jsx"
   const regex = /(?:\!|^)([^!]+)$/;
   const fileName = stats.moduleIdentifier?.match(regex)?.at(-1) ?? '';
-
-  // add default column add lines
-  if (fileName) {
-    return `File: ${fileName}:1:1\n`;
-  }
-
-  // fallback to moduleName if moduleIdentifier parse failed
-  return `File: ${stats.moduleName}\n`;
+  return fileName
+    ? // add default column add lines for linking
+      `File: ${fileName}:1:1\n`
+    : // fallback to moduleName if moduleIdentifier parse failed
+      `File: ${stats.moduleName}\n`;
 }
 
 // Cleans up webpack error messages.
