@@ -5,13 +5,7 @@ import type { ClientConfig } from '@rsbuild/shared';
  */
 export const HMR_SOCK_PATH = '/rsbuild-hmr';
 
-export function createSocketUrl(options: ClientConfig = {}) {
-  const currentLocation = self.location;
-
-  return getSocketUrl(options, currentLocation);
-}
-
-export function formatURL({
+function formatURL({
   port,
   protocol,
   hostname,
@@ -36,7 +30,8 @@ export function formatURL({
   return `${protocol}${colon}//${hostname}:${port}${pathname}`;
 }
 
-function getSocketUrl(urlParts: ClientConfig, location: Location) {
+export function getSocketUrl(urlParts: ClientConfig) {
+  const { location } = self;
   const { host, port, path, protocol } = urlParts;
 
   return formatURL({

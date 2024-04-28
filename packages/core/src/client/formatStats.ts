@@ -30,7 +30,6 @@ function resolveFileName(stats: webpack.StatsError) {
 // Cleans up webpack error messages.
 function formatMessage(stats: webpack.StatsError | string) {
   let lines: string[] = [];
-
   let message: string;
 
   // webpack 5 stats error object
@@ -98,18 +97,17 @@ function formatMessage(stats: webpack.StatsError | string) {
 }
 
 export function formatStatsMessages(
-  json?: Pick<StatsCompilation, 'errors' | 'warnings'>,
+  stats: Pick<StatsCompilation, 'errors' | 'warnings'>,
 ): {
   errors: string[];
   warnings: string[];
 } {
-  const formattedErrors = json?.errors?.map(formatMessage);
-  const formattedWarnings = json?.warnings?.map(formatMessage);
+  const formattedErrors = stats.errors?.map(formatMessage);
+  const formattedWarnings = stats.warnings?.map(formatMessage);
 
   const result = {
     errors: formattedErrors || [],
     warnings: formattedWarnings || [],
-    errorTips: [],
   };
 
   if (result.errors?.some(isLikelyASyntaxError)) {
