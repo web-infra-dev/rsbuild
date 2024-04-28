@@ -4,17 +4,7 @@ import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 import type { PluginAssetsRetryOptions } from '@rsbuild/plugin-assets-retry';
 import { pluginReact } from '@rsbuild/plugin-react';
 import type { RequestHandler } from '@rsbuild/shared';
-
-const pattern = [
-  '[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)',
-  '(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))',
-].join('|');
-
-const ansiRegex = new RegExp(pattern, 'g');
-
-function stripAnsi(content: string) {
-  return content.replace(ansiRegex, '');
-}
+import stripAnsi from 'strip-ansi';
 
 function count404Response(logs: string[], urlPrefix: string): number {
   let count = 0;
