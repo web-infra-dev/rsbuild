@@ -13,9 +13,6 @@ const options: ClientConfig = RSBUILD_CLIENT_CONFIG;
 // Connect to Dev Server
 const socketUrl = createSocketUrl(options);
 
-const enableOverlay = !!options.overlay;
-const enableLiveReload = RSBUILD_DEV_LIVE_RELOAD;
-
 // Remember some state related to hot module replacement.
 let isFirstCompilation = true;
 let mostRecentCompilationHash: string | null = null;
@@ -23,22 +20,24 @@ let hasCompileErrors = false;
 
 function clearOutdatedErrors() {
   // Clean up outdated compile errors, if any.
-  if (typeof console !== 'undefined' && typeof console.clear === 'function') {
-    if (hasCompileErrors) {
-      console.clear();
-    }
+  if (
+    typeof console !== 'undefined' &&
+    typeof console.clear === 'function' &&
+    hasCompileErrors
+  ) {
+    console.clear();
   }
 }
 
 let createOverlay: undefined | ((err: string[]) => void);
 let clearOverlay: undefined | (() => void);
 
-export const registerOverlay = (options: {
-  createOverlay: (err: string[]) => void;
-  clearOverlay: () => void;
-}) => {
-  createOverlay = options.createOverlay;
-  clearOverlay = options.clearOverlay;
+export const registerOverlay = (
+  createFn: (err: string[]) => void,
+  clearFn: () => void,
+) => {
+  createOverlay = createFn;
+  clearOverlay = clearFn;
 };
 
 // Successful compilation.
@@ -112,8 +111,8 @@ function handleErrors(errors: StatsError[]) {
     }
   }
 
-  if (enableOverlay) {
-    createOverlay?.(formatted.errors);
+  if (createOverlay) {
+    createOverlay(formatted.errors);
   }
 
   // Do not attempt to reload now.
@@ -191,7 +190,7 @@ function tryApplyUpdates() {
 
 const MAX_RETRIES = 100;
 let connection: WebSocket | null = null;
-let retry_counter = 0;
+let retryCounter = 0;
 
 function onOpen() {
   if (typeof console !== 'undefined' && typeof console.info === 'function') {
@@ -204,10 +203,10 @@ function onMessage(e: MessageEvent<string>) {
   const message = JSON.parse(e.data);
   switch (message.type) {
     case 'hash':
-      if (enableOverlay) {
-        clearOverlay?.();
-      }
       handleAvailableHash(message.data);
+      if (clearOverlay && isUpdateAvailable()) {
+        clearOverlay();
+      }
       break;
     case 'still-ok':
     case 'ok':
@@ -245,25 +244,25 @@ async function onClose() {
   removeListeners();
 
   await sleep(1000);
-  retry_counter++;
+  retryCounter++;
 
   if (
     connection &&
     (connection.readyState === connection.CONNECTING ||
       connection.readyState === connection.OPEN)
   ) {
-    retry_counter = 0;
+    retryCounter = 0;
     return;
   }
 
   // Exceeded max retry attempts, stop retry.
-  if (retry_counter > MAX_RETRIES) {
+  if (retryCounter > MAX_RETRIES) {
     if (typeof console !== 'undefined' && typeof console.info === 'function') {
       console.info(
         '[HMR] Unable to establish a connection after exceeding the maximum retry attempts.',
       );
     }
-    retry_counter = 0;
+    retryCounter = 0;
     return;
   }
 
@@ -273,7 +272,6 @@ async function onClose() {
 // Establishing a WebSocket connection with the server.
 function connect() {
   connection = new WebSocket(socketUrl);
-
   connection.addEventListener('open', onOpen);
   // Attempt to reconnect after disconnection
   connection.addEventListener('close', onClose);
@@ -301,7 +299,7 @@ function reconnect() {
 }
 
 function reloadPage() {
-  if (enableLiveReload) {
+  if (RSBUILD_DEV_LIVE_RELOAD) {
     window.location.reload();
   }
 }
