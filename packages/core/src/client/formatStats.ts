@@ -15,6 +15,19 @@ function isLikelyASyntaxError(message: string) {
   return message.includes(friendlySyntaxErrorLabel);
 }
 
+function resolveFileName(stats: webpack.StatsError) {
+  const regex = /(?:\!|^)([^!]+)$/;
+
+  // Get the real source file path with stats.moduleIdentifier.
+  // e.g. moduleIdentifier is builtin:react-refresh-loader!/Users/x/src/App.jsx"
+  let fileName = stats.moduleIdentifier?.match(regex)?.at(-1) ?? '';
+
+  // add default column add lines
+  if (fileName) fileName = `File: ${fileName}:1:1\n`;
+
+  return fileName;
+}
+
 // Cleans up webpack error messages.
 function formatMessage(stats: webpack.StatsError | string) {
   let lines: string[] = [];
@@ -23,7 +36,7 @@ function formatMessage(stats: webpack.StatsError | string) {
 
   // webpack 5 stats error object
   if (typeof stats === 'object') {
-    const fileName = stats.moduleName ? `File: ${stats.moduleName}\n` : '';
+    const fileName = resolveFileName(stats);
     // compat rspack
     const mainMessage =
       typeof stats.formatted === 'string' ? stats.formatted : stats.message;
