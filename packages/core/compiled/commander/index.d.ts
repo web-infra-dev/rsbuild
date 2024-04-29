@@ -13,7 +13,7 @@
 // - https://github.com/sindresorhus/type-fest/blob/main/source/primitive.d.ts
 type LiteralUnion<LiteralType, BaseType extends string | number> = LiteralType | (BaseType & Record<never, never>);
 
-export class CommanderError extends Error {
+declare class CommanderError extends Error {
   code: string;
   exitCode: number;
   message: string;
@@ -29,7 +29,7 @@ export class CommanderError extends Error {
   constructor(exitCode: number, code: string, message: string);
 }
 
-export class InvalidArgumentError extends CommanderError {
+declare class InvalidArgumentError extends CommanderError {
   /**
    * Constructs the InvalidArgumentError class
    * @param message - explanation of why argument is invalid
@@ -37,16 +37,16 @@ export class InvalidArgumentError extends CommanderError {
    */
   constructor(message: string);
 }
-export { InvalidArgumentError as InvalidOptionArgumentError }; // deprecated old name
+ // deprecated old name
 
-export interface ErrorOptions { // optional parameter for error()
+interface ErrorOptions { // optional parameter for error()
   /** an id string representing the error */
   code?: string;
   /** suggested exit code which could be used with process.exit */
   exitCode?: number;
 }
 
-export class Argument {
+declare class Argument {
   description: string;
   required: boolean;
   variadic: boolean;
@@ -92,7 +92,7 @@ export class Argument {
   argOptional(): this;
 }
 
-export class Option {
+declare class Option {
   flags: string;
   description: string;
 
@@ -206,7 +206,7 @@ export class Option {
   isBoolean(): boolean;
 }
 
-export class Help {
+declare class Help {
   /** output helpWidth, long lines are wrapped to fit */
   helpWidth?: number;
   sortSubcommands: boolean;
@@ -262,19 +262,19 @@ export class Help {
   /** Generate the built-in help text. */
   formatHelp(cmd: Command, helper: Help): string;
 }
-export type HelpConfiguration = Partial<Help>;
+type HelpConfiguration = Partial<Help>;
 
-export interface ParseOptions {
+interface ParseOptions {
   from: 'node' | 'electron' | 'user';
 }
-export interface HelpContext { // optional parameter for .help() and .outputHelp()
+interface HelpContext { // optional parameter for .help() and .outputHelp()
   error: boolean;
 }
-export interface AddHelpTextContext { // passed to text function used with .addHelpText()
+interface AddHelpTextContext { // passed to text function used with .addHelpText()
   error: boolean;
   command: Command;
 }
-export interface OutputConfiguration {
+interface OutputConfiguration {
   writeOut?(str: string): void;
   writeErr?(str: string): void;
   getOutHelpWidth?(): number;
@@ -283,14 +283,14 @@ export interface OutputConfiguration {
 
 }
 
-export type AddHelpTextPosition = 'beforeAll' | 'before' | 'after' | 'afterAll';
-export type HookEvent = 'preSubcommand' | 'preAction' | 'postAction';
+type AddHelpTextPosition = 'beforeAll' | 'before' | 'after' | 'afterAll';
+type HookEvent = 'preSubcommand' | 'preAction' | 'postAction';
 // The source is a string so author can define their own too.
-export type OptionValueSource = LiteralUnion<'default' | 'config' | 'env' | 'cli' | 'implied', string> | undefined;
+type OptionValueSource = LiteralUnion<'default' | 'config' | 'env' | 'cli' | 'implied', string> | undefined;
 
-export type OptionValues = Record<string, any>;
+type OptionValues = Record<string, any>;
 
-export class Command {
+declare class Command {
   args: string[];
   processedArgs: any[];
   readonly commands: readonly Command[];
@@ -877,23 +877,25 @@ export class Command {
   on(event: string | symbol, listener: (...args: any[]) => void): this;
 }
 
-export interface CommandOptions {
+interface CommandOptions {
   hidden?: boolean;
   isDefault?: boolean;
   /** @deprecated since v7, replaced by hidden */
   noHelp?: boolean;
 }
-export interface ExecutableCommandOptions extends CommandOptions {
+interface ExecutableCommandOptions extends CommandOptions {
   executableFile?: string;
 }
 
-export interface ParseOptionsResult {
+interface ParseOptionsResult {
   operands: string[];
   unknown: string[];
 }
 
-export function createCommand(name?: string): Command;
-export function createOption(flags: string, description?: string): Option;
-export function createArgument(name: string, description?: string): Argument;
+declare function createCommand(name?: string): Command;
+declare function createOption(flags: string, description?: string): Option;
+declare function createArgument(name: string, description?: string): Argument;
 
-export const program: Command;
+declare const program: Command;
+
+export { type AddHelpTextContext, type AddHelpTextPosition, Argument, Command, type CommandOptions, CommanderError, type ErrorOptions, type ExecutableCommandOptions, Help, type HelpConfiguration, type HelpContext, type HookEvent, InvalidArgumentError, InvalidArgumentError as InvalidOptionArgumentError, Option, type OptionValueSource, type OptionValues, type OutputConfiguration, type ParseOptions, type ParseOptionsResult, createArgument, createCommand, createOption, program };

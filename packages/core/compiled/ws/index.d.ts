@@ -1,15 +1,7 @@
 /// <reference types="node" />
-
 import { EventEmitter } from 'events';
-import {
-    Agent,
-    ClientRequest,
-    ClientRequestArgs,
-    IncomingMessage,
-    OutgoingHttpHeaders,
-    Server as HTTPServer,
-} from "http";
-import { Server as HTTPSServer } from 'https';
+import { ClientRequestArgs, IncomingMessage, ClientRequest, OutgoingHttpHeaders, Agent, Server } from 'http';
+import { Server as Server$1 } from 'https';
 import { Duplex, DuplexOptions } from 'stream';
 import { SecureContextOptions } from 'tls';
 import { URL } from 'url';
@@ -35,6 +27,8 @@ type BufferLike =
     | { valueOf(): string }
     | { [Symbol.toPrimitive](hint: string): string };
 
+declare const WebSocketAlias: typeof WebSocket;
+interface WebSocketAlias extends WebSocket {}
 // WebSocket socket.
 declare class WebSocket extends EventEmitter {
     /** The connection is not yet open. */
@@ -199,9 +193,7 @@ declare class WebSocket extends EventEmitter {
     ): this;
     removeListener(event: string | symbol, listener: (...args: any[]) => void): this;
 }
-
-declare const WebSocketAlias: typeof WebSocket;
-interface WebSocketAlias extends WebSocket {} // eslint-disable-line @typescript-eslint/no-empty-interface
+ // eslint-disable-line @typescript-eslint/no-empty-interface
 
 declare namespace WebSocket {
     /**
@@ -318,7 +310,7 @@ declare namespace WebSocket {
         host?: string | undefined;
         port?: number | undefined;
         backlog?: number | undefined;
-        server?: HTTPServer<V> | HTTPSServer<V> | undefined;
+        server?: Server<V> | Server$1<V> | undefined;
         verifyClient?:
             | VerifyClientCallbackAsync<InstanceType<V>>
             | VerifyClientCallbackSync<InstanceType<V>>
@@ -407,4 +399,4 @@ declare namespace WebSocket {
     function createWebSocketStream(websocket: WebSocket, options?: DuplexOptions): Duplex;
 }
 
-export = WebSocket;
+export { WebSocket as default };

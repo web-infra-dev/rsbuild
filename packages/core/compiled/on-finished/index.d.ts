@@ -1,8 +1,6 @@
 /// <reference types="node" />
 import { IncomingMessage, OutgoingMessage } from 'http';
 
-export = onFinished;
-
 declare function onFinished<T extends IncomingMessage | OutgoingMessage>(
     msg: T,
     listener: (err: Error | null, msg: T) => void,
@@ -11,3 +9,5 @@ declare function onFinished<T extends IncomingMessage | OutgoingMessage>(
 declare namespace onFinished {
     function isFinished(msg: IncomingMessage | OutgoingMessage): boolean;
 }
+
+export { onFinished as default };

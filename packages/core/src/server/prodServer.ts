@@ -127,7 +127,7 @@ export class RsbuildProdServer {
       // handler assetPrefix
       if (assetPrefix && url?.startsWith(assetPrefix)) {
         req.url = url.slice(assetPrefix.length);
-        assetMiddleware(req, res, (...args) => {
+        assetMiddleware(req, res, (...args: unknown[]) => {
           req.url = url;
           next(...args);
         });

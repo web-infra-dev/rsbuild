@@ -20,18 +20,7 @@ export default {
     },
     {
       name: 'sirv',
-      afterBundle(task) {
-        const filePath = join(task.distPath, 'sirv.d.ts');
-        const content = readFileSync(filePath, 'utf-8');
-        const newContent = `${content.replace(
-          "declare module 'sirv'",
-          'declare namespace sirv',
-        )}\nexport = sirv;`;
-
-        if (newContent !== content) {
-          writeFileSync(filePath, newContent);
-        }
-      },
+      ignoreDts: true,
     },
     {
       name: 'http-compression',

@@ -1,1 +1,186 @@
-(()=>{"use strict";var e={945:(e,r,t)=>{var n=t(310);r=e.exports=function historyApiFallback(e){e=e||{};var r=getLogger(e);return function(t,i,a){var o=t.headers;if(t.method!=="GET"&&t.method!=="HEAD"){r("Not rewriting",t.method,t.url,"because the method is not GET or HEAD.");return a()}else if(!o||typeof o.accept!=="string"){r("Not rewriting",t.method,t.url,"because the client did not send an HTTP accept header.");return a()}else if(o.accept.indexOf("application/json")===0){r("Not rewriting",t.method,t.url,"because the client prefers JSON.");return a()}else if(!acceptsHtml(o.accept,e)){r("Not rewriting",t.method,t.url,"because the client does not accept HTML.");return a()}var u=n.parse(t.url);var l;e.rewrites=e.rewrites||[];for(var c=0;c<e.rewrites.length;c++){var s=e.rewrites[c];var f=u.pathname.match(s.from);if(f!==null){l=evaluateRewriteRule(u,f,s.to,t);if(l.charAt(0)!=="/"){r("We recommend using an absolute path for the rewrite target.","Received a non-absolute rewrite target",l,"for URL",t.url)}r("Rewriting",t.method,t.url,"to",l);t.url=l;return a()}}var d=u.pathname;if(d.lastIndexOf(".")>d.lastIndexOf("/")&&e.disableDotRule!==true){r("Not rewriting",t.method,t.url,"because the path includes a dot (.) character.");return a()}l=e.index||"/index.html";r("Rewriting",t.method,t.url,"to",l);t.url=l;a()}};function evaluateRewriteRule(e,r,t,n){if(typeof t==="string"){return t}else if(typeof t!=="function"){throw new Error("Rewrite rule can only be of type string or function.")}return t({parsedUrl:e,match:r,request:n})}function acceptsHtml(e,r){r.htmlAcceptHeaders=r.htmlAcceptHeaders||["text/html","*/*"];for(var t=0;t<r.htmlAcceptHeaders.length;t++){if(e.indexOf(r.htmlAcceptHeaders[t])!==-1){return true}}return false}function getLogger(e){if(e&&e.logger){return e.logger}else if(e&&e.verbose){return console.log.bind(console)}return function(){}}},310:e=>{e.exports=require("url")}};var r={};function __nccwpck_require__(t){var n=r[t];if(n!==undefined){return n.exports}var i=r[t]={exports:{}};var a=true;try{e[t](i,i.exports,__nccwpck_require__);a=false}finally{if(a)delete r[t]}return i.exports}if(typeof __nccwpck_require__!=="undefined")__nccwpck_require__.ab=__dirname+"/";var t=__nccwpck_require__(945);module.exports=t})();
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ 945:
+/***/ ((module, exports, __nccwpck_require__) => {
+
+
+
+var url = __nccwpck_require__(310);
+
+exports = module.exports = function historyApiFallback(options) {
+  options = options || {};
+  var logger = getLogger(options);
+
+  return function(req, res, next) {
+    var headers = req.headers;
+    if (req.method !== 'GET' && req.method !== 'HEAD') {
+      logger(
+        'Not rewriting',
+        req.method,
+        req.url,
+        'because the method is not GET or HEAD.'
+      );
+      return next();
+    } else if (!headers || typeof headers.accept !== 'string') {
+      logger(
+        'Not rewriting',
+        req.method,
+        req.url,
+        'because the client did not send an HTTP accept header.'
+      );
+      return next();
+    } else if (headers.accept.indexOf('application/json') === 0) {
+      logger(
+        'Not rewriting',
+        req.method,
+        req.url,
+        'because the client prefers JSON.'
+      );
+      return next();
+    } else if (!acceptsHtml(headers.accept, options)) {
+      logger(
+        'Not rewriting',
+        req.method,
+        req.url,
+        'because the client does not accept HTML.'
+      );
+      return next();
+    }
+
+    var parsedUrl = url.parse(req.url);
+    var rewriteTarget;
+    options.rewrites = options.rewrites || [];
+    for (var i = 0; i < options.rewrites.length; i++) {
+      var rewrite = options.rewrites[i];
+      var match = parsedUrl.pathname.match(rewrite.from);
+      if (match !== null) {
+        rewriteTarget = evaluateRewriteRule(parsedUrl, match, rewrite.to, req);
+
+        if(rewriteTarget.charAt(0) !== '/') {
+          logger(
+            'We recommend using an absolute path for the rewrite target.',
+            'Received a non-absolute rewrite target',
+            rewriteTarget,
+            'for URL',
+            req.url
+          );
+        }
+
+        logger('Rewriting', req.method, req.url, 'to', rewriteTarget);
+        req.url = rewriteTarget;
+        return next();
+      }
+    }
+
+    var pathname = parsedUrl.pathname;
+    if (pathname.lastIndexOf('.') > pathname.lastIndexOf('/') &&
+        options.disableDotRule !== true) {
+      logger(
+        'Not rewriting',
+        req.method,
+        req.url,
+        'because the path includes a dot (.) character.'
+      );
+      return next();
+    }
+
+    rewriteTarget = options.index || '/index.html';
+    logger('Rewriting', req.method, req.url, 'to', rewriteTarget);
+    req.url = rewriteTarget;
+    next();
+  };
+};
+
+function evaluateRewriteRule(parsedUrl, match, rule, req) {
+  if (typeof rule === 'string') {
+    return rule;
+  } else if (typeof rule !== 'function') {
+    throw new Error('Rewrite rule can only be of type string or function.');
+  }
+
+  return rule({
+    parsedUrl: parsedUrl,
+    match: match,
+    request: req
+  });
+}
+
+function acceptsHtml(header, options) {
+  options.htmlAcceptHeaders = options.htmlAcceptHeaders || ['text/html', '*/*'];
+  for (var i = 0; i < options.htmlAcceptHeaders.length; i++) {
+    if (header.indexOf(options.htmlAcceptHeaders[i]) !== -1) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function getLogger(options) {
+  if (options && options.logger) {
+    return options.logger;
+  } else if (options && options.verbose) {
+    // eslint-disable-next-line no-console
+    return console.log.bind(console);
+  }
+  return function(){};
+}
+
+
+/***/ }),
+
+/***/ 310:
+/***/ ((module) => {
+
+module.exports = require("url");
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __nccwpck_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		var threw = true;
+/******/ 		try {
+/******/ 			__webpack_modules__[moduleId](module, module.exports, __nccwpck_require__);
+/******/ 			threw = false;
+/******/ 		} finally {
+/******/ 			if(threw) delete __webpack_module_cache__[moduleId];
+/******/ 		}
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat */
+/******/ 	
+/******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __nccwpck_require__(945);
+/******/ 	module.exports = __webpack_exports__;
+/******/ 	
+/******/ })()
+;

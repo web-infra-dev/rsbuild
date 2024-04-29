@@ -1,19 +1,19 @@
-// TypeScript Version: 3.0
 /// <reference types="node" />
+// TypeScript Version: 3.0
 
-export interface DotenvPopulateInput {
+interface DotenvPopulateInput {
   [name: string]: string;
 }
 
-export interface DotenvParseInput {
+interface DotenvParseInput {
   [name: string]: string;
 }
 
-export interface DotenvParseOutput {
+interface DotenvParseOutput {
   [name: string]: string;
 }
 
-export interface DotenvExpandOptions {
+interface DotenvExpandOptions {
   error?: Error;
 
   /**
@@ -33,7 +33,7 @@ export interface DotenvExpandOptions {
   parsed?: DotenvParseInput;
 }
 
-export interface DotenvExpandOutput {
+interface DotenvExpandOutput {
   error?: Error;
   parsed?: DotenvParseOutput;
 }
@@ -47,4 +47,6 @@ export interface DotenvExpandOutput {
  * @returns an object with a `parsed` key if successful or `error` key if an error occurred. example: { parsed: { KEY: 'value' } }
  *
  */
-export function expand(options?: DotenvExpandOptions): DotenvExpandOutput
+declare function expand(options?: DotenvExpandOptions): DotenvExpandOutput
+
+export { type DotenvExpandOptions, type DotenvExpandOutput, type DotenvParseInput, type DotenvParseOutput, type DotenvPopulateInput, expand };
