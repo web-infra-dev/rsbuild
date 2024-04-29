@@ -2,13 +2,6 @@
 import { join } from 'node:path';
 import fs from 'fs-extra';
 
-// The package size of `schema-utils` is large, and validate has a performance overhead of tens of ms.
-// So we skip the validation and let TypeScript to ensure type safety.
-const writeEmptySchemaUtils = (task) => {
-  const schemaUtilsPath = join(task.distPath, 'schema-utils.js');
-  fs.outputFileSync(schemaUtilsPath, 'module.exports.validate = () => {};');
-};
-
 function replaceFileContent(filePath, replaceFn) {
   const content = fs.readFileSync(filePath, 'utf-8');
   const newContent = replaceFn(content);
@@ -202,16 +195,6 @@ export default {
       externals: {
         'loader-utils': '../loader-utils2',
       },
-    },
-    {
-      name: 'webpack-dev-middleware',
-      externals: {
-        'schema-utils': './schema-utils',
-        'schema-utils/declarations/validate':
-          'schema-utils/declarations/validate',
-        'mime-types': '../mime-types',
-      },
-      afterBundle: writeEmptySchemaUtils,
     },
     {
       name: 'autoprefixer',

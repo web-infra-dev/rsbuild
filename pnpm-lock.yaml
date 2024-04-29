@@ -743,6 +743,9 @@ importers:
       webpack:
         specifier: ^5.91.0
         version: 5.91.0
+      webpack-dev-middleware:
+        specifier: 7.2.1
+        version: 7.2.1(webpack@5.91.0)
       ws:
         specifier: ^8.17.0
         version: 8.17.0
@@ -756,8 +759,8 @@ importers:
         specifier: 18.x
         version: 18.19.31
       rslog:
-        specifier: ^1.2.1
-        version: 1.2.1
+        specifier: ^1.2.2
+        version: 1.2.2
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1650,8 +1653,8 @@ importers:
         specifier: 5.0.0
         version: 5.0.0
       rslog:
-        specifier: ^1.2.1
-        version: 1.2.1
+        specifier: ^1.2.2
+        version: 1.2.2
       sass:
         specifier: ^1.75.0
         version: 1.75.0
@@ -1679,9 +1682,6 @@ importers:
       webpack-chain:
         specifier: npm:webpack-5-chain@8.0.1
         version: webpack-5-chain@8.0.1
-      webpack-dev-middleware:
-        specifier: 7.2.1
-        version: 7.2.1(webpack@5.91.0)
       webpack-merge:
         specifier: 5.10.0
         version: 5.10.0
@@ -7658,8 +7658,8 @@ packages:
   rsfamily-nav-icon@1.0.2:
     resolution: {integrity: sha512-gbvJ3wxy1iV6g6T1m/+UIM09t1Sr1ISEBMLUVwPITW+Ckhjuca1xyDh2gbMpYnYX+jXhOSSqA9qtlXpchUOH9Q==}
 
-  rslog@1.2.1:
-    resolution: {integrity: sha512-XDMoa858LLZnf4i2kUwyjBQGplXaoSoIfMQf9iji2ano5t1OfSiJsSYpHeOH26DJEc5hdje/4K3wiT6TWL3cRA==}
+  rslog@1.2.2:
+    resolution: {integrity: sha512-tZP8KjrI1nz6qOYCrFxAV7cfmfS2GV94jotU2zOmF/6ByO1zNvGR6/+0inylpjqyBjAdnnutTUW0m4th06bSTw==}
     engines: {node: '>=14.17.6'}
 
   rspack-plugin-virtual-module@0.1.12:
@@ -10291,7 +10291,7 @@ snapshots:
       '@swc/helpers': 0.5.3
       caniuse-lite: 1.0.30001612
       lodash: 4.17.21
-      rslog: 1.2.1
+      rslog: 1.2.2
 
   '@module-federation/runtime-tools@0.1.6':
     dependencies:
@@ -15703,7 +15703,7 @@ snapshots:
 
   rsfamily-nav-icon@1.0.2: {}
 
-  rslog@1.2.1: {}
+  rslog@1.2.2: {}
 
   rspack-plugin-virtual-module@0.1.12:
     dependencies:

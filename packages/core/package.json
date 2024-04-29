@@ -76,6 +76,7 @@
     "sirv": "^2.0.4",
     "typescript": "^5.4.2",
     "webpack": "^5.91.0",
+    "webpack-dev-middleware": "7.2.1",
     "ws": "^8.17.0"
   },
   "engines": {

@@ -33,7 +33,7 @@
   "devDependencies": {
     "@clack/prompts": "^0.7.0",
     "@types/node": "18.x",
-    "rslog": "^1.2.1",
+    "rslog": "^1.2.2",
     "typescript": "^5.4.2"
   },
   "engines": {
