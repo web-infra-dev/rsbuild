@@ -226,6 +226,16 @@ export default {
         // express is a peer dependency, no need to provide express type
         express: 'express',
       },
+      beforeBundle(task) {
+        replaceFileContent(
+          join(task.depPath, 'dist/types.d.ts'),
+          (content) =>
+            `${content.replace(
+              "import type * as httpProxy from 'http-proxy'",
+              "import type httpProxy from 'http-proxy'",
+            )}`,
+        );
+      },
     },
     {
       // The webpack-bundle-analyzer version was locked to v4.9.0 to be compatible with Rspack
