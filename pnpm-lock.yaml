@@ -732,8 +732,8 @@ importers:
         specifier: ^8.4.0
         version: 8.4.2
       prebundle:
-        specifier: 1.1.0-beta.4
-        version: 1.1.0-beta.4(typescript@5.4.5)
+        specifier: 1.1.0-beta.5
+        version: 1.1.0-beta.5(typescript@5.4.5)
       sirv:
         specifier: ^2.0.4
         version: 2.0.4
@@ -852,8 +852,8 @@ importers:
         specifier: 9.1.3
         version: 9.1.3(@babel/core@7.24.4)(webpack@5.91.0)
       prebundle:
-        specifier: 1.1.0-beta.4
-        version: 1.1.0-beta.4(typescript@5.4.5)
+        specifier: 1.1.0-beta.5
+        version: 1.1.0-beta.5(typescript@5.4.5)
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1185,8 +1185,8 @@ importers:
         specifier: 6.1.0
         version: 6.1.0(postcss@8.4.38)
       prebundle:
-        specifier: 1.1.0-beta.4
-        version: 1.1.0-beta.4(typescript@5.4.5)
+        specifier: 1.1.0-beta.5
+        version: 1.1.0-beta.5(typescript@5.4.5)
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1347,8 +1347,8 @@ importers:
         specifier: 6.2.0
         version: 6.2.0(webpack@5.91.0)
       prebundle:
-        specifier: 1.1.0-beta.4
-        version: 1.1.0-beta.4(typescript@5.4.5)
+        specifier: 1.1.0-beta.5
+        version: 1.1.0-beta.5(typescript@5.4.5)
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1523,8 +1523,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       prebundle:
-        specifier: 1.1.0-beta.4
-        version: 1.1.0-beta.4(typescript@5.4.5)
+        specifier: 1.1.0-beta.5
+        version: 1.1.0-beta.5(typescript@5.4.5)
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1644,8 +1644,8 @@ importers:
         specifier: 4.2.0
         version: 4.2.0
       prebundle:
-        specifier: 1.1.0-beta.4
-        version: 1.1.0-beta.4(typescript@5.4.5)
+        specifier: 1.1.0-beta.5
+        version: 1.1.0-beta.5(typescript@5.4.5)
       resolve-url-loader:
         specifier: 5.0.0
         version: 5.0.0
@@ -7282,8 +7282,8 @@ packages:
   preact@10.20.2:
     resolution: {integrity: sha512-S1d1ernz3KQ+Y2awUxKakpfOg2CEmJmwOP+6igPx6dgr6pgDvenqYviyokWso2rhHvGtTlWWnJDa7RaPbQerTg==}
 
-  prebundle@1.1.0-beta.4:
-    resolution: {integrity: sha512-RrnvW4WPOuNSLp6S3mGyXtBqDP8cP+4k56AGCX7RYssk4jtQWkqLZ9pJy/ZhPW4oJGVJ0b3YBGuuE2nISJIL7A==}
+  prebundle@1.1.0-beta.5:
+    resolution: {integrity: sha512-pnYlnWPdQC2cVSBc6xV0+hR61pYEI4IcRZi8cU5So4/riLsDcR1aUXMh6djuEbWpkFqQrt/sWJygi/B8OQD0qA==}
     hasBin: true
 
   preferred-pm@3.1.3:
@@ -15186,7 +15186,7 @@ snapshots:
 
   preact@10.20.2: {}
 
-  prebundle@1.1.0-beta.4(typescript@5.4.5):
+  prebundle@1.1.0-beta.5(typescript@5.4.5):
     dependencies:
       '@vercel/ncc': 0.38.1
       rollup: 4.17.1
