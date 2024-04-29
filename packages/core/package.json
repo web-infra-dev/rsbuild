@@ -72,7 +72,7 @@
     "launch-editor-middleware": "^2.6.1",
     "on-finished": "2.4.1",
     "open": "^8.4.0",
-    "prebundle": "1.0.3",
+    "prebundle": "1.0.4",
     "sirv": "^2.0.4",
     "typescript": "^5.4.2",
     "webpack": "^5.91.0",
