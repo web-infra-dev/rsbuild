@@ -1,6 +1,6 @@
+import type fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
 import url from 'node:url';
-import type fs from 'node:fs';
 import type {
   CompileMiddlewareAPI,
   DevConfig,

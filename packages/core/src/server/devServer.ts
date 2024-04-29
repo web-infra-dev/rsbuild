@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import {
   type CreateDevMiddlewareReturns,
   type CreateDevServerOptions,
@@ -12,7 +13,6 @@ import {
   isMultiCompiler,
   setNodeEnv,
 } from '@rsbuild/shared';
-import fs from 'node:fs';
 import connect from '@rsbuild/shared/connect';
 import type { InternalContext } from '../types';
 import {
