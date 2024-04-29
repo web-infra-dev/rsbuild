@@ -39,7 +39,7 @@
     "@scripts/test-helper": "workspace:*",
     "@types/node": "18.x",
     "file-loader": "6.2.0",
-    "prebundle": "1.0.3",
+    "prebundle": "1.0.4",
     "typescript": "^5.4.2",
     "url-loader": "4.1.1"
   },

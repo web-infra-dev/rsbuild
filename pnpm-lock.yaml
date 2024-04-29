@@ -732,8 +732,8 @@ importers:
         specifier: ^8.4.0
         version: 8.4.2
       prebundle:
-        specifier: 1.0.3
-        version: 1.0.3
+        specifier: 1.0.4
+        version: 1.0.4
       sirv:
         specifier: ^2.0.4
         version: 2.0.4
@@ -852,8 +852,8 @@ importers:
         specifier: 9.1.3
         version: 9.1.3(@babel/core@7.24.4)(webpack@5.91.0)
       prebundle:
-        specifier: 1.0.3
-        version: 1.0.3
+        specifier: 1.0.4
+        version: 1.0.4
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1185,8 +1185,8 @@ importers:
         specifier: 6.1.0
         version: 6.1.0(postcss@8.4.38)
       prebundle:
-        specifier: 1.0.3
-        version: 1.0.3
+        specifier: 1.0.4
+        version: 1.0.4
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1347,8 +1347,8 @@ importers:
         specifier: 6.2.0
         version: 6.2.0(webpack@5.91.0)
       prebundle:
-        specifier: 1.0.3
-        version: 1.0.3
+        specifier: 1.0.4
+        version: 1.0.4
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1523,8 +1523,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       prebundle:
-        specifier: 1.0.3
-        version: 1.0.3
+        specifier: 1.0.4
+        version: 1.0.4
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1644,8 +1644,8 @@ importers:
         specifier: 4.2.0
         version: 4.2.0
       prebundle:
-        specifier: 1.0.3
-        version: 1.0.3
+        specifier: 1.0.4
+        version: 1.0.4
       resolve-url-loader:
         specifier: 5.0.0
         version: 5.0.0
@@ -7285,8 +7285,8 @@ packages:
   preact@10.20.2:
     resolution: {integrity: sha512-S1d1ernz3KQ+Y2awUxKakpfOg2CEmJmwOP+6igPx6dgr6pgDvenqYviyokWso2rhHvGtTlWWnJDa7RaPbQerTg==}
 
-  prebundle@1.0.3:
-    resolution: {integrity: sha512-9OpAbpbQ1jnGsBixQN5bbg7YOJqDjG+ssm3puLt7NQ0koZh5Th3rQdaUYPG4Y3lpbPhh3fz5fdbHtX9FG/6e+A==}
+  prebundle@1.0.4:
+    resolution: {integrity: sha512-2ll8Nv4OP2mUeHj0Ac5VFOq/dlJsnBK/3QeDpumb7KB95RAcTLNb7CmEnE2Ij6S2nMoNRoZcyUgOk54W8Ma8Wg==}
     hasBin: true
 
   preferred-pm@3.1.3:
@@ -15238,12 +15238,10 @@ snapshots:
 
   preact@10.20.2: {}
 
-  prebundle@1.0.3:
+  prebundle@1.0.4:
     dependencies:
       '@vercel/ncc': 0.38.1
       dts-packer: 0.0.3
-      fast-glob: 3.3.2
-      fs-extra: 11.2.0
 
   preferred-pm@3.1.3:
     dependencies:
