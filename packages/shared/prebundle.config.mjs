@@ -28,7 +28,6 @@ export default {
     typescript: 'typescript',
   },
   dependencies: [
-    'jiti',
     'rslog',
     'deepmerge',
     'fs-extra',
@@ -39,6 +38,10 @@ export default {
     'browserslist',
     'gzip-size',
     'json5',
+    {
+      name: 'jiti',
+      ignoreDts: true,
+    },
     {
       name: 'webpack-chain',
       externals: {
@@ -105,9 +108,7 @@ export default {
       externals: {
         chokidar: '../chokidar',
       },
-      afterBundle(task) {
-        fs.copySync(join(task.depPath, 'types'), join(task.distPath, 'types'));
-      },
+      ignoreDts: true,
     },
     {
       name: 'style-loader',
@@ -125,14 +126,7 @@ export default {
         // needle is an optional dependency and no need to bundle it.
         needle: 'needle',
       },
-      afterBundle(task) {
-        replaceFileContent(join(task.distPath, 'index.d.ts'), (content) =>
-          content.replace(
-            `declare module "less" {\n    export = less;\n}`,
-            'export = Less;',
-          ),
-        );
-      },
+      ignoreDts: true,
     },
     {
       name: 'less-loader',

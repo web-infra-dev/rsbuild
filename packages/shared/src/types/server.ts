@@ -1,6 +1,6 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Socket } from 'node:net';
-import type { Server as ConnectServer } from '../../compiled/connect';
+import type Connect from '../../compiled/connect';
 import type {
   DevConfig,
   NextFunction,
@@ -113,7 +113,7 @@ export type RsbuildDevServer = {
    *
    * Can be used to attach custom middlewares to the dev server.
    */
-  middlewares: ConnectServer;
+  middlewares: Connect.Server;
   /**
    * Notify Rsbuild Server has started
    *
