@@ -23,9 +23,8 @@
     "compiled"
   ],
   "scripts": {
-    "build": "modern build",
-    "dev": "modern build --watch",
-    "prebundle": "prebundle"
+    "build": "prebundle && modern build",
+    "dev": "prebundle && modern build --watch"
   },
   "dependencies": {
     "@babel/core": "^7.24.4",

@@ -115,9 +115,8 @@
     "compiled"
   ],
   "scripts": {
-    "build": "modern build",
-    "dev": "modern build --watch",
-    "prebundle": "prebundle",
+    "build": "prebundle && modern build",
+    "dev": "prebundle && modern build --watch",
     "test": "vitest run",
     "test:ui": "vitest --ui",
     "test:watch": "vitest dev --no-coverage"
