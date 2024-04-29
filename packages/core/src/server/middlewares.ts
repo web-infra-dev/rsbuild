@@ -1,4 +1,4 @@
-import fs from 'node:fs';
+import type fs from 'node:fs';
 import path from 'node:path';
 import { parse } from 'node:url';
 import {
@@ -79,7 +79,8 @@ export const getHtmlFallbackMiddleware: (params: {
   distPath: string;
   callback?: Middleware;
   htmlFallback?: HtmlFallback;
-}) => Middleware = ({ htmlFallback, distPath, callback }) => {
+  outputFileSystem: typeof fs;
+}) => Middleware = ({ htmlFallback, distPath, callback, outputFileSystem }) => {
   /**
    * support access page without suffix and support fallback in some edge cases
    */
@@ -114,17 +115,6 @@ export const getHtmlFallbackMiddleware: (params: {
         new Error(`Invalid URL: ${color.yellow(url)}`, { cause: err }),
       );
       return next();
-    }
-
-    let outputFileSystem = fs;
-
-    // support memory fs
-    // @ts-expect-error
-    if (res.locals.webpack) {
-      // reference: https://github.com/webpack/webpack-dev-middleware#server-side-rendering
-      // @ts-expect-error
-      const { devMiddleware } = res.locals.webpack;
-      outputFileSystem = devMiddleware.outputFileSystem;
     }
 
     const rewrite = (newUrl: string, isFallback = false) => {
