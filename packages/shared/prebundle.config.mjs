@@ -119,7 +119,17 @@ export default {
         // needle is an optional dependency and no need to bundle it.
         needle: 'needle',
       },
-      ignoreDts: true,
+      // bundle namespace child (hoisting) not supported yet
+      beforeBundle: () => {
+        replaceFileContent(
+          join(process.cwd(), 'node_modules/@types/less/index.d.ts'),
+          (content) =>
+            `${content.replace(
+              /declare module "less" {\s+export = less;\s+}/,
+              'export = Less;',
+            )}`,
+        );
+      },
     },
     {
       name: 'less-loader',
