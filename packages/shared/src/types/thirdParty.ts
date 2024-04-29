@@ -6,13 +6,10 @@ import type {
 import type { AcceptedPlugin, ProcessOptions } from 'postcss';
 import type { MinifyOptions } from 'terser';
 import type { Configuration as WebpackConfig } from 'webpack';
-import type { Options as AutoprefixerOptions } from '../../compiled/autoprefixer';
-import type Less from '../../compiled/less';
-import type {
-  LegacyOptions as LegacySassOptions,
-  Options as SassOptions,
-} from '../../compiled/sass';
-import type * as SassLoader from '../../compiled/sass-loader';
+import type Autoprefixer from '../../compiled/autoprefixer';
+import type SassLoader from '../../compiled/sass-loader';
+
+type AutoprefixerOptions = Autoprefixer.Options;
 
 export interface CSSExtractOptions {
   pluginOptions?: MiniCSSExtractPluginOptions;
@@ -28,16 +25,18 @@ export type SassLoaderOptions = Omit<SassLoader.Options, 'sassOptions'> &
   (
     | {
         api?: 'legacy';
-        sassOptions?: Partial<LegacySassOptions<'async'>>;
+        // TODO: fix prebundle types
+        sassOptions?: any;
       }
     | {
         api: 'modern';
-        sassOptions?: SassOptions<'async'>;
+        sassOptions?: any;
       }
   );
 
 export type LessLoaderOptions = {
-  lessOptions?: Less.Options;
+  // TODO: fix prebundle types
+  lessOptions?: any;
   additionalData?:
     | string
     | ((

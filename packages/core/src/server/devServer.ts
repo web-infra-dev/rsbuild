@@ -91,7 +91,9 @@ export async function createDevServer<
 
     compilerDevMiddleware.init();
 
-    outputFileSystem = isMultiCompiler(compiler) ? compiler.compilers[0].outputFileSystem : compiler.outputFileSystem; 
+    outputFileSystem = isMultiCompiler(compiler)
+      ? compiler.compilers[0].outputFileSystem
+      : compiler.outputFileSystem;
 
     return {
       middleware: compilerDevMiddleware.middleware,

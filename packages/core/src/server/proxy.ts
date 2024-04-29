@@ -50,6 +50,7 @@ export const createProxyMiddleware = (proxyOptions: ProxyOptions) => {
   const middlewares: Middleware[] = [];
 
   for (const opts of formattedOptionsList) {
+    // @ts-expect-error
     const proxyMiddleware = baseCreateProxyMiddleware(opts.context!, opts);
 
     const middleware: Middleware = async (req, res, next) => {

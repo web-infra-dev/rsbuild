@@ -161,7 +161,7 @@
     "postcss-modules-scope": "3.2.0",
     "postcss-modules-values": "4.0.0",
     "postcss-value-parser": "4.2.0",
-    "prebundle": "1.0.4",
+    "prebundle": "1.1.0-beta.6",
     "resolve-url-loader": "5.0.0",
     "rslog": "^1.2.1",
     "sass": "^1.75.0",
