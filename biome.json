@@ -18,12 +18,7 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignore": [
-      "compiled/**/*",
-      "*.vue",
-      "*.svelte",
-      "template-lit-*/src/my-element.*"
-    ],
+    "ignore": ["*.vue", "*.svelte", "template-lit-*/src/my-element.*"],
     "ignoreUnknown": true
   },
   "formatter": {
