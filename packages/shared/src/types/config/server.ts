@@ -8,7 +8,6 @@ import type { Routes } from '../hooks';
 
 export type HtmlFallback = false | 'index';
 
-// TODO: fix prebundle types
 export type ProxyDetail = BaseProxyOptions & {
   bypass?: (
     req: IncomingMessage,
