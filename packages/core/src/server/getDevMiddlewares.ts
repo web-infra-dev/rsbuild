@@ -63,7 +63,6 @@ const applyDefaultMiddlewares = async ({
   outputFileSystem,
 }: RsbuildDevMiddlewareOptions & {
   middlewares: Middlewares;
-  compileMiddlewareAPI?: CompileMiddlewareAPI;
 }): Promise<{
   onUpgrade: UpgradeEvent;
 }> => {
@@ -204,13 +203,8 @@ export const getMiddlewares = async (options: RsbuildDevMiddlewareOptions) => {
   middlewares.push(...before);
 
   const { onUpgrade } = await applyDefaultMiddlewares({
+    ...options,
     middlewares,
-    dev: options.dev,
-    server: options.server,
-    compileMiddlewareAPI,
-    output: options.output,
-    pwd: options.pwd,
-    outputFileSystem: options.outputFileSystem,
   });
 
   middlewares.push(...after);
