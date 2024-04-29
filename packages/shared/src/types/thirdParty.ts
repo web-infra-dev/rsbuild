@@ -25,6 +25,7 @@ export type SassLoaderOptions = Omit<SassLoader.Options, 'sassOptions'> &
   (
     | {
         api?: 'legacy';
+        // TODO: fix prebundle types
         sassOptions?: any;
       }
     | {
@@ -34,6 +35,7 @@ export type SassLoaderOptions = Omit<SassLoader.Options, 'sassOptions'> &
   );
 
 export type LessLoaderOptions = {
+  // TODO: fix prebundle types
   lessOptions?: any;
   additionalData?:
     | string

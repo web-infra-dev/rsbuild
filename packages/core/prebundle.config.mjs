@@ -1,7 +1,4 @@
 // @ts-check
-import { readFileSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
-
 /** @type {import('prebundle').Config} */
 export default {
   dependencies: [
