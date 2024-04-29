@@ -1,12 +1,14 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { ServerOptions as HttpsServerOptions } from 'node:https';
-import type { Filter as ProxyFilter } from '../../../compiled/http-proxy-middleware';
+import type {
+  Options as BaseProxyOptions,
+  Filter as ProxyFilter,
+} from '../../../compiled/http-proxy-middleware';
 import type { Routes } from '../hooks';
 
 export type HtmlFallback = false | 'index';
 
-// TODO: fix prebundle types
-export type ProxyDetail = Record<string, any> & {
+export type ProxyDetail = BaseProxyOptions & {
   bypass?: (
     req: IncomingMessage,
     res: ServerResponse,

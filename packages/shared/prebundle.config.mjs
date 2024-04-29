@@ -2,13 +2,6 @@
 import { join } from 'node:path';
 import fs from 'fs-extra';
 
-// The package size of `schema-utils` is large, and validate has a performance overhead of tens of ms.
-// So we skip the validation and let TypeScript to ensure type safety.
-const writeEmptySchemaUtils = (task) => {
-  const schemaUtilsPath = join(task.distPath, 'schema-utils.js');
-  fs.outputFileSync(schemaUtilsPath, 'module.exports.validate = () => {};');
-};
-
 function replaceFileContent(filePath, replaceFn) {
   const content = fs.readFileSync(filePath, 'utf-8');
   const newContent = replaceFn(content);
@@ -108,7 +101,13 @@ export default {
       externals: {
         chokidar: '../chokidar',
       },
-      ignoreDts: true,
+      dtsExternals: ['source-map-js', 'immutable'],
+      beforeBundle: (task) => {
+        fs.outputFileSync(
+          join(task.depPath, 'types/index.d.ts'),
+          `export { Options } from './options';\nexport { LegacyOptions } from './legacy/options';`,
+        );
+      },
     },
     {
       name: 'style-loader',
@@ -126,7 +125,17 @@ export default {
         // needle is an optional dependency and no need to bundle it.
         needle: 'needle',
       },
-      ignoreDts: true,
+      // bundle namespace child (hoisting) not supported yet
+      beforeBundle: () => {
+        replaceFileContent(
+          join(process.cwd(), 'node_modules/@types/less/index.d.ts'),
+          (content) =>
+            `${content.replace(
+              /declare module "less" {\s+export = less;\s+}/,
+              'export = Less;',
+            )}`,
+        );
+      },
     },
     {
       name: 'less-loader',
@@ -204,16 +213,6 @@ export default {
       },
     },
     {
-      name: 'webpack-dev-middleware',
-      externals: {
-        'schema-utils': './schema-utils',
-        'schema-utils/declarations/validate':
-          'schema-utils/declarations/validate',
-        'mime-types': '../mime-types',
-      },
-      afterBundle: writeEmptySchemaUtils,
-    },
-    {
       name: 'autoprefixer',
       externals: {
         picocolors: '../picocolors',
@@ -226,6 +225,16 @@ export default {
       externals: {
         // express is a peer dependency, no need to provide express type
         express: 'express',
+      },
+      beforeBundle(task) {
+        replaceFileContent(
+          join(task.depPath, 'dist/types.d.ts'),
+          (content) =>
+            `${content.replace(
+              "import type * as httpProxy from 'http-proxy'",
+              "import type httpProxy from 'http-proxy'",
+            )}`,
+        );
       },
     },
     {

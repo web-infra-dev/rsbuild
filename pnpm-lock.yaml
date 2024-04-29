@@ -732,8 +732,8 @@ importers:
         specifier: ^8.4.0
         version: 8.4.2
       prebundle:
-        specifier: 1.1.0-beta.6
-        version: 1.1.0-beta.6(typescript@5.4.5)
+        specifier: 1.1.0
+        version: 1.1.0(typescript@5.4.5)
       sirv:
         specifier: ^2.0.4
         version: 2.0.4
@@ -743,6 +743,9 @@ importers:
       webpack:
         specifier: ^5.91.0
         version: 5.91.0
+      webpack-dev-middleware:
+        specifier: 7.2.1
+        version: 7.2.1(webpack@5.91.0)
       ws:
         specifier: ^8.17.0
         version: 8.17.0
@@ -756,8 +759,8 @@ importers:
         specifier: 18.x
         version: 18.19.31
       rslog:
-        specifier: ^1.2.1
-        version: 1.2.1
+        specifier: ^1.2.2
+        version: 1.2.2
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -852,8 +855,8 @@ importers:
         specifier: 9.1.3
         version: 9.1.3(@babel/core@7.24.4)(webpack@5.91.0)
       prebundle:
-        specifier: 1.1.0-beta.6
-        version: 1.1.0-beta.6(typescript@5.4.5)
+        specifier: 1.1.0
+        version: 1.1.0(typescript@5.4.5)
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1185,8 +1188,8 @@ importers:
         specifier: 6.1.0
         version: 6.1.0(postcss@8.4.38)
       prebundle:
-        specifier: 1.1.0-beta.6
-        version: 1.1.0-beta.6(typescript@5.4.5)
+        specifier: 1.1.0
+        version: 1.1.0(typescript@5.4.5)
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1347,8 +1350,8 @@ importers:
         specifier: 6.2.0
         version: 6.2.0(webpack@5.91.0)
       prebundle:
-        specifier: 1.1.0-beta.6
-        version: 1.1.0-beta.6(typescript@5.4.5)
+        specifier: 1.1.0
+        version: 1.1.0(typescript@5.4.5)
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1523,8 +1526,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       prebundle:
-        specifier: 1.1.0-beta.6
-        version: 1.1.0-beta.6(typescript@5.4.5)
+        specifier: 1.1.0
+        version: 1.1.0(typescript@5.4.5)
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1644,14 +1647,14 @@ importers:
         specifier: 4.2.0
         version: 4.2.0
       prebundle:
-        specifier: 1.1.0-beta.6
-        version: 1.1.0-beta.6(typescript@5.4.5)
+        specifier: 1.1.0
+        version: 1.1.0(typescript@5.4.5)
       resolve-url-loader:
         specifier: 5.0.0
         version: 5.0.0
       rslog:
-        specifier: ^1.2.1
-        version: 1.2.1
+        specifier: ^1.2.2
+        version: 1.2.2
       sass:
         specifier: ^1.75.0
         version: 1.75.0
@@ -1679,9 +1682,6 @@ importers:
       webpack-chain:
         specifier: npm:webpack-5-chain@8.0.1
         version: webpack-5-chain@8.0.1
-      webpack-dev-middleware:
-        specifier: 7.2.1
-        version: 7.2.1(webpack@5.91.0)
       webpack-merge:
         specifier: 5.10.0
         version: 5.10.0
@@ -7282,8 +7282,8 @@ packages:
   preact@10.20.2:
     resolution: {integrity: sha512-S1d1ernz3KQ+Y2awUxKakpfOg2CEmJmwOP+6igPx6dgr6pgDvenqYviyokWso2rhHvGtTlWWnJDa7RaPbQerTg==}
 
-  prebundle@1.1.0-beta.6:
-    resolution: {integrity: sha512-z16BR4x1OcI1Diqz3ZG7CublI/ceJU6+XlRvCrYlsMEkf9l1A3e5rKVJRaAuhWj21Q1wpBdekh08vXC5gZ/Zvg==}
+  prebundle@1.1.0:
+    resolution: {integrity: sha512-yTfRjx0+xiveeb7kO77OcODVB8RSHMKIiVl/qferU7ZHw4Y8pycXkCAtPDViF8YDo0a8ViDpm4C1O9PFKCw1ig==}
     hasBin: true
 
   preferred-pm@3.1.3:
@@ -7658,8 +7658,8 @@ packages:
   rsfamily-nav-icon@1.0.2:
     resolution: {integrity: sha512-gbvJ3wxy1iV6g6T1m/+UIM09t1Sr1ISEBMLUVwPITW+Ckhjuca1xyDh2gbMpYnYX+jXhOSSqA9qtlXpchUOH9Q==}
 
-  rslog@1.2.1:
-    resolution: {integrity: sha512-XDMoa858LLZnf4i2kUwyjBQGplXaoSoIfMQf9iji2ano5t1OfSiJsSYpHeOH26DJEc5hdje/4K3wiT6TWL3cRA==}
+  rslog@1.2.2:
+    resolution: {integrity: sha512-tZP8KjrI1nz6qOYCrFxAV7cfmfS2GV94jotU2zOmF/6ByO1zNvGR6/+0inylpjqyBjAdnnutTUW0m4th06bSTw==}
     engines: {node: '>=14.17.6'}
 
   rspack-plugin-virtual-module@0.1.12:
@@ -10291,7 +10291,7 @@ snapshots:
       '@swc/helpers': 0.5.3
       caniuse-lite: 1.0.30001612
       lodash: 4.17.21
-      rslog: 1.2.1
+      rslog: 1.2.2
 
   '@module-federation/runtime-tools@0.1.6':
     dependencies:
@@ -15186,7 +15186,7 @@ snapshots:
 
   preact@10.20.2: {}
 
-  prebundle@1.1.0-beta.6(typescript@5.4.5):
+  prebundle@1.1.0(typescript@5.4.5):
     dependencies:
       '@vercel/ncc': 0.38.1
       rollup: 4.17.1
@@ -15703,7 +15703,7 @@ snapshots:
 
   rsfamily-nav-icon@1.0.2: {}
 
-  rslog@1.2.1: {}
+  rslog@1.2.2: {}
 
   rspack-plugin-virtual-module@0.1.12:
     dependencies:
