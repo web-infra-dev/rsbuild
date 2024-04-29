@@ -65,6 +65,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
 
         applyScriptCondition({
           rule,
+          chain,
           config,
           context: api.context,
           includes: [],
