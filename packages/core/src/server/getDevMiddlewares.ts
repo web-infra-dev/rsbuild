@@ -1,5 +1,6 @@
 import { isAbsolute, join } from 'node:path';
 import url from 'node:url';
+import type fs from 'node:fs';
 import type {
   CompileMiddlewareAPI,
   DevConfig,
@@ -21,6 +22,7 @@ export type RsbuildDevMiddlewareOptions = {
   dev: DevConfig;
   server: ServerConfig;
   compileMiddlewareAPI?: CompileMiddlewareAPI;
+  outputFileSystem: typeof fs;
   output: {
     distPath: string;
   };
@@ -58,6 +60,7 @@ const applyDefaultMiddlewares = async ({
   compileMiddlewareAPI,
   output,
   pwd,
+  outputFileSystem,
 }: RsbuildDevMiddlewareOptions & {
   middlewares: Middlewares;
   compileMiddlewareAPI?: CompileMiddlewareAPI;
@@ -154,6 +157,7 @@ const applyDefaultMiddlewares = async ({
         distPath: isAbsolute(distPath) ? distPath : join(pwd, distPath),
         callback: compileMiddlewareAPI.middleware,
         htmlFallback: server.htmlFallback,
+        outputFileSystem,
       }),
     );
 
@@ -206,6 +210,7 @@ export const getMiddlewares = async (options: RsbuildDevMiddlewareOptions) => {
     compileMiddlewareAPI,
     output: options.output,
     pwd: options.pwd,
+    outputFileSystem: options.outputFileSystem,
   });
 
   middlewares.push(...after);

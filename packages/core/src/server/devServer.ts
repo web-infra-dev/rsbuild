@@ -12,6 +12,7 @@ import {
   isMultiCompiler,
   setNodeEnv,
 } from '@rsbuild/shared';
+import fs from 'node:fs';
 import connect from '@rsbuild/shared/connect';
 import type { InternalContext } from '../types';
 import {
@@ -65,6 +66,8 @@ export async function createDevServer<
     https,
   };
 
+  let outputFileSystem = fs;
+
   const startCompile: () => Promise<
     RsbuildDevMiddlewareOptions['compileMiddlewareAPI']
   > = async () => {
@@ -87,6 +90,8 @@ export async function createDevServer<
     });
 
     compilerDevMiddleware.init();
+
+    outputFileSystem = isMultiCompiler(compiler) ? compiler.compilers[0].outputFileSystem : compiler.outputFileSystem; 
 
     return {
       middleware: compilerDevMiddleware.middleware,
@@ -138,6 +143,7 @@ export async function createDevServer<
     output: {
       distPath: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
     },
+    outputFileSystem,
   });
 
   const middlewares = connect();
@@ -153,6 +159,7 @@ export async function createDevServer<
   const server = {
     port,
     middlewares,
+    outputFileSystem,
     listen: async () => {
       const httpServer = await createHttpServer({
         https: serverConfig.https,
