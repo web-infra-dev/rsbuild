@@ -101,7 +101,13 @@ export default {
       externals: {
         chokidar: '../chokidar',
       },
-      ignoreDts: true,
+      dtsExternals: ['source-map-js', 'immutable'],
+      beforeBundle: (task) => {
+        fs.outputFileSync(
+          join(task.depPath, 'types/index.d.ts'),
+          `export { Options } from './options';\nexport { LegacyOptions } from './legacy/options';`,
+        );
+      },
     },
     {
       name: 'style-loader',

@@ -8,6 +8,10 @@ import type { MinifyOptions } from 'terser';
 import type { Configuration as WebpackConfig } from 'webpack';
 import type Autoprefixer from '../../compiled/autoprefixer';
 import type Less from '../../compiled/less';
+import type {
+  LegacyOptions as LegacySassOptions,
+  Options as SassOptions,
+} from '../../compiled/sass';
 import type SassLoader from '../../compiled/sass-loader';
 
 type AutoprefixerOptions = Autoprefixer.Options;
@@ -26,12 +30,11 @@ export type SassLoaderOptions = Omit<SassLoader.Options, 'sassOptions'> &
   (
     | {
         api?: 'legacy';
-        // TODO: fix prebundle types
-        sassOptions?: any;
+        sassOptions?: Partial<LegacySassOptions<'async'>>;
       }
     | {
         api: 'modern';
-        sassOptions?: any;
+        sassOptions?: SassOptions<'async'>;
       }
   );
 
