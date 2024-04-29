@@ -732,8 +732,8 @@ importers:
         specifier: ^8.4.0
         version: 8.4.2
       prebundle:
-        specifier: 1.1.0-beta.7
-        version: 1.1.0-beta.7(typescript@5.4.5)
+        specifier: 1.1.0
+        version: 1.1.0(typescript@5.4.5)
       sirv:
         specifier: ^2.0.4
         version: 2.0.4
@@ -855,8 +855,8 @@ importers:
         specifier: 9.1.3
         version: 9.1.3(@babel/core@7.24.4)(webpack@5.91.0)
       prebundle:
-        specifier: 1.1.0-beta.7
-        version: 1.1.0-beta.7(typescript@5.4.5)
+        specifier: 1.1.0
+        version: 1.1.0(typescript@5.4.5)
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1188,8 +1188,8 @@ importers:
         specifier: 6.1.0
         version: 6.1.0(postcss@8.4.38)
       prebundle:
-        specifier: 1.1.0-beta.7
-        version: 1.1.0-beta.7(typescript@5.4.5)
+        specifier: 1.1.0
+        version: 1.1.0(typescript@5.4.5)
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1350,8 +1350,8 @@ importers:
         specifier: 6.2.0
         version: 6.2.0(webpack@5.91.0)
       prebundle:
-        specifier: 1.1.0-beta.7
-        version: 1.1.0-beta.7(typescript@5.4.5)
+        specifier: 1.1.0
+        version: 1.1.0(typescript@5.4.5)
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1526,8 +1526,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       prebundle:
-        specifier: 1.1.0-beta.7
-        version: 1.1.0-beta.7(typescript@5.4.5)
+        specifier: 1.1.0
+        version: 1.1.0(typescript@5.4.5)
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1647,8 +1647,8 @@ importers:
         specifier: 4.2.0
         version: 4.2.0
       prebundle:
-        specifier: 1.1.0-beta.7
-        version: 1.1.0-beta.7(typescript@5.4.5)
+        specifier: 1.1.0
+        version: 1.1.0(typescript@5.4.5)
       resolve-url-loader:
         specifier: 5.0.0
         version: 5.0.0
@@ -7282,8 +7282,8 @@ packages:
   preact@10.20.2:
     resolution: {integrity: sha512-S1d1ernz3KQ+Y2awUxKakpfOg2CEmJmwOP+6igPx6dgr6pgDvenqYviyokWso2rhHvGtTlWWnJDa7RaPbQerTg==}
 
-  prebundle@1.1.0-beta.7:
-    resolution: {integrity: sha512-FEj5t2UHOEq2qfzbnZkORFt3XcepmUjENpEcyvbxM3yKkt433h6RGyvJrnQZWhxDlQ30Ltbp3aPsiUc23r5yDg==}
+  prebundle@1.1.0:
+    resolution: {integrity: sha512-yTfRjx0+xiveeb7kO77OcODVB8RSHMKIiVl/qferU7ZHw4Y8pycXkCAtPDViF8YDo0a8ViDpm4C1O9PFKCw1ig==}
     hasBin: true
 
   preferred-pm@3.1.3:
@@ -15186,7 +15186,7 @@ snapshots:
 
   preact@10.20.2: {}
 
-  prebundle@1.1.0-beta.7(typescript@5.4.5):
+  prebundle@1.1.0(typescript@5.4.5):
     dependencies:
       '@vercel/ncc': 0.38.1
       rollup: 4.17.1
