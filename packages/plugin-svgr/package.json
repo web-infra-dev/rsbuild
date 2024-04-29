@@ -23,8 +23,9 @@
     "compiled"
   ],
   "scripts": {
-    "build": "prebundle && modern build",
-    "dev": "prebundle && modern build --watch"
+    "build": "modern build",
+    "dev": "modern build --watch",
+    "prebundle": "prebundle"
   },
   "dependencies": {
     "@rsbuild/plugin-react": "workspace:*",
