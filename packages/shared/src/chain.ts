@@ -264,10 +264,7 @@ export function applyScriptCondition({
 
   const target = castArray(chain.get('target'));
   const legacyTarget = ['es3', 'es5', 'es6', 'es2015', 'es2016'];
-  if (
-    target.includes('web') &&
-    legacyTarget.some((item) => target.includes(item))
-  ) {
+  if (legacyTarget.some((item) => target.includes(item))) {
     rule.include.add(/[\\/]@rsbuild[\\/]core[\\/]/);
   }
 
