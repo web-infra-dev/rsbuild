@@ -262,6 +262,8 @@ export function applyScriptCondition({
   // Otherwise, it will lead to compilation errors and incorrect output.
   rule.include.add(TS_AND_JSX_REGEX);
 
+  // The Rsbuild runtime code is es2017 by default,
+  // transform the runtime code if user target < es2017
   const target = castArray(chain.get('target'));
   const legacyTarget = ['es5', 'es6', 'es2015', 'es2016'];
   if (legacyTarget.some((item) => target.includes(item))) {
