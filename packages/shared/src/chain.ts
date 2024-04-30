@@ -268,7 +268,7 @@ export function applyScriptCondition({
     target.includes('web') &&
     legacyTarget.some((item) => target.includes(item))
   ) {
-    rule.include.add(/@rsbuild\/core\/dist\/client/);
+    rule.include.add(/[\\/]@rsbuild[\\/]core[\\/]/);
   }
 
   for (const condition of [...includes, ...(config.source.include || [])]) {
