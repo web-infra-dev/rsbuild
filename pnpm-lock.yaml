@@ -307,8 +307,8 @@ importers:
   e2e/cases/swc-plugin:
     dependencies:
       '@swc/plugin-remove-console':
-        specifier: ^1.5.121
-        version: 1.5.121
+        specifier: ^2.0.0
+        version: 2.0.0
 
   e2e/cases/vue:
     dependencies:
@@ -3634,8 +3634,8 @@ packages:
   '@swc/helpers@0.5.3':
     resolution: {integrity: sha512-FaruWX6KdudYloq1AHD/4nU+UsMTdNE8CKyrseXWEcgjDAbvkwJg2QGPAnfIJLIWsjZOSPLOAykK6fuYp4vp4A==}
 
-  '@swc/plugin-remove-console@1.5.121':
-    resolution: {integrity: sha512-oPmTosjPEPTkLQamFjeg/B/uT3VEbwo0dor4iUZUEjgu5Bv6JL8vafv1ma1GLdJ3lkOtN9t1xKirtFcM6aP0ug==}
+  '@swc/plugin-remove-console@2.0.0':
+    resolution: {integrity: sha512-R+DtdH9N+q0wxAt959UKcD3V4kZJSLf+YIaWQyLPr3tPmwVoOLSo+Z00VDwqzi4tW70fT+J99QLkMr71BzYKJg==}
 
   '@trysound/sax@0.2.0':
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
@@ -10842,7 +10842,7 @@ snapshots:
     dependencies:
       tslib: 2.6.2
 
-  '@swc/plugin-remove-console@1.5.121':
+  '@swc/plugin-remove-console@2.0.0':
     dependencies:
       '@swc/counter': 0.1.3
 
