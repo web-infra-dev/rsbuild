@@ -10,7 +10,7 @@ import {
 } from '@rsbuild/shared';
 import { fse } from '@rsbuild/shared';
 import type { StatsCompilation, StatsValue } from '@rspack/core';
-import { formatStatsMessages } from '../client/formatStats';
+import { formatStatsMessages } from '../client/format';
 
 // depend on native IgnorePlugin
 export const rspackMinVersion = '0.6.2';
