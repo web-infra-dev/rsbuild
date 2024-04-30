@@ -1,3 +1,4 @@
+import type fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
 import url from 'node:url';
 import type {
@@ -21,6 +22,7 @@ export type RsbuildDevMiddlewareOptions = {
   dev: DevConfig;
   server: ServerConfig;
   compileMiddlewareAPI?: CompileMiddlewareAPI;
+  outputFileSystem: typeof fs;
   output: {
     distPath: string;
   };
@@ -58,9 +60,9 @@ const applyDefaultMiddlewares = async ({
   compileMiddlewareAPI,
   output,
   pwd,
+  outputFileSystem,
 }: RsbuildDevMiddlewareOptions & {
   middlewares: Middlewares;
-  compileMiddlewareAPI?: CompileMiddlewareAPI;
 }): Promise<{
   onUpgrade: UpgradeEvent;
 }> => {
@@ -154,6 +156,7 @@ const applyDefaultMiddlewares = async ({
         distPath: isAbsolute(distPath) ? distPath : join(pwd, distPath),
         callback: compileMiddlewareAPI.middleware,
         htmlFallback: server.htmlFallback,
+        outputFileSystem,
       }),
     );
 
@@ -200,12 +203,8 @@ export const getMiddlewares = async (options: RsbuildDevMiddlewareOptions) => {
   middlewares.push(...before);
 
   const { onUpgrade } = await applyDefaultMiddlewares({
+    ...options,
     middlewares,
-    dev: options.dev,
-    server: options.server,
-    compileMiddlewareAPI,
-    output: options.output,
-    pwd: options.pwd,
   });
 
   middlewares.push(...after);

@@ -6,13 +6,15 @@ import type {
 import type { AcceptedPlugin, ProcessOptions } from 'postcss';
 import type { MinifyOptions } from 'terser';
 import type { Configuration as WebpackConfig } from 'webpack';
-import type { Options as AutoprefixerOptions } from '../../compiled/autoprefixer';
+import type Autoprefixer from '../../compiled/autoprefixer';
 import type Less from '../../compiled/less';
 import type {
   LegacyOptions as LegacySassOptions,
   Options as SassOptions,
 } from '../../compiled/sass';
-import type * as SassLoader from '../../compiled/sass-loader';
+import type SassLoader from '../../compiled/sass-loader';
+
+type AutoprefixerOptions = Autoprefixer.Options;
 
 export interface CSSExtractOptions {
   pluginOptions?: MiniCSSExtractPluginOptions;

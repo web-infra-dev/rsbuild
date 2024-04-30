@@ -239,12 +239,14 @@ export type ChainIdentifier = typeof CHAIN_ID;
 
 export function applyScriptCondition({
   rule,
+  chain,
   config,
   context,
   includes,
   excludes,
 }: {
   rule: BundlerChainRule;
+  chain: BundlerChain;
   config: NormalizedConfig;
   context: RsbuildContext;
   includes: (string | RegExp)[];
@@ -259,6 +261,14 @@ export function applyScriptCondition({
   // Always compile TS and JSX files.
   // Otherwise, it will lead to compilation errors and incorrect output.
   rule.include.add(TS_AND_JSX_REGEX);
+
+  // The Rsbuild runtime code is es2017 by default,
+  // transform the runtime code if user target < es2017
+  const target = castArray(chain.get('target'));
+  const legacyTarget = ['es5', 'es6', 'es2015', 'es2016'];
+  if (legacyTarget.some((item) => target.includes(item))) {
+    rule.include.add(/[\\/]@rsbuild[\\/]core[\\/]/);
+  }
 
   for (const condition of [...includes, ...(config.source.include || [])]) {
     rule.include.add(condition);

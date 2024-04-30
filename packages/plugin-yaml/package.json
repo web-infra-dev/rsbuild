@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-yaml",
-  "version": "0.6.6",
+  "version": "0.6.8",
   "description": "YAML plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -34,12 +34,12 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
-    "prebundle": "1.0.3",
+    "prebundle": "1.1.0",
     "typescript": "^5.4.2",
     "yaml-loader": "^0.8.1"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.6.6"
+    "@rsbuild/core": "workspace:^0.6.8"
   },
   "publishConfig": {
     "access": "public",

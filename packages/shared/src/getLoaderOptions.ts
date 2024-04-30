@@ -12,7 +12,10 @@ import { castArray, deepmerge, getSharedPkgCompiledPath } from './utils';
 export const getSassLoaderOptions = (
   rsbuildSassConfig: ToolsSassConfig | undefined,
   isUseCssSourceMap: boolean,
-) => {
+): {
+  options: SassLoaderOptions;
+  excludes: (RegExp | string)[];
+} => {
   const excludes: (RegExp | string)[] = [];
 
   const addExcludes: FileFilterUtil = (items) => {

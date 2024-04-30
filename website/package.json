@@ -10,17 +10,17 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rspress/plugin-rss": "^1.18.4",
+    "@rspress/plugin-rss": "^1.19.0",
     "@types/node": "18.x",
-    "@types/react": "^18.2.79",
-    "@types/react-dom": "^18.2.25",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
     "fast-glob": "^3.3.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "rsbuild-plugin-google-analytics": "1.0.0",
     "rsbuild-plugin-open-graph": "1.0.0",
     "rsfamily-nav-icon": "^1.0.2",
-    "rspress": "^1.18.4",
+    "rspress": "^1.19.0",
     "rspress-plugin-font-open-sans": "1.0.0"
   }
 }

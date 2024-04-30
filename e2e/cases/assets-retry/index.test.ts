@@ -4,16 +4,26 @@ import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 import type { PluginAssetsRetryOptions } from '@rsbuild/plugin-assets-retry';
 import { pluginReact } from '@rsbuild/plugin-react';
 import type { RequestHandler } from '@rsbuild/shared';
+import stripAnsi from 'strip-ansi';
 
 function count404Response(logs: string[], urlPrefix: string): number {
   let count = 0;
   for (const log of logs) {
-    if (log.includes('404') && log.includes(urlPrefix)) {
+    const rawLog = stripAnsi(log);
+    // e.g: 18:09:23 404 GET /static/js/index.js 4.443 ms
+    if (rawLog.includes('404 GET') && rawLog.includes(urlPrefix)) {
       count++;
     }
   }
   return count;
 }
+
+type AssetsRetryHookContext = {
+  url: string;
+  times: number;
+  domain: string;
+  tagName: string;
+};
 
 function createBlockMiddleware({
   urlPrefix,
@@ -53,12 +63,18 @@ async function createRsbuildWithMiddleware(
           },
         ],
       },
+      output: {
+        sourceMap: {
+          css: false,
+          js: false,
+        },
+      },
     },
   });
   return rsbuild;
 }
 
-test('@rsbuild/plugin-assets-retry should work when blocking initial chunk index.js`', async ({
+test('@rsbuild/plugin-assets-retry should work when blocking initial chunk index.js', async ({
   page,
 }) => {
   process.env.DEBUG = 'rsbuild';
@@ -79,7 +95,7 @@ test('@rsbuild/plugin-assets-retry should work when blocking initial chunk index
   delete process.env.DEBUG;
 });
 
-test('@rsbuild/plugin-assets-retry should work with minified runtime code when blocking initial chunk index.js`', async ({
+test('@rsbuild/plugin-assets-retry should work with minified runtime code when blocking initial chunk index.js', async ({
   page,
 }) => {
   process.env.DEBUG = 'rsbuild';
@@ -126,7 +142,7 @@ test('@rsbuild/plugin-assets-retry should work when blocking async chunk`', asyn
   delete process.env.DEBUG;
 });
 
-test('@rsbuild/plugin-assets-retry should work with minified runtime code when blocking async chunk`', async ({
+test('@rsbuild/plugin-assets-retry should work with minified runtime code when blocking async chunk', async ({
   page,
 }) => {
   process.env.DEBUG = 'rsbuild';
@@ -152,7 +168,7 @@ test('@rsbuild/plugin-assets-retry should work with minified runtime code when b
   delete process.env.DEBUG;
 });
 
-test('@rsbuild/plugin-assets-retry should catch error by react ErrorBoundary when all retries failed`', async ({
+test('@rsbuild/plugin-assets-retry should catch error by react ErrorBoundary when all retries failed', async ({
   page,
 }) => {
   process.env.DEBUG = 'rsbuild';
@@ -166,13 +182,193 @@ test('@rsbuild/plugin-assets-retry should catch error by react ErrorBoundary whe
   await gotoPage(page, rsbuild);
   const compTestElement = page.locator('#async-comp-test-error');
   await expect(compTestElement).toHaveText(
-    'ChunkLoadError: Loading chunk src_AsyncCompTest_tsx from /static/js/async/src_AsyncCompTest_tsx.js failed after 3 retries.',
+    /ChunkLoadError: Loading chunk src_AsyncCompTest_tsx from \/static\/js\/async\/src_AsyncCompTest_tsx\.js failed after 3 retries: "Loading chunk src_AsyncCompTest_tsx failed.*/,
   );
-  const blockedResponseCount = count404Response(logs, '/static/js/async');
+  const blockedResponseCount = count404Response(
+    logs,
+    '/static/js/async/src_AsyncCompTest_tsx.js',
+  );
   // 1 first request failed
   // 2 3 4 retried again three times and failed all of them
   expect(blockedResponseCount).toBe(4);
   await rsbuild.close();
   restore();
   delete process.env.DEBUG;
+});
+
+function delay(ms = 300) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(1);
+    }, ms);
+  });
+}
+
+test('@rsbuild/plugin-assets-retry onRetry and onSuccess options should work in successfully retrying async chunk', async ({
+  page,
+}) => {
+  const blockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/js/async/src_AsyncCompTest_tsx.js',
+  });
+
+  const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {
+    minify: true,
+    onRetry(context) {
+      console.info('onRetry', context);
+    },
+    onSuccess(context) {
+      console.info('onSuccess', context);
+    },
+    onFail(context) {
+      console.info('onFail', context);
+    },
+  });
+
+  const onRetryContextList: AssetsRetryHookContext[] = [];
+  const onSuccessContextList: AssetsRetryHookContext[] = [];
+  const onFailContextList: AssetsRetryHookContext[] = [];
+
+  page.on('console', async (msg) => {
+    if (msg.type() !== 'info') {
+      return;
+    }
+    const typeValue = await msg.args()[0].jsonValue();
+    const contextValue = await msg.args()[1].jsonValue();
+
+    if (typeValue === 'onRetry') {
+      onRetryContextList.push(contextValue);
+    } else if (typeValue === 'onSuccess') {
+      onSuccessContextList.push(contextValue);
+    } else if (typeValue === 'onFail') {
+      onFailContextList.push(contextValue);
+    }
+  });
+
+  await gotoPage(page, rsbuild);
+  const compTestElement = page.locator('#async-comp-test');
+  await expect(compTestElement).toHaveText('Hello AsyncCompTest');
+  await delay();
+
+  expect({
+    onRetryContextList,
+    onFailContextList,
+    onSuccessContextList,
+  }).toMatchObject({
+    onRetryContextList: [
+      {
+        times: 0,
+        domain: '/',
+        url: '/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+      },
+      {
+        times: 1,
+        domain: '/',
+        url: '/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+      },
+      {
+        times: 2,
+        domain: '/',
+        url: '/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+      },
+    ],
+    onFailContextList: [],
+    onSuccessContextList: [
+      {
+        times: 3,
+        domain: '/',
+        url: '/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+      },
+    ],
+  });
+  await rsbuild.close();
+});
+
+test('@rsbuild/plugin-assets-retry onRetry and onFail options should work in failed retrying async chunk', async ({
+  page,
+}) => {
+  const blockedMiddleware = createBlockMiddleware({
+    blockNum: 100,
+    urlPrefix: '/static/js/async/src_AsyncCompTest_tsx.js',
+  });
+
+  const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {
+    minify: true,
+    onRetry(context) {
+      console.info('onRetry', context);
+    },
+    onSuccess(context) {
+      console.info('onSuccess', context);
+    },
+    onFail(context) {
+      console.info('onFail', context);
+    },
+  });
+
+  const onRetryContextList: AssetsRetryHookContext[] = [];
+  const onSuccessContextList: AssetsRetryHookContext[] = [];
+  const onFailContextList: AssetsRetryHookContext[] = [];
+  page.on('console', async (msg) => {
+    if (msg.type() !== 'info') {
+      return;
+    }
+    const typeValue = await msg.args()?.[0].jsonValue();
+    const contextValue = await msg.args()?.[1].jsonValue();
+
+    if (typeValue === 'onRetry') {
+      onRetryContextList.push(contextValue);
+    } else if (typeValue === 'onSuccess') {
+      onSuccessContextList.push(contextValue);
+    } else if (typeValue === 'onFail') {
+      onFailContextList.push(contextValue);
+    }
+  });
+
+  await gotoPage(page, rsbuild);
+  const compTestElement = page.locator('#async-comp-test-error');
+  await expect(compTestElement).toHaveText(
+    /ChunkLoadError: Loading chunk src_AsyncCompTest_tsx from \/static\/js\/async\/src_AsyncCompTest_tsx\.js failed after 3 retries: "Loading chunk src_AsyncCompTest_tsx failed.*/,
+  );
+  await delay();
+
+  expect({
+    onRetryContextList,
+    onFailContextList,
+    onSuccessContextList,
+  }).toMatchObject({
+    onRetryContextList: [
+      {
+        times: 0,
+        domain: '/',
+        url: '/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+      },
+      {
+        times: 1,
+        domain: '/',
+        url: '/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+      },
+      {
+        times: 2,
+        domain: '/',
+        url: '/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+      },
+    ],
+    onFailContextList: [
+      {
+        times: 3,
+        domain: '/',
+        url: '/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+      },
+    ],
+    onSuccessContextList: [],
+  });
+  await rsbuild.close();
 });

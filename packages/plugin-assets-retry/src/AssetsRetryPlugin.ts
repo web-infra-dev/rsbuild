@@ -16,7 +16,7 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
 
   readonly inlineScript: boolean;
 
-  readonly minify: boolean;
+  readonly minify?: boolean;
 
   readonly HtmlPlugin: typeof HtmlWebpackPlugin;
 
@@ -34,7 +34,7 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
       distDir,
       HtmlPlugin,
       inlineScript = true,
-      minify = process.env.NODE_ENV === 'production',
+      minify,
       ...retryOptions
     } = options;
     this.name = 'AssetsRetryPlugin';
