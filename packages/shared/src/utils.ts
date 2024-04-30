@@ -323,7 +323,9 @@ type ServerCallbacks = {
 
 export const setupServerHooks = (
   compiler: {
-    name?: Compiler['name'];
+    options: {
+      target?: Compiler['options']['target'];
+    };
     hooks: {
       compile: CompilerTapFn<ServerCallbacks['onInvalid']>;
       invalid: CompilerTapFn<ServerCallbacks['onInvalid']>;
@@ -332,7 +334,7 @@ export const setupServerHooks = (
   },
   hookCallbacks: ServerCallbacks,
 ) => {
-  if (compiler.name === 'server') {
+  if (!isClientCompiler(compiler)) {
     return;
   }
 

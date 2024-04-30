@@ -228,7 +228,9 @@ test('printServerURLs', () => {
 
 describe('test dev server', () => {
   test('should setupServerHooks correctly', () => {
-    const compiler = rspack({});
+    const compiler = rspack({
+      target: 'web',
+    });
     const onDoneFn = vi.fn();
     const onInvalidFn = vi.fn();
 
@@ -257,7 +259,7 @@ describe('test dev server', () => {
   });
   test('should not setupServerHooks when compiler is server', () => {
     const compiler = rspack({
-      name: 'server',
+      target: 'node',
     });
     const onDoneFn = vi.fn();
     const onInvalidFn = vi.fn();
