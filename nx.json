@@ -18,12 +18,14 @@
   "targetDefaults": {
     "build": {
       "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["build", "^build"]
+      "dependsOn": ["^build", "prebundle"],
+      "inputs": ["build", "^build"],
+      "outputs": ["{projectRoot}/dist"]
     },
     "prebundle": {
       "cache": true,
-      "inputs": ["prebundle"]
+      "inputs": ["prebundle"],
+      "outputs": ["{projectRoot}/compiled"]
     }
   },
   "defaultBase": "main"

@@ -5,8 +5,8 @@ import {
   isClientCompiler,
   setupServerHooks,
 } from '@rsbuild/shared';
-import webpackDevMiddleware from '@rsbuild/shared/webpack-dev-middleware';
 import type { Compiler, MultiCompiler } from '@rspack/core';
+import webpackDevMiddleware from '../../compiled/webpack-dev-middleware';
 
 function applyHMREntry({
   compiler,
@@ -56,6 +56,5 @@ export const getDevMiddleware =
 
     applyToCompiler(multiCompiler, setupCompiler);
 
-    // @ts-expect-error compiler type mismatch
     return webpackDevMiddleware(multiCompiler, restOptions);
   };
