@@ -228,7 +228,9 @@ test('printServerURLs', () => {
 
 describe('test dev server', () => {
   test('should setupServerHooks correctly', () => {
-    const compiler = rspack({});
+    const compiler = rspack({
+      target: 'web',
+    });
     const onDoneFn = vi.fn();
     const onInvalidFn = vi.fn();
 

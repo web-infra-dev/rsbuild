@@ -7,7 +7,7 @@ import type {
 import deepmerge from '../compiled/deepmerge';
 import fse from '../compiled/fs-extra';
 import color from '../compiled/picocolors';
-import { DEFAULT_ASSET_PREFIX, TARGET_ID_MAP } from './constants';
+import { DEFAULT_ASSET_PREFIX } from './constants';
 import type {
   CacheGroups,
   CompilerTapFn,
