@@ -10,6 +10,7 @@ overrides:
   '@rsbuild/core': link:packages/core
   '@rsbuild/plugin-react': link:packages/plugin-react
   '@rspack/core': 0.6.3-canary-2ffdf97-20240430074011
+  '@rspack/plugin-react-refresh': 0.6.3-canary-2ffdf97-20240430074011
 
 packageExtensionsChecksum: 18212998c4ac9d0b24113807ba3e5d6f
 
@@ -1148,8 +1149,8 @@ importers:
         specifier: workspace:*
         version: link:../shared
       '@rspack/plugin-react-refresh':
-        specifier: 0.6.3
-        version: 0.6.3(react-refresh@0.14.2)
+        specifier: 0.6.3-canary-2ffdf97-20240430074011
+        version: 0.6.3-canary-2ffdf97-20240430074011(react-refresh@0.14.2)
       react-refresh:
         specifier: ^0.14.2
         version: 0.14.2
@@ -3455,8 +3456,8 @@ packages:
       '@swc/helpers':
         optional: true
 
-  '@rspack/plugin-react-refresh@0.6.3':
-    resolution: {integrity: sha512-/IllQJlB1tXzBkDx/uGVvGRy3E/PXfU8RH4Uaa6Sxrj8Kk2ztIz+Yb1qnj4jjCbGmbYWp/+R0+QWqGROAhId9A==}
+  '@rspack/plugin-react-refresh@0.6.3-canary-2ffdf97-20240430074011':
+    resolution: {integrity: sha512-GxL2mTsSnSXUyyhN7QCap/F5UtWeqJOVE7UnWN8OnCW4k4DcVJpxkglTvko9TgdlJkBuKCt7moKdbOcETVLQHw==}
     peerDependencies:
       react-refresh: '>=0.10.0 <1.0.0'
     peerDependenciesMeta:
@@ -10600,7 +10601,7 @@ snapshots:
     optionalDependencies:
       '@swc/helpers': 0.5.3
 
-  '@rspack/plugin-react-refresh@0.6.3(react-refresh@0.14.2)':
+  '@rspack/plugin-react-refresh@0.6.3-canary-2ffdf97-20240430074011(react-refresh@0.14.2)':
     optionalDependencies:
       react-refresh: 0.14.2
 

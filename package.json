@@ -65,7 +65,8 @@
       "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@1.0.28",
       "@rsbuild/core": "link:packages/core",
       "@rsbuild/plugin-react": "link:packages/plugin-react",
-      "@rspack/core": "0.6.3-canary-2ffdf97-20240430074011"
+      "@rspack/core": "0.6.3-canary-2ffdf97-20240430074011",
+      "@rspack/plugin-react-refresh": "0.6.3-canary-2ffdf97-20240430074011"
     },
     "allowedDeprecatedVersions": {
       "vue": "2.x",
