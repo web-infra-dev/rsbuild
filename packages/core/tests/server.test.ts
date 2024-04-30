@@ -257,7 +257,7 @@ describe('test dev server', () => {
   });
   test('should not setupServerHooks when compiler is server', () => {
     const compiler = rspack({
-      name: 'server',
+      name: 'Server',
     });
     const onDoneFn = vi.fn();
     const onInvalidFn = vi.fn();
