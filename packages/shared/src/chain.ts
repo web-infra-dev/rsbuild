@@ -263,7 +263,7 @@ export function applyScriptCondition({
   rule.include.add(TS_AND_JSX_REGEX);
 
   const target = castArray(chain.get('target'));
-  const legacyTarget = ['es3', 'es5', 'es6', 'es2015', 'es2016'];
+  const legacyTarget = ['es5', 'es6', 'es2015', 'es2016'];
   if (legacyTarget.some((item) => target.includes(item))) {
     rule.include.add(/[\\/]@rsbuild[\\/]core[\\/]/);
   }
