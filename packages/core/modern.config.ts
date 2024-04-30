@@ -6,12 +6,12 @@ export default defineConfig({
   buildConfig: [
     {
       ...baseBuildConfig.buildConfig,
-      input: ['src', '!src/client/hmr',  '!src/client/overlay.ts'],
+      input: ['src', '!src/client/hmr', '!src/client/overlay.ts'],
     },
     {
       buildType: 'bundle',
       format: 'esm',
-      target: 'es5',
+      target: 'es2017',
       dts: false,
       input: {
         hmr: 'src/client/hmr/index.ts',
@@ -20,6 +20,13 @@ export default defineConfig({
       externals: ['./hmr'],
       outDir: './dist/client',
       autoExtension: true,
+      externalHelpers: true,
+      // Skip esbuild transform and only use SWC to transform,
+      // because esbuild will transform `import.meta`.
+      esbuildOptions: (options) => {
+        options.target = undefined;
+        return options;
+      },
     },
   ],
 });
