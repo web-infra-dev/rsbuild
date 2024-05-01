@@ -28,7 +28,7 @@
     "prebundle": "prebundle"
   },
   "dependencies": {
-    "@babel/core": "^7.24.4",
+    "@babel/core": "^7.24.5",
     "@babel/plugin-proposal-decorators": "^7.24.1",
     "@babel/plugin-transform-class-properties": "^7.24.1",
     "@babel/preset-typescript": "^7.24.1",
