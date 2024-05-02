@@ -30,6 +30,7 @@ flac
 flexbox
 flexbugs
 fnames
+frontends
 fullhash
 gzipped
 icss
