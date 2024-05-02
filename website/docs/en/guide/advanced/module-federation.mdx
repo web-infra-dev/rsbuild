@@ -1,0 +1,65 @@
+# Module Federation
+
+Rsbuild has worked closely with the authors and development team of the Module Federation, and provides first-class support for the Module Federation.
+
+## What is Module Federation
+
+Module Federation is an architectural pattern for the decentralization of JavaScript applications (similar to microservices on the server-side). It allows you to share code and resources among multiple JavaScript applications (or micro-frontends). This can help you:
+
+- Reduce code duplication
+- Improve code maintainability
+- Lower the overall size of your applications
+- Enhance the performance of your applications
+
+## How to use
+
+There are currently two main versions of Module Federation, you can choose one to use:
+
+### Module Federation v1.5
+
+This is a basic version supported by Rspack, providing features such as module export, module loading, dependency sharing.
+
+You can use it through Rsbuild's [moduleFederation.options](/config/module-federation/options), no need to install any plugins.
+
+```ts title="rsbuild.config.ts"
+export default defineConfig({
+  moduleFederation: {
+    options: {
+      name: 'remote',
+      // other options
+    },
+  },
+});
+```
+
+### Module Federation v2.0
+
+This is the enhanced version of Module Federation. It provides additional features based on Module Federation v1.5, such as dynamic type hinting, manifest, federation runtime, runtime plugin system, etc. These features make Module Federation more suitable for supporting micro-front-end architecture of large web applications.
+
+You need to install the additional `@module-federation/enhanced` plugin to use Module Federation v2.0.
+
+```ts title="rsbuild.config.ts"
+import { ModuleFederationPlugin } from '@module-federation/enhanced/rspack';
+
+export default defineConfig({
+  tools: {
+    rspack: (config, { appendPlugins }) => {
+      appendPlugins([
+        new ModuleFederationPlugin({
+          name: 'provider',
+          // other options
+        }),
+      ]);
+    },
+  },
+});
+```
+
+Please refer to the [Module Federation v2.0 documentation](https://module-federation.io/zh/) for details usage.
+
+## Example Repositories
+
+Rsbuild has provided some example projects of Module Federation, you can refer to:
+
+- [Module Federation v1.5 Example](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/module-federation)
+- [Module Federation v2.0 Example](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/module-federation-enhanced)

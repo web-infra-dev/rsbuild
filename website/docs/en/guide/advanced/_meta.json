@@ -1,1 +1,8 @@
-["alias", "env-vars", "hmr", "browserslist", "browser-compatibility"]
+[
+  "alias",
+  "env-vars",
+  "hmr",
+  "browserslist",
+  "browser-compatibility",
+  "module-federation"
+]
