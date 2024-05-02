@@ -151,7 +151,9 @@ test.describe('should print file size correctly', async () => {
     });
 
     expect(
-      logs.some((log) => log.includes('../test-temp-folder/dist')),
+      logs.some((log) =>
+        log.includes(`..${path.sep}test-temp-folder${path.sep}dist`),
+      ),
     ).toBeTruthy();
   });
 });
