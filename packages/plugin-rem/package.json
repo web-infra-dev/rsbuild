@@ -35,7 +35,7 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
-    "html-webpack-plugin": "npm:html-rspack-plugin@5.7.0",
+    "html-webpack-plugin": "npm:html-rspack-plugin@5.7.2",
     "postcss-pxtorem": "6.1.0",
     "prebundle": "1.1.0",
     "typescript": "^5.4.2"
