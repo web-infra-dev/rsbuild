@@ -134,4 +134,26 @@ test.describe('should print file size correctly', async () => {
     expect(logs.some((log) => log.includes('Total size:'))).toBeFalsy();
     expect(logs.some((log) => log.includes('Gzipped size:'))).toBeFalsy();
   });
+
+  test('should print dist folder correctly if it is not a subdir of root', async () => {
+    await build({
+      cwd,
+      rsbuildConfig: {
+        performance: {
+          printFileSize: true,
+        },
+        output: {
+          distPath: {
+            root: '../test-temp-folder/dist',
+          },
+        },
+      },
+    });
+
+    expect(
+      logs.some((log) =>
+        log.includes(`..${path.sep}test-temp-folder${path.sep}dist`),
+      ),
+    ).toBeTruthy();
+  });
 });
