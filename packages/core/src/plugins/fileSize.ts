@@ -94,13 +94,6 @@ async function printFileSizes(
     };
   };
 
-  const getDistFolderName = (distPath: string, rootPath: string) => {
-    if (distPath.includes(rootPath)) {
-      return distPath.replace(rootPath + path.sep, '');
-    }
-    return path.relative(rootPath, distPath);
-  };
-
   const multiStats = 'stats' in stats ? stats.stats : [stats];
   const assets = multiStats
     .map((stats) => {
@@ -127,7 +120,7 @@ async function printFileSizes(
         filterAsset(asset.name),
       );
 
-      const distFolder = getDistFolderName(distPath, rootPath);
+      const distFolder = path.relative(rootPath, distPath);
 
       return filteredAssets.map((asset) =>
         formatAsset(asset, distPath, distFolder),
