@@ -54,7 +54,7 @@ importers:
         version: 2.11.1
       vitest:
         specifier: ^1.5.2
-        version: 1.5.2(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.76.0)(stylus@0.63.0)(terser@5.30.4)
+        version: 1.5.2(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.76.0)(stylus@0.63.0)(terser@5.31.0)
 
   e2e:
     dependencies:
@@ -812,8 +812,8 @@ importers:
         specifier: npm:html-rspack-plugin@5.7.2
         version: html-rspack-plugin@5.7.2(@rspack/core@0.6.3(@swc/helpers@0.5.3))
       terser:
-        specifier: 5.30.4
-        version: 5.30.4
+        specifier: 5.31.0
+        version: 5.31.0
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1172,8 +1172,8 @@ importers:
         specifier: workspace:*
         version: link:../shared
       terser:
-        specifier: 5.30.4
-        version: 5.30.4
+        specifier: 5.31.0
+        version: 5.31.0
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -1668,8 +1668,8 @@ importers:
         specifier: 3.3.4
         version: 3.3.4(webpack@5.91.0)
       terser:
-        specifier: 5.30.4
-        version: 5.30.4
+        specifier: 5.31.0
+        version: 5.31.0
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -8172,8 +8172,8 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  terser@5.30.4:
-    resolution: {integrity: sha512-xRdd0v64a8mFK9bnsKVdoNP9GQIKUAaJPTaqEQDL4w/J8WaW4sWXXoMZ+6SimPkfT5bElreXf8m9HnmPc3E1BQ==}
+  terser@5.31.0:
+    resolution: {integrity: sha512-Q1JFAoUKE5IMfI4Z/lkE/E6+SwgzO+x4tq4v1AyBLRj8VSYvRO6A/rQrPg1yud4g0En9EKI1TvFRF2tQFcoUkg==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -16241,7 +16241,7 @@ snapshots:
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
-      terser: 5.30.4
+      terser: 5.31.0
       webpack: 5.91.0
 
   terser@5.19.2:
@@ -16251,7 +16251,7 @@ snapshots:
       commander: 2.20.3
       source-map-support: 0.5.21
 
-  terser@5.30.4:
+  terser@5.31.0:
     dependencies:
       '@jridgewell/source-map': 0.3.6
       acorn: 8.11.3
@@ -16556,13 +16556,13 @@ snapshots:
       unist-util-stringify-position: 4.0.0
       vfile-message: 4.0.2
 
-  vite-node@1.5.2(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.76.0)(stylus@0.63.0)(terser@5.30.4):
+  vite-node@1.5.2(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.76.0)(stylus@0.63.0)(terser@5.31.0):
     dependencies:
       cac: 6.7.14
       debug: 4.3.4
       pathe: 1.1.2
       picocolors: 1.0.0
-      vite: 5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.76.0)(stylus@0.63.0)(terser@5.30.4)
+      vite: 5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.76.0)(stylus@0.63.0)(terser@5.31.0)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -16573,7 +16573,7 @@ snapshots:
       - supports-color
       - terser
 
-  vite@5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.76.0)(stylus@0.63.0)(terser@5.30.4):
+  vite@5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.76.0)(stylus@0.63.0)(terser@5.31.0):
     dependencies:
       esbuild: 0.19.12
       postcss: 8.4.38
@@ -16585,9 +16585,9 @@ snapshots:
       lightningcss: 1.24.1
       sass: 1.76.0
       stylus: 0.63.0
-      terser: 5.30.4
+      terser: 5.31.0
 
-  vitest@1.5.2(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.76.0)(stylus@0.63.0)(terser@5.30.4):
+  vitest@1.5.2(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.76.0)(stylus@0.63.0)(terser@5.31.0):
     dependencies:
       '@vitest/expect': 1.5.2
       '@vitest/runner': 1.5.2
@@ -16606,8 +16606,8 @@ snapshots:
       strip-literal: 2.1.0
       tinybench: 2.7.0
       tinypool: 0.8.4
-      vite: 5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.76.0)(stylus@0.63.0)(terser@5.30.4)
-      vite-node: 1.5.2(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.76.0)(stylus@0.63.0)(terser@5.30.4)
+      vite: 5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.76.0)(stylus@0.63.0)(terser@5.31.0)
+      vite-node: 1.5.2(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.76.0)(stylus@0.63.0)(terser@5.31.0)
       why-is-node-running: 2.2.2
     optionalDependencies:
       '@types/node': 18.19.31

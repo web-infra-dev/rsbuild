@@ -164,7 +164,7 @@
     "sass-loader": "14.2.1",
     "semver": "^7.6.0",
     "style-loader": "3.3.4",
-    "terser": "5.30.4",
+    "terser": "5.31.0",
     "typescript": "^5.4.2",
     "webpack": "^5.91.0",
     "webpack-bundle-analyzer": "^4.10.2",
