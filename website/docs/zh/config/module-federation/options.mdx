@@ -6,6 +6,10 @@
 
 用于配置 Rspack 模块联邦插件。
 
+:::tip
+模块联邦存在多个版本的实现。在使用 `moduleFederation.options` 之前，请阅读 [模块联邦指南](/guide/advanced/module-federation) 来了解不同版本模块联邦之间的差异，以及如何进行选择，
+:::
+
 ## 介绍
 
 在使用模块联邦时，我们推荐你使用 Rsbuild 提供的 `moduleFederation.options` 选项，这个选项会自动调整一些相关的配置，以保证模块联邦应用可以正确运行。
@@ -81,5 +85,5 @@ export default defineConfig({
 
 更多示例请查看：
 
-- [Rsbuild - module-federation example](https://github.com/web-infra-dev/rsbuild/tree/main/examples/module-federation)
+- [Rsbuild - module-federation example](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/module-federation)
 - [module-federation/module-federation-examples](https://github.com/module-federation/module-federation-examples)
