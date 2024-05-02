@@ -12,7 +12,7 @@
 
 当你设置 `moduleFederation.options` 选项后，Rsbuild 会执行以下操作：
 
-- 自动注册 [ModuleFederationPlugin](https://rspack.dev/config/plugins#containermodulefederationplugin) 插件，并将 `options` 的值透传给插件。
+- 自动注册 [ModuleFederationPlugin](https://rspack.dev/zh/plugins/webpack/module-federation-plugin) 插件，并将 `options` 的值透传给插件。
 - 将 Rspack [output.publicPath](https://rspack.dev/config/output#outputpublicpath) 配置的默认值设置为 `'auto'`。
 - 关闭 Rsbuild [performance.chunkSplit](/config/performance/chunk-split) 中 `split-by-experience` 相关的规则，因为这可能会与 shared modules 冲突，参考 [#3161](https://github.com/module-federation/module-federation-examples/issues/3161)。
 - 关闭 remote entry 的 splitChunks 规则。
@@ -32,7 +32,7 @@ export default defineConfig({
 });
 ```
 
-请参考 [ModuleFederationPlugin](https://rspack.dev/config/plugins#containermodulefederationplugin) 文档来了解所有可用的选项。
+请参考 [ModuleFederationPlugin](https://rspack.dev/zh/plugins/webpack/module-federation-plugin) 文档来了解所有可用的选项。
 
 ## 示例
 
