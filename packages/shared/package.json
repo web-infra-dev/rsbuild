@@ -120,7 +120,7 @@
   },
   "dependencies": {
     "@rspack/core": "0.6.3",
-    "caniuse-lite": "^1.0.30001612",
+    "caniuse-lite": "^1.0.30001614",
     "postcss": "^8.4.38"
   },
   "devDependencies": {
@@ -170,7 +170,7 @@
     "webpack-bundle-analyzer": "^4.10.2",
     "webpack-chain": "npm:webpack-5-chain@8.0.1",
     "webpack-merge": "5.10.0",
-    "yaml": "^2.4.1"
+    "yaml": "^2.4.2"
   },
   "publishConfig": {
     "access": "public",
