@@ -26,6 +26,8 @@
 
 Rsbuild 是由 [Rspack](https://rspack.dev/) 驱动的高性能构建工具，它默认包含了一套精心设计的构建配置，提供开箱即用的开发体验，并能够充分发挥出 Rspack 的性能优势。
 
+Rsbuild 提供 [丰富的构建功能](https://rsbuild.dev/zh/guide/start/features)，包括编译 TypeScript，JSX，Sass，Less，CSS Modules，Wasm，以及其他资源，也支持模块联邦、图片压缩、类型检查、PostCSS，Lighting CSS 等功能。
+
 ## 💡 对比其他工具
 
 Rsbuild 是与 [Vite](https://vitejs.dev/)、[Create React App](https://github.com/facebook/create-react-app) 或 [Vue CLI](https://github.com/vuejs/vue-cli) 处于同一层级的构建工具，它们都默认包含了开发服务器、命令行工具和合理的构建配置，以此来提供开箱即用的体验。
@@ -35,8 +37,8 @@ Rsbuild 是与 [Vite](https://vitejs.dev/)、[Create React App](https://github.c
 你可以将 Rsbuild 理解为一个现代化的 Create React App 或 Vue CLI，它与这些工具的主要区别在于：
 
 - 底层的打包工具由 Webpack 替换为 Rspack，提供 5 ~ 10 倍的构建性能。
-- 与前端 UI 框架解耦，并通过 [插件](/plugins/list/index) 来支持所有 UI 框架，包括 React、Vue、Svelte、Solid 等。
-- 提供更好的扩展性，你可以通过 [配置](/config/index)、 [插件 API](/plugins/dev/index) 和 [JavaScript API](/api/start/index) 来灵活地扩展 Rsbuild。
+- 与前端 UI 框架解耦，并通过 [插件](https://rsbuild.dev/zh/plugins/list/) 来支持所有 UI 框架，包括 React、Vue、Svelte、Solid 等。
+- 提供更好的扩展性，你可以通过 [配置](https://rsbuild.dev/zh/config/)、 [插件 API](https://rsbuild.dev/zh/plugins/dev/) 和 [JavaScript API](https://rsbuild.dev/zh/api/start/) 来灵活地扩展 Rsbuild。
 
 ### Vite
 
@@ -44,6 +46,7 @@ Rsbuild 与 Vite 有许多相似之处，它们皆致力于提升前端的开发
 
 - **生态兼容性**：Rsbuild 兼容大部分的 webpack 插件和所有 Rspack 插件，而 Vite 则是兼容 Rollup 插件。如果你目前更多地使用了 webpack 生态的插件和 loaders，那么迁移到 Rsbuild 是相对容易的。
 - **生产一致性**：Rsbuild 在开发阶段和生产构建均使用 Rspack 进行打包，因此开发和生产构建的产物具备较强的一致性，这也是 Vite 通过 [Rolldown](https://rolldown.rs/) 想要实现的目标之一。
+- **模块联邦**：Rsbuild 团队与 [Module Federation](https://rsbuild.dev/zh/guide/advanced/module-federation) 的开发团队密切合作，并为 Module Federation 提供一流的支持，帮助你开发微前端架构的大型 Web 应用。
 
 ## 🚀 性能
 
@@ -59,11 +62,11 @@ Rsbuild 具备以下特性：
 
 - **易于配置**：Rsbuild 的目标之一，是为 Rspack 用户提供开箱即用的构建能力，使开发者能够在零配置的情况下开发 web 项目。同时，Rsbuild 提供一套语义化的构建配置，以降低 Rspack 配置的学习成本。
 
-- **性能优先**：Rsbuild 集成了社区中基于 Rust 的高性能工具，包括 [Rspack](https://github.com/web-infra-dev/rspack)，[SWC](https://swc.rs/) 和 [Lightning CSS](https://lightningcss.dev/)，以提供一流的构建速度和开发体验。与基于 Webpack 的 Create React App 和 Vue CLI 等工具相比，Rsbuild 提供了 5 ~ 10 倍的构建性能，以及更轻量的依赖体积。
+- **性能优先**：Rsbuild 集成了社区中基于 Rust 的高性能工具，包括 [Rspack](https://rspack.dev)，[SWC](https://swc.rs/) 和 [Lightning CSS](https://lightningcss.dev/)，以提供一流的构建速度和开发体验。
 
-- **插件生态**：Rsbuild 内置一个轻量级的插件系统，提供一系列高质量的官方插件。此外，Rsbuild 兼容大部分的 webpack 插件和所有的 Rspack 插件，这意味着你可以在 Rsbuild 中使用社区或公司内沉淀的现有插件，而不需要重写相关代码。
+- **插件生态**：Rsbuild 内置一个轻量级的插件系统，提供一系列高质量的官方插件。此外，Rsbuild 兼容大部分的 webpack 插件和所有的 Rspack 插件，这意味着你可以在 Rsbuild 中使用社区或公司内沉淀的现有插件，而无须重写相关代码。
 
-- **产物稳定**：Rsbuild 设计时充分考虑了构建产物的稳定性，它的开发环境产物和生产构建产物具备较高的一致性，并自动完成语法降级和 polyfill 注入。Rsbuild 也提供插件来进行 TypeScript 类型检查和产物语法检查，以避免线上代码的质量问题和兼容性问题。
+- **产物稳定**：Rsbuild 设计时充分考虑了构建产物的稳定性，它的开发和生产构建产物具备较强的一致性，并自动完成语法降级和 polyfill 注入。Rsbuild 也提供插件来进行 TypeScript 类型检查和产物语法检查，以避免线上代码的质量问题和兼容性问题。
 
 - **框架无关**：Rsbuild 不与前端 UI 框架耦合，并通过插件来支持 React、Vue 3、Vue 2、Svelte、Solid、Lit 等框架，未来也计划支持社区中更多的 UI 框架。
 
