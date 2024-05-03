@@ -54,7 +54,7 @@ importers:
         version: 2.11.1
       vitest:
         specifier: ^1.5.3
-        version: 1.5.3(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.75.0)(stylus@0.63.0)(terser@5.30.4)
+        version: 1.5.3(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.76.0)(stylus@0.63.0)(terser@5.31.0)
 
   e2e:
     dependencies:
@@ -65,8 +65,8 @@ importers:
         specifier: ^2.30.1
         version: 2.30.1
       preact:
-        specifier: ^10.20.2
-        version: 10.20.2
+        specifier: ^10.21.0
+        version: 10.21.0
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -298,8 +298,8 @@ importers:
         specifier: ^4.2.0
         version: 4.2.0
       sass:
-        specifier: ^1.75.0
-        version: 1.75.0
+        specifier: ^1.76.0
+        version: 1.76.0
       stylus:
         specifier: 0.63.0
         version: 0.63.0
@@ -424,8 +424,8 @@ importers:
   examples/preact:
     dependencies:
       preact:
-        specifier: ^10.20.2
-        version: 10.20.2
+        specifier: ^10.21.0
+        version: 10.21.0
     devDependencies:
       '@rsbuild/core':
         specifier: link:../../packages/core
@@ -692,8 +692,8 @@ importers:
         specifier: ~3.36.0
         version: 3.36.1
       html-webpack-plugin:
-        specifier: npm:html-rspack-plugin@5.7.0
-        version: html-rspack-plugin@5.7.0(@rspack/core@0.6.3(@swc/helpers@0.5.3))
+        specifier: npm:html-rspack-plugin@5.7.2
+        version: html-rspack-plugin@5.7.2(@rspack/core@0.6.3(@swc/helpers@0.5.3))
       postcss:
         specifier: ^8.4.38
         version: 8.4.38
@@ -809,11 +809,11 @@ importers:
         specifier: ^5.0.4
         version: 5.0.4
       html-webpack-plugin:
-        specifier: npm:html-rspack-plugin@5.7.0
-        version: html-rspack-plugin@5.7.0(@rspack/core@0.6.3(@swc/helpers@0.5.3))
+        specifier: npm:html-rspack-plugin@5.7.2
+        version: html-rspack-plugin@5.7.2(@rspack/core@0.6.3(@swc/helpers@0.5.3))
       terser:
-        specifier: 5.30.4
-        version: 5.30.4
+        specifier: 5.31.0
+        version: 5.31.0
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1172,8 +1172,8 @@ importers:
         specifier: workspace:*
         version: link:../shared
       terser:
-        specifier: 5.30.4
-        version: 5.30.4
+        specifier: 5.31.0
+        version: 5.31.0
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -1182,8 +1182,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       html-webpack-plugin:
-        specifier: npm:html-rspack-plugin@5.7.0
-        version: html-rspack-plugin@5.7.0(@rspack/core@0.6.3(@swc/helpers@0.5.3))
+        specifier: npm:html-rspack-plugin@5.7.2
+        version: html-rspack-plugin@5.7.2(@rspack/core@0.6.3(@swc/helpers@0.5.3))
       postcss-pxtorem:
         specifier: 6.1.0
         version: 6.1.0(postcss@8.4.38)
@@ -1301,7 +1301,7 @@ importers:
         version: 3.2.0(svelte@4.2.15)
       svelte-preprocess:
         specifier: ^5.1.4
-        version: 5.1.4(@babel/core@7.24.5)(less@4.2.0)(postcss-load-config@5.0.3(jiti@1.21.0)(postcss@8.4.38))(postcss@8.4.38)(pug@3.0.2)(sass@1.75.0)(stylus@0.63.0)(svelte@4.2.15)(typescript@5.4.5)
+        version: 5.1.4(@babel/core@7.24.5)(less@4.2.0)(postcss-load-config@5.0.3(jiti@1.21.0)(postcss@8.4.38))(postcss@8.4.38)(pug@3.0.2)(sass@1.76.0)(stylus@0.63.0)(svelte@4.2.15)(typescript@5.4.5)
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -1590,8 +1590,8 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0
       html-webpack-plugin:
-        specifier: npm:html-rspack-plugin@5.7.0
-        version: html-rspack-plugin@5.7.0(@rspack/core@0.6.3(@swc/helpers@0.5.3))
+        specifier: npm:html-rspack-plugin@5.7.2
+        version: html-rspack-plugin@5.7.2(@rspack/core@0.6.3(@swc/helpers@0.5.3))
       http-proxy-middleware:
         specifier: ^2.0.6
         version: 2.0.6
@@ -1656,11 +1656,11 @@ importers:
         specifier: ^1.2.2
         version: 1.2.2
       sass:
-        specifier: ^1.75.0
-        version: 1.75.0
+        specifier: ^1.76.0
+        version: 1.76.0
       sass-loader:
         specifier: 14.2.1
-        version: 14.2.1(@rspack/core@0.6.3(@swc/helpers@0.5.3))(sass@1.75.0)(webpack@5.91.0)
+        version: 14.2.1(@rspack/core@0.6.3(@swc/helpers@0.5.3))(sass@1.76.0)(webpack@5.91.0)
       semver:
         specifier: ^7.6.0
         version: 7.6.0
@@ -1668,8 +1668,8 @@ importers:
         specifier: 3.3.4
         version: 3.3.4(webpack@5.91.0)
       terser:
-        specifier: 5.30.4
-        version: 5.30.4
+        specifier: 5.31.0
+        version: 5.31.0
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1702,8 +1702,8 @@ importers:
         specifier: 18.x
         version: 18.19.31
       tsx:
-        specifier: ^4.7.3
-        version: 4.7.3
+        specifier: ^4.8.2
+        version: 4.8.2
 
   scripts/test-helper:
     dependencies:
@@ -5597,8 +5597,8 @@ packages:
   html-escaper@2.0.2:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
 
-  html-rspack-plugin@5.7.0:
-    resolution: {integrity: sha512-8qCnfnluqMHnw+Jo+NM1lLok8SxPBY09oRLcA2cjGZb7vlin+6g1oFLEWM7JCnQHKDjEnANPzbiXV/ysNuAGTg==}
+  html-rspack-plugin@5.7.2:
+    resolution: {integrity: sha512-uVXGYq19bcsX7Q/53VqXQjCKXw0eUMHlFGDLTaqzgj/ckverfhZQvXyA6ecFBaF9XUH16jfCTCyALYi0lJcagg==}
     engines: {node: '>=10.13.0'}
     peerDependencies:
       '@rspack/core': 0.x || 1.x
@@ -7266,8 +7266,8 @@ packages:
     resolution: {integrity: sha512-Wglpdk03BSfXkHoQa3b/oulrotAkwrlLDRSOb9D0bN86FdRyE9lppSp33aHNPgBa0JKCoB+drFLZkQoRRYae5A==}
     engines: {node: ^10 || ^12 || >=14}
 
-  preact@10.20.2:
-    resolution: {integrity: sha512-S1d1ernz3KQ+Y2awUxKakpfOg2CEmJmwOP+6igPx6dgr6pgDvenqYviyokWso2rhHvGtTlWWnJDa7RaPbQerTg==}
+  preact@10.21.0:
+    resolution: {integrity: sha512-aQAIxtzWEwH8ou+OovWVSVNlFImL7xUCwJX3YMqA3U8iKCNC34999fFOnWjYNsylgfPgMexpbk7WYOLtKr/mxg==}
 
   prebundle@1.1.0:
     resolution: {integrity: sha512-yTfRjx0+xiveeb7kO77OcODVB8RSHMKIiVl/qferU7ZHw4Y8pycXkCAtPDViF8YDo0a8ViDpm4C1O9PFKCw1ig==}
@@ -7697,8 +7697,8 @@ packages:
       webpack:
         optional: true
 
-  sass@1.75.0:
-    resolution: {integrity: sha512-ShMYi3WkrDWxExyxSZPst4/okE9ts46xZmJDSawJQrnte7M1V9fScVB+uNXOVKRBt0PggHOwoZcn8mYX4trnBw==}
+  sass@1.76.0:
+    resolution: {integrity: sha512-nc3LeqvF2FNW5xGF1zxZifdW3ffIz5aBb7I7tSvOoNu7z1RQ6pFt9MBuiPtjgaI62YWrM/txjWlOCFiGtf2xpw==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -8154,8 +8154,8 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  terser@5.30.4:
-    resolution: {integrity: sha512-xRdd0v64a8mFK9bnsKVdoNP9GQIKUAaJPTaqEQDL4w/J8WaW4sWXXoMZ+6SimPkfT5bElreXf8m9HnmPc3E1BQ==}
+  terser@5.31.0:
+    resolution: {integrity: sha512-Q1JFAoUKE5IMfI4Z/lkE/E6+SwgzO+x4tq4v1AyBLRj8VSYvRO6A/rQrPg1yud4g0En9EKI1TvFRF2tQFcoUkg==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -8247,8 +8247,8 @@ packages:
   tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
 
-  tsx@4.7.3:
-    resolution: {integrity: sha512-+fQnMqIp/jxZEXLcj6WzYy9FhcS5/Dfk8y4AtzJ6ejKcKqmfTF8Gso/jtrzDggCF2zTU20gJa6n8XqPYwDAUYQ==}
+  tsx@4.8.2:
+    resolution: {integrity: sha512-hmmzS4U4mdy1Cnzpl/NQiPUC2k34EcNSTZYVJThYKhdqTwuBeF+4cG9KUK/PFQ7KHaAaYwqlb7QfmsE2nuj+WA==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -11049,7 +11049,7 @@ snapshots:
       '@types/node': 18.19.31
       '@types/node-sass': 4.11.7
       '@types/webpack': 4.41.38
-      sass: 1.75.0
+      sass: 1.76.0
 
   '@types/semver@7.5.8': {}
 
@@ -13179,7 +13179,7 @@ snapshots:
 
   html-escaper@2.0.2: {}
 
-  html-rspack-plugin@5.7.0(@rspack/core@0.6.3(@swc/helpers@0.5.3)):
+  html-rspack-plugin@5.7.2(@rspack/core@0.6.3(@swc/helpers@0.5.3)):
     optionalDependencies:
       '@rspack/core': 0.6.3(@swc/helpers@0.5.3)
 
@@ -15238,7 +15238,7 @@ snapshots:
       picocolors: 1.0.0
       source-map-js: 1.2.0
 
-  preact@10.20.2: {}
+  preact@10.21.0: {}
 
   prebundle@1.1.0(typescript@5.4.5):
     dependencies:
@@ -15778,15 +15778,15 @@ snapshots:
       mkdirp: 0.5.6
       rimraf: 2.7.1
 
-  sass-loader@14.2.1(@rspack/core@0.6.3(@swc/helpers@0.5.3))(sass@1.75.0)(webpack@5.91.0):
+  sass-loader@14.2.1(@rspack/core@0.6.3(@swc/helpers@0.5.3))(sass@1.76.0)(webpack@5.91.0):
     dependencies:
       neo-async: 2.6.2
     optionalDependencies:
       '@rspack/core': 0.6.3(@swc/helpers@0.5.3)
-      sass: 1.75.0
+      sass: 1.76.0
       webpack: 5.91.0
 
-  sass@1.75.0:
+  sass@1.76.0:
     dependencies:
       chokidar: 3.6.0
       immutable: 4.3.5
@@ -16171,7 +16171,7 @@ snapshots:
       svelte-dev-helper: 1.1.9
       svelte-hmr: 0.14.12(svelte@4.2.15)
 
-  svelte-preprocess@5.1.4(@babel/core@7.24.5)(less@4.2.0)(postcss-load-config@5.0.3(jiti@1.21.0)(postcss@8.4.38))(postcss@8.4.38)(pug@3.0.2)(sass@1.75.0)(stylus@0.63.0)(svelte@4.2.15)(typescript@5.4.5):
+  svelte-preprocess@5.1.4(@babel/core@7.24.5)(less@4.2.0)(postcss-load-config@5.0.3(jiti@1.21.0)(postcss@8.4.38))(postcss@8.4.38)(pug@3.0.2)(sass@1.76.0)(stylus@0.63.0)(svelte@4.2.15)(typescript@5.4.5):
     dependencies:
       '@types/pug': 2.0.10
       detect-indent: 6.1.0
@@ -16185,7 +16185,7 @@ snapshots:
       postcss: 8.4.38
       postcss-load-config: 5.0.3(jiti@1.21.0)(postcss@8.4.38)
       pug: 3.0.2
-      sass: 1.75.0
+      sass: 1.76.0
       stylus: 0.63.0
       typescript: 5.4.5
 
@@ -16273,7 +16273,7 @@ snapshots:
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
-      terser: 5.30.4
+      terser: 5.31.0
       webpack: 5.91.0
 
   terser@5.19.2:
@@ -16283,7 +16283,7 @@ snapshots:
       commander: 2.20.3
       source-map-support: 0.5.21
 
-  terser@5.30.4:
+  terser@5.31.0:
     dependencies:
       '@jridgewell/source-map': 0.3.6
       acorn: 8.11.3
@@ -16360,7 +16360,7 @@ snapshots:
 
   tslib@2.6.2: {}
 
-  tsx@4.7.3:
+  tsx@4.8.2:
     dependencies:
       esbuild: 0.19.12
       get-tsconfig: 4.7.3
@@ -16588,13 +16588,13 @@ snapshots:
       unist-util-stringify-position: 4.0.0
       vfile-message: 4.0.2
 
-  vite-node@1.5.3(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.75.0)(stylus@0.63.0)(terser@5.30.4):
+  vite-node@1.5.3(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.76.0)(stylus@0.63.0)(terser@5.31.0):
     dependencies:
       cac: 6.7.14
       debug: 4.3.4
       pathe: 1.1.2
       picocolors: 1.0.0
-      vite: 5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.75.0)(stylus@0.63.0)(terser@5.30.4)
+      vite: 5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.76.0)(stylus@0.63.0)(terser@5.31.0)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -16605,7 +16605,7 @@ snapshots:
       - supports-color
       - terser
 
-  vite@5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.75.0)(stylus@0.63.0)(terser@5.30.4):
+  vite@5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.76.0)(stylus@0.63.0)(terser@5.31.0):
     dependencies:
       esbuild: 0.19.12
       postcss: 8.4.38
@@ -16615,11 +16615,11 @@ snapshots:
       fsevents: 2.3.3
       less: 4.2.0
       lightningcss: 1.24.1
-      sass: 1.75.0
+      sass: 1.76.0
       stylus: 0.63.0
-      terser: 5.30.4
+      terser: 5.31.0
 
-  vitest@1.5.3(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.75.0)(stylus@0.63.0)(terser@5.30.4):
+  vitest@1.5.3(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.76.0)(stylus@0.63.0)(terser@5.31.0):
     dependencies:
       '@vitest/expect': 1.5.3
       '@vitest/runner': 1.5.3
@@ -16638,8 +16638,8 @@ snapshots:
       strip-literal: 2.1.0
       tinybench: 2.7.0
       tinypool: 0.8.4
-      vite: 5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.75.0)(stylus@0.63.0)(terser@5.30.4)
-      vite-node: 1.5.3(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.75.0)(stylus@0.63.0)(terser@5.30.4)
+      vite: 5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.76.0)(stylus@0.63.0)(terser@5.31.0)
+      vite-node: 1.5.3(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.24.1)(sass@1.76.0)(stylus@0.63.0)(terser@5.31.0)
       why-is-node-running: 2.2.2
     optionalDependencies:
       '@types/node': 18.19.31

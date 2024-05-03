@@ -119,7 +119,8 @@ async function printFileSizes(
       const filteredAssets = origin.assets!.filter((asset) =>
         filterAsset(asset.name),
       );
-      const distFolder = distPath.replace(rootPath + path.sep, '');
+
+      const distFolder = path.relative(rootPath, distPath);
 
       return filteredAssets.map((asset) =>
         formatAsset(asset, distPath, distFolder),

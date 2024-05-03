@@ -12,6 +12,6 @@
   },
   "devDependencies": {
     "@types/node": "18.x",
-    "tsx": "^4.7.3"
+    "tsx": "^4.8.2"
   }
 }
