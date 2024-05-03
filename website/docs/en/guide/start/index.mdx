@@ -1,11 +1,25 @@
 # Introduction
 
-## 💡 What is Rsbuild?
+Rsbuild is a high-performance build tool powered by Rspack. It provides a set of thoughtfully designed default build configs, offering an out-of-the-box development experience and can fully unleash the performance advantages of Rspack.
 
-- Rsbuild is an Rspack-based build tool for the web.
-- Rsbuild is an enhanced Rspack CLI, which is more user-friendly and out-of-the-box.
-- Rsbuild is the Rspack team's exploration and implementation of best practices for web building.
-- Rsbuild is the best solution for migrating from Webpack to Rspack, reducing configuration by 90% and getting 10x build speed.
+## 💡 Comparisons
+
+Rsbuild is a build tool that is on par with [Vite](https://vitejs.dev/), [Create React App](https://github.com/facebook/create-react-app), or [Vue CLI](https://github.com/vuejs/vue-cli). They all come with builtin dev servers, command line tools, and sensible build configurations to provide the out-of-the-box experience.
+
+### CRA / Vue CLI
+
+You can think of Rsbuild as a modernized version of Create React App or Vue CLI, with these main differences:
+
+- The underlying bundler is switched from Webpack to Rspack, providing 5 to 10 times the build performance.
+- It is decoupled from frontend UI frameworks and supports all UI frameworks via [plugins](/plugins/list/index), including React, Vue, Svelte, Solid, etc.
+- It offers better extensibility. You can extend Rsbuild flexibly via [Configurations](/config/index), [Plugin API](/plugins/dev/index), and [JavaScript API](/api/start/index).
+
+### Vite
+
+Rsbuild shares many similarities with Vite, as they are both aim to improve the frontend development experience. The main differences are:
+
+- **Ecosystem compatibility**: Rsbuild is compatible with most webpack plugins and all Rspack plugins, while Vite is compatible with Rollup plugins. If you're currently using more plugins and loaders from the webpack ecosystem, migrating to Rsbuild would be relatively easy.
+- **Production consistency**: Rsbuild uses Rspack for bundling during both the development and production builds, thus ensuring a high level of consistency between the development and production outputs. This is also one of the goals Vite aims to achieve with [Rolldown](https://rolldown.rs/).
 
 ## 🚀 Performance
 
