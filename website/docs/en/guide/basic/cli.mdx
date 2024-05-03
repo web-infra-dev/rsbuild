@@ -79,9 +79,7 @@ Options:
 
 ## rsbuild preview
 
-The `rsbuild preview` command is used to preview the production build outputs locally. Note that you need to execute the `rsbuild build` command beforehand to generate the corresponding outputs.
-
-Do not use this as a production server as it's not designed for it.
+The `rsbuild preview` command is used to preview the production build outputs locally. Note that you need to execute the `rsbuild build` command beforehand to generate the build outputs.
 
 ```bash
 Usage: rsbuild preview [options]
@@ -94,6 +92,10 @@ Options:
   --env-mode <mode>     specify the env mode to load the `.env.[mode]` file
   -h, --help            display help for command
 ```
+
+:::tip
+The preview command is only used for local preview. Do not use it for production servers, as it is not designed for that.
+:::
 
 ## rsbuild inspect
 

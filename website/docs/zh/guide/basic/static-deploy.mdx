@@ -1,0 +1,115 @@
+# 部署静态站点
+
+本章节介绍如何将 Rsbuild 的构建产物部署为静态站点。
+
+## 背景知识
+
+在开始进行部署前，你需要了解以下背景知识：
+
+- 你需要调用 Rsbuild 的 [build 命令](/guide/basic/cli#rsbuild-build) 来生成用于部署到生产环境的构建产物。
+- Rsbuild 的构建产物通常包含 HTML、JS、CSS 等文件，默认输出到 `dist` 目录下，dist 目录的名称和结构可以通过一些配置项来修改，请参考 [构建产物目录](/guide/basic/output-files) 章节来了解更多。
+
+```bash
+dist
+├── static
+│   ├── image
+│   ├── css
+│   └── js
+└── [name].html
+```
+
+## 本地预览
+
+Rsbuild 还提供了 [preview 命令](/guide/basic/cli#rsbuild-preview)，用于在本地预览生产环境构建的产物, 注意你需要提前执行 `rsbuild build` 命令构建出对应产物。
+
+```bash
+# 生产构建
+npx rsbuild build
+# 本地预览
+npx rsbuild preview
+```
+
+:::tip
+preview 命令仅用于本地预览，请勿将它用于生产服务器，因为它不是为此而设计的。
+:::
+
+## GitHub Pages
+
+下面是部署到 GitHub Pages 的步骤示例。
+
+1. 通过 [output.assetPrefix](/config/output/asset-prefix) 设置静态资源的 URL 前缀。
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  output: {
+    // 请将 <USERNAME> 替换为仓库所在的 GitHub 用户或组织名称，
+    // 并将 <REPO_NAME> 替换为仓库的名称。
+    // 比如 https://jack.github.io/my-project/
+    assetPrefix: 'https://<USERNAME>.github.io/<REPO_NAME>/',
+  },
+});
+```
+
+2. 打开 GitHub 仓库的 "Settings" 页面，点击左侧菜单的 "Pages" 选项，进入 GitHub Pages 的配置页面。
+3. 选择 "Source" -> "GitHub Actions"，点击 "create your own" 来创建 GitHub Action 配置文件。
+4. 将以下内容粘贴到输入框，将文件命名为 `github-pages.yml`（你可以根据需要来调整文件的内容和名称）。
+
+```yaml title="github-pages.yml"
+# 用于构建和部署 Rsbuild 站点到 GitHub Pages 的示例工作流
+name: Rsbuild Deployment
+
+on:
+  # 在推送到默认分支时触发
+  push:
+    branches: ['main']
+  # 允许你从 Actions Tabs 手动运行这个工作流
+  workflow_dispatch:
+
+# 设置 GITHUB_TOKEN 的权限以允许部署到 GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同时只允许一个部署执行
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      # 如果你使用其他的包管理器，如 yarn 或 pnpm，
+      # 你需要先安装它们
+      - name: Install dependencies
+        run: npm i
+
+      - name: Build
+        run: npm run build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+5. 提交，等待 GitHub Actions 执行，执行完成后，你可以访问 `https://<USERNAME>.github.io/<REPO_NAME>/` 来查看部署后的页面。
