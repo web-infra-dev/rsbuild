@@ -1,0 +1,115 @@
+# Deploy Static Site
+
+This section introduces how to deploy the build outputs of Rsbuild as a static site.
+
+## Background Information
+
+Before start deploying, you need to understand the following background knowledge:
+
+- You need to call Rsbuild's [build command](/guide/basic/cli#rsbuild-build) to generate the build outputs for production deployment.
+- Rsbuild's build outputs typically includes HTML, JS, CSS, and other assets, and is output to the `dist` directory by default. The name and structure of the dist directory can be changed using some configuration options. See the [Output Files](/guide/basic/output-files) section for more information.
+
+```bash
+dist
+├── static
+│   ├── image
+│   ├── css
+│   └── js
+└── [name].html
+```
+
+## Local Preview
+
+Rsbuild also provides a [preview command](/guide/basic/cli#rsbuild-preview) to preview the production build outputs locally. Note that you need to execute the `rsbuild build` command beforehand to generate the build outputs.
+
+```bash
+# Production build
+npx rsbuild build
+# Local preview
+npx rsbuild preview
+```
+
+:::tip
+The preview command is only used for local preview. Do not use it for production servers, as it is not designed for that.
+:::
+
+## GitHub Pages
+
+The following are step-by-step examples on how to deploy on GitHub Pages.
+
+1. Set the URL prefix for static assets through [output.assetPrefix](/config/output/asset-prefix).
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  output: {
+    // Please replace <USERNAME> with the GitHub user or organization name where
+    // the repository is located, and replace <REPO_NAME> with the repository name.
+    // For example, https://jack.github.io/my-project/
+    assetPrefix: 'https://<USERNAME>.github.io/<REPO_NAME>/',
+  },
+});
+```
+
+2. Open the "Settings" page of GitHub repository, click "Pages" from the left menu to access the configuration page of GitHub Pages.
+3. Select "Source" -> "GitHub Actions" and click "create your own" to create a GitHub Action config file.
+4. Paste the following content into the input box and name the file `github-pages.yml` (you can adjust the content and name of the file as needed).
+
+```yaml title="github-pages.yml"
+# Sample workflow for building and deploying a Rsbuild site to GitHub Pages
+name: Rsbuild Deployment
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ['main']
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 20
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      # If you use other package managers like yarn or pnpm,
+      # you will need to install them first
+      - name: Install dependencies
+        run: npm i
+
+      - name: Build
+        run: npm run build
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+5. Commit and wait for GitHub Actions to execute. Once it's done, you can visit `https://<USERNAME>.github.io/<REPO_NAME>/` to view the deployed page.

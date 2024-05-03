@@ -12,5 +12,6 @@
   "css-modules",
   "typescript",
   "tailwindcss",
-  "unocss"
+  "unocss",
+  "static-deploy"
 ]
