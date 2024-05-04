@@ -4,10 +4,35 @@ This section introduces how to deploy the build outputs of Rsbuild as a static s
 
 ## Background Information
 
-Before start deploying, you need to understand the following background knowledge:
+Before starting the deployment, you need to understand some background information:
 
-- You need to call Rsbuild's [build command](/guide/basic/cli#rsbuild-build) to generate the build outputs for production deployment.
-- Rsbuild's build outputs typically includes HTML, JS, CSS, and other assets, and is output to the `dist` directory by default. The name and structure of the dist directory can be changed using some configuration options. See the [Output Files](/guide/basic/output-files) section for more information.
+- The CLI commands used for building and previewing outputs.
+- The directory structure of the build outputs.
+- The URL prefix of static assets.
+
+### Build Commands
+
+The build commands provided by Rsbuild:
+
+- [build command](/guide/basic/cli#rsbuild-build), used to generate the build outputs for production deployment.
+- [preview command](/guide/basic/cli#rsbuild-preview), used to preview the production build outputs locally. Note that you need to execute the `rsbuild build` command beforehand to generate the build outputs.
+
+```json title="package.json"
+{
+  "scripts": {
+    "build": "rsbuild build",
+    "preview": "rsbuild preview"
+  }
+}
+```
+
+:::tip
+The preview command is only used for local preview. Do not use it for production servers, as it is not designed for that.
+:::
+
+### Output Directory
+
+Rsbuild's build outputs typically includes HTML, JS, CSS, and other assets, and is output to the `dist` directory by default. The name and structure of the dist directory can be changed using some configuration options. See the [Output Files](/guide/basic/output-files) section for more information.
 
 ```bash
 dist
@@ -18,20 +43,42 @@ dist
 └── [name].html
 ```
 
-## Local Preview
+### Asset Prefix
 
-Rsbuild also provides a [preview command](/guide/basic/cli#rsbuild-preview) to preview the production build outputs locally. Note that you need to execute the `rsbuild build` command beforehand to generate the build outputs.
+We can divide the build output into two parts: **HTML files** and **static assets**.
 
-```bash
-# Production build
-npx rsbuild build
-# Local preview
-npx rsbuild preview
+- HTML files refer to files with the `.html` suffix in the output directory, which usually need to be deployed on the server.
+- Static assets are located in the `static` directory of the output folder, which contains assets such as JavaScript, CSS, and images. They can be deployed either on the server or on a CDN.
+
+If the static assets are deployed in a subdirectory of the server, you can configure [output.assetPrefix](/config/output/asset-prefix) as the base path:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  output: {
+    assetPrefix: '/some-base-folder/',
+  },
+});
 ```
 
-:::tip
-The preview command is only used for local preview. Do not use it for production servers, as it is not designed for that.
-:::
+If you want to place these static assets on a CDN for better performance, rather than directly on the server like HTML, you will need to configure the [output.assetPrefix](/config/output/asset-prefix) to the CDN address to allow the application to properly reference these static assets.
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  output: {
+    assetPrefix: 'https://cdn.com/path/',
+  },
+});
+```
+
+In this way, when referencing static assets in HTML, the specified prefix will be automatically added, for example:
+
+```html
+<script src="https://cdn.com/path/static/js/index.some-hash.js"></script>
+```
 
 ## GitHub Pages
 
