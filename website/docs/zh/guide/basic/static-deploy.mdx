@@ -2,12 +2,37 @@
 
 本章节介绍如何将 Rsbuild 的构建产物部署为静态站点。
 
-## 背景知识
+## 背景信息
 
-在开始进行部署前，你需要了解以下背景知识：
+在开始进行部署前，你需要了解一些背景信息：
 
-- 你需要调用 Rsbuild 的 [build 命令](/guide/basic/cli#rsbuild-build) 来生成用于部署到生产环境的构建产物。
-- Rsbuild 的构建产物通常包含 HTML、JS、CSS 等文件，默认输出到 `dist` 目录下，dist 目录的名称和结构可以通过一些配置项来修改，请参考 [构建产物目录](/guide/basic/output-files) 章节来了解更多。
+- 用于构建和预览产物的 CLI 命令。
+- 构建产物的目录结构。
+- 静态资源的 URL 前缀。
+
+### 构建命令
+
+Rsbuild 提供的构建命令：
+
+- [build 命令](/guide/basic/cli#rsbuild-build)，用于生成部署到生产环境的构建产物；
+- [preview 命令](/guide/basic/cli#rsbuild-preview)，用于在本地预览生产构建的产物, 注意你需要提前执行 `rsbuild build` 命令构建出对应产物。
+
+```json title="package.json"
+{
+  "scripts": {
+    "build": "rsbuild build",
+    "preview": "rsbuild preview"
+  }
+}
+```
+
+:::tip
+preview 命令仅用于本地预览，请勿将它用于生产服务器，因为它不是为此而设计的。
+:::
+
+### 产物目录
+
+Rsbuild 的构建产物通常包含 HTML、JS、CSS 等文件，默认输出到 `dist` 目录下，dist 目录的名称和结构可以通过一些配置项来修改，请参考 [构建产物目录](/guide/basic/output-files) 章节来了解更多。
 
 ```bash
 dist
@@ -18,20 +43,42 @@ dist
 └── [name].html
 ```
 
-## 本地预览
+### 静态资源前缀
 
-Rsbuild 还提供了 [preview 命令](/guide/basic/cli#rsbuild-preview)，用于在本地预览生产环境构建的产物, 注意你需要提前执行 `rsbuild build` 命令构建出对应产物。
+我们可以把构建产物分为两部分：**HTML 文件**和**静态资源**。
 
-```bash
-# 生产构建
-npx rsbuild build
-# 本地预览
-npx rsbuild preview
+- HTML 文件指的是产物目录中 `.html` 后缀的文件，它们通常需要被部署到服务器上。
+- 静态资源位于产物目录中的 `static` 目录，里面包含了 JavaScript、CSS、图片等资源，它们可以被部署到服务器或者 CDN 上。
+
+如果静态资源被部署到了服务器的某个子目录下，你可以将 [output.assetPrefix](/config/output/asset-prefix) 配置为一个 base 路径：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  output: {
+    assetPrefix: '/some-base-folder/',
+  },
+});
 ```
 
-:::tip
-preview 命令仅用于本地预览，请勿将它用于生产服务器，因为它不是为此而设计的。
-:::
+你想要将静态资源放到 CDN 上，以保证更好的访问性能，而不是像 HTML 一样直接放到服务器上，那么你就需要将 [output.assetPrefix](/config/output/asset-prefix) 配置为 CDN 地址，使应用能够正确的引用到这些静态资源：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  output: {
+    assetPrefix: 'https://cdn.com/path/',
+  },
+});
+```
+
+这样，在 HTML 中引用静态资源的时候，就会自动加上指定的前缀，例如：
+
+```html
+<script src="https://cdn.com/path/static/js/index.some-hash.js"></script>
+```
 
 ## GitHub Pages
 
