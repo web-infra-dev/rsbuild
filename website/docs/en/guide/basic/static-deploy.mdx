@@ -91,10 +91,9 @@ import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
   output: {
-    // Please replace <USERNAME> with the GitHub user or organization name where
-    // the repository is located, and replace <REPO_NAME> with the repository name.
-    // For example, https://jack.github.io/my-project/
-    assetPrefix: 'https://<USERNAME>.github.io/<REPO_NAME>/',
+    // Please replace <REPO_NAME> with the repository name.
+    // For example, "/my-project/"
+    assetPrefix: '/<REPO_NAME>/',
   },
 });
 ```

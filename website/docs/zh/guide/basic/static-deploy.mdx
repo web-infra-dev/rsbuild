@@ -91,10 +91,9 @@ import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
   output: {
-    // 请将 <USERNAME> 替换为仓库所在的 GitHub 用户或组织名称，
-    // 并将 <REPO_NAME> 替换为仓库的名称。
-    // 比如 https://jack.github.io/my-project/
-    assetPrefix: 'https://<USERNAME>.github.io/<REPO_NAME>/',
+    // 请将 <REPO_NAME> 替换为仓库的名称。
+    // 比如 "/my-project/"
+    assetPrefix: '/<REPO_NAME>/',
   },
 });
 ```
