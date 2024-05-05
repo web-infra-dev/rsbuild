@@ -82,7 +82,7 @@ In this way, when referencing static assets in HTML, the specified prefix will b
 
 ## GitHub Pages
 
-The following are step-by-step examples on how to deploy on GitHub Pages.
+The following are step-by-step examples on how to deploy on [GitHub Pages](https://pages.github.com/).
 
 1. Set the URL prefix for static assets through [output.assetPrefix](/config/output/asset-prefix).
 
@@ -91,10 +91,9 @@ import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
   output: {
-    // Please replace <USERNAME> with the GitHub user or organization name where
-    // the repository is located, and replace <REPO_NAME> with the repository name.
-    // For example, https://jack.github.io/my-project/
-    assetPrefix: 'https://<USERNAME>.github.io/<REPO_NAME>/',
+    // Please replace <REPO_NAME> with the repository name.
+    // For example, "/my-project/"
+    assetPrefix: '/<REPO_NAME>/',
   },
 });
 ```
@@ -160,3 +159,22 @@ jobs:
 ```
 
 5. Commit and wait for GitHub Actions to execute. Once it's done, you can visit `https://<USERNAME>.github.io/<REPO_NAME>/` to view the deployed page.
+
+## Netlify
+
+### Add New Site
+
+Netlify provides a detailed guide, you can follow the instructions in [Netlify - Add new site](https://docs.netlify.com/welcome/add-new-site/), set up some basic information, and then you can start the deployment.
+
+You need to configure the following two fields:
+
+- **Build command**: fill in the build command of the project, it is typically `npm run build`.
+- **Publish directory**: fill in the output directory in the project, the default is `dist`.
+
+Then click on the **Deploy site** button to start the deployment.
+
+### Custom Domains
+
+If you want to make your sites accessible at your own domain names, you can configure it in the "Domain management" section of Netlify.
+
+> The detailed guide: [Netlify - Custom domains](https://docs.netlify.com/domains-https/custom-domains/).

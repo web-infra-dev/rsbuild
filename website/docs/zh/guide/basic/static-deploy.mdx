@@ -82,7 +82,7 @@ export default defineConfig({
 
 ## GitHub Pages
 
-下面是部署到 GitHub Pages 的步骤示例。
+下面是部署到 [GitHub Pages](https://pages.github.com/) 的步骤示例。
 
 1. 通过 [output.assetPrefix](/config/output/asset-prefix) 设置静态资源的 URL 前缀。
 
@@ -91,10 +91,9 @@ import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
   output: {
-    // 请将 <USERNAME> 替换为仓库所在的 GitHub 用户或组织名称，
-    // 并将 <REPO_NAME> 替换为仓库的名称。
-    // 比如 https://jack.github.io/my-project/
-    assetPrefix: 'https://<USERNAME>.github.io/<REPO_NAME>/',
+    // 请将 <REPO_NAME> 替换为仓库的名称。
+    // 比如 "/my-project/"
+    assetPrefix: '/<REPO_NAME>/',
   },
 });
 ```
@@ -160,3 +159,22 @@ jobs:
 ```
 
 5. 提交，等待 GitHub Actions 执行，执行完成后，你可以访问 `https://<USERNAME>.github.io/<REPO_NAME>/` 来查看部署后的页面。
+
+## Netlify
+
+### 新增站点
+
+Netlify 提供了详细的指南，你可以按照 [Netlify - Add new site](https://docs.netlify.com/welcome/add-new-site/) 操作，配置一些基础信息，就可以开始部署了。
+
+你需要配置以下两个字段：
+
+- **Build command**：构建命令，填写项目的 build 命令即可，通常是 `npm run build`。
+- **Publish directory**：产物目录，填写项目中的产物目录，默认是 `dist`。
+
+然后点击 **Deploy site** 按钮，就可以开始部署了。
+
+### 配置域名
+
+如果你想要使你的站点可以通过你自己的域名访问，那么你可以在 Netlify 的 "Domain management" 栏目中进行配置。
+
+> 详细指南：[Netlify - Custom domains](https://docs.netlify.com/domains-https/custom-domains/)。
