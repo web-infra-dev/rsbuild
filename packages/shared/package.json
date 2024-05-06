@@ -123,6 +123,9 @@
     "caniuse-lite": "^1.0.30001614",
     "postcss": "^8.4.38"
   },
+  "optionalDependencies": {
+    "fsevents": "~2.3.3"
+  },
   "devDependencies": {
     "@types/connect": "3.4.38",
     "@types/fs-extra": "^11.0.4",
