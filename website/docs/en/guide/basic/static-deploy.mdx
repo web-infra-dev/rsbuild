@@ -82,7 +82,9 @@ In this way, when referencing static assets in HTML, the specified prefix will b
 
 ## GitHub Pages
 
-The following are step-by-step examples on how to deploy on [GitHub Pages](https://pages.github.com/).
+[GitHub Pages](https://pages.github.com/) is a static site hosting service that takes HTML, CSS, and JavaScript files straight from a repository on GitHub
+
+The following are step-by-step examples on how to deploy on GitHub Pages.
 
 1. Set the URL prefix for static assets through [output.assetPrefix](/config/output/asset-prefix).
 
@@ -162,6 +164,8 @@ jobs:
 
 ## Netlify
 
+[Netlify Core](https://www.netlify.com/) is a frontend cloud solution for developers to build and deploy future-proof digital solutions with modern, composable tooling.
+
 ### Add New Site
 
 Netlify provides a detailed guide, you can follow the instructions in [Netlify - Add new site](https://docs.netlify.com/welcome/add-new-site/), set up some basic information, and then you can start the deployment.
@@ -177,4 +181,24 @@ Then click on the **Deploy site** button to start the deployment.
 
 If you want to make your sites accessible at your own domain names, you can configure it in the "Domain management" section of Netlify.
 
-> The detailed guide: [Netlify - Custom domains](https://docs.netlify.com/domains-https/custom-domains/).
+> Detailed guide: [Netlify - Custom domains](https://docs.netlify.com/domains-https/custom-domains/).
+
+## Vercel
+
+[Vercel](https://vercel.com/) is a platform for developers that provides the tools, workflows, and infrastructure you need to build and deploy your web apps faster, without the need for additional configuration.
+
+### Add New Site
+
+Vercel provides a detailed guide that you can follow [Vercel - Projects](https://vercel.com/docs/projects/overview) to create a project in your dashboard and configure some basic information to start deployment.
+
+You only need to configure the fields under "Build and Output Settings":
+
+- **Output directory**: fill in the output directory in the project, the default is `dist`.
+
+Then click the **Deploy** button to start the deployment.
+
+### Configure Domains
+
+If you want to make your sites accessible at your own domain names, you can configure it in the "Domains" section of Vercel.
+
+> Detailed guide: [Vercel - Domains](https://vercel.com/docs/projects/domains).
