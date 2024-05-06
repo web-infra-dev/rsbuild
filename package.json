@@ -52,7 +52,7 @@
     "nx": "^18.3.4",
     "prettier": "^3.2.5",
     "simple-git-hooks": "^2.11.1",
-    "vitest": "^1.5.3"
+    "vitest": "^1.6.0"
   },
   "packageManager": "pnpm@9.0.6",
   "engines": {
