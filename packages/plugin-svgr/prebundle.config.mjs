@@ -35,7 +35,7 @@ export default {
         const filePath = join(task.distPath, 'index.js');
         const content = readFileSync(filePath, 'utf-8');
         const newContent = content.replace(
-          '"file-loader"',
+          /['"]file-loader['"]/,
           'require.resolve("../file-loader")',
         );
 
