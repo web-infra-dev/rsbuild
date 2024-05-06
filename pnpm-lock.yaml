@@ -1546,6 +1546,10 @@ importers:
       postcss:
         specifier: ^8.4.38
         version: 8.4.38
+    optionalDependencies:
+      fsevents:
+        specifier: ~2.3.3
+        version: 2.3.3
     devDependencies:
       '@types/connect':
         specifier: 3.4.38
