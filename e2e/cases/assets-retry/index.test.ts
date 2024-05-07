@@ -18,6 +18,30 @@ function count404Response(logs: string[], urlPrefix: string): number {
   return count;
 }
 
+function count404ResponseByUrl(
+  logs: string[],
+  urlPrefix: string,
+): Record<string, number> {
+  const countCollector: Record<string, number> = {};
+  // e.g: 18:09:23 404 GET /static/js/index.js 4.443 ms
+  const reg = /404\sGET\s(.*)\s\d/;
+  for (const log of logs) {
+    const rawLog = stripAnsi(log);
+    const url = reg.exec(rawLog)?.[1];
+    if (!url) {
+      continue;
+    }
+    if (!url.startsWith(urlPrefix)) {
+      continue;
+    }
+    if (!countCollector[url]) {
+      countCollector[url] = 0;
+    }
+    countCollector[url] += 1;
+  }
+  return countCollector;
+}
+
 type AssetsRetryHookContext = {
   url: string;
   times: number;
@@ -405,10 +429,24 @@ test('@rsbuild/plugin-assets-retry should work with addQuery option', async ({
   const asyncCompTestElement = page.locator('#async-comp-test');
   await expect(asyncCompTestElement).toHaveText('Hello AsyncCompTest');
 
-  const blockedResponseCount = count404Response(logs, '/static/js/index.js?retry=2');
-  expect(blockedResponseCount).toBe(1);
-  const blockedAsyncChunkResponseCount = count404Response(logs, '/static/js/async/src_AsyncCompTest_tsx.js?retry=2');
-  expect(blockedAsyncChunkResponseCount).toBe(1);
+  const blockedResponseCount = count404ResponseByUrl(
+    logs,
+    '/static/js/index.js',
+  );
+  expect(blockedResponseCount).toMatchObject({
+    '/static/js/index.js': 1,
+    '/static/js/index.js?retry=1': 1,
+    '/static/js/index.js?retry=2': 1,
+  });
+  const blockedAsyncChunkResponseCount = count404ResponseByUrl(
+    logs,
+    '/static/js/async/src_AsyncCompTest_tsx.js',
+  );
+  expect(blockedAsyncChunkResponseCount).toMatchObject({
+    '/static/js/async/src_AsyncCompTest_tsx.js': 1,
+    '/static/js/async/src_AsyncCompTest_tsx.js?retry=1': 1,
+    '/static/js/async/src_AsyncCompTest_tsx.js?retry=2': 1,
+  });
 
   await rsbuild.close();
   restore();
