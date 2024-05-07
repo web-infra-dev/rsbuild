@@ -63,10 +63,15 @@ function findNextDomain(url: string) {
   return domainList[(index + 1) % domainList.length] || url;
 }
 
-// TODO: add option query to onRetry with initial chunk together
-// function getUrlRetryQuery(existRetryTimes: number): string {
-//   return `?retry-attempt=${existRetryTimes}`;
-// }
+function getUrlRetryQuery(existRetryTimes: number): string {
+  if (config.addQuery === true) {
+    return `?retry=${existRetryTimes}`;
+  }
+  if (typeof config.addQuery === 'function') {
+    return config.addQuery(existRetryTimes);
+  }
+  return '';
+}
 
 function getCurrentRetry(chunkId: string): Retry | undefined {
   return retryCollector[chunkId];
@@ -88,8 +93,8 @@ function initRetry(chunkId: string): Retry {
     nextRetryUrl:
       nextDomain +
       (nextDomain[nextDomain.length - 1] === '/' ? '' : '/') +
-      originalScriptFilename,
-    // + getUrlRetryQuery(existRetryTimes),
+      originalScriptFilename +
+      getUrlRetryQuery(existRetryTimes),
 
     originalScriptFilename,
     originalSrcUrl,
@@ -111,8 +116,8 @@ function nextRetry(chunkId: string): Retry {
       nextRetryUrl:
         nextDomain +
         (nextDomain[nextDomain.length - 1] === '/' ? '' : '/') +
-        currRetry.originalScriptFilename,
-      // + getUrlRetryQuery(existRetryTimes),
+        currRetry.originalScriptFilename +
+        getUrlRetryQuery(existRetryTimes),
 
       originalScriptFilename: currRetry.originalScriptFilename,
       originalSrcUrl: currRetry.originalSrcUrl,
@@ -221,7 +226,7 @@ function loadScript(
 }
 
 function registerAsyncChunkRetry() {
-  // init global variables shared with async chunk
+  // init global variables shared between initial-chunk-retry and async-chunk-retry
   if (typeof window !== 'undefined' && !window.__RB_ASYNC_CHUNKS__) {
     window.__RB_ASYNC_CHUNKS__ = {};
   }

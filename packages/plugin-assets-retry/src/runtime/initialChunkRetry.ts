@@ -38,15 +38,19 @@ function findNextDomain(url: string, domainList: string[]) {
   return domainList[(index + 1) % domainList.length] || url;
 }
 
+function removeQuery(url: string) {
+  return url.replace(/\?.*$/, '');
+}
+
 function getRequestUrl(element: HTMLElement) {
   if (
     element instanceof HTMLScriptElement ||
     element instanceof HTMLImageElement
   ) {
-    return element.src;
+    return removeQuery(element.src);
   }
   if (element instanceof HTMLLinkElement) {
-    return element.href;
+    return removeQuery(element.href);
   }
   return null;
 }
@@ -219,13 +223,24 @@ function retry(config: RuntimeRetryOptions, e: Event) {
   // Then, we will start to retry
   const nextDomain = findNextDomain(domain, config.domain!);
 
+  function getUrlRetryQuery(existRetryTimes: number): string {
+    if (config.addQuery === true) {
+      return `?retry=${existRetryTimes}`;
+    }
+    if (typeof config.addQuery === 'function') {
+      return config.addQuery(existRetryTimes);
+    }
+    return '';
+  }
+
   const isAsync =
     Boolean(target.dataset.rsbuildAsync) ||
     (target as HTMLScriptElement).async ||
     (target as HTMLScriptElement).defer;
 
   const attributes: ScriptElementAttributes = {
-    url: url.replace(domain, nextDomain),
+    url:
+      url.replace(domain, nextDomain) + getUrlRetryQuery(existRetryTimes + 1),
     times: existRetryTimes + 1,
     crossOrigin: config.crossOrigin,
     isAsync,

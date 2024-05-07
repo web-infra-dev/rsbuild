@@ -21,6 +21,7 @@ export type PluginAssetsRetryOptions = {
   domain?: string[];
   /**
    * Set the `crossorigin` attribute for tags.
+   * @default config.html.crossorigin
    */
   crossOrigin?: boolean | CrossOrigin;
   /**
@@ -36,11 +37,20 @@ export type PluginAssetsRetryOptions = {
    */
   onSuccess?: (options: AssetsRetryHookContext) => void;
   /**
+   * The function to add query parameters to the URL of the asset being retried.
+   * @param existRetryTimes e.g: 1 -> 2 -> 3
+   * @default false
+   * @description true -> `?retry=${existRetryTimes}`
+   */
+  addQuery?: boolean | ((existRetryTimes: number) => string);
+  /**
    * Whether to inline the runtime JavaScript code of Assets Retry plugin into the HTML file.
+   * @default true
    */
   inlineScript?: boolean;
   /**
    * Whether to minify the runtime JavaScript code of Assets Retry plugin.
+   * @default process.env.NODE_ENV === 'production'
    */
   minify?: boolean;
 };
