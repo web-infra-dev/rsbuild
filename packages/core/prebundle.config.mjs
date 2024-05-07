@@ -18,6 +18,7 @@ export default {
     'dotenv-expand',
     'ws',
     'on-finished',
+    'rspack-manifest-plugin',
     {
       name: 'launch-editor-middleware',
       ignoreDts: true,
