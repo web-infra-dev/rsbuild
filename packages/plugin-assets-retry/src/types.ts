@@ -39,7 +39,7 @@ export type PluginAssetsRetryOptions = {
   /**
    * The function to add query parameters to the URL of the asset being retried.
    * @param times e.g: 1 -> 2 -> 3
-   * @param originalQuery initial request url's query
+   * @param originalQuery initial request url's query e.g: <script src="https://cdn.com/a.js?version=1"></script> -> "?version=1"
    * @default false
    * @description true -> hasQuery(originalQuery) ? `${getQuery(originalQuery)}&retry=${existRetryTimes}` : `?retry=${existRetryTimes}`
    */
