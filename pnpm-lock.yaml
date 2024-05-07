@@ -736,7 +736,7 @@ importers:
         version: 1.1.0(typescript@5.4.5)
       rspack-manifest-plugin:
         specifier: 5.0.0
-        version: 5.0.0(@rspack/core@0.6.3(@swc/helpers@0.5.3))
+        version: 5.0.0(@rspack/core@0.6.4(@swc/helpers@0.5.3))
       sirv:
         specifier: ^2.0.4
         version: 2.0.4
@@ -15763,12 +15763,12 @@ snapshots:
 
   rslog@1.2.2: {}
 
-  rspack-manifest-plugin@5.0.0(@rspack/core@0.6.3(@swc/helpers@0.5.3)):
+  rspack-manifest-plugin@5.0.0(@rspack/core@0.6.4(@swc/helpers@0.5.3)):
     dependencies:
       tapable: 2.2.1
       webpack-sources: 2.3.1
     optionalDependencies:
-      '@rspack/core': 0.6.3(@swc/helpers@0.5.3)
+      '@rspack/core': 0.6.4(@swc/helpers@0.5.3)
 
   rspack-plugin-virtual-module@0.1.12:
     dependencies:
