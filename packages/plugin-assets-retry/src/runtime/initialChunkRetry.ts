@@ -241,7 +241,7 @@ function retry(config: RuntimeRetryOptions, e: Event) {
   // Then, we will start to retry
   const nextDomain = findNextDomain(domain, config.domain!);
 
-  // if the initial requeset is "/static/js/async/src_Hello_tsx.js?q=1", retry url would be "/static/js/async/src_Hello_tsx.js?q=1&retry=1"
+  // if the initial request is "/static/js/async/src_Hello_tsx.js?q=1", retry url would be "/static/js/async/src_Hello_tsx.js?q=1&retry=1"
   const originalQuery =
     target.dataset.rsbuildOriginalQuery ?? getQueryFromUrl(url);
   function getUrlRetryQuery(existRetryTimes: number): string {
