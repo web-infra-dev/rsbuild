@@ -10,7 +10,7 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "moment": "^2.30.1",
-    "preact": "^10.20.2",
+    "preact": "^10.21.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.23.0",
@@ -55,7 +55,7 @@
     "@rsbuild/shared": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
     "@scripts/test-helper": "workspace:*",
-    "@types/lodash": "^4.17.0",
+    "@types/lodash": "^4.17.1",
     "@types/node": "18.x",
     "@types/react": "^18.3.1",
     "@types/react-dom": "^18.3.0",

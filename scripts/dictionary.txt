@@ -30,6 +30,7 @@ flac
 flexbox
 flexbugs
 fnames
+frontends
 fullhash
 gzipped
 icss
@@ -71,6 +72,7 @@ prefresh
 preprocessors
 pxtorem
 rebranded
+rolldown
 rsbuild
 rsdoctor
 rsfamily

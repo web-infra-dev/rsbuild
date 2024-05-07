@@ -24,7 +24,12 @@ export default {
     'rslog',
     'deepmerge',
     'fs-extra',
-    'chokidar',
+    {
+      name: 'chokidar',
+      externals: {
+        fsevents: 'fsevents',
+      },
+    },
     'webpack-merge',
     'mime-types',
     'connect',

@@ -21,7 +21,7 @@ exports[`should allow to enable legacy decorator 1`] = `
       "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
       {
         "useESModules": true,
-        "version": "7.24.4",
+        "version": "7.24.5",
       },
     ],
     "<ROOT>/packages/compat/babel-preset/src/pluginLockCorejsVersion",
@@ -81,7 +81,7 @@ exports[`should allow to enable specific version decorator 1`] = `
       "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
       {
         "useESModules": true,
-        "version": "7.24.4",
+        "version": "7.24.5",
       },
     ],
     "<ROOT>/packages/compat/babel-preset/src/pluginLockCorejsVersion",
@@ -131,7 +131,7 @@ exports[`should provide web preset as expected 1`] = `
       "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
       {
         "useESModules": true,
-        "version": "7.24.4",
+        "version": "7.24.5",
       },
     ],
     "<ROOT>/packages/compat/babel-preset/src/pluginLockCorejsVersion",
@@ -222,7 +222,7 @@ exports[`should support inject core-js polyfills by entry 1`] = `
       "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
       {
         "useESModules": true,
-        "version": "7.24.4",
+        "version": "7.24.5",
       },
     ],
     "<ROOT>/packages/compat/babel-preset/src/pluginLockCorejsVersion",
@@ -275,7 +275,7 @@ exports[`should support inject core-js polyfills by usage 1`] = `
       "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-runtime/lib/index.js",
       {
         "useESModules": true,
-        "version": "7.24.4",
+        "version": "7.24.5",
       },
     ],
     "<ROOT>/packages/compat/babel-preset/src/pluginLockCorejsVersion",

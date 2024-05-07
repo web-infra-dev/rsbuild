@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/babel-preset",
-  "version": "0.6.8",
+  "version": "0.6.11",
   "description": "The babel config of Rsbuild.",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -47,16 +47,16 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@babel/core": "^7.24.4",
+    "@babel/core": "^7.24.5",
     "@babel/plugin-proposal-decorators": "^7.24.1",
     "@babel/plugin-proposal-export-default-from": "^7.24.1",
-    "@babel/plugin-proposal-partial-application": "^7.24.1",
+    "@babel/plugin-proposal-partial-application": "^7.24.5",
     "@babel/plugin-proposal-pipeline-operator": "^7.24.1",
     "@babel/plugin-transform-runtime": "^7.24.3",
-    "@babel/preset-env": "^7.24.4",
+    "@babel/preset-env": "^7.24.5",
     "@babel/preset-typescript": "^7.24.1",
-    "@babel/runtime": "^7.24.4",
-    "@babel/types": "^7.24.0",
+    "@babel/runtime": "^7.24.5",
+    "@babel/types": "^7.24.5",
     "@types/babel__core": "^7.20.5",
     "babel-plugin-dynamic-import-node": "2.3.3",
     "core-js": "~3.36.0"
