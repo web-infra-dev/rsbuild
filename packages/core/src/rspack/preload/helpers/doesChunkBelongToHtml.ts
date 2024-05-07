@@ -39,7 +39,7 @@ function recursiveChunkGroup(
   return parents.flatMap((chunkParent) => recursiveChunkGroup(chunkParent));
 }
 
-function recursiveChunkEntryNames(chunk: Chunk): string[] {
+export function recursiveChunkEntryNames(chunk: Chunk): string[] {
   const isChunkName = (name: string | undefined): name is string =>
     Boolean(name);
 

@@ -80,6 +80,7 @@ export const rspackProvider: RsbuildProvider = async ({
         plugins.performance(),
         plugins.server(),
         plugins.moduleFederation(),
+        plugins.manifest(),
         import('./plugins/rspackProfile').then((m) => m.pluginRspackProfile()),
       ]);
 

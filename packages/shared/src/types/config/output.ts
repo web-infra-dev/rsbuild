@@ -249,6 +249,10 @@ export interface OutputConfig {
    */
   minify?: Minify;
   /**
+   * Whether to generate manifest file.
+   */
+  manifest?: string | boolean;
+  /**
    * Whether to generate source map files, and which format of source map to generate
    */
   sourceMap?: SourceMap;
