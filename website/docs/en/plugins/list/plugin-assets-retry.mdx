@@ -163,7 +163,7 @@ pluginAssetsRetry({
 
 ### addQuery
 
-- **Type:* `boolean | ((times: number) => string);`
+- **Type:* `boolean | ((times: number, originalQuery: string) => string);`
 - **Default:** `false`
 
 Whether to add query when retrying resources, so as to avoid being affected by browser and CDN caches on the retry results.

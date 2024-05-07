@@ -195,7 +195,7 @@ pluginAssetsRetry({
 
 ### addQuery
 
-- **类型：** `boolean | ((times: number) => string);`
+- **类型：** `boolean | ((times: number, originalQuery: string) => string);`
 - **默认值：** `false`
 
 是否在资源重试时添加 query，这样可以避免被浏览器、CDN 缓存影响到重试的结果。

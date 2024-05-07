@@ -116,7 +116,7 @@ function createElement(
     if (attributes.isAsync) {
       script.dataset.rsbuildAsync = '';
     }
-    if (attributes.originalQuery) {
+    if (attributes.originalQuery !== undefined) {
       script.dataset.rsbuildOriginalQuery = attributes.originalQuery;
     }
 
@@ -144,7 +144,7 @@ function createElement(
     if (attributes.times) {
       link.dataset.rsbuildRetryTimes = String(attributes.times);
     }
-    if (attributes.originalQuery) {
+    if (attributes.originalQuery !== undefined) {
       link.dataset.rsbuildOriginalQuery = attributes.originalQuery;
     }
     return {

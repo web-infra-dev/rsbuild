@@ -6,6 +6,8 @@ import { pluginReact } from '@rsbuild/plugin-react';
 import type { RequestHandler } from '@rsbuild/shared';
 import stripAnsi from 'strip-ansi';
 
+// TODO: write a common testMiddleware instead of collect DEBUG logger
+
 function count404Response(logs: string[], urlPrefix: string): number {
   let count = 0;
   for (const log of logs) {
@@ -73,6 +75,7 @@ function createBlockMiddleware({
 async function createRsbuildWithMiddleware(
   middleware: RequestHandler | RequestHandler[],
   options: PluginAssetsRetryOptions,
+  entry?: string,
 ) {
   const rsbuild = await dev({
     cwd: __dirname,
@@ -90,6 +93,11 @@ async function createRsbuildWithMiddleware(
           },
         ],
       },
+      ...(entry
+        ? {
+            source: { entry: { index: entry } },
+          }
+        : {}),
       output: {
         sourceMap: {
           css: false,
@@ -501,6 +509,42 @@ test('@rsbuild/plugin-assets-retry should work with addQuery function type optio
     '/static/js/async/src_AsyncCompTest_tsx.js': 1,
     '/static/js/async/src_AsyncCompTest_tsx.js?retryAttempt=1': 1,
     '/static/js/async/src_AsyncCompTest_tsx.js?retryAttempt=2': 1,
+  });
+
+  await rsbuild.close();
+  restore();
+  delete process.env.DEBUG;
+});
+
+test('@rsbuild/plugin-assets-retry should preserve users query when set addQuery option', async ({
+  page,
+}) => {
+  process.env.DEBUG = 'rsbuild';
+  const { logs, restore } = proxyConsole();
+
+  const blockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/test-query?a=1&b=1',
+  });
+
+  const rsbuild = await createRsbuildWithMiddleware(
+    blockedMiddleware,
+    {
+      addQuery: true,
+      minify: true,
+    },
+    './src/testQueryEntry.js',
+  );
+
+  await gotoPage(page, rsbuild);
+  const blockedResponseCount = count404ResponseByUrl(
+    logs,
+    '/test-query?a=1&b=1',
+  );
+  expect(blockedResponseCount).toMatchObject({
+    '/test-query?a=1&b=1': 1,
+    '/test-query?a=1&b=1&retry=1': 1,
+    '/test-query?a=1&b=1&retry=2': 1,
   });
 
   await rsbuild.close();

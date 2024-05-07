@@ -41,7 +41,7 @@ export type PluginAssetsRetryOptions = {
    * @param times e.g: 1 -> 2 -> 3
    * @param originalQuery initial request url's query
    * @default false
-   * @description true -> `?retry=${existRetryTimes}`
+   * @description true -> hasQuery(originalQuery) ? `${getQuery(originalQuery)}&retry=${existRetryTimes}` : `?retry=${existRetryTimes}`
    */
   addQuery?: boolean | ((times: number, originalQuery: string) => string);
   /**
