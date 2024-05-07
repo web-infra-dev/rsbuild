@@ -161,6 +161,25 @@ pluginAssetsRetry({
 });
 ```
 
+### addQuery
+
+- **Type:* `boolean | ((times: number) => string);`
+- **Default:** `false`
+
+Whether to add query when retrying resources, so as to avoid being affected by browser and CDN caches on the retry results.
+
+When set to `true`, `?retry=${times}` query will be added when requesting, in order of `?retry=1`, `?retry=2`, `?retry=3`..., in ascending order.
+
+When you want to customize query, you can pass in a function, such as:
+
+```js
+pluginAssetsRetry({
+  addQuery: (times) => {
+    return times === 3 ? `?retryCount=${times}&isLast=1` : `?retryCount=${times}`
+  },
+});
+```
+
 ### onSuccess
 
 - **Type:** `undefined | (options: AssetsRetryHookContext) => void`

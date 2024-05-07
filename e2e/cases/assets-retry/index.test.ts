@@ -400,7 +400,7 @@ test('@rsbuild/plugin-assets-retry onRetry and onFail options should work in fai
   await rsbuild.close();
 });
 
-test('@rsbuild/plugin-assets-retry should work with addQuery option', async ({
+test('@rsbuild/plugin-assets-retry should work with addQuery boolean option', async ({
   page,
 }) => {
   process.env.DEBUG = 'rsbuild';
@@ -446,6 +446,61 @@ test('@rsbuild/plugin-assets-retry should work with addQuery option', async ({
     '/static/js/async/src_AsyncCompTest_tsx.js': 1,
     '/static/js/async/src_AsyncCompTest_tsx.js?retry=1': 1,
     '/static/js/async/src_AsyncCompTest_tsx.js?retry=2': 1,
+  });
+
+  await rsbuild.close();
+  restore();
+  delete process.env.DEBUG;
+});
+
+test('@rsbuild/plugin-assets-retry should work with addQuery function type option', async ({
+  page,
+}) => {
+  process.env.DEBUG = 'rsbuild';
+  const { logs, restore } = proxyConsole();
+  const initialChunkBlockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/js/index.js',
+  });
+
+  const asyncChunkBlockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/js/async/src_AsyncCompTest_tsx.js',
+  });
+  const rsbuild = await createRsbuildWithMiddleware(
+    [initialChunkBlockedMiddleware, asyncChunkBlockedMiddleware],
+    {
+      minify: true,
+      addQuery: (times) => {
+        return `?retryAttempt=${times}`;
+      },
+    },
+  );
+
+  await gotoPage(page, rsbuild);
+  const compTestElement = page.locator('#comp-test');
+  await expect(compTestElement).toHaveText('Hello CompTest');
+
+  const asyncCompTestElement = page.locator('#async-comp-test');
+  await expect(asyncCompTestElement).toHaveText('Hello AsyncCompTest');
+
+  const blockedResponseCount = count404ResponseByUrl(
+    logs,
+    '/static/js/index.js',
+  );
+  expect(blockedResponseCount).toMatchObject({
+    '/static/js/index.js': 1,
+    '/static/js/index.js?retryAttempt=1': 1,
+    '/static/js/index.js?retryAttempt=2': 1,
+  });
+  const blockedAsyncChunkResponseCount = count404ResponseByUrl(
+    logs,
+    '/static/js/async/src_AsyncCompTest_tsx.js',
+  );
+  expect(blockedAsyncChunkResponseCount).toMatchObject({
+    '/static/js/async/src_AsyncCompTest_tsx.js': 1,
+    '/static/js/async/src_AsyncCompTest_tsx.js?retryAttempt=1': 1,
+    '/static/js/async/src_AsyncCompTest_tsx.js?retryAttempt=2': 1,
   });
 
   await rsbuild.close();
