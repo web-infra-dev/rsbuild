@@ -119,7 +119,7 @@
     "test:watch": "vitest dev --no-coverage"
   },
   "dependencies": {
-    "@rspack/core": "0.6.3",
+    "@rspack/core": "0.6.4",
     "caniuse-lite": "^1.0.30001616",
     "postcss": "^8.4.38"
   },
