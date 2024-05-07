@@ -182,7 +182,6 @@ function reloadElementResource(
   }
 }
 
-// resourceMonitor -> retry -> createElement -> reloadElementResource
 function retry(config: RuntimeRetryOptions, e: Event) {
   const targetInfo = validateTargetInfo(config, e);
   if (targetInfo === false) {
