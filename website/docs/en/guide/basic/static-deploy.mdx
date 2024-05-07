@@ -202,3 +202,16 @@ Then click the **Deploy** button to start the deployment.
 If you want to make your sites accessible at your own domain names, you can configure it in the "Domains" section of Vercel.
 
 > Detailed guide: [Vercel - Domains](https://vercel.com/docs/projects/domains).
+
+## Cloudflare Pages
+
+[Cloudflare Pages](https://developers.cloudflare.com/pages/) is a static site hosting platform provided by Cloudflare.
+
+You can follow the [Cloudflare Pages - Git integration guide](https://developers.cloudflare.com/pages/get-started/git-integration/) to integrate with Git and deploy your site to Cloudflare Pages.
+
+When configuring, you need to fill in the following fields in the "Build settings":
+
+- **Build command**: fill in the build command of the project, it is typically `npm run build`.
+- **Build output directory**: fill in the output directory in the project, the default is `dist`.
+
+Then click on the **Save and Deploy** button to start the deployment.

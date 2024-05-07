@@ -202,3 +202,16 @@ Vercel 提供了详细的指南，你可以按照 [Vercel - Projects](https://ve
 如果你想要使你的站点可以通过你自己的域名访问，那么你可以在 Vercel 的 "Domains" 栏目中进行配置。
 
 > 详细指南：[Vercel - Domains](https://vercel.com/docs/projects/domains)。
+
+## Cloudflare Pages
+
+[Cloudflare Pages](https://developers.cloudflare.com/pages/) 是一个由 Cloudflare 提供的静态网站托管平台。
+
+你可以按照 [Cloudflare Pages - Git integration guide](https://developers.cloudflare.com/pages/get-started/git-integration/) 操作，通过 Git 集成，将你的站点部署到 Cloudflare Pages。
+
+在进行配置时，你需要填写 "Build settings" 中的以下字段：
+
+- **Build command**：构建命令，填写项目的 build 命令即可，通常是 `npm run build`。
+- **Build output directory**：产物目录，填写项目中的产物目录，默认是 `dist`。
+
+然后点击 **Save and Deploy** 按钮，就可以开始部署了。
