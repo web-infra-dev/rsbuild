@@ -47,7 +47,7 @@ function createBlockMiddleware({
 }
 
 async function createRsbuildWithMiddleware(
-  middleware: RequestHandler,
+  middleware: RequestHandler | RequestHandler[],
   options: PluginAssetsRetryOptions,
 ) {
   const rsbuild = await dev({
@@ -59,7 +59,10 @@ async function createRsbuildWithMiddleware(
         liveReload: false,
         setupMiddlewares: [
           (middlewares, _server) => {
-            middlewares.unshift(middleware);
+            const addMiddleWares = Array.isArray(middleware)
+              ? middleware
+              : [middleware];
+            middlewares.unshift(...addMiddleWares);
           },
         ],
       },
@@ -371,4 +374,43 @@ test('@rsbuild/plugin-assets-retry onRetry and onFail options should work in fai
     onSuccessContextList: [],
   });
   await rsbuild.close();
+});
+
+test('@rsbuild/plugin-assets-retry should work with addQuery option', async ({
+  page,
+}) => {
+  process.env.DEBUG = 'rsbuild';
+  const { logs, restore } = proxyConsole();
+  const initialChunkBlockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/js/index.js',
+  });
+
+  const asyncChunkBlockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/js/async/src_AsyncCompTest_tsx.js',
+  });
+  const rsbuild = await createRsbuildWithMiddleware(
+    [initialChunkBlockedMiddleware, asyncChunkBlockedMiddleware],
+    {
+      minify: true,
+      addQuery: true,
+    },
+  );
+
+  await gotoPage(page, rsbuild);
+  const compTestElement = page.locator('#comp-test');
+  await expect(compTestElement).toHaveText('Hello CompTest');
+
+  const asyncCompTestElement = page.locator('#async-comp-test');
+  await expect(asyncCompTestElement).toHaveText('Hello AsyncCompTest');
+
+  const blockedResponseCount = count404Response(logs, '/static/js/index.js?retry=2');
+  expect(blockedResponseCount).toBe(1);
+  const blockedAsyncChunkResponseCount = count404Response(logs, '/static/js/async/src_AsyncCompTest_tsx.js?retry=2');
+  expect(blockedAsyncChunkResponseCount).toBe(1);
+
+  await rsbuild.close();
+  restore();
+  delete process.env.DEBUG;
 });
