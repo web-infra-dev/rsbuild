@@ -63,12 +63,23 @@ function findNextDomain(url: string) {
   return domainList[(index + 1) % domainList.length] || url;
 }
 
-function getUrlRetryQuery(existRetryTimes: number): string {
+const QUERY_REG = /\?.*$/;
+
+function getQueryFromUrl(url: string) {
+  return url.match(QUERY_REG)?.[0] ?? '';
+}
+
+function getUrlRetryQuery(
+  existRetryTimes: number,
+  originalQuery: string,
+): string {
   if (config.addQuery === true) {
-    return `?retry=${existRetryTimes}`;
+    return originalQuery !== ''
+      ? `${originalQuery}&retry=${existRetryTimes}`
+      : `?retry=${existRetryTimes}`;
   }
   if (typeof config.addQuery === 'function') {
-    return config.addQuery(existRetryTimes);
+    return config.addQuery(existRetryTimes, originalQuery);
   }
   return '';
 }
@@ -94,7 +105,7 @@ function initRetry(chunkId: string): Retry {
       nextDomain +
       (nextDomain[nextDomain.length - 1] === '/' ? '' : '/') +
       originalScriptFilename +
-      getUrlRetryQuery(existRetryTimes),
+      getUrlRetryQuery(existRetryTimes, getQueryFromUrl(originalSrcUrl)),
 
     originalScriptFilename,
     originalSrcUrl,
@@ -110,6 +121,9 @@ function nextRetry(chunkId: string): Retry {
   } else {
     const existRetryTimes = currRetry.existRetryTimes + 1;
     const nextDomain = findNextDomain(currRetry.nextDomain);
+    const originalScriptFilename = currRetry.originalScriptFilename;
+    const originalSrcUrl = currRetry.originalSrcUrl;
+
     nextRetry = {
       existRetryTimes,
       nextDomain,
@@ -117,10 +131,10 @@ function nextRetry(chunkId: string): Retry {
         nextDomain +
         (nextDomain[nextDomain.length - 1] === '/' ? '' : '/') +
         currRetry.originalScriptFilename +
-        getUrlRetryQuery(existRetryTimes),
+        getUrlRetryQuery(existRetryTimes, getQueryFromUrl(originalSrcUrl)),
 
-      originalScriptFilename: currRetry.originalScriptFilename,
-      originalSrcUrl: currRetry.originalSrcUrl,
+      originalScriptFilename,
+      originalSrcUrl,
     };
   }
 

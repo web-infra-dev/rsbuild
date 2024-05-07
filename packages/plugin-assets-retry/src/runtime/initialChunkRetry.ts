@@ -6,6 +6,7 @@ interface ScriptElementAttributes {
   url: string;
   times: number;
   isAsync: boolean;
+  originalQuery: string;
   crossOrigin?: CrossOrigin | boolean;
 }
 
@@ -38,19 +39,15 @@ function findNextDomain(url: string, domainList: string[]) {
   return domainList[(index + 1) % domainList.length] || url;
 }
 
-function removeQuery(url: string) {
-  return url.replace(/\?.*$/, '');
-}
-
 function getRequestUrl(element: HTMLElement) {
   if (
     element instanceof HTMLScriptElement ||
     element instanceof HTMLImageElement
   ) {
-    return removeQuery(element.src);
+    return element.src;
   }
   if (element instanceof HTMLLinkElement) {
-    return removeQuery(element.href);
+    return element.href;
   }
   return null;
 }
@@ -79,7 +76,16 @@ function validateTargetInfo(
   ) {
     return false;
   }
+
   return { target, tagName, url };
+}
+
+const QUERY_REG = /\?.*$/;
+function removeQuery(url: string) {
+  return url.replace(QUERY_REG, '');
+}
+function getQueryFromUrl(url: string) {
+  return url.match(QUERY_REG)?.[0] ?? '';
 }
 
 function createElement(
@@ -91,6 +97,10 @@ function createElement(
   const crossOriginAttr = crossOrigin ? `crossorigin="${crossOrigin}"` : '';
   const retryTimesAttr = attributes.times
     ? `data-rsbuild-retry-times="${attributes.times}"`
+    : '';
+
+  const originalQueryAttr = attributes.originalQuery
+    ? `data-rsbuild-original-query="${attributes.originalQuery}"`
     : '';
   const isAsyncAttr = attributes.isAsync ? 'data-rsbuild-async' : '';
 
@@ -106,11 +116,15 @@ function createElement(
     if (attributes.isAsync) {
       script.dataset.rsbuildAsync = '';
     }
+    if (attributes.originalQuery) {
+      script.dataset.rsbuildOriginalQuery = attributes.originalQuery;
+    }
+
     return {
       element: script,
       str:
         // biome-ignore lint/style/useTemplate: use "</" + "script>" instead of script tag to avoid syntax error when inlining in html
-        `<script src="${attributes.url}" ${crossOriginAttr} ${retryTimesAttr} ${isAsyncAttr}>` +
+        `<script src="${attributes.url}" ${crossOriginAttr} ${retryTimesAttr} ${isAsyncAttr} ${originalQueryAttr}>` +
         '</' +
         'script>',
     };
@@ -130,13 +144,16 @@ function createElement(
     if (attributes.times) {
       link.dataset.rsbuildRetryTimes = String(attributes.times);
     }
+    if (attributes.originalQuery) {
+      link.dataset.rsbuildOriginalQuery = attributes.originalQuery;
+    }
     return {
       element: link,
       str: `<link rel="${link.rel}" href="${
         attributes.url
       }" ${crossOriginAttr} ${retryTimesAttr} ${
         link.as ? `as="${link.as}"` : ''
-      }></link>`,
+      } ${originalQueryAttr}></link>`,
     };
   }
 }
@@ -144,10 +161,10 @@ function createElement(
 function reloadElementResource(
   origin: HTMLElement,
   fresh: { element: HTMLElement; str: string },
-  options: ScriptElementAttributes,
+  attributes: ScriptElementAttributes,
 ) {
   if (origin instanceof HTMLScriptElement) {
-    if (options.isAsync) {
+    if (attributes.isAsync) {
       document.body.appendChild(fresh.element);
     } else {
       document.write(fresh.str);
@@ -159,11 +176,13 @@ function reloadElementResource(
   }
 
   if (origin instanceof HTMLImageElement) {
-    origin.src = options.url;
-    origin.dataset.rsbuildRetryTimes = String(options.times);
+    origin.src = attributes.url;
+    origin.dataset.rsbuildRetryTimes = String(attributes.times);
+    origin.dataset.rsbuildOriginalQuery = String(attributes.originalQuery);
   }
 }
 
+// resourceMonitor -> retry -> createElement -> reloadElementResource
 function retry(config: RuntimeRetryOptions, e: Event) {
   const targetInfo = validateTargetInfo(config, e);
   if (targetInfo === false) {
@@ -223,12 +242,17 @@ function retry(config: RuntimeRetryOptions, e: Event) {
   // Then, we will start to retry
   const nextDomain = findNextDomain(domain, config.domain!);
 
+  // if the initial requeset is "/static/js/async/src_Hello_tsx.js?q=1", retry url would be "/static/js/async/src_Hello_tsx.js?q=1&retry=1"
+  const originalQuery =
+    target.dataset.rsbuildOriginalQuery ?? getQueryFromUrl(url);
   function getUrlRetryQuery(existRetryTimes: number): string {
     if (config.addQuery === true) {
-      return `?retry=${existRetryTimes}`;
+      return originalQuery !== ''
+        ? `${originalQuery}&retry=${existRetryTimes}`
+        : `?retry=${existRetryTimes}`;
     }
     if (typeof config.addQuery === 'function') {
-      return config.addQuery(existRetryTimes);
+      return config.addQuery(existRetryTimes, originalQuery);
     }
     return '';
   }
@@ -240,10 +264,12 @@ function retry(config: RuntimeRetryOptions, e: Event) {
 
   const attributes: ScriptElementAttributes = {
     url:
-      url.replace(domain, nextDomain) + getUrlRetryQuery(existRetryTimes + 1),
+      removeQuery(url.replace(domain, nextDomain)) +
+      getUrlRetryQuery(existRetryTimes + 1),
     times: existRetryTimes + 1,
     crossOrigin: config.crossOrigin,
     isAsync,
+    originalQuery,
   };
 
   const element = createElement(target, attributes)!;
