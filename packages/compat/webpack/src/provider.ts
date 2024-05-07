@@ -76,6 +76,7 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
         plugins.resourceHints(),
         plugins.server(),
         plugins.moduleFederation(),
+        plugins.manifest(),
       ]);
 
       pluginManager.addPlugins(allPlugins);
