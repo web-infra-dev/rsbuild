@@ -16,7 +16,7 @@ type FilePath = string;
 
 type ManifestList = {
   entries: {
-    /** relate to rsbuild source.entry */
+    /** The key is the entry name, from Rsbuild's source.entry config. */
     [entryName: string]: {
       initial?: {
         js?: FilePath[];
