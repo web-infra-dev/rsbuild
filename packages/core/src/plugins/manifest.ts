@@ -15,7 +15,7 @@ type ManifestByEntry = {
   };
   /** other assets (e.g. png、svg、source map) related to the current entry */
   assets: FilePath[];
-  html?: FilePath;
+  html?: FilePath[];
 };
 
 type ManifestList = {
@@ -92,6 +92,8 @@ const generateManifest =
         }
       }
 
+      const htmlPath = files.find((f) => f.name === htmlPaths[name])?.path;
+
       entries[name] = {
         initial: {
           js: initialJS,
@@ -102,7 +104,7 @@ const generateManifest =
           css: asyncCSS,
         },
         assets: Array.from(assets),
-        html: files.find((f) => f.name === htmlPaths[name])?.path,
+        html: htmlPath ? [htmlPath] : undefined,
       };
     }
 
