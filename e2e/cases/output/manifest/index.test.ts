@@ -23,9 +23,7 @@ test('output.manifest', async () => {
   const files = await rsbuild.unwrapOutputJSON();
 
   const manifestContent =
-    files[
-      Object.keys(files).find((file) => file.endsWith('asset-manifest.json'))!
-    ];
+    files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];
 
   expect(manifestContent).toBeDefined();
 
