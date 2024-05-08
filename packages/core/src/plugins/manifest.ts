@@ -29,10 +29,7 @@ type ManifestList = {
 
 type FileDescriptor = {
   chunk?: Chunk;
-  isAsset: boolean;
-  isChunk: boolean;
   isInitial: boolean;
-  isModuleAsset: boolean;
   name: string;
   path: string;
 };
@@ -136,12 +133,10 @@ export const pluginManifest = (): RsbuildPlugin => ({
       const { RspackManifestPlugin } = await import(
         '../../compiled/rspack-manifest-plugin'
       );
-      const publicPath = chain.output.get('publicPath');
 
       chain.plugin(CHAIN_ID.PLUGIN.MANIFEST).use(RspackManifestPlugin, [
         {
           fileName,
-          publicPath,
           generate: generateManifest(htmlPaths),
         },
       ]);
