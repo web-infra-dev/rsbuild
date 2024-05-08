@@ -146,7 +146,7 @@ export type CssModuleLocalsConvention =
 export type CssModules = {
   auto?: boolean | RegExp | ((resourcePath: string) => boolean);
   /**
-   * Set the local ident name of CSS modules.
+   * Set the local ident name of CSS Modules.
    */
   localIdentName?: string;
   exportLocalsConvention?: CssModuleLocalsConvention;
@@ -257,7 +257,7 @@ export interface OutputConfig {
    */
   filenameHash?: boolean | string;
   /**
-   * Whether to generate a TypeScript declaration file for CSS modules.
+   * Whether to generate a TypeScript declaration file for CSS Modules.
    */
   enableCssModuleTSDeclaration?: boolean;
   /**

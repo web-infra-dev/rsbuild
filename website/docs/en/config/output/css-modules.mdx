@@ -14,16 +14,16 @@ For custom CSS Modules configuration.
 
 ## cssModules.auto
 
-The `auto` configuration option allows CSS modules to be automatically enabled based on their filenames.
+The `auto` configuration option allows CSS Modules to be automatically enabled based on their filenames.
 
 - **Type:** `boolean | RegExp | ((resourcePath: string) => boolean)`
 - **Default:** `true`
 
 Type description:
 
-- `true`: enable CSS modules for all files matching `/\.module\.\w+$/i.test(filename)` regexp.
-- `false`: disables CSS Modules.
-- `RegExp`: enable CSS modules for all files matching `/RegExp/i.test(filename)` regexp.
+- `true`: enable CSS Modules for all files matching `/\.module\.\w+$/i.test(filename)` regexp.
+- `false`: disable CSS Modules.
+- `RegExp`: enable CSS Modules for all files matching `/RegExp/i.test(filename)` regexp.
 - `function`: enable CSS Modules for files based on the filename satisfying your filter function check.
 
 ```ts

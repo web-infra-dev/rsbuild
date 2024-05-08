@@ -2,7 +2,7 @@ import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest(
-  'should compile CSS modules with named exports correctly',
+  'should compile CSS Modules with named exports correctly',
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,
