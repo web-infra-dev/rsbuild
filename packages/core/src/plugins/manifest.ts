@@ -37,7 +37,7 @@ type FileDescriptor = {
   path: string;
 };
 
-export const generateManifest =
+const generateManifest =
   (htmlPaths: Record<string, string>) =>
   (_seed: Record<string, any>, files: FileDescriptor[]) => {
     const chunkEntries = new Map<string, FileDescriptor[]>();
