@@ -7,6 +7,36 @@ Whether to generate a manifest file that contains information of all assets, and
 
 When set to `true`, Rsbuild will generate a `manifest.json` file after building. When the value is a string, it will be used as the manifest file name or path.
 
+### Manifest Output
+
+The default output file structure of manifest is:
+
+```ts
+type FilePath = string;
+
+type ManifestList = {
+  entries: {
+    /** The key is the entry name, from Rsbuild's source.entry config. */
+    [entryName: string]: {
+      initial?: {
+        js?: FilePath[];
+        css?: FilePath[];
+      };
+      async?: {
+        js?: FilePath[];
+        css?: FilePath[];
+      };
+      /** html files related to the current entry */
+      html?: FilePath[];
+      /** other assets (e.g. png、svg、source map) related to the current entry */
+      assets?: FilePath[];
+    };
+  };
+  /** Flatten all assets */
+  allFiles: FilePath[];
+};
+```
+
 ### Example
 
 Enable asset manifest:
@@ -35,12 +65,8 @@ After building, there will be a `dist/manifest.json` file:
         "js": ["/static/js/index.c586cd5e.js"],
         "css": ["/static/css/index.a11cfb11.css"]
       },
-      "async": {
-        "js": [],
-        "css": []
-      },
       "assets": ["/static/js/index.c586cd5e.js.LICENSE.txt"],
-      "html": "/index.html"
+      "html": ["/index.html"]
     }
   }
 }

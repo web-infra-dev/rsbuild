@@ -35,13 +35,47 @@ test('output.manifest', async () => {
   expect(manifest.entries.index).toMatchObject({
     initial: {
       js: ['/static/js/index.js'],
-      css: [],
     },
-    async: {
-      js: [],
-      css: [],
+    html: ['/index.html'],
+  });
+});
+
+test('output.manifest when target is node', async () => {
+  const rsbuild = await build({
+    cwd: fixtures,
+    rsbuildConfig: {
+      output: {
+        distPath: {
+          root: 'dist-1',
+        },
+        targets: ['node'],
+        manifest: true,
+        legalComments: 'none',
+        filenameHash: false,
+      },
+      performance: {
+        chunkSplit: {
+          strategy: 'all-in-one',
+        },
+      },
     },
-    assets: [],
-    html: '/index.html',
+  });
+
+  const files = await rsbuild.unwrapOutputJSON();
+
+  const manifestContent =
+    files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];
+
+  expect(manifestContent).toBeDefined();
+
+  const manifest = JSON.parse(manifestContent);
+
+  // main.js、index.html
+  expect(Object.keys(manifest.allFiles).length).toBe(1);
+
+  expect(manifest.entries.index).toMatchObject({
+    initial: {
+      js: ['/index.js'],
+    },
   });
 });

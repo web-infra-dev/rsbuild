@@ -7,6 +7,36 @@
 
 当设置为 true 时，Rsbuild 构建后将会生成 `manifest.json` 文件。当该值为一个字符串时，它将作为 manifest 文件的名称或路径。
 
+### Manifest 输出内容
+
+manifest 文件默认输出的结构为：
+
+```ts
+type FilePath = string;
+
+type ManifestList = {
+  entries: {
+    /** key 为 entry 名称，对应 Rsbuild 的 source.entry 配置 */
+    [entryName: string]: {
+      initial?: {
+        js?: FilePath[];
+        css?: FilePath[];
+      };
+      async?: {
+        js?: FilePath[];
+        css?: FilePath[];
+      };
+      /** 当前 entry 关联的 HTML 页面 */
+      html?: FilePath[];
+      /** 和当前 entry 相关的其他资源（如 png、svg、source map 等） */
+      assets?: FilePath[];
+    };
+  };
+  /** 铺平的所有 assets */
+  allFiles: FilePath[];
+};
+```
+
 ### 示例
 
 添加以下配置来开启：
@@ -35,12 +65,8 @@ export default {
         "js": ["/static/js/index.c586cd5e.js"],
         "css": ["/static/css/index.a11cfb11.css"]
       },
-      "async": {
-        "js": [],
-        "css": []
-      },
       "assets": ["/static/js/index.c586cd5e.js.LICENSE.txt"],
-      "html": "/index.html"
+      "html": ["/index.html"]
     }
   }
 }

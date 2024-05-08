@@ -5,17 +5,17 @@ import type { RsbuildPlugin } from '../types';
 type FilePath = string;
 
 type ManifestByEntry = {
-  initial: {
-    js: FilePath[];
-    css: FilePath[];
+  initial?: {
+    js?: FilePath[];
+    css?: FilePath[];
   };
-  async: {
-    js: FilePath[];
-    css: FilePath[];
+  async?: {
+    js?: FilePath[];
+    css?: FilePath[];
   };
   /** other assets (e.g. png、svg、source map) related to the current entry */
-  assets: FilePath[];
-  html?: FilePath;
+  assets?: FilePath[];
+  html?: FilePath[];
 };
 
 type ManifestList = {
@@ -92,18 +92,45 @@ const generateManifest =
         }
       }
 
-      entries[name] = {
-        initial: {
+      const entryManifest: ManifestByEntry = {};
+
+      if (assets.size) {
+        entryManifest.assets = Array.from(assets);
+      }
+
+      const htmlPath = files.find((f) => f.name === htmlPaths[name])?.path;
+
+      if (htmlPath) {
+        entryManifest.html = [htmlPath];
+      }
+
+      if (initialJS.length) {
+        entryManifest.initial = {
           js: initialJS,
+        };
+      }
+
+      if (initialCSS.length) {
+        entryManifest.initial = {
+          ...(entryManifest.initial || {}),
           css: initialCSS,
-        },
-        async: {
+        };
+      }
+
+      if (asyncJS.length) {
+        entryManifest.async = {
           js: asyncJS,
+        };
+      }
+
+      if (asyncCSS.length) {
+        entryManifest.async = {
+          ...(entries[name].async || {}),
           css: asyncCSS,
-        },
-        assets: Array.from(assets),
-        html: files.find((f) => f.name === htmlPaths[name])?.path,
-      };
+        };
+      }
+
+      entries[name] = entryManifest;
     }
 
     return {
