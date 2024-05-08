@@ -3,7 +3,7 @@ import { webpackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 webpackOnlyTest(
-  'should compile CSS modules which depends on importLoaders correctly',
+  'should compile CSS Modules which depends on importLoaders correctly',
   async () => {
     const rsbuild = await build({
       cwd: __dirname,

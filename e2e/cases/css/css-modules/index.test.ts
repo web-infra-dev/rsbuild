@@ -1,7 +1,7 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should compile CSS modules correctly', async () => {
+test('should compile CSS Modules correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
   });
@@ -15,7 +15,7 @@ test('should compile CSS modules correctly', async () => {
   );
 });
 
-test('should compile CSS modules follow by output.cssModules', async () => {
+test('should compile CSS Modules follow by output.cssModules', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
