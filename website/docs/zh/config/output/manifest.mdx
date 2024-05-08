@@ -16,7 +16,7 @@ type FilePath = string;
 
 type ManifestList = {
   entries: {
-    /** key 值关联 rsbuild 的 source.entry 配置 */
+    /** key 为 entry 名称，对应 Rsbuild 的 source.entry 配置 */
     [entryName: string]: {
       initial?: {
         js?: FilePath[];
