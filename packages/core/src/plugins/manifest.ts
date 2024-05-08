@@ -1,4 +1,4 @@
-import type { Chunk } from 'webpack';
+import type { Chunk } from '@rspack/core';
 import { recursiveChunkEntryNames } from '../rspack/preload/helpers';
 import type { RsbuildPlugin } from '../types';
 
