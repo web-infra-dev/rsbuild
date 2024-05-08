@@ -16,9 +16,7 @@
  */
 
 import type { PreloadIncludeType } from '@rsbuild/shared';
-import type { Chunk, Compilation } from 'webpack';
-
-export type ChunkGroup = Compilation['chunkGroups'][0];
+import type { Chunk, ChunkGroup, Compilation } from '@rspack/core';
 
 interface ExtractChunks {
   compilation: Compilation;
@@ -30,6 +28,8 @@ function isAsync(chunk: Chunk | ChunkGroup): boolean {
     return !chunk.canBeInitial();
   }
   if ('isInitial' in chunk) {
+    // compat webpack
+    // @ts-expect-error
     return !chunk.isInitial();
   }
   // compat rspack
@@ -64,7 +64,8 @@ export function extractChunks({
     // Every asset, regardless of which chunk it's in.
     // Wrap it in a single, "pseudo-chunk" return value.
     // Note: webpack5 will extract license default, we do not need to preload them
-    const licenseAssets = [...compilation.assetsInfo.values()]
+    // @ts-expect-error
+    const licenseAssets = [...(compilation.assetsInfo?.values() || [])]
       .map((info) => {
         if (info.related?.license) {
           return info.related.license;
@@ -72,13 +73,13 @@ export function extractChunks({
         return false;
       })
       .filter(Boolean);
+
     return [
       {
-        // @ts-expect-error ignore ts check for files
         files: Object.keys(compilation.assets).filter(
           (t) => !licenseAssets.includes(t),
         ),
-      },
+      } as Chunk,
     ];
   }
 

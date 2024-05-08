@@ -67,7 +67,6 @@ function generateLinks(
 ): HtmlWebpackPlugin.HtmlTagObject[] {
   // get all chunks
   const extractedChunks = extractChunks({
-    // @ts-expect-error compilation type mismatch
     compilation,
     includeType: options.type,
   });

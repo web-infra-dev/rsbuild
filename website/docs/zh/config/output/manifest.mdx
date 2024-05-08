@@ -1,0 +1,47 @@
+# output.manifest
+
+- **类型：** `string | boolean`
+- **默认值：** `false`
+
+是否生成 manifest 文件，该文件包含所有构建产物的信息、以及[入口模块](/config/source/entry)与构建产物间的映射关系。
+
+当设置为 true 时，Rsbuild 构建后将会生成 `manifest.json` 文件。当该值为一个字符串时，它将作为 manifest 文件的名称或路径。
+
+### 示例
+
+添加以下配置来开启：
+
+```js
+export default {
+  output: {
+    manifest: true,
+  },
+};
+```
+
+当构建完成后，会自动生成 `dist/manifest.json` 文件：
+
+```json
+{
+  "allFiles": [
+    "/static/css/index.a11cfb11.css",
+    "/static/js/index.c586cd5e.js",
+    "/index.html",
+    "/static/js/index.c586cd5e.js.LICENSE.txt"
+  ],
+  "entries": {
+    "index": {
+      "initial": {
+        "js": ["/static/js/index.c586cd5e.js"],
+        "css": ["/static/css/index.a11cfb11.css"]
+      },
+      "async": {
+        "js": [],
+        "css": []
+      },
+      "assets": ["/static/js/index.c586cd5e.js.LICENSE.txt"],
+      "html": "/index.html"
+    }
+  }
+}
+```

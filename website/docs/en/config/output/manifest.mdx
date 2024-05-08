@@ -1,0 +1,47 @@
+# output.manifest
+
+- **Type:** `string | boolean`
+- **Default:** `false`
+
+Whether to generate a manifest file that contains information of all assets, and the mapping relationship between [entry module](/config/source/entry) and assets.
+
+When set to `true`, Rsbuild will generate a `manifest.json` file after building. When the value is a string, it will be used as the manifest file name or path.
+
+### Example
+
+Enable asset manifest:
+
+```js
+export default {
+  output: {
+    manifest: true,
+  },
+};
+```
+
+After building, there will be a `dist/manifest.json` file:
+
+```json
+{
+  "allFiles": [
+    "/static/css/index.a11cfb11.css",
+    "/static/js/index.c586cd5e.js",
+    "/index.html",
+    "/static/js/index.c586cd5e.js.LICENSE.txt"
+  ],
+  "entries": {
+    "index": {
+      "initial": {
+        "js": ["/static/js/index.c586cd5e.js"],
+        "css": ["/static/css/index.a11cfb11.css"]
+      },
+      "async": {
+        "js": [],
+        "css": []
+      },
+      "assets": ["/static/js/index.c586cd5e.js.LICENSE.txt"],
+      "html": "/index.html"
+    }
+  }
+}
+```

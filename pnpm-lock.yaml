@@ -734,6 +734,9 @@ importers:
       prebundle:
         specifier: 1.1.0
         version: 1.1.0(typescript@5.4.5)
+      rspack-manifest-plugin:
+        specifier: 5.0.0
+        version: 5.0.0(@rspack/core@0.6.4(@swc/helpers@0.5.3))
       sirv:
         specifier: ^2.0.4
         version: 2.0.4
@@ -7651,6 +7654,15 @@ packages:
     resolution: {integrity: sha512-tZP8KjrI1nz6qOYCrFxAV7cfmfS2GV94jotU2zOmF/6ByO1zNvGR6/+0inylpjqyBjAdnnutTUW0m4th06bSTw==}
     engines: {node: '>=14.17.6'}
 
+  rspack-manifest-plugin@5.0.0:
+    resolution: {integrity: sha512-Rtpn6GI4mpTASPmLOGiHzv3KqVWuWhGJG9CKO7aioPrAhukML4jtgYUvbQdBze/mZcDrvqf6sxEGRGx5fKQ+ag==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      '@rspack/core': 0.x || 1.x
+    peerDependenciesMeta:
+      '@rspack/core':
+        optional: true
+
   rspack-plugin-virtual-module@0.1.12:
     resolution: {integrity: sha512-qyBM9XsP7oxBQSms2cr715XOeoDi6p5hUYXtlNDfst0jha8vfWVPNeC7j5+j5dG+yt//1OCmLaOY2rWqPSVXDg==}
 
@@ -7860,6 +7872,9 @@ packages:
   sorcery@0.11.0:
     resolution: {integrity: sha512-J69LQ22xrQB1cIFJhPfgtLuI6BpWRiWu1Y3vSsIwK/eAScqJxd/+CJlUuHQRdX2C9NGFamq+KqNywGgaThwfHw==}
     hasBin: true
+
+  source-list-map@2.0.1:
+    resolution: {integrity: sha512-qnQ7gVMxGNxsiL4lEuJwe/To8UnK7fAnmbGEEH8RpLouuKbeEm0lhbQVFIrNSuB+G7tVrAlVsZgETT5nljf+Iw==}
 
   source-map-js@1.2.0:
     resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
@@ -8610,6 +8625,10 @@ packages:
   webpack-merge@5.10.0:
     resolution: {integrity: sha512-+4zXKdx7UnO+1jaN4l2lHVD+mFvnlZQP/6ljaJVb4SZiwIKeUnrT5l0gkT8z+n4hKpC+jpOv6O9R+gLtag7pSA==}
     engines: {node: '>=10.0.0'}
+
+  webpack-sources@2.3.1:
+    resolution: {integrity: sha512-y9EI9AO42JjEcrTJFOYmVywVZdKVUfOvDUPsJea5GIr1JOEGFVqwlY2K098fFoIjOkDzHn2AjRvM8dsBZu+gCA==}
+    engines: {node: '>=10.13.0'}
 
   webpack-sources@3.2.3:
     resolution: {integrity: sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==}
@@ -15744,6 +15763,13 @@ snapshots:
 
   rslog@1.2.2: {}
 
+  rspack-manifest-plugin@5.0.0(@rspack/core@0.6.4(@swc/helpers@0.5.3)):
+    dependencies:
+      tapable: 2.2.1
+      webpack-sources: 2.3.1
+    optionalDependencies:
+      '@rspack/core': 0.6.4(@swc/helpers@0.5.3)
+
   rspack-plugin-virtual-module@0.1.12:
     dependencies:
       fs-extra: 11.2.0
@@ -15959,6 +15985,8 @@ snapshots:
       buffer-crc32: 0.2.13
       minimist: 1.2.8
       sander: 0.5.1
+
+  source-list-map@2.0.1: {}
 
   source-map-js@1.2.0: {}
 
@@ -16822,6 +16850,11 @@ snapshots:
       clone-deep: 4.0.1
       flat: 5.0.2
       wildcard: 2.0.1
+
+  webpack-sources@2.3.1:
+    dependencies:
+      source-list-map: 2.0.1
+      source-map: 0.6.1
 
   webpack-sources@3.2.3: {}
 

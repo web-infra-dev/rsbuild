@@ -16,9 +16,7 @@
  */
 
 import type { PreloadOrPreFetchOption } from '@rsbuild/shared';
-import type { Compilation } from '@rspack/core';
-import type { Chunk } from 'webpack';
-import type { ChunkGroup } from './extractChunks';
+import type { Chunk, ChunkGroup, Compilation } from '@rspack/core';
 import type { BeforeAssetTagGenerationHtmlPluginData } from './type';
 
 interface DoesChunkBelongToHtmlOptions {
@@ -39,7 +37,7 @@ function recursiveChunkGroup(
   return parents.flatMap((chunkParent) => recursiveChunkGroup(chunkParent));
 }
 
-function recursiveChunkEntryNames(chunk: Chunk): string[] {
+export function recursiveChunkEntryNames(chunk: Chunk): string[] {
   const isChunkName = (name: string | undefined): name is string =>
     Boolean(name);
 
