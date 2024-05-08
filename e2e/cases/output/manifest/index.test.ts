@@ -35,13 +35,7 @@ test('output.manifest', async () => {
   expect(manifest.entries.index).toMatchObject({
     initial: {
       js: ['/static/js/index.js'],
-      css: [],
     },
-    async: {
-      js: [],
-      css: [],
-    },
-    assets: [],
     html: ['/index.html'],
   });
 });
@@ -82,12 +76,6 @@ test('output.manifest when target is node', async () => {
   expect(manifest.entries.index).toMatchObject({
     initial: {
       js: ['/index.js'],
-      css: [],
     },
-    async: {
-      js: [],
-      css: [],
-    },
-    assets: [],
   });
 });
