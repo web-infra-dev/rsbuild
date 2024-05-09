@@ -6,20 +6,8 @@
 type PublicDir =
   | false
   | {
-      /**
-       * public 目录名称，可以设置为相对路径或绝对路径
-       * @default 'public'
-       */
       name?: string;
-      /**
-       * 在生产构建时，是否将文件从 public 目录复制到构建产物目录
-       * @default true
-       */
       copyOnBuild?: boolean;
-      /**
-       * 是否监听 public 目录，并在文件发生变化时重新加载页面
-       * @default false
-       */
       watch?: boolean;
     };
 ```
@@ -38,55 +26,14 @@ const defaultValue = {
 
 > 相关文档：[public 目录](/guide/basic/static-assets#public-目录)。
 
-### Boolean 类型
+## 选项
 
-通过将 `publicDir` 设置成 `false` 可禁用静态资源服务功能：
+### name
 
-```ts
-export default {
-  server: {
-    publicDir: false,
-  },
-};
-```
+- **类型：** `string`
+- **默认值：** `'public'`
 
-### Object 类型
-
-当 `publicDir` 的值为 object 类型时，Rsbuild 会根据当前配置与默认配置进行合并。
-
-比如设置 public 目录的名称为 `static`，并关闭 `copyOnBuild`：
-
-```ts
-export default {
-  server: {
-    publicDir: {
-      name: 'static',
-      copyOnBuild: false,
-    },
-  },
-};
-```
-
-需要注意的是，将 `copyOnBuild` 的值为 false 后，如果执行 `rsbuild preview` 进行生产环境预览，将无法访问对应的静态资源文件。
-
-设置 `watch` 为 `true` 后，开发环境下会监控指定公共目录下的文件变化，并在文件发生变化时重新加载页面：
-
-```ts
-export default {
-  server: {
-    publicDir: {
-      name: 'static',
-      watch: true,
-    },
-  },
-};
-```
-
-需要注意的是，`watch` 选项只有在开发环境下有效。如果 `dev.hmr` 和 `dev.liveReload` 都设置为 false，则 `watch` 将被忽略。
-
-### 路径类型
-
-`name` 的值可以设置为相对路径或绝对路径，相对路径将会相对于项目根目录进行解析。
+public 目录名称。`name` 的值可以设置为相对路径或绝对路径，相对路径将会相对于项目根目录进行解析。
 
 - 相对路径示例：
 
@@ -110,6 +57,64 @@ export default {
     publicDir: {
       name: path.join(__dirname, '../some-public'),
     },
+  },
+};
+```
+
+### copyOnBuild
+
+- **类型：** `boolean`
+- **默认值：** `true`
+
+在生产构建时，是否将文件从 public 目录复制到构建产物目录。
+
+比如关闭 `copyOnBuild`：
+
+```ts
+export default {
+  server: {
+    publicDir: {
+      copyOnBuild: false,
+    },
+  },
+};
+```
+
+需要注意的是，将 `copyOnBuild` 的值为 false 后，如果执行 `rsbuild preview` 进行生产环境预览，将无法访问对应的静态资源文件。
+
+:::tip
+在 dev 构建时，如果你需要拷贝一些静态资源到构建产物目录，可以使用 [output.copy](/config/output/copy) 选项代替。
+:::
+
+### watch
+
+- **类型：** `boolean`
+- **默认值：** `false`
+
+是否监听 public 目录，并在文件发生变化时重新加载页面。
+
+设置 `watch` 为 `true` 后，开发环境下会监控指定公共目录下的文件变化，并在文件发生变化时重新加载页面：
+
+```ts
+export default {
+  server: {
+    publicDir: {
+      watch: true,
+    },
+  },
+};
+```
+
+需要注意的是，`watch` 选项仅在开发环境下有效。如果 [dev.hmr](/config/dev/hmr) 和 [dev.liveReload](/config/dev/live-reload) 都设置为 false，则 `watch` 将被忽略。
+
+## 禁用
+
+你可以将 `publicDir` 设置成 `false` 来禁用静态资源服务：
+
+```ts
+export default {
+  server: {
+    publicDir: false,
   },
 };
 ```
