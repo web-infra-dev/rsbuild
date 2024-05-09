@@ -49,9 +49,9 @@ type AssetsRetryOptions = {
   test?: string | ((url: string) => boolean);
   crossOrigin?: boolean | 'anonymous' | 'use-credentials';
   inlineScript?: boolean;
-  onRetry?: (options: AssetsRetryHookContext) => void;
-  onSuccess?: (options: AssetsRetryHookContext) => void;
-  onFail?: (options: AssetsRetryHookContext) => void;
+  onRetry?: (context: AssetsRetryHookContext) => void;
+  onSuccess?: (context: AssetsRetryHookContext) => void;
+  onFail?: (context: AssetsRetryHookContext) => void;
 };
 ```
 
@@ -147,7 +147,7 @@ pluginAssetsRetry({
 
 ### onRetry
 
-- **类型：** `undefined | (options: AssetsRetryHookContext) => void`
+- **类型：** `undefined | (context: AssetsRetryHookContext) => void`
 
 资源重试时的回调函数。比如：
 
@@ -163,7 +163,7 @@ pluginAssetsRetry({
 
 ### onSuccess
 
-- **类型：** `undefined | (options: AssetsRetryHookContext) => void`
+- **类型：** `undefined | (context: AssetsRetryHookContext) => void`
 
 资源重试成功时的回调函数。比如：
 
@@ -179,7 +179,7 @@ pluginAssetsRetry({
 
 ### onFail
 
-- **类型：** `undefined | (options: AssetsRetryHookContext) => void`
+- **类型：** `undefined | (context: AssetsRetryHookContext) => void`
 
 资源重试超过最大重试次数时的回调函数。比如：
 
@@ -195,7 +195,14 @@ pluginAssetsRetry({
 
 ### addQuery
 
-- **类型：** `boolean | ((times: number, originalQuery: string) => string);`
+- **类型：**
+
+```ts
+type AddQuery =
+  | boolean
+  | ((context: { times: number; originalQuery: string }) => string);
+```
+
 - **默认值：** `false`
 
 是否在资源重试时添加 query，这样可以避免被浏览器、CDN 缓存影响到重试的结果。
@@ -208,27 +215,26 @@ pluginAssetsRetry({
 
 当你想要自定义 query 时，可以传入一个函数，比如：
 
-* **示例：** 请求的所有资源都不含 query：
+- **示例：** 请求的所有资源都不含 query：
 
 ```js
 pluginAssetsRetry({
-  addQuery: (times) => {
-    return times === 3 ? `?retryCount=${times}&isLast=1` : `?retryCount=${times}`
+  addQuery: ({ times }) => {
+    return times === 3
+      ? `?retryCount=${times}&isLast=1`
+      : `?retryCount=${times}`;
   },
 });
 ```
 
-* **示例：** 请求的某些资源中含有 query 可以使用 originalQuery 区分：
+- **示例：** 当请求的某些资源中含有 query 时，可以使用 `originalQuery` 读取：
 
 ```js
 pluginAssetsRetry({
-  addQuery: (times, originalQuery) => {
-    if (originalQuery !== '') {
-      return times === 3 
-        ? `${originalQuery}&retryCount=${times}&isLast=1`
-        : `${originalQuery}&retryCount=${times}`;
-    }
-    return times === 3 ? `?retryCount=${times}&isLast=1` : `?retryCount=${times}`
+  addQuery: ({ times, originalQuery }) => {
+    const query =
+      times === 3 ? `retryCount=${times}&isLast=1` : `retryCount=${times}`;
+    return originalQuery ? `${originalQuery}&${query}` : `?${query}`;
   },
 });
 ```

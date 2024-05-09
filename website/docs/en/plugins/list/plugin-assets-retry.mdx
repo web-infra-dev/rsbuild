@@ -49,9 +49,9 @@ type AssetsRetryOptions = {
   test?: string | ((url: string) => boolean);
   crossOrigin?: boolean | 'anonymous' | 'use-credentials';
   inlineScript?: boolean;
-  onRetry?: (options: AssetsRetryHookContext) => void;
-  onSuccess?: (options: AssetsRetryHookContext) => void;
-  onFail?: (options: AssetsRetryHookContext) => void;
+  onRetry?: (context: AssetsRetryHookContext) => void;
+  onSuccess?: (context: AssetsRetryHookContext) => void;
+  onFail?: (context: AssetsRetryHookContext) => void;
 };
 ```
 
@@ -147,7 +147,7 @@ pluginAssetsRetry({
 
 ### onRetry
 
-- **Type:** `undefined | (options: AssetsRetryHookContext) => void`
+- **Type:** `undefined | (context: AssetsRetryHookContext) => void`
 
 The callback function when the asset is being retried. For example:
 
@@ -163,7 +163,7 @@ pluginAssetsRetry({
 
 ### onSuccess
 
-- **Type:** `undefined | (options: AssetsRetryHookContext) => void`
+- **Type:** `undefined | (context: AssetsRetryHookContext) => void`
 
 The callback function when the asset is successfully retried. For example:
 
@@ -179,7 +179,7 @@ pluginAssetsRetry({
 
 ### onFail
 
-- **Type:** `undefined | (options: AssetsRetryHookContext) => void`
+- **Type:** `undefined | (context: AssetsRetryHookContext) => void`
 
 The callback function when the asset is failed to be retried. For example:
 
@@ -195,7 +195,14 @@ pluginAssetsRetry({
 
 ### addQuery
 
-- **Type:* `boolean | ((times: number, originalQuery: string) => string);`
+- **Type:**
+
+```ts
+type AddQuery =
+  | boolean
+  | ((context: { times: number; originalQuery: string }) => string);
+```
+
 - **Default:** `false`
 
 Whether to add query when retrying resources, so as to avoid being affected by browser and CDN caches on the retry results.
@@ -208,27 +215,26 @@ When set to `true`, `retry=${times}` will be added to the query when requesting,
 
 When you want to customize query, you can pass a function, for example:
 
-* **Example:** All assets requested do not contain query:
+- **Example:** All assets requested do not contain query:
 
 ```js
 pluginAssetsRetry({
-  addQuery: (times) => {
-    return times === 3 ? `?retryCount=${times}&isLast=1` : `?retryCount=${times}`
+  addQuery: ({ times }) => {
+    return times === 3
+      ? `?retryCount=${times}&isLast=1`
+      : `?retryCount=${times}`;
   },
 });
 ```
 
-* **Example:** Some of the requested assets contain query and can be distinguished using `originalQuery`:
+- **Example:** If there is a query in some of the requested assets, you can read it with `originalQuery`:
 
 ```js
 pluginAssetsRetry({
-  addQuery: (times, originalQuery) => {
-    if (originalQuery !== '') {
-      return times === 3 
-        ? `${originalQuery}&retryCount=${times}&isLast=1`
-        : `${originalQuery}&retryCount=${times}`;
-    }
-    return times === 3 ? `?retryCount=${times}&isLast=1` : `?retryCount=${times}`
+  addQuery: ({ times, originalQuery }) => {
+    const query =
+      times === 3 ? `retryCount=${times}&isLast=1` : `retryCount=${times}`;
+    return originalQuery ? `${originalQuery}&${query}` : `?${query}`;
   },
 });
 ```
