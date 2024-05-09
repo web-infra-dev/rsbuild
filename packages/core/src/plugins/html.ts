@@ -161,16 +161,28 @@ function getTemplateParameters(
 
 function getChunks(
   entryName: string,
-  entryValue: string | string[] | EntryDescription,
+  entryValue: Array<string | string[] | EntryDescription>,
 ): string[] {
-  if (isPlainObject(entryValue)) {
-    const { dependOn } = entryValue as EntryDescription;
-    if (Array.isArray(dependOn)) {
-      return [...dependOn, entryName];
+  const chunks = [entryName];
+
+  for (const item of entryValue) {
+    if (!isPlainObject(item)) {
+      continue;
+    }
+
+    const { dependOn } = item as EntryDescription;
+    if (!dependOn) {
+      continue;
+    }
+
+    if (typeof dependOn === 'string') {
+      chunks.unshift(dependOn);
+    } else {
+      chunks.unshift(...dependOn);
     }
   }
 
-  return [entryName];
+  return chunks;
 }
 
 const getTagConfig = (api: RsbuildPluginAPI): TagConfig | undefined => {
@@ -215,8 +227,8 @@ export const pluginHtml = (modifyTagsFn: ModifyHTMLTagsFn): RsbuildPlugin => ({
             const entryValue = entries[entryName].values();
             const chunks = getChunks(
               entryName,
-              // @ts-expect-error EntryDescription type mismatch
-              entryValue,
+              // EntryDescription type is different between webpack and Rspack
+              entryValue as (string | string[] | EntryDescription)[],
             );
             const inject = getInject(entryName, config);
             const filename = htmlPaths[entryName];
@@ -244,6 +256,11 @@ export const pluginHtml = (modifyTagsFn: ModifyHTMLTagsFn): RsbuildPlugin => ({
               templateParameters,
               scriptLoading: config.html.scriptLoading,
             };
+
+            if (chunks.length > 1) {
+              // load entires by the order of `chunks`
+              pluginOptions.chunksSortMode = 'manual';
+            }
 
             const htmlInfo: HtmlInfo = {};
             htmlInfoMap[entryName] = htmlInfo;
