@@ -90,6 +90,7 @@ styl
 subdir
 subpage
 subresource
+subresources
 svgr
 swcrc
 systemjs
