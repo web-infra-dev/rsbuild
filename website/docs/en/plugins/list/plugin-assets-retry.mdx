@@ -172,7 +172,7 @@ When set to `true`, `retry=${times}` will be added to the query when requesting,
 
 For example:
 
-1. Assume that the requested asset is `https://js.cdn.net/foo.js`. If the request fails, it will automatically retry `https://js.cdn.net/foo.js?retry=${ times}`
+1. Assume that the requested asset is `https://js.cdn.net/foo.js`. If the request fails, it will automatically retry `https://js.cdn.net/foo.js?retry=${times}`
 
 2. Assume that the requested asset is `https://js.cdn.net/foo.js?version=1`. If the request fails, it will automatically retry `https://js.cdn.net/foo.js? version=1&retry=${times}`
 
