@@ -479,8 +479,15 @@ test('@rsbuild/plugin-assets-retry should work with addQuery function type optio
     [initialChunkBlockedMiddleware, asyncChunkBlockedMiddleware],
     {
       minify: true,
-      addQuery: (times) => {
-        return `?retryAttempt=${times}`;
+      addQuery: (times, originalQuery) => {
+        if (originalQuery !== '') {
+          return times === 3
+            ? `${originalQuery}&retryCount=${times}&isLast=1`
+            : `${originalQuery}&retryCount=${times}`;
+        }
+        return times === 3
+          ? `?retryCount=${times}&isLast=1`
+          : `?retryCount=${times}`;
       },
     },
   );
@@ -498,8 +505,8 @@ test('@rsbuild/plugin-assets-retry should work with addQuery function type optio
   );
   expect(blockedResponseCount).toMatchObject({
     '/static/js/index.js': 1,
-    '/static/js/index.js?retryAttempt=1': 1,
-    '/static/js/index.js?retryAttempt=2': 1,
+    '/static/js/index.js?retryCount=1': 1,
+    '/static/js/index.js?retryCount=2': 1,
   });
   const blockedAsyncChunkResponseCount = count404ResponseByUrl(
     logs,
@@ -507,8 +514,8 @@ test('@rsbuild/plugin-assets-retry should work with addQuery function type optio
   );
   expect(blockedAsyncChunkResponseCount).toMatchObject({
     '/static/js/async/src_AsyncCompTest_tsx.js': 1,
-    '/static/js/async/src_AsyncCompTest_tsx.js?retryAttempt=1': 1,
-    '/static/js/async/src_AsyncCompTest_tsx.js?retryAttempt=2': 1,
+    '/static/js/async/src_AsyncCompTest_tsx.js?retryCount=1': 1,
+    '/static/js/async/src_AsyncCompTest_tsx.js?retryCount=2': 1,
   });
 
   await rsbuild.close();
@@ -528,8 +535,8 @@ test('@rsbuild/plugin-assets-retry should preserve users query when set addQuery
   });
   const blockedMiddleware2 = createBlockMiddleware({
     blockNum: 3,
-    urlPrefix: '/test-query-hash?a=1&b=1'
-  })
+    urlPrefix: '/test-query-hash?a=1&b=1',
+  });
 
   const rsbuild = await createRsbuildWithMiddleware(
     [blockedMiddleware1, blockedMiddleware2],

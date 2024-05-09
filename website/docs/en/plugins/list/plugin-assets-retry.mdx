@@ -178,6 +178,18 @@ For example:
 
 When you want to customize query, you can pass a function, for example:
 
+* **Example:** All assets requested do not contain query:
+
+```js
+pluginAssetsRetry({
+  addQuery: (times) => {
+    return times === 3 ? `?retryCount=${times}&isLast=1` : `?retryCount=${times}`
+  },
+});
+```
+
+* **Example:** Some of the requested assets contain query and can be distinguished using `originalQuery`:
+
 ```js
 pluginAssetsRetry({
   addQuery: (times, originalQuery) => {
