@@ -165,14 +165,14 @@ function getChunks(
 ): string[] {
   const chunks = [entryName];
 
-  entryValue.forEach((item) => {
+  for (const item of entryValue) {
     if (!isPlainObject(item)) {
-      return;
+      continue;
     }
 
     const { dependOn } = item as EntryDescription;
     if (!dependOn) {
-      return;
+      continue;
     }
 
     if (typeof dependOn === 'string') {
@@ -180,7 +180,7 @@ function getChunks(
     } else {
       chunks.unshift(...dependOn);
     }
-  });
+  }
 
   return chunks;
 }

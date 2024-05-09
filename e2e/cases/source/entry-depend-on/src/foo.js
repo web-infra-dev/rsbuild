@@ -1,1 +1,1 @@
-window.test = (window.test || '') + 'foo';
+window.test = `${window.test || ''}foo`;
