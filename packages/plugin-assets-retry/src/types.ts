@@ -43,7 +43,9 @@ export type PluginAssetsRetryOptions = {
    * @default false
    * @description true -> hasQuery(originalQuery) ? `${getQuery(originalQuery)}&retry=${existRetryTimes}` : `?retry=${existRetryTimes}`
    */
-  addQuery?: boolean | ((times: number, originalQuery: string) => string);
+  addQuery?:
+    | boolean
+    | ((params: { times: number; originalQuery: string }) => string);
   /**
    * Whether to inline the runtime JavaScript code of Assets Retry plugin into the HTML file.
    * @default true

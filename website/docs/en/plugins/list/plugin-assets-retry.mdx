@@ -195,7 +195,14 @@ pluginAssetsRetry({
 
 ### addQuery
 
-- **Type:* `boolean | ((times: number, originalQuery: string) => string);`
+- **Type:**
+
+```ts
+type AddQuery =
+  | boolean
+  | ((params: { times: number; originalQuery: string }) => string);
+```
+
 - **Default:** `false`
 
 Whether to add query when retrying resources, so as to avoid being affected by browser and CDN caches on the retry results.
@@ -208,27 +215,31 @@ When set to `true`, `retry=${times}` will be added to the query when requesting,
 
 When you want to customize query, you can pass a function, for example:
 
-* **Example:** All assets requested do not contain query:
+- **Example:** All assets requested do not contain query:
 
 ```js
 pluginAssetsRetry({
-  addQuery: (times) => {
-    return times === 3 ? `?retryCount=${times}&isLast=1` : `?retryCount=${times}`
+  addQuery: ({ times }) => {
+    return times === 3
+      ? `?retryCount=${times}&isLast=1`
+      : `?retryCount=${times}`;
   },
 });
 ```
 
-* **Example:** Some of the requested assets contain query and can be distinguished using `originalQuery`:
+- **Example:** Some of the requested assets contain query and can be distinguished using `originalQuery`:
 
 ```js
 pluginAssetsRetry({
-  addQuery: (times, originalQuery) => {
+  addQuery: ({ times, originalQuery }) => {
     if (originalQuery !== '') {
-      return times === 3 
+      return times === 3
         ? `${originalQuery}&retryCount=${times}&isLast=1`
         : `${originalQuery}&retryCount=${times}`;
     }
-    return times === 3 ? `?retryCount=${times}&isLast=1` : `?retryCount=${times}`
+    return times === 3
+      ? `?retryCount=${times}&isLast=1`
+      : `?retryCount=${times}`;
   },
 });
 ```

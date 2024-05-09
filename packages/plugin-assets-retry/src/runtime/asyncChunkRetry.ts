@@ -82,7 +82,7 @@ function getUrlRetryQuery(
       : `?retry=${existRetryTimes}`;
   }
   if (typeof config.addQuery === 'function') {
-    return config.addQuery(existRetryTimes, originalQuery);
+    return config.addQuery({ times: existRetryTimes, originalQuery });
   }
   return '';
 }

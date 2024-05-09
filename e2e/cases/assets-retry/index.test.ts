@@ -479,8 +479,8 @@ test('@rsbuild/plugin-assets-retry should work with addQuery function type optio
     [initialChunkBlockedMiddleware, asyncChunkBlockedMiddleware],
     {
       minify: true,
-      addQuery: (times, originalQuery) => {
-        if (originalQuery !== '') {
+      addQuery: ({ times, originalQuery }) => {
+        if (originalQuery) {
           return times === 3
             ? `${originalQuery}&retryCount=${times}&isLast=1`
             : `${originalQuery}&retryCount=${times}`;
