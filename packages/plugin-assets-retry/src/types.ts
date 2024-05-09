@@ -27,15 +27,15 @@ export type PluginAssetsRetryOptions = {
   /**
    * The callback function when the asset is failed to be retried.
    */
-  onFail?: (options: AssetsRetryHookContext) => void;
+  onFail?: (context: AssetsRetryHookContext) => void;
   /**
    * The callback function when the asset is being retried.
    */
-  onRetry?: (options: AssetsRetryHookContext) => void;
+  onRetry?: (context: AssetsRetryHookContext) => void;
   /**
    * The callback function when the asset is successfully retried.
    */
-  onSuccess?: (options: AssetsRetryHookContext) => void;
+  onSuccess?: (context: AssetsRetryHookContext) => void;
   /**
    * The function to add query parameters to the URL of the asset being retried.
    * @param times e.g: 1 -> 2 -> 3
@@ -45,7 +45,7 @@ export type PluginAssetsRetryOptions = {
    */
   addQuery?:
     | boolean
-    | ((params: { times: number; originalQuery: string }) => string);
+    | ((context: { times: number; originalQuery: string }) => string);
   /**
    * Whether to inline the runtime JavaScript code of Assets Retry plugin into the HTML file.
    * @default true

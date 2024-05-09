@@ -49,9 +49,9 @@ type AssetsRetryOptions = {
   test?: string | ((url: string) => boolean);
   crossOrigin?: boolean | 'anonymous' | 'use-credentials';
   inlineScript?: boolean;
-  onRetry?: (options: AssetsRetryHookContext) => void;
-  onSuccess?: (options: AssetsRetryHookContext) => void;
-  onFail?: (options: AssetsRetryHookContext) => void;
+  onRetry?: (context: AssetsRetryHookContext) => void;
+  onSuccess?: (context: AssetsRetryHookContext) => void;
+  onFail?: (context: AssetsRetryHookContext) => void;
 };
 ```
 
@@ -147,7 +147,7 @@ pluginAssetsRetry({
 
 ### onRetry
 
-- **类型：** `undefined | (options: AssetsRetryHookContext) => void`
+- **类型：** `undefined | (context: AssetsRetryHookContext) => void`
 
 资源重试时的回调函数。比如：
 
@@ -163,7 +163,7 @@ pluginAssetsRetry({
 
 ### onSuccess
 
-- **类型：** `undefined | (options: AssetsRetryHookContext) => void`
+- **类型：** `undefined | (context: AssetsRetryHookContext) => void`
 
 资源重试成功时的回调函数。比如：
 
@@ -179,7 +179,7 @@ pluginAssetsRetry({
 
 ### onFail
 
-- **类型：** `undefined | (options: AssetsRetryHookContext) => void`
+- **类型：** `undefined | (context: AssetsRetryHookContext) => void`
 
 资源重试超过最大重试次数时的回调函数。比如：
 
@@ -200,7 +200,7 @@ pluginAssetsRetry({
 ```ts
 type AddQuery =
   | boolean
-  | ((params: { times: number; originalQuery: string }) => string);
+  | ((context: { times: number; originalQuery: string }) => string);
 ```
 
 - **默认值：** `false`

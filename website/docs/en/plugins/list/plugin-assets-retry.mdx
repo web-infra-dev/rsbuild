@@ -49,9 +49,9 @@ type AssetsRetryOptions = {
   test?: string | ((url: string) => boolean);
   crossOrigin?: boolean | 'anonymous' | 'use-credentials';
   inlineScript?: boolean;
-  onRetry?: (options: AssetsRetryHookContext) => void;
-  onSuccess?: (options: AssetsRetryHookContext) => void;
-  onFail?: (options: AssetsRetryHookContext) => void;
+  onRetry?: (context: AssetsRetryHookContext) => void;
+  onSuccess?: (context: AssetsRetryHookContext) => void;
+  onFail?: (context: AssetsRetryHookContext) => void;
 };
 ```
 
@@ -147,7 +147,7 @@ pluginAssetsRetry({
 
 ### onRetry
 
-- **Type:** `undefined | (options: AssetsRetryHookContext) => void`
+- **Type:** `undefined | (context: AssetsRetryHookContext) => void`
 
 The callback function when the asset is being retried. For example:
 
@@ -163,7 +163,7 @@ pluginAssetsRetry({
 
 ### onSuccess
 
-- **Type:** `undefined | (options: AssetsRetryHookContext) => void`
+- **Type:** `undefined | (context: AssetsRetryHookContext) => void`
 
 The callback function when the asset is successfully retried. For example:
 
@@ -179,7 +179,7 @@ pluginAssetsRetry({
 
 ### onFail
 
-- **Type:** `undefined | (options: AssetsRetryHookContext) => void`
+- **Type:** `undefined | (context: AssetsRetryHookContext) => void`
 
 The callback function when the asset is failed to be retried. For example:
 
@@ -200,7 +200,7 @@ pluginAssetsRetry({
 ```ts
 type AddQuery =
   | boolean
-  | ((params: { times: number; originalQuery: string }) => string);
+  | ((context: { times: number; originalQuery: string }) => string);
 ```
 
 - **Default:** `false`
