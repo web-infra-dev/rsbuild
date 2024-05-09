@@ -80,12 +80,13 @@ function validateTargetInfo(
   return { target, tagName, url };
 }
 
-const QUERY_REG = /\?.*$/;
-function removeQuery(url: string) {
-  return url.replace(QUERY_REG, '');
+const postfixRE = /[?#].*$/;
+function cleanUrl(url: string) {
+  return url.replace(postfixRE, '');
 }
 function getQueryFromUrl(url: string) {
-  return url.match(QUERY_REG)?.[0] ?? '';
+  const parts = url.split('?')[1];
+  return parts ? `?${parts.split('#')[0]}` : '';
 }
 
 function createElement(
@@ -263,7 +264,7 @@ function retry(config: RuntimeRetryOptions, e: Event) {
 
   const attributes: ScriptElementAttributes = {
     url:
-      removeQuery(url.replace(domain, nextDomain)) +
+      cleanUrl(url.replace(domain, nextDomain)) +
       getUrlRetryQuery(existRetryTimes + 1),
     times: existRetryTimes + 1,
     crossOrigin: config.crossOrigin,

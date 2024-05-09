@@ -63,10 +63,13 @@ function findNextDomain(url: string) {
   return domainList[(index + 1) % domainList.length] || url;
 }
 
-const QUERY_REG = /\?.*$/;
-
+const postfixRE = /[?#].*$/;
+function cleanUrl(url: string) {
+  return url.replace(postfixRE, '');
+}
 function getQueryFromUrl(url: string) {
-  return url.match(QUERY_REG)?.[0] ?? '';
+  const parts = url.split('?')[1];
+  return parts ? `?${parts.split('#')[0]}` : '';
 }
 
 function getUrlRetryQuery(
@@ -84,6 +87,21 @@ function getUrlRetryQuery(
   return '';
 }
 
+function getNextRetryUrl(
+  existRetryTimes: number,
+  nextDomain: string,
+  originalSrcUrl: string,
+  originalScriptFilename: string,
+) {
+  return (
+    cleanUrl(
+      nextDomain +
+        (nextDomain[nextDomain.length - 1] === '/' ? '' : '/') +
+        originalScriptFilename,
+    ) + getUrlRetryQuery(existRetryTimes, getQueryFromUrl(originalSrcUrl))
+  );
+}
+
 function getCurrentRetry(chunkId: string): Retry | undefined {
   return retryCollector[chunkId];
 }
@@ -94,18 +112,18 @@ function initRetry(chunkId: string): Retry {
   const originalSrcUrl =
     __RUNTIME_GLOBALS_PUBLIC_PATH__ + originalScriptFilename;
 
-  const nextDomain = config.domain?.[0] ?? __RUNTIME_GLOBALS_PUBLIC_PATH__;
-
   const existRetryTimes = 1;
+  const nextDomain = config.domain?.[0] ?? __RUNTIME_GLOBALS_PUBLIC_PATH__;
 
   return {
     existRetryTimes,
     nextDomain,
-    nextRetryUrl:
-      nextDomain +
-      (nextDomain[nextDomain.length - 1] === '/' ? '' : '/') +
-      originalScriptFilename +
-      getUrlRetryQuery(existRetryTimes, getQueryFromUrl(originalSrcUrl)),
+    nextRetryUrl: getNextRetryUrl(
+      existRetryTimes,
+      nextDomain,
+      originalSrcUrl,
+      originalScriptFilename,
+    ),
 
     originalScriptFilename,
     originalSrcUrl,
@@ -119,19 +137,19 @@ function nextRetry(chunkId: string): Retry {
   if (!currRetry) {
     nextRetry = initRetry(chunkId);
   } else {
+    const { originalScriptFilename, originalSrcUrl } = currRetry;
     const existRetryTimes = currRetry.existRetryTimes + 1;
     const nextDomain = findNextDomain(currRetry.nextDomain);
-    const originalScriptFilename = currRetry.originalScriptFilename;
-    const originalSrcUrl = currRetry.originalSrcUrl;
 
     nextRetry = {
       existRetryTimes,
       nextDomain,
-      nextRetryUrl:
-        nextDomain +
-        (nextDomain[nextDomain.length - 1] === '/' ? '' : '/') +
-        currRetry.originalScriptFilename +
-        getUrlRetryQuery(existRetryTimes, getQueryFromUrl(originalSrcUrl)),
+      nextRetryUrl: getNextRetryUrl(
+        existRetryTimes,
+        nextDomain,
+        originalSrcUrl,
+        originalScriptFilename,
+      ),
 
       originalScriptFilename,
       originalSrcUrl,
