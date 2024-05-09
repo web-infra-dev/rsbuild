@@ -232,7 +232,7 @@ pluginAssetsRetry({
 ```js
 pluginAssetsRetry({
   addQuery: ({ times, originalQuery }) => {
-    if (originalQuery !== '') {
+    if (originalQuery) {
       return times === 3
         ? `${originalQuery}&retryCount=${times}&isLast=1`
         : `${originalQuery}&retryCount=${times}`;
