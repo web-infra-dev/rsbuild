@@ -522,13 +522,17 @@ test('@rsbuild/plugin-assets-retry should preserve users query when set addQuery
   process.env.DEBUG = 'rsbuild';
   const { logs, restore } = proxyConsole();
 
-  const blockedMiddleware = createBlockMiddleware({
+  const blockedMiddleware1 = createBlockMiddleware({
     blockNum: 3,
     urlPrefix: '/test-query?a=1&b=1',
   });
+  const blockedMiddleware2 = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/test-query-hash?a=1&b=1'
+  })
 
   const rsbuild = await createRsbuildWithMiddleware(
-    blockedMiddleware,
+    [blockedMiddleware1, blockedMiddleware2],
     {
       addQuery: true,
       minify: true,
@@ -537,14 +541,24 @@ test('@rsbuild/plugin-assets-retry should preserve users query when set addQuery
   );
 
   await gotoPage(page, rsbuild);
-  const blockedResponseCount = count404ResponseByUrl(
+  const blockedResponseCount1 = count404ResponseByUrl(
     logs,
     '/test-query?a=1&b=1',
   );
-  expect(blockedResponseCount).toMatchObject({
+  expect(blockedResponseCount1).toMatchObject({
     '/test-query?a=1&b=1': 1,
     '/test-query?a=1&b=1&retry=1': 1,
     '/test-query?a=1&b=1&retry=2': 1,
+  });
+
+  const blockedResponseCount2 = count404ResponseByUrl(
+    logs,
+    '/test-query-hash?a=1&b=1',
+  );
+  expect(blockedResponseCount2).toMatchObject({
+    '/test-query-hash?a=1&b=1': 1,
+    '/test-query-hash?a=1&b=1&retry=1': 1,
+    '/test-query-hash?a=1&b=1&retry=2': 1,
   });
 
   await rsbuild.close();
