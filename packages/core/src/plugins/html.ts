@@ -257,7 +257,7 @@ export const pluginHtml = (modifyTagsFn: ModifyHTMLTagsFn): RsbuildPlugin => ({
               scriptLoading: config.html.scriptLoading,
             };
 
-            if (Array.isArray(chunks) && chunks.length > 1) {
+            if (chunks.length > 1) {
               // load entires by the order of `chunks`
               pluginOptions.chunksSortMode = 'manual';
             }
