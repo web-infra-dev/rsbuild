@@ -14,6 +14,7 @@ exports[`plugin-assets-retry > should accept user custom options 1`] = `
     AsyncChunkRetryPlugin {
       "name": "ASYNC_CHUNK_RETRY_PLUGIN",
       "options": {
+        "addQuery": [Function],
         "crossOrigin": true,
         "domain": [
           "/http/localhost:3003",
@@ -35,6 +36,7 @@ exports[`plugin-assets-retry > should accept user custom options 1`] = `
         ],
       },
       "runtimeOptions": {
+        "addQuery": [Function],
         "domain": [
           "/http/localhost:3003",
           "/http/localhost:3002",

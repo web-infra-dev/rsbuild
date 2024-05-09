@@ -193,6 +193,46 @@ pluginAssetsRetry({
 });
 ```
 
+### addQuery
+
+- **类型：** `boolean | ((times: number, originalQuery: string) => string);`
+- **默认值：** `false`
+
+是否在资源重试时添加 query，这样可以避免被浏览器、CDN 缓存影响到重试的结果。
+
+当设置为 `true` 时，请求时会在 query 中添加 `retry=${times}`，按照 `retry=1`，`retry=2`，`retry=3` 依次请求，比如：
+
+1. 假设请求的静态资源为 `https://js.cdn.net/foo.js`，请求失败后会自动重试 `https://js.cdn.net/foo.js?retry=${times}`
+
+2. 假设请求的静态资源为 `https://js.cdn.net/foo.js?version=1`，请求失败后会自动重试 `https://js.cdn.net/foo.js?version=1&retry=${times}`
+
+当你想要自定义 query 时，可以传入一个函数，比如：
+
+* **示例：** 请求的所有资源都不含 query：
+
+```js
+pluginAssetsRetry({
+  addQuery: (times) => {
+    return times === 3 ? `?retryCount=${times}&isLast=1` : `?retryCount=${times}`
+  },
+});
+```
+
+* **示例：** 请求的某些资源中含有 query 可以使用 originalQuery 区分：
+
+```js
+pluginAssetsRetry({
+  addQuery: (times, originalQuery) => {
+    if (originalQuery !== '') {
+      return times === 3 
+        ? `${originalQuery}&retryCount=${times}&isLast=1`
+        : `${originalQuery}&retryCount=${times}`;
+    }
+    return times === 3 ? `?retryCount=${times}&isLast=1` : `?retryCount=${times}`
+  },
+});
+```
+
 ### inlineScript
 
 - **类型：** `boolean`

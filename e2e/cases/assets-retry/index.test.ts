@@ -6,6 +6,8 @@ import { pluginReact } from '@rsbuild/plugin-react';
 import type { RequestHandler } from '@rsbuild/shared';
 import stripAnsi from 'strip-ansi';
 
+// TODO: write a common testMiddleware instead of collect DEBUG logger
+
 function count404Response(logs: string[], urlPrefix: string): number {
   let count = 0;
   for (const log of logs) {
@@ -16,6 +18,30 @@ function count404Response(logs: string[], urlPrefix: string): number {
     }
   }
   return count;
+}
+
+function count404ResponseByUrl(
+  logs: string[],
+  urlPrefix: string,
+): Record<string, number> {
+  const countCollector: Record<string, number> = {};
+  // e.g: 18:09:23 404 GET /static/js/index.js 4.443 ms
+  const reg = /404\sGET\s(.*)\s\d/;
+  for (const log of logs) {
+    const rawLog = stripAnsi(log);
+    const url = reg.exec(rawLog)?.[1];
+    if (!url) {
+      continue;
+    }
+    if (!url.startsWith(urlPrefix)) {
+      continue;
+    }
+    if (!countCollector[url]) {
+      countCollector[url] = 0;
+    }
+    countCollector[url] += 1;
+  }
+  return countCollector;
 }
 
 type AssetsRetryHookContext = {
@@ -47,8 +73,9 @@ function createBlockMiddleware({
 }
 
 async function createRsbuildWithMiddleware(
-  middleware: RequestHandler,
+  middleware: RequestHandler | RequestHandler[],
   options: PluginAssetsRetryOptions,
+  entry?: string,
 ) {
   const rsbuild = await dev({
     cwd: __dirname,
@@ -59,10 +86,18 @@ async function createRsbuildWithMiddleware(
         liveReload: false,
         setupMiddlewares: [
           (middlewares, _server) => {
-            middlewares.unshift(middleware);
+            const addMiddleWares = Array.isArray(middleware)
+              ? middleware
+              : [middleware];
+            middlewares.unshift(...addMiddleWares);
           },
         ],
       },
+      ...(entry
+        ? {
+            source: { entry: { index: entry } },
+          }
+        : {}),
       output: {
         sourceMap: {
           css: false,
@@ -371,4 +406,169 @@ test('@rsbuild/plugin-assets-retry onRetry and onFail options should work in fai
     onSuccessContextList: [],
   });
   await rsbuild.close();
+});
+
+test('@rsbuild/plugin-assets-retry should work with addQuery boolean option', async ({
+  page,
+}) => {
+  process.env.DEBUG = 'rsbuild';
+  const { logs, restore } = proxyConsole();
+  const initialChunkBlockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/js/index.js',
+  });
+
+  const asyncChunkBlockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/js/async/src_AsyncCompTest_tsx.js',
+  });
+  const rsbuild = await createRsbuildWithMiddleware(
+    [initialChunkBlockedMiddleware, asyncChunkBlockedMiddleware],
+    {
+      minify: true,
+      addQuery: true,
+    },
+  );
+
+  await gotoPage(page, rsbuild);
+  const compTestElement = page.locator('#comp-test');
+  await expect(compTestElement).toHaveText('Hello CompTest');
+
+  const asyncCompTestElement = page.locator('#async-comp-test');
+  await expect(asyncCompTestElement).toHaveText('Hello AsyncCompTest');
+
+  const blockedResponseCount = count404ResponseByUrl(
+    logs,
+    '/static/js/index.js',
+  );
+  expect(blockedResponseCount).toMatchObject({
+    '/static/js/index.js': 1,
+    '/static/js/index.js?retry=1': 1,
+    '/static/js/index.js?retry=2': 1,
+  });
+  const blockedAsyncChunkResponseCount = count404ResponseByUrl(
+    logs,
+    '/static/js/async/src_AsyncCompTest_tsx.js',
+  );
+  expect(blockedAsyncChunkResponseCount).toMatchObject({
+    '/static/js/async/src_AsyncCompTest_tsx.js': 1,
+    '/static/js/async/src_AsyncCompTest_tsx.js?retry=1': 1,
+    '/static/js/async/src_AsyncCompTest_tsx.js?retry=2': 1,
+  });
+
+  await rsbuild.close();
+  restore();
+  delete process.env.DEBUG;
+});
+
+test('@rsbuild/plugin-assets-retry should work with addQuery function type option', async ({
+  page,
+}) => {
+  process.env.DEBUG = 'rsbuild';
+  const { logs, restore } = proxyConsole();
+  const initialChunkBlockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/js/index.js',
+  });
+
+  const asyncChunkBlockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/js/async/src_AsyncCompTest_tsx.js',
+  });
+  const rsbuild = await createRsbuildWithMiddleware(
+    [initialChunkBlockedMiddleware, asyncChunkBlockedMiddleware],
+    {
+      minify: true,
+      addQuery: (times, originalQuery) => {
+        if (originalQuery !== '') {
+          return times === 3
+            ? `${originalQuery}&retryCount=${times}&isLast=1`
+            : `${originalQuery}&retryCount=${times}`;
+        }
+        return times === 3
+          ? `?retryCount=${times}&isLast=1`
+          : `?retryCount=${times}`;
+      },
+    },
+  );
+
+  await gotoPage(page, rsbuild);
+  const compTestElement = page.locator('#comp-test');
+  await expect(compTestElement).toHaveText('Hello CompTest');
+
+  const asyncCompTestElement = page.locator('#async-comp-test');
+  await expect(asyncCompTestElement).toHaveText('Hello AsyncCompTest');
+
+  const blockedResponseCount = count404ResponseByUrl(
+    logs,
+    '/static/js/index.js',
+  );
+  expect(blockedResponseCount).toMatchObject({
+    '/static/js/index.js': 1,
+    '/static/js/index.js?retryCount=1': 1,
+    '/static/js/index.js?retryCount=2': 1,
+  });
+  const blockedAsyncChunkResponseCount = count404ResponseByUrl(
+    logs,
+    '/static/js/async/src_AsyncCompTest_tsx.js',
+  );
+  expect(blockedAsyncChunkResponseCount).toMatchObject({
+    '/static/js/async/src_AsyncCompTest_tsx.js': 1,
+    '/static/js/async/src_AsyncCompTest_tsx.js?retryCount=1': 1,
+    '/static/js/async/src_AsyncCompTest_tsx.js?retryCount=2': 1,
+  });
+
+  await rsbuild.close();
+  restore();
+  delete process.env.DEBUG;
+});
+
+test('@rsbuild/plugin-assets-retry should preserve users query when set addQuery option', async ({
+  page,
+}) => {
+  process.env.DEBUG = 'rsbuild';
+  const { logs, restore } = proxyConsole();
+
+  const blockedMiddleware1 = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/test-query?a=1&b=1',
+  });
+  const blockedMiddleware2 = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/test-query-hash?a=1&b=1',
+  });
+
+  const rsbuild = await createRsbuildWithMiddleware(
+    [blockedMiddleware1, blockedMiddleware2],
+    {
+      addQuery: true,
+      minify: true,
+    },
+    './src/testQueryEntry.js',
+  );
+
+  await gotoPage(page, rsbuild);
+  const blockedResponseCount1 = count404ResponseByUrl(
+    logs,
+    '/test-query?a=1&b=1',
+  );
+  expect(blockedResponseCount1).toMatchObject({
+    '/test-query?a=1&b=1': 1,
+    '/test-query?a=1&b=1&retry=1': 1,
+    '/test-query?a=1&b=1&retry=2': 1,
+  });
+
+  const blockedResponseCount2 = count404ResponseByUrl(
+    logs,
+    '/test-query-hash?a=1&b=1',
+  );
+  expect(blockedResponseCount2).toMatchObject({
+    '/test-query-hash?a=1&b=1': 1,
+    '/test-query-hash?a=1&b=1&retry=1': 1,
+    '/test-query-hash?a=1&b=1&retry=2': 1,
+  });
+
+  await rsbuild.close();
+  restore();
+  delete process.env.DEBUG;
 });
