@@ -480,14 +480,11 @@ test('@rsbuild/plugin-assets-retry should work with addQuery function type optio
     {
       minify: true,
       addQuery: ({ times, originalQuery }) => {
-        if (originalQuery) {
-          return times === 3
-            ? `${originalQuery}&retryCount=${times}&isLast=1`
-            : `${originalQuery}&retryCount=${times}`;
-        }
-        return times === 3
-          ? `?retryCount=${times}&isLast=1`
-          : `?retryCount=${times}`;
+        const extraQuery =
+          times === 3 ? `retryCount=${times}&isLast=1` : `retryCount=${times}`;
+        return originalQuery
+          ? `${originalQuery}&${extraQuery}`
+          : `?${extraQuery}`;
       },
     },
   );
