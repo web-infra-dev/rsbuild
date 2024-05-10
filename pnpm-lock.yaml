@@ -10,8 +10,6 @@ overrides:
   '@rsbuild/core': link:packages/core
   '@rsbuild/plugin-react': link:packages/plugin-react
 
-packageExtensionsChecksum: 18212998c4ac9d0b24113807ba3e5d6f
-
 importers:
 
   .:
