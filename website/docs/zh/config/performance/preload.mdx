@@ -16,7 +16,7 @@ interface PreloadOption {
 
 - **默认值：** `undefined`
 
-为 Rsbuild 构建生成的静态资源配置 [`<link rel="preload">`](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Attributes/rel/preload) 标签。
+为 Rsbuild 构建生成的静态资源注入 [`<link rel="preload">`](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Attributes/rel/preload) 标签。
 
 ## 什么是 preload
 
@@ -24,19 +24,67 @@ interface PreloadOption {
 
 这可以确保它们更早可用，并且不太可能阻塞页面的渲染，从而提高性能。尽管名称中包含 "load" 一词，但它并不加载和执行脚本，而只是安排脚本以更高的优先级进行下载和缓存。
 
-## Boolean 类型
+## 启用 preload
 
-当设置 `performance.preload` 为 `true`，Rsbuild 将根据如下配置对资源进行预加载:
+当设置 `performance.preload` 为 `true` 时，Rsbuild 将使用以下默认选项，对资源进行预获取，这表示 preload 当前页面的所有异步资源，包含异步 JS 及其关联的 CSS、image、font 等资源。
 
 ```js
-{
+const defaultOptions = {
   type: 'async-chunks',
-}
+};
 ```
 
-## Object 类型
+比如，在入口文件中动态引入了其他模块：
 
-当 `performance.preload` 的值为 object 类型时，Rsbuild 会根据当前配置对指定资源开启 preload 能力。
+```js title="index.js"
+import('./foo');
+import('./bar');
+```
+
+在 HTML 中注入的标签为：
+
+```html
+<html>
+  <head>
+    <title>Rsbuild App</title>
+    <script defer src="/static/js/index.js"></script>
+    <!-- 生成的 preload 标签 -->
+    <link href="/static/js/async/src_bar_js.js" rel="preload" as="script" />
+    <link href="/static/js/async/src_foo_js.js" rel="preload" as="script" />
+  </head>
+</html>
+```
+
+## 手动注入
+
+`performance.preload` 只能为 Rsbuild 构建生成的静态资源注入 preload 标签，如果你需要 preload 其他资源，可以通过 [html.tags](/config/html/tags) 手动添加标签：
+
+```js title="rsbuild.config.ts"
+export default {
+  html: {
+    tags: [
+      {
+        tag: 'link',
+        attrs: {
+          rel: 'preload',
+          as: 'script',
+          href: 'https://example.com/some-script.js',
+        },
+      },
+    ],
+  },
+};
+```
+
+注入的 HTML 标签如下：
+
+```html
+<link rel="preload" as="script" href="https://example.com/some-script.js" />
+```
+
+## 选项
+
+当 `performance.preload` 的值为 object 类型时，Rsbuild 会根据当前选项对指定资源开启 preload 能力。
 
 ### preload.type
 
@@ -44,14 +92,14 @@ interface PreloadOption {
 
 目前支持的资源类型如下：
 
-- `async-chunks`: 预加载所有异步资源（当前页面），包含异步 JS 及其关联的 CSS、image、font 等资源。
-- `initial`: 预加载所有非异步资源（当前页面）。需要注意的是，如果当前脚本已经被添加到 HTML 模版中，则不会进行额外的预加载。
-- `all-chunks`: 预加载所有资源（当前页面），包含所有异步和非异步资源。
-- `all-assets`: 预加载所有资源，MPA 场景下会包含其他页面的资源。
+- `async-chunks`: preload 所有异步资源（当前页面），包含异步 JS 及其关联的 CSS、image、font 等资源。
+- `initial`: preload 所有非异步资源（当前页面）。需要注意的是，如果当前脚本已经被添加到 HTML 模版中，则不会进行额外的预加载。
+- `all-chunks`: preload 所有资源（当前页面），包含所有异步和非异步资源。
+- `all-assets`: preload 所有资源，MPA 场景下会包含其他页面的资源。
 
 ### 示例
 
-当你希望对当前页面中所有 png 格式的图片资源进行预加载时，可以配置如下：
+当你希望对当前页面中所有 png 格式的图片资源进行 preload 时，可以配置如下：
 
 ```js
 export default {
