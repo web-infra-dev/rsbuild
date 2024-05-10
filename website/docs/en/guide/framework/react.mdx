@@ -44,12 +44,6 @@ Rsbuild supports convert SVG to React components via [SVGR](https://react-svgr.c
 
 If you need to use svgr, you also need to register the [SVGR plugin](/plugins/list/plugin-svgr).
 
-## Use styled-components
-
-Rsbuild provides compile-time support for styled-components, improve the debugging experience and add server-side rendering support to styled-components.
-
-If you need to use styled-components, We recommend register the [Styled Components plugin](/plugins/list/plugin-styled-components).
-
 import DeployApp from '@en/shared/deployApp.mdx';
 
 <DeployApp />
@@ -87,3 +81,38 @@ const MyComponent = () => <div>Hello World</div>;
 
 export default MyComponent;
 ```
+
+## CSS-in-JS
+
+### Use styled-components
+
+Rsbuild supports compiling [styled-components](https://github.com/styled-components/styled-components), improve the debugging experience and add server-side rendering support to styled-components.
+
+If you need to use styled-components, We recommend register the [Styled Components plugin](/plugins/list/plugin-styled-components).
+
+### Use vanilla-extract
+
+Rsbuild supports [@vanilla-extract/webpack-plugin](https://www.npmjs.com/package/@vanilla-extract/webpack-plugin). You can add the following config to use [vanilla-extract](https://github.com/vanilla-extract-css/vanilla-extract):
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+import { VanillaExtractPlugin } from '@vanilla-extract/webpack-plugin';
+
+export default defineConfig({
+  plugins: [
+    pluginReact({
+      reactRefreshOptions: {
+        exclude: [/\.css\.ts$/],
+      },
+    }),
+  ],
+  tools: {
+    rspack: {
+      plugins: [new VanillaExtractPlugin()],
+    },
+  },
+});
+```
+
+> You can also refer to this example: [vanilla-extract](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/vanilla-extract).
