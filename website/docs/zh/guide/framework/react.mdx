@@ -44,12 +44,6 @@ Rsbuild 支持调用 [SVGR](https://react-svgr.com/)，将 SVG 图片转换为�
 
 如果你需要使用 SVGR，需要注册 Rsbuild 的 [SVGR 插件](/plugins/list/plugin-svgr)。
 
-## 使用 styled-components
-
-Rsbuild 提供对 styled-components 的编译时支持，优化调试体验并对 styled-components 添加服务器端渲染支持。
-
-如果你需要使用 styled-components, 我们推荐你注册 [Styled Components 插件](/plugins/list/plugin-styled-components)。
-
 import DeployApp from '@zh/shared/deployApp.mdx';
 
 <DeployApp />
@@ -87,3 +81,38 @@ const MyComponent = () => <div>Hello World</div>;
 
 export default MyComponent;
 ```
+
+## CSS-in-JS
+
+### 使用 styled-components
+
+Rsbuild 支持编译 [styled-components](https://github.com/styled-components/styled-components)，优化调试体验，并对 styled-components 添加服务器端渲染支持。
+
+如果你需要使用 styled-components, 我们推荐你注册 [Styled Components 插件](/plugins/list/plugin-styled-components)。
+
+### 使用 vanilla-extract
+
+Rsbuild 支持使用 [@vanilla-extract/webpack-plugin](https://www.npmjs.com/package/@vanilla-extract/webpack-plugin) 插件，你可以添加以下配置来使用 [vanilla-extract](https://github.com/vanilla-extract-css/vanilla-extract)：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+import { VanillaExtractPlugin } from '@vanilla-extract/webpack-plugin';
+
+export default defineConfig({
+  plugins: [
+    pluginReact({
+      reactRefreshOptions: {
+        exclude: [/\.css\.ts$/],
+      },
+    }),
+  ],
+  tools: {
+    rspack: {
+      plugins: [new VanillaExtractPlugin()],
+    },
+  },
+});
+```
+
+> 你也可以参考这个示例：[vanilla-extract](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/vanilla-extract)。
