@@ -316,6 +316,20 @@ export const isClientCompiler = (compiler: {
   return false;
 };
 
+const isNodeCompiler = (compiler: {
+  options: {
+    target?: Compiler['options']['target'];
+  };
+}) => {
+  const { target } = compiler.options;
+
+  if (target) {
+    return Array.isArray(target) ? target.includes('node') : target === 'node';
+  }
+
+  return false;
+};
+
 type ServerCallbacks = {
   onInvalid: () => void;
   onDone: (stats: any) => void;
@@ -334,7 +348,8 @@ export const setupServerHooks = (
   },
   hookCallbacks: ServerCallbacks,
 ) => {
-  if (!isClientCompiler(compiler)) {
+  // TODO: node ssr HMR is not supported yet
+  if (isNodeCompiler(compiler)) {
     return;
   }
 
