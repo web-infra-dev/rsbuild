@@ -49,6 +49,7 @@
 	],
 	"ignoreDeps": [
 		// manually update some packages
+		"pnpm",
 		"core-js",
 		"esbuild",
 		"typescript",
