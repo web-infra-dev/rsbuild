@@ -116,7 +116,7 @@ export interface CSSLoaderOptions {
   sourceMap?: boolean;
   /**
    * Allows to enables/disables or setups number of loaders applied before CSS loader for @import at-rules,
-   * CSS modules and ICSS imports, i.e. @import/composes/@value value from './values.css'/etc.
+   * CSS Modules and ICSS imports, i.e. @import/composes/@value value from './values.css'/etc.
    *
    * @default 0
    */

@@ -49,7 +49,7 @@
     "cross-env": "^7.0.3",
     "cspell-ban-words": "^0.0.3",
     "nano-staged": "^0.8.0",
-    "nx": "^18.3.4",
+    "nx": "^19.0.1",
     "prettier": "^3.2.5",
     "simple-git-hooks": "^2.11.1",
     "vitest": "^1.6.0"
@@ -57,7 +57,7 @@
   "packageManager": "pnpm@9.0.6",
   "engines": {
     "node": ">=18.0.0",
-    "pnpm": ">=9.0.6"
+    "pnpm": ">=9.0.0"
   },
   "pnpm": {
     "overrides": {
@@ -69,14 +69,6 @@
     "allowedDeprecatedVersions": {
       "vue": "2.x",
       "consolidate": "0.15.1"
-    },
-    "packageExtensions": {
-      "dts-packer": {
-        "//": "`resolve >= 1.21.0` breaks dts-packer",
-        "dependencies": {
-          "resolve": "1.20.0"
-        }
-      }
     }
   }
 }

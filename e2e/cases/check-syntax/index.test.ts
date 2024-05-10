@@ -51,10 +51,7 @@ test('should throw error when exist syntax errors', async () => {
   ).toBeTruthy();
 });
 
-// TODO Rspack occasionally generates invalid comments
-// such as:
-// /*! ./test */se information please see index.js?v=fc0ca1e8.LICENSE.txt */
-test.skip('should check assets with query correctly', async () => {
+test('should check assets with query correctly', async () => {
   const cwd = path.join(__dirname, 'fixtures/basic');
   const { logs, restore } = proxyConsole();
 

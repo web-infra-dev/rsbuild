@@ -27,4 +27,5 @@ export const plugins = {
   server: () => import('./server').then((m) => m.pluginServer()),
   moduleFederation: () =>
     import('./moduleFederation').then((m) => m.pluginModuleFederation()),
+  manifest: () => import('./manifest').then((m) => m.pluginManifest()),
 };

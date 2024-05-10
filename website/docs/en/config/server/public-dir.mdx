@@ -6,20 +6,8 @@
 type PublicDir =
   | false
   | {
-      /**
-       * The name of the public directory, can be set as a relative path or an absolute path.
-       * @default 'public'
-       */
       name?: string;
-      /**
-       * Whether to copy files from the publicDir to the distDir on production build
-       * @default true
-       */
       copyOnBuild?: boolean;
-      /**
-       * whether to watch the public directory and reload the page when the files change
-       * @default false
-       */
       watch?: boolean;
     };
 ```
@@ -37,55 +25,14 @@ By default, Rsbuild will use the `public` directory as the directory for serving
 
 > Related document: [Public Folder](/guide/basic/static-assets#public-folder).
 
-### Boolean Type
+## Options
 
-The ability to serve public assets can be disabled by setting `publicDir` to `false`:
+### name
 
-```ts
-export default {
-  server: {
-    publicDir: false,
-  },
-};
-```
+- **Type:** `string`
+- **Default:** `'public'`
 
-### Object Type
-
-When the value of `publicDir` is of object type, Rsbuild will merge the current configuration with the default configuration.
-
-For example, to set the public folder name as `static` and disable `copyOnBuild`:
-
-```ts
-export default {
-  server: {
-    publicDir: {
-      name: 'static',
-      copyOnBuild: false,
-    },
-  },
-};
-```
-
-Note that setting the value of `copyOnBuild` to false means that when you run `rsbuild preview` for a production preview, you will not be able to access the corresponding static resources.
-
-Setting `watch` to `true` allows the development environment to watch changes to files in the specified public directory and reload the page when the files are changed:
-
-```ts
-export default {
-  server: {
-    publicDir: {
-      name: 'static',
-      watch: true,
-    },
-  },
-};
-```
-
-Note that the `watch` option is only valid in the development build. If `dev.hmr` and `dev.liveReload` are both set to false, `watch` will be ignored.
-
-### Path Types
-
-The value of `name` can be set to a relative path or an absolute path. Relative path will be resolved relative to the project root directory.
+The name of the public directory. The value of `name` can be set to a relative path or an absolute path. Relative path will be resolved relative to the project root directory.
 
 - Relative path example:
 
@@ -109,6 +56,64 @@ export default {
     publicDir: {
       name: path.join(__dirname, '../some-public'),
     },
+  },
+};
+```
+
+### copyOnBuild
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+Whether to copy files from the publicDir to the distDir on production build.
+
+For example, disable `copyOnBuild`:
+
+```ts
+export default {
+  server: {
+    publicDir: {
+      copyOnBuild: false,
+    },
+  },
+};
+```
+
+Note that setting the value of `copyOnBuild` to false means that when you run `rsbuild preview` for a production preview, you will not be able to access the corresponding static resources.
+
+:::tip
+During dev builds, if you need to copy some static assets to the output directory, you can use the [output.copy](/config/output/copy) option instead.
+:::
+
+### watch
+
+- **Type:** `boolean`
+- **Default:** `false`
+
+Whether to watch the public directory and reload the page when the files change.
+
+Setting `watch` to `true` allows the development environment to watch changes to files in the specified public directory and reload the page when the files are changed:
+
+```ts
+export default {
+  server: {
+    publicDir: {
+      watch: true,
+    },
+  },
+};
+```
+
+Note that the `watch` option is only valid in the development build. If [dev.hmr](/config/dev/hmr) and [dev.liveReload](/config/dev/live-reload) are both set to false, `watch` will be ignored.
+
+## Disabled
+
+You can set `publicDir` to `false` to disable the static assets serving:
+
+```ts
+export default {
+  server: {
+    publicDir: false,
   },
 };
 ```

@@ -52,6 +52,9 @@ describe('plugin-assets-retry', () => {
           onFail(context) {
             console.log('Failed retry', context);
           },
+          addQuery({ times }) {
+            return `?retry-times=${times}`;
+          },
         }),
       ],
     });

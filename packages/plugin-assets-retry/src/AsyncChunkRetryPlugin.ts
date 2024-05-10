@@ -41,6 +41,7 @@ class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
       'onRetry',
       'onSuccess',
       'onFail',
+      'addQuery',
       'test',
     ]);
   }
