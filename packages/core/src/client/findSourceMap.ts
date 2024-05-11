@@ -6,7 +6,7 @@ const fetchContent = (url: string) => fetch(url).then((r) => r.text());
 const findSourceMap = async (fileSource: string, filename: string) => {
   try {
     // Prefer to get it via filename + '.map'.
-    const mapUrl = filename + '.map';
+    const mapUrl = `${filename}.map`;
     return await fetchContent(mapUrl);
   } catch (e) {
     const mapUrl = fileSource.match(/\/\/# sourceMappingURL=(.*)$/)?.[1];
@@ -33,7 +33,7 @@ const escapeHTML = (str: string) =>
 const formatSourceCode = (sourceCode: string, pos: any) => {
   // Note that the line starts at 1, not 0.
   const { line: crtLine, column, name } = pos;
-  let lines = sourceCode.split('\n');
+  const lines = sourceCode.split('\n');
 
   // Display up to 6 lines of source code
   const lineCount = Math.min(lines.length, 6);
@@ -51,12 +51,7 @@ const formatSourceCode = (sourceCode: string, pos: any) => {
 
     // When the sourcemap information includes specific column details, add an error hint below the error line.
     if (line === crtLine && column > 0) {
-      const errorLine =
-        ' '.repeat(prefix.length + column) +
-        '<span style="color: #fc5e5e;">' +
-        '^'.repeat(name?.length || 1) +
-        '</span>';
-
+      const errorLine = `${' '.repeat(prefix.length + column)}<span style="color: #fc5e5e;">${'^'.repeat(name?.length || 1)}</span>`;
       result.push(errorLine);
     }
   }
@@ -78,8 +73,8 @@ export const findSourceCode = async (sourceInfo: any) => {
 
   // Use sourcemap to find the source code location
   const pos = consumer.originalPositionFor({
-    line: parseInt(line, 10),
-    column: parseInt(column, 10),
+    line: Number.parseInt(line, 10),
+    column: Number.parseInt(column, 10),
   });
 
   const url = `${pos.source}:${pos.line}:${pos.column}`;

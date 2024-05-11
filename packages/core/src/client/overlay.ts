@@ -1,4 +1,4 @@
-import { type OverlayError } from '../types';
+import type { OverlayError } from '../types';
 import { formatRuntimeErrors } from './format';
 import { registerOverlay } from './hmr';
 

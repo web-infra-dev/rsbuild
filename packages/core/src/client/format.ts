@@ -1,5 +1,5 @@
 import type { StatsCompilation, StatsError } from '@rspack/core';
-import { type OverlayError } from '../types';
+import type { OverlayError } from '../types';
 import { findSourceCode } from './findSourceMap';
 
 function resolveFileName(stats: StatsError) {
@@ -82,13 +82,13 @@ export async function formatRuntimeErrors(
   event: PromiseRejectionEvent | ErrorEvent,
   isRejection: boolean,
 ): Promise<OverlayError | undefined> {
-  let error = isRejectionEvent(isRejection, event)
+  const error = isRejectionEvent(isRejection, event)
     ? event.reason
     : event?.error;
 
   if (!error) return;
   const errorName = isRejection
-    ? 'Unhandled Rejection (' + error.name + ')'
+    ? `Unhandled Rejection (${error.name})`
     : error.name;
 
   const stack = parseRuntimeStack(error.stack);
