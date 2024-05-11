@@ -3,13 +3,20 @@ import type { StatsCompilation, StatsError } from '@rspack/core';
 function resolveFileName(stats: StatsError) {
   // Get the real source file path with stats.moduleIdentifier.
   // e.g. moduleIdentifier is "builtin:react-refresh-loader!/Users/x/src/App.jsx"
-  const regex = /(?:\!|^)([^!]+)$/;
-  const fileName = stats.moduleIdentifier?.match(regex)?.at(-1) ?? '';
-  return fileName
-    ? // add default column add lines for linking
-      `File: ${fileName}:1:1\n`
-    : // fallback to moduleName if moduleIdentifier parse failed
-      `File: ${stats.moduleName}\n`;
+  if (stats.moduleIdentifier) {
+    const regex = /(?:\!|^)([^!]+)$/;
+    const matched = stats.moduleIdentifier.match(regex);
+    if (matched) {
+      const fileName = matched.pop();
+      if (fileName) {
+        // add default column add lines for linking
+        return `File: ${fileName}:1:1\n`;
+      }
+    }
+  }
+
+  // fallback to moduleName if moduleIdentifier parse failed
+  return `File: ${stats.moduleName}\n`;
 }
 
 // Cleans up Rspack error messages.
