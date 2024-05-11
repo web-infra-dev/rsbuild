@@ -121,4 +121,8 @@ export default defineConfig({
 });
 ```
 
+:::tip
+When using unplugin transform hook, you need to use transformInclude hook to exclude the html module. Transform hook will destroy the html-rspack-plugin plug-in to generate html.
+:::
+
 > Please ensure that the version of `unplugin` package is >= v1.6.0.
