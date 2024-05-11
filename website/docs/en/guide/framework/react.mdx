@@ -86,6 +86,39 @@ Rsbuild supports compiling [styled-components](https://github.com/styled-compone
 
 If you need to use styled-components, We recommend register the [Styled Components plugin](/plugins/list/plugin-styled-components).
 
+> You can also refer to this example: [styled-components](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/styled-components).
+
+### Using Emotion
+
+Rsbuild supports compiling [Emotion](https://github.com/emotion-js/emotion), you can add the following configuration to use:
+
+- [swcReactOptions.importSource](/plugins/list/plugin-react#swcreactoptions)
+- [rspackExperiments.emotion](https://rspack.dev/guide/features/builtin-swc-loader#rspackexperimentsemotion)
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [
+    pluginReact({
+      swcReactOptions: {
+        importSource: '@emotion/react',
+      },
+    }),
+  ],
+  tools: {
+    swc: {
+      rspackExperiments: {
+        emotion: true,
+      },
+    },
+  },
+});
+```
+
+> You can also refer to this example: [emotion](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/emotion).
+
 ### Use vanilla-extract
 
 Rsbuild supports [@vanilla-extract/webpack-plugin](https://www.npmjs.com/package/@vanilla-extract/webpack-plugin). You can add the following config to use [vanilla-extract](https://github.com/vanilla-extract-css/vanilla-extract):
