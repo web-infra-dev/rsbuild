@@ -128,7 +128,7 @@ export default defineConfig({
 ```
 
 :::tip
-使用 unplugin transform hook 时需要 使用 transformInclude hook 来排除 html 模块, tranform hook会破坏html-rspack-plugin插件生成html。
+在使用 unplugin 的 transform hook 时，请使用 `transformInclude` hook 来匹配指定的模块。当  tranform hook 会匹配到 `.html` 模块时，会代替 html-rspack-plugin 默认的 EJS 转换。
 :::
 
 > 请确保依赖的 `unplugin` 包版本 >= v1.6.0。
