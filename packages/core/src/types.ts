@@ -53,3 +53,15 @@ export type {
   NormalizedPerformanceConfig,
   NormalizedModuleFederationConfig,
 } from '@rsbuild/shared';
+
+export interface OverlayError {
+  content: string;
+
+  title: string;
+
+  type: 'build' | 'runtime';
+
+  stack?: string[];
+
+  sourceFile?: string;
+}

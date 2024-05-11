@@ -6,7 +6,8 @@
  */
 import type { StatsError } from '@rsbuild/shared';
 import type { ClientConfig } from '@rsbuild/shared';
-import { formatStatsMessages } from './format';
+import type { OverlayError } from '../types';
+import { formatBuildErrors, formatStatsMessages } from './format';
 
 /**
  * hmr socket connect path
@@ -62,11 +63,11 @@ function clearOutdatedErrors() {
   }
 }
 
-let createOverlay: undefined | ((err: string[]) => void);
+let createOverlay: undefined | ((err: OverlayError) => void);
 let clearOverlay: undefined | (() => void);
 
 export const registerOverlay = (
-  createFn: (err: string[]) => void,
+  createFn: (err: OverlayError) => void,
   clearFn: () => void,
 ) => {
   createOverlay = createFn;
@@ -124,18 +125,13 @@ function handleErrors(errors: StatsError[]) {
   hasCompileErrors = true;
 
   // "Massage" webpack messages.
-  const formatted = formatStatsMessages({
-    errors,
-    warnings: [],
-  });
+  const overlayError = formatBuildErrors(errors);
 
   // Also log them to the console.
-  for (const error of formatted.errors) {
-    console.error(error);
-  }
+  console.error(overlayError.content);
 
   if (createOverlay) {
-    createOverlay(formatted.errors);
+    createOverlay(overlayError);
   }
 
   // Do not attempt to reload now.

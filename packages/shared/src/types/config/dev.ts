@@ -27,7 +27,12 @@ export type ClientConfig = {
   host?: string;
   protocol?: 'ws' | 'wss';
   /** Shows an overlay in the browser when there are compiler errors. */
-  overlay?: boolean;
+  overlay?:
+    | boolean
+    | {
+        // unhandled runtime errors
+        runtimeErrors?: boolean;
+      };
 };
 
 export type ChokidarWatchOptions = WatchOptions;
