@@ -145,3 +145,24 @@ export default defineConfig({
 ```
 
 > 你也可以参考这个示例：[vanilla-extract](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/vanilla-extract)。
+
+## 使用 StyleX
+
+你可以通过 [unplugin-stylex](https://github.com/eryue0220/unplugin-stylex) 来使用 [StyleX](https://github.com/facebook/stylex):
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+import stylexPlugin from 'unplugin-stylex/rspack';
+
+export default defineConfig({
+  plugins: [pluginReact()],
+  tools: {
+    rspack: {
+      plugins: [stylexPlugin()],
+    },
+  },
+});
+```
+
+> 你也可以参考这个示例：[stylex](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/stylex)。
