@@ -119,6 +119,32 @@ export default defineConfig({
 
 > 你也可以参考这个示例：[emotion](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/emotion)。
 
+### 使用 styled-jsx
+
+你可以通过 [@swc/plugin-styled-jsx](https://www.npmjs.com/package/@swc/plugin-styled-jsx) 来使用 [styled-jsx](https://github.com/vercel/styled-jsx)：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [pluginReact()],
+  tools: {
+    swc: {
+      jsc: {
+        experimental: {
+          plugins: [['@swc/plugin-styled-jsx', {}]],
+        },
+      },
+    },
+  },
+});
+```
+
+请注意，你需要选择和当前 `@swc/core` 版本匹配的 SWC 插件，才能使 SWC 正常执行，详见 [tools.swc](/config/tools/swc)。
+
+> 你也可以参考这个示例：[styled-jsx](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/styled-jsx)。
+
 ### 使用 vanilla-extract
 
 Rsbuild 支持使用 [@vanilla-extract/webpack-plugin](https://www.npmjs.com/package/@vanilla-extract/webpack-plugin) 插件，你可以添加以下配置来使用 [vanilla-extract](https://github.com/vanilla-extract-css/vanilla-extract)：
@@ -146,7 +172,7 @@ export default defineConfig({
 
 > 你也可以参考这个示例：[vanilla-extract](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/vanilla-extract)。
 
-## 使用 StyleX
+### 使用 StyleX
 
 你可以通过 [unplugin-stylex](https://github.com/eryue0220/unplugin-stylex) 来使用 [StyleX](https://github.com/facebook/stylex):
 

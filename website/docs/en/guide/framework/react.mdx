@@ -119,6 +119,32 @@ export default defineConfig({
 
 > You can also refer to this example: [emotion](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/emotion).
 
+### Use styled-jsx
+
+You can use [styled-jsx](https://github.com/vercel/styled-jsx) through [@swc/plugin-styled-jsx](https://www.npmjs.com/package/@swc/plugin-styled-jsx):
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [pluginReact()],
+  tools: {
+    swc: {
+      jsc: {
+        experimental: {
+          plugins: [['@swc/plugin-styled-jsx', {}]],
+        },
+      },
+    },
+  },
+});
+```
+
+Please note, you must select the SWC plugin that matches the current version of `@swc/core` for SWC to work, see [tools.swc](/config/tools/swc).
+
+> You can also refer to this example: [styled-jsx](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/styled-jsx).
+
 ### Use vanilla-extract
 
 Rsbuild supports [@vanilla-extract/webpack-plugin](https://www.npmjs.com/package/@vanilla-extract/webpack-plugin). You can add the following config to use [vanilla-extract](https://github.com/vanilla-extract-css/vanilla-extract):
@@ -146,7 +172,7 @@ export default defineConfig({
 
 > You can also refer to this example: [vanilla-extract](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/vanilla-extract).
 
-## Using StyleX
+### Use StyleX
 
 You can use [StyleX](https://github.com/facebook/stylex) via [unplugin-stylex](https://github.com/eryue0220/unplugin-stylex):
 
