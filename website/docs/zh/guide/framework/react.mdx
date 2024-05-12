@@ -86,7 +86,7 @@ Rsbuild 支持编译 [styled-components](https://github.com/styled-components/st
 
 如果你需要使用 styled-components, 我们推荐你注册 [Styled Components 插件](/plugins/list/plugin-styled-components)。
 
-> 你也可以参考这个示例：[styled-components](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/styled-components)。
+> 你可以参考这个示例：[styled-components](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/styled-components)。
 
 ### 使用 Emotion
 
@@ -117,7 +117,33 @@ export default defineConfig({
 });
 ```
 
-> 你也可以参考这个示例：[emotion](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/emotion)。
+> 你可以参考这个示例：[emotion](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/emotion)。
+
+### 使用 styled-jsx
+
+你可以通过 [@swc/plugin-styled-jsx](https://www.npmjs.com/package/@swc/plugin-styled-jsx) 来使用 [styled-jsx](https://github.com/vercel/styled-jsx)：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [pluginReact()],
+  tools: {
+    swc: {
+      jsc: {
+        experimental: {
+          plugins: [['@swc/plugin-styled-jsx', {}]],
+        },
+      },
+    },
+  },
+});
+```
+
+请注意，你需要选择和当前 `@swc/core` 版本匹配的 SWC 插件，才能使 SWC 正常执行，详见 [tools.swc](/config/tools/swc)。
+
+> 你可以参考这个示例：[styled-jsx](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/styled-jsx)。
 
 ### 使用 vanilla-extract
 
@@ -144,9 +170,9 @@ export default defineConfig({
 });
 ```
 
-> 你也可以参考这个示例：[vanilla-extract](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/vanilla-extract)。
+> 你可以参考这个示例：[vanilla-extract](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/vanilla-extract)。
 
-## 使用 StyleX
+### 使用 StyleX
 
 你可以通过 [unplugin-stylex](https://github.com/eryue0220/unplugin-stylex) 来使用 [StyleX](https://github.com/facebook/stylex):
 
@@ -165,4 +191,4 @@ export default defineConfig({
 });
 ```
 
-> 你也可以参考这个示例：[stylex](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/stylex)。
+> 你可以参考这个示例：[stylex](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/stylex)。
