@@ -69,7 +69,7 @@
     "rspack-manifest-plugin": "5.0.0",
     "dotenv": "16.4.5",
     "dotenv-expand": "11.0.6",
-    "http-compression": "1.0.19",
+    "http-compression": "1.0.20",
     "launch-editor-middleware": "^2.6.1",
     "on-finished": "2.4.1",
     "open": "^8.4.0",

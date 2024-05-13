@@ -120,7 +120,7 @@
   },
   "dependencies": {
     "@rspack/core": "0.6.5",
-    "caniuse-lite": "^1.0.30001616",
+    "caniuse-lite": "^1.0.30001617",
     "postcss": "^8.4.38"
   },
   "optionalDependencies": {
@@ -163,9 +163,9 @@
     "prebundle": "1.1.0",
     "resolve-url-loader": "5.0.0",
     "rslog": "^1.2.2",
-    "sass": "^1.77.0",
+    "sass": "^1.77.1",
     "sass-loader": "14.2.1",
-    "semver": "^7.6.0",
+    "semver": "^7.6.2",
     "style-loader": "3.3.4",
     "terser": "5.31.0",
     "typescript": "^5.4.2",
