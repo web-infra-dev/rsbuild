@@ -45,13 +45,7 @@ export function pluginStylus(options?: PluginStylusOptions): RsbuildPlugin {
           .rule(utils.CHAIN_ID.RULE.STYLUS)
           .test(STYLUS_REGEX);
 
-        const { bundlerType } = api.context;
-        const { applyBaseCSSRule } = await import(
-          bundlerType === 'webpack'
-            ? '@rsbuild/webpack/plugin-css'
-            : '@rsbuild/core/internal'
-        );
-
+        const { applyBaseCSSRule } = await import('@rsbuild/core/internal');
         await applyBaseCSSRule({
           rule,
           config,

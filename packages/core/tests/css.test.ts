@@ -1,7 +1,7 @@
 import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginCss } from '../src/provider/plugins/css';
-import { pluginLess } from '../src/provider/plugins/less';
-import { pluginSass } from '../src/provider/plugins/sass';
+import { pluginCss } from '../src/plugins/css';
+import { pluginLess } from '../src/plugins/less';
+import { pluginSass } from '../src/plugins/sass';
 
 describe('plugin-css', () => {
   it('should override browserslist of autoprefixer when using output.overrideBrowserslist config', async () => {
@@ -218,7 +218,7 @@ describe('plugin-less', () => {
       plugins: [pluginLess()],
       rsbuildConfig: {
         tools: {
-          less(config, { addExcludes }) {
+          less(_config, { addExcludes }) {
             addExcludes(/node_modules/);
           },
         },
@@ -262,7 +262,7 @@ describe('plugin-sass', () => {
       plugins: [pluginSass()],
       rsbuildConfig: {
         tools: {
-          sass(config, { addExcludes }) {
+          sass(_config, { addExcludes }) {
             addExcludes(/node_modules/);
           },
         },

@@ -13,10 +13,6 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
-    },
-    "./plugin-css": {
-      "types": "./dist/plugins/css.d.ts",
-      "default": "./dist/plugins/css.js"
     }
   },
   "main": "./dist/index.js",

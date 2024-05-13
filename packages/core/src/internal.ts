@@ -9,7 +9,7 @@ export { createContext, createPublicContext } from './createContext';
 export { initPlugins, createPluginManager } from './pluginManager';
 export { initHooks, type Hooks } from './initHooks';
 export { initRsbuildConfig } from './provider/initConfigs';
-export { applyBaseCSSRule } from './provider/plugins/css';
+export { applyBaseCSSRule } from './plugins/css';
 export { getPluginAPI } from './initPlugins';
 export type { InternalContext } from './types';
 export { setHTMLPlugin, getHTMLPlugin } from './htmlUtils';

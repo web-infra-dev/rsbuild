@@ -5,7 +5,7 @@ import {
   getSharedPkgCompiledPath,
   patchCompilerGlobalLocation,
 } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../../types';
+import type { RsbuildPlugin } from '../types';
 
 export function pluginSass(): RsbuildPlugin {
   return {

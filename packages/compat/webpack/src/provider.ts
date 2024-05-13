@@ -10,6 +10,7 @@ import {
   type PreviewServerOptions,
   type RsbuildProvider,
   pickRsbuildConfig,
+  setCssExtractPlugin,
 } from '@rsbuild/shared';
 import { initConfigs } from './initConfigs';
 
@@ -22,6 +23,9 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
   const pluginAPI = getPluginAPI({ context, pluginManager });
 
   context.pluginAPI = pluginAPI;
+
+  const { default: cssExtractPlugin } = await import('mini-css-extract-plugin');
+  setCssExtractPlugin(cssExtractPlugin);
 
   const createCompiler = (async () => {
     const { createCompiler } = await import('./createCompiler');
@@ -44,14 +48,14 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
 
     async applyDefaultPlugins() {
       const allPlugins = await Promise.all([
-        plugins.basic?.(),
-        plugins.entry?.(),
-        plugins.cache?.(),
-        plugins.target?.(),
-        import('./plugins/output').then((m) => m.pluginOutput()),
+        plugins.basic(),
+        plugins.entry(),
+        plugins.cache(),
+        plugins.target(),
+        plugins.output(),
         import('./plugins/resolve').then((m) => m.pluginResolve()),
-        plugins.fileSize?.(),
-        plugins.cleanOutput?.(),
+        plugins.fileSize(),
+        plugins.cleanOutput(),
         plugins.asset(),
         import('./plugins/copy').then((m) => m.pluginCopy()),
         plugins.html(async (tags) => {
@@ -63,13 +67,13 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
         plugins.nodeAddons(),
         plugins.define(),
         import('./plugins/progress').then((m) => m.pluginProgress()),
-        import('./plugins/css').then((m) => m.pluginCss()),
-        import('./plugins/sass').then((m) => m.pluginSass()),
-        import('./plugins/less').then((m) => m.pluginLess()),
+        plugins.css(),
+        plugins.less(),
+        plugins.sass(),
         plugins.bundleAnalyzer(),
         plugins.rsdoctor(),
         plugins.splitChunks(),
-        plugins.startUrl?.(),
+        plugins.startUrl(),
         plugins.inlineChunk(),
         plugins.externals(),
         plugins.performance(),
