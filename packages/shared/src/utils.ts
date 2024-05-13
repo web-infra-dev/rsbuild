@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { CssExtractRspackPlugin } from '@rspack/core';
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import type {
   Compiler as WebpackCompiler,
@@ -420,4 +421,17 @@ export const onCompileDone = (
   } else {
     compiler.hooks.done.tapPromise('rsbuild:done', onDone);
   }
+};
+
+let cssExtractPlugin: unknown;
+
+export const setCssExtractPlugin = (plugin: unknown) => {
+  cssExtractPlugin = plugin;
+};
+
+export const getCssExtractPlugin = () => {
+  if (cssExtractPlugin) {
+    return cssExtractPlugin as typeof CssExtractRspackPlugin;
+  }
+  return CssExtractRspackPlugin;
 };

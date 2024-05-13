@@ -1,31 +1,27 @@
 import {
-  type FileFilterUtil,
   LESS_REGEX,
-  type RsbuildPlugin,
   getLessLoaderOptions,
   getSharedPkgCompiledPath,
 } from '@rsbuild/shared';
-
-export type LessLoaderUtils = {
-  addExcludes: FileFilterUtil;
-};
+import type { RsbuildPlugin } from '../types';
 
 export function pluginLess(): RsbuildPlugin {
   return {
-    name: 'rsbuild-webpack:less',
+    name: 'rsbuild:less',
     setup(api) {
       api.modifyBundlerChain(async (chain, utils) => {
         const config = api.getNormalizedConfig();
         const { applyBaseCSSRule } = await import('./css');
 
-        const { options, excludes } = getLessLoaderOptions(
+        const rule = chain.module
+          .rule(utils.CHAIN_ID.RULE.LESS)
+          .test(LESS_REGEX);
+
+        const { excludes, options } = getLessLoaderOptions(
           config.tools.less,
           config.output.sourceMap.css,
           api.context.rootPath,
         );
-        const rule = chain.module
-          .rule(utils.CHAIN_ID.RULE.LESS)
-          .test(LESS_REGEX);
 
         for (const item of excludes) {
           rule.exclude.add(item);

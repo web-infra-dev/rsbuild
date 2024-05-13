@@ -15,7 +15,12 @@ import type {
   RsbuildContext,
   RsbuildTarget,
 } from './types';
-import { getSharedPkgCompiledPath, isFunction, isPlainObject } from './utils';
+import {
+  getCssExtractPlugin,
+  getSharedPkgCompiledPath,
+  isFunction,
+  isPlainObject,
+} from './utils';
 
 export const getCssModuleLocalIdentName = (
   config: NormalizedConfig,
@@ -299,16 +304,12 @@ export async function applyCSSRule({
   context,
   utils: { target, isProd, isServer, CHAIN_ID, isWebWorker },
   importLoaders = 1,
-  cssExtractPlugin,
 }: {
   rule: BundlerChainRule;
   config: NormalizedConfig;
   context: RsbuildContext;
   utils: ModifyChainUtils;
   importLoaders?: number;
-  cssExtractPlugin: {
-    loader: string;
-  };
 }) {
   const browserslist = await getBrowserslistWithDefault(
     context.rootPath,
@@ -346,7 +347,7 @@ export async function applyCSSRule({
 
       rule
         .use(CHAIN_ID.USE.MINI_CSS_EXTRACT)
-        .loader(cssExtractPlugin.loader)
+        .loader(getCssExtractPlugin().loader)
         .options(extraCSSOptions.loaderOptions)
         .end();
     }

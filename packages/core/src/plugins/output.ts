@@ -1,14 +1,14 @@
 import { posix } from 'node:path';
 import {
   applyOutputPlugin,
+  getCssExtractPlugin,
   getDistPath,
   getFilename,
   isUseCssExtract,
   mergeChainedOptions,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
-import { CssExtractRspackPlugin } from '@rspack/core';
-import type { RsbuildPlugin } from '../../types';
+import type { RsbuildPlugin } from '../types';
 
 export const pluginOutput = (): RsbuildPlugin => ({
   name: 'rsbuild:output',
@@ -19,7 +19,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
     api.modifyBundlerChain(async (chain, { CHAIN_ID, target, isProd }) => {
       const config = api.getNormalizedConfig();
 
-      if (config.output.copy) {
+      if (config.output.copy && api.context.bundlerType === 'rspack') {
         const { copy } = config.output;
         const options = Array.isArray(copy) ? { patterns: copy } : copy;
 
@@ -28,8 +28,6 @@ export const pluginOutput = (): RsbuildPlugin => ({
           .use(rspack.CopyRspackPlugin, [options]);
       }
 
-      const cssPath = getDistPath(config, 'css');
-
       // css output
       if (isUseCssExtract(config, target)) {
         const extractPluginOptions = mergeChainedOptions({
@@ -37,18 +35,16 @@ export const pluginOutput = (): RsbuildPlugin => ({
           options: config.tools.cssExtract?.pluginOptions,
         });
 
+        const cssPath = getDistPath(config, 'css');
         const cssFilename = getFilename(config, 'css', isProd);
         const cssAsyncPath = getDistPath(config, 'cssAsync');
-      
+
         chain
           .plugin(CHAIN_ID.PLUGIN.MINI_CSS_EXTRACT)
-          .use(CssExtractRspackPlugin, [
+          .use(getCssExtractPlugin(), [
             {
               filename: posix.join(cssPath, cssFilename),
-              chunkFilename: posix.join(
-                cssAsyncPath,
-                cssFilename,
-              ),
+              chunkFilename: posix.join(cssAsyncPath, cssFilename),
               ignoreOrder: true,
               ...extractPluginOptions,
             },

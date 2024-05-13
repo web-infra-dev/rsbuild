@@ -1,6 +1,6 @@
 import path from 'node:path';
-import { gotoPage } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
 import { fse, setNodeEnv } from '@rsbuild/shared';
 
@@ -40,81 +40,88 @@ const plugin: RsbuildPlugin = {
   },
 };
 
-test('should run plugin hooks correctly when running build', async () => {
-  fse.removeSync(distFile);
+rspackOnlyTest(
+  'should run plugin hooks correctly when running build',
+  async () => {
+    fse.removeSync(distFile);
 
-  const rsbuild = await createRsbuild({
-    cwd: __dirname,
-    rsbuildConfig: {
-      plugins: [plugin],
-    },
-  });
+    const rsbuild = await createRsbuild({
+      cwd: __dirname,
+      rsbuildConfig: {
+        plugins: [plugin],
+      },
+    });
 
-  await rsbuild.build();
+    await rsbuild.build();
 
-  expect(fse.readFileSync(distFile, 'utf-8').split(',')).toEqual([
-    'ModifyRsbuildConfig',
-    'ModifyBundlerChain',
-    'ModifyBundlerConfig',
-    'BeforeCreateCompiler',
-    'AfterCreateCompiler',
-    'BeforeBuild',
-    'ModifyHTMLTags',
-    'AfterBuild',
-  ]);
-});
+    expect(fse.readFileSync(distFile, 'utf-8').split(',')).toEqual([
+      'ModifyRsbuildConfig',
+      'ModifyBundlerChain',
+      'ModifyBundlerConfig',
+      'BeforeCreateCompiler',
+      'AfterCreateCompiler',
+      'BeforeBuild',
+      'ModifyHTMLTags',
+      'AfterBuild',
+    ]);
+  },
+);
 
-test('should run plugin hooks correctly when running startDevServer', async ({
-  page,
-}) => {
-  setNodeEnv('development');
-  fse.removeSync(distFile);
+rspackOnlyTest(
+  'should run plugin hooks correctly when running startDevServer',
+  async ({ page }) => {
+    setNodeEnv('development');
+    fse.removeSync(distFile);
 
-  const rsbuild = await createRsbuild({
-    cwd: __dirname,
-    rsbuildConfig: {
-      plugins: [plugin],
-    },
-  });
+    const rsbuild = await createRsbuild({
+      cwd: __dirname,
+      rsbuildConfig: {
+        plugins: [plugin],
+      },
+    });
 
-  const result = await rsbuild.startDevServer();
+    const result = await rsbuild.startDevServer();
 
-  await gotoPage(page, result);
+    await gotoPage(page, result);
 
-  await result.server.close();
+    await result.server.close();
 
-  expect(fse.readFileSync(distFile, 'utf-8').split(',')).toEqual([
-    'ModifyRsbuildConfig',
-    'BeforeStartDevServer',
-    'ModifyBundlerChain',
-    'ModifyBundlerConfig',
-    'BeforeCreateCompiler',
-    'AfterCreateCompiler',
-    'AfterStartDevServer',
-    'ModifyHTMLTags',
-    'OnDevCompileDone',
-    'OnCloseDevServer',
-  ]);
+    expect(fse.readFileSync(distFile, 'utf-8').split(',')).toEqual([
+      'ModifyRsbuildConfig',
+      'BeforeStartDevServer',
+      'ModifyBundlerChain',
+      'ModifyBundlerConfig',
+      'BeforeCreateCompiler',
+      'AfterCreateCompiler',
+      'AfterStartDevServer',
+      'ModifyHTMLTags',
+      'OnDevCompileDone',
+      'OnCloseDevServer',
+    ]);
 
-  setNodeEnv('test');
-});
+    setNodeEnv('test');
+  },
+);
 
-test('should run plugin hooks correctly when running preview', async () => {
-  const rsbuild = await createRsbuild({
-    cwd: __dirname,
-    rsbuildConfig: {
-      plugins: [plugin],
-    },
-  });
+rspackOnlyTest(
+  'should run plugin hooks correctly when running preview',
+  async () => {
+    const rsbuild = await createRsbuild({
+      cwd: __dirname,
+      rsbuildConfig: {
+        plugins: [plugin],
+      },
+    });
 
-  fse.removeSync(distFile);
-  const result = await rsbuild.preview();
+    fse.removeSync(distFile);
+    const result = await rsbuild.preview();
 
-  expect(fse.readFileSync(distFile, 'utf-8').split(',')).toEqual([
-    'ModifyRsbuildConfig',
-    'BeforeStartProdServer',
-    'AfterStartProdServer',
-  ]);
+    expect(fse.readFileSync(distFile, 'utf-8').split(',')).toEqual([
+      'ModifyRsbuildConfig',
+      'BeforeStartProdServer',
+      'AfterStartProdServer',
+    ]);
 
-  await result.server.close();
-});
+    await result.server.close();
+  },
+);

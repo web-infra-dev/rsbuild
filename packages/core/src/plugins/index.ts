@@ -4,6 +4,7 @@ export const plugins = {
   basic: () => import('./basic').then((m) => m.pluginBasic()),
   html: (modifyTagsFn: ModifyHTMLTagsFn) =>
     import('./html').then((m) => m.pluginHtml(modifyTagsFn)),
+  output: () => import('./output').then((m) => m.pluginOutput()),
   cleanOutput: () => import('./cleanOutput').then((m) => m.pluginCleanOutput()),
   startUrl: () => import('./startUrl').then((m) => m.pluginStartUrl()),
   fileSize: () => import('./fileSize').then((m) => m.pluginFileSize()),
@@ -24,6 +25,9 @@ export const plugins = {
     import('./resourceHints').then((m) => m.pluginResourceHints()),
   performance: () => import('./performance').then((m) => m.pluginPerformance()),
   define: () => import('./define').then((m) => m.pluginDefine()),
+  css: () => import('./css').then((m) => m.pluginCss()),
+  less: () => import('./less').then((m) => m.pluginLess()),
+  sass: () => import('./sass').then((m) => m.pluginSass()),
   server: () => import('./server').then((m) => m.pluginServer()),
   moduleFederation: () =>
     import('./moduleFederation').then((m) => m.pluginModuleFederation()),

@@ -1,9 +1,9 @@
-import { gotoPage } from '@e2e/helper';
+import { gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { startDevServerPure } from './scripts/pureServer.mjs';
 import { startDevServer } from './scripts/server.mjs';
 
-test('custom server', async ({ page }) => {
+rspackOnlyTest('custom server', async ({ page }) => {
   const { config, close } = await startDevServer(__dirname);
 
   await gotoPage(page, config);
@@ -20,7 +20,7 @@ test('custom server', async ({ page }) => {
   await close();
 });
 
-test('custom server without compile', async ({ page }) => {
+rspackOnlyTest('custom server without compile', async ({ page }) => {
   const { config, close } = await startDevServerPure(__dirname);
   const indexRes = await gotoPage(page, config);
 
