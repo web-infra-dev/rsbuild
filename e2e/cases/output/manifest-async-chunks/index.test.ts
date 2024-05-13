@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 const fixtures = __dirname;
 
-test('Should generate manifest for async chunks correctly', async () => {
+test('should generate manifest for async chunks correctly', async () => {
   const rsbuild = await build({
     cwd: fixtures,
     rsbuildConfig: {
