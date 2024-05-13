@@ -1,20 +1,4 @@
-import type { BundlerChain, NormalizedConfig } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
-
-function applyProfile({
-  chain,
-  config,
-}: {
-  chain: BundlerChain;
-  config: NormalizedConfig;
-}) {
-  const { profile } = config.performance;
-  if (!profile) {
-    return;
-  }
-
-  chain.profile(profile);
-}
 
 /**
  * Apply some configs of Rsbuild performance
@@ -40,10 +24,15 @@ export const pluginPerformance = (): RsbuildPlugin => ({
         }
       }
     });
+
     api.modifyBundlerChain((chain) => {
       const config = api.getNormalizedConfig();
+      const { profile } = config.performance;
+      if (!profile) {
+        return;
+      }
 
-      applyProfile({ chain, config });
+      chain.profile(profile);
     });
   },
 });
