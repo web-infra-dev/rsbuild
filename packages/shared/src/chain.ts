@@ -267,7 +267,7 @@ export function applyScriptCondition({
   const target = castArray(chain.get('target'));
   const legacyTarget = ['es5', 'es6', 'es2015', 'es2016'];
   if (legacyTarget.some((item) => target.includes(item))) {
-    rule.include.add(/[\\/]@rsbuild[\\/]core[\\/]/);
+    rule.include.add(/[\\/]@rsbuild[\\/]core[\\/]dist[\\/]/);
   }
 
   for (const condition of [...includes, ...(config.source.include || [])]) {
