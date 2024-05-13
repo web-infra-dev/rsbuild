@@ -11,6 +11,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
   },
   "experiments": {
     "asyncWebAssembly": true,
+    "css": false,
   },
   "ignoreWarnings": [
     /Conflicting order/,
@@ -20,17 +21,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
   },
   "mode": "development",
   "module": {
-    "generator": {
-      "css/module": {
-        "exportsConvention": "camel-case",
-        "exportsOnly": false,
-        "localIdentName": "[path][name]__[local]-[hash:6]",
-      },
-    },
     "parser": {
-      "css/module": {
-        "namedExports": false,
-      },
       "javascript": {
         "exportsPresence": "error",
       },
@@ -251,316 +242,199 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
         "type": "asset/resource",
       },
       {
-        "oneOf": [
-          {
-            "resolve": {
-              "preferRelative": true,
-            },
-            "sideEffects": true,
-            "test": /\\\\\\.module\\\\\\.\\\\w\\+\\$/i,
-            "type": "css/module",
-            "use": [
-              {
-                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
-                "options": {
-                  "postcssOptions": {
-                    "config": false,
-                    "plugins": [
-                      {
-                        "browsers": [
-                          "chrome >= 87",
-                          "edge >= 88",
-                          "firefox >= 78",
-                          "safari >= 14",
-                        ],
-                        "info": [Function],
-                        "options": {
-                          "flexbox": "no-2009",
-                          "overrideBrowserslist": [
-                            "chrome >= 87",
-                            "edge >= 88",
-                            "firefox >= 78",
-                            "safari >= 14",
-                          ],
-                        },
-                        "postcssPlugin": "autoprefixer",
-                        "prepare": [Function],
-                      },
-                    ],
-                  },
-                  "sourceMap": false,
-                },
-              },
-            ],
-          },
-          {
-            "resolve": {
-              "preferRelative": true,
-            },
-            "sideEffects": true,
-            "type": "css",
-            "use": [
-              {
-                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
-                "options": {
-                  "postcssOptions": {
-                    "config": false,
-                    "plugins": [
-                      {
-                        "browsers": [
-                          "chrome >= 87",
-                          "edge >= 88",
-                          "firefox >= 78",
-                          "safari >= 14",
-                        ],
-                        "info": [Function],
-                        "options": {
-                          "flexbox": "no-2009",
-                          "overrideBrowserslist": [
-                            "chrome >= 87",
-                            "edge >= 88",
-                            "firefox >= 78",
-                            "safari >= 14",
-                          ],
-                        },
-                        "postcssPlugin": "autoprefixer",
-                        "prepare": [Function],
-                      },
-                    ],
-                  },
-                  "sourceMap": false,
-                },
-              },
-            ],
-          },
-        ],
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
         "test": /\\\\\\.css\\$/,
-      },
-      {
-        "oneOf": [
+        "use": [
           {
-            "resolve": {
-              "preferRelative": true,
-            },
-            "sideEffects": true,
-            "test": /\\\\\\.module\\\\\\.\\\\w\\+\\$/i,
-            "type": "css/module",
-            "use": [
-              {
-                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
-                "options": {
-                  "postcssOptions": {
-                    "config": false,
-                    "plugins": [
-                      {
-                        "browsers": [
-                          "chrome >= 87",
-                          "edge >= 88",
-                          "firefox >= 78",
-                          "safari >= 14",
-                        ],
-                        "info": [Function],
-                        "options": {
-                          "flexbox": "no-2009",
-                          "overrideBrowserslist": [
-                            "chrome >= 87",
-                            "edge >= 88",
-                            "firefox >= 78",
-                            "safari >= 14",
-                          ],
-                        },
-                        "postcssPlugin": "autoprefixer",
-                        "prepare": [Function],
-                      },
-                    ],
-                  },
-                  "sourceMap": false,
-                },
-              },
-              {
-                "loader": "<ROOT>/packages/shared/compiled/less-loader",
-                "options": {
-                  "implementation": "<ROOT>/packages/shared/compiled/less",
-                  "lessOptions": {
-                    "javascriptEnabled": true,
-                    "paths": [
-                      "<ROOT>/node_modules",
-                    ],
-                  },
-                  "sourceMap": false,
-                },
-              },
-            ],
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
           },
           {
-            "resolve": {
-              "preferRelative": true,
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "options": {
+              "importLoaders": 1,
+              "modules": {
+                "auto": true,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+              "sourceMap": false,
             },
-            "sideEffects": true,
-            "type": "css",
-            "use": [
-              {
-                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
-                "options": {
-                  "postcssOptions": {
-                    "config": false,
-                    "plugins": [
-                      {
-                        "browsers": [
-                          "chrome >= 87",
-                          "edge >= 88",
-                          "firefox >= 78",
-                          "safari >= 14",
-                        ],
-                        "info": [Function],
-                        "options": {
-                          "flexbox": "no-2009",
-                          "overrideBrowserslist": [
-                            "chrome >= 87",
-                            "edge >= 88",
-                            "firefox >= 78",
-                            "safari >= 14",
-                          ],
-                        },
-                        "postcssPlugin": "autoprefixer",
-                        "prepare": [Function],
-                      },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "options": {
+              "postcssOptions": {
+                "config": false,
+                "plugins": [
+                  {
+                    "browsers": [
+                      "chrome >= 87",
+                      "edge >= 88",
+                      "firefox >= 78",
+                      "safari >= 14",
                     ],
+                    "info": [Function],
+                    "options": {
+                      "flexbox": "no-2009",
+                      "overrideBrowserslist": [
+                        "chrome >= 87",
+                        "edge >= 88",
+                        "firefox >= 78",
+                        "safari >= 14",
+                      ],
+                    },
+                    "postcssPlugin": "autoprefixer",
+                    "prepare": [Function],
                   },
-                  "sourceMap": false,
-                },
+                ],
               },
-              {
-                "loader": "<ROOT>/packages/shared/compiled/less-loader",
-                "options": {
-                  "implementation": "<ROOT>/packages/shared/compiled/less",
-                  "lessOptions": {
-                    "javascriptEnabled": true,
-                    "paths": [
-                      "<ROOT>/node_modules",
-                    ],
-                  },
-                  "sourceMap": false,
-                },
-              },
-            ],
+              "sourceMap": false,
+            },
           },
         ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
         "test": /\\\\\\.less\\$/,
-      },
-      {
-        "oneOf": [
+        "use": [
           {
-            "resolve": {
-              "preferRelative": true,
-            },
-            "sideEffects": true,
-            "test": /\\\\\\.module\\\\\\.\\\\w\\+\\$/i,
-            "type": "css/module",
-            "use": [
-              {
-                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
-                "options": {
-                  "postcssOptions": {
-                    "config": false,
-                    "plugins": [
-                      {
-                        "browsers": [
-                          "chrome >= 87",
-                          "edge >= 88",
-                          "firefox >= 78",
-                          "safari >= 14",
-                        ],
-                        "info": [Function],
-                        "options": {
-                          "flexbox": "no-2009",
-                          "overrideBrowserslist": [
-                            "chrome >= 87",
-                            "edge >= 88",
-                            "firefox >= 78",
-                            "safari >= 14",
-                          ],
-                        },
-                        "postcssPlugin": "autoprefixer",
-                        "prepare": [Function],
-                      },
-                    ],
-                  },
-                  "sourceMap": false,
-                },
-              },
-              {
-                "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
-                "options": {
-                  "join": [Function],
-                  "sourceMap": false,
-                },
-              },
-              {
-                "loader": "<ROOT>/packages/shared/compiled/sass-loader",
-                "options": {
-                  "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": true,
-                },
-              },
-            ],
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
           },
           {
-            "resolve": {
-              "preferRelative": true,
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "options": {
+              "importLoaders": 2,
+              "modules": {
+                "auto": true,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+              "sourceMap": false,
             },
-            "sideEffects": true,
-            "type": "css",
-            "use": [
-              {
-                "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
-                "options": {
-                  "postcssOptions": {
-                    "config": false,
-                    "plugins": [
-                      {
-                        "browsers": [
-                          "chrome >= 87",
-                          "edge >= 88",
-                          "firefox >= 78",
-                          "safari >= 14",
-                        ],
-                        "info": [Function],
-                        "options": {
-                          "flexbox": "no-2009",
-                          "overrideBrowserslist": [
-                            "chrome >= 87",
-                            "edge >= 88",
-                            "firefox >= 78",
-                            "safari >= 14",
-                          ],
-                        },
-                        "postcssPlugin": "autoprefixer",
-                        "prepare": [Function],
-                      },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "options": {
+              "postcssOptions": {
+                "config": false,
+                "plugins": [
+                  {
+                    "browsers": [
+                      "chrome >= 87",
+                      "edge >= 88",
+                      "firefox >= 78",
+                      "safari >= 14",
                     ],
+                    "info": [Function],
+                    "options": {
+                      "flexbox": "no-2009",
+                      "overrideBrowserslist": [
+                        "chrome >= 87",
+                        "edge >= 88",
+                        "firefox >= 78",
+                        "safari >= 14",
+                      ],
+                    },
+                    "postcssPlugin": "autoprefixer",
+                    "prepare": [Function],
                   },
-                  "sourceMap": false,
-                },
+                ],
               },
-              {
-                "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
-                "options": {
-                  "join": [Function],
-                  "sourceMap": false,
-                },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/less-loader",
+            "options": {
+              "implementation": "<ROOT>/packages/shared/compiled/less",
+              "lessOptions": {
+                "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/node_modules",
+                ],
               },
-              {
-                "loader": "<ROOT>/packages/shared/compiled/sass-loader",
-                "options": {
-                  "implementation": "<ROOT>/packages/shared/compiled/sass",
-                  "sourceMap": true,
-                },
-              },
-            ],
+              "sourceMap": false,
+            },
           },
         ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
         "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "options": {
+              "importLoaders": 3,
+              "modules": {
+                "auto": true,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "options": {
+              "postcssOptions": {
+                "config": false,
+                "plugins": [
+                  {
+                    "browsers": [
+                      "chrome >= 87",
+                      "edge >= 88",
+                      "firefox >= 78",
+                      "safari >= 14",
+                    ],
+                    "info": [Function],
+                    "options": {
+                      "flexbox": "no-2009",
+                      "overrideBrowserslist": [
+                        "chrome >= 87",
+                        "edge >= 88",
+                        "firefox >= 78",
+                        "safari >= 14",
+                      ],
+                    },
+                    "postcssPlugin": "autoprefixer",
+                    "prepare": [Function],
+                  },
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
+            "options": {
+              "join": [Function],
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/sass-loader",
+            "options": {
+              "implementation": "<ROOT>/packages/shared/compiled/sass",
+              "sourceMap": true,
+            },
+          },
+        ],
       },
     ],
   },
@@ -594,8 +468,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
   },
   "output": {
     "chunkFilename": "static/js/async/[name].js",
-    "cssChunkFilename": "static/css/async/[name].css",
-    "cssFilename": "static/css/[name].css",
     "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
     "hashFunction": "xxhash64",
@@ -610,6 +482,13 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
   "plugins": [
     HotModuleReplacementPlugin {
       "name": "HotModuleReplacementPlugin",
+    },
+    CssExtractRspackPlugin {
+      "options": {
+        "chunkFilename": "static/css/async/[name].css",
+        "filename": "static/css/[name].css",
+        "ignoreOrder": true,
+      },
     },
     HtmlWebpackPlugin {
       "options": {
@@ -677,9 +556,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
       },
       "affectedHooks": "compilation",
       "name": "DefinePlugin",
-    },
-    RemoveCssSourcemapPlugin {
-      "name": "RemoveCssSourcemapPlugin",
     },
   ],
   "resolve": {

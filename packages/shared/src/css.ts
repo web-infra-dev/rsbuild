@@ -1,15 +1,21 @@
+import path from 'node:path';
 import type { AcceptedPlugin } from 'postcss';
 import deepmerge from '../compiled/deepmerge';
 import { CSS_MODULES_REGEX, NODE_MODULES_REGEX } from './constants';
+import { getBrowserslistWithDefault } from './getBrowserslist';
 import { mergeChainedOptions } from './mergeChainedOptions';
 import type {
+  BundlerChainRule,
+  CSSExtractOptions,
   CSSLoaderOptions,
+  ModifyChainUtils,
   NormalizedConfig,
   PostCSSLoaderOptions,
   PostCSSOptions,
+  RsbuildContext,
   RsbuildTarget,
 } from './types';
-import { isFunction, isPlainObject } from './utils';
+import { getSharedPkgCompiledPath, isFunction, isPlainObject } from './utils';
 
 export const getCssModuleLocalIdentName = (
   config: NormalizedConfig,
@@ -286,3 +292,119 @@ export const getResolveUrlJoinFn = async () => {
     createJoinImplementation(rsbuildGenerator),
   );
 };
+
+export async function applyCSSRule({
+  rule,
+  config,
+  context,
+  utils: { target, isProd, isServer, CHAIN_ID, isWebWorker },
+  importLoaders = 1,
+  cssExtractPlugin,
+}: {
+  rule: BundlerChainRule;
+  config: NormalizedConfig;
+  context: RsbuildContext;
+  utils: ModifyChainUtils;
+  importLoaders?: number;
+  cssExtractPlugin: {
+    loader: string;
+  };
+}) {
+  const browserslist = await getBrowserslistWithDefault(
+    context.rootPath,
+    config,
+    target,
+  );
+
+  // 1. Check user config
+  const enableExtractCSS = isUseCssExtract(config, target);
+  const enableCSSModuleTS = Boolean(config.output.enableCssModuleTSDeclaration);
+
+  // 2. Prepare loader options
+  const localIdentName = getCssModuleLocalIdentName(config, isProd);
+
+  const cssLoaderOptions = getCssLoaderOptions({
+    config,
+    importLoaders,
+    isServer,
+    isWebWorker,
+    localIdentName,
+  });
+
+  // 3. Create webpack rule
+  // Order: style-loader/mini-css-extract -> css-loader -> postcss-loader
+  if (!isServer && !isWebWorker) {
+    // use mini-css-extract-plugin loader
+    if (enableExtractCSS) {
+      const extraCSSOptions: Required<CSSExtractOptions> =
+        typeof config.tools.cssExtract === 'object'
+          ? config.tools.cssExtract
+          : {
+              loaderOptions: {},
+              pluginOptions: {},
+            };
+
+      rule
+        .use(CHAIN_ID.USE.MINI_CSS_EXTRACT)
+        .loader(cssExtractPlugin.loader)
+        .options(extraCSSOptions.loaderOptions)
+        .end();
+    }
+    // use style-loader
+    else {
+      const styleLoaderOptions = mergeChainedOptions({
+        defaults: {},
+        options: config.tools.styleLoader,
+      });
+
+      rule
+        .use(CHAIN_ID.USE.STYLE)
+        .loader(getSharedPkgCompiledPath('style-loader'))
+        .options(styleLoaderOptions)
+        .end();
+    }
+
+    // use css-modules-typescript-loader
+    if (enableCSSModuleTS && cssLoaderOptions.modules) {
+      rule
+        .use(CHAIN_ID.USE.CSS_MODULES_TS)
+        .loader(path.resolve(__dirname, './loaders/cssModulesTypescriptLoader'))
+        .options({
+          modules: cssLoaderOptions.modules,
+        })
+        .end();
+    }
+  } else {
+    rule
+      .use(CHAIN_ID.USE.IGNORE_CSS)
+      .loader(path.resolve(__dirname, './loaders/ignoreCssLoader'))
+      .end();
+  }
+
+  rule
+    .use(CHAIN_ID.USE.CSS)
+    .loader(getSharedPkgCompiledPath('css-loader'))
+    .options(cssLoaderOptions)
+    .end();
+
+  if (!isServer && !isWebWorker) {
+    const postcssLoaderOptions = await getPostcssLoaderOptions({
+      browserslist,
+      config,
+      root: context.rootPath,
+    });
+
+    rule
+      .use(CHAIN_ID.USE.POSTCSS)
+      .loader(getSharedPkgCompiledPath('postcss-loader'))
+      .options(postcssLoaderOptions)
+      .end();
+  }
+
+  // CSS imports should always be treated as sideEffects
+  rule.merge({ sideEffects: true });
+
+  // Enable preferRelative by default, which is consistent with the default behavior of css-loader
+  // see: https://github.com/webpack-contrib/css-loader/blob/579fc13/src/plugins/postcss-import-parser.js#L234
+  rule.resolve.preferRelative(true);
+}

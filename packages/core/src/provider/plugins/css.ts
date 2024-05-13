@@ -1,23 +1,11 @@
-import path from 'node:path';
 import {
-  type BundlerChain,
-  CSS_MODULES_REGEX,
+  type BundlerChainRule,
   CSS_REGEX,
-  type ModifyBundlerChainUtils,
+  type ModifyChainUtils,
   type RsbuildContext,
-  type RspackRule,
-  type RuleSetRule,
-  getBrowserslistWithDefault,
-  getCssLoaderOptions,
-  getCssModuleLocalIdentName,
-  getPostcssLoaderOptions,
-  getSharedPkgCompiledPath,
-  isUseCssExtract,
-  kebabCase,
-  logger,
-  mergeChainedOptions,
-  resolvePackage,
+  applyCSSRule,
 } from '@rsbuild/shared';
+import { CssExtractRspackPlugin } from '@rspack/core';
 import type { NormalizedConfig, RsbuildPlugin } from '../../types';
 
 export const enableNativeCss = (config: NormalizedConfig) =>
@@ -27,239 +15,45 @@ export async function applyBaseCSSRule({
   rule,
   config,
   context,
-  utils: { target, isProd, isServer, isWebWorker, CHAIN_ID },
+  utils,
   importLoaders = 1,
 }: {
-  rule: ReturnType<BundlerChain['module']['rule']>;
+  rule: BundlerChainRule;
   config: NormalizedConfig;
   context: RsbuildContext;
-  utils: ModifyBundlerChainUtils;
+  utils: ModifyChainUtils;
   importLoaders?: number;
 }) {
-  // 1. Check user config
-  const enableCSSModuleTS = Boolean(config.output.enableCssModuleTSDeclaration);
-
-  const browserslist = await getBrowserslistWithDefault(
-    context.rootPath,
+  return applyCSSRule({
+    rule,
     config,
-    target,
-  );
-
-  // when disableExtractCSS, use css-loader + style-loader
-  if (!enableNativeCss(config)) {
-    const localIdentName = getCssModuleLocalIdentName(config, isProd);
-
-    const cssLoaderOptions = getCssLoaderOptions({
-      config,
-      importLoaders,
-      isServer,
-      isWebWorker,
-      localIdentName,
-    });
-
-    if (!isServer && !isWebWorker) {
-      const styleLoaderOptions = mergeChainedOptions({
-        defaults: {},
-        options: config.tools.styleLoader,
-      });
-
-      rule
-        .use(CHAIN_ID.USE.STYLE)
-        .loader(getSharedPkgCompiledPath('style-loader'))
-        .options(styleLoaderOptions)
-        .end();
-
-      // use css-modules-typescript-loader
-      if (enableCSSModuleTS && cssLoaderOptions.modules) {
-        rule
-          .use(CHAIN_ID.USE.CSS_MODULES_TS)
-          .loader(
-            resolvePackage(
-              '@rsbuild/shared/css-modules-typescript-loader',
-              __dirname,
-            ),
-          )
-          .options({
-            modules: cssLoaderOptions.modules,
-          })
-          .end();
-      }
-    } else {
-      rule
-        .use(CHAIN_ID.USE.IGNORE_CSS)
-        .loader(resolvePackage('@rsbuild/shared/ignore-css-loader', __dirname))
-        .end();
-    }
-
-    rule
-      .use(CHAIN_ID.USE.CSS)
-      .loader(getSharedPkgCompiledPath('css-loader'))
-      .options(cssLoaderOptions)
-      .end();
-  } else {
-    // can not get experiment.css result, so we fake a css-modules-typescript-pre-loader
-    if (!isServer && !isWebWorker && enableCSSModuleTS) {
-      const { cssModules } = config.output;
-      rule
-        .use(CHAIN_ID.USE.CSS_MODULES_TS)
-        .loader(path.resolve(__dirname, '../css-modules-typescript-pre-loader'))
-        .options({
-          modules: {
-            exportLocalsConvention: cssModules.exportLocalsConvention,
-            auto: cssModules.auto,
-          },
-        })
-        .end();
-    }
-
-    rule.type('css');
-  }
-
-  if (!isServer && !isWebWorker) {
-    const postcssLoaderOptions = await getPostcssLoaderOptions({
-      browserslist,
-      config,
-      root: context.rootPath,
-    });
-
-    rule
-      .use(CHAIN_ID.USE.POSTCSS)
-      .loader(getSharedPkgCompiledPath('postcss-loader'))
-      .options(postcssLoaderOptions)
-      .end();
-  }
-
-  // CSS imports should always be treated as sideEffects
-  rule.merge({ sideEffects: true });
-
-  // Enable preferRelative by default, which is consistent with the default behavior of css-loader
-  // see: https://github.com/webpack-contrib/css-loader/blob/579fc13/src/plugins/postcss-import-parser.js#L234
-  rule.resolve.preferRelative(true);
+    context,
+    utils,
+    importLoaders,
+    cssExtractPlugin: CssExtractRspackPlugin,
+  });
 }
-
-/**
- * Use type: "css/module" rule instead of css-loader modules.auto config
- *
- * applyCSSModuleRule in modifyRspackConfig, so that other plugins can easily adjust css rule in Chain.
- */
-export const applyCSSModuleRule = (
-  rules: RspackRule[] | undefined,
-  ruleTest: RegExp,
-  config: NormalizedConfig,
-) => {
-  if (!rules || !enableNativeCss(config)) {
-    return;
-  }
-
-  const ruleIndex = rules.findIndex(
-    (r) => r && r !== '...' && r.test === ruleTest,
-  );
-
-  if (ruleIndex === -1) {
-    return;
-  }
-
-  const cssModulesAuto = config.output.cssModules.auto;
-
-  if (!cssModulesAuto) {
-    return;
-  }
-
-  const rule = rules[ruleIndex] as RuleSetRule;
-
-  const { test, type, ...rest } = rule;
-
-  rules[ruleIndex] = {
-    test: ruleTest,
-    oneOf: [
-      {
-        ...rest,
-        test:
-          typeof cssModulesAuto !== 'boolean'
-            ? cssModulesAuto
-            : // auto: true
-              CSS_MODULES_REGEX,
-        type: 'css/module',
-      },
-      {
-        ...rest,
-        type: 'css',
-      },
-    ],
-  };
-};
 
 export const pluginCss = (): RsbuildPlugin => {
   return {
     name: 'rsbuild:css',
     setup(api) {
       api.modifyBundlerChain(async (chain, utils) => {
-        const config = api.getNormalizedConfig();
-
         const rule = chain.module.rule(utils.CHAIN_ID.RULE.CSS);
+        const config = api.getNormalizedConfig();
         rule.test(CSS_REGEX);
-
         await applyBaseCSSRule({
           rule,
           utils,
           config,
           context: api.context,
         });
-
-        const enableExtractCSS = isUseCssExtract(config, utils.target);
-
-        // TODO: there is no switch to turn off experiments.css sourcemap in rspack, so we manually remove css sourcemap in Rsbuild
-        if (!config.output.sourceMap.css && enableExtractCSS) {
-          const { RemoveCssSourcemapPlugin } = await import(
-            '../../rspack/RemoveCssSourcemapPlugin'
-          );
-          chain
-            .plugin('remove-css-sourcemap')
-            .use(RemoveCssSourcemapPlugin, []);
-        }
       });
-      api.modifyRspackConfig(
-        async (rspackConfig, { isProd, isServer, isWebWorker }) => {
-          const config = api.getNormalizedConfig();
 
-          if (!enableNativeCss(config)) {
-            rspackConfig.experiments ||= {};
-            rspackConfig.experiments.css = false;
-            return;
-          }
-
-          let localIdentName =
-            config.output.cssModules.localIdentName ||
-            // Using shorter classname in production to reduce bundle size
-            (isProd ? '[local]-[hash:6]' : '[path][name]__[local]-[hash:6]');
-
-          if (localIdentName.includes(':base64')) {
-            logger.warn(
-              `Custom hashDigest in output.cssModules.localIdentName is currently not supported when using Rspack, the 'base64' will be ignored.`,
-            );
-            localIdentName = localIdentName.replace(':base64', '');
-          }
-
-          // need use "css/module" generator instead of modules.auto config
-          rspackConfig.module ||= {};
-          rspackConfig.module.generator ||= {};
-          rspackConfig.module.generator['css/module'] = {
-            exportsConvention: kebabCase(
-              config.output.cssModules.exportLocalsConvention,
-            ),
-            localIdentName,
-            exportsOnly: isServer || isWebWorker,
-          };
-          rspackConfig.module.parser ||= {};
-          rspackConfig.module.parser['css/module'] = {
-            namedExports: false,
-          };
-
-          const rules = rspackConfig.module?.rules;
-
-          applyCSSModuleRule(rules, CSS_REGEX, config);
-        },
-      );
+      api.modifyRspackConfig(async (rspackConfig) => {
+        rspackConfig.experiments ||= {};
+        rspackConfig.experiments.css = false;
+      });
     },
   };
 };

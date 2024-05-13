@@ -65,15 +65,6 @@ export function pluginStylus(options?: PluginStylusOptions): RsbuildPlugin {
           .loader(require.resolve('stylus-loader'))
           .options(mergedOptions);
       });
-
-      api.modifyRspackConfig(async (rspackConfig) => {
-        const { applyCSSModuleRule } = await import('@rsbuild/core/internal');
-
-        const config = api.getNormalizedConfig();
-        const rules = rspackConfig.module?.rules;
-
-        applyCSSModuleRule(rules, STYLUS_REGEX, config);
-      });
     },
   };
 }
