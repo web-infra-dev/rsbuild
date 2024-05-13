@@ -125,7 +125,7 @@ const generateManifest =
 
       if (asyncCSS.length) {
         entryManifest.async = {
-          ...(entries[name].async || {}),
+          ...(entryManifest.async || {}),
           css: asyncCSS,
         };
       }
