@@ -21,13 +21,14 @@ export async function applyBaseCSSRule({
   utils: ModifyChainUtils;
   importLoaders?: number;
 }) {
+  const { default: cssExtractPlugin } = await import('mini-css-extract-plugin');
   return applyCSSRule({
     rule,
     config,
     context,
     utils,
     importLoaders,
-    cssExtractPlugin: require('mini-css-extract-plugin'),
+    cssExtractPlugin,
   });
 }
 
