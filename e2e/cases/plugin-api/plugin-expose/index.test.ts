@@ -1,4 +1,5 @@
-import { expect, test } from '@playwright/test';
+import { rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
 
 type ParentAPI = {
@@ -6,7 +7,7 @@ type ParentAPI = {
   double: (val: number) => number;
 };
 
-test('should allow plugin to expose and consume API', async () => {
+rspackOnlyTest('should allow plugin to expose and consume API', async () => {
   const parentSymbol = Symbol('parent-api');
 
   const pluginParent: RsbuildPlugin = {
