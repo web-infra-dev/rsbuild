@@ -39,7 +39,7 @@ const getCssModuleLocalIdentName = (
     ? '[local]-[hash:base64:6]'
     : '[path][name]__[local]-[hash:base64:6]');
 
-// If the target is 'node' or 'web-worker' and the modules option of css-loader is enabled,
+// If the target is not `web` and the modules option of css-loader is enabled,
 // we must enable exportOnlyLocals to only exports the modules identifier mappings.
 // Otherwise, the compiled CSS code may contain invalid code, such as `new URL`.
 // https://github.com/webpack-contrib/css-loader#exportonlylocals
@@ -203,14 +203,12 @@ const getPostcssLoaderOptions = async ({
 const getCssLoaderOptions = ({
   config,
   importLoaders,
-  isServer,
-  isWebWorker,
+  target,
   localIdentName,
 }: {
   config: NormalizedConfig;
   importLoaders: number;
-  isServer: boolean;
-  isWebWorker: boolean;
+  target: RsbuildTarget;
   localIdentName: string;
 }) => {
   const { cssModules } = config.output;
@@ -234,7 +232,7 @@ const getCssLoaderOptions = ({
 
   const cssLoaderOptions = normalizeCssLoaderOptions(
     mergedCssLoaderOptions,
-    isServer || isWebWorker,
+    target !== 'web',
   );
 
   return cssLoaderOptions;
@@ -244,7 +242,7 @@ export async function applyCSSRule({
   rule,
   config,
   context,
-  utils: { target, isProd, isServer, CHAIN_ID, isWebWorker },
+  utils: { target, isProd, CHAIN_ID },
   importLoaders = 1,
 }: {
   rule: BundlerChainRule;
@@ -268,14 +266,13 @@ export async function applyCSSRule({
   const cssLoaderOptions = getCssLoaderOptions({
     config,
     importLoaders,
-    isServer,
-    isWebWorker,
+    target,
     localIdentName,
   });
 
-  // 3. Create webpack rule
+  // 3. Create Rspack rule
   // Order: style-loader/mini-css-extract -> css-loader -> postcss-loader
-  if (!isServer && !isWebWorker) {
+  if (target === 'web') {
     // use mini-css-extract-plugin loader
     if (enableExtractCSS) {
       const extraCSSOptions: Required<CSSExtractOptions> =
@@ -318,7 +315,7 @@ export async function applyCSSRule({
     .options(cssLoaderOptions)
     .end();
 
-  if (!isServer && !isWebWorker) {
+  if (target === 'web') {
     const postcssLoaderOptions = await getPostcssLoaderOptions({
       browserslist,
       config,

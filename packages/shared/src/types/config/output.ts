@@ -274,7 +274,7 @@ export interface OutputConfig {
   injectStyles?: boolean;
   /**
    * Specifies the range of target browsers that the project is compatible with.
-   * This value will be used by [@babel/preset-env](https://babeljs.io/docs/en/babel-preset-env) and
+   * This value will be used by [SWC](https://github.com/swc-project/swc) and
    * [autoprefixer](https://github.com/postcss/autoprefixer) to identify the JavaScript syntax that
    * need to be transformed and the CSS browser prefixes that need to be added.
    */

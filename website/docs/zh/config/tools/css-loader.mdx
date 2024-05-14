@@ -1,9 +1,7 @@
 # tools.cssLoader
 
 - **类型：** `Object | Function`
-- **默认值：** `undefined`
-
-通过 `tools.cssLoader` 可以修改 [css-loader](https://github.com/webpack-contrib/css-loader) 的配置项。默认配置如下:
+- **默认值：**
 
 ```js
 const defaultOptions = {
@@ -12,20 +10,18 @@ const defaultOptions = {
     namedExport: false,
     exportLocalsConvention: 'camelCase',
     localIdentName: rsbuildConfig.output.cssModules.localIdentName,
-    // isServer 表示 node (SSR) 构建
-    // isWebWorker 表示 web worker 构建
-    exportOnlyLocals: isServer || isWebWorker,
+    exportOnlyLocals: target !== 'web',
   },
   sourceMap: rsbuildConfig.output.sourceMap.css,
-  // importLoaders 在编译 css 文件时为 `1`，在编译 sass/less 文件时为 `2`
+  // 在编译 css 文件时为 `1`，在编译 sass/less 文件时为 `2`
   importLoaders: 1 || 2,
 };
 ```
 
-:::tip
-在使用 Rspack 作为打包工具时，仅支持在 [injectStyles](/config/output/inject-styles) 时使用该配置。
+Rsbuild 默认使用 [css-loader](https://github.com/webpack-contrib/css-loader) 来处理 CSS 资源。你可以通过 `tools.cssLoader` 来修改 css-loader 的选项。
 
-修改 CSS Modules 相关配置，推荐使用 [output.cssModules](/config/output/css-modules) 配置项。
+:::tip
+如果你需要修改 CSS Modules 相关的选项，推荐优先使用 [output.cssModules](/config/output/css-modules) 配置项。
 :::
 
 ### Object 类型

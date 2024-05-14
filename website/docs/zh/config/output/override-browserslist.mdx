@@ -3,13 +3,17 @@
 - **类型：** `string[] | Record<RsbuildTarget, string[]>`
 - **默认值：** `undefined`
 
-指定项目兼容的目标浏览器范围。该值会被 [@babel/preset-env](https://babeljs.io/docs/en/babel-preset-env) 和 [autoprefixer](https://github.com/postcss/autoprefixer) 用来确定需要转换的 JavaScript 语法特性和需要添加的 CSS 浏览器前缀。
+指定项目兼容的目标浏览器范围。
+
+该值会被 [SWC](https://github.com/swc-project/swc) 和 [autoprefixer](https://github.com/postcss/autoprefixer) 等工具读取，用来确定需要转换的 JavaScript 语法特性和需要添加的 CSS 浏览器前缀。
 
 ## 优先级
 
 `overrideBrowserslist` 配置的优先级高于项目中的 `.browserslistrc` 配置文件和 package.json 中的 `browserslist` 字段。
 
 大多数场景下，推荐优先使用 `.browserslistrc` 文件，而不是使用 `overrideBrowserslist` 配置。因为 `.browserslistrc` 文件是官方定义的配置文件，通用性更强，可以被社区中的其他库识别。
+
+> 详见 [设置浏览器范围](/guide/advanced/browserslist)。
 
 ## 默认值
 

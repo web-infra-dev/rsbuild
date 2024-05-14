@@ -164,7 +164,7 @@ export const pluginLightningcss = (
 
   setup(api) {
     api.modifyBundlerChain(async (chain, utils) => {
-      const { isServer, isWebWorker, isProd, target } = utils;
+      const { isProd, target } = utils;
       const { context } = api;
       const config = api.getNormalizedConfig();
       const targets = await getLightningCSSTargets({
@@ -174,7 +174,7 @@ export const pluginLightningcss = (
         options,
       });
 
-      if (!isServer && !isWebWorker && options?.transform !== false) {
+      if (target === 'web' && options?.transform !== false) {
         applyLightningCSSLoader({
           chain,
           utils,
