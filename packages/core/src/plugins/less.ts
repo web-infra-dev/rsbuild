@@ -1,9 +1,69 @@
+import path from 'node:path';
 import {
+  type FileFilterUtil,
   LESS_REGEX,
-  getLessLoaderOptions,
+  type LessLoaderOptions,
+  type ToolsLessConfig,
+  castArray,
+  deepmerge,
   getSharedPkgCompiledPath,
+  mergeChainedOptions,
 } from '@rsbuild/shared';
+import { getCompiledPath } from '../provider/shared';
 import type { RsbuildPlugin } from '../types';
+
+const getLessLoaderOptions = (
+  rsbuildLessConfig: ToolsLessConfig | undefined,
+  isUseCssSourceMap: boolean,
+  rootPath: string,
+) => {
+  const excludes: (RegExp | string)[] = [];
+
+  const addExcludes: FileFilterUtil = (items) => {
+    excludes.push(...castArray(items));
+  };
+
+  const defaultLessLoaderOptions: LessLoaderOptions = {
+    lessOptions: {
+      javascriptEnabled: true,
+      // let less resolve from node_modules in the current root directory,
+      // Avoid resolving from wrong node_modules.
+      paths: [path.join(rootPath, 'node_modules')],
+    },
+    sourceMap: isUseCssSourceMap,
+    implementation: getSharedPkgCompiledPath('less'),
+  };
+
+  const mergeFn = (
+    defaults: LessLoaderOptions,
+    userOptions: LessLoaderOptions,
+  ): LessLoaderOptions => {
+    const getLessOptions = () => {
+      if (defaults.lessOptions && userOptions.lessOptions) {
+        return deepmerge(defaults.lessOptions, userOptions.lessOptions);
+      }
+      return userOptions.lessOptions || defaults.lessOptions;
+    };
+
+    return {
+      ...defaults,
+      ...userOptions,
+      lessOptions: getLessOptions(),
+    };
+  };
+
+  const mergedOptions = mergeChainedOptions({
+    defaults: defaultLessLoaderOptions,
+    options: rsbuildLessConfig,
+    utils: { addExcludes },
+    mergeFn,
+  });
+
+  return {
+    options: mergedOptions,
+    excludes,
+  };
+};
 
 export function pluginLess(): RsbuildPlugin {
   return {
@@ -37,7 +97,7 @@ export function pluginLess(): RsbuildPlugin {
 
         rule
           .use(utils.CHAIN_ID.USE.LESS)
-          .loader(getSharedPkgCompiledPath('less-loader'))
+          .loader(getCompiledPath('less-loader'))
           .options(options);
       });
     },

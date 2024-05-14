@@ -1,7 +1,47 @@
+import type { NormalizedConfig } from '@rsbuild/shared';
+import autoprefixer from '@rsbuild/shared/autoprefixer';
 import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginCss } from '../src/plugins/css';
+import {
+  applyAutoprefixer,
+  normalizeCssLoaderOptions,
+  pluginCss,
+} from '../src/plugins/css';
 import { pluginLess } from '../src/plugins/less';
 import { pluginSass } from '../src/plugins/sass';
+
+describe('normalizeCssLoaderOptions', () => {
+  it('should enable exportOnlyLocals correctly', () => {
+    expect(normalizeCssLoaderOptions({ modules: false }, true)).toEqual({
+      modules: false,
+    });
+
+    expect(normalizeCssLoaderOptions({ modules: true }, true)).toEqual({
+      modules: {
+        exportOnlyLocals: true,
+      },
+    });
+
+    expect(normalizeCssLoaderOptions({ modules: true }, false)).toEqual({
+      modules: true,
+    });
+
+    expect(normalizeCssLoaderOptions({ modules: 'local' }, true)).toEqual({
+      modules: {
+        mode: 'local',
+        exportOnlyLocals: true,
+      },
+    });
+
+    expect(
+      normalizeCssLoaderOptions({ modules: { auto: true } }, true),
+    ).toEqual({
+      modules: {
+        auto: true,
+        exportOnlyLocals: true,
+      },
+    });
+  });
+});
 
 describe('plugin-css', () => {
   it('should override browserslist of autoprefixer when using output.overrideBrowserslist config', async () => {
@@ -272,4 +312,23 @@ describe('plugin-sass', () => {
     const bundlerConfigs = await rsbuild.initConfigs();
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
+});
+
+it('should not apply autoprefixer if user config contains autoprefixer', async () => {
+  const config = {
+    tools: {},
+  } as NormalizedConfig;
+
+  expect(
+    (await applyAutoprefixer([autoprefixer()], ['Chrome >= 100'], config))
+      .length,
+  ).toEqual(1);
+
+  expect(
+    (await applyAutoprefixer([autoprefixer], ['Chrome >= 100'], config)).length,
+  ).toEqual(1);
+
+  expect(
+    (await applyAutoprefixer([], ['Chrome >= 100'], config)).length,
+  ).toEqual(1);
 });

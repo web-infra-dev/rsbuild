@@ -4,11 +4,11 @@ import {
   getCssExtractPlugin,
   getDistPath,
   getFilename,
-  isUseCssExtract,
   mergeChainedOptions,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import type { RsbuildPlugin } from '../types';
+import { isUseCssExtract } from './css';
 
 export const pluginOutput = (): RsbuildPlugin => ({
   name: 'rsbuild:output',
