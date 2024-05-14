@@ -3,13 +3,17 @@
 - **Type:** `string[] | Record<RsbuildTarget, string[]`
 - **Default:** `undefined`
 
-Specifies the range of target browsers that the project is compatible with. This value will be used by [@babel/preset-env](https://babeljs.io/docs/en/babel-preset-env) and [autoprefixer](https://github.com/postcss/autoprefixer) to identify the JavaScript syntax that need to be transformed and the CSS browser prefixes that need to be added.
+Specifies the range of target browsers that the project is compatible with.
+
+This value will be used by tools such as [SWC](https://github.com/swc-project/swc) and [autoprefixer](https://github.com/postcss/autoprefixer) to identify the JavaScript syntax that need to be transformed and the CSS browser prefixes that need to be added.
 
 ## Priority
 
 The `overrideBrowserslist` config will override the `.browserslistrc` config file in the project and the `browserslist` field in package.json.
 
 In most cases, it is recommended to use the `.browserslistrc` file rather than the `overrideBrowserslist` config. Because the `.browserslistrc` file is the official config file, it is more general and can be recognized by other libraries in the community.
+
+> For more details, see [Browserslist](/guide/advanced/browserslist).
 
 ## Default Value
 

@@ -44,7 +44,7 @@ Set the directory of the dist files. Rsbuild will output files to the correspond
 
 Detail:
 
-- `root`: The root directory of all files.
+- `root`: The root directory of all output files.
 - `html`: The output directory of HTML files.
 - `js`: The output directory of JavaScript files.
 - `jsAsync`: The output directory of async JavaScript files, which by default will be output to the `async` subdirectory of `distPath.js`.
@@ -55,8 +55,8 @@ Detail:
 - `wasm`: The output directory of WebAssembly files.
 - `image`: The output directory of non-SVG images.
 - `media`: The output directory of media assets, such as videos.
-- `server`: The output directory of server bundles when target is `node`.
-- `worker`: The output directory of service worker bundles when target is `service-worker`.
+- `server`: The output directory of server bundles when [target](/config/output/targets) is `node`.
+- `worker`: The output directory of service worker bundles when [target](/config/output/targets) is `service-worker`.
 
 ### Root Directory
 

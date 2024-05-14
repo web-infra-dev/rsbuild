@@ -1,9 +1,6 @@
 # tools.cssLoader
 
 - **Type:** `Object | Function`
-- **Default:** `undefined`
-
-The config of [css-loader](https://github.com/webpack-contrib/css-loader) can be modified through `tools.cssLoader`. The default config is as follows:
 
 ```js
 const defaultOptions = {
@@ -12,20 +9,18 @@ const defaultOptions = {
     namedExport: false,
     exportLocalsConvention: 'camelCase',
     localIdentName: rsbuildConfig.output.cssModules.localIdentName,
-    // isServer indicates node (SSR) build
-    // isWebWorker indicates web worker build
-    exportOnlyLocals: isServer || isWebWorker,
+    exportOnlyLocals: target !== 'web',
   },
   sourceMap: rsbuildConfig.output.sourceMap.css,
-  // importLoaders is `1` when compiling css files, and is `2` when compiling sass/less files
+  // value is `1` when compiling css files, and is `2` when compiling sass/less files
   importLoaders: 1 || 2,
 };
 ```
 
-:::tip
-When using Rspack as the bundler, this configuration is only supported when set [injectStyles](/config/output/inject-styles) is true.
+Rsbuild uses [css-loader](https://github.com/webpack-contrib/css-loader) by default to handle CSS resources. You can modify the options of css-loader through `tools.cssLoader`.
 
-To modify CSS Modules configuration, it is recommended to use the [output.cssModules](/config/output/css-modules) configuration.
+:::tip
+If you need to modify the options related to CSS Modules, it is recommended to use the [output.cssModules](/config/output/css-modules) config first.
 :::
 
 ### Object Type
