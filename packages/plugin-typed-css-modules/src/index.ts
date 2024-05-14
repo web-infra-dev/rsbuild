@@ -10,8 +10,8 @@ export const pluginTypedCSSModules = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain({
       order: 'post',
-      handler: async (chain, { isServer, isWebWorker, CHAIN_ID }) => {
-        if (!isServer && !isWebWorker) {
+      handler: async (chain, { target, CHAIN_ID }) => {
+        if (target === 'web') {
           const ruleIds = [
             CHAIN_ID.RULE.CSS,
             CHAIN_ID.RULE.SASS,
