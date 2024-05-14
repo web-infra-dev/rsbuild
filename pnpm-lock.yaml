@@ -696,6 +696,9 @@ importers:
         specifier: ^8.4.38
         version: 8.4.38
     devDependencies:
+      '@types/fs-extra':
+        specifier: ^11.0.4
+        version: 11.0.4
       '@types/node':
         specifier: 18.x
         version: 18.19.31
@@ -720,6 +723,9 @@ importers:
       dotenv-expand:
         specifier: 11.0.6
         version: 11.0.6
+      fs-extra:
+        specifier: ^11.2.0
+        version: 11.2.0
       http-compression:
         specifier: 1.0.20
         version: 1.0.20
