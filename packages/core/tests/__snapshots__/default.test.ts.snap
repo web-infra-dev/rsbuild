@@ -68,7 +68,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
-                  "tsx": true,
+                  "tsx": false,
                 },
                 "preserveAllComments": true,
                 "transform": {
@@ -112,7 +112,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
-                  "tsx": true,
+                  "tsx": false,
                 },
                 "preserveAllComments": true,
                 "transform": {
@@ -648,7 +648,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
-                  "tsx": true,
+                  "tsx": false,
                 },
                 "preserveAllComments": true,
                 "transform": {
@@ -692,7 +692,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
-                  "tsx": true,
+                  "tsx": false,
                 },
                 "preserveAllComments": true,
                 "transform": {
@@ -1287,7 +1287,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
-                  "tsx": true,
+                  "tsx": false,
                 },
                 "preserveAllComments": true,
                 "transform": {
@@ -1325,7 +1325,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
-                  "tsx": true,
+                  "tsx": false,
                 },
                 "preserveAllComments": true,
                 "transform": {
@@ -1695,7 +1695,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
-                  "tsx": true,
+                  "tsx": false,
                 },
                 "preserveAllComments": true,
                 "transform": {
@@ -1739,7 +1739,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
-                  "tsx": true,
+                  "tsx": false,
                 },
                 "preserveAllComments": true,
                 "transform": {

@@ -68,7 +68,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
-                  "tsx": true,
+                  "tsx": false,
                 },
                 "preserveAllComments": true,
                 "transform": {
@@ -112,7 +112,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
-                  "tsx": true,
+                  "tsx": false,
                 },
                 "preserveAllComments": true,
                 "transform": {
