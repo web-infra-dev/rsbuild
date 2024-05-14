@@ -1,6 +1,7 @@
 import { join, resolve } from 'node:path';
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
+import { pluginTypedCSSModules } from '@rsbuild/plugin-typed-css-modules';
 import { fse } from '@rsbuild/shared';
 
 const fixtures = __dirname;
@@ -18,12 +19,10 @@ test('should generator ts declaration correctly for css modules auto true', asyn
 
   await build({
     cwd: __dirname,
+    plugins: [pluginTypedCSSModules()],
     rsbuildConfig: {
       source: {
         entry: { index: resolve(testDir, 'index.js') },
-      },
-      output: {
-        enableCssModuleTSDeclaration: true,
       },
     },
   });
@@ -51,12 +50,12 @@ test('should generator ts declaration correctly for css modules auto function', 
 
   await build({
     cwd: __dirname,
+    plugins: [pluginTypedCSSModules()],
     rsbuildConfig: {
       source: {
         entry: { index: resolve(testDir, 'index.js') },
       },
       output: {
-        enableCssModuleTSDeclaration: true,
         cssModules: {
           auto: (path) => {
             return path.endsWith('.less');
@@ -80,12 +79,12 @@ test('should generator ts declaration correctly for css modules auto Regexp', as
 
   await build({
     cwd: __dirname,
+    plugins: [pluginTypedCSSModules()],
     rsbuildConfig: {
       source: {
         entry: { index: resolve(testDir, 'index.js') },
       },
       output: {
-        enableCssModuleTSDeclaration: true,
         cssModules: {
           auto: /\.module\./i,
         },
@@ -107,12 +106,12 @@ test('should generator ts declaration correctly for custom exportLocalsConventio
 
   await build({
     cwd: __dirname,
+    plugins: [pluginTypedCSSModules()],
     rsbuildConfig: {
       source: {
         entry: { index: resolve(testDir, 'index.js') },
       },
       output: {
-        enableCssModuleTSDeclaration: true,
         cssModules: {
           auto: /\.module\./i,
           exportLocalsConvention: 'asIs',

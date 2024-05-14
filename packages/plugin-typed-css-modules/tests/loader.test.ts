@@ -1,4 +1,5 @@
-import { wrapQuotes } from '../src/rspack/cssModulesTypescriptLoader';
+import { expect, it } from 'vitest';
+import { wrapQuotes } from '../src/loader';
 
 it('should wrap key correctly', () => {
   // do not need wrap

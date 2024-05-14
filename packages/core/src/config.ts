@@ -145,7 +145,6 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
     css: false,
   },
   filenameHash: true,
-  enableCssModuleTSDeclaration: false,
   inlineScripts: false,
   inlineStyles: false,
   cssModules: {

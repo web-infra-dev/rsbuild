@@ -139,19 +139,6 @@ describe('plugin-css', () => {
     const bundlerConfigs = await rsbuild.initConfigs();
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
-
-  it('should apply custom css-modules-typescript-loader when enableCssModuleTSDeclaration', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginCss()],
-      rsbuildConfig: {
-        output: {
-          enableCssModuleTSDeclaration: true,
-        },
-      },
-    });
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0]).toMatchSnapshot();
-  });
 });
 
 describe('plugin-css injectStyles', () => {

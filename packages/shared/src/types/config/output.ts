@@ -261,10 +261,6 @@ export interface OutputConfig {
    */
   filenameHash?: boolean | string;
   /**
-   * Whether to generate a TypeScript declaration file for CSS Modules.
-   */
-  enableCssModuleTSDeclaration?: boolean;
-  /**
    * Whether to inline output scripts files (.js files) into HTML with `<script>` tags.
    */
   inlineScripts?: boolean | InlineChunkTest;
@@ -311,7 +307,6 @@ export interface NormalizedOutputConfig extends OutputConfig {
   assetPrefix: string;
   dataUriLimit: number | NormalizedDataUriLimit;
   minify: Minify;
-  enableCssModuleTSDeclaration: boolean;
   inlineScripts: boolean | InlineChunkTest;
   inlineStyles: boolean | InlineChunkTest;
   injectStyles: boolean;
