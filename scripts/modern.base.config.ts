@@ -50,9 +50,7 @@ export const buildConfigWithMjs: PartialBaseBuildConfig[] = [
     define,
     autoExtension: true,
     externals,
-    dts: {
-      respectExternal: false,
-    },
+    dts: false,
   },
   {
     format: 'esm',
@@ -63,6 +61,12 @@ export const buildConfigWithMjs: PartialBaseBuildConfig[] = [
     shims: true,
     externals,
     banner: requireShim,
+  },
+  {
+    buildType: 'bundleless',
+    dts: {
+      only: true,
+    },
   },
 ];
 

@@ -23,7 +23,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "modern build && node scripts/postCompile.js",
+    "build": "modern build && node scripts/postCompile.mjs",
     "dev": "modern build --watch"
   },
   "dependencies": {

@@ -1,7 +1,12 @@
-const path = require('node:path');
-const { readFile, writeFile, mkdir } = require('node:fs/promises');
-const { transformAsync } = require('@babel/core');
-const { performance } = require('node:perf_hooks');
+import { existsSync } from 'node:fs';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import { performance } from 'node:perf_hooks';
+import { fileURLToPath } from 'node:url';
+import { transformAsync } from '@babel/core';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * transform ../src/runtime/${filename}.ts
@@ -48,11 +53,17 @@ async function compileRuntimeFile(filename) {
 
 async function compile() {
   const startTime = performance.now();
-  await mkdir(path.join(__dirname, '../dist/runtime'));
+
+  const runtimeDir = path.join(__dirname, '../dist/runtime');
+  if (!existsSync(runtimeDir)) {
+    await mkdir(runtimeDir);
+  }
+
   await Promise.all([
     compileRuntimeFile('initialChunkRetry'),
     compileRuntimeFile('asyncChunkRetry'),
   ]);
+
   console.log(
     `Compiled assets retry runtime code. Time cost: ${(
       performance.now() - startTime
