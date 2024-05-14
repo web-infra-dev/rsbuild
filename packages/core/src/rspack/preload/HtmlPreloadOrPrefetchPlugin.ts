@@ -23,7 +23,7 @@ import {
 } from '@rsbuild/shared';
 import type { Compilation, Compiler, RspackPluginInstance } from '@rspack/core';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
-import { getHTMLPlugin } from '../../htmlUtils';
+import { getHTMLPlugin } from '../../pluginHelper';
 import {
   type As,
   type BeforeAssetTagGenerationHtmlPluginData,

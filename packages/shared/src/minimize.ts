@@ -1,5 +1,5 @@
 import type { SwcJsMinimizerRspackPluginOptions } from '@rspack/core';
-import deepmerge from '../compiled/deepmerge';
+import deepmerge from '../compiled/deepmerge/index.js';
 import type {
   HTMLPluginOptions,
   MinifyJSOptions,

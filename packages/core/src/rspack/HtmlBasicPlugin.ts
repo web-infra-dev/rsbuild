@@ -11,7 +11,7 @@ import {
 import type { Compilation, Compiler } from '@rspack/core';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { HtmlTagObject } from 'html-webpack-plugin';
-import { getHTMLPlugin } from '../htmlUtils';
+import { getHTMLPlugin } from '../pluginHelper';
 
 export type TagConfig = {
   tags?: HtmlTagDescriptor[];

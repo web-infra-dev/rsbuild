@@ -12,7 +12,7 @@ import {
   modifyBundlerChain,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
-import { getHTMLPlugin } from '../htmlUtils';
+import { getHTMLPlugin } from '../pluginHelper';
 import type { InternalContext } from '../types';
 import { getCompiledPath } from './shared';
 

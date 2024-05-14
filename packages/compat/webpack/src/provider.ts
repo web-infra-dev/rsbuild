@@ -4,13 +4,13 @@ import {
   getPluginAPI,
   initRsbuildConfig,
   plugins,
+  setCssExtractPlugin,
 } from '@rsbuild/core/internal';
 import {
   type CreateCompiler,
   type PreviewServerOptions,
   type RsbuildProvider,
   pickRsbuildConfig,
-  setCssExtractPlugin,
 } from '@rsbuild/shared';
 import { initConfigs } from './initConfigs';
 
