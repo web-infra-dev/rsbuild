@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { basename, posix } from 'node:path';
 import { getPublicPathFromCompiler, withPublicPath } from '@rsbuild/shared';
 import type { Compilation, Compiler } from '@rspack/core';
-import { getHTMLPlugin } from '../htmlUtils';
+import { getHTMLPlugin } from '../pluginHelper';
 
 type AppIconOptions = {
   distDir: string;

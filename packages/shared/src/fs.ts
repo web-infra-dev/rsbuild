@@ -1,6 +1,6 @@
 import { constants, promises, statSync } from 'node:fs';
 import path from 'node:path';
-import fse from '../compiled/fs-extra';
+import fse from '../compiled/fs-extra/index.js';
 import type {
   DistPathConfig,
   FilenameConfig,

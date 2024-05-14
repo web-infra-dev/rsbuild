@@ -1,13 +1,12 @@
 import path from 'node:path';
-import { CssExtractRspackPlugin } from '@rspack/core';
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import type {
   Compiler as WebpackCompiler,
   MultiCompiler as WebpackMultiCompiler,
 } from 'webpack';
-import deepmerge from '../compiled/deepmerge';
-import fse from '../compiled/fs-extra';
-import color from '../compiled/picocolors';
+import deepmerge from '../compiled/deepmerge/index.js';
+import fse from '../compiled/fs-extra/index.js';
+import color from '../compiled/picocolors/index.js';
 import { DEFAULT_ASSET_PREFIX } from './constants';
 import type {
   CacheGroups,
@@ -421,17 +420,4 @@ export const onCompileDone = (
   } else {
     compiler.hooks.done.tapPromise('rsbuild:done', onDone);
   }
-};
-
-let cssExtractPlugin: unknown;
-
-export const setCssExtractPlugin = (plugin: unknown) => {
-  cssExtractPlugin = plugin;
-};
-
-export const getCssExtractPlugin = () => {
-  if (cssExtractPlugin) {
-    return cssExtractPlugin as typeof CssExtractRspackPlugin;
-  }
-  return CssExtractRspackPlugin;
 };

@@ -1,12 +1,12 @@
 import { posix } from 'node:path';
 import {
   applyOutputPlugin,
-  getCssExtractPlugin,
   getDistPath,
   getFilename,
   mergeChainedOptions,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
+import { getCssExtractPlugin } from '../pluginHelper';
 import type { RsbuildPlugin } from '../types';
 import { isUseCssExtract } from './css';
 

@@ -11,12 +11,12 @@ import {
   type RsbuildTarget,
   deepmerge,
   getBrowserslistWithDefault,
-  getCssExtractPlugin,
   isFunction,
   isPlainObject,
   mergeChainedOptions,
 } from '@rsbuild/shared';
 import type { AcceptedPlugin } from 'postcss';
+import { getCssExtractPlugin } from '../pluginHelper';
 import { getCompiledPath } from '../provider/shared';
 import type { NormalizedConfig, RsbuildPlugin } from '../types';
 

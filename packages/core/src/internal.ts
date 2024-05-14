@@ -12,7 +12,11 @@ export { initRsbuildConfig } from './provider/initConfigs';
 export { applyCSSRule } from './plugins/css';
 export { getPluginAPI } from './initPlugins';
 export type { InternalContext } from './types';
-export { setHTMLPlugin, getHTMLPlugin } from './htmlUtils';
+export {
+  setHTMLPlugin,
+  getHTMLPlugin,
+  setCssExtractPlugin,
+} from './pluginHelper';
 export { formatStats, getStatsOptions } from './provider/shared';
 export { getChainUtils } from './provider/rspackConfig';
 export { applySwcDecoratorConfig } from './provider/plugins/swc';

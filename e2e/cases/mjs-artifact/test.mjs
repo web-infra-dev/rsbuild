@@ -25,8 +25,10 @@ import { pluginVueJsx } from '@rsbuild/plugin-vue-jsx';
 import { pluginVue2 } from '@rsbuild/plugin-vue2';
 import { pluginVue2Jsx } from '@rsbuild/plugin-vue2-jsx';
 import { pluginYaml } from '@rsbuild/plugin-yaml';
+import * as shared from '@rsbuild/shared';
 
 export default {
+  shared,
   pluginAssetsRetry,
   pluginBabel,
   pluginCheckSyntax,

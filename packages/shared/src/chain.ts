@@ -29,7 +29,9 @@ import { addTrailingSlash, isPlainObject, removeTailingSlash } from './utils';
 import { castArray, ensureAbsolutePath } from './utils';
 
 export async function getBundlerChain() {
-  const { default: WebpackChain } = await import('../compiled/webpack-chain');
+  const { default: WebpackChain } = await import(
+    '../compiled/webpack-chain/index.js'
+  );
 
   const bundlerChain = new WebpackChain();
 
