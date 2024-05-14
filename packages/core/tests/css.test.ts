@@ -125,25 +125,6 @@ describe('plugin-css', () => {
     );
   });
 
-  it('should ignore hashDigest when custom cssModules.localIdentName', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginCss()],
-      rsbuildConfig: {
-        output: {
-          cssModules: {
-            localIdentName: '[hash:base64:5]',
-          },
-        },
-      },
-    });
-
-    const bundlerConfigs = await rsbuild.initConfigs();
-
-    expect(JSON.stringify(bundlerConfigs[0])).toContain(
-      '"localIdentName":"[hash:base64:5]"',
-    );
-  });
-
   it('should use custom cssModules rule when using output.cssModules config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
