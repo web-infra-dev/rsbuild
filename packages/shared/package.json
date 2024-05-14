@@ -9,12 +9,12 @@
     "directory": "packages/shared"
   },
   "license": "MIT",
-  "type": "commonjs",
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "default": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./autoprefixer": {
       "types": "./compiled/autoprefixer/index.d.ts",
@@ -105,7 +105,7 @@
       "default": "./compiled/http-proxy-middleware/index.js"
     }
   },
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "files": [
     "dist",

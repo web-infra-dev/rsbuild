@@ -28,7 +28,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
         },
       },
       {
-        "loader": "<ROOT>/packages/plugin-lightningcss/src/loader",
+        "loader": "<ROOT>/packages/plugin-lightningcss/src/loader.cjs",
         "options": {
           "cssModules": {
             "dashedIdents": true,
@@ -76,7 +76,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
         },
       },
       {
-        "loader": "<ROOT>/packages/plugin-lightningcss/src/loader",
+        "loader": "<ROOT>/packages/plugin-lightningcss/src/loader.cjs",
         "options": {
           "cssModules": {
             "dashedIdents": true,
@@ -137,7 +137,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
         },
       },
       {
-        "loader": "<ROOT>/packages/plugin-lightningcss/src/loader",
+        "loader": "<ROOT>/packages/plugin-lightningcss/src/loader.cjs",
         "options": {
           "cssModules": {
             "dashedIdents": true,
@@ -246,7 +246,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
         },
       },
       {
-        "loader": "<ROOT>/packages/plugin-lightningcss/src/loader",
+        "loader": "<ROOT>/packages/plugin-lightningcss/src/loader.cjs",
         "options": {
           "targets": {
             "chrome": 5701632,
@@ -282,7 +282,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
         },
       },
       {
-        "loader": "<ROOT>/packages/plugin-lightningcss/src/loader",
+        "loader": "<ROOT>/packages/plugin-lightningcss/src/loader.cjs",
         "options": {
           "targets": {
             "chrome": 5701632,
@@ -331,7 +331,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
         },
       },
       {
-        "loader": "<ROOT>/packages/plugin-lightningcss/src/loader",
+        "loader": "<ROOT>/packages/plugin-lightningcss/src/loader.cjs",
         "options": {
           "targets": {
             "chrome": 5701632,
@@ -422,7 +422,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should replace postcss-loade
         },
       },
       {
-        "loader": "<ROOT>/packages/plugin-lightningcss/src/loader",
+        "loader": "<ROOT>/packages/plugin-lightningcss/src/loader.cjs",
         "options": {
           "targets": {
             "chrome": 5701632,
@@ -458,7 +458,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should replace postcss-loade
         },
       },
       {
-        "loader": "<ROOT>/packages/plugin-lightningcss/src/loader",
+        "loader": "<ROOT>/packages/plugin-lightningcss/src/loader.cjs",
         "options": {
           "targets": {
             "chrome": 5701632,
@@ -507,7 +507,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should replace postcss-loade
         },
       },
       {
-        "loader": "<ROOT>/packages/plugin-lightningcss/src/loader",
+        "loader": "<ROOT>/packages/plugin-lightningcss/src/loader.cjs",
         "options": {
           "targets": {
             "chrome": 5701632,

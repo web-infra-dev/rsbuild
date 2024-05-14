@@ -117,7 +117,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         .type('javascript/auto')
         .resourceQuery(options.query || /react/)
         .use(CHAIN_ID.USE.SVGR)
-        .loader(path.resolve(__dirname, './loader'))
+        .loader(path.resolve(__dirname, './loader.cjs'))
         .options({
           ...svgrOptions,
           exportType: 'default',
@@ -145,7 +145,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
           // The issuer option ensures that SVGR will only apply if the SVG is imported from a JS file.
           .set('issuer', issuer)
           .use(CHAIN_ID.USE.SVGR)
-          .loader(path.resolve(__dirname, './loader'))
+          .loader(path.resolve(__dirname, './loader.cjs'))
           .options({
             ...svgrOptions,
             exportType,
@@ -159,7 +159,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         if (mixedImport && exportType === 'named') {
           svgRule
             .use(CHAIN_ID.USE.URL)
-            .loader(path.join(__dirname, '../compiled', 'url-loader'))
+            .loader(path.join(__dirname, '../compiled', 'url-loader/index.js'))
             .options({
               limit: maxSize,
               name: outputName,

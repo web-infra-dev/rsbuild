@@ -101,7 +101,7 @@ const applyLightningCSSLoader = ({
     const rule = chain.module.rule(ruleId);
     const use = rule.use(CHAIN_ID.USE.LIGHTNINGCSS);
 
-    use.loader(path.resolve(__dirname, './loader')).options(mergedOptions);
+    use.loader(path.resolve(__dirname, './loader.cjs')).options(mergedOptions);
 
     switch (ruleId) {
       case CHAIN_ID.RULE.SASS:
