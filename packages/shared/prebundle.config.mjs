@@ -57,10 +57,6 @@ export default {
       },
     },
     {
-      name: 'line-diff',
-      ignoreDts: true,
-    },
-    {
       name: 'semver',
       ignoreDts: true,
     },
@@ -96,104 +92,6 @@ export default {
       },
     },
     {
-      name: 'sass-loader',
-      externals: {
-        sass: '../sass',
-      },
-    },
-    {
-      name: 'sass',
-      externals: {
-        chokidar: '../chokidar',
-      },
-      dtsExternals: ['source-map-js', 'immutable'],
-      beforeBundle: (task) => {
-        fs.outputFileSync(
-          join(task.depPath, 'types/index.d.ts'),
-          `export { Options } from './options';\nexport { LegacyOptions } from './legacy/options';`,
-        );
-      },
-    },
-    {
-      name: 'style-loader',
-      ignoreDts: true,
-      afterBundle: (task) => {
-        fs.copySync(
-          join(task.depPath, 'dist/runtime'),
-          join(task.distPath, 'runtime'),
-        );
-      },
-    },
-    {
-      name: 'less',
-      externals: {
-        // needle is an optional dependency and no need to bundle it.
-        needle: 'needle',
-      },
-      // bundle namespace child (hoisting) not supported yet
-      beforeBundle: () => {
-        replaceFileContent(
-          join(process.cwd(), 'node_modules/@types/less/index.d.ts'),
-          (content) =>
-            `${content.replace(
-              /declare module "less" {\s+export = less;\s+}/,
-              'export = Less;',
-            )}`,
-        );
-      },
-    },
-    {
-      name: 'less-loader',
-      ignoreDts: true,
-      externals: {
-        less: '../less',
-      },
-    },
-    {
-      name: 'css-loader',
-      ignoreDts: true,
-      externals: {
-        semver: '../semver',
-        'postcss-value-parser': '../postcss-value-parser',
-        'postcss-modules-local-by-default':
-          '../postcss-modules-local-by-default',
-        'postcss-modules-extract-imports': '../postcss-modules-extract-imports',
-        'postcss-modules-scope': '../postcss-modules-scope',
-        'postcss-modules-values': '../postcss-modules-values',
-        'icss-utils': '../icss-utils',
-      },
-    },
-    {
-      name: 'postcss-loader',
-      externals: {
-        jiti: '../jiti',
-        semver: '../semver',
-      },
-      ignoreDts: true,
-    },
-    {
-      name: 'postcss-load-config',
-      externals: {
-        jiti: '../jiti',
-        yaml: '../yaml',
-      },
-      ignoreDts: true,
-      // this is a trick to avoid ncc compiling the dynamic import syntax
-      // https://github.com/vercel/ncc/issues/935
-      beforeBundle(task) {
-        replaceFileContent(
-          join(task.depPath, 'src/req.js'),
-          (content) => `${content.replace('await import', 'await __import')}`,
-        );
-      },
-      afterBundle(task) {
-        replaceFileContent(
-          join(task.distPath, 'index.js'),
-          (content) => `${content.replace('await __import', 'await import')}`,
-        );
-      },
-    },
-    {
       name: 'loader-utils2',
       ignoreDts: true,
       externals: {
@@ -208,21 +106,6 @@ export default {
         if (fs.existsSync(typesFile)) {
           fs.renameSync(typesFile, join(depPath, 'types.d.ts'));
         }
-      },
-    },
-    {
-      name: 'resolve-url-loader',
-      ignoreDts: true,
-      externals: {
-        'loader-utils': '../loader-utils2',
-      },
-    },
-    {
-      name: 'autoprefixer',
-      externals: {
-        picocolors: '../picocolors',
-        browserslist: '../browserslist',
-        'postcss-value-parser': '../postcss-value-parser',
       },
     },
     {
@@ -248,6 +131,51 @@ export default {
       name: 'webpack-bundle-analyzer',
       externals: {
         'gzip-size': '../gzip-size',
+      },
+    },
+    {
+      name: 'autoprefixer',
+      externals: {
+        picocolors: '../picocolors',
+        browserslist: '../browserslist',
+        'postcss-value-parser': '../postcss-value-parser',
+      },
+    },
+    {
+      name: 'less',
+      externals: {
+        // needle is an optional dependency and no need to bundle it.
+        needle: 'needle',
+      },
+      // bundle namespace child (hoisting) not supported yet
+      beforeBundle: () => {
+        replaceFileContent(
+          join(process.cwd(), 'node_modules/@types/less/index.d.ts'),
+          (content) =>
+            `${content.replace(
+              /declare module "less" {\s+export = less;\s+}/,
+              'export = Less;',
+            )}`,
+        );
+      },
+    },
+    {
+      name: 'sass-loader',
+      externals: {
+        sass: '../sass',
+      },
+    },
+    {
+      name: 'sass',
+      externals: {
+        chokidar: '../chokidar',
+      },
+      dtsExternals: ['source-map-js', 'immutable'],
+      beforeBundle: (task) => {
+        fs.outputFileSync(
+          join(task.depPath, 'types/index.d.ts'),
+          `export { Options } from './options';\nexport { LegacyOptions } from './legacy/options';`,
+        );
       },
     },
   ],

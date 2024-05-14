@@ -696,6 +696,9 @@ importers:
         specifier: ^8.4.38
         version: 8.4.38
     devDependencies:
+      '@types/fs-extra':
+        specifier: ^11.0.4
+        version: 11.0.4
       '@types/node':
         specifier: 18.x
         version: 18.19.31
@@ -711,33 +714,60 @@ importers:
       connect-history-api-fallback:
         specifier: ^2.0.0
         version: 2.0.0
+      css-loader:
+        specifier: 7.1.1
+        version: 7.1.1(@rspack/core@0.6.5(@swc/helpers@0.5.3))(webpack@5.91.0)
       dotenv:
         specifier: 16.4.5
         version: 16.4.5
       dotenv-expand:
         specifier: 11.0.6
         version: 11.0.6
+      fs-extra:
+        specifier: ^11.2.0
+        version: 11.2.0
       http-compression:
         specifier: 1.0.20
         version: 1.0.20
       launch-editor-middleware:
         specifier: ^2.6.1
         version: 2.6.1
+      less-loader:
+        specifier: 12.2.0
+        version: 12.2.0(@rspack/core@0.6.5(@swc/helpers@0.5.3))(less@4.2.0)(webpack@5.91.0)
+      line-diff:
+        specifier: 2.1.1
+        version: 2.1.1
       on-finished:
         specifier: 2.4.1
         version: 2.4.1
       open:
         specifier: ^8.4.0
         version: 8.4.2
+      postcss-load-config:
+        specifier: 5.1.0
+        version: 5.1.0(jiti@1.21.0)(postcss@8.4.38)(tsx@4.10.1)
+      postcss-loader:
+        specifier: 8.1.1
+        version: 8.1.1(@rspack/core@0.6.5(@swc/helpers@0.5.3))(postcss@8.4.38)(typescript@5.4.5)(webpack@5.91.0)
+      postcss-value-parser:
+        specifier: 4.2.0
+        version: 4.2.0
       prebundle:
         specifier: 1.1.0
         version: 1.1.0(typescript@5.4.5)
+      resolve-url-loader:
+        specifier: 5.0.0
+        version: 5.0.0
       rspack-manifest-plugin:
         specifier: 5.0.0
         version: 5.0.0(@rspack/core@0.6.5(@swc/helpers@0.5.3))
       sirv:
         specifier: ^2.0.4
         version: 2.0.4
+      style-loader:
+        specifier: 3.3.4
+        version: 3.3.4(webpack@5.91.0)
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1582,9 +1612,6 @@ importers:
       connect:
         specifier: 3.7.0
         version: 3.7.0
-      css-loader:
-        specifier: 7.1.1
-        version: 7.1.1(@rspack/core@0.6.5(@swc/helpers@0.5.3))(webpack@5.91.0)
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -1612,12 +1639,6 @@ importers:
       less:
         specifier: 4.2.0
         version: 4.2.0
-      less-loader:
-        specifier: 12.2.0
-        version: 12.2.0(@rspack/core@0.6.5(@swc/helpers@0.5.3))(less@4.2.0)(webpack@5.91.0)
-      line-diff:
-        specifier: 2.1.1
-        version: 2.1.1
       loader-utils2:
         specifier: npm:loader-utils@2.0.4
         version: loader-utils@2.0.4
@@ -1630,12 +1651,6 @@ importers:
       picocolors:
         specifier: 1.0.0
         version: 1.0.0
-      postcss-load-config:
-        specifier: 5.1.0
-        version: 5.1.0(jiti@1.21.0)(postcss@8.4.38)(tsx@4.10.1)
-      postcss-loader:
-        specifier: 8.1.1
-        version: 8.1.1(@rspack/core@0.6.5(@swc/helpers@0.5.3))(postcss@8.4.38)(typescript@5.4.5)(webpack@5.91.0)
       postcss-modules-extract-imports:
         specifier: 3.1.0
         version: 3.1.0(postcss@8.4.38)
@@ -1654,9 +1669,6 @@ importers:
       prebundle:
         specifier: 1.1.0
         version: 1.1.0(typescript@5.4.5)
-      resolve-url-loader:
-        specifier: 5.0.0
-        version: 5.0.0
       rslog:
         specifier: ^1.2.2
         version: 1.2.2
@@ -1669,9 +1681,6 @@ importers:
       semver:
         specifier: ^7.6.2
         version: 7.6.2
-      style-loader:
-        specifier: 3.3.4
-        version: 3.3.4(webpack@5.91.0)
       terser:
         specifier: 5.31.0
         version: 5.31.0

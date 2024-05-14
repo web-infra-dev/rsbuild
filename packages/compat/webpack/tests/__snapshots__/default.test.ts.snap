@@ -172,7 +172,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -185,7 +185,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "config": false,
@@ -228,7 +228,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 2,
               "modules": {
@@ -241,7 +241,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "config": false,
@@ -272,7 +272,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/less-loader",
+            "loader": "<ROOT>/packages/core/compiled/less-loader",
             "options": {
               "implementation": "<ROOT>/packages/shared/compiled/less",
               "lessOptions": {
@@ -297,7 +297,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 3,
               "modules": {
@@ -310,7 +310,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "config": false,
@@ -341,7 +341,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
+            "loader": "<ROOT>/packages/core/compiled/resolve-url-loader",
             "options": {
               "join": [Function],
               "sourceMap": false,
@@ -709,7 +709,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -722,7 +722,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "config": false,
@@ -765,7 +765,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 2,
               "modules": {
@@ -778,7 +778,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "config": false,
@@ -809,7 +809,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/less-loader",
+            "loader": "<ROOT>/packages/core/compiled/less-loader",
             "options": {
               "implementation": "<ROOT>/packages/shared/compiled/less",
               "lessOptions": {
@@ -834,7 +834,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 3,
               "modules": {
@@ -847,7 +847,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "config": false,
@@ -878,7 +878,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
+            "loader": "<ROOT>/packages/core/compiled/resolve-url-loader",
             "options": {
               "join": [Function],
               "sourceMap": false,
@@ -1288,10 +1288,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/shared/dist/loaders/ignoreCssLoader",
+            "loader": "<ROOT>/packages/core/dist/rspack/ignoreCssLoader",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -1314,10 +1314,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.less\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/shared/dist/loaders/ignoreCssLoader",
+            "loader": "<ROOT>/packages/core/dist/rspack/ignoreCssLoader",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 2,
               "modules": {
@@ -1331,7 +1331,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/less-loader",
+            "loader": "<ROOT>/packages/core/compiled/less-loader",
             "options": {
               "implementation": "<ROOT>/packages/shared/compiled/less",
               "lessOptions": {
@@ -1353,10 +1353,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/shared/dist/loaders/ignoreCssLoader",
+            "loader": "<ROOT>/packages/core/dist/rspack/ignoreCssLoader",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 3,
               "modules": {
@@ -1370,7 +1370,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
+            "loader": "<ROOT>/packages/core/compiled/resolve-url-loader",
             "options": {
               "join": [Function],
               "sourceMap": false,
@@ -1634,10 +1634,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/shared/dist/loaders/ignoreCssLoader",
+            "loader": "<ROOT>/packages/core/dist/rspack/ignoreCssLoader",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -1660,10 +1660,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.less\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/shared/dist/loaders/ignoreCssLoader",
+            "loader": "<ROOT>/packages/core/dist/rspack/ignoreCssLoader",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 2,
               "modules": {
@@ -1677,7 +1677,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/less-loader",
+            "loader": "<ROOT>/packages/core/compiled/less-loader",
             "options": {
               "implementation": "<ROOT>/packages/shared/compiled/less",
               "lessOptions": {
@@ -1699,10 +1699,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/shared/dist/loaders/ignoreCssLoader",
+            "loader": "<ROOT>/packages/core/dist/rspack/ignoreCssLoader",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 3,
               "modules": {
@@ -1716,7 +1716,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
+            "loader": "<ROOT>/packages/core/compiled/resolve-url-loader",
             "options": {
               "join": [Function],
               "sourceMap": false,
