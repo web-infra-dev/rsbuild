@@ -3,11 +3,11 @@ import {
   CSS_REGEX,
   type NormalizedConfig,
   color,
+  deepmerge,
   getSwcMinimizerOptions,
   parseMinifyOptions,
 } from '@rsbuild/shared';
 import type { webpack } from '@rsbuild/webpack';
-import { merge } from 'lodash';
 import { minify, minifyCss } from './binding';
 import { JS_REGEX } from './constants';
 import type { CssMinifyOptions, JsMinifyOptions, Output } from './types';
@@ -43,7 +43,7 @@ export class SwcMinimizerPlugin {
     const { minifyJs, minifyCss } = parseMinifyOptions(options.rsbuildConfig);
     this.minifyOptions = {
       jsMinify: minifyJs
-        ? merge(
+        ? deepmerge(
             this.getDefaultJsMinifyOptions(options.rsbuildConfig),
             normalize(options.jsMinify, {}),
           )

@@ -24,6 +24,7 @@
     "@playwright/test": "1.44.0",
     "@rsbuild/babel-preset": "workspace:*",
     "@rsbuild/core": "workspace:*",
+    "@rsbuild/monorepo-utils": "workspace:*",
     "@rsbuild/plugin-assets-retry": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
     "@rsbuild/plugin-check-syntax": "workspace:*",

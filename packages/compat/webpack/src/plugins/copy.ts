@@ -14,7 +14,8 @@ export const pluginCopy = (): RsbuildPlugin => ({
       }
 
       const { default: CopyPlugin } = await import(
-        '../../compiled/copy-webpack-plugin'
+        // @ts-expect-error copy-webpack-plugin does not provide types
+        'copy-webpack-plugin'
       );
 
       const options: CopyPluginOptions = Array.isArray(copy)

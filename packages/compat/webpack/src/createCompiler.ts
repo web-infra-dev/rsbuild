@@ -14,7 +14,7 @@ import {
   onCompileDone,
 } from '@rsbuild/shared';
 // @ts-expect-error
-import WebpackMultiStats from 'webpack/lib/MultiStats';
+import WebpackMultiStats from 'webpack/lib/MultiStats.js';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 import type { WebpackConfig } from './types';
 

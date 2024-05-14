@@ -1,7 +1,7 @@
 import { Console } from 'node:console';
 import { getProgressColor } from '@rsbuild/shared';
-import cliTruncate from '../../../compiled/cli-truncate';
-import patchConsole from '../../../compiled/patch-console';
+import cliTruncate from 'cli-truncate';
+import patchConsole from 'patch-console';
 import { FULL_WIDTH, renderBar } from './bar';
 import { create } from './log';
 import type { LogUpdate } from './log';
