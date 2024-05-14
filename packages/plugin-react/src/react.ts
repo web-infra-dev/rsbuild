@@ -2,6 +2,7 @@ import path from 'node:path';
 import type { RsbuildConfig, RsbuildPluginAPI, Rspack } from '@rsbuild/core';
 import {
   SCRIPT_REGEX,
+  deepmerge,
   isUsingHMR,
   modifySwcLoaderOptions,
 } from '@rsbuild/shared';
@@ -26,13 +27,20 @@ export const applyBasicReactSupport = (
     modifySwcLoaderOptions({
       chain,
       modifier: (opts) => {
-        opts.jsc ??= {};
-        opts.jsc.transform ??= {};
-        opts.jsc.transform.react = {
-          ...opts.jsc.transform.react,
-          ...reactOptions,
+        const extraOptions: Rspack.SwcLoaderOptions = {
+          jsc: {
+            parser: {
+              syntax: 'typescript',
+              // enable supports for React JSX/TSX compilation
+              tsx: true,
+            },
+            transform: {
+              react: reactOptions,
+            },
+          },
         };
-        return opts;
+
+        return deepmerge(opts, extraOptions);
       },
     });
 

@@ -22,7 +22,7 @@ import type {
 
 const builtinSwcLoaderName = 'builtin:swc-loader';
 
-export async function getDefaultSwcConfig(
+async function getDefaultSwcConfig(
   config: NormalizedConfig,
   rootPath: string,
   target: RsbuildTarget,
@@ -31,7 +31,7 @@ export async function getDefaultSwcConfig(
     jsc: {
       externalHelpers: true,
       parser: {
-        tsx: true,
+        tsx: false,
         syntax: 'typescript',
         decorators: true,
       },

@@ -28,6 +28,11 @@ export const pluginPreact = (
         tools: {
           swc: {
             jsc: {
+              parser: {
+                syntax: 'typescript',
+                // enable supports for JSX/TSX compilation
+                tsx: true,
+              },
               transform: {
                 react: reactOptions,
               },
