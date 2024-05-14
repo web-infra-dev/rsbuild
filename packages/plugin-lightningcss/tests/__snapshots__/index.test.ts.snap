@@ -15,7 +15,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
         "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
-        "loader": "<ROOT>/packages/shared/compiled/css-loader",
+        "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
           "importLoaders": 1,
           "modules": {
@@ -63,7 +63,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
         "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
-        "loader": "<ROOT>/packages/shared/compiled/css-loader",
+        "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
           "importLoaders": 2,
           "modules": {
@@ -99,7 +99,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
         },
       },
       {
-        "loader": "<ROOT>/packages/shared/compiled/less-loader",
+        "loader": "<ROOT>/packages/core/compiled/less-loader",
         "options": {
           "implementation": "<ROOT>/packages/shared/compiled/less",
           "lessOptions": {
@@ -124,7 +124,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
         "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
-        "loader": "<ROOT>/packages/shared/compiled/css-loader",
+        "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
           "importLoaders": 3,
           "modules": {
@@ -160,7 +160,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
         },
       },
       {
-        "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
+        "loader": "<ROOT>/packages/core/compiled/resolve-url-loader",
         "options": {
           "join": [Function],
           "sourceMap": false,
@@ -233,7 +233,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
         "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
-        "loader": "<ROOT>/packages/shared/compiled/css-loader",
+        "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
           "importLoaders": 1,
           "modules": {
@@ -269,7 +269,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
         "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
-        "loader": "<ROOT>/packages/shared/compiled/css-loader",
+        "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
           "importLoaders": 2,
           "modules": {
@@ -293,7 +293,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
         },
       },
       {
-        "loader": "<ROOT>/packages/shared/compiled/less-loader",
+        "loader": "<ROOT>/packages/core/compiled/less-loader",
         "options": {
           "implementation": "<ROOT>/packages/shared/compiled/less",
           "lessOptions": {
@@ -318,7 +318,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
         "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
-        "loader": "<ROOT>/packages/shared/compiled/css-loader",
+        "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
           "importLoaders": 3,
           "modules": {
@@ -342,7 +342,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
         },
       },
       {
-        "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
+        "loader": "<ROOT>/packages/core/compiled/resolve-url-loader",
         "options": {
           "join": [Function],
           "sourceMap": false,
@@ -409,7 +409,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should replace postcss-loade
         "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
-        "loader": "<ROOT>/packages/shared/compiled/css-loader",
+        "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
           "importLoaders": 1,
           "modules": {
@@ -445,7 +445,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should replace postcss-loade
         "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
-        "loader": "<ROOT>/packages/shared/compiled/css-loader",
+        "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
           "importLoaders": 2,
           "modules": {
@@ -469,7 +469,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should replace postcss-loade
         },
       },
       {
-        "loader": "<ROOT>/packages/shared/compiled/less-loader",
+        "loader": "<ROOT>/packages/core/compiled/less-loader",
         "options": {
           "implementation": "<ROOT>/packages/shared/compiled/less",
           "lessOptions": {
@@ -494,7 +494,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should replace postcss-loade
         "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
-        "loader": "<ROOT>/packages/shared/compiled/css-loader",
+        "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
           "importLoaders": 3,
           "modules": {
@@ -518,7 +518,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should replace postcss-loade
         },
       },
       {
-        "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
+        "loader": "<ROOT>/packages/core/compiled/resolve-url-loader",
         "options": {
           "join": [Function],
           "sourceMap": false,

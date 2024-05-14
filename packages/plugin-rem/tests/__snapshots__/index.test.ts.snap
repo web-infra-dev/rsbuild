@@ -18,7 +18,7 @@ exports[`plugin-rem > should not run htmlPlugin with enableRuntime is false 1`] 
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -31,7 +31,7 @@ exports[`plugin-rem > should not run htmlPlugin with enableRuntime is false 1`] 
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "config": false,
@@ -92,7 +92,7 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -105,7 +105,7 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "config": false,
@@ -193,7 +193,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -206,7 +206,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "config": false,
@@ -255,7 +255,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 2,
               "modules": {
@@ -268,7 +268,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "config": false,
@@ -305,7 +305,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/less-loader",
+            "loader": "<ROOT>/packages/core/compiled/less-loader",
             "options": {
               "implementation": "<ROOT>/packages/shared/compiled/less",
               "lessOptions": {
@@ -330,7 +330,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 3,
               "modules": {
@@ -343,7 +343,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "config": false,
@@ -380,7 +380,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
+            "loader": "<ROOT>/packages/core/compiled/resolve-url-loader",
             "options": {
               "join": [Function],
               "sourceMap": false,
