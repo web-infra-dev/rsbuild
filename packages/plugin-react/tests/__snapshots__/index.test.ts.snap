@@ -171,7 +171,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -198,7 +198,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -225,7 +225,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -252,7 +252,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",

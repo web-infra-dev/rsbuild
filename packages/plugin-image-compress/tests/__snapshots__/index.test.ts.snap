@@ -23,7 +23,7 @@ exports[`plugin-image-compress > should generate correct options 1`] = `
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -50,7 +50,7 @@ exports[`plugin-image-compress > should generate correct options 1`] = `
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -77,7 +77,7 @@ exports[`plugin-image-compress > should generate correct options 1`] = `
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -104,7 +104,7 @@ exports[`plugin-image-compress > should generate correct options 1`] = `
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
