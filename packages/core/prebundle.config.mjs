@@ -1,5 +1,5 @@
-import { join } from 'node:path';
 // @ts-check
+import { join } from 'node:path';
 import { fse } from '@rsbuild/shared';
 
 // The package size of `schema-utils` is large, and validate has a performance overhead of tens of ms.
