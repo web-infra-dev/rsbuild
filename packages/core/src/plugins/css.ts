@@ -17,7 +17,7 @@ import {
   mergeChainedOptions,
 } from '@rsbuild/shared';
 import type { AcceptedPlugin } from 'postcss';
-import { getCompiledPath } from 'src/provider/shared';
+import { getCompiledPath } from '../provider/shared';
 import type { NormalizedConfig, RsbuildPlugin } from '../types';
 
 export const enableNativeCss = (config: NormalizedConfig) =>
