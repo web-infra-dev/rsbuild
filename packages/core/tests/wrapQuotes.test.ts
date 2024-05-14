@@ -1,4 +1,4 @@
-import { wrapQuotes } from '../../src/loaders/cssModulesTypescriptLoader';
+import { wrapQuotes } from '../src/rspack/cssModulesTypescriptLoader';
 
 it('should wrap key correctly', () => {
   // do not need wrap

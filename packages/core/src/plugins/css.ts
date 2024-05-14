@@ -311,7 +311,7 @@ export async function applyCSSRule({
     if (enableCSSModuleTS && cssLoaderOptions.modules) {
       rule
         .use(CHAIN_ID.USE.CSS_MODULES_TS)
-        .loader(path.resolve(__dirname, './loaders/cssModulesTypescriptLoader'))
+        .loader(path.resolve(__dirname, '../rspack/cssModulesTypescriptLoader'))
         .options({
           modules: cssLoaderOptions.modules,
         })
@@ -320,7 +320,7 @@ export async function applyCSSRule({
   } else {
     rule
       .use(CHAIN_ID.USE.IGNORE_CSS)
-      .loader(path.resolve(__dirname, './loaders/ignoreCssLoader'))
+      .loader(path.resolve(__dirname, '../rspack/ignoreCssLoader'))
       .end();
   }
 
@@ -352,28 +352,6 @@ export async function applyCSSRule({
   rule.resolve.preferRelative(true);
 }
 
-export async function applyBaseCSSRule({
-  rule,
-  config,
-  context,
-  utils,
-  importLoaders = 1,
-}: {
-  rule: BundlerChainRule;
-  config: NormalizedConfig;
-  context: RsbuildContext;
-  utils: ModifyChainUtils;
-  importLoaders?: number;
-}) {
-  return applyCSSRule({
-    rule,
-    config,
-    context,
-    utils,
-    importLoaders,
-  });
-}
-
 export const pluginCss = (): RsbuildPlugin => {
   return {
     name: 'rsbuild:css',
@@ -382,7 +360,7 @@ export const pluginCss = (): RsbuildPlugin => {
         const rule = chain.module.rule(utils.CHAIN_ID.RULE.CSS);
         const config = api.getNormalizedConfig();
         rule.test(CSS_REGEX);
-        await applyBaseCSSRule({
+        await applyCSSRule({
           rule,
           utils,
           config,

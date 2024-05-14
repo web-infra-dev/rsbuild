@@ -729,6 +729,9 @@ importers:
       less-loader:
         specifier: 12.2.0
         version: 12.2.0(@rspack/core@0.6.5(@swc/helpers@0.5.3))(less@4.2.0)(webpack@5.91.0)
+      line-diff:
+        specifier: 2.1.1
+        version: 2.1.1
       on-finished:
         specifier: 2.4.1
         version: 2.4.1
@@ -1630,9 +1633,6 @@ importers:
       less:
         specifier: 4.2.0
         version: 4.2.0
-      line-diff:
-        specifier: 2.1.1
-        version: 2.1.1
       loader-utils2:
         specifier: npm:loader-utils@2.0.4
         version: loader-utils@2.0.4

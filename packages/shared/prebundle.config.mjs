@@ -57,10 +57,6 @@ export default {
       },
     },
     {
-      name: 'line-diff',
-      ignoreDts: true,
-    },
-    {
       name: 'semver',
       ignoreDts: true,
     },

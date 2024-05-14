@@ -18,7 +18,7 @@ exports[`plugin-css > should apply custom css-modules-typescript-loader when ena
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
           },
           {
-            "loader": "<ROOT>/packages/core/src/plugins/loaders/cssModulesTypescriptLoader",
+            "loader": "<ROOT>/packages/core/src/rspack/cssModulesTypescriptLoader",
             "options": {
               "modules": {
                 "auto": true,
@@ -224,7 +224,7 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/core/src/plugins/loaders/ignoreCssLoader",
+            "loader": "<ROOT>/packages/core/src/rspack/ignoreCssLoader",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",

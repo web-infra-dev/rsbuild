@@ -1473,7 +1473,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/core/dist/plugins/loaders/ignoreCssLoader",
+            "loader": "<ROOT>/packages/core/dist/rspack/ignoreCssLoader",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
@@ -1499,7 +1499,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.less\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/core/dist/plugins/loaders/ignoreCssLoader",
+            "loader": "<ROOT>/packages/core/dist/rspack/ignoreCssLoader",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
@@ -1538,7 +1538,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/core/dist/plugins/loaders/ignoreCssLoader",
+            "loader": "<ROOT>/packages/core/dist/rspack/ignoreCssLoader",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
