@@ -1,5 +1,5 @@
 import type { Writable } from 'node:stream';
-import ansiEscapes from '../../../compiled/ansi-escapes';
+import ansiEscapes from 'ansi-escapes';
 
 export interface LogUpdate {
   clear: () => void;

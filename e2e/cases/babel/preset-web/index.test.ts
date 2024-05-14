@@ -2,7 +2,7 @@ import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest(
-  'should run babel with @rsbuild/babel-preset correctly',
+  'should run babel with @rsbuild/babel-preset/web correctly',
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,

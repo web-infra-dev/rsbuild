@@ -1,3 +1,6 @@
+import { getBabelConfigForNode } from '@rsbuild/babel-preset/node';
+import { getBabelConfigForWeb } from '@rsbuild/babel-preset/web';
+import * as monorepoUtils from '@rsbuild/monorepo-utils';
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
@@ -17,6 +20,7 @@ import { pluginStyledComponents } from '@rsbuild/plugin-styled-components';
 import { pluginStylus } from '@rsbuild/plugin-stylus';
 import { pluginSvelte } from '@rsbuild/plugin-svelte';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
+import { pluginSwc } from '@rsbuild/plugin-swc';
 import { pluginToml } from '@rsbuild/plugin-toml';
 import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
 import { pluginUmd } from '@rsbuild/plugin-umd';
@@ -26,6 +30,7 @@ import { pluginVue2 } from '@rsbuild/plugin-vue2';
 import { pluginVue2Jsx } from '@rsbuild/plugin-vue2-jsx';
 import { pluginYaml } from '@rsbuild/plugin-yaml';
 import * as shared from '@rsbuild/shared';
+import { webpackProvider } from '@rsbuild/webpack';
 
 export default {
   shared,
@@ -56,4 +61,9 @@ export default {
   pluginToml,
   pluginYaml,
   pluginMdx,
+  pluginSwc,
+  getBabelConfigForWeb,
+  getBabelConfigForNode,
+  webpackProvider,
+  monorepoUtils,
 };

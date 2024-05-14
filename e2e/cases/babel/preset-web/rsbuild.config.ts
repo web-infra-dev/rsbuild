@@ -4,7 +4,7 @@ export default {
   plugins: [
     pluginBabel({
       babelLoaderOptions: (_, { addPresets }) => {
-        addPresets([require.resolve('@rsbuild/babel-preset/web')]);
+        addPresets([require.resolve('@rsbuild/babel-preset/node')]);
       },
     }),
   ],

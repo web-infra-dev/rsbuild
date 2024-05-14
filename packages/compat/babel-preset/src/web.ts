@@ -48,7 +48,7 @@ export const getBabelConfigForWeb = (options: WebPresetOptions) => {
     ]);
   }
 
-  config.plugins?.push(join(__dirname, './pluginLockCorejsVersion'));
+  config.plugins?.push(join(__dirname, './pluginLockCorejsVersion.cjs'));
 
   return config;
 };

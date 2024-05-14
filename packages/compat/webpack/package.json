@@ -8,18 +8,18 @@
     "directory": "packages/compat/webpack"
   },
   "license": "MIT",
-  "type": "commonjs",
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     }
   },
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "files": [
     "static",
-    "compiled",
     "dist"
   ],
   "scripts": {
@@ -29,9 +29,8 @@
   "dependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/shared": "workspace:*",
-    "fast-glob": "^3.3.2",
-    "globby": "^11.1.0",
     "mini-css-extract-plugin": "2.8.1",
+    "copy-webpack-plugin": "9.1.0",
     "postcss": "^8.4.38",
     "tsconfig-paths-webpack-plugin": "4.1.0",
     "webpack": "^5.91.0"
@@ -39,6 +38,9 @@
   "devDependencies": {
     "@scripts/test-helper": "workspace:*",
     "@types/node": "18.x",
+    "ansi-escapes": "4.3.2",
+    "cli-truncate": "2.1.0",
+    "patch-console": "1.0.0",
     "typescript": "^5.4.2"
   },
   "publishConfig": {

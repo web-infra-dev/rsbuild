@@ -9,22 +9,25 @@
     "directory": "packages/babel-preset"
   },
   "license": "MIT",
-  "type": "commonjs",
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
     },
     "./web": {
       "types": "./dist/web.d.ts",
-      "default": "./dist/web.js"
+      "require": "./dist/web.cjs",
+      "import": "./dist/web.js"
     },
     "./node": {
       "types": "./dist/node.d.ts",
-      "default": "./dist/node.js"
+      "require": "./dist/node.cjs",
+      "import": "./dist/node.js"
     }
   },
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
