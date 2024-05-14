@@ -4,23 +4,33 @@ import { SourceCode } from 'rspress/theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-typed-css-modules" />
 
-{/* this plugin is still WIP */}
+The Typed CSS Modules plugin provides the ability to generate corresponding TypeScript declaration files for CSS Modules files in the project.
 
-## Generate exact type definitions
+## Quick Start
 
-Although the above method can provide the type of CSS Modules, it cannot accurately prompt which classNames are exported by a certain CSS file.
+### Install Plugin
 
-Rsbuild supports generating accurate type declarations for CSS Modules, you only need to enable the output.enableCssModuleTSDeclaration config, and then execute the build, Rsbuild will generate type declaration files for all CSS Modules.
+You can install the plugin using the following command:
 
-```ts
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-typed-css-modules -D" />
+
+### Register Plugin
+
+You can register the plugin in the `rsbuild.config.ts` file:
+
+```ts title="rsbuild.config.ts"
+import { pluginTypedCSSModules } from '@rsbuild/plugin-typed-css-modules';
+
 export default {
-  output: {
-    enableCssModuleTSDeclaration: true,
-  },
+  plugins: [pluginTypedCSSModules()],
 };
 ```
 
 ### Example
+
+By adding the Typed CSS Modules plugin, Rsbuild will generate corresponding TypeScript declaration files for all CSS Modules files in the project.
 
 For example, there are two files `src/index.ts` and `src/index.module.scss` under a certain folder:
 

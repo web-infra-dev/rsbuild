@@ -4,23 +4,33 @@ import { SourceCode } from 'rspress/theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-typed-css-modules" />
 
-{/* this plugin is still WIP */}
+Typed CSS Modules 插件用于为项目中的 CSS Modules 文件生成相应的类型声明文件。
 
-## 生成准确的类型定义
+## 快速开始
 
-上述方法虽然可以解决 CSS Modules 在 TypeScript 中的类型问题，但是无法准确地提示出某个 CSS 文件导出了哪些类名。
+### 安装插件
 
-Rsbuild 支持为 CSS Modules 生成准确的类型声明，你只需要开启 output.enableCssModuleTSDeclaration 配置项，再执行构建命令，Rsbuild 就会为项目中所有的 CSS Modules 文件生成相应的类型声明文件。
+你可以通过如下的命令安装插件:
 
-```ts
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-typed-css-modules -D" />
+
+### 注册插件
+
+你可以在 `rsbuild.config.ts` 文件中注册插件：
+
+```ts title="rsbuild.config.ts"
+import { pluginTypedCSSModules } from '@rsbuild/plugin-typed-css-modules';
+
 export default {
-  output: {
-    enableCssModuleTSDeclaration: true,
-  },
+  plugins: [pluginTypedCSSModules()],
 };
 ```
 
 ### 示例
+
+通过添加 Typed CSS Modules 插件，Rsbuild 会为项目中所有的 CSS Modules 文件生成相应的类型声明文件。
 
 例如某个文件夹下面有 `src/index.ts` 和 `src/index.module.scss` 两个文件：
 
