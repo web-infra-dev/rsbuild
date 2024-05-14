@@ -46,6 +46,8 @@ jobs:
             changed:
               - "!**/*.md"
               - "!**/*.mdx"
+              - "!**/_meta.json"
+              - "!**/dictionary.txt"
 
       - name: Setup Node.js ${{ matrix.node-version }}
         if: steps.changes.outputs.changed == 'true'
@@ -92,6 +94,8 @@ jobs:
             changed:
               - "!**/*.md"
               - "!**/*.mdx"
+              - "!**/_meta.json"
+              - "!**/dictionary.txt"
 
       - name: Setup Node.js ${{ matrix.node-version }}
         if: steps.changes.outputs.changed == 'true'
