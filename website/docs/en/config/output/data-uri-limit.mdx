@@ -16,17 +16,18 @@ type DataUriLimitConfig =
 - **Default:**
 
 ```js
+// Since Rsbuild v0.7.0, the defaults changed from 10000 to 4096
 const defaultDatUriLimit = {
-  svg: 10000,
-  font: 10000,
-  image: 10000,
-  media: 10000,
+  svg: 4096,
+  font: 4096,
+  image: 4096,
+  media: 4096,
 };
 ```
 
 Set the size threshold to inline static assets such as images and fonts.
 
-By default, static assets will be Base64 encoded and inline into the page if the size is less than 10KB.
+By default, static assets will be Base64 encoded and inline into the page if the size is less than 4KiB.
 
 You can adjust the threshold by setting the `dataUriLimit` config.
 
@@ -39,12 +40,12 @@ Detail:
 
 ### Example
 
-- Inline all static assets less than 4kB:
+- Inline all static assets less than 10KiB:
 
 ```js
 export default {
   output: {
-    dataUriLimit: 4000,
+    dataUriLimit: 10 * 1024,
   },
 };
 ```
@@ -69,13 +70,13 @@ export default {
 };
 ```
 
-- Set the threshold for image assets to 5kB, do not inline video assets:
+- Set the threshold for image assets to 5KiB, do not inline video assets:
 
 ```js
 export default {
   output: {
     dataUriLimit: {
-      image: 5000,
+      image: 5 * 1024,
       media: 0,
     },
   },

@@ -83,7 +83,7 @@ exports[`svgr > 'configure SVGR options' 1`] = `
       },
       "parser": {
         "dataUrlCondition": {
-          "maxSize": 10000,
+          "maxSize": 4096,
         },
       },
       "type": "asset",
@@ -240,7 +240,7 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
       },
       "parser": {
         "dataUrlCondition": {
-          "maxSize": 10000,
+          "maxSize": 4096,
         },
       },
       "type": "asset",
@@ -397,7 +397,7 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
       },
       "parser": {
         "dataUrlCondition": {
-          "maxSize": 10000,
+          "maxSize": 4096,
         },
       },
       "type": "asset",
@@ -554,7 +554,7 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
       },
       "parser": {
         "dataUrlCondition": {
-          "maxSize": 10000,
+          "maxSize": 4096,
         },
       },
       "type": "asset",
@@ -706,7 +706,7 @@ exports[`svgr > 'exportType named / mixedImport true' 1`] = `
         {
           "loader": "<ROOT>/packages/plugin-svgr/compiled/url-loader/index.js",
           "options": {
-            "limit": 10000,
+            "limit": 4096,
             "name": "static/svg/[name].[contenthash:8].svg",
           },
         },
@@ -718,7 +718,7 @@ exports[`svgr > 'exportType named / mixedImport true' 1`] = `
       },
       "parser": {
         "dataUrlCondition": {
-          "maxSize": 10000,
+          "maxSize": 4096,
         },
       },
       "type": "asset",

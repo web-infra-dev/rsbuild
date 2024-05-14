@@ -144,7 +144,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -171,7 +171,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -198,7 +198,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -225,7 +225,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -724,7 +724,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -751,7 +751,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -778,7 +778,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -805,7 +805,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -1357,7 +1357,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -1384,7 +1384,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -1411,7 +1411,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -1438,7 +1438,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -1771,7 +1771,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -1798,7 +1798,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -1825,7 +1825,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -1852,7 +1852,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
