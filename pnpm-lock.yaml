@@ -165,6 +165,9 @@ importers:
       '@rsbuild/plugin-type-check':
         specifier: workspace:*
         version: link:../packages/plugin-type-check
+      '@rsbuild/plugin-typed-css-modules':
+        specifier: workspace:*
+        version: link:../packages/plugin-typed-css-modules
       '@rsbuild/plugin-umd':
         specifier: workspace:*
         version: link:../packages/plugin-umd
@@ -744,9 +747,6 @@ importers:
       less-loader:
         specifier: 12.2.0
         version: 12.2.0(@rspack/core@0.6.5(@swc/helpers@0.5.3))(less@4.2.0)(webpack@5.91.0)
-      line-diff:
-        specifier: 2.1.1
-        version: 2.1.1
       on-finished:
         specifier: 2.4.1
         version: 2.4.1
@@ -1433,6 +1433,28 @@ importers:
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
+      typescript:
+        specifier: ^5.4.2
+        version: 5.4.5
+
+  packages/plugin-typed-css-modules:
+    dependencies:
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
+    devDependencies:
+      '@rsbuild/core':
+        specifier: link:../core
+        version: link:../core
+      '@scripts/test-helper':
+        specifier: workspace:*
+        version: link:../../scripts/test-helper
+      line-diff:
+        specifier: 2.1.1
+        version: 2.1.1
+      prebundle:
+        specifier: 1.1.0
+        version: 1.1.0(typescript@5.4.5)
       typescript:
         specifier: ^5.4.2
         version: 5.4.5

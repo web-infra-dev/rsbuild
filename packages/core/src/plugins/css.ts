@@ -261,7 +261,6 @@ export async function applyCSSRule({
 
   // 1. Check user config
   const enableExtractCSS = isUseCssExtract(config, target);
-  const enableCSSModuleTS = Boolean(config.output.enableCssModuleTSDeclaration);
 
   // 2. Prepare loader options
   const localIdentName = getCssModuleLocalIdentName(config, isProd);
@@ -304,17 +303,6 @@ export async function applyCSSRule({
         .use(CHAIN_ID.USE.STYLE)
         .loader(getCompiledPath('style-loader'))
         .options(styleLoaderOptions)
-        .end();
-    }
-
-    // use css-modules-typescript-loader
-    if (enableCSSModuleTS && cssLoaderOptions.modules) {
-      rule
-        .use(CHAIN_ID.USE.CSS_MODULES_TS)
-        .loader(path.resolve(__dirname, '../rspack/cssModulesTypescriptLoader'))
-        .options({
-          modules: cssLoaderOptions.modules,
-        })
         .end();
     }
   } else {

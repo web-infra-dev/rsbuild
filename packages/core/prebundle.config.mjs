@@ -42,10 +42,6 @@ export default {
       },
     },
     {
-      name: 'line-diff',
-      ignoreDts: true,
-    },
-    {
       name: 'postcss-value-parser',
       ignoreDts: true,
     },
