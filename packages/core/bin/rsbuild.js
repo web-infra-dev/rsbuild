@@ -8,7 +8,7 @@ async function main() {
     const { runCli } = require('../dist/cli/commands');
     runCli();
   } catch (err) {
-    const { logger } = require('@rsbuild/shared/rslog');
+    const { logger } = require('@rsbuild/shared');
     logger.error(err);
   }
 }
