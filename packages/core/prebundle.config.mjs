@@ -25,6 +25,7 @@ export default {
     '/^caniuse-lite(/.*)/': 'caniuse-lite$1',
     webpack: 'webpack',
     postcss: 'postcss',
+    typescript: 'typescript',
   },
   dependencies: [
     'open',
@@ -91,13 +92,6 @@ export default {
       externals: {
         'postcss-value-parser': '../postcss-value-parser',
         semver: '@rsbuild/shared/semver',
-        'postcss-modules-local-by-default':
-          '@rsbuild/shared/postcss-modules-local-by-default',
-        'postcss-modules-extract-imports':
-          '@rsbuild/shared/postcss-modules-extract-imports',
-        'postcss-modules-scope': '@rsbuild/shared/postcss-modules-scope',
-        'postcss-modules-values': '@rsbuild/shared/postcss-modules-values',
-        'icss-utils': '@rsbuild/shared/icss-utils',
       },
     },
     {

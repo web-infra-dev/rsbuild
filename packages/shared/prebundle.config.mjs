@@ -60,37 +60,6 @@ export default {
       ignoreDts: true,
     },
     {
-      name: 'icss-utils',
-      ignoreDts: true,
-    },
-    {
-      name: 'postcss-value-parser',
-      ignoreDts: true,
-    },
-    {
-      name: 'postcss-modules-local-by-default',
-      ignoreDts: true,
-      externals: {
-        'icss-utils': '../icss-utils',
-        'postcss-value-parser': '../postcss-value-parser',
-      },
-    },
-    {
-      name: 'postcss-modules-extract-imports',
-      ignoreDts: true,
-    },
-    {
-      name: 'postcss-modules-scope',
-      ignoreDts: true,
-    },
-    {
-      name: 'postcss-modules-values',
-      ignoreDts: true,
-      externals: {
-        'icss-utils': '../icss-utils',
-      },
-    },
-    {
       name: 'loader-utils2',
       ignoreDts: true,
       externals: {
@@ -137,7 +106,8 @@ export default {
       externals: {
         picocolors: '../picocolors',
         browserslist: '../browserslist',
-        'postcss-value-parser': '../postcss-value-parser',
+        // Can be enabled after moving to core
+        // 'postcss-value-parser': '../postcss-value-parser',
       },
     },
     {

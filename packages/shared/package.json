@@ -68,26 +68,6 @@
       "types": "./compiled/webpack-bundle-analyzer/index.d.ts",
       "default": "./compiled/webpack-bundle-analyzer/index.js"
     },
-    "./icss-utils": {
-      "types": "./compiled/icss-utils/index.d.ts",
-      "default": "./compiled/icss-utils/index.js"
-    },
-    "./postcss-modules-extract-imports": {
-      "types": "./compiled/postcss-modules-extract-imports/index.d.ts",
-      "default": "./compiled/postcss-modules-extract-imports/index.js"
-    },
-    "./postcss-modules-local-by-default": {
-      "types": "./compiled/postcss-modules-local-by-default/index.d.ts",
-      "default": "./compiled/postcss-modules-local-by-default/index.js"
-    },
-    "./postcss-modules-scope": {
-      "types": "./compiled/postcss-modules-scope/index.d.ts",
-      "default": "./compiled/postcss-modules-scope/index.js"
-    },
-    "./postcss-modules-values": {
-      "types": "./compiled/postcss-modules-values/index.d.ts",
-      "default": "./compiled/postcss-modules-values/index.js"
-    },
     "./semver": {
       "types": "./compiled/semver/index.d.ts",
       "default": "./compiled/semver/index.js"
@@ -136,7 +116,6 @@
     "fs-extra": "^11.2.0",
     "gzip-size": "^6.0.0",
     "http-proxy-middleware": "^2.0.6",
-    "icss-utils": "5.1.0",
     "jiti": "^1.21.0",
     "json5": "^2.2.3",
     "less": "4.2.0",
@@ -144,11 +123,6 @@
     "mime-types": "^2.1.35",
     "mini-css-extract-plugin": "2.8.1",
     "picocolors": "1.0.0",
-    "postcss-modules-extract-imports": "3.1.0",
-    "postcss-modules-local-by-default": "4.0.5",
-    "postcss-modules-scope": "3.2.0",
-    "postcss-modules-values": "4.0.0",
-    "postcss-value-parser": "4.2.0",
     "prebundle": "1.1.0",
     "rslog": "^1.2.2",
     "sass": "^1.77.1",

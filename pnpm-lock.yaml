@@ -1658,9 +1658,6 @@ importers:
       http-proxy-middleware:
         specifier: ^2.0.6
         version: 2.0.6
-      icss-utils:
-        specifier: 5.1.0
-        version: 5.1.0(postcss@8.4.38)
       jiti:
         specifier: ^1.21.0
         version: 1.21.0
@@ -1682,21 +1679,6 @@ importers:
       picocolors:
         specifier: 1.0.0
         version: 1.0.0
-      postcss-modules-extract-imports:
-        specifier: 3.1.0
-        version: 3.1.0(postcss@8.4.38)
-      postcss-modules-local-by-default:
-        specifier: 4.0.5
-        version: 4.0.5(postcss@8.4.38)
-      postcss-modules-scope:
-        specifier: 3.2.0
-        version: 3.2.0(postcss@8.4.38)
-      postcss-modules-values:
-        specifier: 4.0.0
-        version: 4.0.0(postcss@8.4.38)
-      postcss-value-parser:
-        specifier: 4.2.0
-        version: 4.2.0
       prebundle:
         specifier: 1.1.0
         version: 1.1.0(typescript@5.4.5)
