@@ -25,7 +25,7 @@ export type ProxyOptions =
 
 export type HistoryApiFallbackContext = {
   match: RegExpMatchArray;
-  parsedUrl: import('url').Url;
+  parsedUrl: import('node:url').Url;
   request: Request;
 };
 
