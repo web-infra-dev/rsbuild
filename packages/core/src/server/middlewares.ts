@@ -1,9 +1,9 @@
-import type fs from 'node:fs';
 import path from 'node:path';
 import { parse } from 'node:url';
 import {
   type HtmlFallback,
   type RequestHandler as Middleware,
+  type OutputFileSystem,
   color,
   debug,
   isDebug,
@@ -81,12 +81,12 @@ export const getHtmlFallbackMiddleware: (params: {
   distPath: string;
   callback?: Middleware;
   htmlFallback?: HtmlFallback;
-  outputFileSystem: typeof fs;
+  outputFileSystem: OutputFileSystem;
 }) => Middleware = ({ htmlFallback, distPath, callback, outputFileSystem }) => {
   /**
    * support access page without suffix and support fallback in some edge cases
    */
-  return (req, res, next) => {
+  return async (req, res, next) => {
     if (
       // Only accept GET or HEAD
       (req.method !== 'GET' && req.method !== 'HEAD') ||
@@ -119,6 +119,14 @@ export const getHtmlFallbackMiddleware: (params: {
       return next();
     }
 
+    const isFileExists = async (filePath: string) => {
+      return new Promise((resolve) => {
+        outputFileSystem.stat(filePath, (_error, stats) => {
+          resolve(stats?.isFile());
+        });
+      });
+    };
+
     const rewrite = (newUrl: string, isFallback = false) => {
       if (isFallback && isDebug()) {
         debug(
@@ -143,7 +151,7 @@ export const getHtmlFallbackMiddleware: (params: {
       const newUrl = `${pathname}index.html`;
       const filePath = path.join(distPath, pathname, 'index.html');
 
-      if (outputFileSystem.existsSync(filePath)) {
+      if (await isFileExists(filePath)) {
         return rewrite(newUrl);
       }
     } else if (
@@ -153,13 +161,13 @@ export const getHtmlFallbackMiddleware: (params: {
       const newUrl = `${pathname}.html`;
       const filePath = path.join(distPath, `${pathname}.html`);
 
-      if (outputFileSystem.existsSync(filePath)) {
+      if (await isFileExists(filePath)) {
         return rewrite(newUrl);
       }
     }
 
     if (htmlFallback === 'index') {
-      if (outputFileSystem.existsSync(path.join(distPath, 'index.html'))) {
+      if (await isFileExists(path.join(distPath, 'index.html'))) {
         return rewrite('/index.html', true);
       }
     }

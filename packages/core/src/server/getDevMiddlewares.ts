@@ -1,10 +1,10 @@
-import type fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
 import url from 'node:url';
 import type {
   CompileMiddlewareAPI,
   DevConfig,
   Middlewares,
+  OutputFileSystem,
   RequestHandler,
   ServerAPIs,
   ServerConfig,
@@ -22,7 +22,7 @@ export type RsbuildDevMiddlewareOptions = {
   dev: DevConfig;
   server: ServerConfig;
   compileMiddlewareAPI?: CompileMiddlewareAPI;
-  outputFileSystem: typeof fs;
+  outputFileSystem: OutputFileSystem;
   output: {
     distPath: string;
   };
