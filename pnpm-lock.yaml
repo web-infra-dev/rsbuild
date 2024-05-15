@@ -587,6 +587,9 @@ importers:
       '@babel/types':
         specifier: ^7.24.5
         version: 7.24.5
+      '@rsbuild/plugin-babel':
+        specifier: workspace:*
+        version: link:../../plugin-babel
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
@@ -597,9 +600,6 @@ importers:
         specifier: ~3.36.0
         version: 3.36.1
     devDependencies:
-      '@rsbuild/plugin-babel':
-        specifier: workspace:*
-        version: link:../../plugin-babel
       '@types/node':
         specifier: 18.x
         version: 18.19.31

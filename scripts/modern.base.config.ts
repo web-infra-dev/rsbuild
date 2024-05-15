@@ -43,8 +43,8 @@ export default baseBuildConfig;
 
 const externals = [
   'webpack',
+  '@rspack/core',
   '@rsbuild/core',
-  'mini-css-extract-plugin',
   /[\\/]compiled[\\/]/,
   /node:/,
 ];

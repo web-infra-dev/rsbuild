@@ -1,6 +1,6 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Socket } from 'node:net';
-import type Connect from '../../compiled/connect';
+import type Connect from '../../compiled/connect/index.js';
 import type {
   DevConfig,
   NextFunction,
@@ -9,7 +9,7 @@ import type {
 } from './config/dev';
 import type { RspackCompiler, RspackMultiCompiler } from './rspack';
 
-export type { FSWatcher } from '../../compiled/chokidar';
+export type { FSWatcher } from '../../compiled/chokidar/index.js';
 
 export type Middleware = (
   req: IncomingMessage,

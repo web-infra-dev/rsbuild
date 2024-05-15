@@ -1,3 +1,4 @@
+import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { ChainIdentifier } from '../chain';
 import type { BundlerChain } from './bundlerConfig';
 import type { HtmlBasicTag, RsbuildConfig } from './config';
@@ -78,7 +79,7 @@ export type ModifyChainUtils = {
   isServiceWorker: boolean;
   isWebWorker: boolean;
   CHAIN_ID: ChainIdentifier;
-  HtmlPlugin: typeof import('html-webpack-plugin');
+  HtmlPlugin: typeof HtmlWebpackPlugin;
   /**
    * @private internal API
    */

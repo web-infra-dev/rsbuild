@@ -1,5 +1,5 @@
 import type { Configuration } from '@rspack/core';
-import type { BundleAnalyzerPlugin } from '../../../compiled/webpack-bundle-analyzer';
+import type { BundleAnalyzerPlugin } from '../../../compiled/webpack-bundle-analyzer/index.js';
 
 export type ConsoleType = 'log' | 'info' | 'warn' | 'error' | 'table' | 'group';
 

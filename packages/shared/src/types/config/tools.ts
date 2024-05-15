@@ -74,7 +74,7 @@ export type ModifyRspackConfigUtils = ModifyChainUtils & {
     plugins: BundlerPluginInstance | BundlerPluginInstance[],
   ) => void;
   removePlugin: (pluginName: string) => void;
-  mergeConfig: typeof import('../../../compiled/webpack-merge').merge;
+  mergeConfig: typeof import('../../../compiled/webpack-merge/index.js').merge;
   rspack: typeof rspack;
 };
 

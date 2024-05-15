@@ -6,7 +6,7 @@ import {
   setupServerHooks,
 } from '@rsbuild/shared';
 import type { Compiler, MultiCompiler } from '@rspack/core';
-import webpackDevMiddleware from '../../compiled/webpack-dev-middleware';
+import webpackDevMiddleware from '../../compiled/webpack-dev-middleware/index.js';
 
 function applyHMREntry({
   compiler,

@@ -60,12 +60,12 @@
     "@babel/preset-typescript": "^7.24.1",
     "@babel/runtime": "^7.24.5",
     "@babel/types": "^7.24.5",
+    "@rsbuild/plugin-babel": "workspace:*",
     "@types/babel__core": "^7.20.5",
     "babel-plugin-dynamic-import-node": "2.3.3",
     "core-js": "~3.36.0"
   },
   "devDependencies": {
-    "@rsbuild/plugin-babel": "workspace:*",
     "@types/node": "18.x",
     "typescript": "^5.4.2"
   },
