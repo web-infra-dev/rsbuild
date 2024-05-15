@@ -27,8 +27,7 @@ function formatMessage(stats: StatsError | string) {
   // Stats error object
   if (typeof stats === 'object') {
     const fileName = resolveFileName(stats);
-    const mainMessage =
-      typeof stats.formatted === 'string' ? stats.formatted : stats.message;
+    const mainMessage = stats.message;
     const details = stats.details ? `\nDetails: ${stats.details}\n` : '';
     const stack = stats.stack ? `\n${stats.stack}` : '';
 

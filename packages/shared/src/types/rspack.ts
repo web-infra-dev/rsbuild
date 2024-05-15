@@ -16,6 +16,8 @@ export type RspackMultiCompiler = Rspack.MultiCompiler;
 /** T[] => T */
 type GetElementType<T extends any[]> = T extends (infer U)[] ? U : never;
 
+export type OutputFileSystem = Rspack.OutputFileSystem;
+
 export type RspackRule = GetElementType<
   NonNullable<NonNullable<RspackConfig['module']>['rules']>
 >;

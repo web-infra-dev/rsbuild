@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import {
   type CreateDevMiddlewareReturns,
   type CreateDevServerOptions,
+  type OutputFileSystem,
   ROOT_DIST_DIR,
   type RsbuildDevServer,
   type StartDevServerOptions,
@@ -66,7 +67,7 @@ export async function createDevServer<
     https,
   };
 
-  let outputFileSystem = fs;
+  let outputFileSystem: OutputFileSystem = fs;
 
   const startCompile: () => Promise<
     RsbuildDevMiddlewareOptions['compileMiddlewareAPI']
@@ -91,9 +92,10 @@ export async function createDevServer<
 
     compilerDevMiddleware.init();
 
-    outputFileSystem = isMultiCompiler(compiler)
-      ? compiler.compilers[0].outputFileSystem
-      : compiler.outputFileSystem;
+    outputFileSystem =
+      (isMultiCompiler(compiler)
+        ? compiler.compilers[0].outputFileSystem
+        : compiler.outputFileSystem) || fs;
 
     return {
       middleware: compilerDevMiddleware.middleware,
