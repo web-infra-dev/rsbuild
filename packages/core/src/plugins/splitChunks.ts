@@ -137,7 +137,7 @@ function splitByModule(ctx: SplitChunksContext): SplitChunks {
       ...userDefinedCacheGroups,
       // Core group
       vendors: {
-        priority: -10,
+        priority: -9,
         test: NODE_MODULES_REGEX,
         name(module) {
           return module
