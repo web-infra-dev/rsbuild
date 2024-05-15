@@ -28,10 +28,6 @@
       "types": "./compiled/less/index.d.ts",
       "default": "./compiled/less/index.js"
     },
-    "./rslog": {
-      "types": "./compiled/rslog/dist/index.d.ts",
-      "default": "./compiled/rslog/index.js"
-    },
     "./yaml": {
       "types": "./compiled/yaml/index.d.ts",
       "default": "./compiled/yaml/index.js"

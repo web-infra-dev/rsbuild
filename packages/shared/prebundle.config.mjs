@@ -21,7 +21,6 @@ export default {
     typescript: 'typescript',
   },
   dependencies: [
-    'rslog',
     'deepmerge',
     'fs-extra',
     {
