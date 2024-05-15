@@ -70,7 +70,7 @@ export const emitTypePkgJsonPlugin: CliPlugin<ModuleTools> = {
   setup() {
     return {
       afterBuild() {
-        const typesDir = path.join(process.cwd(), 'dist/types');
+        const typesDir = path.join(process.cwd(), 'dist-types');
         const pkgPath = path.join(typesDir, 'package.json');
         if (!fs.existsSync(typesDir)) {
           fs.mkdirSync(typesDir);
