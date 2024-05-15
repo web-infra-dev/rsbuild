@@ -1,4 +1,4 @@
-import type WebpackChain from '../../compiled/webpack-chain';
+import type WebpackChain from '../../compiled/webpack-chain/index.js';
 
 export type { WebpackChain };
 

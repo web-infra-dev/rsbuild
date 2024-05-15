@@ -41,7 +41,13 @@ export const bundleMjsOnlyConfig = defineConfig({
 
 export default baseBuildConfig;
 
-const externals = ['@rsbuild/core', /[\\/]compiled[\\/]/];
+const externals = [
+  'webpack',
+  '@rspack/core',
+  '@rsbuild/core',
+  /[\\/]compiled[\\/]/,
+  /node:/,
+];
 
 export const buildConfigWithMjs: PartialBaseBuildConfig[] = [
   {
@@ -55,18 +61,11 @@ export const buildConfigWithMjs: PartialBaseBuildConfig[] = [
   {
     format: 'esm',
     target: BUILD_TARGET,
-    dts: false,
     define,
     autoExtension: true,
     shims: true,
     externals,
     banner: requireShim,
-  },
-  {
-    buildType: 'bundleless',
-    dts: {
-      only: true,
-    },
   },
 ];
 

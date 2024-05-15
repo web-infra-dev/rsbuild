@@ -13,7 +13,7 @@ import {
   setNodeEnv,
 } from '@rsbuild/shared';
 import connect from '@rsbuild/shared/connect';
-import sirv from '../../compiled/sirv';
+import sirv from '../../compiled/sirv/index.js';
 import type { InternalContext } from '../types';
 import { formatRoutes, getServerOptions, printServerURLs } from './helper';
 import { createHttpServer } from './httpServer';
@@ -58,7 +58,7 @@ export class RsbuildProdServer {
     // compression should be the first middleware
     if (compress) {
       const { default: compression } = await import(
-        '../../compiled/http-compression'
+        '../../compiled/http-compression/index.js'
       );
       this.middlewares.use((req, res, next) => {
         compression({
@@ -92,7 +92,7 @@ export class RsbuildProdServer {
 
     if (historyApiFallback) {
       const { default: connectHistoryApiFallback } = await import(
-        '../../compiled/connect-history-api-fallback'
+        '../../compiled/connect-history-api-fallback/index.js'
       );
       const historyApiFallbackMiddleware = connectHistoryApiFallback(
         historyApiFallback === true ? {} : historyApiFallback,

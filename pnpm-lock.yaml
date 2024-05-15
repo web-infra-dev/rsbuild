@@ -587,6 +587,9 @@ importers:
       '@babel/types':
         specifier: ^7.24.5
         version: 7.24.5
+      '@rsbuild/plugin-babel':
+        specifier: workspace:*
+        version: link:../../plugin-babel
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
@@ -597,9 +600,6 @@ importers:
         specifier: ~3.36.0
         version: 3.36.1
     devDependencies:
-      '@rsbuild/plugin-babel':
-        specifier: workspace:*
-        version: link:../../plugin-babel
       '@types/node':
         specifier: 18.x
         version: 18.19.31
@@ -1605,6 +1605,9 @@ importers:
       caniuse-lite:
         specifier: ^1.0.30001617
         version: 1.0.30001617
+      html-webpack-plugin:
+        specifier: npm:html-rspack-plugin@5.7.2
+        version: html-rspack-plugin@5.7.2(@rspack/core@0.6.5(@swc/helpers@0.5.3))
       postcss:
         specifier: ^8.4.38
         version: 8.4.38
@@ -1652,9 +1655,6 @@ importers:
       gzip-size:
         specifier: ^6.0.0
         version: 6.0.0
-      html-webpack-plugin:
-        specifier: npm:html-rspack-plugin@5.7.2
-        version: html-rspack-plugin@5.7.2(@rspack/core@0.6.5(@swc/helpers@0.5.3))
       http-proxy-middleware:
         specifier: ^2.0.6
         version: 2.0.6

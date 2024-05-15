@@ -1,4 +1,5 @@
 import type { RuleSetCondition } from '@rspack/core';
+import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type {
   RuleSetRule,
   Configuration as WebpackConfig,
@@ -60,7 +61,7 @@ export type ModifyWebpackChainUtils = ModifyChainUtils & {
   /**
    * @deprecated Use HtmlPlugin instead.
    */
-  HtmlWebpackPlugin: typeof import('html-webpack-plugin');
+  HtmlWebpackPlugin: typeof HtmlWebpackPlugin;
 };
 
 export type ModifyWebpackConfigUtils = ModifyWebpackChainUtils & {
@@ -72,7 +73,7 @@ export type ModifyWebpackConfigUtils = ModifyWebpackChainUtils & {
     plugins: WebpackPluginInstance | WebpackPluginInstance[],
   ) => void;
   removePlugin: (pluginName: string) => void;
-  mergeConfig: typeof import('../../compiled/webpack-merge').merge;
+  mergeConfig: typeof import('../../compiled/webpack-merge/index.js').merge;
 };
 
 export type ModifyWebpackChainFn = (

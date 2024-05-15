@@ -70,7 +70,7 @@ const applyDefaultMiddlewares = async ({
   // compression should be the first middleware
   if (server.compress) {
     const { default: compression } = await import(
-      '../../compiled/http-compression'
+      '../../compiled/http-compression/index.js'
     );
     middlewares.push((req, res, next) => {
       compression({
@@ -112,7 +112,7 @@ const applyDefaultMiddlewares = async ({
   }
 
   const { default: launchEditorMiddleware } = await import(
-    '../../compiled/launch-editor-middleware'
+    '../../compiled/launch-editor-middleware/index.js'
   );
   middlewares.push(['/__open-in-editor', launchEditorMiddleware()]);
 
@@ -136,7 +136,7 @@ const applyDefaultMiddlewares = async ({
   }
 
   if (server.publicDir !== false && server.publicDir?.name) {
-    const { default: sirv } = await import('../../compiled/sirv');
+    const { default: sirv } = await import('../../compiled/sirv/index.js');
     const { name } = server.publicDir;
     const publicDir = isAbsolute(name) ? name : join(pwd, name);
 
@@ -162,7 +162,7 @@ const applyDefaultMiddlewares = async ({
 
   if (server.historyApiFallback) {
     const { default: connectHistoryApiFallback } = await import(
-      '../../compiled/connect-history-api-fallback'
+      '../../compiled/connect-history-api-fallback/index.js'
     );
     const historyApiFallbackMiddleware = connectHistoryApiFallback(
       server.historyApiFallback === true ? {} : server.historyApiFallback,
