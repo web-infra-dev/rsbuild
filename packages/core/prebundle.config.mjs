@@ -25,6 +25,7 @@ export default {
     '/^caniuse-lite(/.*)/': 'caniuse-lite$1',
     webpack: 'webpack',
     postcss: 'postcss',
+    typescript: 'typescript',
   },
   dependencies: [
     'open',

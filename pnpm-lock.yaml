@@ -1658,9 +1658,6 @@ importers:
       http-proxy-middleware:
         specifier: ^2.0.6
         version: 2.0.6
-      icss-utils:
-        specifier: 5.1.0
-        version: 5.1.0(postcss@8.4.38)
       jiti:
         specifier: ^1.21.0
         version: 1.21.0
