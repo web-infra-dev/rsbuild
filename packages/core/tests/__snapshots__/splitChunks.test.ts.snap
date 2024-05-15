@@ -152,7 +152,7 @@ exports[`plugin-split-chunks > should set split-by-module config 1`] = `
       "cacheGroups": {
         "vendors": {
           "name": [Function],
-          "priority": -10,
+          "priority": -9,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
         },
       },
