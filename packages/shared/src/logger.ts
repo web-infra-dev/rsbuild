@@ -1,8 +1,5 @@
-import * as rslog from '../compiled/rslog/index.js';
-import type { Logger } from '../compiled/rslog/index.js';
+import { type Logger, logger } from 'rslog';
 import { color } from './utils';
-
-const { logger } = rslog;
 
 // setup the logger level
 if (process.env.DEBUG) {

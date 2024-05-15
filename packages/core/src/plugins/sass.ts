@@ -114,7 +114,7 @@ const getResolveUrlJoinFn = async () => {
     asGenerator,
     createJoinImplementation,
     defaultJoinGenerator,
-  } = await import('../../compiled/resolve-url-loader');
+  } = await import('../../compiled/resolve-url-loader/index.js');
 
   const rsbuildGenerator = asGenerator((item: any, ...rest: any[]) => {
     // only handle relative path (not absolutely accurate, but can meet common scenarios)
