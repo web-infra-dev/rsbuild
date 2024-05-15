@@ -1,4 +1,8 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import {
+  type CliPlugin,
+  type ModuleTools,
   type PartialBaseBuildConfig,
   defineConfig,
   moduleTools,
@@ -26,22 +30,9 @@ export const baseBuildConfig = defineConfig({
   },
 });
 
-export const bundleMjsOnlyConfig = defineConfig({
-  plugins: [moduleTools()],
-  buildConfig: {
-    buildType: 'bundle',
-    format: 'esm',
-    target: BUILD_TARGET,
-    define,
-    autoExtension: true,
-    shims: true,
-    banner: requireShim,
-  },
-});
-
 export default baseBuildConfig;
 
-const externals = [
+export const commonExternals = [
   'webpack',
   '@rspack/core',
   '@rsbuild/core',
@@ -49,49 +40,55 @@ const externals = [
   /node:/,
 ];
 
-export const buildConfigWithMjs: PartialBaseBuildConfig[] = [
-  {
-    format: 'cjs',
-    target: BUILD_TARGET,
-    define,
-    autoExtension: true,
-    externals,
-    dts: false,
-  },
-  {
-    format: 'esm',
-    target: BUILD_TARGET,
-    define,
-    autoExtension: true,
-    shims: true,
-    externals,
-    banner: requireShim,
-  },
+export const esmBuildConfig: PartialBaseBuildConfig = {
+  format: 'esm',
+  target: BUILD_TARGET,
+  define,
+  autoExtension: true,
+  shims: true,
+  externals: commonExternals,
+  banner: requireShim,
+};
+
+export const cjsBuildConfig: PartialBaseBuildConfig = {
+  format: 'cjs',
+  target: BUILD_TARGET,
+  define,
+  autoExtension: true,
+  externals: commonExternals,
+  dts: false,
+};
+
+export const dualBuildConfigs: PartialBaseBuildConfig[] = [
+  cjsBuildConfig,
+  esmBuildConfig,
 ];
 
-export const configWithMjs = defineConfig({
-  plugins: [moduleTools()],
-  buildConfig: buildConfigWithMjs,
-});
+export const emitTypePkgJsonPlugin: CliPlugin<ModuleTools> = {
+  name: 'emit-type-pkg-json-plugin',
 
-export const configWithEsm = defineConfig({
-  plugins: [moduleTools()],
-  buildConfig: [
-    {
-      buildType: 'bundleless',
-      format: 'cjs',
-      target: BUILD_TARGET,
-      outDir: './dist/cjs',
-      dts: {
-        distPath: '../type',
+  setup() {
+    return {
+      afterBuild() {
+        const typesDir = path.join(process.cwd(), 'dist/types');
+        const pkgPath = path.join(typesDir, 'package.json');
+        if (!fs.existsSync(typesDir)) {
+          fs.mkdirSync(typesDir);
+        }
+        fs.writeFileSync(
+          pkgPath,
+          JSON.stringify({
+            '//': 'This file is for making TypeScript work with moduleResolution node16+.',
+            version: '1.0.0',
+          }),
+          'utf8',
+        );
       },
-    },
-    {
-      buildType: 'bundleless',
-      format: 'esm',
-      target: BUILD_TARGET,
-      outDir: './dist/esm',
-      dts: false,
-    },
-  ],
+    };
+  },
+};
+
+export const configForDualPackage = defineConfig({
+  plugins: [moduleTools()],
+  buildConfig: dualBuildConfigs,
 });

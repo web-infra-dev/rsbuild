@@ -1,3 +1,3 @@
-import { configWithMjs } from '../../scripts/modern.base.config';
+import { configForDualPackage } from '../../scripts/modern.base.config';
 
-export default configWithMjs;
+export default configForDualPackage;

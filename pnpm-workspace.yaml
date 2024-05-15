@@ -5,4 +5,5 @@ packages:
   - 'packages/**'
   - 'examples/**'
   - '!**/compiled/**'
+  - '!**/dist-types/**'
   - '!**/create-rsbuild/template-*'
