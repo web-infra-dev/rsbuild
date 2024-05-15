@@ -1716,8 +1716,6 @@ importers:
         specifier: ^2.4.2
         version: 2.4.2
 
-  packages/shared/dist/types: {}
-
   scripts/check-changeset:
     dependencies:
       '@changesets/read':
