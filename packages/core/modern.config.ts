@@ -31,11 +31,12 @@ export const redirectCompiledPlugin: CliPlugin<ModuleTools> = {
           path.join(__dirname, 'dist/index.js'),
           path.join(__dirname, 'dist/index.cjs'),
         ];
-        distFiles.forEach((file) => {
+
+        for (const file of distFiles) {
           let content = fs.readFileSync(file, 'utf-8');
           content = content.replace(/(\.\.\/){2,3}compiled/g, '../compiled');
           fs.writeFileSync(file, content);
-        });
+        }
       },
     };
   },
