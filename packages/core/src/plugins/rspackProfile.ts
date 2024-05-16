@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fse } from '@rsbuild/shared';
 import { logger } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
-import type { RsbuildPlugin } from '../../types';
+import type { RsbuildPlugin } from '../types';
 
 export const stopProfiler = (
   output: string,

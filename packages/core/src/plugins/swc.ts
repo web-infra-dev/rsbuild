@@ -13,12 +13,12 @@ import {
   mergeChainedOptions,
 } from '@rsbuild/shared';
 import type { SwcLoaderOptions } from '@rspack/core';
-import { PLUGIN_SWC_NAME } from '../../constants';
+import { PLUGIN_SWC_NAME } from '../constants';
 import type {
   NormalizedConfig,
   NormalizedSourceConfig,
   RsbuildPlugin,
-} from '../../types';
+} from '../types';
 
 const builtinSwcLoaderName = 'builtin:swc-loader';
 

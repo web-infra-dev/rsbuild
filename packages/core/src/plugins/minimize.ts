@@ -1,9 +1,17 @@
+import {
+  CHAIN_ID,
+  type HTMLPluginOptions,
+  type NormalizedConfig,
+  deepmerge,
+  isObject,
+} from '@rsbuild/shared';
+import { rspack } from '@rspack/core';
 import type { SwcJsMinimizerRspackPluginOptions } from '@rspack/core';
-import deepmerge from '../compiled/deepmerge/index.js';
-import type { HTMLPluginOptions, NormalizedConfig } from './types';
-import { isObject } from './utils';
+import type { RsbuildPlugin } from '../types';
 
-export const getSwcMinimizerOptions = (config: NormalizedConfig) => {
+export const getSwcMinimizerOptions = (
+  config: NormalizedConfig,
+): SwcJsMinimizerRspackPluginOptions => {
   const options: SwcJsMinimizerRspackPluginOptions = {};
 
   const { removeConsole } = config.performance;
@@ -89,3 +97,37 @@ export const parseMinifyOptions = (
     htmlOptions: minify.htmlOptions,
   };
 };
+
+export const pluginMinimize = (): RsbuildPlugin => ({
+  name: 'rsbuild:minimize',
+
+  setup(api) {
+    api.modifyBundlerChain(async (chain, { isProd }) => {
+      const config = api.getNormalizedConfig();
+      const isMinimize = isProd && config.output.minify !== false;
+
+      if (!isMinimize) {
+        return;
+      }
+
+      const { SwcJsMinimizerRspackPlugin, SwcCssMinimizerRspackPlugin } =
+        rspack;
+
+      const { minifyJs, minifyCss } = parseMinifyOptions(config);
+
+      if (minifyJs) {
+        chain.optimization
+          .minimizer(CHAIN_ID.MINIMIZER.JS)
+          .use(SwcJsMinimizerRspackPlugin, [getSwcMinimizerOptions(config)])
+          .end();
+      }
+
+      if (minifyCss) {
+        chain.optimization
+          .minimizer(CHAIN_ID.MINIMIZER.CSS)
+          .use(SwcCssMinimizerRspackPlugin, [])
+          .end();
+      }
+    });
+  },
+});

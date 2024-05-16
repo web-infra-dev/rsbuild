@@ -19,9 +19,10 @@ export {
   getHTMLPlugin,
   setCssExtractPlugin,
 } from './pluginHelper';
-export { formatStats, getStatsOptions } from './provider/shared';
+export { formatStats, getStatsOptions } from './helpers';
 export { getChainUtils } from './provider/rspackConfig';
-export { applySwcDecoratorConfig } from './provider/plugins/swc';
+export { applySwcDecoratorConfig } from './plugins/swc';
+export { getSwcMinimizerOptions, parseMinifyOptions } from './plugins/minimize';
 export { getDevMiddleware } from './server/devMiddleware';
 export { createDevServer, startProdServer } from './server';
 export { plugins } from './plugins';

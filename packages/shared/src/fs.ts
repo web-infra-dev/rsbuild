@@ -1,5 +1,3 @@
-import { constants, promises, statSync } from 'node:fs';
-import path from 'node:path';
 import fse from '../compiled/fs-extra/index.js';
 import type {
   DistPathConfig,
@@ -31,35 +29,6 @@ export const getDistPath = (
   }
 
   return ret;
-};
-
-export async function isFileExists(file: string) {
-  return promises
-    .access(file, constants.F_OK)
-    .then(() => true)
-    .catch(() => false);
-}
-
-export const isFileSync = (filePath: string) => {
-  try {
-    return statSync(filePath, { throwIfNoEntry: false })?.isFile();
-  } catch (_) {
-    return false;
-  }
-};
-
-/**
- * Find first already exists file.
- * @param files - Absolute file paths with extension.
- * @returns The file path if exists, or false if no file exists.
- */
-export const findExists = (files: string[]): string | false => {
-  for (const file of files) {
-    if (isFileSync(file)) {
-      return file;
-    }
-  }
-  return false;
 };
 
 export const getFilename = (
@@ -95,27 +64,3 @@ export const getFilename = (
       throw new Error(`unknown key ${type} in "output.filename"`);
   }
 };
-
-export async function findUp({
-  filename,
-  cwd = process.cwd(),
-}: {
-  filename: string;
-  cwd?: string;
-}) {
-  const { root } = path.parse(cwd);
-
-  let dir = cwd;
-  while (dir && dir !== root) {
-    const filePath = path.join(dir, filename);
-
-    try {
-      const stats = await promises.stat(filePath);
-      if (stats?.isFile()) {
-        return filePath;
-      }
-    } catch {}
-
-    dir = path.dirname(dir);
-  }
-}

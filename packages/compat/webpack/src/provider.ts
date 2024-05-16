@@ -55,11 +55,10 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
         plugins.cache(),
         plugins.target(),
         plugins.output(),
-        import('./plugins/resolve').then((m) => m.pluginResolve()),
+        plugins.resolve(),
         plugins.fileSize(),
         plugins.cleanOutput(),
         plugins.asset(),
-        import('./plugins/copy').then((m) => m.pluginCopy()),
         plugins.html(async (tags) => {
           const result = await context.hooks.modifyHTMLTags.call(tags);
           return result[0];
@@ -68,7 +67,6 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
         plugins.moment(),
         plugins.nodeAddons(),
         plugins.define(),
-        import('./plugins/progress').then((m) => m.pluginProgress()),
         plugins.css(),
         plugins.less(),
         plugins.sass(),
@@ -83,6 +81,7 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
         plugins.server(),
         plugins.moduleFederation(),
         plugins.manifest(),
+        import('./plugin').then((m) => m.pluginAdaptor()),
       ]);
 
       pluginManager.addPlugins(allPlugins);

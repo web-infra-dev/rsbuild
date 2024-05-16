@@ -15,7 +15,6 @@ import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
 import {
   type InternalContext,
   getChainUtils as getBaseChainUtils,
-  getCompiledPath,
 } from './shared';
 import type { WebpackConfig } from './types';
 
@@ -81,7 +80,6 @@ async function getChainUtils(
     ...getBaseChainUtils(target),
     name: nameMap[target] || '',
     webpack,
-    getCompiledPath,
     HtmlWebpackPlugin: __internalHelper.getHTMLPlugin(),
   };
 }

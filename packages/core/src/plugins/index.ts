@@ -5,6 +5,7 @@ export const plugins = {
   html: (modifyTagsFn: ModifyHTMLTagsFn) =>
     import('./html').then((m) => m.pluginHtml(modifyTagsFn)),
   output: () => import('./output').then((m) => m.pluginOutput()),
+  resolve: () => import('./resolve').then((m) => m.pluginResolve()),
   cleanOutput: () => import('./cleanOutput').then((m) => m.pluginCleanOutput()),
   startUrl: () => import('./startUrl').then((m) => m.pluginStartUrl()),
   fileSize: () => import('./fileSize').then((m) => m.pluginFileSize()),

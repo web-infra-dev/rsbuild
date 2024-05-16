@@ -1,17 +1,21 @@
-import { join } from 'node:path';
+import path from 'node:path';
 import {
+  type BundlerChain,
+  DEFAULT_ASSET_PREFIX,
   type MultiStats,
   type SharedCompiledPkgNames,
   type Stats,
   type StatsError,
+  addTrailingSlash,
   color,
   getSharedPkgCompiledPath,
   isMultiCompiler,
+  removeTailingSlash,
 } from '@rsbuild/shared';
 import { fse } from '@rsbuild/shared';
 import type { StatsCompilation, StatsValue } from '@rspack/core';
-import { formatStatsMessages } from '../client/format';
-import { COMPILED_PATH } from '../constants';
+import { formatStatsMessages } from './client/format';
+import { COMPILED_PATH } from './constants';
 
 // depend on native IgnorePlugin
 export const rspackMinVersion = '0.6.2';
@@ -52,14 +56,12 @@ export const isSatisfyRspackVersion = async (originalVersion: string) => {
 };
 
 export const getCompiledPath = (packageName: string) => {
-  const providerCompilerPath = join(COMPILED_PATH, packageName);
+  const providerCompilerPath = path.join(COMPILED_PATH, packageName);
   if (fse.existsSync(providerCompilerPath)) {
     return providerCompilerPath;
   }
   return getSharedPkgCompiledPath(packageName as SharedCompiledPkgNames);
 };
-
-export const BUILTIN_LOADER = 'builtin:';
 
 /**
  * Add node polyfill tip when failed to resolve node built-in modules.
@@ -223,4 +225,66 @@ export function formatStats(
   }
 
   return {};
+}
+
+export const formatPublicPath = (publicPath: string, withSlash = true) => {
+  // 'auto' is a magic value in Rspack and we should not add trailing slash
+  if (publicPath === 'auto') {
+    return publicPath;
+  }
+
+  return withSlash
+    ? addTrailingSlash(publicPath)
+    : removeTailingSlash(publicPath);
+};
+
+export const getPublicPathFromChain = (
+  chain: BundlerChain,
+  withSlash = true,
+) => {
+  const publicPath = chain.output.get('publicPath');
+
+  if (typeof publicPath === 'string') {
+    return formatPublicPath(publicPath, withSlash);
+  }
+
+  return formatPublicPath(DEFAULT_ASSET_PREFIX, withSlash);
+};
+
+/**
+ * ensure absolute file path.
+ * @param base - Base path to resolve relative from.
+ * @param filePath - Absolute or relative file path.
+ * @returns Resolved absolute file path.
+ */
+export const ensureAbsolutePath = (base: string, filePath: string): string =>
+  path.isAbsolute(filePath) ? filePath : path.resolve(base, filePath);
+
+export const isFileSync = (filePath: string) => {
+  try {
+    return fse.statSync(filePath, { throwIfNoEntry: false })?.isFile();
+  } catch (_) {
+    return false;
+  }
+};
+
+/**
+ * Find first already exists file.
+ * @param files - Absolute file paths with extension.
+ * @returns The file path if exists, or false if no file exists.
+ */
+export const findExists = (files: string[]): string | false => {
+  for (const file of files) {
+    if (isFileSync(file)) {
+      return file;
+    }
+  }
+  return false;
+};
+
+export async function isFileExists(file: string) {
+  return fse.promises
+    .access(file, fse.constants.F_OK)
+    .then(() => true)
+    .catch(() => false);
 }

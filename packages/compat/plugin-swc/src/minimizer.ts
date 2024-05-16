@@ -1,11 +1,9 @@
-import { logger } from '@rsbuild/core';
+import { __internalHelper, logger } from '@rsbuild/core';
 import {
   CSS_REGEX,
   type NormalizedConfig,
   color,
   deepmerge,
-  getSwcMinimizerOptions,
-  parseMinifyOptions,
 } from '@rsbuild/shared';
 import type { webpack } from '@rsbuild/webpack';
 import { minify, minifyCss } from './binding';
@@ -40,7 +38,9 @@ export class SwcMinimizerPlugin {
     cssMinify?: boolean | CssMinifyOptions;
     rsbuildConfig: NormalizedConfig;
   }) {
-    const { minifyJs, minifyCss } = parseMinifyOptions(options.rsbuildConfig);
+    const { minifyJs, minifyCss } = __internalHelper.parseMinifyOptions(
+      options.rsbuildConfig,
+    );
     this.minifyOptions = {
       jsMinify: minifyJs
         ? deepmerge(
@@ -54,7 +54,7 @@ export class SwcMinimizerPlugin {
 
   getDefaultJsMinifyOptions(rsbuildConfig: NormalizedConfig): JsMinifyOptions {
     const options = {
-      ...getSwcMinimizerOptions(rsbuildConfig),
+      ...__internalHelper.getSwcMinimizerOptions(rsbuildConfig),
       mangle: true,
     };
 

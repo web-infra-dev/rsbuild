@@ -1,11 +1,11 @@
-import { pluginProgress } from '../src/plugins/progress';
+import { pluginAdaptor } from '../src/plugin';
 import { createFriendlyPercentage } from '../src/progress/helpers';
 import { createStubRsbuild } from './helper';
 
 describe('plugin-progress', () => {
   it('should register ProgressPlugin by default', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginProgress()],
+      plugins: [pluginAdaptor()],
     });
 
     const matched = await rsbuild.matchBundlerPlugin('ProgressPlugin');
@@ -14,7 +14,7 @@ describe('plugin-progress', () => {
 
   it('should not register ProgressPlugin if dev.progressBar is false', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginProgress()],
+      plugins: [pluginAdaptor()],
       rsbuildConfig: {
         dev: {
           progressBar: false,
