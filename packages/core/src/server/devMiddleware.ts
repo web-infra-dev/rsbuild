@@ -7,7 +7,6 @@ import {
   isNodeCompiler,
 } from '@rsbuild/shared';
 import type { Compiler, MultiCompiler } from '@rspack/core';
-import webpackDevMiddleware from '../../compiled/webpack-dev-middleware/index.js';
 
 type ServerCallbacks = {
   onInvalid: () => void;
@@ -66,9 +65,13 @@ function applyHMREntry({
   }
 }
 
-export const getDevMiddleware =
-  (multiCompiler: Compiler | MultiCompiler): NonNullable<DevMiddleware> =>
-  (options) => {
+export const getDevMiddleware = async (
+  multiCompiler: Compiler | MultiCompiler,
+): Promise<NonNullable<DevMiddleware>> => {
+  const { default: webpackDevMiddleware } = await import(
+    '../../compiled/webpack-dev-middleware/index.js'
+  );
+  return (options) => {
     const { clientPaths, clientConfig, callbacks, liveReload, ...restOptions } =
       options;
 
@@ -89,3 +92,4 @@ export const getDevMiddleware =
 
     return webpackDevMiddleware(multiCompiler, restOptions);
   };
+};
