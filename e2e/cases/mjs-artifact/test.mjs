@@ -1,6 +1,5 @@
 import { getBabelConfigForNode } from '@rsbuild/babel-preset/node';
 import { getBabelConfigForWeb } from '@rsbuild/babel-preset/web';
-import * as monorepoUtils from '@rsbuild/monorepo-utils';
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
@@ -65,5 +64,4 @@ export default {
   getBabelConfigForWeb,
   getBabelConfigForNode,
   webpackProvider,
-  monorepoUtils,
 };
