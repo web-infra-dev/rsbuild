@@ -1,11 +1,11 @@
 import {
+  type BundlerChain,
+  type ChainIdentifier,
+  type NormalizedConfig,
+  type RsbuildTarget,
   castArray,
   ensureAbsolutePath,
   mergeChainedOptions,
-  type BundlerChain,
-  type NormalizedConfig,
-  type ChainIdentifier,
-  type RsbuildTarget,
 } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 

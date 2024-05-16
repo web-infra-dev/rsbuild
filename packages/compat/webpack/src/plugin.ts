@@ -1,12 +1,12 @@
 import fs from 'node:fs';
 import {
-  isWebTarget,
-  TARGET_ID_MAP,
-  type CopyPluginOptions,
   type BundlerChain,
   type ChainIdentifier,
-  type RsbuildTarget,
+  type CopyPluginOptions,
   type RsbuildPlugin,
+  type RsbuildTarget,
+  TARGET_ID_MAP,
+  isWebTarget,
 } from '@rsbuild/shared';
 
 async function applyTsConfigPathsPlugin({

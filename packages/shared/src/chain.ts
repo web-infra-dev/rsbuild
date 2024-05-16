@@ -1,14 +1,9 @@
-import { posix } from 'node:path';
 import type { EntryDescription } from '@rspack/core';
-import type { SwcLoaderOptions } from '@rspack/core';
 import {
   DEFAULT_ASSET_PREFIX,
-  DEFAULT_DEV_HOST,
-  DEFAULT_PORT,
   NODE_MODULES_REGEX,
   TS_AND_JSX_REGEX,
 } from './constants';
-import { getDistPath, getFilename } from './fs';
 import { debug } from './logger';
 import type {
   BundlerChain,
@@ -20,7 +15,6 @@ import type {
   RsbuildConfig,
   RsbuildContext,
   RsbuildEntry,
-  RsbuildPluginAPI,
   RspackConfig,
 } from './types';
 import { addTrailingSlash, isPlainObject, removeTailingSlash } from './utils';
@@ -303,93 +297,6 @@ export const getPublicPathFromChain = (
   return formatPublicPath(DEFAULT_ASSET_PREFIX, withSlash);
 };
 
-function getPublicPath({
-  config,
-  isProd,
-  context,
-}: {
-  config: NormalizedConfig;
-  isProd: boolean;
-  context: RsbuildContext;
-}) {
-  const { dev, output } = config;
-
-  let publicPath = DEFAULT_ASSET_PREFIX;
-
-  if (isProd) {
-    if (typeof output.assetPrefix === 'string') {
-      publicPath = output.assetPrefix;
-    }
-  } else if (typeof dev.assetPrefix === 'string') {
-    publicPath = dev.assetPrefix;
-  } else if (dev.assetPrefix === true) {
-    const protocol = context.devServer?.https ? 'https' : 'http';
-    const hostname = context.devServer?.hostname || DEFAULT_DEV_HOST;
-    const port = context.devServer?.port || DEFAULT_PORT;
-    if (hostname === DEFAULT_DEV_HOST) {
-      const localHostname = 'localhost';
-      // If user not specify the hostname, it would use 0.0.0.0
-      // The http://0.0.0.0:port can't visit in windows, so we shouldn't set publicPath as `//0.0.0.0:${port}/`;
-      // Relative to docs:
-      // - https://github.com/quarkusio/quarkus/issues/12246
-      publicPath = `${protocol}://${localHostname}:${port}/`;
-    } else {
-      publicPath = `${protocol}://${hostname}:${port}/`;
-    }
-  }
-
-  return formatPublicPath(publicPath);
-}
-
-export function applyOutputPlugin(api: RsbuildPluginAPI) {
-  api.modifyBundlerChain(
-    async (chain, { isProd, isServer, isServiceWorker }) => {
-      const config = api.getNormalizedConfig();
-
-      const publicPath = getPublicPath({
-        config,
-        isProd,
-        context: api.context,
-      });
-
-      // js output
-      const jsPath = getDistPath(config, 'js');
-      const jsAsyncPath = getDistPath(config, 'jsAsync');
-      const jsFilename = getFilename(config, 'js', isProd);
-
-      chain.output
-        .path(api.context.distPath)
-        .filename(posix.join(jsPath, jsFilename))
-        .chunkFilename(posix.join(jsAsyncPath, jsFilename))
-        .publicPath(publicPath)
-        // disable pathinfo to improve compile performance
-        // the path info is useless in most cases
-        // see: https://webpack.js.org/guides/build-performance/#output-without-path-info
-        .pathinfo(false)
-        // since webpack v5.54.0+, hashFunction supports xxhash64 as a faster algorithm
-        // which will be used as default when experiments.futureDefaults is enabled.
-        .hashFunction('xxhash64');
-
-      if (isServer) {
-        const serverPath = getDistPath(config, 'server');
-
-        chain.output
-          .path(posix.join(api.context.distPath, serverPath))
-          .filename('[name].js')
-          .chunkFilename('[name].js')
-          .libraryTarget('commonjs2');
-      }
-
-      if (isServiceWorker) {
-        const workerPath = getDistPath(config, 'worker');
-        const filename = posix.join(workerPath, '[name].js');
-
-        chain.output.filename(filename).chunkFilename(filename);
-      }
-    },
-  );
-}
-
 export function chainToConfig(chain: BundlerChain): RspackConfig {
   const config = chain.toConfig();
   const { entry } = config;
@@ -438,22 +345,3 @@ export function chainToConfig(chain: BundlerChain): RspackConfig {
 
   return config as RspackConfig;
 }
-
-export const modifySwcLoaderOptions = ({
-  chain,
-  modifier,
-}: {
-  chain: BundlerChain;
-  modifier: (config: SwcLoaderOptions) => SwcLoaderOptions;
-}) => {
-  const ruleIds = [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI];
-
-  for (const ruleId of ruleIds) {
-    if (chain.module.rules.has(ruleId)) {
-      const rule = chain.module.rule(ruleId);
-      if (rule.uses.has(CHAIN_ID.USE.SWC)) {
-        rule.use(CHAIN_ID.USE.SWC).tap(modifier);
-      }
-    }
-  }
-};
