@@ -4,6 +4,7 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "rootDir": "src",
+    "declarationDir": "./dist-types",
     "composite": true,
     "types": ["webpack/module"]
   },

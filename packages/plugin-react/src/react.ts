@@ -1,12 +1,32 @@
 import path from 'node:path';
 import type { RsbuildConfig, RsbuildPluginAPI, Rspack } from '@rsbuild/core';
 import {
+  type BundlerChain,
+  CHAIN_ID,
   SCRIPT_REGEX,
   deepmerge,
   isUsingHMR,
-  modifySwcLoaderOptions,
 } from '@rsbuild/shared';
 import type { PluginReactOptions } from '.';
+
+const modifySwcLoaderOptions = ({
+  chain,
+  modifier,
+}: {
+  chain: BundlerChain;
+  modifier: (config: Rspack.SwcLoaderOptions) => Rspack.SwcLoaderOptions;
+}) => {
+  const ruleIds = [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI];
+
+  for (const ruleId of ruleIds) {
+    if (chain.module.rules.has(ruleId)) {
+      const rule = chain.module.rule(ruleId);
+      if (rule.uses.has(CHAIN_ID.USE.SWC)) {
+        rule.use(CHAIN_ID.USE.SWC).tap(modifier);
+      }
+    }
+  }
+};
 
 export const applyBasicReactSupport = (
   api: RsbuildPluginAPI,

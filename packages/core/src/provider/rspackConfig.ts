@@ -12,9 +12,9 @@ import {
   modifyBundlerChain,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
+import { getCompiledPath } from '../helpers';
 import { getHTMLPlugin } from '../pluginHelper';
 import type { InternalContext } from '../types';
-import { getCompiledPath } from './shared';
 
 async function modifyRspackConfig(
   context: InternalContext,

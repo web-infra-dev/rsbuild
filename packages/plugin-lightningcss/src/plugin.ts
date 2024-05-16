@@ -2,7 +2,6 @@ import path from 'node:path';
 import {
   getBrowserslistWithDefault,
   mergeChainedOptions,
-  parseMinifyOptions,
 } from '@rsbuild/shared';
 import type {
   BundlerChain,
@@ -183,10 +182,11 @@ export const pluginLightningcss = (
         });
       }
 
+      const { minify } = config.output;
       const isMinimize =
         isProd &&
-        config.output.minify !== false &&
-        parseMinifyOptions(config).minifyCss;
+        minify !== false &&
+        !(typeof minify === 'object' && minify.css === false);
 
       if (isMinimize && options?.minify !== false) {
         await applyLightningCSSMinifyPlugin({

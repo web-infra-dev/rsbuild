@@ -11,7 +11,7 @@ import {
   getSharedPkgCompiledPath,
   mergeChainedOptions,
 } from '@rsbuild/shared';
-import { getCompiledPath } from '../provider/shared';
+import { getCompiledPath } from '../helpers';
 import type { RsbuildPlugin } from '../types';
 
 const GLOBAL_PATCHED_SYMBOL: unique symbol = Symbol('GLOBAL_PATCHED_SYMBOL');

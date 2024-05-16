@@ -3,7 +3,7 @@ import { createStubRsbuild } from '@scripts/test-helper';
 import { pluginEntry } from '../src/plugins/entry';
 import { pluginHtml } from '../src/plugins/html';
 
-vi.mock('@rsbuild/shared', async (importOriginal) => {
+vi.mock('../src/helpers.js', async (importOriginal) => {
   const mod = await importOriginal<any>();
   return {
     ...mod,

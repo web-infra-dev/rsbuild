@@ -83,20 +83,6 @@ export async function stringifyConfig(config: unknown, verbose?: boolean) {
   return stringify(config as any, { verbose });
 }
 
-export const getDefaultStyledComponentsConfig = (
-  isProd: boolean,
-  ssr: boolean,
-) => {
-  return {
-    ssr,
-    // "pure" is used to improve dead code elimination in production.
-    // we don't need to enable it in development because it will slow down the build process.
-    pure: isProd,
-    displayName: true,
-    transpileTemplateLiterals: true,
-  };
-};
-
 /**
  * Omit unused keys from Rsbuild config passed by user
  */
