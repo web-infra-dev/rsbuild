@@ -89,7 +89,7 @@ export async function createDevMiddleware(
   }
 
   return {
-    devMiddleware: getDevMiddleware(compiler),
+    devMiddleware: await getDevMiddleware(compiler),
     compiler,
   };
 }
