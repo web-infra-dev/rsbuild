@@ -25,6 +25,7 @@ import type {
   RsbuildPluginAPI,
 } from '@rsbuild/shared';
 import type { EntryDescription } from '@rspack/core';
+import { STATIC_PATH } from '../constants';
 import type { HtmlInfo, TagConfig } from '../rspack/HtmlBasicPlugin';
 import type { RsbuildPlugin } from '../types';
 
@@ -130,10 +131,7 @@ export async function getTemplate(
   config: NormalizedConfig,
   rootPath: string,
 ): Promise<{ templatePath: string; templateContent?: string }> {
-  const DEFAULT_TEMPLATE = path.resolve(
-    __dirname,
-    '../../static/template.html',
-  );
+  const DEFAULT_TEMPLATE = path.resolve(STATIC_PATH, 'template.html');
 
   const templatePath = mergeChainedOptions({
     defaults: DEFAULT_TEMPLATE,

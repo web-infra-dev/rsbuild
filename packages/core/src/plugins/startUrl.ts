@@ -1,7 +1,7 @@
 import { exec } from 'node:child_process';
-import { join } from 'node:path';
 import { promisify } from 'node:util';
 import { type Routes, castArray, debug, logger } from '@rsbuild/shared';
+import { STATIC_PATH } from '../constants';
 import type { RsbuildPlugin } from '../types';
 
 const execAsync = promisify(exec);
@@ -53,7 +53,7 @@ export async function openBrowser(url: string): Promise<boolean> {
             url,
           )}" "${targetBrowser}"`,
           {
-            cwd: join(__dirname, '../../static'),
+            cwd: STATIC_PATH,
           },
         );
 

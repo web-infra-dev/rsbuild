@@ -145,7 +145,7 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/core/src/rspack/ignoreCssLoader",
+            "loader": "<ROOT>/packages/core/src/ignoreCssLoader.cjs",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",

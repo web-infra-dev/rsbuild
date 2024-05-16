@@ -8,13 +8,16 @@ import {
   moduleTools,
 } from '@modern-js/module-tools';
 
-const define = {
+export const define = {
   RSBUILD_VERSION: require('../packages/core/package.json').version,
 };
 
-const BUILD_TARGET = 'es2020' as const;
+export const BUILD_TARGET = {
+  node: 'es2020',
+  client: 'es2020',
+} as const;
 
-const requireShim = {
+export const requireShim = {
   // use import.meta['url'] to bypass bundle-require replacement of import.meta.url
   js: `import { createRequire } from 'module';
 var require = createRequire(import.meta['url']);\n`,
@@ -25,7 +28,7 @@ export const baseBuildConfig = defineConfig({
   buildConfig: {
     buildType: 'bundleless',
     format: 'cjs',
-    target: BUILD_TARGET,
+    target: BUILD_TARGET.node,
     define,
   },
 });
@@ -42,7 +45,7 @@ export const commonExternals = [
 
 export const esmBuildConfig: PartialBaseBuildConfig = {
   format: 'esm',
-  target: BUILD_TARGET,
+  target: BUILD_TARGET.node,
   define,
   autoExtension: true,
   shims: true,
@@ -52,7 +55,7 @@ export const esmBuildConfig: PartialBaseBuildConfig = {
 
 export const cjsBuildConfig: PartialBaseBuildConfig = {
   format: 'cjs',
-  target: BUILD_TARGET,
+  target: BUILD_TARGET.node,
   define,
   autoExtension: true,
   externals: commonExternals,

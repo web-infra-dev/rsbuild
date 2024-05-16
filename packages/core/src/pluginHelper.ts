@@ -15,7 +15,7 @@ export const setHTMLPlugin = (plugin: typeof HtmlWebpackPlugin) => {
   }
 };
 
-export const getHTMLPlugin = () => {
+export const getHTMLPlugin = (): typeof HtmlWebpackPlugin => {
   if (!htmlPlugin) {
     htmlPlugin = require('html-webpack-plugin');
   }
