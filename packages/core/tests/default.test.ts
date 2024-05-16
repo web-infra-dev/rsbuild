@@ -157,7 +157,7 @@ describe('bundlerApi', () => {
             .type('javascript/auto')
             .test(/\.ya?ml$/)
             .use('yaml')
-            .loader(`builtin:yaml-loader`);
+            .loader('builtin:yaml-loader');
         });
       },
     };
