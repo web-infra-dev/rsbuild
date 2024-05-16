@@ -94,6 +94,7 @@ Rsbuild 具备以下特性：
 - [Modern.js](https://github.com/web-infra-dev/modern.js)：基于 Rsbuild 的渐进式 React 框架。
 - [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack)：与 Rspack 和 Rsbuild 相关的精彩内容列表。
 - [rspack-examples](https://github.com/rspack-contrib/rspack-examples)：Rspack、Rsbuild、Rspress 和 Rsdoctor 的示例项目。
+- [storybook-rsbuild](https://github.com/rspack-contrib/storybook-rsbuild): 基于 Rsbuild 构建的 Storybook。
 - [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template)：使用此模板创建你的 Rsbuild 插件。
 - [rsfamily-design-resources](https://github.com/rspack-contrib/rsfamily-design-resources)：Rspack、Rsbuild、Rspress 和 Rsdoctor 的设计资源。
 
