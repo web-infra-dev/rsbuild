@@ -1,5 +1,6 @@
-import { isClientCompiler, setupServerHooks } from '@rsbuild/shared';
+import { isClientCompiler } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
+import { setupServerHooks } from '../src/server/devMiddleware';
 import {
   formatRoutes,
   mergeDevOptions,

@@ -1,4 +1,4 @@
-import { isCssModules } from '../src/css';
+import { isCssModules } from '../src/loader';
 
 it('check isCssModules', () => {
   expect(isCssModules('src/index.css', false)).toBeFalsy();

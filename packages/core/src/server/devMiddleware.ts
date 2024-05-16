@@ -1,12 +1,43 @@
 import {
+  type CompilerTapFn,
   type DevConfig,
   type DevMiddleware,
   applyToCompiler,
   isClientCompiler,
-  setupServerHooks,
+  isNodeCompiler,
 } from '@rsbuild/shared';
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import webpackDevMiddleware from '../../compiled/webpack-dev-middleware/index.js';
+
+type ServerCallbacks = {
+  onInvalid: () => void;
+  onDone: (stats: any) => void;
+};
+
+export const setupServerHooks = (
+  compiler: {
+    options: {
+      target?: Compiler['options']['target'];
+    };
+    hooks: {
+      compile: CompilerTapFn<ServerCallbacks['onInvalid']>;
+      invalid: CompilerTapFn<ServerCallbacks['onInvalid']>;
+      done: CompilerTapFn<ServerCallbacks['onDone']>;
+    };
+  },
+  hookCallbacks: ServerCallbacks,
+) => {
+  // TODO: node SSR HMR is not supported yet
+  if (isNodeCompiler(compiler)) {
+    return;
+  }
+
+  const { compile, invalid, done } = compiler.hooks;
+
+  compile.tap('rsbuild-dev-server', hookCallbacks.onInvalid);
+  invalid.tap('rsbuild-dev-server', hookCallbacks.onInvalid);
+  done.tap('rsbuild-dev-server', hookCallbacks.onDone);
+};
 
 function applyHMREntry({
   compiler,

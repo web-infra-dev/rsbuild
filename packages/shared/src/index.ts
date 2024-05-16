@@ -7,6 +7,5 @@ export * from './mergeChainedOptions';
 export * from './types';
 export * from './config';
 export * from './chain';
-export * from './css';
 export * from './minimize';
 export * from './url';
