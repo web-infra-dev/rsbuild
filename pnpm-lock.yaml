@@ -96,9 +96,6 @@ importers:
       '@rsbuild/core':
         specifier: link:../packages/core
         version: link:../packages/core
-      '@rsbuild/monorepo-utils':
-        specifier: workspace:*
-        version: link:../packages/monorepo-utils
       '@rsbuild/plugin-assets-retry':
         specifier: workspace:*
         version: link:../packages/plugin-assets-retry
@@ -805,22 +802,6 @@ importers:
         specifier: ^5.4.2
         version: 5.4.5
 
-  packages/monorepo-utils:
-    dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
-      fast-glob:
-        specifier: ^3.3.2
-        version: 3.3.2
-    devDependencies:
-      '@types/node':
-        specifier: 18.x
-        version: 18.19.31
-      typescript:
-        specifier: ^5.4.2
-        version: 5.4.5
-
   packages/plugin-assets-retry:
     dependencies:
       '@rsbuild/shared':
@@ -1264,12 +1245,12 @@ importers:
 
   packages/plugin-source-build:
     dependencies:
-      '@rsbuild/monorepo-utils':
-        specifier: workspace:*
-        version: link:../monorepo-utils
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
+      fast-glob:
+        specifier: ^3.3.2
+        version: 3.3.2
     devDependencies:
       '@babel/core':
         specifier: ^7.24.5

@@ -27,8 +27,8 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@rsbuild/monorepo-utils": "workspace:*",
-    "@rsbuild/shared": "workspace:*"
+    "@rsbuild/shared": "workspace:*",
+    "fast-glob": "^3.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.24.5",
