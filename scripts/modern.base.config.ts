@@ -14,7 +14,7 @@ export const define = {
 
 export const BUILD_TARGET = {
   node: 'es2020',
-  client: 'es2020',
+  client: 'es2017',
 } as const;
 
 export const requireShim = {
