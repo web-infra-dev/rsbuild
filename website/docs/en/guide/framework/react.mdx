@@ -78,6 +78,69 @@ const MyComponent = () => <div>Hello World</div>;
 export default MyComponent;
 ```
 
+## React Compiler
+
+React Compiler is an experimental compiler introduced in React 19 that can automatically optimize your React code.
+
+Before you start using React Compiler, it's recommended to read the [React Compiler documentation](https://react.dev/learn/react-compiler) to understand the functionality, current state, and usage of the React Compiler.
+
+### How to use
+
+The steps to use React Compiler in Rsbuild:
+
+1. Upgrade versions of `react` and `react-dom` to 19.
+2. React Compiler currently only provides a Babel plugin, you need to install [@rsbuild/plugin-babel](/plugins/list/plugin-babel) and [babel-plugin-react-compiler](https://www.npmjs.com/package/babel-plugin-react-compiler).
+3. Register the Babel plugin in your Rsbuild config file:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginBabel } from '@rsbuild/plugin-babel';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [
+    pluginReact(),
+    pluginBabel({
+      include: /\.(?:jsx|tsx)$/,
+      babelLoaderOptions(opts) {
+        opts.plugins?.unshift('babel-plugin-react-compiler');
+      },
+    }),
+  ],
+});
+```
+
+> You can also refer to the [example project](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/react-compiler-babel).
+
+### Configuration
+
+Set the config for React Compiler as follows
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginBabel } from '@rsbuild/plugin-babel';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+const ReactCompilerConfig = {
+  /* ... */
+};
+
+export default defineConfig({
+  plugins: [
+    pluginReact(),
+    pluginBabel({
+      include: /\.(?:jsx|tsx)$/,
+      babelLoaderOptions(opts) {
+        opts.plugins?.unshift([
+          'babel-plugin-react-compiler',
+          ReactCompilerConfig,
+        ]);
+      },
+    }),
+  ],
+});
+```
+
 ## CSS-in-JS
 
 ### Use styled-components
