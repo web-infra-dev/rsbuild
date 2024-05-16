@@ -1,4 +1,3 @@
-import { constants, promises } from 'node:fs';
 import fse from '../compiled/fs-extra/index.js';
 import type {
   DistPathConfig,
