@@ -8,7 +8,6 @@ import {
   type StartDevServerOptions,
   type StartServerResult,
   debug,
-  getAddressUrls,
   getNodeEnv,
   getPublicPathFromCompiler,
   isMultiCompiler,
@@ -20,7 +19,12 @@ import {
   type RsbuildDevMiddlewareOptions,
   getMiddlewares,
 } from './getDevMiddlewares';
-import { formatRoutes, getDevOptions, printServerURLs } from './helper';
+import {
+  formatRoutes,
+  getAddressUrls,
+  getDevOptions,
+  printServerURLs,
+} from './helper';
 import { createHttpServer } from './httpServer';
 import { notFoundMiddleware } from './middlewares';
 import { onBeforeRestartServer } from './restart';

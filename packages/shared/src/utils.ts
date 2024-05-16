@@ -10,7 +10,6 @@ import color from '../compiled/picocolors/index.js';
 import { DEFAULT_ASSET_PREFIX } from './constants';
 import type {
   CacheGroups,
-  CompilerTapFn,
   ModifyChainUtils,
   MultiStats,
   NodeEnv,
@@ -316,7 +315,7 @@ export const isClientCompiler = (compiler: {
   return false;
 };
 
-const isNodeCompiler = (compiler: {
+export const isNodeCompiler = (compiler: {
   options: {
     target?: Compiler['options']['target'];
   };
@@ -328,36 +327,6 @@ const isNodeCompiler = (compiler: {
   }
 
   return false;
-};
-
-type ServerCallbacks = {
-  onInvalid: () => void;
-  onDone: (stats: any) => void;
-};
-
-export const setupServerHooks = (
-  compiler: {
-    options: {
-      target?: Compiler['options']['target'];
-    };
-    hooks: {
-      compile: CompilerTapFn<ServerCallbacks['onInvalid']>;
-      invalid: CompilerTapFn<ServerCallbacks['onInvalid']>;
-      done: CompilerTapFn<ServerCallbacks['onDone']>;
-    };
-  },
-  hookCallbacks: ServerCallbacks,
-) => {
-  // TODO: node ssr HMR is not supported yet
-  if (isNodeCompiler(compiler)) {
-    return;
-  }
-
-  const { compile, invalid, done } = compiler.hooks;
-
-  compile.tap('rsbuild-dev-server', hookCallbacks.onInvalid);
-  invalid.tap('rsbuild-dev-server', hookCallbacks.onInvalid);
-  done.tap('rsbuild-dev-server', hookCallbacks.onDone);
 };
 
 export const isMultiCompiler = <

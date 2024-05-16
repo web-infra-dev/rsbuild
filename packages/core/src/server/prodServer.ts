@@ -7,7 +7,6 @@ import {
   type RsbuildConfig,
   type ServerConfig,
   type StartServerResult,
-  getAddressUrls,
   getNodeEnv,
   isDebug,
   setNodeEnv,
@@ -15,7 +14,12 @@ import {
 import connect from '@rsbuild/shared/connect';
 import sirv from '../../compiled/sirv/index.js';
 import type { InternalContext } from '../types';
-import { formatRoutes, getServerOptions, printServerURLs } from './helper';
+import {
+  formatRoutes,
+  getAddressUrls,
+  getServerOptions,
+  printServerURLs,
+} from './helper';
 import { createHttpServer } from './httpServer';
 import {
   faviconFallbackMiddleware,

@@ -1,12 +1,13 @@
 import path, { isAbsolute } from 'node:path';
 import {
+  type MinifyJSOptions,
   applyToCompiler,
   castArray,
   color,
   createVirtualModule,
+  deepmerge,
   fse,
   getDistPath,
-  getHtmlMinifyOptions,
   getPublicPathFromChain,
   isFileExists,
   isHtmlDisabled,
@@ -14,6 +15,7 @@ import {
   isPlainObject,
   isURL,
   mergeChainedOptions,
+  parseMinifyOptions,
 } from '@rsbuild/shared';
 import type {
   HTMLPluginOptions,
@@ -25,6 +27,82 @@ import type {
 import type { EntryDescription } from '@rspack/core';
 import type { HtmlInfo, TagConfig } from '../rspack/HtmlBasicPlugin';
 import type { RsbuildPlugin } from '../types';
+
+function applyRemoveConsole(
+  options: MinifyJSOptions,
+  config: NormalizedConfig,
+) {
+  const { removeConsole } = config.performance;
+  const compressOptions =
+    typeof options.compress === 'boolean' ? {} : options.compress || {};
+
+  if (removeConsole === true) {
+    options.compress = {
+      ...compressOptions,
+      drop_console: true,
+    };
+  } else if (Array.isArray(removeConsole)) {
+    const pureFuncs = removeConsole.map((method) => `console.${method}`);
+    options.compress = {
+      ...compressOptions,
+      pure_funcs: pureFuncs,
+    };
+  }
+
+  return options;
+}
+
+function getTerserMinifyOptions(config: NormalizedConfig) {
+  const options: MinifyJSOptions = {
+    mangle: {
+      safari10: true,
+    },
+    format: {
+      ascii_only: config.output.charset === 'ascii',
+    },
+  };
+
+  if (config.output.legalComments === 'none') {
+    options.format!.comments = false;
+  }
+
+  const finalOptions = applyRemoveConsole(options, config);
+  return finalOptions;
+}
+
+export async function getHtmlMinifyOptions(
+  isProd: boolean,
+  config: NormalizedConfig,
+) {
+  if (
+    !isProd ||
+    !config.output.minify ||
+    !parseMinifyOptions(config).minifyHtml
+  ) {
+    return false;
+  }
+
+  const minifyJS: MinifyJSOptions = getTerserMinifyOptions(config);
+
+  const htmlMinifyDefaultOptions = {
+    removeComments: false,
+    useShortDoctype: true,
+    keepClosingSlash: true,
+    collapseWhitespace: true,
+    removeRedundantAttributes: true,
+    removeScriptTypeAttributes: true,
+    removeStyleLinkTypeAttributes: true,
+    removeEmptyAttributes: true,
+    minifyJS,
+    minifyCSS: true,
+    minifyURLs: true,
+  };
+
+  const htmlMinifyOptions = parseMinifyOptions(config).htmlOptions;
+  return typeof htmlMinifyOptions === 'object'
+    ? deepmerge(htmlMinifyDefaultOptions, htmlMinifyOptions)
+    : htmlMinifyDefaultOptions;
+}
 
 export function getTitle(entryName: string, config: NormalizedConfig) {
   return mergeChainedOptions({
