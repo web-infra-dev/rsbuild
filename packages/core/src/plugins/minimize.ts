@@ -4,7 +4,7 @@ import {
   parseMinifyOptions,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
-import type { RsbuildPlugin } from '../../types';
+import type { RsbuildPlugin } from '../types';
 
 export const pluginMinimize = (): RsbuildPlugin => ({
   name: 'rsbuild:minimize',

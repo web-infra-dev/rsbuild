@@ -21,7 +21,7 @@ export {
 } from './pluginHelper';
 export { formatStats, getStatsOptions } from './provider/shared';
 export { getChainUtils } from './provider/rspackConfig';
-export { applySwcDecoratorConfig } from './provider/plugins/swc';
+export { applySwcDecoratorConfig } from './plugins/swc';
 export { getDevMiddleware } from './server/devMiddleware';
 export { createDevServer, startProdServer } from './server';
 export { plugins } from './plugins';
