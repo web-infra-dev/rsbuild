@@ -27,7 +27,7 @@ export const setupServerHooks = (
   },
   hookCallbacks: ServerCallbacks,
 ) => {
-  // TODO: node ssr HMR is not supported yet
+  // TODO: node SSR HMR is not supported yet
   if (isNodeCompiler(compiler)) {
     return;
   }
