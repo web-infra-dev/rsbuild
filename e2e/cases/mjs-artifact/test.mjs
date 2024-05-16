@@ -64,5 +64,4 @@ export default {
   getBabelConfigForWeb,
   getBabelConfigForNode,
   webpackProvider,
-  monorepoUtils,
 };
