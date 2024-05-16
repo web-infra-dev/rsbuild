@@ -63,8 +63,6 @@ export const getCompiledPath = (packageName: string) => {
   return getSharedPkgCompiledPath(packageName as SharedCompiledPkgNames);
 };
 
-export const BUILTIN_LOADER = 'builtin:';
-
 /**
  * Add node polyfill tip when failed to resolve node built-in modules.
  */
