@@ -1,9 +1,5 @@
 import type { EntryDescription } from '@rspack/core';
-import {
-  DEFAULT_ASSET_PREFIX,
-  NODE_MODULES_REGEX,
-  TS_AND_JSX_REGEX,
-} from './constants';
+import { NODE_MODULES_REGEX, TS_AND_JSX_REGEX } from './constants';
 import { debug } from './logger';
 import type {
   BundlerChain,
@@ -17,7 +13,7 @@ import type {
   RsbuildEntry,
   RspackConfig,
 } from './types';
-import { addTrailingSlash, isPlainObject, removeTailingSlash } from './utils';
+import { isPlainObject } from './utils';
 import { castArray } from './utils';
 
 export async function getBundlerChain() {
@@ -272,30 +268,6 @@ export function applyScriptCondition({
     rule.exclude.add(condition);
   }
 }
-
-export const formatPublicPath = (publicPath: string, withSlash = true) => {
-  // 'auto' is a magic value in Rspack and we should not add trailing slash
-  if (publicPath === 'auto') {
-    return publicPath;
-  }
-
-  return withSlash
-    ? addTrailingSlash(publicPath)
-    : removeTailingSlash(publicPath);
-};
-
-export const getPublicPathFromChain = (
-  chain: BundlerChain,
-  withSlash = true,
-) => {
-  const publicPath = chain.output.get('publicPath');
-
-  if (typeof publicPath === 'string') {
-    return formatPublicPath(publicPath, withSlash);
-  }
-
-  return formatPublicPath(DEFAULT_ASSET_PREFIX, withSlash);
-};
 
 export function chainToConfig(chain: BundlerChain): RspackConfig {
   const config = chain.toConfig();

@@ -1,7 +1,6 @@
 import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
 import {
   type ChainedConfig,
-  getDefaultStyledComponentsConfig,
   getNodeEnv,
   isServerTarget,
   mergeChainedOptions,
@@ -21,6 +20,17 @@ export type PluginStyledComponentsOptions = {
   minify?: boolean;
   pure?: boolean;
   cssProps?: boolean;
+};
+
+const getDefaultStyledComponentsConfig = (isProd: boolean, ssr: boolean) => {
+  return {
+    ssr,
+    // "pure" is used to improve dead code elimination in production.
+    // we don't need to enable it in development because it will slow down the build process.
+    pure: isProd,
+    displayName: true,
+    transpileTemplateLiterals: true,
+  };
 };
 
 export const pluginStyledComponents = (

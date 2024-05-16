@@ -8,14 +8,11 @@ import {
   deepmerge,
   fse,
   getDistPath,
-  getPublicPathFromChain,
-  isFileExists,
   isHtmlDisabled,
   isNil,
   isPlainObject,
   isURL,
   mergeChainedOptions,
-  parseMinifyOptions,
 } from '@rsbuild/shared';
 import type {
   HTMLPluginOptions,
@@ -26,8 +23,10 @@ import type {
 } from '@rsbuild/shared';
 import type { EntryDescription } from '@rspack/core';
 import { STATIC_PATH } from '../constants';
+import { getPublicPathFromChain, isFileExists } from '../helpers';
 import type { HtmlInfo, TagConfig } from '../rspack/HtmlBasicPlugin';
 import type { RsbuildPlugin } from '../types';
+import { parseMinifyOptions } from './minimize';
 
 function applyRemoveConsole(
   options: MinifyJSOptions,
@@ -278,7 +277,7 @@ const getTagConfig = (api: RsbuildPluginAPI): TagConfig | undefined => {
   };
 };
 
-export const pluginHtml = (modifyTagsFn: ModifyHTMLTagsFn): RsbuildPlugin => ({
+export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
   name: 'rsbuild:html',
 
   setup(api) {

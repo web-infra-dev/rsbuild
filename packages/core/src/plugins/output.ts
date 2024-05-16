@@ -5,12 +5,12 @@ import {
   DEFAULT_PORT,
   type NormalizedConfig,
   type RsbuildContext,
-  formatPublicPath,
   getDistPath,
   getFilename,
   mergeChainedOptions,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
+import { formatPublicPath } from '../helpers';
 import { getCssExtractPlugin } from '../pluginHelper';
 import type { RsbuildPlugin } from '../types';
 import { isUseCssExtract } from './css';

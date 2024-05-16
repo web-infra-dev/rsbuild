@@ -20,9 +20,7 @@ import {
   WASM_DIST_DIR,
   color,
   debounce,
-  findExists,
   getNodeEnv,
-  isFileExists,
   isObject,
   logger,
 } from '@rsbuild/shared';
@@ -39,6 +37,7 @@ import type {
   RsbuildConfig,
   RsbuildEntry,
 } from '@rsbuild/shared';
+import { findExists, isFileExists } from './helpers';
 import { mergeRsbuildConfig } from './mergeConfig';
 import { restartDevServer } from './server/restart';
 

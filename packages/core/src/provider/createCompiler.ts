@@ -16,14 +16,14 @@ import {
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import type { StatsCompilation } from '@rspack/core';
-import type { InternalContext } from '../types';
-import { type InitConfigsOptions, initConfigs } from './initConfigs';
 import {
   formatStats,
   getStatsOptions,
   isSatisfyRspackVersion,
   rspackMinVersion,
-} from './shared';
+} from '../helpers';
+import type { InternalContext } from '../types';
+import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
 export async function createCompiler({
   context,

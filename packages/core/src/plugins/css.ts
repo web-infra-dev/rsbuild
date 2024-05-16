@@ -17,8 +17,8 @@ import {
 } from '@rsbuild/shared';
 import type { AcceptedPlugin } from 'postcss';
 import { LOADER_PATH } from '../constants';
+import { getCompiledPath } from '../helpers';
 import { getCssExtractPlugin } from '../pluginHelper';
-import { getCompiledPath } from '../provider/shared';
 import type { NormalizedConfig, RsbuildPlugin } from '../types';
 
 export const enableNativeCss = (config: NormalizedConfig) =>

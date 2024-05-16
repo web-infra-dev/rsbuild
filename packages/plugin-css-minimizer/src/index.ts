@@ -4,7 +4,6 @@ import {
   type ChainIdentifier,
   type ChainedConfig,
   mergeChainedOptions,
-  parseMinifyOptions,
 } from '@rsbuild/shared';
 import CssMinimizerWebpackPlugin from 'css-minimizer-webpack-plugin';
 import type CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
@@ -67,10 +66,11 @@ export const pluginCssMinimizer = (
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
       const config = api.getNormalizedConfig();
+      const { minify } = config.output;
       const isMinimize =
         isProd &&
-        config.output.minify !== false &&
-        parseMinifyOptions(config).minifyCss;
+        minify !== false &&
+        !(typeof minify === 'object' && minify.css === false);
 
       if (isMinimize) {
         applyCSSMinimizer(chain, CHAIN_ID, options);

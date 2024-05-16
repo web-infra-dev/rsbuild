@@ -4,9 +4,9 @@ import {
   type NormalizedConfig,
   type RsbuildTarget,
   castArray,
-  ensureAbsolutePath,
   mergeChainedOptions,
 } from '@rsbuild/shared';
+import { ensureAbsolutePath } from '../helpers';
 import type { RsbuildPlugin } from '../types';
 
 // compatible with legacy packages with type="module"
