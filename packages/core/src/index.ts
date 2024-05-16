@@ -4,6 +4,7 @@
  */
 import { rspack } from '@rspack/core';
 import type * as Rspack from '@rspack/core';
+import * as __internalHelper from './internal';
 
 // Core methods
 export { loadEnv } from './loadEnv';
@@ -86,3 +87,10 @@ export type {
   TransformFn,
   TransformHandler,
 } from '@rsbuild/shared';
+
+export {
+  /**
+   * @private
+   */
+  __internalHelper,
+};

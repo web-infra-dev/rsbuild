@@ -12,37 +12,35 @@
     "directory": "packages/core"
   },
   "license": "MIT",
-  "type": "commonjs",
+  "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "types": "./dist-types/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./client/hmr": {
-      "types": "./dist/client/hmr/index.d.ts",
-      "default": "./dist/client/hmr.mjs"
+      "types": "./dist-types/client/hmr/index.d.ts",
+      "default": "./dist/client/hmr.js"
     },
     "./client/overlay": {
-      "types": "./dist/client/overlay.d.ts",
-      "default": "./dist/client/overlay.mjs"
-    },
-    "./internal": {
-      "types": "./dist/internal.d.ts",
-      "default": "./dist/internal.js"
+      "types": "./dist-types/client/overlay.d.ts",
+      "default": "./dist/client/overlay.js"
     },
     "./types": {
       "types": "./types.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "types": "./dist-types/index.d.ts",
   "bin": {
     "rsbuild": "./bin/rsbuild.js"
   },
   "files": [
     "bin",
     "dist",
+    "dist-types",
     "static",
     "compiled",
     "types.d.ts"

@@ -10,6 +10,7 @@ import {
   removeLeadingSlash,
 } from '@rsbuild/shared';
 import type { Compiler } from '@rspack/core';
+import { LOADER_PATH } from './constants';
 import { createPublicContext } from './createContext';
 import type { InternalContext, NormalizedConfig } from './types';
 
@@ -127,9 +128,9 @@ export function getPluginAPI({
       }
 
       const loaderName = descriptor.raw
-        ? 'transformRawLoader'
-        : 'transformLoader';
-      const loaderPath = join(__dirname, `./rspack/${loaderName}`);
+        ? 'transformRawLoader.cjs'
+        : 'transformLoader.cjs';
+      const loaderPath = join(LOADER_PATH, loaderName);
 
       rule.use(id).loader(loaderPath).options({ id });
 

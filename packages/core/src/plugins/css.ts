@@ -16,6 +16,7 @@ import {
   mergeChainedOptions,
 } from '@rsbuild/shared';
 import type { AcceptedPlugin } from 'postcss';
+import { LOADER_PATH } from '../constants';
 import { getCssExtractPlugin } from '../pluginHelper';
 import { getCompiledPath } from '../provider/shared';
 import type { NormalizedConfig, RsbuildPlugin } from '../types';
@@ -305,7 +306,7 @@ export async function applyCSSRule({
   } else {
     rule
       .use(CHAIN_ID.USE.IGNORE_CSS)
-      .loader(path.resolve(__dirname, '../rspack/ignoreCssLoader'))
+      .loader(path.join(LOADER_PATH, 'ignoreCssLoader.cjs'))
       .end();
   }
 

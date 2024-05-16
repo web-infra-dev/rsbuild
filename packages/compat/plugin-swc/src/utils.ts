@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import { applySwcDecoratorConfig } from '@rsbuild/core/internal';
+import { __internalHelper } from '@rsbuild/core';
 import {
   type ModifyChainUtils,
   type NormalizedConfig,
@@ -18,6 +18,8 @@ import type {
   PluginSwcOptions,
   TransformConfig,
 } from './types';
+
+const { applySwcDecoratorConfig } = __internalHelper;
 
 const isBeyondReact17 = async (cwd: string) => {
   const pkgPath = await findUp({ cwd, filename: 'package.json' });

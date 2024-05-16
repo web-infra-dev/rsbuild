@@ -45,8 +45,8 @@ export function pluginStylus(options?: PluginStylusOptions): RsbuildPlugin {
           .rule(utils.CHAIN_ID.RULE.STYLUS)
           .test(STYLUS_REGEX);
 
-        const { applyCSSRule } = await import('@rsbuild/core/internal');
-        await applyCSSRule({
+        const { __internalHelper } = await import('@rsbuild/core');
+        await __internalHelper.applyCSSRule({
           rule,
           config,
           context: api.context,

@@ -4,6 +4,8 @@
  * Please do not use them in your Rsbuild project or plugins.
  */
 
+export { runCli } from './cli/commands';
+export { prepareCli } from './cli/prepare';
 export { rspackProvider } from './provider/provider';
 export { createContext, createPublicContext } from './createContext';
 export { initPlugins, createPluginManager } from './pluginManager';

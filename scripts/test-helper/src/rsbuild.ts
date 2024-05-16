@@ -8,8 +8,8 @@ import type {
 } from '@rsbuild/shared';
 
 const getRspackProvider = async () => {
-  const { rspackProvider } = await import('@rsbuild/core/internal');
-  return rspackProvider;
+  const { __internalHelper } = await import('@rsbuild/core');
+  return __internalHelper.rspackProvider;
 };
 
 export function baseMatchLoader({
@@ -89,7 +89,7 @@ export async function createStubRsbuild({
   }
 > {
   const { pick } = await import('@rsbuild/shared');
-  const { createPluginManager } = await import('@rsbuild/core/internal');
+  const { __internalHelper } = await import('@rsbuild/core');
   const rsbuildOptions: Required<CreateRsbuildOptions> = {
     cwd: process.env.REBUILD_TEST_SUITE_CWD || process.cwd(),
     rsbuildConfig,
@@ -108,7 +108,7 @@ export async function createStubRsbuild({
     rsbuildConfig.provider ? rsbuildConfig.provider : await getRspackProvider()
   ) as RsbuildProvider;
 
-  const pluginManager = createPluginManager();
+  const pluginManager = __internalHelper.createPluginManager();
   const {
     build,
     publicContext,

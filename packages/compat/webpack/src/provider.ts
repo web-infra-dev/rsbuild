@@ -1,18 +1,20 @@
 import {
-  createContext,
-  createPublicContext,
-  getPluginAPI,
-  initRsbuildConfig,
-  plugins,
-  setCssExtractPlugin,
-} from '@rsbuild/core/internal';
-import {
   type CreateCompiler,
   type PreviewServerOptions,
   type RsbuildProvider,
   pickRsbuildConfig,
 } from '@rsbuild/shared';
 import { initConfigs } from './initConfigs';
+import {
+  createContext,
+  createDevServer,
+  createPublicContext,
+  getPluginAPI,
+  initRsbuildConfig,
+  plugins,
+  setCssExtractPlugin,
+  startProdServer,
+} from './shared';
 
 export const webpackProvider: RsbuildProvider<'webpack'> = async ({
   pluginManager,
@@ -96,7 +98,6 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     },
 
     async createDevServer(options) {
-      const { createDevServer } = await import('@rsbuild/core/internal');
       const { createDevMiddleware } = await import('./createCompiler');
       await initRsbuildConfig({ context, pluginManager });
       return createDevServer(
@@ -107,7 +108,6 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     },
 
     async startDevServer(options) {
-      const { createDevServer } = await import('@rsbuild/core/internal');
       const { createDevMiddleware } = await import('./createCompiler');
       await initRsbuildConfig({
         context,
@@ -127,7 +127,6 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     },
 
     async preview(options?: PreviewServerOptions) {
-      const { startProdServer } = await import('@rsbuild/core/internal');
       await initRsbuildConfig({
         context,
         pluginManager,

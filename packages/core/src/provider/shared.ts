@@ -11,6 +11,7 @@ import {
 import { fse } from '@rsbuild/shared';
 import type { StatsCompilation, StatsValue } from '@rspack/core';
 import { formatStatsMessages } from '../client/format';
+import { COMPILED_PATH } from '../constants';
 
 // depend on native IgnorePlugin
 export const rspackMinVersion = '0.6.2';
@@ -51,7 +52,7 @@ export const isSatisfyRspackVersion = async (originalVersion: string) => {
 };
 
 export const getCompiledPath = (packageName: string) => {
-  const providerCompilerPath = join(__dirname, '../../compiled', packageName);
+  const providerCompilerPath = join(COMPILED_PATH, packageName);
   if (fse.existsSync(providerCompilerPath)) {
     return providerCompilerPath;
   }
