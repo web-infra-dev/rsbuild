@@ -21,7 +21,7 @@ export {
 export { formatStats, getStatsOptions } from './helpers';
 export { getChainUtils } from './provider/rspackConfig';
 export { applySwcDecoratorConfig } from './plugins/swc';
-export { getSwcMinimizerOptions, parseMinifyOptions } from './plugins/minimize';
+export { getSwcMinimizerOptions } from './plugins/minimize';
 export { getDevMiddleware } from './server/devMiddleware';
 export { createDevServer, startProdServer } from './server';
 export { plugins } from './plugins';

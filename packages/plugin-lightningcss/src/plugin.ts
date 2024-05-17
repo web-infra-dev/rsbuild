@@ -185,8 +185,7 @@ export const pluginLightningcss = (
       const { minify } = config.output;
       const isMinimize =
         isProd &&
-        minify !== false &&
-        !(typeof minify === 'object' && minify.css === false);
+        (minify === true || (typeof minify === 'object' && minify.css));
 
       if (isMinimize && options?.minify !== false) {
         await applyLightningCSSMinifyPlugin({
