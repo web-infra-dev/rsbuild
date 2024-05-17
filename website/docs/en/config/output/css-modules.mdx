@@ -4,7 +4,14 @@
 
 ```ts
 type CssModules = {
-  auto?: boolean | RegExp | ((resourcePath: string) => boolean);
+  auto?:
+    | boolean
+    | RegExp
+    | ((
+        resourcePath: string,
+        resourceQuery: string,
+        resourceFragment: string,
+      ) => boolean);
   localIdentName?: string;
   exportLocalsConvention?: CssModuleLocalsConvention;
 };
@@ -16,7 +23,19 @@ For custom CSS Modules configuration.
 
 The `auto` configuration option allows CSS Modules to be automatically enabled based on their filenames.
 
-- **Type:** `boolean | RegExp | ((resourcePath: string) => boolean)`
+- **Type:**
+
+```ts
+type Auto =
+  | boolean
+  | RegExp
+  | ((
+      resourcePath: string,
+      resourceQuery: string,
+      resourceFragment: string,
+    ) => boolean);
+```
+
 - **Default:** `true`
 
 Type description:

@@ -80,7 +80,14 @@ export type { AcceptedPlugin as PostCSSPlugin } from 'postcss';
 export interface CSSModulesOptions {
   compileType?: string;
   mode?: string;
-  auto?: boolean | RegExp | ((resourcePath: string) => boolean);
+  auto?:
+    | boolean
+    | RegExp
+    | ((
+        resourcePath: string,
+        resourceQuery: string,
+        resourceFragment: string,
+      ) => boolean);
   exportGlobals?: boolean;
   localIdentName?: string;
   localIdentContext?: string;
