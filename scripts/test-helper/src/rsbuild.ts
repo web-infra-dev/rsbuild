@@ -79,6 +79,7 @@ export async function createStubRsbuild({
     | 'startDevServer'
     | 'context'
     | 'addPlugins'
+    | 'getPlugins'
     | 'removePlugins'
     | 'isPluginExists'
     | 'initConfigs'
@@ -145,7 +146,12 @@ export async function createStubRsbuild({
     baseMatchLoader({ config: await unwrapConfig(), loader, testFile });
 
   return {
-    ...pick(pluginManager, ['addPlugins', 'removePlugins', 'isPluginExists']),
+    ...pick(pluginManager, [
+      'addPlugins',
+      'getPlugins',
+      'removePlugins',
+      'isPluginExists',
+    ]),
     build,
     createCompiler,
     inspectConfig,
