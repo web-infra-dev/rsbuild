@@ -144,7 +144,14 @@ export type CssModuleLocalsConvention =
   | 'dashesOnly';
 
 export type CssModules = {
-  auto?: boolean | RegExp | ((resourcePath: string) => boolean);
+  auto?:
+    | boolean
+    | RegExp
+    | ((
+        resourcePath: string,
+        resourceQuery: string,
+        resourceFragment: string,
+      ) => boolean);
   /**
    * Set the local ident name of CSS Modules.
    */

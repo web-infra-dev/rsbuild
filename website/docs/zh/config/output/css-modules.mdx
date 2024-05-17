@@ -4,7 +4,14 @@
 
 ```ts
 type CssModules = {
-  auto?: boolean | RegExp | ((resourcePath: string) => boolean);
+  auto?:
+    | boolean
+    | RegExp
+    | ((
+        resourcePath: string,
+        resourceQuery: string,
+        resourceFragment: string,
+      ) => boolean);
   localIdentName?: string;
   exportLocalsConvention?: CssModuleLocalsConvention;
 };
@@ -16,7 +23,19 @@ type CssModules = {
 
 auto 配置项允许基于文件名自动启用 CSS 模块。
 
-- **类型：** `boolean | RegExp | ((resourcePath: string) => boolean)`
+- **类型：**
+
+```ts
+type Auto =
+  | boolean
+  | RegExp
+  | ((
+      resourcePath: string,
+      resourceQuery: string,
+      resourceFragment: string,
+    ) => boolean);
+```
+
 - **默认值：** `true`
 
 类型说明：
