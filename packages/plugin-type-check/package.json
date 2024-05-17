@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-type-check",
-  "version": "0.7.0-beta.4",
+  "version": "0.7.0-beta.5",
   "description": "TS checker plugin of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -37,7 +37,7 @@
     "typescript": "^5.4.2"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.7.0-beta.4"
+    "@rsbuild/core": "workspace:^0.7.0-beta.5"
   },
   "publishConfig": {
     "access": "public",
