@@ -466,6 +466,22 @@ rsbuild.addPlugins([pluginFoo()], { before: 'bar' });
 rsbuild.addPlugins([pluginFoo()], { after: 'bar' });
 ```
 
+## rsbuild.getPlugins
+
+Get all the Rsbuild plugins registered in the current Rsbuild instance.
+
+- **Type:**
+
+```ts
+function GetPlugins(): RsbuildPlugin[];
+```
+
+- **Example:**
+
+```ts
+console.log(rsbuild.getPlugins());
+```
+
 ## rsbuild.removePlugins
 
 Removes one or more Rsbuild plugins, which can be called multiple times.

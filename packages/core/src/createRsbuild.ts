@@ -48,7 +48,12 @@ export async function createRsbuild(
   debug('add default plugins done');
 
   const rsbuild = {
-    ...pick(pluginManager, ['addPlugins', 'removePlugins', 'isPluginExists']),
+    ...pick(pluginManager, [
+      'addPlugins',
+      'getPlugins',
+      'removePlugins',
+      'isPluginExists',
+    ]),
     ...pick(pluginAPI, [
       'onBeforeBuild',
       'onBeforeCreateCompiler',

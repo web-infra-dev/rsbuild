@@ -458,6 +458,22 @@ rsbuild.addPlugins([pluginFoo()], { before: 'bar' });
 rsbuild.addPlugins([pluginFoo()], { after: 'bar' });
 ```
 
+## rsbuild.getPlugins
+
+获取当前 Rsbuild 实例中注册的所有 Rsbuild 插件。
+
+- **类型：**
+
+```ts
+function GetPlugins(): RsbuildPlugin[];
+```
+
+- **示例：**
+
+```ts
+console.log(rsbuild.getPlugins());
+```
+
 ## rsbuild.removePlugins
 
 移除一个或多个 Rsbuild 插件，可以被多次调用。

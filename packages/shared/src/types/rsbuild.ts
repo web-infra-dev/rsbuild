@@ -23,6 +23,7 @@ export type RsbuildInstance<
   context: RsbuildContext;
 
   addPlugins: PluginManager['addPlugins'];
+  getPlugins: PluginManager['getPlugins'];
   removePlugins: PluginManager['removePlugins'];
   isPluginExists: PluginManager['isPluginExists'];
 

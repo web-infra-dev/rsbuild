@@ -87,7 +87,7 @@ export type ModifyWebpackConfigFn = (
 ) => Promise<WebpackConfig | void> | WebpackConfig | void;
 
 export type PluginManager = {
-  readonly plugins: RsbuildPlugin[];
+  getPlugins: () => RsbuildPlugin[];
   addPlugins: (
     plugins: Array<RsbuildPlugin | Falsy>,
     options?: { before?: string },
