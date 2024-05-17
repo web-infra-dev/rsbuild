@@ -35,6 +35,28 @@ export function pluginVue2(options: PluginVueOptions = {}): RsbuildPlugin {
     name: 'rsbuild:vue2',
 
     setup(api) {
+      const VUE_REGEXP = /\.vue$/;
+      const CSS_MODULES_REGEX = /\.modules?\.\w+$/i;
+
+      api.modifyRsbuildConfig((config) => {
+        config.output ||= {};
+        config.output.cssModules ||= {};
+
+        // Support `<style module>` in Vue SFC
+        if (config.output.cssModules.auto === true) {
+          config.output.cssModules.auto = (path, query) => {
+            if (VUE_REGEXP.test(path)) {
+              return (
+                query.includes('type=style') && query.includes('module=true')
+              );
+            }
+            return CSS_MODULES_REGEX.test(path);
+          };
+        }
+
+        return config;
+      });
+
       api.modifyBundlerChain((chain, { CHAIN_ID }) => {
         chain.resolve.extensions.add('.vue');
 
@@ -55,7 +77,7 @@ export function pluginVue2(options: PluginVueOptions = {}): RsbuildPlugin {
 
         chain.module
           .rule(CHAIN_ID.RULE.VUE)
-          .test(/\.vue$/)
+          .test(VUE_REGEXP)
           .use(CHAIN_ID.USE.VUE)
           .loader(require.resolve('vue-loader'))
           .options(vueLoaderOptions);
