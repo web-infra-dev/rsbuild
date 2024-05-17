@@ -3,12 +3,10 @@ import {
   type BundlerChain,
   DEFAULT_ASSET_PREFIX,
   type MultiStats,
-  type SharedCompiledPkgNames,
   type Stats,
   type StatsError,
   addTrailingSlash,
   color,
-  getSharedPkgCompiledPath,
   isMultiCompiler,
   removeTailingSlash,
 } from '@rsbuild/shared';
@@ -55,13 +53,8 @@ export const isSatisfyRspackVersion = async (originalVersion: string) => {
   return true;
 };
 
-export const getCompiledPath = (packageName: string) => {
-  const providerCompilerPath = path.join(COMPILED_PATH, packageName);
-  if (fse.existsSync(providerCompilerPath)) {
-    return providerCompilerPath;
-  }
-  return getSharedPkgCompiledPath(packageName as SharedCompiledPkgNames);
-};
+export const getCompiledPath = (packageName: string) =>
+  path.join(COMPILED_PATH, packageName);
 
 /**
  * Add node polyfill tip when failed to resolve node built-in modules.
