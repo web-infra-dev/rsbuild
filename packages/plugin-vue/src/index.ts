@@ -1,4 +1,4 @@
-import type { RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
 import { deepmerge } from '@rsbuild/shared';
 import { VueLoaderPlugin } from 'vue-loader';
 import type { VueLoaderOptions } from 'vue-loader';
@@ -34,8 +34,11 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
     name: 'rsbuild:vue',
 
     setup(api) {
+      const VUE_REGEXP = /\.vue$/;
+      const CSS_MODULES_REGEX = /\.modules?\.\w+$/i;
+
       api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
-        return mergeRsbuildConfig(config, {
+        const extraConfig: RsbuildConfig = {
           source: {
             define: {
               // https://link.vuejs.org/feature-flags
@@ -44,7 +47,26 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
               __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false,
             },
           },
-        });
+        };
+
+        const merged = mergeRsbuildConfig(extraConfig, config);
+
+        merged.output ||= {};
+        merged.output.cssModules ||= {};
+
+        // Support `<style module>` in Vue SFC
+        if (merged.output.cssModules.auto === true) {
+          merged.output.cssModules.auto = (path, query) => {
+            if (VUE_REGEXP.test(path)) {
+              return (
+                query.includes('type=style') && query.includes('module=true')
+              );
+            }
+            return CSS_MODULES_REGEX.test(path);
+          };
+        }
+
+        return merged;
       });
 
       api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
@@ -62,7 +84,7 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
 
         chain.module
           .rule(CHAIN_ID.RULE.VUE)
-          .test(/\.vue$/)
+          .test(VUE_REGEXP)
           .use(CHAIN_ID.USE.VUE)
           .loader(require.resolve('vue-loader'))
           .options(vueLoaderOptions);
