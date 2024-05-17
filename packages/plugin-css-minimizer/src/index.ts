@@ -67,12 +67,11 @@ export const pluginCssMinimizer = (
     api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
       const config = api.getNormalizedConfig();
       const { minify } = config.output;
-      const isMinimize =
-        isProd &&
-        minify !== false &&
-        !(typeof minify === 'object' && minify.css === false);
 
-      if (isMinimize) {
+      if (
+        isProd &&
+        (minify === true || (typeof minify === 'object' && minify.css))
+      ) {
         applyCSSMinimizer(chain, CHAIN_ID, options);
       }
     });
