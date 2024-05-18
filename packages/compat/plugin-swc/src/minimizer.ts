@@ -1,10 +1,5 @@
-import { __internalHelper, logger } from '@rsbuild/core';
-import {
-  CSS_REGEX,
-  type NormalizedConfig,
-  color,
-  deepmerge,
-} from '@rsbuild/shared';
+import { type NormalizedConfig, __internalHelper, logger } from '@rsbuild/core';
+import { color, deepmerge } from '@rsbuild/shared';
 import type { webpack } from '@rsbuild/webpack';
 import { minify, minifyCss } from './binding';
 import { JS_REGEX } from './constants';
@@ -27,6 +22,8 @@ const normalize = <T>(
   }
   return v;
 };
+
+const CSS_REGEX = /\.css$/;
 
 export class SwcMinimizerPlugin {
   private readonly minifyOptions: NormalizedSwcMinifyOption;

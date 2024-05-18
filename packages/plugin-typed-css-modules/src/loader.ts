@@ -12,7 +12,8 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { NODE_MODULES_REGEX, type Rspack } from '@rsbuild/shared';
+import type { Rspack } from '@rsbuild/core';
+import { NODE_MODULES_REGEX } from '@rsbuild/shared';
 import LineDiff from '../compiled/line-diff/index.js';
 
 export type CssLoaderModules =

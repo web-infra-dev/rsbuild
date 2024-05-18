@@ -10,3 +10,8 @@ export const PLUGIN_STYLUS_NAME = 'rsbuild:stylus';
 export const LOADER_PATH = join(__dirname);
 export const STATIC_PATH = join(__dirname, '../static');
 export const COMPILED_PATH = join(__dirname, '../compiled');
+
+export const TS_CONFIG_FILE = 'tsconfig.json';
+
+export const HTML_REGEX = /\.html$/;
+export const CSS_REGEX = /\.css$/;

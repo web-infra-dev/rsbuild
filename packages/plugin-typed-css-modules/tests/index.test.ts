@@ -1,6 +1,6 @@
 import type { RspackConfig, RspackRule } from '@rsbuild/shared';
 import { createStubRsbuild } from '@scripts/test-helper';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { pluginCss } from '../../core/src/plugins/css';
 import { pluginTypedCSSModules } from '../src';
 

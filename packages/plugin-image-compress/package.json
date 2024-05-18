@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "@napi-rs/image": "^1.9.2",
-    "@rsbuild/shared": "workspace:*",
     "svgo": "^3.3.2"
   },
   "devDependencies": {

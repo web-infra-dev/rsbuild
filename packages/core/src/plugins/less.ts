@@ -1,7 +1,6 @@
 import path from 'node:path';
 import {
   type FileFilterUtil,
-  LESS_REGEX,
   type LessLoaderOptions,
   type ToolsLessConfig,
   castArray,
@@ -75,7 +74,7 @@ export function pluginLess(): RsbuildPlugin {
 
         const rule = chain.module
           .rule(utils.CHAIN_ID.RULE.LESS)
-          .test(LESS_REGEX);
+          .test(/\.less$/);
 
         const { excludes, options } = getLessLoaderOptions(
           config.tools.less,

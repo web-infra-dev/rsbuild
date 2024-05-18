@@ -1,7 +1,5 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { deepmerge } from '@rsbuild/shared';
-import { VueLoaderPlugin } from 'vue-loader';
-import type { VueLoaderOptions } from 'vue-loader';
+import { type VueLoaderOptions, VueLoaderPlugin } from 'vue-loader';
 import { VueLoader15PitchFixPlugin } from './VueLoader15PitchFixPlugin';
 import { applySplitChunksRule } from './splitChunks';
 
@@ -65,15 +63,16 @@ export function pluginVue2(options: PluginVueOptions = {}): RsbuildPlugin {
           chain.resolve.alias.set('vue$', 'vue/dist/vue.runtime.esm.js');
         }
 
-        const vueLoaderOptions = deepmerge(
-          {
-            compilerOptions: {
-              preserveWhitespace: false,
-            },
-            experimentalInlineMatchResource: true,
-          },
-          options.vueLoaderOptions ?? {},
-        );
+        const userLoaderOptions = options.vueLoaderOptions ?? {};
+        const compilerOptions = {
+          preserveWhitespace: false,
+          ...userLoaderOptions.compilerOptions,
+        };
+        const vueLoaderOptions = {
+          experimentalInlineMatchResource: true,
+          ...userLoaderOptions,
+          compilerOptions,
+        };
 
         chain.module
           .rule(CHAIN_ID.RULE.VUE)

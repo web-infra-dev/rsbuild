@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { TS_CONFIG_FILE, fse } from '@rsbuild/shared';
 import type { Project } from './project';
 import {
   type ExtraMonorepoStrategies,
@@ -102,14 +101,14 @@ export function pluginSourceBuild(
 
       const getReferences = async (): Promise<string[]> => {
         const refers = projects
-          .map((project) => path.join(project.dir, TS_CONFIG_FILE))
+          .map((project) => path.join(project.dir, 'tsconfig.json'))
           .filter((filePath) => fs.existsSync(filePath));
 
         // merge with user references
         if (api.context.tsconfigPath) {
           const { default: json5 } = await import('@rsbuild/shared/json5');
           const { references } = json5.parse(
-            fse.readFileSync(api.context.tsconfigPath, 'utf-8'),
+            fs.readFileSync(api.context.tsconfigPath, 'utf-8'),
           );
 
           return Array.isArray(references)

@@ -27,7 +27,6 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@rsbuild/shared": "workspace:*",
     "assert": "^2.1.0",
     "browserify-zlib": "^0.2.0",
     "buffer": "^5.7.1",

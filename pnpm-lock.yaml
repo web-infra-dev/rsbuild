@@ -884,9 +884,6 @@ importers:
 
   packages/plugin-basic-ssl:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       selfsigned:
         specifier: ^2.4.1
         version: 2.4.1
@@ -950,9 +947,6 @@ importers:
 
   packages/plugin-eslint:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -978,9 +972,6 @@ importers:
       '@napi-rs/image':
         specifier: ^1.9.2
         version: 1.9.2
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       svgo:
         specifier: ^3.3.2
         version: 3.3.2
@@ -1047,9 +1038,6 @@ importers:
 
   packages/plugin-node-polyfill:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       assert:
         specifier: ^2.1.0
         version: 2.1.0
@@ -1382,9 +1370,6 @@ importers:
 
   packages/plugin-toml:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       toml:
         specifier: ^3.0.0
         version: 3.0.0
@@ -1557,10 +1542,6 @@ importers:
         version: 5.4.5
 
   packages/plugin-yaml:
-    dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core

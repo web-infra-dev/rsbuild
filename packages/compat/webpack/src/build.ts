@@ -1,11 +1,10 @@
+import { type Rspack, logger } from '@rsbuild/core';
 import {
   type BuildOptions,
   type MultiStats,
-  type Rspack,
   type RspackConfig,
   type Stats,
   getNodeEnv,
-  logger,
   onCompileDone,
   setNodeEnv,
 } from '@rsbuild/shared';
