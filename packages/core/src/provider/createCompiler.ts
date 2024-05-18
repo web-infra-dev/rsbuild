@@ -20,7 +20,7 @@ import {
   isSatisfyRspackVersion,
   rspackMinVersion,
 } from '../helpers';
-import { DevMiddlewareAPI } from '../server/devMiddleware';
+import type { DevMiddlewareAPI } from '../server/devMiddleware';
 import type { DevConfig, InternalContext } from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
