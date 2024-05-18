@@ -1,9 +1,5 @@
 import { createRsbuild } from '@rsbuild/core';
-import {
-  type RspackConfig,
-  type RuleSetRule,
-  isPlainObject,
-} from '@rsbuild/shared';
+import { type Rspack, type RspackConfig, isPlainObject } from '@rsbuild/shared';
 import { createStubRsbuild } from '@scripts/test-helper';
 import { describe, expect, it } from 'vitest';
 import { lightningcss, pluginLightningcss } from '../src';
@@ -19,7 +15,7 @@ const getCssRules = (rspackConfig: RspackConfig) => {
           item.test?.toString().replace(/[\W]/g, '').includes(txt),
         );
       return isRule;
-    }) as RuleSetRule[]) ?? []
+    }) as Rspack.RuleSetRule[]) ?? []
   );
 };
 

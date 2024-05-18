@@ -1,66 +1,6 @@
-import type { IncomingMessage, ServerResponse } from 'node:http';
+import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
 import type Connect from '../../compiled/connect/index.js';
-import type {
-  DevConfig,
-  NextFunction,
-  RequestHandler,
-  ServerAPIs,
-} from './config/dev';
-import type { RspackCompiler, RspackMultiCompiler } from './rspack';
-
-export type { FSWatcher } from '../../compiled/chokidar/index.js';
-
-export type Middleware = (
-  req: IncomingMessage,
-  res: ServerResponse,
-  next: NextFunction,
-) => Promise<void>;
-
-export type DevMiddlewareAPI = Middleware & {
-  close: (callback: (err: Error | null | undefined) => void) => any;
-};
-
-export type MiddlewareCallbacks = {
-  onInvalid: () => void;
-  onDone: (stats: any) => void;
-};
-
-export type DevMiddlewareOptions = {
-  /** To ensure HMR works, the devMiddleware need inject the hmr client path into page when HMR enable. */
-  clientPaths?: string[];
-  clientConfig: DevConfig['client'];
-  publicPath?: string;
-
-  /** When liveReload is disabled, the page does not reload. */
-  liveReload?: boolean;
-
-  etag?: 'weak' | 'strong';
-
-  /** The options need by compiler middleware (like webpackMiddleware) */
-  headers?: Record<string, string | string[]>;
-  writeToDisk?: boolean | ((filename: string) => boolean);
-  stats?: boolean;
-
-  /** should trigger when compiler hook called */
-  callbacks: MiddlewareCallbacks;
-
-  /** whether use Server Side Render */
-  serverSideRender?: boolean;
-};
-
-/**
- * The rsbuild/server do nothing about compiler, the devMiddleware need do such things to ensure dev works well:
- * - Call compiler.watch （normally did by webpack-dev-middleware）.
- * - Inject the hmr client path into page （the hmr client rsbuild/server already provide）.
- * - Notify server when compiler hooks are triggered.
- */
-export type DevMiddleware = (options: DevMiddlewareOptions) => DevMiddlewareAPI;
-
-export type CreateDevMiddlewareReturns = {
-  devMiddleware: (options: DevMiddlewareOptions) => DevMiddlewareAPI;
-  compiler: RspackCompiler | RspackMultiCompiler;
-};
 
 export type StartServerResult = {
   urls: string[];
@@ -78,15 +18,6 @@ export type UpgradeEvent = (
   socket: Socket,
   head: any,
 ) => void;
-
-export type CompileMiddlewareAPI = {
-  middleware: RequestHandler;
-  sockWrite: ServerAPIs['sockWrite'];
-  onUpgrade: UpgradeEvent;
-  close: () => void;
-};
-
-export type Middlewares = Array<RequestHandler | [string, RequestHandler]>;
 
 export type RsbuildDevServer = {
   /**

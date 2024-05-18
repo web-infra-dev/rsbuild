@@ -1,10 +1,9 @@
 import fs from 'node:fs';
 import {
-  type CreateDevMiddlewareReturns,
   type CreateDevServerOptions,
-  type OutputFileSystem,
   ROOT_DIST_DIR,
   type RsbuildDevServer,
+  type Rspack,
   type StartDevServerOptions,
   type StartServerResult,
   debug,
@@ -14,6 +13,7 @@ import {
   setNodeEnv,
 } from '@rsbuild/shared';
 import connect from '@rsbuild/shared/connect';
+import type { CreateDevMiddlewareReturns } from '../provider/createCompiler';
 import type { InternalContext } from '../types';
 import {
   type RsbuildDevMiddlewareOptions,
@@ -71,7 +71,7 @@ export async function createDevServer<
     https,
   };
 
-  let outputFileSystem: OutputFileSystem = fs;
+  let outputFileSystem: Rspack.OutputFileSystem = fs;
 
   const startCompile: () => Promise<
     RsbuildDevMiddlewareOptions['compileMiddlewareAPI']

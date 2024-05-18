@@ -1,10 +1,10 @@
 import type {
   ChokidarWatchOptions,
-  CompileMiddlewareAPI,
   DevConfig,
   ServerConfig,
   WatchFiles,
 } from '@rsbuild/shared';
+import type { CompileMiddlewareAPI } from './getDevMiddlewares';
 
 type WatchFilesOptions = {
   dev: DevConfig;
