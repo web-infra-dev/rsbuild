@@ -38,7 +38,7 @@ const getNoDeclarationFileError = ({ filename }: { filename: string }) =>
     `Generated type declaration does not exist. Run webpack and commit the type declaration for '${filename}'`,
   );
 
-export const isCssModules = (filename: string, modules: CssLoaderModules) => {
+export const isCSSModules = (filename: string, modules: CssLoaderModules) => {
   if (typeof modules === 'boolean') {
     return modules;
   }
@@ -93,8 +93,8 @@ export function wrapQuotes(key: string) {
   return `'${key}'`;
 }
 
-const cssModuleToInterface = (cssModuleKeys: string[]) => {
-  const interfaceFields = cssModuleKeys
+const cssModuleToInterface = (cssModulesKeys: string[]) => {
+  const interfaceFields = cssModulesKeys
     .sort()
     .map((key) => `  ${wrapQuotes(key)}: string;`)
     .join('\n');
@@ -146,22 +146,22 @@ const extractLocalExports = (content: string) => {
   return localExports;
 };
 
-const getCssModuleKeys = (content: string) => {
+const getCSSModulesKeys = (content: string) => {
   const keyRegex = /"([^\\"]+)":/g;
-  const cssModuleKeys = [];
+  const cssModulesKeys = [];
 
   const localExports = extractLocalExports(content);
 
   let match = keyRegex.exec(localExports);
 
   while (match !== null) {
-    if (cssModuleKeys.indexOf(match[1]) < 0) {
-      cssModuleKeys.push(match[1]);
+    if (cssModulesKeys.indexOf(match[1]) < 0) {
+      cssModulesKeys.push(match[1]);
     }
     match = keyRegex.exec(localExports);
   }
 
-  return cssModuleKeys;
+  return cssModulesKeys;
 };
 
 export default function (
@@ -169,7 +169,7 @@ export default function (
     mode: string;
     modules: CssLoaderModules;
   }> & {
-    cssModuleKeys?: string[];
+    cssModulesKeys?: string[];
   },
   content: string,
   ...rest: any[]
@@ -183,16 +183,16 @@ export default function (
     return failed(new Error(`Invalid mode option: ${mode}`));
   }
 
-  if (!isCssModules(filename, modules) || isInNodeModules(filename)) {
+  if (!isCSSModules(filename, modules) || isInNodeModules(filename)) {
     return success();
   }
 
   const cssModuleInterfaceFilename = filenameToTypingsFilename(filename);
   const { read, write } = makeFileHandlers(cssModuleInterfaceFilename);
 
-  const cssModuleKeys = this.cssModuleKeys || getCssModuleKeys(content);
+  const cssModulesKeys = this.cssModulesKeys || getCSSModulesKeys(content);
   const cssModuleDefinition = `${bannerMessage}\n${cssModuleToInterface(
-    cssModuleKeys,
+    cssModulesKeys,
   )}\n${cssModuleExport}`;
 
   if (mode === 'verify') {

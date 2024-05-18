@@ -1,17 +1,17 @@
-import { isCssModules } from '../src/loader';
+import { isCSSModules } from '../src/loader';
 
-it('check isCssModules', () => {
-  expect(isCssModules('src/index.css', false)).toBeFalsy();
-  expect(isCssModules('src/index.css', { auto: false })).toBeFalsy();
-  expect(isCssModules('src/index.module.css', { auto: false })).toBeFalsy();
+it('check isCSSModules', () => {
+  expect(isCSSModules('src/index.css', false)).toBeFalsy();
+  expect(isCSSModules('src/index.css', { auto: false })).toBeFalsy();
+  expect(isCSSModules('src/index.module.css', { auto: false })).toBeFalsy();
 
-  expect(isCssModules('src/index.css', true)).toBeTruthy();
+  expect(isCSSModules('src/index.css', true)).toBeTruthy();
 
-  expect(isCssModules('src/index.css', { auto: true })).toBeFalsy();
-  expect(isCssModules('src/index.module.css', { auto: true })).toBeTruthy();
+  expect(isCSSModules('src/index.css', { auto: true })).toBeFalsy();
+  expect(isCSSModules('src/index.module.css', { auto: true })).toBeTruthy();
 
   expect(
-    isCssModules('src/index.module.css', {
+    isCSSModules('src/index.module.css', {
       auto: (path) => {
         return path.includes('.module.');
       },
@@ -19,7 +19,7 @@ it('check isCssModules', () => {
   ).toBeTruthy();
 
   expect(
-    isCssModules('src/index.css', {
+    isCSSModules('src/index.css', {
       auto: (path) => {
         return path.includes('.module.');
       },
@@ -27,13 +27,13 @@ it('check isCssModules', () => {
   ).toBeFalsy();
 
   expect(
-    isCssModules('src/index.module.css', {
+    isCSSModules('src/index.module.css', {
       auto: /\.module\./i,
     }),
   ).toBeTruthy();
 
   expect(
-    isCssModules('src/index.css', {
+    isCSSModules('src/index.css', {
       auto: /\.module\./i,
     }),
   ).toBeFalsy();

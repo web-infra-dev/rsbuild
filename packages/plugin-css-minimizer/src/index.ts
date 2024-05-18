@@ -1,10 +1,10 @@
-import type { RsbuildPlugin } from '@rsbuild/core';
-import {
-  type BundlerChain,
-  type ChainIdentifier,
-  type ChainedConfig,
-  mergeChainedOptions,
-} from '@rsbuild/shared';
+import type {
+  BundlerChain,
+  ChainIdentifier,
+  ChainedConfig,
+  RsbuildPlugin,
+} from '@rsbuild/core';
+import { mergeChainedOptions } from '@rsbuild/shared';
 import CssMinimizerWebpackPlugin from 'css-minimizer-webpack-plugin';
 import type CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 

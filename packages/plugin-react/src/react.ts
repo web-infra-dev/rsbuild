@@ -1,12 +1,12 @@
 import path from 'node:path';
-import type { RsbuildConfig, RsbuildPluginAPI, Rspack } from '@rsbuild/core';
-import {
-  type BundlerChain,
-  type ChainIdentifier,
-  SCRIPT_REGEX,
-  deepmerge,
-  isUsingHMR,
-} from '@rsbuild/shared';
+import type {
+  BundlerChain,
+  ChainIdentifier,
+  RsbuildConfig,
+  RsbuildPluginAPI,
+  Rspack,
+} from '@rsbuild/core';
+import { SCRIPT_REGEX, deepmerge, isUsingHMR } from '@rsbuild/shared';
 import type { PluginReactOptions } from '.';
 
 const modifySwcLoaderOptions = ({

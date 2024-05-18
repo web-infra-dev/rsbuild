@@ -1,9 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { __internalHelper } from '@rsbuild/core';
+import type { ModifyChainUtils, NormalizedConfig } from '@rsbuild/core';
 import {
-  type ModifyChainUtils,
-  type NormalizedConfig,
   getBrowserslistWithDefault,
   getCoreJsVersion,
   isUsingHMR,

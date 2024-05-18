@@ -1,7 +1,6 @@
 import path from 'node:path';
-import { type Rspack, logger } from '@rsbuild/core';
+import { type Rspack, type ScriptLoading, logger } from '@rsbuild/core';
 import {
-  type ScriptLoading,
   generateScriptTag,
   getPublicPathFromCompiler,
   isProd,

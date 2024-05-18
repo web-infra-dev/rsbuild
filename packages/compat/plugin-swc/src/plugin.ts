@@ -1,7 +1,7 @@
 import path from 'node:path';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import {
   DEFAULT_BROWSERSLIST,
-  type RsbuildPlugin,
   SCRIPT_REGEX,
   applyScriptCondition,
 } from '@rsbuild/shared';
