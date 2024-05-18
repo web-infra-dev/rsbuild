@@ -1,7 +1,5 @@
-import type {
-  ModifyWebpackChainUtils,
-  NormalizedConfig,
-} from '@rsbuild/shared';
+import type { NormalizedConfig } from '@rsbuild/core';
+import type { ModifyWebpackChainUtils } from '@rsbuild/shared';
 import { webpackProvider } from '@rsbuild/webpack';
 import { createStubRsbuild } from '@scripts/test-helper';
 import { pluginSwc } from '../src';

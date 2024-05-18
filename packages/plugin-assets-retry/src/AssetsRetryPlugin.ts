@@ -1,6 +1,6 @@
 import path from 'node:path';
+import type { Rspack } from '@rsbuild/core';
 import {
-  type Rspack,
   fse,
   generateScriptTag,
   getPublicPathFromCompiler,

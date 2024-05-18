@@ -3,7 +3,7 @@
  * license at https://github.com/facebook/create-react-app/blob/master/LICENSE
  */
 import path from 'node:path';
-import { CSS_REGEX, HTML_REGEX, JS_REGEX, fse } from '@rsbuild/shared';
+import { JS_REGEX, fse } from '@rsbuild/shared';
 import { color, logger } from '@rsbuild/shared';
 import type {
   MultiStats,
@@ -11,6 +11,7 @@ import type {
   Stats,
   StatsAsset,
 } from '@rsbuild/shared';
+import { CSS_REGEX, HTML_REGEX } from '../constants';
 import type { RsbuildPlugin } from '../types';
 
 /** Filter source map and license files */

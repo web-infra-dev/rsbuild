@@ -27,7 +27,6 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@rsbuild/shared": "workspace:*",
     "eslint": "^8.57.0",
     "eslint-webpack-plugin": "^4.1.0",
     "webpack": "^5.91.0"

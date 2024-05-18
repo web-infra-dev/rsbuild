@@ -3,7 +3,6 @@ import { pathToFileURL } from 'node:url';
 import {
   type CompilerTapFn,
   type FileFilterUtil,
-  SASS_REGEX,
   type SassLoaderOptions,
   type ToolsSassConfig,
   castArray,
@@ -150,7 +149,7 @@ export function pluginSass(): RsbuildPlugin {
 
         const rule = chain.module
           .rule(utils.CHAIN_ID.RULE.SASS)
-          .test(SASS_REGEX);
+          .test(/\.s(?:a|c)ss$/);
 
         for (const item of excludes) {
           rule.exclude.add(item);

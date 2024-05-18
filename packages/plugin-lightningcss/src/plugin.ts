@@ -1,16 +1,15 @@
 import path from 'node:path';
-import {
-  getBrowserslistWithDefault,
-  mergeChainedOptions,
-} from '@rsbuild/shared';
 import type {
-  BundlerChain,
-  ModifyBundlerChainUtils,
   NormalizedConfig,
   RsbuildContext,
   RsbuildPlugin,
   RsbuildTarget,
+} from '@rsbuild/core';
+import {
+  getBrowserslistWithDefault,
+  mergeChainedOptions,
 } from '@rsbuild/shared';
+import type { BundlerChain, ModifyBundlerChainUtils } from '@rsbuild/shared';
 import browserslist from '@rsbuild/shared/browserslist';
 import { browserslistToTargets as _browserslistToTargets } from 'lightningcss';
 import type * as LightningCSS from 'lightningcss';

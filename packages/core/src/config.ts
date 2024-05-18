@@ -16,7 +16,6 @@ import {
   SERVER_DIST_DIR,
   SERVICE_WORKER_DIST_DIR,
   SVG_DIST_DIR,
-  TS_CONFIG_FILE,
   WASM_DIST_DIR,
   color,
   debounce,
@@ -37,6 +36,7 @@ import type {
   RsbuildConfig,
   RsbuildEntry,
 } from '@rsbuild/shared';
+import { TS_CONFIG_FILE } from './constants';
 import { findExists, isFileExists } from './helpers';
 import { mergeRsbuildConfig } from './mergeConfig';
 import { restartDevServer } from './server/restart';

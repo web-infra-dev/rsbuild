@@ -3,7 +3,6 @@ import {
   type BundlerChainRule,
   type CSSExtractOptions,
   type CSSLoaderOptions,
-  CSS_REGEX,
   type ModifyChainUtils,
   type PostCSSLoaderOptions,
   type PostCSSOptions,
@@ -16,7 +15,7 @@ import {
   mergeChainedOptions,
 } from '@rsbuild/shared';
 import type { AcceptedPlugin } from 'postcss';
-import { LOADER_PATH } from '../constants';
+import { CSS_REGEX, LOADER_PATH } from '../constants';
 import { getCompiledPath } from '../helpers';
 import { getCssExtractPlugin } from '../pluginHelper';
 import type { NormalizedConfig, RsbuildPlugin } from '../types';

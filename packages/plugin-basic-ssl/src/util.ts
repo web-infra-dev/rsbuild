@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import type { ServerConfig } from '@rsbuild/shared';
+import type { ServerConfig } from '@rsbuild/core';
 import selfsigned from 'selfsigned';
 
 export const resolveHttpsConfig = (config: ServerConfig['https']) => {

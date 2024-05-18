@@ -3,7 +3,6 @@ import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
 import { PLUGIN_REACT_NAME } from '@rsbuild/plugin-react';
 import {
   SCRIPT_REGEX,
-  SVG_REGEX,
   deepmerge,
   getDistPath,
   getFilename,
@@ -11,6 +10,8 @@ import {
 import type { Config } from '@svgr/core';
 
 export type SvgDefaultExport = 'component' | 'url';
+
+export const SVG_REGEX = /\.svg$/;
 
 export type PluginSvgrOptions = {
   /**

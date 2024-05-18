@@ -27,7 +27,6 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@rsbuild/shared": "workspace:*",
     "selfsigned": "^2.4.1"
   },
   "devDependencies": {

@@ -1,10 +1,10 @@
 import {
-  CSS_REGEX,
   type InlineChunkTest,
   JS_REGEX,
   isHtmlDisabled,
   pick,
 } from '@rsbuild/shared';
+import { CSS_REGEX } from '../constants';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginInlineChunk = (): RsbuildPlugin => ({

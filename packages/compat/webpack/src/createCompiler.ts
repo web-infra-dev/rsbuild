@@ -1,10 +1,9 @@
+import { type Rspack, logger } from '@rsbuild/core';
 import {
-  type Rspack,
   type RspackConfig,
   type Stats,
   debug,
   isDev,
-  logger,
   onCompileDone,
 } from '@rsbuild/shared';
 // @ts-expect-error
