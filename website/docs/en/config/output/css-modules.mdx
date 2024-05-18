@@ -3,7 +3,7 @@
 - **Type:**
 
 ```ts
-type CssModules = {
+type CSSModules = {
   auto?:
     | boolean
     | RegExp
@@ -13,7 +13,7 @@ type CssModules = {
         resourceFragment: string,
       ) => boolean);
   localIdentName?: string;
-  exportLocalsConvention?: CssModuleLocalsConvention;
+  exportLocalsConvention?: CSSModulesLocalsConvention;
 };
 ```
 
@@ -64,7 +64,7 @@ Style of exported class names.
 - **Type:**
 
 ```ts
-type CssModuleLocalsConvention =
+type CSSModulesLocalsConvention =
   | 'asIs'
   | 'camelCase'
   | 'camelCaseOnly'

@@ -1,9 +1,5 @@
-import type { RsbuildPluginAPI } from '@rsbuild/core';
-import {
-  type SplitChunks,
-  createCacheGroups,
-  isPlainObject,
-} from '@rsbuild/shared';
+import type { RsbuildPluginAPI, SplitChunks } from '@rsbuild/core';
+import { createCacheGroups, isPlainObject } from '@rsbuild/shared';
 import type { SplitVueChunkOptions } from '.';
 
 export const applySplitChunksRule = (

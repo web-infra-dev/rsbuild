@@ -136,14 +136,14 @@ export type SourceMap = {
   css?: boolean;
 };
 
-export type CssModuleLocalsConvention =
+export type CSSModulesLocalsConvention =
   | 'asIs'
   | 'camelCase'
   | 'camelCaseOnly'
   | 'dashes'
   | 'dashesOnly';
 
-export type CssModules = {
+export type CSSModules = {
   auto?:
     | boolean
     | RegExp
@@ -156,7 +156,7 @@ export type CssModules = {
    * Set the local ident name of CSS Modules.
    */
   localIdentName?: string;
-  exportLocalsConvention?: CssModuleLocalsConvention;
+  exportLocalsConvention?: CSSModulesLocalsConvention;
 };
 
 export type Minify =
@@ -250,7 +250,7 @@ export interface OutputConfig {
   /**
    * Allow to custom CSS Modules options.
    */
-  cssModules?: CssModules;
+  cssModules?: CSSModules;
   /**
    * Whether to disable code minification in production build.
    */
@@ -319,8 +319,8 @@ export interface NormalizedOutputConfig extends OutputConfig {
   injectStyles: boolean;
   cssModules: {
     localIdentName?: string;
-    exportLocalsConvention: CssModuleLocalsConvention;
-    auto?: CssModules['auto'];
+    exportLocalsConvention: CSSModulesLocalsConvention;
+    auto?: CSSModules['auto'];
   };
   emitAssets: EmitAssets;
 }

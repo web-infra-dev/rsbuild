@@ -1,10 +1,13 @@
-import type { RspackConfig, RspackRule } from '@rsbuild/shared';
+import type { Rspack, RspackRule } from '@rsbuild/core';
 import { createStubRsbuild } from '@scripts/test-helper';
 import { describe, expect, it } from 'vitest';
 import { pluginCss } from '../../core/src/plugins/css';
 import { pluginTypedCSSModules } from '../src';
 
-function matchRules(config: RspackConfig, testFile: string): RspackRule[] {
+function matchRules(
+  config: Rspack.Configuration,
+  testFile: string,
+): RspackRule[] {
   if (!config.module?.rules) {
     return [];
   }

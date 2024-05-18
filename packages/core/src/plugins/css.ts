@@ -29,7 +29,7 @@ export const isUseCssExtract = (
 ) =>
   !config.output.injectStyles && target !== 'node' && target !== 'web-worker';
 
-const getCssModuleLocalIdentName = (
+const getCSSModulesLocalIdentName = (
   config: NormalizedConfig,
   isProd: boolean,
 ) =>
@@ -200,7 +200,7 @@ const getPostcssLoaderOptions = async ({
   return mergedConfig;
 };
 
-const getCssLoaderOptions = ({
+const getCSSLoaderOptions = ({
   config,
   importLoaders,
   target,
@@ -261,9 +261,9 @@ export async function applyCSSRule({
   const enableExtractCSS = isUseCssExtract(config, target);
 
   // 2. Prepare loader options
-  const localIdentName = getCssModuleLocalIdentName(config, isProd);
+  const localIdentName = getCSSModulesLocalIdentName(config, isProd);
 
-  const cssLoaderOptions = getCssLoaderOptions({
+  const cssLoaderOptions = getCSSLoaderOptions({
     config,
     importLoaders,
     target,

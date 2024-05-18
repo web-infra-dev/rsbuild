@@ -1,5 +1,4 @@
-import type { NormalizedConfig } from '@rsbuild/core';
-import type { ModifyWebpackChainUtils } from '@rsbuild/shared';
+import type { ModifyChainUtils, NormalizedConfig } from '@rsbuild/core';
 import { webpackProvider } from '@rsbuild/webpack';
 import { createStubRsbuild } from '@scripts/test-helper';
 import { pluginSwc } from '../src';
@@ -15,7 +14,7 @@ const TEST_BUILDER_CONFIG = {
   },
 } as unknown as NormalizedConfig;
 
-const UTILS = { target: 'web', isProd: true } as ModifyWebpackChainUtils;
+const UTILS = { target: 'web', isProd: true } as ModifyChainUtils;
 
 describe('plugin-swc', () => {
   it('should set swc-loader', async () => {

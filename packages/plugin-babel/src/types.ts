@@ -2,7 +2,7 @@ import type {
   PluginItem as BabelPlugin,
   TransformOptions as BabelTransformOptions,
 } from '@babel/core';
-import type { ChainedConfigWithUtils } from '@rsbuild/shared';
+import type { ChainedConfigWithUtils } from '@rsbuild/core';
 
 export type { BabelPlugin, BabelTransformOptions };
 

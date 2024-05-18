@@ -1,7 +1,6 @@
-import { type RsbuildPlugin, logger } from '@rsbuild/core';
+import { type ChainedConfig, type RsbuildPlugin, logger } from '@rsbuild/core';
 import {
   CHAIN_ID,
-  type ChainedConfig,
   NODE_MODULES_REGEX,
   deepmerge,
   fse,

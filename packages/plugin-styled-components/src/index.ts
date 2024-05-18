@@ -1,6 +1,9 @@
-import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
+import type {
+  ChainedConfig,
+  RsbuildConfig,
+  RsbuildPlugin,
+} from '@rsbuild/core';
 import {
-  type ChainedConfig,
   getNodeEnv,
   isServerTarget,
   mergeChainedOptions,
