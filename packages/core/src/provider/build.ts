@@ -2,9 +2,8 @@ import { getNodeEnv, logger, onCompileDone, setNodeEnv } from '@rsbuild/shared';
 import type {
   BuildOptions,
   MultiStats,
-  RspackCompiler,
+  Rspack,
   RspackConfig,
-  RspackMultiCompiler,
   Stats,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
@@ -21,7 +20,7 @@ export const build = async (
 
   const { context } = initOptions;
 
-  let compiler: RspackCompiler | RspackMultiCompiler;
+  let compiler: Rspack.Compiler | Rspack.MultiCompiler;
   let bundlerConfigs: RspackConfig[] | undefined;
 
   if (customCompiler) {

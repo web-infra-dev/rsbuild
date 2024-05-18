@@ -1,12 +1,10 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Socket } from 'node:net';
+import type { DevConfig, NextFunction, ServerConfig } from '@rsbuild/shared';
 import type {
   DevMiddleware as CustomDevMiddleware,
-  DevConfig,
   DevMiddlewareAPI,
-  NextFunction,
-  ServerConfig,
-} from '@rsbuild/shared';
+} from './devMiddleware';
 import { SocketServer } from './socketServer';
 
 type Options = {

@@ -3,7 +3,7 @@ import { parse } from 'node:url';
 import {
   type HtmlFallback,
   type RequestHandler as Middleware,
-  type OutputFileSystem,
+  type Rspack,
   color,
   debug,
   isDebug,
@@ -81,7 +81,7 @@ export const getHtmlFallbackMiddleware: (params: {
   distPath: string;
   callback?: Middleware;
   htmlFallback?: HtmlFallback;
-  outputFileSystem: OutputFileSystem;
+  outputFileSystem: Rspack.OutputFileSystem;
 }) => Middleware = ({ htmlFallback, distPath, callback, outputFileSystem }) => {
   /**
    * support access page without suffix and support fallback in some edge cases

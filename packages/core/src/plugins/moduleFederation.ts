@@ -1,7 +1,7 @@
 import {
   type CacheGroup,
   DEFAULT_ASSET_PREFIX,
-  type RspackCompiler,
+  type Rspack,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import type { RspackPluginInstance } from '@rspack/core';
@@ -19,7 +19,7 @@ class PatchSplitChunksPlugin implements RspackPluginInstance {
     this.name = name;
   }
 
-  apply(compiler: RspackCompiler) {
+  apply(compiler: Rspack.Compiler) {
     const { splitChunks } = compiler.options.optimization;
 
     if (!splitChunks) {

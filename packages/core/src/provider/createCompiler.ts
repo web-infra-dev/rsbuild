@@ -1,9 +1,7 @@
 import {
-  type CreateDevMiddlewareReturns,
   type MultiStats,
-  type RspackCompiler,
+  type Rspack,
   type RspackConfig,
-  type RspackMultiCompiler,
   type Stats,
   TARGET_ID_MAP,
   color,
@@ -22,7 +20,8 @@ import {
   isSatisfyRspackVersion,
   rspackMinVersion,
 } from '../helpers';
-import type { InternalContext } from '../types';
+import type { DevMiddlewareAPI } from '../server/devMiddleware';
+import type { DevConfig, InternalContext } from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
 export async function createCompiler({
@@ -31,7 +30,7 @@ export async function createCompiler({
 }: {
   context: InternalContext;
   rspackConfigs: RspackConfig[];
-}): Promise<RspackCompiler | RspackMultiCompiler> {
+}): Promise<Rspack.Compiler | Rspack.MultiCompiler> {
   debug('create compiler');
   await context.hooks.onBeforeCreateCompiler.call({
     bundlerConfigs: rspackConfigs,
@@ -131,11 +130,44 @@ export async function createCompiler({
   return compiler;
 }
 
+export type MiddlewareCallbacks = {
+  onInvalid: () => void;
+  onDone: (stats: any) => void;
+};
+
+export type DevMiddlewareOptions = {
+  /** To ensure HMR works, the devMiddleware need inject the hmr client path into page when HMR enable. */
+  clientPaths?: string[];
+  clientConfig: DevConfig['client'];
+  publicPath?: string;
+
+  /** When liveReload is disabled, the page does not reload. */
+  liveReload?: boolean;
+
+  etag?: 'weak' | 'strong';
+
+  /** The options need by compiler middleware (like webpackMiddleware) */
+  headers?: Record<string, string | string[]>;
+  writeToDisk?: boolean | ((filename: string) => boolean);
+  stats?: boolean;
+
+  /** should trigger when compiler hook called */
+  callbacks: MiddlewareCallbacks;
+
+  /** whether use Server Side Render */
+  serverSideRender?: boolean;
+};
+
+export type CreateDevMiddlewareReturns = {
+  devMiddleware: (options: DevMiddlewareOptions) => DevMiddlewareAPI;
+  compiler: Rspack.Compiler | Rspack.MultiCompiler;
+};
+
 export async function createDevMiddleware(
   options: InitConfigsOptions,
-  customCompiler?: RspackCompiler | RspackMultiCompiler,
+  customCompiler?: Rspack.Compiler | Rspack.MultiCompiler,
 ): Promise<CreateDevMiddlewareReturns> {
-  let compiler: RspackCompiler | RspackMultiCompiler;
+  let compiler: Rspack.Compiler | Rspack.MultiCompiler;
   if (customCompiler) {
     compiler = customCompiler;
   } else {
