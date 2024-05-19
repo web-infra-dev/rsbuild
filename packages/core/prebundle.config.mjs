@@ -112,11 +112,11 @@ export default {
       // this is a trick to avoid ncc compiling the dynamic import syntax
       // https://github.com/vercel/ncc/issues/935
       beforeBundle(task) {
-        replaceFileContent(join(task.depPath, 'src/req.js'), (content) => {
-          content = `${content.replaceAll('await import', 'await __import')}`;
-          content = `${content.replaceAll(`import('jiti')`, `import('@rsbuild/shared/jiti')`)}`;
-          return content;
-        });
+        replaceFileContent(join(task.depPath, 'src/req.js'), (content) =>
+          content
+            .replaceAll('await import', 'await __import')
+            .replaceAll(`import('jiti')`, `import('@rsbuild/shared/jiti')`),
+        );
       },
       afterBundle(task) {
         replaceFileContent(
