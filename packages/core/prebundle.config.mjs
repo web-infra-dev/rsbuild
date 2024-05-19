@@ -105,22 +105,24 @@ export default {
     {
       name: 'postcss-load-config',
       externals: {
-        jiti: '@rsbuild/shared/jiti',
         yaml: '@rsbuild/shared/yaml',
+        '@rsbuild/shared/jiti': '@rsbuild/shared/jiti',
       },
       ignoreDts: true,
       // this is a trick to avoid ncc compiling the dynamic import syntax
       // https://github.com/vercel/ncc/issues/935
       beforeBundle(task) {
-        replaceFileContent(
-          join(task.depPath, 'src/req.js'),
-          (content) => `${content.replace('await import', 'await __import')}`,
+        replaceFileContent(join(task.depPath, 'src/req.js'), (content) =>
+          content
+            .replaceAll('await import', 'await __import')
+            .replaceAll(`import('jiti')`, `import('@rsbuild/shared/jiti')`),
         );
       },
       afterBundle(task) {
         replaceFileContent(
           join(task.distPath, 'index.js'),
-          (content) => `${content.replace('await __import', 'await import')}`,
+          (content) =>
+            `${content.replaceAll('await __import', 'await import')}`,
         );
       },
     },
