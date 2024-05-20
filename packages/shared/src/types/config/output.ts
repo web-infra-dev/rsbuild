@@ -136,20 +136,27 @@ export type SourceMap = {
   css?: boolean;
 };
 
-export type CssModuleLocalsConvention =
+export type CSSModulesLocalsConvention =
   | 'asIs'
   | 'camelCase'
   | 'camelCaseOnly'
   | 'dashes'
   | 'dashesOnly';
 
-export type CssModules = {
-  auto?: boolean | RegExp | ((resourcePath: string) => boolean);
+export type CSSModules = {
+  auto?:
+    | boolean
+    | RegExp
+    | ((
+        resourcePath: string,
+        resourceQuery: string,
+        resourceFragment: string,
+      ) => boolean);
   /**
    * Set the local ident name of CSS Modules.
    */
   localIdentName?: string;
-  exportLocalsConvention?: CssModuleLocalsConvention;
+  exportLocalsConvention?: CSSModulesLocalsConvention;
 };
 
 export type Minify =
@@ -243,7 +250,7 @@ export interface OutputConfig {
   /**
    * Allow to custom CSS Modules options.
    */
-  cssModules?: CssModules;
+  cssModules?: CSSModules;
   /**
    * Whether to disable code minification in production build.
    */
@@ -261,10 +268,6 @@ export interface OutputConfig {
    */
   filenameHash?: boolean | string;
   /**
-   * Whether to generate a TypeScript declaration file for CSS Modules.
-   */
-  enableCssModuleTSDeclaration?: boolean;
-  /**
    * Whether to inline output scripts files (.js files) into HTML with `<script>` tags.
    */
   inlineScripts?: boolean | InlineChunkTest;
@@ -278,7 +281,7 @@ export interface OutputConfig {
   injectStyles?: boolean;
   /**
    * Specifies the range of target browsers that the project is compatible with.
-   * This value will be used by [@babel/preset-env](https://babeljs.io/docs/en/babel-preset-env) and
+   * This value will be used by [SWC](https://github.com/swc-project/swc) and
    * [autoprefixer](https://github.com/postcss/autoprefixer) to identify the JavaScript syntax that
    * need to be transformed and the CSS browser prefixes that need to be added.
    */
@@ -311,14 +314,13 @@ export interface NormalizedOutputConfig extends OutputConfig {
   assetPrefix: string;
   dataUriLimit: number | NormalizedDataUriLimit;
   minify: Minify;
-  enableCssModuleTSDeclaration: boolean;
   inlineScripts: boolean | InlineChunkTest;
   inlineStyles: boolean | InlineChunkTest;
   injectStyles: boolean;
   cssModules: {
     localIdentName?: string;
-    exportLocalsConvention: CssModuleLocalsConvention;
-    auto?: CssModules['auto'];
+    exportLocalsConvention: CSSModulesLocalsConvention;
+    auto?: CSSModules['auto'];
   };
   emitAssets: EmitAssets;
 }

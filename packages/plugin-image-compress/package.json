@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-image-compress",
-  "version": "0.6.13",
+  "version": "0.7.0-beta.5",
   "description": "Image compress plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -9,15 +9,15 @@
     "directory": "packages/plugin-image-compress"
   },
   "license": "MIT",
-  "type": "commonjs",
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "default": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     }
   },
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
@@ -28,8 +28,7 @@
   },
   "dependencies": {
     "@napi-rs/image": "^1.9.2",
-    "@rsbuild/shared": "workspace:*",
-    "svgo": "^3.2.0"
+    "svgo": "^3.3.2"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
@@ -40,7 +39,7 @@
     "webpack": "^5.91.0"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.6.13"
+    "@rsbuild/core": "workspace:^0.7.0-beta.5"
   },
   "publishConfig": {
     "access": "public",

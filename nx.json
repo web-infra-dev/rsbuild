@@ -20,7 +20,7 @@
       "cache": true,
       "dependsOn": ["^build", "prebundle"],
       "inputs": ["build", "^build"],
-      "outputs": ["{projectRoot}/dist"]
+      "outputs": ["{projectRoot}/dist", "{projectRoot}/dist-types"]
     },
     "prebundle": {
       "cache": true,

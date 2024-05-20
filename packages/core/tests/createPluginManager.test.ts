@@ -3,7 +3,7 @@ import { createPluginManager } from '../src/pluginManager';
 describe('createPluginManager', () => {
   it('addPlugins and removePlugins works', () => {
     const pluginManager = createPluginManager();
-    expect(pluginManager.plugins).toEqual([]);
+    expect(pluginManager.getPlugins()).toEqual([]);
     pluginManager.addPlugins([
       {
         name: 'foo',
@@ -18,9 +18,9 @@ describe('createPluginManager', () => {
         },
       },
     ]);
-    expect(pluginManager.plugins).toHaveLength(2);
+    expect(pluginManager.getPlugins()).toHaveLength(2);
     pluginManager.removePlugins(['foo']);
-    expect(pluginManager.plugins).toHaveLength(1);
+    expect(pluginManager.getPlugins()).toHaveLength(1);
     expect(pluginManager.isPluginExists('foo')).toBe(false);
   });
 });

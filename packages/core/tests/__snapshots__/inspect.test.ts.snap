@@ -2,7 +2,6 @@
 
 exports[`inspectConfig > should print plugin names when inspect config 1`] = `
 [
-  "rsbuild:transition",
   "rsbuild:basic",
   "rsbuild:entry",
   "rsbuild:target",

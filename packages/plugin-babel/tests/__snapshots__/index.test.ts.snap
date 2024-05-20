@@ -40,7 +40,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
           "parser": {
             "decorators": true,
             "syntax": "typescript",
-            "tsx": true,
+            "tsx": false,
           },
           "preserveAllComments": true,
           "transform": {

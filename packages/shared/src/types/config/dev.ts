@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import type { WatchOptions } from '../../../compiled/chokidar';
+import type { WatchOptions } from '../../../compiled/chokidar/index.js';
 import type { ArrayOrNot } from '../utils';
 
 export type ProgressBarConfig = {

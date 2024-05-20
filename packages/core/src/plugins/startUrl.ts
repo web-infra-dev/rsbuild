@@ -1,7 +1,7 @@
 import { exec } from 'node:child_process';
-import { join } from 'node:path';
 import { promisify } from 'node:util';
 import { type Routes, castArray, debug, logger } from '@rsbuild/shared';
+import { STATIC_PATH } from '../constants';
 import type { RsbuildPlugin } from '../types';
 
 const execAsync = promisify(exec);
@@ -53,7 +53,7 @@ export async function openBrowser(url: string): Promise<boolean> {
             url,
           )}" "${targetBrowser}"`,
           {
-            cwd: join(__dirname, '../../static'),
+            cwd: STATIC_PATH,
           },
         );
 
@@ -69,7 +69,7 @@ export async function openBrowser(url: string): Promise<boolean> {
   // Fallback to open
   // (It will always open new tab)
   try {
-    const { default: open } = await import('../../compiled/open');
+    const { default: open } = await import('../../compiled/open/index.js');
     await open(url);
     return true;
   } catch (err) {

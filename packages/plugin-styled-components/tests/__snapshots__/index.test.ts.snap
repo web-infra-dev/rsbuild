@@ -36,7 +36,7 @@ exports[`plugins/styled-components > should apply styledComponents option to swc
           "parser": {
             "decorators": true,
             "syntax": "typescript",
-            "tsx": true,
+            "tsx": false,
           },
           "preserveAllComments": true,
           "transform": {
@@ -89,7 +89,7 @@ exports[`plugins/styled-components > should enable ssr option when target contai
           "parser": {
             "decorators": true,
             "syntax": "typescript",
-            "tsx": true,
+            "tsx": false,
           },
           "preserveAllComments": true,
           "transform": {
@@ -148,7 +148,7 @@ exports[`plugins/styled-components > should enable ssr option when target contai
           "parser": {
             "decorators": true,
             "syntax": "typescript",
-            "tsx": true,
+            "tsx": false,
           },
           "preserveAllComments": true,
           "transform": {

@@ -3,10 +3,17 @@
 - **类型：**
 
 ```ts
-type CssModules = {
-  auto?: boolean | RegExp | ((resourcePath: string) => boolean);
+type CSSModules = {
+  auto?:
+    | boolean
+    | RegExp
+    | ((
+        resourcePath: string,
+        resourceQuery: string,
+        resourceFragment: string,
+      ) => boolean);
   localIdentName?: string;
-  exportLocalsConvention?: CssModuleLocalsConvention;
+  exportLocalsConvention?: CSSModulesLocalsConvention;
 };
 ```
 
@@ -16,7 +23,19 @@ type CssModules = {
 
 auto 配置项允许基于文件名自动启用 CSS 模块。
 
-- **类型：** `boolean | RegExp | ((resourcePath: string) => boolean)`
+- **类型：**
+
+```ts
+type Auto =
+  | boolean
+  | RegExp
+  | ((
+      resourcePath: string,
+      resourceQuery: string,
+      resourceFragment: string,
+    ) => boolean);
+```
+
 - **默认值：** `true`
 
 类型说明：
@@ -45,7 +64,7 @@ export default {
 - **类型：**
 
 ```ts
-type CssModuleLocalsConvention =
+type CSSModulesLocalsConvention =
   | 'asIs'
   | 'camelCase'
   | 'camelCaseOnly'
@@ -113,10 +132,6 @@ console.log(styles.header);
 - `[file]` - 文件名和路径。
 - `[ext]` - 文件后缀名，包含点号。
 - `[hash:<hashDigest>:<hashDigestLength>]` - 带有哈希设置的哈希。
-
-:::tip
-在使用 Rspack 作为打包工具时, 暂不支持配置 `<hashDigest>`。
-:::
 
 ### 示例
 

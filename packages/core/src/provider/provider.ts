@@ -45,13 +45,12 @@ export const rspackProvider: RsbuildProvider = async ({
 
     async applyDefaultPlugins() {
       const allPlugins = await Promise.all([
-        import('./plugins/transition').then((m) => m.pluginTransition()),
         plugins.basic(),
         plugins.entry(),
         // plugins.cache(),
         plugins.target(),
-        import('./plugins/output').then((m) => m.pluginOutput()),
-        import('./plugins/resolve').then((m) => m.pluginResolve()),
+        plugins.output(),
+        plugins.resolve(),
         plugins.fileSize(),
         // cleanOutput plugin should before the html plugin
         plugins.cleanOutput(),
@@ -64,12 +63,12 @@ export const rspackProvider: RsbuildProvider = async ({
         plugins.moment(),
         plugins.nodeAddons(),
         plugins.define(),
-        import('./plugins/css').then((m) => m.pluginCss()),
-        import('./plugins/less').then((m) => m.pluginLess()),
-        import('./plugins/sass').then((m) => m.pluginSass()),
-        import('./plugins/minimize').then((m) => m.pluginMinimize()),
-        import('./plugins/progress').then((m) => m.pluginProgress()),
-        import('./plugins/swc').then((m) => m.pluginSwc()),
+        plugins.css(),
+        plugins.less(),
+        plugins.sass(),
+        import('../plugins/minimize').then((m) => m.pluginMinimize()),
+        import('../plugins/progress').then((m) => m.pluginProgress()),
+        import('../plugins/swc').then((m) => m.pluginSwc()),
         plugins.externals(),
         plugins.splitChunks(),
         plugins.startUrl(),
@@ -81,7 +80,7 @@ export const rspackProvider: RsbuildProvider = async ({
         plugins.server(),
         plugins.moduleFederation(),
         plugins.manifest(),
-        import('./plugins/rspackProfile').then((m) => m.pluginRspackProfile()),
+        import('../plugins/rspackProfile').then((m) => m.pluginRspackProfile()),
       ]);
 
       pluginManager.addPlugins(allPlugins);

@@ -12,9 +12,8 @@ import {
   modifyBundlerChain,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
-import { getHTMLPlugin } from '../htmlUtils';
+import { getHTMLPlugin } from '../pluginHelper';
 import type { InternalContext } from '../types';
-import { getCompiledPath } from './shared';
 
 async function modifyRspackConfig(
   context: InternalContext,
@@ -101,7 +100,6 @@ export function getChainUtils(target: RsbuildTarget): ModifyChainUtils {
     isServer: target === 'node',
     isWebWorker: target === 'web-worker',
     isServiceWorker: target === 'service-worker',
-    getCompiledPath,
     CHAIN_ID,
     HtmlPlugin: getHTMLPlugin(),
   };

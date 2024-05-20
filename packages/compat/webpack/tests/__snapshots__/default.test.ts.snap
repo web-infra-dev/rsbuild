@@ -64,7 +64,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -91,7 +91,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -118,7 +118,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -145,7 +145,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -172,7 +172,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -185,7 +185,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "config": false,
@@ -210,6 +210,75 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                     "postcssPlugin": "autoprefixer",
                     "prepare": [Function],
                   },
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
+        "test": /\\\\\\.less\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
+          },
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
+            "options": {
+              "importLoaders": 2,
+              "modules": {
+                "auto": true,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
+            "options": {
+              "postcssOptions": {
+                "config": false,
+                "plugins": [
+                  {
+                    "browsers": [
+                      "chrome >= 87",
+                      "edge >= 88",
+                      "firefox >= 78",
+                      "safari >= 14",
+                    ],
+                    "info": [Function],
+                    "options": {
+                      "flexbox": "no-2009",
+                      "overrideBrowserslist": [
+                        "chrome >= 87",
+                        "edge >= 88",
+                        "firefox >= 78",
+                        "safari >= 14",
+                      ],
+                    },
+                    "postcssPlugin": "autoprefixer",
+                    "prepare": [Function],
+                  },
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/core/compiled/less-loader",
+            "options": {
+              "implementation": "<ROOT>/packages/shared/compiled/less",
+              "lessOptions": {
+                "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/packages/compat/webpack/tests/node_modules",
                 ],
               },
               "sourceMap": false,
@@ -228,7 +297,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 3,
               "modules": {
@@ -241,7 +310,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "config": false,
@@ -272,7 +341,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
+            "loader": "<ROOT>/packages/core/compiled/resolve-url-loader",
             "options": {
               "join": [Function],
               "sourceMap": false,
@@ -283,75 +352,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "options": {
               "implementation": "<ROOT>/packages/shared/compiled/sass",
               "sourceMap": true,
-            },
-          },
-        ],
-      },
-      {
-        "resolve": {
-          "preferRelative": true,
-        },
-        "sideEffects": true,
-        "test": /\\\\\\.less\\$/,
-        "use": [
-          {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
-          },
-          {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
-            "options": {
-              "importLoaders": 2,
-              "modules": {
-                "auto": true,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
-            "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [
-                  {
-                    "browsers": [
-                      "chrome >= 87",
-                      "edge >= 88",
-                      "firefox >= 78",
-                      "safari >= 14",
-                    ],
-                    "info": [Function],
-                    "options": {
-                      "flexbox": "no-2009",
-                      "overrideBrowserslist": [
-                        "chrome >= 87",
-                        "edge >= 88",
-                        "firefox >= 78",
-                        "safari >= 14",
-                      ],
-                    },
-                    "postcssPlugin": "autoprefixer",
-                    "prepare": [Function],
-                  },
-                ],
-              },
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/shared/compiled/less-loader",
-            "options": {
-              "implementation": "<ROOT>/packages/shared/compiled/less",
-              "lessOptions": {
-                "javascriptEnabled": true,
-                "paths": [
-                  "<ROOT>/packages/compat/webpack/tests/node_modules",
-                ],
-              },
-              "sourceMap": false,
             },
           },
         ],
@@ -601,7 +601,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -628,7 +628,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -655,7 +655,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -682,7 +682,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -709,7 +709,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -722,7 +722,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "config": false,
@@ -747,6 +747,75 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                     "postcssPlugin": "autoprefixer",
                     "prepare": [Function],
                   },
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
+        "test": /\\\\\\.less\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
+          },
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
+            "options": {
+              "importLoaders": 2,
+              "modules": {
+                "auto": true,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
+            "options": {
+              "postcssOptions": {
+                "config": false,
+                "plugins": [
+                  {
+                    "browsers": [
+                      "chrome >= 87",
+                      "edge >= 88",
+                      "firefox >= 78",
+                      "safari >= 14",
+                    ],
+                    "info": [Function],
+                    "options": {
+                      "flexbox": "no-2009",
+                      "overrideBrowserslist": [
+                        "chrome >= 87",
+                        "edge >= 88",
+                        "firefox >= 78",
+                        "safari >= 14",
+                      ],
+                    },
+                    "postcssPlugin": "autoprefixer",
+                    "prepare": [Function],
+                  },
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/core/compiled/less-loader",
+            "options": {
+              "implementation": "<ROOT>/packages/shared/compiled/less",
+              "lessOptions": {
+                "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/packages/compat/webpack/tests/node_modules",
                 ],
               },
               "sourceMap": false,
@@ -765,7 +834,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 3,
               "modules": {
@@ -778,7 +847,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
+            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
             "options": {
               "postcssOptions": {
                 "config": false,
@@ -809,7 +878,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
+            "loader": "<ROOT>/packages/core/compiled/resolve-url-loader",
             "options": {
               "join": [Function],
               "sourceMap": false,
@@ -820,75 +889,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "options": {
               "implementation": "<ROOT>/packages/shared/compiled/sass",
               "sourceMap": true,
-            },
-          },
-        ],
-      },
-      {
-        "resolve": {
-          "preferRelative": true,
-        },
-        "sideEffects": true,
-        "test": /\\\\\\.less\\$/,
-        "use": [
-          {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/mini-css-extract-plugin/dist/loader.js",
-          },
-          {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
-            "options": {
-              "importLoaders": 2,
-              "modules": {
-                "auto": true,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/shared/compiled/postcss-loader",
-            "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [
-                  {
-                    "browsers": [
-                      "chrome >= 87",
-                      "edge >= 88",
-                      "firefox >= 78",
-                      "safari >= 14",
-                    ],
-                    "info": [Function],
-                    "options": {
-                      "flexbox": "no-2009",
-                      "overrideBrowserslist": [
-                        "chrome >= 87",
-                        "edge >= 88",
-                        "firefox >= 78",
-                        "safari >= 14",
-                      ],
-                    },
-                    "postcssPlugin": "autoprefixer",
-                    "prepare": [Function],
-                  },
-                ],
-              },
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/shared/compiled/less-loader",
-            "options": {
-              "implementation": "<ROOT>/packages/shared/compiled/less",
-              "lessOptions": {
-                "javascriptEnabled": true,
-                "paths": [
-                  "<ROOT>/packages/compat/webpack/tests/node_modules",
-                ],
-              },
-              "sourceMap": false,
             },
           },
         ],
@@ -1172,7 +1172,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -1199,7 +1199,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -1226,7 +1226,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -1253,7 +1253,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -1273,7 +1273,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.node\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/core/dist/rspack/transformRawLoader",
+            "loader": "<ROOT>/packages/core/dist/transformRawLoader.cjs",
             "options": {
               "id": "rsbuild-transform-0",
             },
@@ -1288,10 +1288,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "@rsbuild/shared/ignore-css-loader",
+            "loader": "<ROOT>/packages/core/dist/ignoreCssLoader.cjs",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -1311,53 +1311,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           "preferRelative": true,
         },
         "sideEffects": true,
-        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
-        "use": [
-          {
-            "loader": "@rsbuild/shared/ignore-css-loader",
-          },
-          {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
-            "options": {
-              "importLoaders": 3,
-              "modules": {
-                "auto": true,
-                "exportLocalsConvention": "camelCase",
-                "exportOnlyLocals": true,
-                "localIdentName": "[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
-            "options": {
-              "join": [Function],
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/shared/compiled/sass-loader",
-            "options": {
-              "implementation": "<ROOT>/packages/shared/compiled/sass",
-              "sourceMap": true,
-            },
-          },
-        ],
-      },
-      {
-        "resolve": {
-          "preferRelative": true,
-        },
-        "sideEffects": true,
         "test": /\\\\\\.less\\$/,
         "use": [
           {
-            "loader": "@rsbuild/shared/ignore-css-loader",
+            "loader": "<ROOT>/packages/core/dist/ignoreCssLoader.cjs",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 2,
               "modules": {
@@ -1371,7 +1331,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/less-loader",
+            "loader": "<ROOT>/packages/core/compiled/less-loader",
             "options": {
               "implementation": "<ROOT>/packages/shared/compiled/less",
               "lessOptions": {
@@ -1381,6 +1341,46 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 ],
               },
               "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
+        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/dist/ignoreCssLoader.cjs",
+          },
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
+            "options": {
+              "importLoaders": 3,
+              "modules": {
+                "auto": true,
+                "exportLocalsConvention": "camelCase",
+                "exportOnlyLocals": true,
+                "localIdentName": "[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/core/compiled/resolve-url-loader",
+            "options": {
+              "join": [Function],
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/sass-loader",
+            "options": {
+              "implementation": "<ROOT>/packages/shared/compiled/sass",
+              "sourceMap": true,
             },
           },
         ],
@@ -1529,7 +1529,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -1556,7 +1556,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -1583,7 +1583,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -1610,7 +1610,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
             "parser": {
               "dataUrlCondition": {
-                "maxSize": 10000,
+                "maxSize": 4096,
               },
             },
             "type": "asset",
@@ -1634,10 +1634,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "@rsbuild/shared/ignore-css-loader",
+            "loader": "<ROOT>/packages/core/dist/ignoreCssLoader.cjs",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -1657,53 +1657,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           "preferRelative": true,
         },
         "sideEffects": true,
-        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
-        "use": [
-          {
-            "loader": "@rsbuild/shared/ignore-css-loader",
-          },
-          {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
-            "options": {
-              "importLoaders": 3,
-              "modules": {
-                "auto": true,
-                "exportLocalsConvention": "camelCase",
-                "exportOnlyLocals": true,
-                "localIdentName": "[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/shared/compiled/resolve-url-loader",
-            "options": {
-              "join": [Function],
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/shared/compiled/sass-loader",
-            "options": {
-              "implementation": "<ROOT>/packages/shared/compiled/sass",
-              "sourceMap": true,
-            },
-          },
-        ],
-      },
-      {
-        "resolve": {
-          "preferRelative": true,
-        },
-        "sideEffects": true,
         "test": /\\\\\\.less\\$/,
         "use": [
           {
-            "loader": "@rsbuild/shared/ignore-css-loader",
+            "loader": "<ROOT>/packages/core/dist/ignoreCssLoader.cjs",
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
               "importLoaders": 2,
               "modules": {
@@ -1717,7 +1677,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
           },
           {
-            "loader": "<ROOT>/packages/shared/compiled/less-loader",
+            "loader": "<ROOT>/packages/core/compiled/less-loader",
             "options": {
               "implementation": "<ROOT>/packages/shared/compiled/less",
               "lessOptions": {
@@ -1727,6 +1687,46 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 ],
               },
               "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "sideEffects": true,
+        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/dist/ignoreCssLoader.cjs",
+          },
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader",
+            "options": {
+              "importLoaders": 3,
+              "modules": {
+                "auto": true,
+                "exportLocalsConvention": "camelCase",
+                "exportOnlyLocals": true,
+                "localIdentName": "[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/core/compiled/resolve-url-loader",
+            "options": {
+              "join": [Function],
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "<ROOT>/packages/shared/compiled/sass-loader",
+            "options": {
+              "implementation": "<ROOT>/packages/shared/compiled/sass",
+              "sourceMap": true,
             },
           },
         ],

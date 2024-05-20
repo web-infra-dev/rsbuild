@@ -1,3 +1,7 @@
-import { bundleMjsOnlyConfig } from '../../scripts/modern.base.config';
+import { defineConfig, moduleTools } from '@modern-js/module-tools';
+import { esmBuildConfig } from '../../scripts/modern.base.config';
 
-export default bundleMjsOnlyConfig;
+export default defineConfig({
+  plugins: [moduleTools()],
+  buildConfig: [esmBuildConfig],
+});

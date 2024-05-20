@@ -3,14 +3,8 @@ import type {
   CreateRsbuildOptions,
   RsbuildInstance,
   RsbuildPlugin,
-  RsbuildProvider,
   RspackConfig,
 } from '@rsbuild/shared';
-
-const getRspackProvider = async () => {
-  const { rspackProvider } = await import('@rsbuild/core/internal');
-  return rspackProvider;
-};
 
 export function baseMatchLoader({
   config,
@@ -71,25 +65,13 @@ export async function createStubRsbuild({
 }: CreateRsbuildOptions & {
   plugins?: RsbuildPlugin[];
 }): Promise<
-  Pick<
-    RsbuildInstance,
-    | 'build'
-    | 'createCompiler'
-    | 'inspectConfig'
-    | 'startDevServer'
-    | 'context'
-    | 'addPlugins'
-    | 'removePlugins'
-    | 'isPluginExists'
-    | 'initConfigs'
-  > & {
+  RsbuildInstance & {
     unwrapConfig: () => Promise<Record<string, any>>;
     matchLoader: (loader: string, testFile: string) => Promise<boolean>;
     matchBundlerPlugin: (name: string) => Promise<BundlerPluginInstance | null>;
   }
 > {
-  const { pick } = await import('@rsbuild/shared');
-  const { createPluginManager } = await import('@rsbuild/core/internal');
+  const { createRsbuild } = await import('@rsbuild/core');
   const rsbuildOptions: Required<CreateRsbuildOptions> = {
     cwd: process.env.REBUILD_TEST_SUITE_CWD || process.cwd(),
     rsbuildConfig,
@@ -104,32 +86,16 @@ export async function createStubRsbuild({
     };
   }
 
-  const provider = (
-    rsbuildConfig.provider ? rsbuildConfig.provider : await getRspackProvider()
-  ) as RsbuildProvider;
-
-  const pluginManager = createPluginManager();
-  const {
-    build,
-    publicContext,
-    inspectConfig,
-    createCompiler,
-    startDevServer,
-    applyDefaultPlugins,
-    initConfigs,
-  } = await provider({
-    pluginManager,
-    rsbuildOptions,
-  });
+  const rsbuild = await createRsbuild(rsbuildOptions);
 
   if (plugins) {
-    pluginManager.addPlugins(plugins);
-  } else {
-    await applyDefaultPlugins(pluginManager);
+    // remove all builtin plugins
+    rsbuild.removePlugins(rsbuild.getPlugins().map((item) => item.name));
+    rsbuild.addPlugins(plugins);
   }
 
   const unwrapConfig = async () => {
-    const configs = await initConfigs();
+    const configs = await rsbuild.initConfigs();
     return configs[0];
   };
 
@@ -145,14 +111,8 @@ export async function createStubRsbuild({
     baseMatchLoader({ config: await unwrapConfig(), loader, testFile });
 
   return {
-    ...pick(pluginManager, ['addPlugins', 'removePlugins', 'isPluginExists']),
-    build,
-    createCompiler,
-    inspectConfig,
-    startDevServer,
-    context: publicContext,
+    ...rsbuild,
     matchLoader,
-    initConfigs,
     unwrapConfig,
     matchBundlerPlugin,
   };

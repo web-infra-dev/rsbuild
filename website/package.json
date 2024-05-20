@@ -10,9 +10,9 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rspress/plugin-rss": "^1.20.1",
+    "@rspress/plugin-rss": "0.0.0-next-20240516095608",
     "@types/node": "18.x",
-    "@types/react": "^18.3.1",
+    "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
     "fast-glob": "^3.3.2",
     "react": "^18.3.1",
@@ -20,7 +20,7 @@
     "rsbuild-plugin-google-analytics": "1.0.0",
     "rsbuild-plugin-open-graph": "1.0.0",
     "rsfamily-nav-icon": "^1.0.2",
-    "rspress": "^1.20.1",
+    "rspress": "0.0.0-next-20240516095608",
     "rspress-plugin-font-open-sans": "1.0.0"
   }
 }

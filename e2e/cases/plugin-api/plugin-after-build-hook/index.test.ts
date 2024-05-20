@@ -1,5 +1,6 @@
 import path from 'node:path';
-import { expect, test } from '@playwright/test';
+import { rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
 import { fse } from '@rsbuild/shared';
 
@@ -29,21 +30,24 @@ const plugin: RsbuildPlugin = {
   },
 };
 
-test('should run onAfterBuild hooks correctly when have multiple targets', async () => {
-  fse.removeSync(distFile);
+rspackOnlyTest(
+  'should run onAfterBuild hooks correctly when have multiple targets',
+  async () => {
+    fse.removeSync(distFile);
 
-  const rsbuild = await createRsbuild({
-    cwd: __dirname,
-    rsbuildConfig: {
-      plugins: [plugin],
-      output: {
-        targets: ['web', 'node'],
+    const rsbuild = await createRsbuild({
+      cwd: __dirname,
+      rsbuildConfig: {
+        plugins: [plugin],
+        output: {
+          targets: ['web', 'node'],
+        },
       },
-    },
-  });
+    });
 
-  await rsbuild.build();
-  write('2');
+    await rsbuild.build();
+    write('2');
 
-  expect(fse.readFileSync(distFile, 'utf-8').split(',')).toEqual(['1', '2']);
-});
+    expect(fse.readFileSync(distFile, 'utf-8').split(',')).toEqual(['1', '2']);
+  },
+);

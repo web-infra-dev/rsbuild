@@ -1,16 +1,32 @@
-import fs from 'node:fs';
 // @ts-check
 import { join } from 'node:path';
+import fse from 'fs-extra';
 
 // The package size of `schema-utils` is large, and validate has a performance overhead of tens of ms.
 // So we skip the validation and let TypeScript to ensure type safety.
 const writeEmptySchemaUtils = (task) => {
   const schemaUtilsPath = join(task.distPath, 'schema-utils.js');
-  fs.writeFileSync(schemaUtilsPath, 'module.exports.validate = () => {};');
+  fse.writeFileSync(schemaUtilsPath, 'module.exports.validate = () => {};');
 };
+
+function replaceFileContent(filePath, replaceFn) {
+  const content = fse.readFileSync(filePath, 'utf-8');
+  const newContent = replaceFn(content);
+  if (newContent !== content) {
+    fse.writeFileSync(filePath, newContent);
+  }
+}
 
 /** @type {import('prebundle').Config} */
 export default {
+  externals: {
+    // External caniuse-lite data, so users can update it manually.
+    'caniuse-lite': 'caniuse-lite',
+    '/^caniuse-lite(/.*)/': 'caniuse-lite$1',
+    webpack: 'webpack',
+    postcss: 'postcss',
+    typescript: 'typescript',
+  },
   dependencies: [
     'open',
     'commander',
@@ -25,6 +41,10 @@ export default {
       externals: {
         picocolors: '@rsbuild/shared/picocolors',
       },
+    },
+    {
+      name: 'postcss-value-parser',
+      ignoreDts: true,
     },
     {
       name: 'sirv',
@@ -48,6 +68,70 @@ export default {
       },
       ignoreDts: true,
       afterBundle: writeEmptySchemaUtils,
+    },
+    {
+      name: 'style-loader',
+      ignoreDts: true,
+      afterBundle: (task) => {
+        fse.copySync(
+          join(task.depPath, 'dist/runtime'),
+          join(task.distPath, 'runtime'),
+        );
+      },
+    },
+    {
+      name: 'less-loader',
+      ignoreDts: true,
+      externals: {
+        less: '@rsbuild/shared/less',
+      },
+    },
+    {
+      name: 'css-loader',
+      ignoreDts: true,
+      externals: {
+        'postcss-value-parser': '../postcss-value-parser',
+        semver: '@rsbuild/shared/semver',
+      },
+    },
+    {
+      name: 'postcss-loader',
+      externals: {
+        jiti: '@rsbuild/shared/jiti',
+        semver: '@rsbuild/shared/semver',
+      },
+      ignoreDts: true,
+    },
+    {
+      name: 'postcss-load-config',
+      externals: {
+        yaml: '@rsbuild/shared/yaml',
+        '@rsbuild/shared/jiti': '@rsbuild/shared/jiti',
+      },
+      ignoreDts: true,
+      // this is a trick to avoid ncc compiling the dynamic import syntax
+      // https://github.com/vercel/ncc/issues/935
+      beforeBundle(task) {
+        replaceFileContent(join(task.depPath, 'src/req.js'), (content) =>
+          content
+            .replaceAll('await import', 'await __import')
+            .replaceAll(`import('jiti')`, `import('@rsbuild/shared/jiti')`),
+        );
+      },
+      afterBundle(task) {
+        replaceFileContent(
+          join(task.distPath, 'index.js'),
+          (content) =>
+            `${content.replaceAll('await __import', 'await import')}`,
+        );
+      },
+    },
+    {
+      name: 'resolve-url-loader',
+      ignoreDts: true,
+      externals: {
+        'loader-utils': '@rsbuild/shared/loader-utils2',
+      },
     },
   ],
 };

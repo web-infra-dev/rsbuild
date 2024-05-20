@@ -4,13 +4,12 @@ import type {
   Compiler as WebpackCompiler,
   MultiCompiler as WebpackMultiCompiler,
 } from 'webpack';
-import deepmerge from '../compiled/deepmerge';
-import fse from '../compiled/fs-extra';
-import color from '../compiled/picocolors';
+import deepmerge from '../compiled/deepmerge/index.js';
+import fse from '../compiled/fs-extra/index.js';
+import color from '../compiled/picocolors/index.js';
 import { DEFAULT_ASSET_PREFIX } from './constants';
 import type {
   CacheGroups,
-  CompilerTapFn,
   ModifyChainUtils,
   MultiStats,
   NodeEnv,
@@ -72,17 +71,6 @@ export interface AwaitableGetter<T> extends PromiseLike<T[]> {
   promises: Promise<T>[];
 }
 
-/**
- * Make Awaitable.
- */
-export const awaitableGetter = <T>(
-  promises: Promise<T>[],
-): AwaitableGetter<T> => {
-  const then: PromiseLike<T[]>['then'] = (...args) =>
-    Promise.all(promises).then(...args);
-  return { then, promises };
-};
-
 export const getJsSourceMap = (config: NormalizedConfig) => {
   const { sourceMap } = config.output;
   if (sourceMap.js === undefined) {
@@ -110,13 +98,6 @@ export function isServerTarget(target: RsbuildTarget[]) {
   );
 }
 
-export function resolvePackage(loader: string, dirname: string) {
-  // Vitest do not support require.resolve to source file
-  return process.env.VITEST
-    ? loader
-    : require.resolve(loader, { paths: [dirname] });
-}
-
 export const getCoreJsVersion = (corejsPkgPath: string) => {
   try {
     const { version } = fse.readJSONSync(corejsPkgPath);
@@ -126,15 +107,6 @@ export const getCoreJsVersion = (corejsPkgPath: string) => {
     return '3';
   }
 };
-
-/**
- * ensure absolute file path.
- * @param base - Base path to resolve relative from.
- * @param filePath - Absolute or relative file path.
- * @returns Resolved absolute file path.
- */
-export const ensureAbsolutePath = (base: string, filePath: string): string =>
-  path.isAbsolute(filePath) ? filePath : path.resolve(base, filePath);
 
 export const castArray = <T>(arr?: T | T[]): T[] => {
   if (arr === undefined) {
@@ -316,7 +288,7 @@ export const isClientCompiler = (compiler: {
   return false;
 };
 
-const isNodeCompiler = (compiler: {
+export const isNodeCompiler = (compiler: {
   options: {
     target?: Compiler['options']['target'];
   };
@@ -328,36 +300,6 @@ const isNodeCompiler = (compiler: {
   }
 
   return false;
-};
-
-type ServerCallbacks = {
-  onInvalid: () => void;
-  onDone: (stats: any) => void;
-};
-
-export const setupServerHooks = (
-  compiler: {
-    options: {
-      target?: Compiler['options']['target'];
-    };
-    hooks: {
-      compile: CompilerTapFn<ServerCallbacks['onInvalid']>;
-      invalid: CompilerTapFn<ServerCallbacks['onInvalid']>;
-      done: CompilerTapFn<ServerCallbacks['onDone']>;
-    };
-  },
-  hookCallbacks: ServerCallbacks,
-) => {
-  // TODO: node ssr HMR is not supported yet
-  if (isNodeCompiler(compiler)) {
-    return;
-  }
-
-  const { compile, invalid, done } = compiler.hooks;
-
-  compile.tap('rsbuild-dev-server', hookCallbacks.onInvalid);
-  invalid.tap('rsbuild-dev-server', hookCallbacks.onInvalid);
-  done.tap('rsbuild-dev-server', hookCallbacks.onDone);
 };
 
 export const isMultiCompiler = <

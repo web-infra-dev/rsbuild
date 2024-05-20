@@ -1,7 +1,7 @@
 import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginCss } from '../../core/src/provider/plugins/css';
-import { pluginLess } from '../../core/src/provider/plugins/less';
-import { pluginSass } from '../../core/src/provider/plugins/sass';
+import { pluginCss } from '../../core/src/plugins/css';
+import { pluginLess } from '../../core/src/plugins/less';
+import { pluginSass } from '../../core/src/plugins/sass';
 import { pluginRem } from '../src';
 
 describe('plugin-rem', () => {

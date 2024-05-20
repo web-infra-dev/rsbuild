@@ -3,10 +3,17 @@
 - **Type:**
 
 ```ts
-type CssModules = {
-  auto?: boolean | RegExp | ((resourcePath: string) => boolean);
+type CSSModules = {
+  auto?:
+    | boolean
+    | RegExp
+    | ((
+        resourcePath: string,
+        resourceQuery: string,
+        resourceFragment: string,
+      ) => boolean);
   localIdentName?: string;
-  exportLocalsConvention?: CssModuleLocalsConvention;
+  exportLocalsConvention?: CSSModulesLocalsConvention;
 };
 ```
 
@@ -16,7 +23,19 @@ For custom CSS Modules configuration.
 
 The `auto` configuration option allows CSS Modules to be automatically enabled based on their filenames.
 
-- **Type:** `boolean | RegExp | ((resourcePath: string) => boolean)`
+- **Type:**
+
+```ts
+type Auto =
+  | boolean
+  | RegExp
+  | ((
+      resourcePath: string,
+      resourceQuery: string,
+      resourceFragment: string,
+    ) => boolean);
+```
+
 - **Default:** `true`
 
 Type description:
@@ -45,7 +64,7 @@ Style of exported class names.
 - **Type:**
 
 ```ts
-type CssModuleLocalsConvention =
+type CSSModulesLocalsConvention =
   | 'asIs'
   | 'camelCase'
   | 'camelCaseOnly'
@@ -113,10 +132,6 @@ You can use the following template strings in `localIdentName`:
 - `[file]` - filename and path.
 - `[ext]` - extension with leading dot.
 - `[hash:<hashDigest>:<hashDigestLength>]`: hash with hash settings.
-
-:::tip
-When using Rspack as the bundler, currently does not support custom `<hashDigest>`.
-:::
 
 ### Example
 

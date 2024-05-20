@@ -1,4 +1,4 @@
-import type WebpackChain from '../../compiled/webpack-chain';
+import type WebpackChain from '../../compiled/webpack-chain/index.js';
 
 export type { WebpackChain };
 
@@ -31,14 +31,8 @@ export type FileFilterUtil = (items: ArrayOrNot<string | RegExp>) => void;
 export type SharedCompiledPkgNames =
   | 'sass'
   | 'less'
-  | 'css-loader'
-  | 'postcss-loader'
   | 'autoprefixer'
-  | 'sass-loader'
-  | 'style-loader'
-  | 'less-loader'
-  | 'yaml-loader'
-  | 'resolve-url-loader';
+  | 'sass-loader';
 
 export type CompilerTapFn<
   CallBack extends (...args: any[]) => void = () => void,

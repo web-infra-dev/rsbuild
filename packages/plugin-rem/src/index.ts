@@ -1,5 +1,5 @@
-import type { RsbuildPlugin } from '@rsbuild/core';
-import { type PostCSSPlugin, getDistPath } from '@rsbuild/shared';
+import type { PostCSSPlugin, RsbuildPlugin } from '@rsbuild/core';
+import { getDistPath } from '@rsbuild/shared';
 import { cloneDeep } from '@rsbuild/shared';
 import type { PluginRemOptions, PxToRemOptions } from './types';
 

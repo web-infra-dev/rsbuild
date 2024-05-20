@@ -1,11 +1,34 @@
 import path from 'node:path';
-import type { RsbuildConfig, RsbuildPluginAPI, Rspack } from '@rsbuild/core';
-import {
-  SCRIPT_REGEX,
-  isUsingHMR,
-  modifySwcLoaderOptions,
-} from '@rsbuild/shared';
+import type {
+  BundlerChain,
+  ChainIdentifier,
+  RsbuildConfig,
+  RsbuildPluginAPI,
+  Rspack,
+} from '@rsbuild/core';
+import { SCRIPT_REGEX, deepmerge, isUsingHMR } from '@rsbuild/shared';
 import type { PluginReactOptions } from '.';
+
+const modifySwcLoaderOptions = ({
+  chain,
+  CHAIN_ID,
+  modifier,
+}: {
+  chain: BundlerChain;
+  CHAIN_ID: ChainIdentifier;
+  modifier: (config: Rspack.SwcLoaderOptions) => Rspack.SwcLoaderOptions;
+}) => {
+  const ruleIds = [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI];
+
+  for (const ruleId of ruleIds) {
+    if (chain.module.rules.has(ruleId)) {
+      const rule = chain.module.rule(ruleId);
+      if (rule.uses.has(CHAIN_ID.USE.SWC)) {
+        rule.use(CHAIN_ID.USE.SWC).tap(modifier);
+      }
+    }
+  }
+};
 
 export const applyBasicReactSupport = (
   api: RsbuildPluginAPI,
@@ -25,14 +48,22 @@ export const applyBasicReactSupport = (
 
     modifySwcLoaderOptions({
       chain,
+      CHAIN_ID,
       modifier: (opts) => {
-        opts.jsc ??= {};
-        opts.jsc.transform ??= {};
-        opts.jsc.transform.react = {
-          ...opts.jsc.transform.react,
-          ...reactOptions,
+        const extraOptions: Rspack.SwcLoaderOptions = {
+          jsc: {
+            parser: {
+              syntax: 'typescript',
+              // enable supports for React JSX/TSX compilation
+              tsx: true,
+            },
+            transform: {
+              react: reactOptions,
+            },
+          },
         };
-        return opts;
+
+        return deepmerge(opts, extraOptions);
       },
     });
 

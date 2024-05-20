@@ -1,7 +1,4 @@
-import {
-  type InternalContext,
-  getChainUtils as getBaseChainUtils,
-} from '@rsbuild/core/internal';
+import { __internalHelper } from '@rsbuild/core';
 import {
   type BundlerChain,
   type ModifyWebpackChainUtils,
@@ -15,7 +12,10 @@ import {
   modifyBundlerChain,
 } from '@rsbuild/shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
-import { getCompiledPath } from './shared';
+import {
+  type InternalContext,
+  getChainUtils as getBaseChainUtils,
+} from './shared';
 import type { WebpackConfig } from './types';
 
 async function modifyWebpackChain(
@@ -69,7 +69,6 @@ async function getChainUtils(
   target: RsbuildTarget,
 ): Promise<ModifyWebpackChainUtils> {
   const { default: webpack } = await import('webpack');
-  const { getHTMLPlugin } = await import('@rsbuild/core/internal');
   const nameMap = {
     web: 'client',
     node: 'server',
@@ -81,8 +80,7 @@ async function getChainUtils(
     ...getBaseChainUtils(target),
     name: nameMap[target] || '',
     webpack,
-    getCompiledPath,
-    HtmlWebpackPlugin: getHTMLPlugin(),
+    HtmlWebpackPlugin: __internalHelper.getHTMLPlugin(),
   };
 }
 
@@ -142,13 +140,14 @@ export async function generateWebpackConfig({
   context: InternalContext;
 }) {
   const chainUtils = await getChainUtils(target);
+  const { default: webpack } = await import('webpack');
   const {
     BannerPlugin,
     DefinePlugin,
     IgnorePlugin,
     ProvidePlugin,
     HotModuleReplacementPlugin,
-  } = await import('webpack');
+  } = webpack;
 
   const bundlerChain = await modifyBundlerChain(context, {
     ...chainUtils,

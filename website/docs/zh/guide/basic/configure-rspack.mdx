@@ -2,9 +2,23 @@
 
 Rsbuild 支持直接修改 Rspack 配置对象，也支持通过 bundler-chain 的形式来修改 Rsbuild 内置的 Rspack 配置。
 
-## 修改 Rspack 配置对象
+## 修改配置对象
 
-你可以使用 Rsbuild 的 `tools.rspack` 选项来修改 Rspack 配置对象，请查看 [tools.rspack 文档](/config/tools/rspack) 来了解完整用法。
+你可以使用 Rsbuild 的 [tools.rspack](/config/tools/rspack) 选项来修改 Rspack 配置对象。
+
+比如注册 Rspack 插件或 webpack 插件：
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      plugins: [SomeWebpackPlugin()],
+    },
+  },
+};
+```
+
+比如以函数的形式修改 Rspack 配置：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -19,13 +33,13 @@ export default {
 };
 ```
 
+> 请查看 [tools.rspack 文档](/config/tools/rspack) 来了解完整用法。
+
 ## 使用 Bundler Chain
 
 import BundlerChain from '@zh/shared/bundlerChain.mdx';
 
 <BundlerChain />
-
-相较于直接修改 Rspack 配置对象，bundler-chain 不仅支持链式调用，并且能够基于 id 来修改内置的 rule 或 plugin.
 
 ### tools.bundlerChain
 

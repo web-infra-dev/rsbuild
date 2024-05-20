@@ -1,4 +1,3 @@
-import { SCRIPT_REGEX } from '@rsbuild/shared';
 import { createStubRsbuild } from '@scripts/test-helper';
 import { describe, expect, it, vi } from 'vitest';
 import { pluginReact } from '../src';

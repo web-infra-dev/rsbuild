@@ -23,6 +23,7 @@
   "plugin-styled-components",
   "plugin-check-syntax",
   "plugin-css-minimizer",
+  "plugin-typed-css-modules",
   "plugin-pug",
   "plugin-rem",
   "plugin-umd",

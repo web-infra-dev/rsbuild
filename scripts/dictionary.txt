@@ -87,6 +87,7 @@ speedscope
 srcset
 stacktracey
 styl
+stylex
 subdir
 subpage
 subresource

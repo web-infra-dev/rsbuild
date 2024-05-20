@@ -1,4 +1,4 @@
-import type { CrossOrigin } from '@rsbuild/shared';
+import type { CrossOrigin } from '@rsbuild/core';
 
 export type PluginAssetsRetryOptions = {
   /**

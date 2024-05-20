@@ -45,14 +45,8 @@ export function pluginStylus(options?: PluginStylusOptions): RsbuildPlugin {
           .rule(utils.CHAIN_ID.RULE.STYLUS)
           .test(STYLUS_REGEX);
 
-        const { bundlerType } = api.context;
-        const { applyBaseCSSRule } = await import(
-          bundlerType === 'webpack'
-            ? '@rsbuild/webpack/plugin-css'
-            : '@rsbuild/core/internal'
-        );
-
-        await applyBaseCSSRule({
+        const { __internalHelper } = await import('@rsbuild/core');
+        await __internalHelper.applyCSSRule({
           rule,
           config,
           context: api.context,
@@ -64,15 +58,6 @@ export function pluginStylus(options?: PluginStylusOptions): RsbuildPlugin {
           .use(utils.CHAIN_ID.USE.STYLUS)
           .loader(require.resolve('stylus-loader'))
           .options(mergedOptions);
-      });
-
-      api.modifyRspackConfig(async (rspackConfig) => {
-        const { applyCSSModuleRule } = await import('@rsbuild/core/internal');
-
-        const config = api.getNormalizedConfig();
-        const rules = rspackConfig.module?.rules;
-
-        applyCSSModuleRule(rules, STYLUS_REGEX, config);
       });
     },
   };

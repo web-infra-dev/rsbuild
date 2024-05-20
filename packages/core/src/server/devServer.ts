@@ -1,25 +1,30 @@
 import fs from 'node:fs';
 import {
-  type CreateDevMiddlewareReturns,
   type CreateDevServerOptions,
   ROOT_DIST_DIR,
   type RsbuildDevServer,
+  type Rspack,
   type StartDevServerOptions,
   type StartServerResult,
   debug,
-  getAddressUrls,
   getNodeEnv,
   getPublicPathFromCompiler,
   isMultiCompiler,
   setNodeEnv,
 } from '@rsbuild/shared';
 import connect from '@rsbuild/shared/connect';
+import type { CreateDevMiddlewareReturns } from '../provider/createCompiler';
 import type { InternalContext } from '../types';
 import {
   type RsbuildDevMiddlewareOptions,
   getMiddlewares,
 } from './getDevMiddlewares';
-import { formatRoutes, getDevOptions, printServerURLs } from './helper';
+import {
+  formatRoutes,
+  getAddressUrls,
+  getDevOptions,
+  printServerURLs,
+} from './helper';
 import { createHttpServer } from './httpServer';
 import { notFoundMiddleware } from './middlewares';
 import { onBeforeRestartServer } from './restart';
@@ -66,7 +71,7 @@ export async function createDevServer<
     https,
   };
 
-  let outputFileSystem = fs;
+  let outputFileSystem: Rspack.OutputFileSystem = fs;
 
   const startCompile: () => Promise<
     RsbuildDevMiddlewareOptions['compileMiddlewareAPI']
@@ -91,9 +96,10 @@ export async function createDevServer<
 
     compilerDevMiddleware.init();
 
-    outputFileSystem = isMultiCompiler(compiler)
-      ? compiler.compilers[0].outputFileSystem
-      : compiler.outputFileSystem;
+    outputFileSystem =
+      (isMultiCompiler(compiler)
+        ? compiler.compilers[0].outputFileSystem
+        : compiler.outputFileSystem) || fs;
 
     return {
       middleware: compilerDevMiddleware.middleware,

@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import fse from '../compiled/fs-extra';
+import fse from '../compiled/fs-extra/index.js';
 import { logger } from './logger';
 import type {
   InspectConfigOptions,
@@ -70,7 +70,9 @@ export async function outputInspectConfigFiles({
 }
 
 export async function stringifyConfig(config: unknown, verbose?: boolean) {
-  const { default: WebpackChain } = await import('../compiled/webpack-chain');
+  const { default: WebpackChain } = await import(
+    '../compiled/webpack-chain/index.js'
+  );
 
   // webpackChain.toString can be used as a common stringify method
   const stringify = WebpackChain.toString as (
@@ -80,20 +82,6 @@ export async function stringifyConfig(config: unknown, verbose?: boolean) {
 
   return stringify(config as any, { verbose });
 }
-
-export const getDefaultStyledComponentsConfig = (
-  isProd: boolean,
-  ssr: boolean,
-) => {
-  return {
-    ssr,
-    // "pure" is used to improve dead code elimination in production.
-    // we don't need to enable it in development because it will slow down the build process.
-    pure: isProd,
-    displayName: true,
-    transpileTemplateLiterals: true,
-  };
-};
 
 /**
  * Omit unused keys from Rsbuild config passed by user

@@ -1,21 +1,20 @@
+import { type Rspack, logger } from '@rsbuild/core';
+import {
+  type RspackConfig,
+  type Stats,
+  debug,
+  isDev,
+  onCompileDone,
+} from '@rsbuild/shared';
+// @ts-expect-error
+import WebpackMultiStats from 'webpack/lib/MultiStats.js';
+import { type InitConfigsOptions, initConfigs } from './initConfigs';
 import {
   type InternalContext,
   formatStats,
   getDevMiddleware,
   getStatsOptions,
-} from '@rsbuild/core/internal';
-import {
-  type Rspack,
-  type RspackConfig,
-  type Stats,
-  debug,
-  isDev,
-  logger,
-  onCompileDone,
-} from '@rsbuild/shared';
-// @ts-expect-error
-import WebpackMultiStats from 'webpack/lib/MultiStats';
-import { type InitConfigsOptions, initConfigs } from './initConfigs';
+} from './shared';
 import type { WebpackConfig } from './types';
 
 export async function createCompiler({
@@ -89,7 +88,7 @@ export async function createDevMiddleware(
   }
 
   return {
-    devMiddleware: getDevMiddleware(compiler),
+    devMiddleware: await getDevMiddleware(compiler),
     compiler,
   };
 }

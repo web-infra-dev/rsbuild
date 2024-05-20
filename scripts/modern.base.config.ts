@@ -1,16 +1,23 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import {
+  type CliPlugin,
+  type ModuleTools,
   type PartialBaseBuildConfig,
   defineConfig,
   moduleTools,
 } from '@modern-js/module-tools';
 
-const define = {
+export const define = {
   RSBUILD_VERSION: require('../packages/core/package.json').version,
 };
 
-const BUILD_TARGET = 'es2020' as const;
+export const BUILD_TARGET = {
+  node: 'es2020',
+  client: 'es2017',
+} as const;
 
-const requireShim = {
+export const requireShim = {
   // use import.meta['url'] to bypass bundle-require replacement of import.meta.url
   js: `import { createRequire } from 'module';
 var require = createRequire(import.meta['url']);\n`,
@@ -21,74 +28,70 @@ export const baseBuildConfig = defineConfig({
   buildConfig: {
     buildType: 'bundleless',
     format: 'cjs',
-    target: BUILD_TARGET,
+    target: BUILD_TARGET.node,
     define,
-  },
-});
-
-export const bundleMjsOnlyConfig = defineConfig({
-  plugins: [moduleTools()],
-  buildConfig: {
-    buildType: 'bundle',
-    format: 'esm',
-    target: BUILD_TARGET,
-    define,
-    autoExtension: true,
-    shims: true,
-    banner: requireShim,
   },
 });
 
 export default baseBuildConfig;
 
-const externals = ['@rsbuild/core', /[\\/]compiled[\\/]/];
-
-export const buildConfigWithMjs: PartialBaseBuildConfig[] = [
-  {
-    format: 'cjs',
-    target: BUILD_TARGET,
-    define,
-    autoExtension: true,
-    externals,
-    dts: {
-      respectExternal: false,
-    },
-  },
-  {
-    format: 'esm',
-    target: BUILD_TARGET,
-    dts: false,
-    define,
-    autoExtension: true,
-    shims: true,
-    externals,
-    banner: requireShim,
-  },
+export const commonExternals = [
+  'webpack',
+  '@rspack/core',
+  '@rsbuild/core',
+  /[\\/]compiled[\\/]/,
+  /node:/,
 ];
 
-export const configWithMjs = defineConfig({
-  plugins: [moduleTools()],
-  buildConfig: buildConfigWithMjs,
-});
+export const esmBuildConfig: PartialBaseBuildConfig = {
+  format: 'esm',
+  target: BUILD_TARGET.node,
+  define,
+  autoExtension: true,
+  shims: true,
+  externals: commonExternals,
+  banner: requireShim,
+};
 
-export const configWithEsm = defineConfig({
-  plugins: [moduleTools()],
-  buildConfig: [
-    {
-      buildType: 'bundleless',
-      format: 'cjs',
-      target: BUILD_TARGET,
-      outDir: './dist/cjs',
-      dts: {
-        distPath: '../type',
+export const cjsBuildConfig: PartialBaseBuildConfig = {
+  format: 'cjs',
+  target: BUILD_TARGET.node,
+  define,
+  autoExtension: true,
+  externals: commonExternals,
+  dts: false,
+};
+
+export const dualBuildConfigs: PartialBaseBuildConfig[] = [
+  cjsBuildConfig,
+  esmBuildConfig,
+];
+
+export const emitTypePkgJsonPlugin: CliPlugin<ModuleTools> = {
+  name: 'emit-type-pkg-json-plugin',
+
+  setup() {
+    return {
+      afterBuild() {
+        const typesDir = path.join(process.cwd(), 'dist-types');
+        const pkgPath = path.join(typesDir, 'package.json');
+        if (!fs.existsSync(typesDir)) {
+          fs.mkdirSync(typesDir);
+        }
+        fs.writeFileSync(
+          pkgPath,
+          JSON.stringify({
+            '//': 'This file is for making TypeScript work with moduleResolution node16+.',
+            version: '1.0.0',
+          }),
+          'utf8',
+        );
       },
-    },
-    {
-      buildType: 'bundleless',
-      format: 'esm',
-      target: BUILD_TARGET,
-      outDir: './dist/esm',
-      dts: false,
-    },
-  ],
+    };
+  },
+};
+
+export const configForDualPackage = defineConfig({
+  plugins: [moduleTools()],
+  buildConfig: dualBuildConfigs,
 });

@@ -1,11 +1,9 @@
-import type fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
 import url from 'node:url';
 import type {
-  CompileMiddlewareAPI,
   DevConfig,
-  Middlewares,
   RequestHandler,
+  Rspack,
   ServerAPIs,
   ServerConfig,
   UpgradeEvent,
@@ -17,12 +15,19 @@ import {
   getRequestLoggerMiddleware,
 } from './middlewares';
 
+export type CompileMiddlewareAPI = {
+  middleware: RequestHandler;
+  sockWrite: ServerAPIs['sockWrite'];
+  onUpgrade: UpgradeEvent;
+  close: () => void;
+};
+
 export type RsbuildDevMiddlewareOptions = {
   pwd: string;
   dev: DevConfig;
   server: ServerConfig;
   compileMiddlewareAPI?: CompileMiddlewareAPI;
-  outputFileSystem: typeof fs;
+  outputFileSystem: Rspack.OutputFileSystem;
   output: {
     distPath: string;
   };
@@ -54,6 +59,8 @@ const applySetupMiddlewares = (
   return { before, after };
 };
 
+export type Middlewares = Array<RequestHandler | [string, RequestHandler]>;
+
 const applyDefaultMiddlewares = async ({
   middlewares,
   server,
@@ -70,7 +77,7 @@ const applyDefaultMiddlewares = async ({
   // compression should be the first middleware
   if (server.compress) {
     const { default: compression } = await import(
-      '../../compiled/http-compression'
+      '../../compiled/http-compression/index.js'
     );
     middlewares.push((req, res, next) => {
       compression({
@@ -112,7 +119,7 @@ const applyDefaultMiddlewares = async ({
   }
 
   const { default: launchEditorMiddleware } = await import(
-    '../../compiled/launch-editor-middleware'
+    '../../compiled/launch-editor-middleware/index.js'
   );
   middlewares.push(['/__open-in-editor', launchEditorMiddleware()]);
 
@@ -136,7 +143,7 @@ const applyDefaultMiddlewares = async ({
   }
 
   if (server.publicDir !== false && server.publicDir?.name) {
-    const { default: sirv } = await import('../../compiled/sirv');
+    const { default: sirv } = await import('../../compiled/sirv/index.js');
     const { name } = server.publicDir;
     const publicDir = isAbsolute(name) ? name : join(pwd, name);
 
@@ -162,7 +169,7 @@ const applyDefaultMiddlewares = async ({
 
   if (server.historyApiFallback) {
     const { default: connectHistoryApiFallback } = await import(
-      '../../compiled/connect-history-api-fallback'
+      '../../compiled/connect-history-api-fallback/index.js'
     );
     const historyApiFallbackMiddleware = connectHistoryApiFallback(
       server.historyApiFallback === true ? {} : server.historyApiFallback,

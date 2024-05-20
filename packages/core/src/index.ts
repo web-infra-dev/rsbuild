@@ -4,6 +4,7 @@
  */
 import { rspack } from '@rspack/core';
 import type * as Rspack from '@rspack/core';
+import * as __internalHelper from './internal';
 
 // Core methods
 export { loadEnv } from './loadEnv';
@@ -68,6 +69,38 @@ export type {
   RsbuildInstance,
   CreateRsbuildOptions,
   InspectConfigOptions,
+  // Subtypes of Config
+  Minify,
+  Polyfill,
+  PrintUrls,
+  PublicDir,
+  Decorators,
+  RspackRule,
+  WatchFiles,
+  CSSModules,
+  CrossOrigin,
+  ConsoleType,
+  SplitChunks,
+  BundlerChain,
+  ClientConfig,
+  ScriptInject,
+  ChainedConfig,
+  PostCSSPlugin,
+  ScriptLoading,
+  LegalComments,
+  AliasStrategy,
+  FilenameConfig,
+  DistPathConfig,
+  OutputStructure,
+  ChainIdentifier,
+  PreconnectOption,
+  CSSLoaderOptions,
+  ModifyChainUtils,
+  StyleLoaderOptions,
+  PostCSSLoaderOptions,
+  ChainedConfigWithUtils,
+  ModifyRspackConfigUtils,
+  CSSModulesLocalsConvention,
   // Hook Callback Types
   OnExitFn,
   OnAfterBuildFn,
@@ -86,3 +119,10 @@ export type {
   TransformFn,
   TransformHandler,
 } from '@rsbuild/shared';
+
+export {
+  /**
+   * @private
+   */
+  __internalHelper,
+};

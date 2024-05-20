@@ -2,9 +2,23 @@
 
 Rsbuild supports directly modifying the Rspack configuration object, and also supports modifying the built-in Rspack configuration of Rsbuild through the bundler-chain.
 
-## Modify Rspack Config
+## Modify Config Object
 
-You can use the `tools.rspack` option of Rsbuild to modify the Rspack configuration object. Please refer to the [tools.rspack documentation](/config/tools/rspack) for complete usage.
+You can use the [tools.rspack](/config/tools/rspack) option of Rsbuild to modify the Rspack config object.
+
+For example, register Rspack plugins or webpack plugins:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      plugins: [SomeWebpackPlugin()],
+    },
+  },
+};
+```
+
+Or modify the Rspack config with a function:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -19,13 +33,13 @@ export default {
 };
 ```
 
+> Please refer to the [tools.rspack documentation](/config/tools/rspack) for detailed usage.
+
 ## Use Bundler Chain
 
 import BundlerChain from '@en/shared/bundlerChain.mdx';
 
 <BundlerChain />
-
-Compared to directly modifying the Rspack configuration object, bundler-chain not only supports chain calls but also allows modification of built-in rules or plugins based on their IDs.
 
 ### tools.bundlerChain
 

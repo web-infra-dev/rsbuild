@@ -1,17 +1,20 @@
 import {
-  createContext,
-  createPublicContext,
-  getPluginAPI,
-  initRsbuildConfig,
-  plugins,
-} from '@rsbuild/core/internal';
-import {
   type CreateCompiler,
   type PreviewServerOptions,
   type RsbuildProvider,
   pickRsbuildConfig,
 } from '@rsbuild/shared';
 import { initConfigs } from './initConfigs';
+import {
+  createContext,
+  createDevServer,
+  createPublicContext,
+  getPluginAPI,
+  initRsbuildConfig,
+  plugins,
+  setCssExtractPlugin,
+  startProdServer,
+} from './shared';
 
 export const webpackProvider: RsbuildProvider<'webpack'> = async ({
   pluginManager,
@@ -22,6 +25,9 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
   const pluginAPI = getPluginAPI({ context, pluginManager });
 
   context.pluginAPI = pluginAPI;
+
+  const { default: cssExtractPlugin } = await import('mini-css-extract-plugin');
+  setCssExtractPlugin(cssExtractPlugin);
 
   const createCompiler = (async () => {
     const { createCompiler } = await import('./createCompiler');
@@ -44,16 +50,15 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
 
     async applyDefaultPlugins() {
       const allPlugins = await Promise.all([
-        plugins.basic?.(),
-        plugins.entry?.(),
-        plugins.cache?.(),
-        plugins.target?.(),
-        import('./plugins/output').then((m) => m.pluginOutput()),
-        import('./plugins/resolve').then((m) => m.pluginResolve()),
-        plugins.fileSize?.(),
-        plugins.cleanOutput?.(),
+        plugins.basic(),
+        plugins.entry(),
+        plugins.cache(),
+        plugins.target(),
+        plugins.output(),
+        plugins.resolve(),
+        plugins.fileSize(),
+        plugins.cleanOutput(),
         plugins.asset(),
-        import('./plugins/copy').then((m) => m.pluginCopy()),
         plugins.html(async (tags) => {
           const result = await context.hooks.modifyHTMLTags.call(tags);
           return result[0];
@@ -62,14 +67,13 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
         plugins.moment(),
         plugins.nodeAddons(),
         plugins.define(),
-        import('./plugins/progress').then((m) => m.pluginProgress()),
-        import('./plugins/css').then((m) => m.pluginCss()),
-        import('./plugins/sass').then((m) => m.pluginSass()),
-        import('./plugins/less').then((m) => m.pluginLess()),
+        plugins.css(),
+        plugins.less(),
+        plugins.sass(),
         plugins.bundleAnalyzer(),
         plugins.rsdoctor(),
         plugins.splitChunks(),
-        plugins.startUrl?.(),
+        plugins.startUrl(),
         plugins.inlineChunk(),
         plugins.externals(),
         plugins.performance(),
@@ -77,6 +81,7 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
         plugins.server(),
         plugins.moduleFederation(),
         plugins.manifest(),
+        import('./plugin').then((m) => m.pluginAdaptor()),
       ]);
 
       pluginManager.addPlugins(allPlugins);
@@ -92,7 +97,6 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     },
 
     async createDevServer(options) {
-      const { createDevServer } = await import('@rsbuild/core/internal');
       const { createDevMiddleware } = await import('./createCompiler');
       await initRsbuildConfig({ context, pluginManager });
       return createDevServer(
@@ -103,7 +107,6 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     },
 
     async startDevServer(options) {
-      const { createDevServer } = await import('@rsbuild/core/internal');
       const { createDevMiddleware } = await import('./createCompiler');
       await initRsbuildConfig({
         context,
@@ -123,7 +126,6 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     },
 
     async preview(options?: PreviewServerOptions) {
-      const { startProdServer } = await import('@rsbuild/core/internal');
       await initRsbuildConfig({
         context,
         pluginManager,

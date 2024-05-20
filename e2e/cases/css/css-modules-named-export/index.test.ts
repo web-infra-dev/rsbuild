@@ -7,6 +7,16 @@ rspackOnlyTest(
     const rsbuild = await build({
       cwd: __dirname,
       runServer: true,
+      rsbuildConfig: {
+        tools: {
+          cssLoader: {
+            modules: {
+              // TODO: css-loader need support named export when namedExports: false.
+              namedExport: true
+            }
+          }
+        }
+      }
     });
     const files = await rsbuild.unwrapOutputJSON();
 

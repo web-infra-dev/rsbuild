@@ -1,3 +1,3 @@
-import baseConfig from '../../../scripts/modern.base.config';
+import { configForDualPackage } from '../../../scripts/modern.base.config';
 
-export default baseConfig;
+export default configForDualPackage;

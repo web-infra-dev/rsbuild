@@ -1,4 +1,4 @@
-import browserslist from '../compiled/browserslist';
+import browserslist from '../compiled/browserslist/index.js';
 import { DEFAULT_BROWSERSLIST } from './constants';
 import type { OverrideBrowserslist, RsbuildTarget } from './types';
 import { getNodeEnv } from './utils';

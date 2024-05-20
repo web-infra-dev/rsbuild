@@ -2,22 +2,18 @@ import { join, resolve } from 'node:path';
 import { build, gotoPage } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
+import { pluginTypedCSSModules } from '@rsbuild/plugin-typed-css-modules';
 import { fse } from '@rsbuild/shared';
 
 const fixtures = resolve(__dirname);
 
-test('enableCssModuleTSDeclaration', async () => {
+test('plugin-typed-css-modules', async () => {
   fse.removeSync(join(fixtures, 'src/App.module.less.d.ts'));
   fse.removeSync(join(fixtures, 'src/App.module.scss.d.ts'));
 
   await build({
     cwd: fixtures,
-    plugins: [pluginReact()],
-    rsbuildConfig: {
-      output: {
-        enableCssModuleTSDeclaration: true,
-      },
-    },
+    plugins: [pluginReact(), pluginTypedCSSModules()],
   });
 
   expect(

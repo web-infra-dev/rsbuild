@@ -1,10 +1,9 @@
 import path from 'node:path';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import {
   DEFAULT_BROWSERSLIST,
-  type RsbuildPlugin,
   SCRIPT_REGEX,
   applyScriptCondition,
-  parseMinifyOptions,
 } from '@rsbuild/shared';
 import { SwcMinimizerPlugin } from './minimizer';
 import type {
@@ -77,7 +76,7 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
           rule
             .test(test || SCRIPT_REGEX)
             .use(CHAIN_ID.USE.SWC)
-            .loader(path.resolve(__dirname, './loader'))
+            .loader(path.resolve(__dirname, './loader.cjs'))
             .options(removeUselessOptions(swcConfig) satisfies TransformConfig);
 
           if (include) {
@@ -113,7 +112,7 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
           .resolve.set('fullySpecified', false)
           .end()
           .use(CHAIN_ID.USE.SWC)
-          .loader(path.resolve(__dirname, './loader'))
+          .loader(path.resolve(__dirname, './loader.cjs'))
           .options(removeUselessOptions(mainConfig) satisfies TransformConfig);
       },
     });
@@ -134,7 +133,11 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
           minimizersChain.delete(CHAIN_ID.MINIMIZER.CSS).end();
         }
 
-        const { minifyJs, minifyCss } = parseMinifyOptions(rsbuildConfig);
+        const { minify } = rsbuildConfig.output;
+        const minifyJs =
+          minify === true || (typeof minify === 'object' && minify.js);
+        const minifyCss =
+          minify === true || (typeof minify === 'object' && minify.css);
 
         minimizersChain
           .end()

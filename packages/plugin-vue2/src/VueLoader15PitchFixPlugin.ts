@@ -1,4 +1,4 @@
-import type { Rspack } from '@rsbuild/shared';
+import type { Rspack } from '@rsbuild/core';
 
 /**
  * this plugin is a quick fix for issue https://github.com/web-infra-dev/rsbuild/issues/2093

@@ -1,17 +1,15 @@
 import path from 'node:path';
-import {
-  getBrowserslistWithDefault,
-  mergeChainedOptions,
-  parseMinifyOptions,
-} from '@rsbuild/shared';
 import type {
-  BundlerChain,
-  ModifyBundlerChainUtils,
   NormalizedConfig,
   RsbuildContext,
   RsbuildPlugin,
   RsbuildTarget,
+} from '@rsbuild/core';
+import {
+  getBrowserslistWithDefault,
+  mergeChainedOptions,
 } from '@rsbuild/shared';
+import type { BundlerChain, ModifyBundlerChainUtils } from '@rsbuild/shared';
 import browserslist from '@rsbuild/shared/browserslist';
 import { browserslistToTargets as _browserslistToTargets } from 'lightningcss';
 import type * as LightningCSS from 'lightningcss';
@@ -101,7 +99,7 @@ const applyLightningCSSLoader = ({
     const rule = chain.module.rule(ruleId);
     const use = rule.use(CHAIN_ID.USE.LIGHTNINGCSS);
 
-    use.loader(path.resolve(__dirname, './loader')).options(mergedOptions);
+    use.loader(path.resolve(__dirname, './loader.cjs')).options(mergedOptions);
 
     switch (ruleId) {
       case CHAIN_ID.RULE.SASS:
@@ -164,7 +162,7 @@ export const pluginLightningcss = (
 
   setup(api) {
     api.modifyBundlerChain(async (chain, utils) => {
-      const { isServer, isWebWorker, isProd, target } = utils;
+      const { isProd, target } = utils;
       const { context } = api;
       const config = api.getNormalizedConfig();
       const targets = await getLightningCSSTargets({
@@ -174,7 +172,7 @@ export const pluginLightningcss = (
         options,
       });
 
-      if (!isServer && !isWebWorker && options?.transform !== false) {
+      if (target === 'web' && options?.transform !== false) {
         applyLightningCSSLoader({
           chain,
           utils,
@@ -183,10 +181,10 @@ export const pluginLightningcss = (
         });
       }
 
+      const { minify } = config.output;
       const isMinimize =
         isProd &&
-        config.output.minify !== false &&
-        parseMinifyOptions(config).minifyCss;
+        (minify === true || (typeof minify === 'object' && minify.css));
 
       if (isMinimize && options?.minify !== false) {
         await applyLightningCSSMinifyPlugin({

@@ -10,10 +10,10 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "moment": "^2.30.1",
-    "preact": "^10.21.0",
+    "preact": "^10.22.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.23.0",
+    "react-router-dom": "^6.23.1",
     "solid-js": "^1.8.17",
     "vue": "^3.4.19",
     "vue-router": "^4.3.2"
@@ -21,7 +21,7 @@
   "devDependencies": {
     "strip-ansi": "6.0.1",
     "@e2e/helper": "workspace:*",
-    "@playwright/test": "1.43.1",
+    "@playwright/test": "1.44.0",
     "@rsbuild/babel-preset": "workspace:*",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-assets-retry": "workspace:*",
@@ -50,6 +50,7 @@
     "@rsbuild/plugin-vue": "workspace:*",
     "@rsbuild/plugin-vue-jsx": "workspace:*",
     "@rsbuild/plugin-vue2": "workspace:*",
+    "@rsbuild/plugin-typed-css-modules": "workspace:*",
     "@rsbuild/plugin-vue2-jsx": "workspace:*",
     "@rsbuild/plugin-yaml": "workspace:*",
     "@rsbuild/shared": "workspace:*",
@@ -57,10 +58,10 @@
     "@scripts/test-helper": "workspace:*",
     "@types/lodash": "^4.17.1",
     "@types/node": "18.x",
-    "@types/react": "^18.3.1",
+    "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
     "fast-glob": "^3.3.2",
-    "playwright": "1.43.1",
+    "playwright": "1.44.0",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.2"
   }

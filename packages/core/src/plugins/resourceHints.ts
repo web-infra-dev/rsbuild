@@ -1,7 +1,8 @@
-import type {
-  DnsPrefetchOption,
-  HtmlBasicTag,
-  PreconnectOption,
+import {
+  type DnsPrefetchOption,
+  type HtmlBasicTag,
+  type PreconnectOption,
+  isHtmlDisabled,
 } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
@@ -44,39 +45,33 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
       return { headTags, bodyTags };
     });
 
-    api.modifyBundlerChain(
-      async (chain, { CHAIN_ID, isServer, isWebWorker, isServiceWorker }) => {
-        const config = api.getNormalizedConfig();
-        const {
-          performance: { preload, prefetch },
-        } = config;
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, target }) => {
+      const config = api.getNormalizedConfig();
+      const {
+        performance: { preload, prefetch },
+      } = config;
 
-        if (isServer || isWebWorker || isServiceWorker) {
-          return;
-        }
+      if (isHtmlDisabled(config, target)) {
+        return;
+      }
 
-        const HTMLCount = chain.entryPoints.values().length;
+      const HTMLCount = chain.entryPoints.values().length;
 
-        const { HtmlPreloadOrPrefetchPlugin } = await import(
-          '../rspack/preload/HtmlPreloadOrPrefetchPlugin'
-        );
+      const { HtmlPreloadOrPrefetchPlugin } = await import(
+        '../rspack/preload/HtmlPreloadOrPrefetchPlugin'
+      );
 
-        if (prefetch) {
-          chain
-            .plugin(CHAIN_ID.PLUGIN.HTML_PREFETCH)
-            .use(HtmlPreloadOrPrefetchPlugin, [
-              prefetch,
-              'prefetch',
-              HTMLCount,
-            ]);
-        }
+      if (prefetch) {
+        chain
+          .plugin(CHAIN_ID.PLUGIN.HTML_PREFETCH)
+          .use(HtmlPreloadOrPrefetchPlugin, [prefetch, 'prefetch', HTMLCount]);
+      }
 
-        if (preload) {
-          chain
-            .plugin(CHAIN_ID.PLUGIN.HTML_PRELOAD)
-            .use(HtmlPreloadOrPrefetchPlugin, [preload, 'preload', HTMLCount]);
-        }
-      },
-    );
+      if (preload) {
+        chain
+          .plugin(CHAIN_ID.PLUGIN.HTML_PRELOAD)
+          .use(HtmlPreloadOrPrefetchPlugin, [preload, 'preload', HTMLCount]);
+      }
+    });
   },
 });
