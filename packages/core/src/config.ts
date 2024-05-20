@@ -95,7 +95,9 @@ const getDefaultSecurityConfig = (): NormalizedSecurityConfig => ({
 const getDefaultToolsConfig = (): NormalizedToolsConfig => ({
   cssExtract: {
     loaderOptions: {},
-    pluginOptions: {},
+    pluginOptions: {
+      ignoreOrder: true,
+    },
   },
 });
 
