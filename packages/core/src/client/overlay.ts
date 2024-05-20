@@ -1,5 +1,4 @@
 import type { OverlayError } from '../types';
-import { formatRuntimeErrors } from './format';
 import { registerOverlay } from './hmr';
 
 function stripAnsi(content: string) {
@@ -338,20 +337,4 @@ if (typeof document !== 'undefined') {
   console.info(
     '[Rsbuild] Failed to display error overlay as document is not available, you can disable the `dev.client.overlay` option.',
   );
-}
-
-const config = RSBUILD_CLIENT_CONFIG;
-
-if (config.overlay.runtimeErrors) {
-  window.addEventListener('error', async (event) => {
-    const formatted = await formatRuntimeErrors(event, false);
-    createOverlay(formatted);
-  });
-
-  window.addEventListener('unhandledrejection', async (event) => {
-    if (event.reason?.stack) {
-      const formatted = await formatRuntimeErrors(event, true);
-      createOverlay(formatted);
-    }
-  });
 }

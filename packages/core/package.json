@@ -27,6 +27,10 @@
       "types": "./dist-types/client/overlay.d.ts",
       "default": "./dist/client/overlay.js"
     },
+    "./client/runtimeErrors": {
+      "types": "./dist/client/runtimeErrors.d.ts",
+      "default": "./dist/client/runtimeErrors.js"
+    },
     "./types": {
       "types": "./types.d.ts"
     },
@@ -57,7 +61,7 @@
     "core-js": "~3.36.0",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.7.2",
     "postcss": "^8.4.38",
-    "source-map": "0.5.7"
+    "source-map-js": "^1.2.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.4",

@@ -31,6 +31,15 @@ function getClientPaths(devConfig: DevConfig) {
     clientPaths.push(`${require.resolve('@rsbuild/core/client/overlay')}`);
   }
 
+  if (
+    typeof devConfig?.client?.overlay === 'object' &&
+    devConfig.client.overlay.runtimeErrors
+  ) {
+    clientPaths.push(
+      `${require.resolve('@rsbuild/core/client/runtimeErrors')}`,
+    );
+  }
+
   return clientPaths;
 }
 

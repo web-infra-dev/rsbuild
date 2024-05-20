@@ -1,6 +1,3 @@
-// @ts-expect-error
-import { SourceMapConsumer } from 'source-map';
-
 const fetchContent = (url: string) => fetch(url).then((r) => r.text());
 
 const findSourceMap = async (fileSource: string, filename: string) => {
@@ -69,6 +66,8 @@ export const findSourceCode = async (sourceInfo: any) => {
   if (!smContent) return;
   const rawSourceMap = JSON.parse(smContent);
 
+  const { SourceMapConsumer } = await import('source-map-js');
+
   const consumer = await new SourceMapConsumer(rawSourceMap);
 
   // Use sourcemap to find the source code location
@@ -81,6 +80,8 @@ export const findSourceCode = async (sourceInfo: any) => {
   const sourceCode = consumer.sourceContentFor(pos.source);
   return {
     sourceCode: formatSourceCode(sourceCode, pos),
+    // Please use an absolute path in order to open it in vscode.
+    // Take webpack as an example. Please configure it correctly for [output.devtoolModuleFilenameTemplate](https://www.webpackjs.com/configuration/output/#outputdevtoolmodulefilenametemplate)
     sourceFile: url,
   };
 };
