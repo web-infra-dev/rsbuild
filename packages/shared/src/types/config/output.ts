@@ -144,6 +144,9 @@ export type CSSModulesLocalsConvention =
   | 'dashesOnly';
 
 export type CSSModules = {
+  /**
+   * Allows CSS Modules to be automatically enabled based on their filenames.
+   */
   auto?:
     | boolean
     | RegExp
@@ -153,9 +156,16 @@ export type CSSModules = {
         resourceFragment: string,
       ) => boolean);
   /**
+   * Allows exporting names from global class names, so you can use them via import.
+   */
+  exportGlobals?: boolean;
+  /**
    * Set the local ident name of CSS Modules.
    */
   localIdentName?: string;
+  /**
+   * Style of exported class names.
+   */
   exportLocalsConvention?: CSSModulesLocalsConvention;
 };
 
@@ -318,9 +328,10 @@ export interface NormalizedOutputConfig extends OutputConfig {
   inlineStyles: boolean | InlineChunkTest;
   injectStyles: boolean;
   cssModules: {
+    auto: CSSModules['auto'];
     localIdentName?: string;
+    exportGlobals: boolean;
     exportLocalsConvention: CSSModulesLocalsConvention;
-    auto?: CSSModules['auto'];
   };
   emitAssets: EmitAssets;
 }

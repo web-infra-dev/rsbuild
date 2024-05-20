@@ -177,6 +177,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               "importLoaders": 1,
               "modules": {
                 "auto": true,
+                "exportGlobals": false,
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
                 "namedExport": false,
@@ -233,6 +234,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               "importLoaders": 2,
               "modules": {
                 "auto": true,
+                "exportGlobals": false,
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
                 "namedExport": false,
@@ -302,6 +304,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               "importLoaders": 3,
               "modules": {
                 "auto": true,
+                "exportGlobals": false,
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
                 "namedExport": false,
@@ -714,6 +717,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
               "importLoaders": 1,
               "modules": {
                 "auto": true,
+                "exportGlobals": false,
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[local]-[hash:base64:6]",
                 "namedExport": false,
@@ -770,6 +774,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
               "importLoaders": 2,
               "modules": {
                 "auto": true,
+                "exportGlobals": false,
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[local]-[hash:base64:6]",
                 "namedExport": false,
@@ -839,6 +844,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
               "importLoaders": 3,
               "modules": {
                 "auto": true,
+                "exportGlobals": false,
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[local]-[hash:base64:6]",
                 "namedExport": false,
@@ -1296,6 +1302,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               "importLoaders": 1,
               "modules": {
                 "auto": true,
+                "exportGlobals": false,
                 "exportLocalsConvention": "camelCase",
                 "exportOnlyLocals": true,
                 "localIdentName": "[local]-[hash:base64:6]",
@@ -1322,6 +1329,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               "importLoaders": 2,
               "modules": {
                 "auto": true,
+                "exportGlobals": false,
                 "exportLocalsConvention": "camelCase",
                 "exportOnlyLocals": true,
                 "localIdentName": "[local]-[hash:base64:6]",
@@ -1361,6 +1369,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               "importLoaders": 3,
               "modules": {
                 "auto": true,
+                "exportGlobals": false,
                 "exportLocalsConvention": "camelCase",
                 "exportOnlyLocals": true,
                 "localIdentName": "[local]-[hash:base64:6]",
@@ -1642,6 +1651,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               "importLoaders": 1,
               "modules": {
                 "auto": true,
+                "exportGlobals": false,
                 "exportLocalsConvention": "camelCase",
                 "exportOnlyLocals": true,
                 "localIdentName": "[local]-[hash:base64:6]",
@@ -1668,6 +1678,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               "importLoaders": 2,
               "modules": {
                 "auto": true,
+                "exportGlobals": false,
                 "exportLocalsConvention": "camelCase",
                 "exportOnlyLocals": true,
                 "localIdentName": "[local]-[hash:base64:6]",
@@ -1707,6 +1718,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               "importLoaders": 3,
               "modules": {
                 "auto": true,
+                "exportGlobals": false,
                 "exportLocalsConvention": "camelCase",
                 "exportOnlyLocals": true,
                 "localIdentName": "[local]-[hash:base64:6]",

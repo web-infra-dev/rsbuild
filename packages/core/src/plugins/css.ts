@@ -218,6 +218,7 @@ const getCSSLoaderOptions = ({
     modules: {
       auto: cssModules.auto,
       namedExport: false,
+      exportGlobals: cssModules.exportGlobals,
       exportLocalsConvention: cssModules.exportLocalsConvention,
       localIdentName,
     },
