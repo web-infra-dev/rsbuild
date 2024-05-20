@@ -20,6 +20,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
           "importLoaders": 1,
           "modules": {
             "auto": true,
+            "exportGlobals": false,
             "exportLocalsConvention": "camelCase",
             "localIdentName": "[local]-[hash:base64:6]",
             "namedExport": false,
@@ -68,6 +69,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
           "importLoaders": 2,
           "modules": {
             "auto": true,
+            "exportGlobals": false,
             "exportLocalsConvention": "camelCase",
             "localIdentName": "[local]-[hash:base64:6]",
             "namedExport": false,
@@ -129,6 +131,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
           "importLoaders": 3,
           "modules": {
             "auto": true,
+            "exportGlobals": false,
             "exportLocalsConvention": "camelCase",
             "localIdentName": "[local]-[hash:base64:6]",
             "namedExport": false,
@@ -238,6 +241,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
           "importLoaders": 1,
           "modules": {
             "auto": true,
+            "exportGlobals": false,
             "exportLocalsConvention": "camelCase",
             "localIdentName": "[local]-[hash:base64:6]",
             "namedExport": false,
@@ -274,6 +278,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
           "importLoaders": 2,
           "modules": {
             "auto": true,
+            "exportGlobals": false,
             "exportLocalsConvention": "camelCase",
             "localIdentName": "[local]-[hash:base64:6]",
             "namedExport": false,
@@ -323,6 +328,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
           "importLoaders": 3,
           "modules": {
             "auto": true,
+            "exportGlobals": false,
             "exportLocalsConvention": "camelCase",
             "localIdentName": "[local]-[hash:base64:6]",
             "namedExport": false,
@@ -414,6 +420,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should replace postcss-loade
           "importLoaders": 1,
           "modules": {
             "auto": true,
+            "exportGlobals": false,
             "exportLocalsConvention": "camelCase",
             "localIdentName": "[path][name]__[local]-[hash:base64:6]",
             "namedExport": false,
@@ -450,6 +457,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should replace postcss-loade
           "importLoaders": 2,
           "modules": {
             "auto": true,
+            "exportGlobals": false,
             "exportLocalsConvention": "camelCase",
             "localIdentName": "[path][name]__[local]-[hash:base64:6]",
             "namedExport": false,
@@ -499,6 +507,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should replace postcss-loade
           "importLoaders": 3,
           "modules": {
             "auto": true,
+            "exportGlobals": false,
             "exportLocalsConvention": "camelCase",
             "localIdentName": "[path][name]__[local]-[hash:base64:6]",
             "namedExport": false,

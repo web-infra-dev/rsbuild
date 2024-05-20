@@ -17,6 +17,7 @@ exports[`plugin-typed-css-modules > should apply css-modules-typescript-loader 1
         "options": {
           "modules": {
             "auto": true,
+            "exportGlobals": false,
             "exportLocalsConvention": "camelCase",
             "localIdentName": "[path][name]__[local]-[hash:base64:6]",
             "namedExport": false,
@@ -29,6 +30,7 @@ exports[`plugin-typed-css-modules > should apply css-modules-typescript-loader 1
           "importLoaders": 1,
           "modules": {
             "auto": true,
+            "exportGlobals": false,
             "exportLocalsConvention": "camelCase",
             "localIdentName": "[path][name]__[local]-[hash:base64:6]",
             "namedExport": false,
@@ -90,6 +92,7 @@ exports[`plugin-typed-css-modules > should not apply css-modules-typescript-load
           "importLoaders": 1,
           "modules": {
             "auto": false,
+            "exportGlobals": false,
             "exportLocalsConvention": "camelCase",
             "localIdentName": "[path][name]__[local]-[hash:base64:6]",
             "namedExport": false,

@@ -330,7 +330,7 @@ export interface NormalizedOutputConfig extends OutputConfig {
   cssModules: {
     auto: CSSModules['auto'];
     localIdentName?: string;
-    exportGlobals?: boolean;
+    exportGlobals: boolean;
     exportLocalsConvention: CSSModulesLocalsConvention;
   };
   emitAssets: EmitAssets;

@@ -284,6 +284,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
               "importLoaders": 1,
               "modules": {
                 "auto": true,
+                "exportGlobals": false,
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
                 "namedExport": false,
@@ -340,6 +341,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
               "importLoaders": 2,
               "modules": {
                 "auto": true,
+                "exportGlobals": false,
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
                 "namedExport": false,
@@ -409,6 +411,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
               "importLoaders": 3,
               "modules": {
                 "auto": true,
+                "exportGlobals": false,
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
                 "namedExport": false,
