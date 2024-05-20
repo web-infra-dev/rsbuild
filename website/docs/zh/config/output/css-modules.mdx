@@ -19,6 +19,8 @@ type CSSModules = {
 
 用于自定义 CSS Modules 配置。
 
+Rsbuild 的 CSS Modules 功能是基于 css-loader 的 `modules` 选项实现的，你可以参考 [css-loader - modules](https://github.com/webpack-contrib/css-loader?tab=readme-ov-file#modules) 来了解更多。
+
 ## cssModules.auto
 
 auto 配置项允许基于文件名自动启用 CSS 模块。
@@ -59,7 +61,7 @@ export default {
 
 ## cssModules.exportLocalsConvention
 
-导出的类名称的样式。
+导出的 class 名称的命名风格。
 
 - **类型：**
 
@@ -104,7 +106,7 @@ const localIdentName = isProd
   : '[path][name]__[local]-[hash:base64:6]';
 ```
 
-设置 CSS Modules 编译后生成的 className 格式。
+设置 CSS Modules 编译后生成的 class names 格式。
 
 ### 默认值
 
@@ -115,8 +117,8 @@ const localIdentName = isProd
 ```ts
 import styles from './index.module.scss';
 
-// 在开发环境下，值为 `.src-index-module__header-[hash]`
-// 在生产环境下，值为 `.header-[hash]`
+// 在开发环境下，值为 `src-index-module__header-[hash]`
+// 在生产环境下，值为 `header-[hash]`
 console.log(styles.header);
 ```
 
@@ -145,4 +147,46 @@ export default {
     },
   },
 };
+```
+
+## cssModules.exportGlobals
+
+- **类型：** `boolean`
+- **默认值：** `false`
+
+允许从 global class names 导出名称，以便你可以通过 import 使用它们。
+
+### 示例
+
+将 `exportGlobals` 设置为 `true`：
+
+```ts
+export default {
+  output: {
+    cssModules: {
+      exportGlobals: true,
+    },
+  },
+};
+```
+
+在 CSS Modules 中使用 `:global()`：
+
+```css title="style.module.css"
+:global(.blue) {
+  color: blue;
+}
+
+.red {
+  color: red;
+}
+```
+
+然后你可以导入 `:global()` 包裹的类名：
+
+```tsx title="Button.tsx"
+import styles from './style.module.css';
+
+console.log(styles.blue); // 'blue'
+console.log(styles.red); // 'red-[hash]'
 ```
