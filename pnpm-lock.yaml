@@ -1635,9 +1635,6 @@ importers:
       mime-types:
         specifier: ^2.1.35
         version: 2.1.35
-      mini-css-extract-plugin:
-        specifier: 2.8.1
-        version: 2.8.1(webpack@5.91.0)
       picocolors:
         specifier: 1.0.0
         version: 1.0.0

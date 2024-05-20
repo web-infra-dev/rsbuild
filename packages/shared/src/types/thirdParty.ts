@@ -1,8 +1,8 @@
-import type { LoaderContext } from '@rspack/core';
 import type {
-  LoaderOptions as MiniCSSExtractLoaderOptions,
-  PluginOptions as MiniCSSExtractPluginOptions,
-} from 'mini-css-extract-plugin';
+  CssExtractRspackLoaderOptions,
+  CssExtractRspackPluginOptions,
+  LoaderContext,
+} from '@rspack/core';
 import type { AcceptedPlugin, ProcessOptions } from 'postcss';
 import type { MinifyOptions } from 'terser';
 import type { Configuration as WebpackConfig } from 'webpack';
@@ -17,8 +17,8 @@ import type {
 type AutoprefixerOptions = Autoprefixer.Options;
 
 export interface CSSExtractOptions {
-  pluginOptions?: MiniCSSExtractPluginOptions;
-  loaderOptions?: MiniCSSExtractLoaderOptions;
+  pluginOptions?: CssExtractRspackPluginOptions;
+  loaderOptions?: CssExtractRspackLoaderOptions;
 }
 
 export type { WebpackConfig, AutoprefixerOptions };

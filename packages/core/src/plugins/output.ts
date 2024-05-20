@@ -7,7 +7,6 @@ import {
   type RsbuildContext,
   getDistPath,
   getFilename,
-  mergeChainedOptions,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import { formatPublicPath } from '../helpers';
@@ -116,10 +115,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
 
         // css output
         if (isUseCssExtract(config, target)) {
-          const extractPluginOptions = mergeChainedOptions({
-            defaults: {},
-            options: config.tools.cssExtract?.pluginOptions,
-          });
+          const extractPluginOptions = config.tools.cssExtract.pluginOptions;
 
           const cssPath = getDistPath(config, 'css');
           const cssFilename = getFilename(config, 'css', isProd);
@@ -131,7 +127,6 @@ export const pluginOutput = (): RsbuildPlugin => ({
               {
                 filename: posix.join(cssPath, cssFilename),
                 chunkFilename: posix.join(cssAsyncPath, cssFilename),
-                ignoreOrder: true,
                 ...extractPluginOptions,
               },
             ]);

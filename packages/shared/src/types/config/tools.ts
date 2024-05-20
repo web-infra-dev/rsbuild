@@ -130,15 +130,14 @@ export interface ToolsConfig {
    */
   swc?: ToolsSwcConfig;
   /**
+   * Modify the options of [CssExtractRspackPlugin](https://rspack.dev/plugins/rspack/css-extract-rspack-plugin).
+   */
+  cssExtract?: CSSExtractOptions;
+  /**
    * Configure Rspack.
    * @requires rspack
    */
   rspack?: ToolsRspackConfig;
-  /**
-   * Modify the options of [mini-css-extract-plugin](https://github.com/webpack-contrib/mini-css-extract-plugin).
-   * @requires webpack
-   */
-  cssExtract?: CSSExtractOptions;
   /**
    * Configure [webpack](https://webpack.js.org/).
    * @requires webpack

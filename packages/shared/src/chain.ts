@@ -143,7 +143,7 @@ export const CHAIN_ID = {
     IGNORE_CSS: 'ignore-css',
     /** css-modules-typescript-loader */
     CSS_MODULES_TS: 'css-modules-typescript',
-    /** mini-css-extract-plugin.loader */
+    /** CssExtractRspackPlugin.loader */
     MINI_CSS_EXTRACT: 'mini-css-extract',
     /** resolve-url-loader */
     RESOLVE_URL: 'resolve-url-loader',
@@ -186,7 +186,7 @@ export const CHAIN_ID = {
     HTML_PREFETCH: 'html-prefetch-plugin',
     /** htmlPreloadPlugin */
     HTML_PRELOAD: 'html-preload-plugin',
-    /** MiniCssExtractPlugin */
+    /** CssExtractRspackPlugin */
     MINI_CSS_EXTRACT: 'mini-css-extract',
     /** VueLoaderPlugin */
     VUE_LOADER_PLUGIN: 'vue-loader-plugin',

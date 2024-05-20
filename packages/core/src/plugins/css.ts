@@ -1,7 +1,6 @@
 import path from 'node:path';
 import {
   type BundlerChainRule,
-  type CSSExtractOptions,
   type CSSLoaderOptions,
   type ModifyChainUtils,
   type PostCSSLoaderOptions,
@@ -272,22 +271,14 @@ export async function applyCSSRule({
   });
 
   // 3. Create Rspack rule
-  // Order: style-loader/mini-css-extract -> css-loader -> postcss-loader
+  // Order: style-loader/CssExtractRspackPlugin -> css-loader -> postcss-loader
   if (target === 'web') {
-    // use mini-css-extract-plugin loader
+    // use CssExtractRspackPlugin loader
     if (enableExtractCSS) {
-      const extraCSSOptions: Required<CSSExtractOptions> =
-        typeof config.tools.cssExtract === 'object'
-          ? config.tools.cssExtract
-          : {
-              loaderOptions: {},
-              pluginOptions: {},
-            };
-
       rule
         .use(CHAIN_ID.USE.MINI_CSS_EXTRACT)
         .loader(getCssExtractPlugin().loader)
-        .options(extraCSSOptions.loaderOptions)
+        .options(config.tools.cssExtract.loaderOptions)
         .end();
     }
     // use style-loader
