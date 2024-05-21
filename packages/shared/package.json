@@ -97,7 +97,7 @@
     "test:watch": "vitest dev --no-coverage"
   },
   "dependencies": {
-    "@rspack/core": "0.7.0-beta.0",
+    "@rspack/core": "0.7.0-beta.1",
     "caniuse-lite": "^1.0.30001617",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.7.2",
     "postcss": "^8.4.38"
