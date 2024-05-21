@@ -18,9 +18,21 @@ Rsbuild v0.7 已与 Rspack v0.7 同步发布！
 
 TODO
 
-## TODO
+## ESM/CJS 导出
 
-TODO
+现在，Rsbuild 的所有包均提供了 ES modules 和 CommonJS 两种格式的导出，并在 package.json 中声明了 `"type"="module"`。
+
+这使你能够使用 `import` 或 `require` 来使用 Rsbuild 的 JavaScript API：
+
+```js
+// ES Modules
+import { createRsbuild } from '@rsbuild/core';
+
+// CommonJS
+const { createRsbuild } = require('@rsbuild/core');
+```
+
+ESM/CJS 互操作是一个棘手的问题，因此我们计划长期提供这两种格式，以便于更多用户使用。
 
 ## output.dataUriLimit 默认值
 
