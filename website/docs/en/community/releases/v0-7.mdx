@@ -18,6 +18,37 @@ Notable changes:
 
 TODO
 
+## Better CSS supports
+
+Rsbuild now uses [CssExtractRspackPlugin](https://www.rspack.dev/plugins/rspack/css-extract-rspack-plugin) to extract CSS into separate files, rather than using the `experimental.css` config to do so.
+
+This allows Rsbuild to support more CSS features, including:
+
+- Support for using `<style module>` in the Vue SFC:
+
+```html title="index.vue"
+<template>
+  <p :class="$style.red">Red</p>
+</template>
+
+<style module>
+  .red {
+    color: red;
+  }
+</style>
+```
+
+- Support for complex CSS Modules `:global()` syntax
+
+```css title="style.module.css"
+:local(.parent):global(.child) > ul {
+  color: red;
+}
+```
+
+- Support for more CSS Modules options, such as [cssModules.exportGlobals](/config/output/css-modules#cssmodulesexportglobals)
+- Now you can use [tools.cssExtract](/config/tools/css-extract) to configure CssExtractRspackPlugin.
+
 ## ESM/CJS Exports
 
 Now, all packages of Rsbuild provide exports in both ES modules and CommonJS formats, and `"type"="module"` has been declared in the package.json.
