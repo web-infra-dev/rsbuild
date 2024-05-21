@@ -13,9 +13,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "asyncWebAssembly": true,
     "css": false,
   },
-  "ignoreWarnings": [
-    /Conflicting order/,
-  ],
   "infrastructureLogging": {
     "level": "error",
   },
@@ -596,9 +593,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "asyncWebAssembly": true,
     "css": false,
   },
-  "ignoreWarnings": [
-    /Conflicting order/,
-  ],
   "infrastructureLogging": {
     "level": "error",
   },
@@ -1244,9 +1238,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "asyncWebAssembly": true,
     "css": false,
   },
-  "ignoreWarnings": [
-    /Conflicting order/,
-  ],
   "infrastructureLogging": {
     "level": "error",
   },
@@ -1641,9 +1632,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "asyncWebAssembly": true,
     "css": false,
   },
-  "ignoreWarnings": [
-    /Conflicting order/,
-  ],
   "infrastructureLogging": {
     "level": "error",
   },

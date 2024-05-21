@@ -30,9 +30,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
     "asyncWebAssembly": true,
     "css": false,
   },
-  "ignoreWarnings": [
-    /Conflicting order/,
-  ],
   "infrastructureLogging": {
     "level": "error",
   },
