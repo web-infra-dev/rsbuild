@@ -4,9 +4,6 @@ exports[`plugin-basic > should apply basic config correctly in development 1`] =
 {
   "context": "<ROOT>/packages/core/tests",
   "devtool": "cheap-module-source-map",
-  "ignoreWarnings": [
-    /Conflicting order/,
-  ],
   "infrastructureLogging": {
     "level": "error",
   },
@@ -40,9 +37,6 @@ exports[`plugin-basic > should apply basic config correctly in production 1`] = 
 {
   "context": "<ROOT>/packages/core/tests",
   "devtool": false,
-  "ignoreWarnings": [
-    /Conflicting order/,
-  ],
   "infrastructureLogging": {
     "level": "error",
   },
