@@ -22,6 +22,18 @@ TODO
 
 TODO
 
-## TODO
+## output.dataUriLimit 默认值
 
-TODO
+[output.dataUriLimit](/config/output/data-uri-limit) 的默认值从 `10000 (10kB)` 调整为 `4096 (4KiB)`.
+
+这是因为目前更多的应用正在使用 HTTP 2.0，所以将资源分割成单独的文件会表现得更好。而且将超过 4KiB 的资源内联可能会使 JS 包体积过大，不利于缓存。
+
+如果你倾向于之前的默认设置，可以添加以下配置：
+
+```js title="rsbuild.config.ts"
+export default {
+  output: {
+    dataUriLimit: 10000,
+  },
+};
+```
