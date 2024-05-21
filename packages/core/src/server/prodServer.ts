@@ -4,7 +4,6 @@ import {
   type PreviewServerOptions,
   ROOT_DIST_DIR,
   type RequestHandler,
-  type RsbuildConfig,
   type ServerConfig,
   type StartServerResult,
   getNodeEnv,
@@ -13,11 +12,11 @@ import {
 } from '@rsbuild/shared';
 import connect from '@rsbuild/shared/connect';
 import sirv from '../../compiled/sirv/index.js';
-import type { InternalContext } from '../types';
+import type { InternalContext, NormalizedConfig } from '../types';
 import {
   formatRoutes,
   getAddressUrls,
-  getServerOptions,
+  getServerConfig,
   printServerURLs,
 } from './helper';
 import { createHttpServer } from './httpServer';
@@ -146,23 +145,24 @@ export class RsbuildProdServer {
 
 export async function startProdServer(
   context: InternalContext,
-  rsbuildConfig: RsbuildConfig,
+  config: NormalizedConfig,
   { getPortSilently }: PreviewServerOptions = {},
 ) {
   if (!getNodeEnv()) {
     setNodeEnv('production');
   }
 
-  const { serverConfig, port, host, https } = await getServerOptions({
-    rsbuildConfig,
+  const { port, host, https } = await getServerConfig({
+    config,
     getPortSilently,
   });
 
+  const serverConfig = config.server;
   const server = new RsbuildProdServer({
     pwd: context.rootPath,
     output: {
-      path: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
-      assetPrefix: rsbuildConfig.output?.assetPrefix,
+      path: config.output.distPath.root || ROOT_DIST_DIR,
+      assetPrefix: config.output.assetPrefix,
     },
     serverConfig,
   });
@@ -185,8 +185,8 @@ export async function startProdServer(
       async () => {
         const routes = formatRoutes(
           context.entry,
-          rsbuildConfig.output?.distPath?.html,
-          rsbuildConfig.html?.outputStructure,
+          config.output.distPath.html,
+          config.html.outputStructure,
         );
         await context.hooks.onAfterStartProdServer.call({
           port,
