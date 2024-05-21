@@ -1,6 +1,6 @@
 import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { dev, gotoPage } from '@e2e/helper';
+import { dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const getContent = (
@@ -8,7 +8,12 @@ const getContent = (
 ) => `document.querySelector('#root').className = '${classNames}';
 `;
 
-test('should support tailwindcss HMR', async ({ page }) => {
+rspackOnlyTest('should support tailwindcss HMR', async ({ page }) => {
+  // HMR cases will fail in Windows
+  if (process.platform === 'win32') {
+    test.skip();
+  }
+
   const tempFile = join(__dirname, 'src/test-temp-file.js');
 
   writeFileSync(tempFile, getContent('text-black'));
