@@ -51,6 +51,46 @@ This allows Rsbuild to support more CSS features, including:
 
 ## Typed CSS Modules
 
+Rsbuild v0.7 added a new [Typed CSS Modules plugin](/plugins/list/plugin-typed-css-modules), which is used to generate type declaration files for CSS Modules in the project.
+
+When you use CSS Modules in a TypeScript project, the default type definition is as follows. It can only provide basic type support, and cannot accurately prompt which class names are exported by CSS Modules.
+
+```ts title="src/env.d.ts"
+declare module '*.module.css' {
+  const classes: { readonly [key: string]: string };
+  export default classes;
+}
+```
+
+After using the Typed CSS Modules plugin, Rsbuild will generate type declaration files for all CSS Modules in the project, providing accurate type hints.
+
+For example, create two files named `src/index.ts` and `src/index.module.css`:
+
+```tsx title="src/index.ts"
+import styles from './index.module.css';
+
+console.log(styles.pageHeader);
+```
+
+```css title="index.module.css"
+.page-header {
+  color: black;
+}
+```
+
+After building, Rsbuild will generate a `src/index.module.css.d.ts` type declaration file:
+
+```ts title="src/index.module.css.d.ts"
+interface CssExports {
+  'page-header': string;
+  pageHeader: string;
+}
+export const cssExports: CssExports;
+export default cssExports;
+```
+
+Now when you open the `src/index.ts` file, you can see that the `styles` object already has an accurate type.
+
 ## ESM/CJS Exports
 
 Now, all packages of Rsbuild provide exports in both ES modules and CommonJS formats, and `"type"="module"` has been declared in the package.json.

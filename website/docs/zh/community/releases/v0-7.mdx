@@ -49,6 +49,48 @@ Rsbuild 现在使用 [CssExtractRspackPlugin](https://www.rspack.dev/plugins/rsp
 - 支持更多的 CSS Modules 选项，如 [cssModules.exportGlobals](/config/output/css-modules#cssmodulesexportglobals)
 - 现在你可以使用 [tools.cssExtract](/config/tools/css-extract) 来配置 CssExtractRspackPlugin。
 
+## CSS Modules 类型
+
+Rsbuild v0.7 新增了 [Typed CSS Modules 插件](/plugins/list/plugin-typed-css-modules)，用于为项目中的 CSS Modules 文件生成类型声明文件。
+
+当你在 TypeScript 项目里使用 CSS Modules 时，默认的类型定义如下。它只能提供基本的类型支持，无法准确地提示出 CSS Modules 导出了哪些类名。
+
+```ts title="src/env.d.ts"
+declare module '*.module.css' {
+  const classes: { readonly [key: string]: string };
+  export default classes;
+}
+```
+
+在使用 Typed CSS Modules 插件后，Rsbuild 会为项目中所有的 CSS Modules 生成类型声明文件，提供准确的类型提示。
+
+例如，创建 `src/index.ts` 和 `src/index.module.css` 两个文件：
+
+```tsx title="src/index.ts"
+import styles from './index.module.css';
+
+console.log(styles.pageHeader);
+```
+
+```css title="index.module.css"
+.page-header {
+  color: black;
+}
+```
+
+构建后，Rsbuild 会自动生成 `src/index.module.css.d.ts` 类型声明文件：
+
+```ts title="src/index.module.css.d.ts"
+interface CssExports {
+  'page-header': string;
+  pageHeader: string;
+}
+export const cssExports: CssExports;
+export default cssExports;
+```
+
+此时再打开 `src/index.ts` 文件，可以看到 `styles` 对象已经具备了准确的类型。
+
 ## ESM/CJS 导出
 
 现在，Rsbuild 的所有包均提供了 ES modules 和 CommonJS 两种格式的导出，并在 package.json 中声明了 `"type"="module"`。
