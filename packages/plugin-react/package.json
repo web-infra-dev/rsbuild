@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "@rspack/plugin-react-refresh": "0.7.0-beta.0",
+    "@rspack/plugin-react-refresh": "0.7.0-beta.1",
     "react-refresh": "^0.14.2"
   },
   "devDependencies": {
