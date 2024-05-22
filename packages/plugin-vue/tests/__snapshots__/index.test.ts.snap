@@ -64,43 +64,15 @@ exports[`plugin-vue > should allow to configure vueLoader options 1`] = `
 `;
 
 exports[`plugin-vue > should define feature flags correctly 1`] = `
-{
-  "module": {
-    "rules": [
-      {
-        "test": /\\\\\\.vue\\$/,
-        "use": [
-          {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/vue-loader/dist/index.js",
-            "options": {
-              "compilerOptions": {
-                "preserveWhitespace": false,
-              },
-              "experimentalInlineMatchResource": true,
-            },
-          },
-        ],
-      },
-    ],
+DefinePlugin {
+  "_options": {
+    "__VUE_OPTIONS_API__": "true",
+    "__VUE_PROD_DEVTOOLS__": "false",
+    "__VUE_PROD_HYDRATION_MISMATCH_DETAILS__": "false",
+    "process.env.ASSET_PREFIX": """",
+    "process.env.NODE_ENV": ""test"",
   },
-  "plugins": [
-    Plugin {},
-    DefinePlugin {
-      "_options": {
-        "__VUE_OPTIONS_API__": "true",
-        "__VUE_PROD_DEVTOOLS__": "false",
-        "__VUE_PROD_HYDRATION_MISMATCH_DETAILS__": "false",
-        "process.env.ASSET_PREFIX": """",
-        "process.env.NODE_ENV": ""test"",
-      },
-      "affectedHooks": "compilation",
-      "name": "DefinePlugin",
-    },
-  ],
-  "resolve": {
-    "extensions": [
-      ".vue",
-    ],
-  },
+  "affectedHooks": "compilation",
+  "name": "DefinePlugin",
 }
 `;

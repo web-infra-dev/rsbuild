@@ -44,7 +44,7 @@ export function baseMatchLoader({
 }
 
 /** Match plugin by constructor name. */
-const matchPlugin = (config: RspackConfig, pluginName: string) => {
+export const matchPlugin = (config: RspackConfig, pluginName: string) => {
   const result = config.plugins?.filter(
     (item) => item?.constructor.name === pluginName,
   );

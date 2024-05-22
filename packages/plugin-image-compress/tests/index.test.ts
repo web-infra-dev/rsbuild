@@ -1,67 +1,45 @@
-import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginAsset } from '../../core/src/plugins/asset';
+import { createRsbuild } from '@rsbuild/core';
 import { pluginImageCompress } from '../src';
 
 process.env.NODE_ENV = 'production';
 
 describe('plugin-image-compress', () => {
   it('should generate correct options', async () => {
-    const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {},
-      plugins: [pluginAsset(), pluginImageCompress()],
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        plugins: [pluginImageCompress()],
+        output: {
+          minify: false,
+        },
+      },
     });
-    expect(await rsbuild.unwrapConfig()).toMatchSnapshot();
+    const configs = await rsbuild.initConfigs();
+    expect(configs[0].optimization?.minimizer).toMatchSnapshot();
   });
 
   it('should accept `...options: Options[]` as parameter', async () => {
-    const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {},
-      plugins: [pluginAsset(), pluginImageCompress('jpeg', { use: 'png' })],
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        plugins: [pluginImageCompress('jpeg', { use: 'png' })],
+        output: {
+          minify: false,
+        },
+      },
     });
-    const config = await rsbuild.unwrapConfig();
-    expect(config.optimization?.minimizer).toMatchInlineSnapshot(`
-      [
-        ImageMinimizerPlugin {
-          "name": "@rsbuild/plugin-image-compress/minimizer",
-          "options": {
-            "test": /\\\\\\.\\(\\?:jpg\\|jpeg\\)\\$/,
-            "use": "jpeg",
-          },
-        },
-        ImageMinimizerPlugin {
-          "name": "@rsbuild/plugin-image-compress/minimizer",
-          "options": {
-            "test": /\\\\\\.png\\$/,
-            "use": "png",
-          },
-        },
-      ]
-    `);
+    const configs = await rsbuild.initConfigs();
+    expect(configs[0].optimization?.minimizer).toMatchSnapshot();
   });
 
   it('should accept `options: Options[]` as parameter', async () => {
-    const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {},
-      plugins: [pluginAsset(), pluginImageCompress(['jpeg', { use: 'png' }])],
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        plugins: [pluginImageCompress(['jpeg', { use: 'png' }])],
+        output: {
+          minify: false,
+        },
+      },
     });
-    const config = await rsbuild.unwrapConfig();
-    expect(config.optimization?.minimizer).toMatchInlineSnapshot(`
-      [
-        ImageMinimizerPlugin {
-          "name": "@rsbuild/plugin-image-compress/minimizer",
-          "options": {
-            "test": /\\\\\\.\\(\\?:jpg\\|jpeg\\)\\$/,
-            "use": "jpeg",
-          },
-        },
-        ImageMinimizerPlugin {
-          "name": "@rsbuild/plugin-image-compress/minimizer",
-          "options": {
-            "test": /\\\\\\.png\\$/,
-            "use": "png",
-          },
-        },
-      ]
-    `);
+    const configs = await rsbuild.initConfigs();
+    expect(configs[0].optimization?.minimizer).toMatchSnapshot();
   });
 });
