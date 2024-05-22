@@ -311,7 +311,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
           {
             "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
             "options": {
-              "implementation": "<ROOT>/node_modules/<PNPM_INNER>/less/index.js",
+              "implementation": "<ROOT>/packages/plugin-less/dist/compiled/less/index.js",
               "lessOptions": {
                 "javascriptEnabled": true,
                 "paths": [

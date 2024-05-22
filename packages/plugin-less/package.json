@@ -28,13 +28,13 @@
     "prebundle": "prebundle"
   },
   "dependencies": {
-    "@rsbuild/shared": "workspace:*",
-    "@types/less": "^3.0.6",
-    "less": "^4.2.0"
+    "@rsbuild/shared": "workspace:*"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
+    "@types/less": "^3.0.6",
+    "less": "^4.2.0",
     "less-loader": "^12.2.0",
     "prebundle": "1.1.0",
     "typescript": "^5.4.2"

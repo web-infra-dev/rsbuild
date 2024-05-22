@@ -11,7 +11,7 @@ import {
   deepmerge,
   mergeChainedOptions,
 } from '@rsbuild/shared';
-import type Less from 'less';
+import type Less from '../compiled/less';
 
 export type LessLoaderOptions = {
   lessOptions?: Less.Options;
@@ -56,7 +56,7 @@ const getLessLoaderOptions = (
       paths: [path.join(rootPath, 'node_modules')],
     },
     sourceMap: isUseCssSourceMap,
-    implementation: require.resolve('less'),
+    implementation: path.join(__dirname, 'compiled/less/index.js'),
   };
 
   const mergeFn = (
