@@ -93,8 +93,8 @@ export const rspackProvider: RsbuildProvider = async ({
       return createDevServer(
         { context, pluginManager, rsbuildOptions },
         createDevMiddleware,
-        options,
         config,
+        options,
       );
     },
 
@@ -106,8 +106,8 @@ export const rspackProvider: RsbuildProvider = async ({
       const server = await createDevServer(
         { context, pluginManager, rsbuildOptions },
         createDevMiddleware,
-        options,
         config,
+        options,
       );
 
       return server.listen();

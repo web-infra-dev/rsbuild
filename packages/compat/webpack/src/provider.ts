@@ -102,8 +102,8 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
       return createDevServer(
         { context, pluginManager, rsbuildOptions },
         createDevMiddleware,
-        options,
         config,
+        options,
       );
     },
 
@@ -120,8 +120,8 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
           rsbuildOptions,
         },
         createDevMiddleware,
-        options,
         config,
+        options,
       );
 
       return server.listen();

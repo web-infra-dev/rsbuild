@@ -41,12 +41,12 @@ export async function createDevServer<
     options: Options,
     compiler: StartDevServerOptions['compiler'],
   ) => Promise<CreateDevMiddlewareReturns>,
+  config: NormalizedConfig,
   {
     compiler: customCompiler,
     getPortSilently,
     runCompile = true,
   }: CreateDevServerOptions = {},
-  config: NormalizedConfig,
 ): Promise<RsbuildDevServer> {
   if (!getNodeEnv()) {
     setNodeEnv('development');
