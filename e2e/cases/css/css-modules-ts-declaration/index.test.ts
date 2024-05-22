@@ -14,7 +14,7 @@ const generatorTempDir = async (testDir: string) => {
 };
 
 test('should generator ts declaration correctly for css modules auto true', async () => {
-  const testDir = join(fixtures, 'test-src-1');
+  const testDir = join(fixtures, 'test-temp-src-1');
   const clear = await generatorTempDir(testDir);
 
   await build({
@@ -45,7 +45,7 @@ test('should generator ts declaration correctly for css modules auto true', asyn
 });
 
 test('should generator ts declaration correctly for css modules auto function', async () => {
-  const testDir = join(fixtures, 'test-src-2');
+  const testDir = join(fixtures, 'test-temp-src-2');
   const clear = await generatorTempDir(testDir);
 
   await build({
@@ -74,7 +74,7 @@ test('should generator ts declaration correctly for css modules auto function', 
 });
 
 test('should generator ts declaration correctly for css modules auto Regexp', async () => {
-  const testDir = join(fixtures, 'test-src-3');
+  const testDir = join(fixtures, 'test-temp-src-3');
   const clear = await generatorTempDir(testDir);
 
   await build({
@@ -101,7 +101,7 @@ test('should generator ts declaration correctly for css modules auto Regexp', as
 });
 
 test('should generator ts declaration correctly for custom exportLocalsConvention', async () => {
-  const testDir = join(fixtures, 'test-src-4');
+  const testDir = join(fixtures, 'test-temp-src-4');
   const clear = await generatorTempDir(testDir);
 
   await build({
