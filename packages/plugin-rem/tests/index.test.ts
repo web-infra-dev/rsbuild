@@ -1,7 +1,7 @@
 import { pluginLess } from '@rsbuild/plugin-less';
+import { pluginSass } from '@rsbuild/plugin-sass';
 import { createStubRsbuild } from '@scripts/test-helper';
 import { pluginCss } from '../../core/src/plugins/css';
-import { pluginSass } from '../../core/src/plugins/sass';
 import { pluginRem } from '../src';
 
 describe('plugin-rem', () => {

@@ -138,6 +138,9 @@ importers:
       '@rsbuild/plugin-rem':
         specifier: workspace:*
         version: link:../packages/plugin-rem
+      '@rsbuild/plugin-sass':
+        specifier: workspace:*
+        version: link:../packages/plugin-sass
       '@rsbuild/plugin-solid':
         specifier: workspace:*
         version: link:../packages/plugin-solid
@@ -762,9 +765,6 @@ importers:
       prebundle:
         specifier: 1.1.0
         version: 1.1.0(typescript@5.4.5)
-      resolve-url-loader:
-        specifier: 5.0.0
-        version: 5.0.0
       rspack-manifest-plugin:
         specifier: 5.0.0
         version: 5.0.0(@rspack/core@0.7.0-beta.1(@swc/helpers@0.5.3))
@@ -1218,6 +1218,9 @@ importers:
       '@rsbuild/plugin-less':
         specifier: workspace:*
         version: link:../plugin-less
+      '@rsbuild/plugin-sass':
+        specifier: workspace:*
+        version: link:../plugin-sass
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1230,6 +1233,40 @@ importers:
       prebundle:
         specifier: 1.1.0
         version: 1.1.0(typescript@5.4.5)
+      typescript:
+        specifier: ^5.4.2
+        version: 5.4.5
+
+  packages/plugin-sass:
+    dependencies:
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
+      postcss:
+        specifier: ^8.4.38
+        version: 8.4.38
+      sass:
+        specifier: ^1.77.1
+        version: 1.77.1
+    devDependencies:
+      '@rsbuild/core':
+        specifier: link:../core
+        version: link:../core
+      '@scripts/test-helper':
+        specifier: workspace:*
+        version: link:../../scripts/test-helper
+      '@types/sass-loader':
+        specifier: ^8.0.8
+        version: 8.0.8
+      prebundle:
+        specifier: 1.1.0
+        version: 1.1.0(typescript@5.4.5)
+      resolve-url-loader:
+        specifier: ^5.0.0
+        version: 5.0.0
+      sass-loader:
+        specifier: ^14.2.1
+        version: 14.2.1(@rspack/core@0.7.0-beta.1(@swc/helpers@0.5.3))(sass@1.77.1)(webpack@5.91.0)
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1612,9 +1649,6 @@ importers:
       '@types/node':
         specifier: 18.x
         version: 18.19.31
-      '@types/sass-loader':
-        specifier: 8.0.8
-        version: 8.0.8
       '@types/webpack-bundle-analyzer':
         specifier: 4.7.0
         version: 4.7.0
@@ -1663,12 +1697,6 @@ importers:
       rslog:
         specifier: ^1.2.2
         version: 1.2.2
-      sass:
-        specifier: ^1.77.1
-        version: 1.77.1
-      sass-loader:
-        specifier: 14.2.1
-        version: 14.2.1(@rspack/core@0.7.0-beta.1(@swc/helpers@0.5.3))(sass@1.77.1)(webpack@5.91.0)
       semver:
         specifier: ^7.6.2
         version: 7.6.2
@@ -1741,6 +1769,9 @@ importers:
       '@rsbuild/core':
         specifier: link:../packages/core
         version: link:../packages/core
+      '@rsbuild/plugin-sass':
+        specifier: workspace:*
+        version: link:../packages/plugin-sass
       '@rspress/plugin-rss':
         specifier: 0.0.0-next-20240516095608
         version: 0.0.0-next-20240516095608(react@18.3.1)(rspress@0.0.0-next-20240516095608(webpack@5.91.0))

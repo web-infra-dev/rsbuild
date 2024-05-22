@@ -15,7 +15,6 @@ import type {
   CSSLoaderOptions,
   PostCSSLoaderOptions,
   PostCSSPlugin,
-  SassLoaderOptions,
   StyleLoaderOptions,
   WebpackConfig,
 } from '../thirdParty';
@@ -23,7 +22,6 @@ import type {
   ArrayOrNot,
   ChainedConfig,
   ChainedConfigWithUtils,
-  FileFilterUtil,
   WebpackChain,
 } from '../utils';
 
@@ -32,11 +30,6 @@ export type { HTMLPluginOptions };
 export type ToolsSwcConfig = ChainedConfig<SwcLoaderOptions>;
 
 export type ToolsAutoprefixerConfig = ChainedConfig<AutoprefixerOptions>;
-
-export type ToolsSassConfig = ChainedConfigWithUtils<
-  SassLoaderOptions,
-  { addExcludes: FileFilterUtil }
->;
 
 export type ToolsBundlerChainConfig = ArrayOrNot<
   (chain: BundlerChain, utils: ModifyBundlerChainUtils) => void
@@ -87,10 +80,6 @@ export type ToolsWebpackChainConfig = ArrayOrNot<
 >;
 
 export interface ToolsConfig {
-  /**
-   * Modify the config of [sass-loader](https://github.com/webpack-contrib/sass-loader).
-   */
-  sass?: ToolsSassConfig;
   /**
    * Configure bundler config base on [webpack-chain](https://github.com/neutrinojs/webpack-chain)
    */

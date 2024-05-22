@@ -119,12 +119,5 @@ export default {
         );
       },
     },
-    {
-      name: 'resolve-url-loader',
-      ignoreDts: true,
-      externals: {
-        'loader-utils': '@rsbuild/shared/loader-utils2',
-      },
-    },
   ],
 };

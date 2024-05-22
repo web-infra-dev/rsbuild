@@ -68,7 +68,6 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
         plugins.nodeAddons(),
         plugins.define(),
         plugins.css(),
-        plugins.sass(),
         plugins.bundleAnalyzer(),
         plugins.rsdoctor(),
         plugins.splitChunks(),

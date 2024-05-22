@@ -38,6 +38,7 @@
     "@rsbuild/plugin-pug": "workspace:*",
     "@rsbuild/plugin-react": "workspace:*",
     "@rsbuild/plugin-rem": "workspace:*",
+    "@rsbuild/plugin-sass": "workspace:*",
     "@rsbuild/plugin-solid": "workspace:*",
     "@rsbuild/plugin-source-build": "workspace:*",
     "@rsbuild/plugin-styled-components": "workspace:*",

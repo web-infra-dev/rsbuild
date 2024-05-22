@@ -110,24 +110,5 @@ export default {
         // 'postcss-value-parser': '../postcss-value-parser',
       },
     },
-    {
-      name: 'sass-loader',
-      externals: {
-        sass: '../sass',
-      },
-    },
-    {
-      name: 'sass',
-      externals: {
-        chokidar: '../chokidar',
-      },
-      dtsExternals: ['source-map-js', 'immutable'],
-      beforeBundle: (task) => {
-        fs.outputFileSync(
-          join(task.depPath, 'types/index.d.ts'),
-          `export { Options } from './options';\nexport { LegacyOptions } from './legacy/options';`,
-        );
-      },
-    },
   ],
 };

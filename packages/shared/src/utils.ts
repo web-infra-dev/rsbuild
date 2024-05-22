@@ -15,7 +15,6 @@ import type {
   NodeEnv,
   NormalizedConfig,
   RsbuildTarget,
-  SharedCompiledPkgNames,
   Stats,
 } from './types';
 
@@ -78,6 +77,8 @@ export const getJsSourceMap = (config: NormalizedConfig) => {
   }
   return sourceMap.js;
 };
+
+export type SharedCompiledPkgNames = 'autoprefixer';
 
 export const getSharedPkgCompiledPath = (packageName: SharedCompiledPkgNames) =>
   path.join(__dirname, '../compiled', packageName);
