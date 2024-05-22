@@ -1,16 +1,8 @@
-# 引用样式资源
+# 引用 CSS 文件
 
-Rsbuild 内置多种常用的样式资源处理方式，包括 Less / Sass 预处理器、PostCSS、CSS Modules、CSS 内联和 CSS 压缩。
+Rsbuild 对 CSS 提供开箱即用的支持，包括 PostCSS、CSS Modules、CSS 预处理器、CSS 内联和 CSS 压缩。
 
 除此之外，Rsbuild 也提供了多个配置项来自定义样式资源的处理规则。
-
-## 使用 Less、Sass 和 Stylus
-
-Rsbuild 内置了社区流行的 CSS 预处理器，包括 Less 和 Sass。
-
-默认情况下，你不需要对 Less 和 Sass 进行任何配置。如果你有自定义 loader 配置的需求，可以通过配置 [tools.less](/config/tools/less)、[tools.sass](/config/tools/sass) 来进行设置。
-
-你也可以在 Rsbuild 中使用 Stylus，只需要安装 Rsbuild 提供的 Stylus 插件即可，使用方式请参考 [Stylus 插件](/plugins/list/plugin-stylus)。
 
 ## 使用 PostCSS
 
@@ -53,7 +45,15 @@ Rsbuild 内置了[autoprefixer](https://github.com/postcss/autoprefixer) 插件�
 
 ## 使用 CSS Modules
 
-请阅读 [使用 CSS Modules](/guide/basic/css-modules) 章节来了解 CSS Modules 的完整用法。
+Rsbuild 默认支持 CSS Modules，请阅读 [使用 CSS Modules](/guide/basic/css-modules) 章节来了解 CSS Modules 的完整用法。
+
+## 使用 CSS 预处理器
+
+Rsbuild 通过插件来支持社区流行的 CSS 预处理器，包括 Sass、Less 和 Stylus，使用方式请参考：
+
+- [Sass 插件](/plugins/list/plugin-sass)
+- [Less 插件](/plugins/list/plugin-less)
+- [Stylus 插件](/plugins/list/plugin-stylus)
 
 ## CSS-in-JS
 

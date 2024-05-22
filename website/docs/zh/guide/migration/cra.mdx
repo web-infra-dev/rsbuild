@@ -98,6 +98,14 @@ export default {
 
 > 更多细节请参考[构建产物目录](/guide/basic/output-files)章节。
 
+## 使用 CSS 预处理器
+
+Rsbuild 通过插件来支持 Sass 和 Less 等 CSS 预处理器，使用方式请参考：
+
+- [Sass 插件](/plugins/list/plugin-sass)
+- [Less 插件](/plugins/list/plugin-less)
+- [Stylus 插件](/plugins/list/plugin-stylus)
+
 ## 使用 SVGR
 
 如果你使用了 CRA 的 "SVG 转 React 组件" 功能（即 [SVGR](https://react-svgr.com/)），那么还需要安装 Rsbuild 的 SVGR 插件。
@@ -255,9 +263,9 @@ export default {
 | [webpack.plugins.remove](https://craco.js.org/docs/configuration/webpack/#webpackpluginsremove) | [tools.rspack.removePlugin](/config/tools/rspack#removeplugin)   |
 | [style.modules](https://craco.js.org/docs/configuration/style/#stylemodules)                    | [output.cssModules](/config/output/css-modules)                  |
 | [style.css](https://craco.js.org/docs/configuration/style/#stylecss)                            | [tools.cssLoader](/config/tools/css-loader)                      |
-| [style.sass](https://craco.js.org/docs/configuration/style/#stylesass)                          | [tools.sass](/config/tools/sass)                                 |
+| [style.sass](https://craco.js.org/docs/configuration/style/#stylesass)                          | [Sass 插件](/plugins/list/plugin-sass)                           |
 | [style.postcss](https://craco.js.org/docs/configuration/style/#stylepostcss)                    | [tools.postcss](/config/tools/postcss)                           |
-| [babel](https://craco.js.org/docs/configuration/babel/)                                         | [Babel Plugin](/plugins/list/plugin-babel)                       |
+| [babel](https://craco.js.org/docs/configuration/babel/)                                         | [Babel 插件](/plugins/list/plugin-babel)                         |
 | [typescript](https://craco.js.org/docs/configuration/typescript/)                               | [Type Check Plugin](/plugins/list/plugin-type-check)             |
 | [devServer](https://craco.js.org/docs/configuration/devserver/)                                 | [server configs](/config/index)                                  |
 
