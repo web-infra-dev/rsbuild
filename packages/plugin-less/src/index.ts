@@ -1,13 +1,11 @@
 import path from 'node:path';
+import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
 import {
-  type RsbuildPlugin,
-  type Rspack,
-  __internalHelper,
-} from '@rsbuild/core';
-import {
+  CHAIN_ID,
   type ChainedConfigWithUtils,
   type FileFilterUtil,
   castArray,
+  cloneDeep,
   deepmerge,
   mergeChainedOptions,
 } from '@rsbuild/shared';
@@ -98,7 +96,12 @@ export const pluginLess = ({
   setup(api) {
     api.modifyBundlerChain(async (chain, utils) => {
       const config = api.getNormalizedConfig();
-      const rule = chain.module.rule(utils.CHAIN_ID.RULE.LESS).test(/\.less$/);
+      const rule = chain.module
+        .rule(utils.CHAIN_ID.RULE.LESS)
+        .test(/\.less$/)
+        .merge({ sideEffects: true })
+        .resolve.preferRelative(true)
+        .end();
 
       const { excludes, options } = getLessLoaderOptions(
         lessLoaderOptions,
@@ -110,13 +113,22 @@ export const pluginLess = ({
         rule.exclude.add(item);
       }
 
-      await __internalHelper.applyCSSRule({
-        rule,
-        utils,
-        config,
-        context: api.context,
-        importLoaders: 2,
-      });
+      // Copy the builtin CSS rules
+      const cssRule = chain.module.rules.get(CHAIN_ID.RULE.CSS);
+
+      for (const id of Object.keys(cssRule.uses.entries())) {
+        const loader = cssRule.uses.get(id);
+        rule.use(id).loader(loader.get('loader'));
+
+        const options = cloneDeep(loader.get('options'));
+        console.log(options);
+        if (options) {
+          if (id === CHAIN_ID.USE.CSS) {
+            options.importLoaders = 2;
+          }
+          rule.use(id).options(options);
+        }
+      }
 
       rule
         .use(utils.CHAIN_ID.USE.LESS)
