@@ -1242,6 +1242,9 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
+      postcss:
+        specifier: ^8.4.38
+        version: 8.4.38
       sass:
         specifier: ^1.77.1
         version: 1.77.1
