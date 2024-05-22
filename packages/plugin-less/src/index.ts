@@ -120,7 +120,7 @@ export function pluginLess({
 
         rule
           .use(utils.CHAIN_ID.USE.LESS)
-          .loader(require.resolve('less-loader'))
+          .loader(path.join(__dirname, '../compiled/less-loader/index.js'))
           .options(options);
       });
     },

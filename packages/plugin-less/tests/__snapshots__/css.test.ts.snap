@@ -60,7 +60,7 @@ exports[`plugin-less > should add less-loader 1`] = `
             },
           },
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/less-loader/dist/cjs.js",
+            "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
             "options": {
               "implementation": "<ROOT>/node_modules/<PNPM_INNER>/less/index.js",
               "lessOptions": {
@@ -139,7 +139,7 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
             },
           },
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/less-loader/dist/cjs.js",
+            "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
             "options": {
               "implementation": "<ROOT>/node_modules/<PNPM_INNER>/less/index.js",
               "lessOptions": {
@@ -218,7 +218,7 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
             },
           },
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/less-loader/dist/cjs.js",
+            "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
             "options": {
               "implementation": "<ROOT>/node_modules/<PNPM_INNER>/less/index.js",
               "lessOptions": {
@@ -297,7 +297,7 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
             },
           },
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/less-loader/dist/cjs.js",
+            "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
             "options": {
               "implementation": "<ROOT>/node_modules/<PNPM_INNER>/less/index.js",
               "lessOptions": {
