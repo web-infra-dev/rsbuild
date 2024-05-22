@@ -1,74 +1,83 @@
+import { createRsbuild } from '@rsbuild/core';
 import { pluginLess } from '@rsbuild/plugin-less';
 import { pluginSass } from '@rsbuild/plugin-sass';
-import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginCss } from '../../core/src/plugins/css';
+import { matchPlugin, matchRules } from '@scripts/test-helper';
 import { pluginRem } from '../src';
 
 describe('plugin-rem', () => {
   it('should run rem plugin with default config', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginCss(), pluginLess(), pluginSass(), pluginRem()],
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        plugins: [pluginLess(), pluginSass(), pluginRem()],
+      },
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
 
-    expect(bundlerConfigs[0]).toMatchSnapshot();
+    expect(matchRules(bundlerConfigs[0], 'a.css')).toMatchSnapshot();
+    expect(matchRules(bundlerConfigs[0], 'a.scss')).toMatchSnapshot();
+    expect(matchRules(bundlerConfigs[0], 'a.less')).toMatchSnapshot();
   });
 
   it('should not run htmlPlugin with enableRuntime is false', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginCss(), pluginRem({ enableRuntime: false })],
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        plugins: [pluginRem({ enableRuntime: false })],
+      },
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
 
-    expect(bundlerConfigs[0]).toMatchSnapshot();
+    expect(matchRules(bundlerConfigs[0], 'a.css')).toMatchSnapshot();
   });
 
   it('should run rem plugin with custom config', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [
-        pluginCss(),
-        pluginRem({
-          rootFontSize: 30,
-          pxtorem: {
-            propList: ['font-size'],
-          },
-        }),
-      ],
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        plugins: [
+          pluginRem({
+            rootFontSize: 30,
+            pxtorem: {
+              propList: ['font-size'],
+            },
+          }),
+        ],
+      },
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0]).toMatchSnapshot();
+    expect(matchRules(bundlerConfigs[0], 'a.css')).toMatchSnapshot();
   });
 
   it('should not run rem plugin when target is node', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginCss(), pluginRem()],
+    const rsbuild = await createRsbuild({
       rsbuildConfig: {
+        plugins: [pluginRem()],
         output: {
           targets: ['node'],
         },
       },
     });
 
+    const bundlerConfigs = await rsbuild.initConfigs();
     expect(
-      await rsbuild.matchBundlerPlugin('AutoSetRootFontSizePlugin'),
+      matchPlugin(bundlerConfigs[0], 'AutoSetRootFontSizePlugin'),
     ).toBeFalsy();
   });
 
   it('should not run rem plugin when target is web-worker', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginCss(), pluginRem()],
+    const rsbuild = await createRsbuild({
       rsbuildConfig: {
+        plugins: [pluginRem()],
         output: {
           targets: ['web-worker'],
         },
       },
     });
 
+    const bundlerConfigs = await rsbuild.initConfigs();
     expect(
-      await rsbuild.matchBundlerPlugin('AutoSetRootFontSizePlugin'),
+      matchPlugin(bundlerConfigs[0], 'AutoSetRootFontSizePlugin'),
     ).toBeFalsy();
   });
 });

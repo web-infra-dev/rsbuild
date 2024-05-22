@@ -1,5 +1,6 @@
+import { createRsbuild } from '@rsbuild/core';
 import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginDefine } from '../../core/src/plugins/define';
+import { matchPlugin } from '@scripts/test-helper';
 import { pluginVue } from '../src';
 
 describe('plugin-vue', () => {
@@ -30,11 +31,12 @@ describe('plugin-vue', () => {
   });
 
   it('should define feature flags correctly', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginVue(), pluginDefine()],
-      rsbuildConfig: {},
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        plugins: [pluginVue()],
+      },
     });
-    const config = await rsbuild.unwrapConfig();
-    expect(config).toMatchSnapshot();
+    const config = await rsbuild.initConfigs();
+    expect(matchPlugin(config[0], 'DefinePlugin')).toMatchSnapshot();
   });
 });
