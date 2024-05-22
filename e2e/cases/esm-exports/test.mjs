@@ -6,6 +6,7 @@ import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
 import { pluginEslint } from '@rsbuild/plugin-eslint';
 import { pluginImageCompress } from '@rsbuild/plugin-image-compress';
+import { pluginLess } from '@rsbuild/plugin-less';
 import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
 import { pluginMdx } from '@rsbuild/plugin-mdx';
 import { pluginNodePolyfill } from '@rsbuild/plugin-node-polyfill';
@@ -39,6 +40,7 @@ export default {
   pluginCssMinimizer,
   pluginImageCompress,
   pluginEslint,
+  pluginLess,
   pluginNodePolyfill,
   pluginPug,
   pluginReact,

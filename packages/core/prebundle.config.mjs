@@ -80,13 +80,6 @@ export default {
       },
     },
     {
-      name: 'less-loader',
-      ignoreDts: true,
-      externals: {
-        less: '@rsbuild/shared/less',
-      },
-    },
-    {
       name: 'css-loader',
       ignoreDts: true,
       externals: {

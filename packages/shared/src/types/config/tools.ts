@@ -13,7 +13,6 @@ import type {
   AutoprefixerOptions,
   CSSExtractOptions,
   CSSLoaderOptions,
-  LessLoaderOptions,
   PostCSSLoaderOptions,
   PostCSSPlugin,
   SassLoaderOptions,
@@ -36,11 +35,6 @@ export type ToolsAutoprefixerConfig = ChainedConfig<AutoprefixerOptions>;
 
 export type ToolsSassConfig = ChainedConfigWithUtils<
   SassLoaderOptions,
-  { addExcludes: FileFilterUtil }
->;
-
-export type ToolsLessConfig = ChainedConfigWithUtils<
-  LessLoaderOptions,
   { addExcludes: FileFilterUtil }
 >;
 
@@ -97,10 +91,6 @@ export interface ToolsConfig {
    * Modify the config of [sass-loader](https://github.com/webpack-contrib/sass-loader).
    */
   sass?: ToolsSassConfig;
-  /**
-   * Modify the config of [less-loader](https://github.com/webpack-contrib/less-loader).
-   */
-  less?: ToolsLessConfig;
   /**
    * Configure bundler config base on [webpack-chain](https://github.com/neutrinojs/webpack-chain)
    */

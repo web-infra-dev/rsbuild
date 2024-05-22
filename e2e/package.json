@@ -30,6 +30,7 @@
     "@rsbuild/plugin-css-minimizer": "workspace:*",
     "@rsbuild/plugin-eslint": "workspace:*",
     "@rsbuild/plugin-image-compress": "workspace:*",
+    "@rsbuild/plugin-less": "workspace:*",
     "@rsbuild/plugin-lightningcss": "workspace:*",
     "@rsbuild/plugin-mdx": "workspace:*",
     "@rsbuild/plugin-node-polyfill": "workspace:*",

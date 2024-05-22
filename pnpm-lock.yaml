@@ -114,6 +114,9 @@ importers:
       '@rsbuild/plugin-image-compress':
         specifier: workspace:*
         version: link:../packages/plugin-image-compress
+      '@rsbuild/plugin-less':
+        specifier: workspace:*
+        version: link:../packages/plugin-less
       '@rsbuild/plugin-lightningcss':
         specifier: workspace:*
         version: link:../packages/plugin-lightningcss
@@ -741,9 +744,6 @@ importers:
       launch-editor-middleware:
         specifier: ^2.6.1
         version: 2.6.1
-      less-loader:
-        specifier: 12.2.0
-        version: 12.2.0(@rspack/core@0.7.0-beta.1(@swc/helpers@0.5.3))(less@4.2.0)(webpack@5.91.0)
       on-finished:
         specifier: 2.4.1
         version: 2.4.1
@@ -995,6 +995,34 @@ importers:
         specifier: ^5.91.0
         version: 5.91.0
 
+  packages/plugin-less:
+    dependencies:
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
+    devDependencies:
+      '@rsbuild/core':
+        specifier: link:../core
+        version: link:../core
+      '@scripts/test-helper':
+        specifier: workspace:*
+        version: link:../../scripts/test-helper
+      '@types/less':
+        specifier: ^3.0.6
+        version: 3.0.6
+      less:
+        specifier: ^4.2.0
+        version: 4.2.0
+      less-loader:
+        specifier: ^12.2.0
+        version: 12.2.0(@rspack/core@0.7.0-beta.1(@swc/helpers@0.5.3))(less@4.2.0)(webpack@5.91.0)
+      prebundle:
+        specifier: 1.1.0
+        version: 1.1.0(typescript@5.4.5)
+      typescript:
+        specifier: ^5.4.2
+        version: 5.4.5
+
   packages/plugin-lightningcss:
     dependencies:
       '@rsbuild/shared':
@@ -1187,6 +1215,9 @@ importers:
       '@rsbuild/core':
         specifier: link:../core
         version: link:../core
+      '@rsbuild/plugin-less':
+        specifier: workspace:*
+        version: link:../plugin-less
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1287,18 +1318,12 @@ importers:
       '@rsbuild/core':
         specifier: link:../core
         version: link:../core
-      '@rsbuild/webpack':
-        specifier: workspace:*
-        version: link:../compat/webpack
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
-      webpack:
-        specifier: ^5.91.0
-        version: 5.91.0
 
   packages/plugin-svelte:
     dependencies:
@@ -1584,9 +1609,6 @@ importers:
       '@types/fs-extra':
         specifier: ^11.0.4
         version: 11.0.4
-      '@types/less':
-        specifier: 3.0.6
-        version: 3.0.6
       '@types/node':
         specifier: 18.x
         version: 18.19.31
@@ -1626,9 +1648,6 @@ importers:
       json5:
         specifier: ^2.2.3
         version: 2.2.3
-      less:
-        specifier: 4.2.0
-        version: 4.2.0
       loader-utils2:
         specifier: npm:loader-utils@2.0.4
         version: loader-utils@2.0.4

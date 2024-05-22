@@ -1,12 +1,12 @@
 {
-  "name": "@rsbuild/plugin-rem",
+  "name": "@rsbuild/plugin-less",
   "version": "0.7.0-beta.6",
-  "description": "Rem plugin for Rsbuild",
+  "description": "Less plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
-    "directory": "packages/plugin-rem"
+    "directory": "packages/plugin-less"
   },
   "license": "MIT",
   "type": "module",
@@ -20,8 +20,7 @@
   "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist",
-    "compiled"
+    "dist"
   ],
   "scripts": {
     "build": "modern build",
@@ -29,15 +28,14 @@
     "prebundle": "prebundle"
   },
   "dependencies": {
-    "@rsbuild/shared": "workspace:*",
-    "terser": "5.31.0"
+    "@rsbuild/shared": "workspace:*"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/plugin-less": "workspace:*",
     "@scripts/test-helper": "workspace:*",
-    "html-webpack-plugin": "npm:html-rspack-plugin@5.7.2",
-    "postcss-pxtorem": "6.1.0",
+    "@types/less": "^3.0.6",
+    "less": "^4.2.0",
+    "less-loader": "^12.2.0",
     "prebundle": "1.1.0",
     "typescript": "^5.4.2"
   },

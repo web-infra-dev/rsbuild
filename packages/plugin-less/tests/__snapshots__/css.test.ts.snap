@@ -1,10 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugin-css > should override browserslist of autoprefixer when using output.overrideBrowserslist config 1`] = `
+exports[`plugin-less > should add less-loader 1`] = `
 {
-  "experiments": {
-    "css": false,
-  },
   "module": {
     "rules": [
       {
@@ -12,7 +9,7 @@ exports[`plugin-css > should override browserslist of autoprefixer when using ou
           "preferRelative": true,
         },
         "sideEffects": true,
-        "test": /\\\\\\.css\\$/,
+        "test": /\\\\\\.less\\$/,
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
@@ -20,72 +17,9 @@ exports[`plugin-css > should override browserslist of autoprefixer when using ou
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
-              "importLoaders": 1,
+              "importLoaders": 2,
               "modules": {
                 "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-            "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [
-                  {
-                    "browsers": [
-                      "Chrome 80",
-                    ],
-                    "info": [Function],
-                    "options": {
-                      "flexbox": "no-2009",
-                      "overrideBrowserslist": [
-                        "Chrome 80",
-                      ],
-                    },
-                    "postcssPlugin": "autoprefixer",
-                    "prepare": [Function],
-                  },
-                ],
-              },
-              "sourceMap": false,
-            },
-          },
-        ],
-      },
-    ],
-  },
-}
-`;
-
-exports[`plugin-css > should use custom cssModules rule when using output.cssModules config 1`] = `
-{
-  "experiments": {
-    "css": false,
-  },
-  "module": {
-    "rules": [
-      {
-        "resolve": {
-          "preferRelative": true,
-        },
-        "sideEffects": true,
-        "test": /\\\\\\.css\\$/,
-        "use": [
-          {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader",
-            "options": {
-              "importLoaders": 1,
-              "modules": {
-                "auto": [Function],
                 "exportGlobals": false,
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
@@ -125,41 +59,15 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
               "sourceMap": false,
             },
           },
-        ],
-      },
-    ],
-  },
-}
-`;
-
-exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyles is true and target is node 1`] = `
-{
-  "experiments": {
-    "css": false,
-  },
-  "module": {
-    "rules": [
-      {
-        "resolve": {
-          "preferRelative": true,
-        },
-        "sideEffects": true,
-        "test": /\\\\\\.css\\$/,
-        "use": [
           {
-            "loader": "<ROOT>/packages/core/src/ignoreCssLoader.cjs",
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader",
+            "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
             "options": {
-              "importLoaders": 1,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "exportOnlyLocals": true,
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
+              "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+              "lessOptions": {
+                "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/packages/plugin-less/tests/node_modules",
+                ],
               },
               "sourceMap": false,
             },
@@ -171,11 +79,8 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
 }
 `;
 
-exports[`plugin-css injectStyles > should use css-loader + style-loader when injectStyles is true 1`] = `
+exports[`plugin-less > should add less-loader and css-loader when injectStyles 1`] = `
 {
-  "experiments": {
-    "css": false,
-  },
   "module": {
     "rules": [
       {
@@ -183,7 +88,7 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
           "preferRelative": true,
         },
         "sideEffects": true,
-        "test": /\\\\\\.css\\$/,
+        "test": /\\\\\\.less\\$/,
         "use": [
           {
             "loader": "<ROOT>/packages/core/compiled/style-loader",
@@ -191,7 +96,7 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
-              "importLoaders": 1,
+              "importLoaders": 2,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -233,6 +138,19 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
               "sourceMap": false,
             },
           },
+          {
+            "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
+            "options": {
+              "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+              "lessOptions": {
+                "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/packages/plugin-less/tests/node_modules",
+                ],
+              },
+              "sourceMap": false,
+            },
+          },
         ],
       },
     ],
@@ -240,7 +158,7 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
 }
 `;
 
-exports[`plugin-sass > should add sass-loader 1`] = `
+exports[`plugin-less > should add less-loader with excludes 1`] = `
 {
   "module": {
     "rules": [
@@ -249,7 +167,7 @@ exports[`plugin-sass > should add sass-loader 1`] = `
           "preferRelative": true,
         },
         "sideEffects": true,
-        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
+        "test": /\\\\\\.less\\$/,
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
@@ -257,7 +175,7 @@ exports[`plugin-sass > should add sass-loader 1`] = `
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
-              "importLoaders": 3,
+              "importLoaders": 2,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -300,99 +218,18 @@ exports[`plugin-sass > should add sass-loader 1`] = `
             },
           },
           {
-            "loader": "<ROOT>/packages/core/compiled/resolve-url-loader",
+            "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
             "options": {
-              "join": [Function],
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/shared/compiled/sass-loader",
-            "options": {
-              "implementation": "<ROOT>/packages/shared/compiled/sass",
-              "sourceMap": true,
-            },
-          },
-        ],
-      },
-    ],
-  },
-}
-`;
-
-exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1`] = `
-{
-  "module": {
-    "rules": [
-      {
-        "resolve": {
-          "preferRelative": true,
-        },
-        "sideEffects": true,
-        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
-        "use": [
-          {
-            "loader": "<ROOT>/packages/core/compiled/style-loader",
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader",
-            "options": {
-              "importLoaders": 3,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-            "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [
-                  {
-                    "browsers": [
-                      "chrome >= 87",
-                      "edge >= 88",
-                      "firefox >= 78",
-                      "safari >= 14",
-                    ],
-                    "info": [Function],
-                    "options": {
-                      "flexbox": "no-2009",
-                      "overrideBrowserslist": [
-                        "chrome >= 87",
-                        "edge >= 88",
-                        "firefox >= 78",
-                        "safari >= 14",
-                      ],
-                    },
-                    "postcssPlugin": "autoprefixer",
-                    "prepare": [Function],
-                  },
+              "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+              "lessOptions": {
+                "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/packages/plugin-less/tests/node_modules",
                 ],
               },
               "sourceMap": false,
             },
           },
-          {
-            "loader": "<ROOT>/packages/core/compiled/resolve-url-loader",
-            "options": {
-              "join": [Function],
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/shared/compiled/sass-loader",
-            "options": {
-              "implementation": "<ROOT>/packages/shared/compiled/sass",
-              "sourceMap": true,
-            },
-          },
         ],
       },
     ],
@@ -400,19 +237,16 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
 }
 `;
 
-exports[`plugin-sass > should add sass-loader with excludes 1`] = `
+exports[`plugin-less > should add less-loader with tools.less 1`] = `
 {
   "module": {
     "rules": [
       {
-        "exclude": [
-          /node_modules/,
-        ],
         "resolve": {
           "preferRelative": true,
         },
         "sideEffects": true,
-        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
+        "test": /\\\\\\.less\\$/,
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
@@ -420,7 +254,7 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
-              "importLoaders": 3,
+              "importLoaders": 2,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -463,17 +297,16 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
             },
           },
           {
-            "loader": "<ROOT>/packages/core/compiled/resolve-url-loader",
+            "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
             "options": {
-              "join": [Function],
+              "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+              "lessOptions": {
+                "javascriptEnabled": true,
+                "paths": [
+                  "<ROOT>/packages/plugin-less/tests/node_modules",
+                ],
+              },
               "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/shared/compiled/sass-loader",
-            "options": {
-              "implementation": "<ROOT>/packages/shared/compiled/sass",
-              "sourceMap": true,
             },
           },
         ],

@@ -1,4 +1,8 @@
-import { PLUGIN_STYLUS_NAME, type RsbuildPlugin } from '@rsbuild/core';
+import {
+  PLUGIN_STYLUS_NAME,
+  type RsbuildPlugin,
+  __internalHelper,
+} from '@rsbuild/core';
 import { deepmerge, mergeChainedOptions } from '@rsbuild/shared';
 
 type StylusOptions = {
@@ -45,7 +49,6 @@ export function pluginStylus(options?: PluginStylusOptions): RsbuildPlugin {
           .rule(utils.CHAIN_ID.RULE.STYLUS)
           .test(STYLUS_REGEX);
 
-        const { __internalHelper } = await import('@rsbuild/core');
         await __internalHelper.applyCSSRule({
           rule,
           config,

@@ -1,6 +1,6 @@
+import { pluginLess } from '@rsbuild/plugin-less';
 import { createStubRsbuild } from '@scripts/test-helper';
 import { pluginCss } from '../../core/src/plugins/css';
-import { pluginLess } from '../../core/src/plugins/less';
 import { pluginSass } from '../../core/src/plugins/sass';
 import { pluginRem } from '../src';
 

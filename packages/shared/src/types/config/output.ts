@@ -242,7 +242,7 @@ export interface OutputConfig {
   assetPrefix?: string;
   /**
    * Set the size threshold to inline static assets such as images and fonts.
-   * By default, static assets will be Base64 encoded and inline into the page if the size is less than 10KB.
+   * By default, static assets will be Base64 encoded and inline into the page if the size is less than 4KiB.
    */
   dataUriLimit?: number | DataUriLimit;
   /**

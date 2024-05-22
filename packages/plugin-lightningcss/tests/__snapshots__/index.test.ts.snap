@@ -58,68 +58,6 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
       "preferRelative": true,
     },
     "sideEffects": true,
-    "test": /\\\\\\.less\\$/,
-    "use": [
-      {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/css-loader",
-        "options": {
-          "importLoaders": 2,
-          "modules": {
-            "auto": true,
-            "exportGlobals": false,
-            "exportLocalsConvention": "camelCase",
-            "localIdentName": "[local]-[hash:base64:6]",
-            "namedExport": false,
-          },
-          "sourceMap": false,
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/plugin-lightningcss/src/loader.cjs",
-        "options": {
-          "cssModules": {
-            "dashedIdents": true,
-            "pattern": "[hash]-[local]",
-          },
-          "errorRecovery": true,
-          "implementation": {
-            "browserslistToTargets": [Function],
-            "transform": [Function],
-          },
-          "targets": {
-            "chrome": 5701632,
-            "edge": 5767168,
-            "firefox": 5111808,
-            "safari": 917504,
-          },
-          "visitor": {
-            "Length": [Function],
-          },
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/less-loader",
-        "options": {
-          "implementation": "<ROOT>/packages/shared/compiled/less",
-          "lessOptions": {
-            "javascriptEnabled": true,
-            "paths": [
-              "<ROOT>/node_modules",
-            ],
-          },
-          "sourceMap": false,
-        },
-      },
-    ],
-  },
-  {
-    "resolve": {
-      "preferRelative": true,
-    },
-    "sideEffects": true,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
     "use": [
       {
@@ -267,56 +205,6 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
       "preferRelative": true,
     },
     "sideEffects": true,
-    "test": /\\\\\\.less\\$/,
-    "use": [
-      {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/css-loader",
-        "options": {
-          "importLoaders": 2,
-          "modules": {
-            "auto": true,
-            "exportGlobals": false,
-            "exportLocalsConvention": "camelCase",
-            "localIdentName": "[local]-[hash:base64:6]",
-            "namedExport": false,
-          },
-          "sourceMap": false,
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/plugin-lightningcss/src/loader.cjs",
-        "options": {
-          "targets": {
-            "chrome": 5701632,
-            "edge": 5767168,
-            "firefox": 5111808,
-            "safari": 917504,
-          },
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/less-loader",
-        "options": {
-          "implementation": "<ROOT>/packages/shared/compiled/less",
-          "lessOptions": {
-            "javascriptEnabled": true,
-            "paths": [
-              "<ROOT>/node_modules",
-            ],
-          },
-          "sourceMap": false,
-        },
-      },
-    ],
-  },
-  {
-    "resolve": {
-      "preferRelative": true,
-    },
-    "sideEffects": true,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
     "use": [
       {
@@ -437,56 +325,6 @@ exports[`plugins/lightningcss > plugin-lightningcss should replace postcss-loade
             "firefox": 5111808,
             "safari": 917504,
           },
-        },
-      },
-    ],
-  },
-  {
-    "resolve": {
-      "preferRelative": true,
-    },
-    "sideEffects": true,
-    "test": /\\\\\\.less\\$/,
-    "use": [
-      {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/css-loader",
-        "options": {
-          "importLoaders": 2,
-          "modules": {
-            "auto": true,
-            "exportGlobals": false,
-            "exportLocalsConvention": "camelCase",
-            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-            "namedExport": false,
-          },
-          "sourceMap": false,
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/plugin-lightningcss/src/loader.cjs",
-        "options": {
-          "targets": {
-            "chrome": 5701632,
-            "edge": 5767168,
-            "firefox": 5111808,
-            "safari": 917504,
-          },
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/less-loader",
-        "options": {
-          "implementation": "<ROOT>/packages/shared/compiled/less",
-          "lessOptions": {
-            "javascriptEnabled": true,
-            "paths": [
-              "<ROOT>/node_modules",
-            ],
-          },
-          "sourceMap": false,
         },
       },
     ],
