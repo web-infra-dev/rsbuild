@@ -163,6 +163,9 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
   "module": {
     "rules": [
       {
+        "exclude": [
+          /node_modules/,
+        ],
         "resolve": {
           "preferRelative": true,
         },
@@ -301,7 +304,7 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
             "options": {
               "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
               "lessOptions": {
-                "javascriptEnabled": true,
+                "javascriptEnabled": false,
                 "paths": [
                   "<ROOT>/packages/plugin-less/tests/node_modules",
                 ],

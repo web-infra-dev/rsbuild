@@ -5,11 +5,6 @@ describe('plugin-less', () => {
   it('should add less-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginLess()],
-      rsbuildConfig: {
-        tools: {
-          less: {},
-        },
-      },
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
@@ -32,16 +27,15 @@ describe('plugin-less', () => {
 
   it('should add less-loader with tools.less', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginLess()],
-      rsbuildConfig: {
-        tools: {
-          less: {
+      plugins: [
+        pluginLess({
+          lessLoaderOptions: {
             lessOptions: {
               javascriptEnabled: false,
             },
           },
-        },
-      },
+        }),
+      ],
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
@@ -50,14 +44,13 @@ describe('plugin-less', () => {
 
   it('should add less-loader with excludes', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginLess()],
-      rsbuildConfig: {
-        tools: {
-          less(_config, { addExcludes }) {
+      plugins: [
+        pluginLess({
+          lessLoaderOptions(_config, { addExcludes }) {
             addExcludes(/node_modules/);
           },
-        },
-      },
+        }),
+      ],
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();

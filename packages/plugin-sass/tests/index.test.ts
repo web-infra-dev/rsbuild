@@ -30,14 +30,13 @@ describe('plugin-sass', () => {
 
   it('should add sass-loader with excludes', async () => {
     const rsbuild = await createStubRsbuild({
-      plugins: [pluginSass()],
-      rsbuildConfig: {
-        tools: {
-          sass(_config, { addExcludes }) {
+      plugins: [
+        pluginSass({
+          sassLoaderOptions(_config, { addExcludes }) {
             addExcludes(/node_modules/);
           },
-        },
-      },
+        }),
+      ],
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
