@@ -1,0 +1,51 @@
+{
+  "name": "@rsbuild/plugin-sass",
+  "version": "0.7.0-beta.6",
+  "description": "Sass plugin for Rsbuild",
+  "homepage": "https://rsbuild.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/plugin-sass"
+  },
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "modern build",
+    "dev": "modern build --watch",
+    "prebundle": "prebundle"
+  },
+  "dependencies": {
+    "@rsbuild/shared": "workspace:*",
+    "sass": "^1.77.1"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "workspace:*",
+    "@scripts/test-helper": "workspace:*",
+    "@types/sass-loader": "^8.0.8",
+    "resolve-url-loader": "^5.0.0",
+    "sass-loader": "^14.2.1",
+    "prebundle": "1.1.0",
+    "typescript": "^5.4.2"
+  },
+  "peerDependencies": {
+    "@rsbuild/core": "workspace:^0.7.0-beta.6"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  }
+}

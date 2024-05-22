@@ -90,42 +90,38 @@ const getLessLoaderOptions = (
   };
 };
 
-export function pluginLess({
+export const pluginLess = ({
   lessLoaderOptions,
-}: PluginLessOptions = {}): RsbuildPlugin {
-  return {
-    name: 'rsbuild:less',
-    setup(api) {
-      api.modifyBundlerChain(async (chain, utils) => {
-        const config = api.getNormalizedConfig();
+}: PluginLessOptions = {}): RsbuildPlugin => ({
+  name: 'rsbuild:less',
 
-        const rule = chain.module
-          .rule(utils.CHAIN_ID.RULE.LESS)
-          .test(/\.less$/);
+  setup(api) {
+    api.modifyBundlerChain(async (chain, utils) => {
+      const config = api.getNormalizedConfig();
+      const rule = chain.module.rule(utils.CHAIN_ID.RULE.LESS).test(/\.less$/);
 
-        const { excludes, options } = getLessLoaderOptions(
-          lessLoaderOptions,
-          config.output.sourceMap.css,
-          api.context.rootPath,
-        );
+      const { excludes, options } = getLessLoaderOptions(
+        lessLoaderOptions,
+        config.output.sourceMap.css,
+        api.context.rootPath,
+      );
 
-        for (const item of excludes) {
-          rule.exclude.add(item);
-        }
+      for (const item of excludes) {
+        rule.exclude.add(item);
+      }
 
-        await __internalHelper.applyCSSRule({
-          rule,
-          utils,
-          config,
-          context: api.context,
-          importLoaders: 2,
-        });
-
-        rule
-          .use(utils.CHAIN_ID.USE.LESS)
-          .loader(path.join(__dirname, '../compiled/less-loader/index.js'))
-          .options(options);
+      await __internalHelper.applyCSSRule({
+        rule,
+        utils,
+        config,
+        context: api.context,
+        importLoaders: 2,
       });
-    },
-  };
-}
+
+      rule
+        .use(utils.CHAIN_ID.USE.LESS)
+        .loader(path.join(__dirname, '../compiled/less-loader/index.js'))
+        .options(options);
+    });
+  },
+});

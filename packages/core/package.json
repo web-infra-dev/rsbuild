@@ -77,7 +77,6 @@
     "postcss-loader": "8.1.1",
     "postcss-value-parser": "4.2.0",
     "prebundle": "1.1.0",
-    "resolve-url-loader": "5.0.0",
     "rspack-manifest-plugin": "5.0.0",
     "sirv": "^2.0.4",
     "style-loader": "3.3.4",

@@ -27,7 +27,6 @@ export const plugins = {
   performance: () => import('./performance').then((m) => m.pluginPerformance()),
   define: () => import('./define').then((m) => m.pluginDefine()),
   css: () => import('./css').then((m) => m.pluginCss()),
-  sass: () => import('./sass').then((m) => m.pluginSass()),
   server: () => import('./server').then((m) => m.pluginServer()),
   moduleFederation: () =>
     import('./moduleFederation').then((m) => m.pluginModuleFederation()),
