@@ -69,7 +69,8 @@ exports[`plugin-sass > should add sass-loader 1`] = `
           {
             "loader": "<ROOT>/packages/plugin-sass/compiled/sass-loader/index.js",
             "options": {
-              "implementation": "<ROOT>/node_modules/<PNPM_INNER>/sass/sass.node.js",
+              "api": "modern-compiler",
+              "implementation": "<ROOT>/node_modules/<PNPM_INNER>/sass-embedded/dist/lib/index.js",
               "sourceMap": true,
             },
           },
@@ -149,7 +150,8 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
           {
             "loader": "<ROOT>/packages/plugin-sass/compiled/sass-loader/index.js",
             "options": {
-              "implementation": "<ROOT>/node_modules/<PNPM_INNER>/sass/sass.node.js",
+              "api": "modern-compiler",
+              "implementation": "<ROOT>/node_modules/<PNPM_INNER>/sass-embedded/dist/lib/index.js",
               "sourceMap": true,
             },
           },
@@ -229,7 +231,8 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
           {
             "loader": "<ROOT>/packages/plugin-sass/compiled/sass-loader/index.js",
             "options": {
-              "implementation": "<ROOT>/node_modules/<PNPM_INNER>/sass/sass.node.js",
+              "api": "modern-compiler",
+              "implementation": "<ROOT>/node_modules/<PNPM_INNER>/sass-embedded/dist/lib/index.js",
               "sourceMap": true,
             },
           },
