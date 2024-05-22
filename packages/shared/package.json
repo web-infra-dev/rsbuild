@@ -24,10 +24,6 @@
       "types": "./compiled/jiti/types/jiti.d.ts",
       "default": "./compiled/jiti/index.js"
     },
-    "./less": {
-      "types": "./compiled/less/index.d.ts",
-      "default": "./compiled/less/index.js"
-    },
     "./yaml": {
       "types": "./compiled/yaml/index.d.ts",
       "default": "./compiled/yaml/index.js"
@@ -105,7 +101,6 @@
   "devDependencies": {
     "@types/connect": "3.4.38",
     "@types/fs-extra": "^11.0.4",
-    "@types/less": "3.0.6",
     "@types/node": "18.x",
     "@types/sass-loader": "8.0.8",
     "@types/webpack-bundle-analyzer": "4.7.0",
@@ -119,7 +114,6 @@
     "http-proxy-middleware": "^2.0.6",
     "jiti": "^1.21.0",
     "json5": "^2.2.3",
-    "less": "4.2.0",
     "loader-utils2": "npm:loader-utils@2.0.4",
     "mime-types": "^2.1.35",
     "picocolors": "1.0.0",

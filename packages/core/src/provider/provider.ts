@@ -64,7 +64,6 @@ export const rspackProvider: RsbuildProvider = async ({
         plugins.nodeAddons(),
         plugins.define(),
         plugins.css(),
-        plugins.less(),
         plugins.sass(),
         import('../plugins/minimize').then((m) => m.pluginMinimize()),
         import('../plugins/progress').then((m) => m.pluginProgress()),

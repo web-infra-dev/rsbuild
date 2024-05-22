@@ -28,11 +28,7 @@ export type DeepReadonly<T> = keyof T extends never
 
 export type FileFilterUtil = (items: ArrayOrNot<string | RegExp>) => void;
 
-export type SharedCompiledPkgNames =
-  | 'sass'
-  | 'less'
-  | 'autoprefixer'
-  | 'sass-loader';
+export type SharedCompiledPkgNames = 'sass' | 'autoprefixer' | 'sass-loader';
 
 export type CompilerTapFn<
   CallBack extends (...args: any[]) => void = () => void,

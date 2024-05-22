@@ -1,18 +1,40 @@
 import path from 'node:path';
+import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
 import {
+  type ChainedConfigWithUtils,
   type FileFilterUtil,
-  type LessLoaderOptions,
-  type ToolsLessConfig,
   castArray,
   deepmerge,
-  getSharedPkgCompiledPath,
   mergeChainedOptions,
 } from '@rsbuild/shared';
-import { getCompiledPath } from '../helpers';
-import type { RsbuildPlugin } from '../types';
+import type Less from 'less';
+
+export type LessLoaderOptions = {
+  lessOptions?: Less.Options;
+  additionalData?:
+    | string
+    | ((
+        content: string,
+        loaderContext: Rspack.LoaderContext<LessLoaderOptions>,
+      ) => string | Promise<string>);
+  sourceMap?: boolean;
+  webpackImporter?: boolean;
+  implementation?: unknown;
+};
+
+export type PluginLessOptions = {
+  /**
+   * Options passed to less-loader.
+   * @see https://github.com/webpack-contrib/less-loader
+   */
+  lessLoaderOptions?: ChainedConfigWithUtils<
+    LessLoaderOptions,
+    { addExcludes: FileFilterUtil }
+  >;
+};
 
 const getLessLoaderOptions = (
-  rsbuildLessConfig: ToolsLessConfig | undefined,
+  userOptions: PluginLessOptions['lessLoaderOptions'],
   isUseCssSourceMap: boolean,
   rootPath: string,
 ) => {
@@ -30,7 +52,7 @@ const getLessLoaderOptions = (
       paths: [path.join(rootPath, 'node_modules')],
     },
     sourceMap: isUseCssSourceMap,
-    implementation: getSharedPkgCompiledPath('less'),
+    implementation: require.resolve('less'),
   };
 
   const mergeFn = (
@@ -53,7 +75,7 @@ const getLessLoaderOptions = (
 
   const mergedOptions = mergeChainedOptions({
     defaults: defaultLessLoaderOptions,
-    options: rsbuildLessConfig,
+    options: userOptions,
     utils: { addExcludes },
     mergeFn,
   });
@@ -64,20 +86,21 @@ const getLessLoaderOptions = (
   };
 };
 
-export function pluginLess(): RsbuildPlugin {
+export function pluginLess({
+  lessLoaderOptions,
+}: PluginLessOptions = {}): RsbuildPlugin {
   return {
     name: 'rsbuild:less',
     setup(api) {
       api.modifyBundlerChain(async (chain, utils) => {
         const config = api.getNormalizedConfig();
-        const { applyCSSRule } = await import('./css');
 
         const rule = chain.module
           .rule(utils.CHAIN_ID.RULE.LESS)
           .test(/\.less$/);
 
         const { excludes, options } = getLessLoaderOptions(
-          config.tools.less,
+          lessLoaderOptions,
           config.output.sourceMap.css,
           api.context.rootPath,
         );
@@ -86,7 +109,8 @@ export function pluginLess(): RsbuildPlugin {
           rule.exclude.add(item);
         }
 
-        await applyCSSRule({
+        const { __internalHelper } = await import('@rsbuild/core');
+        await __internalHelper.applyCSSRule({
           rule,
           utils,
           config,
@@ -96,7 +120,7 @@ export function pluginLess(): RsbuildPlugin {
 
         rule
           .use(utils.CHAIN_ID.USE.LESS)
-          .loader(getCompiledPath('less-loader'))
+          .loader(require.resolve('less-loader'))
           .options(options);
       });
     },

@@ -1,13 +1,11 @@
 import type {
   CssExtractRspackLoaderOptions,
   CssExtractRspackPluginOptions,
-  LoaderContext,
 } from '@rspack/core';
 import type { AcceptedPlugin, ProcessOptions } from 'postcss';
 import type { MinifyOptions } from 'terser';
 import type { Configuration as WebpackConfig } from 'webpack';
 import type Autoprefixer from '../../compiled/autoprefixer/index.js';
-import type Less from '../../compiled/less/index.js';
 import type SassLoader from '../../compiled/sass-loader/index.js';
 import type {
   LegacyOptions as LegacySassOptions,
@@ -37,19 +35,6 @@ export type SassLoaderOptions = Omit<SassLoader.Options, 'sassOptions'> &
         sassOptions?: SassOptions<'async'>;
       }
   );
-
-export type LessLoaderOptions = {
-  lessOptions?: Less.Options;
-  additionalData?:
-    | string
-    | ((
-        content: string,
-        loaderContext: LoaderContext<LessLoaderOptions>,
-      ) => string | Promise<string>);
-  sourceMap?: boolean;
-  webpackImporter?: boolean;
-  implementation?: unknown;
-};
 
 export type PostCSSOptions = ProcessOptions & {
   config?: boolean;

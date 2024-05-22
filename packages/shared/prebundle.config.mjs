@@ -111,24 +111,6 @@ export default {
       },
     },
     {
-      name: 'less',
-      externals: {
-        // needle is an optional dependency and no need to bundle it.
-        needle: 'needle',
-      },
-      // bundle namespace child (hoisting) not supported yet
-      beforeBundle: () => {
-        replaceFileContent(
-          join(process.cwd(), 'node_modules/@types/less/index.d.ts'),
-          (content) =>
-            `${content.replace(
-              /declare module "less" {\s+export = less;\s+}/,
-              'export = Less;',
-            )}`,
-        );
-      },
-    },
-    {
       name: 'sass-loader',
       externals: {
         sass: '../sass',
