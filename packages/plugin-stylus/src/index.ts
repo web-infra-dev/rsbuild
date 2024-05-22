@@ -1,9 +1,7 @@
-import {
-  PLUGIN_STYLUS_NAME,
-  type RsbuildPlugin,
-  __internalHelper,
-} from '@rsbuild/core';
-import { deepmerge, mergeChainedOptions } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '@rsbuild/core';
+import { cloneDeep, deepmerge, mergeChainedOptions } from '@rsbuild/shared';
+
+export const PLUGIN_STYLUS_NAME = 'rsbuild:stylus';
 
 type StylusOptions = {
   use?: string[];
@@ -14,7 +12,7 @@ type StylusOptions = {
   hoistAtrules?: boolean;
 };
 
-type StylusLoaderOptions = {
+export type PluginStylusOptions = {
   /**
    * Options passed to Stylus.
    */
@@ -25,43 +23,44 @@ type StylusLoaderOptions = {
   sourceMap?: boolean;
 };
 
-export type PluginStylusOptions = StylusLoaderOptions;
+export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
+  name: PLUGIN_STYLUS_NAME,
 
-export function pluginStylus(options?: PluginStylusOptions): RsbuildPlugin {
-  return {
-    name: PLUGIN_STYLUS_NAME,
+  setup(api) {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
+      const config = api.getNormalizedConfig();
 
-    setup(api) {
-      const STYLUS_REGEX = /\.styl(us)?$/;
-
-      api.modifyBundlerChain(async (chain, utils) => {
-        const config = api.getNormalizedConfig();
-
-        const mergedOptions = mergeChainedOptions({
-          defaults: {
-            sourceMap: config.output.sourceMap.css,
-          },
-          options,
-          mergeFn: deepmerge,
-        });
-
-        const rule = chain.module
-          .rule(utils.CHAIN_ID.RULE.STYLUS)
-          .test(STYLUS_REGEX);
-
-        await __internalHelper.applyCSSRule({
-          rule,
-          config,
-          context: api.context,
-          utils,
-          importLoaders: 2,
-        });
-
-        rule
-          .use(utils.CHAIN_ID.USE.STYLUS)
-          .loader(require.resolve('stylus-loader'))
-          .options(mergedOptions);
+      const mergedOptions = mergeChainedOptions({
+        defaults: {
+          sourceMap: config.output.sourceMap.css,
+        },
+        options,
+        mergeFn: deepmerge,
       });
-    },
-  };
-}
+
+      const rule = chain.module
+        .rule(CHAIN_ID.RULE.STYLUS)
+        .test(/\.styl(us)?$/)
+        .merge({ sideEffects: true })
+        .resolve.preferRelative(true)
+        .end();
+
+      const cssRule = chain.module.rules.get(CHAIN_ID.RULE.CSS);
+
+      // Copy the builtin CSS rules
+      for (const id of Object.keys(cssRule.uses.entries())) {
+        const loader = cssRule.uses.get(id);
+        const options = cloneDeep(loader.get('options'));
+        if (id === CHAIN_ID.USE.CSS) {
+          options.importLoaders = 2;
+        }
+        rule.use(id).loader(loader.get('loader')).options(options);
+      }
+
+      rule
+        .use(CHAIN_ID.USE.STYLUS)
+        .loader(require.resolve('stylus-loader'))
+        .options(mergedOptions);
+    });
+  },
+});

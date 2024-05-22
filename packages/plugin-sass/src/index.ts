@@ -1,13 +1,16 @@
 import { join } from 'node:path';
-import { type RsbuildPlugin, __internalHelper } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import {
   type FileFilterUtil,
   castArray,
+  cloneDeep,
   deepmerge,
   mergeChainedOptions,
 } from '@rsbuild/shared';
 import { getResolveUrlJoinFn, patchCompilerGlobalLocation } from './helpers';
 import type { PluginSassOptions, SassLoaderOptions } from './types';
+
+export const PLUGIN_SASS_NAME = 'rsbuild:sass';
 
 const getSassLoaderOptions = (
   userOptions: PluginSassOptions['sassLoaderOptions'],
@@ -63,16 +66,14 @@ const getSassLoaderOptions = (
 export const pluginSass = (
   pluginOptions: PluginSassOptions = {},
 ): RsbuildPlugin => ({
-  name: 'rsbuild:sass',
+  name: PLUGIN_SASS_NAME,
 
   setup(api) {
     api.onAfterCreateCompiler(({ compiler }) => {
       patchCompilerGlobalLocation(compiler);
     });
 
-    api.modifyBundlerChain(async (chain, utils) => {
-      const config = api.getNormalizedConfig();
-
+    api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
       const { excludes, options } = getSassLoaderOptions(
         pluginOptions.sassLoaderOptions,
         // source-maps required for loaders preceding resolve-url-loader
@@ -81,24 +82,31 @@ export const pluginSass = (
       );
 
       const rule = chain.module
-        .rule(utils.CHAIN_ID.RULE.SASS)
-        .test(/\.s(?:a|c)ss$/);
+        .rule(CHAIN_ID.RULE.SASS)
+        .test(/\.s(?:a|c)ss$/)
+        .merge({ sideEffects: true })
+        .resolve.preferRelative(true)
+        .end();
 
       for (const item of excludes) {
         rule.exclude.add(item);
       }
 
-      await __internalHelper.applyCSSRule({
-        rule,
-        utils,
-        config,
-        context: api.context,
-        // postcss-loader, resolve-url-loader, sass-loader
-        importLoaders: 3,
-      });
+      const cssRule = chain.module.rules.get(CHAIN_ID.RULE.CSS);
+
+      // Copy the builtin CSS rules
+      for (const id of Object.keys(cssRule.uses.entries())) {
+        const loader = cssRule.uses.get(id);
+        const options = cloneDeep(loader.get('options'));
+        if (id === CHAIN_ID.USE.CSS) {
+          // postcss-loader, resolve-url-loader, sass-loader
+          options.importLoaders = 3;
+        }
+        rule.use(id).loader(loader.get('loader')).options(options);
+      }
 
       rule
-        .use(utils.CHAIN_ID.USE.RESOLVE_URL)
+        .use(CHAIN_ID.USE.RESOLVE_URL)
         .loader(join(__dirname, '../compiled/resolve-url-loader/index.js'))
         .options({
           join: await getResolveUrlJoinFn(),
@@ -108,7 +116,7 @@ export const pluginSass = (
           sourceMap: false,
         })
         .end()
-        .use(utils.CHAIN_ID.USE.SASS)
+        .use(CHAIN_ID.USE.SASS)
         .loader(join(__dirname, '../compiled/sass-loader/index.js'))
         .options(options);
     });

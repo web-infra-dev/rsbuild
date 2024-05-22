@@ -23,13 +23,7 @@ export { logger } from '@rsbuild/shared';
 export { mergeRsbuildConfig } from './mergeConfig';
 
 // Constants
-export {
-  PLUGIN_SWC_NAME,
-  PLUGIN_CSS_NAME,
-  PLUGIN_SASS_NAME,
-  PLUGIN_LESS_NAME,
-  PLUGIN_STYLUS_NAME,
-} from './constants';
+export { PLUGIN_SWC_NAME, PLUGIN_CSS_NAME } from './constants';
 
 // Types
 export type {

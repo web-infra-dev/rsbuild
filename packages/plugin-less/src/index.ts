@@ -1,17 +1,16 @@
 import path from 'node:path';
-import {
-  type RsbuildPlugin,
-  type Rspack,
-  __internalHelper,
-} from '@rsbuild/core';
+import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
 import {
   type ChainedConfigWithUtils,
   type FileFilterUtil,
   castArray,
+  cloneDeep,
   deepmerge,
   mergeChainedOptions,
 } from '@rsbuild/shared';
 import type Less from '../compiled/less';
+
+export const PLUGIN_LESS_NAME = 'rsbuild:less';
 
 export type LessLoaderOptions = {
   lessOptions?: Less.Options;
@@ -93,12 +92,17 @@ const getLessLoaderOptions = (
 export const pluginLess = ({
   lessLoaderOptions,
 }: PluginLessOptions = {}): RsbuildPlugin => ({
-  name: 'rsbuild:less',
+  name: PLUGIN_LESS_NAME,
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, utils) => {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
       const config = api.getNormalizedConfig();
-      const rule = chain.module.rule(utils.CHAIN_ID.RULE.LESS).test(/\.less$/);
+      const rule = chain.module
+        .rule(CHAIN_ID.RULE.LESS)
+        .test(/\.less$/)
+        .merge({ sideEffects: true })
+        .resolve.preferRelative(true)
+        .end();
 
       const { excludes, options } = getLessLoaderOptions(
         lessLoaderOptions,
@@ -110,16 +114,20 @@ export const pluginLess = ({
         rule.exclude.add(item);
       }
 
-      await __internalHelper.applyCSSRule({
-        rule,
-        utils,
-        config,
-        context: api.context,
-        importLoaders: 2,
-      });
+      const cssRule = chain.module.rules.get(CHAIN_ID.RULE.CSS);
+
+      // Copy the builtin CSS rules
+      for (const id of Object.keys(cssRule.uses.entries())) {
+        const loader = cssRule.uses.get(id);
+        const options = cloneDeep(loader.get('options'));
+        if (id === CHAIN_ID.USE.CSS) {
+          options.importLoaders = 2;
+        }
+        rule.use(id).loader(loader.get('loader')).options(options);
+      }
 
       rule
-        .use(utils.CHAIN_ID.USE.LESS)
+        .use(CHAIN_ID.USE.LESS)
         .loader(path.join(__dirname, '../compiled/less-loader/index.js'))
         .options(options);
     });
