@@ -138,6 +138,9 @@ importers:
       '@rsbuild/plugin-rem':
         specifier: workspace:*
         version: link:../packages/plugin-rem
+      '@rsbuild/plugin-sass':
+        specifier: workspace:*
+        version: link:../packages/plugin-sass
       '@rsbuild/plugin-solid':
         specifier: workspace:*
         version: link:../packages/plugin-solid
@@ -1215,6 +1218,9 @@ importers:
       '@rsbuild/plugin-less':
         specifier: workspace:*
         version: link:../plugin-less
+      '@rsbuild/plugin-sass':
+        specifier: workspace:*
+        version: link:../plugin-sass
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
