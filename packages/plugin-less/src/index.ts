@@ -1,5 +1,9 @@
 import path from 'node:path';
-import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
+import {
+  type RsbuildPlugin,
+  type Rspack,
+  __internalHelper,
+} from '@rsbuild/core';
 import {
   type ChainedConfigWithUtils,
   type FileFilterUtil,
@@ -109,7 +113,6 @@ export function pluginLess({
           rule.exclude.add(item);
         }
 
-        const { __internalHelper } = await import('@rsbuild/core');
         await __internalHelper.applyCSSRule({
           rule,
           utils,
