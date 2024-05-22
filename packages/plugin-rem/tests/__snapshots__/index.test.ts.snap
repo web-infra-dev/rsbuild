@@ -1,429 +1,369 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`plugin-rem > should not run htmlPlugin with enableRuntime is false 1`] = `
-{
-  "experiments": {
-    "css": false,
-  },
-  "module": {
-    "rules": [
+[
+  {
+    "resolve": {
+      "preferRelative": true,
+    },
+    "sideEffects": true,
+    "test": /\\\\\\.css\\$/,
+    "use": [
       {
-        "resolve": {
-          "preferRelative": true,
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+      },
+      {
+        "loader": "<ROOT>/packages/core/compiled/css-loader",
+        "options": {
+          "importLoaders": 1,
+          "modules": {
+            "auto": true,
+            "exportGlobals": false,
+            "exportLocalsConvention": "camelCase",
+            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+            "namedExport": false,
+          },
+          "sourceMap": false,
         },
-        "sideEffects": true,
-        "test": /\\\\\\.css\\$/,
-        "use": [
-          {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader",
-            "options": {
-              "importLoaders": 1,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-            "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [
-                  {
-                    "browsers": [
-                      "chrome >= 87",
-                      "edge >= 88",
-                      "firefox >= 78",
-                      "safari >= 14",
-                    ],
-                    "info": [Function],
-                    "options": {
-                      "flexbox": "no-2009",
-                      "overrideBrowserslist": [
-                        "chrome >= 87",
-                        "edge >= 88",
-                        "firefox >= 78",
-                        "safari >= 14",
-                      ],
-                    },
-                    "postcssPlugin": "autoprefixer",
-                    "prepare": [Function],
-                  },
-                  {
-                    "AtRule": [Function],
-                    "Declaration": [Function],
-                    "Once": [Function],
-                    "postcssPlugin": "postcss-pxtorem",
-                  },
+      },
+      {
+        "loader": "<ROOT>/packages/core/compiled/postcss-loader",
+        "options": {
+          "postcssOptions": {
+            "config": false,
+            "plugins": [
+              {
+                "browsers": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
                 ],
+                "info": [Function],
+                "options": {
+                  "flexbox": "no-2009",
+                  "overrideBrowserslist": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "postcssPlugin": "autoprefixer",
+                "prepare": [Function],
               },
-              "sourceMap": false,
-            },
+              {
+                "AtRule": [Function],
+                "Declaration": [Function],
+                "Once": [Function],
+                "postcssPlugin": "postcss-pxtorem",
+              },
+            ],
           },
-        ],
+          "sourceMap": false,
+        },
       },
     ],
   },
-}
+]
 `;
 
 exports[`plugin-rem > should run rem plugin with custom config 1`] = `
-{
-  "experiments": {
-    "css": false,
-  },
-  "module": {
-    "rules": [
+[
+  {
+    "resolve": {
+      "preferRelative": true,
+    },
+    "sideEffects": true,
+    "test": /\\\\\\.css\\$/,
+    "use": [
       {
-        "resolve": {
-          "preferRelative": true,
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+      },
+      {
+        "loader": "<ROOT>/packages/core/compiled/css-loader",
+        "options": {
+          "importLoaders": 1,
+          "modules": {
+            "auto": true,
+            "exportGlobals": false,
+            "exportLocalsConvention": "camelCase",
+            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+            "namedExport": false,
+          },
+          "sourceMap": false,
         },
-        "sideEffects": true,
-        "test": /\\\\\\.css\\$/,
-        "use": [
-          {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader",
-            "options": {
-              "importLoaders": 1,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-            "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [
-                  {
-                    "browsers": [
-                      "chrome >= 87",
-                      "edge >= 88",
-                      "firefox >= 78",
-                      "safari >= 14",
-                    ],
-                    "info": [Function],
-                    "options": {
-                      "flexbox": "no-2009",
-                      "overrideBrowserslist": [
-                        "chrome >= 87",
-                        "edge >= 88",
-                        "firefox >= 78",
-                        "safari >= 14",
-                      ],
-                    },
-                    "postcssPlugin": "autoprefixer",
-                    "prepare": [Function],
-                  },
-                  {
-                    "AtRule": [Function],
-                    "Declaration": [Function],
-                    "Once": [Function],
-                    "postcssPlugin": "postcss-pxtorem",
-                  },
+      },
+      {
+        "loader": "<ROOT>/packages/core/compiled/postcss-loader",
+        "options": {
+          "postcssOptions": {
+            "config": false,
+            "plugins": [
+              {
+                "browsers": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
                 ],
+                "info": [Function],
+                "options": {
+                  "flexbox": "no-2009",
+                  "overrideBrowserslist": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "postcssPlugin": "autoprefixer",
+                "prepare": [Function],
               },
-              "sourceMap": false,
-            },
+              {
+                "AtRule": [Function],
+                "Declaration": [Function],
+                "Once": [Function],
+                "postcssPlugin": "postcss-pxtorem",
+              },
+            ],
           },
-        ],
+          "sourceMap": false,
+        },
       },
     ],
   },
-  "plugins": [
-    AutoSetRootFontSizePlugin {
-      "HtmlPlugin": [Function],
-      "distDir": "static/js",
-      "entries": [],
-      "name": "AutoSetRootFontSizePlugin",
-      "options": {
-        "enableRuntime": true,
-        "excludeEntries": [],
-        "inlineRuntime": true,
-        "maxRootFontSize": 64,
-        "pxtorem": {
-          "propList": [
-            "font-size",
-          ],
-        },
-        "rootFontSize": 30,
-        "rootFontSizeVariableName": "ROOT_FONT_SIZE",
-        "screenWidth": 375,
-        "supportLandscape": false,
-        "useRootFontSizeBeyondMax": false,
-        "widthQueryKey": "",
-      },
-      "scriptLoading": "defer",
-      "scriptPath": "",
-    },
-  ],
-}
+]
 `;
 
 exports[`plugin-rem > should run rem plugin with default config 1`] = `
-{
-  "experiments": {
-    "css": false,
-  },
-  "module": {
-    "rules": [
+[
+  {
+    "resolve": {
+      "preferRelative": true,
+    },
+    "sideEffects": true,
+    "test": /\\\\\\.css\\$/,
+    "use": [
       {
-        "resolve": {
-          "preferRelative": true,
-        },
-        "sideEffects": true,
-        "test": /\\\\\\.css\\$/,
-        "use": [
-          {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader",
-            "options": {
-              "importLoaders": 1,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-            "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [
-                  {
-                    "browsers": [
-                      "chrome >= 87",
-                      "edge >= 88",
-                      "firefox >= 78",
-                      "safari >= 14",
-                    ],
-                    "info": [Function],
-                    "options": {
-                      "flexbox": "no-2009",
-                      "overrideBrowserslist": [
-                        "chrome >= 87",
-                        "edge >= 88",
-                        "firefox >= 78",
-                        "safari >= 14",
-                      ],
-                    },
-                    "postcssPlugin": "autoprefixer",
-                    "prepare": [Function],
-                  },
-                  {
-                    "AtRule": [Function],
-                    "Declaration": [Function],
-                    "Once": [Function],
-                    "postcssPlugin": "postcss-pxtorem",
-                  },
-                ],
-              },
-              "sourceMap": false,
-            },
-          },
-        ],
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
-        "resolve": {
-          "preferRelative": true,
+        "loader": "<ROOT>/packages/core/compiled/css-loader",
+        "options": {
+          "importLoaders": 1,
+          "modules": {
+            "auto": true,
+            "exportGlobals": false,
+            "exportLocalsConvention": "camelCase",
+            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+            "namedExport": false,
+          },
+          "sourceMap": false,
         },
-        "sideEffects": true,
-        "test": /\\\\\\.less\\$/,
-        "use": [
-          {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader",
-            "options": {
-              "importLoaders": 2,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-            "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [
-                  {
-                    "browsers": [
-                      "chrome >= 87",
-                      "edge >= 88",
-                      "firefox >= 78",
-                      "safari >= 14",
-                    ],
-                    "info": [Function],
-                    "options": {
-                      "flexbox": "no-2009",
-                      "overrideBrowserslist": [
-                        "chrome >= 87",
-                        "edge >= 88",
-                        "firefox >= 78",
-                        "safari >= 14",
-                      ],
-                    },
-                    "postcssPlugin": "autoprefixer",
-                    "prepare": [Function],
-                  },
-                  {
-                    "AtRule": [Function],
-                    "Declaration": [Function],
-                    "Once": [Function],
-                    "postcssPlugin": "postcss-pxtorem",
-                  },
-                ],
-              },
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
-            "options": {
-              "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
-              "lessOptions": {
-                "javascriptEnabled": true,
-                "paths": [
-                  "<ROOT>/packages/plugin-rem/tests/node_modules",
-                ],
-              },
-              "sourceMap": false,
-            },
-          },
-        ],
       },
       {
-        "resolve": {
-          "preferRelative": true,
-        },
-        "sideEffects": true,
-        "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
-        "use": [
-          {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader",
-            "options": {
-              "importLoaders": 3,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-            "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [
-                  {
-                    "browsers": [
-                      "chrome >= 87",
-                      "edge >= 88",
-                      "firefox >= 78",
-                      "safari >= 14",
-                    ],
-                    "info": [Function],
-                    "options": {
-                      "flexbox": "no-2009",
-                      "overrideBrowserslist": [
-                        "chrome >= 87",
-                        "edge >= 88",
-                        "firefox >= 78",
-                        "safari >= 14",
-                      ],
-                    },
-                    "postcssPlugin": "autoprefixer",
-                    "prepare": [Function],
-                  },
-                  {
-                    "AtRule": [Function],
-                    "Declaration": [Function],
-                    "Once": [Function],
-                    "postcssPlugin": "postcss-pxtorem",
-                  },
+        "loader": "<ROOT>/packages/core/compiled/postcss-loader",
+        "options": {
+          "postcssOptions": {
+            "config": false,
+            "plugins": [
+              {
+                "browsers": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
                 ],
+                "info": [Function],
+                "options": {
+                  "flexbox": "no-2009",
+                  "overrideBrowserslist": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "postcssPlugin": "autoprefixer",
+                "prepare": [Function],
               },
-              "sourceMap": false,
-            },
+              {
+                "AtRule": [Function],
+                "Declaration": [Function],
+                "Once": [Function],
+                "postcssPlugin": "postcss-pxtorem",
+              },
+            ],
           },
-          {
-            "loader": "<ROOT>/packages/plugin-sass/compiled/resolve-url-loader/index.js",
-            "options": {
-              "join": [Function],
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/plugin-sass/compiled/sass-loader/index.js",
-            "options": {
-              "api": "modern-compiler",
-              "implementation": "<ROOT>/node_modules/<PNPM_INNER>/sass-embedded/dist/lib/index.js",
-              "sourceMap": true,
-            },
-          },
-        ],
+          "sourceMap": false,
+        },
       },
     ],
   },
-  "plugins": [
-    AutoSetRootFontSizePlugin {
-      "HtmlPlugin": [Function],
-      "distDir": "static/js",
-      "entries": [],
-      "name": "AutoSetRootFontSizePlugin",
-      "options": {
-        "enableRuntime": true,
-        "excludeEntries": [],
-        "inlineRuntime": true,
-        "maxRootFontSize": 64,
-        "rootFontSize": 50,
-        "rootFontSizeVariableName": "ROOT_FONT_SIZE",
-        "screenWidth": 375,
-        "supportLandscape": false,
-        "useRootFontSizeBeyondMax": false,
-        "widthQueryKey": "",
-      },
-      "scriptLoading": "defer",
-      "scriptPath": "",
+]
+`;
+
+exports[`plugin-rem > should run rem plugin with default config 2`] = `
+[
+  {
+    "resolve": {
+      "preferRelative": true,
     },
-  ],
-}
+    "sideEffects": true,
+    "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
+    "use": [
+      {
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+      },
+      {
+        "loader": "<ROOT>/packages/core/compiled/css-loader",
+        "options": {
+          "importLoaders": 3,
+          "modules": {
+            "auto": true,
+            "exportGlobals": false,
+            "exportLocalsConvention": "camelCase",
+            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+            "namedExport": false,
+          },
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/core/compiled/postcss-loader",
+        "options": {
+          "postcssOptions": {
+            "config": false,
+            "plugins": [
+              {
+                "browsers": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
+                ],
+                "info": [Function],
+                "options": {
+                  "flexbox": "no-2009",
+                  "overrideBrowserslist": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "postcssPlugin": "autoprefixer",
+                "prepare": [Function],
+              },
+              {
+                "AtRule": [Function],
+                "Declaration": [Function],
+                "Once": [Function],
+                "postcssPlugin": "postcss-pxtorem",
+              },
+            ],
+          },
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/plugin-sass/compiled/resolve-url-loader/index.js",
+        "options": {
+          "join": [Function],
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/plugin-sass/compiled/sass-loader/index.js",
+        "options": {
+          "api": "modern-compiler",
+          "implementation": "<ROOT>/node_modules/<PNPM_INNER>/sass-embedded/dist/lib/index.js",
+          "sourceMap": true,
+        },
+      },
+    ],
+  },
+]
+`;
+
+exports[`plugin-rem > should run rem plugin with default config 3`] = `
+[
+  {
+    "resolve": {
+      "preferRelative": true,
+    },
+    "sideEffects": true,
+    "test": /\\\\\\.less\\$/,
+    "use": [
+      {
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+      },
+      {
+        "loader": "<ROOT>/packages/core/compiled/css-loader",
+        "options": {
+          "importLoaders": 2,
+          "modules": {
+            "auto": true,
+            "exportGlobals": false,
+            "exportLocalsConvention": "camelCase",
+            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+            "namedExport": false,
+          },
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/core/compiled/postcss-loader",
+        "options": {
+          "postcssOptions": {
+            "config": false,
+            "plugins": [
+              {
+                "browsers": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
+                ],
+                "info": [Function],
+                "options": {
+                  "flexbox": "no-2009",
+                  "overrideBrowserslist": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "postcssPlugin": "autoprefixer",
+                "prepare": [Function],
+              },
+              {
+                "AtRule": [Function],
+                "Declaration": [Function],
+                "Once": [Function],
+                "postcssPlugin": "postcss-pxtorem",
+              },
+            ],
+          },
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
+        "options": {
+          "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+          "lessOptions": {
+            "javascriptEnabled": true,
+            "paths": [
+              "<ROOT>/node_modules",
+            ],
+          },
+          "sourceMap": false,
+        },
+      },
+    ],
+  },
+]
 `;
