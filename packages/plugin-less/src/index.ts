@@ -56,7 +56,7 @@ const getLessLoaderOptions = (
       paths: [path.join(rootPath, 'node_modules')],
     },
     sourceMap: isUseCssSourceMap,
-    implementation: path.join(__dirname, 'compiled/less/index.js'),
+    implementation: path.join(__dirname, '../compiled/less/index.js'),
   };
 
   const mergeFn = (
