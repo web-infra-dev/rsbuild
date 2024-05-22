@@ -238,7 +238,7 @@ const getCSSLoaderOptions = ({
   return cssLoaderOptions;
 };
 
-export async function applyCSSRule({
+async function applyCSSRule({
   rule,
   config,
   context,

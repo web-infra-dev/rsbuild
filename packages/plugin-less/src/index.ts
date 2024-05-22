@@ -10,6 +10,8 @@ import {
 } from '@rsbuild/shared';
 import type Less from '../compiled/less';
 
+export const PLUGIN_LESS_NAME = 'rsbuild:less';
+
 export type LessLoaderOptions = {
   lessOptions?: Less.Options;
   additionalData?:
@@ -90,7 +92,7 @@ const getLessLoaderOptions = (
 export const pluginLess = ({
   lessLoaderOptions,
 }: PluginLessOptions = {}): RsbuildPlugin => ({
-  name: 'rsbuild:less',
+  name: PLUGIN_LESS_NAME,
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
