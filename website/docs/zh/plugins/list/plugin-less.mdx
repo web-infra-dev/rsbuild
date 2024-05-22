@@ -1,0 +1,96 @@
+# Less 插件
+
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-less" />
+
+使用 [Less](https://lesscss.org/) 作为 CSS 预处理器，基于 [less-loader](https://github.com/webpack-contrib/less-loader) 实现。
+
+## 快速开始
+
+### 安装插件
+
+你可以通过如下的命令安装插件:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-less -D" />
+
+:::tip
+
+- Less 插件仅支持 @rsbuild/core >= 0.7.0 版本。
+- 当 @rsbuild/core 版本小于 0.7.0 时，内置支持 Less 插件，你不需要安装该插件。
+
+:::
+
+### 注册插件
+
+你可以在 `rsbuild.config.ts` 文件中注册插件：
+
+```ts title="rsbuild.config.ts"
+import { pluginLess } from '@rsbuild/plugin-less';
+
+export default {
+  plugins: [pluginLess()],
+};
+```
+
+注册插件后，你可以在代码中引入 `*.less` 或 `*.module.less` 文件，无须添加其他配置。
+
+## 选项
+
+如果你需要自定义 Less 的编译行为，可以使用以下配置项。
+
+### lessLoaderOptions
+
+修改 [less-loader](https://github.com/webpack-contrib/less-loader) 的配置。
+
+- **类型：** `Object | Function`
+- **默认值：**
+
+```js
+const defaultOptions = {
+  lessOptions: {
+    javascriptEnabled: true,
+    paths: [path.join(rootPath, 'node_modules')],
+  },
+  implementation: require.resolve('less'),
+  sourceMap: rsbuildConfig.output.sourceMap.css,
+};
+```
+
+- **示例：**
+
+当 `lessLoaderOptions` 的值是一个对象时，它会与默认配置通过 `Object.assign` 进行浅层合并，值得注意的是，`lessOptions` 会通过 deepMerge 进行深层合并。
+
+```js
+pluginLess({
+  lessLoaderOptions: {
+    javascriptEnabled: false,
+  },
+});
+```
+
+当 `lessLoaderOptions` 的值是一个函数时，默认配置作为第一个参数传入，你可以直接修改配置对象，也可以返回一个值作为最终结果：
+
+```js
+pluginLess({
+  lessLoaderOptions(config) {
+    config.lessOptions = {
+      javascriptEnabled: false,
+    };
+  },
+});
+```
+
+## 修改 Less 版本
+
+在某些场景下，如果你需要使用特定的 Less 版本，而不是使用 Rsbuild 内置的 Less v4，可以在项目中安装需要使用的 Less 版本，并通过 `less-loader` 的 `implementation` 选项设置。
+
+```js
+pluginLess({
+  lessLoaderOptions: {
+    implementation: require('less'),
+  },
+});
+```

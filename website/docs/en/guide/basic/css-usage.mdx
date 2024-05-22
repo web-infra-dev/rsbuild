@@ -1,16 +1,8 @@
-# CSS Usage
+# Import CSS Files
 
-Rsbuild has built-in multiple style resource processing capabilities, including Less / Sass preprocessor, PostCSS, CSS Modules, CSS inline and CSS compression.
+Rsbuild provides out-of-the-box support for CSS, including PostCSS, CSS Modules, CSS preprocessors, CSS inlining, and CSS compression.
 
 In addition, Rsbuild also provides multiple configs to customize the compile rules of style resources.
-
-## Using Less, Sass and Stylus
-
-The Rsbuild has built-in community popular CSS preprocessors such as Less, Sass.
-
-By default, you don't need to configure anything for Less and Sass. If you need to customize loader config, you can configure [tools.less](/config/tools/less), [tools.sass](/config/tools/sass) to set it up.
-
-You can also use Stylus in Rsbuild, just install the Stylus plugin provided by Rsbuild, please refer to [Stylus Plugin](/plugins/list/plugin-stylus) for usage.
 
 ## Using PostCSS
 
@@ -53,7 +45,15 @@ If the autoprefixer plugin is already registered in your project, Rsbuild will n
 
 ## Using CSS Modules
 
-Please read the [Using CSS Modules](/guide/basic/css-modules) chapter for a complete usage of CSS Modules.
+Rsbuild supports CSS Modules by default, please read the [Using CSS Modules](/guide/basic/css-modules) chapter for the complete usage of CSS Modules.
+
+## Using CSS preprocessors
+
+Rsbuild supports popular CSS preprocessors through plugins, including Sass, Less and Stylus. See how to use them:
+
+- [Sass Plugin](/plugins/list/plugin-sass)
+- [Less Plugin](/plugins/list/plugin-less)
+- [Stylus Plugin](/plugins/list/plugin-stylus)
 
 ## CSS-in-JS
 

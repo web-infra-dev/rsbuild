@@ -1,0 +1,93 @@
+# Sass Plugin
+
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-sass" />
+
+Use [Sass](https://sass-lang.com/) as the CSS preprocessor, implemented based on [sass-loader](https://github.com/webpack-contrib/sass-loader).
+
+## Quick Start
+
+### Install Plugin
+
+You can install the plugin using the following command:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-sass -D" />
+
+:::tip
+
+- The Sass plugin only supports @rsbuild/core versions >= 0.7.0.
+- If the @rsbuild/core version is lower than 0.7.0, it has builtin support for the Sass plugin, you do not need to install it.
+
+:::
+
+### Register Plugin
+
+You can register the plugin in the `rsbuild.config.ts` file:
+
+```ts title="rsbuild.config.ts"
+import { pluginSass } from '@rsbuild/plugin-sass';
+
+export default {
+  plugins: [pluginSass()],
+};
+```
+
+After registering the plugin, you can import `*.scss`, `*.sass`, `*.module.scss` or `*.module.sass` files into the code without adding other configs.
+
+## Options
+
+If you need to customize the compilation behavior of Sass, you can use the following configs.
+
+### sassLoaderOptions
+
+Modify the config of [sass-loader](https://github.com/webpack-contrib/sass-loader).
+
+- **Type:** `Object | Function`
+- **Default:**
+
+```js
+const defaultOptions = {
+  api: 'modern-compiler',
+  implementation: require.resolve('sass-embedded'),
+  sourceMap: rsbuildConfig.output.sourceMap.css,
+};
+```
+
+- **Example:**
+
+If `sassLoaderOptions` is an object, it is merged with the default config through `Object.assign`. It should be noted that `sassOptions` is merged through deepMerge in a deep way.
+
+```js
+pluginSass({
+  sassLoaderOptions: {
+    sourceMap: true,
+  },
+});
+```
+
+If `sassLoaderOptions` is a function, the default config is passed as the first parameter, which can be directly modified or returned as the final result.
+
+```js
+pluginSass({
+  sassLoaderOptions(config) {
+    config.additionalData = async (content, loaderContext) => {
+      // ...
+    };
+  },
+});
+```
+
+## Modifying Sass Version
+
+In some scenarios, if you need to use a specific version of Sass instead of the built-in Sass embedded in Rsbuild, you can install the desired Sass version in your project and set it up using the `implementation` option of the `sass-loader`.
+
+```js
+pluginSass({
+  sassLoaderOptions: {
+    implementation: require('sass'),
+  },
+});
+```
