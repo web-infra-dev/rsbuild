@@ -89,10 +89,11 @@ export const rspackProvider: RsbuildProvider = async ({
     async createDevServer(options) {
       const { createDevServer } = await import('../server/devServer');
       const { createDevMiddleware } = await import('./createCompiler');
-      await initRsbuildConfig({ context, pluginManager });
+      const config = await initRsbuildConfig({ context, pluginManager });
       return createDevServer(
         { context, pluginManager, rsbuildOptions },
         createDevMiddleware,
+        config,
         options,
       );
     },
@@ -100,11 +101,12 @@ export const rspackProvider: RsbuildProvider = async ({
     async startDevServer(options) {
       const { createDevServer } = await import('../server/devServer');
       const { createDevMiddleware } = await import('./createCompiler');
-      await initRsbuildConfig({ context, pluginManager });
+      const config = await initRsbuildConfig({ context, pluginManager });
 
       const server = await createDevServer(
         { context, pluginManager, rsbuildOptions },
         createDevMiddleware,
+        config,
         options,
       );
 
@@ -113,8 +115,8 @@ export const rspackProvider: RsbuildProvider = async ({
 
     async preview(options?: PreviewServerOptions) {
       const { startProdServer } = await import('../server/prodServer');
-      await initRsbuildConfig({ context, pluginManager });
-      return startProdServer(context, context.config, options);
+      const config = await initRsbuildConfig({ context, pluginManager });
+      return startProdServer(context, config, options);
     },
 
     async build(options) {
