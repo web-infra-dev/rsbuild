@@ -1,5 +1,11 @@
 import { pluginLess } from '@rsbuild/plugin-less';
 
 export default {
-  plugins: [pluginLess()],
+  plugins: [
+    pluginLess({
+      lessLoaderOptions: (_, { addExcludes }) => {
+        addExcludes([/b\.less$/]);
+      },
+    }),
+  ],
 };

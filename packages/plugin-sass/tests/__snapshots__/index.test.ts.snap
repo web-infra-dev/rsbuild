@@ -167,6 +167,9 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
   "module": {
     "rules": [
       {
+        "exclude": [
+          /node_modules/,
+        ],
         "resolve": {
           "preferRelative": true,
         },

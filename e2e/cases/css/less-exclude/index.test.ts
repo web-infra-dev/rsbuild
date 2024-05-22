@@ -6,9 +6,6 @@ test('should exclude specified less file', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       tools: {
-        less: (_, { addExcludes }) => {
-          addExcludes([/b\.less$/]);
-        },
         bundlerChain(chain) {
           chain.module
             .rule('fallback')
