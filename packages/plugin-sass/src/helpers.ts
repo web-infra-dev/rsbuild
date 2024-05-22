@@ -1,6 +1,5 @@
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { __internalHelper } from '@rsbuild/core';
 import type { CompilerTapFn } from '@rsbuild/shared';
 
 const GLOBAL_PATCHED_SYMBOL: unique symbol = Symbol('GLOBAL_PATCHED_SYMBOL');
