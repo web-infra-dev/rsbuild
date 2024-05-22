@@ -97,7 +97,7 @@ export const pluginSass = (
       // Copy the builtin CSS rules
       for (const id of Object.keys(cssRule.uses.entries())) {
         const loader = cssRule.uses.get(id);
-        const options = cloneDeep(loader.get('options') || {});
+        const options = cloneDeep(loader.get('options'));
         if (id === CHAIN_ID.USE.CSS) {
           // postcss-loader, resolve-url-loader, sass-loader
           options.importLoaders = 3;
