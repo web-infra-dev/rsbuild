@@ -46,7 +46,8 @@ const getSassLoaderOptions = (
   const mergedOptions = mergeChainedOptions({
     defaults: {
       sourceMap: isUseCssSourceMap,
-      implementation: require.resolve('sass'),
+      api: 'modern-compiler',
+      implementation: require.resolve('sass-embedded'),
     },
     options: userOptions,
     utils: { addExcludes },
