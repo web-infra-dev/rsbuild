@@ -1769,6 +1769,9 @@ importers:
       '@rsbuild/core':
         specifier: link:../packages/core
         version: link:../packages/core
+      '@rsbuild/plugin-sass':
+        specifier: workspace:*
+        version: link:../packages/plugin-sass
       '@rspress/plugin-rss':
         specifier: 0.0.0-next-20240516095608
         version: 0.0.0-next-20240516095608(react@18.3.1)(rspress@0.0.0-next-20240516095608(webpack@5.91.0))
