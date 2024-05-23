@@ -59,6 +59,7 @@ osascript
 outro
 pageerror
 pathinfo
+pcss
 perfetto
 picocolors
 pjpeg

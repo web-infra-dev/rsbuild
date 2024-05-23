@@ -18,6 +18,9 @@ exports[`plugin-vue2 > should add vue-loader and VueLoaderPlugin correctly 1`] =
           },
         ],
       },
+      {
+        "test": /\\\\\\.\\(\\?:css\\|postcss\\|pcss\\)\\$/,
+      },
     ],
   },
   "plugins": [
@@ -55,6 +58,9 @@ exports[`plugin-vue2 > should allow to configure vueLoader options 1`] = `
             },
           },
         ],
+      },
+      {
+        "test": /\\\\\\.\\(\\?:css\\|postcss\\|pcss\\)\\$/,
       },
     ],
   },
