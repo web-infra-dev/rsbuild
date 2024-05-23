@@ -168,3 +168,33 @@ export default {
   },
 };
 ```
+
+## Code Splitting
+
+The UMD plugin overrides Rsbuild's default chunk splitting rules by setting `performance.chunkSplit.strategy` to `all-in-one` to output a single bundle. This is because UMD outputs are often distributed via CDN and allow direct referencing via `<script>` tags.
+
+If you need to split the UMD outputs, you can actively configure [performance.chunkSplit](/config/performance/chunk-split), for example:
+
+```js
+export default {
+  performance: {
+    chunkSplit: {
+      strategy: 'split-by-experience',
+    },
+  },
+};
+```
+
+Note that the UMD plugin does not disable splits caused by dynamic imports. If you need to disable this, you can set the Rspack's [output.asyncChunks](https://rspack.dev/config/output#outputasyncchunks) option to `false`:
+
+```js
+export default {
+  tools: {
+    rspack: {
+      output: {
+        asyncChunks: false,
+      },
+    },
+  },
+};
+```
