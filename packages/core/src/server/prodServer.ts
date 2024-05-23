@@ -1,4 +1,5 @@
 import type { Server } from 'node:http';
+import type { Http2SecureServer } from 'node:http2';
 import { join } from 'node:path';
 import {
   type PreviewServerOptions,
@@ -35,7 +36,7 @@ type RsbuildProdServerOptions = {
 };
 
 export class RsbuildProdServer {
-  private app!: Server;
+  private app!: Server | Http2SecureServer;
   private options: RsbuildProdServerOptions;
   public middlewares = connect();
 
@@ -44,7 +45,7 @@ export class RsbuildProdServer {
   }
 
   // Complete the preparation of services
-  public async onInit(app: Server) {
+  public async onInit(app: Server | Http2SecureServer) {
     this.app = app;
 
     await this.applyDefaultMiddlewares();
@@ -170,7 +171,7 @@ export async function startProdServer(
   await context.hooks.onBeforeStartProdServer.call();
 
   const httpServer = await createHttpServer({
-    https: serverConfig.https,
+    serverConfig,
     middlewares: server.middlewares,
   });
 

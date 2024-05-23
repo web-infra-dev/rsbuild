@@ -1,6 +1,14 @@
 # server.https
 
-- **类型：** `import('https').ServerOptions`
+- **类型：**
+
+```ts
+import type { ServerOptions } from 'node:https';
+import type { SecureServerSessionOptions } from 'node:http2';
+
+type Https = ServerOptions | SecureServerSessionOptions;
+```
+
 - **默认值：** `undefined`
 
 配置该选项后，可以开启 Rsbuild Server 对 HTTPS 的支持，同时会禁用 HTTP 服务器。
@@ -18,6 +26,10 @@
   > Local:    https://localhost:3000/
   > Network:  https://192.168.0.1:3000/
 ```
+
+:::tip
+Rsbuild 默认会启用 HTTP/2 server。但当你使用 [server.proxy](/config/server/proxy) 时，server 会降级到 HTTP/1，这是因为底层使用的 `http-proxy` 不支持 HTTP/2。
+:::
 
 ## 设置证书
 
