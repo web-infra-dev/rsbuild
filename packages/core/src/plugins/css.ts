@@ -329,11 +329,12 @@ async function applyCSSRule({
   rule.resolve.preferRelative(true);
 }
 
-export const pluginCss = (): RsbuildPlugin => {
-  return {
-    name: 'rsbuild:css',
-    setup(api) {
-      api.modifyBundlerChain(async (chain, utils) => {
+export const pluginCss = (): RsbuildPlugin => ({
+  name: 'rsbuild:css',
+  setup(api) {
+    api.modifyBundlerChain({
+      order: 'pre',
+      handler: async (chain, utils) => {
         const rule = chain.module.rule(utils.CHAIN_ID.RULE.CSS);
         const config = api.getNormalizedConfig();
         rule.test(CSS_REGEX);
@@ -343,12 +344,12 @@ export const pluginCss = (): RsbuildPlugin => {
           config,
           context: api.context,
         });
-      });
+      },
+    });
 
-      api.modifyRspackConfig(async (rspackConfig) => {
-        rspackConfig.experiments ||= {};
-        rspackConfig.experiments.css = false;
-      });
-    },
-  };
-};
+    api.modifyRspackConfig(async (rspackConfig) => {
+      rspackConfig.experiments ||= {};
+      rspackConfig.experiments.css = false;
+    });
+  },
+});
