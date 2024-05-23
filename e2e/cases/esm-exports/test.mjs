@@ -2,6 +2,7 @@ import { getBabelConfigForNode } from '@rsbuild/babel-preset/node';
 import { getBabelConfigForWeb } from '@rsbuild/babel-preset/web';
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 import { pluginBabel } from '@rsbuild/plugin-babel';
+import { pluginBasicSsl } from '@rsbuild/plugin-basic-ssl';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
 import { pluginEslint } from '@rsbuild/plugin-eslint';
@@ -36,6 +37,7 @@ import { webpackProvider } from '@rsbuild/webpack';
 export default {
   shared,
   pluginAssetsRetry,
+  pluginBasicSsl,
   pluginBabel,
   pluginCheckSyntax,
   pluginCssMinimizer,

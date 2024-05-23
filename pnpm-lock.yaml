@@ -102,6 +102,9 @@ importers:
       '@rsbuild/plugin-babel':
         specifier: workspace:*
         version: link:../packages/plugin-babel
+      '@rsbuild/plugin-basic-ssl':
+        specifier: workspace:*
+        version: link:../packages/plugin-basic-ssl
       '@rsbuild/plugin-check-syntax':
         specifier: workspace:*
         version: link:../packages/plugin-check-syntax
