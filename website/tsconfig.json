@@ -4,7 +4,9 @@
     "jsx": "react-jsx",
     "outDir": "./dist",
     "paths": {
-      "@theme": ["./theme"]
+      "@theme": ["./theme"],
+      "@zh/*": ["./docs/zh/*"],
+      "@en/*": ["./docs/en/*"]
     },
     "baseUrl": "./"
   },

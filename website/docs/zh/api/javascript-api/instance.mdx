@@ -105,6 +105,8 @@ type DevServer = {
 type bundlerType = 'rspack' | 'webpack';
 ```
 
+> Rsbuild 内部支持切换到 webpack 进行对照测试，因此提供了该字段进行区分，通常你不需要使用此字段。
+
 ## rsbuild.build
 
 调用 build 方法时，会执行一次生产环境构建。
@@ -511,27 +513,49 @@ rsbuild.addPlugins([pluginFoo()]);
 rsbuild.isPluginExists(pluginFoo().name); // true
 ```
 
+## rsbuild.initConfigs
+
+initConfigs 方法用于初始化 Rsbuild 内部的配置，并返回 Rsbuild 内部生成的 Rspack 配置。
+
+通常你不需要调用 initConfigs 方法，因为调用 [rsbuild.build](#rsbuildbuild)、[rsbuild.startDevServer](#rsbuildstartdevserver) 等方法时会自动调用 initConfigs。
+
+- **类型：**
+
+```ts
+function InitConfigs(): Promise<{
+  rspackConfigs: RspackConfig[];
+}>;
+```
+
+- **示例：**
+
+```ts
+const { rspackConfigs } = await rsbuild.initConfigs();
+
+console.log(rspackConfigs);
+```
+
 ## rsbuild.inspectConfig
 
-查看 Rsbuild 内部最终生成的 Rsbuild 配置和 bundler 配置。
+inspectConfig 方法通常用于调试 Rsbuild 内部的配置，它会返回 Rsbuild 内部生成的 Rsbuild 配置和 Rspack 配置，将它们序列化为字符串，并支持写入到磁盘上。
 
-:::tip
-`inspectConfig` 方法不支持与 `startDevServer` / `build` 方法同时使用。
-
-当你需要在构建过程中查看完整的 Rsbuild 和 bundler 配置时，可以使用 [调试模式](/guide/debug/debug-mode)，也可以通过 `onBeforeBuild`、`onBeforeCreateCompile` 等钩子函数来获取。
-:::
+如果你需要在构建过程中查看 Rsbuild 和 Rspack 配置，可以使用 [调试模式](/guide/debug/debug-mode)，也可以通过 [onBeforeBuild](#rsbuildonbeforebuild)、[onBeforeCreateCompile](#rsbuildonbeforecreatecompiler) 等 hooks 来获取。
 
 - **类型：**
 
 ```ts
 type InspectConfigOptions = {
-  // 查看指定环境下的配置，默认为 "development"，可以设置为 "production"
+  // 查看指定环境下的配置
+  // 默认为 "development"，可以设置为 "production"
   env?: RsbuildMode;
-  // 是否开启冗余模式，展示配置中函数的完整内容，默认为 `false`
+  // 是否开启冗余模式，展示配置中函数的完整内容
+  // 默认为 `false`
   verbose?: boolean;
-  // 指定输出路径，默认为 `output.distPath.root` 配置的值
+  // 指定输出路径
+  // 默认为 `output.distPath.root` 配置的值
   outputPath?: string;
-  // 是否将结果写入到磁盘中，默认为 `false`
+  // 是否将结果写入到磁盘中
+  // 默认为 `false`
   writeToDisk?: boolean;
 };
 
@@ -573,7 +597,7 @@ import OnBeforeCreateCompiler from '@zh/shared/onBeforeCreateCompiler.mdx';
 
 ```ts
 rsbuild.onBeforeCreateCompiler(({ bundlerConfigs }) => {
-  console.log('the bundler config is ', bundlerConfigs);
+  console.log('the Rspack config is ', bundlerConfigs);
 });
 ```
 
@@ -601,7 +625,7 @@ import OnBeforeBuild from '@zh/shared/onBeforeBuild.mdx';
 
 ```ts
 rsbuild.onBeforeBuild(({ bundlerConfigs }) => {
-  console.log('the bundler config is ', bundlerConfigs);
+  console.log('the Rspack config is ', bundlerConfigs);
 });
 ```
 
