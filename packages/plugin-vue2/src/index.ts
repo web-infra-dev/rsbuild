@@ -81,6 +81,9 @@ export function pluginVue2(options: PluginVueOptions = {}): RsbuildPlugin {
           .loader(require.resolve('vue-loader'))
           .options(vueLoaderOptions);
 
+        // Support for lang="postcss" and lang="pcss" in SFC
+        chain.module.rule(CHAIN_ID.RULE.CSS).test(/\.(?:css|postcss|pcss)$/);
+
         chain.plugin(CHAIN_ID.PLUGIN.VUE_LOADER_PLUGIN).use(VueLoaderPlugin);
         // we could remove this once a new vue-loader@15 is released with https://github.com/vuejs/vue-loader/pull/2071 shipped
         chain
