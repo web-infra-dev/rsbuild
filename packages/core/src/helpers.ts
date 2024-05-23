@@ -59,7 +59,7 @@ export const getCompiledPath = (packageName: string) =>
 /**
  * Add node polyfill tip when failed to resolve node built-in modules.
  */
-const addNodePolyfillTip = (message: string): string => {
+const hintNodePolyfill = (message: string): string => {
   if (!message.includes(`Can't resolve`)) {
     return message;
   }
@@ -123,7 +123,7 @@ const addNodePolyfillTip = (message: string): string => {
 };
 
 function formatErrorMessage(errors: string[]) {
-  const messages = errors.map((error) => addNodePolyfillTip(error));
+  const messages = errors.map((error) => hintNodePolyfill(error));
 
   const text = `${messages.join('\n\n')}\n`;
   const isTerserError = text.includes('from Terser');
