@@ -19,6 +19,35 @@ function resolveFileName(stats: StatsError) {
   return `File: ${stats.moduleName}\n`;
 }
 
+function hintUnknownFiles(message: string): string {
+  const hint = 'You may need an appropriate loader to handle this file type.';
+
+  if (message.indexOf(hint) === -1) {
+    return message;
+  }
+
+  if (/File: .+\.s(c|a)ss/.test(message)) {
+    return message.replace(
+      hint,
+      `To enable support for Sass, use "@rsbuild/plugin-sass".`,
+    );
+  }
+  if (/File: .+\.less/.test(message)) {
+    return message.replace(
+      hint,
+      `To enable support for Less, use "@rsbuild/plugin-less".`,
+    );
+  }
+  if (/File: .+\.styl(us)?/.test(message)) {
+    return message.replace(
+      hint,
+      `To enable support for Stylus, use "@rsbuild/plugin-stylus".`,
+    );
+  }
+
+  return message;
+}
+
 // Cleans up Rspack error messages.
 function formatMessage(stats: StatsError | string) {
   let lines: string[] = [];
@@ -35,6 +64,8 @@ function formatMessage(stats: StatsError | string) {
   } else {
     message = stats;
   }
+
+  message = hintUnknownFiles(message);
 
   lines = message.split('\n');
 

@@ -14,7 +14,7 @@ import {
 } from '@rsbuild/shared';
 import connect from '@rsbuild/shared/connect';
 import type { CreateDevMiddlewareReturns } from '../provider/createCompiler';
-import type { InternalContext } from '../types';
+import type { InternalContext, NormalizedConfig } from '../types';
 import {
   type RsbuildDevMiddlewareOptions,
   getMiddlewares,
@@ -22,7 +22,8 @@ import {
 import {
   formatRoutes,
   getAddressUrls,
-  getDevOptions,
+  getDevConfig,
+  getServerConfig,
   printServerURLs,
 } from './helper';
 import { createHttpServer } from './httpServer';
@@ -40,6 +41,7 @@ export async function createDevServer<
     options: Options,
     compiler: StartDevServerOptions['compiler'],
   ) => Promise<CreateDevMiddlewareReturns>,
+  config: NormalizedConfig,
   {
     compiler: customCompiler,
     getPortSilently,
@@ -52,17 +54,20 @@ export async function createDevServer<
 
   debug('create dev server');
 
-  const rsbuildConfig = options.context.config;
-
-  const { devConfig, serverConfig, port, host, https } = await getDevOptions({
-    rsbuildConfig,
+  const serverConfig = config.server;
+  const { port, host, https } = await getServerConfig({
+    config,
     getPortSilently,
+  });
+  const devConfig = getDevConfig({
+    config,
+    port,
   });
 
   const routes = formatRoutes(
     options.context.entry,
-    rsbuildConfig.output?.distPath?.html,
-    rsbuildConfig.html?.outputStructure,
+    config.output.distPath.html,
+    config.html.outputStructure,
   );
 
   options.context.devServer = {
@@ -149,7 +154,7 @@ export async function createDevServer<
     dev: devConfig,
     server: serverConfig,
     output: {
-      distPath: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
+      distPath: config.output.distPath.root || ROOT_DIST_DIR,
     },
     outputFileSystem,
   });

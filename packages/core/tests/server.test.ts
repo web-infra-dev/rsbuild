@@ -1,9 +1,9 @@
-import { isClientCompiler } from '@rsbuild/shared';
+import { type NormalizedConfig, isClientCompiler } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import { setupServerHooks } from '../src/server/devMiddleware';
 import {
   formatRoutes,
-  mergeDevOptions,
+  getDevConfig,
   printServerURLs,
 } from '../src/server/helper';
 
@@ -307,8 +307,8 @@ describe('test dev server', () => {
 
   test('getDevServerOptions', async () => {
     expect(
-      mergeDevOptions({
-        rsbuildConfig: {},
+      getDevConfig({
+        config: {} as NormalizedConfig,
         port: 3000,
       }),
     ).toMatchInlineSnapshot(`
@@ -325,8 +325,8 @@ describe('test dev server', () => {
     `);
 
     expect(
-      mergeDevOptions({
-        rsbuildConfig: {
+      getDevConfig({
+        config: {
           dev: {
             hmr: false,
             client: {
@@ -334,7 +334,7 @@ describe('test dev server', () => {
               path: '',
             },
           },
-        },
+        } as NormalizedConfig,
         port: 3001,
       }),
     ).toMatchInlineSnapshot(`

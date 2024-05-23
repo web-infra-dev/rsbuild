@@ -1,0 +1,93 @@
+# Sass 插件
+
+import { SourceCode } from 'rspress/theme';
+
+<SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-sass" />
+
+使用 [Sass](https://sass-lang.com/) 作为 CSS 预处理器，基于 [sass-loader](https://github.com/webpack-contrib/sass-loader) 实现。
+
+## 快速开始
+
+### 安装插件
+
+你可以通过如下的命令安装插件:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @rsbuild/plugin-sass -D" />
+
+:::tip
+
+- Sass 插件仅支持 @rsbuild/core >= 0.7.0 版本。
+- 当 @rsbuild/core 版本小于 0.7.0 时，内置支持 Sass 插件，你不需要安装该插件。
+
+:::
+
+### 注册插件
+
+你可以在 `rsbuild.config.ts` 文件中注册插件：
+
+```ts title="rsbuild.config.ts"
+import { pluginSass } from '@rsbuild/plugin-sass';
+
+export default {
+  plugins: [pluginSass()],
+};
+```
+
+注册插件后，你可以在代码中引入 `*.scss`，`*.sass`，`*.module.scss` 或 `*.module.sass` 文件，无须添加其他配置。
+
+## 选项
+
+如果你需要自定义 Sass 的编译行为，可以使用以下配置项。
+
+### sassLoaderOptions
+
+修改 [sass-loader](https://github.com/webpack-contrib/sass-loader) 的配置。
+
+- **类型：** `Object | Function`
+- **默认值：**
+
+```js
+const defaultOptions = {
+  api: 'modern-compiler',
+  implementation: require.resolve('sass-embedded'),
+  sourceMap: rsbuildConfig.output.sourceMap.css,
+};
+```
+
+- **示例：**
+
+当 `sassLoaderOptions` 的值是一个对象时，它会与默认配置通过 `Object.assign` 进行浅层合并，值得注意的是，`sassOptions` 会通过 deepMerge 进行深层合并。
+
+```js
+pluginSass({
+  sassLoaderOptions: {
+    sourceMap: true,
+  },
+});
+```
+
+当 `sassLoaderOptions` 的值是一个函数时，默认配置作为第一个参数传入，你可以直接修改配置对象，也可以返回一个值作为最终结果：
+
+```js
+pluginSass({
+  sassLoaderOptions(config) {
+    config.additionalData = async (content, loaderContext) => {
+      // ...
+    };
+  },
+});
+```
+
+## 修改 Sass 版本
+
+在某些场景下，如果你需要使用特定的 Sass 版本，而不是使用 Rsbuild 内置的 Sass embedded，可以在项目中安装需要使用的 Sass 版本，并通过 `sass-loader` 的 `implementation` 选项设置。
+
+```js
+pluginSass({
+  sassLoaderOptions: {
+    implementation: require('sass'),
+  },
+});
+```

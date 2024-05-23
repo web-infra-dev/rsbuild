@@ -1,18 +1,11 @@
 import type {
   CssExtractRspackLoaderOptions,
   CssExtractRspackPluginOptions,
-  LoaderContext,
 } from '@rspack/core';
 import type { AcceptedPlugin, ProcessOptions } from 'postcss';
 import type { MinifyOptions } from 'terser';
 import type { Configuration as WebpackConfig } from 'webpack';
 import type Autoprefixer from '../../compiled/autoprefixer/index.js';
-import type Less from '../../compiled/less/index.js';
-import type SassLoader from '../../compiled/sass-loader/index.js';
-import type {
-  LegacyOptions as LegacySassOptions,
-  Options as SassOptions,
-} from '../../compiled/sass/index.js';
 
 type AutoprefixerOptions = Autoprefixer.Options;
 
@@ -25,31 +18,6 @@ export type { WebpackConfig, AutoprefixerOptions };
 
 /** Currently using terser for html js minify and will be replaced by swc later */
 export type MinifyJSOptions = MinifyOptions;
-
-export type SassLoaderOptions = Omit<SassLoader.Options, 'sassOptions'> &
-  (
-    | {
-        api?: 'legacy';
-        sassOptions?: Partial<LegacySassOptions<'async'>>;
-      }
-    | {
-        api: 'modern';
-        sassOptions?: SassOptions<'async'>;
-      }
-  );
-
-export type LessLoaderOptions = {
-  lessOptions?: Less.Options;
-  additionalData?:
-    | string
-    | ((
-        content: string,
-        loaderContext: LoaderContext<LessLoaderOptions>,
-      ) => string | Promise<string>);
-  sourceMap?: boolean;
-  webpackImporter?: boolean;
-  implementation?: unknown;
-};
 
 export type PostCSSOptions = ProcessOptions & {
   config?: boolean;

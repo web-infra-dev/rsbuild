@@ -98,6 +98,14 @@ export default {
 
 > For more details, please refer to the [Output Files](/guide/basic/output-files) section.
 
+## Using CSS Preprocessors
+
+Rsbuild supports CSS preprocessors such as Sass and Less through plugins. Please refer to:
+
+- [Sass Plugin](/plugins/list/plugin-sass)
+- [Less Plugin](/plugins/list/plugin-less)
+- [Stylus Plugin](/plugins/list/plugin-stylus)
+
 ## Using SVGR
 
 If you are using the "SVG to React Component" feature of CRA (i.e., [SVGR](https://react-svgr.com/)), you also need to install the SVGR plugin for Rsbuild.
@@ -255,7 +263,7 @@ If your project is using [CRACO](https://craco.js.org) to override CRA configura
 | [webpack.plugins.remove](https://craco.js.org/docs/configuration/webpack/#webpackpluginsremove) | [tools.rspack.removePlugin](/config/tools/rspack#removeplugin)   |
 | [style.modules](https://craco.js.org/docs/configuration/style/#stylemodules)                    | [output.cssModules](/config/output/css-modules)                  |
 | [style.css](https://craco.js.org/docs/configuration/style/#stylecss)                            | [tools.cssLoader](/config/tools/css-loader)                      |
-| [style.sass](https://craco.js.org/docs/configuration/style/#stylesass)                          | [tools.sass](/config/tools/sass)                                 |
+| [style.sass](https://craco.js.org/docs/configuration/style/#stylesass)                          | [Sass Plugin](/plugins/list/plugin-sass)                         |
 | [style.postcss](https://craco.js.org/docs/configuration/style/#stylepostcss)                    | [tools.postcss](/config/tools/postcss)                           |
 | [babel](https://craco.js.org/docs/configuration/babel/)                                         | [Babel Plugin](/plugins/list/plugin-babel)                       |
 | [typescript](https://craco.js.org/docs/configuration/typescript/)                               | [Type Check Plugin](/plugins/list/plugin-type-check)             |

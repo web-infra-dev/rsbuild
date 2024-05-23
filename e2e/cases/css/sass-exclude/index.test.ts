@@ -6,9 +6,6 @@ test('should exclude specified scss file', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       tools: {
-        sass: (_, { addExcludes }) => {
-          addExcludes([/b\.scss$/]);
-        },
         bundlerChain(chain) {
           chain.module
             .rule('fallback')

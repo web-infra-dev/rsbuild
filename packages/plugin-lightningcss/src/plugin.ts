@@ -1,5 +1,7 @@
 import path from 'node:path';
 import type {
+  BundlerChain,
+  ChainIdentifier,
   NormalizedConfig,
   RsbuildContext,
   RsbuildPlugin,
@@ -9,7 +11,6 @@ import {
   getBrowserslistWithDefault,
   mergeChainedOptions,
 } from '@rsbuild/shared';
-import type { BundlerChain, ModifyBundlerChainUtils } from '@rsbuild/shared';
 import browserslist from '@rsbuild/shared/browserslist';
 import { browserslistToTargets as _browserslistToTargets } from 'lightningcss';
 import type * as LightningCSS from 'lightningcss';
@@ -56,22 +57,26 @@ const getLightningCSSTargets = async ({
 
 const applyLightningCSSLoader = ({
   chain,
-  utils: { CHAIN_ID },
+  CHAIN_ID,
   targets,
-  options,
+  options = {},
 }: {
   chain: BundlerChain;
-  utils: ModifyBundlerChainUtils;
+  CHAIN_ID: ChainIdentifier;
   targets: LightningCSS.Targets;
   options: PluginLightningcssOptions | undefined;
 }) => {
+  if (!chain.module.rules.has(CHAIN_ID.RULE.CSS)) {
+    return;
+  }
+
   const defaultOptions = {
     targets,
   } satisfies LightningCSSLoaderOptions;
 
-  const { implementation } = options ?? {};
+  const { implementation } = options;
 
-  if (options?.transform === true) {
+  if (options.transform === true) {
     options.transform = {};
   }
 
@@ -79,54 +84,29 @@ const applyLightningCSSLoader = ({
     defaults: defaultOptions,
     options: {
       ...(implementation ? { implementation } : {}),
-      ...options?.transform,
+      ...options.transform,
     },
   });
 
-  const ruleIds = [
-    CHAIN_ID.RULE.CSS,
-    CHAIN_ID.RULE.SASS,
-    CHAIN_ID.RULE.LESS,
-    CHAIN_ID.RULE.STYLUS,
-  ];
+  const rule = chain.module.rule(CHAIN_ID.RULE.CSS);
 
-  for (const ruleId of ruleIds) {
-    const existRule = chain.module.rules.has(ruleId);
-    if (!existRule) {
-      continue;
-    }
+  rule
+    .use(CHAIN_ID.USE.LIGHTNINGCSS)
+    .loader(path.resolve(__dirname, './loader.cjs'))
+    .options(mergedOptions)
+    .after(CHAIN_ID.USE.CSS);
 
-    const rule = chain.module.rule(ruleId);
-    const use = rule.use(CHAIN_ID.USE.LIGHTNINGCSS);
-
-    use.loader(path.resolve(__dirname, './loader.cjs')).options(mergedOptions);
-
-    switch (ruleId) {
-      case CHAIN_ID.RULE.SASS:
-        use.before(CHAIN_ID.USE.RESOLVE_URL);
-        break;
-      case CHAIN_ID.RULE.LESS:
-        use.before(CHAIN_ID.USE.LESS);
-        break;
-      case CHAIN_ID.RULE.STYLUS:
-        use.before(CHAIN_ID.USE.STYLUS);
-        break;
-      case CHAIN_ID.RULE.CSS:
-        use.after(CHAIN_ID.USE.CSS);
-        break;
-    }
-    rule.uses.delete(CHAIN_ID.USE.POSTCSS);
-  }
+  rule.uses.delete(CHAIN_ID.USE.POSTCSS);
 };
 
 const applyLightningCSSMinifyPlugin = async ({
   chain,
-  utils: { CHAIN_ID },
+  CHAIN_ID,
   targets,
   options,
 }: {
   chain: BundlerChain;
-  utils: ModifyBundlerChainUtils;
+  CHAIN_ID: ChainIdentifier;
   targets: LightningCSS.Targets;
   options: PluginLightningcssOptions | undefined;
 }) => {
@@ -161,26 +141,35 @@ export const pluginLightningcss = (
   name: PLUGIN_NAME,
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, utils) => {
-      const { isProd, target } = utils;
-      const { context } = api;
-      const config = api.getNormalizedConfig();
-      const targets = await getLightningCSSTargets({
-        context,
-        config,
-        target,
-        options,
-      });
+    let targets: LightningCSS.Targets;
 
-      if (target === 'web' && options?.transform !== false) {
-        applyLightningCSSLoader({
-          chain,
-          utils,
-          targets,
+    api.modifyBundlerChain({
+      // ensure lightningcss-loader can be applied to sass/less/stylus rules
+      order: 'pre',
+
+      handler: async (chain, { CHAIN_ID, target }) => {
+        const config = api.getNormalizedConfig();
+
+        targets = await getLightningCSSTargets({
+          context: api.context,
+          config,
+          target,
           options,
         });
-      }
 
+        if (target === 'web' && options?.transform !== false) {
+          applyLightningCSSLoader({
+            chain,
+            CHAIN_ID,
+            targets,
+            options,
+          });
+        }
+      },
+    });
+
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
+      const config = api.getNormalizedConfig();
       const { minify } = config.output;
       const isMinimize =
         isProd &&
@@ -189,7 +178,7 @@ export const pluginLightningcss = (
       if (isMinimize && options?.minify !== false) {
         await applyLightningCSSMinifyPlugin({
           chain,
-          utils,
+          CHAIN_ID,
           targets,
           options,
         });

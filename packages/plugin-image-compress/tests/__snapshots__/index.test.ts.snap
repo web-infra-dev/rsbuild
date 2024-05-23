@@ -1,144 +1,65 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`plugin-image-compress > should accept \`...options: Options[]\` as parameter 1`] = `
+[
+  ImageMinimizerPlugin {
+    "name": "@rsbuild/plugin-image-compress/minimizer",
+    "options": {
+      "test": /\\\\\\.\\(\\?:jpg\\|jpeg\\)\\$/,
+      "use": "jpeg",
+    },
+  },
+  ImageMinimizerPlugin {
+    "name": "@rsbuild/plugin-image-compress/minimizer",
+    "options": {
+      "test": /\\\\\\.png\\$/,
+      "use": "png",
+    },
+  },
+]
+`;
+
+exports[`plugin-image-compress > should accept \`options: Options[]\` as parameter 1`] = `
+[
+  ImageMinimizerPlugin {
+    "name": "@rsbuild/plugin-image-compress/minimizer",
+    "options": {
+      "test": /\\\\\\.\\(\\?:jpg\\|jpeg\\)\\$/,
+      "use": "jpeg",
+    },
+  },
+  ImageMinimizerPlugin {
+    "name": "@rsbuild/plugin-image-compress/minimizer",
+    "options": {
+      "test": /\\\\\\.png\\$/,
+      "use": "png",
+    },
+  },
+]
+`;
+
 exports[`plugin-image-compress > should generate correct options 1`] = `
-{
-  "module": {
-    "rules": [
-      {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
-            },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
-      },
-      {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
-            },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.svg\\$/i,
-      },
-      {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
-            },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mov\\|mp3\\|wav\\|flac\\|aac\\|m4a\\|opus\\)\\$/i,
-      },
-      {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
-            },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
-      },
-    ],
+[
+  ImageMinimizerPlugin {
+    "name": "@rsbuild/plugin-image-compress/minimizer",
+    "options": {
+      "test": /\\\\\\.\\(\\?:jpg\\|jpeg\\)\\$/,
+      "use": "jpeg",
+    },
   },
-  "optimization": {
-    "minimize": true,
-    "minimizer": [
-      ImageMinimizerPlugin {
-        "name": "@rsbuild/plugin-image-compress/minimizer",
-        "options": {
-          "test": /\\\\\\.\\(\\?:jpg\\|jpeg\\)\\$/,
-          "use": "jpeg",
-        },
-      },
-      ImageMinimizerPlugin {
-        "name": "@rsbuild/plugin-image-compress/minimizer",
-        "options": {
-          "test": /\\\\\\.png\\$/,
-          "use": "png",
-        },
-      },
-      ImageMinimizerPlugin {
-        "name": "@rsbuild/plugin-image-compress/minimizer",
-        "options": {
-          "test": /\\\\\\.\\(\\?:ico\\|icon\\)\\$/,
-          "use": "ico",
-        },
-      },
-    ],
+  ImageMinimizerPlugin {
+    "name": "@rsbuild/plugin-image-compress/minimizer",
+    "options": {
+      "test": /\\\\\\.png\\$/,
+      "use": "png",
+    },
   },
-}
+  ImageMinimizerPlugin {
+    "name": "@rsbuild/plugin-image-compress/minimizer",
+    "options": {
+      "test": /\\\\\\.\\(\\?:ico\\|icon\\)\\$/,
+      "use": "ico",
+    },
+  },
+]
 `;

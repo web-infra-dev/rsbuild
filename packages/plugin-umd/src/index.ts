@@ -28,12 +28,20 @@ export const pluginUmd = (options: PluginUmdOptions): RsbuildPlugin => ({
           filenameHash: userConfig.output?.filenameHash ?? false,
         },
         html: {
-          // allows to test the umd bundle in the browser
+          // allows to test the UMD bundle in the browser
           scriptLoading: userConfig.html?.scriptLoading ?? 'blocking',
         },
         tools: {
           htmlPlugin:
             userConfig.tools?.htmlPlugin ?? (isProd() ? false : undefined),
+        },
+        performance: {
+          chunkSplit: {
+            // UMD outputs are usually distributed via a single <script> tag,
+            // so we use `all-in-one` as the default chunk splitting strategy.
+            strategy:
+              userConfig.performance?.chunkSplit?.strategy ?? 'all-in-one',
+          },
         },
       });
     });
@@ -49,9 +57,6 @@ export const pluginUmd = (options: PluginUmdOptions): RsbuildPlugin => ({
 
       // To make UMD build available on both browsers and Node.js
       chain.output.globalObject('this');
-
-      // disable split chunks to output a single chunk
-      chain.optimization.splitChunks(false);
     });
   },
 });

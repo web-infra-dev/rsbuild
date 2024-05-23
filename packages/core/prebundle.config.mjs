@@ -80,13 +80,6 @@ export default {
       },
     },
     {
-      name: 'less-loader',
-      ignoreDts: true,
-      externals: {
-        less: '@rsbuild/shared/less',
-      },
-    },
-    {
       name: 'css-loader',
       ignoreDts: true,
       externals: {
@@ -124,13 +117,6 @@ export default {
           (content) =>
             `${content.replaceAll('await __import', 'await import')}`,
         );
-      },
-    },
-    {
-      name: 'resolve-url-loader',
-      ignoreDts: true,
-      externals: {
-        'loader-utils': '@rsbuild/shared/loader-utils2',
       },
     },
   ],

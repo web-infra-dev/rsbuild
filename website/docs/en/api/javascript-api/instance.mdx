@@ -105,6 +105,8 @@ The bundler type of current build.
 type bundlerType = 'rspack' | 'webpack';
 ```
 
+> Rsbuild internally supports switching to webpack for comparative testing, so this field is provided for differentiation. Usually, you do not need to use this field.
+
 ## rsbuild.build
 
 Perform a production build.
@@ -519,27 +521,49 @@ rsbuild.addPlugins([pluginFoo()]);
 rsbuild.isPluginExists(pluginFoo().name); // true
 ```
 
+## rsbuild.initConfigs
+
+The initConfigs method is used to initialize the internal configs of Rsbuild and return the Rspack config generated internally by Rsbuild.
+
+Usually, you do not need to call the initConfigs method, because it will be automatically called when methods such as [rsbuild.build](#rsbuildbuild), [rsbuild.startDevServer](#rsbuildstartdevserver) are called.
+
+- **Type:**
+
+```ts
+function InitConfigs(): Promise<{
+  rspackConfigs: RspackConfig[];
+}>;
+```
+
+- **Example:**
+
+```ts
+const { rspackConfigs } = await rsbuild.initConfigs();
+
+console.log(rspackConfigs);
+```
+
 ## rsbuild.inspectConfig
 
-Inspect the final generated Rsbuild config and bundler config.
+The inspectConfig method is typically used for debugging the internal configuration of Rsbuild. It returns the internally generated Rsbuild config and Rspack config, serializes them into strings, and supports writing them to the disk.
 
-:::tip
-The `inspectConfig` method does not support simultaneous use with the `startDevServer` / `build` method.
-
-When you need to view the complete Rsbuild and bundler configurations during the build process, you can use the [debug mode](/guide/debug/debug-mode) or obtain them through hooks such as `onBeforeBuild` and `onBeforeCreateCompile`.
-:::
+If you need to view the Rsbuild and Rspack configurations during the build process, you can use [debug mode](/guide/debug/debug-mode), or obtain them through hooks such as [onBeforeBuild](#rsbuildonbeforebuild), [onBeforeCreateCompile](#rsbuildonbeforecreatecompiler).
 
 - **Type:**
 
 ```ts
 type InspectConfigOptions = {
-  // View the config in the specified environment, the default is "development", can be set to "production"
+  // View the config in the specified environment
+  // defaults to "development", can be set to "production"
   env?: RsbuildMode;
-  // Whether to enable verbose mode, display the complete content of the function in the config, the default is `false`
+  // Whether to enable verbose mode, display the complete content of the function in the config
+  // defaults to `false`
   verbose?: boolean;
-  // Specify the output path, defaults to the value configured by `output.distPath.root`
+  // Specify the output path
+  // defaults to the value configured by `output.distPath.root`
   outputPath?: string;
-  // Whether to write the result to disk, the default is `false`
+  // Whether to write the result to disk
+  // defaults to `false`
   writeToDisk?: boolean;
 };
 
@@ -581,7 +605,7 @@ import OnBeforeCreateCompiler from '@en/shared/onBeforeCreateCompiler.mdx';
 
 ```ts
 rsbuild.onBeforeCreateCompiler(({ bundlerConfigs }) => {
-  console.log('the bundler config is ', bundlerConfigs);
+  console.log('the Rspack config is ', bundlerConfigs);
 });
 ```
 
@@ -609,7 +633,7 @@ import OnBeforeBuild from '@en/shared/onBeforeBuild.mdx';
 
 ```ts
 rsbuild.onBeforeBuild(({ bundlerConfigs }) => {
-  console.log('the bundler config is ', bundlerConfigs);
+  console.log('the Rspack config is ', bundlerConfigs);
 });
 ```
 
