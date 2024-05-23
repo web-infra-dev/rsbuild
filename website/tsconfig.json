@@ -3,7 +3,13 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "outDir": "./dist",
+    "paths": {
+      "@theme": ["./theme"]
+    },
     "baseUrl": "./"
+  },
+  "mdx": {
+    "checkMdx": true
   },
   "include": ["docs", "rspress.config.ts", "theme", "components"]
 }
