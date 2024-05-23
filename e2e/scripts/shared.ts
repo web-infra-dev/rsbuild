@@ -171,6 +171,7 @@ export async function dev({
 
   return {
     ...result,
+    instance: rsbuild,
     close: () => result.server.close(),
   };
 }
