@@ -1,13 +1,8 @@
 import { __internalHelper } from '@rsbuild/core';
 
 const {
-  plugins,
-  createContext,
-  createPublicContext,
-  getPluginAPI,
   getChainUtils,
   initRsbuildConfig,
-  setCssExtractPlugin,
   createDevServer,
   startProdServer,
   formatStats,
@@ -16,13 +11,8 @@ const {
 } = __internalHelper;
 
 export {
-  plugins,
-  createContext,
-  createPublicContext,
-  getPluginAPI,
   getChainUtils,
   initRsbuildConfig,
-  setCssExtractPlugin,
   createDevServer,
   startProdServer,
   formatStats,

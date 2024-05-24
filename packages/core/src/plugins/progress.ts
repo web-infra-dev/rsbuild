@@ -4,7 +4,13 @@ import type { RsbuildPlugin } from '../types';
 
 export const pluginProgress = (): RsbuildPlugin => ({
   name: 'rsbuild:progress',
+
   setup(api) {
+    // This plugin uses Rspack builtin progress plugin and is not suitable for webpack
+    if (api.context.bundlerType === 'webpack') {
+      return;
+    }
+
     api.modifyBundlerChain(async (chain, { target, CHAIN_ID }) => {
       const config = api.getNormalizedConfig();
       const options =

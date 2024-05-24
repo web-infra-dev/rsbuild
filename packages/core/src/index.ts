@@ -53,6 +53,10 @@ export type {
   RsbuildPlugin,
   RsbuildPlugins,
   RsbuildPluginAPI,
+  // Others
+  RsbuildInstance,
+  RsbuildProvider,
+  CreateRsbuildOptions,
 } from './types';
 
 export type {
@@ -60,8 +64,6 @@ export type {
   RsbuildEntry,
   RsbuildTarget,
   RsbuildContext,
-  RsbuildInstance,
-  CreateRsbuildOptions,
   InspectConfigOptions,
   // Subtypes of Config
   Minify,

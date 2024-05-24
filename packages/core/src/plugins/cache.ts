@@ -95,6 +95,11 @@ export const pluginCache = (): RsbuildPlugin => ({
   name: 'rsbuild:cache',
 
   setup(api) {
+    // Rspack does not support persistent cache yet
+    if (api.context.bundlerType === 'rspack') {
+      return;
+    }
+
     api.modifyBundlerChain(async (chain, { target, env }) => {
       const config = api.getNormalizedConfig();
       const { buildCache } = config.performance;

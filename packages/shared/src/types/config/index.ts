@@ -1,5 +1,5 @@
 import type { ModuleFederationPluginOptions } from '@rspack/core';
-import type { RsbuildPlugins, RsbuildProvider } from '..';
+import type { RsbuildPlugins } from '..';
 import type { DeepReadonly } from '../utils';
 import type { DevConfig, NormalizedDevConfig } from './dev';
 import type { HtmlConfig, NormalizedHtmlConfig } from './html';
@@ -75,7 +75,7 @@ export interface RsbuildConfig {
   /**
    * Used to switch the bundler type.
    */
-  provider?: RsbuildProvider<'rspack'> | RsbuildProvider<'webpack'>;
+  provider?: unknown;
   /**
    * @private
    */
@@ -93,7 +93,7 @@ export type NormalizedConfig = DeepReadonly<{
   security: NormalizedSecurityConfig;
   performance: NormalizedPerformanceConfig;
   moduleFederation?: ModuleFederationConfig;
-  provider?: RsbuildProvider<'rspack'> | RsbuildProvider<'webpack'>;
+  provider?: unknown;
   _privateMeta?: RsbuildConfigMeta;
 }>;
 
