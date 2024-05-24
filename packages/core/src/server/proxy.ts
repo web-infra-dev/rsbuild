@@ -2,13 +2,13 @@ import {
   type RequestHandler as Middleware,
   type ProxyDetail,
   type ProxyOptions,
-  type UpgradeEvent,
   logger,
 } from '@rsbuild/shared';
 import {
   type RequestHandler,
   createProxyMiddleware as baseCreateProxyMiddleware,
 } from '@rsbuild/shared/http-proxy-middleware';
+import type { UpgradeEvent } from './helper';
 
 export function formatProxyOptions(proxyOptions: ProxyOptions) {
   const ret: ProxyDetail[] = [];

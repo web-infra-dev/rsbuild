@@ -63,14 +63,14 @@ export class CompilerDevMiddleware {
     this.devMiddleware = devMiddleware;
   }
 
-  public init() {
+  public async init() {
     // start compiling
     this.middleware = this.setupDevMiddleware(
       this.devMiddleware,
       this.publicPaths,
     );
 
-    this.socketServer.prepare();
+    await this.socketServer.prepare();
   }
 
   public upgrade(req: IncomingMessage, sock: Socket, head: any) {

@@ -6,9 +6,9 @@ import type {
   Rspack,
   ServerAPIs,
   ServerConfig,
-  UpgradeEvent,
 } from '@rsbuild/shared';
 import { isDebug } from '@rsbuild/shared';
+import type { UpgradeEvent } from './helper';
 import {
   faviconFallbackMiddleware,
   getHtmlFallbackMiddleware,

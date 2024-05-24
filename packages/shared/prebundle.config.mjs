@@ -31,7 +31,6 @@ export default {
     },
     'webpack-merge',
     'mime-types',
-    'connect',
     'browserslist',
     'gzip-size',
     'json5',
