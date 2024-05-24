@@ -1,5 +1,4 @@
 import {
-  type CreateRsbuildOptions,
   type InspectConfigOptions,
   type PluginManager,
   type RspackConfig,
@@ -10,7 +9,11 @@ import { normalizeConfig } from '../config';
 import { updateContextByNormalizedConfig } from '../createContext';
 import { mergeRsbuildConfig } from '../mergeConfig';
 import { initPlugins } from '../pluginManager';
-import type { InternalContext, NormalizedConfig } from '../types';
+import type {
+  CreateRsbuildOptions,
+  InternalContext,
+  NormalizedConfig,
+} from '../types';
 import { inspectConfig } from './inspectConfig';
 import { generateRspackConfig } from './rspackConfig';
 

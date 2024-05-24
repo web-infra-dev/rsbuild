@@ -1,10 +1,9 @@
 import type {
-  BundlerPluginInstance,
   CreateRsbuildOptions,
   RsbuildInstance,
   RsbuildPlugin,
-  RspackConfig,
-} from '@rsbuild/shared';
+} from '@rsbuild/core';
+import type { BundlerPluginInstance, RspackConfig } from '@rsbuild/shared';
 
 export function baseMatchLoader({
   config,

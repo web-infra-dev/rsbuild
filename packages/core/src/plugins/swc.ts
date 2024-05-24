@@ -53,6 +53,11 @@ export const pluginSwc = (): RsbuildPlugin => ({
   name: PLUGIN_SWC_NAME,
 
   setup(api) {
+    // This plugin uses Rspack builtin SWC and is not suitable for webpack
+    if (api.context.bundlerType === 'webpack') {
+      return;
+    }
+
     api.modifyBundlerChain({
       order: 'pre',
       handler: async (chain, { CHAIN_ID, target }) => {

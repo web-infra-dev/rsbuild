@@ -1,31 +1,14 @@
-import {
-  type CreateCompiler,
-  type PreviewServerOptions,
-  type RsbuildProvider,
-  pickRsbuildConfig,
-} from '@rsbuild/shared';
+import type { RsbuildProvider } from '@rsbuild/core';
+import type { CreateCompiler, PreviewServerOptions } from '@rsbuild/shared';
 import { initConfigs } from './initConfigs';
-import {
-  createContext,
-  createDevServer,
-  createPublicContext,
-  getPluginAPI,
-  initRsbuildConfig,
-  plugins,
-  setCssExtractPlugin,
-  startProdServer,
-} from './shared';
+import { createDevServer, initRsbuildConfig, startProdServer } from './shared';
 
 export const webpackProvider: RsbuildProvider<'webpack'> = async ({
+  context,
   pluginManager,
   rsbuildOptions,
+  setCssExtractPlugin,
 }) => {
-  const rsbuildConfig = pickRsbuildConfig(rsbuildOptions.rsbuildConfig);
-  const context = await createContext(rsbuildOptions, rsbuildConfig, 'webpack');
-  const pluginAPI = getPluginAPI({ context, pluginManager });
-
-  context.pluginAPI = pluginAPI;
-
   const { default: cssExtractPlugin } = await import('mini-css-extract-plugin');
   setCssExtractPlugin(cssExtractPlugin);
 
@@ -39,51 +22,13 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     return createCompiler({ context, webpackConfigs });
   }) as CreateCompiler;
 
+  const { pluginAdaptor } = await import('./plugin');
+  pluginManager.addPlugins([pluginAdaptor()]);
+
   return {
     bundler: 'webpack',
 
-    pluginAPI,
-
     createCompiler,
-
-    publicContext: createPublicContext(context),
-
-    async applyDefaultPlugins() {
-      const allPlugins = await Promise.all([
-        plugins.basic(),
-        plugins.entry(),
-        plugins.cache(),
-        plugins.target(),
-        plugins.output(),
-        plugins.resolve(),
-        plugins.fileSize(),
-        plugins.cleanOutput(),
-        plugins.asset(),
-        plugins.html(async (tags) => {
-          const result = await context.hooks.modifyHTMLTags.call(tags);
-          return result[0];
-        }),
-        plugins.wasm(),
-        plugins.moment(),
-        plugins.nodeAddons(),
-        plugins.define(),
-        plugins.css(),
-        plugins.bundleAnalyzer(),
-        plugins.rsdoctor(),
-        plugins.splitChunks(),
-        plugins.startUrl(),
-        plugins.inlineChunk(),
-        plugins.externals(),
-        plugins.performance(),
-        plugins.resourceHints(),
-        plugins.server(),
-        plugins.moduleFederation(),
-        plugins.manifest(),
-        import('./plugin').then((m) => m.pluginAdaptor()),
-      ]);
-
-      pluginManager.addPlugins(allPlugins);
-    },
 
     async initConfigs() {
       const { webpackConfigs } = await initConfigs({

@@ -1,12 +1,8 @@
 import { join } from 'node:path';
 import fse from '../compiled/fs-extra/index.js';
 import { logger } from './logger';
-import type {
-  InspectConfigOptions,
-  NormalizedConfig,
-  RsbuildConfig,
-} from './types';
-import { color, pick, upperFirst } from './utils';
+import type { InspectConfigOptions, NormalizedConfig } from './types';
+import { color, upperFirst } from './utils';
 
 export async function outputInspectConfigFiles({
   rsbuildConfig,
@@ -82,24 +78,3 @@ export async function stringifyConfig(config: unknown, verbose?: boolean) {
 
   return stringify(config as any, { verbose });
 }
-
-/**
- * Omit unused keys from Rsbuild config passed by user
- */
-export const pickRsbuildConfig = (
-  rsbuildConfig: RsbuildConfig,
-): RsbuildConfig => {
-  const keys: Array<keyof RsbuildConfig> = [
-    'dev',
-    'html',
-    'tools',
-    'output',
-    'source',
-    'server',
-    'security',
-    'performance',
-    'moduleFederation',
-    '_privateMeta',
-  ];
-  return pick(rsbuildConfig, keys);
-};
