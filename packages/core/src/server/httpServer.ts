@@ -1,15 +1,33 @@
 import type { ServerConfig } from '@rsbuild/shared';
 import type connect from '@rsbuild/shared/connect';
 
-export const createHttpServer = async (options: {
-  https?: ServerConfig['https'];
+export const createHttpServer = async ({
+  serverConfig,
+  middlewares,
+}: {
+  serverConfig: ServerConfig;
   middlewares: connect.Server;
 }) => {
-  if (options.https) {
-    const { createServer } = await import('node:https');
-    return createServer(options.https, options.middlewares);
+  if (serverConfig.https) {
+    // http-proxy does not supports http2
+    if (serverConfig.proxy) {
+      const { createServer } = await import('node:https');
+      return createServer(serverConfig.https, middlewares);
+    }
+
+    const { createSecureServer } = await import('node:http2');
+    return createSecureServer(
+      {
+        allowHTTP1: true,
+        // increase the maximum memory (MiB)
+        maxSessionMemory: 1024,
+        ...serverConfig.https,
+      },
+      // @ts-expect-error req type mismatch
+      middlewares,
+    );
   }
 
   const { createServer } = await import('node:http');
-  return createServer(options.middlewares);
+  return createServer(middlewares);
 };

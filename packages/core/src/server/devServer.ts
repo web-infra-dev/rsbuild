@@ -175,7 +175,7 @@ export async function createDevServer<
     outputFileSystem,
     listen: async () => {
       const httpServer = await createHttpServer({
-        https: serverConfig.https,
+        serverConfig,
         middlewares,
       });
       debug('listen dev server');
