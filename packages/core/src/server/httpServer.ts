@@ -1,12 +1,12 @@
 import type { ServerConfig } from '@rsbuild/shared';
-import type connect from '@rsbuild/shared/connect';
+import type Connect from '../../compiled/connect/index.js';
 
 export const createHttpServer = async ({
   serverConfig,
   middlewares,
 }: {
   serverConfig: ServerConfig;
-  middlewares: connect.Server;
+  middlewares: Connect.Server;
 }) => {
   if (serverConfig.https) {
     // http-proxy does not supports http2

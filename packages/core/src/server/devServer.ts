@@ -2,17 +2,15 @@ import fs from 'node:fs';
 import {
   type CreateDevServerOptions,
   ROOT_DIST_DIR,
-  type RsbuildDevServer,
   type Rspack,
   type StartDevServerOptions,
-  type StartServerResult,
   debug,
   getNodeEnv,
   getPublicPathFromCompiler,
   isMultiCompiler,
   setNodeEnv,
 } from '@rsbuild/shared';
-import connect from '@rsbuild/shared/connect';
+import type Connect from '../../compiled/connect/index.js';
 import type { CreateDevMiddlewareReturns } from '../provider/createCompiler';
 import type { InternalContext, NormalizedConfig } from '../types';
 import {
@@ -20,6 +18,8 @@ import {
   getMiddlewares,
 } from './getDevMiddlewares';
 import {
+  type StartServerResult,
+  type UpgradeEvent,
   formatRoutes,
   getAddressUrls,
   getDevConfig,
@@ -30,6 +30,50 @@ import { createHttpServer } from './httpServer';
 import { notFoundMiddleware } from './middlewares';
 import { onBeforeRestartServer } from './restart';
 import { setupWatchFiles } from './watchFiles';
+
+export type RsbuildDevServer = {
+  /**
+   * Use rsbuild inner server to listen
+   */
+  listen: () => Promise<{
+    port: number;
+    urls: string[];
+    server: {
+      close: () => Promise<void>;
+    };
+  }>;
+
+  /** The following APIs will be used when you use a custom server */
+
+  /**
+   * The resolved port.
+   *
+   * By default, Rsbuild Server listens on port `3000` and automatically increments the port number when the port is occupied.
+   */
+  port: number;
+  /**
+   * connect app instance.
+   *
+   * Can be used to attach custom middlewares to the dev server.
+   */
+  middlewares: Connect.Server;
+  /**
+   * Notify Rsbuild Server has started
+   *
+   * In Rsbuild, we will trigger onAfterStartDevServer hook in this stage
+   */
+  afterListen: () => Promise<void>;
+  /**
+   * Subscribe http upgrade event
+   *
+   * It will used when you use custom server
+   */
+  onHTTPUpgrade: UpgradeEvent;
+  /**
+   * Close the Rsbuild server.
+   */
+  close: () => Promise<void>;
+};
 
 export async function createDevServer<
   Options extends {
@@ -99,7 +143,7 @@ export async function createDevServer<
       devMiddleware,
     });
 
-    compilerDevMiddleware.init();
+    await compilerDevMiddleware.init();
 
     outputFileSystem =
       (isMultiCompiler(compiler)
@@ -159,6 +203,7 @@ export async function createDevServer<
     outputFileSystem,
   });
 
+  const { default: connect } = await import('../../compiled/connect/index.js');
   const middlewares = connect();
 
   for (const item of devMiddlewares.middlewares) {

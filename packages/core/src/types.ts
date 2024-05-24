@@ -10,17 +10,17 @@ import type {
   PreviewServerOptions,
   RsbuildConfig,
   RsbuildContext,
-  RsbuildDevServer,
   RsbuildPlugin,
   RsbuildPluginAPI,
   RsbuildPlugins,
   RspackConfig,
   StartDevServerOptions,
-  StartServerResult,
   TransformHandler,
   WebpackConfig,
 } from '@rsbuild/shared';
 import type { Hooks } from './initHooks';
+import type { RsbuildDevServer } from './server/devServer';
+import type { StartServerResult } from './server/helper';
 
 declare module '@rspack/core' {
   interface Compiler {

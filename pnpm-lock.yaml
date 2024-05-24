@@ -714,6 +714,9 @@ importers:
         specifier: ^8.4.38
         version: 8.4.38
     devDependencies:
+      '@types/connect':
+        specifier: 3.4.38
+        version: 3.4.38
       '@types/fs-extra':
         specifier: ^11.0.4
         version: 11.0.4
@@ -729,6 +732,9 @@ importers:
       commander:
         specifier: ^12.1.0
         version: 12.1.0
+      connect:
+        specifier: 3.7.0
+        version: 3.7.0
       connect-history-api-fallback:
         specifier: ^2.0.0
         version: 2.0.0
@@ -1643,9 +1649,6 @@ importers:
         specifier: ~2.3.3
         version: 2.3.3
     devDependencies:
-      '@types/connect':
-        specifier: 3.4.38
-        version: 3.4.38
       '@types/fs-extra':
         specifier: ^11.0.4
         version: 11.0.4
@@ -1664,9 +1667,6 @@ importers:
       chokidar:
         specifier: 3.6.0
         version: 3.6.0
-      connect:
-        specifier: 3.7.0
-        version: 3.7.0
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1

@@ -37,9 +37,9 @@
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "@types/sass-loader": "^8.0.8",
+    "prebundle": "1.1.0",
     "resolve-url-loader": "^5.0.0",
     "sass-loader": "^14.2.1",
-    "prebundle": "1.1.0",
     "typescript": "^5.4.2"
   },
   "peerDependencies": {

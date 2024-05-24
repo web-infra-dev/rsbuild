@@ -48,10 +48,6 @@
       "types": "./compiled/chokidar/types/index.d.ts",
       "default": "./compiled/chokidar/index.js"
     },
-    "./connect": {
-      "types": "./compiled/connect/index.d.ts",
-      "default": "./compiled/connect/index.js"
-    },
     "./mime-types": {
       "types": "./compiled/mime-types/index.d.ts",
       "default": "./compiled/mime-types/index.js"
@@ -99,14 +95,12 @@
     "postcss": "^8.4.38"
   },
   "devDependencies": {
-    "@types/connect": "3.4.38",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "18.x",
     "@types/webpack-bundle-analyzer": "4.7.0",
     "autoprefixer": "10.4.19",
     "browserslist": "4.23.0",
     "chokidar": "3.6.0",
-    "connect": "3.7.0",
     "deepmerge": "^4.3.1",
     "fs-extra": "^11.2.0",
     "gzip-size": "^6.0.0",
