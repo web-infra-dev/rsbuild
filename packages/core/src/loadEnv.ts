@@ -65,8 +65,8 @@ export function loadEnv({
   const publicVars: Record<string, string> = {};
 
   for (const key of Object.keys(process.env)) {
-    const val = process.env[key];
-    if (val && prefixes.some((prefix) => key.startsWith(prefix))) {
+    if (prefixes.some((prefix) => key.startsWith(prefix))) {
+      const val = process.env[key];
       publicVars[`process.env.${key}`] = JSON.stringify(val);
     }
   }
