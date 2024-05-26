@@ -80,6 +80,21 @@ pluginSass({
 });
 ```
 
+### exclude
+
+- **Type:** [RuleSetCondition](https://rspack.dev/config/module#condition)
+- **Default:** `undefined`
+
+Exclude some `.sass` or `.scss` files, they will not be transformed by `sass-loader`.
+
+For example:
+
+```ts
+pluginSass({
+  exclude: /some-folder[\\/]foo\.scss/,
+});
+```
+
 ## Modifying Sass Version
 
 In some scenarios, if you need to use a specific version of Sass instead of the built-in Sass embedded in Rsbuild, you can install the desired Sass version in your project and set it up using the `implementation` option of the `sass-loader`.
