@@ -764,7 +764,7 @@ importers:
         version: 8.4.2
       postcss-load-config:
         specifier: 5.1.0
-        version: 5.1.0(jiti@1.21.0)(postcss@8.4.38)(tsx@4.10.1)
+        version: 5.1.0(jiti@1.21.0)(postcss@8.4.38)(tsx@4.11.0)
       postcss-loader:
         specifier: 8.1.1
         version: 8.1.1(@rspack/core@0.7.0-beta.2(@swc/helpers@0.5.3))(postcss@8.4.38)(typescript@5.4.5)(webpack@5.91.0)
@@ -1381,7 +1381,7 @@ importers:
         version: 3.2.0(svelte@4.2.16)
       svelte-preprocess:
         specifier: ^5.1.4
-        version: 5.1.4(@babel/core@7.24.5)(less@4.2.0)(postcss-load-config@5.1.0(jiti@1.21.0)(postcss@8.4.38)(tsx@4.10.1))(postcss@8.4.38)(pug@3.0.2)(sass@1.77.1)(stylus@0.63.0)(svelte@4.2.16)(typescript@5.4.5)
+        version: 5.1.4(@babel/core@7.24.5)(less@4.2.0)(postcss-load-config@5.1.0(jiti@1.21.0)(postcss@8.4.38)(tsx@4.11.0))(postcss@8.4.38)(pug@3.0.2)(sass@1.77.1)(stylus@0.63.0)(svelte@4.2.16)(typescript@5.4.5)
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -1738,8 +1738,8 @@ importers:
         specifier: 18.x
         version: 18.19.31
       tsx:
-        specifier: ^4.10.1
-        version: 4.10.1
+        specifier: ^4.11.0
+        version: 4.11.0
 
   scripts/test-helper:
     dependencies:
@@ -5467,8 +5467,8 @@ packages:
     resolution: {integrity: sha512-VaUJspBffn/LMCJVoMvSAdmscJyS1auj5Zulnn5UoYcY531UWmdwhRWkcGKnGU93m5HSXP9LP2usOryrBtQowA==}
     engines: {node: '>=16'}
 
-  get-tsconfig@4.7.3:
-    resolution: {integrity: sha512-ZvkrzoUA0PQZM6fy6+/Hce561s+faD1rsNwhnO5FelNjyy7EMGJ3Rz1AQ8GYDWjhRs/7dBLOEJvhK8MiEJOAFg==}
+  get-tsconfig@4.7.5:
+    resolution: {integrity: sha512-ZCuZCnlqNzjb4QprAzXKdpp/gh6KTxSJuw3IBsPnV/7fV4NxC9ckB+vPTt8w7fJA0TaSD7c55BR47JD6MEDyDw==}
 
   github-slugger@2.0.0:
     resolution: {integrity: sha512-IaOQ9puYtjrkq7Y0Ygl9KDZnrf/aiUJYUpVf89y8kyaxbRG7Y1SrX/jaumrv81vc61+kiMempujsM3Yw7w5qcw==}
@@ -8435,8 +8435,8 @@ packages:
   tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
 
-  tsx@4.10.1:
-    resolution: {integrity: sha512-G+CcyTOopwhuI81FU+KpzGN5UBhHgGEDlGt8mHAXKxv8pDGr6WI7hI7aRjTRol5WzFVsSNuzl3ekCZ0eLIJlEQ==}
+  tsx@4.11.0:
+    resolution: {integrity: sha512-vzGGELOgAupsNVssAmZjbUDfdm/pWP4R+Kg8TVdsonxbXk0bEpE1qh0yV6/QxUVXaVlNemgcPajGdJJ82n3stg==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -13037,7 +13037,7 @@ snapshots:
 
   get-stream@8.0.1: {}
 
-  get-tsconfig@4.7.3:
+  get-tsconfig@4.7.5:
     dependencies:
       resolve-pkg-maps: 1.0.0
 
@@ -15197,14 +15197,14 @@ snapshots:
     optionalDependencies:
       postcss: 8.4.38
 
-  postcss-load-config@5.1.0(jiti@1.21.0)(postcss@8.4.38)(tsx@4.10.1):
+  postcss-load-config@5.1.0(jiti@1.21.0)(postcss@8.4.38)(tsx@4.11.0):
     dependencies:
       lilconfig: 3.1.1
       yaml: 2.4.2
     optionalDependencies:
       jiti: 1.21.0
       postcss: 8.4.38
-      tsx: 4.10.1
+      tsx: 4.11.0
 
   postcss-loader@8.1.1(@rspack/core@0.7.0-beta.2(@swc/helpers@0.5.3))(postcss@8.4.38)(typescript@5.4.5)(webpack@5.91.0):
     dependencies:
@@ -16424,7 +16424,7 @@ snapshots:
       svelte-dev-helper: 1.1.9
       svelte-hmr: 0.14.12(svelte@4.2.16)
 
-  svelte-preprocess@5.1.4(@babel/core@7.24.5)(less@4.2.0)(postcss-load-config@5.1.0(jiti@1.21.0)(postcss@8.4.38)(tsx@4.10.1))(postcss@8.4.38)(pug@3.0.2)(sass@1.77.1)(stylus@0.63.0)(svelte@4.2.16)(typescript@5.4.5):
+  svelte-preprocess@5.1.4(@babel/core@7.24.5)(less@4.2.0)(postcss-load-config@5.1.0(jiti@1.21.0)(postcss@8.4.38)(tsx@4.11.0))(postcss@8.4.38)(pug@3.0.2)(sass@1.77.1)(stylus@0.63.0)(svelte@4.2.16)(typescript@5.4.5):
     dependencies:
       '@types/pug': 2.0.10
       detect-indent: 6.1.0
@@ -16436,7 +16436,7 @@ snapshots:
       '@babel/core': 7.24.5
       less: 4.2.0
       postcss: 8.4.38
-      postcss-load-config: 5.1.0(jiti@1.21.0)(postcss@8.4.38)(tsx@4.10.1)
+      postcss-load-config: 5.1.0(jiti@1.21.0)(postcss@8.4.38)(tsx@4.11.0)
       pug: 3.0.2
       sass: 1.77.1
       stylus: 0.63.0
@@ -16611,10 +16611,10 @@ snapshots:
 
   tslib@2.6.2: {}
 
-  tsx@4.10.1:
+  tsx@4.11.0:
     dependencies:
       esbuild: 0.19.12
-      get-tsconfig: 4.7.3
+      get-tsconfig: 4.7.5
     optionalDependencies:
       fsevents: 2.3.3
 
