@@ -32,8 +32,19 @@ export type PluginLessOptions = {
    */
   lessLoaderOptions?: ChainedConfigWithUtils<
     LessLoaderOptions,
-    { addExcludes: FileFilterUtil }
+    {
+      /**
+       * @deprecated
+       * use `exclude` option instead.
+       */
+      addExcludes: FileFilterUtil;
+    }
   >;
+
+  /**
+   * Exclude some Less files, they will not be transformed.
+   */
+  exclude?: Rspack.RuleSetCondition;
 };
 
 const getLessLoaderOptions = (
@@ -90,6 +101,7 @@ const getLessLoaderOptions = (
 };
 
 export const pluginLess = ({
+  exclude,
   lessLoaderOptions,
 }: PluginLessOptions = {}): RsbuildPlugin => ({
   name: PLUGIN_LESS_NAME,
@@ -112,6 +124,10 @@ export const pluginLess = ({
 
       for (const item of excludes) {
         rule.exclude.add(item);
+      }
+
+      if (exclude) {
+        rule.exclude.add(exclude);
       }
 
       const cssRule = chain.module.rules.get(CHAIN_ID.RULE.CSS);
