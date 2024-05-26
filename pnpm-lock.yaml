@@ -1177,8 +1177,8 @@ importers:
         specifier: ^2.0.10
         version: 2.0.10
       pug:
-        specifier: 3.0.2
-        version: 3.0.2
+        specifier: ^3.0.3
+        version: 3.0.3
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -1381,7 +1381,7 @@ importers:
         version: 3.2.0(svelte@4.2.16)
       svelte-preprocess:
         specifier: ^5.1.4
-        version: 5.1.4(@babel/core@7.24.5)(less@4.2.0)(postcss-load-config@5.1.0(jiti@1.21.0)(postcss@8.4.38)(tsx@4.11.0))(postcss@8.4.38)(pug@3.0.2)(sass@1.77.1)(stylus@0.63.0)(svelte@4.2.16)(typescript@5.4.5)
+        version: 5.1.4(@babel/core@7.24.5)(less@4.2.0)(postcss-load-config@5.1.0(jiti@1.21.0)(postcss@8.4.38)(tsx@4.11.0))(postcss@8.4.38)(pug@3.0.3)(sass@1.77.1)(stylus@0.63.0)(svelte@4.2.16)(typescript@5.4.5)
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -1572,7 +1572,7 @@ importers:
         version: link:../shared
       vue-loader:
         specifier: ^15.11.1
-        version: 15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.1(@rspack/core@0.7.0-beta.2(@swc/helpers@0.5.3))(webpack@5.91.0))(lodash@4.17.21)(prettier@3.2.5)(pug@3.0.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.91.0)
+        version: 15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.1(@rspack/core@0.7.0-beta.2(@swc/helpers@0.5.3))(webpack@5.91.0))(lodash@4.17.21)(prettier@3.2.5)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.91.0)
       webpack:
         specifier: ^5.91.0
         version: 5.91.0
@@ -7389,11 +7389,14 @@ packages:
   pug-attrs@3.0.0:
     resolution: {integrity: sha512-azINV9dUtzPMFQktvTXciNAfAuVh/L/JCl0vtPCwvOA21uZrC08K/UnmrL+SXGEVc1FwzjW62+xw5S/uaLj6cA==}
 
-  pug-code-gen@3.0.2:
-    resolution: {integrity: sha512-nJMhW16MbiGRiyR4miDTQMRWDgKplnHyeLvioEJYbk1RsPI3FuA3saEP8uwnTb2nTJEKBU90NFVWJBk4OU5qyg==}
+  pug-code-gen@3.0.3:
+    resolution: {integrity: sha512-cYQg0JW0w32Ux+XTeZnBEeuWrAY7/HNE6TWnhiHGnnRYlCgyAUPoyh9KzCMa9WhcJlJ1AtQqpEYHc+vbCzA+Aw==}
 
   pug-error@2.0.0:
     resolution: {integrity: sha512-sjiUsi9M4RAGHktC1drQfCr5C5eriu24Lfbt4s+7SykztEOwVZtbFk1RRq0tzLxcMxMYTBR+zMQaG07J/btayQ==}
+
+  pug-error@2.1.0:
+    resolution: {integrity: sha512-lv7sU9e5Jk8IeUheHata6/UThZ7RK2jnaaNztxfPYUY+VxZyk/ePVaNZ/vwmH8WqGvDz3LrNYt/+gA55NDg6Pg==}
 
   pug-filters@4.0.0:
     resolution: {integrity: sha512-yeNFtq5Yxmfz0f9z2rMXGw/8/4i1cCFecw/Q7+D0V2DdtII5UvqE12VaZ2AY7ri6o5RNXiweGH79OCq+2RQU4A==}
@@ -7419,8 +7422,8 @@ packages:
   pug-walk@2.0.0:
     resolution: {integrity: sha512-yYELe9Q5q9IQhuvqsZNwA5hfPkMJ8u92bQLIMcsMxf/VADjNtEYptU+inlufAFYcWdHlwNfZOEnOOQrZrcyJCQ==}
 
-  pug@3.0.2:
-    resolution: {integrity: sha512-bp0I/hiK1D1vChHh6EfDxtndHji55XP/ZJKwsRqrz6lRia6ZC2OZbdAymlxdVFwd1L70ebrVJw4/eZ79skrIaw==}
+  pug@3.0.3:
+    resolution: {integrity: sha512-uBi6kmc9f3SZ3PXxqcHiUZLmIXgfgWooKWXcwSGwQd2Zi5Rb0bT14+8CJjJgI8AB+nndLaNgHGrcc6bPIB665g==}
 
   punycode@1.4.1:
     resolution: {integrity: sha512-jmYNElW7yvO7TV33CjSmvSiE2yco3bV2czu/OzDKdMNVZQWfxCblURLhf+47syQRBntjfLdd/H0egrzIG+oaFQ==}
@@ -11421,9 +11424,9 @@ snapshots:
       '@vue/compiler-dom': 3.4.23
       '@vue/shared': 3.4.23
 
-  '@vue/component-compiler-utils@3.3.0(lodash@4.17.21)(pug@3.0.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@vue/component-compiler-utils@3.3.0(lodash@4.17.21)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      consolidate: 0.15.1(lodash@4.17.21)(pug@3.0.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      consolidate: 0.15.1(lodash@4.17.21)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       hash-sum: 1.0.2
       lru-cache: 4.1.5
       merge-source-map: 1.1.0
@@ -12142,12 +12145,12 @@ snapshots:
 
   console-browserify@1.2.0: {}
 
-  consolidate@0.15.1(lodash@4.17.21)(pug@3.0.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  consolidate@0.15.1(lodash@4.17.21)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       bluebird: 3.7.2
     optionalDependencies:
       lodash: 4.17.21
-      pug: 3.0.2
+      pug: 3.0.3
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
@@ -15470,18 +15473,20 @@ snapshots:
       js-stringify: 1.0.2
       pug-runtime: 3.0.1
 
-  pug-code-gen@3.0.2:
+  pug-code-gen@3.0.3:
     dependencies:
       constantinople: 4.0.1
       doctypes: 1.1.0
       js-stringify: 1.0.2
       pug-attrs: 3.0.0
-      pug-error: 2.0.0
+      pug-error: 2.1.0
       pug-runtime: 3.0.1
       void-elements: 3.1.0
       with: 7.0.2
 
   pug-error@2.0.0: {}
+
+  pug-error@2.1.0: {}
 
   pug-filters@4.0.0:
     dependencies:
@@ -15520,9 +15525,9 @@ snapshots:
 
   pug-walk@2.0.0: {}
 
-  pug@3.0.2:
+  pug@3.0.3:
     dependencies:
-      pug-code-gen: 3.0.2
+      pug-code-gen: 3.0.3
       pug-filters: 4.0.0
       pug-lexer: 5.0.1
       pug-linker: 4.0.0
@@ -16424,7 +16429,7 @@ snapshots:
       svelte-dev-helper: 1.1.9
       svelte-hmr: 0.14.12(svelte@4.2.16)
 
-  svelte-preprocess@5.1.4(@babel/core@7.24.5)(less@4.2.0)(postcss-load-config@5.1.0(jiti@1.21.0)(postcss@8.4.38)(tsx@4.11.0))(postcss@8.4.38)(pug@3.0.2)(sass@1.77.1)(stylus@0.63.0)(svelte@4.2.16)(typescript@5.4.5):
+  svelte-preprocess@5.1.4(@babel/core@7.24.5)(less@4.2.0)(postcss-load-config@5.1.0(jiti@1.21.0)(postcss@8.4.38)(tsx@4.11.0))(postcss@8.4.38)(pug@3.0.3)(sass@1.77.1)(stylus@0.63.0)(svelte@4.2.16)(typescript@5.4.5):
     dependencies:
       '@types/pug': 2.0.10
       detect-indent: 6.1.0
@@ -16437,7 +16442,7 @@ snapshots:
       less: 4.2.0
       postcss: 8.4.38
       postcss-load-config: 5.1.0(jiti@1.21.0)(postcss@8.4.38)(tsx@4.11.0)
-      pug: 3.0.2
+      pug: 3.0.3
       sass: 1.77.1
       stylus: 0.63.0
       typescript: 5.4.5
@@ -16911,9 +16916,9 @@ snapshots:
 
   vue-hot-reload-api@2.3.4: {}
 
-  vue-loader@15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.1(@rspack/core@0.7.0-beta.2(@swc/helpers@0.5.3))(webpack@5.91.0))(lodash@4.17.21)(prettier@3.2.5)(pug@3.0.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.91.0):
+  vue-loader@15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.1(@rspack/core@0.7.0-beta.2(@swc/helpers@0.5.3))(webpack@5.91.0))(lodash@4.17.21)(prettier@3.2.5)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.91.0):
     dependencies:
-      '@vue/component-compiler-utils': 3.3.0(lodash@4.17.21)(pug@3.0.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@vue/component-compiler-utils': 3.3.0(lodash@4.17.21)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       css-loader: 7.1.1(@rspack/core@0.7.0-beta.2(@swc/helpers@0.5.3))(webpack@5.91.0)
       hash-sum: 1.0.2
       loader-utils: 1.4.2

@@ -29,7 +29,7 @@
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
     "@types/pug": "^2.0.10",
-    "pug": "3.0.2"
+    "pug": "^3.0.3"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
