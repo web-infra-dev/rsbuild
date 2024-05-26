@@ -92,6 +92,10 @@ export const pluginSass = (
         rule.exclude.add(item);
       }
 
+      if (pluginOptions.exclude) {
+        rule.exclude.add(pluginOptions.exclude);
+      }
+
       const cssRule = chain.module.rules.get(CHAIN_ID.RULE.CSS);
 
       // Copy the builtin CSS rules

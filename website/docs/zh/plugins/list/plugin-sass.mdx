@@ -80,6 +80,21 @@ pluginSass({
 });
 ```
 
+### exclude
+
+- **类型：** [RuleSetCondition](https://rspack.dev/config/module#condition)
+- **默认值：** `undefined`
+
+用于排除一部分 `.sass` 或 `.scss` 模块，这些模块不会被 `sass-loader` 编译。
+
+比如：
+
+```ts
+pluginSass({
+  exclude: /some-folder[\\/]foo\.scss/,
+});
+```
+
 ## 修改 Sass 版本
 
 在某些场景下，如果你需要使用特定的 Sass 版本，而不是使用 Rsbuild 内置的 Sass embedded，可以在项目中安装需要使用的 Sass 版本，并通过 `sass-loader` 的 `implementation` 选项设置。
