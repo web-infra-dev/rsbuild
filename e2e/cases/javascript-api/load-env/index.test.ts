@@ -12,6 +12,7 @@ rspackOnlyTest('should load env files correctly', () => {
   expect(process.env.REACT_NAME).toEqual('react');
 
   expect(env.parsed).toEqual({
+    REACT_EMPTY_STRING: '',
     REACT_NAME: 'react',
     REACT_VERSION: '18',
     VUE_NAME: 'vue',
@@ -19,6 +20,7 @@ rspackOnlyTest('should load env files correctly', () => {
   });
 
   expect(env.publicVars).toEqual({
+    'process.env.REACT_EMPTY_STRING': '""',
     'process.env.REACT_NAME': '"react"',
     'process.env.REACT_VERSION': '"18"',
   });
