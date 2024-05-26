@@ -49,7 +49,7 @@
     "cross-env": "^7.0.3",
     "cspell-ban-words": "^0.0.3",
     "nano-staged": "^0.8.0",
-    "nx": "^19.0.2",
+    "nx": "^19.1.0",
     "prettier": "^3.2.5",
     "simple-git-hooks": "^2.11.1",
     "vitest": "^1.6.0"
