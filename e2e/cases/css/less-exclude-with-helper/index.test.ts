@@ -1,7 +1,7 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('exclude specified less file with exclude option', async () => {
+test('exclude specified less file with addExcludes', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {

@@ -83,6 +83,21 @@ pluginLess({
 });
 ```
 
+### exclude
+
+- **Type:** [RuleSetCondition](https://rspack.dev/config/module#condition)
+- **Default:** `undefined`
+
+Exclude some Less files, they will not be transformed by `less-loader`.
+
+For example:
+
+```ts
+pluginLess({
+  exclude: /some-folder[\\/]foo\.less/,
+});
+```
+
 ## Modifying Less Version
 
 In some scenarios, if you need to use a specific version of Less instead of the built-in Less v4 in Rsbuild, you can install the desired Less version in your project and set it up using the `implementation` option of the `less-loader`.
