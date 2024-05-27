@@ -11,6 +11,7 @@ published_at: 2024-05-23 18:00:00
 Rsbuild v0.7 已与 Rspack v0.7 同步发布，值得关注的变更有：
 
 - [支持 Storybook](#支持-storybook)
+- [更快的 Sass 编译](#更快的-sass-编译)
 - [更好的 CSS 支持](#更好的-css-支持)
 - [CSS Modules 类型生成](#css-modules-类型生成)
 - 更多...
@@ -18,6 +19,18 @@ Rsbuild v0.7 已与 Rspack v0.7 同步发布，值得关注的变更有：
 ## 支持 Storybook
 
 TODO
+
+## 更快的 Sass 编译
+
+在 Rsbuild 0.7 中，**Sass 编译速度提高了 3~10 倍**，在大型项目项目中的性能提升尤为显著。
+
+以编译 Bootstrap 的 Sass 代码为例，Rsbuild v0.6 和 v0.7 的构建时间对比：
+
+![](https://assets.rspack.dev/rsbuild/assets/sass-embedded-compare.jpeg)
+
+这得益于 Rsbuild 默认启用了 [sass-embedded](https://www.npmjs.com/package/sass-embedded)，它是一个围绕原生 Dart Sass 可执行文件的 JavaScript wrapper，具备一致的 API 和更优秀的性能。
+
+此外，Rsbuild 还启用了 `sass-loader` 最新的 [modern-compiler](https://github.com/webpack-contrib/sass-loader/releases/tag/v14.2.0) API，这能够开启 Sass 的 shared resources 能力，在编译多个文件时重复利用相同的 compiler 进程，从而提升构建速度。
 
 ## 更好的 CSS 支持
 
