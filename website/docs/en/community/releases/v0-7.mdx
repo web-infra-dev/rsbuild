@@ -18,7 +18,28 @@ Rsbuild v0.7 has been released with Rspack v0.7. Notable changes:
 
 ## Support for Storybook
 
-TODO
+Rsbuild now supports Storybook!
+
+[storybook-builder-rsbuild](https://github.com/rspack-contrib/storybook-rsbuild) is a Storybook builder based on Storybook v8 and Rsbuild that allows you to quickly build your components and stories.
+
+![](https://assets.rspack.dev/rsbuild/assets/storybook-rsbuild-preview.png)
+
+- For projects using Rsbuild, you can now quickly integrate Storybook and reuse your existing Rsbuild config.
+- For projects using the Storybook webpack builder, you can now upgrade to Rsbuild and **get ~5x faster build performance**.
+
+We also provide `storybook-react-rsbuild` and `storybook-vue3-rsbuild` to support React and Vue 3. For example, to integrate React:
+
+```js title=".storybook/main.js"
+import { StorybookConfig } from 'storybook-react-rsbuild';
+
+const config: StorybookConfig = {
+  framework: 'storybook-react-rsbuild',
+};
+
+export default config;
+```
+
+> For more usage, please refer to [storybook-rsbuild repository](https://github.com/rspack-contrib/storybook-rsbuild).
 
 ## Faster Sass Compilation
 
@@ -107,7 +128,7 @@ Now when you open the `src/index.ts` file, you can see that the `styles` object 
 
 ## ESM/CJS Exports
 
-Now, all packages of Rsbuild provide exports in both ES modules and CommonJS formats, and `"type"="module"` has been declared in the package.json.
+Now, all packages of Rsbuild provide exports in both ES modules and CommonJS formats, and ["type"="module"](https://nodejs.org/api/packages.html#type) has been declared in the package.json.
 
 ![](https://assets.rspack.dev/rsbuild/assets/rsbuild-dual-package-example.png)
 
@@ -129,7 +150,7 @@ ESM/CJS interop is a tricky issue, so we will provide both formats for a long ti
 
 Rsbuild's Sass and Less plugins are now two separate npm packages instead of being built into `@rsbuild/core` as before. This change allows users to enable Sass and Less compilation as needed.
 
-For example, projects using CSS solutions such as Tailwind CSS, CSS-in-JS, etc., no longer need to install the dependencies required for Sass and Less, saving about 7MB of disk space.
+For example, projects using CSS solutions such as Tailwind CSS, CSS-in-JS, etc., no longer need to install the dependencies required for Sass and Less, **saving about 7MB of disk space**.
 
 - If your project requires compiling `.scss` or `.sass` files, please install and register the [@rsbuild/plugin-sass](/plugins/list/plugin-sass) plugin:
 

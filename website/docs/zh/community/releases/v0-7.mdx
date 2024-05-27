@@ -18,7 +18,28 @@ Rsbuild v0.7 已与 Rspack v0.7 同步发布，值得关注的变更有：
 
 ## 支持 Storybook
 
-TODO
+Rsbuild 现已支持 Storybook！
+
+[storybook-builder-rsbuild](https://github.com/rspack-contrib/storybook-rsbuild) 是基于 Storybook v8 和 Rsbuild 实现的 Storybook builder，能够快速构建你的 components 和 stories。
+
+![](https://assets.rspack.dev/rsbuild/assets/storybook-rsbuild-preview.png)
+
+- 对于使用 Rsbuild 的项目，现在你可以快速集成 Storybook，并复用已有的 Rsbuild 配置。
+- 对于使用 Storybook webpack builder 的项目，现在即可升级到 Rsbuild，**并获得约 5 倍的构建性能提升**。
+
+我们还提供了 `storybook-react-rsbuild` 和 `storybook-vue3-rsbuild`，用于支持 React 和 Vue 3。比如集成 React：
+
+```js title=".storybook/main.js"
+import { StorybookConfig } from 'storybook-react-rsbuild';
+
+const config: StorybookConfig = {
+  framework: 'storybook-react-rsbuild',
+};
+
+export default config;
+```
+
+> 更多用法请参考 [storybook-rsbuild 仓库](https://github.com/rspack-contrib/storybook-rsbuild)。
 
 ## 更快的 Sass 编译
 
@@ -107,11 +128,11 @@ export default cssExports;
 
 ## ESM/CJS 导出
 
-现在，Rsbuild 的所有包均提供了 ES modules 和 CommonJS 两种格式的导出，并在 package.json 中声明了 `"type"="module"`。
+现在，Rsbuild 的所有包均提供了 ES modules 和 CommonJS 两种格式的导出，并在 package.json 中声明了 ["type"="module"`](https://nodejs.org/api/packages.html#type)。
 
 ![](https://assets.rspack.dev/rsbuild/assets/rsbuild-dual-package-example.png)
 
-这使你能够使用 `import` 或 `require` 来使用 Rsbuild 的 JavaScript API：
+这使你能够使用 `import` 或 `require` 来调用 Rsbuild 的 JavaScript API：
 
 ```js
 // ES Modules
@@ -129,7 +150,7 @@ ESM/CJS 互操作是一个棘手的问题，因此我们计划长期提供这两
 
 Rsbuild 的 Sass 和 Less 插件现在是两个独立的 npm 包，而不是像之前一样内置在 `@rsbuild/core` 中，这允许用户可以按需启用 Sass 和 Less 编译能力。
 
-比如，对于使用 Tailwind CSS、CSS-in-JS 等 CSS 方案的项目，现在不再需要安装 Sass 和 Less 所需的依赖，这可以节省约 7MB 的磁盘空间。
+比如，对于使用 Tailwind CSS、CSS-in-JS 等 CSS 方案的项目，现在不再需要安装 Sass 和 Less 所需的依赖，**这可以节省约 7MB 的磁盘空间**。
 
 - 如果你的项目需要编译 `.scss` 或 `.sass` 文件，请安装并注册 [@rsbuild/plugin-sass](/plugins/list/plugin-sass) 插件：
 
