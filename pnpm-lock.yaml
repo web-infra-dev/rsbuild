@@ -235,6 +235,14 @@ importers:
         specifier: ^7.24.5
         version: 7.24.5(@babel/core@7.24.5)
 
+  e2e/cases/browserslist/browserslist-config-mock: {}
+
+  e2e/cases/browserslist/extends-browserslist:
+    dependencies:
+      '@e2e/browserslist-config-mock':
+        specifier: workspace:*
+        version: link:../browserslist-config-mock
+
   e2e/cases/eslint:
     dependencies:
       eslint:

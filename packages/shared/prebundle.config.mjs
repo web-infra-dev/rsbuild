@@ -31,9 +31,20 @@ export default {
     },
     'webpack-merge',
     'mime-types',
-    'browserslist',
     'gzip-size',
     'json5',
+    {
+      name: 'browserslist',
+      // preserve the `require(require.resolve())`
+      beforeBundle(task) {
+        replaceFileContent(join(task.depPath, 'node.js'), (content) =>
+          content.replaceAll(
+            'require(require.resolve',
+            'eval("require")(require.resolve',
+          ),
+        );
+      },
+    },
     {
       name: 'jiti',
       ignoreDts: true,
