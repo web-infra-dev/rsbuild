@@ -3,22 +3,39 @@
 - **类型：** `boolean | string | string[] | undefined`
 - **默认值：** `undefined`
 
-`dev.startUrl` 用于设置 Server 启动时自动在浏览器中打开的页面 URL。
+`dev.startUrl` 用于配置一组页面 URL，Rsbuild 会在启动 server 后自动在浏览器中打开这些页面。
 
-默认情况下，当 dev server 或 preview server 启动时，不会自动打开任何页面，你可以通过 `dev.startUrl` 或 CLI 的 `--open` 参数来设置自动打开页面。
+> 你也可以使用 Rsbuild CLI 的 [--open](/guide/basic/cli#打开页面) 选项来打开页面。
 
 ### 示例
 
-你可以设置为如下的值：
+`dev.startUrl` 可以设置为如下的值。
+
+- 打开项目的默认页面，等价于 `http://localhost:<port>`：
 
 ```js
 export default {
   dev: {
-    // 打开项目的默认页面，等价于 `http://localhost:<port>`
     startUrl: true,
-    // 打开指定的页面
+  },
+};
+```
+
+- 打开指定的页面：
+
+```js
+export default {
+  dev: {
     startUrl: 'http://localhost:3000',
-    // 打开多个页面
+  },
+};
+```
+
+- 打开多个页面：
+
+```js
+export default {
+  dev: {
     startUrl: ['http://localhost:3000', 'http://localhost:3000/about'],
   },
 };
@@ -38,7 +55,9 @@ export default {
 
 ### 打开指定浏览器
 
-在 MacOS 上，通过设置环境变量 `BROWSER`，你可以指定 Dev Server 在启动时打开的浏览器，支持如下的值：
+Rsbuild 默认会在当前系统的默认浏览器中打开页面。
+
+在 macOS 上，通过设置环境变量 `BROWSER`，你可以指定 Dev Server 在启动时打开的浏览器，支持如下的值：
 
 - Google Chrome Canary
 - Google Chrome Dev
@@ -49,6 +68,12 @@ export default {
 - Vivaldi
 - Chromium
 
+比如：
+
+```bash
+BROWSER="Google Chrome Canary" npx rsbuild dev --open
+```
+
 :::tip
-建议设置在本地的 `.env.local` 文件中。
+你可以将 `BROWSER` 设置在本地的 `.env.local` 文件中，这样能够避免影响其他开发者。
 :::
