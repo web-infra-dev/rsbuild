@@ -1,17 +1,17 @@
 import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
 import { type DevConfig, type Stats, logger } from '@rsbuild/shared';
-import ws from '../../compiled/ws/index.js';
+import type Ws from '../../compiled/ws/index.js';
 import { getAllStatsErrors, getAllStatsWarnings } from '../helpers';
 
-interface ExtWebSocket extends ws {
+interface ExtWebSocket extends Ws {
   isAlive: boolean;
 }
 
 export class SocketServer {
-  private wsServer!: ws.Server;
+  private wsServer!: Ws.Server;
 
-  private readonly sockets: ws[] = [];
+  private readonly sockets: Ws[] = [];
 
   private readonly options: DevConfig;
 
@@ -36,7 +36,8 @@ export class SocketServer {
   }
 
   // create socket, install socket handler, bind socket event
-  public prepare() {
+  public async prepare() {
+    const { default: ws } = await import('../../compiled/ws/index.js');
     this.wsServer = new ws.Server({
       noServer: true,
       path: this.options.client?.path,
@@ -82,7 +83,7 @@ export class SocketServer {
   }
 
   public singleWrite(
-    socket: ws,
+    socket: Ws,
     type: string,
     data?: Record<string, any> | string | boolean,
   ) {
@@ -100,7 +101,7 @@ export class SocketServer {
     }
   }
 
-  private onConnect(socket: ws) {
+  private onConnect(socket: Ws) {
     const connection = socket as ExtWebSocket;
 
     connection.isAlive = true;
@@ -187,7 +188,7 @@ export class SocketServer {
   }
 
   // send message to connecting socket
-  private send(connection: ws, message: string) {
+  private send(connection: Ws, message: string) {
     if (connection.readyState !== 1) {
       return;
     }

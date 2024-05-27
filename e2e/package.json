@@ -26,6 +26,7 @@
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-assets-retry": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
+    "@rsbuild/plugin-basic-ssl": "workspace:*",
     "@rsbuild/plugin-check-syntax": "workspace:*",
     "@rsbuild/plugin-css-minimizer": "workspace:*",
     "@rsbuild/plugin-eslint": "workspace:*",

@@ -6,21 +6,14 @@
 
 export { runCli } from './cli/commands';
 export { prepareCli } from './cli/prepare';
-export { createContext, createPublicContext } from './createContext';
 export { initPlugins, createPluginManager } from './pluginManager';
 export { initHooks, type Hooks } from './initHooks';
 export { initRsbuildConfig } from './provider/initConfigs';
-export { getPluginAPI } from './initPlugins';
 export type { InternalContext } from './types';
-export {
-  setHTMLPlugin,
-  getHTMLPlugin,
-  setCssExtractPlugin,
-} from './pluginHelper';
+export { setHTMLPlugin, getHTMLPlugin } from './pluginHelper';
 export { formatStats, getStatsOptions } from './helpers';
 export { getChainUtils } from './provider/rspackConfig';
 export { applySwcDecoratorConfig } from './plugins/swc';
 export { getSwcMinimizerOptions } from './plugins/minimize';
 export { getDevMiddleware } from './server/devMiddleware';
 export { createDevServer, startProdServer } from './server';
-export { plugins } from './plugins';

@@ -102,6 +102,11 @@ export const pluginMinimize = (): RsbuildPlugin => ({
   name: 'rsbuild:minimize',
 
   setup(api) {
+    // This plugin uses Rspack builtin SWC and is not suitable for webpack
+    if (api.context.bundlerType === 'webpack') {
+      return;
+    }
+
     api.modifyBundlerChain(async (chain, { isProd }) => {
       const config = api.getNormalizedConfig();
       const isMinimize = isProd && config.output.minify !== false;

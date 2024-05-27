@@ -1,6 +1,14 @@
 # server.https
 
-- **Type:** `import('https').ServerOptions`
+- **Type:**
+
+```ts
+import type { ServerOptions } from 'node:https';
+import type { SecureServerSessionOptions } from 'node:http2';
+
+type Https = ServerOptions | SecureServerSessionOptions;
+```
+
 - **Default:** `undefined`
 
 After configuring this option, you can enable HTTPS Server, and disabling the HTTP Server.
@@ -18,6 +26,10 @@ HTTPS:
   > Local: https://localhost:3000/
   > Network: https://192.168.0.1:3000/
 ```
+
+:::tip
+Rsbuild enables HTTP/2 server by default. However, when you use [server.proxy](/config/server/proxy), the server will downgrade to HTTP/1, because the underlying `http-proxy` does not support HTTP/2.
+:::
 
 ## Set Certificate
 

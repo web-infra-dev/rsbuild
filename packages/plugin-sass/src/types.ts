@@ -1,3 +1,4 @@
+import type { Rspack } from '@rsbuild/core';
 import type { ChainedConfigWithUtils, FileFilterUtil } from '@rsbuild/shared';
 import type {
   LegacyOptions as LegacySassOptions,
@@ -24,6 +25,17 @@ export type PluginSassOptions = {
    */
   sassLoaderOptions?: ChainedConfigWithUtils<
     SassLoaderOptions,
-    { addExcludes: FileFilterUtil }
+    {
+      /**
+       * @deprecated
+       * use `exclude` option instead.
+       */
+      addExcludes: FileFilterUtil;
+    }
   >;
+
+  /**
+   * Exclude some `.scss` or `.sass` files, they will not be transformed by sass-loader.
+   */
+  exclude?: Rspack.RuleSetCondition;
 };

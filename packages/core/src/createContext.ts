@@ -1,9 +1,6 @@
 import { isAbsolute, join } from 'node:path';
 import {
   type BundlerType,
-  type CreateRsbuildOptions,
-  type NormalizedConfig,
-  type RsbuildConfig,
   type RsbuildContext,
   type RsbuildTarget,
   getDistPath,
@@ -12,7 +9,12 @@ import {
 import { withDefaultConfig } from './config';
 import { initHooks } from './initHooks';
 import { getEntryObject } from './plugins/entry';
-import type { InternalContext } from './types';
+import type {
+  CreateRsbuildOptions,
+  InternalContext,
+  NormalizedConfig,
+  RsbuildConfig,
+} from './types';
 
 function getAbsolutePath(root: string, filepath: string) {
   return isAbsolute(filepath) ? filepath : join(root, filepath);
@@ -40,7 +42,7 @@ async function createContextByConfig(
   const cachePath = join(rootPath, 'node_modules', '.cache');
   const tsconfigPath = config.source?.tsconfigPath;
 
-  const context: RsbuildContext = {
+  return {
     entry: getEntryObject(config, 'web'),
     targets: config.output?.targets || [],
     version: RSBUILD_VERSION,
@@ -52,8 +54,6 @@ async function createContextByConfig(
       ? getAbsolutePath(rootPath, tsconfigPath)
       : undefined,
   };
-
-  return context;
 }
 
 export function updateContextByNormalizedConfig(

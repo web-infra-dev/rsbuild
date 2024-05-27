@@ -1,5 +1,6 @@
+import type { IncomingMessage } from 'node:http';
 import net from 'node:net';
-import { isIPv6 } from 'node:net';
+import type { Socket } from 'node:net';
 import os from 'node:os';
 import {
   DEFAULT_DEV_HOST,
@@ -18,6 +19,23 @@ import type {
   Routes,
   RsbuildEntry,
 } from '@rsbuild/shared';
+
+/**
+ * It used to subscribe http upgrade event
+ */
+export type UpgradeEvent = (
+  req: IncomingMessage,
+  socket: Socket,
+  head: any,
+) => void;
+
+export type StartServerResult = {
+  urls: string[];
+  port: number;
+  server: {
+    close: () => Promise<void>;
+  };
+};
 
 /**
  * Make sure there is slash before and after prefix
@@ -294,7 +312,7 @@ const isLoopbackHost = (host: string) => {
 };
 
 const getHostInUrl = (host: string) => {
-  if (isIPv6(host)) {
+  if (net.isIPv6(host)) {
     return host === '::' ? '[::1]' : `[${host}]`;
   }
   return host;

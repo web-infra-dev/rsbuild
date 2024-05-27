@@ -4,6 +4,7 @@ exports[`inspectConfig > should print plugin names when inspect config 1`] = `
 [
   "rsbuild:basic",
   "rsbuild:entry",
+  "rsbuild:cache",
   "rsbuild:target",
   "rsbuild:output",
   "rsbuild:resolve",
@@ -28,8 +29,8 @@ exports[`inspectConfig > should print plugin names when inspect config 1`] = `
   "rsbuild:resource-hints",
   "rsbuild:performance",
   "rsbuild:server",
-  "rsbuild:module-federation",
   "rsbuild:manifest",
+  "rsbuild:module-federation",
   "rsbuild:rspack-profile",
 ]
 `;
