@@ -22,7 +22,7 @@ TODO
 
 ## Faster Sass Compilation
 
-In Rsbuild 0.7, **Sass compilation is 3~10 times faster**. The performance improvements are particularly noticeable on large projects.
+In Rsbuild v0.7, **Sass compilation is 3~10 times faster**. The performance improvements are particularly noticeable on large projects.
 
 Comparison of build times for Rsbuild v0.6 and v0.7 when compiling Bootstrap's Sass code:
 
@@ -34,7 +34,7 @@ Rsbuild has also enabled the latest sass-loader's [modern-compiler](https://gith
 
 ## Better CSS Supports
 
-Rsbuild now uses [CssExtractRspackPlugin](https://www.rspack.dev/plugins/rspack/css-extract-rspack-plugin) to extract CSS into separate files, rather than using the `experimental.css` config to do so.
+Rsbuild now uses [CssExtractRspackPlugin](https://www.rspack.dev/plugins/rspack/css-extract-rspack-plugin) to extract CSS into separate files, rather than using the [experimental.css](https://www.rspack.dev/config/experiments#experimentscss) config to do so.
 
 This allows Rsbuild to support more CSS features, including:
 
@@ -123,7 +123,35 @@ const { createRsbuild } = require('@rsbuild/core');
 
 ESM/CJS interop is a tricky issue, so we will provide both formats for a long time to make it easier for more users to use.
 
-## dataUriLimit Defaults
+## Breaking Changes
+
+### Sass and Less Plugins
+
+Rsbuild's Sass and Less plugins are now two separate npm packages instead of being built into `@rsbuild/core` as before. This change allows users to enable Sass and Less compilation as needed.
+
+For example, projects using CSS solutions such as Tailwind CSS, CSS-in-JS, etc., no longer need to install the dependencies required for Sass and Less, saving about 7MB of disk space.
+
+- If your project requires compiling `.scss` or `.sass` files, please install and register the [@rsbuild/plugin-sass](/plugins/list/plugin-sass) plugin:
+
+```ts title="rsbuild.config.ts"
+import { pluginSass } from '@rsbuild/plugin-sass';
+
+export default {
+  plugins: [pluginSass()],
+};
+```
+
+- If your project requires compiling `.less` files, please install and register the [@rsbuild/plugin-less](/plugins/list/plugin-less) plugin:
+
+```ts title="rsbuild.config.ts"
+import { pluginLess } from '@rsbuild/plugin-less';
+
+export default {
+  plugins: [pluginLess()],
+};
+```
+
+### dataUriLimit Defaults
 
 The default value for [output.dataUriLimit](/config/output/data-uri-limit) has been changed from `10000 (10kB)` to `4096 (4KiB)`.
 

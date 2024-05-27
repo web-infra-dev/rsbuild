@@ -22,7 +22,7 @@ TODO
 
 ## 更快的 Sass 编译
 
-在 Rsbuild 0.7 中，**Sass 编译速度提高了 3~10 倍**，在大型项目项目中的性能提升尤为显著。
+在 Rsbuild v0.7 中，**Sass 编译速度提高了 3~10 倍**，在大型项目项目中的性能提升尤为显著。
 
 以编译 Bootstrap 的 Sass 代码为例，Rsbuild v0.6 和 v0.7 的构建时间对比：
 
@@ -34,7 +34,7 @@ TODO
 
 ## 更好的 CSS 支持
 
-Rsbuild 现在使用 [CssExtractRspackPlugin](https://www.rspack.dev/plugins/rspack/css-extract-rspack-plugin) 来提取 CSS 到单独的文件中，而不是使用 `experimental.css` 配置来实现。
+Rsbuild 现在使用 [CssExtractRspackPlugin](https://www.rspack.dev/plugins/rspack/css-extract-rspack-plugin) 来提取 CSS 到单独的文件中，而不是使用 [experiments.css](https://www.rspack.dev/config/experiments#experimentscss) 配置来实现。
 
 这允许 Rsbuild 支持更多 CSS 特性，包括：
 
@@ -123,7 +123,35 @@ const { createRsbuild } = require('@rsbuild/core');
 
 ESM/CJS 互操作是一个棘手的问题，因此我们计划长期提供这两种格式，以便于更多用户使用。
 
-## dataUriLimit 默认值
+## 不兼容更新
+
+### Sass 和 Less 插件
+
+Rsbuild 的 Sass 和 Less 插件现在是两个独立的 npm 包，而不是像之前一样内置在 `@rsbuild/core` 中，这允许用户可以按需启用 Sass 和 Less 编译能力。
+
+比如，对于使用 Tailwind CSS、CSS-in-JS 等 CSS 方案的项目，现在不再需要安装 Sass 和 Less 所需的依赖，这可以节省约 7MB 的磁盘空间。
+
+- 如果你的项目需要编译 `.scss` 或 `.sass` 文件，请安装并注册 [@rsbuild/plugin-sass](/plugins/list/plugin-sass) 插件：
+
+```ts title="rsbuild.config.ts"
+import { pluginSass } from '@rsbuild/plugin-sass';
+
+export default {
+  plugins: [pluginSass()],
+};
+```
+
+- 如果你的项目需要编译 `.less` 文件，请安装并注册 [@rsbuild/plugin-less](/plugins/list/plugin-less) 插件：
+
+```ts title="rsbuild.config.ts"
+import { pluginLess } from '@rsbuild/plugin-less';
+
+export default {
+  plugins: [pluginLess()],
+};
+```
+
+### dataUriLimit 默认值
 
 [output.dataUriLimit](/config/output/data-uri-limit) 的默认值从 `10000 (10kB)` 调整为 `4096 (4KiB)`.
 
