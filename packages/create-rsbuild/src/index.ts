@@ -63,10 +63,10 @@ export async function main() {
 
   if (fs.existsSync(distFolder) && !isEmptyDir(distFolder)) {
     const option = (await select({
-      message: `"${distFolder}" is not empty, please choose:`,
+      message: `"${targetDir}" is not empty, please choose:`,
       options: [
-        { value: 'yes', label: 'Continue and override files.' },
-        { value: 'no', label: 'Can operation.' },
+        { value: 'yes', label: 'Continue and override files' },
+        { value: 'no', label: 'Cancel operation' },
       ],
     })) as string;
 
