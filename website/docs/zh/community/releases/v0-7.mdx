@@ -49,7 +49,7 @@ export default config;
 
 ![](https://assets.rspack.dev/rsbuild/assets/sass-embedded-compare.jpeg)
 
-这得益于 Rsbuild 默认启用了 [sass-embedded](https://www.npmjs.com/package/sass-embedded)，它是一个围绕原生 Dart Sass 可执行文件的 JavaScript wrapper，具备一致的 API 和更优秀的性能。
+这得益于 Rsbuild 默认启用了 [sass-embedded](https://www.npmjs.com/package/sass-embedded)，sass-embedded 是一个围绕原生 Dart Sass 可执行文件的 JavaScript wrapper，具备一致的 API 和更优秀的性能。
 
 此外，Rsbuild 还启用了 `sass-loader` 最新的 [modern-compiler](https://github.com/webpack-contrib/sass-loader/releases/tag/v14.2.0) API，这能够开启 Sass 的 shared resources 能力，在编译多个文件时重复利用相同的 compiler 进程，从而提升构建速度。
 
@@ -145,6 +145,12 @@ const { createRsbuild } = require('@rsbuild/core');
 ESM/CJS 互操作是一个棘手的问题，因此我们计划长期提供这两种格式，以便于更多用户使用。
 
 ## 不兼容更新
+
+### 升级 Rspack v0.7
+
+Rsbuild 已将依赖的 Rspack 升级至 v0.7 版本，并适配了其中包含的不兼容更新，通常你不会受到这些不兼容更新的影响。
+
+在新版本中，Rspack 支持了 lazy compilation，可以显著提升大型项目的 dev 启动速度。请参考 [Rspack v0.7 发布公告](https://rspack.dev/zh/blog/announcing-0-7) 了解更多。
 
 ### Sass 和 Less 插件
 
