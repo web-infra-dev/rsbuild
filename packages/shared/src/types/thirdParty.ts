@@ -117,6 +117,9 @@ export interface CSSLoaderModulesOptions {
    * Allows to specify hash digest to generate classes.
    */
   localIdentHashDigest?: string;
+  /**
+   * Allows to specify custom RegExp for local ident name.
+   */
   localIdentRegExp?: string | RegExp;
   /**
    * Controls the level of compilation applied to the input styles.
