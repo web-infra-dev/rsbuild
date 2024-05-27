@@ -1,6 +1,7 @@
 import path from 'node:path';
 import {
   type BundlerChainRule,
+  type CSSLoaderModulesMode,
   type CSSLoaderOptions,
   type ModifyChainUtils,
   type PostCSSLoaderOptions,
@@ -51,7 +52,10 @@ export const normalizeCssLoaderOptions = (
     if (modules === true) {
       modules = { exportOnlyLocals: true };
     } else if (typeof modules === 'string') {
-      modules = { mode: modules, exportOnlyLocals: true };
+      modules = {
+        mode: modules as CSSLoaderModulesMode,
+        exportOnlyLocals: true,
+      };
     } else {
       // create a new object to avoid modifying the original options
       modules = {
