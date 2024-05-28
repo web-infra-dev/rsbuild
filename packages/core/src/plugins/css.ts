@@ -219,11 +219,9 @@ const getCSSLoaderOptions = ({
   const defaultOptions: CSSLoaderOptions = {
     importLoaders,
     modules: {
-      auto: cssModules.auto,
-      namedExport: false,
-      exportGlobals: cssModules.exportGlobals,
-      exportLocalsConvention: cssModules.exportLocalsConvention,
+      ...cssModules,
       localIdentName,
+      namedExport: false,
     },
     sourceMap: config.output.sourceMap.css,
   };

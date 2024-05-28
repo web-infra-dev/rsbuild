@@ -3,7 +3,7 @@ import type {
   Externals,
   SwcJsMinimizerRspackPluginOptions,
 } from '@rspack/core';
-import type { HTMLPluginOptions } from '../../types';
+import type { CSSLoaderModulesOptions, HTMLPluginOptions } from '../../types';
 import type { RsbuildTarget } from '../rsbuild';
 import type { RspackConfig } from '../rspack';
 
@@ -147,26 +147,23 @@ export type CSSModules = {
   /**
    * Allows CSS Modules to be automatically enabled based on their filenames.
    */
-  auto?:
-    | boolean
-    | RegExp
-    | ((
-        resourcePath: string,
-        resourceQuery: string,
-        resourceFragment: string,
-      ) => boolean);
+  auto?: CSSLoaderModulesOptions['auto'];
   /**
    * Allows exporting names from global class names, so you can use them via import.
    */
   exportGlobals?: boolean;
   /**
+   * Style of exported class names.
+   */
+  exportLocalsConvention?: CSSModulesLocalsConvention;
+  /**
    * Set the local ident name of CSS Modules.
    */
   localIdentName?: string;
   /**
-   * Style of exported class names.
+   * Controls the level of compilation applied to the input styles.
    */
-  exportLocalsConvention?: CSSModulesLocalsConvention;
+  mode?: CSSLoaderModulesOptions['mode'];
 };
 
 export type Minify =
@@ -329,9 +326,10 @@ export interface NormalizedOutputConfig extends OutputConfig {
   injectStyles: boolean;
   cssModules: {
     auto: CSSModules['auto'];
-    localIdentName?: string;
     exportGlobals: boolean;
     exportLocalsConvention: CSSModulesLocalsConvention;
+    localIdentName?: string;
+    mode?: CSSModules['mode'];
   };
   emitAssets: EmitAssets;
 }

@@ -1,21 +1,6 @@
 # output.cssModules
 
-- **类型：**
-
-```ts
-type CSSModules = {
-  auto?:
-    | boolean
-    | RegExp
-    | ((
-        resourcePath: string,
-        resourceQuery: string,
-        resourceFragment: string,
-      ) => boolean);
-  localIdentName?: string;
-  exportLocalsConvention?: CSSModulesLocalsConvention;
-};
-```
+- **类型：** `CSSModules`
 
 用于自定义 CSS Modules 配置。
 
@@ -23,7 +8,7 @@ Rsbuild 的 CSS Modules 功能是基于 css-loader 的 `modules` 选项实现的
 
 ## cssModules.auto
 
-auto 配置项允许基于文件名自动启用 CSS 模块。
+auto 配置项允许基于文件名自动启用 CSS Modules。
 
 - **类型：**
 
@@ -42,10 +27,10 @@ type Auto =
 
 类型说明：
 
-- `true`: 为所有匹配 `/\.module\.\w+$/i.test(filename)` 正则表达式的文件启用 CSS 模块。
-- `false`: 禁用 CSS 模块。
-- `RegExp`: 为所有匹配 `/RegExp/i.test(filename)` 正则表达式的文件启用 CSS 模块。
-- `function`: 为所有通过基于文件名的过滤函数校验的文件启用 CSS 模块。
+- `true`: 为所有匹配 `/\.module\.\w+$/i.test(filename)` 正则表达式的文件启用 CSS Modules。
+- `false`: 禁用 CSS Modules。
+- `RegExp`: 为所有匹配 `/RegExp/i.test(filename)` 正则表达式的文件启用 CSS Modules。
+- `function`: 为所有通过基于文件名的过滤函数校验的文件启用 CSS Modules。
 
 ```ts
 export default {
@@ -92,6 +77,48 @@ export default {
     },
   },
 };
+```
+
+## cssModules.exportGlobals
+
+- **类型：** `boolean`
+- **默认值：** `false`
+
+允许从 global class names 导出名称，以便你可以通过 import 使用它们。
+
+### 示例
+
+将 `exportGlobals` 设置为 `true`：
+
+```ts
+export default {
+  output: {
+    cssModules: {
+      exportGlobals: true,
+    },
+  },
+};
+```
+
+在 CSS Modules 中使用 `:global()`：
+
+```css title="style.module.css"
+:global(.blue) {
+  color: blue;
+}
+
+.red {
+  color: red;
+}
+```
+
+然后你可以导入 `:global()` 包裹的类名：
+
+```tsx title="Button.tsx"
+import styles from './style.module.css';
+
+console.log(styles.blue); // 'blue'
+console.log(styles.red); // 'red-[hash]'
 ```
 
 ## cssModules.localIdentName
@@ -149,44 +176,63 @@ export default {
 };
 ```
 
-## cssModules.exportGlobals
+## cssModules.mode
 
-- **类型：** `boolean`
-- **默认值：** `false`
+- **类型：**
 
-允许从 global class names 导出名称，以便你可以通过 import 使用它们。
+```ts
+type Mode =
+  | 'local'
+  | 'global'
+  | 'pure'
+  | 'icss'
+  | ((resourcePath: string) => 'local' | 'global' | 'pure' | 'icss');
+```
 
-### 示例
+- **默认值：** `'local'`
 
-将 `exportGlobals` 设置为 `true`：
+控制 CSS Modules 的编译模式。
+
+### 可选值
+
+`cssModules.mode` 可以取以下值之一：
+
+1. `'local'` (默认值)：启用 CSS Modules 规范和局部作用域。类名和 ID 选择器会被重写为模块作用域，并注入 `@value` 绑定。
+2. `'global'`：不启用 CSS Modules 的行为，禁用局部作用域和 `@value` 绑定注入。全局选择器将按照原样保留。
+3. `'pure'`：通过删除最终 CSS 中未使用的本地类名和值来实现死代码消除。仍然执行局部作用域和 `@value` 注入。
+4. `'icss'`：编译成 low-level 可互操作的 CSS 格式，该格式提供在 CSS 和其他语言之间声明 `:import` 和 `:export` 依赖项的语法。它不执行任何作用域或 `@value` 注入。
+
+`'local'` 模式是 CSS Modules 最常见的用法，在组件内启用模块化和局部作用域样式。其他模式可能在特定场景下被使用。
+
+例如：
 
 ```ts
 export default {
   output: {
     cssModules: {
-      exportGlobals: true,
+      mode: 'global',
     },
   },
 };
 ```
 
-在 CSS Modules 中使用 `:global()`：
+### 函数
 
-```css title="style.module.css"
-:global(.blue) {
-  color: blue;
-}
+你还可以传递一个函数给 `cssModules.mode`，并根据资源路径、query 或 fragment 确定 mode。这允许你为不同的文件使用不同的 mode。
 
-.red {
-  color: red;
-}
-```
+例如，对 `.module.css` 文件使用局部作用域，对其他文件使用全局样式：
 
-然后你可以导入 `:global()` 包裹的类名：
-
-```tsx title="Button.tsx"
-import styles from './style.module.css';
-
-console.log(styles.blue); // 'blue'
-console.log(styles.red); // 'red-[hash]'
+```js
+export default {
+  output: {
+    cssModules: {
+      mode: (resourcePath) => {
+        if (/\.module\.css$/.test(resourcePath)) {
+          return 'local';
+        }
+        return 'global';
+      },
+    },
+  },
+};
 ```
