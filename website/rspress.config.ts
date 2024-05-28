@@ -1,5 +1,4 @@
 import path from 'node:path';
-import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginRss } from '@rspress/plugin-rss';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
@@ -123,8 +122,6 @@ export default defineConfig({
   builderConfig: {
     plugins: [
       rsbuildPluginOverview,
-      // TODO: remove after bumping Rspress
-      pluginSass(),
       pluginGoogleAnalytics({ id: 'G-L6BZ6TKW4R' }),
       pluginOpenGraph({
         title: 'Rsbuild',
