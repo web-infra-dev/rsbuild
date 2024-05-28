@@ -1,21 +1,6 @@
 # output.cssModules
 
-- **Type:**
-
-```ts
-type CSSModules = {
-  auto?:
-    | boolean
-    | RegExp
-    | ((
-        resourcePath: string,
-        resourceQuery: string,
-        resourceFragment: string,
-      ) => boolean);
-  localIdentName?: string;
-  exportLocalsConvention?: CSSModulesLocalsConvention;
-};
-```
+- **Type:** `CSSModules`
 
 For custom CSS Modules configuration.
 
@@ -94,6 +79,48 @@ export default {
 };
 ```
 
+## cssModules.exportGlobals
+
+- **Type:** `boolean`
+- **Default:** `false`
+
+Allows exporting names from global class names, so you can use them via import.
+
+### Example
+
+Set the `exportGlobals` to `true`:
+
+```ts
+export default {
+  output: {
+    cssModules: {
+      exportGlobals: true,
+    },
+  },
+};
+```
+
+Use `:global()` in CSS Modules:
+
+```css title="style.module.css"
+:global(.blue) {
+  color: blue;
+}
+
+.red {
+  color: red;
+}
+```
+
+Then you can import the class name wrapped with `:global()`:
+
+```tsx title="Button.tsx"
+import styles from './style.module.css';
+
+console.log(styles.blue); // 'blue'
+console.log(styles.red); // 'red-[hash]'
+```
+
 ## cssModules.localIdentName
 
 - **Type:** `string`
@@ -149,44 +176,59 @@ export default {
 };
 ```
 
-## cssModules.exportGlobals
+## cssModules.mode
 
-- **Type:** `boolean`
-- **Default:** `false`
+- **Type:**
 
-Allows exporting names from global class names, so you can use them via import.
+```ts
+type Mode =
+  | 'local'
+  | 'global'
+  | 'pure'
+  | 'icss'
+  | ((resourcePath: string) => 'local' | 'global' | 'pure' | 'icss');
+```
 
-### Example
+- **Default:** `'local'`
 
-Set the `exportGlobals` to `true`:
+Controls the mode of compilation applied to the CSS Modules.
+
+### Optional values
+
+`cssModules.mode` can take one of the following values:
+
+1. `'local'` (default): This enables the CSS Modules specification for scoping CSS locally. Class and ID selectors are rewritten to be module-scoped, and `@value` bindings are injected.
+2. `'global'`: This opts-out of the CSS Modules behavior, disabling both local scoping and injecting `@value` bindings. Global selectors are preserved as-is.
+3. `'pure'`: This enables dead-code elimination by removing any unused local classnames and values from the final CSS. It still performs local scoping and `@value` injection.
+4. `'icss'`: This compiles to the low-level Interoperable CSS format, which provides a syntax for declaring `:import` and `:export` dependencies between CSS and other languages. It does not perform any scoping or `@value` injection.
+
+The `'local'` mode is the most common use case for CSS Modules, enabling modular and locally-scoped styles within components. The other modes may be used in specific scenarios.
+
+For example:
 
 ```ts
 export default {
   output: {
     cssModules: {
-      exportGlobals: true,
+      mode: 'global',
     },
   },
 };
 ```
 
-Use `:global()` in CSS Modules:
+### Function
 
-```css title="style.module.css"
-:global(.blue) {
-  color: blue;
+You can also pass a function to `modules.mode` that determines the mode based on the resource path, query, or fragment. This allows you to use different modes for different files.
+
+For example, to use local scoping for `.module.css` files and global styles for other files:
+
+```js
+modules: {
+  mode: (resourcePath) => {
+    if (/\.module\.\css$/.test(resourcePath)) {
+      return 'local';
+    }
+    return 'global';
+  };
 }
-
-.red {
-  color: red;
-}
-```
-
-Then you can import the class name wrapped with `:global()`:
-
-```tsx title="Button.tsx"
-import styles from './style.module.css';
-
-console.log(styles.blue); // 'blue'
-console.log(styles.red); // 'red-[hash]'
 ```
