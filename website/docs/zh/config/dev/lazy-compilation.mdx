@@ -1,0 +1,103 @@
+# dev.lazyCompilation
+
+- **类型：**
+
+```ts
+type LazyCompilationOptions =
+  | boolean
+  | {
+      /**
+       * 为 entries 启用 lazy compilation
+       */
+      entries?: boolean;
+      /**
+       * 为 dynamic imports 启用 lazy compilation
+       */
+      imports?: boolean;
+      /**
+       * 指定哪些导入的模块应该被延迟编译
+       */
+      test?: RegExp | ((m: Module) => boolean);
+    };
+```
+
+- **默认值：** `false`
+- **版本：** `>= 0.7.1`
+
+用于开启 lazy compilation（即按需编译），基于 Rspack 的 [experiments.lazyCompilation](https://rspack.dev/zh/config/experiments#experimentslazycompilation) 实现。
+
+## 介绍
+
+Lazy compilation 是一个提升 dev 启动性能的良好手段，它可以按需编译模块，而不是在启动时就编译所有模块。这意味着开发者在启动 dev server 时，可以很快看到应用运行，并分次构建所需的模块。
+
+尽管 Rspack 本身具备良好的性能，但是面对具有大量模块的应用，其整体构建时间仍然可能不够理想。这是因为应用中的模块需要经过不同 loader 的编译，包括 postcss-loader、sass-loader、vue-loader 等，它们都会产生额外的编译开销。
+
+在启用 lazy compilation 的情况下，Rspack 仅会编译被请求的「页面入口」和「动态 import 模块」，这可以显著减少开发启动时编译的模块数量，从而提升启动时间。
+
+## 局限性
+
+- Lazy compilation 仅对 dev 构建生效。
+- Lazy compilation 仍然是 Rspack 的实验性功能，在部分场景下，lazy compilation 可能无法按照预期工作，或是性能提升不明显。
+- Lazy compilation 依赖 Rspack 在本地启动的开发服务器，当你将某个域名代理到 localhost 进行开发时，它将无法正常工作。因此，如果你需要使用代理时，请禁用 lazy compilation。
+
+## 示例
+
+### 启用 Lazy Compilation
+
+```ts
+export default {
+  dev: {
+    lazyCompilation: true,
+  },
+};
+```
+
+这等价于以下配置：
+
+```ts
+export default {
+  dev: {
+    lazyCompilation: {
+      imports: true,
+      entries: true,
+    },
+  },
+};
+```
+
+### 入口模块
+
+通过 `lazyCompilation.entries` 来控制是否 lazy 编译入口模块：
+
+```ts
+export default {
+  dev: {
+    lazyCompilation: {
+      entries: true,
+    },
+  },
+};
+```
+
+在启用 `entries` 选项后，当你启动 dev server 时， Rsbuild 不会编译所有的页面，而是仅在访问特点的页面时，才对该页面进行编译。
+
+lazy 编译入口模块时，有以下注意事项：
+
+- 只适用于多页应用（MPA），对单页应用（SPA）没有优化效果。
+- 当你访问一个页面时，你需要等待页面编译完成才能看到页面的内容。
+
+### 异步模块
+
+通过 `lazyCompilation.imports` 来控制是否 lazy 编译 [dynamic import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) 引入的异步模块：
+
+```ts
+export default {
+  dev: {
+    lazyCompilation: {
+      imports: true,
+    },
+  },
+};
+```
+
+开启 `imports` 选项后，所有的异步模块只有在被请求时才触发编译。如果你的项目是一个单页应用（SPA），并通过 dynamic import 进行了路由拆分，那么 dev 启动时间会有明显提升。
