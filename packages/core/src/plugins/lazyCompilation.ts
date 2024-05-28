@@ -44,7 +44,7 @@ export const pluginLazyCompilation = (): RsbuildPlugin => ({
         if (!test) {
           return {
             ...options,
-            test,
+            test: defaultTest,
           };
         }
 
