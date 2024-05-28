@@ -17,10 +17,12 @@ export const pluginLazyCompilation = (): RsbuildPlugin => ({
         return;
       }
 
+      const clientRegExp = /[\\/]core[\\/]dist[\\/]client[\\/]/;
+
       const isExcludedModule = (name: string) => {
         return (
           // alway include Rsbuild client code, such as HMR
-          name.includes('/core/dist/client/') ||
+          clientRegExp.test(name) ||
           // exclude CSS files because Rspack does not support it yet
           // TODO: remove this after Rspack supporting it
           name.endsWith('.css')
