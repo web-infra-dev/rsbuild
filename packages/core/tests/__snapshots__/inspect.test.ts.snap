@@ -32,5 +32,6 @@ exports[`inspectConfig > should print plugin names when inspect config 1`] = `
   "rsbuild:manifest",
   "rsbuild:module-federation",
   "rsbuild:rspack-profile",
+  "rsbuild:lazy-compilation",
 ]
 `;

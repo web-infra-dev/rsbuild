@@ -1,5 +1,6 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { WatchOptions } from '../../../compiled/chokidar/index.js';
+import type { Rspack } from '../rspack';
 import type { ArrayOrNot } from '../utils';
 
 export type ProgressBarConfig = {
@@ -88,6 +89,10 @@ export interface DevConfig {
    * This option allows you to configure a list of globs/directories/files to watch for file changes.
    */
   watchFiles?: WatchFiles;
+  /**
+   * Enable lazy compilation.
+   */
+  lazyCompilation?: boolean | Rspack.LazyCompilationOptions;
 }
 
 export type NormalizedDevConfig = DevConfig &
