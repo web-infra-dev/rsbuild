@@ -159,6 +159,8 @@ Rsbuild 已将依赖的 Rspack 升级至 v0.7 版本，并适配了其中包含�
 
 在新版本中，Rspack 支持了 lazy compilation，可以显著提升大型项目的 dev 启动速度。请参考 [Rspack v0.7 发布公告](https://rspack.dev/zh/blog/announcing-0-7) 了解更多。
 
+在 Rsbuild 中，你可以使用 [dev.lazyCompilation](/config/dev/lazy-compilation) 来启用 lazy compilation。
+
 ### Sass 和 Less 插件
 
 Rsbuild 的 Sass 和 Less 插件现在是两个独立的 npm 包，而不是像之前一样内置在 `@rsbuild/core` 中，这允许用户可以按需启用 Sass 和 Less 编译能力。
