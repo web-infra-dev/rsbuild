@@ -12,6 +12,8 @@ import type { PluginSassOptions, SassLoaderOptions } from './types';
 
 export const PLUGIN_SASS_NAME = 'rsbuild:sass';
 
+export type { PluginSassOptions };
+
 const getSassLoaderOptions = (
   userOptions: PluginSassOptions['sassLoaderOptions'],
   isUseCssSourceMap: boolean,
