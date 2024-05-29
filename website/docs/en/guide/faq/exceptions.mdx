@@ -128,10 +128,10 @@ For example, add parameters before the `rsbuild build` command:
 
 ```diff title="package.json"
 {
-   "scripts": {
-- "build": "rsbuild build"
-+ "build": "NODE_OPTIONS=--max_old_space_size=16384 rsbuild build"
-   }
+  "scripts": {
+-   "build": "rsbuild build"
++   "build": "NODE_OPTIONS=--max_old_space_size=16384 rsbuild build"
+  }
 }
 ```
 
