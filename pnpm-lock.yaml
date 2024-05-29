@@ -1167,6 +1167,9 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
+      rspack-plugin-prefresh:
+        specifier: ^0.6.5
+        version: 0.6.5(preact@10.22.0)
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -3330,6 +3333,14 @@ packages:
 
   '@polka/url@1.0.0-next.25':
     resolution: {integrity: sha512-j7P6Rgr3mmtdkeDGTe0E/aYyWEWVtc5yFXtHCRHs28/jptDEWfaVOc5T7cblqy1XKPPfCxJc/8DwQ5YgLOZOVQ==}
+
+  '@prefresh/core@1.5.2':
+    resolution: {integrity: sha512-A/08vkaM1FogrCII5PZKCrygxSsc11obExBScm3JF1CryK2uDS3ZXeni7FeKCx1nYdUkj4UcJxzPzc1WliMzZA==}
+    peerDependencies:
+      preact: ^10.0.0
+
+  '@prefresh/utils@1.2.0':
+    resolution: {integrity: sha512-KtC/fZw+oqtwOLUFM9UtiitB0JsVX0zLKNyRTA332sqREqSALIIQQxdUCS1P3xR/jT1e2e8/5rwH6gdcMLEmsQ==}
 
   '@remix-run/router@1.16.1':
     resolution: {integrity: sha512-es2g3dq6Nb07iFxGk5GuHN20RwBZOsuDQN7izWIisUcv9r+d2C5jQxqmgkdebXgReWfiyUabcki6Fg77mSNrig==}
@@ -7708,6 +7719,9 @@ packages:
       '@rspack/core':
         optional: true
 
+  rspack-plugin-prefresh@0.6.5:
+    resolution: {integrity: sha512-b9eyammIqxaKPGBHgt1xT8aSds+u/gKpGar6YR1plRIE80vikF4YY5sv/aHPGCpHT2KZ3Wc6d1lElG7EEvO5cA==}
+
   rspack-plugin-virtual-module@0.1.12:
     resolution: {integrity: sha512-qyBM9XsP7oxBQSms2cr715XOeoDi6p5hUYXtlNDfst0jha8vfWVPNeC7j5+j5dG+yt//1OCmLaOY2rWqPSVXDg==}
 
@@ -10688,6 +10702,12 @@ snapshots:
   '@polka/url@0.5.0': {}
 
   '@polka/url@1.0.0-next.25': {}
+
+  '@prefresh/core@1.5.2(preact@10.22.0)':
+    dependencies:
+      preact: 10.22.0
+
+  '@prefresh/utils@1.2.0': {}
 
   '@remix-run/router@1.16.1': {}
 
@@ -15900,6 +15920,13 @@ snapshots:
       webpack-sources: 2.3.1
     optionalDependencies:
       '@rspack/core': 0.7.0(@swc/helpers@0.5.3)
+
+  rspack-plugin-prefresh@0.6.5(preact@10.22.0):
+    dependencies:
+      '@prefresh/core': 1.5.2(preact@10.22.0)
+      '@prefresh/utils': 1.2.0
+    transitivePeerDependencies:
+      - preact
 
   rspack-plugin-virtual-module@0.1.12:
     dependencies:

@@ -26,7 +26,8 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@rsbuild/shared": "workspace:*"
+    "@rsbuild/shared": "workspace:*",
+    "rspack-plugin-prefresh": "^0.6.5"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",

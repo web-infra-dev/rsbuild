@@ -1,5 +1,5 @@
 import type { RsbuildConfig, RsbuildPlugin, Rspack } from '@rsbuild/core';
-import { getNodeEnv } from '@rsbuild/shared';
+import { SCRIPT_REGEX, getNodeEnv, isUsingHMR } from '@rsbuild/shared';
 
 export type PluginPreactOptions = {
   /**
@@ -7,6 +7,11 @@ export type PluginPreactOptions = {
    * @default true
    */
   reactAliasesEnabled?: boolean;
+  /**
+   * Whether to inject Prefresh for HMR
+   * @default true
+   */
+  prefreshEnabled?: boolean;
 };
 
 export const pluginPreact = (
@@ -15,7 +20,7 @@ export const pluginPreact = (
   name: 'rsbuild:preact',
 
   setup(api) {
-    const { reactAliasesEnabled = true } = options;
+    const { reactAliasesEnabled = true, prefreshEnabled = true } = options;
 
     api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
       const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
@@ -52,6 +57,25 @@ export const pluginPreact = (
       }
 
       return mergeRsbuildConfig(extraConfig, userConfig);
+    });
+
+    api.modifyBundlerChain(async (chain, { isProd, target }) => {
+      const config = api.getNormalizedConfig();
+      const usingHMR = isUsingHMR(config, { isProd, target });
+
+      if (!usingHMR || !prefreshEnabled) {
+        return;
+      }
+
+      const { default: PreactRefreshPlugin } = await import(
+        'rspack-plugin-prefresh'
+      );
+
+      chain.plugin('preact-refresh').use(PreactRefreshPlugin, [
+        {
+          include: [SCRIPT_REGEX],
+        },
+      ]);
     });
   },
 });
