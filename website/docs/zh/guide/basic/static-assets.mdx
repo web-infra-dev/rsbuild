@@ -62,8 +62,8 @@ export default = () => <img src={logo} />;
 
 引用静态资源的结果取决于文件体积：
 
-- 当文件体积大于 10KB 时，会返回一个 URL，同时文件会被输出到构建产物目录下。
-- 当文件体积小于 10KB 时，会自动被内联为 Base64 格式。
+- 当文件体积大于 4KiB 时，会返回一个 URL，同时文件会被输出到构建产物目录下。
+- 当文件体积小于 4KiB 时，会自动被内联为 Base64 格式。
 
 ```js
 import largeImage from './static/largeImage.png';
