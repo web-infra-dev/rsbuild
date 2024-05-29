@@ -1,4 +1,4 @@
-import { build, rspackOnlyTest, proxyConsole } from '@e2e/helper';
+import { build, proxyConsole, rspackOnlyTest } from 'scripts';
 import { expect } from '@playwright/test';
 
 // TODO enhance-resolve on the js side cannot get the tsConfig paths configuration on the rust side
