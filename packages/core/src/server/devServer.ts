@@ -2,11 +2,13 @@ import fs from 'node:fs';
 import {
   type CreateDevMiddlewareReturns,
   type CreateDevServerOptions,
+  type MultiStats,
   type OutputFileSystem,
   ROOT_DIST_DIR,
   type RsbuildDevServer,
   type StartDevServerOptions,
   type StartServerResult,
+  type Stats,
   debug,
   getNodeEnv,
   getPublicPathFromCompiler,
@@ -28,6 +30,7 @@ import {
 import { createHttpServer } from './httpServer';
 import { notFoundMiddleware } from './middlewares';
 import { onBeforeRestartServer } from './restart';
+import { type ServerUtils, getTransformedHtml, ssrLoadModule } from './ssr';
 import { setupWatchFiles } from './watchFiles';
 
 export async function createDevServer<
@@ -143,13 +146,15 @@ export async function createDevServer<
     compileMiddlewareAPI,
   });
 
+  const distPath = rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR;
+
   const devMiddlewares = await getMiddlewares({
     pwd: options.context.rootPath,
     compileMiddlewareAPI,
     dev: devConfig,
     server: serverConfig,
     output: {
-      distPath: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
+      distPath,
     },
     outputFileSystem,
   });
@@ -163,6 +168,34 @@ export async function createDevServer<
       middlewares.use(item);
     }
   }
+
+  const serverUtils: ServerUtils = {
+    readFile: (fileName: string) =>
+      new Promise<string>((resolve, reject) => {
+        outputFileSystem.readFile(fileName, (err, data) => {
+          if (err) {
+            return reject(err);
+          }
+
+          resolve(data!.toString());
+        });
+      }),
+    distPath,
+    getHTMLPaths: options.context.pluginAPI!.getHTMLPaths,
+  };
+
+  let _stats: Stats | MultiStats;
+
+  const waitFirstCompileDone = new Promise<void>((resolve) => {
+    options.context.hooks.onDevCompileDone.tap(({ stats, isFirstCompile }) => {
+      _stats = stats;
+
+      if (!isFirstCompile) {
+        return;
+      }
+      resolve();
+    });
+  });
 
   const server = {
     port,
@@ -217,6 +250,14 @@ export async function createDevServer<
         port,
         routes,
       });
+    },
+    ssrLoadModule: async (entryName: string) => {
+      await waitFirstCompileDone;
+      return ssrLoadModule(_stats, entryName, serverUtils);
+    },
+    getTransformedHtml: async (entryName: string) => {
+      await waitFirstCompileDone;
+      return getTransformedHtml(entryName, serverUtils);
     },
     onHTTPUpgrade: devMiddlewares.onUpgrade,
     close: async () => {
