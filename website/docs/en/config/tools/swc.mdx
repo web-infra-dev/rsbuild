@@ -86,27 +86,29 @@ Please note that SWC's wasm plugins are currently not backward compatible, and t
 
 For more information, refer to [SWC - Selecting the version](https://swc.rs/docs/plugin/selecting-swc-core).
 
-### Enable emotion support
+### Enable Emotion Support
 
-Example of enabling the emotion support using the `builtin:swc-loader`:
+Example of enabling the Emotion support using the `builtin:swc-loader`:
 
 ```js
 export default {
   tools: {
     swc: {
-      rspackExperiments: {
-        emotion: true,
+      jsc: {
+        experimental: {
+          plugins: [['@swc/plugin-emotion', {}]],
+        },
       },
     },
   },
 };
 ```
 
-For more options, please refer to [Rspack - rspackExperiments.emotion](https://rspack.dev/guide/features/builtin-swc-loader#rspackexperimentsemotion).
+For more options, please refer to [@swc/plugin-emotion](https://www.npmjs.com/package/@swc/plugin-emotion).
 
-### Enable relay support
+### Enable Relay Support
 
-Example of enabling the relay support using the `builtin:swc-loader`:
+Example of enabling the Relay support using the `builtin:swc-loader`:
 
 ```js
 export default {

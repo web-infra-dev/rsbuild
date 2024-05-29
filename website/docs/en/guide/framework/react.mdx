@@ -156,7 +156,7 @@ If you need to use styled-components, We recommend register the [Styled Componen
 Rsbuild supports compiling [Emotion](https://github.com/emotion-js/emotion), you can add the following configuration to use:
 
 - [swcReactOptions.importSource](/plugins/list/plugin-react#swcreactoptions)
-- [rspackExperiments.emotion](https://rspack.dev/guide/features/builtin-swc-loader#rspackexperimentsemotion)
+- [@swc/plugin-emotion](https://www.npmjs.com/package/@swc/plugin-emotion)
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -172,8 +172,10 @@ export default defineConfig({
   ],
   tools: {
     swc: {
-      rspackExperiments: {
-        emotion: true,
+      jsc: {
+        experimental: {
+          plugins: [['@swc/plugin-emotion', {}]],
+        },
       },
     },
   },
