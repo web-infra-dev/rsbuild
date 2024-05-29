@@ -72,7 +72,11 @@ export const build = async (
       else {
         // When using run or watch, call close and wait for it to finish before calling run or watch again.
         // Concurrent compilations will corrupt the output files.
-        compiler.close(() => {
+        compiler.close((closeErr) => {
+          if (closeErr) {
+            logger.error(closeErr);
+          }
+
           // Assert type of stats must align to compiler.
           resolve({ stats });
         });
