@@ -109,3 +109,27 @@ pluginLess({
   },
 });
 ```
+
+## 常见问题
+
+### Less 文件中的除法不生效？
+
+`@rsbuild/plugin-less` 内置的 Less 版本为 v4，与 v3 版本相比，除法的写法有一些区别：
+
+```less
+// Less v3
+.math {
+  width: 2px / 2; // 1px
+  width: 2px ./ 2; // 1px
+  width: (2px / 2); // 1px
+}
+
+// Less v4
+.math {
+  width: 2px / 2; // 2px / 2
+  width: 2px ./ 2; // 1px
+  width: (2px / 2); // 1px
+}
+```
+
+Less 中除法的写法可以通过配置项来修改，详见 [Less - Math](https://lesscss.org/usage/#less-options-math)。

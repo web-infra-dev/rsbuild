@@ -158,7 +158,7 @@ Node.js 官方文档中有对以下参数更详细的解释：
 
 如果你在打包时出现了类似下面的报错，表示项目中的 [core-js](https://github.com/zloirock/core-js) 无法被正确引用。
 
-```bash
+```
 Module not found: Can't resolve 'core-js/modules/es.error.cause.js'
 ```
 
@@ -169,29 +169,3 @@ Module not found: Can't resolve 'core-js/modules/es.error.cause.js'
 1. 当前项目覆盖了 Rsbuild 内置的 `alias` 配置，导致引用 `core-js` 时，没有解析到正确的 `core-js` 路径，这种情况下，你可以检查项目的 `alias` 配置。
 2. 项目里某一处代码依赖了 `core-js` v2 版本。这种情况通常需要你找出对应的代码，并升级其中的 `core-js` 到 v3 版本。
 3. `node_modules` 中的某一个 npm 包引用了 `core-js`，但是没有在 `dependencies` 中声明 `core-js` 依赖。这种情况需要你在对应的 npm 包中声明 `core-js` 依赖，或者在项目根目录下安装一份 `core-js`。
-
----
-
-### Less 文件中的除法不生效？
-
-Less v4 版本与 v3 版本相比，除法的写法有一些区别：
-
-```less
-// Less v3
-.math {
-  width: 2px / 2; // 1px
-  width: 2px ./ 2; // 1px
-  width: (2px / 2); // 1px
-}
-
-// Less v4
-.math {
-  width: 2px / 2; // 2px / 2
-  width: 2px ./ 2; // 1px
-  width: (2px / 2); // 1px
-}
-```
-
-Rsbuild 内置的 Less 版本为 v4，低版本的写法不会生效，请注意区分。
-
-Less 中除法的写法也可以通过配置项来修改，详见 [Less - Math](https://lesscss.org/usage/#less-options-math)。
