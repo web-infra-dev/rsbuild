@@ -16,7 +16,7 @@ function resolveFileName(stats: StatsError) {
   }
 
   // fallback to moduleName if moduleIdentifier parse failed
-  return `File: ${stats.moduleName}\n`;
+  return stats.moduleName ? `File: ${stats.moduleName}\n` : '';
 }
 
 function hintUnknownFiles(message: string): string {
