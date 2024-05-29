@@ -22,6 +22,9 @@ export const getProviderTest = (
 
   // @ts-expect-error
   testSkip.describe = test.describe.skip;
+
+  // @ts-expect-error
+  testSkip.fail = test.describe.skip;
   // @ts-expect-error
   return testSkip as typeof test.skip & {
     describe: typeof test.describe.skip;
