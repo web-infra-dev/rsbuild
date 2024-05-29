@@ -109,3 +109,27 @@ pluginLess({
   },
 });
 ```
+
+## FAQ
+
+### Division in Less file doesn't work?
+
+The built-in Less version for `@rsbuild/plugin-less` is v4. Compared to v3, there are some differences in the division syntax in Less v4:
+
+```less
+// Less v3
+.math {
+  width: 2px / 2; // 1px
+  width: 2px ./ 2; // 1px
+  width: (2px / 2); // 1px
+}
+
+// Less v4
+.math {
+  width: 2px / 2; // 2px / 2
+  width: 2px ./ 2; // 1px
+  width: (2px / 2); // 1px
+}
+```
+
+The division syntax in Less can be modified through configuration. For more details, see [Less - Math](https://lesscss.org/usage/#less-options-math).
