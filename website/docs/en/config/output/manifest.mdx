@@ -5,9 +5,9 @@
 
 Whether to generate a manifest file that contains information of all assets, and the mapping relationship between [entry module](/config/source/entry) and assets.
 
-When set to `true`, Rsbuild will generate a `manifest.json` file after building. When the value is a string, it will be used as the manifest file name or path.
+When `output.manifest` is set to `true`, Rsbuild will generate a `manifest.json` file after building. When the value of `output.manifest` is a string, it will be used as the manifest file name or path.
 
-### Manifest Output
+## Output
 
 The default output file structure of manifest is:
 
@@ -37,7 +37,7 @@ type ManifestList = {
 };
 ```
 
-### Example
+## Basic Example
 
 Enable asset manifest:
 
@@ -70,4 +70,16 @@ After building, there will be a `dist/manifest.json` file:
     }
   }
 }
+```
+
+## Set Path
+
+`output.manifest` can be a path relative to the `dist` directory, for example, output to `dist/static/my-manifest.json`:
+
+```js
+export default {
+  output: {
+    manifest: './static/my-manifest.json',
+  },
+};
 ```

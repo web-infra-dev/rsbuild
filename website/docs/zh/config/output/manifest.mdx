@@ -5,9 +5,9 @@
 
 是否生成 manifest 文件，该文件包含所有构建产物的信息、以及[入口模块](/config/source/entry)与构建产物间的映射关系。
 
-当设置为 true 时，Rsbuild 构建后将会生成 `manifest.json` 文件。当该值为一个字符串时，它将作为 manifest 文件的名称或路径。
+当 `output.manifest` 设置为 `true` 时，Rsbuild 会在构建后生成一个 `manifest.json` 文件。当 `output.manifest` 的值是一个字符串时，它将作为 manifest 文件的名称或路径。
 
-### Manifest 输出内容
+## 输出内容
 
 manifest 文件默认输出的结构为：
 
@@ -37,7 +37,7 @@ type ManifestList = {
 };
 ```
 
-### 示例
+## 基础示例
 
 添加以下配置来开启：
 
@@ -70,4 +70,16 @@ export default {
     }
   }
 }
+```
+
+## 设置路径
+
+`output.manifest` 可以是一个相对于 `dist` 目录的路径，比如输出为 `dist/static/my-manifest.json`：
+
+```js
+export default {
+  output: {
+    manifest: './static/my-manifest.json',
+  },
+};
 ```
