@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2019",
+    "target": "ES2021",
     "lib": ["DOM", "ESNext"],
     "allowJs": true,
     "module": "ES2020",
