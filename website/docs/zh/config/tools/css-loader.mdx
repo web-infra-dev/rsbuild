@@ -5,13 +5,7 @@
 
 ```js
 const defaultOptions = {
-  modules: {
-    auto: true,
-    namedExport: false,
-    exportLocalsConvention: 'camelCase',
-    localIdentName: rsbuildConfig.output.cssModules.localIdentName,
-    exportOnlyLocals: target !== 'web',
-  },
+  modules: rsbuildConfig.output.cssModules,
   sourceMap: rsbuildConfig.output.sourceMap.css,
   // 在编译 css 文件时为 `1`，在编译 sass/less 文件时为 `2`
   importLoaders: 1 || 2,

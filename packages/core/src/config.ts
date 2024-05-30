@@ -150,6 +150,7 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
   inlineStyles: false,
   cssModules: {
     auto: true,
+    namedExport: false,
     exportGlobals: false,
     exportLocalsConvention: 'camelCase',
   },
