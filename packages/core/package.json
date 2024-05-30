@@ -67,7 +67,7 @@
     "commander": "^12.1.0",
     "connect": "3.7.0",
     "connect-history-api-fallback": "^2.0.0",
-    "css-loader": "7.1.1",
+    "css-loader": "7.1.2",
     "dotenv": "16.4.5",
     "dotenv-expand": "11.0.6",
     "fs-extra": "^11.2.0",

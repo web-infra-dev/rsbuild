@@ -90,7 +90,7 @@
   },
   "dependencies": {
     "@rspack/core": "0.7.0",
-    "caniuse-lite": "^1.0.30001617",
+    "caniuse-lite": "^1.0.30001625",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.7.2",
     "postcss": "^8.4.38"
   },
@@ -109,7 +109,7 @@
     "json5": "^2.2.3",
     "loader-utils2": "npm:loader-utils@2.0.4",
     "mime-types": "^2.1.35",
-    "picocolors": "1.0.0",
+    "picocolors": "1.0.1",
     "prebundle": "1.1.0",
     "rslog": "^1.2.2",
     "semver": "^7.6.2",
@@ -117,7 +117,7 @@
     "typescript": "^5.4.2",
     "webpack": "^5.91.0",
     "webpack-bundle-analyzer": "^4.10.2",
-    "webpack-chain": "npm:webpack-5-chain@8.0.1",
+    "webpack-chain": "npm:webpack-5-chain@8.0.2",
     "webpack-merge": "5.10.0",
     "yaml": "^2.4.2"
   },

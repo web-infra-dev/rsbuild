@@ -31,7 +31,7 @@
     "fast-glob": "^3.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.5",
+    "@babel/core": "^7.24.6",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
     "@scripts/test-helper": "workspace:*",
