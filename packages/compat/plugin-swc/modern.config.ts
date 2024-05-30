@@ -1,5 +1,5 @@
 import { moduleTools } from '@modern-js/module-tools';
-import { dualBuildConfigs } from '../../../scripts/modern.base.config';
+import { dualBuildConfigs } from '@rsbuild/config/modern';
 
 export default {
   plugins: [moduleTools()],

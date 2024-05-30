@@ -1,3 +1,3 @@
-import { configForDualPackage } from '../../../scripts/modern.base.config';
+import { configForDualPackage } from '@rsbuild/config/modern';
 
 export default configForDualPackage;
