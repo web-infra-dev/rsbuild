@@ -59,6 +59,28 @@ export default cssExports;
 
 此时再打开 `src/index.ts` 文件，可以看到 `styles` 对象已经具备了准确的类型。
 
+## 具名导出
+
+在开启 [output.cssModules.namedExport](/config/output/css-modules#cssmodulesnamedexport) 的情况下，生成的类型声明文件仅会包含具名导出。
+
+比如：
+
+```css title="index.module.css"
+.page {
+  color: black;
+}
+.header {
+  color: white;
+}
+```
+
+生成的类型：
+
+```ts title="src/index.module.css.d.ts"
+export const page: string;
+export const header: string;
+```
+
 ## 配置 Git
 
 在上述例子中，`src/index.module.css.d.ts` 是编译生成的代码，你可以选择将它们提交到 Git 仓库里，也可以选择在 `.gitignore` 文件中忽略它们：
