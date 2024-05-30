@@ -9,7 +9,7 @@ import {
   commonExternals,
   emitTypePkgJsonPlugin,
   esmBuildConfig,
-} from '../../scripts/modern.base.config';
+} from '@rsbuild/config/modern';
 
 const externals = [
   ...commonExternals,

@@ -9,7 +9,7 @@ import {
 } from '@modern-js/module-tools';
 
 export const define = {
-  RSBUILD_VERSION: require('../packages/core/package.json').version,
+  RSBUILD_VERSION: require('../../packages/core/package.json').version,
 };
 
 export const BUILD_TARGET = {
@@ -22,18 +22,6 @@ export const requireShim = {
   js: `import { createRequire } from 'module';
 var require = createRequire(import.meta['url']);\n`,
 };
-
-export const baseBuildConfig = defineConfig({
-  plugins: [moduleTools()],
-  buildConfig: {
-    buildType: 'bundleless',
-    format: 'cjs',
-    target: BUILD_TARGET.node,
-    define,
-  },
-});
-
-export default baseBuildConfig;
 
 export const commonExternals = [
   'webpack',
