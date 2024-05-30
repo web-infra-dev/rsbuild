@@ -63,11 +63,11 @@ type CSSModulesLocalsConvention =
 
 类型说明：
 
-- `asIs` 类名将按原样导出。
-- `camelCase` 类名将被驼峰化，原始类名仍然可用。
-- `camelCaseOnly` 类名将被驼峰化，原始类名不可用。
-- `dashes` 只有类名中的破折号会被驼峰化，原始类名仍然可用。
-- `dashesOnly` 只有类名中的破折号会被驼峰化，原始类名不可用。
+- `asIs`：类名将按原样导出。
+- `camelCase`：类名将被驼峰化，然后被导出。原始类名也会被导出。
+- `camelCaseOnly`：类名将被驼峰化，然后被导出。原始类名不会被导出。
+- `dashes`：只有类名中的破折号会被驼峰化，然后被导出。原始类名也会被导出。
+- `dashesOnly`：类名中的破折号会被驼峰化，然后被导出。原始类名不会被导出。
 
 ```ts
 export default {
@@ -235,4 +235,52 @@ export default {
     },
   },
 };
+```
+
+## cssModules.namedExport
+
+- **类型：** `boolean`
+- **默认值：** `false`
+
+是否具名导出 class names。
+
+```ts
+export default {
+  output: {
+    cssModules: {
+      namedExport: true,
+    },
+  },
+};
+```
+
+### 示例
+
+```css title="style.module.css"
+.foo {
+  color: blue;
+}
+```
+
+- `namedExport: false`:
+
+```js
+import styles from './style.module.css';
+
+console.log(styles.foo);
+```
+
+- `namedExport: true`:
+
+```js
+import { foo } from './style.module.css';
+// or
+import * as styles from './style.module.css';
+
+console.log(foo);
+console.log(styles.foo);
+```
+
+```tip
+当 namedExport 为 true 时，CSS Modules 导出的 `default` class 会被自动重命名为 `_default` class，因为 default 是 ECMA modules 的保留字。
 ```

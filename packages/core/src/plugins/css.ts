@@ -221,7 +221,6 @@ const getCSSLoaderOptions = ({
     modules: {
       ...cssModules,
       localIdentName,
-      namedExport: false,
     },
     sourceMap: config.output.sourceMap.css,
   };
