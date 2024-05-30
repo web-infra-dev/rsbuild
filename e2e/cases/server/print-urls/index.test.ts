@@ -1,4 +1,4 @@
-import { dev, proxyConsole } from '@e2e/helper';
+import { build, dev, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
@@ -122,6 +122,65 @@ test('should allow to modify and return new urls', async ({ page }) => {
   );
 
   expect(localLog).toBeFalsy();
+  expect(networkLog).toBeFalsy();
+
+  await rsbuild.close();
+  restore();
+});
+
+test('allow only listen to localhost for dev', async ({ page }) => {
+  const { logs, restore } = proxyConsole('log');
+
+  const rsbuild = await dev({
+    cwd,
+    rsbuildConfig: {
+      server: {
+        host: 'localhost',
+        printUrls: true,
+      },
+    },
+  });
+
+  await page.goto(`http://localhost:${rsbuild.port}`);
+
+  const localLog = logs.find(
+    (log) => log.includes('Local:') && log.includes('http://localhost'),
+  );
+  const networkLog = logs.find(
+    (log) => log.includes('Network:') && log.includes('http://'),
+  );
+
+  expect(localLog).toBeTruthy();
+  expect(networkLog).toBeFalsy();
+
+  await rsbuild.close();
+  restore();
+});
+
+test('allow only listen to localhost for prod preview', async ({ page }) => {
+  const { logs, restore } = proxyConsole('log');
+
+  const rsbuild = await build({
+    cwd,
+    runServer: true,
+    rsbuildConfig: {
+      server: {
+        host: 'localhost',
+        printUrls: true,
+      },
+    },
+  });
+
+  await page.goto(`http://localhost:${rsbuild.port}`);
+
+  const localLog = logs.find(
+    (log) => log.includes('Local:') && log.includes('http://localhost'),
+  );
+  const networkLog = logs.find(
+    (log) => log.includes('Network:') && log.includes('http://'),
+  );
+
+  expect(localLog).toBeTruthy();
   expect(networkLog).toBeFalsy();
 
   await rsbuild.close();

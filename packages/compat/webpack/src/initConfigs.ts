@@ -1,5 +1,5 @@
+import type { CreateRsbuildOptions } from '@rsbuild/core';
 import {
-  type CreateRsbuildOptions,
   type InspectConfigOptions,
   type PluginManager,
   isDebug,

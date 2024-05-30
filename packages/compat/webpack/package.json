@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/webpack",
-  "version": "0.7.0-beta.3",
+  "version": "0.7.1",
   "homepage": "https://rsbuild.dev",
   "repository": {
     "type": "git",
@@ -29,8 +29,8 @@
   "dependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/shared": "workspace:*",
-    "mini-css-extract-plugin": "2.8.1",
     "copy-webpack-plugin": "9.1.0",
+    "mini-css-extract-plugin": "2.8.1",
     "postcss": "^8.4.38",
     "tsconfig-paths-webpack-plugin": "4.1.0",
     "webpack": "^5.91.0"

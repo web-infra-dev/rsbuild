@@ -1,8 +1,7 @@
 import path from 'node:path';
-import { __internalHelper } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import {
   DEFAULT_BROWSERSLIST,
-  type RsbuildPlugin,
   SCRIPT_REGEX,
   applyScriptCondition,
 } from '@rsbuild/shared';
@@ -134,8 +133,11 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
           minimizersChain.delete(CHAIN_ID.MINIMIZER.CSS).end();
         }
 
-        const { minifyJs, minifyCss } =
-          __internalHelper.parseMinifyOptions(rsbuildConfig);
+        const { minify } = rsbuildConfig.output;
+        const minifyJs =
+          minify === true || (typeof minify === 'object' && minify.js);
+        const minifyCss =
+          minify === true || (typeof minify === 'object' && minify.css);
 
         minimizersChain
           .end()

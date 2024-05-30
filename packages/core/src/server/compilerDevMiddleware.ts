@@ -1,12 +1,10 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Socket } from 'node:net';
+import type { DevConfig, NextFunction, ServerConfig } from '@rsbuild/shared';
 import type {
   DevMiddleware as CustomDevMiddleware,
-  DevConfig,
   DevMiddlewareAPI,
-  NextFunction,
-  ServerConfig,
-} from '@rsbuild/shared';
+} from './devMiddleware';
 import { SocketServer } from './socketServer';
 
 type Options = {
@@ -65,14 +63,14 @@ export class CompilerDevMiddleware {
     this.devMiddleware = devMiddleware;
   }
 
-  public init() {
+  public async init() {
     // start compiling
     this.middleware = this.setupDevMiddleware(
       this.devMiddleware,
       this.publicPaths,
     );
 
-    this.socketServer.prepare();
+    await this.socketServer.prepare();
   }
 
   public upgrade(req: IncomingMessage, sock: Socket, head: any) {

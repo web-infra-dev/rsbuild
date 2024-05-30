@@ -80,10 +80,6 @@ export type ModifyChainUtils = {
   isWebWorker: boolean;
   CHAIN_ID: ChainIdentifier;
   HtmlPlugin: typeof HtmlWebpackPlugin;
-  /**
-   * @private internal API
-   */
-  getCompiledPath: (name: string) => string;
 };
 
 interface PluginInstance {

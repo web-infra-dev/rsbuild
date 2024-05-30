@@ -1,19 +1,21 @@
 import path from 'node:path';
-import type { RsbuildConfig, RsbuildPluginAPI, Rspack } from '@rsbuild/core';
-import {
-  type BundlerChain,
-  CHAIN_ID,
-  SCRIPT_REGEX,
-  deepmerge,
-  isUsingHMR,
-} from '@rsbuild/shared';
+import type {
+  BundlerChain,
+  ChainIdentifier,
+  RsbuildConfig,
+  RsbuildPluginAPI,
+  Rspack,
+} from '@rsbuild/core';
+import { SCRIPT_REGEX, deepmerge, isUsingHMR } from '@rsbuild/shared';
 import type { PluginReactOptions } from '.';
 
 const modifySwcLoaderOptions = ({
   chain,
+  CHAIN_ID,
   modifier,
 }: {
   chain: BundlerChain;
+  CHAIN_ID: ChainIdentifier;
   modifier: (config: Rspack.SwcLoaderOptions) => Rspack.SwcLoaderOptions;
 }) => {
   const ruleIds = [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI];
@@ -46,6 +48,7 @@ export const applyBasicReactSupport = (
 
     modifySwcLoaderOptions({
       chain,
+      CHAIN_ID,
       modifier: (opts) => {
         const extraOptions: Rspack.SwcLoaderOptions = {
           jsc: {

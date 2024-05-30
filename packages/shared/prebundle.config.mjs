@@ -31,10 +31,20 @@ export default {
     },
     'webpack-merge',
     'mime-types',
-    'connect',
-    'browserslist',
     'gzip-size',
     'json5',
+    {
+      name: 'browserslist',
+      // preserve the `require(require.resolve())`
+      beforeBundle(task) {
+        replaceFileContent(join(task.depPath, 'node.js'), (content) =>
+          content.replaceAll(
+            'require(require.resolve',
+            'eval("require")(require.resolve',
+          ),
+        );
+      },
+    },
     {
       name: 'jiti',
       ignoreDts: true,
@@ -108,43 +118,6 @@ export default {
         browserslist: '../browserslist',
         // Can be enabled after moving to core
         // 'postcss-value-parser': '../postcss-value-parser',
-      },
-    },
-    {
-      name: 'less',
-      externals: {
-        // needle is an optional dependency and no need to bundle it.
-        needle: 'needle',
-      },
-      // bundle namespace child (hoisting) not supported yet
-      beforeBundle: () => {
-        replaceFileContent(
-          join(process.cwd(), 'node_modules/@types/less/index.d.ts'),
-          (content) =>
-            `${content.replace(
-              /declare module "less" {\s+export = less;\s+}/,
-              'export = Less;',
-            )}`,
-        );
-      },
-    },
-    {
-      name: 'sass-loader',
-      externals: {
-        sass: '../sass',
-      },
-    },
-    {
-      name: 'sass',
-      externals: {
-        chokidar: '../chokidar',
-      },
-      dtsExternals: ['source-map-js', 'immutable'],
-      beforeBundle: (task) => {
-        fs.outputFileSync(
-          join(task.depPath, 'types/index.d.ts'),
-          `export { Options } from './options';\nexport { LegacyOptions } from './legacy/options';`,
-        );
       },
     },
   ],

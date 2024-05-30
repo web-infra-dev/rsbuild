@@ -1,8 +1,7 @@
 import { pluginReact } from '@rsbuild/plugin-react';
-import { SVG_REGEX } from '@rsbuild/shared';
 import { createStubRsbuild } from '@scripts/test-helper';
 import { describe, expect, it } from 'vitest';
-import { type PluginSvgrOptions, pluginSvgr } from '../src';
+import { type PluginSvgrOptions, SVG_REGEX, pluginSvgr } from '../src';
 
 describe('svgr', () => {
   const cases: Array<{ name: string; pluginConfig: PluginSvgrOptions }> = [

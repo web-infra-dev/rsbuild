@@ -1,6 +1,5 @@
 import path from 'node:path';
-import type { RsbuildPlugin } from '@rsbuild/core';
-import type { CSSLoaderOptions } from '@rsbuild/shared';
+import type { CSSLoaderOptions, RsbuildPlugin } from '@rsbuild/core';
 
 const PLUGIN_NAME = 'rsbuild:typed-css-modules';
 

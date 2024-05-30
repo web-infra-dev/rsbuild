@@ -2,9 +2,8 @@ import { getNodeEnv, logger, onCompileDone, setNodeEnv } from '@rsbuild/shared';
 import type {
   BuildOptions,
   MultiStats,
-  RspackCompiler,
+  Rspack,
   RspackConfig,
-  RspackMultiCompiler,
   Stats,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
@@ -21,7 +20,7 @@ export const build = async (
 
   const { context } = initOptions;
 
-  let compiler: RspackCompiler | RspackMultiCompiler;
+  let compiler: Rspack.Compiler | Rspack.MultiCompiler;
   let bundlerConfigs: RspackConfig[] | undefined;
 
   if (customCompiler) {
@@ -73,7 +72,11 @@ export const build = async (
       else {
         // When using run or watch, call close and wait for it to finish before calling run or watch again.
         // Concurrent compilations will corrupt the output files.
-        compiler.close(() => {
+        compiler.close((closeErr) => {
+          if (closeErr) {
+            logger.error(closeErr);
+          }
+
           // Assert type of stats must align to compiler.
           resolve({ stats });
         });

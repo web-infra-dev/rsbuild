@@ -90,6 +90,17 @@ const defaultOptions = {
 
 `eslintPluginOptions` 对象会与默认配置对象进行浅合并。
 
+- 比如开启 ESLint v9 的 flat config：
+
+```ts
+pluginEslint({
+  eslintPluginOptions: {
+    cwd: __dirname,
+    configType: 'flat',
+  },
+});
+```
+
 - 比如通过 `exclude` 排除一些文件：
 
 ```ts

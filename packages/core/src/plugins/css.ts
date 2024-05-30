@@ -1,9 +1,8 @@
 import path from 'node:path';
 import {
   type BundlerChainRule,
-  type CSSExtractOptions,
+  type CSSLoaderModulesMode,
   type CSSLoaderOptions,
-  CSS_REGEX,
   type ModifyChainUtils,
   type PostCSSLoaderOptions,
   type PostCSSOptions,
@@ -16,7 +15,7 @@ import {
   mergeChainedOptions,
 } from '@rsbuild/shared';
 import type { AcceptedPlugin } from 'postcss';
-import { LOADER_PATH } from '../constants';
+import { CSS_REGEX, LOADER_PATH } from '../constants';
 import { getCompiledPath } from '../helpers';
 import { getCssExtractPlugin } from '../pluginHelper';
 import type { NormalizedConfig, RsbuildPlugin } from '../types';
@@ -30,7 +29,7 @@ export const isUseCssExtract = (
 ) =>
   !config.output.injectStyles && target !== 'node' && target !== 'web-worker';
 
-const getCssModuleLocalIdentName = (
+const getCSSModulesLocalIdentName = (
   config: NormalizedConfig,
   isProd: boolean,
 ) =>
@@ -53,7 +52,10 @@ export const normalizeCssLoaderOptions = (
     if (modules === true) {
       modules = { exportOnlyLocals: true };
     } else if (typeof modules === 'string') {
-      modules = { mode: modules, exportOnlyLocals: true };
+      modules = {
+        mode: modules as CSSLoaderModulesMode,
+        exportOnlyLocals: true,
+      };
     } else {
       // create a new object to avoid modifying the original options
       modules = {
@@ -201,7 +203,7 @@ const getPostcssLoaderOptions = async ({
   return mergedConfig;
 };
 
-const getCssLoaderOptions = ({
+const getCSSLoaderOptions = ({
   config,
   importLoaders,
   target,
@@ -217,10 +219,9 @@ const getCssLoaderOptions = ({
   const defaultOptions: CSSLoaderOptions = {
     importLoaders,
     modules: {
-      auto: cssModules.auto,
-      namedExport: false,
-      exportLocalsConvention: cssModules.exportLocalsConvention,
+      ...cssModules,
       localIdentName,
+      namedExport: false,
     },
     sourceMap: config.output.sourceMap.css,
   };
@@ -239,7 +240,7 @@ const getCssLoaderOptions = ({
   return cssLoaderOptions;
 };
 
-export async function applyCSSRule({
+async function applyCSSRule({
   rule,
   config,
   context,
@@ -262,9 +263,9 @@ export async function applyCSSRule({
   const enableExtractCSS = isUseCssExtract(config, target);
 
   // 2. Prepare loader options
-  const localIdentName = getCssModuleLocalIdentName(config, isProd);
+  const localIdentName = getCSSModulesLocalIdentName(config, isProd);
 
-  const cssLoaderOptions = getCssLoaderOptions({
+  const cssLoaderOptions = getCSSLoaderOptions({
     config,
     importLoaders,
     target,
@@ -272,22 +273,14 @@ export async function applyCSSRule({
   });
 
   // 3. Create Rspack rule
-  // Order: style-loader/mini-css-extract -> css-loader -> postcss-loader
+  // Order: style-loader/CssExtractRspackPlugin -> css-loader -> postcss-loader
   if (target === 'web') {
-    // use mini-css-extract-plugin loader
+    // use CssExtractRspackPlugin loader
     if (enableExtractCSS) {
-      const extraCSSOptions: Required<CSSExtractOptions> =
-        typeof config.tools.cssExtract === 'object'
-          ? config.tools.cssExtract
-          : {
-              loaderOptions: {},
-              pluginOptions: {},
-            };
-
       rule
         .use(CHAIN_ID.USE.MINI_CSS_EXTRACT)
         .loader(getCssExtractPlugin().loader)
-        .options(extraCSSOptions.loaderOptions)
+        .options(config.tools.cssExtract.loaderOptions)
         .end();
     }
     // use style-loader
@@ -338,11 +331,12 @@ export async function applyCSSRule({
   rule.resolve.preferRelative(true);
 }
 
-export const pluginCss = (): RsbuildPlugin => {
-  return {
-    name: 'rsbuild:css',
-    setup(api) {
-      api.modifyBundlerChain(async (chain, utils) => {
+export const pluginCss = (): RsbuildPlugin => ({
+  name: 'rsbuild:css',
+  setup(api) {
+    api.modifyBundlerChain({
+      order: 'pre',
+      handler: async (chain, utils) => {
         const rule = chain.module.rule(utils.CHAIN_ID.RULE.CSS);
         const config = api.getNormalizedConfig();
         rule.test(CSS_REGEX);
@@ -352,12 +346,12 @@ export const pluginCss = (): RsbuildPlugin => {
           config,
           context: api.context,
         });
-      });
+      },
+    });
 
-      api.modifyRspackConfig(async (rspackConfig) => {
-        rspackConfig.experiments ||= {};
-        rspackConfig.experiments.css = false;
-      });
-    },
-  };
-};
+    api.modifyRspackConfig(async (rspackConfig) => {
+      rspackConfig.experiments ||= {};
+      rspackConfig.experiments.css = false;
+    });
+  },
+});

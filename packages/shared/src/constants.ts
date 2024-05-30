@@ -56,18 +56,11 @@ export const AUDIO_EXTENSIONS = ['mp3', 'wav', 'flac', 'aac', 'm4a', 'opus'];
 export const DEFAULT_ASSET_PREFIX = '/';
 
 // RegExp
-export const HTML_REGEX = /\.html$/;
 export const JS_REGEX = /\.(?:js|mjs|cjs|jsx)$/;
 export const TS_REGEX = /\.(?:ts|mts|cts|tsx)$/;
 export const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
 export const TS_AND_JSX_REGEX = /\.(?:ts|tsx|jsx|mts|cts)$/;
-export const SVG_REGEX = /\.svg$/;
-export const CSS_REGEX = /\.css$/;
-export const LESS_REGEX = /\.less$/;
-export const SASS_REGEX = /\.s(?:a|c)ss$/;
 export const NODE_MODULES_REGEX = /[\\/]node_modules[\\/]/;
-
-export const TS_CONFIG_FILE = 'tsconfig.json';
 
 export const TARGET_ID_MAP: Record<RsbuildTarget, string> = {
   web: 'Client',

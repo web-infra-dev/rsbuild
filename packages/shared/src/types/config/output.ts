@@ -3,7 +3,7 @@ import type {
   Externals,
   SwcJsMinimizerRspackPluginOptions,
 } from '@rspack/core';
-import type { HTMLPluginOptions } from '../../types';
+import type { CSSLoaderModulesOptions, HTMLPluginOptions } from '../../types';
 import type { RsbuildTarget } from '../rsbuild';
 import type { RspackConfig } from '../rspack';
 
@@ -136,20 +136,34 @@ export type SourceMap = {
   css?: boolean;
 };
 
-export type CssModuleLocalsConvention =
+export type CSSModulesLocalsConvention =
   | 'asIs'
   | 'camelCase'
   | 'camelCaseOnly'
   | 'dashes'
   | 'dashesOnly';
 
-export type CssModules = {
-  auto?: boolean | RegExp | ((resourcePath: string) => boolean);
+export type CSSModules = {
+  /**
+   * Allows CSS Modules to be automatically enabled based on their filenames.
+   */
+  auto?: CSSLoaderModulesOptions['auto'];
+  /**
+   * Allows exporting names from global class names, so you can use them via import.
+   */
+  exportGlobals?: boolean;
+  /**
+   * Style of exported class names.
+   */
+  exportLocalsConvention?: CSSModulesLocalsConvention;
   /**
    * Set the local ident name of CSS Modules.
    */
   localIdentName?: string;
-  exportLocalsConvention?: CssModuleLocalsConvention;
+  /**
+   * Controls the level of compilation applied to the input styles.
+   */
+  mode?: CSSLoaderModulesOptions['mode'];
 };
 
 export type Minify =
@@ -225,7 +239,7 @@ export interface OutputConfig {
   assetPrefix?: string;
   /**
    * Set the size threshold to inline static assets such as images and fonts.
-   * By default, static assets will be Base64 encoded and inline into the page if the size is less than 10KB.
+   * By default, static assets will be Base64 encoded and inline into the page if the size is less than 4KiB.
    */
   dataUriLimit?: number | DataUriLimit;
   /**
@@ -243,7 +257,7 @@ export interface OutputConfig {
   /**
    * Allow to custom CSS Modules options.
    */
-  cssModules?: CssModules;
+  cssModules?: CSSModules;
   /**
    * Whether to disable code minification in production build.
    */
@@ -311,9 +325,11 @@ export interface NormalizedOutputConfig extends OutputConfig {
   inlineStyles: boolean | InlineChunkTest;
   injectStyles: boolean;
   cssModules: {
+    auto: CSSModules['auto'];
+    exportGlobals: boolean;
+    exportLocalsConvention: CSSModulesLocalsConvention;
     localIdentName?: string;
-    exportLocalsConvention: CssModuleLocalsConvention;
-    auto?: CssModules['auto'];
+    mode?: CSSModules['mode'];
   };
   emitAssets: EmitAssets;
 }

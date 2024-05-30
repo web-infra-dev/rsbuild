@@ -1,28 +1,33 @@
 import { isAbsolute, join } from 'node:path';
 import url from 'node:url';
 import type {
-  CompileMiddlewareAPI,
   DevConfig,
-  Middlewares,
-  OutputFileSystem,
   RequestHandler,
+  Rspack,
   ServerAPIs,
   ServerConfig,
-  UpgradeEvent,
 } from '@rsbuild/shared';
 import { isDebug } from '@rsbuild/shared';
+import type { UpgradeEvent } from './helper';
 import {
   faviconFallbackMiddleware,
   getHtmlFallbackMiddleware,
   getRequestLoggerMiddleware,
 } from './middlewares';
 
+export type CompileMiddlewareAPI = {
+  middleware: RequestHandler;
+  sockWrite: ServerAPIs['sockWrite'];
+  onUpgrade: UpgradeEvent;
+  close: () => void;
+};
+
 export type RsbuildDevMiddlewareOptions = {
   pwd: string;
   dev: DevConfig;
   server: ServerConfig;
   compileMiddlewareAPI?: CompileMiddlewareAPI;
-  outputFileSystem: OutputFileSystem;
+  outputFileSystem: Rspack.OutputFileSystem;
   output: {
     distPath: string;
   };
@@ -53,6 +58,8 @@ const applySetupMiddlewares = (
 
   return { before, after };
 };
+
+export type Middlewares = Array<RequestHandler | [string, RequestHandler]>;
 
 const applyDefaultMiddlewares = async ({
   middlewares,

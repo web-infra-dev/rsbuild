@@ -15,7 +15,6 @@ import type {
   NodeEnv,
   NormalizedConfig,
   RsbuildTarget,
-  SharedCompiledPkgNames,
   Stats,
 } from './types';
 
@@ -79,6 +78,8 @@ export const getJsSourceMap = (config: NormalizedConfig) => {
   return sourceMap.js;
 };
 
+export type SharedCompiledPkgNames = 'autoprefixer';
+
 export const getSharedPkgCompiledPath = (packageName: SharedCompiledPkgNames) =>
   path.join(__dirname, '../compiled', packageName);
 
@@ -124,7 +125,12 @@ export const kebabCase = (str: string) =>
     .toLowerCase()
     .replace(/^-/, '');
 
-export const cloneDeep = <T>(value: T): T => deepmerge({}, value);
+export const cloneDeep = <T>(value: T): T => {
+  if (value === null || value === undefined) {
+    return value;
+  }
+  return deepmerge({}, value);
+};
 
 const DEP_MATCH_TEMPLATE = /[\\/]node_modules[\\/](<SOURCES>)[\\/]/.source;
 

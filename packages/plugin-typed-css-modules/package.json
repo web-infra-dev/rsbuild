@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-typed-css-modules",
-  "version": "0.7.0-beta.3",
+  "version": "0.7.1",
   "description": "Generate TypeScript declaration file for CSS Modules",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -34,12 +34,12 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
-    "typescript": "^5.4.2",
     "line-diff": "2.1.1",
-    "prebundle": "1.1.0"
+    "prebundle": "1.1.0",
+    "typescript": "^5.4.2"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.7.0-beta.3"
+    "@rsbuild/core": "workspace:^0.7.1"
   },
   "publishConfig": {
     "access": "public",

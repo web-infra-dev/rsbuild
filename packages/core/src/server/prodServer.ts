@@ -1,23 +1,22 @@
 import type { Server } from 'node:http';
+import type { Http2SecureServer } from 'node:http2';
 import { join } from 'node:path';
 import {
   type PreviewServerOptions,
   ROOT_DIST_DIR,
   type RequestHandler,
-  type RsbuildConfig,
   type ServerConfig,
-  type StartServerResult,
   getNodeEnv,
   isDebug,
   setNodeEnv,
 } from '@rsbuild/shared';
-import connect from '@rsbuild/shared/connect';
-import sirv from '../../compiled/sirv/index.js';
-import type { InternalContext } from '../types';
+import type Connect from '../../compiled/connect/index.js';
+import type { InternalContext, NormalizedConfig } from '../types';
 import {
+  type StartServerResult,
   formatRoutes,
   getAddressUrls,
-  getServerOptions,
+  getServerConfig,
   printServerURLs,
 } from './helper';
 import { createHttpServer } from './httpServer';
@@ -36,16 +35,17 @@ type RsbuildProdServerOptions = {
 };
 
 export class RsbuildProdServer {
-  private app!: Server;
+  private app!: Server | Http2SecureServer;
   private options: RsbuildProdServerOptions;
-  public middlewares = connect();
+  public middlewares: Connect.Server;
 
-  constructor(options: RsbuildProdServerOptions) {
+  constructor(options: RsbuildProdServerOptions, middlewares: Connect.Server) {
     this.options = options;
+    this.middlewares = middlewares;
   }
 
   // Complete the preparation of services
-  public async onInit(app: Server) {
+  public async onInit(app: Server | Http2SecureServer) {
     this.app = app;
 
     await this.applyDefaultMiddlewares();
@@ -105,18 +105,20 @@ export class RsbuildProdServer {
       this.middlewares.use(historyApiFallbackMiddleware);
 
       // ensure fallback request can be handled by sirv
-      this.applyStaticAssetMiddleware();
+      await this.applyStaticAssetMiddleware();
     }
 
     this.middlewares.use(faviconFallbackMiddleware);
   }
 
-  private applyStaticAssetMiddleware() {
+  private async applyStaticAssetMiddleware() {
     const {
       output: { path, assetPrefix },
       serverConfig: { htmlFallback },
       pwd,
     } = this.options;
+
+    const { default: sirv } = await import('../../compiled/sirv/index.js');
 
     const assetMiddleware = sirv(join(pwd, path), {
       etag: true,
@@ -146,31 +148,38 @@ export class RsbuildProdServer {
 
 export async function startProdServer(
   context: InternalContext,
-  rsbuildConfig: RsbuildConfig,
+  config: NormalizedConfig,
   { getPortSilently }: PreviewServerOptions = {},
 ) {
   if (!getNodeEnv()) {
     setNodeEnv('production');
   }
 
-  const { serverConfig, port, host, https } = await getServerOptions({
-    rsbuildConfig,
+  const { port, host, https } = await getServerConfig({
+    config,
     getPortSilently,
   });
 
-  const server = new RsbuildProdServer({
-    pwd: context.rootPath,
-    output: {
-      path: rsbuildConfig.output?.distPath?.root || ROOT_DIST_DIR,
-      assetPrefix: rsbuildConfig.output?.assetPrefix,
+  const { default: connect } = await import('../../compiled/connect/index.js');
+  const middlewares = connect();
+
+  const serverConfig = config.server;
+  const server = new RsbuildProdServer(
+    {
+      pwd: context.rootPath,
+      output: {
+        path: config.output.distPath.root || ROOT_DIST_DIR,
+        assetPrefix: config.output.assetPrefix,
+      },
+      serverConfig,
     },
-    serverConfig,
-  });
+    middlewares,
+  );
 
   await context.hooks.onBeforeStartProdServer.call();
 
   const httpServer = await createHttpServer({
-    https: serverConfig.https,
+    serverConfig,
     middlewares: server.middlewares,
   });
 
@@ -185,8 +194,8 @@ export async function startProdServer(
       async () => {
         const routes = formatRoutes(
           context.entry,
-          rsbuildConfig.output?.distPath?.html,
-          rsbuildConfig.html?.outputStructure,
+          config.output.distPath.html,
+          config.html.outputStructure,
         );
         await context.hooks.onAfterStartProdServer.call({
           port,
@@ -194,7 +203,7 @@ export async function startProdServer(
         });
 
         const protocol = https ? 'https' : 'http';
-        const urls = getAddressUrls({ protocol, port });
+        const urls = getAddressUrls({ protocol, port, host });
 
         printServerURLs({
           urls,

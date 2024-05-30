@@ -94,10 +94,10 @@ test('should transform css by lightningcss-loader and work with @rsbuild/plugin-
         },
       },
       plugins: [
-        pluginStylus(), // must before pluginLightningcss
         pluginLightningcss({
           minify: false,
         }),
+        pluginStylus(),
       ],
     },
   });

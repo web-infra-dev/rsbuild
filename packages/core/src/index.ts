@@ -23,13 +23,7 @@ export { logger } from '@rsbuild/shared';
 export { mergeRsbuildConfig } from './mergeConfig';
 
 // Constants
-export {
-  PLUGIN_SWC_NAME,
-  PLUGIN_CSS_NAME,
-  PLUGIN_SASS_NAME,
-  PLUGIN_LESS_NAME,
-  PLUGIN_STYLUS_NAME,
-} from './constants';
+export { PLUGIN_SWC_NAME, PLUGIN_CSS_NAME } from './constants';
 
 // Types
 export type {
@@ -59,6 +53,10 @@ export type {
   RsbuildPlugin,
   RsbuildPlugins,
   RsbuildPluginAPI,
+  // Others
+  RsbuildInstance,
+  RsbuildProvider,
+  CreateRsbuildOptions,
 } from './types';
 
 export type {
@@ -66,9 +64,39 @@ export type {
   RsbuildEntry,
   RsbuildTarget,
   RsbuildContext,
-  RsbuildInstance,
-  CreateRsbuildOptions,
   InspectConfigOptions,
+  // Subtypes of Config
+  Minify,
+  Polyfill,
+  PrintUrls,
+  PublicDir,
+  Decorators,
+  RspackRule,
+  WatchFiles,
+  CSSModules,
+  CrossOrigin,
+  ConsoleType,
+  SplitChunks,
+  BundlerChain,
+  ClientConfig,
+  ScriptInject,
+  ChainedConfig,
+  PostCSSPlugin,
+  ScriptLoading,
+  LegalComments,
+  AliasStrategy,
+  FilenameConfig,
+  DistPathConfig,
+  OutputStructure,
+  ChainIdentifier,
+  PreconnectOption,
+  CSSLoaderOptions,
+  ModifyChainUtils,
+  StyleLoaderOptions,
+  PostCSSLoaderOptions,
+  ChainedConfigWithUtils,
+  ModifyRspackConfigUtils,
+  CSSModulesLocalsConvention,
   // Hook Callback Types
   OnExitFn,
   OnAfterBuildFn,

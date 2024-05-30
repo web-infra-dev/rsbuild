@@ -29,9 +29,6 @@ export const pluginBasic = (): RsbuildPlugin => ({
           },
         });
 
-        // ignore the CSS conflicting order warning
-        chain.ignoreWarnings([/Conflicting order/]);
-
         // Disable performance hints, these logs are too complex
         chain.performance.hints(false);
 

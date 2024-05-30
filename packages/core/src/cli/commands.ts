@@ -2,6 +2,7 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { type RsbuildMode, color, logger } from '@rsbuild/shared';
 import { type Command, program } from '../../compiled/commander/index.js';
+import { isEmptyDir } from '../helpers';
 import { init } from './init';
 
 export type CommonOptions = {
@@ -94,12 +95,24 @@ export function runCli() {
       try {
         const rsbuild = await init({ cliOptions: options });
 
-        if (rsbuild && !existsSync(rsbuild.context.distPath)) {
-          throw new Error(
-            `The output directory ${color.yellow(
-              rsbuild.context.distPath,
-            )} does not exist, please build the project before previewing.`,
-          );
+        if (rsbuild) {
+          const { distPath } = rsbuild.context;
+
+          if (!existsSync(distPath)) {
+            throw new Error(
+              `The output directory ${color.yellow(
+                distPath,
+              )} does not exist, please build the project before previewing.`,
+            );
+          }
+
+          if (isEmptyDir(distPath)) {
+            throw new Error(
+              `The output directory ${color.yellow(
+                distPath,
+              )} is empty, please build the project before previewing.`,
+            );
+          }
         }
 
         await rsbuild?.preview();

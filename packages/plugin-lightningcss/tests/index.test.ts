@@ -1,14 +1,10 @@
-import { createRsbuild } from '@rsbuild/core';
-import {
-  type RspackConfig,
-  type RuleSetRule,
-  isPlainObject,
-} from '@rsbuild/shared';
+import { type Rspack, createRsbuild } from '@rsbuild/core';
+import { isPlainObject } from '@rsbuild/shared';
 import { createStubRsbuild } from '@scripts/test-helper';
 import { describe, expect, it } from 'vitest';
 import { lightningcss, pluginLightningcss } from '../src';
 
-const getCssRules = (rspackConfig: RspackConfig) => {
+const getCSSRules = (rspackConfig: Rspack.Configuration) => {
   const CSS_RULES = ['css', 'scss', 'sass', 'less', 'stylus'];
 
   return (
@@ -19,7 +15,7 @@ const getCssRules = (rspackConfig: RspackConfig) => {
           item.test?.toString().replace(/[\W]/g, '').includes(txt),
         );
       return isRule;
-    }) as RuleSetRule[]) ?? []
+    }) as Rspack.RuleSetRule[]) ?? []
   );
 };
 
@@ -32,7 +28,7 @@ describe('plugins/lightningcss', () => {
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
-    const cssRules = getCssRules(bundlerConfigs[0]);
+    const cssRules = getCSSRules(bundlerConfigs[0]);
     expect(cssRules).toMatchSnapshot();
     expect(cssRules).not.contain('postcss-loader');
   });
@@ -138,7 +134,7 @@ describe('plugins/lightningcss', () => {
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
-    const cssRules = getCssRules(bundlerConfigs[0]);
+    const cssRules = getCSSRules(bundlerConfigs[0]);
     expect(cssRules).toMatchSnapshot();
     expect(cssRules).not.contain('postcss-loader');
 
@@ -161,7 +157,7 @@ describe('plugins/lightningcss', () => {
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
-    const cssRules = getCssRules(bundlerConfigs[0]);
+    const cssRules = getCSSRules(bundlerConfigs[0]);
     expect(cssRules).toMatchSnapshot();
     expect(cssRules).not.contain('postcss-loader');
 

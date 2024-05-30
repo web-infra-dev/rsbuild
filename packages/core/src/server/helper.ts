@@ -1,5 +1,6 @@
+import type { IncomingMessage } from 'node:http';
 import net from 'node:net';
-import { isIPv6 } from 'node:net';
+import type { Socket } from 'node:net';
 import os from 'node:os';
 import {
   DEFAULT_DEV_HOST,
@@ -12,12 +13,29 @@ import {
 } from '@rsbuild/shared';
 import type {
   DevConfig,
+  NormalizedConfig,
   OutputStructure,
   PrintUrls,
   Routes,
-  RsbuildConfig,
   RsbuildEntry,
 } from '@rsbuild/shared';
+
+/**
+ * It used to subscribe http upgrade event
+ */
+export type UpgradeEvent = (
+  req: IncomingMessage,
+  socket: Socket,
+  head: any,
+) => void;
+
+export type StartServerResult = {
+  urls: string[];
+  port: number;
+  server: {
+    close: () => Promise<void>;
+  };
+};
 
 /**
  * Make sure there is slash before and after prefix
@@ -149,33 +167,6 @@ export function printServerURLs({
  */
 export const HMR_SOCK_PATH = '/rsbuild-hmr';
 
-export const mergeDevOptions = ({
-  rsbuildConfig,
-  port,
-}: {
-  rsbuildConfig: RsbuildConfig;
-  port: number;
-}) => {
-  const defaultDevConfig: DevConfig = {
-    client: {
-      path: HMR_SOCK_PATH,
-      port: port.toString(),
-      // By default it is set to "location.hostname"
-      host: '',
-      // By default it is set to "location.protocol === 'https:' ? 'wss' : 'ws'""
-      protocol: undefined,
-    },
-    writeToDisk: false,
-    liveReload: true,
-  };
-
-  const devConfig = rsbuildConfig.dev
-    ? deepmerge(defaultDevConfig, rsbuildConfig.dev)
-    : defaultDevConfig;
-
-  return devConfig;
-};
-
 /**
  * Get available free port.
  * @param port - Current port want to use.
@@ -244,50 +235,49 @@ export const getPort = async ({
   return port;
 };
 
-export const getServerOptions = async ({
-  rsbuildConfig,
+export const getServerConfig = async ({
+  config,
   getPortSilently,
 }: {
-  rsbuildConfig: RsbuildConfig;
+  config: NormalizedConfig;
   getPortSilently?: boolean;
 }) => {
-  const host = rsbuildConfig.server?.host || DEFAULT_DEV_HOST;
+  const host = config.server.host || DEFAULT_DEV_HOST;
   const port = await getPort({
     host,
-    port: rsbuildConfig.server?.port || DEFAULT_PORT,
-    strictPort: rsbuildConfig.server?.strictPort || false,
+    port: config.server.port || DEFAULT_PORT,
+    strictPort: config.server.strictPort || false,
     silent: getPortSilently,
   });
-
-  const https = Boolean(rsbuildConfig.server?.https) || false;
-
-  return { port, host, https, serverConfig: rsbuildConfig.server || {} };
+  const https = Boolean(config.server.https) || false;
+  return { port, host, https };
 };
 
-export const getDevOptions = async ({
-  rsbuildConfig,
-  getPortSilently,
+export const getDevConfig = ({
+  config,
+  port,
 }: {
-  rsbuildConfig: RsbuildConfig;
-  getPortSilently?: boolean;
-}) => {
-  const { port, host, https, serverConfig } = await getServerOptions({
-    rsbuildConfig,
-    getPortSilently,
-  });
-
-  const devConfig = mergeDevOptions({ rsbuildConfig, port });
-
-  const liveReload = devConfig.liveReload;
-
-  return {
-    devConfig,
-    serverConfig,
-    port,
-    host,
-    https,
-    liveReload,
+  config: NormalizedConfig;
+  port: number;
+}): DevConfig => {
+  const defaultDevConfig: DevConfig = {
+    client: {
+      path: HMR_SOCK_PATH,
+      port: port.toString(),
+      // By default it is set to "location.hostname"
+      host: '',
+      // By default it is set to "location.protocol === 'https:' ? 'wss' : 'ws'""
+      protocol: undefined,
+    },
+    writeToDisk: false,
+    liveReload: true,
   };
+
+  const devConfig = config.dev
+    ? deepmerge(defaultDevConfig, config.dev)
+    : defaultDevConfig;
+
+  return devConfig;
 };
 
 const getIpv4Interfaces = () => {
@@ -322,7 +312,7 @@ const isLoopbackHost = (host: string) => {
 };
 
 const getHostInUrl = (host: string) => {
-  if (isIPv6(host)) {
+  if (net.isIPv6(host)) {
     return host === '::' ? '[::1]' : `[${host}]`;
   }
   return host;

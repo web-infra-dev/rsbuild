@@ -1,14 +1,11 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should exclude specified scss file', async () => {
+test('exclude specified sass file with exclude option', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
       tools: {
-        sass: (_, { addExcludes }) => {
-          addExcludes([/b\.scss$/]);
-        },
         bundlerChain(chain) {
           chain.module
             .rule('fallback')

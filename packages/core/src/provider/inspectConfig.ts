@@ -41,7 +41,7 @@ export async function inspectConfig({
     pluginNames: string[];
   } = {
     ...context.normalizedConfig!,
-    pluginNames: pluginManager.plugins.map((p) => p.name),
+    pluginNames: pluginManager.getPlugins().map((p) => p.name),
   };
 
   const rawRsbuildConfig = await stringifyConfig(

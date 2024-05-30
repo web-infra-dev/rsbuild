@@ -3,13 +3,13 @@ import { parse } from 'node:url';
 import {
   type HtmlFallback,
   type RequestHandler as Middleware,
-  type OutputFileSystem,
+  type Rspack,
   color,
   debug,
   isDebug,
   logger,
 } from '@rsbuild/shared';
-import type Connect from '@rsbuild/shared/connect';
+import type Connect from '../../compiled/connect/index.js';
 
 export const faviconFallbackMiddleware: Middleware = (req, res, next) => {
   if (req.url === '/favicon.ico') {
@@ -81,7 +81,7 @@ export const getHtmlFallbackMiddleware: (params: {
   distPath: string;
   callback?: Middleware;
   htmlFallback?: HtmlFallback;
-  outputFileSystem: OutputFileSystem;
+  outputFileSystem: Rspack.OutputFileSystem;
 }) => Middleware = ({ htmlFallback, distPath, callback, outputFileSystem }) => {
   /**
    * support access page without suffix and support fallback in some edge cases

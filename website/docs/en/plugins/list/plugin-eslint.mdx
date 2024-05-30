@@ -90,6 +90,17 @@ const defaultOptions = {
 
 The `eslintPluginOptions` object will be shallowly merged with the default configuration object.
 
+- For example, enable ESLint v9's flat config:
+
+```ts
+pluginEslint({
+  eslintPluginOptions: {
+    cwd: __dirname,
+    configType: 'flat',
+  },
+});
+```
+
 - For example, exclude some files using `exclude`:
 
 ```ts

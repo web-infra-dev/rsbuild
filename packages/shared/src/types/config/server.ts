@@ -1,4 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
+import type { SecureServerSessionOptions } from 'node:http2';
 import type { ServerOptions as HttpsServerOptions } from 'node:https';
 import type {
   Options as BaseProxyOptions,
@@ -86,7 +87,7 @@ export interface ServerConfig {
   /**
    * After configuring this option, you can enable HTTPS Server, and disabling the HTTP Server.
    */
-  https?: HttpsServerOptions;
+  https?: HttpsServerOptions | SecureServerSessionOptions;
   /**
    * Used to set the host of Rsbuild Server.
    */

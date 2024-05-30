@@ -7,7 +7,7 @@ import { fse } from '@rsbuild/shared';
 
 const fixtures = resolve(__dirname);
 
-test('enableCssModuleTSDeclaration', async () => {
+test('plugin-typed-css-modules', async () => {
   fse.removeSync(join(fixtures, 'src/App.module.less.d.ts'));
   fse.removeSync(join(fixtures, 'src/App.module.scss.d.ts'));
 

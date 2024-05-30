@@ -52,3 +52,17 @@ await rsbuild.build();
 > For more introduction of Rsbuild instance methods, please read the [Rsbuild Instance](/api/javascript-api/instance) chapter.
 
 After completing the above three steps, you have learned the basic usage of Rsbuild. Next, you can customize the build process through the Rsbuild plugin and Rsbuild configs.
+
+## Exports Format
+
+Rsbuild provides exports in both ES Modules and CommonJS formats:
+
+```js title="index.mjs"
+import { createRsbuild } from '@rsbuild/core';
+```
+
+```js title="index.cjs"
+const { createRsbuild } = require('@rsbuild/core');
+```
+
+> It is recommended to use ES modules format, which is more in line with the community standards.

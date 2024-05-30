@@ -168,3 +168,33 @@ export default {
   },
 };
 ```
+
+## 代码拆分
+
+UMD 插件覆盖了 Rsbuild 默认的 chunk 拆包规则，它会将 `performance.chunkSplit.strategy` 设置为 `all-in-one`，以输出单个 bundle 产物。这是因为 UMD 产物经常会通过 CDN 来分发，并允许通过 `<script>` 标签直接引用。
+
+如果你需要对 UMD 产物进行拆包，可以主动配置 [performance.chunkSplit](/config/performance/chunk-split)，比如：
+
+```js
+export default {
+  performance: {
+    chunkSplit: {
+      strategy: 'split-by-experience',
+    },
+  },
+};
+```
+
+注意 UMD 插件不会禁用 dynamic import 引起的拆包。如果你需要禁用它，可以将 Rspack 的 [output.asyncChunks](https://rspack.dev/config/output#outputasyncchunks) 选项设置为 `false`：
+
+```js
+export default {
+  tools: {
+    rspack: {
+      output: {
+        asyncChunks: false,
+      },
+    },
+  },
+};
+```

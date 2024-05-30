@@ -5,10 +5,14 @@ import path from 'node:path';
 import { cancel, isCancel, note, outro, select, text } from '@clack/prompts';
 import { logger } from 'rslog';
 
+function cancelAndExit() {
+  cancel('Operation cancelled.');
+  process.exit(0);
+}
+
 function checkCancel(value: unknown) {
   if (isCancel(value)) {
-    cancel('Operation cancelled.');
-    process.exit(0);
+    cancelAndExit();
   }
 }
 
@@ -24,6 +28,11 @@ function pkgFromUserAgent(userAgent: string | undefined) {
     name: pkgSpecArr[0],
     version: pkgSpecArr[1],
   };
+}
+
+function isEmptyDir(path: string) {
+  const files = fs.readdirSync(path);
+  return files.length === 0 || (files.length === 1 && files[0] === '.git');
 }
 
 export async function main() {
@@ -44,15 +53,29 @@ export async function main() {
       if (value.length === 0) {
         return 'Target folder is required';
       }
-      if (fs.existsSync(path.join(cwd, value))) {
-        return `"${value}" is not empty, please input another folder`;
-      }
     },
   })) as string;
 
   checkCancel(targetDir);
 
   targetDir = formatTargetDir(targetDir);
+  const distFolder = path.join(cwd, targetDir);
+
+  if (fs.existsSync(distFolder) && !isEmptyDir(distFolder)) {
+    const option = (await select({
+      message: `"${targetDir}" is not empty, please choose:`,
+      options: [
+        { value: 'yes', label: 'Continue and override files' },
+        { value: 'no', label: 'Cancel operation' },
+      ],
+    })) as string;
+
+    checkCancel(option);
+
+    if (option === 'no') {
+      cancelAndExit();
+    }
+  }
 
   const framework = (await select({
     message: 'Select framework',
@@ -82,7 +105,6 @@ export async function main() {
 
   const srcFolder = path.join(packageRoot, `template-${framework}-${language}`);
   const commonFolder = path.join(packageRoot, 'template-common');
-  const distFolder = path.join(cwd, targetDir);
 
   copyFolder(commonFolder, distFolder, version);
   copyFolder(srcFolder, distFolder, version, path.basename(targetDir));

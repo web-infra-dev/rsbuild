@@ -1,7 +1,5 @@
-import type { RsbuildPlugin } from '@rsbuild/core';
-import { deepmerge } from '@rsbuild/shared';
-import { VueLoaderPlugin } from 'vue-loader';
-import type { VueLoaderOptions } from 'vue-loader';
+import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
+import { type VueLoaderOptions, VueLoaderPlugin } from 'vue-loader';
 import { applySplitChunksRule } from './splitChunks';
 
 export type SplitVueChunkOptions = {
@@ -34,8 +32,11 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
     name: 'rsbuild:vue',
 
     setup(api) {
+      const VUE_REGEXP = /\.vue$/;
+      const CSS_MODULES_REGEX = /\.modules?\.\w+$/i;
+
       api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
-        return mergeRsbuildConfig(config, {
+        const extraConfig: RsbuildConfig = {
           source: {
             define: {
               // https://link.vuejs.org/feature-flags
@@ -44,28 +45,51 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
               __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false,
             },
           },
-        });
+        };
+
+        const merged = mergeRsbuildConfig(extraConfig, config);
+
+        merged.output ||= {};
+        merged.output.cssModules ||= {};
+
+        // Support `<style module>` in Vue SFC
+        if (merged.output.cssModules.auto === true) {
+          merged.output.cssModules.auto = (path, query) => {
+            if (VUE_REGEXP.test(path)) {
+              return (
+                query.includes('type=style') && query.includes('module=true')
+              );
+            }
+            return CSS_MODULES_REGEX.test(path);
+          };
+        }
+
+        return merged;
       });
 
       api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
         chain.resolve.extensions.add('.vue');
 
-        const vueLoaderOptions = deepmerge(
-          {
-            compilerOptions: {
-              preserveWhitespace: false,
-            },
-            experimentalInlineMatchResource: true,
-          },
-          options.vueLoaderOptions ?? {},
-        );
+        const userLoaderOptions = options.vueLoaderOptions ?? {};
+        const compilerOptions = {
+          preserveWhitespace: false,
+          ...userLoaderOptions.compilerOptions,
+        };
+        const vueLoaderOptions = {
+          experimentalInlineMatchResource: true,
+          ...userLoaderOptions,
+          compilerOptions,
+        };
 
         chain.module
           .rule(CHAIN_ID.RULE.VUE)
-          .test(/\.vue$/)
+          .test(VUE_REGEXP)
           .use(CHAIN_ID.USE.VUE)
           .loader(require.resolve('vue-loader'))
           .options(vueLoaderOptions);
+
+        // Support for lang="postcss" and lang="pcss" in SFC
+        chain.module.rule(CHAIN_ID.RULE.CSS).test(/\.(?:css|postcss|pcss)$/);
 
         chain.plugin(CHAIN_ID.PLUGIN.VUE_LOADER_PLUGIN).use(VueLoaderPlugin);
       });

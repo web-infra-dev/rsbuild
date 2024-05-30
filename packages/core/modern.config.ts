@@ -1,8 +1,5 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import {
-  type CliPlugin,
-  type ModuleTools,
+  type HookList,
   defineConfig,
   moduleTools,
 } from '@modern-js/module-tools';
@@ -20,30 +17,25 @@ const externals = [
   '@rsbuild/core/client/overlay',
 ];
 
+/** T[] => T */
+type GetElementType<T extends any[]> = T extends (infer U)[] ? U : never;
+
 // Since the relative paths of bundle and compiled have changed,
 // we need to rewrite the import paths.
-export const redirectCompiledPlugin: CliPlugin<ModuleTools> = {
-  name: 'redirect-compiled-plugin',
-  setup() {
-    return {
-      afterBuild() {
-        const distFiles = [
-          path.join(__dirname, 'dist/index.js'),
-          path.join(__dirname, 'dist/index.cjs'),
-        ];
-
-        for (const file of distFiles) {
-          let content = fs.readFileSync(file, 'utf-8');
-          content = content.replace(/(\.\.\/){2,3}compiled/g, '../compiled');
-          fs.writeFileSync(file, content);
-        }
-      },
-    };
+export const redirectCompiledHook: GetElementType<HookList> = {
+  name: 'redirect-compiled',
+  apply: (compiler) => {
+    compiler.hooks.transform.tapPromise('redirect-compiled', async (args) => {
+      return {
+        ...args,
+        code: args.code.replace(/(\.\.\/){2,3}compiled/g, '../compiled'),
+      };
+    });
   },
 };
 
 export default defineConfig({
-  plugins: [moduleTools(), emitTypePkgJsonPlugin, redirectCompiledPlugin],
+  plugins: [moduleTools(), emitTypePkgJsonPlugin],
   buildConfig: [
     // Node / ESM
     {
@@ -51,6 +43,7 @@ export default defineConfig({
       input: ['src/index.ts'],
       externals,
       dts: false,
+      hooks: [redirectCompiledHook],
     },
     // Node / CJS
     {
@@ -62,6 +55,7 @@ export default defineConfig({
         'src/loader/transformRawLoader.ts',
       ],
       externals,
+      hooks: [redirectCompiledHook],
     },
     // Client / ESM
     {

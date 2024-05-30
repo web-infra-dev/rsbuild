@@ -34,6 +34,7 @@ export default {
     'dotenv-expand',
     'ws',
     'on-finished',
+    'connect',
     'rspack-manifest-plugin',
     {
       name: 'launch-editor-middleware',
@@ -80,13 +81,6 @@ export default {
       },
     },
     {
-      name: 'less-loader',
-      ignoreDts: true,
-      externals: {
-        less: '@rsbuild/shared/less',
-      },
-    },
-    {
       name: 'css-loader',
       ignoreDts: true,
       externals: {
@@ -105,30 +99,25 @@ export default {
     {
       name: 'postcss-load-config',
       externals: {
-        jiti: '@rsbuild/shared/jiti',
         yaml: '@rsbuild/shared/yaml',
+        '@rsbuild/shared/jiti': '@rsbuild/shared/jiti',
       },
       ignoreDts: true,
       // this is a trick to avoid ncc compiling the dynamic import syntax
       // https://github.com/vercel/ncc/issues/935
       beforeBundle(task) {
-        replaceFileContent(
-          join(task.depPath, 'src/req.js'),
-          (content) => `${content.replace('await import', 'await __import')}`,
+        replaceFileContent(join(task.depPath, 'src/req.js'), (content) =>
+          content
+            .replaceAll('await import', 'await __import')
+            .replaceAll(`import('jiti')`, `import('@rsbuild/shared/jiti')`),
         );
       },
       afterBundle(task) {
         replaceFileContent(
           join(task.distPath, 'index.js'),
-          (content) => `${content.replace('await __import', 'await import')}`,
+          (content) =>
+            `${content.replaceAll('await __import', 'await import')}`,
         );
-      },
-    },
-    {
-      name: 'resolve-url-loader',
-      ignoreDts: true,
-      externals: {
-        'loader-utils': '@rsbuild/shared/loader-utils2',
       },
     },
   ],
