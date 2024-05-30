@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "lightningcss": "^1.25.0"
+    "lightningcss": "^1.25.1"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
