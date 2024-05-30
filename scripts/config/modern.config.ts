@@ -13,7 +13,7 @@ export const define = {
 };
 
 export const BUILD_TARGET = {
-  node: 'es2020',
+  node: 'es2021',
   client: 'es2017',
 } as const;
 
