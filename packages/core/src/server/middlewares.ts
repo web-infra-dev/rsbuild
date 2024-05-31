@@ -9,7 +9,7 @@ import {
   isDebug,
   logger,
 } from '@rsbuild/shared';
-import type Connect from '../../compiled/connect/index.js';
+import type Connect from 'connect';
 
 export const faviconFallbackMiddleware: Middleware = (req, res, next) => {
   if (req.url === '/favicon.ico') {

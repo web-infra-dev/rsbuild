@@ -10,7 +10,7 @@ import {
   isDebug,
   setNodeEnv,
 } from '@rsbuild/shared';
-import type Connect from '../../compiled/connect/index.js';
+import type Connect from 'connect';
 import type { InternalContext, NormalizedConfig } from '../types';
 import {
   type StartServerResult,
@@ -160,7 +160,7 @@ export async function startProdServer(
     getPortSilently,
   });
 
-  const { default: connect } = await import('../../compiled/connect/index.js');
+  const { default: connect } = await import('connect');
   const middlewares = connect();
 
   const serverConfig = config.server;

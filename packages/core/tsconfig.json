@@ -6,7 +6,11 @@
     "rootDir": "src",
     "declarationDir": "./dist-types",
     "composite": true,
-    "types": ["webpack/module"]
+    "types": ["webpack/module"],
+    "paths": {
+      "open": ["../compiled/open"],
+      "connect": ["../compiled/connect"]
+    }
   },
   "references": [
     {

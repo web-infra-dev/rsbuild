@@ -10,7 +10,7 @@ import {
   isMultiCompiler,
   setNodeEnv,
 } from '@rsbuild/shared';
-import type Connect from '../../compiled/connect/index.js';
+import type Connect from 'connect';
 import type { CreateDevMiddlewareReturns } from '../provider/createCompiler';
 import type { InternalContext, NormalizedConfig } from '../types';
 import {
@@ -203,7 +203,7 @@ export async function createDevServer<
     outputFileSystem,
   });
 
-  const { default: connect } = await import('../../compiled/connect/index.js');
+  const { default: connect } = await import('connect');
   const middlewares = connect();
 
   for (const item of devMiddlewares.middlewares) {
