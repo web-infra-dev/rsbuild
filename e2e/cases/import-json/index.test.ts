@@ -20,7 +20,7 @@ test.skip('should named import JSON correctly', async ({ page }) => {
     rsbuildConfig: {
       source: {
         entry: {
-          index: './src/index-named-export',
+          index: './src/indexNamedExport',
         },
       },
     },
