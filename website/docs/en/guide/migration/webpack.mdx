@@ -1,14 +1,14 @@
 # Webpack
 
-This section introduces how to migrate a project using Webpack to Rsbuild.
+This section introduces how to migrate a project using webpack to Rsbuild.
 
 ## Installing Dependencies
 
-First, you need to replace the npm dependencies of Webpack with Rsbuild's dependencies.
+First, you need to replace the npm dependencies of webpack with Rsbuild's dependencies.
 
 import { PackageManagerTabs } from '@theme';
 
-- Remove Webpack dependencies:
+- Remove webpack dependencies:
 
 <PackageManagerTabs command="remove webpack webpack-cli webpack-dev-server" />
 
@@ -43,7 +43,65 @@ export default defineConfig({
 });
 ```
 
-## Using Plugins
+## Configuration Migration
+
+In a webpack project, there might be some complex `webpack.config.js` configuration files.
+
+After migrating to Rsbuild, most webpack configurations are built-in and do not require manual configuration, such as output, resolve, module.rules, etc.
+
+For the few webpack configurations that need to be migrated, you can choose the following options:
+
+- Use the [tools.rspack](/config/tools/rspack) option (Rspack and webpack configurations are basically equivalent).
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      plugins: [new SomeWebpackPlugin()],
+    },
+  },
+};
+```
+
+- Use encapsulated configs in Rsbuild, for example, options for css-loader can be set through [tools.cssLoader](/config/tools/css-loader).
+
+### Build Entry
+
+webpack uses the `entry` field to set the build entry. In Rsbuild, you can use [source.entry](/config/source/entry) to set it.
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    entry: {
+      foo: './src/pages/foo/index.ts',
+      bar: './src/pages/bar/index.ts',
+    },
+  },
+};
+```
+
+### Cleaning Up Config
+
+Since Rsbuild has built-in some common loaders and plugins, you can remove the following dependencies, which will significantly improve the dependency installation speed of the project:
+
+- css-loader
+- babel-loader
+- style-loader
+- postcss-loader
+- html-webpack-plugin
+- mini-css-extract-plugin
+- autoprefixer
+- @babel/core
+- @babel/preset-env
+- @babel/preset-typescript
+- @babel/runtime
+- ...
+
+:::tip
+The above only lists some of the common dependencies that can be removed. In actual webpack projects, there may be many other dependencies, please handle them as appropriate.
+:::
+
+### Using Plugins
 
 Rsbuild offers a rich set of plugins that provide out-of-the-box support for common scenarios. You can refer to the [Plugin List](/plugins/list/index) documentation to learn about these plugins.
 
@@ -64,71 +122,36 @@ export default {
 };
 ```
 
-## Build Entry
+Most of the common webpack loaders and plugins can still be used in Rsbuild, but we recommend prioritizing the plugins provided by Rsbuild. This can further simplify your configuration. Below is their mapping relationship:
 
-Webpack uses the `entry` field to set the build entry. In Rsbuild, you can use [source.entry](/config/source/entry) to set it.
-
-```ts title="rsbuild.config.ts"
-export default {
-  source: {
-    entry: {
-      foo: './src/pages/foo/index.ts',
-      bar: './src/pages/bar/index.ts',
-    },
-  },
-};
-```
-
-## Configuration Migration
-
-In a Webpack project, there might be some complex `webpack.config.js` configuration files.
-
-After migrating to Rsbuild, most Webpack configurations are built-in and do not require manual configuration, such as output, resolve, module.rules, etc.
-
-For the few Webpack configurations that need to be migrated, you can choose the following options:
-
-- Use the [tools.rspack](/config/tools/rspack) option (Rspack and Webpack configurations are basically equivalent).
-
-```ts title="rsbuild.config.ts"
-export default {
-  tools: {
-    rspack: {
-      plugins: [new SomeWebpackPlugin()],
-    },
-  },
-};
-```
-
-- Use encapsulated config options in Rsbuild, for example, options for css-loader can be set through [tools.cssLoader](/config/tools/css-loader).
+| webpack                                                                                        | Rsbuild                                                                             |
+| ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| [@babel/preset-react](https://www.npmjs.com/package/@babel/preset-react)                       | [React Plugin](/plugins/list/plugin-react)                                          |
+| [vue-loader](https://www.npmjs.com/package/vue-loader)                                         | [Vue Plugin](/plugins/list/plugin-vue) or [Vue 2 Plugin](/plugins/list/plugin-vue2) |
+| [svelte-loader](https://www.npmjs.com/package/svelte-loader)                                   | [Svelte Plugin](/plugins/list/plugin-svelte)                                        |
+| [babel-preset-solid](https://www.npmjs.com/package/babel-preset-solid)                         | [Solid Plugin](/plugins/list/plugin-solid)                                          |
+| [babel-loader](https://www.npmjs.com/package/babel-loader)                                     | [Babel Plugin](/plugins/list/plugin-babel)                                          |
+| [sass-loader](https://www.npmjs.com/package/sass-loader)                                       | [Sass Plugin](/plugins/list/plugin-sass)                                            |
+| [less-loader](https://www.npmjs.com/package/less-loader)                                       | [Less Plugin](/plugins/list/plugin-less)                                            |
+| [stylus-loader](https://www.npmjs.com/package/stylus-loader)                                   | [Stylus Plugin](/plugins/list/plugin-stylus)                                        |
+| [mdx-loader](https://www.npmjs.com/package/mdx-loader)                                         | [MDX Plugin](/plugins/list/plugin-mdx)                                              |
+| [pug-loader](https://www.npmjs.com/package/pug-loader)                                         | [Pug Plugin](/plugins/list/plugin-pug)                                              |
+| [yaml-loader](https://www.npmjs.com/package/yaml-loader)                                       | [Yaml Plugin](/plugins/list/plugin-pug)                                             |
+| [toml-loader](https://www.npmjs.com/package/toml-loader)                                       | [Toml Plugin](/plugins/list/plugin-pug)                                             |
+| [@svgr/webpack](https://www.npmjs.com/package/@svgr/webpack)                                   | [SVGR Plugin](/plugins/list/plugin-svgr)                                            |
+| [fork-ts-checker-webpack-plugin](https://www.npmjs.com/package/fork-ts-checker-webpack-plugin) | [Type Check Plugin](/plugins/list/plugin-type-check)                                |
+| [node-polyfill-webpack-plugin](https://www.npmjs.com/package/node-polyfill-webpack-plugin)     | [Node Polyfill Plugin](/plugins/list/plugin-node-polyfill)                          |
+| [@vue/babel-plugin-jsx](https://www.npmjs.com/package/@vue/babel-plugin-jsx)                   | [Vue JSX Plugin](/plugins/list/plugin-vue-jsx)                                      |
+| [@vue/babel-preset-jsx](https://www.npmjs.com/package/@vue/babel-preset-jsx)                   | [Vue 2 JSX Plugin](/plugins/list/plugin-vue2-jsx)                                   |
+| [eslint-webpack-plugin](https://www.npmjs.com/package/eslint-webpack-plugin)                   | [ESLint Plugin](/plugins/list/plugin-eslint)                                        |
+| [lightningcss-loader](https://www.npmjs.com/package/lightningcss-loader)                       | [Lightning CSS Plugin](/plugins/list/plugin-lightningcss)                           |
+| [babel-plugin-styled-components](https://www.npmjs.com/package/babel-plugin-styled-components) | [Styled Components Plugin](/plugins/list/plugin-styled-components)                  |
 
 ## Validating Results
 
-After completing the above steps, you have completed the basic migration from Webpack to Rsbuild. You can now run the `npm run serve` command to try starting the dev server.
+After completing the above steps, you have completed the basic migration from webpack to Rsbuild. You can now run the `npm run serve` command to try starting the dev server.
 
-If you encounter any issues during the build process, please debug according to the error log, or check the Webpack configuration to see if there are any necessary configurations that have not been migrated to Rsbuild.
-
-## Cleaning Up Dependencies
-
-Since Rsbuild has built-in some common loaders and plugins, you can remove the following dependencies, which will significantly improve the dependency installation speed of the project:
-
-- css-loader
-- less-loader
-- sass-loader
-- babel-loader
-- style-loader
-- postcss-loader
-- html-webpack-plugin
-- mini-css-extract-plugin
-- autoprefixer
-- @babel/core
-- @babel/preset-env
-- @babel/preset-typescript
-- @babel/runtime
-- ...
-
-:::tip
-The above only lists some of the common dependencies that can be removed. In actual Webpack projects, there may be many other dependencies, please handle them as appropriate.
-:::
+If you encounter any issues during the build process, please debug according to the error log, or check the webpack configuration to see if there are any necessary configurations that have not been migrated to Rsbuild.
 
 ## Contents Supplement
 
