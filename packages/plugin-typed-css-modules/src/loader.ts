@@ -30,7 +30,7 @@ export const CSS_MODULES_REGEX = /\.module\.\w+$/i;
 
 const getNoDeclarationFileError = ({ filename }: { filename: string }) =>
   new Error(
-    `Generated type declaration does not exist. Run webpack and commit the type declaration for '${filename}'`,
+    `Generated type declaration does not exist. Run Rsbuild and commit the type declaration for '${filename}'`,
   );
 
 export const isCSSModules = (filename: string, modules: CssLoaderModules) => {
@@ -81,7 +81,7 @@ const getTypeMismatchError = ({
   ).toString();
 
   return new Error(
-    `Generated type declaration file is outdated. Run webpack and commit the updated type declaration for '${filename}'\n\n${diff}`,
+    `Generated type declaration file is outdated. Run Rsbuild and commit the updated type declaration for '${filename}'\n\n${diff}`,
   );
 };
 
