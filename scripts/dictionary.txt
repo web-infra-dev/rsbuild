@@ -11,6 +11,7 @@ caniuse
 chunkhash
 Chunktmp
 classname
+codegen
 codesandbox
 compat
 consolas
