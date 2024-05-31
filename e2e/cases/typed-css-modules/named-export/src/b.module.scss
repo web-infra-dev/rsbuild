@@ -5,8 +5,16 @@
   border: 1px solid #000;
 }
 
-.the-b-class {
+.theBClass {
   composes: btn;
   composes: a from './a.module.scss';
   color: primary;
+}
+
+.default {
+  color: red;
+}
+
+._underline {
+  color: blue;
 }
