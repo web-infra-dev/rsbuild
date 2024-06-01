@@ -138,7 +138,7 @@ export const pluginBabel = (
           const rule = chain.module
             .rule(BABEL_JS_RULE)
             // run babel loader before the builtin SWC loader
-            .before(CHAIN_ID.RULE.JS);
+            .after(CHAIN_ID.RULE.JS);
 
           if (include) {
             for (const condition of castArray(include)) {
