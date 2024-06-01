@@ -138,6 +138,7 @@ export const pluginBabel = (
           const rule = chain.module
             .rule(BABEL_JS_RULE)
             // run babel loader before the builtin SWC loader
+            // https://stackoverflow.com/questions/32234329/what-is-the-loader-order-for-webpack
             .after(CHAIN_ID.RULE.JS);
 
           if (include) {
