@@ -33,7 +33,7 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
-    "eslint": "^9.3.0",
+    "eslint": "^9.4.0",
     "typescript": "^5.4.2"
   },
   "peerDependencies": {
