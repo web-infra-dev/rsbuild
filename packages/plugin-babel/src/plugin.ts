@@ -135,7 +135,10 @@ export const pluginBabel = (
         const { include, exclude } = options;
 
         if (include || exclude) {
-          const rule = chain.module.rule(BABEL_JS_RULE);
+          const rule = chain.module
+            .rule(BABEL_JS_RULE)
+            // run babel loader before the builtin SWC loader
+            .after(CHAIN_ID.RULE.JS);
 
           if (include) {
             for (const condition of castArray(include)) {
@@ -148,18 +151,8 @@ export const pluginBabel = (
             }
           }
 
-          const swcRule = chain.module.rules
-            .get(CHAIN_ID.RULE.JS)
-            .use(CHAIN_ID.USE.SWC);
-          const swcLoader = swcRule.get('loader');
-          const swcOptions = swcRule.get('options');
-
           rule
             .test(SCRIPT_REGEX)
-            .use(CHAIN_ID.USE.SWC)
-            .loader(swcLoader)
-            .options(swcOptions)
-            .end()
             .use(CHAIN_ID.USE.BABEL)
             .loader(babelLoader)
             .options(babelOptions);
