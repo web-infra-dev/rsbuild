@@ -24,10 +24,6 @@
       "types": "./compiled/jiti/types/jiti.d.ts",
       "default": "./compiled/jiti/index.js"
     },
-    "./yaml": {
-      "types": "./compiled/yaml/index.d.ts",
-      "default": "./compiled/yaml/index.js"
-    },
     "./json5": {
       "types": "./compiled/json5/lib/index.d.ts",
       "default": "./compiled/json5/index.js"
@@ -118,8 +114,7 @@
     "webpack": "^5.91.0",
     "webpack-bundle-analyzer": "^4.10.2",
     "webpack-chain": "npm:webpack-5-chain@8.0.2",
-    "webpack-merge": "5.10.0",
-    "yaml": "^2.4.2"
+    "webpack-merge": "5.10.0"
   },
   "optionalDependencies": {
     "fsevents": "~2.3.3"

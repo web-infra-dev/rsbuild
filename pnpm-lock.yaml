@@ -1355,6 +1355,9 @@ importers:
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
+      yaml:
+        specifier: ^2.4.2
+        version: 2.4.2
 
   packages/plugin-styled-components:
     dependencies:
@@ -1744,9 +1747,6 @@ importers:
       webpack-merge:
         specifier: 5.10.0
         version: 5.10.0
-      yaml:
-        specifier: ^2.4.2
-        version: 2.4.2
 
   scripts/check-changeset:
     dependencies:

@@ -99,7 +99,7 @@ export default {
     {
       name: 'postcss-load-config',
       externals: {
-        yaml: '@rsbuild/shared/yaml',
+        yaml: 'yaml',
         '@rsbuild/shared/jiti': '@rsbuild/shared/jiti',
       },
       ignoreDts: true,
