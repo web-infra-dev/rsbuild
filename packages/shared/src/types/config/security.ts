@@ -1,6 +1,8 @@
+export type SriAlgorithm = 'sha256' | 'sha384' | 'sha512';
+
 export type SriOptions = {
-  hashFuncName?: string;
-  enable?: 'auto' | boolean;
+  algorithm?: SriAlgorithm;
+  enable?: boolean;
 };
 
 export interface SecurityConfig {
