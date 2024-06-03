@@ -58,9 +58,26 @@ type HTMLTags = {
   bodyTags: HtmlBasicTag[];
 };
 
+export type ModifyHTMLTagsContext = {
+  /**
+   * The Compilation object of Rspack.
+   */
+  compilation: Rspack.Compilation;
+  /**
+   * URL prefix of assets.
+   * @example 'https://example.com/'
+   */
+  assetPrefix: string;
+  /**
+   * The name of the HTML file, relative to the dist directory.
+   * @example 'index.html'
+   */
+  filename: string;
+};
+
 export type ModifyHTMLTagsFn = (
   tags: HTMLTags,
-  context: { compilation: Rspack.Compilation },
+  context: ModifyHTMLTagsContext,
 ) => MaybePromise<HTMLTags>;
 
 export type ModifyRsbuildConfigUtils = {
