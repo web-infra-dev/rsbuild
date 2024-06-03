@@ -268,10 +268,13 @@ export class HtmlBasicPlugin {
 
           addFavicon(headTags, favicon);
 
-          const result = await this.modifyTagsFn({
-            headTags: headTags.map(formatBasicTag),
-            bodyTags: bodyTags.map(formatBasicTag),
-          });
+          const result = await this.modifyTagsFn(
+            {
+              headTags: headTags.map(formatBasicTag),
+              bodyTags: bodyTags.map(formatBasicTag),
+            },
+            { compilation },
+          );
           Object.assign(data, {
             headTags: result.headTags.map(fromBasicTag),
             bodyTags: result.bodyTags.map(fromBasicTag),
