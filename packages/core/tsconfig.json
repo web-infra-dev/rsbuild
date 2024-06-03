@@ -9,7 +9,8 @@
     "types": ["webpack/module"],
     "paths": {
       "open": ["../compiled/open"],
-      "connect": ["../compiled/connect"]
+      "connect": ["../compiled/connect"],
+      "commander": ["../compiled/commander"]
     }
   },
   "references": [
