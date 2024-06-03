@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/config",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "private": true,
   "exports": {
     "./ts": "./tsconfig.json",
