@@ -4,7 +4,7 @@ import {
   commonExternals,
   emitTypePkgJsonPlugin,
   esmBuildConfig,
-} from '@rsbuild/config/modern';
+} from '@rsbuild/config/modern.config.ts';
 
 export default defineConfig({
   plugins: [moduleTools(), emitTypePkgJsonPlugin],
