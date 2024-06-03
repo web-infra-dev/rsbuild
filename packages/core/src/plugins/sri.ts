@@ -1,9 +1,47 @@
+import type { Buffer } from 'node:buffer';
 import crypto from 'node:crypto';
-import type { SriAlgorithm, SriOptions } from '@rsbuild/shared';
+import {
+  type Rspack,
+  type SriAlgorithm,
+  type SriOptions,
+  isDev,
+  removeLeadingSlash,
+} from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
-const calcHash = (algorithm: SriAlgorithm, data: string) => {
-  return crypto.createHash(algorithm).update(data).digest().toString('base64');
+const getIntegrity = (algorithm: SriAlgorithm, data: Buffer) => {
+  const hash = crypto
+    .createHash(algorithm)
+    .update(data)
+    .digest()
+    .toString('base64');
+  return `${algorithm}-${hash}`;
+};
+
+const getAssetName = (url: string, assetPrefix: string) => {
+  if (url.startsWith(assetPrefix)) {
+    return removeLeadingSlash(url.replace(assetPrefix, ''));
+  }
+  return removeLeadingSlash(url);
+};
+
+const getAssetContent = (
+  url: string,
+  assetPrefix: string,
+  compilation: Rspack.Compilation,
+) => {
+  if (url === '') {
+    return null;
+  }
+
+  const assetName = getAssetName(url, assetPrefix);
+  const source = compilation.assets[assetName];
+
+  if (!source) {
+    return null;
+  }
+
+  return source.buffer() as Buffer;
 };
 
 export const pluginSri = (): RsbuildPlugin => ({
@@ -13,13 +51,15 @@ export const pluginSri = (): RsbuildPlugin => ({
     api.modifyHTMLTags({
       // ensure `sri` can be applied to all tags
       order: 'post',
-      handler(tags, { compilation }) {
+      handler(tags, { compilation, assetPrefix }) {
         const config = api.getNormalizedConfig();
         const { sri } = config.security;
 
-        console.log(Object.entries(compilation.assets));
-
-        if (!sri || (typeof sri === 'object' && !sri.enable)) {
+        if (
+          sri === false ||
+          (sri === true && isDev()) ||
+          (typeof sri === 'object' && !sri.enable)
+        ) {
           return tags;
         }
 
@@ -27,16 +67,35 @@ export const pluginSri = (): RsbuildPlugin => ({
         const allTags = [...tags.headTags, ...tags.bodyTags];
 
         for (const tag of allTags) {
-          if (tag.tag === 'script' && tag.attrs?.src) {
-            tag.attrs.integrity ??= calcHash(algorithm, 'TODO');
-          }
+          if (tag.tag === 'script' && typeof tag.attrs?.src === 'string') {
+            const content = getAssetContent(
+              tag.attrs.src,
+              assetPrefix,
+              compilation,
+            );
 
-          if (
+            if (!content) {
+              continue;
+            }
+
+            tag.attrs.integrity ??= getIntegrity(algorithm, content);
+          } else if (
             tag.tag === 'link' &&
-            tag.attrs?.rel === 'stylesheet' &&
-            tag.attrs?.href
+            tag.attrs &&
+            tag.attrs.rel === 'stylesheet' &&
+            typeof tag.attrs.href === 'string'
           ) {
-            tag.attrs.integrity ??= calcHash(algorithm, 'TODO');
+            const content = getAssetContent(
+              tag.attrs.href,
+              assetPrefix,
+              compilation,
+            );
+
+            if (!content) {
+              continue;
+            }
+
+            tag.attrs.integrity ??= getIntegrity(algorithm, content);
           }
         }
 
