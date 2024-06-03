@@ -5,7 +5,7 @@ import {
   commonExternals,
   emitTypePkgJsonPlugin,
   esmBuildConfig,
-} from '@rsbuild/config/modern';
+} from '@rsbuild/config/modern.config.ts';
 import prebundleConfig from './prebundle.config.mjs';
 
 const externals = [
