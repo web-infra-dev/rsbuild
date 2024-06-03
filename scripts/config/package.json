@@ -2,10 +2,6 @@
   "name": "@rsbuild/config",
   "version": "0.7.2",
   "private": true,
-  "exports": {
-    "./ts": "./tsconfig.json",
-    "./modern": "./modern.config.ts"
-  },
   "devDependencies": {
     "@types/node": "18.x",
     "typescript": "^5.4.2"

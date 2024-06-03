@@ -1,5 +1,5 @@
 {
-  "extends": "@rsbuild/config/ts",
+  "extends": "@rsbuild/config/tsconfig",
   "compilerOptions": {
     "outDir": "./dist",
     "declarationDir": "./dist-types",
