@@ -9,7 +9,7 @@ import {
   isDebug,
   logger,
 } from '@rsbuild/shared';
-import type Connect from '../../compiled/connect/index.js';
+import type Connect from 'connect';
 
 export const faviconFallbackMiddleware: Middleware = (req, res, next) => {
   if (req.url === '/favicon.ico') {
@@ -38,9 +38,7 @@ const getStatusCodeColor = (status: number) => {
 
 export const getRequestLoggerMiddleware: () => Promise<Connect.NextHandleFunction> =
   async () => {
-    const { default: onFinished } = await import(
-      '../../compiled/on-finished/index.js'
-    );
+    const { default: onFinished } = await import('on-finished');
 
     return (req, res, next) => {
       const _startAt = process.hrtime();

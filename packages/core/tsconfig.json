@@ -6,7 +6,25 @@
     "rootDir": "src",
     "declarationDir": "./dist-types",
     "composite": true,
-    "types": ["webpack/module"]
+    "types": ["webpack/module"],
+    "paths": {
+      "ws": ["./compiled/ws"],
+      "open": ["./compiled/open"],
+      "sirv": ["./compiled/sirv"],
+      "dotenv": ["./compiled/dotenv"],
+      "connect": ["./compiled/connect"],
+      "commander": ["./compiled/commander"],
+      "on-finished": ["./compiled/on-finished"],
+      "dotenv-expand": ["./compiled/dotenv-expand"],
+      "http-compression": ["./compiled/http-compression"],
+      "postcss-load-config": ["./compiled/postcss-load-config"],
+      "rspack-manifest-plugin": ["./compiled/rspack-manifest-plugin"],
+      "webpack-dev-middleware": ["./compiled/webpack-dev-middleware"],
+      "launch-editor-middleware": ["./compiled/launch-editor-middleware"],
+      "connect-history-api-fallback": [
+        "./compiled/connect-history-api-fallback"
+      ]
+    }
   },
   "references": [
     {

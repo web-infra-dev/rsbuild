@@ -46,7 +46,7 @@
     "types.d.ts"
   ],
   "scripts": {
-    "build": "modern build",
+    "build": "modern build && tsc-alias -p tsconfig.json",
     "dev": "modern build --watch",
     "prebundle": "prebundle"
   },
@@ -82,6 +82,7 @@
     "rspack-manifest-plugin": "5.0.0",
     "sirv": "^2.0.4",
     "style-loader": "3.3.4",
+    "tsc-alias": "^1.8.10",
     "typescript": "^5.4.2",
     "webpack": "^5.91.0",
     "webpack-dev-middleware": "7.2.1",

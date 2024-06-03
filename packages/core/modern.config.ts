@@ -1,8 +1,4 @@
-import {
-  type HookList,
-  defineConfig,
-  moduleTools,
-} from '@modern-js/module-tools';
+import { defineConfig, moduleTools } from '@modern-js/module-tools';
 import {
   BUILD_TARGET,
   cjsBuildConfig,
@@ -10,6 +6,7 @@ import {
   emitTypePkgJsonPlugin,
   esmBuildConfig,
 } from '@rsbuild/config/modern.config.ts';
+import prebundleConfig from './prebundle.config.mjs';
 
 const externals = [
   ...commonExternals,
@@ -17,20 +14,17 @@ const externals = [
   '@rsbuild/core/client/overlay',
 ];
 
-/** T[] => T */
-type GetElementType<T extends any[]> = T extends (infer U)[] ? U : never;
-
-// Since the relative paths of bundle and compiled have changed,
-// we need to rewrite the import paths.
-export const redirectCompiledHook: GetElementType<HookList> = {
-  name: 'redirect-compiled',
-  apply: (compiler) => {
-    compiler.hooks.transform.tapPromise('redirect-compiled', async (args) => {
-      return {
-        ...args,
-        code: args.code.replace(/(\.\.\/){2,3}compiled/g, '../compiled'),
-      };
-    });
+const aliasCompiledPlugin = {
+  name: 'alias-compiled-plugin',
+  setup(build) {
+    const { dependencies } = prebundleConfig;
+    for (const item of dependencies) {
+      const depName = typeof item === 'string' ? item : item.name;
+      build.onResolve({ filter: new RegExp(`^${depName}$`) }, () => ({
+        path: `../compiled/${depName}/index.js`,
+        external: true,
+      }));
+    }
   },
 };
 
@@ -43,7 +37,10 @@ export default defineConfig({
       input: ['src/index.ts'],
       externals,
       dts: false,
-      hooks: [redirectCompiledHook],
+      esbuildOptions(options) {
+        options.plugins?.unshift(aliasCompiledPlugin);
+        return options;
+      },
     },
     // Node / CJS
     {
@@ -55,7 +52,10 @@ export default defineConfig({
         'src/loader/transformRawLoader.ts',
       ],
       externals,
-      hooks: [redirectCompiledHook],
+      esbuildOptions(options) {
+        options.plugins?.unshift(aliasCompiledPlugin);
+        return options;
+      },
     },
     // Client / ESM
     {
