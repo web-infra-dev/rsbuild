@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
 import { getNodeEnv } from '@rsbuild/shared';
-import { expand } from '../compiled/dotenv-expand/index.js';
-import { parse } from '../compiled/dotenv/index.js';
+import { parse } from 'dotenv';
+import { expand } from 'dotenv-expand';
 import { isFileSync } from './helpers';
 
 export type LoadEnvOptions = {

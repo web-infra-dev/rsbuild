@@ -61,9 +61,7 @@ export class RsbuildProdServer {
 
     // compression should be the first middleware
     if (compress) {
-      const { default: compression } = await import(
-        '../../compiled/http-compression/index.js'
-      );
+      const { default: compression } = await import('http-compression');
       this.middlewares.use((req, res, next) => {
         compression({
           gzip: true,
@@ -96,7 +94,7 @@ export class RsbuildProdServer {
 
     if (historyApiFallback) {
       const { default: connectHistoryApiFallback } = await import(
-        '../../compiled/connect-history-api-fallback/index.js'
+        'connect-history-api-fallback'
       );
       const historyApiFallbackMiddleware = connectHistoryApiFallback(
         historyApiFallback === true ? {} : historyApiFallback,
@@ -118,7 +116,7 @@ export class RsbuildProdServer {
       pwd,
     } = this.options;
 
-    const { default: sirv } = await import('../../compiled/sirv/index.js');
+    const { default: sirv } = await import('sirv');
 
     const assetMiddleware = sirv(join(pwd, path), {
       etag: true,

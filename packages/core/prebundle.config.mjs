@@ -1,4 +1,7 @@
 // @ts-check
+/**
+ * Tip: please add the prebundled packages to `tsconfig.json#paths`.
+ */
 import { join } from 'node:path';
 import fse from 'fs-extra';
 

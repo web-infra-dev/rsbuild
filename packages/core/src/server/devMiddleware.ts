@@ -89,7 +89,7 @@ export const getDevMiddleware = async (
   multiCompiler: Compiler | MultiCompiler,
 ): Promise<NonNullable<DevMiddleware>> => {
   const { default: webpackDevMiddleware } = await import(
-    '../../compiled/webpack-dev-middleware/index.js'
+    'webpack-dev-middleware'
   );
   return (options) => {
     const { clientPaths, clientConfig, callbacks, liveReload, ...restOptions } =

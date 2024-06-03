@@ -38,9 +38,7 @@ const getStatusCodeColor = (status: number) => {
 
 export const getRequestLoggerMiddleware: () => Promise<Connect.NextHandleFunction> =
   async () => {
-    const { default: onFinished } = await import(
-      '../../compiled/on-finished/index.js'
-    );
+    const { default: onFinished } = await import('on-finished');
 
     return (req, res, next) => {
       const _startAt = process.hrtime();

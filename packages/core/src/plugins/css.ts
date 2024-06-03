@@ -85,9 +85,7 @@ async function loadUserPostcssrc(root: string): Promise<PostCSSOptions> {
     return cached;
   }
 
-  const { default: postcssrc } = await import(
-    '../../compiled/postcss-load-config/index.js'
-  );
+  const { default: postcssrc } = await import('postcss-load-config');
 
   const promise = postcssrc({}, root).catch((err: Error) => {
     // ignore the config not found error
