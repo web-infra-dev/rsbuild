@@ -312,7 +312,20 @@ type HTMLTags = {
 };
 
 type Context = {
-  compilation: import('@rspack/core').Compilation;
+  /**
+   * The Compilation object of Rspack.
+   */
+  compilation: Rspack.Compilation;
+  /**
+   * URL prefix of assets.
+   * @example 'https://example.com/'
+   */
+  assetPrefix: string;
+  /**
+   * The name of the HTML file, relative to the dist directory.
+   * @example 'index.html'
+   */
+  filename: string;
 };
 
 function ModifyHTMLTags(
