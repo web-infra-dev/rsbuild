@@ -13,9 +13,11 @@ export const pluginSri = (): RsbuildPlugin => ({
     api.modifyHTMLTags({
       // ensure `sri` can be applied to all tags
       order: 'post',
-      handler(tags) {
+      handler(tags, { compilation }) {
         const config = api.getNormalizedConfig();
         const { sri } = config.security;
+
+        console.log(Object.entries(compilation.assets));
 
         if (!sri || (typeof sri === 'object' && !sri.enable)) {
           return tags;
