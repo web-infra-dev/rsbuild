@@ -273,7 +273,11 @@ export class HtmlBasicPlugin {
               headTags: headTags.map(formatBasicTag),
               bodyTags: bodyTags.map(formatBasicTag),
             },
-            { compilation },
+            {
+              compilation,
+              assetPrefix: data.publicPath,
+              filename: data.outputName,
+            },
           );
           Object.assign(data, {
             headTags: result.headTags.map(fromBasicTag),
