@@ -313,8 +313,12 @@ type HTMLTags = {
   bodyTags: HtmlBasicTag[];
 };
 
+type Context = {
+  compilation: import('@rspack/core').Compilation;
+};
+
 function ModifyHTMLTags(
-  callback: (tags: HTMLTags) => MaybePromise<HTMLTags>,
+  callback: (tags: HTMLTags, context: Context) => MaybePromise<HTMLTags>,
 ): void;
 ```
 
