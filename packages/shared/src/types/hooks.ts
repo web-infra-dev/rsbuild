@@ -58,7 +58,10 @@ type HTMLTags = {
   bodyTags: HtmlBasicTag[];
 };
 
-export type ModifyHTMLTagsFn = (tags: HTMLTags) => MaybePromise<HTMLTags>;
+export type ModifyHTMLTagsFn = (
+  tags: HTMLTags,
+  context: { compilation: Rspack.Compilation },
+) => MaybePromise<HTMLTags>;
 
 export type ModifyRsbuildConfigUtils = {
   /** Merge multiple Rsbuild config objects into one. */
