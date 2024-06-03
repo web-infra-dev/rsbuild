@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { type RsbuildMode, color, logger } from '@rsbuild/shared';
-import { type Command, program } from '../../compiled/commander/index.js';
+import { type Command, program } from 'commander';
 import { isEmptyDir } from '../helpers';
 import { init } from './init';
 

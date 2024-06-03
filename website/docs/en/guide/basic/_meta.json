@@ -13,5 +13,6 @@
   "typescript",
   "tailwindcss",
   "unocss",
-  "static-deploy"
+  "static-deploy",
+  "upgrade-rsbuild"
 ]

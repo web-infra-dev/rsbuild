@@ -313,8 +313,25 @@ type HTMLTags = {
   bodyTags: HtmlBasicTag[];
 };
 
+type Context = {
+  /**
+   * Rspack 的 Compilation 对象
+   */
+  compilation: Rspack.Compilation;
+  /**
+   * 静态资源的 URL 前缀
+   * @example 'https://example.com/'
+   */
+  assetPrefix: string;
+  /**
+   * HTML 文件的名称，相对于 dist 目录
+   * @example 'index.html'
+   */
+  filename: string;
+};
+
 function ModifyHTMLTags(
-  callback: (tags: HTMLTags) => MaybePromise<HTMLTags>,
+  callback: (tags: HTMLTags, context: Context) => MaybePromise<HTMLTags>,
 ): void;
 ```
 

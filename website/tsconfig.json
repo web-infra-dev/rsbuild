@@ -1,5 +1,5 @@
 {
-  "extends": "@rsbuild/tsconfig/base",
+  "extends": "@rsbuild/config/tsconfig",
   "compilerOptions": {
     "jsx": "react-jsx",
     "outDir": "./dist",

@@ -86,27 +86,29 @@ export default {
 
 更多信息可参考 [SWC - Selecting the version](https://swc.rs/docs/plugin/selecting-swc-core)。
 
-### 启用 emotion 支持
+### 启用 Emotion 支持
 
-启用 `builtin:swc-loader` 对 emotion 支持的示例：
+启用 `builtin:swc-loader` 对 Emotion 支持的示例：
 
 ```js
 export default {
   tools: {
     swc: {
-      rspackExperiments: {
-        emotion: true,
+      jsc: {
+        experimental: {
+          plugins: [['@swc/plugin-emotion', {}]],
+        },
       },
     },
   },
 };
 ```
 
-更多选项可参考 [Rspack - rspackExperiments.emotion](https://rspack.dev/zh/guide/features/builtin-swc-loader#rspackexperimentsemotion)。
+更多选项可参考 [@swc/plugin-emotion](https://www.npmjs.com/package/@swc/plugin-emotion)。
 
-### 启用 relay 支持
+### 启用 Relay 支持
 
-启用 `builtin:swc-loader` 对 relay 支持的示例：
+启用 `builtin:swc-loader` 对 Relay 支持的示例：
 
 ```js
 export default {

@@ -99,10 +99,21 @@ pluginSass({
 
 在某些场景下，如果你需要使用特定的 Sass 版本，而不是使用 Rsbuild 内置的 Sass embedded，可以在项目中安装需要使用的 Sass 版本，并通过 `sass-loader` 的 `implementation` 选项设置。
 
-```js
+```ts
 pluginSass({
   sassLoaderOptions: {
-    implementation: require('sass'),
+    implementation: require.resolve('sass'),
+  },
+});
+```
+
+Rsbuild 默认使用最新的 `modern-compiler` API，如果你使用的 Sass 版本较低，请将 sass-loader 的 [api](https://github.com/webpack-contrib/sass-loader?tab=readme-ov-file#api) 选项设置为 `legacy`，以避免版本不匹配导致的异常。
+
+```ts
+pluginSass({
+  sassLoaderOptions: {
+    api: 'legacy',
+    implementation: require.resolve('sass'),
   },
 });
 ```

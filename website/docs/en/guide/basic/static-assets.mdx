@@ -62,8 +62,8 @@ Import with [alias](/guide/advanced/alias) are also supported:
 
 The result of importing static assets depends on the file size:
 
-- When the file size is greater than 10KB, a URL will be returned, and the file will be output to the dist directory.
-- When the file size is less than 10KB, it will be automatically inlined to Base64 format.
+- When the file size is greater than 4KiB, a URL will be returned, and the file will be output to the dist directory.
+- When the file size is less than 4KiB, it will be automatically inlined to Base64 format.
 
 ```js
 import largeImage from './static/largeImage.png';

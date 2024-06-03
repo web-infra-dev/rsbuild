@@ -156,7 +156,7 @@ Rsbuild 支持编译 [styled-components](https://github.com/styled-components/st
 Rsbuild 支持编译 [Emotion](https://github.com/emotion-js/emotion)，你可以添加以下配置来使用：
 
 - [swcReactOptions.importSource](/plugins/list/plugin-react#swcreactoptions)
-- [rspackExperiments.emotion](https://rspack.dev/guide/features/builtin-swc-loader#rspackexperimentsemotion)
+- [@swc/plugin-emotion](https://www.npmjs.com/package/@swc/plugin-emotion)
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -172,8 +172,10 @@ export default defineConfig({
   ],
   tools: {
     swc: {
-      rspackExperiments: {
-        emotion: true,
+      jsc: {
+        experimental: {
+          plugins: [['@swc/plugin-emotion', {}]],
+        },
       },
     },
   },

@@ -1,14 +1,14 @@
 # Webpack
 
-本章节介绍如何将使用 Webpack 的项目迁移到 Rsbuild。
+本章节介绍如何将使用 webpack 的项目迁移到 Rsbuild。
 
 ## 安装依赖
 
-首先你需要把 Webpack 相关的 npm 依赖替换为 Rsbuild 的依赖。
+首先你需要把 webpack 相关的 npm 依赖替换为 Rsbuild 的依赖。
 
 import { PackageManagerTabs } from '@theme';
 
-- 移除 Webpack 的依赖：
+- 移除 webpack 的依赖：
 
 <PackageManagerTabs command="remove webpack webpack-cli webpack-dev-server" />
 
@@ -43,7 +43,65 @@ export default defineConfig({
 });
 ```
 
-## 使用插件
+## 配置迁移
+
+在一个 webpack 项目中，可能已经包含了一些复杂的 `webpack.config.js` 配置文件。
+
+而迁移到 Rsbuild 后，大部分 webpack 配置已经被 Rsbuild 内置，不再需要手动配置，比如 output、resolve、module.rules 等。
+
+对于少部分需要迁移的 webpack 配置，你可以选择以下方案：
+
+- 使用 [tools.rspack](/config/tools/rspack) 选项（Rspack 和 webpack 的配置基本上等价）。
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      plugins: [new SomeWebpackPlugin()],
+    },
+  },
+};
+```
+
+- 使用 Rsbuild 中封装的配置项，比如 css-loader 的选项可以通过 [tools.cssLoader](/config/tools/css-loader) 设置。
+
+### 构建入口
+
+webpack 使用 `entry` 字段来设置构建入口，在 Rsbuild 中你可以使用 [source.entry](/config/source/entry) 来设置。
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    entry: {
+      foo: './src/pages/foo/index.ts',
+      bar: './src/pages/bar/index.ts',
+    },
+  },
+};
+```
+
+### 清理配置
+
+由于 Rsbuild 内置了一些常见的 loader 和 plugin，所以你可以移除以下依赖和相关的配置，这会显著提升项目的依赖安装速度。
+
+- css-loader
+- babel-loader
+- style-loader
+- postcss-loader
+- html-webpack-plugin
+- mini-css-extract-plugin
+- autoprefixer
+- @babel/core
+- @babel/preset-env
+- @babel/preset-typescript
+- @babel/runtime
+- ...
+
+:::tip
+以上仅列出了一些可以被移除的常见依赖。在一个真实的 webpack 项目中，可能还存在很多其他依赖，请酌情处理。
+:::
+
+### 使用插件
 
 Rsbuild 提供了丰富的插件，对常见的使用场景提供开箱即用的支持，你可以参考[插件列表](/plugins/list/index)文档来了解这些插件。
 
@@ -64,71 +122,36 @@ export default {
 };
 ```
 
-## 构建入口
+大部分常见的 webpack loaders 和 plugins 都能在 Rsbuild 中继续使用，但我们推荐你优先使用 Rsbuild 提供的插件，这能够进一步简化你的配置。下面是它们的映射关系：
 
-Webpack 使用 `entry` 字段来设置构建入口，在 Rsbuild 中你可以使用 [source.entry](/config/source/entry) 来设置。
-
-```ts title="rsbuild.config.ts"
-export default {
-  source: {
-    entry: {
-      foo: './src/pages/foo/index.ts',
-      bar: './src/pages/bar/index.ts',
-    },
-  },
-};
-```
-
-## 配置迁移
-
-在一个 Webpack 项目中，可能已经包含了一些复杂的 `webpack.config.js` 配置文件。
-
-而迁移到 Rsbuild 后，大部分 Webpack 配置已经被 Rsbuild 内置，不再需要手动配置，比如 output、resolve、module.rules 等。
-
-对于少部分需要迁移的 Webpack 配置，你可以选择以下方案：
-
-- 使用 [tools.rspack](/config/tools/rspack) 选项（Rspack 和 Webpack 的配置基本上等价）。
-
-```ts title="rsbuild.config.ts"
-export default {
-  tools: {
-    rspack: {
-      plugins: [new SomeWebpackPlugin()],
-    },
-  },
-};
-```
-
-- 使用 Rsbuild 中封装的配置项，比如 css-loader 的选项可以通过 [tools.cssLoader](/config/tools/css-loader) 设置。
+| webpack                                                                                        | Rsbuild                                                                         |
+| ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| [@babel/preset-react](https://www.npmjs.com/package/@babel/preset-react)                       | [React 插件](/plugins/list/plugin-react)                                        |
+| [vue-loader](https://www.npmjs.com/package/vue-loader)                                         | [Vue 插件](/plugins/list/plugin-vue) 或 [Vue 2 插件](/plugins/list/plugin-vue2) |
+| [svelte-loader](https://www.npmjs.com/package/svelte-loader)                                   | [Svelte 插件](/plugins/list/plugin-svelte)                                      |
+| [babel-preset-solid](https://www.npmjs.com/package/babel-preset-solid)                         | [Solid 插件](/plugins/list/plugin-solid)                                        |
+| [babel-loader](https://www.npmjs.com/package/babel-loader)                                     | [Babel 插件](/plugins/list/plugin-babel)                                        |
+| [sass-loader](https://www.npmjs.com/package/sass-loader)                                       | [Sass 插件](/plugins/list/plugin-sass)                                          |
+| [less-loader](https://www.npmjs.com/package/less-loader)                                       | [Less 插件](/plugins/list/plugin-less)                                          |
+| [stylus-loader](https://www.npmjs.com/package/stylus-loader)                                   | [Stylus 插件](/plugins/list/plugin-stylus)                                      |
+| [mdx-loader](https://www.npmjs.com/package/mdx-loader)                                         | [MDX 插件](/plugins/list/plugin-mdx)                                            |
+| [pug-loader](https://www.npmjs.com/package/pug-loader)                                         | [Pug 插件](/plugins/list/plugin-pug)                                            |
+| [yaml-loader](https://www.npmjs.com/package/yaml-loader)                                       | [Yaml 插件](/plugins/list/plugin-pug)                                           |
+| [toml-loader](https://www.npmjs.com/package/toml-loader)                                       | [Toml 插件](/plugins/list/plugin-pug)                                           |
+| [@svgr/webpack](https://www.npmjs.com/package/@svgr/webpack)                                   | [SVGR 插件](/plugins/list/plugin-svgr)                                          |
+| [fork-ts-checker-webpack-plugin](https://www.npmjs.com/package/fork-ts-checker-webpack-plugin) | [Type Check 插件](/plugins/list/plugin-type-check)                              |
+| [node-polyfill-webpack-plugin](https://www.npmjs.com/package/node-polyfill-webpack-plugin)     | [Node Polyfill 插件](/plugins/list/plugin-node-polyfill)                        |
+| [@vue/babel-plugin-jsx](https://www.npmjs.com/package/@vue/babel-plugin-jsx)                   | [Vue JSX 插件](/plugins/list/plugin-vue-jsx)                                    |
+| [@vue/babel-preset-jsx](https://www.npmjs.com/package/@vue/babel-preset-jsx)                   | [Vue 2 JSX 插件](/plugins/list/plugin-vue2-jsx)                                 |
+| [eslint-webpack-plugin](https://www.npmjs.com/package/eslint-webpack-plugin)                   | [ESLint 插件](/plugins/list/plugin-eslint)                                      |
+| [lightningcss-loader](https://www.npmjs.com/package/lightningcss-loader)                       | [Lightning CSS 插件](/plugins/list/plugin-lightningcss)                         |
+| [babel-plugin-styled-components](https://www.npmjs.com/package/babel-plugin-styled-components) | [Styled Components 插件](/plugins/list/plugin-styled-components)                |
 
 ## 验证结果
 
-完成以上步骤后，你已经完成了从 Webpack 到 Rsbuild 的基本迁移，此时可以执行 `npm run dev` 命令来尝试启动开发服务器。
+完成以上步骤后，你已经完成了从 webpack 到 Rsbuild 的基本迁移，此时可以执行 `npm run dev` 命令来尝试启动开发服务器。
 
-如果在构建过程中发现问题，请根据错误日志进行调试，或者查看 Webpack 配置，检查是否有一些必须的配置未被迁移到 Rsbuild。
-
-## 清理依赖
-
-由于 Rsbuild 内置了一些常见的 loader 和 plugin，所以你可以移除以下依赖，这会显著提升项目的依赖安装速度：
-
-- css-loader
-- less-loader
-- sass-loader
-- babel-loader
-- style-loader
-- postcss-loader
-- html-webpack-plugin
-- mini-css-extract-plugin
-- autoprefixer
-- @babel/core
-- @babel/preset-env
-- @babel/preset-typescript
-- @babel/runtime
-- ...
-
-:::tip
-以上仅列出了一些常见的可移除依赖。在实际的 Webpack 项目中，可能还存在很多其他依赖，请酌情处理。
-:::
+如果在构建过程中发现问题，请根据错误日志进行调试，或者查看 webpack 配置，检查是否有一些必须的配置未被迁移到 Rsbuild。
 
 ## 内容补充
 

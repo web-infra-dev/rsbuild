@@ -164,6 +164,10 @@ export type CSSModules = {
    * Controls the level of compilation applied to the input styles.
    */
   mode?: CSSLoaderModulesOptions['mode'];
+  /**
+   * Whether to enable ES modules named export for locals.
+   */
+  namedExport?: boolean;
 };
 
 export type Minify =
@@ -326,6 +330,7 @@ export interface NormalizedOutputConfig extends OutputConfig {
   injectStyles: boolean;
   cssModules: {
     auto: CSSModules['auto'];
+    namedExport: boolean;
     exportGlobals: boolean;
     exportLocalsConvention: CSSModulesLocalsConvention;
     localIdentName?: string;
