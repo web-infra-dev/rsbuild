@@ -1,9 +1,12 @@
 import fs from 'node:fs';
+import { isAbsolute, join } from 'node:path';
 import {
   type CreateDevServerOptions,
+  type MultiStats,
   ROOT_DIST_DIR,
   type Rspack,
   type StartDevServerOptions,
+  type Stats,
   debug,
   getNodeEnv,
   getPublicPathFromCompiler,
@@ -194,9 +197,10 @@ export async function createDevServer<
   });
 
   const distPath = config.output.distPath.root || ROOT_DIST_DIR;
+  const pwd = options.context.rootPath;
 
   const devMiddlewares = await getMiddlewares({
-    pwd: options.context.rootPath,
+    pwd,
     compileMiddlewareAPI,
     dev: devConfig,
     server: serverConfig,
@@ -218,17 +222,15 @@ export async function createDevServer<
   }
 
   const serverUtils: ServerUtils = {
-    readFile: (fileName: string) =>
-      new Promise<string>((resolve, reject) => {
-        outputFileSystem.readFile(fileName, (err, data) => {
-          if (err) {
-            return reject(err);
-          }
-
-          resolve(data!.toString());
-        });
-      }),
-    distPath,
+    readFileSync: (fileName: string) => {
+      if ('readFileSync' in outputFileSystem) {
+        // bundle require needs a synchronous method, although readFileSync is not within the outputFileSystem type definition, but nodejs fs API implemented.
+        // @ts-expect-error
+        return outputFileSystem.readFileSync(fileName, 'utf-8');
+      }
+      return fs.readFileSync(fileName, 'utf-8');
+    },
+    distPath: isAbsolute(distPath) ? distPath : join(pwd, distPath),
     getHTMLPaths: options.context.pluginAPI!.getHTMLPaths,
   };
 

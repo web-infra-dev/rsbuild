@@ -23,4 +23,28 @@ export default defineConfig({
   output: {
     targets: ['web', 'node'],
   },
+  tools: {
+    rspack: (config, { isServer }) => {
+      if (process.env.TEST_ESM_LIBRARY && isServer) {
+        return {
+          ...config,
+          experiments: {
+            ...config.experiments,
+            outputModule: true,
+          },
+          output: {
+            ...config.output,
+            filename: '[name].mjs',
+            chunkFilename: '[name].mjs',
+            chunkFormat: 'module',
+            chunkLoading: 'import',
+            library: {
+              type: 'module',
+            },
+          },
+        };
+      }
+      return config;
+    },
+  },
 });
