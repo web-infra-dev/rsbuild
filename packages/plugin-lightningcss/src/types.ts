@@ -1,21 +1,22 @@
+import type lightningcss from 'lightningcss';
 import type { CustomAtRules, TransformOptions } from 'lightningcss';
+
+export type Lightningcss = typeof lightningcss;
 
 export type LightningCSSTransformOptions = Omit<
   TransformOptions<CustomAtRules>,
   'filename' | 'code' | 'inputSourceMap'
 >;
 
-type Implementation = unknown; // loose type of `typeof import('lightningcss')`
-
 export type LightningCSSLoaderOptions = LightningCSSTransformOptions & {
-  implementation?: Implementation;
+  implementation?: Lightningcss;
 };
 
 export type LightningCSSMinifyPluginOptions = Omit<
   LightningCSSTransformOptions,
   'minify'
 > & {
-  implementation?: Implementation;
+  implementation?: Lightningcss;
 };
 
 export type PluginLightningcssOptions = {
@@ -40,6 +41,7 @@ export type PluginLightningcssOptions = {
    * @example
    * import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
    * import lightningcss from 'lightningcss';
+   *
    * pluginLightningcss({
    *    implementation: lightningcss,
    *    minify: {
@@ -47,5 +49,5 @@ export type PluginLightningcssOptions = {
    *    }
    * })
    */
-  implementation?: Implementation;
+  implementation?: unknown; // loose type of `typeof import('lightningcss')`
 };
