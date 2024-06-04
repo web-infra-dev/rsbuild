@@ -1,7 +1,7 @@
 import type {
-  ArrayOrNot,
   ChainedConfigCombineUtils,
   ChainedConfigWithUtils,
+  OneOrMany,
 } from '../utils';
 
 export type CrossOrigin = 'anonymous' | 'use-credentials';
@@ -71,7 +71,7 @@ export interface HtmlConfig {
   /**
    * Inject custom html tags into the output html files.
    */
-  tags?: ArrayOrNot<HtmlTagDescriptor>;
+  tags?: OneOrMany<HtmlTagDescriptor>;
   /**
    * Set the favicon icon for all pages.
    */
