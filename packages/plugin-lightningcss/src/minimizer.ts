@@ -5,7 +5,7 @@
  */
 import { Buffer } from 'node:buffer';
 import type { Rspack } from '@rsbuild/core';
-import lightningcss from 'lightningcss';
+import * as lightningcss from 'lightningcss';
 import type { LightningCSSMinifyPluginOptions, Lightningcss } from './types';
 
 const PLUGIN_NAME = 'lightningcss-minify-plugin';

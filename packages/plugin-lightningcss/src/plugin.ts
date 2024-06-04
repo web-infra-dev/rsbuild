@@ -12,7 +12,7 @@ import {
   mergeChainedOptions,
 } from '@rsbuild/shared';
 import browserslist from '@rsbuild/shared/browserslist';
-import lightningcss from 'lightningcss';
+import * as lightningcss from 'lightningcss';
 import type { Targets } from 'lightningcss';
 import type {
   LightningCSSLoaderOptions,

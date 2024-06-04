@@ -40,7 +40,7 @@ export type PluginLightningcssOptions = {
    * lightningcss instance
    * @example
    * import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
-   * import lightningcss from 'lightningcss';
+   * import * as lightningcss from 'lightningcss';
    *
    * pluginLightningcss({
    *    implementation: lightningcss,

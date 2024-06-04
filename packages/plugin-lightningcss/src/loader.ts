@@ -5,7 +5,7 @@
  */
 import { Buffer } from 'node:buffer';
 import type { Rspack } from '@rsbuild/core';
-import lightningcss from 'lightningcss';
+import * as lightningcss from 'lightningcss';
 import type { LightningCSSLoaderOptions } from './types';
 
 async function LightningCSSLoader(
