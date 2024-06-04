@@ -1,0 +1,119 @@
+# security.sri
+
+- **类型：**
+
+```ts
+type SriOptions = {
+  enable?: 'auto' | boolean;
+  algorithm?: 'sha256' | 'sha384' | 'sha512';
+};
+```
+
+- **默认值：** `undefined`
+- **版本：** `>= 0.7.3`
+
+为 HTML 所引入的 `<script>` 和 `<link rel="stylesheet">` 标签添加完整性属性 —— `integrity`，使浏览器能够验证引入资源的完整性，以此防止下载的资源被篡改。
+
+## 介绍
+
+子资源完整性 Subresource Integrity（SRI）是专门用来校验资源的一种方案，它读取资源标签中的 integrity 属性，将其中的信息摘要值，和资源实际的信息摘要值进行对比，如果发现无法匹配，那么浏览器就会拒绝执行资源。
+
+对于 `<script>` 标签来说，结果为拒绝执行其中的代码；对于 CSS links 来说，结果为不加载其中的样式。
+
+关于 SRI 的更多内容，可以查看 [Subresource Integrity - MDN](https://developer.mozilla.org/zh-CN/docs/Web/Security/Subresource_Integrity)。
+
+## 示例
+
+在使用 SRI 时，你需要启用 [html.crossorigin](/config/html/crossorigin)，这可以确保资源在跨域加载时，SRI 也能正常校验。
+
+```ts
+export default {
+  security: {
+    src: {
+      enable: 'auto',
+    },
+  },
+  html: {
+    crossorigin: 'anonymous',
+  },
+};
+```
+
+Rsbuild 生成的 `<script>` 和 `<link rel="stylesheet">` 标签上会带有 `integrity` 和 `crossorigin` 属性：
+
+```html
+<script
+  defer
+  src="https://cdn.com/static/js/index.js"
+  crossorigin="anonymous"
+  integrity="sha384-d8fhhhTWXaPPIEMw+POJ9hqCIRvsFbegq/oef7k9R8Rpb8Dy95B2THPOECdZoLDF"
+></script>
+
+<link
+  href="https://cdn.com/static/css/index.css"
+  rel="stylesheet"
+  crossorigin="anonymous"
+  integrity="sha384-8U9HYzsHbf55cFZyiWIE29+QPYQ9WO+U5uT/ViFw0TOwM2Fbbb74ZegzRV/nvwrD"
+/>
+```
+
+## 局限性
+
+Rsbuild 的 `security.sri` 仅会作用于 Rsbuild 生成的标签，不会作用于：
+
+- HTML 模板中原有的标签。
+- Rspack 异步注入的标签。
+- 通过客户端 JavaScript 代码插入的标签。
+
+## 选项
+
+### enable
+
+- **类型：** `'auto' | boolean`
+- **默认值：** `false`
+
+是否启用 SRI。`'auto'` 表示在生产构建时开启，开发构建时关闭。
+
+```ts
+export default {
+  security: {
+    sri: {
+      enable: 'auto',
+    },
+  },
+};
+```
+
+> 通常你不需要在开发阶段开启 SRI。
+
+### algorithm
+
+- **类型：** `'sha256' | 'sha384' | 'sha512'`
+- **默认值：** `'sha384'`
+
+指定用于计算 integrity hash 的算法。
+
+比如设置为 `sha512`：
+
+```ts
+export default {
+  security: {
+    sri: {
+      algorithm: 'sha512',
+    },
+  },
+};
+```
+
+生成的 integrity 属性的值会以 `sha512-` 为前缀：
+
+```html
+<script
+  defer
+  src="https://cdn.com/static/js/index.js"
+  crossorigin="anonymous"
+  integrity="sha512-ShExVSs5q/j3ZBI/PeS0niJ4mBxh6tc08QN1uofI1dmGAx7ETMh8/VDddGRewxXQhjCgdgAnaiY3BfnWrUSmZA=="
+></script>
+```
+
+> 参考：[Cryptographic hash functions](https://www.w3.org/TR/SRI/#cryptographic-hash-functions)。
