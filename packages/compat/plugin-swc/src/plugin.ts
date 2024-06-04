@@ -121,36 +121,33 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
       const rsbuildConfig = api.getNormalizedConfig();
 
       if (checkUseMinify(mainConfig, rsbuildConfig, isProd)) {
-        // Insert swc minify plugin
-        // @ts-expect-error webpack-chain missing minimizers type
-        const minimizersChain = chain.optimization.minimizers;
-
-        if (mainConfig.jsMinify !== false) {
-          minimizersChain.delete(CHAIN_ID.MINIMIZER.JS).end();
-        }
-
-        if (mainConfig.cssMinify !== false) {
-          minimizersChain.delete(CHAIN_ID.MINIMIZER.CSS).end();
-        }
-
         const { minify } = rsbuildConfig.output;
         const minifyJs =
           minify === true || (typeof minify === 'object' && minify.js);
         const minifyCss =
           minify === true || (typeof minify === 'object' && minify.css);
 
-        minimizersChain
-          .end()
-          .minimizer(CHAIN_ID.MINIMIZER.SWC)
-          .use(SwcMinimizerPlugin, [
-            {
-              jsMinify: minifyJs
-                ? mainConfig.jsMinify ?? mainConfig.jsc?.minify
-                : false,
-              cssMinify: minifyCss ? mainConfig.cssMinify : false,
-              rsbuildConfig,
-            },
-          ]);
+        if (minifyJs) {
+          chain.optimization
+            .minimizer(CHAIN_ID.MINIMIZER.JS)
+            .use(SwcMinimizerPlugin, [
+              {
+                jsMinify: mainConfig.jsMinify ?? mainConfig.jsc?.minify ?? true,
+                rsbuildConfig,
+              },
+            ]);
+        }
+
+        if (minifyCss) {
+          chain.optimization
+            .minimizer(CHAIN_ID.MINIMIZER.CSS)
+            .use(SwcMinimizerPlugin, [
+              {
+                cssMinify: minifyCss ? mainConfig.cssMinify ?? true : false,
+                rsbuildConfig,
+              },
+            ]);
+        }
       }
     });
   },

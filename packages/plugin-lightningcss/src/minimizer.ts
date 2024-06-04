@@ -28,9 +28,10 @@ export class LightningCSSMinifyPlugin {
       compilation.hooks.processAssets.tapPromise(
         {
           name: PLUGIN_NAME,
-          stage: (compilation as any)?.PROCESS_ASSETS_STAGE_OPTIMIZE_SIZE,
+          stage:
+            compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_SIZE,
         },
-        async () => await this.transformAssets(compilation),
+        async () => this.transformAssets(compilation),
       );
 
       compilation.hooks.statsPrinter.tap(PLUGIN_NAME, (statsPrinter) => {
