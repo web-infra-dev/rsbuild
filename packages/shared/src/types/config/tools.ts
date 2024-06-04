@@ -1,6 +1,7 @@
 import type { rspack } from '@rspack/core';
 import type { SwcLoaderOptions } from '@rspack/core';
 import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
+import type { ConfigChain, ConfigChainWithContext } from '../../reduceConfigs';
 import type { BundlerChain } from '../bundlerConfig';
 import type { BundlerPluginInstance } from '../bundlerConfig';
 import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
@@ -8,7 +9,7 @@ import type {
   ModifyWebpackChainUtils,
   ModifyWebpackConfigUtils,
 } from '../plugin';
-import type { RspackConfig, RspackRule } from '../rspack';
+import type { Rspack, RspackConfig, RspackRule } from '../rspack';
 import type {
   AutoprefixerOptions,
   CSSExtractOptions,
@@ -18,37 +19,32 @@ import type {
   StyleLoaderOptions,
   WebpackConfig,
 } from '../thirdParty';
-import type {
-  ChainedConfig,
-  ChainedConfigWithUtils,
-  OneOrMany,
-  WebpackChain,
-} from '../utils';
+import type { OneOrMany, WebpackChain } from '../utils';
 
 export type { HTMLPluginOptions };
 
-export type ToolsSwcConfig = ChainedConfig<SwcLoaderOptions>;
+export type ToolsSwcConfig = ConfigChain<SwcLoaderOptions>;
 
-export type ToolsAutoprefixerConfig = ChainedConfig<AutoprefixerOptions>;
+export type ToolsAutoprefixerConfig = ConfigChain<AutoprefixerOptions>;
 
 export type ToolsBundlerChainConfig = OneOrMany<
   (chain: BundlerChain, utils: ModifyBundlerChainUtils) => void
 >;
 
-export type ToolsPostCSSLoaderConfig = ChainedConfigWithUtils<
+export type ToolsPostCSSLoaderConfig = ConfigChainWithContext<
   PostCSSLoaderOptions,
   { addPlugins: (plugins: PostCSSPlugin | PostCSSPlugin[]) => void }
 >;
 
-export type ToolsCSSLoaderConfig = ChainedConfig<CSSLoaderOptions>;
+export type ToolsCSSLoaderConfig = ConfigChain<CSSLoaderOptions>;
 
-export type ToolsStyleLoaderConfig = ChainedConfig<StyleLoaderOptions>;
+export type ToolsStyleLoaderConfig = ConfigChain<StyleLoaderOptions>;
 
-export type ToolsHtmlPluginConfig = ChainedConfigWithUtils<
+export type ToolsHtmlPluginConfig = ConfigChainWithContext<
   HTMLPluginOptions,
   {
     entryName: string;
-    entryValue: string | string[];
+    entryValue: (string | string[] | Rspack.EntryDescription)[];
   }
 >;
 
@@ -65,12 +61,12 @@ export type ModifyRspackConfigUtils = ModifyChainUtils & {
   rspack: typeof rspack;
 };
 
-export type ToolsRspackConfig = ChainedConfigWithUtils<
+export type ToolsRspackConfig = ConfigChainWithContext<
   RspackConfig,
   ModifyRspackConfigUtils
 >;
 
-export type ToolsWebpackConfig = ChainedConfigWithUtils<
+export type ToolsWebpackConfig = ConfigChainWithContext<
   WebpackConfig,
   ModifyWebpackConfigUtils
 >;

@@ -7,10 +7,10 @@ import {
   fse,
   getDistPath,
   isHtmlDisabled,
-  isNil,
   isPlainObject,
   isURL,
-  mergeChainedOptions,
+  reduceConfigsMergeContext,
+  reduceConfigsWithContext,
 } from '@rsbuild/shared';
 import type {
   HTMLPluginOptions,
@@ -103,21 +103,18 @@ export async function getHtmlMinifyOptions(
 }
 
 export function getTitle(entryName: string, config: NormalizedConfig) {
-  return mergeChainedOptions({
-    defaults: '',
-    options: config.html.title,
-    utils: { entryName },
-    useObjectParam: true,
+  return reduceConfigsMergeContext({
+    initial: '',
+    config: config.html.title,
+    ctx: { entryName },
   });
 }
 
 export function getInject(entryName: string, config: NormalizedConfig) {
-  return mergeChainedOptions({
-    defaults: 'head',
-    options: config.html.inject,
-    utils: { entryName },
-    useObjectParam: true,
-    isFalsy: isNil,
+  return reduceConfigsMergeContext({
+    initial: 'head',
+    config: config.html.inject,
+    ctx: { entryName },
   });
 }
 
@@ -130,11 +127,10 @@ export async function getTemplate(
 ): Promise<{ templatePath: string; templateContent?: string }> {
   const DEFAULT_TEMPLATE = path.resolve(STATIC_PATH, 'template.html');
 
-  const templatePath = mergeChainedOptions({
-    defaults: DEFAULT_TEMPLATE,
-    options: config.html.template,
-    utils: { entryName },
-    useObjectParam: true,
+  const templatePath = reduceConfigsMergeContext({
+    initial: DEFAULT_TEMPLATE,
+    config: config.html.template,
+    ctx: { entryName },
   });
 
   if (templatePath === DEFAULT_TEMPLATE) {
@@ -173,11 +169,10 @@ export function getFavicon(
     html: HtmlConfig;
   },
 ) {
-  return mergeChainedOptions({
-    defaults: '',
-    options: config.html.favicon,
-    utils: { entryName },
-    useObjectParam: true,
+  return reduceConfigsMergeContext({
+    initial: '',
+    config: config.html.favicon,
+    ctx: { entryName },
   });
 }
 
@@ -186,11 +181,10 @@ export function getMetaTags(
   config: { html: HtmlConfig },
   templateContent?: string,
 ) {
-  const metaTags = mergeChainedOptions({
-    defaults: {},
-    options: config.html.meta,
-    utils: { entryName },
-    useObjectParam: true,
+  const metaTags = reduceConfigsMergeContext({
+    initial: {},
+    config: config.html.meta,
+    ctx: { entryName },
   });
 
   // `html.meta` will add charset meta by default.
@@ -224,10 +218,10 @@ function getTemplateParameters(
         options: pluginOptions,
       },
     };
-    return mergeChainedOptions({
-      defaults: defaultOptions,
-      options: templateParameters,
-      utils: { entryName },
+    return reduceConfigsWithContext({
+      initial: defaultOptions,
+      config: templateParameters,
+      ctx: { entryName },
     });
   };
 }
@@ -297,12 +291,14 @@ export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
 
         const finalOptions = await Promise.all(
           entryNames.map(async (entryName) => {
-            const entryValue = entries[entryName].values();
-            const chunks = getChunks(
-              entryName,
-              // EntryDescription type is different between webpack and Rspack
-              entryValue as (string | string[] | EntryDescription)[],
-            );
+            // EntryDescription type is different between webpack and Rspack
+            const entryValue = entries[entryName].values() as (
+              | string
+              | string[]
+              | EntryDescription
+            )[];
+
+            const chunks = getChunks(entryName, entryValue);
             const inject = getInject(entryName, config);
             const filename = htmlPaths[entryName];
             const { templatePath, templateContent } = await getTemplate(
@@ -359,16 +355,13 @@ export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
               }
             }
 
-            const finalOptions = mergeChainedOptions({
-              defaults: pluginOptions,
-              options:
+            const finalOptions = reduceConfigsWithContext({
+              initial: pluginOptions,
+              config:
                 typeof config.tools.htmlPlugin === 'boolean'
                   ? {}
                   : config.tools.htmlPlugin,
-              utils: {
-                entryName,
-                entryValue,
-              },
+              ctx: { entryName, entryValue },
             });
 
             return finalOptions;

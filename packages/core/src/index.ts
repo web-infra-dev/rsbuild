@@ -80,7 +80,7 @@ export type {
   BundlerChain,
   ClientConfig,
   ScriptInject,
-  ChainedConfig,
+  ConfigChain,
   PostCSSPlugin,
   ScriptLoading,
   LegalComments,
@@ -94,7 +94,7 @@ export type {
   ModifyChainUtils,
   StyleLoaderOptions,
   PostCSSLoaderOptions,
-  ChainedConfigWithUtils,
+  ConfigChainWithContext,
   ModifyRspackConfigUtils,
   CSSModulesLocalsConvention,
   // Hook Callback Types

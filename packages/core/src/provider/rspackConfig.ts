@@ -8,8 +8,8 @@ import {
   chainToConfig,
   debug,
   getNodeEnv,
-  mergeChainedOptions,
   modifyBundlerChain,
+  reduceConfigsWithContext,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import { getHTMLPlugin } from '../pluginHelper';
@@ -27,10 +27,10 @@ async function modifyRspackConfig(
   );
 
   if (context.config.tools?.rspack) {
-    modifiedConfig = mergeChainedOptions({
-      defaults: modifiedConfig,
-      options: context.config.tools.rspack,
-      utils,
+    modifiedConfig = reduceConfigsWithContext({
+      initial: modifiedConfig,
+      config: context.config.tools.rspack,
+      ctx: utils,
       mergeFn: utils.mergeConfig,
     });
   }

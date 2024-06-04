@@ -1,17 +1,21 @@
-import { isNil, mergeChainedOptions } from '../src';
+import {
+  reduceConfigs,
+  reduceConfigsMergeContext,
+  reduceConfigsWithContext,
+} from '../src';
 
-describe('mergeChainedOptions', () => {
-  test('should return default options', () => {
-    expect(mergeChainedOptions({ defaults: { value: 'a' } })).toEqual({
+describe('reduceConfigs', () => {
+  test('should return initial config', () => {
+    expect(reduceConfigs({ initial: { value: 'a' } })).toEqual({
       value: 'a',
     });
   });
 
-  test('should merge default options', () => {
+  test('should merge initial config', () => {
     expect(
-      mergeChainedOptions({
-        defaults: { name: 'a' },
-        options: {
+      reduceConfigs({
+        initial: { name: 'a' },
+        config: {
           name: 'b',
           custom: 'c',
         },
@@ -35,12 +39,12 @@ describe('mergeChainedOptions', () => {
     };
 
     expect(
-      mergeChainedOptions({
-        defaults: {
+      reduceConfigs({
+        initial: {
           a: 1,
           b: 'b',
         },
-        options: {
+        config: {
           a: 2,
           b: 'b',
           c: 'c',
@@ -55,9 +59,9 @@ describe('mergeChainedOptions', () => {
   });
 
   test('should support function or object array', () => {
-    const defaults = { a: 'a' };
+    const initial = { a: 'a' };
 
-    const options = [
+    const config = [
       { b: 'b' },
       (o: any, { add }: { add: (a: number, b: number) => number }) => {
         o.c = add(1, 2);
@@ -69,10 +73,10 @@ describe('mergeChainedOptions', () => {
       { e: 'e' },
     ];
     expect(
-      mergeChainedOptions({
-        defaults,
-        options,
-        utils: {
+      reduceConfigsWithContext({
+        initial,
+        config,
+        ctx: {
           add: (a: number, b: number) => a + b,
         },
       }),
@@ -85,10 +89,10 @@ describe('mergeChainedOptions', () => {
     });
   });
 
-  test('should support function and use object param', () => {
-    const defaults = { a: 'a' };
+  test('should support function and merge context', () => {
+    const initial = { a: 'a' };
 
-    const options = [
+    const config = [
       { b: 'b' },
       ({
         value,
@@ -107,13 +111,12 @@ describe('mergeChainedOptions', () => {
     ];
 
     expect(
-      mergeChainedOptions({
-        defaults,
-        options,
-        utils: {
+      reduceConfigsMergeContext({
+        initial,
+        config,
+        ctx: {
           add: (a: number, b: number) => a + b,
         },
-        useObjectParam: true,
       }),
     ).toEqual({
       a: 'a',
@@ -124,28 +127,25 @@ describe('mergeChainedOptions', () => {
     });
   });
 
-  test('should allow false as options', () => {
+  test('should allow false as config', () => {
     expect(
-      mergeChainedOptions<'head' | false>({
-        defaults: 'head',
-        options: false,
-        isFalsy: isNil,
+      reduceConfigs<'head' | false>({
+        initial: 'head',
+        config: false,
       }),
     ).toBe(false);
 
     expect(
-      mergeChainedOptions<'head' | false>({
-        defaults: 'head',
-        options: () => false,
-        isFalsy: isNil,
+      reduceConfigs<'head' | false>({
+        initial: 'head',
+        config: () => false,
       }),
     ).toBe(false);
 
     expect(
-      mergeChainedOptions<'head' | false>({
-        defaults: 'head',
-        options: ['head', 'head', () => false],
-        isFalsy: isNil,
+      reduceConfigs<'head' | false>({
+        initial: 'head',
+        config: ['head', 'head', () => false],
       }),
     ).toBe(false);
   });
