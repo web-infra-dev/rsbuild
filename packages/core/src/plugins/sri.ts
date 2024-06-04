@@ -4,8 +4,8 @@ import {
   type Rspack,
   type SriAlgorithm,
   type SriOptions,
-  isDev,
   isHtmlDisabled,
+  isProd,
   logger,
   removeLeadingSlash,
 } from '@rsbuild/shared';
@@ -28,17 +28,13 @@ export const pluginSri = (): RsbuildPlugin => ({
     const getAlgorithm = () => {
       const config = api.getNormalizedConfig();
       const { sri } = config.security;
+      const enable = sri.enable === 'auto' ? isProd() : sri.enable;
 
-      if (
-        sri === false ||
-        (sri === true && isDev()) ||
-        (typeof sri === 'object' && !sri.enable)
-      ) {
+      if (!enable) {
         return null;
       }
 
-      const { algorithm = 'sha384' }: SriOptions = sri === true ? {} : sri;
-
+      const { algorithm = 'sha384' }: SriOptions = sri;
       return algorithm;
     };
 
