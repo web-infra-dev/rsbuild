@@ -1,7 +1,7 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { WatchOptions } from '../../../compiled/chokidar/index.js';
 import type { Rspack } from '../rspack';
-import type { ArrayOrNot } from '../utils';
+import type { OneOrMany } from '../utils';
 
 export type ProgressBarConfig = {
   id?: string;
@@ -56,7 +56,7 @@ export interface DevConfig {
    * Used to execute a callback function before opening the `startUrl`.
    * This config needs to be used together with `dev.startUrl`.
    */
-  beforeStartUrl?: ArrayOrNot<() => Promise<void> | void>;
+  beforeStartUrl?: OneOrMany<() => Promise<void> | void>;
   /**
    * Set the URL prefix of static assets during development,
    * similar to the [output.publicPath](https://rspack.dev/config/output#outputpublicpath) config of webpack.

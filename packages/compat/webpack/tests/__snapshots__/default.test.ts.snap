@@ -1033,7 +1033,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "chunkFilename": "[name].js",
     "filename": "[name].js",
     "hashFunction": "xxhash64",
-    "libraryTarget": "commonjs2",
+    "library": {
+      "type": "commonjs2",
+    },
     "path": "<ROOT>/packages/compat/webpack/tests/dist/server",
     "pathinfo": false,
     "publicPath": "/",

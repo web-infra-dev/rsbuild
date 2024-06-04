@@ -90,6 +90,9 @@ const getDefaultHtmlConfig = (): NormalizedHtmlConfig => ({
 
 const getDefaultSecurityConfig = (): NormalizedSecurityConfig => ({
   nonce: '',
+  sri: {
+    enable: false,
+  },
 });
 
 const getDefaultToolsConfig = (): NormalizedToolsConfig => ({

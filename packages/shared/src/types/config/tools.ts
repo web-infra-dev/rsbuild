@@ -19,9 +19,9 @@ import type {
   WebpackConfig,
 } from '../thirdParty';
 import type {
-  ArrayOrNot,
   ChainedConfig,
   ChainedConfigWithUtils,
+  OneOrMany,
   WebpackChain,
 } from '../utils';
 
@@ -31,7 +31,7 @@ export type ToolsSwcConfig = ChainedConfig<SwcLoaderOptions>;
 
 export type ToolsAutoprefixerConfig = ChainedConfig<AutoprefixerOptions>;
 
-export type ToolsBundlerChainConfig = ArrayOrNot<
+export type ToolsBundlerChainConfig = OneOrMany<
   (chain: BundlerChain, utils: ModifyBundlerChainUtils) => void
 >;
 
@@ -75,7 +75,7 @@ export type ToolsWebpackConfig = ChainedConfigWithUtils<
   ModifyWebpackConfigUtils
 >;
 
-export type ToolsWebpackChainConfig = ArrayOrNot<
+export type ToolsWebpackChainConfig = OneOrMany<
   (chain: WebpackChain, utils: ModifyWebpackChainUtils) => void
 >;
 

@@ -94,7 +94,10 @@ export const pluginOutput = (): RsbuildPlugin => ({
             .path(posix.join(api.context.distPath, serverPath))
             .filename('[name].js')
             .chunkFilename('[name].js')
-            .libraryTarget('commonjs2');
+            .library({
+              ...(chain.output.get('library') || {}),
+              type: 'commonjs2',
+            });
         }
 
         if (isServiceWorker) {

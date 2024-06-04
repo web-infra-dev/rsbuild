@@ -12,14 +12,15 @@ import {
   mergeChainedOptions,
 } from '@rsbuild/shared';
 import browserslist from '@rsbuild/shared/browserslist';
-import { browserslistToTargets as _browserslistToTargets } from 'lightningcss';
-import type * as LightningCSS from 'lightningcss';
+import * as lightningcss from 'lightningcss';
+import type { Targets } from 'lightningcss';
 import type {
   LightningCSSLoaderOptions,
+  Lightningcss,
   PluginLightningcssOptions,
 } from './types';
 
-const PLUGIN_NAME = 'rsbuild:lightningcss';
+export const PLUGIN_LIGHTNINGCSS_NAME = 'rsbuild:lightningcss';
 
 const getLightningCSSTargets = async ({
   context,
@@ -30,7 +31,7 @@ const getLightningCSSTargets = async ({
   context: RsbuildContext;
   config: NormalizedConfig;
   target: RsbuildTarget;
-  options: PluginLightningcssOptions | undefined;
+  options: PluginLightningcssOptions;
 }) => {
   const browserslistUserConfig = await getBrowserslistWithDefault(
     context.rootPath,
@@ -38,20 +39,13 @@ const getLightningCSSTargets = async ({
     target,
   );
 
-  const { implementation } = (options ?? {}) as any;
-  if (
-    implementation &&
-    typeof implementation.browserslistToTargets !== 'function'
-  ) {
-    throw new TypeError(
-      `[${PLUGIN_NAME}]: options.implementation.browserslistToTargets must be an 'lightningcss' browserslistToTargets function. Received ${typeof implementation.browserslistToTargets}`,
-    );
-  }
+  const implementation =
+    (options.implementation as Lightningcss) ?? lightningcss;
 
-  const browserslistToTargets: typeof _browserslistToTargets =
-    implementation?.browserslistToTargets ?? _browserslistToTargets;
+  const targets = implementation.browserslistToTargets(
+    browserslist(browserslistUserConfig),
+  );
 
-  const targets = browserslistToTargets(browserslist(browserslistUserConfig));
   return targets;
 };
 
@@ -63,7 +57,7 @@ const applyLightningCSSLoader = ({
 }: {
   chain: BundlerChain;
   CHAIN_ID: ChainIdentifier;
-  targets: LightningCSS.Targets;
+  targets: Targets;
   options: PluginLightningcssOptions | undefined;
 }) => {
   if (!chain.module.rules.has(CHAIN_ID.RULE.CSS)) {
@@ -107,7 +101,7 @@ const applyLightningCSSMinifyPlugin = async ({
 }: {
   chain: BundlerChain;
   CHAIN_ID: ChainIdentifier;
-  targets: LightningCSS.Targets;
+  targets: Targets;
   options: PluginLightningcssOptions | undefined;
 }) => {
   const defaultOptions = {
@@ -135,13 +129,43 @@ const applyLightningCSSMinifyPlugin = async ({
     .end();
 };
 
+const validateImplementation = (implementation: unknown) => {
+  if (!implementation) {
+    return;
+  }
+
+  const lightningcss = implementation as Lightningcss;
+
+  if (typeof implementation !== 'object') {
+    throw new TypeError(
+      `[${PLUGIN_LIGHTNINGCSS_NAME}]: implementation must be an 'lightningcss' object. Received ${typeof lightningcss}`,
+    );
+  }
+
+  if (typeof lightningcss.transform !== 'function') {
+    throw new TypeError(
+      `[${PLUGIN_LIGHTNINGCSS_NAME}]: implementation.transform must be an 'lightningcss' transform function. Received ${typeof lightningcss.transform}`,
+    );
+  }
+
+  if (typeof lightningcss.browserslistToTargets !== 'function') {
+    throw new TypeError(
+      `[${PLUGIN_LIGHTNINGCSS_NAME}]: options.implementation.browserslistToTargets must be an 'lightningcss' browserslistToTargets function. Received ${typeof lightningcss.browserslistToTargets}`,
+    );
+  }
+};
+
 export const pluginLightningcss = (
-  options?: PluginLightningcssOptions,
+  options: PluginLightningcssOptions = {},
 ): RsbuildPlugin => ({
-  name: PLUGIN_NAME,
+  name: PLUGIN_LIGHTNINGCSS_NAME,
 
   setup(api) {
-    let targets: LightningCSS.Targets;
+    let targets: Targets;
+
+    if (options.implementation) {
+      validateImplementation(options.implementation);
+    }
 
     api.modifyBundlerChain({
       // ensure lightningcss-loader can be applied to sass/less/stylus rules

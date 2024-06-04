@@ -51,6 +51,8 @@ async function applyDefaultPlugins(
   const { pluginModuleFederation } = await import('./plugins/moduleFederation');
   const { pluginRspackProfile } = await import('./plugins/rspackProfile');
   const { pluginLazyCompilation } = await import('./plugins/lazyCompilation');
+  const { pluginSri } = await import('./plugins/sri');
+  const { pluginNonce } = await import('./plugins/nonce');
 
   pluginManager.addPlugins([
     pluginBasic(),
@@ -88,6 +90,8 @@ async function applyDefaultPlugins(
     pluginModuleFederation(),
     pluginRspackProfile(),
     pluginLazyCompilation(),
+    pluginSri(),
+    pluginNonce(),
   ]);
 }
 
