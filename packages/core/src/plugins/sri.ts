@@ -9,7 +9,7 @@ import {
   logger,
   removeLeadingSlash,
 } from '@rsbuild/shared';
-import { HTML_REGEX } from 'src/constants';
+import { HTML_REGEX } from '../constants';
 import type { RsbuildPlugin } from '../types';
 
 const getAssetName = (url: string, assetPrefix: string) => {
