@@ -6,7 +6,7 @@ import type {
 } from '@napi-rs/image';
 import type { Config as SvgoConfig } from 'svgo';
 
-export type ArrayOrNot<T> = T | T[];
+export type OneOrMany<T> = T | T[];
 
 export interface WebpTransformOptions {
   quality?: number;
@@ -22,9 +22,9 @@ export interface CodecBaseOptions {
 
 export interface BaseCompressOptions<T extends Codecs> {
   use: T;
-  test?: ArrayOrNot<RegExp>;
-  include?: ArrayOrNot<RegExp>;
-  exclude?: ArrayOrNot<RegExp>;
+  test?: OneOrMany<RegExp>;
+  include?: OneOrMany<RegExp>;
+  exclude?: OneOrMany<RegExp>;
 }
 
 export type FinalOptionCollection = {
