@@ -35,20 +35,16 @@ export class SwcMinimizerPlugin {
     cssMinify?: boolean | CssMinifyOptions;
     rsbuildConfig: NormalizedConfig;
   }) {
-    const { minify } = options.rsbuildConfig.output;
-    const minifyJs =
-      minify === true || (typeof minify === 'object' && minify.js);
-    const minifyCss =
-      minify === true || (typeof minify === 'object' && minify.css);
-
     this.minifyOptions = {
-      jsMinify: minifyJs
+      jsMinify: options.jsMinify
         ? deepmerge(
             this.getDefaultJsMinifyOptions(options.rsbuildConfig),
             normalize(options.jsMinify, {}),
           )
         : undefined,
-      cssMinify: minifyCss ? normalize(options.cssMinify, {}) : undefined,
+      cssMinify: options.cssMinify
+        ? normalize(options.cssMinify, {})
+        : undefined,
     };
   }
 
