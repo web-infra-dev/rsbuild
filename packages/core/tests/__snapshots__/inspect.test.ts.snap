@@ -34,5 +34,6 @@ exports[`inspectConfig > should print plugin names when inspect config 1`] = `
   "rsbuild:rspack-profile",
   "rsbuild:lazy-compilation",
   "rsbuild:sri",
+  "rsbuild:nonce",
 ]
 `;
