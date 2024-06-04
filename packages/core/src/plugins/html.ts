@@ -462,7 +462,6 @@ export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
               (tag.tag === 'script' && tag.attrs?.src) ||
               (tag.tag === 'link' && tag.attrs?.rel === 'stylesheet')
             ) {
-              tag.attrs ||= {};
               tag.attrs.crossorigin ??= formattedCrossorigin;
             }
           }
