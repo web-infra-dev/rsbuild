@@ -1,12 +1,12 @@
-import { Buffer } from 'node:buffer';
-import type { Rspack } from '@rsbuild/core';
 /**
  * modified from https://github.com/fz6m/lightningcss-loader
  * MIT License https://github.com/fz6m/lightningcss-loader/blob/main/LICENSE
  * Author @fz6m
  */
-import { transform as _transform } from 'lightningcss';
-import type { LightningCSSMinifyPluginOptions } from './types';
+import { Buffer } from 'node:buffer';
+import type { Rspack } from '@rsbuild/core';
+import * as lightningcss from 'lightningcss';
+import type { LightningCSSMinifyPluginOptions, Lightningcss } from './types';
 
 const PLUGIN_NAME = 'lightningcss-minify-plugin';
 
@@ -15,21 +15,11 @@ const CSS_REGEX = /\.css$/;
 export class LightningCSSMinifyPlugin {
   private readonly options: LightningCSSMinifyPluginOptions;
 
-  private readonly transform: typeof _transform;
+  private readonly transform: Lightningcss['transform'];
 
   constructor(opts: LightningCSSMinifyPluginOptions = {}) {
     const { implementation } = opts;
-
-    if (
-      implementation &&
-      typeof (implementation as any).transform !== 'function'
-    ) {
-      throw new TypeError(
-        `[${PLUGIN_NAME}]: implementation.transform must be an 'lightningcss' transform function. Received ${typeof (implementation as any).transform}`,
-      );
-    }
-
-    this.transform = (implementation as any)?.transform ?? _transform;
+    this.transform = implementation?.transform ?? lightningcss.transform;
     this.options = opts;
   }
 
@@ -104,7 +94,7 @@ export class LightningCSSMinifyPlugin {
                 asset.name,
                 JSON.parse(result.map!.toString()),
                 sourceAsString,
-                map as any,
+                map,
                 true,
               )
             : new RawSource(codeString),
