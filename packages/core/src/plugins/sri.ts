@@ -6,18 +6,11 @@ import {
   type SriOptions,
   isDev,
   isHtmlDisabled,
+  logger,
   removeLeadingSlash,
 } from '@rsbuild/shared';
+import { HTML_REGEX } from 'src/constants';
 import type { RsbuildPlugin } from '../types';
-
-const getIntegrity = (algorithm: SriAlgorithm, data: Buffer) => {
-  const hash = crypto
-    .createHash(algorithm)
-    .update(data)
-    .digest()
-    .toString('base64');
-  return `${algorithm}-${hash}`;
-};
 
 const getAssetName = (url: string, assetPrefix: string) => {
   if (url.startsWith(assetPrefix)) {
@@ -26,41 +19,11 @@ const getAssetName = (url: string, assetPrefix: string) => {
   return removeLeadingSlash(url);
 };
 
-const getAsset = (
-  url: string,
-  assetPrefix: string,
-  compilation: Rspack.Compilation,
-) => {
-  if (url === '') {
-    return null;
-  }
-
-  const assetName = getAssetName(url, assetPrefix);
-  const source = compilation.assets[assetName];
-
-  if (!source) {
-    return null;
-  }
-
-  return {
-    name: assetName,
-    content: source.buffer() as Buffer,
-  };
-};
-
 export const pluginSri = (): RsbuildPlugin => ({
   name: 'rsbuild:sri',
 
   setup(api) {
-    const integrityMap = new Map<
-      // asset name
-      string,
-      {
-        content: Buffer;
-        integrity: string;
-        htmlFiles: string[];
-      }
-    >();
+    const placeholder = 'RSBUILD_INTEGRITY_PLACEHOLDER:';
 
     const getAlgorithm = () => {
       const config = api.getNormalizedConfig();
@@ -82,7 +45,7 @@ export const pluginSri = (): RsbuildPlugin => ({
     api.modifyHTMLTags({
       // ensure `sri` can be applied to all tags
       order: 'post',
-      handler(tags, { compilation, assetPrefix, filename }) {
+      handler(tags, { assetPrefix }) {
         const algorithm = getAlgorithm();
 
         if (!algorithm) {
@@ -112,59 +75,119 @@ export const pluginSri = (): RsbuildPlugin => ({
             continue;
           }
 
-          const asset = getAsset(url, assetPrefix, compilation);
+          const assetName = getAssetName(url, assetPrefix);
 
-          if (!asset) {
+          if (!assetName) {
             continue;
           }
 
-          const cached = integrityMap.get(asset.name);
-          if (cached) {
-            if (!cached.htmlFiles.includes(filename)) {
-              integrityMap.set(asset.name, {
-                ...cached,
-                htmlFiles: [...cached.htmlFiles, filename],
-              });
-            }
-            continue;
-          }
-
-          const integrity = getIntegrity(algorithm, asset.content);
-          tag.attrs.integrity ??= integrity;
-
-          integrityMap.set(asset.name, {
-            content: asset.content,
-            integrity,
-            htmlFiles: [filename],
-          });
+          tag.attrs.integrity ??= `${placeholder}${assetName}`;
         }
 
         return tags;
       },
     });
 
-    class SriUpdateIntegrityPlugin {
+    const replaceIntegrity = (
+      htmlContent: string,
+      assets: Rspack.Assets,
+      algorithm: SriAlgorithm,
+      integrityCache: Map<string, string>,
+    ) => {
+      const regex = /integrity="RSBUILD_INTEGRITY_PLACEHOLDER:([^"]+)"/g;
+      const matches = htmlContent.matchAll(regex);
+      let replacedHtml = htmlContent;
+
+      const calcIntegrity = (
+        algorithm: SriAlgorithm,
+        assetName: string,
+        data: Buffer,
+      ) => {
+        if (integrityCache.has(assetName)) {
+          return integrityCache.get(assetName);
+        }
+
+        const hash = crypto
+          .createHash(algorithm)
+          .update(data)
+          .digest()
+          .toString('base64');
+        const integrity = `${algorithm}-${hash}`;
+
+        integrityCache.set(assetName, integrity);
+
+        return integrity;
+      };
+
+      for (const match of matches) {
+        const assetName = match[1];
+        if (!assetName) {
+          continue;
+        }
+
+        if (assets[assetName]) {
+          const integrity = calcIntegrity(
+            algorithm,
+            assetName,
+            assets[assetName].buffer(),
+          );
+          replacedHtml = replacedHtml.replaceAll(
+            `integrity="${placeholder}${assetName}"`,
+            `integrity="${integrity}"`,
+          );
+        } else {
+          logger.debug(
+            `[rsbuild:sri] failed to generate integrity for ${assetName}.`,
+          );
+          // remove the integrity placeholder
+          replacedHtml = replacedHtml.replace(
+            `integrity="${placeholder}${assetName}"`,
+            '',
+          );
+        }
+      }
+
+      return replacedHtml;
+    };
+
+    class SriReplaceIntegrityPlugin {
+      algorithm: SriAlgorithm;
+
+      constructor(algorithm: SriAlgorithm) {
+        this.algorithm = algorithm;
+      }
+
       apply(compiler: Rspack.Compiler) {
         compiler.hooks.compilation.tap(
-          'SriUpdateIntegrityPlugin',
+          'SriReplaceIntegrityPlugin',
           (compilation) => {
             compilation.hooks.processAssets.tapPromise(
               {
-                name: 'SriUpdateIntegrityPlugin',
+                name: 'SriReplaceIntegrityPlugin',
                 // use to final stage to get the final asset content
                 stage: compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_REPORT,
               },
               async (assets) => {
-                const algorithm = getAlgorithm();
-
-                if (!algorithm) {
-                  return;
-                }
+                const integrityCache = new Map<string, string>();
 
                 for (const asset of Object.keys(assets)) {
-                  if (integrityMap.get(asset)) {
-                    console.log(asset);
+                  if (!HTML_REGEX.test(asset)) {
+                    continue;
                   }
+
+                  const htmlContent: string = assets[asset].source();
+                  if (!htmlContent.includes(placeholder)) {
+                    continue;
+                  }
+
+                  assets[asset] = new compiler.webpack.sources.RawSource(
+                    replaceIntegrity(
+                      htmlContent,
+                      assets,
+                      this.algorithm,
+                      integrityCache,
+                    ),
+                  );
                 }
               },
             );
@@ -180,7 +203,14 @@ export const pluginSri = (): RsbuildPlugin => ({
         return;
       }
 
-      chain.plugin('rsbuild-sri').use(SriUpdateIntegrityPlugin);
+      const algorithm = getAlgorithm();
+      if (!algorithm) {
+        return;
+      }
+
+      chain
+        .plugin('rsbuild-sri-replace')
+        .use(SriReplaceIntegrityPlugin, [algorithm]);
     });
   },
 });
