@@ -10,7 +10,7 @@ import {
   getBrowserslistWithDefault,
   getCoreJsVersion,
   isWebTarget,
-  mergeChainedOptions,
+  reduceConfigs,
 } from '@rsbuild/shared';
 import type { SwcLoaderOptions } from '@rspack/core';
 import { PLUGIN_SWC_NAME } from '../constants';
@@ -106,9 +106,9 @@ export const pluginSwc = (): RsbuildPlugin => ({
           }
         }
 
-        const mergedSwcConfig = mergeChainedOptions({
-          defaults: swcConfig,
-          options: config.tools.swc,
+        const mergedSwcConfig = reduceConfigs({
+          initial: swcConfig,
+          config: config.tools.swc,
           mergeFn: deepmerge,
         });
 

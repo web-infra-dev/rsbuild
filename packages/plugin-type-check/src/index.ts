@@ -1,10 +1,10 @@
-import { type ChainedConfig, type RsbuildPlugin, logger } from '@rsbuild/core';
+import { type ConfigChain, type RsbuildPlugin, logger } from '@rsbuild/core';
 import {
   CHAIN_ID,
   NODE_MODULES_REGEX,
   deepmerge,
   fse,
-  mergeChainedOptions,
+  reduceConfigs,
 } from '@rsbuild/shared';
 import type ForkTSCheckerPlugin from 'fork-ts-checker-webpack-plugin';
 
@@ -22,7 +22,7 @@ export type PluginTypeCheckerOptions = {
    * To modify the options of `fork-ts-checker-webpack-plugin`.
    * @see https://github.com/TypeStrong/fork-ts-checker-webpack-plugin#readme
    */
-  forkTsCheckerOptions?: ChainedConfig<ForkTsCheckerOptions>;
+  forkTsCheckerOptions?: ConfigChain<ForkTsCheckerOptions>;
 };
 
 export const pluginTypeCheck = (
@@ -97,9 +97,9 @@ export const pluginTypeCheck = (
           },
         };
 
-        const typeCheckerOptions = mergeChainedOptions({
-          defaults: defaultOptions,
-          options: forkTsCheckerOptions,
+        const typeCheckerOptions = reduceConfigs({
+          initial: defaultOptions,
+          config: forkTsCheckerOptions,
           mergeFn: deepmerge,
         });
 

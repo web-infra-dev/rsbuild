@@ -4,7 +4,7 @@ import {
   type NormalizedConfig,
   type RsbuildTarget,
   castArray,
-  mergeChainedOptions,
+  reduceConfigsWithContext,
 } from '@rsbuild/shared';
 import { ensureAbsolutePath } from '../helpers';
 import type { RsbuildPlugin } from '../types';
@@ -56,10 +56,10 @@ function applyAlias({
     return;
   }
 
-  const mergedAlias = mergeChainedOptions({
-    defaults: {},
-    options: alias,
-    utils: { target },
+  const mergedAlias = reduceConfigsWithContext({
+    initial: {},
+    config: alias,
+    ctx: { target },
   });
 
   /**

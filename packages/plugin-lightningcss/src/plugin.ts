@@ -7,15 +7,13 @@ import type {
   RsbuildPlugin,
   RsbuildTarget,
 } from '@rsbuild/core';
-import {
-  getBrowserslistWithDefault,
-  mergeChainedOptions,
-} from '@rsbuild/shared';
+import { getBrowserslistWithDefault, reduceConfigs } from '@rsbuild/shared';
 import browserslist from '@rsbuild/shared/browserslist';
 import * as lightningcss from 'lightningcss';
 import type { Targets } from 'lightningcss';
 import type {
   LightningCSSLoaderOptions,
+  LightningCSSTransformOptions,
   Lightningcss,
   PluginLightningcssOptions,
 } from './types';
@@ -74,9 +72,9 @@ const applyLightningCSSLoader = ({
     options.transform = {};
   }
 
-  const mergedOptions: LightningCSSLoaderOptions = mergeChainedOptions({
-    defaults: defaultOptions,
-    options: {
+  const mergedOptions = reduceConfigs<LightningCSSTransformOptions>({
+    initial: defaultOptions,
+    config: {
       ...(implementation ? { implementation } : {}),
       ...options.transform,
     },
@@ -114,9 +112,9 @@ const applyLightningCSSMinifyPlugin = async ({
     options.minify = {};
   }
 
-  const mergedOptions: LightningCSSLoaderOptions = mergeChainedOptions({
-    defaults: defaultOptions,
-    options: {
+  const mergedOptions = reduceConfigs<LightningCSSTransformOptions>({
+    initial: defaultOptions,
+    config: {
       ...(implementation ? { implementation } : {}),
       ...options?.minify,
     },

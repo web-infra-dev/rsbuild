@@ -8,8 +8,8 @@ import {
   castArray,
   chainToConfig,
   debug,
-  mergeChainedOptions,
   modifyBundlerChain,
+  reduceConfigsWithContext,
 } from '@rsbuild/shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
 import {
@@ -53,10 +53,10 @@ async function modifyWebpackConfig(
   );
 
   if (context.config.tools?.webpack) {
-    modifiedConfig = mergeChainedOptions({
-      defaults: modifiedConfig,
-      options: context.config.tools.webpack,
-      utils,
+    modifiedConfig = reduceConfigsWithContext({
+      initial: modifiedConfig,
+      config: context.config.tools.webpack,
+      ctx: utils,
       mergeFn: utils.mergeConfig,
     });
   }

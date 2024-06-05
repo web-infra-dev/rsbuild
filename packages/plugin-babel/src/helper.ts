@@ -5,7 +5,7 @@ import type {
   ChainIdentifier,
   NormalizedConfig,
 } from '@rsbuild/core';
-import { castArray, mergeChainedOptions } from '@rsbuild/shared';
+import { castArray, reduceConfigsWithContext } from '@rsbuild/shared';
 import upath from 'upath';
 import type {
   BabelConfigUtils,
@@ -159,10 +159,10 @@ export const applyUserBabelConfig = (
       ...extraBabelUtils,
     } as BabelConfigUtils;
 
-    return mergeChainedOptions({
-      defaults: defaultOptions,
-      options: userBabelConfig,
-      utils: babelUtils,
+    return reduceConfigsWithContext({
+      initial: defaultOptions,
+      config: userBabelConfig,
+      ctx: babelUtils,
     });
   }
 
