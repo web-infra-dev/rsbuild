@@ -50,7 +50,7 @@ The following are the details of each filename:
 - `image`: The name of non-SVG images.
 - `media`: The name of media assets, such as video.
 
-### Example
+## Example
 
 To set the name of the JavaScript file to `[name]_script.js`, use the following configuration:
 
@@ -70,10 +70,10 @@ export default {
 :::tip Filename hash
 Usually, we only set the filename hash in the production mode (i.e., when `process.env.NODE_ENV === 'production'`).
 
-If you set the filename hash in the development mode, it may cause HMR to fail (especially for CSS files). This is because every time the file content changes, the hash value changes, preventing tools like [mini-css-extract-plugin](https://npmjs.com/package/mini-css-extract-plugin) from reading the latest file content.
+If you set the filename hash in the development mode, it may cause HMR to fail (especially for CSS files). This is because every time the file content changes, the hash value changes, preventing bundler from reading the latest file content.
 :::
 
-### Filename of Async Modules
+## Filename of Async Modules
 
 When you import a module via dynamic import, the module will be bundled into a single file, and its default naming rules are as follows:
 
@@ -93,3 +93,32 @@ const { add } = await import(
 ```
 
 After specifying the module name as above, the generated file will be `dist/static/js/async/my-chunk-name.js`.
+
+## Query Hash
+
+If you need to generate hash values on the URL query of assets, you can refer to:
+
+```js
+const isProd = process.env.NODE_ENV === 'production';
+
+export default {
+  output: {
+    filename: {
+      js: isProd ? '[name].js?v=[contenthash:8]' : `[name].js`,
+      css: isProd ? '[name].css?v=[contenthash:8]' : `[name].css`,
+    },
+  },
+};
+```
+
+In this case, the filenames of JS and CSS will not include the hash, while the URLs in the HTML will contain a hash query.
+
+```html
+<!doctype html>
+<html>
+  <head>
+    <script defer="defer" src="/static/js/index.js?v=b8565050"></script>
+    <link href="/static/css/index.css?v=02d157ca" rel="stylesheet" />
+  </head>
+</html>
+```
