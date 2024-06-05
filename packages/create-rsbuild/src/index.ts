@@ -161,7 +161,11 @@ const updatePackageJson = (
   let content = fs.readFileSync(pkgJsonPath, 'utf-8');
   content = content.replace(/workspace:\*/g, `^${version}`);
   const pkg = JSON.parse(content);
-  if (name) pkg.name = name;
+
+  if (name && name !== '.') {
+    pkg.name = name;
+  }
+
   fs.writeFileSync(pkgJsonPath, JSON.stringify(pkg, null, 2));
 };
 
