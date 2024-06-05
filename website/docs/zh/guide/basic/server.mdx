@@ -82,17 +82,43 @@ export default {
 };
 ```
 
-## 对比 Rspack Dev Server
+## Rspack Dev Server
 
-Rsbuild 的开发服务器与 Rspack CLI 的开发服务器（`@rspack/dev-server`）有一些异同：
+Rspack CLI 内置的开发服务器是 [@rspack/dev-server](https://www.npmjs.com/package/@rspack/dev-server)，Rsbuild 没有使用 `@rspack/dev-server`，而是基于 [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware) 实现了一个更轻量的版本。
 
-- 两者都是基于 [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware) 实现。
-- 两者的配置项不同，Rsbuild 提供了更丰富的配置项。
-- Rspack CLI 日志格式会与 Webpack CLI 对齐，Rsbuild 的日志则更加清晰和易读。
+### 对比
 
-:::tip
-Rsbuild 应用不能使用 Rspack 的 [devServer](https://rspack.dev/config/dev-server) 配置项。你可以通过 Rsbuild 的 `dev` 和 `server` 配置 Server 的行为，详见 [Config 总览](/config/index)。
-:::
+Rsbuild 的开发服务器和 `@rspack/dev-server` 有以下区别：
+
+- **配置项**：Rsbuild 提供了更丰富的 server 配置项。
+- **日志格式**：Rspack CLI 日志格式与 Webpack CLI 基本一致，而 Rsbuild 的日志则更加清晰和易读。
+- **底层依赖**：`@rspack/dev-server` 基于 express 实现，三方依赖较多。Rsbuild 则采用 `connect` 等更轻量的库实现。
+
+### 配置项
+
+Rsbuild 不支持使用 Rspack 的 [devServer](https://rspack.dev/config/dev-server) 配置项，你可以使用 Rsbuild 的 `dev` 和 `server` 配置代替。
+
+在 Rsbuild 里，`dev` 包含一些仅在开发阶段生效的配置，而 `server` 配置对开发服务器和 preview 服务器均能生效。
+
+以下是 Rspack CLI 的 `devServer` 配置对应的 Rsbuild 配置：
+
+| Rspack CLI                                                                                       | Rsbuild                                                          |
+| ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
+| [devServer.client](https://rspack.dev/config/dev-server#devserverclient)                         | [dev.client](/config/dev/client)                                 |
+| [devServer.compress](https://rspack.dev/config/dev-server#devservercompress)                     | [server.compress](/config/server/compress)                       |
+| [devServer.headers](https://rspack.dev/config/dev-server#devserverheaders)                       | [server.headers](/config/server/headers)                         |
+| [devServer.historyApiFallback](https://rspack.dev/config/dev-server#devserverhistoryapifallback) | [server.historyApiFallback](/config/server/history-api-fallback) |
+| [devServer.host](https://rspack.dev/config/dev-server#devserverhost)                             | [server.host](/config/server/host)                               |
+| [devServer.hot](https://rspack.dev/config/dev-server#devserverhot)                               | [dev.hmr](/config/dev/hmr)                                       |
+| [devServer.liveReload](https://rspack.dev/config/dev-server#devserverlivereload)                 | [dev.liveReload](/config/dev/live-reload)                        |
+| [devServer.open](https://rspack.dev/config/dev-server#devserveropen)                             | [dev.startUrl](/config/dev/start-url)                            |
+| [devServer.port](https://rspack.dev/config/dev-server#devserverport)                             | [server.port](/config/server/port)                               |
+| [devServer.proxy](https://rspack.dev/config/dev-server#devserverproxy)                           | [server.proxy](/config/server/proxy)                             |
+| [devServer.setupMiddlewares](https://rspack.dev/config/dev-server#devserversetupmiddlewares)     | [dev.setupMiddlewares](/config/dev/setup-middlewares)            |
+| [devServer.static](https://rspack.dev/config/dev-server#devserverstatic)                         | [server.publicDir](/config/server/public-dir)                    |
+| [devServer.watchFiles](https://rspack.dev/config/dev-server#devserverwatchfiles)                 | [dev.watchFiles](/config/dev/watch-files)                        |
+
+> 更多配置请参考 [Config 总览](/config/index)。
 
 ## 扩展中间件
 
