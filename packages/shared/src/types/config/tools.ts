@@ -23,7 +23,7 @@ import type {
   StyleLoaderOptions,
   WebpackConfig,
 } from '../thirdParty';
-import type { OneOrMany, WebpackChain } from '../utils';
+import type { MaybePromise, OneOrMany, WebpackChain } from '../utils';
 
 export type { HTMLPluginOptions };
 
@@ -32,7 +32,7 @@ export type ToolsSwcConfig = ConfigChain<SwcLoaderOptions>;
 export type ToolsAutoprefixerConfig = ConfigChain<AutoprefixerOptions>;
 
 export type ToolsBundlerChainConfig = OneOrMany<
-  (chain: BundlerChain, utils: ModifyBundlerChainUtils) => void
+  (chain: BundlerChain, utils: ModifyBundlerChainUtils) => MaybePromise<void>
 >;
 
 export type ToolsPostCSSLoaderConfig = ConfigChainWithContext<

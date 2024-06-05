@@ -24,3 +24,31 @@ test('should allow to use tools.bundlerChain to set alias config', async ({
 
   await rsbuild.close();
 });
+
+test('should allow to use async tools.bundlerChain to set alias config', async ({
+  page,
+}) => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    runServer: true,
+    rsbuildConfig: {
+      tools: {
+        bundlerChain: async (chain) => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              chain.resolve.alias.merge({
+                '@common': join(__dirname, 'src/common'),
+              });
+              resolve();
+            }, 0);
+          });
+        },
+      },
+    },
+  });
+
+  await gotoPage(page, rsbuild);
+  await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild! 1');
+
+  await rsbuild.close();
+});
