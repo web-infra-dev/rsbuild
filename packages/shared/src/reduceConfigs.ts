@@ -16,7 +16,7 @@ export type ConfigChainMergeContext<T, Ctx> = OneOrMany<
 >;
 
 /**
- * Merge one or many configs into a final config,
+ * Merge one or more configs into a final config,
  * and allow to modify the config object via a function.
  */
 export function reduceConfigs<T>({
@@ -46,6 +46,10 @@ export function reduceConfigs<T>({
   return config ?? initial;
 }
 
+/**
+ * Merge one or more configs into a final config,
+ * and allow to modify the config object via a function, the function accepts a context object.
+ */
 export function reduceConfigsWithContext<T, Ctx>({
   initial,
   config,
@@ -76,6 +80,10 @@ export function reduceConfigsWithContext<T, Ctx>({
   return config ?? initial;
 }
 
+/**
+ * Merge one or more configs into a final config,
+ * and allow to modify the config object via an async function, the function accepts a context object.
+ */
 export async function reduceConfigsAsyncWithContext<T, Ctx>({
   initial,
   config,
@@ -106,6 +114,10 @@ export async function reduceConfigsAsyncWithContext<T, Ctx>({
   return config ?? initial;
 }
 
+/**
+ * Merge one or more configs into a final config,
+ * and allow to modify the config object via an async function, the function accepts a merged object.
+ */
 export function reduceConfigsMergeContext<T, Ctx>({
   initial,
   config,
