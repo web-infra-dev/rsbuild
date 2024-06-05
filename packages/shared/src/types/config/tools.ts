@@ -1,7 +1,11 @@
 import type { rspack } from '@rspack/core';
 import type { SwcLoaderOptions } from '@rspack/core';
 import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
-import type { ConfigChain, ConfigChainWithContext } from '../../reduceConfigs';
+import type {
+  ConfigChain,
+  ConfigChainAsyncWithContext,
+  ConfigChainWithContext,
+} from '../../reduceConfigs';
 import type { BundlerChain } from '../bundlerConfig';
 import type { BundlerPluginInstance } from '../bundlerConfig';
 import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
@@ -61,7 +65,7 @@ export type ModifyRspackConfigUtils = ModifyChainUtils & {
   rspack: typeof rspack;
 };
 
-export type ToolsRspackConfig = ConfigChainWithContext<
+export type ToolsRspackConfig = ConfigChainAsyncWithContext<
   RspackConfig,
   ModifyRspackConfigUtils
 >;
