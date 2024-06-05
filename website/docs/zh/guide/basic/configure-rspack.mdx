@@ -45,10 +45,10 @@ import BundlerChain from '@zh/shared/bundlerChain.mdx';
 
 Rsbuild 提供了 [tools.bundlerChain](/config/tools/bundler-chain) 配置项来修改 bundler-chain。
 
-`tools.bundlerChain` 的值为 `Function` 类型，接收两个参数：
+`tools.bundlerChain` 的值是一个函数，接收两个参数：
 
-- 第一个参数为 `bundler-chain` 实例对象，你可以通过这个实例来修改默认的 bundler 配置。
-- 第二个参数为一个[工具集合](/config/tools/bundler-chain#工具集合)，包括 `env`、`isProd`、`CHAIN_ID` 等。
+- 第一个参数为 `bundler-chain` 实例对象，你可以通过 它来修改默认的 Rspack 配置。
+- 第二个参数为一个[工具对象](/config/tools/bundler-chain#工具对象)，包括 `env`、`isProd`、`CHAIN_ID` 等。
 
 下面是一个基本示例：
 
@@ -64,11 +64,24 @@ export default {
 };
 ```
 
-### 基础知识
+`tools.bundlerChain` 还可以是一个异步函数：
 
-在开始使用 bundler-chain 来修改 Rspack 配置之前，建议你先了解一些基础知识。
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    bundlerChain: (chain, { env }) => {
+      const value = await fetchValue();
+      chain.devtool(value);
+    },
+  },
+};
+```
 
-#### bundler-chain 是如何快速定位的
+### 背景知识
+
+在开始使用 bundler-chain 来修改 Rspack 配置之前，请先了解一些背景知识。
+
+#### 关于 ID
 
 简单来说，bundler-chain 要求使用者为每个 Rule、Loader、Plugin、Minimizer 都设置一个独一无二的 id，通过这个 id，就可以便捷地从嵌套层级很深的对象中找到所需的对象。
 
@@ -87,7 +100,7 @@ export default {
 };
 ```
 
-#### bundler-chain id 的类型
+#### ID 类型
 
 `CHAIN_ID` 对象包含了多种 id，对应的含义如下：
 
