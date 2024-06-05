@@ -9,7 +9,7 @@ import {
   debug,
   getNodeEnv,
   modifyBundlerChain,
-  reduceConfigsWithContext,
+  reduceConfigsAsyncWithContext,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import { getHTMLPlugin } from '../pluginHelper';
@@ -27,7 +27,7 @@ async function modifyRspackConfig(
   );
 
   if (context.config.tools?.rspack) {
-    modifiedConfig = reduceConfigsWithContext({
+    modifiedConfig = await reduceConfigsAsyncWithContext({
       initial: modifiedConfig,
       config: context.config.tools.rspack,
       ctx: utils,
