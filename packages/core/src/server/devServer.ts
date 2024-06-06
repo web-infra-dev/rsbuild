@@ -314,9 +314,9 @@ export async function createDevServer<
         routes,
       });
     },
-    ssrLoadModule: async (entryName: string) => {
+    ssrLoadModule: async <T>(entryName: string) => {
       await waitFirstCompileDone;
-      return ssrLoadModule(_stats, entryName, serverUtils);
+      return ssrLoadModule<T>(_stats, entryName, serverUtils);
     },
     getTransformedHtml: async (entryName: string) => {
       await waitFirstCompileDone;

@@ -8,11 +8,11 @@ export type ServerUtils = {
   distPath: string;
 };
 
-export const ssrLoadModule = async (
+export const ssrLoadModule = async <T>(
   stats: Stats | MultiStats,
   entryName: string,
   utils: ServerUtils,
-) => {
+): Promise<T> => {
   // TODO：need a unique and accurate ssr environment identifier.
   // get ssr bundle from server stats
   const serverStats =
@@ -62,7 +62,7 @@ export const ssrLoadModule = async (
     utils.readFileSync,
   );
 
-  return res;
+  return res as T;
 };
 
 export const getTransformedHtml = async (
