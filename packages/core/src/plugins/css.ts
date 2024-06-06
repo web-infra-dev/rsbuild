@@ -1,7 +1,6 @@
 import path from 'node:path';
 import {
   type AutoprefixerOptions,
-  type BundlerChainRule,
   type CSSLoaderModulesMode,
   type CSSLoaderOptions,
   type ModifyChainUtils,
@@ -9,6 +8,7 @@ import {
   type PostCSSOptions,
   type RsbuildContext,
   type RsbuildTarget,
+  type RspackChain,
   deepmerge,
   getBrowserslistWithDefault,
   isFunction,
@@ -246,7 +246,7 @@ async function applyCSSRule({
   utils: { target, isProd, CHAIN_ID },
   importLoaders = 1,
 }: {
-  rule: BundlerChainRule;
+  rule: RspackChain.Rule;
   config: NormalizedConfig;
   context: RsbuildContext;
   utils: ModifyChainUtils;

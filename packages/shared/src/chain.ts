@@ -3,7 +3,6 @@ import { NODE_MODULES_REGEX, TS_AND_JSX_REGEX } from './constants';
 import { debug } from './logger';
 import type {
   BundlerChain,
-  BundlerChainRule,
   CreateAsyncHook,
   ModifyBundlerChainFn,
   ModifyBundlerChainUtils,
@@ -11,6 +10,7 @@ import type {
   RsbuildConfig,
   RsbuildContext,
   RsbuildEntry,
+  RspackChain,
   RspackConfig,
 } from './types';
 import { isPlainObject } from './utils';
@@ -235,7 +235,7 @@ export function applyScriptCondition({
   includes,
   excludes,
 }: {
-  rule: BundlerChainRule;
+  rule: RspackChain.Rule;
   chain: BundlerChain;
   config: NormalizedConfig;
   context: RsbuildContext;

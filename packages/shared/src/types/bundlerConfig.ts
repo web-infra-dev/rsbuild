@@ -9,5 +9,3 @@ export interface BundlerPluginInstance {
 export interface BundlerChain extends Omit<RspackChain, 'toConfig'> {
   toConfig: () => Configuration;
 }
-
-export type BundlerChainRule = RspackChain.Rule;
