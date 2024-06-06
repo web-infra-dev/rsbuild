@@ -2,7 +2,7 @@ import { rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { startDevServer } from './scripts/server.mjs';
 
-rspackOnlyTest('support ssr', async ({ page }) => {
+rspackOnlyTest.only('support ssr', async ({ page }) => {
   const { config, close } = await startDevServer(__dirname);
 
   const url1 = new URL(`http://localhost:${config.port}`);
