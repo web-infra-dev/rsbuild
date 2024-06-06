@@ -20,9 +20,11 @@ export const serverRender = (rsbuildServer) => async (_req, res, _next) => {
 };
 
 export async function startDevServer(fixtures, overridsConfig) {
-  const { content } = await loadConfig({
-    cwd: fixtures,
-  });
+  const { content } = overridsConfig
+    ? { content: overridsConfig }
+    : await loadConfig({
+        cwd: fixtures,
+      });
 
   const rsbuild = await createRsbuild({
     cwd: fixtures,

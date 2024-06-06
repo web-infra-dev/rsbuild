@@ -99,7 +99,7 @@ export async function getRandomPort(
   }
 }
 
-const updateConfigForTest = async (
+export const updateConfigForTest = async (
   originalConfig: RsbuildConfig,
   cwd: string = process.cwd(),
 ) => {
