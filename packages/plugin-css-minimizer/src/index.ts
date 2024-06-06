@@ -1,8 +1,8 @@
 import type {
-  BundlerChain,
   ChainIdentifier,
   ConfigChain,
   RsbuildPlugin,
+  RspackChain,
 } from '@rsbuild/core';
 import { reduceConfigs } from '@rsbuild/shared';
 import CssMinimizerWebpackPlugin from 'css-minimizer-webpack-plugin';
@@ -37,7 +37,7 @@ const getCssnanoDefaultOptions = (): CssNanoOptions => ({
 });
 
 export function applyCSSMinimizer(
-  chain: BundlerChain,
+  chain: RspackChain,
   CHAIN_ID: ChainIdentifier,
   options: PluginCssMinimizerOptions = {},
 ) {

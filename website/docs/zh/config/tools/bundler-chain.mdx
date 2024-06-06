@@ -4,7 +4,7 @@
 
 ```ts
 type BundlerChainFn = (
-  chain: BundlerChain,
+  chain: RspackChain,
   utils: ModifyBundlerChainUtils,
 ) => Promise<void> | void;
 ```
@@ -16,11 +16,11 @@ type BundlerChainFn = (
 - 第一个参数为 `bundler-chain` 实例，你可以通过它来修改 Rspack 配置。
 - 第二个参数为一个工具对象，包括 `env`、`isProd`、`CHAIN_ID` 等。
 
-:::tip 什么是 BundlerChain
+:::tip 什么是 RspackChain
 
-import BundlerChain from '@zh/shared/bundlerChain.mdx';
+import RspackChain from '@zh/shared/rspackChain.mdx';
 
-<BundlerChain />
+<RspackChain />
 
 :::
 

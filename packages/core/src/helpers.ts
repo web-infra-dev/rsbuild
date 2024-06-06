@@ -1,8 +1,8 @@
 import path from 'node:path';
 import {
-  type BundlerChain,
   DEFAULT_ASSET_PREFIX,
   type MultiStats,
+  type RspackChain,
   type Stats,
   type StatsError,
   addTrailingSlash,
@@ -232,7 +232,7 @@ export const formatPublicPath = (publicPath: string, withSlash = true) => {
 };
 
 export const getPublicPathFromChain = (
-  chain: BundlerChain,
+  chain: RspackChain,
   withSlash = true,
 ) => {
   const publicPath = chain.output.get('publicPath');

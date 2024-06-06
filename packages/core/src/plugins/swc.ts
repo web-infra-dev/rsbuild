@@ -1,8 +1,8 @@
 import path from 'node:path';
 import {
-  type BundlerChain,
   type Polyfill,
   type RsbuildTarget,
+  type RspackChain,
   SCRIPT_REGEX,
   applyScriptCondition,
   cloneDeep,
@@ -143,7 +143,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
 
 async function applyCoreJs(
   swcConfig: SwcLoaderOptions,
-  chain: BundlerChain,
+  chain: RspackChain,
   polyfillMode: Polyfill,
 ) {
   const coreJsPath = require.resolve('core-js/package.json');

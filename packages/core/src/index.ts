@@ -77,7 +77,7 @@ export type {
   CrossOrigin,
   ConsoleType,
   SplitChunks,
-  BundlerChain,
+  RspackChain,
   ClientConfig,
   ScriptInject,
   ConfigChain,
