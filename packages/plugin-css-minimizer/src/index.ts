@@ -51,10 +51,7 @@ export function applyCSSMinimizer(
 
   chain.optimization
     .minimizer(CHAIN_ID.MINIMIZER.CSS)
-    .use(CssMinimizerWebpackPlugin, [
-      // @ts-expect-error type mismatch
-      mergedOptions,
-    ])
+    .use(CssMinimizerWebpackPlugin, [mergedOptions])
     .end();
 }
 

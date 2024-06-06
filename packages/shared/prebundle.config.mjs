@@ -50,7 +50,7 @@ export default {
       ignoreDts: true,
     },
     {
-      name: 'webpack-chain',
+      name: 'rspack-chain',
       externals: {
         deepmerge: '../deepmerge',
       },

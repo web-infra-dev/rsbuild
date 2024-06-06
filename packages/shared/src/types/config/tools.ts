@@ -23,7 +23,7 @@ import type {
   StyleLoaderOptions,
   WebpackConfig,
 } from '../thirdParty';
-import type { MaybePromise, OneOrMany, WebpackChain } from '../utils';
+import type { MaybePromise, OneOrMany, RspackChain } from '../utils';
 
 export type { HTMLPluginOptions };
 
@@ -76,7 +76,7 @@ export type ToolsWebpackConfig = ConfigChainWithContext<
 >;
 
 export type ToolsWebpackChainConfig = OneOrMany<
-  (chain: WebpackChain, utils: ModifyWebpackChainUtils) => void
+  (chain: RspackChain, utils: ModifyWebpackChainUtils) => void
 >;
 
 export interface ToolsConfig {

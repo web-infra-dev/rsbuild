@@ -281,10 +281,7 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
           polyfill: config.output.polyfill,
         });
 
-        chain.optimization.splitChunks(
-          // @ts-expect-error splitChunks type mismatch
-          splitChunksOptions,
-        );
+        chain.optimization.splitChunks(splitChunksOptions);
       },
     );
   },

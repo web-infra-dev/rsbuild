@@ -66,12 +66,12 @@ export async function outputInspectConfigFiles({
 }
 
 export async function stringifyConfig(config: unknown, verbose?: boolean) {
-  const { default: WebpackChain } = await import(
-    '../compiled/webpack-chain/index.js'
+  const { default: RspackChain } = await import(
+    '../compiled/rspack-chain/index.js'
   );
 
   // webpackChain.toString can be used as a common stringify method
-  const stringify = WebpackChain.toString as (
+  const stringify = RspackChain.toString as (
     config: unknown,
     options: { verbose?: boolean },
   ) => string;

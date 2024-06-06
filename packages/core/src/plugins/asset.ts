@@ -1,9 +1,9 @@
 import path from 'node:path';
 import {
   AUDIO_EXTENSIONS,
-  type BundlerChainRule,
   FONT_EXTENSIONS,
   IMAGE_EXTENSIONS,
+  type RspackChain,
   VIDEO_EXTENSIONS,
   getDistPath,
   getFilename,
@@ -19,7 +19,7 @@ const chainStaticAssetRule = ({
   assetType,
 }: {
   emit: boolean;
-  rule: BundlerChainRule;
+  rule: RspackChain.Rule;
   maxSize: number;
   filename: string;
   assetType: string;

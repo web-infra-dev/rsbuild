@@ -31,7 +31,7 @@ import type {
 } from './hooks';
 import type { RsbuildTarget } from './rsbuild';
 import type { RspackConfig, RspackSourceMap } from './rspack';
-import type { Falsy, WebpackChain } from './utils';
+import type { Falsy, RspackChain } from './utils';
 import type { MaybePromise } from './utils';
 
 type HookOrder = 'pre' | 'post' | 'default';
@@ -77,7 +77,7 @@ export type ModifyWebpackConfigUtils = ModifyWebpackChainUtils & {
 };
 
 export type ModifyWebpackChainFn = (
-  chain: WebpackChain,
+  chain: RspackChain,
   utils: ModifyWebpackChainUtils,
 ) => Promise<void> | void;
 
