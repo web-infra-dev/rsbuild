@@ -89,7 +89,7 @@ export function pluginSourceBuild(
                 : ['...', sourceField],
             );
 
-            // bundler-chain do not support resolve.conditionNames yet
+            // rspack-chain do not support resolve.conditionNames yet
             rule.resolve.merge({
               // `conditionNames` is not affected by `resolvePriority`.
               // The priority is controlled by the order of fields declared in `exports`.
