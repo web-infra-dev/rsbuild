@@ -44,6 +44,28 @@ export default defineConfig({
           },
         };
       }
+
+      if (process.env.TEST_SPLIT_CHUNK && isServer) {
+        return {
+          ...config,
+          optimization: {
+            runtimeChunk: true,
+            splitChunks: {
+              chunks: 'all',
+              enforceSizeThreshold: 50000,
+              minSize: 0,
+              cacheGroups: {
+                'lib-react': {
+                  test: /[\\/]node_modules[\\/](react|react-dom|scheduler|react-refresh|@rspack[\\/]plugin-react-refresh)[\\/]/,
+                  priority: 0,
+                  name: 'lib-react',
+                  reuseExistingChunk: true,
+                },
+              },
+            },
+          },
+        };
+      }
       return config;
     },
   },

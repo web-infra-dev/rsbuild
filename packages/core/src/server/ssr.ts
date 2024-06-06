@@ -33,8 +33,11 @@ export const ssrLoadModule = async (
 
   const { chunks: entryChunks } = entrypoints[entryName];
 
+  // find main entryChunk from chunks
   const files = entryChunks.reduce<string[]>((prev, curr) => {
-    const c = curr ? chunks?.find((c) => c.names.includes(curr)) : undefined;
+    const c = curr
+      ? chunks?.find((c) => c.names.includes(curr) && c.entry)
+      : undefined;
 
     return c
       ? prev.concat(c?.files.filter((file) => !file.endsWith('.css')))
@@ -45,9 +48,10 @@ export const ssrLoadModule = async (
     throw new Error(`can't get ssr bundle by entryName(${entryName})`);
   }
 
+  // An entrypoint should have only one entryChunk, but there may be some boundary cases
   if (files.length > 1) {
     throw new Error(
-      `only support load single ssr bundle, but got ${files.length}: ${files.join(',')}`,
+      `only support load single ssr bundle entry, but got ${files.length}: ${files.join(',')}`,
     );
   }
 
@@ -65,6 +69,7 @@ export const getTransformedHtml = async (
   entryName: string,
   utils: ServerUtils,
 ) => {
+  // TODO: should get html resource from stats?
   const htmlPaths = utils.getHTMLPaths();
   const htmlPath = htmlPaths[entryName];
 

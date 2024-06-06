@@ -77,6 +77,19 @@ export type RsbuildDevServer = {
    * Close the Rsbuild server.
    */
   close: () => Promise<void>;
+
+  /**
+   * Load and execute SSR module in Server.
+   *
+   * @param entryName - relate to rsbuild source.entry
+   * @returns the return of server-entry.
+   */
+  ssrLoadModule: <T>(entryName: string) => Promise<T>;
+
+  /**
+   * Get the compiled HTML template.
+   */
+  getTransformedHtml: (entryName: string) => Promise<string>;
 };
 
 export async function createDevServer<
