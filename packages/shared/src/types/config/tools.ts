@@ -81,7 +81,7 @@ export type ToolsWebpackChainConfig = OneOrMany<
 
 export interface ToolsConfig {
   /**
-   * Configure bundler config base on [webpack-chain](https://github.com/neutrinojs/webpack-chain)
+   * Configure bundler config base on [rspack-chain](https://github.com/rspack-contrib/rspack-chain)
    */
   bundlerChain?: ToolsBundlerChainConfig;
   /**
@@ -123,7 +123,7 @@ export interface ToolsConfig {
    */
   webpack?: ToolsWebpackConfig;
   /**
-   * Configure webpack by [webpack-chain](https://github.com/neutrinojs/webpack-chain).
+   * Configure webpack by [rspack-chain](https://github.com/rspack-contrib/rspack-chain).
    * @requires webpack
    */
   webpackChain?: ToolsWebpackChainConfig;
