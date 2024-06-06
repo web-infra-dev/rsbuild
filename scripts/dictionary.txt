@@ -49,6 +49,8 @@ longpaths
 manypkg
 mattcompiles
 menlo
+microfrontend
+microfrontends
 modularly
 napi
 nolyfill
