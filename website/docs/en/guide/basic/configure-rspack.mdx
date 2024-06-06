@@ -1,6 +1,6 @@
 # Configure Rspack
 
-Rsbuild supports directly modifying the Rspack configuration object, and also supports modifying the built-in Rspack configuration of Rsbuild through the bundler-chain.
+Rsbuild supports directly modifying the Rspack configuration object, and also supports modifying the built-in Rspack configuration of Rsbuild through `rspack-chain`.
 
 ## Modify Config Object
 
@@ -37,15 +37,15 @@ export default {
 
 ## Use Bundler Chain
 
-import BundlerChain from '@en/shared/bundlerChain.mdx';
+import RspackChain from '@en/shared/rspackChain.mdx';
 
-<BundlerChain />
+<RspackChain />
 
 ### tools.bundlerChain
 
-Rsbuild provides the [tools.bundlerChain](/config/tools/bundler-chain) config to modify the bundler chain. Its value is a function that takes two arguments:
+Rsbuild provides the [tools.bundlerChain](/config/tools/bundler-chain) config to modify the rspack-chain. Its value is a function that takes two arguments:
 
-- The first argument is a `bundler-chain` instance, which you can use to modify the Rspack config.
+- The first argument is an `rspack-chain` instance, which you can use to modify the Rspack config.
 - The second argument is an utils object, including `env`, `isProd`, `CHAIN_ID`, etc.
 
 Here's a basic example:
@@ -77,11 +77,11 @@ export default {
 
 ### Basics
 
-Before using the bundler chain to modify the Rspack configuration, it is recommended to familiarize yourself with some basics.
+Before using the rspack-chain to modify the Rspack configuration, it is recommended to familiarize yourself with some basics.
 
 #### About ID
 
-In short, the bundler chain requires users to set a unique ID for each rule, loader, plugin, and minimizer. With this ID, you can easily find the desired object from deeply nested objects.
+In short, the rspack-chain requires users to set a unique ID for each rule, loader, plugin, and minimizer. With this ID, you can easily find the desired object from deeply nested objects.
 
 Rsbuild exports all internally defined IDs through the `CHAIN_ID` object, so you can quickly locate the loader or plugin you want to modify using these exported IDs, without the need for complex traversal in the Rspack configuration object.
 
@@ -201,4 +201,4 @@ export default {
 };
 ```
 
-The above are some common configuration examples. For the complete bundler-chain API, please refer to the [webpack-chain documentation](https://github.com/neutrinojs/webpack-chain).
+The above are some common configuration examples. For the complete rspack-chain API, please refer to the [rspack-chain documentation](https://github.com/rspack-contrib/rspack-chain).

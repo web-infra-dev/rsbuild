@@ -1,9 +1,9 @@
 import { join } from 'node:path';
 import {
-  type BundlerChain,
   type GetRsbuildConfig,
   type PluginManager,
   type RsbuildPluginAPI,
+  type RspackChain,
   type TransformFn,
   type TransformHandler,
   getDistPath,
@@ -28,7 +28,7 @@ export function getHTMLPathByEntry(
 }
 
 function applyTransformPlugin(
-  chain: BundlerChain,
+  chain: RspackChain,
   transformer: Record<string, TransformHandler>,
 ) {
   const name = 'RsbuildTransformPlugin';

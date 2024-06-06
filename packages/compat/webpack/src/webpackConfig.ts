@@ -1,6 +1,5 @@
 import { __internalHelper } from '@rsbuild/core';
 import {
-  type BundlerChain,
   type ModifyWebpackChainUtils,
   type ModifyWebpackConfigUtils,
   type RsbuildTarget,
@@ -162,9 +161,7 @@ export async function generateWebpackConfig({
 
   const chain = await modifyWebpackChain(context, chainUtils, bundlerChain);
 
-  let webpackConfig = chainToConfig(
-    chain as unknown as BundlerChain,
-  ) as WebpackConfig;
+  let webpackConfig = chainToConfig(chain) as WebpackConfig;
 
   webpackConfig = await modifyWebpackConfig(
     context,

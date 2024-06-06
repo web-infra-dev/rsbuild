@@ -1,6 +1,6 @@
 # 配置 Rspack
 
-Rsbuild 支持直接修改 Rspack 配置对象，也支持通过 bundler-chain 的形式来修改 Rsbuild 内置的 Rspack 配置。
+Rsbuild 支持直接修改 Rspack 配置对象，也支持通过 `rspack-chain` 来修改 Rsbuild 内置的 Rspack 配置。
 
 ## 修改配置对象
 
@@ -35,19 +35,19 @@ export default {
 
 > 请查看 [tools.rspack 文档](/config/tools/rspack) 来了解完整用法。
 
-## 使用 Bundler Chain
+## 使用 Rspack Chain
 
-import BundlerChain from '@zh/shared/bundlerChain.mdx';
+import RspackChain from '@zh/shared/rspackChain.mdx';
 
-<BundlerChain />
+<RspackChain />
 
 ### tools.bundlerChain
 
-Rsbuild 提供了 [tools.bundlerChain](/config/tools/bundler-chain) 配置项来修改 bundler-chain。
+Rsbuild 提供了 [tools.bundlerChain](/config/tools/bundler-chain) 配置项来修改 rspack-chain。
 
 `tools.bundlerChain` 的值是一个函数，接收两个参数：
 
-- 第一个参数为 `bundler-chain` 实例对象，你可以通过 它来修改默认的 Rspack 配置。
+- 第一个参数为 `rspack-chain` 实例，你可以通过 它来修改默认的 Rspack 配置。
 - 第二个参数为一个[工具对象](/config/tools/bundler-chain#工具对象)，包括 `env`、`isProd`、`CHAIN_ID` 等。
 
 下面是一个基本示例：
@@ -79,11 +79,11 @@ export default {
 
 ### 背景知识
 
-在开始使用 bundler-chain 来修改 Rspack 配置之前，请先了解一些背景知识。
+在开始使用 rspack-chain 来修改 Rspack 配置之前，请先了解一些背景知识。
 
 #### 关于 ID
 
-简单来说，bundler-chain 要求使用者为每个 Rule、Loader、Plugin、Minimizer 都设置一个独一无二的 id，通过这个 id，就可以便捷地从嵌套层级很深的对象中找到所需的对象。
+简单来说，rspack-chain 要求使用者为每个 Rule、Loader、Plugin、Minimizer 都设置一个独一无二的 id，通过这个 id，就可以便捷地从嵌套层级很深的对象中找到所需的对象。
 
 Rsbuild 将内部定义的全部 id 都通过 `CHAIN_ID` 对象导出，因此你可以通过这些导出的 id，快速定位到你想要修改的 Loader 或 Plugin，而不需要在 Rspack 配置对象里通过复杂的遍历寻找。
 
@@ -203,4 +203,4 @@ export default {
 };
 ```
 
-以上是一些常见的配置示例，完整的 bundler-chain API 请见 [webpack-chain 文档](https://github.com/neutrinojs/webpack-chain)。
+以上是一些常见的配置示例，完整的 API 请见 [rspack-chain 文档](https://github.com/rspack-contrib/rspack-chain)。

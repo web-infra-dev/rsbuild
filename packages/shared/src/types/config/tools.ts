@@ -6,14 +6,17 @@ import type {
   ConfigChainAsyncWithContext,
   ConfigChainWithContext,
 } from '../../reduceConfigs';
-import type { BundlerChain } from '../bundlerConfig';
-import type { BundlerPluginInstance } from '../bundlerConfig';
 import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
 import type {
   ModifyWebpackChainUtils,
   ModifyWebpackConfigUtils,
 } from '../plugin';
-import type { Rspack, RspackConfig, RspackRule } from '../rspack';
+import type {
+  BundlerPluginInstance,
+  Rspack,
+  RspackConfig,
+  RspackRule,
+} from '../rspack';
 import type {
   AutoprefixerOptions,
   CSSExtractOptions,
@@ -32,7 +35,7 @@ export type ToolsSwcConfig = ConfigChain<SwcLoaderOptions>;
 export type ToolsAutoprefixerConfig = ConfigChain<AutoprefixerOptions>;
 
 export type ToolsBundlerChainConfig = OneOrMany<
-  (chain: BundlerChain, utils: ModifyBundlerChainUtils) => MaybePromise<void>
+  (chain: RspackChain, utils: ModifyBundlerChainUtils) => MaybePromise<void>
 >;
 
 export type ToolsPostCSSLoaderConfig = ConfigChainWithContext<
@@ -81,7 +84,7 @@ export type ToolsWebpackChainConfig = OneOrMany<
 
 export interface ToolsConfig {
   /**
-   * Configure bundler config base on [webpack-chain](https://github.com/neutrinojs/webpack-chain)
+   * Configure bundler config base on [rspack-chain](https://github.com/rspack-contrib/rspack-chain)
    */
   bundlerChain?: ToolsBundlerChainConfig;
   /**
@@ -123,7 +126,7 @@ export interface ToolsConfig {
    */
   webpack?: ToolsWebpackConfig;
   /**
-   * Configure webpack by [webpack-chain](https://github.com/neutrinojs/webpack-chain).
+   * Configure webpack by [rspack-chain](https://github.com/rspack-contrib/rspack-chain).
    * @requires webpack
    */
   webpackChain?: ToolsWebpackChainConfig;

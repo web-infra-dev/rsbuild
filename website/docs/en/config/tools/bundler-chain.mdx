@@ -4,7 +4,7 @@
 
 ```ts
 type BundlerChainFn = (
-  chain: BundlerChain,
+  chain: RspackChain,
   utils: ModifyBundlerChainUtils,
 ) => Promise<void> | void;
 ```
@@ -13,14 +13,14 @@ type BundlerChainFn = (
 
 You can modify the default Rspack config through `tools.bundlerChain`. Its value is a function that takes two arguments:
 
-- The first argument is a `bundler-chain` instance, which you can use to modify the Rspack config.
+- The first argument is a `rspack-chain` instance, which you can use to modify the Rspack config.
 - The second argument is an utils object, including `env`, `isProd`, `CHAIN_ID`, etc.
 
-:::tip What is BundlerChain
+:::tip What is RspackChain
 
-import BundlerChain from '@en/shared/bundlerChain.mdx';
+import RspackChain from '@en/shared/rspackChain.mdx';
 
-<BundlerChain />
+<RspackChain />
 
 :::
 
@@ -28,7 +28,7 @@ import BundlerChain from '@en/shared/bundlerChain.mdx';
 
 ## Examples
 
-Please refer to: [BundlerChain examples](/guide/basic/configure-rspack#use-bundler-chain).
+Please refer to: [RspackChain examples](/guide/basic/configure-rspack#use-rspack-chain).
 
 ## Utils
 

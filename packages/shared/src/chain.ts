@@ -2,7 +2,6 @@ import type { EntryDescription } from '@rspack/core';
 import { NODE_MODULES_REGEX, TS_AND_JSX_REGEX } from './constants';
 import { debug } from './logger';
 import type {
-  BundlerChain,
   CreateAsyncHook,
   ModifyBundlerChainFn,
   ModifyBundlerChainUtils,
@@ -23,7 +22,7 @@ export async function getBundlerChain() {
 
   const bundlerChain = new RspackChain();
 
-  return bundlerChain as unknown as BundlerChain;
+  return bundlerChain as unknown as RspackChain;
 }
 
 export async function modifyBundlerChain(
@@ -34,7 +33,7 @@ export async function modifyBundlerChain(
     config: Readonly<RsbuildConfig>;
   },
   utils: ModifyBundlerChainUtils,
-): Promise<BundlerChain> {
+): Promise<RspackChain> {
   debug('modify bundler chain');
 
   const bundlerChain = await getBundlerChain();
@@ -236,7 +235,7 @@ export function applyScriptCondition({
   excludes,
 }: {
   rule: RspackChain.Rule;
-  chain: BundlerChain;
+  chain: RspackChain;
   config: NormalizedConfig;
   context: RsbuildContext;
   includes: (string | RegExp)[];
@@ -269,7 +268,7 @@ export function applyScriptCondition({
   }
 }
 
-export function chainToConfig(chain: BundlerChain): RspackConfig {
+export function chainToConfig(chain: RspackChain): RspackConfig {
   const config = chain.toConfig();
   const { entry } = config;
 

@@ -1,11 +1,11 @@
 import path from 'node:path';
 import type {
-  BundlerChain,
   ChainIdentifier,
   NormalizedConfig,
   RsbuildContext,
   RsbuildPlugin,
   RsbuildTarget,
+  RspackChain,
 } from '@rsbuild/core';
 import { getBrowserslistWithDefault, reduceConfigs } from '@rsbuild/shared';
 import browserslist from '@rsbuild/shared/browserslist';
@@ -53,7 +53,7 @@ const applyLightningCSSLoader = ({
   targets,
   options = {},
 }: {
-  chain: BundlerChain;
+  chain: RspackChain;
   CHAIN_ID: ChainIdentifier;
   targets: Targets;
   options: PluginLightningcssOptions | undefined;
@@ -97,7 +97,7 @@ const applyLightningCSSMinifyPlugin = async ({
   targets,
   options,
 }: {
-  chain: BundlerChain;
+  chain: RspackChain;
   CHAIN_ID: ChainIdentifier;
   targets: Targets;
   options: PluginLightningcssOptions | undefined;
