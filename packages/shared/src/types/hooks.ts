@@ -117,7 +117,6 @@ export type ModifyBundlerChainUtils = ModifyChainUtils & {
   };
 };
 
-/** The intersection of webpack-chain and rspack-chain */
 export type ModifyBundlerChainFn = (
   chain: BundlerChain,
   utils: ModifyBundlerChainUtils,

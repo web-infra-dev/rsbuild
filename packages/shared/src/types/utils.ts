@@ -1,6 +1,6 @@
-import type WebpackChain from '../../compiled/webpack-chain/index.js';
+import type RspackChain from '../../compiled/rspack-chain/index.js';
 
-export type { WebpackChain };
+export type { RspackChain };
 
 export type Falsy = false | null | undefined;
 

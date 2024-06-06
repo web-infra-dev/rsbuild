@@ -1729,6 +1729,9 @@ importers:
       rslog:
         specifier: ^1.2.2
         version: 1.2.2
+      rspack-chain:
+        specifier: 0.7.1
+        version: 0.7.1
       semver:
         specifier: ^7.6.2
         version: 7.6.2
@@ -1744,9 +1747,6 @@ importers:
       webpack-bundle-analyzer:
         specifier: ^4.10.2
         version: 4.10.2
-      webpack-chain:
-        specifier: npm:webpack-5-chain@8.0.2
-        version: webpack-5-chain@8.0.2
       webpack-merge:
         specifier: 5.10.0
         version: 5.10.0
@@ -7799,6 +7799,10 @@ packages:
     resolution: {integrity: sha512-tZP8KjrI1nz6qOYCrFxAV7cfmfS2GV94jotU2zOmF/6ByO1zNvGR6/+0inylpjqyBjAdnnutTUW0m4th06bSTw==}
     engines: {node: '>=14.17.6'}
 
+  rspack-chain@0.7.1:
+    resolution: {integrity: sha512-oReT8FgE5elL1w8H/GfdYAwV/2QYkJF6hAw6e0zxOjbJIcyQvCWmEf+QHeKUn5aVVBHu6U6qxzMmmEXIGxBevQ==}
+    engines: {node: '>=16'}
+
   rspack-manifest-plugin@5.0.0:
     resolution: {integrity: sha512-Rtpn6GI4mpTASPmLOGiHzv3KqVWuWhGJG9CKO7aioPrAhukML4jtgYUvbQdBze/mZcDrvqf6sxEGRGx5fKQ+ag==}
     engines: {node: '>=14'}
@@ -8892,10 +8896,6 @@ packages:
   web-streams-polyfill@3.3.3:
     resolution: {integrity: sha512-d2JWLCivmZYTSIoge9MsgFCZrt571BikcWGYkjC1khllbTeDlGqZ2D8vD8E/lJa8WGWbb7Plm8/XJYV7IJHZZw==}
     engines: {node: '>= 8'}
-
-  webpack-5-chain@8.0.2:
-    resolution: {integrity: sha512-gpzlChffrVUu5YwIw9i240/wdcglw53mSEV/7WoK7L/ddfb6Al8/sRjztyPYV8VgJAmkapH5T1AOUfMFryQ/VA==}
-    engines: {node: '>=10'}
 
   webpack-bundle-analyzer@4.10.2:
     resolution: {integrity: sha512-vJptkMm9pk5si4Bv922ZbKLV8UTT4zib4FPgXMhgzUny0bfDDkLXAVQs3ly3fS4/TN9ROFtb0NFrm04UXFE/Vw==}
@@ -16084,6 +16084,11 @@ snapshots:
 
   rslog@1.2.2: {}
 
+  rspack-chain@0.7.1:
+    dependencies:
+      deepmerge: 1.5.2
+      javascript-stringify: 2.1.0
+
   rspack-manifest-plugin@5.0.0(@rspack/core@0.7.1(@swc/helpers@0.5.3)):
     dependencies:
       tapable: 2.2.1
@@ -17235,11 +17240,6 @@ snapshots:
   web-namespaces@2.0.1: {}
 
   web-streams-polyfill@3.3.3: {}
-
-  webpack-5-chain@8.0.2:
-    dependencies:
-      deepmerge: 1.5.2
-      javascript-stringify: 2.1.0
 
   webpack-bundle-analyzer@4.10.2:
     dependencies:

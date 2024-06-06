@@ -17,11 +17,11 @@ import { isPlainObject } from './utils';
 import { castArray } from './utils';
 
 export async function getBundlerChain() {
-  const { default: WebpackChain } = await import(
-    '../compiled/webpack-chain/index.js'
+  const { default: RspackChain } = await import(
+    '../compiled/rspack-chain/index.js'
   );
 
-  const bundlerChain = new WebpackChain();
+  const bundlerChain = new RspackChain();
 
   return bundlerChain as unknown as BundlerChain;
 }
@@ -280,7 +280,7 @@ export function chainToConfig(chain: BundlerChain): RspackConfig {
   const formattedEntry: RsbuildEntry = {};
 
   /**
-   * webpack-chain can not handle entry description object correctly,
+   * rspack-chain can not handle entry description object correctly,
    * so we need to format the entry object and correct the entry description object.
    */
   for (const [entryName, entryValue] of Object.entries(entry)) {

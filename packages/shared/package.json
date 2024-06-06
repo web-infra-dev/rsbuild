@@ -107,13 +107,13 @@
     "mime-types": "^2.1.35",
     "picocolors": "1.0.1",
     "prebundle": "1.1.0",
+    "rspack-chain": "0.7.1",
     "rslog": "^1.2.2",
     "semver": "^7.6.2",
     "terser": "5.31.0",
     "typescript": "^5.4.2",
     "webpack": "^5.91.0",
     "webpack-bundle-analyzer": "^4.10.2",
-    "webpack-chain": "npm:webpack-5-chain@8.0.2",
     "webpack-merge": "5.10.0"
   },
   "optionalDependencies": {
