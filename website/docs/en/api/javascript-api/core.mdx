@@ -91,6 +91,7 @@ type LoadEnvOptions = {
   cwd?: string;
   /**
    * Used to specify the name of the .env.[mode] file
+   * Equivalent to Rsbuild CLI's `--env-mode` option
    * @default process.env.NODE_ENV
    */
   mode?: string;
@@ -131,6 +132,10 @@ const mergedConfig = mergeRsbuildConfig(
 ```
 
 This method will also load files such as `.env.local` and `.env.[mode]`, see [Environment Variables](/guide/advanced/env-vars) for details.
+
+:::tip
+Rsbuild CLI will automatically call the `loadEnv()` method. If you are using the Rsbuild CLI, you can set the `mode` parameter through the [--env-mode](/guide/advanced/env-vars#env-mode) option.
+:::
 
 ## mergeRsbuildConfig
 

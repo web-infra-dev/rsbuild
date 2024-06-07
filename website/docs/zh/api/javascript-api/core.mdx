@@ -91,6 +91,7 @@ type LoadEnvOptions = {
   cwd?: string;
   /**
    * 用于指定 .env.[mode] 文件的名称
+   * 等价于 Rsbuild CLI 的 `--env-mode` 选项
    * @default process.env.NODE_ENV
    */
   mode?: string;
@@ -131,6 +132,10 @@ const mergedConfig = mergeRsbuildConfig(
 ```
 
 该方法也会加载 `.env.local` 和 `.env.[mode]` 等文件，详见 [环境变量](/guide/advanced/env-vars)。
+
+:::tip
+Rsbuild CLI 会自动调用 `loadEnv()` 方法，如果你在使用 Rsbuild CLI，可以通过 [--env-mode](/guide/advanced/env-vars#env-模式) 选项来设置 `mode` 参数。
+:::
 
 ## mergeRsbuildConfig
 
