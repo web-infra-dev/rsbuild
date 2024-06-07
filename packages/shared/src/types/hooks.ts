@@ -1,11 +1,12 @@
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { ChainIdentifier } from '../chain';
+import type { RspackChain } from '../chain';
 import type { HtmlBasicTag, RsbuildConfig } from './config';
 import type { RsbuildTarget } from './rsbuild';
 import type { Rspack, RspackConfig } from './rspack';
 import type { MultiStats, Stats } from './stats';
 import type { WebpackConfig } from './thirdParty';
-import type { MaybePromise, NodeEnv, RspackChain } from './utils';
+import type { MaybePromise, NodeEnv } from './utils';
 
 export type OnBeforeBuildFn<B = 'rspack'> = (params: {
   bundlerConfigs?: B extends 'rspack' ? RspackConfig[] : WebpackConfig[];

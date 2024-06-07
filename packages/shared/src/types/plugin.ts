@@ -6,6 +6,7 @@ import type {
   WebpackPluginInstance,
 } from 'webpack';
 import type { ChainIdentifier } from '../chain';
+import type { RspackChain } from '../chain';
 import type {
   ModifyRspackConfigUtils,
   NormalizedConfig,
@@ -31,7 +32,7 @@ import type {
 } from './hooks';
 import type { RsbuildTarget } from './rsbuild';
 import type { RspackConfig, RspackSourceMap } from './rspack';
-import type { Falsy, RspackChain } from './utils';
+import type { Falsy } from './utils';
 import type { MaybePromise } from './utils';
 
 type HookOrder = 'pre' | 'post' | 'default';

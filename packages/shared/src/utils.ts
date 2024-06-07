@@ -254,11 +254,6 @@ export const prettyTime = (seconds: number) => {
   return `${format(minutes.toFixed(2))} m`;
 };
 
-const colorList: Colors[] = ['green', 'cyan', 'yellow', 'blue', 'magenta'];
-
-export const getProgressColor = (index: number) =>
-  colorList[index % colorList.length];
-
 export const isHtmlDisabled = (
   config: NormalizedConfig,
   target: RsbuildTarget,

@@ -1,5 +1,4 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { isProd } from '@rsbuild/shared';
 
 export type PluginUmdOptions = {
   /**
@@ -33,7 +32,8 @@ export const pluginUmd = (options: PluginUmdOptions): RsbuildPlugin => ({
         },
         tools: {
           htmlPlugin:
-            userConfig.tools?.htmlPlugin ?? (isProd() ? false : undefined),
+            userConfig.tools?.htmlPlugin ??
+            (process.env.NODE_ENV === 'production' ? false : undefined),
         },
         performance: {
           chunkSplit: {

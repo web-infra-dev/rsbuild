@@ -1,7 +1,3 @@
-import type RspackChain from '../../compiled/rspack-chain/index.js';
-
-export type { RspackChain };
-
 export type Falsy = false | null | undefined;
 
 export type OneOrMany<T> = T | T[];

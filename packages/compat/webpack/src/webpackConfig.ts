@@ -1,9 +1,11 @@
-import { __internalHelper } from '@rsbuild/core';
+import {
+  type RsbuildTarget,
+  type RspackChain,
+  __internalHelper,
+} from '@rsbuild/core';
 import {
   type ModifyWebpackChainUtils,
   type ModifyWebpackConfigUtils,
-  type RsbuildTarget,
-  type RspackChain,
   castArray,
   chainToConfig,
   debug,

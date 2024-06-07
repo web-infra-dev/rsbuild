@@ -64,6 +64,7 @@ export type {
   RsbuildEntry,
   RsbuildTarget,
   RsbuildContext,
+  InspectConfigResult,
   InspectConfigOptions,
   // Subtypes of Config
   Minify,

@@ -1,4 +1,5 @@
 import type { EntryDescription } from '@rspack/core';
+import RspackChain from '../compiled/rspack-chain/index.js';
 import { NODE_MODULES_REGEX, TS_AND_JSX_REGEX } from './constants';
 import { debug } from './logger';
 import type {
@@ -9,17 +10,14 @@ import type {
   RsbuildConfig,
   RsbuildContext,
   RsbuildEntry,
-  RspackChain,
   RspackConfig,
 } from './types';
 import { isPlainObject } from './utils';
 import { castArray } from './utils';
 
-export async function getBundlerChain() {
-  const { default: RspackChain } = await import(
-    '../compiled/rspack-chain/index.js'
-  );
+export { RspackChain };
 
+export async function getBundlerChain() {
   const bundlerChain = new RspackChain();
 
   return bundlerChain as unknown as RspackChain;

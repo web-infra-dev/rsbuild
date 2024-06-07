@@ -5,10 +5,9 @@ import {
   type NormalizedConfig,
   type RspackConfig,
   getNodeEnv,
-  outputInspectConfigFiles,
   setNodeEnv,
-  stringifyConfig,
 } from '@rsbuild/shared';
+import { outputInspectConfigFiles, stringifyConfig } from '../config';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
 export async function inspectConfig({
