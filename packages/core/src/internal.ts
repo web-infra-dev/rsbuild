@@ -9,6 +9,7 @@ export { prepareCli } from './cli/prepare';
 export { initPlugins, createPluginManager } from './pluginManager';
 export { initHooks, type Hooks } from './initHooks';
 export { initRsbuildConfig } from './provider/initConfigs';
+export { stringifyConfig, outputInspectConfigFiles } from './config';
 export type { InternalContext } from './types';
 export { setHTMLPlugin, getHTMLPlugin } from './pluginHelper';
 export { formatStats, getStatsOptions } from './helpers';

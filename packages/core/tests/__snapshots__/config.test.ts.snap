@@ -1,0 +1,47 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`stringifyConfig > should stringify Rsbuild config correctly 1`] = `
+"{
+  tools: {
+    bundlerChain(chain) {
+      chain.devtool("eval");
+    }
+  }
+}"
+`;
+
+exports[`stringifyConfig > should stringify Rspack config correctly 1`] = `
+"{
+  mode: 'development',
+  plugins: [
+    {
+      name: 'DefinePlugin',
+      affectedHooks: 'compilation',
+      _options: {
+        foo: 'bar'
+      }
+    }
+  ]
+}"
+`;
+
+exports[`stringifyConfig > should stringify Rspack config with verbose option correctly 1`] = `
+"{
+  mode: 'development',
+  output: {
+    filename() {
+      const a = "[name.js]";
+      return a;
+    }
+  },
+  plugins: [
+    {
+      name: 'DefinePlugin',
+      affectedHooks: 'compilation',
+      _options: {
+        foo: 'bar'
+      }
+    }
+  ]
+}"
+`;

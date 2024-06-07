@@ -3,8 +3,6 @@ import net from 'node:net';
 import type { Socket } from 'node:net';
 import os from 'node:os';
 import {
-  DEFAULT_DEV_HOST,
-  DEFAULT_PORT,
   color,
   deepmerge,
   isFunction,
@@ -19,6 +17,7 @@ import type {
   Routes,
   RsbuildEntry,
 } from '@rsbuild/shared';
+import { DEFAULT_DEV_HOST, DEFAULT_PORT } from '../constants';
 
 /**
  * It used to subscribe http upgrade event

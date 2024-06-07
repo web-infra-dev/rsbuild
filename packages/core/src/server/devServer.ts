@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import {
   type CreateDevServerOptions,
-  ROOT_DIST_DIR,
   type Rspack,
   type StartDevServerOptions,
   debug,
@@ -11,6 +10,7 @@ import {
   setNodeEnv,
 } from '@rsbuild/shared';
 import type Connect from 'connect';
+import { ROOT_DIST_DIR } from '../constants';
 import type { CreateDevMiddlewareReturns } from '../provider/createCompiler';
 import type { InternalContext, NormalizedConfig } from '../types';
 import {

@@ -1,14 +1,12 @@
 import path from 'node:path';
+import { type RspackChain, getDistPath, getFilename } from '@rsbuild/shared';
+import type { GeneratorOptionsByModuleType } from '@rspack/core';
 import {
   AUDIO_EXTENSIONS,
   FONT_EXTENSIONS,
   IMAGE_EXTENSIONS,
-  type RspackChain,
   VIDEO_EXTENSIONS,
-  getDistPath,
-  getFilename,
-} from '@rsbuild/shared';
-import type { GeneratorOptionsByModuleType } from '@rspack/core';
+} from '../constants';
 import type { RsbuildPlugin } from '../types';
 
 const chainStaticAssetRule = ({

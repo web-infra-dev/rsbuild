@@ -1,14 +1,13 @@
 import { posix } from 'node:path';
 import {
   DEFAULT_ASSET_PREFIX,
-  DEFAULT_DEV_HOST,
-  DEFAULT_PORT,
   type NormalizedConfig,
   type RsbuildContext,
   getDistPath,
   getFilename,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
+import { DEFAULT_DEV_HOST, DEFAULT_PORT } from '../constants';
 import { formatPublicPath } from '../helpers';
 import { getCssExtractPlugin } from '../pluginHelper';
 import type { RsbuildPlugin } from '../types';

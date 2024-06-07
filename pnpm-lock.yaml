@@ -1526,10 +1526,6 @@ importers:
         version: 5.4.5
 
   packages/plugin-umd:
-    dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core

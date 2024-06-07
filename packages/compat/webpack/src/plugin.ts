@@ -1,10 +1,12 @@
 import fs from 'node:fs';
+import type {
+  ChainIdentifier,
+  RsbuildPlugin,
+  RsbuildTarget,
+  RspackChain,
+} from '@rsbuild/core';
 import {
-  type ChainIdentifier,
   type CopyPluginOptions,
-  type RsbuildPlugin,
-  type RsbuildTarget,
-  type RspackChain,
   TARGET_ID_MAP,
   isWebTarget,
 } from '@rsbuild/shared';

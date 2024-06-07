@@ -1,6 +1,7 @@
 import type { rspack } from '@rspack/core';
 import type { SwcLoaderOptions } from '@rspack/core';
 import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
+import type { RspackChain } from '../../chain';
 import type {
   ConfigChain,
   ConfigChainAsyncWithContext,
@@ -26,7 +27,7 @@ import type {
   StyleLoaderOptions,
   WebpackConfig,
 } from '../thirdParty';
-import type { MaybePromise, OneOrMany, RspackChain } from '../utils';
+import type { MaybePromise, OneOrMany } from '../utils';
 
 export type { HTMLPluginOptions };
 

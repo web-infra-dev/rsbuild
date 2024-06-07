@@ -3,7 +3,6 @@ import type { Http2SecureServer } from 'node:http2';
 import { join } from 'node:path';
 import {
   type PreviewServerOptions,
-  ROOT_DIST_DIR,
   type RequestHandler,
   type ServerConfig,
   getNodeEnv,
@@ -11,6 +10,7 @@ import {
   setNodeEnv,
 } from '@rsbuild/shared';
 import type Connect from 'connect';
+import { ROOT_DIST_DIR } from '../constants';
 import type { InternalContext, NormalizedConfig } from '../types';
 import {
   type StartServerResult,

@@ -40,7 +40,6 @@ export const applySplitChunksRule = (
 
     chain.optimization.splitChunks({
       ...currentConfig,
-      // @ts-expect-error Rspack and Webpack uses different cacheGroups type
       cacheGroups: {
         ...(currentConfig as Exclude<SplitChunks, false>).cacheGroups,
         ...createCacheGroups(extraGroups),

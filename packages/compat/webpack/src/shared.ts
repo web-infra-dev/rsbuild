@@ -8,6 +8,8 @@ const {
   formatStats,
   getDevMiddleware,
   getStatsOptions,
+  stringifyConfig,
+  outputInspectConfigFiles,
 } = __internalHelper;
 
 export {
@@ -18,6 +20,8 @@ export {
   formatStats,
   getDevMiddleware,
   getStatsOptions,
+  stringifyConfig,
+  outputInspectConfigFiles,
 };
 
 export type InternalContext = __internalHelper.InternalContext;
