@@ -31,7 +31,6 @@
     "@rsbuild/shared": "workspace:*",
     "copy-webpack-plugin": "9.1.0",
     "mini-css-extract-plugin": "2.9.0",
-    "postcss": "^8.4.38",
     "tsconfig-paths-webpack-plugin": "4.1.0",
     "webpack": "^5.91.0"
   },
