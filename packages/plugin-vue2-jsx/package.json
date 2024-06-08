@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "@rsbuild/plugin-babel": "workspace:*",
-    "@rsbuild/shared": "workspace:*",
     "@vue/babel-preset-jsx": "^1.4.0"
   },
   "devDependencies": {

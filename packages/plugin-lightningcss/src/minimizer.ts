@@ -108,5 +108,3 @@ export class LightningCSSMinifyPlugin {
     );
   }
 }
-
-export default LightningCSSMinifyPlugin;

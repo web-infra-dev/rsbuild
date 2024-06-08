@@ -32,7 +32,6 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@scripts/test-helper": "workspace:*",
     "typescript": "^5.4.2"
   },
   "peerDependencies": {

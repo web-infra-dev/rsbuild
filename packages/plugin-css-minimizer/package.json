@@ -31,7 +31,6 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@scripts/test-helper": "workspace:*",
     "@types/lodash": "^4.17.4",
     "@types/node": "18.x",
     "typescript": "^5.4.2"

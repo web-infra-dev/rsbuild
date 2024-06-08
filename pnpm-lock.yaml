@@ -641,9 +641,6 @@ importers:
       '@modern-js/swc-plugins':
         specifier: 0.6.7
         version: 0.6.7(@swc/helpers@0.5.3)
-      '@rsbuild/plugin-react':
-        specifier: link:../../plugin-react
-        version: link:../../plugin-react
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../../shared
@@ -687,9 +684,6 @@ importers:
       mini-css-extract-plugin:
         specifier: 2.9.0
         version: 2.9.0(webpack@5.91.0)
-      postcss:
-        specifier: ^8.4.38
-        version: 8.4.38
       tsconfig-paths-webpack-plugin:
         specifier: 4.1.0
         version: 4.1.0
@@ -858,9 +852,6 @@ importers:
       '@rsbuild/core':
         specifier: link:../core
         version: link:../core
-      '@scripts/test-helper':
-        specifier: workspace:*
-        version: link:../../scripts/test-helper
       '@types/serialize-javascript':
         specifier: ^5.0.4
         version: 5.0.4
@@ -967,9 +958,6 @@ importers:
       '@rsbuild/core':
         specifier: link:../core
         version: link:../core
-      '@scripts/test-helper':
-        specifier: workspace:*
-        version: link:../../scripts/test-helper
       '@types/lodash':
         specifier: ^4.17.4
         version: 4.17.4
@@ -1017,18 +1005,12 @@ importers:
       '@rsbuild/webpack':
         specifier: workspace:*
         version: link:../compat/webpack
-      '@scripts/test-helper':
-        specifier: workspace:*
-        version: link:../../scripts/test-helper
       '@types/node':
         specifier: 18.x
         version: 18.19.31
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
-      webpack:
-        specifier: ^5.91.0
-        version: 5.91.0
 
   packages/plugin-less:
     dependencies:
@@ -1092,9 +1074,6 @@ importers:
       '@rsbuild/core':
         specifier: link:../core
         version: link:../core
-      '@scripts/test-helper':
-        specifier: workspace:*
-        version: link:../../scripts/test-helper
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1343,9 +1322,6 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2
     devDependencies:
-      '@babel/core':
-        specifier: ^7.24.6
-        version: 7.24.6
       '@rsbuild/core':
         specifier: link:../core
         version: link:../core
@@ -1530,9 +1506,6 @@ importers:
       '@rsbuild/core':
         specifier: link:../core
         version: link:../core
-      '@scripts/test-helper':
-        specifier: workspace:*
-        version: link:../../scripts/test-helper
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1617,9 +1590,6 @@ importers:
       '@rsbuild/plugin-babel':
         specifier: workspace:*
         version: link:../plugin-babel
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@vue/babel-preset-jsx':
         specifier: ^1.4.0
         version: 1.4.0(@babel/core@7.24.6)(vue@3.4.23(typescript@5.4.5))
