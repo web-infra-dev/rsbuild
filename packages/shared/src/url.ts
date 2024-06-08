@@ -4,6 +4,16 @@ import { URL } from 'node:url';
 // remove repeat '/'
 export const normalizeUrl = (url: string) => url.replace(/([^:]\/)\/+/g, '$1');
 
+// Can be replaced with URL.canParse when we drop support for Node.js 16
+export const canParse = (url: string) => {
+  try {
+    new URL(url);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 const urlJoin = (base: string, path: string) => {
   const fullUrl = new URL(base);
   fullUrl.pathname = posix.join(fullUrl.pathname, path);
@@ -21,10 +31,9 @@ export const withPublicPath = (str: string, base: string) => {
   // If str is an complete URL, just return it.
   // Only absolute url with hostname & protocol can be parsed into URL instance.
   // e.g. str is https://example.com/foo.js
-  try {
-    new URL(str).toString();
+  if (canParse(str)) {
     return str;
-  } catch {}
+  }
 
   if (base.startsWith('http')) {
     return urlJoin(base, str);

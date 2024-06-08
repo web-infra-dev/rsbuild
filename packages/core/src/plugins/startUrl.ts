@@ -1,6 +1,12 @@
 import { exec } from 'node:child_process';
 import { promisify } from 'node:util';
-import { type Routes, castArray, debug, logger } from '@rsbuild/shared';
+import {
+  type Routes,
+  canParse,
+  castArray,
+  debug,
+  logger,
+} from '@rsbuild/shared';
 import { STATIC_PATH } from '../constants';
 import type { RsbuildPlugin } from '../types';
 
@@ -82,6 +88,21 @@ export async function openBrowser(url: string): Promise<boolean> {
 export const replacePlaceholder = (url: string, port: number) =>
   url.replace(/<port>/g, String(port));
 
+export function resolveUrl(str: string, base: string) {
+  if (canParse(str)) {
+    return str;
+  }
+
+  try {
+    const url = new URL(str, base);
+    return url.href;
+  } catch (e) {
+    throw new Error(
+      '[rsbuild:start-url]: Invalid input: not a valid URL or pathname',
+    );
+  }
+}
+
 const openedURLs: string[] = [];
 
 export function pluginStartUrl(): RsbuildPlugin {
@@ -108,17 +129,18 @@ export function pluginStartUrl(): RsbuildPlugin {
         }
 
         const urls: string[] = [];
+        const protocol = https ? 'https' : 'http';
+        const baseUrl = `${protocol}://localhost:${port}`;
 
         if (startUrl === true || !startUrl) {
-          const protocol = https ? 'https' : 'http';
           if (routes.length) {
             // auto open the first one
-            urls.push(`${protocol}://localhost:${port}${routes[0].pathname}`);
+            urls.push(`${baseUrl}${routes[0].pathname}`);
           }
         } else {
           urls.push(
             ...castArray(startUrl).map((item) =>
-              replacePlaceholder(item, port),
+              resolveUrl(replacePlaceholder(item, port), baseUrl),
             ),
           );
         }
