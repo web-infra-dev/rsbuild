@@ -31,12 +31,32 @@ export default {
 };
 ```
 
+- Open the specified path, equivalent to `http://localhost:<port>/home`:
+
+```js
+export default {
+  dev: {
+    startUrl: '/home',
+  },
+};
+```
+
 - Open multiple pages:
 
 ```js
 export default {
   dev: {
-    startUrl: ['http://localhost:3000', 'http://localhost:3000/about'],
+    startUrl: ['/', '/about'],
+  },
+};
+```
+
+- Open a non-localhost URL (used with proxy):
+
+```js
+export default {
+  dev: {
+    startUrl: 'http://www.example.com',
   },
 };
 ```

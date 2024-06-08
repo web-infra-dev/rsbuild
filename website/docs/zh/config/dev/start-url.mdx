@@ -31,12 +31,32 @@ export default {
 };
 ```
 
+- 打开指定的路径，等价于 `http://localhost:<port>/home`：
+
+```js
+export default {
+  dev: {
+    startUrl: '/home',
+  },
+};
+```
+
 - 打开多个页面：
 
 ```js
 export default {
   dev: {
-    startUrl: ['http://localhost:3000', 'http://localhost:3000/about'],
+    startUrl: ['/', '/about'],
+  },
+};
+```
+
+- 打开一个非 localhost URL（配合 proxy 使用）：
+
+```js
+export default {
+  dev: {
+    startUrl: 'http://www.example.com',
   },
 };
 ```
