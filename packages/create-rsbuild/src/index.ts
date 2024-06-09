@@ -2,7 +2,16 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { cancel, isCancel, note, outro, select, text } from '@clack/prompts';
+import {
+  cancel,
+  isCancel,
+  multiselect,
+  note,
+  outro,
+  select,
+  text,
+} from '@clack/prompts';
+import deepmerge from 'deepmerge';
 import { logger } from 'rslog';
 
 function cancelAndExit() {
@@ -10,10 +19,11 @@ function cancelAndExit() {
   process.exit(0);
 }
 
-function checkCancel(value: unknown) {
+function checkCancel<T>(value: unknown) {
   if (isCancel(value)) {
     cancelAndExit();
   }
+  return value as T;
 }
 
 function formatTargetDir(targetDir: string) {
@@ -46,68 +56,82 @@ export async function main() {
   const packageJsonPath = path.join(packageRoot, 'package.json');
   const { version } = require(packageJsonPath);
 
-  let targetDir = (await text({
-    message: 'Input target folder',
-    placeholder: 'my-project',
-    validate(value) {
-      if (value.length === 0) {
-        return 'Target folder is required';
-      }
-    },
-  })) as string;
-
-  checkCancel(targetDir);
+  let targetDir = checkCancel<string>(
+    await text({
+      message: 'Input target folder',
+      placeholder: 'my-project',
+      validate(value) {
+        if (value.length === 0) {
+          return 'Target folder is required';
+        }
+      },
+    }),
+  );
 
   targetDir = formatTargetDir(targetDir);
   const distFolder = path.join(cwd, targetDir);
 
   if (fs.existsSync(distFolder) && !isEmptyDir(distFolder)) {
-    const option = (await select({
-      message: `"${targetDir}" is not empty, please choose:`,
-      options: [
-        { value: 'yes', label: 'Continue and override files' },
-        { value: 'no', label: 'Cancel operation' },
-      ],
-    })) as string;
-
-    checkCancel(option);
+    const option = checkCancel<string>(
+      await select({
+        message: `"${targetDir}" is not empty, please choose:`,
+        options: [
+          { value: 'yes', label: 'Continue and override files' },
+          { value: 'no', label: 'Cancel operation' },
+        ],
+      }),
+    );
 
     if (option === 'no') {
       cancelAndExit();
     }
   }
 
-  const framework = (await select({
-    message: 'Select framework',
-    options: [
-      { value: 'react', label: 'React' },
-      { value: 'vue3', label: 'Vue 3' },
-      { value: 'vue2', label: 'Vue 2' },
-      { value: 'lit', label: 'Lit' },
-      { value: 'preact', label: 'Preact' },
-      { value: 'svelte', label: 'Svelte' },
-      { value: 'solid', label: 'Solid' },
-      { value: 'vanilla', label: 'Vanilla' },
-    ],
-  })) as string;
+  const framework = checkCancel<string>(
+    await select({
+      message: 'Select framework',
+      options: [
+        { value: 'react', label: 'React' },
+        { value: 'vue3', label: 'Vue 3' },
+        { value: 'vue2', label: 'Vue 2' },
+        { value: 'lit', label: 'Lit' },
+        { value: 'preact', label: 'Preact' },
+        { value: 'svelte', label: 'Svelte' },
+        { value: 'solid', label: 'Solid' },
+        { value: 'vanilla', label: 'Vanilla' },
+      ],
+    }),
+  );
 
-  checkCancel(framework);
+  const language = checkCancel<string>(
+    await select({
+      message: 'Select language',
+      options: [
+        { value: 'ts', label: 'TypeScript' },
+        { value: 'js', label: 'JavaScript' },
+      ],
+    }),
+  );
 
-  const language = (await select({
-    message: 'Select language',
-    options: [
-      { value: 'ts', label: 'TypeScript' },
-      { value: 'js', label: 'JavaScript' },
-    ],
-  })) as string;
-
-  checkCancel(language);
+  const tools = checkCancel<string[]>(
+    await multiselect({
+      message: 'Select additional tools (use arrow keys / space bar)',
+      options: [
+        { value: 'prettier', label: 'Add Prettier for code formatting' },
+      ],
+    }),
+  );
 
   const srcFolder = path.join(packageRoot, `template-${framework}-${language}`);
   const commonFolder = path.join(packageRoot, 'template-common');
 
   copyFolder(commonFolder, distFolder, version);
   copyFolder(srcFolder, distFolder, version, path.basename(targetDir));
+
+  for (const tool of tools) {
+    const toolFolder = path.join(packageRoot, `template-${tool}`);
+    copyFolder(toolFolder, distFolder, version);
+  }
 
   const nextSteps = [
     `cd ${targetDir}`,
@@ -118,6 +142,37 @@ export async function main() {
   note(nextSteps.join('\n'), 'Next steps');
 
   outro('Done.');
+}
+
+function sortObjectKeys(obj: Record<string, unknown>) {
+  const sortedKeys = Object.keys(obj).sort();
+
+  const sortedObj: Record<string, unknown> = {};
+  for (const key of sortedKeys) {
+    sortedObj[key] = obj[key];
+  }
+
+  return sortedObj;
+}
+
+function mergePackageJson(targetPackage: string, extraPackage: string) {
+  if (!fs.existsSync(targetPackage)) {
+    return;
+  }
+
+  const content: Record<string, unknown> = deepmerge(
+    JSON.parse(fs.readFileSync(targetPackage, 'utf-8')),
+    JSON.parse(fs.readFileSync(extraPackage, 'utf-8')),
+  );
+
+  for (const key of ['scripts', 'dependencies', 'devDependencies']) {
+    if (!(key in content)) {
+      continue;
+    }
+    content[key] = sortObjectKeys(content[key] as Record<string, unknown>);
+  }
+
+  fs.writeFileSync(targetPackage, `${JSON.stringify(content, null, 2)}\n`);
 }
 
 function copyFolder(src: string, dist: string, version: string, name?: string) {
@@ -143,6 +198,9 @@ function copyFolder(src: string, dist: string, version: string, name?: string) {
 
     if (stat.isDirectory()) {
       copyFolder(srcFile, distFile, version);
+    } else if (file === 'extra-package.json') {
+      const targetPackage = path.resolve(dist, 'package.json');
+      mergePackageJson(targetPackage, srcFile);
     } else {
       fs.copyFileSync(srcFile, distFile);
 
