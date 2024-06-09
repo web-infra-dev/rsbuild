@@ -117,6 +117,7 @@ export async function main() {
     await multiselect({
       message: 'Select additional tools (use arrow keys / space bar)',
       options: [
+        { value: 'biome', label: 'Add Biome for code linting and formatting' },
         { value: 'prettier', label: 'Add Prettier for code formatting' },
       ],
     }),
