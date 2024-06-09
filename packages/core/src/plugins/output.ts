@@ -72,11 +72,26 @@ export const pluginOutput = (): RsbuildPlugin => ({
         const jsPath = getDistPath(config, 'js');
         const jsAsyncPath = getDistPath(config, 'jsAsync');
         const jsFilename = getFilename(config, 'js', isProd);
+        const isJsFilenameFn = typeof jsFilename === 'function';
 
         chain.output
           .path(api.context.distPath)
-          .filename(posix.join(jsPath, jsFilename))
-          .chunkFilename(posix.join(jsAsyncPath, jsFilename))
+          .filename(
+            isJsFilenameFn
+              ? (...args) => {
+                  const name = jsFilename(...args);
+                  return posix.join(jsPath, name);
+                }
+              : posix.join(jsPath, jsFilename),
+          )
+          .chunkFilename(
+            isJsFilenameFn
+              ? (...args) => {
+                  const name = jsFilename(...args);
+                  return posix.join(jsAsyncPath, name);
+                }
+              : posix.join(jsAsyncPath, jsFilename),
+          )
           .publicPath(publicPath)
           // disable pathinfo to improve compile performance
           // the path info is useless in most cases

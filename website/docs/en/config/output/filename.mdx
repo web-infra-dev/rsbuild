@@ -4,7 +4,9 @@
 
 ```ts
 type FilenameConfig = {
-  js?: string;
+  js?:
+    | string
+    | ((pathData: Rspack.PathData, assetInfo: Rspack.JsAssetInfo) => string);
   css?: string;
   svg?: string;
   font?: string;
@@ -93,6 +95,33 @@ const { add } = await import(
 ```
 
 After specifying the module name as above, the generated file will be `dist/static/js/async/my-chunk-name.js`.
+
+## Using Function
+
+You can pass a function to `output.filename.js`, allowing you to dynamically generate filenames based on file information:
+
+```js
+export default {
+  output: {
+    filename: {
+      js: (pathData, assetInfo) => {
+        console.log(pathData); // You can check the contents of pathData here
+
+        if (pathData.chunk?.name === 'index') {
+          const isProd = process.env.NODE_ENV === 'production';
+          return isProd ? '[name].[contenthash:8].js' : '[name].js';
+        }
+
+        return '/some-path/[name].js';
+      },
+    },
+  },
+};
+```
+
+:::tip
+Except for `output.filename.js`, other types of files currently do not support using functions.
+:::
 
 ## Query Hash
 

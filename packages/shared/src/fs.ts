@@ -31,11 +31,21 @@ export const getDistPath = (
   return ret;
 };
 
-export const getFilename = (
+export function getFilename(
+  config: NormalizedConfig,
+  type: 'js',
+  isProd: boolean,
+): NonNullable<FilenameConfig['js']>;
+export function getFilename(
+  config: NormalizedConfig,
+  type: Exclude<keyof FilenameConfig, 'js'>,
+  isProd: boolean,
+): string;
+export function getFilename(
   config: NormalizedConfig,
   type: keyof FilenameConfig,
   isProd: boolean,
-) => {
+) {
   const { filename, filenameHash } = config.output;
 
   const getHash = () => {
@@ -63,4 +73,4 @@ export const getFilename = (
     default:
       throw new Error(`unknown key ${type} in "output.filename"`);
   }
-};
+}
