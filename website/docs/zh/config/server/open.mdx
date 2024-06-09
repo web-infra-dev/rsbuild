@@ -1,22 +1,23 @@
-# dev.startUrl
+# server.open
 
 - **类型：** `boolean | string | string[] | undefined`
 - **默认值：** `undefined`
+- **版本：** `>= 0.7.4`
 
-`dev.startUrl` 用于配置一组页面 URL，Rsbuild 会在启动 server 后自动在浏览器中打开这些页面。
+`server.open` 用于配置一组页面 URL，Rsbuild 会在启动 server 后自动在浏览器中打开这些页面。
 
 > 你也可以使用 Rsbuild CLI 的 [--open](/guide/basic/cli#打开页面) 选项来打开页面。
 
 ### 示例
 
-`dev.startUrl` 可以设置为如下的值。
+`server.open` 可以设置为如下的值。
 
 - 打开项目的默认页面，等价于 `http://localhost:<port>`：
 
 ```js
 export default {
-  dev: {
-    startUrl: true,
+  server: {
+    open: true,
   },
 };
 ```
@@ -25,8 +26,8 @@ export default {
 
 ```js
 export default {
-  dev: {
-    startUrl: 'http://localhost:3000',
+  server: {
+    open: 'http://localhost:3000',
   },
 };
 ```
@@ -35,8 +36,8 @@ export default {
 
 ```js
 export default {
-  dev: {
-    startUrl: '/home',
+  server: {
+    open: '/home',
   },
 };
 ```
@@ -45,8 +46,8 @@ export default {
 
 ```js
 export default {
-  dev: {
-    startUrl: ['/', '/about'],
+  server: {
+    open: ['/', '/about'],
   },
 };
 ```
@@ -55,8 +56,8 @@ export default {
 
 ```js
 export default {
-  dev: {
-    startUrl: 'http://www.example.com',
+  server: {
+    open: 'http://www.example.com',
   },
 };
 ```
@@ -67,8 +68,8 @@ export default {
 
 ```js
 export default {
-  dev: {
-    startUrl: 'http://localhost:<port>/home',
+  server: {
+    open: 'http://localhost:<port>/home',
   },
 };
 ```

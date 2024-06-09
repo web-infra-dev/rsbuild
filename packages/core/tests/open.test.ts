@@ -1,6 +1,6 @@
-import { replacePlaceholder, resolveUrl } from '../src/plugins/startUrl';
+import { replacePlaceholder, resolveUrl } from '../src/plugins/open';
 
-describe('plugin-start-url', () => {
+describe('plugin-open', () => {
   it('#replacePlaceholder - should replace port number correctly', () => {
     expect(replacePlaceholder('http://localhost:8080', 3000)).toEqual(
       'http://localhost:8080',

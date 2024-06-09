@@ -12,6 +12,7 @@ const OVERRIDE_PATH = [
   'output.cssModules.auto',
   'output.targets',
   'output.emitAssets',
+  'server.open',
   'server.printUrls',
   'dev.startUrl',
   'provider',

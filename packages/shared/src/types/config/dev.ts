@@ -48,8 +48,8 @@ export interface DevConfig {
    */
   liveReload?: boolean;
   /**
-   * Used to set the page URL to open automatically when the Dev Server starts.
-   * By default, no page will be opened.
+   * Set the page URL to open when the server starts.
+   * @deprecated use `server.open` instead
    */
   startUrl?: boolean | string | string[];
   /**

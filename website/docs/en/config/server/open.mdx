@@ -1,22 +1,23 @@
-# dev.startUrl
+# server.open
 
 - **Type:** `boolean | string | string[] | undefined`
 - **Default:** `undefined`
+- **Version:** `>= 0.7.4`
 
-`dev.startUrl` is used to configure a set of page URLs that Rsbuild will automatically open in the browser after starting the server.
+`server.open` is used to configure a set of page URLs that Rsbuild will automatically open in the browser after starting the server.
 
 > You can also use the [--open](/guide/basic/cli#opening-page) option of Rsbuild CLI to open the pages.
 
 ### Example
 
-`dev.startUrl` can be set to the following values.
+`server.open` can be set to the following values.
 
 - Open the project's default preview page, equivalent to `http://localhost:<port>`:
 
 ```js
 export default {
-  dev: {
-    startUrl: true,
+  server: {
+    open: true,
   },
 };
 ```
@@ -25,8 +26,8 @@ export default {
 
 ```js
 export default {
-  dev: {
-    startUrl: 'http://localhost:3000',
+  server: {
+    open: 'http://localhost:3000',
   },
 };
 ```
@@ -35,8 +36,8 @@ export default {
 
 ```js
 export default {
-  dev: {
-    startUrl: '/home',
+  server: {
+    open: '/home',
   },
 };
 ```
@@ -45,8 +46,8 @@ export default {
 
 ```js
 export default {
-  dev: {
-    startUrl: ['/', '/about'],
+  server: {
+    open: ['/', '/about'],
   },
 };
 ```
@@ -55,8 +56,8 @@ export default {
 
 ```js
 export default {
-  dev: {
-    startUrl: 'http://www.example.com',
+  server: {
+    open: 'http://www.example.com',
   },
 };
 ```
@@ -67,8 +68,8 @@ Since the port number may change, you can use the `<port>` placeholder to refer 
 
 ```js
 export default {
-  dev: {
-    startUrl: 'http://localhost:<port>/home',
+  server: {
+    open: 'http://localhost:<port>/home',
   },
 };
 ```
