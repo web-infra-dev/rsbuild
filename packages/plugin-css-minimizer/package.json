@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-css-minimizer",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "description": "CSS minimizer for Rsbuild",
   "repository": {
     "type": "git",
@@ -36,7 +36,7 @@
     "typescript": "^5.4.2"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.7.3"
+    "@rsbuild/core": "workspace:^0.7.4"
   },
   "publishConfig": {
     "access": "public",
