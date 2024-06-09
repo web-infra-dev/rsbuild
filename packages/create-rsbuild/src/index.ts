@@ -19,10 +19,11 @@ function cancelAndExit() {
   process.exit(0);
 }
 
-function checkCancel(value: unknown) {
+function checkCancel<T>(value: unknown) {
   if (isCancel(value)) {
     cancelAndExit();
   }
+  return value as T;
 }
 
 function formatTargetDir(targetDir: string) {
@@ -55,69 +56,71 @@ export async function main() {
   const packageJsonPath = path.join(packageRoot, 'package.json');
   const { version } = require(packageJsonPath);
 
-  let targetDir = (await text({
-    message: 'Input target folder',
-    placeholder: 'my-project',
-    validate(value) {
-      if (value.length === 0) {
-        return 'Target folder is required';
-      }
-    },
-  })) as string;
-
-  checkCancel(targetDir);
+  let targetDir = checkCancel<string>(
+    await text({
+      message: 'Input target folder',
+      placeholder: 'my-project',
+      validate(value) {
+        if (value.length === 0) {
+          return 'Target folder is required';
+        }
+      },
+    }),
+  );
 
   targetDir = formatTargetDir(targetDir);
   const distFolder = path.join(cwd, targetDir);
 
   if (fs.existsSync(distFolder) && !isEmptyDir(distFolder)) {
-    const option = (await select({
-      message: `"${targetDir}" is not empty, please choose:`,
-      options: [
-        { value: 'yes', label: 'Continue and override files' },
-        { value: 'no', label: 'Cancel operation' },
-      ],
-    })) as string;
-
-    checkCancel(option);
+    const option = checkCancel<string>(
+      await select({
+        message: `"${targetDir}" is not empty, please choose:`,
+        options: [
+          { value: 'yes', label: 'Continue and override files' },
+          { value: 'no', label: 'Cancel operation' },
+        ],
+      }),
+    );
 
     if (option === 'no') {
       cancelAndExit();
     }
   }
 
-  const framework = await select({
-    message: 'Select framework',
-    options: [
-      { value: 'react', label: 'React' },
-      { value: 'vue3', label: 'Vue 3' },
-      { value: 'vue2', label: 'Vue 2' },
-      { value: 'lit', label: 'Lit' },
-      { value: 'preact', label: 'Preact' },
-      { value: 'svelte', label: 'Svelte' },
-      { value: 'solid', label: 'Solid' },
-      { value: 'vanilla', label: 'Vanilla' },
-    ],
-  });
+  const framework = checkCancel<string>(
+    await select({
+      message: 'Select framework',
+      options: [
+        { value: 'react', label: 'React' },
+        { value: 'vue3', label: 'Vue 3' },
+        { value: 'vue2', label: 'Vue 2' },
+        { value: 'lit', label: 'Lit' },
+        { value: 'preact', label: 'Preact' },
+        { value: 'svelte', label: 'Svelte' },
+        { value: 'solid', label: 'Solid' },
+        { value: 'vanilla', label: 'Vanilla' },
+      ],
+    }),
+  );
 
-  checkCancel(framework);
+  const language = checkCancel<string>(
+    await select({
+      message: 'Select language',
+      options: [
+        { value: 'ts', label: 'TypeScript' },
+        { value: 'js', label: 'JavaScript' },
+      ],
+    }),
+  );
 
-  const language = await select({
-    message: 'Select language',
-    options: [
-      { value: 'ts', label: 'TypeScript' },
-      { value: 'js', label: 'JavaScript' },
-    ],
-  });
-
-  checkCancel(language);
-
-  const tools = await multiselect({
-    message: 'Select additional tools (use arrow keys / space bar)',
-    options: [{ value: 'prettier', label: 'Add Prettier for code formatting' }],
-  });
-
-  checkCancel(tools);
+  const tools = checkCancel<string[]>(
+    await multiselect({
+      message: 'Select additional tools (use arrow keys / space bar)',
+      options: [
+        { value: 'prettier', label: 'Add Prettier for code formatting' },
+      ],
+    }),
+  );
 
   const srcFolder = path.join(packageRoot, `template-${framework}-${language}`);
   const commonFolder = path.join(packageRoot, 'template-common');
@@ -125,7 +128,7 @@ export async function main() {
   copyFolder(commonFolder, distFolder, version);
   copyFolder(srcFolder, distFolder, version, path.basename(targetDir));
 
-  for (const tool of tools as string[]) {
+  for (const tool of tools) {
     const toolFolder = path.join(packageRoot, `template-${tool}`);
     copyFolder(toolFolder, distFolder, version);
   }
