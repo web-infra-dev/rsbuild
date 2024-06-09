@@ -160,23 +160,23 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
-  test('should merge dev.startUrl correctly', async () => {
+  test('should merge server.open correctly', async () => {
     expect(
       mergeRsbuildConfig(
         {
-          dev: {
-            startUrl: ['http://localhost:3000'],
+          server: {
+            open: ['http://localhost:3000'],
           },
         },
         {
-          dev: {
-            startUrl: false,
+          server: {
+            open: false,
           },
         },
       ),
     ).toEqual({
-      dev: {
-        startUrl: false,
+      server: {
+        open: false,
       },
     });
   });

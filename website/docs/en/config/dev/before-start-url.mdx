@@ -3,12 +3,14 @@
 - **Type:** `() => Promise<void> | void`
 - **Default:** `undefined`
 
-`dev.beforeStartUrl` is used to execute a callback function before opening the `startUrl`, this config needs to be used together with [dev.startUrl](/config/dev/start-url).
+`dev.beforeStartUrl` is used to execute a callback function before opening the `startUrl`, this config needs to be used together with [server.open](/config/server/open).
 
 ```js
 export default {
+  server: {
+    open: true,
+  },
   dev: {
-    startUrl: true,
     beforeStartUrl: async () => {
       await doSomeThing();
     },

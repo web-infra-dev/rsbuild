@@ -22,7 +22,7 @@ exports[`inspectConfig > should print plugin names when inspect config 1`] = `
   "rsbuild:swc",
   "rsbuild:externals",
   "rsbuild:split-chunks",
-  "rsbuild:start-url",
+  "rsbuild:open",
   "rsbuild:inline-chunk",
   "rsbuild:bundle-analyzer",
   "rsbuild:rsdoctor",
