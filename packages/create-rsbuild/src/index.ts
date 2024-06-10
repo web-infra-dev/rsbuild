@@ -134,16 +134,13 @@ export async function main() {
     const toolFolder = path.join(packageRoot, `template-${tool}`);
 
     if (tool === 'eslint') {
-      const fromFolder = path.join(toolFolder, `${framework}-${language}`);
-      if (fs.existsSync(fromFolder)) {
-        copyFolder(fromFolder, distFolder, version);
-      } else {
-        copyFolder(
-          path.join(toolFolder, `common-${language}`),
-          distFolder,
-          version,
-        );
+      let subFolder = path.join(toolFolder, `${framework}-${language}`);
+
+      if (!fs.existsSync(subFolder)) {
+        subFolder = path.join(toolFolder, `common-${language}`);
       }
+
+      copyFolder(subFolder, distFolder, version);
     } else {
       copyFolder(toolFolder, distFolder, version);
     }
