@@ -118,6 +118,7 @@ export async function main() {
       message: 'Select additional tools (use arrow keys / space bar)',
       options: [
         { value: 'biome', label: 'Add Biome for code linting and formatting' },
+        { value: 'eslint', label: 'Add ESLint for code linting' },
         { value: 'prettier', label: 'Add Prettier for code formatting' },
       ],
     }),
@@ -131,7 +132,18 @@ export async function main() {
 
   for (const tool of tools) {
     const toolFolder = path.join(packageRoot, `template-${tool}`);
-    copyFolder(toolFolder, distFolder, version);
+
+    if (tool === 'eslint') {
+      let subFolder = path.join(toolFolder, `${framework}-${language}`);
+
+      if (!fs.existsSync(subFolder)) {
+        subFolder = path.join(toolFolder, `common-${language}`);
+      }
+
+      copyFolder(subFolder, distFolder, version);
+    } else {
+      copyFolder(toolFolder, distFolder, version);
+    }
   }
 
   const nextSteps = [
