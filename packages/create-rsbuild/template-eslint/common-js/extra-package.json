@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.4.0",
+    "eslint": "9.x",
+    "globals": "^15.4.0"
+  }
+}
