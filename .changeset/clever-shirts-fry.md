@@ -1,0 +1,5 @@
+---
+'@rsbuild/core': major
+---
+
+test
