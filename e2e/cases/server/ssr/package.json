@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@e2e/custom-server",
+  "name": "@e2e/custom-server-ssr",
   "version": "1.0.0",
   "scripts": {
     "dev": "node ./scripts/index.mjs",
