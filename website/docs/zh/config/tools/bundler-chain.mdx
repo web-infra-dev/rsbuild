@@ -11,20 +11,20 @@ type BundlerChainFn = (
 
 - **默认值：** `undefined`
 
-你可以通过 `tools.bundlerChain` 来修改默认的 Rspack 配置，它的值是一个函数，接收两个参数：
-
-- 第一个参数为 `rspack-chain` 实例，你可以通过它来修改 Rspack 配置。
-- 第二个参数为一个工具对象，包括 `env`、`isProd`、`CHAIN_ID` 等。
-
-:::tip 什么是 RspackChain
-
 import RspackChain from '@zh/shared/rspackChain.mdx';
 
 <RspackChain />
 
-:::
+你可以通过 `tools.bundlerChain` 来调用 rspack-chain 以修改默认的 Rspack 配置，它的值是一个函数，接收两个参数：
+
+- 第一个参数为 `rspack-chain` 实例，你可以通过它来修改 Rspack 配置。
+- 第二个参数为一个工具对象，包括 `env`、`isProd`、`CHAIN_ID` 等。
 
 > `tools.bundlerChain` 会早于 [tools.rspack](/config/tools/rspack) 被执行，因此会被 `tools.rspack` 覆盖。
+
+:::tip
+Rsbuild 内置的 Rspack 配置会随着迭代而发生变化，这些变化不会反映在 semver 中，因此在升级 Rsbuild 时，你的自定义配置可能会失效。
+:::
 
 ## 示例
 

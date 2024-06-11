@@ -2,6 +2,10 @@
 
 Rsbuild 支持直接修改 Rspack 配置对象，也支持通过 `rspack-chain` 来修改 Rsbuild 内置的 Rspack 配置。
 
+:::tip
+Rsbuild 内置的 Rspack 配置会随着迭代而发生变化，这些变化不会反映在 semver 中，因此在升级 Rsbuild 时，你的自定义配置可能会失效。
+:::
+
 ## 修改配置对象
 
 你可以使用 Rsbuild 的 [tools.rspack](/config/tools/rspack) 选项来修改 Rspack 配置对象。

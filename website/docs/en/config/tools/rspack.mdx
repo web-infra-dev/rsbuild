@@ -5,6 +5,10 @@
 
 `tools.rspack` is used to configure [Rspack](https://rspack.dev/).
 
+:::tip
+The built-in Rspack config in Rsbuild may change with iterations, and these changes won't be reflected in semver. Therefore, your custom config may become invalid when you upgrade Rsbuild.
+:::
+
 ## Object Type
 
 `tools.rspack` can be configured as an object to be deep merged with the built-in Rspack configuration through [webpack-merge](https://github.com/survivejs/webpack-merge).
