@@ -2,7 +2,6 @@ import path from 'node:path';
 import {
   type Polyfill,
   type RsbuildTarget,
-  type RspackChain,
   SCRIPT_REGEX,
   applyScriptCondition,
   cloneDeep,
@@ -68,6 +67,12 @@ export const pluginSwc = (): RsbuildPlugin => ({
           .test(SCRIPT_REGEX)
           .type('javascript/auto');
 
+        const dataUriRule = chain.module
+          .rule(CHAIN_ID.RULE.JS_DATA_URI)
+          .mimetype({
+            or: ['text/javascript', 'application/javascript'],
+          });
+
         applyScriptCondition({
           rule,
           chain,
@@ -101,8 +106,11 @@ export const pluginSwc = (): RsbuildPlugin => ({
             swcConfig.env!.mode = undefined;
           } else {
             swcConfig.env!.mode = polyfillMode;
-            /* Apply core-js version and path alias and exclude core-js */
-            await applyCoreJs(swcConfig, chain, polyfillMode);
+
+            const coreJsDir = await applyCoreJs(swcConfig, polyfillMode);
+            for (const item of [rule, dataUriRule]) {
+              item.resolve.alias.set('core-js', coreJsDir);
+            }
           }
         }
 
@@ -123,14 +131,10 @@ export const pluginSwc = (): RsbuildPlugin => ({
          * https://webpack.js.org/api/module-methods/#import
          * @example: import x from 'data:text/javascript,export default 1;';
          */
-        chain.module
-          .rule(CHAIN_ID.RULE.JS_DATA_URI)
-          .mimetype({
-            or: ['text/javascript', 'application/javascript'],
-          })
-          // compatible with legacy packages with type="module"
+        dataUriRule.resolve
           // https://github.com/webpack/webpack/issues/11467
-          .resolve.set('fullySpecified', false)
+          // compatible with legacy packages with type="module"
+          .set('fullySpecified', false)
           .end()
           .use(CHAIN_ID.USE.SWC)
           .loader(builtinSwcLoaderName)
@@ -143,7 +147,6 @@ export const pluginSwc = (): RsbuildPlugin => ({
 
 async function applyCoreJs(
   swcConfig: SwcLoaderOptions,
-  chain: RspackChain,
   polyfillMode: Polyfill,
 ) {
   const coreJsPath = require.resolve('core-js/package.json');
@@ -158,9 +161,7 @@ async function applyCoreJs(
     swcConfig.env!.shippedProposals = true;
   }
 
-  chain.resolve.alias.merge({
-    'core-js': coreJsDir,
-  });
+  return coreJsDir;
 }
 
 function applyTransformImport(

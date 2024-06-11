@@ -99,6 +99,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
+        "resolve": {
+          "alias": {
+            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+          },
+        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
@@ -143,6 +148,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           ],
         },
         "resolve": {
+          "alias": {
+            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+          },
           "fullySpecified": false,
         },
         "use": [
@@ -420,7 +428,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   "resolve": {
     "alias": {
       "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [
       ".ts",
@@ -538,6 +545,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
+        "resolve": {
+          "alias": {
+            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+          },
+        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
@@ -582,6 +594,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           ],
         },
         "resolve": {
+          "alias": {
+            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+          },
           "fullySpecified": false,
         },
         "use": [
@@ -924,7 +939,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   "resolve": {
     "alias": {
       "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [
       ".ts",
@@ -1365,6 +1379,11 @@ exports[`tools.rspack > should match snapshot 1`] = `
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
+        "resolve": {
+          "alias": {
+            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+          },
+        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
@@ -1409,6 +1428,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
           ],
         },
         "resolve": {
+          "alias": {
+            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+          },
           "fullySpecified": false,
         },
         "use": [
@@ -1689,7 +1711,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
   "resolve": {
     "alias": {
       "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [
       ".ts",
