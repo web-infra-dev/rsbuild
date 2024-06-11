@@ -1,10 +1,10 @@
 import {
-  type BundlerChain,
   type ChainIdentifier,
   type NormalizedConfig,
   type RsbuildTarget,
+  type RspackChain,
   castArray,
-  mergeChainedOptions,
+  reduceConfigsWithContext,
 } from '@rsbuild/shared';
 import { ensureAbsolutePath } from '../helpers';
 import type { RsbuildPlugin } from '../types';
@@ -15,7 +15,7 @@ function applyFullySpecified({
   chain,
   CHAIN_ID,
 }: {
-  chain: BundlerChain;
+  chain: RspackChain;
   config: NormalizedConfig;
   CHAIN_ID: ChainIdentifier;
 }) {
@@ -25,7 +25,7 @@ function applyFullySpecified({
     .resolve.set('fullySpecified', false);
 }
 
-function applyExtensions({ chain }: { chain: BundlerChain }) {
+function applyExtensions({ chain }: { chain: RspackChain }) {
   const extensions = [
     // most projects are using TypeScript, resolve .ts(x) files first to reduce resolve time.
     '.ts',
@@ -45,7 +45,7 @@ function applyAlias({
   config,
   rootPath,
 }: {
-  chain: BundlerChain;
+  chain: RspackChain;
   target: RsbuildTarget;
   config: NormalizedConfig;
   rootPath: string;
@@ -56,10 +56,10 @@ function applyAlias({
     return;
   }
 
-  const mergedAlias = mergeChainedOptions({
-    defaults: {},
-    options: alias,
-    utils: { target },
+  const mergedAlias = reduceConfigsWithContext({
+    initial: {},
+    config: alias,
+    ctx: { target },
   });
 
   /**

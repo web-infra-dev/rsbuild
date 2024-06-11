@@ -11,12 +11,36 @@ test('should serve publicDir for dev server correctly', async ({ page }) => {
   const rsbuild = await dev({
     cwd,
     rsbuildConfig: {
-      source: {
-        entry: {
-          main: join(cwd, 'src/index.js'),
+      output: {
+        distPath: {
+          root: 'dist-dev-1',
         },
       },
+    },
+  });
+
+  const res = await page.goto(
+    `http://localhost:${rsbuild.port}/test-temp-file.txt`,
+  );
+
+  expect((await res?.body())?.toString().trim()).toBe('aaaa');
+
+  await rsbuild.close();
+});
+
+test('should serve publicDir with assetPrefix for dev server correctly', async ({
+  page,
+}) => {
+  await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'aaaa');
+
+  const rsbuild = await dev({
+    cwd,
+    rsbuildConfig: {
+      dev: {
+        assetPrefix: '/dev/',
+      },
       output: {
+        assetPrefix: '/prod/',
         distPath: {
           root: 'dist-dev-1',
         },
@@ -44,11 +68,6 @@ test('should serve custom publicDir for dev server correctly', async ({
   const rsbuild = await dev({
     cwd,
     rsbuildConfig: {
-      source: {
-        entry: {
-          main: join(cwd, 'src/index.js'),
-        },
-      },
       server: {
         publicDir: {
           name: 'public1',
@@ -75,11 +94,6 @@ test('should not serve publicDir when publicDir is false', async ({ page }) => {
   const rsbuild = await dev({
     cwd,
     rsbuildConfig: {
-      source: {
-        entry: {
-          main: join(cwd, 'src/index.js'),
-        },
-      },
       server: {
         publicDir: false,
         htmlFallback: false,
@@ -110,12 +124,37 @@ test('should serve publicDir for preview server correctly', async ({
     cwd,
     runServer: true,
     rsbuildConfig: {
-      source: {
-        entry: {
-          main: join(cwd, 'src/index.js'),
+      output: {
+        distPath: {
+          root: 'dist-build-1',
         },
       },
+    },
+  });
+
+  const res = await page.goto(
+    `http://localhost:${rsbuild.port}/test-temp-file.txt`,
+  );
+
+  expect((await res?.body())?.toString().trim()).toBe('aaaa');
+
+  await rsbuild.close();
+});
+
+test('should serve publicDir for preview server with assetPrefix correctly', async ({
+  page,
+}) => {
+  await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'aaaa');
+
+  const rsbuild = await build({
+    cwd,
+    runServer: true,
+    rsbuildConfig: {
+      dev: {
+        assetPrefix: '/dev/',
+      },
       output: {
+        assetPrefix: '/prod/',
         distPath: {
           root: 'dist-build-1',
         },

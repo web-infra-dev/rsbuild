@@ -1,21 +1,19 @@
 import path from 'node:path';
 import type {
-  BundlerChain,
   ChainIdentifier,
   NormalizedConfig,
   RsbuildContext,
   RsbuildPlugin,
   RsbuildTarget,
+  RspackChain,
 } from '@rsbuild/core';
-import {
-  getBrowserslistWithDefault,
-  mergeChainedOptions,
-} from '@rsbuild/shared';
+import { getBrowserslistWithDefault, reduceConfigs } from '@rsbuild/shared';
 import browserslist from '@rsbuild/shared/browserslist';
 import * as lightningcss from 'lightningcss';
 import type { Targets } from 'lightningcss';
 import type {
   LightningCSSLoaderOptions,
+  LightningCSSTransformOptions,
   Lightningcss,
   PluginLightningcssOptions,
 } from './types';
@@ -55,7 +53,7 @@ const applyLightningCSSLoader = ({
   targets,
   options = {},
 }: {
-  chain: BundlerChain;
+  chain: RspackChain;
   CHAIN_ID: ChainIdentifier;
   targets: Targets;
   options: PluginLightningcssOptions | undefined;
@@ -74,9 +72,9 @@ const applyLightningCSSLoader = ({
     options.transform = {};
   }
 
-  const mergedOptions: LightningCSSLoaderOptions = mergeChainedOptions({
-    defaults: defaultOptions,
-    options: {
+  const mergedOptions = reduceConfigs<LightningCSSTransformOptions>({
+    initial: defaultOptions,
+    config: {
       ...(implementation ? { implementation } : {}),
       ...options.transform,
     },
@@ -99,7 +97,7 @@ const applyLightningCSSMinifyPlugin = async ({
   targets,
   options,
 }: {
-  chain: BundlerChain;
+  chain: RspackChain;
   CHAIN_ID: ChainIdentifier;
   targets: Targets;
   options: PluginLightningcssOptions | undefined;
@@ -114,9 +112,9 @@ const applyLightningCSSMinifyPlugin = async ({
     options.minify = {};
   }
 
-  const mergedOptions: LightningCSSLoaderOptions = mergeChainedOptions({
-    defaults: defaultOptions,
-    options: {
+  const mergedOptions = reduceConfigs<LightningCSSTransformOptions>({
+    initial: defaultOptions,
+    config: {
       ...(implementation ? { implementation } : {}),
       ...options?.minify,
     },

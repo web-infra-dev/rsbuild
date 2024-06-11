@@ -1,6 +1,6 @@
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { ChainIdentifier } from '../chain';
-import type { BundlerChain } from './bundlerConfig';
+import type { RspackChain } from '../chain';
 import type { HtmlBasicTag, RsbuildConfig } from './config';
 import type { RsbuildTarget } from './rsbuild';
 import type { Rspack, RspackConfig } from './rspack';
@@ -117,9 +117,8 @@ export type ModifyBundlerChainUtils = ModifyChainUtils & {
   };
 };
 
-/** The intersection of webpack-chain and rspack-chain */
 export type ModifyBundlerChainFn = (
-  chain: BundlerChain,
+  chain: RspackChain,
   utils: ModifyBundlerChainUtils,
 ) => MaybePromise<void>;
 

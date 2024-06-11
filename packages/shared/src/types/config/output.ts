@@ -5,7 +5,7 @@ import type {
 } from '@rspack/core';
 import type { CSSLoaderModulesOptions, HTMLPluginOptions } from '../../types';
 import type { RsbuildTarget } from '../rsbuild';
-import type { RspackConfig } from '../rspack';
+import type { Rspack, RspackConfig } from '../rspack';
 
 export type DistPathConfig = {
   /**
@@ -82,7 +82,7 @@ export type FilenameConfig = {
    * - dev: '[name].js'
    * - prod: '[name].[contenthash:8].js'
    */
-  js?: string;
+  js?: NonNullable<Rspack.Configuration['output']>['filename'];
   /**
    * The name of the CSS files.
    * @default

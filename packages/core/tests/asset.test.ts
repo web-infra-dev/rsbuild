@@ -1,5 +1,5 @@
-import { FONT_EXTENSIONS } from '@rsbuild/shared';
 import { createStubRsbuild } from '@scripts/test-helper';
+import { FONT_EXTENSIONS } from '../src/constants';
 import { getRegExpForExts, pluginAsset } from '../src/plugins/asset';
 
 describe('getRegExpForExts', () => {

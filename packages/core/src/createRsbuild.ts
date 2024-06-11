@@ -40,7 +40,7 @@ async function applyDefaultPlugins(
   const { pluginSwc } = await import('./plugins/swc');
   const { pluginExternals } = await import('./plugins/externals');
   const { pluginSplitChunks } = await import('./plugins/splitChunks');
-  const { pluginStartUrl } = await import('./plugins/startUrl');
+  const { pluginOpen } = await import('./plugins/open');
   const { pluginInlineChunk } = await import('./plugins/inlineChunk');
   const { pluginBundleAnalyzer } = await import('./plugins/bundleAnalyzer');
   const { pluginRsdoctor } = await import('./plugins/rsdoctor');
@@ -79,7 +79,7 @@ async function applyDefaultPlugins(
     pluginSwc(),
     pluginExternals(),
     pluginSplitChunks(),
-    pluginStartUrl(),
+    pluginOpen(),
     pluginInlineChunk(),
     pluginBundleAnalyzer(),
     pluginRsdoctor(),

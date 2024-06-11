@@ -5,6 +5,7 @@
     "outDir": "./dist",
     "paths": {
       "@theme": ["./theme"],
+      "@components/*": ["./components/*"],
       "@zh/*": ["./docs/zh/*"],
       "@en/*": ["./docs/en/*"]
     },

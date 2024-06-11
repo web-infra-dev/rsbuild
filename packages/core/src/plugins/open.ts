@@ -1,6 +1,12 @@
 import { exec } from 'node:child_process';
 import { promisify } from 'node:util';
-import { type Routes, castArray, debug, logger } from '@rsbuild/shared';
+import {
+  type Routes,
+  canParse,
+  castArray,
+  debug,
+  logger,
+} from '@rsbuild/shared';
 import { STATIC_PATH } from '../constants';
 import type { RsbuildPlugin } from '../types';
 
@@ -82,11 +88,26 @@ export async function openBrowser(url: string): Promise<boolean> {
 export const replacePlaceholder = (url: string, port: number) =>
   url.replace(/<port>/g, String(port));
 
+export function resolveUrl(str: string, base: string) {
+  if (canParse(str)) {
+    return str;
+  }
+
+  try {
+    const url = new URL(str, base);
+    return url.href;
+  } catch (e) {
+    throw new Error(
+      '[rsbuild:open]: Invalid input: not a valid URL or pathname',
+    );
+  }
+}
+
 const openedURLs: string[] = [];
 
-export function pluginStartUrl(): RsbuildPlugin {
+export function pluginOpen(): RsbuildPlugin {
   return {
-    name: 'rsbuild:start-url',
+    name: 'rsbuild:open',
     setup(api) {
       const onStartServer = async (params: {
         port: number;
@@ -94,31 +115,33 @@ export function pluginStartUrl(): RsbuildPlugin {
       }) => {
         const { port, routes } = params;
         const config = api.getNormalizedConfig();
-        const { startUrl, beforeStartUrl } = config.dev;
+        const { beforeStartUrl } = config.dev;
+        const open = config.server.open || config.dev.startUrl;
         const { https } = api.context.devServer || {};
 
         // Skip open in codesandbox. After being bundled, the `open` package will
         // try to call system xdg-open, which will cause an error on codesandbox.
         // https://github.com/codesandbox/codesandbox-client/issues/6642
         const isCodesandbox = process.env.CSB === 'true';
-        const shouldOpen = Boolean(startUrl) && !isCodesandbox;
+        const shouldOpen = Boolean(open) && !isCodesandbox;
 
         if (!shouldOpen) {
           return;
         }
 
         const urls: string[] = [];
+        const protocol = https ? 'https' : 'http';
+        const baseUrl = `${protocol}://localhost:${port}`;
 
-        if (startUrl === true || !startUrl) {
-          const protocol = https ? 'https' : 'http';
+        if (open === true || !open) {
           if (routes.length) {
             // auto open the first one
-            urls.push(`${protocol}://localhost:${port}${routes[0].pathname}`);
+            urls.push(`${baseUrl}${routes[0].pathname}`);
           }
         } else {
           urls.push(
-            ...castArray(startUrl).map((item) =>
-              replacePlaceholder(item, port),
+            ...castArray(open).map((item) =>
+              resolveUrl(replacePlaceholder(item, port), baseUrl),
             ),
           );
         }

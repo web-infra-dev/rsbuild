@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "rsbuild dev --open",
     "build": "rsbuild build",
-    "preview": "rsbuild preview"
+    "preview": "rsbuild preview",
+    "svelte-check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "dependencies": {
     "svelte": "^4.2.17"
@@ -13,6 +14,7 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-svelte": "workspace:*",
+    "svelte-check": "^3.8.0",
     "typescript": "^5.4.2"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-vue2-jsx",
-  "version": "0.7.2",
+  "version": "0.7.4",
   "description": "Vue 2 JSX plugin of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "@rsbuild/plugin-babel": "workspace:*",
-    "@rsbuild/shared": "workspace:*",
     "@vue/babel-preset-jsx": "^1.4.0"
   },
   "devDependencies": {
@@ -38,7 +37,7 @@
     "typescript": "^5.4.2"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.7.2"
+    "@rsbuild/core": "workspace:^0.7.4"
   },
   "publishConfig": {
     "access": "public",

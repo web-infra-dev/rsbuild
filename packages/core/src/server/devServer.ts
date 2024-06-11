@@ -3,7 +3,6 @@ import { isAbsolute, join } from 'node:path';
 import {
   type CreateDevServerOptions,
   type MultiStats,
-  ROOT_DIST_DIR,
   type Rspack,
   type StartDevServerOptions,
   type Stats,
@@ -14,6 +13,7 @@ import {
   setNodeEnv,
 } from '@rsbuild/shared';
 import type Connect from 'connect';
+import { ROOT_DIST_DIR } from '../constants';
 import type { CreateDevMiddlewareReturns } from '../provider/createCompiler';
 import type { InternalContext, NormalizedConfig } from '../types';
 import {

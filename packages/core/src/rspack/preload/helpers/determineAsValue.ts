@@ -23,7 +23,7 @@ import {
   FONT_EXTENSIONS,
   IMAGE_EXTENSIONS,
   VIDEO_EXTENSIONS,
-} from '@rsbuild/shared';
+} from '../../../constants';
 import type { As } from './type';
 
 export function determineAsValue({

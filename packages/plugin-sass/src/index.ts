@@ -5,7 +5,7 @@ import {
   castArray,
   cloneDeep,
   deepmerge,
-  mergeChainedOptions,
+  reduceConfigsWithContext,
 } from '@rsbuild/shared';
 import { getResolveUrlJoinFn, patchCompilerGlobalLocation } from './helpers';
 import type { PluginSassOptions, SassLoaderOptions } from './types';
@@ -48,14 +48,14 @@ const getSassLoaderOptions = (
     };
   };
 
-  const mergedOptions = mergeChainedOptions({
-    defaults: {
+  const mergedOptions = reduceConfigsWithContext({
+    initial: {
       sourceMap: isUseCssSourceMap,
       api: 'modern-compiler',
       implementation: require.resolve('sass-embedded'),
     },
-    options: userOptions,
-    utils: { addExcludes },
+    config: userOptions,
+    ctx: { addExcludes },
     mergeFn,
   });
 

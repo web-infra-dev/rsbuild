@@ -1,6 +1,6 @@
 import path from 'node:path';
 import {
-  type BundlerChainRule,
+  type AutoprefixerOptions,
   type CSSLoaderModulesMode,
   type CSSLoaderOptions,
   type ModifyChainUtils,
@@ -8,11 +8,13 @@ import {
   type PostCSSOptions,
   type RsbuildContext,
   type RsbuildTarget,
+  type RspackChain,
   deepmerge,
   getBrowserslistWithDefault,
   isFunction,
   isPlainObject,
-  mergeChainedOptions,
+  reduceConfigs,
+  reduceConfigsWithContext,
 } from '@rsbuild/shared';
 import type { AcceptedPlugin } from 'postcss';
 import { CSS_REGEX, LOADER_PATH } from '../constants';
@@ -129,12 +131,12 @@ export const applyAutoprefixer = async (
       '@rsbuild/shared/autoprefixer'
     );
 
-    const autoprefixerOptions = mergeChainedOptions({
-      defaults: {
+    const autoprefixerOptions = reduceConfigs<AutoprefixerOptions>({
+      initial: {
         flexbox: 'no-2009',
         overrideBrowserslist: browserslist,
       },
-      options: config.tools.autoprefixer,
+      config: config.tools.autoprefixer,
     });
 
     // Place autoprefixer as the last plugin to correctly process the results of other plugins
@@ -184,10 +186,10 @@ const getPostcssLoaderOptions = async ({
     sourceMap: config.output.sourceMap.css,
   };
 
-  const mergedConfig = mergeChainedOptions({
-    defaults: defaultPostcssConfig,
-    options: config.tools.postcss,
-    utils,
+  const mergedConfig = reduceConfigsWithContext({
+    initial: defaultPostcssConfig,
+    config: config.tools.postcss,
+    ctx: utils,
   });
 
   if (extraPlugins.length) {
@@ -223,9 +225,9 @@ const getCSSLoaderOptions = ({
     sourceMap: config.output.sourceMap.css,
   };
 
-  const mergedCssLoaderOptions = mergeChainedOptions({
-    defaults: defaultOptions,
-    options: config.tools.cssLoader,
+  const mergedCssLoaderOptions = reduceConfigs({
+    initial: defaultOptions,
+    config: config.tools.cssLoader,
     mergeFn: deepmerge,
   });
 
@@ -244,7 +246,7 @@ async function applyCSSRule({
   utils: { target, isProd, CHAIN_ID },
   importLoaders = 1,
 }: {
-  rule: BundlerChainRule;
+  rule: RspackChain.Rule;
   config: NormalizedConfig;
   context: RsbuildContext;
   utils: ModifyChainUtils;
@@ -282,9 +284,9 @@ async function applyCSSRule({
     }
     // use style-loader
     else {
-      const styleLoaderOptions = mergeChainedOptions({
-        defaults: {},
-        options: config.tools.styleLoader,
+      const styleLoaderOptions = reduceConfigs({
+        initial: {},
+        config: config.tools.styleLoader,
       });
 
       rule

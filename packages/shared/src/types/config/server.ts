@@ -106,6 +106,10 @@ export interface ServerConfig {
    */
   historyApiFallback?: boolean | HistoryApiFallbackOptions;
   /**
+   * Set the page URL to open when the server starts.
+   */
+  open?: boolean | string | string[];
+  /**
    * Configure proxy rules for the dev server or preview server to proxy requests to the specified service.
    */
   proxy?: ProxyOptions;
@@ -130,5 +134,6 @@ export type NormalizedServerConfig = ServerConfig &
       | 'publicDir'
       | 'strictPort'
       | 'printUrls'
+      | 'open'
     >
   >;

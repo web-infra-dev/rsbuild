@@ -234,14 +234,11 @@ const myPlugin = () => ({
 
 ### modifyBundlerChain
 
-:::tip 什么是 BundlerChain
+import RspackChain from '@zh/shared/rspackChain.mdx';
 
-import BundlerChain from '@zh/shared/bundlerChain.mdx';
+<RspackChain />
 
-<BundlerChain />
-:::
-
-`modifyBundlerChain` 用于调用 bundler chain 来修改 Rspack 的配置。
+`modifyBundlerChain` 用于调用 rspack-chain 来修改 Rspack 的配置。
 
 - **类型：**
 
@@ -266,7 +263,7 @@ type ModifyBundlerChainUtils = {
 
 function ModifyBundlerChain(
   callback: (
-    chain: BundlerChain,
+    chain: RspackChain,
     utils: ModifyBundlerChainUtils,
   ) => Promise<void> | void,
 ): void;

@@ -1,11 +1,11 @@
 import { isAbsolute, normalize, sep } from 'node:path';
 import type { PluginOptions as BabelPluginOptions } from '@babel/core';
 import type {
-  BundlerChain,
   ChainIdentifier,
   NormalizedConfig,
+  RspackChain,
 } from '@rsbuild/core';
-import { castArray, mergeChainedOptions } from '@rsbuild/shared';
+import { castArray, reduceConfigsWithContext } from '@rsbuild/shared';
 import upath from 'upath';
 import type {
   BabelConfigUtils,
@@ -159,10 +159,10 @@ export const applyUserBabelConfig = (
       ...extraBabelUtils,
     } as BabelConfigUtils;
 
-    return mergeChainedOptions({
-      defaults: defaultOptions,
-      options: userBabelConfig,
-      utils: babelUtils,
+    return reduceConfigsWithContext({
+      initial: defaultOptions,
+      config: userBabelConfig,
+      ctx: babelUtils,
     });
   }
 
@@ -182,7 +182,7 @@ export const modifyBabelLoaderOptions = ({
   CHAIN_ID,
   modifier,
 }: {
-  chain: BundlerChain;
+  chain: RspackChain;
   CHAIN_ID: ChainIdentifier;
   modifier: (config: BabelTransformOptions) => BabelTransformOptions;
 }) => {

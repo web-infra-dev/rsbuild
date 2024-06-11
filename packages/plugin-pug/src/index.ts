@@ -1,5 +1,5 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { mergeChainedOptions } from '@rsbuild/shared';
+import { reduceConfigs } from '@rsbuild/shared';
 import type { Options as PugOptions } from 'pug';
 
 export type PluginPugOptions = {
@@ -17,12 +17,12 @@ export const pluginPug = (options: PluginPugOptions = {}): RsbuildPlugin => ({
     const VUE_SFC_REGEXP = /\.vue$/;
     const { compile, compileClient } = await import('pug');
 
-    const pugOptions = mergeChainedOptions({
-      defaults: {
+    const pugOptions = reduceConfigs({
+      initial: {
         doctype: 'html',
         compileDebug: false,
       },
-      options: options.pugOptions,
+      config: options.pugOptions,
     });
 
     api.transform(

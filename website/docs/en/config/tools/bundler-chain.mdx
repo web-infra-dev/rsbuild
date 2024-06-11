@@ -4,24 +4,31 @@
 
 ```ts
 type BundlerChainFn = (
-  chain: BundlerChain,
+  chain: RspackChain,
   utils: ModifyBundlerChainUtils,
-) => void;
+) => Promise<void> | void;
 ```
 
 - **Default:** `undefined`
 
-You can modify the Rspack and webpack configuration by configuring `tools.bundlerChain` which is type of `Function`. The function receives two parameters, the first is the original bundler chain object, and the second is an object containing some utils.
+You can modify the default Rspack config through `tools.bundlerChain`. Its value is a function that takes two arguments:
 
-:::tip What is BundlerChain
+- The first argument is a `rspack-chain` instance, which you can use to modify the Rspack config.
+- The second argument is an utils object, including `env`, `isProd`, `CHAIN_ID`, etc.
 
-Bundler chain is a subset of webpack chain, which contains part of the webpack chain API that you can use to modify both Rspack and webpack configuration.
+:::tip What is RspackChain
 
-Configurations modified via bundler chain will work on both Rspack and webpack builds. Note that the bundler chain only supports modifying the configuration of the non-differentiated parts of Rspack and webpack. For example, modifying the devtool configuration option (Rspack and webpack have the same devtool property value type), or adding an [Rspack-compatible](https://rspack.dev/guide/compatibility/plugin) webpack plugin.
+import RspackChain from '@en/shared/rspackChain.mdx';
+
+<RspackChain />
 
 :::
 
-> `tools.bundlerChain` is executed earlier than tools.rspack and thus will be overridden by changes in other.
+> `tools.bundlerChain` will be executed earlier than [tools.rspack](/config/tools/rspack), so it will be overridden by `tools.rspack`.
+
+## Examples
+
+Please refer to: [RspackChain examples](/guide/basic/configure-rspack#use-rspack-chain).
 
 ## Utils
 
@@ -231,7 +238,3 @@ For example, the `RULE.STYLUS` rule exists only when the Stylus plugin is regist
 | --------------- | ------------------------------------------- |
 | `MINIMIZER.JS`  | correspond to `SwcJsMinimizerRspackPlugin`  |
 | `MINIMIZER.CSS` | correspond to `SwcCssMinimizerRspackPlugin` |
-
-### Examples
-
-For usage examples, please refer to: [BundlerChain examples](/guide/basic/configure-rsbuild#examples).

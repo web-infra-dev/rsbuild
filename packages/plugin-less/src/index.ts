@@ -1,12 +1,12 @@
 import path from 'node:path';
 import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
 import {
-  type ChainedConfigWithUtils,
+  type ConfigChainWithContext,
   type FileFilterUtil,
   castArray,
   cloneDeep,
   deepmerge,
-  mergeChainedOptions,
+  reduceConfigsWithContext,
 } from '@rsbuild/shared';
 import type Less from '../compiled/less';
 
@@ -30,7 +30,7 @@ export type PluginLessOptions = {
    * Options passed to less-loader.
    * @see https://github.com/webpack-contrib/less-loader
    */
-  lessLoaderOptions?: ChainedConfigWithUtils<
+  lessLoaderOptions?: ConfigChainWithContext<
     LessLoaderOptions,
     {
       /**
@@ -87,10 +87,10 @@ const getLessLoaderOptions = (
     };
   };
 
-  const mergedOptions = mergeChainedOptions({
-    defaults: defaultLessLoaderOptions,
-    options: userOptions,
-    utils: { addExcludes },
+  const mergedOptions = reduceConfigsWithContext({
+    initial: defaultLessLoaderOptions,
+    config: userOptions,
+    ctx: { addExcludes },
     mergeFn,
   });
 

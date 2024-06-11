@@ -1,8 +1,8 @@
 import path from 'node:path';
 import {
-  type BundlerChain,
   type Polyfill,
   type RsbuildTarget,
+  type RspackChain,
   SCRIPT_REGEX,
   applyScriptCondition,
   cloneDeep,
@@ -10,7 +10,7 @@ import {
   getBrowserslistWithDefault,
   getCoreJsVersion,
   isWebTarget,
-  mergeChainedOptions,
+  reduceConfigs,
 } from '@rsbuild/shared';
 import type { SwcLoaderOptions } from '@rspack/core';
 import { PLUGIN_SWC_NAME } from '../constants';
@@ -106,9 +106,9 @@ export const pluginSwc = (): RsbuildPlugin => ({
           }
         }
 
-        const mergedSwcConfig = mergeChainedOptions({
-          defaults: swcConfig,
-          options: config.tools.swc,
+        const mergedSwcConfig = reduceConfigs({
+          initial: swcConfig,
+          config: config.tools.swc,
           mergeFn: deepmerge,
         });
 
@@ -143,7 +143,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
 
 async function applyCoreJs(
   swcConfig: SwcLoaderOptions,
-  chain: BundlerChain,
+  chain: RspackChain,
   polyfillMode: Polyfill,
 ) {
   const coreJsPath = require.resolve('core-js/package.json');

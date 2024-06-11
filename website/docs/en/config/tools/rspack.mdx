@@ -46,9 +46,23 @@ export default {
 The object returned by the `tools.rspack` function is used directly as the final Rspack configuration and is not merged with the built-in Rspack configuration.
 :::
 
-The second parameter of this function is an object, which contains some utility functions and properties, as follows:
+`tools.rspack` can also be an async function:
+
+```js
+export default {
+  tools: {
+    rspack: async (config) => {
+      const { default: ESLintPlugin } = await import('eslint-webpack-plugin');
+      config.plugins?.push(new ESLintPlugin());
+      return config;
+    },
+  },
+};
+```
 
 ## Utils
+
+The second parameter of this function is an object, which contains some utility functions and properties, as follows:
 
 ### env
 

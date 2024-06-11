@@ -239,9 +239,12 @@ export class HtmlBasicPlugin {
 
   readonly options: HtmlBasicPluginOptions;
 
-  readonly modifyTagsFn: ModifyHTMLTagsFn;
+  readonly modifyTagsFn?: ModifyHTMLTagsFn;
 
-  constructor(options: HtmlBasicPluginOptions, modifyTagsFn: ModifyHTMLTagsFn) {
+  constructor(
+    options: HtmlBasicPluginOptions,
+    modifyTagsFn?: ModifyHTMLTagsFn,
+  ) {
     this.name = 'HtmlBasicPlugin';
     this.options = options;
     this.modifyTagsFn = modifyTagsFn;
@@ -268,20 +271,22 @@ export class HtmlBasicPlugin {
 
           addFavicon(headTags, favicon);
 
-          const result = await this.modifyTagsFn(
-            {
-              headTags: headTags.map(formatBasicTag),
-              bodyTags: bodyTags.map(formatBasicTag),
-            },
-            {
-              compilation,
-              assetPrefix: data.publicPath,
-              filename: data.outputName,
-            },
-          );
+          const tags = {
+            headTags: headTags.map(formatBasicTag),
+            bodyTags: bodyTags.map(formatBasicTag),
+          };
+
+          const modified = this.modifyTagsFn
+            ? await this.modifyTagsFn(tags, {
+                compilation,
+                assetPrefix: data.publicPath,
+                filename: data.outputName,
+              })
+            : tags;
+
           Object.assign(data, {
-            headTags: result.headTags.map(fromBasicTag),
-            bodyTags: result.bodyTags.map(fromBasicTag),
+            headTags: modified.headTags.map(fromBasicTag),
+            bodyTags: modified.bodyTags.map(fromBasicTag),
           });
 
           if (tagConfig) {

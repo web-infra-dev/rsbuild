@@ -147,6 +147,10 @@ export default {
 | [lightningcss-loader](https://www.npmjs.com/package/lightningcss-loader)                       | [Lightning CSS 插件](/plugins/list/plugin-lightningcss)                         |
 | [babel-plugin-styled-components](https://www.npmjs.com/package/babel-plugin-styled-components) | [Styled Components 插件](/plugins/list/plugin-styled-components)                |
 
+### 配置 Dev Server
+
+Rsbuild 不支持使用 Rspack 的 [devServer](https://rspack.dev/config/dev-server) 配置项，请参考 [Rspack Dev Server](/guide/basic/server#rspack-dev-server) 进行替换。
+
 ## 验证结果
 
 完成以上步骤后，你已经完成了从 webpack 到 Rsbuild 的基本迁移，此时可以执行 `npm run dev` 命令来尝试启动开发服务器。

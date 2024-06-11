@@ -90,15 +90,17 @@ export type { Foo } from './utils'; // 正确写法
 
 在个别情况下，以上报错是由第三方依赖引入的，你无法直接修改它。此时，如果你确定该问题不影响你的应用，那么可以添加以下配置，将 `error` 日志修改为 `warn` 级别：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
-    bundlerChain(chain) {
-      chain.module.parser.merge({
-        javascript: {
-          exportsPresence: 'warn',
+    rspack: {
+      module: {
+        parser: {
+          javascript: {
+            exportsPresence: 'error',
+          },
         },
-      });
+      },
     },
   },
 };
@@ -106,7 +108,7 @@ export default {
 
 同时，你需要尽快联系第三方依赖的开发者来修复相应的问题。
 
-> 你可以查看 webpack 的文档来了解 [module.parser.javascript.exportsPresence](https://webpack.js.org/configuration/module/#moduleparserjavascriptexportspresence) 的更多细节。
+> 你可以查看 webpack 的文档来了解 [module.parser.javascript.exportsPresence](https://www.rspack.dev/config/module#moduleparserjavascriptexportspresence) 的更多细节。
 
 ---
 

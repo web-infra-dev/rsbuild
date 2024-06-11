@@ -1,9 +1,8 @@
 import type { EntryDescription } from '@rspack/core';
+import RspackChain from '../compiled/rspack-chain/index.js';
 import { NODE_MODULES_REGEX, TS_AND_JSX_REGEX } from './constants';
 import { debug } from './logger';
 import type {
-  BundlerChain,
-  BundlerChainRule,
   CreateAsyncHook,
   ModifyBundlerChainFn,
   ModifyBundlerChainUtils,
@@ -16,14 +15,12 @@ import type {
 import { isPlainObject } from './utils';
 import { castArray } from './utils';
 
+export { RspackChain };
+
 export async function getBundlerChain() {
-  const { default: WebpackChain } = await import(
-    '../compiled/webpack-chain/index.js'
-  );
+  const bundlerChain = new RspackChain();
 
-  const bundlerChain = new WebpackChain();
-
-  return bundlerChain as unknown as BundlerChain;
+  return bundlerChain as unknown as RspackChain;
 }
 
 export async function modifyBundlerChain(
@@ -34,7 +31,7 @@ export async function modifyBundlerChain(
     config: Readonly<RsbuildConfig>;
   },
   utils: ModifyBundlerChainUtils,
-): Promise<BundlerChain> {
+): Promise<RspackChain> {
   debug('modify bundler chain');
 
   const bundlerChain = await getBundlerChain();
@@ -46,7 +43,7 @@ export async function modifyBundlerChain(
 
   if (context.config.tools?.bundlerChain) {
     for (const item of castArray(context.config.tools.bundlerChain)) {
-      item(modifiedBundlerChain, utils);
+      await item(modifiedBundlerChain, utils);
     }
   }
 
@@ -235,8 +232,8 @@ export function applyScriptCondition({
   includes,
   excludes,
 }: {
-  rule: BundlerChainRule;
-  chain: BundlerChain;
+  rule: RspackChain.Rule;
+  chain: RspackChain;
   config: NormalizedConfig;
   context: RsbuildContext;
   includes: (string | RegExp)[];
@@ -269,7 +266,7 @@ export function applyScriptCondition({
   }
 }
 
-export function chainToConfig(chain: BundlerChain): RspackConfig {
+export function chainToConfig(chain: RspackChain): RspackConfig {
   const config = chain.toConfig();
   const { entry } = config;
 
@@ -280,7 +277,7 @@ export function chainToConfig(chain: BundlerChain): RspackConfig {
   const formattedEntry: RsbuildEntry = {};
 
   /**
-   * webpack-chain can not handle entry description object correctly,
+   * rspack-chain can not handle entry description object correctly,
    * so we need to format the entry object and correct the entry description object.
    */
   for (const [entryName, entryValue] of Object.entries(entry)) {
