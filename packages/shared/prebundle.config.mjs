@@ -52,6 +52,7 @@ export default {
     {
       name: 'rspack-chain',
       externals: {
+        '@rspack/core': '@rspack/core',
         deepmerge: '../deepmerge',
       },
     },
