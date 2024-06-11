@@ -13,7 +13,6 @@
     "prebundle": "nx run-many -t prebundle",
     "change": "changeset",
     "changeset": "changeset",
-    "check-changeset": "cd ./scripts/check-changeset && pnpm start",
     "check-dependency-version": "check-dependency-version-consistency . --ignore-dep vue-loader",
     "check-spell": "npx cspell",
     "dev:doc": "cd website && pnpm run dev",
