@@ -132,7 +132,8 @@ export const pluginSwc = (): RsbuildPlugin => ({
          * @example: import x from 'data:text/javascript,export default 1;';
          */
         dataUriRule.resolve
-          // https://github.com/webpack/webpack/issues/11467 // compatible with legacy packages with type="module"
+          // https://github.com/webpack/webpack/issues/11467
+          // compatible with legacy packages with type="module"
           .set('fullySpecified', false)
           .end()
           .use(CHAIN_ID.USE.SWC)
