@@ -1,0 +1,111 @@
+# Vite
+
+Vite 是一个优秀和强大的构建工具，在某些情况下，你可能需要将一个 Vite 应用迁移到 Rsbuild，那么你可以参考这篇指南进行操作。
+
+## 安装依赖
+
+首先你需要把 Vite 相关的 npm 依赖替换为 Rsbuild 的依赖。
+
+import { PackageManagerTabs } from '@theme';
+
+- 移除 Vite 的依赖：
+
+<PackageManagerTabs command="remove vite" />
+
+- 安装 Rsbuild 的依赖：
+
+<PackageManagerTabs command="add @rsbuild/core -D" />
+
+## 更新 npm scripts
+
+下一步，你需要把 package.json 中的 npm scripts 更新为 Rsbuild 的 CLI 命令。
+
+```diff title="package.json"
+{
+  "scripts": {
+-   "dev": "vite",
+-   "build": "vite build",
+-   "preview": "vite preview"
++   "dev": "rsbuild dev",
++   "build": "rsbuild build",
++   "preview": "rsbuild preview"
+  }
+}
+```
+
+## 创建配置文件
+
+在 package.json 的同级目录下创建 Rsbuild 的配置文件 `rsbuild.config.ts`，并添加以下内容：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig({
+  plugins: [],
+});
+```
+
+## 构建入口
+
+Rsbuild 与 Vite 默认的构建入口不同，Vite 使用 `index.html` 作为默认入口，而 Rsbuild 使用 `src/index.js`。
+
+从 Vite 迁移到 Rsbuild 时，你可以使用 Rsbuild 提供的 [source.entry](/config/source/entry) 来设置构建入口，[html.template](/config/html/template) 来设置模板。
+
+以一个新建的 Vite 项目为例，首先删除 `index.html` 中的 `<script>` 标签：
+
+```diff title="index.html"
+- <script type="module" src="/src/main.ts"></script>
+```
+
+然后添加如下配置即可。
+
+```ts title="rsbuild.config.ts"
+export default {
+  html: {
+    template: './index.html',
+  },
+  source: {
+    entry: {
+      index: './src/main.ts',
+    },
+  },
+};
+```
+
+Rsbuild 会在构建时自动注入 `<script>` 标签到生成的 HTML 文件中。
+
+## 迁移插件
+
+大部分常见的 Vite 插件可以轻松地迁移到 Rsbuild 插件，比如：
+
+| Vite                                                                                       | Rsbuild                                                              |
+| ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------- |
+| [@vitejs/plugin-react](https://www.npmjs.com/package/@vitejs/plugin-react)                 | [@rsbuild/plugin-react](/plugins/list/plugin-react)                  |
+| [@vitejs/plugin-react-swc](https://www.npmjs.com/package/@vitejs/plugin-react-swc)         | [@rsbuild/plugin-react](/plugins/list/plugin-react)                  |
+| [@vitejs/plugin-vue](https://www.npmjs.com/package/@vitejs/plugin-vue)                     | [@rsbuild/plugin-vue](/plugins/list/plugin-vue)                      |
+| [@vitejs/plugin-vue2](https://www.npmjs.com/package/@vitejs/plugin-vue2)                   | [@rsbuild/plugin-vue2](/plugins/list/plugin-vue2)                    |
+| [@vitejs/plugin-vue-jsx](https://www.npmjs.com/package/@vitejs/plugin-vue-jsx)             | [@rsbuild/plugin-vue-jsx](/plugins/list/plugin-vue-jsx)              |
+| [@vitejs/plugin-vue2-jsx](https://www.npmjs.com/package/@vitejs/plugin-vue2-jsx)           | [@rsbuild/plugin-vue2-jsx](/plugins/list/plugin-vue2-jsx)            |
+| [@vitejs/plugin-basic-ssl](https://www.npmjs.com/package/@vitejs/plugin-basic-ssl)         | [@rsbuild/plugin-basic-ssl](/plugins/list/plugin-basic-ssl)          |
+| [@vitejs/plugin-legacy](https://www.npmjs.com/package/@vitejs/plugin-legacy)               | 无须使用，详见 [浏览器兼容性](/guide/advanced/browser-compatibility) |
+| [@sveltejs/vite-plugin-svelte](https://www.npmjs.com/package/@sveltejs/vite-plugin-svelte) | [@rsbuild/plugin-svelte](/plugins/list/plugin-svelte)                |
+| [vite-plugin-svgr](https://www.npmjs.com/package/vite-plugin-svgr)                         | [@rsbuild/plugin-svgr](/plugins/list/plugin-svgr)                    |
+| [vite-plugin-checker](https://www.npmjs.com/package/vite-plugin-checker)                   | [@rsbuild/plugin-type-check](/plugins/list/plugin-type-check)        |
+| [vite-plugin-eslint](https://www.npmjs.com/package/vite-plugin-eslint)                     | [@rsbuild/plugin-eslint](/plugins/list/plugin-eslint)                |
+| [vite-plugin-static-copy](https://www.npmjs.com/package/vite-plugin-static-copy)           | [output.copy](/config/output/copy)                                   |
+| [vite-plugin-node-polyfills](https://www.npmjs.com/package/vite-plugin-node-polyfills)     | [@rsbuild/plugin-node-polyfill](/plugins/list/plugin-node-polyfill)  |
+| [vite-plugin-solid](https://www.npmjs.com/package/vite-plugin-solid)                       | [@rsbuild/plugin-solid](/plugins/list/plugin-solid)                  |
+
+你可以参考 [插件列表](/plugins/list/index) 来了解更多可用的插件。
+
+## 验证结果
+
+完成以上步骤后，你已经完成了从 Vite 到 Rsbuild 的基本迁移，此时可以执行 `npm run dev` 命令来尝试启动开发服务器。
+
+如果在构建过程中发现问题，请根据错误日志进行调试，或者查看 Vite 配置，检查是否有一些必须的配置未被迁移到 Rsbuild。
+
+## 内容补充
+
+当前文档只涵盖了迁移过程的部分事项，如果你发现有合适的内容可以补充，欢迎通过 pull request 来完善文档 🤝。
+
+> Rsbuild 的文档位于 [rsbuild/website](https://github.com/web-infra-dev/rsbuild/tree/main/website) 目录。
