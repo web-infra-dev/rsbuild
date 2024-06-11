@@ -201,6 +201,20 @@ export async function createDevServer<
     });
   }
 
+  let _stats: Stats | MultiStats;
+
+  // should register onDevCompileDone hook before startCompile
+  const waitFirstCompileDone = new Promise<void>((resolve) => {
+    options.context.hooks.onDevCompileDone.tap(({ stats, isFirstCompile }) => {
+      _stats = stats;
+
+      if (!isFirstCompile) {
+        return;
+      }
+      resolve();
+    });
+  });
+
   const compileMiddlewareAPI = runCompile ? await startCompile() : undefined;
 
   const fileWatcher = await setupWatchFiles({
@@ -246,19 +260,6 @@ export async function createDevServer<
     distPath: isAbsolute(distPath) ? distPath : join(pwd, distPath),
     getHTMLPaths: options.context.pluginAPI!.getHTMLPaths,
   };
-
-  let _stats: Stats | MultiStats;
-
-  const waitFirstCompileDone = new Promise<void>((resolve) => {
-    options.context.hooks.onDevCompileDone.tap(({ stats, isFirstCompile }) => {
-      _stats = stats;
-
-      if (!isFirstCompile) {
-        return;
-      }
-      resolve();
-    });
-  });
 
   const server = {
     port,
