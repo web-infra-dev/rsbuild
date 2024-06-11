@@ -4,8 +4,8 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "rspress dev",
-    "build": "rspress build",
+    "dev": "RUST_MIN_STACK=4194304 rspress dev",
+    "build": "RUST_MIN_STACK=4194304 rspress build",
     "preview": "rspress preview"
   },
   "devDependencies": {
