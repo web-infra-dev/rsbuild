@@ -20,6 +20,8 @@ export const serverRender = (rsbuildServer) => async (_req, res, _next) => {
 };
 
 export async function startDevServer(fixtures, overridsConfig) {
+  process.env.NODE_ENV = 'development';
+
   const { content } = overridsConfig
     ? { content: overridsConfig }
     : await loadConfig({
