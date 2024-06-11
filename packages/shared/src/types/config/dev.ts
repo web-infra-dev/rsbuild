@@ -1,7 +1,6 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { WatchOptions } from '../../../compiled/chokidar/index.js';
 import type { Rspack } from '../rspack';
-import type { OneOrMany } from '../utils';
 
 export type ProgressBarConfig = {
   id?: string;
@@ -53,10 +52,10 @@ export interface DevConfig {
    */
   startUrl?: boolean | string | string[];
   /**
-   * Used to execute a callback function before opening the `startUrl`.
-   * This config needs to be used together with `dev.startUrl`.
+   * Execute a callback function before opening the `startUrl`.
+   * @deprecated use `server.open.before` instead.
    */
-  beforeStartUrl?: OneOrMany<() => Promise<void> | void>;
+  beforeStartUrl?: () => Promise<void> | void;
   /**
    * Set the URL prefix of static assets during development,
    * similar to the [output.publicPath](https://rspack.dev/config/output#outputpublicpath) config of webpack.

@@ -1,6 +1,18 @@
 # server.open
 
-- **类型：** `boolean | string | string[] | undefined`
+- **类型：**
+
+```ts
+type Open =
+  | boolean
+  | string
+  | string[]
+  | {
+      target?: string | string[];
+      before?: () => Promise<void> | void;
+    };
+```
+
 - **默认值：** `undefined`
 - **版本：** `>= 0.7.4`
 
@@ -98,3 +110,34 @@ BROWSER="Google Chrome Canary" npx rsbuild dev --open
 :::tip
 你可以将 `BROWSER` 设置在本地的 `.env.local` 文件中，这样能够避免影响其他开发者。
 :::
+
+### 回调函数
+
+通过 `open.before`，可以在打开页面之前触发一个回调函数。
+
+```js
+export default {
+  server: {
+    open: {
+      before: async () => {
+        await doSomeThing();
+      },
+    },
+  },
+};
+```
+
+当使用 `open.before` 时，你可以通过 `open.target` 来配置页面的 URLs。
+
+```js
+export default {
+  server: {
+    open: {
+      target: ['/', '/about'],
+      before: async () => {
+        await doSomeThing();
+      },
+    },
+  },
+};
+```
