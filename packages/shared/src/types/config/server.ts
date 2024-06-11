@@ -108,7 +108,14 @@ export interface ServerConfig {
   /**
    * Set the page URL to open when the server starts.
    */
-  open?: boolean | string | string[];
+  open?:
+    | boolean
+    | string
+    | string[]
+    | {
+        target?: string | string[];
+        before?: () => Promise<void> | void;
+      };
   /**
    * Configure proxy rules for the dev server or preview server to proxy requests to the specified service.
    */

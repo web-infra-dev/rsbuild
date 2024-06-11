@@ -8,7 +8,7 @@ import {
   logger,
 } from '@rsbuild/shared';
 import { STATIC_PATH } from '../constants';
-import type { RsbuildPlugin } from '../types';
+import type { NormalizedConfig, RsbuildPlugin } from '../types';
 
 const execAsync = promisify(exec);
 
@@ -105,6 +105,31 @@ export function resolveUrl(str: string, base: string) {
 
 const openedURLs: string[] = [];
 
+const normalizeOpenConfig = (
+  config: NormalizedConfig,
+): { targets?: string[]; before?: () => Promise<void> | void } => {
+  const open = config.server.open || config.dev.startUrl;
+  const { beforeStartUrl } = config.dev;
+
+  if (open === false) {
+    return {};
+  }
+  if (open === true) {
+    return { targets: [], before: beforeStartUrl };
+  }
+  if (typeof open === 'string') {
+    return { targets: [open], before: beforeStartUrl };
+  }
+  if (Array.isArray(open)) {
+    return { targets: open, before: beforeStartUrl };
+  }
+
+  return {
+    targets: open.target ? castArray(open.target) : [],
+    before: open.before,
+  };
+};
+
 export function pluginOpen(): RsbuildPlugin {
   return {
     name: 'rsbuild:open',
@@ -115,15 +140,14 @@ export function pluginOpen(): RsbuildPlugin {
       }) => {
         const { port, routes } = params;
         const config = api.getNormalizedConfig();
-        const { beforeStartUrl } = config.dev;
-        const open = config.server.open || config.dev.startUrl;
         const { https } = api.context.devServer || {};
+        const { targets, before } = normalizeOpenConfig(config);
 
         // Skip open in codesandbox. After being bundled, the `open` package will
         // try to call system xdg-open, which will cause an error on codesandbox.
         // https://github.com/codesandbox/codesandbox-client/issues/6642
         const isCodesandbox = process.env.CSB === 'true';
-        const shouldOpen = Boolean(open) && !isCodesandbox;
+        const shouldOpen = targets !== undefined && !isCodesandbox;
 
         if (!shouldOpen) {
           return;
@@ -133,15 +157,15 @@ export function pluginOpen(): RsbuildPlugin {
         const protocol = https ? 'https' : 'http';
         const baseUrl = `${protocol}://localhost:${port}`;
 
-        if (open === true || !open) {
+        if (!targets.length) {
           if (routes.length) {
             // auto open the first one
             urls.push(`${baseUrl}${routes[0].pathname}`);
           }
         } else {
           urls.push(
-            ...castArray(open).map((item) =>
-              resolveUrl(replacePlaceholder(item, port), baseUrl),
+            ...targets.map((target) =>
+              resolveUrl(replacePlaceholder(target, port), baseUrl),
             ),
           );
         }
@@ -159,13 +183,10 @@ export function pluginOpen(): RsbuildPlugin {
           }
         };
 
-        if (beforeStartUrl) {
-          Promise.all(castArray(beforeStartUrl).map((fn) => fn())).then(
-            openUrls,
-          );
-        } else {
-          openUrls();
+        if (before) {
+          await before();
         }
+        openUrls();
       };
 
       api.onAfterStartDevServer(onStartServer);
