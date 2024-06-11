@@ -13,6 +13,11 @@ exports[`plugins/styled-components > should apply styledComponents option to swc
     },
     /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
   ],
+  "resolve": {
+    "alias": {
+      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+    },
+  },
   "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   "type": "javascript/auto",
   "use": [
@@ -125,6 +130,11 @@ exports[`plugins/styled-components > should enable ssr option when target contai
     },
     /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
   ],
+  "resolve": {
+    "alias": {
+      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+    },
+  },
   "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   "type": "javascript/auto",
   "use": [
