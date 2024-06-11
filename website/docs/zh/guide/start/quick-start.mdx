@@ -59,6 +59,22 @@ import { PackageManagerTabs } from '@theme';
 | solid   | [Solid](https://solidjs.com/)   | TypeScript |
 | vanilla | 原生 JavaScript                 | TypeScript |
 
+### 可选工具
+
+`create-rsbuild` 能够帮助你设置一些常用的工具，包括 [Biome](https://github.com/biomejs/biome)、[ESLint](https://github.com/eslint/eslint) 和 [prettier](https://github.com/prettier/prettier)，你可以使用上下箭头和空格进行选择。如果你不需要这些工具，可以直接按回车跳过。
+
+```text
+◆  Select additional tools (use arrow keys / space bar)
+│  ◻ Add Biome for code linting and formatting
+│  ◻ Add ESLint for code linting
+│  ◻ Add Prettier for code formatting
+└
+```
+
+:::tip
+Biome 提供与 ESLint 和 Prettier 相似的代码检查和格式化功能。如果你选择了 Biome，通常就不需要再选择 ESLint 或 Prettier 了。
+:::
+
 ### 当前目录
 
 如果你需要在当前目录下创建项目，可以将 target folder 设置为 `.`：
