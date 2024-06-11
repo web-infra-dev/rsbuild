@@ -2,6 +2,10 @@
 
 Rsbuild supports directly modifying the Rspack configuration object, and also supports modifying the built-in Rspack configuration of Rsbuild through `rspack-chain`.
 
+:::tip
+The built-in Rspack config in Rsbuild may change with iterations, and these changes won't be reflected in semver. Therefore, your custom config may become invalid when you upgrade Rsbuild.
+:::
+
 ## Modify Config Object
 
 You can use the [tools.rspack](/config/tools/rspack) option of Rsbuild to modify the Rspack config object.

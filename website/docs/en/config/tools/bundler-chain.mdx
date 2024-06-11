@@ -11,20 +11,20 @@ type BundlerChainFn = (
 
 - **Default:** `undefined`
 
-You can modify the default Rspack config through `tools.bundlerChain`. Its value is a function that takes two arguments:
-
-- The first argument is a `rspack-chain` instance, which you can use to modify the Rspack config.
-- The second argument is an utils object, including `env`, `isProd`, `CHAIN_ID`, etc.
-
-:::tip What is RspackChain
-
 import RspackChain from '@en/shared/rspackChain.mdx';
 
 <RspackChain />
 
-:::
+You can use rspack-chain to modify the default Rspack config through `tools.bundlerChain`. Its value is a function that takes two arguments:
+
+- The first argument is a `rspack-chain` instance, which you can use to modify the Rspack config.
+- The second argument is an utils object, including `env`, `isProd`, `CHAIN_ID`, etc.
 
 > `tools.bundlerChain` will be executed earlier than [tools.rspack](/config/tools/rspack), so it will be overridden by `tools.rspack`.
+
+:::tip
+The built-in Rspack config in Rsbuild may change with iterations, and these changes won't be reflected in semver. Therefore, your custom config may become invalid when you upgrade Rsbuild.
+:::
 
 ## Examples
 
