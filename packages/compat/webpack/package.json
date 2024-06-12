@@ -32,7 +32,7 @@
     "copy-webpack-plugin": "9.1.0",
     "mini-css-extract-plugin": "2.9.0",
     "tsconfig-paths-webpack-plugin": "4.1.0",
-    "webpack": "^5.91.0"
+    "webpack": "^5.92.0"
   },
   "devDependencies": {
     "@scripts/test-helper": "workspace:*",

@@ -112,7 +112,7 @@
     "semver": "^7.6.2",
     "terser": "5.31.0",
     "typescript": "^5.4.2",
-    "webpack": "^5.91.0",
+    "webpack": "^5.92.0",
     "webpack-bundle-analyzer": "^4.10.2",
     "webpack-merge": "5.10.0"
   },
