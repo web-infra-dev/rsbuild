@@ -1,5 +1,6 @@
 import { isAbsolute, join } from 'node:path';
 import { fse } from '@rsbuild/shared';
+import { normalizePublicDirs } from '../config';
 import type { RsbuildPlugin } from '../types';
 
 // For Rsbuild Server Config
@@ -9,32 +10,33 @@ export const pluginServer = (): RsbuildPlugin => ({
   setup(api) {
     api.onBeforeBuild(async () => {
       const config = api.getNormalizedConfig();
+      const publicDirs = normalizePublicDirs(config.server.publicDir);
 
-      if (config.server?.publicDir) {
-        const { name, copyOnBuild } = config.server.publicDir;
+      for (const publicDir of publicDirs) {
+        const { name, copyOnBuild } = publicDir;
 
         if (!copyOnBuild || !name) {
-          return;
+          continue;
         }
 
-        const publicDir = isAbsolute(name)
+        const normalizedPath = isAbsolute(name)
           ? name
           : join(api.context.rootPath, name);
 
-        if (!fse.existsSync(publicDir)) {
-          return;
+        if (!fse.existsSync(normalizedPath)) {
+          continue;
         }
 
         try {
-          // async errors will missing Error Stack on copy, move
+          // async errors will missing error stack on copy, move
           // https://github.com/jprichardson/node-fs-extra/issues/769
-          await fse.copy(publicDir, api.context.distPath, {
+          await fse.copy(normalizedPath, api.context.distPath, {
             // dereference symlinks
             dereference: true,
           });
         } catch (err) {
           if (err instanceof Error) {
-            err.message = `Copy public dir (${publicDir}) to dist failed:\n${err.message}`;
+            err.message = `Copy public dir (${normalizedPath}) to dist failed:\n${err.message}`;
           }
 
           throw err;

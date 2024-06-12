@@ -8,6 +8,7 @@ import type {
   ServerConfig,
 } from '@rsbuild/shared';
 import { isDebug } from '@rsbuild/shared';
+import { normalizePublicDirs } from '../config';
 import type { UpgradeEvent } from './helper';
 import {
   faviconFallbackMiddleware,
@@ -140,12 +141,13 @@ const applyDefaultMiddlewares = async ({
     });
   }
 
-  if (server.publicDir !== false && server.publicDir?.name) {
+  const publicDirs = normalizePublicDirs(server?.publicDir);
+  for (const publicDir of publicDirs) {
     const { default: sirv } = await import('sirv');
-    const { name } = server.publicDir;
-    const publicDir = isAbsolute(name) ? name : join(pwd, name);
+    const { name } = publicDir;
+    const normalizedPath = isAbsolute(name) ? name : join(pwd, name);
 
-    const assetMiddleware = sirv(publicDir, {
+    const assetMiddleware = sirv(normalizedPath, {
       etag: true,
       dev: true,
     });

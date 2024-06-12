@@ -22,6 +22,8 @@ import type {
   NormalizedServerConfig,
   NormalizedSourceConfig,
   NormalizedToolsConfig,
+  PublicDir,
+  PublicDirOptions,
   RsbuildConfig,
   RsbuildEntry,
 } from '@rsbuild/shared';
@@ -65,11 +67,6 @@ const getDefaultServerConfig = (): NormalizedServerConfig => ({
   compress: true,
   printUrls: true,
   strictPort: false,
-  publicDir: {
-    name: 'public',
-    copyOnBuild: true,
-    watch: false,
-  },
 });
 
 const getDefaultSourceConfig = (): NormalizedSourceConfig => ({
@@ -463,3 +460,36 @@ export async function stringifyConfig(config: unknown, verbose?: boolean) {
 
   return stringify(config as any, { verbose });
 }
+
+export const normalizePublicDirs = (
+  publicDir?: PublicDir,
+): Required<PublicDirOptions>[] => {
+  if (publicDir === false) {
+    return [];
+  }
+
+  const defaultConfig: Required<PublicDirOptions> = {
+    name: 'public',
+    copyOnBuild: true,
+    watch: false,
+  };
+
+  // enable public dir by default
+  if (publicDir === undefined) {
+    return [defaultConfig];
+  }
+
+  if (Array.isArray(publicDir)) {
+    return publicDir.map((options) => ({
+      ...defaultConfig,
+      ...options,
+    }));
+  }
+
+  return [
+    {
+      ...defaultConfig,
+      ...publicDir,
+    },
+  ];
+};
