@@ -1,4 +1,14 @@
 /**
+ * import.meta
+ */
+interface ImportMetaEnv {
+  [key: string]: any;
+}
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
+
+/**
  * Image assets
  */
 declare module '*.bmp' {

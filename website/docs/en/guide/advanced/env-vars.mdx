@@ -288,20 +288,54 @@ If the above usage is adopted, the following problems will be caused:
 
 Therefore, please inject the environment variables on `process.env` according to actual needs and avoid replacing them in its entirety.
 
-## Declare type of environment variable
+## Type of Environment Variable
 
-When you read an environment variable in a TypeScript file, TypeScript may prompt that the variable lacks a type definition, and you need to add the corresponding type declaration.
+When you access an environment variable in a TypeScript file, TypeScript may prompt that the variable lacks a type definition, and you need to add the corresponding type declaration.
 
-For example, if you reference a `CUSTOM_VAR` variable, the following prompt will appear in the TypeScript file:
+For example, if you reference a `PUBLIC_FOO` variable, the following prompt will appear in the TypeScript file:
 
 ```
-TS2304: Cannot find name 'CUSTOM_VAR'.
+TS2304: Cannot find name 'PUBLIC_FOO'.
 ```
 
 To fix this, you can create a `src/env.d.ts` file in your project and add the following content:
 
 ```ts title="src/env.d.ts"
-declare const CUSTOM_VAR: string;
+declare const PUBLIC_FOO: string;
+```
+
+### import.meta.env
+
+You can extend the type of `import.meta.env` like this:
+
+```ts title="src/env.d.ts"
+interface ImportMetaEnv {
+  // import.meta.env.PUBLIC_FOO
+  readonly PUBLIC_FOO: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
+```
+
+### process.env
+
+If the type for `process.env` is missing, please install the dependency [@types/node](https://www.npmjs.com/package/@types/node):
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs command="add @types/node -D" />
+
+Then extend the type of `process.env`:
+
+```ts title="src/env.d.ts"
+declare namespace NodeJS {
+  interface ProcessEnv {
+    // process.env.PUBLIC_FOO
+    PUBLIC_FOO: string;
+  }
+}
 ```
 
 ## Tree Shaking
