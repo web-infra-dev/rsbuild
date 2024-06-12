@@ -78,6 +78,8 @@ const Image = <img src={`https://example.com/static/icon.png`} />;
 
 当项目根目录存在 `.env` 文件时，Rsbuild 会自动使用 [dotenv](https://npmjs.com/package/dotenv) 来加载这些环境变量，并添加到当前 Node.js 进程中。
 
+你可以通过 `import.meta.env.[name]` 或 `process.env.[name]` 来访问这些环境变量。
+
 ### 文件类型
 
 Rsbuild 支持读取以下 env 文件：
@@ -126,9 +128,12 @@ FOO=hello
 BAR=1
 ```
 
-然后在 `rsbuild.config.ts` 文件中，可以直接访问到上述环境变量：
+然后在 `rsbuild.config.ts` 文件中，你可以通过 `import.meta.env.[name]` 或 `process.env.[name]` 访问到上述环境变量：
 
 ```ts title="rsbuild.config.ts"
+console.log(import.meta.env.FOO); // 'hello'
+console.log(import.meta.env.BAR); // '1'
+
 console.log(process.env.FOO); // 'hello'
 console.log(process.env.BAR); // '1'
 ```
@@ -139,10 +144,10 @@ console.log(process.env.BAR); // '1'
 BAR=2
 ```
 
-此时 `process.env.BAR` 的值被覆盖为 `'2'`：
+此时 `BAR` 的值被覆盖为 `'2'`：
 
 ```ts title="rsbuild.config.ts"
-console.log(process.env.FOO); // 'hello'
+console.log(import.meta.env.BAR); // '2'
 console.log(process.env.BAR); // '2'
 ```
 
@@ -155,9 +160,12 @@ PUBLIC_NAME=jack
 PASSWORD=123
 ```
 
-在 client 代码的源文件中，可以通过以下方式访问 public 变量，Rsbuild 会将 `process.env.PUBLIC_` 开头的标识符替换为相应的表达式。
+在 client 代码中，你可以通过 `import.meta.env.PUBLIC_*` 或 `process.env.PUBLIC_*` 访问这些环境变量，Rsbuild 会匹配标识符替换为相应的值。
 
 ```ts title="src/index.ts"
+console.log(import.meta.env.PUBLIC_NAME); // -> 'jack'
+console.log(import.meta.env.PASSWORD); // -> undefined
+
 console.log(process.env.PUBLIC_NAME); // -> 'jack'
 console.log(process.env.PASSWORD); // -> undefined
 ```
@@ -300,13 +308,13 @@ declare const CUSTOM_VAR: string;
 
 `define` 还可以用于标记死代码以协助 Rspack 进行 tree shaking 优化。
 
-例如通过将 `process.env.LANGUAGE` 替换为具体值来实现针对不同语言的产物进行差异化构建：
+例如通过将 `import.meta.env.LANGUAGE` 替换为具体值来实现针对不同语言的产物进行差异化构建：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     define: {
-      'process.env.LANGUAGE': JSON.stringify(process.env.LANGUAGE),
+      'import.meta.env.LANGUAGE': JSON.stringify(import.meta.env.LANGUAGE),
     },
   },
 };
@@ -316,9 +324,9 @@ export default {
 
 ```js
 const App = () => {
-  if (process.env.LANGUAGE === 'en') {
+  if (import.meta.env.LANGUAGE === 'en') {
     return <EntryFoo />;
-  } else if (process.env.LANGUAGE === 'zh') {
+  } else if (import.meta.env.LANGUAGE === 'zh') {
     return <EntryBar />;
   }
 };

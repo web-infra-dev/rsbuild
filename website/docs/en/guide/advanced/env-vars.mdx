@@ -78,6 +78,8 @@ const Image = <img src={`https://example.com/static/icon.png`} />;
 
 When a `.env` file exists in the project root directory, Rsbuild will automatically use [dotenv](https://npmjs.com/package/dotenv) to load these environment variables and add them to the current Node.js process.
 
+You can access these environment variables through `import.meta.env.[name]` or `process.env.[name]`.
+
 ### File Types
 
 Rsbuild supports reading the following types of env files:
@@ -126,9 +128,12 @@ FOO=hello
 BAR=1
 ```
 
-Then in the `rsbuild.config.ts` file, you can directly access the above environment variables:
+Then in the `rsbuild.config.ts` file, you can access the above environment variables using `import.meta.env.[name]` or `process.env.[name]`:
 
 ```ts title="rsbuild.config.ts"
+console.log(import.meta.env.FOO); // 'hello'
+console.log(import.meta.env.BAR); // '1'
+
 console.log(process.env.FOO); // 'hello'
 console.log(process.env.BAR); // '1'
 ```
@@ -139,10 +144,10 @@ Now, create a `.env.local` file and add the following contents:
 BAR=2
 ```
 
-The value of `process.env.BAR` is overwritten to `'2'`:
+The value of `BAR` is overwritten to `'2'`:
 
 ```ts title="rsbuild.config.ts"
-console.log(process.env.FOO); // 'hello'
+console.log(import.meta.env.BAR); // '2'
 console.log(process.env.BAR); // '2'
 ```
 
@@ -155,9 +160,12 @@ PUBLIC_NAME=jack
 PASSWORD=123
 ```
 
-In the source file of the client code, you can access public variables in the following way. Rsbuild will replace identifiers starting with `process.env.PUBLIC_` with the corresponding expression.
+In the client code, you can access these environment variables through `import.meta.env.PUBLIC_*` or `process.env.PUBLIC_*`. Rsbuild will match the identifiers and replace them with the corresponding values.
 
 ```ts title="src/index.ts"
+console.log(import.meta.env.PUBLIC_NAME); // -> 'jack'
+console.log(import.meta.env.PASSWORD); // -> undefined
+
 console.log(process.env.PUBLIC_NAME); // -> 'jack'
 console.log(process.env.PASSWORD); // -> undefined
 ```
@@ -300,13 +308,13 @@ declare const CUSTOM_VAR: string;
 
 `define` can also be used to mark dead code to assist the Rspack with tree shaking optimization.
 
-Build artifacts for different languages is achieved by replacing `process.env.LANGUAGE` with a specific value, for example.
+Build artifacts for different languages is achieved by replacing `import.meta.env.LANGUAGE` with a specific value, for example.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     define: {
-      'process.env.LANGUAGE': JSON.stringify(process.env.LANGUAGE),
+      'import.meta.env.LANGUAGE': JSON.stringify(import.meta.env.LANGUAGE),
     },
   },
 };
@@ -316,9 +324,9 @@ For an internationalized code:
 
 ```js
 const App = () => {
-  if (process.env.LANGUAGE === 'en') {
+  if (import.meta.env.LANGUAGE === 'en') {
     return <EntryFoo />;
-  } else if (process.env.LANGUAGE === 'zh') {
+  } else if (import.meta.env.LANGUAGE === 'zh') {
     return <EntryBar />;
   }
 };
