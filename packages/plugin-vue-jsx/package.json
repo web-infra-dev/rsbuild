@@ -33,7 +33,7 @@
     "babel-plugin-vue-jsx-hmr": "1.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.6",
+    "@babel/core": "^7.24.7",
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "typescript": "^5.4.2"

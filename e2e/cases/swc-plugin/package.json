@@ -3,6 +3,6 @@
   "name": "@e2e/swc-plugin",
   "version": "1.0.0",
   "dependencies": {
-    "@swc/plugin-remove-console": "^2.0.4"
+    "@swc/plugin-remove-console": "^2.0.5"
   }
 }

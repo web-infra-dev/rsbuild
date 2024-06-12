@@ -39,7 +39,7 @@
     "package.json": "pnpm run check-dependency-version"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.8.0",
+    "@biomejs/biome": "1.8.1",
     "@changesets/cli": "^2.27.5",
     "@modern-js/module-tools": "^2.52.0",
     "@rsbuild/config": "workspace:*",
@@ -48,8 +48,8 @@
     "cross-env": "^7.0.3",
     "cspell-ban-words": "^0.0.3",
     "nano-staged": "^0.8.0",
-    "nx": "^19.2.2",
-    "prettier": "^3.3.0",
+    "nx": "^19.2.3",
+    "prettier": "^3.3.2",
     "simple-git-hooks": "^2.11.1",
     "vitest": "^1.6.0"
   },

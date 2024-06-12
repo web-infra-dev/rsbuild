@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rspress/plugin-rss": "1.23.0",
+    "@rspress/plugin-rss": "1.23.1",
     "@types/node": "18.x",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
@@ -20,7 +20,7 @@
     "rsbuild-plugin-google-analytics": "1.0.0",
     "rsbuild-plugin-open-graph": "1.0.0",
     "rsfamily-nav-icon": "^1.0.3",
-    "rspress": "1.23.0",
+    "rspress": "1.23.1",
     "rspress-plugin-font-open-sans": "1.0.0"
   }
 }
