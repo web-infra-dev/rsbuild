@@ -12,5 +12,6 @@ test('should inject public env vars to client', async () => {
     'utf-8',
   );
   expect(content).not.toContain('jack');
-  expect(content).toContain('rose');
+  expect(content).toContain('"process.env","rose"');
+  expect(content).toContain('"import.meta.env","rose"');
 });
