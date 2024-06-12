@@ -3,16 +3,34 @@
 - **Type:** `CopyPluginOptions | CopyPluginOptions['patterns']`
 - **Default:** `undefined`
 
-Copies the specified file or directory to the dist directory.
+Copies the specified file or directory to the dist directory, implemented based on [rspack.CopyRspackPlugin](https://rspack.dev/plugins/rspack/copy-rspack-plugin).
 
-For example, copy the files under `src/assets` to the dist directory:
+> Please refer to the configuration options here: [rspack.CopyRspackPlugin](https://rspack.dev/plugins/rspack/copy-rspack-plugin).
+
+## Example
+
+Copy files from `./src/assets` to the `./dist` directory:
 
 ```js
 export default {
   output: {
-    copy: [{ from: './src/assets', to: '' }],
+    copy: [
+      // `./src/assets/image.png` -> `./dist/image.png`
+      { from: './src/assets' },
+    ],
   },
 };
 ```
 
-For more detailed configuration, please refer to: [copy-webpack-plugin](https://github.com/webpack-contrib/copy-webpack-plugin).
+Copy files from `./src/assets` to the `./dist/assets` directory:
+
+```js
+export default {
+  output: {
+    copy: [
+      // `./src/assets/image.png` -> `./dist/assets/image.png`
+      { from: './src/assets', to: 'assets' },
+    ],
+  },
+};
+```
