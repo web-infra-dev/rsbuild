@@ -7,7 +7,9 @@ import {
   type StatsError,
   addTrailingSlash,
   color,
+  isDebug,
   isMultiCompiler,
+  isProd,
   removeTailingSlash,
 } from '@rsbuild/shared';
 import { fse } from '@rsbuild/shared';
@@ -196,10 +198,14 @@ export function formatStats(
       : options,
   );
 
-  const { errors, warnings } = formatStatsMessages({
-    errors: getAllStatsErrors(statsData),
-    warnings: getAllStatsWarnings(statsData),
-  });
+  const { errors, warnings } = formatStatsMessages(
+    {
+      errors: getAllStatsErrors(statsData),
+      warnings: getAllStatsWarnings(statsData),
+    },
+    // display verbose messages in prod build or debug mode
+    isProd() || isDebug(),
+  );
 
   if (stats.hasErrors()) {
     return {
