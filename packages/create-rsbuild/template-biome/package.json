@@ -1,4 +1,7 @@
 {
+  "name": "rsbuild-biome",
+  "private": true,
+  "version": "1.0.0",
   "scripts": {
     "check": "biome check --write",
     "format": "biome format --write"
