@@ -55,10 +55,12 @@ export function applyCSSMinimizer(
     .end();
 }
 
+export const PLUGIN_CSS_MINIMIZER_NAME = 'rsbuild:css-minimizer';
+
 export const pluginCssMinimizer = (
   options?: PluginCssMinimizerOptions,
 ): RsbuildPlugin => ({
-  name: 'rsbuild:css-minimizer',
+  name: PLUGIN_CSS_MINIMIZER_NAME,
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {

@@ -9,10 +9,12 @@ export type PluginPreactOptions = {
   reactAliasesEnabled?: boolean;
 };
 
+export const PLUGIN_PREACT_NAME = 'rsbuild:preact';
+
 export const pluginPreact = (
   options: PluginPreactOptions = {},
 ): RsbuildPlugin => ({
-  name: 'rsbuild:preact',
+  name: PLUGIN_PREACT_NAME,
 
   setup(api) {
     const { reactAliasesEnabled = true } = options;

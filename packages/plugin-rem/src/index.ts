@@ -10,8 +10,10 @@ const defaultOptions: PluginRemOptions = {
 
 export type { PluginRemOptions };
 
+export const PLUGIN_REM_NAME = 'rsbuild:rem';
+
 export const pluginRem = (options: PluginRemOptions = {}): RsbuildPlugin => ({
-  name: 'rsbuild:rem',
+  name: PLUGIN_REM_NAME,
 
   setup(api) {
     const userOptions = {

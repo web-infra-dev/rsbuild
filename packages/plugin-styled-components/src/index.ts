@@ -28,10 +28,12 @@ const getDefaultStyledComponentsConfig = (isProd: boolean, ssr: boolean) => {
   };
 };
 
+export const PLUGIN_STYLED_COMPONENTS_NAME = 'rsbuild:styled-components';
+
 export const pluginStyledComponents = (
   pluginOptions: ConfigChain<PluginStyledComponentsOptions> = {},
 ): RsbuildPlugin => ({
-  name: 'rsbuild:styled-components',
+  name: PLUGIN_STYLED_COMPONENTS_NAME,
 
   setup(api) {
     if (api.context.bundlerType === 'webpack') {

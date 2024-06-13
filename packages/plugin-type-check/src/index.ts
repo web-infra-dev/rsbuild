@@ -25,11 +25,13 @@ export type PluginTypeCheckerOptions = {
   forkTsCheckerOptions?: ConfigChain<ForkTsCheckerOptions>;
 };
 
+export const PLUGIN_TYPE_CHECK_NAME = 'rsbuild:type-check';
+
 export const pluginTypeCheck = (
   options: PluginTypeCheckerOptions = {},
 ): RsbuildPlugin => {
   return {
-    name: 'rsbuild:type-check',
+    name: PLUGIN_TYPE_CHECK_NAME,
 
     setup(api) {
       api.modifyBundlerChain(async (chain, { target, isProd }) => {

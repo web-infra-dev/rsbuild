@@ -4,10 +4,12 @@ import type { PluginAssetsRetryOptions } from './types';
 
 export type { PluginAssetsRetryOptions };
 
+export const PLUGIN_ASSETS_RETRY_NAME = 'rsbuild:assets-retry';
+
 export const pluginAssetsRetry = (
   options: PluginAssetsRetryOptions = {},
 ): RsbuildPlugin => ({
-  name: 'rsbuild:assets-retry',
+  name: PLUGIN_ASSETS_RETRY_NAME,
   setup(api) {
     api.modifyBundlerChain(
       async (chain, { CHAIN_ID, target, HtmlPlugin, isProd }) => {
