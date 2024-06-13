@@ -1,3 +1,5 @@
+/// <reference types="@rspack/core/module" />
+
 /**
  * import.meta
  */

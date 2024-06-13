@@ -6,7 +6,7 @@
     "rootDir": "src",
     "declarationDir": "./dist-types",
     "composite": true,
-    "types": ["webpack/module"],
+    "types": ["@rspack/core/module"],
     "paths": {
       "ws": ["./compiled/ws"],
       "open": ["./compiled/open"],
