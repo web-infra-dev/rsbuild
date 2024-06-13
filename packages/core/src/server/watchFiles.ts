@@ -4,6 +4,7 @@ import type {
   ServerConfig,
   WatchFiles,
 } from '@rsbuild/shared';
+import { normalizePublicDirs } from '../config';
 import type { CompileMiddlewareAPI } from './getDevMiddlewares';
 
 type WatchFilesOptions = {
@@ -56,12 +57,20 @@ function watchServerFiles(
   serverConfig: ServerConfig,
   compileMiddlewareAPI: CompileMiddlewareAPI,
 ) {
-  const { publicDir } = serverConfig;
-  if (!publicDir || !publicDir.watch || !publicDir.name) {
+  const publicDirs = normalizePublicDirs(serverConfig.publicDir);
+  if (!publicDirs.length) {
     return;
   }
 
-  const watchOptions = prepareWatchOptions(publicDir.name);
+  const watchPaths = publicDirs
+    .filter((item) => item.watch)
+    .map((item) => item.name);
+
+  if (!watchPaths.length) {
+    return;
+  }
+
+  const watchOptions = prepareWatchOptions(watchPaths);
   return startWatchFiles(watchOptions, compileMiddlewareAPI);
 }
 

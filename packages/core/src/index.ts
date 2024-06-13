@@ -90,6 +90,7 @@ export type {
   DistPathConfig,
   OutputStructure,
   ChainIdentifier,
+  PublicDirOptions,
   PreconnectOption,
   CSSLoaderOptions,
   ModifyChainUtils,

@@ -485,6 +485,12 @@ importers:
       '@rsbuild/plugin-react':
         specifier: link:../../packages/plugin-react
         version: link:../../packages/plugin-react
+      '@types/react':
+        specifier: ^18.3.3
+        version: 18.3.3
+      '@types/react-dom':
+        specifier: ^18.3.0
+        version: 18.3.0
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
