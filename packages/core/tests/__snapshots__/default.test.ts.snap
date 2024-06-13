@@ -931,6 +931,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "_options": {
         "prefix": "Client",
         "profile": false,
+        "progressChars": "━━",
+        "template": "● {prefix:.bold} {bar:25.green/white.dim} ({percent}%) {wide_msg:.dim}",
+        "tick": undefined,
       },
       "affectedHooks": undefined,
       "name": "ProgressPlugin",
