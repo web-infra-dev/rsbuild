@@ -49,7 +49,7 @@ function hintUnknownFiles(message: string): string {
 }
 
 // Cleans up Rspack error messages.
-function formatMessage(stats: StatsError | string) {
+function formatMessage(stats: StatsError | string, verbose?: boolean) {
   let lines: string[] = [];
   let message: string;
 
@@ -57,8 +57,9 @@ function formatMessage(stats: StatsError | string) {
   if (typeof stats === 'object') {
     const fileName = resolveFileName(stats);
     const mainMessage = stats.message;
-    const details = stats.details ? `\nDetails: ${stats.details}\n` : '';
-    const stack = stats.stack ? `\n${stats.stack}` : '';
+    const details =
+      verbose && stats.details ? `\nDetails: ${stats.details}\n` : '';
+    const stack = verbose && stats.stack ? `\n${stats.stack}` : '';
 
     message = `${fileName}${mainMessage}${details}${stack}`;
   } else {
@@ -79,17 +80,26 @@ function formatMessage(stats: StatsError | string) {
 
   // Reassemble the message
   message = lines.join('\n');
+
+  const innerError = '-- inner error --';
+  if (!verbose && message.includes(innerError)) {
+    message = message.split(innerError)[0];
+  }
+
   return message.trim();
 }
 
 export function formatStatsMessages(
   stats: Pick<StatsCompilation, 'errors' | 'warnings'>,
+  verbose?: boolean,
 ): {
   errors: string[];
   warnings: string[];
 } {
-  const formattedErrors = stats.errors?.map(formatMessage) || [];
-  const formattedWarnings = stats.warnings?.map(formatMessage) || [];
+  const formattedErrors =
+    stats.errors?.map((error) => formatMessage(error, verbose)) || [];
+  const formattedWarnings =
+    stats.warnings?.map((warning) => formatMessage(warning, verbose)) || [];
 
   return {
     errors: formattedErrors,
