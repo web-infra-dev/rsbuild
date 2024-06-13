@@ -173,19 +173,22 @@ function mergePackageJson(targetPackage: string, extraPackage: string) {
     return;
   }
 
-  const content: Record<string, unknown> = deepmerge(
-    JSON.parse(fs.readFileSync(targetPackage, 'utf-8')),
-    JSON.parse(fs.readFileSync(extraPackage, 'utf-8')),
-  );
+  const targetJson = JSON.parse(fs.readFileSync(targetPackage, 'utf-8'));
+  const extraJson = JSON.parse(fs.readFileSync(extraPackage, 'utf-8'));
+  const mergedJson: Record<string, unknown> = deepmerge(targetJson, extraJson);
+
+  mergedJson.name = targetJson.name || extraJson.name;
 
   for (const key of ['scripts', 'dependencies', 'devDependencies']) {
-    if (!(key in content)) {
+    if (!(key in mergedJson)) {
       continue;
     }
-    content[key] = sortObjectKeys(content[key] as Record<string, unknown>);
+    mergedJson[key] = sortObjectKeys(
+      mergedJson[key] as Record<string, unknown>,
+    );
   }
 
-  fs.writeFileSync(targetPackage, `${JSON.stringify(content, null, 2)}\n`);
+  fs.writeFileSync(targetPackage, `${JSON.stringify(mergedJson, null, 2)}\n`);
 }
 
 function copyFolder(src: string, dist: string, version: string, name?: string) {
@@ -211,15 +214,16 @@ function copyFolder(src: string, dist: string, version: string, name?: string) {
 
     if (stat.isDirectory()) {
       copyFolder(srcFile, distFile, version);
-    } else if (file === 'extra-package.json') {
+    } else if (file === 'package.json') {
       const targetPackage = path.resolve(dist, 'package.json');
-      mergePackageJson(targetPackage, srcFile);
-    } else {
-      fs.copyFileSync(srcFile, distFile);
-
-      if (file === 'package.json') {
+      if (fs.existsSync(targetPackage)) {
+        mergePackageJson(targetPackage, srcFile);
+      } else {
+        fs.copyFileSync(srcFile, distFile);
         updatePackageJson(distFile, version, name);
       }
+    } else {
+      fs.copyFileSync(srcFile, distFile);
     }
   }
 }

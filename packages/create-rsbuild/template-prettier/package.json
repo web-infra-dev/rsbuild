@@ -1,4 +1,7 @@
 {
+  "name": "rsbuild-prettier",
+  "private": true,
+  "version": "1.0.0",
   "scripts": {
     "format": "prettier --write ."
   },
