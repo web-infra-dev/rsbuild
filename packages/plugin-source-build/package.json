@@ -35,7 +35,7 @@
     "@rsbuild/plugin-babel": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "typescript": "^5.4.2",
-    "yaml": "^2.4.2"
+    "yaml": "^2.4.5"
   },
   "peerDependencies": {
     "@rsbuild/core": "workspace:^0.7.6"

@@ -3,6 +3,6 @@
   "name": "@e2e/babel-decorator",
   "version": "1.0.0",
   "devDependencies": {
-    "@babel/preset-env": "^7.24.6"
+    "@babel/preset-env": "^7.24.7"
   }
 }

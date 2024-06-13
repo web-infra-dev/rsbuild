@@ -31,13 +31,13 @@
     "serialize-javascript": "^6.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.6",
-    "@babel/preset-env": "^7.24.6",
-    "@babel/preset-typescript": "^7.24.6",
+    "@babel/core": "^7.24.7",
+    "@babel/preset-env": "^7.24.7",
+    "@babel/preset-typescript": "^7.24.7",
     "@rsbuild/core": "workspace:*",
     "@types/serialize-javascript": "^5.0.4",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.7.2",
-    "terser": "5.31.0",
+    "terser": "5.31.1",
     "typescript": "^5.4.2"
   },
   "peerDependencies": {

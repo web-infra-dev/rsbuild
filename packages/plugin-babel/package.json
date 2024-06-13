@@ -28,10 +28,10 @@
     "prebundle": "prebundle"
   },
   "dependencies": {
-    "@babel/core": "^7.24.6",
-    "@babel/plugin-proposal-decorators": "^7.24.6",
-    "@babel/plugin-transform-class-properties": "^7.24.6",
-    "@babel/preset-typescript": "^7.24.6",
+    "@babel/core": "^7.24.7",
+    "@babel/plugin-proposal-decorators": "^7.24.7",
+    "@babel/plugin-transform-class-properties": "^7.24.7",
+    "@babel/preset-typescript": "^7.24.7",
     "@rsbuild/shared": "workspace:*",
     "@types/babel__core": "^7.20.5",
     "upath": "2.0.1"

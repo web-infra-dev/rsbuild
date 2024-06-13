@@ -16,7 +16,7 @@
     "react-router-dom": "^6.23.1",
     "solid-js": "^1.8.17",
     "vue": "^3.4.19",
-    "vue-router": "^4.3.2"
+    "vue-router": "^4.3.3"
   },
   "devDependencies": {
     "strip-ansi": "6.0.1",
@@ -59,13 +59,13 @@
     "@rsbuild/shared": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
     "@scripts/test-helper": "workspace:*",
-    "@types/lodash": "^4.17.4",
+    "@types/lodash": "^4.17.5",
     "@types/node": "18.x",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "fast-glob": "^3.3.2",
     "playwright": "1.44.1",
-    "tailwindcss": "^3.4.3",
+    "tailwindcss": "^3.4.4",
     "typescript": "^5.4.2"
   }
 }
