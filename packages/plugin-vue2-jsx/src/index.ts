@@ -33,9 +33,11 @@ export type PluginVueOptions = {
   vueJsxOptions?: VueJSXPresetOptions;
 };
 
+export const PLUGIN_VUE2_JSX_NAME = 'rsbuild:vue2-jsx';
+
 export function pluginVue2Jsx(options: PluginVueOptions = {}): RsbuildPlugin {
   return {
-    name: 'rsbuild:vue2-jsx',
+    name: PLUGIN_VUE2_JSX_NAME,
 
     setup(api) {
       api.modifyBundlerChain((chain, { CHAIN_ID }) => {

@@ -54,13 +54,15 @@ const getProvideGlobals = async (globals?: Globals) => {
   return result;
 };
 
+export const PLUGIN_NODE_POLYFILL_NAME = 'rsbuild:node-polyfill';
+
 export function pluginNodePolyfill(
   options: PluginNodePolyfillOptions = {},
 ): RsbuildPlugin {
   const { protocolImports = true } = options;
 
   return {
-    name: 'rsbuild:node-polyfill',
+    name: PLUGIN_NODE_POLYFILL_NAME,
 
     setup(api) {
       api.modifyBundlerChain(async (chain, { CHAIN_ID, isServer, bundler }) => {

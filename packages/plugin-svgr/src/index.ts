@@ -61,8 +61,10 @@ function getSvgoDefaultConfig() {
   };
 }
 
+export const PLUGIN_SVGR_NAME = 'rsbuild:svgr';
+
 export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
-  name: 'rsbuild:svgr',
+  name: PLUGIN_SVGR_NAME,
 
   pre: [PLUGIN_REACT_NAME],
 

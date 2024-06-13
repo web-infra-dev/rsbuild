@@ -1,4 +1,8 @@
-export { pluginBabel, getDefaultBabelOptions } from './plugin';
+export {
+  pluginBabel,
+  getDefaultBabelOptions,
+  PLUGIN_BABEL_NAME,
+} from './plugin';
 export {
   getBabelUtils,
   getUseBuiltIns,

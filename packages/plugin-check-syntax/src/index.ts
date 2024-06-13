@@ -20,11 +20,13 @@ async function getTargets(
   );
 }
 
+export const PLUGIN_CHECK_SYNTAX_NAME = 'rsbuild:check-syntax';
+
 export function pluginCheckSyntax(
   options: PluginCheckSyntaxOptions = {},
 ): RsbuildPlugin {
   return {
-    name: 'rsbuild:check-syntax',
+    name: PLUGIN_CHECK_SYNTAX_NAME,
 
     setup(api) {
       api.modifyBundlerChain(async (chain, { isDev, target }) => {

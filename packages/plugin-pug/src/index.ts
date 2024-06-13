@@ -10,8 +10,10 @@ export type PluginPugOptions = {
   pugOptions?: PugOptions;
 };
 
+export const PLUGIN_PUG_NAME = 'rsbuild:pug';
+
 export const pluginPug = (options: PluginPugOptions = {}): RsbuildPlugin => ({
-  name: 'rsbuild:pug',
+  name: PLUGIN_PUG_NAME,
 
   async setup(api) {
     const VUE_SFC_REGEXP = /\.vue$/;
