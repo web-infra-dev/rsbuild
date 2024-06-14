@@ -17,4 +17,4 @@ export { getChainUtils } from './provider/rspackConfig';
 export { applySwcDecoratorConfig } from './plugins/swc';
 export { getSwcMinimizerOptions } from './plugins/minimize';
 export { getDevMiddleware } from './server/devMiddleware';
-export { createDevServer, startProdServer } from './server';
+export { createDevServer } from './server/devServer';

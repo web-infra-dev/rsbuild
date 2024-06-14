@@ -1,6 +1,12 @@
-import { type PluginManager, debug, pick } from '@rsbuild/shared';
+import {
+  type PluginManager,
+  type PreviewServerOptions,
+  debug,
+  pick,
+} from '@rsbuild/shared';
 import { createContext } from './createContext';
 import { getPluginAPI } from './initPlugins';
+import { initRsbuildConfig } from './internal';
 import { setCssExtractPlugin } from './pluginHelper';
 import { createPluginManager } from './pluginManager';
 import type {
@@ -152,6 +158,12 @@ export async function createRsbuild(
     setCssExtractPlugin,
   });
 
+  const preview = async (options?: PreviewServerOptions) => {
+    const { startProdServer } = await import('./server/prodServer');
+    const config = await initRsbuildConfig({ context, pluginManager });
+    return startProdServer(context, config, options);
+  };
+
   const rsbuild = {
     ...pick(pluginManager, [
       'addPlugins',
@@ -177,13 +189,13 @@ export async function createRsbuild(
     ]),
     ...pick(providerInstance, [
       'build',
-      'preview',
       'initConfigs',
       'inspectConfig',
       'createCompiler',
       'createDevServer',
       'startDevServer',
     ]),
+    preview,
     context: pluginAPI.context,
   };
 
