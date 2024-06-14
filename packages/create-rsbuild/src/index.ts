@@ -115,12 +115,13 @@ export async function main() {
 
   const tools = checkCancel<string[]>(
     await multiselect({
-      message: 'Select additional tools (use arrow keys / space bar)',
+      message: 'Select additional tools (press enter to continue)',
       options: [
         { value: 'biome', label: 'Add Biome for code linting and formatting' },
         { value: 'eslint', label: 'Add ESLint for code linting' },
         { value: 'prettier', label: 'Add Prettier for code formatting' },
       ],
+      required: false,
     }),
   );
 
