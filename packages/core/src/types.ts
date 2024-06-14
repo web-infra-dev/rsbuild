@@ -77,8 +77,6 @@ export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
     options?: StartDevServerOptions,
   ) => Promise<StartServerResult>;
 
-  preview: (options?: PreviewServerOptions) => Promise<StartServerResult>;
-
   build: (options?: BuildOptions) => Promise<void>;
 
   initConfigs: () => Promise<
@@ -107,7 +105,7 @@ export type RsbuildInstance = {
   isPluginExists: PluginManager['isPluginExists'];
 
   build: ProviderInstance['build'];
-  preview: ProviderInstance['preview'];
+  preview: (options?: PreviewServerOptions) => Promise<StartServerResult>;
   initConfigs: ProviderInstance['initConfigs'];
   inspectConfig: ProviderInstance['inspectConfig'];
   createCompiler: ProviderInstance['createCompiler'];
