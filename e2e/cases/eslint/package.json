@@ -3,6 +3,6 @@
   "name": "@e2e/eslint",
   "version": "1.0.0",
   "dependencies": {
-    "eslint": "^9.4.0"
+    "eslint": "^9.5.0"
   }
 }
