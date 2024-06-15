@@ -343,3 +343,36 @@ import { version } from '@rsbuild/core';
 
 console.log(version); // 1.0.0
 ```
+
+## ensureAssetPrefix
+
+`ensureAssetPrefix` 函数用于将给定的 `assetPrefix` 拼接到一个可能是 URL 的字符串前面。如果传入的字符串已经是一个完整的 URL，则直接返回该字符串。
+
+- **类型：**
+
+```ts
+function ensureAssetPrefix(
+  // 需要处理的 URL 字符串。可以是相对路径或绝对 URL
+  url: string,
+  // 需要拼接的 URL 前缀
+  assetPrefix: string
+) => string;
+```
+
+- **示例：**
+
+```ts
+import { ensureAssetPrefix } from '@rsbuild/core';
+
+ensureAssetPrefix('foo/bar.js', '/static/');
+// -> '/static/foo/bar.js'
+
+ensureAssetPrefix('foo/bar.js', 'https://example.com/static/');
+// -> 'https://example.com/static/foo/bar.js'
+
+ensureAssetPrefix(
+  'https://example.com/index.html',
+  'https://example.com/static/',
+);
+// -> 'https://example.com/index.html'
+```

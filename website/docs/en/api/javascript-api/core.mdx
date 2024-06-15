@@ -343,3 +343,36 @@ import { version } from '@rsbuild/core';
 
 console.log(version); // 1.0.0
 ```
+
+## ensureAssetPrefix
+
+The `ensureAssetPrefix` function is used to prepend a given `assetPrefix` to a string that might be a URL. If the input string is already a complete URL, it returns the string directly.
+
+- **Type:**
+
+```ts
+function ensureAssetPrefix(
+  // URL string to be processed, can be a relative path or an absolute URL
+  url: string,
+  // URL prefix to be appended
+  assetPrefix: string
+) => string;
+```
+
+- **Example:**
+
+```ts
+import { ensureAssetPrefix } from '@rsbuild/core';
+
+ensureAssetPrefix('foo/bar.js', '/static/');
+// -> '/static/foo/bar.js'
+
+ensureAssetPrefix('foo/bar.js', 'https://example.com/static/');
+// -> 'https://example.com/static/foo/bar.js'
+
+ensureAssetPrefix(
+  'https://example.com/index.html',
+  'https://example.com/static/',
+);
+// -> 'https://example.com/index.html'
+```

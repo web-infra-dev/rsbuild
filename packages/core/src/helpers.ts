@@ -1,4 +1,4 @@
-import path from 'node:path';
+import path, { posix } from 'node:path';
 import {
   DEFAULT_ASSET_PREFIX,
   type MultiStats,
@@ -292,3 +292,45 @@ export async function isFileExists(file: string) {
     .then(() => true)
     .catch(() => false);
 }
+
+const urlJoin = (base: string, path: string) => {
+  const fullUrl = new URL(base);
+  fullUrl.pathname = posix.join(fullUrl.pathname, path);
+  return fullUrl.toString();
+};
+
+// Can be replaced with URL.canParse when we drop support for Node.js 16
+export const canParse = (url: string) => {
+  try {
+    new URL(url);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+export const ensureAssetPrefix = (url: string, assetPrefix: string) => {
+  // The use of an absolute URL without a protocol is technically legal,
+  // however it cannot be parsed as a URL instance, just return it.
+  // e.g. str is //example.com/foo.js
+  if (url.startsWith('//')) {
+    return url;
+  }
+
+  // If str is an complete URL, just return it.
+  // Only absolute url with hostname & protocol can be parsed into URL instance.
+  // e.g. str is https://example.com/foo.js
+  if (canParse(url)) {
+    return url;
+  }
+
+  if (assetPrefix.startsWith('http')) {
+    return urlJoin(assetPrefix, url);
+  }
+
+  if (assetPrefix.startsWith('//')) {
+    return urlJoin(`https:${assetPrefix}`, url).replace('https:', '');
+  }
+
+  return posix.join(assetPrefix, url);
+};

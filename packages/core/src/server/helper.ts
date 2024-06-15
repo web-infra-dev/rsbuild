@@ -2,13 +2,7 @@ import type { IncomingMessage } from 'node:http';
 import net from 'node:net';
 import type { Socket } from 'node:net';
 import os from 'node:os';
-import {
-  color,
-  deepmerge,
-  isFunction,
-  logger,
-  normalizeUrl,
-} from '@rsbuild/shared';
+import { color, deepmerge, isFunction, logger } from '@rsbuild/shared';
 import type {
   DevConfig,
   NormalizedConfig,
@@ -35,6 +29,9 @@ export type StartServerResult = {
     close: () => Promise<void>;
   };
 };
+
+// remove repeat '/'
+export const normalizeUrl = (url: string) => url.replace(/([^:]\/)\/+/g, '$1');
 
 /**
  * Make sure there is slash before and after prefix

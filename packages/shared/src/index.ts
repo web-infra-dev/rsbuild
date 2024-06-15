@@ -6,4 +6,3 @@ export * from './logger';
 export * from './reduceConfigs';
 export * from './types';
 export * from './chain';
-export * from './url';

@@ -6,11 +6,11 @@ import {
   type ModifyHTMLTagsFn,
   isFunction,
   partition,
-  withPublicPath,
 } from '@rsbuild/shared';
 import type { Compilation, Compiler } from '@rspack/core';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { HtmlTagObject } from 'html-webpack-plugin';
+import { ensureAssetPrefix } from '../helpers';
 import { getHTMLPlugin } from '../pluginHelper';
 
 export type TagConfig = {
@@ -145,9 +145,9 @@ const applyTagConfig = (
         if (typeof optPublicPath === 'function') {
           filename = optPublicPath(filename, data.publicPath);
         } else if (typeof optPublicPath === 'string') {
-          filename = withPublicPath(filename, optPublicPath);
+          filename = ensureAssetPrefix(filename, optPublicPath);
         } else if (optPublicPath !== false) {
-          filename = withPublicPath(filename, data.publicPath);
+          filename = ensureAssetPrefix(filename, data.publicPath);
         }
 
         const optHash = tag.hash ?? tagConfig.hash;
