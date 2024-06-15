@@ -1,10 +1,9 @@
 import path from 'node:path';
-import type { Rspack } from '@rsbuild/core';
+import { type Rspack, ensureAssetPrefix } from '@rsbuild/core';
 import {
   fse,
   generateScriptTag,
   getPublicPathFromCompiler,
-  withPublicPath,
 } from '@rsbuild/shared';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { PluginAssetsRetryOptions } from './types';
@@ -108,7 +107,10 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
             });
           } else {
             const publicPath = getPublicPathFromCompiler(compiler);
-            const url = withPublicPath(await this.getScriptPath(), publicPath);
+            const url = ensureAssetPrefix(
+              await this.getScriptPath(),
+              publicPath,
+            );
             data.headTags.unshift({
               ...scriptTag,
               attributes: {

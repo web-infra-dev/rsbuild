@@ -21,6 +21,7 @@ export type { Rspack };
 // Helpers
 export { logger } from '@rsbuild/shared';
 export { mergeRsbuildConfig } from './mergeConfig';
+export { ensureAssetPrefix } from './helpers';
 
 // Constants
 export { PLUGIN_SWC_NAME, PLUGIN_CSS_NAME } from './constants';

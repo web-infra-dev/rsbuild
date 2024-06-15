@@ -19,10 +19,10 @@ import {
   type PreloadOrPreFetchOption,
   getPublicPathFromCompiler,
   upperFirst,
-  withPublicPath,
 } from '@rsbuild/shared';
 import type { Compilation, Compiler, RspackPluginInstance } from '@rspack/core';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import { ensureAssetPrefix } from '../../helpers';
 import { getHTMLPlugin } from '../../pluginHelper';
 import {
   type As,
@@ -121,7 +121,7 @@ function generateLinks(
   const { crossOriginLoading } = compilation.compiler.options.output;
 
   for (const file of sortedFilteredFiles) {
-    const href = withPublicPath(file, publicPath);
+    const href = ensureAssetPrefix(file, publicPath);
     const attributes: Attributes = {
       href,
       rel: type,
