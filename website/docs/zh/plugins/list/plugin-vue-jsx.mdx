@@ -35,7 +35,7 @@ export default {
 };
 ```
 
-注册插件后，你可以直接在代码中可以使用 Vue 的 [JSX / TSX 语法](https://github.com/vuejs/babel-plugin-jsx)。
+注册插件后，你可以在 `.jsx`、`.tsx` 和 `.vue` 文件中使用 Vue 的 [JSX / TSX 语法](https://github.com/vuejs/babel-plugin-jsx)。
 
 :::tip
 由于 Vue 的 JSX 插件依赖 Babel 进行编译，因此你需要额外添加 [Babel 插件](/plugins/list/plugin-babel)。
@@ -43,6 +43,26 @@ export default {
 Babel 编译会产生额外的编译开销，在上述例子中，我们通过 `include` 来匹配 `.jsx` 和 `.tsx` 文件，从而减少 Babel 带来的性能开销。
 
 :::
+
+## Vue SFC
+
+在 Vue SFC 中使用 JSX 时，你需要在 `<script>` 标签上添加 `lang="jsx"` 或 `lang="tsx`"。
+
+- JSX：
+
+```html title="App.vue"
+<script lang="jsx">
+  const vnode = <div>hello</div>;
+</script>
+```
+
+- TSX：
+
+```html title="App.vue"
+<script lang="tsx">
+  const vnode = <div>hello</div>;
+</script>
+```
 
 ## JSX 类型推导
 

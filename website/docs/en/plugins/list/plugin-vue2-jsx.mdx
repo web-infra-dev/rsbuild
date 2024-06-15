@@ -46,7 +46,27 @@ Babel compilation will introduce extra overhead, in the example above, we use `i
 
 :::
 
-After registering the plugin, you can use Vue's [JSX / TSX syntax](https://github.com/vuejs/jsx-vue2) in your code.
+After registering the plugin, you can use Vue's [JSX / TSX syntax](https://github.com/vuejs/jsx-vue2) in `.jsx`, `.tsx`, and `.vue` files.
+
+## Vue SFC
+
+When using JSX in Vue SFC, you need to add `lang="jsx"` or `lang="tsx"` to the `<script>` tag.
+
+- JSX:
+
+```html title="App.vue"
+<script lang="jsx">
+  const vnode = <div>hello</div>;
+</script>
+```
+
+- TSX:
+
+```html title="App.vue"
+<script lang="tsx">
+  const vnode = <div>hello</div>;
+</script>
+```
 
 ## Options
 
