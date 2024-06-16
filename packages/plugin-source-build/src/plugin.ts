@@ -106,7 +106,7 @@ export function pluginSourceBuild(
 
         // merge with user references
         if (api.context.tsconfigPath) {
-          const { default: json5 } = await import('@rsbuild/shared/json5');
+          const { default: json5 } = await import('json5');
           const { references } = json5.parse(
             fs.readFileSync(api.context.tsconfigPath, 'utf-8'),
           );

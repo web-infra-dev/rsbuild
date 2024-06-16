@@ -17,7 +17,7 @@ export default {
       ignoreDts: true,
       externals: {
         'schema-utils': './schema-utils',
-        'loader-utils': '@rsbuild/shared/loader-utils2',
+        'loader-utils': 'loader-utils',
       },
       afterBundle: writeEmptySchemaUtils,
     },
@@ -26,8 +26,7 @@ export default {
       ignoreDts: true,
       externals: {
         'schema-utils': './schema-utils',
-        'loader-utils': '@rsbuild/shared/loader-utils2',
-        'mime-types': '@rsbuild/shared/mime-types',
+        'loader-utils': 'loader-utils',
       },
       afterBundle(task) {
         writeEmptySchemaUtils(task);

@@ -64,7 +64,7 @@ export const pluginTypeCheck = (
           'fork-ts-checker-webpack-plugin'
         );
 
-        const { default: json5 } = await import('@rsbuild/shared/json5');
+        const { default: json5 } = await import('json5');
         const { references } = json5.parse(
           fse.readFileSync(api.context.tsconfigPath, 'utf-8'),
         );

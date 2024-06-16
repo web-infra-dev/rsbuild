@@ -40,6 +40,14 @@ export default {
     'connect',
     'rspack-manifest-plugin',
     {
+      name: 'semver',
+      ignoreDts: true,
+    },
+    {
+      name: 'jiti',
+      ignoreDts: true,
+    },
+    {
       name: 'launch-editor-middleware',
       ignoreDts: true,
       externals: {
@@ -68,7 +76,6 @@ export default {
         'schema-utils': './schema-utils',
         'schema-utils/declarations/validate':
           'schema-utils/declarations/validate',
-        'mime-types': '@rsbuild/shared/mime-types',
       },
       ignoreDts: true,
       afterBundle: writeEmptySchemaUtils,
@@ -88,14 +95,14 @@ export default {
       ignoreDts: true,
       externals: {
         'postcss-value-parser': '../postcss-value-parser',
-        semver: '@rsbuild/shared/semver',
+        semver: '../semver',
       },
     },
     {
       name: 'postcss-loader',
       externals: {
-        jiti: '@rsbuild/shared/jiti',
-        semver: '@rsbuild/shared/semver',
+        jiti: '../jiti',
+        semver: '../semver',
       },
       ignoreDts: true,
     },
@@ -103,7 +110,7 @@ export default {
       name: 'postcss-load-config',
       externals: {
         yaml: 'yaml',
-        '@rsbuild/shared/jiti': '@rsbuild/shared/jiti',
+        '../jiti': '../jiti',
       },
       ignoreDts: true,
       // this is a trick to avoid ncc compiling the dynamic import syntax
@@ -112,7 +119,7 @@ export default {
         replaceFileContent(join(task.depPath, 'src/req.js'), (content) =>
           content
             .replaceAll('await import', 'await __import')
-            .replaceAll(`import('jiti')`, `import('@rsbuild/shared/jiti')`),
+            .replaceAll(`import('jiti')`, `import('../jiti/index.js')`),
         );
       },
       afterBundle(task) {

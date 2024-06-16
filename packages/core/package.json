@@ -81,6 +81,8 @@
     "prebundle": "1.1.0",
     "rspack-manifest-plugin": "5.0.0",
     "sirv": "^2.0.4",
+    "jiti": "^1.21.6",
+    "semver": "^7.6.2",
     "style-loader": "3.3.4",
     "tsc-alias": "^1.8.10",
     "typescript": "^5.4.2",

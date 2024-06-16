@@ -659,6 +659,9 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      semver:
+        specifier: ^7.6.2
+        version: 7.6.2
     devDependencies:
       '@rsbuild/core':
         specifier: link:../../core
@@ -776,6 +779,9 @@ importers:
       http-compression:
         specifier: 1.0.20
         version: 1.0.20
+      jiti:
+        specifier: ^1.21.6
+        version: 1.21.6
       launch-editor-middleware:
         specifier: ^2.6.1
         version: 2.6.1
@@ -800,6 +806,9 @@ importers:
       rspack-manifest-plugin:
         specifier: 5.0.0
         version: 5.0.0(@rspack/core@0.7.3(@swc/helpers@0.5.3))
+      semver:
+        specifier: ^7.6.2
+        version: 7.6.2
       sirv:
         specifier: ^2.0.4
         version: 2.0.4
@@ -1265,6 +1274,9 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
+      loader-utils:
+        specifier: ^2.0.4
+        version: 2.0.4
       postcss:
         specifier: ^8.4.38
         version: 8.4.38
@@ -1330,6 +1342,9 @@ importers:
       fast-glob:
         specifier: ^3.3.2
         version: 3.3.2
+      json5:
+        specifier: ^2.2.3
+        version: 2.2.3
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -1430,6 +1445,9 @@ importers:
       '@svgr/plugin-svgo':
         specifier: 8.1.0
         version: 8.1.0(@svgr/core@8.1.0(typescript@5.4.5))(typescript@5.4.5)
+      loader-utils:
+        specifier: ^2.0.4
+        version: 2.0.4
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -1474,6 +1492,9 @@ importers:
       fork-ts-checker-webpack-plugin:
         specifier: 9.0.2
         version: 9.0.2(typescript@5.4.5)(webpack@5.92.0)
+      json5:
+        specifier: ^2.2.3
+        version: 2.2.3
       webpack:
         specifier: ^5.92.0
         version: 5.92.0
@@ -1683,18 +1704,6 @@ importers:
       http-proxy-middleware:
         specifier: ^2.0.6
         version: 2.0.6
-      jiti:
-        specifier: ^1.21.6
-        version: 1.21.6
-      json5:
-        specifier: ^2.2.3
-        version: 2.2.3
-      loader-utils2:
-        specifier: npm:loader-utils@2.0.4
-        version: loader-utils@2.0.4
-      mime-types:
-        specifier: ^2.1.35
-        version: 2.1.35
       picocolors:
         specifier: 1.0.1
         version: 1.0.1
@@ -1707,9 +1716,6 @@ importers:
       rspack-chain:
         specifier: 0.7.1
         version: 0.7.1
-      semver:
-        specifier: ^7.6.2
-        version: 7.6.2
       terser:
         specifier: 5.31.1
         version: 5.31.1
@@ -6119,10 +6125,6 @@ packages:
   jest-worker@29.7.0:
     resolution: {integrity: sha512-eIz2msL/EzL9UFTFFx7jBTkeZfku0yUAyZZZmJ93H2TYEiroIx2PQjEXcwYtYl8zXCxb+PAmA2hLIt/6ZEkPHw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
-
-  jiti@1.21.0:
-    resolution: {integrity: sha512-gFqAIbuKyyso/3G2qhiO2OM6shY6EPP/R0+mkDbyspxKazh8BXDC5FiFsUjlczgdNz/vfra0da2y+aHrusLG/Q==}
-    hasBin: true
 
   jiti@1.21.6:
     resolution: {integrity: sha512-2yTgeWTWzMWkHu6Jp9NKgePDaYHbntiwvYuuJLbbN9vl7DC9DvXKOB2BC3ZZ92D3cvV/aflH0osDfwpHepQ53w==}
@@ -14075,8 +14077,6 @@ snapshots:
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
-  jiti@1.21.0: {}
-
   jiti@1.21.6: {}
 
   js-stringify@1.0.2: {}
@@ -15661,7 +15661,7 @@ snapshots:
   postcss-loader@8.1.1(@rspack/core@0.7.3(@swc/helpers@0.5.3))(postcss@8.4.38)(typescript@5.4.5)(webpack@5.92.0):
     dependencies:
       cosmiconfig: 9.0.0(typescript@5.4.5)
-      jiti: 1.21.0
+      jiti: 1.21.6
       postcss: 8.4.38
       semver: 7.6.2
     optionalDependencies:

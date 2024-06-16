@@ -20,14 +20,6 @@
       "types": "./compiled/autoprefixer/index.d.ts",
       "default": "./compiled/autoprefixer/index.js"
     },
-    "./jiti": {
-      "types": "./compiled/jiti/types/jiti.d.ts",
-      "default": "./compiled/jiti/index.js"
-    },
-    "./json5": {
-      "types": "./compiled/json5/lib/index.d.ts",
-      "default": "./compiled/json5/index.js"
-    },
     "./gzip-size": {
       "types": "./compiled/gzip-size/index.d.ts",
       "default": "./compiled/gzip-size/index.js"
@@ -44,21 +36,9 @@
       "types": "./compiled/chokidar/types/index.d.ts",
       "default": "./compiled/chokidar/index.js"
     },
-    "./mime-types": {
-      "types": "./compiled/mime-types/index.d.ts",
-      "default": "./compiled/mime-types/index.js"
-    },
-    "./loader-utils2": {
-      "types": "./compiled/loader-utils2/index.d.ts",
-      "default": "./compiled/loader-utils2/index.js"
-    },
     "./webpack-bundle-analyzer": {
       "types": "./compiled/webpack-bundle-analyzer/index.d.ts",
       "default": "./compiled/webpack-bundle-analyzer/index.js"
-    },
-    "./semver": {
-      "types": "./compiled/semver/index.d.ts",
-      "default": "./compiled/semver/index.js"
     },
     "./webpack-merge": {
       "types": "./compiled/webpack-merge/types/index.d.ts",
@@ -101,15 +81,10 @@
     "fs-extra": "^11.2.0",
     "gzip-size": "^6.0.0",
     "http-proxy-middleware": "^2.0.6",
-    "jiti": "^1.21.6",
-    "json5": "^2.2.3",
-    "loader-utils2": "npm:loader-utils@2.0.4",
-    "mime-types": "^2.1.35",
     "picocolors": "1.0.1",
     "prebundle": "1.1.0",
     "rspack-chain": "0.7.1",
     "rslog": "^1.2.2",
-    "semver": "^7.6.2",
     "terser": "5.31.1",
     "typescript": "^5.4.2",
     "webpack": "^5.92.0",
