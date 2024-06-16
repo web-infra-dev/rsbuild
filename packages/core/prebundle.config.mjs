@@ -120,7 +120,7 @@ export default {
         replaceFileContent(join(task.depPath, 'src/req.js'), (content) =>
           content
             .replaceAll('await import', 'await __import')
-            .replaceAll(`import('jiti')`, `import('../jiti')`),
+            .replaceAll(`import('jiti')`, `import('../jiti/index.js')`),
         );
       },
       afterBundle(task) {
