@@ -76,7 +76,6 @@ export default {
         'schema-utils': './schema-utils',
         'schema-utils/declarations/validate':
           'schema-utils/declarations/validate',
-        'mime-types': '@rsbuild/shared/mime-types',
       },
       ignoreDts: true,
       afterBundle: writeEmptySchemaUtils,

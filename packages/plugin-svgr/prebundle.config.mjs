@@ -27,7 +27,6 @@ export default {
       externals: {
         'schema-utils': './schema-utils',
         'loader-utils': 'loader-utils',
-        'mime-types': '@rsbuild/shared/mime-types',
       },
       afterBundle(task) {
         writeEmptySchemaUtils(task);

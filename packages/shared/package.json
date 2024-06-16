@@ -36,10 +36,6 @@
       "types": "./compiled/chokidar/types/index.d.ts",
       "default": "./compiled/chokidar/index.js"
     },
-    "./mime-types": {
-      "types": "./compiled/mime-types/index.d.ts",
-      "default": "./compiled/mime-types/index.js"
-    },
     "./webpack-bundle-analyzer": {
       "types": "./compiled/webpack-bundle-analyzer/index.d.ts",
       "default": "./compiled/webpack-bundle-analyzer/index.js"
@@ -85,7 +81,6 @@
     "fs-extra": "^11.2.0",
     "gzip-size": "^6.0.0",
     "http-proxy-middleware": "^2.0.6",
-    "mime-types": "^2.1.35",
     "picocolors": "1.0.1",
     "prebundle": "1.1.0",
     "rspack-chain": "0.7.1",

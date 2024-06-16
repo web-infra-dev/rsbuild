@@ -30,7 +30,6 @@ export default {
       },
     },
     'webpack-merge',
-    'mime-types',
     'gzip-size',
     {
       name: 'browserslist',
