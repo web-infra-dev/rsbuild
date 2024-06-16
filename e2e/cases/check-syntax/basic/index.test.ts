@@ -2,6 +2,7 @@ import { build, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 import { normalizeToPosixPath } from '@scripts/test-helper';
+import stripAnsi from 'strip-ansi';
 
 test('should throw error when exist syntax errors', async () => {
   const cwd = __dirname;
@@ -15,6 +16,14 @@ test('should throw error when exist syntax errors', async () => {
   ).rejects.toThrowError('[Syntax Checker]');
 
   restore();
+
+  expect(
+    logs.find((log) =>
+      stripAnsi(log).includes(
+        'Find some syntax that does not match "ecmaVersion <= 5"',
+      ),
+    ),
+  ).toBeTruthy();
 
   expect(logs.find((log) => log.includes('ERROR 1'))).toBeTruthy();
   expect(
