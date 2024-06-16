@@ -98,6 +98,39 @@ Rsbuild 会在构建时自动注入 `<script>` 标签到生成的 HTML 文件中
 
 你可以参考 [插件列表](/plugins/list/index) 来了解更多可用的插件。
 
+## Glob Import
+
+Vite 提供了 `import.meta.glob()` 来批量导入模块。
+
+迁移到 Rsbuild 时，你可以使用 Rspack 的 [import.meta.webpackContext](https://rspack.dev/zh/api/modules/module-variables#importmetawebpackcontext) 函数代替：
+
+- Vite:
+
+```js
+const modules = import.meta.glob('./dir/*.js');
+
+for (const path in modules) {
+  modules[path]().then((mod) => {
+    console.log(path, mod);
+  });
+}
+```
+
+- Rsbuild:
+
+```js
+const context = import.meta.webpackContext('./dir', {
+  // 是否搜索子目录
+  recursive: false,
+  regExp: /\.js$/,
+});
+
+for (const path of context.keys()) {
+  const mod = context(path);
+  console.log(path, mod);
+}
+```
+
 ## 验证结果
 
 完成以上步骤后，你已经完成了从 Vite 到 Rsbuild 的基本迁移，此时可以执行 `npm run dev` 命令来尝试启动开发服务器。
