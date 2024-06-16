@@ -7,8 +7,8 @@ import {
   getCoreJsVersion,
   isUsingHMR,
 } from '@rsbuild/shared';
-import semver from '@rsbuild/shared/semver';
 import _ from 'lodash';
+import semver from 'semver';
 import { CORE_JS_DIR, CORE_JS_PKG_PATH, SWC_HELPERS_DIR } from './constants';
 import { getDefaultSwcConfig } from './plugin';
 import type {

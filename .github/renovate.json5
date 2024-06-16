@@ -58,7 +58,8 @@
 		// plugin-vue2 depends on vue 2 and vue-loader v15
 		"vue",
 		"vue-loader",
-		"loader-utils2",
+		// some loaders still depend on loader-utils v2
+		"loader-utils",
 		// pure esm packages can not be used now
 		"gzip-size",
 		"globby",

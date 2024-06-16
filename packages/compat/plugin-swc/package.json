@@ -30,7 +30,8 @@
     "@rsbuild/shared": "workspace:*",
     "@swc/helpers": "0.5.3",
     "core-js": "~3.36.0",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "semver": "^7.6.2"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",

@@ -342,7 +342,7 @@ export async function loadConfig({
   };
 
   try {
-    const { default: jiti } = await import('@rsbuild/shared/jiti');
+    const { default: jiti } = await import('jiti');
     const loadConfig = jiti(__filename, {
       esmResolve: true,
       // disable require cache to support restart CLI and read the new config

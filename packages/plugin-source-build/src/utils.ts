@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { fse } from '@rsbuild/shared';
-import json5 from '@rsbuild/shared/json5';
+import json5 from 'json5';
 import { RUSH_JSON_FILE } from './constants';
 import type { INodePackageJson, IRushConfig } from './types';
 
