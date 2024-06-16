@@ -70,7 +70,7 @@ export class CheckSyntaxPlugin {
           }),
         );
 
-        printErrors(this.errors);
+        printErrors(this.errors, this.ecmaVersion);
       },
     );
   }
