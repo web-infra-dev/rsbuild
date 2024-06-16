@@ -98,6 +98,39 @@ Most common Vite plugins can be easily migrated to Rsbuild plugins, such as:
 
 You can refer to [Plugin List](/plugins/list/index) to learn more about available plugins.
 
+## Glob Import
+
+Vite provides `import.meta.glob()` for importing multiple modules.
+
+When migrating to Rsbuild, you can use the [import.meta.webpackContext()](https://rspack.dev/api/modules/module-variables#importmetawebpackcontext) function of Rspack instead:
+
+- Vite:
+
+```js
+const modules = import.meta.glob('./dir/*.js');
+
+for (const path in modules) {
+  modules[path]().then((mod) => {
+    console.log(path, mod);
+  });
+}
+```
+
+- Rsbuild:
+
+```js
+const context = import.meta.webpackContext('./dir', {
+  // Whether to search subdirectories
+  recursive: false,
+  regExp: /\.js$/,
+});
+
+for (const path of context.keys()) {
+  const mod = context(path);
+  console.log(path, mod);
+}
+```
+
 ## Validating Results
 
 After completing the above steps, you have completed the basic migration from Vite to Rsbuild. You can now run the `npm run serve` command to try starting the dev server.
