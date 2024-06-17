@@ -1,35 +1,7 @@
 import fse from '../compiled/fs-extra/index.js';
-import type {
-  DistPathConfig,
-  FilenameConfig,
-  NormalizedConfig,
-  RsbuildConfig,
-} from './types';
+import type { FilenameConfig, NormalizedConfig } from './types';
 
 export { fse };
-
-export const getDistPath = (
-  config: RsbuildConfig | NormalizedConfig,
-  type: keyof DistPathConfig,
-): string => {
-  const { distPath } = config.output || {};
-  const ret = distPath?.[type];
-
-  if (typeof ret !== 'string') {
-    if (type === 'jsAsync') {
-      const jsPath = getDistPath(config, 'js');
-      return jsPath ? `${jsPath}/async` : 'async';
-    }
-    if (type === 'cssAsync') {
-      const cssPath = getDistPath(config, 'css');
-      return cssPath ? `${cssPath}/async` : 'async';
-    }
-
-    throw new Error(`unknown key ${type} in "output.distPath"`);
-  }
-
-  return ret;
-};
 
 export function getFilename(
   config: NormalizedConfig,

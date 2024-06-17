@@ -1,5 +1,4 @@
 import type { PostCSSPlugin, RsbuildPlugin } from '@rsbuild/core';
-import { getDistPath } from '@rsbuild/shared';
 import { cloneDeep } from '@rsbuild/shared';
 import type { PluginRemOptions, PxToRemOptions } from './types';
 
@@ -58,7 +57,7 @@ export const pluginRem = (options: PluginRemOptions = {}): RsbuildPlugin => ({
 
       const entries = Object.keys(chain.entryPoints.entries() || {});
       const config = api.getNormalizedConfig();
-      const distDir = getDistPath(config, 'js');
+      const distDir = config.output.distPath.js;
 
       chain
         .plugin(CHAIN_ID.PLUGIN.AUTO_SET_ROOT_SIZE)

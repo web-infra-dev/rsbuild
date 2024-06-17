@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { type RspackChain, getDistPath, getFilename } from '@rsbuild/shared';
+import { type RspackChain, getFilename } from '@rsbuild/shared';
 import type { GeneratorOptionsByModuleType } from '@rspack/core';
 import {
   AUDIO_EXTENSIONS,
@@ -82,7 +82,7 @@ export const pluginAsset = (): RsbuildPlugin => ({
         emit: boolean,
       ) => {
         const regExp = getRegExpForExts(exts);
-        const distDir = getDistPath(config, assetType);
+        const distDir = config.output.distPath[assetType];
         const filename = getFilename(config, assetType, isProd);
         const { dataUriLimit } = config.output;
         const maxSize =

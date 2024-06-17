@@ -1,5 +1,4 @@
 import { posix } from 'node:path';
-import { getDistPath } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginWasm = (): RsbuildPlugin => ({
@@ -8,7 +7,7 @@ export const pluginWasm = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
       const config = api.getNormalizedConfig();
-      const distPath = getDistPath(config, 'wasm');
+      const distPath = config.output.distPath.wasm;
 
       chain.experiments({
         ...chain.get('experiments'),

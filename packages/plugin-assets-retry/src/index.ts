@@ -1,5 +1,5 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { getDistPath, isHtmlDisabled } from '@rsbuild/shared';
+import { isHtmlDisabled } from '@rsbuild/shared';
 import type { PluginAssetsRetryOptions } from './types';
 
 export type { PluginAssetsRetryOptions };
@@ -23,7 +23,7 @@ export const pluginAssetsRetry = (
         const { AsyncChunkRetryPlugin } = await import(
           './AsyncChunkRetryPlugin'
         );
-        const distDir = getDistPath(config, 'js');
+        const distDir = config.output.distPath.js;
 
         // options.crossOrigin should be same as html.crossorigin by default
         if (options.crossOrigin === undefined) {

@@ -5,7 +5,6 @@ import {
   color,
   deepmerge,
   fse,
-  getDistPath,
   isHtmlDisabled,
   isPlainObject,
   isURL,
@@ -395,7 +394,7 @@ export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
               '../rspack/HtmlAppIconPlugin'
             );
 
-            const distDir = getDistPath(config, 'image');
+            const distDir = config.output.distPath.image;
             const iconPath = path.isAbsolute(appIcon)
               ? appIcon
               : path.join(api.context.rootPath, appIcon);
