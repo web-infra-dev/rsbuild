@@ -1714,8 +1714,8 @@ importers:
         specifier: ^1.2.2
         version: 1.2.2
       rspack-chain:
-        specifier: 0.7.1
-        version: 0.7.1
+        specifier: ^0.7.3
+        version: 0.7.3
       terser:
         specifier: 5.31.1
         version: 5.31.1
@@ -7871,8 +7871,8 @@ packages:
     resolution: {integrity: sha512-tZP8KjrI1nz6qOYCrFxAV7cfmfS2GV94jotU2zOmF/6ByO1zNvGR6/+0inylpjqyBjAdnnutTUW0m4th06bSTw==}
     engines: {node: '>=14.17.6'}
 
-  rspack-chain@0.7.1:
-    resolution: {integrity: sha512-oReT8FgE5elL1w8H/GfdYAwV/2QYkJF6hAw6e0zxOjbJIcyQvCWmEf+QHeKUn5aVVBHu6U6qxzMmmEXIGxBevQ==}
+  rspack-chain@0.7.3:
+    resolution: {integrity: sha512-Me8ifKWw9sr+IPYnVOtRueNiqIdh3q3PrH7MJRZheXcQMQTTeUkGVtNuv7u+YbjVhbmUtgLwSTskdcTGejWV2A==}
     engines: {node: '>=16'}
 
   rspack-manifest-plugin@5.0.0:
@@ -16364,7 +16364,7 @@ snapshots:
 
   rslog@1.2.2: {}
 
-  rspack-chain@0.7.1:
+  rspack-chain@0.7.3:
     dependencies:
       deepmerge: 1.5.2
       javascript-stringify: 2.1.0

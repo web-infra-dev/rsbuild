@@ -2,6 +2,7 @@ import type {
   ChainIdentifier,
   ConfigChain,
   RsbuildPlugin,
+  Rspack,
   RspackChain,
 } from '@rsbuild/core';
 import { reduceConfigs } from '@rsbuild/shared';
@@ -51,7 +52,9 @@ export function applyCSSMinimizer(
 
   chain.optimization
     .minimizer(CHAIN_ID.MINIMIZER.CSS)
-    .use(CssMinimizerWebpackPlugin, [mergedOptions])
+    .use(CssMinimizerWebpackPlugin as Rspack.RspackPluginInstance, [
+      mergedOptions,
+    ])
     .end();
 }
 
