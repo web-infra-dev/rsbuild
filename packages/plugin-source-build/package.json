@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-source-build",
-  "version": "0.7.7",
+  "version": "0.7.8",
   "description": "Source build plugin of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -39,7 +39,7 @@
     "yaml": "^2.4.5"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.7.7"
+    "@rsbuild/core": "workspace:^0.7.8"
   },
   "publishConfig": {
     "access": "public",
