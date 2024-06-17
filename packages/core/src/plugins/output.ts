@@ -3,7 +3,6 @@ import {
   DEFAULT_ASSET_PREFIX,
   type NormalizedConfig,
   type RsbuildContext,
-  getDistPath,
   getFilename,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
@@ -69,8 +68,10 @@ export const pluginOutput = (): RsbuildPlugin => ({
         });
 
         // js output
-        const jsPath = getDistPath(config, 'js');
-        const jsAsyncPath = getDistPath(config, 'jsAsync');
+        const jsPath = config.output.distPath.js;
+        const jsAsyncPath =
+          config.output.distPath.jsAsync ??
+          (jsPath ? `${jsPath}/async` : 'async');
         const jsFilename = getFilename(config, 'js', isProd);
         const isJsFilenameFn = typeof jsFilename === 'function';
 
@@ -102,7 +103,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
           .hashFunction('xxhash64');
 
         if (isServer) {
-          const serverPath = getDistPath(config, 'server');
+          const serverPath = config.output.distPath.server;
 
           chain.output
             .path(posix.join(api.context.distPath, serverPath))
@@ -115,7 +116,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
         }
 
         if (isServiceWorker) {
-          const workerPath = getDistPath(config, 'worker');
+          const workerPath = config.output.distPath.worker;
           const filename = posix.join(workerPath, '[name].js');
 
           chain.output.filename(filename).chunkFilename(filename);
@@ -134,9 +135,11 @@ export const pluginOutput = (): RsbuildPlugin => ({
         if (isUseCssExtract(config, target)) {
           const extractPluginOptions = config.tools.cssExtract.pluginOptions;
 
-          const cssPath = getDistPath(config, 'css');
+          const cssPath = config.output.distPath.css;
           const cssFilename = getFilename(config, 'css', isProd);
-          const cssAsyncPath = getDistPath(config, 'cssAsync');
+          const cssAsyncPath =
+            config.output.distPath.cssAsync ??
+            (cssPath ? `${cssPath}/async` : 'async');
 
           chain
             .plugin(CHAIN_ID.PLUGIN.MINI_CSS_EXTRACT)

@@ -3,10 +3,10 @@ import {
   type BundlerType,
   type RsbuildContext,
   type RsbuildTarget,
-  getDistPath,
   logger,
 } from '@rsbuild/shared';
 import { withDefaultConfig } from './config';
+import { ROOT_DIST_DIR } from './constants';
 import { initHooks } from './initHooks';
 import { getEntryObject } from './plugins/entry';
 import type {
@@ -24,7 +24,7 @@ function getAbsoluteDistPath(
   cwd: string,
   config: RsbuildConfig | NormalizedConfig,
 ) {
-  const dirRoot = getDistPath(config, 'root');
+  const dirRoot = config.output?.distPath?.root ?? ROOT_DIST_DIR;
   return getAbsolutePath(cwd, dirRoot);
 }
 

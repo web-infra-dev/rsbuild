@@ -1,12 +1,7 @@
 import path from 'node:path';
 import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
 import { PLUGIN_REACT_NAME } from '@rsbuild/plugin-react';
-import {
-  SCRIPT_REGEX,
-  deepmerge,
-  getDistPath,
-  getFilename,
-} from '@rsbuild/shared';
+import { SCRIPT_REGEX, deepmerge, getFilename } from '@rsbuild/shared';
 import type { Config } from '@svgr/core';
 
 export type SvgDefaultExport = 'component' | 'url';
@@ -71,7 +66,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain(async (chain, { isProd, CHAIN_ID }) => {
       const config = api.getNormalizedConfig();
-      const distDir = getDistPath(config, 'svg');
+      const distDir = config.output.distPath.svg;
       const filename = getFilename(config, 'svg', isProd);
       const outputName = path.posix.join(distDir, filename);
       const { dataUriLimit } = config.output;

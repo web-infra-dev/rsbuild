@@ -315,7 +315,10 @@ export type OverrideBrowserslist =
 export interface NormalizedOutputConfig extends OutputConfig {
   targets: RsbuildTarget[];
   filename: FilenameConfig;
-  distPath: DistPathConfig;
+  distPath: Omit<Required<DistPathConfig>, 'jsAsync' | 'cssAsync'> & {
+    jsAsync?: string;
+    cssAsync?: string;
+  };
   polyfill: Polyfill;
   sourceMap: {
     js?: RspackConfig['devtool'];

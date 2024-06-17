@@ -6,7 +6,6 @@ import {
   type RspackChain,
   type TransformFn,
   type TransformHandler,
-  getDistPath,
   removeLeadingSlash,
 } from '@rsbuild/shared';
 import type { Compiler } from '@rspack/core';
@@ -18,13 +17,12 @@ export function getHTMLPathByEntry(
   entryName: string,
   config: NormalizedConfig,
 ) {
-  const htmlPath = getDistPath(config, 'html');
   const filename =
     config.html.outputStructure === 'flat'
       ? `${entryName}.html`
       : `${entryName}/index.html`;
 
-  return removeLeadingSlash(`${htmlPath}/${filename}`);
+  return removeLeadingSlash(`${config.output.distPath.html}/${filename}`);
 }
 
 function applyTransformPlugin(
