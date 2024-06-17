@@ -88,7 +88,7 @@
     "typescript": "^5.4.2",
     "webpack": "^5.92.0",
     "webpack-dev-middleware": "7.2.1",
-    "ws": "^8.17.0"
+    "ws": "^8.17.1"
   },
   "engines": {
     "node": ">=16.0.0"
