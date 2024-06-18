@@ -5,7 +5,6 @@ import {
   type RequestHandler as Middleware,
   type Rspack,
   color,
-  isDebug,
   logger,
 } from '@rsbuild/shared';
 import type Connect from 'connect';
@@ -125,7 +124,7 @@ export const getHtmlFallbackMiddleware: (params: {
     };
 
     const rewrite = (newUrl: string, isFallback = false) => {
-      if (isFallback && isDebug()) {
+      if (isFallback && logger.level === 'verbose') {
         logger.debug(
           `${req.method} ${color.gray(
             `${req.url} ${color.yellow('fallback')} to ${newUrl}`,

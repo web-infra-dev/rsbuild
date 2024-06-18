@@ -128,7 +128,6 @@ test('@rsbuild/plugin-assets-retry should work when blocking initial chunk index
   expect(blockedResponseCount).toBe(3);
   await rsbuild.close();
   restore();
-  console.log(logs);
   logger.level = 'log';
 });
 

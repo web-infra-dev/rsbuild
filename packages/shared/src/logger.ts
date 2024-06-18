@@ -1,4 +1,4 @@
-import { type Logger, logger } from 'rslog';
+import { type Logger, logger } from '../compiled/rslog/index.js';
 import { color } from './utils';
 
 // setup the logger level

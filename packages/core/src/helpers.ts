@@ -11,8 +11,8 @@ import {
   type StatsError,
   castArray,
   color,
-  isDebug,
   isProd,
+  logger,
 } from '@rsbuild/shared';
 import { fse } from '@rsbuild/shared';
 import type { StatsCompilation, StatsValue } from '@rspack/core';
@@ -210,7 +210,7 @@ export function formatStats(
       warnings: getAllStatsWarnings(statsData),
     },
     // display verbose messages in prod build or debug mode
-    isProd() || isDebug(),
+    isProd() || logger.level === 'verbose',
   );
 
   if (stats.hasErrors()) {

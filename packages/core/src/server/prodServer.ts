@@ -6,7 +6,7 @@ import {
   type RequestHandler,
   type ServerConfig,
   getNodeEnv,
-  isDebug,
+  logger,
   setNodeEnv,
 } from '@rsbuild/shared';
 import type Connect from 'connect';
@@ -55,7 +55,7 @@ export class RsbuildProdServer {
     const { headers, proxy, historyApiFallback, compress } =
       this.options.serverConfig;
 
-    if (isDebug()) {
+    if (logger.level === 'verbose') {
       this.middlewares.use(await getRequestLoggerMiddleware());
     }
 
