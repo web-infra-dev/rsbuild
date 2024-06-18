@@ -18,11 +18,10 @@
 import {
   type PreloadOrPreFetchOption,
   getPublicPathFromCompiler,
-  upperFirst,
 } from '@rsbuild/shared';
 import type { Compilation, Compiler, RspackPluginInstance } from '@rspack/core';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
-import { ensureAssetPrefix } from '../../helpers';
+import { ensureAssetPrefix, upperFirst } from '../../helpers';
 import { getHTMLPlugin } from '../../pluginHelper';
 import {
   type As,

@@ -2,8 +2,8 @@ import {
   type InspectConfigOptions,
   type PluginManager,
   type RspackConfig,
-  debug,
   isDebug,
+  logger,
 } from '@rsbuild/shared';
 import { normalizeConfig } from '../config';
 import { updateContextByNormalizedConfig } from '../createContext';
@@ -18,14 +18,14 @@ import { inspectConfig } from './inspectConfig';
 import { generateRspackConfig } from './rspackConfig';
 
 async function modifyRsbuildConfig(context: InternalContext) {
-  debug('modify Rsbuild config');
+  logger.debug('modify Rsbuild config');
   const [modified] = await context.hooks.modifyRsbuildConfig.call(
     context.config,
     { mergeRsbuildConfig },
   );
   context.config = modified;
 
-  debug('modify Rsbuild config done');
+  logger.debug('modify Rsbuild config done');
 }
 
 export type InitConfigsOptions = {

@@ -3,14 +3,14 @@ import {
   type CreateDevServerOptions,
   type Rspack,
   type StartDevServerOptions,
-  debug,
   getNodeEnv,
   getPublicPathFromCompiler,
-  isMultiCompiler,
+  logger,
   setNodeEnv,
 } from '@rsbuild/shared';
 import type Connect from 'connect';
 import { ROOT_DIST_DIR } from '../constants';
+import { isMultiCompiler } from '../helpers';
 import type { CreateDevMiddlewareReturns } from '../provider/createCompiler';
 import type { InternalContext, NormalizedConfig } from '../types';
 import {
@@ -96,7 +96,7 @@ export async function createDevServer<
     setNodeEnv('development');
   }
 
-  debug('create dev server');
+  logger.debug('create dev server');
 
   const serverConfig = config.server;
   const { port, host, https } = await getServerConfig({
@@ -223,7 +223,7 @@ export async function createDevServer<
         serverConfig,
         middlewares,
       });
-      debug('listen dev server');
+      logger.debug('listen dev server');
 
       return new Promise<StartServerResult>((resolve) => {
         httpServer.listen(
@@ -240,7 +240,7 @@ export async function createDevServer<
 
             httpServer.on('upgrade', devMiddlewares.onUpgrade);
 
-            debug('listen dev server done');
+            logger.debug('listen dev server done');
 
             await server.afterListen();
 
@@ -276,7 +276,7 @@ export async function createDevServer<
     },
   };
 
-  debug('create dev server done');
+  logger.debug('create dev server done');
 
   return server;
 }

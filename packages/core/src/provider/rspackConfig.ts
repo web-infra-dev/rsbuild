@@ -5,8 +5,8 @@ import {
   type RsbuildTarget,
   type RspackConfig,
   castArray,
-  debug,
   getNodeEnv,
+  logger,
   reduceConfigsAsyncWithContext,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
@@ -19,7 +19,7 @@ async function modifyRspackConfig(
   rspackConfig: RspackConfig,
   utils: ModifyRspackConfigUtils,
 ) {
-  debug('modify Rspack config');
+  logger.debug('modify Rspack config');
   let [modifiedConfig] = await context.hooks.modifyRspackConfig.call(
     rspackConfig,
     utils,
@@ -34,7 +34,7 @@ async function modifyRspackConfig(
     });
   }
 
-  debug('modify Rspack config done');
+  logger.debug('modify Rspack config done');
   return modifiedConfig;
 }
 

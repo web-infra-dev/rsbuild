@@ -3,11 +3,10 @@ import {
   DEFAULT_ASSET_PREFIX,
   type NormalizedConfig,
   type RsbuildContext,
-  getFilename,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import { DEFAULT_DEV_HOST, DEFAULT_PORT } from '../constants';
-import { formatPublicPath } from '../helpers';
+import { formatPublicPath, getFilename } from '../helpers';
 import { getCssExtractPlugin } from '../pluginHelper';
 import type { RsbuildPlugin } from '../types';
 import { isUseCssExtract } from './css';

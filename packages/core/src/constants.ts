@@ -1,4 +1,5 @@
 import { join } from 'node:path';
+import type { RsbuildTarget } from '@rsbuild/shared';
 
 // Paths
 // loaders will be emitted to the same folder of the main bundle
@@ -52,3 +53,10 @@ export const IMAGE_EXTENSIONS = [
 ];
 export const VIDEO_EXTENSIONS = ['mp4', 'webm', 'ogg', 'mov'];
 export const AUDIO_EXTENSIONS = ['mp3', 'wav', 'flac', 'aac', 'm4a', 'opus'];
+
+export const TARGET_ID_MAP: Record<RsbuildTarget, string> = {
+  web: 'Client',
+  node: 'Server',
+  'web-worker': 'Web Worker',
+  'service-worker': 'Service Worker',
+};

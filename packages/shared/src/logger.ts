@@ -25,12 +25,11 @@ function getTime() {
   return `${hours}:${minutes}:${seconds}`;
 }
 
-export const debug = (message: string | (() => string)) => {
-  if (isDebug()) {
-    const result = typeof message === 'string' ? message : message();
-    const time = color.gray(`${getTime()}`);
-    logger.debug(`${time} ${result}`);
-  }
+const { debug } = logger;
+
+logger.debug = (message, ...args) => {
+  const time = color.gray(`${getTime()}`);
+  debug(`${time} ${message}`, ...args);
 };
 
 export { logger };

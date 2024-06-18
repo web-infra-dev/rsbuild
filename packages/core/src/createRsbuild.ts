@@ -1,10 +1,10 @@
 import {
   type PluginManager,
   type PreviewServerOptions,
-  debug,
-  pick,
+  logger,
 } from '@rsbuild/shared';
 import { createContext } from './createContext';
+import { pick } from './helpers';
 import { getPluginAPI } from './initPlugins';
 import { initRsbuildConfig } from './internal';
 import { setCssExtractPlugin } from './pluginHelper';
@@ -144,9 +144,9 @@ export async function createRsbuild(
   const pluginAPI = getPluginAPI({ context, pluginManager });
   context.pluginAPI = pluginAPI;
 
-  debug('add default plugins');
+  logger.debug('add default plugins');
   await applyDefaultPlugins(pluginManager, context);
-  debug('add default plugins done');
+  logger.debug('add default plugins done');
 
   const provider = (rsbuildConfig.provider ||
     (await getRspackProvider())) as RsbuildProvider;

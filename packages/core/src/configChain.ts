@@ -8,8 +8,8 @@ import {
   RspackChain,
   type RspackConfig,
   castArray,
-  debug,
   isPlainObject,
+  logger,
 } from '@rsbuild/shared';
 import type { RsbuildConfig } from './types';
 
@@ -28,7 +28,7 @@ export async function modifyBundlerChain(
   },
   utils: ModifyBundlerChainUtils,
 ): Promise<RspackChain> {
-  debug('modify bundler chain');
+  logger.debug('modify bundler chain');
 
   const bundlerChain = await getBundlerChain();
 
@@ -43,7 +43,7 @@ export async function modifyBundlerChain(
     }
   }
 
-  debug('modify bundler chain done');
+  logger.debug('modify bundler chain done');
 
   return modifiedBundlerChain;
 }

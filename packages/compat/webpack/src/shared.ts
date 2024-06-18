@@ -11,6 +11,8 @@ const {
   outputInspectConfigFiles,
   chainToConfig,
   modifyBundlerChain,
+  onCompileDone,
+  TARGET_ID_MAP,
 } = __internalHelper;
 
 export {
@@ -24,6 +26,8 @@ export {
   outputInspectConfigFiles,
   chainToConfig,
   modifyBundlerChain,
+  onCompileDone,
+  TARGET_ID_MAP,
 };
 
 export type InternalContext = __internalHelper.InternalContext;
