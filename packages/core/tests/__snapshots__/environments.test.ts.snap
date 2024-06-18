@@ -1,0 +1,49 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`environment config > should print environment config when inspect config 1`] = `
+{
+  "ssr": {
+    "source": {
+      "entry": {
+        "index": "src/index.server.js",
+      },
+    },
+  },
+  "web": {
+    "source": {
+      "entry": {
+        "index": "src/index.client.js",
+      },
+    },
+  },
+}
+`;
+
+exports[`environment config > should support modify environment config by api.modifyRsbuildConfig 1`] = `
+{
+  "ssr": {
+    "source": {
+      "entry": {
+        "index": "src/index.server.js",
+      },
+    },
+  },
+  "web": {
+    "source": {
+      "alias": {
+        "@common1": "src/common1",
+      },
+      "entry": {
+        "index": "src/index.client.js",
+      },
+    },
+  },
+  "web1": {
+    "source": {
+      "alias": {
+        "@common1": "src/common1",
+      },
+    },
+  },
+}
+`;
