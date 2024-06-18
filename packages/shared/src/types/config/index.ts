@@ -29,7 +29,6 @@ export type RsbuildConfigMeta = {
 /**
  * The rsbuild config to run in the specified environment.
  * */
-
 export interface EnvironmentConfig {
   /**
    * Options for HTML generation.
@@ -62,10 +61,9 @@ export interface EnvironmentConfig {
 }
 
 /**
- * The shared Rsbuild config.
- * Can be used with both Rspack and Webpack.
+ * The Rsbuild config.
  * */
-export interface RsbuildConfig extends RsbuildEnvironmentConfig {
+export interface RsbuildConfig extends EnvironmentConfig {
   /**
    * Options for local development.
    */
@@ -83,7 +81,7 @@ export interface RsbuildConfig extends RsbuildEnvironmentConfig {
    * Configure rsbuild config by environment.
    */
   environments?: {
-    [name: string]: RsbuildEnvironmentConfig;
+    [name: string]: EnvironmentConfig;
   };
   /**
    * Used to switch the bundler type.
@@ -109,7 +107,7 @@ export type NormalizedConfig = DeepReadonly<{
   provider?: unknown;
   _privateMeta?: RsbuildConfigMeta;
   environments?: {
-    [name: string]: RsbuildEnvironmentConfig;
+    [name: string]: EnvironmentConfig;
   };
 }>;
 
