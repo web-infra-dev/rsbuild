@@ -4,7 +4,7 @@ import { SourceCode } from 'rspress/theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-css-minimizer" />
 
-Rsbuild 默认使用 Rspack 内置的 SWC 来压缩 CSS 代码，你可以通过 CSS Minimizer 插件来自定义 CSS 压缩工具，切换到 [cssnano](https://cssnano.co/) 或其他工具进行 CSS 压缩。
+Rsbuild 默认使用 Rspack 内置的 SWC 来压缩 CSS 代码，你可以通过 CSS Minimizer 插件来自定义 CSS 压缩工具，切换到 [cssnano](https://github.com/cssnano/cssnano) 或其他工具进行 CSS 压缩。
 
 CSS Minimizer 插件内部集成了 [css-minimizer-webpack-plugin](https://github.com/webpack-contrib/css-minimizer-webpack-plugin)。
 
@@ -59,7 +59,7 @@ const defaultOptions = {
 };
 ```
 
-- **示例一：** 修改 [cssnano](https://cssnano.co/) 的 `preset` 配置。
+- **示例一：** 修改 [cssnano](https://github.com/cssnano/cssnano) 的 `preset` 配置。
 
 ```js
 pluginCssMinimizer({
