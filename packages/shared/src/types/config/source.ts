@@ -1,9 +1,6 @@
 import type { RuleSetCondition } from '@rspack/core';
-import type {
-  ConfigChainMergeContext,
-  ConfigChainWithContext,
-} from '../../reduceConfigs';
 import type { RsbuildEntry, RsbuildTarget } from '../rsbuild';
+import type { ConfigChainMergeContext, ConfigChainWithContext } from '../utils';
 
 export type Alias = Record<string, string | false | (string | false)[]>;
 

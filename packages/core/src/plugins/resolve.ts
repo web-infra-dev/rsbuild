@@ -4,9 +4,9 @@ import {
   type RsbuildTarget,
   type RspackChain,
   castArray,
-  reduceConfigsWithContext,
 } from '@rsbuild/shared';
 import { ensureAbsolutePath } from '../helpers';
+import { reduceConfigsWithContext } from '../reduceConfigs';
 import type { RsbuildPlugin } from '../types';
 
 // compatible with legacy packages with type="module"

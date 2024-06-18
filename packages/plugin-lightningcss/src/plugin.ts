@@ -7,7 +7,8 @@ import type {
   RsbuildTarget,
   RspackChain,
 } from '@rsbuild/core';
-import { getBrowserslistWithDefault, reduceConfigs } from '@rsbuild/shared';
+import { reduceConfigs } from '@rsbuild/core';
+import { getBrowserslistWithDefault } from '@rsbuild/shared';
 import browserslist from '@rsbuild/shared/browserslist';
 import * as lightningcss from 'lightningcss';
 import type { Targets } from 'lightningcss';

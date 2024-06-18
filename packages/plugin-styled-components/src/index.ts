@@ -4,7 +4,8 @@ import type {
   RsbuildPlugin,
   RsbuildTarget,
 } from '@rsbuild/core';
-import { getNodeEnv, reduceConfigs } from '@rsbuild/shared';
+import { reduceConfigs } from '@rsbuild/core';
+import { getNodeEnv } from '@rsbuild/shared';
 
 /**
  * the options of [rspackExperiments.styledComponents](https://rspack.dev/guide/features/builtin-swc-loader#rspackexperimentsstyledcomponents).

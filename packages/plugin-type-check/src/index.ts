@@ -1,11 +1,10 @@
-import { type ConfigChain, type RsbuildPlugin, logger } from '@rsbuild/core';
 import {
-  CHAIN_ID,
-  NODE_MODULES_REGEX,
-  deepmerge,
-  fse,
+  type ConfigChain,
+  type RsbuildPlugin,
+  logger,
   reduceConfigs,
-} from '@rsbuild/shared';
+} from '@rsbuild/core';
+import { CHAIN_ID, NODE_MODULES_REGEX, deepmerge, fse } from '@rsbuild/shared';
 import type ForkTSCheckerPlugin from 'fork-ts-checker-webpack-plugin';
 
 type ForkTsCheckerOptions = NonNullable<
