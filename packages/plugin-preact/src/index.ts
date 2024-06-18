@@ -70,9 +70,10 @@ export const pluginPreact = (
       }
 
       const { default: PreactRefreshPlugin } = await import(
-        'rspack-plugin-prefresh'
+        '@rspack/plugin-preact-refresh'
       );
 
+      // @ts-expect-error https://github.com/web-infra-dev/rspack/pull/6850
       chain.plugin('preact-refresh').use(PreactRefreshPlugin, [
         {
           include: [SCRIPT_REGEX],

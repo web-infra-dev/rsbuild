@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "rspack-plugin-prefresh": "^0.6.5"
+    "@rspack/plugin-preact-refresh": "0.7.3"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",

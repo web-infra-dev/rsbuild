@@ -1183,9 +1183,9 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
-      rspack-plugin-prefresh:
-        specifier: ^0.6.5
-        version: 0.6.5(preact@10.22.0)
+      '@rspack/plugin-preact-refresh':
+        specifier: 0.7.3
+        version: 0.7.3(@prefresh/core@1.5.2(preact@10.22.0))(@prefresh/utils@1.2.0)
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -3605,6 +3605,12 @@ packages:
     peerDependenciesMeta:
       '@swc/helpers':
         optional: true
+
+  '@rspack/plugin-preact-refresh@0.7.3':
+    resolution: {integrity: sha512-bQ1y/me4tJIA3jBe2FsTHwScA437UU9rg5ts+OnDj+lDG/4Ns/eWOe8cWPFjPe3WW7/iZ2Y05nARR8EWByRMcw==}
+    peerDependencies:
+      '@prefresh/core': ^1.5.0
+      '@prefresh/utils': ^1.2.0
 
   '@rspack/plugin-react-refresh@0.7.3':
     resolution: {integrity: sha512-fuXXqb6Lhlt1Ynz35E3OAmb1po9EGWYtDJgDqzXVfA9DPcnCPIZpbx6hOLLTYQRYLic74w11J0H2FCUXMHVg1g==}
@@ -7898,9 +7904,6 @@ packages:
       '@rspack/core':
         optional: true
 
-  rspack-plugin-prefresh@0.6.5:
-    resolution: {integrity: sha512-b9eyammIqxaKPGBHgt1xT8aSds+u/gKpGar6YR1plRIE80vikF4YY5sv/aHPGCpHT2KZ3Wc6d1lElG7EEvO5cA==}
-
   rspack-plugin-virtual-module@0.1.12:
     resolution: {integrity: sha512-qyBM9XsP7oxBQSms2cr715XOeoDi6p5hUYXtlNDfst0jha8vfWVPNeC7j5+j5dG+yt//1OCmLaOY2rWqPSVXDg==}
 
@@ -11240,6 +11243,11 @@ snapshots:
       webpack-sources: 3.2.3
     optionalDependencies:
       '@swc/helpers': 0.5.3
+
+  '@rspack/plugin-preact-refresh@0.7.3(@prefresh/core@1.5.2(preact@10.22.0))(@prefresh/utils@1.2.0)':
+    dependencies:
+      '@prefresh/core': 1.5.2(preact@10.22.0)
+      '@prefresh/utils': 1.2.0
 
   '@rspack/plugin-react-refresh@0.7.3(react-refresh@0.14.2)':
     optionalDependencies:
@@ -16405,13 +16413,6 @@ snapshots:
       webpack-sources: 2.3.1
     optionalDependencies:
       '@rspack/core': 0.7.3(@swc/helpers@0.5.3)
-
-  rspack-plugin-prefresh@0.6.5(preact@10.22.0):
-    dependencies:
-      '@prefresh/core': 1.5.2(preact@10.22.0)
-      '@prefresh/utils': 1.2.0
-    transitivePeerDependencies:
-      - preact
 
   rspack-plugin-virtual-module@0.1.12:
     dependencies:
