@@ -19,7 +19,7 @@ export { rspack };
 export type { Rspack };
 
 // Helpers
-export { logger } from '@rsbuild/shared';
+export { logger } from './logger';
 export { mergeRsbuildConfig } from './mergeConfig';
 export { ensureAssetPrefix } from './helpers';
 

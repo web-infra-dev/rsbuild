@@ -1,12 +1,9 @@
-import {
-  type PluginManager,
-  type PreviewServerOptions,
-  logger,
-} from '@rsbuild/shared';
+import type { PluginManager, PreviewServerOptions } from '@rsbuild/shared';
 import { createContext } from './createContext';
 import { pick } from './helpers';
 import { getPluginAPI } from './initPlugins';
 import { initRsbuildConfig } from './internal';
+import { logger } from './logger';
 import { setCssExtractPlugin } from './pluginHelper';
 import { createPluginManager } from './pluginManager';
 import type {

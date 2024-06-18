@@ -803,6 +803,9 @@ importers:
       prebundle:
         specifier: 1.1.0
         version: 1.1.0(typescript@5.4.5)
+      rslog:
+        specifier: ^1.2.2
+        version: 1.2.2
       rspack-manifest-plugin:
         specifier: 5.0.0
         version: 5.0.0(@rspack/core@0.7.3(@swc/helpers@0.5.3))
@@ -1710,9 +1713,6 @@ importers:
       prebundle:
         specifier: 1.1.0
         version: 1.1.0(typescript@5.4.5)
-      rslog:
-        specifier: ^1.2.2
-        version: 1.2.2
       rspack-chain:
         specifier: ^0.7.3
         version: 0.7.3

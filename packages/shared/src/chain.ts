@@ -83,8 +83,6 @@ export const CHAIN_ID = {
     STYLE: 'style-loader',
     /** svelte-loader */
     SVELTE: 'svelte',
-    /** esbuild-loader */
-    ESBUILD: 'esbuild',
     /** postcss-loader */
     POSTCSS: 'postcss',
     /** lightningcss-loader */
@@ -128,10 +126,6 @@ export const CHAIN_ID = {
     MODULE_FEDERATION: 'module-federation',
     /** HtmlBasicPlugin */
     HTML_BASIC: 'html-basic-plugin',
-    /** htmlPreconnectPlugin */
-    HTML_PRECONNECT: 'html-preconnect-plugin',
-    /** htmlDnsPrefetchPlugin */
-    HTML_DNS_PREFETCH: 'html-dns-prefetch-plugin',
     /** htmlPrefetchPlugin */
     HTML_PREFETCH: 'html-prefetch-plugin',
     /** htmlPreloadPlugin */
@@ -152,8 +146,6 @@ export const CHAIN_ID = {
     ASYNC_CHUNK_RETRY: 'async-chunk-retry',
     /** AutoSetRootFontSizePlugin */
     AUTO_SET_ROOT_SIZE: 'auto-set-root-size',
-    /** VueLoader15PitchFixPlugin */
-    VUE_LOADER_15_PITCH_FIX_PLUGIN: 'vue-loader-15-pitch-fix',
   },
   /** Predefined minimizers */
   MINIMIZER: {
@@ -161,15 +153,9 @@ export const CHAIN_ID = {
     JS: 'js',
     /** SwcCssMinimizerRspackPlugin */
     CSS: 'css',
-    /** ESBuildPlugin */
-    ESBUILD: 'js-css',
-    /** SWCPlugin */
-    SWC: 'swc',
   },
   /** Predefined resolve plugins */
   RESOLVE_PLUGIN: {
-    /** ModuleScopePlugin */
-    MODULE_SCOPE: 'module-scope',
     /** TsConfigPathsPlugin */
     TS_CONFIG_PATHS: 'ts-config-paths',
   },

@@ -84,7 +84,6 @@
     "picocolors": "1.0.1",
     "prebundle": "1.1.0",
     "rspack-chain": "^0.7.3",
-    "rslog": "^1.2.2",
     "terser": "5.31.1",
     "typescript": "^5.4.2",
     "webpack": "^5.92.0",

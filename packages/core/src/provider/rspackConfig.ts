@@ -6,11 +6,11 @@ import {
   type RspackConfig,
   castArray,
   getNodeEnv,
-  logger,
   reduceConfigsAsyncWithContext,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import { chainToConfig, modifyBundlerChain } from '../configChain';
+import { logger } from '../logger';
 import { getHTMLPlugin } from '../pluginHelper';
 import type { InternalContext } from '../types';
 

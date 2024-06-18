@@ -4,7 +4,7 @@
  */
 import path from 'node:path';
 import { JS_REGEX, fse } from '@rsbuild/shared';
-import { color, logger } from '@rsbuild/shared';
+import { color } from '@rsbuild/shared';
 import type {
   MultiStats,
   PrintFileSizeOptions,
@@ -12,6 +12,7 @@ import type {
   StatsAsset,
 } from '@rsbuild/shared';
 import { CSS_REGEX, HTML_REGEX } from '../constants';
+import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
 
 /** Filter source map and license files */

@@ -1,6 +1,6 @@
 import { build, webpackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
-import { logger } from '@rsbuild/shared';
+import { logger } from '@rsbuild/core';
 
 webpackOnlyTest('should emit progress log in non-TTY environment', async () => {
   process.stdout.isTTY = false;

@@ -1,13 +1,13 @@
 import { isAbsolute, join } from 'node:path';
-import {
-  type BundlerType,
-  type RsbuildContext,
-  type RsbuildTarget,
-  logger,
+import type {
+  BundlerType,
+  RsbuildContext,
+  RsbuildTarget,
 } from '@rsbuild/shared';
 import { withDefaultConfig } from './config';
 import { ROOT_DIST_DIR } from './constants';
 import { initHooks } from './initHooks';
+import { logger } from './logger';
 import { getEntryObject } from './plugins/entry';
 import type {
   CreateRsbuildOptions,

@@ -6,11 +6,11 @@ import {
   type RequestHandler,
   type ServerConfig,
   getNodeEnv,
-  logger,
   setNodeEnv,
 } from '@rsbuild/shared';
 import type Connect from 'connect';
 import { ROOT_DIST_DIR } from '../constants';
+import { logger } from '../logger';
 import type { InternalContext, NormalizedConfig } from '../types';
 import {
   type StartServerResult,

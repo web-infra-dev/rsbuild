@@ -1,4 +1,4 @@
-import { getNodeEnv, logger, setNodeEnv } from '@rsbuild/shared';
+import { getNodeEnv, setNodeEnv } from '@rsbuild/shared';
 import type {
   BuildOptions,
   MultiStats,
@@ -8,6 +8,7 @@ import type {
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import { onCompileDone } from '../helpers';
+import { logger } from '../logger';
 import { createCompiler } from './createCompiler';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 

@@ -6,7 +6,6 @@ import {
   color,
   isDev,
   isProd,
-  logger,
   prettyTime,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
@@ -19,6 +18,7 @@ import {
   onCompileDone,
   rspackMinVersion,
 } from '../helpers';
+import { logger } from '../logger';
 import type { DevMiddlewareAPI } from '../server/devMiddleware';
 import type { DevConfig, InternalContext } from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';

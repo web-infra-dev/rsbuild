@@ -1,4 +1,4 @@
-import { color, isFunction, logger } from '@rsbuild/shared';
+import { color, isFunction } from '@rsbuild/shared';
 import type {
   BundlerPluginInstance,
   Falsy,
@@ -6,6 +6,7 @@ import type {
   RsbuildPlugin,
   RsbuildPluginAPI,
 } from '@rsbuild/shared';
+import { logger } from './logger';
 
 function validatePlugin(plugin: unknown) {
   const type = typeof plugin;

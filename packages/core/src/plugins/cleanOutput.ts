@@ -1,5 +1,6 @@
 import { sep } from 'node:path';
-import { color, fse, logger } from '@rsbuild/shared';
+import { color, fse } from '@rsbuild/shared';
+import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
 
 const emptyDir = async (dir: string) => {

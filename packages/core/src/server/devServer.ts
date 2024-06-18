@@ -5,12 +5,12 @@ import {
   type StartDevServerOptions,
   getNodeEnv,
   getPublicPathFromCompiler,
-  logger,
   setNodeEnv,
 } from '@rsbuild/shared';
 import type Connect from 'connect';
 import { ROOT_DIST_DIR } from '../constants';
 import { isMultiCompiler } from '../helpers';
+import { logger } from '../logger';
 import type { CreateDevMiddlewareReturns } from '../provider/createCompiler';
 import type { InternalContext, NormalizedConfig } from '../types';
 import {
