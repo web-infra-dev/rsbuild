@@ -26,6 +26,9 @@ function getTime() {
 
 logger.override({
   debug: (message, ...args) => {
+    if (logger.level !== 'verbose') {
+      return;
+    }
     const time = color.gray(`${getTime()}`);
     console.log(`  ${color.magenta('rsbuild')} ${time} ${message}`, ...args);
   },

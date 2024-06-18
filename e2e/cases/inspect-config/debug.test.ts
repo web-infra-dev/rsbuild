@@ -13,7 +13,7 @@ const getBundlerConfig = (dist: string) =>
   );
 
 test('should generate config files when build (with DEBUG)', async () => {
-  logger.level = 'verbose';
+  process.env.DEBUG = 'rsbuild';
   const distRoot = 'dist-1';
 
   await build({
@@ -31,11 +31,11 @@ test('should generate config files when build (with DEBUG)', async () => {
   expect(fse.existsSync(getRsbuildConfig(distRoot))).toBeTruthy();
   expect(fse.existsSync(getBundlerConfig(distRoot))).toBeTruthy();
 
-  logger.level = 'log';
+  delete process.env.DEBUG;
 });
 
 test('should generate config files when dev (with DEBUG)', async ({ page }) => {
-  logger.level = 'verbose';
+  process.env.DEBUG = 'rsbuild';
   const distRoot = 'dist-2';
 
   const rsbuild = await dev({
@@ -57,7 +57,7 @@ test('should generate config files when dev (with DEBUG)', async ({ page }) => {
   expect(fse.existsSync(getRsbuildConfig(distRoot))).toBeTruthy();
   expect(fse.existsSync(getBundlerConfig(distRoot))).toBeTruthy();
 
-  logger.level = 'log';
+  delete process.env.DEBUG;
 
   await rsbuild.close();
 });
