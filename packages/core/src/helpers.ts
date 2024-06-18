@@ -12,7 +12,6 @@ import {
   castArray,
   color,
   isProd,
-  logger,
 } from '@rsbuild/shared';
 import { fse } from '@rsbuild/shared';
 import type { StatsCompilation, StatsValue } from '@rspack/core';
@@ -22,6 +21,7 @@ import type {
 } from 'webpack';
 import { formatStatsMessages } from './client/format';
 import { COMPILED_PATH } from './constants';
+import { logger } from './logger';
 
 // depend on native IgnorePlugin
 export const rspackMinVersion = '0.6.2';

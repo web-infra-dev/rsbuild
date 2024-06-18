@@ -16,7 +16,6 @@ export const DEFAULT_ASSET_PREFIX = '/';
 
 // RegExp
 export const JS_REGEX = /\.(?:js|mjs|cjs|jsx)$/;
-export const TS_REGEX = /\.(?:ts|mts|cts|tsx)$/;
 export const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
 export const TS_AND_JSX_REGEX = /\.(?:ts|tsx|jsx|mts|cts)$/;
 export const NODE_MODULES_REGEX = /[\\/]node_modules[\\/]/;

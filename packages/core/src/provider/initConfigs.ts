@@ -1,12 +1,11 @@
-import {
-  type InspectConfigOptions,
-  type PluginManager,
-  type RspackConfig,
-  isDebug,
-  logger,
+import type {
+  InspectConfigOptions,
+  PluginManager,
+  RspackConfig,
 } from '@rsbuild/shared';
 import { normalizeConfig } from '../config';
 import { updateContextByNormalizedConfig } from '../createContext';
+import { isDebug, logger } from '../logger';
 import { mergeRsbuildConfig } from '../mergeConfig';
 import { initPlugins } from '../pluginManager';
 import type {

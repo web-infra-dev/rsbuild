@@ -12,6 +12,7 @@
       "open": ["./compiled/open"],
       "sirv": ["./compiled/sirv"],
       "jiti": ["./compiled/jiti"],
+      "rslog": ["./compiled/rslog"],
       "dotenv": ["./compiled/dotenv"],
       "semver": ["./compiled/semver"],
       "connect": ["./compiled/connect"],

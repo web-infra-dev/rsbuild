@@ -5,9 +5,9 @@ import {
   type RequestHandler as Middleware,
   type Rspack,
   color,
-  logger,
 } from '@rsbuild/shared';
 import type Connect from 'connect';
+import { logger } from '../logger';
 
 export const faviconFallbackMiddleware: Middleware = (req, res, next) => {
   if (req.url === '/favicon.ico') {

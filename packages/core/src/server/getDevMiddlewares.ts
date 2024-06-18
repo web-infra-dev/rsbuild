@@ -7,8 +7,8 @@ import type {
   ServerAPIs,
   ServerConfig,
 } from '@rsbuild/shared';
-import { logger } from '@rsbuild/shared';
 import { normalizePublicDirs } from '../config';
+import { logger } from '../logger';
 import type { UpgradeEvent } from './helper';
 import {
   faviconFallbackMiddleware,

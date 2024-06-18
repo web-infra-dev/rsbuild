@@ -44,16 +44,6 @@ export default {
       },
     },
     {
-      name: 'rslog',
-      afterBundle(task) {
-        // use the cjs bundle of rslog
-        fs.copyFileSync(
-          join(task.depPath, 'dist/index.cjs'),
-          join(task.distPath, 'index.js'),
-        );
-      },
-    },
-    {
       name: 'rspack-chain',
       externals: {
         '@rspack/core': '@rspack/core',

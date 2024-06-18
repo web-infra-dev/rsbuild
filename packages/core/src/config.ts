@@ -7,7 +7,6 @@ import {
   fse,
   getNodeEnv,
   isObject,
-  logger,
 } from '@rsbuild/shared';
 import type {
   InspectConfigOptions,
@@ -44,6 +43,7 @@ import {
   WASM_DIST_DIR,
 } from './constants';
 import { debounce, findExists, isFileExists, upperFirst } from './helpers';
+import { logger } from './logger';
 import { mergeRsbuildConfig } from './mergeConfig';
 import { restartDevServer } from './server/restart';
 

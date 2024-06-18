@@ -1,5 +1,5 @@
-import { type Logger, logger } from '../compiled/rslog/index.js';
-import { color } from './utils';
+import { color } from '@rsbuild/shared';
+import { type Logger, logger } from 'rslog';
 
 export const isDebug = () => {
   if (!process.env.DEBUG) {

@@ -6,10 +6,10 @@ import {
   type SriOptions,
   isHtmlDisabled,
   isProd,
-  logger,
 } from '@rsbuild/shared';
 import { HTML_REGEX } from '../constants';
 import { removeLeadingSlash } from '../helpers';
+import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
 
 const getAssetName = (url: string, assetPrefix: string) => {

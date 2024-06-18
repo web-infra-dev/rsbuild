@@ -1,6 +1,7 @@
-import { isDev, logger } from '@rsbuild/shared';
+import { isDev } from '@rsbuild/shared';
 import { loadConfig, watchFiles } from '../config';
 import { loadEnv } from '../loadEnv';
+import { logger } from '../logger';
 import { onBeforeRestartServer } from '../server/restart';
 import type { CommonOptions } from './commands';
 

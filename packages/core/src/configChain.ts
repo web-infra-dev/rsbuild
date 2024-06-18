@@ -9,8 +9,8 @@ import {
   type RspackConfig,
   castArray,
   isPlainObject,
-  logger,
 } from '@rsbuild/shared';
+import { logger } from './logger';
 import type { RsbuildConfig } from './types';
 
 export async function getBundlerChain() {

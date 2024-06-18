@@ -44,6 +44,16 @@ export default {
       ignoreDts: true,
     },
     {
+      name: 'rslog',
+      afterBundle(task) {
+        // use the cjs bundle of rslog
+        fse.copyFileSync(
+          join(task.depPath, 'dist/index.cjs'),
+          join(task.distPath, 'index.js'),
+        );
+      },
+    },
+    {
       name: 'jiti',
       ignoreDts: true,
     },

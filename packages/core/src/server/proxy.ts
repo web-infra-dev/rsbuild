@@ -1,13 +1,13 @@
-import {
-  type RequestHandler as Middleware,
-  type ProxyDetail,
-  type ProxyOptions,
-  logger,
+import type {
+  RequestHandler as Middleware,
+  ProxyDetail,
+  ProxyOptions,
 } from '@rsbuild/shared';
 import {
   type RequestHandler,
   createProxyMiddleware as baseCreateProxyMiddleware,
 } from '@rsbuild/shared/http-proxy-middleware';
+import { logger } from '../logger';
 import type { UpgradeEvent } from './helper';
 
 export function formatProxyOptions(proxyOptions: ProxyOptions) {

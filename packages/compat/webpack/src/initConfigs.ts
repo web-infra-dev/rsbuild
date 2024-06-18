@@ -1,5 +1,9 @@
-import type { CreateRsbuildOptions, InspectConfigOptions } from '@rsbuild/core';
-import { type PluginManager, isDebug } from '@rsbuild/shared';
+import {
+  type CreateRsbuildOptions,
+  type InspectConfigOptions,
+  logger,
+} from '@rsbuild/core';
+import type { PluginManager } from '@rsbuild/shared';
 import { inspectConfig } from './inspectConfig';
 import { type InternalContext, initRsbuildConfig } from './shared';
 import type { WebpackConfig } from './types';
@@ -29,7 +33,7 @@ export async function initConfigs({
   );
 
   // write Rsbuild config and webpack config to disk in debug mode
-  if (isDebug()) {
+  if (logger.level === 'verbose') {
     const inspect = () => {
       const inspectOptions: InspectConfigOptions = {
         verbose: true,

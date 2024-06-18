@@ -1,4 +1,4 @@
-import { logger } from '@rsbuild/shared';
+import { logger } from '../logger';
 
 function initNodeEnv() {
   if (!process.env.NODE_ENV) {
