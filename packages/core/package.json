@@ -72,7 +72,7 @@
     "dotenv-expand": "11.0.6",
     "fs-extra": "^11.2.0",
     "http-compression": "1.0.20",
-    "launch-editor-middleware": "^2.6.1",
+    "launch-editor-middleware": "^2.7.0",
     "on-finished": "2.4.1",
     "open": "^8.4.0",
     "postcss-load-config": "6.0.1",
