@@ -7,15 +7,15 @@ import {
   type ModifyWebpackChainUtils,
   type ModifyWebpackConfigUtils,
   castArray,
-  chainToConfig,
   debug,
-  modifyBundlerChain,
   reduceConfigsWithContext,
 } from '@rsbuild/shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
 import {
   type InternalContext,
+  chainToConfig,
   getChainUtils as getBaseChainUtils,
+  modifyBundlerChain,
 } from './shared';
 import type { WebpackConfig } from './types';
 

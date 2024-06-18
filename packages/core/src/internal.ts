@@ -14,6 +14,7 @@ export type { InternalContext } from './types';
 export { setHTMLPlugin, getHTMLPlugin } from './pluginHelper';
 export { formatStats, getStatsOptions } from './helpers';
 export { getChainUtils } from './provider/rspackConfig';
+export { chainToConfig, modifyBundlerChain } from './configChain';
 export { applySwcDecoratorConfig } from './plugins/swc';
 export { getSwcMinimizerOptions } from './plugins/minimize';
 export { getDevMiddleware } from './server/devMiddleware';
