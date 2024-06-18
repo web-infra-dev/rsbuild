@@ -1,5 +1,10 @@
-import type { ConfigChain, RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
-import { getNodeEnv, isServerTarget, reduceConfigs } from '@rsbuild/shared';
+import type {
+  ConfigChain,
+  RsbuildConfig,
+  RsbuildPlugin,
+  RsbuildTarget,
+} from '@rsbuild/core';
+import { getNodeEnv, reduceConfigs } from '@rsbuild/shared';
 
 /**
  * the options of [rspackExperiments.styledComponents](https://rspack.dev/guide/features/builtin-swc-loader#rspackexperimentsstyledcomponents).
@@ -16,6 +21,12 @@ export type PluginStyledComponentsOptions = {
   pure?: boolean;
   cssProps?: boolean;
 };
+
+function isServerTarget(target: RsbuildTarget[]) {
+  return (Array.isArray(target) ? target : [target]).some((item) =>
+    ['node', 'service-worker'].includes(item),
+  );
+}
 
 const getDefaultStyledComponentsConfig = (isProd: boolean, ssr: boolean) => {
   return {

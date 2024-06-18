@@ -1,6 +1,6 @@
 import { exec } from 'node:child_process';
 import { promisify } from 'node:util';
-import { type Routes, castArray, debug, logger } from '@rsbuild/shared';
+import { type Routes, castArray, logger } from '@rsbuild/shared';
 import { STATIC_PATH } from '../constants';
 import { canParse } from '../helpers';
 import type { NormalizedConfig, RsbuildPlugin } from '../types';
@@ -60,9 +60,9 @@ export async function openBrowser(url: string): Promise<boolean> {
 
         return true;
       }
-      debug('Failed to find the target browser.');
+      logger.debug('Failed to find the target browser.');
     } catch (err) {
-      debug('Failed to open start URL with apple script.');
+      logger.debug('Failed to open start URL with apple script.');
       logger.debug(err);
     }
   }

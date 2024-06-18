@@ -5,13 +5,12 @@ import {
   type RsbuildTarget,
   type RspackConfig,
   castArray,
-  chainToConfig,
-  debug,
   getNodeEnv,
-  modifyBundlerChain,
+  logger,
   reduceConfigsAsyncWithContext,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
+import { chainToConfig, modifyBundlerChain } from '../configChain';
 import { getHTMLPlugin } from '../pluginHelper';
 import type { InternalContext } from '../types';
 
@@ -20,7 +19,7 @@ async function modifyRspackConfig(
   rspackConfig: RspackConfig,
   utils: ModifyRspackConfigUtils,
 ) {
-  debug('modify Rspack config');
+  logger.debug('modify Rspack config');
   let [modifiedConfig] = await context.hooks.modifyRspackConfig.call(
     rspackConfig,
     utils,
@@ -35,7 +34,7 @@ async function modifyRspackConfig(
     });
   }
 
-  debug('modify Rspack config done');
+  logger.debug('modify Rspack config done');
   return modifiedConfig;
 }
 

@@ -1,19 +1,25 @@
 import path, { posix } from 'node:path';
 import {
   DEFAULT_ASSET_PREFIX,
+  type FilenameConfig,
   type MultiStats,
+  type NormalizedConfig,
+  type RsbuildTarget,
+  type Rspack,
   type RspackChain,
   type Stats,
   type StatsError,
-  addTrailingSlash,
+  castArray,
   color,
-  isDebug,
-  isMultiCompiler,
   isProd,
-  removeTailingSlash,
+  logger,
 } from '@rsbuild/shared';
 import { fse } from '@rsbuild/shared';
 import type { StatsCompilation, StatsValue } from '@rspack/core';
+import type {
+  Compiler as WebpackCompiler,
+  MultiCompiler as WebpackMultiCompiler,
+} from 'webpack';
 import { formatStatsMessages } from './client/format';
 import { COMPILED_PATH } from './constants';
 
@@ -204,7 +210,7 @@ export function formatStats(
       warnings: getAllStatsWarnings(statsData),
     },
     // display verbose messages in prod build or debug mode
-    isProd() || isDebug(),
+    isProd() || logger.level === 'verbose',
   );
 
   if (stats.hasErrors()) {
@@ -225,6 +231,11 @@ export function formatStats(
 
   return {};
 }
+
+export const removeLeadingSlash = (s: string): string => s.replace(/^\/+/, '');
+export const removeTailingSlash = (s: string): string => s.replace(/\/+$/, '');
+export const addTrailingSlash = (s: string): string =>
+  s.endsWith('/') ? s : `${s}/`;
 
 export const formatPublicPath = (publicPath: string, withSlash = true) => {
   // 'auto' is a magic value in Rspack and we should not add trailing slash
@@ -334,3 +345,174 @@ export const ensureAssetPrefix = (url: string, assetPrefix: string) => {
 
   return posix.join(assetPrefix, url);
 };
+
+export function getFilename(
+  config: NormalizedConfig,
+  type: 'js',
+  isProd: boolean,
+): NonNullable<FilenameConfig['js']>;
+export function getFilename(
+  config: NormalizedConfig,
+  type: Exclude<keyof FilenameConfig, 'js'>,
+  isProd: boolean,
+): string;
+export function getFilename(
+  config: NormalizedConfig,
+  type: keyof FilenameConfig,
+  isProd: boolean,
+) {
+  const { filename, filenameHash } = config.output;
+
+  const getHash = () => {
+    if (typeof filenameHash === 'string') {
+      return filenameHash ? `.[${filenameHash}]` : '';
+    }
+    return filenameHash ? '.[contenthash:8]' : '';
+  };
+
+  const hash = getHash();
+
+  switch (type) {
+    case 'js':
+      return filename.js ?? `[name]${isProd ? hash : ''}.js`;
+    case 'css':
+      return filename.css ?? `[name]${isProd ? hash : ''}.css`;
+    case 'svg':
+      return filename.svg ?? `[name]${hash}.svg`;
+    case 'font':
+      return filename.font ?? `[name]${hash}[ext]`;
+    case 'image':
+      return filename.image ?? `[name]${hash}[ext]`;
+    case 'media':
+      return filename.media ?? `[name]${hash}[ext]`;
+    default:
+      throw new Error(`unknown key ${type} in "output.filename"`);
+  }
+}
+
+export function partition<T>(
+  array: T[],
+  predicate: (value: T) => boolean,
+): [T[], T[]] {
+  const truthy: T[] = [];
+  const falsy: T[] = [];
+
+  for (const value of array) {
+    if (predicate(value)) {
+      truthy.push(value);
+    } else {
+      falsy.push(value);
+    }
+  }
+
+  return [truthy, falsy];
+}
+
+export const applyToCompiler = (
+  compiler: Rspack.Compiler | Rspack.MultiCompiler,
+  apply: (c: Rspack.Compiler) => void,
+) => {
+  if (isMultiCompiler(compiler)) {
+    compiler.compilers.forEach(apply);
+  } else {
+    apply(compiler);
+  }
+};
+
+export const upperFirst = (str: string) =>
+  str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
+
+export function debounce<T extends (...args: any[]) => void>(
+  func: T,
+  wait: number,
+): (...args: Parameters<T>) => void {
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+  return (...args: Parameters<T>) => {
+    if (timeoutId !== null) {
+      clearTimeout(timeoutId);
+    }
+
+    timeoutId = setTimeout(() => {
+      func(...args);
+    }, wait);
+  };
+}
+
+// Determine if the string is a URL
+export const isURL = (str: string) =>
+  str.startsWith('http') || str.startsWith('//:');
+
+export const createVirtualModule = (content: string) =>
+  `data:text/javascript,${content}`;
+
+export const isRegExp = (obj: any): obj is RegExp =>
+  Object.prototype.toString.call(obj) === '[object RegExp]';
+
+export function isWebTarget(target: RsbuildTarget | RsbuildTarget[]) {
+  const targets = castArray(target);
+  return targets.includes('web') || target.includes('web-worker');
+}
+
+export const isMultiCompiler = <
+  C extends Rspack.Compiler | WebpackCompiler = Rspack.Compiler,
+  M extends Rspack.MultiCompiler | WebpackMultiCompiler = Rspack.MultiCompiler,
+>(
+  compiler: C | M,
+): compiler is M => {
+  return compiler.constructor.name === 'MultiCompiler';
+};
+
+export const onCompileDone = (
+  compiler: Rspack.Compiler | Rspack.MultiCompiler,
+  onDone: (stats: Stats | MultiStats) => Promise<void>,
+  MultiStatsCtor: new (stats: Stats[]) => MultiStats,
+) => {
+  // The MultiCompiler of Rspack does not supports `done.tapPromise`,
+  // so we need to use the `done` hook of `MultiCompiler.compilers` to implement it.
+  if (isMultiCompiler(compiler)) {
+    const { compilers } = compiler;
+    const compilerStats: Stats[] = [];
+    let doneCompilers = 0;
+
+    for (let index = 0; index < compilers.length; index++) {
+      const compiler = compilers[index];
+      const compilerIndex = index;
+      let compilerDone = false;
+
+      compiler.hooks.done.tapPromise('rsbuild:done', async (stats) => {
+        if (!compilerDone) {
+          compilerDone = true;
+          doneCompilers++;
+        }
+
+        compilerStats[compilerIndex] = stats;
+
+        if (doneCompilers === compilers.length) {
+          await onDone(new MultiStatsCtor(compilerStats));
+        }
+      });
+
+      compiler.hooks.invalid.tap('rsbuild:done', () => {
+        if (compilerDone) {
+          compilerDone = false;
+          doneCompilers--;
+        }
+      });
+    }
+  } else {
+    compiler.hooks.done.tapPromise('rsbuild:done', onDone);
+  }
+};
+
+export function pick<T, U extends keyof T>(obj: T, keys: ReadonlyArray<U>) {
+  return keys.reduce(
+    (ret, key) => {
+      if (obj[key] !== undefined) {
+        ret[key] = obj[key];
+      }
+      return ret;
+    },
+    {} as Pick<T, U>,
+  );
+}

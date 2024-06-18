@@ -1,18 +1,40 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import {
-  type CompilerTapFn,
-  type DevConfig,
-  type NextFunction,
-  applyToCompiler,
-  isClientCompiler,
-  isNodeCompiler,
-} from '@rsbuild/shared';
+import type { CompilerTapFn, DevConfig, NextFunction } from '@rsbuild/shared';
 import type { Compiler, MultiCompiler } from '@rspack/core';
+import { applyToCompiler } from '../helpers';
 import type { DevMiddlewareOptions } from '../provider/createCompiler';
 
 type ServerCallbacks = {
   onInvalid: () => void;
   onDone: (stats: any) => void;
+};
+
+export const isClientCompiler = (compiler: {
+  options: {
+    target?: Compiler['options']['target'];
+  };
+}) => {
+  const { target } = compiler.options;
+
+  if (target) {
+    return Array.isArray(target) ? target.includes('web') : target === 'web';
+  }
+
+  return false;
+};
+
+export const isNodeCompiler = (compiler: {
+  options: {
+    target?: Compiler['options']['target'];
+  };
+}) => {
+  const { target } = compiler.options;
+
+  if (target) {
+    return Array.isArray(target) ? target.includes('node') : target === 'node';
+  }
+
+  return false;
 };
 
 export const setupServerHooks = (

@@ -1,4 +1,4 @@
-import { applyToCompiler, createVirtualModule } from '@rsbuild/shared';
+import { applyToCompiler, createVirtualModule } from '../helpers';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginNonce = (): RsbuildPlugin => ({

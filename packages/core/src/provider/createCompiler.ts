@@ -3,21 +3,20 @@ import {
   type Rspack,
   type RspackConfig,
   type Stats,
-  TARGET_ID_MAP,
   color,
-  debug,
   isDev,
   isProd,
   logger,
-  onCompileDone,
   prettyTime,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import type { StatsCompilation } from '@rspack/core';
+import { TARGET_ID_MAP } from '../constants';
 import {
   formatStats,
   getStatsOptions,
   isSatisfyRspackVersion,
+  onCompileDone,
   rspackMinVersion,
 } from '../helpers';
 import type { DevMiddlewareAPI } from '../server/devMiddleware';
@@ -31,7 +30,7 @@ export async function createCompiler({
   context: InternalContext;
   rspackConfigs: RspackConfig[];
 }): Promise<Rspack.Compiler | Rspack.MultiCompiler> {
-  debug('create compiler');
+  logger.debug('create compiler');
   await context.hooks.onBeforeCreateCompiler.call({
     bundlerConfigs: rspackConfigs,
   });
@@ -55,7 +54,7 @@ export async function createCompiler({
 
   const logRspackVersion = () => {
     if (!isVersionLogged) {
-      debug(`Use Rspack v${rspack.rspackVersion}`);
+      logger.debug(`Use Rspack v${rspack.rspackVersion}`);
       isVersionLogged = true;
     }
   };
@@ -125,7 +124,7 @@ export async function createCompiler({
   );
 
   await context.hooks.onAfterCreateCompiler.call({ compiler });
-  debug('create compiler done');
+  logger.debug('create compiler done');
 
   return compiler;
 }

@@ -5,11 +5,8 @@ import type {
   RsbuildTarget,
   RspackChain,
 } from '@rsbuild/core';
-import {
-  type CopyPluginOptions,
-  TARGET_ID_MAP,
-  isWebTarget,
-} from '@rsbuild/shared';
+import { type CopyPluginOptions, castArray } from '@rsbuild/shared';
+import { TARGET_ID_MAP } from './shared';
 
 async function applyTsConfigPathsPlugin({
   chain,
@@ -36,6 +33,11 @@ async function applyTsConfigPathsPlugin({
         mainFields: mainFields as string[],
       },
     ]);
+}
+
+function isWebTarget(target: RsbuildTarget | RsbuildTarget[]) {
+  const targets = castArray(target);
+  return targets.includes('web') || target.includes('web-worker');
 }
 
 const getMainFields = (chain: RspackChain, target: RsbuildTarget) => {

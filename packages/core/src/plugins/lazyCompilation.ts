@@ -1,5 +1,5 @@
 import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
-import { isRegExp } from '@rsbuild/shared';
+import { isRegExp } from '../helpers';
 
 export const pluginLazyCompilation = (): RsbuildPlugin => ({
   name: 'rsbuild:lazy-compilation',

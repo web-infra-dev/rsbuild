@@ -2,20 +2,20 @@ import {
   type RsbuildTarget,
   type RspackChain,
   __internalHelper,
+  logger,
 } from '@rsbuild/core';
 import {
   type ModifyWebpackChainUtils,
   type ModifyWebpackConfigUtils,
   castArray,
-  chainToConfig,
-  debug,
-  modifyBundlerChain,
   reduceConfigsWithContext,
 } from '@rsbuild/shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
 import {
   type InternalContext,
+  chainToConfig,
   getChainUtils as getBaseChainUtils,
+  modifyBundlerChain,
 } from './shared';
 import type { WebpackConfig } from './types';
 
@@ -24,7 +24,7 @@ async function modifyWebpackChain(
   utils: ModifyWebpackChainUtils,
   chain: RspackChain,
 ): Promise<RspackChain> {
-  debug('modify webpack chain');
+  logger.debug('modify webpack chain');
 
   const [modifiedChain] = await context.hooks.modifyWebpackChain.call(
     chain,
@@ -37,7 +37,7 @@ async function modifyWebpackChain(
     }
   }
 
-  debug('modify webpack chain done');
+  logger.debug('modify webpack chain done');
 
   return modifiedChain;
 }
@@ -47,7 +47,7 @@ async function modifyWebpackConfig(
   webpackConfig: WebpackConfig,
   utils: ModifyWebpackConfigUtils,
 ): Promise<WebpackConfig> {
-  debug('modify webpack config');
+  logger.debug('modify webpack config');
   let [modifiedConfig] = await context.hooks.modifyWebpackConfig.call(
     webpackConfig,
     utils,
@@ -62,7 +62,7 @@ async function modifyWebpackConfig(
     });
   }
 
-  debug('modify webpack config done');
+  logger.debug('modify webpack config done');
   return modifiedConfig;
 }
 

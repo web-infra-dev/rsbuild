@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { build, dev, gotoPage } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
+import { logger } from '@rsbuild/core';
 import { fse } from '@rsbuild/shared';
 
 const getRsbuildConfig = (dist: string) =>

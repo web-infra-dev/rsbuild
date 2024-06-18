@@ -5,11 +5,7 @@ import {
   ensureAssetPrefix,
   logger,
 } from '@rsbuild/core';
-import {
-  generateScriptTag,
-  getPublicPathFromCompiler,
-  isProd,
-} from '@rsbuild/shared';
+import { getPublicPathFromCompiler, isProd } from '@rsbuild/shared';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { PluginRemOptions } from './types';
 
@@ -151,7 +147,14 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
             return data;
           }
 
-          const scriptTag = generateScriptTag();
+          const scriptTag = {
+            tagName: 'script',
+            attributes: {
+              type: 'text/javascript',
+            },
+            voidTag: false,
+            meta: {},
+          };
 
           if (this.options.inlineRuntime) {
             data.assetTags.scripts.unshift({

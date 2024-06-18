@@ -8,11 +8,11 @@ import {
   deepmerge,
   getBrowserslistWithDefault,
   getCoreJsVersion,
-  isWebTarget,
   reduceConfigs,
 } from '@rsbuild/shared';
 import type { SwcLoaderOptions } from '@rspack/core';
 import { PLUGIN_SWC_NAME } from '../constants';
+import { isWebTarget } from '../helpers';
 import type {
   NormalizedConfig,
   NormalizedSourceConfig,

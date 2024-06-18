@@ -7,7 +7,7 @@ import type {
   ServerAPIs,
   ServerConfig,
 } from '@rsbuild/shared';
-import { isDebug } from '@rsbuild/shared';
+import { logger } from '@rsbuild/shared';
 import { normalizePublicDirs } from '../config';
 import type { UpgradeEvent } from './helper';
 import {
@@ -197,7 +197,7 @@ export const getMiddlewares = async (options: RsbuildDevMiddlewareOptions) => {
   const middlewares: Middlewares = [];
   const { compileMiddlewareAPI } = options;
 
-  if (isDebug()) {
+  if (logger.level === 'verbose') {
     middlewares.push(await getRequestLoggerMiddleware());
   }
 
