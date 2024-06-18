@@ -13,13 +13,12 @@ import {
   getBrowserslistWithDefault,
   isFunction,
   isPlainObject,
-  reduceConfigs,
-  reduceConfigsWithContext,
 } from '@rsbuild/shared';
 import type { AcceptedPlugin } from 'postcss';
 import { CSS_REGEX, LOADER_PATH } from '../constants';
 import { getCompiledPath } from '../helpers';
 import { getCssExtractPlugin } from '../pluginHelper';
+import { reduceConfigs, reduceConfigsWithContext } from '../reduceConfigs';
 import type { NormalizedConfig, RsbuildPlugin } from '../types';
 
 export const enableNativeCss = (config: NormalizedConfig) =>

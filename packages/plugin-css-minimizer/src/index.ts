@@ -5,7 +5,7 @@ import type {
   Rspack,
   RspackChain,
 } from '@rsbuild/core';
-import { reduceConfigs } from '@rsbuild/shared';
+import { reduceConfigs } from '@rsbuild/core';
 import CssMinimizerWebpackPlugin from 'css-minimizer-webpack-plugin';
 import type CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 

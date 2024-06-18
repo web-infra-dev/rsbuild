@@ -7,8 +7,6 @@ import {
   fse,
   isHtmlDisabled,
   isPlainObject,
-  reduceConfigsMergeContext,
-  reduceConfigsWithContext,
 } from '@rsbuild/shared';
 import type {
   HTMLPluginOptions,
@@ -20,6 +18,10 @@ import type {
 import type { EntryDescription } from '@rspack/core';
 import { STATIC_PATH } from '../constants';
 import { getPublicPathFromChain, isFileExists, isURL } from '../helpers';
+import {
+  reduceConfigsMergeContext,
+  reduceConfigsWithContext,
+} from '../reduceConfigs';
 import type { HtmlInfo, TagConfig } from '../rspack/HtmlBasicPlugin';
 import type { RsbuildPlugin } from '../types';
 import { parseMinifyOptions } from './minimize';

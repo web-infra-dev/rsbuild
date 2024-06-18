@@ -1,5 +1,5 @@
-import type { Rspack } from '@rsbuild/core';
-import type { ConfigChainWithContext, FileFilterUtil } from '@rsbuild/shared';
+import type { ConfigChainWithContext, Rspack } from '@rsbuild/core';
+import type { FileFilterUtil } from '@rsbuild/shared';
 import type {
   LegacyOptions as LegacySassOptions,
   Options as SassOptions,

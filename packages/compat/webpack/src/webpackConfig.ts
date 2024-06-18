@@ -3,12 +3,12 @@ import {
   type RspackChain,
   __internalHelper,
   logger,
+  reduceConfigsWithContext,
 } from '@rsbuild/core';
 import {
   type ModifyWebpackChainUtils,
   type ModifyWebpackConfigUtils,
   castArray,
-  reduceConfigsWithContext,
 } from '@rsbuild/shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
 import {

@@ -1,5 +1,4 @@
-import type { RsbuildPlugin } from '@rsbuild/core';
-import { reduceConfigs } from '@rsbuild/shared';
+import { type RsbuildPlugin, reduceConfigs } from '@rsbuild/core';
 import type { Options as PugOptions } from 'pug';
 
 export type PluginPugOptions = {

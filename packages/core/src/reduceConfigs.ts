@@ -1,19 +1,10 @@
-import type { MaybePromise, OneOrMany } from './types';
-import { isFunction, isNil, isPlainObject } from './utils';
-
-export type ConfigChain<T> = OneOrMany<T | ((config: T) => T | void)>;
-
-export type ConfigChainWithContext<T, Ctx> = OneOrMany<
-  T | ((config: T, ctx: Ctx) => T | void)
->;
-
-export type ConfigChainAsyncWithContext<T, Ctx> = OneOrMany<
-  T | ((config: T, ctx: Ctx) => MaybePromise<T | void>)
->;
-
-export type ConfigChainMergeContext<T, Ctx> = OneOrMany<
-  T | ((merged: { value: T } & Ctx) => T | void)
->;
+import type {
+  ConfigChain,
+  ConfigChainAsyncWithContext,
+  ConfigChainMergeContext,
+  ConfigChainWithContext,
+} from '@rsbuild/shared';
+import { isFunction, isNil, isPlainObject } from '@rsbuild/shared';
 
 /**
  * Merge one or more configs into a final config,
@@ -24,8 +15,19 @@ export function reduceConfigs<T>({
   config,
   mergeFn = Object.assign,
 }: {
+  /**
+   * Initial configuration object.
+   */
   initial: T;
+  /**
+   * The configuration object, function, or array of configuration objects/functions
+   * to be merged into the initial configuration
+   */
   config?: ConfigChain<T> | undefined;
+  /**
+   * The function used to merge configuration objects.
+   * @default Object.assign
+   */
   mergeFn?: typeof Object.assign;
 }): T {
   if (isNil(config)) {
@@ -56,9 +58,23 @@ export function reduceConfigsWithContext<T, Ctx>({
   ctx,
   mergeFn = Object.assign,
 }: {
+  /**
+   * Initial configuration object.
+   */
   initial: T;
+  /**
+   * The configuration object, function, or array of configuration objects/functions
+   * to be merged into the initial configuration
+   */
   config?: ConfigChainWithContext<T, Ctx> | undefined;
+  /**
+   * Context object that can be used within the configuration functions.
+   */
   ctx?: Ctx;
+  /**
+   * The function used to merge configuration objects.
+   * @default Object.assign
+   */
   mergeFn?: typeof Object.assign;
 }): T {
   if (isNil(config)) {

@@ -1,5 +1,5 @@
-import type { RsbuildPlugin } from '@rsbuild/core';
-import { cloneDeep, deepmerge, reduceConfigs } from '@rsbuild/shared';
+import { type RsbuildPlugin, reduceConfigs } from '@rsbuild/core';
+import { cloneDeep, deepmerge } from '@rsbuild/shared';
 
 export const PLUGIN_STYLUS_NAME = 'rsbuild:stylus';
 
