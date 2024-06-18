@@ -108,6 +108,9 @@ export type NormalizedConfig = DeepReadonly<{
   moduleFederation?: ModuleFederationConfig;
   provider?: unknown;
   _privateMeta?: RsbuildConfigMeta;
+  environments?: {
+    [name: string]: RsbuildEnvironmentConfig;
+  };
 }>;
 
 export * from './dev';
