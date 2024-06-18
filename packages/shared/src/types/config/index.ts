@@ -27,7 +27,7 @@ export type RsbuildConfigMeta = {
 };
 
 /**
- * The rsbuild config to run in the specified environment.
+ * The Rsbuild config to run in the specified environment.
  * */
 export interface EnvironmentConfig {
   /**
