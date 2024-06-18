@@ -1,19 +1,27 @@
-import path from 'node:path';
+import path, { posix } from 'node:path';
 import {
-  type BundlerChain,
   DEFAULT_ASSET_PREFIX,
+  type FilenameConfig,
   type MultiStats,
+  type NormalizedConfig,
+  type RsbuildTarget,
+  type Rspack,
+  type RspackChain,
   type Stats,
   type StatsError,
-  addTrailingSlash,
+  castArray,
   color,
-  isMultiCompiler,
-  removeTailingSlash,
+  isProd,
 } from '@rsbuild/shared';
 import { fse } from '@rsbuild/shared';
 import type { StatsCompilation, StatsValue } from '@rspack/core';
+import type {
+  Compiler as WebpackCompiler,
+  MultiCompiler as WebpackMultiCompiler,
+} from 'webpack';
 import { formatStatsMessages } from './client/format';
 import { COMPILED_PATH } from './constants';
+import { logger } from './logger';
 
 // depend on native IgnorePlugin
 export const rspackMinVersion = '0.6.2';
@@ -196,10 +204,14 @@ export function formatStats(
       : options,
   );
 
-  const { errors, warnings } = formatStatsMessages({
-    errors: getAllStatsErrors(statsData),
-    warnings: getAllStatsWarnings(statsData),
-  });
+  const { errors, warnings } = formatStatsMessages(
+    {
+      errors: getAllStatsErrors(statsData),
+      warnings: getAllStatsWarnings(statsData),
+    },
+    // display verbose messages in prod build or debug mode
+    isProd() || logger.level === 'verbose',
+  );
 
   if (stats.hasErrors()) {
     return {
@@ -220,6 +232,11 @@ export function formatStats(
   return {};
 }
 
+export const removeLeadingSlash = (s: string): string => s.replace(/^\/+/, '');
+export const removeTailingSlash = (s: string): string => s.replace(/\/+$/, '');
+export const addTrailingSlash = (s: string): string =>
+  s.endsWith('/') ? s : `${s}/`;
+
 export const formatPublicPath = (publicPath: string, withSlash = true) => {
   // 'auto' is a magic value in Rspack and we should not add trailing slash
   if (publicPath === 'auto') {
@@ -232,7 +249,7 @@ export const formatPublicPath = (publicPath: string, withSlash = true) => {
 };
 
 export const getPublicPathFromChain = (
-  chain: BundlerChain,
+  chain: RspackChain,
   withSlash = true,
 ) => {
   const publicPath = chain.output.get('publicPath');
@@ -285,4 +302,217 @@ export async function isFileExists(file: string) {
     .access(file, fse.constants.F_OK)
     .then(() => true)
     .catch(() => false);
+}
+
+const urlJoin = (base: string, path: string) => {
+  const fullUrl = new URL(base);
+  fullUrl.pathname = posix.join(fullUrl.pathname, path);
+  return fullUrl.toString();
+};
+
+// Can be replaced with URL.canParse when we drop support for Node.js 16
+export const canParse = (url: string) => {
+  try {
+    new URL(url);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+export const ensureAssetPrefix = (url: string, assetPrefix: string) => {
+  // The use of an absolute URL without a protocol is technically legal,
+  // however it cannot be parsed as a URL instance, just return it.
+  // e.g. str is //example.com/foo.js
+  if (url.startsWith('//')) {
+    return url;
+  }
+
+  // If str is an complete URL, just return it.
+  // Only absolute url with hostname & protocol can be parsed into URL instance.
+  // e.g. str is https://example.com/foo.js
+  if (canParse(url)) {
+    return url;
+  }
+
+  if (assetPrefix.startsWith('http')) {
+    return urlJoin(assetPrefix, url);
+  }
+
+  if (assetPrefix.startsWith('//')) {
+    return urlJoin(`https:${assetPrefix}`, url).replace('https:', '');
+  }
+
+  return posix.join(assetPrefix, url);
+};
+
+export function getFilename(
+  config: NormalizedConfig,
+  type: 'js',
+  isProd: boolean,
+): NonNullable<FilenameConfig['js']>;
+export function getFilename(
+  config: NormalizedConfig,
+  type: Exclude<keyof FilenameConfig, 'js'>,
+  isProd: boolean,
+): string;
+export function getFilename(
+  config: NormalizedConfig,
+  type: keyof FilenameConfig,
+  isProd: boolean,
+) {
+  const { filename, filenameHash } = config.output;
+
+  const getHash = () => {
+    if (typeof filenameHash === 'string') {
+      return filenameHash ? `.[${filenameHash}]` : '';
+    }
+    return filenameHash ? '.[contenthash:8]' : '';
+  };
+
+  const hash = getHash();
+
+  switch (type) {
+    case 'js':
+      return filename.js ?? `[name]${isProd ? hash : ''}.js`;
+    case 'css':
+      return filename.css ?? `[name]${isProd ? hash : ''}.css`;
+    case 'svg':
+      return filename.svg ?? `[name]${hash}.svg`;
+    case 'font':
+      return filename.font ?? `[name]${hash}[ext]`;
+    case 'image':
+      return filename.image ?? `[name]${hash}[ext]`;
+    case 'media':
+      return filename.media ?? `[name]${hash}[ext]`;
+    default:
+      throw new Error(`unknown key ${type} in "output.filename"`);
+  }
+}
+
+export function partition<T>(
+  array: T[],
+  predicate: (value: T) => boolean,
+): [T[], T[]] {
+  const truthy: T[] = [];
+  const falsy: T[] = [];
+
+  for (const value of array) {
+    if (predicate(value)) {
+      truthy.push(value);
+    } else {
+      falsy.push(value);
+    }
+  }
+
+  return [truthy, falsy];
+}
+
+export const applyToCompiler = (
+  compiler: Rspack.Compiler | Rspack.MultiCompiler,
+  apply: (c: Rspack.Compiler) => void,
+) => {
+  if (isMultiCompiler(compiler)) {
+    compiler.compilers.forEach(apply);
+  } else {
+    apply(compiler);
+  }
+};
+
+export const upperFirst = (str: string) =>
+  str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
+
+export function debounce<T extends (...args: any[]) => void>(
+  func: T,
+  wait: number,
+): (...args: Parameters<T>) => void {
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+  return (...args: Parameters<T>) => {
+    if (timeoutId !== null) {
+      clearTimeout(timeoutId);
+    }
+
+    timeoutId = setTimeout(() => {
+      func(...args);
+    }, wait);
+  };
+}
+
+// Determine if the string is a URL
+export const isURL = (str: string) =>
+  str.startsWith('http') || str.startsWith('//:');
+
+export const createVirtualModule = (content: string) =>
+  `data:text/javascript,${content}`;
+
+export const isRegExp = (obj: any): obj is RegExp =>
+  Object.prototype.toString.call(obj) === '[object RegExp]';
+
+export function isWebTarget(target: RsbuildTarget | RsbuildTarget[]) {
+  const targets = castArray(target);
+  return targets.includes('web') || target.includes('web-worker');
+}
+
+export const isMultiCompiler = <
+  C extends Rspack.Compiler | WebpackCompiler = Rspack.Compiler,
+  M extends Rspack.MultiCompiler | WebpackMultiCompiler = Rspack.MultiCompiler,
+>(
+  compiler: C | M,
+): compiler is M => {
+  return compiler.constructor.name === 'MultiCompiler';
+};
+
+export const onCompileDone = (
+  compiler: Rspack.Compiler | Rspack.MultiCompiler,
+  onDone: (stats: Stats | MultiStats) => Promise<void>,
+  MultiStatsCtor: new (stats: Stats[]) => MultiStats,
+) => {
+  // The MultiCompiler of Rspack does not supports `done.tapPromise`,
+  // so we need to use the `done` hook of `MultiCompiler.compilers` to implement it.
+  if (isMultiCompiler(compiler)) {
+    const { compilers } = compiler;
+    const compilerStats: Stats[] = [];
+    let doneCompilers = 0;
+
+    for (let index = 0; index < compilers.length; index++) {
+      const compiler = compilers[index];
+      const compilerIndex = index;
+      let compilerDone = false;
+
+      compiler.hooks.done.tapPromise('rsbuild:done', async (stats) => {
+        if (!compilerDone) {
+          compilerDone = true;
+          doneCompilers++;
+        }
+
+        compilerStats[compilerIndex] = stats;
+
+        if (doneCompilers === compilers.length) {
+          await onDone(new MultiStatsCtor(compilerStats));
+        }
+      });
+
+      compiler.hooks.invalid.tap('rsbuild:done', () => {
+        if (compilerDone) {
+          compilerDone = false;
+          doneCompilers--;
+        }
+      });
+    }
+  } else {
+    compiler.hooks.done.tapPromise('rsbuild:done', onDone);
+  }
+};
+
+export function pick<T, U extends keyof T>(obj: T, keys: ReadonlyArray<U>) {
+  return keys.reduce(
+    (ret, key) => {
+      if (obj[key] !== undefined) {
+        ret[key] = obj[key];
+      }
+      return ret;
+    },
+    {} as Pick<T, U>,
+  );
 }

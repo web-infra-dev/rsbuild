@@ -11,6 +11,7 @@ caniuse
 chunkhash
 Chunktmp
 classname
+codegen
 codesandbox
 compat
 consolas
@@ -48,6 +49,8 @@ longpaths
 manypkg
 mattcompiles
 menlo
+microfrontend
+microfrontends
 modularly
 napi
 nolyfill
@@ -97,6 +100,7 @@ svgr
 swcrc
 systemjs
 tailwindcss
+taze
 templating
 transpiling
 treeshaking
@@ -108,6 +112,7 @@ unplugin
 unshift
 upath
 vitest
+vnode
 watchpack
 webm
 webp

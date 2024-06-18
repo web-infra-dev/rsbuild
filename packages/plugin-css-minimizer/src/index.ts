@@ -1,10 +1,11 @@
 import type {
-  BundlerChain,
   ChainIdentifier,
-  ChainedConfig,
+  ConfigChain,
   RsbuildPlugin,
+  Rspack,
+  RspackChain,
 } from '@rsbuild/core';
-import { mergeChainedOptions } from '@rsbuild/shared';
+import { reduceConfigs } from '@rsbuild/shared';
 import CssMinimizerWebpackPlugin from 'css-minimizer-webpack-plugin';
 import type CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 
@@ -16,7 +17,7 @@ export type PluginCssMinimizerOptions = {
    * Used to customize the options of css-minimizer-webpack-plugin.
    * @see https://github.com/webpack-contrib/css-minimizer-webpack-plugin
    */
-  pluginOptions?: ChainedConfig<CssMinimizerPluginOptions>;
+  pluginOptions?: ConfigChain<CssMinimizerPluginOptions>;
 };
 
 type CssNanoOptions = {
@@ -37,31 +38,32 @@ const getCssnanoDefaultOptions = (): CssNanoOptions => ({
 });
 
 export function applyCSSMinimizer(
-  chain: BundlerChain,
+  chain: RspackChain,
   CHAIN_ID: ChainIdentifier,
   options: PluginCssMinimizerOptions = {},
 ) {
-  const mergedOptions: CssMinimizerPluginOptions = mergeChainedOptions({
-    defaults: {
+  const mergedOptions: CssMinimizerPluginOptions = reduceConfigs({
+    initial: {
       minify: CssMinimizerWebpackPlugin.cssnanoMinify,
       minimizerOptions: getCssnanoDefaultOptions(),
     },
-    options: options.pluginOptions,
+    config: options.pluginOptions,
   });
 
   chain.optimization
     .minimizer(CHAIN_ID.MINIMIZER.CSS)
-    .use(CssMinimizerWebpackPlugin, [
-      // @ts-expect-error type mismatch
+    .use(CssMinimizerWebpackPlugin as Rspack.RspackPluginInstance, [
       mergedOptions,
     ])
     .end();
 }
 
+export const PLUGIN_CSS_MINIMIZER_NAME = 'rsbuild:css-minimizer';
+
 export const pluginCssMinimizer = (
   options?: PluginCssMinimizerOptions,
 ): RsbuildPlugin => ({
-  name: 'rsbuild:css-minimizer',
+  name: PLUGIN_CSS_MINIMIZER_NAME,
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {

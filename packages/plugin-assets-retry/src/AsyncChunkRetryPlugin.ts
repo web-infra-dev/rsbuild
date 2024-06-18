@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { type Rspack, rspack } from '@rsbuild/core';
-import { fse, pick } from '@rsbuild/shared';
+import { fse } from '@rsbuild/shared';
 import serialize from 'serialize-javascript';
 import type { PluginAssetsRetryOptions, RuntimeRetryOptions } from './types';
 
@@ -26,6 +26,18 @@ function appendRspackScript(
     console.error('Failed to modify Rspack RuntimeModule');
     throw err;
   }
+}
+
+function pick<T, U extends keyof T>(obj: T, keys: ReadonlyArray<U>) {
+  return keys.reduce(
+    (ret, key) => {
+      if (obj[key] !== undefined) {
+        ret[key] = obj[key];
+      }
+      return ret;
+    },
+    {} as Pick<T, U>,
+  );
 }
 
 class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {

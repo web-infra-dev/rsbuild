@@ -1,12 +1,5 @@
 import { type Rspack, logger } from '@rsbuild/core';
-import {
-  type RspackConfig,
-  type Stats,
-  debug,
-  isDev,
-  onCompileDone,
-} from '@rsbuild/shared';
-// @ts-expect-error
+import { type RspackConfig, type Stats, isDev } from '@rsbuild/shared';
 import WebpackMultiStats from 'webpack/lib/MultiStats.js';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 import {
@@ -15,6 +8,7 @@ import {
   getDevMiddleware,
   getStatsOptions,
 } from './shared';
+import { onCompileDone } from './shared';
 import type { WebpackConfig } from './types';
 
 export async function createCompiler({
@@ -24,7 +18,7 @@ export async function createCompiler({
   context: InternalContext;
   webpackConfigs: WebpackConfig[];
 }) {
-  debug('create compiler');
+  logger.debug('create compiler');
   await context.hooks.onBeforeCreateCompiler.call({
     bundlerConfigs: webpackConfigs as RspackConfig[],
   });
@@ -67,7 +61,7 @@ export async function createCompiler({
   await context.hooks.onAfterCreateCompiler.call({
     compiler,
   });
-  debug('create compiler done');
+  logger.debug('create compiler done');
 
   return compiler;
 }

@@ -106,3 +106,22 @@ pluginSass({
   },
 });
 ```
+
+```ts
+pluginSass({
+  sassLoaderOptions: {
+    implementation: require.resolve('sass'),
+  },
+});
+```
+
+Rsbuild defaults to using the latest `modern-compiler` API. If you are using an older version of Sass, please set the [api](https://github.com/webpack-contrib/sass-loader?tab=readme-ov-file#api) option of sass-loader to `legacy` to avoid exceptions caused by version mismatches.
+
+```ts
+pluginSass({
+  sassLoaderOptions: {
+    api: 'legacy',
+    implementation: require.resolve('sass'),
+  },
+});
+```

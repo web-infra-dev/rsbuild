@@ -4,20 +4,30 @@ const {
   getChainUtils,
   initRsbuildConfig,
   createDevServer,
-  startProdServer,
   formatStats,
   getDevMiddleware,
   getStatsOptions,
+  stringifyConfig,
+  outputInspectConfigFiles,
+  chainToConfig,
+  modifyBundlerChain,
+  onCompileDone,
+  TARGET_ID_MAP,
 } = __internalHelper;
 
 export {
   getChainUtils,
   initRsbuildConfig,
   createDevServer,
-  startProdServer,
   formatStats,
   getDevMiddleware,
   getStatsOptions,
+  stringifyConfig,
+  outputInspectConfigFiles,
+  chainToConfig,
+  modifyBundlerChain,
+  onCompileDone,
+  TARGET_ID_MAP,
 };
 
 export type InternalContext = __internalHelper.InternalContext;

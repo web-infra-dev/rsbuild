@@ -1,6 +1,7 @@
-import { isDev, logger } from '@rsbuild/shared';
+import { isDev } from '@rsbuild/shared';
 import { loadConfig, watchFiles } from '../config';
 import { loadEnv } from '../loadEnv';
+import { logger } from '../logger';
 import { onBeforeRestartServer } from '../server/restart';
 import type { CommonOptions } from './commands';
 
@@ -52,9 +53,9 @@ export async function init({
       ...config.source.define,
     };
 
-    if (commonOpts.open && !config.dev?.startUrl) {
-      config.dev ||= {};
-      config.dev.startUrl = commonOpts.open;
+    if (commonOpts.open && !config.server?.open) {
+      config.server ||= {};
+      config.server.open = commonOpts.open;
     }
 
     if (commonOpts.host) {

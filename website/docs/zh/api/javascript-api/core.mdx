@@ -91,6 +91,7 @@ type LoadEnvOptions = {
   cwd?: string;
   /**
    * 用于指定 .env.[mode] 文件的名称
+   * 等价于 Rsbuild CLI 的 `--env-mode` 选项
    * @default process.env.NODE_ENV
    */
   mode?: string;
@@ -131,6 +132,10 @@ const mergedConfig = mergeRsbuildConfig(
 ```
 
 该方法也会加载 `.env.local` 和 `.env.[mode]` 等文件，详见 [环境变量](/guide/advanced/env-vars)。
+
+:::tip
+Rsbuild CLI 会自动调用 `loadEnv()` 方法，如果你在使用 Rsbuild CLI，可以通过 [--env-mode](/guide/advanced/env-vars#env-模式) 选项来设置 `mode` 参数。
+:::
 
 ## mergeRsbuildConfig
 
@@ -337,4 +342,37 @@ console.log(rspack.util.createHash);
 import { version } from '@rsbuild/core';
 
 console.log(version); // 1.0.0
+```
+
+## ensureAssetPrefix
+
+`ensureAssetPrefix` 函数用于将给定的 `assetPrefix` 拼接到一个可能是 URL 的字符串前面。如果传入的字符串已经是一个完整的 URL，则直接返回该字符串。
+
+- **类型：**
+
+```ts
+function ensureAssetPrefix(
+  // 需要处理的 URL 字符串。可以是相对路径或绝对 URL
+  url: string,
+  // 需要拼接的 URL 前缀
+  assetPrefix: string
+) => string;
+```
+
+- **示例：**
+
+```ts
+import { ensureAssetPrefix } from '@rsbuild/core';
+
+ensureAssetPrefix('foo/bar.js', '/static/');
+// -> '/static/foo/bar.js'
+
+ensureAssetPrefix('foo/bar.js', 'https://example.com/static/');
+// -> 'https://example.com/static/foo/bar.js'
+
+ensureAssetPrefix(
+  'https://example.com/index.html',
+  'https://example.com/static/',
+);
+// -> 'https://example.com/index.html'
 ```

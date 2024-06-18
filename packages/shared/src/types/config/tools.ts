@@ -1,14 +1,23 @@
 import type { rspack } from '@rspack/core';
 import type { SwcLoaderOptions } from '@rspack/core';
 import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
-import type { BundlerChain } from '../bundlerConfig';
-import type { BundlerPluginInstance } from '../bundlerConfig';
+import type { RspackChain } from '../../chain';
+import type {
+  ConfigChain,
+  ConfigChainAsyncWithContext,
+  ConfigChainWithContext,
+} from '../../reduceConfigs';
 import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
 import type {
   ModifyWebpackChainUtils,
   ModifyWebpackConfigUtils,
 } from '../plugin';
-import type { RspackConfig, RspackRule } from '../rspack';
+import type {
+  BundlerPluginInstance,
+  Rspack,
+  RspackConfig,
+  RspackRule,
+} from '../rspack';
 import type {
   AutoprefixerOptions,
   CSSExtractOptions,
@@ -18,37 +27,32 @@ import type {
   StyleLoaderOptions,
   WebpackConfig,
 } from '../thirdParty';
-import type {
-  ArrayOrNot,
-  ChainedConfig,
-  ChainedConfigWithUtils,
-  WebpackChain,
-} from '../utils';
+import type { MaybePromise, OneOrMany } from '../utils';
 
 export type { HTMLPluginOptions };
 
-export type ToolsSwcConfig = ChainedConfig<SwcLoaderOptions>;
+export type ToolsSwcConfig = ConfigChain<SwcLoaderOptions>;
 
-export type ToolsAutoprefixerConfig = ChainedConfig<AutoprefixerOptions>;
+export type ToolsAutoprefixerConfig = ConfigChain<AutoprefixerOptions>;
 
-export type ToolsBundlerChainConfig = ArrayOrNot<
-  (chain: BundlerChain, utils: ModifyBundlerChainUtils) => void
+export type ToolsBundlerChainConfig = OneOrMany<
+  (chain: RspackChain, utils: ModifyBundlerChainUtils) => MaybePromise<void>
 >;
 
-export type ToolsPostCSSLoaderConfig = ChainedConfigWithUtils<
+export type ToolsPostCSSLoaderConfig = ConfigChainWithContext<
   PostCSSLoaderOptions,
   { addPlugins: (plugins: PostCSSPlugin | PostCSSPlugin[]) => void }
 >;
 
-export type ToolsCSSLoaderConfig = ChainedConfig<CSSLoaderOptions>;
+export type ToolsCSSLoaderConfig = ConfigChain<CSSLoaderOptions>;
 
-export type ToolsStyleLoaderConfig = ChainedConfig<StyleLoaderOptions>;
+export type ToolsStyleLoaderConfig = ConfigChain<StyleLoaderOptions>;
 
-export type ToolsHtmlPluginConfig = ChainedConfigWithUtils<
+export type ToolsHtmlPluginConfig = ConfigChainWithContext<
   HTMLPluginOptions,
   {
     entryName: string;
-    entryValue: string | string[];
+    entryValue: (string | string[] | Rspack.EntryDescription)[];
   }
 >;
 
@@ -65,23 +69,23 @@ export type ModifyRspackConfigUtils = ModifyChainUtils & {
   rspack: typeof rspack;
 };
 
-export type ToolsRspackConfig = ChainedConfigWithUtils<
+export type ToolsRspackConfig = ConfigChainAsyncWithContext<
   RspackConfig,
   ModifyRspackConfigUtils
 >;
 
-export type ToolsWebpackConfig = ChainedConfigWithUtils<
+export type ToolsWebpackConfig = ConfigChainWithContext<
   WebpackConfig,
   ModifyWebpackConfigUtils
 >;
 
-export type ToolsWebpackChainConfig = ArrayOrNot<
-  (chain: WebpackChain, utils: ModifyWebpackChainUtils) => void
+export type ToolsWebpackChainConfig = OneOrMany<
+  (chain: RspackChain, utils: ModifyWebpackChainUtils) => void
 >;
 
 export interface ToolsConfig {
   /**
-   * Configure bundler config base on [webpack-chain](https://github.com/neutrinojs/webpack-chain)
+   * Configure bundler config base on [rspack-chain](https://github.com/rspack-contrib/rspack-chain)
    */
   bundlerChain?: ToolsBundlerChainConfig;
   /**
@@ -123,7 +127,7 @@ export interface ToolsConfig {
    */
   webpack?: ToolsWebpackConfig;
   /**
-   * Configure webpack by [webpack-chain](https://github.com/neutrinojs/webpack-chain).
+   * Configure webpack by [rspack-chain](https://github.com/rspack-contrib/rspack-chain).
    * @requires webpack
    */
   webpackChain?: ToolsWebpackChainConfig;

@@ -7,7 +7,8 @@ import type {
   ServerAPIs,
   ServerConfig,
 } from '@rsbuild/shared';
-import { isDebug } from '@rsbuild/shared';
+import { normalizePublicDirs } from '../config';
+import { logger } from '../logger';
 import type { UpgradeEvent } from './helper';
 import {
   faviconFallbackMiddleware,
@@ -76,9 +77,7 @@ const applyDefaultMiddlewares = async ({
   const upgradeEvents: UpgradeEvent[] = [];
   // compression should be the first middleware
   if (server.compress) {
-    const { default: compression } = await import(
-      '../../compiled/http-compression/index.js'
-    );
+    const { default: compression } = await import('http-compression');
     middlewares.push((req, res, next) => {
       compression({
         gzip: true,
@@ -119,7 +118,7 @@ const applyDefaultMiddlewares = async ({
   }
 
   const { default: launchEditorMiddleware } = await import(
-    '../../compiled/launch-editor-middleware/index.js'
+    'launch-editor-middleware'
   );
   middlewares.push(['/__open-in-editor', launchEditorMiddleware()]);
 
@@ -142,12 +141,13 @@ const applyDefaultMiddlewares = async ({
     });
   }
 
-  if (server.publicDir !== false && server.publicDir?.name) {
-    const { default: sirv } = await import('../../compiled/sirv/index.js');
-    const { name } = server.publicDir;
-    const publicDir = isAbsolute(name) ? name : join(pwd, name);
+  const publicDirs = normalizePublicDirs(server?.publicDir);
+  for (const publicDir of publicDirs) {
+    const { default: sirv } = await import('sirv');
+    const { name } = publicDir;
+    const normalizedPath = isAbsolute(name) ? name : join(pwd, name);
 
-    const assetMiddleware = sirv(publicDir, {
+    const assetMiddleware = sirv(normalizedPath, {
       etag: true,
       dev: true,
     });
@@ -169,7 +169,7 @@ const applyDefaultMiddlewares = async ({
 
   if (server.historyApiFallback) {
     const { default: connectHistoryApiFallback } = await import(
-      '../../compiled/connect-history-api-fallback/index.js'
+      'connect-history-api-fallback'
     );
     const historyApiFallbackMiddleware = connectHistoryApiFallback(
       server.historyApiFallback === true ? {} : server.historyApiFallback,
@@ -197,7 +197,7 @@ export const getMiddlewares = async (options: RsbuildDevMiddlewareOptions) => {
   const middlewares: Middlewares = [];
   const { compileMiddlewareAPI } = options;
 
-  if (isDebug()) {
+  if (logger.level === 'verbose') {
     middlewares.push(await getRequestLoggerMiddleware());
   }
 

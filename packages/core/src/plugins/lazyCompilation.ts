@@ -1,5 +1,5 @@
 import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
-import { isRegExp } from '@rsbuild/shared';
+import { isRegExp } from '../helpers';
 
 export const pluginLazyCompilation = (): RsbuildPlugin => ({
   name: 'rsbuild:lazy-compilation',
@@ -17,13 +17,10 @@ export const pluginLazyCompilation = (): RsbuildPlugin => ({
         return;
       }
 
-      const clientRegExp = /[\\/]core[\\/]dist[\\/]client[\\/]/;
       const cssRegExp = /\.(?:css|less|sass|scss|styl|stylus)$/;
 
       const isExcludedModule = (name: string) => {
         return (
-          // alway include Rsbuild client code, such as HMR
-          clientRegExp.test(name) ||
           // exclude CSS files because Rspack does not support it yet
           // TODO: remove this after Rspack supporting it
           cssRegExp.test(name)

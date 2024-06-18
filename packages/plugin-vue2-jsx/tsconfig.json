@@ -1,5 +1,5 @@
 {
-  "extends": "@rsbuild/tsconfig/base",
+  "extends": "@rsbuild/config/tsconfig",
   "compilerOptions": {
     "outDir": "./dist",
     "baseUrl": "./",
@@ -9,9 +9,6 @@
   "references": [
     {
       "path": "../core"
-    },
-    {
-      "path": "../shared"
     },
     {
       "path": "../plugin-babel"

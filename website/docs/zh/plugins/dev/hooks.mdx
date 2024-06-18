@@ -234,14 +234,11 @@ const myPlugin = () => ({
 
 ### modifyBundlerChain
 
-:::tip 什么是 BundlerChain
+import RspackChain from '@zh/shared/rspackChain.mdx';
 
-import BundlerChain from '@zh/shared/bundlerChain.mdx';
+<RspackChain />
 
-<BundlerChain />
-:::
-
-`modifyBundlerChain` 用于调用 bundler chain 来修改 Rspack 的配置。
+`modifyBundlerChain` 用于调用 rspack-chain 来修改 Rspack 的配置。
 
 - **类型：**
 
@@ -266,7 +263,7 @@ type ModifyBundlerChainUtils = {
 
 function ModifyBundlerChain(
   callback: (
-    chain: BundlerChain,
+    chain: RspackChain,
     utils: ModifyBundlerChainUtils,
   ) => Promise<void> | void,
 ): void;
@@ -313,8 +310,25 @@ type HTMLTags = {
   bodyTags: HtmlBasicTag[];
 };
 
+type Context = {
+  /**
+   * Rspack 的 Compilation 对象
+   */
+  compilation: Rspack.Compilation;
+  /**
+   * 静态资源的 URL 前缀
+   * @example 'https://example.com/'
+   */
+  assetPrefix: string;
+  /**
+   * HTML 文件的名称，相对于 dist 目录
+   * @example 'index.html'
+   */
+  filename: string;
+};
+
 function ModifyHTMLTags(
-  callback: (tags: HTMLTags) => MaybePromise<HTMLTags>,
+  callback: (tags: HTMLTags, context: Context) => MaybePromise<HTMLTags>,
 ): void;
 ```
 

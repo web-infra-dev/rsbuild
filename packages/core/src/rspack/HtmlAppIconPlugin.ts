@@ -1,7 +1,8 @@
 import fs from 'node:fs';
 import { basename, posix } from 'node:path';
-import { getPublicPathFromCompiler, withPublicPath } from '@rsbuild/shared';
+import { getPublicPathFromCompiler } from '@rsbuild/shared';
 import type { Compilation, Compiler } from '@rspack/core';
+import { ensureAssetPrefix } from '../helpers';
 import { getHTMLPlugin } from '../pluginHelper';
 
 type AppIconOptions = {
@@ -44,7 +45,7 @@ export class HtmlAppIconPlugin {
             attributes: {
               rel: 'apple-touch-icon',
               sizes: '180*180',
-              href: withPublicPath(iconRelativePath, publicPath),
+              href: ensureAssetPrefix(iconRelativePath, publicPath),
             },
             meta: {},
           });

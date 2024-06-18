@@ -1,13 +1,15 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { getDistPath, isHtmlDisabled } from '@rsbuild/shared';
+import { isHtmlDisabled } from '@rsbuild/shared';
 import type { PluginAssetsRetryOptions } from './types';
 
 export type { PluginAssetsRetryOptions };
 
+export const PLUGIN_ASSETS_RETRY_NAME = 'rsbuild:assets-retry';
+
 export const pluginAssetsRetry = (
   options: PluginAssetsRetryOptions = {},
 ): RsbuildPlugin => ({
-  name: 'rsbuild:assets-retry',
+  name: PLUGIN_ASSETS_RETRY_NAME,
   setup(api) {
     api.modifyBundlerChain(
       async (chain, { CHAIN_ID, target, HtmlPlugin, isProd }) => {
@@ -21,7 +23,7 @@ export const pluginAssetsRetry = (
         const { AsyncChunkRetryPlugin } = await import(
           './AsyncChunkRetryPlugin'
         );
-        const distDir = getDistPath(config, 'js');
+        const distDir = config.output.distPath.js;
 
         // options.crossOrigin should be same as html.crossorigin by default
         if (options.crossOrigin === undefined) {

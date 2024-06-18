@@ -15,7 +15,7 @@ export default {
       ignoreDts: true,
       externals: {
         postcss: 'postcss',
-        'loader-utils': '@rsbuild/shared/loader-utils2',
+        'loader-utils': 'loader-utils',
       },
     },
   ],

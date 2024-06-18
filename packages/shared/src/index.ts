@@ -1,10 +1,10 @@
+import fse from '../compiled/fs-extra/index.js';
+
+export { fse };
+
 export * from './constants';
 export * from './utils';
-export * from './fs';
 export * from './getBrowserslist';
-export * from './logger';
-export * from './mergeChainedOptions';
+export * from './reduceConfigs';
 export * from './types';
-export * from './config';
 export * from './chain';
-export * from './url';

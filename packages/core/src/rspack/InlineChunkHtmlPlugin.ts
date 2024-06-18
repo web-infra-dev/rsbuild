@@ -8,12 +8,12 @@
 import { join } from 'node:path';
 import {
   type InlineChunkTest,
-  addTrailingSlash,
   getPublicPathFromCompiler,
   isFunction,
 } from '@rsbuild/shared';
 import type { Compilation, Compiler } from '@rspack/core';
 import type { HtmlTagObject } from 'html-webpack-plugin';
+import { addTrailingSlash } from '../helpers';
 import { getHTMLPlugin } from '../pluginHelper';
 
 export type InlineChunkHtmlPluginOptions = {

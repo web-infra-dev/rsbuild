@@ -1,20 +1,21 @@
 {
   "name": "@scripts/test-helper",
   "private": true,
-  "version": "0.7.1",
+  "version": "0.7.8",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild"
   },
   "license": "MIT",
-  "type": "commonjs",
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.js",
-      "default": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     }
   },
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
@@ -26,7 +27,7 @@
   "dependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/shared": "workspace:*",
-    "@types/lodash": "^4.17.1",
+    "@types/lodash": "^4.17.5",
     "@types/node": "18.x",
     "lodash": "^4.17.21",
     "typescript": "^5.4.2",

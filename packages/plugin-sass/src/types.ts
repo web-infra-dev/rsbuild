@@ -1,5 +1,5 @@
 import type { Rspack } from '@rsbuild/core';
-import type { ChainedConfigWithUtils, FileFilterUtil } from '@rsbuild/shared';
+import type { ConfigChainWithContext, FileFilterUtil } from '@rsbuild/shared';
 import type {
   LegacyOptions as LegacySassOptions,
   Options as SassOptions,
@@ -23,7 +23,7 @@ export type PluginSassOptions = {
    * Options passed to sass-loader.
    * @see https://github.com/webpack-contrib/sass-loader
    */
-  sassLoaderOptions?: ChainedConfigWithUtils<
+  sassLoaderOptions?: ConfigChainWithContext<
     SassLoaderOptions,
     {
       /**

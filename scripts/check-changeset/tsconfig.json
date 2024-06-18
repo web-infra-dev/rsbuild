@@ -1,8 +1,0 @@
-{
-  "extends": "@rsbuild/tsconfig/base",
-  "compilerOptions": {
-    "outDir": "./dist",
-    "baseUrl": "./"
-  },
-  "include": ["src"]
-}

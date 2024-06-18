@@ -43,7 +43,7 @@ jobs:
         run: pnpm run lint
 
       - name: Check Changeset
-        run: pnpm run check-changeset
+        run: npx disallow-major-changeset@latest
 
       - name: Check Dependency Version
         run: pnpm run check-dependency-version

@@ -27,9 +27,11 @@ export type PluginVueOptions = {
   splitChunks?: SplitVueChunkOptions;
 };
 
+export const PLUGIN_VUE_NAME = 'rsbuild:vue';
+
 export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
   return {
-    name: 'rsbuild:vue',
+    name: PLUGIN_VUE_NAME,
 
     setup(api) {
       const VUE_REGEXP = /\.vue$/;

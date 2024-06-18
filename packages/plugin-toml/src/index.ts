@@ -1,7 +1,9 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 
+export const PLUGIN_TOML_NAME = 'rsbuild:toml';
+
 export const pluginToml = (): RsbuildPlugin => ({
-  name: 'rsbuild:toml',
+  name: PLUGIN_TOML_NAME,
 
   async setup(api) {
     const { parse } = await import('toml');

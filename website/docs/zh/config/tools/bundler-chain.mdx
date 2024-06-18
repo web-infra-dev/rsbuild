@@ -4,29 +4,33 @@
 
 ```ts
 type BundlerChainFn = (
-  chain: BundlerChain,
+  chain: RspackChain,
   utils: ModifyBundlerChainUtils,
-) => void;
+) => Promise<void> | void;
 ```
 
 - **默认值：** `undefined`
 
-你可以通过 `tools.bundlerChain` 来修改默认的 Rspack 和 webpack 配置，它的值为 `Function` 类型，接收两个参数：
+import RspackChain from '@zh/shared/rspackChain.mdx';
 
-- 第一个参数为 `bundler-chain` 对象实例，你可以通过这个实例来修改 Rspack 和 webpack 的配置。
-- 第二个参数为一个工具集合，包括`env`、`isProd`、`CHAIN_ID` 等。
+<RspackChain />
 
-:::tip 什么是 BundlerChain
+你可以通过 `tools.bundlerChain` 来调用 rspack-chain 以修改默认的 Rspack 配置，它的值是一个函数，接收两个参数：
 
-Bundler chain 是 webpack chain 的子集，其中包含一部分 webpack chain API，你可以用它来同时修改 Rspack 和 webpack 的配置。
+- 第一个参数为 `rspack-chain` 实例，你可以通过它来修改 Rspack 配置。
+- 第二个参数为一个工具对象，包括 `env`、`isProd`、`CHAIN_ID` 等。
 
-通过 bundler chain 修改的配置，在 Rspack 和 webpack 构建时均可生效。需要注意的是，bundler chain 只支持修改 Rspack 和 webpack 间无差异部分的配置。如，修改 devtool 配置项（Rspack 和 webpack 的 devtool 属性值类型相同），或添加一个[Rspack 兼容](https://rspack.dev/guide/compatibility/plugin)的 webpack 插件。
+> `tools.bundlerChain` 会早于 [tools.rspack](/config/tools/rspack) 被执行，因此会被 `tools.rspack` 覆盖。
 
+:::tip
+Rsbuild 内置的 Rspack 配置会随着迭代而发生变化，这些变化不会反映在 semver 中，因此在升级 Rsbuild 时，你的自定义配置可能会失效。
 :::
 
-> `tools.bundlerChain` 的执行时机早于 tools.rspack，因此会被其他配置中的修改所覆盖。
+## 示例
 
-## 工具集合
+参考：[RspackChain 示例](/guide/basic/configure-rspack#使用-rspack-chain)。
+
+## 工具对象
 
 ### env
 
@@ -234,7 +238,3 @@ Rsbuild 中预先定义了一些常用的 Chain ID，你可以通过这些 ID �
 | --------------- | ---------------------------------- |
 | `MINIMIZER.JS`  | 对应 `SwcJsMinimizerRspackPlugin`  |
 | `MINIMIZER.CSS` | 对应 `SwcCssMinimizerRspackPlugin` |
-
-### 使用示例
-
-使用示例可参考：[BundlerChain 示例](/guide/basic/configure-rsbuild#示例)。

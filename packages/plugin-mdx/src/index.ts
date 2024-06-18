@@ -21,8 +21,10 @@ function createRegExp(exts: string[]): RegExp {
   );
 }
 
+export const PLUGIN_MDX_NAME = 'rsbuild:mdx';
+
 export const pluginMdx = (options: PluginMdxOptions = {}): RsbuildPlugin => ({
-  name: 'rsbuild:mdx',
+  name: PLUGIN_MDX_NAME,
 
   setup(api) {
     api.modifyBundlerChain((chain, { CHAIN_ID }) => {

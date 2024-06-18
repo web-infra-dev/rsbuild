@@ -5,12 +5,11 @@ import {
   type HtmlTagUtils,
   type ModifyHTMLTagsFn,
   isFunction,
-  partition,
-  withPublicPath,
 } from '@rsbuild/shared';
 import type { Compilation, Compiler } from '@rspack/core';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { HtmlTagObject } from 'html-webpack-plugin';
+import { ensureAssetPrefix, partition } from '../helpers';
 import { getHTMLPlugin } from '../pluginHelper';
 
 export type TagConfig = {
@@ -145,9 +144,9 @@ const applyTagConfig = (
         if (typeof optPublicPath === 'function') {
           filename = optPublicPath(filename, data.publicPath);
         } else if (typeof optPublicPath === 'string') {
-          filename = withPublicPath(filename, optPublicPath);
+          filename = ensureAssetPrefix(filename, optPublicPath);
         } else if (optPublicPath !== false) {
-          filename = withPublicPath(filename, data.publicPath);
+          filename = ensureAssetPrefix(filename, data.publicPath);
         }
 
         const optHash = tag.hash ?? tagConfig.hash;
@@ -239,9 +238,12 @@ export class HtmlBasicPlugin {
 
   readonly options: HtmlBasicPluginOptions;
 
-  readonly modifyTagsFn: ModifyHTMLTagsFn;
+  readonly modifyTagsFn?: ModifyHTMLTagsFn;
 
-  constructor(options: HtmlBasicPluginOptions, modifyTagsFn: ModifyHTMLTagsFn) {
+  constructor(
+    options: HtmlBasicPluginOptions,
+    modifyTagsFn?: ModifyHTMLTagsFn,
+  ) {
     this.name = 'HtmlBasicPlugin';
     this.options = options;
     this.modifyTagsFn = modifyTagsFn;
@@ -268,13 +270,22 @@ export class HtmlBasicPlugin {
 
           addFavicon(headTags, favicon);
 
-          const result = await this.modifyTagsFn({
+          const tags = {
             headTags: headTags.map(formatBasicTag),
             bodyTags: bodyTags.map(formatBasicTag),
-          });
+          };
+
+          const modified = this.modifyTagsFn
+            ? await this.modifyTagsFn(tags, {
+                compilation,
+                assetPrefix: data.publicPath,
+                filename: data.outputName,
+              })
+            : tags;
+
           Object.assign(data, {
-            headTags: result.headTags.map(fromBasicTag),
-            bodyTags: result.bodyTags.map(fromBasicTag),
+            headTags: modified.headTags.map(fromBasicTag),
+            bodyTags: modified.bodyTags.map(fromBasicTag),
           });
 
           if (tagConfig) {

@@ -5,6 +5,10 @@
 
 `tools.rspack` 选项用于修改 [Rspack](https://rspack.dev/) 的配置项。
 
+:::tip
+Rsbuild 内置的 Rspack 配置会随着迭代而发生变化，这些变化不会反映在 semver 中，因此在升级 Rsbuild 时，你的自定义配置可能会失效。
+:::
+
 ## Object 类型
 
 `tools.rspack` 可以配置为一个对象，这个对象将会和内置的 Rspack 配置通过 [webpack-merge](https://github.com/survivejs/webpack-merge) 进行深层合并。
@@ -45,6 +49,20 @@ export default {
 :::tip
 `tools.rspack` 函数返回的对象会直接作为最终使用的 Rspack 配置，不会再与内置的 Rspack 配置进行合并。
 :::
+
+`tools.rspack` 还可以是一个异步函数：
+
+```js
+export default {
+  tools: {
+    rspack: async (config) => {
+      const { default: ESLintPlugin } = await import('eslint-webpack-plugin');
+      config.plugins?.push(new ESLintPlugin());
+      return config;
+    },
+  },
+};
+```
 
 ## 工具集合
 

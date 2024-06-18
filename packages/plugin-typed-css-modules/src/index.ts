@@ -1,10 +1,10 @@
 import path from 'node:path';
 import type { CSSLoaderOptions, RsbuildPlugin } from '@rsbuild/core';
 
-const PLUGIN_NAME = 'rsbuild:typed-css-modules';
+export const PLUGIN_TYPED_CSS_MODULES_NAME = 'rsbuild:typed-css-modules';
 
 export const pluginTypedCSSModules = (): RsbuildPlugin => ({
-  name: PLUGIN_NAME,
+  name: PLUGIN_TYPED_CSS_MODULES_NAME,
 
   setup(api) {
     api.modifyBundlerChain({

@@ -1,8 +1,8 @@
 import inspector from 'node:inspector';
 import path from 'node:path';
 import { fse } from '@rsbuild/shared';
-import { logger } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
+import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
 
 export const stopProfiler = (

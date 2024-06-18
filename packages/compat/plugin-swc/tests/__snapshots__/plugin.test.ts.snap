@@ -785,7 +785,7 @@ exports[`plugin-swc > should set correct swc minimizer options in production 1`]
   "minimizer": [
     SwcMinimizerPlugin {
       "minifyOptions": {
-        "cssMinify": {},
+        "cssMinify": undefined,
         "jsMinify": {
           "compress": false,
           "format": {
@@ -793,6 +793,13 @@ exports[`plugin-swc > should set correct swc minimizer options in production 1`]
           },
           "mangle": false,
         },
+      },
+      "name": "swc-minimizer-plugin",
+    },
+    SwcMinimizerPlugin {
+      "minifyOptions": {
+        "cssMinify": {},
+        "jsMinify": undefined,
       },
       "name": "swc-minimizer-plugin",
     },
@@ -805,7 +812,7 @@ exports[`plugin-swc > should set correct swc minimizer options using raw swc con
   "minimizer": [
     SwcMinimizerPlugin {
       "minifyOptions": {
-        "cssMinify": {},
+        "cssMinify": undefined,
         "jsMinify": {
           "compress": false,
           "format": {
@@ -813,6 +820,13 @@ exports[`plugin-swc > should set correct swc minimizer options using raw swc con
           },
           "mangle": false,
         },
+      },
+      "name": "swc-minimizer-plugin",
+    },
+    SwcMinimizerPlugin {
+      "minifyOptions": {
+        "cssMinify": {},
+        "jsMinify": undefined,
       },
       "name": "swc-minimizer-plugin",
     },
@@ -1005,13 +1019,20 @@ exports[`plugin-swc > should set swc minimizer in production 1`] = `
   "minimizer": [
     SwcMinimizerPlugin {
       "minifyOptions": {
-        "cssMinify": {},
+        "cssMinify": undefined,
         "jsMinify": {
           "format": {
             "asciiOnly": true,
           },
           "mangle": true,
         },
+      },
+      "name": "swc-minimizer-plugin",
+    },
+    SwcMinimizerPlugin {
+      "minifyOptions": {
+        "cssMinify": {},
+        "jsMinify": undefined,
       },
       "name": "swc-minimizer-plugin",
     },

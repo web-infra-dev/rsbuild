@@ -1,6 +1,6 @@
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { ChainIdentifier } from '../chain';
-import type { BundlerChain } from './bundlerConfig';
+import type { RspackChain } from '../chain';
 import type { HtmlBasicTag, RsbuildConfig } from './config';
 import type { RsbuildTarget } from './rsbuild';
 import type { Rspack, RspackConfig } from './rspack';
@@ -58,7 +58,27 @@ type HTMLTags = {
   bodyTags: HtmlBasicTag[];
 };
 
-export type ModifyHTMLTagsFn = (tags: HTMLTags) => MaybePromise<HTMLTags>;
+export type ModifyHTMLTagsContext = {
+  /**
+   * The Compilation object of Rspack.
+   */
+  compilation: Rspack.Compilation;
+  /**
+   * URL prefix of assets.
+   * @example 'https://example.com/'
+   */
+  assetPrefix: string;
+  /**
+   * The name of the HTML file, relative to the dist directory.
+   * @example 'index.html'
+   */
+  filename: string;
+};
+
+export type ModifyHTMLTagsFn = (
+  tags: HTMLTags,
+  context: ModifyHTMLTagsContext,
+) => MaybePromise<HTMLTags>;
 
 export type ModifyRsbuildConfigUtils = {
   /** Merge multiple Rsbuild config objects into one. */
@@ -97,9 +117,8 @@ export type ModifyBundlerChainUtils = ModifyChainUtils & {
   };
 };
 
-/** The intersection of webpack-chain and rspack-chain */
 export type ModifyBundlerChainFn = (
-  chain: BundlerChain,
+  chain: RspackChain,
   utils: ModifyBundlerChainUtils,
 ) => MaybePromise<void>;
 

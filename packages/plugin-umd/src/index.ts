@@ -1,5 +1,4 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { isProd } from '@rsbuild/shared';
 
 export type PluginUmdOptions = {
   /**
@@ -12,8 +11,10 @@ export type PluginUmdOptions = {
   export?: string | string[];
 };
 
+export const PLUGIN_UMD_NAME = 'rsbuild:umd';
+
 export const pluginUmd = (options: PluginUmdOptions): RsbuildPlugin => ({
-  name: 'rsbuild:umd',
+  name: PLUGIN_UMD_NAME,
 
   setup(api) {
     api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
@@ -33,7 +34,8 @@ export const pluginUmd = (options: PluginUmdOptions): RsbuildPlugin => ({
         },
         tools: {
           htmlPlugin:
-            userConfig.tools?.htmlPlugin ?? (isProd() ? false : undefined),
+            userConfig.tools?.htmlPlugin ??
+            (process.env.NODE_ENV === 'production' ? false : undefined),
         },
         performance: {
           chunkSplit: {

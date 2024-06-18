@@ -3,16 +3,34 @@
 - **类型：** `CopyPluginOptions | CopyPluginOptions['patterns']`
 - **默认值：** `undefined`
 
-将指定的文件或目录拷贝到构建输出目录中。
+将指定的文件或目录拷贝到构建输出目录中，基于 [rspack.CopyRspackPlugin](https://rspack.dev/zh/plugins/rspack/copy-rspack-plugin) 实现。
 
-例如，将 `src/assets` 下的文件直接拷贝到 dist 目录：
+> 配置项请参考：[rspack.CopyRspackPlugin](https://rspack.dev/zh/plugins/rspack/copy-rspack-plugin)。
+
+## 示例
+
+将 `./src/assets` 下的文件拷贝到 `./dist` 目录：
 
 ```js
 export default {
   output: {
-    copy: [{ from: './src/assets', to: '' }],
+    copy: [
+      // `./src/assets/image.png` -> `./dist/image.png`
+      { from: './src/assets' },
+    ],
   },
 };
 ```
 
-更详细的配置项请参考：[copy-webpack-plugin](https://github.com/webpack-contrib/copy-webpack-plugin) 文档。
+将 `./src/assets` 下的文件拷贝到 `./dist/assets` 目录：
+
+```js
+export default {
+  output: {
+    copy: [
+      // `./src/assets/image.png` -> `./dist/assets/image.png`
+      { from: './src/assets', to: 'assets' },
+    ],
+  },
+};
+```

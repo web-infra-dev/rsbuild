@@ -91,6 +91,7 @@ type LoadEnvOptions = {
   cwd?: string;
   /**
    * Used to specify the name of the .env.[mode] file
+   * Equivalent to Rsbuild CLI's `--env-mode` option
    * @default process.env.NODE_ENV
    */
   mode?: string;
@@ -131,6 +132,10 @@ const mergedConfig = mergeRsbuildConfig(
 ```
 
 This method will also load files such as `.env.local` and `.env.[mode]`, see [Environment Variables](/guide/advanced/env-vars) for details.
+
+:::tip
+Rsbuild CLI will automatically call the `loadEnv()` method. If you are using the Rsbuild CLI, you can set the `mode` parameter through the [--env-mode](/guide/advanced/env-vars#env-mode) option.
+:::
 
 ## mergeRsbuildConfig
 
@@ -337,4 +342,37 @@ The version of `@rsbuild/core` currently in use.
 import { version } from '@rsbuild/core';
 
 console.log(version); // 1.0.0
+```
+
+## ensureAssetPrefix
+
+The `ensureAssetPrefix` function is used to prepend a given `assetPrefix` to a string that might be a URL. If the input string is already a complete URL, it returns the string directly.
+
+- **Type:**
+
+```ts
+function ensureAssetPrefix(
+  // URL string to be processed, can be a relative path or an absolute URL
+  url: string,
+  // URL prefix to be appended
+  assetPrefix: string
+) => string;
+```
+
+- **Example:**
+
+```ts
+import { ensureAssetPrefix } from '@rsbuild/core';
+
+ensureAssetPrefix('foo/bar.js', '/static/');
+// -> '/static/foo/bar.js'
+
+ensureAssetPrefix('foo/bar.js', 'https://example.com/static/');
+// -> 'https://example.com/static/foo/bar.js'
+
+ensureAssetPrefix(
+  'https://example.com/index.html',
+  'https://example.com/static/',
+);
+// -> 'https://example.com/index.html'
 ```

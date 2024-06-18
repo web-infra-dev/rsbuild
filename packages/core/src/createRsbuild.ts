@@ -1,6 +1,9 @@
-import { type PluginManager, debug, pick } from '@rsbuild/shared';
+import type { PluginManager, PreviewServerOptions } from '@rsbuild/shared';
 import { createContext } from './createContext';
+import { pick } from './helpers';
 import { getPluginAPI } from './initPlugins';
+import { initRsbuildConfig } from './internal';
+import { logger } from './logger';
 import { setCssExtractPlugin } from './pluginHelper';
 import { createPluginManager } from './pluginManager';
 import type {
@@ -40,7 +43,7 @@ async function applyDefaultPlugins(
   const { pluginSwc } = await import('./plugins/swc');
   const { pluginExternals } = await import('./plugins/externals');
   const { pluginSplitChunks } = await import('./plugins/splitChunks');
-  const { pluginStartUrl } = await import('./plugins/startUrl');
+  const { pluginOpen } = await import('./plugins/open');
   const { pluginInlineChunk } = await import('./plugins/inlineChunk');
   const { pluginBundleAnalyzer } = await import('./plugins/bundleAnalyzer');
   const { pluginRsdoctor } = await import('./plugins/rsdoctor');
@@ -51,6 +54,8 @@ async function applyDefaultPlugins(
   const { pluginModuleFederation } = await import('./plugins/moduleFederation');
   const { pluginRspackProfile } = await import('./plugins/rspackProfile');
   const { pluginLazyCompilation } = await import('./plugins/lazyCompilation');
+  const { pluginSri } = await import('./plugins/sri');
+  const { pluginNonce } = await import('./plugins/nonce');
 
   pluginManager.addPlugins([
     pluginBasic(),
@@ -63,8 +68,8 @@ async function applyDefaultPlugins(
     // cleanOutput plugin should before the html plugin
     pluginCleanOutput(),
     pluginAsset(),
-    pluginHtml(async (tags) => {
-      const result = await context.hooks.modifyHTMLTags.call(tags);
+    pluginHtml(async (...args) => {
+      const result = await context.hooks.modifyHTMLTags.call(...args);
       return result[0];
     }),
     pluginWasm(),
@@ -77,7 +82,7 @@ async function applyDefaultPlugins(
     pluginSwc(),
     pluginExternals(),
     pluginSplitChunks(),
-    pluginStartUrl(),
+    pluginOpen(),
     pluginInlineChunk(),
     pluginBundleAnalyzer(),
     pluginRsdoctor(),
@@ -88,6 +93,8 @@ async function applyDefaultPlugins(
     pluginModuleFederation(),
     pluginRspackProfile(),
     pluginLazyCompilation(),
+    pluginSri(),
+    pluginNonce(),
   ]);
 }
 
@@ -107,6 +114,7 @@ export const pickRsbuildConfig = (
     'security',
     'performance',
     'moduleFederation',
+    'environments',
     '_privateMeta',
   ];
   return pick(rsbuildConfig, keys);
@@ -134,9 +142,9 @@ export async function createRsbuild(
   const pluginAPI = getPluginAPI({ context, pluginManager });
   context.pluginAPI = pluginAPI;
 
-  debug('add default plugins');
+  logger.debug('add default plugins');
   await applyDefaultPlugins(pluginManager, context);
-  debug('add default plugins done');
+  logger.debug('add default plugins done');
 
   const provider = (rsbuildConfig.provider ||
     (await getRspackProvider())) as RsbuildProvider;
@@ -147,6 +155,12 @@ export async function createRsbuild(
     rsbuildOptions,
     setCssExtractPlugin,
   });
+
+  const preview = async (options?: PreviewServerOptions) => {
+    const { startProdServer } = await import('./server/prodServer');
+    const config = await initRsbuildConfig({ context, pluginManager });
+    return startProdServer(context, config, options);
+  };
 
   const rsbuild = {
     ...pick(pluginManager, [
@@ -173,13 +187,13 @@ export async function createRsbuild(
     ]),
     ...pick(providerInstance, [
       'build',
-      'preview',
       'initConfigs',
       'inspectConfig',
       'createCompiler',
       'createDevServer',
       'startDevServer',
     ]),
+    preview,
     context: pluginAPI.context,
   };
 

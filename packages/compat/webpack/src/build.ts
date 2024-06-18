@@ -5,14 +5,13 @@ import {
   type RspackConfig,
   type Stats,
   getNodeEnv,
-  onCompileDone,
   setNodeEnv,
 } from '@rsbuild/shared';
 import type { Configuration as WebpackConfig } from 'webpack';
-// @ts-expect-error
 import WebpackMultiStats from 'webpack/lib/MultiStats.js';
 import { createCompiler } from './createCompiler';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
+import { onCompileDone } from './shared';
 
 export const build = async (
   initOptions: InitConfigsOptions,

@@ -1,8 +1,9 @@
 import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
-import { type DevConfig, type Stats, logger } from '@rsbuild/shared';
-import type Ws from '../../compiled/ws/index.js';
+import type { DevConfig, Stats } from '@rsbuild/shared';
+import type Ws from 'ws';
 import { getAllStatsErrors, getAllStatsWarnings } from '../helpers';
+import { logger } from '../logger';
 
 interface ExtWebSocket extends Ws {
   isAlive: boolean;
@@ -37,7 +38,7 @@ export class SocketServer {
 
   // create socket, install socket handler, bind socket event
   public async prepare() {
-    const { default: ws } = await import('../../compiled/ws/index.js');
+    const { default: ws } = await import('ws');
     this.wsServer = new ws.Server({
       noServer: true,
       path: this.options.client?.path,

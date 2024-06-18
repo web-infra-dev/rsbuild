@@ -1,5 +1,5 @@
 {
-  "extends": "@rsbuild/tsconfig/base",
+  "extends": "@rsbuild/config/tsconfig",
   "compilerOptions": {
     "declaration": false,
     "jsx": "react-jsx",

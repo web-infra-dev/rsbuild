@@ -1,14 +1,13 @@
 import path from 'node:path';
+import type { RspackChain } from '@rsbuild/shared';
+import type { GeneratorOptionsByModuleType } from '@rspack/core';
 import {
   AUDIO_EXTENSIONS,
-  type BundlerChainRule,
   FONT_EXTENSIONS,
   IMAGE_EXTENSIONS,
   VIDEO_EXTENSIONS,
-  getDistPath,
-  getFilename,
-} from '@rsbuild/shared';
-import type { GeneratorOptionsByModuleType } from '@rspack/core';
+} from '../constants';
+import { getFilename } from '../helpers';
 import type { RsbuildPlugin } from '../types';
 
 const chainStaticAssetRule = ({
@@ -19,7 +18,7 @@ const chainStaticAssetRule = ({
   assetType,
 }: {
   emit: boolean;
-  rule: BundlerChainRule;
+  rule: RspackChain.Rule;
   maxSize: number;
   filename: string;
   assetType: string;
@@ -84,7 +83,7 @@ export const pluginAsset = (): RsbuildPlugin => ({
         emit: boolean,
       ) => {
         const regExp = getRegExpForExts(exts);
-        const distDir = getDistPath(config, assetType);
+        const distDir = config.output.distPath[assetType];
         const filename = getFilename(config, assetType, isProd);
         const { dataUriLimit } = config.output;
         const maxSize =

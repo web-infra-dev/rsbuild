@@ -51,25 +51,25 @@ export type PrintUrls =
       protocol: string;
     }) => string[] | void);
 
-export type PublicDir =
-  | false
-  | {
-      /**
-       * The name of the public directory, can be set as a relative path or an absolute path.
-       * @default 'public'
-       */
-      name?: string;
-      /**
-       * Whether to copy files from the publicDir to the distDir on production build
-       * @default true
-       */
-      copyOnBuild?: boolean;
-      /**
-       * whether to watch the public directory and reload the page when the files change
-       * @default false
-       */
-      watch?: boolean;
-    };
+export type PublicDirOptions = {
+  /**
+   * The name of the public directory, can be set as a relative path or an absolute path.
+   * @default 'public'
+   */
+  name?: string;
+  /**
+   * Whether to copy files from the publicDir to the distDir on production build
+   * @default true
+   */
+  copyOnBuild?: boolean;
+  /**
+   * whether to watch the public directory and reload the page when the files change
+   * @default false
+   */
+  watch?: boolean;
+};
+
+export type PublicDir = false | PublicDirOptions | PublicDirOptions[];
 
 export interface ServerConfig {
   /**
@@ -106,6 +106,17 @@ export interface ServerConfig {
    */
   historyApiFallback?: boolean | HistoryApiFallbackOptions;
   /**
+   * Set the page URL to open when the server starts.
+   */
+  open?:
+    | boolean
+    | string
+    | string[]
+    | {
+        target?: string | string[];
+        before?: () => Promise<void> | void;
+      };
+  /**
    * Configure proxy rules for the dev server or preview server to proxy requests to the specified service.
    */
   proxy?: ProxyOptions;
@@ -127,8 +138,8 @@ export type NormalizedServerConfig = ServerConfig &
       | 'port'
       | 'host'
       | 'compress'
-      | 'publicDir'
       | 'strictPort'
       | 'printUrls'
+      | 'open'
     >
   >;

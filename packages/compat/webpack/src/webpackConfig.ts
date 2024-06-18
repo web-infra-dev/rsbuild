@@ -1,29 +1,30 @@
-import { __internalHelper } from '@rsbuild/core';
 import {
-  type BundlerChain,
+  type RsbuildTarget,
+  type RspackChain,
+  __internalHelper,
+  logger,
+} from '@rsbuild/core';
+import {
   type ModifyWebpackChainUtils,
   type ModifyWebpackConfigUtils,
-  type RsbuildTarget,
-  type WebpackChain,
   castArray,
-  chainToConfig,
-  debug,
-  mergeChainedOptions,
-  modifyBundlerChain,
+  reduceConfigsWithContext,
 } from '@rsbuild/shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
 import {
   type InternalContext,
+  chainToConfig,
   getChainUtils as getBaseChainUtils,
+  modifyBundlerChain,
 } from './shared';
 import type { WebpackConfig } from './types';
 
 async function modifyWebpackChain(
   context: InternalContext,
   utils: ModifyWebpackChainUtils,
-  chain: WebpackChain,
-): Promise<WebpackChain> {
-  debug('modify webpack chain');
+  chain: RspackChain,
+): Promise<RspackChain> {
+  logger.debug('modify webpack chain');
 
   const [modifiedChain] = await context.hooks.modifyWebpackChain.call(
     chain,
@@ -36,7 +37,7 @@ async function modifyWebpackChain(
     }
   }
 
-  debug('modify webpack chain done');
+  logger.debug('modify webpack chain done');
 
   return modifiedChain;
 }
@@ -46,22 +47,22 @@ async function modifyWebpackConfig(
   webpackConfig: WebpackConfig,
   utils: ModifyWebpackConfigUtils,
 ): Promise<WebpackConfig> {
-  debug('modify webpack config');
+  logger.debug('modify webpack config');
   let [modifiedConfig] = await context.hooks.modifyWebpackConfig.call(
     webpackConfig,
     utils,
   );
 
   if (context.config.tools?.webpack) {
-    modifiedConfig = mergeChainedOptions({
-      defaults: modifiedConfig,
-      options: context.config.tools.webpack,
-      utils,
+    modifiedConfig = reduceConfigsWithContext({
+      initial: modifiedConfig,
+      config: context.config.tools.webpack,
+      ctx: utils,
       mergeFn: utils.mergeConfig,
     });
   }
 
-  debug('modify webpack config done');
+  logger.debug('modify webpack config done');
   return modifiedConfig;
 }
 
@@ -160,17 +161,9 @@ export async function generateWebpackConfig({
     },
   });
 
-  const chain = await modifyWebpackChain(
-    context,
-    chainUtils,
-    // module rules not support merge
-    // need a special rule merge or use bundlerChain as WebpackChain
-    bundlerChain as unknown as WebpackChain,
-  );
+  const chain = await modifyWebpackChain(context, chainUtils, bundlerChain);
 
-  let webpackConfig = chainToConfig(
-    chain as unknown as BundlerChain,
-  ) as WebpackConfig;
+  let webpackConfig = chainToConfig(chain) as WebpackConfig;
 
   webpackConfig = await modifyWebpackConfig(
     context,

@@ -45,8 +45,8 @@ export class CheckSyntaxPlugin {
       options.ecmaVersion || browserslistToESVersion(this.targets);
   }
 
-  apply(complier: Compiler) {
-    complier.hooks.afterEmit.tapPromise(
+  apply(compiler: Compiler) {
+    compiler.hooks.afterEmit.tapPromise(
       CheckSyntaxPlugin.name,
       async (compilation: Compilation) => {
         const outputPath = compilation.outputOptions.path || 'dist';
@@ -70,7 +70,7 @@ export class CheckSyntaxPlugin {
           }),
         );
 
-        printErrors(this.errors);
+        printErrors(this.errors, this.ecmaVersion);
       },
     );
   }

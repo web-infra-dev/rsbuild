@@ -1,11 +1,16 @@
 import { Console } from 'node:console';
-import { getProgressColor } from '@rsbuild/shared';
+import type { Colors } from '@rsbuild/shared';
 import cliTruncate from 'cli-truncate';
 import patchConsole from 'patch-console';
 import { FULL_WIDTH, renderBar } from './bar';
 import { create } from './log';
 import type { LogUpdate } from './log';
 import type { Props } from './type';
+
+const colorList: Colors[] = ['green', 'cyan', 'yellow', 'blue', 'magenta'];
+
+export const getProgressColor = (index: number) =>
+  colorList[index % colorList.length];
 
 class Bus {
   states: Partial<Props>[] = [];

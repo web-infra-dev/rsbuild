@@ -1,13 +1,12 @@
 import fs from 'node:fs';
-import {
-  type BundlerChain,
-  type ChainIdentifier,
-  type CopyPluginOptions,
-  type RsbuildPlugin,
-  type RsbuildTarget,
-  TARGET_ID_MAP,
-  isWebTarget,
-} from '@rsbuild/shared';
+import type {
+  ChainIdentifier,
+  RsbuildPlugin,
+  RsbuildTarget,
+  RspackChain,
+} from '@rsbuild/core';
+import { type CopyPluginOptions, castArray } from '@rsbuild/shared';
+import { TARGET_ID_MAP } from './shared';
 
 async function applyTsConfigPathsPlugin({
   chain,
@@ -16,7 +15,7 @@ async function applyTsConfigPathsPlugin({
   extensions,
   configFile,
 }: {
-  chain: BundlerChain;
+  chain: RspackChain;
   CHAIN_ID: ChainIdentifier;
   mainFields: (string | string[])[];
   extensions: string[];
@@ -36,7 +35,12 @@ async function applyTsConfigPathsPlugin({
     ]);
 }
 
-const getMainFields = (chain: BundlerChain, target: RsbuildTarget) => {
+function isWebTarget(target: RsbuildTarget | RsbuildTarget[]) {
+  const targets = castArray(target);
+  return targets.includes('web') || target.includes('web-worker');
+}
+
+const getMainFields = (chain: RspackChain, target: RsbuildTarget) => {
   const mainFields = chain.resolve.mainFields.values();
 
   if (mainFields.length) {

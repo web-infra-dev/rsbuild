@@ -1,59 +1,9 @@
-import type { EntryDescription } from '@rspack/core';
+import RspackChain from '../compiled/rspack-chain/index.js';
 import { NODE_MODULES_REGEX, TS_AND_JSX_REGEX } from './constants';
-import { debug } from './logger';
-import type {
-  BundlerChain,
-  BundlerChainRule,
-  CreateAsyncHook,
-  ModifyBundlerChainFn,
-  ModifyBundlerChainUtils,
-  NormalizedConfig,
-  RsbuildConfig,
-  RsbuildContext,
-  RsbuildEntry,
-  RspackConfig,
-} from './types';
-import { isPlainObject } from './utils';
+import type { NormalizedConfig, RsbuildContext } from './types';
 import { castArray } from './utils';
 
-export async function getBundlerChain() {
-  const { default: WebpackChain } = await import(
-    '../compiled/webpack-chain/index.js'
-  );
-
-  const bundlerChain = new WebpackChain();
-
-  return bundlerChain as unknown as BundlerChain;
-}
-
-export async function modifyBundlerChain(
-  context: RsbuildContext & {
-    hooks: {
-      modifyBundlerChain: CreateAsyncHook<ModifyBundlerChainFn>;
-    };
-    config: Readonly<RsbuildConfig>;
-  },
-  utils: ModifyBundlerChainUtils,
-): Promise<BundlerChain> {
-  debug('modify bundler chain');
-
-  const bundlerChain = await getBundlerChain();
-
-  const [modifiedBundlerChain] = await context.hooks.modifyBundlerChain.call(
-    bundlerChain,
-    utils,
-  );
-
-  if (context.config.tools?.bundlerChain) {
-    for (const item of castArray(context.config.tools.bundlerChain)) {
-      item(modifiedBundlerChain, utils);
-    }
-  }
-
-  debug('modify bundler chain done');
-
-  return modifiedBundlerChain;
-}
+export { RspackChain };
 
 export const CHAIN_ID = {
   /** Predefined rules */
@@ -133,8 +83,6 @@ export const CHAIN_ID = {
     STYLE: 'style-loader',
     /** svelte-loader */
     SVELTE: 'svelte',
-    /** esbuild-loader */
-    ESBUILD: 'esbuild',
     /** postcss-loader */
     POSTCSS: 'postcss',
     /** lightningcss-loader */
@@ -178,10 +126,6 @@ export const CHAIN_ID = {
     MODULE_FEDERATION: 'module-federation',
     /** HtmlBasicPlugin */
     HTML_BASIC: 'html-basic-plugin',
-    /** htmlPreconnectPlugin */
-    HTML_PRECONNECT: 'html-preconnect-plugin',
-    /** htmlDnsPrefetchPlugin */
-    HTML_DNS_PREFETCH: 'html-dns-prefetch-plugin',
     /** htmlPrefetchPlugin */
     HTML_PREFETCH: 'html-prefetch-plugin',
     /** htmlPreloadPlugin */
@@ -202,8 +146,6 @@ export const CHAIN_ID = {
     ASYNC_CHUNK_RETRY: 'async-chunk-retry',
     /** AutoSetRootFontSizePlugin */
     AUTO_SET_ROOT_SIZE: 'auto-set-root-size',
-    /** VueLoader15PitchFixPlugin */
-    VUE_LOADER_15_PITCH_FIX_PLUGIN: 'vue-loader-15-pitch-fix',
   },
   /** Predefined minimizers */
   MINIMIZER: {
@@ -211,15 +153,9 @@ export const CHAIN_ID = {
     JS: 'js',
     /** SwcCssMinimizerRspackPlugin */
     CSS: 'css',
-    /** ESBuildPlugin */
-    ESBUILD: 'js-css',
-    /** SWCPlugin */
-    SWC: 'swc',
   },
   /** Predefined resolve plugins */
   RESOLVE_PLUGIN: {
-    /** ModuleScopePlugin */
-    MODULE_SCOPE: 'module-scope',
     /** TsConfigPathsPlugin */
     TS_CONFIG_PATHS: 'ts-config-paths',
   },
@@ -235,8 +171,8 @@ export function applyScriptCondition({
   includes,
   excludes,
 }: {
-  rule: BundlerChainRule;
-  chain: BundlerChain;
+  rule: RspackChain.Rule;
+  chain: RspackChain;
   config: NormalizedConfig;
   context: RsbuildContext;
   includes: (string | RegExp)[];
@@ -267,53 +203,4 @@ export function applyScriptCondition({
   for (const condition of [...excludes, ...(config.source.exclude || [])]) {
     rule.exclude.add(condition);
   }
-}
-
-export function chainToConfig(chain: BundlerChain): RspackConfig {
-  const config = chain.toConfig();
-  const { entry } = config;
-
-  if (!isPlainObject(entry)) {
-    return config as RspackConfig;
-  }
-
-  const formattedEntry: RsbuildEntry = {};
-
-  /**
-   * webpack-chain can not handle entry description object correctly,
-   * so we need to format the entry object and correct the entry description object.
-   */
-  for (const [entryName, entryValue] of Object.entries(entry)) {
-    const entryImport: string[] = [];
-    let entryDescription: EntryDescription | null = null;
-
-    for (const item of castArray(entryValue)) {
-      if (typeof item === 'string') {
-        entryImport.push(item);
-        continue;
-      }
-
-      if (item.import) {
-        entryImport.push(...castArray(item.import));
-      }
-
-      if (entryDescription) {
-        // merge entry description object
-        Object.assign(entryDescription, item);
-      } else {
-        entryDescription = item;
-      }
-    }
-
-    formattedEntry[entryName] = entryDescription
-      ? {
-          ...(entryDescription as EntryDescription),
-          import: entryImport,
-        }
-      : entryImport;
-  }
-
-  config.entry = formattedEntry;
-
-  return config as RspackConfig;
 }

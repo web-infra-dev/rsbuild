@@ -5,11 +5,9 @@ import {
   type RequestHandler as Middleware,
   type Rspack,
   color,
-  debug,
-  isDebug,
-  logger,
 } from '@rsbuild/shared';
-import type Connect from '../../compiled/connect/index.js';
+import type Connect from 'connect';
+import { logger } from '../logger';
 
 export const faviconFallbackMiddleware: Middleware = (req, res, next) => {
   if (req.url === '/favicon.ico') {
@@ -38,9 +36,7 @@ const getStatusCodeColor = (status: number) => {
 
 export const getRequestLoggerMiddleware: () => Promise<Connect.NextHandleFunction> =
   async () => {
-    const { default: onFinished } = await import(
-      '../../compiled/on-finished/index.js'
-    );
+    const { default: onFinished } = await import('on-finished');
 
     return (req, res, next) => {
       const _startAt = process.hrtime();
@@ -59,7 +55,7 @@ export const getRequestLoggerMiddleware: () => Promise<Connect.NextHandleFunctio
           (endAt[0] - _startAt[0]) * 1e3 + (endAt[1] - _startAt[1]) * 1e-6;
 
         // :status :method :url :total-time ms
-        debug(
+        logger.debug(
           `${statusColor(status)} ${method} ${color.gray(url)} ${color.gray(
             `${totalTime.toFixed(3)} ms`,
           )}`,
@@ -128,8 +124,8 @@ export const getHtmlFallbackMiddleware: (params: {
     };
 
     const rewrite = (newUrl: string, isFallback = false) => {
-      if (isFallback && isDebug()) {
-        debug(
+      if (isFallback && logger.level === 'verbose') {
+        logger.debug(
           `${req.method} ${color.gray(
             `${req.url} ${color.yellow('fallback')} to ${newUrl}`,
           )}`,

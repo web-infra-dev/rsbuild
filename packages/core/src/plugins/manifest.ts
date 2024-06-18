@@ -144,8 +144,6 @@ export const pluginManifest = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
-      const htmlPaths = api.getHTMLPaths();
-
       const {
         output: { manifest },
       } = api.getNormalizedConfig();
@@ -157,9 +155,8 @@ export const pluginManifest = (): RsbuildPlugin => ({
       const fileName =
         typeof manifest === 'string' ? manifest : 'manifest.json';
 
-      const { RspackManifestPlugin } = await import(
-        '../../compiled/rspack-manifest-plugin/index.js'
-      );
+      const { RspackManifestPlugin } = await import('rspack-manifest-plugin');
+      const htmlPaths = api.getHTMLPaths();
 
       chain.plugin(CHAIN_ID.PLUGIN.MANIFEST).use(RspackManifestPlugin, [
         {

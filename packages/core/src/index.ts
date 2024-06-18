@@ -19,8 +19,9 @@ export { rspack };
 export type { Rspack };
 
 // Helpers
-export { logger } from '@rsbuild/shared';
+export { logger } from './logger';
 export { mergeRsbuildConfig } from './mergeConfig';
+export { ensureAssetPrefix } from './helpers';
 
 // Constants
 export { PLUGIN_SWC_NAME, PLUGIN_CSS_NAME } from './constants';
@@ -64,6 +65,7 @@ export type {
   RsbuildEntry,
   RsbuildTarget,
   RsbuildContext,
+  InspectConfigResult,
   InspectConfigOptions,
   // Subtypes of Config
   Minify,
@@ -77,10 +79,10 @@ export type {
   CrossOrigin,
   ConsoleType,
   SplitChunks,
-  BundlerChain,
+  RspackChain,
   ClientConfig,
   ScriptInject,
-  ChainedConfig,
+  ConfigChain,
   PostCSSPlugin,
   ScriptLoading,
   LegalComments,
@@ -89,12 +91,13 @@ export type {
   DistPathConfig,
   OutputStructure,
   ChainIdentifier,
+  PublicDirOptions,
   PreconnectOption,
   CSSLoaderOptions,
   ModifyChainUtils,
   StyleLoaderOptions,
   PostCSSLoaderOptions,
-  ChainedConfigWithUtils,
+  ConfigChainWithContext,
   ModifyRspackConfigUtils,
   CSSModulesLocalsConvention,
   // Hook Callback Types

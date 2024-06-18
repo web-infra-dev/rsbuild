@@ -53,11 +53,33 @@ interface CssExports {
   'page-header': string;
   pageHeader: string;
 }
-export const cssExports: CssExports;
+declare const cssExports: CssExports;
 export default cssExports;
 ```
 
 Now when you open the `src/index.ts` file, you can see that the `styles` object already has an accurate type.
+
+## Named Export
+
+If [output.cssModules.namedExport](/config/output/css-modules#cssmodulesnamedexport) is enabled, the generated type declaration file will only include named exports.
+
+For example:
+
+```css title="index.module.css"
+.page {
+  color: black;
+}
+.header {
+  color: white;
+}
+```
+
+The generated types would be:
+
+```ts title="src/index.module.css.d.ts"
+export const page: string;
+export const header: string;
+```
 
 ## Configure Git
 

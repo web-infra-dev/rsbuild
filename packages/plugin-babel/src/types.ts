@@ -2,7 +2,7 @@ import type {
   PluginItem as BabelPlugin,
   TransformOptions as BabelTransformOptions,
 } from '@babel/core';
-import type { ChainedConfigWithUtils } from '@rsbuild/core';
+import type { ConfigChainWithContext } from '@rsbuild/core';
 
 export type { BabelPlugin, BabelTransformOptions };
 
@@ -107,7 +107,7 @@ export type PluginBabelOptions = {
    * Options passed to `babel-loader`.
    * @see https://github.com/babel/babel-loader
    */
-  babelLoaderOptions?: ChainedConfigWithUtils<
+  babelLoaderOptions?: ConfigChainWithContext<
     BabelLoaderOptions,
     BabelConfigUtils
   >;

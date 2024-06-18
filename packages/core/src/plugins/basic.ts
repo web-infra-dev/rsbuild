@@ -1,6 +1,15 @@
 import path from 'node:path';
-import { TARGET_ID_MAP, getJsSourceMap, isUsingHMR } from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../types';
+import { isProd, isUsingHMR } from '@rsbuild/shared';
+import { TARGET_ID_MAP } from '../constants';
+import type { NormalizedConfig, RsbuildPlugin } from '../types';
+
+const getJsSourceMap = (config: NormalizedConfig) => {
+  const { sourceMap } = config.output;
+  if (sourceMap.js === undefined) {
+    return isProd() ? false : 'cheap-module-source-map';
+  }
+  return sourceMap.js;
+};
 
 /**
  * Provide some basic configs of rspack

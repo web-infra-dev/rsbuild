@@ -142,8 +142,8 @@ export default defineConfig({
         '@zh': path.join(__dirname, 'docs/zh'),
       },
     },
-    dev: {
-      startUrl: 'http://localhost:<port>/',
+    server: {
+      open: 'http://localhost:<port>/',
     },
   },
 });

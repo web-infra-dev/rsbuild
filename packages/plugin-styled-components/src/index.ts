@@ -1,13 +1,10 @@
 import type {
-  ChainedConfig,
+  ConfigChain,
   RsbuildConfig,
   RsbuildPlugin,
+  RsbuildTarget,
 } from '@rsbuild/core';
-import {
-  getNodeEnv,
-  isServerTarget,
-  mergeChainedOptions,
-} from '@rsbuild/shared';
+import { getNodeEnv, reduceConfigs } from '@rsbuild/shared';
 
 /**
  * the options of [rspackExperiments.styledComponents](https://rspack.dev/guide/features/builtin-swc-loader#rspackexperimentsstyledcomponents).
@@ -25,6 +22,12 @@ export type PluginStyledComponentsOptions = {
   cssProps?: boolean;
 };
 
+function isServerTarget(target: RsbuildTarget[]) {
+  return (Array.isArray(target) ? target : [target]).some((item) =>
+    ['node', 'service-worker'].includes(item),
+  );
+}
+
 const getDefaultStyledComponentsConfig = (isProd: boolean, ssr: boolean) => {
   return {
     ssr,
@@ -36,10 +39,12 @@ const getDefaultStyledComponentsConfig = (isProd: boolean, ssr: boolean) => {
   };
 };
 
+export const PLUGIN_STYLED_COMPONENTS_NAME = 'rsbuild:styled-components';
+
 export const pluginStyledComponents = (
-  pluginOptions: ChainedConfig<PluginStyledComponentsOptions> = {},
+  pluginOptions: ConfigChain<PluginStyledComponentsOptions> = {},
 ): RsbuildPlugin => ({
-  name: 'rsbuild:styled-components',
+  name: PLUGIN_STYLED_COMPONENTS_NAME,
 
   setup(api) {
     if (api.context.bundlerType === 'webpack') {
@@ -50,9 +55,9 @@ export const pluginStyledComponents = (
       const useSSR = isServerTarget(api.context.targets);
       const isProd = getNodeEnv() === 'production';
 
-      return mergeChainedOptions({
-        defaults: getDefaultStyledComponentsConfig(isProd, useSSR),
-        options: pluginOptions,
+      return reduceConfigs({
+        initial: getDefaultStyledComponentsConfig(isProd, useSSR),
+        config: pluginOptions,
       });
     };
 

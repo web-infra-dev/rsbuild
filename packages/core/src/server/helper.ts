@@ -2,15 +2,7 @@ import type { IncomingMessage } from 'node:http';
 import net from 'node:net';
 import type { Socket } from 'node:net';
 import os from 'node:os';
-import {
-  DEFAULT_DEV_HOST,
-  DEFAULT_PORT,
-  color,
-  deepmerge,
-  isFunction,
-  logger,
-  normalizeUrl,
-} from '@rsbuild/shared';
+import { color, deepmerge, isFunction } from '@rsbuild/shared';
 import type {
   DevConfig,
   NormalizedConfig,
@@ -19,6 +11,8 @@ import type {
   Routes,
   RsbuildEntry,
 } from '@rsbuild/shared';
+import { DEFAULT_DEV_HOST, DEFAULT_PORT } from '../constants';
+import { logger } from '../logger';
 
 /**
  * It used to subscribe http upgrade event
@@ -36,6 +30,9 @@ export type StartServerResult = {
     close: () => Promise<void>;
   };
 };
+
+// remove repeat '/'
+export const normalizeUrl = (url: string) => url.replace(/([^:]\/)\/+/g, '$1');
 
 /**
  * Make sure there is slash before and after prefix

@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-mdx",
-  "version": "0.7.1",
+  "version": "0.7.8",
   "description": "Mdx plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -32,11 +32,10 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@scripts/test-helper": "workspace:*",
     "typescript": "^5.4.2"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.7.1"
+    "@rsbuild/core": "workspace:^0.7.8"
   },
   "publishConfig": {
     "access": "public",

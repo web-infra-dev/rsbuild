@@ -223,7 +223,7 @@ Therefore, the best way to use configuration options is to
 The Rsbuild plugin can modify the configuration of Rspack in various ways.
 
 - `api.modifyRspackConfig(config => {})` modifies the final Rspack configuration.
-- `api.modifyBundlerChain(chain => {})` modifies the `bundler-chain`, usage is similar to [webpack-chain](https://github.com/neutrinojs/webpack-chain).
+- `api.modifyBundlerChain(chain => {})` modifies the `rspack-chain`, usage is similar to [rspack-chain](https://github.com/rspack-contrib/rspack-chain).
 - `api.onAfterCreateCompiler(compiler => {})` directly operates on the Rspack compiler instance.
 
 ## Example References
@@ -272,7 +272,7 @@ import ESLintPlugin from 'eslint-webpack-plugin';
 export const pluginEslint = (options?: Options): RsbuildPlugin => ({
   name: 'plugin-eslint',
   setup(api) {
-    // Use bundler-chain to register a bundler plugin.
+    // Use rspack-chain to register a bundler plugin.
     api.modifyBundlerChain(async (chain) => {
       chain.plugin('eslint-webpack-plugin').use(ESLintPlugin, [
         {

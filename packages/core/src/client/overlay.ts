@@ -56,7 +56,7 @@ const overlayTemplate = `
 .container {
   font-family: Menlo, Consolas, monospace;
   line-height: 1.6;
-  width: 800px;
+  width: 960px;
   max-width: 85%;
   color: #d8d8d8;
   margin: 32px auto;

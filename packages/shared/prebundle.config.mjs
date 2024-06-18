@@ -30,9 +30,7 @@ export default {
       },
     },
     'webpack-merge',
-    'mime-types',
     'gzip-size',
-    'json5',
     {
       name: 'browserslist',
       // preserve the `require(require.resolve())`
@@ -46,34 +44,10 @@ export default {
       },
     },
     {
-      name: 'jiti',
-      ignoreDts: true,
-    },
-    {
-      name: 'webpack-chain',
+      name: 'rspack-chain',
       externals: {
+        '@rspack/core': '@rspack/core',
         deepmerge: '../deepmerge',
-      },
-    },
-    {
-      name: 'yaml',
-      ignoreDts: true,
-      afterBundle(task) {
-        fs.writeFileSync(
-          join(task.distPath, 'index.d.ts'),
-          'export declare function parse(src: string, options?: any): any;',
-        );
-      },
-    },
-    {
-      name: 'semver',
-      ignoreDts: true,
-    },
-    {
-      name: 'loader-utils2',
-      ignoreDts: true,
-      externals: {
-        json5: '../json5',
       },
     },
     {

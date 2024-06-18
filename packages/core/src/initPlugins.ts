@@ -1,34 +1,32 @@
 import { join } from 'node:path';
-import {
-  type BundlerChain,
-  type GetRsbuildConfig,
-  type PluginManager,
-  type RsbuildPluginAPI,
-  type TransformFn,
-  type TransformHandler,
-  getDistPath,
-  removeLeadingSlash,
+import type {
+  GetRsbuildConfig,
+  PluginManager,
+  RsbuildPluginAPI,
+  RspackChain,
+  TransformFn,
+  TransformHandler,
 } from '@rsbuild/shared';
 import type { Compiler } from '@rspack/core';
 import { LOADER_PATH } from './constants';
 import { createPublicContext } from './createContext';
+import { removeLeadingSlash } from './helpers';
 import type { InternalContext, NormalizedConfig } from './types';
 
 export function getHTMLPathByEntry(
   entryName: string,
   config: NormalizedConfig,
 ) {
-  const htmlPath = getDistPath(config, 'html');
   const filename =
     config.html.outputStructure === 'flat'
       ? `${entryName}.html`
       : `${entryName}/index.html`;
 
-  return removeLeadingSlash(`${htmlPath}/${filename}`);
+  return removeLeadingSlash(`${config.output.distPath.html}/${filename}`);
 }
 
 function applyTransformPlugin(
-  chain: BundlerChain,
+  chain: RspackChain,
   transformer: Record<string, TransformHandler>,
 ) {
   const name = 'RsbuildTransformPlugin';

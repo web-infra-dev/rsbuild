@@ -37,9 +37,11 @@ export type PluginSvelteOptions = {
   preprocessOptions?: AutoPreprocessOptions;
 };
 
+export const PLUGIN_SVELTE_NAME = 'rsbuild:svelte';
+
 export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
   return {
-    name: 'rsbuild:svelte',
+    name: PLUGIN_SVELTE_NAME,
 
     setup(api) {
       let sveltePath = '';
@@ -67,7 +69,7 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
         chain.resolve.alias.set('svelte', path.join(sveltePath, 'src/runtime'));
         chain.resolve.extensions.add('.svelte');
         chain.resolve.mainFields.add('svelte').add('...');
-        chain.resolve.set('conditionNames', ['svelte', '...']);
+        chain.resolve.conditionNames.add('svelte').add('...');
 
         const loaderPath = require.resolve('svelte-loader');
 

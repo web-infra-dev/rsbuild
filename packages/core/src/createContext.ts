@@ -1,13 +1,13 @@
 import { isAbsolute, join } from 'node:path';
-import {
-  type BundlerType,
-  type RsbuildContext,
-  type RsbuildTarget,
-  getDistPath,
-  logger,
+import type {
+  BundlerType,
+  RsbuildContext,
+  RsbuildTarget,
 } from '@rsbuild/shared';
 import { withDefaultConfig } from './config';
+import { ROOT_DIST_DIR } from './constants';
 import { initHooks } from './initHooks';
+import { logger } from './logger';
 import { getEntryObject } from './plugins/entry';
 import type {
   CreateRsbuildOptions,
@@ -24,7 +24,7 @@ function getAbsoluteDistPath(
   cwd: string,
   config: RsbuildConfig | NormalizedConfig,
 ) {
-  const dirRoot = getDistPath(config, 'root');
+  const dirRoot = config.output?.distPath?.root ?? ROOT_DIST_DIR;
   return getAbsolutePath(cwd, dirRoot);
 }
 

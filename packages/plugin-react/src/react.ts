@@ -1,10 +1,10 @@
 import path from 'node:path';
 import type {
-  BundlerChain,
   ChainIdentifier,
   RsbuildConfig,
   RsbuildPluginAPI,
   Rspack,
+  RspackChain,
 } from '@rsbuild/core';
 import { SCRIPT_REGEX, deepmerge, isUsingHMR } from '@rsbuild/shared';
 import type { PluginReactOptions } from '.';
@@ -14,7 +14,7 @@ const modifySwcLoaderOptions = ({
   CHAIN_ID,
   modifier,
 }: {
-  chain: BundlerChain;
+  chain: RspackChain;
   CHAIN_ID: ChainIdentifier;
   modifier: (config: Rspack.SwcLoaderOptions) => Rspack.SwcLoaderOptions;
 }) => {

@@ -1,50 +1,70 @@
-import path from 'node:path';
 import { gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
-import { fse, setNodeEnv } from '@rsbuild/shared';
+import { setNodeEnv } from '@rsbuild/shared';
 
-const distFile = path.join(__dirname, 'node_modules/hooksTempFile');
+const createPlugin = () => {
+  const names: string[] = [];
 
-const write = (str: string) => {
-  let content: string;
-  if (fse.existsSync(distFile)) {
-    content = `${fse.readFileSync(distFile, 'utf-8')},${str}`;
-  } else {
-    content = str;
-  }
-  fse.outputFileSync(distFile, content);
-};
+  const plugin: RsbuildPlugin = {
+    name: 'test-plugin',
+    setup(api) {
+      api.modifyRspackConfig(() => {
+        names.push('ModifyBundlerConfig');
+      });
+      api.modifyWebpackChain(() => {
+        names.push('ModifyBundlerConfig');
+      });
+      api.modifyRsbuildConfig(() => {
+        names.push('ModifyRsbuildConfig');
+      });
+      api.modifyBundlerChain(() => {
+        names.push('ModifyBundlerChain');
+      });
+      api.modifyHTMLTags((tags) => {
+        names.push('ModifyHTMLTags');
+        return tags;
+      });
+      api.onBeforeStartDevServer(() => {
+        names.push('BeforeStartDevServer');
+      });
+      api.onAfterStartDevServer(() => {
+        names.push('AfterStartDevServer');
+      });
+      api.onBeforeCreateCompiler(() => {
+        names.push('BeforeCreateCompiler');
+      });
+      api.onAfterCreateCompiler(() => {
+        names.push('AfterCreateCompiler');
+      });
+      api.onBeforeBuild(() => {
+        names.push('BeforeBuild');
+      });
+      api.onAfterBuild(() => {
+        names.push('AfterBuild');
+      });
+      api.onBeforeStartProdServer(() => {
+        names.push('BeforeStartProdServer');
+      });
+      api.onCloseDevServer(() => {
+        names.push('OnCloseDevServer');
+      });
+      api.onAfterStartProdServer(() => {
+        names.push('AfterStartProdServer');
+      });
+      api.onDevCompileDone(() => {
+        names.push('OnDevCompileDone');
+      });
+    },
+  };
 
-const plugin: RsbuildPlugin = {
-  name: 'test-plugin',
-  setup(api) {
-    api.modifyRspackConfig(() => write('ModifyBundlerConfig'));
-    api.modifyWebpackChain(() => write('ModifyBundlerConfig'));
-    api.modifyRsbuildConfig(() => write('ModifyRsbuildConfig'));
-    api.modifyBundlerChain(() => write('ModifyBundlerChain'));
-    api.modifyHTMLTags((tags) => {
-      write('ModifyHTMLTags');
-      return tags;
-    });
-    api.onBeforeStartDevServer(() => write('BeforeStartDevServer'));
-    api.onAfterStartDevServer(() => write('AfterStartDevServer'));
-    api.onBeforeCreateCompiler(() => write('BeforeCreateCompiler'));
-    api.onAfterCreateCompiler(() => write('AfterCreateCompiler'));
-    api.onBeforeBuild(() => write('BeforeBuild'));
-    api.onAfterBuild(() => write('AfterBuild'));
-    api.onBeforeStartProdServer(() => write('BeforeStartProdServer'));
-    api.onCloseDevServer(() => write('OnCloseDevServer'));
-    api.onAfterStartProdServer(() => write('AfterStartProdServer'));
-    api.onDevCompileDone(() => write('OnDevCompileDone'));
-  },
+  return { plugin, names };
 };
 
 rspackOnlyTest(
   'should run plugin hooks correctly when running build',
   async () => {
-    fse.removeSync(distFile);
-
+    const { plugin, names } = createPlugin();
     const rsbuild = await createRsbuild({
       cwd: __dirname,
       rsbuildConfig: {
@@ -54,7 +74,7 @@ rspackOnlyTest(
 
     await rsbuild.build();
 
-    expect(fse.readFileSync(distFile, 'utf-8').split(',')).toEqual([
+    expect(names).toEqual([
       'ModifyRsbuildConfig',
       'ModifyBundlerChain',
       'ModifyBundlerConfig',
@@ -71,8 +91,8 @@ rspackOnlyTest(
   'should run plugin hooks correctly when running startDevServer',
   async ({ page }) => {
     setNodeEnv('development');
-    fse.removeSync(distFile);
 
+    const { plugin, names } = createPlugin();
     const rsbuild = await createRsbuild({
       cwd: __dirname,
       rsbuildConfig: {
@@ -86,7 +106,7 @@ rspackOnlyTest(
 
     await result.server.close();
 
-    expect(fse.readFileSync(distFile, 'utf-8').split(',')).toEqual([
+    expect(names).toEqual([
       'ModifyRsbuildConfig',
       'BeforeStartDevServer',
       'ModifyBundlerChain',
@@ -106,6 +126,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should run plugin hooks correctly when running preview',
   async () => {
+    const { plugin, names } = createPlugin();
     const rsbuild = await createRsbuild({
       cwd: __dirname,
       rsbuildConfig: {
@@ -113,10 +134,9 @@ rspackOnlyTest(
       },
     });
 
-    fse.removeSync(distFile);
     const result = await rsbuild.preview();
 
-    expect(fse.readFileSync(distFile, 'utf-8').split(',')).toEqual([
+    expect(names).toEqual([
       'ModifyRsbuildConfig',
       'BeforeStartProdServer',
       'AfterStartProdServer',

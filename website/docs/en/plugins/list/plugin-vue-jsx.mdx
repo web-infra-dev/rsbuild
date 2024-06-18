@@ -35,7 +35,7 @@ export default {
 };
 ```
 
-After registering the plugin, you can use Vue's [JSX / TSX syntax](https://github.com/vuejs/babel-plugin-jsx) in your code.
+After registering the plugin, you can use Vue's [JSX / TSX syntax](https://github.com/vuejs/babel-plugin-jsx) in `.jsx`, `.tsx`, and `.vue` files.
 
 :::tip
 Since the Vue JSX plugin relies on Babel for compilation, you need to additionally add the [Babel plugin](/plugins/list/plugin-babel).
@@ -43,6 +43,26 @@ Since the Vue JSX plugin relies on Babel for compilation, you need to additional
 Babel compilation will introduce extra overhead, in the example above, we use `include` to match `.jsx` and `.tsx` files, thereby reducing the performance cost brought by Babel.
 
 :::
+
+## Vue SFC
+
+When using JSX in Vue SFC, you need to add `lang="jsx"` or `lang="tsx"` to the `<script>` tag.
+
+- JSX:
+
+```html title="App.vue"
+<script lang="jsx">
+  const vnode = <div>hello</div>;
+</script>
+```
+
+- TSX:
+
+```html title="App.vue"
+<script lang="tsx">
+  const vnode = <div>hello</div>;
+</script>
+```
 
 ## JSX Type Inference
 

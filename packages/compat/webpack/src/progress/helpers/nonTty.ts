@@ -1,4 +1,4 @@
-import { logger } from '@rsbuild/shared';
+import { logger } from '@rsbuild/core';
 
 export function createNonTTYLogger() {
   let prevPercentage = 0;
