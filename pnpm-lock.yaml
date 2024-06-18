@@ -725,8 +725,8 @@ importers:
         specifier: workspace:*
         version: link:../shared
       '@rspack/core':
-        specifier: 0.7.3
-        version: 0.7.3(@swc/helpers@0.5.3)
+        specifier: 0.7.4
+        version: 0.7.4(@swc/helpers@0.5.3)
       '@swc/helpers':
         specifier: 0.5.3
         version: 0.5.3
@@ -735,7 +735,7 @@ importers:
         version: 3.36.1
       html-webpack-plugin:
         specifier: npm:html-rspack-plugin@5.7.2
-        version: html-rspack-plugin@5.7.2(@rspack/core@0.7.3(@swc/helpers@0.5.3))
+        version: html-rspack-plugin@5.7.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))
       postcss:
         specifier: ^8.4.38
         version: 8.4.38
@@ -766,7 +766,7 @@ importers:
         version: 2.0.0
       css-loader:
         specifier: 7.1.2
-        version: 7.1.2(@rspack/core@0.7.3(@swc/helpers@0.5.3))(webpack@5.92.0)
+        version: 7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))(webpack@5.92.0)
       dotenv:
         specifier: 16.4.5
         version: 16.4.5
@@ -796,7 +796,7 @@ importers:
         version: 6.0.1(jiti@1.21.6)(postcss@8.4.38)(tsx@4.14.0)(yaml@2.4.5)
       postcss-loader:
         specifier: 8.1.1
-        version: 8.1.1(@rspack/core@0.7.3(@swc/helpers@0.5.3))(postcss@8.4.38)(typescript@5.4.5)(webpack@5.92.0)
+        version: 8.1.1(@rspack/core@0.7.4(@swc/helpers@0.5.3))(postcss@8.4.38)(typescript@5.4.5)(webpack@5.92.0)
       postcss-value-parser:
         specifier: 4.2.0
         version: 4.2.0
@@ -808,7 +808,7 @@ importers:
         version: 1.2.2
       rspack-manifest-plugin:
         specifier: 5.0.0
-        version: 5.0.0(@rspack/core@0.7.3(@swc/helpers@0.5.3))
+        version: 5.0.0(@rspack/core@0.7.4(@swc/helpers@0.5.3))
       semver:
         specifier: ^7.6.2
         version: 7.6.2
@@ -878,7 +878,7 @@ importers:
         version: 5.0.4
       html-webpack-plugin:
         specifier: npm:html-rspack-plugin@5.7.2
-        version: html-rspack-plugin@5.7.2(@rspack/core@0.7.3(@swc/helpers@0.5.3))
+        version: html-rspack-plugin@5.7.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))
       terser:
         specifier: 5.31.1
         version: 5.31.1
@@ -1053,7 +1053,7 @@ importers:
         version: 4.2.0
       less-loader:
         specifier: ^12.2.0
-        version: 12.2.0(@rspack/core@0.7.3(@swc/helpers@0.5.3))(less@4.2.0)(webpack@5.92.0)
+        version: 12.2.0(@rspack/core@0.7.4(@swc/helpers@0.5.3))(less@4.2.0)(webpack@5.92.0)
       prebundle:
         specifier: 1.1.0
         version: 1.1.0(typescript@5.4.5)
@@ -1219,8 +1219,8 @@ importers:
         specifier: workspace:*
         version: link:../shared
       '@rspack/plugin-react-refresh':
-        specifier: 0.7.3
-        version: 0.7.3(react-refresh@0.14.2)
+        specifier: 0.7.4
+        version: 0.7.4(react-refresh@0.14.2)
       react-refresh:
         specifier: ^0.14.2
         version: 0.14.2
@@ -1261,7 +1261,7 @@ importers:
         version: link:../../scripts/test-helper
       html-webpack-plugin:
         specifier: npm:html-rspack-plugin@5.7.2
-        version: html-rspack-plugin@5.7.2(@rspack/core@0.7.3(@swc/helpers@0.5.3))
+        version: html-rspack-plugin@5.7.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))
       postcss-pxtorem:
         specifier: 6.1.0
         version: 6.1.0(postcss@8.4.38)
@@ -1304,7 +1304,7 @@ importers:
         version: 5.0.0
       sass-loader:
         specifier: ^14.2.1
-        version: 14.2.1(@rspack/core@0.7.3(@swc/helpers@0.5.3))(sass-embedded@1.77.5)(sass@1.77.5)(webpack@5.92.0)
+        version: 14.2.1(@rspack/core@0.7.4(@swc/helpers@0.5.3))(sass-embedded@1.77.5)(sass@1.77.5)(webpack@5.92.0)
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -1391,7 +1391,7 @@ importers:
         version: 0.63.0
       stylus-loader:
         specifier: 8.1.0
-        version: 8.1.0(@rspack/core@0.7.3(@swc/helpers@0.5.3))(stylus@0.63.0)(webpack@5.92.0)
+        version: 8.1.0(@rspack/core@0.7.4(@swc/helpers@0.5.3))(stylus@0.63.0)(webpack@5.92.0)
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -1603,7 +1603,7 @@ importers:
         version: link:../shared
       vue-loader:
         specifier: ^15.11.1
-        version: 15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.2(@rspack/core@0.7.3(@swc/helpers@0.5.3))(webpack@5.92.0))(lodash@4.17.21)(prettier@3.3.2)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.92.0)
+        version: 15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))(webpack@5.92.0))(lodash@4.17.21)(prettier@3.3.2)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.92.0)
       webpack:
         specifier: ^5.92.0
         version: 5.92.0
@@ -1661,14 +1661,14 @@ importers:
   packages/shared:
     dependencies:
       '@rspack/core':
-        specifier: 0.7.3
-        version: 0.7.3(@swc/helpers@0.5.3)
+        specifier: 0.7.4
+        version: 0.7.4(@swc/helpers@0.5.3)
       caniuse-lite:
         specifier: ^1.0.30001636
         version: 1.0.30001636
       html-webpack-plugin:
         specifier: npm:html-rspack-plugin@5.7.2
-        version: html-rspack-plugin@5.7.2(@rspack/core@0.7.3(@swc/helpers@0.5.3))
+        version: html-rspack-plugin@5.7.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))
       postcss:
         specifier: ^8.4.38
         version: 8.4.38
@@ -3538,56 +3538,56 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rspack/binding-darwin-arm64@0.7.3':
-    resolution: {integrity: sha512-3Gg5yosndYYV0NpYiQ/+Z5UErKv5R7yijE59qVnXBRI80BbkSKUFA8Ulb4btc39l3Rx35ud4EBOALXHlLNA9CQ==}
+  '@rspack/binding-darwin-arm64@0.7.4':
+    resolution: {integrity: sha512-K78fUe9OhFTV61kHYCuahNkBXCFJMmqSGyIgNtLR9Psk82IVCHkvxY5565An1Quvo1UmgVh5R2YmylKE81mwiw==}
     cpu: [arm64]
     os: [darwin]
 
-  '@rspack/binding-darwin-x64@0.7.3':
-    resolution: {integrity: sha512-VMOyiIGHOrwkPvvd3V8NKb0UW91hUnqJoQXdttoqbn+FNz9is/3GxPSiEyc+BISuoH1e9J9FATAq6diLqdJAAw==}
+  '@rspack/binding-darwin-x64@0.7.4':
+    resolution: {integrity: sha512-EQriu7oE+tZv25g5VJH6Ael74U42fmpb4zGs7wLmWyKfCtO6SegL3tJ8Jc6mMmp+vg949dVvkw7uB6TJjOqx2g==}
     cpu: [x64]
     os: [darwin]
 
-  '@rspack/binding-linux-arm64-gnu@0.7.3':
-    resolution: {integrity: sha512-Y1jArNhYSugH/BScvLGyodrjD0j3do1lNozSIOMXfmq0st/S5G+AmWWrxX06Ov6DudHW0EXEqC5oF9d9AbPKTg==}
+  '@rspack/binding-linux-arm64-gnu@0.7.4':
+    resolution: {integrity: sha512-yhJLkU1zEXMyHNWhh8pBEaK6cRAjFzRK2hqejhhZ0K+lqC0Af9bKvZyXXGrMfmmHlsh1VJ9VVmi21qcXr/kdzg==}
     cpu: [arm64]
     os: [linux]
 
-  '@rspack/binding-linux-arm64-musl@0.7.3':
-    resolution: {integrity: sha512-R5PhdHBRUsVVtKdQNbRZyKEd7MsML3yuzXzM/3KhyYLyBUqkyMcVxgjDyFGtZsRZXmGv+N0xYKGpJVvhbukzrg==}
+  '@rspack/binding-linux-arm64-musl@0.7.4':
+    resolution: {integrity: sha512-6GV3Ztl6Q1zdJmNo+dwHiJd2Y/IEH9qWOh4YHiyzYGbQQYpfhhLYwKexalWaAAhdMm6KKoeqzklgHImCINImEg==}
     cpu: [arm64]
     os: [linux]
 
-  '@rspack/binding-linux-x64-gnu@0.7.3':
-    resolution: {integrity: sha512-XX60MwIilJ4Pbvy4FVWf5CkROOa7ywnL/k8aVo6OMip62L2jiTpYfd85v/G2IQbeVDcE4967Pm782bpDFRCYfw==}
+  '@rspack/binding-linux-x64-gnu@0.7.4':
+    resolution: {integrity: sha512-KFdAEIZ7mPnT0y198xVOa8vIT9tgpEFVidCSIlxdk65UGC59g6UxEQq1EVAbcBi1Ou6Zza/UtxIlzk6Ev6KDkQ==}
     cpu: [x64]
     os: [linux]
 
-  '@rspack/binding-linux-x64-musl@0.7.3':
-    resolution: {integrity: sha512-oIRXO2NoXnWj/oIXJuNUbCIRnumfLndqR8rXui1vni91TZ+yUFkE9S7mGPrbrBAUXovOaSaHxB0YYi5hZ8fy4A==}
+  '@rspack/binding-linux-x64-musl@0.7.4':
+    resolution: {integrity: sha512-qekcXkv12oWRztZHXGzNAI92/O/+abU35/nGDycZmMtr+Qt2XS5hE1T9oBQ54yecIzUVDGNcYwhIMWBX6E2dmQ==}
     cpu: [x64]
     os: [linux]
 
-  '@rspack/binding-win32-arm64-msvc@0.7.3':
-    resolution: {integrity: sha512-XeQ6z6Oc8wkkLJCAkG8TyLkciui6PB7reJLOes3yy0AXUJnd6l7gfiDcjzeHJGATVRzuuJojP/FXurBMCQ76uA==}
+  '@rspack/binding-win32-arm64-msvc@0.7.4':
+    resolution: {integrity: sha512-D1BccimBVeA/k2ty/28ER/j3s/c0n0MtN4kpyjYwgRILVLRSr+rfbC75i8wYh8r8AXjhNWNG88LmrFN9e9i7Ug==}
     cpu: [arm64]
     os: [win32]
 
-  '@rspack/binding-win32-ia32-msvc@0.7.3':
-    resolution: {integrity: sha512-MWwswm5+v1Wd3DDJxFbCenOHOy8x+gGp0oBdLj0jlC5UntaaSvzfdb0H85AeVMYWPp584fOpAZfx0QPg3cg8yw==}
+  '@rspack/binding-win32-ia32-msvc@0.7.4':
+    resolution: {integrity: sha512-5//TZH0Y4fRuTQ/ZmNOVaIfPIQXtgNAI78QxvF8Amygk4Uqklpo3ceHGP+yZfZgjh3mzjoUK+22fWbq/cUmW0w==}
     cpu: [ia32]
     os: [win32]
 
-  '@rspack/binding-win32-x64-msvc@0.7.3':
-    resolution: {integrity: sha512-GzOTQxuJedTghyoUbW/RGbzbGRW+R1dRuZxer8Gtlv4558wxbCUj1d621nC2eZmELFc4RWbN9NFTwaecavttvQ==}
+  '@rspack/binding-win32-x64-msvc@0.7.4':
+    resolution: {integrity: sha512-C3ZxIEYKvnjQbV19FfQE6CGO6vcGp2JcvSQCc6SHwU/KNxLDrI1pA7XUG5TKoGSsqVEDZN6H8fJxLUYPQBjJcg==}
     cpu: [x64]
     os: [win32]
 
-  '@rspack/binding@0.7.3':
-    resolution: {integrity: sha512-VYPOtaCb1lphNrHozZXy9L5ODGU76kp7ozCpYbF/CTFq8xaSkvkhNHwWMGXE2TIOvWZImMBRBuYX8/kjz/HiSA==}
+  '@rspack/binding@0.7.4':
+    resolution: {integrity: sha512-H1rTtYxbxe40miV2gYLPwIxEn2yMY6+bq+fjfiRu61kTvllexPMBYgFpKqSAc5Qyyto9j9uCkR4MJEYj2R/SQQ==}
 
-  '@rspack/core@0.7.3':
-    resolution: {integrity: sha512-SUvt4P1nMML3Int2YE1Z2+noDIxjT/hzNtcKMXXqeFp4yFys37s7vC+BnCyzonvIbpxUg2gH+bCMCgav7+xR4A==}
+  '@rspack/core@0.7.4':
+    resolution: {integrity: sha512-HECQ0WL8iVS1Mwq2W2hfrStZZbtTPl/GjDdAZDMToPqWtSVGww99UDGIYTHW8G6kawQ3GY6wa86WTQNfXEpSCA==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       '@swc/helpers': '>=0.5.1'
@@ -3595,8 +3595,8 @@ packages:
       '@swc/helpers':
         optional: true
 
-  '@rspack/plugin-react-refresh@0.7.3':
-    resolution: {integrity: sha512-fuXXqb6Lhlt1Ynz35E3OAmb1po9EGWYtDJgDqzXVfA9DPcnCPIZpbx6hOLLTYQRYLic74w11J0H2FCUXMHVg1g==}
+  '@rspack/plugin-react-refresh@0.7.4':
+    resolution: {integrity: sha512-9tAJdG/xZ6hUtD5K5OVpwAl2yV2HFnNl5fU5aOR5VJ5Pk0rCsYwbEZRbRnmSZwzMWIKDnowhoTi+4Ha3JV3aeQ==}
     peerDependencies:
       react-refresh: '>=0.10.0 <1.0.0'
     peerDependenciesMeta:
@@ -4491,9 +4491,6 @@ packages:
 
   caniuse-api@3.0.0:
     resolution: {integrity: sha512-bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==}
-
-  caniuse-lite@1.0.30001632:
-    resolution: {integrity: sha512-udx3o7yHJfUxMLkGohMlVHCvFvWmirKh9JAH/d7WOLPetlH+LTL5cocMZ0t7oZx/mdlOWXti97xLZWc8uURRHg==}
 
   caniuse-lite@1.0.30001636:
     resolution: {integrity: sha512-bMg2vmr8XBsbL6Lr0UHXy/21m84FTxDLWn2FSqMd5PrlbMxwJlQnC2YWYxVgp66PZE+BBNF2jYQUBKCo1FDeZg==}
@@ -11172,56 +11169,56 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.17.1':
     optional: true
 
-  '@rspack/binding-darwin-arm64@0.7.3':
+  '@rspack/binding-darwin-arm64@0.7.4':
     optional: true
 
-  '@rspack/binding-darwin-x64@0.7.3':
+  '@rspack/binding-darwin-x64@0.7.4':
     optional: true
 
-  '@rspack/binding-linux-arm64-gnu@0.7.3':
+  '@rspack/binding-linux-arm64-gnu@0.7.4':
     optional: true
 
-  '@rspack/binding-linux-arm64-musl@0.7.3':
+  '@rspack/binding-linux-arm64-musl@0.7.4':
     optional: true
 
-  '@rspack/binding-linux-x64-gnu@0.7.3':
+  '@rspack/binding-linux-x64-gnu@0.7.4':
     optional: true
 
-  '@rspack/binding-linux-x64-musl@0.7.3':
+  '@rspack/binding-linux-x64-musl@0.7.4':
     optional: true
 
-  '@rspack/binding-win32-arm64-msvc@0.7.3':
+  '@rspack/binding-win32-arm64-msvc@0.7.4':
     optional: true
 
-  '@rspack/binding-win32-ia32-msvc@0.7.3':
+  '@rspack/binding-win32-ia32-msvc@0.7.4':
     optional: true
 
-  '@rspack/binding-win32-x64-msvc@0.7.3':
+  '@rspack/binding-win32-x64-msvc@0.7.4':
     optional: true
 
-  '@rspack/binding@0.7.3':
+  '@rspack/binding@0.7.4':
     optionalDependencies:
-      '@rspack/binding-darwin-arm64': 0.7.3
-      '@rspack/binding-darwin-x64': 0.7.3
-      '@rspack/binding-linux-arm64-gnu': 0.7.3
-      '@rspack/binding-linux-arm64-musl': 0.7.3
-      '@rspack/binding-linux-x64-gnu': 0.7.3
-      '@rspack/binding-linux-x64-musl': 0.7.3
-      '@rspack/binding-win32-arm64-msvc': 0.7.3
-      '@rspack/binding-win32-ia32-msvc': 0.7.3
-      '@rspack/binding-win32-x64-msvc': 0.7.3
+      '@rspack/binding-darwin-arm64': 0.7.4
+      '@rspack/binding-darwin-x64': 0.7.4
+      '@rspack/binding-linux-arm64-gnu': 0.7.4
+      '@rspack/binding-linux-arm64-musl': 0.7.4
+      '@rspack/binding-linux-x64-gnu': 0.7.4
+      '@rspack/binding-linux-x64-musl': 0.7.4
+      '@rspack/binding-win32-arm64-msvc': 0.7.4
+      '@rspack/binding-win32-ia32-msvc': 0.7.4
+      '@rspack/binding-win32-x64-msvc': 0.7.4
 
-  '@rspack/core@0.7.3(@swc/helpers@0.5.3)':
+  '@rspack/core@0.7.4(@swc/helpers@0.5.3)':
     dependencies:
       '@module-federation/runtime-tools': 0.1.6
-      '@rspack/binding': 0.7.3
-      caniuse-lite: 1.0.30001632
+      '@rspack/binding': 0.7.4
+      caniuse-lite: 1.0.30001636
       tapable: 2.2.1
       webpack-sources: 3.2.3
     optionalDependencies:
       '@swc/helpers': 0.5.3
 
-  '@rspack/plugin-react-refresh@0.7.3(react-refresh@0.14.2)':
+  '@rspack/plugin-react-refresh@0.7.4(react-refresh@0.14.2)':
     optionalDependencies:
       react-refresh: 0.14.2
 
@@ -12412,8 +12409,6 @@ snapshots:
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
 
-  caniuse-lite@1.0.30001632: {}
-
   caniuse-lite@1.0.30001636: {}
 
   ccount@2.0.1: {}
@@ -12722,7 +12717,7 @@ snapshots:
     dependencies:
       postcss: 8.4.38
 
-  css-loader@7.1.2(@rspack/core@0.7.3(@swc/helpers@0.5.3))(webpack@5.92.0):
+  css-loader@7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))(webpack@5.92.0):
     dependencies:
       icss-utils: 5.1.0(postcss@8.4.38)
       postcss: 8.4.38
@@ -12733,7 +12728,7 @@ snapshots:
       postcss-value-parser: 4.2.0
       semver: 7.6.2
     optionalDependencies:
-      '@rspack/core': 0.7.3(@swc/helpers@0.5.3)
+      '@rspack/core': 0.7.4(@swc/helpers@0.5.3)
       webpack: 5.92.0
 
   css-minimizer-webpack-plugin@5.0.1(lightningcss@1.25.1)(webpack@5.92.0):
@@ -13798,9 +13793,9 @@ snapshots:
 
   html-escaper@2.0.2: {}
 
-  html-rspack-plugin@5.7.2(@rspack/core@0.7.3(@swc/helpers@0.5.3)):
+  html-rspack-plugin@5.7.2(@rspack/core@0.7.4(@swc/helpers@0.5.3)):
     optionalDependencies:
-      '@rspack/core': 0.7.3(@swc/helpers@0.5.3)
+      '@rspack/core': 0.7.4(@swc/helpers@0.5.3)
 
   html-tags@2.0.0: {}
 
@@ -14167,11 +14162,11 @@ snapshots:
 
   leac@0.6.0: {}
 
-  less-loader@12.2.0(@rspack/core@0.7.3(@swc/helpers@0.5.3))(less@4.2.0)(webpack@5.92.0):
+  less-loader@12.2.0(@rspack/core@0.7.4(@swc/helpers@0.5.3))(less@4.2.0)(webpack@5.92.0):
     dependencies:
       less: 4.2.0
     optionalDependencies:
-      '@rspack/core': 0.7.3(@swc/helpers@0.5.3)
+      '@rspack/core': 0.7.4(@swc/helpers@0.5.3)
       webpack: 5.92.0
 
   less@4.2.0:
@@ -15673,14 +15668,14 @@ snapshots:
       tsx: 4.14.0
       yaml: 2.4.5
 
-  postcss-loader@8.1.1(@rspack/core@0.7.3(@swc/helpers@0.5.3))(postcss@8.4.38)(typescript@5.4.5)(webpack@5.92.0):
+  postcss-loader@8.1.1(@rspack/core@0.7.4(@swc/helpers@0.5.3))(postcss@8.4.38)(typescript@5.4.5)(webpack@5.92.0):
     dependencies:
       cosmiconfig: 9.0.0(typescript@5.4.5)
       jiti: 1.21.6
       postcss: 8.4.38
       semver: 7.6.2
     optionalDependencies:
-      '@rspack/core': 0.7.3(@swc/helpers@0.5.3)
+      '@rspack/core': 0.7.4(@swc/helpers@0.5.3)
       webpack: 5.92.0
     transitivePeerDependencies:
       - typescript
@@ -16379,12 +16374,12 @@ snapshots:
       deepmerge: 1.5.2
       javascript-stringify: 2.1.0
 
-  rspack-manifest-plugin@5.0.0(@rspack/core@0.7.3(@swc/helpers@0.5.3)):
+  rspack-manifest-plugin@5.0.0(@rspack/core@0.7.4(@swc/helpers@0.5.3)):
     dependencies:
       tapable: 2.2.1
       webpack-sources: 2.3.1
     optionalDependencies:
-      '@rspack/core': 0.7.3(@swc/helpers@0.5.3)
+      '@rspack/core': 0.7.4(@swc/helpers@0.5.3)
 
   rspack-plugin-virtual-module@0.1.12:
     dependencies:
@@ -16509,11 +16504,11 @@ snapshots:
       sass-embedded-win32-ia32: 1.77.5
       sass-embedded-win32-x64: 1.77.5
 
-  sass-loader@14.2.1(@rspack/core@0.7.3(@swc/helpers@0.5.3))(sass-embedded@1.77.5)(sass@1.77.5)(webpack@5.92.0):
+  sass-loader@14.2.1(@rspack/core@0.7.4(@swc/helpers@0.5.3))(sass-embedded@1.77.5)(sass@1.77.5)(webpack@5.92.0):
     dependencies:
       neo-async: 2.6.2
     optionalDependencies:
-      '@rspack/core': 0.7.3(@swc/helpers@0.5.3)
+      '@rspack/core': 0.7.4(@swc/helpers@0.5.3)
       sass: 1.77.5
       sass-embedded: 1.77.5
       webpack: 5.92.0
@@ -16848,13 +16843,13 @@ snapshots:
 
   stylis@4.3.2: {}
 
-  stylus-loader@8.1.0(@rspack/core@0.7.3(@swc/helpers@0.5.3))(stylus@0.63.0)(webpack@5.92.0):
+  stylus-loader@8.1.0(@rspack/core@0.7.4(@swc/helpers@0.5.3))(stylus@0.63.0)(webpack@5.92.0):
     dependencies:
       fast-glob: 3.3.2
       normalize-path: 3.0.0
       stylus: 0.63.0
     optionalDependencies:
-      '@rspack/core': 0.7.3(@swc/helpers@0.5.3)
+      '@rspack/core': 0.7.4(@swc/helpers@0.5.3)
       webpack: 5.92.0
 
   stylus@0.63.0:
@@ -17412,10 +17407,10 @@ snapshots:
 
   vue-hot-reload-api@2.3.4: {}
 
-  vue-loader@15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.2(@rspack/core@0.7.3(@swc/helpers@0.5.3))(webpack@5.92.0))(lodash@4.17.21)(prettier@3.3.2)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.92.0):
+  vue-loader@15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))(webpack@5.92.0))(lodash@4.17.21)(prettier@3.3.2)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.92.0):
     dependencies:
       '@vue/component-compiler-utils': 3.3.0(lodash@4.17.21)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      css-loader: 7.1.2(@rspack/core@0.7.3(@swc/helpers@0.5.3))(webpack@5.92.0)
+      css-loader: 7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))(webpack@5.92.0)
       hash-sum: 1.0.2
       loader-utils: 1.4.2
       vue-hot-reload-api: 2.3.4
