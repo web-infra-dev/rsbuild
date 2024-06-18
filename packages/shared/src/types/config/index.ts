@@ -30,7 +30,7 @@ export type RsbuildConfigMeta = {
  * The rsbuild config to run in the specified environment.
  * */
 
-export interface RsbuildEnvironmentConfig {
+export interface EnvironmentConfig {
   /**
    * Options for HTML generation.
    */
