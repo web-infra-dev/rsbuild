@@ -1,10 +1,6 @@
 import path from 'node:path';
 import { type Rspack, ensureAssetPrefix } from '@rsbuild/core';
-import {
-  fse,
-  generateScriptTag,
-  getPublicPathFromCompiler,
-} from '@rsbuild/shared';
+import { fse, getPublicPathFromCompiler } from '@rsbuild/shared';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { PluginAssetsRetryOptions } from './types';
 
@@ -98,7 +94,14 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
       this.HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tapPromise(
         this.name,
         async (data) => {
-          const scriptTag = generateScriptTag();
+          const scriptTag = {
+            tagName: 'script',
+            attributes: {
+              type: 'text/javascript',
+            },
+            voidTag: false,
+            meta: {},
+          };
 
           if (this.inlineScript) {
             data.headTags.unshift({

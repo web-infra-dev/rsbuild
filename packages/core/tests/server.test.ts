@@ -1,6 +1,9 @@
-import { type NormalizedConfig, isClientCompiler } from '@rsbuild/shared';
+import type { NormalizedConfig } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
-import { setupServerHooks } from '../src/server/devMiddleware';
+import {
+  isClientCompiler,
+  setupServerHooks,
+} from '../src/server/devMiddleware';
 import {
   formatRoutes,
   getDevConfig,

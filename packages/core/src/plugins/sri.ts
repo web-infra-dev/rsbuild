@@ -7,9 +7,9 @@ import {
   isHtmlDisabled,
   isProd,
   logger,
-  removeLeadingSlash,
 } from '@rsbuild/shared';
 import { HTML_REGEX } from '../constants';
+import { removeLeadingSlash } from '../helpers';
 import type { RsbuildPlugin } from '../types';
 
 const getAssetName = (url: string, assetPrefix: string) => {

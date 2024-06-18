@@ -4,12 +4,10 @@ import {
   DEFAULT_ASSET_PREFIX,
   RspackChain,
   color,
-  debounce,
   fse,
   getNodeEnv,
   isObject,
   logger,
-  upperFirst,
 } from '@rsbuild/shared';
 import type {
   InspectConfigOptions,
@@ -45,7 +43,7 @@ import {
   TS_CONFIG_FILE,
   WASM_DIST_DIR,
 } from './constants';
-import { findExists, isFileExists } from './helpers';
+import { debounce, findExists, isFileExists, upperFirst } from './helpers';
 import { mergeRsbuildConfig } from './mergeConfig';
 import { restartDevServer } from './server/restart';
 

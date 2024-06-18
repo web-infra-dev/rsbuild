@@ -1,20 +1,19 @@
-import { type Logger, logger } from 'rslog';
+import { type Logger, logger } from '../compiled/rslog/index.js';
 import { color } from './utils';
-
-// setup the logger level
-if (process.env.DEBUG) {
-  logger.level = 'verbose';
-}
 
 export const isDebug = () => {
   if (!process.env.DEBUG) {
     return false;
   }
 
-  logger.level = 'verbose'; // support `process.env.DEBUG` in e2e
   const values = process.env.DEBUG.toLocaleLowerCase().split(',');
   return ['rsbuild', 'builder', '*'].some((key) => values.includes(key));
 };
+
+// setup the logger level
+if (isDebug()) {
+  logger.level = 'verbose';
+}
 
 function getTime() {
   const now = new Date();
@@ -25,13 +24,15 @@ function getTime() {
   return `${hours}:${minutes}:${seconds}`;
 }
 
-export const debug = (message: string | (() => string)) => {
-  if (isDebug()) {
-    const result = typeof message === 'string' ? message : message();
+logger.override({
+  debug: (message, ...args) => {
+    if (logger.level !== 'verbose') {
+      return;
+    }
     const time = color.gray(`${getTime()}`);
-    logger.debug(`${time} ${result}`);
-  }
-};
+    console.log(`  ${color.magenta('rsbuild')} ${time} ${message}`, ...args);
+  },
+});
 
 export { logger };
 export type { Logger };
