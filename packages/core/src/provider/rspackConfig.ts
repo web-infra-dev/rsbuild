@@ -5,13 +5,12 @@ import {
   type RsbuildTarget,
   type RspackConfig,
   castArray,
-  chainToConfig,
   debug,
   getNodeEnv,
-  modifyBundlerChain,
   reduceConfigsAsyncWithContext,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
+import { chainToConfig, modifyBundlerChain } from '../configChain';
 import { getHTMLPlugin } from '../pluginHelper';
 import type { InternalContext } from '../types';
 

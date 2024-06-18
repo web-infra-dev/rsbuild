@@ -9,6 +9,8 @@ const {
   getStatsOptions,
   stringifyConfig,
   outputInspectConfigFiles,
+  chainToConfig,
+  modifyBundlerChain,
 } = __internalHelper;
 
 export {
@@ -20,6 +22,8 @@ export {
   getStatsOptions,
   stringifyConfig,
   outputInspectConfigFiles,
+  chainToConfig,
+  modifyBundlerChain,
 };
 
 export type InternalContext = __internalHelper.InternalContext;
