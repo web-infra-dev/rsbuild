@@ -40,7 +40,7 @@ test('should compile Node addons in the node_modules correctly', async () => {
     `import addon from './other.node'; export default addon;`,
   );
   fse.ensureDirSync(join(pkgDir, 'src'));
-  fse.copyFileSync(
+  fs.copyFileSync(
     join(__dirname, 'src', 'test.darwin.node'),
     join(pkgDir, 'src', 'other.node'),
   );

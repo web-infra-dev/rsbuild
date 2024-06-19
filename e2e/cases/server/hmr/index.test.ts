@@ -3,7 +3,6 @@ import { join } from 'node:path';
 import { dev, getRandomPort, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
-import { fse } from '@rsbuild/shared';
 
 const cwd = __dirname;
 
@@ -14,7 +13,9 @@ rspackOnlyTest('default & hmr (default true)', async ({ page }) => {
     test.skip();
   }
 
-  await fse.copy(join(cwd, 'src'), join(cwd, 'test-temp-src'));
+  await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
+    recursive: true,
+  });
 
   const rsbuild = await dev({
     cwd,
@@ -95,7 +96,9 @@ rspackOnlyTest(
       test.skip();
     }
 
-    await fse.copy(join(cwd, 'src'), join(cwd, 'test-temp-src-1'));
+    await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src-1'), {
+      recursive: true,
+    });
 
     const port = await getRandomPort();
     const rsbuild = await dev({

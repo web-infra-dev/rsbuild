@@ -2,13 +2,12 @@ import fs from 'node:fs';
 import { join, resolve } from 'node:path';
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { fse } from '@rsbuild/shared';
 
 const fixtures = __dirname;
 
 const generatorTempDir = async (testDir: string) => {
-  await fse.emptyDir(testDir);
-  await fse.copy(join(fixtures, 'src'), testDir);
+  fs.rmSync(testDir, { recursive: true, force: true });
+  await fs.promises.cp(join(fixtures, 'src'), testDir, { recursive: true });
 
   return () => fs.promises.rm(testDir, { force: true, recursive: true });
 };

@@ -2,7 +2,6 @@ import fs from 'node:fs';
 import { join } from 'node:path';
 import { build, dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { fse } from '@rsbuild/shared';
 
 const fixtures = __dirname;
 
@@ -47,7 +46,11 @@ rspackOnlyTest(
       test.skip();
     }
 
-    await fse.copy(join(fixtures, 'src'), join(fixtures, 'test-temp-src'));
+    await fs.promises.cp(
+      join(fixtures, 'src'),
+      join(fixtures, 'test-temp-src'),
+      { recursive: true },
+    );
 
     const rsbuild = await dev({
       cwd: fixtures,
