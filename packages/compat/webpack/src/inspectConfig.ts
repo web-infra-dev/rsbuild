@@ -46,9 +46,10 @@ export async function inspectConfig({
     inspectOptions.verbose,
   );
   const rawBundlerConfigs = await Promise.all(
-    webpackConfigs.map((config) =>
-      stringifyConfig(config, inspectOptions.verbose),
-    ),
+    webpackConfigs.map(async (config) => ({
+      name: config.name!,
+      content: await stringifyConfig(config, inspectOptions.verbose),
+    })),
   );
 
   let outputPath = inspectOptions.outputPath || context.distPath;

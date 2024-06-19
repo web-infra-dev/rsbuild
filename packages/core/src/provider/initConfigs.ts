@@ -43,7 +43,7 @@ const normalizeEnvironmentsConfigs = (
 ): Record<string, NormalizedEnvironmentConfig> => {
   const { environments, dev, server, provider, ...rsbuildSharedConfig } =
     normalizedConfig;
-  if (environments) {
+  if (environments && Object.keys(environments).length) {
     return Object.fromEntries(
       Object.entries(environments).map(([name, config]) => [
         name,
@@ -60,8 +60,7 @@ const normalizeEnvironmentsConfigs = (
   }
 
   return {
-    // TODO: replace output.targets with output.target
-    [camelCase(rsbuildSharedConfig.output.targets[0])]: {
+    [camelCase(rsbuildSharedConfig.output.target)]: {
       ...rsbuildSharedConfig,
       dev,
       server,
@@ -100,6 +99,9 @@ export async function initRsbuildConfig({
 
   updateEnvironmentContext(context, environments);
 
+  // TODO: will remove soon
+  context.targets = Object.values(environments).map((e) => e.output.target);
+
   return context.normalizedConfig;
 }
 
@@ -111,10 +113,15 @@ export async function initConfigs({
   rspackConfigs: RspackConfig[];
 }> {
   const normalizedConfig = await initRsbuildConfig({ context, pluginManager });
-  const { targets } = normalizedConfig.output;
 
   const rspackConfigs = await Promise.all(
-    targets.map((target) => generateRspackConfig({ target, context })),
+    Object.entries(normalizedConfig.environments).map(([environment, config]) =>
+      generateRspackConfig({
+        target: config.output.target,
+        context,
+        environment,
+      }),
+    ),
   );
 
   // write Rsbuild config and Rspack config to disk in debug mode

@@ -208,9 +208,10 @@ export type EmitAssets = (params: { target: RsbuildTarget }) => boolean;
 
 export interface OutputConfig {
   /**
-   * Specify build targets to run in different target environments.
+   * Specify build target to run in specified environment.
+   * @default 'web'
    */
-  targets?: RsbuildTarget[];
+  target?: RsbuildTarget;
   /**
    * At build time, prevent some `import` dependencies from being packed into bundles in your code, and instead fetch them externally at runtime.
    * For more information, please see: [Rspack Externals](https://rspack.dev/config/externals)
@@ -313,7 +314,7 @@ export type OverrideBrowserslist =
   | Partial<Record<RsbuildTarget, string[]>>;
 
 export interface NormalizedOutputConfig extends OutputConfig {
-  targets: RsbuildTarget[];
+  target: RsbuildTarget;
   filename: FilenameConfig;
   distPath: Omit<Required<DistPathConfig>, 'jsAsync' | 'cssAsync'> & {
     jsAsync?: string;
