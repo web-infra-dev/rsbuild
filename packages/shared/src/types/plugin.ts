@@ -8,7 +8,7 @@ import type {
 import type { ChainIdentifier } from '../chain';
 import type { RspackChain } from '../chain';
 import type {
-  EnvironmentConfig,
+  NormalizedEnvironmentConfig,
   ModifyRspackConfigUtils,
   NormalizedConfig,
   RsbuildConfig,
@@ -227,7 +227,7 @@ export type TransformFn = (
 declare function getNormalizedConfig(): NormalizedConfig;
 declare function getNormalizedConfig(options: {
   environment: string;
-}): EnvironmentConfig;
+}): NormalizedEnvironmentConfig;
 
 /**
  * Define a generic Rsbuild plugin API that provider can extend as needed.

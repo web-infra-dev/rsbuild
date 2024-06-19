@@ -1,6 +1,6 @@
 import { join } from 'node:path';
 import type {
-  EnvironmentConfig,
+  NormalizedEnvironmentConfig,
   GetRsbuildConfig,
   PluginManager,
   RsbuildPluginAPI,
@@ -64,13 +64,12 @@ export function getPluginAPI({
   function getNormalizedConfig(): NormalizedConfig;
   function getNormalizedConfig(options: {
     environment: string;
-  }): EnvironmentConfig;
+  }): NormalizedEnvironmentConfig;
   function getNormalizedConfig(options?: { environment: string }) {
-    if (options?.environment) {
-      if (context.environmentConfigs) {
-        const config = context.environmentConfigs?.find(
-          (e) => e.name === options.environment,
-        );
+    if (context.normalizedConfig) {
+      if (options?.environment) {
+        const config =
+          context.normalizedConfig.environments[options.environment];
 
         if (!config) {
           throw new Error(
@@ -78,9 +77,9 @@ export function getPluginAPI({
           );
         }
         return config;
+      } else {
+        return context.normalizedConfig;
       }
-    } else if (context.normalizedConfig) {
-      return context.normalizedConfig;
     }
     throw new Error(
       'Cannot access normalized config until modifyRsbuildConfig is called.',

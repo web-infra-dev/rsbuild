@@ -29,7 +29,7 @@ export type RsbuildConfigMeta = {
 /**
  * The Rsbuild config to run in the specified environment.
  * */
-export interface EnvironmentOption {
+export interface EnvironmentConfig {
   /**
    * Options for HTML generation.
    */
@@ -63,7 +63,7 @@ export interface EnvironmentOption {
 /**
  * The Rsbuild config.
  * */
-export interface RsbuildConfig extends EnvironmentOption {
+export interface RsbuildConfig extends EnvironmentConfig {
   /**
    * Options for local development.
    */
@@ -81,7 +81,7 @@ export interface RsbuildConfig extends EnvironmentOption {
    * Configure rsbuild config by environment.
    */
   environments?: {
-    [name: string]: EnvironmentOption;
+    [name: string]: EnvironmentConfig;
   };
   /**
    * Used to switch the bundler type.
@@ -93,7 +93,8 @@ export interface RsbuildConfig extends EnvironmentOption {
   _privateMeta?: RsbuildConfigMeta;
 }
 
-export type NormalizedConfig = DeepReadonly<{
+/** The normalized Rsbuild environment config. */
+export type NormalizedEnvironmentConfig = DeepReadonly<{
   dev: NormalizedDevConfig;
   html: NormalizedHtmlConfig;
   tools: NormalizedToolsConfig;
@@ -104,16 +105,14 @@ export type NormalizedConfig = DeepReadonly<{
   security: NormalizedSecurityConfig;
   performance: NormalizedPerformanceConfig;
   moduleFederation?: ModuleFederationConfig;
-  provider?: unknown;
   _privateMeta?: RsbuildConfigMeta;
-  environments?: {
-    [name: string]: DeepReadonly<EnvironmentOption>;
-  };
 }>;
 
-/** The normalized Rsbuild environment config. */
-export type EnvironmentConfig = Omit<NormalizedConfig, 'environments'> & {
-  name: string;
+export type NormalizedConfig = NormalizedEnvironmentConfig & {
+  provider?: unknown;
+  environments: {
+    [name: string]: NormalizedEnvironmentConfig;
+  };
 };
 
 export * from './dev';

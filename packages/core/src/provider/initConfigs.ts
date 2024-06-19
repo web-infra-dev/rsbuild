@@ -1,5 +1,5 @@
 import type {
-  EnvironmentConfig,
+  NormalizedEnvironmentConfig,
   InspectConfigOptions,
   PluginManager,
   RspackConfig,
@@ -38,31 +38,35 @@ export type InitConfigsOptions = {
   rsbuildOptions: Required<CreateRsbuildOptions>;
 };
 
-const getEnvironmentsConfig = (
+const normalizeEnvironmentsConfigs = (
   normalizedConfig: NormalizedConfig,
-): EnvironmentConfig[] => {
-  const { environments, dev, server, ...rsbuildSharedConfig } =
+): Record<string, NormalizedEnvironmentConfig> => {
+  const { environments, dev, server, provider, ...rsbuildSharedConfig } =
     normalizedConfig;
   if (environments) {
-    return Object.entries(environments).map(([name, config]) => ({
-      ...mergeRsbuildConfig(
-        rsbuildSharedConfig,
-        config as unknown as EnvironmentConfig,
-      ),
-      dev,
-      server,
-      name,
-    }));
+    return Object.fromEntries(
+      Object.entries(environments).map(([name, config]) => [
+        name,
+        {
+          ...mergeRsbuildConfig(
+            rsbuildSharedConfig,
+            config as unknown as NormalizedEnvironmentConfig,
+          ),
+          dev,
+          server,
+        },
+      ]),
+    );
   }
-  return [
-    {
+
+  return {
+    // TODO: replace output.targets with output.target
+    [camelCase(rsbuildSharedConfig.output.targets[0])]: {
       ...rsbuildSharedConfig,
       dev,
       server,
-      // TODO: replace output.targets with output.target
-      name: camelCase(rsbuildSharedConfig.output.targets[0]),
-    } as EnvironmentConfig,
-  ];
+    },
+  };
 };
 
 export async function initRsbuildConfig({
@@ -83,12 +87,16 @@ export async function initRsbuildConfig({
   });
 
   await modifyRsbuildConfig(context);
-  context.normalizedConfig = normalizeConfig(context.config);
+  const normalizeBaseConfig = normalizeConfig(context.config);
+
+  const environments = normalizeEnvironmentsConfigs(normalizeBaseConfig);
+
+  context.normalizedConfig = {
+    ...normalizeBaseConfig,
+    environments,
+  };
+
   updateContextByNormalizedConfig(context, context.normalizedConfig);
-
-  const environments = getEnvironmentsConfig(context.normalizedConfig);
-
-  context.environmentConfigs = environments;
 
   updateEnvironmentContext(context, environments);
 

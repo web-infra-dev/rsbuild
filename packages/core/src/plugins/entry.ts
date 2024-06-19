@@ -4,13 +4,14 @@ import {
   castArray,
   color,
   reduceConfigsMergeContext,
+  type NormalizedEnvironmentConfig,
 } from '@rsbuild/shared';
 import type { EntryDescription } from '@rspack/core';
 import { createVirtualModule } from '../helpers';
 import type { NormalizedConfig, RsbuildConfig, RsbuildPlugin } from '../types';
 
 export function getEntryObject(
-  config: RsbuildConfig | NormalizedConfig,
+  config: RsbuildConfig | NormalizedConfig | NormalizedEnvironmentConfig,
   target: RsbuildTarget,
 ): RsbuildEntry {
   if (!config.source?.entry) {
