@@ -29,7 +29,7 @@ export type RsbuildConfigMeta = {
 /**
  * The Rsbuild config to run in the specified environment.
  * */
-export interface EnvironmentConfig {
+export interface EnvironmentOption {
   /**
    * Options for HTML generation.
    */
@@ -63,7 +63,7 @@ export interface EnvironmentConfig {
 /**
  * The Rsbuild config.
  * */
-export interface RsbuildConfig extends EnvironmentConfig {
+export interface RsbuildConfig extends EnvironmentOption {
   /**
    * Options for local development.
    */
@@ -81,7 +81,7 @@ export interface RsbuildConfig extends EnvironmentConfig {
    * Configure rsbuild config by environment.
    */
   environments?: {
-    [name: string]: EnvironmentConfig;
+    [name: string]: EnvironmentOption;
   };
   /**
    * Used to switch the bundler type.
@@ -107,9 +107,14 @@ export type NormalizedConfig = DeepReadonly<{
   provider?: unknown;
   _privateMeta?: RsbuildConfigMeta;
   environments?: {
-    [name: string]: EnvironmentConfig;
+    [name: string]: DeepReadonly<EnvironmentOption>;
   };
 }>;
+
+/** The normalized Rsbuild environment config. */
+export type EnvironmentConfig = Omit<NormalizedConfig, 'environments'> & {
+  name: string;
+};
 
 export * from './dev';
 export * from './html';

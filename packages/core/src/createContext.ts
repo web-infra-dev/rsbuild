@@ -1,6 +1,7 @@
 import { isAbsolute, join } from 'node:path';
 import type {
   BundlerType,
+  EnvironmentConfig,
   RsbuildContext,
   RsbuildTarget,
 } from '@rsbuild/shared';
@@ -46,6 +47,7 @@ async function createContextByConfig(
     entry: getEntryObject(config, 'web'),
     targets: config.output?.targets || [],
     version: RSBUILD_VERSION,
+    environments: [],
     rootPath,
     distPath,
     cachePath,
@@ -54,6 +56,22 @@ async function createContextByConfig(
       ? getAbsolutePath(rootPath, tsconfigPath)
       : undefined,
   };
+}
+
+export function updateEnvironmentContext(
+  context: RsbuildContext,
+  configs: EnvironmentConfig[],
+) {
+  context.environments = configs.map((config) => ({
+    name: config.name,
+    // TODO: replace output.targets with output.target
+    target: config.output.targets[0],
+    distPath: getAbsoluteDistPath(context.rootPath, config),
+    entry: getEntryObject(config, config.output.targets[0]),
+    tsconfigPath: config.source.tsconfigPath
+      ? getAbsolutePath(context.rootPath, config.source.tsconfigPath)
+      : undefined,
+  }));
 }
 
 export function updateContextByNormalizedConfig(

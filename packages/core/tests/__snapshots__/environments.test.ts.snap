@@ -1,5 +1,127 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`environment config > should normalized environment config correctly 1`] = `
+{
+  "dev": {
+    "assetPrefix": "/",
+    "client": {
+      "overlay": true,
+    },
+    "hmr": true,
+    "liveReload": true,
+    "startUrl": false,
+  },
+  "html": {
+    "crossorigin": false,
+    "inject": "head",
+    "meta": {
+      "charset": {
+        "charset": "UTF-8",
+      },
+      "viewport": "width=device-width, initial-scale=1.0",
+    },
+    "mountId": "root",
+    "outputStructure": "flat",
+    "scriptLoading": "defer",
+    "title": "Rsbuild App",
+  },
+  "name": "web",
+  "output": {
+    "assetPrefix": "/",
+    "charset": "ascii",
+    "cssModules": {
+      "auto": true,
+      "exportGlobals": false,
+      "exportLocalsConvention": "camelCase",
+      "namedExport": false,
+    },
+    "dataUriLimit": {
+      "font": 4096,
+      "image": 4096,
+      "media": 4096,
+      "svg": 4096,
+    },
+    "distPath": {
+      "css": "static/css",
+      "font": "static/font",
+      "html": "/",
+      "image": "static/image",
+      "js": "static/js",
+      "media": "static/media",
+      "root": "dist",
+      "server": "server",
+      "svg": "static/svg",
+      "wasm": "static/wasm",
+      "worker": "worker",
+    },
+    "emitAssets": [Function],
+    "filename": {},
+    "filenameHash": true,
+    "injectStyles": false,
+    "inlineScripts": false,
+    "inlineStyles": false,
+    "legalComments": "linked",
+    "manifest": false,
+    "minify": true,
+    "polyfill": "usage",
+    "sourceMap": {
+      "css": false,
+      "js": undefined,
+    },
+    "targets": [
+      "web",
+    ],
+  },
+  "performance": {
+    "buildCache": true,
+    "chunkSplit": {
+      "strategy": "split-by-experience",
+    },
+    "printFileSize": true,
+    "profile": false,
+    "removeConsole": false,
+    "removeMomentLocale": false,
+  },
+  "security": {
+    "nonce": "",
+    "sri": {
+      "enable": false,
+    },
+  },
+  "server": {
+    "compress": true,
+    "host": "0.0.0.0",
+    "htmlFallback": "index",
+    "open": false,
+    "port": 3000,
+    "printUrls": true,
+    "strictPort": false,
+  },
+  "source": {
+    "alias": {
+      "@common": "src/common",
+    },
+    "aliasStrategy": "prefer-tsconfig",
+    "decorators": {
+      "version": "legacy",
+    },
+    "define": {},
+    "entry": {
+      "index": "src/index.client.js",
+    },
+    "preEntry": [],
+  },
+  "tools": {
+    "cssExtract": {
+      "loaderOptions": {},
+      "pluginOptions": {
+        "ignoreOrder": true,
+      },
+    },
+  },
+}
+`;
+
 exports[`environment config > should print environment config when inspect config 1`] = `
 {
   "ssr": {

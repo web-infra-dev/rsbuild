@@ -2,6 +2,14 @@ import type { RsbuildEntry, RsbuildTarget } from './rsbuild';
 
 export type BundlerType = 'rspack' | 'webpack';
 
+type EnvironmentContext = {
+  name: string;
+  target: RsbuildTarget;
+  entry: RsbuildEntry;
+  distPath: string;
+  tsconfigPath?: string;
+};
+
 /** The public context */
 export type RsbuildContext = {
   /** The Rsbuild core version. */
@@ -10,6 +18,7 @@ export type RsbuildContext = {
   entry: RsbuildEntry;
   /** The build targets type. */
   targets: RsbuildTarget[];
+  environments: EnvironmentContext[];
   /** The root path of current project. */
   rootPath: string;
   /** Absolute path of output files. */

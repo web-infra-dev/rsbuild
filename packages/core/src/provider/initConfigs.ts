@@ -1,10 +1,15 @@
 import type {
+  EnvironmentConfig,
   InspectConfigOptions,
   PluginManager,
   RspackConfig,
 } from '@rsbuild/shared';
 import { normalizeConfig } from '../config';
-import { updateContextByNormalizedConfig } from '../createContext';
+import {
+  updateContextByNormalizedConfig,
+  updateEnvironmentContext,
+} from '../createContext';
+import { camelCase } from '../helpers';
 import { isDebug, logger } from '../logger';
 import { mergeRsbuildConfig } from '../mergeConfig';
 import { initPlugins } from '../pluginManager';
@@ -33,6 +38,33 @@ export type InitConfigsOptions = {
   rsbuildOptions: Required<CreateRsbuildOptions>;
 };
 
+const getEnvironmentsConfig = (
+  normalizedConfig: NormalizedConfig,
+): EnvironmentConfig[] => {
+  const { environments, dev, server, ...rsbuildSharedConfig } =
+    normalizedConfig;
+  if (environments) {
+    return Object.entries(environments).map(([name, config]) => ({
+      ...mergeRsbuildConfig(
+        rsbuildSharedConfig,
+        config as unknown as EnvironmentConfig,
+      ),
+      dev,
+      server,
+      name,
+    }));
+  }
+  return [
+    {
+      ...rsbuildSharedConfig,
+      dev,
+      server,
+      // TODO: replace output.targets with output.target
+      name: camelCase(rsbuildSharedConfig.output.targets[0]),
+    } as EnvironmentConfig,
+  ];
+};
+
 export async function initRsbuildConfig({
   context,
   pluginManager,
@@ -53,6 +85,12 @@ export async function initRsbuildConfig({
   await modifyRsbuildConfig(context);
   context.normalizedConfig = normalizeConfig(context.config);
   updateContextByNormalizedConfig(context, context.normalizedConfig);
+
+  const environments = getEnvironmentsConfig(context.normalizedConfig);
+
+  context.environmentConfigs = environments;
+
+  updateEnvironmentContext(context, environments);
 
   return context.normalizedConfig;
 }

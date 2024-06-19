@@ -516,3 +516,6 @@ export function pick<T, U extends keyof T>(obj: T, keys: ReadonlyArray<U>) {
     {} as Pick<T, U>,
   );
 }
+
+export const camelCase = (input: string): string =>
+  input.replace(/[-_](\w)/g, (_, c) => c.toUpperCase());
