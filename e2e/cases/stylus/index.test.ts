@@ -12,7 +12,7 @@ const generatorTempDir = async (testDir: string) => {
   await fse.emptyDir(testDir);
   await fse.copy(join(fixtures, 'src'), testDir);
 
-  return () => fse.remove(testDir);
+  return () => fs.promises.rm(testDir, { force: true, recursive: true });
 };
 
 test('should compile stylus correctly with ts declaration', async () => {

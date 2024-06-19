@@ -22,7 +22,7 @@ test('should compile Node addons correctly', async () => {
   // the `test.darwin.node` is only compatible with darwin
   if (process.platform === 'darwin') {
     const content = await import('./dist/server/index.js');
-    expect(typeof content.default.readLength).toEqual('function');
+    expect(typeof (content.default as any).readLength).toEqual('function');
   }
 });
 
@@ -69,6 +69,6 @@ test('should compile Node addons in the node_modules correctly', async () => {
 
   if (process.platform === 'darwin') {
     const content = await import('./dist/server/index.js');
-    expect(typeof content.default.readLength).toEqual('function');
+    expect(typeof (content.default as any).readLength).toEqual('function');
   }
 });

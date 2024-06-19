@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
-import { fse } from '@rsbuild/shared';
 
 rspackOnlyTest('should work with string and path to file', async ({ page }) => {
   const file = path.join(__dirname, '/assets/example.txt');
@@ -24,7 +23,7 @@ rspackOnlyTest('should work with string and path to file', async ({ page }) => {
   });
 
   // reset file
-  fse.truncateSync(file);
+  fs.truncateSync(file);
   await rsbuild.close();
 });
 
@@ -51,7 +50,7 @@ rspackOnlyTest(
     });
 
     // reset file
-    fse.truncateSync(file);
+    fs.truncateSync(file);
     await rsbuild.close();
   },
 );
@@ -80,7 +79,7 @@ rspackOnlyTest('should work with string array directory', async ({ page }) => {
     page.waitForURL(page.url()).then(resolve);
   });
   // reset file
-  fse.truncateSync(file);
+  fs.truncateSync(file);
 
   await fs.promises.writeFile(other, 'test');
   // check the page is reloaded
@@ -88,7 +87,7 @@ rspackOnlyTest('should work with string array directory', async ({ page }) => {
     page.waitForURL(page.url()).then(resolve);
   });
   // reset file
-  fse.truncateSync(other);
+  fs.truncateSync(other);
 
   await rsbuild.close();
 });
@@ -115,7 +114,7 @@ rspackOnlyTest('should work with string and glob', async ({ page }) => {
   });
 
   // reset file
-  fse.truncateSync(file);
+  fs.truncateSync(file);
   await rsbuild.close();
 });
 
@@ -143,6 +142,6 @@ rspackOnlyTest('should work with options', async ({ page }) => {
   });
 
   // reset file
-  fse.truncateSync(file);
+  fs.truncateSync(file);
   await rsbuild.close();
 });

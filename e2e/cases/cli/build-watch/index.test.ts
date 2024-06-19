@@ -8,8 +8,8 @@ import { fse } from '@rsbuild/shared';
 test('should support watch mode for build command', async () => {
   const indexFile = path.join(__dirname, 'src/index.js');
   const distIndexFile = path.join(__dirname, 'dist/static/js/index.js');
-  await fse.remove(indexFile);
-  await fse.remove(distIndexFile);
+  fs.rmSync(indexFile, { force: true });
+  fs.rmSync(distIndexFile, { force: true });
 
   fse.outputFileSync(indexFile, `console.log('hello!');`);
 
@@ -19,7 +19,7 @@ test('should support watch mode for build command', async () => {
 
   await awaitFileExists(distIndexFile);
   expect(fs.readFileSync(distIndexFile, 'utf-8')).toContain('hello!');
-  await fse.remove(distIndexFile);
+  fs.rmSync(distIndexFile, { force: true });
 
   fse.outputFileSync(indexFile, `console.log('hello2!');`);
   await awaitFileExists(distIndexFile);

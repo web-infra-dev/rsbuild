@@ -10,7 +10,7 @@ const generatorTempDir = async (testDir: string) => {
   await fse.emptyDir(testDir);
   await fse.copy(join(fixtures, 'src'), testDir);
 
-  return () => fse.remove(testDir);
+  return () => fs.promises.rm(testDir, { force: true, recursive: true });
 };
 
 test('generator TS declaration for cssModules.auto true', async () => {
