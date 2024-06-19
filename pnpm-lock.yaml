@@ -972,9 +972,6 @@ importers:
 
   packages/plugin-css-minimizer:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       css-minimizer-webpack-plugin:
         specifier: 5.0.1
         version: 5.0.1(lightningcss@1.25.1)(webpack@5.92.0)
@@ -1091,9 +1088,6 @@ importers:
       '@mdx-js/loader':
         specifier: ^3.0.1
         version: 3.0.1(webpack@5.92.0)
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -1182,10 +1176,6 @@ importers:
         version: 5.4.5
 
   packages/plugin-preact:
-    dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -1199,9 +1189,6 @@ importers:
 
   packages/plugin-pug:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@types/pug':
         specifier: ^2.0.10
         version: 2.0.10
@@ -1317,9 +1304,6 @@ importers:
       '@rsbuild/plugin-babel':
         specifier: workspace:*
         version: link:../plugin-babel
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       babel-preset-solid:
         specifier: ^1.8.17
         version: 1.8.17(@babel/core@7.24.7)
@@ -1576,9 +1560,6 @@ importers:
       '@rsbuild/plugin-babel':
         specifier: workspace:*
         version: link:../plugin-babel
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@vue/babel-plugin-jsx':
         specifier: 1.2.2
         version: 1.2.2(@babel/core@7.24.7)

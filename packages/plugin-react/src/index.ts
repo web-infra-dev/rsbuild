@@ -1,5 +1,4 @@
 import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
-import { getNodeEnv } from '@rsbuild/shared';
 import type { PluginOptions as ReactRefreshOptions } from '@rspack/plugin-react-refresh';
 import { applyBasicReactSupport, applyReactProfiler } from './react';
 import { applySplitChunksRule } from './splitChunks';
@@ -53,7 +52,8 @@ export const pluginReact = ({
     if (api.context.bundlerType === 'rspack') {
       applyBasicReactSupport(api, options);
 
-      const isProdProfile = enableProfiler && getNodeEnv() === 'production';
+      const isProdProfile =
+        enableProfiler && process.env.NODE_ENV === 'production';
       if (isProdProfile) {
         applyReactProfiler(api);
       }

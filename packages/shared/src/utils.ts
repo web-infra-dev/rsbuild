@@ -3,13 +3,7 @@ import deepmerge from '../compiled/deepmerge/index.js';
 import fse from '../compiled/fs-extra/index.js';
 import color from '../compiled/picocolors/index.js';
 import { DEFAULT_ASSET_PREFIX } from './constants';
-import type {
-  CacheGroups,
-  ModifyChainUtils,
-  NodeEnv,
-  NormalizedConfig,
-  RsbuildTarget,
-} from './types';
+import type { CacheGroups, NormalizedConfig, RsbuildTarget } from './types';
 
 export { color, deepmerge };
 
@@ -17,16 +11,6 @@ export type Colors = Omit<
   keyof typeof color,
   'createColor' | 'isColorSupported'
 >;
-
-export const getNodeEnv = () => process.env.NODE_ENV as NodeEnv;
-
-export const setNodeEnv = (env: NodeEnv) => {
-  process.env.NODE_ENV = env;
-};
-
-export const isDev = (): boolean => getNodeEnv() === 'development';
-
-export const isProd = (): boolean => getNodeEnv() === 'production';
 
 export const isFunction = (func: unknown): func is (...args: any[]) => any =>
   typeof func === 'function';

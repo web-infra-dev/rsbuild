@@ -4,7 +4,6 @@ import type {
   InspectConfigResult,
   NormalizedConfig,
 } from '@rsbuild/core';
-import { getNodeEnv, setNodeEnv } from '@rsbuild/shared';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 import { outputInspectConfigFiles, stringifyConfig } from './shared';
 import type { WebpackConfig } from './types';
@@ -20,9 +19,9 @@ export async function inspectConfig({
   bundlerConfigs?: WebpackConfig[];
 }): Promise<InspectConfigResult<'webpack'>> {
   if (inspectOptions.env) {
-    setNodeEnv(inspectOptions.env);
-  } else if (!getNodeEnv()) {
-    setNodeEnv('development');
+    process.env.NODE_ENV = inspectOptions.env;
+  } else if (!process.env.NODE_ENV) {
+    process.env.NODE_ENV = 'development';
   }
 
   const webpackConfigs =

@@ -4,8 +4,6 @@ import {
   type RspackConfig,
   type Stats,
   color,
-  isDev,
-  isProd,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import type { StatsCompilation } from '@rspack/core';
@@ -13,6 +11,8 @@ import { TARGET_ID_MAP } from '../constants';
 import {
   formatStats,
   getStatsOptions,
+  isDev,
+  isProd,
   isSatisfyRspackVersion,
   onCompileDone,
   prettyTime,

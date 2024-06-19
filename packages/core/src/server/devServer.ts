@@ -3,13 +3,11 @@ import {
   type CreateDevServerOptions,
   type Rspack,
   type StartDevServerOptions,
-  getNodeEnv,
   getPublicPathFromCompiler,
-  setNodeEnv,
 } from '@rsbuild/shared';
 import type Connect from 'connect';
 import { ROOT_DIST_DIR } from '../constants';
-import { isMultiCompiler } from '../helpers';
+import { getNodeEnv, isMultiCompiler, setNodeEnv } from '../helpers';
 import { logger } from '../logger';
 import type { CreateDevMiddlewareReturns } from '../provider/createCompiler';
 import type { InternalContext, NormalizedConfig } from '../types';

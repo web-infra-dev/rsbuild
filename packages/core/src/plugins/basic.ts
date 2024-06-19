@@ -1,6 +1,6 @@
 import path from 'node:path';
-import { isProd } from '@rsbuild/shared';
 import { TARGET_ID_MAP } from '../constants';
+import { isProd } from '../helpers';
 import type { NormalizedConfig, RsbuildPlugin } from '../types';
 
 const getJsSourceMap = (config: NormalizedConfig) => {

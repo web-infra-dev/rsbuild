@@ -4,14 +4,7 @@ import type {
   RsbuildContext,
   RsbuildPlugin,
 } from '@rsbuild/core';
-import {
-  SCRIPT_REGEX,
-  castArray,
-  cloneDeep,
-  fse,
-  getNodeEnv,
-  isProd,
-} from '@rsbuild/shared';
+import { SCRIPT_REGEX, castArray, cloneDeep, fse } from '@rsbuild/shared';
 import { BABEL_JS_RULE, applyUserBabelConfig } from './helper';
 import type { BabelLoaderOptions, PluginBabelOptions } from './types';
 
@@ -40,7 +33,7 @@ function getCacheDirectory(context: RsbuildContext, cacheDirectory?: string) {
 }
 
 async function getCacheIdentifier(options: BabelLoaderOptions) {
-  let identifier = `${getNodeEnv()}${JSON.stringify(options)}`;
+  let identifier = `${process.env.NODE_ENV}${JSON.stringify(options)}`;
 
   const { version: coreVersion } = await import('@babel/core');
   const loaderVersion = (
@@ -62,7 +55,7 @@ export const getDefaultBabelOptions = (
   const options: BabelLoaderOptions = {
     babelrc: false,
     configFile: false,
-    compact: isProd(),
+    compact: process.env.NODE_ENV === 'production',
     plugins: [
       [
         require.resolve('@babel/plugin-proposal-decorators'),
