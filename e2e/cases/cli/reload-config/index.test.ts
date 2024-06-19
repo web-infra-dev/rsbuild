@@ -1,4 +1,5 @@
 import { exec } from 'node:child_process';
+import fs from 'node:fs';
 import path from 'node:path';
 import { awaitFileExists, getRandomPort } from '@e2e/helper';
 import { test } from '@playwright/test';
@@ -12,7 +13,7 @@ test('should restart dev server and reload config when config file changed', asy
   await fse.remove(dist2);
   await fse.remove(configFile);
 
-  fse.writeFileSync(
+  fs.writeFileSync(
     configFile,
     `export default {
       dev: {
@@ -33,7 +34,7 @@ test('should restart dev server and reload config when config file changed', asy
 
   await awaitFileExists(dist1);
 
-  fse.writeFileSync(
+  fs.writeFileSync(
     configFile,
     `export default {
       dev: {

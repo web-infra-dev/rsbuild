@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { fse } from '@rsbuild/shared';
@@ -16,7 +17,7 @@ rspackOnlyTest('should work with string and path to file', async ({ page }) => {
   });
   await gotoPage(page, rsbuild);
 
-  await fse.writeFile(file, 'test');
+  await fs.promises.writeFile(file, 'test');
   // check the page is reloaded
   await new Promise((resolve) => {
     page.waitForURL(page.url()).then(resolve);
@@ -43,7 +44,7 @@ rspackOnlyTest(
     });
     await gotoPage(page, rsbuild);
 
-    await fse.writeFile(file, 'test');
+    await fs.promises.writeFile(file, 'test');
 
     await new Promise((resolve) => {
       page.waitForURL(page.url()).then(resolve);
@@ -73,7 +74,7 @@ rspackOnlyTest('should work with string array directory', async ({ page }) => {
   });
   await gotoPage(page, rsbuild);
 
-  await fse.writeFile(file, 'test');
+  await fs.promises.writeFile(file, 'test');
   // check the page is reloaded
   await new Promise((resolve) => {
     page.waitForURL(page.url()).then(resolve);
@@ -81,7 +82,7 @@ rspackOnlyTest('should work with string array directory', async ({ page }) => {
   // reset file
   fse.truncateSync(file);
 
-  await fse.writeFile(other, 'test');
+  await fs.promises.writeFile(other, 'test');
   // check the page is reloaded
   await new Promise((resolve) => {
     page.waitForURL(page.url()).then(resolve);
@@ -107,7 +108,7 @@ rspackOnlyTest('should work with string and glob', async ({ page }) => {
   });
   await gotoPage(page, rsbuild);
 
-  await fse.writeFile(file, 'test');
+  await fs.promises.writeFile(file, 'test');
   // check the page is reloaded
   await new Promise((resolve) => {
     page.waitForURL(page.url()).then(resolve);
@@ -135,7 +136,7 @@ rspackOnlyTest('should work with options', async ({ page }) => {
   });
   await gotoPage(page, rsbuild);
 
-  await fse.writeFile(file, 'test');
+  await fs.promises.writeFile(file, 'test');
   // check the page is reloaded
   await new Promise((resolve) => {
     page.waitForURL(page.url()).then(resolve);

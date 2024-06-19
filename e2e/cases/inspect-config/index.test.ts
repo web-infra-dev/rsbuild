@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { createRsbuild } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
@@ -22,8 +23,8 @@ test('should generate config files when writeToDisk is true', async () => {
     writeToDisk: true,
   });
 
-  expect(fse.existsSync(bundlerConfig)).toBeTruthy();
-  expect(fse.existsSync(rsbuildConfig)).toBeTruthy();
+  expect(fs.existsSync(bundlerConfig)).toBeTruthy();
+  expect(fs.existsSync(rsbuildConfig)).toBeTruthy();
 
   fse.removeSync(rsbuildConfig);
   fse.removeSync(bundlerConfig);
@@ -42,9 +43,9 @@ test('should generate bundler config for node when target contains node', async 
     writeToDisk: true,
   });
 
-  expect(fse.existsSync(rsbuildConfig)).toBeTruthy();
-  expect(fse.existsSync(bundlerConfig)).toBeTruthy();
-  expect(fse.existsSync(bundlerNodeConfig)).toBeTruthy();
+  expect(fs.existsSync(rsbuildConfig)).toBeTruthy();
+  expect(fs.existsSync(bundlerConfig)).toBeTruthy();
+  expect(fs.existsSync(bundlerNodeConfig)).toBeTruthy();
 
   fse.removeSync(rsbuildConfig);
   fse.removeSync(bundlerConfig);
@@ -60,6 +61,6 @@ test('should not generate config files when writeToDisk is false', async () => {
     writeToDisk: false,
   });
 
-  expect(fse.existsSync(rsbuildConfig)).toBeFalsy();
-  expect(fse.existsSync(bundlerConfig)).toBeFalsy();
+  expect(fs.existsSync(rsbuildConfig)).toBeFalsy();
+  expect(fs.existsSync(bundlerConfig)).toBeFalsy();
 });

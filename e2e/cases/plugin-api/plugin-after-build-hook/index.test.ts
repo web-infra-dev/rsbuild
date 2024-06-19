@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
@@ -8,8 +9,8 @@ const distFile = path.join(__dirname, 'node_modules/hooksTempFile');
 
 const write = (str: string) => {
   let content: string;
-  if (fse.existsSync(distFile)) {
-    content = `${fse.readFileSync(distFile, 'utf-8')},${str}`;
+  if (fs.existsSync(distFile)) {
+    content = `${fs.readFileSync(distFile, 'utf-8')},${str}`;
   } else {
     content = str;
   }
@@ -48,6 +49,6 @@ rspackOnlyTest(
     await rsbuild.build();
     write('2');
 
-    expect(fse.readFileSync(distFile, 'utf-8').split(',')).toEqual(['1', '2']);
+    expect(fs.readFileSync(distFile, 'utf-8').split(',')).toEqual(['1', '2']);
   },
 );

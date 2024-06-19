@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import { join } from 'node:path';
 import { dev, getRandomPort, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
@@ -49,9 +50,9 @@ rspackOnlyTest('default & hmr (default true)', async ({ page }) => {
 
   const appPath = join(cwd, 'test-temp-src/App.tsx');
 
-  await fse.writeFile(
+  await fs.promises.writeFile(
     appPath,
-    fse.readFileSync(appPath, 'utf-8').replace('Hello Rsbuild', 'Hello Test'),
+    fs.readFileSync(appPath, 'utf-8').replace('Hello Rsbuild', 'Hello Test'),
   );
 
   await expect(locator).toHaveText('Hello Test!');
@@ -61,7 +62,7 @@ rspackOnlyTest('default & hmr (default true)', async ({ page }) => {
 
   const cssPath = join(cwd, 'test-temp-src/App.css');
 
-  await fse.writeFile(
+  await fs.promises.writeFile(
     cssPath,
     `#test {
   color: rgb(0, 0, 255);
@@ -71,12 +72,12 @@ rspackOnlyTest('default & hmr (default true)', async ({ page }) => {
   await expect(locator).toHaveCSS('color', 'rgb(0, 0, 255)');
 
   // restore
-  await fse.writeFile(
+  await fs.promises.writeFile(
     appPath,
-    fse.readFileSync(appPath, 'utf-8').replace('Hello Test', 'Hello Rsbuild'),
+    fs.readFileSync(appPath, 'utf-8').replace('Hello Test', 'Hello Rsbuild'),
   );
 
-  await fse.writeFile(
+  await fs.promises.writeFile(
     cssPath,
     `#test {
   color: rgb(255, 0, 0);
@@ -130,17 +131,17 @@ rspackOnlyTest(
     const locator = page.locator('#test');
     await expect(locator).toHaveText('Hello Rsbuild!');
 
-    await fse.writeFile(
+    await fs.promises.writeFile(
       appPath,
-      fse.readFileSync(appPath, 'utf-8').replace('Hello Rsbuild', 'Hello Test'),
+      fs.readFileSync(appPath, 'utf-8').replace('Hello Rsbuild', 'Hello Test'),
     );
 
     await expect(locator).toHaveText('Hello Test!');
 
     // restore
-    await fse.writeFile(
+    await fs.promises.writeFile(
       appPath,
-      fse.readFileSync(appPath, 'utf-8').replace('Hello Test', 'Hello Rsbuild'),
+      fs.readFileSync(appPath, 'utf-8').replace('Hello Test', 'Hello Rsbuild'),
     );
 
     await rsbuild.close();

@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import { join } from 'node:path';
 import { build, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
@@ -13,7 +14,7 @@ test('should clean dist path by default', async () => {
     cwd,
   });
 
-  expect(fse.existsSync(testDistFile)).toBeFalsy();
+  expect(fs.existsSync(testDistFile)).toBeFalsy();
   fse.removeSync(testDistFile);
 });
 
@@ -37,7 +38,7 @@ test('should not clean dist path if it is outside root', async () => {
     logs.find((log) => log.includes('dist path is not a subdir of root path')),
   ).toBeTruthy();
 
-  expect(fse.existsSync(testOutsideFile)).toBeTruthy();
+  expect(fs.existsSync(testOutsideFile)).toBeTruthy();
 
   fse.removeSync(testOutsideFile);
   restore();
@@ -55,7 +56,7 @@ test('should allow to disable cleanDistPath', async () => {
     },
   });
 
-  expect(fse.existsSync(testDistFile)).toBeTruthy();
+  expect(fs.existsSync(testDistFile)).toBeTruthy();
 
   fse.removeSync(testDistFile);
 });

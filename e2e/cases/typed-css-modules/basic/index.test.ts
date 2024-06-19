@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import { join, resolve } from 'node:path';
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
@@ -25,12 +26,12 @@ test('generator TS declaration for cssModules.auto true', async () => {
     },
   });
 
-  expect(fse.existsSync(join(testDir, './a.css.d.ts'))).toBeFalsy();
-  expect(fse.existsSync(join(testDir, './b.module.scss.d.ts'))).toBeTruthy();
-  expect(fse.existsSync(join(testDir, './c.module.less.d.ts'))).toBeTruthy();
-  expect(fse.existsSync(join(testDir, './d.global.less.d.ts'))).toBeFalsy();
+  expect(fs.existsSync(join(testDir, './a.css.d.ts'))).toBeFalsy();
+  expect(fs.existsSync(join(testDir, './b.module.scss.d.ts'))).toBeTruthy();
+  expect(fs.existsSync(join(testDir, './c.module.less.d.ts'))).toBeTruthy();
+  expect(fs.existsSync(join(testDir, './d.global.less.d.ts'))).toBeFalsy();
 
-  const bContent = fse.readFileSync(join(testDir, './b.module.scss.d.ts'), {
+  const bContent = fs.readFileSync(join(testDir, './b.module.scss.d.ts'), {
     encoding: 'utf-8',
   });
 
@@ -49,7 +50,7 @@ declare const cssExports: CssExports;
 export default cssExports;
 `);
 
-  const cContent = fse.readFileSync(join(testDir, './c.module.less.d.ts'), {
+  const cContent = fs.readFileSync(join(testDir, './c.module.less.d.ts'), {
     encoding: 'utf-8',
   });
 
@@ -86,10 +87,10 @@ test('generator TS declaration for cssModules.auto function', async () => {
     },
   });
 
-  expect(fse.existsSync(join(testDir, './a.css.d.ts'))).toBeFalsy();
-  expect(fse.existsSync(join(testDir, './b.module.scss.d.ts'))).toBeFalsy();
-  expect(fse.existsSync(join(testDir, './c.module.less.d.ts'))).toBeTruthy();
-  expect(fse.existsSync(join(testDir, './d.global.less.d.ts'))).toBeTruthy();
+  expect(fs.existsSync(join(testDir, './a.css.d.ts'))).toBeFalsy();
+  expect(fs.existsSync(join(testDir, './b.module.scss.d.ts'))).toBeFalsy();
+  expect(fs.existsSync(join(testDir, './c.module.less.d.ts'))).toBeTruthy();
+  expect(fs.existsSync(join(testDir, './d.global.less.d.ts'))).toBeTruthy();
 
   await clear();
 });
@@ -112,10 +113,10 @@ test('generator TS declaration for cssModules.auto Regexp', async () => {
     },
   });
 
-  expect(fse.existsSync(join(testDir, './a.css.d.ts'))).toBeFalsy();
-  expect(fse.existsSync(join(testDir, './b.module.scss.d.ts'))).toBeTruthy();
-  expect(fse.existsSync(join(testDir, './c.module.less.d.ts'))).toBeTruthy();
-  expect(fse.existsSync(join(testDir, './d.global.less.d.ts'))).toBeFalsy();
+  expect(fs.existsSync(join(testDir, './a.css.d.ts'))).toBeFalsy();
+  expect(fs.existsSync(join(testDir, './b.module.scss.d.ts'))).toBeTruthy();
+  expect(fs.existsSync(join(testDir, './c.module.less.d.ts'))).toBeTruthy();
+  expect(fs.existsSync(join(testDir, './d.global.less.d.ts'))).toBeFalsy();
 
   await clear();
 });
@@ -138,13 +139,13 @@ test('generator TS declaration for `asIs` convention', async () => {
     },
   });
 
-  expect(fse.existsSync(join(testDir, './b.module.scss.d.ts'))).toBeTruthy();
-  expect(fse.existsSync(join(testDir, './c.module.less.d.ts'))).toBeTruthy();
+  expect(fs.existsSync(join(testDir, './b.module.scss.d.ts'))).toBeTruthy();
+  expect(fs.existsSync(join(testDir, './c.module.less.d.ts'))).toBeTruthy();
 
-  const bContent = fse.readFileSync(join(testDir, './b.module.scss.d.ts'), {
+  const bContent = fs.readFileSync(join(testDir, './b.module.scss.d.ts'), {
     encoding: 'utf-8',
   });
-  const cContent = fse.readFileSync(join(testDir, './c.module.less.d.ts'), {
+  const cContent = fs.readFileSync(join(testDir, './c.module.less.d.ts'), {
     encoding: 'utf-8',
   });
 

@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { build, proxyConsole, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
@@ -22,7 +23,7 @@ rspackOnlyTest(
       cwd: __dirname,
     });
 
-    expect(fse.existsSync(testFile)).toBe(true);
+    expect(fs.existsSync(testFile)).toBe(true);
     expect(
       logs.some((log) => log.includes('@rsdoctor') && log.includes('enabled')),
     ).toBe(true);
@@ -44,7 +45,7 @@ rspackOnlyTest(
       cwd: __dirname,
     });
 
-    expect(fse.existsSync(testFile)).toBe(false);
+    expect(fs.existsSync(testFile)).toBe(false);
     process.env.RSDOCTOR = '';
   },
 );

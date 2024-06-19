@@ -1,4 +1,5 @@
 import { exec } from 'node:child_process';
+import fs from 'node:fs';
 import path from 'node:path';
 import { awaitFileExists, getRandomPort } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
@@ -14,8 +15,8 @@ test.skip('should restart dev server when .env file is changed', async () => {
   fse.removeSync(configFile);
   fse.removeSync(envLocalFile);
 
-  fse.writeFileSync(envLocalFile, 'PUBLIC_NAME=jack');
-  fse.writeFileSync(
+  fs.writeFileSync(envLocalFile, 'PUBLIC_NAME=jack');
+  fs.writeFileSync(
     configFile,
     `export default {
       dev: {
@@ -34,12 +35,12 @@ test.skip('should restart dev server when .env file is changed', async () => {
   });
 
   await awaitFileExists(distIndex);
-  expect(fse.readFileSync(distIndex, 'utf-8')).toContain('jack');
+  expect(fs.readFileSync(distIndex, 'utf-8')).toContain('jack');
 
   fse.removeSync(distIndex);
-  fse.writeFileSync(envLocalFile, 'PUBLIC_NAME=rose');
+  fs.writeFileSync(envLocalFile, 'PUBLIC_NAME=rose');
   await awaitFileExists(distIndex);
-  expect(fse.readFileSync(distIndex, 'utf-8')).toContain('rose');
+  expect(fs.readFileSync(distIndex, 'utf-8')).toContain('rose');
 
   devProcess.kill();
 });

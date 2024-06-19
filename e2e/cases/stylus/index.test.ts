@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import { join, resolve } from 'node:path';
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
@@ -36,7 +37,7 @@ test('should compile stylus correctly with ts declaration', async () => {
     /body{color:#f00;font:14px Arial,sans-serif}\.title-class-\w{6}{font-size:14px}/,
   );
 
-  expect(fse.existsSync(join(testDir, './b.module.styl.d.ts'))).toBeTruthy();
+  expect(fs.existsSync(join(testDir, './b.module.styl.d.ts'))).toBeTruthy();
 
   await clear();
 });

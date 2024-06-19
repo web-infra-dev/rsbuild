@@ -1,4 +1,5 @@
 import { exec } from 'node:child_process';
+import fs from 'node:fs';
 import path from 'node:path';
 import { awaitFileExists } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
@@ -17,12 +18,12 @@ test('should support watch mode for build command', async () => {
   });
 
   await awaitFileExists(distIndexFile);
-  expect(fse.readFileSync(distIndexFile, 'utf-8')).toContain('hello!');
+  expect(fs.readFileSync(distIndexFile, 'utf-8')).toContain('hello!');
   await fse.remove(distIndexFile);
 
   fse.outputFileSync(indexFile, `console.log('hello2!');`);
   await awaitFileExists(distIndexFile);
-  expect(fse.readFileSync(distIndexFile, 'utf-8')).toContain('hello2!');
+  expect(fs.readFileSync(distIndexFile, 'utf-8')).toContain('hello2!');
 
   process.kill();
 });

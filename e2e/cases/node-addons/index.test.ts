@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import { join } from 'node:path';
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
@@ -15,7 +16,7 @@ test('should compile Node addons correctly', async () => {
   expect(addonFile?.includes('server/test.darwin.node')).toBeTruthy();
 
   expect(
-    fse.existsSync(join(__dirname, 'dist', 'server', 'test.darwin.node')),
+    fs.existsSync(join(__dirname, 'dist', 'server', 'test.darwin.node')),
   ).toBeTruthy();
 
   // the `test.darwin.node` is only compatible with darwin
@@ -62,7 +63,7 @@ test('should compile Node addons in the node_modules correctly', async () => {
   expect(addonFile?.includes('server/other.node')).toBeTruthy();
 
   expect(
-    fse.existsSync(join(__dirname, 'dist', 'server', 'other.node')),
+    fs.existsSync(join(__dirname, 'dist', 'server', 'other.node')),
   ).toBeTruthy();
 
   if (process.platform === 'darwin') {

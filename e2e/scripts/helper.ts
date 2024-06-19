@@ -1,7 +1,8 @@
+import fs from 'node:fs';
 import { platform } from 'node:os';
 import { join } from 'node:path';
 import { test } from '@playwright/test';
-import { type ConsoleType, castArray, fse } from '@rsbuild/shared';
+import { type ConsoleType, castArray } from '@rsbuild/shared';
 import glob, {
   convertPathToPattern,
   type Options as GlobOptions,
@@ -49,7 +50,7 @@ export const globContentJSON = async (path: string, options?: GlobOptions) => {
 
   await Promise.all(
     files.map((file) =>
-      fse.readFile(file, 'utf-8').then((content) => {
+      fs.promises.readFile(file, 'utf-8').then((content) => {
         ret[file] = content;
       }),
     ),
@@ -64,7 +65,7 @@ export const awaitFileExists = async (dir: string) => {
   let checks = 0;
 
   while (checks < maxChecks) {
-    if (fse.existsSync(dir)) {
+    if (fs.existsSync(dir)) {
       return;
     }
     checks++;
