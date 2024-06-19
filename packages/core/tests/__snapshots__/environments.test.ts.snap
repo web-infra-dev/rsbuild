@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`environment config > should normalized environment config correctly 1`] = `
+exports[`environment config > should normalize environment config correctly 1`] = `
 {
   "dev": {
     "assetPrefix": "/",

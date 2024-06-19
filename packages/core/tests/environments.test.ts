@@ -64,7 +64,7 @@ describe('environment config', () => {
     expect(rsbuildConfig.environments).toMatchSnapshot();
   });
 
-  it('should normalized environment config correctly', async () => {
+  it('should normalize environment config correctly', async () => {
     process.env.NODE_ENV = 'development';
     const rsbuild = await createRsbuild({
       rsbuildConfig: {
