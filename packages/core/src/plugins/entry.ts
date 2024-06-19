@@ -1,9 +1,9 @@
 import {
+  type NormalizedEnvironmentConfig,
   type RsbuildEntry,
   type RsbuildTarget,
   castArray,
   color,
-  type NormalizedEnvironmentConfig,
 } from '@rsbuild/shared';
 import type { EntryDescription } from '@rspack/core';
 import { createVirtualModule } from '../helpers';

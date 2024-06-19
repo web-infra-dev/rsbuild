@@ -1,6 +1,6 @@
 import type {
-  NormalizedEnvironmentConfig,
   InspectConfigOptions,
+  NormalizedEnvironmentConfig,
   PluginManager,
   RspackConfig,
 } from '@rsbuild/shared';

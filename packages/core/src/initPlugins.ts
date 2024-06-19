@@ -1,7 +1,7 @@
 import { join } from 'node:path';
 import type {
-  NormalizedEnvironmentConfig,
   GetRsbuildConfig,
+  NormalizedEnvironmentConfig,
   PluginManager,
   RsbuildPluginAPI,
   RspackChain,
@@ -77,9 +77,8 @@ export function getPluginAPI({
           );
         }
         return config;
-      } else {
-        return context.normalizedConfig;
       }
+      return context.normalizedConfig;
     }
     throw new Error(
       'Cannot access normalized config until modifyRsbuildConfig is called.',

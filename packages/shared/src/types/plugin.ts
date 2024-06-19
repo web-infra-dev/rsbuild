@@ -8,9 +8,9 @@ import type {
 import type { ChainIdentifier } from '../chain';
 import type { RspackChain } from '../chain';
 import type {
-  NormalizedEnvironmentConfig,
   ModifyRspackConfigUtils,
   NormalizedConfig,
+  NormalizedEnvironmentConfig,
   RsbuildConfig,
 } from './config';
 import type { RsbuildContext } from './context';
