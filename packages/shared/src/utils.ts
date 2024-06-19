@@ -111,22 +111,6 @@ export const getPublicPathFromCompiler = (compiler: Compiler) => {
   return DEFAULT_ASSET_PREFIX;
 };
 
-export const prettyTime = (seconds: number) => {
-  const format = (time: string) => color.bold(time);
-
-  if (seconds < 10) {
-    const digits = seconds >= 0.01 ? 2 : 3;
-    return `${format(seconds.toFixed(digits))} s`;
-  }
-
-  if (seconds < 60) {
-    return `${format(seconds.toFixed(1))} s`;
-  }
-
-  const minutes = seconds / 60;
-  return `${format(minutes.toFixed(2))} m`;
-};
-
 export const isHtmlDisabled = (
   config: NormalizedConfig,
   target: RsbuildTarget,
@@ -140,10 +124,3 @@ export const isHtmlDisabled = (
     target !== 'web'
   );
 };
-
-export function isUsingHMR(
-  config: NormalizedConfig,
-  { isProd, target }: Pick<ModifyChainUtils, 'isProd' | 'target'>,
-) {
-  return !isProd && config.dev.hmr && target === 'web';
-}

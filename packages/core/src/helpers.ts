@@ -516,3 +516,19 @@ export function pick<T, U extends keyof T>(obj: T, keys: ReadonlyArray<U>) {
     {} as Pick<T, U>,
   );
 }
+
+export const prettyTime = (seconds: number) => {
+  const format = (time: string) => color.bold(time);
+
+  if (seconds < 10) {
+    const digits = seconds >= 0.01 ? 2 : 3;
+    return `${format(seconds.toFixed(digits))} s`;
+  }
+
+  if (seconds < 60) {
+    return `${format(seconds.toFixed(1))} s`;
+  }
+
+  const minutes = seconds / 60;
+  return `${format(minutes.toFixed(2))} m`;
+};
