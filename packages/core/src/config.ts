@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import { isAbsolute, join } from 'node:path';
+import { dirname, isAbsolute, join } from 'node:path';
 import {
   DEFAULT_ASSET_PREFIX,
   RspackChain,
@@ -438,9 +438,10 @@ export async function outputInspectConfigFiles({
   ];
 
   await Promise.all(
-    files.map((item) =>
-      fs.promises.writeFile(item.path, `export default ${item.content}`),
-    ),
+    files.map(async (item) => {
+      await fs.promises.mkdir(dirname(item.path), { recursive: true });
+      return fs.promises.writeFile(item.path, `export default ${item.content}`);
+    }),
   );
 
   const fileInfos = files
