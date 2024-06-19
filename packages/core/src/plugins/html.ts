@@ -1,10 +1,10 @@
+import fs from 'node:fs';
 import path, { isAbsolute } from 'node:path';
 import {
   type MinifyJSOptions,
   castArray,
   color,
   deepmerge,
-  fse,
   isHtmlDisabled,
   isPlainObject,
 } from '@rsbuild/shared';
@@ -156,7 +156,7 @@ export async function getTemplate(
     existTemplatePath.push(absolutePath);
   }
 
-  const templateContent = await fse.readFile(absolutePath, 'utf-8');
+  const templateContent = await fs.promises.readFile(absolutePath, 'utf-8');
   return {
     templatePath: absolutePath,
     templateContent,

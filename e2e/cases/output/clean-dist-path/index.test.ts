@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { join } from 'node:path';
 import { build, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { fse } from '@rsbuild/shared';
+import fse from 'fs-extra';
 
 const cwd = __dirname;
 const testDistFile = join(cwd, 'dist/test.json');

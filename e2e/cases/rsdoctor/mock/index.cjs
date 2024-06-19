@@ -1,5 +1,5 @@
 const path = require('node:path');
-const { fse } = require('@rsbuild/shared');
+const fse = require('fs-extra');
 
 class RsdoctorRspackPlugin {
   name = 'RsdoctorRspackPlugin';

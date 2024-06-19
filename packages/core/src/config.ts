@@ -4,7 +4,6 @@ import {
   DEFAULT_ASSET_PREFIX,
   RspackChain,
   color,
-  fse,
   isObject,
 } from '@rsbuild/shared';
 import type {
@@ -426,7 +425,7 @@ export async function outputInspectConfigFiles({
       let outputFilePath = join(outputPath, outputFile);
 
       // if filename is conflict, add a random id to the filename.
-      if (fse.existsSync(outputFilePath)) {
+      if (fs.existsSync(outputFilePath)) {
         outputFilePath = outputFilePath.replace(/\.mjs$/, `.${Date.now()}.mjs`);
       }
 
@@ -440,7 +439,7 @@ export async function outputInspectConfigFiles({
 
   await Promise.all(
     files.map((item) =>
-      fse.outputFile(item.path, `export default ${item.content}`),
+      fs.promises.writeFile(item.path, `export default ${item.content}`),
     ),
   );
 

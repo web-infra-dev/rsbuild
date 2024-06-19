@@ -2,7 +2,7 @@ import { execSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { expect, test } from '@playwright/test';
-import { fse } from '@rsbuild/shared';
+import fse from 'fs-extra';
 
 const localFile = path.join(__dirname, '.env.local');
 const prodLocalFile = path.join(__dirname, '.env.production.local');
