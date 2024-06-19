@@ -5,10 +5,10 @@ import {
   type RsbuildTarget,
   type RspackConfig,
   castArray,
-  getNodeEnv,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import { chainToConfig, modifyBundlerChain } from '../configChain';
+import { getNodeEnv } from '../helpers';
 import { logger } from '../logger';
 import { getHTMLPlugin } from '../pluginHelper';
 import { reduceConfigsAsyncWithContext } from '../reduceConfigs';

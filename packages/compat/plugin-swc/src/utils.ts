@@ -2,11 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { __internalHelper } from '@rsbuild/core';
 import type { ModifyChainUtils, NormalizedConfig } from '@rsbuild/core';
-import {
-  getBrowserslistWithDefault,
-  getCoreJsVersion,
-  isUsingHMR,
-} from '@rsbuild/shared';
+import { getBrowserslistWithDefault, getCoreJsVersion } from '@rsbuild/shared';
 import _ from 'lodash';
 import semver from 'semver';
 import { CORE_JS_DIR, CORE_JS_PKG_PATH, SWC_HELPERS_DIR } from './constants';
@@ -194,7 +190,7 @@ export async function applyPluginConfig(
     jsc: {
       transform: {
         react: {
-          refresh: isUsingHMR(rsbuildConfig, utils),
+          refresh: !isProd && rsbuildConfig.dev.hmr && target === 'web',
         },
       },
     },

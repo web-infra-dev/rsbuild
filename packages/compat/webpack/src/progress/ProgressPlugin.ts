@@ -1,6 +1,6 @@
 import { logger } from '@rsbuild/core';
-import { prettyTime } from '@rsbuild/shared';
 import webpack from 'webpack';
+import { prettyTime } from '../shared';
 import { bus, createFriendlyPercentage } from './helpers';
 import { createNonTTYLogger } from './helpers/nonTty';
 import type { Props } from './helpers/type';

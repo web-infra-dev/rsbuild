@@ -5,7 +5,7 @@ import {
   ensureAssetPrefix,
   logger,
 } from '@rsbuild/core';
-import { getPublicPathFromCompiler, isProd } from '@rsbuild/shared';
+import { getPublicPathFromCompiler } from '@rsbuild/shared';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { PluginRemOptions } from './types';
 
@@ -97,7 +97,7 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
 
     const getRuntimeCode = async () => {
       if (!runtimeCode) {
-        const isCompress = isProd();
+        const isCompress = process.env.NODE_ENV === 'production';
         runtimeCode = await getRootPixelCode(this.options, isCompress);
       }
       return runtimeCode;

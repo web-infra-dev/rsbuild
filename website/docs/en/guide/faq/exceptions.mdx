@@ -77,7 +77,7 @@ export const bar = 'bar';
 import { foo } from './utils';
 ```
 
-- Re-exporting a type without adding the `type` modifier, causing compilers like Babel to fail in recognizing the type export, resulting in compilation errors.
+- Re-exporting a type without adding the `type` modifier, causing transpilers like SWC or Babel to fail in recognizing the type export, resulting in compilation errors.
 
 ```ts
 // utils.ts

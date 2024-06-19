@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "@rsbuild/plugin-babel": "workspace:*",
-    "@rsbuild/shared": "workspace:*",
     "@vue/babel-plugin-jsx": "1.2.2",
     "babel-plugin-vue-jsx-hmr": "1.0.0"
   },

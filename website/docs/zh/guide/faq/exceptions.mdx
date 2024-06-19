@@ -77,7 +77,7 @@ export const bar = 'bar';
 import { foo } from './utils';
 ```
 
-- re-export 了一个类型，但是没有添加 `type` 修饰符，导致 babel 等编译工具无法识别到类型导出，导致编译异常。
+- re-export 了一个类型，但是没有添加 `type` 修饰符，导致 SWC、Babel 等转译工具无法识别到类型导出，导致编译异常。
 
 ```ts
 // utils.ts

@@ -3,13 +3,7 @@ import deepmerge from '../compiled/deepmerge/index.js';
 import fse from '../compiled/fs-extra/index.js';
 import color from '../compiled/picocolors/index.js';
 import { DEFAULT_ASSET_PREFIX } from './constants';
-import type {
-  CacheGroups,
-  ModifyChainUtils,
-  NodeEnv,
-  NormalizedConfig,
-  RsbuildTarget,
-} from './types';
+import type { CacheGroups, NormalizedConfig, RsbuildTarget } from './types';
 
 export { color, deepmerge };
 
@@ -17,16 +11,6 @@ export type Colors = Omit<
   keyof typeof color,
   'createColor' | 'isColorSupported'
 >;
-
-export const getNodeEnv = () => process.env.NODE_ENV as NodeEnv;
-
-export const setNodeEnv = (env: NodeEnv) => {
-  process.env.NODE_ENV = env;
-};
-
-export const isDev = (): boolean => getNodeEnv() === 'development';
-
-export const isProd = (): boolean => getNodeEnv() === 'production';
 
 export const isFunction = (func: unknown): func is (...args: any[]) => any =>
   typeof func === 'function';
@@ -111,22 +95,6 @@ export const getPublicPathFromCompiler = (compiler: Compiler) => {
   return DEFAULT_ASSET_PREFIX;
 };
 
-export const prettyTime = (seconds: number) => {
-  const format = (time: string) => color.bold(time);
-
-  if (seconds < 10) {
-    const digits = seconds >= 0.01 ? 2 : 3;
-    return `${format(seconds.toFixed(digits))} s`;
-  }
-
-  if (seconds < 60) {
-    return `${format(seconds.toFixed(1))} s`;
-  }
-
-  const minutes = seconds / 60;
-  return `${format(minutes.toFixed(2))} m`;
-};
-
 export const isHtmlDisabled = (
   config: NormalizedConfig,
   target: RsbuildTarget,
@@ -140,10 +108,3 @@ export const isHtmlDisabled = (
     target !== 'web'
   );
 };
-
-export function isUsingHMR(
-  config: NormalizedConfig,
-  { isProd, target }: Pick<ModifyChainUtils, 'isProd' | 'target'>,
-) {
-  return !isProd && config.dev.hmr && target === 'web';
-}

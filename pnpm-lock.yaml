@@ -24,7 +24,7 @@ importers:
         version: 2.27.5
       '@modern-js/module-tools':
         specifier: ^2.52.0
-        version: 2.52.0(eslint@9.5.0)(typescript@5.4.5)
+        version: 2.52.0(typescript@5.4.5)
       '@rsbuild/config':
         specifier: workspace:*
         version: link:scripts/config
@@ -672,6 +672,9 @@ importers:
       '@types/lodash':
         specifier: ^4.17.5
         version: 4.17.5
+      '@types/semver':
+        specifier: ^7.5.8
+        version: 7.5.8
       typescript:
         specifier: ^5.4.2
         version: 5.4.5
@@ -969,9 +972,6 @@ importers:
 
   packages/plugin-css-minimizer:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       css-minimizer-webpack-plugin:
         specifier: 5.0.1
         version: 5.0.1(lightningcss@1.25.1)(webpack@5.92.0)
@@ -1088,9 +1088,6 @@ importers:
       '@mdx-js/loader':
         specifier: ^3.0.1
         version: 3.0.1(webpack@5.92.0)
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -1179,10 +1176,6 @@ importers:
         version: 5.4.5
 
   packages/plugin-preact:
-    dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -1196,9 +1189,6 @@ importers:
 
   packages/plugin-pug:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@types/pug':
         specifier: ^2.0.10
         version: 2.0.10
@@ -1314,9 +1304,6 @@ importers:
       '@rsbuild/plugin-babel':
         specifier: workspace:*
         version: link:../plugin-babel
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       babel-preset-solid:
         specifier: ^1.8.17
         version: 1.8.17(@babel/core@7.24.7)
@@ -1413,7 +1400,7 @@ importers:
         version: 3.2.3(svelte@4.2.18)
       svelte-preprocess:
         specifier: ^5.1.4
-        version: 5.1.4(@babel/core@7.24.7)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.38)(tsx@4.14.0)(yaml@2.4.5))(postcss@8.4.38)(pug@3.0.3)(sass@1.77.5)(stylus@0.63.0)(svelte@4.2.18)(typescript@5.4.5)
+        version: 5.1.4(@babel/core@7.24.7)(less@4.2.0)(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(pug@3.0.3)(sass@1.77.5)(stylus@0.63.0)(svelte@4.2.18)(typescript@5.4.5)
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -1573,9 +1560,6 @@ importers:
       '@rsbuild/plugin-babel':
         specifier: workspace:*
         version: link:../plugin-babel
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@vue/babel-plugin-jsx':
         specifier: 1.2.2
         version: 1.2.2(@babel/core@7.24.7)
@@ -1603,7 +1587,7 @@ importers:
         version: link:../shared
       vue-loader:
         specifier: ^15.11.1
-        version: 15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))(webpack@5.92.0))(lodash@4.17.21)(prettier@3.3.2)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.92.0)
+        version: 15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))(webpack@5.92.0))(lodash@4.17.21)(prettier@3.3.2)(pug@3.0.3)(webpack@5.92.0)
       webpack:
         specifier: ^5.92.0
         version: 5.92.0
@@ -7851,7 +7835,7 @@ packages:
   rsbuild-plugin-google-analytics@1.0.0:
     resolution: {integrity: sha512-Z2hVetWq48QT+X/HMmtp+YTxzPw+ujt/KUrbQXn98LmUDYqJyGSCBAjit8atAoRiThUSKlkG+NU3+zkFvKoLdA==}
     peerDependencies:
-      '@rsbuild/core': link:packages/core
+      '@rsbuild/core': link:/Users/chenjiahan/Project/rsbuild/packages/core
     peerDependenciesMeta:
       '@rsbuild/core':
         optional: true
@@ -7859,7 +7843,7 @@ packages:
   rsbuild-plugin-open-graph@1.0.0:
     resolution: {integrity: sha512-SuN9w2FH2v9Mp9/jBowH/RvR74i5A1KzM8+3JrCwCpsuny2HQ3iZqVETgDJ0VIcXqLHUxPnI0aGMgbAcqmlzcg==}
     peerDependencies:
-      '@rsbuild/core': link:packages/core
+      '@rsbuild/core': link:/Users/chenjiahan/Project/rsbuild/packages/core
     peerDependenciesMeta:
       '@rsbuild/core':
         optional: true
@@ -10803,7 +10787,7 @@ snapshots:
       '@modern-js/utils': 2.52.0
       '@swc/helpers': 0.5.3
 
-  '@modern-js/module-tools@2.52.0(eslint@9.5.0)(typescript@5.4.5)':
+  '@modern-js/module-tools@2.52.0(typescript@5.4.5)':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@ast-grep/napi': 0.16.0
@@ -10813,7 +10797,7 @@ snapshots:
       '@modern-js/plugin': 2.52.0
       '@modern-js/plugin-changeset': 2.52.0
       '@modern-js/plugin-i18n': 2.52.0
-      '@modern-js/plugin-lint': 2.52.0(eslint@9.5.0)
+      '@modern-js/plugin-lint': 2.52.0
       '@modern-js/swc-plugins': 0.6.6(@swc/helpers@0.5.3)
       '@modern-js/types': 2.52.0
       '@modern-js/utils': 2.52.0
@@ -10863,15 +10847,13 @@ snapshots:
       '@modern-js/utils': 2.52.0
       '@swc/helpers': 0.5.3
 
-  '@modern-js/plugin-lint@2.52.0(eslint@9.5.0)':
+  '@modern-js/plugin-lint@2.52.0':
     dependencies:
       '@modern-js/tsconfig': 2.52.0
       '@modern-js/utils': 2.52.0
       '@swc/helpers': 0.5.3
       cross-spawn: 7.0.3
       husky: 8.0.3
-    optionalDependencies:
-      eslint: 9.5.0
 
   '@modern-js/plugin@2.52.0':
     dependencies:
@@ -11852,9 +11834,9 @@ snapshots:
       '@vue/compiler-dom': 3.4.23
       '@vue/shared': 3.4.23
 
-  '@vue/component-compiler-utils@3.3.0(lodash@4.17.21)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@vue/component-compiler-utils@3.3.0(lodash@4.17.21)(pug@3.0.3)':
     dependencies:
-      consolidate: 0.15.1(lodash@4.17.21)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      consolidate: 0.15.1(lodash@4.17.21)(pug@3.0.3)
       hash-sum: 1.0.2
       lru-cache: 4.1.5
       merge-source-map: 1.1.0
@@ -12589,14 +12571,12 @@ snapshots:
 
   console-browserify@1.2.0: {}
 
-  consolidate@0.15.1(lodash@4.17.21)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  consolidate@0.15.1(lodash@4.17.21)(pug@3.0.3):
     dependencies:
       bluebird: 3.7.2
     optionalDependencies:
       lodash: 4.17.21
       pug: 3.0.3
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
 
   constantinople@4.0.1:
     dependencies:
@@ -16908,7 +16888,7 @@ snapshots:
       svelte-dev-helper: 1.1.9
       svelte-hmr: 0.14.12(svelte@4.2.18)
 
-  svelte-preprocess@5.1.4(@babel/core@7.24.7)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.38)(tsx@4.14.0)(yaml@2.4.5))(postcss@8.4.38)(pug@3.0.3)(sass@1.77.5)(stylus@0.63.0)(svelte@4.2.18)(typescript@5.4.5):
+  svelte-preprocess@5.1.4(@babel/core@7.24.7)(less@4.2.0)(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(pug@3.0.3)(sass@1.77.5)(stylus@0.63.0)(svelte@4.2.18)(typescript@5.4.5):
     dependencies:
       '@types/pug': 2.0.10
       detect-indent: 6.1.0
@@ -16920,7 +16900,7 @@ snapshots:
       '@babel/core': 7.24.7
       less: 4.2.0
       postcss: 8.4.38
-      postcss-load-config: 6.0.1(jiti@1.21.6)(postcss@8.4.38)(tsx@4.14.0)(yaml@2.4.5)
+      postcss-load-config: 4.0.2(postcss@8.4.38)
       pug: 3.0.3
       sass: 1.77.5
       stylus: 0.63.0
@@ -17407,9 +17387,9 @@ snapshots:
 
   vue-hot-reload-api@2.3.4: {}
 
-  vue-loader@15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))(webpack@5.92.0))(lodash@4.17.21)(prettier@3.3.2)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.92.0):
+  vue-loader@15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))(webpack@5.92.0))(lodash@4.17.21)(prettier@3.3.2)(pug@3.0.3)(webpack@5.92.0):
     dependencies:
-      '@vue/component-compiler-utils': 3.3.0(lodash@4.17.21)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@vue/component-compiler-utils': 3.3.0(lodash@4.17.21)(pug@3.0.3)
       css-loader: 7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))(webpack@5.92.0)
       hash-sum: 1.0.2
       loader-utils: 1.4.2

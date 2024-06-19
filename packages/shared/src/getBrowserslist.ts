@@ -1,13 +1,12 @@
 import browserslist from '../compiled/browserslist/index.js';
 import { DEFAULT_BROWSERSLIST } from './constants';
 import type { OverrideBrowserslist, RsbuildTarget } from './types';
-import { getNodeEnv } from './utils';
 
 // using cache to avoid multiple calls to loadConfig
 const browsersListCache = new Map<string, string[]>();
 
 export async function getBrowserslist(path: string) {
-  const env = getNodeEnv();
+  const env = process.env.NODE_ENV;
   const cacheKey = path + env;
 
   if (browsersListCache.has(cacheKey)) {

@@ -3,6 +3,7 @@ import {
   DEFAULT_ASSET_PREFIX,
   type FilenameConfig,
   type MultiStats,
+  type NodeEnv,
   type NormalizedConfig,
   type RsbuildTarget,
   type Rspack,
@@ -11,7 +12,6 @@ import {
   type StatsError,
   castArray,
   color,
-  isProd,
 } from '@rsbuild/shared';
 import { fse } from '@rsbuild/shared';
 import type { StatsCompilation, StatsValue } from '@rspack/core';
@@ -23,8 +23,14 @@ import { formatStatsMessages } from './client/format';
 import { COMPILED_PATH } from './constants';
 import { logger } from './logger';
 
-// depend on native IgnorePlugin
-export const rspackMinVersion = '0.6.2';
+export const rspackMinVersion = '0.7.0';
+
+export const getNodeEnv = () => process.env.NODE_ENV as NodeEnv;
+export const setNodeEnv = (env: NodeEnv) => {
+  process.env.NODE_ENV = env;
+};
+export const isDev = (): boolean => getNodeEnv() === 'development';
+export const isProd = (): boolean => getNodeEnv() === 'production';
 
 const compareSemver = (version1: string, version2: string) => {
   const parts1 = version1.split('.').map(Number);
@@ -516,3 +522,19 @@ export function pick<T, U extends keyof T>(obj: T, keys: ReadonlyArray<U>) {
     {} as Pick<T, U>,
   );
 }
+
+export const prettyTime = (seconds: number) => {
+  const format = (time: string) => color.bold(time);
+
+  if (seconds < 10) {
+    const digits = seconds >= 0.01 ? 2 : 3;
+    return `${format(seconds.toFixed(digits))} s`;
+  }
+
+  if (seconds < 60) {
+    return `${format(seconds.toFixed(1))} s`;
+  }
+
+  const minutes = seconds / 60;
+  return `${format(minutes.toFixed(2))} m`;
+};

@@ -1,6 +1,5 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 import { modifyBabelLoaderOptions } from '@rsbuild/plugin-babel';
-import { isUsingHMR } from '@rsbuild/shared';
 import type { SolidPresetOptions } from './types';
 
 export type PluginSolidOptions = {
@@ -31,7 +30,9 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
               options.solidPresetOptions || {},
             ]);
 
-            if (isUsingHMR(rsbuildConfig, { isProd, target })) {
+            const usingHMR =
+              !isProd && rsbuildConfig.dev.hmr && target === 'web';
+            if (usingHMR) {
               babelOptions.plugins ??= [];
               babelOptions.plugins.push([
                 require.resolve('solid-refresh/babel'),

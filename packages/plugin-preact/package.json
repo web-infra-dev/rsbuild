@@ -25,9 +25,6 @@
     "build": "modern build",
     "dev": "modern build --watch"
   },
-  "dependencies": {
-    "@rsbuild/shared": "workspace:*"
-  },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@types/node": "18.x",

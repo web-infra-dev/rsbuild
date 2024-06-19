@@ -1,6 +1,6 @@
-import { isProd } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import { TARGET_ID_MAP } from '../constants';
+import { isProd } from '../helpers';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginProgress = (): RsbuildPlugin => ({
