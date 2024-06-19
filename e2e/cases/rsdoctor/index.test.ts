@@ -2,7 +2,6 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { build, proxyConsole, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
-import { fse } from '@rsbuild/shared';
 
 const packagePath = path.join(
   __dirname,
@@ -14,7 +13,7 @@ rspackOnlyTest(
   'should register Rsdoctor plugin when process.env.RSDOCTOR is true',
   async () => {
     fs.rmSync(packagePath, { recursive: true, force: true });
-    fse.copySync(path.join(__dirname, 'mock'), packagePath);
+    fs.cpSync(path.join(__dirname, 'mock'), packagePath, { recursive: true });
 
     const { logs, restore } = proxyConsole();
     process.env.RSDOCTOR = 'true';
@@ -37,7 +36,7 @@ rspackOnlyTest(
   'should not register Rsdoctor plugin when process.env.RSDOCTOR is false',
   async () => {
     fs.rmSync(packagePath, { recursive: true, force: true });
-    fse.copySync(path.join(__dirname, 'mock'), packagePath);
+    fs.cpSync(path.join(__dirname, 'mock'), packagePath, { recursive: true });
 
     process.env.RSDOCTOR = 'false';
 

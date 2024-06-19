@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
@@ -53,10 +54,9 @@ export function copyPkgToNodeModules() {
   const nodeModules = path.resolve(__dirname, 'node_modules');
 
   fse.ensureDirSync(nodeModules);
-  fse.copySync(
-    path.resolve(__dirname, 'foo'),
-    path.resolve(nodeModules, 'foo'),
-  );
+  fs.cpSync(path.resolve(__dirname, 'foo'), path.resolve(nodeModules, 'foo'), {
+    recursive: true,
+  });
 }
 
 export function shareTest(
