@@ -39,8 +39,17 @@ describe('plugin-type-check', () => {
       cwd: __dirname,
       plugins: [pluginEslint()],
       rsbuildConfig: {
-        output: {
-          targets: ['web', 'node'],
+        environments: {
+          web: {
+            output: {
+              target: 'web',
+            },
+          },
+          node: {
+            output: {
+              target: 'node',
+            },
+          },
         },
       },
     });

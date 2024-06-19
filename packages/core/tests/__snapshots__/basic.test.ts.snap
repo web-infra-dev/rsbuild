@@ -15,7 +15,7 @@ exports[`plugin-basic > should apply basic config correctly in development 1`] =
       },
     },
   },
-  "name": "Client",
+  "name": "web",
   "optimization": {
     "minimize": false,
   },
@@ -48,7 +48,7 @@ exports[`plugin-basic > should apply basic config correctly in production 1`] = 
       },
     },
   },
-  "name": "Client",
+  "name": "web",
   "optimization": {
     "minimize": true,
   },

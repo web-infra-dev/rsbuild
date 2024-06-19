@@ -332,7 +332,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
       },
     ],
   },
-  "name": "Client",
+  "name": "web",
   "optimization": {
     "minimize": false,
     "splitChunks": {

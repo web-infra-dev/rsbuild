@@ -8,7 +8,7 @@ describe('plugin-swc', () => {
     await matchConfigSnapshot({
       output: {
         polyfill: 'entry',
-        targets: ['node'],
+        target: 'node',
       },
     });
   });
@@ -73,7 +73,7 @@ describe('plugin-swc', () => {
     await matchConfigSnapshot({
       output: {
         polyfill: 'entry',
-        targets: ['node'],
+        target: 'node',
       },
     });
   });

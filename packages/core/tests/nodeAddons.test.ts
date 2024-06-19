@@ -7,7 +7,7 @@ describe('plugin-node-addons', () => {
       plugins: [pluginNodeAddons()],
       rsbuildConfig: {
         output: {
-          targets: ['node'],
+          target: 'node',
         },
       },
     });
@@ -22,7 +22,7 @@ describe('plugin-node-addons', () => {
       plugins: [pluginNodeAddons()],
       rsbuildConfig: {
         output: {
-          targets: ['web'],
+          target: 'web',
         },
       },
     });
@@ -37,7 +37,7 @@ describe('plugin-node-addons', () => {
       plugins: [pluginNodeAddons()],
       rsbuildConfig: {
         output: {
-          targets: ['web-worker'],
+          target: 'web-worker',
         },
       },
     });
@@ -52,7 +52,7 @@ describe('plugin-node-addons', () => {
       plugins: [pluginNodeAddons()],
       rsbuildConfig: {
         output: {
-          targets: ['service-worker'],
+          target: 'service-worker',
         },
       },
     });

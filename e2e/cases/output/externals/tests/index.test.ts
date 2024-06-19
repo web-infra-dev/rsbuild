@@ -44,7 +44,7 @@ test('should not external dependencies when target is web worker', async () => {
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
-        targets: ['web-worker'],
+        target: 'web-worker',
         externals: {
           react: 'MyReact',
         },
