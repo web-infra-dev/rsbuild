@@ -99,6 +99,7 @@ export type ModifyChainUtils = {
   isServiceWorker: boolean;
   isWebWorker: boolean;
   CHAIN_ID: ChainIdentifier;
+  environment: string;
   HtmlPlugin: typeof HtmlWebpackPlugin;
 };
 
