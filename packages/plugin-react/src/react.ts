@@ -6,7 +6,7 @@ import type {
   Rspack,
   RspackChain,
 } from '@rsbuild/core';
-import { SCRIPT_REGEX, deepmerge, isUsingHMR } from '@rsbuild/shared';
+import { SCRIPT_REGEX, deepmerge } from '@rsbuild/shared';
 import type { PluginReactOptions } from '.';
 
 const modifySwcLoaderOptions = ({
@@ -38,7 +38,7 @@ export const applyBasicReactSupport = (
 
   api.modifyBundlerChain(async (chain, { CHAIN_ID, isDev, isProd, target }) => {
     const config = api.getNormalizedConfig();
-    const usingHMR = isUsingHMR(config, { isProd, target });
+    const usingHMR = !isProd && config.dev.hmr && target === 'web';
     const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
       development: isDev,
       refresh: usingHMR,

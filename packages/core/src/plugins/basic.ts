@@ -1,6 +1,6 @@
 import path from 'node:path';
-import { isProd, isUsingHMR } from '@rsbuild/shared';
 import { TARGET_ID_MAP } from '../constants';
+import { isProd } from '../helpers';
 import type { NormalizedConfig, RsbuildPlugin } from '../types';
 
 const getJsSourceMap = (config: NormalizedConfig) => {
@@ -53,7 +53,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
         // set minimize to allow users to disable minimize
         chain.optimization.minimize(isMinimize);
 
-        const usingHMR = isUsingHMR(config, { target, isProd });
+        const usingHMR = !isProd && config.dev.hmr && target === 'web';
 
         if (usingHMR) {
           chain

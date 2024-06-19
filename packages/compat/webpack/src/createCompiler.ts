@@ -1,5 +1,5 @@
 import { type Rspack, logger } from '@rsbuild/core';
-import { type RspackConfig, type Stats, isDev } from '@rsbuild/shared';
+import type { RspackConfig, Stats } from '@rsbuild/shared';
 import WebpackMultiStats from 'webpack/lib/MultiStats.js';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 import {
@@ -44,7 +44,7 @@ export async function createCompiler({
       logger.warn(message);
     }
 
-    if (isDev()) {
+    if (process.env.NODE_ENV === 'development') {
       await context.hooks.onDevCompileDone.call({
         isFirstCompile,
         stats: stats as Stats,

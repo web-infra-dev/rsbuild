@@ -12,7 +12,12 @@ export { initRsbuildConfig } from './provider/initConfigs';
 export { stringifyConfig, outputInspectConfigFiles } from './config';
 export type { InternalContext } from './types';
 export { setHTMLPlugin, getHTMLPlugin } from './pluginHelper';
-export { formatStats, getStatsOptions, onCompileDone } from './helpers';
+export {
+  formatStats,
+  getStatsOptions,
+  onCompileDone,
+  prettyTime,
+} from './helpers';
 export { getChainUtils } from './provider/rspackConfig';
 export { chainToConfig, modifyBundlerChain } from './configChain';
 export { applySwcDecoratorConfig } from './plugins/swc';

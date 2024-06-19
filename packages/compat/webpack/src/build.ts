@@ -1,11 +1,9 @@
 import { type Rspack, logger } from '@rsbuild/core';
-import {
-  type BuildOptions,
-  type MultiStats,
-  type RspackConfig,
-  type Stats,
-  getNodeEnv,
-  setNodeEnv,
+import type {
+  BuildOptions,
+  MultiStats,
+  RspackConfig,
+  Stats,
 } from '@rsbuild/shared';
 import type { Configuration as WebpackConfig } from 'webpack';
 import WebpackMultiStats from 'webpack/lib/MultiStats.js';
@@ -17,8 +15,8 @@ export const build = async (
   initOptions: InitConfigsOptions,
   { mode = 'production', watch, compiler: customCompiler }: BuildOptions = {},
 ) => {
-  if (!getNodeEnv()) {
-    setNodeEnv(mode);
+  if (!process.env.NODE_ENV) {
+    process.env.NODE_ENV = mode;
   }
 
   const { context } = initOptions;

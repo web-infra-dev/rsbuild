@@ -1,12 +1,15 @@
 import path from 'node:path';
-import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
 import {
   type ConfigChainWithContext,
+  type RsbuildPlugin,
+  type Rspack,
+  reduceConfigsWithContext,
+} from '@rsbuild/core';
+import {
   type FileFilterUtil,
   castArray,
   cloneDeep,
   deepmerge,
-  reduceConfigsWithContext,
 } from '@rsbuild/shared';
 import type Less from '../compiled/less';
 

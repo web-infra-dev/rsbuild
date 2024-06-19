@@ -1,11 +1,12 @@
 import { isAbsolute, normalize, sep } from 'node:path';
 import type { PluginOptions as BabelPluginOptions } from '@babel/core';
-import type {
-  ChainIdentifier,
-  NormalizedConfig,
-  RspackChain,
+import {
+  type ChainIdentifier,
+  type NormalizedConfig,
+  type RspackChain,
+  reduceConfigsWithContext,
 } from '@rsbuild/core';
-import { castArray, reduceConfigsWithContext } from '@rsbuild/shared';
+import { castArray } from '@rsbuild/shared';
 import upath from 'upath';
 import type {
   BabelConfigUtils,

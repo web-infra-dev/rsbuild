@@ -5,10 +5,9 @@ import {
   type SriAlgorithm,
   type SriOptions,
   isHtmlDisabled,
-  isProd,
 } from '@rsbuild/shared';
 import { HTML_REGEX } from '../constants';
-import { removeLeadingSlash } from '../helpers';
+import { isProd, removeLeadingSlash } from '../helpers';
 import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
 

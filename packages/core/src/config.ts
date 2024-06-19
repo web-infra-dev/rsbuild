@@ -5,7 +5,6 @@ import {
   RspackChain,
   color,
   fse,
-  getNodeEnv,
   isObject,
 } from '@rsbuild/shared';
 import type {
@@ -42,7 +41,13 @@ import {
   TS_CONFIG_FILE,
   WASM_DIST_DIR,
 } from './constants';
-import { debounce, findExists, isFileExists, upperFirst } from './helpers';
+import {
+  debounce,
+  findExists,
+  getNodeEnv,
+  isFileExists,
+  upperFirst,
+} from './helpers';
 import { logger } from './logger';
 import { mergeRsbuildConfig } from './mergeConfig';
 import { restartDevServer } from './server/restart';
@@ -365,7 +370,7 @@ export async function loadConfig({
       const result = await configExport(params);
 
       if (result === undefined) {
-        throw new Error('Rsbuild config function must return a config object.');
+        throw new Error('The config function must return a config object.');
       }
 
       return {
@@ -376,7 +381,7 @@ export async function loadConfig({
 
     if (!isObject(configExport)) {
       throw new Error(
-        `Rsbuild config must be an object or a function that returns an object, get ${color.yellow(
+        `The config must be an object or a function that returns an object, get ${color.yellow(
           configExport,
         )}`,
       );

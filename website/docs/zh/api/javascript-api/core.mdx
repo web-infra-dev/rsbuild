@@ -376,3 +376,117 @@ ensureAssetPrefix(
 );
 // -> 'https://example.com/index.html'
 ```
+
+## reduceConfigs
+
+`reduceConfigs` 函数将一个或多个配置对象合并为最终配置，它还允许通过函数修改配置对象。
+
+- **版本：** `>= 1.0.0`
+- **类型：**
+
+```ts
+type OneOrMany<T> = T | T[];
+type ConfigChain<T> = OneOrMany<T | ((config: T) => T | void)>;
+
+function reduceConfigs<T>(options: {
+  /**
+   * 初始配置对象
+   */
+  initial: T;
+  /**
+   * 要合并到初始配置中的配置对象、函数，或是由配置对象和函数组成的数组
+   */
+  config?: ConfigChain<T> | undefined;
+  /**
+   * 合并配置对象的函数
+   * @default Object.assign
+   */
+  mergeFn?: typeof Object.assign;
+}): T;
+```
+
+- **示例：**
+
+```ts
+import { reduceConfigs } from '@rsbuild/core';
+
+const initial = { a: 1, b: 2 };
+
+// 合并一个对象
+const finalConfig1 = reduceConfigs({
+  initial,
+  config: { b: 3, c: 4 },
+});
+// -> { a: 1, b: 3, c: 4 }
+
+// 使用一个函数修改配置
+const finalConfig2 = reduceConfigs({
+  initial,
+  config: (config) => ({ ...config, b: 5, d: 6 }),
+});
+// -> { a: 1, b: 5, d: 6 }
+
+// 合并一个对象/函数数组
+const finalConfig3 = reduceConfigs({
+  initial,
+  config: [
+    { b: 7 },
+    (config) => ({ ...config, c: 8 }),
+    (config) => ({ ...config, d: 9 }),
+  ],
+});
+// -> { a: 1, b: 7, c: 8, d: 9 }
+```
+
+## reduceConfigsWithContext
+
+`reduceConfigsWithContext` 函数的作用与 `reduceConfigs` 相似，它允许你额外传入一个 `context` 对象给配置函数。
+
+- **版本：** `>= 1.0.0`
+- **类型：**
+
+```ts
+type OneOrMany<T> = T | T[];
+type ConfigChainWithContext<T, Ctx> = OneOrMany<
+  T | ((config: T, ctx: Ctx) => T | void)
+>;
+
+function reduceConfigsWithContext<T, Ctx>(options: {
+  /**
+   * 初始配置对象
+   */
+  initial: T;
+  /**
+   * 要合并到初始配置中的配置对象、函数，或是由配置对象和函数组成的数组
+   */
+  config?: ConfigChainWithContext<T> | undefined;
+  /**
+   * 可以在配置函数中使用的上下文对象。
+   */
+  ctx?: Ctx;
+  /**
+   * 合并配置对象的函数
+   * @default Object.assign
+   */
+  mergeFn?: typeof Object.assign;
+}): T;
+```
+
+- **示例：**
+
+```ts
+import { reduceConfigsWithContext } from '@rsbuild/core';
+
+const initial = { a: 1, b: 2 };
+const context = { user: 'admin' };
+
+const finalConfig = reduceConfigsWithContext({
+  initial,
+  config: [
+    { b: 3 },
+    (config, ctx) => ({ ...config, c: ctx.user === 'admin' ? 99 : 4 }),
+  ],
+  ctx: context,
+});
+// -> { a: 1, b: 3, c: 99 }
+```

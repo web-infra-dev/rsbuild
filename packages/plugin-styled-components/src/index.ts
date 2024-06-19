@@ -4,7 +4,7 @@ import type {
   RsbuildPlugin,
   RsbuildTarget,
 } from '@rsbuild/core';
-import { getNodeEnv, reduceConfigs } from '@rsbuild/shared';
+import { reduceConfigs } from '@rsbuild/core';
 
 /**
  * the options of [rspackExperiments.styledComponents](https://rspack.dev/guide/features/builtin-swc-loader#rspackexperimentsstyledcomponents).
@@ -53,7 +53,7 @@ export const pluginStyledComponents = (
 
     const getMergedOptions = () => {
       const useSSR = isServerTarget(api.context.targets);
-      const isProd = getNodeEnv() === 'production';
+      const isProd = process.env.NODE_ENV === 'production';
 
       return reduceConfigs({
         initial: getDefaultStyledComponentsConfig(isProd, useSSR),

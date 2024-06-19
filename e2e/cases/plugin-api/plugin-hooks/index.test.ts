@@ -1,7 +1,6 @@
 import { gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
-import { setNodeEnv } from '@rsbuild/shared';
 
 const createPlugin = () => {
   const names: string[] = [];
@@ -90,7 +89,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should run plugin hooks correctly when running startDevServer',
   async ({ page }) => {
-    setNodeEnv('development');
+    process.env.NODE_ENV = 'development';
 
     const { plugin, names } = createPlugin();
     const rsbuild = await createRsbuild({
@@ -119,7 +118,7 @@ rspackOnlyTest(
       'OnCloseDevServer',
     ]);
 
-    setNodeEnv('test');
+    process.env.NODE_ENV = 'test';
   },
 );
 

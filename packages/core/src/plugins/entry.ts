@@ -3,11 +3,11 @@ import {
   type RsbuildTarget,
   castArray,
   color,
-  reduceConfigsMergeContext,
   type NormalizedEnvironmentConfig,
 } from '@rsbuild/shared';
 import type { EntryDescription } from '@rspack/core';
 import { createVirtualModule } from '../helpers';
+import { reduceConfigsMergeContext } from '../reduceConfigs';
 import type { NormalizedConfig, RsbuildConfig, RsbuildPlugin } from '../types';
 
 export function getEntryObject(

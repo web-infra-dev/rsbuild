@@ -2,7 +2,7 @@ import {
   reduceConfigs,
   reduceConfigsMergeContext,
   reduceConfigsWithContext,
-} from '../src';
+} from '../src/reduceConfigs';
 
 describe('reduceConfigs', () => {
   test('should return initial config', () => {

@@ -1,5 +1,5 @@
 import type { RsbuildPluginAPI, SplitChunks } from '@rsbuild/core';
-import { createCacheGroups, isPlainObject, isProd } from '@rsbuild/shared';
+import { createCacheGroups, isPlainObject } from '@rsbuild/shared';
 import type { SplitReactChunkOptions } from '.';
 
 export const applySplitChunksRule = (
@@ -27,7 +27,7 @@ export const applySplitChunksRule = (
         'react',
         'react-dom',
         'scheduler',
-        ...(isProd()
+        ...(process.env.NODE_ENV === 'production'
           ? []
           : ['react-refresh', /@rspack[\\/]plugin-react-refresh/]),
       ];

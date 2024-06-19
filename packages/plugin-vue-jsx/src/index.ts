@@ -1,6 +1,5 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 import { modifyBabelLoaderOptions } from '@rsbuild/plugin-babel';
-import { isUsingHMR } from '@rsbuild/shared';
 import type { VueJSXPluginOptions } from '@vue/babel-plugin-jsx';
 
 export type PluginVueJsxOptions = {
@@ -31,7 +30,7 @@ export function pluginVueJsx(options: PluginVueJsxOptions = {}): RsbuildPlugin {
               options.vueJsxOptions || {},
             ]);
 
-            const usingHMR = isUsingHMR(config, { target, isProd });
+            const usingHMR = !isProd && config.dev.hmr && target === 'web';
 
             if (usingHMR) {
               babelOptions.plugins ??= [];

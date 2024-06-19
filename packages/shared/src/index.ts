@@ -5,6 +5,5 @@ export { fse };
 export * from './constants';
 export * from './utils';
 export * from './getBrowserslist';
-export * from './reduceConfigs';
 export * from './types';
 export * from './chain';

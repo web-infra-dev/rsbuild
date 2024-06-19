@@ -1,4 +1,4 @@
-import { isProd } from '@rsbuild/shared';
+import { isProd } from '../helpers';
 import type { NormalizedConfig, RsbuildConfig, RsbuildPlugin } from '../types';
 
 // There are two ways to enable the bundle analyzer:

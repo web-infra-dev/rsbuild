@@ -12,6 +12,7 @@ const {
   chainToConfig,
   modifyBundlerChain,
   onCompileDone,
+  prettyTime,
   TARGET_ID_MAP,
 } = __internalHelper;
 
@@ -27,6 +28,7 @@ export {
   chainToConfig,
   modifyBundlerChain,
   onCompileDone,
+  prettyTime,
   TARGET_ID_MAP,
 };
 

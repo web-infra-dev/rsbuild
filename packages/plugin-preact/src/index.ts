@@ -1,5 +1,4 @@
 import type { RsbuildConfig, RsbuildPlugin, Rspack } from '@rsbuild/core';
-import { getNodeEnv } from '@rsbuild/shared';
 
 export type PluginPreactOptions = {
   /**
@@ -21,7 +20,7 @@ export const pluginPreact = (
 
     api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
       const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
-        development: getNodeEnv() === 'development',
+        development: process.env.NODE_ENV === 'development',
         runtime: 'automatic',
         importSource: 'preact',
       };

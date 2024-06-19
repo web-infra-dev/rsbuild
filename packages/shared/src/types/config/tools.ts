@@ -2,11 +2,6 @@ import type { rspack } from '@rspack/core';
 import type { SwcLoaderOptions } from '@rspack/core';
 import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
 import type { RspackChain } from '../../chain';
-import type {
-  ConfigChain,
-  ConfigChainAsyncWithContext,
-  ConfigChainWithContext,
-} from '../../reduceConfigs';
 import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
 import type {
   ModifyWebpackChainUtils,
@@ -27,6 +22,11 @@ import type {
   StyleLoaderOptions,
   WebpackConfig,
 } from '../thirdParty';
+import type {
+  ConfigChain,
+  ConfigChainAsyncWithContext,
+  ConfigChainWithContext,
+} from '../utils';
 import type { MaybePromise, OneOrMany } from '../utils';
 
 export type { HTMLPluginOptions };
