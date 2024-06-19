@@ -1,10 +1,11 @@
+import fs from 'node:fs';
 import {
   type ConfigChain,
   type RsbuildPlugin,
   logger,
   reduceConfigs,
 } from '@rsbuild/core';
-import { CHAIN_ID, NODE_MODULES_REGEX, deepmerge, fse } from '@rsbuild/shared';
+import { CHAIN_ID, NODE_MODULES_REGEX, deepmerge } from '@rsbuild/shared';
 import type ForkTSCheckerPlugin from 'fork-ts-checker-webpack-plugin';
 
 type ForkTsCheckerOptions = NonNullable<
@@ -65,7 +66,7 @@ export const pluginTypeCheck = (
 
         const { default: json5 } = await import('json5');
         const { references } = json5.parse(
-          fse.readFileSync(api.context.tsconfigPath, 'utf-8'),
+          fs.readFileSync(api.context.tsconfigPath, 'utf-8'),
         );
         const useReference = Array.isArray(references) && references.length > 0;
 

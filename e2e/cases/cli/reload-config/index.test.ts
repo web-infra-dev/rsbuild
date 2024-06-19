@@ -1,18 +1,19 @@
 import { exec } from 'node:child_process';
+import fs from 'node:fs';
 import path from 'node:path';
 import { awaitFileExists, getRandomPort } from '@e2e/helper';
 import { test } from '@playwright/test';
-import { fse } from '@rsbuild/shared';
 
 test('should restart dev server and reload config when config file changed', async () => {
   const dist1 = path.join(__dirname, 'dist');
   const dist2 = path.join(__dirname, 'dist-2');
   const configFile = path.join(__dirname, 'rsbuild.config.mjs');
-  await fse.remove(dist1);
-  await fse.remove(dist2);
-  await fse.remove(configFile);
 
-  fse.writeFileSync(
+  fs.rmSync(dist1, { force: true, recursive: true });
+  fs.rmSync(dist2, { force: true, recursive: true });
+  fs.rmSync(configFile, { force: true });
+
+  fs.writeFileSync(
     configFile,
     `export default {
       dev: {
@@ -33,7 +34,7 @@ test('should restart dev server and reload config when config file changed', asy
 
   await awaitFileExists(dist1);
 
-  fse.writeFileSync(
+  fs.writeFileSync(
     configFile,
     `export default {
       dev: {

@@ -1,4 +1,5 @@
 import assert from 'node:assert';
+import fs from 'node:fs';
 import net from 'node:net';
 import { join } from 'node:path';
 import { URL } from 'node:url';
@@ -9,7 +10,6 @@ import type {
   RsbuildPlugins,
 } from '@rsbuild/core';
 import { pluginSwc } from '@rsbuild/plugin-swc';
-import { fse } from '@rsbuild/shared';
 import type { Page } from 'playwright';
 import { globContentJSON } from './helper';
 
@@ -204,7 +204,8 @@ export async function build({
     ? await rsbuild.preview()
     : { port: 0, server: { close: noop } };
 
-  const clean = async () => await fse.remove(distPath);
+  const clean = async () =>
+    fs.promises.rm(distPath, { force: true, recursive: true });
 
   const unwrapOutputJSON = async (ignoreMap = true) => {
     return globContentJSON(distPath, {

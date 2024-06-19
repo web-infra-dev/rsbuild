@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { fse } from '@rsbuild/shared';
 import json5 from 'json5';
@@ -22,7 +23,7 @@ export const readJson = async <T>(jsonFileAbsPath: string) => {
     return {} as T;
   }
 
-  const content = await fse.readFile(jsonFileAbsPath, 'utf-8');
+  const content = await fs.promises.readFile(jsonFileAbsPath, 'utf-8');
   const json: T = json5.parse(content);
   return json;
 };

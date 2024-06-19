@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { build, webpackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
@@ -33,7 +34,7 @@ webpackOnlyTest(
 
     const configFile = path.resolve(cacheDirectory, 'buildDependencies.json');
 
-    fse.emptyDirSync(cacheDirectory);
+    fs.rmSync(cacheDirectory, { recursive: true, force: true });
 
     // first build no cache
     let rsbuild = await build(buildConfig);
@@ -85,7 +86,7 @@ webpackOnlyTest('cacheDigest should work', async () => {
 
   const configFile = path.resolve(cacheDirectory, 'buildDependencies.json');
 
-  fse.emptyDirSync(cacheDirectory);
+  fs.rmSync(cacheDirectory, { recursive: true, force: true });
 
   // first build no cache
   let rsbuild = await build(getBuildConfig());
