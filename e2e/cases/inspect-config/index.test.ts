@@ -26,8 +26,8 @@ test('should generate config files when writeToDisk is true', async () => {
   expect(fs.existsSync(bundlerConfig)).toBeTruthy();
   expect(fs.existsSync(rsbuildConfig)).toBeTruthy();
 
-  fse.removeSync(rsbuildConfig);
-  fse.removeSync(bundlerConfig);
+  fs.rmSync(rsbuildConfig, { force: true });
+  fs.rmSync(bundlerConfig, { force: true });
 });
 
 test('should generate bundler config for node when target contains node', async () => {
@@ -47,9 +47,9 @@ test('should generate bundler config for node when target contains node', async 
   expect(fs.existsSync(bundlerConfig)).toBeTruthy();
   expect(fs.existsSync(bundlerNodeConfig)).toBeTruthy();
 
-  fse.removeSync(rsbuildConfig);
-  fse.removeSync(bundlerConfig);
-  fse.removeSync(bundlerNodeConfig);
+  fs.rmSync(rsbuildConfig, { force: true });
+  fs.rmSync(bundlerConfig, { force: true });
+  fs.rmSync(bundlerNodeConfig, { force: true });
 });
 
 test('should not generate config files when writeToDisk is false', async () => {

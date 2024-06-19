@@ -13,7 +13,7 @@ const testFile = path.join(packagePath, 'test.txt');
 rspackOnlyTest(
   'should register Rsdoctor plugin when process.env.RSDOCTOR is true',
   async () => {
-    fse.removeSync(packagePath);
+    fs.rmSync(packagePath, { recursive: true, force: true });
     fse.copySync(path.join(__dirname, 'mock'), packagePath);
 
     const { logs, restore } = proxyConsole();
@@ -36,7 +36,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should not register Rsdoctor plugin when process.env.RSDOCTOR is false',
   async () => {
-    fse.removeSync(packagePath);
+    fs.rmSync(packagePath, { recursive: true, force: true });
     fse.copySync(path.join(__dirname, 'mock'), packagePath);
 
     process.env.RSDOCTOR = 'false';

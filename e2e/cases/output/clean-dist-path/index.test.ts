@@ -15,7 +15,7 @@ test('should clean dist path by default', async () => {
   });
 
   expect(fs.existsSync(testDistFile)).toBeFalsy();
-  fse.removeSync(testDistFile);
+  fs.rmSync(testDistFile, { force: true });
 });
 
 test('should not clean dist path if it is outside root', async () => {
@@ -40,7 +40,7 @@ test('should not clean dist path if it is outside root', async () => {
 
   expect(fs.existsSync(testOutsideFile)).toBeTruthy();
 
-  fse.removeSync(testOutsideFile);
+  fs.rmSync(testOutsideFile, { force: true });
   restore();
 });
 
@@ -58,5 +58,5 @@ test('should allow to disable cleanDistPath', async () => {
 
   expect(fs.existsSync(testDistFile)).toBeTruthy();
 
-  fse.removeSync(testDistFile);
+  fs.rmSync(testDistFile, { force: true });
 });

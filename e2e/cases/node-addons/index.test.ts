@@ -29,7 +29,8 @@ test('should compile Node addons correctly', async () => {
 test('should compile Node addons in the node_modules correctly', async () => {
   const pkgDir = join(__dirname, 'node_modules', 'node-addon-pkg');
 
-  fse.removeSync(pkgDir);
+  fs.rmSync(pkgDir, { recursive: true, force: true });
+
   fse.outputJSONSync(join(pkgDir, 'package.json'), {
     name: 'node-addon-pkg',
     main: 'src/index.js',

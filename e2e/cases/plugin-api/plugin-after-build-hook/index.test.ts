@@ -34,7 +34,7 @@ const plugin: RsbuildPlugin = {
 rspackOnlyTest(
   'should run onAfterBuild hooks correctly when have multiple targets',
   async () => {
-    fse.removeSync(distFile);
+    fs.rmSync(distFile, { force: true });
 
     const rsbuild = await createRsbuild({
       cwd: __dirname,

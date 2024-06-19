@@ -8,8 +8,8 @@ const localFile = path.join(__dirname, '.env.local');
 const prodLocalFile = path.join(__dirname, '.env.production.local');
 
 test.beforeEach(() => {
-  fse.removeSync(localFile);
-  fse.removeSync(prodLocalFile);
+  fs.rmSync(localFile, { force: true });
+  fs.rmSync(prodLocalFile, { force: true });
 });
 
 test('should load .env config and allow rsbuild.config.ts to read env vars', async () => {
