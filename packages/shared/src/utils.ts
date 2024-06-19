@@ -1,6 +1,6 @@
+import fs from 'node:fs';
 import type { Compiler } from '@rspack/core';
 import deepmerge from '../compiled/deepmerge/index.js';
-import fse from '../compiled/fs-extra/index.js';
 import color from '../compiled/picocolors/index.js';
 import { DEFAULT_ASSET_PREFIX } from './constants';
 import type { CacheGroups, NormalizedConfig, RsbuildTarget } from './types';
@@ -26,7 +26,8 @@ export const isNil = (o: unknown): o is undefined | null =>
 
 export const getCoreJsVersion = (corejsPkgPath: string) => {
   try {
-    const { version } = fse.readJSONSync(corejsPkgPath);
+    const rawJson = fs.readFileSync(corejsPkgPath, 'utf-8');
+    const { version } = JSON.parse(rawJson);
     const [major, minor] = version.split('.');
     return `${major}.${minor}`;
   } catch (err) {

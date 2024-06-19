@@ -1,7 +1,7 @@
 import path, { join } from 'node:path';
 import { build, dev, gotoPage } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { fse } from '@rsbuild/shared';
+import fse from 'fs-extra';
 
 const cwd = __dirname;
 

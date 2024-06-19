@@ -2,7 +2,6 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createRsbuild } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { fse } from '@rsbuild/shared';
 
 const rsbuildConfig = path.resolve(__dirname, './dist/rsbuild.config.mjs');
 const bundlerConfig = path.resolve(

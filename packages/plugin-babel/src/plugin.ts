@@ -1,10 +1,11 @@
+import fs from 'node:fs';
 import path, { isAbsolute, join } from 'node:path';
 import type {
   NormalizedConfig,
   RsbuildContext,
   RsbuildPlugin,
 } from '@rsbuild/core';
-import { SCRIPT_REGEX, castArray, cloneDeep, fse } from '@rsbuild/shared';
+import { SCRIPT_REGEX, castArray, cloneDeep } from '@rsbuild/shared';
 import { BABEL_JS_RULE, applyUserBabelConfig } from './helper';
 import type { BabelLoaderOptions, PluginBabelOptions } from './types';
 
@@ -36,9 +37,11 @@ async function getCacheIdentifier(options: BabelLoaderOptions) {
   let identifier = `${process.env.NODE_ENV}${JSON.stringify(options)}`;
 
   const { version: coreVersion } = await import('@babel/core');
-  const loaderVersion = (
-    await fse.readJSON(join(__dirname, '../compiled/babel-loader/package.json'))
-  ).version;
+  const rawPkgJson = await fs.promises.readFile(
+    join(__dirname, '../compiled/babel-loader/package.json'),
+    'utf-8',
+  );
+  const loaderVersion: string = JSON.parse(rawPkgJson).version ?? '';
 
   identifier += `@babel/core@${coreVersion}`;
   identifier += `babel-loader@${loaderVersion}`;

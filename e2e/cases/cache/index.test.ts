@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { build, webpackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
-import { fse } from '@rsbuild/shared';
+import fse from 'fs-extra';
 
 webpackOnlyTest(
   'should save the buildDependencies to cache directory and hit cache',

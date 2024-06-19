@@ -1,5 +1,5 @@
+import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
-import { fse } from '@rsbuild/shared';
 import { normalizePublicDirs } from '../config';
 import type { RsbuildPlugin } from '../types';
 
@@ -23,14 +23,15 @@ export const pluginServer = (): RsbuildPlugin => ({
           ? name
           : join(api.context.rootPath, name);
 
-        if (!fse.existsSync(normalizedPath)) {
+        if (!fs.existsSync(normalizedPath)) {
           continue;
         }
 
         try {
           // async errors will missing error stack on copy, move
           // https://github.com/jprichardson/node-fs-extra/issues/769
-          await fse.copy(normalizedPath, api.context.distPath, {
+          await fs.promises.cp(normalizedPath, api.context.distPath, {
+            recursive: true,
             // dereference symlinks
             dereference: true,
           });

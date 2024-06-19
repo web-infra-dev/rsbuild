@@ -1,22 +1,22 @@
+import fs from 'node:fs';
 // @ts-check
 /**
  * Tip: please add the prebundled packages to `tsconfig.json#paths`.
  */
 import { join } from 'node:path';
-import fse from 'fs-extra';
 
 // The package size of `schema-utils` is large, and validate has a performance overhead of tens of ms.
 // So we skip the validation and let TypeScript to ensure type safety.
 const writeEmptySchemaUtils = (task) => {
   const schemaUtilsPath = join(task.distPath, 'schema-utils.js');
-  fse.writeFileSync(schemaUtilsPath, 'module.exports.validate = () => {};');
+  fs.writeFileSync(schemaUtilsPath, 'module.exports.validate = () => {};');
 };
 
 function replaceFileContent(filePath, replaceFn) {
-  const content = fse.readFileSync(filePath, 'utf-8');
+  const content = fs.readFileSync(filePath, 'utf-8');
   const newContent = replaceFn(content);
   if (newContent !== content) {
-    fse.writeFileSync(filePath, newContent);
+    fs.writeFileSync(filePath, newContent);
   }
 }
 
@@ -47,7 +47,7 @@ export default {
       name: 'rslog',
       afterBundle(task) {
         // use the cjs bundle of rslog
-        fse.copyFileSync(
+        fs.copyFileSync(
           join(task.depPath, 'dist/index.cjs'),
           join(task.distPath, 'index.js'),
         );
@@ -94,9 +94,10 @@ export default {
       name: 'style-loader',
       ignoreDts: true,
       afterBundle: (task) => {
-        fse.copySync(
+        fs.cpSync(
           join(task.depPath, 'dist/runtime'),
           join(task.distPath, 'runtime'),
+          { recursive: true },
         );
       },
     },

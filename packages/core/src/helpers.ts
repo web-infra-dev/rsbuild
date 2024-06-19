@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path, { posix } from 'node:path';
 import {
   DEFAULT_ASSET_PREFIX,
@@ -13,7 +14,6 @@ import {
   castArray,
   color,
 } from '@rsbuild/shared';
-import { fse } from '@rsbuild/shared';
 import type { StatsCompilation, StatsValue } from '@rspack/core';
 import type {
   Compiler as WebpackCompiler,
@@ -278,14 +278,14 @@ export const ensureAbsolutePath = (base: string, filePath: string): string =>
 
 export const isFileSync = (filePath: string) => {
   try {
-    return fse.statSync(filePath, { throwIfNoEntry: false })?.isFile();
+    return fs.statSync(filePath, { throwIfNoEntry: false })?.isFile();
   } catch (_) {
     return false;
   }
 };
 
 export function isEmptyDir(path: string) {
-  const files = fse.readdirSync(path);
+  const files = fs.readdirSync(path);
   return files.length === 0 || (files.length === 1 && files[0] === '.git');
 }
 
@@ -303,11 +303,27 @@ export const findExists = (files: string[]): string | false => {
   return false;
 };
 
-export async function isFileExists(file: string) {
-  return fse.promises
-    .access(file, fse.constants.F_OK)
+export async function pathExists(path: string) {
+  return fs.promises
+    .access(path)
     .then(() => true)
     .catch(() => false);
+}
+
+export async function isFileExists(file: string) {
+  return fs.promises
+    .access(file, fs.constants.F_OK)
+    .then(() => true)
+    .catch(() => false);
+}
+
+export async function emptyDir(dir: string) {
+  if (!(await pathExists(dir))) {
+    return;
+  }
+  for (const file of fs.readdirSync(dir)) {
+    fs.rmSync(path.resolve(dir, file), { recursive: true, force: true });
+  }
 }
 
 const urlJoin = (base: string, path: string) => {
