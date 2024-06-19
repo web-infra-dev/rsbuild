@@ -64,11 +64,9 @@ const merge = (x: unknown, y: unknown, path = '') => {
   return merged;
 };
 
-export const mergeRsbuildConfig = (
-  ...configs: RsbuildConfig[]
-): RsbuildConfig => {
+export const mergeRsbuildConfig = <T = RsbuildConfig>(...configs: T[]): T => {
   if (configs.length === 2) {
-    return merge(configs[0], configs[1]) as RsbuildConfig;
+    return merge(configs[0], configs[1]) as T;
   }
 
   if (configs.length < 2) {
@@ -76,7 +74,7 @@ export const mergeRsbuildConfig = (
   }
 
   return configs.reduce(
-    (result, config) => merge(result, config) as RsbuildConfig,
-    {},
+    (result, config) => merge(result, config) as T,
+    {} as T,
   );
 };

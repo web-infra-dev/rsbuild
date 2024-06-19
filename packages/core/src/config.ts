@@ -176,6 +176,7 @@ const createDefaultConfig = (): RsbuildConfig => ({
   tools: getDefaultToolsConfig(),
   security: getDefaultSecurityConfig(),
   performance: getDefaultPerformanceConfig(),
+  environments: {},
 });
 
 function getDefaultEntry(root: string): RsbuildEntry {
@@ -230,7 +231,10 @@ export const withDefaultConfig = async (
  * 3. Meaningful and can be filled by constant value.
  */
 export const normalizeConfig = (config: RsbuildConfig): NormalizedConfig =>
-  mergeRsbuildConfig(createDefaultConfig(), config) as NormalizedConfig;
+  mergeRsbuildConfig(
+    createDefaultConfig(),
+    config,
+  ) as unknown as NormalizedConfig;
 
 export type ConfigParams = {
   env: string;

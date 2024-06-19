@@ -1,4 +1,5 @@
 import {
+  type NormalizedEnvironmentConfig,
   type RsbuildEntry,
   type RsbuildTarget,
   castArray,
@@ -10,7 +11,7 @@ import { reduceConfigsMergeContext } from '../reduceConfigs';
 import type { NormalizedConfig, RsbuildConfig, RsbuildPlugin } from '../types';
 
 export function getEntryObject(
-  config: RsbuildConfig | NormalizedConfig,
+  config: RsbuildConfig | NormalizedConfig | NormalizedEnvironmentConfig,
   target: RsbuildTarget,
 ): RsbuildEntry {
   if (!config.source?.entry) {

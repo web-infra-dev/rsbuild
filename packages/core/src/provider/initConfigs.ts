@@ -1,10 +1,15 @@
 import type {
   InspectConfigOptions,
+  NormalizedEnvironmentConfig,
   PluginManager,
   RspackConfig,
 } from '@rsbuild/shared';
 import { normalizeConfig } from '../config';
-import { updateContextByNormalizedConfig } from '../createContext';
+import {
+  updateContextByNormalizedConfig,
+  updateEnvironmentContext,
+} from '../createContext';
+import { camelCase } from '../helpers';
 import { isDebug, logger } from '../logger';
 import { mergeRsbuildConfig } from '../mergeConfig';
 import { initPlugins } from '../pluginManager';
@@ -33,6 +38,37 @@ export type InitConfigsOptions = {
   rsbuildOptions: Required<CreateRsbuildOptions>;
 };
 
+const normalizeEnvironmentsConfigs = (
+  normalizedConfig: NormalizedConfig,
+): Record<string, NormalizedEnvironmentConfig> => {
+  const { environments, dev, server, provider, ...rsbuildSharedConfig } =
+    normalizedConfig;
+  if (environments) {
+    return Object.fromEntries(
+      Object.entries(environments).map(([name, config]) => [
+        name,
+        {
+          ...mergeRsbuildConfig(
+            rsbuildSharedConfig,
+            config as unknown as NormalizedEnvironmentConfig,
+          ),
+          dev,
+          server,
+        },
+      ]),
+    );
+  }
+
+  return {
+    // TODO: replace output.targets with output.target
+    [camelCase(rsbuildSharedConfig.output.targets[0])]: {
+      ...rsbuildSharedConfig,
+      dev,
+      server,
+    },
+  };
+};
+
 export async function initRsbuildConfig({
   context,
   pluginManager,
@@ -51,8 +87,18 @@ export async function initRsbuildConfig({
   });
 
   await modifyRsbuildConfig(context);
-  context.normalizedConfig = normalizeConfig(context.config);
+  const normalizeBaseConfig = normalizeConfig(context.config);
+
+  const environments = normalizeEnvironmentsConfigs(normalizeBaseConfig);
+
+  context.normalizedConfig = {
+    ...normalizeBaseConfig,
+    environments,
+  };
+
   updateContextByNormalizedConfig(context, context.normalizedConfig);
+
+  updateEnvironmentContext(context, environments);
 
   return context.normalizedConfig;
 }
