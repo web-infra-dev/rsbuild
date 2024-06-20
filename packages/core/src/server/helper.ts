@@ -2,9 +2,8 @@ import type { IncomingMessage } from 'node:http';
 import net from 'node:net';
 import type { Socket } from 'node:net';
 import os from 'node:os';
-import { color, deepmerge, isFunction } from '@rsbuild/shared';
+import { color, isFunction } from '@rsbuild/shared';
 import type {
-  DevConfig,
   NormalizedConfig,
   OutputStructure,
   PrintUrls,
@@ -160,11 +159,6 @@ export function printServerURLs({
 }
 
 /**
- * hmr socket connect path
- */
-export const HMR_SOCK_PATH = '/rsbuild-hmr';
-
-/**
  * Get available free port.
  * @param port - Current port want to use.
  * @param tryLimits - Maximum number of retries.
@@ -248,32 +242,6 @@ export const getServerConfig = async ({
   });
   const https = Boolean(config.server.https) || false;
   return { port, host, https };
-};
-
-export const getDevConfig = ({
-  config,
-}: {
-  config: NormalizedConfig;
-}): DevConfig => {
-  const defaultDevConfig: DevConfig = {
-    client: {
-      path: HMR_SOCK_PATH,
-      // By default it is set to "location.port"
-      port: '',
-      // By default it is set to "location.hostname"
-      host: '',
-      // By default it is set to "location.protocol === 'https:' ? 'wss' : 'ws'""
-      protocol: undefined,
-    },
-    writeToDisk: false,
-    liveReload: true,
-  };
-
-  const devConfig = config.dev
-    ? deepmerge(defaultDevConfig, config.dev)
-    : defaultDevConfig;
-
-  return devConfig;
 };
 
 const getIpv4Interfaces = () => {

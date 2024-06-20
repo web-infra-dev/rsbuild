@@ -5,11 +5,15 @@ exports[`environment config > should normalize environment config correctly 1`] 
   "dev": {
     "assetPrefix": "/",
     "client": {
+      "host": "",
       "overlay": true,
+      "path": "/rsbuild-hmr",
+      "port": "",
     },
     "hmr": true,
     "liveReload": true,
     "startUrl": false,
+    "writeToDisk": false,
   },
   "html": {
     "crossorigin": false,
@@ -127,11 +131,15 @@ exports[`environment config > should print environment config when inspect confi
     "dev": {
       "assetPrefix": "/",
       "client": {
+        "host": "",
         "overlay": true,
+        "path": "/rsbuild-hmr",
+        "port": "",
       },
       "hmr": true,
       "liveReload": true,
       "startUrl": false,
+      "writeToDisk": false,
     },
     "html": {
       "crossorigin": false,
@@ -245,11 +253,15 @@ exports[`environment config > should print environment config when inspect confi
     "dev": {
       "assetPrefix": "/",
       "client": {
+        "host": "",
         "overlay": true,
+        "path": "/rsbuild-hmr",
+        "port": "",
       },
       "hmr": true,
       "liveReload": true,
       "startUrl": false,
+      "writeToDisk": false,
     },
     "html": {
       "crossorigin": false,
@@ -368,11 +380,15 @@ exports[`environment config > should support modify environment config by api.mo
     "dev": {
       "assetPrefix": "/",
       "client": {
+        "host": "",
         "overlay": true,
+        "path": "/rsbuild-hmr",
+        "port": "",
       },
       "hmr": true,
       "liveReload": true,
       "startUrl": false,
+      "writeToDisk": false,
     },
     "html": {
       "crossorigin": false,
@@ -486,11 +502,15 @@ exports[`environment config > should support modify environment config by api.mo
     "dev": {
       "assetPrefix": "/",
       "client": {
+        "host": "",
         "overlay": true,
+        "path": "/rsbuild-hmr",
+        "port": "",
       },
       "hmr": true,
       "liveReload": true,
       "startUrl": false,
+      "writeToDisk": false,
     },
     "html": {
       "crossorigin": false,
@@ -605,11 +625,15 @@ exports[`environment config > should support modify environment config by api.mo
     "dev": {
       "assetPrefix": "/",
       "client": {
+        "host": "",
         "overlay": true,
+        "path": "/rsbuild-hmr",
+        "port": "",
       },
       "hmr": true,
       "liveReload": true,
       "startUrl": false,
+      "writeToDisk": false,
     },
     "html": {
       "crossorigin": false,

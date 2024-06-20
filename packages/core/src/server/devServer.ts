@@ -20,7 +20,6 @@ import {
   type UpgradeEvent,
   formatRoutes,
   getAddressUrls,
-  getDevConfig,
   getServerConfig,
   printServerURLs,
 } from './helper';
@@ -96,13 +95,9 @@ export async function createDevServer<
 
   logger.debug('create dev server');
 
-  const serverConfig = config.server;
   const { port, host, https } = await getServerConfig({
     config,
     getPortSilently,
-  });
-  const devConfig = getDevConfig({
-    config,
   });
 
   const routes = formatRoutes(
@@ -134,8 +129,8 @@ export async function createDevServer<
 
     // create dev middleware instance
     const compilerDevMiddleware = new CompilerDevMiddleware({
-      dev: devConfig,
-      server: serverConfig,
+      dev: config.dev,
+      server: config.server,
       publicPaths: publicPaths,
       devMiddleware,
     });
@@ -168,7 +163,7 @@ export async function createDevServer<
         port,
         routes,
         protocol,
-        printUrls: serverConfig.printUrls,
+        printUrls: config.server.printUrls,
       });
     });
   } else {
@@ -177,23 +172,23 @@ export async function createDevServer<
       port,
       routes,
       protocol,
-      printUrls: serverConfig.printUrls,
+      printUrls: config.server.printUrls,
     });
   }
 
   const compileMiddlewareAPI = runCompile ? await startCompile() : undefined;
 
   const fileWatcher = await setupWatchFiles({
-    dev: devConfig,
-    server: serverConfig,
+    dev: config.dev,
+    server: config.server,
     compileMiddlewareAPI,
   });
 
   const devMiddlewares = await getMiddlewares({
     pwd: options.context.rootPath,
     compileMiddlewareAPI,
-    dev: devConfig,
-    server: serverConfig,
+    dev: config.dev,
+    server: config.server,
     output: {
       distPath: config.output.distPath.root || ROOT_DIST_DIR,
     },
@@ -217,7 +212,7 @@ export async function createDevServer<
     outputFileSystem,
     listen: async () => {
       const httpServer = await createHttpServer({
-        serverConfig,
+        serverConfig: config.server,
         middlewares,
       });
       logger.debug('listen dev server');

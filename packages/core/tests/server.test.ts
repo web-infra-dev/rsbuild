@@ -1,14 +1,9 @@
-import type { NormalizedConfig } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import {
   isClientCompiler,
   setupServerHooks,
 } from '../src/server/devMiddleware';
-import {
-  formatRoutes,
-  getDevConfig,
-  printServerURLs,
-} from '../src/server/helper';
+import { formatRoutes, printServerURLs } from '../src/server/helper';
 
 test('formatRoutes', () => {
   expect(
@@ -306,50 +301,5 @@ describe('test dev server', () => {
         }),
       ),
     ).toBeFalsy();
-  });
-
-  test('getDevServerOptions', async () => {
-    expect(
-      getDevConfig({
-        config: {} as NormalizedConfig,
-      }),
-    ).toMatchInlineSnapshot(`
-      {
-        "client": {
-          "host": "",
-          "path": "/rsbuild-hmr",
-          "port": "",
-          "protocol": undefined,
-        },
-        "liveReload": true,
-        "writeToDisk": false,
-      }
-    `);
-
-    expect(
-      getDevConfig({
-        config: {
-          dev: {
-            hmr: false,
-            client: {
-              host: '',
-              path: '',
-            },
-          },
-        } as NormalizedConfig,
-      }),
-    ).toMatchInlineSnapshot(`
-      {
-        "client": {
-          "host": "",
-          "path": "",
-          "port": "",
-          "protocol": undefined,
-        },
-        "hmr": false,
-        "liveReload": true,
-        "writeToDisk": false,
-      }
-    `);
   });
 });

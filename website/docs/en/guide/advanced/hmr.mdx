@@ -33,33 +33,11 @@ export default {
 
 ## Specify HMR URL
 
-By default, Rsbuild uses the host and port number of the current page to splice the WebSocket URL of HMR.
+By default, Rsbuild uses the host and port number of the current page to splice the WebSocket URL for HMR.
 
-When the HMR connection fails, you can specify the WebSocket URL by customizing `dev.client` configuration.
+When the HMR connection fails, you can specify the WebSocket URL by customizing [dev.client](/config/dev/client) config.
 
-### Default Config
-
-The default config are as follows, Rsbuild will automatically deduce the URL of the WebSocket request according to the current location:
-
-```ts
-export default {
-  dev: {
-    client: {
-      path: '/rsbuild-hmr',
-      // Equivalent to port of the dev server
-      port: '',
-      host: location.hostname,
-      protocol: location.protocol === 'https:' ? 'wss' : 'ws',
-    },
-  },
-};
-```
-
-### Proxy
-
-WHen you proxy an online site for local development, WebSocket requests will fail to connect. You can try configuring `dev.client` to the following values so that HMR requests can reach the local Dev Server.
-
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     client: {
