@@ -1,12 +1,7 @@
 # output.emitAssets
 
-- **类型：**
-
-```ts
-type EmitAssets = (params: { target: RsbuildTarget }) => boolean;
-```
-
-- **默认值：** `() => true`
+- **类型：** `boolean`
+- **默认值：** `true`
 
 用于控制是否输出图片、字体、音频、视频等静态资源。
 
@@ -18,9 +13,18 @@ type EmitAssets = (params: { target: RsbuildTarget }) => boolean;
 
 ```js
 export default {
-  output: {
-    targets: ['web', 'node'],
-    emitAssets: ({ target }) => target !== 'node',
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+        emitAssets: false,
+      },
+    },
   },
 };
 ```

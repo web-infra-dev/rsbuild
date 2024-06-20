@@ -204,8 +204,6 @@ export type InlineChunkTestFunction = (params: {
 
 export type InlineChunkTest = RegExp | InlineChunkTestFunction;
 
-export type EmitAssets = (params: { target: RsbuildTarget }) => boolean;
-
 export interface OutputConfig {
   /**
    * Specify build target to run in specified environment.
@@ -306,7 +304,7 @@ export interface OutputConfig {
    * Whether to emit static assets such as image, font, etc.
    * Return `false` to avoid outputting unnecessary assets for some scenarios such as SSR.
    */
-  emitAssets?: EmitAssets;
+  emitAssets?: boolean;
 }
 
 export interface NormalizedOutputConfig extends OutputConfig {
@@ -336,5 +334,5 @@ export interface NormalizedOutputConfig extends OutputConfig {
     localIdentName?: string;
     mode?: CSSModules['mode'];
   };
-  emitAssets: EmitAssets;
+  emitAssets: boolean;
 }

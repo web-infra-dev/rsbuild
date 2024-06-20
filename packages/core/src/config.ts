@@ -169,7 +169,7 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
     exportGlobals: false,
     exportLocalsConvention: 'camelCase',
   },
-  emitAssets: () => true,
+  emitAssets: true,
 });
 
 const createDefaultConfig = (): RsbuildConfig => ({

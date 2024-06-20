@@ -74,8 +74,8 @@ export const pluginAsset = (): RsbuildPlugin => ({
   name: 'rsbuild:asset',
 
   setup(api) {
-    api.modifyBundlerChain((chain, { isProd, target }) => {
-      const config = api.getNormalizedConfig();
+    api.modifyBundlerChain((chain, { isProd, environment }) => {
+      const config = api.getNormalizedConfig({ environment });
 
       const createAssetRule = (
         assetType: 'image' | 'media' | 'font' | 'svg',
@@ -101,16 +101,16 @@ export const pluginAsset = (): RsbuildPlugin => ({
         });
       };
 
-      const emit = config.output.emitAssets({ target });
+      const { emitAssets } = config.output;
 
-      createAssetRule('image', IMAGE_EXTENSIONS, emit);
-      createAssetRule('svg', ['svg'], emit);
+      createAssetRule('image', IMAGE_EXTENSIONS, emitAssets);
+      createAssetRule('svg', ['svg'], emitAssets);
       createAssetRule(
         'media',
         [...VIDEO_EXTENSIONS, ...AUDIO_EXTENSIONS],
-        emit,
+        emitAssets,
       );
-      createAssetRule('font', FONT_EXTENSIONS, emit);
+      createAssetRule('font', FONT_EXTENSIONS, emitAssets);
     });
   },
 });
