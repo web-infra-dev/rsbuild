@@ -175,14 +175,16 @@ You can find the Rsbuild documentation in the [website](./website) folder.
 
 Commit your changes to your forked repo, and [create a pull request](https://help.github.com/articles/creating-a-pull-request/).
 
+> Normally, the commits in a PR will be squashed into one commit, so you don't need to rebase locally.
+
 ### Format of PR titles
 
-The format of PR titles follow Conventional Commits.
+The format of PR titles follow [Conventional Commits](https://www.conventionalcommits.org/).
 
 An example:
 
 ```
-feat(plugin-swc): Add `myOption` config
+feat(core): Add `myOption` config
 ^    ^    ^
 |    |    |__ Subject
 |    |_______ Scope
