@@ -3,7 +3,6 @@ import { defineConfig } from '@rsbuild/core';
 export default defineConfig({
   output: {
     filenameHash: false,
-    emitAssets: ({ target }) => target !== 'node',
   },
   environments: {
     web: {
@@ -14,6 +13,7 @@ export default defineConfig({
     node: {
       output: {
         target: 'node',
+        emitAssets: false,
       },
     },
   },

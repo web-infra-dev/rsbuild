@@ -6,6 +6,7 @@ import {
   type MultiStats,
   type NodeEnv,
   type NormalizedConfig,
+  type NormalizedEnvironmentConfig,
   type RsbuildTarget,
   type Rspack,
   type RspackChain,
@@ -369,17 +370,17 @@ export const ensureAssetPrefix = (url: string, assetPrefix: string) => {
 };
 
 export function getFilename(
-  config: NormalizedConfig,
+  config: NormalizedConfig | NormalizedEnvironmentConfig,
   type: 'js',
   isProd: boolean,
 ): NonNullable<FilenameConfig['js']>;
 export function getFilename(
-  config: NormalizedConfig,
+  config: NormalizedConfig | NormalizedEnvironmentConfig,
   type: Exclude<keyof FilenameConfig, 'js'>,
   isProd: boolean,
 ): string;
 export function getFilename(
-  config: NormalizedConfig,
+  config: NormalizedConfig | NormalizedEnvironmentConfig,
   type: keyof FilenameConfig,
   isProd: boolean,
 ) {

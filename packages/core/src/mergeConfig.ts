@@ -11,7 +11,6 @@ const OVERRIDE_PATH = [
   'output.inlineStyles',
   'output.cssModules.auto',
   'output.targets',
-  'output.emitAssets',
   'output.overrideBrowserslist',
   'server.open',
   'server.printUrls',
