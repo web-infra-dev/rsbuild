@@ -41,10 +41,7 @@ export type InspectConfigOptions = {
 
 export type InspectConfigResult<B extends 'rspack' | 'webpack' = 'rspack'> = {
   rsbuildConfig: string;
-  bundlerConfigs: Array<{
-    name: string;
-    content: string;
-  }>;
+  bundlerConfigs: string[];
   origin: {
     rsbuildConfig: NormalizedConfig & {
       pluginNames: string[];

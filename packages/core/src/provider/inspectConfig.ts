@@ -74,7 +74,7 @@ export async function inspectConfig({
 
   return {
     rsbuildConfig: rawRsbuildConfig,
-    bundlerConfigs: rawBundlerConfigs,
+    bundlerConfigs: rawBundlerConfigs.map((r) => r.content),
     origin: {
       rsbuildConfig: rsbuildDebugConfig,
       bundlerConfigs: rspackConfigs,
