@@ -63,10 +63,10 @@ export async function getBrowserslistByEnvironment(
   path: string,
   config: NormalizedEnvironmentConfig,
 ): Promise<string[]> {
-  const { overrideBrowserslist: overrides, target } = config.output;
+  const { target, overrideBrowserslist } = config.output;
 
-  if (Array.isArray(overrides)) {
-    return overrides;
+  if (Array.isArray(overrideBrowserslist)) {
+    return overrideBrowserslist;
   }
 
   // Read project browserslist config when target is `web-like`
