@@ -24,6 +24,12 @@ declare global {
   var __RUNTIME_GLOBALS_GET_CHUNK_SCRIPT_FILENAME__: (
     chunkId: ChunkId,
   ) => string;
+  // RuntimeGlobals.getChunkCssFilename
+  var __RUNTIME_GLOBALS_GET_CSS_FILENAME__: (chunkId: ChunkId) => string;
+  // RuntimeGlobals.getChunkCssFilename when using Rspack.CssExtractPlugin
+  var __RUNTIME_GLOBALS_GET_MINI_CSS_EXTRACT_FILENAME__: (
+    chunkId: ChunkId,
+  ) => string | undefined;
   // RuntimeGlobals.loadScript
   var __RUNTIME_GLOBALS_LOAD_SCRIPT__: (
     url: ChunkSrcUrl,
@@ -164,22 +170,35 @@ function nextRetry(chunkId: string): Retry {
 const originalEnsureChunk = __RUNTIME_GLOBALS_ENSURE_CHUNK__;
 const originalGetChunkScriptFilename =
   __RUNTIME_GLOBALS_GET_CHUNK_SCRIPT_FILENAME__;
+const originalGetCssFilename =
+  __RUNTIME_GLOBALS_GET_MINI_CSS_EXTRACT_FILENAME__ ??
+  __RUNTIME_GLOBALS_GET_CSS_FILENAME__ ??
+  (() => null);
 const originalLoadScript = __RUNTIME_GLOBALS_LOAD_SCRIPT__;
 
 // if users want to support es5, add Promise polyfill first https://github.com/webpack/webpack/issues/12877
 function ensureChunk(chunkId: string): Promise<unknown> {
   const result = originalEnsureChunk(chunkId);
   const originalScriptFilename = originalGetChunkScriptFilename(chunkId);
+  const originalCssFilename = originalGetCssFilename(chunkId);
 
   // mark the async chunk name in the global variables and share it with initial chunk retry
-  if (
-    typeof window !== 'undefined' &&
-    !window.__RB_ASYNC_CHUNKS__[originalScriptFilename]
-  ) {
-    window.__RB_ASYNC_CHUNKS__[originalScriptFilename] = true;
+  if (typeof window !== 'undefined') {
+    if (
+      originalScriptFilename &&
+      !window.__RB_ASYNC_CHUNKS__[originalScriptFilename]
+    ) {
+      window.__RB_ASYNC_CHUNKS__[originalScriptFilename] = true;
+    }
+    if (
+      originalCssFilename &&
+      !window.__RB_ASYNC_CHUNKS__[originalCssFilename]
+    ) {
+      window.__RB_ASYNC_CHUNKS__[originalCssFilename] = true;
+    }
   }
 
-  return result.catch(function (error: Error) {
+  return result.catch((error: Error) => {
     const { existRetryTimes, originalSrcUrl, nextRetryUrl, nextDomain } =
       nextRetry(chunkId);
 
@@ -226,7 +245,6 @@ function ensureChunk(chunkId: string): Promise<unknown> {
       config.onRetry(context);
     }
 
-    // biome-ignore lint/complexity/useArrowFunction: use function instead of () => {}
     return ensureChunk(chunkId).then((result) => {
       if (typeof config.onSuccess === 'function') {
         const context = createContext(existRetryTimes);
