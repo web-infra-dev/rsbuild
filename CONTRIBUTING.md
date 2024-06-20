@@ -177,12 +177,12 @@ Commit your changes to your forked repo, and [create a pull request](https://hel
 
 ### Format of PR titles
 
-The format of PR titles follow Conventional Commits.
+The format of PR titles follow [Conventional Commits](https://www.conventionalcommits.org/).
 
 An example:
 
 ```
-feat(plugin-swc): Add `myOption` config
+feat(core): Add `myOption` config
 ^    ^    ^
 |    |    |__ Subject
 |    |_______ Scope
