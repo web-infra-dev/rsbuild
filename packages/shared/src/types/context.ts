@@ -6,6 +6,7 @@ type EnvironmentContext = {
   target: RsbuildTarget;
   entry: RsbuildEntry;
   distPath: string;
+  browserslist: string[];
   tsconfigPath?: string;
 };
 

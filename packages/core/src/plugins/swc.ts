@@ -1,12 +1,10 @@
 import path from 'node:path';
 import {
   type Polyfill,
-  type RsbuildTarget,
   SCRIPT_REGEX,
   applyScriptCondition,
   cloneDeep,
   deepmerge,
-  getBrowserslistWithDefault,
   getCoreJsVersion,
 } from '@rsbuild/shared';
 import type { SwcLoaderOptions } from '@rspack/core';
@@ -21,11 +19,7 @@ import type {
 
 const builtinSwcLoaderName = 'builtin:swc-loader';
 
-async function getDefaultSwcConfig(
-  config: NormalizedConfig,
-  rootPath: string,
-  target: RsbuildTarget,
-): Promise<SwcLoaderOptions> {
+function getDefaultSwcConfig(browserslist: string[]): SwcLoaderOptions {
   return {
     jsc: {
       externalHelpers: true,
@@ -40,7 +34,7 @@ async function getDefaultSwcConfig(
     },
     isModule: 'unknown',
     env: {
-      targets: await getBrowserslistWithDefault(rootPath, config, target),
+      targets: browserslist,
     },
   };
 }
@@ -59,7 +53,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
 
     api.modifyBundlerChain({
       order: 'pre',
-      handler: async (chain, { CHAIN_ID, target }) => {
+      handler: async (chain, { CHAIN_ID, target, environment }) => {
         const config = api.getNormalizedConfig();
 
         const rule = chain.module
@@ -82,11 +76,9 @@ export const pluginSwc = (): RsbuildPlugin => ({
           excludes: [],
         });
 
-        const swcConfig = await getDefaultSwcConfig(
-          config,
-          api.context.rootPath,
-          target,
-        );
+        const { browserslist } = api.context.environments[environment];
+
+        const swcConfig = getDefaultSwcConfig(browserslist);
 
         applyTransformImport(swcConfig, config.source.transformImport);
         applySwcDecoratorConfig(swcConfig, config);

@@ -43,24 +43,6 @@ describe('plugin-swc', () => {
         overrideBrowserslist: ['chrome 98'],
       },
     });
-
-    await matchConfigSnapshot({
-      output: {
-        overrideBrowserslist: {
-          web: ['chrome 98'],
-        },
-      },
-    });
-  });
-
-  it("should'n override browserslist when target platform is not web", async () => {
-    await matchConfigSnapshot({
-      output: {
-        overrideBrowserslist: {
-          node: ['chrome 98'],
-        },
-      },
-    });
   });
 
   it('should has correct core-js', async () => {

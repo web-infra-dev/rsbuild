@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { __internalHelper } from '@rsbuild/core';
 import type { ModifyChainUtils, NormalizedConfig } from '@rsbuild/core';
-import { getBrowserslistWithDefault, getCoreJsVersion } from '@rsbuild/shared';
+import { getCoreJsVersion } from '@rsbuild/shared';
 import _ from 'lodash';
 import semver from 'semver';
 import { CORE_JS_DIR, CORE_JS_PKG_PATH, SWC_HELPERS_DIR } from './constants';
@@ -176,6 +176,7 @@ export async function applyPluginConfig(
   utils: ModifyChainUtils,
   rsbuildConfig: NormalizedConfig,
   rootPath: string,
+  browserslist?: string[],
 ): Promise<FinalizedConfig[]> {
   const isUsingFnOptions = typeof rawOptions === 'function';
   const { target, isProd } = utils;
@@ -216,12 +217,8 @@ export async function applyPluginConfig(
   }
 
   // If `targets` is not specified manually, we get `browserslist` from project.
-  if (!swc.env.targets) {
-    swc.env.targets = await getBrowserslistWithDefault(
-      rootPath,
-      rsbuildConfig,
-      target,
-    );
+  if (!swc.env.targets && browserslist) {
+    swc.env.targets = browserslist;
   }
 
   const isSSR = target === 'node';

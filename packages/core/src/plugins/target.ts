@@ -1,7 +1,4 @@
-import {
-  browserslistToESVersion,
-  getBrowserslistWithDefault,
-} from '@rsbuild/shared';
+import { browserslistToESVersion } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginTarget = (): RsbuildPlugin => ({
@@ -10,18 +7,13 @@ export const pluginTarget = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain({
       order: 'pre',
-      handler: async (chain, { target }) => {
+      handler: async (chain, { target, environment }) => {
         if (target === 'node') {
           chain.target('node');
           return;
         }
 
-        const config = api.getNormalizedConfig();
-        const browserslist = await getBrowserslistWithDefault(
-          api.context.rootPath,
-          config,
-          target,
-        );
+        const { browserslist } = api.context.environments[environment];
         const esVersion = browserslistToESVersion(browserslist);
 
         if (target === 'web-worker' || target === 'service-worker') {
