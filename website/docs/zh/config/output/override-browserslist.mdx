@@ -1,6 +1,6 @@
 # output.overrideBrowserslist
 
-- **类型：** `string[] | Record<RsbuildTarget, string[]>`
+- **类型：** `string[]`
 - **默认值：** `undefined`
 
 指定项目兼容的目标浏览器范围。
@@ -41,26 +41,26 @@ export default {
 };
 ```
 
-可以查看 [browserslist 文档](https://github.com/browserslist/browserslist) 来了解如何自定义浏览器范围。
+查看 [browserslist 文档](https://github.com/browserslist/browserslist) 来了解如何自定义浏览器范围。
 
-## 基于产物类型
+## 基于 environment 设置
 
-当你同时构建多种类型的产物时，你可以为不同的产物类型设置不同的目标浏览器范围。此时，你需要把 `overrideBrowserslist` 设置为一个对象，对象的 key 为对应的产物类型。
+当你面向多个 environment 构建时，可以为每个 environment 设置不同的 browserslist：
 
-比如为 `web` 和 `node` 设置不同的范围：
+比如为 `web` 和 `node` 环境设置不同的 browserslist：
 
 ```js
 export default {
-  output: {
-    overrideBrowserslist: {
-      web: [
-        'iOS >= 9',
-        'Android >= 4.4',
-        'last 2 versions',
-        '> 0.2%',
-        'not dead',
-      ],
-      node: ['node >= 20'],
+  environments: {
+    web: {
+      output: {
+        overrideBrowserslist: ['iOS >= 9', 'Android >= 4.4'],
+      },
+    },
+    node: {
+      output: {
+        overrideBrowserslist: ['node >= 20'],
+      },
     },
   },
 };

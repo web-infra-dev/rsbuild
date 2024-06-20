@@ -111,29 +111,6 @@ export default {
 };
 ```
 
-当 `output.overrideBrowserslist` 被设置为数组时，同样只对浏览器端的构建产物生效。
-
-当你同时构建多种类型的产物时，你可以为不同的产物类型设置不同的目标浏览器范围。此时，你需要把 `overrideBrowserslist` 设置为一个对象，对象的 key 为对应的产物类型。
-
-比如为 `web` 和 `node` 设置不同的范围：
-
-```js title="rsbuild.config.ts"
-export default {
-  output: {
-    overrideBrowserslist: {
-      web: [
-        'iOS >= 9',
-        'Android >= 4.4',
-        'last 2 versions',
-        '> 0.2%',
-        'not dead',
-      ],
-      node: ['node >= 20'],
-    },
-  },
-};
-```
-
 大多数场景下，推荐优先使用 `.browserslistrc` 文件，而不是使用 `overrideBrowserslist` 配置。因为 `.browserslistrc` 文件是官方定义的配置文件，通用性更强，可以被社区中的其他库识别。
 
 ## 常用的浏览器范围
