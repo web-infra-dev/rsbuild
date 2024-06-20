@@ -244,7 +244,7 @@ describe('plugin-swc', () => {
               target: 'web',
             },
           },
-          'web-worker': {
+          'webWorker': {
             output: {
               target: 'web-worker',
             },
