@@ -5,6 +5,7 @@ export type BundlerType = 'rspack' | 'webpack';
 type EnvironmentContext = {
   target: RsbuildTarget;
   entry: RsbuildEntry;
+  htmlPaths: Record<string, string>;
   distPath: string;
   browserslist: string[];
   tsconfigPath?: string;

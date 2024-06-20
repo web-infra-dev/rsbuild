@@ -8,7 +8,6 @@ import type {
   TransformFn,
   TransformHandler,
 } from '@rsbuild/shared';
-import { isHtmlDisabled } from '@rsbuild/shared';
 import type { Compiler } from '@rspack/core';
 import { LOADER_PATH } from './constants';
 import { createPublicContext } from './createContext';
@@ -99,29 +98,13 @@ export function getPluginAPI({
   }) as GetRsbuildConfig;
 
   const getHTMLPaths = (options?: { environment: string }) => {
-    const getEnvironmentHTMLPaths = (environment: string) => {
-      const config = getNormalizedConfig({ environment });
-
-      if (isHtmlDisabled(config, config.output.target)) {
-        return {};
-      }
-      return Object.keys(context.environments[environment].entry).reduce<
-        Record<string, string>
-      >((prev, key) => {
-        prev[key] = getHTMLPathByEntry(key, config);
-        return prev;
-      }, {});
-    };
-
     if (options?.environment) {
-      return getEnvironmentHTMLPaths(options?.environment);
+      return context.environments[options.environment].htmlPaths;
     }
-    return Object.keys(context.environments).reduce((prev, environment) => {
-      return {
-        ...getEnvironmentHTMLPaths(environment),
-        prev,
-      };
-    }, {});
+    return Object.values(context.environments).reduce(
+      (prev, context) => Object.assign(prev, context.htmlPaths),
+      {} as Record<string, string>,
+    );
   };
 
   const exposed: Array<{ id: string | symbol; api: any }> = [];
