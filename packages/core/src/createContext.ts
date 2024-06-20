@@ -65,10 +65,12 @@ export async function getBrowserslistByEnvironment(
 ): Promise<string[]> {
   const { overrideBrowserslist: overrides, target } = config.output;
 
+  if (Array.isArray(overrides)) {
+    return overrides;
+  }
+
+  // Read project browserslist config when target is `web-like`
   if (target === 'web' || target === 'web-worker') {
-    if (Array.isArray(overrides)) {
-      return overrides;
-    }
     const browserslistrc = await getBrowserslist(path);
     if (browserslistrc) {
       return browserslistrc;
