@@ -68,4 +68,5 @@ export type AssetsRetryHookContext = {
   times: number;
   domain: string;
   tagName: string;
+  isAsyncChunk: boolean;
 };

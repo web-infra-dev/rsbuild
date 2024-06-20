@@ -202,11 +202,15 @@ function ensureChunk(chunkId: string): Promise<unknown> {
     const { existRetryTimes, originalSrcUrl, nextRetryUrl, nextDomain } =
       nextRetry(chunkId);
 
+    const isCssAsyncChunkLoadFailed =
+      error?.message?.includes('CSS chunk') ?? false;
+
     const createContext = (times: number): AssetsRetryHookContext => ({
       times,
       domain: nextDomain,
       url: nextRetryUrl,
-      tagName: 'script',
+      tagName: isCssAsyncChunkLoadFailed ? 'script' : 'link',
+      isAsyncChunk: true,
     });
 
     const context = createContext(existRetryTimes - 1);
