@@ -108,6 +108,7 @@ export function createPublicContext(
     'configPath',
     'tsconfigPath',
     'bundlerType',
+    'environments',
   ];
 
   // Using Proxy to get the current value of context.
