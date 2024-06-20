@@ -1,13 +1,8 @@
 import { sep } from 'node:path';
-import { color, fse } from '@rsbuild/shared';
+import { color } from '@rsbuild/shared';
+import { emptyDir } from '../helpers';
 import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
-
-const emptyDir = async (dir: string) => {
-  if (await fse.pathExists(dir)) {
-    await fse.emptyDir(dir);
-  }
-};
 
 const addTrailingSep = (dir: string) => (dir.endsWith(sep) ? dir : dir + sep);
 

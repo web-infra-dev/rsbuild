@@ -35,31 +35,9 @@ export default {
 
 在默认情况下，Rsbuild 使用当前页面的 host 和端口号来拼接 HMR 对应的 WebSocket URL。
 
-当出现 HMR 连接失败的情况时，你可以通过自定义 `dev.client` 配置的方式来指定 WebSocket URL。
+当出现 HMR 连接失败的情况时，你可以自定义 [dev.client](/config/dev/client) 配置来指定 WebSocket URL。
 
-### 默认配置
-
-默认配置如下，Rsbuild 会根据当前页面的 location 自动推导 WebSocket 请求的 URL：
-
-```ts
-export default {
-  dev: {
-    client: {
-      path: '/rsbuild-hmr',
-      // 默认设置为 dev server 的端口号
-      port: '',
-      host: location.hostname,
-      protocol: location.protocol === 'https:' ? 'wss' : 'ws',
-    },
-  },
-};
-```
-
-### 线上代理
-
-如果你将一个线上页面代理到本地进行开发，WebSocket 请求将会连接失败。此时你可以尝试将 `dev.client` 配置成如下值，使 HMR 请求能打到本地的 Dev Server。
-
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     client: {

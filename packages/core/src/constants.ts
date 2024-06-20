@@ -18,6 +18,7 @@ export const LOADER_PATH = join(__dirname);
 export const STATIC_PATH = join(__dirname, '../static');
 export const COMPILED_PATH = join(__dirname, '../compiled');
 export const TS_CONFIG_FILE = 'tsconfig.json';
+export const HMR_SOCKET_PATH = '/rsbuild-hmr';
 
 // Defaults
 export const DEFAULT_PORT = 3000;

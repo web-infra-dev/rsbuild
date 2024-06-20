@@ -1,8 +1,8 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { build, dev, gotoPage } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { logger } from '@rsbuild/core';
-import { fse } from '@rsbuild/shared';
 
 const getRsbuildConfig = (dist: string) =>
   path.resolve(__dirname, `./${dist}/rsbuild.config.mjs`);
@@ -30,8 +30,8 @@ test('should generate config files when build (with DEBUG)', async () => {
     },
   });
 
-  expect(fse.existsSync(getRsbuildConfig(distRoot))).toBeTruthy();
-  expect(fse.existsSync(getBundlerConfig(distRoot))).toBeTruthy();
+  expect(fs.existsSync(getRsbuildConfig(distRoot))).toBeTruthy();
+  expect(fs.existsSync(getBundlerConfig(distRoot))).toBeTruthy();
 
   delete process.env.DEBUG;
   logger.level = 'log';
@@ -59,8 +59,8 @@ test('should generate config files when dev (with DEBUG)', async ({ page }) => {
 
   expect(res?.status()).toBe(200);
 
-  expect(fse.existsSync(getRsbuildConfig(distRoot))).toBeTruthy();
-  expect(fse.existsSync(getBundlerConfig(distRoot))).toBeTruthy();
+  expect(fs.existsSync(getRsbuildConfig(distRoot))).toBeTruthy();
+  expect(fs.existsSync(getBundlerConfig(distRoot))).toBeTruthy();
 
   delete process.env.DEBUG;
   logger.level = 'log';

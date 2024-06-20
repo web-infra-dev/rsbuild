@@ -95,4 +95,14 @@ export interface DevConfig {
 }
 
 export type NormalizedDevConfig = DevConfig &
-  Required<Pick<DevConfig, 'hmr' | 'liveReload' | 'startUrl' | 'assetPrefix'>>;
+  Required<
+    Pick<
+      DevConfig,
+      | 'hmr'
+      | 'client'
+      | 'startUrl'
+      | 'liveReload'
+      | 'assetPrefix'
+      | 'writeToDisk'
+    >
+  >;

@@ -1,9 +1,10 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import type { RsbuildConfig } from '@rsbuild/core';
-import { fse } from '@rsbuild/shared';
 import type { TransformImport } from '@rsbuild/shared';
+import fse from 'fs-extra';
 
 export const cases: Parameters<typeof shareTest>[] = [
   [
@@ -53,10 +54,9 @@ export function copyPkgToNodeModules() {
   const nodeModules = path.resolve(__dirname, 'node_modules');
 
   fse.ensureDirSync(nodeModules);
-  fse.copySync(
-    path.resolve(__dirname, 'foo'),
-    path.resolve(nodeModules, 'foo'),
-  );
+  fs.cpSync(path.resolve(__dirname, 'foo'), path.resolve(nodeModules, 'foo'), {
+    recursive: true,
+  });
 }
 
 export function shareTest(

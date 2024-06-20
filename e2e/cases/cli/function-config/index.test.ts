@@ -1,12 +1,13 @@
 import { execSync } from 'node:child_process';
+import fs from 'node:fs';
 import path from 'node:path';
 import { globContentJSON } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { fse } from '@rsbuild/shared';
 
 test('should allow to export function in config file', async () => {
   const targetDir = path.join(__dirname, 'dist-production-build');
-  fse.removeSync(targetDir);
+
+  fs.rmSync(targetDir, { recursive: true, force: true });
 
   delete process.env.NODE_ENV;
   execSync('npx rsbuild build', {

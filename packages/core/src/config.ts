@@ -4,7 +4,6 @@ import {
   DEFAULT_ASSET_PREFIX,
   RspackChain,
   color,
-  fse,
   isObject,
 } from '@rsbuild/shared';
 import type {
@@ -30,6 +29,7 @@ import {
   DEFAULT_MOUNT_ID,
   DEFAULT_PORT,
   FONT_DIST_DIR,
+  HMR_SOCKET_PATH,
   HTML_DIST_DIR,
   IMAGE_DIST_DIR,
   JS_DIST_DIR,
@@ -57,7 +57,13 @@ const getDefaultDevConfig = (): NormalizedDevConfig => ({
   liveReload: true,
   assetPrefix: DEFAULT_ASSET_PREFIX,
   startUrl: false,
+  writeToDisk: false,
   client: {
+    path: HMR_SOCKET_PATH,
+    // By default it is set to "location.port"
+    port: '',
+    // By default it is set to "location.hostname"
+    host: '',
     overlay: true,
   },
 });
@@ -427,7 +433,7 @@ export async function outputInspectConfigFiles({
       let outputFilePath = join(outputPath, outputFile);
 
       // if filename is conflict, add a random id to the filename.
-      if (fse.existsSync(outputFilePath)) {
+      if (fs.existsSync(outputFilePath)) {
         outputFilePath = outputFilePath.replace(/\.mjs$/, `.${Date.now()}.mjs`);
       }
 
@@ -439,10 +445,12 @@ export async function outputInspectConfigFiles({
     }),
   ];
 
+  await fs.promises.mkdir(outputPath, { recursive: true });
+
   await Promise.all(
-    files.map((item) =>
-      fse.outputFile(item.path, `export default ${item.content}`),
-    ),
+    files.map(async (item) => {
+      return fs.promises.writeFile(item.path, `export default ${item.content}`);
+    }),
   );
 
   const fileInfos = files

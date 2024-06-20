@@ -1,7 +1,7 @@
+import fs from 'node:fs';
 import { join } from 'node:path';
 import { build, dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { fse } from '@rsbuild/shared';
 
 const fixtures = __dirname;
 
@@ -46,7 +46,11 @@ rspackOnlyTest(
       test.skip();
     }
 
-    await fse.copy(join(fixtures, 'src'), join(fixtures, 'test-temp-src'));
+    await fs.promises.cp(
+      join(fixtures, 'src'),
+      join(fixtures, 'test-temp-src'),
+      { recursive: true },
+    );
 
     const rsbuild = await dev({
       cwd: fixtures,
@@ -74,9 +78,9 @@ rspackOnlyTest(
 
     const filePath = join(fixtures, 'test-temp-src/App.module.less');
 
-    await fse.writeFile(
+    await fs.promises.writeFile(
       filePath,
-      fse.readFileSync(filePath, 'utf-8').replace('20px', '40px'),
+      fs.readFileSync(filePath, 'utf-8').replace('20px', '40px'),
     );
 
     // css hmr works well

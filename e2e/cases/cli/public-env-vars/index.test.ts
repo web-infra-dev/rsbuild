@@ -1,7 +1,7 @@
 import { execSync } from 'node:child_process';
+import fs from 'node:fs';
 import path from 'node:path';
 import { expect, test } from '@playwright/test';
-import { fse } from '@rsbuild/shared';
 
 test('should inject public env vars to client', async () => {
   const { NODE_ENV } = process.env;
@@ -11,7 +11,7 @@ test('should inject public env vars to client', async () => {
     cwd: __dirname,
   });
 
-  const content = fse.readFileSync(
+  const content = fs.readFileSync(
     path.join(__dirname, 'dist/static/js/index.js'),
     'utf-8',
   );
