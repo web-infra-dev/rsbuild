@@ -4,7 +4,7 @@ import type {
   PluginManager,
   RspackConfig,
 } from '@rsbuild/shared';
-import { normalizeConfig } from '../config';
+import { getDefaultEntry, normalizeConfig } from '../config';
 import {
   updateContextByNormalizedConfig,
   updateEnvironmentContext,
@@ -40,28 +40,39 @@ export type InitConfigsOptions = {
 
 const normalizeEnvironmentsConfigs = (
   normalizedConfig: NormalizedConfig,
+  rootPath: string,
 ): Record<string, NormalizedEnvironmentConfig> => {
   const { environments, dev, server, provider, ...rsbuildSharedConfig } =
     normalizedConfig;
   if (environments && Object.keys(environments).length) {
     return Object.fromEntries(
-      Object.entries(environments).map(([name, config]) => [
-        name,
-        {
+      Object.entries(environments).map(([name, config]) => {
+        const environmentConfig = {
           ...mergeRsbuildConfig(
             rsbuildSharedConfig,
             config as unknown as NormalizedEnvironmentConfig,
           ),
           dev,
           server,
-        },
-      ]),
+        };
+
+        if (!environmentConfig.source.entry) {
+          // @ts-expect-error
+          environmentConfig.source.entry = getDefaultEntry(rootPath);
+        }
+
+        return [name, environmentConfig];
+      }),
     );
   }
 
   return {
     [camelCase(rsbuildSharedConfig.output.target)]: {
       ...rsbuildSharedConfig,
+      source: {
+        ...rsbuildSharedConfig.source,
+        entry: rsbuildSharedConfig.source.entry ?? getDefaultEntry(rootPath),
+      },
       dev,
       server,
     },
@@ -88,7 +99,10 @@ export async function initRsbuildConfig({
   await modifyRsbuildConfig(context);
   const normalizeBaseConfig = normalizeConfig(context.config);
 
-  const environments = normalizeEnvironmentsConfigs(normalizeBaseConfig);
+  const environments = normalizeEnvironmentsConfigs(
+    normalizeBaseConfig,
+    context.rootPath,
+  );
 
   context.normalizedConfig = {
     ...normalizeBaseConfig,

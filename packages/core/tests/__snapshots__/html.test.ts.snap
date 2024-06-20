@@ -679,8 +679,8 @@ exports[`plugin-html > should support environment html config 1`] = `
 [
   {
     "entry": {
-      "index": [
-        "src/index.js",
+      "main": [
+        "src/main.ts",
       ],
     },
     "plugins": [
@@ -689,14 +689,14 @@ exports[`plugin-html > should support environment html config 1`] = `
           "base": false,
           "cache": true,
           "chunks": [
-            "index",
+            "main",
           ],
           "chunksSortMode": "auto",
           "compile": true,
-          "entryName": "index",
+          "entryName": "main",
           "excludeChunks": [],
           "favicon": false,
-          "filename": "web/index.html",
+          "filename": "web/main.html",
           "hash": false,
           "inject": "head",
           "meta": {
@@ -717,10 +717,10 @@ exports[`plugin-html > should support environment html config 1`] = `
         },
         "userOptions": {
           "chunks": [
-            "index",
+            "main",
           ],
-          "entryName": "index",
-          "filename": "web/index.html",
+          "entryName": "main",
+          "filename": "web/main.html",
           "inject": "head",
           "meta": {
             "charset": {
@@ -741,7 +741,7 @@ exports[`plugin-html > should support environment html config 1`] = `
         "modifyTagsFn": undefined,
         "name": "HtmlBasicPlugin",
         "options": {
-          "index": {},
+          "main": {},
         },
       },
     ],
@@ -749,7 +749,7 @@ exports[`plugin-html > should support environment html config 1`] = `
   {
     "entry": {
       "index": [
-        "src/index.js",
+        "src/main1.ts",
       ],
     },
     "plugins": [
