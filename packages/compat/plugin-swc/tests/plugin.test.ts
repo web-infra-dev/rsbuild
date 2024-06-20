@@ -228,8 +228,27 @@ describe('plugin-swc', () => {
       plugins: [pluginSwc()],
       rsbuildConfig: {
         provider: webpackProvider,
-        output: {
-          targets: ['node', 'service-worker', 'web', 'web-worker'],
+        environments: {
+          node: {
+            output: {
+              target: 'node',
+            },
+          },
+          'serviceWorker': {
+            output: {
+              target: 'service-worker',
+            },
+          },
+          web: {
+            output: {
+              target: 'web',
+            },
+          },
+          'webWorker': {
+            output: {
+              target: 'web-worker',
+            },
+          },
         },
       },
     });

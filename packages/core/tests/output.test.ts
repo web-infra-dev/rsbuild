@@ -16,7 +16,7 @@ describe('plugin-output', () => {
       plugins: [pluginOutput()],
       rsbuildConfig: {
         output: {
-          targets: ['node'],
+          target: 'node',
           distPath: {
             server: 'server',
           },

@@ -14,7 +14,7 @@ vi.mock('@rsbuild/shared', async (importOriginal) => {
 describe('plugin-target', () => {
   const cases = [
     {
-      targets: ['node' as const],
+      target: 'node' as const,
       browserslist: ['foo'],
       expected: { target: 'node' },
     },
@@ -27,7 +27,7 @@ describe('plugin-target', () => {
       expected: { target: ['web', 'es2017'] },
     },
     {
-      targets: ['web-worker' as const],
+      target: 'web-worker' as const,
       browserslist: null,
       expected: { target: ['webworker', 'es2017'] },
     },
@@ -42,7 +42,7 @@ describe('plugin-target', () => {
       plugins: [pluginTarget()],
       rsbuildConfig: {
         output: {
-          targets: item.targets,
+          target: item.target,
         },
       },
     });

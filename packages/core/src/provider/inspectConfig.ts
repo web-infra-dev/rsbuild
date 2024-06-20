@@ -48,9 +48,10 @@ export async function inspectConfig({
   );
 
   const rawBundlerConfigs = await Promise.all(
-    rspackConfigs.map((config) =>
-      stringifyConfig(config, inspectOptions.verbose),
-    ),
+    rspackConfigs.map(async (config, index) => ({
+      name: config.name || String(index),
+      content: await stringifyConfig(config, inspectOptions.verbose),
+    })),
   );
 
   let outputPath = inspectOptions.outputPath || context.distPath;
@@ -73,7 +74,7 @@ export async function inspectConfig({
 
   return {
     rsbuildConfig: rawRsbuildConfig,
-    bundlerConfigs: rawBundlerConfigs,
+    bundlerConfigs: rawBundlerConfigs.map((r) => r.content),
     origin: {
       rsbuildConfig: rsbuildDebugConfig,
       bundlerConfigs: rspackConfigs,

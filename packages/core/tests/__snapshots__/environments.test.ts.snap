@@ -71,9 +71,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
       "css": false,
       "js": undefined,
     },
-    "targets": [
-      "web",
-    ],
+    "target": "web",
   },
   "performance": {
     "buildCache": true,
@@ -197,9 +195,7 @@ exports[`environment config > should print environment config when inspect confi
         "css": false,
         "js": undefined,
       },
-      "targets": [
-        "web",
-      ],
+      "target": "web",
     },
     "performance": {
       "buildCache": true,
@@ -319,9 +315,7 @@ exports[`environment config > should print environment config when inspect confi
         "css": false,
         "js": undefined,
       },
-      "targets": [
-        "web",
-      ],
+      "target": "web",
     },
     "performance": {
       "buildCache": true,
@@ -446,9 +440,7 @@ exports[`environment config > should support modify environment config by api.mo
         "css": false,
         "js": undefined,
       },
-      "targets": [
-        "web",
-      ],
+      "target": "web",
     },
     "performance": {
       "buildCache": true,
@@ -568,9 +560,7 @@ exports[`environment config > should support modify environment config by api.mo
         "css": false,
         "js": undefined,
       },
-      "targets": [
-        "web",
-      ],
+      "target": "web",
     },
     "performance": {
       "buildCache": true,
@@ -691,9 +681,7 @@ exports[`environment config > should support modify environment config by api.mo
         "css": false,
         "js": undefined,
       },
-      "targets": [
-        "web",
-      ],
+      "target": "web",
     },
     "performance": {
       "buildCache": true,

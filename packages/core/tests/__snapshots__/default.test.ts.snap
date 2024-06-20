@@ -305,7 +305,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       },
     ],
   },
-  "name": "Client",
+  "name": "web",
   "optimization": {
     "minimize": false,
     "splitChunks": {
@@ -751,7 +751,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       },
     ],
   },
-  "name": "Client",
+  "name": "web",
   "optimization": {
     "minimize": true,
     "minimizer": [
@@ -1226,7 +1226,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       },
     ],
   },
-  "name": "Server",
+  "name": "node",
   "optimization": {
     "minimize": false,
     "splitChunks": false,
@@ -1588,7 +1588,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
       },
     ],
   },
-  "name": "Client",
+  "name": "web",
   "optimization": {
     "minimize": false,
     "splitChunks": {

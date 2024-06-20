@@ -217,7 +217,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       },
     ],
   },
-  "name": "Client",
+  "name": "web",
   "optimization": {
     "minimize": false,
     "splitChunks": {
@@ -613,7 +613,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
       },
     ],
   },
-  "name": "Client",
+  "name": "web",
   "optimization": {
     "minimize": true,
     "splitChunks": {
@@ -1024,7 +1024,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       },
     ],
   },
-  "name": "Server",
+  "name": "node",
   "optimization": {
     "minimize": true,
     "splitChunks": false,
@@ -1291,7 +1291,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       },
     ],
   },
-  "name": "Web Worker",
+  "name": "webWorker",
   "optimization": {
     "minimize": true,
     "splitChunks": false,

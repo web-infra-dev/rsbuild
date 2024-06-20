@@ -88,10 +88,14 @@ async function getConfigUtils(
   };
 }
 
-export function getChainUtils(target: RsbuildTarget): ModifyChainUtils {
+export function getChainUtils(
+  target: RsbuildTarget,
+  environment: string,
+): ModifyChainUtils {
   const nodeEnv = getNodeEnv();
 
   return {
+    environment,
     env: nodeEnv,
     target,
     isDev: nodeEnv === 'development',
@@ -107,11 +111,13 @@ export function getChainUtils(target: RsbuildTarget): ModifyChainUtils {
 export async function generateRspackConfig({
   target,
   context,
+  environment,
 }: {
+  environment: string;
   target: RsbuildTarget;
   context: InternalContext;
 }): Promise<RspackConfig> {
-  const chainUtils = getChainUtils(target);
+  const chainUtils = getChainUtils(target, environment);
   const {
     BannerPlugin,
     DefinePlugin,

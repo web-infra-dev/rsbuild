@@ -9,7 +9,7 @@ export default defineConfig({
       root: './dist',
       worker: './',
     },
-    targets: ['service-worker'],
+    target: 'service-worker',
     copy: ['./index.html'],
   },
 });

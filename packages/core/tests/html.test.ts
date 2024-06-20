@@ -27,7 +27,7 @@ describe('plugin-html', () => {
       plugins: [pluginEntry(), pluginHtml()],
       rsbuildConfig: {
         output: {
-          targets: ['node'],
+          target: 'node',
         },
       },
     });
@@ -39,7 +39,7 @@ describe('plugin-html', () => {
       plugins: [pluginEntry(), pluginHtml()],
       rsbuildConfig: {
         output: {
-          targets: ['web-worker'],
+          target: 'web-worker',
         },
       },
     });
@@ -51,7 +51,7 @@ describe('plugin-html', () => {
       plugins: [pluginEntry(), pluginHtml()],
       rsbuildConfig: {
         output: {
-          targets: ['service-worker'],
+          target: 'service-worker',
         },
       },
     });

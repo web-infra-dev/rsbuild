@@ -26,10 +26,15 @@ export async function initConfigs({
     context,
     pluginManager,
   });
-  const { targets } = normalizedConfig.output;
 
   const webpackConfigs = await Promise.all(
-    targets.map((target) => generateWebpackConfig({ target, context })),
+    Object.entries(normalizedConfig.environments).map(([environment, config]) =>
+      generateWebpackConfig({
+        target: config.output.target,
+        context,
+        environment,
+      }),
+    ),
   );
 
   // write Rsbuild config and webpack config to disk in debug mode

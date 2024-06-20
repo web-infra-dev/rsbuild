@@ -3,7 +3,6 @@ import type {
   BundlerType,
   NormalizedEnvironmentConfig,
   RsbuildContext,
-  RsbuildTarget,
 } from '@rsbuild/shared';
 import { withDefaultConfig } from './config';
 import { ROOT_DIST_DIR } from './constants';
@@ -45,7 +44,7 @@ async function createContextByConfig(
 
   return {
     entry: getEntryObject(config, 'web'),
-    targets: config.output?.targets || [],
+    targets: [config.output?.target || 'web'],
     version: RSBUILD_VERSION,
     environments: {},
     rootPath,
@@ -66,10 +65,9 @@ export function updateEnvironmentContext(
     Object.entries(configs).map(([name, config]) => [
       name,
       {
-        // TODO: replace output.targets with output.target
-        target: config.output.targets[0],
+        target: config.output.target,
         distPath: getAbsoluteDistPath(context.rootPath, config),
-        entry: getEntryObject(config, config.output.targets[0]),
+        entry: getEntryObject(config, config.output.target),
         tsconfigPath: config.source.tsconfigPath
           ? getAbsolutePath(context.rootPath, config.source.tsconfigPath)
           : undefined,
@@ -82,7 +80,6 @@ export function updateContextByNormalizedConfig(
   context: RsbuildContext,
   config: NormalizedConfig,
 ) {
-  context.targets = config.output.targets as RsbuildTarget[];
   context.distPath = getAbsoluteDistPath(context.rootPath, config);
 
   if (config.source.entry) {

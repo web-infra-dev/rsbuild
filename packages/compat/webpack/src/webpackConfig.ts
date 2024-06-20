@@ -68,6 +68,7 @@ async function modifyWebpackConfig(
 
 async function getChainUtils(
   target: RsbuildTarget,
+  environment: string,
 ): Promise<ModifyWebpackChainUtils> {
   const { default: webpack } = await import('webpack');
   const nameMap = {
@@ -78,7 +79,7 @@ async function getChainUtils(
   };
 
   return {
-    ...getBaseChainUtils(target),
+    ...getBaseChainUtils(target, environment),
     name: nameMap[target] || '',
     webpack,
     HtmlWebpackPlugin: __internalHelper.getHTMLPlugin(),
@@ -136,11 +137,13 @@ async function getConfigUtils(
 export async function generateWebpackConfig({
   target,
   context,
+  environment,
 }: {
+  environment: string;
   target: RsbuildTarget;
   context: InternalContext;
 }) {
-  const chainUtils = await getChainUtils(target);
+  const chainUtils = await getChainUtils(target, environment);
   const { default: webpack } = await import('webpack');
   const {
     BannerPlugin,

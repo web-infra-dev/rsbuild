@@ -129,7 +129,7 @@ const getDefaultPerformanceConfig = (): NormalizedPerformanceConfig => ({
 });
 
 const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
-  targets: ['web'],
+  target: 'web',
   distPath: {
     root: ROOT_DIST_DIR,
     js: JS_DIST_DIR,
@@ -404,7 +404,6 @@ export async function loadConfig({
 }
 
 export async function outputInspectConfigFiles({
-  rsbuildConfig,
   rawRsbuildConfig,
   bundlerConfigs,
   inspectOptions,
@@ -413,7 +412,10 @@ export async function outputInspectConfigFiles({
   configType: string;
   rsbuildConfig: NormalizedConfig;
   rawRsbuildConfig: string;
-  bundlerConfigs: string[];
+  bundlerConfigs: Array<{
+    name: string;
+    content: string;
+  }>;
   inspectOptions: InspectConfigOptions & {
     outputPath: string;
   };
@@ -426,9 +428,8 @@ export async function outputInspectConfigFiles({
       label: 'Rsbuild Config',
       content: rawRsbuildConfig,
     },
-    ...bundlerConfigs.map((content, index) => {
-      const suffix = rsbuildConfig.output.targets[index];
-      const outputFile = `${configType}.config.${suffix}.mjs`;
+    ...bundlerConfigs.map(({ name, content }) => {
+      const outputFile = `${configType}.config.${name}.mjs`;
       let outputFilePath = join(outputPath, outputFile);
 
       // if filename is conflict, add a random id to the filename.
@@ -438,7 +439,7 @@ export async function outputInspectConfigFiles({
 
       return {
         path: outputFilePath,
-        label: `${upperFirst(configType)} Config (${suffix})`,
+        label: `${upperFirst(configType)} Config (${name})`,
         content,
       };
     }),

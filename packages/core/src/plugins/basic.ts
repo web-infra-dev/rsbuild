@@ -1,5 +1,4 @@
 import path from 'node:path';
-import { TARGET_ID_MAP } from '../constants';
 import { isProd } from '../helpers';
 import type { NormalizedConfig, RsbuildPlugin } from '../types';
 
@@ -19,10 +18,10 @@ export const pluginBasic = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      (chain, { env, isProd, target, bundler, CHAIN_ID }) => {
+      (chain, { env, isProd, target, bundler, environment, CHAIN_ID }) => {
         const config = api.getNormalizedConfig();
 
-        chain.name(TARGET_ID_MAP[target]);
+        chain.name(environment);
 
         chain.devtool(getJsSourceMap(config));
 

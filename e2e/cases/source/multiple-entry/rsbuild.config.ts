@@ -16,7 +16,18 @@ export default defineConfig({
     },
   },
   output: {
-    targets: ['web', 'node'],
     filenameHash: false,
+  },
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+      },
+    },
   },
 });

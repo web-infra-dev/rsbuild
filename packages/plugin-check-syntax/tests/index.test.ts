@@ -26,7 +26,7 @@ describe('plugin-check-syntax', () => {
       plugins: [pluginCheckSyntax()],
       rsbuildConfig: {
         output: {
-          targets: ['node'],
+          target: 'node',
         },
       },
     });
