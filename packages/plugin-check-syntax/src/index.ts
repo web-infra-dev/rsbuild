@@ -1,24 +1,7 @@
-import type {
-  NormalizedConfig,
-  RsbuildPlugin,
-  RsbuildTarget,
-} from '@rsbuild/core';
-import { getBrowserslistWithDefault } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import type { CheckSyntaxOptions } from './types';
 
 export type PluginCheckSyntaxOptions = CheckSyntaxOptions;
-
-async function getTargets(
-  rootPath: string,
-  rsbuildConfig: NormalizedConfig,
-  rsbuildTarget: RsbuildTarget,
-  checkSyntax: CheckSyntaxOptions,
-) {
-  return (
-    checkSyntax.targets ??
-    (await getBrowserslistWithDefault(rootPath, rsbuildConfig, rsbuildTarget))
-  );
-}
 
 export const PLUGIN_CHECK_SYNTAX_NAME = 'rsbuild:check-syntax';
 
@@ -29,20 +12,16 @@ export function pluginCheckSyntax(
     name: PLUGIN_CHECK_SYNTAX_NAME,
 
     setup(api) {
-      api.modifyBundlerChain(async (chain, { isDev, target }) => {
+      api.modifyBundlerChain(async (chain, { isDev, target, environment }) => {
         if (isDev || target !== 'web') {
           return;
         }
 
         const { rootPath } = api.context;
-        const rsbuildConfig = api.getNormalizedConfig();
 
-        const targets = await getTargets(
-          rootPath,
-          rsbuildConfig,
-          target,
-          options,
-        );
+        const targets =
+          options.targets ?? api.context.environments[environment].browserslist;
+
         const { CheckSyntaxPlugin } = await import('./CheckSyntaxPlugin');
 
         chain.plugin(CheckSyntaxPlugin.name).use(CheckSyntaxPlugin, [

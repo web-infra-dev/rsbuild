@@ -15,12 +15,12 @@ describe('plugin-target', () => {
   const cases = [
     {
       target: 'node' as const,
-      browserslist: ['foo'],
+      browserslist: ['Chrome 100'],
       expected: { target: 'node' },
     },
     {
-      browserslist: ['foo'],
-      expected: { target: ['web', 'es2017'] },
+      browserslist: ['Chrome 100'],
+      expected: { target: ['web', 'es2018'] },
     },
     {
       browserslist: null,

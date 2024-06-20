@@ -10,7 +10,6 @@ import {
   type RsbuildTarget,
   type RspackChain,
   deepmerge,
-  getBrowserslistWithDefault,
   isFunction,
   isPlainObject,
 } from '@rsbuild/shared';
@@ -242,7 +241,7 @@ async function applyCSSRule({
   rule,
   config,
   context,
-  utils: { target, isProd, CHAIN_ID },
+  utils: { target, isProd, CHAIN_ID, environment },
   importLoaders = 1,
 }: {
   rule: RspackChain.Rule;
@@ -251,11 +250,7 @@ async function applyCSSRule({
   utils: ModifyChainUtils;
   importLoaders?: number;
 }) {
-  const browserslist = await getBrowserslistWithDefault(
-    context.rootPath,
-    config,
-    target,
-  );
+  const { browserslist } = context.environments[environment];
 
   // 1. Check user config
   const enableExtractCSS = isUseCssExtract(config, target);
