@@ -111,29 +111,6 @@ export default {
 };
 ```
 
-When `output.overrideBrowserslist` is set to an array, it will also only work for browser-side bundles.
-
-When you build multiple targets at the same time, you can set different browser ranges for different targets. At this point, you need to set `overrideBrowserslist` to an object whose key is the corresponding build target.
-
-For example to set different ranges for `web` and `node`:
-
-```js title="rsbuild.config.ts"
-export default {
-  output: {
-    overrideBrowserslist: {
-      web: [
-        'iOS >= 9',
-        'Android >= 4.4',
-        'last 2 versions',
-        '> 0.2%',
-        'not dead',
-      ],
-      node: ['node >= 20'],
-    },
-  },
-};
-```
-
 In most cases, it is recommended to use the `.browserslistrc` file rather than the `overrideBrowserslist` config. Because the `.browserslistrc` file is the official config file, it is more general and can be recognized by other libraries in the community.
 
 ## Commonly used Browserslist
