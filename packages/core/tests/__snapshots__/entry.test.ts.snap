@@ -1,0 +1,20 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`plugin-entry > should apply environments entry config correctly 1`] = `
+[
+  {
+    "entry": {
+      "index": [
+        "src/index.client",
+      ],
+    },
+  },
+  {
+    "entry": {
+      "index": [
+        "src/index.ssr",
+      ],
+    },
+  },
+]
+`;
