@@ -29,6 +29,7 @@ import {
   DEFAULT_MOUNT_ID,
   DEFAULT_PORT,
   FONT_DIST_DIR,
+  HMR_SOCKET_PATH,
   HTML_DIST_DIR,
   IMAGE_DIST_DIR,
   JS_DIST_DIR,
@@ -56,7 +57,13 @@ const getDefaultDevConfig = (): NormalizedDevConfig => ({
   liveReload: true,
   assetPrefix: DEFAULT_ASSET_PREFIX,
   startUrl: false,
+  writeToDisk: false,
   client: {
+    path: HMR_SOCKET_PATH,
+    // By default it is set to "location.port"
+    port: '',
+    // By default it is set to "location.hostname"
+    host: '',
     overlay: true,
   },
 });
