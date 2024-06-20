@@ -25,11 +25,13 @@ declare global {
     chunkId: ChunkId,
   ) => string;
   // RuntimeGlobals.getChunkCssFilename
-  var __RUNTIME_GLOBALS_GET_CSS_FILENAME__: (chunkId: ChunkId) => string;
+  var __RUNTIME_GLOBALS_GET_CSS_FILENAME__:
+    | ((chunkId: ChunkId) => string)
+    | undefined;
   // RuntimeGlobals.getChunkCssFilename when using Rspack.CssExtractPlugin
-  var __RUNTIME_GLOBALS_GET_MINI_CSS_EXTRACT_FILENAME__: (
-    chunkId: ChunkId,
-  ) => string | undefined;
+  var __RUNTIME_GLOBALS_GET_MINI_CSS_EXTRACT_FILENAME__:
+    | ((chunkId: ChunkId) => string)
+    | undefined;
   // RuntimeGlobals.loadScript
   var __RUNTIME_GLOBALS_LOAD_SCRIPT__: (
     url: ChunkSrcUrl,
