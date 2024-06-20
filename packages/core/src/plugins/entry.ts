@@ -33,7 +33,7 @@ export const pluginEntry = (): RsbuildPlugin => ({
       async (chain, { environment, isServer, isServiceWorker }) => {
         const config = api.getNormalizedConfig({ environment });
         const { preEntry } = config.source;
-        const entry = api.context.environments[environment].entry;
+        const { entry } = api.context.environments[environment];
 
         const injectCoreJsEntry =
           config.output.polyfill === 'entry' && !isServer && !isServiceWorker;
