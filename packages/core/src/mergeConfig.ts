@@ -14,7 +14,6 @@ const OVERRIDE_PATH = [
   'output.emitAssets',
   'server.open',
   'server.printUrls',
-  'dev.startUrl',
   'provider',
 ];
 

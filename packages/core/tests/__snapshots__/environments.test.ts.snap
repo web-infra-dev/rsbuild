@@ -12,7 +12,6 @@ exports[`environment config > should normalize environment config correctly 1`] 
     },
     "hmr": true,
     "liveReload": true,
-    "startUrl": false,
     "writeToDisk": false,
   },
   "html": {
@@ -136,7 +135,6 @@ exports[`environment config > should print environment config when inspect confi
       },
       "hmr": true,
       "liveReload": true,
-      "startUrl": false,
       "writeToDisk": false,
     },
     "html": {
@@ -256,7 +254,6 @@ exports[`environment config > should print environment config when inspect confi
       },
       "hmr": true,
       "liveReload": true,
-      "startUrl": false,
       "writeToDisk": false,
     },
     "html": {
@@ -381,7 +378,6 @@ exports[`environment config > should support modify environment config by api.mo
       },
       "hmr": true,
       "liveReload": true,
-      "startUrl": false,
       "writeToDisk": false,
     },
     "html": {
@@ -501,7 +497,6 @@ exports[`environment config > should support modify environment config by api.mo
       },
       "hmr": true,
       "liveReload": true,
-      "startUrl": false,
       "writeToDisk": false,
     },
     "html": {
@@ -622,7 +617,6 @@ exports[`environment config > should support modify environment config by api.mo
       },
       "hmr": true,
       "liveReload": true,
-      "startUrl": false,
       "writeToDisk": false,
     },
     "html": {
