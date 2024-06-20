@@ -37,10 +37,12 @@ function isAsync(chunk: Chunk | ChunkGroup): boolean {
   return !chunk.initial;
 }
 
-export function extractChunks({
-  compilation,
-  includeType,
-}: ExtractChunks): Chunk[] {
+export function extractChunks({ compilation, includeType }: ExtractChunks):
+  | Chunk[]
+  | Array<{
+      files: string[];
+      auxiliaryFiles?: string[];
+    }> {
   const chunks = [...compilation.chunks];
 
   // 'asyncChunks' are chunks intended for lazy/async loading usually generated as
@@ -79,7 +81,7 @@ export function extractChunks({
         files: Object.keys(compilation.assets).filter(
           (t) => !licenseAssets.includes(t),
         ),
-      } as Chunk,
+      },
     ];
   }
 
