@@ -97,7 +97,7 @@ export async function initRsbuildConfig({
 
   updateContextByNormalizedConfig(context, context.normalizedConfig);
 
-  updateEnvironmentContext(context, environments);
+  await updateEnvironmentContext(context, environments);
 
   // TODO: will remove soon
   context.targets = Object.values(environments).map((e) => e.output.target);

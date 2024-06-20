@@ -1,8 +1,10 @@
 import { isAbsolute, join } from 'node:path';
-import type {
-  BundlerType,
-  NormalizedEnvironmentConfig,
-  RsbuildContext,
+import {
+  type BundlerType,
+  DEFAULT_BROWSERSLIST,
+  type NormalizedEnvironmentConfig,
+  type RsbuildContext,
+  getBrowserslist,
 } from '@rsbuild/shared';
 import { withDefaultConfig } from './config';
 import { ROOT_DIST_DIR } from './constants';
@@ -57,23 +59,49 @@ async function createContextByConfig(
   };
 }
 
-export function updateEnvironmentContext(
+export async function getBrowserslistByEnvironment(
+  path: string,
+  config: NormalizedEnvironmentConfig,
+): Promise<string[]> {
+  const { overrideBrowserslist: overrides, target } = config.output;
+
+  if (target === 'web' || target === 'web-worker') {
+    if (Array.isArray(overrides)) {
+      return overrides;
+    }
+    const browserslistrc = await getBrowserslist(path);
+    if (browserslistrc) {
+      return browserslistrc;
+    }
+  }
+
+  return DEFAULT_BROWSERSLIST[target];
+}
+
+export async function updateEnvironmentContext(
   context: RsbuildContext,
   configs: Record<string, NormalizedEnvironmentConfig>,
 ) {
-  context.environments = Object.fromEntries(
-    Object.entries(configs).map(([name, config]) => [
-      name,
-      {
-        target: config.output.target,
-        distPath: getAbsoluteDistPath(context.rootPath, config),
-        entry: getEntryObject(config, config.output.target),
-        tsconfigPath: config.source.tsconfigPath
-          ? getAbsolutePath(context.rootPath, config.source.tsconfigPath)
-          : undefined,
-      },
-    ]),
-  );
+  context.environments ||= {};
+
+  for (const [name, config] of Object.entries(configs)) {
+    const tsconfigPath = config.source.tsconfigPath
+      ? getAbsolutePath(context.rootPath, config.source.tsconfigPath)
+      : undefined;
+
+    const browserslist = await getBrowserslistByEnvironment(
+      context.rootPath,
+      config,
+    );
+
+    context.environments[name] = {
+      target: config.output.target,
+      distPath: getAbsoluteDistPath(context.rootPath, config),
+      entry: getEntryObject(config, config.output.target),
+      browserslist,
+      tsconfigPath,
+    };
+  }
 }
 
 export function updateContextByNormalizedConfig(

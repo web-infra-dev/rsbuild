@@ -43,11 +43,13 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
         const rsbuildConfig = api.getNormalizedConfig();
         const { rootPath } = api.context;
 
+        const { browserslist } = api.context.environments[utils.environment];
         const swcConfigs = await applyPluginConfig(
           options,
           utils,
           rsbuildConfig,
           rootPath,
+          browserslist,
         );
 
         // If babel plugin is used, replace babel-loader

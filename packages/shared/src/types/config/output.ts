@@ -297,7 +297,7 @@ export interface OutputConfig {
    * [autoprefixer](https://github.com/postcss/autoprefixer) to identify the JavaScript syntax that
    * need to be transformed and the CSS browser prefixes that need to be added.
    */
-  overrideBrowserslist?: string[] | Partial<Record<RsbuildTarget, string[]>>;
+  overrideBrowserslist?: string[];
   /**
    * Copies the specified file or directory to the dist directory.
    */
@@ -308,10 +308,6 @@ export interface OutputConfig {
    */
   emitAssets?: EmitAssets;
 }
-
-export type OverrideBrowserslist =
-  | string[]
-  | Partial<Record<RsbuildTarget, string[]>>;
 
 export interface NormalizedOutputConfig extends OutputConfig {
   target: RsbuildTarget;
