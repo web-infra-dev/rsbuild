@@ -19,7 +19,12 @@ import {
   type PreloadOrPreFetchOption,
   getPublicPathFromCompiler,
 } from '@rsbuild/shared';
-import type { Compilation, Compiler, RspackPluginInstance } from '@rspack/core';
+import type {
+  Chunk,
+  Compilation,
+  Compiler,
+  RspackPluginInstance,
+} from '@rspack/core';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import { ensureAssetPrefix, upperFirst } from '../../helpers';
 import { getHTMLPlugin } from '../../pluginHelper';
@@ -77,7 +82,7 @@ function generateLinks(
       : // Only handle chunks imported by this HtmlWebpackPlugin.
         extractedChunks.filter((chunk) =>
           doesChunkBelongToHtml({
-            chunk,
+            chunk: chunk as Chunk,
             compilation,
             htmlPluginData,
             pluginOptions: options,
