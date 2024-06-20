@@ -8,6 +8,7 @@ import type {
   TransformFn,
   TransformHandler,
 } from '@rsbuild/shared';
+import { isHtmlDisabled } from '@rsbuild/shared';
 import type { Compiler } from '@rspack/core';
 import { LOADER_PATH } from './constants';
 import { createPublicContext } from './createContext';
@@ -16,7 +17,7 @@ import type { InternalContext, NormalizedConfig } from './types';
 
 export function getHTMLPathByEntry(
   entryName: string,
-  config: NormalizedConfig,
+  config: NormalizedEnvironmentConfig,
 ) {
   const filename =
     config.html.outputStructure === 'flat'
@@ -97,14 +98,30 @@ export function getPluginAPI({
     throw new Error('`getRsbuildConfig` get an invalid type param.');
   }) as GetRsbuildConfig;
 
-  const getHTMLPaths = () => {
-    return Object.keys(context.entry).reduce<Record<string, string>>(
-      (prev, key) => {
-        prev[key] = getHTMLPathByEntry(key, getNormalizedConfig());
+  const getHTMLPaths = (options?: { environment: string }) => {
+    const getEnvironmentHTMLPaths = (environment: string) => {
+      const config = getNormalizedConfig({ environment });
+
+      if (isHtmlDisabled(config, config.output.target)) {
+        return {};
+      }
+      return Object.keys(context.environments[environment].entry).reduce<
+        Record<string, string>
+      >((prev, key) => {
+        prev[key] = getHTMLPathByEntry(key, config);
         return prev;
-      },
-      {},
-    );
+      }, {});
+    };
+
+    if (options?.environment) {
+      return getEnvironmentHTMLPaths(options?.environment);
+    }
+    return Object.keys(context.environments).reduce((prev, environment) => {
+      return {
+        ...getEnvironmentHTMLPaths(environment),
+        prev,
+      };
+    }, {});
   };
 
   const exposed: Array<{ id: string | symbol; api: any }> = [];

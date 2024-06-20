@@ -236,15 +236,19 @@ const addFavicon = (headTags: HtmlTagObject[], favicon?: string) => {
 export class HtmlBasicPlugin {
   readonly name: string;
 
+  readonly environment: string;
+
   readonly options: HtmlBasicPluginOptions;
 
   readonly modifyTagsFn?: ModifyHTMLTagsFn;
 
   constructor(
     options: HtmlBasicPluginOptions,
+    environment: string,
     modifyTagsFn?: ModifyHTMLTagsFn,
   ) {
     this.name = 'HtmlBasicPlugin';
+    this.environment = environment;
     this.options = options;
     this.modifyTagsFn = modifyTagsFn;
   }
@@ -280,6 +284,7 @@ export class HtmlBasicPlugin {
                 compilation,
                 assetPrefix: data.publicPath,
                 filename: data.outputName,
+                environment: this.environment,
               })
             : tags;
 

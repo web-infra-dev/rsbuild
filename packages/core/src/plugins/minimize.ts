@@ -2,6 +2,7 @@ import {
   CHAIN_ID,
   type HTMLPluginOptions,
   type NormalizedConfig,
+  type NormalizedEnvironmentConfig,
   deepmerge,
   isObject,
 } from '@rsbuild/shared';
@@ -58,7 +59,7 @@ export const getSwcMinimizerOptions = (
 };
 
 export const parseMinifyOptions = (
-  config: NormalizedConfig,
+  config: NormalizedEnvironmentConfig,
   isProd = true,
 ): {
   minifyJs: boolean;

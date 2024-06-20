@@ -3,7 +3,11 @@ import type { Compiler } from '@rspack/core';
 import deepmerge from '../compiled/deepmerge/index.js';
 import color from '../compiled/picocolors/index.js';
 import { DEFAULT_ASSET_PREFIX } from './constants';
-import type { CacheGroups, NormalizedConfig, RsbuildTarget } from './types';
+import type {
+  CacheGroups,
+  NormalizedEnvironmentConfig,
+  RsbuildTarget,
+} from './types';
 
 export { color, deepmerge };
 
@@ -97,7 +101,7 @@ export const getPublicPathFromCompiler = (compiler: Compiler) => {
 };
 
 export const isHtmlDisabled = (
-  config: NormalizedConfig,
+  config: NormalizedEnvironmentConfig,
   target: RsbuildTarget,
 ) => {
   const { htmlPlugin } = config.tools as {
