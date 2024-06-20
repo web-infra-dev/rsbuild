@@ -1,12 +1,11 @@
 import {
   type ChainIdentifier,
-  type NormalizedConfig,
-  type RsbuildTarget,
+  type NormalizedEnvironmentConfig,
   type RspackChain,
   castArray,
 } from '@rsbuild/shared';
 import { ensureAbsolutePath } from '../helpers';
-import { reduceConfigsWithContext } from '../reduceConfigs';
+import { reduceConfigs } from '../reduceConfigs';
 import type { RsbuildPlugin } from '../types';
 
 // compatible with legacy packages with type="module"
@@ -16,7 +15,7 @@ function applyFullySpecified({
   CHAIN_ID,
 }: {
   chain: RspackChain;
-  config: NormalizedConfig;
+  config: NormalizedEnvironmentConfig;
   CHAIN_ID: ChainIdentifier;
 }) {
   chain.module
@@ -41,13 +40,11 @@ function applyExtensions({ chain }: { chain: RspackChain }) {
 
 function applyAlias({
   chain,
-  target,
   config,
   rootPath,
 }: {
   chain: RspackChain;
-  target: RsbuildTarget;
-  config: NormalizedConfig;
+  config: NormalizedEnvironmentConfig;
   rootPath: string;
 }) {
   const { alias } = config.source;
@@ -56,10 +53,9 @@ function applyAlias({
     return;
   }
 
-  const mergedAlias = reduceConfigsWithContext({
+  const mergedAlias = reduceConfigs({
     initial: {},
     config: alias,
-    ctx: { target },
   });
 
   /**
@@ -91,14 +87,13 @@ export const pluginResolve = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain({
       order: 'pre',
-      handler: (chain, { target, CHAIN_ID }) => {
-        const config = api.getNormalizedConfig();
+      handler: (chain, { environment, CHAIN_ID }) => {
+        const config = api.getNormalizedConfig({ environment });
 
         applyExtensions({ chain });
 
         applyAlias({
           chain,
-          target,
           config,
           rootPath: api.context.rootPath,
         });
