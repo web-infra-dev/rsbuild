@@ -312,14 +312,13 @@ describe('test dev server', () => {
     expect(
       getDevConfig({
         config: {} as NormalizedConfig,
-        port: 3000,
       }),
     ).toMatchInlineSnapshot(`
       {
         "client": {
           "host": "",
           "path": "/rsbuild-hmr",
-          "port": "3000",
+          "port": "",
           "protocol": undefined,
         },
         "liveReload": true,
@@ -338,14 +337,13 @@ describe('test dev server', () => {
             },
           },
         } as NormalizedConfig,
-        port: 3001,
       }),
     ).toMatchInlineSnapshot(`
       {
         "client": {
           "host": "",
           "path": "",
-          "port": "3001",
+          "port": "",
           "protocol": undefined,
         },
         "hmr": false,

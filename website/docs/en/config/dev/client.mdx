@@ -27,10 +27,12 @@ type Client = {
 ```js
 const defaultConfig = {
   path: '/rsbuild-hmr',
-  // Defaults to the port number of the dev server
+  // By default it is set to "location.port"
   port: '',
-  host: location.hostname,
-  protocol: location.protocol === 'https:' ? 'wss' : 'ws',
+  // By default it is set to "location.hostname"
+  host: '',
+  // By default it is set to "location.protocol === 'https:' ? 'wss' : 'ws'""
+  protocol: undefined,
   overlay: true,
 };
 ```

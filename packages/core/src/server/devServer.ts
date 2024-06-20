@@ -103,7 +103,6 @@ export async function createDevServer<
   });
   const devConfig = getDevConfig({
     config,
-    port,
   });
 
   const routes = formatRoutes(

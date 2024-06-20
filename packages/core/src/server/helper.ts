@@ -252,15 +252,14 @@ export const getServerConfig = async ({
 
 export const getDevConfig = ({
   config,
-  port,
 }: {
   config: NormalizedConfig;
-  port: number;
 }): DevConfig => {
   const defaultDevConfig: DevConfig = {
     client: {
       path: HMR_SOCK_PATH,
-      port: port.toString(),
+      // By default it is set to "location.port"
+      port: '',
       // By default it is set to "location.hostname"
       host: '',
       // By default it is set to "location.protocol === 'https:' ? 'wss' : 'ws'""
