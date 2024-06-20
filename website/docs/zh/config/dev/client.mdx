@@ -27,10 +27,12 @@ type Client = {
 ```js
 const defaultConfig = {
   path: '/rsbuild-hmr',
-  // 默认为开发服务器的端口号
+  // 默认为 "location.port"
   port: '',
-  host: location.hostname,
-  protocol: location.protocol === 'https:' ? 'wss' : 'ws',
+  // 默认为 "location.hostname"
+  host: '',
+  // 默认为 "location.protocol === 'https:' ? 'wss' : 'ws'""
+  protocol: undefined,
   overlay: true,
 };
 ```
