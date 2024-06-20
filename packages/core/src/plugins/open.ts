@@ -104,20 +104,19 @@ const openedURLs: string[] = [];
 const normalizeOpenConfig = (
   config: NormalizedConfig,
 ): { targets?: string[]; before?: () => Promise<void> | void } => {
-  const open = config.server.open || config.dev.startUrl;
-  const { beforeStartUrl } = config.dev;
+  const { open } = config.server;
 
   if (open === false) {
     return {};
   }
   if (open === true) {
-    return { targets: [], before: beforeStartUrl };
+    return { targets: [] };
   }
   if (typeof open === 'string') {
-    return { targets: [open], before: beforeStartUrl };
+    return { targets: [open] };
   }
   if (Array.isArray(open)) {
-    return { targets: open, before: beforeStartUrl };
+    return { targets: open };
   }
 
   return {

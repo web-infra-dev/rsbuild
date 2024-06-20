@@ -47,16 +47,6 @@ export interface DevConfig {
    */
   liveReload?: boolean;
   /**
-   * Set the page URL to open when the server starts.
-   * @deprecated use `server.open` instead
-   */
-  startUrl?: boolean | string | string[];
-  /**
-   * Execute a callback function before opening the `startUrl`.
-   * @deprecated use `server.open.before` instead.
-   */
-  beforeStartUrl?: () => Promise<void> | void;
-  /**
    * Set the URL prefix of static assets during development,
    * similar to the [output.publicPath](https://rspack.dev/config/output#outputpublicpath) config of webpack.
    */
@@ -98,11 +88,6 @@ export type NormalizedDevConfig = DevConfig &
   Required<
     Pick<
       DevConfig,
-      | 'hmr'
-      | 'client'
-      | 'startUrl'
-      | 'liveReload'
-      | 'assetPrefix'
-      | 'writeToDisk'
+      'hmr' | 'client' | 'liveReload' | 'assetPrefix' | 'writeToDisk'
     >
   >;

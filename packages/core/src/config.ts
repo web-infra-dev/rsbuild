@@ -56,7 +56,6 @@ const getDefaultDevConfig = (): NormalizedDevConfig => ({
   hmr: true,
   liveReload: true,
   assetPrefix: DEFAULT_ASSET_PREFIX,
-  startUrl: false,
   writeToDisk: false,
   client: {
     path: HMR_SOCKET_PATH,
