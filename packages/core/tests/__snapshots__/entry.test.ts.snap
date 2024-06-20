@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugin-entry > should apply environment entry config correctly 1`] = `
+exports[`plugin-entry > should apply environments entry config correctly 1`] = `
 [
   {
     "entry": {
