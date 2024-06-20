@@ -52,6 +52,26 @@ export default {
       protocol: 'ws',
       // 通常使用 `127.0.0.1`，可以避免跨域请求被浏览器拦截
       host: '127.0.0.1',
+      port: 3000,
+    },
+  },
+};
+```
+
+### 端口号占位符
+
+Rsbuild server 监听的端口号可能会发生变更。比如，当端口被占用时，Rsbuild 会自动递增端口号，直至找到一个可用端口。
+
+为了避免端口变化导致 `client.port` 失效，你可以使用以下方法之一：
+
+- 开启 [server.strictPort](/config/server/strict-port)。
+- 使用 `<port>` 占位符来指代当前端口号，Rsbuild 会将占位符替换为实际监听的端口号。
+
+```js title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      port: '<port>',
     },
   },
 };

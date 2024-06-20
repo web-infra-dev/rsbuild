@@ -52,6 +52,26 @@ export default {
       protocol: 'ws',
       // Usually `127.0.0.1` is used to avoid cross-origin requests being blocked by the browser
       host: '127.0.0.1',
+      port: 3000,
+    },
+  },
+};
+```
+
+### Port placeholder
+
+The port number that Rsbuild server listens on may change. For example, if the port is in use, Rsbuild will automatically increment the port number until it finds an available port.
+
+To avoid `client.port` becoming invalid due to port changes, you can use one of the following methods:
+
+- Enable [server.strictPort](/config/server/strict-port).
+- Use the `<port>` placeholder to refer to the current port number. Rsbuild will replace the placeholder with the actual port number it is listening on.
+
+```js title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      port: '<port>',
     },
   },
 };

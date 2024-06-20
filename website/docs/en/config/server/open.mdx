@@ -76,7 +76,12 @@ export default {
 
 ### Port placeholder
 
-Since the port number may change, you can use the `<port>` placeholder to refer to the current port number, and Rsbuild will automatically replace the placeholder with the actual listening port number.
+The port number that Rsbuild server listens on may change. For example, if the port is in use, Rsbuild will automatically increment the port number until it finds an available port.
+
+To avoid `server.open` becoming invalid due to port changes, you can use one of the following methods:
+
+- Enable [server.strictPort](/config/server/strict-port).
+- Use the `<port>` placeholder to refer to the current port number. Rsbuild will replace the placeholder with the actual port number it is listening on.
 
 ```js
 export default {
