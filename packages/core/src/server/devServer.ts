@@ -114,7 +114,10 @@ export async function createDevServer<
   const devConfig = formatDevConfig(config.dev, port);
 
   const routes = formatRoutes(
-    options.context.entry,
+    Object.values(options.context.environments).reduce(
+      (prev, context) => Object.assign(prev, context.htmlPaths),
+      {},
+    ),
     config.output.distPath.html,
     config.html.outputStructure,
   );

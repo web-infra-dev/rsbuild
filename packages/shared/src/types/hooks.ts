@@ -73,6 +73,8 @@ export type ModifyHTMLTagsContext = {
    * @example 'index.html'
    */
   filename: string;
+  /** The name of the environment to which this build belongs. */
+  environment: string;
 };
 
 export type ModifyHTMLTagsFn = (

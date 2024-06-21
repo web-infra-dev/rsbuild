@@ -190,7 +190,10 @@ export async function startProdServer(
       },
       async () => {
         const routes = formatRoutes(
-          context.entry,
+          Object.values(context.environments).reduce(
+            (prev, context) => Object.assign(prev, context.htmlPaths),
+            {},
+          ),
           config.output.distPath.html,
           config.html.outputStructure,
         );

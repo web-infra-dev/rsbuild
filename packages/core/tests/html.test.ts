@@ -199,6 +199,46 @@ describe('plugin-html', () => {
     expect(config).toMatchSnapshot();
   });
 
+  it('should support environment html config', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginEntry(), pluginHtml()],
+      rsbuildConfig: {
+        environments: {
+          web: {
+            source: {
+              entry: {
+                main: './src/main.ts',
+              },
+            },
+            html: {
+              mountId: 'app',
+              title: 'web',
+            },
+            output: {
+              distPath: {
+                html: 'web',
+              },
+            },
+          },
+          web1: {
+            source: {
+              entry: {
+                index: './src/main1.ts',
+              },
+            },
+            html: {
+              mountId: 'app1',
+              title: 'web1',
+            },
+          },
+        },
+      },
+    });
+    const configs = await rsbuild.initConfigs();
+
+    expect(configs).toMatchSnapshot();
+  });
+
   it.each<{ value: HtmlConfig['inject']; message: string }>([
     { value: false, message: 'false' },
     { value: () => false, message: '() => false' },

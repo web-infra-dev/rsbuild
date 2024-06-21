@@ -184,7 +184,7 @@ const createDefaultConfig = (): RsbuildConfig => ({
   environments: {},
 });
 
-function getDefaultEntry(root: string): RsbuildEntry {
+export function getDefaultEntry(root: string): RsbuildEntry {
   const files = [
     // Most projects are using typescript now.
     // So we put `.ts` as the first one to improve performance.
@@ -214,10 +214,6 @@ export const withDefaultConfig = async (
   const merged = mergeRsbuildConfig(createDefaultConfig(), config);
 
   merged.source ||= {};
-
-  if (!merged.source.entry) {
-    merged.source.entry = getDefaultEntry(rootPath);
-  }
 
   if (!merged.source.tsconfigPath) {
     const tsconfigPath = join(rootPath, TS_CONFIG_FILE);

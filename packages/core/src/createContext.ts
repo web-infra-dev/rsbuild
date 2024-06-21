@@ -4,11 +4,14 @@ import {
   DEFAULT_BROWSERSLIST,
   type NormalizedEnvironmentConfig,
   type RsbuildContext,
+  type RsbuildEntry,
   getBrowserslist,
+  isHtmlDisabled,
 } from '@rsbuild/shared';
 import { withDefaultConfig } from './config';
 import { ROOT_DIST_DIR } from './constants';
 import { initHooks } from './initHooks';
+import { getHTMLPathByEntry } from './initPlugins';
 import { logger } from './logger';
 import { getEntryObject } from './plugins/entry';
 import type {
@@ -80,6 +83,19 @@ export async function getBrowserslistByEnvironment(
   return DEFAULT_BROWSERSLIST[target];
 }
 
+const getEnvironmentHTMLPaths = (
+  entry: RsbuildEntry,
+  config: NormalizedEnvironmentConfig,
+) => {
+  if (isHtmlDisabled(config, config.output.target)) {
+    return {};
+  }
+  return Object.keys(entry).reduce<Record<string, string>>((prev, key) => {
+    prev[key] = getHTMLPathByEntry(key, config);
+    return prev;
+  }, {});
+};
+
 export async function updateEnvironmentContext(
   context: RsbuildContext,
   configs: Record<string, NormalizedEnvironmentConfig>,
@@ -90,17 +106,21 @@ export async function updateEnvironmentContext(
     const tsconfigPath = config.source.tsconfigPath
       ? getAbsolutePath(context.rootPath, config.source.tsconfigPath)
       : undefined;
+    const entry = getEntryObject(config, config.output.target);
 
     const browserslist = await getBrowserslistByEnvironment(
       context.rootPath,
       config,
     );
 
+    const htmlPaths = getEnvironmentHTMLPaths(entry, config);
+
     context.environments[name] = {
       target: config.output.target,
       distPath: getAbsoluteDistPath(context.rootPath, config),
       entry: getEntryObject(config, config.output.target),
       browserslist,
+      htmlPaths,
       tsconfigPath,
     };
   }
