@@ -178,8 +178,8 @@ export const pluginLightningcss = (
       },
     });
 
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
-      const config = api.getNormalizedConfig();
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment, isProd }) => {
+      const config = api.getNormalizedConfig({ environment });
       const { minify } = config.output;
       const isMinimize =
         isProd &&

@@ -61,8 +61,8 @@ export const pluginAdaptor = (): RsbuildPlugin => ({
   name: 'rsbuild-webpack:adaptor',
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, target }) => {
-      const config = api.getNormalizedConfig();
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment, target }) => {
+      const config = api.getNormalizedConfig({ environment });
 
       if (
         api.context.tsconfigPath &&
