@@ -268,11 +268,6 @@ describe('plugin-swc', () => {
               target: 'node',
             },
           },
-          serviceWorker: {
-            output: {
-              target: 'service-worker',
-            },
-          },
           web: {
             output: {
               target: 'web',

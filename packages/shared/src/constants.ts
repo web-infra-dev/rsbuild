@@ -8,7 +8,6 @@ const DEFAULT_WEB_BROWSERSLIST = [
 export const DEFAULT_BROWSERSLIST = {
   web: DEFAULT_WEB_BROWSERSLIST,
   'web-worker': DEFAULT_WEB_BROWSERSLIST,
-  'service-worker': DEFAULT_WEB_BROWSERSLIST,
   node: ['node >= 16'],
 };
 

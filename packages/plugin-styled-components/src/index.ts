@@ -23,9 +23,7 @@ export type PluginStyledComponentsOptions = {
 };
 
 function isServerTarget(target: RsbuildTarget[]) {
-  return (Array.isArray(target) ? target : [target]).some((item) =>
-    ['node', 'service-worker'].includes(item),
-  );
+  return Array.isArray(target) ? target.includes('node') : target === 'node';
 }
 
 const getDefaultStyledComponentsConfig = (isProd: boolean, ssr: boolean) => {

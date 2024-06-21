@@ -497,15 +497,6 @@ importers:
         specifier: ^5.5.0
         version: 5.5.2
 
-  examples/service-worker:
-    devDependencies:
-      '@rsbuild/core':
-        specifier: workspace:*
-        version: link:../../packages/core
-      typescript:
-        specifier: ^5.5.0
-        version: 5.5.2
-
   examples/solid:
     dependencies:
       solid-js:

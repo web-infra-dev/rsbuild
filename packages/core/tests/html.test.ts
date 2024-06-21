@@ -46,18 +46,6 @@ describe('plugin-html', () => {
     expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toBeFalsy();
   });
 
-  it('should not register html plugin when target is service-worker', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
-      rsbuildConfig: {
-        output: {
-          target: 'service-worker',
-        },
-      },
-    });
-    expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toBeFalsy();
-  });
-
   it('should register appIcon plugin when using html.appIcon', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
