@@ -322,8 +322,17 @@ export async function emptyDir(dir: string) {
   if (!(await pathExists(dir))) {
     return;
   }
-  for (const file of fs.readdirSync(dir)) {
-    fs.rmSync(path.resolve(dir, file), { recursive: true, force: true });
+
+  try {
+    for (const file of await fs.promises.readdir(dir)) {
+      await fs.promises.rm(path.resolve(dir, file), {
+        recursive: true,
+        force: true,
+      });
+    }
+  } catch (err) {
+    logger.debug(`Failed to empty dir: ${dir}`);
+    logger.debug(err);
   }
 }
 
