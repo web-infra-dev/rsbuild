@@ -76,6 +76,10 @@ function getURLMessages(
   urls: Array<{ url: string; label: string }>,
   routes: Routes,
 ) {
+  if (!routes.length) {
+    return '';
+  }
+
   if (routes.length === 1) {
     return urls
       .map(
@@ -153,7 +157,9 @@ export function printServerURLs({
   }
 
   const message = getURLMessages(urls, routes);
-  logger.log(message);
+  if (message) {
+    logger.log(message);
+  }
 
   return message;
 }
