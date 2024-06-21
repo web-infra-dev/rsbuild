@@ -66,6 +66,32 @@ import type {
 } from '@rsbuild/core';
 ```
 
+## NormalizedEnvironmentConfig
+
+The type of Rsbuild environment configuration after normalization, corresponding to the return value of the [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig) method.
+
+```ts
+import type { NormalizedConfig } from '@rsbuild/core';
+
+const config: NormalizedConfig = api.getNormalizedConfig({ environment });
+```
+
+You can also import the type definitions of each field in the normalized config:
+
+```ts
+import type {
+  NormalizedDevConfig,
+  NormalizedHtmlConfig,
+  NormalizedToolsConfig,
+  NormalizedSourceConfig,
+  NormalizedServerConfig,
+  NormalizedOutputConfig,
+  NormalizedSecurityConfig,
+  NormalizedPerformanceConfig,
+  NormalizedModuleFederationConfig,
+} from '@rsbuild/core';
+```
+
 ## RsbuildContext
 
 The type of the [context property](/api/javascript-api/instance#rsbuildcontext) in the Rsbuild instance.

@@ -1,0 +1,129 @@
+# environments
+
+Rsbuild 支持构建多个环境产物，可通过 `environments` 定义多个环境，并为不同环境定义不同的 Rsbuild 配置。
+
+用户在 environments 中的配置可以覆盖外层的 Rsbuild 基础配置。
+
+- **类型：**
+
+```ts
+export interface EnvironmentConfig {
+  /**
+   * Options for HTML generation.
+   */
+  html?: HtmlConfig;
+  /**
+   * Options for the low-level tools.
+   */
+  tools?: ToolsConfig;
+  /**
+   * Options for source code parsing and compilation.
+   */
+  source?: SourceConfig;
+  /**
+   * Options for build outputs.
+   */
+  output?: OutputConfig;
+  /**
+   * Options for Web security.
+   */
+  security?: SecurityConfig;
+  /**
+   * Options for build performance and runtime performance.
+   */
+  performance?: PerformanceConfig;
+  /**
+   * Options for module federation.
+   */
+  moduleFederation?: ModuleFederationConfig;
+}
+
+type Environments = {
+  [name: string]: EnvironmentConfig;
+};
+```
+
+- **默认值：** `undefined`
+
+## 示例
+
+分别对 client 和 ssr 场景进行配置：
+
+```ts title="rsbuild.config.ts"
+export default {
+  // 所有环境共享配置
+  source: {
+    alias: {
+      '@common': './src/common',
+    },
+  },
+  environments: {
+    // client 环境配置
+    client: {
+      source: {
+        alias: {
+          '@common1': './src/web/common1',
+        },
+        entry: {
+          index: './src/index.client.js',
+        },
+      },
+      output: {
+        target: 'web',
+      },
+    },
+    // ssr 环境配置
+    ssr: {
+      source: {
+        alias: {
+          '@common1': './src/ssr/common1',
+        },
+        entry: {
+          index: './src/index.server.js',
+        },
+      },
+      output: {
+        target: 'node',
+      },
+    },
+  },
+};
+```
+
+最终 client 环境下生效的 rsbuild 配置为：
+
+```
+{
+  source: {
+    alias: {
+      "@common": "./src/common",
+      "@common1": "./src/web/common1",
+    },
+    entry: {
+      index: "./src/index.client.js",
+    },
+  },
+  output: {
+    target: "web",
+  },
+}
+```
+
+最终 ssr 环境下生效的 rsbuild 配置为：
+
+```
+{
+  source: {
+    alias: {
+      "@common": "./src/common",
+      "@common1": "./src/ssr/common1",
+    },
+    entry: {
+      index: "./src/index.server.js",
+    },
+  },
+  output: {
+    target: "node",
+  },
+}
+```
