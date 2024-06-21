@@ -1,0 +1,129 @@
+# environments
+
+Rsbuild 支持同时为多个环境构建产物。你可以使用  `environments`  为每个环境定义不同的 Rsbuild 配置。
+
+定义在 `environments` 中的配置会覆盖外部的 Rsbuild 基础配置。
+
+- **类型：**
+
+```ts
+interface EnvironmentConfig {
+  /**
+   * Options for HTML generation.
+   */
+  html?: HtmlConfig;
+  /**
+   * Options for the low-level tools.
+   */
+  tools?: ToolsConfig;
+  /**
+   * Options for source code parsing and compilation.
+   */
+  source?: SourceConfig;
+  /**
+   * Options for build outputs.
+   */
+  output?: OutputConfig;
+  /**
+   * Options for Web security.
+   */
+  security?: SecurityConfig;
+  /**
+   * Options for build performance and runtime performance.
+   */
+  performance?: PerformanceConfig;
+  /**
+   * Options for module federation.
+   */
+  moduleFederation?: ModuleFederationConfig;
+}
+
+type Environments = {
+  [name: string]: EnvironmentConfig;
+};
+```
+
+- **默认值：** `undefined`
+
+## 示例
+
+分别为 `web` (client) 和 `node` (SSR) 环境配置 Rsbuild：
+
+```ts title="rsbuild.config.ts"
+export default {
+  // 所有环境共享配置
+  source: {
+    alias: {
+      '@common': './src/common',
+    },
+  },
+  environments: {
+    // client 环境配置
+    web: {
+      source: {
+        alias: {
+          '@common1': './src/web/common1',
+        },
+        entry: {
+          index: './src/index.client.js',
+        },
+      },
+      output: {
+        target: 'web',
+      },
+    },
+    // SSR 环境配置
+    node: {
+      source: {
+        alias: {
+          '@common1': './src/ssr/common1',
+        },
+        entry: {
+          index: './src/index.server.js',
+        },
+      },
+      output: {
+        target: 'node',
+      },
+    },
+  },
+};
+```
+
+对于 `web` 环境，合并后的 Rsbuild 配置为：
+
+```js
+const webConfig = {
+  source: {
+    alias: {
+      "@common": "./src/common",
+      "@common1": "./src/web/common1",
+    },
+    entry: {
+      index: "./src/index.client.js",
+    },
+  },
+  output: {
+    target: "web",
+  },
+}
+```
+
+对于 `node` 环境，合并后的 Rsbuild 配置为：
+
+```js
+const nodeConfig = {
+  source: {
+    alias: {
+      "@common": "./src/common",
+      "@common1": "./src/ssr/common1",
+    },
+    entry: {
+      index: "./src/index.server.js",
+    },
+  },
+  output: {
+    target: "node",
+  },
+}
+```

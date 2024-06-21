@@ -1,0 +1,129 @@
+# environments
+
+Rsbuild supports building outputs for multiple environments. You can use `environments` to define different Rsbuild configurations for each environment.
+
+The configuration in `environments` overrides the outer Rsbuild base configuration.
+
+- **Type:**
+
+```ts
+interface EnvironmentConfig {
+  /**
+   * Options for HTML generation.
+   */
+  html?: HtmlConfig;
+  /**
+   * Options for the low-level tools.
+   */
+  tools?: ToolsConfig;
+  /**
+   * Options for source code parsing and compilation.
+   */
+  source?: SourceConfig;
+  /**
+   * Options for build outputs.
+   */
+  output?: OutputConfig;
+  /**
+   * Options for Web security.
+   */
+  security?: SecurityConfig;
+  /**
+   * Options for build performance and runtime performance.
+   */
+  performance?: PerformanceConfig;
+  /**
+   * Options for module federation.
+   */
+  moduleFederation?: ModuleFederationConfig;
+}
+
+type Environments = {
+  [name: string]: EnvironmentConfig;
+};
+```
+
+- **Default:** `undefined`
+
+## Example
+
+Configure Rsbuild configuration for `web` (client) and `node` (SSR) environments:
+
+```ts title="rsbuild.config.ts"
+export default {
+  // Shared configuration for all environments
+  source: {
+    alias: {
+      '@common': './src/common',
+    },
+  },
+  environments: {
+    // configuration for client
+    web: {
+      source: {
+        alias: {
+          '@common1': './src/web/common1',
+        },
+        entry: {
+          index: './src/index.client.js',
+        },
+      },
+      output: {
+        target: 'web',
+      },
+    },
+    // configuration for SSR
+    node: {
+      source: {
+        alias: {
+          '@common1': './src/ssr/common1',
+        },
+        entry: {
+          index: './src/index.server.js',
+        },
+      },
+      output: {
+        target: 'node',
+      },
+    },
+  },
+};
+```
+
+For the `web` environment, the merged Rsbuild configuration is:
+
+```js
+const webConfig = {
+  source: {
+    alias: {
+      "@common": "./src/common",
+      "@common1": "./src/web/common1",
+    },
+    entry: {
+      index: "./src/index.client.js",
+    },
+  },
+  output: {
+    target: "web",
+  },
+};
+```
+
+For the `node` environment, the merged Rsbuild configuration is:
+
+```js
+const nodeConfig = {
+  source: {
+    alias: {
+      "@common": "./src/common",
+      "@common1": "./src/ssr/common1",
+    },
+    entry: {
+      index: "./src/index.server.js",
+    },
+  },
+  output: {
+    target: "node",
+  },
+};
+```
