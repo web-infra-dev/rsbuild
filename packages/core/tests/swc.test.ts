@@ -161,6 +161,7 @@ describe('plugin-swc', () => {
         environments: {
           web: {
             source: {
+              exclude: ['src/example'],
               transformImport: [
                 {
                   libraryName: 'foo',
@@ -174,6 +175,7 @@ describe('plugin-swc', () => {
           },
           node: {
             source: {
+              exclude: ['src/example1'],
               transformImport: [
                 {
                   libraryName: 'bar',

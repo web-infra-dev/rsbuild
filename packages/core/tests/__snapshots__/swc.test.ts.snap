@@ -536,6 +536,9 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
 exports[`plugin-swc > should apply environment config correctly 1`] = `
 [
   {
+    "exclude": [
+      "src/example",
+    ],
     "include": [
       {
         "and": [
@@ -655,6 +658,9 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
 exports[`plugin-swc > should apply environment config correctly 2`] = `
 [
   {
+    "exclude": [
+      "src/example1",
+    ],
     "include": [
       {
         "and": [

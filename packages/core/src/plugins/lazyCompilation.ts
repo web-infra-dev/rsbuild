@@ -12,6 +12,7 @@ export const pluginLazyCompilation = (): RsbuildPlugin => ({
 
       const config = api.getNormalizedConfig({ environment });
 
+      // TODO: support dev.lazyCompilation option in environment config
       const options = config.dev?.lazyCompilation;
       if (!options) {
         return;

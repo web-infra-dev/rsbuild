@@ -28,6 +28,53 @@ describe('plugins/babel', () => {
     ).toMatchSnapshot();
   });
 
+  it('should apply environment config correctly', async () => {
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {
+        environments: {
+          web: {
+            source: {
+              exclude: ['src/example'],
+              decorators: {
+                version: '2022-03',
+              },
+            },
+            performance: {
+              buildCache: false,
+            },
+          },
+          ssr: {
+            source: {
+              exclude: ['src/example1'],
+              decorators: {
+                version: 'legacy',
+              },
+            },
+            performance: {
+              buildCache: false,
+            },
+            output: {
+              target: 'node',
+            },
+          },
+        },
+      },
+    });
+
+    rsbuild.addPlugins([pluginBabel()]);
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+
+    for (const bundlerConfig of bundlerConfigs) {
+      const rules = bundlerConfig.module?.rules?.find(
+        (r) =>
+          (typeof r === 'object' ? r?.test?.toString() : '') ===
+          SCRIPT_REGEX.toString(),
+      );
+      expect(rules).toMatchSnapshot();
+    }
+  });
+
   it('should set babel-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginBabel()],
