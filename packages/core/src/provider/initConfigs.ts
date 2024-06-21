@@ -2,6 +2,7 @@ import type {
   InspectConfigOptions,
   NormalizedEnvironmentConfig,
   PluginManager,
+  RsbuildEntry,
   RspackConfig,
 } from '@rsbuild/shared';
 import { getDefaultEntry, normalizeConfig } from '../config';
@@ -42,6 +43,13 @@ const normalizeEnvironmentsConfigs = (
   normalizedConfig: NormalizedConfig,
   rootPath: string,
 ): Record<string, NormalizedEnvironmentConfig> => {
+  let defaultEntry: RsbuildEntry;
+  const getDefaultEntryWithMemo = () => {
+    if (!defaultEntry) {
+      defaultEntry = getDefaultEntry(rootPath);
+    }
+    return defaultEntry;
+  };
   const { environments, dev, server, provider, ...rsbuildSharedConfig } =
     normalizedConfig;
   if (environments && Object.keys(environments).length) {
@@ -58,7 +66,7 @@ const normalizeEnvironmentsConfigs = (
 
         if (!environmentConfig.source.entry) {
           // @ts-expect-error
-          environmentConfig.source.entry = getDefaultEntry(rootPath);
+          environmentConfig.source.entry = getDefaultEntryWithMemo();
         }
 
         return [name, environmentConfig];
@@ -71,7 +79,7 @@ const normalizeEnvironmentsConfigs = (
       ...rsbuildSharedConfig,
       source: {
         ...rsbuildSharedConfig.source,
-        entry: rsbuildSharedConfig.source.entry ?? getDefaultEntry(rootPath),
+        entry: rsbuildSharedConfig.source.entry ?? getDefaultEntryWithMemo(),
       },
       dev,
       server,
