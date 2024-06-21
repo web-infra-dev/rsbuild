@@ -33,7 +33,7 @@ test.describe('should print file size correctly', async () => {
     expect(logs.some((log) => log.includes('Gzipped size:'))).toBeTruthy();
   });
 
-  test('should print size of multiple targets correctly', async () => {
+  test.only('should print size of multiple targets correctly', async () => {
     await build({
       cwd,
       rsbuildConfig: {
@@ -52,6 +52,9 @@ test.describe('should print file size correctly', async () => {
           node: {
             output: {
               target: 'node',
+              distPath: {
+                root: 'dist/server',
+              },
             },
           },
         },

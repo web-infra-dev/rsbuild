@@ -106,15 +106,25 @@ dist
 
 Node.js 产物通常只包含 JS 文件，不包含 HTML、CSS 等文件。此外，Node 产物的 JS 文件名称也不会自动生成哈希值。
 
-你可以通过 [output.distPath.server](/config/output/dist-path) 配置项来修改 Node 产物的输出路径。
+你可以通过 [environments](/config/environments) 配置项来修改 Node 产物的输出路径。
 
-比如，将 Node.js 产物输出到 `server` 目录：
+比如，将 Node.js 产物输出到 `dist/server` 目录：
 
 ```ts
 export default {
-  output: {
-    distPath: {
-      server: 'server',
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+        distPath: {
+          root: 'dist/server',
+        },
+      },
     },
   },
 };

@@ -99,10 +99,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
           .hashFunction('xxhash64');
 
         if (isServer) {
-          const serverPath = config.output.distPath.server;
-
           chain.output
-            .path(posix.join(api.context.distPath, serverPath))
             .filename('[name].js')
             .chunkFilename('[name].js')
             .library({
