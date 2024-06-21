@@ -15,6 +15,6 @@
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-svelte": "workspace:*",
     "svelte-check": "^3.8.0",
-    "typescript": "^5.4.2"
+    "typescript": "^5.5.0"
   }
 }
