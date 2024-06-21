@@ -1,8 +1,7 @@
-import {
-  type DnsPrefetchOption,
-  type HtmlBasicTag,
-  type PreconnectOption,
-  isHtmlDisabled,
+import type {
+  DnsPrefetchOption,
+  HtmlBasicTag,
+  PreconnectOption,
 } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
@@ -45,16 +44,17 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
       return { headTags, bodyTags };
     });
 
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, target, environment }) => {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
+      const htmlPaths = api.getHTMLPaths({ environment });
+
+      if (Object.keys(htmlPaths).length === 0) {
+        return;
+      }
+
       const config = api.getNormalizedConfig({ environment });
       const {
         performance: { preload, prefetch },
       } = config;
-
-      if (isHtmlDisabled(config, target)) {
-        return;
-      }
-
       const HTMLCount = chain.entryPoints.values().length;
 
       const { HtmlPreloadOrPrefetchPlugin } = await import(

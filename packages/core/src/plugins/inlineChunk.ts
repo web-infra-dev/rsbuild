@@ -1,8 +1,4 @@
-import {
-  type InlineChunkTest,
-  JS_REGEX,
-  isHtmlDisabled,
-} from '@rsbuild/shared';
+import { type InlineChunkTest, JS_REGEX } from '@rsbuild/shared';
 import { CSS_REGEX } from '../constants';
 import { pick } from '../helpers';
 import type { RsbuildPlugin } from '../types';
@@ -11,47 +7,45 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
   name: 'rsbuild:inline-chunk',
 
   setup(api) {
-    api.modifyBundlerChain(
-      async (chain, { target, environment, CHAIN_ID, isDev }) => {
-        const config = api.getNormalizedConfig({ environment });
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, isDev, environment }) => {
+      const htmlPaths = api.getHTMLPaths({ environment });
+      if (Object.keys(htmlPaths).length === 0 || isDev) {
+        return;
+      }
 
-        if (isHtmlDisabled(config, target) || isDev) {
-          return;
-        }
+      const config = api.getNormalizedConfig({ environment });
+      const { InlineChunkHtmlPlugin } = await import(
+        '../rspack/InlineChunkHtmlPlugin'
+      );
 
-        const { InlineChunkHtmlPlugin } = await import(
-          '../rspack/InlineChunkHtmlPlugin'
-        );
+      const { inlineStyles, inlineScripts } = config.output;
 
-        const { inlineStyles, inlineScripts } = config.output;
+      const scriptTests: InlineChunkTest[] = [];
+      const styleTests: InlineChunkTest[] = [];
 
-        const scriptTests: InlineChunkTest[] = [];
-        const styleTests: InlineChunkTest[] = [];
+      if (inlineScripts) {
+        scriptTests.push(inlineScripts === true ? JS_REGEX : inlineScripts);
+      }
 
-        if (inlineScripts) {
-          scriptTests.push(inlineScripts === true ? JS_REGEX : inlineScripts);
-        }
+      if (inlineStyles) {
+        styleTests.push(inlineStyles === true ? CSS_REGEX : inlineStyles);
+      }
 
-        if (inlineStyles) {
-          styleTests.push(inlineStyles === true ? CSS_REGEX : inlineStyles);
-        }
+      if (!scriptTests.length && !styleTests.length) {
+        return;
+      }
 
-        if (!scriptTests.length && !styleTests.length) {
-          return;
-        }
-
-        chain
-          .plugin(CHAIN_ID.PLUGIN.INLINE_HTML)
-          // ensure nonce can be applied to inlined style tags
-          .before(CHAIN_ID.PLUGIN.HTML_BASIC)
-          .use(InlineChunkHtmlPlugin, [
-            {
-              styleTests,
-              scriptTests,
-              distPath: pick(config.output.distPath, ['js', 'css']),
-            },
-          ]);
-      },
-    );
+      chain
+        .plugin(CHAIN_ID.PLUGIN.INLINE_HTML)
+        // ensure nonce can be applied to inlined style tags
+        .before(CHAIN_ID.PLUGIN.HTML_BASIC)
+        .use(InlineChunkHtmlPlugin, [
+          {
+            styleTests,
+            scriptTests,
+            distPath: pick(config.output.distPath, ['js', 'css']),
+          },
+        ]);
+    });
   },
 });

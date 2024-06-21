@@ -5,7 +5,6 @@ import {
   castArray,
   color,
   deepmerge,
-  isHtmlDisabled,
   isPlainObject,
 } from '@rsbuild/shared';
 import type {
@@ -283,11 +282,11 @@ export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      async (chain, { HtmlPlugin, isProd, CHAIN_ID, target, environment }) => {
+      async (chain, { HtmlPlugin, isProd, CHAIN_ID, environment }) => {
         const config = api.getNormalizedConfig({ environment });
 
-        // if html is disabled or target is server, skip html plugin
-        if (isHtmlDisabled(config, target)) {
+        const htmlPaths = api.getHTMLPaths({ environment });
+        if (Object.keys(htmlPaths).length === 0) {
           return;
         }
 
@@ -295,7 +294,6 @@ export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
         const assetPrefix = getPublicPathFromChain(chain, false);
         const entries = chain.entryPoints.entries() || {};
         const entryNames = Object.keys(entries);
-        const htmlPaths = api.getHTMLPaths({ environment });
         const htmlInfoMap: Record<string, HtmlInfo> = {};
 
         const finalOptions = await Promise.all(
