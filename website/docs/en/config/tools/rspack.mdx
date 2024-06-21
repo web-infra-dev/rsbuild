@@ -198,6 +198,22 @@ export default {
 };
 ```
 
+### HtmlPlugin
+
+- **Type:** `typeof import('html-webpack-plugin')`
+
+The instance of `html-webpack-plugin`:
+
+```js
+export default {
+  tools: {
+    rspack: (config, { HtmlPlugin }) => {
+      console.log(HtmlPlugin);
+    },
+  },
+};
+```
+
 ### addRules
 
 - **Type:** `(rules: RuleSetRule | RuleSetRule[]) => void`
