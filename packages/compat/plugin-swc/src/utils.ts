@@ -1,7 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { __internalHelper } from '@rsbuild/core';
-import type { ModifyChainUtils, NormalizedConfig } from '@rsbuild/core';
+import type {
+  ModifyChainUtils,
+  NormalizedEnvironmentConfig,
+} from '@rsbuild/core';
 import { getCoreJsVersion } from '@rsbuild/shared';
 import _ from 'lodash';
 import semver from 'semver';
@@ -74,7 +77,7 @@ export async function determinePresetReact(
 
 export function checkUseMinify(
   options: ObjPluginSwcOptions,
-  config: NormalizedConfig,
+  config: NormalizedEnvironmentConfig,
   isProd: boolean,
 ) {
   return (
@@ -174,7 +177,7 @@ const getDefaultStyledComponentsConfig = (isProd: boolean, ssr: boolean) => {
 export async function applyPluginConfig(
   rawOptions: PluginSwcOptions,
   utils: ModifyChainUtils,
-  rsbuildConfig: NormalizedConfig,
+  rsbuildConfig: NormalizedEnvironmentConfig,
   rootPath: string,
   browserslist?: string[],
 ): Promise<FinalizedConfig[]> {

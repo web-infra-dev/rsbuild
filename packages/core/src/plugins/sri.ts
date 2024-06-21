@@ -19,8 +19,8 @@ export const pluginSri = (): RsbuildPlugin => ({
   setup(api) {
     const placeholder = 'RSBUILD_INTEGRITY_PLACEHOLDER:';
 
-    const getAlgorithm = () => {
-      const config = api.getNormalizedConfig();
+    const getAlgorithm = (environment: string) => {
+      const config = api.getNormalizedConfig({ environment });
       const { sri } = config.security;
       const enable = sri.enable === 'auto' ? isProd() : sri.enable;
 
@@ -35,8 +35,8 @@ export const pluginSri = (): RsbuildPlugin => ({
     api.modifyHTMLTags({
       // ensure `sri` can be applied to all tags
       order: 'post',
-      handler(tags, { assetPrefix }) {
-        const algorithm = getAlgorithm();
+      handler(tags, { assetPrefix, environment }) {
+        const algorithm = getAlgorithm(environment);
 
         if (!algorithm) {
           return tags;
@@ -193,7 +193,7 @@ export const pluginSri = (): RsbuildPlugin => ({
         return;
       }
 
-      const algorithm = getAlgorithm();
+      const algorithm = getAlgorithm(environment);
       if (!algorithm) {
         return;
       }

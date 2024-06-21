@@ -12,7 +12,7 @@ import { PLUGIN_SWC_NAME } from '../constants';
 import { isWebTarget } from '../helpers';
 import { reduceConfigs } from '../reduceConfigs';
 import type {
-  NormalizedConfig,
+  NormalizedEnvironmentConfig,
   NormalizedSourceConfig,
   RsbuildPlugin,
 } from '../types';
@@ -54,7 +54,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
     api.modifyBundlerChain({
       order: 'pre',
       handler: async (chain, { CHAIN_ID, target, environment }) => {
-        const config = api.getNormalizedConfig();
+        const config = api.getNormalizedConfig({ environment });
 
         const rule = chain.module
           .rule(CHAIN_ID.RULE.JS)
@@ -169,7 +169,7 @@ function applyTransformImport(
 
 export function applySwcDecoratorConfig(
   swcConfig: SwcLoaderOptions,
-  config: NormalizedConfig,
+  config: NormalizedEnvironmentConfig,
 ) {
   swcConfig.jsc ||= {};
   swcConfig.jsc.transform ||= {};

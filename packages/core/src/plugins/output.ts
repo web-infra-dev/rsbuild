@@ -1,7 +1,7 @@
 import { posix } from 'node:path';
 import {
   DEFAULT_ASSET_PREFIX,
-  type NormalizedConfig,
+  type NormalizedEnvironmentConfig,
   type RsbuildContext,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
@@ -17,7 +17,7 @@ function getPublicPath({
   context,
 }: {
   isProd: boolean;
-  config: NormalizedConfig;
+  config: NormalizedEnvironmentConfig;
   context: RsbuildContext;
 }) {
   const { dev, output } = config;
@@ -56,9 +56,9 @@ export const pluginOutput = (): RsbuildPlugin => ({
     api.modifyBundlerChain(
       async (
         chain,
-        { CHAIN_ID, target, isProd, isServer, isServiceWorker },
+        { CHAIN_ID, target, isProd, isServer, isServiceWorker, environment },
       ) => {
-        const config = api.getNormalizedConfig();
+        const config = api.getNormalizedConfig({ environment });
 
         const publicPath = getPublicPath({
           config,

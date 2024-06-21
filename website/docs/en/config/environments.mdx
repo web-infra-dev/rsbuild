@@ -96,15 +96,15 @@ For the `web` environment, the merged Rsbuild configuration is:
 const webConfig = {
   source: {
     alias: {
-      "@common": "./src/common",
-      "@common1": "./src/web/common1",
+      '@common': './src/common',
+      '@common1': './src/web/common1',
     },
     entry: {
-      index: "./src/index.client.js",
+      index: './src/index.client.js',
     },
   },
   output: {
-    target: "web",
+    target: 'web',
   },
 };
 ```
@@ -115,15 +115,15 @@ For the `node` environment, the merged Rsbuild configuration is:
 const nodeConfig = {
   source: {
     alias: {
-      "@common": "./src/common",
-      "@common1": "./src/ssr/common1",
+      '@common': './src/common',
+      '@common1': './src/ssr/common1',
     },
     entry: {
-      index: "./src/index.server.js",
+      index: './src/index.server.js',
     },
   },
   output: {
-    target: "node",
+    target: 'node',
   },
 };
 ```

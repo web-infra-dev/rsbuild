@@ -51,6 +51,7 @@ export type {
   NormalizedSecurityConfig,
   NormalizedPerformanceConfig,
   NormalizedModuleFederationConfig,
+  NormalizedEnvironmentConfig,
   // Plugin Types
   RsbuildPlugin,
   RsbuildPlugins,

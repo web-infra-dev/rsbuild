@@ -1,6 +1,6 @@
 # environments
 
-Rsbuild 支持同时为多个环境构建产物。你可以使用  `environments`  为每个环境定义不同的 Rsbuild 配置。
+Rsbuild 支持同时为多个环境构建产物。你可以使用 `environments` 为每个环境定义不同的 Rsbuild 配置。
 
 定义在 `environments` 中的配置会覆盖外部的 Rsbuild 基础配置。
 
@@ -96,17 +96,17 @@ export default {
 const webConfig = {
   source: {
     alias: {
-      "@common": "./src/common",
-      "@common1": "./src/web/common1",
+      '@common': './src/common',
+      '@common1': './src/web/common1',
     },
     entry: {
-      index: "./src/index.client.js",
+      index: './src/index.client.js',
     },
   },
   output: {
-    target: "web",
+    target: 'web',
   },
-}
+};
 ```
 
 对于 `node` 环境，合并后的 Rsbuild 配置为：
@@ -115,15 +115,15 @@ const webConfig = {
 const nodeConfig = {
   source: {
     alias: {
-      "@common": "./src/common",
-      "@common1": "./src/ssr/common1",
+      '@common': './src/common',
+      '@common1': './src/ssr/common1',
     },
     entry: {
-      index: "./src/index.server.js",
+      index: './src/index.server.js',
     },
   },
   output: {
-    target: "node",
+    target: 'node',
   },
-}
+};
 ```
