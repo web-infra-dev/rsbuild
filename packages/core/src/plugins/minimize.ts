@@ -115,7 +115,7 @@ export const pluginMinimize = (): RsbuildPlugin => ({
         return;
       }
 
-      const { SwcJsMinimizerRspackPlugin, SwcCssMinimizerRspackPlugin } =
+      const { SwcJsMinimizerRspackPlugin, LightningCssMinimizerRspackPlugin } =
         rspack;
 
       const { minifyJs, minifyCss } = parseMinifyOptions(config);
@@ -130,7 +130,7 @@ export const pluginMinimize = (): RsbuildPlugin => ({
       if (minifyCss) {
         chain.optimization
           .minimizer(CHAIN_ID.MINIMIZER.CSS)
-          .use(SwcCssMinimizerRspackPlugin, [])
+          .use(LightningCssMinimizerRspackPlugin, [])
           .end();
       }
     });
