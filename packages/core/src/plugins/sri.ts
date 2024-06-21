@@ -1,11 +1,6 @@
 import type { Buffer } from 'node:buffer';
 import crypto from 'node:crypto';
-import {
-  type Rspack,
-  type SriAlgorithm,
-  type SriOptions,
-  isHtmlDisabled,
-} from '@rsbuild/shared';
+import type { Rspack, SriAlgorithm, SriOptions } from '@rsbuild/shared';
 import { HTML_REGEX } from '../constants';
 import { isProd, removeLeadingSlash } from '../helpers';
 import { logger } from '../logger';
@@ -191,10 +186,10 @@ export const pluginSri = (): RsbuildPlugin => ({
       }
     }
 
-    api.modifyBundlerChain((chain, { target }) => {
-      const config = api.getNormalizedConfig();
+    api.modifyBundlerChain((chain, { environment }) => {
+      const htmlPaths = api.getHTMLPaths({ environment });
 
-      if (isHtmlDisabled(config, target)) {
+      if (Object.keys(htmlPaths).length === 0) {
         return;
       }
 

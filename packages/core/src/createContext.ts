@@ -5,8 +5,8 @@ import {
   type NormalizedEnvironmentConfig,
   type RsbuildContext,
   type RsbuildEntry,
+  type RsbuildTarget,
   getBrowserslist,
-  isHtmlDisabled,
 } from '@rsbuild/shared';
 import { withDefaultConfig } from './config';
 import { ROOT_DIST_DIR } from './constants';
@@ -83,13 +83,28 @@ export async function getBrowserslistByEnvironment(
   return DEFAULT_BROWSERSLIST[target];
 }
 
+const hasHTML = (
+  config: NormalizedEnvironmentConfig,
+  target: RsbuildTarget,
+) => {
+  const { htmlPlugin } = config.tools as {
+    htmlPlugin: boolean | Array<unknown>;
+  };
+  const pluginDisabled =
+    htmlPlugin === false ||
+    (Array.isArray(htmlPlugin) && htmlPlugin.includes(false));
+
+  return target === 'web' && !pluginDisabled;
+};
+
 const getEnvironmentHTMLPaths = (
   entry: RsbuildEntry,
   config: NormalizedEnvironmentConfig,
 ) => {
-  if (isHtmlDisabled(config, config.output.target)) {
+  if (!hasHTML(config, config.output.target)) {
     return {};
   }
+
   return Object.keys(entry).reduce<Record<string, string>>((prev, key) => {
     prev[key] = getHTMLPathByEntry(key, config);
     return prev;
