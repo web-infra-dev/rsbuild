@@ -231,7 +231,7 @@ test('printServerURLs', () => {
     routes: [],
   });
 
-  expect(message).toEqual(undefined);
+  expect(message).toEqual(null);
 });
 
 describe('test dev server', () => {
