@@ -150,4 +150,5 @@ export type {
   NormalizedSecurityConfig,
   NormalizedPerformanceConfig,
   NormalizedModuleFederationConfig,
+  NormalizedEnvironmentConfig,
 } from '@rsbuild/shared';

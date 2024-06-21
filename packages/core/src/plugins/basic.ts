@@ -1,8 +1,8 @@
 import path from 'node:path';
 import { isProd } from '../helpers';
-import type { NormalizedConfig, RsbuildPlugin } from '../types';
+import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
 
-const getJsSourceMap = (config: NormalizedConfig) => {
+const getJsSourceMap = (config: NormalizedEnvironmentConfig) => {
   const { sourceMap } = config.output;
   if (sourceMap.js === undefined) {
     return isProd() ? false : 'cheap-module-source-map';
@@ -19,7 +19,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain(
       (chain, { env, isProd, target, bundler, environment, CHAIN_ID }) => {
-        const config = api.getNormalizedConfig();
+        const config = api.getNormalizedConfig({ environment });
 
         chain.name(environment);
 

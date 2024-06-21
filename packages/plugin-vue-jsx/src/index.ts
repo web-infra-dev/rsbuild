@@ -17,32 +17,34 @@ export function pluginVueJsx(options: PluginVueJsxOptions = {}): RsbuildPlugin {
     name: PLUGIN_VUE_JSX_NAME,
 
     setup(api) {
-      api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd, target }) => {
-        const config = api.getNormalizedConfig();
+      api.modifyBundlerChain(
+        async (chain, { CHAIN_ID, environment, isProd, target }) => {
+          const config = api.getNormalizedConfig({ environment });
 
-        modifyBabelLoaderOptions({
-          chain,
-          CHAIN_ID,
-          modifier: (babelOptions) => {
-            babelOptions.plugins ??= [];
-            babelOptions.plugins.push([
-              require.resolve('@vue/babel-plugin-jsx'),
-              options.vueJsxOptions || {},
-            ]);
-
-            const usingHMR = !isProd && config.dev.hmr && target === 'web';
-
-            if (usingHMR) {
+          modifyBabelLoaderOptions({
+            chain,
+            CHAIN_ID,
+            modifier: (babelOptions) => {
               babelOptions.plugins ??= [];
               babelOptions.plugins.push([
-                require.resolve('babel-plugin-vue-jsx-hmr'),
+                require.resolve('@vue/babel-plugin-jsx'),
+                options.vueJsxOptions || {},
               ]);
-            }
 
-            return babelOptions;
-          },
-        });
-      });
+              const usingHMR = !isProd && config.dev.hmr && target === 'web';
+
+              if (usingHMR) {
+                babelOptions.plugins ??= [];
+                babelOptions.plugins.push([
+                  require.resolve('babel-plugin-vue-jsx-hmr'),
+                ]);
+              }
+
+              return babelOptions;
+            },
+          });
+        },
+      );
     },
   };
 }

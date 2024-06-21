@@ -228,7 +228,10 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
   name: 'rsbuild:split-chunks',
   setup(api) {
     api.modifyBundlerChain(
-      async (chain, { isServer, isWebWorker, isServiceWorker }) => {
+      async (
+        chain,
+        { environment, isServer, isWebWorker, isServiceWorker },
+      ) => {
         if (isServer || isWebWorker || isServiceWorker) {
           chain.optimization.splitChunks(false);
 
@@ -244,7 +247,7 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
           return;
         }
 
-        const config = api.getNormalizedConfig();
+        const config = api.getNormalizedConfig({ environment });
         const defaultConfig: Exclude<SplitChunks, false> = {
           // Optimize both `initial` and `async` chunks
           chunks: 'all',

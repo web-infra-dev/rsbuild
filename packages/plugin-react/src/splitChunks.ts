@@ -9,8 +9,8 @@ export const applySplitChunksRule = (
     router: true,
   },
 ) => {
-  api.modifyBundlerChain((chain) => {
-    const config = api.getNormalizedConfig();
+  api.modifyBundlerChain((chain, { environment }) => {
+    const config = api.getNormalizedConfig({ environment });
     if (config.performance.chunkSplit.strategy !== 'split-by-experience') {
       return;
     }

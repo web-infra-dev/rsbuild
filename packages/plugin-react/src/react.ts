@@ -36,56 +36,61 @@ export const applyBasicReactSupport = (
 ) => {
   const REACT_REFRESH_PATH = require.resolve('react-refresh');
 
-  api.modifyBundlerChain(async (chain, { CHAIN_ID, isDev, isProd, target }) => {
-    const config = api.getNormalizedConfig();
-    const usingHMR = !isProd && config.dev.hmr && target === 'web';
-    const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
-      development: isDev,
-      refresh: usingHMR,
-      runtime: 'automatic',
-      ...options.swcReactOptions,
-    };
+  api.modifyBundlerChain(
+    async (chain, { CHAIN_ID, environment, isDev, isProd, target }) => {
+      const config = api.getNormalizedConfig({ environment });
+      const usingHMR = !isProd && config.dev.hmr && target === 'web';
+      const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
+        development: isDev,
+        refresh: usingHMR,
+        runtime: 'automatic',
+        ...options.swcReactOptions,
+      };
 
-    modifySwcLoaderOptions({
-      chain,
-      CHAIN_ID,
-      modifier: (opts) => {
-        const extraOptions: Rspack.SwcLoaderOptions = {
-          jsc: {
-            parser: {
-              syntax: 'typescript',
-              // enable supports for React JSX/TSX compilation
-              tsx: true,
+      modifySwcLoaderOptions({
+        chain,
+        CHAIN_ID,
+        modifier: (opts) => {
+          const extraOptions: Rspack.SwcLoaderOptions = {
+            jsc: {
+              parser: {
+                syntax: 'typescript',
+                // enable supports for React JSX/TSX compilation
+                tsx: true,
+              },
+              transform: {
+                react: reactOptions,
+              },
             },
-            transform: {
-              react: reactOptions,
-            },
-          },
-        };
+          };
 
-        return deepmerge(opts, extraOptions);
-      },
-    });
-
-    if (!usingHMR) {
-      return;
-    }
-
-    chain.resolve.alias.set('react-refresh', path.dirname(REACT_REFRESH_PATH));
-
-    const { default: ReactRefreshRspackPlugin } = await import(
-      '@rspack/plugin-react-refresh'
-    );
-
-    chain
-      .plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)
-      .use(ReactRefreshRspackPlugin, [
-        {
-          include: [SCRIPT_REGEX],
-          ...options.reactRefreshOptions,
+          return deepmerge(opts, extraOptions);
         },
-      ]);
-  });
+      });
+
+      if (!usingHMR) {
+        return;
+      }
+
+      chain.resolve.alias.set(
+        'react-refresh',
+        path.dirname(REACT_REFRESH_PATH),
+      );
+
+      const { default: ReactRefreshRspackPlugin } = await import(
+        '@rspack/plugin-react-refresh'
+      );
+
+      chain
+        .plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)
+        .use(ReactRefreshRspackPlugin, [
+          {
+            include: [SCRIPT_REGEX],
+            ...options.reactRefreshOptions,
+          },
+        ]);
+    },
+  );
 };
 
 export const applyReactProfiler = (api: RsbuildPluginAPI) => {

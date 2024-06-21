@@ -17,38 +17,40 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
     name: PLUGIN_SOLID_NAME,
 
     setup(api) {
-      api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd, target }) => {
-        const rsbuildConfig = api.getNormalizedConfig();
+      api.modifyBundlerChain(
+        async (chain, { CHAIN_ID, environment, isProd, target }) => {
+          const rsbuildConfig = api.getNormalizedConfig({ environment });
 
-        modifyBabelLoaderOptions({
-          chain,
-          CHAIN_ID,
-          modifier: (babelOptions) => {
-            babelOptions.presets ??= [];
-            babelOptions.presets.push([
-              require.resolve('babel-preset-solid'),
-              options.solidPresetOptions || {},
-            ]);
-
-            const usingHMR =
-              !isProd && rsbuildConfig.dev.hmr && target === 'web';
-            if (usingHMR) {
-              babelOptions.plugins ??= [];
-              babelOptions.plugins.push([
-                require.resolve('solid-refresh/babel'),
+          modifyBabelLoaderOptions({
+            chain,
+            CHAIN_ID,
+            modifier: (babelOptions) => {
+              babelOptions.presets ??= [];
+              babelOptions.presets.push([
+                require.resolve('babel-preset-solid'),
+                options.solidPresetOptions || {},
               ]);
 
-              chain.resolve.alias.merge({
-                'solid-refresh': require.resolve(
-                  'solid-refresh/dist/solid-refresh.mjs',
-                ),
-              });
-            }
+              const usingHMR =
+                !isProd && rsbuildConfig.dev.hmr && target === 'web';
+              if (usingHMR) {
+                babelOptions.plugins ??= [];
+                babelOptions.plugins.push([
+                  require.resolve('solid-refresh/babel'),
+                ]);
 
-            return babelOptions;
-          },
-        });
-      });
+                chain.resolve.alias.merge({
+                  'solid-refresh': require.resolve(
+                    'solid-refresh/dist/solid-refresh.mjs',
+                  ),
+                });
+              }
+
+              return babelOptions;
+            },
+          });
+        },
+      );
     },
   };
 }

@@ -109,8 +109,8 @@ export const pluginLess = (
   name: PLUGIN_LESS_NAME,
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
-      const config = api.getNormalizedConfig();
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
+      const config = api.getNormalizedConfig({ environment });
       const rule = chain.module
         .rule(CHAIN_ID.RULE.LESS)
         .test(/\.less$/)

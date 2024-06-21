@@ -103,9 +103,9 @@ export const pluginResolve = (): RsbuildPlugin => ({
       },
     });
 
-    api.modifyRspackConfig(async (rspackConfig) => {
+    api.modifyRspackConfig(async (rspackConfig, { environment }) => {
       const isTsProject = Boolean(api.context.tsconfigPath);
-      const config = api.getNormalizedConfig();
+      const config = api.getNormalizedConfig({ environment });
 
       rspackConfig.resolve ||= {};
 
