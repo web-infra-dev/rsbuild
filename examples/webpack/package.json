@@ -14,6 +14,6 @@
     "@rsbuild/core": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
     "@rsbuild/plugin-swc": "workspace:*",
-    "typescript": "^5.4.2"
+    "typescript": "^5.5.0"
   }
 }
