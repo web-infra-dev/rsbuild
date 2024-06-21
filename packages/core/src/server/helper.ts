@@ -153,9 +153,7 @@ export function printServerURLs({
   }
 
   const message = getURLMessages(urls, routes);
-  if (message) {
-    logger.log(message);
-  }
+  logger.log(message);
 
   return message;
 }
