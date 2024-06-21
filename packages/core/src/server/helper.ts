@@ -76,10 +76,6 @@ function getURLMessages(
   urls: Array<{ url: string; label: string }>,
   routes: Routes,
 ) {
-  if (!routes.length) {
-    return '';
-  }
-
   if (routes.length === 1) {
     return urls
       .map(
@@ -121,9 +117,9 @@ export function printServerURLs({
   routes: Routes;
   protocol: string;
   printUrls?: PrintUrls;
-}) {
+}): string | null {
   if (printUrls === false) {
-    return;
+    return null;
   }
 
   let urls = originalUrls;
@@ -137,7 +133,7 @@ export function printServerURLs({
     });
 
     if (!newUrls) {
-      return;
+      return null;
     }
 
     if (!Array.isArray(newUrls)) {
@@ -152,8 +148,8 @@ export function printServerURLs({
     }));
   }
 
-  if (urls.length === 0) {
-    return;
+  if (urls.length === 0 || routes.length === 0) {
+    return null;
   }
 
   const message = getURLMessages(urls, routes);
