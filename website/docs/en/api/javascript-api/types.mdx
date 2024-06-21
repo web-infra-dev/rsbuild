@@ -73,23 +73,9 @@ The type of Rsbuild environment configuration after normalization, corresponding
 ```ts
 import type { NormalizedEnvironmentConfig } from '@rsbuild/core';
 
-const config: NormalizedEnvironmentConfig = api.getNormalizedConfig({ environment });
-```
-
-You can also import the type definitions of each field in the normalized config:
-
-```ts
-import type {
-  NormalizedDevConfig,
-  NormalizedHtmlConfig,
-  NormalizedToolsConfig,
-  NormalizedSourceConfig,
-  NormalizedServerConfig,
-  NormalizedOutputConfig,
-  NormalizedSecurityConfig,
-  NormalizedPerformanceConfig,
-  NormalizedModuleFederationConfig,
-} from '@rsbuild/core';
+const config: NormalizedEnvironmentConfig = api.getNormalizedConfig({
+  environment,
+});
 ```
 
 ## RsbuildContext
