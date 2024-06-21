@@ -1,6 +1,6 @@
 import RspackChain from '../compiled/rspack-chain/index.js';
 import { NODE_MODULES_REGEX, TS_AND_JSX_REGEX } from './constants';
-import type { NormalizedConfig, RsbuildContext } from './types';
+import type { NormalizedEnvironmentConfig, RsbuildContext } from './types';
 import { castArray } from './utils';
 
 export { RspackChain };
@@ -173,7 +173,7 @@ export function applyScriptCondition({
 }: {
   rule: RspackChain.Rule;
   chain: RspackChain;
-  config: NormalizedConfig;
+  config: NormalizedEnvironmentConfig;
   context: RsbuildContext;
   includes: (string | RegExp)[];
   excludes: (string | RegExp)[];

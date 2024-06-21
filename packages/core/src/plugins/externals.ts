@@ -4,8 +4,8 @@ export function pluginExternals(): RsbuildPlugin {
   return {
     name: 'rsbuild:externals',
     setup(api) {
-      api.modifyBundlerChain((chain) => {
-        const { externals } = api.getNormalizedConfig().output;
+      api.modifyBundlerChain((chain, { environment }) => {
+        const { externals } = api.getNormalizedConfig({ environment }).output;
         if (externals) {
           chain.externals(externals);
         }

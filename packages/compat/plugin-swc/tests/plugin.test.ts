@@ -29,6 +29,40 @@ describe('plugin-swc', () => {
     expect(config).toMatchSnapshot();
   });
 
+  it('should apply multiply environment configs correctly', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginSwc()],
+      rsbuildConfig: {
+        provider: webpackProvider,
+        environments: {
+          web: {
+            output: {
+              target: 'web',
+            },
+            source: {
+              decorators: {
+                version: '2022-03',
+              },
+            },
+          },
+          ssr: {
+            output: {
+              target: 'node',
+            },
+            source: {
+              decorators: {
+                version: 'legacy',
+              },
+            },
+          },
+        },
+      },
+    });
+    const configs = await rsbuild.initConfigs();
+
+    expect(configs).toMatchSnapshot();
+  });
+
   it('should set swc minimizer in production', async () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
@@ -234,7 +268,7 @@ describe('plugin-swc', () => {
               target: 'node',
             },
           },
-          'serviceWorker': {
+          serviceWorker: {
             output: {
               target: 'service-worker',
             },
@@ -244,7 +278,7 @@ describe('plugin-swc', () => {
               target: 'web',
             },
           },
-          'webWorker': {
+          webWorker: {
             output: {
               target: 'web-worker',
             },

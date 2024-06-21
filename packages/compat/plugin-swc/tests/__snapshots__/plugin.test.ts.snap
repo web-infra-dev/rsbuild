@@ -1,5 +1,260 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`plugin-swc > should apply multiply environment configs correctly 1`] = `
+[
+  {
+    "module": {
+      "rules": [
+        {
+          "include": [
+            {
+              "and": [
+                "<ROOT>/packages/compat/plugin-swc/tests",
+                {
+                  "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+                },
+              ],
+            },
+            /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          ],
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "use": [
+            {
+              "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+              "options": {
+                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                "env": {
+                  "coreJs": "3.36",
+                  "mode": "usage",
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "extensions": {
+                  "lockCorejsVersion": {
+                    "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                    "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+                  },
+                  "lodash": {
+                    "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                    "ids": [
+                      "lodash",
+                      "lodash-es",
+                    ],
+                  },
+                },
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
+                    "react": {
+                      "refresh": true,
+                      "runtime": "classic",
+                    },
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          "mimetype": {
+            "or": [
+              "text/javascript",
+              "application/javascript",
+            ],
+          },
+          "resolve": {
+            "fullySpecified": false,
+          },
+          "use": [
+            {
+              "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+              "options": {
+                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                "env": {
+                  "coreJs": "3.36",
+                  "mode": "usage",
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "extensions": {
+                  "lockCorejsVersion": {
+                    "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                    "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+                  },
+                  "lodash": {
+                    "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                    "ids": [
+                      "lodash",
+                      "lodash-es",
+                    ],
+                  },
+                },
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
+                    "react": {
+                      "refresh": true,
+                      "runtime": "classic",
+                    },
+                  },
+                },
+              },
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    "module": {
+      "rules": [
+        {
+          "include": [
+            {
+              "and": [
+                "<ROOT>/packages/compat/plugin-swc/tests",
+                {
+                  "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+                },
+              ],
+            },
+            /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          ],
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "use": [
+            {
+              "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+              "options": {
+                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                "env": {
+                  "coreJs": "3.36",
+                  "mode": "usage",
+                  "targets": [
+                    "node >= 16",
+                  ],
+                },
+                "extensions": {
+                  "lockCorejsVersion": {
+                    "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                    "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+                  },
+                  "lodash": {
+                    "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                    "ids": [
+                      "lodash",
+                      "lodash-es",
+                    ],
+                  },
+                },
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                    "react": {
+                      "refresh": false,
+                      "runtime": "classic",
+                    },
+                    "useDefineForClassFields": false,
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          "mimetype": {
+            "or": [
+              "text/javascript",
+              "application/javascript",
+            ],
+          },
+          "resolve": {
+            "fullySpecified": false,
+          },
+          "use": [
+            {
+              "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+              "options": {
+                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                "env": {
+                  "coreJs": "3.36",
+                  "mode": "usage",
+                  "targets": [
+                    "node >= 16",
+                  ],
+                },
+                "extensions": {
+                  "lockCorejsVersion": {
+                    "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                    "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+                  },
+                  "lodash": {
+                    "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                    "ids": [
+                      "lodash",
+                      "lodash-es",
+                    ],
+                  },
+                },
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                    "react": {
+                      "refresh": false,
+                      "runtime": "classic",
+                    },
+                    "useDefineForClassFields": false,
+                  },
+                },
+              },
+            },
+          ],
+        },
+      ],
+    },
+  },
+]
+`;
+
 exports[`plugin-swc > should apply source.include and source.exclude correctly 1`] = `
 {
   "module": {

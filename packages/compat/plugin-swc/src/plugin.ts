@@ -39,11 +39,11 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
       // loader should be applied in the pre stage for customizing
       order: 'pre',
       handler: async (chain, utils) => {
-        const { CHAIN_ID } = utils;
-        const rsbuildConfig = api.getNormalizedConfig();
+        const { CHAIN_ID, environment } = utils;
+        const rsbuildConfig = api.getNormalizedConfig({ environment });
         const { rootPath } = api.context;
 
-        const { browserslist } = api.context.environments[utils.environment];
+        const { browserslist } = api.context.environments[environment];
         const swcConfigs = await applyPluginConfig(
           options,
           utils,
@@ -119,8 +119,8 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
       },
     });
 
-    api.modifyBundlerChain((chain, { CHAIN_ID, isProd }) => {
-      const rsbuildConfig = api.getNormalizedConfig();
+    api.modifyBundlerChain((chain, { CHAIN_ID, isProd, environment }) => {
+      const rsbuildConfig = api.getNormalizedConfig({ environment });
 
       if (checkUseMinify(mainConfig, rsbuildConfig, isProd)) {
         const { minify } = rsbuildConfig.output;

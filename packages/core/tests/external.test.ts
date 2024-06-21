@@ -24,7 +24,7 @@ describe('plugin-external', () => {
 
     const chain = await getBundlerChain();
 
-    await modifyBundlerChainCb(chain);
+    await modifyBundlerChainCb(chain, { environment: 'client' });
 
     const bundlerConfigs = [
       {

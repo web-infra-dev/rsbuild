@@ -154,6 +154,48 @@ describe('plugin-swc', () => {
       expect(bundlerConfig.module?.rules).toMatchSnapshot();
     }
   });
+
+  it('should apply environment config correctly', async () => {
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {
+        environments: {
+          web: {
+            source: {
+              transformImport: [
+                {
+                  libraryName: 'foo',
+                },
+              ],
+            },
+            output: {
+              polyfill: 'usage',
+              target: 'web',
+            },
+          },
+          node: {
+            source: {
+              transformImport: [
+                {
+                  libraryName: 'bar',
+                },
+              ],
+            },
+            output: {
+              polyfill: 'usage',
+              target: 'node',
+            },
+          },
+        },
+      },
+      plugins: [pluginSwc()],
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+
+    for (const bundlerConfig of bundlerConfigs) {
+      expect(bundlerConfig.module?.rules).toMatchSnapshot();
+    }
+  });
 });
 
 async function matchConfigSnapshot(rsbuildConfig: RsbuildConfig) {

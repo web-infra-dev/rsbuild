@@ -22,8 +22,8 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
   name: 'rsbuild:resource-hints',
 
   setup(api) {
-    api.modifyHTMLTags(({ headTags, bodyTags }) => {
-      const config = api.getNormalizedConfig();
+    api.modifyHTMLTags(({ headTags, bodyTags }, { environment }) => {
+      const config = api.getNormalizedConfig({ environment });
       const { dnsPrefetch, preconnect } = config.performance;
 
       if (dnsPrefetch) {
@@ -45,8 +45,8 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
       return { headTags, bodyTags };
     });
 
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, target }) => {
-      const config = api.getNormalizedConfig();
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, target, environment }) => {
+      const config = api.getNormalizedConfig({ environment });
       const {
         performance: { preload, prefetch },
       } = config;

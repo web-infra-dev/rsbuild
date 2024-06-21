@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path, { isAbsolute, join } from 'node:path';
 import type {
-  NormalizedConfig,
+  NormalizedEnvironmentConfig,
   RsbuildContext,
   RsbuildPlugin,
 } from '@rsbuild/core';
@@ -50,7 +50,7 @@ async function getCacheIdentifier(options: BabelLoaderOptions) {
 }
 
 export const getDefaultBabelOptions = (
-  config: NormalizedConfig,
+  config: NormalizedEnvironmentConfig,
   context: RsbuildContext,
 ): BabelLoaderOptions => {
   const isLegacyDecorators = config.source.decorators.version === 'legacy';
@@ -103,8 +103,8 @@ export const pluginBabel = (
   name: PLUGIN_BABEL_NAME,
 
   setup(api) {
-    const getBabelOptions = async () => {
-      const config = api.getNormalizedConfig();
+    const getBabelOptions = async (environment: string) => {
+      const config = api.getNormalizedConfig({ environment });
       const baseOptions = getDefaultBabelOptions(config, api.context);
 
       const mergedOptions = applyUserBabelConfig(
@@ -122,8 +122,8 @@ export const pluginBabel = (
 
     api.modifyBundlerChain({
       order: 'pre',
-      handler: async (chain, { CHAIN_ID }) => {
-        const babelOptions = await getBabelOptions();
+      handler: async (chain, { CHAIN_ID, environment }) => {
+        const babelOptions = await getBabelOptions(environment);
         const babelLoader = path.resolve(
           __dirname,
           '../compiled/babel-loader/index.js',

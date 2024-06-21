@@ -12,8 +12,8 @@ export const pluginAssetsRetry = (
   name: PLUGIN_ASSETS_RETRY_NAME,
   setup(api) {
     api.modifyBundlerChain(
-      async (chain, { CHAIN_ID, target, HtmlPlugin, isProd }) => {
-        const config = api.getNormalizedConfig();
+      async (chain, { CHAIN_ID, environment, target, HtmlPlugin, isProd }) => {
+        const config = api.getNormalizedConfig({ environment });
 
         if (!options || isHtmlDisabled(config, target)) {
           return;
