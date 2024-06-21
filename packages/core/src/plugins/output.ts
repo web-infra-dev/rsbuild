@@ -54,10 +54,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      async (
-        chain,
-        { CHAIN_ID, target, isProd, isServer, isServiceWorker, environment },
-      ) => {
+      async (chain, { CHAIN_ID, target, isProd, isServer, environment }) => {
         const config = api.getNormalizedConfig({ environment });
 
         const publicPath = getPublicPath({
@@ -112,13 +109,6 @@ export const pluginOutput = (): RsbuildPlugin => ({
               ...(chain.output.get('library') || {}),
               type: 'commonjs2',
             });
-        }
-
-        if (isServiceWorker) {
-          const workerPath = config.output.distPath.worker;
-          const filename = posix.join(workerPath, '[name].js');
-
-          chain.output.filename(filename).chunkFilename(filename);
         }
 
         if (config.output.copy && api.context.bundlerType === 'rspack') {

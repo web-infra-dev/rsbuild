@@ -7,9 +7,8 @@ export default defineConfig({
   output: {
     distPath: {
       root: './dist',
-      worker: './',
     },
-    target: 'service-worker',
+    target: 'web-worker',
     copy: ['./index.html'],
   },
 });

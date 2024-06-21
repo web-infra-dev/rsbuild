@@ -228,15 +228,12 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
   name: 'rsbuild:split-chunks',
   setup(api) {
     api.modifyBundlerChain(
-      async (
-        chain,
-        { environment, isServer, isWebWorker, isServiceWorker },
-      ) => {
-        if (isServer || isWebWorker || isServiceWorker) {
+      async (chain, { environment, isServer, isWebWorker }) => {
+        if (isServer || isWebWorker) {
           chain.optimization.splitChunks(false);
 
           // web worker does not support dynamic imports, dynamicImportMode need set to eager
-          if (isWebWorker || isServiceWorker) {
+          if (isWebWorker) {
             chain.module.parser.merge({
               javascript: {
                 dynamicImportMode: 'eager',

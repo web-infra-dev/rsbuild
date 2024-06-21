@@ -98,7 +98,6 @@ export type ModifyChainUtils = {
   isProd: boolean;
   target: RsbuildTarget;
   isServer: boolean;
-  isServiceWorker: boolean;
   isWebWorker: boolean;
   CHAIN_ID: ChainIdentifier;
   environment: string;

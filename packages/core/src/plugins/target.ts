@@ -16,7 +16,7 @@ export const pluginTarget = (): RsbuildPlugin => ({
         const { browserslist } = api.context.environments[environment];
         const esVersion = browserslistToESVersion(browserslist);
 
-        if (target === 'web-worker' || target === 'service-worker') {
+        if (target === 'web-worker') {
           chain.target(['webworker', `es${esVersion}`]);
           return;
         }

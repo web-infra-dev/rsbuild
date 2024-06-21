@@ -102,7 +102,6 @@ export function getChainUtils(
     isProd: nodeEnv === 'production',
     isServer: target === 'node',
     isWebWorker: target === 'web-worker',
-    isServiceWorker: target === 'service-worker',
     CHAIN_ID,
     HtmlPlugin: getHTMLPlugin(),
   };
