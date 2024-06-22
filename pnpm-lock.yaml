@@ -48,6 +48,9 @@ importers:
       simple-git-hooks:
         specifier: ^2.11.1
         version: 2.11.1
+      typescript:
+        specifier: ^5.5.0
+        version: 5.5.2
       vitest:
         specifier: ^1.6.0
         version: 1.6.0(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.25.1)(sass@1.77.5)(stylus@0.63.0)(terser@5.31.1)

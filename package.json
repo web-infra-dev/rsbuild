@@ -50,6 +50,7 @@
     "nano-staged": "^0.8.0",
     "nx": "^19.2.3",
     "prettier": "^3.3.2",
+    "typescript": "^5.5.0",
     "simple-git-hooks": "^2.11.1",
     "vitest": "^1.6.0"
   },
