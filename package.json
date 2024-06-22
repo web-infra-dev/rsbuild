@@ -51,7 +51,7 @@
     "nx": "^19.2.3",
     "prettier": "^3.3.2",
     "simple-git-hooks": "^2.11.1",
-    "typescript": "^5.5.0",
+    "typescript": "^5.5.2",
     "vitest": "^1.6.0"
   },
   "packageManager": "pnpm@9.0.6",
