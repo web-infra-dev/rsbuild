@@ -931,7 +931,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     },
     ProgressPlugin {
       "_options": {
-        "prefix": "Client",
+        "prefix": "web",
         "profile": false,
         "progressChars": "━━",
         "template": "● {prefix:.bold} {bar:25.green/white.dim} ({percent}%) {wide_msg:.dim}",
