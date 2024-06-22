@@ -6,7 +6,6 @@ import type {
   RspackChain,
 } from '@rsbuild/core';
 import { type CopyPluginOptions, castArray } from '@rsbuild/shared';
-import { TARGET_ID_MAP } from './shared';
 
 async function applyTsConfigPathsPlugin({
   chain,
@@ -83,7 +82,7 @@ export const pluginAdaptor = (): RsbuildPlugin => ({
         const { ProgressPlugin } = await import('./progress/ProgressPlugin');
         chain.plugin(CHAIN_ID.PLUGIN.PROGRESS).use(ProgressPlugin, [
           {
-            id: TARGET_ID_MAP[target],
+            id: environment,
             ...(progress === true ? {} : progress),
           },
         ]);
