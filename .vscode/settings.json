@@ -14,5 +14,8 @@
     "**/.DS_Store": true
   },
   "mdx.validate.validateFileLinks": "ignore",
+  // Use prettier to format all files
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // Use project's typescript version
   "typescript.tsdk": "node_modules/typescript/lib"
 }
