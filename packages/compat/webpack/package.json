@@ -39,7 +39,7 @@
     "@types/node": "18.x",
     "ansi-escapes": "4.3.2",
     "cli-truncate": "2.1.0",
-    "patch-console": "1.0.0",
+    "patch-console": "2.0.0",
     "typescript": "^5.5.2"
   },
   "publishConfig": {
