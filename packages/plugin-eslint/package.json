@@ -34,7 +34,7 @@
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "eslint": "^9.5.0",
-    "typescript": "^5.5.0"
+    "typescript": "^5.5.2"
   },
   "peerDependencies": {
     "@rsbuild/core": "workspace:^0.7.9",

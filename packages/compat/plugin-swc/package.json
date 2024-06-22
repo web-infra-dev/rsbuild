@@ -38,7 +38,7 @@
     "@rsbuild/webpack": "workspace:*",
     "@types/lodash": "^4.17.5",
     "@types/semver": "^7.5.8",
-    "typescript": "^5.5.0",
+    "typescript": "^5.5.2",
     "webpack": "^5.92.0"
   },
   "peerDependencies": {

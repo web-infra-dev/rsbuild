@@ -40,7 +40,7 @@
     "html-webpack-plugin": "npm:html-rspack-plugin@5.7.2",
     "postcss-pxtorem": "6.1.0",
     "prebundle": "1.1.0",
-    "typescript": "^5.5.0"
+    "typescript": "^5.5.2"
   },
   "peerDependencies": {
     "@rsbuild/core": "workspace:^0.7.9"

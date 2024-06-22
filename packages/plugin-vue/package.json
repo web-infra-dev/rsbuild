@@ -34,7 +34,7 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
-    "typescript": "^5.5.0",
+    "typescript": "^5.5.2",
     "vue": "^3.4.19",
     "webpack": "^5.92.0"
   },

@@ -48,6 +48,9 @@ importers:
       simple-git-hooks:
         specifier: ^2.11.1
         version: 2.11.1
+      typescript:
+        specifier: ^5.5.2
+        version: 5.5.2
       vitest:
         specifier: ^1.6.0
         version: 1.6.0(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.25.1)(sass@1.77.5)(stylus@0.63.0)(terser@5.31.1)
@@ -230,7 +233,7 @@ importers:
         specifier: ^3.4.4
         version: 3.4.4
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   e2e/cases/babel/decorator:
@@ -387,7 +390,7 @@ importers:
         specifier: ^3.1.4
         version: 3.1.4
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   examples/mdx:
@@ -409,7 +412,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/plugin-react
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   examples/module-federation/host:
@@ -453,7 +456,7 @@ importers:
         specifier: 18.x
         version: 18.19.31
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   examples/preact:
@@ -469,7 +472,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/plugin-preact
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   examples/react:
@@ -494,7 +497,7 @@ importers:
         specifier: ^18.3.0
         version: 18.3.0
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   examples/solid:
@@ -532,7 +535,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   examples/vue2:
@@ -580,7 +583,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compat/webpack
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/compat/babel-preset:
@@ -632,7 +635,7 @@ importers:
         specifier: 18.x
         version: 18.19.31
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/compat/plugin-swc:
@@ -669,7 +672,7 @@ importers:
         specifier: ^7.5.8
         version: 7.5.8
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
       webpack:
         specifier: ^5.92.0
@@ -712,7 +715,7 @@ importers:
         specifier: 1.0.0
         version: 1.0.0
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/core:
@@ -818,7 +821,7 @@ importers:
         specifier: ^1.8.10
         version: 1.8.10
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
       webpack:
         specifier: ^5.92.0
@@ -845,7 +848,7 @@ importers:
         specifier: ^1.2.2
         version: 1.2.2
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-assets-retry:
@@ -879,7 +882,7 @@ importers:
         specifier: 5.31.1
         version: 5.31.1
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-babel:
@@ -922,7 +925,7 @@ importers:
         specifier: 1.1.0
         version: 1.1.0(typescript@5.5.2)
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-basic-ssl:
@@ -935,7 +938,7 @@ importers:
         specifier: workspace:*
         version: link:../core
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-check-syntax:
@@ -960,7 +963,7 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-css-minimizer:
@@ -979,7 +982,7 @@ importers:
         specifier: 18.x
         version: 18.19.31
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-eslint:
@@ -1001,7 +1004,7 @@ importers:
         specifier: ^9.5.0
         version: 9.5.0
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-image-compress:
@@ -1023,7 +1026,7 @@ importers:
         specifier: 18.x
         version: 18.19.31
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-less:
@@ -1051,7 +1054,7 @@ importers:
         specifier: 1.1.0
         version: 1.1.0(typescript@5.5.2)
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-lightningcss:
@@ -1073,7 +1076,7 @@ importers:
         specifier: 18.x
         version: 18.19.31
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-mdx:
@@ -1086,7 +1089,7 @@ importers:
         specifier: workspace:*
         version: link:../core
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-node-polyfill:
@@ -1165,7 +1168,7 @@ importers:
         specifier: workspace:*
         version: link:../core
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-preact:
@@ -1177,7 +1180,7 @@ importers:
         specifier: 18.x
         version: 18.19.31
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-pug:
@@ -1193,7 +1196,7 @@ importers:
         specifier: workspace:*
         version: link:../core
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-react:
@@ -1218,7 +1221,7 @@ importers:
         specifier: 18.x
         version: 18.19.31
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-rem:
@@ -1252,7 +1255,7 @@ importers:
         specifier: 1.1.0
         version: 1.1.0(typescript@5.5.2)
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-sass:
@@ -1289,7 +1292,7 @@ importers:
         specifier: ^14.2.1
         version: 14.2.1(@rspack/core@0.7.4(@swc/helpers@0.5.3))(sass-embedded@1.77.5)(sass@1.77.5)(webpack@5.92.0)
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-solid:
@@ -1314,7 +1317,7 @@ importers:
         specifier: ^7.20.5
         version: 7.20.5
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-source-build:
@@ -1339,7 +1342,7 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
       yaml:
         specifier: ^2.4.5
@@ -1358,7 +1361,7 @@ importers:
         specifier: 18.x
         version: 18.19.31
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-stylus:
@@ -1380,7 +1383,7 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-svelte:
@@ -1408,7 +1411,7 @@ importers:
         specifier: ^4.2.18
         version: 4.2.18
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-svgr:
@@ -1448,7 +1451,7 @@ importers:
         specifier: 1.1.0
         version: 1.1.0(typescript@5.5.2)
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
       url-loader:
         specifier: 4.1.1
@@ -1464,7 +1467,7 @@ importers:
         specifier: workspace:*
         version: link:../core
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-type-check:
@@ -1489,7 +1492,7 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-typed-css-modules:
@@ -1511,7 +1514,7 @@ importers:
         specifier: 1.1.0
         version: 1.1.0(typescript@5.5.2)
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-umd:
@@ -1520,7 +1523,7 @@ importers:
         specifier: workspace:*
         version: link:../core
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-vue:
@@ -1542,7 +1545,7 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
       vue:
         specifier: ^3.4.19
@@ -1570,7 +1573,7 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-vue2:
@@ -1592,7 +1595,7 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-vue2-jsx:
@@ -1614,7 +1617,7 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   packages/plugin-yaml:
@@ -1629,7 +1632,7 @@ importers:
         specifier: 1.1.0
         version: 1.1.0(typescript@5.5.2)
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
       yaml-loader:
         specifier: ^0.8.1
@@ -1691,7 +1694,7 @@ importers:
         specifier: 5.31.1
         version: 5.31.1
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
       webpack:
         specifier: ^5.92.0
@@ -1709,7 +1712,7 @@ importers:
         specifier: 18.x
         version: 18.19.31
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
 
   scripts/test-helper:
@@ -1730,7 +1733,7 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       typescript:
-        specifier: ^5.5.0
+        specifier: ^5.5.2
         version: 5.5.2
       upath:
         specifier: 2.0.1

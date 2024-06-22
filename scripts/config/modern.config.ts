@@ -39,6 +39,7 @@ export const esmBuildConfig: PartialBaseBuildConfig = {
   shims: true,
   externals: commonExternals,
   banner: requireShim,
+  dts: false,
 };
 
 export const cjsBuildConfig: PartialBaseBuildConfig = {
@@ -53,6 +54,12 @@ export const cjsBuildConfig: PartialBaseBuildConfig = {
 export const dualBuildConfigs: PartialBaseBuildConfig[] = [
   cjsBuildConfig,
   esmBuildConfig,
+  {
+    buildType: 'bundleless',
+    dts: {
+      only: true,
+    },
+  },
 ];
 
 export const emitTypePkgJsonPlugin: CliPlugin<ModuleTools> = {

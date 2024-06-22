@@ -86,7 +86,7 @@
     "sirv": "^2.0.4",
     "style-loader": "3.3.4",
     "tsc-alias": "^1.8.10",
-    "typescript": "^5.5.0",
+    "typescript": "^5.5.2",
     "webpack": "^5.92.0",
     "webpack-dev-middleware": "7.2.1",
     "ws": "^8.17.1"
