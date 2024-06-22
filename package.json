@@ -41,7 +41,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.8.1",
     "@changesets/cli": "^2.27.5",
-    "@modern-js/module-tools": "^2.52.0",
+    "@modern-js/module-tools": "^2.54.1",
     "@rsbuild/config": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "check-dependency-version-consistency": "^4.1.0",
