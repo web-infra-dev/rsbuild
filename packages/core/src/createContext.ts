@@ -1,15 +1,14 @@
 import { isAbsolute, join } from 'node:path';
-import {
-  type BundlerType,
-  DEFAULT_BROWSERSLIST,
-  type NormalizedEnvironmentConfig,
-  type RsbuildContext,
-  type RsbuildEntry,
-  type RsbuildTarget,
-  getBrowserslist,
+import type {
+  BundlerType,
+  NormalizedEnvironmentConfig,
+  RsbuildContext,
+  RsbuildEntry,
+  RsbuildTarget,
 } from '@rsbuild/shared';
+import browserslist from '@rsbuild/shared/browserslist';
 import { withDefaultConfig } from './config';
-import { ROOT_DIST_DIR } from './constants';
+import { DEFAULT_BROWSERSLIST, ROOT_DIST_DIR } from './constants';
 import { initHooks } from './initHooks';
 import { getHTMLPathByEntry } from './initPlugins';
 import { logger } from './logger';
@@ -60,6 +59,27 @@ async function createContextByConfig(
       ? getAbsolutePath(rootPath, tsconfigPath)
       : undefined,
   };
+}
+
+// using cache to avoid multiple calls to loadConfig
+const browsersListCache = new Map<string, string[]>();
+
+export async function getBrowserslist(path: string) {
+  const env = process.env.NODE_ENV;
+  const cacheKey = path + env;
+
+  if (browsersListCache.has(cacheKey)) {
+    return browsersListCache.get(cacheKey)!;
+  }
+
+  const result = browserslist.loadConfig({ path, env });
+
+  if (result) {
+    browsersListCache.set(cacheKey, result);
+    return result;
+  }
+
+  return null;
 }
 
 export async function getBrowserslistByEnvironment(

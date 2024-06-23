@@ -23,6 +23,18 @@ export const DEFAULT_PORT = 3000;
 export const DEFAULT_DATA_URL_SIZE = 4096;
 export const DEFAULT_MOUNT_ID = 'root';
 export const DEFAULT_DEV_HOST = '0.0.0.0';
+export const DEFAULT_ASSET_PREFIX = '/';
+export const DEFAULT_WEB_BROWSERSLIST = [
+  'chrome >= 87',
+  'edge >= 88',
+  'firefox >= 78',
+  'safari >= 14',
+];
+export const DEFAULT_BROWSERSLIST = {
+  web: DEFAULT_WEB_BROWSERSLIST,
+  'web-worker': DEFAULT_WEB_BROWSERSLIST,
+  node: ['node >= 16'],
+};
 
 // RegExp
 export const HTML_REGEX = /\.html$/;
