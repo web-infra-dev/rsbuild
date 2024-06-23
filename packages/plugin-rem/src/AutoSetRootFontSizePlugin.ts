@@ -5,7 +5,6 @@ import {
   ensureAssetPrefix,
   logger,
 } from '@rsbuild/core';
-import { getPublicPathFromCompiler } from '@rsbuild/shared';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { PluginRemOptions } from './types';
 
@@ -162,7 +161,7 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
               innerHTML: await getRuntimeCode(),
             });
           } else {
-            const publicPath = getPublicPathFromCompiler(compiler);
+            const { publicPath } = compilation.outputOptions;
             const url = ensureAssetPrefix(
               await this.getScriptPath(),
               publicPath,
