@@ -22,7 +22,7 @@ exports[`svgr > 'configure SVGR options' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.36",
+              "coreJs": "3.37",
               "mode": "usage",
               "shippedProposals": true,
               "targets": [
@@ -115,7 +115,7 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.36",
+              "coreJs": "3.37",
               "mode": "usage",
               "shippedProposals": true,
               "targets": [
@@ -180,7 +180,7 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.36",
+              "coreJs": "3.37",
               "mode": "usage",
               "shippedProposals": true,
               "targets": [
@@ -272,7 +272,7 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.36",
+              "coreJs": "3.37",
               "mode": "usage",
               "shippedProposals": true,
               "targets": [
@@ -337,7 +337,7 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.36",
+              "coreJs": "3.37",
               "mode": "usage",
               "shippedProposals": true,
               "targets": [
@@ -429,7 +429,7 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.36",
+              "coreJs": "3.37",
               "mode": "usage",
               "shippedProposals": true,
               "targets": [
@@ -494,7 +494,7 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.36",
+              "coreJs": "3.37",
               "mode": "usage",
               "shippedProposals": true,
               "targets": [
@@ -586,7 +586,7 @@ exports[`svgr > 'exportType named / mixedImport true' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.36",
+              "coreJs": "3.37",
               "mode": "usage",
               "shippedProposals": true,
               "targets": [
@@ -651,7 +651,7 @@ exports[`svgr > 'exportType named / mixedImport true' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.36",
+              "coreJs": "3.37",
               "mode": "usage",
               "shippedProposals": true,
               "targets": [
