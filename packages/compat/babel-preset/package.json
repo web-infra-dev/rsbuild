@@ -63,7 +63,7 @@
     "@rsbuild/plugin-babel": "workspace:*",
     "@types/babel__core": "^7.20.5",
     "babel-plugin-dynamic-import-node": "2.3.3",
-    "core-js": "~3.36.0"
+    "core-js": "~3.37.1"
   },
   "devDependencies": {
     "@types/node": "18.x",
