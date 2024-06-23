@@ -26,7 +26,8 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@rspack/plugin-preact-refresh": "0.7.3"
+    "@rsbuild/shared": "workspace:*",
+    "@rspack/plugin-preact-refresh": "0.7.4"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
