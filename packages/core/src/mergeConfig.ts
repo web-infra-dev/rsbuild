@@ -1,9 +1,5 @@
-import {
-  type RsbuildConfig,
-  castArray,
-  isFunction,
-  isPlainObject,
-} from '@rsbuild/shared';
+import { type RsbuildConfig, castArray } from '@rsbuild/shared';
+import { isFunction, isPlainObject } from './helpers';
 
 const OVERRIDE_PATH = [
   'performance.removeConsole',

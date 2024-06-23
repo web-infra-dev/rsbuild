@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path, { posix } from 'node:path';
 import {
-  DEFAULT_ASSET_PREFIX,
   type FilenameConfig,
   type MultiStats,
   type NodeEnv,
@@ -21,7 +20,7 @@ import type {
   MultiCompiler as WebpackMultiCompiler,
 } from 'webpack';
 import { formatStatsMessages } from './client/format';
-import { COMPILED_PATH } from './constants';
+import { COMPILED_PATH, DEFAULT_ASSET_PREFIX } from './constants';
 import { logger } from './logger';
 
 export const rspackMinVersion = '0.7.0';
@@ -32,6 +31,18 @@ export const setNodeEnv = (env: NodeEnv) => {
 };
 export const isDev = (): boolean => getNodeEnv() === 'development';
 export const isProd = (): boolean => getNodeEnv() === 'production';
+
+export const isNil = (o: unknown): o is undefined | null =>
+  o === undefined || o === null;
+
+export const isFunction = (func: unknown): func is (...args: any[]) => any =>
+  typeof func === 'function';
+
+export const isObject = (obj: unknown): obj is Record<string, any> =>
+  obj !== null && typeof obj === 'object';
+
+export const isPlainObject = (obj: unknown): obj is Record<string, any> =>
+  isObject(obj) && Object.prototype.toString.call(obj) === '[object Object]';
 
 const compareSemver = (version1: string, version2: string) => {
   const parts1 = version1.split('.').map(Number);

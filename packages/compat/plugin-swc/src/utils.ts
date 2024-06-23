@@ -179,7 +179,7 @@ export async function applyPluginConfig(
   utils: ModifyChainUtils,
   rsbuildConfig: NormalizedEnvironmentConfig,
   rootPath: string,
-  browserslist?: string[],
+  browserslist: string[],
 ): Promise<FinalizedConfig[]> {
   const isUsingFnOptions = typeof rawOptions === 'function';
   const { target, isProd } = utils;
@@ -219,10 +219,8 @@ export async function applyPluginConfig(
     swc.env.coreJs = getCoreJsVersion(CORE_JS_PKG_PATH);
   }
 
-  // If `targets` is not specified manually, we get `browserslist` from project.
-  if (!swc.env.targets && browserslist) {
-    swc.env.targets = browserslist;
-  }
+  // get `browserslist` from project.
+  swc.env.targets = browserslist;
 
   const isSSR = target === 'node';
 

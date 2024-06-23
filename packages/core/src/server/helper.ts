@@ -2,7 +2,7 @@ import type { IncomingMessage } from 'node:http';
 import net from 'node:net';
 import type { Socket } from 'node:net';
 import os from 'node:os';
-import { color, isFunction } from '@rsbuild/shared';
+import { color } from '@rsbuild/shared';
 import type {
   NormalizedConfig,
   OutputStructure,
@@ -11,6 +11,7 @@ import type {
   RsbuildEntry,
 } from '@rsbuild/shared';
 import { DEFAULT_DEV_HOST, DEFAULT_PORT } from '../constants';
+import { isFunction } from '../helpers';
 import { logger } from '../logger';
 
 /**

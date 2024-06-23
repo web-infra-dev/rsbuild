@@ -5,7 +5,6 @@ import {
   castArray,
   color,
   deepmerge,
-  isPlainObject,
 } from '@rsbuild/shared';
 import type {
   HTMLPluginOptions,
@@ -16,7 +15,12 @@ import type {
 } from '@rsbuild/shared';
 import type { EntryDescription } from '@rspack/core';
 import { STATIC_PATH } from '../constants';
-import { getPublicPathFromChain, isFileExists, isURL } from '../helpers';
+import {
+  getPublicPathFromChain,
+  isFileExists,
+  isPlainObject,
+  isURL,
+} from '../helpers';
 import {
   reduceConfigsMergeContext,
   reduceConfigsWithContext,

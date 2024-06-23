@@ -1,15 +1,5 @@
-import { getBrowserslist } from '@rsbuild/shared';
 import { createStubRsbuild } from '@scripts/test-helper';
-import type { MockInstance } from 'vitest';
 import { pluginTarget } from '../src/plugins/target';
-
-vi.mock('@rsbuild/shared', async (importOriginal) => {
-  const mod = await importOriginal<any>();
-  return {
-    ...mod,
-    getBrowserslist: vi.fn(),
-  };
-});
 
 describe('plugin-target', () => {
   const cases = [
@@ -34,15 +24,12 @@ describe('plugin-target', () => {
   ];
 
   test.each(cases)('%j', async (item) => {
-    (getBrowserslist as unknown as MockInstance).mockResolvedValueOnce(
-      item.browserslist,
-    );
-
     const rsbuild = await createStubRsbuild({
       plugins: [pluginTarget()],
       rsbuildConfig: {
         output: {
           target: item.target,
+          overrideBrowserslist: item.browserslist || undefined,
         },
       },
     });
