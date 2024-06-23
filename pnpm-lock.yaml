@@ -1173,6 +1173,12 @@ importers:
 
   packages/plugin-preact:
     dependencies:
+      '@prefresh/core':
+        specifier: ^1.5.2
+        version: 1.5.2(preact@10.22.0)
+      '@prefresh/utils':
+        specifier: ^1.2.0
+        version: 1.2.0
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
