@@ -5,7 +5,6 @@ import type {
   ModifyChainUtils,
   NormalizedEnvironmentConfig,
 } from '@rsbuild/core';
-import { getCoreJsVersion } from '@rsbuild/shared';
 import _ from 'lodash';
 import semver from 'semver';
 import { CORE_JS_DIR, CORE_JS_PKG_PATH, SWC_HELPERS_DIR } from './constants';
@@ -172,6 +171,17 @@ const getDefaultStyledComponentsConfig = (isProd: boolean, ssr: boolean) => {
     displayName: true,
     transpileTemplateLiterals: true,
   };
+};
+
+const getCoreJsVersion = (corejsPkgPath: string) => {
+  try {
+    const rawJson = fs.readFileSync(corejsPkgPath, 'utf-8');
+    const { version } = JSON.parse(rawJson);
+    const [major, minor] = version.split('.');
+    return `${major}.${minor}`;
+  } catch (err) {
+    return '3';
+  }
 };
 
 export async function applyPluginConfig(

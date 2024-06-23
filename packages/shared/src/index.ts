@@ -1,4 +1,3 @@
-import fs from 'node:fs';
 import browserslist from '../compiled/browserslist/index.js';
 import deepmerge from '../compiled/deepmerge/index.js';
 import color from '../compiled/picocolors/index.js';
@@ -91,17 +90,6 @@ export type Colors = Omit<
   keyof typeof color,
   'createColor' | 'isColorSupported'
 >;
-
-export const getCoreJsVersion = (corejsPkgPath: string) => {
-  try {
-    const rawJson = fs.readFileSync(corejsPkgPath, 'utf-8');
-    const { version } = JSON.parse(rawJson);
-    const [major, minor] = version.split('.');
-    return `${major}.${minor}`;
-  } catch (err) {
-    return '3';
-  }
-};
 
 export const castArray = <T>(arr?: T | T[]): T[] => {
   if (arr === undefined) {
