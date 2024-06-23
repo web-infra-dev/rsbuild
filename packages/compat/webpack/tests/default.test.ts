@@ -38,7 +38,7 @@ describe('applyDefaultPlugins', () => {
     const rsbuild = await createStubRsbuild({
       rsbuildConfig: {
         output: {
-          targets: ['web-worker'],
+          target: 'web-worker',
         },
       },
     });
@@ -56,7 +56,7 @@ describe('applyDefaultPlugins', () => {
     const rsbuild = await createStubRsbuild({
       rsbuildConfig: {
         output: {
-          targets: ['node'],
+          target: 'node',
         },
       },
     });

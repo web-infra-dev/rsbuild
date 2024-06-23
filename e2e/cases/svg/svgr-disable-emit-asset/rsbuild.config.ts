@@ -13,6 +13,6 @@ export default defineConfig({
   ],
   output: {
     filenameHash: false,
-    emitAssets: () => false,
+    emitAssets: false,
   },
 });

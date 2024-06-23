@@ -29,6 +29,40 @@ describe('plugin-swc', () => {
     expect(config).toMatchSnapshot();
   });
 
+  it('should apply multiply environment configs correctly', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginSwc()],
+      rsbuildConfig: {
+        provider: webpackProvider,
+        environments: {
+          web: {
+            output: {
+              target: 'web',
+            },
+            source: {
+              decorators: {
+                version: '2022-03',
+              },
+            },
+          },
+          ssr: {
+            output: {
+              target: 'node',
+            },
+            source: {
+              decorators: {
+                version: 'legacy',
+              },
+            },
+          },
+        },
+      },
+    });
+    const configs = await rsbuild.initConfigs();
+
+    expect(configs).toMatchSnapshot();
+  });
+
   it('should set swc minimizer in production', async () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
@@ -228,8 +262,22 @@ describe('plugin-swc', () => {
       plugins: [pluginSwc()],
       rsbuildConfig: {
         provider: webpackProvider,
-        output: {
-          targets: ['node', 'service-worker', 'web', 'web-worker'],
+        environments: {
+          node: {
+            output: {
+              target: 'node',
+            },
+          },
+          web: {
+            output: {
+              target: 'web',
+            },
+          },
+          webWorker: {
+            output: {
+              target: 'web-worker',
+            },
+          },
         },
       },
     });
@@ -251,6 +299,7 @@ describe('plugin-swc', () => {
         UTILS,
         TEST_BUILDER_CONFIG,
         process.cwd(),
+        ['chrome 100'],
       )
     )[0].swcConfig;
 
@@ -267,6 +316,7 @@ describe('plugin-swc', () => {
         UTILS,
         TEST_BUILDER_CONFIG,
         process.cwd(),
+        ['chrome 100'],
       )
     )[0].swcConfig;
 
@@ -281,6 +331,7 @@ describe('plugin-swc', () => {
       UTILS,
       TEST_BUILDER_CONFIG,
       process.cwd(),
+      ['chrome 100'],
     );
 
     expect(config[0].swcConfig).toStrictEqual({});
@@ -300,6 +351,7 @@ describe('plugin-swc', () => {
           UTILS,
           TEST_BUILDER_CONFIG,
           process.cwd(),
+          ['chrome 100'],
         )
       )[0].swcConfig;
 
@@ -317,11 +369,11 @@ describe('plugin-swc', () => {
           UTILS,
           TEST_BUILDER_CONFIG,
           process.cwd(),
+          ['chrome 100'],
         )
       )[0].swcConfig;
 
       expect(config.env?.coreJs).toBe('2');
-      expect(config.env?.targets).toBeDefined();
     }
 
     {
@@ -334,11 +386,11 @@ describe('plugin-swc', () => {
           UTILS,
           TEST_BUILDER_CONFIG,
           process.cwd(),
+          ['chrome 100'],
         )
       )[0].swcConfig;
 
       expect(config.env?.coreJs).toBe('2');
-      expect(config.env?.targets).toBeDefined();
     }
   });
 
@@ -381,6 +433,7 @@ describe('plugin-swc', () => {
         UTILS,
         TEST_BUILDER_CONFIG,
         process.cwd(),
+        ['chrome 100'],
       )
     )[0].swcConfig;
 

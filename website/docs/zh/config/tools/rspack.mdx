@@ -198,6 +198,22 @@ export default {
 };
 ```
 
+### HtmlPlugin
+
+- **类型：** `typeof import('html-webpack-plugin')`
+
+通过这个参数你可以拿到 `html-webpack-plugin` 插件的实例。
+
+```js
+export default {
+  tools: {
+    rspack: (config, { HtmlPlugin }) => {
+      console.log(HtmlPlugin);
+    },
+  },
+};
+```
+
 ### addRules
 
 - **类型：** `(rules: RuleSetRule | RuleSetRule[]) => void`

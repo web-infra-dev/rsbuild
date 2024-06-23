@@ -1,17 +1,11 @@
+import fs from 'node:fs';
 import path, { isAbsolute, join } from 'node:path';
 import type {
-  NormalizedConfig,
+  NormalizedEnvironmentConfig,
   RsbuildContext,
   RsbuildPlugin,
 } from '@rsbuild/core';
-import {
-  SCRIPT_REGEX,
-  castArray,
-  cloneDeep,
-  fse,
-  getNodeEnv,
-  isProd,
-} from '@rsbuild/shared';
+import { SCRIPT_REGEX, castArray, cloneDeep } from '@rsbuild/shared';
 import { BABEL_JS_RULE, applyUserBabelConfig } from './helper';
 import type { BabelLoaderOptions, PluginBabelOptions } from './types';
 
@@ -40,12 +34,14 @@ function getCacheDirectory(context: RsbuildContext, cacheDirectory?: string) {
 }
 
 async function getCacheIdentifier(options: BabelLoaderOptions) {
-  let identifier = `${getNodeEnv()}${JSON.stringify(options)}`;
+  let identifier = `${process.env.NODE_ENV}${JSON.stringify(options)}`;
 
   const { version: coreVersion } = await import('@babel/core');
-  const loaderVersion = (
-    await fse.readJSON(join(__dirname, '../compiled/babel-loader/package.json'))
-  ).version;
+  const rawPkgJson = await fs.promises.readFile(
+    join(__dirname, '../compiled/babel-loader/package.json'),
+    'utf-8',
+  );
+  const loaderVersion: string = JSON.parse(rawPkgJson).version ?? '';
 
   identifier += `@babel/core@${coreVersion}`;
   identifier += `babel-loader@${loaderVersion}`;
@@ -54,7 +50,7 @@ async function getCacheIdentifier(options: BabelLoaderOptions) {
 }
 
 export const getDefaultBabelOptions = (
-  config: NormalizedConfig,
+  config: NormalizedEnvironmentConfig,
   context: RsbuildContext,
 ): BabelLoaderOptions => {
   const isLegacyDecorators = config.source.decorators.version === 'legacy';
@@ -62,7 +58,7 @@ export const getDefaultBabelOptions = (
   const options: BabelLoaderOptions = {
     babelrc: false,
     configFile: false,
-    compact: isProd(),
+    compact: process.env.NODE_ENV === 'production',
     plugins: [
       [
         require.resolve('@babel/plugin-proposal-decorators'),
@@ -107,8 +103,8 @@ export const pluginBabel = (
   name: PLUGIN_BABEL_NAME,
 
   setup(api) {
-    const getBabelOptions = async () => {
-      const config = api.getNormalizedConfig();
+    const getBabelOptions = async (environment: string) => {
+      const config = api.getNormalizedConfig({ environment });
       const baseOptions = getDefaultBabelOptions(config, api.context);
 
       const mergedOptions = applyUserBabelConfig(
@@ -126,8 +122,8 @@ export const pluginBabel = (
 
     api.modifyBundlerChain({
       order: 'pre',
-      handler: async (chain, { CHAIN_ID }) => {
-        const babelOptions = await getBabelOptions();
+      handler: async (chain, { CHAIN_ID, environment }) => {
+        const babelOptions = await getBabelOptions(environment);
         const babelLoader = path.resolve(
           __dirname,
           '../compiled/babel-loader/index.js',

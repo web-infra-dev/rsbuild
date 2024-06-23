@@ -3,12 +3,12 @@ import {
   type RspackChain,
   __internalHelper,
   logger,
+  reduceConfigsWithContext,
 } from '@rsbuild/core';
 import {
   type ModifyWebpackChainUtils,
   type ModifyWebpackConfigUtils,
   castArray,
-  reduceConfigsWithContext,
 } from '@rsbuild/shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
 import {
@@ -68,17 +68,17 @@ async function modifyWebpackConfig(
 
 async function getChainUtils(
   target: RsbuildTarget,
+  environment: string,
 ): Promise<ModifyWebpackChainUtils> {
   const { default: webpack } = await import('webpack');
   const nameMap = {
     web: 'client',
     node: 'server',
     'web-worker': 'web-worker',
-    'service-worker': 'service-worker',
   };
 
   return {
-    ...getBaseChainUtils(target),
+    ...getBaseChainUtils(target, environment),
     name: nameMap[target] || '',
     webpack,
     HtmlWebpackPlugin: __internalHelper.getHTMLPlugin(),
@@ -136,11 +136,13 @@ async function getConfigUtils(
 export async function generateWebpackConfig({
   target,
   context,
+  environment,
 }: {
+  environment: string;
   target: RsbuildTarget;
   context: InternalContext;
 }) {
-  const chainUtils = await getChainUtils(target);
+  const chainUtils = await getChainUtils(target, environment);
   const { default: webpack } = await import('webpack');
   const {
     BannerPlugin,

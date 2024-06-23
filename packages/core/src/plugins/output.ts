@@ -1,11 +1,14 @@
 import { posix } from 'node:path';
-import {
-  DEFAULT_ASSET_PREFIX,
-  type NormalizedConfig,
-  type RsbuildContext,
+import type {
+  NormalizedEnvironmentConfig,
+  RsbuildContext,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
-import { DEFAULT_DEV_HOST, DEFAULT_PORT } from '../constants';
+import {
+  DEFAULT_ASSET_PREFIX,
+  DEFAULT_DEV_HOST,
+  DEFAULT_PORT,
+} from '../constants';
 import { formatPublicPath, getFilename } from '../helpers';
 import { getCssExtractPlugin } from '../pluginHelper';
 import type { RsbuildPlugin } from '../types';
@@ -17,7 +20,7 @@ function getPublicPath({
   context,
 }: {
   isProd: boolean;
-  config: NormalizedConfig;
+  config: NormalizedEnvironmentConfig;
   context: RsbuildContext;
 }) {
   const { dev, output } = config;
@@ -54,11 +57,8 @@ export const pluginOutput = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      async (
-        chain,
-        { CHAIN_ID, target, isProd, isServer, isServiceWorker },
-      ) => {
-        const config = api.getNormalizedConfig();
+      async (chain, { CHAIN_ID, target, isProd, isServer, environment }) => {
+        const config = api.getNormalizedConfig({ environment });
 
         const publicPath = getPublicPath({
           config,
@@ -112,13 +112,6 @@ export const pluginOutput = (): RsbuildPlugin => ({
               ...(chain.output.get('library') || {}),
               type: 'commonjs2',
             });
-        }
-
-        if (isServiceWorker) {
-          const workerPath = config.output.distPath.worker;
-          const filename = posix.join(workerPath, '[name].js');
-
-          chain.output.filename(filename).chunkFilename(filename);
         }
 
         if (config.output.copy && api.context.bundlerType === 'rspack') {

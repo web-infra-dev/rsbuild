@@ -14,7 +14,7 @@ Create aliases to import or require certain modules, same as the [resolve.alias]
 For TypeScript projects, you only need to configure [compilerOptions.paths](https://typescriptlang.org/tsconfig#paths) in the `tsconfig.json` file. The Rsbuild will automatically recognize it, so there is no need to configure the `source.alias` option separately. For more details, please refer to [Path Aliases](/guide/advanced/alias).
 :::
 
-### Object Type
+## Object Type
 
 The `alias` can be an Object, and the relative path will be automatically converted to absolute path.
 
@@ -30,7 +30,7 @@ export default {
 
 With above configuration, if `@common/Foo.tsx` is import in the code, it will be mapped to the `<project>/src/common/Foo.tsx` path.
 
-### Function Type
+## Function Type
 
 The `alias` can be a function, it will accept the previous alias object, and you can modify it.
 
@@ -58,23 +58,40 @@ export default {
 };
 ```
 
-The function provides a `target` argument, which can be used to determine the build target environment, such as setting different aliases for web outputs and node outputs.
+## Set by environment
+
+When you build for multiple environments, you can set different alias for each environment:
+
+For example, set different alias for `web` and `node` environments:
 
 ```js
 export default {
-  source: {
-    alias: (alias, { target }) => {
-      if (target === 'node') {
-        alias['@common'] = './src/node/common';
-      } else if (target === 'web') {
-        alias['@common'] = './src/web/common';
-      }
+  environments: {
+    web: {
+      source: {
+        alias: {
+          '@common': './src/web/common',
+        },
+      },
+      output: {
+        target: 'web',
+      },
+    },
+    node: {
+      source: {
+        alias: {
+          '@common': './src/node/common',
+        },
+      },
+      output: {
+        target: 'node',
+      },
     },
   },
 };
 ```
 
-### Exact Matching
+## Exact Matching
 
 By default, `source.alias` will automatically match sub-paths, for example, with the following configuration:
 
@@ -118,7 +135,7 @@ import a from '@common'; // resolved to `./src/common`
 import b from '@common/util'; // remains as `@common/util`
 ```
 
-### Handling npm packages
+## Handling npm packages
 
 You can use `alias` to resolve an npm package to a specific directory.
 

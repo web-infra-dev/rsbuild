@@ -1,10 +1,16 @@
 import type {
   InspectConfigOptions,
+  NormalizedEnvironmentConfig,
   PluginManager,
+  RsbuildEntry,
   RspackConfig,
 } from '@rsbuild/shared';
-import { normalizeConfig } from '../config';
-import { updateContextByNormalizedConfig } from '../createContext';
+import { getDefaultEntry, normalizeConfig } from '../config';
+import {
+  updateContextByNormalizedConfig,
+  updateEnvironmentContext,
+} from '../createContext';
+import { camelCase } from '../helpers';
 import { isDebug, logger } from '../logger';
 import { mergeRsbuildConfig } from '../mergeConfig';
 import { initPlugins } from '../pluginManager';
@@ -33,6 +39,54 @@ export type InitConfigsOptions = {
   rsbuildOptions: Required<CreateRsbuildOptions>;
 };
 
+const normalizeEnvironmentsConfigs = (
+  normalizedConfig: NormalizedConfig,
+  rootPath: string,
+): Record<string, NormalizedEnvironmentConfig> => {
+  let defaultEntry: RsbuildEntry;
+  const getDefaultEntryWithMemo = () => {
+    if (!defaultEntry) {
+      defaultEntry = getDefaultEntry(rootPath);
+    }
+    return defaultEntry;
+  };
+  const { environments, dev, server, provider, ...rsbuildSharedConfig } =
+    normalizedConfig;
+  if (environments && Object.keys(environments).length) {
+    return Object.fromEntries(
+      Object.entries(environments).map(([name, config]) => {
+        const environmentConfig = {
+          ...mergeRsbuildConfig(
+            rsbuildSharedConfig,
+            config as unknown as NormalizedEnvironmentConfig,
+          ),
+          dev,
+          server,
+        };
+
+        if (!environmentConfig.source.entry) {
+          // @ts-expect-error
+          environmentConfig.source.entry = getDefaultEntryWithMemo();
+        }
+
+        return [name, environmentConfig];
+      }),
+    );
+  }
+
+  return {
+    [camelCase(rsbuildSharedConfig.output.target)]: {
+      ...rsbuildSharedConfig,
+      source: {
+        ...rsbuildSharedConfig.source,
+        entry: rsbuildSharedConfig.source.entry ?? getDefaultEntryWithMemo(),
+      },
+      dev,
+      server,
+    },
+  };
+};
+
 export async function initRsbuildConfig({
   context,
   pluginManager,
@@ -51,8 +105,24 @@ export async function initRsbuildConfig({
   });
 
   await modifyRsbuildConfig(context);
-  context.normalizedConfig = normalizeConfig(context.config);
+  const normalizeBaseConfig = normalizeConfig(context.config);
+
+  const environments = normalizeEnvironmentsConfigs(
+    normalizeBaseConfig,
+    context.rootPath,
+  );
+
+  context.normalizedConfig = {
+    ...normalizeBaseConfig,
+    environments,
+  };
+
   updateContextByNormalizedConfig(context, context.normalizedConfig);
+
+  await updateEnvironmentContext(context, environments);
+
+  // TODO: will remove soon
+  context.targets = Object.values(environments).map((e) => e.output.target);
 
   return context.normalizedConfig;
 }
@@ -65,10 +135,15 @@ export async function initConfigs({
   rspackConfigs: RspackConfig[];
 }> {
   const normalizedConfig = await initRsbuildConfig({ context, pluginManager });
-  const { targets } = normalizedConfig.output;
 
   const rspackConfigs = await Promise.all(
-    targets.map((target) => generateRspackConfig({ target, context })),
+    Object.entries(normalizedConfig.environments).map(([environment, config]) =>
+      generateRspackConfig({
+        target: config.output.target,
+        context,
+        environment,
+      }),
+    ),
   );
 
   // write Rsbuild config and Rspack config to disk in debug mode

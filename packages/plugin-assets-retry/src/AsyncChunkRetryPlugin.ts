@@ -1,6 +1,6 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { type Rspack, rspack } from '@rsbuild/core';
-import { fse } from '@rsbuild/shared';
 import serialize from 'serialize-javascript';
 import type { PluginAssetsRetryOptions, RuntimeRetryOptions } from './types';
 
@@ -66,7 +66,7 @@ class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
       'runtime',
       this.options.minify ? `${filename}.min.js` : `${filename}.js`,
     );
-    const rawText = fse.readFileSync(runtimeFilePath, 'utf-8');
+    const rawText = fs.readFileSync(runtimeFilePath, 'utf-8');
 
     return rawText
       .replaceAll('__RUNTIME_GLOBALS_REQUIRE__', RuntimeGlobals.require)

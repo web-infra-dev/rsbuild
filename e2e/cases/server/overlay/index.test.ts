@@ -1,7 +1,7 @@
+import fs from 'node:fs';
 import { join } from 'node:path';
 import { dev, gotoPage, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { fse } from '@rsbuild/shared';
 
 const cwd = __dirname;
 
@@ -13,7 +13,9 @@ test('should show overlay correctly', async ({ page }) => {
 
   const { restore } = proxyConsole();
 
-  await fse.copy(join(cwd, 'src'), join(cwd, 'test-temp-src'));
+  await fs.promises.cp(join(cwd, 'src'), join(cwd, 'test-temp-src'), {
+    recursive: true,
+  });
 
   const rsbuild = await dev({
     cwd,
@@ -34,9 +36,9 @@ test('should show overlay correctly', async ({ page }) => {
 
   const appPath = join(cwd, 'test-temp-src/App.tsx');
 
-  await fse.writeFile(
+  await fs.promises.writeFile(
     appPath,
-    fse.readFileSync(appPath, 'utf-8').replace('</div>', '</aaaaa>'),
+    fs.readFileSync(appPath, 'utf-8').replace('</div>', '</aaaaa>'),
   );
 
   await expect(errorOverlay.locator('.title')).toHaveText('Compilation failed');

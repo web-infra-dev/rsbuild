@@ -1,6 +1,7 @@
+import fs from 'node:fs';
 import { resolve } from 'node:path';
 import type { Rspack } from '@rsbuild/core';
-import { JS_REGEX, browserslistToESVersion, fse } from '@rsbuild/shared';
+import { JS_REGEX, browserslistToESVersion } from '@rsbuild/shared';
 import { parse } from 'acorn';
 import {
   checkIsExcludeSource,
@@ -88,7 +89,7 @@ export class CheckSyntaxPlugin {
     }
 
     if (JS_REGEX.test(filepath)) {
-      const jsScript = await fse.readFile(filepath, 'utf-8');
+      const jsScript = await fs.promises.readFile(filepath, 'utf-8');
       await this.tryParse(filepath, jsScript);
     }
   }

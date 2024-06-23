@@ -25,7 +25,7 @@ exports[`plugins/styled-components > should apply styledComponents option to swc
       "loader": "builtin:swc-loader",
       "options": {
         "env": {
-          "coreJs": "3.36",
+          "coreJs": "3.37",
           "mode": "usage",
           "shippedProposals": true,
           "targets": [
@@ -142,7 +142,7 @@ exports[`plugins/styled-components > should enable ssr option when target contai
       "loader": "builtin:swc-loader",
       "options": {
         "env": {
-          "coreJs": "3.36",
+          "coreJs": "3.37",
           "mode": "usage",
           "shippedProposals": true,
           "targets": [

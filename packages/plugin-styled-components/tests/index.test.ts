@@ -26,8 +26,17 @@ describe('plugins/styled-components', () => {
   it('should enable ssr option when target contains node', async () => {
     const rsbuild = await createRsbuild({
       rsbuildConfig: {
-        output: {
-          targets: ['node', 'web'],
+        environments: {
+          node: {
+            output: {
+              target: 'node',
+            },
+          },
+          web: {
+            output: {
+              target: 'web',
+            },
+          },
         },
         plugins: [pluginStyledComponents()],
       },

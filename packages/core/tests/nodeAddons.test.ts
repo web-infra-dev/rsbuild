@@ -7,7 +7,7 @@ describe('plugin-node-addons', () => {
       plugins: [pluginNodeAddons()],
       rsbuildConfig: {
         output: {
-          targets: ['node'],
+          target: 'node',
         },
       },
     });
@@ -22,7 +22,7 @@ describe('plugin-node-addons', () => {
       plugins: [pluginNodeAddons()],
       rsbuildConfig: {
         output: {
-          targets: ['web'],
+          target: 'web',
         },
       },
     });
@@ -37,22 +37,7 @@ describe('plugin-node-addons', () => {
       plugins: [pluginNodeAddons()],
       rsbuildConfig: {
         output: {
-          targets: ['web-worker'],
-        },
-      },
-    });
-
-    const config = await rsbuild.unwrapConfig();
-
-    expect(config.module).toBeUndefined();
-  });
-
-  it('should not add node addons rule when target is service-worker', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginNodeAddons()],
-      rsbuildConfig: {
-        output: {
-          targets: ['service-worker'],
+          target: 'web-worker',
         },
       },
     });

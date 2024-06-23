@@ -46,28 +46,30 @@ export const pluginRem = (options: PluginRemOptions = {}): RsbuildPlugin => ({
       });
     });
 
-    api.modifyBundlerChain(async (chain, { target, CHAIN_ID, HtmlPlugin }) => {
-      if (target !== 'web' || !userOptions.enableRuntime) {
-        return;
-      }
+    api.modifyBundlerChain(
+      async (chain, { target, CHAIN_ID, environment, HtmlPlugin }) => {
+        if (target !== 'web' || !userOptions.enableRuntime) {
+          return;
+        }
 
-      const { AutoSetRootFontSizePlugin } = await import(
-        './AutoSetRootFontSizePlugin'
-      );
+        const { AutoSetRootFontSizePlugin } = await import(
+          './AutoSetRootFontSizePlugin'
+        );
 
-      const entries = Object.keys(chain.entryPoints.entries() || {});
-      const config = api.getNormalizedConfig();
-      const distDir = config.output.distPath.js;
+        const entries = Object.keys(chain.entryPoints.entries() || {});
+        const config = api.getNormalizedConfig({ environment });
+        const distDir = config.output.distPath.js;
 
-      chain
-        .plugin(CHAIN_ID.PLUGIN.AUTO_SET_ROOT_SIZE)
-        .use(AutoSetRootFontSizePlugin, [
-          userOptions,
-          entries,
-          HtmlPlugin,
-          distDir,
-          config.html.scriptLoading,
-        ]);
-    });
+        chain
+          .plugin(CHAIN_ID.PLUGIN.AUTO_SET_ROOT_SIZE)
+          .use(AutoSetRootFontSizePlugin, [
+            userOptions,
+            entries,
+            HtmlPlugin,
+            distDir,
+            config.html.scriptLoading,
+          ]);
+      },
+    );
   },
 });

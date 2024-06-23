@@ -1,14 +1,15 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { build, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { fse } from '@rsbuild/shared';
 
 test('should compile nested npm import correctly', async () => {
   const { restore, logs } = proxyConsole();
 
-  fse.copySync(
+  fs.cpSync(
     path.resolve(__dirname, '_node_modules'),
     path.resolve(__dirname, 'node_modules'),
+    { recursive: true },
   );
 
   const rsbuild = await build({

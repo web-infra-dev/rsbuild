@@ -1,6 +1,5 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
 import { modifyBabelLoaderOptions } from '@rsbuild/plugin-babel';
-import { isUsingHMR } from '@rsbuild/shared';
 import type { VueJSXPluginOptions } from '@vue/babel-plugin-jsx';
 
 export type PluginVueJsxOptions = {
@@ -18,32 +17,34 @@ export function pluginVueJsx(options: PluginVueJsxOptions = {}): RsbuildPlugin {
     name: PLUGIN_VUE_JSX_NAME,
 
     setup(api) {
-      api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd, target }) => {
-        const config = api.getNormalizedConfig();
+      api.modifyBundlerChain(
+        async (chain, { CHAIN_ID, environment, isProd, target }) => {
+          const config = api.getNormalizedConfig({ environment });
 
-        modifyBabelLoaderOptions({
-          chain,
-          CHAIN_ID,
-          modifier: (babelOptions) => {
-            babelOptions.plugins ??= [];
-            babelOptions.plugins.push([
-              require.resolve('@vue/babel-plugin-jsx'),
-              options.vueJsxOptions || {},
-            ]);
-
-            const usingHMR = isUsingHMR(config, { target, isProd });
-
-            if (usingHMR) {
+          modifyBabelLoaderOptions({
+            chain,
+            CHAIN_ID,
+            modifier: (babelOptions) => {
               babelOptions.plugins ??= [];
               babelOptions.plugins.push([
-                require.resolve('babel-plugin-vue-jsx-hmr'),
+                require.resolve('@vue/babel-plugin-jsx'),
+                options.vueJsxOptions || {},
               ]);
-            }
 
-            return babelOptions;
-          },
-        });
-      });
+              const usingHMR = !isProd && config.dev.hmr && target === 'web';
+
+              if (usingHMR) {
+                babelOptions.plugins ??= [];
+                babelOptions.plugins.push([
+                  require.resolve('babel-plugin-vue-jsx-hmr'),
+                ]);
+              }
+
+              return babelOptions;
+            },
+          });
+        },
+      );
     },
   };
 }

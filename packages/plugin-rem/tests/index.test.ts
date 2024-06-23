@@ -54,7 +54,7 @@ describe('plugin-rem', () => {
       rsbuildConfig: {
         plugins: [pluginRem()],
         output: {
-          targets: ['node'],
+          target: 'node',
         },
       },
     });
@@ -70,7 +70,7 @@ describe('plugin-rem', () => {
       rsbuildConfig: {
         plugins: [pluginRem()],
         output: {
-          targets: ['web-worker'],
+          target: 'web-worker',
         },
       },
     });

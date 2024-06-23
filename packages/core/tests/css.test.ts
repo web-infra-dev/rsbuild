@@ -160,7 +160,7 @@ describe('plugin-css injectStyles', () => {
       plugins: [pluginCss()],
       rsbuildConfig: {
         output: {
-          targets: ['node'],
+          target: 'node',
           injectStyles: true,
         },
       },

@@ -1,5 +1,4 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { isHtmlDisabled } from '@rsbuild/shared';
 import type { PluginAssetsRetryOptions } from './types';
 
 export type { PluginAssetsRetryOptions };
@@ -12,10 +11,11 @@ export const pluginAssetsRetry = (
   name: PLUGIN_ASSETS_RETRY_NAME,
   setup(api) {
     api.modifyBundlerChain(
-      async (chain, { CHAIN_ID, target, HtmlPlugin, isProd }) => {
+      async (chain, { CHAIN_ID, HtmlPlugin, isProd, environment }) => {
         const config = api.getNormalizedConfig();
 
-        if (!options || isHtmlDisabled(config, target)) {
+        const htmlPaths = api.getHTMLPaths({ environment });
+        if (!options || Object.keys(htmlPaths).length === 0) {
           return;
         }
 

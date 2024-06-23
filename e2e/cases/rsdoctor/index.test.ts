@@ -1,7 +1,7 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { build, proxyConsole, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
-import { fse } from '@rsbuild/shared';
 
 const packagePath = path.join(
   __dirname,
@@ -12,8 +12,8 @@ const testFile = path.join(packagePath, 'test.txt');
 rspackOnlyTest(
   'should register Rsdoctor plugin when process.env.RSDOCTOR is true',
   async () => {
-    fse.removeSync(packagePath);
-    fse.copySync(path.join(__dirname, 'mock'), packagePath);
+    fs.rmSync(packagePath, { recursive: true, force: true });
+    fs.cpSync(path.join(__dirname, 'mock'), packagePath, { recursive: true });
 
     const { logs, restore } = proxyConsole();
     process.env.RSDOCTOR = 'true';
@@ -22,7 +22,7 @@ rspackOnlyTest(
       cwd: __dirname,
     });
 
-    expect(fse.existsSync(testFile)).toBe(true);
+    expect(fs.existsSync(testFile)).toBe(true);
     expect(
       logs.some((log) => log.includes('@rsdoctor') && log.includes('enabled')),
     ).toBe(true);
@@ -35,8 +35,8 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should not register Rsdoctor plugin when process.env.RSDOCTOR is false',
   async () => {
-    fse.removeSync(packagePath);
-    fse.copySync(path.join(__dirname, 'mock'), packagePath);
+    fs.rmSync(packagePath, { recursive: true, force: true });
+    fs.cpSync(path.join(__dirname, 'mock'), packagePath, { recursive: true });
 
     process.env.RSDOCTOR = 'false';
 
@@ -44,7 +44,7 @@ rspackOnlyTest(
       cwd: __dirname,
     });
 
-    expect(fse.existsSync(testFile)).toBe(false);
+    expect(fs.existsSync(testFile)).toBe(false);
     process.env.RSDOCTOR = '';
   },
 );

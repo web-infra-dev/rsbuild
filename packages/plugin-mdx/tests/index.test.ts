@@ -1,5 +1,4 @@
 import { createRsbuild } from '@rsbuild/core';
-import { isPlainObject } from '@rsbuild/shared';
 import { pluginMdx } from '../src';
 
 describe('plugin-mdx', () => {
@@ -12,7 +11,7 @@ describe('plugin-mdx', () => {
 
     const bundlerConfigs = await rsbuild.initConfigs();
     const mdxRule = bundlerConfigs[0].module?.rules?.find((item) => {
-      return isPlainObject(item) && item.test?.toString().includes('mdx');
+      return typeof item === 'object' && item?.test?.toString().includes('mdx');
     });
 
     expect(mdxRule).toMatchSnapshot();
@@ -33,7 +32,7 @@ describe('plugin-mdx', () => {
 
     const bundlerConfigs = await rsbuild.initConfigs();
     const mdxRule = bundlerConfigs[0].module?.rules?.find((item) => {
-      return isPlainObject(item) && item.test?.toString().includes('mdx');
+      return typeof item === 'object' && item?.test?.toString().includes('mdx');
     });
 
     expect(mdxRule).toMatchSnapshot();

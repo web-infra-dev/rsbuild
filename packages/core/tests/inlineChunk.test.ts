@@ -45,7 +45,7 @@ describe('plugin-inline-chunk', () => {
       plugins: [pluginEntry(), pluginHtml(), pluginInlineChunk()],
       rsbuildConfig: {
         output: {
-          targets: ['node'],
+          target: 'node',
         },
       },
     });
@@ -60,7 +60,7 @@ describe('plugin-inline-chunk', () => {
       plugins: [pluginEntry(), pluginHtml(), pluginInlineChunk()],
       rsbuildConfig: {
         output: {
-          targets: ['web-worker'],
+          target: 'web-worker',
         },
       },
     });

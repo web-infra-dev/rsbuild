@@ -1,7 +1,7 @@
+import fs from 'node:fs';
 import { join } from 'node:path';
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { fse } from '@rsbuild/shared';
 
 test.describe('should combine multiple html config correctly', () => {
   let rsbuild: Awaited<ReturnType<typeof build>>;
@@ -30,11 +30,11 @@ test.describe('should combine multiple html config correctly', () => {
       },
     });
 
-    mainContent = await fse.readFile(
+    mainContent = await fs.promises.readFile(
       join(rsbuild.distPath, 'main.html'),
       'utf-8',
     );
-    fooContent = await fse.readFile(
+    fooContent = await fs.promises.readFile(
       join(rsbuild.distPath, 'foo.html'),
       'utf-8',
     );
@@ -51,7 +51,7 @@ test.describe('should combine multiple html config correctly', () => {
     expect(iconRelativePath).toBeDefined();
 
     const iconPath = join(rsbuild.distPath, iconRelativePath);
-    expect(fse.existsSync(iconPath)).toBeTruthy();
+    expect(fs.existsSync(iconPath)).toBeTruthy();
 
     // should work on all page
     expect(
@@ -66,7 +66,7 @@ test.describe('should combine multiple html config correctly', () => {
     expect(iconRelativePath).toBeDefined();
 
     const iconPath = join(rsbuild.distPath, iconRelativePath);
-    expect(fse.existsSync(iconPath)).toBeTruthy();
+    expect(fs.existsSync(iconPath)).toBeTruthy();
 
     // should work on all page
     expect(/<link.*rel="icon".*href="(.*?)">/.test(fooContent)).toBeTruthy();

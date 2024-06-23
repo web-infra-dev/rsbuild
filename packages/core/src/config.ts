@@ -1,13 +1,6 @@
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
-import {
-  DEFAULT_ASSET_PREFIX,
-  RspackChain,
-  color,
-  fse,
-  getNodeEnv,
-  isObject,
-} from '@rsbuild/shared';
+import { RspackChain, color } from '@rsbuild/shared';
 import type {
   InspectConfigOptions,
   NormalizedConfig,
@@ -26,23 +19,31 @@ import type {
 } from '@rsbuild/shared';
 import {
   CSS_DIST_DIR,
+  DEFAULT_ASSET_PREFIX,
   DEFAULT_DATA_URL_SIZE,
   DEFAULT_DEV_HOST,
   DEFAULT_MOUNT_ID,
   DEFAULT_PORT,
   FONT_DIST_DIR,
+  HMR_SOCKET_PATH,
   HTML_DIST_DIR,
   IMAGE_DIST_DIR,
   JS_DIST_DIR,
   MEDIA_DIST_DIR,
   ROOT_DIST_DIR,
   SERVER_DIST_DIR,
-  SERVICE_WORKER_DIST_DIR,
   SVG_DIST_DIR,
   TS_CONFIG_FILE,
   WASM_DIST_DIR,
 } from './constants';
-import { debounce, findExists, isFileExists, upperFirst } from './helpers';
+import {
+  debounce,
+  findExists,
+  getNodeEnv,
+  isFileExists,
+  isObject,
+  upperFirst,
+} from './helpers';
 import { logger } from './logger';
 import { mergeRsbuildConfig } from './mergeConfig';
 import { restartDevServer } from './server/restart';
@@ -51,8 +52,13 @@ const getDefaultDevConfig = (): NormalizedDevConfig => ({
   hmr: true,
   liveReload: true,
   assetPrefix: DEFAULT_ASSET_PREFIX,
-  startUrl: false,
+  writeToDisk: false,
   client: {
+    path: HMR_SOCKET_PATH,
+    // By default it is set to "location.port"
+    port: '',
+    // By default it is set to "location.hostname"
+    host: '',
     overlay: true,
   },
 });
@@ -118,7 +124,7 @@ const getDefaultPerformanceConfig = (): NormalizedPerformanceConfig => ({
 });
 
 const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
-  targets: ['web'],
+  target: 'web',
   distPath: {
     root: ROOT_DIST_DIR,
     js: JS_DIST_DIR,
@@ -130,7 +136,6 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
     image: IMAGE_DIST_DIR,
     media: MEDIA_DIST_DIR,
     server: SERVER_DIST_DIR,
-    worker: SERVICE_WORKER_DIST_DIR,
   },
   assetPrefix: DEFAULT_ASSET_PREFIX,
   filename: {},
@@ -159,7 +164,7 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
     exportGlobals: false,
     exportLocalsConvention: 'camelCase',
   },
-  emitAssets: () => true,
+  emitAssets: true,
 });
 
 const createDefaultConfig = (): RsbuildConfig => ({
@@ -171,9 +176,10 @@ const createDefaultConfig = (): RsbuildConfig => ({
   tools: getDefaultToolsConfig(),
   security: getDefaultSecurityConfig(),
   performance: getDefaultPerformanceConfig(),
+  environments: {},
 });
 
-function getDefaultEntry(root: string): RsbuildEntry {
+export function getDefaultEntry(root: string): RsbuildEntry {
   const files = [
     // Most projects are using typescript now.
     // So we put `.ts` as the first one to improve performance.
@@ -204,10 +210,6 @@ export const withDefaultConfig = async (
 
   merged.source ||= {};
 
-  if (!merged.source.entry) {
-    merged.source.entry = getDefaultEntry(rootPath);
-  }
-
   if (!merged.source.tsconfigPath) {
     const tsconfigPath = join(rootPath, TS_CONFIG_FILE);
 
@@ -225,7 +227,10 @@ export const withDefaultConfig = async (
  * 3. Meaningful and can be filled by constant value.
  */
 export const normalizeConfig = (config: RsbuildConfig): NormalizedConfig =>
-  mergeRsbuildConfig(createDefaultConfig(), config) as NormalizedConfig;
+  mergeRsbuildConfig(
+    createDefaultConfig(),
+    config,
+  ) as unknown as NormalizedConfig;
 
 export type ConfigParams = {
   env: string;
@@ -361,7 +366,7 @@ export async function loadConfig({
       const result = await configExport(params);
 
       if (result === undefined) {
-        throw new Error('Rsbuild config function must return a config object.');
+        throw new Error('The config function must return a config object.');
       }
 
       return {
@@ -372,7 +377,7 @@ export async function loadConfig({
 
     if (!isObject(configExport)) {
       throw new Error(
-        `Rsbuild config must be an object or a function that returns an object, get ${color.yellow(
+        `The config must be an object or a function that returns an object, get ${color.yellow(
           configExport,
         )}`,
       );
@@ -389,7 +394,6 @@ export async function loadConfig({
 }
 
 export async function outputInspectConfigFiles({
-  rsbuildConfig,
   rawRsbuildConfig,
   bundlerConfigs,
   inspectOptions,
@@ -398,7 +402,10 @@ export async function outputInspectConfigFiles({
   configType: string;
   rsbuildConfig: NormalizedConfig;
   rawRsbuildConfig: string;
-  bundlerConfigs: string[];
+  bundlerConfigs: Array<{
+    name: string;
+    content: string;
+  }>;
   inspectOptions: InspectConfigOptions & {
     outputPath: string;
   };
@@ -411,28 +418,29 @@ export async function outputInspectConfigFiles({
       label: 'Rsbuild Config',
       content: rawRsbuildConfig,
     },
-    ...bundlerConfigs.map((content, index) => {
-      const suffix = rsbuildConfig.output.targets[index];
-      const outputFile = `${configType}.config.${suffix}.mjs`;
+    ...bundlerConfigs.map(({ name, content }) => {
+      const outputFile = `${configType}.config.${name}.mjs`;
       let outputFilePath = join(outputPath, outputFile);
 
       // if filename is conflict, add a random id to the filename.
-      if (fse.existsSync(outputFilePath)) {
+      if (fs.existsSync(outputFilePath)) {
         outputFilePath = outputFilePath.replace(/\.mjs$/, `.${Date.now()}.mjs`);
       }
 
       return {
         path: outputFilePath,
-        label: `${upperFirst(configType)} Config (${suffix})`,
+        label: `${upperFirst(configType)} Config (${name})`,
         content,
       };
     }),
   ];
 
+  await fs.promises.mkdir(outputPath, { recursive: true });
+
   await Promise.all(
-    files.map((item) =>
-      fse.outputFile(item.path, `export default ${item.content}`),
-    ),
+    files.map(async (item) => {
+      return fs.promises.writeFile(item.path, `export default ${item.content}`);
+    }),
   );
 
   const fileInfos = files

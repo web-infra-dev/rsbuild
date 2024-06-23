@@ -1,6 +1,6 @@
 # output.overrideBrowserslist
 
-- **Type:** `string[] | Record<RsbuildTarget, string[]`
+- **Type:** `string[]`
 - **Default:** `undefined`
 
 Specifies the range of target browsers that the project is compatible with.
@@ -43,24 +43,24 @@ export default {
 
 Check out the [browserslist documentation](https://github.com/browserslist/browserslist) to learn more about browserslist.
 
-## Set by Targets
+## Set by environment
 
-When you build multiple targets at the same time, you can set different browser ranges for different targets. At this point, you need to set `overrideBrowserslist` to an object whose key is the corresponding build target.
+When you build for multiple environments, you can set different browserslist for each environment:
 
-For example to set different ranges for `web` and `node`:
+For example, set different browserslist for `web` and `node` environments:
 
 ```js
 export default {
-  output: {
-    overrideBrowserslist: {
-      web: [
-        'iOS >= 9',
-        'Android >= 4.4',
-        'last 2 versions',
-        '> 0.2%',
-        'not dead',
-      ],
-      node: ['node >= 20'],
+  environments: {
+    web: {
+      output: {
+        overrideBrowserslist: ['iOS >= 9', 'Android >= 4.4'],
+      },
+    },
+    node: {
+      output: {
+        overrideBrowserslist: ['node >= 20'],
+      },
     },
   },
 };

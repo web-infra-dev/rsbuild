@@ -22,6 +22,7 @@ export type { Rspack };
 export { logger } from './logger';
 export { mergeRsbuildConfig } from './mergeConfig';
 export { ensureAssetPrefix } from './helpers';
+export { reduceConfigs, reduceConfigsWithContext } from './reduceConfigs';
 
 // Constants
 export { PLUGIN_SWC_NAME, PLUGIN_CSS_NAME } from './constants';
@@ -50,6 +51,7 @@ export type {
   NormalizedSecurityConfig,
   NormalizedPerformanceConfig,
   NormalizedModuleFederationConfig,
+  NormalizedEnvironmentConfig,
   // Plugin Types
   RsbuildPlugin,
   RsbuildPlugins,

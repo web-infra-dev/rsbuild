@@ -111,7 +111,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -158,7 +158,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -305,7 +305,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       },
     ],
   },
-  "name": "Client",
+  "name": "web",
   "optimization": {
     "minimize": false,
     "splitChunks": {
@@ -410,6 +410,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
+      "environment": "web",
       "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
@@ -557,7 +558,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -604,7 +605,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -751,7 +752,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       },
     ],
   },
-  "name": "Client",
+  "name": "web",
   "optimization": {
     "minimize": true,
     "minimizer": [
@@ -913,6 +914,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "version": 5,
     },
     HtmlBasicPlugin {
+      "environment": "web",
       "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
@@ -929,7 +931,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     },
     ProgressPlugin {
       "_options": {
-        "prefix": "Client",
+        "prefix": "web",
         "profile": false,
         "progressChars": "━━",
         "template": "● {prefix:.bold} {bar:25.green/white.dim} ({percent}%) {wide_msg:.dim}",
@@ -1226,7 +1228,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       },
     ],
   },
-  "name": "Server",
+  "name": "node",
   "optimization": {
     "minimize": false,
     "splitChunks": false,
@@ -1394,7 +1396,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -1441,7 +1443,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -1588,7 +1590,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
       },
     ],
   },
-  "name": "Client",
+  "name": "web",
   "optimization": {
     "minimize": false,
     "splitChunks": {
@@ -1696,6 +1698,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
+      "environment": "web",
       "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {

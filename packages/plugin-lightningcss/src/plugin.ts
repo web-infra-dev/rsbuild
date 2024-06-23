@@ -1,13 +1,11 @@
 import path from 'node:path';
 import type {
   ChainIdentifier,
-  NormalizedConfig,
   RsbuildContext,
   RsbuildPlugin,
-  RsbuildTarget,
   RspackChain,
 } from '@rsbuild/core';
-import { getBrowserslistWithDefault, reduceConfigs } from '@rsbuild/shared';
+import { reduceConfigs } from '@rsbuild/core';
 import browserslist from '@rsbuild/shared/browserslist';
 import * as lightningcss from 'lightningcss';
 import type { Targets } from 'lightningcss';
@@ -22,21 +20,14 @@ export const PLUGIN_LIGHTNINGCSS_NAME = 'rsbuild:lightningcss';
 
 const getLightningCSSTargets = async ({
   context,
-  config,
-  target,
   options,
+  environment,
 }: {
   context: RsbuildContext;
-  config: NormalizedConfig;
-  target: RsbuildTarget;
   options: PluginLightningcssOptions;
+  environment: string;
 }) => {
-  const browserslistUserConfig = await getBrowserslistWithDefault(
-    context.rootPath,
-    config,
-    target,
-  );
-
+  const browserslistUserConfig = context.environments[environment].browserslist;
   const implementation =
     (options.implementation as Lightningcss) ?? lightningcss;
 
@@ -169,14 +160,11 @@ export const pluginLightningcss = (
       // ensure lightningcss-loader can be applied to sass/less/stylus rules
       order: 'pre',
 
-      handler: async (chain, { CHAIN_ID, target }) => {
-        const config = api.getNormalizedConfig();
-
+      handler: async (chain, { CHAIN_ID, target, environment }) => {
         targets = await getLightningCSSTargets({
           context: api.context,
-          config,
-          target,
           options,
+          environment,
         });
 
         if (target === 'web' && options?.transform !== false) {
@@ -190,8 +178,8 @@ export const pluginLightningcss = (
       },
     });
 
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, isProd }) => {
-      const config = api.getNormalizedConfig();
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment, isProd }) => {
+      const config = api.getNormalizedConfig({ environment });
       const { minify } = config.output;
       const isMinimize =
         isProd &&

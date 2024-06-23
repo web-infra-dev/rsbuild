@@ -77,7 +77,7 @@ test('output.manifest when target is node', async () => {
         distPath: {
           root: 'dist-1',
         },
-        targets: ['node'],
+        target: 'node',
         manifest: true,
         legalComments: 'none',
         filenameHash: false,

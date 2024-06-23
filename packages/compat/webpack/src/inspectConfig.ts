@@ -4,7 +4,6 @@ import type {
   InspectConfigResult,
   NormalizedConfig,
 } from '@rsbuild/core';
-import { getNodeEnv, setNodeEnv } from '@rsbuild/shared';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 import { outputInspectConfigFiles, stringifyConfig } from './shared';
 import type { WebpackConfig } from './types';
@@ -20,9 +19,9 @@ export async function inspectConfig({
   bundlerConfigs?: WebpackConfig[];
 }): Promise<InspectConfigResult<'webpack'>> {
   if (inspectOptions.env) {
-    setNodeEnv(inspectOptions.env);
-  } else if (!getNodeEnv()) {
-    setNodeEnv('development');
+    process.env.NODE_ENV = inspectOptions.env;
+  } else if (!process.env.NODE_ENV) {
+    process.env.NODE_ENV = 'development';
   }
 
   const webpackConfigs =
@@ -47,9 +46,10 @@ export async function inspectConfig({
     inspectOptions.verbose,
   );
   const rawBundlerConfigs = await Promise.all(
-    webpackConfigs.map((config) =>
-      stringifyConfig(config, inspectOptions.verbose),
-    ),
+    webpackConfigs.map(async (config) => ({
+      name: config.name!,
+      content: await stringifyConfig(config, inspectOptions.verbose),
+    })),
   );
 
   let outputPath = inspectOptions.outputPath || context.distPath;
@@ -72,7 +72,7 @@ export async function inspectConfig({
 
   return {
     rsbuildConfig: rawRsbuildConfig,
-    bundlerConfigs: rawBundlerConfigs,
+    bundlerConfigs: rawBundlerConfigs.map((r) => r.content),
     origin: {
       rsbuildConfig: rsbuildDebugConfig,
       bundlerConfigs: webpackConfigs,

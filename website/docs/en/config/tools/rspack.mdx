@@ -126,7 +126,7 @@ export default {
 
 ### target
 
-- **Type:** `'web' | 'node' | 'web-worker' | 'service-worker'`
+- **Type:** `'web' | 'node' | 'web-worker'`
 
 The `target` parameter can be used to determine the build target environment. For example:
 
@@ -193,6 +193,22 @@ export default {
     rspack: (config, { rspack }) => {
       config.plugins?.push(new rspack.BannerPlugin());
       return config;
+    },
+  },
+};
+```
+
+### HtmlPlugin
+
+- **Type:** `typeof import('html-webpack-plugin')`
+
+The instance of `html-webpack-plugin`:
+
+```js
+export default {
+  tools: {
+    rspack: (config, { HtmlPlugin }) => {
+      console.log(HtmlPlugin);
     },
   },
 };

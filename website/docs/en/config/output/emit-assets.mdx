@@ -1,12 +1,7 @@
 # output.emitAssets
 
-- **Type:**
-
-```ts
-type EmitAssets = (params: { target: RsbuildTarget }) => boolean;
-```
-
-- **Default:** `() => true`
+- **Type:** `boolean`
+- **Default:** `true`
 
 Control whether to emit static assets such as images, fonts, audio, video, etc.
 
@@ -18,9 +13,18 @@ For example, the following example will emit static assets when building web bun
 
 ```js
 export default {
-  output: {
-    targets: ['web', 'node'],
-    emitAssets: ({ target }) => target !== 'node',
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+        emitAssets: false,
+      },
+    },
   },
 };
 ```

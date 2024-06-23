@@ -12,7 +12,7 @@ const {
   chainToConfig,
   modifyBundlerChain,
   onCompileDone,
-  TARGET_ID_MAP,
+  prettyTime,
 } = __internalHelper;
 
 export {
@@ -27,7 +27,7 @@ export {
   chainToConfig,
   modifyBundlerChain,
   onCompileDone,
-  TARGET_ID_MAP,
+  prettyTime,
 };
 
 export type InternalContext = __internalHelper.InternalContext;

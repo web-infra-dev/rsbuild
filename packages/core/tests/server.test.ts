@@ -1,14 +1,9 @@
-import type { NormalizedConfig } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import {
   isClientCompiler,
   setupServerHooks,
 } from '../src/server/devMiddleware';
-import {
-  formatRoutes,
-  getDevConfig,
-  printServerURLs,
-} from '../src/server/helper';
+import { formatRoutes, printServerURLs } from '../src/server/helper';
 
 test('formatRoutes', () => {
   expect(
@@ -158,7 +153,7 @@ test('formatRoutes', () => {
 });
 
 test('printServerURLs', () => {
-  let message: string | undefined;
+  let message: string | null;
 
   message = printServerURLs({
     port: 3000,
@@ -228,6 +223,15 @@ test('printServerURLs', () => {
       - bar      http:/10.94.62.193:3000/bar
     "
   `);
+
+  message = printServerURLs({
+    port: 3000,
+    protocol: 'http',
+    urls: [],
+    routes: [],
+  });
+
+  expect(message).toEqual(null);
 });
 
 describe('test dev server', () => {
@@ -306,52 +310,5 @@ describe('test dev server', () => {
         }),
       ),
     ).toBeFalsy();
-  });
-
-  test('getDevServerOptions', async () => {
-    expect(
-      getDevConfig({
-        config: {} as NormalizedConfig,
-        port: 3000,
-      }),
-    ).toMatchInlineSnapshot(`
-      {
-        "client": {
-          "host": "",
-          "path": "/rsbuild-hmr",
-          "port": "3000",
-          "protocol": undefined,
-        },
-        "liveReload": true,
-        "writeToDisk": false,
-      }
-    `);
-
-    expect(
-      getDevConfig({
-        config: {
-          dev: {
-            hmr: false,
-            client: {
-              host: '',
-              path: '',
-            },
-          },
-        } as NormalizedConfig,
-        port: 3001,
-      }),
-    ).toMatchInlineSnapshot(`
-      {
-        "client": {
-          "host": "",
-          "path": "",
-          "port": "3001",
-          "protocol": undefined,
-        },
-        "hmr": false,
-        "liveReload": true,
-        "writeToDisk": false,
-      }
-    `);
   });
 });

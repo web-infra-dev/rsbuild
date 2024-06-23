@@ -1,6 +1,6 @@
+import fs from 'node:fs';
 // @ts-check
 import { join } from 'node:path';
-import fs from 'fs-extra';
 
 function replaceFileContent(filePath, replaceFn) {
   const content = fs.readFileSync(filePath, 'utf-8');
@@ -22,7 +22,6 @@ export default {
   },
   dependencies: [
     'deepmerge',
-    'fs-extra',
     {
       name: 'chokidar',
       externals: {

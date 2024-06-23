@@ -1,15 +1,14 @@
-import {
-  type HtmlBasicTag,
-  type HtmlTag,
-  type HtmlTagDescriptor,
-  type HtmlTagUtils,
-  type ModifyHTMLTagsFn,
-  isFunction,
+import type {
+  HtmlBasicTag,
+  HtmlTag,
+  HtmlTagDescriptor,
+  HtmlTagUtils,
+  ModifyHTMLTagsFn,
 } from '@rsbuild/shared';
 import type { Compilation, Compiler } from '@rspack/core';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { HtmlTagObject } from 'html-webpack-plugin';
-import { ensureAssetPrefix, partition } from '../helpers';
+import { ensureAssetPrefix, isFunction, partition } from '../helpers';
 import { getHTMLPlugin } from '../pluginHelper';
 
 export type TagConfig = {
@@ -236,15 +235,19 @@ const addFavicon = (headTags: HtmlTagObject[], favicon?: string) => {
 export class HtmlBasicPlugin {
   readonly name: string;
 
+  readonly environment: string;
+
   readonly options: HtmlBasicPluginOptions;
 
   readonly modifyTagsFn?: ModifyHTMLTagsFn;
 
   constructor(
     options: HtmlBasicPluginOptions,
+    environment: string,
     modifyTagsFn?: ModifyHTMLTagsFn,
   ) {
     this.name = 'HtmlBasicPlugin';
+    this.environment = environment;
     this.options = options;
     this.modifyTagsFn = modifyTagsFn;
   }
@@ -280,6 +283,7 @@ export class HtmlBasicPlugin {
                 compilation,
                 assetPrefix: data.publicPath,
                 filename: data.outputName,
+                environment: this.environment,
               })
             : tags;
 

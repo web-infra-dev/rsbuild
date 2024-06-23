@@ -1,13 +1,12 @@
 import { isAbsolute, join } from 'node:path';
-import {
-  type InspectConfigOptions,
-  type InspectConfigResult,
-  type NormalizedConfig,
-  type RspackConfig,
-  getNodeEnv,
-  setNodeEnv,
+import type {
+  InspectConfigOptions,
+  InspectConfigResult,
+  NormalizedConfig,
+  RspackConfig,
 } from '@rsbuild/shared';
 import { outputInspectConfigFiles, stringifyConfig } from '../config';
+import { getNodeEnv, setNodeEnv } from '../helpers';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
 export async function inspectConfig({
@@ -49,9 +48,10 @@ export async function inspectConfig({
   );
 
   const rawBundlerConfigs = await Promise.all(
-    rspackConfigs.map((config) =>
-      stringifyConfig(config, inspectOptions.verbose),
-    ),
+    rspackConfigs.map(async (config, index) => ({
+      name: config.name || String(index),
+      content: await stringifyConfig(config, inspectOptions.verbose),
+    })),
   );
 
   let outputPath = inspectOptions.outputPath || context.distPath;
@@ -74,7 +74,7 @@ export async function inspectConfig({
 
   return {
     rsbuildConfig: rawRsbuildConfig,
-    bundlerConfigs: rawBundlerConfigs,
+    bundlerConfigs: rawBundlerConfigs.map((r) => r.content),
     origin: {
       rsbuildConfig: rsbuildDebugConfig,
       bundlerConfigs: rspackConfigs,

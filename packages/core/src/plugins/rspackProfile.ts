@@ -1,6 +1,6 @@
+import fs from 'node:fs';
 import inspector from 'node:inspector';
 import path from 'node:path';
-import { fse } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
@@ -18,7 +18,7 @@ export const stopProfiler = (
       logger.error('Failed to generate JS CPU profile:', error);
       return;
     }
-    fse.writeFileSync(output, JSON.stringify(param.profile));
+    fs.writeFileSync(output, JSON.stringify(param.profile));
   });
 };
 
@@ -64,7 +64,9 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
     const loggingFilePath = path.join(profileDir, 'logging.json');
 
     const onStart = () => {
-      fse.ensureDirSync(profileDir);
+      if (!fs.existsSync(profileDir)) {
+        fs.mkdirSync(profileDir, { recursive: true });
+      }
 
       if (enableProfileTrace) {
         rspack.experimental_registerGlobalTrace(
@@ -92,7 +94,7 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
           logging: 'verbose',
           loggingTrace: true,
         });
-        fse.writeFileSync(loggingFilePath, JSON.stringify(logging));
+        fs.writeFileSync(loggingFilePath, JSON.stringify(logging));
       }
     });
 

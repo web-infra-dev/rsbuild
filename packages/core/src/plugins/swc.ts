@@ -1,31 +1,25 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import {
   type Polyfill,
-  type RsbuildTarget,
   SCRIPT_REGEX,
   applyScriptCondition,
   cloneDeep,
   deepmerge,
-  getBrowserslistWithDefault,
-  getCoreJsVersion,
-  reduceConfigs,
 } from '@rsbuild/shared';
 import type { SwcLoaderOptions } from '@rspack/core';
 import { PLUGIN_SWC_NAME } from '../constants';
 import { isWebTarget } from '../helpers';
+import { reduceConfigs } from '../reduceConfigs';
 import type {
-  NormalizedConfig,
+  NormalizedEnvironmentConfig,
   NormalizedSourceConfig,
   RsbuildPlugin,
 } from '../types';
 
 const builtinSwcLoaderName = 'builtin:swc-loader';
 
-async function getDefaultSwcConfig(
-  config: NormalizedConfig,
-  rootPath: string,
-  target: RsbuildTarget,
-): Promise<SwcLoaderOptions> {
+function getDefaultSwcConfig(browserslist: string[]): SwcLoaderOptions {
   return {
     jsc: {
       externalHelpers: true,
@@ -40,7 +34,7 @@ async function getDefaultSwcConfig(
     },
     isModule: 'unknown',
     env: {
-      targets: await getBrowserslistWithDefault(rootPath, config, target),
+      targets: browserslist,
     },
   };
 }
@@ -59,8 +53,8 @@ export const pluginSwc = (): RsbuildPlugin => ({
 
     api.modifyBundlerChain({
       order: 'pre',
-      handler: async (chain, { CHAIN_ID, target }) => {
-        const config = api.getNormalizedConfig();
+      handler: async (chain, { CHAIN_ID, target, environment }) => {
+        const config = api.getNormalizedConfig({ environment });
 
         const rule = chain.module
           .rule(CHAIN_ID.RULE.JS)
@@ -82,11 +76,9 @@ export const pluginSwc = (): RsbuildPlugin => ({
           excludes: [],
         });
 
-        const swcConfig = await getDefaultSwcConfig(
-          config,
-          api.context.rootPath,
-          target,
-        );
+        const { browserslist } = api.context.environments[environment];
+
+        const swcConfig = getDefaultSwcConfig(browserslist);
 
         applyTransformImport(swcConfig, config.source.transformImport);
         applySwcDecoratorConfig(swcConfig, config);
@@ -145,6 +137,17 @@ export const pluginSwc = (): RsbuildPlugin => ({
   },
 });
 
+const getCoreJsVersion = (corejsPkgPath: string) => {
+  try {
+    const rawJson = fs.readFileSync(corejsPkgPath, 'utf-8');
+    const { version } = JSON.parse(rawJson);
+    const [major, minor] = version.split('.');
+    return `${major}.${minor}`;
+  } catch (err) {
+    return '3';
+  }
+};
+
 async function applyCoreJs(
   swcConfig: SwcLoaderOptions,
   polyfillMode: Polyfill,
@@ -177,7 +180,7 @@ function applyTransformImport(
 
 export function applySwcDecoratorConfig(
   swcConfig: SwcLoaderOptions,
-  config: NormalizedConfig,
+  config: NormalizedEnvironmentConfig,
 ) {
   swcConfig.jsc ||= {};
   swcConfig.jsc.transform ||= {};

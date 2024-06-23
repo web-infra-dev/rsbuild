@@ -1,12 +1,15 @@
 import path from 'node:path';
-import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
 import {
   type ConfigChainWithContext,
+  type RsbuildPlugin,
+  type Rspack,
+  reduceConfigsWithContext,
+} from '@rsbuild/core';
+import {
   type FileFilterUtil,
   castArray,
   cloneDeep,
   deepmerge,
-  reduceConfigsWithContext,
 } from '@rsbuild/shared';
 import type Less from '../compiled/less';
 
@@ -106,8 +109,8 @@ export const pluginLess = (
   name: PLUGIN_LESS_NAME,
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
-      const config = api.getNormalizedConfig();
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
+      const config = api.getNormalizedConfig({ environment });
       const rule = chain.module
         .rule(CHAIN_ID.RULE.LESS)
         .test(/\.less$/)

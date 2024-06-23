@@ -66,6 +66,18 @@ import type {
 } from '@rsbuild/core';
 ```
 
+## NormalizedEnvironmentConfig
+
+指定环境下的 Rsbuild 归一化配置类型，对应 [getNormalizedConfig({ environment })](/plugins/dev/core#apigetnormalizedconfig) 方法的返回值。
+
+```ts
+import type { NormalizedEnvironmentConfig } from '@rsbuild/core';
+
+const config: NormalizedEnvironmentConfig = api.getNormalizedConfig({
+  environment,
+});
+```
+
 ## RsbuildContext
 
 Rsbuild 实例中 [context 属性](/api/javascript-api/instance#rsbuildcontext)的类型定义。

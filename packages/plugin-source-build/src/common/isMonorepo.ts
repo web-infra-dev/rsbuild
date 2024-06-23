@@ -1,5 +1,5 @@
+import fs from 'node:fs';
 import path from 'node:path';
-import { fse } from '@rsbuild/shared';
 import { PNPM_WORKSPACE_FILE, RUSH_JSON_FILE } from '../constants';
 
 export type IsMonorepoFn = (
@@ -11,10 +11,17 @@ export type IsMonorepoResult = {
   type: 'rush' | 'pnpm' | string;
 };
 
+async function pathExists(path: string) {
+  return fs.promises
+    .access(path)
+    .then(() => true)
+    .catch(() => false);
+}
+
 export const isPnpmMonorepo: IsMonorepoFn = async (
   monorepoRootPath: string,
 ) => {
-  const existPnpmWorkspaceFile = await fse.pathExists(
+  const existPnpmWorkspaceFile = await pathExists(
     path.join(monorepoRootPath, PNPM_WORKSPACE_FILE),
   );
 
@@ -24,7 +31,7 @@ export const isPnpmMonorepo: IsMonorepoFn = async (
 export const isRushMonorepo: IsMonorepoFn = async (
   monorepoRootPath: string,
 ) => {
-  const existRushJsonFile = await fse.pathExists(
+  const existRushJsonFile = await pathExists(
     path.join(monorepoRootPath, RUSH_JSON_FILE),
   );
   return existRushJsonFile;

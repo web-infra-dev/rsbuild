@@ -1,5 +1,5 @@
 import type { RsbuildConfig, RsbuildPlugin, Rspack } from '@rsbuild/core';
-import { SCRIPT_REGEX, getNodeEnv, isUsingHMR } from '@rsbuild/shared';
+import { SCRIPT_REGEX } from '@rsbuild/shared';
 
 export type PluginPreactOptions = {
   /**
@@ -26,7 +26,7 @@ export const pluginPreact = (
 
     api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
       const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
-        development: getNodeEnv() === 'development',
+        development: process.env.NODE_ENV === 'development',
         runtime: 'automatic',
         importSource: 'preact',
       };
@@ -63,7 +63,7 @@ export const pluginPreact = (
 
     api.modifyBundlerChain(async (chain, { isProd, target }) => {
       const config = api.getNormalizedConfig();
-      const usingHMR = isUsingHMR(config, { isProd, target });
+      const usingHMR = !isProd && config.dev.hmr && target === 'web';
 
       if (!usingHMR || !prefreshEnabled) {
         return;

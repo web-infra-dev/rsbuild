@@ -1,9 +1,8 @@
 import path from 'node:path';
-import { isProd, isUsingHMR } from '@rsbuild/shared';
-import { TARGET_ID_MAP } from '../constants';
-import type { NormalizedConfig, RsbuildPlugin } from '../types';
+import { isProd } from '../helpers';
+import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
 
-const getJsSourceMap = (config: NormalizedConfig) => {
+const getJsSourceMap = (config: NormalizedEnvironmentConfig) => {
   const { sourceMap } = config.output;
   if (sourceMap.js === undefined) {
     return isProd() ? false : 'cheap-module-source-map';
@@ -19,10 +18,10 @@ export const pluginBasic = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      (chain, { env, isProd, target, bundler, CHAIN_ID }) => {
-        const config = api.getNormalizedConfig();
+      (chain, { env, isProd, target, bundler, environment, CHAIN_ID }) => {
+        const config = api.getNormalizedConfig({ environment });
 
-        chain.name(TARGET_ID_MAP[target]);
+        chain.name(environment);
 
         chain.devtool(getJsSourceMap(config));
 
@@ -53,7 +52,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
         // set minimize to allow users to disable minimize
         chain.optimization.minimize(isMinimize);
 
-        const usingHMR = isUsingHMR(config, { target, isProd });
+        const usingHMR = !isProd && config.dev.hmr && target === 'web';
 
         if (usingHMR) {
           chain

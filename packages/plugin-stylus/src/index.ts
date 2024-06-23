@@ -1,5 +1,5 @@
-import type { RsbuildPlugin } from '@rsbuild/core';
-import { cloneDeep, deepmerge, reduceConfigs } from '@rsbuild/shared';
+import { type RsbuildPlugin, reduceConfigs } from '@rsbuild/core';
+import { cloneDeep, deepmerge } from '@rsbuild/shared';
 
 export const PLUGIN_STYLUS_NAME = 'rsbuild:stylus';
 
@@ -27,8 +27,8 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
   name: PLUGIN_STYLUS_NAME,
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
-      const config = api.getNormalizedConfig();
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
+      const config = api.getNormalizedConfig({ environment });
 
       const mergedOptions = reduceConfigs({
         initial: {

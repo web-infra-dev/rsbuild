@@ -1,17 +1,17 @@
+import fs from 'node:fs';
 import { join, resolve } from 'node:path';
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginStylus } from '@rsbuild/plugin-stylus';
 import { pluginTypedCSSModules } from '@rsbuild/plugin-typed-css-modules';
-import { fse } from '@rsbuild/shared';
 
 const fixtures = __dirname;
 
 const generatorTempDir = async (testDir: string) => {
-  await fse.emptyDir(testDir);
-  await fse.copy(join(fixtures, 'src'), testDir);
+  fs.rmSync(testDir, { recursive: true, force: true });
+  await fs.promises.cp(join(fixtures, 'src'), testDir, { recursive: true });
 
-  return () => fse.remove(testDir);
+  return () => fs.promises.rm(testDir, { force: true, recursive: true });
 };
 
 test('should compile stylus correctly with ts declaration', async () => {
@@ -36,7 +36,7 @@ test('should compile stylus correctly with ts declaration', async () => {
     /body{color:#f00;font:14px Arial,sans-serif}\.title-class-\w{6}{font-size:14px}/,
   );
 
-  expect(fse.existsSync(join(testDir, './b.module.styl.d.ts'))).toBeTruthy();
+  expect(fs.existsSync(join(testDir, './b.module.styl.d.ts'))).toBeTruthy();
 
   await clear();
 });

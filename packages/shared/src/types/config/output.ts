@@ -68,11 +68,6 @@ export type DistPathConfig = {
    * @default 'server'
    */
   server?: string;
-  /**
-   * The output directory of service worker bundles when target is `service-worker`.
-   * @default 'worker'
-   */
-  worker?: string;
 };
 
 export type FilenameConfig = {
@@ -204,13 +199,12 @@ export type InlineChunkTestFunction = (params: {
 
 export type InlineChunkTest = RegExp | InlineChunkTestFunction;
 
-export type EmitAssets = (params: { target: RsbuildTarget }) => boolean;
-
 export interface OutputConfig {
   /**
-   * Specify build targets to run in different target environments.
+   * Specify build target to run in specified environment.
+   * @default 'web'
    */
-  targets?: RsbuildTarget[];
+  target?: RsbuildTarget;
   /**
    * At build time, prevent some `import` dependencies from being packed into bundles in your code, and instead fetch them externally at runtime.
    * For more information, please see: [Rspack Externals](https://rspack.dev/config/externals)
@@ -296,7 +290,7 @@ export interface OutputConfig {
    * [autoprefixer](https://github.com/postcss/autoprefixer) to identify the JavaScript syntax that
    * need to be transformed and the CSS browser prefixes that need to be added.
    */
-  overrideBrowserslist?: string[] | Partial<Record<RsbuildTarget, string[]>>;
+  overrideBrowserslist?: string[];
   /**
    * Copies the specified file or directory to the dist directory.
    */
@@ -305,15 +299,11 @@ export interface OutputConfig {
    * Whether to emit static assets such as image, font, etc.
    * Return `false` to avoid outputting unnecessary assets for some scenarios such as SSR.
    */
-  emitAssets?: EmitAssets;
+  emitAssets?: boolean;
 }
 
-export type OverrideBrowserslist =
-  | string[]
-  | Partial<Record<RsbuildTarget, string[]>>;
-
 export interface NormalizedOutputConfig extends OutputConfig {
-  targets: RsbuildTarget[];
+  target: RsbuildTarget;
   filename: FilenameConfig;
   distPath: Omit<Required<DistPathConfig>, 'jsAsync' | 'cssAsync'> & {
     jsAsync?: string;
@@ -339,5 +329,5 @@ export interface NormalizedOutputConfig extends OutputConfig {
     localIdentName?: string;
     mode?: CSSModules['mode'];
   };
-  emitAssets: EmitAssets;
+  emitAssets: boolean;
 }

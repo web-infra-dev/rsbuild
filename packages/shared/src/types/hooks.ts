@@ -1,6 +1,5 @@
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
-import type { ChainIdentifier } from '../chain';
-import type { RspackChain } from '../chain';
+import type { ChainIdentifier, RspackChain } from '..';
 import type { HtmlBasicTag, RsbuildConfig } from './config';
 import type { RsbuildTarget } from './rsbuild';
 import type { Rspack, RspackConfig } from './rspack';
@@ -73,6 +72,8 @@ export type ModifyHTMLTagsContext = {
    * @example 'index.html'
    */
   filename: string;
+  /** The name of the environment to which this build belongs. */
+  environment: string;
 };
 
 export type ModifyHTMLTagsFn = (
@@ -96,9 +97,9 @@ export type ModifyChainUtils = {
   isProd: boolean;
   target: RsbuildTarget;
   isServer: boolean;
-  isServiceWorker: boolean;
   isWebWorker: boolean;
   CHAIN_ID: ChainIdentifier;
+  environment: string;
   HtmlPlugin: typeof HtmlWebpackPlugin;
 };
 
