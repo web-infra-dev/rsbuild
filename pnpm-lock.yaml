@@ -730,8 +730,8 @@ importers:
         specifier: 0.5.3
         version: 0.5.3
       core-js:
-        specifier: ~3.36.0
-        version: 3.36.1
+        specifier: ~3.37.1
+        version: 3.37.1
       html-webpack-plugin:
         specifier: npm:html-rspack-plugin@5.7.2
         version: html-rspack-plugin@5.7.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))
