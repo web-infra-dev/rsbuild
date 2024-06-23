@@ -1,8 +1,6 @@
 import fs from 'node:fs';
-import type { Compiler } from '@rspack/core';
 import deepmerge from '../compiled/deepmerge/index.js';
 import color from '../compiled/picocolors/index.js';
-import { DEFAULT_ASSET_PREFIX } from './constants';
 import type { CacheGroups } from './types';
 
 export { color, deepmerge };
@@ -80,18 +78,3 @@ export function createCacheGroups(
 
   return experienceCacheGroup;
 }
-
-export const getPublicPathFromCompiler = (compiler: Compiler) => {
-  const { publicPath } = compiler.options.output;
-
-  if (typeof publicPath === 'string') {
-    // 'auto' is a magic value in Rspack and behave like `publicPath: ""`
-    if (publicPath === 'auto') {
-      return '';
-    }
-    return publicPath.endsWith('/') ? publicPath : `${publicPath}/`;
-  }
-
-  // publicPath function is not supported yet, fallback to default value
-  return DEFAULT_ASSET_PREFIX;
-};

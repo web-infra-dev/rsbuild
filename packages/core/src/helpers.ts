@@ -268,6 +268,21 @@ export const getPublicPathFromChain = (
   return formatPublicPath(DEFAULT_ASSET_PREFIX, withSlash);
 };
 
+export const getPublicPathFromCompiler = (compiler: Rspack.Compiler) => {
+  const { publicPath } = compiler.options.output;
+
+  if (typeof publicPath === 'string') {
+    // 'auto' is a magic value in Rspack and behave like `publicPath: ""`
+    if (publicPath === 'auto') {
+      return '';
+    }
+    return publicPath.endsWith('/') ? publicPath : `${publicPath}/`;
+  }
+
+  // publicPath function is not supported yet, fallback to default value
+  return DEFAULT_ASSET_PREFIX;
+};
+
 /**
  * ensure absolute file path.
  * @param base - Base path to resolve relative from.
@@ -352,7 +367,10 @@ export const canParse = (url: string) => {
   }
 };
 
-export const ensureAssetPrefix = (url: string, assetPrefix: string) => {
+export const ensureAssetPrefix = (
+  url: string,
+  assetPrefix = DEFAULT_ASSET_PREFIX,
+) => {
   // The use of an absolute URL without a protocol is technically legal,
   // however it cannot be parsed as a URL instance, just return it.
   // e.g. str is //example.com/foo.js
@@ -364,6 +382,11 @@ export const ensureAssetPrefix = (url: string, assetPrefix: string) => {
   // Only absolute url with hostname & protocol can be parsed into URL instance.
   // e.g. str is https://example.com/foo.js
   if (canParse(url)) {
+    return url;
+  }
+
+  // 'auto' is a magic value in Rspack and behave like `publicPath: ""`
+  if (assetPrefix === 'auto') {
     return url;
   }
 

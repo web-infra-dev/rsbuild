@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { type Rspack, ensureAssetPrefix } from '@rsbuild/core';
-import { getPublicPathFromCompiler } from '@rsbuild/shared';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { PluginAssetsRetryOptions } from './types';
 
@@ -110,7 +109,7 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
               innerHTML: await this.getRetryCode(),
             });
           } else {
-            const publicPath = getPublicPathFromCompiler(compiler);
+            const { publicPath } = compilation.outputOptions;
             const url = ensureAssetPrefix(
               await this.getScriptPath(),
               publicPath,
