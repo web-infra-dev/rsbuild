@@ -8,7 +8,7 @@ exports[`plugin-mdx > should allow to configure mdx loader 1`] = `
       "loader": "builtin:swc-loader",
       "options": {
         "env": {
-          "coreJs": "3.36",
+          "coreJs": "3.37",
           "mode": "usage",
           "shippedProposals": true,
           "targets": [
@@ -53,7 +53,7 @@ exports[`plugin-mdx > should register mdx loader correctly 1`] = `
       "loader": "builtin:swc-loader",
       "options": {
         "env": {
-          "coreJs": "3.36",
+          "coreJs": "3.37",
           "mode": "usage",
           "shippedProposals": true,
           "targets": [

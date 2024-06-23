@@ -28,8 +28,8 @@
   "dependencies": {
     "@modern-js/swc-plugins": "0.6.7",
     "@rsbuild/shared": "workspace:*",
-    "@swc/helpers": "0.5.3",
-    "core-js": "~3.36.0",
+    "@swc/helpers": "0.5.11",
+    "core-js": "~3.37.1",
     "lodash": "^4.17.21",
     "semver": "^7.6.2"
   },
