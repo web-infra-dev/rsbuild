@@ -41,30 +41,28 @@ export function pluginBundleAnalyzer(): RsbuildPlugin {
         },
       });
 
-      api.modifyBundlerChain(
-        async (chain, { CHAIN_ID, target, environment }) => {
-          const config = api.getNormalizedConfig({ environment });
+      api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
+        const config = api.getNormalizedConfig({ environment });
 
-          if (!isUseAnalyzer(config)) {
-            return;
-          }
+        if (!isUseAnalyzer(config)) {
+          return;
+        }
 
-          const { default: BundleAnalyzer } = await import(
-            '@rsbuild/shared/webpack-bundle-analyzer'
-          );
+        const { default: BundleAnalyzer } = await import(
+          '@rsbuild/shared/webpack-bundle-analyzer'
+        );
 
-          chain
-            .plugin(CHAIN_ID.PLUGIN.BUNDLE_ANALYZER)
-            .use(BundleAnalyzer.BundleAnalyzerPlugin, [
-              {
-                analyzerMode: 'static',
-                openAnalyzer: false,
-                reportFilename: `report-${target}.html`,
-                ...(config.performance.bundleAnalyze || {}),
-              },
-            ]);
-        },
-      );
+        chain
+          .plugin(CHAIN_ID.PLUGIN.BUNDLE_ANALYZER)
+          .use(BundleAnalyzer.BundleAnalyzerPlugin, [
+            {
+              analyzerMode: 'static',
+              openAnalyzer: false,
+              reportFilename: `report-${environment}.html`,
+              ...(config.performance.bundleAnalyze || {}),
+            },
+          ]);
+      });
     },
   };
 }
