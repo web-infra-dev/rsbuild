@@ -45,7 +45,22 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
     };
 
     const cleanAll = async () => {
-      await Promise.all(Object.keys(api.context.environments).map(clean));
+      const distPaths = Object.entries(api.context.environments).reduce<
+        Array<{
+          environmentName: string;
+          distPath: string;
+        }>
+      >((total, [environmentName, curr]) => {
+        if (!total.find((t) => t.distPath === curr.distPath)) {
+          total.push({
+            environmentName,
+            distPath: curr.distPath,
+          });
+        }
+        return total;
+      }, []);
+
+      await Promise.all(distPaths.map((d) => clean(d.environmentName)));
     };
 
     api.onBeforeBuild(cleanAll);
