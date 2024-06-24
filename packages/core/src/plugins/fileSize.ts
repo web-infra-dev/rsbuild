@@ -215,13 +215,12 @@ export const pluginFileSize = (): RsbuildPlugin => ({
                 : printFileSize;
 
             if (printFileSize) {
-              const logs = await printFileSizes(
+              return printFileSizes(
                 printFileSizeConfig,
                 multiStats[index],
                 api.context.rootPath,
                 environment,
               );
-              return logs;
             }
             return [];
           },
