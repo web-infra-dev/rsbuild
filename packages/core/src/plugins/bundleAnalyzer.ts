@@ -1,10 +1,14 @@
 import { isProd } from '../helpers';
-import type { NormalizedConfig, RsbuildConfig, RsbuildPlugin } from '../types';
+import type {
+  NormalizedEnvironmentConfig,
+  RsbuildConfig,
+  RsbuildPlugin,
+} from '../types';
 
 // There are two ways to enable the bundle analyzer:
 // 1. Set environment variable `BUNDLE_ANALYZE`
 // 2. Set performance.bundleAnalyze config
-const isUseAnalyzer = (config: RsbuildConfig | NormalizedConfig) =>
+const isUseAnalyzer = (config: RsbuildConfig | NormalizedEnvironmentConfig) =>
   process.env.BUNDLE_ANALYZE || config.performance?.bundleAnalyze;
 
 export function pluginBundleAnalyzer(): RsbuildPlugin {
@@ -12,40 +16,55 @@ export function pluginBundleAnalyzer(): RsbuildPlugin {
     name: 'rsbuild:bundle-analyzer',
 
     setup(api) {
-      api.modifyRsbuildConfig((config) => {
-        if (isProd() || !isUseAnalyzer(config)) {
-          return;
-        }
+      api.modifyRsbuildConfig({
+        order: 'post',
+        handler: (config) => {
+          if (isProd()) {
+            return;
+          }
 
-        // webpack-bundle-analyze needs to read assets from disk
-        config.dev ||= {};
-        config.dev.writeToDisk = true;
+          const useAnalyzer =
+            isUseAnalyzer(config) ||
+            Object.values(config.environments || []).some((config) =>
+              isUseAnalyzer(config),
+            );
 
-        return config;
+          if (!useAnalyzer) {
+            return;
+          }
+
+          // webpack-bundle-analyze needs to read assets from disk
+          config.dev ||= {};
+          config.dev.writeToDisk = true;
+
+          return config;
+        },
       });
 
-      api.modifyBundlerChain(async (chain, { CHAIN_ID, target }) => {
-        const config = api.getNormalizedConfig();
+      api.modifyBundlerChain(
+        async (chain, { CHAIN_ID, target, environment }) => {
+          const config = api.getNormalizedConfig({ environment });
 
-        if (!isUseAnalyzer(config)) {
-          return;
-        }
+          if (!isUseAnalyzer(config)) {
+            return;
+          }
 
-        const { default: BundleAnalyzer } = await import(
-          '@rsbuild/shared/webpack-bundle-analyzer'
-        );
+          const { default: BundleAnalyzer } = await import(
+            '@rsbuild/shared/webpack-bundle-analyzer'
+          );
 
-        chain
-          .plugin(CHAIN_ID.PLUGIN.BUNDLE_ANALYZER)
-          .use(BundleAnalyzer.BundleAnalyzerPlugin, [
-            {
-              analyzerMode: 'static',
-              openAnalyzer: false,
-              reportFilename: `report-${target}.html`,
-              ...(config.performance.bundleAnalyze || {}),
-            },
-          ]);
-      });
+          chain
+            .plugin(CHAIN_ID.PLUGIN.BUNDLE_ANALYZER)
+            .use(BundleAnalyzer.BundleAnalyzerPlugin, [
+              {
+                analyzerMode: 'static',
+                openAnalyzer: false,
+                reportFilename: `report-${target}.html`,
+                ...(config.performance.bundleAnalyze || {}),
+              },
+            ]);
+        },
+      );
     },
   };
 }
