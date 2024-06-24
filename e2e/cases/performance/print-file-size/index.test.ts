@@ -60,6 +60,10 @@ test.describe('should print file size correctly', async () => {
 
     // dist/index.html
     expect(
+      logs.some((log) => log.includes('File') && log.includes('(web)')),
+    ).toBeTruthy();
+
+    expect(
       logs.some(
         (log) =>
           log.includes('index.html') &&
@@ -69,6 +73,9 @@ test.describe('should print file size correctly', async () => {
     ).toBeTruthy();
 
     // dist/server/index.js
+    expect(
+      logs.some((log) => log.includes('File') && log.includes('(node)')),
+    ).toBeTruthy();
     expect(
       logs.some(
         (log) =>
