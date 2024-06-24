@@ -4,7 +4,7 @@ import {
   type RspackChain,
   castArray,
 } from '@rsbuild/shared';
-import { ensureAbsolutePath } from '../helpers';
+import { ensureAbsolutePath } from '../helpers/path';
 import { reduceConfigs } from '../reduceConfigs';
 import type { RsbuildPlugin } from '../types';
 

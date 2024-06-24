@@ -20,7 +20,7 @@ import type {
   MultiCompiler as WebpackMultiCompiler,
 } from 'webpack';
 import { formatStatsMessages } from './client/format';
-import { COMPILED_PATH, DEFAULT_ASSET_PREFIX } from './constants';
+import { DEFAULT_ASSET_PREFIX } from './constants';
 import { logger } from './logger';
 
 export const rspackMinVersion = '0.7.0';
@@ -78,9 +78,6 @@ export const isSatisfyRspackVersion = async (originalVersion: string) => {
   // ignore other unstable versions
   return true;
 };
-
-export const getCompiledPath = (packageName: string) =>
-  path.join(COMPILED_PATH, packageName);
 
 /**
  * Add node polyfill tip when failed to resolve node built-in modules.
@@ -293,15 +290,6 @@ export const getPublicPathFromCompiler = (compiler: Rspack.Compiler) => {
   // publicPath function is not supported yet, fallback to default value
   return DEFAULT_ASSET_PREFIX;
 };
-
-/**
- * ensure absolute file path.
- * @param base - Base path to resolve relative from.
- * @param filePath - Absolute or relative file path.
- * @returns Resolved absolute file path.
- */
-export const ensureAbsolutePath = (base: string, filePath: string): string =>
-  path.isAbsolute(filePath) ? filePath : path.resolve(base, filePath);
 
 export const isFileSync = (filePath: string) => {
   try {
