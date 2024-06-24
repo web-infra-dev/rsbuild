@@ -135,7 +135,7 @@ export function runCli() {
         await rsbuild?.inspectConfig({
           env: options.env,
           verbose: options.verbose,
-          outputPath: join(rsbuild.context.distPath, options.output),
+          outputPath: options.output,
           writeToDisk: true,
         });
       } catch (err) {

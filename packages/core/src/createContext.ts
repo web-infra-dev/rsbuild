@@ -1,4 +1,5 @@
-import { isAbsolute, join } from 'node:path';
+import path from 'node:path';
+import { isAbsolute, join, sep } from 'node:path';
 import type {
   BundlerType,
   NormalizedEnvironmentConfig,
@@ -162,13 +163,27 @@ export function updateContextByNormalizedConfig(
   context: RsbuildContext,
   config: NormalizedConfig,
 ) {
-  // Try to get the root distPath of context.environments as context.distPath
+  // Try to get the parent distPath of context.environments as context.distPath
   context.distPath = Object.values(context.environments).reduce((p, e) => {
     // foo/dist/server vs foo/dist
     if (!p || p.startsWith(e.distPath)) {
       return e.distPath;
     }
-    return p;
+
+    if (e.distPath.startsWith(p)) {
+      return p;
+    }
+
+    const p1 = p.split(sep);
+    const p2 = e.distPath.split(sep);
+
+    let i = 0;
+
+    while (i <= p1.length && i <= p2.length && p1[i] === p2[i]) {
+      i++;
+    }
+
+    return p1.slice(0, i).join(path.sep);
   }, context.distPath);
 
   if (config.source.tsconfigPath) {
