@@ -302,8 +302,13 @@ importers:
       '@e2e/source-build-utils':
         specifier: workspace:*
         version: link:../utils
+      '@e2e/source-build-utils2':
+        specifier: workspace:*
+        version: link:../utils2
 
   e2e/cases/source-build/utils: {}
+
+  e2e/cases/source-build/utils2: {}
 
   e2e/cases/source-map:
     dependencies:
