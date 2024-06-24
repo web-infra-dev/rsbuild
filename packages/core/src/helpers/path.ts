@@ -2,11 +2,13 @@ import { isAbsolute, join, resolve, sep } from 'node:path';
 import { COMPILED_PATH } from '../constants';
 
 export function getCommonParentPath(paths: string[]) {
-  if (paths.length === 1) {
+  const uniquePaths = [...new Set(paths)];
+
+  if (uniquePaths.length === 1) {
     return paths[0];
   }
 
-  const [first, ...rest] = [...new Set(paths)].map((p) => p.split(sep));
+  const [first, ...rest] = uniquePaths.map((p) => p.split(sep));
   const common: string[] = [];
 
   for (let i = 0; i < first.length; i++) {
