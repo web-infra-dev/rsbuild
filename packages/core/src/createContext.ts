@@ -162,7 +162,7 @@ export function updateContextByNormalizedConfig(
   context: RsbuildContext,
   config: NormalizedConfig,
 ) {
-  // Use shortest distPath path as context distPath
+  // Try to get the root distPath of context.environments as context.distPath
   context.distPath = Object.values(context.environments).reduce((p, e) => {
     // foo/dist/server vs foo/dist
     if (!p || p.startsWith(e.distPath)) {
