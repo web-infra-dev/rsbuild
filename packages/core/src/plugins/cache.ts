@@ -104,7 +104,7 @@ export const pluginCache = (): RsbuildPlugin => ({
       return;
     }
 
-    api.modifyBundlerChain(async (chain, { target, environment, env }) => {
+    api.modifyBundlerChain(async (chain, { environment, env }) => {
       const config = api.getNormalizedConfig({ environment });
       const { buildCache } = config.performance;
 
@@ -132,8 +132,8 @@ export const pluginCache = (): RsbuildPlugin => ({
         // The default cache name of webpack is '${name}-${env}', and the `name` is `default` by default.
         // We set cache name to avoid cache conflicts of different targets.
         name: useDigest
-          ? `${target}-${env}-${environment}-${getDigestHash(cacheConfig.cacheDigest!)}`
-          : `${target}-${env}-${environment}`,
+          ? `${environment}-${env}-${getDigestHash(cacheConfig.cacheDigest!)}`
+          : `${environment}-${env}`,
         type: 'filesystem',
         cacheDirectory,
         buildDependencies,
