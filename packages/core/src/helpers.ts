@@ -476,12 +476,12 @@ export function partition<T>(
 
 export const applyToCompiler = (
   compiler: Rspack.Compiler | Rspack.MultiCompiler,
-  apply: (c: Rspack.Compiler) => void,
+  apply: (c: Rspack.Compiler, index: number) => void,
 ) => {
   if (isMultiCompiler(compiler)) {
     compiler.compilers.forEach(apply);
   } else {
-    apply(compiler);
+    apply(compiler, 0);
   }
 };
 
