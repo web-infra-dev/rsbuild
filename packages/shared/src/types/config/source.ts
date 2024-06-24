@@ -1,9 +1,6 @@
 import type { RuleSetCondition } from '@rspack/core';
-import type {
-  ConfigChainMergeContext,
-  ConfigChainWithContext,
-} from '../../reduceConfigs';
 import type { RsbuildEntry, RsbuildTarget } from '../rsbuild';
+import type { ConfigChain, ConfigChainMergeContext } from '../utils';
 
 export type Alias = Record<string, string | false | (string | false)[]>;
 
@@ -27,7 +24,7 @@ export interface SourceConfig {
    * Create aliases to import or require certain modules,
    * same as the [resolve.alias](https://rspack.dev/config/resolve) config of Rspack.
    */
-  alias?: ConfigChainWithContext<Alias, { target: RsbuildTarget }>;
+  alias?: ConfigChain<Alias>;
   /**
    * Used to control the priority between the `paths` option in `tsconfig.json`
    * and the `alias` option in the bundler.
@@ -87,7 +84,7 @@ export type TransformImport = {
 
 export interface NormalizedSourceConfig extends SourceConfig {
   define: Define;
-  alias: ConfigChainWithContext<Alias, { target: RsbuildTarget }>;
+  alias: ConfigChain<Alias>;
   aliasStrategy: AliasStrategy;
   preEntry: string[];
   decorators: Required<Decorators>;

@@ -16,7 +16,6 @@ type DistPathConfig = {
   image?: string;
   media?: string;
   server?: string;
-  worker?: string;
 };
 ```
 
@@ -36,7 +35,6 @@ const defaultDistPath = {
   image: 'static/image',
   media: 'static/media',
   server: 'server',
-  worker: 'worker',
 };
 ```
 
@@ -56,7 +54,6 @@ const defaultDistPath = {
 - `image`：表示非 SVG 图片的输出目录。
 - `media`：表示视频等媒体资源的输出目录。
 - `server`: 表示服务端产物的输出目录，仅在 [target](/config/output/targets) 为 `node` 时有效。
-- `worker`: 表示 worker 产物的输出目录，仅在 [target](/config/output/targets) 为 `service-worker` 时有效。
 
 ### 根目录
 

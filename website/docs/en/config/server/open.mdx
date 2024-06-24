@@ -1,6 +1,18 @@
 # server.open
 
-- **Type:** `boolean | string | string[] | undefined`
+- **Type:**
+
+```ts
+type Open =
+  | boolean
+  | string
+  | string[]
+  | {
+      target?: string | string[];
+      before?: () => Promise<void> | void;
+    };
+```
+
 - **Default:** `undefined`
 - **Version:** `>= 0.7.4`
 
@@ -64,7 +76,12 @@ export default {
 
 ### Port placeholder
 
-Since the port number may change, you can use the `<port>` placeholder to refer to the current port number, and Rsbuild will automatically replace the placeholder with the actual listening port number.
+The port number that Rsbuild server listens on may change. For example, if the port is in use, Rsbuild will automatically increment the port number until it finds an available port.
+
+To avoid `server.open` becoming invalid due to port changes, you can use one of the following methods:
+
+- Enable [server.strictPort](/config/server/strict-port).
+- Use the `<port>` placeholder to refer to the current port number. Rsbuild will replace the placeholder with the actual port number it is listening on.
 
 ```js
 export default {
@@ -98,3 +115,34 @@ BROWSER="Google Chrome Canary" npx rsbuild dev --open
 :::tip
 You can set `BROWSER` in the local `.env.local` file, which helps avoid impacting other developers.
 :::
+
+### Callback
+
+By using `open.before`, you can trigger a callback function before opening the page.
+
+```js
+export default {
+  server: {
+    open: {
+      before: async () => {
+        await doSomeThing();
+      },
+    },
+  },
+};
+```
+
+When using `open.before`, the page URLs can be configured via `open.target`.
+
+```js
+export default {
+  server: {
+    open: {
+      target: ['/', '/about'],
+      before: async () => {
+        await doSomeThing();
+      },
+    },
+  },
+};
+```

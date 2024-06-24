@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import { basename, posix } from 'node:path';
-import { getPublicPathFromCompiler, withPublicPath } from '@rsbuild/shared';
 import type { Compilation, Compiler } from '@rspack/core';
+import { ensureAssetPrefix } from '../helpers';
 import { getHTMLPlugin } from '../pluginHelper';
 
 type AppIconOptions = {
@@ -36,15 +36,16 @@ export class HtmlAppIconPlugin {
       getHTMLPlugin()
         .getHooks(compilation)
         .alterAssetTagGroups.tap(this.name, (data) => {
-          const publicPath = getPublicPathFromCompiler(compiler);
-
           data.headTags.unshift({
             tagName: 'link',
             voidTag: true,
             attributes: {
               rel: 'apple-touch-icon',
               sizes: '180*180',
-              href: withPublicPath(iconRelativePath, publicPath),
+              href: ensureAssetPrefix(
+                iconRelativePath,
+                compilation.outputOptions.publicPath,
+              ),
             },
             meta: {},
           });

@@ -1,6 +1,6 @@
 {
   "name": "create-rsbuild",
-  "version": "0.7.4",
+  "version": "0.7.9",
   "description": "Create a new Rsbuild project",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -35,10 +35,10 @@
     "@types/node": "18.x",
     "deepmerge": "^4.3.1",
     "rslog": "^1.2.2",
-    "typescript": "^5.4.2"
+    "typescript": "^5.5.2"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=16.7.0"
   },
   "publishConfig": {
     "access": "public",

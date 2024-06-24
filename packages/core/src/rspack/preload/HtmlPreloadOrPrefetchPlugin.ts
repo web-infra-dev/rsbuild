@@ -15,14 +15,15 @@
  * limitations under the License.
  */
 
-import {
-  type PreloadOrPreFetchOption,
-  getPublicPathFromCompiler,
-  upperFirst,
-  withPublicPath,
-} from '@rsbuild/shared';
-import type { Compilation, Compiler, RspackPluginInstance } from '@rspack/core';
+import type { PreloadOrPreFetchOption } from '@rsbuild/shared';
+import type {
+  Chunk,
+  Compilation,
+  Compiler,
+  RspackPluginInstance,
+} from '@rspack/core';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import { ensureAssetPrefix, upperFirst } from '../../helpers';
 import { getHTMLPlugin } from '../../pluginHelper';
 import {
   type As,
@@ -78,7 +79,7 @@ function generateLinks(
       : // Only handle chunks imported by this HtmlWebpackPlugin.
         extractedChunks.filter((chunk) =>
           doesChunkBelongToHtml({
-            chunk,
+            chunk: chunk as Chunk,
             compilation,
             htmlPluginData,
             pluginOptions: options,
@@ -117,11 +118,10 @@ function generateLinks(
   // Sort to ensure the output is predictable.
   const sortedFilteredFiles = filteredFiles.sort();
   const links: HtmlWebpackPlugin.HtmlTagObject[] = [];
-  const publicPath = getPublicPathFromCompiler(compilation.compiler);
-  const { crossOriginLoading } = compilation.compiler.options.output;
+  const { publicPath, crossOriginLoading } = compilation.outputOptions;
 
   for (const file of sortedFilteredFiles) {
-    const href = withPublicPath(file, publicPath);
+    const href = ensureAssetPrefix(file, publicPath);
     const attributes: Attributes = {
       href,
       rel: type,

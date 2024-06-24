@@ -16,7 +16,7 @@ describe('plugin-assets-retry', () => {
       plugins: [pluginAssetsRetry()],
       rsbuildConfig: {
         output: {
-          targets: ['node'],
+          target: 'node',
         },
       },
     });

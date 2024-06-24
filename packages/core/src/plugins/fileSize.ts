@@ -1,10 +1,11 @@
+import fs from 'node:fs';
 /**
  * modified from https://github.com/facebook/create-react-app
  * license at https://github.com/facebook/create-react-app/blob/master/LICENSE
  */
 import path from 'node:path';
-import { JS_REGEX, fse } from '@rsbuild/shared';
-import { color, logger } from '@rsbuild/shared';
+import { JS_REGEX } from '@rsbuild/shared';
+import { color } from '@rsbuild/shared';
 import type {
   MultiStats,
   PrintFileSizeOptions,
@@ -12,6 +13,7 @@ import type {
   StatsAsset,
 } from '@rsbuild/shared';
 import { CSS_REGEX, HTML_REGEX } from '../constants';
+import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
 
 /** Filter source map and license files */
@@ -81,7 +83,7 @@ async function printFileSizes(
     distFolder: string,
   ) => {
     const fileName = asset.name.split('?')[0];
-    const contents = fse.readFileSync(path.join(distPath, fileName));
+    const contents = fs.readFileSync(path.join(distPath, fileName));
     const size = contents.length;
     const gzippedSize = gzipSize.sync(contents);
 

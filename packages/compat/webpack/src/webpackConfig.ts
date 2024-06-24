@@ -2,20 +2,20 @@ import {
   type RsbuildTarget,
   type RspackChain,
   __internalHelper,
+  logger,
+  reduceConfigsWithContext,
 } from '@rsbuild/core';
 import {
   type ModifyWebpackChainUtils,
   type ModifyWebpackConfigUtils,
   castArray,
-  chainToConfig,
-  debug,
-  modifyBundlerChain,
-  reduceConfigsWithContext,
 } from '@rsbuild/shared';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
 import {
   type InternalContext,
+  chainToConfig,
   getChainUtils as getBaseChainUtils,
+  modifyBundlerChain,
 } from './shared';
 import type { WebpackConfig } from './types';
 
@@ -24,7 +24,7 @@ async function modifyWebpackChain(
   utils: ModifyWebpackChainUtils,
   chain: RspackChain,
 ): Promise<RspackChain> {
-  debug('modify webpack chain');
+  logger.debug('modify webpack chain');
 
   const [modifiedChain] = await context.hooks.modifyWebpackChain.call(
     chain,
@@ -37,7 +37,7 @@ async function modifyWebpackChain(
     }
   }
 
-  debug('modify webpack chain done');
+  logger.debug('modify webpack chain done');
 
   return modifiedChain;
 }
@@ -47,7 +47,7 @@ async function modifyWebpackConfig(
   webpackConfig: WebpackConfig,
   utils: ModifyWebpackConfigUtils,
 ): Promise<WebpackConfig> {
-  debug('modify webpack config');
+  logger.debug('modify webpack config');
   let [modifiedConfig] = await context.hooks.modifyWebpackConfig.call(
     webpackConfig,
     utils,
@@ -62,23 +62,23 @@ async function modifyWebpackConfig(
     });
   }
 
-  debug('modify webpack config done');
+  logger.debug('modify webpack config done');
   return modifiedConfig;
 }
 
 async function getChainUtils(
   target: RsbuildTarget,
+  environment: string,
 ): Promise<ModifyWebpackChainUtils> {
   const { default: webpack } = await import('webpack');
   const nameMap = {
     web: 'client',
     node: 'server',
     'web-worker': 'web-worker',
-    'service-worker': 'service-worker',
   };
 
   return {
-    ...getBaseChainUtils(target),
+    ...getBaseChainUtils(target, environment),
     name: nameMap[target] || '',
     webpack,
     HtmlWebpackPlugin: __internalHelper.getHTMLPlugin(),
@@ -136,11 +136,13 @@ async function getConfigUtils(
 export async function generateWebpackConfig({
   target,
   context,
+  environment,
 }: {
+  environment: string;
   target: RsbuildTarget;
   context: InternalContext;
 }) {
-  const chainUtils = await getChainUtils(target);
+  const chainUtils = await getChainUtils(target, environment);
   const { default: webpack } = await import('webpack');
   const {
     BannerPlugin,

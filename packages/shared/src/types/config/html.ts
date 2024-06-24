@@ -1,7 +1,4 @@
-import type {
-  ConfigChainMergeContext,
-  ConfigChainWithContext,
-} from '../../reduceConfigs';
+import type { ConfigChainMergeContext, ConfigChainWithContext } from '../utils';
 import type { OneOrMany } from '../utils';
 
 export type CrossOrigin = 'anonymous' | 'use-credentials';

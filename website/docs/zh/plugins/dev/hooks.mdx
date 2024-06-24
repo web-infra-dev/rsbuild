@@ -325,6 +325,10 @@ type Context = {
    * @example 'index.html'
    */
   filename: string;
+  /**
+   * 本次构建所属的环境名称
+   */
+  environment: string;
 };
 
 function ModifyHTMLTags(

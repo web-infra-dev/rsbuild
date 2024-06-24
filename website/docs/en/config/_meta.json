@@ -4,6 +4,7 @@
     "name": "index",
     "label": "Overview"
   },
+  "environments",
   "plugins",
   {
     "type": "dir",

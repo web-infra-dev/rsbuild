@@ -2,7 +2,16 @@ import { myPlugin } from './myPlugin';
 
 export default {
   plugins: [myPlugin],
-  output: {
-    targets: ['web', 'node'],
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+      },
+    },
   },
 };

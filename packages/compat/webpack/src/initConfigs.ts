@@ -1,5 +1,9 @@
-import type { CreateRsbuildOptions, InspectConfigOptions } from '@rsbuild/core';
-import { type PluginManager, isDebug } from '@rsbuild/shared';
+import {
+  type CreateRsbuildOptions,
+  type InspectConfigOptions,
+  logger,
+} from '@rsbuild/core';
+import type { PluginManager } from '@rsbuild/shared';
 import { inspectConfig } from './inspectConfig';
 import { type InternalContext, initRsbuildConfig } from './shared';
 import type { WebpackConfig } from './types';
@@ -22,14 +26,19 @@ export async function initConfigs({
     context,
     pluginManager,
   });
-  const { targets } = normalizedConfig.output;
 
   const webpackConfigs = await Promise.all(
-    targets.map((target) => generateWebpackConfig({ target, context })),
+    Object.entries(normalizedConfig.environments).map(([environment, config]) =>
+      generateWebpackConfig({
+        target: config.output.target,
+        context,
+        environment,
+      }),
+    ),
   );
 
   // write Rsbuild config and webpack config to disk in debug mode
-  if (isDebug()) {
+  if (logger.level === 'verbose') {
     const inspect = () => {
       const inspectOptions: InspectConfigOptions = {
         verbose: true,

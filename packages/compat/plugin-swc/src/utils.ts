@@ -1,14 +1,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { __internalHelper } from '@rsbuild/core';
-import type { ModifyChainUtils, NormalizedConfig } from '@rsbuild/core';
-import {
-  getBrowserslistWithDefault,
-  getCoreJsVersion,
-  isUsingHMR,
-} from '@rsbuild/shared';
-import semver from '@rsbuild/shared/semver';
+import type {
+  ModifyChainUtils,
+  NormalizedEnvironmentConfig,
+} from '@rsbuild/core';
 import _ from 'lodash';
+import semver from 'semver';
 import { CORE_JS_DIR, CORE_JS_PKG_PATH, SWC_HELPERS_DIR } from './constants';
 import { getDefaultSwcConfig } from './plugin';
 import type {
@@ -78,7 +76,7 @@ export async function determinePresetReact(
 
 export function checkUseMinify(
   options: ObjPluginSwcOptions,
-  config: NormalizedConfig,
+  config: NormalizedEnvironmentConfig,
   isProd: boolean,
 ) {
   return (
@@ -175,11 +173,23 @@ const getDefaultStyledComponentsConfig = (isProd: boolean, ssr: boolean) => {
   };
 };
 
+const getCoreJsVersion = (corejsPkgPath: string) => {
+  try {
+    const rawJson = fs.readFileSync(corejsPkgPath, 'utf-8');
+    const { version } = JSON.parse(rawJson);
+    const [major, minor] = version.split('.');
+    return `${major}.${minor}`;
+  } catch (err) {
+    return '3';
+  }
+};
+
 export async function applyPluginConfig(
   rawOptions: PluginSwcOptions,
   utils: ModifyChainUtils,
-  rsbuildConfig: NormalizedConfig,
+  rsbuildConfig: NormalizedEnvironmentConfig,
   rootPath: string,
+  browserslist: string[],
 ): Promise<FinalizedConfig[]> {
   const isUsingFnOptions = typeof rawOptions === 'function';
   const { target, isProd } = utils;
@@ -194,7 +204,7 @@ export async function applyPluginConfig(
     jsc: {
       transform: {
         react: {
-          refresh: isUsingHMR(rsbuildConfig, utils),
+          refresh: !isProd && rsbuildConfig.dev.hmr && target === 'web',
         },
       },
     },
@@ -219,14 +229,8 @@ export async function applyPluginConfig(
     swc.env.coreJs = getCoreJsVersion(CORE_JS_PKG_PATH);
   }
 
-  // If `targets` is not specified manually, we get `browserslist` from project.
-  if (!swc.env.targets) {
-    swc.env.targets = await getBrowserslistWithDefault(
-      rootPath,
-      rsbuildConfig,
-      target,
-    );
-  }
+  // get `browserslist` from project.
+  swc.env.targets = browserslist;
 
   const isSSR = target === 'node';
 

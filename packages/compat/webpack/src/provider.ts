@@ -1,7 +1,7 @@
 import type { RsbuildProvider } from '@rsbuild/core';
-import type { CreateCompiler, PreviewServerOptions } from '@rsbuild/shared';
+import type { CreateCompiler } from '@rsbuild/shared';
 import { initConfigs } from './initConfigs';
-import { createDevServer, initRsbuildConfig, startProdServer } from './shared';
+import { createDevServer, initRsbuildConfig } from './shared';
 
 export const webpackProvider: RsbuildProvider<'webpack'> = async ({
   context,
@@ -68,14 +68,6 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
       );
 
       return server.listen();
-    },
-
-    async preview(options?: PreviewServerOptions) {
-      const config = await initRsbuildConfig({
-        context,
-        pluginManager,
-      });
-      return startProdServer(context, config, options);
     },
 
     async build(options) {

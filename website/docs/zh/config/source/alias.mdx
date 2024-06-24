@@ -14,7 +14,7 @@ type Alias = Record<string, string | false | (string | false)[]> | Function;
 对于 TypeScript 项目，你只需要在 `tsconfig.json` 中配置 [compilerOptions.paths](https://typescriptlang.org/tsconfig#paths) 即可，Rsbuild 会自动识别它，不需要额外配置 `source.alias` 字段，详见 [「路径别名」](/guide/advanced/alias)。
 :::
 
-### Object 类型
+## Object 类型
 
 `alias` 的值可以定义为 Object 类型，其中的相对路径会自动被 Rsbuild 转换为绝对路径。
 
@@ -30,7 +30,7 @@ export default {
 
 以上配置完成后，如果你在代码中引用 `@common/Foo.tsx`, 则会映射到 `<project>/src/common/Foo.tsx` 路径上。
 
-### Function 类型
+## Function 类型
 
 `alias` 的值定义为函数时，可以接受预设的 alias 对象，并对其进行修改。
 
@@ -58,23 +58,40 @@ export default {
 };
 ```
 
-函数提供了 target 参数，可以用于判断构建的目标运行时环境，比如针对 web 产物和 node 产物设置不同的 alias：
+## 基于 environment 设置
+
+当你面向多个 environment 构建时，可以为每个 environment 设置不同的 alias：
+
+比如为 `web` 和 `node` 环境设置不同的 alias：
 
 ```js
 export default {
-  source: {
-    alias: (alias, { target }) => {
-      if (target === 'node') {
-        alias['@common'] = './src/node/common';
-      } else if (target === 'web') {
-        alias['@common'] = './src/web/common';
-      }
+  environments: {
+    web: {
+      source: {
+        alias: {
+          '@common': './src/web/common',
+        },
+      },
+      output: {
+        target: 'web',
+      },
+    },
+    node: {
+      source: {
+        alias: {
+          '@common': './src/node/common',
+        },
+      },
+      output: {
+        target: 'node',
+      },
     },
   },
 };
 ```
 
-### 精确匹配
+## 精确匹配
 
 默认情况，`source.alias` 会自动匹配子路径，比如以下配置：
 
@@ -118,7 +135,7 @@ import a from '@common'; // 解析为 `./src/common`
 import b from '@common/util'; // 保持 `@common/util` 不变
 ```
 
-### 处理 npm 包
+## 处理 npm 包
 
 你可以使用 `alias` 将某个 npm 包指向统一的目录。
 

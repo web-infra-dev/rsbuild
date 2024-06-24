@@ -28,9 +28,11 @@ export type PluginVueOptions = {
   splitChunks?: SplitVueChunkOptions;
 };
 
+export const PLUGIN_VUE2_NAME = 'rsbuild:vue2';
+
 export function pluginVue2(options: PluginVueOptions = {}): RsbuildPlugin {
   return {
-    name: 'rsbuild:vue2',
+    name: PLUGIN_VUE2_NAME,
 
     setup(api) {
       const VUE_REGEXP = /\.vue$/;
@@ -86,9 +88,7 @@ export function pluginVue2(options: PluginVueOptions = {}): RsbuildPlugin {
 
         chain.plugin(CHAIN_ID.PLUGIN.VUE_LOADER_PLUGIN).use(VueLoaderPlugin);
         // we could remove this once a new vue-loader@15 is released with https://github.com/vuejs/vue-loader/pull/2071 shipped
-        chain
-          .plugin(CHAIN_ID.PLUGIN.VUE_LOADER_15_PITCH_FIX_PLUGIN)
-          .use(VueLoader15PitchFixPlugin);
+        chain.plugin('vue-loader-15-pitch-fix').use(VueLoader15PitchFixPlugin);
       });
 
       applySplitChunksRule(api, options.splitChunks);

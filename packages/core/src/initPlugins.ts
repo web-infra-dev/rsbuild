@@ -1,30 +1,29 @@
 import { join } from 'node:path';
-import {
-  type GetRsbuildConfig,
-  type PluginManager,
-  type RsbuildPluginAPI,
-  type RspackChain,
-  type TransformFn,
-  type TransformHandler,
-  getDistPath,
-  removeLeadingSlash,
+import type {
+  GetRsbuildConfig,
+  NormalizedEnvironmentConfig,
+  PluginManager,
+  RsbuildPluginAPI,
+  RspackChain,
+  TransformFn,
+  TransformHandler,
 } from '@rsbuild/shared';
 import type { Compiler } from '@rspack/core';
 import { LOADER_PATH } from './constants';
 import { createPublicContext } from './createContext';
+import { removeLeadingSlash } from './helpers';
 import type { InternalContext, NormalizedConfig } from './types';
 
 export function getHTMLPathByEntry(
   entryName: string,
-  config: NormalizedConfig,
+  config: NormalizedEnvironmentConfig,
 ) {
-  const htmlPath = getDistPath(config, 'html');
   const filename =
     config.html.outputStructure === 'flat'
       ? `${entryName}.html`
       : `${entryName}/index.html`;
 
-  return removeLeadingSlash(`${htmlPath}/${filename}`);
+  return removeLeadingSlash(`${config.output.distPath.html}/${filename}`);
 }
 
 function applyTransformPlugin(
@@ -62,14 +61,29 @@ export function getPluginAPI({
   const { hooks } = context;
   const publicContext = createPublicContext(context);
 
-  const getNormalizedConfig = () => {
+  function getNormalizedConfig(): NormalizedConfig;
+  function getNormalizedConfig(options: {
+    environment: string;
+  }): NormalizedEnvironmentConfig;
+  function getNormalizedConfig(options?: { environment: string }) {
     if (context.normalizedConfig) {
+      if (options?.environment) {
+        const config =
+          context.normalizedConfig.environments[options.environment];
+
+        if (!config) {
+          throw new Error(
+            `Cannot find normalized config by environment: ${options.environment}.`,
+          );
+        }
+        return config;
+      }
       return context.normalizedConfig;
     }
     throw new Error(
       'Cannot access normalized config until modifyRsbuildConfig is called.',
     );
-  };
+  }
 
   const getRsbuildConfig = ((type = 'current') => {
     switch (type) {
@@ -83,13 +97,13 @@ export function getPluginAPI({
     throw new Error('`getRsbuildConfig` get an invalid type param.');
   }) as GetRsbuildConfig;
 
-  const getHTMLPaths = () => {
-    return Object.keys(context.entry).reduce<Record<string, string>>(
-      (prev, key) => {
-        prev[key] = getHTMLPathByEntry(key, getNormalizedConfig());
-        return prev;
-      },
-      {},
+  const getHTMLPaths = (options?: { environment: string }) => {
+    if (options?.environment) {
+      return context.environments[options.environment].htmlPaths;
+    }
+    return Object.values(context.environments).reduce(
+      (prev, context) => Object.assign(prev, context.htmlPaths),
+      {} as Record<string, string>,
     );
   };
 

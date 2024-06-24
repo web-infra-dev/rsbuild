@@ -3,13 +3,12 @@
 - **Type:**
 
 ```ts
-type PublicDir =
-  | false
-  | {
-      name?: string;
-      copyOnBuild?: boolean;
-      watch?: boolean;
-    };
+type PublicDirOptions = {
+  name?: string;
+  copyOnBuild?: boolean;
+  watch?: boolean;
+};
+type PublicDir = false | PublicDirOptions | PublicDirOptions[];
 ```
 
 - **Default:**
@@ -105,6 +104,26 @@ export default {
 ```
 
 Note that the `watch` option is only valid in the development build. If [dev.hmr](/config/dev/hmr) and [dev.liveReload](/config/dev/live-reload) are both set to false, `watch` will be ignored.
+
+## Multiple Directories
+
+The `server.publicDir` can be configured as an array, allowing you to serve multiple directories as static assets folders:
+
+```ts
+export default {
+  server: {
+    publicDir: [
+      {
+        name: 'public',
+      },
+      {
+        name: 'assets',
+        watch: false,
+      },
+    ],
+  },
+};
+```
 
 ## Disabled
 

@@ -1,4 +1,5 @@
 import { logger } from '@rsbuild/core';
+import { color } from '@rsbuild/shared';
 
 export function createNonTTYLogger() {
   let prevPercentage = 0;
@@ -16,6 +17,8 @@ export function createNonTTYLogger() {
     hasErrors: boolean;
     compileTime: string | null;
   }) => {
+    const suffix = color.gray(`(${id})`);
+
     if (done) {
       // avoid printing done twice
       if (prevPercentage === 100) {
@@ -24,16 +27,16 @@ export function createNonTTYLogger() {
 
       prevPercentage = 100;
       if (hasErrors) {
-        logger.error(`${id} compile failed in ${compileTime}`);
+        logger.error(`Compile failed in ${compileTime} ${suffix}`);
       } else {
-        logger.ready(`${id} compiled in ${compileTime}`);
+        logger.ready(`Compiled in ${compileTime} ${suffix}`);
       }
     }
     // print progress when percentage increased by more than 10%
     // because we don't want to spam the console
     else if (current - prevPercentage > 10) {
       prevPercentage = current;
-      logger.info(`${id} compile progress: ${current.toFixed(0)}%`);
+      logger.info(`Compile progress: ${current.toFixed(0)}% ${suffix}`);
     }
   };
 

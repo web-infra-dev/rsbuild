@@ -5,6 +5,10 @@
 
 `tools.rspack` is used to configure [Rspack](https://rspack.dev/).
 
+:::tip
+The built-in Rspack config in Rsbuild may change with iterations, and these changes won't be reflected in semver. Therefore, your custom config may become invalid when you upgrade Rsbuild.
+:::
+
 ## Object Type
 
 `tools.rspack` can be configured as an object to be deep merged with the built-in Rspack configuration through [webpack-merge](https://github.com/survivejs/webpack-merge).
@@ -122,7 +126,7 @@ export default {
 
 ### target
 
-- **Type:** `'web' | 'node' | 'web-worker' | 'service-worker'`
+- **Type:** `'web' | 'node' | 'web-worker'`
 
 The `target` parameter can be used to determine the build target environment. For example:
 
@@ -189,6 +193,22 @@ export default {
     rspack: (config, { rspack }) => {
       config.plugins?.push(new rspack.BannerPlugin());
       return config;
+    },
+  },
+};
+```
+
+### HtmlPlugin
+
+- **Type:** `typeof import('html-webpack-plugin')`
+
+The instance of `html-webpack-plugin`:
+
+```js
+export default {
+  tools: {
+    rspack: (config, { HtmlPlugin }) => {
+      console.log(HtmlPlugin);
     },
   },
 };

@@ -99,6 +99,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
+        "resolve": {
+          "alias": {
+            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+          },
+        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
@@ -106,7 +111,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -126,9 +131,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -143,6 +147,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           ],
         },
         "resolve": {
+          "alias": {
+            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+          },
           "fullySpecified": false,
         },
         "use": [
@@ -150,7 +157,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -170,9 +177,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -297,7 +303,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       },
     ],
   },
-  "name": "Client",
+  "name": "web",
   "optimization": {
     "minimize": false,
     "splitChunks": {
@@ -402,6 +408,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
+      "environment": "web",
       "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
@@ -420,7 +427,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   "resolve": {
     "alias": {
       "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [
       ".ts",
@@ -538,6 +544,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
+        "resolve": {
+          "alias": {
+            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+          },
+        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
@@ -545,7 +556,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -565,9 +576,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -582,6 +592,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           ],
         },
         "resolve": {
+          "alias": {
+            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+          },
           "fullySpecified": false,
         },
         "use": [
@@ -589,7 +602,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -609,9 +622,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -736,7 +748,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       },
     ],
   },
-  "name": "Client",
+  "name": "web",
   "optimization": {
     "minimize": true,
     "minimizer": [
@@ -898,6 +910,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "version": 5,
     },
     HtmlBasicPlugin {
+      "environment": "web",
       "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
@@ -914,8 +927,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     },
     ProgressPlugin {
       "_options": {
-        "prefix": "Client",
+        "prefix": "web",
         "profile": false,
+        "progressChars": "━━",
+        "template": "● {prefix:.bold} {bar:25.green/white.dim} ({percent}%) {wide_msg:.dim}",
+        "tick": undefined,
       },
       "affectedHooks": undefined,
       "name": "ProgressPlugin",
@@ -924,7 +940,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   "resolve": {
     "alias": {
       "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [
       ".ts",
@@ -1033,9 +1048,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -1071,9 +1085,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -1209,7 +1222,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       },
     ],
   },
-  "name": "Server",
+  "name": "node",
   "optimization": {
     "minimize": false,
     "splitChunks": false,
@@ -1365,6 +1378,11 @@ exports[`tools.rspack > should match snapshot 1`] = `
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
+        "resolve": {
+          "alias": {
+            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+          },
+        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
@@ -1372,7 +1390,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -1392,9 +1410,8 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -1409,6 +1426,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
           ],
         },
         "resolve": {
+          "alias": {
+            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+          },
           "fullySpecified": false,
         },
         "use": [
@@ -1416,7 +1436,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -1436,9 +1456,8 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -1563,7 +1582,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
       },
     ],
   },
-  "name": "Client",
+  "name": "web",
   "optimization": {
     "minimize": false,
     "splitChunks": {
@@ -1671,6 +1690,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
+      "environment": "web",
       "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
@@ -1689,7 +1709,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
   "resolve": {
     "alias": {
       "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
     },
     "extensions": [
       ".ts",

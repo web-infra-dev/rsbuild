@@ -1,14 +1,15 @@
 import { posix } from 'node:path';
-import {
-  DEFAULT_ASSET_PREFIX,
-  type NormalizedConfig,
-  type RsbuildContext,
-  getDistPath,
-  getFilename,
+import type {
+  NormalizedEnvironmentConfig,
+  RsbuildContext,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
-import { DEFAULT_DEV_HOST, DEFAULT_PORT } from '../constants';
-import { formatPublicPath } from '../helpers';
+import {
+  DEFAULT_ASSET_PREFIX,
+  DEFAULT_DEV_HOST,
+  DEFAULT_PORT,
+} from '../constants';
+import { formatPublicPath, getFilename } from '../helpers';
 import { getCssExtractPlugin } from '../pluginHelper';
 import type { RsbuildPlugin } from '../types';
 import { isUseCssExtract } from './css';
@@ -19,7 +20,7 @@ function getPublicPath({
   context,
 }: {
   isProd: boolean;
-  config: NormalizedConfig;
+  config: NormalizedEnvironmentConfig;
   context: RsbuildContext;
 }) {
   const { dev, output } = config;
@@ -56,11 +57,8 @@ export const pluginOutput = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      async (
-        chain,
-        { CHAIN_ID, target, isProd, isServer, isServiceWorker },
-      ) => {
-        const config = api.getNormalizedConfig();
+      async (chain, { CHAIN_ID, target, isProd, isServer, environment }) => {
+        const config = api.getNormalizedConfig({ environment });
 
         const publicPath = getPublicPath({
           config,
@@ -69,8 +67,10 @@ export const pluginOutput = (): RsbuildPlugin => ({
         });
 
         // js output
-        const jsPath = getDistPath(config, 'js');
-        const jsAsyncPath = getDistPath(config, 'jsAsync');
+        const jsPath = config.output.distPath.js;
+        const jsAsyncPath =
+          config.output.distPath.jsAsync ??
+          (jsPath ? `${jsPath}/async` : 'async');
         const jsFilename = getFilename(config, 'js', isProd);
         const isJsFilenameFn = typeof jsFilename === 'function';
 
@@ -102,7 +102,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
           .hashFunction('xxhash64');
 
         if (isServer) {
-          const serverPath = getDistPath(config, 'server');
+          const serverPath = config.output.distPath.server;
 
           chain.output
             .path(posix.join(api.context.distPath, serverPath))
@@ -112,13 +112,6 @@ export const pluginOutput = (): RsbuildPlugin => ({
               ...(chain.output.get('library') || {}),
               type: 'commonjs2',
             });
-        }
-
-        if (isServiceWorker) {
-          const workerPath = getDistPath(config, 'worker');
-          const filename = posix.join(workerPath, '[name].js');
-
-          chain.output.filename(filename).chunkFilename(filename);
         }
 
         if (config.output.copy && api.context.bundlerType === 'rspack') {
@@ -134,9 +127,11 @@ export const pluginOutput = (): RsbuildPlugin => ({
         if (isUseCssExtract(config, target)) {
           const extractPluginOptions = config.tools.cssExtract.pluginOptions;
 
-          const cssPath = getDistPath(config, 'css');
+          const cssPath = config.output.distPath.css;
           const cssFilename = getFilename(config, 'css', isProd);
-          const cssAsyncPath = getDistPath(config, 'cssAsync');
+          const cssAsyncPath =
+            config.output.distPath.cssAsync ??
+            (cssPath ? `${cssPath}/async` : 'async');
 
           chain
             .plugin(CHAIN_ID.PLUGIN.MINI_CSS_EXTRACT)

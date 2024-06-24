@@ -1,9 +1,8 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { getNodeEnv } from '@rsbuild/shared';
 import { parse } from 'dotenv';
 import { expand } from 'dotenv-expand';
-import { isFileSync } from './helpers';
+import { getNodeEnv, isFileSync } from './helpers';
 
 export type LoadEnvOptions = {
   /**
@@ -67,6 +66,7 @@ export function loadEnv({
   for (const key of Object.keys(process.env)) {
     if (prefixes.some((prefix) => key.startsWith(prefix))) {
       const val = process.env[key];
+      publicVars[`import.meta.env.${key}`] = JSON.stringify(val);
       publicVars[`process.env.${key}`] = JSON.stringify(val);
     }
   }

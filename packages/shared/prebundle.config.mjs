@@ -1,6 +1,6 @@
+import fs from 'node:fs';
 // @ts-check
 import { join } from 'node:path';
-import fs from 'fs-extra';
 
 function replaceFileContent(filePath, replaceFn) {
   const content = fs.readFileSync(filePath, 'utf-8');
@@ -22,7 +22,6 @@ export default {
   },
   dependencies: [
     'deepmerge',
-    'fs-extra',
     {
       name: 'chokidar',
       externals: {
@@ -30,9 +29,7 @@ export default {
       },
     },
     'webpack-merge',
-    'mime-types',
     'gzip-size',
-    'json5',
     {
       name: 'browserslist',
       // preserve the `require(require.resolve())`
@@ -46,24 +43,10 @@ export default {
       },
     },
     {
-      name: 'jiti',
-      ignoreDts: true,
-    },
-    {
       name: 'rspack-chain',
       externals: {
+        '@rspack/core': '@rspack/core',
         deepmerge: '../deepmerge',
-      },
-    },
-    {
-      name: 'semver',
-      ignoreDts: true,
-    },
-    {
-      name: 'loader-utils2',
-      ignoreDts: true,
-      externals: {
-        json5: '../json5',
       },
     },
     {

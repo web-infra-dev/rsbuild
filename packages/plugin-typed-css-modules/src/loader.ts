@@ -24,9 +24,9 @@ export type CssLoaderModules =
       namedExport: boolean;
     };
 
-export const isInNodeModules = (path: string) => NODE_MODULES_REGEX.test(path);
+const isInNodeModules = (path: string) => NODE_MODULES_REGEX.test(path);
 
-export const CSS_MODULES_REGEX = /\.module\.\w+$/i;
+const CSS_MODULES_REGEX = /\.module\.\w+$/i;
 
 const getNoDeclarationFileError = ({ filename }: { filename: string }) =>
   new Error(

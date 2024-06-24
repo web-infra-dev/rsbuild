@@ -2,15 +2,8 @@ import type { IncomingMessage } from 'node:http';
 import net from 'node:net';
 import type { Socket } from 'node:net';
 import os from 'node:os';
-import {
-  color,
-  deepmerge,
-  isFunction,
-  logger,
-  normalizeUrl,
-} from '@rsbuild/shared';
+import { color } from '@rsbuild/shared';
 import type {
-  DevConfig,
   NormalizedConfig,
   OutputStructure,
   PrintUrls,
@@ -18,6 +11,8 @@ import type {
   RsbuildEntry,
 } from '@rsbuild/shared';
 import { DEFAULT_DEV_HOST, DEFAULT_PORT } from '../constants';
+import { isFunction } from '../helpers';
+import { logger } from '../logger';
 
 /**
  * It used to subscribe http upgrade event
@@ -35,6 +30,9 @@ export type StartServerResult = {
     close: () => Promise<void>;
   };
 };
+
+// remove repeat '/'
+export const normalizeUrl = (url: string) => url.replace(/([^:]\/)\/+/g, '$1');
 
 /**
  * Make sure there is slash before and after prefix
@@ -120,9 +118,9 @@ export function printServerURLs({
   routes: Routes;
   protocol: string;
   printUrls?: PrintUrls;
-}) {
+}): string | null {
   if (printUrls === false) {
-    return;
+    return null;
   }
 
   let urls = originalUrls;
@@ -136,7 +134,7 @@ export function printServerURLs({
     });
 
     if (!newUrls) {
-      return;
+      return null;
     }
 
     if (!Array.isArray(newUrls)) {
@@ -151,8 +149,8 @@ export function printServerURLs({
     }));
   }
 
-  if (urls.length === 0) {
-    return;
+  if (urls.length === 0 || routes.length === 0) {
+    return null;
   }
 
   const message = getURLMessages(urls, routes);
@@ -160,11 +158,6 @@ export function printServerURLs({
 
   return message;
 }
-
-/**
- * hmr socket connect path
- */
-export const HMR_SOCK_PATH = '/rsbuild-hmr';
 
 /**
  * Get available free port.
@@ -250,33 +243,6 @@ export const getServerConfig = async ({
   });
   const https = Boolean(config.server.https) || false;
   return { port, host, https };
-};
-
-export const getDevConfig = ({
-  config,
-  port,
-}: {
-  config: NormalizedConfig;
-  port: number;
-}): DevConfig => {
-  const defaultDevConfig: DevConfig = {
-    client: {
-      path: HMR_SOCK_PATH,
-      port: port.toString(),
-      // By default it is set to "location.hostname"
-      host: '',
-      // By default it is set to "location.protocol === 'https:' ? 'wss' : 'ws'""
-      protocol: undefined,
-    },
-    writeToDisk: false,
-    liveReload: true,
-  };
-
-  const devConfig = config.dev
-    ? deepmerge(defaultDevConfig, config.dev)
-    : defaultDevConfig;
-
-  return devConfig;
 };
 
 const getIpv4Interfaces = () => {

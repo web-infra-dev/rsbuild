@@ -1,12 +1,13 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { fse } from '@rsbuild/shared';
 
 test('should compile less npm import correctly', async () => {
-  fse.copySync(
+  fs.cpSync(
     path.resolve(__dirname, '_node_modules'),
     path.resolve(__dirname, 'node_modules'),
+    { recursive: true },
   );
 
   const rsbuild = await build({

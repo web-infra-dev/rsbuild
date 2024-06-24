@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import vm, { type SourceTextModule } from 'node:vm';
-
+// @ts-expect-error
 import asModule from './legacy/asModule';
 
 import { CommonJsRunner } from './cjs';

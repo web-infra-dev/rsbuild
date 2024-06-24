@@ -1,4 +1,4 @@
-import { getBundlerChain } from '@rsbuild/shared';
+import { getBundlerChain } from '../src/configChain';
 import { pluginExternals } from '../src/plugins/externals';
 
 describe('plugin-external', () => {
@@ -24,7 +24,7 @@ describe('plugin-external', () => {
 
     const chain = await getBundlerChain();
 
-    await modifyBundlerChainCb(chain);
+    await modifyBundlerChainCb(chain, { environment: 'client' });
 
     const bundlerConfigs = [
       {

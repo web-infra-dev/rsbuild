@@ -1,10 +1,6 @@
 import path from 'node:path';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import {
-  DEFAULT_BROWSERSLIST,
-  SCRIPT_REGEX,
-  applyScriptCondition,
-} from '@rsbuild/shared';
+import { SCRIPT_REGEX, applyScriptCondition } from '@rsbuild/shared';
 import { SwcMinimizerPlugin } from './minimizer';
 import type {
   ObjPluginSwcOptions,
@@ -39,15 +35,17 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
       // loader should be applied in the pre stage for customizing
       order: 'pre',
       handler: async (chain, utils) => {
-        const { CHAIN_ID } = utils;
-        const rsbuildConfig = api.getNormalizedConfig();
+        const { CHAIN_ID, environment } = utils;
+        const rsbuildConfig = api.getNormalizedConfig({ environment });
         const { rootPath } = api.context;
 
+        const { browserslist } = api.context.environments[environment];
         const swcConfigs = await applyPluginConfig(
           options,
           utils,
           rsbuildConfig,
           rootPath,
+          browserslist,
         );
 
         // If babel plugin is used, replace babel-loader
@@ -117,8 +115,8 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
       },
     });
 
-    api.modifyBundlerChain((chain, { CHAIN_ID, isProd }) => {
-      const rsbuildConfig = api.getNormalizedConfig();
+    api.modifyBundlerChain((chain, { CHAIN_ID, isProd, environment }) => {
+      const rsbuildConfig = api.getNormalizedConfig({ environment });
 
       if (checkUseMinify(mainConfig, rsbuildConfig, isProd)) {
         const { minify } = rsbuildConfig.output;
@@ -173,9 +171,6 @@ export function getDefaultSwcConfig(): TransformConfig {
       // Avoid the webpack magic comment to be removed
       // https://github.com/swc-project/swc/issues/6403
       preserveAllComments: true,
-    },
-    env: {
-      targets: DEFAULT_BROWSERSLIST.web.join(', '),
     },
   };
 }

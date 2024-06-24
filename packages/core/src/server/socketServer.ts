@@ -1,8 +1,9 @@
 import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
-import { type DevConfig, type Stats, logger } from '@rsbuild/shared';
+import type { DevConfig, Stats } from '@rsbuild/shared';
 import type Ws from 'ws';
 import { getAllStatsErrors, getAllStatsWarnings } from '../helpers';
+import { logger } from '../logger';
 
 interface ExtWebSocket extends Ws {
   isAlive: boolean;

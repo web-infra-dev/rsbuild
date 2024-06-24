@@ -11,6 +11,11 @@ Thanks for that you are interested in contributing to Rsbuild. Before starting y
 [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your
 own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local.
 
+## Branches
+
+- `main` -> Rsbuild v1.x
+- `v0.x` -> Rsbuild v0.x
+
 ### Install Node.js
 
 We recommend using Node.js 20. You can check your currently used Node.js version with the following command:
@@ -175,14 +180,16 @@ You can find the Rsbuild documentation in the [website](./website) folder.
 
 Commit your changes to your forked repo, and [create a pull request](https://help.github.com/articles/creating-a-pull-request/).
 
+> Normally, the commits in a PR will be squashed into one commit, so you don't need to rebase locally.
+
 ### Format of PR titles
 
-The format of PR titles follow Conventional Commits.
+The format of PR titles follow [Conventional Commits](https://www.conventionalcommits.org/).
 
 An example:
 
 ```
-feat(plugin-swc): Add `myOption` config
+feat(core): Add `myOption` config
 ^    ^    ^
 |    |    |__ Subject
 |    |_______ Scope

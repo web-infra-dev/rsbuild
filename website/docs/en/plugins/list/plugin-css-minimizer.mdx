@@ -4,12 +4,12 @@ import { SourceCode } from 'rspress/theme';
 
 <SourceCode href="https://github.com/web-infra-dev/rsbuild/tree/main/packages/plugin-css-minimizer" />
 
-The Rsbuild by default uses the SWC built-in by Rspack to minify CSS code. You can customize the CSS minimizer by using the CSS Minimizer plugin and switch to [cssnano](https://cssnano.co/) or other tools for CSS minification.
+The Rsbuild by default uses the SWC built-in by Rspack to minify CSS code. You can customize the CSS minimizer by using the CSS Minimizer plugin and switch to [cssnano](https://github.com/cssnano/cssnano) or other tools for CSS minification.
 
 The CSS Minimizer plugin internally integrates [css-minimizer-webpack-plugin](https://github.com/webpack-contrib/css-minimizer-webpack-plugin).
 
 :::tip About cssnano
-[cssnano](https://cssnano.co/) is a tool for optimizing and minifying CSS files. It reduces the size of CSS files by removing unused rules, merging similar rules, removing comments and whitespace, and converting length units, among other techniques, to improve the loading speed of websites.
+[cssnano](https://github.com/cssnano/cssnano) is a tool for optimizing and minifying CSS files. It reduces the size of CSS files by removing unused rules, merging similar rules, removing comments and whitespace, and converting length units, among other techniques, to improve the loading speed of websites.
 :::
 
 ## Quick Start
@@ -59,7 +59,7 @@ const defaultOptions = {
 };
 ```
 
-- **Example 1:** modify the `preset` configuration of [cssnano](https://cssnano.co/).
+- **Example 1:** modify the `preset` configuration of [cssnano](https://github.com/cssnano/cssnano).
 
 ```js
 pluginCssMinimizer({

@@ -1,5 +1,5 @@
-import { TARGET_ID_MAP, isProd } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
+import { isProd } from '../helpers';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginProgress = (): RsbuildPlugin => ({
@@ -11,7 +11,7 @@ export const pluginProgress = (): RsbuildPlugin => ({
       return;
     }
 
-    api.modifyBundlerChain(async (chain, { target, CHAIN_ID }) => {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
       const config = api.getNormalizedConfig();
       const options =
         config.dev.progressBar ??
@@ -23,9 +23,7 @@ export const pluginProgress = (): RsbuildPlugin => ({
       }
 
       const prefix =
-        options !== true && options.id !== undefined
-          ? options.id
-          : TARGET_ID_MAP[target];
+        options !== true && options.id !== undefined ? options.id : environment;
 
       chain.plugin(CHAIN_ID.PLUGIN.PROGRESS).use(rspack.ProgressPlugin, [
         {

@@ -15,10 +15,12 @@ export type PluginEslintOptions = {
   eslintPluginOptions?: Options;
 };
 
+export const PLUGIN_ESLINT_NAME = 'rsbuild:eslint';
+
 export const pluginEslint = (
   options: PluginEslintOptions = {},
 ): RsbuildPlugin => ({
-  name: 'rsbuild:eslint',
+  name: PLUGIN_ESLINT_NAME,
 
   setup(api) {
     const { enable = true, eslintPluginOptions } = options;

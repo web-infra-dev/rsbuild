@@ -1,0 +1,15 @@
+{
+  "name": "rsbuild-eslint-vue-ts",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.5.0",
+    "eslint": "^9.5.0",
+    "eslint-plugin-vue": "^9.26.0",
+    "globals": "^15.6.0",
+    "typescript-eslint": "^7.13.1"
+  }
+}

@@ -1,4 +1,3 @@
-import { isFunction } from '@rsbuild/shared';
 import type {
   AsyncHook,
   HookDescriptor,
@@ -20,6 +19,7 @@ import type {
   OnDevCompileDoneFn,
   OnExitFn,
 } from '@rsbuild/shared';
+import { isFunction } from './helpers';
 
 export function createAsyncHook<
   Callback extends (...args: any[]) => any,

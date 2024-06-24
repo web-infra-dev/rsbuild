@@ -27,14 +27,9 @@ export type RsbuildConfigMeta = {
 };
 
 /**
- * The shared Rsbuild config.
- * Can be used with both Rspack and Webpack.
+ * The Rsbuild config to run in the specified environment.
  * */
-export interface RsbuildConfig {
-  /**
-   * Options for local development.
-   */
-  dev?: DevConfig;
+export interface EnvironmentConfig {
   /**
    * Options for HTML generation.
    */
@@ -48,18 +43,9 @@ export interface RsbuildConfig {
    */
   source?: SourceConfig;
   /**
-   * Options for the Rsbuild Server,
-   * will take effect during local development and preview.
-   */
-  server?: ServerConfig;
-  /**
    * Options for build outputs.
    */
   output?: OutputConfig;
-  /**
-   * Configure Rsbuild plugins.
-   */
-  plugins?: RsbuildPlugins;
   /**
    * Options for Web security.
    */
@@ -72,6 +58,31 @@ export interface RsbuildConfig {
    * Options for module federation.
    */
   moduleFederation?: ModuleFederationConfig;
+}
+
+/**
+ * The Rsbuild config.
+ * */
+export interface RsbuildConfig extends EnvironmentConfig {
+  /**
+   * Options for local development.
+   */
+  dev?: DevConfig;
+  /**
+   * Options for the Rsbuild Server,
+   * will take effect during local development and preview.
+   */
+  server?: ServerConfig;
+  /**
+   * Configure Rsbuild plugins.
+   */
+  plugins?: RsbuildPlugins;
+  /**
+   * Configure rsbuild config by environment.
+   */
+  environments?: {
+    [name: string]: EnvironmentConfig;
+  };
   /**
    * Used to switch the bundler type.
    */
@@ -82,7 +93,8 @@ export interface RsbuildConfig {
   _privateMeta?: RsbuildConfigMeta;
 }
 
-export type NormalizedConfig = DeepReadonly<{
+/** The normalized Rsbuild environment config. */
+export type NormalizedEnvironmentConfig = DeepReadonly<{
   dev: NormalizedDevConfig;
   html: NormalizedHtmlConfig;
   tools: NormalizedToolsConfig;
@@ -93,9 +105,15 @@ export type NormalizedConfig = DeepReadonly<{
   security: NormalizedSecurityConfig;
   performance: NormalizedPerformanceConfig;
   moduleFederation?: ModuleFederationConfig;
-  provider?: unknown;
   _privateMeta?: RsbuildConfigMeta;
 }>;
+
+export type NormalizedConfig = NormalizedEnvironmentConfig & {
+  provider?: unknown;
+  environments: {
+    [name: string]: NormalizedEnvironmentConfig;
+  };
+};
 
 export * from './dev';
 export * from './html';

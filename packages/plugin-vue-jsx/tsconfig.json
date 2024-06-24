@@ -11,9 +11,6 @@
       "path": "../core"
     },
     {
-      "path": "../shared"
-    },
-    {
       "path": "../plugin-babel"
     }
   ],

@@ -19,8 +19,10 @@ export { rspack };
 export type { Rspack };
 
 // Helpers
-export { logger } from '@rsbuild/shared';
+export { logger } from './logger';
 export { mergeRsbuildConfig } from './mergeConfig';
+export { ensureAssetPrefix } from './helpers';
+export { reduceConfigs, reduceConfigsWithContext } from './reduceConfigs';
 
 // Constants
 export { PLUGIN_SWC_NAME, PLUGIN_CSS_NAME } from './constants';
@@ -49,6 +51,7 @@ export type {
   NormalizedSecurityConfig,
   NormalizedPerformanceConfig,
   NormalizedModuleFederationConfig,
+  NormalizedEnvironmentConfig,
   // Plugin Types
   RsbuildPlugin,
   RsbuildPlugins,
@@ -90,6 +93,7 @@ export type {
   DistPathConfig,
   OutputStructure,
   ChainIdentifier,
+  PublicDirOptions,
   PreconnectOption,
   CSSLoaderOptions,
   ModifyChainUtils,

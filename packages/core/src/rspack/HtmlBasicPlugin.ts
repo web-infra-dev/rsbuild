@@ -1,16 +1,14 @@
-import {
-  type HtmlBasicTag,
-  type HtmlTag,
-  type HtmlTagDescriptor,
-  type HtmlTagUtils,
-  type ModifyHTMLTagsFn,
-  isFunction,
-  partition,
-  withPublicPath,
+import type {
+  HtmlBasicTag,
+  HtmlTag,
+  HtmlTagDescriptor,
+  HtmlTagUtils,
+  ModifyHTMLTagsFn,
 } from '@rsbuild/shared';
 import type { Compilation, Compiler } from '@rspack/core';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { HtmlTagObject } from 'html-webpack-plugin';
+import { ensureAssetPrefix, isFunction, partition } from '../helpers';
 import { getHTMLPlugin } from '../pluginHelper';
 
 export type TagConfig = {
@@ -145,9 +143,9 @@ const applyTagConfig = (
         if (typeof optPublicPath === 'function') {
           filename = optPublicPath(filename, data.publicPath);
         } else if (typeof optPublicPath === 'string') {
-          filename = withPublicPath(filename, optPublicPath);
+          filename = ensureAssetPrefix(filename, optPublicPath);
         } else if (optPublicPath !== false) {
-          filename = withPublicPath(filename, data.publicPath);
+          filename = ensureAssetPrefix(filename, data.publicPath);
         }
 
         const optHash = tag.hash ?? tagConfig.hash;
@@ -237,15 +235,19 @@ const addFavicon = (headTags: HtmlTagObject[], favicon?: string) => {
 export class HtmlBasicPlugin {
   readonly name: string;
 
+  readonly environment: string;
+
   readonly options: HtmlBasicPluginOptions;
 
   readonly modifyTagsFn?: ModifyHTMLTagsFn;
 
   constructor(
     options: HtmlBasicPluginOptions,
+    environment: string,
     modifyTagsFn?: ModifyHTMLTagsFn,
   ) {
     this.name = 'HtmlBasicPlugin';
+    this.environment = environment;
     this.options = options;
     this.modifyTagsFn = modifyTagsFn;
   }
@@ -281,6 +283,7 @@ export class HtmlBasicPlugin {
                 compilation,
                 assetPrefix: data.publicPath,
                 filename: data.outputName,
+                environment: this.environment,
               })
             : tags;
 

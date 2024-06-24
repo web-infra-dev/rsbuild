@@ -5,11 +5,7 @@ import type {
   RsbuildTarget,
   RspackChain,
 } from '@rsbuild/core';
-import {
-  type CopyPluginOptions,
-  TARGET_ID_MAP,
-  isWebTarget,
-} from '@rsbuild/shared';
+import { type CopyPluginOptions, castArray } from '@rsbuild/shared';
 
 async function applyTsConfigPathsPlugin({
   chain,
@@ -38,6 +34,11 @@ async function applyTsConfigPathsPlugin({
     ]);
 }
 
+function isWebTarget(target: RsbuildTarget | RsbuildTarget[]) {
+  const targets = castArray(target);
+  return targets.includes('web') || target.includes('web-worker');
+}
+
 const getMainFields = (chain: RspackChain, target: RsbuildTarget) => {
   const mainFields = chain.resolve.mainFields.values();
 
@@ -59,8 +60,8 @@ export const pluginAdaptor = (): RsbuildPlugin => ({
   name: 'rsbuild-webpack:adaptor',
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, target }) => {
-      const config = api.getNormalizedConfig();
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment, target }) => {
+      const config = api.getNormalizedConfig({ environment });
 
       if (
         api.context.tsconfigPath &&
@@ -81,7 +82,7 @@ export const pluginAdaptor = (): RsbuildPlugin => ({
         const { ProgressPlugin } = await import('./progress/ProgressPlugin');
         chain.plugin(CHAIN_ID.PLUGIN.PROGRESS).use(ProgressPlugin, [
           {
-            id: TARGET_ID_MAP[target],
+            id: environment,
             ...(progress === true ? {} : progress),
           },
         ]);

@@ -3,23 +3,21 @@ import {
   type Rspack,
   type RspackConfig,
   type Stats,
-  TARGET_ID_MAP,
   color,
-  debug,
-  isDev,
-  isProd,
-  logger,
-  onCompileDone,
-  prettyTime,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import type { StatsCompilation } from '@rspack/core';
 import {
   formatStats,
   getStatsOptions,
+  isDev,
+  isProd,
   isSatisfyRspackVersion,
+  onCompileDone,
+  prettyTime,
   rspackMinVersion,
 } from '../helpers';
+import { logger } from '../logger';
 import type { DevMiddlewareAPI } from '../server/devMiddleware';
 import type { DevConfig, InternalContext } from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
@@ -31,7 +29,7 @@ export async function createCompiler({
   context: InternalContext;
   rspackConfigs: RspackConfig[];
 }): Promise<Rspack.Compiler | Rspack.MultiCompiler> {
-  debug('create compiler');
+  logger.debug('create compiler');
   await context.hooks.onBeforeCreateCompiler.call({
     bundlerConfigs: rspackConfigs,
   });
@@ -55,7 +53,7 @@ export async function createCompiler({
 
   const logRspackVersion = () => {
     if (!isVersionLogged) {
-      debug(`Use Rspack v${rspack.rspackVersion}`);
+      logger.debug(`Use Rspack v${rspack.rspackVersion}`);
       isVersionLogged = true;
     }
   };
@@ -73,7 +71,7 @@ export async function createCompiler({
   }
 
   const done = async (stats: Stats | MultiStats) => {
-    const obj = stats.toJson({
+    const statsJson = stats.toJson({
       all: false,
       timings: true,
     });
@@ -81,19 +79,19 @@ export async function createCompiler({
     const printTime = (c: StatsCompilation, index: number) => {
       if (c.time) {
         const time = prettyTime(c.time / 1000);
-        const target = context.targets[index];
-        const name = TARGET_ID_MAP[target || 'web'];
-        logger.ready(`${name} compiled in ${time}`);
+        const { name } = rspackConfigs[index];
+        const suffix = name ? color.gray(` (${name})`) : '';
+        logger.ready(`Compiled in ${time}${suffix}`);
       }
     };
 
     if (!stats.hasErrors()) {
-      if (obj.children) {
-        obj.children.forEach((c, index) => {
+      if (statsJson.children) {
+        statsJson.children.forEach((c, index) => {
           printTime(c, index);
         });
       } else {
-        printTime(obj, 0);
+        printTime(statsJson, 0);
       }
     }
 
@@ -125,7 +123,7 @@ export async function createCompiler({
   );
 
   await context.hooks.onAfterCreateCompiler.call({ compiler });
-  debug('create compiler done');
+  logger.debug('create compiler done');
 
   return compiler;
 }

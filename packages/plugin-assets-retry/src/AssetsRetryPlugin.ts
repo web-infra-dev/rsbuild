@@ -1,11 +1,6 @@
+import fs from 'node:fs';
 import path from 'node:path';
-import type { Rspack } from '@rsbuild/core';
-import {
-  fse,
-  generateScriptTag,
-  getPublicPathFromCompiler,
-  withPublicPath,
-} from '@rsbuild/shared';
+import { type Rspack, ensureAssetPrefix } from '@rsbuild/core';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { PluginAssetsRetryOptions } from './types';
 
@@ -54,7 +49,7 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
       'runtime',
       this.minify ? `${filename}.min.js` : `${filename}.js`,
     );
-    const runtimeCode = await fse.readFile(runtimeFilePath, 'utf-8');
+    const runtimeCode = await fs.promises.readFile(runtimeFilePath, 'utf-8');
     return `(function(){${runtimeCode};init(${serialize(
       this.#retryOptions,
     )});})()`;
@@ -99,7 +94,14 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
       this.HtmlPlugin.getHooks(compilation).alterAssetTagGroups.tapPromise(
         this.name,
         async (data) => {
-          const scriptTag = generateScriptTag();
+          const scriptTag = {
+            tagName: 'script',
+            attributes: {
+              type: 'text/javascript',
+            },
+            voidTag: false,
+            meta: {},
+          };
 
           if (this.inlineScript) {
             data.headTags.unshift({
@@ -107,8 +109,11 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
               innerHTML: await this.getRetryCode(),
             });
           } else {
-            const publicPath = getPublicPathFromCompiler(compiler);
-            const url = withPublicPath(await this.getScriptPath(), publicPath);
+            const { publicPath } = compilation.outputOptions;
+            const url = ensureAssetPrefix(
+              await this.getScriptPath(),
+              publicPath,
+            );
             data.headTags.unshift({
               ...scriptTag,
               attributes: {

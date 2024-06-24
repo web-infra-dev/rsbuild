@@ -1,5 +1,6 @@
 import { dev, gotoPage, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
+import { logger } from '@rsbuild/core';
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 import type { PluginAssetsRetryOptions } from '@rsbuild/plugin-assets-retry';
 import { pluginReact } from '@rsbuild/plugin-react';
@@ -112,7 +113,7 @@ async function createRsbuildWithMiddleware(
 test('@rsbuild/plugin-assets-retry should work when blocking initial chunk index.js', async ({
   page,
 }) => {
-  process.env.DEBUG = 'rsbuild';
+  logger.level = 'verbose';
   const { logs, restore } = proxyConsole();
   const blockedMiddleware = createBlockMiddleware({
     blockNum: 3,
@@ -127,13 +128,13 @@ test('@rsbuild/plugin-assets-retry should work when blocking initial chunk index
   expect(blockedResponseCount).toBe(3);
   await rsbuild.close();
   restore();
-  delete process.env.DEBUG;
+  logger.level = 'log';
 });
 
 test('@rsbuild/plugin-assets-retry should work with minified runtime code when blocking initial chunk index.js', async ({
   page,
 }) => {
-  process.env.DEBUG = 'rsbuild';
+  logger.level = 'verbose';
   const { logs, restore } = proxyConsole();
   const blockedMiddleware = createBlockMiddleware({
     blockNum: 3,
@@ -150,13 +151,13 @@ test('@rsbuild/plugin-assets-retry should work with minified runtime code when b
   expect(blockedResponseCount).toBe(3);
   await rsbuild.close();
   restore();
-  delete process.env.DEBUG;
+  logger.level = 'log';
 });
 
 test('@rsbuild/plugin-assets-retry should work when blocking async chunk`', async ({
   page,
 }) => {
-  process.env.DEBUG = 'rsbuild';
+  logger.level = 'verbose';
   const { logs, restore } = proxyConsole();
   const blockedMiddleware = createBlockMiddleware({
     blockNum: 3,
@@ -174,13 +175,13 @@ test('@rsbuild/plugin-assets-retry should work when blocking async chunk`', asyn
   expect(blockedResponseCount).toBe(3);
   await rsbuild.close();
   restore();
-  delete process.env.DEBUG;
+  logger.level = 'log';
 });
 
 test('@rsbuild/plugin-assets-retry should work with minified runtime code when blocking async chunk', async ({
   page,
 }) => {
-  process.env.DEBUG = 'rsbuild';
+  logger.level = 'verbose';
   const { logs, restore } = proxyConsole();
   const blockedMiddleware = createBlockMiddleware({
     blockNum: 3,
@@ -200,13 +201,13 @@ test('@rsbuild/plugin-assets-retry should work with minified runtime code when b
   expect(blockedResponseCount).toBe(3);
   await rsbuild.close();
   restore();
-  delete process.env.DEBUG;
+  logger.level = 'log';
 });
 
 test('@rsbuild/plugin-assets-retry should catch error by react ErrorBoundary when all retries failed', async ({
   page,
 }) => {
-  process.env.DEBUG = 'rsbuild';
+  logger.level = 'verbose';
   const { logs, restore } = proxyConsole();
   const blockedMiddleware = createBlockMiddleware({
     blockNum: 100,
@@ -228,7 +229,7 @@ test('@rsbuild/plugin-assets-retry should catch error by react ErrorBoundary whe
   expect(blockedResponseCount).toBe(4);
   await rsbuild.close();
   restore();
-  delete process.env.DEBUG;
+  logger.level = 'log';
 });
 
 function delay(ms = 300) {
@@ -411,7 +412,7 @@ test('@rsbuild/plugin-assets-retry onRetry and onFail options should work in fai
 test('@rsbuild/plugin-assets-retry should work with addQuery boolean option', async ({
   page,
 }) => {
-  process.env.DEBUG = 'rsbuild';
+  logger.level = 'verbose';
   const { logs, restore } = proxyConsole();
   const initialChunkBlockedMiddleware = createBlockMiddleware({
     blockNum: 3,
@@ -458,13 +459,13 @@ test('@rsbuild/plugin-assets-retry should work with addQuery boolean option', as
 
   await rsbuild.close();
   restore();
-  delete process.env.DEBUG;
+  logger.level = 'log';
 });
 
 test('@rsbuild/plugin-assets-retry should work with addQuery function type option', async ({
   page,
 }) => {
-  process.env.DEBUG = 'rsbuild';
+  logger.level = 'verbose';
   const { logs, restore } = proxyConsole();
   const initialChunkBlockedMiddleware = createBlockMiddleware({
     blockNum: 3,
@@ -515,13 +516,13 @@ test('@rsbuild/plugin-assets-retry should work with addQuery function type optio
 
   await rsbuild.close();
   restore();
-  delete process.env.DEBUG;
+  logger.level = 'log';
 });
 
 test('@rsbuild/plugin-assets-retry should preserve users query when set addQuery option', async ({
   page,
 }) => {
-  process.env.DEBUG = 'rsbuild';
+  logger.level = 'verbose';
   const { logs, restore } = proxyConsole();
 
   const blockedMiddleware1 = createBlockMiddleware({
@@ -565,5 +566,5 @@ test('@rsbuild/plugin-assets-retry should preserve users query when set addQuery
 
   await rsbuild.close();
   restore();
-  delete process.env.DEBUG;
+  logger.level = 'log';
 });

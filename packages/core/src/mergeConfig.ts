@@ -1,9 +1,5 @@
-import {
-  type RsbuildConfig,
-  castArray,
-  isFunction,
-  isPlainObject,
-} from '@rsbuild/shared';
+import { type RsbuildConfig, castArray } from '@rsbuild/shared';
+import { isFunction, isPlainObject } from './helpers';
 
 const OVERRIDE_PATH = [
   'performance.removeConsole',
@@ -11,10 +7,9 @@ const OVERRIDE_PATH = [
   'output.inlineStyles',
   'output.cssModules.auto',
   'output.targets',
-  'output.emitAssets',
+  'output.overrideBrowserslist',
   'server.open',
   'server.printUrls',
-  'dev.startUrl',
   'provider',
 ];
 
@@ -64,11 +59,9 @@ const merge = (x: unknown, y: unknown, path = '') => {
   return merged;
 };
 
-export const mergeRsbuildConfig = (
-  ...configs: RsbuildConfig[]
-): RsbuildConfig => {
+export const mergeRsbuildConfig = <T = RsbuildConfig>(...configs: T[]): T => {
   if (configs.length === 2) {
-    return merge(configs[0], configs[1]) as RsbuildConfig;
+    return merge(configs[0], configs[1]) as T;
   }
 
   if (configs.length < 2) {
@@ -76,7 +69,7 @@ export const mergeRsbuildConfig = (
   }
 
   return configs.reduce(
-    (result, config) => merge(result, config) as RsbuildConfig,
-    {},
+    (result, config) => merge(result, config) as T,
+    {} as T,
   );
 };

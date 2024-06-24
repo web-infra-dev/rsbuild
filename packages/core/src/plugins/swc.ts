@@ -1,32 +1,25 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import {
   type Polyfill,
-  type RsbuildTarget,
-  type RspackChain,
   SCRIPT_REGEX,
   applyScriptCondition,
   cloneDeep,
   deepmerge,
-  getBrowserslistWithDefault,
-  getCoreJsVersion,
-  isWebTarget,
-  reduceConfigs,
 } from '@rsbuild/shared';
 import type { SwcLoaderOptions } from '@rspack/core';
 import { PLUGIN_SWC_NAME } from '../constants';
+import { isWebTarget } from '../helpers';
+import { reduceConfigs } from '../reduceConfigs';
 import type {
-  NormalizedConfig,
+  NormalizedEnvironmentConfig,
   NormalizedSourceConfig,
   RsbuildPlugin,
 } from '../types';
 
 const builtinSwcLoaderName = 'builtin:swc-loader';
 
-async function getDefaultSwcConfig(
-  config: NormalizedConfig,
-  rootPath: string,
-  target: RsbuildTarget,
-): Promise<SwcLoaderOptions> {
+function getDefaultSwcConfig(browserslist: string[]): SwcLoaderOptions {
   return {
     jsc: {
       externalHelpers: true,
@@ -41,7 +34,7 @@ async function getDefaultSwcConfig(
     },
     isModule: 'unknown',
     env: {
-      targets: await getBrowserslistWithDefault(rootPath, config, target),
+      targets: browserslist,
     },
   };
 }
@@ -60,13 +53,19 @@ export const pluginSwc = (): RsbuildPlugin => ({
 
     api.modifyBundlerChain({
       order: 'pre',
-      handler: async (chain, { CHAIN_ID, target }) => {
-        const config = api.getNormalizedConfig();
+      handler: async (chain, { CHAIN_ID, target, environment }) => {
+        const config = api.getNormalizedConfig({ environment });
 
         const rule = chain.module
           .rule(CHAIN_ID.RULE.JS)
           .test(SCRIPT_REGEX)
           .type('javascript/auto');
+
+        const dataUriRule = chain.module
+          .rule(CHAIN_ID.RULE.JS_DATA_URI)
+          .mimetype({
+            or: ['text/javascript', 'application/javascript'],
+          });
 
         applyScriptCondition({
           rule,
@@ -77,11 +76,9 @@ export const pluginSwc = (): RsbuildPlugin => ({
           excludes: [],
         });
 
-        const swcConfig = await getDefaultSwcConfig(
-          config,
-          api.context.rootPath,
-          target,
-        );
+        const { browserslist } = api.context.environments[environment];
+
+        const swcConfig = getDefaultSwcConfig(browserslist);
 
         applyTransformImport(swcConfig, config.source.transformImport);
         applySwcDecoratorConfig(swcConfig, config);
@@ -101,8 +98,11 @@ export const pluginSwc = (): RsbuildPlugin => ({
             swcConfig.env!.mode = undefined;
           } else {
             swcConfig.env!.mode = polyfillMode;
-            /* Apply core-js version and path alias and exclude core-js */
-            await applyCoreJs(swcConfig, chain, polyfillMode);
+
+            const coreJsDir = await applyCoreJs(swcConfig, polyfillMode);
+            for (const item of [rule, dataUriRule]) {
+              item.resolve.alias.set('core-js', coreJsDir);
+            }
           }
         }
 
@@ -123,14 +123,10 @@ export const pluginSwc = (): RsbuildPlugin => ({
          * https://webpack.js.org/api/module-methods/#import
          * @example: import x from 'data:text/javascript,export default 1;';
          */
-        chain.module
-          .rule(CHAIN_ID.RULE.JS_DATA_URI)
-          .mimetype({
-            or: ['text/javascript', 'application/javascript'],
-          })
-          // compatible with legacy packages with type="module"
+        dataUriRule.resolve
           // https://github.com/webpack/webpack/issues/11467
-          .resolve.set('fullySpecified', false)
+          // compatible with legacy packages with type="module"
+          .set('fullySpecified', false)
           .end()
           .use(CHAIN_ID.USE.SWC)
           .loader(builtinSwcLoaderName)
@@ -141,9 +137,19 @@ export const pluginSwc = (): RsbuildPlugin => ({
   },
 });
 
+const getCoreJsVersion = (corejsPkgPath: string) => {
+  try {
+    const rawJson = fs.readFileSync(corejsPkgPath, 'utf-8');
+    const { version } = JSON.parse(rawJson);
+    const [major, minor] = version.split('.');
+    return `${major}.${minor}`;
+  } catch (err) {
+    return '3';
+  }
+};
+
 async function applyCoreJs(
   swcConfig: SwcLoaderOptions,
-  chain: RspackChain,
   polyfillMode: Polyfill,
 ) {
   const coreJsPath = require.resolve('core-js/package.json');
@@ -158,9 +164,7 @@ async function applyCoreJs(
     swcConfig.env!.shippedProposals = true;
   }
 
-  chain.resolve.alias.merge({
-    'core-js': coreJsDir,
-  });
+  return coreJsDir;
 }
 
 function applyTransformImport(
@@ -176,7 +180,7 @@ function applyTransformImport(
 
 export function applySwcDecoratorConfig(
   swcConfig: SwcLoaderOptions,
-  config: NormalizedConfig,
+  config: NormalizedEnvironmentConfig,
 ) {
   swcConfig.jsc ||= {};
   swcConfig.jsc.transform ||= {};

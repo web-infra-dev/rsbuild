@@ -114,12 +114,14 @@ Example of enabling the Relay support using the `builtin:swc-loader`:
 export default {
   tools: {
     swc: {
-      rspackExperiments: {
-        relay: true,
+      jsc: {
+        experimental: {
+          plugins: [['@swc/plugin-relay', {}]],
+        },
       },
     },
   },
 };
 ```
 
-For more options, please refer to [Rspack - rspackExperiments.relay](https://rspack.dev/guide/features/builtin-swc-loader#rspackexperimentsrelay).
+For more options, please refer to [@swc/plugin-relay](https://www.npmjs.com/package/@swc/plugin-relay).

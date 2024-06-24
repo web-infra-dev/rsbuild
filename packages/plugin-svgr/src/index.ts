@@ -1,12 +1,7 @@
 import path from 'node:path';
 import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
 import { PLUGIN_REACT_NAME } from '@rsbuild/plugin-react';
-import {
-  SCRIPT_REGEX,
-  deepmerge,
-  getDistPath,
-  getFilename,
-} from '@rsbuild/shared';
+import { SCRIPT_REGEX, deepmerge } from '@rsbuild/shared';
 import type { Config } from '@svgr/core';
 
 export type SvgDefaultExport = 'component' | 'url';
@@ -61,17 +56,16 @@ function getSvgoDefaultConfig() {
   };
 }
 
+export const PLUGIN_SVGR_NAME = 'rsbuild:svgr';
+
 export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
-  name: 'rsbuild:svgr',
+  name: PLUGIN_SVGR_NAME,
 
   pre: [PLUGIN_REACT_NAME],
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { isProd, CHAIN_ID }) => {
-      const config = api.getNormalizedConfig();
-      const distDir = getDistPath(config, 'svg');
-      const filename = getFilename(config, 'svg', isProd);
-      const outputName = path.posix.join(distDir, filename);
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
+      const config = api.getNormalizedConfig({ environment });
       const { dataUriLimit } = config.output;
       const maxSize =
         typeof dataUriLimit === 'number' ? dataUriLimit : dataUriLimit.svg;
@@ -163,7 +157,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
             .loader(path.join(__dirname, '../compiled', 'url-loader/index.js'))
             .options({
               limit: maxSize,
-              name: outputName,
+              name: generatorOptions?.filename,
             });
         }
       }

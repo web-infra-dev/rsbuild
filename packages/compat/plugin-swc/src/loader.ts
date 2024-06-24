@@ -1,5 +1,4 @@
 import type { Options as SwcOptions } from '@modern-js/swc-plugins';
-import { getBrowserslist } from '@rsbuild/shared';
 import type { LoaderContext, LoaderDefinitionFunction } from 'webpack';
 import { Compiler } from './binding';
 import type { TransformConfig } from './types';
@@ -31,10 +30,6 @@ function normalizeLoaderOption(
 
   if (enableSourceMap) {
     options.sourceMaps = true;
-  }
-
-  if (options.env && !options.env.targets) {
-    options.env.targets = getBrowserslist(options.cwd || process.cwd());
   }
 
   if (

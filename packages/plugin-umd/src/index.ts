@@ -11,8 +11,10 @@ export type PluginUmdOptions = {
   export?: string | string[];
 };
 
+export const PLUGIN_UMD_NAME = 'rsbuild:umd';
+
 export const pluginUmd = (options: PluginUmdOptions): RsbuildPlugin => ({
-  name: 'rsbuild:umd',
+  name: PLUGIN_UMD_NAME,
 
   setup(api) {
     api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {

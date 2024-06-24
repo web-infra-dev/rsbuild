@@ -10,29 +10,22 @@ import {
   type RsbuildTarget,
   type RspackChain,
   deepmerge,
-  getBrowserslistWithDefault,
-  isFunction,
-  isPlainObject,
-  reduceConfigs,
-  reduceConfigsWithContext,
 } from '@rsbuild/shared';
 import type { AcceptedPlugin } from 'postcss';
 import { CSS_REGEX, LOADER_PATH } from '../constants';
-import { getCompiledPath } from '../helpers';
+import { getCompiledPath, isFunction, isPlainObject } from '../helpers';
 import { getCssExtractPlugin } from '../pluginHelper';
-import type { NormalizedConfig, RsbuildPlugin } from '../types';
-
-export const enableNativeCss = (config: NormalizedConfig) =>
-  !config.output.injectStyles;
+import { reduceConfigs, reduceConfigsWithContext } from '../reduceConfigs';
+import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
 
 export const isUseCssExtract = (
-  config: NormalizedConfig,
+  config: NormalizedEnvironmentConfig,
   target: RsbuildTarget,
 ) =>
   !config.output.injectStyles && target !== 'node' && target !== 'web-worker';
 
 const getCSSModulesLocalIdentName = (
-  config: NormalizedConfig,
+  config: NormalizedEnvironmentConfig,
   isProd: boolean,
 ) =>
   config.output.cssModules.localIdentName ||
@@ -113,7 +106,7 @@ async function loadUserPostcssrc(root: string): Promise<PostCSSOptions> {
 export const applyAutoprefixer = async (
   plugins: unknown[],
   browserslist: string[],
-  config: NormalizedConfig,
+  config: NormalizedEnvironmentConfig,
 ) => {
   const pluginObjects: AcceptedPlugin[] = plugins.map((plugin) =>
     isFunction(plugin) ? plugin({}) : plugin,
@@ -153,7 +146,7 @@ const getPostcssLoaderOptions = async ({
   root,
 }: {
   browserslist: string[];
-  config: NormalizedConfig;
+  config: NormalizedEnvironmentConfig;
   root: string;
 }): Promise<PostCSSLoaderOptions> => {
   const extraPlugins: AcceptedPlugin[] = [];
@@ -209,7 +202,7 @@ const getCSSLoaderOptions = ({
   target,
   localIdentName,
 }: {
-  config: NormalizedConfig;
+  config: NormalizedEnvironmentConfig;
   importLoaders: number;
   target: RsbuildTarget;
   localIdentName: string;
@@ -243,20 +236,16 @@ async function applyCSSRule({
   rule,
   config,
   context,
-  utils: { target, isProd, CHAIN_ID },
+  utils: { target, isProd, CHAIN_ID, environment },
   importLoaders = 1,
 }: {
   rule: RspackChain.Rule;
-  config: NormalizedConfig;
+  config: NormalizedEnvironmentConfig;
   context: RsbuildContext;
   utils: ModifyChainUtils;
   importLoaders?: number;
 }) {
-  const browserslist = await getBrowserslistWithDefault(
-    context.rootPath,
-    config,
-    target,
-  );
+  const { browserslist } = context.environments[environment];
 
   // 1. Check user config
   const enableExtractCSS = isUseCssExtract(config, target);
@@ -337,7 +326,9 @@ export const pluginCss = (): RsbuildPlugin => ({
       order: 'pre',
       handler: async (chain, utils) => {
         const rule = chain.module.rule(utils.CHAIN_ID.RULE.CSS);
-        const config = api.getNormalizedConfig();
+        const config = api.getNormalizedConfig({
+          environment: utils.environment,
+        });
         rule.test(CSS_REGEX);
         await applyCSSRule({
           rule,

@@ -1,11 +1,10 @@
 import path from 'node:path';
-import { type Rspack, type ScriptLoading, logger } from '@rsbuild/core';
 import {
-  generateScriptTag,
-  getPublicPathFromCompiler,
-  isProd,
-  withPublicPath,
-} from '@rsbuild/shared';
+  type Rspack,
+  type ScriptLoading,
+  ensureAssetPrefix,
+  logger,
+} from '@rsbuild/core';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { PluginRemOptions } from './types';
 
@@ -97,7 +96,7 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
 
     const getRuntimeCode = async () => {
       if (!runtimeCode) {
-        const isCompress = isProd();
+        const isCompress = process.env.NODE_ENV === 'production';
         runtimeCode = await getRootPixelCode(this.options, isCompress);
       }
       return runtimeCode;
@@ -147,7 +146,14 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
             return data;
           }
 
-          const scriptTag = generateScriptTag();
+          const scriptTag = {
+            tagName: 'script',
+            attributes: {
+              type: 'text/javascript',
+            },
+            voidTag: false,
+            meta: {},
+          };
 
           if (this.options.inlineRuntime) {
             data.assetTags.scripts.unshift({
@@ -155,8 +161,11 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
               innerHTML: await getRuntimeCode(),
             });
           } else {
-            const publicPath = getPublicPathFromCompiler(compiler);
-            const url = withPublicPath(await this.getScriptPath(), publicPath);
+            const { publicPath } = compilation.outputOptions;
+            const url = ensureAssetPrefix(
+              await this.getScriptPath(),
+              publicPath,
+            );
 
             const attributes: Record<string, string> = {
               ...scriptTag.attributes,

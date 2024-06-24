@@ -1,5 +1,4 @@
 import type { RsbuildConfig, RsbuildPlugin, Rspack } from '@rsbuild/core';
-import { getNodeEnv } from '@rsbuild/shared';
 
 export type PluginPreactOptions = {
   /**
@@ -9,17 +8,19 @@ export type PluginPreactOptions = {
   reactAliasesEnabled?: boolean;
 };
 
+export const PLUGIN_PREACT_NAME = 'rsbuild:preact';
+
 export const pluginPreact = (
   options: PluginPreactOptions = {},
 ): RsbuildPlugin => ({
-  name: 'rsbuild:preact',
+  name: PLUGIN_PREACT_NAME,
 
   setup(api) {
     const { reactAliasesEnabled = true } = options;
 
     api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
       const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
-        development: getNodeEnv() === 'development',
+        development: process.env.NODE_ENV === 'development',
         runtime: 'automatic',
         importSource: 'preact',
       };

@@ -9,7 +9,7 @@ rspackOnlyTest('should allow to customize logger', async () => {
   });
 
   expect(
-    logs.find((item) => item.includes('[READY] Client compiled in')),
+    logs.find((item) => item.includes('[READY] Compiled in')),
   ).toBeTruthy();
 
   restore();

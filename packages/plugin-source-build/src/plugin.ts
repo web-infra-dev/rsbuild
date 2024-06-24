@@ -89,12 +89,9 @@ export function pluginSourceBuild(
                 : ['...', sourceField],
             );
 
-            // rspack-chain do not support resolve.conditionNames yet
-            rule.resolve.merge({
-              // `conditionNames` is not affected by `resolvePriority`.
-              // The priority is controlled by the order of fields declared in `exports`.
-              conditionNames: ['...', sourceField],
-            });
+            // `conditionNames` is not affected by `resolvePriority`.
+            // The priority is controlled by the order of fields declared in `exports`.
+            rule.resolve.conditionNames.add('...').add(sourceField);
           }
         }
       });
@@ -106,7 +103,7 @@ export function pluginSourceBuild(
 
         // merge with user references
         if (api.context.tsconfigPath) {
-          const { default: json5 } = await import('@rsbuild/shared/json5');
+          const { default: json5 } = await import('json5');
           const { references } = json5.parse(
             fs.readFileSync(api.context.tsconfigPath, 'utf-8'),
           );

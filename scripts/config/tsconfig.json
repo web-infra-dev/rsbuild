@@ -2,7 +2,6 @@
   "compilerOptions": {
     "target": "ES2021",
     "lib": ["DOM", "ESNext"],
-    "allowJs": true,
     "module": "ES2020",
     "strict": true,
     "isolatedModules": true,

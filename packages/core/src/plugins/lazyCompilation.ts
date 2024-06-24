@@ -1,17 +1,18 @@
 import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
-import { isRegExp } from '@rsbuild/shared';
+import { isRegExp } from '../helpers';
 
 export const pluginLazyCompilation = (): RsbuildPlugin => ({
   name: 'rsbuild:lazy-compilation',
 
   setup(api) {
-    api.modifyBundlerChain((chain, { isProd, target }) => {
+    api.modifyBundlerChain((chain, { environment, isProd, target }) => {
       if (isProd || target !== 'web') {
         return;
       }
 
-      const config = api.getNormalizedConfig();
+      const config = api.getNormalizedConfig({ environment });
 
+      // TODO: support dev.lazyCompilation option in environment config
       const options = config.dev?.lazyCompilation;
       if (!options) {
         return;

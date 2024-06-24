@@ -5,11 +5,11 @@ import type {
   Configuration as WebpackConfig,
   WebpackPluginInstance,
 } from 'webpack';
-import type { ChainIdentifier } from '../chain';
-import type { RspackChain } from '../chain';
+import type { ChainIdentifier, RspackChain } from '..';
 import type {
   ModifyRspackConfigUtils,
   NormalizedConfig,
+  NormalizedEnvironmentConfig,
   RsbuildConfig,
 } from './config';
 import type { RsbuildContext } from './context';
@@ -223,6 +223,11 @@ export type TransformFn = (
   handler: TransformHandler,
 ) => void;
 
+declare function getNormalizedConfig(): NormalizedConfig;
+declare function getNormalizedConfig(options: {
+  environment: string;
+}): NormalizedEnvironmentConfig;
+
 /**
  * Define a generic Rsbuild plugin API that provider can extend as needed.
  */
@@ -256,9 +261,9 @@ export type RsbuildPluginAPI = Readonly<{
    * Get the relative paths of generated HTML files.
    * The key is entry name and the value is path.
    */
-  getHTMLPaths: () => Record<string, string>;
+  getHTMLPaths: (options?: { environment: string }) => Record<string, string>;
   getRsbuildConfig: GetRsbuildConfig;
-  getNormalizedConfig: () => NormalizedConfig;
+  getNormalizedConfig: typeof getNormalizedConfig;
 
   /**
    * For plugin communication

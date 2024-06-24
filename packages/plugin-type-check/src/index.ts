@@ -1,11 +1,11 @@
-import { type ConfigChain, type RsbuildPlugin, logger } from '@rsbuild/core';
+import fs from 'node:fs';
 import {
-  CHAIN_ID,
-  NODE_MODULES_REGEX,
-  deepmerge,
-  fse,
+  type ConfigChain,
+  type RsbuildPlugin,
+  logger,
   reduceConfigs,
-} from '@rsbuild/shared';
+} from '@rsbuild/core';
+import { CHAIN_ID, NODE_MODULES_REGEX, deepmerge } from '@rsbuild/shared';
 import type ForkTSCheckerPlugin from 'fork-ts-checker-webpack-plugin';
 
 type ForkTsCheckerOptions = NonNullable<
@@ -25,11 +25,13 @@ export type PluginTypeCheckerOptions = {
   forkTsCheckerOptions?: ConfigChain<ForkTsCheckerOptions>;
 };
 
+export const PLUGIN_TYPE_CHECK_NAME = 'rsbuild:type-check';
+
 export const pluginTypeCheck = (
   options: PluginTypeCheckerOptions = {},
 ): RsbuildPlugin => {
   return {
-    name: 'rsbuild:type-check',
+    name: PLUGIN_TYPE_CHECK_NAME,
 
     setup(api) {
       api.modifyBundlerChain(async (chain, { target, isProd }) => {
@@ -62,9 +64,9 @@ export const pluginTypeCheck = (
           'fork-ts-checker-webpack-plugin'
         );
 
-        const { default: json5 } = await import('@rsbuild/shared/json5');
+        const { default: json5 } = await import('json5');
         const { references } = json5.parse(
-          fse.readFileSync(api.context.tsconfigPath, 'utf-8'),
+          fs.readFileSync(api.context.tsconfigPath, 'utf-8'),
         );
         const useReference = Array.isArray(references) && references.length > 0;
 

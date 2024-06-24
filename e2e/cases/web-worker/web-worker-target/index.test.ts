@@ -7,7 +7,7 @@ test('should build web-worker target correctly', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       output: {
-        targets: ['web-worker'],
+        target: 'web-worker',
       },
     },
   });
@@ -27,7 +27,7 @@ test('should build web-worker target with dynamicImport correctly', async () => 
         entry: { index: path.resolve(__dirname, './src/index2.js') },
       },
       output: {
-        targets: ['web-worker'],
+        target: 'web-worker',
       },
     },
   });

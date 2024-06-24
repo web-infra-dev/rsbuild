@@ -1,6 +1,7 @@
+import fs from 'node:fs';
 import { resolve } from 'node:path';
 import type { Rspack } from '@rsbuild/core';
-import { JS_REGEX, browserslistToESVersion, fse } from '@rsbuild/shared';
+import { JS_REGEX, browserslistToESVersion } from '@rsbuild/shared';
 import { parse } from 'acorn';
 import {
   checkIsExcludeSource,
@@ -45,8 +46,8 @@ export class CheckSyntaxPlugin {
       options.ecmaVersion || browserslistToESVersion(this.targets);
   }
 
-  apply(complier: Compiler) {
-    complier.hooks.afterEmit.tapPromise(
+  apply(compiler: Compiler) {
+    compiler.hooks.afterEmit.tapPromise(
       CheckSyntaxPlugin.name,
       async (compilation: Compilation) => {
         const outputPath = compilation.outputOptions.path || 'dist';
@@ -70,7 +71,7 @@ export class CheckSyntaxPlugin {
           }),
         );
 
-        printErrors(this.errors);
+        printErrors(this.errors, this.ecmaVersion);
       },
     );
   }
@@ -88,7 +89,7 @@ export class CheckSyntaxPlugin {
     }
 
     if (JS_REGEX.test(filepath)) {
-      const jsScript = await fse.readFile(filepath, 'utf-8');
+      const jsScript = await fs.promises.readFile(filepath, 'utf-8');
       await this.tryParse(filepath, jsScript);
     }
   }

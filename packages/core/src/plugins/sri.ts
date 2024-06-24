@@ -1,15 +1,9 @@
 import type { Buffer } from 'node:buffer';
 import crypto from 'node:crypto';
-import {
-  type Rspack,
-  type SriAlgorithm,
-  type SriOptions,
-  isHtmlDisabled,
-  isProd,
-  logger,
-  removeLeadingSlash,
-} from '@rsbuild/shared';
+import type { Rspack, SriAlgorithm, SriOptions } from '@rsbuild/shared';
 import { HTML_REGEX } from '../constants';
+import { isProd, removeLeadingSlash } from '../helpers';
+import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
 
 const getAssetName = (url: string, assetPrefix: string) => {
@@ -25,8 +19,8 @@ export const pluginSri = (): RsbuildPlugin => ({
   setup(api) {
     const placeholder = 'RSBUILD_INTEGRITY_PLACEHOLDER:';
 
-    const getAlgorithm = () => {
-      const config = api.getNormalizedConfig();
+    const getAlgorithm = (environment: string) => {
+      const config = api.getNormalizedConfig({ environment });
       const { sri } = config.security;
       const enable = sri.enable === 'auto' ? isProd() : sri.enable;
 
@@ -41,8 +35,8 @@ export const pluginSri = (): RsbuildPlugin => ({
     api.modifyHTMLTags({
       // ensure `sri` can be applied to all tags
       order: 'post',
-      handler(tags, { assetPrefix }) {
-        const algorithm = getAlgorithm();
+      handler(tags, { assetPrefix, environment }) {
+        const algorithm = getAlgorithm(environment);
 
         if (!algorithm) {
           return tags;
@@ -192,14 +186,14 @@ export const pluginSri = (): RsbuildPlugin => ({
       }
     }
 
-    api.modifyBundlerChain((chain, { target }) => {
-      const config = api.getNormalizedConfig();
+    api.modifyBundlerChain((chain, { environment }) => {
+      const htmlPaths = api.getHTMLPaths({ environment });
 
-      if (isHtmlDisabled(config, target)) {
+      if (Object.keys(htmlPaths).length === 0) {
         return;
       }
 
-      const algorithm = getAlgorithm();
+      const algorithm = getAlgorithm(environment);
       if (!algorithm) {
         return;
       }

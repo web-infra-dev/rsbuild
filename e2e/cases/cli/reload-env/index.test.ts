@@ -1,8 +1,8 @@
 import { exec } from 'node:child_process';
+import fs from 'node:fs';
 import path from 'node:path';
 import { awaitFileExists, getRandomPort } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { fse } from '@rsbuild/shared';
 
 // Skipped as it occasionally failed in CI
 test.skip('should restart dev server when .env file is changed', async () => {
@@ -10,12 +10,13 @@ test.skip('should restart dev server when .env file is changed', async () => {
   const configFile = path.join(__dirname, 'rsbuild.config.mjs');
   const envLocalFile = path.join(__dirname, '.env.local');
   const distIndex = path.join(dist, 'static/js/index.js');
-  fse.removeSync(dist);
-  fse.removeSync(configFile);
-  fse.removeSync(envLocalFile);
 
-  fse.writeFileSync(envLocalFile, 'PUBLIC_NAME=jack');
-  fse.writeFileSync(
+  fs.rmSync(dist, { recursive: true, force: true });
+  fs.rmSync(configFile, { force: true });
+  fs.rmSync(envLocalFile, { force: true });
+
+  fs.writeFileSync(envLocalFile, 'PUBLIC_NAME=jack');
+  fs.writeFileSync(
     configFile,
     `export default {
       dev: {
@@ -34,12 +35,13 @@ test.skip('should restart dev server when .env file is changed', async () => {
   });
 
   await awaitFileExists(distIndex);
-  expect(fse.readFileSync(distIndex, 'utf-8')).toContain('jack');
+  expect(fs.readFileSync(distIndex, 'utf-8')).toContain('jack');
 
-  fse.removeSync(distIndex);
-  fse.writeFileSync(envLocalFile, 'PUBLIC_NAME=rose');
+  fs.rmSync(distIndex, { force: true });
+
+  fs.writeFileSync(envLocalFile, 'PUBLIC_NAME=rose');
   await awaitFileExists(distIndex);
-  expect(fse.readFileSync(distIndex, 'utf-8')).toContain('rose');
+  expect(fs.readFileSync(distIndex, 'utf-8')).toContain('rose');
 
   devProcess.kill();
 });

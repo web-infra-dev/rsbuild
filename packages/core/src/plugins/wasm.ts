@@ -1,14 +1,13 @@
 import { posix } from 'node:path';
-import { getDistPath } from '@rsbuild/shared';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginWasm = (): RsbuildPlugin => ({
   name: 'rsbuild:wasm',
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
-      const config = api.getNormalizedConfig();
-      const distPath = getDistPath(config, 'wasm');
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
+      const config = api.getNormalizedConfig({ environment });
+      const distPath = config.output.distPath.wasm;
 
       chain.experiments({
         ...chain.get('experiments'),

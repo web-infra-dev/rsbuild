@@ -1,4 +1,4 @@
-import { color, debug, isFunction, logger } from '@rsbuild/shared';
+import { color } from '@rsbuild/shared';
 import type {
   BundlerPluginInstance,
   Falsy,
@@ -6,6 +6,8 @@ import type {
   RsbuildPlugin,
   RsbuildPluginAPI,
 } from '@rsbuild/shared';
+import { isFunction } from './helpers';
+import { logger } from './logger';
 
 function validatePlugin(plugin: unknown) {
   const type = typeof plugin;
@@ -173,7 +175,7 @@ export async function initPlugins({
   pluginAPI?: RsbuildPluginAPI;
   pluginManager: PluginManager;
 }) {
-  debug('init plugins');
+  logger.debug('init plugins');
 
   const plugins = pluginDagSort(pluginManager.getPlugins());
 
@@ -191,5 +193,5 @@ export async function initPlugins({
     await plugin.setup(pluginAPI!);
   }
 
-  debug('init plugins done');
+  logger.debug('init plugins done');
 }

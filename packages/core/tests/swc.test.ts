@@ -8,7 +8,7 @@ describe('plugin-swc', () => {
     await matchConfigSnapshot({
       output: {
         polyfill: 'entry',
-        targets: ['node'],
+        target: 'node',
       },
     });
   });
@@ -43,24 +43,6 @@ describe('plugin-swc', () => {
         overrideBrowserslist: ['chrome 98'],
       },
     });
-
-    await matchConfigSnapshot({
-      output: {
-        overrideBrowserslist: {
-          web: ['chrome 98'],
-        },
-      },
-    });
-  });
-
-  it("should'n override browserslist when target platform is not web", async () => {
-    await matchConfigSnapshot({
-      output: {
-        overrideBrowserslist: {
-          node: ['chrome 98'],
-        },
-      },
-    });
   });
 
   it('should has correct core-js', async () => {
@@ -73,7 +55,7 @@ describe('plugin-swc', () => {
     await matchConfigSnapshot({
       output: {
         polyfill: 'entry',
-        targets: ['node'],
+        target: 'node',
       },
     });
   });
@@ -160,6 +142,50 @@ describe('plugin-swc', () => {
                 externalHelpers: false,
               },
             };
+          },
+        },
+      },
+      plugins: [pluginSwc()],
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+
+    for (const bundlerConfig of bundlerConfigs) {
+      expect(bundlerConfig.module?.rules).toMatchSnapshot();
+    }
+  });
+
+  it('should apply environment config correctly', async () => {
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {
+        environments: {
+          web: {
+            source: {
+              exclude: ['src/example'],
+              transformImport: [
+                {
+                  libraryName: 'foo',
+                },
+              ],
+            },
+            output: {
+              polyfill: 'usage',
+              target: 'web',
+            },
+          },
+          node: {
+            source: {
+              exclude: ['src/example1'],
+              transformImport: [
+                {
+                  libraryName: 'bar',
+                },
+              ],
+            },
+            output: {
+              polyfill: 'usage',
+              target: 'node',
+            },
           },
         },
       },

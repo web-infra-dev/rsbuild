@@ -1,3 +1,15 @@
+/// <reference types="@rspack/core/module" />
+
+/**
+ * import.meta
+ */
+interface ImportMetaEnv {
+  [key: string]: any;
+}
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
+
 /**
  * Image assets
  */

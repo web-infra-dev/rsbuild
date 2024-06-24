@@ -6,7 +6,7 @@
 
 <p>
   <a href="https://discord.gg/XsaKEEk4mW">
-    <img src="https://img.shields.io/discord/977448667919286283?logo=discord&label=discord&colorA=564341&colorB=EDED91" alt="discord channel" />
+    <img src="https://img.shields.io/badge/chat-discord-blue?style=flat-square&logo=discord&colorA=564341&colorB=EDED91" alt="discord channel" />
   </a>
   <a href="https://npmjs.com/package/@rsbuild/shared?activeTab=readme">
    <img src="https://img.shields.io/npm/v/@rsbuild/shared?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" />
@@ -77,10 +77,6 @@ In addition to being used as a build tool, Rsbuild also provides universal build
 The following diagram illustrates the relationship between Rsbuild and other tools in the ecosystem:
 
 ![Rspack Ecosystem](https://github.com/web-infra-dev/rsbuild/assets/7237365/1ec93ad6-b8b1-475b-963f-cba1e7d79dec)
-
-## 📍 Roadmap
-
-We plan to release Rsbuild v1.0 before July 2024 (based in Rspack v1.0), see [Rsbuild v1.0 Release Plan](https://github.com/web-infra-dev/rsbuild/discussions/1678).
 
 ## 📚 Getting Started
 

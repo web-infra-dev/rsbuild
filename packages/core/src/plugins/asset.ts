@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { type RspackChain, getDistPath, getFilename } from '@rsbuild/shared';
+import type { RspackChain } from '@rsbuild/shared';
 import type { GeneratorOptionsByModuleType } from '@rspack/core';
 import {
   AUDIO_EXTENSIONS,
@@ -7,6 +7,7 @@ import {
   IMAGE_EXTENSIONS,
   VIDEO_EXTENSIONS,
 } from '../constants';
+import { getFilename } from '../helpers';
 import type { RsbuildPlugin } from '../types';
 
 const chainStaticAssetRule = ({
@@ -73,8 +74,8 @@ export const pluginAsset = (): RsbuildPlugin => ({
   name: 'rsbuild:asset',
 
   setup(api) {
-    api.modifyBundlerChain((chain, { isProd, target }) => {
-      const config = api.getNormalizedConfig();
+    api.modifyBundlerChain((chain, { isProd, environment }) => {
+      const config = api.getNormalizedConfig({ environment });
 
       const createAssetRule = (
         assetType: 'image' | 'media' | 'font' | 'svg',
@@ -82,7 +83,7 @@ export const pluginAsset = (): RsbuildPlugin => ({
         emit: boolean,
       ) => {
         const regExp = getRegExpForExts(exts);
-        const distDir = getDistPath(config, assetType);
+        const distDir = config.output.distPath[assetType];
         const filename = getFilename(config, assetType, isProd);
         const { dataUriLimit } = config.output;
         const maxSize =
@@ -100,16 +101,16 @@ export const pluginAsset = (): RsbuildPlugin => ({
         });
       };
 
-      const emit = config.output.emitAssets({ target });
+      const { emitAssets } = config.output;
 
-      createAssetRule('image', IMAGE_EXTENSIONS, emit);
-      createAssetRule('svg', ['svg'], emit);
+      createAssetRule('image', IMAGE_EXTENSIONS, emitAssets);
+      createAssetRule('svg', ['svg'], emitAssets);
       createAssetRule(
         'media',
         [...VIDEO_EXTENSIONS, ...AUDIO_EXTENSIONS],
-        emit,
+        emitAssets,
       );
-      createAssetRule('font', FONT_EXTENSIONS, emit);
+      createAssetRule('font', FONT_EXTENSIONS, emitAssets);
     });
   },
 });

@@ -175,7 +175,7 @@ describe('plugin-split-chunks', () => {
       plugins: [pluginSplitChunks()],
       rsbuildConfig: {
         output: {
-          targets: ['node'],
+          target: 'node',
         },
       },
     });

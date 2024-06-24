@@ -5,14 +5,13 @@ import {
   type RsbuildTarget,
   type RspackConfig,
   castArray,
-  chainToConfig,
-  debug,
-  getNodeEnv,
-  modifyBundlerChain,
-  reduceConfigsAsyncWithContext,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
+import { chainToConfig, modifyBundlerChain } from '../configChain';
+import { getNodeEnv } from '../helpers';
+import { logger } from '../logger';
 import { getHTMLPlugin } from '../pluginHelper';
+import { reduceConfigsAsyncWithContext } from '../reduceConfigs';
 import type { InternalContext } from '../types';
 
 async function modifyRspackConfig(
@@ -20,7 +19,7 @@ async function modifyRspackConfig(
   rspackConfig: RspackConfig,
   utils: ModifyRspackConfigUtils,
 ) {
-  debug('modify Rspack config');
+  logger.debug('modify Rspack config');
   let [modifiedConfig] = await context.hooks.modifyRspackConfig.call(
     rspackConfig,
     utils,
@@ -35,7 +34,7 @@ async function modifyRspackConfig(
     });
   }
 
-  debug('modify Rspack config done');
+  logger.debug('modify Rspack config done');
   return modifiedConfig;
 }
 
@@ -89,17 +88,20 @@ async function getConfigUtils(
   };
 }
 
-export function getChainUtils(target: RsbuildTarget): ModifyChainUtils {
+export function getChainUtils(
+  target: RsbuildTarget,
+  environment: string,
+): ModifyChainUtils {
   const nodeEnv = getNodeEnv();
 
   return {
+    environment,
     env: nodeEnv,
     target,
     isDev: nodeEnv === 'development',
     isProd: nodeEnv === 'production',
     isServer: target === 'node',
     isWebWorker: target === 'web-worker',
-    isServiceWorker: target === 'service-worker',
     CHAIN_ID,
     HtmlPlugin: getHTMLPlugin(),
   };
@@ -108,11 +110,13 @@ export function getChainUtils(target: RsbuildTarget): ModifyChainUtils {
 export async function generateRspackConfig({
   target,
   context,
+  environment,
 }: {
+  environment: string;
   target: RsbuildTarget;
   context: InternalContext;
 }): Promise<RspackConfig> {
-  const chainUtils = getChainUtils(target);
+  const chainUtils = getChainUtils(target, environment);
   const {
     BannerPlugin,
     DefinePlugin,

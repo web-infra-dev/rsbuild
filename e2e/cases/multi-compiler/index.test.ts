@@ -6,8 +6,17 @@ test('multi compiler build', async ({ page }) => {
     cwd: __dirname,
     runServer: true,
     rsbuildConfig: {
-      output: {
-        targets: ['web', 'node'],
+      environments: {
+        web: {
+          output: {
+            target: 'web',
+          },
+        },
+        node: {
+          output: {
+            target: 'node',
+          },
+        },
       },
     },
   });
@@ -25,9 +34,20 @@ test('multi compiler dev', async ({ page }) => {
     cwd: __dirname,
     rsbuildConfig: {
       output: {
-        targets: ['web', 'node'],
         distPath: {
           root: 'dist-dev',
+        },
+      },
+      environments: {
+        web: {
+          output: {
+            target: 'web',
+          },
+        },
+        node: {
+          output: {
+            target: 'node',
+          },
         },
       },
     },

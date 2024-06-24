@@ -6,7 +6,7 @@ test('should ignore css content when build node target', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       output: {
-        targets: ['node'],
+        target: 'node',
       },
     },
   });
@@ -27,7 +27,7 @@ test('should ignore css content when build web-worker target', async () => {
     cwd: __dirname,
     rsbuildConfig: {
       output: {
-        targets: ['web-worker'],
+        target: 'web-worker',
       },
     },
   });

@@ -116,6 +116,11 @@ exports[`plugins/react > should work with swc-loader 1`] = `
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
+        "resolve": {
+          "alias": {
+            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+          },
+        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
@@ -123,7 +128,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -143,14 +148,13 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                   "react": {
                     "development": false,
                     "refresh": true,
                     "runtime": "automatic",
                   },
-                  "useDefineForClassFields": false,
                 },
               },
             },
@@ -165,6 +169,9 @@ exports[`plugins/react > should work with swc-loader 1`] = `
           ],
         },
         "resolve": {
+          "alias": {
+            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+          },
           "fullySpecified": false,
         },
         "use": [
@@ -172,7 +179,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -192,14 +199,13 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                   "react": {
                     "development": false,
                     "refresh": true,
                     "runtime": "automatic",
                   },
-                  "useDefineForClassFields": false,
                 },
               },
             },
@@ -324,7 +330,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
       },
     ],
   },
-  "name": "Client",
+  "name": "web",
   "optimization": {
     "minimize": false,
     "splitChunks": {
@@ -440,6 +446,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
+      "environment": "web",
       "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
@@ -467,7 +474,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
   "resolve": {
     "alias": {
       "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
       "react-refresh": "<ROOT>/node_modules/<PNPM_INNER>/react-refresh",
     },
     "extensions": [

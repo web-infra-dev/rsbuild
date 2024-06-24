@@ -1,6 +1,6 @@
 import { build, webpackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
-import { logger } from '@rsbuild/shared';
+import { logger } from '@rsbuild/core';
 
 webpackOnlyTest('should emit progress log in non-TTY environment', async () => {
   process.stdout.isTTY = false;
@@ -26,10 +26,10 @@ webpackOnlyTest('should emit progress log in non-TTY environment', async () => {
   });
 
   expect(
-    infoMsgs.some((message) => message.includes('Client compile progress')),
+    infoMsgs.some((message) => message.includes('Compile progress')),
   ).toBeTruthy();
   expect(
-    readyMsgs.some((message) => message.includes('Client compiled')),
+    readyMsgs.some((message) => message.includes('Compiled')),
   ).toBeTruthy();
 
   process.stdout.isTTY = true;

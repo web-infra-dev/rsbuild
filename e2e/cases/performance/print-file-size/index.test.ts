@@ -39,10 +39,21 @@ test.describe('should print file size correctly', async () => {
       rsbuildConfig: {
         output: {
           filenameHash: false,
-          targets: ['web', 'node'],
         },
         performance: {
           printFileSize: true,
+        },
+        environments: {
+          web: {
+            output: {
+              target: 'web',
+            },
+          },
+          node: {
+            output: {
+              target: 'node',
+            },
+          },
         },
       },
     });

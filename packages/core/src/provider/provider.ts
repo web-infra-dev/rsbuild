@@ -1,4 +1,4 @@
-import type { CreateCompiler, PreviewServerOptions } from '@rsbuild/shared';
+import type { CreateCompiler } from '@rsbuild/shared';
 import type { RsbuildProvider } from '../types';
 import { initConfigs, initRsbuildConfig } from './initConfigs';
 
@@ -51,12 +51,6 @@ export const rspackProvider: RsbuildProvider = async ({
       );
 
       return server.listen();
-    },
-
-    async preview(options?: PreviewServerOptions) {
-      const { startProdServer } = await import('../server/prodServer');
-      const config = await initRsbuildConfig({ context, pluginManager });
-      return startProdServer(context, config, options);
     },
 
     async build(options) {

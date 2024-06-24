@@ -112,6 +112,7 @@ unplugin
 unshift
 upath
 vitest
+vnode
 watchpack
 webm
 webp

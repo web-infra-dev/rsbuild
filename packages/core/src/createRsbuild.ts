@@ -1,6 +1,9 @@
-import { type PluginManager, debug, pick } from '@rsbuild/shared';
+import type { PluginManager, PreviewServerOptions } from '@rsbuild/shared';
 import { createContext } from './createContext';
+import { pick } from './helpers';
 import { getPluginAPI } from './initPlugins';
+import { initRsbuildConfig } from './internal';
+import { logger } from './logger';
 import { setCssExtractPlugin } from './pluginHelper';
 import { createPluginManager } from './pluginManager';
 import type {
@@ -111,6 +114,7 @@ export const pickRsbuildConfig = (
     'security',
     'performance',
     'moduleFederation',
+    'environments',
     '_privateMeta',
   ];
   return pick(rsbuildConfig, keys);
@@ -138,9 +142,9 @@ export async function createRsbuild(
   const pluginAPI = getPluginAPI({ context, pluginManager });
   context.pluginAPI = pluginAPI;
 
-  debug('add default plugins');
+  logger.debug('add default plugins');
   await applyDefaultPlugins(pluginManager, context);
-  debug('add default plugins done');
+  logger.debug('add default plugins done');
 
   const provider = (rsbuildConfig.provider ||
     (await getRspackProvider())) as RsbuildProvider;
@@ -151,6 +155,12 @@ export async function createRsbuild(
     rsbuildOptions,
     setCssExtractPlugin,
   });
+
+  const preview = async (options?: PreviewServerOptions) => {
+    const { startProdServer } = await import('./server/prodServer');
+    const config = await initRsbuildConfig({ context, pluginManager });
+    return startProdServer(context, config, options);
+  };
 
   const rsbuild = {
     ...pick(pluginManager, [
@@ -177,13 +187,13 @@ export async function createRsbuild(
     ]),
     ...pick(providerInstance, [
       'build',
-      'preview',
       'initConfigs',
       'inspectConfig',
       'createCompiler',
       'createDevServer',
       'startDevServer',
     ]),
+    preview,
     context: pluginAPI.context,
   };
 

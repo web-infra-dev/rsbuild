@@ -1,6 +1,6 @@
 import { logger } from '@rsbuild/core';
 import { color } from '@rsbuild/shared';
-import type { ECMASyntaxError } from '../types';
+import type { ECMASyntaxError, EcmaVersion } from '../types';
 
 type Error = {
   source: string;
@@ -9,7 +9,10 @@ type Error = {
   code: string;
 };
 
-export function printErrors(errors: ECMASyntaxError[]) {
+export function printErrors(
+  errors: ECMASyntaxError[],
+  ecmaVersion: EcmaVersion,
+) {
   if (errors.length === 0) {
     logger.success('The syntax check success.');
     return;
@@ -25,8 +28,10 @@ export function printErrors(errors: ECMASyntaxError[]) {
   }));
 
   const longest = Math.max(...Object.keys(errs[0]).map((err) => err.length));
+
+  const expectedVersion = color.yellow(`ecmaVersion <= ${ecmaVersion}`);
   logger.error(
-    '[Syntax Checker] Find some syntax errors after production build:\n',
+    `[Syntax Checker] Find some syntax that does not match "${expectedVersion}":\n`,
   );
 
   errs.forEach((err, index) => {

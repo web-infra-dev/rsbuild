@@ -1,16 +1,15 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import { join } from 'node:path';
-import {
-  type PreviewServerOptions,
-  type RequestHandler,
-  type ServerConfig,
-  getNodeEnv,
-  isDebug,
-  setNodeEnv,
+import type {
+  PreviewServerOptions,
+  RequestHandler,
+  ServerConfig,
 } from '@rsbuild/shared';
 import type Connect from 'connect';
 import { ROOT_DIST_DIR } from '../constants';
+import { getNodeEnv, setNodeEnv } from '../helpers';
+import { logger } from '../logger';
 import type { InternalContext, NormalizedConfig } from '../types';
 import {
   type StartServerResult,
@@ -55,7 +54,7 @@ export class RsbuildProdServer {
     const { headers, proxy, historyApiFallback, compress } =
       this.options.serverConfig;
 
-    if (isDebug()) {
+    if (logger.level === 'verbose') {
       this.middlewares.use(await getRequestLoggerMiddleware());
     }
 
@@ -191,7 +190,10 @@ export async function startProdServer(
       },
       async () => {
         const routes = formatRoutes(
-          context.entry,
+          Object.values(context.environments).reduce(
+            (prev, context) => Object.assign(prev, context.htmlPaths),
+            {},
+          ),
           config.output.distPath.html,
           config.html.outputStructure,
         );
