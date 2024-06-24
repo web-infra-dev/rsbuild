@@ -1,5 +1,33 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`environment config > should normalize context correctly 1`] = `
+{
+  "ssr": {
+    "browserslist": [
+      "node >= 16",
+    ],
+    "distPath": "<ROOT>/dist1/server",
+    "entry": {},
+    "htmlPaths": {},
+    "target": "node",
+    "tsconfigPath": undefined,
+  },
+  "web": {
+    "browserslist": [
+      "chrome >= 87",
+      "edge >= 88",
+      "firefox >= 78",
+      "safari >= 14",
+    ],
+    "distPath": "<ROOT>/dist1",
+    "entry": {},
+    "htmlPaths": {},
+    "target": "web",
+    "tsconfigPath": undefined,
+  },
+}
+`;
+
 exports[`environment config > should normalize environment config correctly 1`] = `
 {
   "dev": {

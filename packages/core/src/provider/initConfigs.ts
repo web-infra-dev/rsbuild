@@ -7,7 +7,7 @@ import type {
 } from '@rsbuild/shared';
 import { getDefaultEntry, normalizeConfig } from '../config';
 import {
-  updateContextByNormalizedConfig,
+  updateContextByEnvironment,
   updateEnvironmentContext,
 } from '../createContext';
 import { camelCase } from '../helpers';
@@ -117,12 +117,9 @@ export async function initRsbuildConfig({
     environments,
   };
 
-  updateContextByNormalizedConfig(context, context.normalizedConfig);
-
   await updateEnvironmentContext(context, environments);
 
-  // TODO: will remove soon
-  context.targets = Object.values(environments).map((e) => e.output.target);
+  updateContextByEnvironment(context);
 
   return context.normalizedConfig;
 }

@@ -42,17 +42,14 @@ async function createContextByConfig(
 ): Promise<RsbuildContext> {
   const { cwd } = options;
   const rootPath = cwd;
-  const distPath = getAbsoluteDistPath(cwd, config);
   const cachePath = join(rootPath, 'node_modules', '.cache');
   const tsconfigPath = config.source?.tsconfigPath;
 
   return {
-    entry: getEntryObject(config, 'web'),
-    targets: [config.output?.target || 'web'],
     version: RSBUILD_VERSION,
     environments: {},
     rootPath,
-    distPath,
+    distPath: '',
     cachePath,
     bundlerType,
     tsconfigPath: tsconfigPath
@@ -161,30 +158,21 @@ export async function updateEnvironmentContext(
   }
 }
 
-export function updateContextByNormalizedConfig(
-  context: RsbuildContext,
-  config: NormalizedConfig,
-) {
-  context.distPath = getAbsoluteDistPath(context.rootPath, config);
-
-  if (config.source.entry) {
-    context.entry = getEntryObject(config, 'web');
-  }
-
-  if (config.source.tsconfigPath) {
-    context.tsconfigPath = getAbsolutePath(
-      context.rootPath,
-      config.source.tsconfigPath,
-    );
-  }
+export function updateContextByEnvironment(context: RsbuildContext) {
+  // Use shortest distPath path as context distPath
+  context.distPath = Object.values(context.environments).reduce((p, e) => {
+    // foo/dist/server vs foo/dist
+    if (!p || p.startsWith(e.distPath)) {
+      return e.distPath;
+    }
+    return p;
+  }, context.distPath);
 }
 
 export function createPublicContext(
   context: RsbuildContext,
 ): Readonly<RsbuildContext> {
   const exposedKeys = [
-    'entry',
-    'targets',
     'version',
     'rootPath',
     'distPath',
