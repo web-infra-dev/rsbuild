@@ -37,6 +37,19 @@ exports[`plugins/styled-components > should apply styledComponents option to swc
         },
         "isModule": "unknown",
         "jsc": {
+          "experimental": {
+            "plugins": [
+              [
+                "<ROOT>/node_modules/<PNPM_INNER>/@swc/plugin-styled-components/swc_plugin_styled_components.wasm",
+                {
+                  "displayName": true,
+                  "pure": false,
+                  "ssr": false,
+                  "transpileTemplateLiterals": true,
+                },
+              ],
+            ],
+          },
           "externalHelpers": true,
           "parser": {
             "decorators": true,
@@ -47,14 +60,6 @@ exports[`plugins/styled-components > should apply styledComponents option to swc
           "transform": {
             "decoratorVersion": "2022-03",
             "legacyDecorator": false,
-          },
-        },
-        "rspackExperiments": {
-          "styledComponents": {
-            "displayName": true,
-            "pure": false,
-            "ssr": false,
-            "transpileTemplateLiterals": true,
           },
         },
       },
@@ -89,6 +94,19 @@ exports[`plugins/styled-components > should enable ssr option when target contai
         },
         "isModule": "unknown",
         "jsc": {
+          "experimental": {
+            "plugins": [
+              [
+                "<ROOT>/node_modules/<PNPM_INNER>/@swc/plugin-styled-components/swc_plugin_styled_components.wasm",
+                {
+                  "displayName": true,
+                  "pure": false,
+                  "ssr": false,
+                  "transpileTemplateLiterals": true,
+                },
+              ],
+            ],
+          },
           "externalHelpers": true,
           "parser": {
             "decorators": true,
@@ -99,14 +117,6 @@ exports[`plugins/styled-components > should enable ssr option when target contai
           "transform": {
             "decoratorVersion": "2022-03",
             "legacyDecorator": false,
-          },
-        },
-        "rspackExperiments": {
-          "styledComponents": {
-            "displayName": true,
-            "pure": false,
-            "ssr": true,
-            "transpileTemplateLiterals": true,
           },
         },
       },
@@ -152,6 +162,19 @@ exports[`plugins/styled-components > should enable ssr option when target contai
         },
         "isModule": "unknown",
         "jsc": {
+          "experimental": {
+            "plugins": [
+              [
+                "<ROOT>/node_modules/<PNPM_INNER>/@swc/plugin-styled-components/swc_plugin_styled_components.wasm",
+                {
+                  "displayName": true,
+                  "pure": false,
+                  "ssr": false,
+                  "transpileTemplateLiterals": true,
+                },
+              ],
+            ],
+          },
           "externalHelpers": true,
           "parser": {
             "decorators": true,
@@ -162,14 +185,6 @@ exports[`plugins/styled-components > should enable ssr option when target contai
           "transform": {
             "decoratorVersion": "2022-03",
             "legacyDecorator": false,
-          },
-        },
-        "rspackExperiments": {
-          "styledComponents": {
-            "displayName": true,
-            "pure": false,
-            "ssr": true,
-            "transpileTemplateLiterals": true,
           },
         },
       },
