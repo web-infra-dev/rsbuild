@@ -45,9 +45,8 @@ exports[`plugins/styled-components > should apply styledComponents option to swc
           },
           "preserveAllComments": true,
           "transform": {
-            "decoratorMetadata": true,
-            "legacyDecorator": true,
-            "useDefineForClassFields": false,
+            "decoratorVersion": "2022-03",
+            "legacyDecorator": false,
           },
         },
         "rspackExperiments": {
@@ -98,9 +97,8 @@ exports[`plugins/styled-components > should enable ssr option when target contai
           },
           "preserveAllComments": true,
           "transform": {
-            "decoratorMetadata": true,
-            "legacyDecorator": true,
-            "useDefineForClassFields": false,
+            "decoratorVersion": "2022-03",
+            "legacyDecorator": false,
           },
         },
         "rspackExperiments": {
@@ -162,9 +160,8 @@ exports[`plugins/styled-components > should enable ssr option when target contai
           },
           "preserveAllComments": true,
           "transform": {
-            "decoratorMetadata": true,
-            "legacyDecorator": true,
-            "useDefineForClassFields": false,
+            "decoratorVersion": "2022-03",
+            "legacyDecorator": false,
           },
         },
         "rspackExperiments": {

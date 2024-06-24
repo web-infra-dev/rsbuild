@@ -102,7 +102,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     },
     "aliasStrategy": "prefer-tsconfig",
     "decorators": {
-      "version": "legacy",
+      "version": "2022-03",
     },
     "define": {},
     "entry": {
@@ -224,7 +224,7 @@ exports[`environment config > should print environment config when inspect confi
       },
       "aliasStrategy": "prefer-tsconfig",
       "decorators": {
-        "version": "legacy",
+        "version": "2022-03",
       },
       "define": {},
       "entry": {
@@ -342,7 +342,7 @@ exports[`environment config > should print environment config when inspect confi
       },
       "aliasStrategy": "prefer-tsconfig",
       "decorators": {
-        "version": "legacy",
+        "version": "2022-03",
       },
       "define": {},
       "entry": {
@@ -465,7 +465,7 @@ exports[`environment config > should support modify environment config by api.mo
       },
       "aliasStrategy": "prefer-tsconfig",
       "decorators": {
-        "version": "legacy",
+        "version": "2022-03",
       },
       "define": {},
       "entry": {
@@ -584,7 +584,7 @@ exports[`environment config > should support modify environment config by api.mo
       },
       "aliasStrategy": "prefer-tsconfig",
       "decorators": {
-        "version": "legacy",
+        "version": "2022-03",
       },
       "define": {},
       "entry": {
@@ -703,7 +703,7 @@ exports[`environment config > should support modify environment config by api.mo
       },
       "aliasStrategy": "prefer-tsconfig",
       "decorators": {
-        "version": "legacy",
+        "version": "2022-03",
       },
       "define": {},
       "entry": {},

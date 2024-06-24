@@ -79,7 +79,7 @@ const getDefaultSourceConfig = (): NormalizedSourceConfig => ({
   aliasStrategy: 'prefer-tsconfig',
   preEntry: [],
   decorators: {
-    version: 'legacy',
+    version: '2022-03',
   },
 });
 
