@@ -114,12 +114,14 @@ export default {
 export default {
   tools: {
     swc: {
-      rspackExperiments: {
-        relay: true,
+      jsc: {
+        experimental: {
+          plugins: [['@swc/plugin-relay', {}]],
+        },
       },
     },
   },
 };
 ```
 
-更多选项可参考 [Rspack - rspackExperiments.relay](https://rspack.dev/zh/guide/features/builtin-swc-loader#rspackexperimentsrelay)。
+更多选项可参考 [@swc/plugin-relay](https://www.npmjs.com/package/@swc/plugin-relay)。
