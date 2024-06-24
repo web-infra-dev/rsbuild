@@ -7,7 +7,7 @@ import type {
 } from '@rsbuild/shared';
 import { getDefaultEntry, normalizeConfig } from '../config';
 import {
-  updateContextByEnvironment,
+  updateContextByNormalizedConfig,
   updateEnvironmentContext,
 } from '../createContext';
 import { camelCase } from '../helpers';
@@ -119,7 +119,7 @@ export async function initRsbuildConfig({
 
   await updateEnvironmentContext(context, environments);
 
-  updateContextByEnvironment(context);
+  updateContextByNormalizedConfig(context, context.normalizedConfig);
 
   return context.normalizedConfig;
 }

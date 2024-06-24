@@ -158,7 +158,10 @@ export async function updateEnvironmentContext(
   }
 }
 
-export function updateContextByEnvironment(context: RsbuildContext) {
+export function updateContextByNormalizedConfig(
+  context: RsbuildContext,
+  config: NormalizedConfig,
+) {
   // Use shortest distPath path as context distPath
   context.distPath = Object.values(context.environments).reduce((p, e) => {
     // foo/dist/server vs foo/dist
@@ -167,6 +170,13 @@ export function updateContextByEnvironment(context: RsbuildContext) {
     }
     return p;
   }, context.distPath);
+
+  if (config.source.tsconfigPath) {
+    context.tsconfigPath = getAbsolutePath(
+      context.rootPath,
+      config.source.tsconfigPath,
+    );
+  }
 }
 
 export function createPublicContext(
