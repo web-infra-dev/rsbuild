@@ -29,14 +29,14 @@
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
     "vue-loader": "^17.4.0",
-    "webpack": "^5.92.0"
+    "webpack": "^5.92.1"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "typescript": "^5.5.2",
     "vue": "^3.4.19",
-    "webpack": "^5.92.0"
+    "webpack": "^5.92.1"
   },
   "peerDependencies": {
     "@rsbuild/core": "workspace:^0.7.9"
