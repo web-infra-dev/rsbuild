@@ -5,7 +5,6 @@ import type {
   ModifyChainUtils,
   NormalizedEnvironmentConfig,
 } from '@rsbuild/core';
-import { getCoreJsVersion } from '@rsbuild/shared';
 import _ from 'lodash';
 import semver from 'semver';
 import { CORE_JS_DIR, CORE_JS_PKG_PATH, SWC_HELPERS_DIR } from './constants';
@@ -174,12 +173,23 @@ const getDefaultStyledComponentsConfig = (isProd: boolean, ssr: boolean) => {
   };
 };
 
+const getCoreJsVersion = (corejsPkgPath: string) => {
+  try {
+    const rawJson = fs.readFileSync(corejsPkgPath, 'utf-8');
+    const { version } = JSON.parse(rawJson);
+    const [major, minor] = version.split('.');
+    return `${major}.${minor}`;
+  } catch (err) {
+    return '3';
+  }
+};
+
 export async function applyPluginConfig(
   rawOptions: PluginSwcOptions,
   utils: ModifyChainUtils,
   rsbuildConfig: NormalizedEnvironmentConfig,
   rootPath: string,
-  browserslist?: string[],
+  browserslist: string[],
 ): Promise<FinalizedConfig[]> {
   const isUsingFnOptions = typeof rawOptions === 'function';
   const { target, isProd } = utils;
@@ -219,10 +229,8 @@ export async function applyPluginConfig(
     swc.env.coreJs = getCoreJsVersion(CORE_JS_PKG_PATH);
   }
 
-  // If `targets` is not specified manually, we get `browserslist` from project.
-  if (!swc.env.targets && browserslist) {
-    swc.env.targets = browserslist;
-  }
+  // get `browserslist` from project.
+  swc.env.targets = browserslist;
 
   const isSSR = target === 'node';
 

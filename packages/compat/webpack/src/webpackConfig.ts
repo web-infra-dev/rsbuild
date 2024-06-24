@@ -75,7 +75,6 @@ async function getChainUtils(
     web: 'client',
     node: 'server',
     'web-worker': 'web-worker',
-    'service-worker': 'service-worker',
   };
 
   return {

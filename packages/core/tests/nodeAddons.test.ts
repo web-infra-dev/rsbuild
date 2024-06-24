@@ -46,19 +46,4 @@ describe('plugin-node-addons', () => {
 
     expect(config.module).toBeUndefined();
   });
-
-  it('should not add node addons rule when target is service-worker', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginNodeAddons()],
-      rsbuildConfig: {
-        output: {
-          target: 'service-worker',
-        },
-      },
-    });
-
-    const config = await rsbuild.unwrapConfig();
-
-    expect(config.module).toBeUndefined();
-  });
 });

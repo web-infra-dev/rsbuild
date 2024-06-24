@@ -153,7 +153,7 @@ test('formatRoutes', () => {
 });
 
 test('printServerURLs', () => {
-  let message: string | undefined;
+  let message: string | null;
 
   message = printServerURLs({
     port: 3000,
@@ -223,6 +223,15 @@ test('printServerURLs', () => {
       - bar      http:/10.94.62.193:3000/bar
     "
   `);
+
+  message = printServerURLs({
+    port: 3000,
+    protocol: 'http',
+    urls: [],
+    routes: [],
+  });
+
+  expect(message).toEqual(null);
 });
 
 describe('test dev server', () => {

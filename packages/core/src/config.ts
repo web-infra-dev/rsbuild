@@ -1,11 +1,6 @@
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
-import {
-  DEFAULT_ASSET_PREFIX,
-  RspackChain,
-  color,
-  isObject,
-} from '@rsbuild/shared';
+import { RspackChain, color } from '@rsbuild/shared';
 import type {
   InspectConfigOptions,
   NormalizedConfig,
@@ -24,6 +19,7 @@ import type {
 } from '@rsbuild/shared';
 import {
   CSS_DIST_DIR,
+  DEFAULT_ASSET_PREFIX,
   DEFAULT_DATA_URL_SIZE,
   DEFAULT_DEV_HOST,
   DEFAULT_MOUNT_ID,
@@ -36,7 +32,6 @@ import {
   MEDIA_DIST_DIR,
   ROOT_DIST_DIR,
   SERVER_DIST_DIR,
-  SERVICE_WORKER_DIST_DIR,
   SVG_DIST_DIR,
   TS_CONFIG_FILE,
   WASM_DIST_DIR,
@@ -46,6 +41,7 @@ import {
   findExists,
   getNodeEnv,
   isFileExists,
+  isObject,
   upperFirst,
 } from './helpers';
 import { logger } from './logger';
@@ -140,7 +136,6 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
     image: IMAGE_DIST_DIR,
     media: MEDIA_DIST_DIR,
     server: SERVER_DIST_DIR,
-    worker: SERVICE_WORKER_DIST_DIR,
   },
   assetPrefix: DEFAULT_ASSET_PREFIX,
   filename: {},

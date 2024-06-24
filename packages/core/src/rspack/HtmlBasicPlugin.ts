@@ -1,15 +1,14 @@
-import {
-  type HtmlBasicTag,
-  type HtmlTag,
-  type HtmlTagDescriptor,
-  type HtmlTagUtils,
-  type ModifyHTMLTagsFn,
-  isFunction,
+import type {
+  HtmlBasicTag,
+  HtmlTag,
+  HtmlTagDescriptor,
+  HtmlTagUtils,
+  ModifyHTMLTagsFn,
 } from '@rsbuild/shared';
 import type { Compilation, Compiler } from '@rspack/core';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { HtmlTagObject } from 'html-webpack-plugin';
-import { ensureAssetPrefix, partition } from '../helpers';
+import { ensureAssetPrefix, isFunction, partition } from '../helpers';
 import { getHTMLPlugin } from '../pluginHelper';
 
 export type TagConfig = {

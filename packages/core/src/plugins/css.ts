@@ -10,12 +10,10 @@ import {
   type RsbuildTarget,
   type RspackChain,
   deepmerge,
-  isFunction,
-  isPlainObject,
 } from '@rsbuild/shared';
 import type { AcceptedPlugin } from 'postcss';
 import { CSS_REGEX, LOADER_PATH } from '../constants';
-import { getCompiledPath } from '../helpers';
+import { getCompiledPath, isFunction, isPlainObject } from '../helpers';
 import { getCssExtractPlugin } from '../pluginHelper';
 import { reduceConfigs, reduceConfigsWithContext } from '../reduceConfigs';
 import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';

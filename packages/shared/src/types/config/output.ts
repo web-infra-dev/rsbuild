@@ -68,11 +68,6 @@ export type DistPathConfig = {
    * @default 'server'
    */
   server?: string;
-  /**
-   * The output directory of service worker bundles when target is `service-worker`.
-   * @default 'worker'
-   */
-  worker?: string;
 };
 
 export type FilenameConfig = {

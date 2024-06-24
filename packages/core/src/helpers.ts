@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path, { posix } from 'node:path';
 import {
-  DEFAULT_ASSET_PREFIX,
   type FilenameConfig,
   type MultiStats,
   type NodeEnv,
@@ -21,7 +20,7 @@ import type {
   MultiCompiler as WebpackMultiCompiler,
 } from 'webpack';
 import { formatStatsMessages } from './client/format';
-import { COMPILED_PATH } from './constants';
+import { COMPILED_PATH, DEFAULT_ASSET_PREFIX } from './constants';
 import { logger } from './logger';
 
 export const rspackMinVersion = '0.7.0';
@@ -32,6 +31,18 @@ export const setNodeEnv = (env: NodeEnv) => {
 };
 export const isDev = (): boolean => getNodeEnv() === 'development';
 export const isProd = (): boolean => getNodeEnv() === 'production';
+
+export const isNil = (o: unknown): o is undefined | null =>
+  o === undefined || o === null;
+
+export const isFunction = (func: unknown): func is (...args: any[]) => any =>
+  typeof func === 'function';
+
+export const isObject = (obj: unknown): obj is Record<string, any> =>
+  obj !== null && typeof obj === 'object';
+
+export const isPlainObject = (obj: unknown): obj is Record<string, any> =>
+  isObject(obj) && Object.prototype.toString.call(obj) === '[object Object]';
 
 const compareSemver = (version1: string, version2: string) => {
   const parts1 = version1.split('.').map(Number);
@@ -268,6 +279,21 @@ export const getPublicPathFromChain = (
   return formatPublicPath(DEFAULT_ASSET_PREFIX, withSlash);
 };
 
+export const getPublicPathFromCompiler = (compiler: Rspack.Compiler) => {
+  const { publicPath } = compiler.options.output;
+
+  if (typeof publicPath === 'string') {
+    // 'auto' is a magic value in Rspack and behave like `publicPath: ""`
+    if (publicPath === 'auto') {
+      return '';
+    }
+    return publicPath.endsWith('/') ? publicPath : `${publicPath}/`;
+  }
+
+  // publicPath function is not supported yet, fallback to default value
+  return DEFAULT_ASSET_PREFIX;
+};
+
 /**
  * ensure absolute file path.
  * @param base - Base path to resolve relative from.
@@ -322,8 +348,17 @@ export async function emptyDir(dir: string) {
   if (!(await pathExists(dir))) {
     return;
   }
-  for (const file of fs.readdirSync(dir)) {
-    fs.rmSync(path.resolve(dir, file), { recursive: true, force: true });
+
+  try {
+    for (const file of await fs.promises.readdir(dir)) {
+      await fs.promises.rm(path.resolve(dir, file), {
+        recursive: true,
+        force: true,
+      });
+    }
+  } catch (err) {
+    logger.debug(`Failed to empty dir: ${dir}`);
+    logger.debug(err);
   }
 }
 
@@ -343,7 +378,10 @@ export const canParse = (url: string) => {
   }
 };
 
-export const ensureAssetPrefix = (url: string, assetPrefix: string) => {
+export const ensureAssetPrefix = (
+  url: string,
+  assetPrefix = DEFAULT_ASSET_PREFIX,
+) => {
   // The use of an absolute URL without a protocol is technically legal,
   // however it cannot be parsed as a URL instance, just return it.
   // e.g. str is //example.com/foo.js
@@ -355,6 +393,11 @@ export const ensureAssetPrefix = (url: string, assetPrefix: string) => {
   // Only absolute url with hostname & protocol can be parsed into URL instance.
   // e.g. str is https://example.com/foo.js
   if (canParse(url)) {
+    return url;
+  }
+
+  // 'auto' is a magic value in Rspack and behave like `publicPath: ""`
+  if (assetPrefix === 'auto') {
     return url;
   }
 

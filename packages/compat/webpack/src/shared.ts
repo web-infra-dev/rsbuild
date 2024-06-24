@@ -13,7 +13,6 @@ const {
   modifyBundlerChain,
   onCompileDone,
   prettyTime,
-  TARGET_ID_MAP,
 } = __internalHelper;
 
 export {
@@ -29,7 +28,6 @@ export {
   modifyBundlerChain,
   onCompileDone,
   prettyTime,
-  TARGET_ID_MAP,
 };
 
 export type InternalContext = __internalHelper.InternalContext;

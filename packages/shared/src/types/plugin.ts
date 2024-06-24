@@ -5,8 +5,7 @@ import type {
   Configuration as WebpackConfig,
   WebpackPluginInstance,
 } from 'webpack';
-import type { ChainIdentifier } from '../chain';
-import type { RspackChain } from '../chain';
+import type { ChainIdentifier, RspackChain } from '..';
 import type {
   ModifyRspackConfigUtils,
   NormalizedConfig,
