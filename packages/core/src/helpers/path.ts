@@ -6,7 +6,7 @@ export function getCommonParentPath(paths: string[]) {
     return paths[0];
   }
 
-  const [first, ...rest] = paths.map((item) => item.split(sep));
+  const [first, ...rest] = [...new Set(paths)].map((p) => p.split(sep));
   const common = [];
 
   for (let i = 0; i < first.length; i++) {
