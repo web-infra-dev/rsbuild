@@ -2,11 +2,13 @@ name: Release Nightly
 
 on:
   workflow_dispatch:
+  # Nightly release disabled
   # schedule:
     # 00:00 AM Beijing Time.
     # - cron: "0 16 * * *"
 
 permissions:
+  # To publish packages with provenance
   id-token: write
 
 jobs:
