@@ -5,7 +5,7 @@ export function getCommonParentPath(paths: string[]) {
   const uniquePaths = [...new Set(paths)];
 
   if (uniquePaths.length === 1) {
-    return paths[0];
+    return uniquePaths[0];
   }
 
   const [first, ...rest] = uniquePaths.map((p) => p.split(sep));
