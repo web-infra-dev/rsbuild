@@ -96,16 +96,18 @@ export function pluginSourceBuild(
         }
       });
 
-      const getReferences = async (): Promise<string[]> => {
+      const getReferences = async (
+        tsconfigPath?: string,
+      ): Promise<string[]> => {
         const refers = projects
           .map((project) => path.join(project.dir, 'tsconfig.json'))
           .filter((filePath) => fs.existsSync(filePath));
 
         // merge with user references
-        if (api.context.tsconfigPath) {
+        if (tsconfigPath) {
           const { default: json5 } = await import('json5');
           const { references } = json5.parse(
-            fs.readFileSync(api.context.tsconfigPath, 'utf-8'),
+            fs.readFileSync(tsconfigPath, 'utf-8'),
           );
 
           return Array.isArray(references)
@@ -120,27 +122,31 @@ export function pluginSourceBuild(
       };
 
       if (api.context.bundlerType === 'rspack') {
-        api.modifyRspackConfig(async (config) => {
-          if (!api.context.tsconfigPath) {
+        api.modifyRspackConfig(async (config, { environment }) => {
+          const { tsconfigPath } = api.context.environments[environment];
+
+          if (!tsconfigPath) {
             return;
           }
 
           config.resolve ||= {};
           config.resolve.tsConfig = {
             ...config.resolve.tsConfig,
-            configFile: api.context.tsconfigPath,
-            references: await getReferences(),
+            configFile: tsconfigPath,
+            references: await getReferences(tsconfigPath),
           };
         });
       } else {
-        api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
+        api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
           const { TS_CONFIG_PATHS } = CHAIN_ID.RESOLVE_PLUGIN;
 
           if (!chain.resolve.plugins.has(TS_CONFIG_PATHS)) {
             return;
           }
 
-          const references = await getReferences();
+          const { tsconfigPath } = api.context.environments[environment];
+
+          const references = await getReferences(tsconfigPath);
 
           // set references config
           // https://github.com/dividab/tsconfig-paths-webpack-plugin#options

@@ -1,4 +1,5 @@
-import { isAbsolute, join } from 'node:path';
+import path from 'node:path';
+import { isAbsolute, join, sep } from 'node:path';
 import type {
   BundlerType,
   NormalizedEnvironmentConfig,
@@ -42,17 +43,14 @@ async function createContextByConfig(
 ): Promise<RsbuildContext> {
   const { cwd } = options;
   const rootPath = cwd;
-  const distPath = getAbsoluteDistPath(cwd, config);
   const cachePath = join(rootPath, 'node_modules', '.cache');
   const tsconfigPath = config.source?.tsconfigPath;
 
   return {
-    entry: getEntryObject(config, 'web'),
-    targets: [config.output?.target || 'web'],
     version: RSBUILD_VERSION,
     environments: {},
     rootPath,
-    distPath,
+    distPath: '',
     cachePath,
     bundlerType,
     tsconfigPath: tsconfigPath
@@ -165,11 +163,28 @@ export function updateContextByNormalizedConfig(
   context: RsbuildContext,
   config: NormalizedConfig,
 ) {
-  context.distPath = getAbsoluteDistPath(context.rootPath, config);
+  // Try to get the parent distPath of context.environments as context.distPath
+  context.distPath = Object.values(context.environments).reduce((p, e) => {
+    // foo/dist/server vs foo/dist
+    if (!p || p.startsWith(e.distPath)) {
+      return e.distPath;
+    }
 
-  if (config.source.entry) {
-    context.entry = getEntryObject(config, 'web');
-  }
+    if (e.distPath.startsWith(p)) {
+      return p;
+    }
+
+    const p1 = p.split(sep);
+    const p2 = e.distPath.split(sep);
+
+    let i = 0;
+
+    while (i <= p1.length && i <= p2.length && p1[i] === p2[i]) {
+      i++;
+    }
+
+    return p1.slice(0, i).join(path.sep);
+  }, context.distPath);
 
   if (config.source.tsconfigPath) {
     context.tsconfigPath = getAbsolutePath(
@@ -183,8 +198,6 @@ export function createPublicContext(
   context: RsbuildContext,
 ): Readonly<RsbuildContext> {
   const exposedKeys = [
-    'entry',
-    'targets',
     'version',
     'rootPath',
     'distPath',

@@ -59,6 +59,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
     api.modifyBundlerChain(
       async (chain, { CHAIN_ID, target, isProd, isServer, environment }) => {
         const config = api.getNormalizedConfig({ environment });
+        const { distPath } = api.context.environments[environment];
 
         const publicPath = getPublicPath({
           config,
@@ -75,7 +76,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
         const isJsFilenameFn = typeof jsFilename === 'function';
 
         chain.output
-          .path(api.context.distPath)
+          .path(distPath)
           .filename(
             isJsFilenameFn
               ? (...args) => {
@@ -105,7 +106,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
           const serverPath = config.output.distPath.server;
 
           chain.output
-            .path(posix.join(api.context.distPath, serverPath))
+            .path(posix.join(distPath, serverPath))
             .filename('[name].js')
             .chunkFilename('[name].js')
             .library({

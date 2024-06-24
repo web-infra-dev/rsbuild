@@ -1117,7 +1117,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       ],
     },
     "cacheDirectory": "<ROOT>/packages/compat/webpack/tests/node_modules/.cache/webpack",
-    "name": "web-worker-production",
+    "name": "webWorker-production",
     "type": "filesystem",
   },
   "context": "<ROOT>/packages/compat/webpack/tests",

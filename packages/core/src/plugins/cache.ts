@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
 import type { BuildCacheOptions, RsbuildContext } from '@rsbuild/shared';
 import { findExists, isFileExists } from '../helpers';
-import type { NormalizedConfig, RsbuildPlugin } from '../types';
+import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
 
 async function validateCache(
   cacheDirectory: string,
@@ -57,7 +57,8 @@ function getCacheDirectory(
  */
 async function getBuildDependencies(
   context: Readonly<RsbuildContext>,
-  config: NormalizedConfig,
+  config: NormalizedEnvironmentConfig,
+  environment: string,
 ) {
   const rootPackageJson = join(context.rootPath, 'package.json');
   const browserslistConfig = join(context.rootPath, '.browserslistrc');
@@ -67,9 +68,10 @@ async function getBuildDependencies(
   if (await isFileExists(rootPackageJson)) {
     buildDependencies.packageJson = [rootPackageJson];
   }
+  const { tsconfigPath } = context.environments[environment];
 
-  if (context.tsconfigPath) {
-    buildDependencies.tsconfig = [context.tsconfigPath];
+  if (tsconfigPath) {
+    buildDependencies.tsconfig = [tsconfigPath];
   }
 
   if (config._privateMeta?.configFilePath) {
@@ -102,8 +104,8 @@ export const pluginCache = (): RsbuildPlugin => ({
       return;
     }
 
-    api.modifyBundlerChain(async (chain, { target, env }) => {
-      const config = api.getNormalizedConfig();
+    api.modifyBundlerChain(async (chain, { environment, env }) => {
+      const config = api.getNormalizedConfig({ environment });
       const { buildCache } = config.performance;
 
       if (buildCache === false) {
@@ -114,7 +116,11 @@ export const pluginCache = (): RsbuildPlugin => ({
       const { context } = api;
       const cacheConfig = typeof buildCache === 'boolean' ? {} : buildCache;
       const cacheDirectory = getCacheDirectory(cacheConfig, context);
-      const buildDependencies = await getBuildDependencies(context, config);
+      const buildDependencies = await getBuildDependencies(
+        context,
+        config,
+        environment,
+      );
 
       await validateCache(cacheDirectory, buildDependencies);
 
@@ -126,8 +132,8 @@ export const pluginCache = (): RsbuildPlugin => ({
         // The default cache name of webpack is '${name}-${env}', and the `name` is `default` by default.
         // We set cache name to avoid cache conflicts of different targets.
         name: useDigest
-          ? `${target}-${env}-${getDigestHash(cacheConfig.cacheDigest!)}`
-          : `${target}-${env}`,
+          ? `${environment}-${env}-${getDigestHash(cacheConfig.cacheDigest!)}`
+          : `${environment}-${env}`,
         type: 'filesystem',
         cacheDirectory,
         buildDependencies,

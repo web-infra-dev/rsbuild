@@ -34,16 +34,17 @@ export const pluginTypeCheck = (
     name: PLUGIN_TYPE_CHECK_NAME,
 
     setup(api) {
-      api.modifyBundlerChain(async (chain, { target, isProd }) => {
+      api.modifyBundlerChain(async (chain, { isProd, environment }) => {
         const { enable = true, forkTsCheckerOptions } = options;
+        const { tsconfigPath } = api.context.environments[environment];
 
-        if (!api.context.tsconfigPath || enable === false) {
+        if (!tsconfigPath || enable === false) {
           return;
         }
 
-        // If there is multiple target, only apply type checker to the first target
+        // If there is multiple environment, only apply type checker to the first target
         // to avoid multiple type checker running at the same time
-        if (target !== api.context.targets[0]) {
+        if (environment !== Object.keys(api.context.environments)[0]) {
           return;
         }
 
@@ -66,7 +67,7 @@ export const pluginTypeCheck = (
 
         const { default: json5 } = await import('json5');
         const { references } = json5.parse(
-          fs.readFileSync(api.context.tsconfigPath, 'utf-8'),
+          fs.readFileSync(tsconfigPath, 'utf-8'),
         );
         const useReference = Array.isArray(references) && references.length > 0;
 
@@ -80,7 +81,7 @@ export const pluginTypeCheck = (
             // avoid OOM issue
             memoryLimit: 8192,
             // use tsconfig of user project
-            configFile: api.context.tsconfigPath,
+            configFile: tsconfigPath,
             // use typescript of user project
             typescriptPath,
           },
