@@ -34,6 +34,13 @@ export const pluginTypeCheck = (
     name: PLUGIN_TYPE_CHECK_NAME,
 
     setup(api) {
+      const checkedTsconfig = new Map<
+        // tsconfig path
+        string,
+        // environment
+        string
+      >();
+
       api.modifyBundlerChain(async (chain, { isProd, environment }) => {
         const { enable = true, forkTsCheckerOptions } = options;
         const { tsconfigPath } = api.context.environments[environment];
@@ -42,11 +49,15 @@ export const pluginTypeCheck = (
           return;
         }
 
-        // If there is multiple environment, only apply type checker to the first target
-        // to avoid multiple type checker running at the same time
-        if (environment !== Object.keys(api.context.environments)[0]) {
+        // If there are identical tsconfig.json files,
+        // apply type checker only once to avoid duplicate checks.
+        if (
+          checkedTsconfig.has(tsconfigPath) &&
+          checkedTsconfig.get(tsconfigPath) !== environment
+        ) {
           return;
         }
+        checkedTsconfig.set(tsconfigPath, environment);
 
         // use typescript of user project
         let typescriptPath: string;
