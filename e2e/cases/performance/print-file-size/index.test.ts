@@ -33,7 +33,7 @@ test.describe('should print file size correctly', async () => {
     expect(logs.some((log) => log.includes('Gzipped size:'))).toBeTruthy();
   });
 
-  test('should print size of multiple targets correctly', async () => {
+  test('should print size of multiple environments correctly', async () => {
     await build({
       cwd,
       rsbuildConfig: {
@@ -60,6 +60,10 @@ test.describe('should print file size correctly', async () => {
 
     // dist/index.html
     expect(
+      logs.some((log) => log.includes('File') && log.includes('(web)')),
+    ).toBeTruthy();
+
+    expect(
       logs.some(
         (log) =>
           log.includes('index.html') &&
@@ -69,6 +73,9 @@ test.describe('should print file size correctly', async () => {
     ).toBeTruthy();
 
     // dist/server/index.js
+    expect(
+      logs.some((log) => log.includes('File') && log.includes('(node)')),
+    ).toBeTruthy();
     expect(
       logs.some(
         (log) =>
