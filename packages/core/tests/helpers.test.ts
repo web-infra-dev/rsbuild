@@ -1,4 +1,5 @@
 import { ensureAssetPrefix, pick, prettyTime } from '../src/helpers';
+import { getCommonParentPath } from '../src/helpers/path';
 import { normalizeUrl } from '../src/server/helper';
 
 test('should pretty time correctly', () => {
@@ -72,5 +73,33 @@ describe('ensureAssetPrefix', () => {
     );
     expect(ensureAssetPrefix('//foo.com/bar.js', '/')).toBe('//foo.com/bar.js');
     expect(ensureAssetPrefix('/bar.js', '//foo.com')).toBe('//foo.com/bar.js');
+  });
+});
+
+describe('getCommonParentPath', () => {
+  it('should return the common parent path for given paths', () => {
+    const paths = [
+      '/home/user/project/dist',
+      '/home/user/project/dist/sub1',
+      '/home/user/project/dist/sub2',
+    ];
+    const result = getCommonParentPath(paths);
+    expect(result).toBe('/home/user/project/dist');
+
+    const paths2 = ['/home/user/project/dist1', '/home/user/project/dist2'];
+    const result2 = getCommonParentPath(paths2);
+    expect(result2).toBe('/home/user/project');
+  });
+
+  it('should return empty string if there is no common parent path', () => {
+    const paths = ['/home/user/project/dist', '/home2/user/project/dist'];
+    const result = getCommonParentPath(paths);
+    expect(result).toBe('');
+  });
+
+  it('should handle single path input', () => {
+    const paths = ['/home/user/project/dist1'];
+    const result = getCommonParentPath(paths);
+    expect(result).toBe('/home/user/project/dist1');
   });
 });
