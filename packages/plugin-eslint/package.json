@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "eslint-webpack-plugin": "^4.2.0",
-    "webpack": "^5.92.0"
+    "webpack": "^5.92.1"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
