@@ -17,10 +17,9 @@ exports[`plugin-solid > should allow to configure solid preset options 1`] = `
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
                   {
-                    "version": "legacy",
+                    "version": "2022-03",
                   },
                 ],
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
                 ],
@@ -75,10 +74,9 @@ exports[`plugin-solid > should apply solid preset correctly 1`] = `
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
                   {
-                    "version": "legacy",
+                    "version": "2022-03",
                   },
                 ],
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
                 ],
@@ -130,10 +128,9 @@ exports[`plugin-solid > should apply solid preset correctly in rspack mode 1`] =
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
                   {
-                    "version": "legacy",
+                    "version": "2022-03",
                   },
                 ],
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/babel.cjs",
                 ],

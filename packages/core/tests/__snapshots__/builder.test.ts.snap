@@ -131,9 +131,8 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -178,9 +177,8 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
