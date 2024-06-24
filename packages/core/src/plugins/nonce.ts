@@ -14,7 +14,7 @@ export const pluginNonce = (): RsbuildPlugin => ({
         },
       );
 
-      if (!nonces.find((nonce) => !!nonce)) {
+      if (!nonces.some((nonce) => !!nonce)) {
         return;
       }
 
