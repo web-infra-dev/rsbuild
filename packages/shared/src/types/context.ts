@@ -16,18 +16,18 @@ export type RsbuildContext = {
   /** The Rsbuild core version. */
   version: string;
   /** The entry points object. */
-  entry: RsbuildEntry;
+  // entry: RsbuildEntry;
   /** The build targets type. */
-  targets: RsbuildTarget[];
+  // targets: RsbuildTarget[];
   environments: Record<string, EnvironmentContext>;
   /** The root path of current project. */
   rootPath: string;
   /** Absolute path of output files. */
-  distPath: string;
+  // distPath: string;
   /** Absolute path of cache files. */
   cachePath: string;
   /** Absolute path of tsconfig.json. */
-  tsconfigPath?: string;
+  // tsconfigPath?: string;
   /** Info of dev server  */
   devServer?: {
     hostname: string;

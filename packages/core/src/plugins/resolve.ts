@@ -104,13 +104,14 @@ export const pluginResolve = (): RsbuildPlugin => ({
     });
 
     api.modifyRspackConfig(async (rspackConfig, { environment }) => {
-      const isTsProject = Boolean(api.context.tsconfigPath);
+      const { tsconfigPath } = api.context.environments[environment];
+      const isTsProject = Boolean(tsconfigPath);
       const config = api.getNormalizedConfig({ environment });
 
       rspackConfig.resolve ||= {};
 
       if (isTsProject && config.source.aliasStrategy === 'prefer-tsconfig') {
-        rspackConfig.resolve.tsConfigPath = api.context.tsconfigPath;
+        rspackConfig.resolve.tsConfigPath = tsconfigPath;
       }
     });
   },
