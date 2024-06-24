@@ -1,5 +1,4 @@
 import { existsSync } from 'node:fs';
-import { join } from 'node:path';
 import { type RsbuildMode, color } from '@rsbuild/shared';
 import { type Command, program } from 'commander';
 import { isEmptyDir } from '../helpers';
