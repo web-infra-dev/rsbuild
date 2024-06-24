@@ -33,3 +33,72 @@ exports[`plugin-bundle-analyze > should add bundle analyze plugin 1`] = `
   ],
 }
 `;
+
+exports[`plugin-bundle-analyze > should add bundle analyze plugin when bundle analyze is enabled in environments 1`] = `
+{
+  "plugins": [
+    BundleAnalyzerPlugin {
+      "logger": Logger {
+        "activeLevels": Set {
+          "info",
+          "warn",
+          "error",
+          "silent",
+        },
+      },
+      "opts": {
+        "analyzerHost": "127.0.0.1",
+        "analyzerMode": "static",
+        "analyzerPort": 8888,
+        "analyzerUrl": [Function],
+        "defaultSizes": "parsed",
+        "excludeAssets": null,
+        "generateStatsFile": false,
+        "logLevel": "info",
+        "openAnalyzer": false,
+        "reportFilename": "index$$.html",
+        "reportTitle": [Function],
+        "startAnalyzer": true,
+        "statsFilename": "stats.json",
+        "statsOptions": null,
+      },
+      "server": null,
+    },
+  ],
+}
+`;
+
+exports[`plugin-bundle-analyze > should enable bundle analyze plugin when performance.profile is enable 1`] = `
+{
+  "plugins": [
+    BundleAnalyzerPlugin {
+      "logger": Logger {
+        "activeLevels": Set {
+          "info",
+          "warn",
+          "error",
+          "silent",
+        },
+      },
+      "opts": {
+        "analyzerHost": "127.0.0.1",
+        "analyzerMode": "disabled",
+        "analyzerPort": 8888,
+        "analyzerUrl": [Function],
+        "defaultSizes": "parsed",
+        "excludeAssets": null,
+        "generateStatsFile": true,
+        "logLevel": "info",
+        "openAnalyzer": false,
+        "reportFilename": "report-web.html",
+        "reportTitle": [Function],
+        "startAnalyzer": true,
+        "statsFilename": "stats.json",
+        "statsOptions": null,
+      },
+      "server": null,
+    },
+  ],
+  "profile": true,
+}
+`;
