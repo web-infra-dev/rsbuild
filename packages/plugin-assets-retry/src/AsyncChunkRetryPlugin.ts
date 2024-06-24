@@ -98,9 +98,12 @@ class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
         const constructorName = isRspack
           ? module.constructorName
           : module.constructor?.name;
+
         const isPublicPathModule =
           module.name === 'publicPath' ||
-          constructorName === 'PublicPathRuntimeModule';
+          constructorName === 'PublicPathRuntimeModule' ||
+          constructorName === 'AutoPublicPathRuntimeModule';
+
         if (!isPublicPathModule) {
           return;
         }
@@ -108,7 +111,7 @@ class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
         const runtimeCode = this.getRawRuntimeRetryCode();
 
         // Rspack currently does not have module.addRuntimeModule on the js side,
-        // so we insert our runtime code after PublicPathRuntimeModule.
+        // so we insert our runtime code after PublicPathRuntimeModule or AutoPublicPathRuntimeModule.
         if (isRspack) {
           appendRspackScript(module, runtimeCode);
         } else {
