@@ -86,9 +86,11 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
     api.onBeforeStartDevServer(onStart);
 
     api.onAfterBuild(async ({ stats }) => {
-      const profileDir = path.join(api.context.distPath, profileDirName);
-
-      const loggingFilePath = path.join(profileDir, 'logging.json');
+      const loggingFilePath = path.join(
+        api.context.distPath,
+        profileDirName,
+        'logging.json',
+      );
 
       if (enableLogging && stats) {
         const logging = stats.toJson({
