@@ -1,6 +1,6 @@
 import type { RuleSetCondition } from '@rspack/core';
-import type { RsbuildEntry, RsbuildTarget } from '../rsbuild';
-import type { ConfigChain, ConfigChainMergeContext } from '../utils';
+import type { RsbuildEntry } from '../rsbuild';
+import type { ConfigChain } from '../utils';
 
 export type Alias = Record<string, string | false | (string | false)[]>;
 
@@ -39,7 +39,7 @@ export interface SourceConfig {
   /**
    * Set the entry modules.
    */
-  entry?: ConfigChainMergeContext<RsbuildEntry, { target: RsbuildTarget }>;
+  entry?: RsbuildEntry;
   /**
    * Specifies that certain files that will be excluded from compilation.
    */

@@ -45,7 +45,7 @@ export default {
 
 ## 基于 environment 设置
 
-当你面向多个 environment 构建时，可以为每个 environment 设置不同的 browserslist：
+当你面向多个 [environments](/config/environments) 构建时，可以为每个 environment 设置不同的 browserslist：
 
 比如为 `web` 和 `node` 环境设置不同的 browserslist：
 
@@ -54,11 +54,13 @@ export default {
   environments: {
     web: {
       output: {
+        target: 'web',
         overrideBrowserslist: ['iOS >= 9', 'Android >= 4.4'],
       },
     },
     node: {
       output: {
+        target: 'node',
         overrideBrowserslist: ['node >= 20'],
       },
     },

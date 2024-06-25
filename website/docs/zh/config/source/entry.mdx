@@ -3,7 +3,7 @@
 - **类型：**
 
 ```ts
-type Entry = Record<string, string | string[] | EntryDescription> | Function;
+type Entry = Record<string, string | string[] | EntryDescription>;
 ```
 
 - **默认值：**
@@ -96,6 +96,39 @@ export default {
   },
   output: {
     targets: ['web', 'node'],
+  },
+};
+```
+
+## 基于 environment 设置
+
+当你面向多个 [environments](/config/environments) 构建时，可以为每个 environment 设置不同的 entry：
+
+比如为 `web` 和 `node` 环境设置不同的 entry：
+
+```js
+export default {
+  environments: {
+    web: {
+      source: {
+        entry: {
+          index: './src/index.client.js',
+        },
+      },
+      output: {
+        target: 'web',
+      },
+    },
+    node: {
+      source: {
+        entry: {
+          index: './src/index.server.js',
+        },
+      },
+      output: {
+        target: 'node',
+      },
+    },
   },
 };
 ```
