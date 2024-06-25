@@ -20,7 +20,7 @@ importers:
         version: 2.27.5
       '@modern-js/module-tools':
         specifier: ^2.54.1
-        version: 2.54.1(typescript@5.5.2)
+        version: 2.54.1(eslint@9.5.0)(typescript@5.5.2)
       '@rsbuild/config':
         specifier: workspace:*
         version: link:scripts/config
@@ -882,7 +882,7 @@ importers:
         version: 5.0.4
       html-webpack-plugin:
         specifier: npm:html-rspack-plugin@5.7.2
-        version: html-rspack-plugin@5.7.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))
+        version: html-rspack-plugin@5.7.2(@rspack/core@0.7.4(@swc/helpers@0.5.11))
       terser:
         specifier: 5.31.1
         version: 5.31.1
@@ -1054,7 +1054,7 @@ importers:
         version: 4.2.0
       less-loader:
         specifier: ^12.2.0
-        version: 12.2.0(@rspack/core@0.7.4(@swc/helpers@0.5.3))(less@4.2.0)(webpack@5.92.1)
+        version: 12.2.0(@rspack/core@0.7.4(@swc/helpers@0.5.11))(less@4.2.0)(webpack@5.92.1)
       prebundle:
         specifier: 1.1.0
         version: 1.1.0(typescript@5.5.2)
@@ -1252,7 +1252,7 @@ importers:
         version: link:../../scripts/test-helper
       html-webpack-plugin:
         specifier: npm:html-rspack-plugin@5.7.2
-        version: html-rspack-plugin@5.7.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))
+        version: html-rspack-plugin@5.7.2(@rspack/core@0.7.4(@swc/helpers@0.5.11))
       postcss-pxtorem:
         specifier: 6.1.0
         version: 6.1.0(postcss@8.4.38)
@@ -1295,7 +1295,7 @@ importers:
         version: 5.0.0
       sass-loader:
         specifier: ^14.2.1
-        version: 14.2.1(@rspack/core@0.7.4(@swc/helpers@0.5.3))(sass-embedded@1.77.5)(sass@1.77.6)(webpack@5.92.1)
+        version: 14.2.1(@rspack/core@0.7.4(@swc/helpers@0.5.11))(sass-embedded@1.77.5)(sass@1.77.6)(webpack@5.92.1)
       typescript:
         specifier: ^5.5.2
         version: 5.5.2
@@ -1382,7 +1382,7 @@ importers:
         version: 0.63.0
       stylus-loader:
         specifier: 8.1.0
-        version: 8.1.0(@rspack/core@0.7.4(@swc/helpers@0.5.3))(stylus@0.63.0)(webpack@5.92.1)
+        version: 8.1.0(@rspack/core@0.7.4(@swc/helpers@0.5.11))(stylus@0.63.0)(webpack@5.92.1)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1403,8 +1403,8 @@ importers:
         specifier: 3.2.3
         version: 3.2.3(svelte@4.2.18)
       svelte-preprocess:
-        specifier: ^5.1.4
-        version: 5.1.4(@babel/core@7.24.7)(less@4.2.0)(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(pug@3.0.3)(sass@1.77.6)(stylus@0.63.0)(svelte@4.2.18)(typescript@5.5.2)
+        specifier: ^6.0.1
+        version: 6.0.1(@babel/core@7.24.7)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.38)(tsx@4.14.0)(yaml@2.4.5))(postcss@8.4.38)(pug@3.0.3)(sass@1.77.6)(stylus@0.63.0)(svelte@4.2.18)(typescript@5.5.2)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1591,7 +1591,7 @@ importers:
         version: link:../shared
       vue-loader:
         specifier: ^15.11.1
-        version: 15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))(webpack@5.92.1))(lodash@4.17.21)(prettier@3.3.2)(pug@3.0.3)(webpack@5.92.1)
+        version: 15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.11))(webpack@5.92.1))(lodash@4.17.21)(prettier@3.3.2)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.92.1)
       webpack:
         specifier: ^5.92.1
         version: 5.92.1
@@ -4462,9 +4462,6 @@ packages:
   buffer-builder@0.2.0:
     resolution: {integrity: sha512-7VPMEPuYznPSoR21NE1zvd2Xna6c/CloiZCfcMXR1Jny6PjX0N4Nsa38zcBFo/FMK+BlA+FLKbJCQ0i2yxp+Xg==}
 
-  buffer-crc32@0.2.13:
-    resolution: {integrity: sha512-VO9Ht/+p3SN7SKWqcrgEzjGbRSJYTx+Q1pTQC0wrWqHx0vpJraQ6GtHx8tvcg1rlK1byhU5gccxgOgj7B0TDkQ==}
-
   buffer-from@1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
 
@@ -5294,9 +5291,6 @@ packages:
 
   es-module-lexer@1.5.0:
     resolution: {integrity: sha512-pqrTKmwEIgafsYZAGw9kszYzmagcE/n4dbgwGWLEXg7J4QFJVQRBld8j3Q3GNez79jzxZshq0bcT962QHOghjw==}
-
-  es6-promise@3.3.1:
-    resolution: {integrity: sha512-SOp9Phqvqn7jtEUxPWdWfWoLmyt2VaJ6MpvP9Comy1MceMXqE6bxvaTu4iaxpYYPzhny28Lc+M87/c2cPK6lDg==}
 
   esbuild@0.19.12:
     resolution: {integrity: sha512-aARqgq8roFBj054KvQr5f1sFu0D65G+miZRCuJyJ0G13Zwx7vRar5Zhn2tkQNzIXcBrNVsv/8stehpj+GAjgbg==}
@@ -6858,10 +6852,6 @@ packages:
     resolution: {integrity: sha512-5H76ANWinB1H3twpJ6JY8uvAtpmFvHNArpilJAjXRKXSDDLPIMoZArw5SH0q9z+lLs8IrMw7Q2VWpWimFKFT1Q==}
     engines: {node: '>= 8.0.0'}
 
-  mkdirp@0.5.6:
-    resolution: {integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==}
-    hasBin: true
-
   mlly@1.6.1:
     resolution: {integrity: sha512-vLgaHvaeunuOXHSmEbZ9izxPx3USsk8KCQ8iC+aTlp5sKRSoZvwhHh5L9VbKSaVC6sJDqbyohIS76E2VmHIPAA==}
 
@@ -7853,11 +7843,6 @@ packages:
     resolution: {integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
 
-  rimraf@2.7.1:
-    resolution: {integrity: sha512-uWjbaKIK3T1OSVptzX7Nl6PvQ3qAGtKEtVRjRuazjfL3Bx5eI409VZSqgND+4UNnmzLVdPj9FqFJNPqBZFve4w==}
-    deprecated: Rimraf versions prior to v4 are no longer supported
-    hasBin: true
-
   ripemd160@2.0.2:
     resolution: {integrity: sha512-ii4iagi25WusVoiC4B4lq7pbXfAp3D9v5CwfkY33vffw2+pkDjY1D8GaN7spsxvCSx8dkPqOZCEZyfxcmJG2IA==}
 
@@ -7940,9 +7925,6 @@ packages:
 
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
-
-  sander@0.5.1:
-    resolution: {integrity: sha512-3lVqBir7WuKDHGrKRDn/1Ye3kwpXaDOMsiRP1wd6wpZW56gJhsbp5RqQpA6JG/P+pkXizygnr1dKR8vzWaVsfA==}
 
   sass-embedded-android-arm64@1.77.5:
     resolution: {integrity: sha512-t4yIhK5OUpg1coZxFpDo3BhI2YVj21JxEd5SVI6FfcWD2ESroQWsC4cbq3ejw5aun8R1Kx6xH1EKxO8bSMvn1g==}
@@ -8244,10 +8226,6 @@ packages:
     peerDependencies:
       solid-js: ^1.3
 
-  sorcery@0.11.0:
-    resolution: {integrity: sha512-J69LQ22xrQB1cIFJhPfgtLuI6BpWRiWu1Y3vSsIwK/eAScqJxd/+CJlUuHQRdX2C9NGFamq+KqNywGgaThwfHw==}
-    hasBin: true
-
   source-list-map@2.0.1:
     resolution: {integrity: sha512-qnQ7gVMxGNxsiL4lEuJwe/To8UnK7fAnmbGEEH8RpLouuKbeEm0lhbQVFIrNSuB+G7tVrAlVsZgETT5nljf+Iw==}
 
@@ -8461,21 +8439,21 @@ packages:
     peerDependencies:
       svelte: ^3.0.0 || ^4.0.0-next.0 || ^5.0.0-next.1
 
-  svelte-preprocess@5.1.4:
-    resolution: {integrity: sha512-IvnbQ6D6Ao3Gg6ftiM5tdbR6aAETwjhHV+UKGf5bHGYR69RQvF1ho0JKPcbUON4vy4R7zom13jPjgdOWCQ5hDA==}
-    engines: {node: '>= 16.0.0'}
+  svelte-preprocess@6.0.1:
+    resolution: {integrity: sha512-vNgXoyqWwahdpEX9XbQHcAHt41TkXnf8bRDxT5PjISHbZD1dVH4b2OsJ2fVQTBb3qP05x0GuYE9iS5vhD+Dniw==}
+    engines: {node: '>= 18.0.0'}
     peerDependencies:
       '@babel/core': ^7.10.2
       coffeescript: ^2.5.1
       less: ^3.11.3 || ^4.0.0
       postcss: ^7 || ^8
-      postcss-load-config: ^2.1.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
+      postcss-load-config: '>=3'
       pug: ^3.0.0
       sass: ^1.26.8
-      stylus: ^0.55.0
+      stylus: '>=0.55'
       sugarss: ^2.0.0 || ^3.0.0 || ^4.0.0
-      svelte: ^3.23.0 || ^4.0.0-next.0 || ^4.0.0 || ^5.0.0-next.0
-      typescript: '>=3.9.5 || ^4.0.0 || ^5.0.0'
+      svelte: ^4.0.0 || ^5.0.0-next.100 || ^5.0.0
+      typescript: ^5.0.0
     peerDependenciesMeta:
       '@babel/core':
         optional: true
@@ -10742,7 +10720,7 @@ snapshots:
       '@modern-js/utils': 2.54.1
       '@swc/helpers': 0.5.3
 
-  '@modern-js/module-tools@2.54.1(typescript@5.5.2)':
+  '@modern-js/module-tools@2.54.1(eslint@9.5.0)(typescript@5.5.2)':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@ast-grep/napi': 0.16.0
@@ -10752,7 +10730,7 @@ snapshots:
       '@modern-js/plugin': 2.54.1
       '@modern-js/plugin-changeset': 2.54.1
       '@modern-js/plugin-i18n': 2.54.1
-      '@modern-js/plugin-lint': 2.54.1
+      '@modern-js/plugin-lint': 2.54.1(eslint@9.5.0)
       '@modern-js/swc-plugins': 0.6.6(@swc/helpers@0.5.3)
       '@modern-js/types': 2.54.1
       '@modern-js/utils': 2.54.1
@@ -10802,13 +10780,15 @@ snapshots:
       '@modern-js/utils': 2.54.1
       '@swc/helpers': 0.5.3
 
-  '@modern-js/plugin-lint@2.54.1':
+  '@modern-js/plugin-lint@2.54.1(eslint@9.5.0)':
     dependencies:
       '@modern-js/tsconfig': 2.54.1
       '@modern-js/utils': 2.54.1
       '@swc/helpers': 0.5.3
       cross-spawn: 7.0.3
       husky: 8.0.3
+    optionalDependencies:
+      eslint: 9.5.0
 
   '@modern-js/plugin@2.54.1':
     dependencies:
@@ -11249,17 +11229,6 @@ snapshots:
       webpack-sources: 3.2.3
     optionalDependencies:
       '@swc/helpers': 0.5.11
-
-  '@rspack/core@0.7.4(@swc/helpers@0.5.3)':
-    dependencies:
-      '@module-federation/runtime-tools': 0.1.6
-      '@rspack/binding': 0.7.4
-      caniuse-lite: 1.0.30001636
-      tapable: 2.2.1
-      webpack-sources: 3.2.3
-    optionalDependencies:
-      '@swc/helpers': 0.5.3
-    optional: true
 
   '@rspack/plugin-react-refresh@0.7.3(react-refresh@0.14.2)':
     optionalDependencies:
@@ -11908,9 +11877,9 @@ snapshots:
       '@vue/compiler-dom': 3.4.23
       '@vue/shared': 3.4.23
 
-  '@vue/component-compiler-utils@3.3.0(lodash@4.17.21)(pug@3.0.3)':
+  '@vue/component-compiler-utils@3.3.0(lodash@4.17.21)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      consolidate: 0.15.1(lodash@4.17.21)(pug@3.0.3)
+      consolidate: 0.15.1(lodash@4.17.21)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       hash-sum: 1.0.2
       lru-cache: 4.1.5
       merge-source-map: 1.1.0
@@ -12414,8 +12383,6 @@ snapshots:
 
   buffer-builder@0.2.0: {}
 
-  buffer-crc32@0.2.13: {}
-
   buffer-from@1.1.2: {}
 
   buffer-xor@1.0.3: {}
@@ -12645,12 +12612,14 @@ snapshots:
 
   console-browserify@1.2.0: {}
 
-  consolidate@0.15.1(lodash@4.17.21)(pug@3.0.3):
+  consolidate@0.15.1(lodash@4.17.21)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       bluebird: 3.7.2
     optionalDependencies:
       lodash: 4.17.21
       pug: 3.0.3
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   constantinople@4.0.1:
     dependencies:
@@ -12785,20 +12754,6 @@ snapshots:
       semver: 7.6.2
     optionalDependencies:
       '@rspack/core': 0.7.4(@swc/helpers@0.5.11)
-      webpack: 5.92.1
-
-  css-loader@7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))(webpack@5.92.1):
-    dependencies:
-      icss-utils: 5.1.0(postcss@8.4.38)
-      postcss: 8.4.38
-      postcss-modules-extract-imports: 3.1.0(postcss@8.4.38)
-      postcss-modules-local-by-default: 4.0.5(postcss@8.4.38)
-      postcss-modules-scope: 3.2.0(postcss@8.4.38)
-      postcss-modules-values: 4.0.0(postcss@8.4.38)
-      postcss-value-parser: 4.2.0
-      semver: 7.6.2
-    optionalDependencies:
-      '@rspack/core': 0.7.4(@swc/helpers@0.5.3)
       webpack: 5.92.1
 
   css-minimizer-webpack-plugin@5.0.1(lightningcss@1.25.1)(webpack@5.92.1):
@@ -13132,8 +13087,6 @@ snapshots:
   es-errors@1.3.0: {}
 
   es-module-lexer@1.5.0: {}
-
-  es6-promise@3.3.1: {}
 
   esbuild@0.19.12:
     optionalDependencies:
@@ -13871,10 +13824,6 @@ snapshots:
     optionalDependencies:
       '@rspack/core': 0.7.4(@swc/helpers@0.5.11)
 
-  html-rspack-plugin@5.7.2(@rspack/core@0.7.4(@swc/helpers@0.5.3)):
-    optionalDependencies:
-      '@rspack/core': 0.7.4(@swc/helpers@0.5.3)
-
   html-tags@2.0.0: {}
 
   html-tags@3.3.1: {}
@@ -14240,11 +14189,11 @@ snapshots:
 
   leac@0.6.0: {}
 
-  less-loader@12.2.0(@rspack/core@0.7.4(@swc/helpers@0.5.3))(less@4.2.0)(webpack@5.92.1):
+  less-loader@12.2.0(@rspack/core@0.7.4(@swc/helpers@0.5.11))(less@4.2.0)(webpack@5.92.1):
     dependencies:
       less: 4.2.0
     optionalDependencies:
-      '@rspack/core': 0.7.4(@swc/helpers@0.5.3)
+      '@rspack/core': 0.7.4(@swc/helpers@0.5.11)
       webpack: 5.92.1
 
   less@4.2.0:
@@ -15283,10 +15232,6 @@ snapshots:
   minipass@7.0.4: {}
 
   mixme@0.5.10: {}
-
-  mkdirp@0.5.6:
-    dependencies:
-      minimist: 1.2.8
 
   mlly@1.6.1:
     dependencies:
@@ -16396,10 +16341,6 @@ snapshots:
 
   reusify@1.0.4: {}
 
-  rimraf@2.7.1:
-    dependencies:
-      glob: 7.2.3
-
   ripemd160@2.0.2:
     dependencies:
       hash-base: 3.1.0
@@ -16498,13 +16439,6 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sander@0.5.1:
-    dependencies:
-      es6-promise: 3.3.1
-      graceful-fs: 4.2.11
-      mkdirp: 0.5.6
-      rimraf: 2.7.1
-
   sass-embedded-android-arm64@1.77.5:
     optional: true
 
@@ -16583,11 +16517,11 @@ snapshots:
       sass-embedded-win32-ia32: 1.77.5
       sass-embedded-win32-x64: 1.77.5
 
-  sass-loader@14.2.1(@rspack/core@0.7.4(@swc/helpers@0.5.3))(sass-embedded@1.77.5)(sass@1.77.6)(webpack@5.92.1):
+  sass-loader@14.2.1(@rspack/core@0.7.4(@swc/helpers@0.5.11))(sass-embedded@1.77.5)(sass@1.77.6)(webpack@5.92.1):
     dependencies:
       neo-async: 2.6.2
     optionalDependencies:
-      '@rspack/core': 0.7.4(@swc/helpers@0.5.3)
+      '@rspack/core': 0.7.4(@swc/helpers@0.5.11)
       sass: 1.77.6
       sass-embedded: 1.77.5
       webpack: 5.92.1
@@ -16758,13 +16692,6 @@ snapshots:
       '@babel/types': 7.24.7
       solid-js: 1.8.17
 
-  sorcery@0.11.0:
-    dependencies:
-      '@jridgewell/sourcemap-codec': 1.4.15
-      buffer-crc32: 0.2.13
-      minimist: 1.2.8
-      sander: 0.5.1
-
   source-list-map@2.0.1: {}
 
   source-map-js@1.2.0: {}
@@ -16922,13 +16849,13 @@ snapshots:
 
   stylis@4.3.2: {}
 
-  stylus-loader@8.1.0(@rspack/core@0.7.4(@swc/helpers@0.5.3))(stylus@0.63.0)(webpack@5.92.1):
+  stylus-loader@8.1.0(@rspack/core@0.7.4(@swc/helpers@0.5.11))(stylus@0.63.0)(webpack@5.92.1):
     dependencies:
       fast-glob: 3.3.2
       normalize-path: 3.0.0
       stylus: 0.63.0
     optionalDependencies:
-      '@rspack/core': 0.7.4(@swc/helpers@0.5.3)
+      '@rspack/core': 0.7.4(@swc/helpers@0.5.11)
       webpack: 5.92.1
 
   stylus@0.63.0:
@@ -16987,19 +16914,16 @@ snapshots:
       svelte-dev-helper: 1.1.9
       svelte-hmr: 0.14.12(svelte@4.2.18)
 
-  svelte-preprocess@5.1.4(@babel/core@7.24.7)(less@4.2.0)(postcss-load-config@4.0.2(postcss@8.4.38))(postcss@8.4.38)(pug@3.0.3)(sass@1.77.6)(stylus@0.63.0)(svelte@4.2.18)(typescript@5.5.2):
+  svelte-preprocess@6.0.1(@babel/core@7.24.7)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.38)(tsx@4.14.0)(yaml@2.4.5))(postcss@8.4.38)(pug@3.0.3)(sass@1.77.6)(stylus@0.63.0)(svelte@4.2.18)(typescript@5.5.2):
     dependencies:
-      '@types/pug': 2.0.10
       detect-indent: 6.1.0
-      magic-string: 0.30.10
-      sorcery: 0.11.0
       strip-indent: 3.0.0
       svelte: 4.2.18
     optionalDependencies:
       '@babel/core': 7.24.7
       less: 4.2.0
       postcss: 8.4.38
-      postcss-load-config: 4.0.2(postcss@8.4.38)
+      postcss-load-config: 6.0.1(jiti@1.21.6)(postcss@8.4.38)(tsx@4.14.0)(yaml@2.4.5)
       pug: 3.0.3
       sass: 1.77.6
       stylus: 0.63.0
@@ -17486,10 +17410,10 @@ snapshots:
 
   vue-hot-reload-api@2.3.4: {}
 
-  vue-loader@15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))(webpack@5.92.1))(lodash@4.17.21)(prettier@3.3.2)(pug@3.0.3)(webpack@5.92.1):
+  vue-loader@15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.11))(webpack@5.92.1))(lodash@4.17.21)(prettier@3.3.2)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.92.1):
     dependencies:
-      '@vue/component-compiler-utils': 3.3.0(lodash@4.17.21)(pug@3.0.3)
-      css-loader: 7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))(webpack@5.92.1)
+      '@vue/component-compiler-utils': 3.3.0(lodash@4.17.21)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      css-loader: 7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.11))(webpack@5.92.1)
       hash-sum: 1.0.2
       loader-utils: 1.4.2
       vue-hot-reload-api: 2.3.4
