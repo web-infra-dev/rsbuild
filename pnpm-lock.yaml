@@ -82,8 +82,8 @@ importers:
         specifier: ^3.4.19
         version: 3.4.23(typescript@5.5.2)
       vue-router:
-        specifier: ^4.3.3
-        version: 4.3.3(vue@3.4.23(typescript@5.5.2))
+        specifier: ^4.4.0
+        version: 4.4.0(vue@3.4.23(typescript@5.5.2))
     devDependencies:
       '@e2e/helper':
         specifier: workspace:*
@@ -302,8 +302,13 @@ importers:
       '@e2e/source-build-utils':
         specifier: workspace:*
         version: link:../utils
+      '@e2e/source-build-utils2':
+        specifier: workspace:*
+        version: link:../utils2
 
   e2e/cases/source-build/utils: {}
+
+  e2e/cases/source-build/utils2: {}
 
   e2e/cases/source-map:
     dependencies:
@@ -8924,8 +8929,8 @@ packages:
       vue:
         optional: true
 
-  vue-router@4.3.3:
-    resolution: {integrity: sha512-8Q+u+WP4N2SXY38FDcF2H1dUEbYVHVPtPCPZj/GTZx8RCbiB8AtJP9+YIxn4Vs0svMTNQcLIzka4GH7Utkx9xQ==}
+  vue-router@4.4.0:
+    resolution: {integrity: sha512-HB+t2p611aIZraV2aPSRNXf0Z/oLZFrlygJm+sZbdJaW6lcFqEDQwnzUBXn+DApw+/QzDU/I9TeWx9izEjTmsA==}
     peerDependencies:
       vue: ^3.2.0
 
@@ -17481,7 +17486,7 @@ snapshots:
     optionalDependencies:
       vue: 3.4.23(typescript@5.5.2)
 
-  vue-router@4.3.3(vue@3.4.23(typescript@5.5.2)):
+  vue-router@4.4.0(vue@3.4.23(typescript@5.5.2)):
     dependencies:
       '@vue/devtools-api': 6.6.1
       vue: 3.4.23(typescript@5.5.2)

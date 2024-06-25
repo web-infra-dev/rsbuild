@@ -1,5 +1,4 @@
 import { existsSync } from 'node:fs';
-import { join } from 'node:path';
 import { type RsbuildMode, color } from '@rsbuild/shared';
 import { type Command, program } from 'commander';
 import { isEmptyDir } from '../helpers';
@@ -135,7 +134,7 @@ export function runCli() {
         await rsbuild?.inspectConfig({
           env: options.env,
           verbose: options.verbose,
-          outputPath: join(rsbuild.context.distPath, options.output),
+          outputPath: options.output,
           writeToDisk: true,
         });
       } catch (err) {

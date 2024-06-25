@@ -62,15 +62,13 @@ export const pluginAdaptor = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment, target }) => {
       const config = api.getNormalizedConfig({ environment });
+      const { tsconfigPath } = api.context.environments[environment];
 
-      if (
-        api.context.tsconfigPath &&
-        config.source.aliasStrategy === 'prefer-tsconfig'
-      ) {
+      if (tsconfigPath && config.source.aliasStrategy === 'prefer-tsconfig') {
         await applyTsConfigPathsPlugin({
           chain,
           CHAIN_ID,
-          configFile: api.context.tsconfigPath,
+          configFile: tsconfigPath,
           mainFields: getMainFields(chain, target),
           extensions: chain.resolve.extensions.values(),
         });

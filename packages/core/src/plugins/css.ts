@@ -13,7 +13,8 @@ import {
 } from '@rsbuild/shared';
 import type { AcceptedPlugin } from 'postcss';
 import { CSS_REGEX, LOADER_PATH } from '../constants';
-import { getCompiledPath, isFunction, isPlainObject } from '../helpers';
+import { isFunction, isPlainObject } from '../helpers';
+import { getCompiledPath } from '../helpers/path';
 import { getCssExtractPlugin } from '../pluginHelper';
 import { reduceConfigs, reduceConfigsWithContext } from '../reduceConfigs';
 import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';

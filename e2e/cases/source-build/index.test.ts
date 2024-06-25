@@ -16,7 +16,7 @@ rspackOnlyTest(
 
     const locator = page.locator('#root');
     await expect(locator).toHaveText(
-      'Card Comp Title: AppCARD COMP CONTENT:hello world',
+      'Card Comp Title: appCARD COMP CONTENT:hello world',
     );
 
     await rsbuild.close();

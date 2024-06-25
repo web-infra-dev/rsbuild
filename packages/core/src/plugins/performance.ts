@@ -1,4 +1,5 @@
-import type { RsbuildPlugin } from '../types';
+import type { EnvironmentConfig } from '@rsbuild/shared';
+import type { RsbuildConfig, RsbuildPlugin } from '../types';
 
 /**
  * Apply some configs of Rsbuild performance
@@ -7,26 +8,42 @@ export const pluginPerformance = (): RsbuildPlugin => ({
   name: 'rsbuild:performance',
 
   setup(api) {
-    api.modifyRsbuildConfig((rsbuildConfig) => {
-      if (rsbuildConfig.performance?.profile) {
-        // generate stats.json
-        if (!rsbuildConfig.performance?.bundleAnalyze) {
-          rsbuildConfig.performance ??= {};
-          rsbuildConfig.performance.bundleAnalyze = {
-            analyzerMode: 'disabled',
-            generateStatsFile: true,
-          };
-        } else {
-          rsbuildConfig.performance.bundleAnalyze = {
-            generateStatsFile: true,
-            ...(rsbuildConfig.performance.bundleAnalyze || {}),
-          };
+    api.modifyRsbuildConfig({
+      order: 'post',
+      handler: (rsbuildConfig) => {
+        // profile needs to be output to stats.json
+        const applyBundleAnalyzeConfig = (
+          config: RsbuildConfig | EnvironmentConfig,
+        ) => {
+          if (!config.performance?.bundleAnalyze) {
+            config.performance ??= {};
+            config.performance.bundleAnalyze = {
+              analyzerMode: 'disabled',
+              generateStatsFile: true,
+            };
+          } else {
+            config.performance.bundleAnalyze = {
+              generateStatsFile: true,
+              ...(config.performance.bundleAnalyze || {}),
+            };
+          }
+        };
+        if (rsbuildConfig.performance?.profile) {
+          applyBundleAnalyzeConfig(rsbuildConfig);
+        } else if (rsbuildConfig.environments) {
+          for (const config of Object.values(
+            rsbuildConfig.environments,
+          )) {
+            if (config.performance?.profile) {
+              applyBundleAnalyzeConfig(config);
+            }
+          }
         }
-      }
+      },
     });
 
-    api.modifyBundlerChain((chain) => {
-      const config = api.getNormalizedConfig();
+    api.modifyBundlerChain((chain, { environment }) => {
+      const config = api.getNormalizedConfig({ environment });
       const { profile } = config.performance;
       if (!profile) {
         return;

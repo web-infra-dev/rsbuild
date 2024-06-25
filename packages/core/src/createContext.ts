@@ -9,6 +9,7 @@ import type {
 import browserslist from '@rsbuild/shared/browserslist';
 import { withDefaultConfig } from './config';
 import { DEFAULT_BROWSERSLIST, ROOT_DIST_DIR } from './constants';
+import { getCommonParentPath } from './helpers/path';
 import { initHooks } from './initHooks';
 import { getHTMLPathByEntry } from './initPlugins';
 import { logger } from './logger';
@@ -42,17 +43,14 @@ async function createContextByConfig(
 ): Promise<RsbuildContext> {
   const { cwd } = options;
   const rootPath = cwd;
-  const distPath = getAbsoluteDistPath(cwd, config);
   const cachePath = join(rootPath, 'node_modules', '.cache');
   const tsconfigPath = config.source?.tsconfigPath;
 
   return {
-    entry: getEntryObject(config, 'web'),
-    targets: [config.output?.target || 'web'],
     version: RSBUILD_VERSION,
     environments: {},
     rootPath,
-    distPath,
+    distPath: '',
     cachePath,
     bundlerType,
     tsconfigPath: tsconfigPath
@@ -161,30 +159,18 @@ export async function updateEnvironmentContext(
   }
 }
 
-export function updateContextByNormalizedConfig(
-  context: RsbuildContext,
-  config: NormalizedConfig,
-) {
-  context.distPath = getAbsoluteDistPath(context.rootPath, config);
-
-  if (config.source.entry) {
-    context.entry = getEntryObject(config, 'web');
-  }
-
-  if (config.source.tsconfigPath) {
-    context.tsconfigPath = getAbsolutePath(
-      context.rootPath,
-      config.source.tsconfigPath,
-    );
-  }
+export function updateContextByNormalizedConfig(context: RsbuildContext) {
+  // Try to get the parent dist path from all environments
+  const distPaths = Object.values(context.environments).map(
+    (item) => item.distPath,
+  );
+  context.distPath = getCommonParentPath(distPaths);
 }
 
 export function createPublicContext(
   context: RsbuildContext,
 ): Readonly<RsbuildContext> {
   const exposedKeys = [
-    'entry',
-    'targets',
     'version',
     'rootPath',
     'distPath',

@@ -10,8 +10,8 @@ By default, Rsbuild does not enable `webpack-bundle-analyzer`. When this feature
 const defaultConfig = {
   analyzerMode: 'static',
   openAnalyzer: false,
-  // target is the compilation target, such as `web`, `node`, etc.
-  reportFilename: `report-${target}.html`,
+  // Distinguish by environment names, such as `web`, `node`, etc.
+  reportFilename: `report-${environment}.html`,
 };
 ```
 

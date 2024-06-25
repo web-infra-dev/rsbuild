@@ -1,6 +1,39 @@
+import { join } from 'node:path';
 import { createRsbuild } from '../src';
 
 describe('environment config', () => {
+  it('should normalize context correctly', async () => {
+    process.env.NODE_ENV = 'development';
+    const cwd = process.cwd();
+    const rsbuild = await createRsbuild({
+      cwd,
+      rsbuildConfig: {
+        environments: {
+          ssr: {
+            output: {
+              target: 'node',
+              distPath: {
+                root: 'dist1/server',
+              },
+            },
+          },
+          web: {
+            output: {
+              distPath: {
+                root: 'dist1',
+              },
+            },
+          },
+        },
+      },
+    });
+
+    await rsbuild.initConfigs();
+
+    expect(rsbuild.context.environments).toMatchSnapshot();
+    expect(rsbuild.context.distPath).toBe(join(cwd, 'dist1'));
+  });
+
   it('should support modify environment config by api.modifyRsbuildConfig', async () => {
     process.env.NODE_ENV = 'development';
     const rsbuild = await createRsbuild({
