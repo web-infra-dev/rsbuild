@@ -106,15 +106,25 @@ dist
 
 Node.js files usually only contain JS files, no HTML or CSS. Also, JS file names will not contain hash.
 
-You can modify the output path of Node.js files through the [output.distPath.server](/config/output/dist-path) config.
+You can modify the output path of Node.js files via the [environments](/config/environments) config.
 
 For example, output Node.js files to the `server` directory:
 
 ```ts
 export default {
-  output: {
-    distPath: {
-      server: 'server',
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+        distPath: {
+          root: 'dist/server',
+        },
+      },
     },
   },
 };

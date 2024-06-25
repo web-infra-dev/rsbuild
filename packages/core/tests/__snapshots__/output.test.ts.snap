@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugin-output > should allow to custom server directory with distPath.server 1`] = `
+exports[`plugin-output > should allow to custom server directory with distPath.root 1`] = `
 {
   "output": {
     "chunkFilename": "[name].js",
