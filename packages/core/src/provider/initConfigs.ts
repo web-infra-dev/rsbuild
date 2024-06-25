@@ -118,8 +118,7 @@ export async function initRsbuildConfig({
   };
 
   await updateEnvironmentContext(context, environments);
-
-  updateContextByNormalizedConfig(context, context.normalizedConfig);
+  updateContextByNormalizedConfig(context);
 
   return context.normalizedConfig;
 }

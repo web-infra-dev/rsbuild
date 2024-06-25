@@ -159,22 +159,12 @@ export async function updateEnvironmentContext(
   }
 }
 
-export function updateContextByNormalizedConfig(
-  context: RsbuildContext,
-  config: NormalizedConfig,
-) {
+export function updateContextByNormalizedConfig(context: RsbuildContext) {
   // Try to get the parent dist path from all environments
   const distPaths = Object.values(context.environments).map(
     (item) => item.distPath,
   );
   context.distPath = getCommonParentPath(distPaths);
-
-  if (config.source.tsconfigPath) {
-    context.tsconfigPath = getAbsolutePath(
-      context.rootPath,
-      config.source.tsconfigPath,
-    );
-  }
 }
 
 export function createPublicContext(
