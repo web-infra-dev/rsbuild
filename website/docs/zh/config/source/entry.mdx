@@ -72,34 +72,6 @@ export default {
 
 关于描述对象的完整用法，请参考 [Rspack - 入口描述对象](https://rspack.dev/config/entry#%E5%85%A5%E5%8F%A3%E6%8F%8F%E8%BF%B0%E5%AF%B9%E8%B1%A1)。
 
-## 函数用法
-
-`source.entry` 支持设置为一个函数，这通常用于为不同的构建产物类型设置不同的 entry 对象。
-
-比如分别为 web 产物和 node 产物设置 entry：
-
-```ts title="rsbuild.config.ts"
-export default {
-  source: {
-    entry({ target }) {
-      if (target === 'web') {
-        return {
-          index: './src/index.client.js',
-        };
-      }
-      if (target === 'node') {
-        return {
-          index: './src/index.server.js',
-        };
-      }
-    },
-  },
-  output: {
-    targets: ['web', 'node'],
-  },
-};
-```
-
 ## 基于 environment 设置
 
 当你面向多个 [environments](/config/environments) 构建时，可以为每个 environment 设置不同的 entry：

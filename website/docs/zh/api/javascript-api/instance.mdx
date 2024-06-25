@@ -28,20 +28,6 @@ type RsbuildEntry = Record<string, string | string[] | EntryDescription>;
 
 > 如果 `source.entry` 被设置为函数，并针对不同的 target 返回了不同的 entry 对象，那么 context.entry 仅会包含 web target 对应的入口对象。
 
-### context.targets
-
-构建产物类型，对应调用 Rsbuild 配置里的 `output.targets` 选项。
-
-- **类型：**
-
-```ts
-type RsbuildTarget = 'web' | 'node' | 'web-worker';
-
-type Context = {
-  targets: RsbuildTarget[];
-};
-```
-
 ### context.rootPath
 
 当前执行构建的根路径，对应调用 `createRsbuild` 时传入的 `cwd` 选项。
@@ -98,6 +84,16 @@ type bundlerType = 'rspack' | 'webpack';
 > Rsbuild 内部支持切换到 webpack 进行对照测试，因此提供了该字段进行区分，通常你不需要使用此字段。
 
 ## rsbuild.environments
+
+### target
+
+构建产物类型，对应 Rsbuild 的 [output.target](/config/output/target) 配置。
+
+- **类型：**
+
+```ts
+type RsbuildTarget = 'web' | 'node' | 'web-worker';
+```
 
 ### tsconfigPath
 

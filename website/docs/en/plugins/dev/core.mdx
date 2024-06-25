@@ -242,7 +242,7 @@ api.transform({ test: /\.pug$/ }, ({ code }) => {
 });
 ```
 
-- `targets`: matches the Rsbuild [output.targets](/config/output/targets), and applies the current transform function only to the matched targets.
+- `targets`: matches the Rsbuild [output.target](/config/output/target), and applies the current transform function only to the matched targets.
 
 ```js
 api.transform({ test: /\.pug$/, targets: ['web'] }, ({ code }) => {
