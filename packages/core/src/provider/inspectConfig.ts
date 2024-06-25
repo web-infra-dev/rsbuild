@@ -54,7 +54,9 @@ export async function inspectConfig({
     })),
   );
 
-  let outputPath = inspectOptions.outputPath || context.distPath;
+  let outputPath = inspectOptions.outputPath
+    ? join(context.distPath, inspectOptions.outputPath)
+    : context.distPath;
   if (!isAbsolute(outputPath)) {
     outputPath = join(context.rootPath, outputPath);
   }

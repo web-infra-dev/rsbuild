@@ -180,4 +180,46 @@ describe('mergeRsbuildConfig', () => {
       },
     });
   });
+
+  it('should merge SWC plugins as expected', () => {
+    expect(
+      mergeRsbuildConfig(
+        {
+          tools: {
+            swc: {
+              jsc: {
+                experimental: {
+                  plugins: [['@swc/plugin-foo', {}]],
+                },
+              },
+            },
+          },
+        },
+        {
+          tools: {
+            swc: {
+              jsc: {
+                experimental: {
+                  plugins: [['@swc/plugin-bar', {}]],
+                },
+              },
+            },
+          },
+        },
+      ),
+    ).toEqual({
+      tools: {
+        swc: {
+          jsc: {
+            experimental: {
+              plugins: [
+                ['@swc/plugin-foo', {}],
+                ['@swc/plugin-bar', {}],
+              ],
+            },
+          },
+        },
+      },
+    });
+  });
 });

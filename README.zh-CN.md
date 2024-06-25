@@ -78,10 +78,6 @@ Rsbuild 具备以下特性：
 
 ![Rspack Ecosystem](https://github.com/web-infra-dev/rsbuild/assets/7237365/1ec93ad6-b8b1-475b-963f-cba1e7d79dec)
 
-## 📍 路线图
-
-我们计划在 2024 年 7 月之前发布 Rsbuild v1.0（基于 Rspack v1.0），参见 [Rsbuild v1.0 Release Plan](https://github.com/web-infra-dev/rsbuild/discussions/1678)。
-
 ## 📚 快速上手
 
 你可以参考 [快速上手](https://rsbuild.dev/zh/guide/start/quick-start) 来开始体验 Rsbuild。

@@ -4,7 +4,7 @@ import type {
   ConfigChainMergeContext,
   ConfigChainWithContext,
 } from '@rsbuild/shared';
-import { isFunction, isNil, isPlainObject } from '@rsbuild/shared';
+import { isFunction, isNil, isPlainObject } from './helpers';
 
 /**
  * Merge one or more configs into a final config,

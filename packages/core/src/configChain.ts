@@ -8,8 +8,8 @@ import {
   RspackChain,
   type RspackConfig,
   castArray,
-  isPlainObject,
 } from '@rsbuild/shared';
+import { isPlainObject } from './helpers';
 import { logger } from './logger';
 import type { RsbuildConfig } from './types';
 

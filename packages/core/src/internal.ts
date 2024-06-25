@@ -24,4 +24,3 @@ export { applySwcDecoratorConfig } from './plugins/swc';
 export { getSwcMinimizerOptions } from './plugins/minimize';
 export { getDevMiddleware } from './server/devMiddleware';
 export { createDevServer } from './server/devServer';
-export { TARGET_ID_MAP } from './constants';

@@ -111,7 +111,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -131,9 +131,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -158,7 +157,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -178,9 +177,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -558,7 +556,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -578,9 +576,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -605,7 +602,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -625,9 +622,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -931,7 +927,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     },
     ProgressPlugin {
       "_options": {
-        "prefix": "Client",
+        "prefix": "web",
         "profile": false,
         "progressChars": "━━",
         "template": "● {prefix:.bold} {bar:25.green/white.dim} ({percent}%) {wide_msg:.dim}",
@@ -1052,9 +1048,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -1090,9 +1085,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -1396,7 +1390,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -1416,9 +1410,8 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -1443,7 +1436,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -1463,9 +1456,8 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },

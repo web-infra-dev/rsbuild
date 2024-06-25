@@ -1,13 +1,17 @@
 import fs from 'node:fs';
-import {
-  type CreateDevServerOptions,
-  type Rspack,
-  type StartDevServerOptions,
-  getPublicPathFromCompiler,
+import type {
+  CreateDevServerOptions,
+  Rspack,
+  StartDevServerOptions,
 } from '@rsbuild/shared';
 import type Connect from 'connect';
 import { ROOT_DIST_DIR } from '../constants';
-import { getNodeEnv, isMultiCompiler, setNodeEnv } from '../helpers';
+import {
+  getNodeEnv,
+  getPublicPathFromCompiler,
+  isMultiCompiler,
+  setNodeEnv,
+} from '../helpers';
 import { logger } from '../logger';
 import type { CreateDevMiddlewareReturns } from '../provider/createCompiler';
 import type {

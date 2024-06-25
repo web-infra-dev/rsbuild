@@ -299,6 +299,7 @@ describe('plugin-swc', () => {
         UTILS,
         TEST_BUILDER_CONFIG,
         process.cwd(),
+        ['chrome 100'],
       )
     )[0].swcConfig;
 
@@ -315,6 +316,7 @@ describe('plugin-swc', () => {
         UTILS,
         TEST_BUILDER_CONFIG,
         process.cwd(),
+        ['chrome 100'],
       )
     )[0].swcConfig;
 
@@ -329,6 +331,7 @@ describe('plugin-swc', () => {
       UTILS,
       TEST_BUILDER_CONFIG,
       process.cwd(),
+      ['chrome 100'],
     );
 
     expect(config[0].swcConfig).toStrictEqual({});
@@ -348,6 +351,7 @@ describe('plugin-swc', () => {
           UTILS,
           TEST_BUILDER_CONFIG,
           process.cwd(),
+          ['chrome 100'],
         )
       )[0].swcConfig;
 
@@ -365,11 +369,11 @@ describe('plugin-swc', () => {
           UTILS,
           TEST_BUILDER_CONFIG,
           process.cwd(),
+          ['chrome 100'],
         )
       )[0].swcConfig;
 
       expect(config.env?.coreJs).toBe('2');
-      expect(config.env?.targets).toBeDefined();
     }
 
     {
@@ -382,11 +386,11 @@ describe('plugin-swc', () => {
           UTILS,
           TEST_BUILDER_CONFIG,
           process.cwd(),
+          ['chrome 100'],
         )
       )[0].swcConfig;
 
       expect(config.env?.coreJs).toBe('2');
-      expect(config.env?.targets).toBeDefined();
     }
   });
 
@@ -429,6 +433,7 @@ describe('plugin-swc', () => {
         UTILS,
         TEST_BUILDER_CONFIG,
         process.cwd(),
+        ['chrome 100'],
       )
     )[0].swcConfig;
 

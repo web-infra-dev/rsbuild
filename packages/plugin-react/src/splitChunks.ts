@@ -1,6 +1,11 @@
 import type { RsbuildPluginAPI, SplitChunks } from '@rsbuild/core';
-import { createCacheGroups, isPlainObject } from '@rsbuild/shared';
+import { createCacheGroups } from '@rsbuild/shared';
 import type { SplitReactChunkOptions } from '.';
+
+const isPlainObject = (obj: unknown): obj is Record<string, any> =>
+  obj !== null &&
+  typeof obj === 'object' &&
+  Object.prototype.toString.call(obj) === '[object Object]';
 
 export const applySplitChunksRule = (
   api: RsbuildPluginAPI,

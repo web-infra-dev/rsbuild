@@ -128,6 +128,12 @@ export class Project {
   #getExportsSourceDirs(exportsConfig: ExportsConfig, sourceField: string) {
     const exportsSourceDirs: string[] = [];
 
+    if (typeof exportsConfig[sourceField] === 'string') {
+      exportsSourceDirs.push(
+        path.normalize(exportsConfig[sourceField] as string),
+      );
+    }
+
     for (const moduleRules of Object.values(exportsConfig)) {
       if (
         typeof moduleRules === 'object' &&

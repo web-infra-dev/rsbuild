@@ -11,6 +11,11 @@ Thanks for that you are interested in contributing to Rsbuild. Before starting y
 [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your
 own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local.
 
+## Branches
+
+- `main` -> Rsbuild v1.x
+- `v0.x` -> Rsbuild v0.x
+
 ### Install Node.js
 
 We recommend using Node.js 20. You can check your currently used Node.js version with the following command:

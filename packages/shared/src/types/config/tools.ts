@@ -1,7 +1,7 @@
 import type { rspack } from '@rspack/core';
 import type { SwcLoaderOptions } from '@rspack/core';
 import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
-import type { RspackChain } from '../../chain';
+import type RspackChain from '../../../compiled/rspack-chain/index.js';
 import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
 import type {
   ModifyWebpackChainUtils,

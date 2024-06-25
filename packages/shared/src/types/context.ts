@@ -15,10 +15,6 @@ type EnvironmentContext = {
 export type RsbuildContext = {
   /** The Rsbuild core version. */
   version: string;
-  /** The entry points object. */
-  entry: RsbuildEntry;
-  /** The build targets type. */
-  targets: RsbuildTarget[];
   environments: Record<string, EnvironmentContext>;
   /** The root path of current project. */
   rootPath: string;

@@ -1,15 +1,15 @@
 import { isAbsolute, join } from 'node:path';
-import {
-  type BundlerType,
-  DEFAULT_BROWSERSLIST,
-  type NormalizedEnvironmentConfig,
-  type RsbuildContext,
-  type RsbuildEntry,
-  type RsbuildTarget,
-  getBrowserslist,
+import type {
+  BundlerType,
+  NormalizedEnvironmentConfig,
+  RsbuildContext,
+  RsbuildEntry,
+  RsbuildTarget,
 } from '@rsbuild/shared';
+import browserslist from '@rsbuild/shared/browserslist';
 import { withDefaultConfig } from './config';
-import { ROOT_DIST_DIR } from './constants';
+import { DEFAULT_BROWSERSLIST, ROOT_DIST_DIR } from './constants';
+import { getCommonParentPath } from './helpers/path';
 import { initHooks } from './initHooks';
 import { getHTMLPathByEntry } from './initPlugins';
 import { logger } from './logger';
@@ -43,23 +43,41 @@ async function createContextByConfig(
 ): Promise<RsbuildContext> {
   const { cwd } = options;
   const rootPath = cwd;
-  const distPath = getAbsoluteDistPath(cwd, config);
   const cachePath = join(rootPath, 'node_modules', '.cache');
   const tsconfigPath = config.source?.tsconfigPath;
 
   return {
-    entry: getEntryObject(config, 'web'),
-    targets: [config.output?.target || 'web'],
     version: RSBUILD_VERSION,
     environments: {},
     rootPath,
-    distPath,
+    distPath: '',
     cachePath,
     bundlerType,
     tsconfigPath: tsconfigPath
       ? getAbsolutePath(rootPath, tsconfigPath)
       : undefined,
   };
+}
+
+// using cache to avoid multiple calls to loadConfig
+const browsersListCache = new Map<string, string[]>();
+
+export async function getBrowserslist(path: string) {
+  const env = process.env.NODE_ENV;
+  const cacheKey = path + env;
+
+  if (browsersListCache.has(cacheKey)) {
+    return browsersListCache.get(cacheKey)!;
+  }
+
+  const result = browserslist.loadConfig({ path, env });
+
+  if (result) {
+    browsersListCache.set(cacheKey, result);
+    return result;
+  }
+
+  return null;
 }
 
 export async function getBrowserslistByEnvironment(
@@ -141,30 +159,18 @@ export async function updateEnvironmentContext(
   }
 }
 
-export function updateContextByNormalizedConfig(
-  context: RsbuildContext,
-  config: NormalizedConfig,
-) {
-  context.distPath = getAbsoluteDistPath(context.rootPath, config);
-
-  if (config.source.entry) {
-    context.entry = getEntryObject(config, 'web');
-  }
-
-  if (config.source.tsconfigPath) {
-    context.tsconfigPath = getAbsolutePath(
-      context.rootPath,
-      config.source.tsconfigPath,
-    );
-  }
+export function updateContextByNormalizedConfig(context: RsbuildContext) {
+  // Try to get the parent dist path from all environments
+  const distPaths = Object.values(context.environments).map(
+    (item) => item.distPath,
+  );
+  context.distPath = getCommonParentPath(distPaths);
 }
 
 export function createPublicContext(
   context: RsbuildContext,
 ): Readonly<RsbuildContext> {
   const exposedKeys = [
-    'entry',
-    'targets',
     'version',
     'rootPath',
     'distPath',
