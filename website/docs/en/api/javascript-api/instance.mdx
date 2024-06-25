@@ -72,16 +72,6 @@ The absolute path of the build cache files.
 type CachePath = string;
 ```
 
-### context.tsconfigPath
-
-The absolute path of the tsconfig.json file, or `undefined` if the tsconfig.json file does not exist in current project.
-
-- **Type:**
-
-```ts
-type TsconfigPath = string | undefined;
-```
-
 ### context.devServer
 
 Dev Server information, including the current Dev Server hostname and port number.
@@ -106,6 +96,18 @@ type bundlerType = 'rspack' | 'webpack';
 ```
 
 > Rsbuild internally supports switching to webpack for comparative testing, so this field is provided for differentiation. Usually, you do not need to use this field.
+
+## rsbuild.environments
+
+### tsconfigPath
+
+The absolute path of the tsconfig.json file, or `undefined` if the tsconfig.json file does not exist in current project.
+
+- **Type:**
+
+```ts
+type TsconfigPath = string | undefined;
+```
 
 ## rsbuild.build
 

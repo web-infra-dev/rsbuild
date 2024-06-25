@@ -72,16 +72,6 @@ type DistPath = string;
 type CachePath = string;
 ```
 
-### context.tsconfigPath
-
-tsconfig.json 文件的绝对路径，若项目中不存在 tsconfig.json 文件，则为 `undefined`。
-
-- **类型：**
-
-```ts
-type TsconfigPath = string | undefined;
-```
-
 ### context.devServer
 
 Dev Server 相关信息，包含了当前 Dev Server 的 hostname 和端口号。
@@ -106,6 +96,18 @@ type bundlerType = 'rspack' | 'webpack';
 ```
 
 > Rsbuild 内部支持切换到 webpack 进行对照测试，因此提供了该字段进行区分，通常你不需要使用此字段。
+
+## rsbuild.environments
+
+### tsconfigPath
+
+tsconfig.json 文件的绝对路径，若项目中不存在 tsconfig.json 文件，则为 `undefined`。
+
+- **类型：**
+
+```ts
+type TsconfigPath = string | undefined;
+```
 
 ## rsbuild.build
 
