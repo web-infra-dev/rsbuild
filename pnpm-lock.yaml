@@ -5,8 +5,8 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  esbuild: ~0.19.0
   array.prototype.flat: npm:@nolyfill/array.prototype.flat@1.0.28
+  esbuild: ~0.19.0
 
 importers:
 
@@ -1177,6 +1177,19 @@ importers:
         version: 5.5.2
 
   packages/plugin-preact:
+    dependencies:
+      '@prefresh/core':
+        specifier: ^1.5.2
+        version: 1.5.2(preact@10.22.0)
+      '@prefresh/utils':
+        specifier: ^1.2.0
+        version: 1.2.0
+      '@rsbuild/shared':
+        specifier: workspace:*
+        version: link:../shared
+      '@rspack/plugin-preact-refresh':
+        specifier: 0.7.4
+        version: 0.7.4(@prefresh/core@1.5.2(preact@10.22.0))(@prefresh/utils@1.2.0)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -3378,6 +3391,14 @@ packages:
   '@polka/url@1.0.0-next.25':
     resolution: {integrity: sha512-j7P6Rgr3mmtdkeDGTe0E/aYyWEWVtc5yFXtHCRHs28/jptDEWfaVOc5T7cblqy1XKPPfCxJc/8DwQ5YgLOZOVQ==}
 
+  '@prefresh/core@1.5.2':
+    resolution: {integrity: sha512-A/08vkaM1FogrCII5PZKCrygxSsc11obExBScm3JF1CryK2uDS3ZXeni7FeKCx1nYdUkj4UcJxzPzc1WliMzZA==}
+    peerDependencies:
+      preact: ^10.0.0
+
+  '@prefresh/utils@1.2.0':
+    resolution: {integrity: sha512-KtC/fZw+oqtwOLUFM9UtiitB0JsVX0zLKNyRTA332sqREqSALIIQQxdUCS1P3xR/jT1e2e8/5rwH6gdcMLEmsQ==}
+
   '@remix-run/router@1.16.1':
     resolution: {integrity: sha512-es2g3dq6Nb07iFxGk5GuHN20RwBZOsuDQN7izWIisUcv9r+d2C5jQxqmgkdebXgReWfiyUabcki6Fg77mSNrig==}
     engines: {node: '>=14.0.0'}
@@ -3602,6 +3623,12 @@ packages:
     peerDependenciesMeta:
       '@swc/helpers':
         optional: true
+
+  '@rspack/plugin-preact-refresh@0.7.4':
+    resolution: {integrity: sha512-ZgO4Ie4jDv5lz3ArrKUJycOqtMmrjq0y1lJ1k1IV3QC80ZkC7ncbP/HBERsuBr1ID8moujYNrq98Cu8CZqjr/Q==}
+    peerDependencies:
+      '@prefresh/core': ^1.5.0
+      '@prefresh/utils': ^1.2.0
 
   '@rspack/plugin-react-refresh@0.7.3':
     resolution: {integrity: sha512-fuXXqb6Lhlt1Ynz35E3OAmb1po9EGWYtDJgDqzXVfA9DPcnCPIZpbx6hOLLTYQRYLic74w11J0H2FCUXMHVg1g==}
@@ -11031,6 +11058,12 @@ snapshots:
 
   '@polka/url@1.0.0-next.25': {}
 
+  '@prefresh/core@1.5.2(preact@10.22.0)':
+    dependencies:
+      preact: 10.22.0
+
+  '@prefresh/utils@1.2.0': {}
+
   '@remix-run/router@1.16.1': {}
 
   '@rollup/pluginutils@4.1.1':
@@ -11229,6 +11262,11 @@ snapshots:
       webpack-sources: 3.2.3
     optionalDependencies:
       '@swc/helpers': 0.5.11
+
+  '@rspack/plugin-preact-refresh@0.7.4(@prefresh/core@1.5.2(preact@10.22.0))(@prefresh/utils@1.2.0)':
+    dependencies:
+      '@prefresh/core': 1.5.2(preact@10.22.0)
+      '@prefresh/utils': 1.2.0
 
   '@rspack/plugin-react-refresh@0.7.3(react-refresh@0.14.2)':
     optionalDependencies:
