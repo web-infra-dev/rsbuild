@@ -45,7 +45,7 @@ Check out the [browserslist documentation](https://github.com/browserslist/brows
 
 ## Set by environment
 
-When you build for multiple environments, you can set different browserslist for each environment:
+When you build for multiple [environments](/config/environments), you can set different browserslist for each environment:
 
 For example, set different browserslist for `web` and `node` environments:
 
@@ -54,11 +54,13 @@ export default {
   environments: {
     web: {
       output: {
+        target: 'web',
         overrideBrowserslist: ['iOS >= 9', 'Android >= 4.4'],
       },
     },
     node: {
       output: {
+        target: 'node',
         overrideBrowserslist: ['node >= 20'],
       },
     },

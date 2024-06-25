@@ -1,30 +1,26 @@
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
-  source: {
-    entry({ target }) {
-      if (target === 'web') {
-        return {
-          index: './src/index.client.js',
-        };
-      }
-      if (target === 'node') {
-        return {
-          index: './src/index.server.js',
-        };
-      }
-    },
-  },
   output: {
     filenameHash: false,
   },
   environments: {
     web: {
+      source: {
+        entry: {
+          index: './src/index.client.js',
+        },
+      },
       output: {
         target: 'web',
       },
     },
     node: {
+      source: {
+        entry: {
+          index: './src/index.server.js',
+        },
+      },
       output: {
         target: 'node',
         distPath: {
