@@ -6,7 +6,6 @@ const OVERRIDE_PATH = [
   'output.inlineScripts',
   'output.inlineStyles',
   'output.cssModules.auto',
-  'output.targets',
   'output.overrideBrowserslist',
   'server.open',
   'server.printUrls',

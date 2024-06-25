@@ -94,17 +94,15 @@ dist
 
 ## Node.js Output Directory
 
-When the [output.targets](/config/output/targets) of Rsbuild contains `'node'`, or you have enabled server-side features such as SSR in the higher level solutions, Rsbuild will generate some output files for Node.js and output them to the `server` directory:
+When the [output.target](/config/output/target) of Rsbuild is `'node'`, Rsbuild will generate output files for Node.js:
 
 ```bash
 dist
-├── server
-│   └── [name].js
 ├── static
-└── [name].html
+└── [name].js
 ```
 
-Node.js files usually only contain JS files, no HTML or CSS. Also, JS file names will not contain hash.
+Node.js outputs usually only contain JS files, no HTML or CSS. And the JS file names will not contain hash.
 
 You can modify the output path of Node.js files via the [environments](/config/environments) config.
 

@@ -94,14 +94,12 @@ dist
 
 ## Node.js 产物目录
 
-当 Rsbuild 的 [output.targets](/config/output/targets) 中包含 `'node'`，或者你在上层框架中开启了 SSR 等服务端功能时，Rsbuild 会在构建后生成一份 Node.js 产物，并输出到 `server` 目录下：
+当 Rsbuild 的 [output.target](/config/output/target) 是 `'node'` 时，Rsbuild 会在构建后生成 Node.js 产物：
 
 ```bash
 dist
-├── server
-│   └── [name].js
 ├── static
-└── [name].html
+└── [name].js
 ```
 
 Node.js 产物通常只包含 JS 文件，不包含 HTML、CSS 等文件。此外，Node 产物的 JS 文件名称也不会自动生成哈希值。
