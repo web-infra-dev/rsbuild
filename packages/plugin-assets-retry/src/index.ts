@@ -12,7 +12,7 @@ export const pluginAssetsRetry = (
   setup(api) {
     api.modifyBundlerChain(
       async (chain, { CHAIN_ID, HtmlPlugin, isProd, environment }) => {
-        const config = api.getNormalizedConfig();
+        const config = api.getNormalizedConfig({ environment });
 
         const htmlPaths = api.getHTMLPaths({ environment });
         if (!options || Object.keys(htmlPaths).length === 0) {

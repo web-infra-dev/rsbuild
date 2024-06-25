@@ -96,46 +96,87 @@ export function pluginModuleFederation(): RsbuildPlugin {
            * So we need to disable the default split chunks rules to make shared modules to work properly.
            * @see https://github.com/module-federation/module-federation-examples/issues/3161
            */
-          if (
-            config.moduleFederation?.options &&
-            config.performance?.chunkSplit?.strategy === 'split-by-experience'
-          ) {
-            config.performance.chunkSplit = {
-              ...config.performance.chunkSplit,
-              strategy: 'custom',
-            };
+          if (config.moduleFederation?.options) {
+            if (
+              config.performance?.chunkSplit?.strategy === 'split-by-experience'
+            ) {
+              if (
+                config.environments &&
+                Object.keys(config.environments).length
+              ) {
+                // override chunkSplit strategy in every environment
+                for (const envConfig of Object.values(config.environments)) {
+                  if (
+                    envConfig.performance?.chunkSplit?.strategy ===
+                      'split-by-experience' ||
+                    !envConfig.performance?.chunkSplit?.strategy
+                  ) {
+                    envConfig.performance ??= {};
+                    envConfig.performance.chunkSplit = {
+                      ...envConfig.performance.chunkSplit,
+                      strategy: 'custom',
+                    };
+                  }
+                }
+              } else {
+                config.performance.chunkSplit = {
+                  ...config.performance.chunkSplit,
+                  strategy: 'custom',
+                };
+              }
+            }
+          } else if (config.environments) {
+            for (const envConfig of Object.values(config.environments)) {
+              if (envConfig.moduleFederation?.options) {
+                if (
+                  envConfig.performance?.chunkSplit?.strategy ===
+                    'split-by-experience' ||
+                  (!envConfig.performance?.chunkSplit?.strategy &&
+                    config.performance?.chunkSplit?.strategy ===
+                      'split-by-experience')
+                ) {
+                  envConfig.performance ??= {};
+                  envConfig.performance.chunkSplit = {
+                    ...envConfig.performance.chunkSplit,
+                    strategy: 'custom',
+                  };
+                }
+              }
+            }
           }
 
           return config;
         },
       });
 
-      api.modifyBundlerChain(async (chain, { CHAIN_ID, target }) => {
-        const config = api.getNormalizedConfig();
+      api.modifyBundlerChain(
+        async (chain, { CHAIN_ID, target, environment }) => {
+          const config = api.getNormalizedConfig({ environment });
 
-        if (!config.moduleFederation?.options || target !== 'web') {
-          return;
-        }
+          if (!config.moduleFederation?.options || target !== 'web') {
+            return;
+          }
 
-        const { options } = config.moduleFederation;
+          const { options } = config.moduleFederation;
 
-        chain
-          .plugin(CHAIN_ID.PLUGIN.MODULE_FEDERATION)
-          .use(rspack.container.ModuleFederationPlugin, [options]);
-
-        if (options.name) {
           chain
-            .plugin('mf-patch-split-chunks')
-            .use(PatchSplitChunksPlugin, [options.name]);
-        }
+            .plugin(CHAIN_ID.PLUGIN.MODULE_FEDERATION)
+            .use(rspack.container.ModuleFederationPlugin, [options]);
 
-        const publicPath = chain.output.get('publicPath');
+          if (options.name) {
+            chain
+              .plugin('mf-patch-split-chunks')
+              .use(PatchSplitChunksPlugin, [options.name]);
+          }
 
-        // set the default publicPath to 'auto' to make MF work
-        if (publicPath === DEFAULT_ASSET_PREFIX) {
-          chain.output.set('publicPath', 'auto');
-        }
-      });
+          const publicPath = chain.output.get('publicPath');
+
+          // set the default publicPath to 'auto' to make MF work
+          if (publicPath === DEFAULT_ASSET_PREFIX) {
+            chain.output.set('publicPath', 'auto');
+          }
+        },
+      );
     },
   };
 }
