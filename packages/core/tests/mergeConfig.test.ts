@@ -222,4 +222,63 @@ describe('mergeRsbuildConfig', () => {
       },
     });
   });
+
+  test('should merge overrideBrowserslist in environments as expected', async () => {
+    expect(
+      mergeRsbuildConfig(
+        {
+          output: {
+            overrideBrowserslist: ['chrome 50'],
+          },
+          environments: {
+            web: {
+              output: {
+                overrideBrowserslist: ['edge 10'],
+              },
+            },
+            node: {
+              output: {
+                overrideBrowserslist: ['node 14'],
+              },
+            },
+          },
+        },
+        {
+          output: {
+            overrideBrowserslist: ['chrome 100'],
+          },
+        },
+        {
+          environments: {
+            web: {
+              output: {
+                overrideBrowserslist: ['edge 11'],
+              },
+            },
+            node: {
+              output: {
+                overrideBrowserslist: ['node 16'],
+              },
+            },
+          },
+        },
+      ),
+    ).toEqual({
+      output: {
+        overrideBrowserslist: ['chrome 100'],
+      },
+      environments: {
+        web: {
+          output: {
+            overrideBrowserslist: ['edge 11'],
+          },
+        },
+        node: {
+          output: {
+            overrideBrowserslist: ['node 16'],
+          },
+        },
+      },
+    });
+  });
 });
