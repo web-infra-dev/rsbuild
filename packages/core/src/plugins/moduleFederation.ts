@@ -88,65 +88,21 @@ export function pluginModuleFederation(): RsbuildPlugin {
     name: 'rsbuild:module-federation',
 
     setup(api) {
-      api.modifyRsbuildConfig({
-        order: 'post',
-        handler: (config) => {
-          /**
-           * Currently, splitChunks will take precedence over module federation shared modules.
-           * So we need to disable the default split chunks rules to make shared modules to work properly.
-           * @see https://github.com/module-federation/module-federation-examples/issues/3161
-           */
-          if (config.moduleFederation?.options) {
-            if (
-              config.performance?.chunkSplit?.strategy === 'split-by-experience'
-            ) {
-              if (
-                config.environments &&
-                Object.keys(config.environments).length
-              ) {
-                // override chunkSplit strategy in every environment
-                for (const envConfig of Object.values(config.environments)) {
-                  if (
-                    envConfig.performance?.chunkSplit?.strategy ===
-                      'split-by-experience' ||
-                    !envConfig.performance?.chunkSplit?.strategy
-                  ) {
-                    envConfig.performance ??= {};
-                    envConfig.performance.chunkSplit = {
-                      ...envConfig.performance.chunkSplit,
-                      strategy: 'custom',
-                    };
-                  }
-                }
-              } else {
-                config.performance.chunkSplit = {
-                  ...config.performance.chunkSplit,
-                  strategy: 'custom',
-                };
-              }
-            }
-          } else if (config.environments) {
-            for (const envConfig of Object.values(config.environments)) {
-              if (envConfig.moduleFederation?.options) {
-                if (
-                  envConfig.performance?.chunkSplit?.strategy ===
-                    'split-by-experience' ||
-                  (!envConfig.performance?.chunkSplit?.strategy &&
-                    config.performance?.chunkSplit?.strategy ===
-                      'split-by-experience')
-                ) {
-                  envConfig.performance ??= {};
-                  envConfig.performance.chunkSplit = {
-                    ...envConfig.performance.chunkSplit,
-                    strategy: 'custom',
-                  };
-                }
-              }
-            }
-          }
-
-          return config;
-        },
+      api.modifyEnvironmentConfig((config) => {
+        /**
+         * Currently, splitChunks will take precedence over module federation shared modules.
+         * So we need to disable the default split chunks rules to make shared modules to work properly.
+         * @see https://github.com/module-federation/module-federation-examples/issues/3161
+         */
+        if (
+          config.moduleFederation?.options &&
+          config.performance?.chunkSplit?.strategy === 'split-by-experience'
+        ) {
+          config.performance.chunkSplit = {
+            ...config.performance.chunkSplit,
+            strategy: 'custom',
+          };
+        }
       });
 
       api.modifyBundlerChain(
