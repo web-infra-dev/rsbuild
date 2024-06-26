@@ -19,7 +19,8 @@ type AutoSetRootFontSizeOptions = Omit<
 export async function getRootPixelCode(
   options: Required<AutoSetRootFontSizeOptions>,
   isCompress = false,
-) {
+): Promise<string | undefined> {
+  Ï;
   const code = genJSTemplate(options);
 
   if (!isCompress) {
@@ -80,7 +81,7 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
     this.scriptLoading = scriptLoading;
   }
 
-  async getScriptPath() {
+  async getScriptPath(): Promise<string> {
     if (!this.scriptPath) {
       this.scriptPath = path.posix.join(
         this.distDir,
@@ -91,7 +92,7 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
     return this.scriptPath;
   }
 
-  apply(compiler: Rspack.Compiler) {
+  apply(compiler: Rspack.Compiler): void {
     let runtimeCode: string | undefined;
 
     const getRuntimeCode = async () => {

@@ -33,7 +33,7 @@ export function patchCompilerGlobalLocation(compiler: {
     watchClose: CompilerTapFn;
     done: CompilerTapFn;
   };
-}) {
+}): void {
   // https://github.com/webpack/webpack/blob/136b723023f8f26d71eabdd16badf04c1c8554e4/lib/MultiCompiler.js#L64
   compiler.hooks.run.tap('PatchGlobalLocation', patchGlobalLocation);
   compiler.hooks.watchRun.tap('PatchGlobalLocation', patchGlobalLocation);
@@ -46,7 +46,9 @@ export function patchCompilerGlobalLocation(compiler: {
  *
  * reference: https://github.com/bholloway/resolve-url-loader/blob/e2695cde68f325f617825e168173df92236efb93/packages/resolve-url-loader/docs/advanced-features.md
  */
-export const getResolveUrlJoinFn = async () => {
+export const getResolveUrlJoinFn = async (): Promise<
+  (...args: unknown[]) => void
+> => {
   const {
     createJoinFunction,
     asGenerator,
