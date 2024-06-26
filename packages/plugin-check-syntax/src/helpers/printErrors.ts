@@ -12,7 +12,7 @@ type Error = {
 export function printErrors(
   errors: ECMASyntaxError[],
   ecmaVersion: EcmaVersion,
-) {
+): void {
   if (errors.length === 0) {
     logger.success('The syntax check success.');
     return;

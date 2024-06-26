@@ -3,9 +3,20 @@ import path from 'node:path';
 import type { ServerConfig } from '@rsbuild/core';
 import selfsigned from 'selfsigned';
 
-export const resolveHttpsConfig = (config: ServerConfig['https']) => {
+type HttpsConfig = ServerConfig['https'];
+
+export const resolveHttpsConfig = (
+  config: HttpsConfig,
+): {
+  key: NonNullable<HttpsConfig>['key'];
+  cert: NonNullable<HttpsConfig>['cert'];
+} => {
   const { key, cert } = config ?? {};
-  if (key && cert) return { key, cert };
+
+  if (key && cert) {
+    return { key, cert };
+  }
+
   const certPath = path.join(__dirname, 'fake-cert.pem');
   if (fs.existsSync(certPath)) {
     const stats = fs.statSync(certPath);

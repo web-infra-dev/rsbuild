@@ -37,7 +37,7 @@ function applyTransformPlugin(
   }
 
   class RsbuildTransformPlugin {
-    apply(compiler: Compiler) {
+    apply(compiler: Compiler): void {
       compiler.__rsbuildTransformer = transformer;
 
       compiler.hooks.thisCompilation.tap(name, (compilation) => {

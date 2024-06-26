@@ -20,7 +20,6 @@ export async function getRootPixelCode(
   options: Required<AutoSetRootFontSizeOptions>,
   isCompress = false,
 ): Promise<string | undefined> {
-  Ï;
   const code = genJSTemplate(options);
 
   if (!isCompress) {

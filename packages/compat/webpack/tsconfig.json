@@ -5,7 +5,7 @@
     "baseUrl": "./",
     "rootDir": "src",
     "composite": true,
-    "isolatedDeclarations": true
+    "isolatedDeclarations": false
   },
   "references": [
     {

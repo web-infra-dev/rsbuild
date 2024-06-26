@@ -6,7 +6,7 @@
     "rootDir": "src",
     "declarationDir": "./dist-types",
     "composite": true,
-    "isolatedDeclarations": true,
+    "isolatedDeclarations": false,
     "types": ["@rspack/core/module"],
     "paths": {
       "ws": ["./compiled/ws"],

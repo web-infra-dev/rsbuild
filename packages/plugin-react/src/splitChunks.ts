@@ -13,7 +13,7 @@ export const applySplitChunksRule = (
     react: true,
     router: true,
   },
-) => {
+): void => {
   api.modifyBundlerChain((chain, { environment }) => {
     const config = api.getNormalizedConfig({ environment });
     if (config.performance.chunkSplit.strategy !== 'split-by-experience') {

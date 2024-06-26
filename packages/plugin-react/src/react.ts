@@ -33,7 +33,7 @@ const modifySwcLoaderOptions = ({
 export const applyBasicReactSupport = (
   api: RsbuildPluginAPI,
   options: PluginReactOptions,
-) => {
+): void => {
   const REACT_REFRESH_PATH = require.resolve('react-refresh');
 
   api.modifyBundlerChain(
@@ -93,7 +93,7 @@ export const applyBasicReactSupport = (
   );
 };
 
-export const applyReactProfiler = (api: RsbuildPluginAPI) => {
+export const applyReactProfiler = (api: RsbuildPluginAPI): void => {
   api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
     const enableProfilerConfig: RsbuildConfig = {
       output: {

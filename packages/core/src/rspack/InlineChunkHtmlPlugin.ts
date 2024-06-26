@@ -215,7 +215,7 @@ export class InlineChunkHtmlPlugin {
     return tag;
   }
 
-  apply(compiler: Compiler) {
+  apply(compiler: Compiler): void {
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
       const publicPath = getPublicPathFromCompiler(compiler);
 

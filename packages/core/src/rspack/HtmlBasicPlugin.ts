@@ -252,7 +252,7 @@ export class HtmlBasicPlugin {
     this.modifyTagsFn = modifyTagsFn;
   }
 
-  apply(compiler: Compiler) {
+  apply(compiler: Compiler): void {
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
       getHTMLPlugin()
         .getHooks(compilation)
