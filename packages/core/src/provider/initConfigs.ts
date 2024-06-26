@@ -1,5 +1,7 @@
 import type {
   InspectConfigOptions,
+  MergedEnvironmentConfig,
+  ModifyEnvironmentConfigUtils,
   NormalizedEnvironmentConfig,
   PluginManager,
   RsbuildEntry,
@@ -33,16 +35,33 @@ async function modifyRsbuildConfig(context: InternalContext) {
   logger.debug('modify Rsbuild config done');
 }
 
+async function modifyEnvironmentConfig(
+  context: InternalContext,
+  config: MergedEnvironmentConfig,
+  name: string,
+) {
+  logger.debug(`modify Rsbuild environment(${name}) config`);
+  const [modified] = await context.hooks.modifyEnvironmentConfig.call(config, {
+    name,
+    mergeEnvironmentConfig:
+      mergeRsbuildConfig<MergedEnvironmentConfig> as ModifyEnvironmentConfigUtils['mergeEnvironmentConfig'],
+  });
+
+  logger.debug(`modify Rsbuild environment(${name}) config done`);
+
+  return modified;
+}
+
 export type InitConfigsOptions = {
   context: InternalContext;
   pluginManager: PluginManager;
   rsbuildOptions: Required<CreateRsbuildOptions>;
 };
 
-const normalizeEnvironmentsConfigs = (
+const initEnvironmentConfigs = (
   normalizedConfig: NormalizedConfig,
   rootPath: string,
-): Record<string, NormalizedEnvironmentConfig> => {
+): Record<string, MergedEnvironmentConfig> => {
   let defaultEntry: RsbuildEntry;
   const getDefaultEntryWithMemo = () => {
     if (!defaultEntry) {
@@ -52,20 +71,25 @@ const normalizeEnvironmentsConfigs = (
   };
   const { environments, dev, server, provider, ...rsbuildSharedConfig } =
     normalizedConfig;
+  const { assetPrefix, lazyCompilation } = dev;
+
   if (environments && Object.keys(environments).length) {
     return Object.fromEntries(
       Object.entries(environments).map(([name, config]) => {
-        const environmentConfig = {
-          ...mergeRsbuildConfig(
-            rsbuildSharedConfig,
-            config as unknown as NormalizedEnvironmentConfig,
-          ),
-          dev,
-          server,
+        const environmentConfig: MergedEnvironmentConfig = {
+          ...(mergeRsbuildConfig(
+            {
+              ...rsbuildSharedConfig,
+              dev: {
+                assetPrefix,
+                lazyCompilation,
+              },
+            } as unknown as MergedEnvironmentConfig,
+            config as unknown as MergedEnvironmentConfig,
+          ) as unknown as MergedEnvironmentConfig),
         };
 
         if (!environmentConfig.source.entry) {
-          // @ts-expect-error
           environmentConfig.source.entry = getDefaultEntryWithMemo();
         }
 
@@ -81,9 +105,11 @@ const normalizeEnvironmentsConfigs = (
         ...rsbuildSharedConfig.source,
         entry: rsbuildSharedConfig.source.entry ?? getDefaultEntryWithMemo(),
       },
-      dev,
-      server,
-    },
+      dev: {
+        assetPrefix,
+        lazyCompilation,
+      },
+    } as MergedEnvironmentConfig,
   };
 };
 
@@ -107,10 +133,34 @@ export async function initRsbuildConfig({
   await modifyRsbuildConfig(context);
   const normalizeBaseConfig = normalizeConfig(context.config);
 
-  const environments = normalizeEnvironmentsConfigs(
+  const environments: Record<string, NormalizedEnvironmentConfig> = {};
+
+  const mergedEnvironments = initEnvironmentConfigs(
     normalizeBaseConfig,
     context.rootPath,
   );
+
+  const {
+    dev: { assetPrefix, lazyCompilation, ...rsbuildSharedDev },
+    server,
+  } = normalizeBaseConfig;
+
+  for (const [name, config] of Object.entries(mergedEnvironments)) {
+    const environmentConfig = await modifyEnvironmentConfig(
+      context,
+      config,
+      name,
+    );
+
+    environments[name] = {
+      ...environmentConfig,
+      dev: {
+        ...environmentConfig.dev,
+        ...rsbuildSharedDev,
+      },
+      server,
+    };
+  }
 
   context.normalizedConfig = {
     ...normalizeBaseConfig,

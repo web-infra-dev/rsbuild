@@ -2,6 +2,7 @@ import type {
   AsyncHook,
   HookDescriptor,
   ModifyBundlerChainFn,
+  ModifyEnvironmentConfigFn,
   ModifyHTMLTagsFn,
   ModifyRsbuildConfigFn,
   ModifyRspackConfigFn,
@@ -80,6 +81,7 @@ export function initHooks() {
     modifyWebpackChain: createAsyncHook<ModifyWebpackChainFn>(),
     modifyWebpackConfig: createAsyncHook<ModifyWebpackConfigFn>(),
     modifyRsbuildConfig: createAsyncHook<ModifyRsbuildConfigFn>(),
+    modifyEnvironmentConfig: createAsyncHook<ModifyEnvironmentConfigFn>(),
   };
 }
 

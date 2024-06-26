@@ -39,6 +39,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
       "port": "",
     },
     "hmr": true,
+    "lazyCompilation": true,
     "liveReload": true,
     "writeToDisk": false,
   },
@@ -148,6 +149,127 @@ exports[`environment config > should normalize environment config correctly 1`] 
 }
 `;
 
+exports[`environment config > should normalize environment config correctly 2`] = `
+{
+  "dev": {
+    "assetPrefix": "/foo",
+    "client": {
+      "host": "",
+      "overlay": true,
+      "path": "/rsbuild-hmr",
+      "port": "",
+    },
+    "hmr": true,
+    "lazyCompilation": false,
+    "liveReload": true,
+    "writeToDisk": false,
+  },
+  "html": {
+    "crossorigin": false,
+    "inject": "head",
+    "meta": {
+      "charset": {
+        "charset": "UTF-8",
+      },
+      "viewport": "width=device-width, initial-scale=1.0",
+    },
+    "mountId": "root",
+    "outputStructure": "flat",
+    "scriptLoading": "defer",
+    "title": "Rsbuild App",
+  },
+  "output": {
+    "assetPrefix": "/",
+    "charset": "ascii",
+    "cssModules": {
+      "auto": true,
+      "exportGlobals": false,
+      "exportLocalsConvention": "camelCase",
+      "namedExport": false,
+    },
+    "dataUriLimit": {
+      "font": 4096,
+      "image": 4096,
+      "media": 4096,
+      "svg": 4096,
+    },
+    "distPath": {
+      "css": "static/css",
+      "font": "static/font",
+      "html": "/",
+      "image": "static/image",
+      "js": "static/js",
+      "media": "static/media",
+      "root": "dist",
+      "svg": "static/svg",
+      "wasm": "static/wasm",
+    },
+    "emitAssets": true,
+    "filename": {},
+    "filenameHash": true,
+    "injectStyles": false,
+    "inlineScripts": false,
+    "inlineStyles": false,
+    "legalComments": "linked",
+    "manifest": false,
+    "minify": true,
+    "polyfill": "usage",
+    "sourceMap": {
+      "css": false,
+      "js": undefined,
+    },
+    "target": "node",
+  },
+  "performance": {
+    "buildCache": true,
+    "chunkSplit": {
+      "strategy": "split-by-experience",
+    },
+    "printFileSize": true,
+    "profile": false,
+    "removeConsole": false,
+    "removeMomentLocale": false,
+  },
+  "security": {
+    "nonce": "",
+    "sri": {
+      "enable": false,
+    },
+  },
+  "server": {
+    "compress": true,
+    "host": "0.0.0.0",
+    "htmlFallback": "index",
+    "open": false,
+    "port": 3000,
+    "printUrls": true,
+    "strictPort": false,
+  },
+  "source": {
+    "alias": {
+      "@common": "src/common",
+    },
+    "aliasStrategy": "prefer-tsconfig",
+    "decorators": {
+      "version": "2022-03",
+    },
+    "define": {},
+    "entry": {
+      "index": "src/index.server.js",
+    },
+    "preEntry": [],
+  },
+  "tools": {
+    "cssExtract": {
+      "loaderOptions": {},
+      "pluginOptions": {
+        "ignoreOrder": true,
+      },
+    },
+  },
+}
+`;
+
 exports[`environment config > should print environment config when inspect config 1`] = `
 {
   "ssr": {
@@ -160,6 +282,7 @@ exports[`environment config > should print environment config when inspect confi
         "port": "",
       },
       "hmr": true,
+      "lazyCompilation": undefined,
       "liveReload": true,
       "writeToDisk": false,
     },
@@ -277,6 +400,7 @@ exports[`environment config > should print environment config when inspect confi
         "port": "",
       },
       "hmr": true,
+      "lazyCompilation": undefined,
       "liveReload": true,
       "writeToDisk": false,
     },
@@ -399,6 +523,7 @@ exports[`environment config > should support modify environment config by api.mo
         "port": "",
       },
       "hmr": true,
+      "lazyCompilation": undefined,
       "liveReload": true,
       "writeToDisk": false,
     },
@@ -516,6 +641,7 @@ exports[`environment config > should support modify environment config by api.mo
         "port": "",
       },
       "hmr": true,
+      "lazyCompilation": undefined,
       "liveReload": true,
       "writeToDisk": false,
     },
@@ -634,6 +760,7 @@ exports[`environment config > should support modify environment config by api.mo
         "port": "",
       },
       "hmr": true,
+      "lazyCompilation": undefined,
       "liveReload": true,
       "writeToDisk": false,
     },
@@ -729,6 +856,248 @@ exports[`environment config > should support modify environment config by api.mo
       },
       "define": {},
       "entry": {},
+      "preEntry": [],
+    },
+    "tools": {
+      "cssExtract": {
+        "loaderOptions": {},
+        "pluginOptions": {
+          "ignoreOrder": true,
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`environment config > should support modify single environment config by api.modifyEnvironmentConfig 1`] = `
+{
+  "ssr": {
+    "dev": {
+      "assetPrefix": "/",
+      "client": {
+        "host": "",
+        "overlay": true,
+        "path": "/rsbuild-hmr",
+        "port": "",
+      },
+      "hmr": true,
+      "lazyCompilation": undefined,
+      "liveReload": true,
+      "writeToDisk": false,
+    },
+    "html": {
+      "crossorigin": false,
+      "inject": "head",
+      "meta": {
+        "charset": {
+          "charset": "UTF-8",
+        },
+        "viewport": "width=device-width, initial-scale=1.0",
+      },
+      "mountId": "root",
+      "outputStructure": "flat",
+      "scriptLoading": "defer",
+      "title": "Rsbuild App",
+    },
+    "output": {
+      "assetPrefix": "/",
+      "charset": "ascii",
+      "cssModules": {
+        "auto": true,
+        "exportGlobals": false,
+        "exportLocalsConvention": "camelCase",
+        "namedExport": false,
+      },
+      "dataUriLimit": {
+        "font": 4096,
+        "image": 4096,
+        "media": 4096,
+        "svg": 4096,
+      },
+      "distPath": {
+        "css": "static/css",
+        "font": "static/font",
+        "html": "/",
+        "image": "static/image",
+        "js": "static/js",
+        "media": "static/media",
+        "root": "dist",
+        "svg": "static/svg",
+        "wasm": "static/wasm",
+      },
+      "emitAssets": true,
+      "filename": {},
+      "filenameHash": true,
+      "injectStyles": false,
+      "inlineScripts": false,
+      "inlineStyles": false,
+      "legalComments": "linked",
+      "manifest": false,
+      "minify": true,
+      "polyfill": "usage",
+      "sourceMap": {
+        "css": false,
+        "js": undefined,
+      },
+      "target": "web",
+    },
+    "performance": {
+      "buildCache": true,
+      "chunkSplit": {
+        "strategy": "split-by-experience",
+      },
+      "printFileSize": true,
+      "profile": false,
+      "removeConsole": false,
+      "removeMomentLocale": false,
+    },
+    "security": {
+      "nonce": "",
+      "sri": {
+        "enable": false,
+      },
+    },
+    "server": {
+      "compress": true,
+      "host": "0.0.0.0",
+      "htmlFallback": "index",
+      "open": false,
+      "port": 3000,
+      "printUrls": true,
+      "strictPort": false,
+    },
+    "source": {
+      "alias": {
+        "@common": "src/common",
+      },
+      "aliasStrategy": "prefer-tsconfig",
+      "decorators": {
+        "version": "2022-03",
+      },
+      "define": {},
+      "entry": {
+        "index": "src/index.server.js",
+      },
+      "preEntry": [],
+    },
+    "tools": {
+      "cssExtract": {
+        "loaderOptions": {},
+        "pluginOptions": {
+          "ignoreOrder": true,
+        },
+      },
+    },
+  },
+  "web": {
+    "dev": {
+      "assetPrefix": "/",
+      "client": {
+        "host": "",
+        "overlay": true,
+        "path": "/rsbuild-hmr",
+        "port": "",
+      },
+      "hmr": true,
+      "lazyCompilation": undefined,
+      "liveReload": true,
+      "writeToDisk": false,
+    },
+    "html": {
+      "crossorigin": false,
+      "inject": "head",
+      "meta": {
+        "charset": {
+          "charset": "UTF-8",
+        },
+        "viewport": "width=device-width, initial-scale=1.0",
+      },
+      "mountId": "root",
+      "outputStructure": "flat",
+      "scriptLoading": "defer",
+      "title": "Rsbuild App",
+    },
+    "output": {
+      "assetPrefix": "/",
+      "charset": "ascii",
+      "cssModules": {
+        "auto": true,
+        "exportGlobals": false,
+        "exportLocalsConvention": "camelCase",
+        "namedExport": false,
+      },
+      "dataUriLimit": {
+        "font": 4096,
+        "image": 4096,
+        "media": 4096,
+        "svg": 4096,
+      },
+      "distPath": {
+        "css": "static/css",
+        "font": "static/font",
+        "html": "/",
+        "image": "static/image",
+        "js": "static/js",
+        "media": "static/media",
+        "root": "dist",
+        "svg": "static/svg",
+        "wasm": "static/wasm",
+      },
+      "emitAssets": true,
+      "filename": {},
+      "filenameHash": true,
+      "injectStyles": false,
+      "inlineScripts": false,
+      "inlineStyles": false,
+      "legalComments": "linked",
+      "manifest": false,
+      "minify": true,
+      "polyfill": "usage",
+      "sourceMap": {
+        "css": false,
+        "js": undefined,
+      },
+      "target": "web",
+    },
+    "performance": {
+      "buildCache": true,
+      "chunkSplit": {
+        "strategy": "split-by-experience",
+      },
+      "printFileSize": true,
+      "profile": false,
+      "removeConsole": false,
+      "removeMomentLocale": false,
+    },
+    "security": {
+      "nonce": "",
+      "sri": {
+        "enable": false,
+      },
+    },
+    "server": {
+      "compress": true,
+      "host": "0.0.0.0",
+      "htmlFallback": "index",
+      "open": false,
+      "port": 3000,
+      "printUrls": true,
+      "strictPort": false,
+    },
+    "source": {
+      "alias": {
+        "@common": "src/common",
+        "@common1": "src/common1",
+      },
+      "aliasStrategy": "prefer-tsconfig",
+      "decorators": {
+        "version": "2022-03",
+      },
+      "define": {},
+      "entry": {
+        "index": "src/index.client.js",
+      },
       "preEntry": [],
     },
     "tools": {

@@ -88,54 +88,51 @@ export function pluginModuleFederation(): RsbuildPlugin {
     name: 'rsbuild:module-federation',
 
     setup(api) {
-      api.modifyRsbuildConfig({
-        order: 'post',
-        handler: (config) => {
-          /**
-           * Currently, splitChunks will take precedence over module federation shared modules.
-           * So we need to disable the default split chunks rules to make shared modules to work properly.
-           * @see https://github.com/module-federation/module-federation-examples/issues/3161
-           */
-          if (
-            config.moduleFederation?.options &&
-            config.performance?.chunkSplit?.strategy === 'split-by-experience'
-          ) {
-            config.performance.chunkSplit = {
-              ...config.performance.chunkSplit,
-              strategy: 'custom',
-            };
+      api.modifyEnvironmentConfig((config) => {
+        /**
+         * Currently, splitChunks will take precedence over module federation shared modules.
+         * So we need to disable the default split chunks rules to make shared modules to work properly.
+         * @see https://github.com/module-federation/module-federation-examples/issues/3161
+         */
+        if (
+          config.moduleFederation?.options &&
+          config.performance?.chunkSplit?.strategy === 'split-by-experience'
+        ) {
+          config.performance.chunkSplit = {
+            ...config.performance.chunkSplit,
+            strategy: 'custom',
+          };
+        }
+      });
+
+      api.modifyBundlerChain(
+        async (chain, { CHAIN_ID, target, environment }) => {
+          const config = api.getNormalizedConfig({ environment });
+
+          if (!config.moduleFederation?.options || target !== 'web') {
+            return;
           }
 
-          return config;
-        },
-      });
+          const { options } = config.moduleFederation;
 
-      api.modifyBundlerChain(async (chain, { CHAIN_ID, target }) => {
-        const config = api.getNormalizedConfig();
-
-        if (!config.moduleFederation?.options || target !== 'web') {
-          return;
-        }
-
-        const { options } = config.moduleFederation;
-
-        chain
-          .plugin(CHAIN_ID.PLUGIN.MODULE_FEDERATION)
-          .use(rspack.container.ModuleFederationPlugin, [options]);
-
-        if (options.name) {
           chain
-            .plugin('mf-patch-split-chunks')
-            .use(PatchSplitChunksPlugin, [options.name]);
-        }
+            .plugin(CHAIN_ID.PLUGIN.MODULE_FEDERATION)
+            .use(rspack.container.ModuleFederationPlugin, [options]);
 
-        const publicPath = chain.output.get('publicPath');
+          if (options.name) {
+            chain
+              .plugin('mf-patch-split-chunks')
+              .use(PatchSplitChunksPlugin, [options.name]);
+          }
 
-        // set the default publicPath to 'auto' to make MF work
-        if (publicPath === DEFAULT_ASSET_PREFIX) {
-          chain.output.set('publicPath', 'auto');
-        }
-      });
+          const publicPath = chain.output.get('publicPath');
+
+          // set the default publicPath to 'auto' to make MF work
+          if (publicPath === DEFAULT_ASSET_PREFIX) {
+            chain.output.set('publicPath', 'auto');
+          }
+        },
+      );
     },
   };
 }
