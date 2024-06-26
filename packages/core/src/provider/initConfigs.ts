@@ -104,7 +104,10 @@ const initEnvironmentConfigs = (
         ...rsbuildSharedConfig.source,
         entry: rsbuildSharedConfig.source.entry ?? getDefaultEntryWithMemo(),
       },
-      // dev,
+      dev: {
+        assetPrefix,
+        lazyCompilation,
+      },
     } as MergedEnvironmentConfig,
   };
 };
