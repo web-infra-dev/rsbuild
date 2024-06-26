@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import type {
   CreateDevServerOptions,
+  Routes,
   Rspack,
   StartDevServerOptions,
 } from '@rsbuild/shared';
@@ -117,13 +118,20 @@ export async function createDevServer<
   });
   const devConfig = formatDevConfig(config.dev, port);
 
-  const routes = formatRoutes(
-    Object.values(options.context.environments).reduce(
-      (prev, context) => Object.assign(prev, context.htmlPaths),
-      {},
-    ),
-    config.output.distPath.html,
-    config.html.outputStructure,
+  const routes = Object.entries(options.context.environments).reduce<Routes>(
+    (prev, [name, context]) => {
+      const environmentConfig =
+        options.context.pluginAPI?.getNormalizedConfig({ environment: name }) ||
+        config;
+
+      const routes = formatRoutes(
+        context.htmlPaths,
+        environmentConfig.output.distPath.html,
+        environmentConfig.html.outputStructure,
+      );
+      return prev.concat(...routes);
+    },
+    [],
   );
 
   options.context.devServer = {

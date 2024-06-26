@@ -160,6 +160,39 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
+  it('should not modify the original objects when the merged config modified', () => {
+    const obj: RsbuildConfig = {
+      source: {
+        alias: {},
+      },
+    };
+
+    const other: RsbuildConfig = {};
+
+    const res = mergeRsbuildConfig(obj, other);
+
+    if (!res.source?.entry) {
+      res.source!.entry = {
+        index: './index',
+      };
+    }
+
+    expect(res).toEqual({
+      source: {
+        alias: {},
+        entry: {
+          index: './index',
+        },
+      },
+    });
+
+    expect(obj).toEqual({
+      source: {
+        alias: {},
+      },
+    });
+  });
+
   test('should merge server.open correctly', async () => {
     expect(
       mergeRsbuildConfig(
