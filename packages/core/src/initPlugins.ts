@@ -184,5 +184,6 @@ export function getPluginAPI({
     modifyWebpackChain: hooks.modifyWebpackChain.tap,
     modifyWebpackConfig: hooks.modifyWebpackConfig.tap,
     modifyRsbuildConfig: hooks.modifyRsbuildConfig.tap,
+    modifyEnvironmentConfig: hooks.modifyEnvironmentConfig.tap,
   };
 }

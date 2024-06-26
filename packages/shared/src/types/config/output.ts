@@ -63,11 +63,6 @@ export type DistPathConfig = {
    * @default 'static/media'
    */
   media?: string;
-  /**
-   * The output directory of server bundles when target is `node`.
-   * @default 'server'
-   */
-  server?: string;
 };
 
 export type FilenameConfig = {

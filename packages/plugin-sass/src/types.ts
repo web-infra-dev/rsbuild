@@ -6,7 +6,10 @@ import type {
 } from 'sass-embedded';
 import type SassLoader from '../compiled/sass-loader/index.js';
 
-export type SassLoaderOptions = Omit<SassLoader.Options, 'sassOptions'> &
+export type SassLoaderOptions = Omit<
+  SassLoader.Options,
+  'sassOptions' | 'additionalData'
+> &
   (
     | {
         api?: 'legacy';
@@ -16,7 +19,14 @@ export type SassLoaderOptions = Omit<SassLoader.Options, 'sassOptions'> &
         api: 'modern' | 'modern-compiler';
         sassOptions?: SassOptions<'async'>;
       }
-  );
+  ) & {
+    // @types/sass-loader is outdated
+    // see https://github.com/web-infra-dev/rsbuild/issues/2582
+    additionalData?: (
+      content: string | Buffer,
+      loaderContext: Rspack.LoaderContext,
+    ) => string;
+  };
 
 export type PluginSassOptions = {
   /**

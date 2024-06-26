@@ -52,6 +52,9 @@ test.describe('should print file size correctly', async () => {
           node: {
             output: {
               target: 'node',
+              distPath: {
+                root: 'dist/server',
+              },
             },
           },
         },

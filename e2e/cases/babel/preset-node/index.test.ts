@@ -9,7 +9,8 @@ rspackOnlyTest(
       runServer: true,
     });
 
-    const { foo } = await import('./dist/server/index.js');
+    // @ts-ignore .js file
+    const { foo } = await import('./dist/index.js');
     expect(foo).toEqual(1);
   },
 );

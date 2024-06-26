@@ -3,7 +3,7 @@
 - **Type:**
 
 ```ts
-type Entry = Record<string, string | string[] | EntryDescription> | Function;
+type Entry = Record<string, string | string[] | EntryDescription>;
 ```
 
 - **Default:**
@@ -72,30 +72,35 @@ export default {
 
 For the complete usage of the description object, please refer to [Rspack - Entry Description Object](https://rspack.dev/config/entry#entry-description-object).
 
-## Function Usage
+## Set by environment
 
-`source.entry` supports setting as a function, which is commonly used to set different entry objects for different build target.
+When you build for multiple [environments](/config/environments), you can set different entry for each environment:
 
-For example, set entry for web target and node target separately:
+For example, set different entry for `web` and `node` environments:
 
-```ts title="rsbuild.config.ts"
+```js
 export default {
-  source: {
-    entry({ target }) {
-      if (target === 'web') {
-        return {
+  environments: {
+    web: {
+      source: {
+        entry: {
           index: './src/index.client.js',
-        };
-      }
-      if (target === 'node') {
-        return {
-          index: './src/index.server.js',
-        };
-      }
+        },
+      },
+      output: {
+        target: 'web',
+      },
     },
-  },
-  output: {
-    targets: ['web', 'node'],
+    node: {
+      source: {
+        entry: {
+          index: './src/index.server.js',
+        },
+      },
+      output: {
+        target: 'node',
+      },
+    },
   },
 };
 ```

@@ -31,6 +31,10 @@ export type RsbuildConfigMeta = {
  * */
 export interface EnvironmentConfig {
   /**
+   * Options for local development.
+   */
+  dev?: Pick<DevConfig, 'assetPrefix' | 'lazyCompilation'>;
+  /**
    * Options for HTML generation.
    */
   html?: HtmlConfig;
@@ -92,6 +96,18 @@ export interface RsbuildConfig extends EnvironmentConfig {
    */
   _privateMeta?: RsbuildConfigMeta;
 }
+
+export type MergedEnvironmentConfig = {
+  dev: Pick<NormalizedDevConfig, 'assetPrefix' | 'lazyCompilation'>;
+  html: NormalizedHtmlConfig;
+  tools: NormalizedToolsConfig;
+  source: NormalizedSourceConfig;
+  output: NormalizedOutputConfig;
+  plugins?: RsbuildPlugins;
+  security: NormalizedSecurityConfig;
+  performance: NormalizedPerformanceConfig;
+  moduleFederation?: ModuleFederationConfig;
+};
 
 /** The normalized Rsbuild environment config. */
 export type NormalizedEnvironmentConfig = DeepReadonly<{

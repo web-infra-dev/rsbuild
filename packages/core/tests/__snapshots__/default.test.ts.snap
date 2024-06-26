@@ -1234,7 +1234,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "library": {
       "type": "commonjs2",
     },
-    "path": "<ROOT>/packages/core/tests/dist/server",
+    "path": "<ROOT>/packages/core/tests/dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",

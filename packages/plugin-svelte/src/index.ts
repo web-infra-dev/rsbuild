@@ -2,13 +2,12 @@ import path from 'node:path';
 import { logger } from '@rsbuild/core';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import { deepmerge } from '@rsbuild/shared';
-import type {
-  AutoPreprocessOptions,
-  Transformer,
-} from 'svelte-preprocess/dist/types';
+import type { sveltePreprocess } from 'svelte-preprocess';
 import type { CompileOptions } from 'svelte/compiler';
 
-export type { AutoPreprocessOptions, Transformer };
+export type AutoPreprocessOptions = NonNullable<
+  Parameters<typeof sveltePreprocess>[0]
+>;
 
 export interface SvelteLoaderOptions {
   compilerOptions?: Omit<CompileOptions, 'filename' | 'format' | 'generate'>;

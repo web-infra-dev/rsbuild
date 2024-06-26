@@ -31,9 +31,7 @@ export const pluginPerformance = (): RsbuildPlugin => ({
         if (rsbuildConfig.performance?.profile) {
           applyBundleAnalyzeConfig(rsbuildConfig);
         } else if (rsbuildConfig.environments) {
-          for (const config of Object.values(
-            rsbuildConfig.environments,
-          )) {
+          for (const config of Object.values(rsbuildConfig.environments)) {
             if (config.performance?.profile) {
               applyBundleAnalyzeConfig(config);
             }

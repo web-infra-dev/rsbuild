@@ -1,29 +1,7 @@
-import {
-  type NormalizedEnvironmentConfig,
-  type RsbuildEntry,
-  type RsbuildTarget,
-  castArray,
-  color,
-} from '@rsbuild/shared';
+import { castArray, color } from '@rsbuild/shared';
 import type { EntryDescription } from '@rspack/core';
 import { createVirtualModule } from '../helpers';
-import { reduceConfigsMergeContext } from '../reduceConfigs';
-import type { NormalizedConfig, RsbuildConfig, RsbuildPlugin } from '../types';
-
-export function getEntryObject(
-  config: RsbuildConfig | NormalizedConfig | NormalizedEnvironmentConfig,
-  target: RsbuildTarget,
-): RsbuildEntry {
-  if (!config.source?.entry) {
-    return {};
-  }
-
-  return reduceConfigsMergeContext({
-    initial: {},
-    config: config.source?.entry,
-    ctx: { target },
-  });
-}
+import type { RsbuildPlugin } from '../types';
 
 export const pluginEntry = (): RsbuildPlugin => ({
   name: 'rsbuild:entry',
