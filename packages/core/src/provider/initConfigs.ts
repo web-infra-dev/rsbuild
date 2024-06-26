@@ -70,12 +70,20 @@ const initEnvironmentConfigs = (
   };
   const { environments, dev, server, provider, ...rsbuildSharedConfig } =
     normalizedConfig;
+  const { assetPrefix, lazyCompilation } = dev;
+
   if (environments && Object.keys(environments).length) {
     return Object.fromEntries(
       Object.entries(environments).map(([name, config]) => {
         const environmentConfig: MergedEnvironmentConfig = {
           ...(mergeRsbuildConfig(
-            rsbuildSharedConfig,
+            {
+              ...rsbuildSharedConfig,
+              dev: {
+                assetPrefix,
+                lazyCompilation,
+              },
+            } as unknown as MergedEnvironmentConfig,
             config as unknown as MergedEnvironmentConfig,
           ) as unknown as MergedEnvironmentConfig),
         };
@@ -128,7 +136,10 @@ export async function initRsbuildConfig({
     context.rootPath,
   );
 
-  const { dev, server } = normalizeBaseConfig;
+  const {
+    dev: { assetPrefix, lazyCompilation, ...rsbuildSharedDev },
+    server,
+  } = normalizeBaseConfig;
 
   for await (const [name, config] of Object.entries(mergedEnvironments)) {
     const environmentConfig = await modifyEnvironmentConfig(
@@ -139,7 +150,10 @@ export async function initRsbuildConfig({
 
     environments[name] = {
       ...environmentConfig,
-      dev,
+      dev: {
+        ...environmentConfig.dev,
+        ...rsbuildSharedDev,
+      },
       server,
     };
   }

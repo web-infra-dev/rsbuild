@@ -164,6 +164,9 @@ describe('environment config', () => {
             '@common': './src/common',
           },
         },
+        dev: {
+          lazyCompilation: false,
+        },
         environments: {
           web: {
             source: {
@@ -171,8 +174,17 @@ describe('environment config', () => {
                 index: './src/index.client.js',
               },
             },
+            dev: {
+              lazyCompilation: true,
+            },
           },
           ssr: {
+            output: {
+              target: 'node',
+            },
+            dev: {
+              assetPrefix: '/foo',
+            },
             source: {
               entry: {
                 index: './src/index.server.js',
@@ -185,11 +197,17 @@ describe('environment config', () => {
 
     await rsbuild.initConfigs();
 
-    const environmentConfig = rsbuild.getNormalizedConfig({
-      environment: 'web',
-    });
+    expect(
+      rsbuild.getNormalizedConfig({
+        environment: 'web',
+      }),
+    ).toMatchSnapshot();
 
-    expect(environmentConfig).toMatchSnapshot();
+    expect(
+      rsbuild.getNormalizedConfig({
+        environment: 'ssr',
+      }),
+    ).toMatchSnapshot();
   });
 
   it('should print environment config when inspect config', async () => {

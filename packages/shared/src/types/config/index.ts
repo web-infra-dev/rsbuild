@@ -98,7 +98,7 @@ export interface RsbuildConfig extends EnvironmentConfig {
 }
 
 export type MergedEnvironmentConfig = {
-  // dev: NormalizedDevConfig;
+  dev: Pick<NormalizedDevConfig, 'assetPrefix' | 'lazyCompilation'>;
   html: NormalizedHtmlConfig;
   tools: NormalizedToolsConfig;
   source: NormalizedSourceConfig;
