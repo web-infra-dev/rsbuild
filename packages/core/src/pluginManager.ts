@@ -174,7 +174,7 @@ export async function initPlugins({
 }: {
   pluginAPI?: RsbuildPluginAPI;
   pluginManager: PluginManager;
-}) {
+}): Promise<void> {
   logger.debug('init plugins');
 
   const plugins = pluginDagSort(pluginManager.getPlugins());

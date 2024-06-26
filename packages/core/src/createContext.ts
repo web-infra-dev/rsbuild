@@ -61,7 +61,7 @@ async function createContextByConfig(
 // using cache to avoid multiple calls to loadConfig
 const browsersListCache = new Map<string, string[]>();
 
-export async function getBrowserslist(path: string) {
+export async function getBrowserslist(path: string): Promise<string[] | null> {
   const env = process.env.NODE_ENV;
   const cacheKey = path + env;
 
@@ -131,7 +131,7 @@ const getEnvironmentHTMLPaths = (
 export async function updateEnvironmentContext(
   context: RsbuildContext,
   configs: Record<string, NormalizedEnvironmentConfig>,
-) {
+): Promise<void> {
   context.environments ||= {};
 
   for (const [name, config] of Object.entries(configs)) {
@@ -158,7 +158,7 @@ export async function updateEnvironmentContext(
   }
 }
 
-export function updateContextByNormalizedConfig(context: RsbuildContext) {
+export function updateContextByNormalizedConfig(context: RsbuildContext): void {
   // Try to get the parent dist path from all environments
   const distPaths = Object.values(context.environments).map(
     (item) => item.distPath,

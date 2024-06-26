@@ -8,10 +8,10 @@ import type { NormalizedEnvironmentConfig, RsbuildContext } from './types';
 export * from './types';
 
 // RegExp
-export const JS_REGEX = /\.(?:js|mjs|cjs|jsx)$/;
-export const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
-export const TS_AND_JSX_REGEX = /\.(?:ts|tsx|jsx|mts|cts)$/;
-export const NODE_MODULES_REGEX = /[\\/]node_modules[\\/]/;
+export const JS_REGEX: RegExp = /\.(?:js|mjs|cjs|jsx)$/;
+export const SCRIPT_REGEX: RegExp = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
+export const TS_AND_JSX_REGEX: RegExp = /\.(?:ts|tsx|jsx|mts|cts)$/;
+export const NODE_MODULES_REGEX: RegExp = /[\\/]node_modules[\\/]/;
 
 enum ESVersion {
   es5 = 5,
@@ -35,7 +35,7 @@ const renameBrowser = (name: string) => {
   return name === 'ios_saf' ? 'safari' : name;
 };
 
-export function browserslistToESVersion(browsers: string[]) {
+export function browserslistToESVersion(browsers: string[]): ESVersion {
   const projectBrowsers = browserslist(browsers, {
     ignoreUnknownVersions: true,
   });
@@ -110,7 +110,7 @@ const DEP_MATCH_TEMPLATE = /[\\/]node_modules[\\/](<SOURCES>)[\\/]/.source;
 /** Expect to match path just like "./node_modules/react-router/" */
 export const createDependenciesRegExp = (
   ...dependencies: (string | RegExp)[]
-) => {
+): RegExp => {
   const sources = dependencies.map((d) =>
     typeof d === 'string' ? d : d.source,
   );
@@ -311,7 +311,7 @@ export function applyScriptCondition({
   context: RsbuildContext;
   includes: (string | RegExp)[];
   excludes: (string | RegExp)[];
-}) {
+}): void {
   // compile all folders in app directory, exclude node_modules
   // which can be removed next version of rspack
   rule.include.add({

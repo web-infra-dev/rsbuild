@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import glob, { type Options as GlobOptions } from 'fast-glob';
 import { PACKAGE_JSON, PNPM_WORKSPACE_FILE } from '../constants';
-import { Project } from '../project/project';
+import { Project } from '../project';
 import type { IPnpmWorkSpace } from '../types';
 import { readPackageJson } from '../utils';
 

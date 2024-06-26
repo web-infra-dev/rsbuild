@@ -17,7 +17,7 @@ import type { InternalContext, NormalizedConfig } from './types';
 export function getHTMLPathByEntry(
   entryName: string,
   config: NormalizedEnvironmentConfig,
-) {
+): string {
   const filename =
     config.html.outputStructure === 'flat'
       ? `${entryName}.html`

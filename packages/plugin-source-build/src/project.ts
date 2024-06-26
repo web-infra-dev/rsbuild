@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { PACKAGE_JSON } from '../constants';
-import type { ExportsConfig, INodePackageJson } from '../types/packageJson';
-import { readPackageJson } from '../utils';
+import { PACKAGE_JSON } from './constants';
+import type { ExportsConfig, INodePackageJson } from './types/packageJson';
+import { readPackageJson } from './utils';
 
 export class Project {
   name: string;
@@ -16,11 +16,11 @@ export class Project {
     this.dir = dir;
   }
 
-  async init() {
+  async init(): Promise<void> {
     this.metaData = await readPackageJson(path.join(this.dir, PACKAGE_JSON));
   }
 
-  getMetaData() {
+  getMetaData(): INodePackageJson {
     if (this.metaData === null) {
       throw new Error(
         'The Project object needs to be initialized by executing the `init` function',
@@ -89,7 +89,10 @@ export class Project {
     return projects;
   }
 
-  getSourceEntryPaths(options?: { field?: string; exports?: boolean }) {
+  getSourceEntryPaths(options?: {
+    field?: string;
+    exports?: boolean;
+  }): string[] {
     const { exports: checkExports = false, field: sourceField = 'source' } =
       options ?? {};
     const pkgJson = this.getMetaData() as INodePackageJson &

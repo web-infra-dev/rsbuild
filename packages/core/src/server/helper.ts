@@ -32,7 +32,8 @@ export type StartServerResult = {
 };
 
 // remove repeat '/'
-export const normalizeUrl = (url: string) => url.replace(/([^:]\/)\/+/g, '$1');
+export const normalizeUrl = (url: string): string =>
+  url.replace(/([^:]\/)\/+/g, '$1');
 
 /**
  * Make sure there is slash before and after prefix
@@ -233,7 +234,11 @@ export const getServerConfig = async ({
 }: {
   config: NormalizedConfig;
   getPortSilently?: boolean;
-}) => {
+}): Promise<{
+  port: number;
+  host: string;
+  https: boolean;
+}> => {
   const host = config.server.host || DEFAULT_DEV_HOST;
   const port = await getPort({
     host,
@@ -296,7 +301,7 @@ const concatUrl = ({
 const LOCAL_LABEL = 'Local:  ';
 const NETWORK_LABEL = 'Network:  ';
 
-export const getUrlLabel = (url: string) => {
+const getUrlLabel = (url: string) => {
   try {
     const { host } = new URL(url);
     return isLoopbackHost(host) ? LOCAL_LABEL : NETWORK_LABEL;

@@ -4,8 +4,7 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "rootDir": "src",
-    "composite": true,
-    "isolatedDeclarations": false
+    "composite": true
   },
   "references": [
     {

@@ -141,7 +141,7 @@ export async function generateWebpackConfig({
   environment: string;
   target: RsbuildTarget;
   context: InternalContext;
-}) {
+}): Promise<WebpackConfig> {
   const chainUtils = await getChainUtils(target, environment);
   const { default: webpack } = await import('webpack');
   const {

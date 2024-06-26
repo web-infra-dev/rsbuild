@@ -6,7 +6,7 @@
     "baseUrl": "./",
     "rootDir": "src",
     "composite": true,
-    "isolatedDeclarations": false
+    "isolatedDeclarations": true
   },
   "include": ["src"]
 }

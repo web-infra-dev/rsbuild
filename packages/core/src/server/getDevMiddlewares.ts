@@ -193,7 +193,13 @@ const applyDefaultMiddlewares = async ({
   };
 };
 
-export const getMiddlewares = async (options: RsbuildDevMiddlewareOptions) => {
+export const getMiddlewares = async (
+  options: RsbuildDevMiddlewareOptions,
+): Promise<{
+  close: () => Promise<void>;
+  onUpgrade: UpgradeEvent;
+  middlewares: Middlewares;
+}> => {
   const middlewares: Middlewares = [];
   const { compileMiddlewareAPI } = options;
 

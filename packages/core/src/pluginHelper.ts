@@ -9,7 +9,7 @@ let htmlPlugin: typeof HtmlWebpackPlugin;
 /**
  * This method is used to override the Rsbuild default html-plugin (html-rspack-plugin).
  */
-export const setHTMLPlugin = (plugin: typeof HtmlWebpackPlugin) => {
+export const setHTMLPlugin = (plugin: typeof HtmlWebpackPlugin): void => {
   if (plugin) {
     htmlPlugin = plugin;
   }
@@ -24,11 +24,11 @@ export const getHTMLPlugin = (): typeof HtmlWebpackPlugin => {
 
 let cssExtractPlugin: unknown;
 
-export const setCssExtractPlugin = (plugin: unknown) => {
+export const setCssExtractPlugin = (plugin: unknown): void => {
   cssExtractPlugin = plugin;
 };
 
-export const getCssExtractPlugin = () => {
+export const getCssExtractPlugin = (): typeof rspack.CssExtractRspackPlugin => {
   if (cssExtractPlugin) {
     return cssExtractPlugin as typeof rspack.CssExtractRspackPlugin;
   }

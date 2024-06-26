@@ -13,7 +13,7 @@ import { isPlainObject } from './helpers';
 import { logger } from './logger';
 import type { RsbuildConfig } from './types';
 
-export async function getBundlerChain() {
+export function getBundlerChain(): RspackChain {
   const bundlerChain = new RspackChain();
 
   return bundlerChain as unknown as RspackChain;
@@ -30,7 +30,7 @@ export async function modifyBundlerChain(
 ): Promise<RspackChain> {
   logger.debug('modify bundler chain');
 
-  const bundlerChain = await getBundlerChain();
+  const bundlerChain = getBundlerChain();
 
   const [modifiedBundlerChain] = await context.hooks.modifyBundlerChain.call(
     bundlerChain,
