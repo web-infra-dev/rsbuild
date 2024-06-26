@@ -20,7 +20,7 @@ importers:
         version: 2.27.5
       '@modern-js/module-tools':
         specifier: ^2.54.1
-        version: 2.54.1(eslint@9.5.0)(typescript@5.5.2)
+        version: 2.54.1(typescript@5.5.2)
       '@rsbuild/config':
         specifier: workspace:*
         version: link:scripts/config
@@ -692,8 +692,8 @@ importers:
         specifier: workspace:*
         version: link:../../shared
       copy-webpack-plugin:
-        specifier: 9.1.0
-        version: 9.1.0(webpack@5.92.1)
+        specifier: 11.0.0
+        version: 11.0.0(webpack@5.92.1)
       mini-css-extract-plugin:
         specifier: 2.9.0
         version: 2.9.0(webpack@5.92.1)
@@ -882,7 +882,7 @@ importers:
         version: 5.0.4
       html-webpack-plugin:
         specifier: npm:html-rspack-plugin@5.7.2
-        version: html-rspack-plugin@5.7.2(@rspack/core@0.7.4(@swc/helpers@0.5.11))
+        version: html-rspack-plugin@5.7.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))
       terser:
         specifier: 5.31.1
         version: 5.31.1
@@ -1054,7 +1054,7 @@ importers:
         version: 4.2.0
       less-loader:
         specifier: ^12.2.0
-        version: 12.2.0(@rspack/core@0.7.4(@swc/helpers@0.5.11))(less@4.2.0)(webpack@5.92.1)
+        version: 12.2.0(@rspack/core@0.7.4(@swc/helpers@0.5.3))(less@4.2.0)(webpack@5.92.1)
       prebundle:
         specifier: 1.1.0
         version: 1.1.0(typescript@5.5.2)
@@ -1252,7 +1252,7 @@ importers:
         version: link:../../scripts/test-helper
       html-webpack-plugin:
         specifier: npm:html-rspack-plugin@5.7.2
-        version: html-rspack-plugin@5.7.2(@rspack/core@0.7.4(@swc/helpers@0.5.11))
+        version: html-rspack-plugin@5.7.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))
       postcss-pxtorem:
         specifier: 6.1.0
         version: 6.1.0(postcss@8.4.38)
@@ -1295,7 +1295,7 @@ importers:
         version: 5.0.0
       sass-loader:
         specifier: ^14.2.1
-        version: 14.2.1(@rspack/core@0.7.4(@swc/helpers@0.5.11))(sass-embedded@1.77.5)(sass@1.77.6)(webpack@5.92.1)
+        version: 14.2.1(@rspack/core@0.7.4(@swc/helpers@0.5.3))(sass-embedded@1.77.5)(sass@1.77.6)(webpack@5.92.1)
       typescript:
         specifier: ^5.5.2
         version: 5.5.2
@@ -1382,7 +1382,7 @@ importers:
         version: 0.63.0
       stylus-loader:
         specifier: 8.1.0
-        version: 8.1.0(@rspack/core@0.7.4(@swc/helpers@0.5.11))(stylus@0.63.0)(webpack@5.92.1)
+        version: 8.1.0(@rspack/core@0.7.4(@swc/helpers@0.5.3))(stylus@0.63.0)(webpack@5.92.1)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1404,7 +1404,7 @@ importers:
         version: 3.2.3(svelte@4.2.18)
       svelte-preprocess:
         specifier: ^6.0.1
-        version: 6.0.1(@babel/core@7.24.7)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.38)(tsx@4.14.0)(yaml@2.4.5))(postcss@8.4.38)(pug@3.0.3)(sass@1.77.6)(stylus@0.63.0)(svelte@4.2.18)(typescript@5.5.2)
+        version: 6.0.1(@babel/core@7.24.7)(less@4.2.0)(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)(pug@3.0.3)(sass@1.77.6)(stylus@0.63.0)(svelte@4.2.18)(typescript@5.5.2)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1591,7 +1591,7 @@ importers:
         version: link:../shared
       vue-loader:
         specifier: ^15.11.1
-        version: 15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.11))(webpack@5.92.1))(lodash@4.17.21)(prettier@3.3.2)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.92.1)
+        version: 15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))(webpack@5.92.1))(lodash@4.17.21)(prettier@3.3.2)(pug@3.0.3)(webpack@5.92.1)
       webpack:
         specifier: ^5.92.1
         version: 5.92.1
@@ -4876,9 +4876,9 @@ packages:
   copy-to-clipboard@3.3.3:
     resolution: {integrity: sha512-2KV8NhB5JqC3ky0r9PMCAZKbUHSwtEo4CwCs0KXgruG43gX5PMqDEBbVU4OUzw2MuAWUfsuFmWvEKG5QRfSnJA==}
 
-  copy-webpack-plugin@9.1.0:
-    resolution: {integrity: sha512-rxnR7PaGigJzhqETHGmAcxKnLZSR5u1Y3/bcIv/1FnqXedcL/E2ewK7ZCNrArJKCiSv8yVXhTqetJh8inDvfsA==}
-    engines: {node: '>= 12.13.0'}
+  copy-webpack-plugin@11.0.0:
+    resolution: {integrity: sha512-fX2MWpamkW0hZxMEg0+mYnA40LTosOSa5TqZ9GYIBzyJa9C3QUaMPSE2xAi/buNr8u89SfD9wHSQVBzrRa/SOQ==}
+    engines: {node: '>= 14.15.0'}
     peerDependencies:
       webpack: ^5.1.0
 
@@ -10720,7 +10720,7 @@ snapshots:
       '@modern-js/utils': 2.54.1
       '@swc/helpers': 0.5.3
 
-  '@modern-js/module-tools@2.54.1(eslint@9.5.0)(typescript@5.5.2)':
+  '@modern-js/module-tools@2.54.1(typescript@5.5.2)':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@ast-grep/napi': 0.16.0
@@ -10730,7 +10730,7 @@ snapshots:
       '@modern-js/plugin': 2.54.1
       '@modern-js/plugin-changeset': 2.54.1
       '@modern-js/plugin-i18n': 2.54.1
-      '@modern-js/plugin-lint': 2.54.1(eslint@9.5.0)
+      '@modern-js/plugin-lint': 2.54.1
       '@modern-js/swc-plugins': 0.6.6(@swc/helpers@0.5.3)
       '@modern-js/types': 2.54.1
       '@modern-js/utils': 2.54.1
@@ -10780,15 +10780,13 @@ snapshots:
       '@modern-js/utils': 2.54.1
       '@swc/helpers': 0.5.3
 
-  '@modern-js/plugin-lint@2.54.1(eslint@9.5.0)':
+  '@modern-js/plugin-lint@2.54.1':
     dependencies:
       '@modern-js/tsconfig': 2.54.1
       '@modern-js/utils': 2.54.1
       '@swc/helpers': 0.5.3
       cross-spawn: 7.0.3
       husky: 8.0.3
-    optionalDependencies:
-      eslint: 9.5.0
 
   '@modern-js/plugin@2.54.1':
     dependencies:
@@ -11229,6 +11227,17 @@ snapshots:
       webpack-sources: 3.2.3
     optionalDependencies:
       '@swc/helpers': 0.5.11
+
+  '@rspack/core@0.7.4(@swc/helpers@0.5.3)':
+    dependencies:
+      '@module-federation/runtime-tools': 0.1.6
+      '@rspack/binding': 0.7.4
+      caniuse-lite: 1.0.30001636
+      tapable: 2.2.1
+      webpack-sources: 3.2.3
+    optionalDependencies:
+      '@swc/helpers': 0.5.3
+    optional: true
 
   '@rspack/plugin-react-refresh@0.7.3(react-refresh@0.14.2)':
     optionalDependencies:
@@ -11877,9 +11886,9 @@ snapshots:
       '@vue/compiler-dom': 3.4.23
       '@vue/shared': 3.4.23
 
-  '@vue/component-compiler-utils@3.3.0(lodash@4.17.21)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@vue/component-compiler-utils@3.3.0(lodash@4.17.21)(pug@3.0.3)':
     dependencies:
-      consolidate: 0.15.1(lodash@4.17.21)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      consolidate: 0.15.1(lodash@4.17.21)(pug@3.0.3)
       hash-sum: 1.0.2
       lru-cache: 4.1.5
       merge-source-map: 1.1.0
@@ -12612,14 +12621,12 @@ snapshots:
 
   console-browserify@1.2.0: {}
 
-  consolidate@0.15.1(lodash@4.17.21)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  consolidate@0.15.1(lodash@4.17.21)(pug@3.0.3):
     dependencies:
       bluebird: 3.7.2
     optionalDependencies:
       lodash: 4.17.21
       pug: 3.0.3
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
 
   constantinople@4.0.1:
     dependencies:
@@ -12644,13 +12651,13 @@ snapshots:
     dependencies:
       toggle-selection: 1.0.6
 
-  copy-webpack-plugin@9.1.0(webpack@5.92.1):
+  copy-webpack-plugin@11.0.0(webpack@5.92.1):
     dependencies:
       fast-glob: 3.3.2
       glob-parent: 6.0.2
-      globby: 11.1.0
+      globby: 13.2.2
       normalize-path: 3.0.0
-      schema-utils: 3.3.0
+      schema-utils: 4.2.0
       serialize-javascript: 6.0.2
       webpack: 5.92.1
 
@@ -12754,6 +12761,20 @@ snapshots:
       semver: 7.6.2
     optionalDependencies:
       '@rspack/core': 0.7.4(@swc/helpers@0.5.11)
+      webpack: 5.92.1
+
+  css-loader@7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))(webpack@5.92.1):
+    dependencies:
+      icss-utils: 5.1.0(postcss@8.4.38)
+      postcss: 8.4.38
+      postcss-modules-extract-imports: 3.1.0(postcss@8.4.38)
+      postcss-modules-local-by-default: 4.0.5(postcss@8.4.38)
+      postcss-modules-scope: 3.2.0(postcss@8.4.38)
+      postcss-modules-values: 4.0.0(postcss@8.4.38)
+      postcss-value-parser: 4.2.0
+      semver: 7.6.2
+    optionalDependencies:
+      '@rspack/core': 0.7.4(@swc/helpers@0.5.3)
       webpack: 5.92.1
 
   css-minimizer-webpack-plugin@5.0.1(lightningcss@1.25.1)(webpack@5.92.1):
@@ -13824,6 +13845,10 @@ snapshots:
     optionalDependencies:
       '@rspack/core': 0.7.4(@swc/helpers@0.5.11)
 
+  html-rspack-plugin@5.7.2(@rspack/core@0.7.4(@swc/helpers@0.5.3)):
+    optionalDependencies:
+      '@rspack/core': 0.7.4(@swc/helpers@0.5.3)
+
   html-tags@2.0.0: {}
 
   html-tags@3.3.1: {}
@@ -14189,11 +14214,11 @@ snapshots:
 
   leac@0.6.0: {}
 
-  less-loader@12.2.0(@rspack/core@0.7.4(@swc/helpers@0.5.11))(less@4.2.0)(webpack@5.92.1):
+  less-loader@12.2.0(@rspack/core@0.7.4(@swc/helpers@0.5.3))(less@4.2.0)(webpack@5.92.1):
     dependencies:
       less: 4.2.0
     optionalDependencies:
-      '@rspack/core': 0.7.4(@swc/helpers@0.5.11)
+      '@rspack/core': 0.7.4(@swc/helpers@0.5.3)
       webpack: 5.92.1
 
   less@4.2.0:
@@ -16517,11 +16542,11 @@ snapshots:
       sass-embedded-win32-ia32: 1.77.5
       sass-embedded-win32-x64: 1.77.5
 
-  sass-loader@14.2.1(@rspack/core@0.7.4(@swc/helpers@0.5.11))(sass-embedded@1.77.5)(sass@1.77.6)(webpack@5.92.1):
+  sass-loader@14.2.1(@rspack/core@0.7.4(@swc/helpers@0.5.3))(sass-embedded@1.77.5)(sass@1.77.6)(webpack@5.92.1):
     dependencies:
       neo-async: 2.6.2
     optionalDependencies:
-      '@rspack/core': 0.7.4(@swc/helpers@0.5.11)
+      '@rspack/core': 0.7.4(@swc/helpers@0.5.3)
       sass: 1.77.6
       sass-embedded: 1.77.5
       webpack: 5.92.1
@@ -16849,13 +16874,13 @@ snapshots:
 
   stylis@4.3.2: {}
 
-  stylus-loader@8.1.0(@rspack/core@0.7.4(@swc/helpers@0.5.11))(stylus@0.63.0)(webpack@5.92.1):
+  stylus-loader@8.1.0(@rspack/core@0.7.4(@swc/helpers@0.5.3))(stylus@0.63.0)(webpack@5.92.1):
     dependencies:
       fast-glob: 3.3.2
       normalize-path: 3.0.0
       stylus: 0.63.0
     optionalDependencies:
-      '@rspack/core': 0.7.4(@swc/helpers@0.5.11)
+      '@rspack/core': 0.7.4(@swc/helpers@0.5.3)
       webpack: 5.92.1
 
   stylus@0.63.0:
@@ -16914,7 +16939,7 @@ snapshots:
       svelte-dev-helper: 1.1.9
       svelte-hmr: 0.14.12(svelte@4.2.18)
 
-  svelte-preprocess@6.0.1(@babel/core@7.24.7)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.38)(tsx@4.14.0)(yaml@2.4.5))(postcss@8.4.38)(pug@3.0.3)(sass@1.77.6)(stylus@0.63.0)(svelte@4.2.18)(typescript@5.5.2):
+  svelte-preprocess@6.0.1(@babel/core@7.24.7)(less@4.2.0)(postcss-load-config@6.0.1(postcss@8.4.38))(postcss@8.4.38)(pug@3.0.3)(sass@1.77.6)(stylus@0.63.0)(svelte@4.2.18)(typescript@5.5.2):
     dependencies:
       detect-indent: 6.1.0
       strip-indent: 3.0.0
@@ -17410,10 +17435,10 @@ snapshots:
 
   vue-hot-reload-api@2.3.4: {}
 
-  vue-loader@15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.11))(webpack@5.92.1))(lodash@4.17.21)(prettier@3.3.2)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.92.1):
+  vue-loader@15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))(webpack@5.92.1))(lodash@4.17.21)(prettier@3.3.2)(pug@3.0.3)(webpack@5.92.1):
     dependencies:
-      '@vue/component-compiler-utils': 3.3.0(lodash@4.17.21)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      css-loader: 7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.11))(webpack@5.92.1)
+      '@vue/component-compiler-utils': 3.3.0(lodash@4.17.21)(pug@3.0.3)
+      css-loader: 7.1.2(@rspack/core@0.7.4(@swc/helpers@0.5.3))(webpack@5.92.1)
       hash-sum: 1.0.2
       loader-utils: 1.4.2
       vue-hot-reload-api: 2.3.4
