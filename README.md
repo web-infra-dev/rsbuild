@@ -8,8 +8,8 @@
   <a href="https://discord.gg/XsaKEEk4mW">
     <img src="https://img.shields.io/badge/chat-discord-blue?style=flat-square&logo=discord&colorA=564341&colorB=EDED91" alt="discord channel" />
   </a>
-  <a href="https://npmjs.com/package/@rsbuild/shared?activeTab=readme">
-   <img src="https://img.shields.io/npm/v/@rsbuild/shared?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" />
+  <a href="https://npmjs.com/package/@rsbuild/core?activeTab=readme">
+   <img src="https://img.shields.io/npm/v/@rsbuild/core?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" />
   </a>
   <a href="https://npmcharts.com/compare/@rsbuild/core?minimal=true">
     <img src="https://img.shields.io/npm/dm/@rsbuild/core.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="downloads" />
@@ -18,7 +18,7 @@
     <img src="https://img.shields.io/node/v/@rsbuild/core.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="node version">
   </a>
   <a href="https://github.com/web-infra-dev/rsbuild/blob/main/LICENSE">
-    <img src="https://img.shields.io/npm/l/@rsbuild/shared?style=flat-square&colorA=564341&colorB=EDED91" alt="license" />
+    <img src="https://img.shields.io/npm/l/@rsbuild/core?style=flat-square&colorA=564341&colorB=EDED91" alt="license" />
   </a>
 </p>
 
