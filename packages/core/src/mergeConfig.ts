@@ -1,4 +1,4 @@
-import { type RsbuildConfig, castArray } from '@rsbuild/shared';
+import { type RsbuildConfig, castArray, cloneDeep } from '@rsbuild/shared';
 import { isFunction, isPlainObject } from './helpers';
 
 const OVERRIDE_PATHS = [
@@ -32,10 +32,10 @@ const merge = (x: unknown, y: unknown, path = '') => {
 
   // ignore undefined property
   if (x === undefined) {
-    return y;
+    return isPlainObject(y) ? cloneDeep(y) : y;
   }
   if (y === undefined) {
-    return x;
+    return isPlainObject(x) ? cloneDeep(x) : x;
   }
 
   const pair = [x, y];
