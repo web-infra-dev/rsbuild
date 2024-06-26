@@ -97,6 +97,64 @@ describe('environment config', () => {
     expect(rsbuildConfig.environments).toMatchSnapshot();
   });
 
+  it('should support modify single environment config by api.modifyEnvironmentConfig', async () => {
+    process.env.NODE_ENV = 'development';
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        source: {
+          alias: {
+            '@common': './src/common',
+          },
+        },
+        environments: {
+          web: {
+            source: {
+              entry: {
+                index: './src/index.client.js',
+              },
+            },
+          },
+          ssr: {
+            source: {
+              entry: {
+                index: './src/index.server.js',
+              },
+            },
+          },
+        },
+      },
+    });
+
+    rsbuild.addPlugins([
+      {
+        name: 'test-environment',
+        setup: (api) => {
+          api.modifyEnvironmentConfig(
+            (config, { name, mergeEnvironmentConfig }) => {
+              if (name !== 'web') {
+                return config;
+              }
+
+              return mergeEnvironmentConfig(config, {
+                source: {
+                  alias: {
+                    '@common1': './src/common1',
+                  },
+                },
+              });
+            },
+          );
+        },
+      },
+    ]);
+
+    const {
+      origin: { rsbuildConfig },
+    } = await rsbuild.inspectConfig();
+
+    expect(rsbuildConfig.environments).toMatchSnapshot();
+  });
+
   it('should normalize environment config correctly', async () => {
     process.env.NODE_ENV = 'development';
     const rsbuild = await createRsbuild({

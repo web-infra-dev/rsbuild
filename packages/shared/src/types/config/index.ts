@@ -93,6 +93,18 @@ export interface RsbuildConfig extends EnvironmentConfig {
   _privateMeta?: RsbuildConfigMeta;
 }
 
+export type MergedEnvironmentConfig = {
+  // dev: NormalizedDevConfig;
+  html: NormalizedHtmlConfig;
+  tools: NormalizedToolsConfig;
+  source: NormalizedSourceConfig;
+  output: NormalizedOutputConfig;
+  plugins?: RsbuildPlugins;
+  security: NormalizedSecurityConfig;
+  performance: NormalizedPerformanceConfig;
+  moduleFederation?: ModuleFederationConfig;
+};
+
 /** The normalized Rsbuild environment config. */
 export type NormalizedEnvironmentConfig = DeepReadonly<{
   dev: NormalizedDevConfig;
