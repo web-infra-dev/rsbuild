@@ -5,12 +5,14 @@
     "module": "ESNext",
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
+    "noEmit": true,
     "strict": true,
     "skipLibCheck": true,
     "isolatedModules": true,
     "resolveJsonModule": true,
     "moduleResolution": "bundler",
     "useDefineForClassFields": true,
+    "allowImportingTsExtensions": true,
     "paths": {
       "react": ["./node_modules/preact/compat/"],
       "react-dom": ["./node_modules/preact/compat/"]
