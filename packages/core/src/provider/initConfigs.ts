@@ -1,6 +1,7 @@
 import type {
   InspectConfigOptions,
   MergedEnvironmentConfig,
+  ModifyEnvironmentConfigUtils,
   NormalizedEnvironmentConfig,
   PluginManager,
   RsbuildEntry,
@@ -42,8 +43,8 @@ async function modifyEnvironmentConfig(
   logger.debug(`modify Rsbuild environment(${name}) config`);
   const [modified] = await context.hooks.modifyEnvironmentConfig.call(config, {
     name,
-    // @ts-expect-error
-    mergeEnvironmentConfig: mergeRsbuildConfig<MergedEnvironmentConfig>,
+    mergeEnvironmentConfig:
+      mergeRsbuildConfig<MergedEnvironmentConfig> as ModifyEnvironmentConfigUtils['mergeEnvironmentConfig'],
   });
 
   logger.debug(`modify Rsbuild environment(${name}) config done`);
@@ -144,7 +145,7 @@ export async function initRsbuildConfig({
     server,
   } = normalizeBaseConfig;
 
-  for await (const [name, config] of Object.entries(mergedEnvironments)) {
+  for (const [name, config] of Object.entries(mergedEnvironments)) {
     const environmentConfig = await modifyEnvironmentConfig(
       context,
       config,
