@@ -4,12 +4,14 @@
     "lib": ["DOM", "ES2020"],
     "module": "ESNext",
     "jsx": "react-jsx",
+    "noEmit": true,
     "strict": true,
     "skipLibCheck": true,
     "isolatedModules": true,
     "resolveJsonModule": true,
     "moduleResolution": "bundler",
-    "useDefineForClassFields": true
+    "useDefineForClassFields": true,
+    "allowImportingTsExtensions": true
   },
   "include": ["src"]
 }
