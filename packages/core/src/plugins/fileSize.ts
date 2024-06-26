@@ -12,7 +12,7 @@ import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
 
 /** Filter source map and license files */
-export const filterAsset = (asset: string) =>
+export const filterAsset = (asset: string): boolean =>
   !/\.map$/.test(asset) && !/\.LICENSE\.txt$/.test(asset);
 
 const getAssetColor = (size: number) => {

@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { Project } from '../project/project';
+import { Project } from '../project';
 import { readRushJson } from '../utils';
 
 export const getProjects = async (monorepoRoot: string): Promise<Project[]> => {

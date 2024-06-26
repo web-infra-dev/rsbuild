@@ -14,7 +14,7 @@ const REWRITE_TARGETS: Record<string, string> = {
 const matchedKey = (value: string) =>
   Object.keys(REWRITE_TARGETS).find((name) => value.startsWith(`${name}/`));
 
-export const getCoreJsVersion = () => {
+export const getCoreJsVersion = (): string => {
   try {
     const { version } = JSON.parse(readFileSync(CORE_JS_PKG_PATH, 'utf-8'));
     const [major, minor] = version.split('.');
@@ -26,7 +26,7 @@ export const getCoreJsVersion = () => {
 
 export default (_: any) => {
   return {
-    post({ path }: any) {
+    post({ path }: any): void {
       for (const node of path.node.body as t.Node[]) {
         // import
         if (t.isImportDeclaration(node)) {

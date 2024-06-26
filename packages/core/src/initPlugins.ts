@@ -17,7 +17,7 @@ import type { InternalContext, NormalizedConfig } from './types';
 export function getHTMLPathByEntry(
   entryName: string,
   config: NormalizedEnvironmentConfig,
-) {
+): string {
   const filename =
     config.html.outputStructure === 'flat'
       ? `${entryName}.html`
@@ -37,7 +37,7 @@ function applyTransformPlugin(
   }
 
   class RsbuildTransformPlugin {
-    apply(compiler: Compiler) {
+    apply(compiler: Compiler): void {
       compiler.__rsbuildTransformer = transformer;
 
       compiler.hooks.thisCompilation.tap(name, (compilation) => {

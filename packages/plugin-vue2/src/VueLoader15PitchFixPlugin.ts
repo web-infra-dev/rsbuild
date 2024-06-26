@@ -6,7 +6,7 @@ import type { Rspack } from '@rsbuild/core';
 export class VueLoader15PitchFixPlugin implements Rspack.RspackPluginInstance {
   readonly name = 'VueLoader15PitchFixPlugin';
 
-  apply(compiler: Rspack.Compiler) {
+  apply(compiler: Rspack.Compiler): void {
     const { NormalModule } = compiler.webpack;
     compiler.hooks.compilation.tap(this.name, (compilation) => {
       const isExpCssOn = compilation.compiler.options?.experiments?.css;

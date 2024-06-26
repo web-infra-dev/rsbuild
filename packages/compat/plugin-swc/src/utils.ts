@@ -67,7 +67,7 @@ const isBeyondReact17 = async (cwd: string) => {
 export async function determinePresetReact(
   root: string,
   pluginConfig: ObjPluginSwcOptions,
-) {
+): Promise<void> {
   pluginConfig.presetReact ??= {};
   pluginConfig.presetReact.runtime ??= (await isBeyondReact17(root))
     ? 'automatic'
@@ -78,7 +78,7 @@ export function checkUseMinify(
   options: ObjPluginSwcOptions,
   config: NormalizedEnvironmentConfig,
   isProd: boolean,
-) {
+): boolean {
   return (
     isProd &&
     config.output.minify &&

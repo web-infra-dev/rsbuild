@@ -16,7 +16,7 @@ class PatchSplitChunksPlugin implements RspackPluginInstance {
     this.name = name;
   }
 
-  apply(compiler: Rspack.Compiler) {
+  apply(compiler: Rspack.Compiler): void {
     const { splitChunks } = compiler.options.optimization;
 
     if (!splitChunks) {

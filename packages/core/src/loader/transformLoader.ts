@@ -5,7 +5,7 @@ export default async function transform(
   this: LoaderContext<{ id: string }>,
   source: string,
   map?: string | RspackSourceMap,
-) {
+): Promise<void> {
   const callback = this.async();
   const bypass = () => callback(null, source, map);
 

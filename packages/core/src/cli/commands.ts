@@ -46,7 +46,7 @@ const applyServerOptions = (command: Command) => {
     .option('--host <host>', 'specify the host that the server listens to');
 };
 
-export function runCli() {
+export function runCli(): void {
   program.name('rsbuild').usage('<command> [options]').version(RSBUILD_VERSION);
 
   const devCommand = program.command('dev');

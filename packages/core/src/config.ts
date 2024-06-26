@@ -203,7 +203,7 @@ export function getDefaultEntry(root: string): RsbuildEntry {
 export const withDefaultConfig = async (
   rootPath: string,
   config: RsbuildConfig,
-) => {
+): Promise<RsbuildConfig> => {
   const merged = mergeRsbuildConfig(createDefaultConfig(), config);
 
   merged.source ||= {};
@@ -292,7 +292,7 @@ const resolveConfigPath = (root: string, customConfig?: string) => {
   return null;
 };
 
-export async function watchFiles(files: string[]) {
+export async function watchFiles(files: string[]): Promise<void> {
   if (!files.length) {
     return;
   }
@@ -407,7 +407,7 @@ export async function outputInspectConfigFiles({
   inspectOptions: InspectConfigOptions & {
     outputPath: string;
   };
-}) {
+}): Promise<void> {
   const { outputPath } = inspectOptions;
 
   const files = [
@@ -455,7 +455,7 @@ export async function outputInspectConfigFiles({
   );
 }
 
-export async function stringifyConfig(config: unknown, verbose?: boolean) {
+export function stringifyConfig(config: unknown, verbose?: boolean): string {
   // webpackChain.toString can be used as a common stringify method
   const stringify = RspackChain.toString as (
     config: unknown,

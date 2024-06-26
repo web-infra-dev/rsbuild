@@ -41,7 +41,7 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
     this.minify = minify;
   }
 
-  async getRetryCode() {
+  async getRetryCode(): Promise<string> {
     const { default: serialize } = await import('serialize-javascript');
     const filename = 'initialChunkRetry';
     const runtimeFilePath = path.join(
@@ -55,7 +55,7 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
     )});})()`;
   }
 
-  async getScriptPath() {
+  async getScriptPath(): Promise<string> {
     if (!this.scriptPath) {
       this.scriptPath = path.posix.join(
         this.distDir,

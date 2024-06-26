@@ -13,7 +13,7 @@ export const PLUGIN_SOURCE_BUILD_NAME = 'rsbuild:source-build';
 export const getSourceInclude = async (options: {
   projects: Project[];
   sourceField: string;
-}) => {
+}): Promise<string[]> => {
   const { projects, sourceField } = options;
 
   const includes = [];

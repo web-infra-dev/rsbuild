@@ -33,7 +33,10 @@ const getNoDeclarationFileError = ({ filename }: { filename: string }) =>
     `Generated type declaration does not exist. Run Rsbuild and commit the type declaration for '${filename}'`,
   );
 
-export const isCSSModules = (filename: string, modules: CssLoaderModules) => {
+export const isCSSModules = (
+  filename: string,
+  modules: CssLoaderModules,
+): boolean => {
   if (typeof modules === 'boolean') {
     return modules;
   }
@@ -85,7 +88,7 @@ const getTypeMismatchError = ({
   );
 };
 
-export function wrapQuotes(key: string) {
+export function wrapQuotes(key: string): string {
   // Check if key is a valid identifier
   const isValidIdentifier = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(key);
   if (isValidIdentifier) {
@@ -135,7 +138,11 @@ const validModes = ['emit', 'verify'];
 
 const isFileNotFound = (err?: { code: string }) => err && err.code === 'ENOENT';
 
-const makeDoneHandlers = (callback: any, content: string, rest: any[]) => ({
+const makeDoneHandlers = (
+  callback: (...args: any[]) => void,
+  content: string,
+  rest: any[],
+) => ({
   failed: (e: Error) => callback(e),
   success: () => callback(null, content, ...rest),
 });
@@ -203,18 +210,20 @@ export default function (
   }>,
   content: string,
   ...rest: any[]
-) {
+): void {
   const { failed, success } = makeDoneHandlers(this.async(), content, rest);
 
   const filename = this.resourcePath;
   const { mode = 'emit', modules = true } = this.getOptions() || {};
 
   if (!validModes.includes(mode)) {
-    return failed(new Error(`Invalid mode option: ${mode}`));
+    failed(new Error(`Invalid mode option: ${mode}`));
+    return;
   }
 
   if (!isCSSModules(filename, modules) || isInNodeModules(filename)) {
-    return success();
+    success();
+    return;
   }
 
   const cssModuleInterfaceFilename = filenameToTypingsFilename(filename);

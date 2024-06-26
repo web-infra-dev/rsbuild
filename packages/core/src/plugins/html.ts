@@ -71,7 +71,7 @@ function getTerserMinifyOptions(config: NormalizedEnvironmentConfig) {
   return finalOptions;
 }
 
-export async function getHtmlMinifyOptions(
+async function getHtmlMinifyOptions(
   isProd: boolean,
   config: NormalizedEnvironmentConfig,
 ) {
@@ -105,10 +105,7 @@ export async function getHtmlMinifyOptions(
     : htmlMinifyDefaultOptions;
 }
 
-export function getTitle(
-  entryName: string,
-  config: NormalizedEnvironmentConfig,
-) {
+function getTitle(entryName: string, config: NormalizedEnvironmentConfig) {
   return reduceConfigsMergeContext({
     initial: '',
     config: config.html.title,
@@ -116,10 +113,7 @@ export function getTitle(
   });
 }
 
-export function getInject(
-  entryName: string,
-  config: NormalizedEnvironmentConfig,
-) {
+function getInject(entryName: string, config: NormalizedEnvironmentConfig) {
   return reduceConfigsMergeContext({
     initial: 'head',
     config: config.html.inject,
@@ -172,7 +166,7 @@ export async function getTemplate(
   };
 }
 
-export function getFavicon(
+function getFavicon(
   entryName: string,
   config: {
     html: HtmlConfig;
@@ -185,7 +179,7 @@ export function getFavicon(
   });
 }
 
-export function getMetaTags(
+function getMetaTags(
   entryName: string,
   config: { html: HtmlConfig },
   templateContent?: string,

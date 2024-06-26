@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { getMonorepoBaseData, getMonorepoSubProjects } from '../common';
+import type { Project } from '../project';
 import type { MonorepoAnalyzer } from '../types';
 import { readPackageJson } from '../utils';
 import type { Filter } from './filter';
@@ -25,7 +26,7 @@ async function pathExists(path: string) {
 const getDependentProjects = async (
   projectNameOrRootPath: string,
   options: GetDependentProjectsOptions,
-) => {
+): Promise<Project[]> => {
   const {
     cwd = process.cwd(),
     recursive,

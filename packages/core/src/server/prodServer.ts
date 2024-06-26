@@ -44,7 +44,7 @@ export class RsbuildProdServer {
   }
 
   // Complete the preparation of services
-  public async onInit(app: Server | Http2SecureServer) {
+  public async onInit(app: Server | Http2SecureServer): Promise<void> {
     this.app = app;
 
     await this.applyDefaultMiddlewares();
@@ -140,14 +140,14 @@ export class RsbuildProdServer {
     });
   }
 
-  public close() {}
+  public close(): void {}
 }
 
 export async function startProdServer(
   context: InternalContext,
   config: NormalizedConfig,
   { getPortSilently }: PreviewServerOptions = {},
-) {
+): Promise<StartServerResult> {
   if (!getNodeEnv()) {
     setNodeEnv('production');
   }

@@ -10,7 +10,7 @@ import {
 import { logger } from '../logger';
 import type { UpgradeEvent } from './helper';
 
-export function formatProxyOptions(proxyOptions: ProxyOptions) {
+function formatProxyOptions(proxyOptions: ProxyOptions) {
   const ret: ProxyDetail[] = [];
 
   if (Array.isArray(proxyOptions)) {
@@ -42,7 +42,12 @@ export function formatProxyOptions(proxyOptions: ProxyOptions) {
   return ret;
 }
 
-export const createProxyMiddleware = (proxyOptions: ProxyOptions) => {
+export const createProxyMiddleware = (
+  proxyOptions: ProxyOptions,
+): {
+  middlewares: Middleware[];
+  upgrade: UpgradeEvent;
+} => {
   // If it is not an array, it may be an object that uses the context attribute
   // or an object in the form of { source: ProxyDetail }
   const formattedOptionsList = formatProxyOptions(proxyOptions);

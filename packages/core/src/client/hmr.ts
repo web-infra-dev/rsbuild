@@ -63,7 +63,7 @@ let clearOverlay: undefined | (() => void);
 export const registerOverlay = (
   createFn: (err: string[]) => void,
   clearFn: () => void,
-) => {
+): void => {
   createOverlay = createFn;
   clearOverlay = clearFn;
 };

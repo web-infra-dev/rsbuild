@@ -1,7 +1,9 @@
 import { generateBaseConfig } from './base';
 import type { BabelConfig, NodePresetOptions } from './types';
 
-export const getBabelConfigForNode = (options: NodePresetOptions = {}) => {
+export const getBabelConfigForNode = (
+  options: NodePresetOptions = {},
+): BabelConfig => {
   if (options.presetEnv !== false) {
     options.presetEnv ??= {};
     options.presetEnv.targets ??= ['node >= 16'];

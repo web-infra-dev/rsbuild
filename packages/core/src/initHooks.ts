@@ -62,7 +62,26 @@ export function createAsyncHook<
   };
 }
 
-export function initHooks() {
+export function initHooks(): {
+  onExit: AsyncHook<OnExitFn>;
+  onAfterBuild: AsyncHook<OnAfterBuildFn>;
+  onBeforeBuild: AsyncHook<OnBeforeBuildFn>;
+  onDevCompileDone: AsyncHook<OnDevCompileDoneFn>;
+  onCloseDevServer: AsyncHook<OnCloseDevServerFn>;
+  onAfterStartDevServer: AsyncHook<OnAfterStartDevServerFn>;
+  onBeforeStartDevServer: AsyncHook<OnBeforeStartDevServerFn>;
+  onAfterStartProdServer: AsyncHook<OnAfterStartProdServerFn>;
+  onBeforeStartProdServer: AsyncHook<OnBeforeStartProdServerFn>;
+  onAfterCreateCompiler: AsyncHook<OnAfterCreateCompilerFn>;
+  onBeforeCreateCompiler: AsyncHook<OnBeforeCreateCompilerFn>;
+  modifyHTMLTags: AsyncHook<ModifyHTMLTagsFn>;
+  modifyRspackConfig: AsyncHook<ModifyRspackConfigFn>;
+  modifyBundlerChain: AsyncHook<ModifyBundlerChainFn>;
+  modifyWebpackChain: AsyncHook<ModifyWebpackChainFn>;
+  modifyWebpackConfig: AsyncHook<ModifyWebpackConfigFn>;
+  modifyRsbuildConfig: AsyncHook<ModifyRsbuildConfigFn>;
+  modifyEnvironmentConfig: AsyncHook<ModifyEnvironmentConfigFn>;
+} {
   return {
     onExit: createAsyncHook<OnExitFn>(),
     onAfterBuild: createAsyncHook<OnAfterBuildFn>(),

@@ -13,7 +13,12 @@ type WatchFilesOptions = {
   compileMiddlewareAPI?: CompileMiddlewareAPI;
 };
 
-export async function setupWatchFiles(options: WatchFilesOptions) {
+export async function setupWatchFiles(options: WatchFilesOptions): Promise<
+  | {
+      close(): Promise<void>;
+    }
+  | undefined
+> {
   const { dev, server, compileMiddlewareAPI } = options;
 
   const { hmr, liveReload } = dev;

@@ -5,10 +5,7 @@ import { rspack } from '@rspack/core';
 import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
 
-export const stopProfiler = (
-  output: string,
-  profileSession?: inspector.Session,
-) => {
+const stopProfiler = (output: string, profileSession?: inspector.Session) => {
   if (!profileSession) {
     return;
   }

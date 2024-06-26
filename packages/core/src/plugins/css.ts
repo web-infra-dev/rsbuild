@@ -22,7 +22,7 @@ import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
 export const isUseCssExtract = (
   config: NormalizedEnvironmentConfig,
   target: RsbuildTarget,
-) =>
+): boolean =>
   !config.output.injectStyles && target !== 'node' && target !== 'web-worker';
 
 const getCSSModulesLocalIdentName = (
@@ -42,7 +42,7 @@ const getCSSModulesLocalIdentName = (
 export const normalizeCssLoaderOptions = (
   options: CSSLoaderOptions,
   exportOnlyLocals: boolean,
-) => {
+): CSSLoaderOptions => {
   if (options.modules && exportOnlyLocals) {
     let { modules } = options;
     if (modules === true) {
@@ -108,7 +108,7 @@ export const applyAutoprefixer = async (
   plugins: unknown[],
   browserslist: string[],
   config: NormalizedEnvironmentConfig,
-) => {
+): Promise<AcceptedPlugin[]> => {
   const pluginObjects: AcceptedPlugin[] = plugins.map((plugin) =>
     isFunction(plugin) ? plugin({}) : plugin,
   );

@@ -181,7 +181,7 @@ function applyTransformImport(
 export function applySwcDecoratorConfig(
   swcConfig: SwcLoaderOptions,
   config: NormalizedEnvironmentConfig,
-) {
+): void {
   swcConfig.jsc ||= {};
   swcConfig.jsc.transform ||= {};
 

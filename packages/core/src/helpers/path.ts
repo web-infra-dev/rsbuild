@@ -1,7 +1,7 @@
 import { isAbsolute, join, resolve, sep } from 'node:path';
 import { COMPILED_PATH } from '../constants';
 
-export function getCommonParentPath(paths: string[]) {
+export function getCommonParentPath(paths: string[]): string {
   const uniquePaths = [...new Set(paths)];
 
   if (uniquePaths.length === 1) {
@@ -22,7 +22,7 @@ export function getCommonParentPath(paths: string[]) {
   return common.join(sep);
 }
 
-export const getCompiledPath = (packageName: string) =>
+export const getCompiledPath = (packageName: string): string =>
   join(COMPILED_PATH, packageName);
 
 /**

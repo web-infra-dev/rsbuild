@@ -1,7 +1,7 @@
 import type { Rspack } from '@rsbuild/core';
 
 export class ProtocolImportsPlugin {
-  apply(compiler: Rspack.Compiler) {
+  apply(compiler: Rspack.Compiler): void {
     compiler.hooks.normalModuleFactory.tap(
       'NormalModuleReplacementPlugin',
       (nmf) => {

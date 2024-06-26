@@ -63,7 +63,7 @@ export class CompilerDevMiddleware {
     this.devMiddleware = devMiddleware;
   }
 
-  public async init() {
+  public async init(): Promise<void> {
     // start compiling
     this.middleware = this.setupDevMiddleware(
       this.devMiddleware,
@@ -73,11 +73,11 @@ export class CompilerDevMiddleware {
     await this.socketServer.prepare();
   }
 
-  public upgrade(req: IncomingMessage, sock: Socket, head: any) {
+  public upgrade(req: IncomingMessage, sock: Socket, head: any): void {
     this.socketServer.upgrade(req, sock, head);
   }
 
-  public close() {
+  public close(): void {
     // socketServer close should before app close
     this.socketServer.close();
     this.middleware?.close(noop);
@@ -86,7 +86,7 @@ export class CompilerDevMiddleware {
   public sockWrite(
     type: string,
     data?: Record<string, any> | string | boolean,
-  ) {
+  ): void {
     this.socketServer.sockWrite(type, data);
   }
 
