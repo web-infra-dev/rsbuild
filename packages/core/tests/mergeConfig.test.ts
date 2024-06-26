@@ -34,25 +34,25 @@ describe('mergeRsbuildConfig', () => {
     const config = mergeRsbuildConfig(
       { source: { alias: {} } },
       { source: { alias: undefined } },
-      { tools: { webpack: noop } },
-      { tools: { webpack: undefined } },
+      { tools: { rspack: noop } },
+      { tools: { rspack: undefined } },
     );
     expect(config).toEqual({
       source: {
         alias: {},
       },
       tools: {
-        webpack: noop,
+        rspack: noop,
       },
     });
   });
 
   test('should keep single function value', () => {
     const config = mergeRsbuildConfig(
-      { tools: { webpack: undefined } },
-      { tools: { webpack: () => ({}) } },
+      { tools: { rspack: undefined } },
+      { tools: { rspack: () => ({}) } },
     );
-    expect(typeof config.tools?.webpack).toEqual('function');
+    expect(typeof config.tools?.rspack).toEqual('function');
   });
 
   test('should merge string and string[] correctly', async () => {
