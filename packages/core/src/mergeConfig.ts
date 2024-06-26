@@ -1,7 +1,7 @@
 import { type RsbuildConfig, castArray } from '@rsbuild/shared';
 import { isFunction, isPlainObject } from './helpers';
 
-const OVERRIDE_PATH = [
+const OVERRIDE_PATHS = [
   'performance.removeConsole',
   'output.inlineScripts',
   'output.inlineStyles',
@@ -15,7 +15,14 @@ const OVERRIDE_PATH = [
 /**
  * When merging configs, some properties prefer `override` over `merge to array`
  */
-const isOverridePath = (key: string) => OVERRIDE_PATH.includes(key);
+const isOverridePath = (key: string) => {
+  // ignore environments name prefix, such as `environments.web`
+  if (key.startsWith('environments.')) {
+    const realKey = key.split('.').slice(2).join('.');
+    return OVERRIDE_PATHS.includes(realKey);
+  }
+  return OVERRIDE_PATHS.includes(key);
+};
 
 const merge = (x: unknown, y: unknown, path = '') => {
   // force some keys to override
