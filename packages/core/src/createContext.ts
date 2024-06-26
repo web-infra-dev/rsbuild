@@ -13,7 +13,6 @@ import { getCommonParentPath } from './helpers/path';
 import { initHooks } from './initHooks';
 import { getHTMLPathByEntry } from './initPlugins';
 import { logger } from './logger';
-import { getEntryObject } from './plugins/entry';
 import type {
   CreateRsbuildOptions,
   InternalContext,
@@ -139,19 +138,19 @@ export async function updateEnvironmentContext(
     const tsconfigPath = config.source.tsconfigPath
       ? getAbsolutePath(context.rootPath, config.source.tsconfigPath)
       : undefined;
-    const entry = getEntryObject(config, config.output.target);
 
     const browserslist = await getBrowserslistByEnvironment(
       context.rootPath,
       config,
     );
 
+    const entry = config.source.entry ?? {};
     const htmlPaths = getEnvironmentHTMLPaths(entry, config);
 
     context.environments[name] = {
       target: config.output.target,
       distPath: getAbsoluteDistPath(context.rootPath, config),
-      entry: getEntryObject(config, config.output.target),
+      entry,
       browserslist,
       htmlPaths,
       tsconfigPath,

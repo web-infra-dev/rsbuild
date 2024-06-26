@@ -15,7 +15,6 @@ type DistPathConfig = {
   wasm?: string;
   image?: string;
   media?: string;
-  server?: string;
 };
 ```
 
@@ -34,7 +33,6 @@ const defaultDistPath = {
   wasm: 'static/wasm',
   image: 'static/image',
   media: 'static/media',
-  server: 'server',
 };
 ```
 
@@ -53,7 +51,6 @@ const defaultDistPath = {
 - `wasm`：表示 WebAssembly 文件的输出目录。
 - `image`：表示非 SVG 图片的输出目录。
 - `media`：表示视频等媒体资源的输出目录。
-- `server`: 表示服务端产物的输出目录，仅在 [target](/config/output/targets) 为 `node` 时有效。
 
 ### 根目录
 

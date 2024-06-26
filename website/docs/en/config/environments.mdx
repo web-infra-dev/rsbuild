@@ -9,6 +9,10 @@ The configuration in `environments` overrides the outer Rsbuild base configurati
 ```ts
 interface EnvironmentConfig {
   /**
+   * Options for local development.
+   */
+  dev?: Pick<DevConfig, 'assetPrefix' | 'lazyCompilation'>;
+  /**
    * Options for HTML generation.
    */
   html?: HtmlConfig;

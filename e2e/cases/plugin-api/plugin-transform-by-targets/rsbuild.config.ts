@@ -11,6 +11,9 @@ export default {
     node: {
       output: {
         target: 'node',
+        distPath: {
+          root: 'dist/server',
+        },
       },
     },
   },

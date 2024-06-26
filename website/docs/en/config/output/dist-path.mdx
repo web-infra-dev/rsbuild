@@ -15,7 +15,6 @@ type DistPathConfig = {
   wasm?: string;
   image?: string;
   media?: string;
-  server?: string;
 };
 ```
 
@@ -34,7 +33,6 @@ const defaultDistPath = {
   wasm: 'static/wasm',
   image: 'static/image',
   media: 'static/media',
-  server: 'server',
 };
 ```
 
@@ -53,7 +51,6 @@ Detail:
 - `wasm`: The output directory of WebAssembly files.
 - `image`: The output directory of non-SVG images.
 - `media`: The output directory of media assets, such as videos.
-- `server`: The output directory of server bundles when [target](/config/output/targets) is `node`.
 
 ### Root Directory
 

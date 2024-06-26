@@ -4,7 +4,6 @@ import { join } from 'node:path';
 // loaders will be emitted to the same folder of the main bundle
 export const ROOT_DIST_DIR = 'dist';
 export const HTML_DIST_DIR = '/';
-export const SERVER_DIST_DIR = 'server';
 export const JS_DIST_DIR = 'static/js';
 export const CSS_DIST_DIR = 'static/css';
 export const SVG_DIST_DIR = 'static/svg';

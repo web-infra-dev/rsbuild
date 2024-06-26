@@ -31,6 +31,10 @@ export type RsbuildConfigMeta = {
  * */
 export interface EnvironmentConfig {
   /**
+   * Options for local development.
+   */
+  dev?: Pick<DevConfig, 'assetPrefix' | 'lazyCompilation'>;
+  /**
    * Options for HTML generation.
    */
   html?: HtmlConfig;

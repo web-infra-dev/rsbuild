@@ -34,25 +34,25 @@ describe('mergeRsbuildConfig', () => {
     const config = mergeRsbuildConfig(
       { source: { alias: {} } },
       { source: { alias: undefined } },
-      { tools: { webpack: noop } },
-      { tools: { webpack: undefined } },
+      { tools: { rspack: noop } },
+      { tools: { rspack: undefined } },
     );
     expect(config).toEqual({
       source: {
         alias: {},
       },
       tools: {
-        webpack: noop,
+        rspack: noop,
       },
     });
   });
 
   test('should keep single function value', () => {
     const config = mergeRsbuildConfig(
-      { tools: { webpack: undefined } },
-      { tools: { webpack: () => ({}) } },
+      { tools: { rspack: undefined } },
+      { tools: { rspack: () => ({}) } },
     );
-    expect(typeof config.tools?.webpack).toEqual('function');
+    expect(typeof config.tools?.rspack).toEqual('function');
   });
 
   test('should merge string and string[] correctly', async () => {
@@ -217,6 +217,65 @@ describe('mergeRsbuildConfig', () => {
                 ['@swc/plugin-bar', {}],
               ],
             },
+          },
+        },
+      },
+    });
+  });
+
+  test('should merge overrideBrowserslist in environments as expected', async () => {
+    expect(
+      mergeRsbuildConfig(
+        {
+          output: {
+            overrideBrowserslist: ['chrome 50'],
+          },
+          environments: {
+            web: {
+              output: {
+                overrideBrowserslist: ['edge 10'],
+              },
+            },
+            node: {
+              output: {
+                overrideBrowserslist: ['node 14'],
+              },
+            },
+          },
+        },
+        {
+          output: {
+            overrideBrowserslist: ['chrome 100'],
+          },
+        },
+        {
+          environments: {
+            web: {
+              output: {
+                overrideBrowserslist: ['edge 11'],
+              },
+            },
+            node: {
+              output: {
+                overrideBrowserslist: ['node 16'],
+              },
+            },
+          },
+        },
+      ),
+    ).toEqual({
+      output: {
+        overrideBrowserslist: ['chrome 100'],
+      },
+      environments: {
+        web: {
+          output: {
+            overrideBrowserslist: ['edge 11'],
+          },
+        },
+        node: {
+          output: {
+            overrideBrowserslist: ['node 16'],
           },
         },
       },
