@@ -88,16 +88,16 @@ export const pluginAdaptor = (): RsbuildPlugin => ({
 
       const { copy } = config.output;
       if (copy) {
-        const { default: CopyPlugin } = await import(
-          // @ts-expect-error copy-webpack-plugin does not provide types
-          'copy-webpack-plugin'
-        );
+        const { default: CopyPlugin } = await import('copy-webpack-plugin');
 
         const options: CopyPluginOptions = Array.isArray(copy)
           ? { patterns: copy }
           : copy;
 
-        chain.plugin(CHAIN_ID.PLUGIN.COPY).use(CopyPlugin, [options]);
+        chain.plugin(CHAIN_ID.PLUGIN.COPY).use(CopyPlugin, [
+          // @ts-expect-error to type mismatch
+          options,
+        ]);
       }
     });
 
