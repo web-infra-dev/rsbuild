@@ -12,17 +12,14 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import type { Rspack } from '@rsbuild/core';
+import type { CSSModules, Rspack } from '@rsbuild/core';
 import { NODE_MODULES_REGEX } from '@rsbuild/shared';
 import LineDiff from '../compiled/line-diff/index.js';
 
 export type CssLoaderModules =
   | boolean
   | string
-  | {
-      auto: boolean | RegExp | ((filename: string) => boolean);
-      namedExport: boolean;
-    };
+  | Required<Pick<CSSModules, 'auto' | 'namedExport'>>;
 
 const isInNodeModules = (path: string) => NODE_MODULES_REGEX.test(path);
 
@@ -33,10 +30,17 @@ const getNoDeclarationFileError = ({ filename }: { filename: string }) =>
     `Generated type declaration does not exist. Run Rsbuild and commit the type declaration for '${filename}'`,
   );
 
-export const isCSSModules = (
-  filename: string,
-  modules: CssLoaderModules,
-): boolean => {
+export const isCSSModules = ({
+  resourcePath,
+  resourceQuery,
+  resourceFragment,
+  modules,
+}: {
+  resourcePath: string;
+  resourceQuery: string;
+  resourceFragment: string;
+  modules: CssLoaderModules;
+}): boolean => {
   if (typeof modules === 'boolean') {
     return modules;
   }
@@ -51,13 +55,13 @@ export const isCSSModules = (
   const { auto } = modules;
 
   if (typeof auto === 'boolean') {
-    return auto && CSS_MODULES_REGEX.test(filename);
+    return auto && CSS_MODULES_REGEX.test(resourcePath);
   }
   if (auto instanceof RegExp) {
-    return auto.test(filename);
+    return auto.test(resourcePath);
   }
   if (typeof auto === 'function') {
-    return auto(filename);
+    return auto(resourcePath, resourceQuery, resourceFragment);
   }
   return true;
 };
@@ -213,7 +217,7 @@ export default function (
 ): void {
   const { failed, success } = makeDoneHandlers(this.async(), content, rest);
 
-  const filename = this.resourcePath;
+  const { resourcePath, resourceQuery, resourceFragment } = this;
   const { mode = 'emit', modules = true } = this.getOptions() || {};
 
   if (!validModes.includes(mode)) {
@@ -221,12 +225,15 @@ export default function (
     return;
   }
 
-  if (!isCSSModules(filename, modules) || isInNodeModules(filename)) {
+  if (
+    !isCSSModules({ resourcePath, resourceQuery, resourceFragment, modules }) ||
+    isInNodeModules(resourcePath)
+  ) {
     success();
     return;
   }
 
-  const cssModuleInterfaceFilename = filenameToTypingsFilename(filename);
+  const cssModuleInterfaceFilename = filenameToTypingsFilename(resourcePath);
   const { read, write } = makeFileHandlers(cssModuleInterfaceFilename);
 
   const namedExport = isNamedExport(modules);
