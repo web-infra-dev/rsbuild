@@ -189,9 +189,7 @@ export async function startProdServer(
         port,
       },
       async () => {
-        const routes = getRoutes({
-          context,
-        });
+        const routes = getRoutes(context);
         await context.hooks.onAfterStartProdServer.call({
           port,
           routes,

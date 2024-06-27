@@ -117,7 +117,7 @@ export async function createDevServer<
   });
   const devConfig = formatDevConfig(config.dev, port);
 
-  const routes = getRoutes(options);
+  const routes = getRoutes(options.context);
 
   options.context.devServer = {
     hostname: host,

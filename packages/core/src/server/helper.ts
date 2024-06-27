@@ -49,20 +49,20 @@ const formatPrefix = (prefix: string | undefined) => {
   return `${hasLeadingSlash ? '' : '/'}${prefix}${hasTailSlash ? '' : '/'}`;
 };
 
-export const getRoutes = (options: { context: InternalContext }): Routes => {
-  return Object.entries(options.context.environments).reduce<Routes>(
-    (prev, [name, context]) => {
+export const getRoutes = (context: InternalContext): Routes => {
+  return Object.entries(context.environments).reduce<Routes>(
+    (prev, [name, environmentContext]) => {
       const distPrefix = relative(
-        options.context.distPath,
-        options.context.environments[name].distPath,
+        context.distPath,
+        environmentContext.distPath,
       );
 
-      const environmentConfig = options.context.pluginAPI!.getNormalizedConfig({
+      const environmentConfig = context.pluginAPI!.getNormalizedConfig({
         environment: name,
       });
 
       const routes = formatRoutes(
-        context.htmlPaths,
+        environmentContext.htmlPaths,
         join(distPrefix, environmentConfig.output.distPath.html),
         environmentConfig.html.outputStructure,
       );
