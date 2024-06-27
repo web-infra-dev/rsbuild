@@ -1,40 +1,76 @@
-import { isCSSModules } from '../src/loader';
+import { type CssLoaderModules, isCSSModules } from '../src/loader';
 
 it('check isCSSModules', () => {
-  expect(isCSSModules('src/index.css', false)).toBeFalsy();
-  expect(isCSSModules('src/index.css', { auto: false })).toBeFalsy();
-  expect(isCSSModules('src/index.module.css', { auto: false })).toBeFalsy();
+  const testIsCSSModules = (
+    resourcePath: string,
+    modules: CssLoaderModules,
+  ) => {
+    return isCSSModules({
+      modules,
+      resourcePath,
+      resourceQuery: '',
+      resourceFragment: '',
+    });
+  };
 
-  expect(isCSSModules('src/index.css', true)).toBeTruthy();
+  expect(testIsCSSModules('/path/to/src/index.css', false)).toBeFalsy();
+  expect(
+    testIsCSSModules('/path/to/src/index.css', {
+      auto: false,
+      namedExport: false,
+    }),
+  ).toBeFalsy();
+  expect(
+    testIsCSSModules('/path/to/src/index.module.css', {
+      auto: false,
+      namedExport: false,
+    }),
+  ).toBeFalsy();
 
-  expect(isCSSModules('src/index.css', { auto: true })).toBeFalsy();
-  expect(isCSSModules('src/index.module.css', { auto: true })).toBeTruthy();
+  expect(testIsCSSModules('/path/to/src/index.css', true)).toBeTruthy();
 
   expect(
-    isCSSModules('src/index.module.css', {
-      auto: (path) => {
-        return path.includes('.module.');
-      },
+    testIsCSSModules('/path/to/src/index.css', {
+      auto: true,
+      namedExport: false,
+    }),
+  ).toBeFalsy();
+  expect(
+    testIsCSSModules('/path/to/src/index.module.css', {
+      auto: true,
+      namedExport: false,
     }),
   ).toBeTruthy();
 
   expect(
-    isCSSModules('src/index.css', {
+    testIsCSSModules('/path/to/src/index.module.css', {
       auto: (path) => {
         return path.includes('.module.');
       },
+      namedExport: false,
+    }),
+  ).toBeTruthy();
+
+  expect(
+    testIsCSSModules('/path/to/src/index.css', {
+      auto: (path) => {
+        return path.includes('.module.');
+      },
+      namedExport: false,
     }),
   ).toBeFalsy();
 
   expect(
-    isCSSModules('src/index.module.css', {
+    testIsCSSModules('/path/to/src/index.module.css', {
       auto: /\.module\./i,
+      namedExport: false,
     }),
   ).toBeTruthy();
 
   expect(
-    isCSSModules('src/index.css', {
+    testIsCSSModules('/path/to/src/index.css', {
       auto: /\.module\./i,
+      namedExport: false,
     }),
   ).toBeFalsy();
 });
