@@ -1,13 +1,19 @@
 import fs from 'node:fs';
-import {
-  type CreateDevServerOptions,
-  type Rspack,
-  type StartDevServerOptions,
-  getPublicPathFromCompiler,
+import type {
+  CreateDevServerOptions,
+  EnvironmentAPI,
+  Rspack,
+  StartDevServerOptions,
+  Stats,
 } from '@rsbuild/shared';
 import type Connect from 'connect';
 import { ROOT_DIST_DIR } from '../constants';
-import { getNodeEnv, isMultiCompiler, setNodeEnv } from '../helpers';
+import {
+  getNodeEnv,
+  getPublicPathFromCompiler,
+  isMultiCompiler,
+  setNodeEnv,
+} from '../helpers';
 import { logger } from '../logger';
 import type { CreateDevMiddlewareReturns } from '../provider/createCompiler';
 import type {
@@ -22,8 +28,8 @@ import {
 import {
   type StartServerResult,
   type UpgradeEvent,
-  formatRoutes,
   getAddressUrls,
+  getRoutes,
   getServerConfig,
   printServerURLs,
 } from './helper';
@@ -45,6 +51,9 @@ export type RsbuildDevServer = {
   }>;
 
   /** The following APIs will be used when you use a custom server */
+
+  /** The Rsbuild server environment API */
+  environments: EnvironmentAPI;
 
   /**
    * The resolved port.
@@ -113,14 +122,7 @@ export async function createDevServer<
   });
   const devConfig = formatDevConfig(config.dev, port);
 
-  const routes = formatRoutes(
-    Object.values(options.context.environments).reduce(
-      (prev, context) => Object.assign(prev, context.htmlPaths),
-      {},
-    ),
-    config.output.distPath.html,
-    config.html.outputStructure,
-  );
+  const routes = getRoutes(options.context);
 
   options.context.devServer = {
     hostname: host,
@@ -129,6 +131,24 @@ export async function createDevServer<
   };
 
   let outputFileSystem: Rspack.OutputFileSystem = fs;
+
+  let lastStats: Stats[];
+
+  // should register onDevCompileDone hook before startCompile
+  const waitFirstCompileDone = runCompile
+    ? new Promise<void>((resolve) => {
+        options.context.hooks.onDevCompileDone.tap(
+          ({ stats, isFirstCompile }) => {
+            lastStats = 'stats' in stats ? stats.stats : [stats];
+
+            if (!isFirstCompile) {
+              return;
+            }
+            resolve();
+          },
+        );
+      })
+    : Promise.resolve();
 
   const startCompile: () => Promise<
     RsbuildDevMiddlewareOptions['compileMiddlewareAPI']
@@ -200,13 +220,31 @@ export async function createDevServer<
     compileMiddlewareAPI,
   });
 
+  const environmentAPI = Object.fromEntries(
+    Object.keys(options.context.environments).map((name, index) => {
+      return [
+        name,
+        {
+          getStats: async () => {
+            if (!runCompile) {
+              throw new Error("can't get stats info when runCompile is false");
+            }
+            await waitFirstCompileDone;
+            return lastStats[index];
+          },
+        },
+      ];
+    }),
+  );
+
   const devMiddlewares = await getMiddlewares({
     pwd: options.context.rootPath,
     compileMiddlewareAPI,
     dev: devConfig,
     server: config.server,
+    environments: environmentAPI,
     output: {
-      distPath: config.output.distPath.root || ROOT_DIST_DIR,
+      distPath: options.context.distPath || ROOT_DIST_DIR,
     },
     outputFileSystem,
   });
@@ -226,6 +264,7 @@ export async function createDevServer<
     port,
     middlewares,
     outputFileSystem,
+    environments: environmentAPI,
     listen: async () => {
       const httpServer = await createHttpServer({
         serverConfig: config.server,

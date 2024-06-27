@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import {
   type Polyfill,
@@ -5,7 +6,6 @@ import {
   applyScriptCondition,
   cloneDeep,
   deepmerge,
-  getCoreJsVersion,
 } from '@rsbuild/shared';
 import type { SwcLoaderOptions } from '@rspack/core';
 import { PLUGIN_SWC_NAME } from '../constants';
@@ -137,6 +137,17 @@ export const pluginSwc = (): RsbuildPlugin => ({
   },
 });
 
+const getCoreJsVersion = (corejsPkgPath: string) => {
+  try {
+    const rawJson = fs.readFileSync(corejsPkgPath, 'utf-8');
+    const { version } = JSON.parse(rawJson);
+    const [major, minor] = version.split('.');
+    return `${major}.${minor}`;
+  } catch (err) {
+    return '3';
+  }
+};
+
 async function applyCoreJs(
   swcConfig: SwcLoaderOptions,
   polyfillMode: Polyfill,
@@ -170,7 +181,7 @@ function applyTransformImport(
 export function applySwcDecoratorConfig(
   swcConfig: SwcLoaderOptions,
   config: NormalizedEnvironmentConfig,
-) {
+): void {
   swcConfig.jsc ||= {};
   swcConfig.jsc.transform ||= {};
 

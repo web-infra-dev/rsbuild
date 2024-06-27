@@ -16,6 +16,7 @@
     }
   },
   "dependencies": {
-    "@e2e/source-build-utils": "workspace:*"
+    "@e2e/source-build-utils": "workspace:*",
+    "@e2e/source-build-utils2": "workspace:*"
   }
 }

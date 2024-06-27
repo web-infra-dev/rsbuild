@@ -9,7 +9,7 @@ function initNodeEnv() {
   }
 }
 
-export function prepareCli() {
+export function prepareCli(): void {
   initNodeEnv();
 
   // Print a blank line to keep the greet log nice.

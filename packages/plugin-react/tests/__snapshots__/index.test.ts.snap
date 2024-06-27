@@ -55,7 +55,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core-canary/dist/builtin-plugin/css-extract/loader.js",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
@@ -128,7 +128,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -148,14 +148,13 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                   "react": {
                     "development": false,
                     "refresh": true,
                     "runtime": "automatic",
                   },
-                  "useDefineForClassFields": false,
                 },
               },
             },
@@ -180,7 +179,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -200,14 +199,13 @@ exports[`plugins/react > should work with swc-loader 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                   "react": {
                     "development": false,
                     "refresh": true,
                     "runtime": "automatic",
                   },
-                  "useDefineForClassFields": false,
                 },
               },
             },

@@ -87,4 +87,32 @@ describe('plugin-entry', () => {
     const configs = await rsbuild.initConfigs();
     expect(configs).toMatchSnapshot();
   });
+
+  it('should apply different environments entry config correctly', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginEntry()],
+      rsbuildConfig: {
+        environments: {
+          web: {
+            source: {
+              entry: {
+                index: './src/index.client',
+              },
+            },
+          },
+          ssr: {
+            source: {
+              entry: {
+                main: './src/index.ssr',
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const configs = await rsbuild.initConfigs();
+
+    expect(configs).toMatchSnapshot();
+  });
 });

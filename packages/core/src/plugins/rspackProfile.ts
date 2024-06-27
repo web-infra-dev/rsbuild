@@ -5,10 +5,7 @@ import { rspack } from '@rspack/core';
 import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
 
-export const stopProfiler = (
-  output: string,
-  profileSession?: inspector.Session,
-) => {
+const stopProfiler = (output: string, profileSession?: inspector.Session) => {
   if (!profileSession) {
     return;
   }
@@ -43,10 +40,7 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
     }
 
     const timestamp = Date.now();
-    const profileDir = path.join(
-      api.context.distPath,
-      `rspack-profile-${timestamp}`,
-    );
+    const profileDirName = `rspack-profile-${timestamp}`;
 
     let profileSession: inspector.Session | undefined;
 
@@ -59,11 +53,12 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
     const enableLogging =
       RSPACK_PROFILE === 'ALL' || RSPACK_PROFILE.includes('LOGGING');
 
-    const traceFilePath = path.join(profileDir, 'trace.json');
-    const cpuProfilePath = path.join(profileDir, 'jscpuprofile.json');
-    const loggingFilePath = path.join(profileDir, 'logging.json');
-
     const onStart = () => {
+      // can't get precise api.context.distPath before config init
+      const profileDir = path.join(api.context.distPath, profileDirName);
+
+      const traceFilePath = path.join(profileDir, 'trace.json');
+
       if (!fs.existsSync(profileDir)) {
         fs.mkdirSync(profileDir, { recursive: true });
       }
@@ -88,6 +83,12 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
     api.onBeforeStartDevServer(onStart);
 
     api.onAfterBuild(async ({ stats }) => {
+      const loggingFilePath = path.join(
+        api.context.distPath,
+        profileDirName,
+        'logging.json',
+      );
+
       if (enableLogging && stats) {
         const logging = stats.toJson({
           all: false,
@@ -102,6 +103,9 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
       if (enableProfileTrace) {
         rspack.experimental_cleanupGlobalTrace();
       }
+      const profileDir = path.join(api.context.distPath, profileDirName);
+
+      const cpuProfilePath = path.join(profileDir, 'jscpuprofile.json');
 
       stopProfiler(cpuProfilePath, profileSession);
 

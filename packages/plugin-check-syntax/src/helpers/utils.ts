@@ -3,7 +3,7 @@ import type { CheckSyntaxExclude } from '../types';
 export function checkIsExcludeSource(
   path: string,
   exclude?: CheckSyntaxExclude,
-) {
+): boolean {
   if (!exclude) {
     return false;
   }

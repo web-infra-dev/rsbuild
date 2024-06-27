@@ -29,7 +29,7 @@ export async function generateError({
   filepath: string;
   rootPath: string;
   exclude?: CheckSyntaxExclude;
-}) {
+}): Promise<ECMASyntaxError | null> {
   let error = await tryGenerateErrorFromSourceMap({
     err,
     filepath,

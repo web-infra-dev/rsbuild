@@ -28,20 +28,6 @@ type RsbuildEntry = Record<string, string | string[] | EntryDescription>;
 
 > If `source.entry` is set as a function, and different entry objects are returned for different targets, then context.entry will only contain the entry object corresponding to the web target.
 
-### context.targets
-
-Build artifact type, corresponding to the output.targets option in the Rsbuild configuration.
-
-- **Type:**
-
-```ts
-type RsbuildTarget = 'web' | 'node' | 'web-worker';
-
-type Context = {
-  targets: RsbuildTarget[];
-};
-```
-
 ### context.rootPath
 
 The root path of current build, corresponding to the `cwd` option of `createRsbuild` method.
@@ -72,16 +58,6 @@ The absolute path of the build cache files.
 type CachePath = string;
 ```
 
-### context.tsconfigPath
-
-The absolute path of the tsconfig.json file, or `undefined` if the tsconfig.json file does not exist in current project.
-
-- **Type:**
-
-```ts
-type TsconfigPath = string | undefined;
-```
-
 ### context.devServer
 
 Dev Server information, including the current Dev Server hostname and port number.
@@ -106,6 +82,28 @@ type bundlerType = 'rspack' | 'webpack';
 ```
 
 > Rsbuild internally supports switching to webpack for comparative testing, so this field is provided for differentiation. Usually, you do not need to use this field.
+
+## rsbuild.environments
+
+### target
+
+Build target type, corresponding to the [output.target](/config/output/target) config of Rsbuild.
+
+- **Type:**
+
+```ts
+type RsbuildTarget = 'web' | 'node' | 'web-worker';
+```
+
+### tsconfigPath
+
+The absolute path of the tsconfig.json file, or `undefined` if the tsconfig.json file does not exist in current project.
+
+- **Type:**
+
+```ts
+type TsconfigPath = string | undefined;
+```
 
 ## rsbuild.build
 

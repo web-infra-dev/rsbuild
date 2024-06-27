@@ -31,6 +31,11 @@
 			"groupSlug": "modern-js"
 		},
 		{
+			"groupName": "eslint",
+			"packagePatterns": ["eslint"],
+			"groupSlug": "eslint"
+		},
+		{
 			"groupName": "types",
 			"packagePatterns": ["^@types/"],
 			"groupSlug": "types"
@@ -50,7 +55,6 @@
 	"ignoreDeps": [
 		// manually update some packages
 		"pnpm",
-		"core-js",
 		"esbuild",
 		"typescript",
 		// related to the SWC version built into Rspack
@@ -64,6 +68,10 @@
 		"gzip-size",
 		"globby",
 		"open",
+		"strip-ansi",
+		"ansi-escapes",
+		"cli-truncate",
+		"patch-console",
 		// buffer v6 has compatibility issues as node polyfill
 		"buffer",
 		// align Node.js version minimum requirements

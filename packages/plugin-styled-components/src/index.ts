@@ -7,7 +7,7 @@ import type {
 import { reduceConfigs } from '@rsbuild/core';
 
 /**
- * the options of [rspackExperiments.styledComponents](https://rspack.dev/guide/features/builtin-swc-loader#rspackexperimentsstyledcomponents).
+ * The options of [@swc/plugin-styled-components](https://www.npmjs.com/package/@swc/plugin-styled-components).
  */
 export type PluginStyledComponentsOptions = {
   displayName?: boolean;
@@ -50,7 +50,9 @@ export const pluginStyledComponents = (
     }
 
     const getMergedOptions = () => {
-      const useSSR = isServerTarget(api.context.targets);
+      const useSSR = isServerTarget(
+        Object.values(api.context.environments).map((e) => e.target),
+      );
       const isProd = process.env.NODE_ENV === 'production';
 
       return reduceConfigs({
@@ -60,17 +62,24 @@ export const pluginStyledComponents = (
     };
 
     api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
+      const mergedOptions = getMergedOptions();
+      if (!mergedOptions) {
+        return userConfig;
+      }
+
       const extraConfig: RsbuildConfig = {
         tools: {
-          swc(opts) {
-            const mergedOptions = getMergedOptions();
-            if (!mergedOptions) {
-              return opts;
-            }
-
-            opts.rspackExperiments ??= {};
-            opts.rspackExperiments.styledComponents = mergedOptions;
-            return opts;
+          swc: {
+            jsc: {
+              experimental: {
+                plugins: [
+                  [
+                    require.resolve('@swc/plugin-styled-components'),
+                    mergedOptions,
+                  ],
+                ],
+              },
+            },
           },
         },
       };

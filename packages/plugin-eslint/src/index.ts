@@ -29,10 +29,11 @@ export const pluginEslint = (
       return;
     }
 
-    api.modifyBundlerChain(async (chain, { target, CHAIN_ID }) => {
-      // If there is multiple target, only apply eslint plugin to the first target
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
+      const { distPath } = api.context.environments[environment];
+      // If there is multiple environment, only apply eslint plugin to the first target
       // to avoid multiple eslint running at the same time
-      if (target !== api.context.targets[0]) {
+      if (environment !== Object.keys(api.context.environments)[0]) {
         return;
       }
 
@@ -41,7 +42,7 @@ export const pluginEslint = (
         extensions: ['js', 'jsx', 'mjs', 'cjs', 'ts', 'tsx', 'mts', 'cts'],
         exclude: [
           'node_modules',
-          path.relative(api.context.rootPath, api.context.distPath),
+          path.relative(api.context.rootPath, distPath),
         ],
       };
 

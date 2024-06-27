@@ -1,6 +1,5 @@
 import fs from 'node:fs';
 import { basename, posix } from 'node:path';
-import { getPublicPathFromCompiler } from '@rsbuild/shared';
 import type { Compilation, Compiler } from '@rspack/core';
 import { ensureAssetPrefix } from '../helpers';
 import { getHTMLPlugin } from '../pluginHelper';
@@ -23,7 +22,7 @@ export class HtmlAppIconPlugin {
     this.iconPath = options.iconPath;
   }
 
-  apply(compiler: Compiler) {
+  apply(compiler: Compiler): void {
     if (!fs.existsSync(this.iconPath)) {
       throw new Error(
         `[${this.name}] Can not find the app icon, please check if the '${this.iconPath}' file exists'.`,
@@ -37,15 +36,16 @@ export class HtmlAppIconPlugin {
       getHTMLPlugin()
         .getHooks(compilation)
         .alterAssetTagGroups.tap(this.name, (data) => {
-          const publicPath = getPublicPathFromCompiler(compiler);
-
           data.headTags.unshift({
             tagName: 'link',
             voidTag: true,
             attributes: {
               rel: 'apple-touch-icon',
               sizes: '180*180',
-              href: ensureAssetPrefix(iconRelativePath, publicPath),
+              href: ensureAssetPrefix(
+                iconRelativePath,
+                compilation.outputOptions.publicPath,
+              ),
             },
             meta: {},
           });

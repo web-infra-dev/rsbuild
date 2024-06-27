@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugin-output > should allow to custom server directory with distPath.server 1`] = `
+exports[`plugin-output > should allow to custom server directory with distPath.root 1`] = `
 {
   "output": {
     "chunkFilename": "[name].js",
@@ -75,7 +75,7 @@ exports[`plugin-output > should allow to use copy plugin 1`] = `
 }
 `;
 
-exports[`plugin-output > should allow to use copy plugin with multiply config 1`] = `
+exports[`plugin-output > should allow to use copy plugin with multiple config 1`] = `
 {
   "output": {
     "chunkFilename": "static/js/async/[name].js",

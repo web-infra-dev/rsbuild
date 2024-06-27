@@ -5,8 +5,7 @@ import type {
   Configuration as WebpackConfig,
   WebpackPluginInstance,
 } from 'webpack';
-import type { ChainIdentifier } from '../chain';
-import type { RspackChain } from '../chain';
+import type { ChainIdentifier, RspackChain } from '..';
 import type {
   ModifyRspackConfigUtils,
   NormalizedConfig,
@@ -17,6 +16,7 @@ import type { RsbuildContext } from './context';
 import type {
   ModifyBundlerChainFn,
   ModifyChainUtils,
+  ModifyEnvironmentConfigFn,
   ModifyHTMLTagsFn,
   ModifyRsbuildConfigFn,
   OnAfterBuildFn,
@@ -250,6 +250,7 @@ export type RsbuildPluginAPI = Readonly<{
 
   modifyHTMLTags: PluginHook<ModifyHTMLTagsFn>;
   modifyRsbuildConfig: PluginHook<ModifyRsbuildConfigFn>;
+  modifyEnvironmentConfig: PluginHook<ModifyEnvironmentConfigFn>;
   modifyBundlerChain: PluginHook<ModifyBundlerChainFn>;
   /** Only works when bundler is Rspack */
   modifyRspackConfig: PluginHook<ModifyRspackConfigFn>;

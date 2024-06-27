@@ -1,10 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { getMonorepoBaseData, getMonorepoSubProjects } from '../common';
-import type { Project } from '../project/project';
+import type { Project } from '../project';
 import type { MonorepoAnalyzer } from '../types';
 import { readPackageJson } from '../utils';
-import { type Filter, defaultFilter } from './filter';
+import type { Filter } from './filter';
 
 export type ExtraMonorepoStrategies = Record<string, MonorepoAnalyzer>;
 
@@ -23,18 +23,10 @@ async function pathExists(path: string) {
     .catch(() => false);
 }
 
-const filterProjects = async (projects: Project[], filter?: Filter) => {
-  if (!filter) {
-    return defaultFilter(projects);
-  }
-
-  return filter(projects);
-};
-
 const getDependentProjects = async (
   projectNameOrRootPath: string,
   options: GetDependentProjectsOptions,
-) => {
+): Promise<Project[]> => {
   const {
     cwd = process.cwd(),
     recursive,
@@ -72,7 +64,9 @@ const getDependentProjects = async (
   let dependentProjects = currentProject.getDependentProjects(projects, {
     recursive,
   });
-  dependentProjects = await filterProjects(dependentProjects, filter);
+  if (filter) {
+    dependentProjects = await filter(dependentProjects);
+  }
 
   return dependentProjects;
 };

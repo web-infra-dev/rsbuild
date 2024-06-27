@@ -14,5 +14,5 @@
   "mdx": {
     "checkMdx": true
   },
-  "include": ["docs", "rspress.config.ts", "theme", "components"]
+  "include": ["docs", "rspress.config.ts", "theme", "components", "env.d.ts"]
 }

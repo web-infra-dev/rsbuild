@@ -2,7 +2,8 @@ import type { IncomingMessage } from 'node:http';
 import net from 'node:net';
 import type { Socket } from 'node:net';
 import os from 'node:os';
-import { color, isFunction } from '@rsbuild/shared';
+import { join, relative } from 'node:path';
+import { color } from '@rsbuild/shared';
 import type {
   NormalizedConfig,
   OutputStructure,
@@ -11,7 +12,9 @@ import type {
   RsbuildEntry,
 } from '@rsbuild/shared';
 import { DEFAULT_DEV_HOST, DEFAULT_PORT } from '../constants';
+import { isFunction } from '../helpers';
 import { logger } from '../logger';
+import type { InternalContext } from '../types';
 
 /**
  * It used to subscribe http upgrade event
@@ -31,7 +34,8 @@ export type StartServerResult = {
 };
 
 // remove repeat '/'
-export const normalizeUrl = (url: string) => url.replace(/([^:]\/)\/+/g, '$1');
+export const normalizeUrl = (url: string): string =>
+  url.replace(/([^:]\/)\/+/g, '$1');
 
 /**
  * Make sure there is slash before and after prefix
@@ -44,6 +48,29 @@ const formatPrefix = (prefix: string | undefined) => {
   const hasLeadingSlash = prefix.startsWith('/');
   const hasTailSlash = prefix.endsWith('/');
   return `${hasLeadingSlash ? '' : '/'}${prefix}${hasTailSlash ? '' : '/'}`;
+};
+
+export const getRoutes = (context: InternalContext): Routes => {
+  return Object.entries(context.environments).reduce<Routes>(
+    (prev, [name, environmentContext]) => {
+      const distPrefix = relative(
+        context.distPath,
+        environmentContext.distPath,
+      );
+
+      const environmentConfig = context.pluginAPI!.getNormalizedConfig({
+        environment: name,
+      });
+
+      const routes = formatRoutes(
+        environmentContext.htmlPaths,
+        join(distPrefix, environmentConfig.output.distPath.html),
+        environmentConfig.html.outputStructure,
+      );
+      return prev.concat(...routes);
+    },
+    [],
+  );
 };
 
 /*
@@ -232,7 +259,11 @@ export const getServerConfig = async ({
 }: {
   config: NormalizedConfig;
   getPortSilently?: boolean;
-}) => {
+}): Promise<{
+  port: number;
+  host: string;
+  https: boolean;
+}> => {
   const host = config.server.host || DEFAULT_DEV_HOST;
   const port = await getPort({
     host,
@@ -295,7 +326,7 @@ const concatUrl = ({
 const LOCAL_LABEL = 'Local:  ';
 const NETWORK_LABEL = 'Network:  ';
 
-export const getUrlLabel = (url: string) => {
+const getUrlLabel = (url: string) => {
   try {
     const { host } = new URL(url);
     return isLoopbackHost(host) ? LOCAL_LABEL : NETWORK_LABEL;

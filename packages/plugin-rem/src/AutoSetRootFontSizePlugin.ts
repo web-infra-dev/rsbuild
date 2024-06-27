@@ -5,7 +5,6 @@ import {
   ensureAssetPrefix,
   logger,
 } from '@rsbuild/core';
-import { getPublicPathFromCompiler } from '@rsbuild/shared';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { PluginRemOptions } from './types';
 
@@ -20,7 +19,7 @@ type AutoSetRootFontSizeOptions = Omit<
 export async function getRootPixelCode(
   options: Required<AutoSetRootFontSizeOptions>,
   isCompress = false,
-) {
+): Promise<string | undefined> {
   const code = genJSTemplate(options);
 
   if (!isCompress) {
@@ -81,7 +80,7 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
     this.scriptLoading = scriptLoading;
   }
 
-  async getScriptPath() {
+  async getScriptPath(): Promise<string> {
     if (!this.scriptPath) {
       this.scriptPath = path.posix.join(
         this.distDir,
@@ -92,7 +91,7 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
     return this.scriptPath;
   }
 
-  apply(compiler: Rspack.Compiler) {
+  apply(compiler: Rspack.Compiler): void {
     let runtimeCode: string | undefined;
 
     const getRuntimeCode = async () => {
@@ -162,7 +161,7 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
               innerHTML: await getRuntimeCode(),
             });
           } else {
-            const publicPath = getPublicPathFromCompiler(compiler);
+            const { publicPath } = compilation.outputOptions;
             const url = ensureAssetPrefix(
               await this.getScriptPath(),
               publicPath,

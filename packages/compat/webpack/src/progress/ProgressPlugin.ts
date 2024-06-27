@@ -1,4 +1,5 @@
 import { logger } from '@rsbuild/core';
+import { color } from '@rsbuild/shared';
 import webpack from 'webpack';
 import { prettyTime } from '../shared';
 import { bus, createFriendlyPercentage } from './helpers';
@@ -81,7 +82,8 @@ export class ProgressPlugin extends webpack.ProgressPlugin {
         startTime = null;
 
         if (!this.hasCompileErrors) {
-          logger.ready(`${this.id} compiled in ${this.compileTime}`);
+          const suffix = this.id ? color.gray(` (${this.id})`) : '';
+          logger.ready(`Compiled in ${this.compileTime} ${suffix}`);
         }
       }
     });

@@ -24,7 +24,7 @@ export class SocketServer {
     this.options = options;
   }
 
-  public upgrade(req: IncomingMessage, sock: Socket, head: any) {
+  public upgrade(req: IncomingMessage, sock: Socket, head: any): void {
     // subscribe upgrade event to handle socket
 
     if (!this.wsServer.shouldHandle(req)) {
@@ -37,7 +37,7 @@ export class SocketServer {
   }
 
   // create socket, install socket handler, bind socket event
-  public async prepare() {
+  public async prepare(): Promise<void> {
     const { default: ws } = await import('ws');
     this.wsServer = new ws.Server({
       noServer: true,
@@ -68,7 +68,7 @@ export class SocketServer {
     });
   }
 
-  public updateStats(stats: Stats) {
+  public updateStats(stats: Stats): void {
     this.stats = stats;
     this.sendStats();
   }
@@ -77,13 +77,13 @@ export class SocketServer {
   public sockWrite(
     type: string,
     data?: Record<string, any> | string | boolean,
-  ) {
+  ): void {
     for (const socket of this.sockets) {
       this.send(socket, JSON.stringify({ type, data }));
     }
   }
 
-  public singleWrite(
+  private singleWrite(
     socket: Ws,
     type: string,
     data?: Record<string, any> | string | boolean,
@@ -91,7 +91,7 @@ export class SocketServer {
     this.send(socket, JSON.stringify({ type, data }));
   }
 
-  public close() {
+  public close(): void {
     for (const socket of this.sockets) {
       socket.close();
     }

@@ -6,7 +6,6 @@ import type {
   RspackChain,
 } from '@rsbuild/core';
 import { type CopyPluginOptions, castArray } from '@rsbuild/shared';
-import { TARGET_ID_MAP } from './shared';
 
 async function applyTsConfigPathsPlugin({
   chain,
@@ -63,15 +62,13 @@ export const pluginAdaptor = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment, target }) => {
       const config = api.getNormalizedConfig({ environment });
+      const { tsconfigPath } = api.context.environments[environment];
 
-      if (
-        api.context.tsconfigPath &&
-        config.source.aliasStrategy === 'prefer-tsconfig'
-      ) {
+      if (tsconfigPath && config.source.aliasStrategy === 'prefer-tsconfig') {
         await applyTsConfigPathsPlugin({
           chain,
           CHAIN_ID,
-          configFile: api.context.tsconfigPath,
+          configFile: tsconfigPath,
           mainFields: getMainFields(chain, target),
           extensions: chain.resolve.extensions.values(),
         });
@@ -83,7 +80,7 @@ export const pluginAdaptor = (): RsbuildPlugin => ({
         const { ProgressPlugin } = await import('./progress/ProgressPlugin');
         chain.plugin(CHAIN_ID.PLUGIN.PROGRESS).use(ProgressPlugin, [
           {
-            id: TARGET_ID_MAP[target],
+            id: environment,
             ...(progress === true ? {} : progress),
           },
         ]);
@@ -91,16 +88,16 @@ export const pluginAdaptor = (): RsbuildPlugin => ({
 
       const { copy } = config.output;
       if (copy) {
-        const { default: CopyPlugin } = await import(
-          // @ts-expect-error copy-webpack-plugin does not provide types
-          'copy-webpack-plugin'
-        );
+        const { default: CopyPlugin } = await import('copy-webpack-plugin');
 
         const options: CopyPluginOptions = Array.isArray(copy)
           ? { patterns: copy }
           : copy;
 
-        chain.plugin(CHAIN_ID.PLUGIN.COPY).use(CopyPlugin, [options]);
+        chain.plugin(CHAIN_ID.PLUGIN.COPY).use(CopyPlugin, [
+          // @ts-expect-error to type mismatch
+          options,
+        ]);
       }
     });
 

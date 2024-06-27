@@ -2,11 +2,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import glob, { type Options as GlobOptions } from 'fast-glob';
 import { PACKAGE_JSON, PNPM_WORKSPACE_FILE } from '../constants';
-import { Project } from '../project/project';
+import { Project } from '../project';
 import type { IPnpmWorkSpace } from '../types';
 import { readPackageJson } from '../utils';
 
-export const getPatternsFromYaml = async (monorepoRoot: string) => {
+const getPatternsFromYaml = async (monorepoRoot: string): Promise<string[]> => {
   const { parse } = await import('yaml');
   const workspaceYamlFilePath = path.join(monorepoRoot, PNPM_WORKSPACE_FILE);
   const yamlContent = await fs.promises.readFile(workspaceYamlFilePath, 'utf8');
@@ -14,7 +14,7 @@ export const getPatternsFromYaml = async (monorepoRoot: string) => {
   return pnpmWorkspace.packages || [];
 };
 
-export const normalize = (results: string[]) =>
+const normalize = (results: string[]) =>
   results.map((fp: string) => path.normalize(fp));
 
 const getGlobOpts = (rootPath: string, patterns: string[]): GlobOptions => {
@@ -36,7 +36,7 @@ const getGlobOpts = (rootPath: string, patterns: string[]): GlobOptions => {
   return globOpts;
 };
 
-export const makeFileFinder = (rootPath: string, patterns: string[]) => {
+const makeFileFinder = (rootPath: string, patterns: string[]) => {
   const globOpts = getGlobOpts(rootPath, patterns);
 
   return async <FileMapperType>(
@@ -57,10 +57,7 @@ export const makeFileFinder = (rootPath: string, patterns: string[]) => {
   };
 };
 
-export const readPnpmProjects = async (
-  monorepoRoot: string,
-  patterns: string[],
-) => {
+const readPnpmProjects = async (monorepoRoot: string, patterns: string[]) => {
   const finder = makeFileFinder(monorepoRoot, patterns);
   const mapper = async (pkgJsonFilePath: string) => {
     const pkgJson = await readPackageJson(pkgJsonFilePath);

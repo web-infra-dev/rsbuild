@@ -33,7 +33,7 @@ exports[`plugin-swc > should add antd pluginImport 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -53,9 +53,8 @@ exports[`plugin-swc > should add antd pluginImport 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -80,7 +79,7 @@ exports[`plugin-swc > should add antd pluginImport 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -100,9 +99,8 @@ exports[`plugin-swc > should add antd pluginImport 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -153,7 +151,7 @@ exports[`plugin-swc > should add browserslist 1`] = `
               "loader": "builtin:swc-loader",
               "options": {
                 "env": {
-                  "coreJs": "3.36",
+                  "coreJs": "3.37",
                   "mode": "usage",
                   "shippedProposals": true,
                   "targets": [
@@ -170,9 +168,8 @@ exports[`plugin-swc > should add browserslist 1`] = `
                   },
                   "preserveAllComments": true,
                   "transform": {
-                    "decoratorMetadata": true,
-                    "legacyDecorator": true,
-                    "useDefineForClassFields": false,
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
                   },
                 },
               },
@@ -197,7 +194,7 @@ exports[`plugin-swc > should add browserslist 1`] = `
               "loader": "builtin:swc-loader",
               "options": {
                 "env": {
-                  "coreJs": "3.36",
+                  "coreJs": "3.37",
                   "mode": "usage",
                   "shippedProposals": true,
                   "targets": [
@@ -214,9 +211,8 @@ exports[`plugin-swc > should add browserslist 1`] = `
                   },
                   "preserveAllComments": true,
                   "transform": {
-                    "decoratorMetadata": true,
-                    "legacyDecorator": true,
-                    "useDefineForClassFields": false,
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
                   },
                 },
               },
@@ -268,7 +264,7 @@ exports[`plugin-swc > should add pluginImport 1`] = `
               "loader": "builtin:swc-loader",
               "options": {
                 "env": {
-                  "coreJs": "3.36",
+                  "coreJs": "3.37",
                   "mode": "usage",
                   "shippedProposals": true,
                   "targets": [
@@ -288,9 +284,8 @@ exports[`plugin-swc > should add pluginImport 1`] = `
                   },
                   "preserveAllComments": true,
                   "transform": {
-                    "decoratorMetadata": true,
-                    "legacyDecorator": true,
-                    "useDefineForClassFields": false,
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
                   },
                 },
                 "rspackExperiments": {
@@ -322,7 +317,7 @@ exports[`plugin-swc > should add pluginImport 1`] = `
               "loader": "builtin:swc-loader",
               "options": {
                 "env": {
-                  "coreJs": "3.36",
+                  "coreJs": "3.37",
                   "mode": "usage",
                   "shippedProposals": true,
                   "targets": [
@@ -342,9 +337,8 @@ exports[`plugin-swc > should add pluginImport 1`] = `
                   },
                   "preserveAllComments": true,
                   "transform": {
-                    "decoratorMetadata": true,
-                    "legacyDecorator": true,
-                    "useDefineForClassFields": false,
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
                   },
                 },
                 "rspackExperiments": {
@@ -454,7 +448,7 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
         "loader": "builtin:swc-loader",
         "options": {
           "env": {
-            "coreJs": "3.36",
+            "coreJs": "3.37",
             "mode": "usage",
             "shippedProposals": true,
             "targets": [
@@ -474,9 +468,8 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
             },
             "preserveAllComments": true,
             "transform": {
-              "decoratorMetadata": true,
-              "legacyDecorator": true,
-              "useDefineForClassFields": false,
+              "decoratorVersion": "2022-03",
+              "legacyDecorator": false,
             },
           },
         },
@@ -501,7 +494,7 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
         "loader": "builtin:swc-loader",
         "options": {
           "env": {
-            "coreJs": "3.36",
+            "coreJs": "3.37",
             "mode": "usage",
             "shippedProposals": true,
             "targets": [
@@ -521,9 +514,8 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
             },
             "preserveAllComments": true,
             "transform": {
-              "decoratorMetadata": true,
-              "legacyDecorator": true,
-              "useDefineForClassFields": false,
+              "decoratorVersion": "2022-03",
+              "legacyDecorator": false,
             },
           },
         },
@@ -562,7 +554,7 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
         "loader": "builtin:swc-loader",
         "options": {
           "env": {
-            "coreJs": "3.36",
+            "coreJs": "3.37",
             "mode": "usage",
             "shippedProposals": true,
             "targets": [
@@ -582,9 +574,8 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
             },
             "preserveAllComments": true,
             "transform": {
-              "decoratorMetadata": true,
-              "legacyDecorator": true,
-              "useDefineForClassFields": false,
+              "decoratorVersion": "2022-03",
+              "legacyDecorator": false,
             },
           },
           "rspackExperiments": {
@@ -616,7 +607,7 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
         "loader": "builtin:swc-loader",
         "options": {
           "env": {
-            "coreJs": "3.36",
+            "coreJs": "3.37",
             "mode": "usage",
             "shippedProposals": true,
             "targets": [
@@ -636,9 +627,8 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
             },
             "preserveAllComments": true,
             "transform": {
-              "decoratorMetadata": true,
-              "legacyDecorator": true,
-              "useDefineForClassFields": false,
+              "decoratorVersion": "2022-03",
+              "legacyDecorator": false,
             },
           },
           "rspackExperiments": {
@@ -693,9 +683,8 @@ exports[`plugin-swc > should apply environment config correctly 2`] = `
             },
             "preserveAllComments": true,
             "transform": {
-              "decoratorMetadata": true,
-              "legacyDecorator": true,
-              "useDefineForClassFields": false,
+              "decoratorVersion": "2022-03",
+              "legacyDecorator": false,
             },
           },
           "rspackExperiments": {
@@ -738,9 +727,8 @@ exports[`plugin-swc > should apply environment config correctly 2`] = `
             },
             "preserveAllComments": true,
             "transform": {
-              "decoratorMetadata": true,
-              "legacyDecorator": true,
-              "useDefineForClassFields": false,
+              "decoratorVersion": "2022-03",
+              "legacyDecorator": false,
             },
           },
           "rspackExperiments": {
@@ -790,7 +778,7 @@ exports[`plugin-swc > should disable all pluginImport 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -810,9 +798,8 @@ exports[`plugin-swc > should disable all pluginImport 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -837,7 +824,7 @@ exports[`plugin-swc > should disable all pluginImport 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -857,9 +844,8 @@ exports[`plugin-swc > should disable all pluginImport 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -919,9 +905,8 @@ exports[`plugin-swc > should disable preset_env in target other than web 1`] = `
                   },
                   "preserveAllComments": true,
                   "transform": {
-                    "decoratorMetadata": true,
-                    "legacyDecorator": true,
-                    "useDefineForClassFields": false,
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
                   },
                 },
               },
@@ -957,9 +942,8 @@ exports[`plugin-swc > should disable preset_env in target other than web 1`] = `
                   },
                   "preserveAllComments": true,
                   "transform": {
-                    "decoratorMetadata": true,
-                    "legacyDecorator": true,
-                    "useDefineForClassFields": false,
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
                   },
                 },
               },
@@ -1024,9 +1008,8 @@ exports[`plugin-swc > should disable preset_env mode 1`] = `
                   },
                   "preserveAllComments": true,
                   "transform": {
-                    "decoratorMetadata": true,
-                    "legacyDecorator": true,
-                    "useDefineForClassFields": false,
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
                   },
                 },
               },
@@ -1066,9 +1049,8 @@ exports[`plugin-swc > should disable preset_env mode 1`] = `
                   },
                   "preserveAllComments": true,
                   "transform": {
-                    "decoratorMetadata": true,
-                    "legacyDecorator": true,
-                    "useDefineForClassFields": false,
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
                   },
                 },
               },
@@ -1121,7 +1103,7 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
               "loader": "builtin:swc-loader",
               "options": {
                 "env": {
-                  "coreJs": "3.36",
+                  "coreJs": "3.37",
                   "mode": "entry",
                   "targets": [
                     "chrome >= 87",
@@ -1140,9 +1122,8 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
                   },
                   "preserveAllComments": true,
                   "transform": {
-                    "decoratorMetadata": true,
-                    "legacyDecorator": true,
-                    "useDefineForClassFields": false,
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
                   },
                 },
               },
@@ -1167,7 +1148,7 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
               "loader": "builtin:swc-loader",
               "options": {
                 "env": {
-                  "coreJs": "3.36",
+                  "coreJs": "3.37",
                   "mode": "entry",
                   "targets": [
                     "chrome >= 87",
@@ -1186,9 +1167,8 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
                   },
                   "preserveAllComments": true,
                   "transform": {
-                    "decoratorMetadata": true,
-                    "legacyDecorator": true,
-                    "useDefineForClassFields": false,
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
                   },
                 },
               },
@@ -1240,7 +1220,7 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
               "loader": "builtin:swc-loader",
               "options": {
                 "env": {
-                  "coreJs": "3.36",
+                  "coreJs": "3.37",
                   "mode": "usage",
                   "shippedProposals": true,
                   "targets": [
@@ -1260,9 +1240,8 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
                   },
                   "preserveAllComments": true,
                   "transform": {
-                    "decoratorMetadata": true,
-                    "legacyDecorator": true,
-                    "useDefineForClassFields": false,
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
                   },
                 },
               },
@@ -1287,7 +1266,7 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
               "loader": "builtin:swc-loader",
               "options": {
                 "env": {
-                  "coreJs": "3.36",
+                  "coreJs": "3.37",
                   "mode": "usage",
                   "shippedProposals": true,
                   "targets": [
@@ -1307,9 +1286,8 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
                   },
                   "preserveAllComments": true,
                   "transform": {
-                    "decoratorMetadata": true,
-                    "legacyDecorator": true,
-                    "useDefineForClassFields": false,
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
                   },
                 },
               },
@@ -1362,7 +1340,7 @@ exports[`plugin-swc > should has correct core-js 1`] = `
               "loader": "builtin:swc-loader",
               "options": {
                 "env": {
-                  "coreJs": "3.36",
+                  "coreJs": "3.37",
                   "mode": "entry",
                   "targets": [
                     "chrome >= 87",
@@ -1381,9 +1359,8 @@ exports[`plugin-swc > should has correct core-js 1`] = `
                   },
                   "preserveAllComments": true,
                   "transform": {
-                    "decoratorMetadata": true,
-                    "legacyDecorator": true,
-                    "useDefineForClassFields": false,
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
                   },
                 },
               },
@@ -1408,7 +1385,7 @@ exports[`plugin-swc > should has correct core-js 1`] = `
               "loader": "builtin:swc-loader",
               "options": {
                 "env": {
-                  "coreJs": "3.36",
+                  "coreJs": "3.37",
                   "mode": "entry",
                   "targets": [
                     "chrome >= 87",
@@ -1427,9 +1404,8 @@ exports[`plugin-swc > should has correct core-js 1`] = `
                   },
                   "preserveAllComments": true,
                   "transform": {
-                    "decoratorMetadata": true,
-                    "legacyDecorator": true,
-                    "useDefineForClassFields": false,
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
                   },
                 },
               },
@@ -1490,9 +1466,8 @@ exports[`plugin-swc > should has correct core-js 2`] = `
                   },
                   "preserveAllComments": true,
                   "transform": {
-                    "decoratorMetadata": true,
-                    "legacyDecorator": true,
-                    "useDefineForClassFields": false,
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
                   },
                 },
               },
@@ -1528,9 +1503,8 @@ exports[`plugin-swc > should has correct core-js 2`] = `
                   },
                   "preserveAllComments": true,
                   "transform": {
-                    "decoratorMetadata": true,
-                    "legacyDecorator": true,
-                    "useDefineForClassFields": false,
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
                   },
                 },
               },

@@ -29,10 +29,10 @@
   "dependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/shared": "workspace:*",
-    "copy-webpack-plugin": "9.1.0",
+    "copy-webpack-plugin": "11.0.0",
     "mini-css-extract-plugin": "2.9.0",
     "tsconfig-paths-webpack-plugin": "4.1.0",
-    "webpack": "^5.92.0"
+    "webpack": "^5.92.1"
   },
   "devDependencies": {
     "@scripts/test-helper": "workspace:*",
@@ -40,7 +40,7 @@
     "ansi-escapes": "4.3.2",
     "cli-truncate": "2.1.0",
     "patch-console": "1.0.0",
-    "typescript": "^5.5.0"
+    "typescript": "^5.5.2"
   },
   "publishConfig": {
     "access": "public",

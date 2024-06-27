@@ -1,7 +1,11 @@
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
-import type { ChainIdentifier } from '../chain';
-import type { RspackChain } from '../chain';
-import type { HtmlBasicTag, RsbuildConfig } from './config';
+import type { ChainIdentifier, RspackChain } from '..';
+import type {
+  EnvironmentConfig,
+  HtmlBasicTag,
+  MergedEnvironmentConfig,
+  RsbuildConfig,
+} from './config';
 import type { RsbuildTarget } from './rsbuild';
 import type { Rspack, RspackConfig } from './rspack';
 import type { MultiStats, Stats } from './stats';
@@ -87,10 +91,25 @@ export type ModifyRsbuildConfigUtils = {
   mergeRsbuildConfig: (...configs: RsbuildConfig[]) => RsbuildConfig;
 };
 
+export type ModifyEnvironmentConfigUtils = {
+  /** environment name. */
+  name: string;
+  /** Merge multiple Rsbuild environment config objects into one. */
+  mergeEnvironmentConfig: (
+    config: MergedEnvironmentConfig,
+    ...configs: EnvironmentConfig[]
+  ) => MergedEnvironmentConfig;
+};
+
 export type ModifyRsbuildConfigFn = (
   config: RsbuildConfig,
   utils: ModifyRsbuildConfigUtils,
 ) => MaybePromise<RsbuildConfig | void>;
+
+export type ModifyEnvironmentConfigFn = (
+  config: MergedEnvironmentConfig,
+  utils: ModifyEnvironmentConfigUtils,
+) => MaybePromise<MergedEnvironmentConfig | void>;
 
 export type ModifyChainUtils = {
   env: NodeEnv;

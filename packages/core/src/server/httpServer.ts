@@ -1,3 +1,5 @@
+import type { Server } from 'node:http';
+import type { Http2SecureServer } from 'node:http2';
 import type { ServerConfig } from '@rsbuild/shared';
 import type Connect from 'connect';
 
@@ -7,7 +9,7 @@ export const createHttpServer = async ({
 }: {
   serverConfig: ServerConfig;
   middlewares: Connect.Server;
-}) => {
+}): Promise<Http2SecureServer | Server> => {
   if (serverConfig.https) {
     // http-proxy does not supports http2
     if (serverConfig.proxy) {

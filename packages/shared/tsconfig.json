@@ -5,7 +5,8 @@
     "declarationDir": "./dist-types",
     "baseUrl": "./",
     "rootDir": "src",
-    "composite": true
+    "composite": true,
+    "isolatedDeclarations": true
   },
   "include": ["src"]
 }

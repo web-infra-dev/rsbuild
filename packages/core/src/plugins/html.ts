@@ -5,7 +5,6 @@ import {
   castArray,
   color,
   deepmerge,
-  isPlainObject,
 } from '@rsbuild/shared';
 import type {
   HTMLPluginOptions,
@@ -16,7 +15,12 @@ import type {
 } from '@rsbuild/shared';
 import type { EntryDescription } from '@rspack/core';
 import { STATIC_PATH } from '../constants';
-import { getPublicPathFromChain, isFileExists, isURL } from '../helpers';
+import {
+  getPublicPathFromChain,
+  isFileExists,
+  isPlainObject,
+  isURL,
+} from '../helpers';
 import {
   reduceConfigsMergeContext,
   reduceConfigsWithContext,
@@ -67,7 +71,7 @@ function getTerserMinifyOptions(config: NormalizedEnvironmentConfig) {
   return finalOptions;
 }
 
-export async function getHtmlMinifyOptions(
+async function getHtmlMinifyOptions(
   isProd: boolean,
   config: NormalizedEnvironmentConfig,
 ) {
@@ -101,10 +105,7 @@ export async function getHtmlMinifyOptions(
     : htmlMinifyDefaultOptions;
 }
 
-export function getTitle(
-  entryName: string,
-  config: NormalizedEnvironmentConfig,
-) {
+function getTitle(entryName: string, config: NormalizedEnvironmentConfig) {
   return reduceConfigsMergeContext({
     initial: '',
     config: config.html.title,
@@ -112,10 +113,7 @@ export function getTitle(
   });
 }
 
-export function getInject(
-  entryName: string,
-  config: NormalizedEnvironmentConfig,
-) {
+function getInject(entryName: string, config: NormalizedEnvironmentConfig) {
   return reduceConfigsMergeContext({
     initial: 'head',
     config: config.html.inject,
@@ -168,7 +166,7 @@ export async function getTemplate(
   };
 }
 
-export function getFavicon(
+function getFavicon(
   entryName: string,
   config: {
     html: HtmlConfig;
@@ -181,7 +179,7 @@ export function getFavicon(
   });
 }
 
-export function getMetaTags(
+function getMetaTags(
   entryName: string,
   config: { html: HtmlConfig },
   templateContent?: string,

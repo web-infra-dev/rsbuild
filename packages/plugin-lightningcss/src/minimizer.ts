@@ -23,7 +23,7 @@ export class LightningCSSMinifyPlugin {
     this.options = opts;
   }
 
-  apply(compiler: Rspack.Compiler) {
+  apply(compiler: Rspack.Compiler): void {
     compiler.hooks.compilation.tap(PLUGIN_NAME, (compilation) => {
       compilation.hooks.processAssets.tapPromise(
         {

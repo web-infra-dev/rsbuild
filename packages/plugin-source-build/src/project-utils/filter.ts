@@ -1,4 +1,4 @@
-import type { Project } from '../project/project';
+import type { Project } from '../project';
 import type { ExportsConfig } from '../types/packageJson';
 
 export type Filter = FilterFunction;
@@ -10,14 +10,15 @@ function hasExportsSourceField(
   exportsConfig: ExportsConfig,
   sourceField: string,
 ) {
-  return Object.values(exportsConfig).some(
-    (moduleRules) =>
-      typeof moduleRules === 'object' &&
-      typeof moduleRules[sourceField] === 'string',
+  return (
+    typeof exportsConfig[sourceField] === 'string' ||
+    Object.values(exportsConfig).some(
+      (moduleRules) =>
+        typeof moduleRules === 'object' &&
+        typeof moduleRules[sourceField] === 'string',
+    )
   );
 }
-
-export const defaultFilter: FilterFunction = (projects) => projects;
 
 export const filterByField =
   (fieldName: string, checkExports?: boolean): FilterFunction =>

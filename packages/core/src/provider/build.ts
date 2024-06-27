@@ -14,7 +14,7 @@ import { type InitConfigsOptions, initConfigs } from './initConfigs';
 export const build = async (
   initOptions: InitConfigsOptions,
   { mode = 'production', watch, compiler: customCompiler }: BuildOptions = {},
-) => {
+): Promise<void> => {
   if (!getNodeEnv()) {
     setNodeEnv(mode);
   }

@@ -4,11 +4,15 @@ import json5 from 'json5';
 import { RUSH_JSON_FILE } from './constants';
 import type { INodePackageJson, IRushConfig } from './types';
 
-export const readPackageJson = async (pkgJsonFilePath: string) => {
+export const readPackageJson = async (
+  pkgJsonFilePath: string,
+): Promise<INodePackageJson> => {
   return readJson<INodePackageJson>(pkgJsonFilePath);
 };
 
-export const readRushJson = async (rushJsonFilePath: string) => {
+export const readRushJson = async (
+  rushJsonFilePath: string,
+): Promise<IRushConfig> => {
   const rushJson = readJson<IRushConfig>(
     rushJsonFilePath.includes(RUSH_JSON_FILE)
       ? rushJsonFilePath
@@ -24,7 +28,7 @@ async function pathExists(path: string) {
     .catch(() => false);
 }
 
-export const readJson = async <T>(jsonFileAbsPath: string) => {
+export const readJson = async <T>(jsonFileAbsPath: string): Promise<T> => {
   if (!(await pathExists(jsonFileAbsPath))) {
     return {} as T;
   }

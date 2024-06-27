@@ -38,7 +38,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core-canary/dist/builtin-plugin/css-extract/loader.js",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
@@ -111,7 +111,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -131,9 +131,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -158,7 +157,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -178,9 +177,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -438,7 +436,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       ".mjs",
       ".json",
     ],
-    "tsConfigPath": "<ROOT>/packages/core/tests/tsconfig.json",
+    "tsConfig": {
+      "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
+    },
   },
   "target": [
     "web",
@@ -485,7 +485,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core-canary/dist/builtin-plugin/css-extract/loader.js",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
@@ -558,7 +558,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -578,9 +578,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -605,7 +604,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -625,9 +624,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -938,7 +936,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     },
     ProgressPlugin {
       "_options": {
-        "prefix": "Client",
+        "prefix": "web",
         "profile": false,
         "progressChars": "━━",
         "template": "● {prefix:.bold} {bar:25.green/white.dim} ({percent}%) {wide_msg:.dim}",
@@ -960,7 +958,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       ".mjs",
       ".json",
     ],
-    "tsConfigPath": "<ROOT>/packages/core/tests/tsconfig.json",
+    "tsConfig": {
+      "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
+    },
   },
   "target": [
     "web",
@@ -1059,9 +1059,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -1097,9 +1096,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -1247,7 +1245,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "library": {
       "type": "commonjs2",
     },
-    "path": "<ROOT>/packages/core/tests/dist/server",
+    "path": "<ROOT>/packages/core/tests/dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
@@ -1278,7 +1276,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       ".mjs",
       ".json",
     ],
-    "tsConfigPath": "<ROOT>/packages/core/tests/tsconfig.json",
+    "tsConfig": {
+      "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
+    },
   },
   "target": "node",
 }
@@ -1330,7 +1330,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core-canary/dist/builtin-plugin/css-extract/loader.js",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
@@ -1403,7 +1403,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -1423,9 +1423,8 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -1450,7 +1449,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "shippedProposals": true,
                 "targets": [
@@ -1470,9 +1469,8 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -1733,7 +1731,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
       ".mjs",
       ".json",
     ],
-    "tsConfigPath": "<ROOT>/packages/core/tests/tsconfig.json",
+    "tsConfig": {
+      "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
+    },
   },
   "target": [
     "web",

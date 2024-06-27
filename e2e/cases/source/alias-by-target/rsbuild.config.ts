@@ -23,6 +23,9 @@ export default defineConfig({
       },
       output: {
         target: 'node',
+        distPath: {
+          root: 'dist/server',
+        },
       },
     },
   },

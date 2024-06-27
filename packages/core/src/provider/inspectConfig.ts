@@ -42,7 +42,7 @@ export async function inspectConfig({
     pluginNames: pluginManager.getPlugins().map((p) => p.name),
   };
 
-  const rawRsbuildConfig = await stringifyConfig(
+  const rawRsbuildConfig = stringifyConfig(
     rsbuildDebugConfig,
     inspectOptions.verbose,
   );
@@ -50,11 +50,13 @@ export async function inspectConfig({
   const rawBundlerConfigs = await Promise.all(
     rspackConfigs.map(async (config, index) => ({
       name: config.name || String(index),
-      content: await stringifyConfig(config, inspectOptions.verbose),
+      content: stringifyConfig(config, inspectOptions.verbose),
     })),
   );
 
-  let outputPath = inspectOptions.outputPath || context.distPath;
+  let outputPath = inspectOptions.outputPath
+    ? join(context.distPath, inspectOptions.outputPath)
+    : context.distPath;
   if (!isAbsolute(outputPath)) {
     outputPath = join(context.rootPath, outputPath);
   }

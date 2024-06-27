@@ -3,10 +3,10 @@ import {
   type HTMLPluginOptions,
   type NormalizedEnvironmentConfig,
   deepmerge,
-  isObject,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import type { SwcJsMinimizerRspackPluginOptions } from '@rspack/core';
+import { isObject } from '../helpers';
 import type { RsbuildPlugin } from '../types';
 
 export const getSwcMinimizerOptions = (

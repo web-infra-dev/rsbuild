@@ -1,15 +1,14 @@
-import {
-  type HtmlBasicTag,
-  type HtmlTag,
-  type HtmlTagDescriptor,
-  type HtmlTagUtils,
-  type ModifyHTMLTagsFn,
-  isFunction,
+import type {
+  HtmlBasicTag,
+  HtmlTag,
+  HtmlTagDescriptor,
+  HtmlTagUtils,
+  ModifyHTMLTagsFn,
 } from '@rsbuild/shared';
 import type { Compilation, Compiler } from '@rspack/core';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import type { HtmlTagObject } from 'html-webpack-plugin';
-import { ensureAssetPrefix, partition } from '../helpers';
+import { ensureAssetPrefix, isFunction, partition } from '../helpers';
 import { getHTMLPlugin } from '../pluginHelper';
 
 export type TagConfig = {
@@ -20,7 +19,7 @@ export type TagConfig = {
 };
 
 /** @see {@link https://developer.mozilla.org/en-US/docs/Glossary/Void_element} */
-export const VOID_TAGS = [
+const VOID_TAGS = [
   'area',
   'base',
   'br',
@@ -39,7 +38,7 @@ export const VOID_TAGS = [
 ];
 
 /** @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/head#see_also} */
-export const HEAD_TAGS = [
+const HEAD_TAGS = [
   'title',
   'base',
   'link',
@@ -253,7 +252,7 @@ export class HtmlBasicPlugin {
     this.modifyTagsFn = modifyTagsFn;
   }
 
-  apply(compiler: Compiler) {
+  apply(compiler: Compiler): void {
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
       getHTMLPlugin()
         .getHooks(compilation)

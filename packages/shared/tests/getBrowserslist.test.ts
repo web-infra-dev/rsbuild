@@ -1,4 +1,4 @@
-import { browserslistToESVersion } from '../src/getBrowserslist';
+import { browserslistToESVersion } from '../src';
 
 describe('browserslistToESVersion', () => {
   test('should get ecma version correctly', () => {

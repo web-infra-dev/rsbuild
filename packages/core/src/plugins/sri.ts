@@ -147,7 +147,7 @@ export const pluginSri = (): RsbuildPlugin => ({
         this.algorithm = algorithm;
       }
 
-      apply(compiler: Rspack.Compiler) {
+      apply(compiler: Rspack.Compiler): void {
         compiler.hooks.compilation.tap(
           'SriReplaceIntegrityPlugin',
           (compilation) => {

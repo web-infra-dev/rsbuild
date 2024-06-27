@@ -12,17 +12,14 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import type { Rspack } from '@rsbuild/core';
+import type { CSSModules, Rspack } from '@rsbuild/core';
 import { NODE_MODULES_REGEX } from '@rsbuild/shared';
 import LineDiff from '../compiled/line-diff/index.js';
 
 export type CssLoaderModules =
   | boolean
   | string
-  | {
-      auto: boolean | RegExp | ((filename: string) => boolean);
-      namedExport: boolean;
-    };
+  | Required<Pick<CSSModules, 'auto' | 'namedExport'>>;
 
 const isInNodeModules = (path: string) => NODE_MODULES_REGEX.test(path);
 
@@ -33,7 +30,17 @@ const getNoDeclarationFileError = ({ filename }: { filename: string }) =>
     `Generated type declaration does not exist. Run Rsbuild and commit the type declaration for '${filename}'`,
   );
 
-export const isCSSModules = (filename: string, modules: CssLoaderModules) => {
+export const isCSSModules = ({
+  resourcePath,
+  resourceQuery,
+  resourceFragment,
+  modules,
+}: {
+  resourcePath: string;
+  resourceQuery: string;
+  resourceFragment: string;
+  modules: CssLoaderModules;
+}): boolean => {
   if (typeof modules === 'boolean') {
     return modules;
   }
@@ -48,13 +55,13 @@ export const isCSSModules = (filename: string, modules: CssLoaderModules) => {
   const { auto } = modules;
 
   if (typeof auto === 'boolean') {
-    return auto && CSS_MODULES_REGEX.test(filename);
+    return auto && CSS_MODULES_REGEX.test(resourcePath);
   }
   if (auto instanceof RegExp) {
-    return auto.test(filename);
+    return auto.test(resourcePath);
   }
   if (typeof auto === 'function') {
-    return auto(filename);
+    return auto(resourcePath, resourceQuery, resourceFragment);
   }
   return true;
 };
@@ -85,7 +92,7 @@ const getTypeMismatchError = ({
   );
 };
 
-export function wrapQuotes(key: string) {
+export function wrapQuotes(key: string): string {
   // Check if key is a valid identifier
   const isValidIdentifier = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(key);
   if (isValidIdentifier) {
@@ -135,7 +142,11 @@ const validModes = ['emit', 'verify'];
 
 const isFileNotFound = (err?: { code: string }) => err && err.code === 'ENOENT';
 
-const makeDoneHandlers = (callback: any, content: string, rest: any[]) => ({
+const makeDoneHandlers = (
+  callback: (...args: any[]) => void,
+  content: string,
+  rest: any[],
+) => ({
   failed: (e: Error) => callback(e),
   success: () => callback(null, content, ...rest),
 });
@@ -203,21 +214,26 @@ export default function (
   }>,
   content: string,
   ...rest: any[]
-) {
+): void {
   const { failed, success } = makeDoneHandlers(this.async(), content, rest);
 
-  const filename = this.resourcePath;
+  const { resourcePath, resourceQuery, resourceFragment } = this;
   const { mode = 'emit', modules = true } = this.getOptions() || {};
 
   if (!validModes.includes(mode)) {
-    return failed(new Error(`Invalid mode option: ${mode}`));
+    failed(new Error(`Invalid mode option: ${mode}`));
+    return;
   }
 
-  if (!isCSSModules(filename, modules) || isInNodeModules(filename)) {
-    return success();
+  if (
+    !isCSSModules({ resourcePath, resourceQuery, resourceFragment, modules }) ||
+    isInNodeModules(resourcePath)
+  ) {
+    success();
+    return;
   }
 
-  const cssModuleInterfaceFilename = filenameToTypingsFilename(filename);
+  const cssModuleInterfaceFilename = filenameToTypingsFilename(resourcePath);
   const { read, write } = makeFileHandlers(cssModuleInterfaceFilename);
 
   const namedExport = isNamedExport(modules);

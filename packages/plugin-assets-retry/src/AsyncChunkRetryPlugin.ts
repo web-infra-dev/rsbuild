@@ -58,7 +58,7 @@ class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
     ]);
   }
 
-  getRawRuntimeRetryCode() {
+  getRawRuntimeRetryCode(): string {
     const { RuntimeGlobals } = rspack;
     const filename = 'asyncChunkRetry';
     const runtimeFilePath = path.join(
@@ -83,7 +83,7 @@ class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
       .replaceAll('__RETRY_OPTIONS__', serialize(this.runtimeOptions));
   }
 
-  apply(compiler: Rspack.Compiler) {
+  apply(compiler: Rspack.Compiler): void {
     compiler.hooks.thisCompilation.tap(this.name, (compilation) => {
       compilation.hooks.runtimeModule.tap(this.name, (module) => {
         const { isRspack } = this.options;

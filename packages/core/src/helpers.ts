@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path, { posix } from 'node:path';
 import {
-  DEFAULT_ASSET_PREFIX,
   type FilenameConfig,
   type MultiStats,
   type NodeEnv,
@@ -21,17 +20,29 @@ import type {
   MultiCompiler as WebpackMultiCompiler,
 } from 'webpack';
 import { formatStatsMessages } from './client/format';
-import { COMPILED_PATH } from './constants';
+import { DEFAULT_ASSET_PREFIX } from './constants';
 import { logger } from './logger';
 
 export const rspackMinVersion = '0.7.0';
 
 export const getNodeEnv = () => process.env.NODE_ENV as NodeEnv;
-export const setNodeEnv = (env: NodeEnv) => {
+export const setNodeEnv = (env: NodeEnv): void => {
   process.env.NODE_ENV = env;
 };
 export const isDev = (): boolean => getNodeEnv() === 'development';
 export const isProd = (): boolean => getNodeEnv() === 'production';
+
+export const isNil = (o: unknown): o is undefined | null =>
+  o === undefined || o === null;
+
+export const isFunction = (func: unknown): func is (...args: any[]) => any =>
+  typeof func === 'function';
+
+export const isObject = (obj: unknown): obj is Record<string, any> =>
+  obj !== null && typeof obj === 'object';
+
+export const isPlainObject = (obj: unknown): obj is Record<string, any> =>
+  isObject(obj) && Object.prototype.toString.call(obj) === '[object Object]';
 
 const compareSemver = (version1: string, version2: string) => {
   const parts1 = version1.split('.').map(Number);
@@ -52,7 +63,9 @@ const compareSemver = (version1: string, version2: string) => {
   return 0;
 };
 
-export const isSatisfyRspackVersion = async (originalVersion: string) => {
+export const isSatisfyRspackVersion = async (
+  originalVersion: string,
+): Promise<boolean> => {
   let version = originalVersion;
 
   // The nightly version of rspack is to append `-canary-abc` to the current version
@@ -67,9 +80,6 @@ export const isSatisfyRspackVersion = async (originalVersion: string) => {
   // ignore other unstable versions
   return true;
 };
-
-export const getCompiledPath = (packageName: string) =>
-  path.join(COMPILED_PATH, packageName);
 
 /**
  * Add node polyfill tip when failed to resolve node built-in modules.
@@ -159,7 +169,9 @@ function formatErrorMessage(errors: string[]) {
   return `${title}\n${tip}\n${text}`;
 }
 
-export const getAllStatsErrors = (statsData: StatsCompilation) => {
+export const getAllStatsErrors = (
+  statsData: StatsCompilation,
+): Rspack.StatsError[] | undefined => {
   // stats error + childCompiler error
   // only append child errors when stats error does not exist, because some errors will exist in both stats and childCompiler
   if (statsData.errorsCount && statsData.errors?.length === 0) {
@@ -172,7 +184,9 @@ export const getAllStatsErrors = (statsData: StatsCompilation) => {
   return statsData.errors;
 };
 
-export const getAllStatsWarnings = (statsData: StatsCompilation) => {
+export const getAllStatsWarnings = (
+  statsData: StatsCompilation,
+): Rspack.StatsError[] | undefined => {
   if (statsData.warningsCount && statsData.warnings?.length === 0) {
     return statsData.children?.reduce<StatsError[]>(
       (warnings, curr) => warnings.concat(curr.warnings || []),
@@ -200,7 +214,10 @@ export function getStatsOptions(
 export function formatStats(
   stats: Stats | MultiStats,
   options: StatsValue = {},
-) {
+): {
+  message?: string;
+  level?: string;
+} {
   const statsData = stats.toJson(
     typeof options === 'object'
       ? {
@@ -244,7 +261,10 @@ export const removeTailingSlash = (s: string): string => s.replace(/\/+$/, '');
 export const addTrailingSlash = (s: string): string =>
   s.endsWith('/') ? s : `${s}/`;
 
-export const formatPublicPath = (publicPath: string, withSlash = true) => {
+export const formatPublicPath = (
+  publicPath: string,
+  withSlash = true,
+): string => {
   // 'auto' is a magic value in Rspack and we should not add trailing slash
   if (publicPath === 'auto') {
     return publicPath;
@@ -258,7 +278,7 @@ export const formatPublicPath = (publicPath: string, withSlash = true) => {
 export const getPublicPathFromChain = (
   chain: RspackChain,
   withSlash = true,
-) => {
+): string => {
   const publicPath = chain.output.get('publicPath');
 
   if (typeof publicPath === 'string') {
@@ -268,16 +288,24 @@ export const getPublicPathFromChain = (
   return formatPublicPath(DEFAULT_ASSET_PREFIX, withSlash);
 };
 
-/**
- * ensure absolute file path.
- * @param base - Base path to resolve relative from.
- * @param filePath - Absolute or relative file path.
- * @returns Resolved absolute file path.
- */
-export const ensureAbsolutePath = (base: string, filePath: string): string =>
-  path.isAbsolute(filePath) ? filePath : path.resolve(base, filePath);
+export const getPublicPathFromCompiler = (
+  compiler: Rspack.Compiler,
+): string => {
+  const { publicPath } = compiler.options.output;
 
-export const isFileSync = (filePath: string) => {
+  if (typeof publicPath === 'string') {
+    // 'auto' is a magic value in Rspack and behave like `publicPath: ""`
+    if (publicPath === 'auto') {
+      return '';
+    }
+    return publicPath.endsWith('/') ? publicPath : `${publicPath}/`;
+  }
+
+  // publicPath function is not supported yet, fallback to default value
+  return DEFAULT_ASSET_PREFIX;
+};
+
+export const isFileSync = (filePath: string): boolean | undefined => {
   try {
     return fs.statSync(filePath, { throwIfNoEntry: false })?.isFile();
   } catch (_) {
@@ -285,7 +313,7 @@ export const isFileSync = (filePath: string) => {
   }
 };
 
-export function isEmptyDir(path: string) {
+export function isEmptyDir(path: string): boolean {
   const files = fs.readdirSync(path);
   return files.length === 0 || (files.length === 1 && files[0] === '.git');
 }
@@ -304,21 +332,21 @@ export const findExists = (files: string[]): string | false => {
   return false;
 };
 
-export async function pathExists(path: string) {
+export async function pathExists(path: string): Promise<boolean> {
   return fs.promises
     .access(path)
     .then(() => true)
     .catch(() => false);
 }
 
-export async function isFileExists(file: string) {
+export async function isFileExists(file: string): Promise<boolean> {
   return fs.promises
     .access(file, fs.constants.F_OK)
     .then(() => true)
     .catch(() => false);
 }
 
-export async function emptyDir(dir: string) {
+export async function emptyDir(dir: string): Promise<void> {
   if (!(await pathExists(dir))) {
     return;
   }
@@ -343,7 +371,7 @@ const urlJoin = (base: string, path: string) => {
 };
 
 // Can be replaced with URL.canParse when we drop support for Node.js 16
-export const canParse = (url: string) => {
+export const canParse = (url: string): boolean => {
   try {
     new URL(url);
     return true;
@@ -352,7 +380,10 @@ export const canParse = (url: string) => {
   }
 };
 
-export const ensureAssetPrefix = (url: string, assetPrefix: string) => {
+export const ensureAssetPrefix = (
+  url: string,
+  assetPrefix: string = DEFAULT_ASSET_PREFIX,
+): string => {
   // The use of an absolute URL without a protocol is technically legal,
   // however it cannot be parsed as a URL instance, just return it.
   // e.g. str is //example.com/foo.js
@@ -364,6 +395,11 @@ export const ensureAssetPrefix = (url: string, assetPrefix: string) => {
   // Only absolute url with hostname & protocol can be parsed into URL instance.
   // e.g. str is https://example.com/foo.js
   if (canParse(url)) {
+    return url;
+  }
+
+  // 'auto' is a magic value in Rspack and behave like `publicPath: ""`
+  if (assetPrefix === 'auto') {
     return url;
   }
 
@@ -442,16 +478,16 @@ export function partition<T>(
 
 export const applyToCompiler = (
   compiler: Rspack.Compiler | Rspack.MultiCompiler,
-  apply: (c: Rspack.Compiler) => void,
-) => {
+  apply: (c: Rspack.Compiler, index: number) => void,
+): void => {
   if (isMultiCompiler(compiler)) {
     compiler.compilers.forEach(apply);
   } else {
-    apply(compiler);
+    apply(compiler, 0);
   }
 };
 
-export const upperFirst = (str: string) =>
+export const upperFirst = (str: string): string =>
   str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
 
 export function debounce<T extends (...args: any[]) => void>(
@@ -472,7 +508,7 @@ export function debounce<T extends (...args: any[]) => void>(
 }
 
 // Determine if the string is a URL
-export const isURL = (str: string) =>
+export const isURL = (str: string): boolean =>
   str.startsWith('http') || str.startsWith('//:');
 
 export const createVirtualModule = (content: string) =>
@@ -481,7 +517,7 @@ export const createVirtualModule = (content: string) =>
 export const isRegExp = (obj: any): obj is RegExp =>
   Object.prototype.toString.call(obj) === '[object RegExp]';
 
-export function isWebTarget(target: RsbuildTarget | RsbuildTarget[]) {
+export function isWebTarget(target: RsbuildTarget | RsbuildTarget[]): boolean {
   const targets = castArray(target);
   return targets.includes('web') || target.includes('web-worker');
 }
@@ -499,7 +535,7 @@ export const onCompileDone = (
   compiler: Rspack.Compiler | Rspack.MultiCompiler,
   onDone: (stats: Stats | MultiStats) => Promise<void>,
   MultiStatsCtor: new (stats: Stats[]) => MultiStats,
-) => {
+): void => {
   // The MultiCompiler of Rspack does not supports `done.tapPromise`,
   // so we need to use the `done` hook of `MultiCompiler.compilers` to implement it.
   if (isMultiCompiler(compiler)) {
@@ -537,7 +573,10 @@ export const onCompileDone = (
   }
 };
 
-export function pick<T, U extends keyof T>(obj: T, keys: ReadonlyArray<U>) {
+export function pick<T, U extends keyof T>(
+  obj: T,
+  keys: ReadonlyArray<U>,
+): Pick<T, U> {
   return keys.reduce(
     (ret, key) => {
       if (obj[key] !== undefined) {
@@ -552,7 +591,7 @@ export function pick<T, U extends keyof T>(obj: T, keys: ReadonlyArray<U>) {
 export const camelCase = (input: string): string =>
   input.replace(/[-_](\w)/g, (_, c) => c.toUpperCase());
 
-export const prettyTime = (seconds: number) => {
+export const prettyTime = (seconds: number): string => {
   const format = (time: string) => color.bold(time);
 
   if (seconds < 10) {

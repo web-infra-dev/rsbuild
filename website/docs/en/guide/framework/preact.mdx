@@ -1,0 +1,35 @@
+# Preact
+
+In this document, you will learn how to build a Preact application using Rsbuild.
+
+## Create Preact Project
+
+You can use `create-rsbuild` to create a project with Rsbuild + Preact. Just execute the following command:
+
+import { PackageManagerTabs } from '@theme';
+
+<PackageManagerTabs
+  command={{
+    npm: 'npm create rsbuild@latest',
+    yarn: 'yarn create rsbuild',
+    pnpm: 'pnpm create rsbuild@latest',
+    bun: 'bun create rsbuild@latest',
+  }}
+/>
+
+Then select `Preact` when prompted to "Select framework".
+
+## Use Preact in an existing project
+
+To compile Preact, you need to register the Rsbuild [Preact Plugin](/plugins/list/plugin-preact). The plugin will automatically add the necessary configuration for Preact builds.
+
+For example, register in `rsbuild.config.ts`:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginPreact } from '@rsbuild/plugin-preact';
+
+export default defineConfig({
+  plugins: [pluginPreact()],
+});
+```

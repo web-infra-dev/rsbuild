@@ -11,14 +11,14 @@ describe('plugin-output', () => {
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
-  it('should allow to custom server directory with distPath.server', async () => {
+  it('should allow to custom server directory with distPath.root', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
       rsbuildConfig: {
         output: {
           target: 'node',
           distPath: {
-            server: 'server',
+            root: 'dist/server',
           },
         },
       },
@@ -100,7 +100,7 @@ describe('plugin-output', () => {
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
-  it('should allow to use copy plugin with multiply config', async () => {
+  it('should allow to use copy plugin with multiple config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
       rsbuildConfig: {

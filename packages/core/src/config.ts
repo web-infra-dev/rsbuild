@@ -1,11 +1,6 @@
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
-import {
-  DEFAULT_ASSET_PREFIX,
-  RspackChain,
-  color,
-  isObject,
-} from '@rsbuild/shared';
+import { RspackChain, color } from '@rsbuild/shared';
 import type {
   InspectConfigOptions,
   NormalizedConfig,
@@ -24,6 +19,7 @@ import type {
 } from '@rsbuild/shared';
 import {
   CSS_DIST_DIR,
+  DEFAULT_ASSET_PREFIX,
   DEFAULT_DATA_URL_SIZE,
   DEFAULT_DEV_HOST,
   DEFAULT_MOUNT_ID,
@@ -35,7 +31,6 @@ import {
   JS_DIST_DIR,
   MEDIA_DIST_DIR,
   ROOT_DIST_DIR,
-  SERVER_DIST_DIR,
   SVG_DIST_DIR,
   TS_CONFIG_FILE,
   WASM_DIST_DIR,
@@ -45,6 +40,7 @@ import {
   findExists,
   getNodeEnv,
   isFileExists,
+  isObject,
   upperFirst,
 } from './helpers';
 import { logger } from './logger';
@@ -82,7 +78,7 @@ const getDefaultSourceConfig = (): NormalizedSourceConfig => ({
   aliasStrategy: 'prefer-tsconfig',
   preEntry: [],
   decorators: {
-    version: 'legacy',
+    version: '2022-03',
   },
 });
 
@@ -138,7 +134,6 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
     wasm: WASM_DIST_DIR,
     image: IMAGE_DIST_DIR,
     media: MEDIA_DIST_DIR,
-    server: SERVER_DIST_DIR,
   },
   assetPrefix: DEFAULT_ASSET_PREFIX,
   filename: {},
@@ -208,7 +203,7 @@ export function getDefaultEntry(root: string): RsbuildEntry {
 export const withDefaultConfig = async (
   rootPath: string,
   config: RsbuildConfig,
-) => {
+): Promise<RsbuildConfig> => {
   const merged = mergeRsbuildConfig(createDefaultConfig(), config);
 
   merged.source ||= {};
@@ -297,7 +292,7 @@ const resolveConfigPath = (root: string, customConfig?: string) => {
   return null;
 };
 
-export async function watchFiles(files: string[]) {
+export async function watchFiles(files: string[]): Promise<void> {
   if (!files.length) {
     return;
   }
@@ -412,7 +407,7 @@ export async function outputInspectConfigFiles({
   inspectOptions: InspectConfigOptions & {
     outputPath: string;
   };
-}) {
+}): Promise<void> {
   const { outputPath } = inspectOptions;
 
   const files = [
@@ -460,7 +455,7 @@ export async function outputInspectConfigFiles({
   );
 }
 
-export async function stringifyConfig(config: unknown, verbose?: boolean) {
+export function stringifyConfig(config: unknown, verbose?: boolean): string {
   // webpackChain.toString can be used as a common stringify method
   const stringify = RspackChain.toString as (
     config: unknown,

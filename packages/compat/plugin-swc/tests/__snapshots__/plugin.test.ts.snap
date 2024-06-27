@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugin-swc > should apply multiply environment configs correctly 1`] = `
+exports[`plugin-swc > should apply multiple environment configs correctly 1`] = `
 [
   {
     "module": {
@@ -24,7 +24,7 @@ exports[`plugin-swc > should apply multiply environment configs correctly 1`] = 
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
                 "env": {
-                  "coreJs": "3.36",
+                  "coreJs": "3.37",
                   "mode": "usage",
                   "targets": [
                     "chrome >= 87",
@@ -83,7 +83,7 @@ exports[`plugin-swc > should apply multiply environment configs correctly 1`] = 
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
                 "env": {
-                  "coreJs": "3.36",
+                  "coreJs": "3.37",
                   "mode": "usage",
                   "targets": [
                     "chrome >= 87",
@@ -151,7 +151,7 @@ exports[`plugin-swc > should apply multiply environment configs correctly 1`] = 
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
                 "env": {
-                  "coreJs": "3.36",
+                  "coreJs": "3.37",
                   "mode": "usage",
                   "targets": [
                     "node >= 16",
@@ -208,7 +208,7 @@ exports[`plugin-swc > should apply multiply environment configs correctly 1`] = 
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
                 "env": {
-                  "coreJs": "3.36",
+                  "coreJs": "3.37",
                   "mode": "usage",
                   "targets": [
                     "node >= 16",
@@ -282,7 +282,7 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
             "options": {
               "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "targets": [
                   "chrome >= 87",
@@ -313,13 +313,12 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                   "react": {
                     "refresh": true,
                     "runtime": "classic",
                   },
-                  "useDefineForClassFields": false,
                 },
               },
             },
@@ -342,7 +341,7 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
             "options": {
               "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "targets": [
                   "chrome >= 87",
@@ -373,13 +372,12 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                   "react": {
                     "refresh": true,
                     "runtime": "classic",
                   },
-                  "useDefineForClassFields": false,
                 },
               },
             },
@@ -413,7 +411,7 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
-              "coreJs": "3.36",
+              "coreJs": "3.37",
               "mode": "usage",
               "targets": [
                 "chrome >= 87",
@@ -444,13 +442,12 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
               },
               "preserveAllComments": true,
               "transform": {
-                "decoratorMetadata": true,
-                "legacyDecorator": true,
+                "decoratorVersion": "2022-03",
+                "legacyDecorator": false,
                 "react": {
                   "refresh": false,
                   "runtime": "classic",
                 },
-                "useDefineForClassFields": false,
               },
             },
           },
@@ -473,7 +470,7 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
-              "coreJs": "3.36",
+              "coreJs": "3.37",
               "mode": "usage",
               "targets": [
                 "chrome >= 87",
@@ -504,13 +501,12 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
               },
               "preserveAllComments": true,
               "transform": {
-                "decoratorMetadata": true,
-                "legacyDecorator": true,
+                "decoratorVersion": "2022-03",
+                "legacyDecorator": false,
                 "react": {
                   "refresh": false,
                   "runtime": "classic",
                 },
-                "useDefineForClassFields": false,
               },
             },
           },
@@ -543,7 +539,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
-              "coreJs": "3.36",
+              "coreJs": "3.37",
               "mode": "usage",
               "targets": [
                 "node >= 16",
@@ -571,13 +567,12 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
               },
               "preserveAllComments": true,
               "transform": {
-                "decoratorMetadata": true,
-                "legacyDecorator": true,
+                "decoratorVersion": "2022-03",
+                "legacyDecorator": false,
                 "react": {
                   "refresh": false,
                   "runtime": "classic",
                 },
-                "useDefineForClassFields": false,
               },
             },
           },
@@ -600,7 +595,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
-              "coreJs": "3.36",
+              "coreJs": "3.37",
               "mode": "usage",
               "targets": [
                 "node >= 16",
@@ -628,13 +623,12 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
               },
               "preserveAllComments": true,
               "transform": {
-                "decoratorMetadata": true,
-                "legacyDecorator": true,
+                "decoratorVersion": "2022-03",
+                "legacyDecorator": false,
                 "react": {
                   "refresh": false,
                   "runtime": "classic",
                 },
-                "useDefineForClassFields": false,
               },
             },
           },
@@ -667,7 +661,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
-              "coreJs": "3.36",
+              "coreJs": "3.37",
               "mode": "usage",
               "targets": [
                 "chrome >= 87",
@@ -698,13 +692,12 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
               },
               "preserveAllComments": true,
               "transform": {
-                "decoratorMetadata": true,
-                "legacyDecorator": true,
+                "decoratorVersion": "2022-03",
+                "legacyDecorator": false,
                 "react": {
                   "refresh": true,
                   "runtime": "classic",
                 },
-                "useDefineForClassFields": false,
               },
             },
           },
@@ -727,7 +720,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
-              "coreJs": "3.36",
+              "coreJs": "3.37",
               "mode": "usage",
               "targets": [
                 "chrome >= 87",
@@ -758,13 +751,12 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
               },
               "preserveAllComments": true,
               "transform": {
-                "decoratorMetadata": true,
-                "legacyDecorator": true,
+                "decoratorVersion": "2022-03",
+                "legacyDecorator": false,
                 "react": {
                   "refresh": true,
                   "runtime": "classic",
                 },
-                "useDefineForClassFields": false,
               },
             },
           },
@@ -797,7 +789,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
-              "coreJs": "3.36",
+              "coreJs": "3.37",
               "mode": "usage",
               "targets": [
                 "chrome >= 87",
@@ -828,13 +820,12 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
               },
               "preserveAllComments": true,
               "transform": {
-                "decoratorMetadata": true,
-                "legacyDecorator": true,
+                "decoratorVersion": "2022-03",
+                "legacyDecorator": false,
                 "react": {
                   "refresh": false,
                   "runtime": "classic",
                 },
-                "useDefineForClassFields": false,
               },
             },
           },
@@ -857,7 +848,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
-              "coreJs": "3.36",
+              "coreJs": "3.37",
               "mode": "usage",
               "targets": [
                 "chrome >= 87",
@@ -888,13 +879,12 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
               },
               "preserveAllComments": true,
               "transform": {
-                "decoratorMetadata": true,
-                "legacyDecorator": true,
+                "decoratorVersion": "2022-03",
+                "legacyDecorator": false,
                 "react": {
                   "refresh": false,
                   "runtime": "classic",
                 },
-                "useDefineForClassFields": false,
               },
             },
           },
@@ -980,7 +970,7 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
         "options": {
           "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
           "env": {
-            "coreJs": "3.36",
+            "coreJs": "3.37",
             "mode": "usage",
             "targets": [
               "chrome >= 87",
@@ -1011,8 +1001,8 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
             },
             "preserveAllComments": true,
             "transform": {
-              "decoratorMetadata": true,
-              "legacyDecorator": true,
+              "decoratorVersion": "2022-03",
+              "legacyDecorator": false,
               "react": {
                 "refresh": true,
                 "runtime": "classic",
@@ -1032,7 +1022,7 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
         "options": {
           "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
           "env": {
-            "coreJs": "3.36",
+            "coreJs": "3.37",
             "mode": "usage",
             "targets": [
               "chrome >= 87",
@@ -1063,8 +1053,8 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
             },
             "preserveAllComments": true,
             "transform": {
-              "decoratorMetadata": true,
-              "legacyDecorator": true,
+              "decoratorVersion": "2022-03",
+              "legacyDecorator": false,
               "react": {
                 "refresh": true,
                 "runtime": "classic",
@@ -1092,7 +1082,7 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
         "options": {
           "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
           "env": {
-            "coreJs": "3.36",
+            "coreJs": "3.37",
             "mode": "usage",
             "targets": [
               "chrome >= 87",
@@ -1123,8 +1113,8 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
             },
             "preserveAllComments": true,
             "transform": {
-              "decoratorMetadata": true,
-              "legacyDecorator": true,
+              "decoratorVersion": "2022-03",
+              "legacyDecorator": false,
               "react": {
                 "refresh": true,
                 "runtime": "classic",
@@ -1188,7 +1178,7 @@ exports[`plugin-swc > should set swc-loader 1`] = `
             "options": {
               "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "targets": [
                   "chrome >= 87",
@@ -1219,13 +1209,12 @@ exports[`plugin-swc > should set swc-loader 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                   "react": {
                     "refresh": true,
                     "runtime": "classic",
                   },
-                  "useDefineForClassFields": false,
                 },
               },
             },
@@ -1248,7 +1237,7 @@ exports[`plugin-swc > should set swc-loader 1`] = `
             "options": {
               "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
               "env": {
-                "coreJs": "3.36",
+                "coreJs": "3.37",
                 "mode": "usage",
                 "targets": [
                   "chrome >= 87",
@@ -1279,13 +1268,12 @@ exports[`plugin-swc > should set swc-loader 1`] = `
                 },
                 "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                   "react": {
                     "refresh": true,
                     "runtime": "classic",
                   },
-                  "useDefineForClassFields": false,
                 },
               },
             },

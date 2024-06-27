@@ -81,10 +81,10 @@ export async function openBrowser(url: string): Promise<boolean> {
   }
 }
 
-export const replacePlaceholder = (url: string, port: number) =>
+export const replacePlaceholder = (url: string, port: number): string =>
   url.replace(/<port>/g, String(port));
 
-export function resolveUrl(str: string, base: string) {
+export function resolveUrl(str: string, base: string): string {
   if (canParse(str)) {
     return str;
   }

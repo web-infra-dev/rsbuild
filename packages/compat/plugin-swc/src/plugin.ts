@@ -1,10 +1,6 @@
 import path from 'node:path';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import {
-  DEFAULT_BROWSERSLIST,
-  SCRIPT_REGEX,
-  applyScriptCondition,
-} from '@rsbuild/shared';
+import { SCRIPT_REGEX, applyScriptCondition } from '@rsbuild/shared';
 import { SwcMinimizerPlugin } from './minimizer';
 import type {
   ObjPluginSwcOptions,
@@ -175,9 +171,6 @@ export function getDefaultSwcConfig(): TransformConfig {
       // Avoid the webpack magic comment to be removed
       // https://github.com/swc-project/swc/issues/6403
       preserveAllComments: true,
-    },
-    env: {
-      targets: DEFAULT_BROWSERSLIST.web.join(', '),
     },
   };
 }

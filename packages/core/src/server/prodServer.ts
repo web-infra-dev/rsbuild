@@ -13,8 +13,8 @@ import { logger } from '../logger';
 import type { InternalContext, NormalizedConfig } from '../types';
 import {
   type StartServerResult,
-  formatRoutes,
   getAddressUrls,
+  getRoutes,
   getServerConfig,
   printServerURLs,
 } from './helper';
@@ -44,7 +44,7 @@ export class RsbuildProdServer {
   }
 
   // Complete the preparation of services
-  public async onInit(app: Server | Http2SecureServer) {
+  public async onInit(app: Server | Http2SecureServer): Promise<void> {
     this.app = app;
 
     await this.applyDefaultMiddlewares();
@@ -140,14 +140,14 @@ export class RsbuildProdServer {
     });
   }
 
-  public close() {}
+  public close(): void {}
 }
 
 export async function startProdServer(
   context: InternalContext,
   config: NormalizedConfig,
   { getPortSilently }: PreviewServerOptions = {},
-) {
+): Promise<StartServerResult> {
   if (!getNodeEnv()) {
     setNodeEnv('production');
   }
@@ -189,14 +189,7 @@ export async function startProdServer(
         port,
       },
       async () => {
-        const routes = formatRoutes(
-          Object.values(context.environments).reduce(
-            (prev, context) => Object.assign(prev, context.htmlPaths),
-            {},
-          ),
-          config.output.distPath.html,
-          config.html.outputStructure,
-        );
+        const routes = getRoutes(context);
         await context.hooks.onAfterStartProdServer.call({
           port,
           routes,
