@@ -124,16 +124,27 @@ export function pluginSourceBuild(
       if (api.context.bundlerType === 'rspack') {
         api.modifyRspackConfig(async (config, { environment }) => {
           const { tsconfigPath } = api.context.environments[environment];
-
           if (!tsconfigPath) {
             return;
           }
 
           config.resolve ||= {};
+
+          const { tsConfig = { configFile: tsconfigPath } } = config.resolve;
+
+          const configObject =
+            typeof tsConfig === 'string' ? { configFile: tsConfig } : tsConfig;
+
+          const references = [
+            ...(await getReferences(tsconfigPath)),
+            ...(Array.isArray(configObject.references)
+              ? configObject.references
+              : []),
+          ];
+
           config.resolve.tsConfig = {
-            ...config.resolve.tsConfig,
-            configFile: tsconfigPath,
-            references: await getReferences(tsconfigPath),
+            configFile: configObject?.configFile || tsconfigPath,
+            references: references,
           };
         });
       } else {

@@ -66,7 +66,16 @@
     },
     "overrides": {
       "array.prototype.flat": "npm:@nolyfill/array.prototype.flat@1.0.28",
-      "esbuild": "~0.19.0"
+      "esbuild": "~0.19.0",
+      "@rspack/binding": "npm:@rspack/binding-canary@canary",
+      "@rspack/core": "npm:@rspack/core-canary@canary",
+      "@rspack/plugin-preact-refresh": "npm:@rspack/plugin-preact-refresh-canary@canary",
+      "@rspack/plugin-react-refresh": "npm:@rspack/plugin-react-refresh-canary@canary"
+    },
+    "peerDependencyRules": {
+      "allowAny": [
+        "@rspack/*"
+      ]
     }
   }
 }

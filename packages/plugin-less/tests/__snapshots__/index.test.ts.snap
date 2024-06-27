@@ -10,7 +10,7 @@ exports[`plugin-less > should add less-loader 1`] = `
     "test": /\\\\\\.less\\$/,
     "use": [
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core-canary/dist/builtin-plugin/css-extract/loader.js",
       },
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
@@ -163,7 +163,7 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
     "test": /\\\\\\.less\\$/,
     "use": [
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core-canary/dist/builtin-plugin/css-extract/loader.js",
       },
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
@@ -238,7 +238,7 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
     "test": /\\\\\\.less\\$/,
     "use": [
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core-canary/dist/builtin-plugin/css-extract/loader.js",
       },
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
