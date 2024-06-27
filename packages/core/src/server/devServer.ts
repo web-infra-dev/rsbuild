@@ -132,14 +132,14 @@ export async function createDevServer<
 
   let outputFileSystem: Rspack.OutputFileSystem = fs;
 
-  let _stats: Stats[];
+  let lastStats: Stats[];
 
   // should register onDevCompileDone hook before startCompile
   const waitFirstCompileDone = runCompile
     ? new Promise<void>((resolve) => {
         options.context.hooks.onDevCompileDone.tap(
           ({ stats, isFirstCompile }) => {
-            _stats = 'stats' in stats ? stats.stats : [stats];
+            lastStats = 'stats' in stats ? stats.stats : [stats];
 
             if (!isFirstCompile) {
               return;
@@ -226,8 +226,11 @@ export async function createDevServer<
         name,
         {
           getStats: async () => {
+            if (!runCompile) {
+              throw new Error("can't get stats info when runCompile is false");
+            }
             await waitFirstCompileDone;
-            return _stats[index];
+            return lastStats[index];
           },
         },
       ];
