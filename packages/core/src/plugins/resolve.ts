@@ -109,6 +109,11 @@ export const pluginResolve = (): RsbuildPlugin => ({
 
       if (tsconfigPath && config.source.aliasStrategy === 'prefer-tsconfig') {
         rspackConfig.resolve ||= {};
+
+        if (typeof rspackConfig.resolve.tsConfig === 'string') {
+          return;
+        }
+
         rspackConfig.resolve.tsConfig = {
           configFile: tsconfigPath,
           ...rspackConfig.resolve.tsConfig,
