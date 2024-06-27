@@ -1,8 +1,10 @@
 import fs from 'node:fs';
 import type {
   CreateDevServerOptions,
+  EnvironmentAPI,
   Rspack,
   StartDevServerOptions,
+  Stats,
 } from '@rsbuild/shared';
 import type Connect from 'connect';
 import { ROOT_DIST_DIR } from '../constants';
@@ -49,6 +51,9 @@ export type RsbuildDevServer = {
   }>;
 
   /** The following APIs will be used when you use a custom server */
+
+  /** The Rsbuild server environment API */
+  environments: EnvironmentAPI;
 
   /**
    * The resolved port.
@@ -127,6 +132,24 @@ export async function createDevServer<
 
   let outputFileSystem: Rspack.OutputFileSystem = fs;
 
+  let lastStats: Stats[];
+
+  // should register onDevCompileDone hook before startCompile
+  const waitFirstCompileDone = runCompile
+    ? new Promise<void>((resolve) => {
+        options.context.hooks.onDevCompileDone.tap(
+          ({ stats, isFirstCompile }) => {
+            lastStats = 'stats' in stats ? stats.stats : [stats];
+
+            if (!isFirstCompile) {
+              return;
+            }
+            resolve();
+          },
+        );
+      })
+    : Promise.resolve();
+
   const startCompile: () => Promise<
     RsbuildDevMiddlewareOptions['compileMiddlewareAPI']
   > = async () => {
@@ -197,11 +220,29 @@ export async function createDevServer<
     compileMiddlewareAPI,
   });
 
+  const environmentAPI = Object.fromEntries(
+    Object.keys(options.context.environments).map((name, index) => {
+      return [
+        name,
+        {
+          getStats: async () => {
+            if (!runCompile) {
+              throw new Error("can't get stats info when runCompile is false");
+            }
+            await waitFirstCompileDone;
+            return lastStats[index];
+          },
+        },
+      ];
+    }),
+  );
+
   const devMiddlewares = await getMiddlewares({
     pwd: options.context.rootPath,
     compileMiddlewareAPI,
     dev: devConfig,
     server: config.server,
+    environments: environmentAPI,
     output: {
       distPath: options.context.distPath || ROOT_DIST_DIR,
     },
@@ -223,6 +264,7 @@ export async function createDevServer<
     port,
     middlewares,
     outputFileSystem,
+    environments: environmentAPI,
     listen: async () => {
       const httpServer = await createHttpServer({
         serverConfig: config.server,

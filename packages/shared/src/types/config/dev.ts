@@ -1,6 +1,7 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { WatchOptions } from '../../../compiled/chokidar/index.js';
 import type { Rspack } from '../rspack';
+import type { Stats } from '../stats';
 
 export type ProgressBarConfig = {
   id?: string;
@@ -14,11 +15,18 @@ export type RequestHandler = (
   next: NextFunction,
 ) => void;
 
+export type EnvironmentAPI = {
+  [name: string]: {
+    getStats: () => Promise<Stats>;
+  };
+};
+
 export type ServerAPIs = {
   sockWrite: (
     type: string,
     data?: string | boolean | Record<string, any>,
   ) => void;
+  environments: EnvironmentAPI;
 };
 
 export type ClientConfig = {
