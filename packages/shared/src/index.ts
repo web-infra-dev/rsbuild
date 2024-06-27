@@ -285,7 +285,7 @@ export const CHAIN_ID = {
   MINIMIZER: {
     /** SwcJsMinimizerRspackPlugin */
     JS: 'js',
-    /** SwcCssMinimizerRspackPlugin */
+    /** LightningCssMinimizerRspackPlugin */
     CSS: 'css',
   },
   /** Predefined resolve plugins */

@@ -1,9 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { build, proxyConsole } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { build, proxyConsole, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
-test('should compile nested npm import correctly', async () => {
+rspackOnlyTest('should compile nested npm import correctly', async () => {
   const { restore, logs } = proxyConsole();
 
   fs.cpSync(
@@ -20,7 +20,7 @@ test('should compile nested npm import correctly', async () => {
   const cssFiles = Object.keys(files).find((file) => file.endsWith('.css'))!;
 
   expect(files[cssFiles]).toEqual(
-    '#b{color:yellow}#c{color:green}#a{font-size:10px}html{font-size:18px}',
+    '#b{color:#ff0}#c{color:green}#a{font-size:10px}html{font-size:18px}',
   );
 
   // there will be a deprecation log for `~`.

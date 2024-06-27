@@ -1,8 +1,8 @@
 import path from 'node:path';
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { build, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
-test('should emit multiple css files correctly', async () => {
+rspackOnlyTest('should emit multiple css files correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
@@ -28,6 +28,6 @@ test('should emit multiple css files correctly', async () => {
   )!;
 
   expect(files[entry1CSS]).toContain('#entry1{color:red}');
-  expect(files[entry2CSS]).toContain('#entry2{color:blue}');
+  expect(files[entry2CSS]).toContain('#entry2{color:#00f}');
   expect(files[entry3CSS]).toContain('#entry3{color:green}');
 });

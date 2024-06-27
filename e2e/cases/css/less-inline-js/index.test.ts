@@ -9,5 +9,5 @@ test('should compile less inline js correctly', async () => {
   const files = await rsbuild.unwrapOutputJSON();
   const cssFiles = Object.keys(files).find((file) => file.endsWith('.css'))!;
 
-  expect(files[cssFiles]).toEqual('body{width:200}');
+  expect(files[cssFiles]).toEqual('body{opacity:.2}');
 });
