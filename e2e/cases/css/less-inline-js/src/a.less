@@ -1,7 +1,7 @@
-@a: `function(width) {
-  return (width + 100);
+@a: `function(val) {
+  return (val + 0.1);
 }`;
 
 body {
-  width: `(@{a})(100)`;
+  opacity: `(@{a})(0.1)`;
 }

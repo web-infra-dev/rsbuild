@@ -21,7 +21,7 @@ rspackOnlyTest(
       files[Object.keys(files).find((file) => file.endsWith('.css'))!];
 
     expect(content).toMatch(
-      /\.classA-\w{6}{color:red}\.classB-\w{6}{color:blue}\.classC-\w{6}{color:yellow}/,
+      /\.classA-\w{6}{color:red}\.classB-\w{6}{color:#00f}\.classC-\w{6}{color:#ff0}/,
     );
 
     await gotoPage(page, rsbuild);
