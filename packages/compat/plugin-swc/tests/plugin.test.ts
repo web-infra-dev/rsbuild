@@ -29,7 +29,7 @@ describe('plugin-swc', () => {
     expect(config).toMatchSnapshot();
   });
 
-  it('should apply multiply environment configs correctly', async () => {
+  it('should apply multiple environment configs correctly', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSwc()],
       rsbuildConfig: {

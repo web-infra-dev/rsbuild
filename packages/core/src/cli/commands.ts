@@ -94,6 +94,7 @@ export function runCli(): void {
     .action(async (options: PreviewOptions) => {
       try {
         const rsbuild = await init({ cliOptions: options });
+        await rsbuild?.initConfigs();
 
         if (rsbuild) {
           const { distPath } = rsbuild.context;

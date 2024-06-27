@@ -33,6 +33,62 @@ test('should print server urls correctly when printUrls is true', async ({
   restore();
 });
 
+test('should print different environment server urls correctly', async ({
+  page,
+}) => {
+  const { logs, restore } = proxyConsole('log');
+
+  const rsbuild = await dev({
+    cwd,
+    rsbuildConfig: {
+      server: {
+        printUrls: true,
+      },
+      environments: {
+        web: {
+          output: {
+            distPath: {
+              html: 'html0',
+            },
+          },
+        },
+        web1: {
+          source: {
+            entry: {
+              main: './src/index.js',
+            },
+          },
+          html: {
+            outputStructure: 'nested',
+          },
+          output: {
+            distPath: {
+              html: 'html1',
+            },
+          },
+        },
+      },
+    },
+  });
+
+  await page.goto(`http://localhost:${rsbuild.port}`);
+
+  const localIndexLog = logs.find(
+    (log) => log.includes('Local:') && log.includes('/html0'),
+  );
+
+  expect(localIndexLog).toBeTruthy();
+
+  const localMainLog = logs.find(
+    (log) => log.includes('Local:') && log.includes('/html1/main'),
+  );
+
+  expect(localMainLog).toBeTruthy();
+
+  await rsbuild.close();
+  restore();
+});
+
 test('should not print server urls when printUrls is false', async ({
   page,
 }) => {

@@ -26,8 +26,8 @@ import {
 import {
   type StartServerResult,
   type UpgradeEvent,
-  formatRoutes,
   getAddressUrls,
+  getRoutes,
   getServerConfig,
   printServerURLs,
 } from './helper';
@@ -117,14 +117,7 @@ export async function createDevServer<
   });
   const devConfig = formatDevConfig(config.dev, port);
 
-  const routes = formatRoutes(
-    Object.values(options.context.environments).reduce(
-      (prev, context) => Object.assign(prev, context.htmlPaths),
-      {},
-    ),
-    config.output.distPath.html,
-    config.html.outputStructure,
-  );
+  const routes = getRoutes(options.context);
 
   options.context.devServer = {
     hostname: host,
@@ -210,7 +203,7 @@ export async function createDevServer<
     dev: devConfig,
     server: config.server,
     output: {
-      distPath: config.output.distPath.root || ROOT_DIST_DIR,
+      distPath: options.context.distPath || ROOT_DIST_DIR,
     },
     outputFileSystem,
   });

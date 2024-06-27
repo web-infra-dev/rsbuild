@@ -13,8 +13,8 @@ import { logger } from '../logger';
 import type { InternalContext, NormalizedConfig } from '../types';
 import {
   type StartServerResult,
-  formatRoutes,
   getAddressUrls,
+  getRoutes,
   getServerConfig,
   printServerURLs,
 } from './helper';
@@ -189,14 +189,7 @@ export async function startProdServer(
         port,
       },
       async () => {
-        const routes = formatRoutes(
-          Object.values(context.environments).reduce(
-            (prev, context) => Object.assign(prev, context.htmlPaths),
-            {},
-          ),
-          config.output.distPath.html,
-          config.html.outputStructure,
-        );
+        const routes = getRoutes(context);
         await context.hooks.onAfterStartProdServer.call({
           port,
           routes,
