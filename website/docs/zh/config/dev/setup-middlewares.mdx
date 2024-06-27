@@ -79,7 +79,7 @@ export default {
         middlewares.unshift(async (req, _res, next) => {
           const webStats = await server.environments.web.getStats();
 
-          console.log(webStats.toJson());
+          console.log(webStats.toJson({ all: false }));
 
           next();
         });
