@@ -168,6 +168,7 @@ test('@rsbuild/plugin-assets-retry should work when blocking async chunk`', asyn
   await gotoPage(page, rsbuild);
   const compTestElement = page.locator('#async-comp-test');
   await expect(compTestElement).toHaveText('Hello AsyncCompTest');
+  await expect(compTestElement).toHaveCSS('background', 'rgb(0, 0, 139)');
   const blockedResponseCount = count404Response(
     logs,
     '/static/js/async/src_AsyncCompTest_tsx.js',
