@@ -2,6 +2,7 @@ import type { IncomingMessage } from 'node:http';
 import net from 'node:net';
 import type { Socket } from 'node:net';
 import os from 'node:os';
+import { join, relative } from 'node:path';
 import { color } from '@rsbuild/shared';
 import type {
   NormalizedConfig,
@@ -13,6 +14,7 @@ import type {
 import { DEFAULT_DEV_HOST, DEFAULT_PORT } from '../constants';
 import { isFunction } from '../helpers';
 import { logger } from '../logger';
+import type { InternalContext } from '../types';
 
 /**
  * It used to subscribe http upgrade event
@@ -45,6 +47,29 @@ const formatPrefix = (prefix: string | undefined) => {
   const hasLeadingSlash = prefix.startsWith('/');
   const hasTailSlash = prefix.endsWith('/');
   return `${hasLeadingSlash ? '' : '/'}${prefix}${hasTailSlash ? '' : '/'}`;
+};
+
+export const getRoutes = (options: { context: InternalContext }) => {
+  return Object.entries(options.context.environments).reduce<Routes>(
+    (prev, [name, context]) => {
+      const distPrefix = relative(
+        options.context.distPath,
+        options.context.environments[name].distPath,
+      );
+
+      const environmentConfig = options.context.pluginAPI!.getNormalizedConfig({
+        environment: name,
+      });
+
+      const routes = formatRoutes(
+        context.htmlPaths,
+        join(distPrefix, environmentConfig.output.distPath.html),
+        environmentConfig.html.outputStructure,
+      );
+      return prev.concat(...routes);
+    },
+    [],
+  );
 };
 
 /*

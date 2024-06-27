@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import type {
   CreateDevServerOptions,
-  Routes,
   Rspack,
   StartDevServerOptions,
 } from '@rsbuild/shared';
@@ -27,8 +26,8 @@ import {
 import {
   type StartServerResult,
   type UpgradeEvent,
-  formatRoutes,
   getAddressUrls,
+  getRoutes,
   getServerConfig,
   printServerURLs,
 } from './helper';
@@ -118,21 +117,7 @@ export async function createDevServer<
   });
   const devConfig = formatDevConfig(config.dev, port);
 
-  const routes = Object.entries(options.context.environments).reduce<Routes>(
-    (prev, [name, context]) => {
-      const environmentConfig =
-        options.context.pluginAPI?.getNormalizedConfig({ environment: name }) ||
-        config;
-
-      const routes = formatRoutes(
-        context.htmlPaths,
-        environmentConfig.output.distPath.html,
-        environmentConfig.html.outputStructure,
-      );
-      return prev.concat(...routes);
-    },
-    [],
-  );
+  const routes = getRoutes(options);
 
   options.context.devServer = {
     hostname: host,
@@ -218,7 +203,7 @@ export async function createDevServer<
     dev: devConfig,
     server: config.server,
     output: {
-      distPath: config.output.distPath.root || ROOT_DIST_DIR,
+      distPath: options.context.distPath || ROOT_DIST_DIR,
     },
     outputFileSystem,
   });

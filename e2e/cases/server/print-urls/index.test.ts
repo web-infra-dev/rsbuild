@@ -48,14 +48,14 @@ test('should print different environment server urls correctly', async ({
         web: {
           output: {
             distPath: {
-              html: 'html',
+              html: 'html0',
             },
           },
         },
         web1: {
           source: {
             entry: {
-              main: './src/web1.tsx',
+              main: './src/index.js',
             },
           },
           html: {
@@ -73,9 +73,14 @@ test('should print different environment server urls correctly', async ({
 
   await page.goto(`http://localhost:${rsbuild.port}`);
 
+  const localIndexLog = logs.find(
+    (log) => log.includes('Local:') && log.includes('/html0'),
+  );
+
+  expect(localIndexLog).toBeTruthy();
+
   const localMainLog = logs.find(
-    (log) =>
-      log.includes('Local:') && log.includes('http://localhost/html1/main'),
+    (log) => log.includes('Local:') && log.includes('/html1/main'),
   );
 
   expect(localMainLog).toBeTruthy();
