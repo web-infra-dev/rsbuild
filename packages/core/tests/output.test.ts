@@ -100,7 +100,7 @@ describe('plugin-output', () => {
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
-  it('should allow to use copy plugin with multiply config', async () => {
+  it('should allow to use copy plugin with multiple config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
       rsbuildConfig: {

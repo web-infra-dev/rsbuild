@@ -75,7 +75,7 @@ exports[`plugin-output > should allow to use copy plugin 1`] = `
 }
 `;
 
-exports[`plugin-output > should allow to use copy plugin with multiply config 1`] = `
+exports[`plugin-output > should allow to use copy plugin with multiple config 1`] = `
 {
   "output": {
     "chunkFilename": "static/js/async/[name].js",

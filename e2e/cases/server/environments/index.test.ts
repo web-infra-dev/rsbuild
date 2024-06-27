@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
 
-test('should serve multiply environments correctly', async ({ page }) => {
+test('should serve multiple environments correctly', async ({ page }) => {
   const rsbuild = await dev({
     cwd,
     rsbuildConfig: {
@@ -43,8 +43,8 @@ test('should serve multiply environments correctly', async ({ page }) => {
   await rsbuild.close();
 });
 
-// TODO: not support serve multiply environments when distPath different
-test.skip('serve multiply environments correctly when distPath different', async ({
+// TODO: not support serve multiple environments when distPath different
+test.skip('serve multiple environments correctly when distPath different', async ({
   page,
 }) => {
   const rsbuild = await dev({
