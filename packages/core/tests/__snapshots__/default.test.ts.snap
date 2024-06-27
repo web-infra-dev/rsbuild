@@ -436,7 +436,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       ".mjs",
       ".json",
     ],
-    "tsConfigPath": "<ROOT>/packages/core/tests/tsconfig.json",
+    "tsConfig": {
+      "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
+    },
   },
   "target": [
     "web",
@@ -949,7 +951,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       ".mjs",
       ".json",
     ],
-    "tsConfigPath": "<ROOT>/packages/core/tests/tsconfig.json",
+    "tsConfig": {
+      "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
+    },
   },
   "target": [
     "web",
@@ -1265,7 +1269,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       ".mjs",
       ".json",
     ],
-    "tsConfigPath": "<ROOT>/packages/core/tests/tsconfig.json",
+    "tsConfig": {
+      "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
+    },
   },
   "target": "node",
 }
@@ -1718,7 +1724,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
       ".mjs",
       ".json",
     ],
-    "tsConfigPath": "<ROOT>/packages/core/tests/tsconfig.json",
+    "tsConfig": {
+      "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
+    },
   },
   "target": [
     "web",
