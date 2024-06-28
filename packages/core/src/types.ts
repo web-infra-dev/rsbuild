@@ -3,6 +3,7 @@ import type {
   Bundler,
   CreateCompiler,
   CreateDevServerOptions,
+  EnvironmentContext,
   InspectConfigOptions,
   InspectConfigResult,
   NormalizedConfig,
@@ -17,7 +18,6 @@ import type {
   StartDevServerOptions,
   TransformHandler,
   WebpackConfig,
-  EnvironmentContext,
 } from '@rsbuild/shared';
 import type { Hooks } from './initHooks';
 import type { RsbuildDevServer } from './server/devServer';

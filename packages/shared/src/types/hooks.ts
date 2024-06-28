@@ -7,7 +7,7 @@ import type {
   NormalizedEnvironmentConfig,
   RsbuildConfig,
 } from './config';
-import type { RsbuildTarget, RsbuildEntry } from './rsbuild';
+import type { RsbuildEntry, RsbuildTarget } from './rsbuild';
 import type { Rspack, RspackConfig } from './rspack';
 import type { MultiStats, Stats } from './stats';
 import type { WebpackConfig } from './thirdParty';
