@@ -189,7 +189,9 @@ export async function createDevServer<
   const protocol = https ? 'https' : 'http';
   const urls = getAddressUrls({ protocol, port, host });
 
-  await options.context.hooks.onBeforeStartDevServer.call();
+  await options.context.hooks.onBeforeStartDevServer.call({
+    environments: options.context.environments,
+  });
 
   if (runCompile) {
     options.context.hooks.onBeforeCreateCompiler.tap(() => {

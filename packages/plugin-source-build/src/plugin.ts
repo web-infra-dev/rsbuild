@@ -123,7 +123,7 @@ export function pluginSourceBuild(
 
       if (api.context.bundlerType === 'rspack') {
         api.modifyRspackConfig(async (config, { environment }) => {
-          const { tsconfigPath } = api.context.environments[environment];
+          const { tsconfigPath } = environment;
           if (!tsconfigPath) {
             return;
           }
@@ -155,7 +155,7 @@ export function pluginSourceBuild(
             return;
           }
 
-          const { tsconfigPath } = api.context.environments[environment];
+          const { tsconfigPath } = environment;
 
           const references = await getReferences(tsconfigPath);
 

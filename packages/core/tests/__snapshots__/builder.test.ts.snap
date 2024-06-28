@@ -408,7 +408,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
-      "environment": "web",
+      "getEnvironment": [Function],
       "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {

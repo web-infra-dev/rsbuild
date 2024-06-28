@@ -1,5 +1,6 @@
 import {
   CHAIN_ID,
+  type EnvironmentContext,
   type ModifyChainUtils,
   type ModifyRspackConfigUtils,
   type RsbuildTarget,
@@ -90,7 +91,7 @@ async function getConfigUtils(
 
 export function getChainUtils(
   target: RsbuildTarget,
-  environment: string,
+  environment: EnvironmentContext,
 ): ModifyChainUtils {
   const nodeEnv = getNodeEnv();
 
@@ -116,7 +117,7 @@ export async function generateRspackConfig({
   target: RsbuildTarget;
   context: InternalContext;
 }): Promise<RspackConfig> {
-  const chainUtils = getChainUtils(target, environment);
+  const chainUtils = getChainUtils(target, context.environments[environment]);
   const {
     BannerPlugin,
     DefinePlugin,

@@ -10,11 +10,6 @@ describe('plugin-external', () => {
       modifyBundlerChain: (fn: any) => {
         modifyBundlerChainCb = fn;
       },
-      getNormalizedConfig: () => ({
-        output: {
-          externals: ['react', /@swc\/.*/],
-        },
-      }),
       onBeforeCreateCompiler: (fn: any) => {
         onBeforeCreateCompilerCb = fn;
       },
@@ -24,7 +19,15 @@ describe('plugin-external', () => {
 
     const chain = getBundlerChain();
 
-    await modifyBundlerChainCb(chain, { environment: 'client' });
+    await modifyBundlerChainCb(chain, {
+      environment: {
+        config: {
+          output: {
+            externals: ['react', /@swc\/.*/],
+          },
+        },
+      },
+    });
 
     const bundlerConfigs = [
       {

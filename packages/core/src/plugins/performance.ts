@@ -41,7 +41,7 @@ export const pluginPerformance = (): RsbuildPlugin => ({
     });
 
     api.modifyBundlerChain((chain, { environment }) => {
-      const config = api.getNormalizedConfig({ environment });
+      const { config } = environment;
       const { profile } = config.performance;
       if (!profile) {
         return;

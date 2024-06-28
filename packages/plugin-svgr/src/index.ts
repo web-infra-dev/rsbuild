@@ -65,7 +65,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
-      const config = api.getNormalizedConfig({ environment });
+      const { config } = environment;
       const { dataUriLimit } = config.output;
       const maxSize =
         typeof dataUriLimit === 'number' ? dataUriLimit : dataUriLimit.svg;

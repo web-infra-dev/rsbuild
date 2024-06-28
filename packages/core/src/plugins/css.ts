@@ -246,7 +246,7 @@ async function applyCSSRule({
   utils: ModifyChainUtils;
   importLoaders?: number;
 }) {
-  const { browserslist } = context.environments[environment];
+  const { browserslist } = environment;
 
   // 1. Check user config
   const enableExtractCSS = isUseCssExtract(config, target);
@@ -327,9 +327,7 @@ export const pluginCss = (): RsbuildPlugin => ({
       order: 'pre',
       handler: async (chain, utils) => {
         const rule = chain.module.rule(utils.CHAIN_ID.RULE.CSS);
-        const config = api.getNormalizedConfig({
-          environment: utils.environment,
-        });
+        const { config } = utils.environment;
         rule.test(CSS_REGEX);
         await applyCSSRule({
           rule,

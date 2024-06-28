@@ -67,7 +67,7 @@ export const pluginCssMinimizer = (
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment, isProd }) => {
-      const config = api.getNormalizedConfig({ environment });
+      const { config } = environment;
       const { minify } = config.output;
 
       if (

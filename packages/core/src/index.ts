@@ -67,6 +67,7 @@ export type {
   RsbuildEntry,
   RsbuildTarget,
   RsbuildContext,
+  EnvironmentContext,
   InspectConfigResult,
   InspectConfigOptions,
   // Subtypes of Config

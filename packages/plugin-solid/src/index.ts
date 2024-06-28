@@ -19,7 +19,7 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
     setup(api) {
       api.modifyBundlerChain(
         async (chain, { CHAIN_ID, environment, isProd, target }) => {
-          const rsbuildConfig = api.getNormalizedConfig({ environment });
+          const environmentConfig = environment.config;
 
           modifyBabelLoaderOptions({
             chain,
@@ -32,7 +32,7 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
               ]);
 
               const usingHMR =
-                !isProd && rsbuildConfig.dev.hmr && target === 'web';
+                !isProd && environmentConfig.dev.hmr && target === 'web';
               if (usingHMR) {
                 babelOptions.plugins ??= [];
                 babelOptions.plugins.push([

@@ -54,7 +54,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
     api.modifyBundlerChain({
       order: 'pre',
       handler: async (chain, { CHAIN_ID, target, environment }) => {
-        const config = api.getNormalizedConfig({ environment });
+        const { config, browserslist } = environment;
 
         const rule = chain.module
           .rule(CHAIN_ID.RULE.JS)
@@ -75,8 +75,6 @@ export const pluginSwc = (): RsbuildPlugin => ({
           includes: [],
           excludes: [],
         });
-
-        const { browserslist } = api.context.environments[environment];
 
         const swcConfig = getDefaultSwcConfig(browserslist);
 

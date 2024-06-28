@@ -1,7 +1,11 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
-import type { BuildCacheOptions, RsbuildContext } from '@rsbuild/shared';
+import type {
+  BuildCacheOptions,
+  EnvironmentContext,
+  RsbuildContext,
+} from '@rsbuild/shared';
 import { findExists, isFileExists } from '../helpers';
 import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
 
@@ -58,7 +62,7 @@ function getCacheDirectory(
 async function getBuildDependencies(
   context: Readonly<RsbuildContext>,
   config: NormalizedEnvironmentConfig,
-  environment: string,
+  environmentContext: EnvironmentContext,
 ) {
   const rootPackageJson = join(context.rootPath, 'package.json');
   const browserslistConfig = join(context.rootPath, '.browserslistrc');
@@ -68,7 +72,7 @@ async function getBuildDependencies(
   if (await isFileExists(rootPackageJson)) {
     buildDependencies.packageJson = [rootPackageJson];
   }
-  const { tsconfigPath } = context.environments[environment];
+  const { tsconfigPath } = environmentContext;
 
   if (tsconfigPath) {
     buildDependencies.tsconfig = [tsconfigPath];
@@ -105,7 +109,7 @@ export const pluginCache = (): RsbuildPlugin => ({
     }
 
     api.modifyBundlerChain(async (chain, { environment, env }) => {
-      const config = api.getNormalizedConfig({ environment });
+      const { config } = environment;
       const { buildCache } = config.performance;
 
       if (buildCache === false) {
@@ -132,8 +136,8 @@ export const pluginCache = (): RsbuildPlugin => ({
         // The default cache name of webpack is '${name}-${env}', and the `name` is `default` by default.
         // We set cache name to avoid cache conflicts of different targets.
         name: useDigest
-          ? `${environment}-${env}-${getDigestHash(cacheConfig.cacheDigest!)}`
-          : `${environment}-${env}`,
+          ? `${environment.name}-${env}-${getDigestHash(cacheConfig.cacheDigest!)}`
+          : `${environment.name}-${env}`,
         type: 'filesystem',
         cacheDirectory,
         buildDependencies,

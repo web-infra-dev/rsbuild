@@ -40,10 +40,15 @@ export const build = async (
   let isFirstCompile = true;
   await context.hooks.onBeforeBuild.call({
     bundlerConfigs: bundlerConfigs as RspackConfig[],
+    environments: context.environments,
   });
 
   const onDone = async (stats: Stats | MultiStats) => {
-    const p = context.hooks.onAfterBuild.call({ isFirstCompile, stats });
+    const p = context.hooks.onAfterBuild.call({
+      isFirstCompile,
+      stats,
+      environments: context.environments,
+    });
     isFirstCompile = false;
     await p;
   };

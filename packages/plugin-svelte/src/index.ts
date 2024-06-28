@@ -66,7 +66,7 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
             'svelte-preprocess'
           );
 
-          const rsbuildConfig = api.getNormalizedConfig({ environment });
+          const environmentConfig = environment.config;
 
           chain.resolve.alias.set(
             'svelte',
@@ -97,8 +97,8 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
                 dev: isDev,
               },
               preprocess: sveltePreprocess(options.preprocessOptions),
-              emitCss: !rsbuildConfig.output.injectStyles,
-              hotReload: isDev && rsbuildConfig.dev.hmr,
+              emitCss: !environmentConfig.output.injectStyles,
+              hotReload: isDev && environmentConfig.dev.hmr,
             },
             options.svelteLoaderOptions ?? {},
           );

@@ -8,12 +8,12 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, isDev, environment }) => {
-      const htmlPaths = api.getHTMLPaths({ environment });
+      const htmlPaths = api.getHTMLPaths({ environment: environment.name });
       if (Object.keys(htmlPaths).length === 0 || isDev) {
         return;
       }
 
-      const config = api.getNormalizedConfig({ environment });
+      const { config } = environment;
       const { InlineChunkHtmlPlugin } = await import(
         '../rspack/InlineChunkHtmlPlugin'
       );

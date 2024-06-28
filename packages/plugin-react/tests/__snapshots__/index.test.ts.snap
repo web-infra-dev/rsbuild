@@ -446,7 +446,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
-      "environment": "web",
+      "getEnvironment": [Function],
       "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {

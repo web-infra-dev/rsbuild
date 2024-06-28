@@ -3,6 +3,7 @@ import type {
   Bundler,
   CreateCompiler,
   CreateDevServerOptions,
+  EnvironmentContext,
   InspectConfigOptions,
   InspectConfigResult,
   NormalizedConfig,
@@ -52,6 +53,8 @@ export type InternalContext = RsbuildContext & {
   normalizedConfig?: NormalizedConfig;
   /** The plugin API. */
   pluginAPI?: RsbuildPluginAPI;
+  /** The environment context. */
+  environments: Record<string, EnvironmentContext>;
 };
 
 export type CreateRsbuildOptions = {

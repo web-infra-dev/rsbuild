@@ -30,10 +30,10 @@ export const pluginEslint = (
     }
 
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
-      const { distPath } = api.context.environments[environment];
+      const { distPath } = environment;
       // If there is multiple environment, only apply eslint plugin to the first target
       // to avoid multiple eslint running at the same time
-      if (environment !== Object.keys(api.context.environments)[0]) {
+      if (environment.index !== 0) {
         return;
       }
 

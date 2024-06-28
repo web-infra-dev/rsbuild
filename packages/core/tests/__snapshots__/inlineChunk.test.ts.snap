@@ -111,7 +111,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineScrip
       "styleTests": [],
     },
     HtmlBasicPlugin {
-      "environment": "web",
+      "getEnvironment": [Function],
       "modifyTagsFn": undefined,
       "name": "HtmlBasicPlugin",
       "options": {
@@ -233,7 +233,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineStyle
       ],
     },
     HtmlBasicPlugin {
-      "environment": "web",
+      "getEnvironment": [Function],
       "modifyTagsFn": undefined,
       "name": "HtmlBasicPlugin",
       "options": {

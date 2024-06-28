@@ -1,5 +1,5 @@
 import { sep } from 'node:path';
-import { color } from '@rsbuild/shared';
+import { type EnvironmentContext, color } from '@rsbuild/shared';
 import { emptyDir } from '../helpers';
 import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
@@ -16,10 +16,9 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
   name: 'rsbuild:clean-output',
 
   setup(api) {
-    const clean = async (environment: string) => {
+    const clean = async (environment: EnvironmentContext) => {
       const { rootPath } = api.context;
-      const config = api.getNormalizedConfig({ environment });
-      const { distPath } = api.context.environments[environment];
+      const { config, distPath } = environment;
 
       let { cleanDistPath } = config.output;
 
@@ -44,23 +43,19 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
       }
     };
 
-    const cleanAll = async () => {
-      const distPaths = Object.entries(api.context.environments).reduce<
-        Array<{
-          environmentName: string;
-          distPath: string;
-        }>
-      >((total, [environmentName, curr]) => {
+    const cleanAll = async (params: {
+      environments: Record<string, EnvironmentContext>;
+    }) => {
+      const environments = Object.values(params.environments).reduce<
+        Array<EnvironmentContext>
+      >((total, curr) => {
         if (!total.find((t) => t.distPath === curr.distPath)) {
-          total.push({
-            environmentName,
-            distPath: curr.distPath,
-          });
+          total.push(curr);
         }
         return total;
       }, []);
 
-      await Promise.all(distPaths.map((d) => clean(d.environmentName)));
+      await Promise.all(environments.map((e) => clean(e)));
     };
 
     api.onBeforeBuild(cleanAll);

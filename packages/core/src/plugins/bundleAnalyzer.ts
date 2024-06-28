@@ -42,7 +42,7 @@ export function pluginBundleAnalyzer(): RsbuildPlugin {
       });
 
       api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
-        const config = api.getNormalizedConfig({ environment });
+        const { config } = environment;
 
         if (!isUseAnalyzer(config)) {
           return;
@@ -58,7 +58,7 @@ export function pluginBundleAnalyzer(): RsbuildPlugin {
             {
               analyzerMode: 'static',
               openAnalyzer: false,
-              reportFilename: `report-${environment}.html`,
+              reportFilename: `report-${environment.name}.html`,
               ...(config.performance.bundleAnalyze || {}),
             },
           ]);

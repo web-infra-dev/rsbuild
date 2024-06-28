@@ -408,7 +408,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
-      "environment": "web",
+      "getEnvironment": [Function],
       "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
@@ -919,7 +919,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "version": 5,
     },
     HtmlBasicPlugin {
-      "environment": "web",
+      "getEnvironment": [Function],
       "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
@@ -1703,7 +1703,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
-      "environment": "web",
+      "getEnvironment": [Function],
       "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {

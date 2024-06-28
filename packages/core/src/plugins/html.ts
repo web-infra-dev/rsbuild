@@ -11,7 +11,6 @@ import type {
   HtmlConfig,
   ModifyHTMLTagsFn,
   NormalizedEnvironmentConfig,
-  RsbuildPluginAPI,
 } from '@rsbuild/shared';
 import type { EntryDescription } from '@rspack/core';
 import { STATIC_PATH } from '../constants';
@@ -256,10 +255,8 @@ function getChunks(
 }
 
 const getTagConfig = (
-  api: RsbuildPluginAPI,
-  environment: string,
+  config: NormalizedEnvironmentConfig,
 ): TagConfig | undefined => {
-  const config = api.getNormalizedConfig({ environment });
   const tags = castArray(config.html.tags).filter(Boolean);
 
   // skip if options is empty.
@@ -281,9 +278,9 @@ export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain(
       async (chain, { HtmlPlugin, isProd, CHAIN_ID, environment }) => {
-        const config = api.getNormalizedConfig({ environment });
+        const { config } = environment;
 
-        const htmlPaths = api.getHTMLPaths({ environment });
+        const htmlPaths = api.getHTMLPaths({ environment: environment.name });
         if (Object.keys(htmlPaths).length === 0) {
           return;
         }
@@ -343,7 +340,7 @@ export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
               htmlInfo.templateContent = templateContent;
             }
 
-            const tagConfig = getTagConfig(api, environment);
+            const tagConfig = getTagConfig(environment.config);
             if (tagConfig) {
               htmlInfo.tagConfig = tagConfig;
             }
@@ -417,7 +414,7 @@ export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
       // ensure `crossorigin` and `nonce` can be applied to all tags
       order: 'post',
       handler: ({ headTags, bodyTags }, { environment }) => {
-        const config = api.getNormalizedConfig({ environment });
+        const { config } = environment;
         const { crossorigin } = config.html;
         const allTags = [...headTags, ...bodyTags];
 

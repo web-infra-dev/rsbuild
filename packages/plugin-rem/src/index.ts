@@ -57,7 +57,7 @@ export const pluginRem = (options: PluginRemOptions = {}): RsbuildPlugin => ({
         );
 
         const entries = Object.keys(chain.entryPoints.entries() || {});
-        const config = api.getNormalizedConfig({ environment });
+        const { config } = environment;
         const distDir = config.output.distPath.js;
 
         chain

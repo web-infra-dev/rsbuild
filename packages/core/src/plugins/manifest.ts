@@ -146,7 +146,7 @@ export const pluginManifest = (): RsbuildPlugin => ({
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
       const {
         output: { manifest },
-      } = api.getNormalizedConfig({ environment });
+      } = environment.config;
 
       if (manifest === false) {
         return;
@@ -156,7 +156,7 @@ export const pluginManifest = (): RsbuildPlugin => ({
         typeof manifest === 'string' ? manifest : 'manifest.json';
 
       const { RspackManifestPlugin } = await import('rspack-manifest-plugin');
-      const htmlPaths = api.getHTMLPaths({ environment });
+      const htmlPaths = api.getHTMLPaths({ environment: environment.name });
 
       chain.plugin(CHAIN_ID.PLUGIN.MANIFEST).use(RspackManifestPlugin, [
         {
