@@ -19,7 +19,7 @@ type AutoSetRootFontSizeOptions = Omit<
 export async function getRootPixelCode(
   options: Required<AutoSetRootFontSizeOptions>,
   isCompress = false,
-): Promise<string | undefined> {
+): Promise<string> {
   const code = genJSTemplate(options);
 
   if (!isCompress) {
@@ -35,6 +35,13 @@ export async function getRootPixelCode(
       ecma: 5,
     },
   );
+
+  if (!minifiedRuntimeCode) {
+    throw new Error(
+      '[AutoSetRootFontSizePlugin] Failed to minify runtime code.',
+    );
+  }
+
   return minifiedRuntimeCode;
 }
 

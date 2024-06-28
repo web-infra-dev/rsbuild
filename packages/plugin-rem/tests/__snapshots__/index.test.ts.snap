@@ -10,7 +10,7 @@ exports[`plugin-rem > should not run htmlPlugin with enableRuntime is false 1`] 
     "test": /\\\\\\.css\\$/,
     "use": [
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core-canary/dist/builtin-plugin/css-extract/loader.js",
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
@@ -78,7 +78,7 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
     "test": /\\\\\\.css\\$/,
     "use": [
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core-canary/dist/builtin-plugin/css-extract/loader.js",
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
@@ -146,7 +146,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
     "test": /\\\\\\.css\\$/,
     "use": [
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core-canary/dist/builtin-plugin/css-extract/loader.js",
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
@@ -214,7 +214,7 @@ exports[`plugin-rem > should run rem plugin with default config 2`] = `
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
     "use": [
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core-canary/dist/builtin-plugin/css-extract/loader.js",
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
@@ -297,7 +297,7 @@ exports[`plugin-rem > should run rem plugin with default config 3`] = `
     "test": /\\\\\\.less\\$/,
     "use": [
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core-canary/dist/builtin-plugin/css-extract/loader.js",
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
