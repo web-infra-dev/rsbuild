@@ -170,7 +170,7 @@ export const pluginSri = (): RsbuildPlugin => ({
                     continue;
                   }
 
-                  const htmlContent: string = assets[asset].source();
+                  const htmlContent = assets[asset].source() as string;
                   if (!htmlContent.includes(placeholder)) {
                     continue;
                   }

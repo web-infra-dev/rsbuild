@@ -10,7 +10,7 @@ exports[`plugin-typed-css-modules > should apply css-modules-typescript-loader 1
     "test": /\\\\\\.css\\$/,
     "use": [
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core-canary/dist/builtin-plugin/css-extract/loader.js",
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
         "loader": "<ROOT>/packages/plugin-typed-css-modules/src/loader.cjs",
@@ -84,7 +84,7 @@ exports[`plugin-typed-css-modules > should not apply css-modules-typescript-load
     "test": /\\\\\\.css\\$/,
     "use": [
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core-canary/dist/builtin-plugin/css-extract/loader.js",
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",

@@ -12,7 +12,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
     "test": /\\\\\\.css\\$/,
     "use": [
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core-canary/dist/builtin-plugin/css-extract/loader.js",
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
@@ -60,14 +60,19 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
 [
   SwcJsMinimizerRspackPlugin {
     "_options": {
-      "compress": "{"passes":1,"pure_funcs":[],"drop_console":false}",
+      "compress": {
+        "passes": 1,
+      },
       "exclude": undefined,
       "extractComments": {
         "condition": "@preserve|@lic|@cc_on|^/**!",
       },
-      "format": "{"comments":false,"asciiOnly":true}",
+      "format": {
+        "asciiOnly": true,
+        "comments": false,
+      },
       "include": undefined,
-      "mangle": "{"keep_classnames":false,"keep_fnames":false}",
+      "mangle": true,
       "module": undefined,
       "test": undefined,
     },
@@ -99,7 +104,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
     "test": /\\\\\\.css\\$/,
     "use": [
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core-canary/dist/builtin-plugin/css-extract/loader.js",
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
@@ -135,14 +140,19 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
 [
   SwcJsMinimizerRspackPlugin {
     "_options": {
-      "compress": "{"passes":1,"pure_funcs":[],"drop_console":false}",
+      "compress": {
+        "passes": 1,
+      },
       "exclude": undefined,
       "extractComments": {
         "condition": "@preserve|@lic|@cc_on|^/**!",
       },
-      "format": "{"comments":false,"asciiOnly":true}",
+      "format": {
+        "asciiOnly": true,
+        "comments": false,
+      },
       "include": undefined,
-      "mangle": "{"keep_classnames":false,"keep_fnames":false}",
+      "mangle": true,
       "module": undefined,
       "test": undefined,
     },
@@ -174,7 +184,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should replace postcss-loade
     "test": /\\\\\\.css\\$/,
     "use": [
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core-canary/dist/builtin-plugin/css-extract/loader.js",
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
