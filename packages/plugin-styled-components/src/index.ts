@@ -49,8 +49,7 @@ export const pluginStyledComponents = (
       return;
     }
 
-    const getMergedOptions = () => {
-      const useSSR = isServerTarget(api.context.targets);
+    const getMergedOptions = (useSSR: boolean) => {
       const isProd = process.env.NODE_ENV === 'production';
 
       return reduceConfigs({
@@ -59,30 +58,39 @@ export const pluginStyledComponents = (
       });
     };
 
-    api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
-      const mergedOptions = getMergedOptions();
-      if (!mergedOptions) {
-        return userConfig;
-      }
+    api.modifyRsbuildConfig({
+      order: 'post',
+      handler: (userConfig, { mergeRsbuildConfig }) => {
+        const targets = userConfig.environments
+          ? Object.values(userConfig.environments).map(
+              (e) => e.output?.target || userConfig.output?.target || 'web',
+            )
+          : [userConfig.output?.target || 'web'];
+        const useSSR = isServerTarget(targets);
+        const mergedOptions = getMergedOptions(useSSR);
+        if (!mergedOptions) {
+          return userConfig;
+        }
 
-      const extraConfig: RsbuildConfig = {
-        tools: {
-          swc: {
-            jsc: {
-              experimental: {
-                plugins: [
-                  [
-                    require.resolve('@swc/plugin-styled-components'),
-                    mergedOptions,
+        const extraConfig: RsbuildConfig = {
+          tools: {
+            swc: {
+              jsc: {
+                experimental: {
+                  plugins: [
+                    [
+                      require.resolve('@swc/plugin-styled-components'),
+                      mergedOptions,
+                    ],
                   ],
-                ],
+                },
               },
             },
           },
-        },
-      };
+        };
 
-      return mergeRsbuildConfig(extraConfig, userConfig);
+        return mergeRsbuildConfig(extraConfig, userConfig);
+      },
     });
   },
 });

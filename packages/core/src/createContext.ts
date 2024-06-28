@@ -46,7 +46,6 @@ async function createContextByConfig(
   const tsconfigPath = config.source?.tsconfigPath;
 
   return {
-    targets: [],
     version: RSBUILD_VERSION,
     rootPath,
     distPath: '',
@@ -169,9 +168,6 @@ export function updateContextByNormalizedConfig(
     (item) => item.distPath,
   );
   context.distPath = getCommonParentPath(distPaths);
-  context.targets = Object.values(context.environments).map(
-    (item) => item.target,
-  );
 }
 
 export function createPublicContext(

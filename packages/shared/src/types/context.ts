@@ -1,5 +1,3 @@
-import type { RsbuildTarget } from './rsbuild';
-
 export type BundlerType = 'rspack' | 'webpack';
 
 /** The public context */
@@ -20,6 +18,5 @@ export type RsbuildContext = {
     port: number;
     https: boolean;
   };
-  targets: RsbuildTarget[];
   bundlerType: BundlerType;
 };
