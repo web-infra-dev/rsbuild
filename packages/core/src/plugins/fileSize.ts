@@ -192,39 +192,37 @@ export const pluginFileSize = (): RsbuildPlugin => ({
   name: 'rsbuild:file-size',
 
   setup(api) {
-    api.onAfterBuild(async ({ stats }) => {
+    api.onAfterBuild(async ({ stats, environments }) => {
       if (!stats) {
         return;
       }
 
       const logs = await Promise.all(
-        Object.keys(api.context.environments).map(
-          async (environment, index) => {
-            const { printFileSize } = api.getNormalizedConfig({
+        Object.keys(environments).map(async (environment, index) => {
+          const { printFileSize } = api.getNormalizedConfig({
+            environment,
+          }).performance;
+
+          const multiStats = 'stats' in stats ? stats.stats : [stats];
+
+          const printFileSizeConfig =
+            typeof printFileSize === 'boolean'
+              ? {
+                  total: true,
+                  detail: true,
+                }
+              : printFileSize;
+
+          if (printFileSize) {
+            return printFileSizes(
+              printFileSizeConfig,
+              multiStats[index],
+              api.context.rootPath,
               environment,
-            }).performance;
-
-            const multiStats = 'stats' in stats ? stats.stats : [stats];
-
-            const printFileSizeConfig =
-              typeof printFileSize === 'boolean'
-                ? {
-                    total: true,
-                    detail: true,
-                  }
-                : printFileSize;
-
-            if (printFileSize) {
-              return printFileSizes(
-                printFileSizeConfig,
-                multiStats[index],
-                api.context.rootPath,
-                environment,
-              );
-            }
-            return [];
-          },
-        ),
+            );
+          }
+          return [];
+        }),
       ).catch((err) => {
         logger.warn('Failed to print file size.');
         logger.warn(err as Error);

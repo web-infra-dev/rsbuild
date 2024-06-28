@@ -19,7 +19,7 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
     setup(api) {
       api.modifyBundlerChain(
         async (chain, { CHAIN_ID, environment, isProd, target }) => {
-          const rsbuildConfig = api.getNormalizedConfig({ environment });
+          const rsbuildConfig = environment.normalizedConfig;
 
           modifyBabelLoaderOptions({
             chain,

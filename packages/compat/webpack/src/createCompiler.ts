@@ -60,6 +60,7 @@ export async function createCompiler({
 
   await context.hooks.onAfterCreateCompiler.call({
     compiler,
+    environments: context.environments,
   });
   logger.debug('create compiler done');
 

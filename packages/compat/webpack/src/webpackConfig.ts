@@ -6,6 +6,7 @@ import {
   reduceConfigsWithContext,
 } from '@rsbuild/core';
 import {
+  type EnvironmentContext,
   type ModifyWebpackChainUtils,
   type ModifyWebpackConfigUtils,
   castArray,
@@ -68,7 +69,7 @@ async function modifyWebpackConfig(
 
 async function getChainUtils(
   target: RsbuildTarget,
-  environment: string,
+  environment: EnvironmentContext,
 ): Promise<ModifyWebpackChainUtils> {
   const { default: webpack } = await import('webpack');
   const nameMap = {
@@ -142,7 +143,10 @@ export async function generateWebpackConfig({
   target: RsbuildTarget;
   context: InternalContext;
 }): Promise<WebpackConfig> {
-  const chainUtils = await getChainUtils(target, environment);
+  const chainUtils = await getChainUtils(
+    target,
+    context.environments[environment],
+  );
   const { default: webpack } = await import('webpack');
   const {
     BannerPlugin,

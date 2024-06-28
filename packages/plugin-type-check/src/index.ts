@@ -43,7 +43,7 @@ export const pluginTypeCheck = (
 
       api.modifyBundlerChain(async (chain, { isProd, environment }) => {
         const { enable = true, forkTsCheckerOptions } = options;
-        const { tsconfigPath } = api.context.environments[environment];
+        const { tsconfigPath } = environment;
 
         if (!tsconfigPath || enable === false) {
           return;
@@ -53,11 +53,11 @@ export const pluginTypeCheck = (
         // apply type checker only once to avoid duplicate checks.
         if (
           checkedTsconfig.has(tsconfigPath) &&
-          checkedTsconfig.get(tsconfigPath) !== environment
+          checkedTsconfig.get(tsconfigPath) !== environment.name
         ) {
           return;
         }
-        checkedTsconfig.set(tsconfigPath, environment);
+        checkedTsconfig.set(tsconfigPath, environment.name);
 
         // use typescript of user project
         let typescriptPath: string;

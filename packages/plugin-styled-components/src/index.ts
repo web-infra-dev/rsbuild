@@ -50,9 +50,7 @@ export const pluginStyledComponents = (
     }
 
     const getMergedOptions = () => {
-      const useSSR = isServerTarget(
-        Object.values(api.context.environments).map((e) => e.target),
-      );
+      const useSSR = isServerTarget(api.context.targets);
       const isProd = process.env.NODE_ENV === 'production';
 
       return reduceConfigs({

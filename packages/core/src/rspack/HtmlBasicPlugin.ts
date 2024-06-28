@@ -1,4 +1,5 @@
 import type {
+  EnvironmentContext,
   HtmlBasicTag,
   HtmlTag,
   HtmlTagDescriptor,
@@ -235,7 +236,7 @@ const addFavicon = (headTags: HtmlTagObject[], favicon?: string) => {
 export class HtmlBasicPlugin {
   readonly name: string;
 
-  readonly environment: string;
+  readonly environment: EnvironmentContext;
 
   readonly options: HtmlBasicPluginOptions;
 
@@ -243,7 +244,7 @@ export class HtmlBasicPlugin {
 
   constructor(
     options: HtmlBasicPluginOptions,
-    environment: string,
+    environment: EnvironmentContext,
     modifyTagsFn?: ModifyHTMLTagsFn,
   ) {
     this.name = 'HtmlBasicPlugin';

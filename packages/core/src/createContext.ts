@@ -46,8 +46,8 @@ async function createContextByConfig(
   const tsconfigPath = config.source?.tsconfigPath;
 
   return {
+    targets: [],
     version: RSBUILD_VERSION,
-    environments: {},
     rootPath,
     distPath: '',
     cachePath,
@@ -129,12 +129,12 @@ const getEnvironmentHTMLPaths = (
 };
 
 export async function updateEnvironmentContext(
-  context: RsbuildContext,
+  context: InternalContext,
   configs: Record<string, NormalizedEnvironmentConfig>,
 ): Promise<void> {
   context.environments ||= {};
 
-  for (const [name, config] of Object.entries(configs)) {
+  for (const [index, [name, config]] of Object.entries(configs).entries()) {
     const tsconfigPath = config.source.tsconfigPath
       ? getAbsolutePath(context.rootPath, config.source.tsconfigPath)
       : undefined;
@@ -148,22 +148,30 @@ export async function updateEnvironmentContext(
     const htmlPaths = getEnvironmentHTMLPaths(entry, config);
 
     context.environments[name] = {
+      index,
+      name,
       target: config.output.target,
       distPath: getAbsoluteDistPath(context.rootPath, config),
       entry,
       browserslist,
       htmlPaths,
       tsconfigPath,
+      normalizedConfig: config,
     };
   }
 }
 
-export function updateContextByNormalizedConfig(context: RsbuildContext): void {
+export function updateContextByNormalizedConfig(
+  context: InternalContext,
+): void {
   // Try to get the parent dist path from all environments
   const distPaths = Object.values(context.environments).map(
     (item) => item.distPath,
   );
   context.distPath = getCommonParentPath(distPaths);
+  context.targets = Object.values(context.environments).map(
+    (item) => item.target,
+  );
 }
 
 export function createPublicContext(
@@ -216,6 +224,7 @@ export async function createContext(
 
   return {
     ...context,
+    environments: {},
     hooks: initHooks(),
     config: { ...rsbuildConfig },
     originalConfig: userRsbuildConfig,

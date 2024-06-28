@@ -1,7 +1,7 @@
 import path from 'node:path';
 import type {
   ChainIdentifier,
-  RsbuildContext,
+  EnvironmentContext,
   RsbuildPlugin,
   RspackChain,
 } from '@rsbuild/core';
@@ -19,15 +19,13 @@ import type {
 export const PLUGIN_LIGHTNINGCSS_NAME = 'rsbuild:lightningcss';
 
 const getLightningCSSTargets = async ({
-  context,
   options,
   environment,
 }: {
-  context: RsbuildContext;
   options: PluginLightningcssOptions;
-  environment: string;
+  environment: EnvironmentContext;
 }) => {
-  const browserslistUserConfig = context.environments[environment].browserslist;
+  const browserslistUserConfig = environment.browserslist;
   const implementation =
     (options.implementation as Lightningcss) ?? lightningcss;
 
@@ -162,7 +160,6 @@ export const pluginLightningcss = (
 
       handler: async (chain, { CHAIN_ID, target, environment }) => {
         targets = await getLightningCSSTargets({
-          context: api.context,
           options,
           environment,
         });
@@ -179,7 +176,7 @@ export const pluginLightningcss = (
     });
 
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment, isProd }) => {
-      const config = api.getNormalizedConfig({ environment });
+      const config = environment.normalizedConfig;
       const { minify } = config.output;
       const isMinimize =
         isProd &&

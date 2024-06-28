@@ -36,10 +36,9 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
       order: 'pre',
       handler: async (chain, utils) => {
         const { CHAIN_ID, environment } = utils;
-        const rsbuildConfig = api.getNormalizedConfig({ environment });
+        const { normalizedConfig: rsbuildConfig, browserslist } = environment;
         const { rootPath } = api.context;
 
-        const { browserslist } = api.context.environments[environment];
         const swcConfigs = await applyPluginConfig(
           options,
           utils,
@@ -116,7 +115,7 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
     });
 
     api.modifyBundlerChain((chain, { CHAIN_ID, isProd, environment }) => {
-      const rsbuildConfig = api.getNormalizedConfig({ environment });
+      const rsbuildConfig = environment.normalizedConfig;
 
       if (checkUseMinify(mainConfig, rsbuildConfig, isProd)) {
         const { minify } = rsbuildConfig.output;

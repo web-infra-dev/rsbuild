@@ -66,7 +66,7 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
             'svelte-preprocess'
           );
 
-          const rsbuildConfig = api.getNormalizedConfig({ environment });
+          const rsbuildConfig = environment.normalizedConfig;
 
           chain.resolve.alias.set(
             'svelte',

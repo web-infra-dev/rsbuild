@@ -122,7 +122,10 @@ export async function createCompiler({
     rspack.MultiStats,
   );
 
-  await context.hooks.onAfterCreateCompiler.call({ compiler });
+  await context.hooks.onAfterCreateCompiler.call({
+    compiler,
+    environments: context.environments,
+  });
   logger.debug('create compiler done');
 
   return compiler;

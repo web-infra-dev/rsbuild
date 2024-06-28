@@ -1,21 +1,11 @@
-import type { RsbuildEntry, RsbuildTarget } from './rsbuild';
+import type { RsbuildTarget } from './rsbuild';
 
 export type BundlerType = 'rspack' | 'webpack';
-
-type EnvironmentContext = {
-  target: RsbuildTarget;
-  entry: RsbuildEntry;
-  htmlPaths: Record<string, string>;
-  distPath: string;
-  browserslist: string[];
-  tsconfigPath?: string;
-};
 
 /** The public context */
 export type RsbuildContext = {
   /** The Rsbuild core version. */
   version: string;
-  environments: Record<string, EnvironmentContext>;
   /** The root path of current project. */
   rootPath: string;
   /** Absolute path of output files. */
@@ -30,5 +20,6 @@ export type RsbuildContext = {
     port: number;
     https: boolean;
   };
+  targets: RsbuildTarget[];
   bundlerType: BundlerType;
 };

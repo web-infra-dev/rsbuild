@@ -17,6 +17,7 @@ import type {
   StartDevServerOptions,
   TransformHandler,
   WebpackConfig,
+  EnvironmentContext,
 } from '@rsbuild/shared';
 import type { Hooks } from './initHooks';
 import type { RsbuildDevServer } from './server/devServer';
@@ -52,6 +53,8 @@ export type InternalContext = RsbuildContext & {
   normalizedConfig?: NormalizedConfig;
   /** The plugin API. */
   pluginAPI?: RsbuildPluginAPI;
+  /** The environment context. */
+  environments: Record<string, EnvironmentContext>;
 };
 
 export type CreateRsbuildOptions = {
