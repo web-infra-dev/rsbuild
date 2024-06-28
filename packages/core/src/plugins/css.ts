@@ -327,7 +327,7 @@ export const pluginCss = (): RsbuildPlugin => ({
       order: 'pre',
       handler: async (chain, utils) => {
         const rule = chain.module.rule(utils.CHAIN_ID.RULE.CSS);
-        const config = utils.environment.config;
+        const { config } = utils.environment;
         rule.test(CSS_REGEX);
         await applyCSSRule({
           rule,
