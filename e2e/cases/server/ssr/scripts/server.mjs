@@ -1,15 +1,14 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import { createRsbuild, logger } from '@rsbuild/core';
 import { loadConfig } from '@rsbuild/core';
 import polka from 'polka';
 
 export const serverRender = (rsbuildServer) => async (_req, res, _next) => {
-  const indexModule = await rsbuildServer.ssrLoadModule('index');
+  const indexModule = await rsbuildServer.environments.ssr.loadBundle('index');
 
   const markup = indexModule.render();
 
-  const template = await rsbuildServer.getTransformedHtml('index');
+  const template =
+    await rsbuildServer.environments.web.getTransformedHtml('index');
 
   const html = template.replace('<!--app-content-->', markup);
 

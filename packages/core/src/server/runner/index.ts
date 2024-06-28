@@ -41,12 +41,12 @@ export class BasicRunnerFactory implements RunnerFactory {
   }
 }
 
-export const run = async (
+export const run = async <T>(
   bundlePath: string,
   outputPath: string,
   compilerOptions: CompilerOptions,
   readFileSync: (path: string) => string,
-) => {
+): Promise<T> => {
   const runnerFactory = new BasicRunnerFactory(bundlePath);
   const runner = runnerFactory.create(
     compilerOptions,
@@ -55,5 +55,5 @@ export const run = async (
   );
   const mod = runner.run(bundlePath);
 
-  return mod;
+  return mod as T;
 };

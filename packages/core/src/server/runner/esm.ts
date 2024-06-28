@@ -8,7 +8,7 @@ import { CommonJsRunner } from './cjs';
 import { EEsmMode, type RunnerRequirer } from './type';
 
 export class EsmRunner extends CommonJsRunner {
-  protected createRunner() {
+  protected createRunner(): void {
     super.createRunner();
     this.requirers.set('cjs', this.getRequire());
     this.requirers.set('esm', this.createEsmRequirer());

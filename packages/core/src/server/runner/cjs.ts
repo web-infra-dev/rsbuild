@@ -63,7 +63,7 @@ export class CommonJsRunner extends BasicRunner {
     };
   }
 
-  protected createRunner() {
+  protected createRunner(): void {
     this.requirers.set('miss', this.createMissRequirer());
     this.requirers.set('entry', this.createCjsRequirer());
   }

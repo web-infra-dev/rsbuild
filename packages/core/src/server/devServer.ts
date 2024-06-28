@@ -1,5 +1,4 @@
 import fs from 'node:fs';
-// import { isAbsolute, join } from 'node:path';
 import type {
   CreateDevServerOptions,
   EnvironmentAPI,
@@ -22,6 +21,7 @@ import type {
   NormalizedConfig,
   NormalizedDevConfig,
 } from '../types';
+import { getTransformedHtml, loadBundle } from './environment';
 import {
   type RsbuildDevMiddlewareOptions,
   getMiddlewares,
@@ -37,7 +37,6 @@ import {
 import { createHttpServer } from './httpServer';
 import { notFoundMiddleware } from './middlewares';
 import { onBeforeRestartServer } from './restart';
-import { type ServerUtils, getTransformedHtml, ssrLoadModule } from './ssr';
 import { setupWatchFiles } from './watchFiles';
 
 export type RsbuildDevServer = {
@@ -85,19 +84,6 @@ export type RsbuildDevServer = {
    * Close the Rsbuild server.
    */
   close: () => Promise<void>;
-
-  /**
-   * Load and execute SSR module in Server.
-   *
-   * @param entryName - relate to rsbuild source.entry
-   * @returns the return of server-entry.
-   */
-  ssrLoadModule: <T>(entryName: string) => Promise<T>;
-
-  /**
-   * Get the compiled HTML template.
-   */
-  getTransformedHtml: (entryName: string) => Promise<string>;
 };
 
 const formatDevConfig = (config: NormalizedDevConfig, port: number) => {
@@ -239,42 +225,48 @@ export async function createDevServer<
 
   const pwd = options.context.rootPath;
 
-  const serverUtils: ServerUtils = {
-    readFileSync: (fileName: string) => {
-      if ('readFileSync' in outputFileSystem) {
-        // bundle require needs a synchronous method, although readFileSync is not within the outputFileSystem type definition, but nodejs fs API implemented.
-        // @ts-expect-error
-        return outputFileSystem.readFileSync(fileName, 'utf-8');
-      }
-      return fs.readFileSync(fileName, 'utf-8');
-    },
-    // distPath: isAbsolute(distPath) ? distPath : join(pwd, distPath),
-    getHTMLPaths: options.context.pluginAPI!.getHTMLPaths,
+  const readFileSync = (fileName: string) => {
+    if ('readFileSync' in outputFileSystem) {
+      // bundle require needs a synchronous method, although readFileSync is not within the outputFileSystem type definition, but nodejs fs API implemented.
+      // @ts-expect-error
+      return outputFileSystem.readFileSync(fileName, 'utf-8');
+    }
+    return fs.readFileSync(fileName, 'utf-8');
   };
 
   const environmentAPI = Object.fromEntries(
-    Object.keys(options.context.environments).map((name, index) => {
-      return [
-        name,
-        {
-          getStats: async () => {
-            if (!runCompile) {
-              throw new Error("can't get stats info when runCompile is false");
-            }
-            await waitFirstCompileDone;
-            return lastStats[index];
+    Object.entries(options.context.environments).map(
+      ([name, environment], index) => {
+        return [
+          name,
+          {
+            getStats: async () => {
+              if (!runCompile) {
+                throw new Error(
+                  "can't get stats info when runCompile is false",
+                );
+              }
+              await waitFirstCompileDone;
+              return lastStats[index];
+            },
+            loadBundle: async <T>(entryName: string) => {
+              await waitFirstCompileDone;
+              return loadBundle<T>(lastStats[index], entryName, {
+                readFileSync,
+                environment,
+              });
+            },
+            getTransformedHtml: async (entryName: string) => {
+              await waitFirstCompileDone;
+              return getTransformedHtml(entryName, {
+                readFileSync,
+                environment,
+              });
+            },
           },
-          loadModule: async <T>(entryName: string) => {
-            await waitFirstCompileDone;
-            return loadModule<T>(lastStats[index], entryName, serverUtils);
-          },
-          getTransformedHtml: async (entryName: string) => {
-            await waitFirstCompileDone;
-            return getTransformedHtml(entryName, serverUtils);
-          },
-        },
-      ];
-    }),
+        ];
+      },
+    ),
   );
 
   const devMiddlewares = await getMiddlewares({

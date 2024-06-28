@@ -106,10 +106,13 @@ export abstract class BasicRunner implements Runner {
     return null;
   }
 
-  protected preExecute(_code: string, _file: BasicRunnerFile) {}
-  protected postExecute(_m: Record<string, any>, _file: BasicRunnerFile) {}
+  protected preExecute(_code: string, _file: BasicRunnerFile): void {}
+  protected postExecute(
+    _m: Record<string, any>,
+    _file: BasicRunnerFile,
+  ): void {}
 
-  protected createRunner() {
+  protected createRunner(): void {
     this.requirers.set(
       'entry',
       (_currentDirectory, _modulePath, _context = {}) => {

@@ -4,11 +4,10 @@ import { run } from './runner';
 
 export type ServerUtils = {
   readFileSync: (fileName: string) => string;
-  getHTMLPaths: () => Record<string, string>;
-  distPath: string;
+  environment: EnvironmentContext;
 };
 
-export const loadModule = async <T>(
+export const loadBundle = async <T>(
   stats: Stats,
   entryName: string,
   utils: ServerUtils,
@@ -48,29 +47,28 @@ export const loadModule = async <T>(
     );
   }
 
-  const res = await run(
+  const res = await run<T>(
     files[0],
     outputPath!,
     stats.compilation.options,
     utils.readFileSync,
   );
 
-  return res as T;
+  return res;
 };
 
 export const getTransformedHtml = async (
   entryName: string,
-  environment: EnvironmentContext,
-) => {
-  // TODO: should get html resource from stats?
-  const htmlPaths = utils.getHTMLPaths();
+  utils: ServerUtils,
+): Promise<string> => {
+  const { htmlPaths, distPath } = utils.environment;
   const htmlPath = htmlPaths[entryName];
 
   if (!htmlPath) {
     throw new Error(`can't get html file by entryName(${entryName})`);
   }
 
-  const fileName = join(utils.distPath, htmlPath);
+  const fileName = join(distPath, htmlPath);
 
   const fileContent = utils.readFileSync(fileName);
 
