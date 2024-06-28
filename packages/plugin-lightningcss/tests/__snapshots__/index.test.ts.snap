@@ -74,26 +74,17 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
     "affectedHooks": "compilation",
     "name": "SwcJsMinimizerRspackPlugin",
   },
-  LightningCSSMinifyPlugin {
-    "options": {
-      "cssModules": {
-        "dashedIdents": true,
-        "pattern": "[hash]-[local]",
-      },
-      "errorRecovery": true,
-      "exclude": 64512,
-      "implementation": {
-        "browserslistToTargets": [Function],
-        "transform": [Function],
-      },
-      "targets": {
-        "chrome": 5701632,
-        "edge": 5767168,
-        "firefox": 5111808,
-        "safari": 917504,
-      },
+  LightningCssMinimizerRspackPlugin {
+    "_options": {
+      "browserslist": [
+        "defaults",
+      ],
+      "errorRecovery": false,
+      "removeUnusedLocalIdents": true,
+      "unusedSymbols": [],
     },
-    "transform": [Function],
+    "affectedHooks": undefined,
+    "name": "LightningCssMinimizerRspackPlugin",
   },
 ]
 `;
@@ -158,23 +149,20 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
     "affectedHooks": "compilation",
     "name": "SwcJsMinimizerRspackPlugin",
   },
-  LightningCSSMinifyPlugin {
-    "options": {
-      "targets": {
-        "chrome": 5701632,
-        "edge": 5767168,
-        "firefox": 5111808,
-        "safari": 917504,
-      },
+  LightningCssMinimizerRspackPlugin {
+    "_options": {
+      "browserslist": [
+        "defaults",
+      ],
+      "errorRecovery": false,
+      "removeUnusedLocalIdents": true,
+      "unusedSymbols": [],
     },
-    "transform": [Function],
+    "affectedHooks": undefined,
+    "name": "LightningCssMinimizerRspackPlugin",
   },
 ]
 `;
-
-exports[`plugins/lightningcss > plugin-lightningcss should not set lightningCssMinifyPlugin with minify.css: false 1`] = `undefined`;
-
-exports[`plugins/lightningcss > plugin-lightningcss should not set lightningCssMinifyPlugin with minify: false 1`] = `undefined`;
 
 exports[`plugins/lightningcss > plugin-lightningcss should replace postcss-loader with lightningcss-loader with default options 1`] = `
 [
@@ -218,20 +206,4 @@ exports[`plugins/lightningcss > plugin-lightningcss should replace postcss-loade
 ]
 `;
 
-exports[`plugins/lightningcss > plugin-lightningcss should set lightningCssMinifyPlugin with default options 1`] = `
-{
-  "minimizer": [
-    LightningCSSMinifyPlugin {
-      "options": {
-        "targets": {
-          "chrome": 5701632,
-          "edge": 5767168,
-          "firefox": 5111808,
-          "safari": 917504,
-        },
-      },
-      "transform": [Function],
-    },
-  ],
-}
-`;
+exports[`plugins/lightningcss > plugin-lightningcss should set lightningCssMinifyPlugin with default options 1`] = `undefined`;
