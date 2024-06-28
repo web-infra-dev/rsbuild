@@ -198,10 +198,8 @@ export const pluginFileSize = (): RsbuildPlugin => ({
       }
 
       const logs = await Promise.all(
-        Object.keys(environments).map(async (environment, index) => {
-          const { printFileSize } = api.getNormalizedConfig({
-            environment,
-          }).performance;
+        Object.values(environments).map(async (environment, index) => {
+          const { printFileSize } = environment.config.performance;
 
           const multiStats = 'stats' in stats ? stats.stats : [stats];
 
@@ -218,7 +216,7 @@ export const pluginFileSize = (): RsbuildPlugin => ({
               printFileSizeConfig,
               multiStats[index],
               api.context.rootPath,
-              environment,
+              environment.name,
             );
           }
           return [];
