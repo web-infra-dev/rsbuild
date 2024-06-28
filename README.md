@@ -52,7 +52,7 @@ Rsbuild shares many similarities with Vite, as they are both aim to improve the 
 
 Rsbuild's build performance is on par with native Rspack. This is the time it takes to build 1000 React components:
 
-![benchmark](https://github.com/web-infra-dev/rsbuild/assets/7237365/2909b68f-8928-49c6-8eb3-cd1486dbf876)
+![benchmark](https://assets.rspack.dev/rsbuild/assets/benchmark-v049.png)
 
 > The above data comes from the [performance-compare](https://github.com/rspack-contrib/performance-compare) benchmark.
 

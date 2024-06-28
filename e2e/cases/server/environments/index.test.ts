@@ -43,6 +43,59 @@ test('should serve multiple environments correctly', async ({ page }) => {
   await rsbuild.close();
 });
 
+test('server environment api', async ({ page }) => {
+  let assertionsCount = 0;
+
+  const rsbuild = await dev({
+    cwd,
+    rsbuildConfig: {
+      dev: {
+        setupMiddlewares: [
+          (middlewares, server) => {
+            middlewares.unshift(async (req, _res, next) => {
+              if (req.url === '/') {
+                const webStats = await server.environments.web.getStats();
+
+                expect(webStats.toJson().name).toBe('web');
+
+                assertionsCount++;
+                const web1Stats = await server.environments.web1.getStats();
+
+                expect(web1Stats.toJson().name).toBe('web1');
+                assertionsCount++;
+              }
+
+              next();
+            });
+          },
+        ],
+      },
+      environments: {
+        web: {},
+        web1: {
+          source: {
+            entry: {
+              main: './src/web1.js',
+            },
+          },
+          output: {
+            distPath: {
+              root: 'dist/web1',
+              html: 'html1',
+            },
+          },
+        },
+      },
+    },
+  });
+
+  await page.goto(`http://localhost:${rsbuild.port}`);
+
+  expect(assertionsCount).toBe(2);
+
+  await rsbuild.close();
+});
+
 // TODO: not support serve multiple environments when distPath different
 test.skip('serve multiple environments correctly when distPath different', async ({
   page,

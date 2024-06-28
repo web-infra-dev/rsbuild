@@ -8,6 +8,11 @@ type ServerAPIs = {
     type: string,
     data?: string | boolean | Record<string, any>,
   ) => void;
+  environments: {
+    [name: string]: {
+      getStats: () => Promise<Stats>;
+    };
+  };
 };
 
 type SetupMiddlewares = Array<
@@ -57,6 +62,26 @@ export default {
         // 添加自定义 watcher 并在文件更新时触发页面刷新
         watcher.on('change', (changed) => {
           server.sockWrite('content-changed');
+        });
+      },
+    ],
+  },
+};
+```
+
+- environments。允许对指定的 environment 产物进行操作。
+
+```ts
+export default {
+  dev: {
+    setupMiddlewares: [
+      (middlewares, server) => {
+        middlewares.unshift(async (req, _res, next) => {
+          const webStats = await server.environments.web.getStats();
+
+          console.log(webStats.toJson({ all: false }));
+
+          next();
         });
       },
     ],

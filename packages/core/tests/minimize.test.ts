@@ -46,10 +46,17 @@ describe('plugin-minimize', () => {
           "affectedHooks": "compilation",
           "name": "SwcJsMinimizerRspackPlugin",
         },
-        SwcCssMinimizerRspackPlugin {
-          "_options": undefined,
+        LightningCssMinimizerRspackPlugin {
+          "_options": {
+            "browserslist": [
+              "defaults",
+            ],
+            "errorRecovery": false,
+            "removeUnusedLocalIdents": true,
+            "unusedSymbols": [],
+          },
           "affectedHooks": undefined,
-          "name": "SwcCssMinimizerRspackPlugin",
+          "name": "LightningCssMinimizerRspackPlugin",
         },
       ]
     `,
@@ -76,7 +83,7 @@ describe('plugin-minimize', () => {
 
     expect(bundlerConfigs[0].optimization?.minimizer?.length).toBe(1);
     expect(bundlerConfigs[0].optimization?.minimizer?.[0]).toMatchObject({
-      name: 'SwcCssMinimizerRspackPlugin',
+      name: 'LightningCssMinimizerRspackPlugin',
     });
 
     process.env.NODE_ENV = 'test';
@@ -222,10 +229,17 @@ describe('plugin-minimize', () => {
           "affectedHooks": "compilation",
           "name": "SwcJsMinimizerRspackPlugin",
         },
-        SwcCssMinimizerRspackPlugin {
-          "_options": undefined,
+        LightningCssMinimizerRspackPlugin {
+          "_options": {
+            "browserslist": [
+              "defaults",
+            ],
+            "errorRecovery": false,
+            "removeUnusedLocalIdents": true,
+            "unusedSymbols": [],
+          },
           "affectedHooks": undefined,
-          "name": "SwcCssMinimizerRspackPlugin",
+          "name": "LightningCssMinimizerRspackPlugin",
         },
       ]
     `,
@@ -267,10 +281,17 @@ describe('plugin-minimize', () => {
           "affectedHooks": "compilation",
           "name": "SwcJsMinimizerRspackPlugin",
         },
-        SwcCssMinimizerRspackPlugin {
-          "_options": undefined,
+        LightningCssMinimizerRspackPlugin {
+          "_options": {
+            "browserslist": [
+              "defaults",
+            ],
+            "errorRecovery": false,
+            "removeUnusedLocalIdents": true,
+            "unusedSymbols": [],
+          },
           "affectedHooks": undefined,
-          "name": "SwcCssMinimizerRspackPlugin",
+          "name": "LightningCssMinimizerRspackPlugin",
         },
       ]
     `,
@@ -312,10 +333,17 @@ describe('plugin-minimize', () => {
           "affectedHooks": "compilation",
           "name": "SwcJsMinimizerRspackPlugin",
         },
-        SwcCssMinimizerRspackPlugin {
-          "_options": undefined,
+        LightningCssMinimizerRspackPlugin {
+          "_options": {
+            "browserslist": [
+              "defaults",
+            ],
+            "errorRecovery": false,
+            "removeUnusedLocalIdents": true,
+            "unusedSymbols": [],
+          },
           "affectedHooks": undefined,
-          "name": "SwcCssMinimizerRspackPlugin",
+          "name": "LightningCssMinimizerRspackPlugin",
         },
       ]
     `,

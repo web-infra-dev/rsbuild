@@ -79,7 +79,7 @@ test('generator TS declaration for cssModules.auto function', async () => {
       output: {
         cssModules: {
           auto: (path) => {
-            return path.endsWith('.less');
+            return path.endsWith('.scss');
           },
         },
       },
@@ -87,9 +87,9 @@ test('generator TS declaration for cssModules.auto function', async () => {
   });
 
   expect(fs.existsSync(join(testDir, './a.css.d.ts'))).toBeFalsy();
-  expect(fs.existsSync(join(testDir, './b.module.scss.d.ts'))).toBeFalsy();
-  expect(fs.existsSync(join(testDir, './c.module.less.d.ts'))).toBeTruthy();
-  expect(fs.existsSync(join(testDir, './d.global.less.d.ts'))).toBeTruthy();
+  expect(fs.existsSync(join(testDir, './b.module.scss.d.ts'))).toBeTruthy();
+  expect(fs.existsSync(join(testDir, './c.module.less.d.ts'))).toBeFalsy();
+  expect(fs.existsSync(join(testDir, './d.global.less.d.ts'))).toBeFalsy();
 
   await clear();
 });

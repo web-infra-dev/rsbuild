@@ -1,7 +1,7 @@
-import { build, proxyConsole } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { build, proxyConsole, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
-test('should compile common css import correctly', async () => {
+rspackOnlyTest('should compile common CSS import correctly', async () => {
   const { restore, logs } = proxyConsole();
 
   const rsbuild = await build({
@@ -24,7 +24,7 @@ test('should compile common css import correctly', async () => {
   );
 
   expect(files[cssFiles]).toEqual(
-    'html{min-height:100%}#a{color:red}#b{color:blue}',
+    'html{min-height:100%}#a{color:red}#b{color:#00f}',
   );
 
   restore();

@@ -79,8 +79,8 @@ If a large number of warning logs are generated due to the three-party package, 
 ```ts
 export default {
   tools: {
-    bundlerChain: (chain) => {
-      chain.ignoreWarnings([/Using \/ for division outside of calc()/]);
+    rspack: {
+      ignoreWarnings: [/Using \/ for division outside of calc()/],
     },
   },
 };

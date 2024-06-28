@@ -2,6 +2,7 @@ import { isAbsolute, join } from 'node:path';
 import url from 'node:url';
 import type {
   DevConfig,
+  EnvironmentAPI,
   RequestHandler,
   Rspack,
   ServerAPIs,
@@ -27,6 +28,7 @@ export type RsbuildDevMiddlewareOptions = {
   pwd: string;
   dev: DevConfig;
   server: ServerConfig;
+  environments: EnvironmentAPI;
   compileMiddlewareAPI?: CompileMiddlewareAPI;
   outputFileSystem: Rspack.OutputFileSystem;
   output: {
@@ -36,12 +38,14 @@ export type RsbuildDevMiddlewareOptions = {
 
 const applySetupMiddlewares = (
   dev: RsbuildDevMiddlewareOptions['dev'],
+  environments: EnvironmentAPI,
   compileMiddlewareAPI?: CompileMiddlewareAPI,
 ) => {
   const setupMiddlewares = dev.setupMiddlewares || [];
 
   const serverOptions: ServerAPIs = {
     sockWrite: (type, data) => compileMiddlewareAPI?.sockWrite(type, data),
+    environments,
   };
 
   const before: RequestHandler[] = [];
@@ -201,7 +205,7 @@ export const getMiddlewares = async (
   middlewares: Middlewares;
 }> => {
   const middlewares: Middlewares = [];
-  const { compileMiddlewareAPI } = options;
+  const { environments, compileMiddlewareAPI } = options;
 
   if (logger.level === 'verbose') {
     middlewares.push(await getRequestLoggerMiddleware());
@@ -210,6 +214,7 @@ export const getMiddlewares = async (
   // Order: setupMiddlewares.unshift => internal middlewares => setupMiddlewares.push
   const { before, after } = applySetupMiddlewares(
     options.dev,
+    environments,
     compileMiddlewareAPI,
   );
 
