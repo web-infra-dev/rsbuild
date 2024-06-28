@@ -1,6 +1,11 @@
 import type { Buffer } from 'node:buffer';
 import crypto from 'node:crypto';
-import type { Rspack, SriAlgorithm, SriOptions } from '@rsbuild/shared';
+import type {
+  EnvironmentContext,
+  Rspack,
+  SriAlgorithm,
+  SriOptions,
+} from '@rsbuild/shared';
 import { HTML_REGEX } from '../constants';
 import { isProd, removeLeadingSlash } from '../helpers';
 import { logger } from '../logger';
@@ -19,8 +24,8 @@ export const pluginSri = (): RsbuildPlugin => ({
   setup(api) {
     const placeholder = 'RSBUILD_INTEGRITY_PLACEHOLDER:';
 
-    const getAlgorithm = (environment: string) => {
-      const config = api.getNormalizedConfig({ environment });
+    const getAlgorithm = (environment: EnvironmentContext) => {
+      const { config } = environment;
       const { sri } = config.security;
       const enable = sri.enable === 'auto' ? isProd() : sri.enable;
 
@@ -187,7 +192,7 @@ export const pluginSri = (): RsbuildPlugin => ({
     }
 
     api.modifyBundlerChain((chain, { environment }) => {
-      const htmlPaths = api.getHTMLPaths({ environment });
+      const htmlPaths = api.getHTMLPaths({ environment: environment.name });
 
       if (Object.keys(htmlPaths).length === 0) {
         return;

@@ -19,9 +19,9 @@ export const pluginBasic = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain(
       (chain, { env, isProd, target, bundler, environment, CHAIN_ID }) => {
-        const config = api.getNormalizedConfig({ environment });
+        const { config } = environment;
 
-        chain.name(environment);
+        chain.name(environment.name);
 
         chain.devtool(getJsSourceMap(config));
 

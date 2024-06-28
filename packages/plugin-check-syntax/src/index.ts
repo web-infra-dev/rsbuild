@@ -19,8 +19,7 @@ export function pluginCheckSyntax(
 
         const { rootPath } = api.context;
 
-        const targets =
-          options.targets ?? api.context.environments[environment].browserslist;
+        const targets = options.targets ?? environment.browserslist;
 
         const { CheckSyntaxPlugin } = await import('./CheckSyntaxPlugin');
 

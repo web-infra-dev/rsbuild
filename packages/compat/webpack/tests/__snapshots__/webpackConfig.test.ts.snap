@@ -78,7 +78,7 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
     "version": 5,
   },
   HtmlBasicPlugin {
-    "environment": "web",
+    "getEnvironment": [Function],
     "modifyTagsFn": [Function],
     "name": "HtmlBasicPlugin",
     "options": {

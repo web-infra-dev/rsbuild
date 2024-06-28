@@ -75,7 +75,7 @@ export const pluginAsset = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain((chain, { isProd, environment }) => {
-      const config = api.getNormalizedConfig({ environment });
+      const { config } = environment;
 
       const createAssetRule = (
         assetType: 'image' | 'media' | 'font' | 'svg',

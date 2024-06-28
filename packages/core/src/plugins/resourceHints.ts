@@ -22,7 +22,7 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyHTMLTags(({ headTags, bodyTags }, { environment }) => {
-      const config = api.getNormalizedConfig({ environment });
+      const { config } = environment;
       const { dnsPrefetch, preconnect } = config.performance;
 
       if (dnsPrefetch) {
@@ -45,13 +45,13 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
     });
 
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
-      const htmlPaths = api.getHTMLPaths({ environment });
+      const htmlPaths = api.getHTMLPaths({ environment: environment.name });
 
       if (Object.keys(htmlPaths).length === 0) {
         return;
       }
 
-      const config = api.getNormalizedConfig({ environment });
+      const { config } = environment;
       const {
         performance: { preload, prefetch },
       } = config;

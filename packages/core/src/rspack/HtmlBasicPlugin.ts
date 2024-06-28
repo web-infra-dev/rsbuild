@@ -1,4 +1,5 @@
 import type {
+  EnvironmentContext,
   HtmlBasicTag,
   HtmlTag,
   HtmlTagDescriptor,
@@ -235,7 +236,7 @@ const addFavicon = (headTags: HtmlTagObject[], favicon?: string) => {
 export class HtmlBasicPlugin {
   readonly name: string;
 
-  readonly environment: string;
+  readonly getEnvironment: () => EnvironmentContext;
 
   readonly options: HtmlBasicPluginOptions;
 
@@ -243,11 +244,11 @@ export class HtmlBasicPlugin {
 
   constructor(
     options: HtmlBasicPluginOptions,
-    environment: string,
+    environment: EnvironmentContext,
     modifyTagsFn?: ModifyHTMLTagsFn,
   ) {
     this.name = 'HtmlBasicPlugin';
-    this.environment = environment;
+    this.getEnvironment = () => environment;
     this.options = options;
     this.modifyTagsFn = modifyTagsFn;
   }
@@ -283,7 +284,7 @@ export class HtmlBasicPlugin {
                 compilation,
                 assetPrefix: data.publicPath,
                 filename: data.outputName,
-                environment: this.environment,
+                environment: this.getEnvironment(),
               })
             : tags;
 

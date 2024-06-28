@@ -8,9 +8,8 @@ export const pluginEntry = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { environment, isServer }) => {
-      const config = api.getNormalizedConfig({ environment });
+      const { config, entry } = environment;
       const { preEntry } = config.source;
-      const { entry } = api.context.environments[environment];
 
       const injectCoreJsEntry = config.output.polyfill === 'entry' && !isServer;
 

@@ -107,7 +107,7 @@ export function pluginModuleFederation(): RsbuildPlugin {
 
       api.modifyBundlerChain(
         async (chain, { CHAIN_ID, target, environment }) => {
-          const config = api.getNormalizedConfig({ environment });
+          const { config } = environment;
 
           if (!config.moduleFederation?.options || target !== 'web') {
             return;

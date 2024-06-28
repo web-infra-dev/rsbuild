@@ -38,7 +38,7 @@ export const applyBasicReactSupport = (
 
   api.modifyBundlerChain(
     async (chain, { CHAIN_ID, environment, isDev, isProd, target }) => {
-      const config = api.getNormalizedConfig({ environment });
+      const { config } = environment;
       const usingHMR = !isProd && config.dev.hmr && target === 'web';
       const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
         development: isDev,

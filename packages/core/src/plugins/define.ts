@@ -7,7 +7,7 @@ export const pluginDefine = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain((chain, { CHAIN_ID, bundler, environment }) => {
-      const config = api.getNormalizedConfig({ environment });
+      const { config } = environment;
       const builtinVars: Define = {
         'process.env.NODE_ENV': JSON.stringify(getNodeEnv()),
         'process.env.ASSET_PREFIX': JSON.stringify(

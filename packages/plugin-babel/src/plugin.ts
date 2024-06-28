@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path, { isAbsolute, join } from 'node:path';
 import type {
+  EnvironmentContext,
   NormalizedEnvironmentConfig,
   RsbuildContext,
   RsbuildPlugin,
@@ -103,8 +104,8 @@ export const pluginBabel = (
   name: PLUGIN_BABEL_NAME,
 
   setup(api) {
-    const getBabelOptions = async (environment: string) => {
-      const config = api.getNormalizedConfig({ environment });
+    const getBabelOptions = async (environment: EnvironmentContext) => {
+      const { config } = environment;
       const baseOptions = getDefaultBabelOptions(config, api.context);
 
       const mergedOptions = applyUserBabelConfig(

@@ -4,9 +4,10 @@ import type {
   EnvironmentConfig,
   HtmlBasicTag,
   MergedEnvironmentConfig,
+  NormalizedEnvironmentConfig,
   RsbuildConfig,
 } from './config';
-import type { RsbuildTarget } from './rsbuild';
+import type { RsbuildEntry, RsbuildTarget } from './rsbuild';
 import type { Rspack, RspackConfig } from './rspack';
 import type { MultiStats, Stats } from './stats';
 import type { WebpackConfig } from './thirdParty';
@@ -14,11 +15,13 @@ import type { MaybePromise, NodeEnv } from './utils';
 
 export type OnBeforeBuildFn<B = 'rspack'> = (params: {
   bundlerConfigs?: B extends 'rspack' ? RspackConfig[] : WebpackConfig[];
+  environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
 
 export type OnAfterBuildFn = (params: {
   isFirstCompile: boolean;
   stats?: Stats | MultiStats;
+  environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
 
 export type OnCloseDevServerFn = () => MaybePromise<void>;
@@ -28,7 +31,9 @@ export type OnDevCompileDoneFn = (params: {
   stats: Stats | MultiStats;
 }) => MaybePromise<void>;
 
-export type OnBeforeStartDevServerFn = () => MaybePromise<void>;
+export type OnBeforeStartDevServerFn = (params: {
+  environments: Record<string, EnvironmentContext>;
+}) => MaybePromise<void>;
 
 export type OnBeforeStartProdServerFn = () => MaybePromise<void>;
 
@@ -53,7 +58,10 @@ export type OnBeforeCreateCompilerFn<B = 'rspack'> = (params: {
 
 export type OnAfterCreateCompilerFn<
   Compiler = Rspack.Compiler | Rspack.MultiCompiler,
-> = (params: { compiler: Compiler }) => MaybePromise<void>;
+> = (params: {
+  compiler: Compiler;
+  environments: Record<string, EnvironmentContext>;
+}) => MaybePromise<void>;
 
 export type OnExitFn = () => void;
 
@@ -77,8 +85,8 @@ export type ModifyHTMLTagsContext = {
    * @example 'index.html'
    */
   filename: string;
-  /** The name of the environment to which this build belongs. */
-  environment: string;
+  /** The related environment context. */
+  environment: EnvironmentContext;
 };
 
 export type ModifyHTMLTagsFn = (
@@ -111,6 +119,17 @@ export type ModifyEnvironmentConfigFn = (
   utils: ModifyEnvironmentConfigUtils,
 ) => MaybePromise<MergedEnvironmentConfig | void>;
 
+export type EnvironmentContext = {
+  index: number;
+  name: string;
+  entry: RsbuildEntry;
+  htmlPaths: Record<string, string>;
+  distPath: string;
+  browserslist: string[];
+  tsconfigPath?: string;
+  config: NormalizedEnvironmentConfig;
+};
+
 export type ModifyChainUtils = {
   env: NodeEnv;
   isDev: boolean;
@@ -119,7 +138,7 @@ export type ModifyChainUtils = {
   isServer: boolean;
   isWebWorker: boolean;
   CHAIN_ID: ChainIdentifier;
-  environment: string;
+  environment: EnvironmentContext;
   HtmlPlugin: typeof HtmlWebpackPlugin;
 };
 

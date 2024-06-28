@@ -13,7 +13,7 @@ export const pluginTarget = (): RsbuildPlugin => ({
           return;
         }
 
-        const { browserslist } = api.context.environments[environment];
+        const { browserslist } = environment;
         const esVersion = browserslistToESVersion(browserslist);
 
         if (target === 'web-worker') {

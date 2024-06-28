@@ -88,7 +88,7 @@ export const pluginResolve = (): RsbuildPlugin => ({
     api.modifyBundlerChain({
       order: 'pre',
       handler: (chain, { environment, CHAIN_ID }) => {
-        const config = api.getNormalizedConfig({ environment });
+        const { config } = environment;
 
         applyExtensions({ chain });
 
@@ -104,8 +104,7 @@ export const pluginResolve = (): RsbuildPlugin => ({
     });
 
     api.modifyRspackConfig(async (rspackConfig, { environment }) => {
-      const { tsconfigPath } = api.context.environments[environment];
-      const config = api.getNormalizedConfig({ environment });
+      const { tsconfigPath, config } = environment;
 
       if (tsconfigPath && config.source.aliasStrategy === 'prefer-tsconfig') {
         rspackConfig.resolve ||= {};

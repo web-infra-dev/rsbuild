@@ -5,14 +5,12 @@ export const pluginNonce = (): RsbuildPlugin => ({
   name: 'rsbuild:nonce',
 
   setup(api) {
-    api.onAfterCreateCompiler(({ compiler }) => {
-      const nonces = Object.keys(api.context.environments).map(
-        (environment) => {
-          const { nonce } = api.getNormalizedConfig({ environment }).security;
+    api.onAfterCreateCompiler(({ compiler, environments }) => {
+      const nonces = Object.values(environments).map((environment) => {
+        const { nonce } = environment.config.security;
 
-          return nonce;
-        },
-      );
+        return nonce;
+      });
 
       if (!nonces.some((nonce) => !!nonce)) {
         return;
@@ -43,7 +41,7 @@ export const pluginNonce = (): RsbuildPlugin => ({
       // ensure `nonce` can be applied to all tags
       order: 'post',
       handler: ({ headTags, bodyTags }, { environment }) => {
-        const config = api.getNormalizedConfig({ environment });
+        const { config } = environment;
         const { nonce } = config.security;
         const allTags = [...headTags, ...bodyTags];
 

@@ -61,8 +61,7 @@ export const pluginAdaptor = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment, target }) => {
-      const config = api.getNormalizedConfig({ environment });
-      const { tsconfigPath } = api.context.environments[environment];
+      const { config, tsconfigPath } = environment;
 
       if (tsconfigPath && config.source.aliasStrategy === 'prefer-tsconfig') {
         await applyTsConfigPathsPlugin({
@@ -80,7 +79,7 @@ export const pluginAdaptor = (): RsbuildPlugin => ({
         const { ProgressPlugin } = await import('./progress/ProgressPlugin');
         chain.plugin(CHAIN_ID.PLUGIN.PROGRESS).use(ProgressPlugin, [
           {
-            id: environment,
+            id: environment.name,
             ...(progress === true ? {} : progress),
           },
         ]);

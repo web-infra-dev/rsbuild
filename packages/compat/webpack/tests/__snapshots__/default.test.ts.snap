@@ -330,7 +330,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "version": 5,
     },
     HtmlBasicPlugin {
-      "environment": "web",
+      "getEnvironment": [Function],
       "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {
@@ -761,7 +761,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
       "version": 5,
     },
     HtmlBasicPlugin {
-      "environment": "web",
+      "getEnvironment": [Function],
       "modifyTagsFn": [Function],
       "name": "HtmlBasicPlugin",
       "options": {

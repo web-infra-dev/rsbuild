@@ -101,7 +101,7 @@ exports[`plugins/styled-components > should enable ssr option when target contai
                 {
                   "displayName": true,
                   "pure": false,
-                  "ssr": false,
+                  "ssr": true,
                   "transpileTemplateLiterals": true,
                 },
               ],
@@ -169,7 +169,7 @@ exports[`plugins/styled-components > should enable ssr option when target contai
                 {
                   "displayName": true,
                   "pure": false,
-                  "ssr": false,
+                  "ssr": true,
                   "transpileTemplateLiterals": true,
                 },
               ],

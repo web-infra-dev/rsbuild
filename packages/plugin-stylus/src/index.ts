@@ -28,7 +28,7 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
-      const config = api.getNormalizedConfig({ environment });
+      const { config } = environment;
 
       const mergedOptions = reduceConfigs({
         initial: {

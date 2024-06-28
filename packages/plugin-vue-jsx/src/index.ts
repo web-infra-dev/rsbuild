@@ -19,7 +19,7 @@ export function pluginVueJsx(options: PluginVueJsxOptions = {}): RsbuildPlugin {
     setup(api) {
       api.modifyBundlerChain(
         async (chain, { CHAIN_ID, environment, isProd, target }) => {
-          const config = api.getNormalizedConfig({ environment });
+          const { config } = environment;
 
           modifyBabelLoaderOptions({
             chain,
