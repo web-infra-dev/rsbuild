@@ -108,7 +108,7 @@ export const pluginMinimize = (): RsbuildPlugin => ({
     }
 
     api.modifyBundlerChain(async (chain, { isProd, environment }) => {
-      const config = environment.normalizedConfig;
+      const { config } = environment;
       const isMinimize = isProd && config.output.minify !== false;
 
       if (!isMinimize) {

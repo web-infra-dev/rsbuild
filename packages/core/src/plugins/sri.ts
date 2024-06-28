@@ -25,7 +25,7 @@ export const pluginSri = (): RsbuildPlugin => ({
     const placeholder = 'RSBUILD_INTEGRITY_PLACEHOLDER:';
 
     const getAlgorithm = (environment: EnvironmentContext) => {
-      const config = environment.normalizedConfig;
+      const { config } = environment;
       const { sri } = config.security;
       const enable = sri.enable === 'auto' ? isProd() : sri.enable;
 

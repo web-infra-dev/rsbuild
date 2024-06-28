@@ -246,7 +246,7 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
           return;
         }
 
-        const config = environment.normalizedConfig;
+        const { config } = environment;
         const defaultConfig: Exclude<SplitChunks, false> = {
           // Optimize both `initial` and `async` chunks
           chunks: 'all',

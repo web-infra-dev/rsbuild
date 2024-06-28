@@ -9,7 +9,7 @@ export const pluginLazyCompilation = (): RsbuildPlugin => ({
         return;
       }
 
-      const config = environment.normalizedConfig;
+      const { config } = environment;
 
       const options = config.dev?.lazyCompilation;
       if (!options) {

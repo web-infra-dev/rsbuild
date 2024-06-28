@@ -42,7 +42,7 @@ export function pluginBundleAnalyzer(): RsbuildPlugin {
       });
 
       api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
-        const config = environment.normalizedConfig;
+        const { config } = environment;
 
         if (!isUseAnalyzer(config)) {
           return;

@@ -5,7 +5,7 @@ export const pluginMoment = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { environment, bundler }) => {
-      const config = environment.normalizedConfig;
+      const { config } = environment;
 
       if (config.performance.removeMomentLocale) {
         // Moment.js includes a lots of locale data by default.

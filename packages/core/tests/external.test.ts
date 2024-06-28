@@ -21,7 +21,7 @@ describe('plugin-external', () => {
 
     await modifyBundlerChainCb(chain, {
       environment: {
-        normalizedConfig: {
+        config: {
           output: {
             externals: ['react', /@swc\/.*/],
           },

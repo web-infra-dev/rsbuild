@@ -6,12 +6,7 @@ exports[`environment config > should normalize context correctly 1`] = `
     "browserslist": [
       "node >= 16",
     ],
-    "distPath": "<ROOT>/dist1/server",
-    "entry": {},
-    "htmlPaths": {},
-    "index": 0,
-    "name": "ssr",
-    "normalizedConfig": {
+    "config": {
       "dev": {
         "assetPrefix": "/",
         "client": {
@@ -125,6 +120,11 @@ exports[`environment config > should normalize context correctly 1`] = `
         },
       },
     },
+    "distPath": "<ROOT>/dist1/server",
+    "entry": {},
+    "htmlPaths": {},
+    "index": 0,
+    "name": "ssr",
     "target": "node",
     "tsconfigPath": undefined,
   },
@@ -135,12 +135,7 @@ exports[`environment config > should normalize context correctly 1`] = `
       "firefox >= 78",
       "safari >= 14",
     ],
-    "distPath": "<ROOT>/dist1",
-    "entry": {},
-    "htmlPaths": {},
-    "index": 1,
-    "name": "web",
-    "normalizedConfig": {
+    "config": {
       "dev": {
         "assetPrefix": "/",
         "client": {
@@ -254,6 +249,11 @@ exports[`environment config > should normalize context correctly 1`] = `
         },
       },
     },
+    "distPath": "<ROOT>/dist1",
+    "entry": {},
+    "htmlPaths": {},
+    "index": 1,
+    "name": "web",
     "target": "web",
     "tsconfigPath": undefined,
   },

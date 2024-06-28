@@ -22,7 +22,7 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyHTMLTags(({ headTags, bodyTags }, { environment }) => {
-      const config = environment.normalizedConfig;
+      const { config } = environment;
       const { dnsPrefetch, preconnect } = config.performance;
 
       if (dnsPrefetch) {
@@ -51,7 +51,7 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
         return;
       }
 
-      const config = environment.normalizedConfig;
+      const { config } = environment;
       const {
         performance: { preload, prefetch },
       } = config;

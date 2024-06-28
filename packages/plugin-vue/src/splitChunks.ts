@@ -15,7 +15,7 @@ export const applySplitChunksRule = (
   },
 ): void => {
   api.modifyBundlerChain((chain, { environment }) => {
-    const config = environment.normalizedConfig;
+    const { config } = environment;
     if (config.performance.chunkSplit.strategy !== 'split-by-experience') {
       return;
     }

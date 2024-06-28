@@ -36,13 +36,13 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
       order: 'pre',
       handler: async (chain, utils) => {
         const { CHAIN_ID, environment } = utils;
-        const { normalizedConfig: rsbuildConfig, browserslist } = environment;
+        const { config: environmentConfig, browserslist } = environment;
         const { rootPath } = api.context;
 
         const swcConfigs = await applyPluginConfig(
           options,
           utils,
-          rsbuildConfig,
+          environmentConfig,
           rootPath,
           browserslist,
         );
@@ -55,7 +55,7 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
           applyScriptCondition({
             rule: chain.module.rule(CHAIN_ID.RULE.JS),
             chain,
-            config: rsbuildConfig,
+            config: environmentConfig,
             context: api.context,
             includes: [],
             excludes: [],
@@ -115,10 +115,10 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
     });
 
     api.modifyBundlerChain((chain, { CHAIN_ID, isProd, environment }) => {
-      const rsbuildConfig = environment.normalizedConfig;
+      const environmentConfig = environment.config;
 
-      if (checkUseMinify(mainConfig, rsbuildConfig, isProd)) {
-        const { minify } = rsbuildConfig.output;
+      if (checkUseMinify(mainConfig, environmentConfig, isProd)) {
+        const { minify } = environmentConfig.output;
         const minifyJs =
           minify === true || (typeof minify === 'object' && minify.js);
         const minifyCss =
@@ -130,7 +130,7 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
             .use(SwcMinimizerPlugin, [
               {
                 jsMinify: mainConfig.jsMinify ?? mainConfig.jsc?.minify ?? true,
-                rsbuildConfig,
+                environmentConfig,
               },
             ]);
         }
@@ -141,7 +141,7 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
             .use(SwcMinimizerPlugin, [
               {
                 cssMinify: minifyCss ? mainConfig.cssMinify ?? true : false,
-                rsbuildConfig,
+                environmentConfig,
               },
             ]);
         }

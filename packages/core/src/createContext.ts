@@ -155,7 +155,7 @@ export async function updateEnvironmentContext(
       browserslist,
       htmlPaths,
       tsconfigPath,
-      normalizedConfig: config,
+      config,
     };
   }
 }

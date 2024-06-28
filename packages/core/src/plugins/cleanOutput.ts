@@ -18,7 +18,7 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
   setup(api) {
     const clean = async (environment: EnvironmentContext) => {
       const { rootPath } = api.context;
-      const { normalizedConfig: config, distPath } = environment;
+      const { config, distPath } = environment;
 
       let { cleanDistPath } = config.output;
 

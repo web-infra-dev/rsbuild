@@ -109,7 +109,7 @@ export const pluginCache = (): RsbuildPlugin => ({
     }
 
     api.modifyBundlerChain(async (chain, { environment, env }) => {
-      const config = environment.normalizedConfig;
+      const { config } = environment;
       const { buildCache } = config.performance;
 
       if (buildCache === false) {

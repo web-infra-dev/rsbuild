@@ -105,7 +105,7 @@ export const pluginBabel = (
 
   setup(api) {
     const getBabelOptions = async (environment: EnvironmentContext) => {
-      const config = environment.normalizedConfig;
+      const { config } = environment;
       const baseOptions = getDefaultBabelOptions(config, api.context);
 
       const mergedOptions = applyUserBabelConfig(

@@ -128,7 +128,7 @@ export type EnvironmentContext = {
   distPath: string;
   browserslist: string[];
   tsconfigPath?: string;
-  normalizedConfig: NormalizedEnvironmentConfig;
+  config: NormalizedEnvironmentConfig;
 };
 
 export type ModifyChainUtils = {

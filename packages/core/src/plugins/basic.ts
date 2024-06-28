@@ -19,7 +19,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain(
       (chain, { env, isProd, target, bundler, environment, CHAIN_ID }) => {
-        const config = environment.normalizedConfig;
+        const { config } = environment;
 
         chain.name(environment.name);
 

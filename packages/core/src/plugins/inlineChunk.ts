@@ -13,7 +13,7 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
         return;
       }
 
-      const config = environment.normalizedConfig;
+      const { config } = environment;
       const { InlineChunkHtmlPlugin } = await import(
         '../rspack/InlineChunkHtmlPlugin'
       );

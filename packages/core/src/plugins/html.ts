@@ -278,7 +278,7 @@ export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain(
       async (chain, { HtmlPlugin, isProd, CHAIN_ID, environment }) => {
-        const config = environment.normalizedConfig;
+        const { config } = environment;
 
         const htmlPaths = api.getHTMLPaths({ environment: environment.name });
         if (Object.keys(htmlPaths).length === 0) {
@@ -340,7 +340,7 @@ export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
               htmlInfo.templateContent = templateContent;
             }
 
-            const tagConfig = getTagConfig(environment.normalizedConfig);
+            const tagConfig = getTagConfig(environment.config);
             if (tagConfig) {
               htmlInfo.tagConfig = tagConfig;
             }
@@ -414,7 +414,7 @@ export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
       // ensure `crossorigin` and `nonce` can be applied to all tags
       order: 'post',
       handler: ({ headTags, bodyTags }, { environment }) => {
-        const config = environment.normalizedConfig;
+        const { config } = environment;
         const { crossorigin } = config.html;
         const allTags = [...headTags, ...bodyTags];
 

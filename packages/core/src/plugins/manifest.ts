@@ -146,7 +146,7 @@ export const pluginManifest = (): RsbuildPlugin => ({
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
       const {
         output: { manifest },
-      } = environment.normalizedConfig;
+      } = environment.config;
 
       if (manifest === false) {
         return;
