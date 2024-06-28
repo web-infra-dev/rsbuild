@@ -12,13 +12,6 @@ export type LightningCSSLoaderOptions = LightningCSSTransformOptions & {
   implementation?: Lightningcss;
 };
 
-export type LightningCSSMinifyPluginOptions = Omit<
-  LightningCSSTransformOptions,
-  'minify'
-> & {
-  implementation?: Lightningcss;
-};
-
 export type PluginLightningcssOptions = {
   /**
    * @see https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts
@@ -29,14 +22,6 @@ export type PluginLightningcssOptions = {
    */
   transform?: boolean | LightningCSSTransformOptions;
   /**
-   * @see https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts
-   * @default
-   * {
-   *   targets: browserslistToTargets(browserslist)
-   * }
-   */
-  minify?: boolean | LightningCSSTransformOptions;
-  /**
    * lightningcss instance
    * @example
    * import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
@@ -44,9 +29,6 @@ export type PluginLightningcssOptions = {
    *
    * pluginLightningcss({
    *    implementation: lightningcss,
-   *    minify: {
-   *      exclude: lightningcss.Features.ColorFunction
-   *    }
    * })
    */
   implementation?: unknown; // loose type of `typeof import('lightningcss')`

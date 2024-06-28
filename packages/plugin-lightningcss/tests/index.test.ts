@@ -43,56 +43,6 @@ describe('plugins/lightningcss', () => {
     process.env.NODE_ENV = 'test';
   });
 
-  it('plugin-lightningcss should not set lightningCssMinifyPlugin with minify: false', async () => {
-    process.env.NODE_ENV = 'production';
-    const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
-        output: {
-          minify: false,
-        },
-      },
-      plugins: [
-        pluginLightningcss({
-          minify: {
-            errorRecovery: true,
-            exclude: lightningcss.Features.Colors,
-          },
-        }),
-      ],
-    });
-
-    const config = await rsbuild.unwrapConfig();
-    expect(config.optimization).toMatchSnapshot();
-
-    process.env.NODE_ENV = 'test';
-  });
-
-  it('plugin-lightningcss should not set lightningCssMinifyPlugin with minify.css: false', async () => {
-    process.env.NODE_ENV = 'production';
-    const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
-        output: {
-          minify: {
-            css: false,
-          },
-        },
-      },
-      plugins: [
-        pluginLightningcss({
-          minify: {
-            errorRecovery: true,
-            exclude: lightningcss.Features.Colors,
-          },
-        }),
-      ],
-    });
-
-    const config = await rsbuild.unwrapConfig();
-    expect(config.optimization).toMatchSnapshot();
-
-    process.env.NODE_ENV = 'test';
-  });
-
   it('plugin-lightningcss should be configurable by users', async () => {
     process.env.NODE_ENV = 'production';
 
@@ -119,14 +69,6 @@ describe('plugins/lightningcss', () => {
                 },
               },
             },
-            minify: {
-              errorRecovery: true,
-              exclude: lightningcss.Features.Colors,
-              cssModules: {
-                dashedIdents: true,
-                pattern: '[hash]-[local]',
-              },
-            },
           }),
         ],
       },
@@ -149,7 +91,6 @@ describe('plugins/lightningcss', () => {
         plugins: [
           pluginLightningcss({
             transform: true,
-            minify: true,
           }),
         ],
       },
@@ -171,7 +112,6 @@ describe('plugins/lightningcss', () => {
       plugins: [
         pluginLightningcss({
           transform: false,
-          minify: false,
         }),
       ],
     });
