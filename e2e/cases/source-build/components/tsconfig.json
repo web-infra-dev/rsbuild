@@ -16,6 +16,9 @@
   "references": [
     {
       "path": "../utils"
+    },
+    {
+      "path": "../utils2"
     }
   ],
   "include": ["src"]

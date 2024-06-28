@@ -41,7 +41,7 @@ export function applyCSSMinimizer(
   chain: RspackChain,
   CHAIN_ID: ChainIdentifier,
   options: PluginCssMinimizerOptions = {},
-) {
+): void {
   const mergedOptions: CssMinimizerPluginOptions = reduceConfigs({
     initial: {
       minify: CssMinimizerWebpackPlugin.cssnanoMinify,

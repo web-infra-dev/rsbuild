@@ -17,7 +17,7 @@ describe('plugin-resolve', () => {
       '.mjs',
       '.json',
     ]);
-    expect(bundlerConfigs[0].resolve?.tsConfigPath).toBeDefined();
+    expect(bundlerConfigs[0].resolve?.tsConfig?.configFile).toBeDefined();
   });
 
   it('should not apply tsConfigPath when aliasStrategy is "prefer-alias"', async () => {

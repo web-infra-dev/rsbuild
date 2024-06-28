@@ -23,7 +23,9 @@ const getDefaultPresetEnvOption = (
   };
 };
 
-export const getBabelConfigForWeb = (options: WebPresetOptions) => {
+export const getBabelConfigForWeb = (
+  options: WebPresetOptions,
+): BabelConfig => {
   if (options.presetEnv !== false) {
     options.presetEnv = {
       ...getDefaultPresetEnvOption(options),

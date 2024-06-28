@@ -2,35 +2,6 @@ import { build, gotoPage } from '@e2e/helper';
 import { type Page, expect, test } from '@playwright/test';
 import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
 import { pluginStylus } from '@rsbuild/plugin-stylus';
-import { pluginSwc } from '@rsbuild/plugin-swc';
-
-test('should minimize CSS correctly by lightningcss-minify', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    rsbuildConfig: {
-      html: {
-        template: './src/index.html',
-      },
-      plugins:
-        process.env.PROVIDE_TYPE === 'rspack'
-          ? [
-              pluginLightningcss({
-                transform: false,
-              }),
-            ]
-          : [pluginSwc(), pluginLightningcss({ transform: false })],
-    },
-  });
-
-  const files = await rsbuild.unwrapOutputJSON();
-
-  const content =
-    files[Object.keys(files).find((file) => file.endsWith('.css'))!];
-
-  expect(content).toContain(
-    '.test-minify{color:#ffff00b3;background-color:#545c3d;border-color:#669;width:200px;height:calc(75.37% - 763.5px);transition:background .2s;transform:translateY(50px)}',
-  );
-});
 
 async function expectPageToBeNormal(
   page: Page,
@@ -56,7 +27,7 @@ async function expectPageToBeNormal(
   await rsbuild.close();
 }
 
-test('should transform css by lightningcss-loader and work normally with other pre-processors', async ({
+test('should transform CSS by lightningcss-loader and work normally with other pre-processors', async ({
   page,
 }) => {
   const rsbuild = await build({
@@ -66,11 +37,7 @@ test('should transform css by lightningcss-loader and work normally with other p
       html: {
         template: './src/index.html',
       },
-      plugins: [
-        pluginLightningcss({
-          minify: false,
-        }),
-      ],
+      plugins: [pluginLightningcss()],
     },
   });
   const bundlerConfigs = await rsbuild.instance.initConfigs();
@@ -78,7 +45,7 @@ test('should transform css by lightningcss-loader and work normally with other p
   await expectPageToBeNormal(page, rsbuild);
 });
 
-test('should transform css by lightningcss-loader and work with @rsbuild/plugin-stylus', async ({
+test('should transform CSS by lightningcss-loader and work with @rsbuild/plugin-stylus', async ({
   page,
 }) => {
   const rsbuild = await build({
@@ -93,12 +60,7 @@ test('should transform css by lightningcss-loader and work with @rsbuild/plugin-
           index: './src/_styl.js',
         },
       },
-      plugins: [
-        pluginLightningcss({
-          minify: false,
-        }),
-        pluginStylus(),
-      ],
+      plugins: [pluginLightningcss(), pluginStylus()],
     },
   });
   const bundlerConfigs = await rsbuild.instance.initConfigs();

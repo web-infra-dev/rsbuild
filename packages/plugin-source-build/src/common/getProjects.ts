@@ -1,4 +1,4 @@
-import type { Project } from '../project/project';
+import type { Project } from '../project';
 import type { IMonorepoBaseData } from './getBaseData';
 
 export type GetProjectsFunc = (

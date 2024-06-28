@@ -8,8 +8,8 @@
   <a href="https://discord.gg/XsaKEEk4mW">
     <img src="https://img.shields.io/badge/chat-discord-blue?style=flat-square&logo=discord&colorA=564341&colorB=EDED91" alt="discord channel" />
   </a>
-  <a href="https://npmjs.com/package/@rsbuild/shared?activeTab=readme">
-   <img src="https://img.shields.io/npm/v/@rsbuild/shared?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" />
+  <a href="https://npmjs.com/package/@rsbuild/core?activeTab=readme">
+   <img src="https://img.shields.io/npm/v/@rsbuild/core?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" />
   </a>
   <a href="https://npmcharts.com/compare/@rsbuild/core?minimal=true">
     <img src="https://img.shields.io/npm/dm/@rsbuild/core.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="downloads" />
@@ -18,7 +18,7 @@
     <img src="https://img.shields.io/node/v/@rsbuild/core.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="node version">
   </a>
   <a href="https://github.com/web-infra-dev/rsbuild/blob/main/LICENSE">
-    <img src="https://img.shields.io/npm/l/@rsbuild/shared?style=flat-square&colorA=564341&colorB=EDED91" alt="license" />
+    <img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="license" />
   </a>
 </p>
 
@@ -52,7 +52,7 @@ Rsbuild 与 Vite 有许多相似之处，它们皆致力于提升前端的开发
 
 Rsbuild 的构建性能与原生 Rspack 处于同一水平，以下是构建 1000 个 React 组件的时间：
 
-![benchmark](https://github.com/web-infra-dev/rsbuild/assets/7237365/2909b68f-8928-49c6-8eb3-cd1486dbf876)
+![benchmark](https://assets.rspack.dev/rsbuild/assets/benchmark-v049.png)
 
 > 以上数据来自 [performance-compare](https://github.com/rspack-contrib/performance-compare) benchmark。
 

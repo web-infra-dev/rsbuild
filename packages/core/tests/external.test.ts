@@ -22,7 +22,7 @@ describe('plugin-external', () => {
 
     pluginExternals().setup(api);
 
-    const chain = await getBundlerChain();
+    const chain = getBundlerChain();
 
     await modifyBundlerChainCb(chain, { environment: 'client' });
 

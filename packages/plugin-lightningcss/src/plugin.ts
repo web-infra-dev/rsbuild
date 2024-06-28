@@ -82,42 +82,6 @@ const applyLightningCSSLoader = ({
   rule.uses.delete(CHAIN_ID.USE.POSTCSS);
 };
 
-const applyLightningCSSMinifyPlugin = async ({
-  chain,
-  CHAIN_ID,
-  targets,
-  options,
-}: {
-  chain: RspackChain;
-  CHAIN_ID: ChainIdentifier;
-  targets: Targets;
-  options: PluginLightningcssOptions | undefined;
-}) => {
-  const defaultOptions = {
-    targets,
-  } satisfies LightningCSSLoaderOptions;
-
-  const { implementation } = options ?? {};
-
-  if (options?.minify === true) {
-    options.minify = {};
-  }
-
-  const mergedOptions = reduceConfigs<LightningCSSTransformOptions>({
-    initial: defaultOptions,
-    config: {
-      ...(implementation ? { implementation } : {}),
-      ...options?.minify,
-    },
-  });
-
-  const { LightningCSSMinifyPlugin } = await import('./minimizer');
-  chain.optimization
-    .minimizer(CHAIN_ID.MINIMIZER.CSS)
-    .use(LightningCSSMinifyPlugin, [mergedOptions])
-    .end();
-};
-
 const validateImplementation = (implementation: unknown) => {
   if (!implementation) {
     return;
@@ -176,23 +140,6 @@ export const pluginLightningcss = (
           });
         }
       },
-    });
-
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment, isProd }) => {
-      const config = api.getNormalizedConfig({ environment });
-      const { minify } = config.output;
-      const isMinimize =
-        isProd &&
-        (minify === true || (typeof minify === 'object' && minify.css));
-
-      if (isMinimize && options?.minify !== false) {
-        await applyLightningCSSMinifyPlugin({
-          chain,
-          CHAIN_ID,
-          targets,
-          options,
-        });
-      }
     });
   },
 });

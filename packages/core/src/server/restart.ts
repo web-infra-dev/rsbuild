@@ -10,7 +10,7 @@ let cleaners: Cleaner[] = [];
 /**
  * Add a cleaner to handle side effects
  */
-export const onBeforeRestartServer = (cleaner: Cleaner) => {
+export const onBeforeRestartServer = (cleaner: Cleaner): void => {
   cleaners.push(cleaner);
 };
 
@@ -20,7 +20,11 @@ const clearConsole = () => {
   }
 };
 
-export const restartDevServer = async ({ filePath }: { filePath: string }) => {
+export const restartDevServer = async ({
+  filePath,
+}: {
+  filePath: string;
+}): Promise<void> => {
   clearConsole();
 
   const filename = path.basename(filePath);

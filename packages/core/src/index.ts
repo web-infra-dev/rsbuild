@@ -12,7 +12,7 @@ export { createRsbuild } from './createRsbuild';
 export { loadConfig, defineConfig } from './config';
 
 // Rsbuild version
-export const version = RSBUILD_VERSION;
+export const version: string = RSBUILD_VERSION;
 
 // Rspack instance
 export { rspack };

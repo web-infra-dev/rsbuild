@@ -8,7 +8,7 @@ import { SourceCode } from 'rspress/theme';
 [Lightning CSS](https://lightningcss.dev) is a high performance CSS parser, transformer and minifier written in Rust. It supports parsing and transforming many modern CSS features into syntax supported by target browsers, and also provides a better compression ratio.
 :::
 
-The Lightning CSS plugin will use `lightningcss-loader` to replace the builtin `postcss-loader` in Rsbuild to reduce the performance overhead of PostCSS and autoprefixer, and will use `LightningCSSMinifyPlugin` to replace the default builtin CSS minifier in Rspack to obtain greater compression ratios.
+The Lightning CSS plugin will use `lightningcss-loader` to replace the builtin `postcss-loader` in Rsbuild to reduce the performance overhead of PostCSS and autoprefixer.
 
 ## Quick Start
 
@@ -88,46 +88,11 @@ pluginLightningcss({
 });
 ```
 
-- **Example:** Disable CSS transform of lightningcss, leaving only CSS minify.
+- **Example:** Disable CSS transform of lightningcss.
 
 ```ts
 pluginLightningcss({
   transform: false,
-});
-```
-
-### minify
-
-Use Lightning CSS instead of Rspack's builtin CSS minifier. For options passed to `lightningcss`, please refer to the [lightningcss repository](https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts) for detailed usage.
-
-- **Type:** `false | lightningcss.TransformOptions<CustomAtRules>`
-- **Default:**
-
-```ts
-const defaultOptions = {
-  targets: browserslistToTargets(browserslist(browserslistUserConfig)),
-};
-```
-
-- **Example:** Disable lightning CSS minify for `ColorFunctions` and `HexAlphaColors`
-
-```ts
-import { lightningcss, pluginLightningcss } from '@rsbuild/plugin-lightningcss';
-
-pluginLightningcss({
-  minify: {
-    exclude:
-      lightningcss.Features.ColorFunction |
-      lightningcss.Features.HexAlphaColors,
-  },
-});
-```
-
-- **Example:** Disable the CSS minify of lightningcss, leaving only the CSS transform.
-
-```ts
-pluginLightningcss({
-  minify: false,
 });
 ```
 
@@ -144,8 +109,5 @@ import * as lightningcss from 'lightningcss';
 
 pluginLightningcss({
   implementation: lightningcss,
-  minify: {
-    exclude: lightningcss.Features.ColorFunction,
-  },
 });
 ```

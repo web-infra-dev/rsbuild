@@ -13,7 +13,7 @@ export const isClientCompiler = (compiler: {
   options: {
     target?: Compiler['options']['target'];
   };
-}) => {
+}): boolean => {
   const { target } = compiler.options;
 
   if (target) {
@@ -23,7 +23,7 @@ export const isClientCompiler = (compiler: {
   return false;
 };
 
-export const isNodeCompiler = (compiler: {
+const isNodeCompiler = (compiler: {
   options: {
     target?: Compiler['options']['target'];
   };
@@ -49,7 +49,7 @@ export const setupServerHooks = (
     };
   },
   hookCallbacks: ServerCallbacks,
-) => {
+): void => {
   // TODO: node SSR HMR is not supported yet
   if (isNodeCompiler(compiler)) {
     return;

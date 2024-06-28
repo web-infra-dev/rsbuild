@@ -16,6 +16,7 @@ import type { RsbuildContext } from './context';
 import type {
   ModifyBundlerChainFn,
   ModifyChainUtils,
+  ModifyEnvironmentConfigFn,
   ModifyHTMLTagsFn,
   ModifyRsbuildConfigFn,
   OnAfterBuildFn,
@@ -249,6 +250,7 @@ export type RsbuildPluginAPI = Readonly<{
 
   modifyHTMLTags: PluginHook<ModifyHTMLTagsFn>;
   modifyRsbuildConfig: PluginHook<ModifyRsbuildConfigFn>;
+  modifyEnvironmentConfig: PluginHook<ModifyEnvironmentConfigFn>;
   modifyBundlerChain: PluginHook<ModifyBundlerChainFn>;
   /** Only works when bundler is Rspack */
   modifyRspackConfig: PluginHook<ModifyRspackConfigFn>;

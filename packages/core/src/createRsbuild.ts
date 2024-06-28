@@ -9,7 +9,6 @@ import { createPluginManager } from './pluginManager';
 import type {
   CreateRsbuildOptions,
   InternalContext,
-  RsbuildConfig,
   RsbuildInstance,
   RsbuildProvider,
 } from './types';
@@ -84,10 +83,10 @@ async function applyDefaultPlugins(
     pluginSplitChunks(),
     pluginOpen(),
     pluginInlineChunk(),
-    pluginBundleAnalyzer(),
     pluginRsdoctor(),
     pluginResourceHints(),
     pluginPerformance(),
+    pluginBundleAnalyzer(),
     pluginServer(),
     pluginManifest(),
     pluginModuleFederation(),
@@ -97,28 +96,6 @@ async function applyDefaultPlugins(
     pluginNonce(),
   ]);
 }
-
-/**
- * Omit unused keys from Rsbuild config passed by user
- */
-export const pickRsbuildConfig = (
-  rsbuildConfig: RsbuildConfig,
-): RsbuildConfig => {
-  const keys: Array<keyof RsbuildConfig> = [
-    'dev',
-    'html',
-    'tools',
-    'output',
-    'source',
-    'server',
-    'security',
-    'performance',
-    'moduleFederation',
-    'environments',
-    '_privateMeta',
-  ];
-  return pick(rsbuildConfig, keys);
-};
 
 export async function createRsbuild(
   options: CreateRsbuildOptions = {},
@@ -135,7 +112,7 @@ export async function createRsbuild(
 
   const context = await createContext(
     rsbuildOptions,
-    pickRsbuildConfig(rsbuildOptions.rsbuildConfig),
+    rsbuildOptions.rsbuildConfig,
     rsbuildConfig.provider ? 'webpack' : 'rspack',
   );
 

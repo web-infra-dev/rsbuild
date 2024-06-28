@@ -1,5 +1,24 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`plugin-entry > should apply different environments entry config correctly 1`] = `
+[
+  {
+    "entry": {
+      "index": [
+        "src/index.client",
+      ],
+    },
+  },
+  {
+    "entry": {
+      "main": [
+        "src/index.ssr",
+      ],
+    },
+  },
+]
+`;
+
 exports[`plugin-entry > should apply environments entry config correctly 1`] = `
 [
   {

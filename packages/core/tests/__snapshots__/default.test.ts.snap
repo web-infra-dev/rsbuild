@@ -38,7 +38,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core-canary/dist/builtin-plugin/css-extract/loader.js",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
@@ -436,7 +436,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       ".mjs",
       ".json",
     ],
-    "tsConfigPath": "<ROOT>/packages/core/tests/tsconfig.json",
+    "tsConfig": {
+      "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
+    },
   },
   "target": [
     "web",
@@ -483,7 +485,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core-canary/dist/builtin-plugin/css-extract/loader.js",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
@@ -768,10 +770,17 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "affectedHooks": "compilation",
         "name": "SwcJsMinimizerRspackPlugin",
       },
-      SwcCssMinimizerRspackPlugin {
-        "_options": undefined,
+      LightningCssMinimizerRspackPlugin {
+        "_options": {
+          "browserslist": [
+            "defaults",
+          ],
+          "errorRecovery": false,
+          "removeUnusedLocalIdents": true,
+          "unusedSymbols": [],
+        },
         "affectedHooks": undefined,
-        "name": "SwcCssMinimizerRspackPlugin",
+        "name": "LightningCssMinimizerRspackPlugin",
       },
     ],
     "splitChunks": {
@@ -949,7 +958,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       ".mjs",
       ".json",
     ],
-    "tsConfigPath": "<ROOT>/packages/core/tests/tsconfig.json",
+    "tsConfig": {
+      "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
+    },
   },
   "target": [
     "web",
@@ -1234,7 +1245,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "library": {
       "type": "commonjs2",
     },
-    "path": "<ROOT>/packages/core/tests/dist/server",
+    "path": "<ROOT>/packages/core/tests/dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
@@ -1265,7 +1276,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       ".mjs",
       ".json",
     ],
-    "tsConfigPath": "<ROOT>/packages/core/tests/tsconfig.json",
+    "tsConfig": {
+      "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
+    },
   },
   "target": "node",
 }
@@ -1317,7 +1330,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "test": /\\\\\\.css\\$/,
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core-canary/dist/builtin-plugin/css-extract/loader.js",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
@@ -1718,7 +1731,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
       ".mjs",
       ".json",
     ],
-    "tsConfigPath": "<ROOT>/packages/core/tests/tsconfig.json",
+    "tsConfig": {
+      "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
+    },
   },
   "target": [
     "web",

@@ -13,15 +13,15 @@ test('should compile Node addons correctly', async () => {
     file.endsWith('test.darwin.node'),
   );
 
-  expect(addonFile?.includes('server/test.darwin.node')).toBeTruthy();
+  expect(addonFile?.includes('/test.darwin.node')).toBeTruthy();
 
   expect(
-    fs.existsSync(join(__dirname, 'dist', 'server', 'test.darwin.node')),
+    fs.existsSync(join(__dirname, 'dist', 'test.darwin.node')),
   ).toBeTruthy();
 
   // the `test.darwin.node` is only compatible with darwin
   if (process.platform === 'darwin') {
-    const content = await import('./dist/server/index.js');
+    const content = await import('./dist/index.js');
     expect(typeof (content.default as any).readLength).toEqual('function');
   }
 });
@@ -61,14 +61,12 @@ test('should compile Node addons in the node_modules correctly', async () => {
     file.endsWith('other.node'),
   );
 
-  expect(addonFile?.includes('server/other.node')).toBeTruthy();
+  expect(addonFile?.includes('/other.node')).toBeTruthy();
 
-  expect(
-    fs.existsSync(join(__dirname, 'dist', 'server', 'other.node')),
-  ).toBeTruthy();
+  expect(fs.existsSync(join(__dirname, 'dist', 'other.node'))).toBeTruthy();
 
   if (process.platform === 'darwin') {
-    const content = await import('./dist/server/index.js');
+    const content = await import('./dist/index.js');
     expect(typeof (content.default as any).readLength).toEqual('function');
   }
 });

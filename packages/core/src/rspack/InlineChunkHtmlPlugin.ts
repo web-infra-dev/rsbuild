@@ -53,7 +53,7 @@ export class InlineChunkHtmlPlugin {
    * because the relative path of source code has been changed.
    * @param source
    */
-  updateSourceMappingURL({
+  private updateSourceMappingURL({
     source,
     compilation,
     publicPath,
@@ -85,7 +85,7 @@ export class InlineChunkHtmlPlugin {
     return source;
   }
 
-  matchTests(name: string, source: string, tests: InlineChunkTest[]) {
+  private matchTests(name: string, source: string, tests: InlineChunkTest[]) {
     return tests.some((test) => {
       if (isFunction(test)) {
         const size = source.length;
@@ -95,7 +95,7 @@ export class InlineChunkHtmlPlugin {
     });
   }
 
-  getInlinedScriptTag(
+  private getInlinedScriptTag(
     publicPath: string,
     tag: HtmlTagObject,
     compilation: Compilation,
@@ -142,7 +142,7 @@ export class InlineChunkHtmlPlugin {
     return ret;
   }
 
-  getInlinedCSSTag(
+  private getInlinedCSSTag(
     publicPath: string,
     tag: HtmlTagObject,
     compilation: Compilation,
@@ -187,7 +187,7 @@ export class InlineChunkHtmlPlugin {
     return ret;
   }
 
-  getInlinedTag(
+  private getInlinedTag(
     publicPath: string,
     tag: HtmlTagObject,
     compilation: Compilation,
@@ -215,7 +215,7 @@ export class InlineChunkHtmlPlugin {
     return tag;
   }
 
-  apply(compiler: Compiler) {
+  apply(compiler: Compiler): void {
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
       const publicPath = getPublicPathFromCompiler(compiler);
 

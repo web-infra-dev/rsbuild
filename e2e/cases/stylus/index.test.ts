@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import { join, resolve } from 'node:path';
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { build, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 import { pluginStylus } from '@rsbuild/plugin-stylus';
 import { pluginTypedCSSModules } from '@rsbuild/plugin-typed-css-modules';
 
@@ -14,29 +14,32 @@ const generatorTempDir = async (testDir: string) => {
   return () => fs.promises.rm(testDir, { force: true, recursive: true });
 };
 
-test('should compile stylus correctly with ts declaration', async () => {
-  const testDir = join(fixtures, 'test-temp-src-1');
-  const clear = await generatorTempDir(testDir);
+rspackOnlyTest(
+  'should compile stylus correctly with ts declaration',
+  async () => {
+    const testDir = join(fixtures, 'test-temp-src-1');
+    const clear = await generatorTempDir(testDir);
 
-  const rsbuild = await build({
-    cwd: __dirname,
-    plugins: [pluginStylus(), pluginTypedCSSModules()],
-    rsbuildConfig: {
-      source: {
-        entry: { index: resolve(testDir, 'index.js') },
+    const rsbuild = await build({
+      cwd: __dirname,
+      plugins: [pluginStylus(), pluginTypedCSSModules()],
+      rsbuildConfig: {
+        source: {
+          entry: { index: resolve(testDir, 'index.js') },
+        },
       },
-    },
-  });
-  const files = await rsbuild.unwrapOutputJSON();
+    });
+    const files = await rsbuild.unwrapOutputJSON();
 
-  const content =
-    files[Object.keys(files).find((file) => file.endsWith('.css'))!];
+    const content =
+      files[Object.keys(files).find((file) => file.endsWith('.css'))!];
 
-  expect(content).toMatch(
-    /body{color:#f00;font:14px Arial,sans-serif}\.title-class-\w{6}{font-size:14px}/,
-  );
+    expect(content).toMatch(
+      /body{color:red;font:14px Arial,sans-serif}\.title-class-\w{6}{font-size:14px}/,
+    );
 
-  expect(fs.existsSync(join(testDir, './b.module.styl.d.ts'))).toBeTruthy();
+    expect(fs.existsSync(join(testDir, './b.module.styl.d.ts'))).toBeTruthy();
 
-  await clear();
-});
+    await clear();
+  },
+);

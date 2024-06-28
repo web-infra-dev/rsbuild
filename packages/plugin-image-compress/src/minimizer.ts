@@ -11,7 +11,7 @@ export interface MinimizedResult {
 }
 
 export class ImageMinimizerPlugin {
-  name = IMAGE_MINIMIZER_PLUGIN_NAME;
+  name: string = IMAGE_MINIMIZER_PLUGIN_NAME;
 
   options: FinalOptions;
 
@@ -83,7 +83,7 @@ export class ImageMinimizerPlugin {
     await Promise.all(promises);
   }
 
-  apply(compiler: webpack.Compiler) {
+  apply(compiler: webpack.Compiler): void {
     const handleCompilation = (compilation: webpack.Compilation) => {
       compilation.hooks.processAssets.tapPromise(
         {

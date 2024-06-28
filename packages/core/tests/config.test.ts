@@ -9,7 +9,7 @@ describe('stringifyConfig', () => {
       plugins: [new DefinePlugin({ foo: 'bar' })],
     };
 
-    expect(await stringifyConfig(config)).toMatchSnapshot();
+    expect(stringifyConfig(config)).toMatchSnapshot();
   });
 
   it('should stringify Rspack config with verbose option correctly', async () => {
@@ -29,7 +29,7 @@ describe('stringifyConfig', () => {
       ],
     };
 
-    expect(await stringifyConfig(config, true)).toMatchSnapshot();
+    expect(stringifyConfig(config, true)).toMatchSnapshot();
   });
 
   it('should stringify Rsbuild config correctly', async () => {
@@ -41,6 +41,6 @@ describe('stringifyConfig', () => {
       },
     };
 
-    expect(await stringifyConfig(rsbuildConfig)).toMatchSnapshot();
+    expect(stringifyConfig(rsbuildConfig)).toMatchSnapshot();
   });
 });

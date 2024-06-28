@@ -107,10 +107,12 @@ function splitByExperience(ctx: SplitChunksContext): SplitChunks {
   };
 }
 
-export const MODULE_PATH_REGEX =
+export const MODULE_PATH_REGEX: RegExp =
   /.*[\\/]node_modules[\\/](?!\.pnpm[\\/])(?:(@[^\\/]+)[\\/])?([^\\/]+)/;
 
-export function getPackageNameFromModulePath(modulePath: string) {
+export function getPackageNameFromModulePath(
+  modulePath: string,
+): string | undefined {
   const handleModuleContext = modulePath?.match(MODULE_PATH_REGEX);
 
   if (!handleModuleContext) {

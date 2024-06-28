@@ -1,7 +1,7 @@
 import { color } from '@rsbuild/shared';
 import { type Logger, logger } from 'rslog';
 
-export const isDebug = () => {
+export const isDebug = (): boolean => {
   if (!process.env.DEBUG) {
     return false;
   }

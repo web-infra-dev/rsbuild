@@ -79,4 +79,9 @@ export function createLoader(): LoaderDefinitionFunction {
   };
 }
 
-export default createLoader();
+const loader: LoaderDefinitionFunction<
+  Record<string, unknown>,
+  Record<string, unknown>
+> = createLoader();
+
+export default loader;

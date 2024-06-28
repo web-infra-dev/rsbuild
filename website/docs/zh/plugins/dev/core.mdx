@@ -240,7 +240,7 @@ api.transform({ test: /\.pug$/ }, ({ code }) => {
 });
 ```
 
-- `targets`：匹配 Rsbuild [output.targets](/config/output/targets)，仅对匹配的 targets 应用当前 transform 函数。
+- `targets`：匹配 Rsbuild [output.target](/config/output/target)，仅对匹配的 targets 应用当前 transform 函数。
 
 ```js
 api.transform({ test: /\.pug$/, targets: ['web'] }, ({ code }) => {

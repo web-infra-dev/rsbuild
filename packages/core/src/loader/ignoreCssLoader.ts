@@ -1,6 +1,6 @@
 import type { LoaderContext } from '@rspack/core';
 
-export default function (this: LoaderContext<unknown>, source: string) {
+export default function (this: LoaderContext<unknown>, source: string): string {
   this?.cacheable(true);
 
   // if the source code include '___CSS_LOADER_EXPORT___'

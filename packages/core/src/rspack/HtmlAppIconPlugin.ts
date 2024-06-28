@@ -22,7 +22,7 @@ export class HtmlAppIconPlugin {
     this.iconPath = options.iconPath;
   }
 
-  apply(compiler: Compiler) {
+  apply(compiler: Compiler): void {
     if (!fs.existsSync(this.iconPath)) {
       throw new Error(
         `[${this.name}] Can not find the app icon, please check if the '${this.iconPath}' file exists'.`,

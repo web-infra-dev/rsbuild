@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugin-swc > should apply multiply environment configs correctly 1`] = `
+exports[`plugin-swc > should apply multiple environment configs correctly 1`] = `
 [
   {
     "module": {

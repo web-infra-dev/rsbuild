@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import type { MultiStats, Stats } from '@rsbuild/shared';
+import type { EnvironmentContext, Stats } from '@rsbuild/shared';
 import { run } from './runner';
 
 export type ServerUtils = {
@@ -8,19 +8,12 @@ export type ServerUtils = {
   distPath: string;
 };
 
-export const ssrLoadModule = async <T>(
-  stats: Stats | MultiStats,
+export const loadModule = async <T>(
+  stats: Stats,
   entryName: string,
   utils: ServerUtils,
 ): Promise<T> => {
-  // TODO：need a unique and accurate ssr environment identifier.
-  // get ssr bundle from server stats
-  const serverStats =
-    'stats' in stats
-      ? stats.stats.find((s) => s.compilation.options.target === 'node')!
-      : stats;
-
-  const { chunks, entrypoints, outputPath } = serverStats.toJson({
+  const { chunks, entrypoints, outputPath } = stats.toJson({
     all: false,
     chunks: true,
     entrypoints: true,
@@ -58,7 +51,7 @@ export const ssrLoadModule = async <T>(
   const res = await run(
     files[0],
     outputPath!,
-    serverStats.compilation.options,
+    stats.compilation.options,
     utils.readFileSync,
   );
 
@@ -67,7 +60,7 @@ export const ssrLoadModule = async <T>(
 
 export const getTransformedHtml = async (
   entryName: string,
-  utils: ServerUtils,
+  environment: EnvironmentContext,
 ) => {
   // TODO: should get html resource from stats?
   const htmlPaths = utils.getHTMLPaths();

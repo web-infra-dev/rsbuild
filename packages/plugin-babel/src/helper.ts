@@ -170,7 +170,9 @@ export const applyUserBabelConfig = (
   return defaultOptions;
 };
 
-export const getUseBuiltIns = (config: NormalizedConfig) => {
+export const getUseBuiltIns = (
+  config: NormalizedConfig,
+): false | 'usage' | 'entry' => {
   const { polyfill } = config.output;
   if (polyfill === 'off') {
     return false;
@@ -186,7 +188,7 @@ export const modifyBabelLoaderOptions = ({
   chain: RspackChain;
   CHAIN_ID: ChainIdentifier;
   modifier: (config: BabelTransformOptions) => BabelTransformOptions;
-}) => {
+}): void => {
   const ruleIds = [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI, BABEL_JS_RULE];
 
   for (const ruleId of ruleIds) {

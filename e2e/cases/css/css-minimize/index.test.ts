@@ -13,7 +13,7 @@ rspackOnlyTest('should minimize CSS correctly by default', async () => {
     files[Object.keys(files).find((file) => file.endsWith('.css'))!];
 
   expect(content).toEqual(
-    '.a{text-align:center;line-height:1.5;font-size:1.5rem}.b{text-align:center;line-height:1.5;font-size:1.5rem;background:#fafafa}',
+    '.a{text-align:center;text-align:center;font-size:1.5rem;line-height:1.5}.b{text-align:center;background:#fafafa;font-size:1.5rem;line-height:1.5}',
   );
 });
 

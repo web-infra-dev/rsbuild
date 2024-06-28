@@ -1,8 +1,8 @@
 import fs from 'node:fs';
-import { isAbsolute, join } from 'node:path';
+// import { isAbsolute, join } from 'node:path';
 import type {
   CreateDevServerOptions,
-  MultiStats,
+  EnvironmentAPI,
   Rspack,
   StartDevServerOptions,
   Stats,
@@ -29,8 +29,8 @@ import {
 import {
   type StartServerResult,
   type UpgradeEvent,
-  formatRoutes,
   getAddressUrls,
+  getRoutes,
   getServerConfig,
   printServerURLs,
 } from './helper';
@@ -53,6 +53,9 @@ export type RsbuildDevServer = {
   }>;
 
   /** The following APIs will be used when you use a custom server */
+
+  /** The Rsbuild server environment API */
+  environments: EnvironmentAPI;
 
   /**
    * The resolved port.
@@ -134,14 +137,7 @@ export async function createDevServer<
   });
   const devConfig = formatDevConfig(config.dev, port);
 
-  const routes = formatRoutes(
-    Object.values(options.context.environments).reduce(
-      (prev, context) => Object.assign(prev, context.htmlPaths),
-      {},
-    ),
-    config.output.distPath.html,
-    config.html.outputStructure,
-  );
+  const routes = getRoutes(options.context);
 
   options.context.devServer = {
     hostname: host,
@@ -150,6 +146,24 @@ export async function createDevServer<
   };
 
   let outputFileSystem: Rspack.OutputFileSystem = fs;
+
+  let lastStats: Stats[];
+
+  // should register onDevCompileDone hook before startCompile
+  const waitFirstCompileDone = runCompile
+    ? new Promise<void>((resolve) => {
+        options.context.hooks.onDevCompileDone.tap(
+          ({ stats, isFirstCompile }) => {
+            lastStats = 'stats' in stats ? stats.stats : [stats];
+
+            if (!isFirstCompile) {
+              return;
+            }
+            resolve();
+          },
+        );
+      })
+    : Promise.resolve();
 
   const startCompile: () => Promise<
     RsbuildDevMiddlewareOptions['compileMiddlewareAPI']
@@ -213,20 +227,6 @@ export async function createDevServer<
     });
   }
 
-  let _stats: Stats | MultiStats;
-
-  // should register onDevCompileDone hook before startCompile
-  const waitFirstCompileDone = new Promise<void>((resolve) => {
-    options.context.hooks.onDevCompileDone.tap(({ stats, isFirstCompile }) => {
-      _stats = stats;
-
-      if (!isFirstCompile) {
-        return;
-      }
-      resolve();
-    });
-  });
-
   const compileMiddlewareAPI = runCompile ? await startCompile() : undefined;
 
   const fileWatcher = await setupWatchFiles({
@@ -235,16 +235,54 @@ export async function createDevServer<
     compileMiddlewareAPI,
   });
 
-  const distPath = config.output.distPath.root || ROOT_DIST_DIR;
   const pwd = options.context.rootPath;
+
+  const serverUtils: ServerUtils = {
+    readFileSync: (fileName: string) => {
+      if ('readFileSync' in outputFileSystem) {
+        // bundle require needs a synchronous method, although readFileSync is not within the outputFileSystem type definition, but nodejs fs API implemented.
+        // @ts-expect-error
+        return outputFileSystem.readFileSync(fileName, 'utf-8');
+      }
+      return fs.readFileSync(fileName, 'utf-8');
+    },
+    // distPath: isAbsolute(distPath) ? distPath : join(pwd, distPath),
+    getHTMLPaths: options.context.pluginAPI!.getHTMLPaths,
+  };
+
+  const environmentAPI = Object.fromEntries(
+    Object.keys(options.context.environments).map((name, index) => {
+      return [
+        name,
+        {
+          getStats: async () => {
+            if (!runCompile) {
+              throw new Error("can't get stats info when runCompile is false");
+            }
+            await waitFirstCompileDone;
+            return lastStats[index];
+          },
+          loadModule: async <T>(entryName: string) => {
+            await waitFirstCompileDone;
+            return loadModule<T>(lastStats[index], entryName, serverUtils);
+          },
+          getTransformedHtml: async (entryName: string) => {
+            await waitFirstCompileDone;
+            return getTransformedHtml(entryName, serverUtils);
+          },
+        },
+      ];
+    }),
+  );
 
   const devMiddlewares = await getMiddlewares({
     pwd,
     compileMiddlewareAPI,
     dev: devConfig,
     server: config.server,
+    environments: environmentAPI,
     output: {
-      distPath,
+      distPath: options.context.distPath || ROOT_DIST_DIR,
     },
     outputFileSystem,
   });
@@ -260,23 +298,11 @@ export async function createDevServer<
     }
   }
 
-  const serverUtils: ServerUtils = {
-    readFileSync: (fileName: string) => {
-      if ('readFileSync' in outputFileSystem) {
-        // bundle require needs a synchronous method, although readFileSync is not within the outputFileSystem type definition, but nodejs fs API implemented.
-        // @ts-expect-error
-        return outputFileSystem.readFileSync(fileName, 'utf-8');
-      }
-      return fs.readFileSync(fileName, 'utf-8');
-    },
-    distPath: isAbsolute(distPath) ? distPath : join(pwd, distPath),
-    getHTMLPaths: options.context.pluginAPI!.getHTMLPaths,
-  };
-
   const server = {
     port,
     middlewares,
     outputFileSystem,
+    environments: environmentAPI,
     listen: async () => {
       const httpServer = await createHttpServer({
         serverConfig: config.server,
@@ -326,14 +352,6 @@ export async function createDevServer<
         port,
         routes,
       });
-    },
-    ssrLoadModule: async <T>(entryName: string) => {
-      await waitFirstCompileDone;
-      return ssrLoadModule<T>(_stats, entryName, serverUtils);
-    },
-    getTransformedHtml: async (entryName: string) => {
-      await waitFirstCompileDone;
-      return getTransformedHtml(entryName, serverUtils);
     },
     onHTTPUpgrade: devMiddlewares.onUpgrade,
     close: async () => {

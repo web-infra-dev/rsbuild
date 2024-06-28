@@ -4,7 +4,7 @@ import {
   type RspackChain,
   castArray,
 } from '@rsbuild/shared';
-import { ensureAbsolutePath } from '../helpers';
+import { ensureAbsolutePath } from '../helpers/path';
 import { reduceConfigs } from '../reduceConfigs';
 import type { RsbuildPlugin } from '../types';
 
@@ -104,13 +104,20 @@ export const pluginResolve = (): RsbuildPlugin => ({
     });
 
     api.modifyRspackConfig(async (rspackConfig, { environment }) => {
-      const isTsProject = Boolean(api.context.tsconfigPath);
+      const { tsconfigPath } = api.context.environments[environment];
       const config = api.getNormalizedConfig({ environment });
 
-      rspackConfig.resolve ||= {};
+      if (tsconfigPath && config.source.aliasStrategy === 'prefer-tsconfig') {
+        rspackConfig.resolve ||= {};
 
-      if (isTsProject && config.source.aliasStrategy === 'prefer-tsconfig') {
-        rspackConfig.resolve.tsConfigPath = api.context.tsconfigPath;
+        if (typeof rspackConfig.resolve.tsConfig === 'string') {
+          return;
+        }
+
+        rspackConfig.resolve.tsConfig = {
+          configFile: tsconfigPath,
+          ...rspackConfig.resolve.tsConfig,
+        };
       }
     });
   },

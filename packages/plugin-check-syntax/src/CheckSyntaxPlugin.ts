@@ -46,7 +46,7 @@ export class CheckSyntaxPlugin {
       options.ecmaVersion || browserslistToESVersion(this.targets);
   }
 
-  apply(compiler: Compiler) {
+  apply(compiler: Compiler): void {
     compiler.hooks.afterEmit.tapPromise(
       CheckSyntaxPlugin.name,
       async (compilation: Compilation) => {

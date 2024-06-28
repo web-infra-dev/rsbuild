@@ -1,7 +1,7 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { build, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
-test('should compile CSS relative imports correctly', async () => {
+rspackOnlyTest('should compile CSS relative imports correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
   });
@@ -10,5 +10,5 @@ test('should compile CSS relative imports correctly', async () => {
   const content =
     files[Object.keys(files).find((file) => file.endsWith('.css'))!];
 
-  expect(content).toContain('.foo{color:red}.bar{color:blue}.baz{color:green}');
+  expect(content).toContain('.foo{color:red}.bar{color:#00f}.baz{color:green}');
 });

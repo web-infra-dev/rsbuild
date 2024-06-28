@@ -1,5 +1,4 @@
 import { existsSync } from 'node:fs';
-import { join } from 'node:path';
 import { type RsbuildMode, color } from '@rsbuild/shared';
 import { type Command, program } from 'commander';
 import { isEmptyDir } from '../helpers';
@@ -47,7 +46,7 @@ const applyServerOptions = (command: Command) => {
     .option('--host <host>', 'specify the host that the server listens to');
 };
 
-export function runCli() {
+export function runCli(): void {
   program.name('rsbuild').usage('<command> [options]').version(RSBUILD_VERSION);
 
   const devCommand = program.command('dev');
@@ -95,6 +94,7 @@ export function runCli() {
     .action(async (options: PreviewOptions) => {
       try {
         const rsbuild = await init({ cliOptions: options });
+        await rsbuild?.initConfigs();
 
         if (rsbuild) {
           const { distPath } = rsbuild.context;
@@ -135,7 +135,7 @@ export function runCli() {
         await rsbuild?.inspectConfig({
           env: options.env,
           verbose: options.verbose,
-          outputPath: join(rsbuild.context.distPath, options.output),
+          outputPath: options.output,
           writeToDisk: true,
         });
       } catch (err) {
