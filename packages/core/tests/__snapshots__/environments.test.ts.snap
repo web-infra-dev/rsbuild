@@ -125,7 +125,6 @@ exports[`environment config > should normalize context correctly 1`] = `
     "htmlPaths": {},
     "index": 0,
     "name": "ssr",
-    "target": "node",
     "tsconfigPath": undefined,
   },
   "web": {
@@ -254,7 +253,6 @@ exports[`environment config > should normalize context correctly 1`] = `
     "htmlPaths": {},
     "index": 1,
     "name": "web",
-    "target": "web",
     "tsconfigPath": undefined,
   },
 }

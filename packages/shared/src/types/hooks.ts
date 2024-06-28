@@ -122,7 +122,6 @@ export type ModifyEnvironmentConfigFn = (
 export type EnvironmentContext = {
   index: number;
   name: string;
-  target: RsbuildTarget;
   entry: RsbuildEntry;
   htmlPaths: Record<string, string>;
   distPath: string;

@@ -149,7 +149,6 @@ export async function updateEnvironmentContext(
     context.environments[name] = {
       index,
       name,
-      target: config.output.target,
       distPath: getAbsoluteDistPath(context.rootPath, config),
       entry,
       browserslist,
