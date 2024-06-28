@@ -52,7 +52,7 @@ Rsbuild 与 Vite 有许多相似之处，它们皆致力于提升前端的开发
 
 Rsbuild 的构建性能与原生 Rspack 处于同一水平，以下是构建 1000 个 React 组件的时间：
 
-![benchmark](https://github.com/web-infra-dev/rsbuild/assets/7237365/2909b68f-8928-49c6-8eb3-cd1486dbf876)
+![benchmark](https://assets.rspack.dev/rsbuild/assets/benchmark-v049.png)
 
 > 以上数据来自 [performance-compare](https://github.com/rspack-contrib/performance-compare) benchmark。
 
