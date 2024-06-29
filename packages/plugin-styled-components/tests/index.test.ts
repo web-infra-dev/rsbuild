@@ -1,5 +1,5 @@
 import { createRsbuild } from '@rsbuild/core';
-import { SCRIPT_REGEX } from '@rsbuild/shared';
+import { matchRules } from '@scripts/test-helper';
 import { describe, expect, it } from 'vitest';
 import { pluginStyledComponents } from '../src';
 
@@ -11,16 +11,8 @@ describe('plugins/styled-components', () => {
       },
     });
 
-    rsbuild.addPlugins([pluginStyledComponents()]);
     const configs = await rsbuild.initConfigs();
-
-    expect(
-      configs[0].module?.rules?.find(
-        (rule) =>
-          (rule as { test: RegExp }).test.toString() ===
-          SCRIPT_REGEX.toString(),
-      ),
-    ).toMatchSnapshot();
+    expect(matchRules(configs[0], 'a.tsx')[0]).toMatchSnapshot();
   });
 
   it('should enable ssr option when target contains node', async () => {
@@ -45,13 +37,7 @@ describe('plugins/styled-components', () => {
     const configs = await rsbuild.initConfigs();
 
     for (const config of configs) {
-      expect(
-        config.module?.rules?.find(
-          (rule) =>
-            (rule as { test: RegExp }).test.toString() ===
-            SCRIPT_REGEX.toString(),
-        ),
-      ).toMatchSnapshot();
+      expect(matchRules(config, 'a.tsx')[0]).toMatchSnapshot();
     }
   });
 });
