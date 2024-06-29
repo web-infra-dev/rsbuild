@@ -10,7 +10,6 @@ const buildFixture = (rootDir: string): ReturnType<typeof build> => {
   const plugins = [
     pluginBabel({
       include: /\.(?:jsx|tsx)$/,
-      exclude: /[\\/]node_modules[\\/]/,
     }),
     pluginSolid(),
   ];

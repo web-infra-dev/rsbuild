@@ -6,7 +6,6 @@ export default defineConfig({
   plugins: [
     pluginBabel({
       include: /\.(?:jsx|tsx)$/,
-      exclude: /[\\/]node_modules[\\/]/,
     }),
     pluginSolid({}),
   ],
