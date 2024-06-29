@@ -337,10 +337,5 @@ export const pluginCss = (): RsbuildPlugin => ({
         });
       },
     });
-
-    api.modifyRspackConfig(async (rspackConfig) => {
-      rspackConfig.experiments ||= {};
-      rspackConfig.experiments.css = false;
-    });
   },
 });
