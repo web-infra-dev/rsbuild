@@ -1,5 +1,5 @@
-import { type InlineChunkTest, JS_REGEX } from '@rsbuild/shared';
-import { CSS_REGEX } from '../constants';
+import type { InlineChunkTest } from '@rsbuild/shared';
+import { CSS_REGEX, JS_REGEX } from '../constants';
 import { pick } from '../helpers';
 import type { RsbuildPlugin } from '../types';
 

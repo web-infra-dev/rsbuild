@@ -13,7 +13,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import type { CSSModules, Rspack } from '@rsbuild/core';
-import { NODE_MODULES_REGEX } from '@rsbuild/shared';
 import LineDiff from '../compiled/line-diff/index.js';
 
 export type CssLoaderModules =
@@ -21,6 +20,7 @@ export type CssLoaderModules =
   | string
   | Required<Pick<CSSModules, 'auto' | 'namedExport'>>;
 
+const NODE_MODULES_REGEX: RegExp = /[\\/]node_modules[\\/]/;
 const isInNodeModules = (path: string) => NODE_MODULES_REGEX.test(path);
 
 const CSS_MODULES_REGEX = /\.module\.\w+$/i;

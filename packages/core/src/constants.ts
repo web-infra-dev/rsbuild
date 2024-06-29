@@ -37,7 +37,9 @@ export const DEFAULT_BROWSERSLIST: Record<string, string[]> = {
 
 // RegExp
 export const HTML_REGEX: RegExp = /\.html$/;
+export const JS_REGEX: RegExp = /\.(?:js|mjs|cjs|jsx)$/;
 export const CSS_REGEX: RegExp = /\.css$/;
+export const NODE_MODULES_REGEX: RegExp = /[\\/]node_modules[\\/]/;
 
 // Plugins
 export const PLUGIN_SWC_NAME = 'rsbuild:swc';

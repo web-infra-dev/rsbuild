@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import { resolve } from 'node:path';
 import type { Rspack } from '@rsbuild/core';
-import { JS_REGEX, browserslistToESVersion } from '@rsbuild/shared';
+import { browserslistToESVersion } from '@rsbuild/shared';
 import { parse } from 'acorn';
 import {
   checkIsExcludeSource,
@@ -21,6 +21,7 @@ type Compiler = Rspack.Compiler;
 type Compilation = Rspack.Compilation;
 
 const HTML_REGEX = /\.html$/;
+export const JS_REGEX: RegExp = /\.(?:js|mjs|cjs|jsx)$/;
 
 export class CheckSyntaxPlugin {
   errors: ECMASyntaxError[] = [];
