@@ -33,7 +33,7 @@ export interface EnvironmentConfig {
   /**
    * Options for local development.
    */
-  dev?: Pick<DevConfig, 'assetPrefix' | 'lazyCompilation'>;
+  dev?: Pick<DevConfig, 'assetPrefix' | 'lazyCompilation' | 'progressBar'>;
   /**
    * Options for HTML generation.
    */
