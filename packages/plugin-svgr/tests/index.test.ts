@@ -1,7 +1,7 @@
 import { pluginReact } from '@rsbuild/plugin-react';
-import { createStubRsbuild } from '@scripts/test-helper';
+import { createStubRsbuild, matchRules } from '@scripts/test-helper';
 import { describe, expect, it } from 'vitest';
-import { type PluginSvgrOptions, SVG_REGEX, pluginSvgr } from '../src';
+import { type PluginSvgrOptions, pluginSvgr } from '../src';
 
 describe('svgr', () => {
   const cases: Array<{ name: string; pluginConfig: PluginSvgrOptions }> = [
@@ -61,9 +61,6 @@ describe('svgr', () => {
     rsbuild.addPlugins([pluginSvgr(item.pluginConfig), pluginReact()]);
 
     const config = await rsbuild.unwrapConfig();
-
-    expect(
-      config.module.rules.find((r) => r.test === SVG_REGEX),
-    ).toMatchSnapshot();
+    expect(matchRules(config, 'a.svg')[0]).toMatchSnapshot();
   });
 });
