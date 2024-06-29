@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {
-  NODE_MODULES_REGEX,
   type Polyfill,
   type RsbuildContext,
   type RspackChain,
@@ -11,7 +10,7 @@ import {
   deepmerge,
 } from '@rsbuild/shared';
 import type { SwcLoaderOptions } from '@rspack/core';
-import { PLUGIN_SWC_NAME } from '../constants';
+import { NODE_MODULES_REGEX, PLUGIN_SWC_NAME } from '../constants';
 import { isWebTarget } from '../helpers';
 import { reduceConfigs } from '../reduceConfigs';
 import type {

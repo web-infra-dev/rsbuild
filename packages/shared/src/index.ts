@@ -7,9 +7,7 @@ import type { CacheGroups } from './types';
 export * from './types';
 
 // RegExp
-export const JS_REGEX: RegExp = /\.(?:js|mjs|cjs|jsx)$/;
 export const SCRIPT_REGEX: RegExp = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
-export const NODE_MODULES_REGEX: RegExp = /[\\/]node_modules[\\/]/;
 
 enum ESVersion {
   es5 = 5,

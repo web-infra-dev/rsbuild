@@ -4,10 +4,9 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { JS_REGEX } from '@rsbuild/shared';
 import { color } from '@rsbuild/shared';
 import type { PrintFileSizeOptions, Stats, StatsAsset } from '@rsbuild/shared';
-import { CSS_REGEX, HTML_REGEX } from '../constants';
+import { CSS_REGEX, HTML_REGEX, JS_REGEX } from '../constants';
 import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
 

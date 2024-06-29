@@ -5,7 +5,7 @@ import type {
 } from '@rsbuild/core';
 import type { BundlerPluginInstance, RspackConfig } from '@rsbuild/shared';
 
-export function baseMatchLoader({
+function baseMatchLoader({
   config,
   loader,
   testFile,
