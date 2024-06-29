@@ -6,17 +6,6 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
     "module": {
       "rules": [
         {
-          "include": [
-            {
-              "and": [
-                "<ROOT>/packages/compat/plugin-swc/tests",
-                {
-                  "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-                },
-              ],
-            },
-            /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-          ],
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "use": [
             {
@@ -133,17 +122,6 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
     "module": {
       "rules": [
         {
-          "include": [
-            {
-              "and": [
-                "<ROOT>/packages/compat/plugin-swc/tests",
-                {
-                  "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-                },
-              ],
-            },
-            /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-          ],
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "use": [
             {
@@ -260,21 +238,6 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
   "module": {
     "rules": [
       {
-        "exclude": [
-          /bar/,
-        ],
-        "include": [
-          {
-            "and": [
-              "<ROOT>/packages/compat/plugin-swc/tests",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
-          },
-          /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-          /foo/,
-        ],
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
@@ -393,17 +356,6 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
 {
   "rules": [
     {
-      "include": [
-        {
-          "and": [
-            "<ROOT>/packages/compat/plugin-swc/tests",
-            {
-              "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-            },
-          ],
-        },
-        /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-      ],
       "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
@@ -521,17 +473,6 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
 {
   "rules": [
     {
-      "include": [
-        {
-          "and": [
-            "<ROOT>/packages/compat/plugin-swc/tests",
-            {
-              "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-            },
-          ],
-        },
-        /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-      ],
       "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
@@ -643,17 +584,6 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
 {
   "rules": [
     {
-      "include": [
-        {
-          "and": [
-            "<ROOT>/packages/compat/plugin-swc/tests",
-            {
-              "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-            },
-          ],
-        },
-        /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-      ],
       "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
@@ -771,17 +701,6 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
 {
   "rules": [
     {
-      "include": [
-        {
-          "and": [
-            "<ROOT>/packages/compat/plugin-swc/tests",
-            {
-              "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-            },
-          ],
-        },
-        /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-      ],
       "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
@@ -952,17 +871,6 @@ exports[`plugin-swc > should set correct swc minimizer options using raw swc con
 exports[`plugin-swc > should set multiple swc-loader 1`] = `
 [
   {
-    "include": [
-      {
-        "and": [
-          "<ROOT>/packages/compat/plugin-swc/tests",
-          {
-            "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-          },
-        ],
-      },
-      /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-    ],
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
     "use": [
       {
@@ -1160,17 +1068,6 @@ exports[`plugin-swc > should set swc-loader 1`] = `
   "module": {
     "rules": [
       {
-        "include": [
-          {
-            "and": [
-              "<ROOT>/packages/compat/plugin-swc/tests",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
-            ],
-          },
-          /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-        ],
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {

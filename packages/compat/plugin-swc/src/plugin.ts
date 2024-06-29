@@ -1,6 +1,6 @@
 import path from 'node:path';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { SCRIPT_REGEX, applyScriptCondition } from '@rsbuild/shared';
+import { SCRIPT_REGEX } from '@rsbuild/shared';
 import { SwcMinimizerPlugin } from './minimizer';
 import type {
   ObjPluginSwcOptions,
@@ -48,18 +48,10 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
         );
 
         // If babel plugin is used, replace babel-loader
-        if (chain.module.rules.get(CHAIN_ID.RULE.JS)) {
-          chain.module.rule(CHAIN_ID.RULE.JS).uses.delete(CHAIN_ID.USE.BABEL);
+        const jsRule = chain.module.rule(CHAIN_ID.RULE.JS);
+        if (jsRule.uses.has(CHAIN_ID.USE.BABEL)) {
+          jsRule.uses.delete(CHAIN_ID.USE.BABEL);
           chain.module.delete(CHAIN_ID.RULE.TS);
-        } else {
-          applyScriptCondition({
-            rule: chain.module.rule(CHAIN_ID.RULE.JS),
-            chain,
-            config: environmentConfig,
-            context: api.context,
-            includes: [],
-            excludes: [],
-          });
         }
 
         for (let i = 0; i < swcConfigs.length; i++) {

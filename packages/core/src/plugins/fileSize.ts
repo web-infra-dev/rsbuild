@@ -1,8 +1,8 @@
-import fs from 'node:fs';
 /**
  * modified from https://github.com/facebook/create-react-app
  * license at https://github.com/facebook/create-react-app/blob/master/LICENSE
  */
+import fs from 'node:fs';
 import path from 'node:path';
 import { JS_REGEX } from '@rsbuild/shared';
 import { color } from '@rsbuild/shared';
