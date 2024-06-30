@@ -23,7 +23,6 @@ import { pluginStylus } from '@rsbuild/plugin-stylus';
 import { pluginSvelte } from '@rsbuild/plugin-svelte';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import { pluginSwc } from '@rsbuild/plugin-swc';
-import { pluginToml } from '@rsbuild/plugin-toml';
 import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
 import { pluginUmd } from '@rsbuild/plugin-umd';
 import { pluginVue } from '@rsbuild/plugin-vue';
@@ -63,7 +62,6 @@ export default {
   pluginVue2,
   pluginVueJsx,
   pluginVue2Jsx,
-  pluginToml,
   pluginYaml,
   pluginMdx,
   pluginSwc,

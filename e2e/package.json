@@ -46,7 +46,6 @@
     "@rsbuild/plugin-svelte": "workspace:*",
     "@rsbuild/plugin-svgr": "workspace:*",
     "@rsbuild/plugin-swc": "workspace:*",
-    "@rsbuild/plugin-toml": "workspace:*",
     "@rsbuild/plugin-type-check": "workspace:*",
     "@rsbuild/plugin-typed-css-modules": "workspace:*",
     "@rsbuild/plugin-umd": "workspace:*",

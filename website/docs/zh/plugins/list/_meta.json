@@ -29,6 +29,5 @@
   "plugin-pug",
   "plugin-rem",
   "plugin-umd",
-  "plugin-yaml",
-  "plugin-toml"
+  "plugin-yaml"
 ]
