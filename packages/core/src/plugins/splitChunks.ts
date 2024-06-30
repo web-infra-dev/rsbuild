@@ -2,20 +2,19 @@ import assert from 'node:assert';
 import {
   type CacheGroups,
   type ForceSplitting,
-  NODE_MODULES_REGEX,
   type Polyfill,
   type RsbuildChunkSplit,
   type SplitChunks,
   createDependenciesRegExp,
 } from '@rsbuild/shared';
+import { NODE_MODULES_REGEX } from '../constants';
 import type { RsbuildPlugin } from '../types';
 
-// We expose the three-layer to specify webpack chunk-split ability:
-// 1. By strategy.There some best practice integrated in our internal strategy.
-// 2. By forceSplitting config, which is designed to split chunks by user defined rules.That's easier to use than webpack raw config.
-// 3. By override config, which is designed to override the raw config of webpack `splitChunks`.It has the highest priority.
-// By the way, the config complexity is increasing gradually.
-
+// We expose three layers to specify Rspack chunk-split config:
+// 1. By strategy. Some best practices strategies.
+// 2. By forceSplitting config, which is designed to split chunks by user defined rules.That's easier to use than Rspack raw config.
+// 3. By override config, which is designed to override the raw config of Rspack `splitChunks`.It has the highest priority.
+// By this way, the config complexity is increasing gradually.
 interface SplitChunksContext {
   /**
    * User defined cache groups which can be reused across different split strategies

@@ -1,5 +1,4 @@
-import { SCRIPT_REGEX } from '@rsbuild/shared';
-import { createStubRsbuild } from '@scripts/test-helper';
+import { createStubRsbuild, matchRules } from '@scripts/test-helper';
 import { describe, expect, it } from 'vitest';
 import { pluginBabel } from '../src';
 
@@ -20,12 +19,7 @@ describe('plugins/babel', () => {
     rsbuild.addPlugins([pluginBabel()]);
 
     const config = await rsbuild.unwrapConfig();
-
-    expect(
-      config.module.rules.find(
-        (r) => r.test.toString() === SCRIPT_REGEX.toString(),
-      ),
-    ).toMatchSnapshot();
+    expect(matchRules(config, 'a.tsx')[0]).toMatchSnapshot();
   });
 
   it('should apply environment config correctly', async () => {
@@ -66,12 +60,7 @@ describe('plugins/babel', () => {
     const bundlerConfigs = await rsbuild.initConfigs();
 
     for (const bundlerConfig of bundlerConfigs) {
-      const rules = bundlerConfig.module?.rules?.find(
-        (r) =>
-          (typeof r === 'object' ? r?.test?.toString() : '') ===
-          SCRIPT_REGEX.toString(),
-      );
-      expect(rules).toMatchSnapshot();
+      expect(matchRules(bundlerConfig, 'a.tsx')[0]).toMatchSnapshot();
     }
   });
 

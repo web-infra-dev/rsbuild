@@ -2,9 +2,6 @@
 
 exports[`plugin-css > should override browserslist of autoprefixer when using output.overrideBrowserslist config 1`] = `
 {
-  "experiments": {
-    "css": false,
-  },
   "module": {
     "rules": [
       {
@@ -65,9 +62,6 @@ exports[`plugin-css > should override browserslist of autoprefixer when using ou
 
 exports[`plugin-css > should use custom cssModules rule when using output.cssModules config 1`] = `
 {
-  "experiments": {
-    "css": false,
-  },
   "module": {
     "rules": [
       {
@@ -134,9 +128,6 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
 
 exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyles is true and target is node 1`] = `
 {
-  "experiments": {
-    "css": false,
-  },
   "module": {
     "rules": [
       {
@@ -173,9 +164,6 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
 
 exports[`plugin-css injectStyles > should use css-loader + style-loader when injectStyles is true 1`] = `
 {
-  "experiments": {
-    "css": false,
-  },
   "module": {
     "rules": [
       {

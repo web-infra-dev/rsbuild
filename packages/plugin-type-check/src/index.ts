@@ -5,7 +5,7 @@ import {
   logger,
   reduceConfigs,
 } from '@rsbuild/core';
-import { CHAIN_ID, NODE_MODULES_REGEX, deepmerge } from '@rsbuild/shared';
+import { CHAIN_ID, deepmerge } from '@rsbuild/shared';
 import type ForkTSCheckerPlugin from 'fork-ts-checker-webpack-plugin';
 
 type ForkTsCheckerOptions = NonNullable<
@@ -34,6 +34,7 @@ export const pluginTypeCheck = (
     name: PLUGIN_TYPE_CHECK_NAME,
 
     setup(api) {
+      const NODE_MODULES_REGEX: RegExp = /[\\/]node_modules[\\/]/;
       const checkedTsconfig = new Map<
         // tsconfig path
         string,

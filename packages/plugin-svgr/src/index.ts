@@ -6,7 +6,7 @@ import type { Config } from '@svgr/core';
 
 export type SvgDefaultExport = 'component' | 'url';
 
-export const SVG_REGEX: RegExp = /\.svg$/;
+const SVG_REGEX = /\.svg$/;
 
 export type PluginSvgrOptions = {
   /**
