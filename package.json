@@ -33,7 +33,7 @@
   "nano-staged": {
     "*.{md,mdx,json,css,less,scss}": "prettier --write",
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
-      "biome check --apply --formatter-enabled=false --linter-enabled=false --no-errors-on-unmatched",
+      "biome check --write --formatter-enabled=false --linter-enabled=false --no-errors-on-unmatched",
       "prettier --write"
     ],
     "package.json": "pnpm run check-dependency-version"
