@@ -28,6 +28,5 @@
   "plugin-typed-css-modules",
   "plugin-pug",
   "plugin-rem",
-  "plugin-umd",
-  "plugin-yaml"
+  "plugin-umd"
 ]

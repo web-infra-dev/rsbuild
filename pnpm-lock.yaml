@@ -191,9 +191,6 @@ importers:
       '@rsbuild/plugin-vue2-jsx':
         specifier: workspace:*
         version: link:../packages/plugin-vue2-jsx
-      '@rsbuild/plugin-yaml':
-        specifier: workspace:*
-        version: link:../packages/plugin-yaml
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../packages/shared
@@ -1615,24 +1612,6 @@ importers:
       typescript:
         specifier: ^5.5.2
         version: 5.5.2
-
-  packages/plugin-yaml:
-    devDependencies:
-      '@rsbuild/core':
-        specifier: workspace:*
-        version: link:../core
-      '@scripts/test-helper':
-        specifier: workspace:*
-        version: link:../../scripts/test-helper
-      prebundle:
-        specifier: 1.1.0
-        version: 1.1.0(typescript@5.5.2)
-      typescript:
-        specifier: ^5.5.2
-        version: 5.5.2
-      yaml-loader:
-        specifier: ^0.8.1
-        version: 0.8.1
 
   packages/shared:
     dependencies:
@@ -9020,10 +8999,6 @@ packages:
   yaml-front-matter@4.1.1:
     resolution: {integrity: sha512-ULGbghCLsN8Hs8vfExlqrJIe8Hl2TUjD7/zsIGMP8U+dgRXEsDXk4yydxeZJgdGiimP1XB7zhmhOB4/HyfqOyQ==}
     hasBin: true
-
-  yaml-loader@0.8.1:
-    resolution: {integrity: sha512-BCEndnUoi3BaZmePkwGGe93txRxLgMhBa/gE725v1/GHnura8QvNs7c4+4C1yyhhKoj3Dg63M7IqhA++15j6ww==}
-    engines: {node: '>= 14'}
 
   yaml@2.4.5:
     resolution: {integrity: sha512-aBx2bnqDzVOyNKfsysjA2ms5ZlnjSAW2eG3/L5G/CSujfjLJTJsEw1bGw8kCf04KodQWk1pxlGnZ56CRxiawmg==}
@@ -17553,12 +17528,6 @@ snapshots:
     dependencies:
       commander: 6.2.1
       js-yaml: 3.14.1
-
-  yaml-loader@0.8.1:
-    dependencies:
-      javascript-stringify: 2.1.0
-      loader-utils: 2.0.4
-      yaml: 2.4.5
 
   yaml@2.4.5: {}
 
