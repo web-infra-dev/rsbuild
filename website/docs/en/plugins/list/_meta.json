@@ -14,7 +14,6 @@
   "plugin-less",
   "plugin-stylus",
   "plugin-assets-retry",
-  "plugin-basic-ssl",
   "plugin-eslint",
   "plugin-type-check",
   "plugin-image-compress",
