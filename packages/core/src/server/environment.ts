@@ -43,7 +43,7 @@ export const loadBundle = async <T>(
   // An entrypoint should have only one entryChunk, but there may be some boundary cases
   if (files.length > 1) {
     throw new Error(
-      `only support load single entryChunk, but got ${files.length}: ${files.join(',')}`,
+      `only support load single entry chunk, but got ${files.length}: ${files.join(',')}`,
     );
   }
 
