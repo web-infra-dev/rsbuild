@@ -31,7 +31,7 @@
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
     "loader-utils": "^2.0.4",
-    "postcss": "^8.4.38",
+    "postcss": "^8.4.39",
     "sass-embedded": "^1.77.5"
   },
   "devDependencies": {
