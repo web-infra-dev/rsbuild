@@ -7,11 +7,6 @@ import { logger } from '@rsbuild/core';
 const getRsbuildConfig = (dist: string) =>
   path.resolve(__dirname, `./${dist}/rsbuild.config.mjs`);
 
-const getRsbuildEnvironmentConfig = (dist: string, environment = 'web') =>
-  path.resolve(
-    __dirname,
-    `./${dist}/rsbuild.environment-${environment}.config.mjs`,
-  );
 const getBundlerConfig = (dist: string) =>
   path.resolve(
     __dirname,
@@ -37,7 +32,6 @@ test('should generate config files when build (with DEBUG)', async () => {
   });
 
   expect(fs.existsSync(getRsbuildConfig(distRoot))).toBeTruthy();
-  expect(fs.existsSync(getRsbuildEnvironmentConfig(distRoot))).toBeTruthy();
   expect(fs.existsSync(getBundlerConfig(distRoot))).toBeTruthy();
 
   delete process.env.DEBUG;
@@ -67,7 +61,6 @@ test('should generate config files when dev (with DEBUG)', async ({ page }) => {
   expect(res?.status()).toBe(200);
 
   expect(fs.existsSync(getRsbuildConfig(distRoot))).toBeTruthy();
-  expect(fs.existsSync(getRsbuildEnvironmentConfig(distRoot))).toBeTruthy();
   expect(fs.existsSync(getBundlerConfig(distRoot))).toBeTruthy();
 
   delete process.env.DEBUG;

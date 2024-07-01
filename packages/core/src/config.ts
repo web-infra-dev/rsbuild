@@ -468,14 +468,12 @@ export const getRsbuildInspectConfig = ({
 };
 
 export async function outputInspectConfigFiles({
-  rawRsbuildConfig,
   rawBundlerConfigs,
   rawEnvironmentConfigs,
   inspectOptions,
   configType,
 }: {
   configType: string;
-  rawRsbuildConfig: string;
   rawEnvironmentConfigs: Array<{
     name: string;
     content: string;
@@ -491,13 +489,18 @@ export async function outputInspectConfigFiles({
   const { outputPath } = inspectOptions;
 
   const files = [
-    {
-      path: join(outputPath, 'rsbuild.config.mjs'),
-      label: 'Rsbuild Config',
-      content: rawRsbuildConfig,
-    },
     ...rawEnvironmentConfigs.map(({ name, content }) => {
-      const outputFile = `rsbuild.environment-${name}.config.mjs`;
+      if (rawEnvironmentConfigs.length === 1) {
+        const outputFile = 'rsbuild.config.mjs';
+        const outputFilePath = join(outputPath, outputFile);
+
+        return {
+          path: outputFilePath,
+          label: 'Rsbuild Config',
+          content,
+        };
+      }
+      const outputFile = `rsbuild.config.${name}.mjs`;
       const outputFilePath = join(outputPath, outputFile);
 
       return {

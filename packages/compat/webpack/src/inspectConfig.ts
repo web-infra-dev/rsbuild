@@ -34,8 +34,8 @@ export async function inspectConfig({
       })
     ).webpackConfigs;
 
-  const rawBundlerConfigs = webpackConfigs.map((config) => ({
-    name: config.name!,
+  const rawBundlerConfigs = webpackConfigs.map((config, index) => ({
+    name: config.name || String(index),
     content: stringifyConfig(config, inspectOptions.verbose),
   }));
 
@@ -57,7 +57,6 @@ export async function inspectConfig({
 
   if (inspectOptions.writeToDisk) {
     await outputInspectConfigFiles({
-      rawRsbuildConfig,
       rawBundlerConfigs,
       rawEnvironmentConfigs,
       inspectOptions: {
