@@ -68,7 +68,7 @@ export const rspackProvider: RsbuildProvider = async ({
     },
 
     async inspectConfig(inspectOptions) {
-      const { inspectConfig } = await import('./inspectConfig');  
+      const { inspectConfig } = await import('./inspectConfig');
       return inspectConfig({
         context,
         pluginManager,
