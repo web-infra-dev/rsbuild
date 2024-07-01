@@ -17,6 +17,7 @@ export class SocketServer {
   private readonly options: DevConfig;
 
   private stats?: Stats;
+  private entryPointsLength?: number;
 
   private timer: ReturnType<typeof setInterval> | null = null;
 
@@ -70,7 +71,17 @@ export class SocketServer {
 
   public updateStats(stats: Stats): void {
     this.stats = stats;
-    this.sendStats();
+    const newEntryPointsLength = Object.values(
+      stats.toJson().entrypoints ?? {},
+    ).reduce((prev, curr) => {
+      return prev + curr.chunks.length;
+    }, 0);
+    const reload =
+      Boolean(this.entryPointsLength) &&
+      newEntryPointsLength !== this.entryPointsLength;
+
+    this.entryPointsLength = newEntryPointsLength;
+    this.sendStats(false, reload);
   }
 
   // write message to each socket
@@ -158,7 +169,7 @@ export class SocketServer {
   }
 
   // determine what message should send by stats
-  private sendStats(force = false) {
+  private sendStats(force = false, reloadFullPage = false) {
     const stats = this.getStats();
 
     // this should never happened
@@ -178,6 +189,9 @@ export class SocketServer {
     }
 
     this.sockWrite('hash', stats.hash);
+    if (reloadFullPage) {
+      return this.sockWrite('content-changed');
+    }
 
     if (stats.errorsCount) {
       return this.sockWrite('errors', getAllStatsErrors(stats));
