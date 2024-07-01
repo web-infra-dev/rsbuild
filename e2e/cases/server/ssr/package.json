@@ -3,8 +3,8 @@
   "name": "@e2e/custom-server-ssr",
   "version": "1.0.0",
   "scripts": {
-    "dev": "node ./scripts/index.mjs",
-    "dev:esm": "TEST_ESM_LIBRARY=true node --experimental-vm-modules ./scripts/index.mjs"
+    "dev": "npx rsbuild dev",
+    "dev:esm": "TEST_ESM_LIBRARY=true npx rsbuild dev"
   },
   "dependencies": {
     "polka": "^0.5.2"

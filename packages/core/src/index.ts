@@ -120,6 +120,8 @@ export type {
   ModifyRsbuildConfigFn,
   TransformFn,
   TransformHandler,
+  ServerAPIs,
+  RequestHandler,
 } from '@rsbuild/shared';
 
 export {
