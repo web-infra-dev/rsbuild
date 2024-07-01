@@ -12,6 +12,7 @@ const externals = [
   ...commonExternals,
   '@rsbuild/core/client/hmr',
   '@rsbuild/core/client/overlay',
+  '@rsbuild/core/client/runtimeErrors',
 ];
 
 const aliasCompiledPlugin = {
@@ -63,10 +64,11 @@ export default defineConfig({
       input: {
         hmr: 'src/client/hmr.ts',
         overlay: 'src/client/overlay.ts',
+        runtimeErrors: 'src/client/runtimeErrors.ts',
       },
       target: BUILD_TARGET.client,
       dts: false,
-      externals: ['./hmr'],
+      externals: ['./hmr', './overlay'],
       outDir: './dist/client',
       autoExtension: true,
       externalHelpers: true,

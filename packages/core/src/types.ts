@@ -155,3 +155,15 @@ export type {
   NormalizedModuleFederationConfig,
   NormalizedEnvironmentConfig,
 } from '@rsbuild/shared';
+
+export interface OverlayError {
+  content: string;
+
+  title: string;
+
+  type: 'build' | 'runtime';
+
+  stack?: string[];
+
+  sourceFile?: string;
+}
