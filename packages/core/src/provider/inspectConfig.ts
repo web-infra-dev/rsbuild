@@ -63,6 +63,7 @@ export async function inspectConfig({
 
   if (inspectOptions.writeToDisk) {
     await outputInspectConfigFiles({
+      rawRsbuildConfig,
       rawBundlerConfigs,
       rawEnvironmentConfigs,
       inspectOptions: {
