@@ -43,7 +43,7 @@ export async function startDevServer(fixtures, overridsConfig) {
       try {
         await serverRenderMiddleware(req, res, next);
       } catch (err) {
-        logger.error('ssr render error, downgrade to csr...\n', err);
+        logger.error('SSR render error, downgrade to CSR...\n', err);
         next();
       }
     } else {
