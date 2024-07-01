@@ -18,7 +18,6 @@
   "plugin-eslint",
   "plugin-type-check",
   "plugin-image-compress",
-  "plugin-mdx",
   "plugin-node-polyfill",
   "plugin-lightningcss",
   "plugin-source-build",

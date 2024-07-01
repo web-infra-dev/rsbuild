@@ -9,7 +9,6 @@ import { pluginEslint } from '@rsbuild/plugin-eslint';
 import { pluginImageCompress } from '@rsbuild/plugin-image-compress';
 import { pluginLess } from '@rsbuild/plugin-less';
 import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
-import { pluginMdx } from '@rsbuild/plugin-mdx';
 import { pluginNodePolyfill } from '@rsbuild/plugin-node-polyfill';
 import { pluginPreact } from '@rsbuild/plugin-preact';
 import { pluginPug } from '@rsbuild/plugin-pug';
@@ -61,7 +60,6 @@ export default {
   pluginVue2,
   pluginVueJsx,
   pluginVue2Jsx,
-  pluginMdx,
   pluginSwc,
   getBabelConfigForWeb,
   getBabelConfigForNode,
