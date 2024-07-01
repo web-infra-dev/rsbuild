@@ -5,8 +5,5 @@
   "scripts": {
     "dev": "npx rsbuild dev",
     "dev:esm": "TEST_ESM_LIBRARY=true npx rsbuild dev"
-  },
-  "dependencies": {
-    "polka": "^0.5.2"
   }
 }
