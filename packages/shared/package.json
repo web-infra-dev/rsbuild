@@ -66,9 +66,9 @@
   },
   "dependencies": {
     "@rspack/core": "1.0.0-alpha.0",
-    "caniuse-lite": "^1.0.30001636",
+    "caniuse-lite": "^1.0.30001639",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.7.2",
-    "postcss": "^8.4.38"
+    "postcss": "^8.4.39"
   },
   "devDependencies": {
     "@types/node": "18.x",
