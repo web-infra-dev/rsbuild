@@ -3,6 +3,7 @@ import { isAbsolute, join } from 'node:path';
 import { RspackChain, color } from '@rsbuild/shared';
 import type {
   InspectConfigOptions,
+  InspectConfigResult,
   NormalizedConfig,
   NormalizedDevConfig,
   NormalizedEnvironmentConfig,
@@ -13,12 +14,11 @@ import type {
   NormalizedServerConfig,
   NormalizedSourceConfig,
   NormalizedToolsConfig,
+  PluginManager,
   PublicDir,
   PublicDirOptions,
   RsbuildConfig,
   RsbuildEntry,
-  PluginManager,
-  InspectConfigResult,
 } from '@rsbuild/shared';
 import {
   CSS_DIST_DIR,

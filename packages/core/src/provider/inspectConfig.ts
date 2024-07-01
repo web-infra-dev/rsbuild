@@ -5,8 +5,8 @@ import type {
   RspackConfig,
 } from '@rsbuild/shared';
 import {
-  outputInspectConfigFiles,
   getRsbuildInspectConfig,
+  outputInspectConfigFiles,
   stringifyConfig,
 } from '../config';
 import { getNodeEnv, setNodeEnv } from '../helpers';

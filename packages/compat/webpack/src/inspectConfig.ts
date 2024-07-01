@@ -2,8 +2,8 @@ import { isAbsolute, join } from 'node:path';
 import type { InspectConfigOptions, InspectConfigResult } from '@rsbuild/core';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 import {
-  outputInspectConfigFiles,
   getRsbuildInspectConfig,
+  outputInspectConfigFiles,
   stringifyConfig,
 } from './shared';
 import type { WebpackConfig } from './types';
