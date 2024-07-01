@@ -427,42 +427,34 @@ export const getRsbuildInspectConfig = ({
     inspectOptions.verbose,
   );
 
-  const { environmentDebugConfigs, rawEnvironmentConfigs } = Object.entries(
-    environments,
-  ).reduce<{
-    environmentDebugConfigs: Record<
-      string,
-      NormalizedEnvironmentConfig & {
-        pluginNames: string[];
-      }
-    >;
-    rawEnvironmentConfigs: Array<{
-      name: string;
-      content: string;
-    }>;
-  }>(
-    (prev, [name, config]) => {
-      const debugConfig = {
-        ...config,
-        pluginNames,
-      };
-      prev.rawEnvironmentConfigs.push({
-        name,
-        content: stringifyConfig(debugConfig, inspectOptions.verbose),
-      });
-      prev.environmentDebugConfigs[name] = debugConfig;
-      return prev;
-    },
-    {
-      environmentDebugConfigs: {},
-      rawEnvironmentConfigs: [],
-    },
-  );
+  const environmentConfigs: Record<
+    string,
+    NormalizedEnvironmentConfig & {
+      pluginNames: string[];
+    }
+  > = {};
+
+  const rawEnvironmentConfigs: Array<{
+    name: string;
+    content: string;
+  }> = [];
+
+  for (const [name, config] of Object.entries(environments)) {
+    const debugConfig = {
+      ...config,
+      pluginNames,
+    };
+    rawEnvironmentConfigs.push({
+      name,
+      content: stringifyConfig(debugConfig, inspectOptions.verbose),
+    });
+    environmentConfigs[name] = debugConfig;
+  }
 
   return {
     rsbuildConfig: rsbuildDebugConfig,
     rawRsbuildConfig,
-    environmentConfigs: environmentDebugConfigs,
+    environmentConfigs,
     rawEnvironmentConfigs,
   };
 };
