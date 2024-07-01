@@ -5,7 +5,7 @@ export type RunnerRequirer = (
   modulePath: string[] | string,
   context?: {
     file?: BasicRunnerFile;
-    esmMode?: EEsmMode;
+    esmMode?: EsmMode;
   },
 ) => Record<string, any> | Promise<Record<string, any>>;
 
@@ -15,7 +15,7 @@ export type BasicRunnerFile = {
   subPath: string;
 };
 
-export enum EEsmMode {
+export enum EsmMode {
   Unknown = 0,
   Evaluated = 1,
   Unlinked = 2,

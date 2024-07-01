@@ -1,11 +1,10 @@
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import vm, { type SourceTextModule } from 'node:vm';
-// @ts-expect-error
-import asModule from './legacy/asModule';
+import { asModule } from './asModule';
 
 import { CommonJsRunner } from './cjs';
-import { EEsmMode, type RunnerRequirer } from './type';
+import { EsmMode, type RunnerRequirer } from './type';
 
 export class EsmRunner extends CommonJsRunner {
   protected createRunner(): void {
@@ -67,14 +66,14 @@ export class EsmRunner extends CommonJsRunner {
             module: { context: any },
           ) => {
             const result = await _require(path.dirname(file!.path), specifier, {
-              esmMode: EEsmMode.Evaluated,
+              esmMode: EsmMode.Evaluated,
             });
             return await asModule(result, module.context);
           },
         } as any);
         esmCache.set(file.path, esm);
       }
-      if (context.esmMode === EEsmMode.Unlinked) return esm;
+      if (context.esmMode === EsmMode.Unlinked) return esm;
       return (async () => {
         await esm.link(async (specifier, referencingModule) => {
           return await asModule(
@@ -86,7 +85,7 @@ export class EsmRunner extends CommonJsRunner {
               ),
               specifier,
               {
-                esmMode: EEsmMode.Unlinked,
+                esmMode: EsmMode.Unlinked,
               },
             ),
             referencingModule.context,
@@ -95,7 +94,7 @@ export class EsmRunner extends CommonJsRunner {
         });
         if ((esm as any).instantiate) (esm as any).instantiate();
         await esm.evaluate();
-        if (context.esmMode === EEsmMode.Evaluated) {
+        if (context.esmMode === EsmMode.Evaluated) {
           return esm;
         }
         const ns = esm.namespace as {

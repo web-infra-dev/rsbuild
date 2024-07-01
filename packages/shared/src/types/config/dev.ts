@@ -25,7 +25,7 @@ export type EnvironmentAPI = {
      * @param entryName - relate to rsbuild source.entry
      * @returns the return of entry module.
      */
-    loadBundle: <T>(entryName: string) => Promise<T>;
+    loadBundle: <T = unknown>(entryName: string) => Promise<T>;
 
     /**
      * Get the compiled HTML template.

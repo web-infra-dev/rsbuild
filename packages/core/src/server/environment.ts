@@ -20,7 +20,7 @@ export const loadBundle = async <T>(
   });
 
   if (!entrypoints?.[entryName]) {
-    throw new Error(`can't find ssr entry(${entryName})`);
+    throw new Error(`can't find entry(${entryName})`);
   }
 
   const { chunks: entryChunks } = entrypoints[entryName];
@@ -37,13 +37,13 @@ export const loadBundle = async <T>(
   }, []);
 
   if (files.length === 0) {
-    throw new Error(`can't get ssr bundle by entryName(${entryName})`);
+    throw new Error(`can't get bundle by entryName(${entryName})`);
   }
 
   // An entrypoint should have only one entryChunk, but there may be some boundary cases
   if (files.length > 1) {
     throw new Error(
-      `only support load single ssr bundle entry, but got ${files.length}: ${files.join(',')}`,
+      `only support load single entryChunk, but got ${files.length}: ${files.join(',')}`,
     );
   }
 

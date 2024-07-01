@@ -1,8 +1,12 @@
-const vm = require('node:vm');
+import vm from 'node:vm';
 
 const SYNTHETIC_MODULES_STORE = '__SYNTHETIC_MODULES_STORE';
 
-module.exports = async (something, context, unlinked) => {
+export const asModule = async (
+  something: Record<string, any>,
+  context: Record<string, any>,
+  unlinked?: boolean,
+): Promise<vm.SourceTextModule> => {
   if (something instanceof vm.Module) {
     return something;
   }
@@ -21,7 +25,8 @@ module.exports = async (something, context, unlinked) => {
     context,
   });
   if (unlinked) return m;
-  await m.link(() => {});
+  await m.link((() => {}) as () => vm.Module);
+  // @ts-expect-error copy from webpack
   if (m.instantiate) m.instantiate();
   await m.evaluate();
   return m;
