@@ -1,5 +1,5 @@
 import { Buffer } from 'node:buffer';
-import type { webpack } from '@rsbuild/webpack';
+import type { Rspack } from '@rsbuild/core';
 import Codecs from './shared/codecs';
 import type { FinalOptions } from './types';
 
@@ -7,7 +7,7 @@ export const IMAGE_MINIMIZER_PLUGIN_NAME =
   '@rsbuild/plugin-image-compress/minimizer' as const;
 
 export interface MinimizedResult {
-  source: webpack.sources.RawSource;
+  source: Rspack.sources.RawSource;
 }
 
 export class ImageMinimizerPlugin {
@@ -20,9 +20,9 @@ export class ImageMinimizerPlugin {
   }
 
   async optimize(
-    compiler: webpack.Compiler,
-    compilation: webpack.Compilation,
-    assets: Record<string, webpack.sources.Source>,
+    compiler: Rspack.Compiler,
+    compilation: Rspack.Compilation,
+    assets: Record<string, Rspack.sources.Source>,
   ): Promise<void> {
     const cache = compilation.getCache(IMAGE_MINIMIZER_PLUGIN_NAME);
     const { RawSource } = compiler.webpack.sources;
@@ -83,13 +83,14 @@ export class ImageMinimizerPlugin {
     await Promise.all(promises);
   }
 
-  apply(compiler: webpack.Compiler): void {
-    const handleCompilation = (compilation: webpack.Compilation) => {
+  apply(compiler: Rspack.Compiler): void {
+    const handleCompilation = (compilation: Rspack.Compilation) => {
       compilation.hooks.processAssets.tapPromise(
         {
           name: this.name,
           stage:
             compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_SIZE,
+          // @ts-expect-error unsupported by Rspack
           additionalAssets: true,
         },
         (assets) => this.optimize(compiler, compilation, assets),
