@@ -32,7 +32,6 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/webpack": "workspace:*",
     "@types/node": "18.x",
     "typescript": "^5.5.2"
   },
