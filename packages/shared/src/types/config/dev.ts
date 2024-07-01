@@ -18,6 +18,19 @@ export type RequestHandler = (
 export type EnvironmentAPI = {
   [name: string]: {
     getStats: () => Promise<Stats>;
+
+    /**
+     * Load and execute stats bundle in Server.
+     *
+     * @param entryName - relate to rsbuild source.entry
+     * @returns the return of entry module.
+     */
+    loadBundle: <T = unknown>(entryName: string) => Promise<T>;
+
+    /**
+     * Get the compiled HTML template.
+     */
+    getTransformedHtml: (entryName: string) => Promise<string>;
   };
 };
 

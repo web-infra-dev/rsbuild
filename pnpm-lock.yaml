@@ -286,6 +286,8 @@ importers:
         specifier: ^0.5.2
         version: 0.5.2
 
+  e2e/cases/server/ssr: {}
+
   e2e/cases/source-build/app:
     dependencies:
       '@e2e/source-build-components':
