@@ -1,5 +1,5 @@
 import type { Compiler, MultiCompiler } from '@rspack/core';
-import type { NormalizedConfig } from './config';
+import type { NormalizedConfig, NormalizedEnvironmentConfig } from './config';
 import type { RsbuildMode } from './rsbuild';
 import type { RspackConfig } from './rspack';
 import type { WebpackConfig } from './thirdParty';
@@ -42,10 +42,17 @@ export type InspectConfigOptions = {
 export type InspectConfigResult<B extends 'rspack' | 'webpack' = 'rspack'> = {
   rsbuildConfig: string;
   bundlerConfigs: string[];
+  environmentConfigs: string[];
   origin: {
-    rsbuildConfig: NormalizedConfig & {
+    rsbuildConfig: Omit<NormalizedConfig, 'environments'> & {
       pluginNames: string[];
     };
+    environmentConfigs: Record<
+      string,
+      NormalizedEnvironmentConfig & {
+        pluginNames: string[];
+      }
+    >;
     bundlerConfigs: B extends 'rspack' ? RspackConfig[] : WebpackConfig[];
   };
 };

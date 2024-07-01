@@ -30,7 +30,6 @@ describe('environment config', () => {
 
     await rsbuild.initConfigs();
 
-    expect(rsbuild.context.environments).toMatchSnapshot();
     expect(rsbuild.context.distPath).toBe(join(cwd, 'dist1'));
   });
 
@@ -91,10 +90,10 @@ describe('environment config', () => {
     ]);
 
     const {
-      origin: { rsbuildConfig },
+      origin: { environmentConfigs },
     } = await rsbuild.inspectConfig();
 
-    expect(rsbuildConfig.environments).toMatchSnapshot();
+    expect(environmentConfigs).toMatchSnapshot();
   });
 
   it('should support modify single environment config by api.modifyEnvironmentConfig', async () => {
@@ -149,10 +148,10 @@ describe('environment config', () => {
     ]);
 
     const {
-      origin: { rsbuildConfig },
+      origin: { environmentConfigs },
     } = await rsbuild.inspectConfig();
 
-    expect(rsbuildConfig.environments).toMatchSnapshot();
+    expect(environmentConfigs).toMatchSnapshot();
   });
 
   it('should normalize environment config correctly', async () => {
@@ -239,9 +238,9 @@ describe('environment config', () => {
     });
 
     const {
-      origin: { rsbuildConfig },
+      origin: { environmentConfigs },
     } = await rsbuild.inspectConfig();
 
-    expect(rsbuildConfig.environments).toMatchSnapshot();
+    expect(environmentConfigs).toMatchSnapshot();
   });
 });

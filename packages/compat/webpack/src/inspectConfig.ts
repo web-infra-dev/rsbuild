@@ -1,11 +1,11 @@
 import { isAbsolute, join } from 'node:path';
-import type {
-  InspectConfigOptions,
-  InspectConfigResult,
-  NormalizedConfig,
-} from '@rsbuild/core';
+import type { InspectConfigOptions, InspectConfigResult } from '@rsbuild/core';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
-import { outputInspectConfigFiles, stringifyConfig } from './shared';
+import {
+  outputInspectConfigFiles,
+  getRsbuildInspectConfig,
+  stringifyConfig,
+} from './shared';
 import type { WebpackConfig } from './types';
 
 export async function inspectConfig({
@@ -34,34 +34,34 @@ export async function inspectConfig({
       })
     ).webpackConfigs;
 
-  const rsbuildDebugConfig: NormalizedConfig & {
-    pluginNames: string[];
-  } = {
-    ...context.normalizedConfig!,
-    pluginNames: pluginManager.getPlugins().map((p) => p.name),
-  };
+  const rawBundlerConfigs = webpackConfigs.map((config) => ({
+    name: config.name!,
+    content: stringifyConfig(config, inspectOptions.verbose),
+  }));
 
-  const rawRsbuildConfig = await stringifyConfig(
-    rsbuildDebugConfig,
-    inspectOptions.verbose,
-  );
-  const rawBundlerConfigs = await Promise.all(
-    webpackConfigs.map(async (config) => ({
-      name: config.name!,
-      content: await stringifyConfig(config, inspectOptions.verbose),
-    })),
-  );
+  const {
+    rsbuildConfig,
+    rawRsbuildConfig,
+    environmentConfigs,
+    rawEnvironmentConfigs,
+  } = getRsbuildInspectConfig({
+    normalizedConfig: context.normalizedConfig!,
+    inspectOptions,
+    pluginManager,
+  });
 
-  let outputPath = inspectOptions.outputPath || context.distPath;
+  let outputPath = inspectOptions.outputPath
+    ? join(context.distPath, inspectOptions.outputPath)
+    : context.distPath;
+
   if (!isAbsolute(outputPath)) {
     outputPath = join(context.rootPath, outputPath);
   }
 
   if (inspectOptions.writeToDisk) {
     await outputInspectConfigFiles({
-      rsbuildConfig: context.normalizedConfig!,
-      rawRsbuildConfig,
-      bundlerConfigs: rawBundlerConfigs,
+      rawBundlerConfigs,
+      rawEnvironmentConfigs,
       inspectOptions: {
         ...inspectOptions,
         outputPath,
@@ -72,9 +72,11 @@ export async function inspectConfig({
 
   return {
     rsbuildConfig: rawRsbuildConfig,
+    environmentConfigs: rawEnvironmentConfigs.map((r) => r.content),
     bundlerConfigs: rawBundlerConfigs.map((r) => r.content),
     origin: {
-      rsbuildConfig: rsbuildDebugConfig,
+      rsbuildConfig,
+      environmentConfigs,
       bundlerConfigs: webpackConfigs,
     },
   };

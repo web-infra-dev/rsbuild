@@ -9,6 +9,7 @@ const {
   getStatsOptions,
   stringifyConfig,
   outputInspectConfigFiles,
+  getRsbuildInspectConfig,
   chainToConfig,
   modifyBundlerChain,
   onCompileDone,
@@ -28,6 +29,7 @@ export {
   modifyBundlerChain,
   onCompileDone,
   prettyTime,
+  getRsbuildInspectConfig,
 };
 
 export type InternalContext = __internalHelper.InternalContext;
