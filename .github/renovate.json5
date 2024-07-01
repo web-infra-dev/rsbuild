@@ -76,6 +76,8 @@
 		"buffer",
 		// align Node.js version minimum requirements
 		"@types/node",
-		"node"
+		"node",
+		// does not follow semver
+		"babel-plugin-react-compiler"
 	]
 }
