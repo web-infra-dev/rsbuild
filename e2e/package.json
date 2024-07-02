@@ -31,7 +31,6 @@
     "@rsbuild/plugin-image-compress": "workspace:*",
     "@rsbuild/plugin-less": "workspace:*",
     "@rsbuild/plugin-lightningcss": "workspace:*",
-    "@rsbuild/plugin-node-polyfill": "workspace:*",
     "@rsbuild/plugin-preact": "workspace:*",
     "@rsbuild/plugin-pug": "workspace:*",
     "@rsbuild/plugin-react": "workspace:*",

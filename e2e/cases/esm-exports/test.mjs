@@ -8,7 +8,6 @@ import { pluginEslint } from '@rsbuild/plugin-eslint';
 import { pluginImageCompress } from '@rsbuild/plugin-image-compress';
 import { pluginLess } from '@rsbuild/plugin-less';
 import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
-import { pluginNodePolyfill } from '@rsbuild/plugin-node-polyfill';
 import { pluginPreact } from '@rsbuild/plugin-preact';
 import { pluginPug } from '@rsbuild/plugin-pug';
 import { pluginReact } from '@rsbuild/plugin-react';
@@ -39,7 +38,6 @@ export default {
   pluginImageCompress,
   pluginEslint,
   pluginLess,
-  pluginNodePolyfill,
   pluginPug,
   pluginReact,
   pluginPreact,
