@@ -80,3 +80,59 @@ exports[`plugin-vue2 > should allow to configure vueLoader options 1`] = `
   },
 }
 `;
+
+exports[`plugin-vue2 > should include polyfill resolve config 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "resolve": {
+          "alias": {
+            "core-js": "core-js-aaa",
+          },
+          "fullySpecified": false,
+        },
+        "test": /\\\\\\.js\\$/,
+      },
+      {
+        "resolve": {
+          "alias": {
+            "core-js": "core-js-aaa",
+          },
+          "fullySpecified": false,
+        },
+        "test": /\\\\\\.vue\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/vue-loader/lib/index.js",
+            "options": {
+              "compilerOptions": {
+                "preserveWhitespace": false,
+              },
+              "experimentalInlineMatchResource": true,
+              "hotReload": false,
+            },
+          },
+        ],
+      },
+      {
+        "test": /\\\\\\.\\(\\?:css\\|postcss\\|pcss\\)\\$/,
+      },
+    ],
+  },
+  "plugins": [
+    VueLoaderPlugin {},
+    VueLoader15PitchFixPlugin {
+      "name": "VueLoader15PitchFixPlugin",
+    },
+  ],
+  "resolve": {
+    "alias": {
+      "vue$": "vue/dist/vue.runtime.esm.js",
+    },
+    "extensions": [
+      ".vue",
+    ],
+  },
+}
+`;

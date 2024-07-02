@@ -1,6 +1,9 @@
 <template>
   <div>
     <button id="button1" type="button" @click="count++">A: {{ count }}</button>
+    <div class="list1" v-for="item in list.filter(Boolean)" :key="item">
+      {{ item }}
+    </div>
     <B />
   </div>
 </template>
@@ -19,6 +22,7 @@ export default {
 
     return {
       count,
+      list: [1, 2, null, 3],
     };
   },
 };
