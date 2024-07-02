@@ -1,4 +1,4 @@
-import type { RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildPlugin, RspackChain } from '@rsbuild/core';
 import { type VueLoaderOptions, VueLoaderPlugin } from 'vue-loader';
 import { VueLoader15PitchFixPlugin } from './VueLoader15PitchFixPlugin';
 import { applySplitChunksRule } from './splitChunks';
@@ -76,12 +76,17 @@ export function pluginVue2(options: PluginVueOptions = {}): RsbuildPlugin {
           compilerOptions,
         };
 
-        chain.module
-          .rule(CHAIN_ID.RULE.VUE)
+        const rule = chain.module.rule(CHAIN_ID.RULE.VUE);
+
+        rule
           .test(VUE_REGEXP)
           .use(CHAIN_ID.USE.VUE)
           .loader(require.resolve('vue-loader'))
           .options(vueLoaderOptions);
+
+        if (chain.module.rules.has(CHAIN_ID.RULE.JS)) {
+          applyResolveConfig(rule, chain.module.rule(CHAIN_ID.RULE.JS));
+        }
 
         // Support for lang="postcss" and lang="pcss" in SFC
         chain.module.rule(CHAIN_ID.RULE.CSS).test(/\.(?:css|postcss|pcss)$/);
@@ -94,4 +99,20 @@ export function pluginVue2(options: PluginVueOptions = {}): RsbuildPlugin {
       applySplitChunksRule(api, options.splitChunks);
     },
   };
+}
+
+function applyResolveConfig(
+  vueRule: RspackChain.Rule,
+  jsRule: RspackChain.Rule,
+) {
+  const fullySpecified = jsRule.resolve.get('fullySpecified');
+  const aliases = jsRule.resolve.alias.entries();
+
+  if (aliases) {
+    vueRule.resolve.alias.merge(aliases);
+  }
+
+  if (fullySpecified !== undefined) {
+    vueRule.resolve.fullySpecified(fullySpecified);
+  }
 }
