@@ -78,7 +78,7 @@
     "chokidar": "3.6.0",
     "deepmerge": "^4.3.1",
     "gzip-size": "^6.0.0",
-    "http-proxy-middleware": "^2.0.6",
+    "http-proxy-middleware": "^3.0.0",
     "picocolors": "1.0.1",
     "prebundle": "1.1.0",
     "rspack-chain": "^0.7.3",
