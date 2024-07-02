@@ -560,8 +560,10 @@ type InspectConfigOptions = {
 async function InspectConfig(options?: InspectConfigOptions): Promise<{
   rsbuildConfig: string;
   bundlerConfigs: string[];
+  environmentConfigs: string[];
   origin: {
     rsbuildConfig: RsbuildConfig;
+    environmentConfigs: Record<string, EnvironmentConfig>;
     bundlerConfigs: BundlerConfigs[];
   };
 }>;

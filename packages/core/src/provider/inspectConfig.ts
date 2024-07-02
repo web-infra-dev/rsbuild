@@ -2,10 +2,13 @@ import { isAbsolute, join } from 'node:path';
 import type {
   InspectConfigOptions,
   InspectConfigResult,
-  NormalizedConfig,
   RspackConfig,
 } from '@rsbuild/shared';
-import { outputInspectConfigFiles, stringifyConfig } from '../config';
+import {
+  getRsbuildInspectConfig,
+  outputInspectConfigFiles,
+  stringifyConfig,
+} from '../config';
 import { getNodeEnv, setNodeEnv } from '../helpers';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
@@ -35,24 +38,21 @@ export async function inspectConfig({
       })
     ).rspackConfigs;
 
-  const rsbuildDebugConfig: NormalizedConfig & {
-    pluginNames: string[];
-  } = {
-    ...context.normalizedConfig!,
-    pluginNames: pluginManager.getPlugins().map((p) => p.name),
-  };
+  const rawBundlerConfigs = rspackConfigs.map((config, index) => ({
+    name: config.name || String(index),
+    content: stringifyConfig(config, inspectOptions.verbose),
+  }));
 
-  const rawRsbuildConfig = stringifyConfig(
-    rsbuildDebugConfig,
-    inspectOptions.verbose,
-  );
-
-  const rawBundlerConfigs = await Promise.all(
-    rspackConfigs.map(async (config, index) => ({
-      name: config.name || String(index),
-      content: stringifyConfig(config, inspectOptions.verbose),
-    })),
-  );
+  const {
+    rsbuildConfig,
+    rawRsbuildConfig,
+    environmentConfigs,
+    rawEnvironmentConfigs,
+  } = getRsbuildInspectConfig({
+    normalizedConfig: context.normalizedConfig!,
+    inspectOptions,
+    pluginManager,
+  });
 
   let outputPath = inspectOptions.outputPath
     ? join(context.distPath, inspectOptions.outputPath)
@@ -63,9 +63,8 @@ export async function inspectConfig({
 
   if (inspectOptions.writeToDisk) {
     await outputInspectConfigFiles({
-      rsbuildConfig: context.normalizedConfig!,
-      rawRsbuildConfig,
-      bundlerConfigs: rawBundlerConfigs,
+      rawBundlerConfigs,
+      rawEnvironmentConfigs,
       inspectOptions: {
         ...inspectOptions,
         outputPath,
@@ -76,9 +75,11 @@ export async function inspectConfig({
 
   return {
     rsbuildConfig: rawRsbuildConfig,
+    environmentConfigs: rawEnvironmentConfigs.map((r) => r.content),
     bundlerConfigs: rawBundlerConfigs.map((r) => r.content),
     origin: {
-      rsbuildConfig: rsbuildDebugConfig,
+      rsbuildConfig,
+      environmentConfigs,
       bundlerConfigs: rspackConfigs,
     },
   };

@@ -3,8 +3,10 @@ import { isAbsolute, join } from 'node:path';
 import { RspackChain, color } from '@rsbuild/shared';
 import type {
   InspectConfigOptions,
+  InspectConfigResult,
   NormalizedConfig,
   NormalizedDevConfig,
+  NormalizedEnvironmentConfig,
   NormalizedHtmlConfig,
   NormalizedOutputConfig,
   NormalizedPerformanceConfig,
@@ -12,6 +14,7 @@ import type {
   NormalizedServerConfig,
   NormalizedSourceConfig,
   NormalizedToolsConfig,
+  PluginManager,
   PublicDir,
   PublicDirOptions,
   RsbuildConfig,
@@ -391,16 +394,83 @@ export async function loadConfig({
   }
 }
 
+export const getRsbuildInspectConfig = ({
+  normalizedConfig,
+  inspectOptions,
+  pluginManager,
+}: {
+  normalizedConfig: NormalizedConfig;
+  inspectOptions: InspectConfigOptions;
+  pluginManager: PluginManager;
+}): {
+  rawRsbuildConfig: string;
+  rsbuildConfig: InspectConfigResult['origin']['rsbuildConfig'];
+  rawEnvironmentConfigs: Array<{
+    name: string;
+    content: string;
+  }>;
+  environmentConfigs: InspectConfigResult['origin']['environmentConfigs'];
+} => {
+  const { environments, ...rsbuildConfig } = normalizedConfig;
+
+  const pluginNames = pluginManager.getPlugins().map((p) => p.name);
+
+  const rsbuildDebugConfig: Omit<NormalizedConfig, 'environments'> & {
+    pluginNames: string[];
+  } = {
+    ...rsbuildConfig,
+    pluginNames,
+  };
+
+  const rawRsbuildConfig = stringifyConfig(
+    rsbuildDebugConfig,
+    inspectOptions.verbose,
+  );
+
+  const environmentConfigs: Record<
+    string,
+    NormalizedEnvironmentConfig & {
+      pluginNames: string[];
+    }
+  > = {};
+
+  const rawEnvironmentConfigs: Array<{
+    name: string;
+    content: string;
+  }> = [];
+
+  for (const [name, config] of Object.entries(environments)) {
+    const debugConfig = {
+      ...config,
+      pluginNames,
+    };
+    rawEnvironmentConfigs.push({
+      name,
+      content: stringifyConfig(debugConfig, inspectOptions.verbose),
+    });
+    environmentConfigs[name] = debugConfig;
+  }
+
+  return {
+    rsbuildConfig: rsbuildDebugConfig,
+    rawRsbuildConfig,
+    environmentConfigs,
+    rawEnvironmentConfigs,
+  };
+};
+
 export async function outputInspectConfigFiles({
-  rawRsbuildConfig,
-  bundlerConfigs,
+  rawBundlerConfigs,
+  rawEnvironmentConfigs,
   inspectOptions,
   configType,
 }: {
   configType: string;
-  rsbuildConfig: NormalizedConfig;
-  rawRsbuildConfig: string;
-  bundlerConfigs: Array<{
+  rawEnvironmentConfigs: Array<{
+    name: string;
+    content: string;
+  }>;
+  rawBundlerConfigs: Array<{
     name: string;
     content: string;
   }>;
@@ -411,12 +481,27 @@ export async function outputInspectConfigFiles({
   const { outputPath } = inspectOptions;
 
   const files = [
-    {
-      path: join(outputPath, 'rsbuild.config.mjs'),
-      label: 'Rsbuild Config',
-      content: rawRsbuildConfig,
-    },
-    ...bundlerConfigs.map(({ name, content }) => {
+    ...rawEnvironmentConfigs.map(({ name, content }) => {
+      if (rawEnvironmentConfigs.length === 1) {
+        const outputFile = 'rsbuild.config.mjs';
+        const outputFilePath = join(outputPath, outputFile);
+
+        return {
+          path: outputFilePath,
+          label: 'Rsbuild Config',
+          content,
+        };
+      }
+      const outputFile = `rsbuild.config.${name}.mjs`;
+      const outputFilePath = join(outputPath, outputFile);
+
+      return {
+        path: outputFilePath,
+        label: `Rsbuild Config (${name})`,
+        content,
+      };
+    }),
+    ...rawBundlerConfigs.map(({ name, content }) => {
       const outputFile = `${configType}.config.${name}.mjs`;
       let outputFilePath = join(outputPath, outputFile);
 

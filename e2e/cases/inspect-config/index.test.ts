@@ -4,6 +4,11 @@ import { createRsbuild } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const rsbuildConfig = path.resolve(__dirname, './dist/rsbuild.config.mjs');
+
+const rsbuildNodeConfig = path.resolve(
+  __dirname,
+  './dist/rsbuild.config.node.mjs',
+);
 const bundlerConfig = path.resolve(
   __dirname,
   `./dist/${process.env.PROVIDE_TYPE || 'rspack'}.config.web.mjs`,
@@ -51,11 +56,12 @@ test('should generate bundler config for node when target contains node', async 
     writeToDisk: true,
   });
 
-  expect(fs.existsSync(rsbuildConfig)).toBeTruthy();
+  expect(fs.existsSync(rsbuildNodeConfig)).toBeTruthy();
   expect(fs.existsSync(bundlerConfig)).toBeTruthy();
   expect(fs.existsSync(bundlerNodeConfig)).toBeTruthy();
 
   fs.rmSync(rsbuildConfig, { force: true });
+  fs.rmSync(rsbuildNodeConfig, { force: true });
   fs.rmSync(bundlerConfig, { force: true });
   fs.rmSync(bundlerNodeConfig, { force: true });
 });

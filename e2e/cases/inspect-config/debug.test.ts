@@ -6,6 +6,7 @@ import { logger } from '@rsbuild/core';
 
 const getRsbuildConfig = (dist: string) =>
   path.resolve(__dirname, `./${dist}/rsbuild.config.mjs`);
+
 const getBundlerConfig = (dist: string) =>
   path.resolve(
     __dirname,
