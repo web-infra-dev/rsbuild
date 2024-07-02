@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { build } from '@e2e/helper';
+import { build, getRandomPort } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const fixtures = __dirname;
@@ -246,6 +246,68 @@ test('should access /html/main success when entry is main and outputPath is /htm
   const res = await page.goto(url1.href);
 
   expect(res?.status()).toBe(404);
+
+  await rsbuild.close();
+});
+
+test('should match resource correctly with specify assetPrefix', async ({
+  page,
+}) => {
+  const port = await getRandomPort();
+
+  const rsbuild = await build({
+    cwd: fixtures,
+    runServer: true,
+    rsbuildConfig: {
+      server: {
+        port,
+      },
+      output: {
+        assetPrefix: '/subpath/',
+        distPath: {
+          root: 'dist-8',
+        },
+      },
+    },
+  });
+
+  const url = new URL(`http://localhost:${rsbuild.port}/`);
+
+  await page.goto(url.href);
+
+  const locator = page.locator('#test');
+  await expect(locator).toHaveText('Hello Rsbuild!');
+
+  await rsbuild.close();
+});
+
+test('should match resource correctly with full url assetPrefix', async ({
+  page,
+}) => {
+  const port = await getRandomPort();
+
+  const rsbuild = await build({
+    cwd: fixtures,
+    runServer: true,
+    rsbuildConfig: {
+      server: {
+        port,
+      },
+      output: {
+        assetPrefix: `http://localhost:${port}/subpath/`,
+        distPath: {
+          root: 'dist-8',
+        },
+      },
+    },
+  });
+
+  const url = new URL(`http://localhost:${rsbuild.port}/`);
+
+  await page.goto(url.href);
+
+  const locator = page.locator('#test');
+  await expect(locator).toHaveText('Hello Rsbuild!');
 
   await rsbuild.close();
 });

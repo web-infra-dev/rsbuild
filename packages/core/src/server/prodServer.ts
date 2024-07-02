@@ -1,14 +1,13 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
-import { join } from 'node:path';
 import type {
   PreviewServerOptions,
   RequestHandler,
   ServerConfig,
 } from '@rsbuild/shared';
 import type Connect from 'connect';
-import { ROOT_DIST_DIR } from '../constants';
 import { getNodeEnv, setNodeEnv } from '../helpers';
+import { pathnameParse } from '../helpers/path';
 import { logger } from '../logger';
 import type { InternalContext, NormalizedConfig } from '../types';
 import {
@@ -28,7 +27,7 @@ type RsbuildProdServerOptions = {
   pwd: string;
   output: {
     path: string;
-    assetPrefix?: string;
+    assetPrefixes: string[];
   };
   serverConfig: ServerConfig;
 };
@@ -110,14 +109,13 @@ export class RsbuildProdServer {
 
   private async applyStaticAssetMiddleware() {
     const {
-      output: { path, assetPrefix },
+      output: { path, assetPrefixes },
       serverConfig: { htmlFallback },
-      pwd,
     } = this.options;
 
     const { default: sirv } = await import('sirv');
 
-    const assetMiddleware = sirv(join(pwd, path), {
+    const assetMiddleware = sirv(path, {
       etag: true,
       dev: true,
       ignores: ['favicon.ico'],
@@ -126,6 +124,8 @@ export class RsbuildProdServer {
 
     this.middlewares.use((req, res, next) => {
       const url = req.url;
+      const assetPrefix =
+        url && assetPrefixes.find((prefix) => url.startsWith(prefix));
 
       // handler assetPrefix
       if (assetPrefix && url?.startsWith(assetPrefix)) {
@@ -165,8 +165,10 @@ export async function startProdServer(
     {
       pwd: context.rootPath,
       output: {
-        path: config.output.distPath.root || ROOT_DIST_DIR,
-        assetPrefix: config.output.assetPrefix,
+        path: context.distPath,
+        assetPrefixes: Object.values(context.environments).map((e) =>
+          pathnameParse(e.config.output.assetPrefix),
+        ),
       },
       serverConfig,
     },

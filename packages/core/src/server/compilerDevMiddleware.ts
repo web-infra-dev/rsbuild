@@ -1,6 +1,7 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Socket } from 'node:net';
 import type { DevConfig, NextFunction, ServerConfig } from '@rsbuild/shared';
+import { pathnameParse } from '../helpers/path';
 import type {
   DevMiddleware as CustomDevMiddleware,
   DevMiddlewareAPI,
@@ -122,6 +123,8 @@ export class CompilerDevMiddleware {
       etag: 'weak',
     });
 
+    const assetPrefixes = publicPaths.map(pathnameParse);
+
     const warp = async (
       req: IncomingMessage,
       res: ServerResponse,
@@ -129,7 +132,7 @@ export class CompilerDevMiddleware {
     ) => {
       const { url } = req;
       const assetPrefix =
-        url && publicPaths.find((prefix) => url.startsWith(prefix));
+        url && assetPrefixes.find((prefix) => url.startsWith(prefix));
 
       // slice publicPath, static asset have publicPath but html does not.
       if (assetPrefix && assetPrefix !== '/') {
