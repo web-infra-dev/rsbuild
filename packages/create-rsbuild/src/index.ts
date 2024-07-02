@@ -229,13 +229,24 @@ function copyFolder(src: string, dist: string, version: string, name?: string) {
   }
 }
 
+const isStableVersion = (version: string) => {
+  return ['alpha', 'beta', 'rc', 'canary', 'nightly'].every(
+    (tag) => !version.includes(tag),
+  );
+};
+
 const updatePackageJson = (
   pkgJsonPath: string,
   version: string,
   name?: string,
 ) => {
   let content = fs.readFileSync(pkgJsonPath, 'utf-8');
-  content = content.replace(/workspace:\*/g, `^${version}`);
+
+  // Lock the version if it is not stable
+  const targetVersion = isStableVersion(version) ? `^${version}` : version;
+
+  content = content.replace(/workspace:\*/g, targetVersion);
+
   const pkg = JSON.parse(content);
 
   if (name && name !== '.') {
