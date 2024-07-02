@@ -63,7 +63,9 @@ test.describe('should print file size correctly', async () => {
 
     // dist/index.html
     expect(
-      logs.some((log) => log.includes('File') && log.includes('(web)')),
+      logs.some(
+        (log) => log.includes('Production file sizes') && log.includes('web'),
+      ),
     ).toBeTruthy();
 
     expect(
@@ -77,7 +79,9 @@ test.describe('should print file size correctly', async () => {
 
     // dist/server/index.js
     expect(
-      logs.some((log) => log.includes('File') && log.includes('(node)')),
+      logs.some(
+        (log) => log.includes('Production file sizes') && log.includes('node'),
+      ),
     ).toBeTruthy();
     expect(
       logs.some(

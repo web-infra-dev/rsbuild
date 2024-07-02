@@ -24,24 +24,17 @@ const getAssetColor = (size: number) => {
   return color.green;
 };
 
-function getHeader(
-  longestFileLength: number,
-  longestLabelLength: number,
-  environment: string,
-) {
+function getHeader(longestFileLength: number, longestLabelLength: number) {
   const longestLengths = [longestFileLength, longestLabelLength];
-  const headerRow = [`File (${environment})`, 'Size', 'Gzipped'].reduce(
-    (prev, cur, index) => {
-      const length = longestLengths[index];
-      let curLabel = cur;
-      if (length) {
-        curLabel =
-          cur.length < length ? cur + ' '.repeat(length - cur.length) : cur;
-      }
-      return `${prev + curLabel}    `;
-    },
-    '  ',
-  );
+  const headerRow = ['File', 'Size', 'Gzipped'].reduce((prev, cur, index) => {
+    const length = longestLengths[index];
+    let curLabel = cur;
+    if (length) {
+      curLabel =
+        cur.length < length ? cur + ' '.repeat(length - cur.length) : cur;
+    }
+    return `${prev + curLabel}    `;
+  }, '  ');
 
   return color.bold(color.blue(headerRow));
 }
@@ -68,7 +61,6 @@ async function printFileSizes(
   config: PrintFileSizeOptions,
   stats: Stats,
   rootPath: string,
-  environment: string,
 ) {
   const logs: string[] = [];
   if (config.detail === false && config.total === false) {
@@ -141,7 +133,7 @@ async function printFileSizes(
   );
 
   if (config.detail !== false) {
-    logs.push(getHeader(longestFileLength, longestLabelLength, environment));
+    logs.push(getHeader(longestFileLength, longestLabelLength));
   }
 
   let totalSize = 0;
@@ -196,7 +188,7 @@ export const pluginFileSize = (): RsbuildPlugin => ({
         return;
       }
 
-      const logs = await Promise.all(
+      await Promise.all(
         Object.values(environments).map(async (environment, index) => {
           const { printFileSize } = environment.config.performance;
 
@@ -211,29 +203,24 @@ export const pluginFileSize = (): RsbuildPlugin => ({
               : printFileSize;
 
           if (printFileSize) {
-            return printFileSizes(
+            const statsLog = await printFileSizes(
               printFileSizeConfig,
               multiStats[index],
               api.context.rootPath,
-              environment.name,
             );
+
+            const name = color.green(environment.name);
+            logger.info(`Production file sizes for ${name}:\n`);
+
+            for (const log of statsLog) {
+              logger.log(log);
+            }
           }
-          return [];
         }),
       ).catch((err) => {
         logger.warn('Failed to print file size.');
         logger.warn(err as Error);
-        return [];
       });
-
-      if (logs.filter((log) => log.length).length) {
-        logger.info('Production file sizes:\n');
-        for (const statsLog of logs) {
-          for (const log of statsLog) {
-            logger.log(log);
-          }
-        }
-      }
     });
   },
 });
