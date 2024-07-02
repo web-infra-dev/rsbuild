@@ -233,6 +233,7 @@ function retry(config: RuntimeRetryOptions, e: Event) {
         domain,
         url,
         tagName,
+        isAsyncChunk: false,
       };
       config.onFail(context);
     }
@@ -280,6 +281,7 @@ function retry(config: RuntimeRetryOptions, e: Event) {
       domain,
       url,
       tagName,
+      isAsyncChunk: false,
     };
     config.onRetry(context);
   }
@@ -304,6 +306,7 @@ function load(config: RuntimeRetryOptions, e: Event) {
       domain,
       url,
       tagName,
+      isAsyncChunk: false,
     };
     config.onSuccess(context);
   }

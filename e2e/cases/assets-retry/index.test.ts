@@ -178,6 +178,31 @@ test('@rsbuild/plugin-assets-retry should work when blocking async chunk`', asyn
   logger.level = 'log';
 });
 
+test('@rsbuild/plugin-assets-retry should work when blocking async css chunk`', async ({
+  page,
+}) => {
+  logger.level = 'verbose';
+  const { logs, restore } = proxyConsole();
+  const blockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/css/async/src_AsyncCompTest_tsx.css',
+  });
+  const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {});
+
+  await gotoPage(page, rsbuild);
+  const compTestElement = page.locator('#async-comp-test');
+  await expect(compTestElement).toHaveText('Hello AsyncCompTest');
+  await expect(compTestElement).toHaveCSS('background-color', 'rgb(0, 0, 139)');
+  const blockedResponseCount = count404Response(
+    logs,
+    '/static/css/async/src_AsyncCompTest_tsx.css',
+  );
+  expect(blockedResponseCount).toBe(3);
+  await rsbuild.close();
+  restore();
+  logger.level = 'log';
+});
+
 test('@rsbuild/plugin-assets-retry should work with minified runtime code when blocking async chunk', async ({
   page,
 }) => {
