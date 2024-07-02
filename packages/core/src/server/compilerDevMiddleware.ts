@@ -6,6 +6,7 @@ import type {
   DevMiddlewareAPI,
 } from './devMiddleware';
 import { SocketServer } from './socketServer';
+import { pathParse } from './helper';
 
 type Options = {
   publicPaths: string[];
@@ -122,6 +123,8 @@ export class CompilerDevMiddleware {
       etag: 'weak',
     });
 
+    const assetPrefixes = publicPaths.map(pathParse);
+
     const warp = async (
       req: IncomingMessage,
       res: ServerResponse,
@@ -129,7 +132,7 @@ export class CompilerDevMiddleware {
     ) => {
       const { url } = req;
       const assetPrefix =
-        url && publicPaths.find((prefix) => url.startsWith(prefix));
+        url && assetPrefixes.find((prefix) => url.startsWith(prefix));
 
       // slice publicPath, static asset have publicPath but html does not.
       if (assetPrefix && assetPrefix !== '/') {
