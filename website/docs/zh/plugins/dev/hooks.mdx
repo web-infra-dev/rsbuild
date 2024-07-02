@@ -195,7 +195,9 @@ const myPlugin = () => ({
 
 ### modifyEnvironmentConfig
 
-修改传递给 Rsbuild 的某个 Environment 的配置项，你可以直接修改传入的 config 对象，也可以返回一个新的对象来替换传入的对象。
+修改特定 environment 的 Rsbuild 配置。
+
+在回调函数中，入参里的 config 对象已经合并了公共的 Rsbuild 配置，你可以直接修改这个 config 对象，也可以返回一个新的对象来替换它。
 
 - **类型：**
 
