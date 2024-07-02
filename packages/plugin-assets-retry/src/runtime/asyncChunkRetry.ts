@@ -186,16 +186,10 @@ function ensureChunk(chunkId: string): Promise<unknown> {
 
   // mark the async chunk name in the global variables and share it with initial chunk retry to avoid duplicate retrying
   if (typeof window !== 'undefined') {
-    if (
-      originalScriptFilename &&
-      !window.__RB_ASYNC_CHUNKS__[originalScriptFilename]
-    ) {
+    if (originalScriptFilename) {
       window.__RB_ASYNC_CHUNKS__[originalScriptFilename] = true;
     }
-    if (
-      originalCssFilename &&
-      !window.__RB_ASYNC_CHUNKS__[originalCssFilename]
-    ) {
+    if (originalCssFilename) {
       window.__RB_ASYNC_CHUNKS__[originalCssFilename] = true;
     }
   }
@@ -207,8 +201,9 @@ function ensureChunk(chunkId: string): Promise<unknown> {
     // At present, we don't consider the switching domain and addQuery of async css chunk
     // 1. Async js chunk will be requested first. It is rare for async css chunk to fail alone.
     // 2. the code of loading css in webpack runtime is complex and it may be modified by cssExtractPlugin, increase the complexity of this plugin.
-    const isCssAsyncChunkLoadFailed =
-      error?.message?.includes('CSS chunk') ?? false;
+    const isCssAsyncChunkLoadFailed = Boolean(
+      error?.message?.includes('CSS chunk'),
+    );
 
     const createContext = (times: number): AssetsRetryHookContext => ({
       times,
