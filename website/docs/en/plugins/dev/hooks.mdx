@@ -196,7 +196,10 @@ const myPlugin = () => ({
 
 ### modifyEnvironmentConfig
 
-Modify the environment config passed to the Rsbuild, you can directly modify the config object, or return a new object to replace the previous object.
+
+Modify the Rsbuild configuration of a specific environment.
+
+In the callback function, the config object in the parameters has already been merged with the common Rsbuild configuration. You can directly modify this config object, or you can return a new object to replace it.
 
 - **Type:**
 
