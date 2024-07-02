@@ -38,7 +38,7 @@ export default {
 
 传递给 `svelte-loader` 的选项，请查阅 [svelte-loader 文档](https://github.com/sveltejs/svelte-loader) 来了解具体用法。
 
-- **类型：** `Object`
+- **类型：** `SvelteLoaderOptions`
 - **默认值：**
 
 ```js
@@ -47,7 +47,7 @@ const defaultOptions = {
     dev: isDev,
   },
   preprocess: require('svelte-preprocess')(),
-  emitCss: !rsbuildConfig.output.injectStyles,
+  emitCss: isProd && !rsbuildConfig.output.injectStyles,
   hotReload: isDev && rsbuildConfig.dev.hmr,
 };
 ```

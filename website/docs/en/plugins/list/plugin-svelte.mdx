@@ -38,7 +38,7 @@ If you need to customize the compilation behavior of Svelte, you can use the fol
 
 Options passed to `svelte-loader`, please refer to the [svelte-loader documentation](https://github.com/sveltejs/svelte-loader) for detailed usage.
 
-- **Type:** `Object`
+- **Type:** `SvelteLoaderOptions`
 - **Default:**
 
 ```js
@@ -47,7 +47,7 @@ const defaultOptions = {
     dev: isDev,
   },
   preprocess: require('svelte-preprocess')(),
-  emitCss: !rsbuildConfig.output.injectStyles,
+  emitCss: isProd && !rsbuildConfig.output.injectStyles,
   hotReload: isDev && rsbuildConfig.dev.hmr,
 };
 ```

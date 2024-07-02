@@ -61,7 +61,7 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
       }
 
       api.modifyBundlerChain(
-        async (chain, { CHAIN_ID, environment, isDev }) => {
+        async (chain, { CHAIN_ID, environment, isDev, isProd }) => {
           const { default: sveltePreprocess } = await import(
             'svelte-preprocess'
           );
@@ -97,7 +97,9 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
                 dev: isDev,
               },
               preprocess: sveltePreprocess(options.preprocessOptions),
-              emitCss: !environmentConfig.output.injectStyles,
+              // NOTE emitCss: true is currently not supported with HMR
+              // See https://github.com/web-infra-dev/rsbuild/issues/2744
+              emitCss: isProd && !environmentConfig.output.injectStyles,
               hotReload: isDev && environmentConfig.dev.hmr,
             },
             options.svelteLoaderOptions ?? {},

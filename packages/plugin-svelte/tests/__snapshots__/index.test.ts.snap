@@ -13,7 +13,7 @@ exports[`plugin-svelte > should add svelte loader properly 1`] = `
               "compilerOptions": {
                 "dev": false,
               },
-              "emitCss": true,
+              "emitCss": false,
               "hotReload": false,
               "preprocess": {
                 "markup": [Function],
