@@ -217,7 +217,10 @@ export const pluginFileSize = (): RsbuildPlugin => ({
             }
           }
         }),
-      );
+      ).catch((err) => {
+        logger.warn('Failed to print file size.');
+        logger.warn(err as Error);
+      });
     });
   },
 });
