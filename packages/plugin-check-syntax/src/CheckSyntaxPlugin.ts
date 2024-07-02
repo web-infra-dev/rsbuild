@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import { resolve } from 'node:path';
 import type { Rspack } from '@rsbuild/core';
-import { browserslistToESVersion } from '@rsbuild/shared';
 import { parse } from 'acorn';
+import { browserslistToESVersion } from 'browserslist-to-es-version';
 import {
   checkIsExcludeSource,
   generateError,

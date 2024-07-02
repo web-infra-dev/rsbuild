@@ -64,6 +64,7 @@
     "@types/node": "18.x",
     "@types/on-finished": "2.3.4",
     "@types/ws": "^8.5.10",
+    "browserslist-to-es-version": "^1.0.0",
     "commander": "^12.1.0",
     "connect": "3.7.0",
     "connect-history-api-fallback": "^2.0.0",

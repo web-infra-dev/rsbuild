@@ -1,4 +1,4 @@
-import { browserslistToESVersion } from '@rsbuild/shared';
+import * as toESVersion from 'browserslist-to-es-version';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginTarget = (): RsbuildPlugin => ({
@@ -14,7 +14,7 @@ export const pluginTarget = (): RsbuildPlugin => ({
         }
 
         const { browserslist } = environment;
-        const esVersion = browserslistToESVersion(browserslist);
+        const esVersion = toESVersion.browserslistToESVersion(browserslist);
 
         if (target === 'web-worker') {
           chain.target(['webworker', `es${esVersion}`]);

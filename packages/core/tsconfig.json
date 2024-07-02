@@ -25,6 +25,7 @@
       "rspack-manifest-plugin": ["./compiled/rspack-manifest-plugin"],
       "webpack-dev-middleware": ["./compiled/webpack-dev-middleware"],
       "launch-editor-middleware": ["./compiled/launch-editor-middleware"],
+      "browserslist-to-es-version": ["./compiled/browserslist-to-es-version"],
       "connect-history-api-fallback": [
         "./compiled/connect-history-api-fallback"
       ]
