@@ -194,6 +194,71 @@ const myPlugin = () => ({
 });
 ```
 
+### modifyEnvironmentConfig
+
+
+Modify the Rsbuild configuration of a specific environment.
+
+In the callback function, the config object in the parameters has already been merged with the common Rsbuild configuration. You can directly modify this config object, or you can return a new object to replace it.
+
+- **Type:**
+
+```ts
+type ModifyEnvironmentConfigUtils = {
+  /** Current environment name */
+  name: string;
+  mergeEnvironmentConfig: (
+    ...configs: EnvironmentConfig[]
+  ) => EnvironmentConfig;
+};
+
+function ModifyEnvironmentConfig(
+  callback: (
+    config: EnvironmentConfig,
+    utils: ModifyEnvironmentConfigUtils,
+  ) => MaybePromise<EnvironmentConfig | void>,
+): void;
+```
+
+- **Example:** Set a default value for the Rsbuild config of a specified environment:
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.modifyEnvironmentConfig((config, { name }) => {
+      if (name !== 'web') {
+        return config;
+      }
+      config.html ||= {};
+      config.html.title = 'My Default Title';
+    });
+  },
+});
+```
+
+- **Example:** Using `mergeEnvironmentConfig` to merge config objects, and return the merged object.
+
+```ts
+import type { EnvironmentConfig } from '@rsbuild/core';
+
+const myPlugin = () => ({
+  setup: (api) => {
+    api.modifyEnvironmentConfig((userConfig, { mergeEnvironmentConfig }) => {
+      const extraConfig: EnvironmentConfig = {
+        source: {
+          // ...
+        },
+        output: {
+          // ...
+        },
+      };
+
+      return mergeEnvironmentConfig(userConfig, extraConfig);
+    });
+  },
+});
+```
+
 ### modifyRspackConfig
 
 To modify the final Rspack config object, you can directly modify the config object, or return a new object to replace the previous object.
