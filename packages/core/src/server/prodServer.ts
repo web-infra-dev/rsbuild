@@ -166,9 +166,9 @@ export async function startProdServer(
       pwd: context.rootPath,
       output: {
         path: context.distPath,
-        assetPrefixes: Object.values(
-          context.normalizedConfig?.environments || {},
-        ).map((e) => pathnameParse(e.output.assetPrefix)),
+        assetPrefixes: Object.values(context.environments).map((e) =>
+          pathnameParse(e.config.output.assetPrefix),
+        ),
       },
       serverConfig,
     },
