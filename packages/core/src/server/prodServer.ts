@@ -16,12 +16,12 @@ import {
   getServerConfig,
   printServerURLs,
 } from './helper';
+import { pathParse } from './helper';
 import { createHttpServer } from './httpServer';
 import {
   faviconFallbackMiddleware,
   getRequestLoggerMiddleware,
 } from './middlewares';
-import { pathParse } from './helper';
 
 type RsbuildProdServerOptions = {
   pwd: string;

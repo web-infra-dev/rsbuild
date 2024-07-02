@@ -5,8 +5,8 @@ import type {
   DevMiddleware as CustomDevMiddleware,
   DevMiddlewareAPI,
 } from './devMiddleware';
-import { SocketServer } from './socketServer';
 import { pathParse } from './helper';
+import { SocketServer } from './socketServer';
 
 type Options = {
   publicPaths: string[];
