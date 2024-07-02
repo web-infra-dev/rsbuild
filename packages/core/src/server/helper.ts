@@ -50,14 +50,6 @@ const formatPrefix = (prefix: string | undefined) => {
   return `${hasLeadingSlash ? '' : '/'}${prefix}${hasTailSlash ? '' : '/'}`;
 };
 
-export const pathParse = (publicPath: string): string => {
-  try {
-    return publicPath ? new URL(publicPath).pathname : publicPath;
-  } catch (err) {
-    return publicPath;
-  }
-};
-
 export const getRoutes = (context: InternalContext): Routes => {
   return Object.entries(context.environments).reduce<Routes>(
     (prev, [name, environmentContext]) => {

@@ -7,6 +7,7 @@ import type {
 } from '@rsbuild/shared';
 import type Connect from 'connect';
 import { getNodeEnv, setNodeEnv } from '../helpers';
+import { pathnameParse } from '../helpers/path';
 import { logger } from '../logger';
 import type { InternalContext, NormalizedConfig } from '../types';
 import {
@@ -16,7 +17,6 @@ import {
   getServerConfig,
   printServerURLs,
 } from './helper';
-import { pathParse } from './helper';
 import { createHttpServer } from './httpServer';
 import {
   faviconFallbackMiddleware,
@@ -167,8 +167,8 @@ export async function startProdServer(
       output: {
         path: context.distPath,
         assetPrefixes: Object.values(
-          context.normalizedConfig?.environments || [],
-        ).map((e) => pathParse(e.output.assetPrefix)),
+          context.normalizedConfig?.environments || {},
+        ).map((e) => pathnameParse(e.output.assetPrefix)),
       },
       serverConfig,
     },

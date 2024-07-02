@@ -1,11 +1,11 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Socket } from 'node:net';
 import type { DevConfig, NextFunction, ServerConfig } from '@rsbuild/shared';
+import { pathnameParse } from '../helpers/path';
 import type {
   DevMiddleware as CustomDevMiddleware,
   DevMiddlewareAPI,
 } from './devMiddleware';
-import { pathParse } from './helper';
 import { SocketServer } from './socketServer';
 
 type Options = {
@@ -123,7 +123,7 @@ export class CompilerDevMiddleware {
       etag: 'weak',
     });
 
-    const assetPrefixes = publicPaths.map(pathParse);
+    const assetPrefixes = publicPaths.map(pathnameParse);
 
     const warp = async (
       req: IncomingMessage,

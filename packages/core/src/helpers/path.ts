@@ -33,3 +33,11 @@ export const getCompiledPath = (packageName: string): string =>
  */
 export const ensureAbsolutePath = (base: string, filePath: string): string =>
   isAbsolute(filePath) ? filePath : resolve(base, filePath);
+
+export const pathnameParse = (publicPath: string): string => {
+  try {
+    return publicPath ? new URL(publicPath).pathname : publicPath;
+  } catch (err) {
+    return publicPath;
+  }
+};
