@@ -26,7 +26,7 @@ const getAssetColor = (size: number) => {
 
 function getHeader(longestFileLength: number, longestLabelLength: number) {
   const longestLengths = [longestFileLength, longestLabelLength];
-  const headerRow = [`File`, 'Size', 'Gzipped'].reduce((prev, cur, index) => {
+  const headerRow = ['File', 'Size', 'Gzipped'].reduce((prev, cur, index) => {
     const length = longestLengths[index];
     let curLabel = cur;
     if (length) {
