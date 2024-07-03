@@ -140,7 +140,10 @@ export function pluginSourceBuild(
             ...(Array.isArray(configObject.references)
               ? configObject.references
               : []),
-          ];
+          ].filter(
+            // avoid self reference, it will break the resolver
+            (item) => item !== tsconfigPath,
+          );
 
           config.resolve.tsConfig = {
             configFile: configObject?.configFile || tsconfigPath,
