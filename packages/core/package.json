@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/core",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "description": "The Rspack-based build tool.",
   "homepage": "https://rsbuild.dev",
   "bugs": {
@@ -52,7 +52,7 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "@rspack/core": "1.0.0-alpha.0",
+    "@rspack/core": "1.0.0-alpha.1",
     "@swc/helpers": "0.5.11",
     "core-js": "~3.37.1",
     "html-webpack-plugin": "npm:html-rspack-plugin@5.7.2",
