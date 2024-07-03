@@ -12,3 +12,7 @@ export interface MonorepoAnalyzer {
 export interface IPnpmWorkSpace {
   packages: string[];
 }
+
+export type TsConfig = {
+  references?: Array<{ path?: string }>;
+};
