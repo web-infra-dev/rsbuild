@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-preact",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "Preact plugin for Rsbuild",
   "repository": {
     "type": "git",
@@ -31,7 +31,7 @@
     "typescript": "^5.5.2"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^1.0.0-alpha.1"
+    "@rsbuild/core": "workspace:^1.0.0-alpha.2"
   },
   "publishConfig": {
     "access": "public",
