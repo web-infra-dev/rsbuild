@@ -278,9 +278,8 @@ export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain(
       async (chain, { HtmlPlugin, isProd, CHAIN_ID, environment }) => {
-        const { config } = environment;
+        const { config, htmlPaths } = environment;
 
-        const htmlPaths = api.getHTMLPaths({ environment: environment.name });
         if (Object.keys(htmlPaths).length === 0) {
           return;
         }

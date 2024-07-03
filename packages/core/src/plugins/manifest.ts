@@ -156,7 +156,7 @@ export const pluginManifest = (): RsbuildPlugin => ({
         typeof manifest === 'string' ? manifest : 'manifest.json';
 
       const { RspackManifestPlugin } = await import('rspack-manifest-plugin');
-      const htmlPaths = api.getHTMLPaths({ environment: environment.name });
+      const { htmlPaths } = environment;
 
       chain.plugin(CHAIN_ID.PLUGIN.MANIFEST).use(RspackManifestPlugin, [
         {
