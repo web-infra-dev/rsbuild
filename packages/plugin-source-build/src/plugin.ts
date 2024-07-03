@@ -7,6 +7,7 @@ import {
   filterByField,
   getDependentProjects,
 } from './project-utils';
+import type { TsConfig } from './types';
 
 export const PLUGIN_SOURCE_BUILD_NAME = 'rsbuild:source-build';
 
@@ -97,28 +98,51 @@ export function pluginSourceBuild(
       });
 
       const getReferences = async (
-        tsconfigPath?: string,
+        tsconfigPath: string,
+        rspackReferences?: string[] | 'auto',
       ): Promise<string[]> => {
-        const refers = projects
-          .map((project) => path.join(project.dir, 'tsconfig.json'))
-          .filter((filePath) => fs.existsSync(filePath));
+        const { default: json5 } = await import('json5');
 
-        // merge with user references
-        if (tsconfigPath) {
-          const { default: json5 } = await import('json5');
-          const { references } = json5.parse(
-            fs.readFileSync(tsconfigPath, 'utf-8'),
-          );
+        const references = new Set<string>();
 
-          return Array.isArray(references)
-            ? references
-                .map((r) => r.path)
-                .filter(Boolean)
-                .concat(refers)
-            : refers;
+        for (const project of projects) {
+          const filePath = path.join(project.dir, 'tsconfig.json');
+          if (fs.existsSync(filePath)) {
+            references.add(filePath);
+          }
         }
 
-        return refers;
+        // Add references in the current project's tsconfig.json
+        const tsconfig = json5.parse<TsConfig>(
+          fs.readFileSync(tsconfigPath, 'utf-8'),
+        );
+
+        const userReferences = [
+          ...(Array.isArray(rspackReferences) ? rspackReferences : []),
+          ...(tsconfig.references
+            ? tsconfig.references.map((item) => item.path).filter(Boolean)
+            : []),
+        ];
+
+        if (userReferences.length) {
+          const baseDir = path.dirname(tsconfigPath);
+          for (const item of userReferences) {
+            if (!item) {
+              continue;
+            }
+
+            const absolutePath = path.isAbsolute(item)
+              ? item
+              : path.join(baseDir, item);
+
+            references.add(absolutePath);
+          }
+        }
+
+        // avoid self reference, it will break the resolver
+        references.delete(tsconfigPath);
+
+        return Array.from(references);
       };
 
       if (api.context.bundlerType === 'rspack') {
@@ -135,14 +159,9 @@ export function pluginSourceBuild(
           const configObject =
             typeof tsConfig === 'string' ? { configFile: tsConfig } : tsConfig;
 
-          const references = [
-            ...(await getReferences(tsconfigPath)),
-            ...(Array.isArray(configObject.references)
-              ? configObject.references
-              : []),
-          ].filter(
-            // avoid self reference, it will break the resolver
-            (item) => item !== tsconfigPath,
+          const references = await getReferences(
+            tsconfigPath,
+            configObject.references,
           );
 
           config.resolve.tsConfig = {
@@ -153,12 +172,11 @@ export function pluginSourceBuild(
       } else {
         api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
           const { TS_CONFIG_PATHS } = CHAIN_ID.RESOLVE_PLUGIN;
+          const { tsconfigPath } = environment;
 
-          if (!chain.resolve.plugins.has(TS_CONFIG_PATHS)) {
+          if (!chain.resolve.plugins.has(TS_CONFIG_PATHS) || !tsconfigPath) {
             return;
           }
-
-          const { tsconfigPath } = environment;
 
           const references = await getReferences(tsconfigPath);
 
