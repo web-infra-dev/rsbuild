@@ -3,5 +3,9 @@
 - **类型：**
 
 ```ts
-function OnBeforeStartDevServer(callback: () => Promise<void> | void): void;
+function OnBeforeStartDevServer(
+  callback: (params: {
+    environments: Record<string, EnvironmentContext>;
+  }) => Promise<void> | void,
+): void;
 ```

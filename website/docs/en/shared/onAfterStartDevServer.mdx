@@ -9,6 +9,10 @@ type Routes = Array<{
 }>;
 
 function OnAfterStartDevServer(
-  callback: (params: { port: number; routes: Routes }) => Promise<void> | void,
+  callback: (params: {
+    port: number;
+    routes: Routes;
+    environments: Record<string, EnvironmentContext>;
+  }) => Promise<void> | void,
 ): void;
 ```

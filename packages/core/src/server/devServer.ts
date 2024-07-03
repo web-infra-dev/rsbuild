@@ -345,6 +345,7 @@ export async function createDevServer<
       await options.context.hooks.onAfterStartDevServer.call({
         port,
         routes,
+        environments: options.context.environments,
       });
     },
     onHTTPUpgrade: devMiddlewares.onUpgrade,

@@ -7,5 +7,6 @@
 ```ts
 function OnAfterCreateCompiler(callback: (params: {
   compiler: Compiler | MultiCompiler;
+  environments: Record<string, EnvironmentContext>;
 }) => Promise<void> | void;): void;
 ```

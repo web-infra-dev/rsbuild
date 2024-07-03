@@ -29,6 +29,7 @@ export type OnCloseDevServerFn = () => MaybePromise<void>;
 export type OnDevCompileDoneFn = (params: {
   isFirstCompile: boolean;
   stats: Stats | MultiStats;
+  environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
 
 export type OnBeforeStartDevServerFn = (params: {
@@ -45,6 +46,7 @@ export type Routes = Array<{
 export type OnAfterStartDevServerFn = (params: {
   port: number;
   routes: Routes;
+  environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
 
 export type OnAfterStartProdServerFn = (params: {
@@ -54,6 +56,7 @@ export type OnAfterStartProdServerFn = (params: {
 
 export type OnBeforeCreateCompilerFn<B = 'rspack'> = (params: {
   bundlerConfigs: B extends 'rspack' ? RspackConfig[] : WebpackConfig[];
+  environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
 
 export type OnAfterCreateCompilerFn<

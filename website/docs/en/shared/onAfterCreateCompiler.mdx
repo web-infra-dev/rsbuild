@@ -7,5 +7,6 @@ You can access the [Compiler instance](https://webpack.js.org/api/node/#compiler
 ```ts
 function OnAfterCreateCompiler(callback: (params: {
   compiler: Compiler | MultiCompiler;
+  environments: Record<string, EnvironmentContext>;
 }) => Promise<void> | void;): void;
 ```
