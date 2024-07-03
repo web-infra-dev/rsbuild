@@ -29,7 +29,8 @@
     "prebundle": "prebundle"
   },
   "dependencies": {
-    "@rsbuild/shared": "workspace:*"
+    "@rsbuild/shared": "workspace:*",
+    "reduce-configs": "^1.0.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",

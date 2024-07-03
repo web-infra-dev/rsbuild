@@ -28,7 +28,8 @@
   },
   "dependencies": {
     "@types/pug": "^2.0.10",
-    "pug": "^3.0.3"
+    "pug": "^3.0.3",
+    "reduce-configs": "^1.0.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",

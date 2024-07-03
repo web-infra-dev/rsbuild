@@ -34,6 +34,7 @@
     "@babel/preset-typescript": "^7.24.7",
     "@rsbuild/shared": "workspace:*",
     "@types/babel__core": "^7.20.5",
+    "reduce-configs": "^1.0.0",
     "upath": "2.0.1"
   },
   "devDependencies": {

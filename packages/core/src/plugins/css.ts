@@ -12,11 +12,11 @@ import {
   deepmerge,
 } from '@rsbuild/shared';
 import type { AcceptedPlugin } from 'postcss';
+import { reduceConfigs, reduceConfigsWithContext } from 'reduce-configs';
 import { CSS_REGEX, LOADER_PATH } from '../constants';
 import { isFunction, isPlainObject } from '../helpers';
 import { getCompiledPath } from '../helpers/path';
 import { getCssExtractPlugin } from '../pluginHelper';
-import { reduceConfigs, reduceConfigsWithContext } from '../reduceConfigs';
 import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
 
 export const isUseCssExtract = (

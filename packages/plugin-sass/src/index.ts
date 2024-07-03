@@ -1,11 +1,12 @@
 import { join } from 'node:path';
-import { type RsbuildPlugin, reduceConfigsWithContext } from '@rsbuild/core';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import {
   type FileFilterUtil,
   castArray,
   cloneDeep,
   deepmerge,
 } from '@rsbuild/shared';
+import { reduceConfigsWithContext } from 'reduce-configs';
 import { getResolveUrlJoinFn, patchCompilerGlobalLocation } from './helpers';
 import type { PluginSassOptions, SassLoaderOptions } from './types';
 

@@ -5,10 +5,10 @@ import type {
   RsbuildPlugin,
   RspackChain,
 } from '@rsbuild/core';
-import { reduceConfigs } from '@rsbuild/core';
 import browserslist from '@rsbuild/shared/browserslist';
 import * as lightningcss from 'lightningcss';
 import type { Targets } from 'lightningcss';
+import { reduceConfigs } from 'reduce-configs';
 import type {
   LightningCSSLoaderOptions,
   LightningCSSTransformOptions,

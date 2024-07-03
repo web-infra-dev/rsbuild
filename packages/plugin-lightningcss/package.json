@@ -27,7 +27,8 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "lightningcss": "^1.25.1"
+    "lightningcss": "^1.25.1",
+    "reduce-configs": "^1.0.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",

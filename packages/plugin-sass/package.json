@@ -32,6 +32,7 @@
     "@rsbuild/shared": "workspace:*",
     "loader-utils": "^2.0.4",
     "postcss": "^8.4.39",
+    "reduce-configs": "^1.0.0",
     "sass-embedded": "^1.77.5"
   },
   "devDependencies": {

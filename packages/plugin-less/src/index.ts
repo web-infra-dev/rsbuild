@@ -1,9 +1,8 @@
 import path from 'node:path';
-import {
-  type ConfigChainWithContext,
-  type RsbuildPlugin,
-  type Rspack,
-  reduceConfigsWithContext,
+import type {
+  ConfigChainWithContext,
+  RsbuildPlugin,
+  Rspack,
 } from '@rsbuild/core';
 import {
   type FileFilterUtil,
@@ -11,6 +10,7 @@ import {
   cloneDeep,
   deepmerge,
 } from '@rsbuild/shared';
+import { reduceConfigsWithContext } from 'reduce-configs';
 import type Less from '../compiled/less';
 
 export const PLUGIN_LESS_NAME = 'rsbuild:less';
