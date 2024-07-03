@@ -17,7 +17,6 @@
   "plugin-eslint",
   "plugin-type-check",
   "plugin-image-compress",
-  "plugin-node-polyfill",
   "plugin-lightningcss",
   "plugin-source-build",
   "plugin-styled-components",
