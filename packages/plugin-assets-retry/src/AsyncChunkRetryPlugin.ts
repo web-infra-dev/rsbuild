@@ -78,6 +78,14 @@ class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
         '__RUNTIME_GLOBALS_GET_CHUNK_SCRIPT_FILENAME__',
         RuntimeGlobals.getChunkScriptFilename,
       )
+      .replaceAll(
+        '__RUNTIME_GLOBALS_GET_CSS_FILENAME__',
+        RuntimeGlobals.getChunkCssFilename,
+      )
+      .replaceAll(
+        '__RUNTIME_GLOBALS_GET_MINI_CSS_EXTRACT_FILENAME__',
+        '__webpack_require__.miniCssF'
+      )
       .replaceAll('__RUNTIME_GLOBALS_PUBLIC_PATH__', RuntimeGlobals.publicPath)
       .replaceAll('__RUNTIME_GLOBALS_LOAD_SCRIPT__', RuntimeGlobals.loadScript)
       .replaceAll('__RETRY_OPTIONS__', serialize(this.runtimeOptions));
@@ -90,9 +98,12 @@ class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
         const constructorName = isRspack
           ? module.constructorName
           : module.constructor?.name;
+
         const isPublicPathModule =
           module.name === 'publicPath' ||
-          constructorName === 'PublicPathRuntimeModule';
+          constructorName === 'PublicPathRuntimeModule' ||
+          constructorName === 'AutoPublicPathRuntimeModule';
+
         if (!isPublicPathModule) {
           return;
         }
@@ -100,7 +111,7 @@ class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
         const runtimeCode = this.getRawRuntimeRetryCode();
 
         // Rspack currently does not have module.addRuntimeModule on the js side,
-        // so we insert our runtime code after PublicPathRuntimeModule.
+        // so we insert our runtime code after PublicPathRuntimeModule or AutoPublicPathRuntimeModule.
         if (isRspack) {
           appendRspackScript(module, runtimeCode);
         } else {
