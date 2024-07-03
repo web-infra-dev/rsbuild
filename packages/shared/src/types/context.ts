@@ -10,8 +10,6 @@ export type RsbuildContext = {
   distPath: string;
   /** Absolute path of cache files. */
   cachePath: string;
-  /** Absolute path of tsconfig.json. */
-  tsconfigPath?: string;
   /** Info of dev server  */
   devServer?: {
     hostname: string;
