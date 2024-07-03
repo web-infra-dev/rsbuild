@@ -32,6 +32,7 @@ export async function createCompiler({
   logger.debug('create compiler');
   await context.hooks.onBeforeCreateCompiler.call({
     bundlerConfigs: rspackConfigs,
+    environments: context.environments,
   });
 
   if (!(await isSatisfyRspackVersion(rspack.rspackVersion))) {
@@ -108,6 +109,7 @@ export async function createCompiler({
       await context.hooks.onDevCompileDone.call({
         isFirstCompile,
         stats: stats,
+        environments: context.environments,
       });
     }
 

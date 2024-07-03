@@ -21,6 +21,7 @@ export async function createCompiler({
   logger.debug('create compiler');
   await context.hooks.onBeforeCreateCompiler.call({
     bundlerConfigs: webpackConfigs as RspackConfig[],
+    environments: context.environments,
   });
 
   const { default: webpack } = await import('webpack');
@@ -48,6 +49,7 @@ export async function createCompiler({
       await context.hooks.onDevCompileDone.call({
         isFirstCompile,
         stats: stats as Stats,
+        environments: context.environments,
       });
     }
 

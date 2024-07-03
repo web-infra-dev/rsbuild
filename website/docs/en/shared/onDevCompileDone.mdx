@@ -7,6 +7,7 @@ function OnDevCompileDone(
   callback: (params: {
     isFirstCompile: boolean;
     stats: Stats | MultiStats;
+    environments: Record<string, EnvironmentContext>;
   }) => Promise<void> | void,
 ): void;
 ```

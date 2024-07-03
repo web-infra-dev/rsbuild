@@ -8,6 +8,7 @@
 function OnBeforeBuild(
   callback: (params: {
     bundlerConfigs?: WebpackConfig[] | RspackConfig[];
+    environments: Record<string, EnvironmentContext>;
   }) => Promise<void> | void,
 ): void;
 ```
