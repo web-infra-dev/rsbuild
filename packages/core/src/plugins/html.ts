@@ -13,6 +13,10 @@ import type {
   NormalizedEnvironmentConfig,
 } from '@rsbuild/shared';
 import type { EntryDescription } from '@rspack/core';
+import {
+  reduceConfigsMergeContext,
+  reduceConfigsWithContext,
+} from 'reduce-configs';
 import { STATIC_PATH } from '../constants';
 import {
   getPublicPathFromChain,
@@ -20,10 +24,6 @@ import {
   isPlainObject,
   isURL,
 } from '../helpers';
-import {
-  reduceConfigsMergeContext,
-  reduceConfigsWithContext,
-} from '../reduceConfigs';
 import type { HtmlInfo, TagConfig } from '../rspack/HtmlBasicPlugin';
 import type { RsbuildPlugin } from '../types';
 import { parseMinifyOptions } from './minimize';

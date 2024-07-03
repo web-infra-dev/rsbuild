@@ -3,7 +3,6 @@ import {
   type RspackChain,
   __internalHelper,
   logger,
-  reduceConfigsWithContext,
 } from '@rsbuild/core';
 import {
   type EnvironmentContext,
@@ -11,6 +10,7 @@ import {
   type ModifyWebpackConfigUtils,
   castArray,
 } from '@rsbuild/shared';
+import { reduceConfigsWithContext } from 'reduce-configs';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
 import {
   type InternalContext,

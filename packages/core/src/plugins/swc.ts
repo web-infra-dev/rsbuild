@@ -10,9 +10,9 @@ import {
   deepmerge,
 } from '@rsbuild/shared';
 import type { SwcLoaderOptions } from '@rspack/core';
+import { reduceConfigs } from 'reduce-configs';
 import { NODE_MODULES_REGEX, PLUGIN_SWC_NAME } from '../constants';
 import { isWebTarget } from '../helpers';
-import { reduceConfigs } from '../reduceConfigs';
 import type {
   NormalizedEnvironmentConfig,
   NormalizedSourceConfig,

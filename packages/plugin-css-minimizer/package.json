@@ -26,7 +26,8 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "css-minimizer-webpack-plugin": "5.0.1"
+    "css-minimizer-webpack-plugin": "5.0.1",
+    "reduce-configs": "^1.0.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",

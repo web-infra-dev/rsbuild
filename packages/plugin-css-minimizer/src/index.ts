@@ -1,13 +1,12 @@
 import type {
   ChainIdentifier,
-  ConfigChain,
   RsbuildPlugin,
   Rspack,
   RspackChain,
 } from '@rsbuild/core';
-import { reduceConfigs } from '@rsbuild/core';
 import CssMinimizerWebpackPlugin from 'css-minimizer-webpack-plugin';
 import type CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import { type ConfigChain, reduceConfigs } from 'reduce-configs';
 
 export type CssMinimizerPluginOptions = CssMinimizerPlugin.BasePluginOptions &
   CssMinimizerPlugin.DefinedDefaultMinimizerAndOptions<CssMinimizerPlugin.CssNanoOptionsExtended>;

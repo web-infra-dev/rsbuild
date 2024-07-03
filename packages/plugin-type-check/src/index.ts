@@ -1,12 +1,8 @@
 import fs from 'node:fs';
-import {
-  type ConfigChain,
-  type RsbuildPlugin,
-  logger,
-  reduceConfigs,
-} from '@rsbuild/core';
+import { type RsbuildPlugin, logger } from '@rsbuild/core';
 import { CHAIN_ID, deepmerge } from '@rsbuild/shared';
 import type ForkTSCheckerPlugin from 'fork-ts-checker-webpack-plugin';
+import { type ConfigChain, reduceConfigs } from 'reduce-configs';
 
 type ForkTsCheckerOptions = NonNullable<
   ConstructorParameters<typeof ForkTSCheckerPlugin>[0]
