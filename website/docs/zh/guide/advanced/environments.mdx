@@ -1,0 +1,134 @@
+# 多环境构建
+
+Rsbuild 支持同时为多个环境构建产物。你可以使用 [environments](/config/environments) 来并行构建多个环境，并为每个环境设置不同的 Rsbuild 配置。
+
+## 通过 environments 定义多环境配置
+
+Rsbuild 支持通过 [environments](/config/environments) 为每个环境定义不同的 Rsbuild 配置。
+
+例如，假如你的项目希望支持 SSR 功能，你需要分别为 client 和 SSR 定义不同的配置，你可以分别定义一个 web 和 node 的 environment。
+
+```ts title=rsbuild.config.ts
+export default {
+  environments: {
+    // client 环境配置
+    web: {
+      source: {
+        alias: {
+          '@common1': './src/web/common1',
+        },
+        entry: {
+          index: './src/index.client.js',
+        },
+      },
+      output: {
+        // 定义构建产物类型适用于浏览器端
+        target: 'web',
+      },
+    },
+    // SSR 环境配置
+    node: {
+      source: {
+        alias: {
+          '@common1': './src/ssr/common1',
+        },
+        entry: {
+          index: './src/index.server.js',
+        },
+      },
+      output: {
+        // 定义构建产物类型适用于 Node.js
+        target: 'node',
+      },
+    },
+  },
+};
+```
+
+以上配置完成后，Rsbuild 会基于这两份 environment 配置计算最终生效的 Rsbuild 及 Rspack 配置，并进行构建。
+
+当你在项目根目录下执行命令 `npx rsbuild inspect` 后，会发现有如下输出：
+
+- rsbuild.config.[name].mjs: 表示在构建时某个 environment 对应使用的 Rsbuild 配置。
+- rspack.config.[name].mjs: 表示在构建时某个 environment 对应使用的 Rspack 配置。
+
+```bash
+➜ npx rsbuild inspect
+
+Inspect config succeed, open following files to view the content:
+
+  - Rsbuild Config (web): /project/dist/rsbuild.config.web.mjs
+  - Rsbuild Config (node): /project/dist/rsbuild.config.node.mjs
+  - Rspack Config (web): /project/dist/rspack.config.web.mjs
+  - Rspack Config (node): /project/dist/rspack.config.node.mjs
+```
+
+## 默认 environment
+
+当 environments 未指定时，Rsbuild 默认会根据当前设置的产物类型 ([output.target](/config/output/target) 的值) 创建一个同名的环境。
+
+```ts title=rsbuild.config.ts
+export default {
+  output: {
+    target: 'web',
+  },
+};
+```
+
+以上配置相当于下面配置的语法糖：
+
+```ts title=rsbuild.config.ts
+export default {
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+      },
+    },
+  },
+};
+```
+
+## 通过插件 API 修改 environment 配置
+
+### 新增 / 修改 environment 配置
+
+Rsbuild 支持通过 [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) 钩子修改 / 新增 environment 配置。
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
+      return mergeRsbuildConfig(config, {
+        environments: {
+          web1: {
+            source: {
+              entry: {
+                index: './src/web1/index',
+              },
+            },
+          },
+        },
+      });
+    });
+  },
+});
+```
+
+### 修改单个 environment 配置
+
+Rsbuild 支持通过 [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig) 钩子修改特定 environment 的 Rsbuild 配置。
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.modifyEnvironmentConfig((config, { name }) => {
+      if (name !== 'web') {
+        return config;
+      }
+      config.html ||= {};
+      config.html.title = 'My Default Title';
+    });
+  },
+});
+```
