@@ -4,5 +4,6 @@
   "hmr",
   "browserslist",
   "browser-compatibility",
-  "module-federation"
+  "module-federation",
+  "environments"
 ]

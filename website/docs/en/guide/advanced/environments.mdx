@@ -1,0 +1,134 @@
+# Multi-environment
+
+Rsbuild supports building products for multiple environments at the same time. You can use [environments](/config/environments) to build multiple environments in parallel and set a different Rsbuild configuration for each environment.
+
+## Define multiple environment configurations
+
+Rsbuild supports defining different Rsbuild configurations for each environment through [environments](/config/environments).
+
+For example, if your project wants to support the SSR function, you need to define different configurations for client and SSR respectively. You can define a web and node environment respectively.
+
+```ts title=rsbuild.config.ts
+export default {
+  environments: {
+    // client environment configuration
+    web: {
+      source: {
+        alias: {
+          '@common1': './src/web/common1',
+        },
+        entry: {
+          index: './src/index.client.js',
+        },
+      },
+      output: {
+        // Define the build product type for the browser side
+        target: 'web',
+      },
+    },
+    // SSR environment configuration
+    node: {
+      source: {
+        alias: {
+          '@common1': './src/ssr/common1',
+        },
+        entry: {
+          index: './src/index.server.js',
+        },
+      },
+      output: {
+        // Define build artifact types for Node.js
+        target: 'node',
+      },
+    },
+  },
+};
+```
+
+After the above configuration is completed, Rsbuild will calculate the final effective Rsbuild and Rspack configurations based on these two environment configurations and build them.
+
+When you execute the command `npx rsbuild inspect` in the project root directory, you will find the following output:
+
+- rsbuild.config.[name].mjs: Indicates the Rsbuild configuration used for a certain environment during build.
+- rspack.config.[name].mjs: Indicates the Rspack configuration corresponding to a certain environment when building.
+
+```bash
+➜ npx rsbuild inspect
+
+Inspect config succeed, open following files to view the content:
+
+  - Rsbuild Config (web): /project/dist/rsbuild.config.web.mjs
+  - Rsbuild Config (node): /project/dist/rsbuild.config.node.mjs
+  - Rspack Config (web): /project/dist/rspack.config.web.mjs
+  - Rspack Config (node): /project/dist/rspack.config.node.mjs
+```
+
+## Default environment
+
+When environments is not specified, Rsbuild will by default create an environment with the same name based on the currently set product type (the value of [output.target](/config/output/target)).
+
+```ts title=rsbuild.config.ts
+export default {
+  output: {
+    target: 'web',
+  },
+};
+```
+
+The above configuration is equivalent to a simplification of the following configuration:
+
+```ts title=rsbuild.config.ts
+export default {
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+      },
+    },
+  },
+};
+```
+
+## Modify environment configuration through plugin API
+
+### Add / modify environment configuration
+
+Rsbuild supports modifying or adding environment configuration through the [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) hook.
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
+      return mergeRsbuildConfig(config, {
+        environments: {
+          web1: {
+            source: {
+              entry: {
+                index: './src/web1/index',
+              },
+            },
+          },
+        },
+      });
+    });
+  },
+});
+```
+
+### Modify a single environment configuration
+
+Rsbuild supports modifying the Rsbuild configuration of a specific environment through the [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig) hook.
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.modifyEnvironmentConfig((config, { name }) => {
+      if (name !== 'web') {
+        return config;
+      }
+      config.html ||= {};
+      config.html.title = 'My Default Title';
+    });
+  },
+});
+```
