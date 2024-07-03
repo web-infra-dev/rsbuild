@@ -115,7 +115,6 @@ export type RsbuildInstance = {
   createDevServer: ProviderInstance['createDevServer'];
   startDevServer: ProviderInstance['startDevServer'];
 
-  getHTMLPaths: RsbuildPluginAPI['getHTMLPaths'];
   getRsbuildConfig: RsbuildPluginAPI['getRsbuildConfig'];
   getNormalizedConfig: RsbuildPluginAPI['getNormalizedConfig'];
 

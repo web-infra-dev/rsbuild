@@ -192,7 +192,7 @@ export const pluginSri = (): RsbuildPlugin => ({
     }
 
     api.modifyBundlerChain((chain, { environment }) => {
-      const htmlPaths = api.getHTMLPaths({ environment: environment.name });
+      const { htmlPaths } = environment;
 
       if (Object.keys(htmlPaths).length === 0) {
         return;
