@@ -170,7 +170,7 @@ export class SocketServer {
 
     // web-infra-dev/rspack#6633
     const newEntryPointsLength = Object.values(stats.entrypoints ?? {}).reduce(
-      (prev, curr) => prev + curr?.chunks?.length,
+      (prev, curr) => prev + Number(curr?.chunks?.length),
       0,
     );
 
