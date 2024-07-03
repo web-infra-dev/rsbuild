@@ -16,18 +16,6 @@
 type Version = string;
 ```
 
-### context.entry
-
-构建入口对象，对应 [source.entry](/config/source/entry) 选项。
-
-- **类型：**
-
-```ts
-type RsbuildEntry = Record<string, string | string[] | EntryDescription>;
-```
-
-> 如果 `source.entry` 被设置为函数，并针对不同的 target 返回了不同的 entry 对象，那么 context.entry 仅会包含 web target 对应的入口对象。
-
 ### context.rootPath
 
 当前执行构建的根路径，对应调用 `createRsbuild` 时传入的 `cwd` 选项。
@@ -41,6 +29,10 @@ type RootPath = string;
 ### context.distPath
 
 构建产物输出目录的绝对路径，对应 `RsbuildConfig` 中的 `output.distPath.root` 配置项。
+
+当有多个环境时，Rsbuild 会尝试获取所有环境的父 distPath 作为 `context.distPath`。
+
+如果要获取指定环境的输出目录的绝对路径，建议使用 [environment.distPath](/api/javascript-api/types#environmentdistpath)。
 
 - **类型：**
 

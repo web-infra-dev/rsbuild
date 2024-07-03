@@ -16,18 +16,6 @@ The version of `@rsbuild/core` currently in use.
 type Version = string;
 ```
 
-### context.entry
-
-The entry object from the [source.entry](/config/source/entry) option.
-
-- **Type:**
-
-```ts
-type RsbuildEntry = Record<string, string | string[] | EntryDescription>;
-```
-
-> If `source.entry` is set as a function, and different entry objects are returned for different targets, then context.entry will only contain the entry object corresponding to the web target.
-
 ### context.rootPath
 
 The root path of current build, corresponding to the `cwd` option of `createRsbuild` method.
@@ -41,6 +29,10 @@ type RootPath = string;
 ### context.distPath
 
 The absolute path of the output directory, corresponding to the `output.distPath.root` config in `RsbuildConfig`.
+
+When there are multiple environments, Rsbuild will try to get the parent distPath of all environments as `context.distPath`.
+
+If you want to get the absolute path to the output directory of a specified environment, it is recommended to use [environment.distPath](/api/javascript-api/types#environmentdistpath).
 
 - **Type:**
 
@@ -82,28 +74,6 @@ type bundlerType = 'rspack' | 'webpack';
 ```
 
 > Rsbuild internally supports switching to webpack for comparative testing, so this field is provided for differentiation. Usually, you do not need to use this field.
-
-## rsbuild.environments
-
-### target
-
-Build target type, corresponding to the [output.target](/config/output/target) config of Rsbuild.
-
-- **Type:**
-
-```ts
-type RsbuildTarget = 'web' | 'node' | 'web-worker';
-```
-
-### tsconfigPath
-
-The absolute path of the tsconfig.json file, or `undefined` if the tsconfig.json file does not exist in current project.
-
-- **Type:**
-
-```ts
-type TsconfigPath = string | undefined;
-```
 
 ## rsbuild.build
 
