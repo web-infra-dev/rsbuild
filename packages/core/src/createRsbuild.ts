@@ -158,7 +158,6 @@ export async function createRsbuild(
       'onCloseDevServer',
       'onDevCompileDone',
       'onExit',
-      'getHTMLPaths',
       'getRsbuildConfig',
       'getNormalizedConfig',
     ]),

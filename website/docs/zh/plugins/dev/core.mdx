@@ -159,25 +159,6 @@ export default () => ({
 });
 ```
 
-## api.getHTMLPaths
-
-import GetHTMLPaths from '@zh/shared/getHtmlPaths.mdx';
-
-<GetHTMLPaths />
-
-- **示例：**
-
-```ts
-const pluginFoo = () => ({
-  setup(api) {
-    api.modifyRspackConfig(() => {
-      const htmlPaths = api.getHTMLPaths();
-      console.log(htmlPaths); // { index: 'index.html' };
-    });
-  },
-});
-```
-
 ## api.transform
 
 用于转换模块的代码。

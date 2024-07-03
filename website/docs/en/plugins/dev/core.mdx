@@ -161,25 +161,6 @@ export default () => ({
 });
 ```
 
-## api.getHTMLPaths
-
-import GetHTMLPaths from '@en/shared/getHtmlPaths.mdx';
-
-<GetHTMLPaths />
-
-- **Example:**
-
-```ts
-const pluginFoo = () => ({
-  setup(api) {
-    api.modifyRspackConfig(() => {
-      const htmlPaths = api.getHTMLPaths();
-      console.log(htmlPaths); // { index: 'index.html' };
-    });
-  },
-});
-```
-
 ## api.transform
 
 Used to transform the code of modules.

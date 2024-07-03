@@ -776,18 +776,3 @@ rsbuild.onBeforeBuild(() => {
   console.log(config.html.title);
 });
 ```
-
-## rsbuild.getHTMLPaths
-
-import GetHTMLPaths from '@zh/shared/getHtmlPaths.mdx';
-
-<GetHTMLPaths />
-
-- **示例：**
-
-```ts
-rsbuild.onBeforeBuild(() => {
-  const htmlPaths = api.getHTMLPaths();
-  console.log(htmlPaths); // { main: 'html/main/index.html' };
-});
-```

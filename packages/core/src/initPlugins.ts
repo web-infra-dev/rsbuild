@@ -97,16 +97,6 @@ export function getPluginAPI({
     throw new Error('`getRsbuildConfig` get an invalid type param.');
   }) as GetRsbuildConfig;
 
-  const getHTMLPaths = (options?: { environment: string }) => {
-    if (options?.environment) {
-      return context.environments[options.environment].htmlPaths;
-    }
-    return Object.values(context.environments).reduce(
-      (prev, context) => Object.assign(prev, context.htmlPaths),
-      {} as Record<string, string>,
-    );
-  };
-
   const exposed: Array<{ id: string | symbol; api: any }> = [];
 
   const expose = (id: string | symbol, api: any) => {
@@ -161,7 +151,6 @@ export function getPluginAPI({
     expose,
     transform,
     useExposed,
-    getHTMLPaths,
     getRsbuildConfig,
     getNormalizedConfig,
     isPluginExists: pluginManager.isPluginExists,
