@@ -17,6 +17,7 @@ export class SocketServer {
   private readonly options: DevConfig;
 
   private stats?: Stats;
+  private entryPointsLength?: number;
 
   private timer: ReturnType<typeof setInterval> | null = null;
 
@@ -151,6 +152,7 @@ export class SocketServer {
       errors: true,
       errorsCount: true,
       errorDetails: false,
+      entrypoints: true,
       children: true,
     };
 
@@ -166,6 +168,17 @@ export class SocketServer {
       return null;
     }
 
+    // web-infra-dev/rspack#6633
+    const newEntryPointsLength = Object.values(stats.entrypoints ?? {}).reduce(
+      (prev, curr) => prev + curr?.chunks?.length,
+      0,
+    );
+
+    const shouldReload =
+      this.entryPointsLength !== undefined &&
+      newEntryPointsLength !== this.entryPointsLength;
+    this.entryPointsLength = newEntryPointsLength;
+
     const shouldEmit =
       !force &&
       stats &&
@@ -178,6 +191,9 @@ export class SocketServer {
     }
 
     this.sockWrite('hash', stats.hash);
+    if (shouldReload) {
+      return this.sockWrite('content-changed');
+    }
 
     if (stats.errorsCount) {
       return this.sockWrite('errors', getAllStatsErrors(stats));

@@ -10,16 +10,8 @@ export default defineConfig({
   },
   tools: {
     rspack(config) {
-      config.optimization ??= {};
-      config.optimization.chunkIds = 'named';
-      config.optimization.minimize = false;
-      config.optimization.mangleExports = false;
-      config.optimization.concatenateModules = false;
-
       config.output ??= {};
       config.output.asyncChunks = false;
-
-      config.devtool = false;
     },
   },
   performance: {
@@ -42,6 +34,5 @@ export default defineConfig({
   },
   dev: {
     lazyCompilation: true,
-    writeToDisk: true,
   },
 });
