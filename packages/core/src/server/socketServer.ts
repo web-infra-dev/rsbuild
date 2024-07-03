@@ -176,7 +176,8 @@ export class SocketServer {
 
     const shouldReload =
       this.entryPointsLength !== undefined &&
-      newEntryPointsLength !== this.entryPointsLength;
+      stats.entrypoints !== undefined &&
+      this.entryPointsLength !== newEntryPointsLength;
     this.entryPointsLength = newEntryPointsLength;
 
     const shouldEmit =
