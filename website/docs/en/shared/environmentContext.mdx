@@ -1,0 +1,86 @@
+## EnvironmentContext
+
+Environment context is a read-only object that provides some context infos about the current environment.
+
+```ts
+type EnvironmentContext = {
+  name: string;
+  browserslist: string[];
+  config: NormalizedEnvironmentConfig;
+  distPath: string;
+  entry: RsbuildEntry;
+  htmlPaths: Record<string, string>;
+  tsconfigPath?: string;
+};
+```
+
+### environment.name
+
+The unique name of the current environment is used to distinguish and locate the environment, corresponds to the key in the [environments](/config/environments) configuration.
+
+- **Type:** `string`
+
+### environment.browserslist
+
+The range of target browsers that the project is compatible with. See details in [Browserslist](/guide/advanced/browserslist).
+
+- **Type:** `string[]`
+
+### environment.config
+
+The Rsbuild environment configuration after normalization.
+
+- **Type:**
+
+```ts
+type NormalizedEnvironmentConfig = DeepReadonly<{
+  dev: NormalizedDevConfig;
+  html: NormalizedHtmlConfig;
+  tools: NormalizedToolsConfig;
+  source: NormalizedSourceConfig;
+  server: NormalizedServerConfig;
+  output: NormalizedOutputConfig;
+  plugins?: RsbuildPlugins;
+  security: NormalizedSecurityConfig;
+  performance: NormalizedPerformanceConfig;
+  moduleFederation?: ModuleFederationConfig;
+}>;
+```
+
+### environment.distPath
+
+The absolute path of the output directory, corresponding to the `output.distPath.root` config in `RsbuildConfig`.
+
+- **Type:** `string`
+
+### environment.entry
+
+The entry object from the [source.entry](/config/source/entry) option.
+
+- **Type:**
+
+```ts
+type RsbuildEntry = Record<string, string | string[] | EntryDescription>;
+```
+
+### environment.htmlPaths
+
+The path information for all HTML assets.
+
+This API will return an object, the key is the entry name and the value is the relative path of the HTML file in the dist directory.
+
+- **Type:**
+
+```ts
+type htmlPaths = Record<string, string>;
+```
+
+### environment.tsconfigPath
+
+The absolute path of the tsconfig.json file, or `undefined` if the tsconfig.json file does not exist in current project.
+
+- **Type:**
+
+```ts
+type TsconfigPath = string | undefined;
+```
