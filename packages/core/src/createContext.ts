@@ -153,7 +153,7 @@ export async function updateEnvironmentContext(
       config,
     };
 
-    // EnvironmentContext is readOnly.
+    // EnvironmentContext is readonly.
     context.environments[name] = new Proxy(environmentContext, {
       get(target, prop: keyof EnvironmentContext) {
         return target[prop];
