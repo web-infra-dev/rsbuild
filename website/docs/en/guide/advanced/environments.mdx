@@ -137,7 +137,7 @@ const myPlugin = () => ({
 
 [Environment context](/api/javascript-api/types#environmentcontext) is a read-only object that provides some context infos about the current environment. Rsbuild supports obtaining environment context information in plugin hooks.
 
-In some plugin hooks related to the current build environment (such as [modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain), [modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig), etc.), Rsbuild supports obtaining the current environment information through parameters.
+For some plugin hooks related to the build environment (such as [modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain) and [modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig)), Rsbuild supports obtaining the current environment context through the `environment` parameter.
 
 ```ts
 const myPlugin = () => ({
