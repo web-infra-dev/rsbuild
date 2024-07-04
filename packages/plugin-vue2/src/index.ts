@@ -67,7 +67,8 @@ export function pluginVue2(options: PluginVueOptions = {}): RsbuildPlugin {
 
         const userLoaderOptions = options.vueLoaderOptions ?? {};
         const compilerOptions = {
-          preserveWhitespace: false,
+          // https://github.com/vuejs/vue-cli/pull/3853
+          whitespace: 'condense',
           ...userLoaderOptions.compilerOptions,
         };
         const vueLoaderOptions = {
