@@ -26,7 +26,6 @@
     "@rsbuild/plugin-assets-retry": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
     "@rsbuild/plugin-check-syntax": "workspace:*",
-    "@rsbuild/plugin-eslint": "workspace:*",
     "@rsbuild/plugin-image-compress": "workspace:*",
     "@rsbuild/plugin-less": "workspace:*",
     "@rsbuild/plugin-lightningcss": "workspace:*",
