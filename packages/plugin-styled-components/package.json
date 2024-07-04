@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-styled-components",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "description": "styled-components plugin for Rsbuild",
   "repository": {
     "type": "git",
@@ -35,7 +35,7 @@
     "typescript": "^5.5.2"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^1.0.0-alpha.2"
+    "@rsbuild/core": "workspace:^1.0.0-alpha.3"
   },
   "publishConfig": {
     "access": "public",
