@@ -111,9 +111,8 @@ const applyDefaultMiddlewares = async ({
   // dev proxy handler, each proxy has own handler
   if (server.proxy) {
     const { createProxyMiddleware } = await import('./proxy');
-    const { middlewares: proxyMiddlewares, upgrade } = createProxyMiddleware(
-      server.proxy,
-    );
+    const { middlewares: proxyMiddlewares, upgrade } =
+      await createProxyMiddleware(server.proxy);
     upgradeEvents.push(upgrade);
 
     for (const middleware of proxyMiddlewares) {
