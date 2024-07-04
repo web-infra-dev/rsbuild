@@ -4,9 +4,9 @@ import type { DeepReadonly } from '../utils';
 import type { DevConfig, NormalizedDevConfig } from './dev';
 import type { HtmlConfig, NormalizedHtmlConfig } from './html';
 import type {
+  DistPathConfig,
   NormalizedOutputConfig,
   OutputConfig,
-  DistPathConfig,
 } from './output';
 import type {
   NormalizedPerformanceConfig,

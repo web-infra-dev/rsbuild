@@ -8,6 +8,7 @@ import type {
   RspackConfig,
 } from '@rsbuild/shared';
 import { getDefaultEntry, normalizeConfig } from '../config';
+import { JS_DIST_DIR } from '../constants';
 import {
   updateContextByNormalizedConfig,
   updateEnvironmentContext,
@@ -23,7 +24,6 @@ import type {
 } from '../types';
 import { inspectConfig } from './inspectConfig';
 import { generateRspackConfig } from './rspackConfig';
-import { JS_DIST_DIR } from '../constants';
 
 async function modifyRsbuildConfig(context: InternalContext) {
   logger.debug('modify Rsbuild config');
