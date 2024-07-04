@@ -84,7 +84,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
       "browserslist": [
         "defaults",
       ],
-      "errorRecovery": false,
+      "errorRecovery": true,
       "removeUnusedLocalIdents": true,
       "unusedSymbols": [],
     },
@@ -164,7 +164,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
       "browserslist": [
         "defaults",
       ],
-      "errorRecovery": false,
+      "errorRecovery": true,
       "removeUnusedLocalIdents": true,
       "unusedSymbols": [],
     },

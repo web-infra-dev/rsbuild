@@ -775,7 +775,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           "browserslist": [
             "defaults",
           ],
-          "errorRecovery": false,
+          "errorRecovery": true,
           "removeUnusedLocalIdents": true,
           "unusedSymbols": [],
         },

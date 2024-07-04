@@ -56,7 +56,7 @@ describe('plugin-minimize', () => {
             "browserslist": [
               "defaults",
             ],
-            "errorRecovery": false,
+            "errorRecovery": true,
             "removeUnusedLocalIdents": true,
             "unusedSymbols": [],
           },
@@ -245,7 +245,7 @@ describe('plugin-minimize', () => {
             "browserslist": [
               "defaults",
             ],
-            "errorRecovery": false,
+            "errorRecovery": true,
             "removeUnusedLocalIdents": true,
             "unusedSymbols": [],
           },
@@ -306,7 +306,7 @@ describe('plugin-minimize', () => {
             "browserslist": [
               "defaults",
             ],
-            "errorRecovery": false,
+            "errorRecovery": true,
             "removeUnusedLocalIdents": true,
             "unusedSymbols": [],
           },
@@ -363,7 +363,7 @@ describe('plugin-minimize', () => {
             "browserslist": [
               "defaults",
             ],
-            "errorRecovery": false,
+            "errorRecovery": true,
             "removeUnusedLocalIdents": true,
             "unusedSymbols": [],
           },

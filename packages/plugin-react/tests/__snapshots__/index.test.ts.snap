@@ -461,6 +461,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
         "include": [
           /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         ],
+        "overlay": false,
       },
     },
   ],
