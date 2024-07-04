@@ -248,20 +248,17 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "lib-axios": {
           "name": "lib-axios",
           "priority": 0,
-          "reuseExistingChunk": true,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(axios\\|axios-\\.\\+\\)\\[\\\\\\\\/\\]/,
         },
         "lib-lodash": {
           "name": "lib-lodash",
           "priority": 0,
-          "reuseExistingChunk": true,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(lodash\\|lodash-es\\)\\[\\\\\\\\/\\]/,
         },
         "lib-polyfill": {
           "name": "lib-polyfill",
           "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
+          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
         },
       },
       "chunks": "all",
@@ -668,20 +665,17 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "lib-axios": {
           "name": "lib-axios",
           "priority": 0,
-          "reuseExistingChunk": true,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(axios\\|axios-\\.\\+\\)\\[\\\\\\\\/\\]/,
         },
         "lib-lodash": {
           "name": "lib-lodash",
           "priority": 0,
-          "reuseExistingChunk": true,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(lodash\\|lodash-es\\)\\[\\\\\\\\/\\]/,
         },
         "lib-polyfill": {
           "name": "lib-polyfill",
           "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
+          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
         },
       },
       "chunks": "all",

@@ -28,7 +28,6 @@ export function createCacheGroups(
       test: createDependenciesRegExp(...pkgs),
       priority: 0,
       name: key,
-      reuseExistingChunk: true,
     };
   }
 

@@ -104,7 +104,6 @@ export default defineConfig({
                       test: /[\\/]node_modules[\\/](react|react-dom|scheduler|react-refresh|@rspack[\\/]plugin-react-refresh)[\\/]/,
                       priority: 0,
                       name: 'lib-react',
-                      reuseExistingChunk: true,
                     },
                   },
                 },
