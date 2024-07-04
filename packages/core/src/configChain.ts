@@ -36,8 +36,8 @@ export async function modifyBundlerChain(
     utils,
   );
 
-  if (context.config.tools?.bundlerChain) {
-    for (const item of castArray(context.config.tools.bundlerChain)) {
+  if (utils.environment.config.tools?.bundlerChain) {
+    for (const item of castArray(utils.environment.config.tools.bundlerChain)) {
       await item(modifiedBundlerChain, utils);
     }
   }

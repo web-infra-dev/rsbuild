@@ -243,4 +243,44 @@ describe('environment config', () => {
 
     expect(environmentConfigs).toMatchSnapshot();
   });
+
+  it('tools.rspack / bundlerChain can be used in environment config', async () => {
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        tools: {
+          rspack(config) {
+            return {
+              ...config,
+              devtool: 'eval',
+            };
+          },
+        },
+        environments: {
+          web: {
+            tools: {
+              rspack(config) {
+                return {
+                  ...config,
+                  devtool: 'eval-source-map',
+                };
+              },
+            },
+          },
+          node: {
+            output: {
+              target: 'node',
+            },
+            tools: {
+              bundlerChain: (chain) => {
+                chain.output.filename('bundle.js');
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const configs = await rsbuild.initConfigs();
+    expect(configs).toMatchSnapshot();
+  });
 });

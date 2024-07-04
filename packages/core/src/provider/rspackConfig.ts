@@ -25,10 +25,10 @@ async function modifyRspackConfig(
     utils,
   );
 
-  if (context.config.tools?.rspack) {
+  if (utils.environment.config.tools?.rspack) {
     modifiedConfig = await reduceConfigsAsyncWithContext({
       initial: modifiedConfig,
-      config: context.config.tools.rspack,
+      config: utils.environment.config.tools.rspack,
       ctx: utils,
       mergeFn: utils.mergeConfig,
     });
