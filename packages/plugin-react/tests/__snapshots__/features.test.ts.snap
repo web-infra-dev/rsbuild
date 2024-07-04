@@ -13,11 +13,6 @@ exports[`splitChunks > should apply antd/semi/... splitChunks rule when pkg is i
       "priority": 0,
       "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
     },
-    "lib-polyfill": {
-      "name": "lib-polyfill",
-      "priority": 0,
-      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(\\?:tslib\\|core-js\\|@swc\\[\\\\\\\\/\\]helpers\\)\\[\\\\\\\\/\\]/,
-    },
     "react": {
       "name": "lib-react",
       "priority": 0,
@@ -46,11 +41,6 @@ exports[`splitChunks > should apply splitChunks.react/router plugin option when 
       "name": "lib-lodash",
       "priority": 0,
       "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
-    },
-    "lib-polyfill": {
-      "name": "lib-polyfill",
-      "priority": 0,
-      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(\\?:tslib\\|core-js\\|@swc\\[\\\\\\\\/\\]helpers\\)\\[\\\\\\\\/\\]/,
     },
   },
   "chunks": "all",

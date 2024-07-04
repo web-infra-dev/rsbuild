@@ -255,11 +255,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           "priority": 0,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
         },
-        "lib-polyfill": {
-          "name": "lib-polyfill",
-          "priority": 0,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(\\?:tslib\\|core-js\\|@swc\\[\\\\\\\\/\\]helpers\\)\\[\\\\\\\\/\\]/,
-        },
       },
       "chunks": "all",
       "enforceSizeThreshold": 50000,
@@ -671,11 +666,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
           "name": "lib-lodash",
           "priority": 0,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
-        },
-        "lib-polyfill": {
-          "name": "lib-polyfill",
-          "priority": 0,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(\\?:tslib\\|core-js\\|@swc\\[\\\\\\\\/\\]helpers\\)\\[\\\\\\\\/\\]/,
         },
       },
       "chunks": "all",

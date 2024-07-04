@@ -70,7 +70,7 @@ Please read the [Browserslist](/guide/advanced/browserslist) chapter to know mor
 
 ## Usage polyfill
 
-When it is clear that third-party dependencies do not require additional polyfill, you can set [output.polyfill](/config/output/polyfill) to `usage`.
+If the current project's [output.polyfill](/config/output/polyfill) is set to `'entry'`, and you are certain that third-party dependencies do not require additional polyfills, you can change it to `usage`.
 
 In `usage` mode, Rsbuild analyzes the syntax used in the source code and injects the required polyfill code on demand to reduce the size of polyfill.
 

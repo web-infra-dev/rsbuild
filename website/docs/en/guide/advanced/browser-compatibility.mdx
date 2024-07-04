@@ -179,13 +179,23 @@ export default {
 
 ## Polyfill mode
 
-Rsbuild compiles JavaScript code through SWC by default, and injects polyfills like [core-js](https://github.com/zloirock/core-js) and [@swc/helpers](https://npmjs.com/package/@swc/helpers).
+Rsbuild compiles JavaScript code using SWC and supports injecting polyfills such as [core-js](https://github.com/zloirock/core-js) and [@swc/helpers](https://npmjs.com/package/@swc/helpers).
 
 In different usage scenarios, you may need different polyfill solutions. Rsbuild provides [output.polyfill](/config/output/polyfill) config to switch between different polyfill modes.
 
-### Usage mode
+### Default Behavior
 
-The usage is the default mode and does not need to be set manually, it allows more precise control over which core-js polyfills need to be injected.
+Rsbuild does not inject any polyfills by default:
+
+```ts
+export default {
+  output: {
+    polyfill: 'off',
+  },
+};
+```
+
+### Usage mode
 
 When you enable the usage mode, Rsbuild will analyze the source code in the project and determine which polyfills need to be injected.
 
@@ -227,17 +237,3 @@ export default {
   },
 };
 ```
-
-### Disable Polyfill
-
-You can disable polyfill injection behavior by setting `output.polyfill` to `'off'`.
-
-```ts
-export default {
-  output: {
-    polyfill: 'off',
-  },
-};
-```
-
-When using this config, you need to ensure compatibility by yourself, such as manually import the required polyfill code through [source.preEntry](/config/source/pre-entry).

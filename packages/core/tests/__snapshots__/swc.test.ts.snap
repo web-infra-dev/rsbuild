@@ -21,11 +21,6 @@ exports[`plugin-swc > should add antd pluginImport 1`] = `
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "resolve": {
-          "alias": {
-            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-          },
-        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
@@ -33,9 +28,7 @@ exports[`plugin-swc > should add antd pluginImport 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.37",
-                "mode": "usage",
-                "shippedProposals": true,
+                "mode": undefined,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -69,9 +62,6 @@ exports[`plugin-swc > should add antd pluginImport 1`] = `
           ],
         },
         "resolve": {
-          "alias": {
-            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-          },
           "fullySpecified": false,
         },
         "use": [
@@ -79,9 +69,7 @@ exports[`plugin-swc > should add antd pluginImport 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.37",
-                "mode": "usage",
-                "shippedProposals": true,
+                "mode": undefined,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -139,11 +127,6 @@ exports[`plugin-swc > should add browserslist 1`] = `
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],
-          "resolve": {
-            "alias": {
-              "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-            },
-          },
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "type": "javascript/auto",
           "use": [
@@ -151,9 +134,7 @@ exports[`plugin-swc > should add browserslist 1`] = `
               "loader": "builtin:swc-loader",
               "options": {
                 "env": {
-                  "coreJs": "3.37",
-                  "mode": "usage",
-                  "shippedProposals": true,
+                  "mode": undefined,
                   "targets": [
                     "chrome 98",
                   ],
@@ -184,9 +165,6 @@ exports[`plugin-swc > should add browserslist 1`] = `
             ],
           },
           "resolve": {
-            "alias": {
-              "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-            },
             "fullySpecified": false,
           },
           "use": [
@@ -194,9 +172,7 @@ exports[`plugin-swc > should add browserslist 1`] = `
               "loader": "builtin:swc-loader",
               "options": {
                 "env": {
-                  "coreJs": "3.37",
-                  "mode": "usage",
-                  "shippedProposals": true,
+                  "mode": undefined,
                   "targets": [
                     "chrome 98",
                   ],
@@ -252,11 +228,6 @@ exports[`plugin-swc > should add pluginImport 1`] = `
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],
-          "resolve": {
-            "alias": {
-              "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-            },
-          },
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "type": "javascript/auto",
           "use": [
@@ -264,9 +235,7 @@ exports[`plugin-swc > should add pluginImport 1`] = `
               "loader": "builtin:swc-loader",
               "options": {
                 "env": {
-                  "coreJs": "3.37",
-                  "mode": "usage",
-                  "shippedProposals": true,
+                  "mode": undefined,
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -307,9 +276,6 @@ exports[`plugin-swc > should add pluginImport 1`] = `
             ],
           },
           "resolve": {
-            "alias": {
-              "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-            },
             "fullySpecified": false,
           },
           "use": [
@@ -317,9 +283,7 @@ exports[`plugin-swc > should add pluginImport 1`] = `
               "loader": "builtin:swc-loader",
               "options": {
                 "env": {
-                  "coreJs": "3.37",
-                  "mode": "usage",
-                  "shippedProposals": true,
+                  "mode": undefined,
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -377,11 +341,6 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to be function type 1`] 
       },
       /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
     ],
-    "resolve": {
-      "alias": {
-        "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-      },
-    },
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
     "type": "javascript/auto",
     "use": [
@@ -403,9 +362,6 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to be function type 1`] 
       ],
     },
     "resolve": {
-      "alias": {
-        "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-      },
       "fullySpecified": false,
     },
     "use": [
@@ -436,11 +392,6 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
       },
       /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
     ],
-    "resolve": {
-      "alias": {
-        "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-      },
-    },
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
     "type": "javascript/auto",
     "use": [
@@ -448,9 +399,7 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
         "loader": "builtin:swc-loader",
         "options": {
           "env": {
-            "coreJs": "3.37",
-            "mode": "usage",
-            "shippedProposals": true,
+            "mode": undefined,
             "targets": [
               "chrome >= 87",
               "edge >= 88",
@@ -484,9 +433,6 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
       ],
     },
     "resolve": {
-      "alias": {
-        "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-      },
       "fullySpecified": false,
     },
     "use": [
@@ -494,9 +440,7 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
         "loader": "builtin:swc-loader",
         "options": {
           "env": {
-            "coreJs": "3.37",
-            "mode": "usage",
-            "shippedProposals": true,
+            "mode": undefined,
             "targets": [
               "chrome >= 87",
               "edge >= 88",
@@ -766,11 +710,6 @@ exports[`plugin-swc > should disable all pluginImport 1`] = `
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "resolve": {
-          "alias": {
-            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-          },
-        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
@@ -778,9 +717,7 @@ exports[`plugin-swc > should disable all pluginImport 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.37",
-                "mode": "usage",
-                "shippedProposals": true,
+                "mode": undefined,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -814,9 +751,6 @@ exports[`plugin-swc > should disable all pluginImport 1`] = `
           ],
         },
         "resolve": {
-          "alias": {
-            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-          },
           "fullySpecified": false,
         },
         "use": [
@@ -824,9 +758,7 @@ exports[`plugin-swc > should disable all pluginImport 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.37",
-                "mode": "usage",
-                "shippedProposals": true,
+                "mode": undefined,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",

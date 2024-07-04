@@ -140,7 +140,7 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
   assetPrefix: DEFAULT_ASSET_PREFIX,
   filename: {},
   charset: 'ascii',
-  polyfill: 'usage',
+  polyfill: 'off',
   dataUriLimit: {
     svg: DEFAULT_DATA_URL_SIZE,
     font: DEFAULT_DATA_URL_SIZE,

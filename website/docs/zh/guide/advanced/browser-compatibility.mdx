@@ -179,13 +179,23 @@ export default {
 
 ## Polyfill 方案
 
-Rsbuild 默认通过 SWC 编译 JavaScript 代码，并注入 [core-js](https://github.com/zloirock/core-js)、[@swc/helpers](https://npmjs.com/package/@swc/helpers) 等 polyfills。
+Rsbuild 通过 SWC 编译 JavaScript 代码，并支持注入 [core-js](https://github.com/zloirock/core-js)、[@swc/helpers](https://npmjs.com/package/@swc/helpers) 等 polyfills。
 
 在不同的使用场景下，你可能会需要不同的 polyfill 方案。Rsbuild 提供了 [output.polyfill](/config/output/polyfill) 配置项来切换不同的 polyfill 方案。
 
-### usage 方案
+### 默认行为
 
-usage 为默认方案，无须手动设置，它可以精确地控制需要注入哪些 core-js polyfill。
+Rsbuild 默认不注入任何 polyfill：
+
+```ts
+export default {
+  output: {
+    polyfill: 'off',
+  },
+};
+```
+
+### usage 方案
 
 当你开启 usage 方案时，Rsbuild 会分析项目中的源代码，并判断需要注入哪些 polyfill。
 
@@ -227,17 +237,3 @@ export default {
   },
 };
 ```
-
-### 不注入 Polyfill
-
-你可以将 `output.polyfill` 设置为 `'off'` 来禁用 polyfill 注入的行为。
-
-```ts
-export default {
-  output: {
-    polyfill: 'off',
-  },
-};
-```
-
-使用此选项时，你需要自行保证代码的兼容性，比如通过 [source.preEntry](/config/source/pre-entry) 来手动引用所需的 polyfill 代码。
