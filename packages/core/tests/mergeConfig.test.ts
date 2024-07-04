@@ -1,4 +1,4 @@
-import type { RsbuildConfig, RspackConfig } from '@rsbuild/shared';
+import type { RsbuildConfig, Rspack } from '../src';
 import { mergeRsbuildConfig } from '../src/mergeConfig';
 
 describe('mergeRsbuildConfig', () => {
@@ -108,7 +108,7 @@ describe('mergeRsbuildConfig', () => {
   });
 
   test('should merge function and object correctly', async () => {
-    const rspackFn = (config: RspackConfig) => {
+    const rspackFn = (config: Rspack.Configuration) => {
       config.devtool = 'source-map';
     };
 

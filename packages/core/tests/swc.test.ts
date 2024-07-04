@@ -1,5 +1,5 @@
-import type { RsbuildConfig } from '@rsbuild/shared';
 import { createStubRsbuild } from '@scripts/test-helper';
+import type { RsbuildConfig } from '../src';
 import { pluginEntry } from '../src/plugins/entry';
 import { pluginSwc } from '../src/plugins/swc';
 

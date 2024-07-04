@@ -1,5 +1,5 @@
-import type { HtmlConfig } from '@rsbuild/shared';
 import { createStubRsbuild } from '@scripts/test-helper';
+import type { HtmlConfig } from '../src';
 import { pluginEntry } from '../src/plugins/entry';
 import { pluginHtml } from '../src/plugins/html';
 

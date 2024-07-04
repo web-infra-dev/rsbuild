@@ -1,4 +1,4 @@
-import type { RsbuildPlugin } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '../src';
 import { pluginDagSort } from '../src/pluginManager';
 
 describe('sort plugins', () => {
