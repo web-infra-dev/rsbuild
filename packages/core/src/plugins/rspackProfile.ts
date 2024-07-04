@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import inspector from 'node:inspector';
 import path from 'node:path';
-import { experiments } from '@rspack/core';
+import rspack from '@rspack/core';
 import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
 
@@ -64,7 +64,11 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
       }
 
       if (enableProfileTrace) {
-        experiments.globalTrace.register('trace', 'chrome', traceFilePath);
+        rspack.experiments.globalTrace.register(
+          'trace',
+          'chrome',
+          traceFilePath,
+        );
       }
 
       if (enableCPUProfile) {
@@ -97,7 +101,7 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
 
     api.onExit(() => {
       if (enableProfileTrace) {
-        experiments.globalTrace.cleanup();
+        rspack.experiments.globalTrace.cleanup();
       }
       const profileDir = path.join(api.context.distPath, profileDirName);
 
