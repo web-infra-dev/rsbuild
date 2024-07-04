@@ -156,7 +156,7 @@ const myPlugin = () => ({
 });
 ```
 
-In some global plugin hooks (such as [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone), [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver), etc.), Rsbuild supports obtaining all environment information through parameters.
+For some global plugin hooks (such as [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone), [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver), etc.), Rsbuild supports obtaining the context of all environments through the `environments` parameter.
 
 ```ts
 const myPlugin = () => ({
