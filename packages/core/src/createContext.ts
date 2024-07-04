@@ -1,4 +1,11 @@
 import { isAbsolute, join } from 'node:path';
+import browserslist from 'browserslist';
+import { withDefaultConfig } from './config';
+import { DEFAULT_BROWSERSLIST, ROOT_DIST_DIR } from './constants';
+import { getCommonParentPath } from './helpers/path';
+import { initHooks } from './initHooks';
+import { getHTMLPathByEntry } from './initPlugins';
+import { logger } from './logger';
 import type {
   BundlerType,
   EnvironmentContext,
@@ -6,14 +13,7 @@ import type {
   RsbuildContext,
   RsbuildEntry,
   RsbuildTarget,
-} from '@rsbuild/shared';
-import browserslist from '@rsbuild/shared/browserslist';
-import { withDefaultConfig } from './config';
-import { DEFAULT_BROWSERSLIST, ROOT_DIST_DIR } from './constants';
-import { getCommonParentPath } from './helpers/path';
-import { initHooks } from './initHooks';
-import { getHTMLPathByEntry } from './initPlugins';
-import { logger } from './logger';
+} from './types';
 import type {
   CreateRsbuildOptions,
   InternalContext,

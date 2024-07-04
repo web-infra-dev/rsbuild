@@ -1,18 +1,17 @@
-import {
-  CHAIN_ID,
-  type EnvironmentContext,
-  type ModifyChainUtils,
-  type ModifyRspackConfigUtils,
-  type RsbuildTarget,
-  type Rspack,
-  type RspackConfig,
-} from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import { reduceConfigsAsyncWithContext } from 'reduce-configs';
-import { chainToConfig, modifyBundlerChain } from '../configChain';
+import { CHAIN_ID, chainToConfig, modifyBundlerChain } from '../configChain';
 import { castArray, getNodeEnv } from '../helpers';
 import { logger } from '../logger';
 import { getHTMLPlugin } from '../pluginHelper';
+import type {
+  EnvironmentContext,
+  ModifyChainUtils,
+  ModifyRspackConfigUtils,
+  RsbuildTarget,
+  Rspack,
+  RspackConfig,
+} from '../types';
 import type { InternalContext } from '../types';
 
 async function modifyRspackConfig(
@@ -43,7 +42,7 @@ export async function getConfigUtils(
   config: Rspack.Configuration,
   chainUtils: ModifyChainUtils,
 ): Promise<ModifyRspackConfigUtils> {
-  const { merge } = await import('@rsbuild/shared/webpack-merge');
+  const { merge } = await import('webpack-merge');
 
   return {
     ...chainUtils,

@@ -49,7 +49,7 @@ export function pluginBundleAnalyzer(): RsbuildPlugin {
         }
 
         const { default: BundleAnalyzer } = await import(
-          '@rsbuild/shared/webpack-bundle-analyzer'
+          'webpack-bundle-analyzer'
         );
 
         chain

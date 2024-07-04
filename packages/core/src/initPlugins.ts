@@ -1,4 +1,8 @@
 import { join } from 'node:path';
+import type { Compiler } from '@rspack/core';
+import { LOADER_PATH } from './constants';
+import { createPublicContext } from './createContext';
+import { removeLeadingSlash } from './helpers';
 import type {
   GetRsbuildConfig,
   NormalizedEnvironmentConfig,
@@ -7,11 +11,7 @@ import type {
   RspackChain,
   TransformFn,
   TransformHandler,
-} from '@rsbuild/shared';
-import type { Compiler } from '@rspack/core';
-import { LOADER_PATH } from './constants';
-import { createPublicContext } from './createContext';
-import { removeLeadingSlash } from './helpers';
+} from './types';
 import type { InternalContext, NormalizedConfig } from './types';
 
 export function getHTMLPathByEntry(

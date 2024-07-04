@@ -1,7 +1,7 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
-import type { ServerConfig } from '@rsbuild/shared';
 import type Connect from 'connect';
+import type { ServerConfig } from '../types';
 
 export const createHttpServer = async ({
   serverConfig,

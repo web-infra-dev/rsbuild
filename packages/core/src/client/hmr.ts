@@ -4,8 +4,7 @@
  *
  * Tips: this package will be bundled and running in the browser, do not import any Node.js modules.
  */
-import type { StatsError } from '@rsbuild/shared';
-import type { ClientConfig } from '@rsbuild/shared';
+import type { ClientConfig, StatsError } from '../types';
 import { formatStatsMessages } from './format';
 
 function formatURL({

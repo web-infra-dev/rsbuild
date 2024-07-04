@@ -1,0 +1,41 @@
+import type { Hooks } from '../initHooks';
+import type { NormalizedConfig, RsbuildConfig } from './config';
+import type { EnvironmentContext } from './hooks';
+import type { RsbuildPluginAPI } from './plugin';
+
+export type BundlerType = 'rspack' | 'webpack';
+
+/** The public context */
+export type RsbuildContext = {
+  /** The Rsbuild core version. */
+  version: string;
+  /** The root path of current project. */
+  rootPath: string;
+  /** Absolute path of output files. */
+  distPath: string;
+  /** Absolute path of cache files. */
+  cachePath: string;
+  /** Info of dev server  */
+  devServer?: {
+    hostname: string;
+    port: number;
+    https: boolean;
+  };
+  bundlerType: BundlerType;
+};
+
+/** The inner context. */
+export type InternalContext = RsbuildContext & {
+  /** All hooks. */
+  hooks: Readonly<Hooks>;
+  /** Current Rsbuild config. */
+  config: Readonly<RsbuildConfig>;
+  /** The original Rsbuild config passed from the createRsbuild method. */
+  originalConfig: Readonly<RsbuildConfig>;
+  /** The normalized Rsbuild config. */
+  normalizedConfig?: NormalizedConfig;
+  /** The plugin API. */
+  pluginAPI?: RsbuildPluginAPI;
+  /** The environment context. */
+  environments: Record<string, EnvironmentContext>;
+};

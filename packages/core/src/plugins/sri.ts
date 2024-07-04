@@ -1,14 +1,14 @@
 import type { Buffer } from 'node:buffer';
 import crypto from 'node:crypto';
+import { HTML_REGEX } from '../constants';
+import { isProd, removeLeadingSlash } from '../helpers';
+import { logger } from '../logger';
 import type {
   EnvironmentContext,
   Rspack,
   SriAlgorithm,
   SriOptions,
-} from '@rsbuild/shared';
-import { HTML_REGEX } from '../constants';
-import { isProd, removeLeadingSlash } from '../helpers';
-import { logger } from '../logger';
+} from '../types';
 import type { RsbuildPlugin } from '../types';
 
 const getAssetName = (url: string, assetPrefix: string) => {

@@ -1,8 +1,8 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import type { DevConfig, NextFunction } from '@rsbuild/shared';
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import { applyToCompiler } from '../helpers';
 import type { DevMiddlewareOptions } from '../provider/createCompiler';
+import type { DevConfig, NextFunction } from '../types';
 
 type ServerCallbacks = {
   onInvalid: () => void;

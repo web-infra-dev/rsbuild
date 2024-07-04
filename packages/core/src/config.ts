@@ -1,26 +1,7 @@
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
-import { RspackChain } from '@rsbuild/shared';
-import type {
-  InspectConfigOptions,
-  InspectConfigResult,
-  NormalizedConfig,
-  NormalizedDevConfig,
-  NormalizedEnvironmentConfig,
-  NormalizedHtmlConfig,
-  NormalizedOutputConfig,
-  NormalizedPerformanceConfig,
-  NormalizedSecurityConfig,
-  NormalizedServerConfig,
-  NormalizedSourceConfig,
-  NormalizedToolsConfig,
-  PluginManager,
-  PublicDir,
-  PublicDirOptions,
-  RsbuildConfig,
-  RsbuildEntry,
-} from '@rsbuild/shared';
 import color from 'picocolors';
+import RspackChain from 'rspack-chain';
 import {
   CSS_DIST_DIR,
   DEFAULT_ASSET_PREFIX,
@@ -49,6 +30,25 @@ import {
 import { logger } from './logger';
 import { mergeRsbuildConfig } from './mergeConfig';
 import { restartDevServer } from './server/restart';
+import type {
+  InspectConfigOptions,
+  InspectConfigResult,
+  NormalizedConfig,
+  NormalizedDevConfig,
+  NormalizedEnvironmentConfig,
+  NormalizedHtmlConfig,
+  NormalizedOutputConfig,
+  NormalizedPerformanceConfig,
+  NormalizedSecurityConfig,
+  NormalizedServerConfig,
+  NormalizedSourceConfig,
+  NormalizedToolsConfig,
+  PluginManager,
+  PublicDir,
+  PublicDirOptions,
+  RsbuildConfig,
+  RsbuildEntry,
+} from './types';
 
 const getDefaultDevConfig = (): NormalizedDevConfig => ({
   hmr: true,
@@ -299,7 +299,7 @@ export async function watchFiles(files: string[]): Promise<void> {
     return;
   }
 
-  const chokidar = await import('@rsbuild/shared/chokidar');
+  const chokidar = await import('chokidar');
   const watcher = chokidar.watch(files, {
     // do not trigger add for initial files
     ignoreInitial: true,

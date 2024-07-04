@@ -1,11 +1,8 @@
-import type {
-  ChainIdentifier,
-  NormalizedEnvironmentConfig,
-  RspackChain,
-} from '@rsbuild/shared';
 import { reduceConfigs } from 'reduce-configs';
+import type { ChainIdentifier } from '../configChain';
 import { castArray } from '../helpers';
 import { ensureAbsolutePath } from '../helpers/path';
+import type { NormalizedEnvironmentConfig, RspackChain } from '../types';
 import type { RsbuildPlugin } from '../types';
 
 // compatible with legacy packages with type="module"

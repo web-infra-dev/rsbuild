@@ -1,15 +1,15 @@
 import { isAbsolute, join } from 'node:path';
-import type {
-  InspectConfigOptions,
-  InspectConfigResult,
-  RspackConfig,
-} from '@rsbuild/shared';
 import {
   getRsbuildInspectConfig,
   outputInspectConfigFiles,
   stringifyConfig,
 } from '../config';
 import { getNodeEnv, setNodeEnv } from '../helpers';
+import type {
+  InspectConfigOptions,
+  InspectConfigResult,
+  RspackConfig,
+} from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
 export async function inspectConfig({

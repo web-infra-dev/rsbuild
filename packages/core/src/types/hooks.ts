@@ -1,5 +1,6 @@
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
-import type { ChainIdentifier, RspackChain } from '..';
+import type RspackChain from 'rspack-chain';
+import type { ChainIdentifier } from '..';
 import type {
   EnvironmentConfig,
   HtmlBasicTag,

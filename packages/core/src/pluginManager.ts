@@ -1,13 +1,13 @@
+import color from 'picocolors';
+import { isFunction } from './helpers';
+import { logger } from './logger';
 import type {
   BundlerPluginInstance,
   Falsy,
   PluginManager,
   RsbuildPlugin,
   RsbuildPluginAPI,
-} from '@rsbuild/shared';
-import color from 'picocolors';
-import { isFunction } from './helpers';
-import { logger } from './logger';
+} from './types';
 
 function validatePlugin(plugin: unknown) {
   const type = typeof plugin;

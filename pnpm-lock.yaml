@@ -681,9 +681,6 @@ importers:
 
   packages/core:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@rspack/core':
         specifier: 1.0.0-alpha.0
         version: 1.0.0-alpha.0(@swc/helpers@0.5.11)
@@ -699,6 +696,10 @@ importers:
       postcss:
         specifier: ^8.4.39
         version: 8.4.39
+    optionalDependencies:
+      fsevents:
+        specifier: ~2.3.3
+        version: 2.3.3
     devDependencies:
       '@types/connect':
         specifier: 3.4.38
@@ -712,12 +713,24 @@ importers:
       '@types/on-finished':
         specifier: 2.3.4
         version: 2.3.4
+      '@types/webpack-bundle-analyzer':
+        specifier: 4.7.0
+        version: 4.7.0
       '@types/ws':
         specifier: ^8.5.10
         version: 8.5.10
+      autoprefixer:
+        specifier: 10.4.19
+        version: 10.4.19(postcss@8.4.39)
+      browserslist:
+        specifier: 4.23.1
+        version: 4.23.1
       browserslist-to-es-version:
         specifier: ^1.0.0
         version: 1.0.0
+      chokidar:
+        specifier: 3.6.0
+        version: 3.6.0
       commander:
         specifier: ^12.1.0
         version: 12.1.0
@@ -742,9 +755,15 @@ importers:
       fs-extra:
         specifier: ^11.2.0
         version: 11.2.0
+      gzip-size:
+        specifier: ^6.0.0
+        version: 6.0.0
       http-compression:
         specifier: 1.0.20
         version: 1.0.20
+      http-proxy-middleware:
+        specifier: ^2.0.6
+        version: 2.0.6
       jiti:
         specifier: ^1.21.6
         version: 1.21.6
@@ -778,6 +797,9 @@ importers:
       rslog:
         specifier: ^1.2.2
         version: 1.2.2
+      rspack-chain:
+        specifier: ^0.7.3
+        version: 0.7.3
       rspack-manifest-plugin:
         specifier: 5.0.0
         version: 5.0.0(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
@@ -790,6 +812,9 @@ importers:
       style-loader:
         specifier: 3.3.4
         version: 3.3.4(webpack@5.92.1)
+      terser:
+        specifier: 5.31.1
+        version: 5.31.1
       tsc-alias:
         specifier: ^1.8.10
         version: 1.8.10
@@ -799,9 +824,15 @@ importers:
       webpack:
         specifier: ^5.92.1
         version: 5.92.1
+      webpack-bundle-analyzer:
+        specifier: ^4.10.2
+        version: 4.10.2
       webpack-dev-middleware:
         specifier: 7.2.1
         version: 7.2.1(webpack@5.92.1)
+      webpack-merge:
+        specifier: 5.10.0
+        version: 5.10.0
       ws:
         specifier: ^8.17.1
         version: 8.17.1
@@ -1460,68 +1491,6 @@ importers:
       typescript:
         specifier: ^5.5.2
         version: 5.5.2
-
-  packages/shared:
-    dependencies:
-      '@rspack/core':
-        specifier: 1.0.0-alpha.0
-        version: 1.0.0-alpha.0(@swc/helpers@0.5.11)
-      caniuse-lite:
-        specifier: ^1.0.30001639
-        version: 1.0.30001639
-      html-webpack-plugin:
-        specifier: npm:html-rspack-plugin@5.7.2
-        version: html-rspack-plugin@5.7.2(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
-      postcss:
-        specifier: ^8.4.39
-        version: 8.4.39
-    optionalDependencies:
-      fsevents:
-        specifier: ~2.3.3
-        version: 2.3.3
-    devDependencies:
-      '@types/node':
-        specifier: 18.x
-        version: 18.19.31
-      '@types/webpack-bundle-analyzer':
-        specifier: 4.7.0
-        version: 4.7.0
-      autoprefixer:
-        specifier: 10.4.19
-        version: 10.4.19(postcss@8.4.39)
-      browserslist:
-        specifier: 4.23.1
-        version: 4.23.1
-      chokidar:
-        specifier: 3.6.0
-        version: 3.6.0
-      gzip-size:
-        specifier: ^6.0.0
-        version: 6.0.0
-      http-proxy-middleware:
-        specifier: ^2.0.6
-        version: 2.0.6
-      prebundle:
-        specifier: 1.1.0
-        version: 1.1.0(typescript@5.5.2)
-      rspack-chain:
-        specifier: ^0.7.3
-        version: 0.7.3
-      terser:
-        specifier: 5.31.1
-        version: 5.31.1
-      typescript:
-        specifier: ^5.5.2
-        version: 5.5.2
-      webpack:
-        specifier: ^5.92.1
-        version: 5.92.1
-      webpack-bundle-analyzer:
-        specifier: ^4.10.2
-        version: 4.10.2
-      webpack-merge:
-        specifier: 5.10.0
-        version: 5.10.0
 
   scripts/config:
     devDependencies:

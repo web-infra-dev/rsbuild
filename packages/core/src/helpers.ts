@@ -1,5 +1,16 @@
 import fs from 'node:fs';
 import path, { posix } from 'node:path';
+import type { StatsCompilation, StatsValue } from '@rspack/core';
+import deepmerge from 'deepmerge';
+import color from 'picocolors';
+import type RspackChain from 'rspack-chain';
+import type {
+  Compiler as WebpackCompiler,
+  MultiCompiler as WebpackMultiCompiler,
+} from 'webpack';
+import { formatStatsMessages } from './client/format';
+import { DEFAULT_ASSET_PREFIX } from './constants';
+import { logger } from './logger';
 import type {
   FilenameConfig,
   MultiStats,
@@ -8,20 +19,9 @@ import type {
   NormalizedEnvironmentConfig,
   RsbuildTarget,
   Rspack,
-  RspackChain,
   Stats,
   StatsError,
-} from '@rsbuild/shared';
-import type { StatsCompilation, StatsValue } from '@rspack/core';
-import deepmerge from 'deepmerge';
-import color from 'picocolors';
-import type {
-  Compiler as WebpackCompiler,
-  MultiCompiler as WebpackMultiCompiler,
-} from 'webpack';
-import { formatStatsMessages } from './client/format';
-import { DEFAULT_ASSET_PREFIX } from './constants';
-import { logger } from './logger';
+} from './types';
 
 export const rspackMinVersion = '0.7.0';
 

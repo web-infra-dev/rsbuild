@@ -4,10 +4,10 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import type { PrintFileSizeOptions, Stats, StatsAsset } from '@rsbuild/shared';
 import color from 'picocolors';
 import { CSS_REGEX, HTML_REGEX, JS_REGEX } from '../constants';
 import { logger } from '../logger';
+import type { PrintFileSizeOptions, Stats, StatsAsset } from '../types';
 import type { RsbuildPlugin } from '../types';
 
 /** Filter source map and license files */
@@ -67,7 +67,7 @@ async function printFileSizes(
     return logs;
   }
 
-  const { default: gzipSize } = await import('@rsbuild/shared/gzip-size');
+  const { default: gzipSize } = await import('gzip-size');
 
   const formatAsset = (
     asset: StatsAsset,

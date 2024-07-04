@@ -1,9 +1,9 @@
 import { exec } from 'node:child_process';
 import { promisify } from 'node:util';
-import type { Routes } from '@rsbuild/shared';
 import { STATIC_PATH } from '../constants';
 import { canParse, castArray } from '../helpers';
 import { logger } from '../logger';
+import type { Routes } from '../types';
 import type { NormalizedConfig, RsbuildPlugin } from '../types';
 
 const execAsync = promisify(exec);

@@ -1,6 +1,5 @@
-import type { Define } from '@rsbuild/shared';
 import { getNodeEnv, getPublicPathFromChain } from '../helpers';
-import type { RsbuildPlugin } from '../types';
+import type { Define, RsbuildPlugin } from '../types';
 
 export const pluginDefine = (): RsbuildPlugin => ({
   name: 'rsbuild:define',

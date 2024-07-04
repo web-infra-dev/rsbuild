@@ -1,4 +1,4 @@
-import type { EnvironmentConfig } from '@rsbuild/shared';
+import type { EnvironmentConfig } from '../types';
 import type { RsbuildConfig, RsbuildPlugin } from '../types';
 
 /**

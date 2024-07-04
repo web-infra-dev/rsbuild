@@ -1,12 +1,12 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
+import { findExists, isFileExists } from '../helpers';
 import type {
   BuildCacheOptions,
   EnvironmentContext,
   RsbuildContext,
-} from '@rsbuild/shared';
-import { findExists, isFileExists } from '../helpers';
+} from '../types';
 import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
 
 async function validateCache(

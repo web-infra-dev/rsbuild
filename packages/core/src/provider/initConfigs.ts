@@ -1,12 +1,3 @@
-import type {
-  InspectConfigOptions,
-  MergedEnvironmentConfig,
-  ModifyEnvironmentConfigUtils,
-  NormalizedEnvironmentConfig,
-  PluginManager,
-  RsbuildEntry,
-  RspackConfig,
-} from '@rsbuild/shared';
 import { getDefaultEntry, normalizeConfig } from '../config';
 import { JS_DIST_DIR } from '../constants';
 import {
@@ -17,6 +8,15 @@ import { camelCase } from '../helpers';
 import { isDebug, logger } from '../logger';
 import { mergeRsbuildConfig } from '../mergeConfig';
 import { initPlugins } from '../pluginManager';
+import type {
+  InspectConfigOptions,
+  MergedEnvironmentConfig,
+  ModifyEnvironmentConfigUtils,
+  NormalizedEnvironmentConfig,
+  PluginManager,
+  RsbuildEntry,
+  RspackConfig,
+} from '../types';
 import type {
   CreateRsbuildOptions,
   InternalContext,

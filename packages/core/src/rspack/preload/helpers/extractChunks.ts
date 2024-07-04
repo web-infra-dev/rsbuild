@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import type { PreloadIncludeType } from '@rsbuild/shared';
 import type { Chunk, ChunkGroup, Compilation } from '@rspack/core';
+import type { PreloadIncludeType } from '../../../types';
 
 interface ExtractChunks {
   compilation: Compilation;

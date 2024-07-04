@@ -1,14 +1,14 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
-import type {
-  PreviewServerOptions,
-  RequestHandler,
-  ServerConfig,
-} from '@rsbuild/shared';
 import type Connect from 'connect';
 import { getNodeEnv, setNodeEnv } from '../helpers';
 import { pathnameParse } from '../helpers/path';
 import { logger } from '../logger';
+import type {
+  PreviewServerOptions,
+  RequestHandler,
+  ServerConfig,
+} from '../types';
 import type { InternalContext, NormalizedConfig } from '../types';
 import {
   type StartServerResult,

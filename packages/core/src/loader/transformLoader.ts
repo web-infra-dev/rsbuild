@@ -1,5 +1,5 @@
-import type { RspackSourceMap, TransformContext } from '@rsbuild/shared';
 import type { LoaderContext } from '@rspack/core';
+import type { RspackSourceMap, TransformContext } from '../types';
 
 export default async function transform(
   this: LoaderContext<{ id: string }>,

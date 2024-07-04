@@ -28,7 +28,6 @@ export { PLUGIN_SWC_NAME, PLUGIN_CSS_NAME } from './constants';
 
 // Types
 export type {
-  // Config Types
   RsbuildConfig,
   DevConfig,
   HtmlConfig,
@@ -39,7 +38,6 @@ export type {
   SecurityConfig,
   PerformanceConfig,
   ModuleFederationConfig,
-  // Normalized Config Types
   NormalizedConfig,
   NormalizedDevConfig,
   NormalizedHtmlConfig,
@@ -51,17 +49,9 @@ export type {
   NormalizedPerformanceConfig,
   NormalizedModuleFederationConfig,
   NormalizedEnvironmentConfig,
-  // Plugin Types
   RsbuildPlugin,
   RsbuildPlugins,
   RsbuildPluginAPI,
-  // Others
-  RsbuildInstance,
-  RsbuildProvider,
-  CreateRsbuildOptions,
-} from './types';
-
-export type {
   RsbuildMode,
   RsbuildEntry,
   RsbuildTarget,
@@ -72,7 +62,6 @@ export type {
   EnvironmentContext,
   InspectConfigResult,
   InspectConfigOptions,
-  // Subtypes of Config
   Minify,
   Polyfill,
   PrintUrls,
@@ -84,7 +73,6 @@ export type {
   CrossOrigin,
   ConsoleType,
   SplitChunks,
-  RspackChain,
   ClientConfig,
   ScriptInject,
   ConfigChain,
@@ -95,7 +83,6 @@ export type {
   FilenameConfig,
   DistPathConfig,
   OutputStructure,
-  ChainIdentifier,
   TransformImport,
   PublicDirOptions,
   PreconnectOption,
@@ -106,7 +93,6 @@ export type {
   ConfigChainWithContext,
   ModifyRspackConfigUtils,
   CSSModulesLocalsConvention,
-  // Hook Callback Types
   OnExitFn,
   OnAfterBuildFn,
   OnAfterCreateCompilerFn,
@@ -130,11 +116,11 @@ export type {
   ServerAPIs,
   RequestHandler,
   PluginManager,
-  // Rspack related
   CacheGroup,
   CacheGroups,
   BundlerPluginInstance,
-} from '@rsbuild/shared';
+} from './types';
+export type { ChainIdentifier } from './configChain';
 
 export {
   /**

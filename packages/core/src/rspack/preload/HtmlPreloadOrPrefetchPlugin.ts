@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import type { PreloadOrPreFetchOption } from '@rsbuild/shared';
 import type {
   Chunk,
   Compilation,
@@ -25,6 +24,7 @@ import type {
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import { ensureAssetPrefix, upperFirst } from '../../helpers';
 import { getHTMLPlugin } from '../../pluginHelper';
+import type { PreloadOrPreFetchOption } from '../../types';
 import {
   type As,
   type BeforeAssetTagGenerationHtmlPluginData,

@@ -1,12 +1,5 @@
 import fs from 'node:fs';
 import path, { isAbsolute } from 'node:path';
-import type { MinifyJSOptions } from '@rsbuild/shared';
-import type {
-  HTMLPluginOptions,
-  HtmlConfig,
-  ModifyHTMLTagsFn,
-  NormalizedEnvironmentConfig,
-} from '@rsbuild/shared';
 import type { EntryDescription } from '@rspack/core';
 import deepmerge from 'deepmerge';
 import color from 'picocolors';
@@ -23,6 +16,13 @@ import {
   isURL,
 } from '../helpers';
 import type { HtmlInfo, TagConfig } from '../rspack/HtmlBasicPlugin';
+import type { MinifyJSOptions } from '../types';
+import type {
+  HTMLPluginOptions,
+  HtmlConfig,
+  ModifyHTMLTagsFn,
+  NormalizedEnvironmentConfig,
+} from '../types';
 import type { RsbuildPlugin } from '../types';
 import { parseMinifyOptions } from './minimize';
 

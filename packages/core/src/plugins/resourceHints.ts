@@ -2,7 +2,7 @@ import type {
   DnsPrefetchOption,
   HtmlBasicTag,
   PreconnectOption,
-} from '@rsbuild/shared';
+} from '../types';
 import type { RsbuildPlugin } from '../types';
 
 const generateLinks = (

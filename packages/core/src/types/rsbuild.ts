@@ -1,61 +1,70 @@
-import type {
-  BuildOptions,
-  Bundler,
-  CreateCompiler,
-  CreateDevServerOptions,
-  EnvironmentContext,
-  InspectConfigOptions,
-  InspectConfigResult,
-  NormalizedConfig,
-  PluginManager,
-  PreviewServerOptions,
-  RsbuildConfig,
-  RsbuildContext,
-  RsbuildPlugin,
-  RsbuildPluginAPI,
-  RsbuildPlugins,
-  RspackConfig,
-  StartDevServerOptions,
-  TransformHandler,
-  WebpackConfig,
-} from '@rsbuild/shared';
-import type { Hooks } from './initHooks';
-import type { RsbuildDevServer } from './server/devServer';
-import type { StartServerResult } from './server/helper';
+import type { EntryDescription } from '@rspack/core';
+import type { Compiler, MultiCompiler } from '@rspack/core';
+import type { RsbuildDevServer } from '../server/devServer';
+import type { StartServerResult } from '../server/helper';
+import type { RsbuildConfig } from './config';
+import type { NormalizedConfig, NormalizedEnvironmentConfig } from './config';
+import type { InternalContext, RsbuildContext } from './context';
+import type { PluginManager, RsbuildPluginAPI } from './plugin';
+import type { RspackConfig } from './rspack';
+import type { WebpackConfig } from './thirdParty';
 
-declare module '@rspack/core' {
-  interface Compiler {
-    __rsbuildTransformer?: Record<string, TransformHandler>;
-  }
-}
+export type Bundler = 'rspack' | 'webpack';
 
-export type RspackSourceMap = {
-  version: number;
-  sources: string[];
-  mappings: string;
-  file?: string;
-  sourceRoot?: string;
-  sourcesContent?: string[];
-  names?: string[];
+export type CreateCompilerOptions = { watch?: boolean };
+
+export type StartDevServerOptions = {
+  compiler?: Compiler | MultiCompiler;
+  getPortSilently?: boolean;
 };
 
-export type { RsbuildPlugin, RsbuildPlugins, RsbuildPluginAPI };
-
-/** The inner context. */
-export type InternalContext = RsbuildContext & {
-  /** All hooks. */
-  hooks: Readonly<Hooks>;
-  /** Current Rsbuild config. */
-  config: Readonly<RsbuildConfig>;
-  /** The original Rsbuild config passed from the createRsbuild method. */
-  originalConfig: Readonly<RsbuildConfig>;
-  /** The normalized Rsbuild config. */
-  normalizedConfig?: NormalizedConfig;
-  /** The plugin API. */
-  pluginAPI?: RsbuildPluginAPI;
-  /** The environment context. */
-  environments: Record<string, EnvironmentContext>;
+export type CreateDevServerOptions = StartDevServerOptions & {
+  /**
+   * Whether to trigger Rsbuild compilation
+   *
+   * @default true
+   */
+  runCompile?: boolean;
 };
+
+export type PreviewServerOptions = {
+  getPortSilently?: boolean;
+};
+
+export type BuildOptions = {
+  mode?: RsbuildMode;
+  watch?: boolean;
+  compiler?: Compiler | MultiCompiler;
+};
+
+export type InspectConfigOptions = {
+  env?: RsbuildMode;
+  verbose?: boolean;
+  outputPath?: string;
+  writeToDisk?: boolean;
+};
+
+export type InspectConfigResult<B extends 'rspack' | 'webpack' = 'rspack'> = {
+  rsbuildConfig: string;
+  bundlerConfigs: string[];
+  environmentConfigs: string[];
+  origin: {
+    rsbuildConfig: Omit<NormalizedConfig, 'environments'> & {
+      pluginNames: string[];
+    };
+    environmentConfigs: Record<
+      string,
+      NormalizedEnvironmentConfig & {
+        pluginNames: string[];
+      }
+    >;
+    bundlerConfigs: B extends 'rspack' ? RspackConfig[] : WebpackConfig[];
+  };
+};
+
+export type CreateCompiler =
+  // Allow user to manually narrow Compiler type
+  <C = Compiler | MultiCompiler>(options?: CreateCompilerOptions) => Promise<C>;
 
 export type CreateRsbuildOptions = {
   /** The root path of current project. */
@@ -131,26 +140,8 @@ export type RsbuildInstance = {
   onExit: RsbuildPluginAPI['onExit'];
 };
 
-export type {
-  RsbuildConfig,
-  NormalizedConfig,
-  DevConfig,
-  HtmlConfig,
-  ToolsConfig,
-  SourceConfig,
-  ServerConfig,
-  OutputConfig,
-  SecurityConfig,
-  PerformanceConfig,
-  ModuleFederationConfig,
-  NormalizedDevConfig,
-  NormalizedHtmlConfig,
-  NormalizedToolsConfig,
-  NormalizedSourceConfig,
-  NormalizedServerConfig,
-  NormalizedOutputConfig,
-  NormalizedSecurityConfig,
-  NormalizedPerformanceConfig,
-  NormalizedModuleFederationConfig,
-  NormalizedEnvironmentConfig,
-} from '@rsbuild/shared';
+export type RsbuildTarget = 'web' | 'node' | 'web-worker';
+
+export type RsbuildEntry = Record<string, string | string[] | EntryDescription>;
+
+export type RsbuildMode = 'development' | 'production';

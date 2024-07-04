@@ -1,13 +1,13 @@
+import { rspack } from '@rspack/core';
+import { getNodeEnv, onCompileDone, setNodeEnv } from '../helpers';
+import { logger } from '../logger';
 import type {
   BuildOptions,
   MultiStats,
   Rspack,
   RspackConfig,
   Stats,
-} from '@rsbuild/shared';
-import { rspack } from '@rspack/core';
-import { getNodeEnv, onCompileDone, setNodeEnv } from '../helpers';
-import { logger } from '../logger';
+} from '../types';
 import { createCompiler } from './createCompiler';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 

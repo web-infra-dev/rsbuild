@@ -1,7 +1,7 @@
-import type { CacheGroup, Rspack } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import type { RspackPluginInstance } from '@rspack/core';
 import { DEFAULT_ASSET_PREFIX } from '../constants';
+import type { CacheGroup, Rspack } from '../types';
 import type { RsbuildPlugin } from '../types';
 
 /**

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import type { PreloadOrPreFetchOption } from '@rsbuild/shared';
 import type { Chunk, ChunkGroup, Compilation } from '@rspack/core';
+import type { PreloadOrPreFetchOption } from '../../../types';
 import type { BeforeAssetTagGenerationHtmlPluginData } from './type';
 
 interface DoesChunkBelongToHtmlOptions {

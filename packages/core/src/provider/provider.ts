@@ -1,4 +1,4 @@
-import type { CreateCompiler } from '@rsbuild/shared';
+import type { CreateCompiler } from '../types';
 import type { RsbuildProvider } from '../types';
 import { initConfigs, initRsbuildConfig } from './initConfigs';
 

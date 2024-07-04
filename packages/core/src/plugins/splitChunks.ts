@@ -1,12 +1,12 @@
 import assert from 'node:assert';
+import { NODE_MODULES_REGEX } from '../constants';
 import type {
   CacheGroups,
   ForceSplitting,
   Polyfill,
   RsbuildChunkSplit,
   SplitChunks,
-} from '@rsbuild/shared';
-import { NODE_MODULES_REGEX } from '../constants';
+} from '../types';
 import type { RsbuildPlugin } from '../types';
 
 // We expose three layers to specify Rspack chunk-split config:
