@@ -1640,17 +1640,17 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
           "lib-axios": {
             "name": "lib-axios",
             "priority": 0,
-            "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(axios\\|axios-\\.\\+\\)\\[\\\\\\\\/\\]/,
+            "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
           },
           "lib-lodash": {
             "name": "lib-lodash",
             "priority": 0,
-            "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(lodash\\|lodash-es\\)\\[\\\\\\\\/\\]/,
+            "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
           },
           "lib-polyfill": {
             "name": "lib-polyfill",
             "priority": 0,
-            "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
+            "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(\\?:tslib\\|core-js\\|@swc\\[\\\\\\\\/\\]helpers\\)\\[\\\\\\\\/\\]/,
           },
         },
         "chunks": "all",

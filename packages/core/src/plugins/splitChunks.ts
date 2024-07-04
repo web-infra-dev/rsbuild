@@ -1,11 +1,10 @@
 import assert from 'node:assert';
-import {
-  type CacheGroups,
-  type ForceSplitting,
-  type Polyfill,
-  type RsbuildChunkSplit,
-  type SplitChunks,
-  createDependenciesRegExp,
+import type {
+  CacheGroups,
+  ForceSplitting,
+  Polyfill,
+  RsbuildChunkSplit,
+  SplitChunks,
 } from '@rsbuild/shared';
 import { NODE_MODULES_REGEX } from '../constants';
 import type { RsbuildPlugin } from '../types';
@@ -69,16 +68,13 @@ function splitByExperience(ctx: SplitChunksContext): SplitChunks {
   const experienceCacheGroup: CacheGroups = {};
 
   const packageRegExps: Record<string, RegExp> = {
-    lodash: createDependenciesRegExp('lodash', 'lodash-es'),
-    axios: createDependenciesRegExp('axios', /axios-.+/),
+    lodash: /[\\/]node_modules[\\/]lodash(-es)?[\\/]/,
+    axios: /[\\/]node_modules[\\/]axios(-.+)?[\\/]/,
   };
 
   if (polyfill === 'entry' || polyfill === 'usage') {
-    packageRegExps.polyfill = createDependenciesRegExp(
-      'tslib',
-      'core-js',
-      '@swc/helpers',
-    );
+    packageRegExps.polyfill =
+      /[\\/]node_modules[\\/](?:tslib|core-js|@swc[\\/]helpers)[\\/]/;
   }
 
   for (const [name, test] of Object.entries(packageRegExps)) {
