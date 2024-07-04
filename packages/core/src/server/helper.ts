@@ -2,7 +2,7 @@ import type { IncomingMessage } from 'node:http';
 import net from 'node:net';
 import type { Socket } from 'node:net';
 import os from 'node:os';
-import { join, relative } from 'node:path';
+import { posix } from 'node:path';
 import { color } from '@rsbuild/shared';
 import type {
   NormalizedConfig,
@@ -54,13 +54,11 @@ export const getRoutes = (context: InternalContext): Routes => {
   return Object.values(context.environments).reduce<Routes>(
     (prev, environmentContext) => {
       const { distPath, config } = environmentContext;
-      const distPrefix = relative(context.distPath, distPath);
+      const distPrefix = posix.relative(context.distPath, distPath);
 
       const routes = formatRoutes(
         environmentContext.htmlPaths,
-        join(distPrefix, config.output.distPath.html)
-          // fix path error in window
-          .replaceAll(/\\/g, '/'),
+        posix.join(distPrefix, config.output.distPath.html),
         config.html.outputStructure,
       );
       return prev.concat(...routes);
