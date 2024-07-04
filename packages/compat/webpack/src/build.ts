@@ -1,10 +1,5 @@
-import { type Rspack, logger } from '@rsbuild/core';
-import type {
-  BuildOptions,
-  MultiStats,
-  RspackConfig,
-  Stats,
-} from '@rsbuild/shared';
+import { logger } from '@rsbuild/core';
+import type { BuildOptions, Rspack } from '@rsbuild/core';
 import type { Configuration as WebpackConfig } from 'webpack';
 import WebpackMultiStats from 'webpack/lib/MultiStats.js';
 import { createCompiler } from './createCompiler';
@@ -39,11 +34,11 @@ export const build = async (
 
   let isFirstCompile = true;
   await context.hooks.onBeforeBuild.call({
-    bundlerConfigs: bundlerConfigs as RspackConfig[],
+    bundlerConfigs: bundlerConfigs as Rspack.Configuration[],
     environments: context.environments,
   });
 
-  const onDone = async (stats: Stats | MultiStats) => {
+  const onDone = async (stats: Rspack.Stats | Rspack.MultiStats) => {
     const p = context.hooks.onAfterBuild.call({
       isFirstCompile,
       stats,
@@ -64,24 +59,26 @@ export const build = async (
     return;
   }
 
-  await new Promise<{ stats: Stats | MultiStats }>((resolve, reject) => {
-    compiler.run((err, stats) => {
-      if (err || stats?.hasErrors()) {
-        const buildError = err || new Error('Webpack build failed!');
-        reject(buildError);
-      }
-      // If there is a compilation error, the close method should not be called.
-      // Otherwise bundler may generate an invalid cache.
-      else {
-        // When using run or watch, call close and wait for it to finish before calling run or watch again.
-        // Concurrent compilations will corrupt the output files.
-        compiler.close((closeErr) => {
-          closeErr && logger.error(closeErr);
+  await new Promise<{ stats: Rspack.Stats | Rspack.MultiStats }>(
+    (resolve, reject) => {
+      compiler.run((err, stats) => {
+        if (err || stats?.hasErrors()) {
+          const buildError = err || new Error('Webpack build failed!');
+          reject(buildError);
+        }
+        // If there is a compilation error, the close method should not be called.
+        // Otherwise bundler may generate an invalid cache.
+        else {
+          // When using run or watch, call close and wait for it to finish before calling run or watch again.
+          // Concurrent compilations will corrupt the output files.
+          compiler.close((closeErr) => {
+            closeErr && logger.error(closeErr);
 
-          // Assert type of stats must align to compiler.
-          resolve({ stats: stats as any });
-        });
-      }
-    });
-  });
+            // Assert type of stats must align to compiler.
+            resolve({ stats: stats as any });
+          });
+        }
+      });
+    },
+  );
 };

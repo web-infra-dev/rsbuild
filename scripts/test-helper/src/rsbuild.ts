@@ -1,12 +1,16 @@
 import type {
+  BundlerPluginInstance,
   CreateRsbuildOptions,
   RsbuildInstance,
   RsbuildPlugin,
+  Rspack,
 } from '@rsbuild/core';
-import type { BundlerPluginInstance, RspackConfig } from '@rsbuild/shared';
 
 /** Match plugin by constructor name. */
-export const matchPlugin = (config: RspackConfig, pluginName: string) => {
+export const matchPlugin = (
+  config: Rspack.Configuration,
+  pluginName: string,
+) => {
   const result = config.plugins?.filter(
     (item) => item?.constructor.name === pluginName,
   );

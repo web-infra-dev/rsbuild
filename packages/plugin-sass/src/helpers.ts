@@ -1,6 +1,5 @@
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import type { CompilerTapFn } from '@rsbuild/shared';
 
 const GLOBAL_PATCHED_SYMBOL: unique symbol = Symbol('GLOBAL_PATCHED_SYMBOL');
 
@@ -25,6 +24,10 @@ function unpatchGlobalLocation() {
     delete global.location;
   }
 }
+
+type CompilerTapFn<CallBack extends (...args: any[]) => void = () => void> = {
+  tap: (name: string, cb: CallBack) => void;
+};
 
 export function patchCompilerGlobalLocation(compiler: {
   hooks: {

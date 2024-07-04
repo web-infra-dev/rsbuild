@@ -185,8 +185,6 @@ export type Minify =
       htmlOptions?: HTMLPluginOptions['minify'];
     };
 
-export type CopyPluginOptions = CopyRspackPluginOptions;
-
 export type InlineChunkTestFunction = (params: {
   size: number;
   name: string;
@@ -289,7 +287,9 @@ export interface OutputConfig {
   /**
    * Copies the specified file or directory to the dist directory.
    */
-  copy?: CopyPluginOptions | CopyPluginOptions['patterns'];
+  copy?:
+    | Rspack.CopyRspackPluginOptions
+    | Rspack.CopyRspackPluginOptions['patterns'];
   /**
    * Whether to emit static assets such as image, font, etc.
    * Return `false` to avoid outputting unnecessary assets for some scenarios such as SSR.

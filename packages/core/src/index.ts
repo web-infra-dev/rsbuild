@@ -66,6 +66,9 @@ export type {
   RsbuildEntry,
   RsbuildTarget,
   RsbuildContext,
+  BuildOptions,
+  CreateCompiler,
+  CreateCompilerOptions,
   EnvironmentContext,
   InspectConfigResult,
   InspectConfigOptions,
@@ -93,6 +96,7 @@ export type {
   DistPathConfig,
   OutputStructure,
   ChainIdentifier,
+  TransformImport,
   PublicDirOptions,
   PreconnectOption,
   CSSLoaderOptions,
@@ -116,11 +120,20 @@ export type {
   OnDevCompileDoneFn,
   ModifyBundlerChainFn,
   ModifyRspackConfigFn,
+  ModifyWebpackChainFn,
   ModifyRsbuildConfigFn,
+  ModifyWebpackChainUtils,
+  ModifyWebpackConfigUtils,
+  ModifyBundlerChainUtils,
   TransformFn,
   TransformHandler,
   ServerAPIs,
   RequestHandler,
+  PluginManager,
+  // Rspack related
+  CacheGroup,
+  CacheGroups,
+  BundlerPluginInstance,
 } from '@rsbuild/shared';
 
 export {

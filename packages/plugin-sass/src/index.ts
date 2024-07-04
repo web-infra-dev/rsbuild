@@ -1,6 +1,5 @@
 import { join } from 'node:path';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import type { FileFilterUtil } from '@rsbuild/shared';
 import deepmerge from 'deepmerge';
 import { reduceConfigsWithContext } from 'reduce-configs';
 import { getResolveUrlJoinFn, patchCompilerGlobalLocation } from './helpers';
@@ -19,7 +18,7 @@ const getSassLoaderOptions = (
 } => {
   const excludes: (RegExp | string)[] = [];
 
-  const addExcludes: FileFilterUtil = (items) => {
+  const addExcludes = (items: string | RegExp | Array<string | RegExp>) => {
     excludes.push(...(Array.isArray(items) ? items : [items]));
   };
 

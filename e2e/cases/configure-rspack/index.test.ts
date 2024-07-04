@@ -1,6 +1,5 @@
 import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
-import type { RspackConfig } from '@rsbuild/shared';
 
 rspackOnlyTest(
   'should allow to use tools.rspack to configure Rspack',

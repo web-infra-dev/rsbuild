@@ -1,14 +1,12 @@
 import {
+  type EnvironmentContext,
+  type ModifyWebpackChainUtils,
+  type ModifyWebpackConfigUtils,
   type RsbuildTarget,
   type RspackChain,
   __internalHelper,
   logger,
 } from '@rsbuild/core';
-import type {
-  EnvironmentContext,
-  ModifyWebpackChainUtils,
-  ModifyWebpackConfigUtils,
-} from '@rsbuild/shared';
 import { reduceConfigsWithContext } from 'reduce-configs';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
 import {

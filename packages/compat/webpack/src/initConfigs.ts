@@ -1,9 +1,9 @@
 import {
   type CreateRsbuildOptions,
   type InspectConfigOptions,
+  type PluginManager,
   logger,
 } from '@rsbuild/core';
-import type { PluginManager } from '@rsbuild/shared';
 import { inspectConfig } from './inspectConfig';
 import { type InternalContext, initRsbuildConfig } from './shared';
 import type { WebpackConfig } from './types';
