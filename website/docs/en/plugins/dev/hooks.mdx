@@ -196,7 +196,6 @@ const myPlugin = () => ({
 
 ### modifyEnvironmentConfig
 
-
 Modify the Rsbuild configuration of a specific environment.
 
 In the callback function, the config object in the parameters has already been merged with the common Rsbuild configuration. You can directly modify this config object, or you can return a new object to replace it.
@@ -267,6 +266,7 @@ To modify the final Rspack config object, you can directly modify the config obj
 
 ```ts
 type ModifyRspackConfigUtils = {
+  environment: EnvironmentContext;
   env: NodeEnv;
   isDev: boolean;
   isProd: boolean;
@@ -312,6 +312,7 @@ This hook only supports modifying the configuration of the non-differentiated pa
 
 ```ts
 type ModifyBundlerChainUtils = {
+  environment: EnvironmentContext;
   env: NodeEnv;
   isDev: boolean;
   isProd: boolean;
@@ -393,8 +394,8 @@ type Context = {
    * @example 'index.html'
    */
   filename: string;
-  /** The name of the environment to which this build belongs. */
-  environment: string;
+  /** The environment context for current build. */
+  environment: EnvironmentContext;
 };
 
 function ModifyHTMLTags(

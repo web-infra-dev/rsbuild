@@ -265,6 +265,7 @@ const myPlugin = () => ({
 
 ```ts
 type ModifyRspackConfigUtils = {
+  environment: EnvironmentContext;
   env: NodeEnv;
   isDev: boolean;
   isProd: boolean;
@@ -308,6 +309,7 @@ import RspackChain from '@zh/shared/rspackChain.mdx';
 
 ```ts
 type ModifyBundlerChainUtils = {
+  environment: EnvironmentContext;
   env: NodeEnv;
   isDev: boolean;
   isProd: boolean;
@@ -390,9 +392,9 @@ type Context = {
    */
   filename: string;
   /**
-   * 本次构建所属的环境名称
+   * 本次构建的 environment 上下文
    */
-  environment: string;
+  environment: EnvironmentContext;
 };
 
 function ModifyHTMLTags(
