@@ -11,9 +11,7 @@
     {
       "path": "../core"
     },
-    {
-      "path": "../shared"
-    },
+    ,
     {
       "path": "../plugin-react"
     }
