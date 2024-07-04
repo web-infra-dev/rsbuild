@@ -29,7 +29,7 @@
   "dependencies": {
     "@rsbuild/plugin-babel": "workspace:*",
     "babel-preset-solid": "^1.8.18",
-    "solid-refresh": "0.6.3"
+    "solid-refresh": "0.7.5"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",

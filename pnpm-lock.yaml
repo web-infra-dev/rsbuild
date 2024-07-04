@@ -1174,8 +1174,8 @@ importers:
         specifier: ^1.8.18
         version: 1.8.18(@babel/core@7.24.7)
       solid-refresh:
-        specifier: 0.6.3
-        version: 0.6.3(solid-js@1.8.18)
+        specifier: 0.7.5
+        version: 0.7.5(solid-js@1.8.18)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1632,14 +1632,6 @@ packages:
   '@babel/generator@7.2.0':
     resolution: {integrity: sha512-BA75MVfRlFQG2EZgFYIwyT1r6xSkwfP2bdkY/kLZusEYWiJs4xCowab/alaEaT0wSvmVuXGqiefeBlP+7V1yKg==}
 
-  '@babel/generator@7.24.5':
-    resolution: {integrity: sha512-x32i4hEXvr+iI0NEoEfDKzlemF8AmtOP8CcrRaEcpzysWuoEb1KknpcvMsHKPONoKZiDuItklgWhB18xEhr9PA==}
-    engines: {node: '>=6.9.0'}
-
-  '@babel/generator@7.24.6':
-    resolution: {integrity: sha512-S7m4eNa6YAPJRHmKsLHIDJhNAGNKoWNiWefz1MBbpnt8g9lvMDl1hir4P9bo/57bQEmuwEhnRU/AMWsD0G/Fbg==}
-    engines: {node: '>=6.9.0'}
-
   '@babel/generator@7.24.7':
     resolution: {integrity: sha512-oipXieGC3i45Y1A41t4tAqpnEZWgB/lC6Ehh6+rOviR5XWpTtMmLN+fGjz9vOiNRt0p6RtO6DtD0pdU3vpqdSA==}
     engines: {node: '>=6.9.0'}
@@ -1717,10 +1709,6 @@ packages:
 
   '@babel/helper-module-imports@7.22.15':
     resolution: {integrity: sha512-0pYVBnDKZO2fnSPCrgM/6WMc7eS20Fbok+0r88fp+YtWVLZrp4CkafFGIp+W0VKw4a22sgebPT99y+FDNMdP4w==}
-    engines: {node: '>=6.9.0'}
-
-  '@babel/helper-module-imports@7.24.3':
-    resolution: {integrity: sha512-viKb0F9f2s0BCS22QSF308z/+1YWKV/76mwt61NBzS5izMzDPwdq1pTrzf+Li3npBWX9KdQbkeCt1jSAM7lZqg==}
     engines: {node: '>=6.9.0'}
 
   '@babel/helper-module-imports@7.24.6':
@@ -7141,8 +7129,8 @@ packages:
   solid-js@1.8.18:
     resolution: {integrity: sha512-cpkxDPvO/AuKBugVv6xKFd1C9VC0XZMu4VtF56IlHoux8HgyW44uqNSWbozMnVcpIzHIhS3vVXPAVZYM26jpWw==}
 
-  solid-refresh@0.6.3:
-    resolution: {integrity: sha512-F3aPsX6hVw9ttm5LYlth8Q15x6MlI/J3Dn+o3EQyRTtTxidepSTwAYdozt01/YA+7ObcciagGEyXIopGZzQtbA==}
+  solid-refresh@0.7.5:
+    resolution: {integrity: sha512-ZYMbjWsy7IwSF3+oZCNnReiTYSyCAFRvC7oLUKxxh1wPa6/6YIWqsxa+Ma2kM4F/ypWT69B1c0fmKeZRdLueGw==}
     peerDependencies:
       solid-js: ^1.3
 
@@ -8025,20 +8013,6 @@ snapshots:
       source-map: 0.5.7
       trim-right: 1.0.1
 
-  '@babel/generator@7.24.5':
-    dependencies:
-      '@babel/types': 7.24.7
-      '@jridgewell/gen-mapping': 0.3.5
-      '@jridgewell/trace-mapping': 0.3.25
-      jsesc: 2.5.2
-
-  '@babel/generator@7.24.6':
-    dependencies:
-      '@babel/types': 7.24.7
-      '@jridgewell/gen-mapping': 0.3.5
-      '@jridgewell/trace-mapping': 0.3.25
-      jsesc: 2.5.2
-
   '@babel/generator@7.24.7':
     dependencies:
       '@babel/types': 7.24.7
@@ -8145,10 +8119,6 @@ snapshots:
       '@babel/types': 7.24.7
 
   '@babel/helper-module-imports@7.22.15':
-    dependencies:
-      '@babel/types': 7.24.7
-
-  '@babel/helper-module-imports@7.24.3':
     dependencies:
       '@babel/types': 7.24.7
 
@@ -8936,7 +8906,7 @@ snapshots:
   '@babel/traverse@7.24.5':
     dependencies:
       '@babel/code-frame': 7.24.6
-      '@babel/generator': 7.24.6
+      '@babel/generator': 7.24.7
       '@babel/helper-environment-visitor': 7.22.20
       '@babel/helper-function-name': 7.23.0
       '@babel/helper-hoist-variables': 7.22.5
@@ -14316,10 +14286,9 @@ snapshots:
       seroval: 1.0.5
       seroval-plugins: 1.0.5(seroval@1.0.5)
 
-  solid-refresh@0.6.3(solid-js@1.8.18):
+  solid-refresh@0.7.5(solid-js@1.8.18):
     dependencies:
-      '@babel/generator': 7.24.5
-      '@babel/helper-module-imports': 7.24.3
+      '@babel/generator': 7.24.7
       '@babel/types': 7.24.7
       solid-js: 1.8.18
 
