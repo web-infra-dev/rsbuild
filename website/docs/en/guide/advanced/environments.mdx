@@ -132,3 +132,38 @@ const myPlugin = () => ({
   },
 });
 ```
+
+## Get environment context
+
+Rsbuild supports obtaining [environment context](/api/javascript-api/types#environmentcontext) information in plugin hook.
+
+In some plugin hooks related to the current build environment (such as [modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain), [modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig), etc.), Rsbuild supports obtaining the current environment information through parameters.
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.modifyBundlerChain((chain, { environment }) => {
+      const { name, config, entry } = environment;
+
+      if (config.output.minify !== false) {
+        chain.optimization
+          .minimizer(CHAIN_ID.MINIMIZER.JS)
+          .use(SwcJsMinimizerRspackPlugin)
+          .end();
+      }
+    });
+  },
+});
+```
+
+In some global plugin hooks (such as [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone), [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver), etc.), Rsbuild supports obtaining all environment information through parameters.
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.onDevCompileDone(({ environments }) => {
+      const entries = Object.values(environments).map((e) => e.entry);
+    });
+  },
+});
+```

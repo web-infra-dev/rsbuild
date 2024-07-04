@@ -132,3 +132,38 @@ const myPlugin = () => ({
   },
 });
 ```
+
+## 获取 environment 信息
+
+Rsbuild 支持在 plugin hook 中获取 [environment context](/api/javascript-api/types#environmentcontext) 信息。
+
+在一些和当前构建环境相关的 plugin hook 中 (如 [modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain)、[modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig) 等), Rsbuild 支持通过参数形式获取当前 environment 信息。
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.modifyBundlerChain((chain, { environment }) => {
+      const { name, config, entry } = environment;
+
+      if (config.output.minify !== false) {
+        chain.optimization
+          .minimizer(CHAIN_ID.MINIMIZER.JS)
+          .use(SwcJsMinimizerRspackPlugin)
+          .end();
+      }
+    });
+  },
+});
+```
+
+在一些全局 plugin hook 中 (如 [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone)、[onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) 等)， Rsbuild 支持通过参数形式获取所有 environment 信息。
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.onDevCompileDone(({ environments }) => {
+      const entries = Object.values(environments).map((e) => e.entry);
+    });
+  },
+});
+```
