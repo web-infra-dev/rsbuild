@@ -1,7 +1,84 @@
 import { sep } from 'node:path';
 import { ensureAssetPrefix, pick, prettyTime } from '../src/helpers';
 import { getCommonParentPath } from '../src/helpers/path';
-import { normalizeUrl } from '../src/server/helper';
+import type { InternalContext } from '../src/internal';
+import { getRoutes, normalizeUrl } from '../src/server/helper';
+
+test('should getRoutes correctly', () => {
+  expect(
+    getRoutes({
+      distPath: '/project/dist',
+      environments: {
+        web: {
+          distPath: '/project/dist',
+          htmlPaths: {
+            index: 'index.html',
+          },
+          config: {
+            output: {
+              distPath: {
+                html: '/',
+              },
+            },
+            html: {
+              outputStructure: 'flat',
+            },
+          },
+        },
+        web1: {
+          distPath: '/project/dist/web1',
+          htmlPaths: {
+            index: 'index.html',
+          },
+          config: {
+            output: {
+              distPath: {
+                html: '/',
+              },
+            },
+            html: {
+              outputStructure: 'flat',
+            },
+          },
+        },
+        web2: {
+          distPath: '/project/dist/web2',
+          htmlPaths: {
+            index: 'index.html',
+            main: 'main.html',
+          },
+          config: {
+            output: {
+              distPath: {
+                html: '/',
+              },
+            },
+            html: {
+              outputStructure: 'nested',
+            },
+          },
+        },
+      },
+    } as unknown as InternalContext),
+  ).toEqual([
+    {
+      entryName: 'index',
+      pathname: '/',
+    },
+    {
+      entryName: 'index',
+      pathname: '/web1/',
+    },
+    {
+      entryName: 'index',
+      pathname: '/web2/index',
+    },
+    {
+      entryName: 'main',
+      pathname: '/web2/main',
+    },
+  ]);
+});
 
 test('should pretty time correctly', () => {
   expect(prettyTime(0.0012)).toEqual('0.001 s');
