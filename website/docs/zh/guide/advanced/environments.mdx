@@ -137,7 +137,7 @@ const myPlugin = () => ({
 
 [Environment context](/api/javascript-api/types#environmentcontext) 是一个只读对象，提供一些和当前环境有关的上下文信息。Rsbuild 支持在 plugin hook 中获取 environment context 信息。
 
-在一些和当前构建环境相关的 plugin hook 中 (如 [modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain)、[modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig) 等), Rsbuild 支持通过参数形式获取当前 environment 信息。
+对于一些与构建环境相关的 plugin hooks (如 [modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain)、[modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig) 等), Rsbuild 支持通过 `environment` 参数获取当前 environment 上下文。
 
 ```ts
 const myPlugin = () => ({
