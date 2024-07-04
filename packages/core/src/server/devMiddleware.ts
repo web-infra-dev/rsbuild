@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import type { CompilerTapFn, DevConfig, NextFunction } from '@rsbuild/shared';
+import type { DevConfig, NextFunction } from '@rsbuild/shared';
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import { applyToCompiler } from '../helpers';
 import type { DevMiddlewareOptions } from '../provider/createCompiler';
@@ -35,6 +35,10 @@ const isNodeCompiler = (compiler: {
   }
 
   return false;
+};
+
+type CompilerTapFn<CallBack extends (...args: any[]) => void = () => void> = {
+  tap: (name: string, cb: CallBack) => void;
 };
 
 export const setupServerHooks = (

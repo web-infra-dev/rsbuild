@@ -27,7 +27,6 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@rsbuild/shared": "workspace:*",
     "serialize-javascript": "^6.0.2"
   },
   "devDependencies": {

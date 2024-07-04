@@ -4,6 +4,7 @@ import {
   type ModifyChainUtils,
   type ModifyRspackConfigUtils,
   type RsbuildTarget,
+  type Rspack,
   type RspackConfig,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
@@ -38,8 +39,8 @@ async function modifyRspackConfig(
   return modifiedConfig;
 }
 
-async function getConfigUtils(
-  config: RspackConfig,
+export async function getConfigUtils(
+  config: Rspack.Configuration,
   chainUtils: ModifyChainUtils,
 ): Promise<ModifyRspackConfigUtils> {
   const { merge } = await import('@rsbuild/shared/webpack-merge');
@@ -79,11 +80,16 @@ async function getConfigUtils(
     },
 
     removePlugin(pluginName) {
-      if (config.plugins) {
-        config.plugins = config.plugins.filter(
-          (p) => p && p.name !== pluginName,
-        );
+      if (!config.plugins) {
+        return;
       }
+      config.plugins = config.plugins.filter((plugin) => {
+        if (!plugin) {
+          return true;
+        }
+        const name = plugin.name || plugin.constructor.name;
+        return name !== pluginName;
+      });
     },
   };
 }

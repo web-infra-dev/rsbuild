@@ -27,7 +27,6 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@rsbuild/shared": "workspace:*",
     "vue-loader": "^17.4.0",
     "webpack": "^5.92.1"
   },

@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "@modern-js/swc-plugins": "0.6.7",
-    "@rsbuild/shared": "workspace:*",
     "@swc/helpers": "0.5.11",
     "core-js": "~3.37.1",
     "deepmerge": "^4.3.1",

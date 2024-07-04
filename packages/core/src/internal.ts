@@ -22,7 +22,7 @@ export {
   onCompileDone,
   prettyTime,
 } from './helpers';
-export { getChainUtils } from './provider/rspackConfig';
+export { getChainUtils, getConfigUtils } from './provider/rspackConfig';
 export { chainToConfig, modifyBundlerChain } from './configChain';
 export { applySwcDecoratorConfig } from './plugins/swc';
 export { getSwcMinimizerOptions } from './plugins/minimize';

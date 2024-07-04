@@ -112,12 +112,7 @@ export async function createCompiler({
     isFirstCompile = false;
   };
 
-  onCompileDone(
-    compiler,
-    done,
-    // @ts-expect-error type mismatch
-    rspack.MultiStats,
-  );
+  onCompileDone(compiler, done, rspack.MultiStats);
 
   await context.hooks.onAfterCreateCompiler.call({
     compiler,
