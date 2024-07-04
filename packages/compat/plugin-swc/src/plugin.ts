@@ -1,6 +1,5 @@
 import path from 'node:path';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { SCRIPT_REGEX } from '@rsbuild/shared';
 import { SwcMinimizerPlugin } from './minimizer';
 import type {
   ObjPluginSwcOptions,
@@ -63,7 +62,7 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
 
           // Insert swc loader and plugin
           rule
-            .test(test || SCRIPT_REGEX)
+            .test(test || /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/)
             .use(CHAIN_ID.USE.SWC)
             .loader(path.resolve(__dirname, './loader.cjs'))
             .options(removeUselessOptions(swcConfig) satisfies TransformConfig);

@@ -5,7 +5,8 @@ import type {
   RsbuildTarget,
   RspackChain,
 } from '@rsbuild/core';
-import { type CopyPluginOptions, castArray } from '@rsbuild/shared';
+import type { CopyPluginOptions } from '@rsbuild/shared';
+import { castArray } from './shared';
 
 async function applyTsConfigPathsPlugin({
   chain,

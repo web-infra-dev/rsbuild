@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
+    "deepmerge": "^4.3.1",
     "reduce-configs": "^1.0.0",
     "stylus": "0.63.0",
     "stylus-loader": "8.1.0"

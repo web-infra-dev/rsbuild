@@ -24,10 +24,6 @@
       "types": "./compiled/gzip-size/index.d.ts",
       "default": "./compiled/gzip-size/index.js"
     },
-    "./picocolors": {
-      "types": "./compiled/picocolors/picocolors.d.ts",
-      "default": "./compiled/picocolors/index.js"
-    },
     "./browserslist": {
       "types": "./compiled/browserslist/index.d.ts",
       "default": "./compiled/browserslist/index.js"
@@ -76,10 +72,8 @@
     "autoprefixer": "10.4.19",
     "browserslist": "4.23.1",
     "chokidar": "3.6.0",
-    "deepmerge": "^4.3.1",
     "gzip-size": "^6.0.0",
     "http-proxy-middleware": "^2.0.6",
-    "picocolors": "1.0.1",
     "prebundle": "1.1.0",
     "rspack-chain": "^0.7.3",
     "terser": "5.31.1",

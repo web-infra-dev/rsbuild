@@ -5,7 +5,6 @@ import type {
   NormalizedConfig,
   RspackChain,
 } from '@rsbuild/core';
-import { castArray } from '@rsbuild/shared';
 import { reduceConfigsWithContext } from 'reduce-configs';
 import upath from 'upath';
 import type {
@@ -19,6 +18,13 @@ import type {
 } from './types';
 
 export const BABEL_JS_RULE = 'babel-js';
+
+export const castArray = <T>(arr?: T | T[]): T[] => {
+  if (arr === undefined) {
+    return [];
+  }
+  return Array.isArray(arr) ? arr : [arr];
+};
 
 const normalizeToPosixPath = (p: string | undefined) =>
   upath

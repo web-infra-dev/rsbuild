@@ -21,7 +21,6 @@ export default {
     typescript: 'typescript',
   },
   dependencies: [
-    'deepmerge',
     {
       name: 'chokidar',
       externals: {
@@ -46,17 +45,8 @@ export default {
       name: 'rspack-chain',
       externals: {
         '@rspack/core': '@rspack/core',
-        deepmerge: '../deepmerge',
-      },
-    },
-    {
-      name: 'picocolors',
-      beforeBundle({ depPath }) {
-        const typesFile = join(depPath, 'types.ts');
-        // Fix type bundle
-        if (fs.existsSync(typesFile)) {
-          fs.renameSync(typesFile, join(depPath, 'types.d.ts'));
-        }
+        // TODO
+        // deepmerge: '../deepmerge',
       },
     },
     {
@@ -87,9 +77,9 @@ export default {
     {
       name: 'autoprefixer',
       externals: {
-        picocolors: '../picocolors',
         browserslist: '../browserslist',
         // Can be enabled after moving to core
+        // picocolors: 'picocolors',
         // 'postcss-value-parser': '../postcss-value-parser',
       },
     },

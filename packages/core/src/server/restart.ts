@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { color } from '@rsbuild/shared';
+import color from 'picocolors';
 import { init } from '../cli/init';
 import { logger } from '../logger';
 

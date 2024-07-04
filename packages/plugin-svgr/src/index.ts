@@ -1,8 +1,8 @@
 import path from 'node:path';
 import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
 import { PLUGIN_REACT_NAME } from '@rsbuild/plugin-react';
-import { SCRIPT_REGEX, deepmerge } from '@rsbuild/shared';
 import type { Config } from '@svgr/core';
+import deepmerge from 'deepmerge';
 
 export type SvgDefaultExport = 'component' | 'url';
 
@@ -124,7 +124,10 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
       if (mixedImport || svgrOptions.exportType) {
         const { exportType = mixedImport ? 'named' : undefined } = svgrOptions;
 
-        const issuerInclude = [SCRIPT_REGEX, /\.mdx$/];
+        const issuerInclude = [
+          /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/,
+          /\.mdx$/,
+        ];
         const issuer = options.excludeImporter
           ? { and: [issuerInclude, { not: options.excludeImporter }] }
           : issuerInclude;

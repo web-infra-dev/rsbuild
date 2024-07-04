@@ -1,10 +1,10 @@
-import {
-  type ChainIdentifier,
-  type NormalizedEnvironmentConfig,
-  type RspackChain,
-  castArray,
+import type {
+  ChainIdentifier,
+  NormalizedEnvironmentConfig,
+  RspackChain,
 } from '@rsbuild/shared';
 import { reduceConfigs } from 'reduce-configs';
+import { castArray } from '../helpers';
 import { ensureAbsolutePath } from '../helpers/path';
 import type { RsbuildPlugin } from '../types';
 

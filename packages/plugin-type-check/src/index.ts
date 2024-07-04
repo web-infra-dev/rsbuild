@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import { type RsbuildPlugin, logger } from '@rsbuild/core';
-import { CHAIN_ID, deepmerge } from '@rsbuild/shared';
+import { CHAIN_ID } from '@rsbuild/shared';
+import deepmerge from 'deepmerge';
 import type ForkTSCheckerPlugin from 'fork-ts-checker-webpack-plugin';
 import { type ConfigChain, reduceConfigs } from 'reduce-configs';
 

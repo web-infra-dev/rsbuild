@@ -1,4 +1,5 @@
-import { type BundlerPluginInstance, color } from '@rsbuild/shared';
+import type { BundlerPluginInstance } from '@rsbuild/shared';
+import color from 'picocolors';
 import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
 

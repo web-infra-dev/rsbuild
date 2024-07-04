@@ -6,11 +6,12 @@ import type {
   RsbuildContext,
   RsbuildPlugin,
 } from '@rsbuild/core';
-import { SCRIPT_REGEX, castArray, cloneDeep } from '@rsbuild/shared';
-import { BABEL_JS_RULE, applyUserBabelConfig } from './helper';
+import deepmerge from 'deepmerge';
+import { BABEL_JS_RULE, applyUserBabelConfig, castArray } from './helper';
 import type { BabelLoaderOptions, PluginBabelOptions } from './types';
 
 export const PLUGIN_BABEL_NAME = 'rsbuild:babel';
+const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
 
 /**
  * The `@babel/preset-typescript` default options.
@@ -109,7 +110,7 @@ export const pluginBabel = (
       const baseOptions = getDefaultBabelOptions(config, api.context);
 
       const mergedOptions = applyUserBabelConfig(
-        cloneDeep(baseOptions),
+        deepmerge({}, baseOptions),
         options.babelLoaderOptions,
       );
 
