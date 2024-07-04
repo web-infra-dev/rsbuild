@@ -8,13 +8,13 @@ import { DEFAULT_DEV_HOST, DEFAULT_PORT } from '../constants';
 import { isFunction } from '../helpers';
 import { logger } from '../logger';
 import type {
+  InternalContext,
   NormalizedConfig,
   OutputStructure,
   PrintUrls,
   Routes,
   RsbuildEntry,
 } from '../types';
-import type { InternalContext } from '../types';
 
 /**
  * It used to subscribe http upgrade event

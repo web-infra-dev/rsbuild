@@ -12,14 +12,12 @@ import type { CreateDevMiddlewareReturns } from '../provider/createCompiler';
 import type {
   CreateDevServerOptions,
   EnvironmentAPI,
-  Rspack,
-  StartDevServerOptions,
-  Stats,
-} from '../types';
-import type {
   InternalContext,
   NormalizedConfig,
   NormalizedDevConfig,
+  Rspack,
+  StartDevServerOptions,
+  Stats,
 } from '../types';
 import { getTransformedHtml, loadBundle } from './environment';
 import {

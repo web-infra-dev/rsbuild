@@ -8,17 +8,15 @@ import { getHTMLPathByEntry } from './initPlugins';
 import { logger } from './logger';
 import type {
   BundlerType,
+  CreateRsbuildOptions,
   EnvironmentContext,
+  InternalContext,
+  NormalizedConfig,
   NormalizedEnvironmentConfig,
+  RsbuildConfig,
   RsbuildContext,
   RsbuildEntry,
   RsbuildTarget,
-} from './types';
-import type {
-  CreateRsbuildOptions,
-  InternalContext,
-  NormalizedConfig,
-  RsbuildConfig,
 } from './types';
 
 function getAbsolutePath(root: string, filepath: string) {

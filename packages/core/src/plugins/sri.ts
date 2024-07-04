@@ -5,11 +5,11 @@ import { isProd, removeLeadingSlash } from '../helpers';
 import { logger } from '../logger';
 import type {
   EnvironmentContext,
+  RsbuildPlugin,
   Rspack,
   SriAlgorithm,
   SriOptions,
 } from '../types';
-import type { RsbuildPlugin } from '../types';
 
 const getAssetName = (url: string, assetPrefix: string) => {
   if (url.startsWith(assetPrefix)) {

@@ -5,9 +5,10 @@ import { findExists, isFileExists } from '../helpers';
 import type {
   BuildCacheOptions,
   EnvironmentContext,
+  NormalizedEnvironmentConfig,
   RsbuildContext,
+  RsbuildPlugin,
 } from '../types';
-import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
 
 async function validateCache(
   cacheDirectory: string,

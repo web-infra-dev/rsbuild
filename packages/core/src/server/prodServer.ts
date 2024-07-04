@@ -5,11 +5,12 @@ import { getNodeEnv, setNodeEnv } from '../helpers';
 import { pathnameParse } from '../helpers/path';
 import { logger } from '../logger';
 import type {
+  InternalContext,
+  NormalizedConfig,
   PreviewServerOptions,
   RequestHandler,
   ServerConfig,
 } from '../types';
-import type { InternalContext, NormalizedConfig } from '../types';
 import {
   type StartServerResult,
   getAddressUrls,

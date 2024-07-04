@@ -2,8 +2,7 @@ import { sep } from 'node:path';
 import color from 'picocolors';
 import { emptyDir } from '../helpers';
 import { logger } from '../logger';
-import type { EnvironmentContext } from '../types';
-import type { RsbuildPlugin } from '../types';
+import type { EnvironmentContext, RsbuildPlugin } from '../types';
 
 const addTrailingSep = (dir: string) => (dir.endsWith(sep) ? dir : dir + sep);
 

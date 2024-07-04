@@ -16,14 +16,14 @@ import {
   isURL,
 } from '../helpers';
 import type { HtmlInfo, TagConfig } from '../rspack/HtmlBasicPlugin';
-import type { MinifyJSOptions } from '../types';
 import type {
   HTMLPluginOptions,
   HtmlConfig,
+  MinifyJSOptions,
   ModifyHTMLTagsFn,
   NormalizedEnvironmentConfig,
+  RsbuildPlugin,
 } from '../types';
-import type { RsbuildPlugin } from '../types';
 import { parseMinifyOptions } from './minimize';
 
 function applyRemoveConsole(

@@ -1,7 +1,6 @@
 import color from 'picocolors';
 import { logger } from '../logger';
-import type { BundlerPluginInstance } from '../types';
-import type { RsbuildPlugin } from '../types';
+import type { BundlerPluginInstance, RsbuildPlugin } from '../types';
 
 type RsdoctorExports = {
   RsdoctorRspackPlugin: { new (): BundlerPluginInstance };

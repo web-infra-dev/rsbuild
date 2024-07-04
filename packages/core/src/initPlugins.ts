@@ -5,6 +5,8 @@ import { createPublicContext } from './createContext';
 import { removeLeadingSlash } from './helpers';
 import type {
   GetRsbuildConfig,
+  InternalContext,
+  NormalizedConfig,
   NormalizedEnvironmentConfig,
   PluginManager,
   RsbuildPluginAPI,
@@ -12,7 +14,6 @@ import type {
   TransformFn,
   TransformHandler,
 } from './types';
-import type { InternalContext, NormalizedConfig } from './types';
 
 export function getHTMLPathByEntry(
   entryName: string,

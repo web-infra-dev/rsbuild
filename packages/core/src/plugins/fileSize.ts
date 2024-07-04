@@ -7,8 +7,12 @@ import path from 'node:path';
 import color from 'picocolors';
 import { CSS_REGEX, HTML_REGEX, JS_REGEX } from '../constants';
 import { logger } from '../logger';
-import type { PrintFileSizeOptions, Stats, StatsAsset } from '../types';
-import type { RsbuildPlugin } from '../types';
+import type {
+  PrintFileSizeOptions,
+  RsbuildPlugin,
+  Stats,
+  StatsAsset,
+} from '../types';
 
 /** Filter source map and license files */
 export const filterAsset = (asset: string): boolean =>

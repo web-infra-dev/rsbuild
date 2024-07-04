@@ -5,12 +5,12 @@ import type {
   CreateAsyncHook,
   ModifyBundlerChainFn,
   ModifyBundlerChainUtils,
+  RsbuildConfig,
   RsbuildContext,
   RsbuildEntry,
   Rspack,
   RspackConfig,
 } from './types';
-import type { RsbuildConfig } from './types';
 
 export function getBundlerChain(): RspackChain {
   const bundlerChain = new RspackChain();

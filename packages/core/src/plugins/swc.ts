@@ -9,11 +9,13 @@ import {
   SCRIPT_REGEX,
 } from '../constants';
 import { castArray, cloneDeep, isWebTarget } from '../helpers';
-import type { Polyfill, RsbuildContext, RspackChain } from '../types';
 import type {
   NormalizedEnvironmentConfig,
   NormalizedSourceConfig,
+  Polyfill,
+  RsbuildContext,
   RsbuildPlugin,
+  RspackChain,
 } from '../types';
 
 const builtinSwcLoaderName = 'builtin:swc-loader';

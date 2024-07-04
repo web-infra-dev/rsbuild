@@ -9,18 +9,16 @@ import { isDebug, logger } from '../logger';
 import { mergeRsbuildConfig } from '../mergeConfig';
 import { initPlugins } from '../pluginManager';
 import type {
+  CreateRsbuildOptions,
   InspectConfigOptions,
+  InternalContext,
   MergedEnvironmentConfig,
   ModifyEnvironmentConfigUtils,
+  NormalizedConfig,
   NormalizedEnvironmentConfig,
   PluginManager,
   RsbuildEntry,
   RspackConfig,
-} from '../types';
-import type {
-  CreateRsbuildOptions,
-  InternalContext,
-  NormalizedConfig,
 } from '../types';
 import { inspectConfig } from './inspectConfig';
 import { generateRspackConfig } from './rspackConfig';

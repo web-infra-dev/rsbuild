@@ -5,9 +5,9 @@ import type {
   ForceSplitting,
   Polyfill,
   RsbuildChunkSplit,
+  RsbuildPlugin,
   SplitChunks,
 } from '../types';
-import type { RsbuildPlugin } from '../types';
 
 // We expose three layers to specify Rspack chunk-split config:
 // 1. By strategy. Some best practices strategies.

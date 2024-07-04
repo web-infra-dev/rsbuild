@@ -6,13 +6,13 @@ import { logger } from '../logger';
 import { getHTMLPlugin } from '../pluginHelper';
 import type {
   EnvironmentContext,
+  InternalContext,
   ModifyChainUtils,
   ModifyRspackConfigUtils,
   RsbuildTarget,
   Rspack,
   RspackConfig,
 } from '../types';
-import type { InternalContext } from '../types';
 
 async function modifyRspackConfig(
   context: InternalContext,

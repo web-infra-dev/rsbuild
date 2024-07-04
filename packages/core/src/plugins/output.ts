@@ -7,8 +7,11 @@ import {
 } from '../constants';
 import { formatPublicPath, getFilename } from '../helpers';
 import { getCssExtractPlugin } from '../pluginHelper';
-import type { NormalizedEnvironmentConfig, RsbuildContext } from '../types';
-import type { RsbuildPlugin } from '../types';
+import type {
+  NormalizedEnvironmentConfig,
+  RsbuildContext,
+  RsbuildPlugin,
+} from '../types';
 import { isUseCssExtract } from './css';
 
 function getPublicPath({
