@@ -4,12 +4,7 @@ import type {
   RsbuildPlugin,
   Rspack,
 } from '@rsbuild/core';
-import {
-  type FileFilterUtil,
-  castArray,
-  cloneDeep,
-  deepmerge,
-} from '@rsbuild/shared';
+import { type FileFilterUtil, cloneDeep, deepmerge } from '@rsbuild/shared';
 import { reduceConfigsWithContext } from 'reduce-configs';
 import type Less from '../compiled/less';
 
@@ -58,7 +53,7 @@ const getLessLoaderOptions = (
   const excludes: (RegExp | string)[] = [];
 
   const addExcludes: FileFilterUtil = (items) => {
-    excludes.push(...castArray(items));
+    excludes.push(...(Array.isArray(items) ? items : [items]));
   };
 
   const defaultLessLoaderOptions: LessLoaderOptions = {

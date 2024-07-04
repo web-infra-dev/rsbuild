@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path, { isAbsolute } from 'node:path';
-import { type MinifyJSOptions, castArray, deepmerge } from '@rsbuild/shared';
+import { type MinifyJSOptions, deepmerge } from '@rsbuild/shared';
 import type {
   HTMLPluginOptions,
   HtmlConfig,
@@ -15,6 +15,7 @@ import {
 } from 'reduce-configs';
 import { STATIC_PATH } from '../constants';
 import {
+  castArray,
   getPublicPathFromChain,
   isFileExists,
   isPlainObject,

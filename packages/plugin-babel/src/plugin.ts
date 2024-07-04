@@ -6,8 +6,8 @@ import type {
   RsbuildContext,
   RsbuildPlugin,
 } from '@rsbuild/core';
-import { SCRIPT_REGEX, castArray, cloneDeep } from '@rsbuild/shared';
-import { BABEL_JS_RULE, applyUserBabelConfig } from './helper';
+import { SCRIPT_REGEX, cloneDeep } from '@rsbuild/shared';
+import { BABEL_JS_RULE, applyUserBabelConfig, castArray } from './helper';
 import type { BabelLoaderOptions, PluginBabelOptions } from './types';
 
 export const PLUGIN_BABEL_NAME = 'rsbuild:babel';

@@ -9,13 +9,6 @@ export const SCRIPT_REGEX: RegExp = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
 
 export { deepmerge };
 
-export const castArray = <T>(arr?: T | T[]): T[] => {
-  if (arr === undefined) {
-    return [];
-  }
-  return Array.isArray(arr) ? arr : [arr];
-};
-
 export const cloneDeep = <T>(value: T): T => {
   if (value === null || value === undefined) {
     return value;

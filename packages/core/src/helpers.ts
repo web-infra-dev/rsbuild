@@ -1,17 +1,16 @@
 import fs from 'node:fs';
 import path, { posix } from 'node:path';
-import {
-  type FilenameConfig,
-  type MultiStats,
-  type NodeEnv,
-  type NormalizedConfig,
-  type NormalizedEnvironmentConfig,
-  type RsbuildTarget,
-  type Rspack,
-  type RspackChain,
-  type Stats,
-  type StatsError,
-  castArray,
+import type {
+  FilenameConfig,
+  MultiStats,
+  NodeEnv,
+  NormalizedConfig,
+  NormalizedEnvironmentConfig,
+  RsbuildTarget,
+  Rspack,
+  RspackChain,
+  Stats,
+  StatsError,
 } from '@rsbuild/shared';
 import type { StatsCompilation, StatsValue } from '@rspack/core';
 import color from 'picocolors';
@@ -43,6 +42,13 @@ export const isObject = (obj: unknown): obj is Record<string, any> =>
 
 export const isPlainObject = (obj: unknown): obj is Record<string, any> =>
   isObject(obj) && Object.prototype.toString.call(obj) === '[object Object]';
+
+export const castArray = <T>(arr?: T | T[]): T[] => {
+  if (arr === undefined) {
+    return [];
+  }
+  return Array.isArray(arr) ? arr : [arr];
+};
 
 const compareSemver = (version1: string, version2: string) => {
   const parts1 = version1.split('.').map(Number);
