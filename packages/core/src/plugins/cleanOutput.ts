@@ -1,5 +1,6 @@
 import { sep } from 'node:path';
-import { type EnvironmentContext, color } from '@rsbuild/shared';
+import type { EnvironmentContext } from '@rsbuild/shared';
+import color from 'picocolors';
 import { emptyDir } from '../helpers';
 import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';

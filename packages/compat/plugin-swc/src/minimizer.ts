@@ -3,8 +3,9 @@ import {
   __internalHelper,
   logger,
 } from '@rsbuild/core';
-import { color, deepmerge } from '@rsbuild/shared';
+import { deepmerge } from '@rsbuild/shared';
 import type { webpack } from '@rsbuild/webpack';
+import color from 'picocolors';
 import { minify, minifyCss } from './binding';
 import { JS_REGEX } from './constants';
 import type { CssMinifyOptions, JsMinifyOptions, Output } from './types';

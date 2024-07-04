@@ -1,5 +1,5 @@
 import { logger } from '@rsbuild/core';
-import { color } from '@rsbuild/shared';
+import color from 'picocolors';
 import type { ECMASyntaxError, EcmaVersion } from '../types';
 
 type Error = {

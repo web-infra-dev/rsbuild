@@ -1,10 +1,10 @@
 import { logger } from '@rsbuild/core';
-import { color } from '@rsbuild/shared';
+import color from 'picocolors';
 import webpack from 'webpack';
 import { prettyTime } from '../shared';
 import { bus, createFriendlyPercentage } from './helpers';
 import { createNonTTYLogger } from './helpers/nonTty';
-import type { Props } from './helpers/type';
+import type { Props } from './helpers/types';
 
 export interface ProgressOptions
   extends Omit<Partial<Props>, 'message' | 'total' | 'current' | 'done'> {

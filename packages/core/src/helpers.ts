@@ -12,9 +12,9 @@ import {
   type Stats,
   type StatsError,
   castArray,
-  color,
 } from '@rsbuild/shared';
 import type { StatsCompilation, StatsValue } from '@rspack/core';
+import color from 'picocolors';
 import type {
   Compiler as WebpackCompiler,
   MultiCompiler as WebpackMultiCompiler,

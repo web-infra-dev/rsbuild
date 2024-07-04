@@ -613,6 +613,9 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      picocolors:
+        specifier: ^1.0.1
+        version: 1.0.1
       semver:
         specifier: ^7.6.2
         version: 7.6.2
@@ -650,6 +653,9 @@ importers:
       mini-css-extract-plugin:
         specifier: 2.9.0
         version: 2.9.0(webpack@5.92.1)
+      picocolors:
+        specifier: ^1.0.1
+        version: 1.0.1
       reduce-configs:
         specifier: ^1.0.0
         version: 1.0.0
@@ -754,6 +760,9 @@ importers:
       open:
         specifier: ^8.4.0
         version: 8.4.2
+      picocolors:
+        specifier: ^1.0.1
+        version: 1.0.1
       postcss-load-config:
         specifier: 6.0.1
         version: 6.0.1(jiti@1.21.6)(postcss@8.4.39)(tsx@4.14.0)(yaml@2.4.5)
@@ -912,6 +921,9 @@ importers:
       htmlparser2:
         specifier: 9.1.0
         version: 9.1.0
+      picocolors:
+        specifier: ^1.0.1
+        version: 1.0.1
       source-map:
         specifier: ^0.7.4
         version: 0.7.4
@@ -1523,9 +1535,6 @@ importers:
       http-proxy-middleware:
         specifier: ^2.0.6
         version: 2.0.6
-      picocolors:
-        specifier: 1.0.1
-        version: 1.0.1
       prebundle:
         specifier: 1.1.0
         version: 1.1.0(typescript@5.5.2)
@@ -6476,9 +6485,6 @@ packages:
   picocolors@0.2.1:
     resolution: {integrity: sha512-cMlDqaLEqfSaW8Z7N5Jw+lyIW869EzT73/F5lhtY9cLGoVxSXznfgfXMO0Z5K0o0Q2TkTXq+0KFsdnSe3jDViA==}
 
-  picocolors@1.0.0:
-    resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
-
   picocolors@1.0.1:
     resolution: {integrity: sha512-anP1Z8qwhkbmu7MFP5iTt+wQKXgwzf7zTyGlcdzabySa9vd0Xt392U0rVmz9poOaBj0uHJKyyo9/upk0HrEQew==}
 
@@ -9522,7 +9528,7 @@ snapshots:
   '@clack/prompts@0.7.0':
     dependencies:
       '@clack/core': 0.3.4
-      picocolors: 1.0.0
+      picocolors: 1.0.1
       sisteransi: 1.0.5
 
   '@discoveryjs/json-ext@0.5.7': {}
@@ -13573,7 +13579,7 @@ snapshots:
 
   nano-staged@0.8.0:
     dependencies:
-      picocolors: 1.0.0
+      picocolors: 1.0.1
 
   nanoid@3.3.7: {}
 
@@ -13855,8 +13861,6 @@ snapshots:
       is-reference: 3.0.2
 
   picocolors@0.2.1: {}
-
-  picocolors@1.0.0: {}
 
   picocolors@1.0.1: {}
 
@@ -14149,7 +14153,7 @@ snapshots:
   postcss@8.4.38:
     dependencies:
       nanoid: 3.3.7
-      picocolors: 1.0.0
+      picocolors: 1.0.1
       source-map-js: 1.2.0
 
   postcss@8.4.39:
@@ -15091,7 +15095,7 @@ snapshots:
       css-tree: 2.3.1
       css-what: 6.1.0
       csso: 5.0.5
-      picocolors: 1.0.0
+      picocolors: 1.0.1
 
   table@6.8.2:
     dependencies:
@@ -15422,7 +15426,7 @@ snapshots:
       local-pkg: 0.5.0
       magic-string: 0.30.10
       pathe: 1.1.2
-      picocolors: 1.0.0
+      picocolors: 1.0.1
       std-env: 3.7.0
       strip-literal: 2.1.0
       tinybench: 2.7.0

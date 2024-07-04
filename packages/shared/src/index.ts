@@ -1,5 +1,4 @@
 import deepmerge from '../compiled/deepmerge/index.js';
-import color from '../compiled/picocolors/index.js';
 import RspackChain from '../compiled/rspack-chain/index.js';
 import type { CacheGroups } from './types';
 
@@ -8,12 +7,7 @@ export * from './types';
 // RegExp
 export const SCRIPT_REGEX: RegExp = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
 
-export { color, deepmerge };
-
-export type Colors = Omit<
-  keyof typeof color,
-  'createColor' | 'isColorSupported'
->;
+export { deepmerge };
 
 export const castArray = <T>(arr?: T | T[]): T[] => {
   if (arr === undefined) {

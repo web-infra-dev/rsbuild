@@ -50,16 +50,6 @@ export default {
       },
     },
     {
-      name: 'picocolors',
-      beforeBundle({ depPath }) {
-        const typesFile = join(depPath, 'types.ts');
-        // Fix type bundle
-        if (fs.existsSync(typesFile)) {
-          fs.renameSync(typesFile, join(depPath, 'types.d.ts'));
-        }
-      },
-    },
-    {
       name: 'http-proxy-middleware',
       externals: {
         // express is a peer dependency, no need to provide express type
@@ -87,9 +77,9 @@ export default {
     {
       name: 'autoprefixer',
       externals: {
-        picocolors: '../picocolors',
         browserslist: '../browserslist',
         // Can be enabled after moving to core
+        // picocolors: 'picocolors',
         // 'postcss-value-parser': '../postcss-value-parser',
       },
     },

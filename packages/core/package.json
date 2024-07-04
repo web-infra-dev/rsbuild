@@ -77,6 +77,7 @@
     "launch-editor-middleware": "^2.8.0",
     "on-finished": "2.4.1",
     "open": "^8.4.0",
+    "picocolors": "^1.0.1",
     "postcss-load-config": "6.0.1",
     "postcss-loader": "8.1.1",
     "postcss-value-parser": "4.2.0",

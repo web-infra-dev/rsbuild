@@ -61,7 +61,7 @@ export default {
       name: 'launch-editor-middleware',
       ignoreDts: true,
       externals: {
-        picocolors: '@rsbuild/shared/picocolors',
+        picocolors: 'picocolors',
       },
     },
     {

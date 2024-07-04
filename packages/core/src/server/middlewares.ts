@@ -1,12 +1,12 @@
 import path from 'node:path';
 import { parse } from 'node:url';
-import {
-  type HtmlFallback,
-  type RequestHandler as Middleware,
-  type Rspack,
-  color,
+import type {
+  HtmlFallback,
+  RequestHandler as Middleware,
+  Rspack,
 } from '@rsbuild/shared';
 import type Connect from 'connect';
+import color from 'picocolors';
 import { logger } from '../logger';
 
 export const faviconFallbackMiddleware: Middleware = (req, res, next) => {
