@@ -1,7 +1,7 @@
 import type { rspack } from '@rspack/core';
 import type { SwcLoaderOptions } from '@rspack/core';
 import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
-import type RspackChain from '../../../compiled/rspack-chain/index.js';
+import type RspackChain from 'rspack-chain';
 import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
 import type {
   ModifyWebpackChainUtils,
@@ -65,7 +65,7 @@ export type ModifyRspackConfigUtils = ModifyChainUtils & {
     plugins: BundlerPluginInstance | BundlerPluginInstance[],
   ) => void;
   removePlugin: (pluginName: string) => void;
-  mergeConfig: typeof import('../../../compiled/webpack-merge/index.js').merge;
+  mergeConfig: typeof import('webpack-merge').merge;
   rspack: typeof rspack;
 };
 

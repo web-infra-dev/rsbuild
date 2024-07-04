@@ -1,5 +1,7 @@
 import { isAbsolute, join } from 'node:path';
 import url from 'node:url';
+import { normalizePublicDirs } from '../config';
+import { logger } from '../logger';
 import type {
   DevConfig,
   EnvironmentAPI,
@@ -7,9 +9,7 @@ import type {
   Rspack,
   ServerAPIs,
   ServerConfig,
-} from '@rsbuild/shared';
-import { normalizePublicDirs } from '../config';
-import { logger } from '../logger';
+} from '../types';
 import type { UpgradeEvent } from './helper';
 import {
   faviconFallbackMiddleware,

@@ -1,5 +1,4 @@
-import type { CreateCompiler } from '@rsbuild/shared';
-import type { RsbuildProvider } from '../types';
+import type { CreateCompiler, RsbuildProvider } from '../types';
 import { initConfigs, initRsbuildConfig } from './initConfigs';
 
 export const rspackProvider: RsbuildProvider = async ({

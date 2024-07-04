@@ -1,6 +1,6 @@
-import type { NormalizedConfig } from '@rsbuild/shared';
-import autoprefixer from '@rsbuild/shared/autoprefixer';
 import { createStubRsbuild } from '@scripts/test-helper';
+import autoprefixer from 'autoprefixer';
+import type { NormalizedConfig } from '../src';
 import {
   applyAutoprefixer,
   normalizeCssLoaderOptions,

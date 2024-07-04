@@ -1,10 +1,10 @@
+import { normalizePublicDirs } from '../config';
 import type {
   ChokidarWatchOptions,
   DevConfig,
   ServerConfig,
   WatchFiles,
-} from '@rsbuild/shared';
-import { normalizePublicDirs } from '../config';
+} from '../types';
 import type { CompileMiddlewareAPI } from './getDevMiddlewares';
 
 type WatchFilesOptions = {
@@ -93,7 +93,7 @@ async function startWatchFiles(
   { paths, options }: WatchFiles,
   compileMiddlewareAPI: CompileMiddlewareAPI,
 ) {
-  const chokidar = await import('@rsbuild/shared/chokidar');
+  const chokidar = await import('chokidar');
   const watcher = chokidar.watch(paths, options);
 
   watcher.on('change', () => {

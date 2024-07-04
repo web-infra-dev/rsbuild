@@ -2,10 +2,10 @@ import type {
   CssExtractRspackLoaderOptions,
   CssExtractRspackPluginOptions,
 } from '@rspack/core';
+import type Autoprefixer from 'autoprefixer';
 import type { AcceptedPlugin, ProcessOptions } from 'postcss';
 import type { MinifyOptions } from 'terser';
 import type { Configuration as WebpackConfig } from 'webpack';
-import type Autoprefixer from '../../compiled/autoprefixer/index.js';
 import type { Rspack } from './rspack';
 
 type AutoprefixerOptions = Autoprefixer.Options;

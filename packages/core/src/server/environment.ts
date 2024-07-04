@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import type { EnvironmentContext, Stats } from '@rsbuild/shared';
+import type { EnvironmentContext, Stats } from '../types';
 import { run } from './runner';
 
 export type ServerUtils = {

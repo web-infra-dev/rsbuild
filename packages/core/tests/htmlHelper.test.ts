@@ -1,4 +1,4 @@
-import type { NormalizedConfig } from '@rsbuild/shared';
+import type { NormalizedConfig } from '../src';
 import { getHTMLPathByEntry } from '../src/initPlugins';
 import { hasTitle } from '../src/rspack/HtmlBasicPlugin';
 

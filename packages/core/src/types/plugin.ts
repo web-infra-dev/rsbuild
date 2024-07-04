@@ -1,11 +1,12 @@
 import type { RuleSetCondition } from '@rspack/core';
 import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import type RspackChain from 'rspack-chain';
 import type {
   RuleSetRule,
   Configuration as WebpackConfig,
   WebpackPluginInstance,
 } from 'webpack';
-import type { ChainIdentifier, RspackChain } from '..';
+import type { ChainIdentifier } from '../configChain';
 import type {
   ModifyRspackConfigUtils,
   NormalizedConfig,
@@ -75,7 +76,7 @@ export type ModifyWebpackConfigUtils = ModifyWebpackChainUtils & {
     plugins: WebpackPluginInstance | WebpackPluginInstance[],
   ) => void;
   removePlugin: (pluginName: string) => void;
-  mergeConfig: typeof import('../../compiled/webpack-merge/index.js').merge;
+  mergeConfig: typeof import('webpack-merge').merge;
 };
 
 export type ModifyWebpackChainFn = (

@@ -681,15 +681,15 @@ importers:
 
   packages/core:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@rspack/core':
         specifier: 1.0.0-alpha.0
         version: 1.0.0-alpha.0(@swc/helpers@0.5.11)
       '@swc/helpers':
         specifier: 0.5.11
         version: 0.5.11
+      caniuse-lite:
+        specifier: ^1.0.30001640
+        version: 1.0.30001640
       core-js:
         specifier: ~3.37.1
         version: 3.37.1
@@ -699,6 +699,10 @@ importers:
       postcss:
         specifier: ^8.4.39
         version: 8.4.39
+    optionalDependencies:
+      fsevents:
+        specifier: ~2.3.3
+        version: 2.3.3
     devDependencies:
       '@types/connect':
         specifier: 3.4.38
@@ -712,12 +716,24 @@ importers:
       '@types/on-finished':
         specifier: 2.3.4
         version: 2.3.4
+      '@types/webpack-bundle-analyzer':
+        specifier: 4.7.0
+        version: 4.7.0
       '@types/ws':
         specifier: ^8.5.10
         version: 8.5.10
+      autoprefixer:
+        specifier: 10.4.19
+        version: 10.4.19(postcss@8.4.39)
+      browserslist:
+        specifier: 4.23.1
+        version: 4.23.1
       browserslist-to-es-version:
         specifier: ^1.0.0
         version: 1.0.0
+      chokidar:
+        specifier: 3.6.0
+        version: 3.6.0
       commander:
         specifier: ^12.1.0
         version: 12.1.0
@@ -742,9 +758,15 @@ importers:
       fs-extra:
         specifier: ^11.2.0
         version: 11.2.0
+      gzip-size:
+        specifier: ^6.0.0
+        version: 6.0.0
       http-compression:
         specifier: 1.0.20
         version: 1.0.20
+      http-proxy-middleware:
+        specifier: ^2.0.6
+        version: 2.0.6
       jiti:
         specifier: ^1.21.6
         version: 1.21.6
@@ -778,6 +800,9 @@ importers:
       rslog:
         specifier: ^1.2.2
         version: 1.2.2
+      rspack-chain:
+        specifier: ^0.7.3
+        version: 0.7.3
       rspack-manifest-plugin:
         specifier: 5.0.0
         version: 5.0.0(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
@@ -790,6 +815,9 @@ importers:
       style-loader:
         specifier: 3.3.4
         version: 3.3.4(webpack@5.92.1)
+      terser:
+        specifier: 5.31.1
+        version: 5.31.1
       tsc-alias:
         specifier: ^1.8.10
         version: 1.8.10
@@ -799,9 +827,15 @@ importers:
       webpack:
         specifier: ^5.92.1
         version: 5.92.1
+      webpack-bundle-analyzer:
+        specifier: ^4.10.2
+        version: 4.10.2
       webpack-dev-middleware:
         specifier: 7.2.1
         version: 7.2.1(webpack@5.92.1)
+      webpack-merge:
+        specifier: 5.10.0
+        version: 5.10.0
       ws:
         specifier: ^8.17.1
         version: 8.17.1
@@ -1460,68 +1494,6 @@ importers:
       typescript:
         specifier: ^5.5.2
         version: 5.5.2
-
-  packages/shared:
-    dependencies:
-      '@rspack/core':
-        specifier: 1.0.0-alpha.0
-        version: 1.0.0-alpha.0(@swc/helpers@0.5.11)
-      caniuse-lite:
-        specifier: ^1.0.30001639
-        version: 1.0.30001639
-      html-webpack-plugin:
-        specifier: npm:html-rspack-plugin@5.7.2
-        version: html-rspack-plugin@5.7.2(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))
-      postcss:
-        specifier: ^8.4.39
-        version: 8.4.39
-    optionalDependencies:
-      fsevents:
-        specifier: ~2.3.3
-        version: 2.3.3
-    devDependencies:
-      '@types/node':
-        specifier: 18.x
-        version: 18.19.31
-      '@types/webpack-bundle-analyzer':
-        specifier: 4.7.0
-        version: 4.7.0
-      autoprefixer:
-        specifier: 10.4.19
-        version: 10.4.19(postcss@8.4.39)
-      browserslist:
-        specifier: 4.23.1
-        version: 4.23.1
-      chokidar:
-        specifier: 3.6.0
-        version: 3.6.0
-      gzip-size:
-        specifier: ^6.0.0
-        version: 6.0.0
-      http-proxy-middleware:
-        specifier: ^2.0.6
-        version: 2.0.6
-      prebundle:
-        specifier: 1.1.0
-        version: 1.1.0(typescript@5.5.2)
-      rspack-chain:
-        specifier: ^0.7.3
-        version: 0.7.3
-      terser:
-        specifier: 5.31.1
-        version: 5.31.1
-      typescript:
-        specifier: ^5.5.2
-        version: 5.5.2
-      webpack:
-        specifier: ^5.92.1
-        version: 5.92.1
-      webpack-bundle-analyzer:
-        specifier: ^4.10.2
-        version: 4.10.2
-      webpack-merge:
-        specifier: 5.10.0
-        version: 5.10.0
 
   scripts/config:
     devDependencies:
@@ -4141,11 +4113,8 @@ packages:
   caniuse-api@3.0.0:
     resolution: {integrity: sha512-bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==}
 
-  caniuse-lite@1.0.30001636:
-    resolution: {integrity: sha512-bMg2vmr8XBsbL6Lr0UHXy/21m84FTxDLWn2FSqMd5PrlbMxwJlQnC2YWYxVgp66PZE+BBNF2jYQUBKCo1FDeZg==}
-
-  caniuse-lite@1.0.30001639:
-    resolution: {integrity: sha512-eFHflNTBIlFwP2AIKaYuBQN/apnUoKNhBdza8ZnW/h2di4LCZ4xFqYlxUxo+LQ76KFI1PGcC1QDxMbxTZpSCAg==}
+  caniuse-lite@1.0.30001640:
+    resolution: {integrity: sha512-lA4VMpW0PSUrFnkmVuEKBUovSWKhj7puyCg8StBChgu298N1AtuF1sKWEvfDuimSEDbhlb/KqPKC3fs1HbuQUA==}
 
   ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
@@ -9898,7 +9867,7 @@ snapshots:
   '@modern-js/utils@2.54.5':
     dependencies:
       '@swc/helpers': 0.5.3
-      caniuse-lite: 1.0.30001639
+      caniuse-lite: 1.0.30001640
       lodash: 4.17.21
       rslog: 1.2.2
 
@@ -10133,7 +10102,7 @@ snapshots:
   '@rsbuild/shared@0.7.8(@swc/helpers@0.5.3)':
     dependencies:
       '@rspack/core': 1.0.0-alpha.0(@swc/helpers@0.5.3)
-      caniuse-lite: 1.0.30001639
+      caniuse-lite: 1.0.30001640
       html-webpack-plugin: html-rspack-plugin@5.7.2(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.3))
       postcss: 8.4.39
     optionalDependencies:
@@ -10184,7 +10153,7 @@ snapshots:
     dependencies:
       '@module-federation/runtime-tools': 0.1.6
       '@rspack/binding': 1.0.0-alpha.0
-      caniuse-lite: 1.0.30001636
+      caniuse-lite: 1.0.30001640
       tapable: 2.2.1
     optionalDependencies:
       '@swc/helpers': 0.5.11
@@ -10193,7 +10162,7 @@ snapshots:
     dependencies:
       '@module-federation/runtime-tools': 0.1.6
       '@rspack/binding': 1.0.0-alpha.0
-      caniuse-lite: 1.0.30001639
+      caniuse-lite: 1.0.30001640
       tapable: 2.2.1
     optionalDependencies:
       '@swc/helpers': 0.5.3
@@ -11119,7 +11088,7 @@ snapshots:
   autoprefixer@10.4.19(postcss@8.4.39):
     dependencies:
       browserslist: 4.23.1
-      caniuse-lite: 1.0.30001639
+      caniuse-lite: 1.0.30001640
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.1
@@ -11254,7 +11223,7 @@ snapshots:
 
   browserslist@4.23.1:
     dependencies:
-      caniuse-lite: 1.0.30001639
+      caniuse-lite: 1.0.30001640
       electron-to-chromium: 1.4.799
       node-releases: 2.0.14
       update-browserslist-db: 1.0.16(browserslist@4.23.1)
@@ -11291,13 +11260,11 @@ snapshots:
   caniuse-api@3.0.0:
     dependencies:
       browserslist: 4.23.1
-      caniuse-lite: 1.0.30001639
+      caniuse-lite: 1.0.30001640
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
 
-  caniuse-lite@1.0.30001636: {}
-
-  caniuse-lite@1.0.30001639: {}
+  caniuse-lite@1.0.30001640: {}
 
   ccount@2.0.1: {}
 

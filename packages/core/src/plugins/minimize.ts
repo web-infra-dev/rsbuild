@@ -1,13 +1,12 @@
-import {
-  CHAIN_ID,
-  type HTMLPluginOptions,
-  type NormalizedEnvironmentConfig,
-} from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import type { SwcJsMinimizerRspackPluginOptions } from '@rspack/core';
 import deepmerge from 'deepmerge';
 import { isObject } from '../helpers';
-import type { RsbuildPlugin } from '../types';
+import type {
+  HTMLPluginOptions,
+  NormalizedEnvironmentConfig,
+  RsbuildPlugin,
+} from '../types';
 
 export const getSwcMinimizerOptions = (
   config: NormalizedEnvironmentConfig,
@@ -107,7 +106,7 @@ export const pluginMinimize = (): RsbuildPlugin => ({
       return;
     }
 
-    api.modifyBundlerChain(async (chain, { isProd, environment }) => {
+    api.modifyBundlerChain(async (chain, { isProd, environment, CHAIN_ID }) => {
       const { config } = environment;
       const isMinimize = isProd && config.output.minify !== false;
 

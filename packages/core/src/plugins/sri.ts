@@ -1,15 +1,15 @@
 import type { Buffer } from 'node:buffer';
 import crypto from 'node:crypto';
-import type {
-  EnvironmentContext,
-  Rspack,
-  SriAlgorithm,
-  SriOptions,
-} from '@rsbuild/shared';
 import { HTML_REGEX } from '../constants';
 import { isProd, removeLeadingSlash } from '../helpers';
 import { logger } from '../logger';
-import type { RsbuildPlugin } from '../types';
+import type {
+  EnvironmentContext,
+  RsbuildPlugin,
+  Rspack,
+  SriAlgorithm,
+  SriOptions,
+} from '../types';
 
 const getAssetName = (url: string, assetPrefix: string) => {
   if (url.startsWith(assetPrefix)) {

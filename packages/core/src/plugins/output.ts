@@ -1,8 +1,4 @@
 import { posix } from 'node:path';
-import type {
-  NormalizedEnvironmentConfig,
-  RsbuildContext,
-} from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import {
   DEFAULT_ASSET_PREFIX,
@@ -11,7 +7,11 @@ import {
 } from '../constants';
 import { formatPublicPath, getFilename } from '../helpers';
 import { getCssExtractPlugin } from '../pluginHelper';
-import type { RsbuildPlugin } from '../types';
+import type {
+  NormalizedEnvironmentConfig,
+  RsbuildContext,
+  RsbuildPlugin,
+} from '../types';
 import { isUseCssExtract } from './css';
 
 function getPublicPath({

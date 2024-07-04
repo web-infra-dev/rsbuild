@@ -1,10 +1,10 @@
+import type { RequestHandler } from 'http-proxy-middleware';
+import { logger } from '../logger';
 import type {
   RequestHandler as Middleware,
   ProxyDetail,
   ProxyOptions,
-} from '@rsbuild/shared';
-import type { RequestHandler } from '@rsbuild/shared/http-proxy-middleware';
-import { logger } from '../logger';
+} from '../types';
 import type { UpgradeEvent } from './helper';
 
 function formatProxyOptions(proxyOptions: ProxyOptions) {
@@ -52,7 +52,7 @@ export const createProxyMiddleware = async (
   const middlewares: Middleware[] = [];
 
   const { createProxyMiddleware: baseCreateProxyMiddleware } = await import(
-    '@rsbuild/shared/http-proxy-middleware'
+    'http-proxy-middleware'
   );
 
   for (const opts of formattedOptionsList) {

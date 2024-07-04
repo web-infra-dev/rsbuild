@@ -1,15 +1,4 @@
 import path from 'node:path';
-import type {
-  AutoprefixerOptions,
-  CSSLoaderModulesMode,
-  CSSLoaderOptions,
-  ModifyChainUtils,
-  PostCSSLoaderOptions,
-  PostCSSOptions,
-  RsbuildContext,
-  RsbuildTarget,
-  RspackChain,
-} from '@rsbuild/shared';
 import deepmerge from 'deepmerge';
 import type { AcceptedPlugin } from 'postcss';
 import { reduceConfigs, reduceConfigsWithContext } from 'reduce-configs';
@@ -17,7 +6,19 @@ import { CSS_REGEX, LOADER_PATH } from '../constants';
 import { isFunction, isPlainObject } from '../helpers';
 import { getCompiledPath } from '../helpers/path';
 import { getCssExtractPlugin } from '../pluginHelper';
-import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
+import type {
+  AutoprefixerOptions,
+  CSSLoaderModulesMode,
+  CSSLoaderOptions,
+  ModifyChainUtils,
+  NormalizedEnvironmentConfig,
+  PostCSSLoaderOptions,
+  PostCSSOptions,
+  RsbuildContext,
+  RsbuildPlugin,
+  RsbuildTarget,
+  RspackChain,
+} from '../types';
 
 export const isUseCssExtract = (
   config: NormalizedEnvironmentConfig,
@@ -121,9 +122,7 @@ export const applyAutoprefixer = async (
   });
 
   if (!hasAutoprefixer) {
-    const { default: autoprefixer } = await import(
-      '@rsbuild/shared/autoprefixer'
-    );
+    const { default: autoprefixer } = await import('autoprefixer');
 
     const autoprefixerOptions = reduceConfigs<AutoprefixerOptions>({
       initial: {

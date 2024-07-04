@@ -1,11 +1,4 @@
 import fs from 'node:fs';
-import type {
-  CreateDevServerOptions,
-  EnvironmentAPI,
-  Rspack,
-  StartDevServerOptions,
-  Stats,
-} from '@rsbuild/shared';
 import type Connect from 'connect';
 import { ROOT_DIST_DIR } from '../constants';
 import {
@@ -17,9 +10,14 @@ import {
 import { logger } from '../logger';
 import type { CreateDevMiddlewareReturns } from '../provider/createCompiler';
 import type {
+  CreateDevServerOptions,
+  EnvironmentAPI,
   InternalContext,
   NormalizedConfig,
   NormalizedDevConfig,
+  Rspack,
+  StartDevServerOptions,
+  Stats,
 } from '../types';
 import { getTransformedHtml, loadBundle } from './environment';
 import {

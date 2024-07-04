@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import type { WatchOptions } from '../../../compiled/chokidar/index.js';
+import type { WatchOptions } from 'chokidar';
 import type { Rspack } from '../rspack';
 import type { Stats } from '../stats';
 

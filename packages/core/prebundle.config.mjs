@@ -39,6 +39,14 @@ export default {
     'on-finished',
     'connect',
     'rspack-manifest-plugin',
+    'webpack-merge',
+    'gzip-size',
+    {
+      name: 'chokidar',
+      externals: {
+        fsevents: 'fsevents',
+      },
+    },
     {
       name: 'semver',
       ignoreDts: true,
@@ -79,6 +87,57 @@ export default {
     {
       name: 'connect-history-api-fallback',
       ignoreDts: true,
+    },
+    {
+      name: 'browserslist',
+      // preserve the `require(require.resolve())`
+      beforeBundle(task) {
+        replaceFileContent(join(task.depPath, 'node.js'), (content) =>
+          content.replaceAll(
+            'require(require.resolve',
+            'eval("require")(require.resolve',
+          ),
+        );
+      },
+    },
+    {
+      name: 'rspack-chain',
+      externals: {
+        '@rspack/core': '@rspack/core',
+      },
+    },
+    {
+      name: 'http-proxy-middleware',
+      externals: {
+        // express is a peer dependency, no need to provide express type
+        express: 'express',
+      },
+      beforeBundle(task) {
+        replaceFileContent(
+          join(task.depPath, 'dist/types.d.ts'),
+          (content) =>
+            `${content.replace(
+              "import type * as httpProxy from 'http-proxy'",
+              "import type httpProxy from 'http-proxy'",
+            )}`,
+        );
+      },
+    },
+    {
+      // The webpack-bundle-analyzer version was locked to v4.9.0 to be compatible with Rspack
+      // If we need to upgrade the version, please check if the chunk detail can be displayed correctly
+      name: 'webpack-bundle-analyzer',
+      externals: {
+        'gzip-size': '../gzip-size',
+      },
+    },
+    {
+      name: 'autoprefixer',
+      externals: {
+        browserslist: '../browserslist',
+        'postcss-value-parser': '../postcss-value-parser',
+        picocolors: 'picocolors',
+      },
     },
     {
       name: 'webpack-dev-middleware',

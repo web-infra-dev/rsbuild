@@ -1,3 +1,8 @@
+import type { Compilation, Compiler } from '@rspack/core';
+import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import type { HtmlTagObject } from 'html-webpack-plugin';
+import { ensureAssetPrefix, isFunction, partition } from '../helpers';
+import { getHTMLPlugin } from '../pluginHelper';
 import type {
   EnvironmentContext,
   HtmlBasicTag,
@@ -5,12 +10,7 @@ import type {
   HtmlTagDescriptor,
   HtmlTagUtils,
   ModifyHTMLTagsFn,
-} from '@rsbuild/shared';
-import type { Compilation, Compiler } from '@rspack/core';
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
-import type { HtmlTagObject } from 'html-webpack-plugin';
-import { ensureAssetPrefix, isFunction, partition } from '../helpers';
-import { getHTMLPlugin } from '../pluginHelper';
+} from '../types';
 
 export type TagConfig = {
   tags?: HtmlTagDescriptor[];

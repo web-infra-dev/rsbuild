@@ -17,9 +17,17 @@
       "dotenv": ["./compiled/dotenv"],
       "semver": ["./compiled/semver"],
       "connect": ["./compiled/connect"],
+      "chokidar": ["./compiled/chokidar"],
+      "gzip-size": ["./compiled/gzip-size"],
       "commander": ["./compiled/commander"],
       "on-finished": ["./compiled/on-finished"],
+      "autoprefixer": ["./compiled/autoprefixer"],
+      "browserslist": ["./compiled/browserslist"],
+      "rspack-chain": ["./compiled/rspack-chain"],
       "dotenv-expand": ["./compiled/dotenv-expand"],
+      "webpack-merge": ["./compiled/webpack-merge"],
+      "http-proxy-middleware": ["./compiled/http-proxy-middleware"],
+      "webpack-bundle-analyzer": ["./compiled/webpack-bundle-analyzer"],
       "http-compression": ["./compiled/http-compression"],
       "postcss-load-config": ["./compiled/postcss-load-config"],
       "rspack-manifest-plugin": ["./compiled/rspack-manifest-plugin"],
@@ -31,10 +39,5 @@
       ]
     }
   },
-  "references": [
-    {
-      "path": "../shared"
-    }
-  ],
   "include": ["src"]
 }

@@ -4,7 +4,7 @@ import type { ServerOptions as HttpsServerOptions } from 'node:https';
 import type {
   Options as BaseProxyOptions,
   Filter as ProxyFilter,
-} from '../../../compiled/http-proxy-middleware/index.js';
+} from 'http-proxy-middleware';
 import type { Routes } from '../hooks';
 
 export type HtmlFallback = false | 'index';

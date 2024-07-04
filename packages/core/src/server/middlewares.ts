@@ -1,13 +1,13 @@
 import path from 'node:path';
 import { parse } from 'node:url';
+import type Connect from 'connect';
+import color from 'picocolors';
+import { logger } from '../logger';
 import type {
   HtmlFallback,
   RequestHandler as Middleware,
   Rspack,
-} from '@rsbuild/shared';
-import type Connect from 'connect';
-import color from 'picocolors';
-import { logger } from '../logger';
+} from '../types';
 
 export const faviconFallbackMiddleware: Middleware = (req, res, next) => {
   if (req.url === '/favicon.ico') {

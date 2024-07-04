@@ -2,8 +2,8 @@ import type {
   DnsPrefetchOption,
   HtmlBasicTag,
   PreconnectOption,
-} from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../types';
+  RsbuildPlugin,
+} from '../types';
 
 const generateLinks = (
   options: PreconnectOption[] | DnsPrefetchOption[],

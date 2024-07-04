@@ -1,13 +1,5 @@
 import { isAbsolute, join } from 'node:path';
-import type {
-  BundlerType,
-  EnvironmentContext,
-  NormalizedEnvironmentConfig,
-  RsbuildContext,
-  RsbuildEntry,
-  RsbuildTarget,
-} from '@rsbuild/shared';
-import browserslist from '@rsbuild/shared/browserslist';
+import browserslist from 'browserslist';
 import { withDefaultConfig } from './config';
 import { DEFAULT_BROWSERSLIST, ROOT_DIST_DIR } from './constants';
 import { getCommonParentPath } from './helpers/path';
@@ -15,10 +7,16 @@ import { initHooks } from './initHooks';
 import { getHTMLPathByEntry } from './initPlugins';
 import { logger } from './logger';
 import type {
+  BundlerType,
   CreateRsbuildOptions,
+  EnvironmentContext,
   InternalContext,
   NormalizedConfig,
+  NormalizedEnvironmentConfig,
   RsbuildConfig,
+  RsbuildContext,
+  RsbuildEntry,
+  RsbuildTarget,
 } from './types';
 
 function getAbsolutePath(root: string, filepath: string) {

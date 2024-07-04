@@ -1,4 +1,3 @@
-import type { PluginManager, PreviewServerOptions } from '@rsbuild/shared';
 import { createContext } from './createContext';
 import { pick } from './helpers';
 import { getPluginAPI } from './initPlugins';
@@ -9,6 +8,8 @@ import { createPluginManager } from './pluginManager';
 import type {
   CreateRsbuildOptions,
   InternalContext,
+  PluginManager,
+  PreviewServerOptions,
   RsbuildInstance,
   RsbuildProvider,
 } from './types';

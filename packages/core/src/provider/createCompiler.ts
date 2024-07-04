@@ -1,4 +1,3 @@
-import type { MultiStats, Rspack, RspackConfig, Stats } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import type { StatsCompilation } from '@rspack/core';
 import color from 'picocolors';
@@ -14,7 +13,14 @@ import {
 } from '../helpers';
 import { logger } from '../logger';
 import type { DevMiddlewareAPI } from '../server/devMiddleware';
-import type { DevConfig, InternalContext } from '../types';
+import type {
+  DevConfig,
+  InternalContext,
+  MultiStats,
+  Rspack,
+  RspackConfig,
+  Stats,
+} from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
 export async function createCompiler({

@@ -1,9 +1,9 @@
 import { existsSync } from 'node:fs';
-import type { RsbuildMode } from '@rsbuild/shared';
 import { type Command, program } from 'commander';
 import color from 'picocolors';
 import { isEmptyDir } from '../helpers';
 import { logger } from '../logger';
+import type { RsbuildMode } from '../types';
 import { init } from './init';
 
 export type CommonOptions = {

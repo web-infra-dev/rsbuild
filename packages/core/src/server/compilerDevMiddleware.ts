@@ -1,7 +1,7 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Socket } from 'node:net';
-import type { DevConfig, NextFunction, ServerConfig } from '@rsbuild/shared';
 import { pathnameParse } from '../helpers/path';
+import type { DevConfig, NextFunction, ServerConfig } from '../types';
 import type {
   DevMiddleware as CustomDevMiddleware,
   DevMiddlewareAPI,

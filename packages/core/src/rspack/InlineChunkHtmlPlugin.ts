@@ -6,7 +6,6 @@
  * modified from https://github.com/facebook/create-react-app/blob/master/packages/react-dev-utils/InlineChunkHtmlPlugin.js
  */
 import { join } from 'node:path';
-import type { InlineChunkTest } from '@rsbuild/shared';
 import type { Compilation, Compiler } from '@rspack/core';
 import type { HtmlTagObject } from 'html-webpack-plugin';
 import {
@@ -15,6 +14,7 @@ import {
   isFunction,
 } from '../helpers';
 import { getHTMLPlugin } from '../pluginHelper';
+import type { InlineChunkTest } from '../types';
 
 export type InlineChunkHtmlPluginOptions = {
   styleTests: InlineChunkTest[];

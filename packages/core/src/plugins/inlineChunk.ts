@@ -1,7 +1,6 @@
-import type { InlineChunkTest } from '@rsbuild/shared';
 import { CSS_REGEX, JS_REGEX } from '../constants';
 import { pick } from '../helpers';
-import type { RsbuildPlugin } from '../types';
+import type { InlineChunkTest, RsbuildPlugin } from '../types';
 
 export const pluginInlineChunk = (): RsbuildPlugin => ({
   name: 'rsbuild:inline-chunk',

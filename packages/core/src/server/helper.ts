@@ -3,18 +3,18 @@ import net from 'node:net';
 import type { Socket } from 'node:net';
 import os from 'node:os';
 import { posix } from 'node:path';
+import color from 'picocolors';
+import { DEFAULT_DEV_HOST, DEFAULT_PORT } from '../constants';
+import { isFunction } from '../helpers';
+import { logger } from '../logger';
 import type {
+  InternalContext,
   NormalizedConfig,
   OutputStructure,
   PrintUrls,
   Routes,
   RsbuildEntry,
-} from '@rsbuild/shared';
-import color from 'picocolors';
-import { DEFAULT_DEV_HOST, DEFAULT_PORT } from '../constants';
-import { isFunction } from '../helpers';
-import { logger } from '../logger';
-import type { InternalContext } from '../types';
+} from '../types';
 
 /**
  * It used to subscribe http upgrade event
