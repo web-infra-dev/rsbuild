@@ -30,7 +30,7 @@ const devDefaultFilename = {
 
 // Production
 const prodDefaultFilename = {
-  js: '[name].[contenthash:8].js',
+  js: isServer ? '[name].js' : '[name].[contenthash:8].js',
   css: '[name].[contenthash:8].css',
   svg: '[name].[contenthash:8].svg',
   font: '[name].[contenthash:8][ext]',

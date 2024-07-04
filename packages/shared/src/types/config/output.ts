@@ -300,7 +300,8 @@ export interface OutputConfig {
 export interface NormalizedOutputConfig extends OutputConfig {
   target: RsbuildTarget;
   filename: FilenameConfig;
-  distPath: Omit<Required<DistPathConfig>, 'jsAsync' | 'cssAsync'> & {
+  distPath: Omit<Required<DistPathConfig>, 'jsAsync' | 'cssAsync' | 'js'> & {
+    js?: string;
     jsAsync?: string;
     cssAsync?: string;
   };

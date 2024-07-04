@@ -80,6 +80,27 @@ describe('plugin-output', () => {
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
+  it('output config should works when target is node', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginOutput()],
+      rsbuildConfig: {
+        output: {
+          target: 'node',
+          distPath: {
+            js: 'bundle',
+          },
+          filename: {
+            js: 'foo.js',
+            css: '[name].css',
+          },
+        },
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+    expect(bundlerConfigs[0]).toMatchSnapshot();
+  });
+
   it('should allow to use copy plugin', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],

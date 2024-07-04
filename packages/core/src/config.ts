@@ -32,7 +32,6 @@ import {
   HMR_SOCKET_PATH,
   HTML_DIST_DIR,
   IMAGE_DIST_DIR,
-  JS_DIST_DIR,
   MEDIA_DIST_DIR,
   ROOT_DIST_DIR,
   SVG_DIST_DIR,
@@ -130,7 +129,6 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
   target: 'web',
   distPath: {
     root: ROOT_DIST_DIR,
-    js: JS_DIST_DIR,
     css: CSS_DIST_DIR,
     svg: SVG_DIST_DIR,
     font: FONT_DIST_DIR,
