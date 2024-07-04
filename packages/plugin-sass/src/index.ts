@@ -99,17 +99,15 @@ export const pluginSass = (
       // Copy the builtin CSS rules
       for (const id of Object.keys(cssRule.uses.entries())) {
         const loader = cssRule.uses.get(id);
-        const options = deepmerge<Record<string, any>>(
-          {},
-          loader.get('options'),
-        );
+        const options = loader.get('options') ?? {};
+        const clonedOptions = deepmerge<Record<string, any>>({}, options);
 
         if (id === CHAIN_ID.USE.CSS) {
           // postcss-loader, resolve-url-loader, sass-loader
-          options.importLoaders = 3;
+          clonedOptions.importLoaders = 3;
         }
 
-        rule.use(id).loader(loader.get('loader')).options(options);
+        rule.use(id).loader(loader.get('loader')).options(clonedOptions);
       }
 
       rule
