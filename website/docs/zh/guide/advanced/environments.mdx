@@ -156,7 +156,7 @@ const myPlugin = () => ({
 });
 ```
 
-在一些全局 plugin hook 中 (如 [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone)、[onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) 等)， Rsbuild 支持通过参数形式获取所有 environment 信息。
+对于一些全局的 plugin hooks (如 [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone)、[onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) 等)， Rsbuild 支持通过 `environments` 参数获取所有环境的上下文。
 
 ```ts
 const myPlugin = () => ({
