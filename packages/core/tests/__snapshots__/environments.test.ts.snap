@@ -1333,3 +1333,687 @@ exports[`environment config > should support modify single environment config by
   },
 }
 `;
+
+exports[`environment config > tools.rspack / bundlerChain can be used in environment config 1`] = `
+[
+  {
+    "context": "<ROOT>",
+    "devtool": "eval-source-map",
+    "experiments": {
+      "asyncWebAssembly": true,
+    },
+    "infrastructureLogging": {
+      "level": "error",
+    },
+    "mode": "development",
+    "module": {
+      "parser": {
+        "javascript": {
+          "exportsPresence": "error",
+        },
+      },
+      "rules": [
+        {
+          "resolve": {
+            "fullySpecified": false,
+          },
+          "test": /\\\\\\.m\\?js/,
+        },
+        {
+          "resolve": {
+            "preferRelative": true,
+          },
+          "sideEffects": true,
+          "test": /\\\\\\.css\\$/,
+          "use": [
+            {
+              "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+            },
+            {
+              "loader": "<ROOT>/packages/core/compiled/css-loader",
+              "options": {
+                "importLoaders": 1,
+                "modules": {
+                  "auto": true,
+                  "exportGlobals": false,
+                  "exportLocalsConvention": "camelCase",
+                  "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                  "namedExport": false,
+                },
+                "sourceMap": false,
+              },
+            },
+            {
+              "loader": "<ROOT>/packages/core/compiled/postcss-loader",
+              "options": {
+                "postcssOptions": {
+                  "config": false,
+                  "plugins": [
+                    {
+                      "browsers": [
+                        "chrome >= 87",
+                        "edge >= 88",
+                        "firefox >= 78",
+                        "safari >= 14",
+                      ],
+                      "info": [Function],
+                      "options": {
+                        "flexbox": "no-2009",
+                        "overrideBrowserslist": [
+                          "chrome >= 87",
+                          "edge >= 88",
+                          "firefox >= 78",
+                          "safari >= 14",
+                        ],
+                      },
+                      "postcssPlugin": "autoprefixer",
+                      "prepare": [Function],
+                    },
+                  ],
+                },
+                "sourceMap": false,
+              },
+            },
+          ],
+        },
+        {
+          "include": [
+            {
+              "and": [
+                "<ROOT>",
+                {
+                  "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+                },
+              ],
+            },
+            /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          ],
+          "resolve": {
+            "alias": {
+              "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+            },
+          },
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "coreJs": "3.37",
+                  "mode": "usage",
+                  "shippedProposals": true,
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": false,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          "mimetype": {
+            "or": [
+              "text/javascript",
+              "application/javascript",
+            ],
+          },
+          "resolve": {
+            "alias": {
+              "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+            },
+            "fullySpecified": false,
+          },
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "coreJs": "3.37",
+                  "mode": "usage",
+                  "shippedProposals": true,
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": false,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          "oneOf": [
+            {
+              "generator": {
+                "filename": "static/image/[name].[contenthash:8][ext]",
+              },
+              "resourceQuery": /\\(__inline=false\\|url\\)/,
+              "type": "asset/resource",
+            },
+            {
+              "resourceQuery": /inline/,
+              "type": "asset/inline",
+            },
+            {
+              "generator": {
+                "filename": "static/image/[name].[contenthash:8][ext]",
+              },
+              "parser": {
+                "dataUrlCondition": {
+                  "maxSize": 4096,
+                },
+              },
+              "type": "asset",
+            },
+          ],
+          "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
+        },
+        {
+          "oneOf": [
+            {
+              "generator": {
+                "filename": "static/svg/[name].[contenthash:8].svg",
+              },
+              "resourceQuery": /\\(__inline=false\\|url\\)/,
+              "type": "asset/resource",
+            },
+            {
+              "resourceQuery": /inline/,
+              "type": "asset/inline",
+            },
+            {
+              "generator": {
+                "filename": "static/svg/[name].[contenthash:8].svg",
+              },
+              "parser": {
+                "dataUrlCondition": {
+                  "maxSize": 4096,
+                },
+              },
+              "type": "asset",
+            },
+          ],
+          "test": /\\\\\\.svg\\$/i,
+        },
+        {
+          "oneOf": [
+            {
+              "generator": {
+                "filename": "static/media/[name].[contenthash:8][ext]",
+              },
+              "resourceQuery": /\\(__inline=false\\|url\\)/,
+              "type": "asset/resource",
+            },
+            {
+              "resourceQuery": /inline/,
+              "type": "asset/inline",
+            },
+            {
+              "generator": {
+                "filename": "static/media/[name].[contenthash:8][ext]",
+              },
+              "parser": {
+                "dataUrlCondition": {
+                  "maxSize": 4096,
+                },
+              },
+              "type": "asset",
+            },
+          ],
+          "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mov\\|mp3\\|wav\\|flac\\|aac\\|m4a\\|opus\\)\\$/i,
+        },
+        {
+          "oneOf": [
+            {
+              "generator": {
+                "filename": "static/font/[name].[contenthash:8][ext]",
+              },
+              "resourceQuery": /\\(__inline=false\\|url\\)/,
+              "type": "asset/resource",
+            },
+            {
+              "resourceQuery": /inline/,
+              "type": "asset/inline",
+            },
+            {
+              "generator": {
+                "filename": "static/font/[name].[contenthash:8][ext]",
+              },
+              "parser": {
+                "dataUrlCondition": {
+                  "maxSize": 4096,
+                },
+              },
+              "type": "asset",
+            },
+          ],
+          "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
+        },
+        {
+          "dependency": "url",
+          "generator": {
+            "filename": "static/wasm/[hash].module.wasm",
+          },
+          "test": /\\\\\\.wasm\\$/,
+          "type": "asset/resource",
+        },
+      ],
+    },
+    "name": "web",
+    "optimization": {
+      "minimize": false,
+      "splitChunks": {
+        "cacheGroups": {
+          "lib-axios": {
+            "name": "lib-axios",
+            "priority": 0,
+            "reuseExistingChunk": true,
+            "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(axios\\|axios-\\.\\+\\)\\[\\\\\\\\/\\]/,
+          },
+          "lib-lodash": {
+            "name": "lib-lodash",
+            "priority": 0,
+            "reuseExistingChunk": true,
+            "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(lodash\\|lodash-es\\)\\[\\\\\\\\/\\]/,
+          },
+          "lib-polyfill": {
+            "name": "lib-polyfill",
+            "priority": 0,
+            "reuseExistingChunk": true,
+            "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
+          },
+        },
+        "chunks": "all",
+        "enforceSizeThreshold": 50000,
+      },
+    },
+    "output": {
+      "chunkFilename": "static/js/async/[name].js",
+      "devtoolModuleFilenameTemplate": [Function],
+      "filename": "static/js/[name].js",
+      "hashFunction": "xxhash64",
+      "path": "<ROOT>/dist",
+      "pathinfo": false,
+      "publicPath": "/",
+      "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
+    },
+    "performance": {
+      "hints": false,
+    },
+    "plugins": [
+      HotModuleReplacementPlugin {
+        "name": "HotModuleReplacementPlugin",
+      },
+      CssExtractRspackPlugin {
+        "options": {
+          "chunkFilename": "static/css/async/[name].css",
+          "filename": "static/css/[name].css",
+          "ignoreOrder": true,
+        },
+      },
+      DefinePlugin {
+        "_options": {
+          "process.env.ASSET_PREFIX": """",
+          "process.env.NODE_ENV": ""development"",
+        },
+        "affectedHooks": "compilation",
+        "name": "DefinePlugin",
+      },
+    ],
+    "resolve": {
+      "alias": {
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+      },
+      "extensions": [
+        ".ts",
+        ".tsx",
+        ".js",
+        ".jsx",
+        ".mjs",
+        ".json",
+      ],
+    },
+    "target": [
+      "web",
+      "es2017",
+    ],
+  },
+  {
+    "context": "<ROOT>",
+    "devtool": "eval",
+    "experiments": {
+      "asyncWebAssembly": true,
+    },
+    "infrastructureLogging": {
+      "level": "error",
+    },
+    "mode": "development",
+    "module": {
+      "parser": {
+        "javascript": {
+          "exportsPresence": "error",
+        },
+      },
+      "rules": [
+        {
+          "resolve": {
+            "fullySpecified": false,
+          },
+          "test": /\\\\\\.m\\?js/,
+        },
+        {
+          "resolve": {
+            "preferRelative": true,
+          },
+          "sideEffects": true,
+          "test": /\\\\\\.css\\$/,
+          "use": [
+            {
+              "loader": "<ROOT>/packages/core/src/ignoreCssLoader.cjs",
+            },
+            {
+              "loader": "<ROOT>/packages/core/compiled/css-loader",
+              "options": {
+                "importLoaders": 1,
+                "modules": {
+                  "auto": true,
+                  "exportGlobals": false,
+                  "exportLocalsConvention": "camelCase",
+                  "exportOnlyLocals": true,
+                  "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                  "namedExport": false,
+                },
+                "sourceMap": false,
+              },
+            },
+          ],
+        },
+        {
+          "include": [
+            {
+              "and": [
+                "<ROOT>",
+                {
+                  "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+                },
+              ],
+            },
+            /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          ],
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "targets": [
+                    "node >= 16",
+                  ],
+                },
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": false,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          "mimetype": {
+            "or": [
+              "text/javascript",
+              "application/javascript",
+            ],
+          },
+          "resolve": {
+            "fullySpecified": false,
+          },
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "targets": [
+                    "node >= 16",
+                  ],
+                },
+                "isModule": "unknown",
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": false,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          "oneOf": [
+            {
+              "generator": {
+                "filename": "static/image/[name].[contenthash:8][ext]",
+              },
+              "resourceQuery": /\\(__inline=false\\|url\\)/,
+              "type": "asset/resource",
+            },
+            {
+              "resourceQuery": /inline/,
+              "type": "asset/inline",
+            },
+            {
+              "generator": {
+                "filename": "static/image/[name].[contenthash:8][ext]",
+              },
+              "parser": {
+                "dataUrlCondition": {
+                  "maxSize": 4096,
+                },
+              },
+              "type": "asset",
+            },
+          ],
+          "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
+        },
+        {
+          "oneOf": [
+            {
+              "generator": {
+                "filename": "static/svg/[name].[contenthash:8].svg",
+              },
+              "resourceQuery": /\\(__inline=false\\|url\\)/,
+              "type": "asset/resource",
+            },
+            {
+              "resourceQuery": /inline/,
+              "type": "asset/inline",
+            },
+            {
+              "generator": {
+                "filename": "static/svg/[name].[contenthash:8].svg",
+              },
+              "parser": {
+                "dataUrlCondition": {
+                  "maxSize": 4096,
+                },
+              },
+              "type": "asset",
+            },
+          ],
+          "test": /\\\\\\.svg\\$/i,
+        },
+        {
+          "oneOf": [
+            {
+              "generator": {
+                "filename": "static/media/[name].[contenthash:8][ext]",
+              },
+              "resourceQuery": /\\(__inline=false\\|url\\)/,
+              "type": "asset/resource",
+            },
+            {
+              "resourceQuery": /inline/,
+              "type": "asset/inline",
+            },
+            {
+              "generator": {
+                "filename": "static/media/[name].[contenthash:8][ext]",
+              },
+              "parser": {
+                "dataUrlCondition": {
+                  "maxSize": 4096,
+                },
+              },
+              "type": "asset",
+            },
+          ],
+          "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mov\\|mp3\\|wav\\|flac\\|aac\\|m4a\\|opus\\)\\$/i,
+        },
+        {
+          "oneOf": [
+            {
+              "generator": {
+                "filename": "static/font/[name].[contenthash:8][ext]",
+              },
+              "resourceQuery": /\\(__inline=false\\|url\\)/,
+              "type": "asset/resource",
+            },
+            {
+              "resourceQuery": /inline/,
+              "type": "asset/inline",
+            },
+            {
+              "generator": {
+                "filename": "static/font/[name].[contenthash:8][ext]",
+              },
+              "parser": {
+                "dataUrlCondition": {
+                  "maxSize": 4096,
+                },
+              },
+              "type": "asset",
+            },
+          ],
+          "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
+        },
+        {
+          "dependency": "url",
+          "generator": {
+            "filename": "static/wasm/[hash].module.wasm",
+          },
+          "test": /\\\\\\.wasm\\$/,
+          "type": "asset/resource",
+        },
+        {
+          "test": /\\\\\\.node\\$/,
+          "use": [
+            {
+              "loader": "<ROOT>/packages/core/src/transformRawLoader.cjs",
+              "options": {
+                "id": "rsbuild-transform-0",
+              },
+            },
+          ],
+        },
+      ],
+    },
+    "name": "node",
+    "optimization": {
+      "minimize": false,
+      "splitChunks": false,
+    },
+    "output": {
+      "chunkFilename": "[name].js",
+      "devtoolModuleFilenameTemplate": [Function],
+      "filename": "bundle.js",
+      "hashFunction": "xxhash64",
+      "library": {
+        "type": "commonjs2",
+      },
+      "path": "<ROOT>/dist",
+      "pathinfo": false,
+      "publicPath": "/",
+      "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
+    },
+    "performance": {
+      "hints": false,
+    },
+    "plugins": [
+      RsbuildTransformPlugin {},
+      DefinePlugin {
+        "_options": {
+          "process.env.ASSET_PREFIX": """",
+          "process.env.NODE_ENV": ""development"",
+        },
+        "affectedHooks": "compilation",
+        "name": "DefinePlugin",
+      },
+    ],
+    "resolve": {
+      "alias": {
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+      },
+      "extensions": [
+        ".ts",
+        ".tsx",
+        ".js",
+        ".jsx",
+        ".mjs",
+        ".json",
+      ],
+    },
+    "target": "node",
+  },
+]
+`;

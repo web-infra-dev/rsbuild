@@ -32,8 +32,8 @@ async function modifyWebpackChain(
     utils,
   );
 
-  if (context.config.tools?.webpackChain) {
-    for (const item of castArray(context.config.tools.webpackChain)) {
+  if (utils.environment.config.tools?.webpackChain) {
+    for (const item of castArray(utils.environment.config.tools.webpackChain)) {
       item(modifiedChain, utils);
     }
   }
@@ -54,10 +54,10 @@ async function modifyWebpackConfig(
     utils,
   );
 
-  if (context.config.tools?.webpack) {
+  if (utils.environment.config.tools?.webpack) {
     modifiedConfig = reduceConfigsWithContext({
       initial: modifiedConfig,
-      config: context.config.tools.webpack,
+      config: utils.environment.config.tools.webpack,
       ctx: utils,
       mergeFn: utils.mergeConfig,
     });
