@@ -1,5 +1,4 @@
 import type { ConfigChainWithContext, Rspack } from '@rsbuild/core';
-import type { FileFilterUtil } from '@rsbuild/shared';
 import type {
   LegacyOptions as LegacySassOptions,
   Options as SassOptions,
@@ -40,7 +39,7 @@ export type PluginSassOptions = {
        * @deprecated
        * use `exclude` option instead.
        */
-      addExcludes: FileFilterUtil;
+      addExcludes: (items: string | RegExp | Array<string | RegExp>) => void;
     }
   >;
 

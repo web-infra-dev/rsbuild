@@ -8,13 +8,15 @@ import type {
   RsbuildConfig,
 } from './config';
 import type { RsbuildEntry, RsbuildTarget } from './rsbuild';
-import type { Rspack, RspackConfig } from './rspack';
+import type { Rspack } from './rspack';
 import type { MultiStats, Stats } from './stats';
 import type { WebpackConfig } from './thirdParty';
 import type { MaybePromise, NodeEnv } from './utils';
 
 export type OnBeforeBuildFn<B = 'rspack'> = (params: {
-  bundlerConfigs?: B extends 'rspack' ? RspackConfig[] : WebpackConfig[];
+  bundlerConfigs?: B extends 'rspack'
+    ? Rspack.Configuration[]
+    : WebpackConfig[];
   environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
 
@@ -55,7 +57,7 @@ export type OnAfterStartProdServerFn = (params: {
 }) => MaybePromise<void>;
 
 export type OnBeforeCreateCompilerFn<B = 'rspack'> = (params: {
-  bundlerConfigs: B extends 'rspack' ? RspackConfig[] : WebpackConfig[];
+  bundlerConfigs: B extends 'rspack' ? Rspack.Configuration[] : WebpackConfig[];
   environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
 

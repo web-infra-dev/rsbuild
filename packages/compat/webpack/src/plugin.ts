@@ -3,9 +3,9 @@ import type {
   ChainIdentifier,
   RsbuildPlugin,
   RsbuildTarget,
+  Rspack,
   RspackChain,
 } from '@rsbuild/core';
-import type { CopyPluginOptions } from '@rsbuild/shared';
 import { castArray } from './shared';
 
 async function applyTsConfigPathsPlugin({
@@ -90,7 +90,7 @@ export const pluginAdaptor = (): RsbuildPlugin => ({
       if (copy) {
         const { default: CopyPlugin } = await import('copy-webpack-plugin');
 
-        const options: CopyPluginOptions = Array.isArray(copy)
+        const options: Rspack.CopyRspackPluginOptions = Array.isArray(copy)
           ? { patterns: copy }
           : copy;
 
@@ -104,7 +104,7 @@ export const pluginAdaptor = (): RsbuildPlugin => ({
     api.modifyWebpackConfig(async (config) => {
       const copyPlugin = config.plugins?.find(
         (item) => item?.constructor.name === 'CopyPlugin',
-      ) as unknown as CopyPluginOptions;
+      ) as unknown as Rspack.CopyRspackPluginOptions;
 
       if (copyPlugin) {
         // If the pattern.context directory not exists, we should remove CopyPlugin.

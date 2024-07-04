@@ -1,10 +1,9 @@
 import { dev, gotoPage, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { logger } from '@rsbuild/core';
+import { type RequestHandler, logger } from '@rsbuild/core';
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 import type { PluginAssetsRetryOptions } from '@rsbuild/plugin-assets-retry';
 import { pluginReact } from '@rsbuild/plugin-react';
-import type { RequestHandler } from '@rsbuild/shared';
 import stripAnsi from 'strip-ansi';
 
 // TODO: write a common testMiddleware instead of collect DEBUG logger

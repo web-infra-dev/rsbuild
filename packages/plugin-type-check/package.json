@@ -27,7 +27,6 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@rsbuild/shared": "workspace:*",
     "deepmerge": "^4.3.1",
     "fork-ts-checker-webpack-plugin": "9.0.2",
     "json5": "^2.2.3",

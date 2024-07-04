@@ -28,9 +28,6 @@
     "dev": "modern build --watch",
     "prebundle": "prebundle"
   },
-  "dependencies": {
-    "@rsbuild/shared": "workspace:*"
-  },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",

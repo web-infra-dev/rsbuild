@@ -1,16 +1,15 @@
 import {
+  type EnvironmentContext,
+  type ModifyRspackConfigUtils,
+  type ModifyWebpackChainUtils,
+  type ModifyWebpackConfigUtils,
   type RsbuildTarget,
+  type Rspack,
   type RspackChain,
   __internalHelper,
   logger,
 } from '@rsbuild/core';
-import type {
-  EnvironmentContext,
-  ModifyWebpackChainUtils,
-  ModifyWebpackConfigUtils,
-} from '@rsbuild/shared';
 import { reduceConfigsWithContext } from 'reduce-configs';
-import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
 import {
   type InternalContext,
   castArray,
@@ -86,54 +85,6 @@ async function getChainUtils(
   };
 }
 
-async function getConfigUtils(
-  config: WebpackConfig,
-  chainUtils: ModifyWebpackChainUtils,
-): Promise<ModifyWebpackConfigUtils> {
-  const { merge } = await import('@rsbuild/shared/webpack-merge');
-
-  return {
-    ...chainUtils,
-
-    mergeConfig: merge,
-
-    addRules(rules: RuleSetRule | RuleSetRule[]) {
-      const ruleArr = castArray(rules);
-      if (!config.module) {
-        config.module = {};
-      }
-      if (!config.module.rules) {
-        config.module.rules = [];
-      }
-      config.module.rules.unshift(...ruleArr);
-    },
-
-    prependPlugins(plugins: WebpackPluginInstance | WebpackPluginInstance[]) {
-      const pluginArr = castArray(plugins);
-      if (!config.plugins) {
-        config.plugins = [];
-      }
-      config.plugins.unshift(...pluginArr);
-    },
-
-    appendPlugins(plugins: WebpackPluginInstance | WebpackPluginInstance[]) {
-      const pluginArr = castArray(plugins);
-      if (!config.plugins) {
-        config.plugins = [];
-      }
-      config.plugins.push(...pluginArr);
-    },
-
-    removePlugin(pluginName: string) {
-      if (config.plugins) {
-        config.plugins = config.plugins.filter(
-          (item) => item?.constructor.name !== pluginName,
-        );
-      }
-    },
-  };
-}
-
 export async function generateWebpackConfig({
   target,
   context,
@@ -171,10 +122,15 @@ export async function generateWebpackConfig({
 
   let webpackConfig = chainToConfig(chain) as WebpackConfig;
 
+  const configUtils = (await __internalHelper.getConfigUtils(
+    webpackConfig as Rspack.Configuration,
+    chainUtils as unknown as ModifyRspackConfigUtils,
+  )) as unknown as ModifyWebpackConfigUtils;
+
   webpackConfig = await modifyWebpackConfig(
     context,
     webpackConfig,
-    await getConfigUtils(webpackConfig, chainUtils),
+    configUtils,
   );
 
   return webpackConfig;

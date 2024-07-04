@@ -26,7 +26,6 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@rsbuild/shared": "workspace:*",
     "@swc/plugin-styled-components": "2.0.8",
     "reduce-configs": "^1.0.0"
   },

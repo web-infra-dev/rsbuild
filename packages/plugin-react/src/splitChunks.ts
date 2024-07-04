@@ -1,5 +1,4 @@
-import type { RsbuildPluginAPI, SplitChunks } from '@rsbuild/core';
-import type { CacheGroups } from '@rsbuild/shared';
+import type { CacheGroups, RsbuildPluginAPI, SplitChunks } from '@rsbuild/core';
 import type { SplitReactChunkOptions } from '.';
 
 const isPlainObject = (obj: unknown): obj is Record<string, any> =>

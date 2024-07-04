@@ -25,11 +25,9 @@ import { pluginVue } from '@rsbuild/plugin-vue';
 import { pluginVueJsx } from '@rsbuild/plugin-vue-jsx';
 import { pluginVue2 } from '@rsbuild/plugin-vue2';
 import { pluginVue2Jsx } from '@rsbuild/plugin-vue2-jsx';
-import * as shared from '@rsbuild/shared';
 import { webpackProvider } from '@rsbuild/webpack';
 
 export default {
-  shared,
   pluginAssetsRetry,
   pluginBabel,
   pluginCheckSyntax,

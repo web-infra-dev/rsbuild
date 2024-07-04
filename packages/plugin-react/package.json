@@ -26,7 +26,6 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@rsbuild/shared": "workspace:*",
     "@rspack/plugin-react-refresh": "1.0.0-alpha.0",
     "react-refresh": "^0.14.2"
   },

@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { platform } from 'node:os';
 import { join } from 'node:path';
 import { test } from '@playwright/test';
-import type { ConsoleType } from '@rsbuild/shared';
+import type { ConsoleType } from '@rsbuild/core';
 import glob, {
   convertPathToPattern,
   type Options as GlobOptions,

@@ -27,7 +27,6 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@rsbuild/shared": "workspace:*",
     "fast-glob": "^3.3.2",
     "json5": "^2.2.3"
   },

@@ -547,14 +547,14 @@ export const isMultiCompiler = <
 
 export const onCompileDone = (
   compiler: Rspack.Compiler | Rspack.MultiCompiler,
-  onDone: (stats: Stats | MultiStats) => Promise<void>,
-  MultiStatsCtor: new (stats: Stats[]) => MultiStats,
+  onDone: (stats: Rspack.Stats | Rspack.MultiStats) => Promise<void>,
+  MultiStatsCtor: new (stats: Rspack.Stats[]) => Rspack.MultiStats,
 ): void => {
   // The MultiCompiler of Rspack does not supports `done.tapPromise`,
   // so we need to use the `done` hook of `MultiCompiler.compilers` to implement it.
   if (isMultiCompiler(compiler)) {
     const { compilers } = compiler;
-    const compilerStats: Stats[] = [];
+    const compilerStats: Rspack.Stats[] = [];
     let doneCompilers = 0;
 
     for (let index = 0; index < compilers.length; index++) {

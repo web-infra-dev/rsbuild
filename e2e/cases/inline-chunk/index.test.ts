@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { build, gotoPage } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import type { RspackChain } from '@rsbuild/shared';
+import type { RspackChain } from '@rsbuild/core';
 
 // use source-map for easy to test. By default, Rsbuild use hidden-source-map
 const toolsConfig = {

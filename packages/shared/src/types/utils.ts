@@ -12,12 +12,6 @@ export type DeepReadonly<T> = keyof T extends never
 
 export type FileFilterUtil = (items: OneOrMany<string | RegExp>) => void;
 
-export type CompilerTapFn<
-  CallBack extends (...args: any[]) => void = () => void,
-> = {
-  tap: (name: string, cb: CallBack) => void;
-};
-
 export type ConfigChain<T> = OneOrMany<T | ((config: T) => T | void)>;
 
 export type ConfigChainWithContext<T, Ctx> = OneOrMany<

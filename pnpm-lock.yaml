@@ -178,9 +178,6 @@ importers:
       '@rsbuild/plugin-vue2-jsx':
         specifier: workspace:*
         version: link:../packages/plugin-vue2-jsx
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../packages/shared
       '@rsbuild/webpack':
         specifier: workspace:*
         version: link:../packages/compat/webpack
@@ -601,9 +598,6 @@ importers:
       '@modern-js/swc-plugins':
         specifier: 0.6.7
         version: 0.6.7(@swc/helpers@0.5.11)
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../../shared
       '@swc/helpers':
         specifier: 0.5.11
         version: 0.5.11
@@ -647,9 +641,6 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../../core
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../../shared
       copy-webpack-plugin:
         specifier: 11.0.0
         version: 11.0.0(webpack@5.92.1)
@@ -835,9 +826,6 @@ importers:
 
   packages/plugin-assets-retry:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       serialize-javascript:
         specifier: ^6.0.2
         version: 6.0.2
@@ -881,9 +869,6 @@ importers:
       '@babel/preset-typescript':
         specifier: ^7.24.7
         version: 7.24.7(@babel/core@7.24.7)
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
@@ -918,9 +903,6 @@ importers:
 
   packages/plugin-check-syntax:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       acorn:
         specifier: ^8.12.0
         version: 8.12.0
@@ -1012,9 +994,6 @@ importers:
 
   packages/plugin-less:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -1046,9 +1025,9 @@ importers:
 
   packages/plugin-lightningcss:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
+      browserslist:
+        specifier: 4.23.1
+        version: 4.23.1
       lightningcss:
         specifier: ^1.25.1
         version: 1.25.1
@@ -1083,9 +1062,6 @@ importers:
 
   packages/plugin-react:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@rspack/plugin-react-refresh':
         specifier: 1.0.0-alpha.0
         version: 1.0.0-alpha.0(react-refresh@0.14.2)
@@ -1108,9 +1084,6 @@ importers:
 
   packages/plugin-rem:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -1145,9 +1118,6 @@ importers:
 
   packages/plugin-sass:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -1213,9 +1183,6 @@ importers:
 
   packages/plugin-source-build:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       fast-glob:
         specifier: ^3.3.2
         version: 3.3.2
@@ -1241,9 +1208,6 @@ importers:
 
   packages/plugin-styled-components:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@swc/plugin-styled-components':
         specifier: 2.0.8
         version: 2.0.8
@@ -1263,9 +1227,6 @@ importers:
 
   packages/plugin-stylus:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -1291,9 +1252,6 @@ importers:
 
   packages/plugin-svelte:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       svelte-loader:
         specifier: 3.2.3
         version: 3.2.3(svelte@4.2.18)
@@ -1322,9 +1280,6 @@ importers:
       '@rsbuild/plugin-react':
         specifier: workspace:*
         version: link:../plugin-react
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       '@svgr/core':
         specifier: 8.1.0
         version: 8.1.0(typescript@5.5.2)
@@ -1365,9 +1320,6 @@ importers:
 
   packages/plugin-type-check:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -1395,10 +1347,6 @@ importers:
         version: 5.5.2
 
   packages/plugin-typed-css-modules:
-    dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1427,9 +1375,6 @@ importers:
 
   packages/plugin-vue:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       vue-loader:
         specifier: ^17.4.0
         version: 17.4.2(vue@3.4.23(typescript@5.5.2))(webpack@5.92.1)
@@ -1477,9 +1422,6 @@ importers:
 
   packages/plugin-vue2:
     dependencies:
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../shared
       vue-loader:
         specifier: ^15.11.1
         version: 15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.2(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))(webpack@5.92.1))(lodash@4.17.21)(prettier@3.3.2)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.92.1)
@@ -1595,9 +1537,6 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@rsbuild/shared':
-        specifier: workspace:*
-        version: link:../../packages/shared
       '@types/lodash':
         specifier: ^4.17.6
         version: 4.17.6

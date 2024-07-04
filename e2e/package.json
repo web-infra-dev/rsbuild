@@ -49,7 +49,6 @@
     "@rsbuild/plugin-vue-jsx": "workspace:*",
     "@rsbuild/plugin-vue2": "workspace:*",
     "@rsbuild/plugin-vue2-jsx": "workspace:*",
-    "@rsbuild/shared": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "@types/fs-extra": "^11.0.4",

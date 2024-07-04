@@ -51,12 +51,7 @@ export const build = async (
     await p;
   };
 
-  onCompileDone(
-    compiler,
-    onDone,
-    // @ts-expect-error type mismatch
-    rspack.MultiStats,
-  );
+  onCompileDone(compiler, onDone, rspack.MultiStats);
 
   if (watch) {
     compiler.watch({}, (err) => {
