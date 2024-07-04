@@ -1,38 +1,6 @@
 import RspackChain from '../compiled/rspack-chain/index.js';
-import type { CacheGroups } from './types';
 
 export * from './types';
-
-const DEP_MATCH_TEMPLATE = /[\\/]node_modules[\\/](<SOURCES>)[\\/]/.source;
-
-/** Expect to match path just like "./node_modules/react-router/" */
-export const createDependenciesRegExp = (
-  ...dependencies: (string | RegExp)[]
-): RegExp => {
-  const sources = dependencies.map((d) =>
-    typeof d === 'string' ? d : d.source,
-  );
-  const expr = DEP_MATCH_TEMPLATE.replace('<SOURCES>', sources.join('|'));
-  return new RegExp(expr);
-};
-
-export function createCacheGroups(
-  group: Record<string, (string | RegExp)[]>,
-): CacheGroups {
-  const experienceCacheGroup: CacheGroups = {};
-
-  for (const [name, pkgs] of Object.entries(group)) {
-    const key = `lib-${name}`;
-
-    experienceCacheGroup[key] = {
-      test: createDependenciesRegExp(...pkgs),
-      priority: 0,
-      name: key,
-    };
-  }
-
-  return experienceCacheGroup;
-}
 
 export { RspackChain };
 
