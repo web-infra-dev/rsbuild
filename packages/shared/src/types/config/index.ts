@@ -3,7 +3,11 @@ import type { RsbuildPlugins } from '..';
 import type { DeepReadonly } from '../utils';
 import type { DevConfig, NormalizedDevConfig } from './dev';
 import type { HtmlConfig, NormalizedHtmlConfig } from './html';
-import type { NormalizedOutputConfig, OutputConfig } from './output';
+import type {
+  DistPathConfig,
+  NormalizedOutputConfig,
+  OutputConfig,
+} from './output';
 import type {
   NormalizedPerformanceConfig,
   PerformanceConfig,
@@ -102,7 +106,12 @@ export type MergedEnvironmentConfig = {
   html: NormalizedHtmlConfig;
   tools: NormalizedToolsConfig;
   source: NormalizedSourceConfig;
-  output: NormalizedOutputConfig;
+  output: Omit<NormalizedOutputConfig, 'distPath'> & {
+    distPath: Omit<Required<DistPathConfig>, 'jsAsync' | 'cssAsync'> & {
+      jsAsync?: string;
+      cssAsync?: string;
+    };
+  };
   plugins?: RsbuildPlugins;
   security: NormalizedSecurityConfig;
   performance: NormalizedPerformanceConfig;
@@ -116,7 +125,7 @@ export type NormalizedEnvironmentConfig = DeepReadonly<{
   tools: NormalizedToolsConfig;
   source: NormalizedSourceConfig;
   server: NormalizedServerConfig;
-  output: NormalizedOutputConfig;
+  output: MergedEnvironmentConfig['output'];
   plugins?: RsbuildPlugins;
   security: NormalizedSecurityConfig;
   performance: NormalizedPerformanceConfig;

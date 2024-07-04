@@ -52,6 +52,21 @@ function getPublicPath({
   return formatPublicPath(publicPath);
 }
 
+const getJsAsyncPath = (
+  jsPath: string,
+  isServer: boolean,
+  jsAsync?: string,
+) => {
+  if (jsAsync !== undefined) {
+    return jsAsync;
+  }
+  if (isServer) {
+    return jsPath;
+  }
+
+  return jsPath ? `${jsPath}/async` : 'async';
+};
+
 export const pluginOutput = (): RsbuildPlugin => ({
   name: 'rsbuild:output',
 
@@ -68,10 +83,12 @@ export const pluginOutput = (): RsbuildPlugin => ({
 
         // js output
         const jsPath = config.output.distPath.js;
-        const jsAsyncPath =
-          config.output.distPath.jsAsync ??
-          (jsPath ? `${jsPath}/async` : 'async');
-        const jsFilename = getFilename(config, 'js', isProd);
+        const jsAsyncPath = getJsAsyncPath(
+          jsPath,
+          isServer,
+          config.output.distPath.jsAsync,
+        );
+        const jsFilename = getFilename(config, 'js', isProd, isServer);
         const isJsFilenameFn = typeof jsFilename === 'function';
 
         chain.output
@@ -102,13 +119,10 @@ export const pluginOutput = (): RsbuildPlugin => ({
           .hashFunction('xxhash64');
 
         if (isServer) {
-          chain.output
-            .filename('[name].js')
-            .chunkFilename('[name].js')
-            .library({
-              ...(chain.output.get('library') || {}),
-              type: 'commonjs2',
-            });
+          chain.output.library({
+            type: 'commonjs2',
+            ...(chain.output.get('library') || {}),
+          });
         }
 
         if (config.output.copy && api.context.bundlerType === 'rspack') {

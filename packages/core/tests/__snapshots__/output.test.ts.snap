@@ -1,5 +1,21 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`plugin-output > output config should works when target is node 1`] = `
+{
+  "output": {
+    "chunkFilename": "bundle/foo.js",
+    "filename": "bundle/foo.js",
+    "hashFunction": "xxhash64",
+    "library": {
+      "type": "commonjs2",
+    },
+    "path": "<ROOT>/packages/core/tests/dist",
+    "pathinfo": false,
+    "publicPath": "/",
+  },
+}
+`;
+
 exports[`plugin-output > should allow to custom server directory with distPath.root 1`] = `
 {
   "output": {

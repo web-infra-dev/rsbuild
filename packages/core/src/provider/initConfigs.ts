@@ -8,6 +8,7 @@ import type {
   RspackConfig,
 } from '@rsbuild/shared';
 import { getDefaultEntry, normalizeConfig } from '../config';
+import { JS_DIST_DIR } from '../constants';
 import {
   updateContextByNormalizedConfig,
   updateEnvironmentContext,
@@ -73,6 +74,19 @@ const initEnvironmentConfigs = (
     normalizedConfig;
   const { assetPrefix, lazyCompilation } = dev;
 
+  const applyEnvironmentDefaultConfig = (config: MergedEnvironmentConfig) => {
+    if (!config.source.entry) {
+      config.source.entry = getDefaultEntryWithMemo();
+    }
+
+    const isServer = config.output.target === 'node';
+    if (config.output.distPath.js === undefined) {
+      config.output.distPath.js = isServer ? '' : JS_DIST_DIR;
+    }
+
+    return config;
+  };
+
   if (environments && Object.keys(environments).length) {
     return Object.fromEntries(
       Object.entries(environments).map(([name, config]) => {
@@ -89,27 +103,20 @@ const initEnvironmentConfigs = (
           ) as unknown as MergedEnvironmentConfig),
         };
 
-        if (!environmentConfig.source.entry) {
-          environmentConfig.source.entry = getDefaultEntryWithMemo();
-        }
-
-        return [name, environmentConfig];
+        return [name, applyEnvironmentDefaultConfig(environmentConfig)];
       }),
     );
   }
 
   return {
-    [camelCase(rsbuildSharedConfig.output.target)]: {
-      ...rsbuildSharedConfig,
-      source: {
-        ...rsbuildSharedConfig.source,
-        entry: rsbuildSharedConfig.source.entry ?? getDefaultEntryWithMemo(),
-      },
-      dev: {
-        assetPrefix,
-        lazyCompilation,
-      },
-    } as MergedEnvironmentConfig,
+    [camelCase(rsbuildSharedConfig.output.target)]:
+      applyEnvironmentDefaultConfig({
+        ...rsbuildSharedConfig,
+        dev: {
+          assetPrefix,
+          lazyCompilation,
+        },
+      } as MergedEnvironmentConfig),
   };
 };
 

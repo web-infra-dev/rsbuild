@@ -432,16 +432,19 @@ export function getFilename(
   config: NormalizedConfig | NormalizedEnvironmentConfig,
   type: 'js',
   isProd: boolean,
+  isServer?: boolean,
 ): NonNullable<FilenameConfig['js']>;
 export function getFilename(
   config: NormalizedConfig | NormalizedEnvironmentConfig,
   type: Exclude<keyof FilenameConfig, 'js'>,
   isProd: boolean,
+  isServer?: boolean,
 ): string;
 export function getFilename(
   config: NormalizedConfig | NormalizedEnvironmentConfig,
   type: keyof FilenameConfig,
   isProd: boolean,
+  isServer?: boolean,
 ) {
   const { filename, filenameHash } = config.output;
 
@@ -456,7 +459,7 @@ export function getFilename(
 
   switch (type) {
     case 'js':
-      return filename.js ?? `[name]${isProd ? hash : ''}.js`;
+      return filename.js ?? `[name]${isProd && !isServer ? hash : ''}.js`;
     case 'css':
       return filename.css ?? `[name]${isProd ? hash : ''}.css`;
     case 'svg':
