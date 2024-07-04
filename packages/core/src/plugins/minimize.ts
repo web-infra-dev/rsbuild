@@ -2,10 +2,10 @@ import {
   CHAIN_ID,
   type HTMLPluginOptions,
   type NormalizedEnvironmentConfig,
-  deepmerge,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import type { SwcJsMinimizerRspackPluginOptions } from '@rspack/core';
+import deepmerge from 'deepmerge';
 import { isObject } from '../helpers';
 import type { RsbuildPlugin } from '../types';
 

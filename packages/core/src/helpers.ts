@@ -13,6 +13,7 @@ import type {
   StatsError,
 } from '@rsbuild/shared';
 import type { StatsCompilation, StatsValue } from '@rspack/core';
+import deepmerge from 'deepmerge';
 import color from 'picocolors';
 import type {
   Compiler as WebpackCompiler,
@@ -48,6 +49,13 @@ export const castArray = <T>(arr?: T | T[]): T[] => {
     return [];
   }
   return Array.isArray(arr) ? arr : [arr];
+};
+
+export const cloneDeep = <T>(value: T): T => {
+  if (value === null || value === undefined) {
+    return value;
+  }
+  return deepmerge<T>({}, value);
 };
 
 const compareSemver = (version1: string, version2: string) => {

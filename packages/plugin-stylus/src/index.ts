@@ -1,5 +1,5 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { cloneDeep, deepmerge } from '@rsbuild/shared';
+import deepmerge from 'deepmerge';
 import { reduceConfigs } from 'reduce-configs';
 
 export const PLUGIN_STYLUS_NAME = 'rsbuild:stylus';
@@ -51,10 +51,15 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
       // Copy the builtin CSS rules
       for (const id of Object.keys(cssRule.uses.entries())) {
         const loader = cssRule.uses.get(id);
-        const options = cloneDeep(loader.get('options'));
+        const options = deepmerge<Record<string, any>>(
+          {},
+          loader.get('options'),
+        );
+
         if (id === CHAIN_ID.USE.CSS) {
           options.importLoaders = 2;
         }
+
         rule.use(id).loader(loader.get('loader')).options(options);
       }
 

@@ -1,20 +1,7 @@
-import deepmerge from '../compiled/deepmerge/index.js';
 import RspackChain from '../compiled/rspack-chain/index.js';
 import type { CacheGroups } from './types';
 
 export * from './types';
-
-// RegExp
-export const SCRIPT_REGEX: RegExp = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
-
-export { deepmerge };
-
-export const cloneDeep = <T>(value: T): T => {
-  if (value === null || value === undefined) {
-    return value;
-  }
-  return deepmerge({}, value);
-};
 
 const DEP_MATCH_TEMPLATE = /[\\/]node_modules[\\/](<SOURCES>)[\\/]/.source;
 

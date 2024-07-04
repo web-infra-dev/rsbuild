@@ -610,6 +610,9 @@ importers:
       core-js:
         specifier: ~3.37.1
         version: 3.37.1
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -736,6 +739,9 @@ importers:
       css-loader:
         specifier: 7.1.2
         version: 7.1.2(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))(webpack@5.92.1)
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
       dotenv:
         specifier: 16.4.5
         version: 16.4.5
@@ -881,6 +887,9 @@ importers:
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
       reduce-configs:
         specifier: ^1.0.0
         version: 1.0.0
@@ -1006,6 +1015,9 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
       reduce-configs:
         specifier: ^1.0.0
         version: 1.0.0
@@ -1099,6 +1111,9 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
       terser:
         specifier: 5.31.1
         version: 5.31.1
@@ -1133,6 +1148,9 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
       loader-utils:
         specifier: ^2.0.4
         version: 2.0.4
@@ -1248,6 +1266,9 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
       reduce-configs:
         specifier: ^1.0.0
         version: 1.0.0
@@ -1313,6 +1334,9 @@ importers:
       '@svgr/plugin-svgo':
         specifier: 8.1.0
         version: 8.1.0(@svgr/core@8.1.0(typescript@5.5.2))(typescript@5.5.2)
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
       loader-utils:
         specifier: ^2.0.4
         version: 2.0.4
@@ -1344,6 +1368,9 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
       fork-ts-checker-webpack-plugin:
         specifier: 9.0.2
         version: 9.0.2(typescript@5.5.2)(webpack@5.92.1)
@@ -1526,9 +1553,6 @@ importers:
       chokidar:
         specifier: 3.6.0
         version: 3.6.0
-      deepmerge:
-        specifier: ^4.3.1
-        version: 4.3.1
       gzip-size:
         specifier: ^6.0.0
         version: 6.0.0

@@ -21,7 +21,6 @@ export default {
     typescript: 'typescript',
   },
   dependencies: [
-    'deepmerge',
     {
       name: 'chokidar',
       externals: {
@@ -46,7 +45,8 @@ export default {
       name: 'rspack-chain',
       externals: {
         '@rspack/core': '@rspack/core',
-        deepmerge: '../deepmerge',
+        // TODO
+        // deepmerge: '../deepmerge',
       },
     },
     {

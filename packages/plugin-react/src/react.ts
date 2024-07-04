@@ -6,7 +6,6 @@ import type {
   Rspack,
   RspackChain,
 } from '@rsbuild/core';
-import { SCRIPT_REGEX, deepmerge } from '@rsbuild/shared';
 import type { PluginReactOptions } from '.';
 
 const modifySwcLoaderOptions = ({
@@ -51,20 +50,17 @@ export const applyBasicReactSupport = (
         chain,
         CHAIN_ID,
         modifier: (opts) => {
-          const extraOptions: Rspack.SwcLoaderOptions = {
-            jsc: {
-              parser: {
-                syntax: 'typescript',
-                // enable supports for React JSX/TSX compilation
-                tsx: true,
-              },
-              transform: {
-                react: reactOptions,
-              },
-            },
+          opts.jsc ||= {};
+          opts.jsc.transform ||= {};
+          opts.jsc.transform.react = reactOptions;
+          opts.jsc.parser = {
+            ...opts.jsc.parser,
+            syntax: 'typescript',
+            // enable supports for React JSX/TSX compilation
+            tsx: true,
           };
 
-          return deepmerge(opts, extraOptions);
+          return opts;
         },
       });
 
@@ -80,6 +76,7 @@ export const applyBasicReactSupport = (
       const { default: ReactRefreshRspackPlugin } = await import(
         '@rspack/plugin-react-refresh'
       );
+      const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
 
       chain
         .plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)

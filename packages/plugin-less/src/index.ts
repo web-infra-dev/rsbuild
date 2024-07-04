@@ -4,7 +4,8 @@ import type {
   RsbuildPlugin,
   Rspack,
 } from '@rsbuild/core';
-import { type FileFilterUtil, cloneDeep, deepmerge } from '@rsbuild/shared';
+import type { FileFilterUtil } from '@rsbuild/shared';
+import deepmerge from 'deepmerge';
 import { reduceConfigsWithContext } from 'reduce-configs';
 import type Less from '../compiled/less';
 
@@ -132,10 +133,15 @@ export const pluginLess = (
       // Copy the builtin CSS rules
       for (const id of Object.keys(cssRule.uses.entries())) {
         const loader = cssRule.uses.get(id);
-        const options = cloneDeep(loader.get('options'));
+        const options = deepmerge<Record<string, any>>(
+          {},
+          loader.get('options'),
+        );
+
         if (id === CHAIN_ID.USE.CSS) {
           options.importLoaders = 2;
         }
+
         rule.use(id).loader(loader.get('loader')).options(options);
       }
 
