@@ -51,21 +51,17 @@ const formatPrefix = (prefix: string | undefined) => {
 };
 
 export const getRoutes = (context: InternalContext): Routes => {
-  return Object.entries(context.environments).reduce<Routes>(
-    (prev, [name, environmentContext]) => {
-      const distPrefix = relative(
-        context.distPath,
-        environmentContext.distPath,
-      );
-
-      const environmentConfig = context.pluginAPI!.getNormalizedConfig({
-        environment: name,
-      });
+  return Object.values(context.environments).reduce<Routes>(
+    (prev, environmentContext) => {
+      const { distPath, config } = environmentContext;
+      const distPrefix = relative(context.distPath, distPath);
 
       const routes = formatRoutes(
         environmentContext.htmlPaths,
-        join(distPrefix, environmentConfig.output.distPath.html),
-        environmentConfig.html.outputStructure,
+        join(distPrefix, config.output.distPath.html)
+          // fix path error in window
+          .replaceAll(/\\/g, '/'),
+        config.html.outputStructure,
       );
       return prev.concat(...routes);
     },
