@@ -11,7 +11,7 @@ exports[`plugin-vue2 > should add vue-loader and VueLoaderPlugin correctly 1`] =
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/vue-loader/lib/index.js",
             "options": {
               "compilerOptions": {
-                "preserveWhitespace": false,
+                "whitespace": "condense",
               },
               "experimentalInlineMatchResource": true,
             },
@@ -51,7 +51,7 @@ exports[`plugin-vue2 > should allow to configure vueLoader options 1`] = `
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/vue-loader/lib/index.js",
             "options": {
               "compilerOptions": {
-                "preserveWhitespace": false,
+                "whitespace": "condense",
               },
               "experimentalInlineMatchResource": true,
               "hotReload": false,
@@ -107,7 +107,7 @@ exports[`plugin-vue2 > should include polyfill resolve config 1`] = `
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/vue-loader/lib/index.js",
             "options": {
               "compilerOptions": {
-                "preserveWhitespace": false,
+                "whitespace": "condense",
               },
               "experimentalInlineMatchResource": true,
               "hotReload": false,

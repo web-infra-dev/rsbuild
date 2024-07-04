@@ -1,12 +1,7 @@
-import {
-  type MultiStats,
-  type Rspack,
-  type RspackConfig,
-  type Stats,
-  color,
-} from '@rsbuild/shared';
+import type { MultiStats, Rspack, RspackConfig, Stats } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import type { StatsCompilation } from '@rspack/core';
+import color from 'picocolors';
 import {
   formatStats,
   getStatsOptions,

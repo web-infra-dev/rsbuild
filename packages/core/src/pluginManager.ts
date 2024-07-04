@@ -1,4 +1,3 @@
-import { color } from '@rsbuild/shared';
 import type {
   BundlerPluginInstance,
   Falsy,
@@ -6,6 +5,7 @@ import type {
   RsbuildPlugin,
   RsbuildPluginAPI,
 } from '@rsbuild/shared';
+import color from 'picocolors';
 import { isFunction } from './helpers';
 import { logger } from './logger';
 

@@ -9,7 +9,6 @@ import { pluginImageCompress } from '@rsbuild/plugin-image-compress';
 import { pluginLess } from '@rsbuild/plugin-less';
 import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
 import { pluginPreact } from '@rsbuild/plugin-preact';
-import { pluginPug } from '@rsbuild/plugin-pug';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginRem } from '@rsbuild/plugin-rem';
 import { pluginSass } from '@rsbuild/plugin-sass';
@@ -38,7 +37,6 @@ export default {
   pluginImageCompress,
   pluginEslint,
   pluginLess,
-  pluginPug,
   pluginReact,
   pluginPreact,
   pluginRem,

@@ -1,13 +1,30 @@
-import { moduleTools } from '@modern-js/module-tools';
-import { dualBuildConfigs } from '@rsbuild/config/modern.config.ts';
+import { defineConfig, moduleTools } from '@modern-js/module-tools';
+import {
+  cjsBuildConfig,
+  commonExternals,
+  emitTypePkgJsonPlugin,
+  esmBuildConfig,
+} from '@rsbuild/config/modern.config.ts';
 
-export default {
-  plugins: [moduleTools()],
-  buildConfig: dualBuildConfigs.map((config) => {
-    if (config.format === 'cjs') {
+export default defineConfig({
+  plugins: [moduleTools(), emitTypePkgJsonPlugin],
+  buildConfig: [
+    {
+      ...esmBuildConfig,
+      dts: false,
+    },
+    {
+      ...cjsBuildConfig,
       // add loader to entry
-      config.input = ['src/index.ts', 'src/loader.ts'];
-    }
-    return config;
-  }),
-};
+      input: ['src/index.ts', 'src/loader.ts'],
+    },
+    {
+      externals: commonExternals,
+      buildType: 'bundleless',
+      dts: {
+        distPath: '../dist-types',
+        only: true,
+      },
+    },
+  ],
+});

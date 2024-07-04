@@ -1,4 +1,9 @@
-import type { Colors } from '@rsbuild/shared';
+import type color from 'picocolors';
+
+export type Colors = Omit<
+  keyof typeof color,
+  'createColor' | 'isColorSupported'
+>;
 
 export type Props = {
   total: number;

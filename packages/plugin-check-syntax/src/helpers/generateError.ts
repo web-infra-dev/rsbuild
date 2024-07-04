@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import { color } from '@rsbuild/shared';
+import color from 'picocolors';
 import { SourceMapConsumer } from 'source-map';
 import {
   type AcornParseError,

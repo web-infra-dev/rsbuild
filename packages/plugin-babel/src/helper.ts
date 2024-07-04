@@ -1,12 +1,11 @@
 import { isAbsolute, normalize, sep } from 'node:path';
 import type { PluginOptions as BabelPluginOptions } from '@babel/core';
-import {
-  type ChainIdentifier,
-  type NormalizedConfig,
-  type RspackChain,
-  reduceConfigsWithContext,
+import type {
+  ChainIdentifier,
+  NormalizedConfig,
+  RspackChain,
 } from '@rsbuild/core';
-import { castArray } from '@rsbuild/shared';
+import { reduceConfigsWithContext } from 'reduce-configs';
 import upath from 'upath';
 import type {
   BabelConfigUtils,
@@ -19,6 +18,13 @@ import type {
 } from './types';
 
 export const BABEL_JS_RULE = 'babel-js';
+
+export const castArray = <T>(arr?: T | T[]): T[] => {
+  if (arr === undefined) {
+    return [];
+  }
+  return Array.isArray(arr) ? arr : [arr];
+};
 
 const normalizeToPosixPath = (p: string | undefined) =>
   upath

@@ -1,5 +1,5 @@
 import type { RsbuildPluginAPI, SplitChunks } from '@rsbuild/core';
-import { createCacheGroups } from '@rsbuild/shared';
+import type { CacheGroups } from '@rsbuild/shared';
 import type { SplitVueChunkOptions } from '.';
 
 const isPlainObject = (obj: unknown): obj is Record<string, any> =>
@@ -25,18 +25,22 @@ export const applySplitChunksRule = (
       return;
     }
 
-    const extraGroups: Record<string, (string | RegExp)[]> = {};
+    const extraGroups: CacheGroups = {};
 
     if (options.vue) {
-      extraGroups.vue = [
-        'vue',
-        'vue-loader',
-        /@vue[\\/](shared|reactivity|runtime-dom|runtime-core)/,
-      ];
+      extraGroups.vue = {
+        name: 'lib-vue',
+        test: /[\\/]node_modules[\\/](?:vue|vue-loader|@vue[\\/]shared|@vue[\\/]reactivity|@vue[\\/]runtime-dom|@vue[\\/]runtime-core)[\\/]/,
+        priority: 0,
+      };
     }
 
     if (options.router) {
-      extraGroups.router = ['vue-router'];
+      extraGroups.router = {
+        name: 'lib-router',
+        test: /[\\/]node_modules[\\/]vue-router[\\/]/,
+        priority: 0,
+      };
     }
 
     if (!Object.keys(extraGroups).length) {
@@ -47,7 +51,7 @@ export const applySplitChunksRule = (
       ...currentConfig,
       cacheGroups: {
         ...(currentConfig as Exclude<SplitChunks, false>).cacheGroups,
-        ...createCacheGroups(extraGroups),
+        ...extraGroups,
       },
     });
   });

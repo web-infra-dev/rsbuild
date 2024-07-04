@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/webpack",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.2",
   "homepage": "https://rsbuild.dev",
   "repository": {
     "type": "git",
@@ -31,6 +31,8 @@
     "@rsbuild/shared": "workspace:*",
     "copy-webpack-plugin": "11.0.0",
     "mini-css-extract-plugin": "2.9.0",
+    "picocolors": "^1.0.1",
+    "reduce-configs": "^1.0.0",
     "tsconfig-paths-webpack-plugin": "4.1.0",
     "webpack": "^5.92.1"
   },

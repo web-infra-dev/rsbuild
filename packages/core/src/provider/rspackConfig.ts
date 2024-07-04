@@ -5,14 +5,13 @@ import {
   type ModifyRspackConfigUtils,
   type RsbuildTarget,
   type RspackConfig,
-  castArray,
 } from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
+import { reduceConfigsAsyncWithContext } from 'reduce-configs';
 import { chainToConfig, modifyBundlerChain } from '../configChain';
-import { getNodeEnv } from '../helpers';
+import { castArray, getNodeEnv } from '../helpers';
 import { logger } from '../logger';
 import { getHTMLPlugin } from '../pluginHelper';
-import { reduceConfigsAsyncWithContext } from '../reduceConfigs';
 import type { InternalContext } from '../types';
 
 async function modifyRspackConfig(
@@ -26,10 +25,10 @@ async function modifyRspackConfig(
     utils,
   );
 
-  if (context.config.tools?.rspack) {
+  if (utils.environment.config.tools?.rspack) {
     modifiedConfig = await reduceConfigsAsyncWithContext({
       initial: modifiedConfig,
-      config: context.config.tools.rspack,
+      config: utils.environment.config.tools.rspack,
       ctx: utils,
       mergeFn: utils.mergeConfig,
     });

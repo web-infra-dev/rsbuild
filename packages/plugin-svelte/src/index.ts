@@ -1,7 +1,6 @@
 import path from 'node:path';
 import { logger } from '@rsbuild/core';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { deepmerge } from '@rsbuild/shared';
 import type { sveltePreprocess } from 'svelte-preprocess';
 import type { CompileOptions } from 'svelte/compiler';
 
@@ -91,19 +90,19 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
             },
           });
 
-          const svelteLoaderOptions = deepmerge(
-            {
-              compilerOptions: {
-                dev: isDev,
-              },
-              preprocess: sveltePreprocess(options.preprocessOptions),
-              // NOTE emitCss: true is currently not supported with HMR
-              // See https://github.com/web-infra-dev/rsbuild/issues/2744
-              emitCss: isProd && !environmentConfig.output.injectStyles,
-              hotReload: isDev && environmentConfig.dev.hmr,
+          const userLoaderOptions = options.svelteLoaderOptions ?? {};
+          const svelteLoaderOptions = {
+            preprocess: sveltePreprocess(options.preprocessOptions),
+            // NOTE emitCss: true is currently not supported with HMR
+            // See https://github.com/web-infra-dev/rsbuild/issues/2744
+            emitCss: isProd && !environmentConfig.output.injectStyles,
+            hotReload: isDev && environmentConfig.dev.hmr,
+            ...userLoaderOptions,
+            compilerOptions: {
+              dev: isDev,
+              ...userLoaderOptions.compilerOptions,
             },
-            options.svelteLoaderOptions ?? {},
-          );
+          };
 
           chain.module
             .rule(CHAIN_ID.RULE.SVELTE)

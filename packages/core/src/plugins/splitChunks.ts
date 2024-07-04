@@ -1,11 +1,10 @@
 import assert from 'node:assert';
-import {
-  type CacheGroups,
-  type ForceSplitting,
-  type Polyfill,
-  type RsbuildChunkSplit,
-  type SplitChunks,
-  createDependenciesRegExp,
+import type {
+  CacheGroups,
+  ForceSplitting,
+  Polyfill,
+  RsbuildChunkSplit,
+  SplitChunks,
 } from '@rsbuild/shared';
 import { NODE_MODULES_REGEX } from '../constants';
 import type { RsbuildPlugin } from '../types';
@@ -17,9 +16,9 @@ import type { RsbuildPlugin } from '../types';
 // By this way, the config complexity is increasing gradually.
 interface SplitChunksContext {
   /**
-   * User defined cache groups which can be reused across different split strategies
+   * Force splitting cache groups which can be reused across different split strategies
    */
-  userDefinedCacheGroups: CacheGroups;
+  forceSplittingGroups: CacheGroups;
   /**
    * Default split config in webpack
    */
@@ -42,9 +41,7 @@ interface SplitChunksContext {
   polyfill: Polyfill;
 }
 
-function getUserDefinedCacheGroups(
-  forceSplitting: ForceSplitting,
-): CacheGroups {
+function getForceSplittingGroups(forceSplitting: ForceSplitting): CacheGroups {
   const cacheGroups: CacheGroups = {};
   const pairs = Array.isArray(forceSplitting)
     ? forceSplitting.map(
@@ -57,7 +54,8 @@ function getUserDefinedCacheGroups(
       test: regexp,
       name: key,
       chunks: 'all',
-      // Ignore minimum size, minimum chunks and maximum requests and always create chunks for user defined cache group.
+      priority: 0,
+      // Ignore minimum size, minimum chunks and maximum requests and always create chunks.
       enforce: true,
     };
   }
@@ -66,21 +64,17 @@ function getUserDefinedCacheGroups(
 }
 
 function splitByExperience(ctx: SplitChunksContext): SplitChunks {
-  const { override, polyfill, defaultConfig, userDefinedCacheGroups } = ctx;
+  const { override, polyfill, defaultConfig, forceSplittingGroups } = ctx;
   const experienceCacheGroup: CacheGroups = {};
 
   const packageRegExps: Record<string, RegExp> = {
-    lodash: createDependenciesRegExp('lodash', 'lodash-es'),
-    axios: createDependenciesRegExp('axios', /axios-.+/),
+    lodash: /[\\/]node_modules[\\/]lodash(-es)?[\\/]/,
+    axios: /[\\/]node_modules[\\/]axios(-.+)?[\\/]/,
   };
 
   if (polyfill === 'entry' || polyfill === 'usage') {
-    packageRegExps.polyfill = createDependenciesRegExp(
-      'tslib',
-      'core-js',
-      '@babel/runtime',
-      '@swc/helpers',
-    );
+    packageRegExps.polyfill =
+      /[\\/]node_modules[\\/](?:tslib|core-js|@swc[\\/]helpers)[\\/]/;
   }
 
   for (const [name, test] of Object.entries(packageRegExps)) {
@@ -90,7 +84,6 @@ function splitByExperience(ctx: SplitChunksContext): SplitChunks {
       test,
       priority: 0,
       name: key,
-      reuseExistingChunk: true,
     };
   }
 
@@ -100,7 +93,7 @@ function splitByExperience(ctx: SplitChunksContext): SplitChunks {
     cacheGroups: {
       ...defaultConfig.cacheGroups,
       ...experienceCacheGroup,
-      ...userDefinedCacheGroups,
+      ...forceSplittingGroups,
       ...override.cacheGroups,
     },
   };
@@ -127,7 +120,7 @@ export function getPackageNameFromModulePath(
 }
 
 function splitByModule(ctx: SplitChunksContext): SplitChunks {
-  const { override, userDefinedCacheGroups, defaultConfig } = ctx;
+  const { override, forceSplittingGroups, defaultConfig } = ctx;
   return {
     ...defaultConfig,
     minSize: 0,
@@ -135,7 +128,7 @@ function splitByModule(ctx: SplitChunksContext): SplitChunks {
     ...override,
     cacheGroups: {
       ...defaultConfig.cacheGroups,
-      ...userDefinedCacheGroups,
+      ...forceSplittingGroups,
       // Core group
       vendors: {
         priority: -9,
@@ -152,7 +145,7 @@ function splitByModule(ctx: SplitChunksContext): SplitChunks {
 }
 
 function splitBySize(ctx: SplitChunksContext): SplitChunks {
-  const { override, userDefinedCacheGroups, defaultConfig, userConfig } = ctx;
+  const { override, forceSplittingGroups, defaultConfig, userConfig } = ctx;
   assert(userConfig.strategy === 'split-by-size');
 
   return {
@@ -162,20 +155,20 @@ function splitBySize(ctx: SplitChunksContext): SplitChunks {
     ...override,
     cacheGroups: {
       ...defaultConfig.cacheGroups,
-      ...userDefinedCacheGroups,
+      ...forceSplittingGroups,
       ...override.cacheGroups,
     },
   };
 }
 
 function splitCustom(ctx: SplitChunksContext): SplitChunks {
-  const { override, userDefinedCacheGroups, defaultConfig } = ctx;
+  const { override, forceSplittingGroups, defaultConfig } = ctx;
   return {
     ...defaultConfig,
     ...override,
     cacheGroups: {
       ...defaultConfig.cacheGroups,
-      ...userDefinedCacheGroups,
+      ...forceSplittingGroups,
       ...override.cacheGroups,
     },
   };
@@ -188,7 +181,7 @@ function allInOne(_ctx: SplitChunksContext): SplitChunks {
 
 // Ignore user defined cache group to get single vendor chunk.
 function singleVendor(ctx: SplitChunksContext): SplitChunks {
-  const { override, defaultConfig, userDefinedCacheGroups } = ctx;
+  const { override, defaultConfig, forceSplittingGroups } = ctx;
 
   const singleVendorCacheGroup: CacheGroups = {
     singleVendor: {
@@ -197,7 +190,6 @@ function singleVendor(ctx: SplitChunksContext): SplitChunks {
       chunks: 'all',
       name: 'vendor',
       enforce: true,
-      reuseExistingChunk: true,
     },
   };
 
@@ -207,7 +199,7 @@ function singleVendor(ctx: SplitChunksContext): SplitChunks {
     cacheGroups: {
       ...defaultConfig.cacheGroups,
       ...singleVendorCacheGroup,
-      ...userDefinedCacheGroups,
+      ...forceSplittingGroups,
       ...override.cacheGroups,
     },
   };
@@ -256,10 +248,10 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
         };
 
         const { chunkSplit } = config.performance;
-        let userDefinedCacheGroups = {};
+        let forceSplittingGroups = {};
 
         if (chunkSplit.forceSplitting) {
-          userDefinedCacheGroups = getUserDefinedCacheGroups(
+          forceSplittingGroups = getForceSplittingGroups(
             chunkSplit.forceSplitting,
           );
         }
@@ -276,7 +268,7 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
         ]({
           defaultConfig,
           override: override || {},
-          userDefinedCacheGroups,
+          forceSplittingGroups,
           userConfig: chunkSplit,
           rootPath: api.context.rootPath,
           polyfill: config.output.polyfill,

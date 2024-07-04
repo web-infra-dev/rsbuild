@@ -7,9 +7,8 @@ import {
   type Rspack,
   RspackChain,
   type RspackConfig,
-  castArray,
 } from '@rsbuild/shared';
-import { isPlainObject } from './helpers';
+import { castArray, isPlainObject } from './helpers';
 import { logger } from './logger';
 import type { RsbuildConfig } from './types';
 
@@ -37,8 +36,8 @@ export async function modifyBundlerChain(
     utils,
   );
 
-  if (context.config.tools?.bundlerChain) {
-    for (const item of castArray(context.config.tools.bundlerChain)) {
+  if (utils.environment.config.tools?.bundlerChain) {
+    for (const item of castArray(utils.environment.config.tools.bundlerChain)) {
       await item(modifiedBundlerChain, utils);
     }
   }

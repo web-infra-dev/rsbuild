@@ -3,8 +3,9 @@ import {
   __internalHelper,
   logger,
 } from '@rsbuild/core';
-import { color, deepmerge } from '@rsbuild/shared';
 import type { webpack } from '@rsbuild/webpack';
+import deepmerge from 'deepmerge';
+import color from 'picocolors';
 import { minify, minifyCss } from './binding';
 import { JS_REGEX } from './constants';
 import type { CssMinifyOptions, JsMinifyOptions, Output } from './types';
@@ -41,9 +42,9 @@ export class SwcMinimizerPlugin {
   }) {
     this.minifyOptions = {
       jsMinify: options.jsMinify
-        ? deepmerge(
+        ? deepmerge<JsMinifyOptions>(
             this.getDefaultJsMinifyOptions(options.environmentConfig),
-            normalize(options.jsMinify, {}),
+            normalize(options.jsMinify, {}) ?? {},
           )
         : undefined,
       cssMinify: options.cssMinify

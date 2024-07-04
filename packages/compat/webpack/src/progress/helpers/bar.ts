@@ -1,6 +1,6 @@
-import { color as colors } from '@rsbuild/shared';
 import cliTruncate from 'cli-truncate';
-import type { Props } from './type';
+import colors from 'picocolors';
+import type { Props } from './types';
 import { clamp } from './utils';
 
 const defaultOption: Props = {

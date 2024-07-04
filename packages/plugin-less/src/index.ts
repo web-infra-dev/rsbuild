@@ -1,16 +1,12 @@
 import path from 'node:path';
-import {
-  type ConfigChainWithContext,
-  type RsbuildPlugin,
-  type Rspack,
-  reduceConfigsWithContext,
+import type {
+  ConfigChainWithContext,
+  RsbuildPlugin,
+  Rspack,
 } from '@rsbuild/core';
-import {
-  type FileFilterUtil,
-  castArray,
-  cloneDeep,
-  deepmerge,
-} from '@rsbuild/shared';
+import type { FileFilterUtil } from '@rsbuild/shared';
+import deepmerge from 'deepmerge';
+import { reduceConfigsWithContext } from 'reduce-configs';
 import type Less from '../compiled/less';
 
 export const PLUGIN_LESS_NAME = 'rsbuild:less';
@@ -58,7 +54,7 @@ const getLessLoaderOptions = (
   const excludes: (RegExp | string)[] = [];
 
   const addExcludes: FileFilterUtil = (items) => {
-    excludes.push(...castArray(items));
+    excludes.push(...(Array.isArray(items) ? items : [items]));
   };
 
   const defaultLessLoaderOptions: LessLoaderOptions = {
@@ -137,11 +133,14 @@ export const pluginLess = (
       // Copy the builtin CSS rules
       for (const id of Object.keys(cssRule.uses.entries())) {
         const loader = cssRule.uses.get(id);
-        const options = cloneDeep(loader.get('options'));
+        const options = loader.get('options') ?? {};
+        const clonedOptions = deepmerge<Record<string, any>>({}, options);
+
         if (id === CHAIN_ID.USE.CSS) {
-          options.importLoaders = 2;
+          clonedOptions.importLoaders = 2;
         }
-        rule.use(id).loader(loader.get('loader')).options(options);
+
+        rule.use(id).loader(loader.get('loader')).options(clonedOptions);
       }
 
       rule

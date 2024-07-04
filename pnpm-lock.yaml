@@ -127,9 +127,6 @@ importers:
       '@rsbuild/plugin-preact':
         specifier: workspace:*
         version: link:../packages/plugin-preact
-      '@rsbuild/plugin-pug':
-        specifier: workspace:*
-        version: link:../packages/plugin-pug
       '@rsbuild/plugin-react':
         specifier: workspace:*
         version: link:../packages/plugin-react
@@ -243,18 +240,6 @@ importers:
       eslint:
         specifier: ^9.6.0
         version: 9.6.0
-
-  e2e/cases/pug/vue2-template:
-    dependencies:
-      vue:
-        specifier: ^2.7.14
-        version: 2.7.16
-
-  e2e/cases/pug/vue3-template:
-    dependencies:
-      vue:
-        specifier: ^3.4.19
-        version: 3.4.23(typescript@5.5.2)
 
   e2e/cases/react/react-compiler-babel:
     dependencies:
@@ -625,9 +610,15 @@ importers:
       core-js:
         specifier: ~3.37.1
         version: 3.37.1
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      picocolors:
+        specifier: ^1.0.1
+        version: 1.0.1
       semver:
         specifier: ^7.6.2
         version: 7.6.2
@@ -665,6 +656,12 @@ importers:
       mini-css-extract-plugin:
         specifier: 2.9.0
         version: 2.9.0(webpack@5.92.1)
+      picocolors:
+        specifier: ^1.0.1
+        version: 1.0.1
+      reduce-configs:
+        specifier: ^1.0.0
+        version: 1.0.0
       tsconfig-paths-webpack-plugin:
         specifier: 4.1.0
         version: 4.1.0
@@ -742,6 +739,9 @@ importers:
       css-loader:
         specifier: 7.1.2
         version: 7.1.2(@rspack/core@1.0.0-alpha.0(@swc/helpers@0.5.11))(webpack@5.92.1)
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
       dotenv:
         specifier: 16.4.5
         version: 16.4.5
@@ -766,6 +766,9 @@ importers:
       open:
         specifier: ^8.4.0
         version: 8.4.2
+      picocolors:
+        specifier: ^1.0.1
+        version: 1.0.1
       postcss-load-config:
         specifier: 6.0.1
         version: 6.0.1(jiti@1.21.6)(postcss@8.4.39)(tsx@4.14.0)(yaml@2.4.5)
@@ -778,6 +781,9 @@ importers:
       prebundle:
         specifier: 1.1.0
         version: 1.1.0(typescript@5.5.2)
+      reduce-configs:
+        specifier: ^1.0.0
+        version: 1.0.0
       rslog:
         specifier: ^1.2.2
         version: 1.2.2
@@ -881,6 +887,12 @@ importers:
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
+      reduce-configs:
+        specifier: ^1.0.0
+        version: 1.0.0
       upath:
         specifier: 2.0.1
         version: 2.0.1
@@ -918,6 +930,9 @@ importers:
       htmlparser2:
         specifier: 9.1.0
         version: 9.1.0
+      picocolors:
+        specifier: ^1.0.1
+        version: 1.0.1
       source-map:
         specifier: ^0.7.4
         version: 0.7.4
@@ -937,6 +952,9 @@ importers:
       css-minimizer-webpack-plugin:
         specifier: 5.0.1
         version: 5.0.1(lightningcss@1.25.1)(webpack@5.92.1)
+      reduce-configs:
+        specifier: ^1.0.0
+        version: 1.0.0
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -997,6 +1015,12 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
+      reduce-configs:
+        specifier: ^1.0.0
+        version: 1.0.0
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1028,6 +1052,9 @@ importers:
       lightningcss:
         specifier: ^1.25.1
         version: 1.25.1
+      reduce-configs:
+        specifier: ^1.0.0
+        version: 1.0.0
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1050,22 +1077,6 @@ importers:
       '@types/node':
         specifier: 18.x
         version: 18.19.31
-      typescript:
-        specifier: ^5.5.2
-        version: 5.5.2
-
-  packages/plugin-pug:
-    dependencies:
-      '@types/pug':
-        specifier: ^2.0.10
-        version: 2.0.10
-      pug:
-        specifier: ^3.0.3
-        version: 3.0.3
-    devDependencies:
-      '@rsbuild/core':
-        specifier: workspace:*
-        version: link:../core
       typescript:
         specifier: ^5.5.2
         version: 5.5.2
@@ -1100,6 +1111,9 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
       terser:
         specifier: 5.31.1
         version: 5.31.1
@@ -1134,12 +1148,18 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
       loader-utils:
         specifier: ^2.0.4
         version: 2.0.4
       postcss:
         specifier: ^8.4.39
         version: 8.4.39
+      reduce-configs:
+        specifier: ^1.0.0
+        version: 1.0.0
       sass-embedded:
         specifier: ^1.77.5
         version: 1.77.5
@@ -1227,6 +1247,9 @@ importers:
       '@swc/plugin-styled-components':
         specifier: 2.0.8
         version: 2.0.8
+      reduce-configs:
+        specifier: ^1.0.0
+        version: 1.0.0
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1243,6 +1266,12 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
+      reduce-configs:
+        specifier: ^1.0.0
+        version: 1.0.0
       stylus:
         specifier: 0.63.0
         version: 0.63.0
@@ -1305,6 +1334,9 @@ importers:
       '@svgr/plugin-svgo':
         specifier: 8.1.0
         version: 8.1.0(@svgr/core@8.1.0(typescript@5.5.2))(typescript@5.5.2)
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
       loader-utils:
         specifier: ^2.0.4
         version: 2.0.4
@@ -1336,12 +1368,18 @@ importers:
       '@rsbuild/shared':
         specifier: workspace:*
         version: link:../shared
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
       fork-ts-checker-webpack-plugin:
         specifier: 9.0.2
         version: 9.0.2(typescript@5.5.2)(webpack@5.92.1)
       json5:
         specifier: ^2.2.3
         version: 2.2.3
+      reduce-configs:
+        specifier: ^1.0.0
+        version: 1.0.0
       webpack:
         specifier: ^5.92.1
         version: 5.92.1
@@ -1515,18 +1553,12 @@ importers:
       chokidar:
         specifier: 3.6.0
         version: 3.6.0
-      deepmerge:
-        specifier: ^4.3.1
-        version: 4.3.1
       gzip-size:
         specifier: ^6.0.0
         version: 6.0.0
       http-proxy-middleware:
         specifier: ^2.0.6
         version: 2.0.6
-      picocolors:
-        specifier: 1.0.1
-        version: 1.0.1
       prebundle:
         specifier: 1.1.0
         version: 1.1.0(typescript@5.5.2)
@@ -3647,9 +3679,6 @@ packages:
 
   '@types/prop-types@15.7.12':
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
-
-  '@types/pug@2.0.10':
-    resolution: {integrity: sha512-Sk/uYFOBAB7mb74XcpizmH0KOR2Pv3D2Hmrh1Dmy5BmK3MpdSa5kqZcg6EKBdklU0bFXX9gCfzvpnyUehrPIuA==}
 
   '@types/react-dom@18.3.0':
     resolution: {integrity: sha512-EhwApuTmMBmXuFOikhQLIBUn6uFg81SwLMOAUgodJF14SOBOCMdU04gDoYi0WOJJHD144TL32z4yDqCW3dnkQg==}
@@ -6480,9 +6509,6 @@ packages:
   picocolors@0.2.1:
     resolution: {integrity: sha512-cMlDqaLEqfSaW8Z7N5Jw+lyIW869EzT73/F5lhtY9cLGoVxSXznfgfXMO0Z5K0o0Q2TkTXq+0KFsdnSe3jDViA==}
 
-  picocolors@1.0.0:
-    resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
-
   picocolors@1.0.1:
     resolution: {integrity: sha512-anP1Z8qwhkbmu7MFP5iTt+wQKXgwzf7zTyGlcdzabySa9vd0Xt392U0rVmz9poOaBj0uHJKyyo9/upk0HrEQew==}
 
@@ -7007,6 +7033,9 @@ packages:
   readdirp@3.6.0:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
     engines: {node: '>=8.10.0'}
+
+  reduce-configs@1.0.0:
+    resolution: {integrity: sha512-/JCYSgL/QeXXsq0Lv/7kOZfqvof7vyzHWfyNQPt3c6vc73mU4WRyT8RJ6ZH5Ci08vUOqXwk7jkZy6BycHTDD9w==}
 
   refractor@3.6.0:
     resolution: {integrity: sha512-MY9W41IOWxxk31o+YvFCNyNzdkc9M20NoZK5vq6jkv4I/uh2zkWcfudj0Q1fovjUQJrNewS9NMzeTtqPf+n5EA==}
@@ -9523,7 +9552,7 @@ snapshots:
   '@clack/prompts@0.7.0':
     dependencies:
       '@clack/core': 0.3.4
-      picocolors: 1.0.0
+      picocolors: 1.0.1
       sisteransi: 1.0.5
 
   '@discoveryjs/json-ext@0.5.7': {}
@@ -10620,8 +10649,6 @@ snapshots:
 
   '@types/prop-types@15.7.12': {}
 
-  '@types/pug@2.0.10': {}
-
   '@types/react-dom@18.3.0':
     dependencies:
       '@types/react': 18.3.3
@@ -11052,7 +11079,8 @@ snapshots:
 
   acorn-walk@8.3.2: {}
 
-  acorn@7.4.1: {}
+  acorn@7.4.1:
+    optional: true
 
   acorn@8.11.3: {}
 
@@ -11135,9 +11163,11 @@ snapshots:
 
   array-union@2.1.0: {}
 
-  asap@2.0.6: {}
+  asap@2.0.6:
+    optional: true
 
-  assert-never@1.2.1: {}
+  assert-never@1.2.1:
+    optional: true
 
   assertion-error@1.1.0: {}
 
@@ -11238,6 +11268,7 @@ snapshots:
   babel-walk@3.0.0-canary-5:
     dependencies:
       '@babel/types': 7.24.7
+    optional: true
 
   bail@2.0.2: {}
 
@@ -11367,6 +11398,7 @@ snapshots:
   character-parser@2.2.0:
     dependencies:
       is-regex: 1.1.4
+    optional: true
 
   character-reference-invalid@1.1.4: {}
 
@@ -11505,6 +11537,7 @@ snapshots:
     dependencies:
       '@babel/parser': 7.24.7
       '@babel/types': 7.24.7
+    optional: true
 
   convert-source-map@1.8.0:
     dependencies:
@@ -11750,7 +11783,8 @@ snapshots:
 
   dlv@1.1.3: {}
 
-  doctypes@1.1.0: {}
+  doctypes@1.1.0:
+    optional: true
 
   dom-helpers@5.2.1:
     dependencies:
@@ -12366,6 +12400,7 @@ snapshots:
   has-tostringtag@1.0.2:
     dependencies:
       has-symbols: 1.0.3
+    optional: true
 
   hash-sum@1.0.2: {}
 
@@ -12656,6 +12691,7 @@ snapshots:
     dependencies:
       acorn: 7.4.1
       object-assign: 4.1.1
+    optional: true
 
   is-extendable@0.1.1: {}
 
@@ -12691,7 +12727,8 @@ snapshots:
 
   is-primitive@3.0.1: {}
 
-  is-promise@2.2.2: {}
+  is-promise@2.2.2:
+    optional: true
 
   is-reference@3.0.2:
     dependencies:
@@ -12701,6 +12738,7 @@ snapshots:
     dependencies:
       call-bind: 1.0.7
       has-tostringtag: 1.0.2
+    optional: true
 
   is-stream@2.0.1: {}
 
@@ -12767,7 +12805,8 @@ snapshots:
 
   jiti@1.21.6: {}
 
-  js-stringify@1.0.2: {}
+  js-stringify@1.0.2:
+    optional: true
 
   js-tokens@4.0.0: {}
 
@@ -12820,6 +12859,7 @@ snapshots:
     dependencies:
       is-promise: 2.2.2
       promise: 7.3.1
+    optional: true
 
   keyv@4.5.4:
     dependencies:
@@ -13563,7 +13603,7 @@ snapshots:
 
   nano-staged@0.8.0:
     dependencies:
-      picocolors: 1.0.0
+      picocolors: 1.0.1
 
   nanoid@3.3.7: {}
 
@@ -13845,8 +13885,6 @@ snapshots:
       is-reference: 3.0.2
 
   picocolors@0.2.1: {}
-
-  picocolors@1.0.0: {}
 
   picocolors@1.0.1: {}
 
@@ -14139,7 +14177,7 @@ snapshots:
   postcss@8.4.38:
     dependencies:
       nanoid: 3.3.7
-      picocolors: 1.0.0
+      picocolors: 1.0.1
       source-map-js: 1.2.0
 
   postcss@8.4.39:
@@ -14191,6 +14229,7 @@ snapshots:
   promise@7.3.1:
     dependencies:
       asap: 2.0.6
+    optional: true
 
   prop-types@15.8.1:
     dependencies:
@@ -14216,6 +14255,7 @@ snapshots:
       constantinople: 4.0.1
       js-stringify: 1.0.2
       pug-runtime: 3.0.1
+    optional: true
 
   pug-code-gen@3.0.3:
     dependencies:
@@ -14227,8 +14267,10 @@ snapshots:
       pug-runtime: 3.0.1
       void-elements: 3.1.0
       with: 7.0.2
+    optional: true
 
-  pug-error@2.1.0: {}
+  pug-error@2.1.0:
+    optional: true
 
   pug-filters@4.0.0:
     dependencies:
@@ -14237,35 +14279,43 @@ snapshots:
       pug-error: 2.1.0
       pug-walk: 2.0.0
       resolve: 1.22.8
+    optional: true
 
   pug-lexer@5.0.1:
     dependencies:
       character-parser: 2.2.0
       is-expression: 4.0.0
       pug-error: 2.1.0
+    optional: true
 
   pug-linker@4.0.0:
     dependencies:
       pug-error: 2.1.0
       pug-walk: 2.0.0
+    optional: true
 
   pug-load@3.0.0:
     dependencies:
       object-assign: 4.1.1
       pug-walk: 2.0.0
+    optional: true
 
   pug-parser@6.0.0:
     dependencies:
       pug-error: 2.1.0
       token-stream: 1.0.0
+    optional: true
 
-  pug-runtime@3.0.1: {}
+  pug-runtime@3.0.1:
+    optional: true
 
   pug-strip-comments@2.0.0:
     dependencies:
       pug-error: 2.1.0
+    optional: true
 
-  pug-walk@2.0.0: {}
+  pug-walk@2.0.0:
+    optional: true
 
   pug@3.0.3:
     dependencies:
@@ -14277,6 +14327,7 @@ snapshots:
       pug-parser: 6.0.0
       pug-runtime: 3.0.1
       pug-strip-comments: 2.0.0
+    optional: true
 
   punycode@2.3.1: {}
 
@@ -14381,6 +14432,10 @@ snapshots:
   readdirp@3.6.0:
     dependencies:
       picomatch: 2.3.1
+
+  reduce-configs@1.0.0:
+    dependencies:
+      browserslist: 4.23.1
 
   refractor@3.6.0:
     dependencies:
@@ -15064,7 +15119,7 @@ snapshots:
       css-tree: 2.3.1
       css-what: 6.1.0
       csso: 5.0.5
-      picocolors: 1.0.0
+      picocolors: 1.0.1
 
   table@6.8.2:
     dependencies:
@@ -15168,7 +15223,8 @@ snapshots:
 
   toggle-selection@1.0.6: {}
 
-  token-stream@1.0.0: {}
+  token-stream@1.0.0:
+    optional: true
 
   totalist@3.0.1: {}
 
@@ -15394,7 +15450,7 @@ snapshots:
       local-pkg: 0.5.0
       magic-string: 0.30.10
       pathe: 1.1.2
-      picocolors: 1.0.0
+      picocolors: 1.0.1
       std-env: 3.7.0
       strip-literal: 2.1.0
       tinybench: 2.7.0
@@ -15413,7 +15469,8 @@ snapshots:
       - supports-color
       - terser
 
-  void-elements@3.1.0: {}
+  void-elements@3.1.0:
+    optional: true
 
   vue-hot-reload-api@2.3.4: {}
 
@@ -15634,6 +15691,7 @@ snapshots:
       '@babel/types': 7.24.7
       assert-never: 1.2.1
       babel-walk: 3.0.0-canary-5
+    optional: true
 
   wrap-ansi@7.0.0:
     dependencies:

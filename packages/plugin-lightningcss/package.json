@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-lightningcss",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.2",
   "description": "lightningcss for Rsbuild",
   "repository": {
     "type": "git",
@@ -27,7 +27,8 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
-    "lightningcss": "^1.25.1"
+    "lightningcss": "^1.25.1",
+    "reduce-configs": "^1.0.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
@@ -36,7 +37,7 @@
     "typescript": "^5.5.2"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^1.0.0-alpha.0"
+    "@rsbuild/core": "workspace:^1.0.0-alpha.2"
   },
   "publishConfig": {
     "access": "public",

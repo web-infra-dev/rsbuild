@@ -1,0 +1,18 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`environment config > tools.webpack / bundlerChain can be used in environment config 1`] = `
+[
+  {
+    "devtool": "eval-source-map",
+    "output": {
+      "filename": "[name].web.js",
+    },
+  },
+  {
+    "devtool": "eval",
+    "output": {
+      "filename": "bundle.js",
+    },
+  },
+]
+`;

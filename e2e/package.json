@@ -32,7 +32,6 @@
     "@rsbuild/plugin-less": "workspace:*",
     "@rsbuild/plugin-lightningcss": "workspace:*",
     "@rsbuild/plugin-preact": "workspace:*",
-    "@rsbuild/plugin-pug": "workspace:*",
     "@rsbuild/plugin-react": "workspace:*",
     "@rsbuild/plugin-rem": "workspace:*",
     "@rsbuild/plugin-sass": "workspace:*",

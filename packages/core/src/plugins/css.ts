@@ -1,22 +1,22 @@
 import path from 'node:path';
-import {
-  type AutoprefixerOptions,
-  type CSSLoaderModulesMode,
-  type CSSLoaderOptions,
-  type ModifyChainUtils,
-  type PostCSSLoaderOptions,
-  type PostCSSOptions,
-  type RsbuildContext,
-  type RsbuildTarget,
-  type RspackChain,
-  deepmerge,
+import type {
+  AutoprefixerOptions,
+  CSSLoaderModulesMode,
+  CSSLoaderOptions,
+  ModifyChainUtils,
+  PostCSSLoaderOptions,
+  PostCSSOptions,
+  RsbuildContext,
+  RsbuildTarget,
+  RspackChain,
 } from '@rsbuild/shared';
+import deepmerge from 'deepmerge';
 import type { AcceptedPlugin } from 'postcss';
+import { reduceConfigs, reduceConfigsWithContext } from 'reduce-configs';
 import { CSS_REGEX, LOADER_PATH } from '../constants';
 import { isFunction, isPlainObject } from '../helpers';
 import { getCompiledPath } from '../helpers/path';
 import { getCssExtractPlugin } from '../pluginHelper';
-import { reduceConfigs, reduceConfigsWithContext } from '../reduceConfigs';
 import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
 
 export const isUseCssExtract = (

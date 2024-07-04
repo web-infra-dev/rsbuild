@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-check-syntax",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.2",
   "description": "Check syntax plugin of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -31,6 +31,7 @@
     "acorn": "^8.12.0",
     "browserslist-to-es-version": "^1.0.0",
     "htmlparser2": "9.1.0",
+    "picocolors": "^1.0.1",
     "source-map": "^0.7.4"
   },
   "devDependencies": {
@@ -39,7 +40,7 @@
     "typescript": "^5.5.2"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^1.0.0-alpha.0"
+    "@rsbuild/core": "workspace:^1.0.0-alpha.2"
   },
   "publishConfig": {
     "access": "public",

@@ -1,5 +1,5 @@
 import type { PostCSSPlugin, RsbuildPlugin } from '@rsbuild/core';
-import { cloneDeep } from '@rsbuild/shared';
+import deepmerge from 'deepmerge';
 import type { PluginRemOptions, PxToRemOptions } from './types';
 
 const defaultOptions: PluginRemOptions = {
@@ -31,7 +31,7 @@ export const pluginRem = (options: PluginRemOptions = {}): RsbuildPlugin => ({
         rootValue: userOptions.rootFontSize,
         unitPrecision: 5,
         propList: ['*'],
-        ...(userOptions.pxtorem ? cloneDeep(userOptions.pxtorem) : {}),
+        ...(userOptions.pxtorem ? deepmerge({}, userOptions.pxtorem) : {}),
       });
     };
 

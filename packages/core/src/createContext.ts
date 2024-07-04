@@ -1,6 +1,7 @@
 import { isAbsolute, join } from 'node:path';
 import type {
   BundlerType,
+  EnvironmentContext,
   NormalizedEnvironmentConfig,
   RsbuildContext,
   RsbuildEntry,
@@ -38,12 +39,10 @@ function getAbsoluteDistPath(
 async function createContextByConfig(
   options: Required<CreateRsbuildOptions>,
   bundlerType: BundlerType,
-  config: RsbuildConfig = {},
 ): Promise<RsbuildContext> {
   const { cwd } = options;
   const rootPath = cwd;
   const cachePath = join(rootPath, 'node_modules', '.cache');
-  const tsconfigPath = config.source?.tsconfigPath;
 
   return {
     version: RSBUILD_VERSION,
@@ -51,9 +50,6 @@ async function createContextByConfig(
     distPath: '',
     cachePath,
     bundlerType,
-    tsconfigPath: tsconfigPath
-      ? getAbsolutePath(rootPath, tsconfigPath)
-      : undefined,
   };
 }
 
@@ -146,7 +142,7 @@ export async function updateEnvironmentContext(
     const entry = config.source.entry ?? {};
     const htmlPaths = getEnvironmentHTMLPaths(entry, config);
 
-    context.environments[name] = {
+    const environmentContext = {
       index,
       name,
       distPath: getAbsoluteDistPath(context.rootPath, config),
@@ -156,6 +152,19 @@ export async function updateEnvironmentContext(
       tsconfigPath,
       config,
     };
+
+    // EnvironmentContext is readonly.
+    context.environments[name] = new Proxy(environmentContext, {
+      get(target, prop: keyof EnvironmentContext) {
+        return target[prop];
+      },
+      set(_, prop: keyof EnvironmentContext) {
+        logger.error(
+          `EnvironmentContext is readonly, you can not assign to the "environment.${prop}" prop.`,
+        );
+        return true;
+      },
+    });
   }
 }
 
@@ -172,16 +181,13 @@ export function updateContextByNormalizedConfig(
 export function createPublicContext(
   context: RsbuildContext,
 ): Readonly<RsbuildContext> {
-  const exposedKeys = [
+  const exposedKeys: Array<keyof RsbuildContext> = [
     'version',
     'rootPath',
     'distPath',
     'devServer',
     'cachePath',
-    'configPath',
-    'tsconfigPath',
     'bundlerType',
-    'environments',
   ];
 
   // Using Proxy to get the current value of context.
@@ -211,11 +217,7 @@ export async function createContext(
   bundlerType: BundlerType,
 ): Promise<InternalContext> {
   const rsbuildConfig = await withDefaultConfig(options.cwd, userRsbuildConfig);
-  const context = await createContextByConfig(
-    options,
-    bundlerType,
-    rsbuildConfig,
-  );
+  const context = await createContextByConfig(options, bundlerType);
 
   return {
     ...context,

@@ -3,17 +3,17 @@ import {
   type RspackChain,
   __internalHelper,
   logger,
-  reduceConfigsWithContext,
 } from '@rsbuild/core';
-import {
-  type EnvironmentContext,
-  type ModifyWebpackChainUtils,
-  type ModifyWebpackConfigUtils,
-  castArray,
+import type {
+  EnvironmentContext,
+  ModifyWebpackChainUtils,
+  ModifyWebpackConfigUtils,
 } from '@rsbuild/shared';
+import { reduceConfigsWithContext } from 'reduce-configs';
 import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
 import {
   type InternalContext,
+  castArray,
   chainToConfig,
   getChainUtils as getBaseChainUtils,
   modifyBundlerChain,
@@ -32,8 +32,8 @@ async function modifyWebpackChain(
     utils,
   );
 
-  if (context.config.tools?.webpackChain) {
-    for (const item of castArray(context.config.tools.webpackChain)) {
+  if (utils.environment.config.tools?.webpackChain) {
+    for (const item of castArray(utils.environment.config.tools.webpackChain)) {
       item(modifiedChain, utils);
     }
   }
@@ -54,10 +54,10 @@ async function modifyWebpackConfig(
     utils,
   );
 
-  if (context.config.tools?.webpack) {
+  if (utils.environment.config.tools?.webpack) {
     modifiedConfig = reduceConfigsWithContext({
       initial: modifiedConfig,
-      config: context.config.tools.webpack,
+      config: utils.environment.config.tools.webpack,
       ctx: utils,
       mergeFn: utils.mergeConfig,
     });

@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-sass",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.2",
   "description": "Sass plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -30,8 +30,10 @@
   },
   "dependencies": {
     "@rsbuild/shared": "workspace:*",
+    "deepmerge": "^4.3.1",
     "loader-utils": "^2.0.4",
     "postcss": "^8.4.39",
+    "reduce-configs": "^1.0.0",
     "sass-embedded": "^1.77.5"
   },
   "devDependencies": {
@@ -44,7 +46,7 @@
     "typescript": "^5.5.2"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^1.0.0-alpha.0"
+    "@rsbuild/core": "workspace:^1.0.0-alpha.2"
   },
   "publishConfig": {
     "access": "public",

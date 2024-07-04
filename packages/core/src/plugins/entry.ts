@@ -1,6 +1,6 @@
-import { castArray, color } from '@rsbuild/shared';
 import type { EntryDescription } from '@rspack/core';
-import { createVirtualModule } from '../helpers';
+import color from 'picocolors';
+import { castArray, createVirtualModule } from '../helpers';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginEntry = (): RsbuildPlugin => ({

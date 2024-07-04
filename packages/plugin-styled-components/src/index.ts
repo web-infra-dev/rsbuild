@@ -1,10 +1,9 @@
 import type {
-  ConfigChain,
   RsbuildConfig,
   RsbuildPlugin,
   RsbuildTarget,
 } from '@rsbuild/core';
-import { reduceConfigs } from '@rsbuild/core';
+import { type ConfigChain, reduceConfigs } from 'reduce-configs';
 
 /**
  * The options of [@swc/plugin-styled-components](https://www.npmjs.com/package/@swc/plugin-styled-components).

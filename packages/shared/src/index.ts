@@ -1,65 +1,6 @@
-import deepmerge from '../compiled/deepmerge/index.js';
-import color from '../compiled/picocolors/index.js';
 import RspackChain from '../compiled/rspack-chain/index.js';
-import type { CacheGroups } from './types';
 
 export * from './types';
-
-// RegExp
-export const SCRIPT_REGEX: RegExp = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
-
-export { color, deepmerge };
-
-export type Colors = Omit<
-  keyof typeof color,
-  'createColor' | 'isColorSupported'
->;
-
-export const castArray = <T>(arr?: T | T[]): T[] => {
-  if (arr === undefined) {
-    return [];
-  }
-  return Array.isArray(arr) ? arr : [arr];
-};
-
-export const cloneDeep = <T>(value: T): T => {
-  if (value === null || value === undefined) {
-    return value;
-  }
-  return deepmerge({}, value);
-};
-
-const DEP_MATCH_TEMPLATE = /[\\/]node_modules[\\/](<SOURCES>)[\\/]/.source;
-
-/** Expect to match path just like "./node_modules/react-router/" */
-export const createDependenciesRegExp = (
-  ...dependencies: (string | RegExp)[]
-): RegExp => {
-  const sources = dependencies.map((d) =>
-    typeof d === 'string' ? d : d.source,
-  );
-  const expr = DEP_MATCH_TEMPLATE.replace('<SOURCES>', sources.join('|'));
-  return new RegExp(expr);
-};
-
-export function createCacheGroups(
-  group: Record<string, (string | RegExp)[]>,
-): CacheGroups {
-  const experienceCacheGroup: CacheGroups = {};
-
-  for (const [name, pkgs] of Object.entries(group)) {
-    const key = `lib-${name}`;
-
-    experienceCacheGroup[key] = {
-      test: createDependenciesRegExp(...pkgs),
-      priority: 0,
-      name: key,
-      reuseExistingChunk: true,
-    };
-  }
-
-  return experienceCacheGroup;
-}
 
 export { RspackChain };
 

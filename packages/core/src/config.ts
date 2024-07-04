@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
-import { RspackChain, color } from '@rsbuild/shared';
+import { RspackChain } from '@rsbuild/shared';
 import type {
   InspectConfigOptions,
   InspectConfigResult,
@@ -20,6 +20,7 @@ import type {
   RsbuildConfig,
   RsbuildEntry,
 } from '@rsbuild/shared';
+import color from 'picocolors';
 import {
   CSS_DIST_DIR,
   DEFAULT_ASSET_PREFIX,

@@ -1,11 +1,6 @@
 import fs from 'node:fs';
 import path, { isAbsolute } from 'node:path';
-import {
-  type MinifyJSOptions,
-  castArray,
-  color,
-  deepmerge,
-} from '@rsbuild/shared';
+import type { MinifyJSOptions } from '@rsbuild/shared';
 import type {
   HTMLPluginOptions,
   HtmlConfig,
@@ -13,17 +8,20 @@ import type {
   NormalizedEnvironmentConfig,
 } from '@rsbuild/shared';
 import type { EntryDescription } from '@rspack/core';
+import deepmerge from 'deepmerge';
+import color from 'picocolors';
+import {
+  reduceConfigsMergeContext,
+  reduceConfigsWithContext,
+} from 'reduce-configs';
 import { STATIC_PATH } from '../constants';
 import {
+  castArray,
   getPublicPathFromChain,
   isFileExists,
   isPlainObject,
   isURL,
 } from '../helpers';
-import {
-  reduceConfigsMergeContext,
-  reduceConfigsWithContext,
-} from '../reduceConfigs';
 import type { HtmlInfo, TagConfig } from '../rspack/HtmlBasicPlugin';
 import type { RsbuildPlugin } from '../types';
 import { parseMinifyOptions } from './minimize';
