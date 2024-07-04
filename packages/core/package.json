@@ -51,7 +51,7 @@
     "prebundle": "prebundle"
   },
   "dependencies": {
-    "@rspack/core": "1.0.0-alpha.0",
+    "@rspack/core": "1.0.0-alpha.1",
     "@swc/helpers": "0.5.11",
     "caniuse-lite": "^1.0.30001640",
     "core-js": "~3.37.1",
