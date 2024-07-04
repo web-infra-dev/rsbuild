@@ -45,6 +45,22 @@ function isEmptyDir(path: string) {
   return files.length === 0 || (files.length === 1 && files[0] === '.git');
 }
 
+async function checkCwd() {
+  const option = checkCancel<string>(
+    await select({
+      message: 'Current folder is not empty, please choose:',
+      options: [
+        { value: 'yes', label: 'Continue and override files' },
+        { value: 'no', label: 'Cancel operation' },
+      ],
+    }),
+  );
+
+  if (option === 'no') {
+    cancelAndExit();
+  }
+}
+
 export async function main() {
   console.log('');
   logger.greet('◆  Create Rsbuild Project');
@@ -55,6 +71,12 @@ export async function main() {
   const packageRoot = path.resolve(__dirname, '..');
   const packageJsonPath = path.join(packageRoot, 'package.json');
   const { version } = require(packageJsonPath);
+
+  const currentPath = path.join(cwd);
+  // check cwd is empty
+  if (!isEmptyDir(currentPath)) {
+    await checkCwd();
+  }
 
   let targetDir = checkCancel<string>(
     await text({
@@ -70,21 +92,8 @@ export async function main() {
 
   targetDir = formatTargetDir(targetDir);
   const distFolder = path.join(cwd, targetDir);
-
   if (fs.existsSync(distFolder) && !isEmptyDir(distFolder)) {
-    const option = checkCancel<string>(
-      await select({
-        message: `"${targetDir}" is not empty, please choose:`,
-        options: [
-          { value: 'yes', label: 'Continue and override files' },
-          { value: 'no', label: 'Cancel operation' },
-        ],
-      }),
-    );
-
-    if (option === 'no') {
-      cancelAndExit();
-    }
+    await checkCwd();
   }
 
   const framework = checkCancel<string>(
