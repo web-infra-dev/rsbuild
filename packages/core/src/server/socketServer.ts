@@ -195,14 +195,11 @@ export class SocketServer {
         }
       }
     }
-
     const shouldReload =
       Boolean(stats.entrypoints) &&
       Boolean(this.initialChunks) &&
       !isEqualSet(this.initialChunks as Set<string>, newInitialChunks);
-
     this.initialChunks = newInitialChunks;
-
     if (shouldReload) {
       return this.sockWrite('content-changed');
     }
