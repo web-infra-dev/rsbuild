@@ -90,7 +90,7 @@
     "prebundle": "1.1.0",
     "reduce-configs": "^1.0.0",
     "rslog": "^1.2.2",
-    "rspack-chain": "^0.7.3",
+    "rspack-chain": "^0.7.4",
     "rspack-manifest-plugin": "5.0.0",
     "semver": "^7.6.2",
     "sirv": "^2.0.4",

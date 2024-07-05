@@ -10,10 +10,10 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "moment": "^2.30.1",
-    "preact": "^10.22.0",
+    "preact": "^10.22.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.24.0",
+    "react-router-dom": "^6.24.1",
     "solid-js": "^1.8.18",
     "vue": "^3.4.19",
     "vue-router": "^4.4.0"
