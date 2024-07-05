@@ -9,8 +9,17 @@ interface ExtWebSocket extends Ws {
   isAlive: boolean;
 }
 
-function equalArray(a: string[], b: string[]): boolean {
-  return a.length === b.length && a.every((item, index) => item === b[index]);
+function isEqualSet(a: Set<string>, b: Set<string>): boolean {
+  if (a.size !== b.size) {
+    return false;
+  }
+
+  for (const v of a.values()) {
+    if (!b.has(v)) {
+      return false;
+    }
+  }
+  return true;
 }
 
 export class SocketServer {
@@ -21,7 +30,7 @@ export class SocketServer {
   private readonly options: DevConfig;
 
   private stats?: Stats;
-  private entryPointsChunks?: string[];
+  private initialChunks?: Set<string>;
 
   private timer: ReturnType<typeof setInterval> | null = null;
 
@@ -175,21 +184,24 @@ export class SocketServer {
     // web-infra-dev/rspack#6633
     // when initial-chunks change, reload the page
     // e.g: ['index.js'] -> ['index.js', 'lib-polyfill.js']
-    const newEntryPointsChunks: string[] = [];
-    for (const entrypoint of Object.values(stats.entrypoints ?? {})) {
-      if (Array.isArray(entrypoint?.chunks)) {
-        const chunks = entrypoint?.chunks.filter(Boolean) as string[];
-        newEntryPointsChunks.push(...chunks);
+    const newInitialChunks: Set<string> = new Set();
+    if (stats.entrypoints) {
+      for (const entrypoint of Object.values(stats.entrypoints)) {
+        const chunks = entrypoint.chunks;
+        if (Array.isArray(chunks)) {
+          for (const chunkName of chunks) {
+            chunkName && newInitialChunks.add(chunkName);
+          }
+        }
       }
     }
-    newEntryPointsChunks.sort((a, b) => a.localeCompare(b));
 
     const shouldReload =
       Boolean(stats.entrypoints) &&
-      Boolean(this.entryPointsChunks) &&
-      !equalArray(this.entryPointsChunks as string[], newEntryPointsChunks);
+      Boolean(this.initialChunks) &&
+      !isEqualSet(this.initialChunks as Set<string>, newInitialChunks);
 
-    this.entryPointsChunks = newEntryPointsChunks;
+    this.initialChunks = newInitialChunks;
 
     if (shouldReload) {
       return this.sockWrite('content-changed');
