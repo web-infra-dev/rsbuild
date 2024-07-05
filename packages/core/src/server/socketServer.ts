@@ -180,6 +180,10 @@ export class SocketServer {
       this.entryPointsLength !== newEntryPointsLength;
     this.entryPointsLength = newEntryPointsLength;
 
+    if (shouldReload) {
+      return this.sockWrite('content-changed');
+    }
+
     const shouldEmit =
       !force &&
       stats &&
@@ -192,9 +196,6 @@ export class SocketServer {
     }
 
     this.sockWrite('hash', stats.hash);
-    if (shouldReload) {
-      return this.sockWrite('content-changed');
-    }
 
     if (stats.errorsCount) {
       return this.sockWrite('errors', getAllStatsErrors(stats));
