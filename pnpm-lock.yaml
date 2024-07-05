@@ -157,9 +157,6 @@ importers:
       '@rsbuild/plugin-typed-css-modules':
         specifier: workspace:*
         version: link:../packages/plugin-typed-css-modules
-      '@rsbuild/plugin-umd':
-        specifier: workspace:*
-        version: link:../packages/plugin-umd
       '@rsbuild/plugin-vue':
         specifier: workspace:*
         version: link:../packages/plugin-vue
@@ -1335,15 +1332,6 @@ importers:
       prebundle:
         specifier: 1.1.0
         version: 1.1.0(typescript@5.5.2)
-      typescript:
-        specifier: ^5.5.2
-        version: 5.5.2
-
-  packages/plugin-umd:
-    devDependencies:
-      '@rsbuild/core':
-        specifier: workspace:*
-        version: link:../core
       typescript:
         specifier: ^5.5.2
         version: 5.5.2

@@ -21,6 +21,5 @@
   "plugin-styled-components",
   "plugin-check-syntax",
   "plugin-typed-css-modules",
-  "plugin-rem",
-  "plugin-umd"
+  "plugin-rem"
 ]
