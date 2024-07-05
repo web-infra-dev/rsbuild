@@ -18,7 +18,6 @@
       "semver": ["./compiled/semver"],
       "connect": ["./compiled/connect"],
       "chokidar": ["./compiled/chokidar"],
-      "gzip-size": ["./compiled/gzip-size"],
       "commander": ["./compiled/commander"],
       "on-finished": ["./compiled/on-finished"],
       "autoprefixer": ["./compiled/autoprefixer"],

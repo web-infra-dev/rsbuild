@@ -40,7 +40,6 @@ export default {
     'connect',
     'rspack-manifest-plugin',
     'webpack-merge',
-    'gzip-size',
     {
       name: 'chokidar',
       externals: {
@@ -127,9 +126,6 @@ export default {
       // The webpack-bundle-analyzer version was locked to v4.9.0 to be compatible with Rspack
       // If we need to upgrade the version, please check if the chunk detail can be displayed correctly
       name: 'webpack-bundle-analyzer',
-      externals: {
-        'gzip-size': '../gzip-size',
-      },
     },
     {
       name: 'autoprefixer',

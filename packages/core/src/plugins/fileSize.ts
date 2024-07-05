@@ -4,6 +4,8 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { promisify } from 'node:util';
+import zlib from 'node:zlib';
 import color from 'picocolors';
 import { CSS_REGEX, HTML_REGEX, JS_REGEX } from '../constants';
 import { logger } from '../logger';
@@ -13,6 +15,13 @@ import type {
   Stats,
   StatsAsset,
 } from '../types';
+
+const gzip = promisify(zlib.gzip);
+
+async function gzipSize(input: Buffer) {
+  const data = await gzip(input);
+  return data.length;
+}
 
 /** Filter source map and license files */
 export const filterAsset = (asset: string): boolean =>
@@ -71,9 +80,7 @@ async function printFileSizes(
     return logs;
   }
 
-  const { default: gzipSize } = await import('gzip-size');
-
-  const formatAsset = (
+  const formatAsset = async (
     asset: StatsAsset,
     distPath: string,
     distFolder: string,
@@ -81,7 +88,7 @@ async function printFileSizes(
     const fileName = asset.name.split('?')[0];
     const contents = fs.readFileSync(path.join(distPath, fileName));
     const size = contents.length;
-    const gzippedSize = gzipSize.sync(contents);
+    const gzippedSize = await gzipSize(contents);
 
     return {
       size,
@@ -93,7 +100,7 @@ async function printFileSizes(
     };
   };
 
-  const getAssets = () => {
+  const getAssets = async () => {
     const distPath = stats.compilation.outputOptions.path;
 
     if (!distPath) {
@@ -119,11 +126,11 @@ async function printFileSizes(
 
     const distFolder = path.relative(rootPath, distPath);
 
-    return filteredAssets.map((asset) =>
-      formatAsset(asset, distPath, distFolder),
+    return Promise.all(
+      filteredAssets.map((asset) => formatAsset(asset, distPath, distFolder)),
     );
   };
-  const assets = getAssets();
+  const assets = await getAssets();
 
   if (assets.length === 0) {
     return logs;
