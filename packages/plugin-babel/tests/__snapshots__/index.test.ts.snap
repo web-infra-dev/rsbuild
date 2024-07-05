@@ -17,11 +17,6 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
     /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
     /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]query-string\\[\\\\\\\\/\\]/,
   ],
-  "resolve": {
-    "alias": {
-      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-    },
-  },
   "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   "type": "javascript/auto",
   "use": [
@@ -29,9 +24,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
       "loader": "builtin:swc-loader",
       "options": {
         "env": {
-          "coreJs": "3.37",
-          "mode": "usage",
-          "shippedProposals": true,
+          "mode": undefined,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -103,11 +96,6 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
     },
     /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
   ],
-  "resolve": {
-    "alias": {
-      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-    },
-  },
   "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   "type": "javascript/auto",
   "use": [
@@ -115,9 +103,7 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
       "loader": "builtin:swc-loader",
       "options": {
         "env": {
-          "coreJs": "3.37",
-          "mode": "usage",
-          "shippedProposals": true,
+          "mode": undefined,
           "targets": [
             "chrome >= 87",
             "edge >= 88",

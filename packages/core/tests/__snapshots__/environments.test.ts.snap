@@ -64,7 +64,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "legalComments": "linked",
     "manifest": false,
     "minify": true,
-    "polyfill": "usage",
+    "polyfill": "off",
     "sourceMap": {
       "css": false,
       "js": undefined,
@@ -185,7 +185,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "legalComments": "linked",
     "manifest": false,
     "minify": true,
-    "polyfill": "usage",
+    "polyfill": "off",
     "sourceMap": {
       "css": false,
       "js": undefined,
@@ -307,7 +307,7 @@ exports[`environment config > should print environment config when inspect confi
       "legalComments": "linked",
       "manifest": false,
       "minify": true,
-      "polyfill": "usage",
+      "polyfill": "off",
       "sourceMap": {
         "css": false,
         "js": undefined,
@@ -460,7 +460,7 @@ exports[`environment config > should print environment config when inspect confi
       "legalComments": "linked",
       "manifest": false,
       "minify": true,
-      "polyfill": "usage",
+      "polyfill": "off",
       "sourceMap": {
         "css": false,
         "js": undefined,
@@ -618,7 +618,7 @@ exports[`environment config > should support modify environment config by api.mo
       "legalComments": "linked",
       "manifest": false,
       "minify": true,
-      "polyfill": "usage",
+      "polyfill": "off",
       "sourceMap": {
         "css": false,
         "js": undefined,
@@ -772,7 +772,7 @@ exports[`environment config > should support modify environment config by api.mo
       "legalComments": "linked",
       "manifest": false,
       "minify": true,
-      "polyfill": "usage",
+      "polyfill": "off",
       "sourceMap": {
         "css": false,
         "js": undefined,
@@ -927,7 +927,7 @@ exports[`environment config > should support modify environment config by api.mo
       "legalComments": "linked",
       "manifest": false,
       "minify": true,
-      "polyfill": "usage",
+      "polyfill": "off",
       "sourceMap": {
         "css": false,
         "js": undefined,
@@ -1085,7 +1085,7 @@ exports[`environment config > should support modify single environment config by
       "legalComments": "linked",
       "manifest": false,
       "minify": true,
-      "polyfill": "usage",
+      "polyfill": "off",
       "sourceMap": {
         "css": false,
         "js": undefined,
@@ -1239,7 +1239,7 @@ exports[`environment config > should support modify single environment config by
       "legalComments": "linked",
       "manifest": false,
       "minify": true,
-      "polyfill": "usage",
+      "polyfill": "off",
       "sourceMap": {
         "css": false,
         "js": undefined,
@@ -1428,11 +1428,6 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
             },
             /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
           ],
-          "resolve": {
-            "alias": {
-              "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-            },
-          },
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "type": "javascript/auto",
           "use": [
@@ -1440,9 +1435,7 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
               "loader": "builtin:swc-loader",
               "options": {
                 "env": {
-                  "coreJs": "3.37",
-                  "mode": "usage",
-                  "shippedProposals": true,
+                  "mode": undefined,
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -1476,9 +1469,6 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
             ],
           },
           "resolve": {
-            "alias": {
-              "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-            },
             "fullySpecified": false,
           },
           "use": [
@@ -1486,9 +1476,7 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
               "loader": "builtin:swc-loader",
               "options": {
                 "env": {
-                  "coreJs": "3.37",
-                  "mode": "usage",
-                  "shippedProposals": true,
+                  "mode": undefined,
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -1646,11 +1634,6 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
             "name": "lib-lodash",
             "priority": 0,
             "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
-          },
-          "lib-polyfill": {
-            "name": "lib-polyfill",
-            "priority": 0,
-            "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(\\?:tslib\\|core-js\\|@swc\\[\\\\\\\\/\\]helpers\\)\\[\\\\\\\\/\\]/,
           },
         },
         "chunks": "all",

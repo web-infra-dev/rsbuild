@@ -114,11 +114,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "resolve": {
-          "alias": {
-            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-          },
-        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
@@ -126,9 +121,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.37",
-                "mode": "usage",
-                "shippedProposals": true,
+                "mode": undefined,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -167,9 +160,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
           ],
         },
         "resolve": {
-          "alias": {
-            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-          },
           "fullySpecified": false,
         },
         "use": [
@@ -177,9 +167,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.37",
-                "mode": "usage",
-                "shippedProposals": true,
+                "mode": undefined,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -342,11 +330,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
           "name": "lib-lodash",
           "priority": 0,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
-        },
-        "lib-polyfill": {
-          "name": "lib-polyfill",
-          "priority": 0,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(\\?:tslib\\|core-js\\|@swc\\[\\\\\\\\/\\]helpers\\)\\[\\\\\\\\/\\]/,
         },
         "react": {
           "name": "lib-react",

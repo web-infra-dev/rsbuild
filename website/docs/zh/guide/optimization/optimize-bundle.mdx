@@ -70,7 +70,7 @@ Rsbuild 默认的 Browserslist 配置为：
 
 ## 按需引入 polyfill
 
-在明确第三方依赖不需要额外 polyfill 的情况下，你可以将 [output.polyfill](/config/output/polyfill) 设置为 `usage`。
+如果当前项目的 [output.polyfill](/config/output/polyfill) 为 `'entry'`，在明确第三方依赖不需要额外 polyfill 的情况下，你可以将它设置为 `usage` 。
 
 在 `usage` 模式下，Rsbuild 会分析源代码中使用的语法，按需注入所需的 polyfill 代码，从而减少 polyfill 的代码量。
 

@@ -49,11 +49,6 @@ exports[`plugin-module-federation > should set environment module federation con
             "priority": 0,
             "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
           },
-          "lib-polyfill": {
-            "name": "lib-polyfill",
-            "priority": 0,
-            "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(\\?:tslib\\|core-js\\|@swc\\[\\\\\\\\/\\]helpers\\)\\[\\\\\\\\/\\]/,
-          },
         },
         "chunks": "all",
         "enforceSizeThreshold": 50000,
