@@ -18,7 +18,6 @@ import { pluginSvelte } from '@rsbuild/plugin-svelte';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import { pluginSwc } from '@rsbuild/plugin-swc';
 import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
-import { pluginUmd } from '@rsbuild/plugin-umd';
 import { pluginVue } from '@rsbuild/plugin-vue';
 import { pluginVueJsx } from '@rsbuild/plugin-vue-jsx';
 import { pluginVue2 } from '@rsbuild/plugin-vue2';
@@ -42,7 +41,6 @@ export default {
   pluginLightningcss,
   pluginSourceBuild,
   pluginStyledComponents,
-  pluginUmd,
   pluginTypeCheck,
   pluginVue,
   pluginVue2,
