@@ -2,7 +2,7 @@
  * This file is used to get/set the global instance for html-plugin and css-extract plugin.
  */
 import rspack from '@rspack/core';
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import type HtmlWebpackPlugin from 'html-rspack-plugin';
 
 let htmlPlugin: typeof HtmlWebpackPlugin;
 
@@ -17,7 +17,7 @@ export const setHTMLPlugin = (plugin: typeof HtmlWebpackPlugin): void => {
 
 export const getHTMLPlugin = (): typeof HtmlWebpackPlugin => {
   if (!htmlPlugin) {
-    htmlPlugin = require('html-webpack-plugin');
+    htmlPlugin = require('html-rspack-plugin');
   }
   return htmlPlugin;
 };

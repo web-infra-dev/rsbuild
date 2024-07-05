@@ -92,12 +92,12 @@ export interface HtmlConfig {
   outputStructure?: OutputStructure;
   /**
    * Define the path to the HTML template,
-   * corresponding to the `template` config of [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin).
+   * corresponding to the `template` config of [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin).
    */
   template?: ChainedHtmlOption<string>;
   /**
    * Define the parameters in the HTML template,
-   * corresponding to the `templateParameters` config of [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin).
+   * corresponding to the `templateParameters` config of [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin).
    */
   templateParameters?: ConfigChainWithContext<
     Record<string, unknown>,

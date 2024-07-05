@@ -1,4 +1,4 @@
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import type HtmlWebpackPlugin from 'html-rspack-plugin';
 import type RspackChain from 'rspack-chain';
 import type { ChainIdentifier } from '..';
 import type {

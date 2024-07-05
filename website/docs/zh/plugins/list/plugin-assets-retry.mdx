@@ -312,7 +312,7 @@ pluginAssetsRetry({
 
 Assets Retry 插件通过监听页面 error 事件来获悉当前资源是否加载失败需要重试。因此，如果自定义模版中的资源执行早于 Assets Retry 插件，那 Assets Retry 插件无法监听到该资源加载失败的事件，retry 无法对其生效。
 
-如果想要 Assets Retry 插件对自定义模版中的资源生效，可参考 [自定义插入示例](https://github.com/jantimon/html-webpack-plugin/tree/main/examples/custom-insertion-position) 来修改 [html.inject](/config/html/inject) 配置和自定义模版。
+如果想要 Assets Retry 插件对自定义模版中的资源生效，可参考 [自定义插入示例](https://github.com/rspack-contrib/html-rspack-plugin/tree/main/examples/custom-insertion-position) 来修改 [html.inject](/config/html/inject) 配置和自定义模版。
 
 ```diff
 <!DOCTYPE html>

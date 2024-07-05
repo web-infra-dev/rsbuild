@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { type Rspack, ensureAssetPrefix } from '@rsbuild/core';
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import type HtmlWebpackPlugin from 'html-rspack-plugin';
 import type { PluginAssetsRetryOptions } from './types';
 
 export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {

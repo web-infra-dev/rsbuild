@@ -1,6 +1,6 @@
 import type { rspack } from '@rspack/core';
 import type { SwcLoaderOptions } from '@rspack/core';
-import type { Options as HTMLPluginOptions } from 'html-webpack-plugin';
+import type { Options as HTMLPluginOptions } from 'html-rspack-plugin';
 import type RspackChain from 'rspack-chain';
 import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
 import type {
@@ -105,7 +105,7 @@ export interface ToolsConfig {
    */
   styleLoader?: ToolsStyleLoaderConfig;
   /**
-   * Configure the html-webpack-plugin.
+   * Configure the html-rspack-plugin.
    */
   htmlPlugin?: boolean | ToolsHtmlPluginConfig;
   /**

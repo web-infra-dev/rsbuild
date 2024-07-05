@@ -681,9 +681,9 @@ importers:
       core-js:
         specifier: ~3.37.1
         version: 3.37.1
-      html-webpack-plugin:
-        specifier: npm:html-rspack-plugin@5.7.2
-        version: html-rspack-plugin@5.7.2(@rspack/core@1.0.0-alpha.1(@swc/helpers@0.5.11))
+      html-rspack-plugin:
+        specifier: 5.7.2
+        version: 5.7.2(@rspack/core@1.0.0-alpha.1(@swc/helpers@0.5.11))
       postcss:
         specifier: ^8.4.39
         version: 8.4.39
@@ -867,9 +867,9 @@ importers:
       '@types/serialize-javascript':
         specifier: ^5.0.4
         version: 5.0.4
-      html-webpack-plugin:
-        specifier: npm:html-rspack-plugin@5.7.2
-        version: html-rspack-plugin@5.7.2(@rspack/core@1.0.0-alpha.1(@swc/helpers@0.5.11))
+      html-rspack-plugin:
+        specifier: 5.7.2
+        version: 5.7.2(@rspack/core@1.0.0-alpha.1(@swc/helpers@0.5.11))
       terser:
         specifier: 5.31.1
         version: 5.31.1
@@ -1081,9 +1081,9 @@ importers:
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
-      html-webpack-plugin:
-        specifier: npm:html-rspack-plugin@5.7.2
-        version: html-rspack-plugin@5.7.2(@rspack/core@1.0.0-alpha.1(@swc/helpers@0.5.11))
+      html-rspack-plugin:
+        specifier: 5.7.2
+        version: 5.7.2(@rspack/core@1.0.0-alpha.1(@swc/helpers@0.5.11))
       postcss-pxtorem:
         specifier: 6.1.0
         version: 6.1.0(postcss@8.4.39)
