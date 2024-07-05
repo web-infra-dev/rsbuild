@@ -298,12 +298,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "lib-axios": {
           "name": "lib-axios",
           "priority": 0,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
+          "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
         },
         "lib-lodash": {
           "name": "lib-lodash",
           "priority": 0,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
+          "test": /node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
         },
       },
       "chunks": "all",
@@ -759,12 +759,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "lib-axios": {
           "name": "lib-axios",
           "priority": 0,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
+          "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
         },
         "lib-lodash": {
           "name": "lib-lodash",
           "priority": 0,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
+          "test": /node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
         },
       },
       "chunks": "all",
@@ -1552,12 +1552,12 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "lib-axios": {
           "name": "lib-axios",
           "priority": 0,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
+          "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
         },
         "lib-lodash": {
           "name": "lib-lodash",
           "priority": 0,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
+          "test": /node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
         },
       },
       "chunks": "all",

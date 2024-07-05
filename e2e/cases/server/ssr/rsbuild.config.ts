@@ -101,7 +101,7 @@ export default defineConfig({
                   minSize: 0,
                   cacheGroups: {
                     'lib-react': {
-                      test: /[\\/]node_modules[\\/](react|react-dom|scheduler|react-refresh|@rspack[\\/]plugin-react-refresh)[\\/]/,
+                      test: /node_modules[\\/](react|react-dom|scheduler|react-refresh|@rspack[\\/]plugin-react-refresh)[\\/]/,
                       priority: 0,
                       name: 'lib-react',
                     },

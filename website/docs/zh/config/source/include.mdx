@@ -52,8 +52,8 @@ export default {
       path.dirname(require.resolve('query-string')),
       // 方法二:
       // 通过正则表达式进行匹配
-      // 所有包含 `/node_modules/query-string/` 的路径都会被匹配到
-      /[\\/]node_modules[\\/]query-string[\\/]/,
+      // 所有包含 `node_modules/query-string/` 的路径都会被匹配到
+      /node_modules[\\/]query-string[\\/]/,
     ],
   },
 };
@@ -75,8 +75,8 @@ export default {
 export default {
   source: {
     include: [
-      /[\\/]node_modules[\\/]query-string[\\/]/,
-      /[\\/]node_modules[\\/]decode-uri-component[\\/]/,
+      /node_modules[\\/]query-string[\\/]/,
+      /node_modules[\\/]decode-uri-component[\\/]/,
     ],
   },
 };

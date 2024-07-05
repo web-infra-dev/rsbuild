@@ -68,13 +68,13 @@ function splitByExperience(ctx: SplitChunksContext): SplitChunks {
   const experienceCacheGroup: CacheGroups = {};
 
   const packageRegExps: Record<string, RegExp> = {
-    lodash: /[\\/]node_modules[\\/]lodash(-es)?[\\/]/,
-    axios: /[\\/]node_modules[\\/]axios(-.+)?[\\/]/,
+    lodash: /node_modules[\\/]lodash(-es)?[\\/]/,
+    axios: /node_modules[\\/]axios(-.+)?[\\/]/,
   };
 
   if (polyfill === 'entry' || polyfill === 'usage') {
     packageRegExps.polyfill =
-      /[\\/]node_modules[\\/](?:tslib|core-js|@swc[\\/]helpers)[\\/]/;
+      /node_modules[\\/](?:tslib|core-js|@swc[\\/]helpers)[\\/]/;
   }
 
   for (const [name, test] of Object.entries(packageRegExps)) {

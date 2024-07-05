@@ -42,12 +42,12 @@ exports[`plugin-module-federation > should set environment module federation con
           "lib-axios": {
             "name": "lib-axios",
             "priority": 0,
-            "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
+            "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
           },
           "lib-lodash": {
             "name": "lib-lodash",
             "priority": 0,
-            "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
+            "test": /node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
           },
         },
         "chunks": "all",

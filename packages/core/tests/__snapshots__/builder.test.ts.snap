@@ -298,12 +298,12 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
         "lib-axios": {
           "name": "lib-axios",
           "priority": 0,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
+          "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
         },
         "lib-lodash": {
           "name": "lib-lodash",
           "priority": 0,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
+          "test": /node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
         },
       },
       "chunks": "all",

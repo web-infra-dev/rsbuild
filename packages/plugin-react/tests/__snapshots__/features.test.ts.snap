@@ -6,22 +6,22 @@ exports[`splitChunks > should apply antd/semi/... splitChunks rule when pkg is i
     "lib-axios": {
       "name": "lib-axios",
       "priority": 0,
-      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
+      "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
     },
     "lib-lodash": {
       "name": "lib-lodash",
       "priority": 0,
-      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
+      "test": /node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
     },
     "react": {
       "name": "lib-react",
       "priority": 0,
-      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(\\?:react\\|react-dom\\|scheduler\\|react-refresh\\|@rspack\\[\\\\\\\\/\\]plugin-react-refresh\\)\\[\\\\\\\\/\\]/,
+      "test": /node_modules\\[\\\\\\\\/\\]\\(\\?:react\\|react-dom\\|scheduler\\|react-refresh\\|@rspack\\[\\\\\\\\/\\]plugin-react-refresh\\)\\[\\\\\\\\/\\]/,
     },
     "router": {
       "name": "lib-router",
       "priority": 0,
-      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(\\?:react-router\\|react-router-dom\\|history\\|@remix-run\\[\\\\\\\\/\\]router\\)\\[\\\\\\\\/\\]/,
+      "test": /node_modules\\[\\\\\\\\/\\]\\(\\?:react-router\\|react-router-dom\\|history\\|@remix-run\\[\\\\\\\\/\\]router\\)\\[\\\\\\\\/\\]/,
     },
   },
   "chunks": "all",
@@ -35,12 +35,12 @@ exports[`splitChunks > should apply splitChunks.react/router plugin option when 
     "lib-axios": {
       "name": "lib-axios",
       "priority": 0,
-      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
+      "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
     },
     "lib-lodash": {
       "name": "lib-lodash",
       "priority": 0,
-      "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
+      "test": /node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
     },
   },
   "chunks": "all",

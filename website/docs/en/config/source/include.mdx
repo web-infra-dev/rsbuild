@@ -52,8 +52,8 @@ export default {
       path.dirname(require.resolve('query-string')),
       // Method 2:
       // Match by regular expression
-      // All paths containing `/node_modules/query-string/` will be matched
-      /[\\/]node_modules[\\/]query-string[\\/]/,
+      // All paths containing `node_modules/query-string/` will be matched
+      /node_modules[\\/]query-string[\\/]/,
     ],
   },
 };
@@ -75,8 +75,8 @@ Take `query-string` for example, it depends on the `decode-uri-component` packag
 export default {
   source: {
     include: [
-      /[\\/]node_modules[\\/]query-string[\\/]/,
-      /[\\/]node_modules[\\/]decode-uri-component[\\/]/,
+      /node_modules[\\/]query-string[\\/]/,
+      /node_modules[\\/]decode-uri-component[\\/]/,
     ],
   },
 };
