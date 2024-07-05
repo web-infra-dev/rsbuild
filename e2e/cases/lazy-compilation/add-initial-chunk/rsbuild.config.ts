@@ -35,4 +35,7 @@ export default defineConfig({
   dev: {
     lazyCompilation: true,
   },
+  output: {
+    polyfill: 'usage',
+  },
 });
