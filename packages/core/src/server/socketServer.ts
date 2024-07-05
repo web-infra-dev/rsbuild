@@ -9,6 +9,19 @@ interface ExtWebSocket extends Ws {
   isAlive: boolean;
 }
 
+function isEqualSet(a: Set<string>, b: Set<string>): boolean {
+  if (a.size !== b.size) {
+    return false;
+  }
+
+  for (const v of a.values()) {
+    if (!b.has(v)) {
+      return false;
+    }
+  }
+  return true;
+}
+
 export class SocketServer {
   private wsServer!: Ws.Server;
 
@@ -17,6 +30,7 @@ export class SocketServer {
   private readonly options: DevConfig;
 
   private stats?: Stats;
+  private initialChunks?: Set<string>;
 
   private timer: ReturnType<typeof setInterval> | null = null;
 
@@ -151,6 +165,7 @@ export class SocketServer {
       errors: true,
       errorsCount: true,
       errorDetails: false,
+      entrypoints: true,
       children: true,
     };
 
@@ -164,6 +179,29 @@ export class SocketServer {
     // this should never happened
     if (!stats) {
       return null;
+    }
+
+    // web-infra-dev/rspack#6633
+    // when initial-chunks change, reload the page
+    // e.g: ['index.js'] -> ['index.js', 'lib-polyfill.js']
+    const newInitialChunks: Set<string> = new Set();
+    if (stats.entrypoints) {
+      for (const entrypoint of Object.values(stats.entrypoints)) {
+        const chunks = entrypoint.chunks;
+        if (Array.isArray(chunks)) {
+          for (const chunkName of chunks) {
+            chunkName && newInitialChunks.add(chunkName);
+          }
+        }
+      }
+    }
+    const shouldReload =
+      Boolean(stats.entrypoints) &&
+      Boolean(this.initialChunks) &&
+      !isEqualSet(this.initialChunks as Set<string>, newInitialChunks);
+    this.initialChunks = newInitialChunks;
+    if (shouldReload) {
+      return this.sockWrite('content-changed');
     }
 
     const shouldEmit =
