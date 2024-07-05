@@ -746,9 +746,6 @@ importers:
       fs-extra:
         specifier: ^11.2.0
         version: 11.2.0
-      gzip-size:
-        specifier: ^6.0.0
-        version: 6.0.0
       http-compression:
         specifier: 1.0.20
         version: 1.0.20

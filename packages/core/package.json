@@ -77,7 +77,6 @@
     "dotenv": "16.4.5",
     "dotenv-expand": "11.0.6",
     "fs-extra": "^11.2.0",
-    "gzip-size": "^6.0.0",
     "http-compression": "1.0.20",
     "http-proxy-middleware": "^2.0.6",
     "jiti": "^1.21.6",
