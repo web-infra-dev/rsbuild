@@ -1,4 +1,4 @@
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import type HtmlWebpackPlugin from 'html-rspack-plugin';
 
 export type BeforeAssetTagGenerationHtmlPluginData = {
   assets: {

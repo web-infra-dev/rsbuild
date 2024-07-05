@@ -5,7 +5,7 @@ import {
   ensureAssetPrefix,
   logger,
 } from '@rsbuild/core';
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import type HtmlWebpackPlugin from 'html-rspack-plugin';
 import type { PluginRemOptions } from './types';
 
 type AutoSetRootFontSizeOptions = Omit<

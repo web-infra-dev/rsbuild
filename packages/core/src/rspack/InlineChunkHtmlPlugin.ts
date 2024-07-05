@@ -7,7 +7,7 @@
  */
 import { join } from 'node:path';
 import type { Compilation, Compiler } from '@rspack/core';
-import type { HtmlTagObject } from 'html-webpack-plugin';
+import type { HtmlTagObject } from 'html-rspack-plugin';
 import {
   addTrailingSlash,
   getPublicPathFromCompiler,
@@ -235,7 +235,7 @@ export class InlineChunkHtmlPlugin {
           name: 'InlineChunkHtmlPlugin',
           /**
            * Remove marked inline assets in summarize stage,
-           * which should be later than the emitting of html-webpack-plugin
+           * which should be later than the emitting of html-rspack-plugin
            */
           stage: compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_SUMMARIZE,
         },

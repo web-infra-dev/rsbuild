@@ -55,7 +55,7 @@
     "@swc/helpers": "0.5.11",
     "caniuse-lite": "^1.0.30001640",
     "core-js": "~3.37.1",
-    "html-webpack-plugin": "npm:html-rspack-plugin@5.7.2",
+    "html-rspack-plugin": "5.7.2",
     "postcss": "^8.4.39"
   },
   "devDependencies": {

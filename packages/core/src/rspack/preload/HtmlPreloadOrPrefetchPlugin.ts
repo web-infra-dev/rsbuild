@@ -21,7 +21,7 @@ import type {
   Compiler,
   RspackPluginInstance,
 } from '@rspack/core';
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
+import type HtmlWebpackPlugin from 'html-rspack-plugin';
 import { ensureAssetPrefix, upperFirst } from '../../helpers';
 import { getHTMLPlugin } from '../../pluginHelper';
 import type { PreloadOrPreFetchOption } from '../../types';

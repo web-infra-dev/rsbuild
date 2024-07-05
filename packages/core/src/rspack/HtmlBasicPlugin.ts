@@ -1,6 +1,6 @@
 import type { Compilation, Compiler } from '@rspack/core';
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
-import type { HtmlTagObject } from 'html-webpack-plugin';
+import type HtmlWebpackPlugin from 'html-rspack-plugin';
+import type { HtmlTagObject } from 'html-rspack-plugin';
 import { ensureAssetPrefix, isFunction, partition } from '../helpers';
 import { getHTMLPlugin } from '../pluginHelper';
 import type {
