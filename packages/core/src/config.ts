@@ -344,53 +344,68 @@ export async function loadConfig({
     return config;
   };
 
-  try {
-    const { default: jiti } = await import('jiti');
-    const loadConfig = jiti(__filename, {
-      esmResolve: true,
-      // disable require cache to support restart CLI and read the new config
-      requireCache: false,
-      interopDefault: true,
-    });
+  let configExport: RsbuildConfigExport;
 
-    const configExport = loadConfig(configFilePath) as RsbuildConfigExport;
-
-    if (typeof configExport === 'function') {
-      const command = process.argv[2];
-      const params: ConfigParams = {
-        env: getNodeEnv(),
-        command,
-        envMode: envMode || getNodeEnv(),
-      };
-
-      const result = await configExport(params);
-
-      if (result === undefined) {
-        throw new Error('The config function must return a config object.');
-      }
-
-      return {
-        content: applyMetaInfo(result),
-        filePath: configFilePath,
-      };
-    }
-
-    if (!isObject(configExport)) {
-      throw new Error(
-        `The config must be an object or a function that returns an object, get ${color.yellow(
-          configExport,
-        )}`,
+  if (/\.(?:js|mjs|cjs)$/.test(configFilePath)) {
+    try {
+      const exportModule = await import(`${configFilePath}?t=${Date.now()}`);
+      configExport = exportModule.default ? exportModule.default : exportModule;
+    } catch (err) {
+      logger.debug(
+        `Failed to load file with dynamic import: ${color.dim(configFilePath)}`,
       );
+    }
+  }
+
+  try {
+    if (configExport! === undefined) {
+      const { default: jiti } = await import('jiti');
+      const loadConfig = jiti(__filename, {
+        esmResolve: true,
+        // disable require cache to support restart CLI and read the new config
+        requireCache: false,
+        interopDefault: true,
+      });
+
+      configExport = loadConfig(configFilePath) as RsbuildConfigExport;
+    }
+  } catch (err) {
+    logger.error(`Failed to load file with jiti: ${color.dim(configFilePath)}`);
+    throw err;
+  }
+
+  if (typeof configExport === 'function') {
+    const command = process.argv[2];
+    const params: ConfigParams = {
+      env: getNodeEnv(),
+      command,
+      envMode: envMode || getNodeEnv(),
+    };
+
+    const result = await configExport(params);
+
+    if (result === undefined) {
+      throw new Error('The config function must return a config object.');
     }
 
     return {
-      content: applyMetaInfo(configExport),
+      content: applyMetaInfo(result),
       filePath: configFilePath,
     };
-  } catch (err) {
-    logger.error(`Failed to load file: ${color.dim(configFilePath)}`);
-    throw err;
   }
+
+  if (!isObject(configExport)) {
+    throw new Error(
+      `The config must be an object or a function that returns an object, get ${color.yellow(
+        configExport,
+      )}`,
+    );
+  }
+
+  return {
+    content: applyMetaInfo(configExport),
+    filePath: configFilePath,
+  };
 }
 
 export const getRsbuildInspectConfig = ({
