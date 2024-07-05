@@ -29,7 +29,7 @@ export const applySplitChunksRule = (
     if (options.vue) {
       extraGroups.vue = {
         name: 'lib-vue',
-        test: /[\\/]node_modules[\\/](?:vue|vue-loader|@vue[\\/]shared|@vue[\\/]reactivity|@vue[\\/]runtime-dom|@vue[\\/]runtime-core)[\\/]/,
+        test: /node_modules[\\/](?:vue|vue-loader|@vue[\\/]shared|@vue[\\/]reactivity|@vue[\\/]runtime-dom|@vue[\\/]runtime-core)[\\/]/,
         priority: 0,
       };
     }
@@ -37,7 +37,7 @@ export const applySplitChunksRule = (
     if (options.router) {
       extraGroups.router = {
         name: 'lib-router',
-        test: /[\\/]node_modules[\\/]vue-router[\\/]/,
+        test: /node_modules[\\/]vue-router[\\/]/,
         priority: 0,
       };
     }
