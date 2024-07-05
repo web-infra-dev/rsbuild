@@ -9,6 +9,10 @@ interface ExtWebSocket extends Ws {
   isAlive: boolean;
 }
 
+function equalArray(a: string[], b: string[]): boolean {
+  return a.length === b.length && a.every((item, index) => item === b[index]);
+}
+
 export class SocketServer {
   private wsServer!: Ws.Server;
 
@@ -17,7 +21,7 @@ export class SocketServer {
   private readonly options: DevConfig;
 
   private stats?: Stats;
-  private entryPointsLength?: number;
+  private entryPointsChunks?: string[];
 
   private timer: ReturnType<typeof setInterval> | null = null;
 
@@ -169,27 +173,23 @@ export class SocketServer {
     }
 
     // web-infra-dev/rspack#6633
-    const newEntryPointsLength = Object.values(stats.entrypoints ?? {}).reduce(
-      (prev, curr) => prev + Number(curr?.chunks?.length),
-      0,
-    );
+    // when initial-chunks change, reload the page
+    // e.g: ['index.js'] -> ['index.js', 'lib-polyfill.js']
+    const newEntryPointsChunks: string[] = [];
+    for (const entrypoint of Object.values(stats.entrypoints ?? {})) {
+      if (Array.isArray(entrypoint?.chunks)) {
+        const chunks = entrypoint?.chunks.filter(Boolean) as string[];
+        newEntryPointsChunks.push(...chunks);
+      }
+    }
+    newEntryPointsChunks.sort((a, b) => a.localeCompare(b));
 
     const shouldReload =
-      Boolean(this.entryPointsLength) &&
       Boolean(stats.entrypoints) &&
-      this.entryPointsLength !== newEntryPointsLength;
+      Boolean(this.entryPointsChunks) &&
+      !equalArray(this.entryPointsChunks as string[], newEntryPointsChunks);
 
-    // debug
-    if (shouldReload) {
-      console.log(
-        shouldReload,
-        this.entryPointsLength,
-        newEntryPointsLength,
-        process.cwd(),
-      );
-    }
-
-    this.entryPointsLength = newEntryPointsLength;
+    this.entryPointsChunks = newEntryPointsChunks;
 
     if (shouldReload) {
       return this.sockWrite('content-changed');
