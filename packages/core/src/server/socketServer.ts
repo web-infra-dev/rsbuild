@@ -175,13 +175,21 @@ export class SocketServer {
     );
 
     const shouldReload =
-      this.entryPointsLength !== undefined &&
-      newEntryPointsLength !== undefined &&
+      Boolean(this.entryPointsLength) &&
+      Boolean(stats.entrypoints) &&
       this.entryPointsLength !== newEntryPointsLength;
-    this.entryPointsLength = newEntryPointsLength;
 
     // debug
-    console.log(shouldReload)
+    if (shouldReload) {
+      console.log(
+        shouldReload,
+        this.entryPointsLength,
+        newEntryPointsLength,
+        process.cwd(),
+      );
+    }
+
+    this.entryPointsLength = newEntryPointsLength;
 
     if (shouldReload) {
       return this.sockWrite('content-changed');
