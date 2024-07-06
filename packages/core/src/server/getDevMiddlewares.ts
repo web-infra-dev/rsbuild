@@ -13,6 +13,7 @@ import type {
 import type { UpgradeEvent } from './helper';
 import {
   faviconFallbackMiddleware,
+  getHtmlCompletionMiddleware,
   getHtmlFallbackMiddleware,
   getRequestLoggerMiddleware,
 } from './middlewares';
@@ -144,6 +145,20 @@ const applyDefaultMiddlewares = async ({
     });
   }
 
+  const distPath = isAbsolute(output.distPath)
+    ? output.distPath
+    : join(pwd, output.distPath);
+
+  if (compileMiddlewareAPI) {
+    middlewares.push(
+      getHtmlCompletionMiddleware({
+        distPath,
+        callback: compileMiddlewareAPI.middleware,
+        outputFileSystem,
+      }),
+    );
+  }
+
   const publicDirs = normalizePublicDirs(server?.publicDir);
   for (const publicDir of publicDirs) {
     const { default: sirv } = await import('sirv');
@@ -158,17 +173,16 @@ const applyDefaultMiddlewares = async ({
     middlewares.push(assetMiddleware);
   }
 
-  const { distPath } = output;
-
-  compileMiddlewareAPI &&
+  if (compileMiddlewareAPI) {
     middlewares.push(
       getHtmlFallbackMiddleware({
-        distPath: isAbsolute(distPath) ? distPath : join(pwd, distPath),
+        distPath,
         callback: compileMiddlewareAPI.middleware,
         htmlFallback: server.htmlFallback,
         outputFileSystem,
       }),
     );
+  }
 
   if (server.historyApiFallback) {
     const { default: connectHistoryApiFallback } = await import(
