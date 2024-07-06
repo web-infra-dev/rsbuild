@@ -35,7 +35,7 @@
     "@babel/preset-typescript": "^7.24.7",
     "@rsbuild/core": "workspace:*",
     "@types/serialize-javascript": "^5.0.4",
-    "html-rspack-plugin": "5.7.2",
+    "html-rspack-plugin": "5.7.3",
     "terser": "5.31.1",
     "typescript": "^5.5.2"
   },
