@@ -23,79 +23,71 @@ async function applyDefaultPlugins(
   pluginManager: PluginManager,
   context: InternalContext,
 ) {
-  const { pluginBasic } = await import('./plugins/basic');
-  const { pluginEntry } = await import('./plugins/entry');
-  const { pluginCache } = await import('./plugins/cache');
-  const { pluginTarget } = await import('./plugins/target');
-  const { pluginOutput } = await import('./plugins/output');
-  const { pluginResolve } = await import('./plugins/resolve');
-  const { pluginFileSize } = await import('./plugins/fileSize');
-  const { pluginCleanOutput } = await import('./plugins/cleanOutput');
-  const { pluginAsset } = await import('./plugins/asset');
-  const { pluginHtml } = await import('./plugins/html');
-  const { pluginWasm } = await import('./plugins/wasm');
-  const { pluginMoment } = await import('./plugins/moment');
-  const { pluginNodeAddons } = await import('./plugins/nodeAddons');
-  const { pluginDefine } = await import('./plugins/define');
-  const { pluginCss } = await import('./plugins/css');
-  const { pluginMinimize } = await import('./plugins/minimize');
-  const { pluginProgress } = await import('./plugins/progress');
-  const { pluginSwc } = await import('./plugins/swc');
-  const { pluginExternals } = await import('./plugins/externals');
-  const { pluginSplitChunks } = await import('./plugins/splitChunks');
-  const { pluginOpen } = await import('./plugins/open');
-  const { pluginInlineChunk } = await import('./plugins/inlineChunk');
-  const { pluginBundleAnalyzer } = await import('./plugins/bundleAnalyzer');
-  const { pluginRsdoctor } = await import('./plugins/rsdoctor');
-  const { pluginResourceHints } = await import('./plugins/resourceHints');
-  const { pluginPerformance } = await import('./plugins/performance');
-  const { pluginServer } = await import('./plugins/server');
-  const { pluginManifest } = await import('./plugins/manifest');
-  const { pluginModuleFederation } = await import('./plugins/moduleFederation');
-  const { pluginRspackProfile } = await import('./plugins/rspackProfile');
-  const { pluginLazyCompilation } = await import('./plugins/lazyCompilation');
-  const { pluginSri } = await import('./plugins/sri');
-  const { pluginNonce } = await import('./plugins/nonce');
-
-  pluginManager.addPlugins([
-    pluginBasic(),
-    pluginEntry(),
-    pluginCache(),
-    pluginTarget(),
-    pluginOutput(),
-    pluginResolve(),
-    pluginFileSize(),
+  const plugins = await Promise.all([
+    import('./plugins/basic').then(({ pluginBasic }) => pluginBasic()),
+    import('./plugins/entry').then(({ pluginEntry }) => pluginEntry()),
+    import('./plugins/cache').then(({ pluginCache }) => pluginCache()),
+    import('./plugins/target').then(({ pluginTarget }) => pluginTarget()),
+    import('./plugins/output').then(({ pluginOutput }) => pluginOutput()),
+    import('./plugins/resolve').then(({ pluginResolve }) => pluginResolve()),
+    import('./plugins/fileSize').then(({ pluginFileSize }) => pluginFileSize()),
     // cleanOutput plugin should before the html plugin
-    pluginCleanOutput(),
-    pluginAsset(),
-    pluginHtml(async (...args) => {
-      const result = await context.hooks.modifyHTMLTags.call(...args);
-      return result[0];
-    }),
-    pluginWasm(),
-    pluginMoment(),
-    pluginNodeAddons(),
-    pluginDefine(),
-    pluginCss(),
-    pluginMinimize(),
-    pluginProgress(),
-    pluginSwc(),
-    pluginExternals(),
-    pluginSplitChunks(),
-    pluginOpen(),
-    pluginInlineChunk(),
-    pluginRsdoctor(),
-    pluginResourceHints(),
-    pluginPerformance(),
-    pluginBundleAnalyzer(),
-    pluginServer(),
-    pluginManifest(),
-    pluginModuleFederation(),
-    pluginRspackProfile(),
-    pluginLazyCompilation(),
-    pluginSri(),
-    pluginNonce(),
+    import('./plugins/cleanOutput').then(({ pluginCleanOutput }) =>
+      pluginCleanOutput(),
+    ),
+    import('./plugins/asset').then(({ pluginAsset }) => pluginAsset()),
+    import('./plugins/html').then(({ pluginHtml }) =>
+      pluginHtml(async (...args) => {
+        const result = await context.hooks.modifyHTMLTags.call(...args);
+        return result[0];
+      }),
+    ),
+    import('./plugins/wasm').then(({ pluginWasm }) => pluginWasm()),
+    import('./plugins/moment').then(({ pluginMoment }) => pluginMoment()),
+    import('./plugins/nodeAddons').then(({ pluginNodeAddons }) =>
+      pluginNodeAddons(),
+    ),
+    import('./plugins/define').then(({ pluginDefine }) => pluginDefine()),
+    import('./plugins/css').then(({ pluginCss }) => pluginCss()),
+    import('./plugins/minimize').then(({ pluginMinimize }) => pluginMinimize()),
+    import('./plugins/progress').then(({ pluginProgress }) => pluginProgress()),
+    import('./plugins/swc').then(({ pluginSwc }) => pluginSwc()),
+    import('./plugins/externals').then(({ pluginExternals }) =>
+      pluginExternals(),
+    ),
+    import('./plugins/splitChunks').then(({ pluginSplitChunks }) =>
+      pluginSplitChunks(),
+    ),
+    import('./plugins/open').then(({ pluginOpen }) => pluginOpen()),
+    import('./plugins/inlineChunk').then(({ pluginInlineChunk }) =>
+      pluginInlineChunk(),
+    ),
+    import('./plugins/rsdoctor').then(({ pluginRsdoctor }) => pluginRsdoctor()),
+    import('./plugins/resourceHints').then(({ pluginResourceHints }) =>
+      pluginResourceHints(),
+    ),
+    import('./plugins/performance').then(({ pluginPerformance }) =>
+      pluginPerformance(),
+    ),
+    import('./plugins/bundleAnalyzer').then(({ pluginBundleAnalyzer }) =>
+      pluginBundleAnalyzer(),
+    ),
+    import('./plugins/server').then(({ pluginServer }) => pluginServer()),
+    import('./plugins/manifest').then(({ pluginManifest }) => pluginManifest()),
+    import('./plugins/moduleFederation').then(({ pluginModuleFederation }) =>
+      pluginModuleFederation(),
+    ),
+    import('./plugins/rspackProfile').then(({ pluginRspackProfile }) =>
+      pluginRspackProfile(),
+    ),
+    import('./plugins/lazyCompilation').then(({ pluginLazyCompilation }) =>
+      pluginLazyCompilation(),
+    ),
+    import('./plugins/sri').then(({ pluginSri }) => pluginSri()),
+    import('./plugins/nonce').then(({ pluginNonce }) => pluginNonce()),
   ]);
+
+  pluginManager.addPlugins(plugins);
 }
 
 export async function createRsbuild(
