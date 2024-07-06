@@ -3,7 +3,9 @@ import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
 
-test('should serve publicDir for dev server correctly', async ({ page }) => {
+test('should serve publicDir with template for dev server correctly', async ({
+  page,
+}) => {
   const rsbuild = await dev({
     cwd,
   });
@@ -18,7 +20,7 @@ test('should serve publicDir for dev server correctly', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('should serve publicDir for preview server correctly', async ({
+test('should serve publicDir with template for preview server correctly', async ({
   page,
 }) => {
   const rsbuild = await build({

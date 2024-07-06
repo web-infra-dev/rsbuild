@@ -1,3 +1,4 @@
+import type { IncomingMessage } from 'node:http';
 import path from 'node:path';
 import { parse } from 'node:url';
 import type Connect from 'connect';
@@ -73,37 +74,50 @@ export const notFoundMiddleware: Middleware = (_req, res, _next) => {
   res.end();
 };
 
-export const getHtmlFallbackMiddleware: (params: {
+const isFileExists = async (
+  filePath: string,
+  outputFileSystem: Rspack.OutputFileSystem,
+) =>
+  new Promise((resolve) => {
+    outputFileSystem.stat(filePath, (_error, stats) => {
+      resolve(stats?.isFile());
+    });
+  });
+
+const maybeHTMLRequest = (req: IncomingMessage) => {
+  if (
+    // require headers and url
+    !req.url ||
+    !req.headers ||
+    // only accept GET or HEAD
+    (req.method !== 'GET' && req.method !== 'HEAD')
+  ) {
+    return false;
+  }
+
+  const { accept } = req.headers;
+  // accept should be `text/html` or `*/*`
+  return (
+    typeof accept === 'string' &&
+    (accept.includes('text/html') || accept.includes('*/*'))
+  );
+};
+
+/**
+ * Support access HTML without suffix
+ */
+export const getHtmlCompletionMiddleware: (params: {
   distPath: string;
-  callback?: Middleware;
-  htmlFallback?: HtmlFallback;
+  callback: Middleware;
   outputFileSystem: Rspack.OutputFileSystem;
-}) => Middleware = ({ htmlFallback, distPath, callback, outputFileSystem }) => {
-  /**
-   * support access page without suffix and support fallback in some edge cases
-   */
+}) => Middleware = ({ distPath, callback, outputFileSystem }) => {
   return async (req, res, next) => {
-    if (
-      // Only accept GET or HEAD
-      (req.method !== 'GET' && req.method !== 'HEAD') ||
-      // Require Accept header
-      !req.headers ||
-      typeof req.headers.accept !== 'string' ||
-      // Ignore JSON requests
-      req.headers.accept.includes('application/json') ||
-      // Require Accept: text/html or */*
-      !(
-        req.headers.accept.includes('text/html') ||
-        req.headers.accept.includes('*/*')
-      ) ||
-      !req.url ||
-      ['/favicon.ico'].includes(req.url)
-    ) {
+    if (!maybeHTMLRequest(req)) {
       return next();
     }
 
-    const { url } = req;
-    let pathname = url;
+    const url = req.url!;
+    let pathname: string;
 
     // Handle invalid URLs
     try {
@@ -115,16 +129,59 @@ export const getHtmlFallbackMiddleware: (params: {
       return next();
     }
 
-    const isFileExists = async (filePath: string) => {
-      return new Promise((resolve) => {
-        outputFileSystem.stat(filePath, (_error, stats) => {
-          resolve(stats?.isFile());
-        });
+    const rewrite = (newUrl: string) => {
+      req.url = newUrl;
+      return callback(req, res, (...args) => {
+        next(...args);
       });
     };
 
-    const rewrite = (newUrl: string, isFallback = false) => {
-      if (isFallback && logger.level === 'verbose') {
+    // '/' => '/index.html'
+    if (pathname.endsWith('/')) {
+      const newUrl = `${pathname}index.html`;
+      const filePath = path.join(distPath, newUrl);
+
+      if (await isFileExists(filePath, outputFileSystem)) {
+        return rewrite(newUrl);
+      }
+    }
+    // '/main' => '/main.html'
+    else if (!path.extname(pathname)) {
+      const newUrl = `${pathname}.html`;
+      const filePath = path.join(distPath, newUrl);
+
+      if (await isFileExists(filePath, outputFileSystem)) {
+        return rewrite(newUrl);
+      }
+    }
+
+    next();
+  };
+};
+
+/**
+ * support HTML fallback in some edge cases
+ */
+export const getHtmlFallbackMiddleware: (params: {
+  distPath: string;
+  callback: Middleware;
+  htmlFallback?: HtmlFallback;
+  outputFileSystem: Rspack.OutputFileSystem;
+}) => Middleware = ({ htmlFallback, distPath, callback, outputFileSystem }) => {
+  return async (req, res, next) => {
+    if (
+      !maybeHTMLRequest(req) ||
+      '/favicon.ico' === req.url ||
+      htmlFallback !== 'index'
+    ) {
+      return next();
+    }
+
+    const filePath = path.join(distPath, 'index.html');
+    if (await isFileExists(filePath, outputFileSystem)) {
+      const newUrl = '/index.html';
+
+      if (logger.level === 'verbose') {
         logger.debug(
           `${req.method} ${color.gray(
             `${req.url} ${color.yellow('fallback')} to ${newUrl}`,
@@ -133,39 +190,7 @@ export const getHtmlFallbackMiddleware: (params: {
       }
 
       req.url = newUrl;
-
-      if (callback) {
-        return callback(req, res, (...args) => {
-          next(...args);
-        });
-      }
-      return next();
-    };
-
-    // '/' => '/index.html'
-    if (pathname.endsWith('/')) {
-      const newUrl = `${pathname}index.html`;
-      const filePath = path.join(distPath, pathname, 'index.html');
-
-      if (await isFileExists(filePath)) {
-        return rewrite(newUrl);
-      }
-    } else if (
-      // '/main' => '/main.html'
-      !pathname.endsWith('.html')
-    ) {
-      const newUrl = `${pathname}.html`;
-      const filePath = path.join(distPath, `${pathname}.html`);
-
-      if (await isFileExists(filePath)) {
-        return rewrite(newUrl);
-      }
-    }
-
-    if (htmlFallback === 'index') {
-      if (await isFileExists(path.join(distPath, 'index.html'))) {
-        return rewrite('/index.html', true);
-      }
+      return callback(req, res, (...args) => next(...args));
     }
 
     next();
