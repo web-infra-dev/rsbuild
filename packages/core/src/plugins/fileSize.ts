@@ -86,7 +86,7 @@ async function printFileSizes(
     distFolder: string,
   ) => {
     const fileName = asset.name.split('?')[0];
-    const contents = fs.readFileSync(path.join(distPath, fileName));
+    const contents = await fs.promises.readFile(path.join(distPath, fileName));
     const size = contents.length;
     const gzippedSize = await gzipSize(contents);
 
