@@ -12,6 +12,13 @@ const writeEmptySchemaUtils = (task) => {
   fs.writeFileSync(schemaUtilsPath, 'module.exports.validate = () => {};');
 };
 
+// postcss-loader and css-loader use `semver` to compare PostCSS ast version,
+// Rsbuild uses the same PostCSS version and do not need the comparison.
+const writeEmptySemver = (task) => {
+  const schemaUtilsPath = join(task.distPath, 'semver.js');
+  fs.writeFileSync(schemaUtilsPath, 'module.exports.satisfies = () => true;');
+};
+
 function replaceFileContent(filePath, replaceFn) {
   const content = fs.readFileSync(filePath, 'utf-8');
   const newContent = replaceFn(content);
@@ -45,10 +52,6 @@ export default {
       externals: {
         fsevents: 'fsevents',
       },
-    },
-    {
-      name: 'semver',
-      ignoreDts: true,
     },
     {
       name: 'rslog',
@@ -161,16 +164,18 @@ export default {
       ignoreDts: true,
       externals: {
         'postcss-value-parser': '../postcss-value-parser',
-        semver: '../semver',
+        semver: './semver',
       },
+      afterBundle: writeEmptySemver,
     },
     {
       name: 'postcss-loader',
       externals: {
         jiti: '../jiti',
-        semver: '../semver',
+        semver: './semver',
       },
       ignoreDts: true,
+      afterBundle: writeEmptySemver,
     },
     {
       name: 'postcss-load-config',

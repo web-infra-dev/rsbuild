@@ -92,7 +92,6 @@
     "rslog": "^1.2.2",
     "rspack-chain": "^0.7.4",
     "rspack-manifest-plugin": "5.0.0",
-    "semver": "^7.6.2",
     "sirv": "^2.0.4",
     "style-loader": "3.3.4",
     "terser": "5.31.1",
