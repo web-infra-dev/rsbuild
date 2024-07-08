@@ -94,7 +94,6 @@
     "rspack-manifest-plugin": "5.0.0",
     "sirv": "^2.0.4",
     "style-loader": "3.3.4",
-    "terser": "5.31.1",
     "tsc-alias": "^1.8.10",
     "typescript": "^5.5.2",
     "webpack": "^5.92.1",
