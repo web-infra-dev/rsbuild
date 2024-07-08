@@ -794,9 +794,6 @@ importers:
       style-loader:
         specifier: 3.3.4
         version: 3.3.4(webpack@5.92.1)
-      terser:
-        specifier: 5.31.1
-        version: 5.31.1
       tsc-alias:
         specifier: ^1.8.10
         version: 1.8.10
