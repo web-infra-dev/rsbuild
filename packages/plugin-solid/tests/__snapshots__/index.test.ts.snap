@@ -13,6 +13,12 @@ exports[`plugin-solid > should allow to configure solid preset options 1`] = `
               "babelrc": false,
               "compact": false,
               "configFile": false,
+              "parserOpts": {
+                "plugins": [
+                  "jsx",
+                  "typescript",
+                ],
+              },
               "plugins": [
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
@@ -25,16 +31,6 @@ exports[`plugin-solid > should allow to configure solid preset options 1`] = `
                 ],
               ],
               "presets": [
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
-                  {
-                    "allExtensions": true,
-                    "allowDeclareFields": true,
-                    "allowNamespaces": true,
-                    "isTSX": true,
-                    "optimizeConstEnums": true,
-                  },
-                ],
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/babel-preset-solid/index.js",
                   {
@@ -70,6 +66,12 @@ exports[`plugin-solid > should apply solid preset correctly 1`] = `
               "babelrc": false,
               "compact": false,
               "configFile": false,
+              "parserOpts": {
+                "plugins": [
+                  "jsx",
+                  "typescript",
+                ],
+              },
               "plugins": [
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
@@ -82,16 +84,6 @@ exports[`plugin-solid > should apply solid preset correctly 1`] = `
                 ],
               ],
               "presets": [
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
-                  {
-                    "allExtensions": true,
-                    "allowDeclareFields": true,
-                    "allowNamespaces": true,
-                    "isTSX": true,
-                    "optimizeConstEnums": true,
-                  },
-                ],
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/babel-preset-solid/index.js",
                   {},
@@ -124,6 +116,12 @@ exports[`plugin-solid > should apply solid preset correctly in rspack mode 1`] =
               "babelrc": false,
               "compact": false,
               "configFile": false,
+              "parserOpts": {
+                "plugins": [
+                  "jsx",
+                  "typescript",
+                ],
+              },
               "plugins": [
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
@@ -136,16 +134,6 @@ exports[`plugin-solid > should apply solid preset correctly in rspack mode 1`] =
                 ],
               ],
               "presets": [
-                [
-                  "<ROOT>/node_modules/<PNPM_INNER>/@babel/preset-typescript/lib/index.js",
-                  {
-                    "allExtensions": true,
-                    "allowDeclareFields": true,
-                    "allowNamespaces": true,
-                    "isTSX": true,
-                    "optimizeConstEnums": true,
-                  },
-                ],
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/babel-preset-solid/index.js",
                   {},

@@ -25,11 +25,13 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
             chain,
             CHAIN_ID,
             modifier: (babelOptions) => {
-              babelOptions.presets ??= [];
-              babelOptions.presets.push([
-                require.resolve('babel-preset-solid'),
-                options.solidPresetOptions || {},
-              ]);
+              babelOptions.presets = [
+                [
+                  require.resolve('babel-preset-solid'),
+                  options.solidPresetOptions || {},
+                ],
+              ];
+              babelOptions.parserOpts = { plugins: ['jsx', 'typescript'] };
 
               const usingHMR =
                 !isProd && environmentConfig.dev.hmr && target === 'web';
