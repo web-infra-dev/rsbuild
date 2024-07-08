@@ -54,6 +54,16 @@ export default {
       },
     },
     {
+      name: 'picocolors',
+      beforeBundle({ depPath }) {
+        const typesFile = join(depPath, 'types.ts');
+        // Fix type bundle
+        if (fs.existsSync(typesFile)) {
+          fs.renameSync(typesFile, join(depPath, 'types.d.ts'));
+        }
+      },
+    },
+    {
       name: 'rslog',
       afterBundle(task) {
         // use the cjs bundle of rslog
@@ -71,7 +81,7 @@ export default {
       name: 'launch-editor-middleware',
       ignoreDts: true,
       externals: {
-        picocolors: 'picocolors',
+        picocolors: '../picocolors',
       },
     },
     {
@@ -135,7 +145,7 @@ export default {
       externals: {
         browserslist: '../browserslist',
         'postcss-value-parser': '../postcss-value-parser',
-        picocolors: 'picocolors',
+        picocolors: '../picocolors',
       },
     },
     {

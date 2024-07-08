@@ -19,6 +19,7 @@
       "connect": ["./compiled/connect"],
       "chokidar": ["./compiled/chokidar"],
       "commander": ["./compiled/commander"],
+      "picocolors": ["./compiled/picocolors"],
       "on-finished": ["./compiled/on-finished"],
       "autoprefixer": ["./compiled/autoprefixer"],
       "browserslist": ["./compiled/browserslist"],
