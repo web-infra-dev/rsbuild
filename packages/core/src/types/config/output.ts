@@ -1,6 +1,7 @@
 import type {
   CopyRspackPluginOptions,
   Externals,
+  LightningCssMinimizerRspackPluginOptions,
   SwcJsMinimizerRspackPluginOptions,
 } from '@rspack/core';
 import type { CSSLoaderModulesOptions } from '../../types';
@@ -168,13 +169,17 @@ export type Minify =
        */
       js?: boolean;
       /**
-       * Minimizer options of JavaScript, which will be passed to swc.
+       * Minimizer options of JavaScript, which will be passed to SWC.
        */
       jsOptions?: SwcJsMinimizerRspackPluginOptions;
       /**
        * Whether to enable CSS minimization.
        */
       css?: boolean;
+      /**
+       * Minimizer options of CSS, which will be passed to LightningCSS.
+       */
+      cssOptions?: LightningCssMinimizerRspackPluginOptions;
     };
 
 export type InlineChunkTestFunction = (params: {

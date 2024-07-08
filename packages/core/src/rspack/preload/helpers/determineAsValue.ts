@@ -1,8 +1,8 @@
 /**
- * @license
- * Copyright 2018 Google Inc.
+ * This method is modified based on source found in
  * https://github.com/vuejs/preload-webpack-plugin/blob/master/src/lib/determine-as-value.js
  *
+ * Copyright 2018 Google Inc.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at

@@ -9,6 +9,7 @@ type Minify =
       js?: boolean;
       jsOptions?: SwcJsMinimizerRspackPluginOptions;
       css?: boolean;
+      cssOptions?: LightningCssMinimizerRspackPluginOptions;
     };
 ```
 
@@ -24,10 +25,11 @@ Here are explanations for each field:
 - `js`: Whether to enable minification for JavaScript code.
 - `jsOptions`: JS code minification configuration, which will be merged with the default configuration and passed to SWC.
 - `css`: Whether to enable minification for CSS code.
+- `cssOptions`: CSS code minification configuration, which will be merged with the default configuration and passed to Lightning CSS.
 
 ## Example
 
-### Disable all code minification
+### Disable all minification
 
 ```js
 export default {
@@ -41,7 +43,7 @@ export default {
 This configuration is usually used for debugging and troubleshooting. It is not recommended to disable code minification in production builds, as it will significantly degrade the page performance.
 :::
 
-### Disable JavaScript code minification
+### Disable JavaScript minification
 
 ```js
 export default {
@@ -53,7 +55,7 @@ export default {
 };
 ```
 
-### Customize JavaScript code minification
+### JavaScript minify options
 
 `output.minify.jsOptions` is used to configure SWC's minification options. For specific configuration items, please refer to [SWC Documentation](https://swc.rs/docs/configuration/minification#configuration). The following configuration will override the default settings, turning off code obfuscation and the removal of `console` statements.
 
@@ -66,6 +68,22 @@ export default {
         compress: {
           drop_console: false,
         },
+      },
+    },
+  },
+};
+```
+
+### CSS minify options
+
+`output.minify.cssOptions` is used to configure Lightning CSS's minification options. For specific configuration items, please refer to [LightningCssMinimizerRspackPlugin Documentation](https://rspack.dev/plugins/rspack/lightning-css-minimizer-rspack-plugin).
+
+```js
+export default {
+  output: {
+    minify: {
+      cssOptions: {
+        errorRecovery: false,
       },
     },
   },

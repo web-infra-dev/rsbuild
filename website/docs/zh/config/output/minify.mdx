@@ -9,6 +9,7 @@ type Minify =
       js?: boolean;
       jsOptions?: SwcJsMinimizerRspackPluginOptions;
       css?: boolean;
+      cssOptions?: LightningCssMinimizerRspackPluginOptions;
     };
 ```
 
@@ -21,13 +22,14 @@ type Minify =
 
 下面是各个字段的说明：
 
-- `js`: 是否开启对 JavaScript 代码的压缩
-- `jsOptions`: JS 代码压缩配置，将会与默认配置合并传给 SWC
-- `css`: 是否开启对 CSS 代码的压缩
+- `js`: 是否开启对 JavaScript 代码的压缩。
+- `jsOptions`: JS 代码压缩配置，将会与默认配置合并传给 SWC。
+- `css`: 是否开启对 CSS 代码的压缩。
+- `cssOptions`: CSS 代码压缩配置，将会与默认配置合并传给 Lightning CSS。
 
 ## 示例
 
-### 禁用所有代码压缩
+### 禁用所有压缩
 
 ```js
 export default {
@@ -41,7 +43,7 @@ export default {
 该配置项通常用于代码调试和问题排查，不建议在生产环境禁用代码压缩，否则会导致页面性能显著下降。
 :::
 
-### 禁用 JavaScript 代码压缩
+### 禁用 JavaScript 压缩
 
 ```js
 export default {
@@ -53,7 +55,7 @@ export default {
 };
 ```
 
-### 对 JavaScript 代码进行自定义压缩
+### JavaScript 压缩选项
 
 `output.minify.jsOptions` 用于配置 SWC 的压缩选项，具体配置项请参考 [SWC 文档](https://swc.rs/docs/configuration/minification#configuration)。如下配置将覆盖默认配置，关闭代码混淆和移除 `console` 语句。
 
@@ -66,6 +68,22 @@ export default {
         compress: {
           drop_console: false,
         },
+      },
+    },
+  },
+};
+```
+
+### CSS 压缩选项
+
+`output.minify.cssOptions` 用于配置 Lightning CSS 的压缩选项，具体配置项请参考 [LightningCssMinimizerRspackPlugin 文档](https://rspack.dev/plugins/rspack/lightning-css-minimizer-rspack-plugin)。
+
+```js
+export default {
+  output: {
+    minify: {
+      cssOptions: {
+        errorRecovery: false,
       },
     },
   },
