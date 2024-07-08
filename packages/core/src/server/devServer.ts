@@ -51,7 +51,7 @@ export type RsbuildDevServer = {
 
   /** The following APIs will be used when you use a custom server */
 
-  /** The Rsbuild Server environment API */
+  /** The Rsbuild server environment API */
   environments: EnvironmentAPI;
 
   /**
