@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path, { isAbsolute } from 'node:path';
 import type { EntryDescription } from '@rspack/core';
-import deepmerge from 'deepmerge';
 import color from 'picocolors';
 import {
   reduceConfigsMergeContext,
@@ -19,88 +18,10 @@ import type { HtmlInfo, TagConfig } from '../rspack/HtmlBasicPlugin';
 import type {
   HTMLPluginOptions,
   HtmlConfig,
-  MinifyJSOptions,
   ModifyHTMLTagsFn,
   NormalizedEnvironmentConfig,
   RsbuildPlugin,
 } from '../types';
-import { parseMinifyOptions } from './minimize';
-
-function applyRemoveConsole(
-  options: MinifyJSOptions,
-  config: NormalizedEnvironmentConfig,
-) {
-  const { removeConsole } = config.performance;
-  const compressOptions =
-    typeof options.compress === 'boolean' ? {} : options.compress || {};
-
-  if (removeConsole === true) {
-    options.compress = {
-      ...compressOptions,
-      drop_console: true,
-    };
-  } else if (Array.isArray(removeConsole)) {
-    const pureFuncs = removeConsole.map((method) => `console.${method}`);
-    options.compress = {
-      ...compressOptions,
-      pure_funcs: pureFuncs,
-    };
-  }
-
-  return options;
-}
-
-function getTerserMinifyOptions(config: NormalizedEnvironmentConfig) {
-  const options: MinifyJSOptions = {
-    mangle: {
-      safari10: true,
-    },
-    format: {
-      ascii_only: config.output.charset === 'ascii',
-    },
-  };
-
-  if (config.output.legalComments === 'none') {
-    options.format!.comments = false;
-  }
-
-  const finalOptions = applyRemoveConsole(options, config);
-  return finalOptions;
-}
-
-async function getHtmlMinifyOptions(
-  isProd: boolean,
-  config: NormalizedEnvironmentConfig,
-) {
-  if (
-    !isProd ||
-    !config.output.minify ||
-    !parseMinifyOptions(config).minifyHtml
-  ) {
-    return false;
-  }
-
-  const minifyJS: MinifyJSOptions = getTerserMinifyOptions(config);
-
-  const htmlMinifyDefaultOptions = {
-    removeComments: false,
-    useShortDoctype: true,
-    keepClosingSlash: true,
-    collapseWhitespace: true,
-    removeRedundantAttributes: true,
-    removeScriptTypeAttributes: true,
-    removeStyleLinkTypeAttributes: true,
-    removeEmptyAttributes: true,
-    minifyJS,
-    minifyCSS: true,
-    minifyURLs: true,
-  };
-
-  const htmlMinifyOptions = parseMinifyOptions(config).htmlOptions;
-  return typeof htmlMinifyOptions === 'object'
-    ? deepmerge(htmlMinifyDefaultOptions, htmlMinifyOptions)
-    : htmlMinifyDefaultOptions;
-}
 
 function getTitle(entryName: string, config: NormalizedEnvironmentConfig) {
   return reduceConfigsMergeContext({
@@ -275,14 +196,13 @@ export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      async (chain, { HtmlPlugin, isProd, CHAIN_ID, environment }) => {
+      async (chain, { HtmlPlugin, CHAIN_ID, environment }) => {
         const { config, htmlPaths } = environment;
 
         if (Object.keys(htmlPaths).length === 0) {
           return;
         }
 
-        const minify = await getHtmlMinifyOptions(isProd, config);
         const assetPrefix = getPublicPathFromChain(chain, false);
         const entries = chain.entryPoints.entries() || {};
         const entryNames = Object.keys(entries);
@@ -317,7 +237,6 @@ export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
               meta: metaTags,
               chunks,
               inject,
-              minify,
               filename,
               template: templatePath,
               entryName,

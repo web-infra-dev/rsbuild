@@ -172,35 +172,6 @@ describe('plugin-minimize', () => {
     process.env.NODE_ENV = 'test';
   });
 
-  it('should accept and merge options for HTML minimizer', async () => {
-    process.env.NODE_ENV = 'production';
-
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
-      rsbuildConfig: {
-        output: {
-          minify: {
-            htmlOptions: {
-              minifyJS: false,
-            },
-          },
-        },
-      },
-    });
-
-    expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toMatchObject(
-      {
-        options: {
-          minify: {
-            minifyJS: false,
-          },
-        },
-      },
-    );
-
-    process.env.NODE_ENV = 'test';
-  });
-
   it('should dropConsole when performance.removeConsole is true', async () => {
     process.env.NODE_ENV = 'production';
 

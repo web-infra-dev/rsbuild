@@ -3,7 +3,7 @@ import type {
   Externals,
   SwcJsMinimizerRspackPluginOptions,
 } from '@rspack/core';
-import type { CSSLoaderModulesOptions, HTMLPluginOptions } from '../../types';
+import type { CSSLoaderModulesOptions } from '../../types';
 import type { RsbuildTarget } from '../rsbuild';
 import type { Rspack, RspackConfig } from '../rspack';
 
@@ -175,14 +175,6 @@ export type Minify =
        * Whether to enable CSS minimization.
        */
       css?: boolean;
-      /**
-       * Whether to enable HTML minimization.
-       */
-      html?: boolean;
-      /**
-       * Minimizer options of HTML, which will be passed to html-rspack-plugin.
-       */
-      htmlOptions?: HTMLPluginOptions['minify'];
     };
 
 export type InlineChunkTestFunction = (params: {
