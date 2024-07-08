@@ -246,6 +246,28 @@ If you want to integrate Rsbuild dev server into an custom server, you can use t
 - **Type:**
 
 ```ts
+type EnvironmentAPI = {
+  [name: string]: {
+    /**
+     * Get stats info about current environment.
+     */
+    getStats: () => Promise<Stats>;
+
+    /**
+     * Load and execute stats bundle in server.
+     *
+     * @param entryName - relate to Rsbuild's `source.entry`
+     * @returns the return value of entry module.
+     */
+    loadBundle: <T = unknown>(entryName: string) => Promise<T>;
+
+    /**
+     * Get the compiled HTML template.
+     */
+    getTransformedHtml: (entryName: string) => Promise<string>;
+  };
+};
+
 type RsbuildDevServer = {
   /** start the Rsbuild DevServer */
   listen: () => Promise<{
@@ -255,6 +277,9 @@ type RsbuildDevServer = {
   }>;
 
   /** The following APIs will be used when you use a custom server */
+
+  /** The Rsbuild server environment API */
+  environments: EnvironmentAPI;
 
   /**
    * The resolved port
@@ -326,7 +351,7 @@ export async function startDevServer() {
 }
 ```
 
-For detailed usage, please refer to: [Example](https://github.com/web-infra-dev/rsbuild/blob/main/e2e/cases/server/custom-server/scripts/server.mjs).
+For detailed usage, please refer to: [Example](https://github.com/rspack-contrib/rspack-examples/blob/main/rsbuild/express/server.mjs).
 
 If you want to use Rsbuild DevServer to start the project directly, you can use the [Rsbuild - startDevServer](#rsbuildstartdevserver) method directly. `startDevServer` is actually syntactic sugar for the following code:
 

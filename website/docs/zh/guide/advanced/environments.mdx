@@ -167,3 +167,63 @@ const myPlugin = () => ({
   },
 });
 ```
+
+## 使用 environment API
+
+Rsbuild Server 提供了一系列和构建环境相关的 API，用户可通过 Rsbuild environment API 在服务器端操作特定环境下的构建产物。
+
+你可以在 [Rsbuild DevMiddleware](/config/dev/setup-middlewares) 或[自定义 Server](/api/javascript-api/instance#rsbuildcreatedevserver) 中使用 environment API。
+
+例如，你可以通过 Rsbuild environment API 在开发模式下快速实现一个 SSR 功能：
+
+```ts
+import express from 'express';
+import { createRsbuild, loadConfig } from '@rsbuild/core';
+
+const serverRender = (serverAPI) => async (_req, res) => {
+  const indexModule = await serverAPI.environments.ssr.loadBundle('index');
+
+  const markup = indexModule.render();
+
+  const template = await serverAPI.environments.web.getTransformedHtml('index');
+
+  const html = template.replace('<!--app-content-->', markup);
+
+  res.writeHead(200, {
+    'Content-Type': 'text/html',
+  });
+  res.end(html);
+};
+
+export async function startDevServer() {
+  const { content } = await loadConfig({});
+
+  // Init Rsbuild
+  const rsbuild = await createRsbuild({
+    rsbuildConfig: content,
+  });
+
+  const app = express();
+
+  // Create Rsbuild DevServer instance
+  const rsbuildServer = await rsbuild.createDevServer();
+
+  const serverRenderMiddleware = serverRender(rsbuildServer);
+
+  app.get('/', async (req, res, next) => {
+    try {
+      await serverRenderMiddleware(req, res, next);
+    } catch (err) {
+      logger.error('SSR render error, downgrade to CSR...\n', err);
+      next();
+    }
+  });
+
+  // Apply Rsbuild’s built-in middlewares
+  app.use(rsbuildServer.middlewares);
+
+  // ...
+}
+```
+
+详细使用情况可参考：[SSR + Express 示例](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/ssr-express)。
