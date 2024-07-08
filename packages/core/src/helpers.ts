@@ -163,21 +163,15 @@ const hintNodePolyfill = (message: string): string => {
 
 function formatErrorMessage(errors: string[]) {
   const messages = errors.map((error) => hintNodePolyfill(error));
-
   const text = `${messages.join('\n\n')}\n`;
-  const isTerserError = text.includes('from Terser');
-  const title = color.bold(
-    color.red(isTerserError ? 'Minify error: ' : 'Compile error: '),
-  );
+  const title = color.bold(color.red('Compile error: '));
 
   if (!errors.length) {
     return `${title}\n${color.yellow(`For more details, please setting 'stats.errors: true' `)}`;
   }
 
   const tip = color.yellow(
-    isTerserError
-      ? 'Failed to minify with terser, check for syntax errors.'
-      : 'Failed to compile, check the errors for troubleshooting.',
+    'Failed to compile, check the errors for troubleshooting.',
   );
 
   return `${title}\n${tip}\n${text}`;

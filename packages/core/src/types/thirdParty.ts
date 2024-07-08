@@ -4,7 +4,6 @@ import type {
 } from '@rspack/core';
 import type Autoprefixer from 'autoprefixer';
 import type { AcceptedPlugin, ProcessOptions } from 'postcss';
-import type { MinifyOptions } from 'terser';
 import type { Configuration as WebpackConfig } from 'webpack';
 import type { Rspack } from './rspack';
 
@@ -16,9 +15,6 @@ export interface CSSExtractOptions {
 }
 
 export type { WebpackConfig, AutoprefixerOptions };
-
-/** Currently using terser for html js minify and will be replaced by swc later */
-export type MinifyJSOptions = MinifyOptions;
 
 export type PostCSSOptions = ProcessOptions & {
   config?: boolean;

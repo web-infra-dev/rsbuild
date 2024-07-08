@@ -12,7 +12,7 @@ test('generate integrity using sha512 algorithm', async ({ page }) => {
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
 
   expect(html).toMatch(
-    /<script defer="defer" src="\/static\/js\/index\.\w{8}\.js" integrity="sha512-[A-Za-z0-9+\/=]+"/,
+    /<script defer src="\/static\/js\/index\.\w{8}\.js" integrity="sha512-[A-Za-z0-9+\/=]+"/,
   );
 
   expect(html).toMatch(

@@ -334,7 +334,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "ignoreOrder": true,
       },
     },
-    HtmlWebpackPlugin {
+    HtmlRspackPlugin {
       "options": {
         "base": false,
         "cache": true,
@@ -355,7 +355,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
-        "minify": false,
         "publicPath": "auto",
         "scriptLoading": "defer",
         "showErrors": true,
@@ -378,13 +377,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
-        "minify": false,
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
         "title": "Rsbuild App",
       },
-      "version": 5,
+      "version": 6,
     },
     HtmlBasicPlugin {
       "getEnvironment": [Function],
@@ -791,7 +789,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "ignoreOrder": true,
       },
     },
-    HtmlWebpackPlugin {
+    HtmlRspackPlugin {
       "options": {
         "base": false,
         "cache": true,
@@ -811,26 +809,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "charset": "UTF-8",
           },
           "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "minify": {
-          "collapseWhitespace": true,
-          "keepClosingSlash": true,
-          "minifyCSS": true,
-          "minifyJS": {
-            "format": {
-              "ascii_only": true,
-            },
-            "mangle": {
-              "safari10": true,
-            },
-          },
-          "minifyURLs": true,
-          "removeComments": false,
-          "removeEmptyAttributes": true,
-          "removeRedundantAttributes": true,
-          "removeScriptTypeAttributes": true,
-          "removeStyleLinkTypeAttributes": true,
-          "useShortDoctype": true,
         },
         "publicPath": "auto",
         "scriptLoading": "defer",
@@ -854,32 +832,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
-        "minify": {
-          "collapseWhitespace": true,
-          "keepClosingSlash": true,
-          "minifyCSS": true,
-          "minifyJS": {
-            "format": {
-              "ascii_only": true,
-            },
-            "mangle": {
-              "safari10": true,
-            },
-          },
-          "minifyURLs": true,
-          "removeComments": false,
-          "removeEmptyAttributes": true,
-          "removeRedundantAttributes": true,
-          "removeScriptTypeAttributes": true,
-          "removeStyleLinkTypeAttributes": true,
-          "useShortDoctype": true,
-        },
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
         "title": "Rsbuild App",
       },
-      "version": 5,
+      "version": 6,
     },
     HtmlBasicPlugin {
       "getEnvironment": [Function],
@@ -1591,7 +1549,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "ignoreOrder": true,
       },
     },
-    HtmlWebpackPlugin {
+    HtmlRspackPlugin {
       "options": {
         "base": false,
         "cache": true,
@@ -1612,7 +1570,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
-        "minify": false,
         "publicPath": "auto",
         "scriptLoading": "defer",
         "showErrors": true,
@@ -1635,13 +1592,12 @@ exports[`tools.rspack > should match snapshot 1`] = `
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
-        "minify": false,
         "scriptLoading": "defer",
         "template": "<ROOT>/packages/core/static/template.html",
         "templateParameters": [Function],
         "title": "Rsbuild App",
       },
-      "version": 5,
+      "version": 6,
     },
     HtmlBasicPlugin {
       "getEnvironment": [Function],

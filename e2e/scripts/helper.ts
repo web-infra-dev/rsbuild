@@ -102,3 +102,6 @@ export const proxyConsole = (
     },
   };
 };
+
+// Windows and macOS use different new lines
+export const normalizeNewlines = (str: string) => str.replace(/\r\n/g, '\n');

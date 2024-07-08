@@ -18,7 +18,7 @@ describe('plugin-html', () => {
     });
     const config = await rsbuild.unwrapConfig();
 
-    expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toBeTruthy();
+    expect(await rsbuild.matchBundlerPlugin('HtmlRspackPlugin')).toBeTruthy();
     expect(config).toMatchSnapshot();
   });
 
@@ -31,7 +31,7 @@ describe('plugin-html', () => {
         },
       },
     });
-    expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toBeFalsy();
+    expect(await rsbuild.matchBundlerPlugin('HtmlRspackPlugin')).toBeFalsy();
   });
 
   it('should not register html plugin when target is web-worker', async () => {
@@ -43,7 +43,7 @@ describe('plugin-html', () => {
         },
       },
     });
-    expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toBeFalsy();
+    expect(await rsbuild.matchBundlerPlugin('HtmlRspackPlugin')).toBeFalsy();
   });
 
   it('should register appIcon plugin when using html.appIcon', async () => {
@@ -130,7 +130,7 @@ describe('plugin-html', () => {
       },
     });
 
-    expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toBeFalsy();
+    expect(await rsbuild.matchBundlerPlugin('HtmlRspackPlugin')).toBeFalsy();
   });
 
   it('should disable html plugin when htmlPlugin is an array and contains false', async () => {
@@ -143,7 +143,7 @@ describe('plugin-html', () => {
       },
     });
 
-    expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toBeFalsy();
+    expect(await rsbuild.matchBundlerPlugin('HtmlRspackPlugin')).toBeFalsy();
   });
 
   it('should support multi entry', async () => {

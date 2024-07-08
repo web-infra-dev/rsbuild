@@ -2,11 +2,7 @@ import { rspack } from '@rspack/core';
 import type { SwcJsMinimizerRspackPluginOptions } from '@rspack/core';
 import deepmerge from 'deepmerge';
 import { isObject } from '../helpers';
-import type {
-  HTMLPluginOptions,
-  NormalizedEnvironmentConfig,
-  RsbuildPlugin,
-} from '../types';
+import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
 
 export const getSwcMinimizerOptions = (
   config: NormalizedEnvironmentConfig,
@@ -62,19 +58,15 @@ export const parseMinifyOptions = (
 ): {
   minifyJs: boolean;
   minifyCss: boolean;
-  minifyHtml: boolean;
   jsOptions?: SwcJsMinimizerRspackPluginOptions;
-  htmlOptions?: HTMLPluginOptions['minify'];
 } => {
-  const minify = config.output.minify;
+  const { minify } = config.output;
 
   if (minify === false || !isProd) {
     return {
       minifyJs: false,
       minifyCss: false,
-      minifyHtml: false,
       jsOptions: undefined,
-      htmlOptions: undefined,
     };
   }
 
@@ -82,18 +74,14 @@ export const parseMinifyOptions = (
     return {
       minifyJs: true,
       minifyCss: true,
-      minifyHtml: true,
       jsOptions: undefined,
-      htmlOptions: undefined,
     };
   }
 
   return {
     minifyJs: minify.js !== false,
     minifyCss: minify.css !== false,
-    minifyHtml: minify.html !== false,
     jsOptions: minify.jsOptions,
-    htmlOptions: minify.htmlOptions,
   };
 };
 

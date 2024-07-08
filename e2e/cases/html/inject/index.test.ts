@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { build } from '@e2e/helper';
+import { build, normalizeNewlines } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginRem } from '@rsbuild/plugin-rem';
 
@@ -42,6 +42,9 @@ test('should set inject via function correctly', async () => {
           foo: path.resolve(__dirname, './src/foo.js'),
         },
       },
+      output: {
+        filenameHash: false,
+      },
       html: {
         inject({ value, entryName }) {
           return entryName === 'foo' ? 'body' : value;
@@ -53,11 +56,23 @@ test('should set inject via function correctly', async () => {
 
   const fooHtml =
     files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
-  expect(fooHtml).toContain('<body><div id="root"></div><script defer="defer"');
+  expect(normalizeNewlines(fooHtml)).toEqual(`<!doctype html>
+<html>
+  <head><title>Rsbuild App</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+  <body>
+    <div id="root"></div>
+  <script defer src="/static/js/foo.js"></script></body>
+</html>
+`);
 
   const indexHtml =
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
-  expect(indexHtml).toContain(
-    'content="width=device-width,initial-scale=1"><script defer="defer"',
-  );
+  expect(normalizeNewlines(indexHtml)).toEqual(`<!doctype html>
+<html>
+  <head><title>Rsbuild App</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><script defer src="/static/js/index.js"></script><link href="/static/css/index.css" rel="stylesheet"></head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+`);
 });

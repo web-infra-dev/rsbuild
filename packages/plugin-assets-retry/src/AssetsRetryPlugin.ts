@@ -96,9 +96,7 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
         async (data) => {
           const scriptTag = {
             tagName: 'script',
-            attributes: {
-              type: 'text/javascript',
-            },
+            attributes: {},
             voidTag: false,
             meta: {},
           };

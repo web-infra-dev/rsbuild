@@ -118,31 +118,6 @@ describe('plugin-minimize', () => {
     process.env.NODE_ENV = 'test';
   });
 
-  it('should not minimizer for HTML when output.minify.html is false', async () => {
-    process.env.NODE_ENV = 'production';
-
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
-      rsbuildConfig: {
-        output: {
-          minify: {
-            html: false,
-          },
-        },
-      },
-    });
-
-    expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toMatchObject(
-      {
-        options: {
-          minify: false,
-        },
-      },
-    );
-
-    process.env.NODE_ENV = 'test';
-  });
-
   it('should accept and merge options for JS minimizer', async () => {
     process.env.NODE_ENV = 'production';
 
@@ -168,35 +143,6 @@ describe('plugin-minimize', () => {
         exclude: 'no_js_minify',
       },
     });
-
-    process.env.NODE_ENV = 'test';
-  });
-
-  it('should accept and merge options for HTML minimizer', async () => {
-    process.env.NODE_ENV = 'production';
-
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
-      rsbuildConfig: {
-        output: {
-          minify: {
-            htmlOptions: {
-              minifyJS: false,
-            },
-          },
-        },
-      },
-    });
-
-    expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toMatchObject(
-      {
-        options: {
-          minify: {
-            minifyJS: false,
-          },
-        },
-      },
-    );
 
     process.env.NODE_ENV = 'test';
   });
