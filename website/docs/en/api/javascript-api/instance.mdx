@@ -256,7 +256,7 @@ type EnvironmentAPI = {
     /**
      * Load and execute stats bundle in server.
      *
-     * @param entryName - relate to rsbuild source.entry
+     * @param entryName - relate to Rsbuild's `source.entry`
      * @returns the return of entry module.
      */
     loadBundle: <T = unknown>(entryName: string) => Promise<T>;
