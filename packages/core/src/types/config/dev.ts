@@ -17,6 +17,9 @@ export type RequestHandler = (
 
 export type EnvironmentAPI = {
   [name: string]: {
+    /**
+     * Get stats info about current environment.
+     */
     getStats: () => Promise<Stats>;
 
     /**

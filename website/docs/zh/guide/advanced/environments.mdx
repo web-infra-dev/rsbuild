@@ -167,3 +167,81 @@ const myPlugin = () => ({
   },
 });
 ```
+
+## 使用 environment API
+
+Rsbuild Server 提供了一系列和构建环境相关的 API，用户可通过 Rsbuild environment API 在服务器端管理和操作特定环境中的构建产物。
+
+你可以在 [Rsbuild DevMiddleware](/config/dev/setup-middlewares) 或[自定义 Server](/api/javascript-api/instance#rsbuildcreatedevserver) 中使用 environment API。
+
+例如，你可以通过 Rsbuild environment API 快速实现一个 SSR 功能：
+
+```ts title=rsbuild.config.ts
+import {
+  type RequestHandler,
+  type ServerAPIs,
+  defineConfig,
+  logger,
+} from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+const serverRender =
+  (serverAPI: ServerAPIs): RequestHandler =>
+  async (_req, res, _next) => {
+    const indexModule = await serverAPI.environments.ssr.loadBundle<{
+      render: () => string;
+    }>('index');
+
+    const markup = indexModule.render();
+
+    const template =
+      await serverAPI.environments.web.getTransformedHtml('index');
+
+    const html = template.replace('<!--app-content-->', markup);
+
+    res.writeHead(200, {
+      'Content-Type': 'text/html',
+    });
+    res.end(html);
+  };
+
+export default defineConfig({
+  plugins: [pluginReact()],
+  dev: {
+    setupMiddlewares: [
+      ({ unshift }, serverAPI) => {
+        const serverRenderMiddleware = serverRender(serverAPI);
+
+        unshift(async (req, res, next) => {
+          if (req.method === 'GET' && req.url === '/') {
+            try {
+              await serverRenderMiddleware(req, res, next);
+            } catch (err) {
+              logger.error('SSR render error, downgrade to CSR...', err);
+              next();
+            }
+          } else {
+            next();
+          }
+        });
+      },
+    ],
+  },
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+      },
+      // ...
+    },
+    ssr: {
+      output: {
+        target: 'node',
+      },
+      // ...
+    },
+  },
+});
+```
+
+详细使用情况可参考：[SSR 示例](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/ssr)、[SSR + Express 示例](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/ssr-express)。

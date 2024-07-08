@@ -167,3 +167,81 @@ const myPlugin = () => ({
   },
 });
 ```
+
+## Use environment API
+
+Rsbuild Server provides a series of APIs related to the build environment. Users can operate the build products in a specific environment on the server side through the Rsbuild environment API.
+
+You can use the environment API in [Rsbuild DevMiddleware](/config/dev/setup-middlewares) or [Custom Server](/api/javascript-api/instance#rsbuildcreatedevserver).
+
+For example, you can quickly implement an SSR function through the Rsbuild environment API:
+
+```ts title=rsbuild.config.ts
+import {
+  type RequestHandler,
+  type ServerAPIs,
+  defineConfig,
+  logger,
+} from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+const serverRender =
+  (serverAPI: ServerAPIs): RequestHandler =>
+  async (_req, res, _next) => {
+    const indexModule = await serverAPI.environments.ssr.loadBundle<{
+      render: () => string;
+    }>('index');
+
+    const markup = indexModule.render();
+
+    const template =
+      await serverAPI.environments.web.getTransformedHtml('index');
+
+    const html = template.replace('<!--app-content-->', markup);
+
+    res.writeHead(200, {
+      'Content-Type': 'text/html',
+    });
+    res.end(html);
+  };
+
+export default defineConfig({
+  plugins: [pluginReact()],
+  dev: {
+    setupMiddlewares: [
+      ({ unshift }, serverAPI) => {
+        const serverRenderMiddleware = serverRender(serverAPI);
+
+        unshift(async (req, res, next) => {
+          if (req.method === 'GET' && req.url === '/') {
+            try {
+              await serverRenderMiddleware(req, res, next);
+            } catch (err) {
+              logger.error('SSR render error, downgrade to CSR...', err);
+              next();
+            }
+          } else {
+            next();
+          }
+        });
+      },
+    ],
+  },
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+      },
+      // ...
+    },
+    ssr: {
+      output: {
+        target: 'node',
+      },
+      // ...
+    },
+  },
+});
+```
+
+For detailed usage, please refer to: [SSR Example](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/ssr), [SSR + Express Example](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/ssr-express).
