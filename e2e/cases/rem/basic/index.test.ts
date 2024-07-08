@@ -126,7 +126,7 @@ test('should apply html.scriptLoading to rem runtime script', async ({
 
   expect(htmlFile).toBeTruthy();
   expect(files[htmlFile!]).toMatch(
-    /<script type="module" src="\/static\/js\/convert-rem.\d+\.\d+\.\d+(?:-(beta|alpha|rc)\.\d+)?.js">/,
+    /<script src="\/static\/js\/convert-rem.\d+\.\d+\.\d+(?:-(beta|alpha|rc)\.\d+)?.js" type="module">/,
   );
   expect(files[htmlFile!].includes('function setRootPixel')).toBeFalsy();
 
