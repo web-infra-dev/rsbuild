@@ -1,6 +1,13 @@
 import { join } from 'node:path';
-import { dev, getRandomPort, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import {
+  build,
+  dev,
+  getRandomPort,
+  gotoPage,
+  rspackOnlyTest,
+} from '@e2e/helper';
 import { expect } from '@playwright/test';
+import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 
 const host = join(__dirname, 'host');
 const remote = join(__dirname, 'remote');
@@ -29,5 +36,48 @@ rspackOnlyTest(
 
     await hostApp.close();
     await remoteApp.close();
+  },
+);
+
+rspackOnlyTest(
+  'should transform module federation runtime with SWC',
+  async () => {
+    const remotePort = await getRandomPort();
+
+    process.env.REMOTE_PORT = remotePort.toString();
+
+    await expect(
+      build({
+        cwd: remote,
+        rsbuildConfig: {
+          output: {
+            overrideBrowserslist: ['Chrome >= 51'],
+          },
+          performance: {
+            chunkSplit: {
+              strategy: 'all-in-one',
+            },
+          },
+          plugins: [pluginCheckSyntax()],
+        },
+      }),
+    ).resolves.toBeTruthy();
+
+    await expect(
+      build({
+        cwd: host,
+        rsbuildConfig: {
+          output: {
+            overrideBrowserslist: ['Chrome >= 51'],
+          },
+          performance: {
+            chunkSplit: {
+              strategy: 'all-in-one',
+            },
+          },
+          plugins: [pluginCheckSyntax()],
+        },
+      }),
+    ).resolves.toBeTruthy();
   },
 );
