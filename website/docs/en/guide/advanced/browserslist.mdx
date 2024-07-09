@@ -8,13 +8,23 @@ Since different browsers support ECMAScript and CSS differently, developers need
 
 [Browserslist](https://browsersl.ist/) can specify which browsers your web application can run in, it provides a configuration for specifying browsers range. Browserslist has become a standard in the industry, it is used by libraries such as Autoprefixer, Babel, ESLint, PostCSS, SWC and Webpack.
 
-When you specify a browser range through Browserslist, Rsbuild will compile JavaScript and CSS code to the specified syntax, and inject the corresponding polyfill code. **When you only need to be compatible with modern browsers, the compilation process will introduce less compatible code and polyfills, and the performance of the page will be better.**
+When you specify a browser range through Browserslist, Rsbuild will compile JavaScript and CSS code to the specified syntax.
+
+## Polyfill Injection
+
+If you enabled [output.polyfill](/config/output/polyfill), Rsbuild will also inject the corresponding polyfill code based on browserslist. **When you only need to support more modern browsers, the build process will introduce less compatibility code and polyfills, and the performance of the page will be better.**
+
+```js
+export default {
+  output: {
+    polyfill: 'usage',
+  },
+};
+```
 
 For example, when you need to be compatible with IE11 browser, Rsbuild will compile the code to ES5 and inject the polyfill required by IE11 through `core-js`.
 
-:::tip What is polyfill
-A polyfill is a piece of code that provides the functionality of a newer feature to older browsers that do not support that feature natively. It is used to fill in the gaps in older browsers' implementations of web standards, allowing developers to use newer features safely without having to worry about whether or not they will work in older browsers. For example, if a browser does not support the Array.map() method, a polyfill can be used to provide that functionality, allowing code that uses `Array.prototype.flat()` to work in that browser. Polyfills are commonly used to ensure that web applications can work on a wide range of browsers, including older ones.
-:::
+> Please refer to [Browser Compatibility](/guide/advanced/browser-compatibility) for more information.
 
 ## Set Browserslist
 

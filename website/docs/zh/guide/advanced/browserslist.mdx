@@ -8,13 +8,23 @@ Rsbuild 支持通过 [Browserslist](https://browsersl.ist/) 来设置 Web 应用
 
 [Browserslist](https://browsersl.ist/) 可以指定 Web 应用能够在哪些浏览器中正常运行，它提供了统一的配置格式，并且已经成为了前端社区中的标准。Browserslist 被 Autoprefixer, Babel, ESLint, PostCSS，SWC 和 Webpack 等库所使用。
 
-当你通过 Browserslist 指定了一个浏览器范围时，Rsbuild 会将 JavaScript 代码和 CSS 代码编译到指定的语法，并注入相应的 polyfill 代码。**当你只需要兼容更现代的浏览器时，编译过程会引入更少的兼容代码和 polyfills，页面的性能会更好。**
+当你通过 Browserslist 指定了一个浏览器范围时，Rsbuild 会将 JavaScript 代码和 CSS 代码编译到指定的语法。
+
+## Polyfill 注入
+
+如果你开启了 [output.polyfill](/config/output/polyfill)，Rsbuild 还会基于 browserslist 注入相应的 polyfill 代码。**当你只需要兼容更现代的浏览器时，构建过程会引入更少的兼容代码和 polyfills，页面的性能会更好。**
+
+```js
+export default {
+  output: {
+    polyfill: 'usage',
+  },
+};
+```
 
 比如，当你需要适配 IE11 浏览器时，Rsbuild 会将代码编译至 ES5，并通过 `core-js` 注入 IE11 所需的 polyfill。
 
-:::tip 什么是 polyfill
-polyfill 是一种用于解决浏览器兼容问题的技术。它用于模拟某些浏览器不支持的新特性，使得这些特性能在不支持的浏览器中正常工作。例如，如果某个浏览器不支持 `Array.prototype.flat()` 方法，那么我们可以使用 polyfill 来模拟这个方法，从而让代码在这个浏览器中也能正常工作。
-:::
+> 请参考 [浏览器兼容性](/guide/advanced/browser-compatibility) 了解更多。
 
 ## 设置 Browserslist
 
