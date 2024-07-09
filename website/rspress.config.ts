@@ -145,5 +145,17 @@ export default defineConfig({
     server: {
       open: 'http://localhost:<port>/',
     },
+    html: {
+      tags: [
+        // for baidu SEO verification
+        {
+          tag: 'meta',
+          attrs: {
+            name: 'baidu-site-verification',
+            content: 'codeva-ztxThXWOiy',
+          },
+        },
+      ],
+    },
   },
 });
