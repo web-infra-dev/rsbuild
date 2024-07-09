@@ -3,14 +3,20 @@ import { pluginRss } from '@rspress/plugin-rss';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
+import pluginSitemap from 'rspress-plugin-sitemap';
 import { defineConfig } from 'rspress/config';
 import { rsbuildPluginOverview } from './theme/rsbuildPluginOverview';
 
+const siteUrl = 'https://rsbuild.dev';
+
 export default defineConfig({
   plugins: [
+    pluginSitemap({
+      domain: siteUrl,
+    }),
     pluginFontOpenSans(),
     pluginRss({
-      siteUrl: 'https://rsbuild.dev',
+      siteUrl,
       feed: [
         {
           id: 'releases-rss',
@@ -126,7 +132,7 @@ export default defineConfig({
       pluginOpenGraph({
         title: 'Rsbuild',
         type: 'website',
-        url: 'https://rsbuild.dev/',
+        url: siteUrl,
         image: 'https://assets.rspack.dev/rsbuild/rsbuild-og-image.png',
         description: 'The Rspack-based build tool',
         twitter: {
@@ -152,7 +158,7 @@ export default defineConfig({
           tag: 'meta',
           attrs: {
             name: 'baidu-site-verification',
-            content: 'codeva-ztxThXWOiy',
+            content: 'codeva-AgtVD3w3iV',
           },
         },
       ],
