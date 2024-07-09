@@ -92,7 +92,7 @@ export default {
 <meta name="description" content="a description of the page" />
 ```
 
-## 设置模板参数
+## 模板参数
 
 在 HTML 模板中，你可以使用丰富的模板参数，Rsbuild 默认注入的模板参数包括：
 
@@ -114,13 +114,15 @@ type DefaultParameters = {
 
 你也可以通过 [html.templateParameters](/config/html/template-parameters) 配置项来传入自定义的模板参数。
 
+### 示例
+
 比如：
 
 ```ts
 export default {
   html: {
     templateParameters: {
-      text: 'World',
+      text: 'world',
     },
   },
 };
@@ -128,14 +130,30 @@ export default {
 
 接下来，你可以在 HTML 模板中，通过 `<%= text %>` 来读取参数：
 
-```js
+```html
 <div>hello <%= text %>!</div>
 ```
 
-经过编译后的最终 HTML 代码如下：
+编译后的 HTML 代码如下：
 
-```js
+```html
 <div>hello world!</div>
+```
+
+### 参数转义
+
+你可以使用 `<%- text %>` 来 escape 参数。
+
+比如 text 是 `'<script>'`，则会被转义为 `&lt;script&gt;`：
+
+```html
+<div>hello <%- text %>!</div>
+```
+
+编译后的 HTML 代码如下：
+
+```html
+<div>hello &lt;script&gt;!</div>
 ```
 
 ## 模板引擎
