@@ -150,3 +150,8 @@ pluginCheckSyntax({
   exclude: /node_modules\/foo/,
 });
 ```
+
+## Limitations
+
+1. Check Syntax plugin only checks incompatible syntax in the outputs and cannot detect missing polyfills.
+2. Check Syntax plugin's detection may be inaccurate in certain cases due to the limitations of AST parser. Check Syntax is implemented based on [Acorn](https://github.com/acornjs/acorn), which targets a specific ECMA version, such as ES2018. On the other hand, SWC can target specific syntax during compilation, such as ES2018's Object Spread. This difference means that using the same browserslist configuration, SWC's compiled output is correct, but Check Syntax may still fail detection.
