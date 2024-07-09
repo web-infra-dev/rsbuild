@@ -158,7 +158,7 @@ export default defineConfig({
           tag: 'meta',
           attrs: {
             name: 'baidu-site-verification',
-            content: 'codeva-AgtVD3w3iV',
+            content: 'codeva-mYbzBtlg6o',
           },
         },
       ],
