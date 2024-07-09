@@ -150,3 +150,8 @@ pluginCheckSyntax({
   exclude: /node_modules\/foo/,
 });
 ```
+
+## 局限性
+
+1. Check Syntax 插件只检测产物中不兼容的高级语法，无法检测是否存在缺失的 polyfill。
+2. Check Syntax 插件的检测在某些情况下存在偏差，这个偏差是由于 AST parser 的局限性导致的。Check Syntax 是基于 [Acorn](https://github.com/acornjs/acorn) 实现的，它精确到指定的 ECMA version，比如 ES2018；而 SWC 在编译时可以精确到具体的语法，比如 ES2018 的 Object Spread。这导致在使用同一个 browserslist 配置时，SWC 编译的产物是正确的，但仍然可能导致 Check Syntax 插件检测不通过。
