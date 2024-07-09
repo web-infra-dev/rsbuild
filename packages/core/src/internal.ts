@@ -14,7 +14,6 @@ export {
   getRsbuildInspectConfig,
   outputInspectConfigFiles,
 } from './config';
-export { getBrowserslist, getBrowserslistByEnvironment } from './createContext';
 export type { InternalContext } from './types';
 export { setHTMLPlugin, getHTMLPlugin } from './pluginHelper';
 export {
