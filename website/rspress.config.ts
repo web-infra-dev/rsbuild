@@ -7,14 +7,16 @@ import pluginSitemap from 'rspress-plugin-sitemap';
 import { defineConfig } from 'rspress/config';
 import { rsbuildPluginOverview } from './theme/rsbuildPluginOverview';
 
+const siteUrl = 'https://rsbuild.dev';
+
 export default defineConfig({
   plugins: [
     pluginSitemap({
-      domain: 'https://rsbuild.dev',
+      domain: siteUrl,
     }),
     pluginFontOpenSans(),
     pluginRss({
-      siteUrl: 'https://rsbuild.dev',
+      siteUrl,
       feed: [
         {
           id: 'releases-rss',
@@ -130,7 +132,7 @@ export default defineConfig({
       pluginOpenGraph({
         title: 'Rsbuild',
         type: 'website',
-        url: 'https://rsbuild.dev/',
+        url: siteUrl,
         image: 'https://assets.rspack.dev/rsbuild/rsbuild-og-image.png',
         description: 'The Rspack-based build tool',
         twitter: {
