@@ -13,6 +13,7 @@ Chunktmp
 classname
 codegen
 codesandbox
+codeva
 compat
 consolas
 contentful
