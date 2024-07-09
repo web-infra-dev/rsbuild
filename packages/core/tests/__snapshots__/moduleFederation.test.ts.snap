@@ -10,6 +10,9 @@ exports[`plugin-module-federation > should set environment module federation con
         "enforceSizeThreshold": 50000,
       },
     },
+    "output": {
+      "uniqueName": "remote",
+    },
     "plugins": [
       ModuleFederationPlugin {
         "_options": {
@@ -68,6 +71,9 @@ exports[`plugin-module-federation > should set module federation and environment
         "enforceSizeThreshold": 50000,
       },
     },
+    "output": {
+      "uniqueName": "remote",
+    },
     "plugins": [
       ModuleFederationPlugin {
         "_options": {
@@ -96,6 +102,9 @@ exports[`plugin-module-federation > should set module federation and environment
   {
     "optimization": {
       "splitChunks": false,
+    },
+    "output": {
+      "uniqueName": "remote",
     },
     "plugins": [
       ModuleFederationPlugin {
@@ -133,6 +142,9 @@ exports[`plugin-module-federation > should set module federation config 1`] = `
       "chunks": "all",
       "enforceSizeThreshold": 50000,
     },
+  },
+  "output": {
+    "uniqueName": "remote",
   },
   "plugins": [
     ModuleFederationPlugin {

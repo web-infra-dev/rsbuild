@@ -150,6 +150,11 @@ export function pluginModuleFederation(): RsbuildPlugin {
             chain
               .plugin('mf-patch-split-chunks')
               .use(PatchSplitChunksPlugin, [options.name]);
+
+            // `uniqueName` is required for react refresh to work
+            if (!chain.output.get('uniqueName')) {
+              chain.output.set('uniqueName', options.name);
+            }
           }
 
           const publicPath = chain.output.get('publicPath');

@@ -1,4 +1,4 @@
-import LocalButton from './Button';
+import LocalButton from './test-temp-Button';
 
 const App = () => (
   <div>
