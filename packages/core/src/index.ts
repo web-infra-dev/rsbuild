@@ -50,6 +50,8 @@ export type {
   EnvironmentContext,
   FilenameConfig,
   HtmlConfig,
+  HtmlTagHandler,
+  HtmlTagDescriptor,
   InspectConfigOptions,
   InspectConfigResult,
   LegalComments,
@@ -123,6 +125,7 @@ export type {
   TransformHandler,
   TransformImport,
   WatchFiles,
+  NodeEnv,
 } from './types';
 export type { ChainIdentifier } from './configChain';
 
