@@ -30,7 +30,7 @@ function findCurrentDomain(url: string, domainList: string[]) {
       break;
     }
   }
-  return domain || url;
+  return domain || window.origin;
 }
 
 function findNextDomain(url: string, domainList: string[]) {
