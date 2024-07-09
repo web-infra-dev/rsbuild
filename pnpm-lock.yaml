@@ -1489,6 +1489,9 @@ importers:
       rspress-plugin-font-open-sans:
         specifier: 1.0.0
         version: 1.0.0
+      rspress-plugin-sitemap:
+        specifier: ^1.0.1
+        version: 1.0.1
 
 packages:
 
@@ -6789,6 +6792,9 @@ packages:
 
   rspress-plugin-font-open-sans@1.0.0:
     resolution: {integrity: sha512-4GP0pd7h3W8EWdqE0VkA62nzUJZNy4ZnYK7be8+lOKHQKsQ5nZ+22A/VurNssi1eZFx3kjwbmIuoAkgb5W8S9Q==}
+
+  rspress-plugin-sitemap@1.0.1:
+    resolution: {integrity: sha512-1hLh2v2OMTjPD+jnHxKPnMRNWojUwao5gPyBFwd6YR8URRU4TNg5pvd9TSpszid1WNGt4OokqYwnL96tZGaDZQ==}
 
   rspress@1.25.2:
     resolution: {integrity: sha512-BvElBR8+Iwv7jau5B+dRCvXRIdsmPSr9mlwFsMMUeTFpy05OP1I/yO7HjE2TehzKfYitKDBJIKVo82eWDB4yuQ==}
@@ -14023,6 +14029,8 @@ snapshots:
       fs-extra: 11.2.0
 
   rspress-plugin-font-open-sans@1.0.0: {}
+
+  rspress-plugin-sitemap@1.0.1: {}
 
   rspress@1.25.2(@swc/helpers@0.5.3)(webpack@5.92.1):
     dependencies:
