@@ -92,7 +92,7 @@ The generated meta tag in HTML is:
 <meta name="description" content="a description of the page" />
 ```
 
-## Set Template Parameters
+## Template Parameters
 
 In HTML templates, you can use a variety of template parameters. The template parameters injected by Rsbuild by default include:
 
@@ -114,13 +114,15 @@ type DefaultParameters = {
 
 You can also use the [html.templateParameters](/config/html/template-parameters) config to pass in custom template parameters.
 
+### Example
+
 For example:
 
 ```ts
 export default {
   html: {
     templateParameters: {
-      text: 'World',
+      text: 'world',
     },
   },
 };
@@ -128,14 +130,30 @@ export default {
 
 Then you can read parameters in the HTML template with `<%= text %>`:
 
-```js
+```html
 <div>hello <%= text %>!</div>
 ```
 
-The generated HTML code is as follows:
+The compiled HTML code will be:
 
-```js
+```html
 <div>hello world!</div>
+```
+
+### Parameter Escaping
+
+You can use `<%- text %>` to escape parameters.
+
+For example, if `text` is `'<script>'`, it will be escaped to `&lt;script&gt;`:
+
+```html
+<div>hello <%- text %>!</div>
+```
+
+The compiled HTML code will be:
+
+```html
+<div>hello &lt;script&gt;!</div>
 ```
 
 ## Template Engine
