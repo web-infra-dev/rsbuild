@@ -11,7 +11,7 @@ test('should escape template parameters correctly', async () => {
     files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
   expect(fooHtml).toContain('&lt;div&gt;escape me&lt;/div&gt;');
 
-  const indexHtml =
-    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
-  expect(indexHtml).toContain('<div>escape me</div>');
+  const barHtml =
+    files[Object.keys(files).find((file) => file.endsWith('bar.html'))!];
+  expect(barHtml).toContain('<div>escape me</div>');
 });
