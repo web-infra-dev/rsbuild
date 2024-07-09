@@ -176,16 +176,6 @@ export const applyUserBabelConfig = (
   return defaultOptions;
 };
 
-export const getUseBuiltIns = (
-  config: NormalizedConfig,
-): false | 'usage' | 'entry' => {
-  const { polyfill } = config.output;
-  if (polyfill === 'off') {
-    return false;
-  }
-  return polyfill;
-};
-
 export const modifyBabelLoaderOptions = ({
   chain,
   CHAIN_ID,
