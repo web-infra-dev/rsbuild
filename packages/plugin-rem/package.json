@@ -37,7 +37,7 @@
     "@rsbuild/plugin-less": "workspace:*",
     "@rsbuild/plugin-sass": "workspace:*",
     "@scripts/test-helper": "workspace:*",
-    "html-rspack-plugin": "6.0.0-beta.3",
+    "html-rspack-plugin": "6.0.0-beta.5",
     "postcss-pxtorem": "6.1.0",
     "prebundle": "1.1.0",
     "typescript": "^5.5.2"
