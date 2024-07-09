@@ -1,10 +1,6 @@
 import { isAbsolute, normalize, sep } from 'node:path';
 import type { PluginOptions as BabelPluginOptions } from '@babel/core';
-import type {
-  ChainIdentifier,
-  NormalizedConfig,
-  RspackChain,
-} from '@rsbuild/core';
+import type { ChainIdentifier, RspackChain } from '@rsbuild/core';
 import { reduceConfigsWithContext } from 'reduce-configs';
 import upath from 'upath';
 import type {
@@ -174,16 +170,6 @@ export const applyUserBabelConfig = (
   }
 
   return defaultOptions;
-};
-
-export const getUseBuiltIns = (
-  config: NormalizedConfig,
-): false | 'usage' | 'entry' => {
-  const { polyfill } = config.output;
-  if (polyfill === 'off') {
-    return false;
-  }
-  return polyfill;
 };
 
 export const modifyBabelLoaderOptions = ({

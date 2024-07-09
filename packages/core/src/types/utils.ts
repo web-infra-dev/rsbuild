@@ -10,8 +10,6 @@ export type DeepReadonly<T> = keyof T extends never
   ? T
   : { readonly [k in keyof T]: DeepReadonly<T[k]> };
 
-export type FileFilterUtil = (items: OneOrMany<string | RegExp>) => void;
-
 export type ConfigChain<T> = OneOrMany<T | ((config: T) => T | void)>;
 
 export type ConfigChainWithContext<T, Ctx> = OneOrMany<

@@ -3,11 +3,7 @@ export {
   getDefaultBabelOptions,
   PLUGIN_BABEL_NAME,
 } from './plugin';
-export {
-  getBabelUtils,
-  getUseBuiltIns,
-  modifyBabelLoaderOptions,
-} from './helper';
+export { getBabelUtils, modifyBabelLoaderOptions } from './helper';
 export type {
   PresetEnvOptions,
   PresetEnvTargets,
