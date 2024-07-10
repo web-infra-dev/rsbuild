@@ -8,7 +8,7 @@ Rsbuild 提供了丰富的配置项，并为每个配置项预设了一个通用
 
 Rsbuild 的配置结构如下所示：
 
-```ts title="rsbuild.config.ts"
+```js title="rsbuild.config.mjs"
 export default {
   plugins: [
     // 配置 Rsbuild 插件
@@ -41,6 +41,9 @@ export default {
   moduleFederation: {
     // 与模块联邦有关的选项
   },
+  environments: {
+    // 为每个环境定义不同的 Rsbuild 配置
+  },
 };
 ```
 
@@ -50,14 +53,14 @@ export default {
 
 当你使用 Rsbuild 的 CLI 命令时，Rsbuild 会自动读取当前项目根目录下的配置文件，按照以下顺序进行解析：
 
+- rsbuild.config.mjs
 - rsbuild.config.ts
 - rsbuild.config.js
-- rsbuild.config.mjs
 - rsbuild.config.cjs
 - rsbuild.config.mts
 - rsbuild.config.cts
 
-我们推荐使用 `.ts` 格式的配置文件，并从 `@rsbuild/core` 中导入 `defineConfig` 工具函数, 它提供了友好的 TypeScript 类型推导和自动补全，可以帮助你避免配置中的错误。
+我们推荐使用 `.mjs` 或 `.ts` 格式的配置文件，并从 `@rsbuild/core` 中导入 `defineConfig` 工具函数, 它提供了友好的 TypeScript 类型推导和自动补全，可以帮助你避免配置中的错误。
 
 比如在 `rsbuild.config.ts` 中，你可以定义 Rsbuild 的 [source.alias](/config/source/alias) 配置：
 
@@ -88,19 +91,19 @@ export default defineConfig({
 ```
 
 :::tip
-Rsbuild 使用 [jiti](https://github.com/unjs/jiti) 来加载配置文件，提供 ESM 与 CommonJS 的互操作性，模块解析的行为与 Node.js 原生行为存在一定差异。
+当你使用 `.ts`, `.mts` 和 `.cts` 后缀时，Rsbuild 会使用 [jiti](https://github.com/unjs/jiti) 来加载配置文件，提供 ESM 与 CommonJS 的互操作性，模块解析的行为与 Node.js 原生行为存在一定差异。
 :::
 
 ## 指定配置文件
 
 Rsbuild CLI 通过 `--config` 选项来指定配置文件，可以设置为相对路径或绝对路径。
 
-例如，你需要在执行 `build` 命令时使用 `rsbuild.prod.config.ts` 文件，可以在 `package.json` 中添加如下配置：
+例如，你需要在执行 `build` 命令时使用 `rsbuild.prod.config.mjs` 文件，可以在 `package.json` 中添加如下配置：
 
 ```json title="package.json"
 {
   "scripts": {
-    "build": "rsbuild build --config rsbuild.prod.config.ts"
+    "build": "rsbuild build --config rsbuild.prod.config.mjs"
   }
 }
 ```
@@ -108,7 +111,7 @@ Rsbuild CLI 通过 `--config` 选项来指定配置文件，可以设置为相�
 你也可以将 `--config` 选项缩写为 `-c`：
 
 ```bash
-rsbuild build -c rsbuild.prod.config.js
+rsbuild build -c rsbuild.prod.config.mjs
 ```
 
 ## 使用环境变量
