@@ -2,20 +2,20 @@
  * This file is used to get/set the global instance for html-plugin and css-extract plugin.
  */
 import rspack from '@rspack/core';
-import type HtmlWebpackPlugin from 'html-rspack-plugin';
+import type { HtmlRspackPlugin } from './types';
 
-let htmlPlugin: typeof HtmlWebpackPlugin;
+let htmlPlugin: typeof HtmlRspackPlugin;
 
 /**
  * This method is used to override the Rsbuild default html-plugin (html-rspack-plugin).
  */
-export const setHTMLPlugin = (plugin: typeof HtmlWebpackPlugin): void => {
+export const setHTMLPlugin = (plugin: typeof HtmlRspackPlugin): void => {
   if (plugin) {
     htmlPlugin = plugin;
   }
 };
 
-export const getHTMLPlugin = (): typeof HtmlWebpackPlugin => {
+export const getHTMLPlugin = (): typeof HtmlRspackPlugin => {
   if (!htmlPlugin) {
     htmlPlugin = require('html-rspack-plugin');
   }

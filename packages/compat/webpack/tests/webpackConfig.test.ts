@@ -128,7 +128,7 @@ describe('webpackConfig', () => {
     expect(config).toMatchSnapshot();
   });
 
-  it('should export HtmlWebpackPlugin instance', async () => {
+  it('should expose HtmlWebpackPlugin instance via params', async () => {
     await createStubRsbuild({
       rsbuildConfig: {
         tools: {

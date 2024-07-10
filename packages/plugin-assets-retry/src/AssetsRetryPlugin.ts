@@ -1,7 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { type Rspack, ensureAssetPrefix } from '@rsbuild/core';
-import type HtmlWebpackPlugin from 'html-rspack-plugin';
+import {
+  type HtmlRspackPlugin,
+  type Rspack,
+  ensureAssetPrefix,
+} from '@rsbuild/core';
 import type { PluginAssetsRetryOptions } from './types';
 
 export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
@@ -13,7 +16,7 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
 
   readonly minify?: boolean;
 
-  readonly HtmlPlugin: typeof HtmlWebpackPlugin;
+  readonly HtmlPlugin: typeof HtmlRspackPlugin;
 
   scriptPath: string;
 
@@ -22,7 +25,7 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
   constructor(
     options: PluginAssetsRetryOptions & {
       distDir: string;
-      HtmlPlugin: typeof HtmlWebpackPlugin;
+      HtmlPlugin: typeof HtmlRspackPlugin;
     },
   ) {
     const {

@@ -1,8 +1,8 @@
 import type { Compilation, Compiler } from '@rspack/core';
-import type HtmlWebpackPlugin from 'html-rspack-plugin';
 import type { HtmlTagObject } from 'html-rspack-plugin';
 import { ensureAssetPrefix, isFunction, partition } from '../helpers';
 import { getHTMLPlugin } from '../pluginHelper';
+import type { HtmlRspackPlugin } from '../types';
 import type {
   EnvironmentContext,
   HtmlBasicTag,
@@ -68,7 +68,7 @@ export type AlterAssetTagGroupsData = {
   bodyTags: HtmlTagObject[];
   outputName: string;
   publicPath: string;
-  plugin: HtmlWebpackPlugin;
+  plugin: HtmlRspackPlugin;
 };
 
 export const hasTitle = (html?: string): boolean =>

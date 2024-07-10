@@ -50,6 +50,7 @@ export type {
   EnvironmentContext,
   FilenameConfig,
   HtmlConfig,
+  HtmlRspackPlugin,
   HtmlTagHandler,
   HtmlTagDescriptor,
   InspectConfigOptions,

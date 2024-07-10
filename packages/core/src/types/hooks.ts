@@ -1,4 +1,3 @@
-import type HtmlWebpackPlugin from 'html-rspack-plugin';
 import type RspackChain from 'rspack-chain';
 import type { ChainIdentifier } from '..';
 import type {
@@ -11,7 +10,7 @@ import type {
 import type { RsbuildEntry, RsbuildTarget } from './rsbuild';
 import type { Rspack } from './rspack';
 import type { MultiStats, Stats } from './stats';
-import type { WebpackConfig } from './thirdParty';
+import type { HtmlRspackPlugin, WebpackConfig } from './thirdParty';
 import type { MaybePromise, NodeEnv } from './utils';
 
 export type OnBeforeBuildFn<B = 'rspack'> = (params: {
@@ -145,7 +144,7 @@ export type ModifyChainUtils = {
   isWebWorker: boolean;
   CHAIN_ID: ChainIdentifier;
   environment: EnvironmentContext;
-  HtmlPlugin: typeof HtmlWebpackPlugin;
+  HtmlPlugin: typeof HtmlRspackPlugin;
 };
 
 interface PluginInstance {
