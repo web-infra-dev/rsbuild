@@ -1,8 +1,8 @@
-import { rspack } from '@rspack/core';
 import type {
   LightningCssMinimizerRspackPluginOptions,
   SwcJsMinimizerRspackPluginOptions,
 } from '@rspack/core';
+import { rspack } from '@rspack/core';
 import deepmerge from 'deepmerge';
 import { isObject } from '../helpers';
 import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
@@ -92,38 +92,30 @@ export const pluginMinimize = (): RsbuildPlugin => ({
   name: 'rsbuild:minimize',
 
   setup(api) {
-    // This plugin uses Rspack builtin SWC and is not suitable for webpack
-    if (api.context.bundlerType === 'webpack') {
-      return;
-    }
+    const isRspack = api.context.bundlerType === 'rspack';
 
     api.modifyBundlerChain(async (chain, { isProd, environment, CHAIN_ID }) => {
       const { config } = environment;
-      const isMinimize = isProd && config.output.minify !== false;
+      const { minifyJs, minifyCss, jsOptions, cssOptions } = parseMinifyOptions(
+        config,
+        isProd,
+      );
 
-      if (!isMinimize) {
-        return;
-      }
+      chain.optimization.minimize(minifyJs || minifyCss);
 
-      const { SwcJsMinimizerRspackPlugin, LightningCssMinimizerRspackPlugin } =
-        rspack;
-
-      const { minifyJs, minifyCss, jsOptions, cssOptions } =
-        parseMinifyOptions(config);
-
-      if (minifyJs) {
+      if (minifyJs && isRspack) {
         chain.optimization
           .minimizer(CHAIN_ID.MINIMIZER.JS)
-          .use(SwcJsMinimizerRspackPlugin, [
+          .use(rspack.SwcJsMinimizerRspackPlugin, [
             getSwcMinimizerOptions(config, jsOptions),
           ])
           .end();
       }
 
-      if (minifyCss) {
+      if (minifyCss && isRspack) {
         chain.optimization
           .minimizer(CHAIN_ID.MINIMIZER.CSS)
-          .use(LightningCssMinimizerRspackPlugin, [cssOptions])
+          .use(rspack.LightningCssMinimizerRspackPlugin, [cssOptions])
           .end();
       }
     });
