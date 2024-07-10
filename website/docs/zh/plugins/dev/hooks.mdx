@@ -251,6 +251,8 @@ const myPlugin = () => ({
         },
       };
 
+      // extraConfig 会覆盖 userConfig 里的字段
+      // 如果你不希望覆盖 userConfig，可以调整为 `mergeEnvironmentConfig(extraConfig, userConfig)`
       return mergeEnvironmentConfig(userConfig, extraConfig);
     });
   },
