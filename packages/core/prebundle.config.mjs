@@ -33,6 +33,7 @@ export default {
     // External caniuse-lite data, so users can update it manually.
     'caniuse-lite': 'caniuse-lite',
     '/^caniuse-lite(/.*)/': 'caniuse-lite$1',
+    '@rspack/core': '@rspack/core',
     webpack: 'webpack',
     postcss: 'postcss',
     typescript: 'typescript',
@@ -209,6 +210,12 @@ export default {
           (content) =>
             `${content.replaceAll('await __import', 'await import')}`,
         );
+      },
+    },
+    {
+      name: 'html-rspack-plugin',
+      externals: {
+        '@rspack/lite-tapable': '@rspack/lite-tapable',
       },
     },
   ],

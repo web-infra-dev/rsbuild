@@ -60,20 +60,11 @@
     "pnpm": ">=9.0.0"
   },
   "pnpm": {
-    "peerDependencyRules": {
-      "allowAny": [
-        "@rspack/*"
-      ]
-    },
     "allowedDeprecatedVersions": {
       "consolidate": "0.15.1",
       "vue": "2.x"
     },
     "overrides": {
-      "@rspack/binding": "1.0.0-alpha.2",
-      "@rspack/core": "1.0.0-alpha.2",
-      "@rspack/plugin-preact-refresh": "1.0.0-alpha.2",
-      "@rspack/plugin-react-refresh": "1.0.0-alpha.2",
       "esbuild": "~0.19.0"
     }
   }
