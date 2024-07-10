@@ -201,9 +201,9 @@ const myPlugin = () => ({
 
 - **类型：**
 
+```ts
 type ArrayAtLeastOne<A, B> = [A, ...Array<A | B>] | [...Array<A | B>, A];
 
-```ts
 type ModifyEnvironmentConfigUtils = {
   /** 当前 environment 名称 */
   name: string;
