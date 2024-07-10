@@ -202,11 +202,13 @@ const myPlugin = () => ({
 - **类型：**
 
 ```ts
+type ArrayAtLeastOne<A, B> = [A, ...Array<A | B>] | [...Array<A | B>, A];
+
 type ModifyEnvironmentConfigUtils = {
   /** 当前 environment 名称 */
   name: string;
   mergeEnvironmentConfig: (
-    ...configs: EnvironmentConfig[]
+    ...configs: ArrayAtLeastOne<MergedEnvironmentConfig, EnvironmentConfig>
   ) => EnvironmentConfig;
 };
 
@@ -251,6 +253,8 @@ const myPlugin = () => ({
         },
       };
 
+      // extraConfig 会覆盖 userConfig 里的字段
+      // 如果你不希望覆盖 userConfig，可以调整为 `mergeEnvironmentConfig(extraConfig, userConfig)`
       return mergeEnvironmentConfig(userConfig, extraConfig);
     });
   },
