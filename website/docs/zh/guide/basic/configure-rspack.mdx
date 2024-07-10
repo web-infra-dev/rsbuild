@@ -122,28 +122,103 @@ export default {
 
 下面是新增、修改和删除 Rspack loader 的示例。
 
-```js title="rsbuild.config.ts"
+- 新增一个 loader 来处理 `.md` 文件：
+
+```js title="rsbuild.config.mjs"
 export default {
   tools: {
-    bundlerChain: (chain, { CHAIN_ID }) => {
-      // 新增 loader
+    bundlerChain: (chain) => {
       chain.module
         .rule('md')
         .test(/\.md$/)
         .use('md-loader')
+        // loader 的包名或模块路径
         .loader('md-loader');
+    },
+  },
+};
+```
 
-      // 修改 loader
+- 修改内置的 SWC loader 选项：
+
+```js title="rsbuild.config.mjs"
+export default {
+  tools: {
+    bundlerChain: (chain, { CHAIN_ID }) => {
       chain.module
         .rule(CHAIN_ID.RULE.JS)
-        .use(CHAIN_ID.USE.BABEL)
+        .use(CHAIN_ID.USE.SWC)
         .tap((options) => {
-          options.plugins.push('babel-plugin-abc');
+          console.log(options);
           return options;
         });
+    },
+  },
+};
+```
 
-      // 删除 loader
-      chain.module.rule(CHAIN_ID.RULE.JS).uses.delete(CHAIN_ID.USE.BABEL);
+- 删除内置的 SWC loader：
+
+```js title="rsbuild.config.mjs"
+export default {
+  tools: {
+    bundlerChain: (chain, { CHAIN_ID }) => {
+      chain.module.rule(CHAIN_ID.RULE.JS).uses.delete(CHAIN_ID.USE.SWC);
+    },
+  },
+};
+```
+
+- 在内置的 SWC loader 之后插入一个 loader，它会早于 SWC loader 执行：
+
+```js title="rsbuild.config.mjs"
+export default {
+  tools: {
+    bundlerChain: (chain, { CHAIN_ID }) => {
+      chain.module
+        .rule(CHAIN_ID.RULE.JS)
+        .use('my-loader')
+        .after(CHAIN_ID.USE.SWC)
+        // loader 的包名或模块路径
+        .loader('my-loader')
+        .options({
+          // some options
+        });
+    },
+  },
+};
+```
+
+> 注意：Rspack 的 loader 是以相反顺序执行的。
+
+- 在内置的 SWC loader 之前插入一个 loader，它会晚于 SWC loader 执行：
+
+```js title="rsbuild.config.mjs"
+export default {
+  tools: {
+    bundlerChain: (chain, { CHAIN_ID }) => {
+      chain.module
+        .rule(CHAIN_ID.RULE.JS)
+        // loader id，没有实际意义，仅用于定位
+        .use('my-loader')
+        .before(CHAIN_ID.USE.SWC)
+        // loader 的包名或模块路径
+        .loader('my-loader')
+        .options({
+          // some options
+        });
+    },
+  },
+};
+```
+
+- 删除内置的 CSS 处理规则：
+
+```js title="rsbuild.config.mjs"
+export default {
+  tools: {
+    bundlerChain: (chain, { CHAIN_ID }) => {
+      chain.module.rules.delete(CHAIN_ID.RULE.CSS);
     },
   },
 };
@@ -153,7 +228,7 @@ export default {
 
 下面是新增、修改和删除 Rspack 插件的示例。
 
-```js title="rsbuild.config.ts"
+```js title="rsbuild.config.mjs"
 export default {
   tools: {
     bundlerChain: (chain, { bundler, CHAIN_ID }) => {
@@ -183,7 +258,7 @@ export default {
 
 在 `tools.bundlerChain` 函数的第二个参数中，你可以拿到各种环境的标识，如开发/生产环境构建、 SSR 构建、Web Worker 构建，从而实现不同环境下的配置修改。
 
-```js title="rsbuild.config.ts"
+```js title="rsbuild.config.mjs"
 export default {
   tools: {
     bundlerChain: (chain, { env, isProd, target, isServer, isWebWorker }) => {
