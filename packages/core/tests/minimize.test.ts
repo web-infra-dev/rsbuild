@@ -94,6 +94,28 @@ describe('plugin-minimize', () => {
     process.env.NODE_ENV = 'test';
   });
 
+  it('should not minimize when both output.minify.js and output.minify.css are false', async () => {
+    process.env.NODE_ENV = 'production';
+
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginMinimize()],
+      rsbuildConfig: {
+        output: {
+          minify: {
+            css: false,
+            js: false,
+          },
+        },
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+
+    expect(bundlerConfigs[0].optimization?.minimize).toBe(false);
+
+    process.env.NODE_ENV = 'test';
+  });
+
   it('should not minimizer for CSS when output.minify.css is false', async () => {
     process.env.NODE_ENV = 'production';
 

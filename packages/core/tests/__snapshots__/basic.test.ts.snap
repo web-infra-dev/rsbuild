@@ -16,9 +16,6 @@ exports[`plugin-basic > should apply basic config correctly in development 1`] =
     },
   },
   "name": "web",
-  "optimization": {
-    "minimize": false,
-  },
   "output": {
     "devtoolModuleFilenameTemplate": [Function],
   },
@@ -49,9 +46,6 @@ exports[`plugin-basic > should apply basic config correctly in production 1`] = 
     },
   },
   "name": "web",
-  "optimization": {
-    "minimize": true,
-  },
   "performance": {
     "hints": false,
   },
