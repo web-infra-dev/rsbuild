@@ -118,30 +118,105 @@ The `CHAIN_ID` object contains various IDs, which correspond to the following co
 
 #### Configure loader
 
-Here are examples of adding, modifying, and deleting Rspack loaders.
+Here are examples of adding, modifying, and removing Rspack loaders.
 
-```js title="rsbuild.config.ts"
+- Add a loader to handle `.md` files:
+
+```js title="rsbuild.config.mjs"
 export default {
   tools: {
-    bundlerChain: (chain, { CHAIN_ID }) => {
-      // Add loader
+    bundlerChain: (chain) => {
       chain.module
         .rule('md')
         .test(/\.md$/)
         .use('md-loader')
+        // The package name or module path of the loader
         .loader('md-loader');
+    },
+  },
+};
+```
 
-      // Modify loader
+- Modify options of the built-in SWC loader:
+
+```js title="rsbuild.config.mjs"
+export default {
+  tools: {
+    bundlerChain: (chain, { CHAIN_ID }) => {
       chain.module
         .rule(CHAIN_ID.RULE.JS)
-        .use(CHAIN_ID.USE.BABEL)
+        .use(CHAIN_ID.USE.SWC)
         .tap((options) => {
-          options.plugins.push('babel-plugin-abc');
+          console.log(options);
           return options;
         });
+    },
+  },
+};
+```
 
-      // Delete loader
-      chain.module.rule(CHAIN_ID.RULE.JS).uses.delete(CHAIN_ID.USE.BABEL);
+- Remove the built-in SWC loader:
+
+```js title="rsbuild.config.mjs"
+export default {
+  tools: {
+    bundlerChain: (chain, { CHAIN_ID }) => {
+      chain.module.rule(CHAIN_ID.RULE.JS).uses.delete(CHAIN_ID.USE.SWC);
+    },
+  },
+};
+```
+
+- Insert a loader after the built-in SWC loader that executes earlier:
+
+```js title="rsbuild.config.mjs"
+export default {
+  tools: {
+    bundlerChain: (chain, { CHAIN_ID }) => {
+      chain.module
+        .rule(CHAIN_ID.RULE.JS)
+        .use('my-loader')
+        .after(CHAIN_ID.USE.SWC)
+        // The package name or module path of the loader
+        .loader('my-loader')
+        .options({
+          // some options
+        });
+    },
+  },
+};
+```
+
+> Note: Rspack loaders are executed in reverse order.
+
+- Insert a loader before the built-in SWC loader that executes later:
+
+```js title="rsbuild.config.mjs"
+export default {
+  tools: {
+    bundlerChain: (chain, { CHAIN_ID }) => {
+      chain.module
+        .rule(CHAIN_ID.RULE.JS)
+        // Loader ID, not actually meaningful, just for locating
+        .use('my-loader')
+        .before(CHAIN_ID.USE.SWC)
+        // The package name or module path of the loader
+        .loader('my-loader')
+        .options({
+          // some options
+        });
+    },
+  },
+};
+```
+
+- Remove the built-in CSS handling rule:
+
+```js title="rsbuild.config.mjs"
+export default {
+  tools: {
+    bundlerChain: (chain, { CHAIN_ID }) => {
+      chain.module.rules.delete(CHAIN_ID.RULE.CSS);
     },
   },
 };
@@ -151,7 +226,7 @@ export default {
 
 Here are examples of adding, modifying, and deleting Rspack plugins.
 
-```js title="rsbuild.config.ts"
+```js title="rsbuild.config.mjs"
 export default {
   tools: {
     bundlerChain: (chain, { bundler, CHAIN_ID }) => {
@@ -181,7 +256,7 @@ export default {
 
 In the `tools.bundlerChain` function, you can access various environment identifiers in the second parameter, such as development/production build, SSR build, Web Worker build, to achieve configuration modifications for different environments.
 
-```js title="rsbuild.config.ts"
+```js title="rsbuild.config.mjs"
 export default {
   tools: {
     bundlerChain: (chain, { env, isProd, target, isServer, isWebWorker }) => {
