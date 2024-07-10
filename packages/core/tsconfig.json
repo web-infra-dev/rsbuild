@@ -26,6 +26,7 @@
       "rspack-chain": ["./compiled/rspack-chain"],
       "dotenv-expand": ["./compiled/dotenv-expand"],
       "webpack-merge": ["./compiled/webpack-merge"],
+      "http-rspack-plugin": ["./compiled/http-rspack-plugin"],
       "http-proxy-middleware": ["./compiled/http-proxy-middleware"],
       "webpack-bundle-analyzer": ["./compiled/webpack-bundle-analyzer"],
       "http-compression": ["./compiled/http-compression"],

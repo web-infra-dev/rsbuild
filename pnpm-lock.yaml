@@ -5,10 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@rspack/binding': 1.0.0-alpha.2
-  '@rspack/core': 1.0.0-alpha.2
-  '@rspack/plugin-preact-refresh': 1.0.0-alpha.2
-  '@rspack/plugin-react-refresh': 1.0.0-alpha.2
   esbuild: ~0.19.0
 
 importers:
@@ -669,6 +665,9 @@ importers:
       '@rspack/core':
         specifier: 1.0.0-alpha.2
         version: 1.0.0-alpha.2(@swc/helpers@0.5.11)
+      '@rspack/lite-tapable':
+        specifier: 1.0.0-alpha.2
+        version: 1.0.0-alpha.2
       '@swc/helpers':
         specifier: 0.5.11
         version: 0.5.11
@@ -678,9 +677,6 @@ importers:
       core-js:
         specifier: ~3.37.1
         version: 3.37.1
-      html-rspack-plugin:
-        specifier: 6.0.0-beta.5
-        version: 6.0.0-beta.5(@rspack/core@1.0.0-alpha.2(@swc/helpers@0.5.11))
       postcss:
         specifier: ^8.4.39
         version: 8.4.39
@@ -743,6 +739,9 @@ importers:
       fs-extra:
         specifier: ^11.2.0
         version: 11.2.0
+      html-rspack-plugin:
+        specifier: 6.0.0-beta.7
+        version: 6.0.0-beta.7(@rspack/core@1.0.0-alpha.2(@swc/helpers@0.5.11))
       http-compression:
         specifier: 1.0.20
         version: 1.0.20
@@ -4426,7 +4425,7 @@ packages:
     resolution: {integrity: sha512-6WvYYn7l/XEGN8Xu2vWFt9nVzrCn39vKyTEFf/ExEyoksJjjSZV/0/35XPlMbpnr6VGhZIUg5yJrL8tGfes/FA==}
     engines: {node: '>= 18.12.0'}
     peerDependencies:
-      '@rspack/core': 1.0.0-alpha.2
+      '@rspack/core': 0.x || 1.x
       webpack: ^5.27.0
     peerDependenciesMeta:
       '@rspack/core':
@@ -5142,16 +5141,16 @@ packages:
     resolution: {integrity: sha512-H1jVj3GnyqbZmhycUHwdlGvSdXHmzdtVaZcFIsTJ+i0q0hH+gGe+t+d0y5SIGfsozeTjjSdOZPWfzI/hM/5OXQ==}
     engines: {node: '>=10.13.0'}
     peerDependencies:
-      '@rspack/core': 1.0.0-alpha.2
+      '@rspack/core': 0.x || 1.x
     peerDependenciesMeta:
       '@rspack/core':
         optional: true
 
-  html-rspack-plugin@6.0.0-beta.5:
-    resolution: {integrity: sha512-UzgniuWQ5Nr/8bf09tT+m9RHHrFD4USc1533okdVfZrtSbyVOdFu1G2UzcXZf0yD0IqJAQJsbRrND0+T4bgciQ==}
-    engines: {node: '>=10.13.0'}
+  html-rspack-plugin@6.0.0-beta.7:
+    resolution: {integrity: sha512-9Zve5TfgC2SWNHX1ZjVqBecflYKhoGHPALu8jC+9+m3zUeX0YKWk72Y8h8QPIm5Bh3HVsKaSyPrqWotp+7SDiA==}
+    engines: {node: '>=18.0.0'}
     peerDependencies:
-      '@rspack/core': 1.0.0-alpha.2
+      '@rspack/core': 0.x || 1.x
     peerDependenciesMeta:
       '@rspack/core':
         optional: true
@@ -5528,7 +5527,7 @@ packages:
     resolution: {integrity: sha512-MYUxjSQSBUQmowc0l5nPieOYwMzGPUaTzB6inNW/bdPEG9zOL3eAAD1Qw5ZxSPk7we5dMojHwNODYMV1hq4EVg==}
     engines: {node: '>= 18.12.0'}
     peerDependencies:
-      '@rspack/core': 1.0.0-alpha.2
+      '@rspack/core': 0.x || 1.x
       less: ^3.5.0 || ^4.0.0
       webpack: ^5.0.0
     peerDependenciesMeta:
@@ -6359,7 +6358,7 @@ packages:
     resolution: {integrity: sha512-0IeqyAsG6tYiDRCYKQJLAmgQr47DX6N7sFSWvQxt6AcupX8DIdmykuk/o/tx0Lze3ErGHJEp5OSRxrelC6+NdQ==}
     engines: {node: '>= 18.12.0'}
     peerDependencies:
-      '@rspack/core': 1.0.0-alpha.2
+      '@rspack/core': 0.x || 1.x
       postcss: ^7.0.0 || ^8.0.1
       webpack: ^5.0.0
     peerDependenciesMeta:
@@ -6767,7 +6766,7 @@ packages:
     resolution: {integrity: sha512-Rtpn6GI4mpTASPmLOGiHzv3KqVWuWhGJG9CKO7aioPrAhukML4jtgYUvbQdBze/mZcDrvqf6sxEGRGx5fKQ+ag==}
     engines: {node: '>=14'}
     peerDependencies:
-      '@rspack/core': 1.0.0-alpha.2
+      '@rspack/core': 0.x || 1.x
     peerDependenciesMeta:
       '@rspack/core':
         optional: true
@@ -6930,7 +6929,7 @@ packages:
     resolution: {integrity: sha512-G0VcnMYU18a4N7VoNDegg2OuMjYtxnqzQWARVWCIVSZwJeiL9kg8QMsuIZOplsJgTzZLF6jGxI3AClj8I9nRdQ==}
     engines: {node: '>= 18.12.0'}
     peerDependencies:
-      '@rspack/core': 1.0.0-alpha.2
+      '@rspack/core': 0.x || 1.x
       node-sass: ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0
       sass: ^1.3.0
       sass-embedded: '*'
@@ -7214,7 +7213,7 @@ packages:
     resolution: {integrity: sha512-+Xcn5fd0azjzSXxclT31wVviXlXbBfcBamFgAQimN2qug9ZQf0OmRlK+/MJwLs1V8DJWhTFGuFwmOTkfV4KnYQ==}
     engines: {node: '>= 18.12.0'}
     peerDependencies:
-      '@rspack/core': 1.0.0-alpha.2
+      '@rspack/core': 0.x || 1.x
       stylus: '>=0.52.4'
       webpack: ^5.0.0
     peerDependenciesMeta:
@@ -12041,7 +12040,7 @@ snapshots:
     optionalDependencies:
       '@rspack/core': 1.0.0-alpha.2(@swc/helpers@0.5.11)
 
-  html-rspack-plugin@6.0.0-beta.5(@rspack/core@1.0.0-alpha.2(@swc/helpers@0.5.11)):
+  html-rspack-plugin@6.0.0-beta.7(@rspack/core@1.0.0-alpha.2(@swc/helpers@0.5.11)):
     dependencies:
       '@rspack/lite-tapable': 1.0.0-alpha.2
     optionalDependencies:
