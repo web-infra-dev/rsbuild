@@ -203,11 +203,13 @@ In the callback function, the config object in the parameters has already been m
 - **Type:**
 
 ```ts
+type ArrayAtLeastOne<A, B> = [A, ...Array<A | B>] | [...Array<A | B>, A];
+
 type ModifyEnvironmentConfigUtils = {
   /** Current environment name */
   name: string;
   mergeEnvironmentConfig: (
-    ...configs: EnvironmentConfig[]
+    ...configs: ArrayAtLeastOne<MergedEnvironmentConfig, EnvironmentConfig>
   ) => EnvironmentConfig;
 };
 
