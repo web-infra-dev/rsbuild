@@ -104,20 +104,15 @@ export type ModifyRsbuildConfigUtils = {
   mergeRsbuildConfig: (...configs: RsbuildConfig[]) => RsbuildConfig;
 };
 
-declare function mergeEnvironmentConfig(
-  userConfig: EnvironmentConfig,
-  config: MergedEnvironmentConfig,
-): MergedEnvironmentConfig;
-declare function mergeEnvironmentConfig(
-  config: MergedEnvironmentConfig,
-  ...configs: EnvironmentConfig[]
-): MergedEnvironmentConfig;
+type ArrayAtLeastOne<A, B> = [A, ...Array<A | B>] | [...Array<A | B>, A];
 
 export type ModifyEnvironmentConfigUtils = {
   /** environment name. */
   name: string;
   /** Merge multiple Rsbuild environment config objects into one. */
-  mergeEnvironmentConfig: typeof mergeEnvironmentConfig;
+  mergeEnvironmentConfig: (
+    ...configs: ArrayAtLeastOne<MergedEnvironmentConfig, EnvironmentConfig>
+  ) => MergedEnvironmentConfig;
 };
 
 export type ModifyRsbuildConfigFn = (
