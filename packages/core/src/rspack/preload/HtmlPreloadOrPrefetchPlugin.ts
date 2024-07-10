@@ -22,10 +22,9 @@ import type {
   Compiler,
   RspackPluginInstance,
 } from '@rspack/core';
-import type HtmlWebpackPlugin from 'html-rspack-plugin';
 import { ensureAssetPrefix, upperFirst } from '../../helpers';
 import { getHTMLPlugin } from '../../pluginHelper';
-import type { PreloadOrPreFetchOption } from '../../types';
+import type { HtmlRspackPlugin, PreloadOrPreFetchOption } from '../../types';
 import {
   type As,
   type BeforeAssetTagGenerationHtmlPluginData,
@@ -49,9 +48,9 @@ interface Attributes {
 }
 
 function filterResourceHints(
-  resourceHints: HtmlWebpackPlugin.HtmlTagObject[],
-  scripts: HtmlWebpackPlugin.HtmlTagObject[],
-): HtmlWebpackPlugin.HtmlTagObject[] {
+  resourceHints: HtmlRspackPlugin.HtmlTagObject[],
+  scripts: HtmlRspackPlugin.HtmlTagObject[],
+): HtmlRspackPlugin.HtmlTagObject[] {
   return resourceHints.filter(
     (resourceHint) =>
       !scripts.find(
@@ -66,7 +65,7 @@ function generateLinks(
   compilation: Compilation,
   htmlPluginData: BeforeAssetTagGenerationHtmlPluginData,
   HTMLCount: number,
-): HtmlWebpackPlugin.HtmlTagObject[] {
+): HtmlRspackPlugin.HtmlTagObject[] {
   // get all chunks
   const extractedChunks = extractChunks({
     compilation,
@@ -77,7 +76,7 @@ function generateLinks(
     // Handle all chunks.
     options.type === 'all-assets' || HTMLCount === 1
       ? extractedChunks
-      : // Only handle chunks imported by this HtmlWebpackPlugin.
+      : // Only handle chunks imported by this HtmlRspackPlugin.
         extractedChunks.filter((chunk) =>
           doesChunkBelongToHtml({
             chunk: chunk as Chunk,
@@ -118,7 +117,7 @@ function generateLinks(
 
   // Sort to ensure the output is predictable.
   const sortedFilteredFiles = filteredFiles.sort();
-  const links: HtmlWebpackPlugin.HtmlTagObject[] = [];
+  const links: HtmlRspackPlugin.HtmlTagObject[] = [];
   const { publicPath, crossOriginLoading } = compilation.outputOptions;
 
   for (const file of sortedFilteredFiles) {
@@ -168,7 +167,7 @@ function generateLinks(
 export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
   readonly options: PreloadOrPreFetchOption;
 
-  resourceHints: HtmlWebpackPlugin.HtmlTagObject[] = [];
+  resourceHints: HtmlRspackPlugin.HtmlTagObject[] = [];
 
   type: LinkType;
 

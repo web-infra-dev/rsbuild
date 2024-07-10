@@ -3,9 +3,12 @@ import type {
   CssExtractRspackPluginOptions,
 } from '@rspack/core';
 import type Autoprefixer from 'autoprefixer';
+import type HtmlRspackPlugin from 'html-rspack-plugin';
 import type { AcceptedPlugin, ProcessOptions } from 'postcss';
 import type { Configuration as WebpackConfig } from 'webpack';
 import type { Rspack } from './rspack';
+
+export type { HtmlRspackPlugin };
 
 type AutoprefixerOptions = Autoprefixer.Options;
 

@@ -1,4 +1,4 @@
-import type HtmlWebpackPlugin from 'html-rspack-plugin';
+import type { HtmlRspackPlugin } from '../../../types';
 
 export type BeforeAssetTagGenerationHtmlPluginData = {
   assets: {
@@ -9,7 +9,7 @@ export type BeforeAssetTagGenerationHtmlPluginData = {
     manifest?: string;
   };
   outputName: string;
-  plugin: HtmlWebpackPlugin;
+  plugin: HtmlRspackPlugin;
 };
 
 export type As =

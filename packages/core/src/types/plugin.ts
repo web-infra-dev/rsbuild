@@ -1,5 +1,4 @@
 import type { RuleSetCondition } from '@rspack/core';
-import type HtmlWebpackPlugin from 'html-rspack-plugin';
 import type RspackChain from 'rspack-chain';
 import type {
   RuleSetRule,
@@ -34,6 +33,7 @@ import type {
 } from './hooks';
 import type { RsbuildTarget } from './rsbuild';
 import type { RspackConfig, RspackSourceMap } from './rspack';
+import type { HtmlRspackPlugin } from './thirdParty';
 import type { Falsy } from './utils';
 import type { MaybePromise } from './utils';
 
@@ -64,7 +64,7 @@ export type ModifyWebpackChainUtils = ModifyChainUtils & {
   /**
    * @deprecated Use HtmlPlugin instead.
    */
-  HtmlWebpackPlugin: typeof HtmlWebpackPlugin;
+  HtmlWebpackPlugin: typeof HtmlRspackPlugin;
 };
 
 export type ModifyWebpackConfigUtils = ModifyWebpackChainUtils & {

@@ -193,9 +193,9 @@ export const CHAIN_ID = {
   PLUGIN: {
     /** HotModuleReplacementPlugin */
     HMR: 'hmr',
-    /** CopyWebpackPlugin */
+    /** CopyRspackPlugin */
     COPY: 'copy',
-    /** HtmlWebpackPlugin */
+    /** HtmlRspackPlugin */
     HTML: 'html',
     /** ESLintWebpackPlugin */
     ESLINT: 'eslint',

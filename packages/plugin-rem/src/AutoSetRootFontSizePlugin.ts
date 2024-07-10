@@ -1,11 +1,11 @@
 import path from 'node:path';
 import {
+  type HtmlRspackPlugin,
   type Rspack,
   type ScriptLoading,
   ensureAssetPrefix,
   logger,
 } from '@rsbuild/core';
-import type HtmlWebpackPlugin from 'html-rspack-plugin';
 import type { PluginRemOptions } from './types';
 
 type AutoSetRootFontSizeOptions = Omit<
@@ -68,14 +68,14 @@ export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
 
   scriptPath: string;
 
-  HtmlPlugin: typeof HtmlWebpackPlugin;
+  HtmlPlugin: typeof HtmlRspackPlugin;
 
   scriptLoading: ScriptLoading;
 
   constructor(
     options: PluginRemOptions,
     entries: Array<string>,
-    HtmlPlugin: typeof HtmlWebpackPlugin,
+    HtmlPlugin: typeof HtmlRspackPlugin,
     distDir: string,
     scriptLoading: ScriptLoading,
   ) {
