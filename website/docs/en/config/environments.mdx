@@ -2,43 +2,19 @@
 
 Rsbuild supports building outputs for multiple environments. You can use `environments` to define different Rsbuild configurations for each environment.
 
-The configuration in `environments` overrides the outer Rsbuild base configuration.
+> Please refer to [Multi-Environment Builds](/guide/advanced/environments) for more information.
 
 - **Type:**
 
 ```ts
 interface EnvironmentConfig {
-  /**
-   * Options for local development.
-   */
   dev?: Pick<DevConfig, 'assetPrefix' | 'lazyCompilation' | 'progressBar'>;
-  /**
-   * Options for HTML generation.
-   */
   html?: HtmlConfig;
-  /**
-   * Options for the low-level tools.
-   */
   tools?: ToolsConfig;
-  /**
-   * Options for source code parsing and compilation.
-   */
   source?: SourceConfig;
-  /**
-   * Options for build outputs.
-   */
   output?: OutputConfig;
-  /**
-   * Options for Web security.
-   */
   security?: SecurityConfig;
-  /**
-   * Options for build performance and runtime performance.
-   */
   performance?: PerformanceConfig;
-  /**
-   * Options for module federation.
-   */
   moduleFederation?: ModuleFederationConfig;
 }
 

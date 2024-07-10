@@ -2,43 +2,19 @@
 
 Rsbuild 支持同时为多个环境构建产物。你可以使用 `environments` 为每个环境定义不同的 Rsbuild 配置。
 
-定义在 `environments` 中的配置会覆盖外部的 Rsbuild 基础配置。
+> 请查看 [多环境构建](/guide/advanced/environments) 了解更多。
 
 - **类型：**
 
 ```ts
 interface EnvironmentConfig {
-  /**
-   * Options for local development.
-   */
   dev?: Pick<DevConfig, 'assetPrefix' | 'lazyCompilation' | 'progressBar'>;
-  /**
-   * Options for HTML generation.
-   */
   html?: HtmlConfig;
-  /**
-   * Options for the low-level tools.
-   */
   tools?: ToolsConfig;
-  /**
-   * Options for source code parsing and compilation.
-   */
   source?: SourceConfig;
-  /**
-   * Options for build outputs.
-   */
   output?: OutputConfig;
-  /**
-   * Options for Web security.
-   */
   security?: SecurityConfig;
-  /**
-   * Options for build performance and runtime performance.
-   */
   performance?: PerformanceConfig;
-  /**
-   * Options for module federation.
-   */
   moduleFederation?: ModuleFederationConfig;
 }
 

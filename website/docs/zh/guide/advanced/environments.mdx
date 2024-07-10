@@ -2,7 +2,7 @@
 
 Rsbuild 支持同时为多个环境构建产物。你可以使用 [environments](/config/environments) 来并行构建多个环境，并为每个环境设置不同的 Rsbuild 配置。
 
-## 通过 environments 定义多环境配置
+## 多环境配置
 
 Rsbuild 支持通过 [environments](/config/environments) 为每个环境定义不同的 Rsbuild 配置。
 
@@ -11,33 +11,33 @@ Rsbuild 支持通过 [environments](/config/environments) 为每个环境定义�
 ```ts title=rsbuild.config.ts
 export default {
   environments: {
-    // client 环境配置
+    // 配置 web 环境，用于浏览器端
     web: {
       source: {
-        alias: {
-          '@common1': './src/web/common1',
-        },
         entry: {
           index: './src/index.client.js',
         },
+        alias: {
+          '@common': './src/client/common',
+        },
       },
       output: {
-        // 定义构建产物类型适用于浏览器端
+        // 浏览器产物的 target 类型为 'web'
         target: 'web',
       },
     },
-    // SSR 环境配置
+    // 配置 node 环境，用于 SSR
     node: {
       source: {
-        alias: {
-          '@common1': './src/ssr/common1',
-        },
         entry: {
           index: './src/index.server.js',
         },
+        alias: {
+          '@common': './src/server/common',
+        },
       },
       output: {
-        // 定义构建产物类型适用于 Node.js
+        // Node.js 产物的 target 类型为 'node'
         target: 'node',
       },
     },
@@ -45,7 +45,18 @@ export default {
 };
 ```
 
-以上配置完成后，Rsbuild 会基于这两份 environment 配置计算最终生效的 Rsbuild 及 Rspack 配置，并进行构建。
+### 配置合并
+
+当你配置 `environments` 时，Rsbuild 会将 `environments` 里的配置与外层的基础配置进行合并。合并时，`environments` 中的配置具有更高的优先级。
+
+在上述例子中，在合并配置后，Rsbuild 会生成两份独立的 environments 配置，分别用于构建 web 和 node 环境的产物。
+
+- **web environments config**：由 base config 和 `environments.web` 合并生成
+- **node environments config**：由 base config 和 `environments.node` 合并生成
+
+接着，Rsbuild 会基于这些 environments 配置，在内部生成两份 Rspack 配置，并通过 Rspack 的 MultiCompiler 来执行单次构建。
+
+### 配置调试
 
 当你在项目根目录下执行命令 `npx rsbuild inspect` 后，会发现有如下输出：
 
@@ -65,7 +76,7 @@ Inspect config succeed, open following files to view the content:
 
 ## 默认 environment
 
-当 environments 未指定时，Rsbuild 默认会根据当前设置的产物类型 ([output.target](/config/output/target) 的值) 创建一个同名的环境。
+当 environments 未指定时，Rsbuild 默认会根据当前的产物类型 ([output.target](/config/output/target) 的值) 创建一个同名的环境。
 
 ```ts title=rsbuild.config.ts
 export default {
@@ -89,11 +100,11 @@ export default {
 };
 ```
 
-## 通过插件 API 修改 environment 配置
+## 插件 API
 
-### 新增 / 修改 environment 配置
+### 更新配置
 
-Rsbuild 支持通过 [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) 钩子修改 / 新增 environment 配置。
+Rsbuild 支持通过 [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) 钩子新增或修改 environment 配置。
 
 ```ts
 const myPlugin = () => ({
@@ -115,7 +126,7 @@ const myPlugin = () => ({
 });
 ```
 
-### 修改单个 environment 配置
+### 配置特定 environment
 
 Rsbuild 支持通过 [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig) 钩子修改特定 environment 的 Rsbuild 配置。
 
@@ -133,7 +144,7 @@ const myPlugin = () => ({
 });
 ```
 
-## 获取 environment 上下文
+## Environment 上下文
 
 [Environment context](/api/javascript-api/types#environmentcontext) 是一个只读对象，提供一些和当前环境有关的上下文信息。Rsbuild 支持在 plugin hook 中获取 environment context 信息。
 
@@ -168,7 +179,7 @@ const myPlugin = () => ({
 });
 ```
 
-## 使用 environment API
+## Environment API
 
 Rsbuild Server 提供了一系列和构建环境相关的 API，用户可通过 Rsbuild environment API 在服务器端操作特定环境下的构建产物。
 

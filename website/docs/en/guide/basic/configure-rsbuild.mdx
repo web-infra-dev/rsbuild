@@ -8,7 +8,7 @@ If you need to customize build behaviors, you can use these configuration option
 
 The configuration structure of Rsbuild looks like this:
 
-```ts title="rsbuild.config.ts"
+```js title="rsbuild.config.mjs"
 export default {
   plugins: [
     // configure Rsbuild plugins
@@ -41,6 +41,9 @@ export default {
   moduleFederation: {
     // options for module federation
   },
+  environments: {
+    // define different Rsbuild configurations for each environment
+  },
 };
 ```
 
@@ -50,14 +53,14 @@ You can find detailed descriptions of all configs on the [Configure Overview](/c
 
 When you use the CLI of Rsbuild, Rsbuild will automatically read the configuration file in the root directory of the current project and resolve it in the following order:
 
+- rsbuild.config.mjs
 - rsbuild.config.ts
 - rsbuild.config.js
-- rsbuild.config.mjs
 - rsbuild.config.cjs
 - rsbuild.config.mts
 - rsbuild.config.cts
 
-We recommend using the `.ts` format for the configuration file and importing the `defineConfig` utility function from `@rsbuild/core`. It provides friendly TypeScript type hints and autocompletion, which can help you avoid errors in the configuration.
+We recommend using the `.mjs` or `.ts` format for the configuration file and importing the `defineConfig` utility function from `@rsbuild/core`. It provides friendly TypeScript type hints and autocompletion, which can help you avoid errors in the configuration.
 
 For example, in `rsbuild.config.ts`, you can define the Rsbuild [source.alias](/config/source/alias) configuration:
 
@@ -88,19 +91,19 @@ export default defineConfig({
 ```
 
 :::tip
-Rsbuild uses [jiti](https://github.com/unjs/jiti) to load configuration files, providing interoperability between ESM and CommonJS. The behavior of module resolution differs slightly from the native behavior of Node.js.
+When you use the `.ts`, `.mts`, and `.cts` extensions, Rsbuild will use [jiti](https://github.com/unjs/jiti) to load configuration files, providing interoperability between ESM and CommonJS. The behavior of module resolution differs slightly from the native behavior of Node.js.
 :::
 
 ## Specify Config File
 
 Rsbuild CLI uses the `--config` option to specify the config file, which can be set to a relative path or an absolute path.
 
-For example, if you need to use the `rsbuild.prod.config.js` file when running `build`, you can add the following scripts to `package.json`:
+For example, if you need to use the `rsbuild.prod.config.mjs` file when running `build`, you can add the following scripts to `package.json`:
 
 ```json title="package.json"
 {
   "scripts": {
-    "build": "rsbuild build --config rsbuild.prod.config.js"
+    "build": "rsbuild build --config rsbuild.prod.config.mjs"
   }
 }
 ```
@@ -108,7 +111,7 @@ For example, if you need to use the `rsbuild.prod.config.js` file when running `
 You can also abbreviate the `--config` option to `-c`:
 
 ```bash
-rsbuild build -c rsbuild.prod.config.js
+rsbuild build -c rsbuild.prod.config.mjs
 ```
 
 ## Using Environment Variables

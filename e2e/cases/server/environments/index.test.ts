@@ -11,7 +11,8 @@ test('should serve multiple environments correctly', async ({ page }) => {
         web: {},
         web1: {
           dev: {
-            // When generating multiple environment web products, file search conflicts will occur if assetPrefix is ​​not added.
+            // When generating outputs for multiple web environments,
+            // if assetPrefix is not added, file search conflicts will occur.
             assetPrefix: 'auto',
           },
           source: {
