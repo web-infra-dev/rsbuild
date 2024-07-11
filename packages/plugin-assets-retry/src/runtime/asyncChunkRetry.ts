@@ -95,7 +95,6 @@ function getUrlRetryQuery(
   return '';
 }
 
-// "http://cdn.com/app/main/static/js/index.js" -> "/app/main/static/js/index.js"
 function removeDomainFromUrl(url: string): string {
   const protocolStartIndex = url.indexOf('//');
 
@@ -112,14 +111,20 @@ function removeDomainFromUrl(url: string): string {
   return url.slice(pathStartIndex);
 }
 
+// "http://cdn.com/app/main/static/js/index.js?query=1#hash" -> "/app/main/static/js/index.js"
+function getAbsolutePathFromUrl(url: string): string {
+  return cleanUrl(removeDomainFromUrl(url));
+}
+
 function getNextRetryUrl(
   existRetryTimes: number,
   nextDomain: string,
   originalSrcUrl: string,
 ) {
-  const relativeUrl = removeDomainFromUrl(originalSrcUrl);
+  const absolutePath = getAbsolutePathFromUrl(originalSrcUrl);
   return (
-    cleanUrl(nextDomain + relativeUrl) +
+    nextDomain +
+    absolutePath +
     getUrlRetryQuery(existRetryTimes, getQueryFromUrl(originalSrcUrl))
   );
 }
