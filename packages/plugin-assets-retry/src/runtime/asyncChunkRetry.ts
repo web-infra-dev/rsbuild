@@ -95,11 +95,7 @@ function getUrlRetryQuery(
   return '';
 }
 
-/**
- *
- * @param url "http://cdn.com/app/main/static/js/index.js"
- * @returns "/app/main/static/js/index.js"
- */
+// "http://cdn.com/app/main/static/js/index.js" -> "/app/main/static/js/index.js"
 function getPathFromUrl(url: string): string {
   const protocolStartIndex = url.indexOf('//');
 
