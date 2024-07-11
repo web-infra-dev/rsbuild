@@ -1,5 +1,18 @@
-import * as toESVersion from 'browserslist-to-es-version';
+import { DEFAULT_WEB_BROWSERSLIST } from '../constants';
 import type { RsbuildPlugin } from '../types';
+
+const getESVersion = async (browserslist: string[]) => {
+  const { browserslistToESVersion } = await import(
+    'browserslist-to-es-version'
+  );
+
+  // skip calculation if the browserslist is the default value
+  if (browserslist.join(',') === DEFAULT_WEB_BROWSERSLIST.join(',')) {
+    return 2017;
+  }
+
+  return browserslistToESVersion(browserslist);
+};
 
 export const pluginTarget = (): RsbuildPlugin => ({
   name: 'rsbuild:target',
@@ -14,7 +27,7 @@ export const pluginTarget = (): RsbuildPlugin => ({
         }
 
         const { browserslist } = environment;
-        const esVersion = toESVersion.browserslistToESVersion(browserslist);
+        const esVersion = await getESVersion(browserslist);
 
         if (target === 'web-worker') {
           chain.target(['webworker', `es${esVersion}`]);
