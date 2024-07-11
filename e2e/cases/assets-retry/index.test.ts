@@ -94,9 +94,13 @@ async function createRsbuildWithMiddleware(
           },
         ],
       },
-      server: {
-        port,
-      },
+      ...(port
+        ? {
+            server: {
+              port,
+            },
+          }
+        : {}),
       ...(entry
         ? {
             source: { entry: { index: entry } },
