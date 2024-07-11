@@ -109,6 +109,16 @@ const applyDefaultMiddlewares = async ({
     next();
   });
 
+  middlewares.push((req, res, next) => {
+    if (req.method === 'OPTIONS') {
+      res.statusCode = 200;
+      res.setHeader('Content-Length', '0');
+      res.end();
+      return;
+    }
+    next();
+  });
+
   // dev proxy handler, each proxy has own handler
   if (server.proxy) {
     const { createProxyMiddleware } = await import('./proxy');
