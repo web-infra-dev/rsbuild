@@ -96,7 +96,7 @@ function getUrlRetryQuery(
 }
 
 // "http://cdn.com/app/main/static/js/index.js" -> "/app/main/static/js/index.js"
-function getPathFromUrl(url: string): string {
+function removeDomainFromUrl(url: string): string {
   const protocolStartIndex = url.indexOf('//');
 
   // case /app/main/static/js/index.js
@@ -109,8 +109,7 @@ function getPathFromUrl(url: string): string {
   const protocolEndIndex = protocolStartIndex + 2;
   const pathStartIndex = url.indexOf('/', protocolEndIndex);
 
-  const path = url.slice(pathStartIndex);
-  return path;
+  return url.slice(pathStartIndex);
 }
 
 function getNextRetryUrl(
@@ -118,7 +117,7 @@ function getNextRetryUrl(
   nextDomain: string,
   originalSrcUrl: string,
 ) {
-  const originalSrcUrlWithoutDomain = getPathFromUrl(originalSrcUrl);
+  const originalSrcUrlWithoutDomain = removeDomainFromUrl(originalSrcUrl);
   return (
     cleanUrl(nextDomain + originalSrcUrlWithoutDomain) +
     getUrlRetryQuery(existRetryTimes, getQueryFromUrl(originalSrcUrl))
