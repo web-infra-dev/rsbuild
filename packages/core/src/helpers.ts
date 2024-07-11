@@ -39,10 +39,29 @@ export const isFunction = (func: unknown): func is (...args: any[]) => any =>
   typeof func === 'function';
 
 export const isObject = (obj: unknown): obj is Record<string, any> =>
-  obj !== null && typeof obj === 'object';
+  Object.prototype.toString.call(obj) === '[object Object]';
 
-export const isPlainObject = (obj: unknown): obj is Record<string, any> =>
-  isObject(obj) && Object.prototype.toString.call(obj) === '[object Object]';
+export const isPlainObject = (o: unknown): o is Record<string, any> => {
+  if (isObject(o) === false) return false;
+
+  // If has modified constructor
+  const ctor = (o as Record<string, any>).constructor;
+  if (ctor === undefined) return true;
+
+  // If has modified prototype
+  const prot = ctor.prototype;
+  if (isObject(prot) === false) return false;
+
+  // If constructor does not have an Object-specific method
+
+  // biome-ignore lint/suspicious/noPrototypeBuiltins: <explanation>
+  if (prot.hasOwnProperty('isPrototypeOf') === false) {
+    return false;
+  }
+
+  // Most likely a plain Object
+  return true;
+};
 
 export const castArray = <T>(arr?: T | T[]): T[] => {
   if (arr === undefined) {
@@ -55,7 +74,9 @@ export const cloneDeep = <T>(value: T): T => {
   if (value === null || value === undefined) {
     return value;
   }
-  return deepmerge<T>({}, value);
+  return deepmerge<T>({}, value, {
+    isMergeableObject: isPlainObject,
+  });
 };
 
 const compareSemver = (version1: string, version2: string) => {

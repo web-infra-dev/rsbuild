@@ -256,6 +256,39 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
+  it('should merge rspack plugins as expected', () => {
+    class A {
+      a = 1;
+
+      apply() {
+        return this.a;
+      }
+    }
+
+    const pluginA = new A();
+
+    const mergedConfig = mergeRsbuildConfig(
+      {
+        tools: {
+          rspack: {
+            plugins: [pluginA],
+          },
+        },
+      },
+      {},
+    );
+
+    expect(mergedConfig).toEqual({
+      tools: {
+        rspack: {
+          plugins: [pluginA],
+        },
+      },
+    });
+
+    expect(mergedConfig.tools!.rspack.plugins[0] instanceof A).toBeTruthy();
+  });
+
   test('should merge overrideBrowserslist in environments as expected', async () => {
     expect(
       mergeRsbuildConfig(

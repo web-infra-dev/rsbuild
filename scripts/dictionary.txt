@@ -118,3 +118,4 @@ vnode
 watchpack
 webm
 webp
+Mergeable
