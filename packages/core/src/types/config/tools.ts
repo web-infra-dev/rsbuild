@@ -1,6 +1,5 @@
 import type { rspack } from '@rspack/core';
 import type { SwcLoaderOptions } from '@rspack/core';
-import type { Options as HTMLPluginOptions } from 'html-rspack-plugin';
 import type RspackChain from 'rspack-chain';
 import type { ModifyBundlerChainUtils, ModifyChainUtils } from '../hooks';
 import type {
@@ -13,6 +12,7 @@ import type {
   RspackConfig,
   RspackRule,
 } from '../rspack';
+import type { HtmlRspackPlugin } from '../thirdParty';
 import type {
   AutoprefixerOptions,
   CSSExtractOptions,
@@ -28,8 +28,6 @@ import type {
   ConfigChainWithContext,
 } from '../utils';
 import type { MaybePromise, OneOrMany } from '../utils';
-
-export type { HTMLPluginOptions };
 
 export type ToolsSwcConfig = ConfigChain<SwcLoaderOptions>;
 
@@ -49,7 +47,7 @@ export type ToolsCSSLoaderConfig = ConfigChain<CSSLoaderOptions>;
 export type ToolsStyleLoaderConfig = ConfigChain<StyleLoaderOptions>;
 
 export type ToolsHtmlPluginConfig = ConfigChainWithContext<
-  HTMLPluginOptions,
+  HtmlRspackPlugin.Options,
   {
     entryName: string;
     entryValue: (string | string[] | Rspack.EntryDescription)[];

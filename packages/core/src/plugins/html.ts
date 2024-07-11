@@ -16,8 +16,8 @@ import {
 } from '../helpers';
 import type { HtmlInfo, TagConfig } from '../rspack/HtmlBasicPlugin';
 import type {
-  HTMLPluginOptions,
   HtmlConfig,
+  HtmlRspackPlugin,
   ModifyHTMLTagsFn,
   NormalizedEnvironmentConfig,
   RsbuildPlugin,
@@ -124,7 +124,7 @@ function getTemplateParameters(
   entryName: string,
   config: NormalizedEnvironmentConfig,
   assetPrefix: string,
-): HTMLPluginOptions['templateParameters'] {
+): HtmlRspackPlugin.Options['templateParameters'] {
   return (compilation, assets, assetTags, pluginOptions) => {
     const { mountId, templateParameters } = config.html;
     const defaultOptions = {
@@ -233,7 +233,7 @@ export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
 
             const metaTags = getMetaTags(entryName, config, templateContent);
 
-            const pluginOptions: HTMLPluginOptions = {
+            const pluginOptions: HtmlRspackPlugin.Options = {
               meta: metaTags,
               chunks,
               inject,
