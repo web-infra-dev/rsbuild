@@ -1,4 +1,4 @@
-import { DEFAULT_WEB_BROWSERSLIST } from 'src/constants';
+import { DEFAULT_WEB_BROWSERSLIST } from '../constants';
 import type { RsbuildPlugin } from '../types';
 
 const getESVersion = async (browserslist: string[]) => {
