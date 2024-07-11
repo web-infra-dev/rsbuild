@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-swc",
-  "version": "1.0.0-alpha.8",
+  "version": "1.0.0-alpha.9",
   "description": "SWC plugin for Rsbuild",
   "repository": {
     "type": "git",
@@ -44,7 +44,7 @@
     "webpack": "^5.92.1"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^1.0.0-alpha.8"
+    "@rsbuild/core": "workspace:^1.0.0-alpha.9"
   },
   "publishConfig": {
     "access": "public",
