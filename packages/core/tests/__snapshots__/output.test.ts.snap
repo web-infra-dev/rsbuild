@@ -66,17 +66,15 @@ exports[`plugin-output > should allow to use copy plugin 1`] = `
   },
   "plugins": [
     CopyRspackPlugin {
-      "_options": {
-        "patterns": [
-          {
-            "force": false,
-            "from": "test",
-            "globOptions": {},
-            "noErrorOnMissing": false,
-            "priority": 0,
-          },
-        ],
-      },
+      "_args": [
+        {
+          "patterns": [
+            {
+              "from": "test",
+            },
+          ],
+        },
+      ],
       "affectedHooks": undefined,
       "name": "CopyRspackPlugin",
     },
@@ -103,31 +101,17 @@ exports[`plugin-output > should allow to use copy plugin with multiple config 1`
   },
   "plugins": [
     CopyRspackPlugin {
-      "_options": {
-        "patterns": [
-          {
-            "force": false,
-            "from": "test",
-            "globOptions": {},
-            "noErrorOnMissing": false,
-            "priority": 0,
-          },
-          {
-            "force": false,
-            "from": "src/assets/",
-            "globOptions": {},
-            "noErrorOnMissing": false,
-            "priority": 0,
-          },
-          {
-            "force": false,
-            "from": "tests/",
-            "globOptions": {},
-            "noErrorOnMissing": false,
-            "priority": 0,
-          },
-        ],
-      },
+      "_args": [
+        {
+          "patterns": [
+            {
+              "from": "test",
+            },
+            "src/assets/",
+            "tests/",
+          ],
+        },
+      ],
       "affectedHooks": undefined,
       "name": "CopyRspackPlugin",
     },

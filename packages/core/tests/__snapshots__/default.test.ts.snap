@@ -393,10 +393,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       },
     },
     DefinePlugin {
-      "_options": {
-        "process.env.ASSET_PREFIX": """",
-        "process.env.NODE_ENV": ""development"",
-      },
+      "_args": [
+        {
+          "process.env.ASSET_PREFIX": """",
+          "process.env.NODE_ENV": ""development"",
+        },
+      ],
       "affectedHooks": "compilation",
       "name": "DefinePlugin",
     },
@@ -719,35 +721,21 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "minimize": true,
     "minimizer": [
       SwcJsMinimizerRspackPlugin {
-        "_options": {
-          "compress": {
-            "passes": 1,
+        "_args": [
+          {
+            "extractComments": true,
+            "format": {
+              "asciiOnly": true,
+            },
           },
-          "exclude": undefined,
-          "extractComments": {
-            "condition": "@preserve|@lic|@cc_on|^/**!",
-          },
-          "format": {
-            "asciiOnly": true,
-            "comments": false,
-          },
-          "include": undefined,
-          "mangle": true,
-          "module": undefined,
-          "test": undefined,
-        },
+        ],
         "affectedHooks": "compilation",
         "name": "SwcJsMinimizerRspackPlugin",
       },
       LightningCssMinimizerRspackPlugin {
-        "_options": {
-          "browserslist": [
-            "defaults",
-          ],
-          "errorRecovery": true,
-          "removeUnusedLocalIdents": true,
-          "unusedSymbols": [],
-        },
+        "_args": [
+          undefined,
+        ],
         "affectedHooks": undefined,
         "name": "LightningCssMinimizerRspackPlugin",
       },
@@ -848,21 +836,21 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       },
     },
     DefinePlugin {
-      "_options": {
-        "process.env.ASSET_PREFIX": """",
-        "process.env.NODE_ENV": ""production"",
-      },
+      "_args": [
+        {
+          "process.env.ASSET_PREFIX": """",
+          "process.env.NODE_ENV": ""production"",
+        },
+      ],
       "affectedHooks": "compilation",
       "name": "DefinePlugin",
     },
     ProgressPlugin {
-      "_options": {
-        "prefix": "web",
-        "profile": false,
-        "progressChars": "━━",
-        "template": "● {prefix:.bold} {bar:25.green/white.dim} ({percent}%) {wide_msg:.dim}",
-        "tick": undefined,
-      },
+      "_args": [
+        {
+          "prefix": "web",
+        },
+      ],
       "affectedHooks": undefined,
       "name": "ProgressPlugin",
     },
@@ -1176,10 +1164,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "plugins": [
     RsbuildTransformPlugin {},
     DefinePlugin {
-      "_options": {
-        "process.env.ASSET_PREFIX": """",
-        "process.env.NODE_ENV": ""test"",
-      },
+      "_args": [
+        {
+          "process.env.ASSET_PREFIX": """",
+          "process.env.NODE_ENV": ""test"",
+        },
+      ],
       "affectedHooks": "compilation",
       "name": "DefinePlugin",
     },
@@ -1608,10 +1598,12 @@ exports[`tools.rspack > should match snapshot 1`] = `
       },
     },
     DefinePlugin {
-      "_options": {
-        "process.env.ASSET_PREFIX": """",
-        "process.env.NODE_ENV": ""development"",
-      },
+      "_args": [
+        {
+          "process.env.ASSET_PREFIX": """",
+          "process.env.NODE_ENV": ""development"",
+        },
+      ],
       "affectedHooks": "compilation",
       "name": "DefinePlugin",
     },
