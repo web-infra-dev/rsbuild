@@ -6,7 +6,6 @@ import { URL } from 'node:url';
 import type {
   CreateRsbuildOptions,
   RsbuildConfig,
-  RsbuildPlugin,
   RsbuildPlugins,
 } from '@rsbuild/core';
 import { pluginSwc } from '@rsbuild/plugin-swc';
@@ -135,7 +134,7 @@ export async function dev({
   plugins,
   ...options
 }: CreateRsbuildOptions & {
-  plugins?: RsbuildPlugin[];
+  plugins?: RsbuildPlugins;
 }) {
   process.env.NODE_ENV = 'development';
 
