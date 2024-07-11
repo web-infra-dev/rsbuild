@@ -129,10 +129,18 @@ export type RsbuildPlugin = {
   remove?: string[];
 };
 
+// Support for registering lower version Rsbuild plugins in the new version of
+// Rsbuild core without throwing type mismatches. In most cases, Rsbuild core
+// only adds new methods or properties to the API object, which means that lower
+// version plugins will usually work fine.
+type LooseRsbuildPlugin = Omit<RsbuildPlugin, 'setup'> & {
+  setup: (api: any) => MaybePromise<void>;
+};
+
 export type RsbuildPlugins = (
-  | RsbuildPlugin
+  | LooseRsbuildPlugin
   | Falsy
-  | Promise<RsbuildPlugin | Falsy>
+  | Promise<LooseRsbuildPlugin | Falsy>
 )[];
 
 export type GetRsbuildConfig = {

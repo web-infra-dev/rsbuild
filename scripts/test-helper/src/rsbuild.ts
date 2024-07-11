@@ -2,7 +2,7 @@ import type {
   BundlerPluginInstance,
   CreateRsbuildOptions,
   RsbuildInstance,
-  RsbuildPlugin,
+  RsbuildPlugins,
   Rspack,
 } from '@rsbuild/core';
 
@@ -29,7 +29,7 @@ export async function createStubRsbuild({
   plugins,
   ...options
 }: CreateRsbuildOptions & {
-  plugins?: RsbuildPlugin[];
+  plugins?: RsbuildPlugins;
 }): Promise<
   RsbuildInstance & {
     unwrapConfig: () => Promise<Record<string, any>>;
@@ -56,7 +56,7 @@ export async function createStubRsbuild({
   if (plugins) {
     // remove all builtin plugins
     rsbuild.removePlugins(rsbuild.getPlugins().map((item) => item.name));
-    rsbuild.addPlugins(plugins);
+    rsbuild.addPlugins(await Promise.all(plugins));
   }
 
   const unwrapConfig = async () => {

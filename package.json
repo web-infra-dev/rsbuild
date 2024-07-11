@@ -65,7 +65,11 @@
       "vue": "2.x"
     },
     "overrides": {
-      "esbuild": "~0.19.0"
+      "esbuild": "~0.19.0",
+      "@rsbuild/core": "link:packages/core",
+      "@rsbuild/plugin-less": "link:packages/plugin-less",
+      "@rsbuild/plugin-sass": "link:packages/plugin-sass",
+      "@rsbuild/plugin-react": "link:packages/plugin-react"
     }
   }
 }
