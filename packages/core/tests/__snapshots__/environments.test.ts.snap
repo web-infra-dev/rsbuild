@@ -1665,10 +1665,12 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
         },
       },
       DefinePlugin {
-        "_options": {
-          "process.env.ASSET_PREFIX": """",
-          "process.env.NODE_ENV": ""development"",
-        },
+        "_args": [
+          {
+            "process.env.ASSET_PREFIX": """",
+            "process.env.NODE_ENV": ""development"",
+          },
+        ],
         "affectedHooks": "compilation",
         "name": "DefinePlugin",
       },
@@ -1972,10 +1974,12 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
     "plugins": [
       RsbuildTransformPlugin {},
       DefinePlugin {
-        "_options": {
-          "process.env.ASSET_PREFIX": """",
-          "process.env.NODE_ENV": ""development"",
-        },
+        "_args": [
+          {
+            "process.env.ASSET_PREFIX": """",
+            "process.env.NODE_ENV": ""development"",
+          },
+        ],
         "affectedHooks": "compilation",
         "name": "DefinePlugin",
       },
