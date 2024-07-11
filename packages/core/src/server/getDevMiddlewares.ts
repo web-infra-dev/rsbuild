@@ -203,7 +203,7 @@ const applyDefaultMiddlewares = async ({
 
   // OPTIONS request fallback middleware
   // Should register this middleware as the last
-  // see: https://github.com/webpack/webpack-dev-server/pull/4559
+  // see: https://github.com/web-infra-dev/rsbuild/pull/2867
   middlewares.push((req, res, next) => {
     if (req.method === 'OPTIONS') {
       // Use 204 as no content to send in the response body
