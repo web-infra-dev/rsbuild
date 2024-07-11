@@ -26,8 +26,30 @@ function checkCancel<T>(value: unknown) {
   return value as T;
 }
 
-function formatTargetDir(targetDir: string) {
-  return targetDir.trim().replace(/\/+$/g, '');
+/**
+ * 1. Input: 'foo'
+ *    Output: folder `<cwd>/foo`, `package.json#name` -> `foo`
+ *
+ * 2. Input: 'foo/bar'
+ *    Output: folder -> `<cwd>/foo/bar` folder, `package.json#name` -> `bar`
+ *
+ * 3. Input: '@scope/foo'
+ *    Output: folder -> `<cwd>/@scope/bar` folder, `package.json#name` -> `@scope/foo`
+ *
+ * 4. Input: './foo/bar'
+ *    Output: folder -> `<cwd>/foo/bar` folder, `package.json#name` -> `bar`
+ *
+ * 5. Input: '/root/path/to/foo'
+ *    Output: folder -> `'/root/path/to/foo'` folder, `package.json#name` -> `foo`
+ */
+function formatProjectName(input: string) {
+  const formatted = input.trim().replace(/\/+$/g, '');
+  return {
+    packageName: formatted.startsWith('@')
+      ? formatted
+      : path.basename(formatted),
+    targetDir: formatted,
+  };
 }
 
 function pkgFromUserAgent(userAgent: string | undefined) {
@@ -56,20 +78,23 @@ export async function main() {
   const packageJsonPath = path.join(packageRoot, 'package.json');
   const { version } = require(packageJsonPath);
 
-  let targetDir = checkCancel<string>(
+  const projectName = checkCancel<string>(
     await text({
-      message: 'Input target folder',
-      placeholder: 'my-project',
+      message: 'Project name or path',
+      placeholder: 'rsbuild-project',
+      defaultValue: 'rsbuild-project',
       validate(value) {
         if (value.length === 0) {
-          return 'Target folder is required';
+          return 'Project name is required';
         }
       },
     }),
   );
 
-  targetDir = formatTargetDir(targetDir);
-  const distFolder = path.join(cwd, targetDir);
+  const { targetDir, packageName } = formatProjectName(projectName);
+  const distFolder = path.isAbsolute(targetDir)
+    ? targetDir
+    : path.join(cwd, targetDir);
 
   if (fs.existsSync(distFolder) && !isEmptyDir(distFolder)) {
     const option = checkCancel<string>(
@@ -129,7 +154,7 @@ export async function main() {
   const commonFolder = path.join(packageRoot, 'template-common');
 
   copyFolder(commonFolder, distFolder, version);
-  copyFolder(srcFolder, distFolder, version, path.basename(targetDir));
+  copyFolder(srcFolder, distFolder, version, packageName);
 
   for (const tool of tools) {
     const toolFolder = path.join(packageRoot, `template-${tool}`);
