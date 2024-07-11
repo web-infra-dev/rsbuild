@@ -206,6 +206,7 @@ const applyDefaultMiddlewares = async ({
   // see: https://github.com/webpack/webpack-dev-server/pull/4559
   middlewares.push((req, res, next) => {
     if (req.method === 'OPTIONS') {
+      // Use 204 as no content to send in the response body
       res.statusCode = 204;
       res.setHeader('Content-Length', '0');
       res.end();
