@@ -117,9 +117,9 @@ function getNextRetryUrl(
   nextDomain: string,
   originalSrcUrl: string,
 ) {
-  const originalSrcUrlWithoutDomain = removeDomainFromUrl(originalSrcUrl);
+  const relativeUrl = removeDomainFromUrl(originalSrcUrl);
   return (
-    cleanUrl(nextDomain + originalSrcUrlWithoutDomain) +
+    cleanUrl(nextDomain + relativeUrl) +
     getUrlRetryQuery(existRetryTimes, getQueryFromUrl(originalSrcUrl))
   );
 }
