@@ -61,7 +61,7 @@ function findCurrentDomain(url: string) {
       break;
     }
   }
-  return domain || url;
+  return domain || window.origin;
 }
 
 function findNextDomain(url: string) {
@@ -95,18 +95,37 @@ function getUrlRetryQuery(
   return '';
 }
 
+function removeDomainFromUrl(url: string): string {
+  const protocolStartIndex = url.indexOf('//');
+
+  // case /app/main/static/js/index.js
+  if (protocolStartIndex === -1 && url.startsWith('/')) {
+    return url;
+  }
+
+  // case "//cdn.com/app/main/static/js/index.js"
+  // case "http://cdn.com/app/main/static/js/index.js"
+  const protocolEndIndex = protocolStartIndex + 2;
+  const pathStartIndex = url.indexOf('/', protocolEndIndex);
+
+  return url.slice(pathStartIndex);
+}
+
+// "http://cdn.com/app/main/static/js/index.js?query=1#hash" -> "/app/main/static/js/index.js"
+function getAbsolutePathFromUrl(url: string): string {
+  return cleanUrl(removeDomainFromUrl(url));
+}
+
 function getNextRetryUrl(
   existRetryTimes: number,
   nextDomain: string,
   originalSrcUrl: string,
-  originalScriptFilename: string,
 ) {
+  const absolutePath = getAbsolutePathFromUrl(originalSrcUrl);
   return (
-    cleanUrl(
-      nextDomain +
-        (nextDomain[nextDomain.length - 1] === '/' ? '' : '/') +
-        originalScriptFilename,
-    ) + getUrlRetryQuery(existRetryTimes, getQueryFromUrl(originalSrcUrl))
+    nextDomain +
+    absolutePath +
+    getUrlRetryQuery(existRetryTimes, getQueryFromUrl(originalSrcUrl))
   );
 }
 
@@ -121,17 +140,12 @@ function initRetry(chunkId: string): Retry {
     __RUNTIME_GLOBALS_PUBLIC_PATH__ + originalScriptFilename;
 
   const existRetryTimes = 1;
-  const nextDomain = config.domain?.[0] ?? __RUNTIME_GLOBALS_PUBLIC_PATH__;
+  const nextDomain = config.domain?.[0] ?? window.origin;
 
   return {
     existRetryTimes,
     nextDomain,
-    nextRetryUrl: getNextRetryUrl(
-      existRetryTimes,
-      nextDomain,
-      originalSrcUrl,
-      originalScriptFilename,
-    ),
+    nextRetryUrl: getNextRetryUrl(existRetryTimes, nextDomain, originalSrcUrl),
 
     originalScriptFilename,
     originalSrcUrl,
@@ -156,7 +170,6 @@ function nextRetry(chunkId: string): Retry {
         existRetryTimes,
         nextDomain,
         originalSrcUrl,
-        originalScriptFilename,
       ),
 
       originalScriptFilename,
