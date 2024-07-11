@@ -11,6 +11,7 @@ const writeEmptySchemaUtils = (task) => {
 
 /** @type {import('prebundle').Config} */
 export default {
+  prettier: true,
   dependencies: [
     {
       name: 'babel-loader',

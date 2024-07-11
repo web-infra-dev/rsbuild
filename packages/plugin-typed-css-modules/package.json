@@ -32,7 +32,7 @@
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "line-diff": "2.1.1",
-    "prebundle": "1.1.0",
+    "prebundle": "1.2.2",
     "typescript": "^5.5.2"
   },
   "peerDependencies": {

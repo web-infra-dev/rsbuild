@@ -1,6 +1,7 @@
 // @ts-check
 /** @type {import('prebundle').Config} */
 export default {
+  prettier: true,
   dependencies: [
     // prebundle sass-loader to make it works in Node 16
     {

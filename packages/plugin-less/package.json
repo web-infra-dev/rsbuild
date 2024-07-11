@@ -38,7 +38,7 @@
     "@types/less": "^3.0.6",
     "less": "^4.2.0",
     "less-loader": "^12.2.0",
-    "prebundle": "1.1.0",
+    "prebundle": "1.2.2",
     "typescript": "^5.5.2"
   },
   "peerDependencies": {
