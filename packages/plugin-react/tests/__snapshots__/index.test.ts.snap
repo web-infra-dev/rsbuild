@@ -428,10 +428,12 @@ exports[`plugins/react > should work with swc-loader 1`] = `
       },
     },
     DefinePlugin {
-      "_options": {
-        "process.env.ASSET_PREFIX": """",
-        "process.env.NODE_ENV": ""test"",
-      },
+      "_args": [
+        {
+          "process.env.ASSET_PREFIX": """",
+          "process.env.NODE_ENV": ""test"",
+        },
+      ],
       "affectedHooks": "compilation",
       "name": "DefinePlugin",
     },
