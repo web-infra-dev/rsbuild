@@ -29,6 +29,7 @@ function replaceFileContent(filePath, replaceFn) {
 
 /** @type {import('prebundle').Config} */
 export default {
+  prettier: true,
   externals: {
     // External caniuse-lite data, so users can update it manually.
     'caniuse-lite': 'caniuse-lite',
@@ -76,6 +77,8 @@ export default {
     },
     {
       name: 'jiti',
+      // jiti has been minified, we do not need to prettier it
+      prettier: false,
       ignoreDts: true,
     },
     {

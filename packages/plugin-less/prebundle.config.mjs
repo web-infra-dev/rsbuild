@@ -12,6 +12,7 @@ function replaceFileContent(filePath, replaceFn) {
 
 /** @type {import('prebundle').Config} */
 export default {
+  prettier: true,
   dependencies: [
     // prebundle less to make correct the types
     {
