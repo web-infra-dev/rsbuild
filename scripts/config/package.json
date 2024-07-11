@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/config",
-  "version": "1.0.0-alpha.7",
+  "version": "1.0.0-alpha.8",
   "private": true,
   "devDependencies": {
     "@types/node": "18.x",
