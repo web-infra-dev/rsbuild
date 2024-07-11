@@ -1,5 +1,4 @@
 import type { Compilation, Compiler } from '@rspack/core';
-import type { HtmlTagObject } from 'html-rspack-plugin';
 import { ensureAssetPrefix, isFunction, partition } from '../helpers';
 import { getHTMLPlugin } from '../pluginHelper';
 import type { HtmlRspackPlugin } from '../types';
@@ -11,6 +10,8 @@ import type {
   HtmlTagUtils,
   ModifyHTMLTagsFn,
 } from '../types';
+
+type HtmlTagObject = HtmlRspackPlugin.HtmlTagObject;
 
 export type TagConfig = {
   tags?: HtmlTagDescriptor[];

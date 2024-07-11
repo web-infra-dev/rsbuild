@@ -7,14 +7,15 @@
  */
 import { join } from 'node:path';
 import type { Compilation, Compiler } from '@rspack/core';
-import type { HtmlTagObject } from 'html-rspack-plugin';
 import {
   addTrailingSlash,
   getPublicPathFromCompiler,
   isFunction,
 } from '../helpers';
 import { getHTMLPlugin } from '../pluginHelper';
-import type { InlineChunkTest } from '../types';
+import type { HtmlRspackPlugin, InlineChunkTest } from '../types';
+
+type HtmlTagObject = HtmlRspackPlugin.HtmlTagObject;
 
 export type InlineChunkHtmlPluginOptions = {
   styleTests: InlineChunkTest[];
