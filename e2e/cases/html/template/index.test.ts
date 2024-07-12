@@ -62,3 +62,38 @@ test('should allow to access templateParameters', async ({ page }) => {
 
   await rsbuild.close();
 });
+
+test('should set template via tools.htmlPlugin correctly', async () => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    rsbuildConfig: {
+      source: {
+        entry: {
+          index: path.resolve(__dirname, './src/index.js'),
+          foo: path.resolve(__dirname, './src/foo.js'),
+        },
+      },
+      tools: {
+        htmlPlugin(config, { entryName }) {
+          config.template =
+            entryName === 'index' ? './static/index.html' : './static/foo.html';
+        },
+      },
+      html: {
+        templateParameters: {
+          foo: 'foo',
+          type: 'type',
+        },
+      },
+    },
+  });
+  const files = await rsbuild.unwrapOutputJSON();
+
+  const fooHtml =
+    files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
+  expect(fooHtml).toContain('<div id="test-template">foo</div>');
+
+  const indexHtml =
+    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+  expect(indexHtml).toContain('<div id="test-template">text</div>');
+});

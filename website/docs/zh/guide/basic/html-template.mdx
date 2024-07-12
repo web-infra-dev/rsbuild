@@ -16,6 +16,18 @@ export default {
 };
 ```
 
+未设置 `html.template` 时，Rsbuild 会使用内置的 HTML 模板：
+
+```html title="defaultTemplate.html"
+<!doctype html>
+<html>
+  <head></head>
+  <body>
+    <div id="<%= mountId %>"></div>
+  </body>
+</html>
+```
+
 ## 设置页面标题
 
 你可以通过 [html.title](/config/html/title) 配置项来设置 HTML 的 `<title>` 标签。
@@ -74,7 +86,14 @@ export default {
 
 你可以通过 [html.meta](/config/html/meta) 配置项来设置 HTML 的 `<meta>` 标签。
 
-比如设置 description：
+Rsbuild 默认设置了 charset 和 viewport meta 标签：
+
+```html
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+```
+
+你也可以添加自定义的 meta 标签，比如设置 description：
 
 ```ts
 export default {

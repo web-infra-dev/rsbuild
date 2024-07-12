@@ -16,6 +16,18 @@ export default {
 };
 ```
 
+If `html.template` is not set, Rsbuild will use the built-in HTML template:
+
+```html title="defaultTemplate.html"
+<!doctype html>
+<html>
+  <head></head>
+  <body>
+    <div id="<%= mountId %>"></div>
+  </body>
+</html>
+```
+
 ## Set Page Title
 
 You can set the HTML `<title>` tag through the [html.title](/config/html/title) config.
@@ -74,7 +86,14 @@ export default {
 
 You can set the meta tags through the [html.meta](/config/html/meta) config.
 
-For example to setting description:
+Rsbuild defaults to setting the charset and viewport meta tags:
+
+```html
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+```
+
+You can also add custom meta tags, such as setting the description:
 
 ```ts
 export default {

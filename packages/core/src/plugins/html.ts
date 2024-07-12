@@ -6,7 +6,6 @@ import {
   reduceConfigsMergeContext,
   reduceConfigsWithContext,
 } from 'reduce-configs';
-import { STATIC_PATH } from '../constants';
 import {
   castArray,
   getPublicPathFromChain,
@@ -39,24 +38,29 @@ function getInject(entryName: string, config: NormalizedEnvironmentConfig) {
   });
 }
 
-const existTemplatePath: string[] = [];
+const getDefaultTemplateContent = (mountId: string) =>
+  `<!doctype html><html><head></head><body><div id="${mountId}"></div></body></html>`;
+
+const existTemplatePath = new Set<string>();
 
 export async function getTemplate(
   entryName: string,
   config: NormalizedEnvironmentConfig,
   rootPath: string,
-): Promise<{ templatePath: string; templateContent?: string }> {
-  const DEFAULT_TEMPLATE = path.resolve(STATIC_PATH, 'template.html');
-
+): Promise<
+  | { templatePath: string; templateContent?: string }
+  | { templatePath: undefined; templateContent: string }
+> {
   const templatePath = reduceConfigsMergeContext({
-    initial: DEFAULT_TEMPLATE,
+    initial: '',
     config: config.html.template,
     ctx: { entryName },
   });
 
-  if (templatePath === DEFAULT_TEMPLATE) {
+  if (!templatePath) {
     return {
-      templatePath: templatePath,
+      templatePath: undefined,
+      templateContent: getDefaultTemplateContent(config.html.mountId),
     };
   }
 
@@ -64,7 +68,7 @@ export async function getTemplate(
     ? templatePath
     : path.resolve(rootPath, templatePath);
 
-  if (!existTemplatePath.includes(absolutePath)) {
+  if (!existTemplatePath.has(absolutePath)) {
     // Check if custom template exists
     if (!(await isFileExists(absolutePath))) {
       throw new Error(
@@ -74,7 +78,7 @@ export async function getTemplate(
       );
     }
 
-    existTemplatePath.push(absolutePath);
+    existTemplatePath.add(absolutePath);
   }
 
   const templateContent = await fs.promises.readFile(absolutePath, 'utf-8');
@@ -238,11 +242,14 @@ export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
               chunks,
               inject,
               filename,
-              template: templatePath,
               entryName,
               templateParameters,
               scriptLoading: config.html.scriptLoading,
             };
+
+            if (templatePath) {
+              pluginOptions.template = templatePath;
+            }
 
             if (chunks.length > 1) {
               // load entires by the order of `chunks`
@@ -281,6 +288,12 @@ export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
                   : config.tools.htmlPlugin,
               ctx: { entryName, entryValue },
             });
+
+            // fallback to the default template content
+            if (!finalOptions.template && !finalOptions.templateContent) {
+              pluginOptions.template = '';
+              pluginOptions.templateContent = templateContent;
+            }
 
             return finalOptions;
           }),
