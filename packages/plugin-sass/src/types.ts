@@ -21,10 +21,12 @@ export type SassLoaderOptions = Omit<
   ) & {
     // @types/sass-loader is outdated
     // see https://github.com/web-infra-dev/rsbuild/issues/2582
-    additionalData?: (
-      content: string | Buffer,
-      loaderContext: Rspack.LoaderContext,
-    ) => string;
+    additionalData?:
+      | string
+      | ((
+          content: string | Buffer,
+          loaderContext: Rspack.LoaderContext,
+        ) => string);
   };
 
 export type PluginSassOptions = {
