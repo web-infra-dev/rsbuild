@@ -78,27 +78,27 @@ type Argv = {
 
 function logHelpMessage() {
   logger.log(`
-    Usage: create-rsbuild [options]
+   Usage: create-rsbuild [options]
 
-    Options:
-    
-      -h, --help       display help for command
-      -d, --dir        create project in specified directory
-      -t, --template   specify the template to use
-      --tools          select additional tools (biome, eslint, prettier)
-      --override       override files in target directory
-    
-    Templates:
-    
-      react            react-ts
-      vue3             vue3-ts
-      vue2             vue2-ts
-      lit              lit-ts
-      preact           preact-ts
-      svelte           svelte-ts
-      solid            solid-ts
-      vanilla          vanilla-ts
-    `);
+   Options:
+   
+     -h, --help       display help for command
+     -d, --dir        create project in specified directory
+     -t, --template   specify the template to use
+     --tools          select additional tools (biome, eslint, prettier)
+     --override       override files in target directory
+   
+   Templates:
+   
+     react            react-ts
+     vue3             vue3-ts
+     vue2             vue2-ts
+     lit              lit-ts
+     preact           preact-ts
+     svelte           svelte-ts
+     solid            solid-ts
+     vanilla          vanilla-ts
+`);
 }
 
 async function getTemplate({ template }: Argv) {
