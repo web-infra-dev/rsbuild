@@ -8,6 +8,7 @@ import { init } from './init';
 
 export type CommonOptions = {
   config?: string;
+  envDir?: string;
   envMode?: string;
   open?: boolean | string;
   host?: string;
@@ -37,7 +38,8 @@ const applyCommonOptions = (command: Command) => {
     .option(
       '--env-mode <mode>',
       'specify the env mode to load the `.env.[mode]` file',
-    );
+    )
+    .option('--env-dir <dir>', 'specify the directory to load `.env` files');
 };
 
 const applyServerOptions = (command: Command) => {

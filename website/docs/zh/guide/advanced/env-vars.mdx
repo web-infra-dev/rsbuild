@@ -119,6 +119,18 @@ Rsbuild 会依次读取以下文件：
 
 :::
 
+### Env 目录
+
+默认情况下，`.env` 文件位于项目的根目录。你可以通过 CLI 的 `--env-dir <dir>` 选项来指定 env 目录。
+
+比如，指定 env 目录为 `config`：
+
+```bash
+npx rsbuild dev --env-dir config
+```
+
+这种情况下，Rsbuild 会读取 `./config/.env` 等 env 文件。
+
 ### 示例
 
 比如创建 `.env` 文件并添加以下内容：
