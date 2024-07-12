@@ -3,7 +3,6 @@ import { getBabelConfigForWeb } from '@rsbuild/babel-preset/web';
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
-import { pluginImageCompress } from '@rsbuild/plugin-image-compress';
 import { pluginLess } from '@rsbuild/plugin-less';
 import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
 import { pluginPreact } from '@rsbuild/plugin-preact';
@@ -28,7 +27,6 @@ export default {
   pluginAssetsRetry,
   pluginBabel,
   pluginCheckSyntax,
-  pluginImageCompress,
   pluginLess,
   pluginReact,
   pluginPreact,
