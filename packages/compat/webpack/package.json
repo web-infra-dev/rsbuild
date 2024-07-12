@@ -33,7 +33,7 @@
     "picocolors": "^1.0.1",
     "reduce-configs": "^1.0.0",
     "tsconfig-paths-webpack-plugin": "4.1.0",
-    "webpack": "^5.92.1"
+    "webpack": "^5.93.0"
   },
   "devDependencies": {
     "@scripts/test-helper": "workspace:*",
