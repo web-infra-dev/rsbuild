@@ -41,7 +41,7 @@
     "@types/lodash": "^4.17.6",
     "@types/semver": "^7.5.8",
     "typescript": "^5.5.2",
-    "webpack": "^5.92.1"
+    "webpack": "^5.93.0"
   },
   "peerDependencies": {
     "@rsbuild/core": "workspace:^1.0.0-alpha.9"
