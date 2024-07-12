@@ -181,4 +181,21 @@ test.describe('should print file size correctly', async () => {
       ),
     ).toBeTruthy();
   });
+
+  test('should allow to disable gzip-compressed size', async () => {
+    await build({
+      cwd,
+      rsbuildConfig: {
+        performance: {
+          printFileSize: {
+            compressed: false,
+          },
+        },
+      },
+    });
+
+    expect(logs.some((log) => log.includes('index.html'))).toBeTruthy();
+    expect(logs.some((log) => log.includes('Total size:'))).toBeTruthy();
+    expect(logs.some((log) => log.includes('Gzipped size:'))).toBeFalsy();
+  });
 });

@@ -13,6 +13,7 @@ export type BuildCacheOptions = {
 export type PrintFileSizeOptions = {
   total?: boolean;
   detail?: boolean;
+  compressed?: boolean;
 };
 
 export interface PreconnectOption {
