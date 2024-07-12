@@ -164,8 +164,6 @@ export const CHAIN_ID = {
     SWC: 'swc',
     /** svgr */
     SVGR: 'svgr',
-    /** plugin-image-compress svgo-loader */
-    SVGO: 'svgo',
     /** yaml-loader */
     YAML: 'yaml',
     /** babel-loader */
@@ -186,8 +184,6 @@ export const CHAIN_ID = {
     MINI_CSS_EXTRACT: 'mini-css-extract',
     /** resolve-url-loader */
     RESOLVE_URL: 'resolve-url-loader',
-    /** plugin-image-compress.loader */
-    IMAGE_COMPRESS: 'image-compress',
   },
   /** Predefined plugins */
   PLUGIN: {

@@ -63,15 +63,15 @@ Rsbuild 和 Builder 的插件系统不兼容，因此需要将 Builder 的插件
 
 下面是 Builder 插件和 Rsbuild 插件的对应关系：
 
-| Builder                                  | Rsbuild                                                                                         |
-| ---------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| @modern-js/builder-plugin-vue            | [@rsbuild/plugin-vue](/plugins/list/plugin-vue)                                                 |
-| @modern-js/builder-plugin-vue2           | [@rsbuild/plugin-vue2](/plugins/list/plugin-vue2)                                               |
-| @modern-js/builder-plugin-stylus         | [@rsbuild/plugin-stylus](/plugins/list/plugin-stylus)                                           |
-| @modern-js/builder-plugin-node-polyfill  | [@rsbuild/plugin-node-polyfill](https://github.com/rspack-contrib/rsbuild-plugin-node-polyfill) |
-| @modern-js/builder-plugin-image-compress | [@rsbuild/plugin-image-compress](/plugins/list/plugin-image-compress)                           |
-| @modern-js/builder-plugin-swc            | 默认生效，无须使用                                                                              |
-| @modern-js/builder-plugin-esbuild        | 不再支持                                                                                        |
+| Builder                                  | Rsbuild                                                                                           |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| @modern-js/builder-plugin-vue            | [@rsbuild/plugin-vue](/plugins/list/plugin-vue)                                                   |
+| @modern-js/builder-plugin-vue2           | [@rsbuild/plugin-vue2](/plugins/list/plugin-vue2)                                                 |
+| @modern-js/builder-plugin-stylus         | [@rsbuild/plugin-stylus](/plugins/list/plugin-stylus)                                             |
+| @modern-js/builder-plugin-node-polyfill  | [@rsbuild/plugin-node-polyfill](https://github.com/rspack-contrib/rsbuild-plugin-node-polyfill)   |
+| @modern-js/builder-plugin-image-compress | [@rsbuild/plugin-image-compress](https://github.com/rspack-contrib/rsbuild-plugin-image-compress) |
+| @modern-js/builder-plugin-swc            | 默认生效，无须使用                                                                                |
+| @modern-js/builder-plugin-esbuild        | 不再支持                                                                                          |
 
 以 `@modern-js/builder-plugin-vue` 为例，你需要先安装 `@rsbuild/plugin-vue`，然后在 `rsbuild.config.ts` 中引入插件，并添加到 `plugins` 字段中。
 

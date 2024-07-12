@@ -63,15 +63,15 @@ Rsbuild and Builder have incompatible plugin systems, so you need to replace Bui
 
 The following table shows the correspondence between Builder plugins and Rsbuild plugins:
 
-| Builder                                  | Rsbuild                                                                                         |
-| ---------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| @modern-js/builder-plugin-vue            | [@rsbuild/plugin-vue](/plugins/list/plugin-vue)                                                 |
-| @modern-js/builder-plugin-vue2           | [@rsbuild/plugin-vue2](/plugins/list/plugin-vue2)                                               |
-| @modern-js/builder-plugin-stylus         | [@rsbuild/plugin-stylus](/plugins/list/plugin-stylus)                                           |
-| @modern-js/builder-plugin-node-polyfill  | [@rsbuild/plugin-node-polyfill](https://github.com/rspack-contrib/rsbuild-plugin-node-polyfill) |
-| @modern-js/builder-plugin-image-compress | [@rsbuild/plugin-image-compress](/plugins/list/plugin-image-compress)                           |
-| @modern-js/builder-plugin-swc            | Enabled by default, no need to use                                                              |
-| @modern-js/builder-plugin-esbuild        | No longer supported                                                                             |
+| Builder                                  | Rsbuild                                                                                           |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| @modern-js/builder-plugin-vue            | [@rsbuild/plugin-vue](/plugins/list/plugin-vue)                                                   |
+| @modern-js/builder-plugin-vue2           | [@rsbuild/plugin-vue2](/plugins/list/plugin-vue2)                                                 |
+| @modern-js/builder-plugin-stylus         | [@rsbuild/plugin-stylus](/plugins/list/plugin-stylus)                                             |
+| @modern-js/builder-plugin-node-polyfill  | [@rsbuild/plugin-node-polyfill](https://github.com/rspack-contrib/rsbuild-plugin-node-polyfill)   |
+| @modern-js/builder-plugin-image-compress | [@rsbuild/plugin-image-compress](https://github.com/rspack-contrib/rsbuild-plugin-image-compress) |
+| @modern-js/builder-plugin-swc            | Enabled by default, no need to use                                                                |
+| @modern-js/builder-plugin-esbuild        | No longer supported                                                                               |
 
 For example, if you were using `@modern-js/builder-plugin-vue`, you need to first install `@rsbuild/plugin-vue`, then import the plugin in `rsbuild.config.ts` and add it to the `plugins` field.
 
