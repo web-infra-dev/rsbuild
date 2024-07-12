@@ -38,25 +38,6 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineScrip
         "title": "Rsbuild App",
         "xhtml": false,
       },
-      "userOptions": {
-        "chunks": [
-          "index",
-        ],
-        "entryName": "index",
-        "filename": "index.html",
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "scriptLoading": "defer",
-        "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-      },
       "version": 6,
     },
     InlineChunkHtmlPlugin {
@@ -122,25 +103,6 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineStyle
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
-      },
-      "userOptions": {
-        "chunks": [
-          "index",
-        ],
-        "entryName": "index",
-        "filename": "index.html",
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "scriptLoading": "defer",
-        "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
       },
       "version": 6,
     },
