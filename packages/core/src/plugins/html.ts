@@ -249,10 +249,6 @@ export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
 
             if (templatePath) {
               pluginOptions.template = templatePath;
-            } else {
-              pluginOptions.template = '';
-              // fallback to the default template content
-              pluginOptions.templateContent = templateContent;
             }
 
             if (chunks.length > 1) {
@@ -292,6 +288,12 @@ export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
                   : config.tools.htmlPlugin,
               ctx: { entryName, entryValue },
             });
+
+            // fallback to the default template content
+            if (!finalOptions.template && !finalOptions.templateContent) {
+              pluginOptions.template = '';
+              pluginOptions.templateContent = templateContent;
+            }
 
             return finalOptions;
           }),
