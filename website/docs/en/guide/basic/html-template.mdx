@@ -16,6 +16,18 @@ export default {
 };
 ```
 
+If `html.template` is not set, Rsbuild will use the built-in HTML template:
+
+```html title="defaultTemplate.html"
+<!doctype html>
+<html>
+  <head></head>
+  <body>
+    <div id="<%= mountId %>"></div>
+  </body>
+</html>
+```
+
 ## Set Page Title
 
 You can set the HTML `<title>` tag through the [html.title](/config/html/title) config.

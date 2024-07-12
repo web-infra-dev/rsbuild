@@ -16,6 +16,18 @@ export default {
 };
 ```
 
+未设置 `html.template` 时，Rsbuild 会使用内置的 HTML 模板：
+
+```html title="defaultTemplate.html"
+<!doctype html>
+<html>
+  <head></head>
+  <body>
+    <div id="<%= mountId %>"></div>
+  </body>
+</html>
+```
+
 ## 设置页面标题
 
 你可以通过 [html.title](/config/html/title) 配置项来设置 HTML 的 `<title>` 标签。
