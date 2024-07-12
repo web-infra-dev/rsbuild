@@ -41,25 +41,6 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
         "title": "Rsbuild App",
         "xhtml": false,
       },
-      "userOptions": {
-        "chunks": [
-          "main",
-        ],
-        "entryName": "main",
-        "filename": "main.html",
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "scriptLoading": "defer",
-        "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-      },
       "version": 6,
     },
     HtmlRspackPlugin {
@@ -91,25 +72,6 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
-      },
-      "userOptions": {
-        "chunks": [
-          "foo",
-        ],
-        "entryName": "foo",
-        "filename": "foo.html",
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "scriptLoading": "defer",
-        "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
       },
       "version": 6,
     },
@@ -186,9 +148,6 @@ exports[`plugin-html > should allow to modify plugin options by tools.htmlPlugin
         "title": "Rspack App",
         "xhtml": false,
       },
-      "userOptions": {
-        "inject": true,
-      },
       "version": 6,
     },
     HtmlBasicPlugin {
@@ -242,26 +201,6 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
-      },
-      "userOptions": {
-        "chunks": [
-          "index",
-        ],
-        "entryName": "index",
-        "favicon": "src/favicon.ico",
-        "filename": "index.html",
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "scriptLoading": "defer",
-        "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
       },
       "version": 6,
     },
@@ -317,25 +256,6 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
         "title": "Rsbuild App",
         "xhtml": false,
       },
-      "userOptions": {
-        "chunks": [
-          "index",
-        ],
-        "entryName": "index",
-        "filename": "index.html",
-        "inject": "body",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "scriptLoading": "defer",
-        "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-      },
       "version": 6,
     },
     HtmlBasicPlugin {
@@ -389,25 +309,6 @@ exports[`plugin-html > should enable minify in production 1`] = `
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
-      },
-      "userOptions": {
-        "chunks": [
-          "index",
-        ],
-        "entryName": "index",
-        "filename": "index.html",
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "scriptLoading": "defer",
-        "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
       },
       "version": 6,
     },
@@ -463,25 +364,6 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
         "title": "Rsbuild App",
         "xhtml": false,
       },
-      "userOptions": {
-        "chunks": [
-          "index",
-        ],
-        "entryName": "index",
-        "filename": "index.html",
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "scriptLoading": "defer",
-        "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-      },
       "version": 6,
     },
     HtmlBasicPlugin {
@@ -536,25 +418,6 @@ exports[`plugin-html > should stop injecting <script> if inject is '() => false'
         "title": "Rsbuild App",
         "xhtml": false,
       },
-      "userOptions": {
-        "chunks": [
-          "index",
-        ],
-        "entryName": "index",
-        "filename": "index.html",
-        "inject": false,
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "scriptLoading": "defer",
-        "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-      },
       "version": 6,
     },
     HtmlBasicPlugin {
@@ -608,25 +471,6 @@ exports[`plugin-html > should stop injecting <script> if inject is 'false' 1`] =
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
-      },
-      "userOptions": {
-        "chunks": [
-          "index",
-        ],
-        "entryName": "index",
-        "filename": "index.html",
-        "inject": false,
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "scriptLoading": "defer",
-        "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
       },
       "version": 6,
     },
@@ -683,25 +527,6 @@ exports[`plugin-html > should support environment html config 1`] = `
           "title": "web",
           "xhtml": false,
         },
-        "userOptions": {
-          "chunks": [
-            "main",
-          ],
-          "entryName": "main",
-          "filename": "web/main.html",
-          "inject": "head",
-          "meta": {
-            "charset": {
-              "charset": "UTF-8",
-            },
-            "viewport": "width=device-width, initial-scale=1.0",
-          },
-          "scriptLoading": "defer",
-          "template": "",
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"app\\"></div></body></html>",
-          "templateParameters": [Function],
-          "title": "web",
-        },
         "version": 6,
       },
       HtmlBasicPlugin {
@@ -752,25 +577,6 @@ exports[`plugin-html > should support environment html config 1`] = `
           "templateParameters": [Function],
           "title": "web1",
           "xhtml": false,
-        },
-        "userOptions": {
-          "chunks": [
-            "index",
-          ],
-          "entryName": "index",
-          "filename": "index.html",
-          "inject": "head",
-          "meta": {
-            "charset": {
-              "charset": "UTF-8",
-            },
-            "viewport": "width=device-width, initial-scale=1.0",
-          },
-          "scriptLoading": "defer",
-          "template": "",
-          "templateContent": "<!doctype html><html><head></head><body><div id=\\"app1\\"></div></body></html>",
-          "templateParameters": [Function],
-          "title": "web1",
         },
         "version": 6,
       },
@@ -830,25 +636,6 @@ exports[`plugin-html > should support multi entry 1`] = `
         "title": "Rsbuild App",
         "xhtml": false,
       },
-      "userOptions": {
-        "chunks": [
-          "main",
-        ],
-        "entryName": "main",
-        "filename": "main.html",
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "scriptLoading": "defer",
-        "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-      },
       "version": 6,
     },
     HtmlRspackPlugin {
@@ -880,25 +667,6 @@ exports[`plugin-html > should support multi entry 1`] = `
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
-      },
-      "userOptions": {
-        "chunks": [
-          "foo",
-        ],
-        "entryName": "foo",
-        "filename": "foo.html",
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "scriptLoading": "defer",
-        "template": "",
-        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
       },
       "version": 6,
     },

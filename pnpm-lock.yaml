@@ -744,8 +744,8 @@ importers:
         specifier: ^11.2.0
         version: 11.2.0
       html-rspack-plugin:
-        specifier: 6.0.0-beta.7
-        version: 6.0.0-beta.7(@rspack/core@1.0.0-alpha.3(@swc/helpers@0.5.11))
+        specifier: 6.0.0-beta.8
+        version: 6.0.0-beta.8(@rspack/core@1.0.0-alpha.3(@swc/helpers@0.5.11))
       http-compression:
         specifier: 1.0.20
         version: 1.0.20
@@ -5193,9 +5193,9 @@ packages:
   html-escaper@2.0.2:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
 
-  html-rspack-plugin@6.0.0-beta.7:
-    resolution: {integrity: sha512-9Zve5TfgC2SWNHX1ZjVqBecflYKhoGHPALu8jC+9+m3zUeX0YKWk72Y8h8QPIm5Bh3HVsKaSyPrqWotp+7SDiA==}
-    engines: {node: '>=18.0.0'}
+  html-rspack-plugin@6.0.0-beta.8:
+    resolution: {integrity: sha512-sxdRRbGCpojsSqv7vkw4PBVEoAtcWvQ8NH8JspAvHncGhtblfXlKcLJ9yijI+/jq7yzrJUUbaGVHFA0D5ADL8Q==}
+    engines: {node: '>=16.0.0'}
     peerDependencies:
       '@rspack/core': 0.x || 1.x
     peerDependenciesMeta:
@@ -12107,7 +12107,7 @@ snapshots:
 
   html-escaper@2.0.2: {}
 
-  html-rspack-plugin@6.0.0-beta.7(@rspack/core@1.0.0-alpha.3(@swc/helpers@0.5.11)):
+  html-rspack-plugin@6.0.0-beta.8(@rspack/core@1.0.0-alpha.3(@swc/helpers@0.5.11)):
     dependencies:
       '@rspack/lite-tapable': 1.0.0-alpha.3
     optionalDependencies:
