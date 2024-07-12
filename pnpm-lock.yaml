@@ -813,8 +813,8 @@ importers:
         specifier: 7.2.1
         version: 7.2.1(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
       webpack-merge:
-        specifier: 5.10.0
-        version: 5.10.0
+        specifier: 6.0.1
+        version: 6.0.1
       ws:
         specifier: ^8.18.0
         version: 8.18.0
@@ -7789,9 +7789,9 @@ packages:
       webpack:
         optional: true
 
-  webpack-merge@5.10.0:
-    resolution: {integrity: sha512-+4zXKdx7UnO+1jaN4l2lHVD+mFvnlZQP/6ljaJVb4SZiwIKeUnrT5l0gkT8z+n4hKpC+jpOv6O9R+gLtag7pSA==}
-    engines: {node: '>=10.0.0'}
+  webpack-merge@6.0.1:
+    resolution: {integrity: sha512-hXXvrjtx2PLYx4qruKl+kyRSLc52V+cCvMxRjmKwoA+CBbbF5GfIBtR6kCvl0fYGqTUPKB+1ktVmTHqMOzgCBg==}
+    engines: {node: '>=18.0.0'}
 
   webpack-sources@2.3.1:
     resolution: {integrity: sha512-y9EI9AO42JjEcrTJFOYmVywVZdKVUfOvDUPsJea5GIr1JOEGFVqwlY2K098fFoIjOkDzHn2AjRvM8dsBZu+gCA==}
@@ -15049,7 +15049,7 @@ snapshots:
     optionalDependencies:
       webpack: 5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))
 
-  webpack-merge@5.10.0:
+  webpack-merge@6.0.1:
     dependencies:
       clone-deep: 4.0.1
       flat: 5.0.2
