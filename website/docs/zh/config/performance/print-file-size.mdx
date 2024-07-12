@@ -13,6 +13,10 @@ type PrintFileSizeOptions =
        * 是否输出每个静态资源文件的体积
        */
       detail?: boolean;
+      /**
+       * 是否输出 gzip 压缩后的体积
+       */
+      compressed?: boolean;
     }
   | boolean;
 ```
@@ -21,7 +25,9 @@ type PrintFileSizeOptions =
 
 是否在生产环境构建后输出所有静态资源文件的体积。
 
-如果是 Boolean 类型，将根据配置决定是否输出所有静态资源文件的体积，默认输出如下。
+## 默认输出
+
+默认输出的日志如下：
 
 ```bash
 info    Production file sizes:
@@ -36,9 +42,23 @@ info    Production file sizes:
   Gzipped size:  46.5 kB
 ```
 
-你也可以通过 Object 类型分别对输出所有静态资源文件的体积和以及输出每个静态资源文件的体积进行配置。
+## 禁用输出
 
-如果你不想输出每个静态资源文件的体积，可以：
+如果不需要输出任何信息，可以将 `printFileSize` 置为 `false` 将其禁用：
+
+```ts
+export default {
+  performance: {
+    printFileSize: false,
+  },
+};
+```
+
+## 自定义输出
+
+你可以通过选项来自定义输出的格式。
+
+- 如果不需要输出每个静态资源文件的体积，可以把 `detail` 设置为 false，此时仅输出总体积：
 
 ```ts
 export default {
@@ -50,12 +70,14 @@ export default {
 };
 ```
 
-如果你不想输出任何信息，可以将 `printFileSize` 置为 `false` 将其禁用掉：
+- 如果不需要输出 gzip 压缩后的体积，可以把 `compressed` 设置为 false，这在大型项目中可以节省一些 gzip 计算的耗时：
 
 ```ts
 export default {
   performance: {
-    printFileSize: false,
+    printFileSize: {
+      compressed: false,
+    },
   },
 };
 ```

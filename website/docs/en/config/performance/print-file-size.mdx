@@ -13,6 +13,10 @@ type PrintFileSizeOptions =
        * whether to print size of each file
        */
       detail?: boolean;
+      /**
+       * whether to print gzip-compressed size
+       */
+      compressed?: boolean;
     }
   | boolean;
 ```
@@ -21,7 +25,9 @@ type PrintFileSizeOptions =
 
 Whether to print the file sizes after production build.
 
-If it is a Boolean type, it will be decided according to the config whether to print the file sizes. The default output is as follows.
+## Default Outputs
+
+The default output log is as follows:
 
 ```bash
 info    Production file sizes:
@@ -36,9 +42,23 @@ info    Production file sizes:
   Gzipped size:  46.5 kB
 ```
 
-You can also configure whether to print the sum of the size of all static resource files and whether to print the size of each static resource file through the Object type.
+## Disable Outputs
 
-If you don't want to print the size of each static resource file, you can:
+If you don't want to print any information, you can disable it by setting `printFileSize` to `false`:
+
+```ts
+export default {
+  performance: {
+    printFileSize: false,
+  },
+};
+```
+
+## Custom Outputs
+
+You can customize the output format through the options.
+
+- If you don't need to output the size of each static asset, you can set `detail` to false. In this case, only the total size will be output:
 
 ```ts
 export default {
@@ -50,12 +70,14 @@ export default {
 };
 ```
 
-If you don't want to print any information, you can disable it by setting `printFileSize` to `false`:
+- If you don't need to output the gzipped size, you can set `compressed` to false. This can save some gzip computation time for large projects:
 
 ```ts
 export default {
   performance: {
-    printFileSize: false,
+    printFileSize: {
+      compressed: false,
+    },
   },
 };
 ```
