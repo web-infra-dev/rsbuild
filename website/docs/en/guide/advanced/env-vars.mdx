@@ -119,6 +119,18 @@ It is recommended to use `--env-mode` to set the env mode, and not to modify `pr
 
 :::
 
+### Env Directory
+
+By default, the `.env` file is located in the root directory of the project. You can specify the env directory by using the `--env-dir <dir>` option in the CLI.
+
+For example, to specify the env directory as `config`:
+
+```bash
+npx rsbuild dev --env-dir config
+```
+
+In this case, Rsbuild will read the `./config/.env` and other env files.
+
 ### Example
 
 For example, create a `.env` file and add the following contents:

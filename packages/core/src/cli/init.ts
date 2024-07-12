@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { loadConfig, watchFiles } from '../config';
 import { isDev } from '../helpers';
 import { loadEnv } from '../loadEnv';
@@ -7,6 +8,13 @@ import type { RsbuildInstance } from '../types';
 import type { CommonOptions } from './commands';
 
 let commonOpts: CommonOptions = {};
+
+const getEnvDir = (cwd: string, envDir?: string) => {
+  if (envDir) {
+    return path.isAbsolute(envDir) ? envDir : path.resolve(cwd, envDir);
+  }
+  return cwd;
+};
 
 export async function init({
   cliOptions,
@@ -22,8 +30,8 @@ export async function init({
   try {
     const root = process.cwd();
     const envs = loadEnv({
-      cwd: root,
-      mode: cliOptions?.envMode,
+      cwd: getEnvDir(root, commonOpts.envDir),
+      mode: commonOpts.envMode,
     });
 
     if (isDev()) {
