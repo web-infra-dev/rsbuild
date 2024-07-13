@@ -7,3 +7,4 @@ packages:
   - '!**/compiled/**'
   - '!**/dist-types/**'
   - '!**/create-rsbuild/template-*/**'
+  - '!**/test-temp-*/**'

@@ -52,6 +52,7 @@
     "@types/node": "18.x",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "create-rsbuild": "workspace:*",
     "fast-glob": "^3.3.2",
     "fs-extra": "^11.2.0",
     "playwright": "1.44.1",

@@ -187,6 +187,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.0
+      create-rsbuild:
+        specifier: workspace:*
+        version: link:../packages/create-rsbuild
       fast-glob:
         specifier: ^3.3.2
         version: 3.3.2
@@ -3712,11 +3715,6 @@ packages:
 
   acorn@7.4.1:
     resolution: {integrity: sha512-nQyp0o1/mNdbTO1PO6kHkwSrmgZ0MT/jCCpNiwbUjGoRN4dlBhqJtoQuCnEOKzgTVwg0ZWiCoQy6SxMebQVh8A==}
-    engines: {node: '>=0.4.0'}
-    hasBin: true
-
-  acorn@8.11.3:
-    resolution: {integrity: sha512-Y9rRfJG5jcKOE0CLisYbojUjIrIEE7AGMzA/Sm4BslANhbS+cDMpgBdcPT91oJ7OuJ9hYJBx59RjbhxVnrF8Xg==}
     engines: {node: '>=0.4.0'}
     hasBin: true
 
@@ -10330,7 +10328,7 @@ snapshots:
 
   '@vue/compiler-sfc@2.7.16':
     dependencies:
-      '@babel/parser': 7.24.5
+      '@babel/parser': 7.24.7
       postcss: 8.4.39
       source-map: 0.6.1
     optionalDependencies:
@@ -10548,8 +10546,6 @@ snapshots:
 
   acorn@7.4.1:
     optional: true
-
-  acorn@8.11.3: {}
 
   acorn@8.12.0: {}
 
@@ -14340,7 +14336,7 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.4.15
       '@jridgewell/trace-mapping': 0.3.25
       '@types/estree': 1.0.5
-      acorn: 8.11.3
+      acorn: 8.12.1
       aria-query: 5.3.0
       axobject-query: 4.0.0
       code-red: 1.0.4
