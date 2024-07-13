@@ -47,7 +47,7 @@ export type ServerAPIs = {
 
 export type ClientConfig = {
   path?: string;
-  port?: string;
+  port?: string | number;
   host?: string;
   protocol?: 'ws' | 'wss';
   /** Shows an overlay in the browser when there are compiler errors. */
@@ -79,7 +79,9 @@ export interface DevConfig {
    * Whether to display progress bar during compilation.
    */
   progressBar?: boolean | ProgressBarConfig;
-  /** config of Rsbuild client code. */
+  /**
+   * Config for Rsbuild client code.
+   */
   client?: ClientConfig;
   /** Provides the ability to execute a custom function and apply custom middlewares */
   setupMiddlewares?: Array<
