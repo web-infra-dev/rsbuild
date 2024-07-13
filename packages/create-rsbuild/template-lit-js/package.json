@@ -7,8 +7,10 @@
     "build": "rsbuild build",
     "preview": "rsbuild preview"
   },
-  "devDependencies": {
-    "@rsbuild/core": "workspace:*",
+  "dependencies": {
     "lit": "^3.1.4"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "workspace:*"
   }
 }
