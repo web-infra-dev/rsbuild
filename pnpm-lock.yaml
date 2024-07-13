@@ -821,12 +821,18 @@ importers:
       '@clack/prompts':
         specifier: ^0.7.0
         version: 0.7.0
+      '@types/minimist':
+        specifier: ^1.2.5
+        version: 1.2.5
       '@types/node':
         specifier: 18.x
         version: 18.19.31
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
+      minimist:
+        specifier: ^1.2.8
+        version: 1.2.8
       rslog:
         specifier: ^1.2.2
         version: 1.2.2
@@ -3429,6 +3435,9 @@ packages:
 
   '@types/mdx@2.0.13':
     resolution: {integrity: sha512-+OWZQfAYyio6YkJb3HLxDrvnx6SWWDbC0zVPfBRzUk0/nqoDyf6dNxQi3eArPe8rJ473nobTMQ/8Zk+LxJ+Yuw==}
+
+  '@types/minimist@1.2.5':
+    resolution: {integrity: sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==}
 
   '@types/ms@0.7.34':
     resolution: {integrity: sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==}
@@ -10088,6 +10097,8 @@ snapshots:
       '@types/unist': 2.0.10
 
   '@types/mdx@2.0.13': {}
+
+  '@types/minimist@1.2.5': {}
 
   '@types/ms@0.7.34': {}
 

@@ -12,6 +12,7 @@ import {
   text,
 } from '@clack/prompts';
 import deepmerge from 'deepmerge';
+import minimist from 'minimist';
 import { logger } from 'rslog';
 
 function cancelAndExit() {
@@ -67,49 +68,47 @@ function isEmptyDir(path: string) {
   return files.length === 0 || (files.length === 1 && files[0] === '.git');
 }
 
-export async function main() {
-  console.log('');
-  logger.greet('◆  Create Rsbuild Project');
+type Argv = {
+  help?: boolean;
+  dir?: string;
+  template?: string;
+  override?: boolean;
+  tools?: string | string[];
+};
 
-  const cwd = process.cwd();
-  const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent);
-  const pkgManager = pkgInfo ? pkgInfo.name : 'npm';
-  const packageRoot = path.resolve(__dirname, '..');
-  const packageJsonPath = path.join(packageRoot, 'package.json');
-  const { version } = require(packageJsonPath);
+function logHelpMessage() {
+  logger.log(`
+   Usage: create-rsbuild [options]
 
-  const projectName = checkCancel<string>(
-    await text({
-      message: 'Project name or path',
-      placeholder: 'rsbuild-project',
-      defaultValue: 'rsbuild-project',
-      validate(value) {
-        if (value.length === 0) {
-          return 'Project name is required';
-        }
-      },
-    }),
-  );
+   Options:
+   
+     -h, --help       display help for command
+     -d, --dir        create project in specified directory
+     -t, --template   specify the template to use
+     --tools          select additional tools (biome, eslint, prettier)
+     --override       override files in target directory
+   
+   Templates:
+   
+     react            react-ts
+     vue3             vue3-ts
+     vue2             vue2-ts
+     lit              lit-ts
+     preact           preact-ts
+     svelte           svelte-ts
+     solid            solid-ts
+     vanilla          vanilla-ts
+`);
+}
 
-  const { targetDir, packageName } = formatProjectName(projectName);
-  const distFolder = path.isAbsolute(targetDir)
-    ? targetDir
-    : path.join(cwd, targetDir);
-
-  if (fs.existsSync(distFolder) && !isEmptyDir(distFolder)) {
-    const option = checkCancel<string>(
-      await select({
-        message: `"${targetDir}" is not empty, please choose:`,
-        options: [
-          { value: 'yes', label: 'Continue and override files' },
-          { value: 'no', label: 'Cancel operation' },
-        ],
-      }),
-    );
-
-    if (option === 'no') {
-      cancelAndExit();
-    }
+async function getTemplate({ template }: Argv) {
+  if (template) {
+    const pair = template.split('-');
+    const language = pair[1] ?? 'js';
+    return {
+      framework: pair[0],
+      language,
+    };
   }
 
   const framework = checkCancel<string>(
@@ -138,7 +137,18 @@ export async function main() {
     }),
   );
 
-  const tools = checkCancel<string[]>(
+  return {
+    framework,
+    language,
+  };
+}
+
+async function getTools({ tools }: Argv) {
+  if (tools) {
+    return Array.isArray(tools) ? tools : [tools];
+  }
+
+  return checkCancel<string[]>(
     await multiselect({
       message: 'Select additional tools (press enter to continue)',
       options: [
@@ -149,6 +159,66 @@ export async function main() {
       required: false,
     }),
   );
+}
+
+export async function main() {
+  const argv = minimist<Argv>(process.argv.slice(2), {
+    alias: { h: 'help', d: 'dir', t: 'template' },
+  });
+
+  console.log('');
+  logger.greet('◆  Create Rsbuild Project');
+
+  if (argv.help) {
+    logHelpMessage();
+    return;
+  }
+
+  const cwd = process.cwd();
+  const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent);
+  const pkgManager = pkgInfo ? pkgInfo.name : 'npm';
+  const packageRoot = path.resolve(__dirname, '..');
+  const packageJsonPath = path.join(packageRoot, 'package.json');
+  const { version } = require(packageJsonPath);
+
+  const projectName =
+    argv.dir ??
+    checkCancel<string>(
+      await text({
+        message: 'Project name or path',
+        placeholder: 'rsbuild-project',
+        defaultValue: 'rsbuild-project',
+        validate(value) {
+          if (value.length === 0) {
+            return 'Project name is required';
+          }
+        },
+      }),
+    );
+
+  const { targetDir, packageName } = formatProjectName(projectName);
+  const distFolder = path.isAbsolute(targetDir)
+    ? targetDir
+    : path.join(cwd, targetDir);
+
+  if (!argv.override && fs.existsSync(distFolder) && !isEmptyDir(distFolder)) {
+    const option = checkCancel<string>(
+      await select({
+        message: `"${targetDir}" is not empty, please choose:`,
+        options: [
+          { value: 'yes', label: 'Continue and override files' },
+          { value: 'no', label: 'Cancel operation' },
+        ],
+      }),
+    );
+
+    if (option === 'no') {
+      cancelAndExit();
+    }
+  }
+
+  const { framework, language } = await getTemplate(argv);
+  const tools = await getTools(argv);
 
   const srcFolder = path.join(packageRoot, `template-${framework}-${language}`);
   const commonFolder = path.join(packageRoot, 'template-common');
