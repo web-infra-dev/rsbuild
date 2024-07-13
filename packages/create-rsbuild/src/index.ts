@@ -148,7 +148,7 @@ async function getTools({ tools, dir, template }: Argv) {
     return Array.isArray(tools) ? tools : [tools];
   }
   // skip tools selection when using CLI options
-  if (dir || template) {
+  if (dir && template) {
     return [];
   }
 
