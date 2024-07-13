@@ -59,6 +59,13 @@ export function loadEnv({
     Object.assign(parsed, parse(fs.readFileSync(envPath)));
   }
 
+  // dotenv-expand does not override existing env vars by default,
+  // but we should allow overriding NODE_ENV, which is very common.
+  // https://github.com/web-infra-dev/rsbuild/issues/2904
+  if (parsed.NODE_ENV) {
+    process.env.NODE_ENV = parsed.NODE_ENV;
+  }
+
   expand({ parsed });
 
   const publicVars: Record<string, string> = {};
