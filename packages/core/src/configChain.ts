@@ -233,6 +233,8 @@ export const CHAIN_ID = {
     ASYNC_CHUNK_RETRY: 'async-chunk-retry',
     /** AutoSetRootFontSizePlugin */
     AUTO_SET_ROOT_SIZE: 'auto-set-root-size',
+    /** RsdoctorRspackPlugin */
+    RSDOCTOR: 'rsdoctor',
   },
   /** Predefined minimizers */
   MINIMIZER: {

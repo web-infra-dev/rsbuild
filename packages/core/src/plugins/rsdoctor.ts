@@ -11,7 +11,7 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
   name: 'rsbuild:rsdoctor',
 
   setup(api) {
-    api.onBeforeCreateCompiler(async ({ bundlerConfigs }) => {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
       if (process.env.RSDOCTOR !== 'true') {
         return;
       }
@@ -43,25 +43,13 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
         return;
       }
 
-      let isAutoRegister = false;
-
-      for (const config of bundlerConfigs) {
-        const registered = config.plugins?.some(
-          (plugin) => plugin?.constructor?.name === pluginName,
-        );
-
-        if (registered) {
-          return;
-        }
-
-        config.plugins ||= [];
-        config.plugins.push(new module[pluginName]());
-        isAutoRegister = true;
+      if (chain.plugins.has(CHAIN_ID.PLUGIN.RSDOCTOR)) {
+        return;
       }
 
-      if (isAutoRegister) {
-        logger.info(`${color.bold(color.yellow(packageName))} enabled.`);
-      }
+      chain.plugin(CHAIN_ID.PLUGIN.RSDOCTOR).use(module[pluginName]);
+
+      logger.info(`${color.bold(color.yellow(packageName))} enabled.`);
     });
   },
 });
