@@ -102,7 +102,7 @@ export function pluginModuleFederation(): RsbuildPlugin {
         ) {
           config.dev ||= {};
           config.dev.client ||= {};
-          config.dev.client.port = String(config.server.port);
+          config.dev.client.port = config.server.port;
         }
       });
 

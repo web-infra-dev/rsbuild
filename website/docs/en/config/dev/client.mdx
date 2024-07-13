@@ -11,7 +11,7 @@ type Client = {
   /** Specify the path for the WebSocket request */
   path?: string;
   /** Specify the port number for the WebSocket request */
-  port?: string;
+  port?: string | number;
   /** Specify the host for the WebSocket request */
   host?: string;
   /**
@@ -52,7 +52,7 @@ export default {
       protocol: 'ws',
       // Usually `127.0.0.1` is used to avoid cross-origin requests being blocked by the browser
       host: '127.0.0.1',
-      port: '3000',
+      port: 3000,
     },
   },
 };

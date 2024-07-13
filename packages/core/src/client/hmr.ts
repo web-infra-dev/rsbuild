@@ -13,14 +13,14 @@ function formatURL({
   hostname,
   pathname,
 }: {
-  port: string;
+  port: string | number;
   protocol: string;
   hostname: string;
   pathname: string;
 }) {
   if (typeof URL !== 'undefined') {
     const url = new URL('http://localhost');
-    url.port = port;
+    url.port = String(port);
     url.hostname = hostname;
     url.protocol = protocol;
     url.pathname = pathname;
