@@ -89,6 +89,44 @@ If you need to create a project in the current directory, you can set the target
 │  Continue and override files
 ```
 
+### Quick Creation
+
+`create-rsbuild` provides some CLI options. By setting these CLI options, you can skip the interactive selection steps and create the project with one command.
+
+For example, to create a React project in the `my-project` directory with one command:
+
+```bash
+npx create-rsbuild --dir my-project --template react
+
+# Using abbreviations
+npx create-rsbuild -d my-project -t react
+```
+
+The complete CLI options for `create-rsbuild` are as follows:
+
+```text
+Usage: create-rsbuild [options]
+
+Options:
+
+  -h, --help       display help for command
+  -d, --dir        create project in specified directory
+  -t, --template   specify the template to use
+  --tools          select additional tools (biome, eslint, prettier)
+  --override       override files in target directory
+
+Templates:
+
+  react            react-ts
+  vue3             vue3-ts
+  vue2             vue2-ts
+  lit              lit-ts
+  preact           preact-ts
+  svelte           svelte-ts
+  solid            solid-ts
+  vanilla          vanilla-ts
+```
+
 ## Migrate from Existing Projects
 
 If you need to migrate from an existing project to Rsbuild, you can refer to the following guides:
