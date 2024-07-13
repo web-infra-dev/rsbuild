@@ -143,9 +143,13 @@ async function getTemplate({ template }: Argv) {
   };
 }
 
-async function getTools({ tools }: Argv) {
+async function getTools({ tools, dir, template }: Argv) {
   if (tools) {
     return Array.isArray(tools) ? tools : [tools];
+  }
+  // skip tools selection when using CLI options
+  if (dir && template) {
+    return [];
   }
 
   return checkCancel<string[]>(
