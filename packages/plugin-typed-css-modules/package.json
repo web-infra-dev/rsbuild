@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-typed-css-modules",
-  "version": "1.0.1-beta.0",
+  "version": "1.0.1-beta.1",
   "description": "Generate TypeScript declaration file for CSS Modules",
   "homepage": "https://rsbuild.dev",
   "repository": {
