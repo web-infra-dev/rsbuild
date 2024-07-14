@@ -101,12 +101,19 @@ function logHelpMessage() {
 `);
 }
 
+const frameworkAlias: Record<string, string> = {
+  vue: 'vue3',
+  'solid-js': 'solid',
+};
+
 async function getTemplate({ template }: Argv) {
-  if (template) {
+  if (typeof template === 'string') {
     const pair = template.split('-');
     const language = pair[1] ?? 'js';
+    const framework = pair[0];
+
     return {
-      framework: pair[0],
+      framework: frameworkAlias[framework] ?? framework,
       language,
     };
   }
@@ -226,6 +233,12 @@ export async function main() {
 
   const srcFolder = path.join(packageRoot, `template-${framework}-${language}`);
   const commonFolder = path.join(packageRoot, 'template-common');
+
+  if (!fs.existsSync(srcFolder)) {
+    throw new Error(
+      `Invalid input: template "${framework}-${language}" not found. `,
+    );
+  }
 
   copyFolder(commonFolder, distFolder, version);
   copyFolder(srcFolder, distFolder, version, packageName);
