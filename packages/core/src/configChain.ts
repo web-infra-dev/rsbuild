@@ -127,6 +127,7 @@ export const CHAIN_ID = {
     PUG: 'pug',
     /** Rule for Vue */
     VUE: 'vue',
+    // TODO: remove
     /** Rule for yaml */
     YAML: 'yaml',
     /** Rule for wasm */
@@ -164,6 +165,7 @@ export const CHAIN_ID = {
     SWC: 'swc',
     /** svgr */
     SVGR: 'svgr',
+    // TODO: remove
     /** yaml-loader */
     YAML: 'yaml',
     /** babel-loader */
@@ -193,6 +195,7 @@ export const CHAIN_ID = {
     COPY: 'copy',
     /** HtmlRspackPlugin */
     HTML: 'html',
+    // TODO: remove
     /** ESLintWebpackPlugin */
     ESLINT: 'eslint',
     /** DefinePlugin */
@@ -223,6 +226,7 @@ export const CHAIN_ID = {
     VUE_LOADER_PLUGIN: 'vue-loader-plugin',
     /** ReactFastRefreshPlugin */
     REACT_FAST_REFRESH: 'react-fast-refresh',
+    // TODO: remove
     /** ProvidePlugin for node polyfill */
     NODE_POLYFILL_PROVIDE: 'node-polyfill-provide',
     /** WebpackSRIPlugin */
