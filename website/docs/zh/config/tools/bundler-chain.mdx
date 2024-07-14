@@ -176,9 +176,7 @@ Rsbuild 中预先定义了一些常用的 Chain ID，你可以通过这些 ID �
 | `RULE.CSS`    | 处理 `css` 的规则                                                       |
 | `RULE.LESS`   | 处理 `less` 的规则                                                      |
 | `RULE.SASS`   | 处理 `sass` 的规则                                                      |
-| `RULE.YAML`   | 处理 `yaml` 的规则                                                      |
 | `RULE.WASM`   | 处理 `wasm` 的规则                                                      |
-| `RULE.NODE`   | 处理 `node` 的规则                                                      |
 | `RULE.FONT`   | 处理 `font` 的规则                                                      |
 | `RULE.IMAGE`  | 处理 `image` 的规则                                                     |
 | `RULE.MEDIA`  | 处理 `media` 的规则                                                     |
@@ -202,33 +200,29 @@ Rsbuild 中预先定义了一些常用的 Chain ID，你可以通过这些 ID �
 
 | ID                | 描述                                                                     |
 | ----------------- | ------------------------------------------------------------------------ |
-| `USE.SWC`         | 对应 `swc-loader`                                                        |
-| `USE.LESS`        | 对应 `less-loader`                                                       |
-| `USE.SASS`        | 对应 `sass-loader`                                                       |
-| `USE.YAML`        | 对应 `yaml-loader`                                                       |
-| `USE.NODE`        | 对应 `node-loader`                                                       |
-| `USE.STYLE`       | 对应 `style-loader`                                                      |
+| `USE.SWC`         | 对应 `builtin:swc-loader`                                                |
 | `USE.POSTCSS`     | 对应 `postcss-loader`                                                    |
-| `USE.RESOLVE_URL` | 对应 `resolve-url-loader`                                                |
+| `USE.STYLE`       | 对应 `style-loader`                                                      |
+| `USE.LESS`        | 对应 `less-loader`（依赖 [Less 插件](/plugins/list/plugin-less)）        |
+| `USE.SASS`        | 对应 `sass-loader`（依赖 [Sass 插件](/plugins/list/plugin-sass)）        |
+| `USE.RESOLVE_URL` | 对应 `resolve-url-loader`（依赖 [Sass 插件](/plugins/list/plugin-sass)） |
 | `USE.VUE`         | 对应 `vue-loader`（依赖 [Vue 插件](/plugins/list/plugin-vue)）           |
 | `USE.SVGR`        | 对应 `svgr-loader`（依赖 [Svgr 插件](/plugins/list/plugin-svgr)）        |
 | `USE.BABEL`       | 对应 `babel-loader`（依赖 [Babel 插件](/plugins/list/plugin-babel)）     |
-| `USE.SVELTE`      | 对应 `svelte-loader` （依赖 [Svelte 插件](/plugins/list/plugin-svelte)） |
-| `USE.STYLUS`      | 对应 `stylus-loader` （依赖 [Stylus 插件](/plugins/list/plugin-stylus)） |
+| `USE.SVELTE`      | 对应 `svelte-loader`（依赖 [Svelte 插件](/plugins/list/plugin-svelte)）  |
+| `USE.STYLUS`      | 对应 `stylus-loader`（依赖 [Stylus 插件](/plugins/list/plugin-stylus)）  |
 
 ### CHAIN_ID.PLUGIN
 
 通过 `PLUGIN.[ID]` 可以匹配到特定的 Rspack 或 Webpack plugin。
 
-| ID                          | 描述                                                                        |
-| --------------------------- | --------------------------------------------------------------------------- |
-| `PLUGIN.HTML`               | 对应 `HtmlPlugin`，使用时需要拼接 entry 名称：`${PLUGIN.HTML}-${entryName}` |
-| `PLUGIN.APP_ICON`           | 对应 `AppIconPlugin`                                                        |
-| `PLUGIN.INLINE_HTML`        | 对应 `InlineChunkHtmlPlugin`                                                |
-| `PLUGIN.ASSETS_RETRY`       | 对应 `AssetsRetryPlugin`                                                    |
-| `PLUGIN.BUNDLE_ANALYZER`    | 对应 `WebpackBundleAnalyzer`                                                |
-| `PLUGIN.VUE_LOADER_PLUGIN`  | 对应 `VueLoaderPlugin`                                                      |
-| `PLUGIN.AUTO_SET_ROOT_SIZE` | 对应 `AutoSetRootSizePlugin`                                                |
+| ID                         | 描述                                                                              |
+| -------------------------- | --------------------------------------------------------------------------------- |
+| `PLUGIN.HTML`              | 对应 `HtmlRspackPlugin`，使用时需要拼接 entry 名称：`${PLUGIN.HTML}-${entryName}` |
+| `PLUGIN.APP_ICON`          | 对应 `AppIconPlugin`                                                              |
+| `PLUGIN.INLINE_HTML`       | 对应 `InlineChunkHtmlPlugin`                                                      |
+| `PLUGIN.BUNDLE_ANALYZER`   | 对应 `WebpackBundleAnalyzer`                                                      |
+| `PLUGIN.VUE_LOADER_PLUGIN` | 对应 `VueLoaderPlugin`（依赖 [Vue 插件](/plugins/list/plugin-vue)）               |
 
 ### CHAIN_ID.MINIMIZER
 
