@@ -103,7 +103,6 @@ function logHelpMessage() {
 
 const frameworkAlias: Record<string, string> = {
   vue: 'vue3',
-  'vue-ts': 'vue3-ts',
 };
 
 async function getTemplate({ template }: Argv) {
