@@ -103,6 +103,7 @@ function logHelpMessage() {
 
 const frameworkAlias: Record<string, string> = {
   vue: 'vue3',
+  'solid-js': 'solid',
 };
 
 async function getTemplate({ template }: Argv) {
