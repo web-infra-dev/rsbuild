@@ -89,6 +89,44 @@ Biome 提供与 ESLint 和 Prettier 相似的代码检查和格式化功能。�
 │  Continue and override files
 ```
 
+### 快速创建
+
+`create-rsbuild` 提供了一些 CLI 选项。通过设置这些 CLI 选项，你可以跳过交互式的选择步骤，一键创建项目。
+
+比如，一键创建 React 项目到 `my-project` 目录：
+
+```bash
+npx create-rsbuild --dir my-project --template react
+
+# 使用缩写
+npx create-rsbuild -d my-project -t react
+```
+
+`create-rsbuild` 完整的 CLI 选项如下：
+
+```text
+Usage: create-rsbuild [options]
+
+Options:
+
+  -h, --help       display help for command
+  -d, --dir        create project in specified directory
+  -t, --template   specify the template to use
+  --tools          select additional tools (biome, eslint, prettier)
+  --override       override files in target directory
+
+Templates:
+
+  react            react-ts
+  vue3             vue3-ts
+  vue2             vue2-ts
+  lit              lit-ts
+  preact           preact-ts
+  svelte           svelte-ts
+  solid            solid-ts
+  vanilla          vanilla-ts
+```
+
 ## 从现有项目迁移
 
 如果你需要从一个现有项目迁移迁移到 Rsbuild，可以参考以下指南：
