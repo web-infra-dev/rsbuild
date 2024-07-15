@@ -115,6 +115,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               },
               "isModule": "unknown",
               "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                },
                 "externalHelpers": true,
                 "parser": {
                   "decorators": true,
@@ -156,6 +159,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               },
               "isModule": "unknown",
               "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                },
                 "externalHelpers": true,
                 "parser": {
                   "decorators": true,
@@ -525,6 +531,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               },
               "isModule": "unknown",
               "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                },
                 "externalHelpers": true,
                 "parser": {
                   "decorators": true,
@@ -566,6 +575,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               },
               "isModule": "unknown",
               "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                },
                 "externalHelpers": true,
                 "parser": {
                   "decorators": true,
@@ -927,6 +939,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               },
               "isModule": "unknown",
               "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                },
                 "externalHelpers": true,
                 "parser": {
                   "decorators": true,
@@ -964,6 +979,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               },
               "isModule": "unknown",
               "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                },
                 "externalHelpers": true,
                 "parser": {
                   "decorators": true,
@@ -1285,6 +1303,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
               },
               "isModule": "unknown",
               "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                },
                 "externalHelpers": true,
                 "parser": {
                   "decorators": true,
@@ -1326,6 +1347,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
               },
               "isModule": "unknown",
               "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                },
                 "externalHelpers": true,
                 "parser": {
                   "decorators": true,
