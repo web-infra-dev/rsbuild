@@ -1445,6 +1445,9 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
                 },
                 "isModule": "unknown",
                 "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                  },
                   "externalHelpers": true,
                   "parser": {
                     "decorators": true,
@@ -1486,6 +1489,9 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
                 },
                 "isModule": "unknown",
                 "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                  },
                   "externalHelpers": true,
                   "parser": {
                     "decorators": true,
@@ -1768,6 +1774,9 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
                 },
                 "isModule": "unknown",
                 "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                  },
                   "externalHelpers": true,
                   "parser": {
                     "decorators": true,
@@ -1805,6 +1814,9 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
                 },
                 "isModule": "unknown",
                 "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                  },
                   "externalHelpers": true,
                   "parser": {
                     "decorators": true,

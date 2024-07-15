@@ -115,6 +115,9 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
               },
               "isModule": "unknown",
               "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                },
                 "externalHelpers": true,
                 "parser": {
                   "decorators": true,
@@ -156,6 +159,9 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
               },
               "isModule": "unknown",
               "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                },
                 "externalHelpers": true,
                 "parser": {
                   "decorators": true,

@@ -38,6 +38,9 @@ exports[`plugin-swc > should add antd pluginImport 1`] = `
               },
               "isModule": "unknown",
               "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                },
                 "externalHelpers": true,
                 "parser": {
                   "decorators": true,
@@ -79,6 +82,9 @@ exports[`plugin-swc > should add antd pluginImport 1`] = `
               },
               "isModule": "unknown",
               "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                },
                 "externalHelpers": true,
                 "parser": {
                   "decorators": true,
@@ -141,6 +147,9 @@ exports[`plugin-swc > should add browserslist 1`] = `
                 },
                 "isModule": "unknown",
                 "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  },
                   "externalHelpers": true,
                   "parser": {
                     "decorators": true,
@@ -179,6 +188,9 @@ exports[`plugin-swc > should add browserslist 1`] = `
                 },
                 "isModule": "unknown",
                 "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  },
                   "externalHelpers": true,
                   "parser": {
                     "decorators": true,
@@ -245,6 +257,9 @@ exports[`plugin-swc > should add pluginImport 1`] = `
                 },
                 "isModule": "unknown",
                 "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  },
                   "externalHelpers": true,
                   "parser": {
                     "decorators": true,
@@ -293,6 +308,9 @@ exports[`plugin-swc > should add pluginImport 1`] = `
                 },
                 "isModule": "unknown",
                 "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  },
                   "externalHelpers": true,
                   "parser": {
                     "decorators": true,
@@ -409,6 +427,9 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
           },
           "isModule": "unknown",
           "jsc": {
+            "experimental": {
+              "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+            },
             "externalHelpers": false,
             "parser": {
               "decorators": true,
@@ -450,6 +471,9 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
           },
           "isModule": "unknown",
           "jsc": {
+            "experimental": {
+              "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+            },
             "externalHelpers": false,
             "parser": {
               "decorators": true,
@@ -510,6 +534,9 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
           },
           "isModule": "unknown",
           "jsc": {
+            "experimental": {
+              "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+            },
             "externalHelpers": true,
             "parser": {
               "decorators": true,
@@ -563,6 +590,9 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
           },
           "isModule": "unknown",
           "jsc": {
+            "experimental": {
+              "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+            },
             "externalHelpers": true,
             "parser": {
               "decorators": true,
@@ -619,6 +649,9 @@ exports[`plugin-swc > should apply environment config correctly 2`] = `
           },
           "isModule": "unknown",
           "jsc": {
+            "experimental": {
+              "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+            },
             "externalHelpers": true,
             "parser": {
               "decorators": true,
@@ -663,6 +696,9 @@ exports[`plugin-swc > should apply environment config correctly 2`] = `
           },
           "isModule": "unknown",
           "jsc": {
+            "experimental": {
+              "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+            },
             "externalHelpers": true,
             "parser": {
               "decorators": true,
@@ -727,6 +763,9 @@ exports[`plugin-swc > should disable all pluginImport 1`] = `
               },
               "isModule": "unknown",
               "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                },
                 "externalHelpers": true,
                 "parser": {
                   "decorators": true,
@@ -768,6 +807,9 @@ exports[`plugin-swc > should disable all pluginImport 1`] = `
               },
               "isModule": "unknown",
               "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                },
                 "externalHelpers": true,
                 "parser": {
                   "decorators": true,
@@ -829,6 +871,9 @@ exports[`plugin-swc > should disable preset_env in target other than web 1`] = `
                 },
                 "isModule": "unknown",
                 "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  },
                   "externalHelpers": true,
                   "parser": {
                     "decorators": true,
@@ -866,6 +911,9 @@ exports[`plugin-swc > should disable preset_env in target other than web 1`] = `
                 },
                 "isModule": "unknown",
                 "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  },
                   "externalHelpers": true,
                   "parser": {
                     "decorators": true,
@@ -932,6 +980,9 @@ exports[`plugin-swc > should disable preset_env mode 1`] = `
                 },
                 "isModule": "unknown",
                 "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  },
                   "externalHelpers": true,
                   "parser": {
                     "decorators": true,
@@ -973,6 +1024,9 @@ exports[`plugin-swc > should disable preset_env mode 1`] = `
                 },
                 "isModule": "unknown",
                 "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  },
                   "externalHelpers": true,
                   "parser": {
                     "decorators": true,
@@ -1046,6 +1100,9 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
                 },
                 "isModule": "unknown",
                 "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  },
                   "externalHelpers": true,
                   "parser": {
                     "decorators": true,
@@ -1091,6 +1148,9 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
                 },
                 "isModule": "unknown",
                 "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  },
                   "externalHelpers": true,
                   "parser": {
                     "decorators": true,
@@ -1164,6 +1224,9 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
                 },
                 "isModule": "unknown",
                 "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  },
                   "externalHelpers": true,
                   "parser": {
                     "decorators": true,
@@ -1210,6 +1273,9 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
                 },
                 "isModule": "unknown",
                 "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  },
                   "externalHelpers": true,
                   "parser": {
                     "decorators": true,
@@ -1283,6 +1349,9 @@ exports[`plugin-swc > should has correct core-js 1`] = `
                 },
                 "isModule": "unknown",
                 "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  },
                   "externalHelpers": true,
                   "parser": {
                     "decorators": true,
@@ -1328,6 +1397,9 @@ exports[`plugin-swc > should has correct core-js 1`] = `
                 },
                 "isModule": "unknown",
                 "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  },
                   "externalHelpers": true,
                   "parser": {
                     "decorators": true,
@@ -1390,6 +1462,9 @@ exports[`plugin-swc > should has correct core-js 2`] = `
                 },
                 "isModule": "unknown",
                 "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  },
                   "externalHelpers": true,
                   "parser": {
                     "decorators": true,
@@ -1427,6 +1502,9 @@ exports[`plugin-swc > should has correct core-js 2`] = `
                 },
                 "isModule": "unknown",
                 "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  },
                   "externalHelpers": true,
                   "parser": {
                     "decorators": true,

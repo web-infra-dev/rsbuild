@@ -62,7 +62,10 @@ function applyScriptCondition({
   }
 }
 
-function getDefaultSwcConfig(browserslist: string[]): SwcLoaderOptions {
+function getDefaultSwcConfig(
+  browserslist: string[],
+  cacheRoot: string,
+): SwcLoaderOptions {
   return {
     jsc: {
       externalHelpers: true,
@@ -74,6 +77,9 @@ function getDefaultSwcConfig(browserslist: string[]): SwcLoaderOptions {
       // Avoid the webpack magic comment to be removed
       // https://github.com/swc-project/swc/issues/6403
       preserveAllComments: true,
+      experimental: {
+        cacheRoot,
+      },
     },
     isModule: 'unknown',
     env: {
@@ -93,6 +99,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
       order: 'pre',
       handler: async (chain, { CHAIN_ID, target, environment }) => {
         const { config, browserslist } = environment;
+        const cacheRoot = path.join(api.context.cachePath, '.swc');
 
         const rule = chain.module
           .rule(CHAIN_ID.RULE.JS)
@@ -119,7 +126,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
           return;
         }
 
-        const swcConfig = getDefaultSwcConfig(browserslist);
+        const swcConfig = getDefaultSwcConfig(browserslist, cacheRoot);
 
         applyTransformImport(swcConfig, config.source.transformImport);
         applySwcDecoratorConfig(swcConfig, config);
