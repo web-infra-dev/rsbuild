@@ -1,5 +1,3 @@
-import { getBabelConfigForNode } from '@rsbuild/babel-preset/node';
-import { getBabelConfigForWeb } from '@rsbuild/babel-preset/web';
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
@@ -45,7 +43,5 @@ export default {
   pluginVueJsx,
   pluginVue2Jsx,
   pluginSwc,
-  getBabelConfigForWeb,
-  getBabelConfigForNode,
   webpackProvider,
 };

@@ -94,9 +94,6 @@ importers:
       '@playwright/test':
         specifier: 1.44.1
         version: 1.44.1
-      '@rsbuild/babel-preset':
-        specifier: workspace:*
-        version: link:../packages/compat/babel-preset
       '@rsbuild/core':
         specifier: link:../packages/core
         version: link:../packages/core
@@ -522,58 +519,6 @@ importers:
       '@rsbuild/webpack':
         specifier: workspace:*
         version: link:../../packages/compat/webpack
-      typescript:
-        specifier: ^5.5.2
-        version: 5.5.2
-
-  packages/compat/babel-preset:
-    dependencies:
-      '@babel/core':
-        specifier: ^7.24.7
-        version: 7.24.7
-      '@babel/plugin-proposal-decorators':
-        specifier: ^7.24.7
-        version: 7.24.7(@babel/core@7.24.7)
-      '@babel/plugin-proposal-export-default-from':
-        specifier: ^7.24.7
-        version: 7.24.7(@babel/core@7.24.7)
-      '@babel/plugin-proposal-partial-application':
-        specifier: ^7.24.7
-        version: 7.24.7(@babel/core@7.24.7)
-      '@babel/plugin-proposal-pipeline-operator':
-        specifier: ^7.24.7
-        version: 7.24.7(@babel/core@7.24.7)
-      '@babel/plugin-transform-runtime':
-        specifier: ^7.24.7
-        version: 7.24.7(@babel/core@7.24.7)
-      '@babel/preset-env':
-        specifier: ^7.24.7
-        version: 7.24.7(@babel/core@7.24.7)
-      '@babel/preset-typescript':
-        specifier: ^7.24.7
-        version: 7.24.7(@babel/core@7.24.7)
-      '@babel/runtime':
-        specifier: ^7.24.7
-        version: 7.24.7
-      '@babel/types':
-        specifier: ^7.24.7
-        version: 7.24.7
-      '@rsbuild/plugin-babel':
-        specifier: workspace:*
-        version: link:../../plugin-babel
-      '@types/babel__core':
-        specifier: ^7.20.5
-        version: 7.20.5
-      babel-plugin-dynamic-import-node:
-        specifier: 2.3.3
-        version: 2.3.3
-      core-js:
-        specifier: ~3.37.1
-        version: 3.37.1
-    devDependencies:
-      '@types/node':
-        specifier: 18.x
-        version: 18.19.31
       typescript:
         specifier: ^5.5.2
         version: 5.5.2
@@ -1793,24 +1738,6 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
-  '@babel/plugin-proposal-export-default-from@7.24.7':
-    resolution: {integrity: sha512-CcmFwUJ3tKhLjPdt4NP+SHMshebytF8ZTYOv5ZDpkzq2sin80Wb5vJrGt8fhPrORQCfoSa0LAxC/DW+GAC5+Hw==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
-  '@babel/plugin-proposal-partial-application@7.24.7':
-    resolution: {integrity: sha512-4PpEJclyaty+PE1Ma+ZMm6EcRnktKrhnhJ24DLrRWOuLJaczOJpzRxg4Znr63EgvtvFny/pAP2VLupjxHI3iwQ==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
-  '@babel/plugin-proposal-pipeline-operator@7.24.7':
-    resolution: {integrity: sha512-cJOSXlieT6/Yul8yEkbBRzhyf/J4jeeqUREw8HCf8nxT4DTP5FCdC0EXf+b8+vBt34IMYYvTDiC8uC91KSSLpA==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
   '@babel/plugin-proposal-private-property-in-object@7.21.0-placeholder-for-preset-env.2':
     resolution: {integrity: sha512-SOSkfJDddaM7mak6cPEpswyTRnuRltl429hMraQEglW+OkovnCzsiszTmsrlY//qLFjCpQDFRvjdm2wA5pPm9w==}
     engines: {node: '>=6.9.0'}
@@ -1841,12 +1768,6 @@ packages:
 
   '@babel/plugin-syntax-dynamic-import@7.8.3':
     resolution: {integrity: sha512-5gdGbFon+PszYzqs83S3E5mpi7/y/8M9eC90MRTZfduQOYW76ig6SOSPNe41IG5LoP3FGBn2N0RjVDSQiS94kQ==}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
-  '@babel/plugin-syntax-export-default-from@7.24.7':
-    resolution: {integrity: sha512-bTPz4/635WQ9WhwsyPdxUJDVpsi/X9BMmy/8Rf/UAlOO4jSql4CxUCjWI5PiM+jG+c4LVPTScoTw80geFj9+Bw==}
-    engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
@@ -1922,18 +1843,6 @@ packages:
 
   '@babel/plugin-syntax-optional-chaining@7.8.3':
     resolution: {integrity: sha512-KoK9ErH1MBlCPxV0VANkXW2/dw4vlbGDrFgz8bmUsBGYkFRcbRwMh6cIJubdPrkxRwuGdtCk0v/wPTKbQgBjkg==}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
-  '@babel/plugin-syntax-partial-application@7.24.7':
-    resolution: {integrity: sha512-+iFwg2pr9sQgVKH0Scj3ezezvWLp+y5xNLBFiYu6/+FilRFs6y3DrUyTGEho4Um6S6tw5f7YM62aS0hJRlf/8A==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
-  '@babel/plugin-syntax-pipeline-operator@7.24.7':
-    resolution: {integrity: sha512-PnW47ro0vPh4Raqabn3FM7opwdKbNQoFJKSNfCj7lmqcQlVMYFcJ6b+rhMyfB/g1SlWRwnodffVzLcee1FDHYQ==}
-    engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
@@ -2191,12 +2100,6 @@ packages:
 
   '@babel/plugin-transform-reserved-words@7.24.7':
     resolution: {integrity: sha512-0DUq0pHcPKbjFZCfTss/pGkYMfy3vFWydkUBd9r0GHpIyfs2eCDENvqadMycRS9wZCXR41wucAfJHJmwA0UmoQ==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
-  '@babel/plugin-transform-runtime@7.24.7':
-    resolution: {integrity: sha512-YqXjrk4C+a1kZjewqt+Mmu2UuV1s07y8kqcUf4qYLnoqemhR4gRQikhdAhSVJioMjVTu6Mo6pAbaypEA3jY6fw==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -3862,9 +3765,6 @@ packages:
       '@babel/core': ^7.12.0
       webpack: '>=5'
 
-  babel-plugin-dynamic-import-node@2.3.3:
-    resolution: {integrity: sha512-jZVI+s9Zg3IqA/kdi0i6UDCybUI3aSBLnglhYbSSjKlV7yF1F/5LWv8MakQmvYpnbJDS6fcBL2KzHSxNCMtWSQ==}
-
   babel-plugin-jsx-dom-expressions@0.37.23:
     resolution: {integrity: sha512-Y/r8LyLi/njnwPTaDuPEReWk30FJ1KplloYvcFUhHmiH1F7yVVj5mWojD7mbO/IruKyvOs9OIPUoeMi3Z++J4w==}
     peerDependencies:
@@ -4486,10 +4386,6 @@ packages:
   define-lazy-prop@2.0.0:
     resolution: {integrity: sha512-Ds09qNh8yw3khSjiJjiUInaGX9xlqZDY7JVryGxdxV7NPeuqQfplOpQ66yJFZut3jLa5zOwkXw1g9EI2uKh4Og==}
     engines: {node: '>=8'}
-
-  define-properties@1.2.1:
-    resolution: {integrity: sha512-8QmQKqEASLd5nx0U1B1okLElbUuuttJ/AnYmRXbbbGDWh6uS208EjD4Xqq/I9wK7u0v6O08XhTWnt5XtEbR6Dg==}
-    engines: {node: '>= 0.4'}
 
   delayed-stream@1.0.0:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
@@ -6042,14 +5938,6 @@ packages:
   object-hash@3.0.0:
     resolution: {integrity: sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw==}
     engines: {node: '>= 6'}
-
-  object-keys@1.1.1:
-    resolution: {integrity: sha512-NuAESUOUMrlIXOfHKzD6bpPu3tYt3xvjNdRIQ+FeT0lNb4K8WR70CaDxhuNguS2XG+GjkyMwOzsN5ZktImfhLA==}
-    engines: {node: '>= 0.4'}
-
-  object.assign@4.1.5:
-    resolution: {integrity: sha512-byy+U7gp+FVwmyzKPYhW2h5l3crpmGsxl7X2s8y43IgxvG4g3QZ6CffDtsNQy1WsmZpQbO+ybo0AlW7TY6DcBQ==}
-    engines: {node: '>= 0.4'}
 
   on-finished@2.3.0:
     resolution: {integrity: sha512-ikqdkGAAyf/X/gPhXGvfgAytDZtDbr+bkNUJ0N9h5MI/dmdgCs3l6hoHrcUv41sRKew3jIwrp4qQDXiK99Utww==}
@@ -8195,24 +8083,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@babel/plugin-proposal-export-default-from@7.24.7(@babel/core@7.24.7)':
-    dependencies:
-      '@babel/core': 7.24.7
-      '@babel/helper-plugin-utils': 7.24.7
-      '@babel/plugin-syntax-export-default-from': 7.24.7(@babel/core@7.24.7)
-
-  '@babel/plugin-proposal-partial-application@7.24.7(@babel/core@7.24.7)':
-    dependencies:
-      '@babel/core': 7.24.7
-      '@babel/helper-plugin-utils': 7.24.7
-      '@babel/plugin-syntax-partial-application': 7.24.7(@babel/core@7.24.7)
-
-  '@babel/plugin-proposal-pipeline-operator@7.24.7(@babel/core@7.24.7)':
-    dependencies:
-      '@babel/core': 7.24.7
-      '@babel/helper-plugin-utils': 7.24.7
-      '@babel/plugin-syntax-pipeline-operator': 7.24.7(@babel/core@7.24.7)
-
   '@babel/plugin-proposal-private-property-in-object@7.21.0-placeholder-for-preset-env.2(@babel/core@7.24.7)':
     dependencies:
       '@babel/core': 7.24.7
@@ -8238,11 +8108,6 @@ snapshots:
       '@babel/helper-plugin-utils': 7.24.7
 
   '@babel/plugin-syntax-dynamic-import@7.8.3(@babel/core@7.24.7)':
-    dependencies:
-      '@babel/core': 7.24.7
-      '@babel/helper-plugin-utils': 7.24.7
-
-  '@babel/plugin-syntax-export-default-from@7.24.7(@babel/core@7.24.7)':
     dependencies:
       '@babel/core': 7.24.7
       '@babel/helper-plugin-utils': 7.24.7
@@ -8313,16 +8178,6 @@ snapshots:
       '@babel/helper-plugin-utils': 7.24.7
 
   '@babel/plugin-syntax-optional-chaining@7.8.3(@babel/core@7.24.7)':
-    dependencies:
-      '@babel/core': 7.24.7
-      '@babel/helper-plugin-utils': 7.24.7
-
-  '@babel/plugin-syntax-partial-application@7.24.7(@babel/core@7.24.7)':
-    dependencies:
-      '@babel/core': 7.24.7
-      '@babel/helper-plugin-utils': 7.24.7
-
-  '@babel/plugin-syntax-pipeline-operator@7.24.7(@babel/core@7.24.7)':
     dependencies:
       '@babel/core': 7.24.7
       '@babel/helper-plugin-utils': 7.24.7
@@ -8619,18 +8474,6 @@ snapshots:
     dependencies:
       '@babel/core': 7.24.7
       '@babel/helper-plugin-utils': 7.24.7
-
-  '@babel/plugin-transform-runtime@7.24.7(@babel/core@7.24.7)':
-    dependencies:
-      '@babel/core': 7.24.7
-      '@babel/helper-module-imports': 7.24.7
-      '@babel/helper-plugin-utils': 7.24.7
-      babel-plugin-polyfill-corejs2: 0.4.10(@babel/core@7.24.7)
-      babel-plugin-polyfill-corejs3: 0.10.4(@babel/core@7.24.7)
-      babel-plugin-polyfill-regenerator: 0.6.1(@babel/core@7.24.7)
-      semver: 6.3.1
-    transitivePeerDependencies:
-      - supports-color
 
   '@babel/plugin-transform-shorthand-properties@7.24.7(@babel/core@7.24.7)':
     dependencies:
@@ -10674,10 +10517,6 @@ snapshots:
       schema-utils: 4.2.0
       webpack: 5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))
 
-  babel-plugin-dynamic-import-node@2.3.3:
-    dependencies:
-      object.assign: 4.1.5
-
   babel-plugin-jsx-dom-expressions@0.37.23(@babel/core@7.24.7):
     dependencies:
       '@babel/core': 7.24.7
@@ -10806,6 +10645,7 @@ snapshots:
       function-bind: 1.1.2
       get-intrinsic: 1.2.4
       set-function-length: 1.2.2
+    optional: true
 
   callsites@3.1.0: {}
 
@@ -11148,14 +10988,9 @@ snapshots:
       es-define-property: 1.0.0
       es-errors: 1.3.0
       gopd: 1.0.1
+    optional: true
 
   define-lazy-prop@2.0.0: {}
-
-  define-properties@1.2.1:
-    dependencies:
-      define-data-property: 1.1.4
-      has-property-descriptors: 1.0.2
-      object-keys: 1.1.1
 
   delayed-stream@1.0.0: {}
 
@@ -11304,8 +11139,10 @@ snapshots:
   es-define-property@1.0.0:
     dependencies:
       get-intrinsic: 1.2.4
+    optional: true
 
-  es-errors@1.3.0: {}
+  es-errors@1.3.0:
+    optional: true
 
   es-module-lexer@1.5.0: {}
 
@@ -11697,6 +11534,7 @@ snapshots:
       has-proto: 1.0.3
       has-symbols: 1.0.3
       hasown: 2.0.2
+    optional: true
 
   get-stream@6.0.1: {}
 
@@ -11770,6 +11608,7 @@ snapshots:
   gopd@1.0.1:
     dependencies:
       get-intrinsic: 1.2.4
+    optional: true
 
   graceful-fs@4.2.11: {}
 
@@ -11791,10 +11630,13 @@ snapshots:
   has-property-descriptors@1.0.2:
     dependencies:
       es-define-property: 1.0.0
+    optional: true
 
-  has-proto@1.0.3: {}
+  has-proto@1.0.3:
+    optional: true
 
-  has-symbols@1.0.3: {}
+  has-symbols@1.0.3:
+    optional: true
 
   has-tostringtag@1.0.2:
     dependencies:
@@ -13078,15 +12920,6 @@ snapshots:
 
   object-hash@3.0.0: {}
 
-  object-keys@1.1.1: {}
-
-  object.assign@4.1.5:
-    dependencies:
-      call-bind: 1.0.7
-      define-properties: 1.2.1
-      has-symbols: 1.0.3
-      object-keys: 1.1.1
-
   on-finished@2.3.0:
     dependencies:
       ee-first: 1.1.1
@@ -14033,6 +13866,7 @@ snapshots:
       get-intrinsic: 1.2.4
       gopd: 1.0.1
       has-property-descriptors: 1.0.2
+    optional: true
 
   set-value@4.1.0:
     dependencies:

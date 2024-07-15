@@ -21,7 +21,6 @@
   "devDependencies": {
     "@e2e/helper": "workspace:*",
     "@playwright/test": "1.44.1",
-    "@rsbuild/babel-preset": "workspace:*",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-assets-retry": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
