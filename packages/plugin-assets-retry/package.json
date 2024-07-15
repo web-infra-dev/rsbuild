@@ -30,12 +30,12 @@
     "serialize-javascript": "^6.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.7",
-    "@babel/preset-env": "^7.24.7",
+    "@babel/core": "^7.24.8",
+    "@babel/preset-env": "^7.24.8",
     "@babel/preset-typescript": "^7.24.7",
     "@rsbuild/core": "workspace:*",
     "@types/serialize-javascript": "^5.0.4",
-    "terser": "5.31.1",
+    "terser": "5.31.2",
     "typescript": "^5.5.2"
   },
   "peerDependencies": {
