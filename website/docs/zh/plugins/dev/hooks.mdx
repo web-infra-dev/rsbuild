@@ -6,9 +6,10 @@
 
 ### Common Hooks
 
-- [modifyRsbuildConfig](#modifyrsbuildconfig)：修改传递给 Rsbuild 的配置对象。
-- [modifyRspackConfig](#modifyrspackconfig)：修改传递给 Rspack 的配置对象。
-- [modifyBundlerChain](#modifybundlerchain)：通过 chain API 修改 Rspack 的配置对象。
+- [modifyRsbuildConfig](#modifyrsbuildconfig)：修改传递给 Rsbuild 的配置。
+- [modifyEnvironmentConfig](#modifyenvironmentconfig): 修改特定 environment 的 Rsbuild 配置。
+- [modifyRspackConfig](#modifyrspackconfig)：修改传递给 Rspack 的配置。
+- [modifyBundlerChain](#modifybundlerchain)：通过 chain API 修改 Rspack 的配置。
 - [modifyHTMLTags](#modifyhtmltags)：修改注入到 HTML 中的标签。
 - [onBeforeCreateCompiler](#onbeforecreatecompiler)：在创建 compiler 实例前调用。
 - [onAfterCreateCompiler](#onaftercreatecompiler)：在创建 compiler 实例后、执行构建前调用。
@@ -193,6 +194,10 @@ const myPlugin = () => ({
 });
 ```
 
+:::tip
+`modifyRsbuildConfig` 不能用于注册额外的 Rsbuild 插件。这是因为在执行 `modifyRsbuildConfig` 时，Rsbuild 已经初始化了所有插件，并开始执行 hooks 的回调函数。
+:::
+
 ### modifyEnvironmentConfig
 
 修改特定 environment 的 Rsbuild 配置。
@@ -263,7 +268,7 @@ const myPlugin = () => ({
 
 ### modifyRspackConfig
 
-修改最终的 Rspack 配置对象，你可以直接修改传入的 config 对象，也可以返回一个新的对象来替换传入的对象。
+修改最终的 Rspack 配置，你可以直接修改传入的 config 对象，也可以返回一个新的对象来替换传入的对象。
 
 - **类型：**
 
