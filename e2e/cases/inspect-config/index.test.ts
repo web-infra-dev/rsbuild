@@ -34,6 +34,34 @@ test('should generate config files when writeToDisk is true', async () => {
   fs.rmSync(bundlerConfig, { force: true });
 });
 
+test('should generate config files correctly when output is specified', async () => {
+  const rsbuild = await createRsbuild({
+    cwd: __dirname,
+    rsbuildConfig: {},
+  });
+  await rsbuild.inspectConfig({
+    writeToDisk: true,
+    outputPath: 'foo',
+  });
+
+  const bundlerConfig = path.resolve(
+    __dirname,
+    `./dist/foo/${process.env.PROVIDE_TYPE || 'rspack'}.config.web.mjs`,
+  );
+
+  const rsbuildConfig = path.resolve(
+    __dirname,
+    './dist/foo/rsbuild.config.mjs',
+  );
+
+  expect(fs.existsSync(bundlerConfig)).toBeTruthy();
+  expect(fs.existsSync(rsbuildConfig)).toBeTruthy();
+
+  fs.rmSync(rsbuildConfig, { force: true });
+  fs.rmSync(bundlerConfig, { force: true });
+});
+
+
 test('should generate bundler config for node when target contains node', async () => {
   const rsbuild = await createRsbuild({
     cwd: __dirname,
