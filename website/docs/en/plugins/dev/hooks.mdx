@@ -6,9 +6,10 @@ This chapter introduces the plugin hooks available for Rsbuild plugins.
 
 ### Common Hooks
 
-- [modifyRsbuildConfig](#modifyrsbuildconfig): Modify the configuration object passed to Rsbuild.
-- [modifyRspackConfig](#modifyrspackconfig): Modify the configuration object passed to Rspack.
-- [modifyBundlerChain](#modifybundlerchain): Modify the configuration object of Rspack through the chain API.
+- [modifyRsbuildConfig](#modifyrsbuildconfig): Modify the configuration passed to Rsbuild.
+- [modifyEnvironmentConfig](#modifyenvironmentconfig): Modify the Rsbuild configuration of a specific environment.
+- [modifyRspackConfig](#modifyrspackconfig): Modify the configuration passed to Rspack.
+- [modifyBundlerChain](#modifybundlerchain): Modify the configuration of Rspack through the chain API.
 - [modifyHTMLTags](#modifyhtmltags): Modify the tags that are injected into the HTML.
 - [onBeforeCreateCompiler](#onbeforecreatecompiler): Called before creating a compiler instance.
 - [onAfterCreateCompiler](#onaftercreatecompiler): Called after creating a compiler instance and before building.
@@ -194,6 +195,10 @@ const myPlugin = () => ({
 });
 ```
 
+:::tip
+`modifyRsbuildConfig` cannot be used to register additional Rsbuild plugins. This is because at the time `modifyRsbuildConfig` is executed, Rsbuild has already initialized all plugins and started executing the callbacks of the hooks.
+:::
+
 ### modifyEnvironmentConfig
 
 Modify the Rsbuild configuration of a specific environment.
@@ -265,7 +270,7 @@ const myPlugin = () => ({
 
 ### modifyRspackConfig
 
-To modify the final Rspack config object, you can directly modify the config object, or return a new object to replace the previous object.
+To modify the final Rspack config, you can directly modify the config object, or return a new object to replace the previous object.
 
 - **Type:**
 
