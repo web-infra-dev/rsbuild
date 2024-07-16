@@ -147,12 +147,12 @@ function getTemplateParameters(
       rspackConfig,
       /**
        * compatible with html-webpack-plugin
-       * @deprecated may be removed in a future major version
+       * @deprecated may be removed in a future major version, use `rspackConfig` instead
        */
       webpackConfig: rspackConfig,
       /**
        * compatible with html-webpack-plugin
-       * @deprecated may be removed in a future major version
+       * @deprecated may be removed in a future major version, use `htmlPlugin` instead
        */
       htmlWebpackPlugin: htmlPlugin,
     };
