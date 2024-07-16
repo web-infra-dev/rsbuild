@@ -131,18 +131,34 @@ function getTemplateParameters(
 ): HtmlRspackPlugin.Options['templateParameters'] {
   return (compilation, assets, assetTags, pluginOptions) => {
     const { mountId, templateParameters } = config.html;
+    const rspackConfig = compilation.options;
+    const htmlPlugin = {
+      tags: assetTags,
+      files: assets,
+    };
+
     const defaultOptions = {
       mountId,
       entryName,
       assetPrefix,
       compilation,
-      webpackConfig: compilation.options,
+      htmlPlugin,
+      rspackConfig,
+      /**
+       * compatible with html-webpack-plugin
+       * @deprecated may be removed in a future major version
+       */
+      webpackConfig: rspackConfig,
+      /**
+       * compatible with html-webpack-plugin
+       * @deprecated may be removed in a future major version
+       */
       htmlWebpackPlugin: {
-        tags: assetTags,
-        files: assets,
+        ...htmlPlugin,
         options: pluginOptions,
       },
     };
+
     return reduceConfigsWithContext({
       initial: defaultOptions,
       config: templateParameters,

@@ -121,12 +121,19 @@ type DefaultParameters = {
   entryName: string; // 入口名称
   assetPrefix: string; // 对应 dev.assetPrefix 和 output.assetPrefix 配置
   compilation: Compilation; // 对应 Rspack 的 compilation 对象
-  // htmlWebpackPlugin 内置的参数
-  // 详见 https://github.com/rspack-contrib/html-rspack-plugin
-  htmlWebpackPlugin: {
-    tags: object;
-    files: object;
-    options: object;
+  rspackConfig: Rspack.Configuration; // Rspack 的配置对象
+  // html-rspack-plugin 生成的参数
+  htmlPlugin: {
+    tags: {
+      headTags: HtmlTagObject[];
+      bodyTags: HtmlTagObject[];
+    };
+    files: {
+      publicPath: string;
+      js: Array<string>;
+      css: Array<string>;
+      favicon?: string;
+    };
   };
 };
 ```
@@ -235,15 +242,15 @@ Rsbuild 通过 Pug 插件来支持 Pug 模板引擎，请阅读 [@rsbuild/plugin
 前端应用的产物最终都会直接或间接地被 HTML 入口引用，但大多数时候直接向 HTML 注入标签都并非首选。
 :::
 
-模版文件中可以通过 `htmlWebpackPlugin.tags` 变量来访问需要最终注入到 HTML 的所有标签：
+模版文件中可以通过 `htmlPlugin.tags` 变量来访问需要最终注入到 HTML 的所有标签：
 
 ```html
 <html>
   <head>
-    <%= htmlWebpackPlugin.tags.headTags %>
+    <%= htmlPlugin.tags.headTags %>
   </head>
   <body>
-    <%= htmlWebpackPlugin.tags.bodyTags %>
+    <%= htmlPlugin.tags.bodyTags %>
   </body>
 </html>
 ```

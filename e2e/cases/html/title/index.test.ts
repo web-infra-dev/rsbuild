@@ -76,7 +76,7 @@ test('should generate title correctly when using custom HTML template', async ()
   expect(html).toContain('<title>foo</title>');
 });
 
-test('should generate title correctly when using htmlWebpackPlugin.options.title', async () => {
+test('should generate title correctly when using htmlPlugin.options.title', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
