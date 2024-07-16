@@ -262,8 +262,8 @@ export function formatStats(
       errors: getAllStatsErrors(statsData),
       warnings: getAllStatsWarnings(statsData),
     },
-    // display verbose messages in prod build or debug mode
-    isProd() || logger.level === 'verbose',
+    // display verbose messages in debug mode
+    logger.level === 'verbose',
   );
 
   if (stats.hasErrors()) {
