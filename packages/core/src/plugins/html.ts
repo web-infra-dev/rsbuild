@@ -135,6 +135,7 @@ function getTemplateParameters(
     const htmlPlugin = {
       tags: assetTags,
       files: assets,
+      options: pluginOptions,
     };
 
     const defaultOptions = {
@@ -153,10 +154,7 @@ function getTemplateParameters(
        * compatible with html-webpack-plugin
        * @deprecated may be removed in a future major version
        */
-      htmlWebpackPlugin: {
-        ...htmlPlugin,
-        options: pluginOptions,
-      },
+      htmlWebpackPlugin: htmlPlugin,
     };
 
     return reduceConfigsWithContext({
