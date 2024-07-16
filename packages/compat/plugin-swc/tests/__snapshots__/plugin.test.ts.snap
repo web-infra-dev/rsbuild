@@ -1162,3 +1162,141 @@ exports[`plugin-swc > should set swc-loader 1`] = `
   },
 }
 `;
+
+exports[`plugin-swc > should use output config 1`] = `
+[
+  {
+    "module": {
+      "rules": [
+        {
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "use": [
+            {
+              "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+              "options": {
+                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                "env": {
+                  "coreJs": "3.37",
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "extensions": {
+                  "lockCorejsVersion": {
+                    "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                    "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+                  },
+                  "lodash": {
+                    "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                    "ids": [
+                      "lodash",
+                      "lodash-es",
+                    ],
+                  },
+                },
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
+                    "react": {
+                      "refresh": false,
+                      "runtime": "classic",
+                    },
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          "mimetype": {
+            "or": [
+              "text/javascript",
+              "application/javascript",
+            ],
+          },
+          "resolve": {
+            "fullySpecified": false,
+          },
+          "use": [
+            {
+              "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+              "options": {
+                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                "env": {
+                  "coreJs": "3.37",
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "extensions": {
+                  "lockCorejsVersion": {
+                    "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                    "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+                  },
+                  "lodash": {
+                    "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                    "ids": [
+                      "lodash",
+                      "lodash-es",
+                    ],
+                  },
+                },
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
+                    "react": {
+                      "refresh": false,
+                      "runtime": "classic",
+                    },
+                  },
+                },
+              },
+            },
+          ],
+        },
+      ],
+    },
+    "optimization": {
+      "minimizer": [
+        SwcMinimizerPlugin {
+          "minifyOptions": {
+            "cssMinify": undefined,
+            "jsMinify": {
+              "compress": {
+                "ecma": 2019,
+              },
+              "format": {
+                "asciiOnly": true,
+              },
+              "mangle": true,
+            },
+          },
+          "name": "swc-minimizer-plugin",
+        },
+      ],
+    },
+  },
+]
+`;
