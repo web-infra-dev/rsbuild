@@ -121,7 +121,9 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
             .use(SwcMinimizerPlugin, [
               {
                 jsMinify:
-                  (typeof minify === 'object' && minify.jsOptions) ??
+                  (typeof minify === 'object' && minify.jsOptions
+                    ? minify.jsOptions
+                    : undefined) ??
                   mainConfig.jsMinify ??
                   mainConfig.jsc?.minify ??
                   true,
