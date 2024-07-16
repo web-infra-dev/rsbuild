@@ -2,7 +2,7 @@ import {
   DEFAULT_OPTIONS,
   genJSTemplate,
   getRootPixelCode,
-} from '../src/AutoSetRootFontSizePlugin';
+} from '../src/helpers';
 
 const customOptions = {
   ...DEFAULT_OPTIONS,
@@ -88,9 +88,12 @@ describe('test runtime', () => {
     runRootPixelCode(code);
     expect(listenerCbs.length).toBe(1);
 
-    expect(window[DEFAULT_OPTIONS.rootFontSizeVariableName]).toBe(
-      DEFAULT_OPTIONS.maxRootFontSize,
-    );
+    expect(
+      (window as unknown as Record<string, unknown>)[
+        DEFAULT_OPTIONS.rootFontSizeVariableName
+      ],
+    ).toBe(DEFAULT_OPTIONS.maxRootFontSize);
+
     expect(document.documentElement.style.fontSize).toBe(
       `${DEFAULT_OPTIONS.maxRootFontSize}px`,
     );
