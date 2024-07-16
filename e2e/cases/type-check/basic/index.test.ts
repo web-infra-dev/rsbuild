@@ -1,4 +1,4 @@
-import { build } from '@e2e/helper';
+import { build, dev, gotoPage } from '@e2e/helper';
 import { proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
@@ -11,6 +11,43 @@ test('should throw error when exist type errors', async () => {
       plugins: [pluginTypeCheck()],
     }),
   ).rejects.toThrowError('build failed!');
+
+  expect(
+    logs.find((log) => log.includes('File:') && log.includes('/src/index.ts')),
+  ).toBeTruthy();
+
+  expect(
+    logs.find((log) =>
+      log.includes(
+        `Argument of type 'string' is not assignable to parameter of type 'number'.`,
+      ),
+    ),
+  ).toBeTruthy();
+
+  restore();
+});
+
+test('should throw error when exist type errors in dev mode', async ({
+  page,
+}) => {
+  const { logs, restore } = proxyConsole();
+
+  const rsbuild = await dev({
+    cwd: __dirname,
+    plugins: [
+      pluginTypeCheck({
+        forkTsCheckerOptions: {
+          async: false,
+        },
+      }),
+    ],
+  });
+
+  await gotoPage(page, rsbuild);
+
+  expect(
+    logs.find((log) => log.includes('File:') && log.includes('/src/index.ts')),
+  ).toBeTruthy();
 
   expect(
     logs.find((log) =>
