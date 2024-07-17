@@ -118,8 +118,17 @@ export function getPluginAPI({
 
     transformer[id] = handler;
 
-    hooks.modifyBundlerChain.tap((chain, { target }) => {
+    hooks.modifyBundlerChain.tap((chain, { target, environment }) => {
+      // filter by targets
       if (descriptor.targets && !descriptor.targets.includes(target)) {
+        return;
+      }
+
+      // filter by environments
+      if (
+        descriptor.environments &&
+        !descriptor.environments.includes(environment.name)
+      ) {
         return;
       }
 

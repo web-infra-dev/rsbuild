@@ -222,6 +222,11 @@ export type TransformDescriptor = {
    */
   targets?: RsbuildTarget[];
   /**
+   * Match based on the Rsbuild environment names and only apply the transform to certain environments.
+   * @see https://rsbuild.dev/config/environments
+   */
+  environments?: string[];
+  /**
    * If raw is `true`, the transform handler will receive the Buffer type code instead of the string type.
    * @see https://rspack.dev/api/loader-api#raw-loader
    */
