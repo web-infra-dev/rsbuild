@@ -206,6 +206,7 @@ descriptor 参数是一个对象，用于描述模块的匹配条件。
 type TransformDescriptor = {
   test?: RuleSetCondition;
   targets?: RsbuildTarget[];
+  environments?: string[];
   resourceQuery?: RuleSetCondition;
   raw?: boolean;
 };
@@ -225,6 +226,14 @@ api.transform({ test: /\.pug$/ }, ({ code }) => {
 
 ```js
 api.transform({ test: /\.pug$/, targets: ['web'] }, ({ code }) => {
+  // ...
+});
+```
+
+- `environments`：匹配 Rsbuild [environment](/guide/advanced/environments) name，仅对匹配的 environments 应用当前 transform 函数。
+
+```js
+api.transform({ test: /\.pug$/, environments: ['web'] }, ({ code }) => {
   // ...
 });
 ```
