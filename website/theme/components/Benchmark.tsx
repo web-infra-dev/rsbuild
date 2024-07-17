@@ -79,6 +79,10 @@ const BENCHMARK_DATA: BenchmarkData = {
   },
 };
 
+export function BenchmarkGraph() {
+  return <BaseBenchmark data={BENCHMARK_DATA} />;
+}
+
 export function Benchmark() {
   const t = useI18n();
   return (
@@ -87,7 +91,7 @@ export function Benchmark() {
         <h2 className={styles.title}>{t('benchmarkTitle')}</h2>
         <p className={styles.desc}>{t('benchmarkDesc')}</p>
       </div>
-      <BaseBenchmark data={BENCHMARK_DATA} />
+      <BenchmarkGraph />
     </div>
   );
 }
