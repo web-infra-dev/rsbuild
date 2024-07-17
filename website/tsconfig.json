@@ -5,7 +5,7 @@
     "outDir": "./dist",
     "paths": {
       "@theme": ["./theme"],
-      "@components/*": ["./components/*"],
+      "@components/*": ["./theme/components/*"],
       "@zh/*": ["./docs/zh/*"],
       "@en/*": ["./docs/en/*"]
     },
@@ -14,5 +14,5 @@
   "mdx": {
     "checkMdx": true
   },
-  "include": ["docs", "rspress.config.ts", "theme", "components", "env.d.ts"]
+  "include": ["docs", "rspress.config.ts", "theme", "env.d.ts"]
 }
