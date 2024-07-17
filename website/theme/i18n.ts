@@ -7,7 +7,7 @@ export const EN_US = {
 } as const;
 
 export const ZH_CN: Record<keyof typeof EN_US, string> = {
-  benchmarkTitle: '闪电般快速',
+  benchmarkTitle: '极快的构建速度',
   benchmarkDesc:
     '基于 Rust 和 TypeScript 的高度并行、增量编译架构，构建性能极佳，带来极致的开发体验。',
 };
