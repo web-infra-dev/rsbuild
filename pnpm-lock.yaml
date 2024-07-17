@@ -1388,9 +1388,9 @@ importers:
       rsbuild-plugin-open-graph:
         specifier: 1.0.0
         version: 1.0.0(@rsbuild/core@packages+core)
-      rsfamily-nav-icon:
-        specifier: ^1.0.3
-        version: 1.0.3
+      rsfamily-doc-ui:
+        specifier: ^1.0.2
+        version: 1.0.2(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rspress:
         specifier: 1.26.1
         version: 1.26.1(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
@@ -4800,6 +4800,20 @@ packages:
   fraction.js@4.3.7:
     resolution: {integrity: sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==}
 
+  framer-motion@11.3.4:
+    resolution: {integrity: sha512-LC+luwNmz4zEg0AU0rol3yLUFKSJ9GDmIyvigXBAwEbUBG59EWmcRQ2Xh+0py7IkmvWxFUH0TN42v1Dda8xgUg==}
+    peerDependencies:
+      '@emotion/is-prop-valid': '*'
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    peerDependenciesMeta:
+      '@emotion/is-prop-valid':
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+
   front-matter@4.0.2:
     resolution: {integrity: sha512-I8ZuJ/qG92NWX8i5x1Y8qyj3vizhXS31OxjKDu3LKP+7/qBgfIKValiZIEwoVoJKUHlhWtYrktkxV1XsX+pPlg==}
 
@@ -6582,8 +6596,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  rsfamily-nav-icon@1.0.3:
-    resolution: {integrity: sha512-ZbSASDPb30II7x0NWlA9BNP6EA3+lvAVui9ahAT3vomqlP5Pt3cu1eSVaXApIv2gu0EFTC1TOQL4kKdK+8pXbA==}
+  rsfamily-doc-ui@1.0.2:
+    resolution: {integrity: sha512-Q2Hhq3yIajUdu1Bh/GE7H8qbUOphDIJhgjlbTVpDGT4EUE4fAAc7hDWkUghSk9XOBbL2X4a6WXbGRYQFaorhrg==}
 
   rslog@1.2.2:
     resolution: {integrity: sha512-tZP8KjrI1nz6qOYCrFxAV7cfmfS2GV94jotU2zOmF/6ByO1zNvGR6/+0inylpjqyBjAdnnutTUW0m4th06bSTw==}
@@ -11542,6 +11556,14 @@ snapshots:
 
   fraction.js@4.3.7: {}
 
+  framer-motion@11.3.4(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      tslib: 2.6.2
+    optionalDependencies:
+      '@emotion/is-prop-valid': 1.2.2
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
   front-matter@4.0.2:
     dependencies:
       js-yaml: 3.14.1
@@ -13721,7 +13743,13 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': link:packages/core
 
-  rsfamily-nav-icon@1.0.3: {}
+  rsfamily-doc-ui@1.0.2(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      framer-motion: 11.3.4(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+    transitivePeerDependencies:
+      - '@emotion/is-prop-valid'
+      - react
+      - react-dom
 
   rslog@1.2.2: {}
 

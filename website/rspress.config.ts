@@ -143,7 +143,7 @@ export default defineConfig({
     ],
     source: {
       alias: {
-        '@components': path.join(__dirname, 'components'),
+        '@components': path.join(__dirname, '@components'),
         '@en': path.join(__dirname, 'docs/en'),
         '@zh': path.join(__dirname, 'docs/zh'),
       },
