@@ -48,11 +48,11 @@
     "cross-env": "^7.0.3",
     "cspell-ban-words": "^0.0.3",
     "nano-staged": "^0.8.0",
-    "nx": "^19.4.3",
+    "nx": "^19.4.4",
     "prettier": "^3.3.3",
     "simple-git-hooks": "^2.11.1",
     "typescript": "^5.5.2",
-    "vitest": "^2.0.2"
+    "vitest": "^2.0.3"
   },
   "packageManager": "pnpm@9.0.6",
   "engines": {
