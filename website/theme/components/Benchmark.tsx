@@ -10,7 +10,7 @@ import styles from './Benchmark.module.scss';
 // From: https://github.com/rspack-contrib/performance-compare
 const BENCHMARK_DATA: BenchmarkData = {
   rspack: {
-    label: 'Rspack',
+    label: 'Rsbuild',
     metrics: [
       {
         time: 0.49,
