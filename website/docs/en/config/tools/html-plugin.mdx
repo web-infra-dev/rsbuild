@@ -4,26 +4,15 @@
 - **Default:**
 
 ```js
-const defaultHtmlPluginOptions = {
-  inject, // corresponding to the html.inject config
-  favicon, // corresponding to html.favicon config
-  filename, // generated based on output.distPath and entryName
-  templateParameters, // corresponding to the html.templateParameters config
+const defaultOptions = {
+  meta, // Corresponds to `html.meta` config
+  title, // Corresponds to `html.title` config
+  inject, // Corresponds to `html.inject` config
+  favicon, // Corresponds to `html.favicon` config
+  template, // Corresponds to `html.template` config
+  filename, // Generated based on `output.distPath` and `entryName`
+  templateParameters, // Corresponds to `html.templateParameters` config
   chunks: [entryName],
-  minify: {
-    // generated based on output.minify
-    removeComments: false,
-    useShortDoctype: true,
-    keepClosingSlash: true,
-    collapseWhitespace: true,
-    removeRedundantAttributes: true,
-    removeScriptTypeAttributes: true,
-    removeStyleLinkTypeAttributes: true,
-    removeEmptyAttributes: true,
-    minifyJS,
-    minifyCSS: true,
-    minifyURLs: true,
-  },
 };
 ```
 
@@ -99,21 +88,6 @@ export default {
 };
 ```
 
-### Disable JS/CSS minify
+## HTML Minification
 
-By default, Rsbuild will compresses JavaScript/CSS code inside HTML during the production build to improve the page performance. This ability is often helpful when using custom templates or inserting custom scripts.
-
-However, when `output.inlineScripts` or `output.inlineStyles` is turned on, inline JavaScript/CSS code will be repeatedly compressed, which will have a certain impact on build performance. You can modify the default minify behavior by modifying the `tools.htmlPlugin.minify` configuration.
-
-```js
-export default {
-  tools: {
-    htmlPlugin: (config) => {
-      if (typeof config.minify === 'object') {
-        config.minify.minifyJS = false;
-        config.minify.minifyCSS = false;
-      }
-    },
-  },
-};
-```
+Rsbuild currently does not minify HTML files. If you need to minify HTML files, you can use the [rsbuild-plugin-html-minifier-terser plugin](https://github.com/rspack-contrib/rsbuild-plugin-html-minifier-terser).

@@ -228,7 +228,7 @@ export type TransformDescriptor = {
   environments?: string[];
   /**
    * If raw is `true`, the transform handler will receive the Buffer type code instead of the string type.
-   * @see https://rspack.dev/api/loader-api#raw-loader
+   * @see https://rspack.dev/api/loader-api/examples#raw-loader
    */
   raw?: boolean;
 };
