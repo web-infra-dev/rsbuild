@@ -71,11 +71,9 @@ export default {
 </html>
 ```
 
-标签中表示外部资源文件路径的字段会受到 `publicPath` 和 `hash` 选项的影响，
-这些字段包括 `script` 标签的 `src` 和 `link` 标签的 `href`。
+标签中表示外部资源文件路径的字段会受到 `publicPath` 和 `hash` 选项的影响，这些字段包括 `script` 标签的 `src` 和 `link` 标签的 `href`。
 
-启用 `publicPath` 会让标签中表示路径的属性被拼接上 `output.assetPrefix` 字段。
-而 `hash` 字段会让文件名后多出一个哈希查询用于控制浏览器缓存，哈希字符串与 HTML 文件产物的哈希值相同。
+启用 `publicPath` 会让标签中表示路径的属性被拼接上 [output.assetPrefix](/config/output/asset-prefix) 字段。而 `hash` 字段会让文件名后多出一个哈希查询用于控制浏览器缓存，哈希字符串与 HTML 文件产物的哈希值相同。
 
 用户也可以向这两个配置传入函数，以自行控制路径拼接的逻辑。
 
