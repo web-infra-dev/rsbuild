@@ -1,10 +1,10 @@
 import { ToolStack as BaseToolStack } from 'rsfamily-doc-ui/tool-stack';
 import { useLang } from 'rspress/runtime';
-import { useI18n } from '../i18n';
+import { useI18n } from 'rspress/runtime';
 import styles from './ToolStack.module.scss';
 
 export function ToolStack() {
-  const t = useI18n();
+  const t = useI18n<typeof import('i18n')>();
   const lang = useLang();
   return (
     <div className={styles.root}>

@@ -7,7 +7,8 @@
       "@theme": ["./theme"],
       "@components/*": ["./theme/components/*"],
       "@zh/*": ["./docs/zh/*"],
-      "@en/*": ["./docs/en/*"]
+      "@en/*": ["./docs/en/*"],
+      "i18n": ["./i18n.json"]
     },
     "baseUrl": "./"
   },
