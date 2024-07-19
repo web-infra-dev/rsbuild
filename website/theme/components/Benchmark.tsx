@@ -2,7 +2,7 @@ import {
   Benchmark as BaseBenchmark,
   type BenchmarkData,
 } from 'rsfamily-doc-ui/benchmark';
-import { useI18n } from '../i18n';
+import { useI18n } from 'rspress/runtime';
 import styles from './Benchmark.module.scss';
 
 // Benchmark data for different cases
@@ -84,7 +84,7 @@ export function BenchmarkGraph() {
 }
 
 export function Benchmark() {
-  const t = useI18n();
+  const t = useI18n<typeof import('i18n')>();
   return (
     <div className={styles.root}>
       <div className={styles.header}>
