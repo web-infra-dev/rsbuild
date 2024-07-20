@@ -1,15 +1,24 @@
 import type { LoaderContext } from '@rspack/core';
-import type { RspackSourceMap, TransformContext } from '../types';
+import type {
+  EnvironmentContext,
+  RspackSourceMap,
+  TransformContext,
+} from '../types';
+
+export type TransformLoaderOptions = {
+  id: string;
+  getEnvironment: () => EnvironmentContext;
+};
 
 export default async function transform(
-  this: LoaderContext<{ id: string }>,
+  this: LoaderContext<TransformLoaderOptions>,
   source: string,
   map?: string | RspackSourceMap,
 ): Promise<void> {
   const callback = this.async();
   const bypass = () => callback(null, source, map);
 
-  const transformId = this.getOptions().id;
+  const { id: transformId, getEnvironment } = this.getOptions();
   if (!transformId) {
     return bypass();
   }
@@ -24,6 +33,7 @@ export default async function transform(
     resource: this.resource,
     resourcePath: this.resourcePath,
     resourceQuery: this.resourceQuery,
+    environment: getEnvironment(),
     addDependency: this.addDependency,
     emitFile: this.emitFile as TransformContext['emitFile'],
   });

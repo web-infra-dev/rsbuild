@@ -13,6 +13,7 @@ import type {
 } from './config';
 import type { RsbuildContext } from './context';
 import type {
+  EnvironmentContext,
   ModifyBundlerChainFn,
   ModifyChainUtils,
   ModifyEnvironmentConfigFn,
@@ -180,6 +181,10 @@ export type TransformContext = {
    * @example '?foo=123'
    */
   resourceQuery: string;
+  /**
+   * The environment context for current build.
+   */
+  environment: EnvironmentContext;
   /**
    * Add an additional file as the dependency.
    * The file will be watched and changes to the file will trigger rebuild.
