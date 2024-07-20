@@ -28,11 +28,11 @@ type RootPath = string;
 
 ### context.distPath
 
-构建产物输出目录的绝对路径，对应 `RsbuildConfig` 中的 `output.distPath.root` 配置项。
+构建产物输出目录的绝对路径，对应 `RsbuildConfig` 中的 [output.distPath.root](/config/output/dist-path) 配置项。
 
 当有多个环境时，Rsbuild 会尝试获取所有环境的父 distPath 作为 `context.distPath`。
 
-如果要获取指定环境的输出目录的绝对路径，建议使用 [environment.distPath](/api/javascript-api/types#environmentdistpath)。
+如果要获取指定环境的输出目录的绝对路径，建议使用 [environment.distPath](/api/javascript-api/environment-context#distpath)。
 
 - **类型：**
 
