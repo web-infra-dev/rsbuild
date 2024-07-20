@@ -10,6 +10,7 @@ exports[`plugin-node-addons > should add node addons rule properly 1`] = `
           {
             "loader": "<ROOT>/packages/core/dist/transformRawLoader.cjs",
             "options": {
+              "getEnvironment": [Function],
               "id": "rsbuild-transform-0",
             },
           },
