@@ -9,6 +9,8 @@ import type {
   NormalizedConfig,
   NormalizedEnvironmentConfig,
   PluginManager,
+  ProcessAssetsFn,
+  ProcessAssetsStage,
   RsbuildPluginAPI,
   RspackChain,
   TransformFn,
@@ -51,6 +53,49 @@ function applyTransformPlugin(
 
   chain.plugin(name).use(RsbuildTransformPlugin);
 }
+
+const mapProcessAssetsStage = (
+  compiler: Compiler,
+  stage: ProcessAssetsStage,
+) => {
+  const { Compilation } = compiler.webpack;
+  switch (stage) {
+    case 'additional':
+      return Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL;
+    case 'pre-process':
+      return Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS;
+    case 'derived':
+      return Compilation.PROCESS_ASSETS_STAGE_DERIVED;
+    case 'additions':
+      return Compilation.PROCESS_ASSETS_STAGE_ADDITIONS;
+    case 'none':
+      return Compilation.PROCESS_ASSETS_STAGE_NONE;
+    case 'optimize':
+      return Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE;
+    case 'optimize-count':
+      return Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_COUNT;
+    case 'optimize-compatibility':
+      return Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_COMPATIBILITY;
+    case 'optimize-size':
+      return Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_SIZE;
+    case 'dev-tooling':
+      return Compilation.PROCESS_ASSETS_STAGE_DEV_TOOLING;
+    case 'optimize-inline':
+      return Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_INLINE;
+    case 'summarize':
+      return Compilation.PROCESS_ASSETS_STAGE_SUMMARIZE;
+    case 'optimize-hash':
+      return Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_HASH;
+    case 'optimize-transfer':
+      return Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_TRANSFER;
+    case 'analyse':
+      return Compilation.PROCESS_ASSETS_STAGE_ANALYSE;
+    case 'report':
+      return Compilation.PROCESS_ASSETS_STAGE_REPORT;
+    default:
+      throw new Error(`Invalid process assets stage: ${stage}`);
+  }
+};
 
 export function getPluginAPI({
   context,
@@ -152,6 +197,32 @@ export function getPluginAPI({
     });
   };
 
+  let processAssetsId = 0;
+
+  const processAssets: ProcessAssetsFn = (descriptor, handler) => {
+    const name = 'RsbuildProcessAssetsPlugin';
+
+    class RsbuildProcessAssetsPlugin {
+      apply(compiler: Compiler): void {
+        compiler.hooks.compilation.tap(name, (compilation) => {
+          compilation.hooks.processAssets.tapPromise(
+            {
+              name,
+              stage: mapProcessAssetsStage(compiler, descriptor.stage),
+            },
+            async (assets) => handler({ assets, compiler, compilation }),
+          );
+        });
+      }
+    }
+
+    hooks.modifyBundlerChain.tap((chain) => {
+      chain
+        .plugin(`RsbuildProcessAssetsPlugin#${processAssetsId++}`)
+        .use(RsbuildProcessAssetsPlugin);
+    });
+  };
+
   process.on('exit', () => {
     hooks.onExit.call();
   });
@@ -161,6 +232,7 @@ export function getPluginAPI({
     expose,
     transform,
     useExposed,
+    processAssets,
     getRsbuildConfig,
     getNormalizedConfig,
     isPluginExists: pluginManager.isPluginExists,

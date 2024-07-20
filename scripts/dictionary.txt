@@ -1,4 +1,5 @@
 # Custom Dictionary Words
+analyse
 antd
 apng
 applescript
@@ -50,6 +51,7 @@ longpaths
 manypkg
 mattcompiles
 menlo
+Mergeable
 microfrontend
 microfrontends
 modularly
@@ -118,4 +120,3 @@ vnode
 watchpack
 webm
 webp
-Mergeable
