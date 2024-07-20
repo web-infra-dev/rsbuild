@@ -216,7 +216,12 @@ export function getPluginAPI({
       }
     }
 
-    hooks.modifyBundlerChain.tap((chain) => {
+    hooks.modifyBundlerChain.tap((chain, { target }) => {
+      // filter by targets
+      if (descriptor.targets && !descriptor.targets.includes(target)) {
+        return;
+      }
+
       chain
         .plugin(`RsbuildProcessAssetsPlugin#${processAssetsId++}`)
         .use(RsbuildProcessAssetsPlugin);

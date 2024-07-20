@@ -257,7 +257,15 @@ export type ProcessAssetsStage =
   | 'report';
 
 export type ProcessAssetsDescriptor = {
+  /**
+   * Specifies the order in which your asset processing logic should run relative to other plugins.
+   */
   stage: ProcessAssetsStage;
+  /**
+   * Match based on the Rsbuild targets and only process the assets of certain targets.
+   * @see https://rsbuild.dev/config/output/targets
+   */
+  targets?: RsbuildTarget[];
 };
 
 export type ProcessAssetsHandler = (context: {
