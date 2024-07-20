@@ -268,6 +268,7 @@ type TransformContext = {
   resource: string;
   resourcePath: string;
   resourceQuery: string;
+  environment: EnvironmentContext;
   addDependency: (file: string) => void;
   emitFile: (
     name: string,
@@ -295,6 +296,7 @@ The `handler` function provides the following params:
 - `resource`: The absolute path of the module, including the query.
 - `resourcePath`: The absolute path of the module, without the query.
 - `resourceQuery`: The query of the module.
+- `environment`: The [environment context](/api/javascript-api/types#environmentcontext) for current build.
 - `addDependency`: Add an additional file as the dependency. The file will be watched and changes to the file will trigger rebuild.
 - `emitFile`: Emits a file to the build output.
 

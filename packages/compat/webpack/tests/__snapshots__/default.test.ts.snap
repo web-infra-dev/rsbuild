@@ -998,6 +998,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           {
             "loader": "<ROOT>/packages/core/dist/transformRawLoader.cjs",
             "options": {
+              "getEnvironment": [Function],
               "id": "rsbuild-transform-0",
             },
           },

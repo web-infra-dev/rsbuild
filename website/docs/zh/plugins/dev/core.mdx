@@ -266,6 +266,7 @@ type TransformContext = {
   resource: string;
   resourcePath: string;
   resourceQuery: string;
+  environment: EnvironmentContext;
   addDependency: (file: string) => void;
   emitFile: (
     name: string,
@@ -293,6 +294,7 @@ handler 函数提供以下参数：
 - `resource`：模块的绝对路径，包含 query。
 - `resourcePath`：模块的绝对路径，不包含 query。
 - `resourceQuery`：模块路径上的 query。
+- `environment`: 当前构建的 [environment 上下文](/api/javascript-api/types#environmentcontext).
 - `addDependency`：添加一个额外的文件作为依赖。该文件将被监听，并在发生变更时触发重新构建。
 - `emitFile`：将一个文件输出到构建结果中。
 

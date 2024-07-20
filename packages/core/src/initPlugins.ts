@@ -3,6 +3,7 @@ import type { Compiler } from '@rspack/core';
 import { LOADER_PATH } from './constants';
 import { createPublicContext } from './createContext';
 import { removeLeadingSlash } from './helpers';
+import type { TransformLoaderOptions } from './loader/transformLoader';
 import type {
   GetRsbuildConfig,
   InternalContext,
@@ -191,7 +192,13 @@ export function getPluginAPI({
         : 'transformLoader.cjs';
       const loaderPath = join(LOADER_PATH, loaderName);
 
-      rule.use(id).loader(loaderPath).options({ id });
+      rule
+        .use(id)
+        .loader(loaderPath)
+        .options({
+          id,
+          getEnvironment: () => environment,
+        } satisfies TransformLoaderOptions);
 
       applyTransformPlugin(chain, transformer);
     });

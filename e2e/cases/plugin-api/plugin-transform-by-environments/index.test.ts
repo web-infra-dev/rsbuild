@@ -1,7 +1,7 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should allow plugin to transform code by targets', async () => {
+test('should allow plugin to transform code by environments', async () => {
   const rsbuild = await build({
     cwd: __dirname,
   });
@@ -18,6 +18,6 @@ test('should allow plugin to transform code by targets', async () => {
       file.includes('index') && file.includes('server') && file.endsWith('.js'),
   );
 
-  expect(files[webJs!].includes('target is web')).toBeTruthy();
-  expect(files[nodeJs!].includes('target is node')).toBeTruthy();
+  expect(files[webJs!].includes('environments is web')).toBeTruthy();
+  expect(files[nodeJs!].includes('environments is node')).toBeTruthy();
 });
