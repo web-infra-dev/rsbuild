@@ -28,11 +28,11 @@ type RootPath = string;
 
 ### context.distPath
 
-The absolute path of the output directory, corresponding to the `output.distPath.root` config in `RsbuildConfig`.
+The absolute path of the output directory, corresponding to the [output.distPath.root](/config/output/dist-path) config in `RsbuildConfig`.
 
 When there are multiple environments, Rsbuild will try to get the parent distPath of all environments as `context.distPath`.
 
-If you want to get the absolute path to the output directory of a specified environment, it is recommended to use [environment.distPath](/api/javascript-api/types#environmentdistpath).
+If you want to get the absolute path to the output directory of a specified environment, it is recommended to use [environment.distPath](/api/javascript-api/environment-context#distpath).
 
 - **Type:**
 
@@ -110,7 +110,7 @@ try {
 }
 ```
 
-### Development environment build
+### Development build
 
 If you need to perform a development build, you can set the `mode` option to `'development'`.
 

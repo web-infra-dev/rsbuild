@@ -1,6 +1,8 @@
-## EnvironmentContext
+# Environment Context
 
 Environment context 是一个只读对象，提供一些和当前环境有关的上下文信息。
+
+在 Rsbuild 的 hooks 中，你可以通过 `environment` 或 `environments` 入参获取 environment context 对象。
 
 ```ts
 type EnvironmentContext = {
@@ -14,19 +16,19 @@ type EnvironmentContext = {
 };
 ```
 
-### environment.name
+## name
 
 当前环境的唯一名称，用于区分和定位环境，对应于 [environments](/config/environments) 配置中的 key。
 
 - **类型：** `string`
 
-### environment.browserslist
+## browserslist
 
 项目兼容的目标浏览器范围。详情可参考 [设置浏览器范围](/guide/advanced/browserslist).
 
 - **类型：** `string[]`
 
-### environment.config
+## config
 
 归一化后当前环境的 Rsbuild 配置
 
@@ -47,13 +49,13 @@ type NormalizedEnvironmentConfig = DeepReadonly<{
 }>;
 ```
 
-### environment.distPath
+## distPath
 
-构建产物输出目录的绝对路径，对应 RsbuildConfig 中的 `output.distPath.root` 配置项。
+构建产物输出目录的绝对路径，对应 RsbuildConfig 中的 [output.distPath.root](/config/output/dist-path) 配置项。
 
 - **类型：** `string`
 
-### environment.entry
+## entry
 
 构建入口对象，对应 [source.entry](/config/source/entry) 选项。
 
@@ -63,7 +65,7 @@ type NormalizedEnvironmentConfig = DeepReadonly<{
 type RsbuildEntry = Record<string, string | string[] | EntryDescription>;
 ```
 
-### environment.htmlPaths
+## htmlPaths
 
 HTML 产物的路径信息。该 API 会返回一个对象，对象的 key 为 entry 名称，value 为 HTML 文件在产物目录下的相对路径。
 
@@ -73,7 +75,7 @@ HTML 产物的路径信息。该 API 会返回一个对象，对象的 key 为 e
 type htmlPaths = Record<string, string>;
 ```
 
-### environment.tsconfigPath
+## tsconfigPath
 
 tsconfig.json 文件的绝对路径，若项目中不存在 tsconfig.json 文件，则为 undefined。
 

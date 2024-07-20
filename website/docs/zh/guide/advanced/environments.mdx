@@ -146,34 +146,31 @@ const myPlugin = () => ({
 
 ## Environment 上下文
 
-[Environment context](/api/javascript-api/types#environmentcontext) 是一个只读对象，提供一些和当前环境有关的上下文信息。Rsbuild 支持在 plugin hook 中获取 environment context 信息。
+[Environment context](/api/javascript-api/environment-context) 是一个只读对象，提供一些和当前环境有关的上下文信息。Rsbuild 支持在 plugin hook 中获取 environment context 信息。
 
-对于一些与构建环境相关的 plugin hooks (如 [modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain)、[modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig) 等), Rsbuild 支持通过 `environment` 参数获取当前 environment 上下文。
+对于一些与构建环境相关的 plugin hooks（如 [modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig)、[modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain) 等）, Rsbuild 支持通过 `environment` 参数获取当前 environment 上下文。
 
 ```ts
 const myPlugin = () => ({
   setup: (api) => {
-    api.modifyBundlerChain((chain, { environment }) => {
-      const { name, config, entry } = environment;
-
-      if (config.output.minify !== false) {
-        chain.optimization
-          .minimizer(CHAIN_ID.MINIMIZER.JS)
-          .use(SwcJsMinimizerRspackPlugin)
-          .end();
+    api.modifyRspackConfig((rspackConfig, { environment }) => {
+      if (environment.name === 'node') {
+        // do some thing
       }
     });
   },
 });
 ```
 
-对于一些全局的 plugin hooks (如 [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone)、[onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) 等)， Rsbuild 支持通过 `environments` 参数获取所有环境的上下文。
+对于一些全局的 plugin hooks（如 [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone)、[onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) 等）， Rsbuild 支持通过 `environments` 参数获取所有环境的上下文。
 
 ```ts
 const myPlugin = () => ({
   setup: (api) => {
     api.onDevCompileDone(({ environments }) => {
-      const entries = Object.values(environments).map((e) => e.entry);
+      environments.forEach((environment) => {
+        console.log('environment', environment);
+      });
     });
   },
 });
