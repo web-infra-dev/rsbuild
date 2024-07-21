@@ -81,6 +81,10 @@ export type ModifyHTMLTagsContext = {
    */
   compilation: Rspack.Compilation;
   /**
+   * The Compiler object of Rspack.
+   */
+  compiler: Rspack.Compiler;
+  /**
    * URL prefix of assets.
    * @example 'https://example.com/'
    */
@@ -90,7 +94,9 @@ export type ModifyHTMLTagsContext = {
    * @example 'index.html'
    */
   filename: string;
-  /** The related environment context. */
+  /**
+   * The environment context for current build.
+   */
   environment: EnvironmentContext;
 };
 
