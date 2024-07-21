@@ -330,6 +330,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "hints": false,
   },
   "plugins": [
+    RsbuildCorePlugin {},
     HotModuleReplacementPlugin {
       "name": "HotModuleReplacementPlugin",
     },
@@ -392,7 +393,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "affectedHooks": "compilation",
       "name": "DefinePlugin",
     },
-    RsbuildProcessAssetsPlugin {},
   ],
   "resolve": {
     "alias": {
@@ -767,6 +767,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "hints": false,
   },
   "plugins": [
+    RsbuildCorePlugin {},
     CssExtractRspackPlugin {
       "options": {
         "chunkFilename": "static/css/async/[name].[contenthash:8].css",
@@ -835,7 +836,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "affectedHooks": undefined,
       "name": "ProgressPlugin",
     },
-    RsbuildProcessAssetsPlugin {},
   ],
   "resolve": {
     "alias": {
@@ -1151,7 +1151,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "hints": false,
   },
   "plugins": [
-    RsbuildTransformPlugin {},
+    RsbuildCorePlugin {},
     DefinePlugin {
       "_args": [
         {
@@ -1162,7 +1162,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       "affectedHooks": "compilation",
       "name": "DefinePlugin",
     },
-    RsbuildProcessAssetsPlugin {},
   ],
   "resolve": {
     "alias": {
@@ -1525,6 +1524,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
     TestPlugin {
       "name": "TestPlugin",
     },
+    RsbuildCorePlugin {},
     HotModuleReplacementPlugin {
       "name": "HotModuleReplacementPlugin",
     },
@@ -1587,7 +1587,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
       "affectedHooks": "compilation",
       "name": "DefinePlugin",
     },
-    RsbuildProcessAssetsPlugin {},
   ],
   "resolve": {
     "alias": {

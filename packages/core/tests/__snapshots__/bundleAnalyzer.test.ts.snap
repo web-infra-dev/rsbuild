@@ -3,6 +3,7 @@
 exports[`plugin-bundle-analyze > should add bundle analyze plugin 1`] = `
 {
   "plugins": [
+    RsbuildCorePlugin {},
     BundleAnalyzerPlugin {
       "logger": Logger {
         "activeLevels": Set {
@@ -37,6 +38,7 @@ exports[`plugin-bundle-analyze > should add bundle analyze plugin 1`] = `
 exports[`plugin-bundle-analyze > should add bundle analyze plugin when bundle analyze is enabled in environments 1`] = `
 {
   "plugins": [
+    RsbuildCorePlugin {},
     BundleAnalyzerPlugin {
       "logger": Logger {
         "activeLevels": Set {
@@ -71,6 +73,7 @@ exports[`plugin-bundle-analyze > should add bundle analyze plugin when bundle an
 exports[`plugin-bundle-analyze > should enable bundle analyze plugin when performance.profile is enable 1`] = `
 {
   "plugins": [
+    RsbuildCorePlugin {},
     BundleAnalyzerPlugin {
       "logger": Logger {
         "activeLevels": Set {

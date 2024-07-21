@@ -14,6 +14,7 @@ exports[`plugin-module-federation > should set environment module federation con
       "uniqueName": "remote",
     },
     "plugins": [
+      RsbuildCorePlugin {},
       ModuleFederationPlugin {
         "_options": {
           "exposes": {
@@ -57,6 +58,9 @@ exports[`plugin-module-federation > should set environment module federation con
         "enforceSizeThreshold": 50000,
       },
     },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
   },
 ]
 `;
@@ -75,6 +79,7 @@ exports[`plugin-module-federation > should set module federation and environment
       "uniqueName": "remote",
     },
     "plugins": [
+      RsbuildCorePlugin {},
       ModuleFederationPlugin {
         "_options": {
           "exposes": {
@@ -107,6 +112,7 @@ exports[`plugin-module-federation > should set module federation and environment
       "uniqueName": "remote",
     },
     "plugins": [
+      RsbuildCorePlugin {},
       ModuleFederationPlugin {
         "_options": {
           "exposes": {
@@ -147,6 +153,7 @@ exports[`plugin-module-federation > should set module federation config 1`] = `
     "uniqueName": "remote",
   },
   "plugins": [
+    RsbuildCorePlugin {},
     ModuleFederationPlugin {
       "_options": {
         "exposes": {

@@ -8,6 +8,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineScrip
     ],
   },
   "plugins": [
+    RsbuildCorePlugin {},
     HtmlRspackPlugin {
       "options": {
         "base": false,
@@ -74,6 +75,7 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineStyle
     ],
   },
   "plugins": [
+    RsbuildCorePlugin {},
     HtmlRspackPlugin {
       "options": {
         "base": false,

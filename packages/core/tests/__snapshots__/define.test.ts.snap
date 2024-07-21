@@ -3,6 +3,7 @@
 exports[`plugin-define > should register define plugin correctly 1`] = `
 {
   "plugins": [
+    RsbuildCorePlugin {},
     DefinePlugin {
       "_args": [
         {

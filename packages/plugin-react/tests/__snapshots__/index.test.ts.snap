@@ -365,6 +365,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
     "hints": false,
   },
   "plugins": [
+    RsbuildCorePlugin {},
     HotModuleReplacementPlugin {
       "name": "HotModuleReplacementPlugin",
     },
@@ -427,7 +428,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
       "affectedHooks": "compilation",
       "name": "DefinePlugin",
     },
-    RsbuildProcessAssetsPlugin {},
     ReactRefreshRspackPlugin {
       "options": {
         "exclude": /node_modules/i,

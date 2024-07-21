@@ -103,6 +103,9 @@ exports[`plugin-swc > should add antd pluginImport 1`] = `
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
   "resolve": {
     "alias": {
       "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
@@ -209,6 +212,9 @@ exports[`plugin-swc > should add browserslist 1`] = `
         },
       ],
     },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
     "resolve": {
       "alias": {
         "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
@@ -336,6 +342,9 @@ exports[`plugin-swc > should add pluginImport 1`] = `
         },
       ],
     },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
     "resolve": {
       "alias": {
         "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
@@ -828,6 +837,9 @@ exports[`plugin-swc > should disable all pluginImport 1`] = `
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
   "resolve": {
     "alias": {
       "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
@@ -932,6 +944,9 @@ exports[`plugin-swc > should disable preset_env in target other than web 1`] = `
         },
       ],
     },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
     "resolve": {
       "alias": {
         "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
@@ -1045,6 +1060,9 @@ exports[`plugin-swc > should disable preset_env mode 1`] = `
         },
       ],
     },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
     "resolve": {
       "alias": {
         "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
@@ -1169,6 +1187,9 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
         },
       ],
     },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
     "resolve": {
       "alias": {
         "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
@@ -1294,6 +1315,9 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
         },
       ],
     },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
     "resolve": {
       "alias": {
         "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
@@ -1418,6 +1442,9 @@ exports[`plugin-swc > should has correct core-js 1`] = `
         },
       ],
     },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
     "resolve": {
       "alias": {
         "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
@@ -1523,6 +1550,9 @@ exports[`plugin-swc > should has correct core-js 2`] = `
         },
       ],
     },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
     "resolve": {
       "alias": {
         "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",

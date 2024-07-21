@@ -1660,6 +1660,7 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
       "hints": false,
     },
     "plugins": [
+      RsbuildCorePlugin {},
       HotModuleReplacementPlugin {
         "name": "HotModuleReplacementPlugin",
       },
@@ -1680,7 +1681,6 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
         "affectedHooks": "compilation",
         "name": "DefinePlugin",
       },
-      RsbuildProcessAssetsPlugin {},
     ],
     "resolve": {
       "alias": {
@@ -1986,7 +1986,7 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
       "hints": false,
     },
     "plugins": [
-      RsbuildTransformPlugin {},
+      RsbuildCorePlugin {},
       DefinePlugin {
         "_args": [
           {
@@ -1997,7 +1997,6 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
         "affectedHooks": "compilation",
         "name": "DefinePlugin",
       },
-      RsbuildProcessAssetsPlugin {},
     ],
     "resolve": {
       "alias": {

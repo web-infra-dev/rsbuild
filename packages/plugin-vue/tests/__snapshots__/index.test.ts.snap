@@ -24,6 +24,7 @@ exports[`plugin-vue > should add vue-loader and VueLoaderPlugin correctly 1`] = 
     ],
   },
   "plugins": [
+    RsbuildCorePlugin {},
     Plugin {},
   ],
   "resolve": {
@@ -59,6 +60,7 @@ exports[`plugin-vue > should allow to configure vueLoader options 1`] = `
     ],
   },
   "plugins": [
+    RsbuildCorePlugin {},
     Plugin {},
   ],
   "resolve": {

@@ -26,6 +26,9 @@ exports[`plugin-svelte > should add svelte loader properly 1`] = `
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
   "resolve": {
     "alias": {
       "svelte": "<ROOT>/node_modules/<PNPM_INNER>/svelte/src/runtime",
@@ -72,6 +75,9 @@ exports[`plugin-svelte > should override default svelte-loader options throw opt
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
   "resolve": {
     "alias": {
       "svelte": "<ROOT>/node_modules/<PNPM_INNER>/svelte/src/runtime",
@@ -122,6 +128,9 @@ exports[`plugin-svelte > should set dev and hotReload to false in production mod
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
   "resolve": {
     "alias": {
       "svelte": "<ROOT>/node_modules/<PNPM_INNER>/svelte/src/runtime",
@@ -172,6 +181,9 @@ exports[`plugin-svelte > should support pass custom preprocess options 1`] = `
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
   "resolve": {
     "alias": {
       "svelte": "<ROOT>/node_modules/<PNPM_INNER>/svelte/src/runtime",
@@ -222,6 +234,9 @@ exports[`plugin-svelte > should turn off hmr by hand correctly 1`] = `
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
   "resolve": {
     "alias": {
       "svelte": "<ROOT>/node_modules/<PNPM_INNER>/svelte/src/runtime",

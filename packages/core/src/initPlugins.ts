@@ -10,10 +10,11 @@ import type {
   NormalizedConfig,
   NormalizedEnvironmentConfig,
   PluginManager,
+  ProcessAssetsDescriptor,
   ProcessAssetsFn,
+  ProcessAssetsHandler,
   ProcessAssetsStage,
   RsbuildPluginAPI,
-  RspackChain,
   TransformFn,
   TransformHandler,
 } from './types';
@@ -28,31 +29,6 @@ export function getHTMLPathByEntry(
       : `${entryName}/index.html`;
 
   return removeLeadingSlash(`${config.output.distPath.html}/${filename}`);
-}
-
-function applyTransformPlugin(
-  chain: RspackChain,
-  transformer: Record<string, TransformHandler>,
-) {
-  const name = 'RsbuildTransformPlugin';
-
-  if (chain.plugins.get(name)) {
-    return;
-  }
-
-  class RsbuildTransformPlugin {
-    apply(compiler: Compiler): void {
-      compiler.__rsbuildTransformer = transformer;
-
-      compiler.hooks.thisCompilation.tap(name, (compilation) => {
-        compilation.hooks.childCompiler.tap(name, (childCompiler) => {
-          childCompiler.__rsbuildTransformer = transformer;
-        });
-      });
-    }
-  }
-
-  chain.plugin(name).use(RsbuildTransformPlugin);
 }
 
 const mapProcessAssetsStage = (
@@ -158,6 +134,54 @@ export function getPluginAPI({
 
   let transformId = 0;
   const transformer: Record<string, TransformHandler> = {};
+  const processAssetsFns: Array<{
+    descriptor: ProcessAssetsDescriptor;
+    handler: ProcessAssetsHandler;
+  }> = [];
+
+  hooks.modifyBundlerChain.tap((chain, { target, environment }) => {
+    const pluginName = 'RsbuildCorePlugin';
+
+    /**
+     * Transform Rsbuild plugin hooks to Rspack plugin hooks
+     */
+    class RsbuildCorePlugin {
+      apply(compiler: Compiler): void {
+        compiler.__rsbuildTransformer = transformer;
+
+        compiler.hooks.thisCompilation.tap(pluginName, (compilation) => {
+          compilation.hooks.childCompiler.tap(pluginName, (childCompiler) => {
+            childCompiler.__rsbuildTransformer = transformer;
+          });
+        });
+
+        compiler.hooks.compilation.tap(pluginName, (compilation) => {
+          for (const { descriptor, handler } of processAssetsFns) {
+            // filter by targets
+            if (descriptor.targets && !descriptor.targets.includes(target)) {
+              return;
+            }
+
+            compilation.hooks.processAssets.tapPromise(
+              {
+                name: pluginName,
+                stage: mapProcessAssetsStage(compiler, descriptor.stage),
+              },
+              async (assets) =>
+                handler({
+                  assets,
+                  compiler,
+                  compilation,
+                  environment,
+                }),
+            );
+          }
+        });
+      }
+    }
+
+    chain.plugin(pluginName).use(RsbuildCorePlugin);
+  });
 
   const transform: TransformFn = (descriptor, handler) => {
     const id = `rsbuild-transform-${transformId++}`;
@@ -199,46 +223,11 @@ export function getPluginAPI({
           id,
           getEnvironment: () => environment,
         } satisfies TransformLoaderOptions);
-
-      applyTransformPlugin(chain, transformer);
     });
   };
 
-  let processAssetsId = 0;
-
   const processAssets: ProcessAssetsFn = (descriptor, handler) => {
-    const name = 'RsbuildProcessAssetsPlugin';
-
-    hooks.modifyBundlerChain.tap((chain, { target, environment }) => {
-      // filter by targets
-      if (descriptor.targets && !descriptor.targets.includes(target)) {
-        return;
-      }
-
-      class RsbuildProcessAssetsPlugin {
-        apply(compiler: Compiler): void {
-          compiler.hooks.compilation.tap(name, (compilation) => {
-            compilation.hooks.processAssets.tapPromise(
-              {
-                name,
-                stage: mapProcessAssetsStage(compiler, descriptor.stage),
-              },
-              async (assets) =>
-                handler({
-                  assets,
-                  compiler,
-                  compilation,
-                  environment,
-                }),
-            );
-          });
-        }
-      }
-
-      chain
-        .plugin(`RsbuildProcessAssetsPlugin#${processAssetsId++}`)
-        .use(RsbuildProcessAssetsPlugin);
-    });
+    processAssetsFns.push({ descriptor, handler });
   };
 
   process.on('exit', () => {
