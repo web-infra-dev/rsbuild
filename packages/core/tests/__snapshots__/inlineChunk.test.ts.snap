@@ -41,18 +41,6 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineScrip
       },
       "version": 6,
     },
-    InlineChunkHtmlPlugin {
-      "distPath": {
-        "css": "static/css",
-        "js": "static/js",
-      },
-      "inlinedAssets": Set {},
-      "name": "InlineChunkHtmlPlugin",
-      "scriptTests": [
-        /\\\\\\.\\(\\?:js\\|mjs\\|cjs\\|jsx\\)\\$/,
-      ],
-      "styleTests": [],
-    },
     HtmlBasicPlugin {
       "getEnvironment": [Function],
       "modifyTagsFn": undefined,
@@ -107,18 +95,6 @@ exports[`plugin-inline-chunk > should use proper plugin options when inlineStyle
         "xhtml": false,
       },
       "version": 6,
-    },
-    InlineChunkHtmlPlugin {
-      "distPath": {
-        "css": "static/css",
-        "js": "static/js",
-      },
-      "inlinedAssets": Set {},
-      "name": "InlineChunkHtmlPlugin",
-      "scriptTests": [],
-      "styleTests": [
-        /\\\\\\.css\\$/,
-      ],
     },
     HtmlBasicPlugin {
       "getEnvironment": [Function],

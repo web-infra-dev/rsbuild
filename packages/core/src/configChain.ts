@@ -208,8 +208,6 @@ export const CHAIN_ID = {
     MANIFEST: 'webpack-manifest',
     /** ForkTsCheckerWebpackPlugin */
     TS_CHECKER: 'ts-checker',
-    /** InlineChunkHtmlPlugin */
-    INLINE_HTML: 'inline-html',
     /** WebpackBundleAnalyzer */
     BUNDLE_ANALYZER: 'bundle-analyze',
     /** ModuleFederationPlugin */
