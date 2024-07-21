@@ -72,21 +72,27 @@ export const pluginRem = (
       });
     });
 
-    api.modifyBundlerChain(async (chain, { target, CHAIN_ID, environment }) => {
-      if (target !== 'web' || !options.enableRuntime || options.inlineRuntime) {
-        return;
-      }
+    api.processAssets(
+      { stage: 'pre-process' },
+      async ({ compiler, compilation, environment }) => {
+        const { config } = environment;
 
-      const { AutoSetRootFontSizePlugin } = await import('./helpers');
-      const { config } = environment;
+        if (
+          config.output.target !== 'web' ||
+          !options.enableRuntime ||
+          options.inlineRuntime
+        ) {
+          return;
+        }
 
-      chain
-        .plugin(CHAIN_ID.PLUGIN.AUTO_SET_ROOT_SIZE)
-        .use(AutoSetRootFontSizePlugin, [
-          getScriptPath(config.output.distPath.js),
-          getRuntimeCode,
-        ]);
-    });
+        const code = await getRuntimeCode();
+        const scriptPath = getScriptPath(config.output.distPath.js);
+        compilation.emitAsset(
+          scriptPath,
+          new compiler.webpack.sources.RawSource(code, false),
+        );
+      },
+    );
 
     api.modifyHTMLTags(
       async (
