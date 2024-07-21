@@ -277,6 +277,10 @@ export type ProcessAssetsHandler = (context: {
   assets: Record<string, Rspack.sources.Source>;
   compiler: Rspack.Compiler;
   compilation: Rspack.Compilation;
+  /**
+   * The environment context for current build.
+   */
+  environment: EnvironmentContext;
 }) => Promise<void> | void;
 
 export type ProcessAssetsFn = (

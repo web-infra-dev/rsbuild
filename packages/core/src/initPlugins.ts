@@ -209,24 +209,30 @@ export function getPluginAPI({
   const processAssets: ProcessAssetsFn = (descriptor, handler) => {
     const name = 'RsbuildProcessAssetsPlugin';
 
-    class RsbuildProcessAssetsPlugin {
-      apply(compiler: Compiler): void {
-        compiler.hooks.compilation.tap(name, (compilation) => {
-          compilation.hooks.processAssets.tapPromise(
-            {
-              name,
-              stage: mapProcessAssetsStage(compiler, descriptor.stage),
-            },
-            async (assets) => handler({ assets, compiler, compilation }),
-          );
-        });
-      }
-    }
-
-    hooks.modifyBundlerChain.tap((chain, { target }) => {
+    hooks.modifyBundlerChain.tap((chain, { target, environment }) => {
       // filter by targets
       if (descriptor.targets && !descriptor.targets.includes(target)) {
         return;
+      }
+
+      class RsbuildProcessAssetsPlugin {
+        apply(compiler: Compiler): void {
+          compiler.hooks.compilation.tap(name, (compilation) => {
+            compilation.hooks.processAssets.tapPromise(
+              {
+                name,
+                stage: mapProcessAssetsStage(compiler, descriptor.stage),
+              },
+              async (assets) =>
+                handler({
+                  assets,
+                  compiler,
+                  compilation,
+                  environment,
+                }),
+            );
+          });
+        }
       }
 
       chain
