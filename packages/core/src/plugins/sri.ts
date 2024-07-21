@@ -145,67 +145,40 @@ export const pluginSri = (): RsbuildPlugin => ({
       return replacedHtml;
     };
 
-    class SriReplaceIntegrityPlugin {
-      algorithm: SriAlgorithm;
+    api.processAssets(
+      {
+        // use to final stage to get the final asset content
+        stage: 'report',
+      },
+      ({ assets, compiler, environment }) => {
+        const { htmlPaths } = environment;
 
-      constructor(algorithm: SriAlgorithm) {
-        this.algorithm = algorithm;
-      }
+        if (Object.keys(htmlPaths).length === 0) {
+          return;
+        }
 
-      apply(compiler: Rspack.Compiler): void {
-        compiler.hooks.compilation.tap(
-          'SriReplaceIntegrityPlugin',
-          (compilation) => {
-            compilation.hooks.processAssets.tapPromise(
-              {
-                name: 'SriReplaceIntegrityPlugin',
-                // use to final stage to get the final asset content
-                stage: compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_REPORT,
-              },
-              async (assets) => {
-                const integrityCache = new Map<string, string>();
+        const algorithm = getAlgorithm(environment);
+        if (!algorithm) {
+          return;
+        }
 
-                for (const asset of Object.keys(assets)) {
-                  if (!HTML_REGEX.test(asset)) {
-                    continue;
-                  }
+        const integrityCache = new Map<string, string>();
 
-                  const htmlContent = assets[asset].source() as string;
-                  if (!htmlContent.includes(placeholder)) {
-                    continue;
-                  }
+        for (const asset of Object.keys(assets)) {
+          if (!HTML_REGEX.test(asset)) {
+            continue;
+          }
 
-                  assets[asset] = new compiler.webpack.sources.RawSource(
-                    replaceIntegrity(
-                      htmlContent,
-                      assets,
-                      this.algorithm,
-                      integrityCache,
-                    ),
-                  );
-                }
-              },
-            );
-          },
-        );
-      }
-    }
+          const htmlContent = assets[asset].source() as string;
+          if (!htmlContent.includes(placeholder)) {
+            continue;
+          }
 
-    api.modifyBundlerChain((chain, { environment }) => {
-      const { htmlPaths } = environment;
-
-      if (Object.keys(htmlPaths).length === 0) {
-        return;
-      }
-
-      const algorithm = getAlgorithm(environment);
-      if (!algorithm) {
-        return;
-      }
-
-      chain
-        .plugin('rsbuild-sri-replace')
-        .use(SriReplaceIntegrityPlugin, [algorithm]);
-    });
+          assets[asset] = new compiler.webpack.sources.RawSource(
+            replaceIntegrity(htmlContent, assets, algorithm, integrityCache),
+          );
+        }
+      },
+    );
   },
 });

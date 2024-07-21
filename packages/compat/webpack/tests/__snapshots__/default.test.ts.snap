@@ -340,6 +340,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "process.env.NODE_ENV": ""development"",
       },
     },
+    RsbuildProcessAssetsPlugin {},
     ProgressPlugin {
       "compileTime": null,
       "dependenciesCount": 10000,
@@ -730,6 +731,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "process.env.NODE_ENV": ""production"",
       },
     },
+    RsbuildProcessAssetsPlugin {},
     ProgressPlugin {
       "compileTime": null,
       "dependenciesCount": 10000,
@@ -1034,6 +1036,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "process.env.NODE_ENV": ""production"",
       },
     },
+    RsbuildProcessAssetsPlugin {},
     ProgressPlugin {
       "compileTime": null,
       "dependenciesCount": 10000,
@@ -1320,6 +1323,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "process.env.NODE_ENV": ""production"",
       },
     },
+    RsbuildProcessAssetsPlugin {},
     ProgressPlugin {
       "compileTime": null,
       "dependenciesCount": 10000,

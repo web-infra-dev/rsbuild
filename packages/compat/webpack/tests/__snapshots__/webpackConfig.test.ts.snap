@@ -73,6 +73,7 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
       "process.env.NODE_ENV": ""test"",
     },
   },
+  RsbuildProcessAssetsPlugin {},
   ProgressPlugin {
     "compileTime": null,
     "dependenciesCount": 10000,
