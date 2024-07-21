@@ -1,4 +1,3 @@
-import type { Rspack } from '@rsbuild/core';
 import type { PluginRemOptions } from './types';
 
 type AutoSetRootFontSizeOptions = Omit<PluginRemOptions, 'pxtorem'> & {
@@ -47,41 +46,6 @@ export const DEFAULT_OPTIONS: Required<AutoSetRootFontSizeOptions> = {
   supportLandscape: false,
   useRootFontSizeBeyondMax: false,
 };
-
-export class AutoSetRootFontSizePlugin implements Rspack.RspackPluginInstance {
-  readonly name: string = 'AutoSetRootFontSizePlugin';
-
-  scriptPath: string;
-
-  getRuntimeCode: () => Promise<string>;
-
-  constructor(scriptPath: string, getRuntimeCode: () => Promise<string>) {
-    this.scriptPath = scriptPath;
-    this.getRuntimeCode = getRuntimeCode;
-  }
-
-  apply(compiler: Rspack.Compiler): void {
-    compiler.hooks.thisCompilation.tap(
-      this.name,
-      (compilation: Rspack.Compilation) => {
-        compilation.hooks.processAssets.tapPromise(
-          {
-            name: this.name,
-            stage:
-              compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS,
-          },
-          async () => {
-            const code = await this.getRuntimeCode();
-            compilation.emitAsset(
-              this.scriptPath,
-              new compiler.webpack.sources.RawSource(code, false),
-            );
-          },
-        );
-      },
-    );
-  }
-}
 
 export const genJSTemplate = (
   opts: Required<AutoSetRootFontSizeOptions>,
