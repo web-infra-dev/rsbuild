@@ -330,6 +330,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
     "hints": false,
   },
   "plugins": [
+    RsbuildCorePlugin {},
     HotModuleReplacementPlugin {
       "name": "HotModuleReplacementPlugin",
     },
@@ -392,7 +393,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
       "affectedHooks": "compilation",
       "name": "DefinePlugin",
     },
-    RsbuildProcessAssetsPlugin {},
   ],
   "resolve": {
     "alias": {

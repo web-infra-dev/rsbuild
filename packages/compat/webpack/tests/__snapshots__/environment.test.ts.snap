@@ -7,12 +7,18 @@ exports[`environment config > tools.webpack / bundlerChain can be used in enviro
     "output": {
       "filename": "[name].web.js",
     },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
   },
   {
     "devtool": "eval",
     "output": {
       "filename": "bundle.js",
     },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
   },
 ]
 `;

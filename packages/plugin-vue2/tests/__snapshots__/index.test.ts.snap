@@ -24,6 +24,7 @@ exports[`plugin-vue2 > should add vue-loader and VueLoaderPlugin correctly 1`] =
     ],
   },
   "plugins": [
+    RsbuildCorePlugin {},
     VueLoaderPlugin {},
     VueLoader15PitchFixPlugin {
       "name": "VueLoader15PitchFixPlugin",
@@ -65,6 +66,7 @@ exports[`plugin-vue2 > should allow to configure vueLoader options 1`] = `
     ],
   },
   "plugins": [
+    RsbuildCorePlugin {},
     VueLoaderPlugin {},
     VueLoader15PitchFixPlugin {
       "name": "VueLoader15PitchFixPlugin",
@@ -121,6 +123,7 @@ exports[`plugin-vue2 > should include polyfill resolve config 1`] = `
     ],
   },
   "plugins": [
+    RsbuildCorePlugin {},
     VueLoaderPlugin {},
     VueLoader15PitchFixPlugin {
       "name": "VueLoader15PitchFixPlugin",

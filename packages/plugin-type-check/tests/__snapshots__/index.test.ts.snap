@@ -3,6 +3,7 @@
 exports[`plugin-type-check > should allow to configure fork-ts-checker-webpack-plugin options 1`] = `
 {
   "plugins": [
+    RsbuildCorePlugin {},
     ForkTsCheckerWebpackPlugin {
       "options": {
         "issue": {
@@ -33,6 +34,7 @@ exports[`plugin-type-check > should allow to configure fork-ts-checker-webpack-p
 exports[`plugin-type-check > should allow to configure fork-ts-checker-webpack-plugin options via function 1`] = `
 {
   "plugins": [
+    RsbuildCorePlugin {},
     ForkTsCheckerWebpackPlugin {
       "options": {
         "async": false,
@@ -61,6 +63,7 @@ exports[`plugin-type-check > should allow to configure fork-ts-checker-webpack-p
 exports[`plugin-type-check > should apply fork-ts-checker-webpack-plugin correctly 1`] = `
 {
   "plugins": [
+    RsbuildCorePlugin {},
     ForkTsCheckerWebpackPlugin {
       "options": {
         "issue": {

@@ -274,6 +274,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "hints": false,
   },
   "plugins": [
+    RsbuildCorePlugin {},
     HotModuleReplacementPlugin {
       "options": {},
     },
@@ -340,7 +341,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "process.env.NODE_ENV": ""development"",
       },
     },
-    RsbuildProcessAssetsPlugin {},
     ProgressPlugin {
       "compileTime": null,
       "dependenciesCount": 10000,
@@ -668,6 +668,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     "hints": false,
   },
   "plugins": [
+    RsbuildCorePlugin {},
     MiniCssExtractPlugin {
       "_sortedModulesCache": WeakMap {},
       "options": {
@@ -731,7 +732,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "process.env.NODE_ENV": ""production"",
       },
     },
-    RsbuildProcessAssetsPlugin {},
     ProgressPlugin {
       "compileTime": null,
       "dependenciesCount": 10000,
@@ -1029,14 +1029,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "hints": false,
   },
   "plugins": [
-    RsbuildTransformPlugin {},
+    RsbuildCorePlugin {},
     DefinePlugin {
       "definitions": {
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""production"",
       },
     },
-    RsbuildProcessAssetsPlugin {},
     ProgressPlugin {
       "compileTime": null,
       "dependenciesCount": 10000,
@@ -1317,13 +1316,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "hints": false,
   },
   "plugins": [
+    RsbuildCorePlugin {},
     DefinePlugin {
       "definitions": {
         "process.env.ASSET_PREFIX": """",
         "process.env.NODE_ENV": ""production"",
       },
     },
-    RsbuildProcessAssetsPlugin {},
     ProgressPlugin {
       "compileTime": null,
       "dependenciesCount": 10000,

@@ -175,8 +175,7 @@ describe('webpackConfig', () => {
       plugins: [],
     });
 
-    const config = await rsbuild.unwrapConfig();
-    expect(config.plugins).toEqual([]);
+    expect(await rsbuild.matchBundlerPlugin('DefinePlugin')).toBeFalsy();
   });
 
   it('should allow to add rules', async () => {

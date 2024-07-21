@@ -10,9 +10,7 @@ describe('plugin-entry', () => {
       },
       preEntry: [],
       expected: {
-        entry: {
-          main: ['./src/main.ts'],
-        },
+        main: ['./src/main.ts'],
       },
     },
     {
@@ -23,10 +21,8 @@ describe('plugin-entry', () => {
       },
       preEntry: [],
       expected: {
-        entry: {
-          bar: ['./src/polyfill.ts', './src/bar.ts'],
-          foo: ['./src/polyfill.ts', './src/foo.ts'],
-        },
+        bar: ['./src/polyfill.ts', './src/bar.ts'],
+        foo: ['./src/polyfill.ts', './src/foo.ts'],
       },
     },
     {
@@ -37,10 +33,8 @@ describe('plugin-entry', () => {
       },
       preEntry: ['./src/pre-entry.ts'],
       expected: {
-        entry: {
-          bar: ['./src/pre-entry.ts', './src/bar.ts'],
-          foo: ['./src/pre-entry.ts', './src/polyfill.ts', './src/foo.ts'],
-        },
+        bar: ['./src/pre-entry.ts', './src/bar.ts'],
+        foo: ['./src/pre-entry.ts', './src/polyfill.ts', './src/foo.ts'],
       },
     },
   ];
@@ -58,7 +52,7 @@ describe('plugin-entry', () => {
 
     const config = await rsbuild.unwrapConfig();
 
-    expect(config).toEqual(item.expected);
+    expect(config.entry).toEqual(item.expected);
   });
 
   it('should apply environments entry config correctly', async () => {

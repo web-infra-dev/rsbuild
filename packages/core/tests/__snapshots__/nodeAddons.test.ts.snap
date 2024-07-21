@@ -19,7 +19,7 @@ exports[`plugin-node-addons > should add node addons rule properly 1`] = `
     ],
   },
   "plugins": [
-    RsbuildTransformPlugin {},
+    RsbuildCorePlugin {},
   ],
 }
 `;

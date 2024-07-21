@@ -57,6 +57,9 @@ exports[`plugin-css > should override browserslist of autoprefixer when using ou
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;
 
@@ -123,6 +126,9 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;
 
@@ -159,6 +165,9 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;
 
@@ -225,5 +234,8 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;

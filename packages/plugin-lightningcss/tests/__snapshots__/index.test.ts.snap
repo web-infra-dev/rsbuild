@@ -1,6 +1,12 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugins/lightningcss > plugin-lightningcss should be cancelable by users with false options 1`] = `{}`;
+exports[`plugins/lightningcss > plugin-lightningcss should be cancelable by users with false options 1`] = `
+{
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
+}
+`;
 
 exports[`plugins/lightningcss > plugin-lightningcss should be configurable by users 1`] = `
 [

@@ -115,6 +115,9 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
         },
       ],
     },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
   },
   {
     "module": {
@@ -225,6 +228,9 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
         },
       ],
     },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
   },
 ]
 `;
@@ -343,6 +349,9 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;
 
@@ -1160,6 +1169,9 @@ exports[`plugin-swc > should set swc-loader 1`] = `
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;
 
@@ -1297,6 +1309,9 @@ exports[`plugin-swc > should use output config 1`] = `
         },
       ],
     },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
   },
 ]
 `;

@@ -94,6 +94,9 @@ describe('bundlerApi', () => {
     expect(config).toMatchInlineSnapshot(`
       {
         "devtool": "hidden-source-map",
+        "plugins": [
+          RsbuildCorePlugin {},
+        ],
         "target": "node",
       }
     `);

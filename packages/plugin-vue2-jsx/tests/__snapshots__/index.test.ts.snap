@@ -45,6 +45,9 @@ exports[`plugin-vue2-jsx > should allow to configure jsx babel plugin options 1`
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;
 
@@ -93,5 +96,8 @@ exports[`plugin-vue2-jsx > should apply jsx babel plugin correctly 1`] = `
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;
