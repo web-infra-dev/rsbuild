@@ -42,6 +42,7 @@ async function applyDefaultPlugins(
         return result[0];
       }),
     ),
+    import('./plugins/appIcon').then(({ pluginAppIcon }) => pluginAppIcon()),
     import('./plugins/wasm').then(({ pluginWasm }) => pluginWasm()),
     import('./plugins/moment').then(({ pluginMoment }) => pluginMoment()),
     import('./plugins/nodeAddons').then(({ pluginNodeAddons }) =>
