@@ -73,7 +73,7 @@ export const pluginRem = (
     });
 
     api.processAssets(
-      { stage: 'pre-process' },
+      { stage: 'additional' },
       async ({ compiler, compilation, environment }) => {
         const { config } = environment;
 

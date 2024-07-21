@@ -327,27 +327,11 @@ export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
           .use(HtmlBasicPlugin, [htmlInfoMap, environment, modifyTagsFn]);
 
         if (config.html) {
-          const { appIcon, crossorigin } = config.html;
-
+          const { crossorigin } = config.html;
           if (crossorigin) {
             const formattedCrossorigin =
               crossorigin === true ? 'anonymous' : crossorigin;
             chain.output.crossOriginLoading(formattedCrossorigin);
-          }
-
-          if (appIcon) {
-            const { HtmlAppIconPlugin } = await import(
-              '../rspack/HtmlAppIconPlugin'
-            );
-
-            const distDir = config.output.distPath.image;
-            const iconPath = path.isAbsolute(appIcon)
-              ? appIcon
-              : path.join(api.context.rootPath, appIcon);
-
-            chain
-              .plugin(CHAIN_ID.PLUGIN.APP_ICON)
-              .use(HtmlAppIconPlugin, [{ iconPath, distDir }]);
           }
         }
       },
