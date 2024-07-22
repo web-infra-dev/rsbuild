@@ -51,6 +51,7 @@ export type {
   FilenameConfig,
   HtmlConfig,
   HtmlRspackPlugin,
+  HtmlBasicTag,
   HtmlTagHandler,
   HtmlTagDescriptor,
   InspectConfigOptions,

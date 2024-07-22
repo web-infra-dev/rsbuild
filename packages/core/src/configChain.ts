@@ -202,8 +202,6 @@ export const CHAIN_ID = {
     DEFINE: 'define',
     /** ProgressPlugin */
     PROGRESS: 'progress',
-    /** AppIconPlugin */
-    APP_ICON: 'app-icon',
     /** WebpackManifestPlugin */
     MANIFEST: 'webpack-manifest',
     /** ForkTsCheckerWebpackPlugin */
@@ -229,10 +227,6 @@ export const CHAIN_ID = {
     NODE_POLYFILL_PROVIDE: 'node-polyfill-provide',
     /** WebpackSRIPlugin */
     SUBRESOURCE_INTEGRITY: 'subresource-integrity',
-    /** AssetsRetryPlugin */
-    ASSETS_RETRY: 'assets-retry',
-    /** AsyncChunkRetryPlugin */
-    ASYNC_CHUNK_RETRY: 'async-chunk-retry',
     /** AutoSetRootFontSizePlugin */
     AUTO_SET_ROOT_SIZE: 'auto-set-root-size',
   },
