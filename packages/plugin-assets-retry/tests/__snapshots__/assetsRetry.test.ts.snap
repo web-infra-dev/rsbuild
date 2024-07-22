@@ -4,14 +4,6 @@ exports[`plugin-assets-retry > should accept user custom options 1`] = `
 {
   "plugins": [
     RsbuildCorePlugin {},
-    AssetsRetryPlugin {
-      "HtmlPlugin": [Function],
-      "distDir": "static/js",
-      "inlineScript": true,
-      "minify": true,
-      "name": "AssetsRetryPlugin",
-      "scriptPath": "",
-    },
     AsyncChunkRetryPlugin {
       "name": "ASYNC_CHUNK_RETRY_PLUGIN",
       "options": {
@@ -59,14 +51,6 @@ exports[`plugin-assets-retry > should add assets retry plugin 1`] = `
 {
   "plugins": [
     RsbuildCorePlugin {},
-    AssetsRetryPlugin {
-      "HtmlPlugin": [Function],
-      "distDir": "static/js",
-      "inlineScript": true,
-      "minify": false,
-      "name": "AssetsRetryPlugin",
-      "scriptPath": "",
-    },
     AsyncChunkRetryPlugin {
       "name": "ASYNC_CHUNK_RETRY_PLUGIN",
       "options": {
