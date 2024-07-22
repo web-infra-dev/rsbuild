@@ -150,7 +150,7 @@ export const pluginSri = (): RsbuildPlugin => ({
         // use to final stage to get the final asset content
         stage: 'report',
       },
-      ({ assets, compiler, environment }) => {
+      ({ assets, sources, environment }) => {
         const { htmlPaths } = environment;
 
         if (Object.keys(htmlPaths).length === 0) {
@@ -174,7 +174,7 @@ export const pluginSri = (): RsbuildPlugin => ({
             continue;
           }
 
-          assets[asset] = new compiler.webpack.sources.RawSource(
+          assets[asset] = new sources.RawSource(
             replaceIntegrity(htmlContent, assets, algorithm, integrityCache),
           );
         }

@@ -156,6 +156,8 @@ export function getPluginAPI({
         });
 
         compiler.hooks.compilation.tap(pluginName, (compilation) => {
+          const { sources } = compiler.webpack;
+
           for (const { descriptor, handler } of processAssetsFns) {
             // filter by targets
             if (descriptor.targets && !descriptor.targets.includes(target)) {
@@ -173,6 +175,7 @@ export function getPluginAPI({
                   compiler,
                   compilation,
                   environment,
+                  sources,
                 }),
             );
           }

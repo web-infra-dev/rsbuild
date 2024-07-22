@@ -74,7 +74,7 @@ export const pluginRem = (
 
     api.processAssets(
       { stage: 'additional' },
-      async ({ compiler, compilation, environment }) => {
+      async ({ compilation, environment, sources }) => {
         const { config } = environment;
 
         if (
@@ -87,10 +87,7 @@ export const pluginRem = (
 
         const code = await getRuntimeCode();
         const scriptPath = getScriptPath(config.output.distPath.js);
-        compilation.emitAsset(
-          scriptPath,
-          new compiler.webpack.sources.RawSource(code, false),
-        );
+        compilation.emitAsset(scriptPath, new sources.RawSource(code));
       },
     );
 
