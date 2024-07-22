@@ -7,6 +7,8 @@
 import type { ClientConfig, StatsError } from '../types';
 import { formatStatsMessages } from './format';
 
+const compilationName = RSBUILD_COMPILATION_NAME;
+
 function formatURL({
   port,
   protocol,
@@ -24,6 +26,7 @@ function formatURL({
     url.hostname = hostname;
     url.protocol = protocol;
     url.pathname = pathname;
+    url.searchParams.append('compilationName', compilationName);
     return url.toString();
   }
 
@@ -202,6 +205,13 @@ function onOpen() {
 
 function onMessage(e: MessageEvent<string>) {
   const message = JSON.parse(e.data);
+
+  if (message.compilationName && message.compilationName !== compilationName) {
+    return;
+  }
+
+  console.log('onMessage', message, message.compilationName, compilationName);
+
   switch (message.type) {
     case 'hash':
       // Update the last compilation hash
