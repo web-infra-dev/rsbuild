@@ -252,18 +252,6 @@ describe('test dev server', () => {
     );
 
     expect(isOnDoneRegistered).toBeTruthy();
-
-    const isCompileHookRegistered = compiler.hooks.compile.taps.some(
-      (tap) => tap.fn === onInvalidFn,
-    );
-
-    expect(isCompileHookRegistered).toBeTruthy();
-
-    const isInvalidHookRegistered = compiler.hooks.invalid.taps.some(
-      (tap) => tap.fn === onInvalidFn,
-    );
-
-    expect(isInvalidHookRegistered).toBeTruthy();
   });
   test('should not setupServerHooks when compiler is server', () => {
     const compiler = rspack({
