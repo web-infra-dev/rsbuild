@@ -195,7 +195,9 @@ const getTagConfig = (
   };
 };
 
-export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
+export const pluginHtml = (
+  modifyTagsFn?: (environment: string) => ModifyHTMLTagsFn,
+): RsbuildPlugin => ({
   name: 'rsbuild:html',
 
   setup(api) {
@@ -310,7 +312,11 @@ export const pluginHtml = (modifyTagsFn?: ModifyHTMLTagsFn): RsbuildPlugin => ({
 
         chain
           .plugin(CHAIN_ID.PLUGIN.HTML_BASIC)
-          .use(HtmlBasicPlugin, [htmlInfoMap, environment, modifyTagsFn]);
+          .use(HtmlBasicPlugin, [
+            htmlInfoMap,
+            environment,
+            modifyTagsFn?.(environment.name),
+          ]);
 
         if (config.html) {
           const { appIcon, crossorigin } = config.html;

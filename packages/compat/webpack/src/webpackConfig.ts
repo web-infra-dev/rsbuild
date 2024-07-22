@@ -27,9 +27,8 @@ async function modifyWebpackChain(
   logger.debug('modify webpack chain');
 
   const [modifiedChain] = await context.hooks.modifyWebpackChain.call(
-    chain,
-    utils,
-  );
+    utils.environment.name,
+  )(chain, utils);
 
   if (utils.environment.config.tools?.webpackChain) {
     for (const item of castArray(utils.environment.config.tools.webpackChain)) {
@@ -49,9 +48,8 @@ async function modifyWebpackConfig(
 ): Promise<WebpackConfig> {
   logger.debug('modify webpack config');
   let [modifiedConfig] = await context.hooks.modifyWebpackConfig.call(
-    webpackConfig,
-    utils,
-  );
+    utils.environment.name,
+  )(webpackConfig, utils);
 
   if (utils.environment.config.tools?.webpack) {
     modifiedConfig = reduceConfigsWithContext({

@@ -66,6 +66,10 @@ export interface EnvironmentConfig {
    * Options for module federation.
    */
   moduleFederation?: ModuleFederationConfig;
+  /**
+   * Configure Rsbuild plugins.
+   */
+  plugins?: RsbuildPlugins;
 }
 
 /**
@@ -81,10 +85,6 @@ export interface RsbuildConfig extends EnvironmentConfig {
    * will take effect during local development and preview.
    */
   server?: ServerConfig;
-  /**
-   * Configure Rsbuild plugins.
-   */
-  plugins?: RsbuildPlugins;
   /**
    * Configure rsbuild config by environment.
    */

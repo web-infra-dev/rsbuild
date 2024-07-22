@@ -52,13 +52,13 @@ function applyTransformPlugin(
   chain.plugin(name).use(RsbuildTransformPlugin);
 }
 
-export function getPluginAPI({
+export function initPluginAPI({
   context,
   pluginManager,
 }: {
   context: InternalContext;
   pluginManager: PluginManager;
-}): RsbuildPluginAPI {
+}): (environmentMeta?: { environment: string }) => RsbuildPluginAPI {
   const { hooks } = context;
   const publicContext = createPublicContext(context);
 
@@ -118,7 +118,8 @@ export function getPluginAPI({
 
     transformer[id] = handler;
 
-    hooks.modifyBundlerChain.tap((chain, { target }) => {
+    // TODO: support environment
+    hooks.modifyBundlerChain.tap()((chain, { target }) => {
       if (descriptor.targets && !descriptor.targets.includes(target)) {
         return;
       }
@@ -147,9 +148,11 @@ export function getPluginAPI({
     hooks.onExit.call();
   });
 
-  return {
+  // Each plugin returns different APIs depending on the registered environment info.
+  return (environmentMeta?: { environment: string }) => ({
     context: publicContext,
     expose,
+    // TODO: supports running in specified environment and avoid repeat registry
     transform,
     useExposed,
     getRsbuildConfig,
@@ -168,12 +171,12 @@ export function getPluginAPI({
     onBeforeStartDevServer: hooks.onBeforeStartDevServer.tap,
     onAfterStartProdServer: hooks.onAfterStartProdServer.tap,
     onBeforeStartProdServer: hooks.onBeforeStartProdServer.tap,
-    modifyHTMLTags: hooks.modifyHTMLTags.tap,
-    modifyBundlerChain: hooks.modifyBundlerChain.tap,
-    modifyRspackConfig: hooks.modifyRspackConfig.tap,
-    modifyWebpackChain: hooks.modifyWebpackChain.tap,
-    modifyWebpackConfig: hooks.modifyWebpackConfig.tap,
     modifyRsbuildConfig: hooks.modifyRsbuildConfig.tap,
-    modifyEnvironmentConfig: hooks.modifyEnvironmentConfig.tap,
-  };
+    modifyHTMLTags: hooks.modifyHTMLTags.tap(environmentMeta),
+    modifyBundlerChain: hooks.modifyBundlerChain.tap(environmentMeta),
+    modifyRspackConfig: hooks.modifyRspackConfig.tap(environmentMeta),
+    modifyWebpackChain: hooks.modifyWebpackChain.tap(environmentMeta),
+    modifyWebpackConfig: hooks.modifyWebpackConfig.tap(environmentMeta),
+    modifyEnvironmentConfig: hooks.modifyEnvironmentConfig.tap(environmentMeta),
+  });
 }

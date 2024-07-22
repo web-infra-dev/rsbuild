@@ -12,37 +12,47 @@ describe('sort plugins', () => {
       { name: '6', pre: [], post: [] },
     ] as RsbuildPlugin[];
 
-    const result = pluginDagSort(cases);
-    expect(result).toEqual([
-      {
-        name: '1',
-      },
-      {
-        name: '4',
-        post: [],
-        pre: [],
-      },
-      {
-        name: '6',
-        post: [],
-        pre: [],
-      },
-      {
-        name: '5',
-        post: ['3'],
-        pre: ['6'],
-      },
-      {
-        name: '3',
-        post: ['2'],
-        pre: ['1'],
-      },
-      {
-        name: '2',
-        post: [],
-        pre: [],
-      },
-    ]);
+    const result = pluginDagSort(
+      cases.map((c) => ({
+        instance: c,
+        environment: '',
+      })),
+    );
+    expect(result).toEqual(
+      [
+        {
+          name: '1',
+        },
+        {
+          name: '4',
+          post: [],
+          pre: [],
+        },
+        {
+          name: '6',
+          post: [],
+          pre: [],
+        },
+        {
+          name: '5',
+          post: ['3'],
+          pre: ['6'],
+        },
+        {
+          name: '3',
+          post: ['2'],
+          pre: ['1'],
+        },
+        {
+          name: '2',
+          post: [],
+          pre: [],
+        },
+      ].map((p) => ({
+        environment: '',
+        instance: p,
+      })),
+    );
   });
 
   it('should keep the order consistent', () => {
@@ -53,13 +63,23 @@ describe('sort plugins', () => {
       { name: '4' },
     ] as RsbuildPlugin[];
 
-    const result = pluginDagSort(cases);
-    expect(result).toEqual([
-      { name: '1' },
-      { name: '3' },
-      { name: '2', pre: ['3'] },
-      { name: '4' },
-    ]);
+    const result = pluginDagSort(
+      cases.map((c) => ({
+        instance: c,
+        environment: '',
+      })),
+    );
+    expect(result).toEqual(
+      [
+        { name: '1' },
+        { name: '3' },
+        { name: '2', pre: ['3'] },
+        { name: '4' },
+      ].map((p) => ({
+        environment: '',
+        instance: p,
+      })),
+    );
   });
 
   it('should allow some invalid plugins', () => {
@@ -70,25 +90,35 @@ describe('sort plugins', () => {
       { name: undefined },
     ] as RsbuildPlugin[];
 
-    const result = pluginDagSort(cases);
-    expect(result).toEqual([
-      {
-        name: '1',
-      },
-      {
-        name: '3',
-        post: ['2', undefined],
-        pre: ['1'],
-      },
-      {
-        name: '2',
-        post: [],
-        pre: [undefined],
-      },
-      {
-        name: undefined,
-      },
-    ]);
+    const result = pluginDagSort(
+      cases.map((c) => ({
+        instance: c,
+        environment: '',
+      })),
+    );
+    expect(result).toEqual(
+      [
+        {
+          name: '1',
+        },
+        {
+          name: '3',
+          post: ['2', undefined],
+          pre: ['1'],
+        },
+        {
+          name: '2',
+          post: [],
+          pre: [undefined],
+        },
+        {
+          name: undefined,
+        },
+      ].map((p) => ({
+        environment: '',
+        instance: p,
+      })),
+    );
   });
 
   it('should throw error when plugin has ring', () => {
@@ -102,7 +132,12 @@ describe('sort plugins', () => {
     ] as RsbuildPlugin[];
 
     expect(() => {
-      pluginDagSort(cases);
+      pluginDagSort(
+        cases.map((c) => ({
+          instance: c,
+          environment: '',
+        })),
+      );
     }).toThrow(/plugins dependencies has loop: 2,3,5/);
   });
 });

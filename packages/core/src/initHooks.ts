@@ -1,6 +1,9 @@
 import { isFunction } from './helpers';
+import { isPluginMatchEnvironment } from './pluginManager';
 import type {
   AsyncHook,
+  EnvironmentAsyncHook,
+  EnvironmentMeta,
   HookDescriptor,
   ModifyBundlerChainFn,
   ModifyEnvironmentConfigFn,
@@ -21,6 +24,75 @@ import type {
   OnDevCompileDoneFn,
   OnExitFn,
 } from './types';
+
+export function createEnvironmentAsyncHook<
+  Callback extends (...args: any[]) => any,
+>(): EnvironmentAsyncHook<Callback> {
+  type Hook = {
+    environmentMeta?: EnvironmentMeta;
+    handler: Callback;
+  };
+  const preGroup: Hook[] = [];
+  const postGroup: Hook[] = [];
+  const defaultGroup: Hook[] = [];
+
+  const tap =
+    (environmentMeta?: EnvironmentMeta) =>
+    (cb: Callback | HookDescriptor<Callback>) => {
+      if (isFunction(cb)) {
+        defaultGroup.push({
+          environmentMeta,
+          handler: cb,
+        });
+      } else if (cb.order === 'pre') {
+        preGroup.push({
+          environmentMeta,
+          handler: cb.handler,
+        });
+      } else if (cb.order === 'post') {
+        postGroup.push({
+          environmentMeta,
+          handler: cb.handler,
+        });
+      } else {
+        defaultGroup.push({
+          environmentMeta,
+          handler: cb.handler,
+        });
+      }
+    };
+
+  const call =
+    (environment?: string) =>
+    async (...args: Parameters<Callback>) => {
+      const params = args.slice(0) as Parameters<Callback>;
+      const callbacks = [...preGroup, ...defaultGroup, ...postGroup];
+
+      for (const callback of callbacks) {
+        // If this callback is not a global callback, the environment info should match
+        if (
+          callback.environmentMeta &&
+          environment &&
+          !isPluginMatchEnvironment(callback.environmentMeta, environment)
+        ) {
+          continue;
+        }
+
+        const result = await callback.handler(...params);
+
+        if (result !== undefined) {
+          params[0] = result;
+        }
+      }
+
+      return params;
+    };
+
+  return {
+    tap,
+    call,
+  };
+}
 
 export function createAsyncHook<
   Callback extends (...args: any[]) => any,
@@ -63,6 +135,7 @@ export function createAsyncHook<
 }
 
 export function initHooks(): {
+  /** The following hooks are global hooks */
   onExit: AsyncHook<OnExitFn>;
   onAfterBuild: AsyncHook<OnAfterBuildFn>;
   onBeforeBuild: AsyncHook<OnBeforeBuildFn>;
@@ -74,13 +147,14 @@ export function initHooks(): {
   onBeforeStartProdServer: AsyncHook<OnBeforeStartProdServerFn>;
   onAfterCreateCompiler: AsyncHook<OnAfterCreateCompilerFn>;
   onBeforeCreateCompiler: AsyncHook<OnBeforeCreateCompilerFn>;
-  modifyHTMLTags: AsyncHook<ModifyHTMLTagsFn>;
-  modifyRspackConfig: AsyncHook<ModifyRspackConfigFn>;
-  modifyBundlerChain: AsyncHook<ModifyBundlerChainFn>;
-  modifyWebpackChain: AsyncHook<ModifyWebpackChainFn>;
-  modifyWebpackConfig: AsyncHook<ModifyWebpackConfigFn>;
+  /**  The following hooks are related to the environment */
+  modifyHTMLTags: EnvironmentAsyncHook<ModifyHTMLTagsFn>;
+  modifyRspackConfig: EnvironmentAsyncHook<ModifyRspackConfigFn>;
+  modifyBundlerChain: EnvironmentAsyncHook<ModifyBundlerChainFn>;
+  modifyWebpackChain: EnvironmentAsyncHook<ModifyWebpackChainFn>;
+  modifyWebpackConfig: EnvironmentAsyncHook<ModifyWebpackConfigFn>;
   modifyRsbuildConfig: AsyncHook<ModifyRsbuildConfigFn>;
-  modifyEnvironmentConfig: AsyncHook<ModifyEnvironmentConfigFn>;
+  modifyEnvironmentConfig: EnvironmentAsyncHook<ModifyEnvironmentConfigFn>;
 } {
   return {
     onExit: createAsyncHook<OnExitFn>(),
@@ -94,13 +168,14 @@ export function initHooks(): {
     onBeforeStartProdServer: createAsyncHook<OnBeforeStartProdServerFn>(),
     onAfterCreateCompiler: createAsyncHook<OnAfterCreateCompilerFn>(),
     onBeforeCreateCompiler: createAsyncHook<OnBeforeCreateCompilerFn>(),
-    modifyHTMLTags: createAsyncHook<ModifyHTMLTagsFn>(),
-    modifyRspackConfig: createAsyncHook<ModifyRspackConfigFn>(),
-    modifyBundlerChain: createAsyncHook<ModifyBundlerChainFn>(),
-    modifyWebpackChain: createAsyncHook<ModifyWebpackChainFn>(),
-    modifyWebpackConfig: createAsyncHook<ModifyWebpackConfigFn>(),
+    modifyHTMLTags: createEnvironmentAsyncHook<ModifyHTMLTagsFn>(),
+    modifyRspackConfig: createEnvironmentAsyncHook<ModifyRspackConfigFn>(),
+    modifyBundlerChain: createEnvironmentAsyncHook<ModifyBundlerChainFn>(),
+    modifyWebpackChain: createEnvironmentAsyncHook<ModifyWebpackChainFn>(),
+    modifyWebpackConfig: createEnvironmentAsyncHook<ModifyWebpackConfigFn>(),
     modifyRsbuildConfig: createAsyncHook<ModifyRsbuildConfigFn>(),
-    modifyEnvironmentConfig: createAsyncHook<ModifyEnvironmentConfigFn>(),
+    modifyEnvironmentConfig:
+      createEnvironmentAsyncHook<ModifyEnvironmentConfigFn>(),
   };
 }
 

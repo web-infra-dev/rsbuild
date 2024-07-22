@@ -91,7 +91,7 @@ export const applyBasicReactSupport = (
 };
 
 export const applyReactProfiler = (api: RsbuildPluginAPI): void => {
-  api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
+  api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
     const enableProfilerConfig: RsbuildConfig = {
       output: {
         minify: {
@@ -105,7 +105,7 @@ export const applyReactProfiler = (api: RsbuildPluginAPI): void => {
         },
       },
     };
-    return mergeRsbuildConfig(config, enableProfilerConfig);
+    return mergeEnvironmentConfig(config, enableProfilerConfig);
   });
 
   api.modifyBundlerChain((chain) => {

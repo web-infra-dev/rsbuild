@@ -40,11 +40,14 @@ async function modifyEnvironmentConfig(
   name: string,
 ) {
   logger.debug(`modify Rsbuild environment(${name}) config`);
-  const [modified] = await context.hooks.modifyEnvironmentConfig.call(config, {
-    name,
-    mergeEnvironmentConfig:
-      mergeRsbuildConfig<MergedEnvironmentConfig> as ModifyEnvironmentConfigUtils['mergeEnvironmentConfig'],
-  });
+  const [modified] = await context.hooks.modifyEnvironmentConfig.call(name)(
+    config,
+    {
+      name,
+      mergeEnvironmentConfig:
+        mergeRsbuildConfig<MergedEnvironmentConfig> as ModifyEnvironmentConfigUtils['mergeEnvironmentConfig'],
+    },
+  );
 
   logger.debug(`modify Rsbuild environment(${name}) config done`);
 
@@ -131,7 +134,7 @@ export async function initRsbuildConfig({
   }
 
   await initPlugins({
-    pluginAPI: context.pluginAPI,
+    getPluginAPI: context.getPluginAPI!,
     pluginManager,
   });
 
