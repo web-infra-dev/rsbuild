@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-rem",
-  "version": "1.0.1-beta.3",
+  "version": "1.0.1-beta.4",
   "description": "Rem plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
