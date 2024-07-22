@@ -301,8 +301,8 @@ importers:
   e2e/cases/swc-plugin:
     dependencies:
       '@swc/plugin-remove-console':
-        specifier: ^2.0.8
-        version: 2.0.8
+        specifier: 2.0.7
+        version: 2.0.7
 
   e2e/cases/vue:
     dependencies:
@@ -1101,8 +1101,8 @@ importers:
   packages/plugin-styled-components:
     dependencies:
       '@swc/plugin-styled-components':
-        specifier: 2.0.10
-        version: 2.0.10
+        specifier: 2.0.9
+        version: 2.0.9
       reduce-configs:
         specifier: ^1.0.0
         version: 1.0.0
@@ -3224,11 +3224,11 @@ packages:
   '@swc/helpers@0.5.3':
     resolution: {integrity: sha512-FaruWX6KdudYloq1AHD/4nU+UsMTdNE8CKyrseXWEcgjDAbvkwJg2QGPAnfIJLIWsjZOSPLOAykK6fuYp4vp4A==}
 
-  '@swc/plugin-remove-console@2.0.8':
-    resolution: {integrity: sha512-9Yctl9zb2r41Lnz50k1A1HXipt0uP4vl9DtStyUk6llVd6qx5cvOjtVzaJUUAlh9J+F6AIKbQr3MbRk8ub7Pew==}
+  '@swc/plugin-remove-console@2.0.7':
+    resolution: {integrity: sha512-qGqkXLRFn1AbMwXgyh9XEUn6uSO3khhhPUCOBGV/fvuaWk1/pyH6c8H4MXneBUZIDjQNHOYBm6+mLgd9P8CTXA==}
 
-  '@swc/plugin-styled-components@2.0.10':
-    resolution: {integrity: sha512-R3topjrXcZWmiucP6E3iQZAKV7944SFTkujvBuyxD+Y/Xbp/1Qe8RkkZ0anPZ/IxPVVT8rX91ZfOgx/NiQnb8g==}
+  '@swc/plugin-styled-components@2.0.9':
+    resolution: {integrity: sha512-0aPv7lNed27qs8JBklLkVSlLhpPRU3YKRnKplObaAyhNWbpbOkCbVSTay5ArFT2Gz1rz844Np7l4DMozEtZRBg==}
 
   '@swc/types@0.1.9':
     resolution: {integrity: sha512-qKnCno++jzcJ4lM4NTfYifm1EFSCeIfKiAHAfkENZAV5Kl9PjJIyd2yeeVv6c/2CckuLyv2NmRC5pv6pm2WQBg==}
@@ -9737,11 +9737,11 @@ snapshots:
     dependencies:
       tslib: 2.6.2
 
-  '@swc/plugin-remove-console@2.0.8':
+  '@swc/plugin-remove-console@2.0.7':
     dependencies:
       '@swc/counter': 0.1.3
 
-  '@swc/plugin-styled-components@2.0.10':
+  '@swc/plugin-styled-components@2.0.9':
     dependencies:
       '@swc/counter': 0.1.3
 
