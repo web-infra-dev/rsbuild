@@ -2,7 +2,6 @@ import fs from 'node:fs';
 import path from 'node:path';
 import type {
   EnvironmentContext,
-  HtmlBasicTag,
   NormalizedEnvironmentConfig,
   RsbuildPlugin,
 } from '@rsbuild/core';
@@ -61,7 +60,35 @@ export const pluginAssetsRetry = (
       return options;
     };
 
-    if (!inlineScript) {
+    if (inlineScript) {
+      api.modifyHTMLTags(async ({ headTags, bodyTags }, { environment }) => {
+        const code = await getRetryCode(formatOptions(environment.config));
+
+        headTags.unshift({
+          tag: 'script',
+          attrs: {},
+          children: code,
+        });
+
+        return { headTags, bodyTags };
+      });
+    } else {
+      api.modifyHTMLTags(
+        async ({ headTags, bodyTags }, { assetPrefix, environment }) => {
+          const scriptPath = getScriptPath(environment);
+          const url = ensureAssetPrefix(scriptPath, assetPrefix);
+
+          headTags.unshift({
+            tag: 'script',
+            attrs: {
+              src: url,
+            },
+          });
+
+          return { headTags, bodyTags };
+        },
+      );
+
       api.processAssets(
         { stage: 'additional' },
         async ({ sources, compilation, environment }) => {
@@ -71,36 +98,6 @@ export const pluginAssetsRetry = (
         },
       );
     }
-
-    api.modifyHTMLTags(
-      async ({ headTags, bodyTags }, { assetPrefix, environment }) => {
-        const scriptTag: HtmlBasicTag = {
-          tag: 'script',
-          attrs: {},
-        };
-
-        if (inlineScript) {
-          const code = await getRetryCode(formatOptions(environment.config));
-          headTags.unshift({
-            ...scriptTag,
-            children: code,
-          });
-        } else {
-          const scriptPath = getScriptPath(environment);
-          const url = ensureAssetPrefix(scriptPath, assetPrefix);
-
-          headTags.unshift({
-            ...scriptTag,
-            attrs: {
-              ...scriptTag.attrs,
-              src: url,
-            },
-          });
-        }
-
-        return { headTags, bodyTags };
-      },
-    );
 
     api.modifyBundlerChain(async (chain, { environment }) => {
       const { config, htmlPaths } = environment;
