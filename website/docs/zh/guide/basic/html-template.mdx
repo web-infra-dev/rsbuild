@@ -121,12 +121,19 @@ type DefaultParameters = {
   entryName: string; // 入口名称
   assetPrefix: string; // 对应 dev.assetPrefix 和 output.assetPrefix 配置
   compilation: Compilation; // 对应 Rspack 的 compilation 对象
-  // htmlWebpackPlugin 内置的参数
-  // 详见 https://github.com/rspack-contrib/html-rspack-plugin
-  htmlWebpackPlugin: {
-    tags: object;
-    files: object;
-    options: object;
+  rspackConfig: Rspack.Configuration; // Rspack 的配置对象
+  // html-rspack-plugin 生成的参数
+  htmlPlugin: {
+    tags: {
+      headTags: HtmlTagObject[];
+      bodyTags: HtmlTagObject[];
+    };
+    files: {
+      publicPath: string;
+      js: Array<string>;
+      css: Array<string>;
+      favicon?: string;
+    };
   };
 };
 ```
@@ -235,15 +242,15 @@ Rsbuild 通过 Pug 插件来支持 Pug 模板引擎，请阅读 [@rsbuild/plugin
 前端应用的产物最终都会直接或间接地被 HTML 入口引用，但大多数时候直接向 HTML 注入标签都并非首选。
 :::
 
-模版文件中可以通过 `htmlWebpackPlugin.tags` 变量来访问需要最终注入到 HTML 的所有标签：
+模版文件中可以通过 `htmlPlugin.tags` 变量来访问需要最终注入到 HTML 的所有标签：
 
 ```html
 <html>
   <head>
-    <%= htmlWebpackPlugin.tags.headTags %>
+    <%= htmlPlugin.tags.headTags %>
   </head>
   <body>
-    <%= htmlWebpackPlugin.tags.bodyTags %>
+    <%= htmlPlugin.tags.bodyTags %>
   </body>
 </html>
 ```
@@ -272,7 +279,7 @@ export default {
 
 标签最终的插入位置由 `head` 和 `append` 选项决定，两个配置相同的元素将被插入到相同区域，并且维持彼此之间的相对位置。
 
-标签默认会启用 `publicPath` 配置，即会将 `output.assetPrefix` 的值拼接到 `script` 标签的 `src` 等表示路径的属性上。
+标签默认会启用 `publicPath` 配置，即会将 [output.assetPrefix](/config/output/asset-prefix) 的值拼接到 `script` 标签的 `src` 等表示路径的属性上。
 
 所以以上配置构建出的 HTML 产物将会类似：
 

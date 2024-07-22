@@ -103,6 +103,9 @@ describe('bundlerApi', () => {
     expect(bundlerConfigs[0]).toMatchInlineSnapshot(`
       {
         "devtool": "hidden-source-map",
+        "plugins": [
+          RsbuildCorePlugin {},
+        ],
         "target": "node",
       }
     `);
@@ -143,6 +146,9 @@ describe('bundlerApi', () => {
             },
           ],
         },
+        "plugins": [
+          RsbuildCorePlugin {},
+        ],
       }
     `);
   });
@@ -182,6 +188,9 @@ describe('bundlerApi', () => {
             },
           ],
         },
+        "plugins": [
+          RsbuildCorePlugin {},
+        ],
       }
     `);
   });

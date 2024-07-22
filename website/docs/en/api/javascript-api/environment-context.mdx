@@ -1,6 +1,8 @@
-## EnvironmentContext
+# Environment Context
 
-Environment context is a read-only object that provides some context infos about the current environment.
+Environment context is a read-only object that provides some context information about the current environment.
+
+In Rsbuild's hooks, you can get the environment context object through the `environment` or `environments` parameter.
 
 ```ts
 type EnvironmentContext = {
@@ -14,19 +16,19 @@ type EnvironmentContext = {
 };
 ```
 
-### environment.name
+## name
 
 The unique name of the current environment is used to distinguish and locate the environment, corresponds to the key in the [environments](/config/environments) configuration.
 
 - **Type:** `string`
 
-### environment.browserslist
+## browserslist
 
 The range of target browsers that the project is compatible with. See details in [Browserslist](/guide/advanced/browserslist).
 
 - **Type:** `string[]`
 
-### environment.config
+## config
 
 The Rsbuild environment configuration after normalization.
 
@@ -47,13 +49,13 @@ type NormalizedEnvironmentConfig = DeepReadonly<{
 }>;
 ```
 
-### environment.distPath
+## distPath
 
-The absolute path of the output directory, corresponding to the `output.distPath.root` config in `RsbuildConfig`.
+The absolute path of the output directory, corresponding to the [output.distPath.root](/config/output/dist-path) config in `RsbuildConfig`.
 
 - **Type:** `string`
 
-### environment.entry
+## entry
 
 The entry object from the [source.entry](/config/source/entry) option.
 
@@ -63,7 +65,7 @@ The entry object from the [source.entry](/config/source/entry) option.
 type RsbuildEntry = Record<string, string | string[] | EntryDescription>;
 ```
 
-### environment.htmlPaths
+## htmlPaths
 
 The path information for all HTML assets.
 
@@ -75,7 +77,7 @@ This API will return an object, the key is the entry name and the value is the r
 type htmlPaths = Record<string, string>;
 ```
 
-### environment.tsconfigPath
+## tsconfigPath
 
 The absolute path of the tsconfig.json file, or `undefined` if the tsconfig.json file does not exist in current project.
 

@@ -391,6 +391,10 @@ type HTMLTags = {
 
 type Context = {
   /**
+   * The Compiler object of Rspack.
+   */
+  compiler: Rspack.Compiler;
+  /**
    * The Compilation object of Rspack.
    */
   compilation: Rspack.Compilation;
@@ -404,7 +408,9 @@ type Context = {
    * @example 'index.html'
    */
   filename: string;
-  /** The environment context for current build. */
+  /**
+   * The environment context for current build.
+   */
   environment: EnvironmentContext;
 };
 

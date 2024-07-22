@@ -120,7 +120,13 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
             .minimizer(CHAIN_ID.MINIMIZER.JS)
             .use(SwcMinimizerPlugin, [
               {
-                jsMinify: mainConfig.jsMinify ?? mainConfig.jsc?.minify ?? true,
+                jsMinify:
+                  (typeof minify === 'object' && minify.jsOptions
+                    ? minify.jsOptions
+                    : undefined) ??
+                  mainConfig.jsMinify ??
+                  mainConfig.jsc?.minify ??
+                  true,
                 environmentConfig,
               },
             ]);
@@ -131,7 +137,7 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
             .minimizer(CHAIN_ID.MINIMIZER.CSS)
             .use(SwcMinimizerPlugin, [
               {
-                cssMinify: minifyCss ? mainConfig.cssMinify ?? true : false,
+                cssMinify: mainConfig.cssMinify ?? true,
                 environmentConfig,
               },
             ]);

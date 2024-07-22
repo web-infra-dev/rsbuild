@@ -1,49 +1,271 @@
+import path from 'node:path';
 import { CSS_REGEX, JS_REGEX } from '../constants';
-import { pick } from '../helpers';
-import type { InlineChunkTest, RsbuildPlugin } from '../types';
+import {
+  addTrailingSlash,
+  getPublicPathFromCompiler,
+  isDev,
+  isFunction,
+} from '../helpers';
+import type {
+  HtmlBasicTag,
+  InlineChunkTest,
+  NormalizedEnvironmentConfig,
+  RsbuildPlugin,
+  Rspack,
+} from '../types';
+
+/**
+ * If we inlined the chunk to HTML,we should update the value of sourceMappingURL,
+ * because the relative path of source code has been changed.
+ */
+function updateSourceMappingURL({
+  source,
+  compilation,
+  publicPath,
+  type,
+  config,
+}: {
+  source: string;
+  compilation: Rspack.Compilation;
+  publicPath: string;
+  type: 'js' | 'css';
+  config: NormalizedEnvironmentConfig;
+}) {
+  const { devtool } = compilation.options;
+
+  if (
+    devtool &&
+    // If the source map is inlined, we do not need to update the sourceMappingURL
+    !devtool.includes('inline') &&
+    source.includes('# sourceMappingURL')
+  ) {
+    const prefix = addTrailingSlash(
+      path.join(publicPath, config.output.distPath[type] || ''),
+    );
+
+    return source.replace(
+      /# sourceMappingURL=/,
+      `# sourceMappingURL=${prefix}`,
+    );
+  }
+
+  return source;
+}
+
+function matchTests(name: string, source: string, tests: InlineChunkTest[]) {
+  return tests.some((test) => {
+    if (isFunction(test)) {
+      const size = source.length;
+      return test({ name, size });
+    }
+    return test.exec(name);
+  });
+}
 
 export const pluginInlineChunk = (): RsbuildPlugin => ({
   name: 'rsbuild:inline-chunk',
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, isDev, environment }) => {
-      const { htmlPaths, config } = environment;
-      if (Object.keys(htmlPaths).length === 0 || isDev) {
-        return;
+    const inlinedAssets = new Set<string>();
+
+    const getInlinedScriptTag = (
+      publicPath: string,
+      tag: HtmlBasicTag,
+      compilation: Rspack.Compilation,
+      scriptTests: InlineChunkTest[],
+      config: NormalizedEnvironmentConfig,
+    ) => {
+      const { assets } = compilation;
+
+      // No need to inline scripts with src attribute
+      if (!(tag.attrs?.src && typeof tag.attrs.src === 'string')) {
+        return tag;
       }
 
-      const { InlineChunkHtmlPlugin } = await import(
-        '../rspack/InlineChunkHtmlPlugin'
-      );
+      const { src, ...otherAttrs } = tag.attrs;
+      const scriptName = publicPath ? src.replace(publicPath, '') : src;
 
-      const { inlineStyles, inlineScripts } = config.output;
-
-      const scriptTests: InlineChunkTest[] = [];
-      const styleTests: InlineChunkTest[] = [];
-
-      if (inlineScripts) {
-        scriptTests.push(inlineScripts === true ? JS_REGEX : inlineScripts);
+      // If asset is not found, skip it
+      const asset = assets[scriptName];
+      if (asset == null) {
+        return tag;
       }
 
-      if (inlineStyles) {
-        styleTests.push(inlineStyles === true ? CSS_REGEX : inlineStyles);
+      const source = asset.source().toString();
+      const shouldInline = matchTests(scriptName, source, scriptTests);
+      if (!shouldInline) {
+        return tag;
       }
 
-      if (!scriptTests.length && !styleTests.length) {
-        return;
+      const ret: HtmlBasicTag = {
+        tag: 'script',
+        children: updateSourceMappingURL({
+          source,
+          compilation,
+          publicPath,
+          type: 'js',
+          config,
+        }),
+        attrs: {
+          ...otherAttrs,
+        },
+      };
+
+      // mark asset has already been inlined
+      inlinedAssets.add(scriptName);
+
+      return ret;
+    };
+
+    const getInlinedCSSTag = (
+      publicPath: string,
+      tag: HtmlBasicTag,
+      compilation: Rspack.Compilation,
+      styleTests: InlineChunkTest[],
+      config: NormalizedEnvironmentConfig,
+    ) => {
+      const { assets } = compilation;
+
+      // No need to inline styles with href attribute
+      if (!(tag.attrs?.href && typeof tag.attrs.href === 'string')) {
+        return tag;
       }
 
-      chain
-        .plugin(CHAIN_ID.PLUGIN.INLINE_HTML)
-        // ensure nonce can be applied to inlined style tags
-        .before(CHAIN_ID.PLUGIN.HTML_BASIC)
-        .use(InlineChunkHtmlPlugin, [
-          {
-            styleTests,
+      const linkName = publicPath
+        ? tag.attrs.href.replace(publicPath, '')
+        : tag.attrs.href;
+
+      // If asset is not found, skip it
+      const asset = assets[linkName];
+      if (asset == null) {
+        return tag;
+      }
+
+      const source = asset.source().toString();
+      const shouldInline = matchTests(linkName, source, styleTests);
+      if (!shouldInline) {
+        return tag;
+      }
+
+      const ret: HtmlBasicTag = {
+        tag: 'style',
+        children: updateSourceMappingURL({
+          source,
+          compilation,
+          publicPath,
+          type: 'css',
+          config,
+        }),
+      };
+
+      // mark asset has already been inlined
+      inlinedAssets.add(linkName);
+
+      return ret;
+    };
+
+    const getInlinedTag = (
+      publicPath: string,
+      tag: HtmlBasicTag,
+      compilation: Rspack.Compilation,
+      scriptTests: InlineChunkTest[],
+      styleTests: InlineChunkTest[],
+      config: NormalizedEnvironmentConfig,
+    ) => {
+      if (tag.tag === 'script') {
+        return getInlinedScriptTag(
+          publicPath,
+          tag,
+          compilation,
+          scriptTests,
+          config,
+        );
+      }
+      if (tag.tag === 'link' && tag.attrs && tag.attrs.rel === 'stylesheet') {
+        return getInlinedCSSTag(
+          publicPath,
+          tag,
+          compilation,
+          styleTests,
+          config,
+        );
+      }
+      return tag;
+    };
+
+    api.processAssets(
+      {
+        /**
+         * Remove marked inline assets in summarize stage,
+         * which should be later than the emitting of html-rspack-plugin
+         */
+        stage: 'summarize',
+      },
+      ({ compiler, compilation }) => {
+        if (inlinedAssets.size === 0) {
+          return;
+        }
+
+        const { devtool } = compiler.options;
+
+        for (const name of inlinedAssets) {
+          // If the source map reference is removed,
+          // we do not need to preserve the source map of inlined files
+          if (devtool === 'hidden-source-map') {
+            compilation.deleteAsset(name);
+          } else {
+            // use delete instead of compilation.deleteAsset
+            // because we want to preserve the related files such as source map
+            delete compilation.assets[name];
+          }
+        }
+
+        inlinedAssets.clear();
+      },
+    );
+
+    api.modifyHTMLTags(
+      ({ headTags, bodyTags }, { compiler, compilation, environment }) => {
+        const { htmlPaths, config } = environment;
+
+        if (isDev() || Object.keys(htmlPaths).length === 0) {
+          return { headTags, bodyTags };
+        }
+
+        const { inlineStyles, inlineScripts } = config.output;
+
+        const scriptTests: InlineChunkTest[] = [];
+        const styleTests: InlineChunkTest[] = [];
+
+        if (inlineScripts) {
+          scriptTests.push(inlineScripts === true ? JS_REGEX : inlineScripts);
+        }
+
+        if (inlineStyles) {
+          styleTests.push(inlineStyles === true ? CSS_REGEX : inlineStyles);
+        }
+
+        if (!scriptTests.length && !styleTests.length) {
+          return { headTags, bodyTags };
+        }
+
+        const publicPath = getPublicPathFromCompiler(compiler);
+
+        const updateTag = (tag: HtmlBasicTag) =>
+          getInlinedTag(
+            publicPath,
+            tag,
+            compilation,
             scriptTests,
-            distPath: pick(config.output.distPath, ['js', 'css']),
-          },
-        ]);
-    });
+            styleTests,
+            environment.config,
+          );
+
+        return {
+          headTags: headTags.map(updateTag),
+          bodyTags: bodyTags.map(updateTag),
+        };
+      },
+    );
   },
 });

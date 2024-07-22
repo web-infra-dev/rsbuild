@@ -46,19 +46,6 @@ describe('plugin-html', () => {
     expect(await rsbuild.matchBundlerPlugin('HtmlRspackPlugin')).toBeFalsy();
   });
 
-  it('should register appIcon plugin when using html.appIcon', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
-      rsbuildConfig: {
-        html: {
-          appIcon: './src/assets/icon.png',
-        },
-      },
-    });
-
-    expect(await rsbuild.matchBundlerPlugin('HtmlAppIconPlugin')).toBeTruthy();
-  });
-
   it('should allow to set favicon by html.favicon option', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],

@@ -282,6 +282,7 @@ export class HtmlBasicPlugin {
 
           const modified = this.modifyTagsFn
             ? await this.modifyTagsFn(tags, {
+                compiler,
                 compilation,
                 assetPrefix: data.publicPath,
                 filename: data.outputName,

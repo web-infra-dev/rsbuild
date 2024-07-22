@@ -49,6 +49,9 @@ exports[`plugin-source-build > should allow to set resolve priority 1`] = `
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
   "resolve": {
     "tsConfig": {
       "configFile": "<ROOT>/packages/plugin-source-build/tests/tsconfig.json",

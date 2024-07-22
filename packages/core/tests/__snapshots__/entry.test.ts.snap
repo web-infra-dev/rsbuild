@@ -8,6 +8,9 @@ exports[`plugin-entry > should apply different environments entry config correct
         "src/index.client",
       ],
     },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
   },
   {
     "entry": {
@@ -15,6 +18,9 @@ exports[`plugin-entry > should apply different environments entry config correct
         "src/index.ssr",
       ],
     },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
   },
 ]
 `;
@@ -27,6 +33,9 @@ exports[`plugin-entry > should apply environments entry config correctly 1`] = `
         "src/index.client",
       ],
     },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
   },
   {
     "entry": {
@@ -34,6 +43,9 @@ exports[`plugin-entry > should apply environments entry config correctly 1`] = `
         "src/index.ssr",
       ],
     },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
   },
 ]
 `;

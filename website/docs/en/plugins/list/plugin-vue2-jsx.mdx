@@ -26,6 +26,7 @@ You can register the plugin in the `rsbuild.config.ts` file:
 
 ```ts title="rsbuild.config.ts"
 import { pluginBabel } from '@rsbuild/plugin-babel';
+import { pluginVue2 } from '@rsbuild/plugin-vue2';
 import { pluginVue2Jsx } from '@rsbuild/plugin-vue2-jsx';
 
 export default {
@@ -33,6 +34,7 @@ export default {
     pluginBabel({
       include: /\.(?:jsx|tsx)$/,
     }),
+    pluginVue2(),
     pluginVue2Jsx(),
   ],
 };

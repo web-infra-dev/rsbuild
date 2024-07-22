@@ -131,18 +131,32 @@ function getTemplateParameters(
 ): HtmlRspackPlugin.Options['templateParameters'] {
   return (compilation, assets, assetTags, pluginOptions) => {
     const { mountId, templateParameters } = config.html;
+    const rspackConfig = compilation.options;
+    const htmlPlugin = {
+      tags: assetTags,
+      files: assets,
+      options: pluginOptions,
+    };
+
     const defaultOptions = {
       mountId,
       entryName,
       assetPrefix,
       compilation,
-      webpackConfig: compilation.options,
-      htmlWebpackPlugin: {
-        tags: assetTags,
-        files: assets,
-        options: pluginOptions,
-      },
+      htmlPlugin,
+      rspackConfig,
+      /**
+       * compatible with html-webpack-plugin
+       * @deprecated may be removed in a future major version, use `rspackConfig` instead
+       */
+      webpackConfig: rspackConfig,
+      /**
+       * compatible with html-webpack-plugin
+       * @deprecated may be removed in a future major version, use `htmlPlugin` instead
+       */
+      htmlWebpackPlugin: htmlPlugin,
     };
+
     return reduceConfigsWithContext({
       initial: defaultOptions,
       config: templateParameters,
@@ -319,27 +333,11 @@ export const pluginHtml = (
           ]);
 
         if (config.html) {
-          const { appIcon, crossorigin } = config.html;
-
+          const { crossorigin } = config.html;
           if (crossorigin) {
             const formattedCrossorigin =
               crossorigin === true ? 'anonymous' : crossorigin;
             chain.output.crossOriginLoading(formattedCrossorigin);
-          }
-
-          if (appIcon) {
-            const { HtmlAppIconPlugin } = await import(
-              '../rspack/HtmlAppIconPlugin'
-            );
-
-            const distDir = config.output.distPath.image;
-            const iconPath = path.isAbsolute(appIcon)
-              ? appIcon
-              : path.join(api.context.rootPath, appIcon);
-
-            chain
-              .plugin(CHAIN_ID.PLUGIN.APP_ICON)
-              .use(HtmlAppIconPlugin, [{ iconPath, distDir }]);
           }
         }
       },

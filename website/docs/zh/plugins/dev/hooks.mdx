@@ -387,6 +387,10 @@ type HTMLTags = {
 
 type Context = {
   /**
+   * Rspack 的 Compiler 对象
+   */
+  compiler: Rspack.Compiler;
+  /**
    * Rspack 的 Compilation 对象
    */
   compilation: Rspack.Compilation;
@@ -401,7 +405,7 @@ type Context = {
    */
   filename: string;
   /**
-   * 本次构建的 environment 上下文
+   * 当前构建的 environment 上下文
    */
   environment: EnvironmentContext;
 };

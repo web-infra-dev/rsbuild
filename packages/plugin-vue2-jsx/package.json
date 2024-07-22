@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-vue2-jsx",
-  "version": "1.0.1-beta.1",
+  "version": "1.0.1-beta.3",
   "description": "Vue 2 JSX plugin of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -31,7 +31,7 @@
     "@vue/babel-preset-jsx": "^1.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.8",
+    "@babel/core": "^7.24.9",
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "typescript": "^5.5.2"

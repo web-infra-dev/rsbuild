@@ -23,6 +23,7 @@ exports[`plugin-basic > should apply basic config correctly in development 1`] =
     "hints": false,
   },
   "plugins": [
+    RsbuildCorePlugin {},
     HotModuleReplacementPlugin {
       "name": "HotModuleReplacementPlugin",
     },
@@ -49,5 +50,8 @@ exports[`plugin-basic > should apply basic config correctly in production 1`] = 
   "performance": {
     "hints": false,
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;

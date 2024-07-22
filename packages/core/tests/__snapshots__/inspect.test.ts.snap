@@ -12,6 +12,7 @@ exports[`inspectConfig > should print plugin names when inspect config 1`] = `
   "rsbuild:clean-output",
   "rsbuild:asset",
   "rsbuild:html",
+  "rsbuild:app-icon",
   "rsbuild:wasm",
   "rsbuild:moment",
   "rsbuild:node-addons",

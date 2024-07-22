@@ -365,6 +365,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
     "hints": false,
   },
   "plugins": [
+    RsbuildCorePlugin {},
     HotModuleReplacementPlugin {
       "name": "HotModuleReplacementPlugin",
     },

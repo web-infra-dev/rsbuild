@@ -3,6 +3,7 @@
 exports[`plugin-assets-retry > should accept user custom options 1`] = `
 {
   "plugins": [
+    RsbuildCorePlugin {},
     AssetsRetryPlugin {
       "HtmlPlugin": [Function],
       "distDir": "static/js",
@@ -57,6 +58,7 @@ exports[`plugin-assets-retry > should accept user custom options 1`] = `
 exports[`plugin-assets-retry > should add assets retry plugin 1`] = `
 {
   "plugins": [
+    RsbuildCorePlugin {},
     AssetsRetryPlugin {
       "HtmlPlugin": [Function],
       "distDir": "static/js",
@@ -78,4 +80,10 @@ exports[`plugin-assets-retry > should add assets retry plugin 1`] = `
 }
 `;
 
-exports[`plugin-assets-retry > should't add assets retry plugin when target is set to 'node' 1`] = `{}`;
+exports[`plugin-assets-retry > should't add assets retry plugin when target is set to 'node' 1`] = `
+{
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
+}
+`;

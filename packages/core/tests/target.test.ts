@@ -6,20 +6,20 @@ describe('plugin-target', () => {
     {
       target: 'node' as const,
       browserslist: ['Chrome 100'],
-      expected: { target: 'node' },
+      expected: 'node',
     },
     {
       browserslist: ['Chrome 100'],
-      expected: { target: ['web', 'es2018'] },
+      expected: ['web', 'es2018'],
     },
     {
       browserslist: null,
-      expected: { target: ['web', 'es2017'] },
+      expected: ['web', 'es2017'],
     },
     {
       target: 'web-worker' as const,
       browserslist: null,
-      expected: { target: ['webworker', 'es2017'] },
+      expected: ['webworker', 'es2017'],
     },
   ];
 
@@ -36,6 +36,6 @@ describe('plugin-target', () => {
 
     const config = await rsbuild.unwrapConfig();
 
-    expect(config).toEqual(item.expected);
+    expect(config.target).toEqual(item.expected);
   });
 });

@@ -59,14 +59,14 @@ export async function createStubRsbuild({
     rsbuild.addPlugins(await Promise.all(plugins));
   }
 
-  const unwrapConfig = async () => {
+  const unwrapConfig = async (index = 0) => {
     const configs = await rsbuild.initConfigs();
-    return configs[0];
+    return configs[index];
   };
 
   /** Match rspack/webpack plugin by constructor name. */
-  const matchBundlerPlugin = async (pluginName: string) => {
-    const config = await unwrapConfig();
+  const matchBundlerPlugin = async (pluginName: string, index?: number) => {
+    const config = await unwrapConfig(index);
 
     return matchPlugin(config, pluginName) as BundlerPluginInstance;
   };

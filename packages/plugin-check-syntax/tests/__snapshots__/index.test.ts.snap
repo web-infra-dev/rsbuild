@@ -3,6 +3,7 @@
 exports[`plugin-check-syntax > should add check-syntax plugin properly 1`] = `
 {
   "plugins": [
+    RsbuildCorePlugin {},
     CheckSyntaxPlugin {
       "ecmaVersion": 2017,
       "errors": [],
@@ -19,11 +20,18 @@ exports[`plugin-check-syntax > should add check-syntax plugin properly 1`] = `
 }
 `;
 
-exports[`plugin-check-syntax > should not add check-syntax plugin when target node 1`] = `{}`;
+exports[`plugin-check-syntax > should not add check-syntax plugin when target node 1`] = `
+{
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
+}
+`;
 
 exports[`plugin-check-syntax > should use default browserslist as targets when only set checkSyntax.exclude 1`] = `
 {
   "plugins": [
+    RsbuildCorePlugin {},
     CheckSyntaxPlugin {
       "ecmaVersion": 5,
       "errors": [],

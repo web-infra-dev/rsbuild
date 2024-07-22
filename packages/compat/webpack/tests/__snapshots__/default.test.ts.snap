@@ -274,6 +274,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "hints": false,
   },
   "plugins": [
+    RsbuildCorePlugin {},
     HotModuleReplacementPlugin {
       "options": {},
     },
@@ -667,6 +668,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     "hints": false,
   },
   "plugins": [
+    RsbuildCorePlugin {},
     MiniCssExtractPlugin {
       "_sortedModulesCache": WeakMap {},
       "options": {
@@ -998,6 +1000,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           {
             "loader": "<ROOT>/packages/core/dist/transformRawLoader.cjs",
             "options": {
+              "getEnvironment": [Function],
               "id": "rsbuild-transform-0",
             },
           },
@@ -1026,7 +1029,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "hints": false,
   },
   "plugins": [
-    RsbuildTransformPlugin {},
+    RsbuildCorePlugin {},
     DefinePlugin {
       "definitions": {
         "process.env.ASSET_PREFIX": """",
@@ -1313,6 +1316,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "hints": false,
   },
   "plugins": [
+    RsbuildCorePlugin {},
     DefinePlugin {
       "definitions": {
         "process.env.ASSET_PREFIX": """",

@@ -3,14 +3,20 @@ import type { Compiler } from '@rspack/core';
 import { LOADER_PATH } from './constants';
 import { createPublicContext } from './createContext';
 import { removeLeadingSlash } from './helpers';
+import type { TransformLoaderOptions } from './loader/transformLoader';
+import { isPluginMatchEnvironment } from './pluginManager';
 import type {
+  EnvironmentMeta,
   GetRsbuildConfig,
   InternalContext,
   NormalizedConfig,
   NormalizedEnvironmentConfig,
   PluginManager,
+  ProcessAssetsDescriptor,
+  ProcessAssetsFn,
+  ProcessAssetsHandler,
+  ProcessAssetsStage,
   RsbuildPluginAPI,
-  RspackChain,
   TransformFn,
   TransformHandler,
 } from './types';
@@ -27,30 +33,48 @@ export function getHTMLPathByEntry(
   return removeLeadingSlash(`${config.output.distPath.html}/${filename}`);
 }
 
-function applyTransformPlugin(
-  chain: RspackChain,
-  transformer: Record<string, TransformHandler>,
-) {
-  const name = 'RsbuildTransformPlugin';
-
-  if (chain.plugins.get(name)) {
-    return;
+const mapProcessAssetsStage = (
+  compiler: Compiler,
+  stage: ProcessAssetsStage,
+) => {
+  const { Compilation } = compiler.webpack;
+  switch (stage) {
+    case 'additional':
+      return Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL;
+    case 'pre-process':
+      return Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS;
+    case 'derived':
+      return Compilation.PROCESS_ASSETS_STAGE_DERIVED;
+    case 'additions':
+      return Compilation.PROCESS_ASSETS_STAGE_ADDITIONS;
+    case 'none':
+      return Compilation.PROCESS_ASSETS_STAGE_NONE;
+    case 'optimize':
+      return Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE;
+    case 'optimize-count':
+      return Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_COUNT;
+    case 'optimize-compatibility':
+      return Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_COMPATIBILITY;
+    case 'optimize-size':
+      return Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_SIZE;
+    case 'dev-tooling':
+      return Compilation.PROCESS_ASSETS_STAGE_DEV_TOOLING;
+    case 'optimize-inline':
+      return Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_INLINE;
+    case 'summarize':
+      return Compilation.PROCESS_ASSETS_STAGE_SUMMARIZE;
+    case 'optimize-hash':
+      return Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_HASH;
+    case 'optimize-transfer':
+      return Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_TRANSFER;
+    case 'analyse':
+      return Compilation.PROCESS_ASSETS_STAGE_ANALYSE;
+    case 'report':
+      return Compilation.PROCESS_ASSETS_STAGE_REPORT;
+    default:
+      throw new Error(`Invalid process assets stage: ${stage}`);
   }
-
-  class RsbuildTransformPlugin {
-    apply(compiler: Compiler): void {
-      compiler.__rsbuildTransformer = transformer;
-
-      compiler.hooks.thisCompilation.tap(name, (compilation) => {
-        compilation.hooks.childCompiler.tap(name, (childCompiler) => {
-          childCompiler.__rsbuildTransformer = transformer;
-        });
-      });
-    }
-  }
-
-  chain.plugin(name).use(RsbuildTransformPlugin);
-}
+};
 
 export function initPluginAPI({
   context,
@@ -112,36 +136,119 @@ export function initPluginAPI({
 
   let transformId = 0;
   const transformer: Record<string, TransformHandler> = {};
+  const processAssetsFns: Array<{
+    environmentMeta?: EnvironmentMeta;
+    descriptor: ProcessAssetsDescriptor;
+    handler: ProcessAssetsHandler;
+  }> = [];
 
-  const transform: TransformFn = (descriptor, handler) => {
+  hooks.modifyBundlerChain.tap()((chain, { target, environment }) => {
+    const pluginName = 'RsbuildCorePlugin';
+
+    /**
+     * Transform Rsbuild plugin hooks to Rspack plugin hooks
+     */
+    class RsbuildCorePlugin {
+      apply(compiler: Compiler): void {
+        compiler.__rsbuildTransformer = transformer;
+
+        compiler.hooks.thisCompilation.tap(pluginName, (compilation) => {
+          compilation.hooks.childCompiler.tap(pluginName, (childCompiler) => {
+            childCompiler.__rsbuildTransformer = transformer;
+          });
+        });
+
+        compiler.hooks.compilation.tap(pluginName, (compilation) => {
+          for (const {
+            descriptor,
+            handler,
+            environmentMeta,
+          } of processAssetsFns) {
+            // filter by targets
+            if (descriptor.targets && !descriptor.targets.includes(target)) {
+              return;
+            }
+
+            // filter by environment
+            if (
+              environmentMeta &&
+              !isPluginMatchEnvironment(environmentMeta, environment.name)
+            ) {
+              return;
+            }
+
+            compilation.hooks.processAssets.tapPromise(
+              {
+                name: pluginName,
+                stage: mapProcessAssetsStage(compiler, descriptor.stage),
+              },
+              async (assets) =>
+                handler({
+                  assets,
+                  compiler,
+                  compilation,
+                  environment,
+                }),
+            );
+          }
+        });
+      }
+    }
+
+    chain.plugin(pluginName).use(RsbuildCorePlugin);
+  });
+
+  const getTransformFn: (environmentMeta?: {
+    environment: string;
+  }) => TransformFn = (environmentMeta) => (descriptor, handler) => {
     const id = `rsbuild-transform-${transformId++}`;
 
     transformer[id] = handler;
 
-    // TODO: support environment
-    hooks.modifyBundlerChain.tap()((chain, { target }) => {
-      if (descriptor.targets && !descriptor.targets.includes(target)) {
-        return;
-      }
+    hooks.modifyBundlerChain.tap(environmentMeta)(
+      (chain, { target, environment }) => {
+        // filter by targets
+        if (descriptor.targets && !descriptor.targets.includes(target)) {
+          return;
+        }
 
-      const rule = chain.module.rule(id);
+        // filter by environments
+        if (
+          descriptor.environments &&
+          !descriptor.environments.includes(environment.name)
+        ) {
+          return;
+        }
 
-      if (descriptor.test) {
-        rule.test(descriptor.test);
-      }
-      if (descriptor.resourceQuery) {
-        rule.resourceQuery(descriptor.resourceQuery);
-      }
+        const rule = chain.module.rule(id);
 
-      const loaderName = descriptor.raw
-        ? 'transformRawLoader.cjs'
-        : 'transformLoader.cjs';
-      const loaderPath = join(LOADER_PATH, loaderName);
+        if (descriptor.test) {
+          rule.test(descriptor.test);
+        }
+        if (descriptor.resourceQuery) {
+          rule.resourceQuery(descriptor.resourceQuery);
+        }
 
-      rule.use(id).loader(loaderPath).options({ id });
+        const loaderName = descriptor.raw
+          ? 'transformRawLoader.cjs'
+          : 'transformLoader.cjs';
+        const loaderPath = join(LOADER_PATH, loaderName);
 
-      applyTransformPlugin(chain, transformer);
-    });
+        rule
+          .use(id)
+          .loader(loaderPath)
+          .options({
+            id,
+            getEnvironment: () => environment,
+          } satisfies TransformLoaderOptions);
+      },
+    );
+  };
+
+  const setProcessAssets: (
+    environmentMeta?: EnvironmentMeta,
+  ) => ProcessAssetsFn = (environmentMeta) => (descriptor, handler) => {
+    processAssetsFns.push({ environmentMeta, descriptor, handler });
   };
 
   process.on('exit', () => {
@@ -152,9 +259,9 @@ export function initPluginAPI({
   return (environmentMeta?: { environment: string }) => ({
     context: publicContext,
     expose,
-    // TODO: supports running in specified environment and avoid repeat registry
-    transform,
+    transform: getTransformFn(environmentMeta),
     useExposed,
+    processAssets: setProcessAssets(environmentMeta),
     getRsbuildConfig,
     getNormalizedConfig,
     isPluginExists: pluginManager.isPluginExists,

@@ -118,6 +118,46 @@ pluginSvgr({
 });
 ```
 
+当你设置 `svgoConfig.plugins` 时，同名 plugin 的配置会被自动合并，比如下面的配置会与内置的 `preset-default` 进行合并：
+
+```ts
+pluginSvgr({
+  svgrOptions: {
+    svgoConfig: {
+      plugins: [
+        {
+          name: 'preset-default',
+          params: {
+            overrides: {
+              cleanupIds: false,
+            },
+          },
+        },
+      ],
+    },
+  },
+});
+```
+
+合并后的 `svgoConfig` `如下：
+
+```ts
+const mergedSvgoConfig = {
+  plugins: [
+    {
+      name: 'preset-default',
+      params: {
+        overrides: {
+          removeViewBox: true,
+          cleanupIds: false,
+        },
+      },
+    },
+    'prefixIds',
+  ],
+};
+```
+
 ### svgrOptions.exportType
 
 设置 SVG React 组件的导出方式。

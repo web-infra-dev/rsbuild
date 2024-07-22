@@ -114,6 +114,9 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;
 
@@ -231,6 +234,9 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;
 
@@ -348,6 +354,9 @@ exports[`plugin-asset > should allow to use distPath.image to modify dist path 1
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;
 
@@ -465,5 +474,8 @@ exports[`plugin-asset > should allow to use filename.image to modify filename 1`
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;

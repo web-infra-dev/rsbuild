@@ -45,6 +45,9 @@ exports[`plugin-solid > should allow to configure solid preset options 1`] = `
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
   "resolve": {
     "alias": {
       "solid-refresh": "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/solid-refresh.mjs",
@@ -95,6 +98,9 @@ exports[`plugin-solid > should apply solid preset correctly 1`] = `
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
   "resolve": {
     "alias": {
       "solid-refresh": "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/solid-refresh.mjs",
@@ -145,6 +151,9 @@ exports[`plugin-solid > should apply solid preset correctly in rspack mode 1`] =
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
   "resolve": {
     "alias": {
       "solid-refresh": "<ROOT>/node_modules/<PNPM_INNER>/solid-refresh/dist/solid-refresh.mjs",
