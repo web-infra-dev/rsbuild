@@ -118,6 +118,46 @@ pluginSvgr({
 });
 ```
 
+When you set `svgoConfig.plugins`, the configuration for plugins with the same name is automatically merged. For example, the following configuration will be merged with the built-in `preset-default`:
+
+```ts
+pluginSvgr({
+  svgrOptions: {
+    svgoConfig: {
+      plugins: [
+        {
+          name: 'preset-default',
+          params: {
+            overrides: {
+              cleanupIds: false,
+            },
+          },
+        },
+      ],
+    },
+  },
+});
+```
+
+The merged `svgoConfig` will be:
+
+```ts
+const mergedSvgoConfig = {
+  plugins: [
+    {
+      name: 'preset-default',
+      params: {
+        overrides: {
+          removeViewBox: true,
+          cleanupIds: false,
+        },
+      },
+    },
+    'prefixIds',
+  ],
+};
+```
+
 ### svgrOptions.exportType
 
 Set the export type of SVG React components.

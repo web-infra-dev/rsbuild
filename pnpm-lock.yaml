@@ -1203,6 +1203,9 @@ importers:
       prebundle:
         specifier: 1.2.2
         version: 1.2.2(typescript@5.5.2)
+      svgo:
+        specifier: ^3.3.2
+        version: 3.3.2
       typescript:
         specifier: ^5.5.2
         version: 5.5.2
