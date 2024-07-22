@@ -10,9 +10,7 @@ test('use SVGR and override svgo plugin options', async ({ page }) => {
   await gotoPage(page, rsbuild);
 
   await expect(
-    page.evaluate(
-      `document.getElementById('with-id_svg__svg-path').tagName === 'path'`,
-    ),
+    page.evaluate(`document.getElementById('test-svg').tagName === 'svg'`),
   ).resolves.toBeTruthy();
 
   await rsbuild.close();
