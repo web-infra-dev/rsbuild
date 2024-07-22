@@ -44,7 +44,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
 
     api.processAssets(
       { stage: 'additional' },
-      async ({ compiler, compilation, environment }) => {
+      async ({ compilation, environment, sources }) => {
         const iconPath = getIconPath(environment);
         if (!iconPath) {
           return;
@@ -60,7 +60,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
 
         compilation.emitAsset(
           iconPath.relativePath,
-          new compiler.webpack.sources.RawSource(source, false),
+          new sources.RawSource(source),
         );
       },
     );

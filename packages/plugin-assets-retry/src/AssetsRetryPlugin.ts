@@ -84,7 +84,7 @@ export class AssetsRetryPlugin implements Rspack.RspackPluginInstance {
               const code = await this.getRetryCode();
               compilation.emitAsset(
                 scriptPath,
-                new compiler.webpack.sources.RawSource(code, false),
+                new compiler.webpack.sources.RawSource(code),
               );
             },
           );
