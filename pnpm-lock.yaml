@@ -9208,7 +9208,7 @@ snapshots:
   '@modern-js/utils@2.56.0':
     dependencies:
       '@swc/helpers': 0.5.3
-      caniuse-lite: 1.0.30001642
+      caniuse-lite: 1.0.30001643
       lodash: 4.17.21
       rslog: 1.2.2
 
