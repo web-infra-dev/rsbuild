@@ -104,12 +104,19 @@ const dedupeSvgoPlugins = (config: SvgoConfig): SvgoConfig => {
       continue;
     }
 
+    let isMerged = false;
+
     mergedPlugins = mergedPlugins.map((item) => {
       if (typeof item === 'object' && item.name === plugin.name) {
+        isMerged = true;
         return deepmerge<SvgoPluginConfig>(item, plugin);
       }
       return item;
     });
+
+    if (!isMerged) {
+      mergedPlugins.push(plugin);
+    }
   }
 
   config.plugins = mergedPlugins;
