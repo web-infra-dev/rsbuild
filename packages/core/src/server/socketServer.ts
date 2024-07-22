@@ -23,7 +23,7 @@ function isEqualSet(a: Set<string>, b: Set<string>): boolean {
 }
 
 const parseUrlParams = (url?: string) => {
-  // /rsbuild-hmr?compilerName=web
+  // /rsbuild-hmr?compilationName=web
   const searchParams = url?.split('?')[1]?.split('&') || [];
   const options: Record<string, string> = {};
 
@@ -97,12 +97,12 @@ export class SocketServer {
   }
 
   public updateStats(stats: Stats): void {
-    const name = stats.compilation.name!;
+    const compilationName = stats.compilation.name!;
 
-    this.stats[name] = stats;
+    this.stats[compilationName] = stats;
 
     this.sendStats({
-      name: stats.compilation.name!,
+      compilationName,
     });
   }
 
@@ -180,7 +180,7 @@ export class SocketServer {
     if (this.stats) {
       this.sendStats({
         force: true,
-        name: params.compilationName,
+        compilationName: params.compilationName,
       });
     }
   }
@@ -212,13 +212,12 @@ export class SocketServer {
   // determine what message should send by stats
   private sendStats({
     force = false,
-    name,
+    compilationName,
   }: {
-    name: string;
+    compilationName: string;
     force?: boolean;
   }) {
-    const compilationName = name;
-    const stats = this.getStats(name);
+    const stats = this.getStats(compilationName);
 
     // this should never happened
     if (!stats) {

@@ -210,8 +210,6 @@ function onMessage(e: MessageEvent<string>) {
     return;
   }
 
-  console.log('onMessage', message, message.compilationName, compilationName);
-
   switch (message.type) {
     case 'hash':
       // Update the last compilation hash
