@@ -555,6 +555,19 @@ exports[`environment config > should print environment config when inspect confi
 }
 `;
 
+exports[`environment config > should support add single environment plugin 1`] = `
+{
+  "ssr": {
+    "global": "ssr",
+    "ssr": "ssr",
+  },
+  "web": {
+    "global": "web",
+    "web": "web",
+  },
+}
+`;
+
 exports[`environment config > should support modify environment config by api.modifyRsbuildConfig 1`] = `
 {
   "ssr": {

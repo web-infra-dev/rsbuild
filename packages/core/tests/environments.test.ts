@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { createRsbuild } from '../src';
+import { type RsbuildPlugin, createRsbuild } from '../src';
 
 describe('environment config', () => {
   it('should normalize context correctly', async () => {
@@ -152,6 +152,53 @@ describe('environment config', () => {
     } = await rsbuild.inspectConfig();
 
     expect(environmentConfigs).toMatchSnapshot();
+  });
+
+  it('should support add single environment plugin', async () => {
+    process.env.NODE_ENV = 'development';
+    const plugin: (pluginId: string) => RsbuildPlugin = (pluginId) => ({
+      name: 'test-environment',
+      setup: (api) => {
+        api.modifyEnvironmentConfig(
+          (config, { name, mergeEnvironmentConfig }) => {
+            return mergeEnvironmentConfig(config, {
+              source: {
+                alias: {
+                  [pluginId]: name,
+                },
+              },
+            });
+          },
+        );
+      },
+    });
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        environments: {
+          web: {
+            plugins: [plugin('web')],
+          },
+          ssr: {
+            plugins: [plugin('ssr')],
+          },
+        },
+      },
+    });
+
+    rsbuild.addPlugins([plugin('global')]);
+
+    const {
+      origin: { environmentConfigs },
+    } = await rsbuild.inspectConfig();
+
+    expect(
+      Object.fromEntries(
+        Object.entries(environmentConfigs).map(([name, config]) => [
+          name,
+          config.source.alias,
+        ]),
+      ),
+    ).toMatchSnapshot();
   });
 
   it('should normalize environment config correctly', async () => {
