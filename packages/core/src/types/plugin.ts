@@ -309,6 +309,20 @@ export type ProcessAssetsDescriptor = {
   targets?: RsbuildTarget[];
 };
 
+export type RspackSources = Pick<
+  typeof Rspack.sources,
+  | 'Source'
+  | 'RawSource'
+  | 'OriginalSource'
+  | 'SourceMapSource'
+  | 'CachedSource'
+  | 'ConcatSource'
+  | 'ReplaceSource'
+  | 'PrefixSource'
+  | 'SizeOnlySource'
+  | 'CompatSource'
+>;
+
 export type ProcessAssetsHandler = (context: {
   assets: Record<string, Rspack.sources.Source>;
   compiler: Rspack.Compiler;
@@ -317,6 +331,10 @@ export type ProcessAssetsHandler = (context: {
    * The environment context for current build.
    */
   environment: EnvironmentContext;
+  /**
+   * Contains multiple classes which represent an Rspack `Source`.
+   */
+  sources: RspackSources;
 }) => Promise<void> | void;
 
 export type ProcessAssetsFn = (

@@ -1,55 +1,118 @@
-import type { RsbuildPlugin } from '@rsbuild/core';
+import fs from 'node:fs';
+import path from 'node:path';
+import type {
+  EnvironmentContext,
+  NormalizedEnvironmentConfig,
+  RsbuildPlugin,
+} from '@rsbuild/core';
+import { ensureAssetPrefix } from '@rsbuild/core';
 import type { PluginAssetsRetryOptions } from './types';
 
 export type { PluginAssetsRetryOptions };
 
 export const PLUGIN_ASSETS_RETRY_NAME = 'rsbuild:assets-retry';
 
+async function getRetryCode(
+  options: PluginAssetsRetryOptions,
+): Promise<string> {
+  const { default: serialize } = await import('serialize-javascript');
+  const filename = 'initialChunkRetry';
+  const { minify, inlineScript: _, ...restOptions } = options;
+
+  const runtimeFilePath = path.join(
+    __dirname,
+    'runtime',
+    minify ? `${filename}.min.js` : `${filename}.js`,
+  );
+  const runtimeCode = await fs.promises.readFile(runtimeFilePath, 'utf-8');
+
+  return `(function(){${runtimeCode};init(${serialize(restOptions)});})()`;
+}
+
 export const pluginAssetsRetry = (
-  options: PluginAssetsRetryOptions = {},
+  userOptions: PluginAssetsRetryOptions = {},
 ): RsbuildPlugin => ({
   name: PLUGIN_ASSETS_RETRY_NAME,
   setup(api) {
-    api.modifyBundlerChain(
-      async (chain, { CHAIN_ID, HtmlPlugin, isProd, environment }) => {
-        const { config, htmlPaths } = environment;
+    const { inlineScript = true } = userOptions;
 
-        if (!options || Object.keys(htmlPaths).length === 0) {
-          return;
-        }
+    const getScriptPath = (environment: EnvironmentContext) => {
+      const distDir = environment.config.output.distPath.js;
+      return path.posix.join(distDir, `assets-retry.${RSBUILD_VERSION}.js`);
+    };
 
-        const { AssetsRetryPlugin } = await import('./AssetsRetryPlugin');
-        const { AsyncChunkRetryPlugin } = await import(
-          './AsyncChunkRetryPlugin'
-        );
-        const distDir = config.output.distPath.js;
+    const formatOptions = (config: NormalizedEnvironmentConfig) => {
+      const options = { ...userOptions };
 
-        // options.crossOrigin should be same as html.crossorigin by default
-        if (options.crossOrigin === undefined) {
-          options.crossOrigin = config.html.crossorigin;
-        }
+      // options.crossOrigin should be same as html.crossorigin by default
+      if (options.crossOrigin === undefined) {
+        options.crossOrigin = config.html.crossorigin;
+      }
 
-        if (options.minify === undefined) {
-          const minify =
-            typeof config.output.minify === 'boolean'
-              ? config.output.minify
-              : config.output.minify?.js;
-          options.minify = minify && isProd;
-        }
+      if (options.minify === undefined) {
+        const minify =
+          typeof config.output.minify === 'boolean'
+            ? config.output.minify
+            : config.output.minify?.js;
+        options.minify = minify && process.env.NODE_ENV === 'production';
+      }
 
-        chain.plugin(CHAIN_ID.PLUGIN.ASSETS_RETRY).use(AssetsRetryPlugin, [
-          {
-            ...options,
-            distDir,
-            HtmlPlugin,
-          },
-        ]);
+      return options;
+    };
 
-        const isRspack = api.context.bundlerType === 'rspack';
-        chain
-          .plugin(CHAIN_ID.PLUGIN.ASYNC_CHUNK_RETRY)
-          .use(AsyncChunkRetryPlugin, [{ ...options, isRspack }]);
-      },
-    );
+    if (inlineScript) {
+      api.modifyHTMLTags(async ({ headTags, bodyTags }, { environment }) => {
+        const code = await getRetryCode(formatOptions(environment.config));
+
+        headTags.unshift({
+          tag: 'script',
+          attrs: {},
+          children: code,
+        });
+
+        return { headTags, bodyTags };
+      });
+    } else {
+      api.modifyHTMLTags(
+        async ({ headTags, bodyTags }, { assetPrefix, environment }) => {
+          const scriptPath = getScriptPath(environment);
+          const url = ensureAssetPrefix(scriptPath, assetPrefix);
+
+          headTags.unshift({
+            tag: 'script',
+            attrs: {
+              src: url,
+            },
+          });
+
+          return { headTags, bodyTags };
+        },
+      );
+
+      api.processAssets(
+        { stage: 'additional' },
+        async ({ sources, compilation, environment }) => {
+          const scriptPath = getScriptPath(environment);
+          const code = await getRetryCode(formatOptions(environment.config));
+          compilation.emitAsset(scriptPath, new sources.RawSource(code));
+        },
+      );
+    }
+
+    api.modifyBundlerChain(async (chain, { environment }) => {
+      const { config, htmlPaths } = environment;
+
+      if (!userOptions || Object.keys(htmlPaths).length === 0) {
+        return;
+      }
+
+      const { AsyncChunkRetryPlugin } = await import('./AsyncChunkRetryPlugin');
+      const options = formatOptions(config);
+      const isRspack = api.context.bundlerType === 'rspack';
+
+      chain
+        .plugin('async-chunk-retry')
+        .use(AsyncChunkRetryPlugin, [{ ...options, isRspack }]);
+    });
   },
 });

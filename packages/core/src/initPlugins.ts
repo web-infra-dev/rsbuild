@@ -159,6 +159,8 @@ export function initPluginAPI({
         });
 
         compiler.hooks.compilation.tap(pluginName, (compilation) => {
+          const { sources } = compiler.webpack;
+
           for (const {
             descriptor,
             handler,
@@ -188,6 +190,7 @@ export function initPluginAPI({
                   compiler,
                   compilation,
                   environment,
+                  sources,
                 }),
             );
           }
