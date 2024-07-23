@@ -82,7 +82,7 @@ export class SocketServer {
 
     this.wsServer.on('connection', (socket, req) => {
       // /rsbuild-hmr?compilationName=web
-      const queryStr = req.url ? req.url?.split('?')[1] : '';
+      const queryStr = req.url ? req.url.split('?')[1] : '';
 
       this.onConnect(
         socket,
