@@ -224,7 +224,7 @@ The Rsbuild plugin can modify the configuration of Rspack in various ways.
 
 - `api.modifyRspackConfig(config => {})` modifies the final Rspack configuration.
 - `api.modifyBundlerChain(chain => {})` modifies the `rspack-chain`, usage is similar to [rspack-chain](https://github.com/rspack-contrib/rspack-chain).
-- `api.onAfterCreateCompiler(compiler => {})` directly operates on the Rspack compiler instance.
+- `api.onAfterCreateCompiler({ compiler } => {})` directly operates on the Rspack compiler instance.
 
 ## Example References
 
