@@ -252,9 +252,17 @@ export function initPluginAPI({
       processAssetsFns.push({ environment, descriptor, handler });
     };
 
-  process.on('exit', () => {
-    hooks.onExit.call();
-  });
+  let onExitListened = false;
+
+  const onExit: typeof hooks.onExit.tap = (cb) => {
+    if (!onExitListened) {
+      process.on('exit', () => {
+        hooks.onExit.call();
+      });
+      onExitListened = true;
+    }
+    hooks.onExit.tap(cb);
+  };
 
   // Each plugin returns different APIs depending on the registered environment info.
   return (environment?: string) => ({
@@ -268,7 +276,7 @@ export function initPluginAPI({
     isPluginExists: pluginManager.isPluginExists,
 
     // Hooks
-    onExit: hooks.onExit.tap,
+    onExit,
     onAfterBuild: hooks.onAfterBuild.tap,
     onBeforeBuild: hooks.onBeforeBuild.tap,
     onCloseDevServer: hooks.onCloseDevServer.tap,
