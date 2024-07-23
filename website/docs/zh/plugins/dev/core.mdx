@@ -320,6 +320,145 @@ api.transform(
 
 注意，对于一些复杂的代码转换场景，`api.transform` 可能无法满足，此时你可以使用 Rspack loader 进行实现。
 
+## api.processAssets
+
+在输出产物之前对 assets 进行修改，等价于 Rspack 的 [compilation.hooks.processAssets](https://rspack.dev/api/plugin-api/compilation-hooks#processassets) hook。
+
+- **版本：** `>= 1.0.0`
+- **类型：**
+
+```ts
+function processAssets(
+  descriptor: ProcessAssetsDescriptor,
+  handler: ProcessAssetsHandler,
+): void;
+```
+
+`api.processAssets` 接受两个参数：
+
+- `descriptor`：一个对象，用于描述 processAssets 触发的 stage 和匹配条件。
+- `handler`：一个回调函数，接收 assets 对象并允许你修改它。
+
+### 示例
+
+- 在 `additional` 阶段输出一个新的 asset：
+
+```js
+api.processAssets(
+  { stage: 'additional' },
+  ({ assets, sources, compilation }) => {
+    const source = new sources.RawSource('This is a new asset!');
+    compilation.emitAsset('new-asset.txt', source);
+  },
+);
+```
+
+- 更新一个已经存在的 asset：
+
+```js
+api.processAssets(
+  { stage: 'additions' },
+  ({ assets, sources, compilation }) => {
+    const asset = assets['foo.js'];
+    if (!asset) {
+      return;
+    }
+
+    const oldContent = asset.source();
+    const newContent = oldContent + '\nconsole.log("hello world!")';
+    const source = new sources.RawSource(newContent);
+
+    compilation.updateAsset(assetName, source);
+  },
+);
+```
+
+- 移除一个 asset：
+
+```js
+api.processAssets({ stage: 'stage-optimize' }, ({ assets, compilation }) => {
+  const assetName = 'unwanted-script.js';
+  if (assets[assetName]) {
+    compilation.deleteAsset(assetName);
+  }
+});
+```
+
+### descriptor 参数
+
+descriptor 参数是一个对象，用于描述 processAssets 触发的 stage 和匹配条件。
+
+- **类型：**
+
+```ts
+type ProcessAssetsDescriptor = {
+  stage: ProcessAssetsStage;
+  targets?: RsbuildTarget[];
+};
+```
+
+descriptor 参数支持设置以下属性：
+
+- `stage`：Rspack 内部将 processAssets 划分为多个 stages（参考 [process assets stages](#process-assets-stages)，你可以根据需要进行的操作来选择合适的 stage。
+
+```js
+api.processAssets({ stage: 'additional' }, ({ assets }) => {
+  // ...
+});
+```
+
+- `targets`：匹配 Rsbuild [output.target](/config/output/target)，仅对匹配的 targets 应用当前 processAssets 函数。
+
+```js
+api.processAssets({ stage: 'additional', targets: ['web'] }, ({ assets }) => {
+  // ...
+});
+```
+
+### handler 参数
+
+handler 参数是一个回调函数，接收一个 assets 对象，并允许你修改它。
+
+- **类型：**
+
+```ts
+type ProcessAssetsHandler = (context: {
+  assets: Record<string, Rspack.sources.Source>;
+  compiler: Rspack.Compiler;
+  compilation: Rspack.Compilation;
+  environment: EnvironmentContext;
+  sources: RspackSources;
+}) => Promise<void> | void;
+```
+
+handler 函数提供以下参数：
+
+- `assets`：一个对象，其中 key 是 asset 的路径名，值是由 [Source](https://github.com/webpack/webpack-sources#source) 表示的 asset 数据。
+- `compiler`：Rspack 的 Compiler 对象。
+- `compilation`：Rspack 的 Compilation 对象。
+- `environment`: 当前构建的 [environment 上下文](/api/javascript-api/environment-context).
+- `sources`：[Rspack Sources](https://github.com/webpack/webpack-sources#source) 对象，它包含了多种表示 Sources 的 classes。
+
+### Process assets stages
+
+下面是支持的 stage 列表，Rspack 会按由上至下的顺序依次执行这些 stages，请根据你需要进行的操作来选择合适的 stage。
+
+- `additional` — 在编译中添加额外的 asset。
+- `pre-process` — asset 进行了基础的预处理。
+- `derived` — 从现有 asset 中派生新的 asset。
+- `additions` — 为现有的 asset 添加额外的内容，例如 banner 或初始代码。
+- `optimize` — 以通用的方式优化现有 asset。
+- `optimize-count` — 优化现有 asset 的数量，例如，进行合并操作。
+- `optimize-compatibility` — 优化现有 asset 的兼容性，例如添加 polyfills 或者 vendor prefixes。
+- `optimize-size` — 优化现有 asset 的大小，例如进行压缩或者删除空格。
+- `dev-tooling` — 为 asset 添加开发者工具，例如，提取 source map。
+- `optimize-inline` — 将 asset 内联到其他 asset 中来优化现有 asset 数量。
+- `summarize` — 整理现有 asset 列表。
+- `optimize-hash` — 优化 asset 的 hash 值，例如，生成基于 asset 内容的真实 hash 值。
+- `optimize-transfer` — 优化已有 asset 的转换操作，例如对 asset 进行压缩，并作为独立的 asset。
+- `analyse` — 分析已有 asset。
+- `report` — 创建用于上报的 asset。
+
 ## api.expose
 
 用于插件间通信。
