@@ -5,7 +5,7 @@ import type { DevMiddlewareOptions } from '../provider/createCompiler';
 import type { DevConfig, NextFunction } from '../types';
 
 type ServerCallbacks = {
-  onInvalid: () => void;
+  onInvalid: (compilationName?: string) => void;
   onDone: (stats: any) => void;
 };
 
@@ -37,21 +37,8 @@ const isNodeCompiler = (compiler: {
   return false;
 };
 
-type CompilerTapFn<CallBack extends (...args: any[]) => void = () => void> = {
-  tap: (name: string, cb: CallBack) => void;
-};
-
 export const setupServerHooks = (
-  compiler: {
-    options: {
-      target?: Compiler['options']['target'];
-    };
-    hooks: {
-      compile: CompilerTapFn<ServerCallbacks['onInvalid']>;
-      invalid: CompilerTapFn<ServerCallbacks['onInvalid']>;
-      done: CompilerTapFn<ServerCallbacks['onDone']>;
-    };
-  },
+  compiler: Compiler,
   hookCallbacks: ServerCallbacks,
 ): void => {
   // TODO: node SSR HMR is not supported yet
@@ -61,8 +48,12 @@ export const setupServerHooks = (
 
   const { compile, invalid, done } = compiler.hooks;
 
-  compile.tap('rsbuild-dev-server', hookCallbacks.onInvalid);
-  invalid.tap('rsbuild-dev-server', hookCallbacks.onInvalid);
+  compile.tap('rsbuild-dev-server', () =>
+    hookCallbacks.onInvalid(compiler.name),
+  );
+  invalid.tap('rsbuild-dev-server', () =>
+    hookCallbacks.onInvalid(compiler.name),
+  );
   done.tap('rsbuild-dev-server', hookCallbacks.onDone);
 };
 
@@ -82,6 +73,7 @@ function applyHMREntry({
   }
 
   new compiler.webpack.DefinePlugin({
+    RSBUILD_COMPILATION_NAME: JSON.stringify(compiler.name!),
     RSBUILD_CLIENT_CONFIG: JSON.stringify(clientConfig),
     RSBUILD_DEV_LIVE_RELOAD: liveReload,
   }).apply(compiler);

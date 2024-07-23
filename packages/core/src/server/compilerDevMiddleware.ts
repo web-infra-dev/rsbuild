@@ -88,7 +88,10 @@ export class CompilerDevMiddleware {
     type: string,
     data?: Record<string, any> | string | boolean,
   ): void {
-    this.socketServer.sockWrite(type, data);
+    this.socketServer.sockWrite({
+      type,
+      data,
+    });
   }
 
   private setupDevMiddleware(
@@ -98,8 +101,11 @@ export class CompilerDevMiddleware {
     const { devConfig, serverConfig } = this;
 
     const callbacks = {
-      onInvalid: () => {
-        this.socketServer.sockWrite('invalid');
+      onInvalid: (compilationName?: string) => {
+        this.socketServer.sockWrite({
+          type: 'invalid',
+          compilationName,
+        });
       },
       onDone: (stats: any) => {
         this.socketServer.updateStats(stats);
