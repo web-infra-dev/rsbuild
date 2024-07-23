@@ -1,4 +1,4 @@
-import type { RsbuildConfig, RsbuildPlugin, Rspack } from '@rsbuild/core';
+import type { EnvironmentConfig, RsbuildPlugin, Rspack } from '@rsbuild/core';
 
 export type PluginPreactOptions = {
   /**
@@ -18,14 +18,14 @@ export const pluginPreact = (
   setup(api) {
     const { reactAliasesEnabled = true } = options;
 
-    api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
+    api.modifyEnvironmentConfig((userConfig, { mergeEnvironmentConfig }) => {
       const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
         development: process.env.NODE_ENV === 'development',
         runtime: 'automatic',
         importSource: 'preact',
       };
 
-      const extraConfig: RsbuildConfig = {
+      const extraConfig: EnvironmentConfig = {
         tools: {
           swc: {
             jsc: {
@@ -52,7 +52,7 @@ export const pluginPreact = (
         };
       }
 
-      return mergeRsbuildConfig(extraConfig, userConfig);
+      return mergeEnvironmentConfig(extraConfig, userConfig);
     });
   },
 });

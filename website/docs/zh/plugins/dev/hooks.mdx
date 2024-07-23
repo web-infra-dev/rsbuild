@@ -141,6 +141,10 @@ rsbuild.addPlugins([plugin1, plugin2]);
 
 修改传递给 Rsbuild 的配置项，你可以直接修改传入的 config 对象，也可以返回一个新的对象来替换传入的对象。
 
+:::warning
+`modifyRsbuildConfig` 为全局 hook。如果你希望你开发的插件支持[仅在特定的 environment 下生效](/guide/advanced/environments#为指定环境添加插件)，应避免使用 `modifyRsbuildConfig`，可使用 [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig) 代替。
+:::
+
 - **类型：**
 
 ```ts

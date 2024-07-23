@@ -141,6 +141,10 @@ rsbuild.addPlugins([plugin1, plugin2]);
 
 Modify the config passed to the Rsbuild, you can directly modify the config object, or return a new object to replace the previous object.
 
+:::warning
+`modifyRsbuildConfig` is a global hook. To add support for your plugin as an [environment-specific plugin](/guide/advanced/environments#add-plugins-for-specified-environment), you should use [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig) instead of `modifyRsbuildConfig`.
+:::
+
 - **Type:**
 
 ```ts

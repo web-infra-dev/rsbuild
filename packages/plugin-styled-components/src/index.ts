@@ -48,6 +48,8 @@ export const pluginStyledComponents = (
       return;
     }
 
+    let useSSR = false;
+
     const getMergedOptions = (useSSR: boolean) => {
       const isProd = process.env.NODE_ENV === 'production';
 
@@ -57,39 +59,43 @@ export const pluginStyledComponents = (
       });
     };
 
+    // use modifyRsbuildConfig to get useSSR default value (can be override by pluginOptions)
     api.modifyRsbuildConfig({
       order: 'post',
-      handler: (userConfig, { mergeRsbuildConfig }) => {
+      handler: (userConfig) => {
         const targets = userConfig.environments
           ? Object.values(userConfig.environments).map(
               (e) => e.output?.target || userConfig.output?.target || 'web',
             )
           : [userConfig.output?.target || 'web'];
-        const useSSR = isServerTarget(targets);
-        const mergedOptions = getMergedOptions(useSSR);
-        if (!mergedOptions) {
-          return userConfig;
-        }
+        useSSR = isServerTarget(targets);
+      },
+    });
 
-        const extraConfig: RsbuildConfig = {
-          tools: {
-            swc: {
-              jsc: {
-                experimental: {
-                  plugins: [
-                    [
-                      require.resolve('@swc/plugin-styled-components'),
-                      mergedOptions,
-                    ],
+    api.modifyEnvironmentConfig((userConfig, { mergeEnvironmentConfig }) => {
+      const mergedOptions = getMergedOptions(useSSR);
+      if (!mergedOptions) {
+        return userConfig;
+      }
+
+      const extraConfig: RsbuildConfig = {
+        tools: {
+          swc: {
+            jsc: {
+              experimental: {
+                plugins: [
+                  [
+                    require.resolve('@swc/plugin-styled-components'),
+                    mergedOptions,
                   ],
-                },
+                ],
               },
             },
           },
-        };
+        },
+      };
 
-        return mergeRsbuildConfig(extraConfig, userConfig);
-      },
+      return mergeEnvironmentConfig(extraConfig, userConfig);
     });
   },
 });

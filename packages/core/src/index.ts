@@ -48,6 +48,7 @@ export type {
   DevConfig,
   DistPathConfig,
   EnvironmentContext,
+  EnvironmentConfig,
   FilenameConfig,
   HtmlConfig,
   HtmlRspackPlugin,
