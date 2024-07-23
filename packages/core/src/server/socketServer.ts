@@ -1,5 +1,6 @@
 import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
+import { parse } from 'node:querystring';
 import type Ws from 'ws';
 import { getAllStatsErrors, getAllStatsWarnings } from '../helpers';
 import { logger } from '../logger';
@@ -21,18 +22,6 @@ function isEqualSet(a: Set<string>, b: Set<string>): boolean {
   }
   return true;
 }
-
-const parseUrlParams = (url?: string) => {
-  // /rsbuild-hmr?compilationName=web
-  const searchParams = url?.split('?')[1]?.split('&') || [];
-  const options: Record<string, string> = {};
-
-  for (const pair of searchParams) {
-    const ary = pair.split('=');
-    options[ary[0]] = decodeURIComponent(ary[1]);
-  }
-  return options;
-};
 
 export class SocketServer {
   private wsServer!: Ws.Server;
@@ -92,7 +81,13 @@ export class SocketServer {
     }, 30000);
 
     this.wsServer.on('connection', (socket, req) => {
-      this.onConnect(socket, parseUrlParams(req.url));
+      // /rsbuild-hmr?compilationName=web
+      const queryStr = req.url ? req.url?.split('?')[1] : '';
+
+      this.onConnect(
+        socket,
+        queryStr ? (parse(queryStr) as Record<string, string>) : {},
+      );
     });
   }
 
