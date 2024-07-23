@@ -1,7 +1,7 @@
 import type { Hooks } from '../initHooks';
 import type { NormalizedConfig, RsbuildConfig } from './config';
 import type { EnvironmentContext } from './hooks';
-import type { EnvironmentMeta, RsbuildPluginAPI } from './plugin';
+import type { RsbuildPluginAPI } from './plugin';
 
 export type BundlerType = 'rspack' | 'webpack';
 
@@ -36,9 +36,10 @@ export type InternalContext = RsbuildContext & {
   normalizedConfig?: NormalizedConfig;
   /**
    * Get the plugin API.
-   * When environmentMeta is undefined, the global plugin API is returned, which can be used in all environments.
+   *
+   * When environment is undefined, the global plugin API is returned, which can be used in all environments.
    * */
-  getPluginAPI?: (environmentMeta?: EnvironmentMeta) => RsbuildPluginAPI;
+  getPluginAPI?: (environment?: string) => RsbuildPluginAPI;
   /** The environment context. */
   environments: Record<string, EnvironmentContext>;
 };

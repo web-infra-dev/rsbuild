@@ -38,9 +38,10 @@ async function applyDefaultPlugins(
     import('./plugins/asset').then(({ pluginAsset }) => pluginAsset()),
     import('./plugins/html').then(({ pluginHtml }) =>
       pluginHtml((environment: string) => async (...args) => {
-        const result = await context.hooks.modifyHTMLTags.call(environment)(
-          ...args,
-        );
+        const result = await context.hooks.modifyHTMLTags.callInEnvironment({
+          environment,
+          args,
+        });
         return result[0];
       }),
     ),

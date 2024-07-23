@@ -3,7 +3,6 @@ import { isPluginMatchEnvironment } from './pluginManager';
 import type {
   AsyncHook,
   EnvironmentAsyncHook,
-  EnvironmentMeta,
   HookDescriptor,
   ModifyBundlerChainFn,
   ModifyEnvironmentConfigFn,
@@ -29,68 +28,77 @@ export function createEnvironmentAsyncHook<
   Callback extends (...args: any[]) => any,
 >(): EnvironmentAsyncHook<Callback> {
   type Hook = {
-    environmentMeta?: EnvironmentMeta;
+    environment?: string;
     handler: Callback;
   };
   const preGroup: Hook[] = [];
   const postGroup: Hook[] = [];
   const defaultGroup: Hook[] = [];
 
-  const tap =
-    (environmentMeta?: EnvironmentMeta) =>
-    (cb: Callback | HookDescriptor<Callback>) => {
-      if (isFunction(cb)) {
-        defaultGroup.push({
-          environmentMeta,
-          handler: cb,
-        });
-      } else if (cb.order === 'pre') {
-        preGroup.push({
-          environmentMeta,
-          handler: cb.handler,
-        });
-      } else if (cb.order === 'post') {
-        postGroup.push({
-          environmentMeta,
-          handler: cb.handler,
-        });
-      } else {
-        defaultGroup.push({
-          environmentMeta,
-          handler: cb.handler,
-        });
+  const tapEnvironment = ({
+    environment,
+    handler: cb,
+  }: {
+    environment?: string;
+    handler: Callback | HookDescriptor<Callback>;
+  }) => {
+    if (isFunction(cb)) {
+      defaultGroup.push({
+        environment,
+        handler: cb,
+      });
+    } else if (cb.order === 'pre') {
+      preGroup.push({
+        environment,
+        handler: cb.handler,
+      });
+    } else if (cb.order === 'post') {
+      postGroup.push({
+        environment,
+        handler: cb.handler,
+      });
+    } else {
+      defaultGroup.push({
+        environment,
+        handler: cb.handler,
+      });
+    }
+  };
+
+  const callInEnvironment = async ({
+    environment,
+    args: params,
+  }: {
+    environment?: string;
+    args: Parameters<Callback>;
+  }) => {
+    const callbacks = [...preGroup, ...defaultGroup, ...postGroup];
+
+    for (const callback of callbacks) {
+      // If this callback is not a global callback, the environment info should match
+      if (
+        callback.environment &&
+        environment &&
+        !isPluginMatchEnvironment(callback.environment, environment)
+      ) {
+        continue;
       }
-    };
 
-  const call =
-    (environment?: string) =>
-    async (...args: Parameters<Callback>) => {
-      const params = args.slice(0) as Parameters<Callback>;
-      const callbacks = [...preGroup, ...defaultGroup, ...postGroup];
+      const result = await callback.handler(...params);
 
-      for (const callback of callbacks) {
-        // If this callback is not a global callback, the environment info should match
-        if (
-          callback.environmentMeta &&
-          environment &&
-          !isPluginMatchEnvironment(callback.environmentMeta, environment)
-        ) {
-          continue;
-        }
-
-        const result = await callback.handler(...params);
-
-        if (result !== undefined) {
-          params[0] = result;
-        }
+      if (result !== undefined) {
+        params[0] = result;
       }
+    }
 
-      return params;
-    };
+    return params;
+  };
 
   return {
-    tap,
-    call,
+    tapEnvironment,
+    tap: (handler: Callback | HookDescriptor<Callback>) =>
+      tapEnvironment({ handler }),
+    callInEnvironment,
   };
 }
 
@@ -113,8 +121,7 @@ export function createAsyncHook<
     }
   };
 
-  const call = async (...args: Parameters<Callback>) => {
-    const params = args.slice(0) as Parameters<Callback>;
+  const call = async (...params: Parameters<Callback>) => {
     const callbacks = [...preGroup, ...defaultGroup, ...postGroup];
 
     for (const callback of callbacks) {

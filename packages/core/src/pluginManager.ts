@@ -3,7 +3,6 @@ import { isFunction } from './helpers';
 import { logger } from './logger';
 import type {
   BundlerPluginInstance,
-  EnvironmentMeta,
   Falsy,
   PluginManager,
   PluginMeta,
@@ -57,11 +56,11 @@ function validatePlugin(plugin: unknown) {
 export const RSBUILD_ALL_ENVIRONMENT_SYMBOL = 'RSBUILD_ALL_ENVIRONMENT_SYMBOL';
 
 export const isPluginMatchEnvironment = (
-  meta: { environment: string },
-  environment: string,
+  metaEnvironment: string,
+  currentEnvironment: string,
 ): boolean =>
-  meta.environment === environment ||
-  meta.environment === RSBUILD_ALL_ENVIRONMENT_SYMBOL;
+  metaEnvironment === currentEnvironment ||
+  metaEnvironment === RSBUILD_ALL_ENVIRONMENT_SYMBOL;
 
 export function createPluginManager(): PluginManager {
   let plugins: PluginMeta[] = [];
@@ -138,7 +137,7 @@ export function createPluginManager(): PluginManager {
       plugins.find(
         (plugin) =>
           plugin.instance.name === pluginName &&
-          isPluginMatchEnvironment(plugin, options.environment),
+          isPluginMatchEnvironment(plugin.environment, options.environment),
       ),
     );
 
@@ -148,7 +147,9 @@ export function createPluginManager(): PluginManager {
     },
   ) => {
     return plugins
-      .filter((p) => isPluginMatchEnvironment(p, options.environment))
+      .filter((p) =>
+        isPluginMatchEnvironment(p.environment, options.environment),
+      )
       .map((p) => p.instance);
   };
   return {
@@ -234,7 +235,7 @@ export async function initPlugins({
   getPluginAPI,
   pluginManager,
 }: {
-  getPluginAPI: (environmentMeta?: EnvironmentMeta) => RsbuildPluginAPI;
+  getPluginAPI: (environment?: string) => RsbuildPluginAPI;
   pluginManager: PluginManager;
 }): Promise<void> {
   logger.debug('init plugins');
@@ -265,8 +266,8 @@ export async function initPlugins({
     ) {
       continue;
     }
-    const { instance, ...environmentMeta } = plugin;
-    await instance.setup(getPluginAPI!(environmentMeta));
+    const { instance, environment } = plugin;
+    await instance.setup(getPluginAPI!(environment));
   }
 
   logger.debug('init plugins done');

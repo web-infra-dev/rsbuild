@@ -10,19 +10,26 @@ describe('initHooks', () => {
   test('createEnvironmentAsyncHook should only works in specified environment', async () => {
     const logs: string[] = [];
     const hookA = createEnvironmentAsyncHook();
-    hookA.tap()((msg) => {
+    hookA.tap((msg) => {
       logs.push(`[global] ${msg}`);
     });
 
-    hookA.tap({
+    hookA.tapEnvironment({
       environment: 'a',
-    })((msg) => {
-      logs.push(msg);
+      handler: (msg) => {
+        logs.push(msg);
+      },
     });
 
-    await hookA.call('a')('call in a');
+    await hookA.callInEnvironment({
+      environment: 'a',
+      args: ['call in a'],
+    });
 
-    await hookA.call('b')('call in b');
+    await hookA.callInEnvironment({
+      environment: 'b',
+      args: ['call in b'],
+    });
 
     expect(logs).toEqual([
       '[global] call in a',

@@ -23,9 +23,11 @@ export async function modifyBundlerChain(
 
   const bundlerChain = getBundlerChain();
 
-  const [modifiedBundlerChain] = await context.hooks.modifyBundlerChain.call(
-    utils.environment.name,
-  )(bundlerChain, utils);
+  const [modifiedBundlerChain] =
+    await context.hooks.modifyBundlerChain.callInEnvironment({
+      environment: utils.environment.name,
+      args: [bundlerChain, utils],
+    });
 
   if (utils.environment.config.tools?.bundlerChain) {
     for (const item of castArray(utils.environment.config.tools.bundlerChain)) {

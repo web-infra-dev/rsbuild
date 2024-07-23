@@ -6,7 +6,6 @@ import { removeLeadingSlash } from './helpers';
 import type { TransformLoaderOptions } from './loader/transformLoader';
 import { isPluginMatchEnvironment } from './pluginManager';
 import type {
-  EnvironmentMeta,
   GetRsbuildConfig,
   InternalContext,
   NormalizedConfig,
@@ -82,7 +81,7 @@ export function initPluginAPI({
 }: {
   context: InternalContext;
   pluginManager: PluginManager;
-}): (environmentMeta?: { environment: string }) => RsbuildPluginAPI {
+}): (environment?: string) => RsbuildPluginAPI {
   const { hooks } = context;
   const publicContext = createPublicContext(context);
 
@@ -137,12 +136,12 @@ export function initPluginAPI({
   let transformId = 0;
   const transformer: Record<string, TransformHandler> = {};
   const processAssetsFns: Array<{
-    environmentMeta?: EnvironmentMeta;
+    environment?: string;
     descriptor: ProcessAssetsDescriptor;
     handler: ProcessAssetsHandler;
   }> = [];
 
-  hooks.modifyBundlerChain.tap()((chain, { target, environment }) => {
+  hooks.modifyBundlerChain.tap((chain, { target, environment }) => {
     const pluginName = 'RsbuildCorePlugin';
 
     /**
@@ -164,7 +163,7 @@ export function initPluginAPI({
           for (const {
             descriptor,
             handler,
-            environmentMeta,
+            environment: metaEnvironment,
           } of processAssetsFns) {
             // filter by targets
             if (descriptor.targets && !descriptor.targets.includes(target)) {
@@ -173,8 +172,8 @@ export function initPluginAPI({
 
             // filter by environment
             if (
-              environmentMeta &&
-              !isPluginMatchEnvironment(environmentMeta, environment.name)
+              metaEnvironment &&
+              !isPluginMatchEnvironment(metaEnvironment, environment.name)
             ) {
               return;
             }
@@ -201,70 +200,69 @@ export function initPluginAPI({
     chain.plugin(pluginName).use(RsbuildCorePlugin);
   });
 
-  const getTransformFn: (environmentMeta?: {
-    environment: string;
-  }) => TransformFn = (environmentMeta) => (descriptor, handler) => {
-    const id = `rsbuild-transform-${transformId++}`;
+  const getTransformFn: (environment?: string) => TransformFn =
+    (environment) => (descriptor, handler) => {
+      const id = `rsbuild-transform-${transformId++}`;
 
-    transformer[id] = handler;
+      transformer[id] = handler;
 
-    hooks.modifyBundlerChain.tap(environmentMeta)(
-      (chain, { target, environment }) => {
-        // filter by targets
-        if (descriptor.targets && !descriptor.targets.includes(target)) {
-          return;
-        }
+      hooks.modifyBundlerChain.tapEnvironment({
+        environment,
+        handler: (chain, { target, environment }) => {
+          // filter by targets
+          if (descriptor.targets && !descriptor.targets.includes(target)) {
+            return;
+          }
 
-        // filter by environments
-        if (
-          descriptor.environments &&
-          !descriptor.environments.includes(environment.name)
-        ) {
-          return;
-        }
+          // filter by environments
+          if (
+            descriptor.environments &&
+            !descriptor.environments.includes(environment.name)
+          ) {
+            return;
+          }
 
-        const rule = chain.module.rule(id);
+          const rule = chain.module.rule(id);
 
-        if (descriptor.test) {
-          rule.test(descriptor.test);
-        }
-        if (descriptor.resourceQuery) {
-          rule.resourceQuery(descriptor.resourceQuery);
-        }
+          if (descriptor.test) {
+            rule.test(descriptor.test);
+          }
+          if (descriptor.resourceQuery) {
+            rule.resourceQuery(descriptor.resourceQuery);
+          }
 
-        const loaderName = descriptor.raw
-          ? 'transformRawLoader.cjs'
-          : 'transformLoader.cjs';
-        const loaderPath = join(LOADER_PATH, loaderName);
+          const loaderName = descriptor.raw
+            ? 'transformRawLoader.cjs'
+            : 'transformLoader.cjs';
+          const loaderPath = join(LOADER_PATH, loaderName);
 
-        rule
-          .use(id)
-          .loader(loaderPath)
-          .options({
-            id,
-            getEnvironment: () => environment,
-          } satisfies TransformLoaderOptions);
-      },
-    );
-  };
+          rule
+            .use(id)
+            .loader(loaderPath)
+            .options({
+              id,
+              getEnvironment: () => environment,
+            } satisfies TransformLoaderOptions);
+        },
+      });
+    };
 
-  const setProcessAssets: (
-    environmentMeta?: EnvironmentMeta,
-  ) => ProcessAssetsFn = (environmentMeta) => (descriptor, handler) => {
-    processAssetsFns.push({ environmentMeta, descriptor, handler });
-  };
+  const setProcessAssets: (environment?: string) => ProcessAssetsFn =
+    (environment) => (descriptor, handler) => {
+      processAssetsFns.push({ environment, descriptor, handler });
+    };
 
   process.on('exit', () => {
     hooks.onExit.call();
   });
 
   // Each plugin returns different APIs depending on the registered environment info.
-  return (environmentMeta?: { environment: string }) => ({
+  return (environment?: string) => ({
     context: publicContext,
     expose,
-    transform: getTransformFn(environmentMeta),
+    transform: getTransformFn(environment),
     useExposed,
-    processAssets: setProcessAssets(environmentMeta),
+    processAssets: setProcessAssets(environment),
     getRsbuildConfig,
     getNormalizedConfig,
     isPluginExists: pluginManager.isPluginExists,
@@ -282,11 +280,35 @@ export function initPluginAPI({
     onAfterStartProdServer: hooks.onAfterStartProdServer.tap,
     onBeforeStartProdServer: hooks.onBeforeStartProdServer.tap,
     modifyRsbuildConfig: hooks.modifyRsbuildConfig.tap,
-    modifyHTMLTags: hooks.modifyHTMLTags.tap(environmentMeta),
-    modifyBundlerChain: hooks.modifyBundlerChain.tap(environmentMeta),
-    modifyRspackConfig: hooks.modifyRspackConfig.tap(environmentMeta),
-    modifyWebpackChain: hooks.modifyWebpackChain.tap(environmentMeta),
-    modifyWebpackConfig: hooks.modifyWebpackConfig.tap(environmentMeta),
-    modifyEnvironmentConfig: hooks.modifyEnvironmentConfig.tap(environmentMeta),
+    modifyHTMLTags: (handler) =>
+      hooks.modifyHTMLTags.tapEnvironment({
+        environment,
+        handler,
+      }),
+    modifyBundlerChain: (handler) =>
+      hooks.modifyBundlerChain.tapEnvironment({
+        environment,
+        handler,
+      }),
+    modifyRspackConfig: (handler) =>
+      hooks.modifyRspackConfig.tapEnvironment({
+        environment,
+        handler,
+      }),
+    modifyWebpackChain: (handler) =>
+      hooks.modifyWebpackChain.tapEnvironment({
+        environment,
+        handler,
+      }),
+    modifyWebpackConfig: (handler) =>
+      hooks.modifyWebpackConfig.tapEnvironment({
+        environment,
+        handler,
+      }),
+    modifyEnvironmentConfig: (handler) =>
+      hooks.modifyEnvironmentConfig.tapEnvironment({
+        environment,
+        handler,
+      }),
   });
 }
