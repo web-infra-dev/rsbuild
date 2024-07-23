@@ -58,15 +58,17 @@ export function pluginSourceBuild(
     setup(api) {
       const projectRootPath = api.context.rootPath;
 
-      let projects: Project[] = [];
+      let projects: Project[] | undefined;
 
-      api.modifyRsbuildConfig(async (config) => {
-        projects = await getDependentProjects(projectName || projectRootPath, {
-          cwd: projectRootPath,
-          recursive: true,
-          filter: filterByField(sourceField, true),
-          extraMonorepoStrategies,
-        });
+      api.modifyEnvironmentConfig(async (config) => {
+        projects =
+          projects ||
+          (await getDependentProjects(projectName || projectRootPath, {
+            cwd: projectRootPath,
+            recursive: true,
+            filter: filterByField(sourceField, true),
+            extraMonorepoStrategies,
+          }));
 
         const includes = await getSourceInclude({
           projects,
@@ -105,7 +107,7 @@ export function pluginSourceBuild(
 
         const references = new Set<string>();
 
-        for (const project of projects) {
+        for (const project of projects || []) {
           const filePath = path.join(project.dir, 'tsconfig.json');
           if (fs.existsSync(filePath)) {
             references.add(filePath);

@@ -61,9 +61,9 @@ export const pluginRem = (
       });
     };
 
-    api.modifyRsbuildConfig(async (config, { mergeRsbuildConfig }) => {
+    api.modifyEnvironmentConfig(async (config, { mergeEnvironmentConfig }) => {
       const remPlugin = await getPostCSSPlugin();
-      return mergeRsbuildConfig(config, {
+      return mergeEnvironmentConfig(config, {
         tools: {
           postcss(_, { addPlugins }) {
             addPlugins(remPlugin);

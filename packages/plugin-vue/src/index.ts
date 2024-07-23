@@ -1,4 +1,4 @@
-import type { RsbuildConfig, RsbuildPlugin } from '@rsbuild/core';
+import type { EnvironmentConfig, RsbuildPlugin } from '@rsbuild/core';
 import { type VueLoaderOptions, VueLoaderPlugin } from 'vue-loader';
 import { applySplitChunksRule } from './splitChunks';
 
@@ -37,8 +37,8 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
       const VUE_REGEXP = /\.vue$/;
       const CSS_MODULES_REGEX = /\.modules?\.\w+$/i;
 
-      api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
-        const extraConfig: RsbuildConfig = {
+      api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
+        const extraConfig: EnvironmentConfig = {
           source: {
             define: {
               // https://link.vuejs.org/feature-flags
@@ -49,10 +49,7 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
           },
         };
 
-        const merged = mergeRsbuildConfig(extraConfig, config);
-
-        merged.output ||= {};
-        merged.output.cssModules ||= {};
+        const merged = mergeEnvironmentConfig(extraConfig, config);
 
         // Support `<style module>` in Vue SFC
         if (merged.output.cssModules.auto === true) {

@@ -57,39 +57,40 @@ export const pluginStyledComponents = (
       });
     };
 
-    api.modifyRsbuildConfig({
-      order: 'post',
-      handler: (userConfig, { mergeRsbuildConfig }) => {
-        const targets = userConfig.environments
-          ? Object.values(userConfig.environments).map(
-              (e) => e.output?.target || userConfig.output?.target || 'web',
-            )
-          : [userConfig.output?.target || 'web'];
-        const useSSR = isServerTarget(targets);
-        const mergedOptions = getMergedOptions(useSSR);
-        if (!mergedOptions) {
-          return userConfig;
-        }
+    api.modifyEnvironmentConfig((userConfig, { mergeEnvironmentConfig }) => {
+      const rsbuildConfig = api.getRsbuildConfig();
 
-        const extraConfig: RsbuildConfig = {
-          tools: {
-            swc: {
-              jsc: {
-                experimental: {
-                  plugins: [
-                    [
-                      require.resolve('@swc/plugin-styled-components'),
-                      mergedOptions,
-                    ],
+      const targets = rsbuildConfig.environments
+        ? Object.values(rsbuildConfig.environments).map(
+            (e) => e.output?.target || userConfig.output?.target || 'web',
+          )
+        : [userConfig.output?.target || 'web'];
+
+      const useSSR = isServerTarget(targets);
+
+      const mergedOptions = getMergedOptions(useSSR);
+      if (!mergedOptions) {
+        return userConfig;
+      }
+
+      const extraConfig: RsbuildConfig = {
+        tools: {
+          swc: {
+            jsc: {
+              experimental: {
+                plugins: [
+                  [
+                    require.resolve('@swc/plugin-styled-components'),
+                    mergedOptions,
                   ],
-                },
+                ],
               },
             },
           },
-        };
+        },
+      };
 
-        return mergeRsbuildConfig(extraConfig, userConfig);
-      },
+      return mergeEnvironmentConfig(extraConfig, userConfig);
     });
   },
 });
