@@ -34,8 +34,12 @@ export type InternalContext = RsbuildContext & {
   originalConfig: Readonly<RsbuildConfig>;
   /** The normalized Rsbuild config. */
   normalizedConfig?: NormalizedConfig;
-  /** The plugin API. */
-  pluginAPI?: RsbuildPluginAPI;
+  /**
+   * Get the plugin API.
+   *
+   * When environment is undefined, the global plugin API is returned, which can be used in all environments.
+   * */
+  getPluginAPI?: (environment?: string) => RsbuildPluginAPI;
   /** The environment context. */
   environments: Record<string, EnvironmentContext>;
 };

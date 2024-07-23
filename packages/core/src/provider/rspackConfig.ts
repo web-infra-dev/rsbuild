@@ -20,10 +20,11 @@ async function modifyRspackConfig(
   utils: ModifyRspackConfigUtils,
 ) {
   logger.debug('modify Rspack config');
-  let [modifiedConfig] = await context.hooks.modifyRspackConfig.call(
-    rspackConfig,
-    utils,
-  );
+  let [modifiedConfig] =
+    await context.hooks.modifyRspackConfig.callInEnvironment({
+      environment: utils.environment.name,
+      args: [rspackConfig, utils],
+    });
 
   if (utils.environment.config.tools?.rspack) {
     modifiedConfig = await reduceConfigsAsyncWithContext({

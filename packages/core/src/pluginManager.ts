@@ -5,6 +5,7 @@ import type {
   BundlerPluginInstance,
   Falsy,
   PluginManager,
+  PluginMeta,
   RsbuildPlugin,
   RsbuildPluginAPI,
 } from './types';
@@ -52,14 +53,24 @@ function validatePlugin(plugin: unknown) {
   );
 }
 
+export const RSBUILD_ALL_ENVIRONMENT_SYMBOL = 'RSBUILD_ALL_ENVIRONMENT_SYMBOL';
+
+export const isPluginMatchEnvironment = (
+  metaEnvironment: string,
+  currentEnvironment: string,
+): boolean =>
+  metaEnvironment === currentEnvironment ||
+  metaEnvironment === RSBUILD_ALL_ENVIRONMENT_SYMBOL;
+
 export function createPluginManager(): PluginManager {
-  let plugins: RsbuildPlugin[] = [];
+  let plugins: PluginMeta[] = [];
 
   const addPlugins = (
     newPlugins: Array<RsbuildPlugin | Falsy>,
-    options?: { before?: string },
+    options?: { before?: string; environment?: string },
   ) => {
-    const { before } = options || {};
+    const { before, environment = RSBUILD_ALL_ENVIRONMENT_SYMBOL } =
+      options || {};
 
     for (const newPlugin of newPlugins) {
       if (!newPlugin) {
@@ -68,63 +79,112 @@ export function createPluginManager(): PluginManager {
 
       validatePlugin(newPlugin);
 
-      if (plugins.find((item) => item.name === newPlugin.name)) {
+      const existPlugin = plugins.find(
+        (item) =>
+          item.instance.name === newPlugin.name &&
+          item.environment === environment,
+      );
+
+      if (existPlugin) {
         logger.warn(
           `Rsbuild plugin "${newPlugin.name}" registered multiple times.`,
         );
       } else if (before) {
-        const index = plugins.findIndex((item) => item.name === before);
+        const index = plugins.findIndex(
+          (item) => item.instance.name === before,
+        );
         if (index === -1) {
           logger.warn(`Plugin "${before}" does not exist.`);
-          plugins.push(newPlugin);
+          plugins.push({
+            environment,
+            instance: newPlugin,
+          });
         } else {
-          plugins.splice(index, 0, newPlugin);
+          plugins.splice(index, 0, {
+            environment,
+            instance: newPlugin,
+          });
         }
       } else {
-        plugins.push(newPlugin);
+        plugins.push({
+          environment,
+          instance: newPlugin,
+        });
       }
     }
   };
 
-  const removePlugins = (pluginNames: string[]) => {
-    plugins = plugins.filter((plugin) => !pluginNames.includes(plugin.name));
+  const removePlugins = (
+    pluginNames: string[],
+    options: { environment?: string } = {},
+  ) => {
+    plugins = plugins.filter(
+      (plugin) =>
+        !(
+          pluginNames.includes(plugin.instance.name) &&
+          (!options.environment || plugin.environment === options.environment)
+        ),
+    );
   };
 
-  const isPluginExists = (pluginName: string) =>
-    Boolean(plugins.find((plugin) => plugin.name === pluginName));
+  const isPluginExists = (
+    pluginName: string,
+    options: { environment: string } = {
+      environment: RSBUILD_ALL_ENVIRONMENT_SYMBOL,
+    },
+  ) =>
+    Boolean(
+      plugins.find(
+        (plugin) =>
+          plugin.instance.name === pluginName &&
+          isPluginMatchEnvironment(plugin.environment, options.environment),
+      ),
+    );
 
+  const getPlugins = (
+    options: { environment: string } = {
+      environment: RSBUILD_ALL_ENVIRONMENT_SYMBOL,
+    },
+  ) => {
+    return plugins
+      .filter((p) =>
+        isPluginMatchEnvironment(p.environment, options.environment),
+      )
+      .map((p) => p.instance);
+  };
   return {
-    getPlugins: () => plugins,
+    getPlugins,
+    getAllPluginsWithMeta: () => plugins,
     addPlugins,
     removePlugins,
     isPluginExists,
   };
 }
 
-export const pluginDagSort = (plugins: RsbuildPlugin[]): RsbuildPlugin[] => {
+export const pluginDagSort = (plugins: PluginMeta[]): PluginMeta[] => {
   let allLines: [string, string][] = [];
 
   function getPlugin(name: string) {
-    const target = plugins.find((item) => item.name === name);
-    if (!target) {
+    const targets = plugins.filter((item) => item.instance.name === name);
+    if (!targets.length) {
       throw new Error(`plugin ${name} not existed`);
     }
-    return target;
+    return targets;
   }
 
   for (const plugin of plugins) {
-    if (plugin.pre) {
-      for (const pre of plugin.pre) {
-        if (pre && plugins.some((item) => item.name === pre)) {
-          allLines.push([pre, plugin.name]);
+    if (plugin.instance.pre) {
+      for (const pre of plugin.instance.pre) {
+        if (pre && plugins.some((item) => item.instance.name === pre)) {
+          allLines.push([pre, plugin.instance.name]);
         }
       }
     }
 
-    if (plugin.post) {
-      for (const post of plugin.post) {
-        if (post && plugins.some((item) => item.name === post)) {
-          allLines.push([plugin.name, post]);
+    if (plugin.instance.post) {
+      for (const post of plugin.instance.post) {
+        if (post && plugins.some((item) => item.instance.name === post)) {
+          allLines.push([plugin.instance.name, post]);
         }
       }
     }
@@ -132,21 +192,24 @@ export const pluginDagSort = (plugins: RsbuildPlugin[]): RsbuildPlugin[] => {
 
   // search the zero input plugin
   let zeroEndPoints = plugins.filter(
-    (item) => !allLines.find((l) => l[1] === item.name),
+    (item) => !allLines.find((l) => l[1] === item.instance.name),
   );
 
-  const sortedPoint: RsbuildPlugin[] = [];
+  const sortedPoint: PluginMeta[] = [];
 
   while (zeroEndPoints.length) {
     const zep = zeroEndPoints.shift()!;
-    sortedPoint.push(getPlugin(zep.name));
-    allLines = allLines.filter((l) => l[0] !== getPlugin(zep.name).name);
+    sortedPoint.push(...getPlugin(zep.instance.name));
+    allLines = allLines.filter(
+      (l) => l[0] !== getPlugin(zep.instance.name)[0].instance.name,
+    );
 
     const restPoints = plugins.filter(
-      (item) => !sortedPoint.find((sp) => sp.name === item.name),
+      (item) =>
+        !sortedPoint.find((sp) => sp.instance.name === item.instance.name),
     );
     zeroEndPoints = restPoints.filter(
-      (item) => !allLines.find((l) => l[1] === item.name),
+      (item) => !allLines.find((l) => l[1] === item.instance.name),
     );
   }
 
@@ -169,28 +232,42 @@ export const pluginDagSort = (plugins: RsbuildPlugin[]): RsbuildPlugin[] => {
 };
 
 export async function initPlugins({
-  pluginAPI,
+  getPluginAPI,
   pluginManager,
 }: {
-  pluginAPI?: RsbuildPluginAPI;
+  getPluginAPI: (environment?: string) => RsbuildPluginAPI;
   pluginManager: PluginManager;
 }): Promise<void> {
   logger.debug('init plugins');
 
-  const plugins = pluginDagSort(pluginManager.getPlugins());
+  const plugins = pluginDagSort(pluginManager.getAllPluginsWithMeta());
 
-  const removedPlugins = plugins.reduce<string[]>((ret, plugin) => {
-    if (plugin.remove) {
-      return ret.concat(plugin.remove);
-    }
-    return ret;
-  }, []);
+  const removedPlugins = plugins.reduce<Record<string, string[]>>(
+    (ret, plugin) => {
+      if (plugin.instance.remove) {
+        ret[plugin.environment] ??= [];
+        ret[plugin.environment].push(...plugin.instance.remove);
+      }
+      return ret;
+    },
+    {},
+  );
 
   for (const plugin of plugins) {
-    if (removedPlugins.includes(plugin.name)) {
+    const isGlobalPlugin =
+      plugin.environment === 'RSBUILD_ALL_ENVIRONMENT_SYMBOL';
+
+    if (
+      removedPlugins[plugin.environment]?.includes(plugin.instance.name) ||
+      (!isGlobalPlugin &&
+        removedPlugins[RSBUILD_ALL_ENVIRONMENT_SYMBOL]?.includes(
+          plugin.instance.name,
+        ))
+    ) {
       continue;
     }
-    await plugin.setup(pluginAPI!);
+    const { instance, environment } = plugin;
+    await instance.setup(getPluginAPI!(environment));
   }
 
   logger.debug('init plugins done');

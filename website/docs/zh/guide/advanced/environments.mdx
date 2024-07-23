@@ -100,6 +100,32 @@ export default {
 };
 ```
 
+## 为指定环境添加插件
+
+通过 [plugins](/config/plugins) 字段配置的插件支持在所有环境下运行，如果你希望某个插件仅在指定环境下运行时，将该插件配置在特定 `environment` 下即可。
+
+例如，仅在 web 环境下开启 React 插件：
+
+```ts title=rsbuild.config.ts
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default {
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+      },
+      plugins: [pluginReact()],
+    },
+    node: {
+      output: {
+        target: 'node',
+      },
+    },
+  },
+};
+```
+
 ## 插件 API
 
 ### 更新配置

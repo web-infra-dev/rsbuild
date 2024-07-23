@@ -1,10 +1,41 @@
 import { createStubRsbuild } from '@scripts/test-helper';
-import { initHooks } from '../src/initHooks';
+import { createEnvironmentAsyncHook, initHooks } from '../src/initHooks';
 
 describe('initHooks', () => {
   test('should init hooks correctly', async () => {
     const hooks = initHooks();
     expect(Object.keys(hooks)).toMatchSnapshot();
+  });
+
+  test('createEnvironmentAsyncHook should only works in specified environment', async () => {
+    const logs: string[] = [];
+    const hookA = createEnvironmentAsyncHook();
+    hookA.tap((msg) => {
+      logs.push(`[global] ${msg}`);
+    });
+
+    hookA.tapEnvironment({
+      environment: 'a',
+      handler: (msg) => {
+        logs.push(msg);
+      },
+    });
+
+    await hookA.callInEnvironment({
+      environment: 'a',
+      args: ['call in a'],
+    });
+
+    await hookA.callInEnvironment({
+      environment: 'b',
+      args: ['call in b'],
+    });
+
+    expect(logs).toEqual([
+      '[global] call in a',
+      'call in a',
+      '[global] call in b',
+    ]);
   });
 });
 

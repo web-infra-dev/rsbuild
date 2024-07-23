@@ -458,7 +458,9 @@ export const getRsbuildInspectConfig = ({
   for (const [name, config] of Object.entries(environments)) {
     const debugConfig = {
       ...config,
-      pluginNames,
+      pluginNames: pluginManager
+        .getPlugins({ environment: name })
+        .map((p) => p.name),
     };
     rawEnvironmentConfigs.push({
       name,

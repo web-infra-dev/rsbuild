@@ -100,6 +100,32 @@ export default {
 };
 ```
 
+## Add plugins for specified environment
+
+Plugins configured through the [plugins](/config/plugins) field support running in all environments. If you want a plugin to run only in a specified environment, you can configure the plugin in the specified `environment`.
+
+For example, enable the React plugin only in the web environment:
+
+```ts title=rsbuild.config.ts
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default {
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+      },
+      plugins: [pluginReact()],
+    },
+    node: {
+      output: {
+        target: 'node',
+      },
+    },
+  },
+};
+```
+
 ## Plugin API
 
 ### Update environment config

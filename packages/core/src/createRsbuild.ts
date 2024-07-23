@@ -1,6 +1,6 @@
 import { createContext } from './createContext';
 import { pick } from './helpers';
-import { getPluginAPI } from './initPlugins';
+import { initPluginAPI } from './initPlugins';
 import { initRsbuildConfig } from './internal';
 import { logger } from './logger';
 import { setCssExtractPlugin } from './pluginHelper';
@@ -37,8 +37,11 @@ async function applyDefaultPlugins(
     ),
     import('./plugins/asset').then(({ pluginAsset }) => pluginAsset()),
     import('./plugins/html').then(({ pluginHtml }) =>
-      pluginHtml(async (...args) => {
-        const result = await context.hooks.modifyHTMLTags.call(...args);
+      pluginHtml((environment: string) => async (...args) => {
+        const result = await context.hooks.modifyHTMLTags.callInEnvironment({
+          environment,
+          args,
+        });
         return result[0];
       }),
     ),
@@ -110,8 +113,9 @@ export async function createRsbuild(
     rsbuildConfig.provider ? 'webpack' : 'rspack',
   );
 
-  const pluginAPI = getPluginAPI({ context, pluginManager });
-  context.pluginAPI = pluginAPI;
+  const getPluginAPI = initPluginAPI({ context, pluginManager });
+  context.getPluginAPI = getPluginAPI;
+  const globalPluginAPI = getPluginAPI();
 
   logger.debug('add default plugins');
   await applyDefaultPlugins(pluginManager, context);
@@ -140,7 +144,7 @@ export async function createRsbuild(
       'removePlugins',
       'isPluginExists',
     ]),
-    ...pick(pluginAPI, [
+    ...pick(globalPluginAPI, [
       'onBeforeBuild',
       'onBeforeCreateCompiler',
       'onBeforeStartDevServer',
@@ -164,12 +168,26 @@ export async function createRsbuild(
       'startDevServer',
     ]),
     preview,
-    context: pluginAPI.context,
+    context: globalPluginAPI.context,
   };
 
   if (rsbuildConfig.plugins) {
     const plugins = await Promise.all(rsbuildConfig.plugins);
     rsbuild.addPlugins(plugins);
+  }
+
+  // Register environment plugin
+  if (rsbuildConfig.environments) {
+    await Promise.all(
+      Object.entries(rsbuildConfig.environments).map(async ([name, config]) => {
+        if (config.plugins) {
+          const plugins = await Promise.all(config.plugins);
+          rsbuild.addPlugins(plugins, {
+            environment: name,
+          });
+        }
+      }),
+    );
   }
 
   return rsbuild;

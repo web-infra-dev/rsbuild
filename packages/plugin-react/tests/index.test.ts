@@ -1,5 +1,5 @@
 import { createStubRsbuild } from '@scripts/test-helper';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { pluginReact } from '../src';
 
 describe('plugins/react', () => {
@@ -89,5 +89,39 @@ describe('plugins/react', () => {
     const config = await rsbuild.unwrapConfig();
 
     expect(JSON.stringify(config)).toContain(`"importSource":"@emotion/react"`);
+  });
+
+  it('should allow to add react plugin as single environment plugin', async () => {
+    process.env.NODE_ENV = 'production';
+
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {
+        environments: {
+          web: {},
+          web1: {},
+        },
+      },
+    });
+
+    rsbuild.addPlugins(
+      [
+        pluginReact({
+          enableProfiler: true,
+        }),
+      ],
+      {
+        environment: 'web',
+      },
+    );
+    const { bundlerConfigs, environmentConfigs } =
+      await rsbuild.inspectConfig();
+
+    expect(bundlerConfigs[0]).toContain('lib-react');
+    expect(environmentConfigs[0]).toContain('keep_classnames');
+
+    expect(bundlerConfigs[1]).not.toContain('lib-react');
+    expect(environmentConfigs[1]).not.toContain('keep_classnames');
+
+    delete process.env.NODE_ENV;
   });
 });

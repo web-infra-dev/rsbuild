@@ -2,11 +2,8 @@ import RspackChain from 'rspack-chain';
 import { castArray, isPlainObject } from './helpers';
 import { logger } from './logger';
 import type {
-  CreateAsyncHook,
-  ModifyBundlerChainFn,
+  InternalContext,
   ModifyBundlerChainUtils,
-  RsbuildConfig,
-  RsbuildContext,
   RsbuildEntry,
   Rspack,
   RspackConfig,
@@ -19,22 +16,18 @@ export function getBundlerChain(): RspackChain {
 }
 
 export async function modifyBundlerChain(
-  context: RsbuildContext & {
-    hooks: {
-      modifyBundlerChain: CreateAsyncHook<ModifyBundlerChainFn>;
-    };
-    config: Readonly<RsbuildConfig>;
-  },
+  context: InternalContext,
   utils: ModifyBundlerChainUtils,
 ): Promise<RspackChain> {
   logger.debug('modify bundler chain');
 
   const bundlerChain = getBundlerChain();
 
-  const [modifiedBundlerChain] = await context.hooks.modifyBundlerChain.call(
-    bundlerChain,
-    utils,
-  );
+  const [modifiedBundlerChain] =
+    await context.hooks.modifyBundlerChain.callInEnvironment({
+      environment: utils.environment.name,
+      args: [bundlerChain, utils],
+    });
 
   if (utils.environment.config.tools?.bundlerChain) {
     for (const item of castArray(utils.environment.config.tools.bundlerChain)) {

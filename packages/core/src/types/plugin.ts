@@ -45,6 +45,25 @@ export type HookDescriptor<T extends (...args: any[]) => any> = {
   order: HookOrder;
 };
 
+export type EnvironmentAsyncHook<Callback extends (...args: any[]) => any> = {
+  tapEnvironment: (params: {
+    /**
+     * Specify that the callback will only be executed under the specified environment
+     */
+    environment?: string;
+    handler: Callback | HookDescriptor<Callback>;
+  }) => void;
+  /**
+   *  Triggered in all environments by default.
+   *  If you need to specify the environment, please use `tapEnvironment`
+   */
+  tap: (cb: Callback | HookDescriptor<Callback>) => void;
+  callInEnvironment: (params: {
+    environment?: string;
+    args: Parameters<Callback>;
+  }) => Promise<Parameters<Callback>>;
+};
+
 export type AsyncHook<Callback extends (...args: any[]) => any> = {
   tap: (cb: Callback | HookDescriptor<Callback>) => void;
   call: (...args: Parameters<Callback>) => Promise<Parameters<Callback>>;
@@ -90,16 +109,56 @@ export type ModifyWebpackConfigFn = (
   utils: ModifyWebpackConfigUtils,
 ) => Promise<WebpackConfig | void> | WebpackConfig | void;
 
+export type PluginMeta = {
+  environment: string;
+  instance: RsbuildPlugin;
+};
+
 export type PluginManager = {
-  getPlugins: () => RsbuildPlugin[];
+  getPlugins: (options?: {
+    /**
+     * Get the plugins in the specified environment.
+     *
+     * If environment is not specified, get the global plugins.
+     */
+    environment: string;
+  }) => RsbuildPlugin[];
   addPlugins: (
     plugins: Array<RsbuildPlugin | Falsy>,
-    options?: { before?: string },
+    options?: {
+      before?: string;
+      /**
+       * Add a plugin for the specified environment.
+       *
+       * If environment is not specified, it will be registered as a global plugin (effective in all environments)
+       */
+      environment?: string;
+    },
   ) => void;
-  removePlugins: (pluginNames: string[]) => void;
-  isPluginExists: (pluginName: string) => boolean;
-  /** The plugin API. */
-  pluginAPI?: RsbuildPluginAPI;
+  removePlugins: (
+    pluginNames: string[],
+    options?: {
+      /**
+       * Remove the plugin in the specified environment.
+       *
+       * If environment is not specified, remove it in all environments.
+       */
+      environment: string;
+    },
+  ) => void;
+  isPluginExists: (
+    pluginName: string,
+    options?: {
+      /**
+       * Whether it exists in the specified environment.
+       *
+       * If environment is not specified, determine whether the plugin is a global plugin.
+       */
+      environment: string;
+    },
+  ) => boolean;
+  /** Get all plugins with environment info */
+  getAllPluginsWithMeta: () => PluginMeta[];
 };
 
 /**
