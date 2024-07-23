@@ -1,5 +1,5 @@
 import { dev, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 rspackOnlyTest('support SSR', async ({ page }) => {
   const rsbuild = await dev({
@@ -16,7 +16,9 @@ rspackOnlyTest('support SSR', async ({ page }) => {
   await rsbuild.close();
 });
 
-rspackOnlyTest('support SSR with esm target', async ({ page }) => {
+// TODO: depend on Node.js NODE_OPTIONS=--experimental-vm-modules
+// but this flag sometimes breaks the CI
+test.skip('support SSR with esm target', async ({ page }) => {
   process.env.TEST_ESM_LIBRARY = '1';
 
   const rsbuild = await dev({
