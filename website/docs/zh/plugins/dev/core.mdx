@@ -394,6 +394,7 @@ descriptor 参数是一个对象，用于描述 processAssets 触发的 stage �
 type ProcessAssetsDescriptor = {
   stage: ProcessAssetsStage;
   targets?: RsbuildTarget[];
+  environments?: string[];
 };
 ```
 
@@ -413,6 +414,17 @@ api.processAssets({ stage: 'additional' }, ({ assets }) => {
 api.processAssets({ stage: 'additional', targets: ['web'] }, ({ assets }) => {
   // ...
 });
+```
+
+- `environments`：匹配 Rsbuild [environment](/guide/advanced/environments) name，仅对匹配的 environments 应用当前 processAssets 函数。
+
+```js
+api.processAssets(
+  { stage: 'additional', environments: ['web'] },
+  ({ assets }) => {
+    // ...
+  },
+);
 ```
 
 ### handler 参数

@@ -330,6 +330,11 @@ export type ProcessAssetsDescriptor = {
    * @see https://rsbuild.dev/config/output/targets
    */
   targets?: RsbuildTarget[];
+  /**
+   * Match based on the Rsbuild environment names and only process the assets of certain environments.
+   * @see https://rsbuild.dev/config/environments
+   */
+  environments?: string[];
 };
 
 export type RspackSources = Pick<

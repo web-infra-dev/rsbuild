@@ -56,11 +56,11 @@ function validatePlugin(plugin: unknown) {
 export const RSBUILD_ALL_ENVIRONMENT_SYMBOL = 'RSBUILD_ALL_ENVIRONMENT_SYMBOL';
 
 export const isPluginMatchEnvironment = (
-  metaEnvironment: string,
+  pluginEnvironment: string,
   currentEnvironment: string,
 ): boolean =>
-  metaEnvironment === currentEnvironment ||
-  metaEnvironment === RSBUILD_ALL_ENVIRONMENT_SYMBOL;
+  pluginEnvironment === currentEnvironment ||
+  pluginEnvironment === RSBUILD_ALL_ENVIRONMENT_SYMBOL;
 
 export function createPluginManager(): PluginManager {
   let plugins: PluginMeta[] = [];
