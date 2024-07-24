@@ -3,15 +3,22 @@
 - **类型：**
 
 ```ts
-type InlineStyles =
-  | boolean
+type InlineStylesTest =
   | RegExp
   | ((params: { size: number; name: string }) => boolean);
+
+type InlineStyles =
+  | boolean
+  | InlineStylesTest
+  | {
+      enable?: boolean | 'auto';
+      test: InlineStylesTest;
+    };
 ```
 
 - **默认值：** `false`
 
-用来控制生产环境中是否用 `<style>` 标签将产物中的 style 文件（.css 文件）inline 到 HTML 中。
+用来控制是否用 `<style>` 标签将产物中的 style 文件（.css 文件）inline 到 HTML 中。
 
 注意，如果开启了这个选项，那么 style 文件将不会被写入产物目录中，而只会以 inline 样式的形式存在于 HTML 文件中。
 
@@ -87,6 +94,43 @@ export default {
   output: {
     inlineStyles({ size }) {
       return size < 10 * 1000;
+    },
+  },
+};
+```
+
+## 选项
+
+### enable
+
+- **类型：** `'auto' | boolean`
+- **默认值：** `false`
+
+是否启用内联。`'auto'` 表示在生产模式时开启，开发模式时关闭。
+
+```ts
+export default {
+  output: {
+    inlineStyles: {
+      enable: 'auto',
+      test: /[\\/]main\.\w+\.css$/,
+    },
+  },
+};
+```
+
+### test
+
+- **类型：** `RegExp | ((params: { size: number; name: string }) => boolean)`
+
+用来匹配需要内联的 CSS 文件。
+
+```ts
+export default {
+  output: {
+    inlineStyles: {
+      enable: true,
+      test: /[\\/]main\.\w+\.css$/,
     },
   },
 };
