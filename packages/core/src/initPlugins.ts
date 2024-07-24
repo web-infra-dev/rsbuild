@@ -163,17 +163,20 @@ export function initPluginAPI({
           for (const {
             descriptor,
             handler,
-            environment: metaEnvironment,
+            environment: pluginEnvironment,
           } of processAssetsFns) {
             // filter by targets
             if (descriptor.targets && !descriptor.targets.includes(target)) {
               return;
             }
 
-            // filter by environment
+            // filter by environments
             if (
-              metaEnvironment &&
-              !isPluginMatchEnvironment(metaEnvironment, environment.name)
+              (descriptor.environments &&
+                !descriptor.environments.includes(environment.name)) ||
+              // the plugin is registered in a specific environment config
+              (pluginEnvironment &&
+                !isPluginMatchEnvironment(pluginEnvironment, environment.name))
             ) {
               return;
             }
