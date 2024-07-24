@@ -18,7 +18,7 @@ If both `dev.hmr` and `dev.liveReload` are set to false, `watchFiles` will be ig
 
 ### Prerequisite knowledge
 
-By default, Rsbuild (Rspack) watches all build dependencies and triggers a recompilation when any of these files change. If you want changes in non-build dependency files to cause the page to reload, you can configure this configuration.
+By default, Rsbuild (Rspack) watches all build dependencies and triggers a rebuild when any of these files change. If you want the page to automatically reload when some **non-build dependency files** change, you can use this configuration.
 
 It's important to note that changes in files listed under `watchFiles` do not trigger a rebuild or reloading of the configuration file.
 
