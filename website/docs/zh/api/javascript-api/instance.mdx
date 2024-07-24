@@ -774,7 +774,7 @@ import GetRsbuildConfig from '@zh/shared/getRsbuildConfig.mdx';
 
 ```ts
 rsbuild.onBeforeBuild(() => {
-  const config = api.getRsbuildConfig();
+  const config = rsbuild.getRsbuildConfig();
   console.log(config.html?.title);
 });
 ```
@@ -789,7 +789,7 @@ import GetNormalizedConfig from '@zh/shared/getNormalizedConfig.mdx';
 
 ```ts
 rsbuild.onBeforeBuild(() => {
-  const config = api.getNormalizedConfig();
+  const config = rsbuild.getNormalizedConfig();
   console.log(config.html.title);
 });
 ```
