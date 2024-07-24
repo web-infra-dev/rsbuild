@@ -29,10 +29,9 @@ For instance, if you want to prevent a rebuild when files in the `node_modules` 
 ```js
 export default {
   tools: {
-    bundlerChain: (chain) => {
-      chain.watchOptions({
-        ignored: /node_modules/,
-      });
+    rspack: (config) => {
+      config.watchOptions ??= {};
+      config.watchOptions.ignored = /node_modules/;
     },
   },
 };
