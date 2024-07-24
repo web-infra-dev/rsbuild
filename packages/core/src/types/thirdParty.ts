@@ -128,6 +128,15 @@ export interface CSSLoaderModulesOptions {
    * Enables/disables ES modules named export for locals.
    */
   namedExport?: boolean;
+  /**
+   * Enables a callback to output the CSS modules mapping JSON.
+   */
+  getJSON?: (context: {
+    resourcePath: string;
+    imports: object[];
+    exports: object[];
+    replacements: object[];
+  }) => Promise<void> | void;
 }
 
 export interface CSSLoaderOptions {
@@ -137,7 +146,11 @@ export interface CSSLoaderOptions {
    *
    * @default true
    */
-  url?: boolean | ((url: string, resourcePath: string) => boolean);
+  url?:
+    | boolean
+    | {
+        filter: (url: string, resourcePath: string) => boolean;
+      };
   /**
    * Allows to enables/disables @import at-rules handling.
    *
@@ -145,7 +158,15 @@ export interface CSSLoaderOptions {
    */
   import?:
     | boolean
-    | ((url: string, media: string, resourcePath: string) => boolean);
+    | {
+        filter: (
+          url: string,
+          media: string,
+          resourcePath: string,
+          supports?: string,
+          layer?: string,
+        ) => boolean;
+      };
   /**
    * Allows to enable/disable CSS Modules or ICSS and setup configuration:
    */
