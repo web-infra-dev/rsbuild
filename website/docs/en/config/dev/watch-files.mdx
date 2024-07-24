@@ -16,6 +16,27 @@ Watch files and directories for changes. When a file changes, the page will be r
 
 If both `dev.hmr` and `dev.liveReload` are set to false, `watchFiles` will be ignored.
 
+### Prerequisite knowledge
+
+By default, Rsbuild (Rspack) watches all build dependencies and triggers a rebuild when any of these files change. If you want the page to automatically reload when some **non-build dependency files** change, you can use this configuration.
+
+It's important to note that changes in files listed under `watchFiles` do not trigger a rebuild or reloading of the configuration file.
+
+Furthermore, if you want changes in a build dependency file to not trigger a rebuild, you can use the [watchOptions.ignored](https://www.rspack.dev/config/watch#watchoptionsignored) setting in Rspack.
+
+For instance, if you want to prevent a rebuild when files in the `node_modules` directory change, you can configure it as follows:
+
+```js
+export default {
+  tools: {
+    rspack: (config) => {
+      config.watchOptions ??= {};
+      config.watchOptions.ignored = /node_modules/;
+    },
+  },
+};
+```
+
 ### Example
 
 You can configure a list of globs/directories/files to watch for file changes.

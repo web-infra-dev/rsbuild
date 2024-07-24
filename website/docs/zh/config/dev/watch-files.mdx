@@ -16,6 +16,27 @@ type WatchFiles = {
 
 如果 `dev.hmr` 和 `dev.liveReload` 都设置为 false，则 `watchFiles` 将被忽略。
 
+### 前置知识
+
+Rsbuild (Rspack) 默认会监听所有构建依赖，当这些文件发生变化时，会触发重新构建。如果你希望当一些**非构建依赖的文件**发生变化时，页面可以自动重新加载，你可以使用此配置项。
+
+需要注意的是，`watchFiles` 中的文件发生变化时，不会触发重新构建和配置文件的重新加载。
+
+同时，如果你希望某个**构建依赖的文件**变化时，不触发重新构建，可以使用 Rspack 的 [watchOptions.ignored](https://www.rspack.dev/zh/config/watch#watchoptionsignored) 配置项。
+
+例如，当你希望你的项目在 node_modules 中文件发生变化时，不触发重新构建，可以如下配置：
+
+```js
+export default {
+  tools: {
+    rspack: (config) => {
+      config.watchOptions ??= {};
+      config.watchOptions.ignored = /node_modules/;
+    },
+  },
+};
+```
+
 ### 示例
 
 你可以配置一个 glob 模式 / 目录 / 文件的列表，用于监视文件变化。
