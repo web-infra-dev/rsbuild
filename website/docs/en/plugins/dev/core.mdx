@@ -396,6 +396,7 @@ The descriptor parameter is an object to describes the stage and matching condit
 type ProcessAssetsDescriptor = {
   stage: ProcessAssetsStage;
   targets?: RsbuildTarget[];
+  environments?: string[];
 };
 ```
 
@@ -415,6 +416,17 @@ api.processAssets({ stage: 'additional' }, ({ assets }) => {
 api.processAssets({ stage: 'additional', targets: ['web'] }, ({ assets }) => {
   // ...
 });
+```
+
+- `environments`: matches the Rsbuild [environment](/guide/advanced/environments) name, and applies the current processAssets function only to the matched environments.
+
+```js
+api.processAssets(
+  { stage: 'additional', environments: ['web'] },
+  ({ assets }) => {
+    // ...
+  },
+);
 ```
 
 ### Handler Param
