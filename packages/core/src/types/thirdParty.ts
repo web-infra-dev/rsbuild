@@ -131,7 +131,7 @@ export interface CSSLoaderModulesOptions {
   /**
    * Enables a callback to output the CSS modules mapping JSON.
    */
-  getJSON: (context: {
+  getJSON?: (context: {
     resourcePath: string;
     imports: object[];
     exports: object[];
