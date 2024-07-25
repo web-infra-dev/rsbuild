@@ -1367,6 +1367,9 @@ importers:
       '@rspress/plugin-rss':
         specifier: 1.26.2
         version: 1.26.2(react@18.3.1)(rspress@1.26.2(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))))
+      '@rstack-dev/doc-ui':
+        specifier: ^1.1.2
+        version: 1.1.2(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/node':
         specifier: 18.x
         version: 18.19.31
@@ -1391,9 +1394,6 @@ importers:
       rsbuild-plugin-open-graph:
         specifier: 1.0.1
         version: 1.0.1(@rsbuild/core@packages+core)
-      rsfamily-doc-ui:
-        specifier: ^1.1.2
-        version: 1.1.2(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rspress:
         specifier: 1.26.2
         version: 1.26.2(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
@@ -3067,6 +3067,9 @@ packages:
   '@rspress/theme-default@1.26.2':
     resolution: {integrity: sha512-NpVo2zPwYuIML5ka1S7jbktTWXOQmagvtujtzPFIPxaEmYdVRu+6mNSxmBzXnby9zjlpwntz4JYzOjF69mE06Q==}
     engines: {node: '>=14.17.6'}
+
+  '@rstack-dev/doc-ui@1.1.2':
+    resolution: {integrity: sha512-R2iQBsfdtvLfiFMWpkrsigDKvlu1PizZ9YmLVyF4J9H2nZOTJSSYroTg33Ae6rfbpbTRAKpL1qZ36Kml1SwXZA==}
 
   '@selderee/plugin-htmlparser2@0.11.0':
     resolution: {integrity: sha512-P33hHGdldxGabLFjPPpaTxVolMrzrcegejx+0GxjrIb9Zv48D8yAIA/QTDR2dFl7Uz7urX8aX6+5bCZslr+gWQ==}
@@ -6485,9 +6488,6 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  rsfamily-doc-ui@1.1.2:
-    resolution: {integrity: sha512-6GHgf1zg50HwjVDFUNMfT2TM4fa8BtoTDGJCCReJu6MPfrvJKqb221XaPS4XAVwv9wc1V5UpCg56e48kPruCCg==}
-
   rslog@1.2.2:
     resolution: {integrity: sha512-tZP8KjrI1nz6qOYCrFxAV7cfmfS2GV94jotU2zOmF/6ByO1zNvGR6/+0inylpjqyBjAdnnutTUW0m4th06bSTw==}
     engines: {node: '>=14.17.6'}
@@ -9565,6 +9565,14 @@ snapshots:
       react-syntax-highlighter: 15.5.0(react@18.3.1)
       react-transition-group: 4.4.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rspack-plugin-virtual-module: 0.1.12
+
+  '@rstack-dev/doc-ui@1.1.2(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      framer-motion: 11.3.4(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+    transitivePeerDependencies:
+      - '@emotion/is-prop-valid'
+      - react
+      - react-dom
 
   '@selderee/plugin-htmlparser2@0.11.0':
     dependencies:
@@ -13428,14 +13436,6 @@ snapshots:
   rsbuild-plugin-open-graph@1.0.1(@rsbuild/core@packages+core):
     optionalDependencies:
       '@rsbuild/core': link:packages/core
-
-  rsfamily-doc-ui@1.1.2(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
-    dependencies:
-      framer-motion: 11.3.4(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-    transitivePeerDependencies:
-      - '@emotion/is-prop-valid'
-      - react
-      - react-dom
 
   rslog@1.2.2: {}
 

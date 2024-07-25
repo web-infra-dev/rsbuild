@@ -87,6 +87,7 @@ rsfamily
 rslog
 rspack
 rspress
+rstack
 selfsign
 selfsigned
 sirv

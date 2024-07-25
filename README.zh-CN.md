@@ -82,7 +82,7 @@ Rsbuild 具备以下特性：
 - [rspack-examples](https://github.com/rspack-contrib/rspack-examples)：Rspack、Rsbuild、Rspress 和 Rsdoctor 的示例项目。
 - [storybook-rsbuild](https://github.com/rspack-contrib/storybook-rsbuild): 基于 Rsbuild 构建的 Storybook。
 - [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template)：使用此模板创建你的 Rsbuild 插件。
-- [rsfamily-design-resources](https://github.com/rspack-contrib/rsfamily-design-resources)：Rspack、Rsbuild、Rspress 和 Rsdoctor 的设计资源。
+- [rstack-design-resources](https://github.com/rspack-contrib/rstack-design-resources)：Rspack、Rsbuild、Rspress 和 Rsdoctor 的设计资源。
 
 ## 🤝 参与贡献
 
