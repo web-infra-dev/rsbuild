@@ -1,4 +1,4 @@
-import { NavIcon } from 'rsfamily-doc-ui/nav-icon';
+import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
 import Theme from 'rspress/theme';
 import { HomeLayout } from './pages';
 import './index.scss';
