@@ -22,7 +22,7 @@ Whether to inline output scripts files (.js files) into HTML with `<script>` tag
 
 Note that, with this option on, the scripts files will no longer be written in dist directory, they will only exist inside the HTML file instead.
 
-### Example
+## Example
 
 By default, we have following output files:
 
@@ -42,7 +42,7 @@ export default {
 };
 ```
 
-The output files will become:
+The output files of production build will become:
 
 ```bash
 dist/html/main/index.html
@@ -60,6 +60,10 @@ And `dist/static/js/main.js` will be inlined in `index.html`:
   </head>
 </html>
 ```
+
+:::tip
+Setting `inlineScripts: true` is equivalent to setting [inlineScripts.enable](#enable) to `'auto'`. This indicates that inline scripts will only be enabled in production mode.
+:::
 
 ### Script Tag Position
 

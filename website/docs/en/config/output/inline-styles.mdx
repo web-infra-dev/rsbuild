@@ -22,7 +22,7 @@ Whether to inline output style files (.css files) into HTML with `<style>` tags.
 
 Note that, with this option on, the style files will no longer be written in dist directory, they will only exist inside the HTML file instead.
 
-### Example
+## Example
 
 By default, we have following output files:
 
@@ -42,7 +42,7 @@ export default {
 };
 ```
 
-The output files will become:
+The output files of production build will become:
 
 ```bash
 dist/html/main/index.html
@@ -61,6 +61,10 @@ And `dist/static/css/style.css` will be inlined in `index.html`:
   <body></body>
 </html>
 ```
+
+:::tip
+Setting `inlineStyles: true` is equivalent to setting [inlineStyles.enable](#enable) to `'auto'`. This indicates that inline styles will only be enabled in production mode.
+:::
 
 ### Using RegExp
 

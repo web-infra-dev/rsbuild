@@ -22,7 +22,7 @@ type InlineStyles =
 
 注意，如果开启了这个选项，那么 style 文件将不会被写入产物目录中，而只会以 inline 样式的形式存在于 HTML 文件中。
 
-### 示例
+## 示例
 
 默认情况下，我们有这样的产物文件：
 
@@ -42,7 +42,7 @@ export default {
 };
 ```
 
-产物文件将变成：
+生产构建的产物文件将变成：
 
 ```bash
 dist/html/main/index.html
@@ -61,6 +61,10 @@ dist/static/js/main.js
   <body></body>
 </html>
 ```
+
+:::tip
+设置 `inlineStyles: true`，等价于将 [inlineStyles.enable](#enable) 设置为 `'auto'`，这表示仅在生产模式时开启内联。
+:::
 
 ### 通过正则匹配
 
