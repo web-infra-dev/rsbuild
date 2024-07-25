@@ -3,15 +3,22 @@
 - **Type:**
 
 ```ts
-type InlineScripts =
-  | boolean
+type InlineScriptsTest =
   | RegExp
   | ((params: { size: number; name: string }) => boolean);
+
+type InlineScripts =
+  | boolean
+  | InlineScriptsTest
+  | {
+      enable?: boolean | 'auto';
+      test: InlineScriptsTest;
+    };
 ```
 
 - **Default:** `false`
 
-Whether to inline output scripts files (.js files) into HTML with `<script>` tags in production mode.
+Whether to inline output scripts files (.js files) into HTML with `<script>` tags.
 
 Note that, with this option on, the scripts files will no longer be written in dist directory, they will only exist inside the HTML file instead.
 
@@ -103,6 +110,43 @@ export default {
   output: {
     inlineScripts({ size }) {
       return size < 10 * 1000;
+    },
+  },
+};
+```
+
+## Options
+
+### enable
+
+- **Type:** `boolean | 'auto'`
+- **Default:** `false`
+
+Whether to enable the inline scripts feature. If set to `'auto'`, it will be enabled when the `mode` is `'production'`.
+
+```ts
+export default {
+  output: {
+    inlineScripts: {
+      enable: 'auto',
+      test: /[\\/]main\.\w+\.js$/,
+    },
+  },
+};
+```
+
+### test
+
+- **Type:** `RegExp | ((params: { size: number; name: string }) => boolean)`
+
+The regular expression or function to match the files that need to be inlined.
+
+```ts
+export default {
+  output: {
+    inlineScripts: {
+      enable: true,
+      test: /[\\/]main\.\w+\.js$/,
     },
   },
 };

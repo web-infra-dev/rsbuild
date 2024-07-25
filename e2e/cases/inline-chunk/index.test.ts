@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { build, gotoPage } from '@e2e/helper';
+import { build, dev, gotoPage } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import type { RspackChain } from '@rsbuild/core';
 
@@ -154,4 +154,205 @@ test('inline styles by filename and file size', async () => {
       (fileName) => fileName.endsWith('.css') && fileName.includes('/index.'),
     ).length,
   ).toEqual(0);
+});
+
+test('styles are not inline by default in development mode', async ({
+  page,
+}) => {
+  const rsbuild = await dev({
+    cwd: __dirname,
+    rsbuildConfig: {
+      tools: toolsConfig,
+    },
+  });
+
+  await gotoPage(page, rsbuild);
+
+  // index.css in page
+  await expect(
+    page.evaluate(
+      `document.querySelectorAll('link[href*="index.css"]').length`,
+    ),
+  ).resolves.toEqual(1);
+});
+
+test('using RegExp to inline styles in development mode', async ({ page }) => {
+  const rsbuild = await dev({
+    cwd: __dirname,
+    rsbuildConfig: {
+      output: {
+        inlineStyles: {
+          enable: true,
+          test: /\.css$/,
+        },
+      },
+      tools: toolsConfig,
+    },
+  });
+
+  await gotoPage(page, rsbuild);
+
+  // no index.css in page
+  await expect(
+    page.evaluate(
+      `document.querySelectorAll('link[href*="index.css"]').length`,
+    ),
+  ).resolves.toEqual(0);
+});
+
+test('inline styles by filename and file size in development mode', async ({
+  page,
+}) => {
+  const rsbuild = await dev({
+    cwd: __dirname,
+    rsbuildConfig: {
+      output: {
+        inlineStyles: {
+          enable: true,
+          test({ size, name }: { size: number; name: string }) {
+            return name.includes('index') && size < 1000;
+          },
+        },
+      },
+      tools: toolsConfig,
+    },
+  });
+
+  await gotoPage(page, rsbuild);
+
+  // no index.css in page
+  await expect(
+    page.evaluate(
+      `document.querySelectorAll('link[href*="index.css"]').length`,
+    ),
+  ).resolves.toEqual(0);
+});
+
+test('inline scripts does not work when enable is false', async () => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    rsbuildConfig: {
+      output: {
+        inlineScripts: {
+          enable: false,
+          test: /\.js$/,
+        },
+      },
+      tools: toolsConfig,
+    },
+  });
+  const files = await rsbuild.unwrapOutputJSON(false);
+
+  // all index.js in output
+  expect(
+    Object.keys(files).filter(
+      (fileName) => fileName.endsWith('.js') && fileName.includes('/index.'),
+    ).length,
+  ).toEqual(1);
+
+  // all source maps in output
+  expect(
+    Object.keys(files).filter((fileName) => fileName.endsWith('.js.map'))
+      .length,
+  ).toBeGreaterThanOrEqual(2);
+});
+
+test('inline styles does not work when enable is false', async () => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    rsbuildConfig: {
+      output: {
+        inlineStyles: {
+          enable: false,
+          test: /\.css$/,
+        },
+      },
+      tools: toolsConfig,
+    },
+  });
+  const files = await rsbuild.unwrapOutputJSON(false);
+
+  // all index.css in output
+  expect(
+    Object.keys(files).filter(
+      (fileName) => fileName.endsWith('.css') && fileName.includes('/index.'),
+    ).length,
+  ).toEqual(1);
+});
+
+test('inline chunk works in production mode when enable is auto', async () => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    rsbuildConfig: {
+      output: {
+        inlineScripts: {
+          enable: 'auto',
+          test: /\.js$/,
+        },
+        inlineStyles: {
+          enable: 'auto',
+          test: /\.css$/,
+        },
+      },
+      tools: toolsConfig,
+    },
+  });
+  const files = await rsbuild.unwrapOutputJSON(false);
+
+  // no index.js in output
+  expect(
+    Object.keys(files).filter(
+      (fileName) => fileName.endsWith('.js') && fileName.includes('/index.'),
+    ).length,
+  ).toEqual(0);
+
+  // all source maps in output
+  expect(
+    Object.keys(files).filter((fileName) => fileName.endsWith('.js.map'))
+      .length,
+  ).toBeGreaterThanOrEqual(2);
+
+  // no index.css in output
+  expect(
+    Object.keys(files).filter(
+      (fileName) => fileName.endsWith('.css') && fileName.includes('/index.'),
+    ).length,
+  ).toEqual(0);
+});
+
+test('inline does not work in development mode when enable is auto', async ({
+  page,
+}) => {
+  const rsbuild = await dev({
+    cwd: __dirname,
+    rsbuildConfig: {
+      output: {
+        inlineScripts: {
+          enable: 'auto',
+          test: /\.js$/,
+        },
+        inlineStyles: {
+          enable: 'auto',
+          test: /\.css$/,
+        },
+      },
+      tools: toolsConfig,
+    },
+  });
+
+  await gotoPage(page, rsbuild);
+
+  // all index.js in page
+  await expect(
+    page.evaluate(
+      `document.querySelectorAll('script[src*="index.js"]').length`,
+    ),
+  ).resolves.toEqual(1);
+
+  // all index.css in page
+  await expect(
+    page.evaluate(
+      `document.querySelectorAll('link[href*="index.css"]').length`,
+    ),
+  ).resolves.toEqual(1);
 });

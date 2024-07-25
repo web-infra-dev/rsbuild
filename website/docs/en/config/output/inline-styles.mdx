@@ -3,15 +3,22 @@
 - **Type:**
 
 ```ts
-type InlineStyles =
-  | boolean
+type InlineStylesTest =
   | RegExp
   | ((params: { size: number; name: string }) => boolean);
+
+type InlineStyles =
+  | boolean
+  | InlineStylesTest
+  | {
+      enable?: boolean | 'auto';
+      test: InlineStylesTest;
+    };
 ```
 
 - **Default:** `false`
 
-Whether to inline output style files (.css files) into HTML with `<style>` tags in production mode.
+Whether to inline output style files (.css files) into HTML with `<style>` tags.
 
 Note that, with this option on, the style files will no longer be written in dist directory, they will only exist inside the HTML file instead.
 
@@ -87,6 +94,43 @@ export default {
   output: {
     inlineStyles({ size }) {
       return size < 10 * 1000;
+    },
+  },
+};
+```
+
+## Options
+
+### enable
+
+- **Type:** `boolean | 'auto'`
+- **Default:** `false`
+
+Whether to enable the inline styles feature. If set to `'auto'`, it will be enabled when the `mode` is `'production'`.
+
+```ts
+export default {
+  output: {
+    inlineStyles: {
+      enable: 'auto',
+      test: /[\\/]main\.\w+\.css$/,
+    },
+  },
+};
+```
+
+### test
+
+- **Type:** `RegExp | ((params: { size: number; name: string }) => boolean)`
+
+The regular expression or function to match the CSS files that need to be inlined.
+
+```ts
+export default {
+  output: {
+    inlineStyles: {
+      enable: true,
+      test: /[\\/]main\.\w+\.css$/,
     },
   },
 };

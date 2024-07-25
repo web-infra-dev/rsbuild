@@ -189,6 +189,11 @@ export type InlineChunkTestFunction = (params: {
 
 export type InlineChunkTest = RegExp | InlineChunkTestFunction;
 
+export type InlineChunkConfig =
+  | boolean
+  | InlineChunkTest
+  | { enable?: boolean | 'auto'; test: InlineChunkTest };
+
 export interface OutputConfig {
   /**
    * Specify build target to run in specified environment.
@@ -265,11 +270,11 @@ export interface OutputConfig {
   /**
    * Whether to inline output scripts files (.js files) into HTML with `<script>` tags.
    */
-  inlineScripts?: boolean | InlineChunkTest;
+  inlineScripts?: InlineChunkConfig;
   /**
    * Whether to inline output style files (.css files) into html with `<style>` tags.
    */
-  inlineStyles?: boolean | InlineChunkTest;
+  inlineStyles?: InlineChunkConfig;
   /**
    * Whether to inject styles into the DOM via `style-loader`.
    */
@@ -309,8 +314,8 @@ export interface NormalizedOutputConfig extends OutputConfig {
   assetPrefix: string;
   dataUriLimit: number | NormalizedDataUriLimit;
   minify: Minify;
-  inlineScripts: boolean | InlineChunkTest;
-  inlineStyles: boolean | InlineChunkTest;
+  inlineScripts: InlineChunkConfig;
+  inlineStyles: InlineChunkConfig;
   injectStyles: boolean;
   cssModules: {
     auto: CSSModules['auto'];

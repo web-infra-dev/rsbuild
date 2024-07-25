@@ -3,8 +3,8 @@ import { CSS_REGEX, JS_REGEX } from '../constants';
 import {
   addTrailingSlash,
   getPublicPathFromCompiler,
-  isDev,
   isFunction,
+  isProd,
 } from '../helpers';
 import type {
   HtmlBasicTag,
@@ -228,7 +228,7 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
       ({ headTags, bodyTags }, { compiler, compilation, environment }) => {
         const { htmlPaths, config } = environment;
 
-        if (isDev() || Object.keys(htmlPaths).length === 0) {
+        if (Object.keys(htmlPaths).length === 0) {
           return { headTags, bodyTags };
         }
 
@@ -238,11 +238,37 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
         const styleTests: InlineChunkTest[] = [];
 
         if (inlineScripts) {
-          scriptTests.push(inlineScripts === true ? JS_REGEX : inlineScripts);
+          if (inlineScripts === true) {
+            scriptTests.push(JS_REGEX);
+          } else if (
+            inlineScripts instanceof RegExp ||
+            inlineScripts instanceof Function
+          ) {
+            scriptTests.push(inlineScripts);
+          } else {
+            const enable =
+              inlineScripts.enable === 'auto' ? isProd() : inlineScripts.enable;
+            if (enable) {
+              scriptTests.push(inlineScripts.test);
+            }
+          }
         }
 
         if (inlineStyles) {
-          styleTests.push(inlineStyles === true ? CSS_REGEX : inlineStyles);
+          if (inlineStyles === true) {
+            styleTests.push(CSS_REGEX);
+          } else if (
+            inlineStyles instanceof RegExp ||
+            inlineStyles instanceof Function
+          ) {
+            styleTests.push(inlineStyles);
+          } else {
+            const enable =
+              inlineStyles.enable === 'auto' ? isProd() : inlineStyles.enable;
+            if (enable) {
+              styleTests.push(inlineStyles.test);
+            }
+          }
         }
 
         if (!scriptTests.length && !styleTests.length) {
