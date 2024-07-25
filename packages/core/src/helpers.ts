@@ -546,9 +546,6 @@ export const isURL = (str: string): boolean =>
 export const createVirtualModule = (content: string) =>
   `data:text/javascript,${content}`;
 
-export const isRegExp = (obj: any): obj is RegExp =>
-  Object.prototype.toString.call(obj) === '[object RegExp]';
-
 export function isWebTarget(target: RsbuildTarget | RsbuildTarget[]): boolean {
   const targets = castArray(target);
   return targets.includes('web') || target.includes('web-worker');

@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { isRegExp } from 'node:util/types';
 import { CSS_REGEX, JS_REGEX } from '../constants';
 import {
   addTrailingSlash,
@@ -240,10 +241,7 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
         if (inlineScripts) {
           if (inlineScripts === true) {
             scriptTests.push(JS_REGEX);
-          } else if (
-            inlineScripts instanceof RegExp ||
-            inlineScripts instanceof Function
-          ) {
+          } else if (isRegExp(inlineScripts) || isFunction(inlineScripts)) {
             scriptTests.push(inlineScripts);
           } else {
             const enable =
@@ -257,10 +255,7 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
         if (inlineStyles) {
           if (inlineStyles === true) {
             styleTests.push(CSS_REGEX);
-          } else if (
-            inlineStyles instanceof RegExp ||
-            inlineStyles instanceof Function
-          ) {
+          } else if (isRegExp(inlineStyles) || isFunction(inlineStyles)) {
             styleTests.push(inlineStyles);
           } else {
             const enable =
