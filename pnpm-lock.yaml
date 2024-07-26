@@ -67,8 +67,8 @@ importers:
         specifier: ^2.30.1
         version: 2.30.1
       preact:
-        specifier: ^10.22.1
-        version: 10.22.1
+        specifier: ^10.23.1
+        version: 10.23.1
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -396,8 +396,8 @@ importers:
   examples/preact:
     dependencies:
       preact:
-        specifier: ^10.22.1
-        version: 10.22.1
+        specifier: ^10.23.1
+        version: 10.23.1
     devDependencies:
       '@rsbuild/core':
         specifier: link:../../packages/core
@@ -6171,8 +6171,8 @@ packages:
     resolution: {integrity: sha512-0vzE+lAiG7hZl1/9I8yzKLx3aR9Xbof3fBHKunvMfOCYAtMhrsnccJY2iTURb9EZd5+pLuiNV9/c/GZJOHsgIw==}
     engines: {node: ^10 || ^12 || >=14}
 
-  preact@10.22.1:
-    resolution: {integrity: sha512-jRYbDDgMpIb5LHq3hkI0bbl+l/TQ9UnkdQ0ww+lp+4MMOdqaUYdFc5qeyP+IV8FAd/2Em7drVPeKdQxsiWCf/A==}
+  preact@10.23.1:
+    resolution: {integrity: sha512-O5UdRsNh4vdZaTieWe3XOgSpdMAmkIYBCT3VhQDlKrzyCm8lUYsk0fmVEvoQQifoOjFRTaHZO69ylrzTW2BH+A==}
 
   prebundle@1.2.2:
     resolution: {integrity: sha512-lbVWLgdF0ae5Bs/Yc2byQ5y0VhExqiVEEPx4WEIdCTjVgQSuRLsMhs1ojBpZw58L9l1hpoF/6Lh9UTYh2NHYoA==}
@@ -13011,7 +13011,7 @@ snapshots:
       picocolors: 1.0.1
       source-map-js: 1.2.0
 
-  preact@10.22.1: {}
+  preact@10.23.1: {}
 
   prebundle@1.2.2(typescript@5.5.2):
     dependencies:
