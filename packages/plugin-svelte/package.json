@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-svelte",
-  "version": "1.0.1-beta.5",
+  "version": "1.0.1-beta.6",
   "description": "Svelte plugin for Rsbuild",
   "repository": {
     "type": "git",
