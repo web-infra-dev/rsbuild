@@ -553,7 +553,7 @@ type InspectConfigOptions = {
   // defaults to `false`
   verbose?: boolean;
   // Specify the output path
-  // defaults to the value configured by `output.distPath.root`
+  // defaults to the value of `output.distPath.root`
   outputPath?: string;
   // Whether to write the result to disk
   // defaults to `false`
@@ -572,9 +572,9 @@ async function InspectConfig(options?: InspectConfigOptions): Promise<{
 }>;
 ```
 
-- **Example:**
+### Example
 
-Get the config content in string format:
+Get the content of configs in string format:
 
 ```ts
 const { rsbuildConfig, bundlerConfigs } = await rsbuild.inspectConfig();
@@ -587,6 +587,21 @@ Write the config content to disk:
 ```ts
 await rsbuild.inspectConfig({
   writeToDisk: true,
+});
+```
+
+### Output Path
+
+You can set the output path using `outputPath`. The default value is [output.distPath.root](/config/output/dist-path).
+
+If `outputPath` is a relative path, it will be concatenated relative to the value of `output.distPath.root`. You can also set `outputPath` to an absolute path, in which case the files will be written directly to that path. For example:
+
+```ts
+import path from 'node:path';
+
+await rsbuild.inspectConfig({
+  writeToDisk: true,
+  outputPath: path.join(__dirname, 'custom-dir'),
 });
 ```
 

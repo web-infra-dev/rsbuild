@@ -2,11 +2,27 @@ import { isAbsolute, join } from 'node:path';
 import type { InspectConfigOptions, InspectConfigResult } from '@rsbuild/core';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 import {
+  type InternalContext,
   getRsbuildInspectConfig,
   outputInspectConfigFiles,
   stringifyConfig,
 } from './shared';
 import type { WebpackConfig } from './types';
+
+const getInspectOutputPath = (
+  context: InternalContext,
+  inspectOptions: InspectConfigOptions,
+) => {
+  if (inspectOptions.outputPath) {
+    if (isAbsolute(inspectOptions.outputPath)) {
+      return inspectOptions.outputPath;
+    }
+
+    return join(context.distPath, inspectOptions.outputPath);
+  }
+
+  return context.distPath;
+};
 
 export async function inspectConfig({
   context,
@@ -50,13 +66,7 @@ export async function inspectConfig({
     pluginManager,
   });
 
-  let outputPath = inspectOptions.outputPath
-    ? join(context.distPath, inspectOptions.outputPath)
-    : context.distPath;
-
-  if (!isAbsolute(outputPath)) {
-    outputPath = join(context.rootPath, outputPath);
-  }
+  const outputPath = getInspectOutputPath(context, inspectOptions);
 
   if (inspectOptions.writeToDisk) {
     await outputInspectConfigFiles({

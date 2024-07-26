@@ -8,9 +8,25 @@ import { getNodeEnv, setNodeEnv } from '../helpers';
 import type {
   InspectConfigOptions,
   InspectConfigResult,
+  InternalContext,
   RspackConfig,
 } from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
+
+const getInspectOutputPath = (
+  context: InternalContext,
+  inspectOptions: InspectConfigOptions,
+) => {
+  if (inspectOptions.outputPath) {
+    if (isAbsolute(inspectOptions.outputPath)) {
+      return inspectOptions.outputPath;
+    }
+
+    return join(context.distPath, inspectOptions.outputPath);
+  }
+
+  return context.distPath;
+};
 
 export async function inspectConfig({
   context,
@@ -54,12 +70,7 @@ export async function inspectConfig({
     pluginManager,
   });
 
-  let outputPath = inspectOptions.outputPath
-    ? join(context.distPath, inspectOptions.outputPath)
-    : context.distPath;
-  if (!isAbsolute(outputPath)) {
-    outputPath = join(context.rootPath, outputPath);
-  }
+  const outputPath = getInspectOutputPath(context, inspectOptions);
 
   if (inspectOptions.writeToDisk) {
     await outputInspectConfigFiles({
