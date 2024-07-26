@@ -411,7 +411,7 @@ export const canParse = (url: string): boolean => {
 
 export const ensureAssetPrefix = (
   url: string,
-  assetPrefix: string = DEFAULT_ASSET_PREFIX,
+  assetPrefix: Rspack.PublicPath = DEFAULT_ASSET_PREFIX,
 ): string => {
   // The use of an absolute URL without a protocol is technically legal,
   // however it cannot be parsed as a URL instance, just return it.
@@ -429,6 +429,11 @@ export const ensureAssetPrefix = (
 
   // 'auto' is a magic value in Rspack and behave like `publicPath: ""`
   if (assetPrefix === 'auto') {
+    return url;
+  }
+
+  // function is not supported by this helper
+  if (typeof assetPrefix === 'function') {
     return url;
   }
 
