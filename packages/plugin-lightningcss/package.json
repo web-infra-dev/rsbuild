@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-lightningcss",
-  "version": "1.0.1-beta.5",
+  "version": "1.0.1-beta.6",
   "description": "lightningcss for Rsbuild",
   "repository": {
     "type": "git",

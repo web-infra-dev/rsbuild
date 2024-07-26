@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-preact",
-  "version": "1.0.1-beta.5",
+  "version": "1.0.1-beta.6",
   "description": "Preact plugin for Rsbuild",
   "repository": {
     "type": "git",
