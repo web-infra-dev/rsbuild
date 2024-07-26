@@ -20,12 +20,12 @@
       "require": "./dist/index.cjs"
     },
     "./client/hmr": {
-      "types": "./dist-types/client/hmr/index.d.ts",
-      "default": "./dist/client/hmr.js"
+      "types": "./dist-types/client/hmr.d.ts",
+      "import": "./dist/client/hmr.js"
     },
     "./client/overlay": {
       "types": "./dist-types/client/overlay.d.ts",
-      "default": "./dist/client/overlay.js"
+      "import": "./dist/client/overlay.js"
     },
     "./types": {
       "types": "./types.d.ts"
