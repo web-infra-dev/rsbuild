@@ -20,7 +20,7 @@
       "require": "./dist/index.cjs"
     },
     "./client/hmr": {
-      "types": "./dist-types/client/hmr/index.d.ts",
+      "types": "./dist-types/client/hmr.d.ts",
       "default": "./dist/client/hmr.js"
     },
     "./client/overlay": {
