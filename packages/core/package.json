@@ -21,11 +21,11 @@
     },
     "./client/hmr": {
       "types": "./dist-types/client/hmr.d.ts",
-      "import": "./dist/client/hmr.js"
+      "default": "./dist/client/hmr.js"
     },
     "./client/overlay": {
       "types": "./dist-types/client/overlay.d.ts",
-      "import": "./dist/client/overlay.js"
+      "default": "./dist/client/overlay.js"
     },
     "./types": {
       "types": "./types.d.ts"
