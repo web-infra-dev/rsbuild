@@ -21,7 +21,6 @@ const bundlerNodeConfig = path.resolve(
 test('should generate config files when writeToDisk is true', async () => {
   const rsbuild = await createRsbuild({
     cwd: __dirname,
-    rsbuildConfig: {},
   });
   await rsbuild.inspectConfig({
     writeToDisk: true,
@@ -37,7 +36,6 @@ test('should generate config files when writeToDisk is true', async () => {
 test('should generate config files correctly when output is specified', async () => {
   const rsbuild = await createRsbuild({
     cwd: __dirname,
-    rsbuildConfig: {},
   });
   await rsbuild.inspectConfig({
     writeToDisk: true,
@@ -60,7 +58,6 @@ test('should generate config files correctly when output is specified', async ()
   fs.rmSync(rsbuildConfig, { force: true });
   fs.rmSync(bundlerConfig, { force: true });
 });
-
 
 test('should generate bundler config for node when target contains node', async () => {
   const rsbuild = await createRsbuild({
@@ -97,7 +94,6 @@ test('should generate bundler config for node when target contains node', async 
 test('should not generate config files when writeToDisk is false', async () => {
   const rsbuild = await createRsbuild({
     cwd: __dirname,
-    rsbuildConfig: {},
   });
   await rsbuild.inspectConfig({
     writeToDisk: false,
@@ -105,4 +101,22 @@ test('should not generate config files when writeToDisk is false', async () => {
 
   expect(fs.existsSync(rsbuildConfig)).toBeFalsy();
   expect(fs.existsSync(bundlerConfig)).toBeFalsy();
+});
+
+test('should allow to specify absolute output path', async () => {
+  const rsbuild = await createRsbuild({
+    cwd: __dirname,
+  });
+  const outputPath = path.join(__dirname, 'test-temp-output');
+
+  await rsbuild.inspectConfig({
+    writeToDisk: true,
+    outputPath,
+  });
+
+  expect(
+    fs.existsSync(path.join(outputPath, 'rspack.config.web.mjs')),
+  ).toBeTruthy();
+
+  fs.rmSync(rsbuildConfig, { force: true });
 });

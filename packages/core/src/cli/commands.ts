@@ -130,7 +130,7 @@ export function runCli(): void {
   inspectCommand
     .description('inspect the Rspack and Rsbuild configs')
     .option('--env <env>', 'specify env mode', 'development')
-    .option('--output <output>', 'specify inspect content output path', '/')
+    .option('--output <output>', 'specify inspect content output path')
     .option('--verbose', 'show full function definitions in output')
     .action(async (options: InspectOptions) => {
       try {
