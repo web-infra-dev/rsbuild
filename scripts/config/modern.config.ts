@@ -90,3 +90,18 @@ export const configForDualPackage = defineConfig({
   plugins: [moduleTools()],
   buildConfig: dualBuildConfigs,
 });
+
+export const configForSeparateTypesPackage = defineConfig({
+  plugins: [moduleTools(), emitTypePkgJsonPlugin],
+  buildConfig: [
+    cjsBuildConfig,
+    esmBuildConfig,
+    {
+      buildType: 'bundleless',
+      dts: {
+        distPath: '../dist-types',
+        only: true,
+      },
+    },
+  ],
+});
