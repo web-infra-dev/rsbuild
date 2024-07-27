@@ -14,7 +14,6 @@ import type {
 } from '../rspack';
 import type { HtmlRspackPlugin } from '../thirdParty';
 import type {
-  AutoprefixerOptions,
   CSSExtractOptions,
   CSSLoaderOptions,
   PostCSSLoaderOptions,
@@ -30,8 +29,6 @@ import type {
 import type { MaybePromise, OneOrMany } from '../utils';
 
 export type ToolsSwcConfig = ConfigChain<SwcLoaderOptions>;
-
-export type ToolsAutoprefixerConfig = ConfigChain<AutoprefixerOptions>;
 
 export type ToolsBundlerChainConfig = OneOrMany<
   (chain: RspackChain, utils: ModifyBundlerChainUtils) => MaybePromise<void>
@@ -86,10 +83,6 @@ export interface ToolsConfig {
    * Configure bundler config base on [rspack-chain](https://github.com/rspack-contrib/rspack-chain)
    */
   bundlerChain?: ToolsBundlerChainConfig;
-  /**
-   * Modify the config of [autoprefixer](https://github.com/postcss/autoprefixer)
-   */
-  autoprefixer?: ToolsAutoprefixerConfig;
   /**
    * Modify the options of [css-loader](https://github.com/webpack-contrib/css-loader).
    */

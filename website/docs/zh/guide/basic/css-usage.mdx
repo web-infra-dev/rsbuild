@@ -35,14 +35,6 @@ export default {
 
 当你同时配置 `postcss.config.js` 文件和 `tools.postcss` 选项时，两者都会生效，并且 `tools.postcss` 的优先级更高。
 
-### 内置 PostCSS 插件
-
-Rsbuild 内置了[autoprefixer](https://github.com/postcss/autoprefixer) 插件，来自动补齐 CSS 的浏览器前缀。如果你需要配置目标浏览器，可以使用 [browserslist](/guide/advanced/browserslist) 进行配置。
-
-:::tip
-如果你的项目中已经注册了 autoprefixer 插件，Rsbuild 不会再次注册 autoprefixer 插件。
-:::
-
 ## 使用 CSS Modules
 
 Rsbuild 默认支持 CSS Modules，请阅读 [使用 CSS Modules](/guide/basic/css-modules) 章节来了解 CSS Modules 的完整用法。

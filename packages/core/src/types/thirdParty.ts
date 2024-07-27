@@ -2,7 +2,6 @@ import type {
   CssExtractRspackLoaderOptions,
   CssExtractRspackPluginOptions,
 } from '@rspack/core';
-import type Autoprefixer from 'autoprefixer';
 import type HtmlRspackPlugin from 'html-rspack-plugin';
 import type { AcceptedPlugin, ProcessOptions } from 'postcss';
 import type { Configuration as WebpackConfig } from 'webpack';
@@ -10,14 +9,12 @@ import type { Rspack } from './rspack';
 
 export type { HtmlRspackPlugin };
 
-type AutoprefixerOptions = Autoprefixer.Options;
-
 export interface CSSExtractOptions {
   pluginOptions?: CssExtractRspackPluginOptions;
   loaderOptions?: CssExtractRspackLoaderOptions;
 }
 
-export type { WebpackConfig, AutoprefixerOptions };
+export type { WebpackConfig };
 
 export type PostCSSOptions = ProcessOptions & {
   config?: boolean;

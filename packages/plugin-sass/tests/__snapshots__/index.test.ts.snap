@@ -42,28 +42,7 @@ exports[`plugin-sass > should add sass-loader 1`] = `
         "options": {
           "postcssOptions": {
             "config": false,
-            "plugins": [
-              {
-                "browsers": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-                "info": [Function],
-                "options": {
-                  "flexbox": "no-2009",
-                  "overrideBrowserslist": [
-                    "chrome >= 87",
-                    "edge >= 88",
-                    "firefox >= 78",
-                    "safari >= 14",
-                  ],
-                },
-                "postcssPlugin": "autoprefixer",
-                "prepare": [Function],
-              },
-            ],
+            "plugins": [],
           },
           "sourceMap": false,
         },
@@ -130,28 +109,7 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
         "options": {
           "postcssOptions": {
             "config": false,
-            "plugins": [
-              {
-                "browsers": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-                "info": [Function],
-                "options": {
-                  "flexbox": "no-2009",
-                  "overrideBrowserslist": [
-                    "chrome >= 87",
-                    "edge >= 88",
-                    "firefox >= 78",
-                    "safari >= 14",
-                  ],
-                },
-                "postcssPlugin": "autoprefixer",
-                "prepare": [Function],
-              },
-            ],
+            "plugins": [],
           },
           "sourceMap": false,
         },
@@ -221,28 +179,7 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
         "options": {
           "postcssOptions": {
             "config": false,
-            "plugins": [
-              {
-                "browsers": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-                "info": [Function],
-                "options": {
-                  "flexbox": "no-2009",
-                  "overrideBrowserslist": [
-                    "chrome >= 87",
-                    "edge >= 88",
-                    "firefox >= 78",
-                    "safari >= 14",
-                  ],
-                },
-                "postcssPlugin": "autoprefixer",
-                "prepare": [Function],
-              },
-            ],
+            "plugins": [],
           },
           "sourceMap": false,
         },

@@ -71,28 +71,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "options": {
               "postcssOptions": {
                 "config": false,
-                "plugins": [
-                  {
-                    "browsers": [
-                      "chrome >= 87",
-                      "edge >= 88",
-                      "firefox >= 78",
-                      "safari >= 14",
-                    ],
-                    "info": [Function],
-                    "options": {
-                      "flexbox": "no-2009",
-                      "overrideBrowserslist": [
-                        "chrome >= 87",
-                        "edge >= 88",
-                        "firefox >= 78",
-                        "safari >= 14",
-                      ],
-                    },
-                    "postcssPlugin": "autoprefixer",
-                    "prepare": [Function],
-                  },
-                ],
+                "plugins": [],
               },
               "sourceMap": false,
             },
@@ -466,28 +445,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "options": {
               "postcssOptions": {
                 "config": false,
-                "plugins": [
-                  {
-                    "browsers": [
-                      "chrome >= 87",
-                      "edge >= 88",
-                      "firefox >= 78",
-                      "safari >= 14",
-                    ],
-                    "info": [Function],
-                    "options": {
-                      "flexbox": "no-2009",
-                      "overrideBrowserslist": [
-                        "chrome >= 87",
-                        "edge >= 88",
-                        "firefox >= 78",
-                        "safari >= 14",
-                      ],
-                    },
-                    "postcssPlugin": "autoprefixer",
-                    "prepare": [Function],
-                  },
-                ],
+                "plugins": [],
               },
               "sourceMap": false,
             },
