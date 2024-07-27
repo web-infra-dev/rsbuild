@@ -25,6 +25,7 @@ crossorigin
 datauri
 deepmerge
 docgen
+dppx
 envinfo
 estree
 facti
@@ -44,6 +45,7 @@ jfif
 jiti
 jscpuprofile
 jsesc
+kaios
 koppers
 lightningcss
 liyincode

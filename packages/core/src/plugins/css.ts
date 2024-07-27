@@ -1,4 +1,5 @@
 import path from 'node:path';
+import browserslist from 'browserslist';
 import deepmerge from 'deepmerge';
 import type { AcceptedPlugin } from 'postcss';
 import { reduceConfigs, reduceConfigsWithContext } from 'reduce-configs';
@@ -182,6 +183,56 @@ const getCSSLoaderOptions = ({
   return cssLoaderOptions;
 };
 
+const BROWSER_MAPPING: Record<string, string | null> = {
+  and_chr: 'chrome',
+  and_ff: 'firefox',
+  ie_mob: 'ie',
+  op_mob: 'opera',
+  and_qq: null,
+  and_uc: null,
+  baidu: null,
+  bb: null,
+  kaios: null,
+  op_mini: null,
+};
+
+function parseVersion(version: string) {
+  const [major, minor = 0, patch = 0] = version
+    .split('-')[0]
+    .split('.')
+    .map((v) => Number.parseInt(v, 10));
+
+  if (Number.isNaN(major) || Number.isNaN(minor) || Number.isNaN(patch)) {
+    return null;
+  }
+
+  return (major << 16) | (minor << 8) | patch;
+}
+
+// code modified based on https://github.com/parcel-bundler/lightningcss/blob/34b67a431c043fda5d4979bcdccb3008d082e243/node/browserslistToTargets.js
+// MIT License
+// TODO: no need to call browserslist in next Rspack version
+function browserslistToTargets(browserslist: string[]): Record<string, number> {
+  const targets: Record<string, number> = {};
+  for (const browser of browserslist) {
+    const [name, v] = browser.split(' ');
+    if (BROWSER_MAPPING[name] === null) {
+      continue;
+    }
+
+    const version = parseVersion(v);
+    if (version == null) {
+      continue;
+    }
+
+    if (targets[name] == null || version < targets[name]) {
+      targets[name] = version;
+    }
+  }
+
+  return targets;
+}
+
 async function applyCSSRule({
   rule,
   config,
@@ -237,7 +288,9 @@ async function applyCSSRule({
         .use(CHAIN_ID.USE.LIGHTNINGCSS)
         .loader('builtin:lightningcss-loader')
         .options({
-          targets: environment.browserslist,
+          targets: browserslistToTargets(
+            browserslist(environment.browserslist),
+          ),
         } satisfies Rspack.LightningcssLoaderOptions);
     }
 
