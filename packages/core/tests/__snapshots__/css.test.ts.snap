@@ -31,12 +31,12 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
-              "targets": [
-                "chrome >= 87",
-                "edge >= 88",
-                "firefox >= 78",
-                "safari >= 14",
-              ],
+              "targets": {
+                "chrome": 5701632,
+                "edge": 5767168,
+                "firefox": 5111808,
+                "safari": 917504,
+              },
             },
           },
         ],
@@ -119,12 +119,12 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
-              "targets": [
-                "chrome >= 87",
-                "edge >= 88",
-                "firefox >= 78",
-                "safari >= 14",
-              ],
+              "targets": {
+                "chrome": 5701632,
+                "edge": 5767168,
+                "firefox": 5111808,
+                "safari": 917504,
+              },
             },
           },
         ],
