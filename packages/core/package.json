@@ -56,7 +56,7 @@
     "@swc/helpers": "0.5.11",
     "caniuse-lite": "^1.0.30001643",
     "core-js": "~3.37.1",
-    "postcss": "^8.4.39"
+    "postcss": "^8.4.40"
   },
   "devDependencies": {
     "@types/connect": "3.4.38",
