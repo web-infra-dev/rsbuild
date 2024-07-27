@@ -55,7 +55,8 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
         const clonedOptions = deepmerge<Record<string, any>>({}, options);
 
         if (id === CHAIN_ID.USE.CSS) {
-          clonedOptions.importLoaders = 2;
+          // add stylus-loader
+          clonedOptions.importLoaders += 1;
         }
 
         rule.use(id).loader(loader.get('loader')).options(clonedOptions);

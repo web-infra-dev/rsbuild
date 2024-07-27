@@ -15,7 +15,7 @@ exports[`plugin-less > should add less-loader 1`] = `
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
-          "importLoaders": 2,
+          "importLoaders": 3,
           "modules": {
             "auto": true,
             "exportGlobals": false,
@@ -24,6 +24,17 @@ exports[`plugin-less > should add less-loader 1`] = `
             "namedExport": false,
           },
           "sourceMap": false,
+        },
+      },
+      {
+        "loader": "builtin:lightningcss-loader",
+        "options": {
+          "target": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
         },
       },
       {
@@ -90,7 +101,7 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
-          "importLoaders": 2,
+          "importLoaders": 3,
           "modules": {
             "auto": true,
             "exportGlobals": false,
@@ -99,6 +110,17 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
             "namedExport": false,
           },
           "sourceMap": false,
+        },
+      },
+      {
+        "loader": "builtin:lightningcss-loader",
+        "options": {
+          "target": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
         },
       },
       {
@@ -168,7 +190,7 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
-          "importLoaders": 2,
+          "importLoaders": 3,
           "modules": {
             "auto": true,
             "exportGlobals": false,
@@ -177,6 +199,17 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
             "namedExport": false,
           },
           "sourceMap": false,
+        },
+      },
+      {
+        "loader": "builtin:lightningcss-loader",
+        "options": {
+          "target": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
         },
       },
       {
@@ -243,7 +276,7 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
-          "importLoaders": 2,
+          "importLoaders": 3,
           "modules": {
             "auto": true,
             "exportGlobals": false,
@@ -252,6 +285,17 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
             "namedExport": false,
           },
           "sourceMap": false,
+        },
+      },
+      {
+        "loader": "builtin:lightningcss-loader",
+        "options": {
+          "target": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
         },
       },
       {

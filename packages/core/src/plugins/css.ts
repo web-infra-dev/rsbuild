@@ -237,30 +237,18 @@ async function applyCSSRule({
   config,
   context,
   utils: { target, isProd, CHAIN_ID, environment },
-  importLoaders = 1,
 }: {
   rule: RspackChain.Rule;
   config: NormalizedEnvironmentConfig;
   context: RsbuildContext;
   utils: ModifyChainUtils;
-  importLoaders?: number;
 }) {
   const { browserslist } = environment;
 
-  // 1. Check user config
+  // Check user config
   const enableExtractCSS = isUseCssExtract(config, target);
 
-  // 2. Prepare loader options
-  const localIdentName = getCSSModulesLocalIdentName(config, isProd);
-
-  const cssLoaderOptions = getCSSLoaderOptions({
-    config,
-    importLoaders,
-    target,
-    localIdentName,
-  });
-
-  // 3. Create Rspack rule
+  // Create Rspack rule
   // Order: style-loader/CssExtractRspackPlugin -> css-loader -> postcss-loader
   if (target === 'web') {
     // use CssExtractRspackPlugin loader
@@ -268,8 +256,7 @@ async function applyCSSRule({
       rule
         .use(CHAIN_ID.USE.MINI_CSS_EXTRACT)
         .loader(getCssExtractPlugin().loader)
-        .options(config.tools.cssExtract.loaderOptions)
-        .end();
+        .options(config.tools.cssExtract.loaderOptions);
     }
     // use style-loader
     else {
@@ -281,23 +268,31 @@ async function applyCSSRule({
       rule
         .use(CHAIN_ID.USE.STYLE)
         .loader(getCompiledPath('style-loader'))
-        .options(styleLoaderOptions)
-        .end();
+        .options(styleLoaderOptions);
     }
   } else {
     rule
       .use(CHAIN_ID.USE.IGNORE_CSS)
-      .loader(path.join(LOADER_PATH, 'ignoreCssLoader.cjs'))
-      .end();
+      .loader(path.join(LOADER_PATH, 'ignoreCssLoader.cjs'));
   }
 
-  rule
-    .use(CHAIN_ID.USE.CSS)
-    .loader(getCompiledPath('css-loader'))
-    .options(cssLoaderOptions)
-    .end();
+  // Number of loaders applied before css-loader for `@import` at-rules
+  let importLoaders = 1;
+
+  rule.use(CHAIN_ID.USE.CSS).loader(getCompiledPath('css-loader'));
 
   if (target === 'web') {
+    // `builtin:lightningcss-loader` is not supported when using webpack
+    if (context.bundlerType === 'rspack') {
+      rule
+        .use(CHAIN_ID.USE.LIGHTNINGCSS)
+        .loader('builtin:lightningcss-loader')
+        .options({
+          target: environment.browserslist,
+        });
+      importLoaders++;
+    }
+
     const postcssLoaderOptions = await getPostcssLoaderOptions({
       browserslist,
       config,
@@ -307,9 +302,17 @@ async function applyCSSRule({
     rule
       .use(CHAIN_ID.USE.POSTCSS)
       .loader(getCompiledPath('postcss-loader'))
-      .options(postcssLoaderOptions)
-      .end();
+      .options(postcssLoaderOptions);
   }
+
+  const localIdentName = getCSSModulesLocalIdentName(config, isProd);
+  const cssLoaderOptions = getCSSLoaderOptions({
+    config,
+    importLoaders,
+    target,
+    localIdentName,
+  });
+  rule.use(CHAIN_ID.USE.CSS).options(cssLoaderOptions);
 
   // CSS imports should always be treated as sideEffects
   rule.merge({ sideEffects: true });

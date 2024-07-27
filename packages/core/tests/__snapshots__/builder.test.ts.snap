@@ -42,7 +42,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
-              "importLoaders": 1,
+              "importLoaders": 2,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -51,6 +51,17 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                 "namedExport": false,
               },
               "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "target": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
             },
           },
           {

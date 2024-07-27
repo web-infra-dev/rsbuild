@@ -136,7 +136,8 @@ export const pluginLess = (
         const clonedOptions = deepmerge<Record<string, any>>({}, options);
 
         if (id === CHAIN_ID.USE.CSS) {
-          clonedOptions.importLoaders = 2;
+          // add less-loader
+          clonedOptions.importLoaders += 1;
         }
 
         rule.use(id).loader(loader.get('loader')).options(clonedOptions);
