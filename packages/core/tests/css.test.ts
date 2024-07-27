@@ -1,11 +1,5 @@
 import { createStubRsbuild } from '@scripts/test-helper';
-import autoprefixer from 'autoprefixer';
-import type { NormalizedConfig } from '../src';
-import {
-  applyAutoprefixer,
-  normalizeCssLoaderOptions,
-  pluginCss,
-} from '../src/plugins/css';
+import { normalizeCssLoaderOptions, pluginCss } from '../src/plugins/css';
 
 describe('normalizeCssLoaderOptions', () => {
   it('should enable exportOnlyLocals correctly', () => {
@@ -170,23 +164,4 @@ describe('plugin-css injectStyles', () => {
 
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
-});
-
-it('should not apply autoprefixer if user config contains autoprefixer', async () => {
-  const config = {
-    tools: {},
-  } as NormalizedConfig;
-
-  expect(
-    (await applyAutoprefixer([autoprefixer()], ['Chrome >= 100'], config))
-      .length,
-  ).toEqual(1);
-
-  expect(
-    (await applyAutoprefixer([autoprefixer], ['Chrome >= 100'], config)).length,
-  ).toEqual(1);
-
-  expect(
-    (await applyAutoprefixer([], ['Chrome >= 100'], config)).length,
-  ).toEqual(1);
 });

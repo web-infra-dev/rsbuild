@@ -145,14 +145,6 @@ export default {
       name: 'webpack-bundle-analyzer',
     },
     {
-      name: 'autoprefixer',
-      externals: {
-        browserslist: '../browserslist',
-        'postcss-value-parser': '../postcss-value-parser',
-        picocolors: '../picocolors',
-      },
-    },
-    {
       name: 'webpack-dev-middleware',
       externals: {
         'schema-utils': './schema-utils',

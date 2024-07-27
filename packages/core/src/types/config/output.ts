@@ -282,7 +282,7 @@ export interface OutputConfig {
   /**
    * Specifies the range of target browsers that the project is compatible with.
    * This value will be used by [SWC](https://github.com/swc-project/swc) and
-   * [autoprefixer](https://github.com/postcss/autoprefixer) to identify the JavaScript syntax that
+   * [Lightning CSS](https://github.com/parcel-bundler/lightningcss) to identify the JavaScript syntax that
    * need to be transformed and the CSS browser prefixes that need to be added.
    */
   overrideBrowserslist?: string[];

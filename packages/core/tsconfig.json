@@ -21,7 +21,6 @@
       "commander": ["./compiled/commander"],
       "picocolors": ["./compiled/picocolors"],
       "on-finished": ["./compiled/on-finished"],
-      "autoprefixer": ["./compiled/autoprefixer"],
       "browserslist": ["./compiled/browserslist"],
       "rspack-chain": ["./compiled/rspack-chain"],
       "dotenv-expand": ["./compiled/dotenv-expand"],

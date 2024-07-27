@@ -3,11 +3,9 @@ import deepmerge from 'deepmerge';
 import type { AcceptedPlugin } from 'postcss';
 import { reduceConfigs, reduceConfigsWithContext } from 'reduce-configs';
 import { CSS_REGEX, LOADER_PATH } from '../constants';
-import { isFunction, isPlainObject } from '../helpers';
 import { getCompiledPath } from '../helpers/path';
 import { getCssExtractPlugin } from '../pluginHelper';
 import type {
-  AutoprefixerOptions,
   CSSLoaderModulesMode,
   CSSLoaderOptions,
   ModifyChainUtils,
@@ -101,51 +99,10 @@ async function loadUserPostcssrc(root: string): Promise<PostCSSOptions> {
   return promise;
 }
 
-/**
- * Apply autoprefixer to the postcss plugins
- * Check if autoprefixer is already in the plugins, if not, add it
- */
-export const applyAutoprefixer = async (
-  plugins: unknown[],
-  browserslist: string[],
-  config: NormalizedEnvironmentConfig,
-): Promise<AcceptedPlugin[]> => {
-  const pluginObjects: AcceptedPlugin[] = plugins.map((plugin) =>
-    isFunction(plugin) ? plugin({}) : plugin,
-  );
-
-  const hasAutoprefixer = pluginObjects.some((pluginObject) => {
-    if (isPlainObject(pluginObject) && 'postcssPlugin' in pluginObject) {
-      return pluginObject.postcssPlugin === 'autoprefixer';
-    }
-    return false;
-  });
-
-  if (!hasAutoprefixer) {
-    const { default: autoprefixer } = await import('autoprefixer');
-
-    const autoprefixerOptions = reduceConfigs<AutoprefixerOptions>({
-      initial: {
-        flexbox: 'no-2009',
-        overrideBrowserslist: browserslist,
-      },
-      config: config.tools.autoprefixer,
-    });
-
-    // Place autoprefixer as the last plugin to correctly process the results of other plugins
-    // such as tailwindcss
-    pluginObjects.push(autoprefixer(autoprefixerOptions));
-  }
-
-  return pluginObjects;
-};
-
 const getPostcssLoaderOptions = async ({
-  browserslist,
   config,
   root,
 }: {
-  browserslist: string[];
   config: NormalizedEnvironmentConfig;
   root: string;
 }): Promise<PostCSSLoaderOptions> => {
@@ -163,19 +120,11 @@ const getPostcssLoaderOptions = async ({
 
   const userPostcssConfig = await loadUserPostcssrc(root);
 
-  let postcssPlugins = userPostcssConfig.plugins?.slice() || [];
-
-  postcssPlugins = await applyAutoprefixer(
-    postcssPlugins,
-    browserslist,
-    config,
-  );
+  // init the plugins array
+  userPostcssConfig.plugins ||= [];
 
   const defaultPostcssConfig: PostCSSLoaderOptions = {
-    postcssOptions: {
-      ...userPostcssConfig,
-      plugins: postcssPlugins,
-    },
+    postcssOptions: userPostcssConfig,
     sourceMap: config.output.sourceMap.css,
   };
 
@@ -243,8 +192,6 @@ async function applyCSSRule({
   context: RsbuildContext;
   utils: ModifyChainUtils;
 }) {
-  const { browserslist } = environment;
-
   // Check user config
   const enableExtractCSS = isUseCssExtract(config, target);
 
@@ -294,7 +241,6 @@ async function applyCSSRule({
     }
 
     const postcssLoaderOptions = await getPostcssLoaderOptions({
-      browserslist,
       config,
       root: context.rootPath,
     });
