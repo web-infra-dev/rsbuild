@@ -1,51 +1,5 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugin-css > should override browserslist of autoprefixer when using output.overrideBrowserslist config 1`] = `
-{
-  "module": {
-    "rules": [
-      {
-        "resolve": {
-          "preferRelative": true,
-        },
-        "sideEffects": true,
-        "test": /\\\\\\.css\\$/,
-        "use": [
-          {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader",
-            "options": {
-              "importLoaders": 1,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "builtin:lightningcss-loader",
-            "options": {
-              "target": [
-                "Chrome 80",
-              ],
-            },
-          },
-        ],
-      },
-    ],
-  },
-  "plugins": [
-    RsbuildCorePlugin {},
-  ],
-}
-`;
-
 exports[`plugin-css > should use custom cssModules rule when using output.cssModules config 1`] = `
 {
   "module": {
@@ -77,7 +31,7 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
-              "target": [
+              "targets": [
                 "chrome >= 87",
                 "edge >= 88",
                 "firefox >= 78",
@@ -165,7 +119,7 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
-              "target": [
+              "targets": [
                 "chrome >= 87",
                 "edge >= 88",
                 "firefox >= 78",

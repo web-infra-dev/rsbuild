@@ -15,6 +15,7 @@ import type {
   RsbuildContext,
   RsbuildPlugin,
   RsbuildTarget,
+  Rspack,
   RspackChain,
 } from '../types';
 
@@ -236,8 +237,8 @@ async function applyCSSRule({
         .use(CHAIN_ID.USE.LIGHTNINGCSS)
         .loader('builtin:lightningcss-loader')
         .options({
-          target: environment.browserslist,
-        });
+          targets: environment.browserslist,
+        } satisfies Rspack.LightningcssLoaderOptions);
     }
 
     const postcssLoaderOptions = await getPostcssLoaderOptions({
