@@ -1392,7 +1392,7 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
             {
               "loader": "<ROOT>/packages/core/compiled/css-loader",
               "options": {
-                "importLoaders": 2,
+                "importLoaders": 1,
                 "modules": {
                   "auto": true,
                   "exportGlobals": false,
@@ -1736,7 +1736,7 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
             {
               "loader": "<ROOT>/packages/core/compiled/css-loader",
               "options": {
-                "importLoaders": 1,
+                "importLoaders": 0,
                 "modules": {
                   "auto": true,
                   "exportGlobals": false,

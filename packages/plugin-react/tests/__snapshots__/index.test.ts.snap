@@ -58,7 +58,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
-              "importLoaders": 2,
+              "importLoaders": 1,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,

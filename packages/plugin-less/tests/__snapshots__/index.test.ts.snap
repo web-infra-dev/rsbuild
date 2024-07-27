@@ -15,7 +15,7 @@ exports[`plugin-less > should add less-loader 1`] = `
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
-          "importLoaders": 3,
+          "importLoaders": 2,
           "modules": {
             "auto": true,
             "exportGlobals": false,
@@ -70,7 +70,7 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
-          "importLoaders": 3,
+          "importLoaders": 2,
           "modules": {
             "auto": true,
             "exportGlobals": false,
@@ -128,7 +128,7 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
-          "importLoaders": 3,
+          "importLoaders": 2,
           "modules": {
             "auto": true,
             "exportGlobals": false,
@@ -183,7 +183,7 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
-          "importLoaders": 3,
+          "importLoaders": 2,
           "modules": {
             "auto": true,
             "exportGlobals": false,

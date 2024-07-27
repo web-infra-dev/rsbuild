@@ -17,7 +17,7 @@ exports[`plugin-css > should override browserslist of autoprefixer when using ou
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
-              "importLoaders": 2,
+              "importLoaders": 1,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -63,7 +63,7 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
-              "importLoaders": 2,
+              "importLoaders": 1,
               "modules": {
                 "auto": [Function],
                 "exportGlobals": false,
@@ -112,7 +112,7 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
-              "importLoaders": 1,
+              "importLoaders": 0,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -151,7 +151,7 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
-              "importLoaders": 2,
+              "importLoaders": 1,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
