@@ -41,18 +41,18 @@
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
     "@changesets/cli": "^2.27.7",
-    "@modern-js/module-tools": "^2.56.0",
+    "@modern-js/module-tools": "^2.56.2",
     "@rsbuild/config": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "check-dependency-version-consistency": "^4.1.0",
     "cross-env": "^7.0.3",
     "cspell-ban-words": "^0.0.3",
     "nano-staged": "^0.8.0",
-    "nx": "^19.5.1",
+    "nx": "^19.5.3",
     "prettier": "^3.3.3",
     "simple-git-hooks": "^2.11.1",
     "typescript": "^5.5.2",
-    "vitest": "^2.0.3"
+    "vitest": "^2.0.4"
   },
   "packageManager": "pnpm@9.6.0",
   "engines": {
