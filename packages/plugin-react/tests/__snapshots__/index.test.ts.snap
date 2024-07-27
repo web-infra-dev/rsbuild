@@ -72,7 +72,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
-              "target": [
+              "targets": [
                 "chrome >= 87",
                 "edge >= 88",
                 "firefox >= 78",

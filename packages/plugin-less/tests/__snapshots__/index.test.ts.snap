@@ -29,7 +29,7 @@ exports[`plugin-less > should add less-loader 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
-          "target": [
+          "targets": [
             "chrome >= 87",
             "edge >= 88",
             "firefox >= 78",
@@ -84,7 +84,7 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
-          "target": [
+          "targets": [
             "chrome >= 87",
             "edge >= 88",
             "firefox >= 78",
@@ -142,7 +142,7 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
-          "target": [
+          "targets": [
             "chrome >= 87",
             "edge >= 88",
             "firefox >= 78",
@@ -197,7 +197,7 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
-          "target": [
+          "targets": [
             "chrome >= 87",
             "edge >= 88",
             "firefox >= 78",

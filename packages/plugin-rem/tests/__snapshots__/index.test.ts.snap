@@ -29,7 +29,7 @@ exports[`plugin-rem > should not run htmlPlugin with enableRuntime is false 1`] 
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
-          "target": [
+          "targets": [
             "chrome >= 87",
             "edge >= 88",
             "firefox >= 78",
@@ -94,7 +94,7 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
-          "target": [
+          "targets": [
             "chrome >= 87",
             "edge >= 88",
             "firefox >= 78",
@@ -165,7 +165,7 @@ exports[`plugin-rem > should run rem plugin with default config 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
-          "target": [
+          "targets": [
             "chrome >= 87",
             "edge >= 88",
             "firefox >= 78",
@@ -224,7 +224,7 @@ exports[`plugin-rem > should run rem plugin with default config 2`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
-          "target": [
+          "targets": [
             "chrome >= 87",
             "edge >= 88",
             "firefox >= 78",
@@ -298,7 +298,7 @@ exports[`plugin-rem > should run rem plugin with default config 3`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
-          "target": [
+          "targets": [
             "chrome >= 87",
             "edge >= 88",
             "firefox >= 78",
