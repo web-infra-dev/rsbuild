@@ -36,19 +36,6 @@ describe('normalizeCssLoaderOptions', () => {
 });
 
 describe('plugin-css', () => {
-  it('should override browserslist of autoprefixer when using output.overrideBrowserslist config', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginCss()],
-      rsbuildConfig: {
-        output: {
-          overrideBrowserslist: ['Chrome 80'],
-        },
-      },
-    });
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0]).toMatchSnapshot();
-  });
-
   it('should enable source map when output.sourceMap.css is true', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],

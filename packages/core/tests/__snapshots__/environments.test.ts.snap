@@ -1406,7 +1406,7 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
             {
               "loader": "builtin:lightningcss-loader",
               "options": {
-                "target": [
+                "targets": [
                   "chrome >= 87",
                   "edge >= 88",
                   "firefox >= 78",

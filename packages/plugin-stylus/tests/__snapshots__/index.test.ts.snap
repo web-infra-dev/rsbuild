@@ -29,7 +29,7 @@ exports[`plugin-stylus > should add stylus loader config correctly 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
-          "target": [
+          "targets": [
             "chrome >= 87",
             "edge >= 88",
             "firefox >= 78",
@@ -77,7 +77,7 @@ exports[`plugin-stylus > should allow to configure stylus options 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
-          "target": [
+          "targets": [
             "chrome >= 87",
             "edge >= 88",
             "firefox >= 78",

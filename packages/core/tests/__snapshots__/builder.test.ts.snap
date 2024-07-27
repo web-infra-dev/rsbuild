@@ -56,7 +56,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
-              "target": [
+              "targets": [
                 "chrome >= 87",
                 "edge >= 88",
                 "firefox >= 78",
