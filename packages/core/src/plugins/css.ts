@@ -289,9 +289,7 @@ async function applyCSSRule({
         .loader('builtin:lightningcss-loader')
         .options({
           targets: browserslistToTargets(
-            browserslist(environment.browserslist, {
-              ignoreUnknownVersions: true,
-            }),
+            browserslist(environment.browserslist),
           ),
         } satisfies Rspack.LightningcssLoaderOptions);
     }
