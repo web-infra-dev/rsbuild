@@ -66,16 +66,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               "sourceMap": false,
             },
           },
-          {
-            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-            "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [],
-              },
-              "sourceMap": false,
-            },
-          },
         ],
       },
       {
@@ -436,16 +426,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
                 "exportLocalsConvention": "camelCase",
                 "localIdentName": "[local]-[hash:base64:6]",
                 "namedExport": false,
-              },
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-            "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [],
               },
               "sourceMap": false,
             },

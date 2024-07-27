@@ -6,7 +6,7 @@ Rsbuild 对 CSS 提供开箱即用的支持，包括 PostCSS、CSS Modules、CSS
 
 ## 使用 PostCSS
 
-Rsbuild 内置了 [PostCSS](https://postcss.org/) 来转换 CSS 代码。你可以通过以下方式来配置 PostCSS：
+Rsbuild 支持通过 [PostCSS](https://postcss.org/) 来转换 CSS 代码。你可以通过以下方式来配置 PostCSS：
 
 1. Rsbuild 使用 [postcss-load-config](https://github.com/postcss/postcss-load-config) 来加载当前项目根目录下的 PostCSS 配置文件，比如 `postcss.config.js`：
 
@@ -34,6 +34,8 @@ export default {
 ```
 
 当你同时配置 `postcss.config.js` 文件和 `tools.postcss` 选项时，两者都会生效，并且 `tools.postcss` 的优先级更高。
+
+如果项目中没有 `postcss.config.js` 文件，也没有配置 `tools.postcss` 选项，Rsbuild 将不会注册 `postcss-loader。
 
 ## 使用 CSS Modules
 

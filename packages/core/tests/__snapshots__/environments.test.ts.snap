@@ -1414,16 +1414,6 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
                 ],
               },
             },
-            {
-              "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-              "options": {
-                "postcssOptions": {
-                  "config": false,
-                  "plugins": [],
-                },
-                "sourceMap": false,
-              },
-            },
           ],
         },
         {

@@ -36,16 +36,6 @@ exports[`plugin-css > should override browserslist of autoprefixer when using ou
               ],
             },
           },
-          {
-            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-            "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [],
-              },
-              "sourceMap": false,
-            },
-          },
         ],
       },
     ],
@@ -93,16 +83,6 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
                 "firefox >= 78",
                 "safari >= 14",
               ],
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-            "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [],
-              },
-              "sourceMap": false,
             },
           },
         ],
@@ -191,16 +171,6 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
                 "firefox >= 78",
                 "safari >= 14",
               ],
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-            "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [],
-              },
-              "sourceMap": false,
             },
           },
         ],

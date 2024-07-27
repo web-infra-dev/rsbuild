@@ -38,16 +38,6 @@ exports[`plugin-less > should add less-loader 1`] = `
         },
       },
       {
-        "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-        "options": {
-          "postcssOptions": {
-            "config": false,
-            "plugins": [],
-          },
-          "sourceMap": false,
-        },
-      },
-      {
         "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
         "options": {
           "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
@@ -100,16 +90,6 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
             "firefox >= 78",
             "safari >= 14",
           ],
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-        "options": {
-          "postcssOptions": {
-            "config": false,
-            "plugins": [],
-          },
-          "sourceMap": false,
         },
       },
       {
@@ -171,16 +151,6 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
         },
       },
       {
-        "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-        "options": {
-          "postcssOptions": {
-            "config": false,
-            "plugins": [],
-          },
-          "sourceMap": false,
-        },
-      },
-      {
         "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
         "options": {
           "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
@@ -233,16 +203,6 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
             "firefox >= 78",
             "safari >= 14",
           ],
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-        "options": {
-          "postcssOptions": {
-            "config": false,
-            "plugins": [],
-          },
-          "sourceMap": false,
         },
       },
       {

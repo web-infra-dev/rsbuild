@@ -245,10 +245,13 @@ async function applyCSSRule({
       root: context.rootPath,
     });
 
-    rule
-      .use(CHAIN_ID.USE.POSTCSS)
-      .loader(getCompiledPath('postcss-loader'))
-      .options(postcssLoaderOptions);
+    // enable postcss-loader if using PostCSS plugins
+    if (postcssLoaderOptions.postcssOptions?.plugins?.length) {
+      rule
+        .use(CHAIN_ID.USE.POSTCSS)
+        .loader(getCompiledPath('postcss-loader'))
+        .options(postcssLoaderOptions);
+    }
   }
 
   const localIdentName = getCSSModulesLocalIdentName(config, isProd);
