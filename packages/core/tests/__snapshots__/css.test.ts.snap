@@ -17,7 +17,7 @@ exports[`plugin-css > should override browserslist of autoprefixer when using ou
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
-              "importLoaders": 1,
+              "importLoaders": 2,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -26,6 +26,14 @@ exports[`plugin-css > should override browserslist of autoprefixer when using ou
                 "namedExport": false,
               },
               "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "target": [
+                "Chrome 80",
+              ],
             },
           },
           {
@@ -80,7 +88,7 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
-              "importLoaders": 1,
+              "importLoaders": 2,
               "modules": {
                 "auto": [Function],
                 "exportGlobals": false,
@@ -89,6 +97,17 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
                 "namedExport": false,
               },
               "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "target": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
             },
           },
           {
@@ -188,7 +207,7 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
-              "importLoaders": 1,
+              "importLoaders": 2,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -197,6 +216,17 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
                 "namedExport": false,
               },
               "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "target": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
             },
           },
           {

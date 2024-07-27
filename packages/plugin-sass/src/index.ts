@@ -102,8 +102,8 @@ export const pluginSass = (
         const clonedOptions = deepmerge<Record<string, any>>({}, options);
 
         if (id === CHAIN_ID.USE.CSS) {
-          // postcss-loader, resolve-url-loader, sass-loader
-          clonedOptions.importLoaders = 3;
+          // add resolve-url-loader and sass-loader
+          clonedOptions.importLoaders += 2;
         }
 
         rule.use(id).loader(loader.get('loader')).options(clonedOptions);
