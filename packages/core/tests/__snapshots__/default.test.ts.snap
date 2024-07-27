@@ -42,7 +42,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
-              "importLoaders": 2,
+              "importLoaders": 1,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -62,16 +62,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "firefox >= 78",
                 "safari >= 14",
               ],
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-            "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [],
-              },
-              "sourceMap": false,
             },
           },
         ],
@@ -449,7 +439,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
-              "importLoaders": 2,
+              "importLoaders": 1,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -469,16 +459,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                 "firefox >= 78",
                 "safari >= 14",
               ],
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-            "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [],
-              },
-              "sourceMap": false,
             },
           },
         ],
@@ -882,7 +862,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
-              "importLoaders": 1,
+              "importLoaders": 0,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -1213,7 +1193,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader",
             "options": {
-              "importLoaders": 2,
+              "importLoaders": 1,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -1233,16 +1213,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "firefox >= 78",
                 "safari >= 14",
               ],
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-            "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [],
-              },
-              "sourceMap": false,
             },
           },
         ],

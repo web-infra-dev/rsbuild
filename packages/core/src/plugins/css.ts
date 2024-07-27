@@ -224,20 +224,20 @@ async function applyCSSRule({
   }
 
   // Number of loaders applied before css-loader for `@import` at-rules
-  let importLoaders = 1;
+  let importLoaders = 0;
 
   rule.use(CHAIN_ID.USE.CSS).loader(getCompiledPath('css-loader'));
 
   if (target === 'web') {
     // `builtin:lightningcss-loader` is not supported when using webpack
     if (context.bundlerType === 'rspack') {
+      importLoaders++;
       rule
         .use(CHAIN_ID.USE.LIGHTNINGCSS)
         .loader('builtin:lightningcss-loader')
         .options({
           target: environment.browserslist,
         });
-      importLoaders++;
     }
 
     const postcssLoaderOptions = await getPostcssLoaderOptions({
@@ -245,10 +245,14 @@ async function applyCSSRule({
       root: context.rootPath,
     });
 
-    rule
-      .use(CHAIN_ID.USE.POSTCSS)
-      .loader(getCompiledPath('postcss-loader'))
-      .options(postcssLoaderOptions);
+    // enable postcss-loader if using PostCSS plugins
+    if (postcssLoaderOptions.postcssOptions?.plugins?.length) {
+      importLoaders++;
+      rule
+        .use(CHAIN_ID.USE.POSTCSS)
+        .loader(getCompiledPath('postcss-loader'))
+        .options(postcssLoaderOptions);
+    }
   }
 
   const localIdentName = getCSSModulesLocalIdentName(config, isProd);

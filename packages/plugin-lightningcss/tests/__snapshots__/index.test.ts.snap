@@ -23,7 +23,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
-          "importLoaders": 2,
+          "importLoaders": 1,
           "modules": {
             "auto": true,
             "exportGlobals": false,
@@ -101,7 +101,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should be configurable by us
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
-          "importLoaders": 2,
+          "importLoaders": 1,
           "modules": {
             "auto": true,
             "exportGlobals": false,
@@ -167,7 +167,7 @@ exports[`plugins/lightningcss > plugin-lightningcss should replace postcss-loade
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
-          "importLoaders": 2,
+          "importLoaders": 1,
           "modules": {
             "auto": true,
             "exportGlobals": false,

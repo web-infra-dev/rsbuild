@@ -6,7 +6,7 @@ In addition, Rsbuild also provides multiple configs to customize the compile rul
 
 ## Using PostCSS
 
-Rsbuild has built-in [PostCSS](https://postcss.org/) to transform the CSS code. You can configure PostCSS in the following ways:
+Rsbuild supports transforming CSS code through [PostCSS](https://postcss.org/). You can configure PostCSS in the following ways:
 
 1. Rsbuild uses [postcss-load-config](https://github.com/postcss/postcss-load-config) to load the PostCSS configuration file in the root directory of the current project, such as `postcss.config.js`:
 
@@ -34,6 +34,8 @@ export default {
 ```
 
 When you configure both the `postcss.config.js` file and the `tools.postcss` option, both will take effect, and the `tools.postcss` option will take precedence.
+
+If there is no `postcss.config.js` file in the project and the `tools.postcss` option is not configured, Rsbuild will not register `postcss-loader`.
 
 ## Using CSS Modules
 

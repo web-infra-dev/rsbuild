@@ -15,7 +15,7 @@ exports[`plugin-sass > should add sass-loader 1`] = `
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
-          "importLoaders": 4,
+          "importLoaders": 3,
           "modules": {
             "auto": true,
             "exportGlobals": false,
@@ -35,16 +35,6 @@ exports[`plugin-sass > should add sass-loader 1`] = `
             "firefox >= 78",
             "safari >= 14",
           ],
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-        "options": {
-          "postcssOptions": {
-            "config": false,
-            "plugins": [],
-          },
-          "sourceMap": false,
         },
       },
       {
@@ -82,7 +72,7 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
-          "importLoaders": 4,
+          "importLoaders": 3,
           "modules": {
             "auto": true,
             "exportGlobals": false,
@@ -102,16 +92,6 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
             "firefox >= 78",
             "safari >= 14",
           ],
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-        "options": {
-          "postcssOptions": {
-            "config": false,
-            "plugins": [],
-          },
-          "sourceMap": false,
         },
       },
       {
@@ -152,7 +132,7 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader",
         "options": {
-          "importLoaders": 4,
+          "importLoaders": 3,
           "modules": {
             "auto": true,
             "exportGlobals": false,
@@ -172,16 +152,6 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
             "firefox >= 78",
             "safari >= 14",
           ],
-        },
-      },
-      {
-        "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-        "options": {
-          "postcssOptions": {
-            "config": false,
-            "plugins": [],
-          },
-          "sourceMap": false,
         },
       },
       {
