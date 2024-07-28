@@ -42,7 +42,7 @@
     "@types/sass-loader": "^8.0.8",
     "prebundle": "1.2.2",
     "resolve-url-loader": "^5.0.0",
-    "sass-loader": "^15.0.0",
+    "sass-loader": "^16.0.0",
     "typescript": "^5.5.2"
   },
   "peerDependencies": {
