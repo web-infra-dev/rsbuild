@@ -1,8 +1,30 @@
 # 引用 CSS 文件
 
-Rsbuild 对 CSS 提供开箱即用的支持，包括 PostCSS、CSS Modules、CSS 预处理器、CSS 内联和 CSS 压缩。
+Rsbuild 对 CSS 提供开箱即用的支持，包括 Lightning CSS、PostCSS、CSS Modules、CSS 预处理器、CSS 内联和 CSS 压缩。
 
-除此之外，Rsbuild 也提供了多个配置项来自定义样式资源的处理规则。
+Rsbuild 也提供了多个配置项，允许自定义 CSS 文件的处理规则。
+
+## Lightning CSS
+
+:::tip
+[Lightning CSS](https://lightningcss.dev) 是一个基于 Rust 编写的高性能 CSS 解析、转译和压缩工具。它支持将许多现代的 CSS 特性解析并转化为指定浏览器支持的语法，并提供更好的压缩比例。
+:::
+
+Rsbuild 使用 Rspack 内置的 [lightningcss-loader](https://www.rspack.dev/guide/features/builtin-lightningcss-loader) 来转换 CSS 代码，它会自动读取项目中的 [browserslist](/guide/advanced/browserslist) 配置，并将 CSS 代码转换为目标浏览器支持的语法。
+
+- Lightning CSS 会自动添加浏览器前缀，比如 `-webkit-`、`-moz-`、`-ms-` 等，因此你不需要手动添加前缀，或是使用 [autoprefixer](https://github.com/postcss/autoprefixer) 插件。
+- Lightning CSS 会自动将 CSS 语法降级，这允许你在代码中使用现代的 CSS 特性，比如 CSS nesting，custom media queries 等，而无需担心浏览器兼容性问题。
+- 你可以使用 [tools.lightningcssLoader](/config/tools/lightningcss-loader) 来自定义 `lightningcss-loader` 的选项。
+- 如果 Lightning CSS 无法满足你的需求，你也可以使用 [PostCSS](#使用-postcss) 来转换 CSS 代码。
+
+> Rsbuild 从 `1.0.1-beta.6` 版本开始默认启用 Lightning CSS。
+
+## CSS 压缩
+
+在生产环境构建时， Rsbuild 会开启 Rspack 内置的 [LightningCssMinimizerRspackPlugin](https://rspack.dev/plugins/rspack/lightning-css-minimizer-rspack-plugin) 插件，将 CSS 资源压缩，以达到更好的传输效率。
+
+- 你可以通过 [output.minify](/config/output/minify) 选项来禁用 CSS 压缩，或是自定义 `LightningCssMinimizerRspackPlugin` 的选项。
+- 你可以通过 [@rsbuild/plugin-css-minimizer](https://github.com/rspack-contrib/rsbuild-plugin-css-minimizer) 来自定义 CSS 压缩工具，切换到 [cssnano](https://github.com/cssnano/cssnano) 或是其他 CSS 压缩器。
 
 ## 使用 PostCSS
 
@@ -33,9 +55,8 @@ export default {
 };
 ```
 
-当你同时配置 `postcss.config.js` 文件和 `tools.postcss` 选项时，两者都会生效，并且 `tools.postcss` 的优先级更高。
-
-如果项目中没有 `postcss.config.js` 文件，也没有配置 `tools.postcss` 选项，Rsbuild 将不会注册 `postcss-loader。
+- 当你同时配置 `postcss.config.js` 文件和 `tools.postcss` 选项时，两者都会生效，并且 `tools.postcss` 的优先级更高。
+- 如果项目中没有 `postcss.config.js` 文件，也没有配置 `tools.postcss` 选项，Rsbuild 将不会注册 `postcss-loader`。
 
 ## 使用 CSS Modules
 
@@ -52,14 +73,6 @@ Rsbuild 通过插件来支持社区流行的 CSS 预处理器，包括 Sass、Le
 ## CSS-in-JS
 
 请阅读 [React - CSS-in-JS](/guide/framework/react#css-in-js) 章节来了解如何在 Rsbuild 中使用常见的 CSS-in-JS 库。
-
-## CSS 压缩
-
-在生产环境构建时， Rsbuild 会将 CSS、JS 等静态资源进行压缩，以达到更好的传输效率。
-
-Rsbuild 默认使用 Rspack 内置的 `LightningCssMinimizerRspackPlugin` 插件，在生产环境构建时自动压缩 CSS 代码。
-
-你可以通过 [@rsbuild/plugin-css-minimizer](https://github.com/rspack-contrib/rsbuild-plugin-css-minimizer) 来自定义 CSS 压缩工具，切换到 cssnano 或其他工具进行 CSS 压缩。
 
 ## 内联 CSS 文件
 
