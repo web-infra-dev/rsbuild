@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "test": "pnpm test:rspack && pnpm test:webpack",
-    "test:rspack": "cross-env playwright test",
+    "test:rspack": "cross-env NODE_OPTIONS=--experimental-vm-modules playwright test",
     "test:webpack": "cross-env PROVIDE_TYPE=webpack playwright test"
   },
   "dependencies": {
