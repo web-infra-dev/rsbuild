@@ -691,7 +691,14 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       },
       LightningCssMinimizerRspackPlugin {
         "_args": [
-          undefined,
+          {
+            "browserslist": [
+              "chrome >= 87",
+              "edge >= 88",
+              "firefox >= 78",
+              "safari >= 14",
+            ],
+          },
         ],
         "affectedHooks": undefined,
         "name": "LightningCssMinimizerRspackPlugin",
