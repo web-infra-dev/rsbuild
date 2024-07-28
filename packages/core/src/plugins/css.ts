@@ -284,14 +284,20 @@ async function applyCSSRule({
     // `builtin:lightningcss-loader` is not supported when using webpack
     if (context.bundlerType === 'rspack') {
       importLoaders++;
-      rule
-        .use(CHAIN_ID.USE.LIGHTNINGCSS)
-        .loader('builtin:lightningcss-loader')
-        .options({
+
+      const loaderOptions = reduceConfigs<Rspack.LightningcssLoaderOptions>({
+        initial: {
           targets: browserslistToTargets(
             browserslist(environment.browserslist),
           ),
-        } satisfies Rspack.LightningcssLoaderOptions);
+        },
+        config: config.tools.lightningcssLoader,
+      });
+
+      rule
+        .use(CHAIN_ID.USE.LIGHTNINGCSS)
+        .loader('builtin:lightningcss-loader')
+        .options(loaderOptions);
     }
 
     const postcssLoaderOptions = await getPostcssLoaderOptions({
