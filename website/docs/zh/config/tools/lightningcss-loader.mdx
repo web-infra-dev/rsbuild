@@ -1,0 +1,48 @@
+# tools.lightningcssLoader
+
+- **类型：** `Rspack.LightningcssLoaderOptions | Function`
+- **默认值：**
+
+```ts
+const defaultOptions = {
+  // use current browserslist config
+  targets: browserslist,
+};
+```
+
+通过 `tools.lightningcssLoader` 可以设置 [builtin:lightningcss-loader](https://rspack.dev/guide/features/builtin-lightningcss-loader) 的选项。
+
+## Object 类型
+
+当 `tools.lightningcssLoader` 是一个 object 时，它会与默认配置通过 `Object.assign` 合并。
+
+比如，你可以通过 `tools.lightningcssLoader.exclude` 来关闭 vendor prefixes 的添加，此时你可以使用 PostCSS 的 autoprefixer 插件来添加 vendor prefixes。
+
+```js
+export default {
+  tools: {
+    lightningcssLoader: {
+      exclude: {
+        vendorPrefixes: false,
+      },
+    },
+  },
+};
+```
+
+## Function 类型
+
+当 `tools.lightningcssLoader` 是一个 function 时，默认选项会作为第一个参数传入，你可以直接修改这个对象，也可以返回一个新的对象作为最终使用的选项。比如：
+
+```js
+export default {
+  tools: {
+    lightningcssLoader: (config) => {
+      config.exclude = {
+        vendorPrefixes: false,
+      };
+      return config;
+    },
+  },
+};
+```
