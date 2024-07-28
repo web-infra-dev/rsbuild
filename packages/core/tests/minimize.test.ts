@@ -42,7 +42,14 @@ describe('plugin-minimize', () => {
         },
         LightningCssMinimizerRspackPlugin {
           "_args": [
-            undefined,
+            {
+              "browserslist": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
           ],
           "affectedHooks": undefined,
           "name": "LightningCssMinimizerRspackPlugin",
@@ -189,7 +196,14 @@ describe('plugin-minimize', () => {
         },
         LightningCssMinimizerRspackPlugin {
           "_args": [
-            undefined,
+            {
+              "browserslist": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
           ],
           "affectedHooks": undefined,
           "name": "LightningCssMinimizerRspackPlugin",
@@ -238,7 +252,14 @@ describe('plugin-minimize', () => {
         },
         LightningCssMinimizerRspackPlugin {
           "_args": [
-            undefined,
+            {
+              "browserslist": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
           ],
           "affectedHooks": undefined,
           "name": "LightningCssMinimizerRspackPlugin",
@@ -281,7 +302,14 @@ describe('plugin-minimize', () => {
         },
         LightningCssMinimizerRspackPlugin {
           "_args": [
-            undefined,
+            {
+              "browserslist": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
           ],
           "affectedHooks": undefined,
           "name": "LightningCssMinimizerRspackPlugin",

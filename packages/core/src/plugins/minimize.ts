@@ -113,9 +113,14 @@ export const pluginMinimize = (): RsbuildPlugin => ({
       }
 
       if (minifyCss && isRspack) {
+        const options: LightningCssMinimizerRspackPluginOptions = {
+          browserslist: environment.browserslist,
+          ...cssOptions,
+        };
+
         chain.optimization
           .minimizer(CHAIN_ID.MINIMIZER.CSS)
-          .use(rspack.LightningCssMinimizerRspackPlugin, [cssOptions])
+          .use(rspack.LightningCssMinimizerRspackPlugin, [options])
           .end();
       }
     });
