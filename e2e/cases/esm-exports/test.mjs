@@ -2,7 +2,6 @@ import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 import { pluginLess } from '@rsbuild/plugin-less';
-import { pluginLightningcss } from '@rsbuild/plugin-lightningcss';
 import { pluginPreact } from '@rsbuild/plugin-preact';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginRem } from '@rsbuild/plugin-rem';
@@ -34,7 +33,6 @@ export default {
   pluginSolid,
   pluginStylus,
   pluginSvelte,
-  pluginLightningcss,
   pluginSourceBuild,
   pluginStyledComponents,
   pluginTypeCheck,

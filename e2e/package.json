@@ -26,7 +26,6 @@
     "@rsbuild/plugin-babel": "workspace:*",
     "@rsbuild/plugin-check-syntax": "workspace:*",
     "@rsbuild/plugin-less": "workspace:*",
-    "@rsbuild/plugin-lightningcss": "workspace:*",
     "@rsbuild/plugin-preact": "workspace:*",
     "@rsbuild/plugin-react": "workspace:*",
     "@rsbuild/plugin-rem": "workspace:*",

@@ -109,9 +109,6 @@ importers:
       '@rsbuild/plugin-less':
         specifier: link:../packages/plugin-less
         version: link:../packages/plugin-less
-      '@rsbuild/plugin-lightningcss':
-        specifier: workspace:*
-        version: link:../packages/plugin-lightningcss
       '@rsbuild/plugin-preact':
         specifier: workspace:*
         version: link:../packages/plugin-preact
@@ -911,31 +908,6 @@ importers:
       prebundle:
         specifier: 1.2.2
         version: 1.2.2(typescript@5.5.2)
-      typescript:
-        specifier: ^5.5.2
-        version: 5.5.2
-
-  packages/plugin-lightningcss:
-    dependencies:
-      browserslist:
-        specifier: 4.23.2
-        version: 4.23.2
-      lightningcss:
-        specifier: ^1.25.1
-        version: 1.25.1
-      reduce-configs:
-        specifier: ^1.0.0
-        version: 1.0.0
-    devDependencies:
-      '@rsbuild/core':
-        specifier: link:../core
-        version: link:../core
-      '@scripts/test-helper':
-        specifier: workspace:*
-        version: link:../../scripts/test-helper
-      '@types/node':
-        specifier: 18.x
-        version: 18.19.31
       typescript:
         specifier: ^5.5.2
         version: 5.5.2
@@ -6455,7 +6427,7 @@ packages:
   rsbuild-plugin-google-analytics@1.0.1:
     resolution: {integrity: sha512-l4LiloIJ23HVswNTeySsIi6Mx9EYvu2HVm8PaCdkEle6UCY7Kkqz0OM28RW1qo27k4xVyYncxQGtBWRay3oM1g==}
     peerDependencies:
-      '@rsbuild/core': link:/tmp/renovate/repos/github/web-infra-dev/rsbuild/packages/core
+      '@rsbuild/core': link:/Users/chenjiahan/Project/rsbuild/packages/core
     peerDependenciesMeta:
       '@rsbuild/core':
         optional: true
@@ -6463,7 +6435,7 @@ packages:
   rsbuild-plugin-open-graph@1.0.1:
     resolution: {integrity: sha512-E+Pkbqq24/FVyrFPIUZ7T9W1PVHlPRlVNZG9AZ4xE29GHee4UcDkp0XXmh9GmAl2Fp0l7XTxk9RqztfuM4heUg==}
     peerDependencies:
-      '@rsbuild/core': link:/tmp/renovate/repos/github/web-infra-dev/rsbuild/packages/core
+      '@rsbuild/core': link:/Users/chenjiahan/Project/rsbuild/packages/core
     peerDependenciesMeta:
       '@rsbuild/core':
         optional: true
@@ -10857,7 +10829,8 @@ snapshots:
 
   detect-indent@6.1.0: {}
 
-  detect-libc@1.0.3: {}
+  detect-libc@1.0.3:
+    optional: true
 
   didyoumean@1.2.2: {}
 
@@ -11930,6 +11903,7 @@ snapshots:
       lightningcss-linux-x64-gnu: 1.25.1
       lightningcss-linux-x64-musl: 1.25.1
       lightningcss-win32-x64-msvc: 1.25.1
+    optional: true
 
   lilconfig@2.1.0: {}
 
