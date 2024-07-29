@@ -37,13 +37,14 @@ rspackOnlyTest(
     const remoteApp = await dev({
       cwd: remote,
     });
-    const hostApp = await dev({
-      cwd: host,
-    });
 
     await gotoPage(page, remoteApp);
     await expect(page.locator('#title')).toHaveText('Remote');
     await expect(page.locator('#button')).toHaveText('Button from remote');
+
+    const hostApp = await dev({
+      cwd: host,
+    });
 
     await gotoPage(page, hostApp);
     await expect(page.locator('#title')).toHaveText('Host');
