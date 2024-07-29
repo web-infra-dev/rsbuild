@@ -69,6 +69,54 @@ describe('initPlugins', () => {
 
     expect(result).toEqual([0, 2]);
   });
+
+  it('should remove environment plugin correctly', async () => {
+    const pluginManager = createPluginManager();
+    const result: number[] = [];
+
+    pluginManager.addPlugins(
+      [
+        {
+          name: 'plugin0',
+          // environment plugin can't remove global plugin
+          remove: ['plugin2', 'plugin3'],
+          setup() {
+            result.push(0);
+          },
+        },
+        {
+          name: 'plugin1',
+          setup() {
+            result.push(1);
+          },
+        },
+        {
+          name: 'plugin3',
+          setup() {
+            result.push(3);
+          },
+        },
+      ],
+      {
+        environment: 'A',
+      },
+    );
+
+    pluginManager.addPlugins([
+      {
+        name: 'plugin2',
+        // global plugin can remove environment plugin
+        remove: ['plugin1'],
+        setup() {
+          result.push(2);
+        },
+      },
+    ]);
+
+    await initPlugins({ pluginManager, getPluginAPI: () => ({}) as any });
+
+    expect(result).toEqual([0, 2]);
+  });
 });
 
 describe('pluginManager', () => {
