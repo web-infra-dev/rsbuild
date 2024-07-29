@@ -8,11 +8,11 @@ import { getHTMLPathByEntry } from './initPlugins';
 import { logger } from './logger';
 import type {
   BundlerType,
-  CreateRsbuildOptions,
   EnvironmentContext,
   InternalContext,
   NormalizedConfig,
   NormalizedEnvironmentConfig,
+  ResolvedCreateRsbuildOptions,
   RsbuildConfig,
   RsbuildContext,
   RsbuildEntry,
@@ -35,7 +35,7 @@ function getAbsoluteDistPath(
  * Create context by config.
  */
 async function createContextByConfig(
-  options: Required<CreateRsbuildOptions>,
+  options: ResolvedCreateRsbuildOptions,
   bundlerType: BundlerType,
 ): Promise<RsbuildContext> {
   const { cwd } = options;
@@ -210,7 +210,7 @@ export function createPublicContext(
  * which can have a lot of overhead and take some side effects.
  */
 export async function createContext(
-  options: Required<CreateRsbuildOptions>,
+  options: ResolvedCreateRsbuildOptions,
   userRsbuildConfig: RsbuildConfig,
   bundlerType: BundlerType,
 ): Promise<InternalContext> {
@@ -223,5 +223,6 @@ export async function createContext(
     hooks: initHooks(),
     config: { ...rsbuildConfig },
     originalConfig: userRsbuildConfig,
+    specifiedEnvironments: options.environment,
   };
 }

@@ -71,6 +71,17 @@ export type CreateRsbuildOptions = {
   cwd?: string;
   /** Configurations of Rsbuild. */
   rsbuildConfig?: RsbuildConfig;
+  /** Only build specified environment. */
+  environment?: string[];
+};
+
+export type ResolvedCreateRsbuildOptions = {
+  /** The root path of current project. */
+  cwd: string;
+  /** Configurations of Rsbuild. */
+  rsbuildConfig: RsbuildConfig;
+  /** Only build specified environment. */
+  environment?: string[];
 };
 
 export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
@@ -104,7 +115,7 @@ export type RsbuildProvider<B extends 'rspack' | 'webpack' = 'rspack'> =
   (options: {
     context: InternalContext;
     pluginManager: PluginManager;
-    rsbuildOptions: Required<CreateRsbuildOptions>;
+    rsbuildOptions: ResolvedCreateRsbuildOptions;
     setCssExtractPlugin: (plugin: unknown) => void;
   }) => Promise<ProviderInstance<B>>;
 

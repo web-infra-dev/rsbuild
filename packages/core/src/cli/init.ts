@@ -80,6 +80,7 @@ export async function init({
     return createRsbuild({
       cwd: root,
       rsbuildConfig: config,
+      environment: commonOpts.environment,
     });
   } catch (err) {
     if (isRestart) {

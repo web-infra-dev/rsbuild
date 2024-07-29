@@ -42,4 +42,6 @@ export type InternalContext = RsbuildContext & {
   getPluginAPI?: (environment?: string) => RsbuildPluginAPI;
   /** The environment context. */
   environments: Record<string, EnvironmentContext>;
+  /** Only build specified environment. */
+  specifiedEnvironments?: string[];
 };
