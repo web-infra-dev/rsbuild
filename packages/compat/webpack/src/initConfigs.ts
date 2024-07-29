@@ -1,7 +1,7 @@
 import {
-  type CreateRsbuildOptions,
   type InspectConfigOptions,
   type PluginManager,
+  type ResolvedCreateRsbuildOptions,
   logger,
 } from '@rsbuild/core';
 import { inspectConfig } from './inspectConfig';
@@ -12,7 +12,7 @@ import { generateWebpackConfig } from './webpackConfig';
 export type InitConfigsOptions = {
   context: InternalContext;
   pluginManager: PluginManager;
-  rsbuildOptions: Required<CreateRsbuildOptions>;
+  rsbuildOptions: ResolvedCreateRsbuildOptions;
 };
 
 export async function initConfigs({
