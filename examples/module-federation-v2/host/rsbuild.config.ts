@@ -9,6 +9,9 @@ export default defineConfig({
   },
   tools: {
     rspack: {
+      output: {
+        uniqueName: 'host',
+      },
       plugins: [
         new ModuleFederationPlugin({
           name: 'host',
