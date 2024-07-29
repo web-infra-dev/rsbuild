@@ -750,9 +750,6 @@ importers:
       postcss-loader:
         specifier: 8.1.1
         version: 8.1.1(@rspack/core@1.0.0-beta.0(@swc/helpers@0.5.11))(postcss@8.4.40)(typescript@5.5.2)(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
-      postcss-value-parser:
-        specifier: 4.2.0
-        version: 4.2.0
       prebundle:
         specifier: 1.2.2
         version: 1.2.2(typescript@5.5.2)

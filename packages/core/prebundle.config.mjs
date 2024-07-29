@@ -36,7 +36,6 @@ export default {
     '/^caniuse-lite(/.*)/': 'caniuse-lite$1',
     '@rspack/core': '@rspack/core',
     webpack: 'webpack',
-    postcss: 'postcss',
     typescript: 'typescript',
   },
   dependencies: [
@@ -87,10 +86,6 @@ export default {
       externals: {
         picocolors: '../picocolors',
       },
-    },
-    {
-      name: 'postcss-value-parser',
-      ignoreDts: true,
     },
     {
       name: 'sirv',
@@ -169,8 +164,8 @@ export default {
       name: 'css-loader',
       ignoreDts: true,
       externals: {
-        'postcss-value-parser': '../postcss-value-parser',
         semver: './semver',
+        picocolors: '../picocolors',
       },
       afterBundle: writeEmptySemver,
     },
