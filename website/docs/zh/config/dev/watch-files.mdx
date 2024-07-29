@@ -29,9 +29,10 @@ Rsbuild (Rspack) 默认会监听所有构建依赖，当这些文件发生变化
 ```js
 export default {
   tools: {
-    rspack: (config) => {
-      config.watchOptions ??= {};
-      config.watchOptions.ignored = /node_modules/;
+    rspack: {
+      watchOptions: {
+        ignored: /node_modules/,
+      },
     },
   },
 };
