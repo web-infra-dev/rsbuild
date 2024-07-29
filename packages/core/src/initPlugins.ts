@@ -155,9 +155,7 @@ export function initPluginAPI({
           compilation.hooks.childCompiler.tap(pluginName, (childCompiler) => {
             childCompiler.__rsbuildTransformer = transformer;
           });
-        });
 
-        compiler.hooks.compilation.tap(pluginName, (compilation) => {
           const { sources } = compiler.webpack;
 
           for (const {
