@@ -5,9 +5,10 @@ import { pluginReact } from '@rsbuild/plugin-react';
 export default defineConfig({
   plugins: [pluginReact()],
   server: {
-    port: 3002,
+    port: Number(process.env.REMOTE_PORT) || 3002,
   },
   dev: {
+    writeToDisk: true,
     assetPrefix: true,
   },
   tools: {
@@ -19,7 +20,7 @@ export default defineConfig({
         new ModuleFederationPlugin({
           name: 'remote',
           exposes: {
-            './Button': './src/Button',
+            './Button': './src/test-temp-Button',
           },
           shared: ['react', 'react-dom'],
         }),

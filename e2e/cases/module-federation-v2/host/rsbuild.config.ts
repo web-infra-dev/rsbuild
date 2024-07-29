@@ -4,22 +4,19 @@ import { pluginReact } from '@rsbuild/plugin-react';
 
 export default defineConfig({
   plugins: [pluginReact()],
-  server: {
-    port: 3002,
-  },
   dev: {
-    assetPrefix: true,
+    writeToDisk: true,
   },
   tools: {
     rspack: {
       output: {
-        uniqueName: 'remote',
+        uniqueName: 'host',
       },
       plugins: [
         new ModuleFederationPlugin({
-          name: 'remote',
-          exposes: {
-            './Button': './src/Button',
+          name: 'host',
+          remotes: {
+            remote: `remote@http://localhost:${process.env.REMOTE_PORT || 3002}/mf-manifest.json`,
           },
           shared: ['react', 'react-dom'],
         }),

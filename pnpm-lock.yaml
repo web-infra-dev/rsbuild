@@ -91,6 +91,9 @@ importers:
       '@e2e/helper':
         specifier: workspace:*
         version: link:scripts
+      '@module-federation/rspack':
+        specifier: 0.3.2
+        version: 0.3.2(typescript@5.5.2)
       '@playwright/test':
         specifier: 1.44.1
         version: 1.44.1
@@ -355,9 +358,9 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
     devDependencies:
-      '@module-federation/enhanced':
+      '@module-federation/rspack':
         specifier: 0.3.2
-        version: 0.3.2(typescript@5.5.2)(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
+        version: 0.3.2(typescript@5.5.2)
       '@rsbuild/core':
         specifier: link:../../../packages/core
         version: link:../../../packages/core
@@ -374,9 +377,9 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
     devDependencies:
-      '@module-federation/enhanced':
+      '@module-federation/rspack':
         specifier: 0.3.2
-        version: 0.3.2(typescript@5.5.2)(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
+        version: 0.3.2(typescript@5.5.2)
       '@rsbuild/core':
         specifier: link:../../../packages/core
         version: link:../../../packages/core
@@ -2625,20 +2628,6 @@ packages:
       vue-tsc:
         optional: true
 
-  '@module-federation/enhanced@0.3.2':
-    resolution: {integrity: sha512-qusdh0YLzBiFpCAVNN5Hclf59xgIWFWjDllmzCV8IAbIMO8fEyKbcUsKyuwA+oIhAb75TDSfs8mojixy8dtDTA==}
-    peerDependencies:
-      typescript: ^4.9.0 || ^5.0.0
-      vue-tsc: '>=1.0.24'
-      webpack: ^5.0.0
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-      vue-tsc:
-        optional: true
-      webpack:
-        optional: true
-
   '@module-federation/managers@0.3.2':
     resolution: {integrity: sha512-VSEfhe4SU6a2jl1kAogAgmK0aPGo4kQ4VmLbSrhXOp/PZiIdP/lI7MaikSA33LmmOBQ+us4HZE8+Lp8X5rpZnQ==}
 
@@ -3781,11 +3770,6 @@ packages:
   browserslist@4.23.2:
     resolution: {integrity: sha512-qkqSyistMYdxAcw+CzbZwlBy8AGmS/eEWs+sEV5TnLRGDOL+C5M2EnH6tlZyg0YoAxGJAFKh61En9BR941GnHA==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
-    hasBin: true
-
-  btoa@1.2.1:
-    resolution: {integrity: sha512-SB4/MIGlsiVkMcHmT+pSmIPoNDoHg+7cMzmt3Uxt628MTz2487DKSqK/fuhFBrkuqrYv5UCEnACpF4dTFNKc/g==}
-    engines: {node: '>= 0.4.0'}
     hasBin: true
 
   buffer-builder@0.2.0:
@@ -9243,26 +9227,6 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@module-federation/enhanced@0.3.2(typescript@5.5.2)(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))':
-    dependencies:
-      '@module-federation/bridge-react-webpack-plugin': 0.3.2
-      '@module-federation/dts-plugin': 0.3.2(typescript@5.5.2)
-      '@module-federation/managers': 0.3.2
-      '@module-federation/manifest': 0.3.2(typescript@5.5.2)
-      '@module-federation/rspack': 0.3.2(typescript@5.5.2)
-      '@module-federation/runtime-tools': 0.3.2
-      '@module-federation/sdk': 0.3.2
-      btoa: 1.2.1
-      upath: 2.0.1
-    optionalDependencies:
-      typescript: 5.5.2
-      webpack: 5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))
-    transitivePeerDependencies:
-      - bufferutil
-      - debug
-      - supports-color
-      - utf-8-validate
-
   '@module-federation/managers@0.3.2':
     dependencies:
       '@module-federation/sdk': 0.3.2
@@ -10632,8 +10596,6 @@ snapshots:
       electron-to-chromium: 1.4.827
       node-releases: 2.0.14
       update-browserslist-db: 1.1.0(browserslist@4.23.2)
-
-  btoa@1.2.1: {}
 
   buffer-builder@0.2.0: {}
 
