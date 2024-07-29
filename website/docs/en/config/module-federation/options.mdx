@@ -1,18 +1,18 @@
 # moduleFederation.options
 
-- **Type:** `ModuleFederationConfig`
+- **Type:** [Rspack.ModuleFederationPluginOptions](https://rspack.dev/plugins/webpack/module-federation-plugin#options)
 - **Default:** `undefined`
 - **Version:** `>= 0.4.0`
 
-Used to configure the Rspack's module federation plugin.
+Used to configure the Rspack's Module Federation plugin (Module Federation v1.5).
 
 :::tip
-There are several versions of Module Federation implementations. Before using `moduleFederation.options`, please read the [Module Federation guide](/guide/advanced/module-federation) to understand the differences between different versions of Module Federation and how to make choices.
+There are several versions of Module Federation implementations. Before using `moduleFederation.options`, please read the [Module Federation guide](/guide/advanced/module-federation) to understand the differences between different versions and how to make choices.
 :::
 
 ## Introduction
 
-When using module federation, it is recommended that you use the `moduleFederation.options` option provided by Rsbuild. This option will automatically adjust some related configurations to ensure that the module federation application can run correctly.
+When using Module Federation, it is recommended that you use the `moduleFederation.options` option provided by Rsbuild. This option will automatically adjust some related configurations to ensure that the module federation application can run correctly.
 
 When you set the `moduleFederation.options` option, Rsbuild will take the following actions:
 
