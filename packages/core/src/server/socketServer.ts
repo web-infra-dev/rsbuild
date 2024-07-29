@@ -5,6 +5,7 @@ import type Ws from 'ws';
 import { getAllStatsErrors, getAllStatsWarnings } from '../helpers';
 import { logger } from '../logger';
 import type { DevConfig, Stats } from '../types';
+import { getCompilationName } from './helper';
 
 interface ExtWebSocket extends Ws {
   isAlive: boolean;
@@ -92,7 +93,7 @@ export class SocketServer {
   }
 
   public updateStats(stats: Stats): void {
-    const compilationName = stats.compilation.name!;
+    const compilationName = getCompilationName(stats.compilation);
 
     this.stats[compilationName] = stats;
 
