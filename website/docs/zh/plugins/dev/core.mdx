@@ -93,6 +93,8 @@ const pluginBar = {
 
 比如同时注册上述的 Foo 和 Bar 插件，由于 Bar 插件声明 remove 了 Foo 插件，因此 Foo 插件不会生效。
 
+需要注意的是：如果当前插件注册为[特定环境插件](/guide/advanced/environments#为指定环境添加插件)，则仅支持移除同环境插件，不能移除全局插件。
+
 ## api.context
 
 `api.context` 是一个只读对象，提供一些上下文信息。
