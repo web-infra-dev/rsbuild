@@ -14,6 +14,7 @@ import type {
   PrintUrls,
   Routes,
   RsbuildEntry,
+  Rspack,
 } from '../types';
 
 /**
@@ -380,3 +381,8 @@ export const getAddressUrls = ({
 
   return addressUrls;
 };
+
+// A unique name for WebSocket communication
+export const getCompilationName = (
+  compiler: Rspack.Compiler | Rspack.Compilation,
+) => `${compiler.name ?? ''}_${compiler.options.output.uniqueName ?? ''}`;
