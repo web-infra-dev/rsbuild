@@ -119,7 +119,7 @@ const updateConfigForTest = async (
     server: {
       // make port random to avoid conflict
       port: await getRandomPort(),
-      // printUrls: false,
+      printUrls: false,
     },
     performance: {
       buildCache: false,
