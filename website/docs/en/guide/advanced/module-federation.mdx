@@ -51,13 +51,13 @@ import { ModuleFederationPlugin } from '@module-federation/enhanced/rspack';
 
 export default defineConfig({
   tools: {
-    rspack: (config, { appendPlugins }) => {
-      appendPlugins([
+    rspack: {
+      plugins: [
         new ModuleFederationPlugin({
           name: 'provider',
           // other options
         }),
-      ]);
+      ],
     },
   },
 });
