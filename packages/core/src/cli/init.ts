@@ -5,6 +5,7 @@ import { loadEnv } from '../loadEnv';
 import { logger } from '../logger';
 import { onBeforeRestartServer } from '../server/restart';
 import type { RsbuildInstance } from '../types';
+import { getDependencyFiles } from './analyzingDependencies';
 import type { CommonOptions } from './commands';
 
 let commonOpts: CommonOptions = {};
@@ -48,7 +49,8 @@ export async function init({
     if (command === 'dev') {
       const files = [...envs.filePaths];
       if (configFilePath) {
-        files.push(configFilePath);
+        const dependencyFiles = getDependencyFiles(configFilePath);
+        files.push(configFilePath, ...dependencyFiles);
       }
 
       watchFiles(files);
