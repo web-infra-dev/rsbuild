@@ -32,8 +32,6 @@ rspackOnlyTest(
 
     const remotePort = await getRandomPort();
 
-    process.env.DEBUG = 'builder';
-
     process.env.REMOTE_PORT = remotePort.toString();
 
     const remoteApp = await dev({
