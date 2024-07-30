@@ -121,10 +121,9 @@ const initEnvironmentConfigs = (
     );
 
     if (!Object.keys(resolvedEnvironments).length) {
-      logger.error(
+      throw new Error(
         `The current build is specified to run only in the ${color.yellow(specifiedEnvironments?.join(','))} environment, but the configuration of the specified environment was not found.`,
       );
-      process.exit(1);
     }
     return resolvedEnvironments;
   }
@@ -132,10 +131,9 @@ const initEnvironmentConfigs = (
   const defaultEnvironmentName = camelCase(rsbuildSharedConfig.output.target);
 
   if (!isEnvironmentEnabled(defaultEnvironmentName)) {
-    logger.error(
-      `The current project is specified to run only in the ${color.yellow(specifiedEnvironments?.join(','))} environment, but the configuration of the corresponding environment was not found.`,
+    throw new Error(
+      `The current build is specified to run only in the ${color.yellow(specifiedEnvironments?.join(','))} environment, but the configuration of the specified environment was not found.`,
     );
-    process.exit(1);
   }
 
   return {
