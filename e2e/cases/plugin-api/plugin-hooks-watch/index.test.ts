@@ -67,9 +67,9 @@ rspackOnlyTest(
   'should run plugin hooks correctly when running build with watch',
   async () => {
     const cwd = __dirname;
-    fse.ensureDirSync(join(cwd, 'src'));
+    fse.ensureDirSync(join(cwd, 'test-temp-src'));
 
-    const filePath = join(cwd, 'src', 'index.js');
+    const filePath = join(cwd, 'test-temp-src', 'index.js');
 
     await fs.promises.writeFile(filePath, "console.log('1');");
 
@@ -80,6 +80,11 @@ rspackOnlyTest(
         plugins: [plugin],
         server: {
           printUrls: false,
+        },
+        source: {
+          entry: {
+            index: './test-temp-src/index.js',
+          },
         },
         performance: {
           printFileSize: false,

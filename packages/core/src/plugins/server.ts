@@ -8,8 +8,8 @@ export const pluginServer = (): RsbuildPlugin => ({
   name: 'rsbuild:server',
 
   setup(api) {
-    api.onBeforeBuild(async (params: { isFirstCompile?: boolean }) => {
-      if (!params.isFirstCompile) {
+    api.onBeforeBuild(async ({ isFirstCompile }) => {
+      if (!isFirstCompile) {
         return;
       }
       const config = api.getNormalizedConfig();
