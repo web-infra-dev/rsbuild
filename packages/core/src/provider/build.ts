@@ -39,6 +39,7 @@ export const build = async (
   await context.hooks.onBeforeBuild.call({
     bundlerConfigs,
     environments: context.environments,
+    isWatch: Boolean(watch),
   });
 
   const onDone = async (stats: Stats | MultiStats) => {
