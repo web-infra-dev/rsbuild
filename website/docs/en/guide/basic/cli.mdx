@@ -39,6 +39,7 @@ Options:
   --port <port>         specify a port number for Rsbuild Server to listen
   --host <host>         specify the host that the Rsbuild Server listens to
   -c --config <config>  specify the configuration file, can be a relative or absolute path
+  --environment <name>  specify the name of environment to build
   --env-mode <mode>     specify the env mode to load the `.env.[mode]` file
   --env-dir <dir>       specify the directory to load `.env` files
   -h, --help            display help for command
@@ -74,6 +75,7 @@ Usage: rsbuild build [options]
 Options:
   -w --watch            turn on watch mode, watch for changes and rebuild
   -c --config <config>  specify the configuration file, can be a relative or absolute path
+  --environment <name>  specify the name of environment to build
   --env-mode <mode>     specify the env mode to load the `.env.[mode]` file
   --env-dir <dir>       specify the directory to load `.env` files
   -h, --help            display help for command
@@ -91,6 +93,7 @@ Options:
   --port <port>         specify a port number for Rsbuild Server to listen
   --host <host>         specify the host that the Rsbuild Server listens to
   -c --config <config>  specify the configuration file, can be a relative or absolute path
+  --environment <name>  specify the name of environment to build
   --env-mode <mode>     specify the env mode to load the `.env.[mode]` file
   --env-dir <dir>       specify the directory to load `.env` files
   -h, --help            display help for command
@@ -112,6 +115,7 @@ Options:
   --output <output>     Specify the path to output in the dist (default: "/")
   --verbose             Show the full function in the result
   -c --config <config>  specify the configuration file, can be a relative or absolute path
+  --environment <name>  specify the name of environment to build
   --env-mode <mode>     specify the env mode to load the `.env.[mode]` file
   --env-dir <dir>       specify the directory to load `.env` files
   -h, --help            show command help
@@ -131,7 +135,7 @@ Inspect config succeed, open following files to view the content:
   - Rspack Config (web): /project/dist/rspack.config.web.mjs
 ```
 
-### Specifying Environment
+### Specifying Environment Mode
 
 By default, the inspect command outputs the configuration for the development environment. You can add the `--env production` option to output the configuration for the production build:
 

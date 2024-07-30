@@ -100,6 +100,24 @@ export default {
 };
 ```
 
+## Specify environment build
+
+By default, Rsbuild will build all environments in the Rsbuild configuration when you execute `rsbuild dev` or `rsbuild build`. You can build only the specified environment via `--environment <name>`.
+
+```bash
+# Build for all environments by default
+rsbuild dev
+
+# Build for the web environment
+rsbuild dev --environment web
+
+# Build for the web and ssr environments
+rsbuild dev --environment web --environment node
+
+# Build multiple environments can be shortened to:
+rsbuild dev --environment web,node
+```
+
 ## Add plugins for specified environment
 
 Plugins configured through the [plugins](/config/plugins) field support running in all environments. If you want a plugin to run only in a specified environment, you can configure the plugin in the specified `environment`.

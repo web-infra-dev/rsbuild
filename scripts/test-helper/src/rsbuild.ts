@@ -37,7 +37,7 @@ export async function createStubRsbuild({
   }
 > {
   const { createRsbuild } = await import('@rsbuild/core');
-  const rsbuildOptions: Required<CreateRsbuildOptions> = {
+  const rsbuildOptions = {
     cwd: process.env.REBUILD_TEST_SUITE_CWD || process.cwd(),
     rsbuildConfig,
     ...options,

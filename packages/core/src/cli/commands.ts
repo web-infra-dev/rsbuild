@@ -13,6 +13,7 @@ export type CommonOptions = {
   open?: boolean | string;
   host?: string;
   port?: number;
+  environment?: string[];
 };
 
 export type BuildOptions = CommonOptions & {
@@ -38,6 +39,11 @@ const applyCommonOptions = (command: Command) => {
     .option(
       '--env-mode <mode>',
       'specify the env mode to load the `.env.[mode]` file',
+    )
+    .option<string[]>(
+      '--environment <name>',
+      'specify the name of environment to build',
+      (str, prev) => (prev ? prev.concat(str.split(',')) : str.split(',')),
     )
     .option('--env-dir <dir>', 'specify the directory to load `.env` files');
 };
