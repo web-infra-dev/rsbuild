@@ -154,7 +154,7 @@ await rsbuild.build({
 });
 ```
 
-watch 模式下 build 方法会返回一个 Watching 实例，该实例会暴露一个 `.close(callback)` 方法。调用该方法将会结束监听：
+watch 模式下 build 方法会返回一个 `Watching` 实例，该实例会暴露一个 `.close(callback)` 方法。调用该方法将会结束监听：
 
 ```ts
 const watching = await rsbuild.build({
