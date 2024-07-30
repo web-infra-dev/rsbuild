@@ -35,8 +35,8 @@ export default {
     'caniuse-lite': 'caniuse-lite',
     '/^caniuse-lite(/.*)/': 'caniuse-lite$1',
     '@rspack/core': '@rspack/core',
+    '@rspack/lite-tapable': '@rspack/lite-tapable',
     webpack: 'webpack',
-    postcss: 'postcss',
     typescript: 'typescript',
   },
   dependencies: [
@@ -49,6 +49,7 @@ export default {
     'connect',
     'rspack-manifest-plugin',
     'webpack-merge',
+    'html-rspack-plugin',
     {
       name: 'chokidar',
       externals: {
@@ -87,10 +88,6 @@ export default {
       externals: {
         picocolors: '../picocolors',
       },
-    },
-    {
-      name: 'postcss-value-parser',
-      ignoreDts: true,
     },
     {
       name: 'sirv',
@@ -169,8 +166,8 @@ export default {
       name: 'css-loader',
       ignoreDts: true,
       externals: {
-        'postcss-value-parser': '../postcss-value-parser',
         semver: './semver',
+        picocolors: '../picocolors',
       },
       afterBundle: writeEmptySemver,
     },
@@ -181,6 +178,13 @@ export default {
         semver: './semver',
       },
       ignoreDts: true,
+      beforeBundle(task) {
+        replaceFileContent(join(task.depPath, 'dist/utils.js'), (content) =>
+          // Rsbuild uses `postcss-load-config` and no need to use `cosmiconfig`.
+          // the ralevent code will never be executed, so we can replace it with an empty object.
+          content.replaceAll('require("cosmiconfig")', '{}'),
+        );
+      },
       afterBundle: writeEmptySemver,
     },
     {
@@ -205,12 +209,6 @@ export default {
           (content) =>
             `${content.replaceAll('await __import', 'await import')}`,
         );
-      },
-    },
-    {
-      name: 'html-rspack-plugin',
-      externals: {
-        '@rspack/lite-tapable': '@rspack/lite-tapable',
       },
     },
   ],

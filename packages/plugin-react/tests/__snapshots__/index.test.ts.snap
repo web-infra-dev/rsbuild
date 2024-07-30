@@ -51,6 +51,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",

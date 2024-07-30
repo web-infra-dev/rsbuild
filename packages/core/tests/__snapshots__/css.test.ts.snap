@@ -10,6 +10,7 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
@@ -59,6 +60,7 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/packages/core/src/ignoreCssLoader.cjs",
@@ -98,6 +100,7 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/packages/core/compiled/style-loader",

@@ -14,6 +14,7 @@ import type { HtmlRspackPlugin, WebpackConfig } from './thirdParty';
 import type { MaybePromise, NodeEnv } from './utils';
 
 export type OnBeforeBuildFn<B = 'rspack'> = (params: {
+  isWatch: boolean;
   bundlerConfigs?: B extends 'rspack'
     ? Rspack.Configuration[]
     : WebpackConfig[];
@@ -22,6 +23,7 @@ export type OnBeforeBuildFn<B = 'rspack'> = (params: {
 
 export type OnAfterBuildFn = (params: {
   isFirstCompile: boolean;
+  isWatch: boolean;
   stats?: Stats | MultiStats;
   environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;

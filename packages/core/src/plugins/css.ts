@@ -340,7 +340,12 @@ export const pluginCss = (): RsbuildPlugin => ({
       handler: async (chain, utils) => {
         const rule = chain.module.rule(utils.CHAIN_ID.RULE.CSS);
         const { config } = utils.environment;
-        rule.test(CSS_REGEX);
+
+        rule
+          .test(CSS_REGEX)
+          // specify type to allow enabling Rspack `experiments.css`
+          .type('javascript/auto');
+
         await applyCSSRule({
           rule,
           utils,
