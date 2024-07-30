@@ -122,7 +122,7 @@ const initEnvironmentConfigs = (
 
     if (!Object.keys(resolvedEnvironments).length) {
       logger.error(
-        `The current project is specified to run only in the ${color.yellow(specifiedEnvironments?.join(','))} environment, but the configuration of the corresponding environment was not found.`,
+        `The current build is specified to run only in the ${color.yellow(specifiedEnvironments?.join(','))} environment, but the configuration of the specified environment was not found.`,
       );
       process.exit(1);
     }
