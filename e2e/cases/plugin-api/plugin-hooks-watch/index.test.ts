@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
+import fse from 'fs-extra';
 
 const createPlugin = () => {
   const names: string[] = [];
@@ -66,11 +67,11 @@ rspackOnlyTest(
   'should run plugin hooks correctly when running build with watch',
   async () => {
     const cwd = __dirname;
+    fse.ensureDirSync(join(cwd, 'src'));
 
-    await fs.promises.writeFile(
-      join(cwd, 'src', 'index.js'),
-      "console.log('1');",
-    );
+    const filePath = join(cwd, 'src', 'index.js');
+
+    await fs.promises.writeFile(filePath, "console.log('1');");
 
     const { plugin, names } = createPlugin();
     const rsbuild = await createRsbuild({
@@ -88,10 +89,7 @@ rspackOnlyTest(
 
     const watching = await rsbuild.build({ watch: true });
 
-    await fs.promises.writeFile(
-      join(cwd, 'src', 'index.js'),
-      "console.log('2');",
-    );
+    await fs.promises.writeFile(filePath, "console.log('2');");
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
