@@ -57,12 +57,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
-              "targets": {
-                "chrome": 5701632,
-                "edge": 5767168,
-                "firefox": 5111808,
-                "safari": 917504,
-              },
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
             },
           },
         ],
@@ -455,12 +455,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
-              "targets": {
-                "chrome": 5701632,
-                "edge": 5767168,
-                "firefox": 5111808,
-                "safari": 917504,
-              },
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
             },
           },
         ],
@@ -1218,12 +1218,12 @@ exports[`tools.rspack > should match snapshot 1`] = `
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
-              "targets": {
-                "chrome": 5701632,
-                "edge": 5767168,
-                "firefox": 5111808,
-                "safari": 917504,
-              },
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
             },
           },
         ],
