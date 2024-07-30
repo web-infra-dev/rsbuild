@@ -20,6 +20,7 @@ export {
   formatStats,
   getStatsOptions,
   onCompileDone,
+  onBeforeCompile,
   prettyTime,
 } from './helpers';
 export { getChainUtils, getConfigUtils } from './provider/rspackConfig';

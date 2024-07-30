@@ -39,7 +39,14 @@ export async function initConfigs({
 
   // write Rsbuild config and webpack config to disk in debug mode
   if (logger.level === 'verbose') {
-    const inspect = () => {
+    const inspect = (params: {
+      isFirstCompile?: boolean;
+      [key: string]: unknown;
+    }) => {
+      if (params.isFirstCompile !== undefined && !params.isFirstCompile) {
+        return;
+      }
+
       const inspectOptions: InspectConfigOptions = {
         verbose: true,
         writeToDisk: true,

@@ -53,7 +53,13 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
     const enableLogging =
       RSPACK_PROFILE === 'ALL' || RSPACK_PROFILE.includes('LOGGING');
 
-    const onStart = () => {
+    const onStart = (params: {
+      isFirstCompile?: boolean;
+      [key: string]: unknown;
+    }) => {
+      if (params.isFirstCompile !== undefined && !params.isFirstCompile) {
+        return;
+      }
       // can't get precise api.context.distPath before config init
       const profileDir = path.join(api.context.distPath, profileDirName);
 

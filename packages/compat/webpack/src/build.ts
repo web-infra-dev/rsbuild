@@ -4,12 +4,14 @@ import type { Configuration as WebpackConfig } from 'webpack';
 import WebpackMultiStats from 'webpack/lib/MultiStats.js';
 import { createCompiler } from './createCompiler';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
-import { onCompileDone } from './shared';
+import { onBeforeCompile, onCompileDone } from './shared';
 
 export const build = async (
   initOptions: InitConfigsOptions,
   { mode = 'production', watch, compiler: customCompiler }: BuildOptions = {},
-) => {
+): Promise<void | {
+  close: (callback?: () => void) => void;
+}> => {
   if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = mode;
   }
@@ -33,11 +35,13 @@ export const build = async (
   }
 
   let isFirstCompile = true;
-  await context.hooks.onBeforeBuild.call({
-    bundlerConfigs: bundlerConfigs as Rspack.Configuration[],
-    environments: context.environments,
-    isWatch: Boolean(watch),
-  });
+  const onBeforeBuild = async () =>
+    await context.hooks.onBeforeBuild.call({
+      bundlerConfigs: bundlerConfigs as Rspack.Configuration[],
+      environments: context.environments,
+      isWatch: Boolean(watch),
+      isFirstCompile,
+    });
 
   const onDone = async (stats: Rspack.Stats | Rspack.MultiStats) => {
     const p = context.hooks.onAfterBuild.call({
@@ -50,15 +54,17 @@ export const build = async (
     await p;
   };
 
+  onBeforeCompile(compiler, onBeforeBuild);
+
   onCompileDone(compiler, onDone, WebpackMultiStats);
 
   if (watch) {
-    compiler.watch({}, (err) => {
+    const watching = compiler.watch({}, (err) => {
       if (err) {
         logger.error(err);
       }
     });
-    return;
+    return watching;
   }
 
   await new Promise<{ stats: Rspack.Stats | Rspack.MultiStats }>(

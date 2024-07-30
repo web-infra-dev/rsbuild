@@ -14,6 +14,7 @@ import type { HtmlRspackPlugin, WebpackConfig } from './thirdParty';
 import type { MaybePromise, NodeEnv } from './utils';
 
 export type OnBeforeBuildFn<B = 'rspack'> = (params: {
+  isFirstCompile: boolean;
   isWatch: boolean;
   bundlerConfigs?: B extends 'rspack'
     ? Rspack.Configuration[]

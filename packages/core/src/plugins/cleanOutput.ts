@@ -45,7 +45,11 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
 
     const cleanAll = async (params: {
       environments: Record<string, EnvironmentContext>;
+      isFirstCompile?: boolean;
     }) => {
+      if (params.isFirstCompile !== undefined && !params.isFirstCompile) {
+        return;
+      }
       const environments = Object.values(params.environments).reduce<
         Array<EnvironmentContext>
       >((total, curr) => {
