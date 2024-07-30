@@ -39,6 +39,7 @@ Options:
   --port <port>         设置 Rsbuild Server 监听的端口号
   --host <host>         指定 Rsbuild Server 启动时监听的 host
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
+  --environment <name>  指定需要构建的 environment 名称
   --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
   --env-dir <dir>       指定目录来加载 `.env` 文件
   -h, --help            显示命令帮助
@@ -74,6 +75,7 @@ Usage: rsbuild build [options]
 Options:
   -w --watch            开启 watch 模式, 监听文件变更并重新构建
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
+  --environment <name>  指定需要构建的 environment 名称
   --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
   --env-dir <dir>       指定目录来加载 `.env` 文件
   -h, --help            显示命令帮助
@@ -91,6 +93,7 @@ Options:
   --port <port>         设置 Rsbuild Server 监听的端口号
   --host <host>         指定 Rsbuild Server 启动时监听的 host
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
+  --environment <name>  指定需要构建的 environment 名称
   --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
   --env-dir <dir>       指定目录来加载 `.env` 文件
   -h, --help            显示命令帮助
@@ -112,6 +115,7 @@ Options:
   --output <output>     指定在 dist 目录下输出的路径 (default: "/")
   --verbose             在结果中展示函数的完整内容
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
+  --environment <name>  指定需要构建的 environment 名称
   --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
   --env-dir <dir>       指定目录来加载 `.env` 文件
   -h, --help            显示命令帮助
@@ -131,7 +135,7 @@ Inspect config succeed, open following files to view the content:
   - Rspack Config (web): /project/dist/rspack.config.web.mjs
 ```
 
-### 指定环境
+### 指定环境模式
 
 默认情况下，inspect 命令会输出开发环境的配置，你可以添加 `--env production` 选项来输出生产环境的配置：
 

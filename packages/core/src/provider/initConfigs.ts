@@ -1,3 +1,4 @@
+import color from 'picocolors';
 import { getDefaultEntry, normalizeConfig } from '../config';
 import { JS_DIST_DIR } from '../constants';
 import {
@@ -9,7 +10,6 @@ import { isDebug, logger } from '../logger';
 import { mergeRsbuildConfig } from '../mergeConfig';
 import { initPlugins } from '../pluginManager';
 import type {
-  CreateRsbuildOptions,
   InspectConfigOptions,
   InternalContext,
   MergedEnvironmentConfig,
@@ -17,6 +17,7 @@ import type {
   NormalizedConfig,
   NormalizedEnvironmentConfig,
   PluginManager,
+  ResolvedCreateRsbuildOptions,
   RsbuildEntry,
   RspackConfig,
 } from '../types';
@@ -62,12 +63,13 @@ async function modifyEnvironmentConfig(
 export type InitConfigsOptions = {
   context: InternalContext;
   pluginManager: PluginManager;
-  rsbuildOptions: Required<CreateRsbuildOptions>;
+  rsbuildOptions: ResolvedCreateRsbuildOptions;
 };
 
 const initEnvironmentConfigs = (
   normalizedConfig: NormalizedConfig,
   rootPath: string,
+  specifiedEnvironments?: string[],
 ): Record<string, MergedEnvironmentConfig> => {
   let defaultEntry: RsbuildEntry;
   const getDefaultEntryWithMemo = () => {
@@ -79,6 +81,9 @@ const initEnvironmentConfigs = (
   const { environments, dev, server, provider, ...rsbuildSharedConfig } =
     normalizedConfig;
   const { assetPrefix, lazyCompilation } = dev;
+
+  const isEnvironmentEnabled = (name: string) =>
+    !specifiedEnvironments || specifiedEnvironments.includes(name);
 
   const applyEnvironmentDefaultConfig = (config: MergedEnvironmentConfig) => {
     if (!config.source.entry) {
@@ -94,35 +99,51 @@ const initEnvironmentConfigs = (
   };
 
   if (environments && Object.keys(environments).length) {
-    return Object.fromEntries(
-      Object.entries(environments).map(([name, config]) => {
-        const environmentConfig: MergedEnvironmentConfig = {
-          ...(mergeRsbuildConfig(
-            {
-              ...rsbuildSharedConfig,
-              dev: {
-                assetPrefix,
-                lazyCompilation,
-              },
-            } as unknown as MergedEnvironmentConfig,
-            config as unknown as MergedEnvironmentConfig,
-          ) as unknown as MergedEnvironmentConfig),
-        };
+    const resolvedEnvironments = Object.fromEntries(
+      Object.entries(environments)
+        .filter(([name]) => isEnvironmentEnabled(name))
+        .map(([name, config]) => {
+          const environmentConfig: MergedEnvironmentConfig = {
+            ...(mergeRsbuildConfig(
+              {
+                ...rsbuildSharedConfig,
+                dev: {
+                  assetPrefix,
+                  lazyCompilation,
+                },
+              } as unknown as MergedEnvironmentConfig,
+              config as unknown as MergedEnvironmentConfig,
+            ) as unknown as MergedEnvironmentConfig),
+          };
 
-        return [name, applyEnvironmentDefaultConfig(environmentConfig)];
-      }),
+          return [name, applyEnvironmentDefaultConfig(environmentConfig)];
+        }),
+    );
+
+    if (!Object.keys(resolvedEnvironments).length) {
+      throw new Error(
+        `The current build is specified to run only in the ${color.yellow(specifiedEnvironments?.join(','))} environment, but the configuration of the specified environment was not found.`,
+      );
+    }
+    return resolvedEnvironments;
+  }
+
+  const defaultEnvironmentName = camelCase(rsbuildSharedConfig.output.target);
+
+  if (!isEnvironmentEnabled(defaultEnvironmentName)) {
+    throw new Error(
+      `The current build is specified to run only in the ${color.yellow(specifiedEnvironments?.join(','))} environment, but the configuration of the specified environment was not found.`,
     );
   }
 
   return {
-    [camelCase(rsbuildSharedConfig.output.target)]:
-      applyEnvironmentDefaultConfig({
-        ...rsbuildSharedConfig,
-        dev: {
-          assetPrefix,
-          lazyCompilation,
-        },
-      } as MergedEnvironmentConfig),
+    [defaultEnvironmentName]: applyEnvironmentDefaultConfig({
+      ...rsbuildSharedConfig,
+      dev: {
+        assetPrefix,
+        lazyCompilation,
+      },
+    } as MergedEnvironmentConfig),
   };
 };
 
@@ -151,6 +172,7 @@ export async function initRsbuildConfig({
   const mergedEnvironments = initEnvironmentConfigs(
     normalizeBaseConfig,
     context.rootPath,
+    context.specifiedEnvironments,
   );
 
   const {

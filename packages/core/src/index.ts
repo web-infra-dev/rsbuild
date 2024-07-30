@@ -40,6 +40,7 @@ export type {
   CreateCompiler,
   CreateCompilerOptions,
   CreateRsbuildOptions,
+  ResolvedCreateRsbuildOptions,
   CrossOrigin,
   CSSLoaderOptions,
   CSSModules,

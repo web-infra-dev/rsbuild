@@ -201,6 +201,42 @@ describe('environment config', () => {
     ).toMatchSnapshot();
   });
 
+  it('should support run specified environment', async () => {
+    process.env.NODE_ENV = 'development';
+
+    const pluginLogs: string[] = [];
+
+    const plugin: (pluginId: string) => RsbuildPlugin = (pluginId) => ({
+      name: 'test-environment',
+      setup: () => {
+        pluginLogs.push(`run plugin in ${pluginId}`);
+      },
+    });
+
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        environments: {
+          web: {
+            plugins: [plugin('web')],
+          },
+          ssr: {
+            plugins: [plugin('ssr')],
+          },
+        },
+      },
+      environment: ['ssr'],
+    });
+
+    rsbuild.addPlugins([plugin('global')]);
+
+    const {
+      origin: { environmentConfigs },
+    } = await rsbuild.inspectConfig();
+
+    expect(Object.keys(environmentConfigs)).toEqual(['ssr']);
+    expect(pluginLogs).toEqual(['run plugin in ssr', 'run plugin in global']);
+  });
+
   it('should normalize environment config correctly', async () => {
     process.env.NODE_ENV = 'development';
     const rsbuild = await createRsbuild({

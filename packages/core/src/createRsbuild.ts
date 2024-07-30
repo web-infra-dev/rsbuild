@@ -10,6 +10,7 @@ import type {
   InternalContext,
   PluginManager,
   PreviewServerOptions,
+  ResolvedCreateRsbuildOptions,
   RsbuildInstance,
   RsbuildProvider,
 } from './types';
@@ -99,7 +100,7 @@ export async function createRsbuild(
 ): Promise<RsbuildInstance> {
   const { rsbuildConfig = {} } = options;
 
-  const rsbuildOptions: Required<CreateRsbuildOptions> = {
+  const rsbuildOptions: ResolvedCreateRsbuildOptions = {
     cwd: process.cwd(),
     rsbuildConfig,
     ...options,
@@ -180,7 +181,10 @@ export async function createRsbuild(
   if (rsbuildConfig.environments) {
     await Promise.all(
       Object.entries(rsbuildConfig.environments).map(async ([name, config]) => {
-        if (config.plugins) {
+        const isEnvironmentEnabled =
+          !rsbuildOptions.environment ||
+          rsbuildOptions.environment.includes(name);
+        if (config.plugins && isEnvironmentEnabled) {
           const plugins = await Promise.all(config.plugins);
           rsbuild.addPlugins(plugins, {
             environment: name,

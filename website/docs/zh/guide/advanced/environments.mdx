@@ -100,6 +100,24 @@ export default {
 };
 ```
 
+## 仅构建指定环境
+
+默认情况下，当你执行 `rsbuild dev` 或 `rsbuild build` 时，Rsbuild 会构建所有 Rsbuild 配置中的环境。你可以通过 `--environment <name>` 仅构建指定环境。
+
+```bash
+# 构建所有环境
+rsbuild dev
+
+# 仅构建 web 环境
+rsbuild dev --environment web
+
+# 构建 web 和 ssr 环境
+rsbuild dev --environment web --environment node
+
+# 构建多个环境可以简写为：
+rsbuild dev --environment web,node
+```
+
 ## 为指定环境添加插件
 
 通过 [plugins](/config/plugins) 字段配置的插件支持在所有环境下运行，如果你希望某个插件仅在指定环境下运行时，将该插件配置在特定 `environment` 下即可。
