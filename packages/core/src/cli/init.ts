@@ -49,6 +49,13 @@ export async function init({
       const files = [...envs.filePaths];
       if (configFilePath) {
         files.push(configFilePath);
+        if (config.dev?.watchFiles?.type === 'reload-server') {
+          const extraConfigFiles =
+            typeof config.dev.watchFiles.paths === 'string'
+              ? [config.dev.watchFiles.paths]
+              : config.dev.watchFiles.paths;
+          files.push(...extraConfigFiles);
+        }
       }
 
       watchFiles(files);
