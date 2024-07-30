@@ -29,12 +29,12 @@ exports[`plugin-less > should add less-loader 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
-          "targets": {
-            "chrome": 5701632,
-            "edge": 5767168,
-            "firefox": 5111808,
-            "safari": 917504,
-          },
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
         },
       },
       {
@@ -84,12 +84,12 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
-          "targets": {
-            "chrome": 5701632,
-            "edge": 5767168,
-            "firefox": 5111808,
-            "safari": 917504,
-          },
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
         },
       },
       {
@@ -142,12 +142,12 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
-          "targets": {
-            "chrome": 5701632,
-            "edge": 5767168,
-            "firefox": 5111808,
-            "safari": 917504,
-          },
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
         },
       },
       {
@@ -197,12 +197,12 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
-          "targets": {
-            "chrome": 5701632,
-            "edge": 5767168,
-            "firefox": 5111808,
-            "safari": 917504,
-          },
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
         },
       },
       {
