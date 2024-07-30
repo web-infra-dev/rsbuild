@@ -105,13 +105,13 @@ export default {
 By default, Rsbuild will build all environments in the Rsbuild configuration when you execute `rsbuild dev` or `rsbuild build`. You can build only the specified environment via `--environment <name>`.
 
 ```bash
-# Enable build for all environments by default
+# Build for all environments by default
 rsbuild dev
 
-# Only enable web environment build
+# Build for the web environment
 rsbuild dev --environment web
 
-# Enable web and ssr environment build
+# Build for the web and ssr environments
 rsbuild dev --environment web --environment ssr
 ```
 

@@ -105,13 +105,13 @@ export default {
 默认情况下，当你执行 `rsbuild dev` 或 `rsbuild build` 时，Rsbuild 会构建所有 Rsbuild 配置中的环境。你可以通过 `--environment <name>` 仅构建指定环境。
 
 ```bash
-# 默认为所有环境开启构建
+# 构建所有环境
 rsbuild dev
 
-# 仅开启 web 环境构建
+# 仅构建 web 环境
 rsbuild dev --environment web
 
-# 开启 web 和 ssr 环境构建
+# 构建 web 和 ssr 环境
 rsbuild dev --environment web --environment ssr
 ```
 
