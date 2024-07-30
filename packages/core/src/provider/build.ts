@@ -46,6 +46,7 @@ export const build = async (
       isFirstCompile,
       stats,
       environments: context.environments,
+      isWatch: Boolean(watch),
     });
     isFirstCompile = false;
     await p;

@@ -22,6 +22,7 @@ export type OnBeforeBuildFn<B = 'rspack'> = (params: {
 
 export type OnAfterBuildFn = (params: {
   isFirstCompile: boolean;
+  isWatch: boolean;
   stats?: Stats | MultiStats;
   environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
