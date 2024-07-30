@@ -96,15 +96,17 @@ async function startWatchFiles(
   { paths, options, type }: ReturnType<typeof prepareWatchOptions>,
   compileMiddlewareAPI: CompileMiddlewareAPI,
 ) {
-  // If `type` is not 'reload-server', treat it as 'reload-page'.
-  if (type !== 'reload-server') {
-    const chokidar = await import('chokidar');
-    const watcher = chokidar.watch(paths, options);
-
-    watcher.on('change', () => {
-      compileMiddlewareAPI.sockWrite('static-changed');
-    });
-
-    return watcher;
+  // If `type` is 'reload-server', skip it.
+  if (type === 'reload-server') {
+    return;
   }
+
+  const chokidar = await import('chokidar');
+  const watcher = chokidar.watch(paths, options);
+
+  watcher.on('change', () => {
+    compileMiddlewareAPI.sockWrite('static-changed');
+  });
+
+  return watcher;
 }
