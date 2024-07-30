@@ -132,7 +132,7 @@ await rsbuild.build({
 });
 ```
 
-The build method returns a Watching instance in watch mode that exposes `.close(callback)` method. Calling this method will end watching:
+The build method returns a `Watching` instance in watch mode that exposes `.close(callback)` method. Calling this method will end watching:
 
 ```ts
 const watching = await rsbuild.build({
