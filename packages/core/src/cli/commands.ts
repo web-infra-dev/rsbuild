@@ -42,7 +42,7 @@ const applyCommonOptions = (command: Command) => {
     )
     .option<string[]>(
       '--environment <name>',
-      'specify the environment during multi-environment',
+      'specify the name of environment to build',
       (str, prev) => (prev ? prev.concat(str.split(',')) : str.split(',')),
     )
     .option('--env-dir <dir>', 'specify the directory to load `.env` files');
