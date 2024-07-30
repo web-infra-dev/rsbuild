@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
+import type { WatchOptions } from 'chokidar';
 import color from 'picocolors';
 import RspackChain from 'rspack-chain';
 import {
@@ -296,7 +297,10 @@ const resolveConfigPath = (root: string, customConfig?: string) => {
   return null;
 };
 
-export async function watchFiles(files: string[]): Promise<void> {
+export async function watchFiles(
+  files: string[],
+  watchOptions?: WatchOptions,
+): Promise<void> {
   if (!files.length) {
     return;
   }
@@ -307,6 +311,7 @@ export async function watchFiles(files: string[]): Promise<void> {
     ignoreInitial: true,
     // If watching fails due to read permissions, the errors will be suppressed silently.
     ignorePermissionErrors: true,
+    ...watchOptions,
   });
 
   const callback = debounce(
