@@ -1,4 +1,6 @@
-import { build, rspackOnlyTest } from '@e2e/helper';
+import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
+import { build, dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest(
@@ -15,5 +17,41 @@ rspackOnlyTest(
     expect(content).toEqual(
       '@media (-webkit-min-device-pixel-ratio:2),(min-resolution:2dppx){.item{-webkit-user-select:none;-ms-user-select:none;user-select:none;background:-webkit-linear-gradient(#fff,#000);background:linear-gradient(#fff,#000);-webkit-transition:all .5s;transition:all .5s}}',
     );
+  },
+);
+
+rspackOnlyTest(
+  'should add vendor prefixes by current browserslist in dev mode',
+  async ({ page }) => {
+    const rsbuild = await dev({
+      cwd: __dirname,
+      rsbuildConfig: {
+        dev: {
+          writeToDisk: true,
+        },
+      },
+    });
+
+    await gotoPage(page, rsbuild);
+
+    const content = await readFile(
+      join(rsbuild.instance.context.distPath, 'static/css/index.css'),
+      'utf-8',
+    );
+    expect(content).toContain(
+      `@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+  .item {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background: -webkit-linear-gradient(#fff, #000);
+    background: linear-gradient(#fff, #000);
+    -webkit-transition: all .5s;
+    transition: all .5s;
+  }
+}`,
+    );
+
+    await rsbuild.close();
   },
 );
