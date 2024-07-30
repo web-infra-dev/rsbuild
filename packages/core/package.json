@@ -55,8 +55,7 @@
     "@rspack/lite-tapable": "1.0.0-beta.0",
     "@swc/helpers": "0.5.11",
     "caniuse-lite": "^1.0.30001643",
-    "core-js": "~3.37.1",
-    "postcss": "^8.4.40"
+    "core-js": "~3.37.1"
   },
   "devDependencies": {
     "@types/connect": "3.4.38",
@@ -84,13 +83,14 @@
     "on-finished": "2.4.1",
     "open": "^8.4.0",
     "picocolors": "^1.0.1",
+    "postcss": "^8.4.40",
     "postcss-load-config": "6.0.1",
     "postcss-loader": "8.1.1",
     "prebundle": "1.2.2",
     "reduce-configs": "^1.0.0",
     "rslog": "^1.2.2",
     "rspack-chain": "^0.7.4",
-    "rspack-manifest-plugin": "5.0.0",
+    "rspack-manifest-plugin": "5.0.1",
     "sirv": "^2.0.4",
     "style-loader": "3.3.4",
     "tsc-alias": "^1.8.10",
