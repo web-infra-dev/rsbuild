@@ -35,6 +35,7 @@ export default {
     'caniuse-lite': 'caniuse-lite',
     '/^caniuse-lite(/.*)/': 'caniuse-lite$1',
     '@rspack/core': '@rspack/core',
+    '@rspack/lite-tapable': '@rspack/lite-tapable',
     webpack: 'webpack',
     typescript: 'typescript',
   },
@@ -48,6 +49,7 @@ export default {
     'connect',
     'rspack-manifest-plugin',
     'webpack-merge',
+    'html-rspack-plugin',
     {
       name: 'chokidar',
       externals: {
@@ -207,12 +209,6 @@ export default {
           (content) =>
             `${content.replaceAll('await __import', 'await import')}`,
         );
-      },
-    },
-    {
-      name: 'html-rspack-plugin',
-      externals: {
-        '@rspack/lite-tapable': '@rspack/lite-tapable',
       },
     },
   ],
