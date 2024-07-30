@@ -59,6 +59,7 @@ export type ChokidarWatchOptions = WatchOptions;
 export type WatchFiles = {
   paths: string | string[];
   options?: WatchOptions;
+  type?: 'reload-page' | 'reload-server';
 };
 
 export interface DevConfig {
