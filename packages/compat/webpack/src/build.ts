@@ -36,6 +36,7 @@ export const build = async (
   await context.hooks.onBeforeBuild.call({
     bundlerConfigs: bundlerConfigs as Rspack.Configuration[],
     environments: context.environments,
+    isWatch: Boolean(watch),
   });
 
   const onDone = async (stats: Rspack.Stats | Rspack.MultiStats) => {
@@ -43,6 +44,7 @@ export const build = async (
       isFirstCompile,
       stats,
       environments: context.environments,
+      isWatch: Boolean(watch),
     });
     isFirstCompile = false;
     await p;
