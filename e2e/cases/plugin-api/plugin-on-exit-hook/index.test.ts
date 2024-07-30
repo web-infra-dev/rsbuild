@@ -10,9 +10,10 @@ rspackOnlyTest('should run onExit hook before process exit', async () => {
   fs.rmSync(distFile, { force: true });
 
   await new Promise<void>((resolve) => {
-    exec('node ./run.mjs', { cwd: __dirname }, () => {
+    const process = exec('node ./run.mjs', { cwd: __dirname }, () => {
       expect(fs.readFileSync(distFile, 'utf-8')).toEqual('1');
       resolve();
+      process.kill();
     });
   });
 });
