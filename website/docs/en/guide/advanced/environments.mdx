@@ -298,7 +298,7 @@ For detailed usage, please refer to: [SSR + Express Example](https://github.com/
 
 By default, Rsbuild builds all environments in parallel. If an environment in your project needs to rely on other environments to be compiled first, you can add the name of the environment you need to depend on to Rspack's [dependencies](https://rspack.dev/config/other-options#dependencies) Configuring.
 
-For example, the node environment needs to rely on the web environment to be compiled first. You can add the following configuration:
+For example, the node environment depends on the web environment to be compiled first. You can add the following configuration:
 
 ```ts title=rsbuild.config.ts
 export default {
