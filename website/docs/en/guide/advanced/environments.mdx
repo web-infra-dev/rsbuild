@@ -2,6 +2,13 @@
 
 Rsbuild supports building outputs for multiple environments at the same time. You can use [environments](/config/environments) to build multiple environments in parallel and set a different Rsbuild config for each environment.
 
+## What is environment
+
+Rsbuild supports building outputs for multiple different environments at the same time. In Rsbuild, `environment` can be set according to different usage scenarios. For example, there will be different usage scenarios under different targets, such as client-side rendering (client) and server-side rendering (SSR);
+In addition, there will be different usage scenarios under the same target, such as server-side rendering (SSR) and React Server Components (RSC). In previous builds, these scenarios often required multiple configurations to be defined and completed through multiple builds. Now, multiple environments can be built in one Rsbuild build through the `environment` configuration.
+
+Each `environment` in Rsbuild is associated with an Rsbuild configuration, an Rspack configuration and a build product. Users can track the Rsbuild processing process through the `environment` name, such as modifying the Rsbuild / Rspack configuration, adding or deleting plugins, adjusting rules or getting product information, etc.
+
 ## Environment configs
 
 Rsbuild supports defining different Rsbuild configs for each environment through [environments](/config/environments).

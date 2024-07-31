@@ -2,6 +2,13 @@
 
 Rsbuild 支持同时为多个环境构建产物。你可以使用 [environments](/config/environments) 来并行构建多个环境，并为每个环境设置不同的 Rsbuild 配置。
 
+## 什么是 environment
+
+Rsbuild 支持同时为多种不同的环境构建产物。在 Rsbuild 中，`environment` 可以根据不同的使用场景来设置。例如，不同目标(target)下会有不同的使用场景，如客户端渲染(client)、服务器端渲染(SSR)；
+此外，相同的目标下也会有不同的使用场景，如服务器端渲染(SSR)、React Server Components(RSC)。这些场景在以往的构建中，往往需要定义多份配置，通过多次构建完成，现在可以通过 `environment` 配置在一次 Rsbuild 构建中完成多个环境的构建。
+
+Rsbuild 中每个 `environment` 关联一份 Rsbuild 配置，一份 Rspack 配置和一份构建产物。用户可以通过 `environment` 名称对 Rsbuild 处理过程进行追踪，如修改 Rsbuild / Rspack 配置、增删插件、调整规则或查看产物信息等。
+
 ## 多环境配置
 
 Rsbuild 支持通过 [environments](/config/environments) 为每个环境定义不同的 Rsbuild 配置。
