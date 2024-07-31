@@ -16,7 +16,7 @@
     "react-router-dom": "^6.25.1",
     "solid-js": "^1.8.19",
     "vue": "^3.4.19",
-    "vue-router": "^4.4.0"
+    "vue-router": "^4.4.1"
   },
   "devDependencies": {
     "@e2e/helper": "workspace:*",
@@ -43,7 +43,7 @@
     "@rsbuild/plugin-vue2": "workspace:*",
     "@rsbuild/plugin-vue2-jsx": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "@module-federation/rspack": "0.3.2",
+    "@module-federation/rspack": "0.3.3",
     "@scripts/test-helper": "workspace:*",
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.7",
