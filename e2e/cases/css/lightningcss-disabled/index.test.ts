@@ -20,14 +20,7 @@ rspackOnlyTest(
     const content =
       files[Object.keys(files).find((file) => file.endsWith('.css'))!];
 
-    expect(content).toContain(
-      `@media (min-resolution: 2dppx) {
-  .item {
-    transition: all 0.5s;
-    user-select: none;
-    background: linear-gradient(to bottom, white, black);
-  }
-}`,
-    );
+    expect(content).not.toContain('-webkit-');
+    expect(content).not.toContain('-ms-');
   },
 );
