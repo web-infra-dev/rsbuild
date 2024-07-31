@@ -1,6 +1,6 @@
 # tools.lightningcssLoader
 
-- **Type:** `Rspack.LightningcssLoaderOptions | Function`
+- **Type:** `Rspack.LightningcssLoaderOptions | Function | boolean`
 - **Default:**
 
 ```ts
@@ -9,6 +9,8 @@ const defaultOptions = {
   targets: browserslist,
 };
 ```
+
+- **Version:** `>= 1.0.0`
 
 You can set the options for [builtin:lightningcss-loader](https://rspack.dev/guide/features/builtin-lightningcss-loader) through `tools.lightningcssLoader`.
 
@@ -43,6 +45,18 @@ export default {
       };
       return config;
     },
+  },
+};
+```
+
+## Disable loader
+
+Set `tools.lightningcssLoader` to `false` to disable the built-in `lightningcss-loader` in Rsbuild:
+
+```js
+export default {
+  tools: {
+    lightningcssLoader: false,
   },
 };
 ```
