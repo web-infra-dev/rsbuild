@@ -106,7 +106,7 @@ export interface ToolsConfig {
   /**
    * Configure the `builtin:lightningcss-loader` of Rspack.
    */
-  lightningcssLoader?: ConfigChain<Rspack.LightningcssLoaderOptions>;
+  lightningcssLoader?: boolean | ConfigChain<Rspack.LightningcssLoaderOptions>;
   /**
    * Modify the options of [CssExtractRspackPlugin](https://rspack.dev/plugins/rspack/css-extract-rspack-plugin).
    */

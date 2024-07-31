@@ -1,6 +1,6 @@
 # tools.lightningcssLoader
 
-- **类型：** `Rspack.LightningcssLoaderOptions | Function`
+- **类型：** `Rspack.LightningcssLoaderOptions | Function | boolean`
 - **默认值：**
 
 ```ts
@@ -9,6 +9,8 @@ const defaultOptions = {
   targets: browserslist,
 };
 ```
+
+- **版本：** `>= 1.0.0`
 
 通过 `tools.lightningcssLoader` 可以设置 [builtin:lightningcss-loader](https://rspack.dev/guide/features/builtin-lightningcss-loader) 的选项。
 
@@ -43,6 +45,18 @@ export default {
       };
       return config;
     },
+  },
+};
+```
+
+## 禁用 loader
+
+将 `tools.lightningcssLoader` 设置为 `false`，可以禁用 Rsbuild 内置的 `lightningcss-loader`：
+
+```js
+export default {
+  tools: {
+    lightningcssLoader: false,
   },
 };
 ```

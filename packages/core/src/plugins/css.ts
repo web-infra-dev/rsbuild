@@ -231,14 +231,22 @@ async function applyCSSRule({
 
   if (target === 'web') {
     // `builtin:lightningcss-loader` is not supported when using webpack
-    if (context.bundlerType === 'rspack') {
+    if (
+      context.bundlerType === 'rspack' &&
+      config.tools.lightningcssLoader !== false
+    ) {
       importLoaders++;
+
+      const userOptions =
+        config.tools.lightningcssLoader === true
+          ? {}
+          : config.tools.lightningcssLoader;
 
       const loaderOptions = reduceConfigs<Rspack.LightningcssLoaderOptions>({
         initial: {
           targets: environment.browserslist,
         },
-        config: config.tools.lightningcssLoader,
+        config: userOptions,
       });
 
       rule
