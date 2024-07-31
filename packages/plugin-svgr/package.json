@@ -46,7 +46,7 @@
     "url-loader": "4.1.1"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^1.0.1-beta.0"
+    "@rsbuild/core": "workspace:^1.0.1-beta.7"
   },
   "publishConfig": {
     "access": "public",
