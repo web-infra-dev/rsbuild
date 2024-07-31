@@ -90,7 +90,7 @@ export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
   ) => Promise<StartServerResult>;
 
   build: (options?: BuildOptions) => Promise<void | {
-    close: (callback?: () => void) => void;
+    close: () => Promise<void>;
   }>;
 
   initConfigs: () => Promise<

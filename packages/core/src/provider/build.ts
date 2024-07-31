@@ -20,7 +20,7 @@ export const build = async (
   initOptions: InitConfigsOptions,
   { mode = 'production', watch, compiler: customCompiler }: BuildOptions = {},
 ): Promise<void | {
-  close: (callback?: () => void) => void;
+  close: () => Promise<void>;
 }> => {
   if (!getNodeEnv()) {
     setNodeEnv(mode);
@@ -73,7 +73,12 @@ export const build = async (
         logger.error(err);
       }
     });
-    return watching;
+    return {
+      close: () =>
+        new Promise((resolve) => {
+          watching.close(resolve);
+        }),
+    };
   }
 
   await new Promise<{ stats?: Stats | MultiStats }>((resolve, reject) => {

@@ -10,7 +10,7 @@ export const build = async (
   initOptions: InitConfigsOptions,
   { mode = 'production', watch, compiler: customCompiler }: BuildOptions = {},
 ): Promise<void | {
-  close: (callback?: () => void) => void;
+  close: () => Promise<void>;
 }> => {
   if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = mode;
@@ -64,7 +64,12 @@ export const build = async (
         logger.error(err);
       }
     });
-    return watching;
+    return {
+      close: () =>
+        new Promise((resolve) => {
+          watching.close(resolve);
+        }),
+    };
   }
 
   await new Promise<{ stats: Rspack.Stats | Rspack.MultiStats }>(

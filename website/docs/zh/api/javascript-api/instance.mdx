@@ -112,7 +112,7 @@ type BuildOptions = {
 };
 
 function Build(options?: BuildOptions): Promise<void | {
-  close: (callback?: () => void) => void;
+  close: () => Promise<void>;
 }>;
 ```
 
@@ -161,7 +161,7 @@ const watching = await rsbuild.build({
   watch: true,
 });
 
-watching?.close();
+await watching?.close();
 ```
 
 ### 自定义 Compiler
