@@ -120,19 +120,6 @@ describe('plugin-html', () => {
     expect(await rsbuild.matchBundlerPlugin('HtmlRspackPlugin')).toBeFalsy();
   });
 
-  it('should disable html plugin when htmlPlugin is an array and contains false', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
-      rsbuildConfig: {
-        tools: {
-          htmlPlugin: [{}, false],
-        },
-      },
-    });
-
-    expect(await rsbuild.matchBundlerPlugin('HtmlRspackPlugin')).toBeFalsy();
-  });
-
   it('should support multi entry', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginEntry(), pluginHtml()],
