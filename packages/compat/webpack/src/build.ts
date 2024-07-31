@@ -4,7 +4,7 @@ import type { Configuration as WebpackConfig } from 'webpack';
 import WebpackMultiStats from 'webpack/lib/MultiStats.js';
 import { createCompiler } from './createCompiler';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
-import { onBeforeCompile, onCompileDone } from './shared';
+import { onBeforeBuild, onCompileDone } from './shared';
 
 export const build = async (
   initOptions: InitConfigsOptions,
@@ -35,7 +35,7 @@ export const build = async (
   }
 
   let isFirstCompile = true;
-  const onBeforeBuild = async () =>
+  const beforeBuild = async () =>
     await context.hooks.onBeforeBuild.call({
       bundlerConfigs: bundlerConfigs as Rspack.Configuration[],
       environments: context.environments,
@@ -54,7 +54,7 @@ export const build = async (
     await p;
   };
 
-  onBeforeCompile(compiler, onBeforeBuild);
+  onBeforeBuild(compiler, beforeBuild, watch);
 
   onCompileDone(compiler, onDone, WebpackMultiStats);
 

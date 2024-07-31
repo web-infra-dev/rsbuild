@@ -565,9 +565,10 @@ export const isMultiCompiler = <
   return compiler.constructor.name === 'MultiCompiler';
 };
 
-export const onBeforeCompile = (
+export const onBeforeBuild = (
   compiler: Rspack.Compiler | Rspack.MultiCompiler,
   onBefore: () => Promise<any>,
+  isWatch?: boolean,
 ): void => {
   const name = 'rsbuild:beforeCompile';
 
@@ -580,16 +581,19 @@ export const onBeforeCompile = (
       const compiler = compilers[index];
       let compilerDone = false;
 
-      compiler.hooks.beforeCompile.tapPromise(name, async () => {
-        if (!compilerDone) {
-          compilerDone = true;
-          doneCompilers++;
-        }
+      (isWatch ? compiler.hooks.watchRun : compiler.hooks.run).tapPromise(
+        name,
+        async () => {
+          if (!compilerDone) {
+            compilerDone = true;
+            doneCompilers++;
+          }
 
-        if (doneCompilers === compilers.length) {
-          await onBefore();
-        }
-      });
+          if (doneCompilers === compilers.length) {
+            await onBefore();
+          }
+        },
+      );
 
       compiler.hooks.invalid.tap(name, () => {
         if (compilerDone) {
@@ -599,7 +603,10 @@ export const onBeforeCompile = (
       });
     }
   } else {
-    compiler.hooks.beforeCompile.tapPromise(name, onBefore);
+    (isWatch ? compiler.hooks.watchRun : compiler.hooks.run).tapPromise(
+      name,
+      onBefore,
+    );
   }
 };
 

@@ -1,7 +1,7 @@
 import { rspack } from '@rspack/core';
 import {
   getNodeEnv,
-  onBeforeCompile,
+  onBeforeBuild,
   onCompileDone,
   setNodeEnv,
 } from '../helpers';
@@ -44,7 +44,7 @@ export const build = async (
 
   let isFirstCompile = true;
 
-  const onBeforeBuild = async () =>
+  const beforeBuild = async () =>
     await context.hooks.onBeforeBuild.call({
       bundlerConfigs,
       environments: context.environments,
@@ -63,7 +63,7 @@ export const build = async (
     await p;
   };
 
-  onBeforeCompile(compiler, onBeforeBuild);
+  onBeforeBuild(compiler, beforeBuild, watch);
 
   onCompileDone(compiler, onDone, rspack.MultiStats);
 
