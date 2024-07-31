@@ -293,3 +293,24 @@ export async function startDevServer() {
 ```
 
 详细使用情况可参考：[SSR + Express 示例](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/ssr-express)。
+
+## 添加 environment 依赖
+
+默认情况下，Rsbuild 会并行构建所有环境。如果你的项目中某一个环境依赖其他环境预先编译完成，可以将你需要依赖的环境名称添加到 Rspack 的 [dependencies](https://rspack.dev/zh/config/other-options#dependencies) 配置中。
+
+例如，node 环境依赖 web 环境预先编译完成，可以添加如下配置：
+
+```ts title=rsbuild.config.ts
+export default {
+  environments: {
+    web: {},
+    node: {
+      tools: {
+        rspack: {
+          dependencies: ['web'],
+        },
+      },
+    },
+  },
+};
+```

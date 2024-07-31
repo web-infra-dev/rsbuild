@@ -293,3 +293,24 @@ export async function startDevServer() {
 ```
 
 For detailed usage, please refer to: [SSR + Express Example](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/ssr-express).
+
+## Add environment dependencies
+
+By default, Rsbuild builds all environments in parallel. If an environment in your project depends on other environments to be compiled first, you can add the name of the environment you need to depend on to Rspack's [dependencies](https://rspack.dev/config/other-options#dependencies) configuration.
+
+For example, the node environment depends on the web environment to be compiled first. You can add the following configuration:
+
+```ts title=rsbuild.config.ts
+export default {
+  environments: {
+    web: {},
+    node: {
+      tools: {
+        rspack: {
+          dependencies: ['web'],
+        },
+      },
+    },
+  },
+};
+```
