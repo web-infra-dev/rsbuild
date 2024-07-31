@@ -38,6 +38,11 @@ const merge = (x: unknown, y: unknown, path = '') => {
     return isPlainObject(x) ? cloneDeep(x) : x;
   }
 
+  // no need to merge boolean with object or function, such as `tools.htmlPlugin`
+  if (typeof x === 'boolean' || typeof y === 'boolean') {
+    return y;
+  }
+
   const pair = [x, y];
 
   // combine array

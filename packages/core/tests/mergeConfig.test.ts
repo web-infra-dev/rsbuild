@@ -214,6 +214,46 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
+  test('should merge tools.htmlPlugin correctly', async () => {
+    expect(
+      mergeRsbuildConfig(
+        {
+          tools: {
+            htmlPlugin: {},
+          },
+        },
+        {
+          tools: {
+            htmlPlugin: false,
+          },
+        },
+      ),
+    ).toEqual({
+      tools: {
+        htmlPlugin: false,
+      },
+    });
+
+    expect(
+      mergeRsbuildConfig(
+        {
+          tools: {
+            htmlPlugin: false,
+          },
+        },
+        {
+          tools: {
+            htmlPlugin: {},
+          },
+        },
+      ),
+    ).toEqual({
+      tools: {
+        htmlPlugin: {},
+      },
+    });
+  });
+
   it('should merge SWC plugins as expected', () => {
     expect(
       mergeRsbuildConfig(

@@ -16,7 +16,6 @@ import type {
   RsbuildConfig,
   RsbuildContext,
   RsbuildEntry,
-  RsbuildTarget,
 } from './types';
 
 function getAbsolutePath(root: string, filepath: string) {
@@ -93,25 +92,11 @@ export async function getBrowserslistByEnvironment(
   return DEFAULT_BROWSERSLIST[target];
 }
 
-const hasHTML = (
-  config: NormalizedEnvironmentConfig,
-  target: RsbuildTarget,
-) => {
-  const { htmlPlugin } = config.tools as {
-    htmlPlugin: boolean | Array<unknown>;
-  };
-  const pluginDisabled =
-    htmlPlugin === false ||
-    (Array.isArray(htmlPlugin) && htmlPlugin.includes(false));
-
-  return target === 'web' && !pluginDisabled;
-};
-
 const getEnvironmentHTMLPaths = (
   entry: RsbuildEntry,
   config: NormalizedEnvironmentConfig,
 ) => {
-  if (!hasHTML(config, config.output.target)) {
+  if (config.output.target !== 'web' || config.tools.htmlPlugin === false) {
     return {};
   }
 
