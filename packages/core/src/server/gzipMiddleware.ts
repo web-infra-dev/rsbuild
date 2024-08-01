@@ -16,7 +16,7 @@ const shouldCompress = (res: ServerResponse) => {
   }
 
   const size = res.getHeader('Content-Length');
-  return size !== undefined && Number(size) > 1024;
+  return size === undefined || Number(size) > 1024;
 };
 
 export const gzipMiddleware: RequestHandler = (req, res, next): void => {
