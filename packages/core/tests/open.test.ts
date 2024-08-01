@@ -1,16 +1,16 @@
-import { replacePlaceholder, resolveUrl } from '../src/plugins/open';
+import { replacePortPlaceholder, resolveUrl } from '../src/plugins/open';
 
 describe('plugin-open', () => {
-  it('#replacePlaceholder - should replace port number correctly', () => {
-    expect(replacePlaceholder('http://localhost:8080', 3000)).toEqual(
+  it('#replacePortPlaceholder - should replace port number correctly', () => {
+    expect(replacePortPlaceholder('http://localhost:8080', 3000)).toEqual(
       'http://localhost:8080',
     );
-    expect(replacePlaceholder('http://localhost:<port>', 3000)).toEqual(
+    expect(replacePortPlaceholder('http://localhost:<port>', 3000)).toEqual(
       'http://localhost:3000',
     );
-    expect(replacePlaceholder('http://localhost:<port>/path/', 3000)).toEqual(
-      'http://localhost:3000/path/',
-    );
+    expect(
+      replacePortPlaceholder('http://localhost:<port>/path/', 3000),
+    ).toEqual('http://localhost:3000/path/');
   });
 
   it('#resolveUrl - should resolve url correctly', () => {
