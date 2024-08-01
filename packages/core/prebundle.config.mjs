@@ -94,10 +94,6 @@ export default {
       ignoreDts: true,
     },
     {
-      name: 'http-compression',
-      ignoreDts: true,
-    },
-    {
       name: 'connect-history-api-fallback',
       ignoreDts: true,
     },

@@ -82,13 +82,8 @@ const applyDefaultMiddlewares = async ({
   const upgradeEvents: UpgradeEvent[] = [];
   // compression should be the first middleware
   if (server.compress) {
-    const { default: compression } = await import('http-compression');
-    middlewares.push((req, res, next) => {
-      compression({
-        gzip: true,
-        brotli: false,
-      })(req, res, next);
-    });
+    const { gzipMiddleware } = await import('./gzipMiddleware');
+    middlewares.push(gzipMiddleware);
   }
 
   middlewares.push((req, res, next) => {

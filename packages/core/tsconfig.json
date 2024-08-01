@@ -28,7 +28,6 @@
       "html-rspack-plugin": ["./compiled/html-rspack-plugin"],
       "http-proxy-middleware": ["./compiled/http-proxy-middleware"],
       "webpack-bundle-analyzer": ["./compiled/webpack-bundle-analyzer"],
-      "http-compression": ["./compiled/http-compression"],
       "postcss-load-config": ["./compiled/postcss-load-config"],
       "rspack-manifest-plugin": ["./compiled/rspack-manifest-plugin"],
       "webpack-dev-middleware": ["./compiled/webpack-dev-middleware"],

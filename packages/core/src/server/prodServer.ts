@@ -60,13 +60,8 @@ export class RsbuildProdServer {
 
     // compression should be the first middleware
     if (compress) {
-      const { default: compression } = await import('http-compression');
-      this.middlewares.use((req, res, next) => {
-        compression({
-          gzip: true,
-          brotli: false,
-        })(req, res, next);
-      });
+      const { gzipMiddleware } = await import('./gzipMiddleware');
+      this.middlewares.use(gzipMiddleware);
     }
 
     if (headers) {

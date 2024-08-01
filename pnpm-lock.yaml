@@ -720,9 +720,6 @@ importers:
       html-rspack-plugin:
         specifier: 6.0.0-beta.9
         version: 6.0.0-beta.9(@rspack/core@1.0.0-beta.1(@swc/helpers@0.5.11))
-      http-compression:
-        specifier: 1.0.20
-        version: 1.0.20
       http-proxy-middleware:
         specifier: ^2.0.6
         version: 2.0.6
@@ -5042,10 +5039,6 @@ packages:
   http-assert@1.5.0:
     resolution: {integrity: sha512-uPpH7OKX4H25hBmU6G1jWNaqJGpTXxey+YOUizJUAgu0AjLUeC8D73hTrhvDS5D+GJN1DN1+hhc/eF/wpxtp0w==}
     engines: {node: '>= 0.8'}
-
-  http-compression@1.0.20:
-    resolution: {integrity: sha512-HbYdvKpmlPiFiyZ8DO1XkGsrKUe/jsllmzeBJMQ6HuDyhAqjciyimkhGpP852MeeQ54DzebKYrp00zH5wwoEdA==}
-    engines: {node: '>= 4'}
 
   http-errors@1.8.1:
     resolution: {integrity: sha512-Kpk9Sm7NmI+RHhnj6OIWDI1d6fIoFAtFt9RLaTMRlg/8w49juAStsrBgp0Dp4OdxdVbRIeKhtCUvoi/RuAhO4g==}
@@ -11853,8 +11846,6 @@ snapshots:
     dependencies:
       deep-equal: 1.0.1
       http-errors: 1.8.1
-
-  http-compression@1.0.20: {}
 
   http-errors@1.8.1:
     dependencies:
