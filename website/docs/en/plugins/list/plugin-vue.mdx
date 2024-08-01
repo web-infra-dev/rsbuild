@@ -101,3 +101,21 @@ pluginVue({
   },
 });
 ```
+
+## FAQ
+
+### /deep/ selector causes compilation error
+
+`/deep/` is a deprecated usage as of Vue v2.7. Since it is not a valid CSS syntax, CSS compilation tools like Lightning CSS will fail to compile it.
+
+You can use `:deep()` instead. See [Vue - Deep Selectors](https://vuejs.org/api/sfc-css-features.html#deep-selectors) for more details.
+
+```html
+<style scoped>
+  .a :deep(.b) {
+    /* ... */
+  }
+</style>
+```
+
+> You can also refer to [Vue - RFC 0023](https://github.com/vuejs/rfcs/blob/master/active-rfcs/0023-scoped-styles-changes.md) for more details.
