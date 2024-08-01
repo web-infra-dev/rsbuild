@@ -1,6 +1,5 @@
-import type { OutgoingHttpHeader, ServerResponse } from 'node:http';
+import type { ServerResponse } from 'node:http';
 import zlib from 'node:zlib';
-import { castArray } from 'src/helpers';
 import type { RequestHandler } from '../types';
 
 const ENCODING_REGEX = /\bgzip\b/;
@@ -72,14 +71,10 @@ export const gzipMiddleware: RequestHandler = (req, res, next): void => {
     writeHead.call(res, writeHeadStatus || res.statusCode);
   };
 
-  res.writeHead = (status, reason, optionalHeaders?) => {
+  res.writeHead = (status, reason, headers?) => {
     if (reason) {
-      const headers = castArray(
-        typeof reason === 'string' ? optionalHeaders : reason,
-      ) as OutgoingHttpHeader[];
-
-      for (const index in headers) {
-        res.setHeader(index, headers[index]);
+      for (const [key, value] of Object.entries(headers || reason)) {
+        res.setHeader(key, value);
       }
     }
 
