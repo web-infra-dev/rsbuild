@@ -36,6 +36,7 @@ import { createHttpServer } from './httpServer';
 import { notFoundMiddleware } from './middlewares';
 import { onBeforeRestartServer } from './restart';
 import { setupWatchFiles } from './watchFiles';
+import type { FSWatcher } from 'chokidar'
 
 export type RsbuildDevServer = {
   /**
@@ -54,6 +55,13 @@ export type RsbuildDevServer = {
   /** The Rsbuild server environment API */
   environments: EnvironmentAPI;
 
+  /**
+   *  to watch source files 
+   *
+   *  Return a chokidar `FSWatcher` object, please refer to the API: https://github.com/paulmillr/chokidar
+   */
+  watcher: FSWatcher
+  
   /**
    * The resolved port.
    *
@@ -344,6 +352,7 @@ export async function createDevServer<
         port,
         routes,
         environments: options.context.environments,
+        watcher: fileWatcher
       });
     },
     onHTTPUpgrade: devMiddlewares.onUpgrade,
