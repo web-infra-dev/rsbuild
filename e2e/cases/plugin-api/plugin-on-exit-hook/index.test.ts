@@ -9,11 +9,27 @@ const distFile = path.join(__dirname, 'node_modules/hooksTempFile');
 rspackOnlyTest('should run onExit hook before process exit', async () => {
   fs.rmSync(distFile, { force: true });
 
-  await new Promise<void>((resolve) => {
-    const process = exec('node ./run.mjs', { cwd: __dirname }, () => {
-      expect(fs.readFileSync(distFile, 'utf-8')).toEqual('1');
-      resolve();
+  await new Promise<void>((resolve, reject) => {
+    const timeoutId = setTimeout(() => {
       process.kill();
+      reject(new Error('Process timeout'));
+    }, 3000);
+
+    const process = exec('node ./run.mjs', { cwd: __dirname }, (error) => {
+      if (error) {
+        clearTimeout(timeoutId);
+        reject(error);
+        return;
+      }
+
+      try {
+        expect(fs.readFileSync(distFile, 'utf-8')).toEqual('1');
+        clearTimeout(timeoutId);
+        resolve();
+      } catch (err) {
+        clearTimeout(timeoutId);
+        reject(err);
+      }
     });
   });
 });
