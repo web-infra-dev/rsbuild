@@ -6,6 +6,7 @@ const ENCODING_REGEX = /\bgzip\b/;
 const CONTENT_TYPE_REGEX = /text|javascript|\/json|xml/i;
 
 const shouldCompress = (res: ServerResponse) => {
+  // already compressed
   if (res.getHeader('Content-Encoding')) {
     return false;
   }
@@ -31,9 +32,9 @@ export const gzipMiddleware: RequestHandler = (req, res, next): void => {
   let gzip: zlib.Gzip | undefined;
   let writeHeadStatus: number | undefined;
   let started = false;
-  const listeners: Array<[string | symbol, (...args: any[]) => void]> = [];
 
   const { end, write, on, writeHead } = res;
+  const listeners: Array<[string | symbol, (...args: any[]) => void]> = [];
 
   const start = () => {
     if (started) {
@@ -68,7 +69,7 @@ export const gzipMiddleware: RequestHandler = (req, res, next): void => {
       }
     }
 
-    writeHead.call(res, writeHeadStatus || res.statusCode);
+    writeHead.call(res, writeHeadStatus ?? res.statusCode);
   };
 
   res.writeHead = (status, reason, headers?) => {
@@ -77,7 +78,6 @@ export const gzipMiddleware: RequestHandler = (req, res, next): void => {
         res.setHeader(key, value);
       }
     }
-
     writeHeadStatus = status;
     return res;
   };
@@ -97,11 +97,14 @@ export const gzipMiddleware: RequestHandler = (req, res, next): void => {
   };
 
   res.on = (type, listener) => {
-    if (!gzip || type !== 'drain') {
-      on.call(res, type, listener);
-    } else if (gzip) {
-      gzip.on(type, listener);
+    if (started) {
+      if (!gzip || type !== 'drain') {
+        on.call(res, type, listener);
+      } else {
+        gzip.on(type, listener);
+      }
     } else {
+      // store listeners until start
       listeners.push([type, listener]);
     }
     return res;
