@@ -105,3 +105,21 @@ pluginVue({
   },
 });
 ```
+
+## 常见问题
+
+### /deep/ 选择器导致编译报错
+
+`/deep/` 是从 Vue v2.7 开始废弃的用法，它不是一个合法的 CSS 语法，因此在编译时，Lightning CSS 等 CSS 编译工具会抛出错误。
+
+你可以使用 `:deep()` 代替它，更多用法参考 [Vue - Deep Selectors](https://vuejs.org/api/sfc-css-features.html#deep-selectors)。
+
+```html
+<style scoped>
+  .a :deep(.b) {
+    /* ... */
+  }
+</style>
+```
+
+> 你也可以参考 [Vue - RFC 0023](https://github.com/vuejs/rfcs/blob/master/active-rfcs/0023-scoped-styles-changes.md) 了解更多。
