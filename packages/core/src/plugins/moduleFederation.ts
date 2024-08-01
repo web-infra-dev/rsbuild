@@ -147,9 +147,11 @@ export function pluginModuleFederation(): RsbuildPlugin {
             .use(rspack.container.ModuleFederationPlugin, [options]);
 
           if (options.name) {
-            chain
-              .plugin('mf-patch-split-chunks')
-              .use(PatchSplitChunksPlugin, [options.name]);
+            if (options.exposes) {
+              chain
+                .plugin('mf-patch-split-chunks')
+                .use(PatchSplitChunksPlugin, [options.name]);
+            }
 
             // `uniqueName` is required for react refresh to work
             if (!chain.output.get('uniqueName')) {
