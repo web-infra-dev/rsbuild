@@ -65,6 +65,23 @@ The resource URL loaded in the browser is as follows:
 <script defer src="https://example.com/assets/static/js/index.js"></script>
 ```
 
+### Port placeholder
+
+The port number that Rsbuild server listens on may change. For example, if the port is in use, Rsbuild will automatically increment the port number until it finds an available port.
+
+To avoid `dev.assetPrefix` becoming invalid due to port changes, you can use one of the following methods:
+
+- Enable [server.strictPort](/config/server/strict-port).
+- Use the `<port>` placeholder to refer to the current port number. Rsbuild will replace the placeholder with the actual port number it is listening on.
+
+```js title="rsbuild.config.ts"
+export default {
+  dev: {
+    assetPrefix: 'http://localhost:<port>/',
+  },
+};
+```
+
 ## Path Types
 
 assetPrefix can be set to the following types of paths:

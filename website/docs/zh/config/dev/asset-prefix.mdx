@@ -65,6 +65,23 @@ export default {
 <script defer src="https://example.com/assets/static/js/index.js"></script>
 ```
 
+### 端口号占位符
+
+Rsbuild server 监听的端口号可能会发生变更。比如，当端口被占用时，Rsbuild 会自动递增端口号，直至找到一个可用端口。
+
+为了避免端口变化导致 `dev.assetPrefix` 失效，你可以使用以下方法之一：
+
+- 开启 [server.strictPort](/config/server/strict-port)。
+- 使用 `<port>` 占位符来指代当前端口号，Rsbuild 会将占位符替换为实际监听的端口号。
+
+```js
+export default {
+  dev: {
+    assetPrefix: 'http://localhost:<port>/',
+  },
+};
+```
+
 ## 路径类型
 
 assetPrefix 可以设置为以下类型的路径：

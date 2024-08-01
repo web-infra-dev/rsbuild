@@ -162,4 +162,34 @@ describe('plugin-output', () => {
     const bundlerConfigs = await rsbuild.initConfigs();
     expect(bundlerConfigs[0]?.output?.publicPath).toEqual('auto');
   });
+
+  it('should replace `<port>` placeholder with default port', async () => {
+    vi.stubEnv('NODE_ENV', 'development');
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginOutput()],
+      rsbuildConfig: {
+        dev: {
+          assetPrefix: 'http://example-<port>.com:<port>/',
+        },
+      },
+    });
+
+    const [config] = await rsbuild.initConfigs();
+    expect(config?.output?.publicPath).toEqual('http://example-3000.com:3000/');
+  });
+
+  it('should replace `<port>` placeholder of `output.assetPrefix` with default port', async () => {
+    vi.stubEnv('NODE_ENV', 'production');
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginOutput()],
+      rsbuildConfig: {
+        output: {
+          assetPrefix: 'http://example.com:<port>/',
+        },
+      },
+    });
+
+    const [config] = await rsbuild.initConfigs();
+    expect(config?.output?.publicPath).toEqual('http://example.com:3000/');
+  });
 });
