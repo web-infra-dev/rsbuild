@@ -56,6 +56,11 @@
 - [onCloseDevServer](#onclosedevserver)
 - [onExit](#onexit)
 
+当 rebuild 时，以下 hooks 会再次触发：
+
+- [modifyHTMLTags](#modifyhtmltags)
+- [onDevCompileDone](#ondevcompiledone)
+
 ### Build Hooks
 
 执行 `rsbuild build` 命令或 `rsbuild.build()` 方法时，Rsbuild 会依次执行以下 hooks：
@@ -69,6 +74,12 @@
 - [modifyHTMLTags](#modifyhtmltags)
 - [onAfterBuild](#onafterbuild)
 - [onExit](#onexit)
+
+当 rebuild 时，以下 hooks 会再次触发：
+
+- [onBeforeBuild](#onbeforebuild)
+- [modifyHTMLTags](#modifyhtmltags)
+- [onAfterBuild](#onafterbuild)
 
 ### Preview Hooks
 

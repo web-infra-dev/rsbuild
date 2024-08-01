@@ -56,6 +56,11 @@ When the `rsbuild dev` command or `rsbuild.startDevServer()` method is executed,
 - [onCloseDevServer](#onclosedevserver)
 - [onExit](#onexit)
 
+When rebuilding, the following hooks will be triggered again:
+
+- [modifyHTMLTags](#modifyhtmltags)
+- [onDevCompileDone](#ondevcompiledone)
+
 ### Build Hooks
 
 When the `rsbuild build` command or `rsbuild.build()` method is executed, Rsbuild will execute the following hooks in order:
@@ -69,6 +74,12 @@ When the `rsbuild build` command or `rsbuild.build()` method is executed, Rsbuil
 - [modifyHTMLTags](#modifyhtmltags)
 - [onAfterBuild](#onafterbuild)
 - [onExit](#onexit)
+
+When rebuilding, the following hooks will be triggered again:
+
+- [onBeforeBuild](#onbeforebuild)
+- [modifyHTMLTags](#modifyhtmltags)
+- [onAfterBuild](#onafterbuild)
 
 ### Preview Hooks
 
