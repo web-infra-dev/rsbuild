@@ -1,3 +1,3 @@
-import { configForDualPackage } from '@rsbuild/config/modern.config.ts';
+import { configForSeparateTypesPackage } from '@rsbuild/config/modern.config.ts';
 
-export default configForDualPackage;
+export default configForSeparateTypesPackage;
