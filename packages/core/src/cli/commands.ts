@@ -1,10 +1,9 @@
-import { existsSync } from 'node:fs';
 import { type Command, program } from 'commander';
-import color from 'picocolors';
-import { isEmptyDir } from '../helpers';
 import { logger } from '../logger';
 import type { RsbuildMode } from '../types';
 import { init } from './init';
+import { _createDevServer, _createPreviewServer } from './server';
+import { bindCLIShortcuts } from './shortcut';
 
 export type CommonOptions = {
   config?: string;
@@ -73,8 +72,8 @@ export function runCli(): void {
     .description('starting the dev server')
     .action(async (options: DevOptions) => {
       try {
-        const rsbuild = await init({ cliOptions: options });
-        await rsbuild?.startDevServer();
+        const devServer = await _createDevServer(options);
+        bindCLIShortcuts(devServer, { print: true });
       } catch (err) {
         logger.error('Failed to start dev server.');
         logger.error(err);
@@ -102,30 +101,8 @@ export function runCli(): void {
     .description('preview the production build locally')
     .action(async (options: PreviewOptions) => {
       try {
-        const rsbuild = await init({ cliOptions: options });
-        await rsbuild?.initConfigs();
-
-        if (rsbuild) {
-          const { distPath } = rsbuild.context;
-
-          if (!existsSync(distPath)) {
-            throw new Error(
-              `The output directory ${color.yellow(
-                distPath,
-              )} does not exist, please build the project before previewing.`,
-            );
-          }
-
-          if (isEmptyDir(distPath)) {
-            throw new Error(
-              `The output directory ${color.yellow(
-                distPath,
-              )} is empty, please build the project before previewing.`,
-            );
-          }
-        }
-
-        await rsbuild?.preview();
+        const previewServer = await _createPreviewServer(options);
+        bindCLIShortcuts(previewServer, { print: true });
       } catch (err) {
         logger.error('Failed to start preview server.');
         logger.error(err);
