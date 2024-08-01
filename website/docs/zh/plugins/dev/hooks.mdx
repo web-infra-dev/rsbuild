@@ -45,6 +45,7 @@
 执行 `rsbuild dev` 命令或 `rsbuild.startDevServer()` 方法时，Rsbuild 会依次执行以下 hooks：
 
 - [modifyRsbuildConfig](#modifyrsbuildconfig)
+- [modifyEnvironmentConfig](#modifyenvironmentconfig)
 - [onBeforeStartDevServer](#onbeforestartdevserver)
 - [modifyBundlerChain](#modifybundlerchain)
 - [modifyRspackConfig](#modifyrspackconfig)
@@ -66,6 +67,7 @@
 执行 `rsbuild build` 命令或 `rsbuild.build()` 方法时，Rsbuild 会依次执行以下 hooks：
 
 - [modifyRsbuildConfig](#modifyrsbuildconfig)
+- [modifyEnvironmentConfig](#modifyenvironmentconfig)
 - [modifyBundlerChain](#modifybundlerchain)
 - [modifyRspackConfig](#modifyrspackconfig)
 - [onBeforeCreateCompiler](#onbeforecreatecompiler)
@@ -86,9 +88,41 @@
 执行 `rsbuild preview` 命令或 `rsbuild.preview()` 方法时，Rsbuild 会依次执行以下 hooks：
 
 - [modifyRsbuildConfig](#modifyrsbuildconfig)
+- [modifyEnvironmentConfig](#modifyenvironmentconfig)
 - [onBeforeStartProdServer](#onbeforestartprodserver)
 - [onAfterStartProdServer](#onafterstartprodserver)
 - [onExit](#onexit)
+
+## Global Hooks vs Environment Hooks
+
+在 Rsbuild 中，有一些插件 hooks 是全局 hooks，这些 hook 的执行往往和 Rsbuild 自身的启动流程或全局逻辑相关，在所有 environment 下共享。如：
+
+- `modifyRsbuildConfig` 用来修改 Rsbuild 的基础配置，基础配置最终会和 environment 配置合并；
+- `onBeforeStartDevServer`、`onAfterStartDevServer` 和 Rsbuild dev server 启动流程相关，所有 environments 共享 Rsbuild 的 dev server、middlewares、Web Socket。
+
+与之对应的，有一些插件 hooks 是和当前 environment 相关的 hook，这些 hook 执行时会带有特定的 environment 上下文，并根据 environment 的不同而触发多次。
+
+### Global Hooks
+
+- [modifyRsbuildConfig](#modifyrsbuildconfig)
+- [onBeforeStartDevServer](#onbeforestartdevserver)
+- [onBeforeCreateCompiler](#onbeforecreatecompiler)
+- [onAfterCreateCompiler](#onaftercreatecompiler)
+- [onAfterStartDevServer](#onafterstartdevserver)
+- [onDevCompileDone](#ondevcompiledone)
+- [onCloseDevServer](#onclosedevserver)
+- [onBeforeBuild](#onbeforebuild)
+- [onAfterBuild](#onafterbuild)
+- [onBeforeStartProdServer](#onbeforestartprodserver)
+- [onAfterStartProdServer](#onafterstartprodserver)
+- [onExit](#onexit)
+
+### Environment Hooks
+
+- [modifyEnvironmentConfig](#modifyenvironmentconfig)
+- [modifyBundlerChain](#modifybundlerchain)
+- [modifyRspackConfig](#modifyrspackconfig)
+- [modifyHTMLTags](#modifyhtmltags)
 
 ## 回调函数顺序
 
