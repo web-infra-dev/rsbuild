@@ -10,6 +10,6 @@
     "eslint": "^9.8.0",
     "eslint-plugin-vue": "^9.27.0",
     "globals": "^15.8.0",
-    "typescript-eslint": "^7.17.0"
+    "typescript-eslint": "^8.0.0"
   }
 }

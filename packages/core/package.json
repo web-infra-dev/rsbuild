@@ -54,7 +54,7 @@
     "@rspack/core": "1.0.0-beta.1",
     "@rspack/lite-tapable": "1.0.0-beta.1",
     "@swc/helpers": "0.5.11",
-    "caniuse-lite": "^1.0.30001643",
+    "caniuse-lite": "^1.0.30001645",
     "core-js": "~3.37.1"
   },
   "devDependencies": {
@@ -63,7 +63,7 @@
     "@types/node": "18.x",
     "@types/on-finished": "2.3.4",
     "@types/webpack-bundle-analyzer": "4.7.0",
-    "@types/ws": "^8.5.11",
+    "@types/ws": "^8.5.12",
     "browserslist": "4.23.2",
     "browserslist-to-es-version": "^1.0.0",
     "chokidar": "3.6.0",
