@@ -89,7 +89,9 @@ type BuildOptions = {
   compiler?: Compiler | MultiCompiler;
 };
 
-function Build(options?: BuildOptions): Promise<void>;
+function Build(options?: BuildOptions): Promise<void | {
+  close: () => Promise<void>;
+}>;
 ```
 
 - **Example:**
@@ -128,6 +130,16 @@ If you need to watch file changes and re-build, you can set the `watch` option t
 await rsbuild.build({
   watch: true,
 });
+```
+
+The build method returns a `Watching` instance in watch mode that exposes `.close(callback)` method. Calling this method will end watching:
+
+```ts
+const watching = await rsbuild.build({
+  watch: true,
+});
+
+await watching?.close();
 ```
 
 ### Custom Compiler

@@ -79,7 +79,11 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
       }
     };
 
-    api.onBeforeBuild(onStart);
+    api.onBeforeBuild(({ isFirstCompile }) => {
+      if (isFirstCompile) {
+        onStart();
+      }
+    });
     api.onBeforeStartDevServer(onStart);
 
     api.onAfterBuild(async ({ stats }) => {

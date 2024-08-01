@@ -1,5 +1,10 @@
 import { rspack } from '@rspack/core';
-import { getNodeEnv, onCompileDone, setNodeEnv } from '../helpers';
+import {
+  getNodeEnv,
+  onBeforeBuild,
+  onCompileDone,
+  setNodeEnv,
+} from '../helpers';
 import { logger } from '../logger';
 import type {
   BuildOptions,
@@ -14,7 +19,9 @@ import { type InitConfigsOptions, initConfigs } from './initConfigs';
 export const build = async (
   initOptions: InitConfigsOptions,
   { mode = 'production', watch, compiler: customCompiler }: BuildOptions = {},
-): Promise<void> => {
+): Promise<void | {
+  close: () => Promise<void>;
+}> => {
   if (!getNodeEnv()) {
     setNodeEnv(mode);
   }
@@ -36,11 +43,14 @@ export const build = async (
   }
 
   let isFirstCompile = true;
-  await context.hooks.onBeforeBuild.call({
-    bundlerConfigs,
-    environments: context.environments,
-    isWatch: Boolean(watch),
-  });
+
+  const beforeBuild = async () =>
+    await context.hooks.onBeforeBuild.call({
+      bundlerConfigs,
+      environments: context.environments,
+      isWatch: Boolean(watch),
+      isFirstCompile,
+    });
 
   const onDone = async (stats: Stats | MultiStats) => {
     const p = context.hooks.onAfterBuild.call({
@@ -53,15 +63,22 @@ export const build = async (
     await p;
   };
 
+  onBeforeBuild(compiler, beforeBuild, watch);
+
   onCompileDone(compiler, onDone, rspack.MultiStats);
 
   if (watch) {
-    compiler.watch({}, (err) => {
+    const watching = compiler.watch({}, (err) => {
       if (err) {
         logger.error(err);
       }
     });
-    return;
+    return {
+      close: () =>
+        new Promise((resolve) => {
+          watching.close(resolve);
+        }),
+    };
   }
 
   await new Promise<{ stats?: Stats | MultiStats }>((resolve, reject) => {

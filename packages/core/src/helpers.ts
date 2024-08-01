@@ -565,6 +565,51 @@ export const isMultiCompiler = <
   return compiler.constructor.name === 'MultiCompiler';
 };
 
+export const onBeforeBuild = (
+  compiler: Rspack.Compiler | Rspack.MultiCompiler,
+  onBefore: () => Promise<any>,
+  isWatch?: boolean,
+): void => {
+  const name = 'rsbuild:beforeCompile';
+
+  if (isMultiCompiler(compiler)) {
+    const { compilers } = compiler;
+
+    let doneCompilers = 0;
+
+    for (let index = 0; index < compilers.length; index++) {
+      const compiler = compilers[index];
+      let compilerDone = false;
+
+      (isWatch ? compiler.hooks.watchRun : compiler.hooks.run).tapPromise(
+        name,
+        async () => {
+          if (!compilerDone) {
+            compilerDone = true;
+            doneCompilers++;
+          }
+
+          if (doneCompilers === compilers.length) {
+            await onBefore();
+          }
+        },
+      );
+
+      compiler.hooks.invalid.tap(name, () => {
+        if (compilerDone) {
+          compilerDone = false;
+          doneCompilers--;
+        }
+      });
+    }
+  } else {
+    (isWatch ? compiler.hooks.watchRun : compiler.hooks.run).tapPromise(
+      name,
+      onBefore,
+    );
+  }
+};
+
 export const onCompileDone = (
   compiler: Rspack.Compiler | Rspack.MultiCompiler,
   onDone: (stats: Rspack.Stats | Rspack.MultiStats) => Promise<void>,

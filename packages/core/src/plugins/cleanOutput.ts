@@ -58,7 +58,11 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
       await Promise.all(environments.map((e) => clean(e)));
     };
 
-    api.onBeforeBuild(cleanAll);
+    api.onBeforeBuild(async ({ isFirstCompile, environments }) => {
+      if (isFirstCompile) {
+        await cleanAll({ environments });
+      }
+    });
     api.onBeforeStartDevServer(cleanAll);
   },
 });

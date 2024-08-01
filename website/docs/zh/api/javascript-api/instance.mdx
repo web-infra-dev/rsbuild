@@ -111,7 +111,9 @@ type BuildOptions = {
   compiler?: Compiler | MultiCompiler;
 };
 
-function Build(options?: BuildOptions): Promise<void>;
+function Build(options?: BuildOptions): Promise<void | {
+  close: () => Promise<void>;
+}>;
 ```
 
 - **示例：**
@@ -150,6 +152,16 @@ await rsbuild.build({
 await rsbuild.build({
   watch: true,
 });
+```
+
+watch 模式下 build 方法会返回一个 `Watching` 实例，该实例会暴露一个 `.close(callback)` 方法。调用该方法将会结束监听：
+
+```ts
+const watching = await rsbuild.build({
+  watch: true,
+});
+
+await watching?.close();
 ```
 
 ### 自定义 Compiler
