@@ -1,3 +1,4 @@
+import { isRegExp } from 'node:util/types';
 import { rspack } from '@rspack/core';
 import type { RspackPluginInstance } from '@rspack/core';
 import { DEFAULT_ASSET_PREFIX } from '../constants';
@@ -23,14 +24,14 @@ class PatchSplitChunksPlugin implements RspackPluginInstance {
     }
 
     const applyPatch = (cacheGroup: CacheGroup) => {
-      if (typeof cacheGroup !== 'object' || cacheGroup instanceof RegExp) {
+      if (typeof cacheGroup !== 'object' || isRegExp(cacheGroup)) {
         return;
       }
 
       // cacheGroup.chunks will inherit splitChunks.chunks
       // so we only need to modify the chunks that are set separately.
       const { chunks } = cacheGroup;
-      if (!chunks) {
+      if (!chunks || chunks === 'async') {
         return;
       }
 
@@ -110,6 +111,7 @@ export function pluginModuleFederation(): RsbuildPlugin {
         if (!config.moduleFederation?.options) {
           return;
         }
+
         /**
          * Currently, splitChunks will take precedence over module federation shared modules.
          * So we need to disable the default split chunks rules to make shared modules to work properly.

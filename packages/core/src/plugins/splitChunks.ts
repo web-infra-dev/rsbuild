@@ -238,9 +238,14 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
         }
 
         const { config } = environment;
+
         const defaultConfig: Exclude<SplitChunks, false> = {
-          // Optimize both `initial` and `async` chunks
-          chunks: 'all',
+          chunks: config.moduleFederation?.options?.exposes
+            ? // split only `async` chunks for module federation provider app
+              // this ensures that remote entries are not affected by chunk splitting
+              'async'
+            : // split both `initial` and `async` chunks for normal app
+              'all',
           // When chunk size >= 50000 bytes, split it into separate chunk
           // @ts-expect-error Rspack type missing
           enforceSizeThreshold: 50000,
@@ -259,7 +264,7 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
         // Patch the override config difference between the `custom` strategy and other strategy.
         const override =
           chunkSplit.strategy === 'custom'
-            ? chunkSplit.splitChunks ?? chunkSplit.override
+            ? (chunkSplit.splitChunks ?? chunkSplit.override)
             : chunkSplit.override;
 
         // Apply different strategy

@@ -6,7 +6,7 @@ exports[`plugin-module-federation > should set environment module federation con
     "optimization": {
       "splitChunks": {
         "cacheGroups": {},
-        "chunks": "all",
+        "chunks": "async",
         "enforceSizeThreshold": 50000,
       },
     },
@@ -71,7 +71,7 @@ exports[`plugin-module-federation > should set module federation and environment
     "optimization": {
       "splitChunks": {
         "cacheGroups": {},
-        "chunks": "all",
+        "chunks": "async",
         "enforceSizeThreshold": 50000,
       },
     },
@@ -145,7 +145,7 @@ exports[`plugin-module-federation > should set module federation config 1`] = `
   "optimization": {
     "splitChunks": {
       "cacheGroups": {},
-      "chunks": "all",
+      "chunks": "async",
       "enforceSizeThreshold": 50000,
     },
   },
