@@ -33,6 +33,24 @@ test('should allow dev.assetPrefix to be true', async ({ page }) => {
   await rsbuild.close();
 });
 
+test('should allow dev.assetPrefix to have <port> placeholder', async ({
+  page,
+}) => {
+  const rsbuild = await dev({
+    cwd: __dirname,
+    rsbuildConfig: {
+      dev: {
+        assetPrefix: 'http://localhost:<port>/',
+      },
+    },
+  });
+
+  await gotoPage(page, rsbuild);
+  const testEl = page.locator('#test-port');
+  await expect(testEl).toHaveText(`http://localhost:${rsbuild.port}`);
+  await rsbuild.close();
+});
+
 test('should allow output.assetPrefix to be `auto`', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,

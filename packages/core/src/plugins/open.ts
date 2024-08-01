@@ -80,7 +80,7 @@ export async function openBrowser(url: string): Promise<boolean> {
   }
 }
 
-export const replacePlaceholder = (url: string, port: number): string =>
+export const replacePortPlaceholder = (url: string, port: number): string =>
   url.replace(/<port>/g, String(port));
 
 export function resolveUrl(str: string, base: string): string {
@@ -159,7 +159,7 @@ export function pluginOpen(): RsbuildPlugin {
         } else {
           urls.push(
             ...targets.map((target) =>
-              resolveUrl(replacePlaceholder(target, port), baseUrl),
+              resolveUrl(replacePortPlaceholder(target, port), baseUrl),
             ),
           );
         }
