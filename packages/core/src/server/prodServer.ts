@@ -61,7 +61,12 @@ export class RsbuildProdServer {
     // compression should be the first middleware
     if (compress) {
       const { gzipMiddleware } = await import('./gzipMiddleware');
-      this.middlewares.use(gzipMiddleware);
+      this.middlewares.use(
+        gzipMiddleware({
+          // simulates the common gzip compression rates
+          level: 6,
+        }),
+      );
     }
 
     if (headers) {
