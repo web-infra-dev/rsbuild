@@ -17,6 +17,9 @@ const createPlugin = () => {
       api.modifyRsbuildConfig(() => {
         names.push('ModifyRsbuildConfig');
       });
+      api.modifyEnvironmentConfig(() => {
+        names.push('ModifyEnvironmentConfig');
+      });
       api.modifyBundlerChain(() => {
         names.push('ModifyBundlerChain');
       });
@@ -75,6 +78,7 @@ rspackOnlyTest(
 
     expect(names).toEqual([
       'ModifyRsbuildConfig',
+      'ModifyEnvironmentConfig',
       'ModifyBundlerChain',
       'ModifyBundlerConfig',
       'BeforeCreateCompiler',
@@ -107,6 +111,7 @@ rspackOnlyTest(
 
     expect(names).toEqual([
       'ModifyRsbuildConfig',
+      'ModifyEnvironmentConfig',
       'BeforeStartDevServer',
       'ModifyBundlerChain',
       'ModifyBundlerConfig',
@@ -137,6 +142,7 @@ rspackOnlyTest(
 
     expect(names).toEqual([
       'ModifyRsbuildConfig',
+      'ModifyEnvironmentConfig',
       'BeforeStartProdServer',
       'AfterStartProdServer',
     ]);
