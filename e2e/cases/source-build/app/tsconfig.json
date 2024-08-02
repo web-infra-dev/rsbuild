@@ -4,6 +4,8 @@
     "declaration": false,
     "jsx": "react-jsx",
     "baseUrl": "./",
+    // make type checker faster by not including types
+    "types": [],
     "paths": {
       "@/*": ["./src/*"]
     }
