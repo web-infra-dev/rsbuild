@@ -78,7 +78,13 @@ async function loadUserPostcssrc(root: string): Promise<PostCSSOptions> {
   const cached = userPostcssrcCache.get(root);
 
   if (cached) {
-    return cached;
+    const config = await cached;
+    // Create a new config object,
+    // ensure isolation of config objects between different builds
+    return {
+      ...config,
+      plugins: config.plugins ? [...config.plugins] : undefined,
+    };
   }
 
   const { default: postcssrc } = await import('postcss-load-config');
