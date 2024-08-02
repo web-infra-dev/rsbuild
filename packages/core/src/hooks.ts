@@ -1,0 +1,209 @@
+import { isMultiCompiler } from './helpers';
+import type {
+  EnvironmentContext,
+  InternalContext,
+  MultiStats,
+  Rspack,
+  RspackConfig,
+  Stats,
+} from './types';
+
+const onBeforeBuild = ({
+  compiler,
+  beforeBuild,
+  beforeEnvironmentBuild,
+  isWatch,
+}: {
+  compiler: Rspack.Compiler | Rspack.MultiCompiler;
+  beforeBuild: () => Promise<any>;
+  beforeEnvironmentBuild: (buildIndex: number) => Promise<any>;
+  isWatch?: boolean;
+}): void => {
+  const name = 'rsbuild:beforeCompile';
+
+  if (isMultiCompiler(compiler)) {
+    const { compilers } = compiler;
+    console.log('compilers', compilers.length);
+
+    let doneCompilers = 0;
+
+    for (let index = 0; index < compilers.length; index++) {
+      const compiler = compilers[index];
+      let compilerDone = false;
+
+      (isWatch ? compiler.hooks.watchRun : compiler.hooks.run).tapPromise(
+        name,
+        async () => {
+          if (!compilerDone) {
+            compilerDone = true;
+            doneCompilers++;
+          }
+          // ensure only last compiler done will trigger beforeBuild hook
+          // avoid other compiler done triggers when executing async beforeEnvironmentBuild hook
+          const lastCompilerDone = doneCompilers === compilers.length;
+
+          await beforeEnvironmentBuild(index);
+
+          if (lastCompilerDone) {
+            await beforeBuild();
+          }
+        },
+      );
+
+      compiler.hooks.invalid.tap(name, () => {
+        if (compilerDone) {
+          compilerDone = false;
+          doneCompilers--;
+        }
+      });
+    }
+  } else {
+    (isWatch ? compiler.hooks.watchRun : compiler.hooks.run).tapPromise(
+      name,
+      async () => {
+        await beforeEnvironmentBuild(0);
+        await beforeBuild();
+      },
+    );
+  }
+};
+
+export const onCompileDone = ({
+  compiler,
+  onDone,
+  onEnvironmentDone,
+  MultiStatsCtor,
+}: {
+  compiler: Rspack.Compiler | Rspack.MultiCompiler;
+  onDone: (stats: Rspack.Stats | Rspack.MultiStats) => Promise<void>;
+  onEnvironmentDone: (buildIndex: number, stats: Rspack.Stats) => Promise<void>;
+  MultiStatsCtor: new (stats: Rspack.Stats[]) => Rspack.MultiStats;
+}): void => {
+  // The MultiCompiler of Rspack does not supports `done.tapPromise`,
+  // so we need to use the `done` hook of `MultiCompiler.compilers` to implement it.
+  if (isMultiCompiler(compiler)) {
+    const { compilers } = compiler;
+    const compilerStats: Rspack.Stats[] = [];
+    let doneCompilers = 0;
+
+    for (let index = 0; index < compilers.length; index++) {
+      const compiler = compilers[index];
+      const compilerIndex = index;
+      let compilerDone = false;
+
+      compiler.hooks.done.tapPromise('rsbuild:done', async (stats) => {
+        if (!compilerDone) {
+          compilerDone = true;
+          doneCompilers++;
+        }
+
+        compilerStats[compilerIndex] = stats;
+
+        const lastCompilerDone = doneCompilers === compilers.length;
+
+        await onEnvironmentDone(index, stats);
+
+        if (lastCompilerDone) {
+          await onDone(new MultiStatsCtor(compilerStats));
+        }
+      });
+
+      compiler.hooks.invalid.tap('rsbuild:done', () => {
+        if (compilerDone) {
+          compilerDone = false;
+          doneCompilers--;
+        }
+      });
+    }
+  } else {
+    compiler.hooks.done.tapPromise('rsbuild:done', async (stats) => {
+      await onEnvironmentDone(0, stats);
+      await onDone(stats);
+    });
+  }
+};
+
+export const registerBuildHook = ({
+  context,
+  isWatch,
+  compiler,
+  bundlerConfigs,
+  MultiStatsCtor,
+}: {
+  bundlerConfigs?: RspackConfig[];
+  context: InternalContext;
+  compiler: Rspack.Compiler | Rspack.MultiCompiler;
+  isWatch: boolean;
+  MultiStatsCtor: new (stats: Rspack.Stats[]) => Rspack.MultiStats;
+}): void => {
+  let isFirstCompile = true;
+
+  const environmentArr = Object.values(context.environments).reduce<
+    EnvironmentContext[]
+  >((prev, curr) => {
+    prev[curr.index] = curr;
+    return prev;
+  }, []);
+
+  const beforeBuild = async () =>
+    await context.hooks.onBeforeBuild.call({
+      bundlerConfigs,
+      environments: context.environments,
+      isWatch,
+      isFirstCompile,
+    });
+
+  const beforeEnvironmentBuild = async (buildIndex: number) =>
+    await context.hooks.onBeforeEnvironmentBuild.callInEnvironment({
+      environment: environmentArr[buildIndex].name,
+      args: [
+        {
+          bundlerConfig: bundlerConfigs?.[buildIndex] as Rspack.Configuration,
+          environment: environmentArr[buildIndex],
+          isWatch,
+          isFirstCompile,
+        },
+      ],
+    });
+
+  const onDone = async (stats: Stats | MultiStats) => {
+    const p = context.hooks.onAfterBuild.call({
+      isFirstCompile,
+      stats,
+      environments: context.environments,
+      isWatch,
+    });
+    isFirstCompile = false;
+    await p;
+  };
+
+  const onEnvironmentDone = async (buildIndex: number, stats: Stats) => {
+    const p = context.hooks.onAfterEnvironmentBuild.callInEnvironment({
+      environment: environmentArr[buildIndex].name,
+      args: [
+        {
+          isFirstCompile,
+          stats,
+          environment: environmentArr[buildIndex],
+          isWatch,
+        },
+      ],
+    });
+    isFirstCompile = false;
+    await p;
+  };
+
+  onBeforeBuild({
+    compiler,
+    beforeBuild,
+    beforeEnvironmentBuild,
+    isWatch,
+  });
+
+  onCompileDone({
+    compiler,
+    onDone,
+    onEnvironmentDone,
+    MultiStatsCtor,
+  });
+};

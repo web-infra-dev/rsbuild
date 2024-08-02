@@ -21,6 +21,7 @@
 
 - [onBeforeStartDevServer](#onbeforestartdevserver)：在启动开发服务器前调用。
 - [onAfterStartDevServer](#onafterstartdevserver)：在启动开发服务器后调用。
+- [onDevCompileEnvironmentDone](#ondevcompileenvironmentdone): 在每次单个 environment 的开发环境构建结束后调用。
 - [onDevCompileDone](#ondevcompiledone)：在每次开发环境构建结束后调用。
 - [onCloseDevServer](#onclosedevserver)：在关闭开发服务器时调用。
 
@@ -28,7 +29,9 @@
 
 仅在执行 `rsbuild build` 命令或 `rsbuild.build()` 方法时调用。
 
+- [onBeforeEnvironmentBuild](#onbeforeenvironmentbuild): 在执行单个 environment 的生产环境构建前调用。
 - [onBeforeBuild](#onbeforebuild)：在执行生产环境构建前调用。
+- [onAfterEnvironmentBuild](#onafterenvironmentbuild): 在执行单个 environment 的生产环境构建后调用，可以获取到单个 environment 的构建结果信息。
 - [onAfterBuild](#onafterbuild)：在执行生产环境构建后调用，可以获取到构建结果信息。
 
 ### Preview Hooks
@@ -53,6 +56,7 @@
 - [onAfterCreateCompiler](#onaftercreatecompiler)
 - [onAfterStartDevServer](#onafterstartdevserver)
 - [modifyHTMLTags](#modifyhtmltags)
+- [onDevCompileEnvironmentDone](#ondevcompileenvironmentdone)
 - [onDevCompileDone](#ondevcompiledone)
 - [onCloseDevServer](#onclosedevserver)
 - [onExit](#onexit)
@@ -60,6 +64,7 @@
 当 rebuild 时，以下 hooks 会再次触发：
 
 - [modifyHTMLTags](#modifyhtmltags)
+- [onDevCompileEnvironmentDone](#ondevcompileenvironmentdone)
 - [onDevCompileDone](#ondevcompiledone)
 
 ### Build Hooks
@@ -72,15 +77,19 @@
 - [modifyRspackConfig](#modifyrspackconfig)
 - [onBeforeCreateCompiler](#onbeforecreatecompiler)
 - [onAfterCreateCompiler](#onaftercreatecompiler)
+- [onBeforeEnvironmentBuild](#onbeforeenvironmentbuild)
 - [onBeforeBuild](#onbeforebuild)
 - [modifyHTMLTags](#modifyhtmltags)
+- [onAfterEnvironmentBuild](#onafterenvironmentbuild)
 - [onAfterBuild](#onafterbuild)
 - [onExit](#onexit)
 
 当 rebuild 时，以下 hooks 会再次触发：
 
+- [onBeforeEnvironmentBuild](#onbeforeenvironmentbuild)
 - [onBeforeBuild](#onbeforebuild)
 - [modifyHTMLTags](#modifyhtmltags)
+- [onAfterEnvironmentBuild](#onafterenvironmentbuild)
 - [onAfterBuild](#onafterbuild)
 
 ### Preview Hooks
@@ -123,6 +132,9 @@
 - [modifyBundlerChain](#modifybundlerchain)
 - [modifyRspackConfig](#modifyrspackconfig)
 - [modifyHTMLTags](#modifyhtmltags)
+- [onBeforeEnvironmentBuild](#onbeforeenvironmentbuild)
+- [onAfterEnvironmentBuild](#onafterenvironmentbuild)
+- [onDevCompileEnvironmentDone](#ondevcompileenvironmentdone)
 
 ## 回调函数顺序
 
@@ -522,6 +534,27 @@ const myPlugin = () => ({
 
 ## Build Hooks
 
+### onBeforeEnvironmentBuild
+
+import OnBeforeEnvironmentBuild from '@zh/shared/onBeforeEnvironmentBuild.mdx';
+
+<OnBeforeEnvironmentBuild />
+
+- **示例：**
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.onBeforeEnvironmentBuild(({ bundlerConfig, environment }) => {
+      console.log(
+        `the bundler config for the ${environment.name} is `,
+        bundlerConfig,
+      );
+    });
+  },
+});
+```
+
 ### onBeforeBuild
 
 import OnBeforeBuild from '@zh/shared/onBeforeBuild.mdx';
@@ -535,6 +568,24 @@ const myPlugin = () => ({
   setup: (api) => {
     api.onBeforeBuild(({ bundlerConfigs }) => {
       console.log('the bundler config is ', bundlerConfigs);
+    });
+  },
+});
+```
+
+### onAfterEnvironmentBuild
+
+import OnAfterEnvironmentBuild from '@zh/shared/onAfterEnvironmentBuild.mdx';
+
+<OnAfterEnvironmentBuild />
+
+- **示例：**
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.onAfterEnvironmentBuild(({ isFirstCompile, stats }) => {
+      console.log(stats?.toJson(), isFirstCompile);
     });
   },
 });
@@ -592,6 +643,28 @@ const myPlugin = () => ({
     api.onAfterStartDevServer(({ port, routes }) => {
       console.log('this port is: ', port);
       console.log('this routes is: ', routes);
+    });
+  },
+});
+```
+
+### onDevCompileEnvironmentDone
+
+import OnDevCompileEnvironmentDone from '@zh/shared/onDevCompileEnvironmentDone.mdx';
+
+<OnDevCompileEnvironmentDone />
+
+- **示例：**
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.onDevCompileEnvironmentDone(({ isFirstCompile }) => {
+      if (isFirstCompile) {
+        console.log('first compile!');
+      } else {
+        console.log('re-compile!');
+      }
     });
   },
 });

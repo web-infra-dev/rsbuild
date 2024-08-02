@@ -16,13 +16,8 @@ export {
 } from './config';
 export type { InternalContext } from './types';
 export { setHTMLPlugin, getHTMLPlugin } from './pluginHelper';
-export {
-  formatStats,
-  getStatsOptions,
-  onCompileDone,
-  onBeforeBuild,
-  prettyTime,
-} from './helpers';
+export { formatStats, getStatsOptions, prettyTime } from './helpers';
+export { registerBuildHook, onCompileDone } from './hooks';
 export { getChainUtils, getConfigUtils } from './provider/rspackConfig';
 export { chainToConfig, modifyBundlerChain } from './configChain';
 export { applySwcDecoratorConfig } from './plugins/swc';

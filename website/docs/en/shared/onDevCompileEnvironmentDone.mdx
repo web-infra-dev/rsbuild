@@ -1,0 +1,13 @@
+Called after each build of a single environment during development, you can use `isFirstCompile` to determine whether it is the first build.
+
+- **Type:**
+
+```ts
+function OnDevCompileEnvironmentDone(
+  callback: (params: {
+    isFirstCompile: boolean;
+    stats: Stats;
+    environment: EnvironmentContext;
+  }) => Promise<void> | void,
+): void;
+```

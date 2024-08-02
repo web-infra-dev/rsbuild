@@ -13,14 +13,17 @@ import type {
   ModifyWebpackConfigFn,
   OnAfterBuildFn,
   OnAfterCreateCompilerFn,
+  OnAfterEnvironmentBuildFn,
   OnAfterStartDevServerFn,
   OnAfterStartProdServerFn,
   OnBeforeBuildFn,
   OnBeforeCreateCompilerFn,
+  OnBeforeEnvironmentBuildFn,
   OnBeforeStartDevServerFn,
   OnBeforeStartProdServerFn,
   OnCloseDevServerFn,
   OnDevCompileDoneFn,
+  OnDevCompileEnvironmentDoneFn,
   OnExitFn,
 } from './types';
 
@@ -162,6 +165,9 @@ export function initHooks(): {
   modifyWebpackConfig: EnvironmentAsyncHook<ModifyWebpackConfigFn>;
   modifyRsbuildConfig: AsyncHook<ModifyRsbuildConfigFn>;
   modifyEnvironmentConfig: EnvironmentAsyncHook<ModifyEnvironmentConfigFn>;
+  onBeforeEnvironmentBuild: EnvironmentAsyncHook<OnBeforeEnvironmentBuildFn>;
+  onAfterEnvironmentBuild: EnvironmentAsyncHook<OnAfterEnvironmentBuildFn>;
+  onDevCompileEnvironmentDone: EnvironmentAsyncHook<OnDevCompileEnvironmentDoneFn>;
 } {
   return {
     onExit: createAsyncHook<OnExitFn>(),
@@ -183,6 +189,12 @@ export function initHooks(): {
     modifyRsbuildConfig: createAsyncHook<ModifyRsbuildConfigFn>(),
     modifyEnvironmentConfig:
       createEnvironmentAsyncHook<ModifyEnvironmentConfigFn>(),
+    onBeforeEnvironmentBuild:
+      createEnvironmentAsyncHook<OnBeforeEnvironmentBuildFn>(),
+    onAfterEnvironmentBuild:
+      createEnvironmentAsyncHook<OnAfterEnvironmentBuildFn>(),
+    onDevCompileEnvironmentDone:
+      createEnvironmentAsyncHook<OnDevCompileEnvironmentDoneFn>(),
   };
 }
 

@@ -7,14 +7,15 @@ import {
   isDev,
   isProd,
   isSatisfyRspackVersion,
-  onCompileDone,
   prettyTime,
   rspackMinVersion,
 } from '../helpers';
+import { onCompileDone } from '../hooks';
 import { logger } from '../logger';
 import type { DevMiddlewareAPI } from '../server/devMiddleware';
 import type {
   DevConfig,
+  EnvironmentContext,
   InternalContext,
   MultiStats,
   Rspack,
@@ -118,7 +119,34 @@ export async function createCompiler({
     isFirstCompile = false;
   };
 
-  onCompileDone(compiler, done, rspack.MultiStats);
+  const environmentArr = Object.values(context.environments).reduce<
+    EnvironmentContext[]
+  >((prev, curr) => {
+    prev[curr.index] = curr;
+    return prev;
+  }, []);
+
+  const onEnvironmentDone = async (index: number, stats: Stats) => {
+    if (isDev()) {
+      await context.hooks.onDevCompileEnvironmentDone.callInEnvironment({
+        environment: environmentArr[index].name,
+        args: [
+          {
+            isFirstCompile,
+            stats,
+            environment: environmentArr[index],
+          },
+        ],
+      });
+    }
+  };
+
+  onCompileDone({
+    compiler,
+    onDone: done,
+    onEnvironmentDone,
+    MultiStatsCtor: rspack.MultiStats,
+  });
 
   await context.hooks.onAfterCreateCompiler.call({
     compiler,

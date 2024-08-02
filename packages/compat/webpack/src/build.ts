@@ -4,7 +4,7 @@ import type { Configuration as WebpackConfig } from 'webpack';
 import WebpackMultiStats from 'webpack/lib/MultiStats.js';
 import { createCompiler } from './createCompiler';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
-import { onBeforeBuild, onCompileDone } from './shared';
+import { registerBuildHook } from './shared';
 
 export const build = async (
   initOptions: InitConfigsOptions,
@@ -34,29 +34,13 @@ export const build = async (
     bundlerConfigs = webpackConfigs;
   }
 
-  let isFirstCompile = true;
-  const beforeBuild = async () =>
-    await context.hooks.onBeforeBuild.call({
-      bundlerConfigs: bundlerConfigs as Rspack.Configuration[],
-      environments: context.environments,
-      isWatch: Boolean(watch),
-      isFirstCompile,
-    });
-
-  const onDone = async (stats: Rspack.Stats | Rspack.MultiStats) => {
-    const p = context.hooks.onAfterBuild.call({
-      isFirstCompile,
-      stats,
-      environments: context.environments,
-      isWatch: Boolean(watch),
-    });
-    isFirstCompile = false;
-    await p;
-  };
-
-  onBeforeBuild(compiler, beforeBuild, watch);
-
-  onCompileDone(compiler, onDone, WebpackMultiStats);
+  registerBuildHook({
+    context,
+    bundlerConfigs: bundlerConfigs as any,
+    compiler,
+    isWatch: Boolean(watch),
+    MultiStatsCtor: WebpackMultiStats,
+  });
 
   if (watch) {
     const watching = compiler.watch({}, (err) => {

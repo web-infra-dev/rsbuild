@@ -1,4 +1,4 @@
-import { type Rspack, logger } from '@rsbuild/core';
+import { type EnvironmentContext, type Rspack, logger } from '@rsbuild/core';
 import WebpackMultiStats from 'webpack/lib/MultiStats.js';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 import {
@@ -31,6 +31,8 @@ export async function createCompiler({
     | Rspack.Compiler
     | Rspack.MultiCompiler;
 
+  let isFirstCompile = true;
+
   const done = async (stats: unknown) => {
     const { message, level } = formatStats(
       stats as Rspack.Stats,
@@ -55,9 +57,34 @@ export async function createCompiler({
     isFirstCompile = false;
   };
 
-  let isFirstCompile = true;
+  const environmentArr = Object.values(context.environments).reduce<
+    EnvironmentContext[]
+  >((prev, curr) => {
+    prev[curr.index] = curr;
+    return prev;
+  }, []);
 
-  onCompileDone(compiler, done, WebpackMultiStats);
+  const onEnvironmentDone = async (index: number, stats: Rspack.Stats) => {
+    if (process.env.NODE_ENV === 'development') {
+      await context.hooks.onDevCompileEnvironmentDone.callInEnvironment({
+        environment: environmentArr[index].name,
+        args: [
+          {
+            isFirstCompile,
+            stats,
+            environment: environmentArr[index],
+          },
+        ],
+      });
+    }
+  };
+
+  onCompileDone({
+    compiler,
+    onDone: done,
+    onEnvironmentDone,
+    MultiStatsCtor: WebpackMultiStats,
+  });
 
   await context.hooks.onAfterCreateCompiler.call({
     compiler,

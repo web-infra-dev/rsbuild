@@ -319,5 +319,20 @@ export function initPluginAPI({
         environment,
         handler,
       }),
+    onAfterEnvironmentBuild: (handler) =>
+      hooks.onAfterEnvironmentBuild.tapEnvironment({
+        environment,
+        handler,
+      }),
+    onBeforeEnvironmentBuild: (handler) =>
+      hooks.onBeforeEnvironmentBuild.tapEnvironment({
+        environment,
+        handler,
+      }),
+    onDevCompileEnvironmentDone: (handler) =>
+      hooks.onDevCompileEnvironmentDone.tapEnvironment({
+        environment,
+        handler,
+      }),
   });
 }

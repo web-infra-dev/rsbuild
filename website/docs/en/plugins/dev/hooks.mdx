@@ -22,13 +22,16 @@ Called only when running the `rsbuild dev` command or the `rsbuild.startDevServe
 - [onBeforeStartDevServer](#onbeforestartdevserver): Called before starting the dev server.
 - [onAfterStartDevServer](#onafterstartdevserver): Called after starting the dev server.
 - [onCloseDevServer](#onclosedevserver): Called when the dev server is closed.
+- [onDevCompileEnvironmentDone](#ondevcompileenvironmentdone): Called after each build of a single environment during development.
 - [onDevCompileDone](#ondevcompiledone): Called after each build during development.
 
 ### Build Hooks
 
 Called only when running the `rsbuild build` command or the `rsbuild.build()` method.
 
+- [onBeforeEnvironmentBuild](#onbeforeenvironmentbuild): Called before running the production build of a single environment.
 - [onBeforeBuild](#onbeforebuild): Called before running the production build.
+- [onAfterEnvironmentBuild](#onafterenvironmentbuild): Called after running the production build of a single environment. You can get the build result information.
 - [onAfterBuild](#onafterbuild): Called after running the production build. You can get the build result information.
 
 ### Preview Hooks
@@ -53,6 +56,7 @@ When the `rsbuild dev` command or `rsbuild.startDevServer()` method is executed,
 - [onAfterCreateCompiler](#onaftercreatecompiler)
 - [onAfterStartDevServer](#onafterstartdevserver)
 - [modifyHTMLTags](#modifyhtmltags)
+- [onDevCompileEnvironmentDone](#ondevcompileenvironmentdone)
 - [onDevCompileDone](#ondevcompiledone)
 - [onCloseDevServer](#onclosedevserver)
 - [onExit](#onexit)
@@ -60,6 +64,7 @@ When the `rsbuild dev` command or `rsbuild.startDevServer()` method is executed,
 When rebuilding, the following hooks will be triggered again:
 
 - [modifyHTMLTags](#modifyhtmltags)
+- [onDevCompileEnvironmentDone](#ondevcompileenvironmentdone)
 - [onDevCompileDone](#ondevcompiledone)
 
 ### Build Hooks
@@ -72,16 +77,20 @@ When the `rsbuild build` command or `rsbuild.build()` method is executed, Rsbuil
 - [modifyRspackConfig](#modifyrspackconfig)
 - [onBeforeCreateCompiler](#onbeforecreatecompiler)
 - [onAfterCreateCompiler](#onaftercreatecompiler)
+- [onBeforeEnvironmentBuild](#onbeforeenvironmentbuild)
 - [onBeforeBuild](#onbeforebuild)
 - [modifyHTMLTags](#modifyhtmltags)
+- [onAfterEnvironmentBuild](#onafterenvironmentbuild)
 - [onAfterBuild](#onafterbuild)
 - [onExit](#onexit)
 
 When rebuilding, the following hooks will be triggered again:
 
+- [onBeforeEnvironmentBuild](#onbeforeenvironmentbuild)
 - [onBeforeBuild](#onbeforebuild)
 - [modifyHTMLTags](#modifyhtmltags)
 - [onAfterBuild](#onafterbuild)
+- [onAfterEnvironmentBuild](#onafterenvironmentbuild)
 
 ### Preview Hooks
 
@@ -123,6 +132,9 @@ Correspondingly, there are some plugin hooks that are related to the current env
 - [modifyBundlerChain](#modifybundlerchain)
 - [modifyRspackConfig](#modifyrspackconfig)
 - [modifyHTMLTags](#modifyhtmltags)
+- [onBeforeEnvironmentBuild](#onbeforeenvironmentbuild)
+- [onAfterEnvironmentBuild](#onafterenvironmentbuild)
+- [onDevCompileEnvironmentDone](#ondevcompileenvironmentdone)
 
 ## Callback Order
 
@@ -526,6 +538,27 @@ const myPlugin = () => ({
 
 ## Build Hooks
 
+### onBeforeEnvironmentBuild
+
+import OnBeforeEnvironmentBuild from '@en/shared/onBeforeEnvironmentBuild.mdx';
+
+<OnBeforeEnvironmentBuild />
+
+- **Example:**
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.onBeforeEnvironmentBuild(({ bundlerConfig, environment }) => {
+      console.log(
+        `the bundler config for the ${environment.name} is `,
+        bundlerConfig,
+      );
+    });
+  },
+});
+```
+
 ### onBeforeBuild
 
 import OnBeforeBuild from '@en/shared/onBeforeBuild.mdx';
@@ -539,6 +572,24 @@ const myPlugin = () => ({
   setup: (api) => {
     api.onBeforeBuild(({ bundlerConfigs }) => {
       console.log('the bundler config is ', bundlerConfigs);
+    });
+  },
+});
+```
+
+### onAfterEnvironmentBuild
+
+import OnAfterEnvironmentBuild from '@en/shared/onAfterEnvironmentBuild.mdx';
+
+<OnAfterEnvironmentBuild />
+
+- **Example:**
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.onAfterEnvironmentBuild(({ isFirstCompile, stats }) => {
+      console.log(stats?.toJson(), isFirstCompile);
     });
   },
 });
@@ -596,6 +647,28 @@ const myPlugin = () => ({
     api.onAfterStartDevServer(({ port, routes }) => {
       console.log('this port is: ', port);
       console.log('this routes is: ', routes);
+    });
+  },
+});
+```
+
+### onDevCompileEnvironmentDone
+
+import OnDevCompileEnvironmentDone from '@en/shared/onDevCompileEnvironmentDone.mdx';
+
+<OnDevCompileEnvironmentDone />
+
+- **Example:**
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.onDevCompileEnvironmentDone(({ isFirstCompile }) => {
+      if (isFirstCompile) {
+        console.log('first compile!');
+      } else {
+        console.log('re-compile!');
+      }
     });
   },
 });

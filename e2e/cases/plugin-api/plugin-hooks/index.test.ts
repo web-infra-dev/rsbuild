@@ -45,6 +45,12 @@ const createPlugin = () => {
       api.onAfterBuild(() => {
         names.push('AfterBuild');
       });
+      api.onBeforeEnvironmentBuild(() => {
+        names.push('BeforeEnvironmentBuild');
+      });
+      api.onAfterEnvironmentBuild(() => {
+        names.push('AfterEnvironmentBuild');
+      });
       api.onBeforeStartProdServer(() => {
         names.push('BeforeStartProdServer');
       });
@@ -56,6 +62,9 @@ const createPlugin = () => {
       });
       api.onDevCompileDone(() => {
         names.push('OnDevCompileDone');
+      });
+      api.onDevCompileEnvironmentDone(() => {
+        names.push('DevCompileEnvironmentDone');
       });
     },
   };
@@ -83,8 +92,10 @@ rspackOnlyTest(
       'ModifyBundlerConfig',
       'BeforeCreateCompiler',
       'AfterCreateCompiler',
+      'BeforeEnvironmentBuild',
       'BeforeBuild',
       'ModifyHTMLTags',
+      'AfterEnvironmentBuild',
       'AfterBuild',
     ]);
   },
@@ -119,6 +130,7 @@ rspackOnlyTest(
       'AfterCreateCompiler',
       'AfterStartDevServer',
       'ModifyHTMLTags',
+      'DevCompileEnvironmentDone',
       'OnDevCompileDone',
       'OnCloseDevServer',
     ]);
