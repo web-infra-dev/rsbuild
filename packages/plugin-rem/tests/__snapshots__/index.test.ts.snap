@@ -50,12 +50,6 @@ exports[`plugin-rem > should not run htmlPlugin with enableRuntime is false 1`] 
                 "Once": [Function],
                 "postcssPlugin": "postcss-pxtorem",
               },
-              {
-                "AtRule": [Function],
-                "Declaration": [Function],
-                "Once": [Function],
-                "postcssPlugin": "postcss-pxtorem",
-              },
             ],
           },
           "sourceMap": false,
@@ -110,18 +104,6 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
           "postcssOptions": {
             "config": false,
             "plugins": [
-              {
-                "AtRule": [Function],
-                "Declaration": [Function],
-                "Once": [Function],
-                "postcssPlugin": "postcss-pxtorem",
-              },
-              {
-                "AtRule": [Function],
-                "Declaration": [Function],
-                "Once": [Function],
-                "postcssPlugin": "postcss-pxtorem",
-              },
               {
                 "AtRule": [Function],
                 "Declaration": [Function],

@@ -74,11 +74,18 @@ const userPostcssrcCache = new Map<
   PostCSSOptions | Promise<PostCSSOptions>
 >();
 
+// Create a new config object,
+// ensure isolation of config objects between different builds
+const clonePostCSSConfig = (config: PostCSSOptions) => ({
+  ...config,
+  plugins: config.plugins ? [...config.plugins] : undefined,
+});
+
 async function loadUserPostcssrc(root: string): Promise<PostCSSOptions> {
   const cached = userPostcssrcCache.get(root);
 
   if (cached) {
-    return cached;
+    return clonePostCSSConfig(await cached);
   }
 
   const { default: postcssrc } = await import('postcss-load-config');
@@ -93,11 +100,10 @@ async function loadUserPostcssrc(root: string): Promise<PostCSSOptions> {
 
   userPostcssrcCache.set(root, promise);
 
-  promise.then((config: PostCSSOptions) => {
+  return promise.then((config: PostCSSOptions) => {
     userPostcssrcCache.set(root, config);
+    return clonePostCSSConfig(config);
   });
-
-  return promise;
 }
 
 const getPostcssLoaderOptions = async ({

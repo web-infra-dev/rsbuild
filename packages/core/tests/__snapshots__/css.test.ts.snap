@@ -139,3 +139,117 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
   ],
 }
 `;
+
+exports[`should ensure isolation of PostCSS config objects between different builds 1`] = `
+[
+  {
+    "resolve": {
+      "preferRelative": true,
+    },
+    "sideEffects": true,
+    "test": /\\\\\\.css\\$/,
+    "type": "javascript/auto",
+    "use": [
+      {
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+      },
+      {
+        "loader": "<ROOT>/packages/core/compiled/css-loader",
+        "options": {
+          "importLoaders": 2,
+          "modules": {
+            "auto": true,
+            "exportGlobals": false,
+            "exportLocalsConvention": "camelCase",
+            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+            "namedExport": false,
+          },
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "builtin:lightningcss-loader",
+        "options": {
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/core/compiled/postcss-loader",
+        "options": {
+          "postcssOptions": {
+            "config": false,
+            "plugins": [
+              {
+                "postcssPlugin": "foo",
+              },
+            ],
+          },
+          "sourceMap": false,
+        },
+      },
+    ],
+  },
+]
+`;
+
+exports[`should ensure isolation of PostCSS config objects between different builds 2`] = `
+[
+  {
+    "resolve": {
+      "preferRelative": true,
+    },
+    "sideEffects": true,
+    "test": /\\\\\\.css\\$/,
+    "type": "javascript/auto",
+    "use": [
+      {
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+      },
+      {
+        "loader": "<ROOT>/packages/core/compiled/css-loader",
+        "options": {
+          "importLoaders": 2,
+          "modules": {
+            "auto": true,
+            "exportGlobals": false,
+            "exportLocalsConvention": "camelCase",
+            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+            "namedExport": false,
+          },
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "builtin:lightningcss-loader",
+        "options": {
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/core/compiled/postcss-loader",
+        "options": {
+          "postcssOptions": {
+            "config": false,
+            "plugins": [
+              {
+                "postcssPlugin": "bar",
+              },
+            ],
+          },
+          "sourceMap": false,
+        },
+      },
+    ],
+  },
+]
+`;
