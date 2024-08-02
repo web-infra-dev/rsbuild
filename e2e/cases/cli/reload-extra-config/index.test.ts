@@ -1,118 +1,66 @@
 import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { awaitFileExists } from '@e2e/helper';
+import { awaitFileExists, getRandomPort } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should restart dev server and reload config when extra config file changed', async () => {
-  const distPath = 'dist';
-  const dist = path.join(__dirname, distPath);
+const tempConfigPath = './test-temp-config.ts';
 
-  const extraConfigPath = './server.ts';
-  const extraConfigFile = path.join(__dirname, extraConfigPath);
-
-  const configFile = path.join(__dirname, 'rsbuild.config.ts');
+test('should restart dev server when extra config file changed', async () => {
+  const dist = path.join(__dirname, 'dist');
+  const extraConfigFile = path.join(__dirname, tempConfigPath);
 
   fs.rmSync(extraConfigFile, { force: true });
-  fs.rmSync(configFile, { force: true });
   fs.rmSync(dist, { recursive: true, force: true });
+  fs.writeFileSync(extraConfigFile, 'export default { foo: 1 };');
 
-  // configs/server.ts
-  fs.writeFileSync(extraConfigFile, 'export default {};');
-
-  // rsbuild.config.ts
-  fs.writeFileSync(
-    configFile,
-    `
-    import { defineConfig } from '@rsbuild/core';
-    import server from '${extraConfigPath}';
-
-    export default defineConfig({
-      dev: {
-        writeToDisk: true,
-        watchFiles: {
-          type: 'reload-server',
-          paths: ['${extraConfigPath}'],
-        }
-      },
-      output: {
-        distPath: {
-          root: '${distPath}',
-        },
-      },
-      server,
-    });`,
-  );
-
-  const process = exec('npx rsbuild dev', {
+  const childProcess = exec('npx rsbuild dev', {
     cwd: __dirname,
+    env: {
+      ...process.env,
+      PORT: String(await getRandomPort()),
+      WATCH_FILES_TYPE: 'reload-server',
+    },
   });
 
   await awaitFileExists(dist);
 
   fs.rmSync(dist, { recursive: true });
-  // configs/server.ts changed
-  fs.writeFileSync(extraConfigFile, 'export default {};');
+  // temp config changed
+  fs.writeFileSync(extraConfigFile, 'export default { foo: 2 };');
 
+  // rebuild and generate dist files
   await awaitFileExists(dist);
+  expect(fs.existsSync(path.join(dist, 'temp.txt')));
 
-  process.kill();
+  childProcess.kill();
 });
 
-test('should not restart dev server when extra config file changed but `dev.watchFiles.type` is not set to `reload-server`', async () => {
-  const distPath = 'dist';
-  const dist = path.join(__dirname, distPath);
-
-  const extraConfigPath = './server.ts';
-  const extraConfigFile = path.join(__dirname, extraConfigPath);
-
-  const configFile = path.join(__dirname, 'rsbuild.config.ts');
+test('should not restart dev server if `watchFiles.type` is `reload-page`', async () => {
+  const dist = path.join(__dirname, 'dist');
+  const extraConfigFile = path.join(__dirname, tempConfigPath);
 
   fs.rmSync(extraConfigFile, { force: true });
-  fs.rmSync(configFile, { force: true });
   fs.rmSync(dist, { recursive: true, force: true });
+  fs.writeFileSync(extraConfigFile, 'export default { foo: 1 };');
 
-  // configs/server.ts
-  fs.writeFileSync(extraConfigFile, 'export default {};');
-
-  // rsbuild.config.ts
-  fs.writeFileSync(
-    configFile,
-    `
-    import { defineConfig } from '@rsbuild/core';
-    import server from '${extraConfigPath}';
-
-    export default defineConfig({
-      dev: {
-        writeToDisk: true,
-        watchFiles: {
-          // should not restart dev server
-          type: 'foo',
-          paths: ['${extraConfigPath}'],
-        }
-      },
-      output: {
-        distPath: {
-          root: '${distPath}',
-        },
-      },
-      server,
-    });`,
-  );
-
-  const process = exec('npx rsbuild dev', {
+  const childProcess = exec('npx rsbuild dev', {
     cwd: __dirname,
+    env: {
+      ...process.env,
+      PORT: String(await getRandomPort()),
+      WATCH_FILES_TYPE: 'reload-page',
+    },
   });
 
   await awaitFileExists(dist);
 
   fs.rmSync(dist, { recursive: true });
-  // configs/server.ts changed
-  fs.writeFileSync(extraConfigFile, 'export default {};');
+  // temp config changed
+  fs.writeFileSync(extraConfigFile, 'export default { foo: 2 };');
 
-  await expect(awaitFileExists(dist)).rejects.toThrow(
-    `awaitFileExists failed: ${dist}`,
-  );
+  await new Promise((resolve) => setTimeout(resolve, 300));
+  expect(fs.existsSync(path.join(dist, 'temp.txt'))).toBeFalsy();
 
-  process.kill();
+  childProcess.kill();
 });
