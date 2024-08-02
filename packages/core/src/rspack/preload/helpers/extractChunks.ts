@@ -29,13 +29,9 @@ function isAsync(chunk: Chunk | ChunkGroup): boolean {
     return !chunk.canBeInitial();
   }
   if ('isInitial' in chunk) {
-    // compat webpack
-    // @ts-expect-error
     return !chunk.isInitial();
   }
-  // compat rspack
-  // @ts-expect-error
-  return !chunk.initial;
+  return false;
 }
 
 export function extractChunks({ compilation, includeType }: ExtractChunks):
