@@ -241,3 +241,26 @@ export default {
   },
 };
 ```
+
+### UA Polyfill
+
+Cloudflare provides a [polyfill service](https://cdnjs.cloudflare.com/polyfill/) that can automatically generate polyfill bundle based on the user's browser User-Agent.
+
+You can use the [html.tags](/config/html/tags) config of Rsbuild to inject scripts. For example, injecting a `<script>` tag at the beginning of the `<head>` tag:
+
+```ts
+export default {
+  html: {
+    tags: [
+      {
+        tag: 'script',
+        attrs: {
+          defer: true,
+          src: 'https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=default',
+        },
+        append: false,
+      },
+    ],
+  },
+};
+```

@@ -241,3 +241,26 @@ export default {
   },
 };
 ```
+
+### UA Polyfill
+
+Cloudflare 提供了一个 [polyfill 服务](https://cdnjs.cloudflare.com/polyfill/)，可以根据用户浏览器的 User-Agent 自动生成 polyfill 文件。
+
+你可以通过 Rsbuild 的 [html.tags](/config/html/tags) 配置来注入脚本，例如在 `<head>` 标签的开头插入 `<script>` 标签：
+
+```ts
+export default {
+  html: {
+    tags: [
+      {
+        tag: 'script',
+        attrs: {
+          defer: true,
+          src: 'https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=default',
+        },
+        append: false,
+      },
+    ],
+  },
+};
+```
