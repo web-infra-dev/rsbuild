@@ -122,12 +122,6 @@ exports[`plugin-rem > should run rem plugin with custom config 1`] = `
                 "Once": [Function],
                 "postcssPlugin": "postcss-pxtorem",
               },
-              {
-                "AtRule": [Function],
-                "Declaration": [Function],
-                "Once": [Function],
-                "postcssPlugin": "postcss-pxtorem",
-              },
             ],
           },
           "sourceMap": false,
