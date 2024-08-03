@@ -13,7 +13,7 @@ The options for `builtin:swc-loader` are consistent with the JS version of swc-l
 
 ### Register SWC Plugin
 
-`tools.swc` can be used to register SWC's Wasm plugins, for example, registering `@swc/plugin-styled-jsx`:
+`tools.swc` can be used to register SWC's Wasm plugins, for example, registering [@swc/plugin-styled-components](https://www.npmjs.com/package/@swc/plugin-styled-components):
 
 ```js
 export default {
@@ -21,7 +21,7 @@ export default {
     swc: {
       jsc: {
         experimental: {
-          plugins: [['@swc/plugin-styled-jsx', {}]],
+          plugins: [['@swc/plugin-styled-components', {}]],
         },
       },
     },
@@ -29,11 +29,22 @@ export default {
 };
 ```
 
-Please note that SWC's wasm plugins are currently not backward compatible, and there is a certain binding relationship between the SWC plugin and the version of `@swc/core` that Rspack depends on. Therefore, you must select the SWC plugin that matches the current version of `@swc/core` for SWC to work.
-
-For more information, refer to [SWC - Selecting the version](https://swc.rs/docs/plugin/selecting-swc-core).
-
 > You can check out the [awesome-swc](https://github.com/swc-contrib/awesome-swc) repository to see the SWC plugins available in the community.
+
+### SWC Plugin Version
+
+Please note that the SWC plugin is still an experimental feature, and the SWC Wasm plugin is currently not backward compatible. The version of the SWC plugin is closely tied to the version of `swc_core` that Rspack depends on.
+
+This means that you must to choose an SWC plugin that matches the current version of `swc_core` to ensure that it works properly. If the version of the SWC plugin you are using does not match the version of `swc_core` that Rspack depends on, Rspack will throw the following error during the build process:
+
+```text
+1: failed to run Wasm plugin transform. Please ensure the version of `swc_core`
+   used by the plugin is compatible with the host runtime.
+```
+
+If you encounter the above issue, a common solution is to upgrade both the Rsbuild and the SWC plugin to the latest versions. If this does not solve the problem, you can refer to [SWC - Selecting the version](https://swc.rs/docs/plugin/selecting-swc-core) to understand the version information of `swc_core`.
+
+You can check the version information of `swc_core` in the Cargo.toml file within the Rust code repository. For example, in the Rspack repository, you can open [Cargo.toml](https://github.com/web-infra-dev/rspack/blob/main/Cargo.toml) and search for the `swc_core` keyword to view the version.
 
 ### Enable Emotion Support
 

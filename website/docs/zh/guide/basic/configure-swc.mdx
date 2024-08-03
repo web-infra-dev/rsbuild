@@ -13,7 +13,7 @@ Rsbuild 默认启用 SWC 的以下功能：
 
 ### 注册 SWC 插件
 
-`tools.swc` 可以用于注册 SWC 的 Wasm 插件，比如注册 `@swc/plugin-styled-jsx`：
+`tools.swc` 可以用于注册 SWC 的 Wasm 插件，比如注册 [@swc/plugin-styled-components](https://www.npmjs.com/package/@swc/plugin-styled-components)：
 
 ```js
 export default {
@@ -21,7 +21,7 @@ export default {
     swc: {
       jsc: {
         experimental: {
-          plugins: [['@swc/plugin-styled-jsx', {}]],
+          plugins: [['@swc/plugin-styled-components', {}]],
         },
       },
     },
@@ -29,11 +29,22 @@ export default {
 };
 ```
 
-注意，目前 SWC 的 Wasm 插件不向后兼容，SWC 插件和 Rspack 依赖的 `@swc/core` 的版本存在一定的绑定关系。因此，你需要选择和当前 `@swc/core` 版本匹配的 SWC 插件，才能使 SWC 正常执行。
-
-更多信息可参考 [SWC - Selecting the version](https://swc.rs/docs/plugin/selecting-swc-core)。
-
 > 你可以通过 [awesome-swc](https://github.com/swc-contrib/awesome-swc) 仓库查看社区中可用的 SWC 插件。
+
+### SWC 插件版本
+
+请注意，SWC 插件仍然是一个实验性的功能，目前 SWC 的 Wasm 插件是不向后兼容的，SWC 插件的版本与 Rspack 依赖的 `swc_core` 的版本存在强耦合关系。
+
+这意味着，你需要选择和当前 `swc_core` 版本匹配的 SWC 插件，才能使它正常执行。如果你使用的 SWC 插件版本与 Rspack 依赖的 `swc_core` 版本不匹配，Rspack 在执行构建时会抛出如下错误：
+
+```text
+1: failed to run Wasm plugin transform. Please ensure the version of `swc_core`
+   used by the plugin is compatible with the host runtime.
+```
+
+如果你遇到了以上问题，通常可行的解决方法是将 Rsbuild 和 SWC 插件都升级到最新版本。如果无法解决，可以参考 [SWC - Selecting the version](https://swc.rs/docs/plugin/selecting-swc-core) 来了解 `swc_core` 的版本信息。
+
+你可以通过 Rust 代码仓库中的 Cargo.toml文件来查看 `swc_core` 的版本信息。以 Rspack 仓库为例，你可以打开 [Cargo.toml](https://github.com/web-infra-dev/rspack/blob/main/Cargo.toml)，并搜索 `swc_core` 关键字来查看版本。
 
 ### 启用 Emotion 支持
 
