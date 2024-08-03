@@ -22,9 +22,7 @@ const defaultOptions = {
 
 You can set the options of [builtin:swc-loader](https://rspack.dev/guide/features/builtin-swc-loader) through `tools.swc`.
 
-:::tip
-Rsbuild uses `builtin:swc-loader` by default to transform JavaScript code. It is the Rust version of [swc-loader](https://github.com/swc-project/pkgs/tree/main/packages/swc-loader), and its options align with the JS version of swc-loader.
-:::
+> Refer to [Configure SWC](/guide/basic/configure-swc) for more details.
 
 ## Object Type
 
@@ -61,67 +59,3 @@ export default {
 :::tip
 The object returned by the `tools.swc` function will be used directly as the final `builtin:swc-loader` option, and will not be merged with the built-in `builtin:swc-loader` option anymore.
 :::
-
-## Example
-
-### Register SWC Plugin
-
-`tools.swc` can be used to register SWC's Wasm plugins, for example, registering `@swc/plugin-styled-jsx`:
-
-```js
-export default {
-  tools: {
-    swc: {
-      jsc: {
-        experimental: {
-          plugins: [['@swc/plugin-styled-jsx', {}]],
-        },
-      },
-    },
-  },
-};
-```
-
-Please note that SWC's wasm plugins are currently not backward compatible, and there is a certain binding relationship between the SWC plugin and the version of `@swc/core` that Rspack depends on. Therefore, you must select the SWC plugin that matches the current version of `@swc/core` for SWC to work.
-
-For more information, refer to [SWC - Selecting the version](https://swc.rs/docs/plugin/selecting-swc-core).
-
-### Enable Emotion Support
-
-Example of enabling the Emotion support using the `builtin:swc-loader`:
-
-```js
-export default {
-  tools: {
-    swc: {
-      jsc: {
-        experimental: {
-          plugins: [['@swc/plugin-emotion', {}]],
-        },
-      },
-    },
-  },
-};
-```
-
-For more options, please refer to [@swc/plugin-emotion](https://www.npmjs.com/package/@swc/plugin-emotion).
-
-### Enable Relay Support
-
-Example of enabling the Relay support using the `builtin:swc-loader`:
-
-```js
-export default {
-  tools: {
-    swc: {
-      jsc: {
-        experimental: {
-          plugins: [['@swc/plugin-relay', {}]],
-        },
-      },
-    },
-  },
-};
-```
-
-For more options, please refer to [@swc/plugin-relay](https://www.npmjs.com/package/@swc/plugin-relay).

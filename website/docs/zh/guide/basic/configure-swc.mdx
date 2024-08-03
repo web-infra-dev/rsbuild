@@ -1,0 +1,73 @@
+# 配置 SWC
+
+[SWC](https://github.com/swc-project/swc)（Speedy Web Compiler）是基于 Rust 语言编写的高性能 JavaScript 和 TypeScript 转译和压缩工具。SWC 提供与 Babel 和 Terser 相似的能力，在单线程上它比 Babel 快 20 倍，在四核上它比 Babel 快 70 倍。
+
+Rsbuild 默认使用 Rspack 的 [builtin:swc-loader](https://rspack.dev/guide/features/builtin-swc-loader) 来转换 JavaScript 和 TypeScript 代码，它是 [swc-loader](https://github.com/swc-project/pkgs/tree/main/packages/swc-loader) 的 Rust 版本，选项与 JS 版本的 swc-loader 保持对齐。
+
+## 配置 swc-loader
+
+Rsbuild 提供了 [tools.swc](/config/tools/swc) 选项来配置 `builtin:swc-loader`，下面是一些示例：
+
+### 注册 SWC 插件
+
+`tools.swc` 可以用于注册 SWC 的 Wasm 插件，比如注册 `@swc/plugin-styled-jsx`：
+
+```js
+export default {
+  tools: {
+    swc: {
+      jsc: {
+        experimental: {
+          plugins: [['@swc/plugin-styled-jsx', {}]],
+        },
+      },
+    },
+  },
+};
+```
+
+注意，目前 SWC 的 Wasm 插件不向后兼容，SWC 插件和 Rspack 依赖的 `@swc/core` 的版本存在一定的绑定关系。因此，你需要选择和当前 `@swc/core` 版本匹配的 SWC 插件，才能使 SWC 正常执行。
+
+更多信息可参考 [SWC - Selecting the version](https://swc.rs/docs/plugin/selecting-swc-core)。
+
+> 你可以通过 [awesome-swc](https://github.com/swc-contrib/awesome-swc) 仓库查看社区中可用的 SWC 插件。
+
+### 启用 Emotion 支持
+
+启用 `builtin:swc-loader` 对 Emotion 支持的示例：
+
+```js
+export default {
+  tools: {
+    swc: {
+      jsc: {
+        experimental: {
+          plugins: [['@swc/plugin-emotion', {}]],
+        },
+      },
+    },
+  },
+};
+```
+
+更多选项可参考 [@swc/plugin-emotion](https://www.npmjs.com/package/@swc/plugin-emotion)。
+
+### 启用 Relay 支持
+
+启用 `builtin:swc-loader` 对 Relay 支持的示例：
+
+```js
+export default {
+  tools: {
+    swc: {
+      jsc: {
+        experimental: {
+          plugins: [['@swc/plugin-relay', {}]],
+        },
+      },
+    },
+  },
+};
+```
+
+更多选项可参考 [@swc/plugin-relay](https://www.npmjs.com/package/@swc/plugin-relay)。

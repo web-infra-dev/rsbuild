@@ -8,6 +8,7 @@
   "wasm-assets",
   "configure-rspack",
   "configure-rsbuild",
+  "configure-swc",
   "html-template",
   "css-modules",
   "typescript",
