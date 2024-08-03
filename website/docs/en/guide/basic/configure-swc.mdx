@@ -31,7 +31,7 @@ export default {
 
 > You can check out the [awesome-swc](https://github.com/swc-contrib/awesome-swc) repository to see the SWC plugins available in the community.
 
-#### SWC Plugin Version
+### SWC Plugin Version
 
 Please note that the SWC plugin is still an experimental feature, and the SWC Wasm plugin is currently not backward compatible. The version of the SWC plugin is closely tied to the version of `swc_core` that Rspack depends on.
 
@@ -43,6 +43,8 @@ This means that you must to choose an SWC plugin that matches the current versio
 ```
 
 If you encounter the above issue, a common solution is to upgrade both the Rsbuild and the SWC plugin to the latest versions. If this does not solve the problem, you can refer to [SWC - Selecting the version](https://swc.rs/docs/plugin/selecting-swc-core) to understand the version information of `swc_core`.
+
+You can check the version information of `swc_core` in the Cargo.toml file within the Rust code repository. For example, in the Rspack repository, you can open [Cargo.toml](https://github.com/web-infra-dev/rspack/blob/main/Cargo.toml) and search for the `swc_core` keyword to view the version.
 
 ### Enable Emotion Support
 
