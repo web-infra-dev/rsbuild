@@ -2,11 +2,14 @@
 
 [SWC](https://github.com/swc-project/swc) (Speedy Web Compiler) is a transformer and minimizer for JavaScript and TypeScript based on Rust. SWC provides similar functionality to Babel and Terser, and it is 20x faster than Babel on a single thread and 70x faster on four cores.
 
-Rsbuild uses Rspack's [builtin:swc-loader](https://rspack.dev/guide/features/builtin-swc-loader) by default to transform JavaScript and TypeScript code. It is the Rust version of [swc-loader](https://github.com/swc-project/pkgs/tree/main/packages/swc-loader), and its options align with the JS version of swc-loader.
+Rsbuild enables the following SWC features by default:
 
-## Configure swc-loader
+- Transform JavaScript and TypeScript code using Rspack's [builtin:swc-loader](https://rspack.dev/guide/features/builtin-swc-loader), which is the Rust version of [swc-loader](https://github.com/swc-project/pkgs/tree/main/packages/swc-loader).
+- Minify JavaScript code using Rspack's [SwcJsMinimizerRspackPlugin](https://rspack.dev/plugins/rspack/swc-js-minimizer-rspack-plugin).
 
-Rsbuild provides the [tools.swc](/config/tools/swc) option to configure `builtin:swc-loader`. Here are some examples:
+## Loader Options
+
+The options for `builtin:swc-loader` are consistent with the JS version of swc-loader. Rsbuild provides the [tools.swc](/config/tools/swc) option to configure `builtin:swc-loader`. Here are some examples:
 
 ### Register SWC Plugin
 
@@ -71,3 +74,45 @@ export default {
 ```
 
 For more options, please refer to [@swc/plugin-relay](https://www.npmjs.com/package/@swc/plugin-relay).
+
+## Minimizer Options
+
+Rsbuild provides the [output.minify.js](/config/output/minify) option to configure the SwcJsMinimizerRspackPlugin. Here are some examples:
+
+### Exclude Files
+
+You can exclude certain files from being minified using the `exclude` option:
+
+```ts
+export default {
+  output: {
+    minify: {
+      jsOptions: {
+        exclude: /foo\/bar/,
+      },
+    },
+  },
+};
+```
+
+## Switching Minimizer
+
+If the `SwcJsMinimizerRspackPlugin` does not meet your needs, you can switch to other minimizers through the [tools.bundlerChain](/config/tools/bundler-chain) option.
+
+For example, to switch to [Terser](https://github.com/webpack-contrib/terser-webpack-plugin) for minifying JavaScript, which is more stable but performs worse compared to SWC:
+
+```ts
+export default {
+  tools: {
+    bundlerChain(chain, { CHAIN_ID, isProd }) {
+      if (isProd) {
+        chain.optimization.minimizer(CHAIN_ID.MINIMIZER.JS).use(TerserPlugin, [
+          {
+            minify: TerserPlugin.terserMinify,
+          },
+        ]);
+      }
+    },
+  },
+};
+```

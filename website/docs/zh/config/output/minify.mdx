@@ -57,7 +57,9 @@ export default {
 
 ### JavaScript 压缩选项
 
-`output.minify.jsOptions` 用于配置 SWC 的压缩选项，具体配置项请参考 [SWC 文档](https://swc.rs/docs/configuration/minification#configuration)。如下配置将覆盖默认配置，关闭代码混淆和移除 `console` 语句。
+`output.minify.jsOptions` 用于配置 SWC 的压缩选项，具体配置项请参考 [SwcJsMinimizerRspackPlugin 文档](https://rspack.dev/plugins/rspack/swc-js-minimizer-rspack-plugin)。
+
+例如，关闭变量和函数名的重命名：
 
 ```js
 export default {
@@ -65,14 +67,13 @@ export default {
     minify: {
       jsOptions: {
         mangle: false,
-        compress: {
-          drop_console: false,
-        },
       },
     },
   },
 };
 ```
+
+> 参考 [配置 SWC](/guide/basic/configure-swc) 了解更多。
 
 ### CSS 压缩选项
 

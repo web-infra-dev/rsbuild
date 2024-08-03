@@ -2,11 +2,14 @@
 
 [SWC](https://github.com/swc-project/swc)（Speedy Web Compiler）是基于 Rust 语言编写的高性能 JavaScript 和 TypeScript 转译和压缩工具。SWC 提供与 Babel 和 Terser 相似的能力，在单线程上它比 Babel 快 20 倍，在四核上它比 Babel 快 70 倍。
 
-Rsbuild 默认使用 Rspack 的 [builtin:swc-loader](https://rspack.dev/guide/features/builtin-swc-loader) 来转换 JavaScript 和 TypeScript 代码，它是 [swc-loader](https://github.com/swc-project/pkgs/tree/main/packages/swc-loader) 的 Rust 版本，选项与 JS 版本的 swc-loader 保持对齐。
+Rsbuild 默认启用 SWC 的以下功能：
 
-## 配置 swc-loader
+- 通过 Rspack 的 [builtin:swc-loader](https://rspack.dev/guide/features/builtin-swc-loader) 来转换 JavaScript 和 TypeScript 代码，它是 [swc-loader](https://github.com/swc-project/pkgs/tree/main/packages/swc-loader) 的 Rust 版本。
+- 通过 Rspack 的 [SwcJsMinimizerRspackPlugin](https://rspack.dev/plugins/rspack/swc-js-minimizer-rspack-plugin) 来压缩 JavaScript 代码。
 
-Rsbuild 提供了 [tools.swc](/config/tools/swc) 选项来配置 `builtin:swc-loader`，下面是一些示例：
+## Loader 选项
+
+`builtin:swc-loader` 的选项与 JS 版本的 swc-loader 一致。Rsbuild 提供了 [tools.swc](/config/tools/swc) 选项来配置 `builtin:swc-loader`，下面是一些示例：
 
 ### 注册 SWC 插件
 
@@ -71,3 +74,45 @@ export default {
 ```
 
 更多选项可参考 [@swc/plugin-relay](https://www.npmjs.com/package/@swc/plugin-relay)。
+
+## Minimizer 选项
+
+Rsbuild 提供了 [output.minify.js](/config/output/minify) 选项来配置 SwcJsMinimizerRspackPlugin，下面是一些示例：
+
+### 排除文件
+
+通过 `exclude` 选项可以排除某些文件，不进行压缩：
+
+```ts
+export default {
+  output: {
+    minify: {
+      jsOptions: {
+        exclude: /foo\/bar/,
+      },
+    },
+  },
+};
+```
+
+## 切换压缩工具
+
+如果 SwcJsMinimizerRspackPlugin 无法满足你的需求，你可以通过 [tools.bundlerChain](/config/tools/bundler-chain) 选项来切换到其他压缩工具。
+
+例如，切换到 [Terser](https://github.com/webpack-contrib/terser-webpack-plugin) 来压缩 JavaScript 代码，它的性能不如 SWC，但功能更稳定：
+
+```ts
+export default {
+  tools: {
+    bundlerChain(chain, { CHAIN_ID, isProd }) {
+      if (isProd) {
+        chain.optimization.minimizer(CHAIN_ID.MINIMIZER.JS).use(TerserPlugin, [
+          {
+            minify: TerserPlugin.terserMinify,
+          },
+        ]);
+      }
+    },
+  },
+};
+```
