@@ -57,7 +57,7 @@ export default {
 
 ### JavaScript minify options
 
-`output.minify.jsOptions` is used to configure SWC's minification options. For specific configuration items, please refer to [SWC Documentation](https://swc.rs/docs/configuration/minification#configuration). The following configuration will override the default settings, turning off code obfuscation and the removal of `console` statements.
+`output.minify.jsOptions` is used to configure SWC's minification options. For detailed configurations, please refer to [SwcJsMinimizerRspackPlugin](https://rspack.dev/plugins/rspack/swc-js-minimizer-rspack-plugin). The following configuration will override the default settings, disable the mangle feature.
 
 ```js
 export default {
@@ -65,14 +65,13 @@ export default {
     minify: {
       jsOptions: {
         mangle: false,
-        compress: {
-          drop_console: false,
-        },
       },
     },
   },
 };
 ```
+
+> Refer to [Configure SWC](/guide/basic/configure-swc) for more details.
 
 ### CSS minify options
 
