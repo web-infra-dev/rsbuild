@@ -5,6 +5,7 @@
 ```ts
 type WatchFiles = {
   paths: string | string[];
+  type?: 'reload-page' | 'reload-server';
   // watch options for chokidar
   options?: WatchOptions;
 };
@@ -12,52 +13,99 @@ type WatchFiles = {
 
 - **Default:** `undefined`
 
-Watch files and directories for changes. When a file changes, the page will be reloaded.
+Watch specified files and directories for changes. When a file change is detected, it can trigger a page reload or restart the dev server.
 
-If both `dev.hmr` and `dev.liveReload` are set to false, `watchFiles` will be ignored.
+## paths
 
-### Prerequisite knowledge
+- **Type:** `string | string[]`
+- **Default:** `undefined`
 
-By default, Rsbuild (Rspack) watches all build dependencies and triggers a rebuild when any of these files change. If you want the page to automatically reload when some **non-build dependency files** change, you can use this configuration.
+Paths of the files or directories to be watched, supports glob syntax. It can be a single path or an array of multiple paths.
 
-It's important to note that changes in files listed under `watchFiles` do not trigger a rebuild or reloading of the configuration file.
-
-Furthermore, if you want changes in a build dependency file to not trigger a rebuild, you can use the [watchOptions.ignored](https://www.rspack.dev/config/watch#watchoptionsignored) setting in Rspack.
-
-For instance, if you want to prevent a rebuild when files in the `node_modules` directory change, you can configure it as follows:
-
-```js
-export default {
-  tools: {
-    rspack: {
-      watchOptions: {
-        ignored: /node_modules/,
-      },
-    },
-  },
-};
-```
-
-### Example
-
-You can configure a list of globs/directories/files to watch for file changes.
+- Watching a single file:
 
 ```js
 export default {
   dev: {
     watchFiles: {
-      // watch a single file
       paths: 'public/demo.txt',
-      // use a glob pattern
+    },
+  },
+};
+```
+
+- Using glob to match multiple files:
+
+```js
+export default {
+  dev: {
+    watchFiles: {
       paths: 'src/**/*.txt',
-      // watch multiple file paths
+    },
+  },
+};
+```
+
+- Watching multiple file paths:
+
+```js
+export default {
+  dev: {
+    watchFiles: {
       paths: ['src/**/*.txt', 'public/**/*'],
     },
   },
 };
 ```
 
-You can also specify [chokidar](https://github.com/paulmillr/chokidar#api) watcher options by passing an object with `paths` and `options` properties.
+## type
+
+- **Type:** `'reload-page' | 'reload-server'`
+- **Default:** `'reload-page'`
+
+Specifies whether to trigger a page reload or restart the dev server when a file changes.
+
+### reload-page
+
+`reload-page` means that the browser page will automatically reload when a file changes. This can be used to watch changes to static assets, such as files in the `public` directory.
+
+```js
+export default {
+  dev: {
+    watchFiles: {
+      paths: 'public/**/*',
+    },
+  },
+};
+```
+
+> If both [dev.hmr](/config/dev/hmr) and [dev.liveReload](/config/dev/live-reload) are set to `false`, the page will not automatically reload.
+
+### reload-server
+
+`reload-server` means that the dev server will automatically restart when a file changes. This can be used to watch changes to configuration files, such as modules imported by the `rsbuild.config.ts` file.
+
+For example, if you maintain some common configuration files in the `config` directory, such as `common.ts`, you want the dev server to automatically restart when these files change. Example configuration:
+
+```ts title="rsbuild.config.ts"
+import { commonConfig } from './config/common';
+
+export default {
+  ...commonConfig,
+  dev: {
+    watchFiles: {
+      paths: ['./config/*.ts'],
+    },
+  },
+};
+```
+
+## options
+
+- **Type:** `WatchOptions`
+- **Default:** `undefined`
+
+`watchFiles` is implemented based on [chokidar](https://github.com/paulmillr/chokidar#api), and you can pass chokidar options through `options`.
 
 ```js
 export default {
@@ -66,6 +114,26 @@ export default {
       paths: 'src/**/*.txt',
       options: {
         usePolling: false,
+      },
+    },
+  },
+};
+```
+
+## Notes
+
+`watchFiles` is not applicable for watching build dependency files. When an Rsbuild build starts, the underlying Rspack will automatically watches all build dependencies. Any changes to these files will trigger a new build.
+
+If you want to prevent some files from triggering a rebuild when they change, you can use Rspack's [watchOptions.ignored](https://rspack.dev/config/watch#watchoptionsignored) configuration item.
+
+For example, to prevent changes in the `node_modules` directory from triggering a rebuild, you can add the following configuration:
+
+```js
+export default {
+  tools: {
+    rspack: {
+      watchOptions: {
+        ignored: /node_modules/,
       },
     },
   },
