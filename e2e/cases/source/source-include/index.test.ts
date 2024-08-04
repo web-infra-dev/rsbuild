@@ -16,7 +16,7 @@ test('should not compile file which outside of project by default', async () => 
         },
       },
     }),
-  ).rejects.toThrowError('[Syntax Checker]');
+  ).rejects.toThrowError('[@rsbuild/plugin-check-syntax]');
 
   restore();
 

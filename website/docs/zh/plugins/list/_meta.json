@@ -17,6 +17,5 @@
   "plugin-type-check",
   "plugin-source-build",
   "plugin-styled-components",
-  "plugin-check-syntax",
   "plugin-rem"
 ]

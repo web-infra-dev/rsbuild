@@ -35,7 +35,7 @@ export default {
 比较典型的使用场景是编译 node_modules 下的 npm 包，因为某些第三方依赖存在 ESNext 的语法，这可能导致在低版本浏览器上无法运行，你可以通过该选项指定需要编译的依赖，从而解决此类问题。
 
 :::tip
-如果你不确定 node_modules 中的哪些第三方依赖存在 ESNext 的语法，可以使用 Rsbuild 的 [Check Syntax 插件](/plugins/list/plugin-check-syntax) 进行检查，插件可以帮助你找到存在 ESNext 语法的模块。
+如果你不确定 node_modules 中的哪些第三方依赖存在 ESNext 的语法，可以使用 [@rsbuild/plugin-check-syntax](https://github.com/rspack-contrib/rsbuild-plugin-check-syntax) 进行检查，插件可以帮助你找到存在 ESNext 语法的模块。
 :::
 
 以 `query-string` 为例，你可以做如下的配置：
