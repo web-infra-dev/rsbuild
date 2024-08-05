@@ -56,6 +56,8 @@ The following are the details of each filename:
 - `image`: The name of non-SVG images.
 - `media`: The name of media assets, such as video.
 
+> See [Output Files](/guide/basic/output-files) for more information.
+
 ## Example
 
 To set the name of the JavaScript file to `[name]_script.js`, use the following configuration:
@@ -74,7 +76,7 @@ export default {
 ```
 
 :::tip Filename hash
-Usually, we only set the filename hash in the production mode (i.e., when `process.env.NODE_ENV === 'production'`).
+Usually, Rsbuild only set the filename hash in the production mode (i.e., when `process.env.NODE_ENV === 'production'`).
 
 If you set the filename hash in the development mode, it may cause HMR to fail (especially for CSS files). This is because every time the file content changes, the hash value changes, preventing bundler from reading the latest file content.
 :::

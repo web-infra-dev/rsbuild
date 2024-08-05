@@ -56,6 +56,8 @@ const prodDefaultFilename = {
 - `image`：表示非 SVG 图片的名称。
 - `media`：表示视频等媒体资源的名称。
 
+> 查看 [构建产物目录](/guide/basic/output-files) 了解更多。
+
 ## 示例
 
 修改 JavaScript 文件的名称为 `[name]_script.js`：
@@ -74,9 +76,9 @@ export default {
 ```
 
 :::tip 文件名中的 hash 值
-通常来说，我们只会在生产环境下设置文件名的 hash 值（即 `process.env.NODE_ENV === 'production'` 时）。
+通常来说，Rsbuild 只会在生产模式下设置文件名的 hash 值（即 `process.env.NODE_ENV === 'production'` 时）。
 
-如果你在开发环境下设置了文件名的 hash，那么可能会导致热更新不生效（尤其是 CSS 文件）。这是因为每次文件内容变化时，都会引起 hash 变化，导致打包工具无法读取到最新的文件内容。
+如果你在开发模式下设置了文件名的 hash，那么可能会导致热更新不生效（尤其是 CSS 文件）。这是因为每次文件内容变化时，都会引起 hash 变化，导致打包工具无法读取到最新的文件内容。
 :::
 
 ## 异步模块文件名
