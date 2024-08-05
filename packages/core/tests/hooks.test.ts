@@ -1,5 +1,5 @@
 import { createStubRsbuild } from '@scripts/test-helper';
-import { createEnvironmentAsyncHook, initHooks } from '../src/initHooks';
+import { createEnvironmentAsyncHook, initHooks } from '../src/hooks';
 
 describe('initHooks', () => {
   test('should init hooks correctly', async () => {
