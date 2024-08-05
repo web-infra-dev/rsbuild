@@ -16,12 +16,15 @@ export const pluginNonce = (): RsbuildPlugin => ({
         return;
       }
 
+      const environmentList = Object.values(environments);
+
       applyToCompiler(compiler, (compiler, index) => {
         const nonce = nonces[index];
-        const { plugins } = compiler.options;
-        const hasHTML = plugins.some(
-          (plugin) => plugin && plugin.constructor.name === 'HtmlBasicPlugin',
+        const environment = environmentList.find(
+          (item) => item.index === index,
         );
+        const hasHTML = Object.keys(environment?.htmlPaths ?? {}).length;
+
         if (!hasHTML || !nonce) {
           return;
         }

@@ -62,7 +62,7 @@ export type HtmlInfo = {
   templateContent?: string;
 };
 
-export type HtmlBasicPluginOptions = Record<string, HtmlInfo>;
+export type RsbuildHtmlPluginOptions = Record<string, HtmlInfo>;
 
 export type AlterAssetTagGroupsData = {
   headTags: HtmlTagObject[];
@@ -234,24 +234,24 @@ const addFavicon = (headTags: HtmlTagObject[], favicon?: string) => {
   }
 };
 
-export class HtmlBasicPlugin {
+export class RsbuildHtmlPlugin {
   readonly name: string;
 
   readonly getEnvironment: () => EnvironmentContext;
 
-  readonly options: HtmlBasicPluginOptions;
+  readonly options: RsbuildHtmlPluginOptions;
 
   readonly modifyTagsFn?: ModifyHTMLTagsFn;
 
   constructor(
-    options: HtmlBasicPluginOptions,
-    environment: EnvironmentContext,
+    options: RsbuildHtmlPluginOptions,
+    getEnvironment: () => EnvironmentContext,
     modifyTagsFn?: ModifyHTMLTagsFn,
   ) {
-    this.name = 'HtmlBasicPlugin';
-    this.getEnvironment = () => environment;
+    this.name = 'RsbuildHtmlPlugin';
     this.options = options;
     this.modifyTagsFn = modifyTagsFn;
+    this.getEnvironment = getEnvironment;
   }
 
   apply(compiler: Compiler): void {

@@ -13,7 +13,7 @@ import {
   isPlainObject,
   isURL,
 } from '../helpers';
-import type { HtmlInfo, TagConfig } from '../rspack/HtmlBasicPlugin';
+import type { HtmlInfo, TagConfig } from '../rspack/RsbuildHtmlPlugin';
 import type {
   HtmlConfig,
   HtmlRspackPlugin,
@@ -322,13 +322,15 @@ export const pluginHtml = (
             .use(HtmlPlugin, [finalOptions[index]]);
         });
 
-        const { HtmlBasicPlugin } = await import('../rspack/HtmlBasicPlugin');
+        const { RsbuildHtmlPlugin } = await import(
+          '../rspack/RsbuildHtmlPlugin'
+        );
 
         chain
-          .plugin(CHAIN_ID.PLUGIN.HTML_BASIC)
-          .use(HtmlBasicPlugin, [
+          .plugin('rsbuild-html-plugin')
+          .use(RsbuildHtmlPlugin, [
             htmlInfoMap,
-            environment,
+            () => environment,
             modifyTagsFn?.(environment.name),
           ]);
 

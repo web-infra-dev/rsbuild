@@ -203,8 +203,6 @@ export const CHAIN_ID = {
     BUNDLE_ANALYZER: 'bundle-analyze',
     /** ModuleFederationPlugin */
     MODULE_FEDERATION: 'module-federation',
-    /** HtmlBasicPlugin */
-    HTML_BASIC: 'html-basic-plugin',
     /** htmlPrefetchPlugin */
     HTML_PREFETCH: 'html-prefetch-plugin',
     /** htmlPreloadPlugin */

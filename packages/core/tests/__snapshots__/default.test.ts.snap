@@ -354,10 +354,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       },
       "version": 6,
     },
-    HtmlBasicPlugin {
+    RsbuildHtmlPlugin {
       "getEnvironment": [Function],
       "modifyTagsFn": [Function],
-      "name": "HtmlBasicPlugin",
+      "name": "RsbuildHtmlPlugin",
       "options": {
         "index": {
           "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
@@ -776,10 +776,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       },
       "version": 6,
     },
-    HtmlBasicPlugin {
+    RsbuildHtmlPlugin {
       "getEnvironment": [Function],
       "modifyTagsFn": [Function],
-      "name": "HtmlBasicPlugin",
+      "name": "RsbuildHtmlPlugin",
       "options": {
         "index": {
           "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
@@ -1518,10 +1518,10 @@ exports[`tools.rspack > should match snapshot 1`] = `
       },
       "version": 6,
     },
-    HtmlBasicPlugin {
+    RsbuildHtmlPlugin {
       "getEnvironment": [Function],
       "modifyTagsFn": [Function],
-      "name": "HtmlBasicPlugin",
+      "name": "RsbuildHtmlPlugin",
       "options": {
         "index": {
           "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
