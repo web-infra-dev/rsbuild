@@ -7,7 +7,7 @@
 export { runCli } from './cli/commands';
 export { prepareCli } from './cli/prepare';
 export { initPlugins, createPluginManager } from './pluginManager';
-export { initHooks, type Hooks } from './initHooks';
+export { initHooks, type Hooks } from './hooks';
 export { initRsbuildConfig } from './provider/initConfigs';
 export {
   stringifyConfig,
@@ -17,7 +17,7 @@ export {
 export type { InternalContext } from './types';
 export { setHTMLPlugin, getHTMLPlugin } from './pluginHelper';
 export { formatStats, getStatsOptions, prettyTime } from './helpers';
-export { registerBuildHook, registerDevHook, onCompileDone } from './initHooks';
+export { registerBuildHook, registerDevHook, onCompileDone } from './hooks';
 export { getChainUtils, getConfigUtils } from './provider/rspackConfig';
 export { chainToConfig, modifyBundlerChain } from './configChain';
 export { applySwcDecoratorConfig } from './plugins/swc';

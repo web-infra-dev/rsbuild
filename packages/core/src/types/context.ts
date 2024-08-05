@@ -1,4 +1,4 @@
-import type { Hooks } from '../initHooks';
+import type { Hooks } from '../hooks';
 import type { NormalizedConfig, RsbuildConfig } from './config';
 import type { EnvironmentContext } from './hooks';
 import type { RsbuildPluginAPI } from './plugin';
