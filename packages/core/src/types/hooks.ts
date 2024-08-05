@@ -13,20 +13,20 @@ import type { MultiStats, Stats } from './stats';
 import type { HtmlRspackPlugin, WebpackConfig } from './thirdParty';
 import type { MaybePromise, NodeEnv } from './utils';
 
-type BuildCommonParams = {
+type CompileCommonParams = {
   isFirstCompile: boolean;
   isWatch: boolean;
 };
 
-export type OnBeforeEnvironmentBuildFn<B = 'rspack'> = (
-  params: BuildCommonParams & {
+export type OnBeforeEnvironmentCompile<B = 'rspack'> = (
+  params: CompileCommonParams & {
     environment: EnvironmentContext;
     bundlerConfig?: B extends 'rspack' ? Rspack.Configuration : WebpackConfig;
   },
 ) => MaybePromise<void>;
 
 export type OnBeforeBuildFn<B = 'rspack'> = (
-  params: BuildCommonParams & {
+  params: CompileCommonParams & {
     environments: Record<string, EnvironmentContext>;
     bundlerConfigs?: B extends 'rspack'
       ? Rspack.Configuration[]
@@ -34,27 +34,21 @@ export type OnBeforeBuildFn<B = 'rspack'> = (
   },
 ) => MaybePromise<void>;
 
-export type OnAfterEnvironmentBuildFn = (
-  params: BuildCommonParams & {
+export type OnAfterEnvironmentCompileFn = (
+  params: CompileCommonParams & {
     stats?: Stats;
     environment: EnvironmentContext;
   },
 ) => MaybePromise<void>;
 
 export type OnAfterBuildFn = (
-  params: BuildCommonParams & {
+  params: CompileCommonParams & {
     stats?: Stats | MultiStats;
     environments: Record<string, EnvironmentContext>;
   },
 ) => MaybePromise<void>;
 
 export type OnCloseDevServerFn = () => MaybePromise<void>;
-
-export type OnDevCompileEnvironmentDoneFn = (params: {
-  isFirstCompile: boolean;
-  stats: Stats;
-  environment: EnvironmentContext;
-}) => MaybePromise<void>;
 
 export type OnDevCompileDoneFn = (params: {
   isFirstCompile: boolean;

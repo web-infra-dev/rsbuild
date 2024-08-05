@@ -8,15 +8,15 @@ import type {
   Stats,
 } from './types';
 
-const onBeforeBuild = ({
+const onBeforeCompile = ({
   compiler,
-  beforeBuild,
-  beforeEnvironmentBuild,
+  beforeCompile,
+  beforeEnvironmentCompiler,
   isWatch,
 }: {
   compiler: Rspack.Compiler | Rspack.MultiCompiler;
-  beforeBuild: () => Promise<any>;
-  beforeEnvironmentBuild: (buildIndex: number) => Promise<any>;
+  beforeCompile?: () => Promise<any>;
+  beforeEnvironmentCompiler: (buildIndex: number) => Promise<any>;
   isWatch?: boolean;
 }): void => {
   const name = 'rsbuild:beforeCompile';
@@ -38,14 +38,14 @@ const onBeforeBuild = ({
             compilerDone = true;
             doneCompilers++;
           }
-          // ensure only last compiler done will trigger beforeBuild hook
-          // avoid other compiler done triggers when executing async beforeEnvironmentBuild hook
+          // ensure only last compiler done will trigger beforeCompile hook
+          // avoid other compiler done triggers when executing async beforeEnvironmentCompiler hook
           const lastCompilerDone = doneCompilers === compilers.length;
 
-          await beforeEnvironmentBuild(index);
+          await beforeEnvironmentCompiler(index);
 
           if (lastCompilerDone) {
-            await beforeBuild();
+            await beforeCompile?.();
           }
         },
       );
@@ -61,8 +61,8 @@ const onBeforeBuild = ({
     (isWatch ? compiler.hooks.watchRun : compiler.hooks.run).tapPromise(
       name,
       async () => {
-        await beforeEnvironmentBuild(0);
-        await beforeBuild();
+        await beforeEnvironmentCompiler(0);
+        await beforeCompile?.();
       },
     );
   }
@@ -145,7 +145,7 @@ export const registerBuildHook = ({
     return prev;
   }, []);
 
-  const beforeBuild = async () =>
+  const beforeCompile = async () =>
     await context.hooks.onBeforeBuild.call({
       bundlerConfigs,
       environments: context.environments,
@@ -153,8 +153,8 @@ export const registerBuildHook = ({
       isFirstCompile,
     });
 
-  const beforeEnvironmentBuild = async (buildIndex: number) =>
-    await context.hooks.onBeforeEnvironmentBuild.callInEnvironment({
+  const beforeEnvironmentCompiler = async (buildIndex: number) =>
+    await context.hooks.onBeforeEnvironmentCompile.callInEnvironment({
       environment: environmentArr[buildIndex].name,
       args: [
         {
@@ -178,7 +178,7 @@ export const registerBuildHook = ({
   };
 
   const onEnvironmentDone = async (buildIndex: number, stats: Stats) => {
-    const p = context.hooks.onAfterEnvironmentBuild.callInEnvironment({
+    await context.hooks.onAfterEnvironmentCompile.callInEnvironment({
       environment: environmentArr[buildIndex].name,
       args: [
         {
@@ -189,15 +189,84 @@ export const registerBuildHook = ({
         },
       ],
     });
+  };
+
+  onBeforeCompile({
+    compiler,
+    beforeCompile,
+    beforeEnvironmentCompiler,
+    isWatch,
+  });
+
+  onCompileDone({
+    compiler,
+    onDone,
+    onEnvironmentDone,
+    MultiStatsCtor,
+  });
+};
+
+export const registerDevHook = ({
+  context,
+  compiler,
+  bundlerConfigs,
+  MultiStatsCtor,
+}: {
+  bundlerConfigs?: RspackConfig[];
+  context: InternalContext;
+  compiler: Rspack.Compiler | Rspack.MultiCompiler;
+  MultiStatsCtor: new (stats: Rspack.Stats[]) => Rspack.MultiStats;
+}): void => {
+  let isFirstCompile = true;
+
+  const environmentArr = Object.values(context.environments).reduce<
+    EnvironmentContext[]
+  >((prev, curr) => {
+    prev[curr.index] = curr;
+    return prev;
+  }, []);
+
+  const beforeEnvironmentCompiler = async (buildIndex: number) =>
+    await context.hooks.onBeforeEnvironmentCompile.callInEnvironment({
+      environment: environmentArr[buildIndex].name,
+      args: [
+        {
+          bundlerConfig: bundlerConfigs?.[buildIndex] as Rspack.Configuration,
+          environment: environmentArr[buildIndex],
+          isWatch: true,
+          isFirstCompile,
+        },
+      ],
+    });
+
+  const onDone = async (stats: Stats | MultiStats) => {
+    const p = context.hooks.onDevCompileDone.call({
+      isFirstCompile,
+      stats,
+      environments: context.environments,
+    });
     isFirstCompile = false;
     await p;
   };
 
-  onBeforeBuild({
+  const onEnvironmentDone = async (buildIndex: number, stats: Stats) => {
+    await context.hooks.onAfterEnvironmentCompile.callInEnvironment({
+      environment: environmentArr[buildIndex].name,
+      args: [
+        {
+          isFirstCompile,
+          stats,
+          environment: environmentArr[buildIndex],
+          isWatch: true,
+        },
+      ],
+    });
+  };
+
+  onBeforeCompile({
     compiler,
-    beforeBuild,
-    beforeEnvironmentBuild,
-    isWatch,
+    beforeEnvironmentCompiler,
+    isWatch: true,
   });
 
   onCompileDone({

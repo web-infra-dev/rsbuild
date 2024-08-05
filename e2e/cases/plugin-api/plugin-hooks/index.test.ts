@@ -1,4 +1,4 @@
-import { gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { getRandomPort, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
 
@@ -45,11 +45,11 @@ const createPlugin = () => {
       api.onAfterBuild(() => {
         names.push('AfterBuild');
       });
-      api.onBeforeEnvironmentBuild(() => {
-        names.push('BeforeEnvironmentBuild');
+      api.onBeforeEnvironmentCompile(() => {
+        names.push('BeforeEnvironmentCompile');
       });
-      api.onAfterEnvironmentBuild(() => {
-        names.push('AfterEnvironmentBuild');
+      api.onAfterEnvironmentCompile(() => {
+        names.push('AfterEnvironmentCompile');
       });
       api.onBeforeStartProdServer(() => {
         names.push('BeforeStartProdServer');
@@ -62,9 +62,6 @@ const createPlugin = () => {
       });
       api.onDevCompileDone(() => {
         names.push('OnDevCompileDone');
-      });
-      api.onDevCompileEnvironmentDone(() => {
-        names.push('DevCompileEnvironmentDone');
       });
     },
   };
@@ -92,10 +89,10 @@ rspackOnlyTest(
       'ModifyBundlerConfig',
       'BeforeCreateCompiler',
       'AfterCreateCompiler',
-      'BeforeEnvironmentBuild',
+      'BeforeEnvironmentCompile',
       'BeforeBuild',
       'ModifyHTMLTags',
-      'AfterEnvironmentBuild',
+      'AfterEnvironmentCompile',
       'AfterBuild',
     ]);
   },
@@ -105,12 +102,16 @@ rspackOnlyTest(
   'should run plugin hooks correctly when running startDevServer',
   async ({ page }) => {
     process.env.NODE_ENV = 'development';
+    const port = await getRandomPort();
 
     const { plugin, names } = createPlugin();
     const rsbuild = await createRsbuild({
       cwd: __dirname,
       rsbuildConfig: {
         plugins: [plugin],
+        server: {
+          port,
+        },
       },
     });
 
@@ -128,9 +129,10 @@ rspackOnlyTest(
       'ModifyBundlerConfig',
       'BeforeCreateCompiler',
       'AfterCreateCompiler',
+      'BeforeEnvironmentCompile',
       'AfterStartDevServer',
       'ModifyHTMLTags',
-      'DevCompileEnvironmentDone',
+      'AfterEnvironmentCompile',
       'OnDevCompileDone',
       'OnCloseDevServer',
     ]);

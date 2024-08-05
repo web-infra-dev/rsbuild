@@ -1,4 +1,4 @@
-import { type EnvironmentContext, type Rspack, logger } from '@rsbuild/core';
+import { type Rspack, logger } from '@rsbuild/core';
 import WebpackMultiStats from 'webpack/lib/MultiStats.js';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 import {
@@ -6,8 +6,8 @@ import {
   formatStats,
   getDevMiddleware,
   getStatsOptions,
+  registerDevHook,
 } from './shared';
-import { onCompileDone } from './shared';
 import type { WebpackConfig } from './types';
 
 export async function createCompiler({
@@ -31,9 +31,7 @@ export async function createCompiler({
     | Rspack.Compiler
     | Rspack.MultiCompiler;
 
-  let isFirstCompile = true;
-
-  const done = async (stats: unknown) => {
+  const done = (stats: unknown) => {
     const { message, level } = formatStats(
       stats as Rspack.Stats,
       getStatsOptions(compiler),
@@ -45,46 +43,20 @@ export async function createCompiler({
     if (level === 'warning') {
       logger.warn(message);
     }
-
-    if (process.env.NODE_ENV === 'development') {
-      await context.hooks.onDevCompileDone.call({
-        isFirstCompile,
-        stats: stats as Rspack.Stats,
-        environments: context.environments,
-      });
-    }
-
-    isFirstCompile = false;
   };
 
-  const environmentArr = Object.values(context.environments).reduce<
-    EnvironmentContext[]
-  >((prev, curr) => {
-    prev[curr.index] = curr;
-    return prev;
-  }, []);
-
-  const onEnvironmentDone = async (index: number, stats: Rspack.Stats) => {
-    if (process.env.NODE_ENV === 'development') {
-      await context.hooks.onDevCompileEnvironmentDone.callInEnvironment({
-        environment: environmentArr[index].name,
-        args: [
-          {
-            isFirstCompile,
-            stats,
-            environment: environmentArr[index],
-          },
-        ],
-      });
-    }
-  };
-
-  onCompileDone({
-    compiler,
-    onDone: done,
-    onEnvironmentDone,
-    MultiStatsCtor: WebpackMultiStats,
+  compiler.hooks.done.tap('rsbuild:done', (stats: unknown) => {
+    done(stats);
   });
+
+  if (process.env.NODE_ENV === 'development') {
+    registerDevHook({
+      compiler,
+      context,
+      bundlerConfigs: webpackConfigs as any,
+      MultiStatsCtor: WebpackMultiStats,
+    });
+  }
 
   await context.hooks.onAfterCreateCompiler.call({
     compiler,

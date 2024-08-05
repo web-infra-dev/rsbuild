@@ -319,18 +319,13 @@ export function initPluginAPI({
         environment,
         handler,
       }),
-    onAfterEnvironmentBuild: (handler) =>
-      hooks.onAfterEnvironmentBuild.tapEnvironment({
+    onAfterEnvironmentCompile: (handler) =>
+      hooks.onAfterEnvironmentCompile.tapEnvironment({
         environment,
         handler,
       }),
-    onBeforeEnvironmentBuild: (handler) =>
-      hooks.onBeforeEnvironmentBuild.tapEnvironment({
-        environment,
-        handler,
-      }),
-    onDevCompileEnvironmentDone: (handler) =>
-      hooks.onDevCompileEnvironmentDone.tapEnvironment({
+    onBeforeEnvironmentCompile: (handler) =>
+      hooks.onBeforeEnvironmentCompile.tapEnvironment({
         environment,
         handler,
       }),

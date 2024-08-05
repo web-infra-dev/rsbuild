@@ -10,12 +10,11 @@ import {
   prettyTime,
   rspackMinVersion,
 } from '../helpers';
-import { onCompileDone } from '../hooks';
+import { registerDevHook } from '../hooks';
 import { logger } from '../logger';
 import type { DevMiddlewareAPI } from '../server/devMiddleware';
 import type {
   DevConfig,
-  EnvironmentContext,
   InternalContext,
   MultiStats,
   Rspack,
@@ -50,7 +49,6 @@ export async function createCompiler({
       ? rspack(rspackConfigs[0])
       : rspack(rspackConfigs);
 
-  let isFirstCompile = true;
   let isVersionLogged = false;
   let isCompiling = false;
 
@@ -73,7 +71,7 @@ export async function createCompiler({
     compiler.hooks.run.tap('rsbuild:run', logRspackVersion);
   }
 
-  const done = async (stats: Stats | MultiStats) => {
+  const done = (stats: Stats | MultiStats) => {
     const statsJson = stats.toJson({
       all: false,
       timings: true,
@@ -107,46 +105,21 @@ export async function createCompiler({
       logger.warn(message);
     }
 
-    if (isDev()) {
-      await context.hooks.onDevCompileDone.call({
-        isFirstCompile,
-        stats: stats,
-        environments: context.environments,
-      });
-    }
-
     isCompiling = false;
-    isFirstCompile = false;
   };
 
-  const environmentArr = Object.values(context.environments).reduce<
-    EnvironmentContext[]
-  >((prev, curr) => {
-    prev[curr.index] = curr;
-    return prev;
-  }, []);
-
-  const onEnvironmentDone = async (index: number, stats: Stats) => {
-    if (isDev()) {
-      await context.hooks.onDevCompileEnvironmentDone.callInEnvironment({
-        environment: environmentArr[index].name,
-        args: [
-          {
-            isFirstCompile,
-            stats,
-            environment: environmentArr[index],
-          },
-        ],
-      });
-    }
-  };
-
-  onCompileDone({
-    compiler,
-    onDone: done,
-    onEnvironmentDone,
-    MultiStatsCtor: rspack.MultiStats,
+  compiler.hooks.done.tap('rsbuild:done', (stats: Stats | MultiStats) => {
+    done(stats);
   });
+
+  if (isDev()) {
+    registerDevHook({
+      context,
+      compiler,
+      bundlerConfigs: rspackConfigs,
+      MultiStatsCtor: rspack.MultiStats,
+    });
+  }
 
   await context.hooks.onAfterCreateCompiler.call({
     compiler,

@@ -1,4 +1,4 @@
-import { gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { getRandomPort, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
 
@@ -45,12 +45,12 @@ const createPlugin = () => {
       api.onAfterBuild(() => {
         names.push('AfterBuild');
       });
-      api.onBeforeEnvironmentBuild(({ environment }) => {
-        names.push(`BeforeEnvironmentBuild ${environment.name}`);
+      api.onBeforeEnvironmentCompile(({ environment }) => {
+        names.push(`BeforeEnvironmentCompile ${environment.name}`);
       });
-      api.onAfterEnvironmentBuild(({ stats, environment }) => {
+      api.onAfterEnvironmentCompile(({ stats, environment }) => {
         expect(stats?.compilation.name).toBe(environment.name);
-        names.push(`AfterEnvironmentBuild ${environment.name}`);
+        names.push(`AfterEnvironmentCompile ${environment.name}`);
       });
       api.onBeforeStartProdServer(() => {
         names.push('BeforeStartProdServer');
@@ -63,10 +63,6 @@ const createPlugin = () => {
       });
       api.onDevCompileDone(() => {
         names.push('OnDevCompileDone');
-      });
-      api.onDevCompileEnvironmentDone(({ stats, environment }) => {
-        expect(stats?.compilation.name).toBe(environment.name);
-        names.push(`DevCompileEnvironmentDone ${environment.name}`);
       });
     },
   };
@@ -105,10 +101,10 @@ rspackOnlyTest(
       'ModifyBundlerConfig web',
       'BeforeCreateCompiler',
       'AfterCreateCompiler',
-      'BeforeEnvironmentBuild web',
+      'BeforeEnvironmentCompile web',
       'BeforeBuild',
       'ModifyHTMLTags web',
-      'AfterEnvironmentBuild web',
+      'AfterEnvironmentCompile web',
       'AfterBuild',
     ]);
 
@@ -119,10 +115,10 @@ rspackOnlyTest(
       'ModifyBundlerConfig node',
       'BeforeCreateCompiler',
       'AfterCreateCompiler',
-      'BeforeEnvironmentBuild node',
+      'BeforeEnvironmentCompile node',
       'BeforeBuild',
       'ModifyHTMLTags node',
-      'AfterEnvironmentBuild node',
+      'AfterEnvironmentCompile node',
       'AfterBuild',
     ]);
   },
@@ -132,12 +128,16 @@ rspackOnlyTest(
   'should run plugin hooks correctly when running startDevServer with multiple environments',
   async ({ page }) => {
     process.env.NODE_ENV = 'development';
+    const port = await getRandomPort();
 
     const { plugin, names } = createPlugin();
     const rsbuild = await createRsbuild({
       cwd: __dirname,
       rsbuildConfig: {
         plugins: [plugin],
+        server: {
+          port,
+        },
         environments: {
           web: {},
           node: {},
@@ -163,9 +163,10 @@ rspackOnlyTest(
       'ModifyBundlerConfig web',
       'BeforeCreateCompiler',
       'AfterCreateCompiler',
+      'BeforeEnvironmentCompile web',
       'AfterStartDevServer',
       'ModifyHTMLTags web',
-      'DevCompileEnvironmentDone web',
+      'AfterEnvironmentCompile web',
       'OnDevCompileDone',
       'OnCloseDevServer',
     ]);
@@ -178,9 +179,10 @@ rspackOnlyTest(
       'ModifyBundlerConfig node',
       'BeforeCreateCompiler',
       'AfterCreateCompiler',
+      'BeforeEnvironmentCompile node',
       'AfterStartDevServer',
       'ModifyHTMLTags node',
-      'DevCompileEnvironmentDone node',
+      'AfterEnvironmentCompile node',
       'OnDevCompileDone',
       'OnCloseDevServer',
     ]);

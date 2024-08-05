@@ -21,17 +21,16 @@ import type {
   ModifyRsbuildConfigFn,
   OnAfterBuildFn,
   OnAfterCreateCompilerFn,
-  OnAfterEnvironmentBuildFn,
+  OnAfterEnvironmentCompileFn,
   OnAfterStartDevServerFn,
   OnAfterStartProdServerFn,
   OnBeforeBuildFn,
   OnBeforeCreateCompilerFn,
-  OnBeforeEnvironmentBuildFn,
+  OnBeforeEnvironmentCompile,
   OnBeforeStartDevServerFn,
   OnBeforeStartProdServerFn,
   OnCloseDevServerFn,
   OnDevCompileDoneFn,
-  OnDevCompileEnvironmentDoneFn,
   OnExitFn,
 } from './hooks';
 import type { RsbuildTarget } from './rsbuild';
@@ -388,10 +387,9 @@ export type RsbuildPluginAPI = Readonly<{
   onExit: PluginHook<OnExitFn>;
   onAfterBuild: PluginHook<OnAfterBuildFn>;
   onBeforeBuild: PluginHook<OnBeforeBuildFn>;
-  onAfterEnvironmentBuild: PluginHook<OnAfterEnvironmentBuildFn>;
-  onBeforeEnvironmentBuild: PluginHook<OnBeforeEnvironmentBuildFn>;
+  onAfterEnvironmentCompile: PluginHook<OnAfterEnvironmentCompileFn>;
+  onBeforeEnvironmentCompile: PluginHook<OnBeforeEnvironmentCompile>;
   onCloseDevServer: PluginHook<OnCloseDevServerFn>;
-  onDevCompileEnvironmentDone: PluginHook<OnDevCompileEnvironmentDoneFn>;
   onDevCompileDone: PluginHook<OnDevCompileDoneFn>;
   onAfterStartDevServer: PluginHook<OnAfterStartDevServerFn>;
   onBeforeStartDevServer: PluginHook<OnBeforeStartDevServerFn>;

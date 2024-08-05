@@ -12,7 +12,7 @@ const {
   getRsbuildInspectConfig,
   chainToConfig,
   modifyBundlerChain,
-  onCompileDone,
+  registerDevHook,
   registerBuildHook,
   prettyTime,
 } = __internalHelper;
@@ -28,7 +28,7 @@ export {
   outputInspectConfigFiles,
   chainToConfig,
   modifyBundlerChain,
-  onCompileDone,
+  registerDevHook,
   registerBuildHook,
   prettyTime,
   getRsbuildInspectConfig,
