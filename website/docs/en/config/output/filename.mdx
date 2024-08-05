@@ -48,7 +48,7 @@ After the production build, Rsbuild will add a hash in the middle of the filenam
 
 The following are the details of each filename:
 
-- `html`: The name of the HTML file, only supports the `[name]` placeholder.
+- `html`: The name of the HTML file.
 - `js`: The name of the JavaScript files.
 - `css`: The name of the CSS files.
 - `svg`: The name of the SVG images.
@@ -79,6 +79,26 @@ export default {
 Usually, Rsbuild only set the filename hash in the production mode (i.e., when `process.env.NODE_ENV === 'production'`).
 
 If you set the filename hash in the development mode, it may cause HMR to fail (especially for CSS files). This is because every time the file content changes, the hash value changes, preventing bundler from reading the latest file content.
+:::
+
+## Template Strings
+
+In the value of `output.filename`, you can use template strings to dynamically generate file names.
+
+Common template strings include:
+
+- `[name]` - entry name, which is the key of [source.entry](/config/source/entry).
+- `[contenthash]` - hash value generated based on file content.
+- `[contenthash:<length>]` - hash value generated based on file content, with specified hash length.
+- `[ext]` - file extension, including the dot.
+
+> For more template strings, refer to [Rspack - Template String](https://rspack.dev/config/output#template-string).
+
+:::tip
+
+- `filename.html` can only use certain template strings like `[name]` and `[contenthash:<length>]`.
+- `filename.js` and `filename.css` do not support `[ext]`.
+
 :::
 
 ## Filename of Async Modules
