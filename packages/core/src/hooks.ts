@@ -23,7 +23,6 @@ const onBeforeCompile = ({
 
   if (isMultiCompiler(compiler)) {
     const { compilers } = compiler;
-    console.log('compilers', compilers.length);
 
     let doneCompilers = 0;
 
