@@ -3,11 +3,17 @@ import { build, globContentJSON } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should allow to custom HTML filename', async () => {
-  const rsbuild = await build({
+  await build({
     cwd: __dirname,
   });
 
   const outputs = await globContentJSON(join(__dirname, 'dist'));
-  expect(outputs[join(rsbuild.distPath, 'custom-foo.html')]).toBeTruthy();
-  expect(outputs[join(rsbuild.distPath, 'custom-bar.html')]).toBeTruthy();
+  const fooFile = Object.keys(outputs).find((item) =>
+    item.includes('custom-foo.html'),
+  );
+  const barFile = Object.keys(outputs).find((item) =>
+    item.includes('custom-bar.html'),
+  );
+  expect(fooFile).toBeTruthy();
+  expect(barFile).toBeTruthy();
 });
