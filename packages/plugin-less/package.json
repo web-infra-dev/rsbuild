@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-less",
-  "version": "1.0.1-beta.9",
+  "version": "1.0.1-beta.10",
   "description": "Less plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -43,7 +43,7 @@
     "typescript": "^5.5.2"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^1.0.1-beta.9"
+    "@rsbuild/core": "workspace:^1.0.1-beta.10"
   },
   "publishConfig": {
     "access": "public",
