@@ -4,6 +4,7 @@
 
 ```ts
 type FilenameConfig = {
+  html?: string;
   js?:
     | string
     | ((pathData: Rspack.PathData, assetInfo: Rspack.JsAssetInfo) => string);
@@ -18,8 +19,9 @@ type FilenameConfig = {
 - **Default:**
 
 ```js
-// Development
+// Development build
 const devDefaultFilename = {
+  html: '[name].html',
   js: '[name].js',
   css: '[name].css',
   svg: '[name].[contenthash:8].svg',
@@ -28,9 +30,10 @@ const devDefaultFilename = {
   media: '[name].[contenthash:8][ext]',
 };
 
-// Production
+// Production build
 const prodDefaultFilename = {
-  js: isServer ? '[name].js' : '[name].[contenthash:8].js',
+  html: '[name].html',
+  js: output.target === 'node' ? '[name].js' : '[name].[contenthash:8].js',
   css: '[name].[contenthash:8].css',
   svg: '[name].[contenthash:8].svg',
   font: '[name].[contenthash:8][ext]',
@@ -45,12 +48,15 @@ After the production build, Rsbuild will add a hash in the middle of the filenam
 
 The following are the details of each filename:
 
+- `html`: The name of the HTML file, only supports the `[name]` placeholder.
 - `js`: The name of the JavaScript files.
 - `css`: The name of the CSS files.
 - `svg`: The name of the SVG images.
 - `font`: The name of the font files.
 - `image`: The name of non-SVG images.
 - `media`: The name of media assets, such as video.
+
+> See [Output Files](/guide/basic/output-files) for more information.
 
 ## Example
 
@@ -70,7 +76,7 @@ export default {
 ```
 
 :::tip Filename hash
-Usually, we only set the filename hash in the production mode (i.e., when `process.env.NODE_ENV === 'production'`).
+Usually, Rsbuild only set the filename hash in the production mode (i.e., when `process.env.NODE_ENV === 'production'`).
 
 If you set the filename hash in the development mode, it may cause HMR to fail (especially for CSS files). This is because every time the file content changes, the hash value changes, preventing bundler from reading the latest file content.
 :::
@@ -86,7 +92,7 @@ When you import a module via dynamic import, the module will be bundled into a s
 const { add } = await import('./add.ts');
 ```
 
-If you want to specify a fixed name for the async module, you can use the [magic comments](https://rspack.dev/api/modules#magic-comments) provided by the bundler to achieve this, using `webpackChunkName ` to specify the module name:
+If you want to specify a fixed name for the async module, you can use the [magic comments](https://rspack.dev/api/modules#magic-comments) provided by Rspack to achieve this, using `webpackChunkName ` to specify the module name:
 
 ```js title="src/index.ts"
 const { add } = await import(

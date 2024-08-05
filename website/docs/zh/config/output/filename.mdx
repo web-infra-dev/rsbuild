@@ -4,6 +4,7 @@
 
 ```ts
 type FilenameConfig = {
+  html?: string;
   js?:
     | string
     | ((pathData: Rspack.PathData, assetInfo: Rspack.JsAssetInfo) => string);
@@ -18,8 +19,9 @@ type FilenameConfig = {
 - **默认值：**
 
 ```js
-// 开发环境
+// 开发环境构建
 const devDefaultFilename = {
+  html: '[name].html',
   js: '[name].js',
   css: '[name].css',
   svg: '[name].[contenthash:8].svg',
@@ -28,9 +30,10 @@ const devDefaultFilename = {
   media: '[name].[contenthash:8][ext]',
 };
 
-// 生产环境
+// 生产环境构建
 const prodDefaultFilename = {
-  js: isServer ? '[name].js' : '[name].[contenthash:8].js',
+  html: '[name].html',
+  js: output.target === 'node' ? '[name].js' : '[name].[contenthash:8].js',
   css: '[name].[contenthash:8].css',
   svg: '[name].[contenthash:8].svg',
   font: '[name].[contenthash:8][ext]',
@@ -45,12 +48,15 @@ const prodDefaultFilename = {
 
 下面是各个文件类型的说明：
 
+- `html`：表示 HTML 文件的名称，仅支持 `[name]` 占位符。
 - `js`：表示 JavaScript 文件的名称。
 - `css`：表示 CSS 样式文件的名称。
 - `svg`：表示 SVG 图片的名称。
 - `font`：表示字体文件的名称。
 - `image`：表示非 SVG 图片的名称。
 - `media`：表示视频等媒体资源的名称。
+
+> 查看 [构建产物目录](/guide/basic/output-files) 了解更多。
 
 ## 示例
 
@@ -70,9 +76,9 @@ export default {
 ```
 
 :::tip 文件名中的 hash 值
-通常来说，我们只会在生产环境下设置文件名的 hash 值（即 `process.env.NODE_ENV === 'production'` 时）。
+通常来说，Rsbuild 只会在生产模式下设置文件名的 hash 值（即 `process.env.NODE_ENV === 'production'` 时）。
 
-如果你在开发环境下设置了文件名的 hash，那么可能会导致热更新不生效（尤其是 CSS 文件）。这是因为每次文件内容变化时，都会引起 hash 变化，导致打包工具无法读取到最新的文件内容。
+如果你在开发模式下设置了文件名的 hash，那么可能会导致热更新不生效（尤其是 CSS 文件）。这是因为每次文件内容变化时，都会引起 hash 变化，导致打包工具无法读取到最新的文件内容。
 :::
 
 ## 异步模块文件名
@@ -86,7 +92,7 @@ export default {
 const { add } = await import('./add.ts');
 ```
 
-如果你希望为异步模块指定一个固定的名称，可以通过打包工具提供的 [magic comments](https://rspack.dev/api/modules#magic-comments) 来实现，通过 `webpackChunkName` 指定模块名称：
+如果你希望为异步模块指定一个固定的名称，可以通过 Rspack 提供的 [magic comments](https://rspack.dev/api/modules#magic-comments) 来实现，通过 `webpackChunkName` 指定模块名称：
 
 ```js title="src/index.ts"
 const { add } = await import(

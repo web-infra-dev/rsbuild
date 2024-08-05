@@ -1,4 +1,4 @@
-import { join } from 'node:path';
+import { join, posix } from 'node:path';
 import type { Compiler } from '@rspack/core';
 import { LOADER_PATH } from './constants';
 import { createPublicContext } from './createContext';
@@ -24,12 +24,17 @@ export function getHTMLPathByEntry(
   entryName: string,
   config: NormalizedEnvironmentConfig,
 ): string {
-  const filename =
-    config.html.outputStructure === 'flat'
-      ? `${entryName}.html`
-      : `${entryName}/index.html`;
+  let filename: string;
 
-  return removeLeadingSlash(`${config.output.distPath.html}/${filename}`);
+  if (config.output.filename.html) {
+    filename = config.output.filename.html.replace('[name]', entryName);
+  } else if (config.html.outputStructure === 'flat') {
+    filename = `${entryName}.html`;
+  } else {
+    filename = `${entryName}/index.html`;
+  }
+
+  return removeLeadingSlash(posix.join(config.output.distPath.html, filename));
 }
 
 const mapProcessAssetsStage = (
