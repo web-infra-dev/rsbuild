@@ -29,6 +29,7 @@ describe('getHTMLPathByEntry', () => {
         distPath: {
           html: 'my-html',
         },
+        filename: {},
       },
       html: {
         outputStructure: 'nested',
@@ -44,6 +45,7 @@ describe('getHTMLPathByEntry', () => {
         distPath: {
           html: 'html',
         },
+        filename: {},
       },
       html: {
         outputStructure: 'flat',
