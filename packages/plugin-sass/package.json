@@ -39,7 +39,7 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
-    "@types/sass-loader": "^8.0.8",
+    "@types/sass-loader": "^8.0.9",
     "prebundle": "1.2.2",
     "resolve-url-loader": "^5.0.0",
     "sass-loader": "^16.0.0",

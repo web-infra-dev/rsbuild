@@ -16,7 +16,7 @@
     "react-router-dom": "^6.26.0",
     "solid-js": "^1.8.19",
     "vue": "^3.4.19",
-    "vue-router": "^4.4.1"
+    "vue-router": "^4.4.2"
   },
   "devDependencies": {
     "@e2e/helper": "workspace:*",
