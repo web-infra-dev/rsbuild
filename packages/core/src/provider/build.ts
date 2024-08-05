@@ -1,6 +1,6 @@
 import { rspack } from '@rspack/core';
 import { getNodeEnv, setNodeEnv } from '../helpers';
-import { registerBuildHook } from '../hooks';
+import { registerBuildHook } from '../initHooks';
 import { logger } from '../logger';
 import type {
   BuildOptions,

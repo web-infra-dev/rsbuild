@@ -10,7 +10,7 @@ import {
   prettyTime,
   rspackMinVersion,
 } from '../helpers';
-import { registerDevHook } from '../hooks';
+import { registerDevHook } from '../initHooks';
 import { logger } from '../logger';
 import type { DevMiddlewareAPI } from '../server/devMiddleware';
 import type {
