@@ -86,6 +86,7 @@ rolldown
 rsbuild
 rsdoctor
 rsfamily
+rslib
 rslog
 rspack
 rspress
