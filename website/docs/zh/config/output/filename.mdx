@@ -4,6 +4,7 @@
 
 ```ts
 type FilenameConfig = {
+  html?: string;
   js?:
     | string
     | ((pathData: Rspack.PathData, assetInfo: Rspack.JsAssetInfo) => string);
@@ -18,8 +19,9 @@ type FilenameConfig = {
 - **默认值：**
 
 ```js
-// 开发环境
+// 开发环境构建
 const devDefaultFilename = {
+  html: '[name].html',
   js: '[name].js',
   css: '[name].css',
   svg: '[name].[contenthash:8].svg',
@@ -28,9 +30,10 @@ const devDefaultFilename = {
   media: '[name].[contenthash:8][ext]',
 };
 
-// 生产环境
+// 生产环境构建
 const prodDefaultFilename = {
-  js: isServer ? '[name].js' : '[name].[contenthash:8].js',
+  html: '[name].html',
+  js: output.target === 'node' ? '[name].js' : '[name].[contenthash:8].js',
   css: '[name].[contenthash:8].css',
   svg: '[name].[contenthash:8].svg',
   font: '[name].[contenthash:8][ext]',
@@ -45,6 +48,7 @@ const prodDefaultFilename = {
 
 下面是各个文件类型的说明：
 
+- `html`：表示 HTML 文件的名称，仅支持 `[name]` 占位符。
 - `js`：表示 JavaScript 文件的名称。
 - `css`：表示 CSS 样式文件的名称。
 - `svg`：表示 SVG 图片的名称。

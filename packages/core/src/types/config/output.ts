@@ -87,6 +87,11 @@ export type FilenameConfig = {
    */
   svg?: string;
   /**
+   * The name of HTML files.
+   * @default `[name].html`
+   */
+  html?: string;
+  /**
    * The name of the font files.
    * @default '[name].[contenthash:8][ext]'
    */

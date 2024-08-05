@@ -4,6 +4,7 @@
 
 ```ts
 type FilenameConfig = {
+  html?: string;
   js?:
     | string
     | ((pathData: Rspack.PathData, assetInfo: Rspack.JsAssetInfo) => string);
@@ -18,8 +19,9 @@ type FilenameConfig = {
 - **Default:**
 
 ```js
-// Development
+// Development build
 const devDefaultFilename = {
+  html: '[name].html',
   js: '[name].js',
   css: '[name].css',
   svg: '[name].[contenthash:8].svg',
@@ -28,9 +30,10 @@ const devDefaultFilename = {
   media: '[name].[contenthash:8][ext]',
 };
 
-// Production
+// Production build
 const prodDefaultFilename = {
-  js: isServer ? '[name].js' : '[name].[contenthash:8].js',
+  html: '[name].html',
+  js: output.target === 'node' ? '[name].js' : '[name].[contenthash:8].js',
   css: '[name].[contenthash:8].css',
   svg: '[name].[contenthash:8].svg',
   font: '[name].[contenthash:8][ext]',
@@ -45,6 +48,7 @@ After the production build, Rsbuild will add a hash in the middle of the filenam
 
 The following are the details of each filename:
 
+- `html`: The name of the HTML file, only supports the `[name]` placeholder.
 - `js`: The name of the JavaScript files.
 - `css`: The name of the CSS files.
 - `svg`: The name of the SVG images.
