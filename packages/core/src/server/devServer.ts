@@ -233,38 +233,34 @@ export async function createDevServer<
   };
 
   const environmentAPI = Object.fromEntries(
-    Object.entries(options.context.environments).map(
-      ([name, environment], index) => {
-        return [
-          name,
-          {
-            getStats: async () => {
-              if (!runCompile) {
-                throw new Error(
-                  "can't get stats info when runCompile is false",
-                );
-              }
-              await waitFirstCompileDone;
-              return lastStats[index];
-            },
-            loadBundle: async <T>(entryName: string) => {
-              await waitFirstCompileDone;
-              return loadBundle<T>(lastStats[index], entryName, {
-                readFileSync,
-                environment,
-              });
-            },
-            getTransformedHtml: async (entryName: string) => {
-              await waitFirstCompileDone;
-              return getTransformedHtml(entryName, {
-                readFileSync,
-                environment,
-              });
-            },
+    Object.entries(options.context.environments).map(([name, environment]) => {
+      return [
+        name,
+        {
+          getStats: async () => {
+            if (!runCompile) {
+              throw new Error("can't get stats info when runCompile is false");
+            }
+            await waitFirstCompileDone;
+            return lastStats[environment.index];
           },
-        ];
-      },
-    ),
+          loadBundle: async <T>(entryName: string) => {
+            await waitFirstCompileDone;
+            return loadBundle<T>(lastStats[environment.index], entryName, {
+              readFileSync,
+              environment,
+            });
+          },
+          getTransformedHtml: async (entryName: string) => {
+            await waitFirstCompileDone;
+            return getTransformedHtml(entryName, {
+              readFileSync,
+              environment,
+            });
+          },
+        },
+      ];
+    }),
   );
 
   const devMiddlewares = await getMiddlewares({

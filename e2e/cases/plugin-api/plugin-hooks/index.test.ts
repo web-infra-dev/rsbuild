@@ -1,4 +1,4 @@
-import { gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { getRandomPort, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
 
@@ -45,6 +45,12 @@ const createPlugin = () => {
       api.onAfterBuild(() => {
         names.push('AfterBuild');
       });
+      api.onBeforeEnvironmentCompile(() => {
+        names.push('BeforeEnvironmentCompile');
+      });
+      api.onAfterEnvironmentCompile(() => {
+        names.push('AfterEnvironmentCompile');
+      });
       api.onBeforeStartProdServer(() => {
         names.push('BeforeStartProdServer');
       });
@@ -83,8 +89,10 @@ rspackOnlyTest(
       'ModifyBundlerConfig',
       'BeforeCreateCompiler',
       'AfterCreateCompiler',
+      'BeforeEnvironmentCompile',
       'BeforeBuild',
       'ModifyHTMLTags',
+      'AfterEnvironmentCompile',
       'AfterBuild',
     ]);
   },
@@ -94,12 +102,16 @@ rspackOnlyTest(
   'should run plugin hooks correctly when running startDevServer',
   async ({ page }) => {
     process.env.NODE_ENV = 'development';
+    const port = await getRandomPort();
 
     const { plugin, names } = createPlugin();
     const rsbuild = await createRsbuild({
       cwd: __dirname,
       rsbuildConfig: {
         plugins: [plugin],
+        server: {
+          port,
+        },
       },
     });
 
@@ -117,8 +129,10 @@ rspackOnlyTest(
       'ModifyBundlerConfig',
       'BeforeCreateCompiler',
       'AfterCreateCompiler',
+      'BeforeEnvironmentCompile',
       'AfterStartDevServer',
       'ModifyHTMLTags',
+      'AfterEnvironmentCompile',
       'OnDevCompileDone',
       'OnCloseDevServer',
     ]);

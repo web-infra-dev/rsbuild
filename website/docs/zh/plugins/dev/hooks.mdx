@@ -13,6 +13,8 @@
 - [modifyHTMLTags](#modifyhtmltags)：修改注入到 HTML 中的标签。
 - [onBeforeCreateCompiler](#onbeforecreatecompiler)：在创建 compiler 实例前调用。
 - [onAfterCreateCompiler](#onaftercreatecompiler)：在创建 compiler 实例后、执行构建前调用。
+- [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile): 在每次执行单个 environment 的构建前调用。
+- [onAfterEnvironmentCompile](#onafterenvironmentcompile): 在每次单个 environment 的构建结束后调用。
 - [onExit](#onexit)：在进程即将退出时调用。
 
 ### Dev Hooks
@@ -51,15 +53,19 @@
 - [modifyRspackConfig](#modifyrspackconfig)
 - [onBeforeCreateCompiler](#onbeforecreatecompiler)
 - [onAfterCreateCompiler](#onaftercreatecompiler)
+- [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [onAfterStartDevServer](#onafterstartdevserver)
 - [modifyHTMLTags](#modifyhtmltags)
+- [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onDevCompileDone](#ondevcompiledone)
 - [onCloseDevServer](#onclosedevserver)
 - [onExit](#onexit)
 
 当 rebuild 时，以下 hooks 会再次触发：
 
+- [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [modifyHTMLTags](#modifyhtmltags)
+- [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onDevCompileDone](#ondevcompiledone)
 
 ### Build Hooks
@@ -72,15 +78,19 @@
 - [modifyRspackConfig](#modifyrspackconfig)
 - [onBeforeCreateCompiler](#onbeforecreatecompiler)
 - [onAfterCreateCompiler](#onaftercreatecompiler)
+- [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [onBeforeBuild](#onbeforebuild)
 - [modifyHTMLTags](#modifyhtmltags)
+- [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onAfterBuild](#onafterbuild)
 - [onExit](#onexit)
 
 当 rebuild 时，以下 hooks 会再次触发：
 
+- [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [onBeforeBuild](#onbeforebuild)
 - [modifyHTMLTags](#modifyhtmltags)
+- [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onAfterBuild](#onafterbuild)
 
 ### Preview Hooks
@@ -123,6 +133,8 @@
 - [modifyBundlerChain](#modifybundlerchain)
 - [modifyRspackConfig](#modifyrspackconfig)
 - [modifyHTMLTags](#modifyhtmltags)
+- [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
+- [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 
 ## 回调函数顺序
 
@@ -520,6 +532,45 @@ const myPlugin = () => ({
 });
 ```
 
+### onBeforeEnvironmentCompile
+
+import OnBeforeEnvironmentCompile from '@zh/shared/onBeforeEnvironmentCompile.mdx';
+
+<OnBeforeEnvironmentCompile />
+
+- **示例：**
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.onBeforeEnvironmentCompile(({ bundlerConfig, environment }) => {
+      console.log(
+        `the bundler config for the ${environment.name} is `,
+        bundlerConfig,
+      );
+    });
+  },
+});
+```
+
+### onAfterEnvironmentCompile
+
+import OnAfterEnvironmentCompile from '@zh/shared/onAfterEnvironmentCompile.mdx';
+
+<OnAfterEnvironmentCompile />
+
+- **示例：**
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.onAfterEnvironmentCompile(({ isFirstCompile, stats }) => {
+      console.log(stats?.toJson(), isFirstCompile);
+    });
+  },
+});
+```
+
 ## Build Hooks
 
 ### onBeforeBuild
@@ -592,6 +643,28 @@ const myPlugin = () => ({
     api.onAfterStartDevServer(({ port, routes }) => {
       console.log('this port is: ', port);
       console.log('this routes is: ', routes);
+    });
+  },
+});
+```
+
+### onAfterEnvironmentCompile
+
+import OnDevCompileEnvironmentDone from '@zh/shared/onAfterEnvironmentCompile.mdx';
+
+<OnDevCompileEnvironmentDone />
+
+- **示例：**
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.onAfterEnvironmentCompile(({ isFirstCompile }) => {
+      if (isFirstCompile) {
+        console.log('first compile!');
+      } else {
+        console.log('re-compile!');
+      }
     });
   },
 });

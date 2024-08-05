@@ -6,8 +6,8 @@ import {
   formatStats,
   getDevMiddleware,
   getStatsOptions,
+  registerDevHook,
 } from './shared';
-import { onCompileDone } from './shared';
 import type { WebpackConfig } from './types';
 
 export async function createCompiler({
@@ -31,7 +31,7 @@ export async function createCompiler({
     | Rspack.Compiler
     | Rspack.MultiCompiler;
 
-  const done = async (stats: unknown) => {
+  const done = (stats: unknown) => {
     const { message, level } = formatStats(
       stats as Rspack.Stats,
       getStatsOptions(compiler),
@@ -43,21 +43,20 @@ export async function createCompiler({
     if (level === 'warning') {
       logger.warn(message);
     }
-
-    if (process.env.NODE_ENV === 'development') {
-      await context.hooks.onDevCompileDone.call({
-        isFirstCompile,
-        stats: stats as Rspack.Stats,
-        environments: context.environments,
-      });
-    }
-
-    isFirstCompile = false;
   };
 
-  let isFirstCompile = true;
+  compiler.hooks.done.tap('rsbuild:done', (stats: unknown) => {
+    done(stats);
+  });
 
-  onCompileDone(compiler, done, WebpackMultiStats);
+  if (process.env.NODE_ENV === 'development') {
+    registerDevHook({
+      compiler,
+      context,
+      bundlerConfigs: webpackConfigs as any,
+      MultiStatsCtor: WebpackMultiStats,
+    });
+  }
 
   await context.hooks.onAfterCreateCompiler.call({
     compiler,

@@ -1,10 +1,6 @@
 import { rspack } from '@rspack/core';
-import {
-  getNodeEnv,
-  onBeforeBuild,
-  onCompileDone,
-  setNodeEnv,
-} from '../helpers';
+import { getNodeEnv, setNodeEnv } from '../helpers';
+import { registerBuildHook } from '../hooks';
 import { logger } from '../logger';
 import type {
   BuildOptions,
@@ -42,30 +38,13 @@ export const build = async (
     bundlerConfigs = rspackConfigs;
   }
 
-  let isFirstCompile = true;
-
-  const beforeBuild = async () =>
-    await context.hooks.onBeforeBuild.call({
-      bundlerConfigs,
-      environments: context.environments,
-      isWatch: Boolean(watch),
-      isFirstCompile,
-    });
-
-  const onDone = async (stats: Stats | MultiStats) => {
-    const p = context.hooks.onAfterBuild.call({
-      isFirstCompile,
-      stats,
-      environments: context.environments,
-      isWatch: Boolean(watch),
-    });
-    isFirstCompile = false;
-    await p;
-  };
-
-  onBeforeBuild(compiler, beforeBuild, watch);
-
-  onCompileDone(compiler, onDone, rspack.MultiStats);
+  registerBuildHook({
+    context,
+    bundlerConfigs,
+    compiler,
+    isWatch: Boolean(watch),
+    MultiStatsCtor: rspack.MultiStats,
+  });
 
   if (watch) {
     const watching = compiler.watch({}, (err) => {

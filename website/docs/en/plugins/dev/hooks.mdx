@@ -13,6 +13,8 @@ This chapter introduces the plugin hooks available for Rsbuild plugins.
 - [modifyHTMLTags](#modifyhtmltags): Modify the tags that are injected into the HTML.
 - [onBeforeCreateCompiler](#onbeforecreatecompiler): Called before creating a compiler instance.
 - [onAfterCreateCompiler](#onaftercreatecompiler): Called after creating a compiler instance and before building.
+- [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile): Called before the compilation of a single environment.
+- [onAfterEnvironmentCompile](#onafterenvironmentcompile): Called after the compilation of a single environment. You can get the build result information.
 - [onExit](#onexit): Called when the process is about to exit.
 
 ### Dev Hooks
@@ -51,15 +53,19 @@ When the `rsbuild dev` command or `rsbuild.startDevServer()` method is executed,
 - [modifyRspackConfig](#modifyrspackconfig)
 - [onBeforeCreateCompiler](#onbeforecreatecompiler)
 - [onAfterCreateCompiler](#onaftercreatecompiler)
+- [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [onAfterStartDevServer](#onafterstartdevserver)
 - [modifyHTMLTags](#modifyhtmltags)
+- [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onDevCompileDone](#ondevcompiledone)
 - [onCloseDevServer](#onclosedevserver)
 - [onExit](#onexit)
 
 When rebuilding, the following hooks will be triggered again:
 
+- [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [modifyHTMLTags](#modifyhtmltags)
+- [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onDevCompileDone](#ondevcompiledone)
 
 ### Build Hooks
@@ -72,16 +78,20 @@ When the `rsbuild build` command or `rsbuild.build()` method is executed, Rsbuil
 - [modifyRspackConfig](#modifyrspackconfig)
 - [onBeforeCreateCompiler](#onbeforecreatecompiler)
 - [onAfterCreateCompiler](#onaftercreatecompiler)
+- [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [onBeforeBuild](#onbeforebuild)
 - [modifyHTMLTags](#modifyhtmltags)
+- [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onAfterBuild](#onafterbuild)
 - [onExit](#onexit)
 
 When rebuilding, the following hooks will be triggered again:
 
+- [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [onBeforeBuild](#onbeforebuild)
 - [modifyHTMLTags](#modifyhtmltags)
 - [onAfterBuild](#onafterbuild)
+- [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 
 ### Preview Hooks
 
@@ -123,6 +133,8 @@ Correspondingly, there are some plugin hooks that are related to the current env
 - [modifyBundlerChain](#modifybundlerchain)
 - [modifyRspackConfig](#modifyrspackconfig)
 - [modifyHTMLTags](#modifyhtmltags)
+- [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
+- [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 
 ## Callback Order
 
@@ -524,6 +536,45 @@ const myPlugin = () => ({
 });
 ```
 
+### onBeforeEnvironmentCompile
+
+import OnBeforeEnvironmentCompile from '@en/shared/onBeforeEnvironmentCompile.mdx';
+
+<OnBeforeEnvironmentCompile />
+
+- **Example:**
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.onBeforeEnvironmentCompile(({ bundlerConfig, environment }) => {
+      console.log(
+        `the bundler config for the ${environment.name} is `,
+        bundlerConfig,
+      );
+    });
+  },
+});
+```
+
+### onAfterEnvironmentCompile
+
+import OnAfterEnvironmentCompile from '@en/shared/onAfterEnvironmentCompile.mdx';
+
+<OnAfterEnvironmentCompile />
+
+- **Example:**
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.onAfterEnvironmentCompile(({ isFirstCompile, stats }) => {
+      console.log(stats?.toJson(), isFirstCompile);
+    });
+  },
+});
+```
+
 ## Build Hooks
 
 ### onBeforeBuild
@@ -596,6 +647,28 @@ const myPlugin = () => ({
     api.onAfterStartDevServer(({ port, routes }) => {
       console.log('this port is: ', port);
       console.log('this routes is: ', routes);
+    });
+  },
+});
+```
+
+### onAfterEnvironmentCompile
+
+import OnDevCompileEnvironmentDone from '@en/shared/onAfterEnvironmentCompile.mdx';
+
+<OnDevCompileEnvironmentDone />
+
+- **Example:**
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.onAfterEnvironmentCompile(({ isFirstCompile }) => {
+      if (isFirstCompile) {
+        console.log('first compile!');
+      } else {
+        console.log('re-compile!');
+      }
     });
   },
 });

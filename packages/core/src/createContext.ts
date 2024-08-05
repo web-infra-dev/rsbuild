@@ -3,7 +3,7 @@ import browserslist from 'browserslist';
 import { withDefaultConfig } from './config';
 import { DEFAULT_BROWSERSLIST, ROOT_DIST_DIR } from './constants';
 import { getCommonParentPath } from './helpers/path';
-import { initHooks } from './initHooks';
+import { initHooks } from './hooks';
 import { getHTMLPathByEntry } from './initPlugins';
 import { logger } from './logger';
 import type {
