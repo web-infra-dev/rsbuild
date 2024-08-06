@@ -8,19 +8,19 @@ changelog:
   categories:
     - title: Breaking Changes 🍭
       labels:
-        - "change: breaking"
+        - "release: breaking change"
     - title: New Features 🎉
       labels:
-        - "change: feat"
+        - "release: feature"
     - title: Performance 🚀
       labels:
-        - "change: perf"
+        - "release: performance"
     - title: Bug Fixes 🐞
       labels:
-        - "change: fix"
+        - "release: bug fix"
     - title: Document 📖
       labels:
-        - "change: docs"
+        - "release: document"
     - title: Other Changes
       labels:
         - "*"
