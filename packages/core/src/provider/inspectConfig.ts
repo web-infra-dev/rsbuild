@@ -38,8 +38,8 @@ export async function inspectConfig({
   inspectOptions?: InspectConfigOptions;
   bundlerConfigs?: RspackConfig[];
 }): Promise<InspectConfigResult<'rspack'>> {
-  if (inspectOptions.env) {
-    setNodeEnv(inspectOptions.env);
+  if (inspectOptions.mode) {
+    setNodeEnv(inspectOptions.mode);
   } else if (!getNodeEnv()) {
     setNodeEnv('development');
   }

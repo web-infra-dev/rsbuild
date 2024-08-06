@@ -34,8 +34,8 @@ export async function inspectConfig({
   inspectOptions?: InspectConfigOptions;
   bundlerConfigs?: WebpackConfig[];
 }): Promise<InspectConfigResult<'webpack'>> {
-  if (inspectOptions.env) {
-    process.env.NODE_ENV = inspectOptions.env;
+  if (inspectOptions.mode) {
+    process.env.NODE_ENV = inspectOptions.mode;
   } else if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = 'development';
   }

@@ -21,7 +21,7 @@ export type BuildOptions = CommonOptions & {
 };
 
 export type InspectOptions = CommonOptions & {
-  env: RsbuildMode;
+  mode: RsbuildMode;
   output: string;
   verbose?: boolean;
 };
@@ -135,14 +135,14 @@ export function runCli(): void {
 
   inspectCommand
     .description('inspect the Rspack and Rsbuild configs')
-    .option('--env <env>', 'specify env mode', 'development')
+    .option('--mode <mode>', 'specify the mode for Rsbuild', 'development')
     .option('--output <output>', 'specify inspect content output path')
     .option('--verbose', 'show full function definitions in output')
     .action(async (options: InspectOptions) => {
       try {
         const rsbuild = await init({ cliOptions: options });
         await rsbuild?.inspectConfig({
-          env: options.env,
+          mode: options.mode,
           verbose: options.verbose,
           outputPath: options.output,
           writeToDisk: true,
