@@ -4,7 +4,6 @@ import type {
 } from '@rspack/core';
 import { rspack } from '@rspack/core';
 import deepmerge from 'deepmerge';
-import { isObject } from '../helpers';
 import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
 
 export const getSwcMinimizerOptions = (
@@ -13,40 +12,39 @@ export const getSwcMinimizerOptions = (
 ): SwcJsMinimizerRspackPluginOptions => {
   const options: SwcJsMinimizerRspackPluginOptions = {};
 
+  options.minimizerOptions ||= {};
+  options.minimizerOptions.format ||= {};
+
   const { removeConsole } = config.performance;
 
   if (removeConsole === true) {
-    options.compress = {
-      ...(isObject(options.compress) ? options.compress : {}),
+    options.minimizerOptions.compress = {
       drop_console: true,
     };
   } else if (Array.isArray(removeConsole)) {
     const pureFuncs = removeConsole.map((method) => `console.${method}`);
-    options.compress = {
-      ...(isObject(options.compress) ? options.compress : {}),
+    options.minimizerOptions.compress = {
       pure_funcs: pureFuncs,
     };
   }
 
-  options.format ||= {};
-
   switch (config.output.legalComments) {
     case 'inline':
-      options.format.comments = 'some';
+      options.minimizerOptions.format.comments = 'some';
       options.extractComments = false;
       break;
     case 'linked':
       options.extractComments = true;
       break;
     case 'none':
-      options.format.comments = false;
+      options.minimizerOptions.format.comments = false;
       options.extractComments = false;
       break;
     default:
       break;
   }
 
-  options.format.asciiOnly = config.output.charset === 'ascii';
+  options.minimizerOptions.format.asciiOnly = config.output.charset === 'ascii';
 
   if (jsOptions) {
     return deepmerge(options, jsOptions);
@@ -113,14 +111,22 @@ export const pluginMinimize = (): RsbuildPlugin => ({
       }
 
       if (minifyCss && isRspack) {
-        const options: LightningCssMinimizerRspackPluginOptions = {
-          browserslist: environment.browserslist,
-          ...cssOptions,
+        const defaultOptions = {
+          minimizerOptions: {
+            targets: environment.browserslist,
+          },
         };
+
+        const mergedOptions = cssOptions
+          ? deepmerge<LightningCssMinimizerRspackPluginOptions>(
+              defaultOptions,
+              cssOptions,
+            )
+          : defaultOptions;
 
         chain.optimization
           .minimizer(CHAIN_ID.MINIMIZER.CSS)
-          .use(rspack.LightningCssMinimizerRspackPlugin, [options])
+          .use(rspack.LightningCssMinimizerRspackPlugin, [mergedOptions])
           .end();
       }
     });

@@ -23,16 +23,16 @@ export const loadBundle = async <T>(
     throw new Error(`can't find entry(${entryName})`);
   }
 
-  const { chunks: entryChunks } = entrypoints[entryName];
+  const { chunks: entryChunks = [] } = entrypoints[entryName];
 
   // find main entryChunk from chunks
-  const files = entryChunks.reduce<string[]>((prev, curr) => {
-    const c = curr
-      ? chunks?.find((c) => c.names.includes(curr) && c.entry)
-      : undefined;
+  const files = entryChunks.reduce<string[]>((prev, entryChunkName) => {
+    const chunk = chunks?.find(
+      (chunk) => chunk.entry && chunk.names?.includes(String(entryChunkName)),
+    );
 
-    return c
-      ? prev.concat(c?.files.filter((file) => !file.endsWith('.css')))
+    return chunk?.files
+      ? prev.concat(chunk.files.filter((file) => !file.endsWith('.css')))
       : prev;
   }, []);
 

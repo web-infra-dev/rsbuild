@@ -103,7 +103,9 @@ export default {
   output: {
     minify: {
       jsOptions: {
-        mangle: false,
+        minimizerOptions: {
+          mangle: false,
+        },
       },
     },
   },

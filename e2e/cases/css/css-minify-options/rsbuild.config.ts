@@ -4,7 +4,9 @@ export default defineConfig({
   output: {
     minify: {
       cssOptions: {
-        unusedSymbols: ['foo', 'fade-in', '--color'],
+        minimizerOptions: {
+          unusedSymbols: ['foo', 'fade-in', '--color'],
+        },
       },
     },
   },

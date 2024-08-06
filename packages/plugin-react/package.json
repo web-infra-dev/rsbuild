@@ -27,7 +27,7 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@rspack/plugin-react-refresh": "1.0.0-beta.2",
+    "@rspack/plugin-react-refresh": "1.0.0-beta.3",
     "react-refresh": "^0.14.2"
   },
   "devDependencies": {

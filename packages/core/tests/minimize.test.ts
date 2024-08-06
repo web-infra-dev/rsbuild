@@ -32,8 +32,10 @@ describe('plugin-minimize', () => {
           "_args": [
             {
               "extractComments": true,
-              "format": {
-                "asciiOnly": true,
+              "minimizerOptions": {
+                "format": {
+                  "asciiOnly": true,
+                },
               },
             },
           ],
@@ -43,12 +45,14 @@ describe('plugin-minimize', () => {
         LightningCssMinimizerRspackPlugin {
           "_args": [
             {
-              "browserslist": [
-                "chrome >= 87",
-                "edge >= 88",
-                "firefox >= 78",
-                "safari >= 14",
-              ],
+              "minimizerOptions": {
+                "targets": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
+                ],
+              },
             },
           ],
           "affectedHooks": undefined,
@@ -182,12 +186,14 @@ describe('plugin-minimize', () => {
         SwcJsMinimizerRspackPlugin {
           "_args": [
             {
-              "compress": {
-                "drop_console": true,
-              },
               "extractComments": true,
-              "format": {
-                "asciiOnly": true,
+              "minimizerOptions": {
+                "compress": {
+                  "drop_console": true,
+                },
+                "format": {
+                  "asciiOnly": true,
+                },
               },
             },
           ],
@@ -197,12 +203,14 @@ describe('plugin-minimize', () => {
         LightningCssMinimizerRspackPlugin {
           "_args": [
             {
-              "browserslist": [
-                "chrome >= 87",
-                "edge >= 88",
-                "firefox >= 78",
-                "safari >= 14",
-              ],
+              "minimizerOptions": {
+                "targets": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
+                ],
+              },
             },
           ],
           "affectedHooks": undefined,
@@ -235,15 +243,17 @@ describe('plugin-minimize', () => {
         SwcJsMinimizerRspackPlugin {
           "_args": [
             {
-              "compress": {
-                "pure_funcs": [
-                  "console.log",
-                  "console.warn",
-                ],
-              },
               "extractComments": true,
-              "format": {
-                "asciiOnly": true,
+              "minimizerOptions": {
+                "compress": {
+                  "pure_funcs": [
+                    "console.log",
+                    "console.warn",
+                  ],
+                },
+                "format": {
+                  "asciiOnly": true,
+                },
               },
             },
           ],
@@ -253,12 +263,14 @@ describe('plugin-minimize', () => {
         LightningCssMinimizerRspackPlugin {
           "_args": [
             {
-              "browserslist": [
-                "chrome >= 87",
-                "edge >= 88",
-                "firefox >= 78",
-                "safari >= 14",
-              ],
+              "minimizerOptions": {
+                "targets": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
+                ],
+              },
             },
           ],
           "affectedHooks": undefined,
@@ -292,8 +304,10 @@ describe('plugin-minimize', () => {
           "_args": [
             {
               "extractComments": true,
-              "format": {
-                "asciiOnly": false,
+              "minimizerOptions": {
+                "format": {
+                  "asciiOnly": false,
+                },
               },
             },
           ],
@@ -303,12 +317,14 @@ describe('plugin-minimize', () => {
         LightningCssMinimizerRspackPlugin {
           "_args": [
             {
-              "browserslist": [
-                "chrome >= 87",
-                "edge >= 88",
-                "firefox >= 78",
-                "safari >= 14",
-              ],
+              "minimizerOptions": {
+                "targets": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
+                ],
+              },
             },
           ],
           "affectedHooks": undefined,
