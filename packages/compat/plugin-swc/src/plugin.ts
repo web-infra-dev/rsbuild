@@ -108,40 +108,42 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
     api.modifyBundlerChain((chain, { CHAIN_ID, isProd, environment }) => {
       const environmentConfig = environment.config;
 
-      if (checkUseMinify(mainConfig, environmentConfig, isProd)) {
-        const { minify } = environmentConfig.output;
-        const minifyJs =
-          minify === true || (typeof minify === 'object' && minify.js);
-        const minifyCss =
-          minify === true || (typeof minify === 'object' && minify.css);
+      if (!checkUseMinify(mainConfig, environmentConfig, isProd)) {
+        return;
+      }
 
-        if (minifyJs) {
-          chain.optimization
-            .minimizer(CHAIN_ID.MINIMIZER.JS)
-            .use(SwcMinimizerPlugin, [
-              {
-                jsMinify:
-                  (typeof minify === 'object' && minify.jsOptions
-                    ? minify.jsOptions
-                    : undefined) ??
-                  mainConfig.jsMinify ??
-                  mainConfig.jsc?.minify ??
-                  true,
-                environmentConfig,
-              },
-            ]);
-        }
+      const { minify } = environmentConfig.output;
+      const minifyJs =
+        minify === true || (typeof minify === 'object' && minify.js);
+      const minifyCss =
+        minify === true || (typeof minify === 'object' && minify.css);
 
-        if (minifyCss) {
-          chain.optimization
-            .minimizer(CHAIN_ID.MINIMIZER.CSS)
-            .use(SwcMinimizerPlugin, [
-              {
-                cssMinify: mainConfig.cssMinify ?? true,
-                environmentConfig,
-              },
-            ]);
-        }
+      if (minifyJs) {
+        chain.optimization
+          .minimizer(CHAIN_ID.MINIMIZER.JS)
+          .use(SwcMinimizerPlugin, [
+            {
+              jsMinify:
+                (typeof minify === 'object' && minify.jsOptions
+                  ? minify.jsOptions.minimizerOptions
+                  : undefined) ??
+                mainConfig.jsMinify ??
+                mainConfig.jsc?.minify ??
+                true,
+              environmentConfig,
+            },
+          ]);
+      }
+
+      if (minifyCss) {
+        chain.optimization
+          .minimizer(CHAIN_ID.MINIMIZER.CSS)
+          .use(SwcMinimizerPlugin, [
+            {
+              cssMinify: mainConfig.cssMinify ?? true,
+              environmentConfig,
+            },
+          ]);
       }
     });
   },

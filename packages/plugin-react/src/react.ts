@@ -96,10 +96,12 @@ export const applyReactProfiler = (api: RsbuildPluginAPI): void => {
       output: {
         minify: {
           jsOptions: {
-            // Need to keep classnames and function names like Components for debugging purposes.
-            mangle: {
-              keep_classnames: true,
-              keep_fnames: true,
+            minimizerOptions: {
+              // Need to keep classnames and function names like Components for debugging purposes.
+              mangle: {
+                keep_classnames: true,
+                keep_fnames: true,
+              },
             },
           },
         },

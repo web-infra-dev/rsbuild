@@ -66,7 +66,9 @@ export default {
   output: {
     minify: {
       jsOptions: {
-        mangle: false,
+        minimizerOptions: {
+          mangle: false,
+        },
       },
     },
   },
@@ -84,7 +86,9 @@ export default {
   output: {
     minify: {
       cssOptions: {
-        errorRecovery: false,
+        minimizerOptions: {
+          errorRecovery: false,
+        },
       },
     },
   },

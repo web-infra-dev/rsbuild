@@ -56,13 +56,11 @@ export class SwcMinimizerPlugin {
   getDefaultJsMinifyOptions(
     environmentConfig: NormalizedEnvironmentConfig,
   ): JsMinifyOptions {
-    const options = {
-      ...__internalHelper.getSwcMinimizerOptions(environmentConfig),
+    const options: JsMinifyOptions = {
+      ...__internalHelper.getSwcMinimizerOptions(environmentConfig)
+        .minimizerOptions,
       mangle: true,
     };
-
-    // extractComments not supported yet
-    delete options.extractComments;
 
     return options;
   }

@@ -452,8 +452,10 @@ describe('plugin-swc', () => {
               minify: {
                 js: true,
                 jsOptions: {
-                  compress: {
-                    ecma: 2019,
+                  minimizerOptions: {
+                    compress: {
+                      ecma: 2019,
+                    },
                   },
                 },
               },

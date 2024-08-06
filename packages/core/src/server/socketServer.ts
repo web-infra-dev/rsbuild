@@ -227,10 +227,16 @@ export class SocketServer {
     if (stats.entrypoints) {
       for (const entrypoint of Object.values(stats.entrypoints)) {
         const chunks = entrypoint.chunks;
-        if (Array.isArray(chunks)) {
-          for (const chunkName of chunks) {
-            chunkName && newInitialChunks.add(chunkName);
+
+        if (!Array.isArray(chunks)) {
+          continue;
+        }
+
+        for (const chunkName of chunks) {
+          if (!chunkName) {
+            continue;
           }
+          newInitialChunks.add(String(chunkName));
         }
       }
     }
