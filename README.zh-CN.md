@@ -12,7 +12,7 @@
   <a href="https://github.com/web-infra-dev/rsbuild/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="license" /></a>
 </p>
 
-[English](./README.md) | 简体中文
+[English](./README.md) | [Portuguese](./README.pt-BR.md) | 简体中文
 
 Rsbuild 是由 [Rspack](https://rspack.dev/) 驱动的高性能构建工具，它默认包含了一套精心设计的构建配置，提供开箱即用的开发体验，并能够充分发挥出 Rspack 的性能优势。
 
