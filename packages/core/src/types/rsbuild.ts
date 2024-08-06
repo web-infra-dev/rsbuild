@@ -38,7 +38,7 @@ export type BuildOptions = {
 };
 
 export type InspectConfigOptions = {
-  env?: RsbuildMode;
+  mode?: RsbuildMode;
   verbose?: boolean;
   outputPath?: string;
   writeToDisk?: boolean;

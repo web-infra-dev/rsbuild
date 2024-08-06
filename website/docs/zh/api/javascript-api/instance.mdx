@@ -574,7 +574,7 @@ inspectConfig 方法通常用于调试 Rsbuild 内部的配置，它会返回 Rs
 type InspectConfigOptions = {
   // 查看指定环境下的配置
   // 默认为 "development"，可以设置为 "production"
-  env?: RsbuildMode;
+  mode?: RsbuildMode;
   // 是否开启冗余模式，展示配置中函数的完整内容
   // 默认为 `false`
   verbose?: boolean;
