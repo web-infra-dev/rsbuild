@@ -7,20 +7,20 @@ import type SassLoader from '../compiled/sass-loader/index.js';
 
 export type SassLoaderOptions = Omit<
   SassLoader.Options,
-  'sassOptions' | 'additionalData'
+  'api' | 'sassOptions' | 'additionalData'
 > &
   (
     | {
-        api?: 'legacy';
-        sassOptions?: Partial<LegacySassOptions<'async'>>;
-      }
-    | {
-        api: 'modern' | 'modern-compiler';
+        api?: 'modern' | 'modern-compiler';
         sassOptions?: SassOptions<'async'>;
       }
+    | {
+        api: 'legacy';
+        sassOptions?: Partial<LegacySassOptions<'async'>>;
+      }
   ) & {
-    // @types/sass-loader is outdated
-    // see https://github.com/web-infra-dev/rsbuild/issues/2582
+    // Use `Rspack.LoaderContext` instead of `webpack.LoaderContext`
+    // see https://github.com/web-infra-dev/rsbuild/pull/2708
     additionalData?:
       | string
       | ((
