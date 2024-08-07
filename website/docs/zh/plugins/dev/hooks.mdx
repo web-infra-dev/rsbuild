@@ -335,7 +335,7 @@ const myPlugin = () => ({
 ```ts
 type ModifyRspackConfigUtils = {
   environment: EnvironmentContext;
-  env: NodeEnv;
+  env: string;
   isDev: boolean;
   isProd: boolean;
   target: RsbuildTarget;
@@ -379,7 +379,7 @@ import RspackChain from '@zh/shared/rspackChain.mdx';
 ```ts
 type ModifyBundlerChainUtils = {
   environment: EnvironmentContext;
-  env: NodeEnv;
+  env: string;
   isDev: boolean;
   isProd: boolean;
   target: RsbuildTarget;

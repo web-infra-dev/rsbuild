@@ -873,7 +873,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "infrastructureLogging": {
     "level": "error",
   },
-  "mode": "development",
+  "mode": "none",
   "module": {
     "parser": {
       "javascript": {

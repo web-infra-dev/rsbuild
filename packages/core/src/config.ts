@@ -49,6 +49,7 @@ import type {
   PublicDirOptions,
   RsbuildConfig,
   RsbuildEntry,
+  RsbuildMode,
 } from './types';
 
 const getDefaultDevConfig = (): NormalizedDevConfig => ({
@@ -228,12 +229,20 @@ export const withDefaultConfig = async (
  * 3. Meaningful and can be filled by constant value.
  */
 export const normalizeConfig = (config: RsbuildConfig): NormalizedConfig => {
-  const mode =
-    process.env.NODE_ENV === 'production' ? 'production' : 'development';
+  const getMode = (): RsbuildMode => {
+    if (config.mode) {
+      return config.mode;
+    }
+    const nodeEnv = getNodeEnv();
+    return nodeEnv === 'production' || nodeEnv === 'development'
+      ? nodeEnv
+      : 'none';
+  };
+
   return mergeRsbuildConfig(
     {
       ...createDefaultConfig(),
-      mode,
+      mode: getMode(),
     },
     config,
   ) as unknown as NormalizedConfig;

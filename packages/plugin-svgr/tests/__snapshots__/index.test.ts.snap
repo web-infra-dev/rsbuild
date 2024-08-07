@@ -46,7 +46,7 @@ exports[`svgr > 'configure SVGR options' 1`] = `
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
                 "react": {
-                  "development": true,
+                  "development": false,
                   "refresh": true,
                   "runtime": "automatic",
                 },
@@ -139,7 +139,7 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
                 "react": {
-                  "development": true,
+                  "development": false,
                   "refresh": true,
                   "runtime": "automatic",
                 },
@@ -204,7 +204,7 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
                 "react": {
-                  "development": true,
+                  "development": false,
                   "refresh": true,
                   "runtime": "automatic",
                 },
@@ -296,7 +296,7 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
                 "react": {
-                  "development": true,
+                  "development": false,
                   "refresh": true,
                   "runtime": "automatic",
                 },
@@ -361,7 +361,7 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
                 "react": {
-                  "development": true,
+                  "development": false,
                   "refresh": true,
                   "runtime": "automatic",
                 },
@@ -453,7 +453,7 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
                 "react": {
-                  "development": true,
+                  "development": false,
                   "refresh": true,
                   "runtime": "automatic",
                 },
@@ -518,7 +518,7 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
                 "react": {
-                  "development": true,
+                  "development": false,
                   "refresh": true,
                   "runtime": "automatic",
                 },
@@ -610,7 +610,7 @@ exports[`svgr > 'exportType named / mixedImport true' 1`] = `
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
                 "react": {
-                  "development": true,
+                  "development": false,
                   "refresh": true,
                   "runtime": "automatic",
                 },
@@ -675,7 +675,7 @@ exports[`svgr > 'exportType named / mixedImport true' 1`] = `
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
                 "react": {
-                  "development": true,
+                  "development": false,
                   "refresh": true,
                   "runtime": "automatic",
                 },
