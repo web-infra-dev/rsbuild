@@ -227,11 +227,17 @@ export const withDefaultConfig = async (
  * 2. Object value that should not be empty.
  * 3. Meaningful and can be filled by constant value.
  */
-export const normalizeConfig = (config: RsbuildConfig): NormalizedConfig =>
-  mergeRsbuildConfig(
-    createDefaultConfig(),
+export const normalizeConfig = (config: RsbuildConfig): NormalizedConfig => {
+  const mode =
+    process.env.NODE_ENV === 'production' ? 'production' : 'development';
+  return mergeRsbuildConfig(
+    {
+      ...createDefaultConfig(),
+      mode,
+    },
     config,
   ) as unknown as NormalizedConfig;
+};
 
 export type ConfigParams = {
   env: string;

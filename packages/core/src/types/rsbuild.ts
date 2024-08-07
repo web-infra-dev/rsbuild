@@ -32,7 +32,6 @@ export type PreviewServerOptions = {
 };
 
 export type BuildOptions = {
-  mode?: RsbuildMode;
   watch?: boolean;
   compiler?: Compiler | MultiCompiler;
 };
