@@ -11,7 +11,7 @@ function OnBeforeBuild(
   callback: (params: {
     isWatch: boolean;
     isFirstCompile: boolean;
-    bundlerConfigs?: WebpackConfig[] | RspackConfig[];
+    bundlerConfigs?: Rspack.Configuration[];
     environments: Record<string, EnvironmentContext>;
   }) => Promise<void> | void,
 ): void;

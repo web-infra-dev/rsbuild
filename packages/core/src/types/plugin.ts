@@ -34,8 +34,7 @@ import type {
   OnExitFn,
 } from './hooks';
 import type { RsbuildTarget } from './rsbuild';
-import type { Rspack } from './rspack';
-import type { RspackConfig, RspackSourceMap } from './rspack';
+import type { Rspack, RspackSourceMap } from './rspack';
 import type { HtmlRspackPlugin } from './thirdParty';
 import type { Falsy } from './utils';
 import type { MaybePromise } from './utils';
@@ -72,9 +71,9 @@ export type AsyncHook<Callback extends (...args: any[]) => any> = {
 };
 
 export type ModifyRspackConfigFn = (
-  config: RspackConfig,
+  config: Rspack.Configuration,
   utils: ModifyRspackConfigUtils,
-) => Promise<RspackConfig | void> | RspackConfig | void;
+) => MaybePromise<Rspack.Configuration | void>;
 
 export type ModifyWebpackChainUtils = ModifyChainUtils & {
   webpack: typeof import('webpack');

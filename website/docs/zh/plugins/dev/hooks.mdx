@@ -346,9 +346,9 @@ type ModifyRspackConfigUtils = {
 
 function ModifyRspackConfig(
   callback: (
-    config: RspackConfig,
+    config: Rspack.Configuration,
     utils: ModifyRspackConfigUtils,
-  ) => Promise<RspackConfig | void> | RspackConfig | void,
+  ) => Promise<RspackConfig | void> | Rspack.Configuration | void,
 ): void;
 ```
 

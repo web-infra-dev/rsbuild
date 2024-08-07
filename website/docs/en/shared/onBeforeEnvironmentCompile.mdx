@@ -11,7 +11,7 @@ function OnBeforeEnvironmentCompile(
   callback: (params: {
     isWatch: boolean;
     isFirstCompile: boolean;
-    bundlerConfig?: RspackConfig;
+    bundlerConfig?: Rspack.Configuration;
     environment: EnvironmentContext;
   }) => Promise<void> | void,
 ): void;

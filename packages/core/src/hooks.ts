@@ -28,7 +28,6 @@ import type {
   OnDevCompileDoneFn,
   OnExitFn,
   Rspack,
-  RspackConfig,
   Stats,
 } from './types';
 
@@ -323,7 +322,7 @@ export const registerBuildHook = ({
   bundlerConfigs,
   MultiStatsCtor,
 }: {
-  bundlerConfigs?: RspackConfig[];
+  bundlerConfigs?: Rspack.Configuration[];
   context: InternalContext;
   compiler: Rspack.Compiler | Rspack.MultiCompiler;
   isWatch: boolean;
@@ -405,7 +404,7 @@ export const registerDevHook = ({
   bundlerConfigs,
   MultiStatsCtor,
 }: {
-  bundlerConfigs?: RspackConfig[];
+  bundlerConfigs?: Rspack.Configuration[];
   context: InternalContext;
   compiler: Rspack.Compiler | Rspack.MultiCompiler;
   MultiStatsCtor: new (stats: Rspack.Stats[]) => Rspack.MultiStats;

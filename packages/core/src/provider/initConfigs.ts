@@ -19,7 +19,7 @@ import type {
   PluginManager,
   ResolvedCreateRsbuildOptions,
   RsbuildEntry,
-  RspackConfig,
+  Rspack,
 } from '../types';
 import { inspectConfig } from './inspectConfig';
 import { generateRspackConfig } from './rspackConfig';
@@ -213,7 +213,7 @@ export async function initConfigs({
   pluginManager,
   rsbuildOptions,
 }: InitConfigsOptions): Promise<{
-  rspackConfigs: RspackConfig[];
+  rspackConfigs: Rspack.Configuration[];
 }> {
   const normalizedConfig = await initRsbuildConfig({ context, pluginManager });
 
