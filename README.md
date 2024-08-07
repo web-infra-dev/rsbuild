@@ -12,7 +12,7 @@
   <a href="https://github.com/web-infra-dev/rsbuild/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="license" /></a>
 </p>
 
-English | [简体中文](./README.zh-CN.md)
+English | [Portuguese](./README.pt-BR.md) | [简体中文](./README.zh-CN.md)
 
 Rsbuild is a high-performance build tool powered by Rspack. It provides a set of thoughtfully designed default build configs, offering an out-of-the-box development experience and can fully unleash the performance advantages of Rspack.
 
