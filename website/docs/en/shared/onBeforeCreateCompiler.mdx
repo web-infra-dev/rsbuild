@@ -7,7 +7,7 @@ You can access the Rspack configuration array through the `bundlerConfigs` param
 ```ts
 function OnBeforeCreateCompiler(
   callback: (params: {
-    bundlerConfigs: WebpackConfig[] | RspackConfig[];
+    bundlerConfigs: Rspack.Configuration[];
     environments: Record<string, EnvironmentContext>;
   }) => Promise<void> | void,
 ): void;

@@ -9,7 +9,7 @@ import type {
   InspectConfigOptions,
   InspectConfigResult,
   InternalContext,
-  RspackConfig,
+  Rspack,
 } from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
@@ -36,7 +36,7 @@ export async function inspectConfig({
   inspectOptions = {},
 }: InitConfigsOptions & {
   inspectOptions?: InspectConfigOptions;
-  bundlerConfigs?: RspackConfig[];
+  bundlerConfigs?: Rspack.Configuration[];
 }): Promise<InspectConfigResult<'rspack'>> {
   if (inspectOptions.mode) {
     setNodeEnv(inspectOptions.mode);

@@ -6,7 +6,6 @@ import type {
   ModifyBundlerChainUtils,
   RsbuildEntry,
   Rspack,
-  RspackConfig,
 } from './types';
 
 export function getBundlerChain(): RspackChain {
@@ -40,12 +39,12 @@ export async function modifyBundlerChain(
   return modifiedBundlerChain;
 }
 
-export function chainToConfig(chain: RspackChain): RspackConfig {
+export function chainToConfig(chain: RspackChain): Rspack.Configuration {
   const config = chain.toConfig();
   const { entry } = config;
 
   if (!isPlainObject(entry)) {
-    return config as RspackConfig;
+    return config as Rspack.Configuration;
   }
 
   const formattedEntry: RsbuildEntry = {};
@@ -86,7 +85,7 @@ export function chainToConfig(chain: RspackChain): RspackConfig {
 
   config.entry = formattedEntry;
 
-  return config as RspackConfig;
+  return config as Rspack.Configuration;
 }
 
 export const CHAIN_ID = {

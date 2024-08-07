@@ -7,7 +7,7 @@
 ```ts
 function OnBeforeCreateCompiler(
   callback: (params: {
-    bundlerConfigs: WebpackConfig[] | RspackConfig[];
+    bundlerConfigs: Rspack.Configuration[];
     environments: Record<string, EnvironmentContext>;
   }) => Promise<void> | void,
 ): void;

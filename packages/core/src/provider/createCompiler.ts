@@ -18,7 +18,6 @@ import type {
   InternalContext,
   MultiStats,
   Rspack,
-  RspackConfig,
   Stats,
 } from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
@@ -28,7 +27,7 @@ export async function createCompiler({
   rspackConfigs,
 }: {
   context: InternalContext;
-  rspackConfigs: RspackConfig[];
+  rspackConfigs: Rspack.Configuration[];
 }): Promise<Rspack.Compiler | Rspack.MultiCompiler> {
   logger.debug('create compiler');
   await context.hooks.onBeforeCreateCompiler.call({

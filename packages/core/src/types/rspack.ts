@@ -15,16 +15,11 @@ export interface BundlerPluginInstance {
   apply: (compiler: any) => void;
 }
 
-export type RspackConfig = Omit<Rspack.Configuration, 'plugins'> & {
-  // Use a loose type here, so that user can pass webpack plugins
-  plugins?: BundlerPluginInstance[];
-};
-
 /** T[] => T */
 type GetElementType<T extends any[]> = T extends (infer U)[] ? U : never;
 
 export type RspackRule = GetElementType<
-  NonNullable<NonNullable<RspackConfig['module']>['rules']>
+  NonNullable<NonNullable<Rspack.Configuration['module']>['rules']>
 >;
 
 export type RspackSourceMap = {

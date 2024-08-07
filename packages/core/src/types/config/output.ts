@@ -6,7 +6,7 @@ import type {
 } from '@rspack/core';
 import type { CSSLoaderModulesOptions } from '../../types';
 import type { RsbuildTarget } from '../rsbuild';
-import type { Rspack, RspackConfig } from '../rspack';
+import type { Rspack } from '../rspack';
 
 export type DistPathConfig = {
   /**
@@ -128,7 +128,7 @@ export type NormalizedDataUriLimit = Required<DataUriLimit>;
 export type Polyfill = 'usage' | 'entry' | 'off';
 
 export type SourceMap = {
-  js?: RspackConfig['devtool'];
+  js?: Rspack.Configuration['devtool'];
   css?: boolean;
 };
 
@@ -312,7 +312,7 @@ export interface NormalizedOutputConfig extends OutputConfig {
   };
   polyfill: Polyfill;
   sourceMap: {
-    js?: RspackConfig['devtool'];
+    js?: Rspack.Configuration['devtool'];
     css: boolean;
   };
   filenameHash: boolean | string;

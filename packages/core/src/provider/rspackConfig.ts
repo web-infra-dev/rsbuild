@@ -11,12 +11,11 @@ import type {
   ModifyRspackConfigUtils,
   RsbuildTarget,
   Rspack,
-  RspackConfig,
 } from '../types';
 
 async function modifyRspackConfig(
   context: InternalContext,
-  rspackConfig: RspackConfig,
+  rspackConfig: Rspack.Configuration,
   utils: ModifyRspackConfigUtils,
 ) {
   logger.debug('modify Rspack config');
@@ -121,7 +120,7 @@ export async function generateRspackConfig({
   environment: string;
   target: RsbuildTarget;
   context: InternalContext;
-}): Promise<RspackConfig> {
+}): Promise<Rspack.Configuration> {
   const chainUtils = getChainUtils(target, context.environments[environment]);
   const {
     BannerPlugin,

@@ -2,13 +2,7 @@ import { rspack } from '@rspack/core';
 import { getNodeEnv, setNodeEnv } from '../helpers';
 import { registerBuildHook } from '../hooks';
 import { logger } from '../logger';
-import type {
-  BuildOptions,
-  MultiStats,
-  Rspack,
-  RspackConfig,
-  Stats,
-} from '../types';
+import type { BuildOptions, MultiStats, Rspack, Stats } from '../types';
 import { createCompiler } from './createCompiler';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
@@ -25,7 +19,7 @@ export const build = async (
   const { context } = initOptions;
 
   let compiler: Rspack.Compiler | Rspack.MultiCompiler;
-  let bundlerConfigs: RspackConfig[] | undefined;
+  let bundlerConfigs: Rspack.Configuration[] | undefined;
 
   if (customCompiler) {
     compiler = customCompiler as any;

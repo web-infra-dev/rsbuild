@@ -6,12 +6,7 @@ import type {
   ModifyWebpackChainUtils,
   ModifyWebpackConfigUtils,
 } from '../plugin';
-import type {
-  BundlerPluginInstance,
-  Rspack,
-  RspackConfig,
-  RspackRule,
-} from '../rspack';
+import type { BundlerPluginInstance, Rspack, RspackRule } from '../rspack';
 import type { HtmlRspackPlugin } from '../thirdParty';
 import type {
   CSSExtractOptions,
@@ -65,7 +60,7 @@ export type ModifyRspackConfigUtils = ModifyChainUtils & {
 };
 
 export type ToolsRspackConfig = ConfigChainAsyncWithContext<
-  RspackConfig,
+  Rspack.Configuration,
   ModifyRspackConfigUtils
 >;
 

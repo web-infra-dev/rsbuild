@@ -6,7 +6,7 @@ import type { RsbuildConfig } from './config';
 import type { NormalizedConfig, NormalizedEnvironmentConfig } from './config';
 import type { InternalContext, RsbuildContext } from './context';
 import type { PluginManager, RsbuildPluginAPI } from './plugin';
-import type { RspackConfig } from './rspack';
+import type { Rspack } from './rspack';
 import type { WebpackConfig } from './thirdParty';
 
 export type Bundler = 'rspack' | 'webpack';
@@ -58,7 +58,9 @@ export type InspectConfigResult<B extends 'rspack' | 'webpack' = 'rspack'> = {
         pluginNames: string[];
       }
     >;
-    bundlerConfigs: B extends 'rspack' ? RspackConfig[] : WebpackConfig[];
+    bundlerConfigs: B extends 'rspack'
+      ? Rspack.Configuration[]
+      : WebpackConfig[];
   };
 };
 
@@ -99,7 +101,7 @@ export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
   }>;
 
   initConfigs: () => Promise<
-    B extends 'rspack' ? RspackConfig[] : WebpackConfig[]
+    B extends 'rspack' ? Rspack.Configuration[] : WebpackConfig[]
   >;
 
   inspectConfig: (
