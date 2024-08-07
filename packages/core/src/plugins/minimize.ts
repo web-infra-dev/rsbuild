@@ -55,7 +55,7 @@ export const getSwcMinimizerOptions = (
 
 export const parseMinifyOptions = (
   config: NormalizedEnvironmentConfig,
-  isProd = true,
+  isProd: boolean,
 ): {
   minifyJs: boolean;
   minifyCss: boolean;
