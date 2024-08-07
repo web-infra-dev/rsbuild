@@ -6,7 +6,6 @@ import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginRem } from '@rsbuild/plugin-rem';
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginSolid } from '@rsbuild/plugin-solid';
-import { pluginSourceBuild } from '@rsbuild/plugin-source-build';
 import { pluginStyledComponents } from '@rsbuild/plugin-styled-components';
 import { pluginStylus } from '@rsbuild/plugin-stylus';
 import { pluginSvelte } from '@rsbuild/plugin-svelte';
@@ -31,7 +30,6 @@ export default {
   pluginSolid,
   pluginStylus,
   pluginSvelte,
-  pluginSourceBuild,
   pluginStyledComponents,
   pluginTypeCheck,
   pluginVue,

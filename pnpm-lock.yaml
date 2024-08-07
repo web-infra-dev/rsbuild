@@ -127,9 +127,6 @@ importers:
       '@rsbuild/plugin-solid':
         specifier: workspace:*
         version: link:../packages/plugin-solid
-      '@rsbuild/plugin-source-build':
-        specifier: workspace:*
-        version: link:../packages/plugin-source-build
       '@rsbuild/plugin-styled-components':
         specifier: workspace:*
         version: link:../packages/plugin-styled-components
@@ -241,25 +238,6 @@ importers:
         version: 0.5.2
 
   e2e/cases/server/ssr: {}
-
-  e2e/cases/source-build/app:
-    dependencies:
-      '@e2e/source-build-components':
-        specifier: workspace:*
-        version: link:../components
-
-  e2e/cases/source-build/components:
-    dependencies:
-      '@e2e/source-build-utils':
-        specifier: workspace:*
-        version: link:../utils
-      '@e2e/source-build-utils2':
-        specifier: workspace:*
-        version: link:../utils2
-
-  e2e/cases/source-build/utils: {}
-
-  e2e/cases/source-build/utils2: {}
 
   e2e/cases/source-map:
     dependencies:
@@ -1048,31 +1026,6 @@ importers:
       typescript:
         specifier: ^5.5.2
         version: 5.5.2
-
-  packages/plugin-source-build:
-    dependencies:
-      fast-glob:
-        specifier: ^3.3.2
-        version: 3.3.2
-      json5:
-        specifier: ^2.2.3
-        version: 2.2.3
-    devDependencies:
-      '@rsbuild/core':
-        specifier: link:../core
-        version: link:../core
-      '@rsbuild/plugin-babel':
-        specifier: workspace:*
-        version: link:../plugin-babel
-      '@scripts/test-helper':
-        specifier: workspace:*
-        version: link:../../scripts/test-helper
-      typescript:
-        specifier: ^5.5.2
-        version: 5.5.2
-      yaml:
-        specifier: ^2.5.0
-        version: 2.5.0
 
   packages/plugin-styled-components:
     dependencies:
