@@ -5,5 +5,6 @@
   "browserslist",
   "browser-compatibility",
   "module-federation",
-  "environments"
+  "environments",
+  "ssr"
 ]
