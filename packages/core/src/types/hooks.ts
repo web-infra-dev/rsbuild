@@ -11,7 +11,7 @@ import type { RsbuildEntry, RsbuildTarget } from './rsbuild';
 import type { Rspack } from './rspack';
 import type { MultiStats, Stats } from './stats';
 import type { HtmlRspackPlugin, WebpackConfig } from './thirdParty';
-import type { MaybePromise, NodeEnv } from './utils';
+import type { MaybePromise } from './utils';
 
 type CompileCommonParams = {
   isFirstCompile: boolean;
@@ -165,7 +165,7 @@ export type EnvironmentContext = {
 };
 
 export type ModifyChainUtils = {
-  env: NodeEnv;
+  env: string;
   isDev: boolean;
   isProd: boolean;
   target: RsbuildTarget;

@@ -28,7 +28,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
         // The base directory for resolving entry points and loaders from the configuration.
         chain.context(api.context.rootPath);
 
-        chain.mode(isProd ? 'production' : 'development');
+        chain.mode(environment.config.mode);
 
         chain.merge({
           infrastructureLogging: {

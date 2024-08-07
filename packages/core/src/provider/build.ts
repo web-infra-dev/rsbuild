@@ -8,12 +8,12 @@ import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
 export const build = async (
   initOptions: InitConfigsOptions,
-  { mode = 'production', watch, compiler: customCompiler }: BuildOptions = {},
+  { watch, compiler: customCompiler }: BuildOptions = {},
 ): Promise<void | {
   close: () => Promise<void>;
 }> => {
   if (!getNodeEnv()) {
-    setNodeEnv(mode);
+    setNodeEnv('production');
   }
 
   const { context } = initOptions;

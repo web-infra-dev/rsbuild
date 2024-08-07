@@ -29,6 +29,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "scriptLoading": "defer",
     "title": "Rsbuild App",
   },
+  "mode": "development",
   "output": {
     "assetPrefix": "/",
     "charset": "ascii",
@@ -150,6 +151,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "scriptLoading": "defer",
     "title": "Rsbuild App",
   },
+  "mode": "development",
   "output": {
     "assetPrefix": "/",
     "charset": "ascii",
@@ -272,6 +274,7 @@ exports[`environment config > should print environment config when inspect confi
       "scriptLoading": "defer",
       "title": "Rsbuild App",
     },
+    "mode": "development",
     "output": {
       "assetPrefix": "/",
       "charset": "ascii",
@@ -426,6 +429,7 @@ exports[`environment config > should print environment config when inspect confi
       "scriptLoading": "defer",
       "title": "Rsbuild App",
     },
+    "mode": "development",
     "output": {
       "assetPrefix": "/",
       "charset": "ascii",
@@ -598,6 +602,7 @@ exports[`environment config > should support modify environment config by api.mo
       "scriptLoading": "defer",
       "title": "Rsbuild App",
     },
+    "mode": "development",
     "output": {
       "assetPrefix": "/",
       "charset": "ascii",
@@ -753,6 +758,7 @@ exports[`environment config > should support modify environment config by api.mo
       "scriptLoading": "defer",
       "title": "Rsbuild App",
     },
+    "mode": "development",
     "output": {
       "assetPrefix": "/",
       "charset": "ascii",
@@ -909,6 +915,7 @@ exports[`environment config > should support modify environment config by api.mo
       "scriptLoading": "defer",
       "title": "Rsbuild App",
     },
+    "mode": "development",
     "output": {
       "assetPrefix": "/",
       "charset": "ascii",
@@ -1068,6 +1075,7 @@ exports[`environment config > should support modify single environment config by
       "scriptLoading": "defer",
       "title": "Rsbuild App",
     },
+    "mode": "development",
     "output": {
       "assetPrefix": "/",
       "charset": "ascii",
@@ -1223,6 +1231,7 @@ exports[`environment config > should support modify single environment config by
       "scriptLoading": "defer",
       "title": "Rsbuild App",
     },
+    "mode": "development",
     "output": {
       "assetPrefix": "/",
       "charset": "ascii",

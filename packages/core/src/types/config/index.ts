@@ -1,5 +1,5 @@
 import type { ModuleFederationPluginOptions } from '@rspack/core';
-import type { RsbuildPlugins } from '..';
+import type { RsbuildMode, RsbuildPlugins } from '..';
 import type { DeepReadonly } from '../utils';
 import type { DevConfig, NormalizedDevConfig } from './dev';
 import type { HtmlConfig, NormalizedHtmlConfig } from './html';
@@ -77,6 +77,10 @@ export interface EnvironmentConfig {
  * */
 export interface RsbuildConfig extends EnvironmentConfig {
   /**
+   * Specify the Rsbuild build mode.
+   */
+  mode?: RsbuildMode;
+  /**
    * Options for local development.
    */
   dev?: DevConfig;
@@ -102,7 +106,11 @@ export interface RsbuildConfig extends EnvironmentConfig {
 }
 
 export type MergedEnvironmentConfig = {
-  dev: Pick<NormalizedDevConfig, 'assetPrefix' | 'lazyCompilation'>;
+  mode: RsbuildMode;
+  dev: Pick<
+    NormalizedDevConfig,
+    'assetPrefix' | 'lazyCompilation' | 'progressBar'
+  >;
   html: NormalizedHtmlConfig;
   tools: NormalizedToolsConfig;
   source: NormalizedSourceConfig;
@@ -120,6 +128,7 @@ export type MergedEnvironmentConfig = {
 
 /** The normalized Rsbuild environment config. */
 export type NormalizedEnvironmentConfig = DeepReadonly<{
+  mode: RsbuildMode;
   dev: NormalizedDevConfig;
   html: NormalizedHtmlConfig;
   tools: NormalizedToolsConfig;

@@ -4,8 +4,6 @@ export type OneOrMany<T> = T | T[];
 
 export type MaybePromise<T> = T | Promise<T>;
 
-export type NodeEnv = 'development' | 'production' | 'test';
-
 export type DeepReadonly<T> = keyof T extends never
   ? T
   : { readonly [k in keyof T]: DeepReadonly<T[k]> };

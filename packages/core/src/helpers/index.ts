@@ -9,7 +9,6 @@ import type {
 import { DEFAULT_ASSET_PREFIX } from '../constants';
 import type {
   FilenameConfig,
-  NodeEnv,
   NormalizedConfig,
   NormalizedEnvironmentConfig,
   RsbuildTarget,
@@ -22,8 +21,8 @@ export * from './stats';
 
 export const rspackMinVersion = '0.7.0';
 
-export const getNodeEnv = () => process.env.NODE_ENV as NodeEnv;
-export const setNodeEnv = (env: NodeEnv): void => {
+export const getNodeEnv = () => process.env.NODE_ENV as string;
+export const setNodeEnv = (env: string): void => {
   process.env.NODE_ENV = env;
 };
 export const isDev = (): boolean => getNodeEnv() === 'development';

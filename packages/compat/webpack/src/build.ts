@@ -8,12 +8,12 @@ import { registerBuildHook } from './shared';
 
 export const build = async (
   initOptions: InitConfigsOptions,
-  { mode = 'production', watch, compiler: customCompiler }: BuildOptions = {},
+  { watch, compiler: customCompiler }: BuildOptions = {},
 ): Promise<void | {
   close: () => Promise<void>;
 }> => {
   if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV = mode;
+    process.env.NODE_ENV = 'production';
   }
 
   const { context } = initOptions;

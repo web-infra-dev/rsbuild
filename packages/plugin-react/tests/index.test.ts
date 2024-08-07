@@ -5,7 +5,9 @@ import { pluginReact } from '../src';
 describe('plugins/react', () => {
   it('should work with swc-loader', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {},
+      rsbuildConfig: {
+        mode: 'development',
+      },
     });
 
     rsbuild.addPlugins([pluginReact()]);

@@ -337,7 +337,7 @@ To modify the final Rspack config, you can directly modify the config object, or
 ```ts
 type ModifyRspackConfigUtils = {
   environment: EnvironmentContext;
-  env: NodeEnv;
+  env: string;
   isDev: boolean;
   isProd: boolean;
   target: RsbuildTarget;
@@ -383,7 +383,7 @@ This hook only supports modifying the configuration of the non-differentiated pa
 ```ts
 type ModifyBundlerChainUtils = {
   environment: EnvironmentContext;
-  env: NodeEnv;
+  env: string;
   isDev: boolean;
   isProd: boolean;
   target: RsbuildTarget;

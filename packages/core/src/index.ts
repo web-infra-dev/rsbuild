@@ -129,7 +129,6 @@ export type {
   TransformHandler,
   TransformImport,
   WatchFiles,
-  NodeEnv,
 } from './types';
 export type { ChainIdentifier } from './configChain';
 
