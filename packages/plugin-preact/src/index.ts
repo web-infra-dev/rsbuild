@@ -20,7 +20,7 @@ export const pluginPreact = (
 
     api.modifyEnvironmentConfig((userConfig, { mergeEnvironmentConfig }) => {
       const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
-        development: process.env.NODE_ENV === 'development',
+        development: userConfig.mode === 'development',
         runtime: 'automatic',
         importSource: 'preact',
       };

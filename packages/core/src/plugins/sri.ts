@@ -1,7 +1,7 @@
 import type { Buffer } from 'node:buffer';
 import crypto from 'node:crypto';
 import { HTML_REGEX } from '../constants';
-import { isProd, removeLeadingSlash } from '../helpers';
+import { removeLeadingSlash } from '../helpers';
 import { logger } from '../logger';
 import type {
   EnvironmentContext,
@@ -27,7 +27,8 @@ export const pluginSri = (): RsbuildPlugin => ({
     const getAlgorithm = (environment: EnvironmentContext) => {
       const { config } = environment;
       const { sri } = config.security;
-      const enable = sri.enable === 'auto' ? isProd() : sri.enable;
+      const enable =
+        sri.enable === 'auto' ? config.mode === 'production' : sri.enable;
 
       if (!enable) {
         return null;

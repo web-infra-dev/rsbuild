@@ -165,6 +165,9 @@ export type EnvironmentContext = {
 };
 
 export type ModifyChainUtils = {
+  /**
+   * The value of `process.env.NODE_ENV`
+   */
   env: string;
   isDev: boolean;
   isProd: boolean;

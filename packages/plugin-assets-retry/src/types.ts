@@ -53,7 +53,7 @@ export type PluginAssetsRetryOptions = {
   inlineScript?: boolean;
   /**
    * Whether to minify the runtime JavaScript code of Assets Retry plugin.
-   * @default process.env.NODE_ENV === 'production'
+   * @default rsbuildConfig.mode === 'production'
    */
   minify?: boolean;
 };

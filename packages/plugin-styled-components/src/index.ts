@@ -1,4 +1,5 @@
 import type {
+  MergedEnvironmentConfig,
   RsbuildConfig,
   RsbuildPlugin,
   RsbuildTarget,
@@ -48,8 +49,11 @@ export const pluginStyledComponents = (
       return;
     }
 
-    const getMergedOptions = (useSSR: boolean) => {
-      const isProd = process.env.NODE_ENV === 'production';
+    const getMergedOptions = (
+      useSSR: boolean,
+      config: MergedEnvironmentConfig,
+    ) => {
+      const isProd = config.mode === 'production';
 
       return reduceConfigs({
         initial: getDefaultStyledComponentsConfig(isProd, useSSR),
@@ -68,7 +72,7 @@ export const pluginStyledComponents = (
 
       const useSSR = isServerTarget(targets);
 
-      const mergedOptions = getMergedOptions(useSSR);
+      const mergedOptions = getMergedOptions(useSSR, userConfig);
       if (!mergedOptions) {
         return userConfig;
       }

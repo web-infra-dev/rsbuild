@@ -92,6 +92,10 @@ export const applyBasicReactSupport = (
 
 export const applyReactProfiler = (api: RsbuildPluginAPI): void => {
   api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
+    if (config.mode !== 'production') {
+      return;
+    }
+
     const enableProfilerConfig: RsbuildConfig = {
       output: {
         minify: {
@@ -110,7 +114,11 @@ export const applyReactProfiler = (api: RsbuildPluginAPI): void => {
     return mergeEnvironmentConfig(config, enableProfilerConfig);
   });
 
-  api.modifyBundlerChain((chain) => {
+  api.modifyBundlerChain((chain, { isProd }) => {
+    if (!isProd) {
+      return;
+    }
+
     // Replace react-dom with the profiling version.
     // Reference: https://gist.github.com/bvaughn/25e6233aeb1b4f0cdb8d8366e54a3977
     chain.resolve.alias.set('react-dom$', 'react-dom/profiling');

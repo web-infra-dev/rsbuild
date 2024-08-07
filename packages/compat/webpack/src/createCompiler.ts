@@ -49,7 +49,7 @@ export async function createCompiler({
     done(stats);
   });
 
-  if (process.env.NODE_ENV === 'development') {
+  if (context.normalizedConfig?.mode === 'development') {
     registerDevHook({
       compiler,
       context,

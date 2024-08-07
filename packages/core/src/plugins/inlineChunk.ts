@@ -5,7 +5,6 @@ import {
   addTrailingSlash,
   getPublicPathFromCompiler,
   isFunction,
-  isProd,
 } from '../helpers';
 import type {
   HtmlBasicTag,
@@ -237,6 +236,7 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
 
         const scriptTests: InlineChunkTest[] = [];
         const styleTests: InlineChunkTest[] = [];
+        const isProdMode = environment.config.mode === 'production';
 
         if (inlineScripts) {
           if (inlineScripts === true) {
@@ -245,7 +245,9 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
             scriptTests.push(inlineScripts);
           } else {
             const enable =
-              inlineScripts.enable === 'auto' ? isProd() : inlineScripts.enable;
+              inlineScripts.enable === 'auto'
+                ? isProdMode
+                : inlineScripts.enable;
             if (enable) {
               scriptTests.push(inlineScripts.test);
             }
@@ -259,7 +261,7 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
             styleTests.push(inlineStyles);
           } else {
             const enable =
-              inlineStyles.enable === 'auto' ? isProd() : inlineStyles.enable;
+              inlineStyles.enable === 'auto' ? isProdMode : inlineStyles.enable;
             if (enable) {
               styleTests.push(inlineStyles.test);
             }
