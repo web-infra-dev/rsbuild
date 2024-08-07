@@ -30,6 +30,7 @@ describe('applyDefaultPlugins', () => {
     process.env.NODE_ENV = 'test';
     const rsbuild = await createStubRsbuild({
       rsbuildConfig: {
+        mode: 'development',
         output: {
           target: 'node',
         },
