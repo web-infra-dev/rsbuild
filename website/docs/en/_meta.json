@@ -23,5 +23,18 @@
     "text": "Community",
     "link": "/community/",
     "activeMatch": "/community/"
+  },
+  {
+    "text": "Version",
+    "items": [
+      {
+        "text": "Changelog",
+        "link": "https://github.com/web-infra-dev/rsbuild/releases"
+      },
+      {
+        "text": "Rsbuild 0.x Doc",
+        "link": "http://v0.rsbuild.dev/"
+      }
+    ]
   }
 ]
