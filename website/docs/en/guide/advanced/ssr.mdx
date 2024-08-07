@@ -10,9 +10,7 @@ import SSR from '@en/shared/ssr.mdx';
 
 <SSR />
 
-### Quick Start
-
-#### File Structure
+## File Structure
 
 A typical SSR application will have the following files:
 
@@ -31,7 +29,7 @@ The `index.html` will need to include a placeholder where the server-rendered ma
 <div id="root"><!--app-content--></div>
 ```
 
-#### Create SSR configuration
+## Create SSR configuration
 
 In the SSR scenario, two types of outputs (web and node targets), need to be generated at the same time, for client-side rendering (CSR) and server-side rendering (SSR) respectively.
 
@@ -72,7 +70,7 @@ export default {
 };
 ```
 
-#### Custom server
+## Custom server
 
 Rsbuild does not have built-in SSR rendering capabilities, but you can implement SSR rendering through Rsbuild's [custom server](/guide/basic/server#custom-server) and [environment API](/guide/advanced/environments#environment-api):
 
@@ -134,7 +132,7 @@ async function startDevServer() {
 startDevServer(process.cwd());
 ```
 
-#### Modify startup script
+## Modify startup script
 
 After using a custom Server, you need to change the startup command from `rsbuild dev` to `node ./server.mjs`.
 
@@ -152,6 +150,6 @@ If you need to preview the online effect of SSR rendering, you also need to modi
 
 Now, you can run the `npm run dev` command to start the dev server with SSR rendering function, and visit `http://localhost:3000/` to see that the SSR content has been rendered to the HTML page.
 
-### Examples
+## Examples
 
 - [SSR + Express Example](https://github.com/rspack-contrib/rspack-examples/blob/main/rsbuild/ssr-express)

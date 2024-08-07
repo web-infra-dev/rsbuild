@@ -4,15 +4,13 @@
 
 值得注意的是，Rsbuild 自身不提供开箱即用的 SSR 能力，而是提供 low-level 的 API 和配置来允许框架开发者实现 SSR。如果你需要使用开箱即用的 SSR 支持，可以考虑使用基于 Rsbuild 的框架，例如 [Modern.js](https://github.com/web-infra-dev/modern.js)。
 
-### 什么是 SSR
+## 什么是 SSR
 
 import SSR from '@zh/shared/ssr.mdx';
 
 <SSR />
 
-### 快速开始
-
-#### 文件结构
+## 文件结构
 
 一个典型的 SSR 应用会包含以下文件：
 
@@ -31,7 +29,7 @@ import SSR from '@zh/shared/ssr.mdx';
 <div id="root"><!--app-content--></div>
 ```
 
-#### 创建 SSR 配置
+## 创建 SSR 配置
 
 SSR 场景下，需要同时产出 web 和 node 两种类型的产物，分别用于客户端渲染（CSR）和服务器端渲染（SSR）。
 
@@ -72,7 +70,7 @@ export default {
 };
 ```
 
-#### 自定义 Server
+## 自定义 Server
 
 Rsbuild 并未内置 SSR 渲染能力，你可以通过 Rsbuild 的[自定义 Server](/guide/basic/server#自定义-server) 和 [Environment API](/guide/advanced/environments#environment-api) 实现 SSR 渲染：
 
@@ -134,7 +132,7 @@ async function startDevServer() {
 startDevServer(process.cwd());
 ```
 
-#### 修改启动脚本
+## 修改启动脚本
 
 使用自定义 Server 后，需要将启动命令由 `rsbuild dev` 改为 `node ./server.mjs`。
 
@@ -152,6 +150,6 @@ startDevServer(process.cwd());
 
 现在，执行 `npm run dev` 命令即可启动带有 SSR 渲染功能的开发服务器，访问 `http://localhost:3000/` 即可看到 SSR 内容已经渲染到了 HTML 页面上。
 
-### 示例项目
+## 示例项目
 
 - [SSR + Express Example](https://github.com/rspack-contrib/rspack-examples/blob/main/rsbuild/ssr-express)
