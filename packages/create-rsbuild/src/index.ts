@@ -240,8 +240,17 @@ export async function main() {
     );
   }
 
-  copyFolder(commonFolder, distFolder, version);
-  copyFolder(srcFolder, distFolder, version, packageName);
+  copyFolder({
+    from: commonFolder,
+    to: distFolder,
+    version,
+  });
+  copyFolder({
+    from: srcFolder,
+    to: distFolder,
+    version,
+    packageName,
+  });
 
   for (const tool of tools) {
     const toolFolder = path.join(packageRoot, `template-${tool}`);
@@ -253,9 +262,19 @@ export async function main() {
         subFolder = path.join(toolFolder, `common-${language}`);
       }
 
-      copyFolder(subFolder, distFolder, version);
+      copyFolder({
+        from: subFolder,
+        to: distFolder,
+        version,
+        isMergePackageJson: true,
+      });
     } else {
-      copyFolder(toolFolder, distFolder, version);
+      copyFolder({
+        from: toolFolder,
+        to: distFolder,
+        version,
+        isMergePackageJson: true,
+      });
     }
   }
 
@@ -304,7 +323,19 @@ function mergePackageJson(targetPackage: string, extraPackage: string) {
   fs.writeFileSync(targetPackage, `${JSON.stringify(mergedJson, null, 2)}\n`);
 }
 
-function copyFolder(src: string, dist: string, version: string, name?: string) {
+function copyFolder({
+  from,
+  to,
+  version,
+  packageName,
+  isMergePackageJson,
+}: {
+  from: string;
+  to: string;
+  version: string;
+  packageName?: string;
+  isMergePackageJson?: boolean;
+}) {
   const renameFiles: Record<string, string> = {
     gitignore: '.gitignore',
   };
@@ -312,28 +343,33 @@ function copyFolder(src: string, dist: string, version: string, name?: string) {
   // Skip local files
   const skipFiles = ['node_modules', 'dist'];
 
-  fs.mkdirSync(dist, { recursive: true });
+  fs.mkdirSync(to, { recursive: true });
 
-  for (const file of fs.readdirSync(src)) {
+  for (const file of fs.readdirSync(from)) {
     if (skipFiles.includes(file)) {
       continue;
     }
 
-    const srcFile = path.resolve(src, file);
+    const srcFile = path.resolve(from, file);
     const distFile = renameFiles[file]
-      ? path.resolve(dist, renameFiles[file])
-      : path.resolve(dist, file);
+      ? path.resolve(to, renameFiles[file])
+      : path.resolve(to, file);
     const stat = fs.statSync(srcFile);
 
     if (stat.isDirectory()) {
-      copyFolder(srcFile, distFile, version);
+      copyFolder({
+        from: srcFile,
+        to: distFile,
+        version,
+      });
     } else if (file === 'package.json') {
-      const targetPackage = path.resolve(dist, 'package.json');
-      if (fs.existsSync(targetPackage)) {
+      const targetPackage = path.resolve(to, 'package.json');
+
+      if (isMergePackageJson && fs.existsSync(targetPackage)) {
         mergePackageJson(targetPackage, srcFile);
       } else {
         fs.copyFileSync(srcFile, distFile);
-        updatePackageJson(distFile, version, name);
+        updatePackageJson(distFile, version, packageName);
       }
     } else {
       fs.copyFileSync(srcFile, distFile);
