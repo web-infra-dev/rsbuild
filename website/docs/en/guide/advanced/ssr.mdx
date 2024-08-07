@@ -1,0 +1,155 @@
+# Server-Side Rendering (SSR)
+
+This chapter introduces how to implement SSR functionality using Rsbuild.
+
+Please note that Rsbuild itself does not provide out-of-the-box SSR functionality, but instead provides low-level APIs and configurations to allow framework developers to implement SSR. If you require out-of-the-box SSR support, you may consider using full-stack frameworks based on Rsbuild, such as [Modern.js](https://github.com/web-infra-dev/modern.js).
+
+## What is SSR
+
+import SSR from '@en/shared/ssr.mdx';
+
+<SSR />
+
+## File Structure
+
+A typical SSR application will have the following files:
+
+```
+- index.html
+- server.js          # main application server
+- src/
+  - App.js           # exports app code
+  - index.client.js  # client entry, mounts the app to a DOM element
+  - index.server.js  # server entry, renders the app using the framework's SSR API
+```
+
+The `index.html` will need to include a placeholder where the server-rendered markup should be injected:
+
+```html
+<div id="root"><!--app-content--></div>
+```
+
+## Create SSR configuration
+
+In the SSR scenario, two types of outputs (web and node targets), need to be generated at the same time, for client-side rendering (CSR) and server-side rendering (SSR) respectively.
+
+At this time, you can use Rsbuild's [multi-environment builds](guide/advanced/environments) capability, define the following configuration:
+
+```ts title=rsbuild.config.ts
+export default {
+  environments: {
+    // Configure the web environment for browsers
+    web: {
+      source: {
+        entry: {
+          index: './src/index.client.js',
+        },
+      },
+      output: {
+        // Use 'web' target for the browser outputs
+        target: 'web',
+      },
+      html: {
+        // Custom html template
+        template: './index.html',
+      },
+    },
+    // Configure the node environment for SSR
+    node: {
+      source: {
+        entry: {
+          index: './src/index.server.js',
+        },
+      },
+      output: {
+        // Use 'node' target for the Node.js outputs
+        target: 'node',
+      },
+    },
+  },
+};
+```
+
+## Custom server
+
+Rsbuild does not have built-in SSR rendering capabilities, but you can implement SSR rendering through Rsbuild's [custom server](/guide/basic/server#custom-server) and [environment API](/guide/advanced/environments#environment-api):
+
+```ts title=server.mjs
+import express from 'express';
+import { createRsbuild, loadConfig } from '@rsbuild/core';
+
+// Implement SSR rendering function
+const serverRender = (serverAPI) => async (_req, res) => {
+  // Load SSR bundle
+  const indexModule = await serverAPI.environments.ssr.loadBundle('index');
+
+  const markup = indexModule.render();
+
+  const template = await serverAPI.environments.web.getTransformedHtml('index');
+
+  // Insert SSR rendering content into html template
+  const html = template.replace('<!--app-content-->', markup);
+
+  res.writeHead(200, {
+    'Content-Type': 'text/html',
+  });
+  res.end(html);
+};
+
+// Custom server
+async function startDevServer() {
+  const { content } = await loadConfig({});
+
+  const rsbuild = await createRsbuild({
+    rsbuildConfig: content,
+  });
+
+  const app = express();
+
+  const rsbuildServer = await rsbuild.createDevServer();
+
+  const serverRenderMiddleware = serverRender(rsbuildServer);
+
+  // SSR rendering when accessing /index.html
+  app.get('/', async (req, res, next) => {
+    try {
+      await serverRenderMiddleware(req, res, next);
+    } catch (err) {
+      logger.error('SSR render error, downgrade to CSR...\n', err);
+      next();
+    }
+  });
+
+  app.use(rsbuildServer.middlewares);
+
+  const httpServer = app.listen(rsbuildServer.port, async () => {
+    await rsbuildServer.afterListen();
+  });
+
+  httpServer.on('upgrade', rsbuildServer.onHTTPUpgrade);
+}
+
+startDevServer(process.cwd());
+```
+
+## Modify startup script
+
+After using a custom Server, you need to change the startup command from `rsbuild dev` to `node ./server.mjs`.
+
+If you need to preview the online effect of SSR rendering, you also need to modify the preview command. SSR Prod Server example reference: [Example](https://github.com/rspack-contrib/rspack-examples/blob/main/rsbuild/ssr-express/prod-server.mjs).
+
+```json title=package.json
+{
+  "scripts": {
+    "build": "rsbuild build",
+    "dev": "node ./server.mjs",
+    "preview": "node ./prod-server.mjs"
+  }
+}
+```
+
+Now, you can run the `npm run dev` command to start the dev server with SSR rendering function, and visit `http://localhost:3000/` to see that the SSR content has been rendered to the HTML page.
+
+## Examples
+
+- [SSR + Express Example](https://github.com/rspack-contrib/rspack-examples/blob/main/rsbuild/ssr-express)
