@@ -128,6 +128,7 @@ export type MergedEnvironmentConfig = {
 
 /** The normalized Rsbuild environment config. */
 export type NormalizedEnvironmentConfig = DeepReadonly<{
+  mode: RsbuildMode;
   dev: NormalizedDevConfig;
   html: NormalizedHtmlConfig;
   tools: NormalizedToolsConfig;
