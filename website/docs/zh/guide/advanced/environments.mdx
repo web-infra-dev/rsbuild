@@ -4,18 +4,9 @@ Rsbuild 支持同时为多个环境构建产物。你可以使用 [environments]
 
 ## 什么是 environment
 
-environment 指的是构建产物的运行环境，常见的运行环境有浏览器、Node.js 和 Workers。Rsbuild 允许你定义任意的 environment 名称，并为这些 environment 分别设置构建选项。
+import Environment from '@zh/shared/environment.mdx';
 
-一个典型的场景是服务器端渲染（SSR），你可以定义 `web` 和 `node` 两个 environments，它们的构建目标（[output.target](/config/output/target)）分别是 `web` 和 `node`，并用于客户端渲染（CSR）和服务器端渲染（SSR）场景。
-
-此外，你还可以为同一个构建目标定义不同的 environment，例如：
-
-- 定义 `rsc` 和 `ssr` 两个环境，它们的构建目标都是 `node`，分别用于 React Server Components 和 SSR。
-- 定义 `desktop` 和 `mobile` 两个环境，它们的构建目标都是 ` web`，分别用于桌面端浏览器和移动端浏览器。
-
-如果没有 `environments` 配置，你需要为这些场景定义多份配置，并执行多次独立的 Rsbuild 构建。现在通过 `environments` 配置，你可以在一次 Rsbuild 构建中完成多种产物的构建（Rsbuild 基于 Rspack 的 `MultiCompiler` 来实现这一点）。
-
-Rsbuild 中的每个 `environment` 关联一份 Rsbuild 配置、一份 Rspack 配置和一份构建产物。Rsbuild 插件的开发者可以基于 `environment` 名称，对指定环境的构建流程进行定制，如修改 Rsbuild 或 Rspack 配置、注册或移除插件、调整 Rspack 规则和查看静态资源信息等。
+<Environment />
 
 ## 多环境配置
 
