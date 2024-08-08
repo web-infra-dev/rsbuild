@@ -5,8 +5,8 @@
     "label": "Overview"
   },
   "mode",
-  "environments",
   "plugins",
+  "environments",
   {
     "type": "dir",
     "name": "dev",
