@@ -39,9 +39,10 @@ Options:
   --port <port>         specify a port number for Rsbuild Server to listen
   --host <host>         specify the host that the Rsbuild Server listens to
   -c --config <config>  specify the configuration file, can be a relative or absolute path
-  --environment <name>  specify the name of environment to build
+  -m --mode <mode>      specify the build mode, can be `development`, `production` or `none`
   --env-mode <mode>     specify the env mode to load the `.env.[mode]` file
   --env-dir <dir>       specify the directory to load `.env` files
+  --environment <name>  specify the name of environment to build
   -h, --help            display help for command
 ```
 
@@ -75,9 +76,10 @@ Usage: rsbuild build [options]
 Options:
   -w --watch            turn on watch mode, watch for changes and rebuild
   -c --config <config>  specify the configuration file, can be a relative or absolute path
-  --environment <name>  specify the name of environment to build
+  -m --mode <mode>      specify the build mode, can be `development`, `production` or `none`
   --env-mode <mode>     specify the env mode to load the `.env.[mode]` file
   --env-dir <dir>       specify the directory to load `.env` files
+  --environment <name>  specify the name of environment to build
   -h, --help            display help for command
 ```
 
@@ -93,9 +95,10 @@ Options:
   --port <port>         specify a port number for Rsbuild Server to listen
   --host <host>         specify the host that the Rsbuild Server listens to
   -c --config <config>  specify the configuration file, can be a relative or absolute path
-  --environment <name>  specify the name of environment to build
+  -m --mode <mode>      specify the build mode, can be `development`, `production` or `none`
   --env-mode <mode>     specify the env mode to load the `.env.[mode]` file
   --env-dir <dir>       specify the directory to load `.env` files
+  --environment <name>  specify the name of environment to build
   -h, --help            display help for command
 ```
 
@@ -111,13 +114,13 @@ The `rsbuild inspect` command is used to view the Rsbuild config and Rspack conf
 Usage: rsbuild inspect [options]
 
 Options:
-  --mode <mode>         specify the mode for Rsbuild (default: "development")
   --output <output>     specify the path to output in the dist (default: "/")
   --verbose             show the full function in the result
   -c --config <config>  specify the configuration file, can be a relative or absolute path
-  --environment <name>  specify the name of environment to build
+  -m --mode <mode>      specify the build mode, can be `development`, `production` or `none`
   --env-mode <mode>     specify the env mode to load the `.env.[mode]` file
   --env-dir <dir>       specify the directory to load `.env` files
+  --environment <name>  specify the name of environment to build
   -h, --help            show command help
 ```
 

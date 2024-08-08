@@ -7,6 +7,7 @@ import type { RsbuildMode } from '../types';
 import { init } from './init';
 
 export type CommonOptions = {
+  mode?: RsbuildMode;
   config?: string;
   envDir?: string;
   envMode?: string;
@@ -35,6 +36,10 @@ const applyCommonOptions = (command: Command) => {
     .option(
       '-c --config <config>',
       'specify the configuration file, can be a relative or absolute path',
+    )
+    .option(
+      '-m --mode <mode>',
+      'specify the build mode, can be `development`, `production` or `none`',
     )
     .option(
       '--env-mode <mode>',
@@ -135,14 +140,12 @@ export function runCli(): void {
 
   inspectCommand
     .description('inspect the Rspack and Rsbuild configs')
-    .option('--mode <mode>', 'specify the mode for Rsbuild', 'development')
     .option('--output <output>', 'specify inspect content output path')
     .option('--verbose', 'show full function definitions in output')
     .action(async (options: InspectOptions) => {
       try {
         const rsbuild = await init({ cliOptions: options });
         await rsbuild?.inspectConfig({
-          mode: options.mode,
           verbose: options.verbose,
           outputPath: options.output,
           writeToDisk: true,
