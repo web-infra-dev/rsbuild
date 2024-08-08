@@ -4,6 +4,39 @@ Rsbuild 支持在编译过程中向代码中注入环境变量或表达式，这
 
 ## 默认环境变量
 
+### import.meta.env.MODE
+
+你可以在 client 代码中使用 `import.meta.env.MODE` 来读取 [mode](/config/mode) 配置项的值。
+
+```ts
+if (import.meta.env.MODE === 'development') {
+  console.log('this is development mode');
+}
+```
+
+在开发模式，以上代码会被编译为：
+
+```js
+if (true) {
+  console.log('this is development mode');
+}
+```
+
+在生产模式，以上代码会被编译为：
+
+```js
+if (false) {
+  console.log('this is development mode');
+}
+```
+
+在代码压缩过程中，`if (false) { ... }` 会被识别为无效代码，并被自动移除。
+
+此外，你还可以使用以下环境变量：
+
+- `import.meta.env.DEV`：当 [mode](/config/mode) 为 `'development'` 时，值为 `true`，否则为 `false`。
+- `import.meta.env.PROD`：当 [mode](/config/mode) 为 `'production'` 时，值为 `true`，否则为 `false`。
+
 ### process.env.NODE_ENV
 
 默认情况下，Rsbuild 会自动设置 `process.env.NODE_ENV` 环境变量，在开发模式为 `'development'`，生产模式为 `'production'`。

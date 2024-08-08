@@ -4,6 +4,39 @@ Rsbuild supports injecting environment variables or expressions into the code du
 
 ## Default Variables
 
+### import.meta.env.MODE
+
+You can use `import.meta.env.MODE` in the client code to read the value of the [mode](/config/mode) configuration.
+
+```ts
+if (import.meta.env.MODE === 'development') {
+  console.log('this is development mode');
+}
+```
+
+In development mode, the above code will be compiled to:
+
+```js
+if (true) {
+  console.log('this is development mode');
+}
+```
+
+In production mode, the above code will be compiled to:
+
+```js
+if (false) {
+  console.log('this is development mode');
+}
+```
+
+During code minification, `if (false) { ... }` will be recognized as invalid code and removed automatically.
+
+You can also use the following environment variables:
+
+- `import.meta.env.DEV`: If [mode](/config/mode) is `'development'`, the value is `true`; otherwise, it is `false`.
+- `import.meta.env.PROD`: If [mode](/config/mode) is `'production'`, the value is `true`; otherwise, it is `false`.
+
 ### process.env.NODE_ENV
 
 By default, Rsbuild will automatically set the `process.env.NODE_ENV` environment variable to `'development'` in development mode and `'production'` in production mode.
@@ -16,7 +49,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 ```
 
-In development mode, the above code will be compiled as:
+In development mode, the above code will be compiled to:
 
 ```js
 if (true) {
@@ -24,7 +57,7 @@ if (true) {
 }
 ```
 
-In production mode, the above code will be compiled as:
+In production mode, the above code will be compiled to:
 
 ```js
 if (false) {
@@ -32,7 +65,7 @@ if (false) {
 }
 ```
 
-After code minification, `if (false) { ... }` will be recognized as invalid code and removed automatically.
+During code minification, `if (false) { ... }` will be recognized as invalid code and removed automatically.
 
 ### process.env.ASSET_PREFIX
 
@@ -62,13 +95,13 @@ Then we can access the image URL in the client code:
 const Image = <img src={`${process.env.ASSET_PREFIX}/static/icon.png`} />;
 ```
 
-In development mode, the above code will be compiled as:
+In development mode, the above code will be compiled to:
 
 ```jsx
 const Image = <img src={`/static/icon.png`} />;
 ```
 
-In production mode, the above code will be compiled as:
+In production mode, the above code will be compiled to:
 
 ```jsx
 const Image = <img src={`https://example.com/static/icon.png`} />;
