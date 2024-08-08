@@ -403,7 +403,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
       "_args": [
         {
           "process.env.ASSET_PREFIX": """",
-          "process.env.NODE_ENV": ""test"",
         },
       ],
       "affectedHooks": "compilation",

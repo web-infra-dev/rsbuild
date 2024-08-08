@@ -1685,7 +1685,6 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
         "_args": [
           {
             "process.env.ASSET_PREFIX": """",
-            "process.env.NODE_ENV": ""development"",
           },
         ],
         "affectedHooks": "compilation",
@@ -2002,7 +2001,6 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
         "_args": [
           {
             "process.env.ASSET_PREFIX": """",
-            "process.env.NODE_ENV": ""development"",
           },
         ],
         "affectedHooks": "compilation",

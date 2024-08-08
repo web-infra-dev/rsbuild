@@ -368,7 +368,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "_args": [
         {
           "process.env.ASSET_PREFIX": """",
-          "process.env.NODE_ENV": ""development"",
         },
       ],
       "affectedHooks": "compilation",
@@ -819,7 +818,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
       "_args": [
         {
           "process.env.ASSET_PREFIX": """",
-          "process.env.NODE_ENV": ""production"",
         },
       ],
       "affectedHooks": "compilation",
@@ -1155,7 +1153,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       "_args": [
         {
           "process.env.ASSET_PREFIX": """",
-          "process.env.NODE_ENV": ""test"",
         },
       ],
       "affectedHooks": "compilation",
@@ -1561,7 +1558,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
       "_args": [
         {
           "process.env.ASSET_PREFIX": """",
-          "process.env.NODE_ENV": ""development"",
         },
       ],
       "affectedHooks": "compilation",

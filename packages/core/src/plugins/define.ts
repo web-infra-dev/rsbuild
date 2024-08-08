@@ -5,10 +5,9 @@ export const pluginDefine = (): RsbuildPlugin => ({
   name: 'rsbuild:define',
 
   setup(api) {
-    api.modifyBundlerChain((chain, { CHAIN_ID, env, bundler, environment }) => {
+    api.modifyBundlerChain((chain, { CHAIN_ID, bundler, environment }) => {
       const { config } = environment;
       const builtinVars: Define = {
-        'process.env.NODE_ENV': JSON.stringify(env),
         'process.env.ASSET_PREFIX': JSON.stringify(
           getPublicPathFromChain(chain, false),
         ),
