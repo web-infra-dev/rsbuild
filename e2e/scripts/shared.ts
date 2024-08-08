@@ -130,6 +130,13 @@ const updateConfigForTest = async (
   return mergeRsbuildConfig(baseConfig, loadedConfig, originalConfig);
 };
 
+const unwrapOutputJSON = async (distPath: string, ignoreMap = true) => {
+  return globContentJSON(distPath, {
+    absolute: true,
+    ignore: ignoreMap ? [join(distPath, '/**/*.map')] : [],
+  });
+};
+
 export async function dev({
   plugins,
   ...options
@@ -171,6 +178,8 @@ export async function dev({
   return {
     ...result,
     instance: rsbuild,
+    unwrapOutputJSON: (ignoreMap?: boolean) =>
+      unwrapOutputJSON(rsbuild.context.distPath, ignoreMap),
     close: () => result.server.close(),
   };
 }
@@ -206,15 +215,8 @@ export async function build({
   const clean = async () =>
     fs.promises.rm(distPath, { force: true, recursive: true });
 
-  const unwrapOutputJSON = async (ignoreMap = true) => {
-    return globContentJSON(distPath, {
-      absolute: true,
-      ignore: ignoreMap ? [join(distPath, '/**/*.map')] : [],
-    });
-  };
-
   const getIndexFile = async () => {
-    const files = await unwrapOutputJSON();
+    const files = await unwrapOutputJSON(distPath);
     const [name, content] =
       Object.entries(files).find(
         ([file]) => file.includes('index') && file.endsWith('.js'),
@@ -233,7 +235,8 @@ export async function build({
     port,
     clean,
     close,
-    unwrapOutputJSON,
+    unwrapOutputJSON: (ignoreMap?: boolean) =>
+      unwrapOutputJSON(distPath, ignoreMap),
     getIndexFile,
     providerType: process.env.PROVIDE_TYPE || 'rspack',
     instance: rsbuild,
