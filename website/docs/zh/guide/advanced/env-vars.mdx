@@ -41,7 +41,7 @@ if (false) {
 
 默认情况下，Rsbuild 会自动设置 `process.env.NODE_ENV` 环境变量，在开发模式为 `'development'`，生产模式为 `'production'`。
 
-你可以在代码中直接使用 `process.env.NODE_ENV`。
+你可以在 Node.js 和 client 代码中直接使用 `process.env.NODE_ENV`。
 
 ```ts
 if (process.env.NODE_ENV === 'development') {
