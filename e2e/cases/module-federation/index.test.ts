@@ -26,7 +26,7 @@ export default Button;`,
 };
 
 rspackOnlyTest(
-  'should run module federation during development',
+  'should run module federation in development mode',
   async ({ page }) => {
     writeButtonCode();
 

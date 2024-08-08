@@ -127,25 +127,25 @@ console.log(styles.red); // 'red-[hash]'
 - **默认值：**
 
 ```ts
-// isProd 表示生产环境构建
-const localIdentName = isProd
-  ? '[local]-[hash:base64:6]'
-  : '[path][name]__[local]-[hash:base64:6]';
+const localIdentName =
+  rsbuildConfig.mode === 'production'
+    ? '[local]-[hash:base64:6]'
+    : '[path][name]__[local]-[hash:base64:6]';
 ```
 
 设置 CSS Modules 编译后生成的 class names 格式。
 
 ### 默认值
 
-`localIdentName` 在开发环境和生产环境有不同的默认值。
+`localIdentName` 在开发模式和生产模式有不同的默认值。
 
-在生产环境，Rsbuild 会生成更简短的类名，从而减少构建产物的体积。
+在生产模式，Rsbuild 会生成更简短的类名，从而减少构建产物的体积。
 
 ```ts
 import styles from './index.module.scss';
 
-// 在开发环境下，值为 `src-index-module__header-[hash]`
-// 在生产环境下，值为 `header-[hash]`
+// 在开发模式下，值为 `src-index-module__header-[hash]`
+// 在生产模式下，值为 `header-[hash]`
 console.log(styles.header);
 ```
 

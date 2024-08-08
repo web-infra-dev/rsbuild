@@ -72,7 +72,7 @@ export interface DevConfig {
    */
   liveReload?: boolean;
   /**
-   * Set the URL prefix of static assets during development,
+   * Set the URL prefix of static assets in development mode,
    * similar to the [output.publicPath](https://rspack.dev/config/output#outputpublicpath) config of webpack.
    */
   assetPrefix?: string | boolean;
@@ -98,7 +98,7 @@ export interface DevConfig {
     ) => void
   >;
   /**
-   * Used to control whether the build artifacts of the development environment are written to the disk.
+   * Controls whether the build output from development mode is written to disk.
    */
   writeToDisk?: boolean | ((filename: string) => boolean);
   /**

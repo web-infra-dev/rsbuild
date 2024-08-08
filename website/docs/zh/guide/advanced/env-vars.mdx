@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 ```
 
-在开发环境，以上代码会被编译为：
+在开发模式，以上代码会被编译为：
 
 ```js
 if (true) {
@@ -24,7 +24,7 @@ if (true) {
 }
 ```
 
-在生产环境，以上代码会被编译为：
+在生产模式，以上代码会被编译为：
 
 ```js
 if (false) {
@@ -38,8 +38,8 @@ if (false) {
 
 你可以在 client 代码中使用 `process.env.ASSET_PREFIX` 来访问静态资源的前缀。
 
-- 在开发环境下，它等同于 [dev.assetPrefix](/config/dev/asset-prefix) 设置的值。
-- 在生产环境下，它等同于 [output.assetPrefix](/config/output/asset-prefix) 设置的值。
+- 在开发模式下，它等同于 [dev.assetPrefix](/config/dev/asset-prefix) 设置的值。
+- 在生产模式下，它等同于 [output.assetPrefix](/config/output/asset-prefix) 设置的值。
 - Rsbuild 会自动移除 `assetPrefix` 尾部的斜线符号，以便于进行字符串拼接。
 
 比如，我们通过 [output.copy](/config/output/copy) 配置，将 `static/icon.png` 图片拷贝到 `dist` 目录下：
@@ -62,13 +62,13 @@ export default {
 const Image = <img src={`${process.env.ASSET_PREFIX}/static/icon.png`} />;
 ```
 
-在开发环境，以上代码会被编译为：
+在开发模式，以上代码会被编译为：
 
 ```jsx
 const Image = <img src={`/static/icon.png`} />;
 ```
 
-在生产环境，以上代码会被编译为：
+在生产模式，以上代码会被编译为：
 
 ```jsx
 const Image = <img src={`https://example.com/static/icon.png`} />;
@@ -295,7 +295,7 @@ export default {
 
 如果你采用了上述用法，将会导致如下问题：
 
-1. 额外注入了一些未使用的环境变量，导致开发环境的环境变量被泄露到前端代码中。
+1. 额外注入了一些未使用的环境变量，导致开发服务器的环境变量被泄露到前端代码中。
 2. 由于每一处 `process.env` 代码都会被替换为完整的环境变量对象，导致前端代码的包体积增加，性能降低。
 
 因此，请按照实际需求来注入 `process.env` 上的环境变量，避免全量替换。
