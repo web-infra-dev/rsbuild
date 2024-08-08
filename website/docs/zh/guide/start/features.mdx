@@ -9,9 +9,9 @@
 | Rspack 打包     | 默认使用 Rspack 作为打包工具                                     | -                                                                                                                          |
 | SWC 编译        | 默认通过 SWC 对 JavaScript 和 TypeScript 代码进行转译和压缩      | -                                                                                                                          |
 | TS 编译         | 默认通过 SWC 编译 TS 文件                                        | <ul><li>[TypeScript 转译](/guide/basic/typescript#typescript-转译)</li></ul>                                               |
-| 代码压缩        | 默认在生产环境构建时开启代码压缩                                 | <ul><li>[output.minify](/config/output/minify)</li></ul>                                                                   |
+| 代码压缩        | 默认在生产模式构建时开启代码压缩                                 | <ul><li>[output.minify](/config/output/minify)</li></ul>                                                                   |
 | Polyfill 注入   | 默认会注入 core-js 等 Polyfill                                   | <ul><li>[浏览器兼容性](/guide/advanced/browser-compatibility)</li><li>[output.polyfill](/config/output/polyfill)</li></ul> |
-| SourceMap 生成  | 默认在开发环境生成 SourceMap                                     | <ul><li>[output.sourceMap](/config/output/source-map)</li></ul>                                                            |
+| SourceMap 生成  | 默认在开发模式生成 SourceMap                                     | <ul><li>[output.sourceMap](/config/output/source-map)</li></ul>                                                            |
 | 文件别名        | 可选功能，通过 alias 设置文件别名                                | <ul><li>[路径别名](/guide/advanced/alias)</li><li>[source.alias](/config/source/alias)</li></ul>                           |
 | Babel 编译      | 可选功能，通过 Babel 对 JavaScript 和 TypeScript 代码进行转译    | <ul><li>[Babel 插件](/plugins/list/plugin-babel)</li></ul>                                                                 |
 | Node 产物       | 可选功能，支持构建出运行在 Node.js 环境的 JavaScript 产物        | <ul><li>[Node 产物](/config/output/targets#node-target)</li></ul>                                                          |
@@ -34,7 +34,7 @@
 | Stylus 预处理器      | 可选功能，编译 Stylus 文件                 | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[Stylus 插件](/plugins/list/plugin-stylus)</li></ul>          |
 | CSS Modules 编译     | 默认支持编译 CSS Modules 文件              | <ul><li>[使用 CSS Modules](/guide/basic/css-modules)</li><li>[tools.cssLoader](/config/tools/css-loader)</li></ul>   |
 | CSS Modules 类型提示 | 可选功能，生成 CSS Modules 的类型定义文件  | <ul><li>[Typed CSS Modules 插件](https://github.com/rspack-contrib/rsbuild-plugin-typed-css-modules)</li></ul>       |
-| CSS 压缩             | 默认在生产环境构建时开启 CSS 压缩          | <ul><li>[引用样式资源](/guide/basic/css-usage)</li></ul>                                                             |
+| CSS 压缩             | 默认在生产模式构建时开启 CSS 压缩          | <ul><li>[引用样式资源](/guide/basic/css-usage)</li></ul>                                                             |
 | Styled Components    | 可选功能，支持 styled-components 编译      | <ul><li>[Styled Components 插件](/plugins/list/plugin-styled-components)</li></ul>                                   |
 | 内联 CSS 到 JS 中    | 可选功能，将 CSS 文件内联到 JS 文件中      | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[output.injectStyles](/config/output/inject-styles)</li></ul> |
 | Rem 单位转换         | 可选功能，将 CSS 中的 px 转成 rem 单位     | <ul><li>[Rem 插件](/plugins/list/plugin-rem)</li></ul>                                                               |
@@ -93,7 +93,7 @@
 | 功能                | 描述                                                           | 相关链接                                                                                                                            |
 | ------------------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | 产物自动拆包        | Rsbuild 中内置了多种拆包策略，自动将代码包拆分为体积适中的文件 | <ul><li>[拆包最佳实践](/guide/optimization/split-chunk)</li><li>[performance.chunkSplit](/config/performance/chunk-split)</li></ul> |
-| 展示产物体积        | 在生产环境构建后，默认展示所有静态资源的体积信息               | <ul><li>[performance.printFileSize](/config/performance/print-file-size)</li></ul>                                                  |
+| 展示产物体积        | 在生产模式构建后，默认展示所有静态资源的体积信息               | <ul><li>[performance.printFileSize](/config/performance/print-file-size)</li></ul>                                                  |
 | 分析产物体积        | 可选功能，通过 Bundle Analyzer 分析产物体积                    | <ul><li>[performance.bundleAnalyze](/config/performance/bundle-analyze)</li></ul>                                                   |
 | 移除 console        | 可选功能，移除代码中的 `console.[methodName]`                  | <ul><li>[performance.removeConsole](/config/performance/remove-console)</li></ul>                                                   |
 | 优化 moment.js 体积 | 可选功能，移除 moment.js 多余的 locale 文件                    | <ul><li>[performance.removeMomentLocale](/config/performance/remove-moment-locale)</li></ul>                                        |

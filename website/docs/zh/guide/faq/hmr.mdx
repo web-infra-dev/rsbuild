@@ -41,9 +41,9 @@ Web Socket 请求没有建立成功的原因可能有很多种，例如开启了
 
 ### 打包时 external React 后，热更新不生效？
 
-为了保证热更新生效，我们需要使用 React 和 ReactDOM 的开发环境产物。
+为了保证热更新生效，我们需要使用 React 和 ReactDOM 的开发模式产物。
 
-当你将 React 通过 externals 排除后，通常会通过 CDN 等方式注入 React 的生产环境产物，所以热更新会不生效。
+当你将 React 通过 externals 排除后，通常会通过 CDN 等方式注入 React 的生产模式产物，所以热更新会不生效。
 
 ```js
 export default {
@@ -56,7 +56,7 @@ export default {
 };
 ```
 
-为了解决该问题，你需要引用 React 的开发环境产物，同时安装 React Devtools，安装完成后即可实现热更新。
+为了解决该问题，你需要引用 React 的开发模式产物，同时安装 React Devtools，安装完成后即可实现热更新。
 
 如果你不确定当前使用的 React 产物类型，可以参考：[React 官方文档 - Use the Production Build](https://legacy.reactjs.org/docs/optimizing-performance.html#use-the-production-build)。
 
@@ -64,9 +64,9 @@ export default {
 
 ### 开发环境设置文件名的 hash 后，热更新不生效？
 
-通常来说，我们只会在生产环境下设置文件名的 hash 值（即 `process.env.NODE_ENV === 'production'` 时）。
+通常来说，我们只会在生产模式下设置文件名的 hash 值（即 `process.env.NODE_ENV === 'production'` 时）。
 
-如果你在开发环境下设置了文件名的 hash，那么可能会导致热更新不生效（尤其是 CSS 文件）。这是因为每次文件内容变化时，都会引起 hash 变化，导致 [mini-css-extract-plugin](https://npmjs.com/package/mini-css-extract-plugin) 等工具无法读取到最新的文件内容。
+如果你在开发模式下设置了文件名的 hash，那么可能会导致热更新不生效（尤其是 CSS 文件）。这是因为每次文件内容变化时，都会引起 hash 变化，导致 [mini-css-extract-plugin](https://npmjs.com/package/mini-css-extract-plugin) 等工具无法读取到最新的文件内容。
 
 - 正确用法：
 
@@ -103,7 +103,7 @@ export default {
 
 ```text
 » WebSocket connection to 'wss://localhost:3000/rsbuild-hmr' failed:
-The development server has disconnected. Refresh the page if necessary.
+[HMR] disconnected. Attempting to reconnect.
 ```
 
 此问题的解决方法为：点击 Chrome 浏览器问题页面的「高级」->「继续前往 some page（不安全）」。

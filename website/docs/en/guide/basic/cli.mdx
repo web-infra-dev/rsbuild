@@ -111,9 +111,9 @@ The `rsbuild inspect` command is used to view the Rsbuild config and Rspack conf
 Usage: rsbuild inspect [options]
 
 Options:
-  --env <env>           view the configuration in the target environment (default: "development")
-  --output <output>     Specify the path to output in the dist (default: "/")
-  --verbose             Show the full function in the result
+  --mode <mode>         specify the mode for Rsbuild (default: "development")
+  --output <output>     specify the path to output in the dist (default: "/")
+  --verbose             show the full function in the result
   -c --config <config>  specify the configuration file, can be a relative or absolute path
   --environment <name>  specify the name of environment to build
   --env-mode <mode>     specify the env mode to load the `.env.[mode]` file
@@ -135,12 +135,12 @@ Inspect config succeed, open following files to view the content:
   - Rspack Config (web): /project/dist/rspack.config.web.mjs
 ```
 
-### Specifying Environment Mode
+### Specifying Mode
 
-By default, the inspect command outputs the configuration for the development environment. You can add the `--env production` option to output the configuration for the production build:
+By default, the inspect command outputs the configuration for the development mode. You can add the `--env production` option to output the configuration for the production mode:
 
 ```bash
-rsbuild inspect --env production
+rsbuild inspect --mode production
 ```
 
 ### Verbose content

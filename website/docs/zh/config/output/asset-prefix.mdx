@@ -3,11 +3,11 @@
 - **类型：** `string | 'auto'`
 - **默认值：** `'/'`
 
-在部署到生产环境时，可使用该选项设置静态资源的 URL 前缀，比如设置为 CDN 的 URL 地址。
+在 [生产模式](/config/mode) 下，可以使用该选项设置静态资源的 URL 前缀，比如设置为 CDN 地址。
 
 `assetPrefix` 会影响构建产物中绝大部分静态资源的 URL，包括 JavaScript 文件、CSS 文件、图片、视频等。如果指定了一个错误的值，则在加载这些资源时可能会出现 404 错误。
 
-该配置项仅用于生产环境。在开发环境下，请使用 [dev.assetPrefix](/config/dev/asset-prefix) 配置项进行设置。
+该配置项仅用于生产模式。在开发模式下，请使用 [dev.assetPrefix](/config/dev/asset-prefix) 配置项进行设置。
 
 ## 示例
 
@@ -47,6 +47,6 @@ assetPrefix 可以设置为以下类型的路径：
 
 它与原生配置的区别在于：
 
-- `output.assetPrefix` 仅在生产环境下生效。
+- `output.assetPrefix` 仅在生产模式下生效。
 - `output.assetPrefix` 默认会自动补全尾部的 `/`。
 - `output.assetPrefix` 的值会写入 [process.env.ASSET_PREFIX](/guide/advanced/env-vars#processenvasset_prefix) 环境变量（只能在 client 代码中访问）。

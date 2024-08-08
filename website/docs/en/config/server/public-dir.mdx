@@ -91,7 +91,7 @@ During dev builds, if you need to copy some static assets to the output director
 
 Whether to watch the public directory and reload the page when the files change.
 
-Setting `watch` to `true` allows the development environment to watch changes to files in the specified public directory and reload the page when the files are changed:
+Setting `watch` to `true` allows the dev server to watch changes to files in the specified public directory and reload the page when the files are changed:
 
 ```ts
 export default {
@@ -103,7 +103,7 @@ export default {
 };
 ```
 
-Note that the `watch` option is only valid in the development build. If [dev.hmr](/config/dev/hmr) and [dev.liveReload](/config/dev/live-reload) are both set to false, `watch` will be ignored.
+Note that the `watch` option is only valid in development mode. If [dev.hmr](/config/dev/hmr) and [dev.liveReload](/config/dev/live-reload) are both set to false, `watch` will be ignored.
 
 ## Multiple Directories
 

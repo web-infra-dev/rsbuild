@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 ```
 
-In the development build, the above code will be compiled as:
+In development mode, the above code will be compiled as:
 
 ```js
 if (true) {
@@ -24,7 +24,7 @@ if (true) {
 }
 ```
 
-In the production build, the above code will be compiled as:
+In production mode, the above code will be compiled as:
 
 ```js
 if (false) {
@@ -62,13 +62,13 @@ Then we can access the image URL in the client code:
 const Image = <img src={`${process.env.ASSET_PREFIX}/static/icon.png`} />;
 ```
 
-In the development build, the above code will be compiled as:
+In development mode, the above code will be compiled as:
 
 ```jsx
 const Image = <img src={`/static/icon.png`} />;
 ```
 
-In the production build, the above code will be compiled as:
+In production mode, the above code will be compiled as:
 
 ```jsx
 const Image = <img src={`https://example.com/static/icon.png`} />;
@@ -295,7 +295,7 @@ export default {
 
 If the above usage is adopted, the following problems will be caused:
 
-1. Some unused environment variables are additionally injected, causing the environment variables of the development environment to be leaked into the front-end code.
+1. Some unused environment variables are additionally injected, causing the environment variables of the dev server to be leaked into the front-end code.
 2. As each `process.env` code will be replaced by a complete environment variable object, the bundle size of the front-end code will increase and the performance will decrease.
 
 Therefore, please inject the environment variables on `process.env` according to actual needs and avoid replacing them in its entirety.

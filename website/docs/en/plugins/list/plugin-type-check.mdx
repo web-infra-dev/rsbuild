@@ -12,8 +12,8 @@ The type checking logic of `fork-ts-checker-webpack-plugin` is similar to the na
 
 The behavior of the plugin differs in the development and production builds:
 
-- During development builds, type errors do not block the build process. They are only logged in the terminal.
-- During production builds, type errors cause the build to fail in order to ensure the stability of the production code.
+- In development mode, type errors do not block the build process. They are only logged in the terminal.
+- In production mode, type errors cause the build to fail in order to ensure the stability of the production code.
 
 ## Quick Start
 
@@ -77,7 +77,7 @@ pluginTypeCheck({
 });
 ```
 
-Enable type checking only during production builds:
+Enable type checking only in production mode:
 
 ```js
 pluginTypeCheck({
@@ -85,7 +85,7 @@ pluginTypeCheck({
 });
 ```
 
-Enable type checking only during development builds (it is not recommended to disable type checking during production builds, as it may reduce the stability of the production code):
+Enable type checking only in development mode (it is not recommended to disable type checking in production mode, as it may reduce the stability of the production code):
 
 ```js
 pluginTypeCheck({
@@ -195,7 +195,7 @@ For example, properly configuring the `include` and `exclude` scopes in `tsconfi
 }
 ```
 
-3. Since the production build uses `vue-tsc` for type checking, you can disable the Type Check plugin in the production build to avoid redundant checks.
+3. Since the production build uses `vue-tsc` for type checking, you can disable the Type Check plugin in production mode to avoid redundant checks.
 
 ```js
 pluginTypeCheck({

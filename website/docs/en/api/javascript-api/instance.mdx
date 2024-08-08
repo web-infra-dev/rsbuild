@@ -52,7 +52,7 @@ type CachePath = string;
 
 ### context.devServer
 
-Dev Server information, including the current Dev Server hostname and port number.
+Dev server information, including the current dev server hostname and port number.
 
 - **Type:**
 
@@ -77,7 +77,7 @@ type bundlerType = 'rspack' | 'webpack';
 
 ## rsbuild.build
 
-Perform a production build.
+Perform a production mode build.
 
 - **Type:**
 
@@ -109,16 +109,6 @@ try {
   logger.error(err);
   process.exit(1);
 }
-```
-
-### Development build
-
-If you need to perform a development build, you can set the `mode` option to `'development'`.
-
-```ts
-await rsbuild.build({
-  mode: 'development',
-});
 ```
 
 ### Monitor file changes
@@ -183,7 +173,7 @@ function StartDevServer(
 
 - **Example:**
 
-Start Dev Server:
+Start dev server:
 
 ```ts
 import { logger } from '@rsbuild/core';
@@ -201,7 +191,7 @@ try {
 }
 ```
 
-After successfully starting Dev Server, you can see the following logs:
+After successfully starting dev server, you can see the following logs:
 
 ```
   > Local:    http://localhost:3000
@@ -441,7 +431,7 @@ function CreateCompiler(): Promise<Compiler | MultiCompiler>;
 const compiler = await rsbuild.createCompiler();
 ```
 
-> In most scenarios, you do not need to use this API unless you need to custom the Dev Server or other advanced scenarios.
+> In most scenarios, you do not need to use this API unless you need to custom the dev server or other advanced scenarios.
 
 ## rsbuild.addPlugins
 

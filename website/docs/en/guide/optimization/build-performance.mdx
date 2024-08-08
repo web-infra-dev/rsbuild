@@ -20,7 +20,7 @@ Optimizing the number of modules referenced by the application can reduce the bu
 
 ## Development optimization
 
-The following are methods for improving development build performance.
+The following are methods for improving performance in development mode.
 
 ## Enable Lazy Compilation
 
@@ -38,9 +38,9 @@ export default {
 
 ### Source Map Format
 
-In order to provide a good debugging experience, Rsbuild uses the `cheap-module-source-map` format source map by default during development, which is a high-quality source map format and will bring certain performance overhead.
+In order to provide a good debugging experience, Rsbuild uses the `cheap-module-source-map` format source map by default in development mode, which is a high-quality source map format and will bring certain performance overhead.
 
-You can improve build speed by adjusting the source map format during development through [output.sourceMap](/config/output/source-map).
+You can improve build speed by adjusting the source map format in development mode through [output.sourceMap](/config/output/source-map).
 
 For example to disable source map:
 
@@ -54,7 +54,7 @@ export default {
 };
 ```
 
-Or set the source map format of the development environment to the cheapest `eval` format:
+Or set the source map format of the development mode to the cheapest `eval` format:
 
 ```js
 export default {
@@ -70,9 +70,9 @@ export default {
 
 ### Browserslist for development
 
-This strategy is similar to ["Adjust Browserslist"](/guide/optimization/optimize-bundle#adjust-browserslist), the difference is that we can set different browserslist for development and production environment, thereby reducing the compilation overhead during development.
+This strategy is similar to ["Adjust Browserslist"](/guide/optimization/optimize-bundle#adjust-browserslist), the difference is that we can set different browserslist for development and production mode, thereby reducing the compilation overhead in development mode.
 
-For example, you can add the following config to `.browserslistrc`, which means that only the latest browsers are compatible during development, and the actual browsers are compatible in the production environment:
+For example, you can add the following config to `.browserslistrc`, which means that only the latest browsers are compatible in development mode, and the actual browsers are compatible in the production mode:
 
 ```yaml title=".browserslistrc"
 [production]
@@ -87,4 +87,4 @@ last 1 firefox version
 last 1 safari version
 ```
 
-Note that this strategy can lead to some differences in the build result of development production environment.
+Note that this can lead to some differences in the build result between development and production modes.

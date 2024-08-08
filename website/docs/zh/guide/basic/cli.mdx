@@ -29,7 +29,7 @@ Commands:
 
 ## rsbuild dev
 
-`rsbuild dev` 命令用于启动一个本地开发服务器，对源代码进行开发环境编译。
+`rsbuild dev` 命令用于启动一个本地开发服务器，对源代码进行开发模式编译。
 
 ```bash
 Usage: rsbuild dev [options]
@@ -83,7 +83,7 @@ Options:
 
 ## rsbuild preview
 
-`rsbuild preview` 命令用于在本地预览生产环境构建的产物, 注意你需要提前执行 `rsbuild build` 命令构建出对应产物。
+`rsbuild preview` 命令用于在本地预览生产模式构建的产物, 注意你需要提前执行 `rsbuild build` 命令构建出对应产物。
 
 ```bash
 Usage: rsbuild preview [options]
@@ -111,7 +111,7 @@ preview 命令仅用于本地预览，请勿将它用于生产服务器，因为
 Usage: rsbuild inspect [options]
 
 Options:
-  --env <env>           查看指定环境下的配置 (default: "development")
+  --mode <mode>         查看指定模式下的配置 (default: "development")
   --output <output>     指定在 dist 目录下输出的路径 (default: "/")
   --verbose             在结果中展示函数的完整内容
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
@@ -135,12 +135,12 @@ Inspect config succeed, open following files to view the content:
   - Rspack Config (web): /project/dist/rspack.config.web.mjs
 ```
 
-### 指定环境模式
+### 指定模式
 
-默认情况下，inspect 命令会输出开发环境的配置，你可以添加 `--env production` 选项来输出生产环境的配置：
+默认情况下，inspect 命令会输出开发模式的配置，你可以添加 `--mode production` 选项来输出生产模式的配置：
 
 ```bash
-rsbuild inspect --env production
+rsbuild inspect --mode production
 ```
 
 ### 完整内容

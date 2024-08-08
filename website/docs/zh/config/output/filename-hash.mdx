@@ -4,7 +4,7 @@
 - **默认值：** `true`
 - **版本：** `>= 0.4.0`
 
-在生产环境构建后，是否在产物的文件名中添加 hash 值。
+在生产模式构建后，是否在产物的文件名中添加 hash 值。
 
 ### 禁用 hash
 
@@ -56,4 +56,4 @@ export default {
 
 - [output.filename](/config/output/filename) 的优先级高于 `output.filenameHash`。
 - 默认情况下，当 target 不是 `web` 时，产物的文件名不会包含 hash，比如 Node.js 产物。
-- 默认情况下，开发环境构建产物的文件名不会包含 hash。
+- 默认情况下，开发模式构建产物的文件名不会包含 hash。

@@ -52,7 +52,7 @@ type CachePath = string;
 
 ### context.devServer
 
-Dev Server 相关信息，包含了当前 Dev Server 的 hostname 和端口号。
+Dev server 相关信息，包含了当前 dev server 的 hostname 和端口号。
 
 - **类型：**
 
@@ -99,7 +99,7 @@ type TsconfigPath = string | undefined;
 
 ## rsbuild.build
 
-调用 build 方法时，会执行一次生产环境构建。
+调用 build 方法时，会执行一次生产模式构建。
 
 - **类型：**
 
@@ -131,16 +131,6 @@ try {
   logger.error(err);
   process.exit(1);
 }
-```
-
-### 开发环境构建
-
-如果需要执行一次开发环境构建，可以将 `mode` 参数设置为 `'development'`。
-
-```ts
-await rsbuild.build({
-  mode: 'development',
-});
 ```
 
 ### 监听文件变化
@@ -205,7 +195,7 @@ function StartDevServer(
 
 - **示例：**
 
-启动 Dev Server：
+启动 dev server：
 
 ```ts
 import { logger } from '@rsbuild/core';
@@ -223,7 +213,7 @@ try {
 }
 ```
 
-成功启动 Dev Server 后，可以看到以下日志信息：
+成功启动 dev server 后，可以看到以下日志信息：
 
 ```
   > Local:    http://localhost:3000
@@ -232,7 +222,7 @@ try {
 
 `startDevServer` 会返回以下参数：
 
-- `urls`：访问 Dev Server 的 URLs
+- `urls`：访问 dev server 的 URLs
 - `port` 实际监听的端口号
 - `server`：Server 实例对象
 
@@ -241,7 +231,7 @@ const { urls, port, server } = await rsbuild.startDevServer();
 console.log(urls); // ['http://localhost:3000', 'http://192.168.0.1:3000']
 console.log(port); // 3000
 
-// 关闭 Dev Server
+// 关闭 dev server
 await server.close();
 ```
 
@@ -388,7 +378,7 @@ await server.listen();
 
 ## rsbuild.preview
 
-在本地启动 Server 来预览生产环境构建的产物，需要在 `rsbuild.build` 方法之后执行。
+在本地启动 Server 来预览生产模式构建的产物，需要在 `rsbuild.build` 方法之后执行。
 
 - **类型：**
 
@@ -455,7 +445,7 @@ function CreateCompiler(): Promise<Compiler | MultiCompiler>;
 const compiler = await rsbuild.createCompiler();
 ```
 
-> 大部分场景下，不需要使用该 API，除非需要进行自定义 Dev Server 等高级操作。
+> 大部分场景下，不需要使用该 API，除非需要进行自定义 dev server 等高级操作。
 
 ## rsbuild.addPlugins
 

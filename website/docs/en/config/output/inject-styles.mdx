@@ -23,7 +23,7 @@ When `output.injectStyles` is enabled, you can modify the options of `style-load
 
 ### Usage Scenario
 
-It is recommended to only enable the `injectStyles` option during development.
+It is recommended to only enable the `injectStyles` option in development mode.
 
 For production builds, it is recommended to use the default behavior of Rsbuild, which extracts CSS into separate bundles to allow browsers to load CSS and JS assets in parallel.
 
@@ -37,7 +37,7 @@ export default {
 };
 ```
 
-If you need to enable this option in the production build, please note that the inlined CSS code will not go through Rsbuild's default CSS minimizer. You can manually register the [cssnano](https://github.com/cssnano/cssnano) plugin for PostCSS to compress the inlined code.
+If you need to enable this option in production mode, please note that the inlined CSS code will not go through Rsbuild's default CSS minimizer. You can manually register the [cssnano](https://github.com/cssnano/cssnano) plugin for PostCSS to compress the inlined code.
 
 1. Install cssnano:
 
