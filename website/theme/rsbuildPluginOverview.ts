@@ -16,7 +16,7 @@ export const rsbuildPluginOverview: RsbuildPlugin = {
     const files = await glob(globPath);
     const groups: Group[] = [
       {
-        name: 'root',
+        name: 'top level',
         items: [
           {
             text: 'mode',
@@ -58,7 +58,7 @@ export const rsbuildPluginOverview: RsbuildPlugin = {
     }
 
     const order = [
-      'root',
+      'top level',
       'source',
       'output',
       'html',
