@@ -4,8 +4,6 @@ import color from 'picocolors';
 import {
   formatStats,
   getStatsOptions,
-  isDev,
-  isProd,
   isSatisfyRspackVersion,
   prettyTime,
   rspackMinVersion,
@@ -66,7 +64,7 @@ export async function createCompiler({
     isCompiling = true;
   });
 
-  if (isProd()) {
+  if (context.normalizedConfig?.mode === 'production') {
     compiler.hooks.run.tap('rsbuild:run', logRspackVersion);
   }
 
@@ -111,7 +109,7 @@ export async function createCompiler({
     done(stats);
   });
 
-  if (isDev()) {
+  if (context.normalizedConfig?.mode === 'development') {
     registerDevHook({
       context,
       compiler,

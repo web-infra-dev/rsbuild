@@ -60,7 +60,7 @@ export const getDefaultBabelOptions = (
   const options: BabelLoaderOptions = {
     babelrc: false,
     configFile: false,
-    compact: process.env.NODE_ENV === 'production',
+    compact: config.mode === 'production',
     plugins: [
       [
         require.resolve('@babel/plugin-proposal-decorators'),

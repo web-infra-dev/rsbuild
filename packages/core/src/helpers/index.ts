@@ -25,8 +25,6 @@ export const getNodeEnv = () => process.env.NODE_ENV as string;
 export const setNodeEnv = (env: string): void => {
   process.env.NODE_ENV = env;
 };
-export const isDev = (): boolean => getNodeEnv() === 'development';
-export const isProd = (): boolean => getNodeEnv() === 'production';
 
 export const isNil = (o: unknown): o is undefined | null =>
   o === undefined || o === null;

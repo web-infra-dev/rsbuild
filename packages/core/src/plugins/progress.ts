@@ -1,5 +1,4 @@
 import { rspack } from '@rspack/core';
-import { isProd } from '../helpers';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginProgress = (): RsbuildPlugin => ({
@@ -15,8 +14,8 @@ export const pluginProgress = (): RsbuildPlugin => ({
       const { config } = environment;
       const options =
         config.dev.progressBar ??
-        // enable progress bar in production by default
-        isProd();
+        // enable progress bar in production mode by default
+        config.mode === 'production';
 
       if (!options) {
         return;

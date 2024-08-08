@@ -52,9 +52,7 @@ export const pluginReact = ({
     if (api.context.bundlerType === 'rspack') {
       applyBasicReactSupport(api, options);
 
-      const isProdProfile =
-        enableProfiler && process.env.NODE_ENV === 'production';
-      if (isProdProfile) {
+      if (enableProfiler) {
         applyReactProfiler(api);
       }
     }

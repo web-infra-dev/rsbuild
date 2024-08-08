@@ -54,7 +54,7 @@ export const pluginAssetsRetry = (
           typeof config.output.minify === 'boolean'
             ? config.output.minify
             : config.output.minify?.js;
-        options.minify = minify && process.env.NODE_ENV === 'production';
+        options.minify = minify && config.mode === 'production';
       }
 
       return options;

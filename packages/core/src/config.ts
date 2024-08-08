@@ -398,10 +398,11 @@ export async function loadConfig({
 
   if (typeof configExport === 'function') {
     const command = process.argv[2];
+    const nodeEnv = getNodeEnv();
     const params: ConfigParams = {
-      env: getNodeEnv(),
+      env: nodeEnv,
       command,
-      envMode: envMode || getNodeEnv(),
+      envMode: envMode || nodeEnv,
     };
 
     const result = await configExport(params);

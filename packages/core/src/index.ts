@@ -70,6 +70,7 @@ export type {
   ModifyWebpackChainUtils,
   ModifyWebpackConfigUtils,
   ModuleFederationConfig,
+  MergedEnvironmentConfig,
   NormalizedConfig,
   NormalizedDevConfig,
   NormalizedEnvironmentConfig,

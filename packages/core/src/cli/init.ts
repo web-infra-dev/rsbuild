@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { loadConfig, watchFiles } from '../config';
-import { castArray, isDev } from '../helpers';
+import { castArray } from '../helpers';
 import { loadEnv } from '../loadEnv';
 import { logger } from '../logger';
 import { onBeforeRestartServer } from '../server/restart';
@@ -34,9 +34,7 @@ export async function init({
       mode: commonOpts.envMode,
     });
 
-    if (isDev()) {
-      onBeforeRestartServer(envs.cleanup);
-    }
+    onBeforeRestartServer(envs.cleanup);
 
     const { content: config, filePath: configFilePath } = await loadConfig({
       cwd: root,

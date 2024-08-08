@@ -1,11 +1,10 @@
 import path from 'node:path';
-import { isProd } from '../helpers';
 import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
 
 const getJsSourceMap = (config: NormalizedEnvironmentConfig) => {
   const { sourceMap } = config.output;
   if (sourceMap.js === undefined) {
-    return isProd() ? false : 'cheap-module-source-map';
+    return config.mode === 'production' ? false : 'cheap-module-source-map';
   }
   return sourceMap.js;
 };

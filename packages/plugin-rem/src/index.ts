@@ -1,5 +1,6 @@
 import path from 'node:path';
 import {
+  type NormalizedEnvironmentConfig,
   type PostCSSPlugin,
   type RsbuildPlugin,
   ensureAssetPrefix,
@@ -38,9 +39,9 @@ export const pluginRem = (
       return scriptPath;
     };
 
-    const getRuntimeCode = async () => {
+    const getRuntimeCode = async (config: NormalizedEnvironmentConfig) => {
       if (!runtimeCode) {
-        const isCompress = process.env.NODE_ENV === 'production';
+        const isCompress = config.mode === 'production';
         runtimeCode = await getRootPixelCode(options, isCompress);
       }
       return runtimeCode;
@@ -85,7 +86,7 @@ export const pluginRem = (
           return;
         }
 
-        const code = await getRuntimeCode();
+        const code = await getRuntimeCode(config);
         const scriptPath = getScriptPath(config.output.distPath.js);
         compilation.emitAsset(scriptPath, new sources.RawSource(code));
       },
@@ -129,7 +130,7 @@ export const pluginRem = (
         if (options.inlineRuntime) {
           headTags.splice(injectPosition, 0, {
             ...scriptTag,
-            children: await getRuntimeCode(),
+            children: await getRuntimeCode(config),
           });
         } else {
           const url = ensureAssetPrefix(
