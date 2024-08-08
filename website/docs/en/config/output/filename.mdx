@@ -19,7 +19,7 @@ type FilenameConfig = {
 - **Default:**
 
 ```js
-// Development build
+// Development mode
 const devDefaultFilename = {
   html: '[name].html',
   js: '[name].js',
@@ -30,7 +30,7 @@ const devDefaultFilename = {
   media: '[name].[contenthash:8][ext]',
 };
 
-// Production build
+// Production mode
 const prodDefaultFilename = {
   html: '[name].html',
   js: output.target === 'node' ? '[name].js' : '[name].[contenthash:8].js',
