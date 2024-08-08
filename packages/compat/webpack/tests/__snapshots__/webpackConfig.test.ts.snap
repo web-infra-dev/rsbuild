@@ -71,7 +71,6 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
   DefinePlugin {
     "definitions": {
       "process.env.ASSET_PREFIX": """",
-      "process.env.NODE_ENV": ""test"",
     },
   },
   ProgressPlugin {

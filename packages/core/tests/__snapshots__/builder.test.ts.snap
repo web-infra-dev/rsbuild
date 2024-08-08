@@ -368,7 +368,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
       "_args": [
         {
           "process.env.ASSET_PREFIX": """",
-          "process.env.NODE_ENV": ""development"",
         },
       ],
       "affectedHooks": "compilation",
