@@ -47,6 +47,7 @@ If the value of `mode` is `development`:
 
 - Enable HMR and register the [HotModuleReplacementPlugin](https://rspack.dev/plugins/webpack/hot-module-replacement-plugin).
 - Generate JavaScript source maps, but do not generate CSS source maps. See [output.sourceMap](/config/output/source-map) for details.
+- The `process.env.NODE_ENV` in the source code will be replaced with `'development'`.
 
 ## Production Mode
 
@@ -57,6 +58,7 @@ If the value of `mode` is `production`:
 - Generated JavaScript and CSS filenames will have hash suffixes, see [output.filenameHash](/config/output/filename-hash).
 - Generated CSS Modules classnames will be shorter, see [cssModules.localIdentName](/config/output/css-modules#cssmoduleslocalidentname).
 - Do not generate JavaScript and CSS source maps, see [output.sourceMap](/config/output/source-map).
+- The `process.env.NODE_ENV` in the source code will be replaced with `'production'`.
 
 ## None Mode
 
