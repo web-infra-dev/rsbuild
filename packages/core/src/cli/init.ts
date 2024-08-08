@@ -67,6 +67,10 @@ export async function init({
       ...config.source.define,
     };
 
+    if (commonOpts.mode) {
+      config.mode = commonOpts.mode;
+    }
+
     if (commonOpts.open && !config.server?.open) {
       config.server ||= {};
       config.server.open = commonOpts.open;

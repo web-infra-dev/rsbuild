@@ -39,9 +39,10 @@ Options:
   --port <port>         设置 Rsbuild Server 监听的端口号
   --host <host>         指定 Rsbuild Server 启动时监听的 host
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
-  --environment <name>  指定需要构建的 environment 名称
+  -m --mode <mode>      指定构建模式，可以是 `development`，`production` 或 `none`
   --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
   --env-dir <dir>       指定目录来加载 `.env` 文件
+  --environment <name>  指定需要构建的 environment 名称
   -h, --help            显示命令帮助
 ```
 
@@ -75,9 +76,10 @@ Usage: rsbuild build [options]
 Options:
   -w --watch            开启 watch 模式, 监听文件变更并重新构建
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
-  --environment <name>  指定需要构建的 environment 名称
+  -m --mode <mode>      指定构建模式，可以是 `development`，`production` 或 `none`
   --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
   --env-dir <dir>       指定目录来加载 `.env` 文件
+  --environment <name>  指定需要构建的 environment 名称
   -h, --help            显示命令帮助
 ```
 
@@ -93,9 +95,10 @@ Options:
   --port <port>         设置 Rsbuild Server 监听的端口号
   --host <host>         指定 Rsbuild Server 启动时监听的 host
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
-  --environment <name>  指定需要构建的 environment 名称
+  -m --mode <mode>      指定构建模式，可以是 `development`，`production` 或 `none`
   --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
   --env-dir <dir>       指定目录来加载 `.env` 文件
+  --environment <name>  指定需要构建的 environment 名称
   -h, --help            显示命令帮助
 ```
 
@@ -111,13 +114,13 @@ preview 命令仅用于本地预览，请勿将它用于生产服务器，因为
 Usage: rsbuild inspect [options]
 
 Options:
-  --mode <mode>         查看指定模式下的配置 (default: "development")
   --output <output>     指定在 dist 目录下输出的路径 (default: "/")
   --verbose             在结果中展示函数的完整内容
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
-  --environment <name>  指定需要构建的 environment 名称
+  -m --mode <mode>      指定构建模式，可以是 `development`，`production` 或 `none`
   --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
   --env-dir <dir>       指定目录来加载 `.env` 文件
+  --environment <name>  指定需要构建的 environment 名称
   -h, --help            显示命令帮助
 ```
 
