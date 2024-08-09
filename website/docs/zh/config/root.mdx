@@ -8,6 +8,12 @@
 
 Rsbuild `root` 的值也会传递给 Rspack 的 [context](https://rspack.dev/config/context) 配置。
 
+:::tip
+`root` 的值不会影响 `.env` 文件的加载路径，因为 `.env` 文件早于 Rsbuild 的配置文件被解析。
+
+Rsbuild CLI 支持使用 `--root` 选项来指定根目录，它可以影响 `.env` 文件的加载路径，详见 ["CLI"](/guide/basic/cli)。
+:::
+
 ## 示例
 
 - 相对路径：

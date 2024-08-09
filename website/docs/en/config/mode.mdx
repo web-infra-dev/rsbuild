@@ -8,7 +8,9 @@ Specify the build mode for Rsbuild, as each mode has different default behavior 
 The value of Rsbuild `mode` is also be passed to the [mode](https://rspack.dev/config/mode) configuration of Rspack.
 
 :::tip
-The value of `mode` does not affect the loading of `.env` files. Rsbuild supports the use of the `--env-mode` option to specify the env mode. See [env mode](/guide/advanced/env-vars#env-mode) for more details.
+The value of `mode` does not affect the loading results of the `.env` file, as the `.env` file is resolved before the Rsbuild configuration file.
+
+Rsbuild CLI supports using the `--env-mode` option to specify the env mode. See ["Env mode"](/guide/advanced/env-vars#env-mode) for more details.
 :::
 
 ## Default Values
