@@ -7,6 +7,7 @@ import type { RsbuildMode } from '../types';
 import { init } from './init';
 
 export type CommonOptions = {
+  root?: string;
   mode?: RsbuildMode;
   config?: string;
   envDir?: string;
@@ -36,6 +37,10 @@ const applyCommonOptions = (command: Command) => {
     .option(
       '-c --config <config>',
       'specify the configuration file, can be a relative or absolute path',
+    )
+    .option(
+      '-r --root <root>',
+      'specify the project root directory, can be an absolute path or a path relative to cwd',
     )
     .option(
       '-m --mode <mode>',

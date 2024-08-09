@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { loadConfig, watchFiles } from '../config';
-import { castArray } from '../helpers';
+import { castArray, getAbsolutePath } from '../helpers';
 import { loadEnv } from '../loadEnv';
 import { logger } from '../logger';
 import { onBeforeRestartServer } from '../server/restart';
@@ -28,7 +28,8 @@ export async function init({
   }
 
   try {
-    const root = process.cwd();
+    const cwd = process.cwd();
+    const root = commonOpts.root ? getAbsolutePath(cwd, commonOpts.root) : cwd;
     const envs = loadEnv({
       cwd: getEnvDir(root, commonOpts.envDir),
       mode: commonOpts.envMode,
@@ -66,6 +67,10 @@ export async function init({
       ...envs.publicVars,
       ...config.source.define,
     };
+
+    if (commonOpts.root) {
+      config.root = root;
+    }
 
     if (commonOpts.mode) {
       config.mode = commonOpts.mode;

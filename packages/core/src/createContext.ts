@@ -1,8 +1,8 @@
-import { isAbsolute, join } from 'node:path';
+import { join } from 'node:path';
 import browserslist from 'browserslist';
 import { withDefaultConfig } from './config';
 import { DEFAULT_BROWSERSLIST, ROOT_DIST_DIR } from './constants';
-import { getCommonParentPath } from './helpers/path';
+import { getAbsolutePath, getCommonParentPath } from './helpers/path';
 import { initHooks } from './hooks';
 import { getHTMLPathByEntry } from './initPlugins';
 import { logger } from './logger';
@@ -17,10 +17,6 @@ import type {
   RsbuildContext,
   RsbuildEntry,
 } from './types';
-
-function getAbsolutePath(base: string, filepath: string) {
-  return isAbsolute(filepath) ? filepath : join(base, filepath);
-}
 
 function getAbsoluteDistPath(
   cwd: string,
