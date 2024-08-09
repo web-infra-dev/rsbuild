@@ -545,8 +545,8 @@ importers:
         specifier: 0.5.11
         version: 0.5.11
       core-js:
-        specifier: ~3.37.1
-        version: 3.37.1
+        specifier: ~3.38.0
+        version: 3.38.0
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -637,8 +637,8 @@ importers:
         specifier: ^1.0.30001647
         version: 1.0.30001647
       core-js:
-        specifier: ~3.37.1
-        version: 3.37.1
+        specifier: ~3.38.0
+        version: 3.38.0
     optionalDependencies:
       fsevents:
         specifier: ~2.3.3
@@ -4168,8 +4168,8 @@ packages:
   core-js-compat@3.37.1:
     resolution: {integrity: sha512-9TNiImhKvQqSUkOvk/mMRZzOANTiEVC7WaBNhHcKM7x+/5E1l5NvsysR19zuDQScE8k+kfQXWRN3AtS/eOSHpg==}
 
-  core-js@3.37.1:
-    resolution: {integrity: sha512-Xn6qmxrQZyB0FFY8E3bgRXei3lWDJHhvI+u0q9TKIYM49G8pAr0FgnnrFRAmsbptZL1yxRADVXn+x5AGsbBfyw==}
+  core-js@3.38.0:
+    resolution: {integrity: sha512-XPpwqEodRljce9KswjZShh95qJ1URisBeKCjUdq27YdenkslVe7OO0ZJhlYXAChW7OhXaRLl8AAba7IBfoIHug==}
 
   cosmiconfig@8.3.6:
     resolution: {integrity: sha512-kcZ6+W5QzcJ3P1Mt+83OUv/oHFqZHIx8DuxG6eZ5RGMERoLqp4BuGjhHLYGK+Kf5XVkQvqBSmAy/nGWN3qDgEA==}
@@ -10936,7 +10936,7 @@ snapshots:
     dependencies:
       browserslist: 4.23.3
 
-  core-js@3.37.1: {}
+  core-js@3.38.0: {}
 
   cosmiconfig@8.3.6(typescript@5.5.2):
     dependencies:
