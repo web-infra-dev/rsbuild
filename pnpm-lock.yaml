@@ -1282,8 +1282,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       path-serializer:
-        specifier: 0.0.3
-        version: 0.0.3
+        specifier: 0.0.4
+        version: 0.0.4
       typescript:
         specifier: ^5.5.2
         version: 5.5.2
@@ -6056,8 +6056,8 @@ packages:
     resolution: {integrity: sha512-7xTavNy5RQXnsjANvVvMkEjvloOinkAjv/Z6Ildz9v2RinZ4SBKTWFOVRbaF8p0vpHnyjV/UwNDdKuUv6M5qcA==}
     engines: {node: '>=16 || 14 >=14.17'}
 
-  path-serializer@0.0.3:
-    resolution: {integrity: sha512-eJFzXIi7bVuqzm/T+I0McHLfjz8KiRyZ5CpZ4+GlHhN26vmBeNV3pSVMbcYmELDofM0QGmVZpXcyZOM2FP0aTQ==}
+  path-serializer@0.0.4:
+    resolution: {integrity: sha512-TxuzPbovS7A3125Xz4b/vfRGRtDFJrVzwpAadPF8aR5ZOp0whweKJFF5OFa1eHrOftYWfVxU294Dfw+KSGTXbg==}
 
   path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
@@ -13168,7 +13168,7 @@ snapshots:
       lru-cache: 10.2.0
       minipass: 7.0.4
 
-  path-serializer@0.0.3: {}
+  path-serializer@0.0.4: {}
 
   path-type@4.0.0: {}
 
