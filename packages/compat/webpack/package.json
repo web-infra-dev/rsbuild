@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@rsbuild/core": "workspace:*",
-    "copy-webpack-plugin": "11.0.0",
+    "copy-webpack-plugin": "12.0.2",
     "mini-css-extract-plugin": "2.9.0",
     "picocolors": "^1.0.1",
     "reduce-configs": "^1.0.0",
