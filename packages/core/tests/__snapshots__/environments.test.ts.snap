@@ -82,6 +82,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "removeConsole": false,
     "removeMomentLocale": false,
   },
+  "root": "<ROOT>",
   "security": {
     "nonce": "",
     "sri": {
@@ -204,6 +205,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "removeConsole": false,
     "removeMomentLocale": false,
   },
+  "root": "<ROOT>",
   "security": {
     "nonce": "",
     "sri": {
@@ -363,6 +365,7 @@ exports[`environment config > should print environment config when inspect confi
       "rsbuild:sri",
       "rsbuild:nonce",
     ],
+    "root": "<ROOT>",
     "security": {
       "nonce": "",
       "sri": {
@@ -518,6 +521,7 @@ exports[`environment config > should print environment config when inspect confi
       "rsbuild:sri",
       "rsbuild:nonce",
     ],
+    "root": "<ROOT>",
     "security": {
       "nonce": "",
       "sri": {
@@ -692,6 +696,7 @@ exports[`environment config > should support modify environment config by api.mo
       "rsbuild:nonce",
       "test-environment",
     ],
+    "root": "<ROOT>",
     "security": {
       "nonce": "",
       "sri": {
@@ -848,6 +853,7 @@ exports[`environment config > should support modify environment config by api.mo
       "rsbuild:nonce",
       "test-environment",
     ],
+    "root": "<ROOT>",
     "security": {
       "nonce": "",
       "sri": {
@@ -1005,6 +1011,7 @@ exports[`environment config > should support modify environment config by api.mo
       "rsbuild:nonce",
       "test-environment",
     ],
+    "root": "<ROOT>",
     "security": {
       "nonce": "",
       "sri": {
@@ -1165,6 +1172,7 @@ exports[`environment config > should support modify single environment config by
       "rsbuild:nonce",
       "test-environment",
     ],
+    "root": "<ROOT>",
     "security": {
       "nonce": "",
       "sri": {
@@ -1321,6 +1329,7 @@ exports[`environment config > should support modify single environment config by
       "rsbuild:nonce",
       "test-environment",
     ],
+    "root": "<ROOT>",
     "security": {
       "nonce": "",
       "sri": {
