@@ -18,7 +18,7 @@ exports[`plugin-module-federation > should set environment module federation con
       ModuleFederationPlugin {
         "_options": {
           "exposes": {
-            "Button": "src/Button",
+            "./Button": "./src/Button",
           },
           "filename": "remoteEntry.js",
           "name": "remote",
@@ -83,7 +83,7 @@ exports[`plugin-module-federation > should set module federation and environment
       ModuleFederationPlugin {
         "_options": {
           "exposes": {
-            "Button": "src/Button",
+            "./Button": "./src/Button",
           },
           "filename": "remoteEntry.js",
           "name": "remote",
@@ -116,7 +116,7 @@ exports[`plugin-module-federation > should set module federation and environment
       ModuleFederationPlugin {
         "_options": {
           "exposes": {
-            "Button": "src/Button",
+            "./Button": "./src/Button",
           },
           "filename": "remoteEntry.js",
           "name": "remote",
@@ -157,7 +157,7 @@ exports[`plugin-module-federation > should set module federation config 1`] = `
     ModuleFederationPlugin {
       "_options": {
         "exposes": {
-          "Button": "src/Button",
+          "./Button": "./src/Button",
         },
         "filename": "remoteEntry.js",
         "name": "remote",

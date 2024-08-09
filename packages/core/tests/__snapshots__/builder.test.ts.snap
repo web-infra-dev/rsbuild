@@ -6,7 +6,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
   "devtool": "cheap-module-source-map",
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "experiments": {

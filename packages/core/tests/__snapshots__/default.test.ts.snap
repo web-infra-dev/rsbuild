@@ -6,7 +6,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   "devtool": "cheap-module-source-map",
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "experiments": {
@@ -406,7 +406,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   "devtool": false,
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "experiments": {
@@ -868,7 +868,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "devtool": "cheap-module-source-map",
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "experiments": {
@@ -1194,7 +1194,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
   "devtool": "cheap-module-source-map",
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "experiments": {

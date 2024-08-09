@@ -10,7 +10,7 @@ exports[`plugin-type-check > should allow to configure fork-ts-checker-webpack-p
           "exclude": [
             [Function],
             {
-              "file": "src/**/*.ts",
+              "file": "./src/**/*.ts",
             },
           ],
         },

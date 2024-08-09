@@ -100,7 +100,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
   },
   "source": {
     "alias": {
-      "@common": "src/common",
+      "@common": "./src/common",
     },
     "aliasStrategy": "prefer-tsconfig",
     "decorators": {
@@ -108,7 +108,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     },
     "define": {},
     "entry": {
-      "index": "src/index.client.js",
+      "index": "./src/index.client.js",
     },
     "preEntry": [],
   },
@@ -223,7 +223,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
   },
   "source": {
     "alias": {
-      "@common": "src/common",
+      "@common": "./src/common",
     },
     "aliasStrategy": "prefer-tsconfig",
     "decorators": {
@@ -231,7 +231,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
     },
     "define": {},
     "entry": {
-      "index": "src/index.server.js",
+      "index": "./src/index.server.js",
     },
     "preEntry": [],
   },
@@ -383,7 +383,7 @@ exports[`environment config > should print environment config when inspect confi
     },
     "source": {
       "alias": {
-        "@common": "src/common",
+        "@common": "./src/common",
       },
       "aliasStrategy": "prefer-tsconfig",
       "decorators": {
@@ -391,7 +391,7 @@ exports[`environment config > should print environment config when inspect confi
       },
       "define": {},
       "entry": {
-        "index": "src/index.server.js",
+        "index": "./src/index.server.js",
       },
       "preEntry": [],
     },
@@ -539,7 +539,7 @@ exports[`environment config > should print environment config when inspect confi
     },
     "source": {
       "alias": {
-        "@common": "src/common",
+        "@common": "./src/common",
       },
       "aliasStrategy": "prefer-tsconfig",
       "decorators": {
@@ -547,7 +547,7 @@ exports[`environment config > should print environment config when inspect confi
       },
       "define": {},
       "entry": {
-        "index": "src/index.client.js",
+        "index": "./src/index.client.js",
       },
       "preEntry": [],
     },
@@ -714,7 +714,7 @@ exports[`environment config > should support modify environment config by api.mo
     },
     "source": {
       "alias": {
-        "@common": "src/common",
+        "@common": "./src/common",
       },
       "aliasStrategy": "prefer-tsconfig",
       "decorators": {
@@ -722,7 +722,7 @@ exports[`environment config > should support modify environment config by api.mo
       },
       "define": {},
       "entry": {
-        "index": "src/index.server.js",
+        "index": "./src/index.server.js",
       },
       "preEntry": [],
     },
@@ -871,8 +871,8 @@ exports[`environment config > should support modify environment config by api.mo
     },
     "source": {
       "alias": {
-        "@common": "src/common",
-        "@common1": "src/common1",
+        "@common": "./src/common",
+        "@common1": "./src/common1",
       },
       "aliasStrategy": "prefer-tsconfig",
       "decorators": {
@@ -880,7 +880,7 @@ exports[`environment config > should support modify environment config by api.mo
       },
       "define": {},
       "entry": {
-        "index": "src/index.client.js",
+        "index": "./src/index.client.js",
       },
       "preEntry": [],
     },
@@ -1029,8 +1029,8 @@ exports[`environment config > should support modify environment config by api.mo
     },
     "source": {
       "alias": {
-        "@common": "src/common",
-        "@common1": "src/common1",
+        "@common": "./src/common",
+        "@common1": "./src/common1",
       },
       "aliasStrategy": "prefer-tsconfig",
       "decorators": {
@@ -1190,7 +1190,7 @@ exports[`environment config > should support modify single environment config by
     },
     "source": {
       "alias": {
-        "@common": "src/common",
+        "@common": "./src/common",
       },
       "aliasStrategy": "prefer-tsconfig",
       "decorators": {
@@ -1198,7 +1198,7 @@ exports[`environment config > should support modify single environment config by
       },
       "define": {},
       "entry": {
-        "index": "src/index.server.js",
+        "index": "./src/index.server.js",
       },
       "preEntry": [],
     },
@@ -1347,8 +1347,8 @@ exports[`environment config > should support modify single environment config by
     },
     "source": {
       "alias": {
-        "@common": "src/common",
-        "@common1": "src/common1",
+        "@common": "./src/common",
+        "@common1": "./src/common1",
       },
       "aliasStrategy": "prefer-tsconfig",
       "decorators": {
@@ -1356,7 +1356,7 @@ exports[`environment config > should support modify single environment config by
       },
       "define": {},
       "entry": {
-        "index": "src/index.client.js",
+        "index": "./src/index.client.js",
       },
       "preEntry": [],
     },

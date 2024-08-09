@@ -22,7 +22,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
   "devtool": "cheap-module-source-map",
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "experiments": {
