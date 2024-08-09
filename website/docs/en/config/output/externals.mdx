@@ -1,6 +1,16 @@
 # output.externals
 
-- **Type:** `string | object | function | RegExp | Array<string | object | function | RegExp>`
+- **Type:**
+
+```ts
+type Externals =
+  | string
+  | object
+  | function
+  | RegExp
+  | Array<string | object | function | RegExp>;
+```
+
 - **Default:** `undefined`
 
 At build time, prevent some `import` dependencies from being packed into bundles in your code, and instead fetch them externally at runtime.
@@ -22,5 +32,5 @@ export default {
 ```
 
 :::tip
-When the build target is Web Worker, externals will not take effect. This is because the Worker environment can not access global variables.
+If [output.target](/config/output/target) is `web-worker`, externals will not take effect. This is because the Web Worker environment can not access global variables.
 :::
