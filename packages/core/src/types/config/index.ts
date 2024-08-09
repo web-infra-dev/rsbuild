@@ -81,6 +81,11 @@ export interface RsbuildConfig extends EnvironmentConfig {
    */
   mode?: RsbuildMode;
   /**
+   * Specify the project root directory. Can be an absolute path, or a path relative to `process.cwd()`.
+   * @default `process.cwd()`
+   */
+  root?: string;
+  /**
    * Options for local development.
    */
   dev?: DevConfig;
@@ -107,6 +112,7 @@ export interface RsbuildConfig extends EnvironmentConfig {
 
 export type MergedEnvironmentConfig = {
   mode: RsbuildMode;
+  root: string;
   dev: Pick<
     NormalizedDevConfig,
     'assetPrefix' | 'lazyCompilation' | 'progressBar'
@@ -126,21 +132,16 @@ export type MergedEnvironmentConfig = {
   moduleFederation?: ModuleFederationConfig;
 };
 
-/** The normalized Rsbuild environment config. */
-export type NormalizedEnvironmentConfig = DeepReadonly<{
-  mode: RsbuildMode;
-  dev: NormalizedDevConfig;
-  html: NormalizedHtmlConfig;
-  tools: NormalizedToolsConfig;
-  source: NormalizedSourceConfig;
-  server: NormalizedServerConfig;
-  output: MergedEnvironmentConfig['output'];
-  plugins?: RsbuildPlugins;
-  security: NormalizedSecurityConfig;
-  performance: NormalizedPerformanceConfig;
-  moduleFederation?: ModuleFederationConfig;
-  _privateMeta?: RsbuildConfigMeta;
-}>;
+/**
+ * The normalized Rsbuild environment config.
+ */
+export type NormalizedEnvironmentConfig = DeepReadonly<
+  Omit<MergedEnvironmentConfig, 'dev'> & {
+    dev: NormalizedDevConfig;
+    server: NormalizedServerConfig;
+    _privateMeta?: RsbuildConfigMeta;
+  }
+>;
 
 export type NormalizedConfig = NormalizedEnvironmentConfig & {
   provider?: unknown;

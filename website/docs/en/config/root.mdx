@@ -1,0 +1,29 @@
+# root
+
+- **Type:** `string`
+- **Default:** `process.cwd()`
+- **Version:** `>= 1.0.0`
+
+Specify the project root directory. Can be an absolute path, or a path relative to `process.cwd()`.
+
+The value of Rsbuild `root` is also be passed to the [context](https://rspack.dev/config/context) configuration of Rspack.
+
+## Example
+
+- Relative path:
+
+```ts title="rsbuild.config.ts"
+export default {
+  root: './foo',
+};
+```
+
+- Absolute path:
+
+```ts title="rsbuild.config.ts"
+import { join } from 'node:path';
+
+export default {
+  root: join(__dirname, 'foo'),
+};
+```

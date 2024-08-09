@@ -18,8 +18,8 @@ import type {
   RsbuildEntry,
 } from './types';
 
-function getAbsolutePath(root: string, filepath: string) {
-  return isAbsolute(filepath) ? filepath : join(root, filepath);
+function getAbsolutePath(base: string, filepath: string) {
+  return isAbsolute(filepath) ? filepath : join(base, filepath);
 }
 
 function getAbsoluteDistPath(
@@ -28,26 +28,6 @@ function getAbsoluteDistPath(
 ) {
   const dirRoot = config.output?.distPath?.root ?? ROOT_DIST_DIR;
   return getAbsolutePath(cwd, dirRoot);
-}
-
-/**
- * Create context by config.
- */
-async function createContextByConfig(
-  options: ResolvedCreateRsbuildOptions,
-  bundlerType: BundlerType,
-): Promise<RsbuildContext> {
-  const { cwd } = options;
-  const rootPath = cwd;
-  const cachePath = join(rootPath, 'node_modules', '.cache');
-
-  return {
-    version: RSBUILD_VERSION,
-    rootPath,
-    distPath: '',
-    cachePath,
-    bundlerType,
-  };
 }
 
 // using cache to avoid multiple calls to loadConfig
@@ -196,18 +176,26 @@ export function createPublicContext(
  */
 export async function createContext(
   options: ResolvedCreateRsbuildOptions,
-  userRsbuildConfig: RsbuildConfig,
+  userConfig: RsbuildConfig,
   bundlerType: BundlerType,
 ): Promise<InternalContext> {
-  const rsbuildConfig = await withDefaultConfig(options.cwd, userRsbuildConfig);
-  const context = await createContextByConfig(options, bundlerType);
+  const { cwd } = options;
+  const rootPath = userConfig.root
+    ? getAbsolutePath(cwd, userConfig.root)
+    : cwd;
+  const rsbuildConfig = await withDefaultConfig(rootPath, userConfig);
+  const cachePath = join(rootPath, 'node_modules', '.cache');
 
   return {
-    ...context,
+    version: RSBUILD_VERSION,
+    rootPath,
+    distPath: '',
+    cachePath,
+    bundlerType,
     environments: {},
     hooks: initHooks(),
     config: { ...rsbuildConfig },
-    originalConfig: userRsbuildConfig,
+    originalConfig: userConfig,
     specifiedEnvironments: options.environment,
   };
 }

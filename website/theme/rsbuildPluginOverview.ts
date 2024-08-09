@@ -19,6 +19,10 @@ export const rsbuildPluginOverview: RsbuildPlugin = {
         name: 'top level',
         items: [
           {
+            text: 'root',
+            link: '/config/root',
+          },
+          {
             text: 'mode',
             link: '/config/mode',
           },

@@ -1,0 +1,29 @@
+# root
+
+- **类型：** `string`
+- **默认值：** `process.cwd()`
+- **版本：** `>= 1.0.0`
+
+指定项目根目录。可以是绝对路径，也可以是相对于 `process.cwd()` 的路径。
+
+Rsbuild `root` 的值也会传递给 Rspack 的 [context](https://rspack.dev/config/context) 配置。
+
+## 示例
+
+- 相对路径：
+
+```ts title="rsbuild.config.ts"
+export default {
+  root: './foo',
+};
+```
+
+- 绝对路径：
+
+```ts title="rsbuild.config.ts"
+import { join } from 'node:path';
+
+export default {
+  root: join(__dirname, 'foo'),
+};
+```
