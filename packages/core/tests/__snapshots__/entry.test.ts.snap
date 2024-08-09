@@ -5,7 +5,7 @@ exports[`plugin-entry > should apply different environments entry config correct
   {
     "entry": {
       "index": [
-        "src/index.client",
+        "./src/index.client",
       ],
     },
     "plugins": [
@@ -15,7 +15,7 @@ exports[`plugin-entry > should apply different environments entry config correct
   {
     "entry": {
       "main": [
-        "src/index.ssr",
+        "./src/index.ssr",
       ],
     },
     "plugins": [
@@ -30,7 +30,7 @@ exports[`plugin-entry > should apply environments entry config correctly 1`] = `
   {
     "entry": {
       "index": [
-        "src/index.client",
+        "./src/index.client",
       ],
     },
     "plugins": [
@@ -40,7 +40,7 @@ exports[`plugin-entry > should apply environments entry config correctly 1`] = `
   {
     "entry": {
       "index": [
-        "src/index.ssr",
+        "./src/index.ssr",
       ],
     },
     "plugins": [

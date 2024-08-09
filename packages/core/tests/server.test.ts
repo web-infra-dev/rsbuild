@@ -177,8 +177,8 @@ test('printServerURLs', () => {
   });
 
   expect(message!).toMatchInlineSnapshot(`
-    "  > local     http:/localhost:3000/
-      > network   http:/10.94.62.193:3000/
+    "  > local     http://localhost:3000/
+      > network   http://10.94.62.193:3000/
     "
   `);
 
@@ -213,14 +213,14 @@ test('printServerURLs', () => {
 
   expect(message!).toMatchInlineSnapshot(`
     "  > local
-      - index    http:/localhost:3000/
-      - foo      http:/localhost:3000/html/foo
-      - bar      http:/localhost:3000/bar
+      - index    http://localhost:3000/
+      - foo      http://localhost:3000/html/foo
+      - bar      http://localhost:3000/bar
 
       > network
-      - index    http:/10.94.62.193:3000/
-      - foo      http:/10.94.62.193:3000/html/foo
-      - bar      http:/10.94.62.193:3000/bar
+      - index    http://10.94.62.193:3000/
+      - foo      http://10.94.62.193:3000/html/foo
+      - bar      http://10.94.62.193:3000/bar
     "
   `);
 

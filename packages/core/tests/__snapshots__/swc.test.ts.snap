@@ -4,7 +4,7 @@ exports[`plugin-swc > should add antd pluginImport 1`] = `
 {
   "entry": {
     "main": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "module": {
@@ -119,7 +119,7 @@ exports[`plugin-swc > should add browserslist 1`] = `
   {
     "entry": {
       "main": [
-        "src/index.js",
+        "./src/index.js",
       ],
     },
     "module": {
@@ -229,7 +229,7 @@ exports[`plugin-swc > should add pluginImport 1`] = `
   {
     "entry": {
       "main": [
-        "src/index.js",
+        "./src/index.js",
       ],
     },
     "module": {
@@ -738,7 +738,7 @@ exports[`plugin-swc > should disable all pluginImport 1`] = `
 {
   "entry": {
     "main": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "module": {
@@ -853,7 +853,7 @@ exports[`plugin-swc > should disable preset_env in target other than web 1`] = `
   {
     "entry": {
       "main": [
-        "src/index.js",
+        "./src/index.js",
       ],
     },
     "module": {
@@ -961,7 +961,7 @@ exports[`plugin-swc > should disable preset_env mode 1`] = `
   {
     "entry": {
       "main": [
-        "src/index.js",
+        "./src/index.js",
       ],
     },
     "module": {
@@ -1077,8 +1077,8 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
   {
     "entry": {
       "main": [
-        "/datatext/javascript,import \\"core-js\\";",
-        "src/index.js",
+        "data:text/javascript,import \\"core-js\\";",
+        "./src/index.js",
       ],
     },
     "module": {
@@ -1204,7 +1204,7 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
   {
     "entry": {
       "main": [
-        "src/index.js",
+        "./src/index.js",
       ],
     },
     "module": {
@@ -1332,8 +1332,8 @@ exports[`plugin-swc > should has correct core-js 1`] = `
   {
     "entry": {
       "main": [
-        "/datatext/javascript,import \\"core-js\\";",
-        "src/index.js",
+        "data:text/javascript,import \\"core-js\\";",
+        "./src/index.js",
       ],
     },
     "module": {
@@ -1459,7 +1459,7 @@ exports[`plugin-swc > should has correct core-js 2`] = `
   {
     "entry": {
       "main": [
-        "src/index.js",
+        "./src/index.js",
       ],
     },
     "module": {

@@ -889,7 +889,7 @@ importers:
         version: 4.2.0
       less-loader:
         specifier: ^12.2.0
-        version: 12.2.0(less@4.2.0)(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
+        version: 12.2.0(@rspack/core@1.0.0-beta.3(@swc/helpers@0.5.11))(less@4.2.0)(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
       prebundle:
         specifier: 1.2.2
         version: 1.2.2(typescript@5.5.2)
@@ -997,7 +997,7 @@ importers:
         version: 5.0.0
       sass-loader:
         specifier: ^16.0.0
-        version: 16.0.0(sass-embedded@1.77.8)(sass@1.77.8)(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
+        version: 16.0.0(@rspack/core@1.0.0-beta.3(@swc/helpers@0.5.11))(sass-embedded@1.77.8)(sass@1.77.8)(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
       typescript:
         specifier: ^5.5.2
         version: 5.5.2
@@ -1059,7 +1059,7 @@ importers:
         version: 0.63.0
       stylus-loader:
         specifier: 8.1.0
-        version: 8.1.0(stylus@0.63.0)(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
+        version: 8.1.0(@rspack/core@1.0.0-beta.3(@swc/helpers@0.5.11))(stylus@0.63.0)(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -1078,7 +1078,7 @@ importers:
         version: 3.2.3(svelte@4.2.18)
       svelte-preprocess:
         specifier: ^6.0.2
-        version: 6.0.2(@babel/core@7.25.2)(less@4.2.0)(postcss-load-config@6.0.1(postcss@8.4.40))(postcss@8.4.40)(pug@3.0.3)(sass@1.77.8)(stylus@0.63.0)(svelte@4.2.18)(typescript@5.5.2)
+        version: 6.0.2(@babel/core@7.25.2)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.40)(tsx@4.14.0)(yaml@2.5.0))(postcss@8.4.40)(pug@3.0.3)(sass@1.77.8)(stylus@0.63.0)(svelte@4.2.18)(typescript@5.5.2)
     devDependencies:
       '@rsbuild/core':
         specifier: link:../core
@@ -1221,7 +1221,7 @@ importers:
     dependencies:
       vue-loader:
         specifier: ^15.11.1
-        version: 15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.2(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))))(lodash@4.17.21)(prettier@3.3.3)(pug@3.0.3)(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
+        version: 15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.2(@rspack/core@1.0.0-beta.3(@swc/helpers@0.5.11))(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))))(lodash@4.17.21)(prettier@3.3.3)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
       webpack:
         specifier: ^5.93.0
         version: 5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))
@@ -1281,6 +1281,9 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      path-serializer:
+        specifier: 0.0.6
+        version: 0.0.6
       typescript:
         specifier: ^5.5.2
         version: 5.5.2
@@ -2817,7 +2820,7 @@ packages:
   '@rsbuild/plugin-check-syntax@1.0.1':
     resolution: {integrity: sha512-LN6OVmLJahFwv3dp9Q6k1E4GIpF78cUf7aXxKBvtvYXD0/rRP/1PPs4OWeyOqIcqSikcIdmERj50OECzPdWmpA==}
     peerDependencies:
-      '@rsbuild/core': link:/Users/chenjiahan/Project/rsbuild/packages/core
+      '@rsbuild/core': link:packages/core
     peerDependenciesMeta:
       '@rsbuild/core':
         optional: true
@@ -6053,6 +6056,9 @@ packages:
     resolution: {integrity: sha512-7xTavNy5RQXnsjANvVvMkEjvloOinkAjv/Z6Ildz9v2RinZ4SBKTWFOVRbaF8p0vpHnyjV/UwNDdKuUv6M5qcA==}
     engines: {node: '>=16 || 14 >=14.17'}
 
+  path-serializer@0.0.6:
+    resolution: {integrity: sha512-kBhnac4AnaKORPpadUFKsxdTOMDF+vNuYyZcmbmeWnjogEUIjdOgOMpKxdb8acv6i8ldVthtDV35EOXIt1DbJw==}
+
   path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
@@ -6549,7 +6555,7 @@ packages:
   rsbuild-plugin-google-analytics@1.0.1:
     resolution: {integrity: sha512-l4LiloIJ23HVswNTeySsIi6Mx9EYvu2HVm8PaCdkEle6UCY7Kkqz0OM28RW1qo27k4xVyYncxQGtBWRay3oM1g==}
     peerDependencies:
-      '@rsbuild/core': link:/Users/chenjiahan/Project/rsbuild/packages/core
+      '@rsbuild/core': link:packages/core
     peerDependenciesMeta:
       '@rsbuild/core':
         optional: true
@@ -6557,7 +6563,7 @@ packages:
   rsbuild-plugin-open-graph@1.0.1:
     resolution: {integrity: sha512-E+Pkbqq24/FVyrFPIUZ7T9W1PVHlPRlVNZG9AZ4xE29GHee4UcDkp0XXmh9GmAl2Fp0l7XTxk9RqztfuM4heUg==}
     peerDependencies:
-      '@rsbuild/core': link:/Users/chenjiahan/Project/rsbuild/packages/core
+      '@rsbuild/core': link:packages/core
     peerDependenciesMeta:
       '@rsbuild/core':
         optional: true
@@ -10230,9 +10236,9 @@ snapshots:
       '@vue/compiler-dom': 3.4.23
       '@vue/shared': 3.4.23
 
-  '@vue/component-compiler-utils@3.3.0(lodash@4.17.21)(pug@3.0.3)':
+  '@vue/component-compiler-utils@3.3.0(lodash@4.17.21)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      consolidate: 0.15.1(lodash@4.17.21)(pug@3.0.3)
+      consolidate: 0.15.1(lodash@4.17.21)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       hash-sum: 1.0.2
       lru-cache: 4.1.5
       merge-source-map: 1.1.0
@@ -10874,12 +10880,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  consolidate@0.15.1(lodash@4.17.21)(pug@3.0.3):
+  consolidate@0.15.1(lodash@4.17.21)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       bluebird: 3.7.2
     optionalDependencies:
       lodash: 4.17.21
       pug: 3.0.3
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   constantinople@4.0.1:
     dependencies:
@@ -12192,10 +12200,11 @@ snapshots:
 
   leac@0.6.0: {}
 
-  less-loader@12.2.0(less@4.2.0)(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
+  less-loader@12.2.0(@rspack/core@1.0.0-beta.3(@swc/helpers@0.5.11))(less@4.2.0)(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
     dependencies:
       less: 4.2.0
     optionalDependencies:
+      '@rspack/core': 1.0.0-beta.3(@swc/helpers@0.5.11)
       webpack: 5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))
 
   less@4.2.0:
@@ -13159,6 +13168,8 @@ snapshots:
       lru-cache: 10.2.0
       minipass: 7.0.4
 
+  path-serializer@0.0.6: {}
+
   path-type@4.0.0: {}
 
   pathe@1.1.2: {}
@@ -13888,10 +13899,11 @@ snapshots:
       sass-embedded-win32-ia32: 1.77.8
       sass-embedded-win32-x64: 1.77.8
 
-  sass-loader@16.0.0(sass-embedded@1.77.8)(sass@1.77.8)(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
+  sass-loader@16.0.0(@rspack/core@1.0.0-beta.3(@swc/helpers@0.5.11))(sass-embedded@1.77.8)(sass@1.77.8)(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
     dependencies:
       neo-async: 2.6.2
     optionalDependencies:
+      '@rspack/core': 1.0.0-beta.3(@swc/helpers@0.5.11)
       sass: 1.77.8
       sass-embedded: 1.77.8
       webpack: 5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))
@@ -14151,12 +14163,13 @@ snapshots:
 
   stylis@4.3.2: {}
 
-  stylus-loader@8.1.0(stylus@0.63.0)(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
+  stylus-loader@8.1.0(@rspack/core@1.0.0-beta.3(@swc/helpers@0.5.11))(stylus@0.63.0)(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
     dependencies:
       fast-glob: 3.3.2
       normalize-path: 3.0.0
       stylus: 0.63.0
     optionalDependencies:
+      '@rspack/core': 1.0.0-beta.3(@swc/helpers@0.5.11)
       webpack: 5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))
 
   stylus@0.63.0:
@@ -14215,7 +14228,7 @@ snapshots:
       svelte-dev-helper: 1.1.9
       svelte-hmr: 0.14.12(svelte@4.2.18)
 
-  svelte-preprocess@6.0.2(@babel/core@7.25.2)(less@4.2.0)(postcss-load-config@6.0.1(postcss@8.4.40))(postcss@8.4.40)(pug@3.0.3)(sass@1.77.8)(stylus@0.63.0)(svelte@4.2.18)(typescript@5.5.2):
+  svelte-preprocess@6.0.2(@babel/core@7.25.2)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.40)(tsx@4.14.0)(yaml@2.5.0))(postcss@8.4.40)(pug@3.0.3)(sass@1.77.8)(stylus@0.63.0)(svelte@4.2.18)(typescript@5.5.2):
     dependencies:
       svelte: 4.2.18
     optionalDependencies:
@@ -14615,9 +14628,9 @@ snapshots:
 
   vue-hot-reload-api@2.3.4: {}
 
-  vue-loader@15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.2(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))))(lodash@4.17.21)(prettier@3.3.3)(pug@3.0.3)(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
+  vue-loader@15.11.1(@vue/compiler-sfc@3.4.23)(css-loader@7.1.2(@rspack/core@1.0.0-beta.3(@swc/helpers@0.5.11))(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))))(lodash@4.17.21)(prettier@3.3.3)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
     dependencies:
-      '@vue/component-compiler-utils': 3.3.0(lodash@4.17.21)(pug@3.0.3)
+      '@vue/component-compiler-utils': 3.3.0(lodash@4.17.21)(pug@3.0.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       css-loader: 7.1.2(@rspack/core@1.0.0-beta.3(@swc/helpers@0.5.11))(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
       hash-sum: 1.0.2
       loader-utils: 1.4.2

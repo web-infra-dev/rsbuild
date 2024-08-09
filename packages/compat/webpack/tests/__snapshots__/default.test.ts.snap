@@ -19,7 +19,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   "devtool": "cheap-module-source-map",
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "experiments": {
@@ -386,7 +386,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
   "devtool": false,
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "experiments": {
@@ -749,7 +749,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "devtool": false,
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "experiments": {
@@ -1053,7 +1053,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "devtool": false,
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "experiments": {

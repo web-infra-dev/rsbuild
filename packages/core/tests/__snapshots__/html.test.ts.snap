@@ -4,10 +4,10 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
 {
   "entry": {
     "foo": [
-      "src/foo.ts",
+      "./src/foo.ts",
     ],
     "main": [
-      "src/main.ts",
+      "./src/main.ts",
     ],
   },
   "plugins": [
@@ -123,7 +123,7 @@ exports[`plugin-html > should allow to modify plugin options by tools.htmlPlugin
 {
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "plugins": [
@@ -170,7 +170,7 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
 {
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "plugins": [
@@ -186,7 +186,7 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
         "compile": true,
         "entryName": "index",
         "excludeChunks": [],
-        "favicon": "src/favicon.ico",
+        "favicon": "./src/favicon.ico",
         "filename": "index.html",
         "hash": false,
         "inject": "head",
@@ -225,7 +225,7 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
 {
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "plugins": [
@@ -280,7 +280,7 @@ exports[`plugin-html > should enable minify in production 1`] = `
 {
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "plugins": [
@@ -335,7 +335,7 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
 {
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "plugins": [
@@ -390,7 +390,7 @@ exports[`plugin-html > should stop injecting <script> if inject is '() => false'
 {
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "plugins": [
@@ -445,7 +445,7 @@ exports[`plugin-html > should stop injecting <script> if inject is 'false' 1`] =
 {
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "plugins": [
@@ -501,7 +501,7 @@ exports[`plugin-html > should support environment html config 1`] = `
   {
     "entry": {
       "main": [
-        "src/main.ts",
+        "./src/main.ts",
       ],
     },
     "plugins": [
@@ -553,7 +553,7 @@ exports[`plugin-html > should support environment html config 1`] = `
   {
     "entry": {
       "index": [
-        "src/main1.ts",
+        "./src/main1.ts",
       ],
     },
     "plugins": [
@@ -609,10 +609,10 @@ exports[`plugin-html > should support multi entry 1`] = `
 {
   "entry": {
     "foo": [
-      "src/foo.ts",
+      "./src/foo.ts",
     ],
     "main": [
-      "src/main.ts",
+      "./src/main.ts",
     ],
   },
   "plugins": [
