@@ -210,6 +210,7 @@ export const withDefaultConfig = async (
 ): Promise<RsbuildConfig> => {
   const merged = mergeRsbuildConfig(createDefaultConfig(), config);
 
+  merged.root ||= rootPath;
   merged.source ||= {};
 
   if (!merged.source.tsconfigPath) {

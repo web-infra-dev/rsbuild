@@ -4,6 +4,7 @@
     "name": "index",
     "label": "Overview"
   },
+  "root",
   "mode",
   "plugins",
   "environments",
