@@ -27,7 +27,7 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@swc/plugin-styled-components": "2.0.10",
+    "@swc/plugin-styled-components": "2.0.11",
     "reduce-configs": "^1.0.0"
   },
   "devDependencies": {
