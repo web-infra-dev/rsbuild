@@ -52,9 +52,9 @@
   },
   "dependencies": {
     "@rspack/core": "1.0.0-beta.4",
-    "@rspack/lite-tapable": "1.0.0-beta.3",
+    "@rspack/lite-tapable": "1.0.0",
     "@swc/helpers": "0.5.11",
-    "caniuse-lite": "^1.0.30001647",
+    "caniuse-lite": "^1.0.30001651",
     "core-js": "~3.38.0"
   },
   "devDependencies": {
@@ -78,11 +78,11 @@
     "html-rspack-plugin": "6.0.0-beta.9",
     "http-proxy-middleware": "^2.0.6",
     "jiti": "^1.21.6",
-    "launch-editor-middleware": "^2.8.0",
+    "launch-editor-middleware": "^2.8.1",
     "on-finished": "2.4.1",
     "open": "^8.4.0",
     "picocolors": "^1.0.1",
-    "postcss": "^8.4.40",
+    "postcss": "^8.4.41",
     "postcss-load-config": "6.0.1",
     "postcss-loader": "8.1.1",
     "prebundle": "1.2.2",
