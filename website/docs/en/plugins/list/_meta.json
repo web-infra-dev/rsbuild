@@ -15,6 +15,5 @@
   "plugin-stylus",
   "plugin-assets-retry",
   "plugin-type-check",
-  "plugin-styled-components",
   "plugin-rem"
 ]
