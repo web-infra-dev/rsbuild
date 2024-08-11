@@ -88,7 +88,7 @@
     "prebundle": "1.2.2",
     "reduce-configs": "^1.0.0",
     "rslog": "^1.2.2",
-    "rspack-chain": "^0.7.4",
+    "rspack-chain": "^1.0.0",
     "rspack-manifest-plugin": "5.0.1",
     "sirv": "^2.0.4",
     "style-loader": "3.3.4",

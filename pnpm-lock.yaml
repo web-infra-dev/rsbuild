@@ -735,8 +735,8 @@ importers:
         specifier: ^1.2.2
         version: 1.2.2
       rspack-chain:
-        specifier: ^0.7.4
-        version: 0.7.4
+        specifier: ^1.0.0
+        version: 1.0.0
       rspack-manifest-plugin:
         specifier: 5.0.1
         version: 5.0.1(@rspack/core@1.0.0-beta.4(@swc/helpers@0.5.11))
@@ -4304,10 +4304,6 @@ packages:
   deep-equal@1.0.1:
     resolution: {integrity: sha512-bHtC0iYvWhyaTzvV3CZgPeZQqCOBGyGsVV7v4eevpdkLHfiSrXUdBG+qAuSz4RI70sszvjQ1QSZ98An1yNwpSw==}
 
-  deepmerge@1.5.2:
-    resolution: {integrity: sha512-95k0GDqvBjZavkuvzx/YqVLv/6YYa17fz6ILMSf7neqQITCPbnfEnQvEgMPNjH4kgobe7+WIL0yJEHku+H3qtQ==}
-    engines: {node: '>=0.10.0'}
-
   deepmerge@4.3.1:
     resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
     engines: {node: '>=0.10.0'}
@@ -6580,9 +6576,8 @@ packages:
     resolution: {integrity: sha512-tZP8KjrI1nz6qOYCrFxAV7cfmfS2GV94jotU2zOmF/6ByO1zNvGR6/+0inylpjqyBjAdnnutTUW0m4th06bSTw==}
     engines: {node: '>=14.17.6'}
 
-  rspack-chain@0.7.4:
-    resolution: {integrity: sha512-p6C8hzEXLSWNMq2kNFMhvLPsYPSjgQ3z2JZJANBT4QEZGbXhjGf+uAb/BcvuG91Qk6B720SguW1KXmx1D2AB7g==}
-    engines: {node: '>=16'}
+  rspack-chain@1.0.0:
+    resolution: {integrity: sha512-bsIz9BUhJXNojd7EzDsRNJAJu9eEV06tJZx0zKQWZt2LHW6yTC7Ref0/dCgXTBsRsc7FNn+3WoQzWEtNCgR5gg==}
 
   rspack-manifest-plugin@5.0.1:
     resolution: {integrity: sha512-K2g7kcOdj+cHTi+xvzwdLZ4rdL1nnphJhs9P8VH5sVcoQd1U/FxpNXnEm5ARxhE7qZO0yfqaL74aXwcQH0T0Ig==}
@@ -11068,8 +11063,6 @@ snapshots:
 
   deep-equal@1.0.1: {}
 
-  deepmerge@1.5.2: {}
-
   deepmerge@4.3.1: {}
 
   defaults@1.0.4:
@@ -13815,9 +13808,9 @@ snapshots:
 
   rslog@1.2.2: {}
 
-  rspack-chain@0.7.4:
+  rspack-chain@1.0.0:
     dependencies:
-      deepmerge: 1.5.2
+      deepmerge: 4.3.1
       javascript-stringify: 2.1.0
 
   rspack-manifest-plugin@5.0.1(@rspack/core@1.0.0-beta.4(@swc/helpers@0.5.11)):
