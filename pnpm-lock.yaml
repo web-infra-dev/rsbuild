@@ -127,9 +127,6 @@ importers:
       '@rsbuild/plugin-solid':
         specifier: workspace:*
         version: link:../packages/plugin-solid
-      '@rsbuild/plugin-styled-components':
-        specifier: workspace:*
-        version: link:../packages/plugin-styled-components
       '@rsbuild/plugin-stylus':
         specifier: workspace:*
         version: link:../packages/plugin-stylus
@@ -254,8 +251,8 @@ importers:
   e2e/cases/styled-component:
     dependencies:
       '@rsbuild/plugin-styled-components':
-        specifier: workspace:*
-        version: link:../../../packages/plugin-styled-components
+        specifier: ^1.0.1
+        version: 1.0.1
       styled-components:
         specifier: ^6.1.12
         version: 6.1.12(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react@19.0.0-rc-fb9a90fa48-20240614)
@@ -1023,25 +1020,6 @@ importers:
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
-      typescript:
-        specifier: ^5.5.2
-        version: 5.5.2
-
-  packages/plugin-styled-components:
-    dependencies:
-      '@swc/plugin-styled-components':
-        specifier: 2.0.11
-        version: 2.0.11
-      reduce-configs:
-        specifier: ^1.0.0
-        version: 1.0.0
-    devDependencies:
-      '@rsbuild/core':
-        specifier: link:../core
-        version: link:../core
-      '@types/node':
-        specifier: 18.x
-        version: 18.19.31
       typescript:
         specifier: ^5.5.2
         version: 5.5.2
@@ -2822,6 +2800,14 @@ packages:
 
   '@rsbuild/plugin-check-syntax@1.0.1':
     resolution: {integrity: sha512-LN6OVmLJahFwv3dp9Q6k1E4GIpF78cUf7aXxKBvtvYXD0/rRP/1PPs4OWeyOqIcqSikcIdmERj50OECzPdWmpA==}
+    peerDependencies:
+      '@rsbuild/core': link:packages/core
+    peerDependenciesMeta:
+      '@rsbuild/core':
+        optional: true
+
+  '@rsbuild/plugin-styled-components@1.0.1':
+    resolution: {integrity: sha512-1NL0yu5yr7S9wv4xTBYE++CaCved96yoAyd+r/xu4dGfi0w+BrshHNDrPwYBKPX+DC3NZrHGMIsfvpy3QmtloA==}
     peerDependencies:
       '@rsbuild/core': link:packages/core
     peerDependenciesMeta:
@@ -9507,6 +9493,11 @@ snapshots:
       source-map: 0.7.4
     optionalDependencies:
       '@rsbuild/core': link:packages/core
+
+  '@rsbuild/plugin-styled-components@1.0.1':
+    dependencies:
+      '@swc/plugin-styled-components': 2.0.11
+      reduce-configs: 1.0.0
 
   '@rspack/binding-darwin-arm64@1.0.0-beta.4':
     optional: true
