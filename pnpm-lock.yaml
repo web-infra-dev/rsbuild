@@ -696,8 +696,8 @@ importers:
         specifier: ^11.2.0
         version: 11.2.0
       html-rspack-plugin:
-        specifier: 6.0.0-beta.9
-        version: 6.0.0-beta.9(@rspack/core@1.0.0-beta.4(@swc/helpers@0.5.11))
+        specifier: 6.0.0
+        version: 6.0.0(@rspack/core@1.0.0-beta.4(@swc/helpers@0.5.11))
       http-proxy-middleware:
         specifier: ^2.0.6
         version: 2.0.6
@@ -4960,8 +4960,8 @@ packages:
   html-escaper@2.0.2:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
 
-  html-rspack-plugin@6.0.0-beta.9:
-    resolution: {integrity: sha512-nqOGv5mghz/lyQWXpVM/i+L1sA2IBxVPQ+K+o7ZuKl1a7zo7tRNzdFazeSsYMrqsyavTl/fLckPSM8Ebonmtzg==}
+  html-rspack-plugin@6.0.0:
+    resolution: {integrity: sha512-p/hXOkywyuhyt5R2onk1UH0RCfu7rmiyMHdp88jB06lnoggEswiBKKKoTEFKza8bBf99a2Vi+rKIuDOIRFQAbw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       '@rspack/core': 0.x || 1.x
@@ -11835,7 +11835,7 @@ snapshots:
 
   html-escaper@2.0.2: {}
 
-  html-rspack-plugin@6.0.0-beta.9(@rspack/core@1.0.0-beta.4(@swc/helpers@0.5.11)):
+  html-rspack-plugin@6.0.0(@rspack/core@1.0.0-beta.4(@swc/helpers@0.5.11)):
     dependencies:
       '@rspack/lite-tapable': 1.0.0
     optionalDependencies:
