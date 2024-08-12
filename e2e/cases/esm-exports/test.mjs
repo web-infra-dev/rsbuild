@@ -3,7 +3,6 @@ import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginLess } from '@rsbuild/plugin-less';
 import { pluginPreact } from '@rsbuild/plugin-preact';
 import { pluginReact } from '@rsbuild/plugin-react';
-import { pluginRem } from '@rsbuild/plugin-rem';
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginSolid } from '@rsbuild/plugin-solid';
 import { pluginStylus } from '@rsbuild/plugin-stylus';
@@ -23,7 +22,6 @@ export default {
   pluginLess,
   pluginReact,
   pluginPreact,
-  pluginRem,
   pluginSvgr,
   pluginSass,
   pluginSolid,
