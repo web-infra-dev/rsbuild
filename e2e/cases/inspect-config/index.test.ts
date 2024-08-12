@@ -3,19 +3,22 @@ import path from 'node:path';
 import { createRsbuild } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-const rsbuildConfig = path.resolve(__dirname, './dist/rsbuild.config.mjs');
+const rsbuildConfig = path.resolve(
+  __dirname,
+  './dist/.rsbuild/rsbuild.config.mjs',
+);
 
 const rsbuildNodeConfig = path.resolve(
   __dirname,
-  './dist/rsbuild.config.node.mjs',
+  './dist/.rsbuild/rsbuild.config.node.mjs',
 );
 const bundlerConfig = path.resolve(
   __dirname,
-  `./dist/${process.env.PROVIDE_TYPE || 'rspack'}.config.web.mjs`,
+  `./dist/.rsbuild/${process.env.PROVIDE_TYPE || 'rspack'}.config.web.mjs`,
 );
 const bundlerNodeConfig = path.resolve(
   __dirname,
-  `./dist/${process.env.PROVIDE_TYPE || 'rspack'}.config.node.mjs`,
+  `./dist/.rsbuild/${process.env.PROVIDE_TYPE || 'rspack'}.config.node.mjs`,
 );
 
 test('should generate config files when writeToDisk is true', async () => {

@@ -1,5 +1,6 @@
-import { sep } from 'node:path';
+import { join, sep } from 'node:path';
 import color from 'picocolors';
+import { RSBUILD_OUTPUTS_PATH } from '../constants';
 import { emptyDir } from '../helpers';
 import { logger } from '../logger';
 import type { EnvironmentContext, RsbuildPlugin } from '../types';
@@ -16,6 +17,23 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
   name: 'rsbuild:clean-output',
 
   setup(api) {
+    // clean rsbuild outputs, such as inspect files
+    const cleanRsbuildOutputs = async () => {
+      const { rootPath, distPath } = api.context;
+      const config = api.getNormalizedConfig();
+      const cleanPath = join(distPath, RSBUILD_OUTPUTS_PATH);
+
+      let { cleanDistPath } = config.output;
+
+      if (cleanDistPath === undefined) {
+        cleanDistPath = isStrictSubdir(rootPath, cleanPath);
+      }
+
+      if (cleanDistPath) {
+        await emptyDir(cleanPath);
+      }
+    };
+
     const clean = async (environment: EnvironmentContext) => {
       const { rootPath } = api.context;
       const { config, distPath } = environment;
@@ -55,7 +73,9 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
         return total;
       }, []);
 
-      await Promise.all(environments.map((e) => clean(e)));
+      await Promise.all(
+        environments.map((e) => clean(e)).concat(cleanRsbuildOutputs()),
+      );
     };
 
     api.onBeforeBuild(async ({ isFirstCompile, environments }) => {

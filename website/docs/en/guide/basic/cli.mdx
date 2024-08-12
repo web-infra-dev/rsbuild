@@ -128,7 +128,7 @@ Options:
   -h, --help            show command help
 ```
 
-When you run the command `npx rsbuild inspect` in the project root directory, the following files will be generated in the `dist` directory of the project:
+When you run the command `npx rsbuild inspect` in the project root directory, the following files will be generated in the `dist/.rsbuild` directory of the project:
 
 - `rsbuild.config.mjs`: Represents the Rsbuild configuration used during the build.
 - `rspack.config.web.mjs`: Represents the Rspack configuration used during the build.
@@ -138,8 +138,8 @@ When you run the command `npx rsbuild inspect` in the project root directory, th
 
 Inspect config succeed, open following files to view the content:
 
-  - Rsbuild Config: /project/dist/rsbuild.config.mjs
-  - Rspack Config (web): /project/dist/rspack.config.web.mjs
+  - Rsbuild Config: /project/dist/.rsbuild/rsbuild.config.mjs
+  - Rspack Config (web): /project/dist/.rsbuild/rspack.config.web.mjs
 ```
 
 ### Specifying Mode
@@ -160,14 +160,14 @@ rsbuild inspect --verbose
 
 ### Multiple Targets
 
-If the current project has multiple build targets, such as building browser artifact and Node.js artifact simultaneously, multiple Rspack configuration files will be generated in the `dist` directory.
+If the current project has multiple build targets, such as building browser artifact and Node.js artifact simultaneously, multiple Rspack configuration files will be generated in the `dist/.rsbuild` directory.
 
 ```bash
 ➜ npx rsbuild inspect
 
 Inspect config succeed, open following files to view the content:
 
-  - Rsbuild Config: /project/dist/rsbuild.config.mjs
-  - Rspack Config (web): /project/dist/rspack.config.web.mjs
-  - Rspack Config (node): /project/dist/rspack.config.node.mjs
+  - Rsbuild Config: /project/dist/.rsbuild/rsbuild.config.mjs
+  - Rspack Config (web): /project/dist/.rsbuild/rspack.config.web.mjs
+  - Rspack Config (node): /project/dist/.rsbuild/rspack.config.node.mjs
 ```
