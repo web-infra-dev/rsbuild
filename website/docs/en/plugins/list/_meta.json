@@ -14,6 +14,5 @@
   "plugin-less",
   "plugin-stylus",
   "plugin-assets-retry",
-  "plugin-type-check",
-  "plugin-rem"
+  "plugin-type-check"
 ]

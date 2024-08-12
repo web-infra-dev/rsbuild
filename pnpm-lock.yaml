@@ -119,8 +119,8 @@ importers:
         specifier: link:../packages/plugin-react
         version: link:../packages/plugin-react
       '@rsbuild/plugin-rem':
-        specifier: workspace:*
-        version: link:../packages/plugin-rem
+        specifier: ^1.0.1
+        version: 1.0.1(@rsbuild/core@packages+core)
       '@rsbuild/plugin-sass':
         specifier: link:../packages/plugin-sass
         version: link:../packages/plugin-sass
@@ -924,37 +924,6 @@ importers:
       '@types/node':
         specifier: 18.x
         version: 18.19.31
-      typescript:
-        specifier: ^5.5.2
-        version: 5.5.2
-
-  packages/plugin-rem:
-    dependencies:
-      deepmerge:
-        specifier: ^4.3.1
-        version: 4.3.1
-      terser:
-        specifier: 5.31.5
-        version: 5.31.5
-    devDependencies:
-      '@rsbuild/core':
-        specifier: link:../core
-        version: link:../core
-      '@rsbuild/plugin-less':
-        specifier: link:../plugin-less
-        version: link:../plugin-less
-      '@rsbuild/plugin-sass':
-        specifier: link:../plugin-sass
-        version: link:../plugin-sass
-      '@scripts/test-helper':
-        specifier: workspace:*
-        version: link:../../scripts/test-helper
-      postcss-pxtorem:
-        specifier: 6.1.0
-        version: 6.1.0(postcss@8.4.41)
-      prebundle:
-        specifier: 1.2.2
-        version: 1.2.2(typescript@5.5.2)
       typescript:
         specifier: ^5.5.2
         version: 5.5.2
@@ -2800,6 +2769,14 @@ packages:
 
   '@rsbuild/plugin-check-syntax@1.0.1':
     resolution: {integrity: sha512-LN6OVmLJahFwv3dp9Q6k1E4GIpF78cUf7aXxKBvtvYXD0/rRP/1PPs4OWeyOqIcqSikcIdmERj50OECzPdWmpA==}
+    peerDependencies:
+      '@rsbuild/core': link:packages/core
+    peerDependenciesMeta:
+      '@rsbuild/core':
+        optional: true
+
+  '@rsbuild/plugin-rem@1.0.1':
+    resolution: {integrity: sha512-wsaEvFLVpWsvGi5Bh1j3Yxq1C5RgD+AyveNTbEHaoHHj7ChDx1lrTSRZhre3Jmgjse02gUZjbnAhcO+v5aJPVw==}
     peerDependencies:
       '@rsbuild/core': link:packages/core
     peerDependenciesMeta:
@@ -6199,11 +6176,6 @@ packages:
     peerDependencies:
       postcss: ^8.2.14
 
-  postcss-pxtorem@6.1.0:
-    resolution: {integrity: sha512-ROODSNci9ADal3zUcPHOF/K83TiCgNSPXQFSbwyPHNV8ioHIE4SaC+FPOufd8jsr5jV2uIz29v1Uqy1c4ov42g==}
-    peerDependencies:
-      postcss: ^8.0.0
-
   postcss-selector-parser@6.0.16:
     resolution: {integrity: sha512-A0RVJrX+IUkVZbW3ClroRWurercFhieevHB38sr2+l9eUClMqome3LmEmnhlNy+5Mr2EYN6B2Kaw9wYdd+VHiw==}
     engines: {node: '>=4'}
@@ -9491,6 +9463,13 @@ snapshots:
       htmlparser2: 9.1.0
       picocolors: 1.0.1
       source-map: 0.7.4
+    optionalDependencies:
+      '@rsbuild/core': link:packages/core
+
+  '@rsbuild/plugin-rem@1.0.1(@rsbuild/core@packages+core)':
+    dependencies:
+      deepmerge: 4.3.1
+      terser: 5.31.5
     optionalDependencies:
       '@rsbuild/core': link:packages/core
 
@@ -13321,10 +13300,6 @@ snapshots:
     dependencies:
       postcss: 8.4.41
       postcss-selector-parser: 6.0.16
-
-  postcss-pxtorem@6.1.0(postcss@8.4.41):
-    dependencies:
-      postcss: 8.4.41
 
   postcss-selector-parser@6.0.16:
     dependencies:
