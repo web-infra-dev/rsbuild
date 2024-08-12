@@ -5,12 +5,12 @@ import { expect, test } from '@playwright/test';
 import { logger } from '@rsbuild/core';
 
 const getRsbuildConfig = (dist: string) =>
-  path.resolve(__dirname, `./${dist}/rsbuild.config.mjs`);
+  path.resolve(__dirname, `./${dist}/.rsbuild/rsbuild.config.mjs`);
 
 const getBundlerConfig = (dist: string) =>
   path.resolve(
     __dirname,
-    `./${dist}/${process.env.PROVIDE_TYPE || 'rspack'}.config.web.mjs`,
+    `./${dist}/.rsbuild/${process.env.PROVIDE_TYPE || 'rspack'}.config.web.mjs`,
   );
 
 test('should generate config files when build (with DEBUG)', async () => {

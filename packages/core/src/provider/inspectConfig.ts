@@ -4,6 +4,7 @@ import {
   outputInspectConfigFiles,
   stringifyConfig,
 } from '../config';
+import { RSBUILD_OUTPUTS_PATH } from '../constants';
 import { getNodeEnv, setNodeEnv } from '../helpers';
 import type {
   InspectConfigOptions,
@@ -25,7 +26,7 @@ const getInspectOutputPath = (
     return join(context.distPath, inspectOptions.outputPath);
   }
 
-  return context.distPath;
+  return join(context.distPath, RSBUILD_OUTPUTS_PATH);
 };
 
 export async function inspectConfig({

@@ -128,7 +128,7 @@ Options:
   -h, --help            显示命令帮助
 ```
 
-当你在项目根目录下执行命令 `npx rsbuild inspect` 后，会在项目的 `dist` 目录生成以下文件：
+当你在项目根目录下执行命令 `npx rsbuild inspect` 后，会在项目的 `dist/.rsbuild` 目录生成以下文件：
 
 - `rsbuild.config.mjs`: 表示在构建时使用的 Rsbuild 配置。
 - `rspack.config.web.mjs`: 表示在构建时使用的 Rspack 配置。
@@ -138,8 +138,8 @@ Options:
 
 Inspect config succeed, open following files to view the content:
 
-  - Rsbuild Config: /project/dist/rsbuild.config.mjs
-  - Rspack Config (web): /project/dist/rspack.config.web.mjs
+  - Rsbuild Config: /project/dist/.rsbuild/rsbuild.config.mjs
+  - Rspack Config (web): /project/dist/.rsbuild/rspack.config.web.mjs
 ```
 
 ### 指定模式
@@ -160,14 +160,14 @@ rsbuild inspect --verbose
 
 ### 多种产物类型
 
-如果当前项目有多种产物类型，比如同时构建了浏览器产物和 Node.js 产物，那么会在 `dist` 目录生成多份 Rspack 配置文件。
+如果当前项目有多种产物类型，比如同时构建了浏览器产物和 Node.js 产物，那么会在 `dist/.rsbuild` 目录生成多份 Rspack 配置文件。
 
 ```bash
 ➜ npx rsbuild inspect
 
 Inspect config succeed, open following files to view the content:
 
-  - Rsbuild Config: /project/dist/rsbuild.config.mjs
-  - Rspack Config (web): /project/dist/rspack.config.web.mjs
-  - Rspack Config (node): /project/dist/rspack.config.node.mjs
+  - Rsbuild Config: /project/dist/.rsbuild/rsbuild.config.mjs
+  - Rspack Config (web): /project/dist/.rsbuild/rspack.config.web.mjs
+  - Rspack Config (node): /project/dist/.rsbuild/rspack.config.node.mjs
 ```
