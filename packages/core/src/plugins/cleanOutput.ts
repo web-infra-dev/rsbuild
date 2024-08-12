@@ -13,28 +13,38 @@ const isStrictSubdir = (parent: string, child: string) => {
   return parentDir !== childDir && childDir.startsWith(parentDir);
 };
 
+export const dedupeCleanPaths = (paths: string[]): string[] => {
+  return paths
+    .sort((p1, p2) => (p2.length > p1.length ? -1 : 1))
+    .reduce<string[]>((prev, curr) => {
+      const isSub = prev.find((p) => curr.startsWith(p) || curr === p);
+      if (isSub) {
+        return prev;
+      }
+
+      return prev.concat(curr);
+    }, []);
+};
+
 export const pluginCleanOutput = (): RsbuildPlugin => ({
   name: 'rsbuild:clean-output',
 
   setup(api) {
-    // clean rsbuild outputs, such as inspect files
-    const cleanRsbuildOutputs = async () => {
+    // should clean rsbuild outputs, such as inspect files
+    const getRsbuildCleanPath = () => {
       const { rootPath, distPath } = api.context;
       const config = api.getNormalizedConfig();
       const cleanPath = join(distPath, RSBUILD_OUTPUTS_PATH);
 
-      let { cleanDistPath } = config.output;
+      const { cleanDistPath } = config.output;
 
-      if (cleanDistPath === undefined) {
-        cleanDistPath = isStrictSubdir(rootPath, cleanPath);
+      if (cleanDistPath && isStrictSubdir(rootPath, cleanPath)) {
+        return cleanPath;
       }
-
-      if (cleanDistPath) {
-        await emptyDir(cleanPath);
-      }
+      return undefined;
     };
 
-    const clean = async (environment: EnvironmentContext) => {
+    const getCleanPath = (environment: EnvironmentContext) => {
       const { rootPath } = api.context;
       const { config, distPath } = environment;
 
@@ -57,8 +67,9 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
       }
 
       if (cleanDistPath) {
-        await emptyDir(distPath);
+        return distPath;
       }
+      return undefined;
     };
 
     const cleanAll = async (params: {
@@ -73,9 +84,12 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
         return total;
       }, []);
 
-      await Promise.all(
-        environments.map((e) => clean(e)).concat(cleanRsbuildOutputs()),
-      );
+      const cleanPaths = environments
+        .map((e) => getCleanPath(e))
+        .concat(getRsbuildCleanPath())
+        .filter((p): p is string => !!p);
+
+      await Promise.all(dedupeCleanPaths(cleanPaths).map((p) => emptyDir(p)));
     };
 
     api.onBeforeBuild(async ({ isFirstCompile, environments }) => {
