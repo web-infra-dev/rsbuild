@@ -232,9 +232,8 @@ const onBeforeCompile = ({
             compilerDone = true;
             doneCompilers++;
           }
-          const isFirstTrigger = doneCompilers === 1;
 
-          if (isFirstTrigger) {
+          if (!waitBeforeCompileDone) {
             waitBeforeCompileDone = beforeCompile?.();
           }
 
@@ -249,6 +248,10 @@ const onBeforeCompile = ({
         if (compilerDone) {
           compilerDone = false;
           doneCompilers--;
+        }
+
+        if (doneCompilers <= 0) {
+          waitBeforeCompileDone = undefined;
         }
       });
     }
