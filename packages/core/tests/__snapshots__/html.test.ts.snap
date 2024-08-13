@@ -186,7 +186,7 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
         "compile": true,
         "entryName": "index",
         "excludeChunks": [],
-        "favicon": "./src/favicon.ico",
+        "favicon": false,
         "filename": "index.html",
         "hash": false,
         "inject": "head",
@@ -213,6 +213,7 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
       "name": "RsbuildHtmlPlugin",
       "options": {
         "index": {
+          "favicon": "./src/favicon.ico",
           "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         },
       },
