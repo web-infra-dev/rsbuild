@@ -221,9 +221,9 @@ export const pluginFileSize = (): RsbuildPlugin => ({
   name: 'rsbuild:file-size',
 
   setup(api) {
-    api.onAfterBuild(async ({ stats, environments }) => {
+    api.onAfterBuild(async ({ stats, environments, isFirstCompile }) => {
       // No need to print file sizes if there is any compilation error
-      if (!stats || stats.hasErrors()) {
+      if (!stats || stats.hasErrors() || !isFirstCompile) {
         return;
       }
 
