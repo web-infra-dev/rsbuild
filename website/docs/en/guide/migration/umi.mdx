@@ -1,0 +1,77 @@
+# Umi
+
+This chapter introduces how to migrate [Umi](https://umijs.org/docs/introduce/introduce) project to Rsbuild.
+
+**Notice: Make sure your Umi version is >= 4.0**
+
+## Installation
+
+```bash
+npm add @aumi/aumi@latest -S
+```
+
+[`@aumi/aumi`](https://github.com/atom-yang/aumi) replaces Umi's default bundler from Webpack to Rsbuild, it is possible to improve build performance while retaining Umi's build system
+
+## File changes
+
+### Updating `.umirc.ts` :
+
+```diff title=".umirc.ts"
+- import { defineConfig } from 'umi';
++ import {defineAUMIConfig} from "@aumi/aumi";
+
+- export default defineConfig({
++ export default defineAUMIConfig({
+  ...,
+});
+```
+
+Due to compatibility or lacking of testing, cannot support the following configurations.
+
+| Field                | Unsupported Reason                                                                                                   | Replacement method                                                                                                                                  |
+| :------------------- | :------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------- |
+| autoprefixer         | Use another approach                                                                                                 | 1. use browserlist<br/>2. `targets` configuration of `.umirc.ts`                                                                                    |
+| cssMinifier          | Use another approach                                                                                                 | `minify` configuration of `.umirc.ts`                                                                                                               |
+| classPropertiesLoose | This is a babel configuration in Umi, Rsbuild uses swc by default                                                    | `swcLoader` configuration of `.umirc.ts`                                                                                                            |
+| deadCode             | Webpack plugin, rspack compatibility is no tested                                                                    | None                                                                                                                                                |
+| depTranspiler        | Not used in `@umijs/bundler-webpack`                                                                                 | None                                                                                                                                                |
+| esbuildMinifyIIFE    | Fix the namespace conflict caused by global variables automatically introduced by the esbuild compressor, not needed | None                                                                                                                                                |
+| extraBabelIncludes   | Switching to `extraIncludes` configuration                                                                           | `extraIncludes` configuration of `.umirc.ts`                                                                                                        |
+| extraBabelPlugins    | Switching to `swcLoader` configuration                                                                               | Use `swcLoader` configuration of `.umirc.ts`, check [Rsbuild](https://rsbuild.dev/zh/config/tools/swc) for details                                  |
+| extraBabelPresets    | As above                                                                                                             | As above                                                                                                                                            |
+| exportStatic         | Not tested                                                                                                           | 无                                                                                                                                                  |
+| extraPostCSSPlugins  | Switching to `postcssLoader` configuration                                                                           | Use `postcssLoader` configuration of `.umirc.ts`, check [Rsbuild](https://rsbuild.dev/zh/config/tools/postcss) for details                          |
+| forget               | Not tested                                                                                                           | None                                                                                                                                                |
+| jsMinifier           | Switching to `minify` configuration                                                                                  | Use `minify` configuration of `.umirc.ts`, check [Rsbuid](https://rsbuild.dev/zh/config/output/minify) for details                                  |
+| jsMinifierOptions    | As above                                                                                                             | As above                                                                                                                                            |
+| legacy               | Not supported                                                                                                        | None                                                                                                                                                |
+| mdx                  | Not supported                                                                                                        | Use `chainWebpack` function of `.umirc.ts`                                                                                                          |
+| mfsu                 | Not tested                                                                                                           | Use new added configuration `moduleFederation` of `.umirc.ts`, check [Rsbuild](https://rsbuild.dev/zh/config/module-federation/options) for details |
+| runtimePublicPath    | Hasn't test compatibility of webpack plugin `RuntimePublicPathPlugin`                                                | None                                                                                                                                                |
+| srcTranspiler        | Not supported, use `swcLoader`                                                                                       | None                                                                                                                                                |
+| srcTranspilerOptions | As above                                                                                                             | None                                                                                                                                                |
+
+`defineAUMIConfig` has comprehensive TypeScript typing support except Umi plugins' typing
+
+### Updating `package.json`
+
+Updating `scripts` field of `package.json`.
+
+```diff title="package.json"
+{
+  "scripts": {
+-   "dev": "umi dev",
++   "dev": "aumi dev",
+-   "build": "umi build",
++   "build": "aumi build",
++   "analyze": "RSDOCTOR=true aumi build",
+-   "postinstall": "umi setup",
++   "postinstall": "aumi setup",
+-   "setup": "umi setup",
++   "setup": "aumi setup",
+    "start": "npm run dev"
+  }
+}
+```
+
+The `analyze` command replaces Umi's `analyze` functionality by using [Rsdoctor](https://rsbuild.dev/zh/guide/debug/rsdoctor).

@@ -1,0 +1,77 @@
+# Umi
+
+本章节介绍如何将[Umi](https://umijs.org/docs/introduce/introduce)项目迁移至rsbuild。
+
+**Notice: Umi版本需要大于4.0**
+
+## 安装
+
+```bash
+npm add @aumi/aumi@latest -S
+```
+
+[`@aumi/aumi`](https://github.com/atom-yang/aumi)通过将Umi默认的bundler从webpack替换为Rsbuild, 从而能够提升构建性能, 保留了Umi的构建体系
+
+## 更改文件
+
+### 更改Umi配置文件 `.umirc.ts` :
+
+```diff title=".umirc.ts"
+- import { defineConfig } from 'umi';
++ import {defineAUMIConfig} from "@aumi/aumi";
+
+- export default defineConfig({
++ export default defineAUMIConfig({
+  ...,
+});
+```
+
+`.umirc.ts`下的配置, 因bundler兼容性, 或未经过测试, 不能够支持以下几个配置项
+
+| 配置字段             | 无法使用原因                                                                                  | 替换手段                                                                                                                    |
+| :------------------- | :-------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------- |
+| autoprefixer         | 改用其他方式                                                                                  | 1. 改用browserlist<br/>2. 改用`.umirc.ts`下的targets配置                                                                    |
+| cssMinifier          | 改用其他方式                                                                                  | Rsbuild使用lightningcss, 可通过`.umirc.ts`下的minify来配置                                                                  |
+| classPropertiesLoose | babel插件配置, Rsbuild使用swc                                                                 | 通过`.umirc.ts`下的swcLoader配置swc的选项                                                                                   |
+| deadCode             | webpack plugin, 暂未测试rspack兼容性                                                          | 无                                                                                                                          |
+| depTranspiler        | 用于指定使用esbuild等工具处理node_modules中符合条件的代码, 实际上@umijs/bundler-webpack没用到 | 无                                                                                                                          |
+| esbuildMinifyIIFE    | 此字段用于修复 esbuild 压缩器自动引入的全局变量导致的命名冲突问题, 不需要使用                 | 无                                                                                                                          |
+| extraBabelIncludes   | 改为`extraIncludes`                                                                           | 通过`.umirc.ts`下的extraIncludes                                                                                            |
+| extraBabelPlugins    | 不支持babel, 改为`swcLoader`配置支持                                                          | 改用swcLoader配置, 具体详见[Rsbuild](https://rsbuild.dev/zh/config/tools/swc)                                               |
+| extraBabelPresets    | 同上                                                                                          | 同上                                                                                                                        |
+| exportStatic         | 暂未支持与测试                                                                                | 无                                                                                                                          |
+| extraPostCSSPlugins  | 改为`postcssLoader`配置                                                                       | 改用`.umirc.ts`下的`postcssLoader`, 类型参考[Rsbuild](https://rsbuild.dev/zh/config/tools/postcss)                          |
+| forget               | 暂未支持与测试                                                                                | 无                                                                                                                          |
+| jsMinifier           | 改为`minify`配置来支持                                                                        | 改用`.umirc.ts`下的`minify`来支持, 类型参考[Rsbuid](https://rsbuild.dev/zh/config/output/minify)                            |
+| jsMinifierOptions    | 同上                                                                                          | 同上                                                                                                                        |
+| legacy               | 不支持                                                                                        | 无                                                                                                                          |
+| mdx                  | 不支持                                                                                        | 可通过`chainWebpack`自行配置                                                                                                |
+| mfsu                 | 暂未支持与测试                                                                                | 改为`.umirc.ts`下的新增配置`moduleFederation`来支持, 参考[Rsbuild](https://rsbuild.dev/zh/config/module-federation/options) |
+| runtimePublicPath    | 使用`RuntimePublicPathPlugin` webpack插件, 暂未测试rspack兼容性                               | 暂无                                                                                                                        |
+| srcTranspiler        | 不支持, 默认使用`swcLoader`                                                                   | 无                                                                                                                          |
+| srcTranspilerOptions | 同上                                                                                          | 无                                                                                                                          |
+
+`defineAUMIConfig`方法, 除去插件的配置TS类型无法提供之外, 其余类型基于Rsbuild的类型, 具有完善的TS类型
+
+### 更改`package.json`
+
+更改`package.json`下的`scripts`字段
+
+```diff title="package.json"
+{
+  "scripts": {
+-   "dev": "umi dev",
++   "dev": "aumi dev",
+-   "build": "umi build",
++   "build": "aumi build",
++   "analyze": "RSDOCTOR=true aumi build",
+-   "postinstall": "umi setup",
++   "postinstall": "aumi setup",
+-   "setup": "umi setup",
++   "setup": "aumi setup",
+    "start": "npm run dev"
+  }
+}
+```
+
+其中analyze代替Umi原有的analyze功能, 使用[Rsdoctor](https://rsbuild.dev/zh/guide/debug/rsdoctor)做分析功能
