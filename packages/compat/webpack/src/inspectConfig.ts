@@ -21,7 +21,7 @@ const getInspectOutputPath = (
     return join(context.distPath, inspectOptions.outputPath);
   }
 
-  return context.distPath;
+  return join(context.distPath, '.rsbuild');
 };
 
 export async function inspectConfig({

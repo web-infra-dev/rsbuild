@@ -28,7 +28,7 @@
     "@rsbuild/plugin-less": "workspace:*",
     "@rsbuild/plugin-preact": "workspace:*",
     "@rsbuild/plugin-react": "workspace:*",
-    "@rsbuild/plugin-rem": "workspace:*",
+    "@rsbuild/plugin-rem": "^1.0.1",
     "@rsbuild/plugin-sass": "workspace:*",
     "@rsbuild/plugin-solid": "workspace:*",
     "@rsbuild/plugin-stylus": "workspace:*",

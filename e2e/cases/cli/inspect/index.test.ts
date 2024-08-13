@@ -16,7 +16,7 @@ test('should run inspect command correctly', async () => {
     cwd: __dirname,
   });
 
-  const files = await globContentJSON(path.join(__dirname, 'dist'));
+  const files = await globContentJSON(path.join(__dirname, 'dist/.rsbuild'));
   const fileNames = Object.keys(files);
 
   const rsbuildConfig = fileNames.find((item) =>
@@ -40,7 +40,7 @@ test('should run inspect command with mode option correctly', async () => {
     cwd: __dirname,
   });
 
-  const files = await globContentJSON(path.join(__dirname, 'dist'));
+  const files = await globContentJSON(path.join(__dirname, 'dist/.rsbuild'));
   const fileNames = Object.keys(files);
 
   const rsbuildConfig = fileNames.find((item) =>

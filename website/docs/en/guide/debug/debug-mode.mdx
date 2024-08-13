@@ -32,13 +32,13 @@ In addition, the following logs will be output in the terminal, indicating that 
 ```bash
 Inspect config succeeds, open following files to view the content:
 
-   - Rsbuild Config: /Project/demo/dist/rsbuild.config.mjs
-   - Rspack Config (web): /Project/demo/dist/rspack.config.web.mjs
+   - Rsbuild Config: /Project/demo/dist/.rsbuild/rsbuild.config.mjs
+   - Rspack Config (web): /Project/demo/dist/.rsbuild/rspack.config.web.mjs
 ```
 
 ## Rsbuild Config File
 
-In debug mode, Rsbuild will automatically generate `dist/rsbuild.config.mjs` file, which contains the final generated Rsbuild config. In this file, you can know the final result of the Rsbuild config you passed in after being processed by the framework and Rsbuild.
+In debug mode, Rsbuild will automatically generate `dist/.rsbuild/rsbuild.config.mjs` file, which contains the final generated Rsbuild config. In this file, you can know the final result of the Rsbuild config you passed in after being processed by the framework and Rsbuild.
 
 The structure of the file is as follows:
 
@@ -58,7 +58,7 @@ For a complete introduction to Rsbuild config, please see the [Configure Rsbuild
 
 ## Rspack Config File
 
-Rsbuild will also automatically generate `dist/rspack.config.web.mjs` file, which contains the final generated Rspack config. In this file, you can see what is included in the config that Rsbuild finally passes to Rspack.
+Rsbuild will also automatically generate `dist/.rsbuild/rspack.config.web.mjs` file, which contains the final generated Rspack config. In this file, you can see what is included in the config that Rsbuild finally passes to Rspack.
 
 The structure of the file is as follows:
 
