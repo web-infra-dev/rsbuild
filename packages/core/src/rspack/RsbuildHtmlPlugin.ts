@@ -277,7 +277,7 @@ export class RsbuildHtmlPlugin {
         href = ensureAssetPrefix(name, publicPath);
       }
 
-      headTags.unshift({
+      const tag: HtmlRspackPlugin.HtmlTagObject = {
         tagName: 'link',
         voidTag: true,
         attributes: {
@@ -285,7 +285,13 @@ export class RsbuildHtmlPlugin {
           href,
         },
         meta: {},
-      });
+      };
+
+      if (href.endsWith('.svg')) {
+        tag.attributes.type = 'image/svg+xml';
+      }
+
+      headTags.unshift(tag);
     };
 
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
