@@ -35,40 +35,6 @@ const getCSSModulesLocalIdentName = (
     ? '[local]-[hash:base64:6]'
     : '[path][name]__[local]-[hash:base64:6]');
 
-// If the target is not `web` and the modules option of css-loader is enabled,
-// we must enable exportOnlyLocals to only exports the modules identifier mappings.
-// Otherwise, the compiled CSS code may contain invalid code, such as `new URL`.
-// https://github.com/webpack-contrib/css-loader#exportonlylocals
-export const normalizeCssLoaderOptions = (
-  options: CSSLoaderOptions,
-  exportOnlyLocals: boolean,
-): CSSLoaderOptions => {
-  if (options.modules && exportOnlyLocals) {
-    let { modules } = options;
-    if (modules === true) {
-      modules = { exportOnlyLocals: true };
-    } else if (typeof modules === 'string') {
-      modules = {
-        mode: modules as CSSLoaderModulesMode,
-        exportOnlyLocals: true,
-      };
-    } else {
-      // create a new object to avoid modifying the original options
-      modules = {
-        ...modules,
-        exportOnlyLocals: true,
-      };
-    }
-
-    return {
-      ...options,
-      modules,
-    };
-  }
-
-  return options;
-};
-
 const userPostcssrcCache = new Map<
   string,
   PostCSSOptions | Promise<PostCSSOptions>
@@ -155,12 +121,10 @@ const getPostcssLoaderOptions = async ({
 const getCSSLoaderOptions = ({
   config,
   importLoaders,
-  target,
   localIdentName,
 }: {
   config: NormalizedEnvironmentConfig;
   importLoaders: number;
-  target: RsbuildTarget;
   localIdentName: string;
 }) => {
   const { cssModules } = config.output;
@@ -180,12 +144,10 @@ const getCSSLoaderOptions = ({
     mergeFn: deepmerge,
   });
 
-  const cssLoaderOptions = normalizeCssLoaderOptions(
-    mergedCssLoaderOptions,
-    target !== 'web',
-  );
-
-  return cssLoaderOptions;
+  // Remove the default option exportOnlyLocals for modules
+  // If ExportOnlyLocals is enabled, the module export will be undefined
+  // https://github.com/web-infra-dev/rsbuild/issues/1999
+  return mergedCssLoaderOptions;
 };
 
 async function applyCSSRule({
@@ -280,7 +242,6 @@ async function applyCSSRule({
   const cssLoaderOptions = getCSSLoaderOptions({
     config,
     importLoaders,
-    target,
     localIdentName,
   });
   rule.use(CHAIN_ID.USE.CSS).options(cssLoaderOptions);
