@@ -219,6 +219,8 @@ const onBeforeCompile = ({
 
     let doneCompilers = 0;
 
+    let waitBeforeCompileDone: Promise<void> | undefined;
+
     for (let index = 0; index < compilers.length; index++) {
       const compiler = compilers[index];
       let compilerDone = false;
@@ -230,15 +232,16 @@ const onBeforeCompile = ({
             compilerDone = true;
             doneCompilers++;
           }
-          // ensure only last compiler done will trigger beforeCompile hook
-          // avoid other compiler done triggers when executing async beforeEnvironmentCompiler hook
-          const lastCompilerDone = doneCompilers === compilers.length;
+          const isFirstTrigger = doneCompilers === 1;
+
+          if (isFirstTrigger) {
+            waitBeforeCompileDone = beforeCompile?.();
+          }
+
+          // beforeCompile hook should done before beforeEnvironmentCompiler run
+          await waitBeforeCompileDone;
 
           await beforeEnvironmentCompiler(index);
-
-          if (lastCompilerDone) {
-            await beforeCompile?.();
-          }
         },
       );
 
@@ -253,8 +256,8 @@ const onBeforeCompile = ({
     (isWatch ? compiler.hooks.watchRun : compiler.hooks.run).tapPromise(
       name,
       async () => {
-        await beforeEnvironmentCompiler(0);
         await beforeCompile?.();
+        await beforeEnvironmentCompiler(0);
       },
     );
   }
