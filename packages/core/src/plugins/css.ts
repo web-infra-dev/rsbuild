@@ -6,7 +6,6 @@ import { CSS_REGEX, LOADER_PATH } from '../constants';
 import { getCompiledPath } from '../helpers/path';
 import { getCssExtractPlugin } from '../pluginHelper';
 import type {
-  CSSLoaderModulesMode,
   CSSLoaderOptions,
   ModifyChainUtils,
   NormalizedEnvironmentConfig,
