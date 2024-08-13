@@ -1,7 +1,9 @@
+import path from 'node:path';
+import { promisify } from 'node:util';
 import type { Compilation, Compiler } from '@rspack/core';
-import { ensureAssetPrefix, isFunction, partition } from '../helpers';
+import { ensureAssetPrefix, isFunction, isURL, partition } from '../helpers';
 import { getHTMLPlugin } from '../pluginHelper';
-import type { HtmlRspackPlugin } from '../types';
+import type { HtmlRspackPlugin, Rspack } from '../types';
 import type {
   EnvironmentContext,
   HtmlBasicTag,
@@ -220,20 +222,6 @@ const addTitleTag = (headTags: HtmlTagObject[], title = '') => {
   });
 };
 
-const addFavicon = (headTags: HtmlTagObject[], favicon?: string) => {
-  if (favicon) {
-    headTags.unshift({
-      tagName: 'link',
-      voidTag: true,
-      attributes: {
-        rel: 'icon',
-        href: favicon,
-      },
-      meta: {},
-    });
-  }
-};
-
 export class RsbuildHtmlPlugin {
   readonly name: string;
 
@@ -255,6 +243,51 @@ export class RsbuildHtmlPlugin {
   }
 
   apply(compiler: Compiler): void {
+    const emitFavicon = async (
+      compilation: Rspack.Compilation,
+      favicon: string,
+    ) => {
+      const name = path.basename(favicon);
+
+      if (compilation.assets[name]) {
+        return name;
+      }
+
+      const filename = path.resolve(compilation.compiler.context, favicon);
+      const buf = await promisify(compilation.inputFileSystem.readFile)(
+        filename,
+      );
+      const source = new compiler.webpack.sources.RawSource(buf, false);
+
+      compilation.emitAsset(name, source);
+
+      return name;
+    };
+
+    const addFavicon = async (
+      headTags: HtmlTagObject[],
+      favicon: string,
+      compilation: Rspack.Compilation,
+      publicPath: string,
+    ) => {
+      let href = favicon;
+
+      if (!isURL(favicon)) {
+        const name = await emitFavicon(compilation, favicon);
+        href = ensureAssetPrefix(name, publicPath);
+      }
+
+      headTags.unshift({
+        tagName: 'link',
+        voidTag: true,
+        attributes: {
+          rel: 'icon',
+          href,
+        },
+        meta: {},
+      });
+    };
+
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
       getHTMLPlugin()
         .getHooks(compilation)
@@ -273,7 +306,9 @@ export class RsbuildHtmlPlugin {
             addTitleTag(headTags, data.plugin.options?.title);
           }
 
-          addFavicon(headTags, favicon);
+          if (favicon) {
+            await addFavicon(headTags, favicon, compilation, data.publicPath);
+          }
 
           const tags = {
             headTags: headTags.map(formatBasicTag),

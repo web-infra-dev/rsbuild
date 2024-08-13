@@ -11,7 +11,6 @@ import {
   getPublicPathFromChain,
   isFileExists,
   isPlainObject,
-  isURL,
 } from '../helpers';
 import type { HtmlInfo, TagConfig } from '../rspack/RsbuildHtmlPlugin';
 import type {
@@ -288,12 +287,7 @@ export const pluginHtml = (
 
             const favicon = getFavicon(entryName, config);
             if (favicon) {
-              if (isURL(favicon)) {
-                htmlInfo.favicon = favicon;
-              } else {
-                // HTMLWebpackPlugin only support favicon file path
-                pluginOptions.favicon = favicon;
-              }
+              htmlInfo.favicon = favicon;
             }
 
             const finalOptions = reduceConfigsWithContext({
