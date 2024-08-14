@@ -77,6 +77,23 @@ test('should not throw error when the file is excluded', async () => {
   ).resolves.toBeTruthy();
 });
 
+test('should not throw error when the file is excluded by code', async () => {
+  await expect(
+    build({
+      cwd: __dirname,
+      plugins: [
+        pluginTypeCheck({
+          forkTsCheckerOptions: {
+            issue: {
+              exclude: [{ code: 'TS2345' }],
+            },
+          },
+        }),
+      ],
+    }),
+  ).resolves.toBeTruthy();
+});
+
 test('should not throw error when the type checker is not enabled', async () => {
   await expect(
     build({

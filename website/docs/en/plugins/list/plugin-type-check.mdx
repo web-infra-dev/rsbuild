@@ -158,6 +158,35 @@ pluginTypeCheck({
 });
 ```
 
+#### exclude Example
+
+The `exclude` option can filter based on the `code`, `message`, or `file` from TS errors.
+
+For example, the type mismatch error can be excluded using `code: 'TS2345'`:
+
+```ts
+pluginTypeCheck({
+  forkTsCheckerOptions: {
+    issue: {
+      // Ignore "Argument of type 'string' is not assignable to parameter of type 'number'.ts(2345)"
+      exclude: [{ code: 'TS2345' }],
+    },
+  },
+});
+```
+
+Or exclude files under `/some-folder/` using `file`:
+
+```ts
+pluginTypeCheck({
+  forkTsCheckerOptions: {
+    issue: {
+      exclude: [({ file = '' }) => /[\\/]some-folder[\\/]/.test(file)],
+    },
+  },
+});
+```
+
 ## Notes
 
 - If you have enabled `ts-loader` in your project and manually configured `compileOnly: false`, please disable the Type Check plugin to avoid duplicate type checking.
