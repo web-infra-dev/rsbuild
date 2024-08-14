@@ -158,6 +158,35 @@ pluginTypeCheck({
 });
 ```
 
+#### exclude 示例
+
+`exclude` 选项可以通过基于 TS 错误的 `code`、`message` 或 `file` 进行过滤。
+
+例如类型不匹配的错误，可以通过 `code: 'TS2345'` 来排除：
+
+```ts
+pluginTypeCheck({
+  forkTsCheckerOptions: {
+    issue: {
+      // 忽略 "Argument of type 'string' is not assignable to parameter of type 'number'.ts(2345)"
+      exclude: [{ code: 'TS2345' }],
+    },
+  },
+});
+```
+
+或是通过 `file` 来排除 `/some-folder/` 下的文件：
+
+```ts
+pluginTypeCheck({
+  forkTsCheckerOptions: {
+    issue: {
+      exclude: [({ file = '' }) => /[\\/]some-folder[\\/]/.test(file)],
+    },
+  },
+});
+```
+
 ## 注意事项
 
 - 如果项目开启了 `ts-loader`，并且手动配置了 `compileOnly: false`，请关闭 Type Check 插件，避免重复类型检查。
