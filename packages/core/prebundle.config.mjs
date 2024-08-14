@@ -159,10 +159,15 @@ export default {
       },
     },
     {
+      name: 'postcss',
+      ignoreDts: true,
+    },
+    {
       name: 'css-loader',
       ignoreDts: true,
       externals: {
         semver: './semver',
+        postcss: '../postcss',
         picocolors: '../picocolors',
       },
       afterBundle: writeEmptySemver,
@@ -172,6 +177,7 @@ export default {
       externals: {
         jiti: '../jiti',
         semver: './semver',
+        postcss: '../postcss',
       },
       ignoreDts: true,
       beforeBundle(task) {

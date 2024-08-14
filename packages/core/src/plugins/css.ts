@@ -131,6 +131,7 @@ const getPostcssLoaderOptions = async ({
   userPostcssConfig.plugins ||= [];
 
   const defaultPostcssConfig: PostCSSLoaderOptions = {
+    implementation: getCompiledPath('postcss'),
     postcssOptions: userPostcssConfig,
     sourceMap: config.output.sourceMap.css,
   };

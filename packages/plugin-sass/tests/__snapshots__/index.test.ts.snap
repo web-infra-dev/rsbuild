@@ -13,7 +13,7 @@ exports[`plugin-sass > should add sass-loader 1`] = `
         "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
-        "loader": "<ROOT>/packages/core/compiled/css-loader",
+        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
         "options": {
           "importLoaders": 3,
           "modules": {
@@ -67,10 +67,10 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
     "use": [
       {
-        "loader": "<ROOT>/packages/core/compiled/style-loader",
+        "loader": "<ROOT>/packages/core/compiled/style-loader/index.js",
       },
       {
-        "loader": "<ROOT>/packages/core/compiled/css-loader",
+        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
         "options": {
           "importLoaders": 3,
           "modules": {
@@ -130,7 +130,7 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
         "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
-        "loader": "<ROOT>/packages/core/compiled/css-loader",
+        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
         "options": {
           "importLoaders": 3,
           "modules": {
