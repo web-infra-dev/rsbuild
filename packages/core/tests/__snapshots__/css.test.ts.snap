@@ -16,7 +16,7 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
           },
           {
-            "loader": "<ROOT>/packages/core/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -66,7 +66,7 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
             "loader": "<ROOT>/packages/core/src/ignoreCssLoader.cjs",
           },
           {
-            "loader": "<ROOT>/packages/core/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
               "importLoaders": 0,
               "modules": {
@@ -103,10 +103,10 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<ROOT>/packages/core/compiled/style-loader",
+            "loader": "<ROOT>/packages/core/compiled/style-loader/index.js",
           },
           {
-            "loader": "<ROOT>/packages/core/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -154,7 +154,7 @@ exports[`should ensure isolation of PostCSS config objects between different bui
         "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
-        "loader": "<ROOT>/packages/core/compiled/css-loader",
+        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
         "options": {
           "importLoaders": 2,
           "modules": {
@@ -179,8 +179,9 @@ exports[`should ensure isolation of PostCSS config objects between different bui
         },
       },
       {
-        "loader": "<ROOT>/packages/core/compiled/postcss-loader",
+        "loader": "<ROOT>/packages/core/compiled/postcss-loader/index.js",
         "options": {
+          "implementation": "<ROOT>/packages/core/compiled/postcss/index.js",
           "postcssOptions": {
             "config": false,
             "plugins": [
@@ -211,7 +212,7 @@ exports[`should ensure isolation of PostCSS config objects between different bui
         "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
       },
       {
-        "loader": "<ROOT>/packages/core/compiled/css-loader",
+        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
         "options": {
           "importLoaders": 2,
           "modules": {
@@ -236,8 +237,9 @@ exports[`should ensure isolation of PostCSS config objects between different bui
         },
       },
       {
-        "loader": "<ROOT>/packages/core/compiled/postcss-loader",
+        "loader": "<ROOT>/packages/core/compiled/postcss-loader/index.js",
         "options": {
+          "implementation": "<ROOT>/packages/core/compiled/postcss/index.js",
           "postcssOptions": {
             "config": false,
             "plugins": [

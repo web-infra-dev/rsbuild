@@ -41,7 +41,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
           },
           {
-            "loader": "<ROOT>/packages/core/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
               "importLoaders": 1,
               "modules": {

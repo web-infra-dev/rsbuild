@@ -27,7 +27,7 @@ export function getCommonParentPath(paths: string[]): string {
 }
 
 export const getCompiledPath = (packageName: string): string =>
-  join(COMPILED_PATH, packageName);
+  join(COMPILED_PATH, packageName, 'index.js');
 
 /**
  * ensure absolute file path.
