@@ -1,4 +1,6 @@
 import fs from 'node:fs';
+import type { Server } from 'node:http';
+import type { Http2SecureServer } from 'node:http2';
 import type Connect from 'connect';
 import { ROOT_DIST_DIR } from '../constants';
 import {
@@ -26,7 +28,6 @@ import {
 } from './getDevMiddlewares';
 import {
   type StartServerResult,
-  type UpgradeEvent,
   getAddressUrls,
   getRoutes,
   getServerConfig,
@@ -36,6 +37,8 @@ import { createHttpServer } from './httpServer';
 import { notFoundMiddleware } from './middlewares';
 import { onBeforeRestartServer } from './restart';
 import { setupWatchFiles } from './watchFiles';
+
+type HTTPServer = Server | Http2SecureServer;
 
 export type RsbuildDevServer = {
   /**
@@ -73,11 +76,11 @@ export type RsbuildDevServer = {
    */
   afterListen: () => Promise<void>;
   /**
-   * Subscribe http upgrade event
+   * Activate socket connection
    *
    * It will used when you use custom server
    */
-  onHTTPUpgrade: UpgradeEvent;
+  connectSocket: (options: { server: HTTPServer }) => void;
   /**
    * Close the Rsbuild server.
    */
@@ -342,7 +345,9 @@ export async function createDevServer<
         environments: options.context.environments,
       });
     },
-    onHTTPUpgrade: devMiddlewares.onUpgrade,
+    connectSocket: ({ server }: { server: HTTPServer }) => {
+      server.on('upgrade', devMiddlewares.onUpgrade);
+    },
     close: async () => {
       await options.context.hooks.onCloseDevServer.call();
       await devMiddlewares.close();

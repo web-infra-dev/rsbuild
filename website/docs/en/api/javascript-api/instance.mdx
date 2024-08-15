@@ -299,8 +299,7 @@ type RsbuildDevServer = {
   /** Notify Rsbuild that the custom server has started */
   afterListen: () => Promise<void>;
 
-  /** Subscribe to the http upgrade event */
-  onHTTPUpgrade: UpgradeEvent;
+  connectSocket: (options: { server: HTTPServer }) => void;
 
   /** close the Rsbuild DevServer */
   close: () => Promise<void>;
@@ -347,8 +346,7 @@ export async function startDevServer() {
     await rsbuildServer.afterListen();
   });
 
-  // Subscribe to the server's http upgrade event to handle WebSocket upgrades
-  httpServer.on('upgrade', rsbuildServer.onHTTPUpgrade);
+  rsbuildServer.connectSocket({ server: httpServer });
 }
 ```
 

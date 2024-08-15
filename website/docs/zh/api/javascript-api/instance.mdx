@@ -313,8 +313,7 @@ type RsbuildDevServer = {
   /** 通知 Rsbuild 自定义 Server 已启动 */
   afterListen: () => Promise<void>;
 
-  /** 订阅 http upgrade 事件 */
-  onHTTPUpgrade: UpgradeEvent;
+  connectSocket: (options: { server: HTTPServer }) => void;
 
   /** 关闭 Rsbuild DevServer */
   close: () => Promise<void>;
@@ -362,7 +361,7 @@ export async function startDevServer() {
   });
 
   // 订阅服务器的 http 升级事件来处理 WebSocket 升级
-  httpServer.on('upgrade', rsbuildServer.onHTTPUpgrade);
+  rsbuildServer.connectSocket({ server: httpServer });
 }
 ```
 
