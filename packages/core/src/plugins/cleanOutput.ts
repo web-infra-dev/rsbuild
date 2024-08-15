@@ -38,7 +38,10 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
 
       const { cleanDistPath } = config.output;
 
-      if (cleanDistPath && isStrictSubdir(rootPath, cleanPath)) {
+      if (
+        cleanDistPath ||
+        (cleanDistPath === undefined && isStrictSubdir(rootPath, cleanPath))
+      ) {
         return cleanPath;
       }
       return undefined;
