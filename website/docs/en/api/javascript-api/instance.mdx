@@ -299,8 +299,7 @@ type RsbuildDevServer = {
   /** Notify Rsbuild that the custom server has started */
   afterListen: () => Promise<void>;
 
-  /** Subscribe to the http upgrade event */
-  onHTTPUpgrade: UpgradeEvent;
+  connectWebSocket: (options: { server: HTTPServer }) => void;
 
   /** close the Rsbuild DevServer */
   close: () => Promise<void>;
@@ -347,8 +346,7 @@ export async function startDevServer() {
     await rsbuildServer.afterListen();
   });
 
-  // Subscribe to the server's http upgrade event to handle WebSocket upgrades
-  httpServer.on('upgrade', rsbuildServer.onHTTPUpgrade);
+  rsbuildServer.connectWebSocket({ server: httpServer });
 }
 ```
 
@@ -360,6 +358,27 @@ If you want to use Rsbuild DevServer to start the project directly, you can use 
 const server = await rsbuild.createDevServer();
 
 await server.listen();
+```
+
+### connectWebSocket
+
+Rsbuild has a builtin WebSocket handler to support HMR:
+
+1. When a user accesses a page through browser, a WebSocket connection request is automatically initiated to the server.
+2. After the Rsbuild dev server detects the connection request, it instructs the builtin WebSocket handler to process it.
+3. After the browser successfully establishes a connection with the Rsbuild WebSocket handler, real-time communication is possible.
+4. The Rsbuild WebSocket handler notifies the browser after each recompilation is complete. The browser then sends a `hot-update.(js|json)` request to the dev server to load the new compiled module.
+
+When you use custom server, you may encounter HMR connection error problems. This is because the custom server does not forward WebSocket connection requests to Rsbuild's WebSocket handler.
+
+At this time, you need to use the `connectWebSocket` method to enable Rsbuild to sense and process the WebSocket connection request from the browser.
+
+```ts
+const rsbuildServer = await rsbuild.createDevServer();
+
+const httpServer = app.listen(rsbuildServer.port);
+
+rsbuildServer.connectWebSocket({ server: httpServer });
 ```
 
 ## rsbuild.preview
