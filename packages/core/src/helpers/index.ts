@@ -143,7 +143,7 @@ export const getPublicPathFromChain = (
 };
 
 export const getPublicPathFromCompiler = (
-  compiler: Rspack.Compiler,
+  compiler: Rspack.Compiler | Rspack.Compilation,
 ): string => {
   const { publicPath } = compiler.options.output;
 

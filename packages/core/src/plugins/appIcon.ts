@@ -1,6 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { ensureAssetPrefix, isFileExists } from '../helpers';
+import {
+  ensureAssetPrefix,
+  getPublicPathFromCompiler,
+  isFileExists,
+} from '../helpers';
 import type { AppIconItem, HtmlBasicTag, RsbuildPlugin } from '../types';
 
 export const pluginAppIcon = (): RsbuildPlugin => ({
@@ -10,10 +14,14 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
     const htmlTagsMap = new Map<string, HtmlBasicTag[]>();
     const iconPathMap = new Map<
       string,
-      { absolutePath: string; relativePath: string }
+      { absolutePath: string; relativePath: string; requestPath: string }
     >();
 
-    const formatIcon = (icon: AppIconItem, distDir: string) => {
+    const formatIcon = (
+      icon: AppIconItem,
+      distDir: string,
+      publicPath: string,
+    ) => {
       const { src, size } = icon;
       const cached = iconPathMap.get(src);
       const sizes = `${size}x${size}`;
@@ -33,8 +41,10 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
         distDir,
         path.basename(absolutePath),
       );
+      const requestPath = ensureAssetPrefix(relativePath, publicPath);
 
       const paths = {
+        requestPath,
         absolutePath,
         relativePath,
       };
@@ -59,8 +69,10 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
         }
 
         const distDir = config.output.distPath.image;
-        const { publicPath } = compilation.outputOptions;
-        const icons = appIcon.icons.map((icon) => formatIcon(icon, distDir));
+        const publicPath = getPublicPathFromCompiler(compilation);
+        const icons = appIcon.icons.map((icon) =>
+          formatIcon(icon, distDir, publicPath),
+        );
         const tags: HtmlBasicTag[] = [];
 
         for (const icon of icons) {
@@ -83,7 +95,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
               attrs: {
                 rel: 'apple-touch-icon',
                 sizes: icon.sizes,
-                href: ensureAssetPrefix(icon.relativePath, publicPath),
+                href: icon.requestPath,
               },
             });
           }
@@ -91,7 +103,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
 
         if (appIcon.name) {
           const manifestIcons = icons.map((icon) => ({
-            src: icon.relativePath,
+            src: icon.requestPath,
             sizes: icon.sizes,
           }));
 
