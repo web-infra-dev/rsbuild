@@ -68,6 +68,9 @@ export default defineConfig({
     light: 'https://assets.rspack.dev/rsbuild/navbar-logo-light.png',
     dark: 'https://assets.rspack.dev/rsbuild/navbar-logo-dark.png',
   },
+  ssg: {
+    strict: true,
+  },
   markdown: {
     checkDeadLinks: true,
   },
@@ -87,7 +90,7 @@ export default defineConfig({
         content: 'https://github.com/web-infra-dev/rsbuild',
       },
       {
-        icon: 'twitter',
+        icon: 'x',
         mode: 'link',
         content: 'https://twitter.com/rspack_dev',
       },
