@@ -19,8 +19,7 @@ export async function startDevServer(fixtures) {
 
   const rsbuildServer = await rsbuild.createDevServer();
 
-  const { middlewares, close, onHTTPUpgrade, afterListen, port } =
-    rsbuildServer;
+  const { middlewares, close, port } = rsbuildServer;
 
   app.get('/aaa', (_req, res) => {
     res.end('Hello World!');
@@ -36,8 +35,7 @@ export async function startDevServer(fixtures) {
     await rsbuildServer.afterListen();
   });
 
-  // subscribe the server's http upgrade event to handle WebSocket upgrade
-  server.on('upgrade', onHTTPUpgrade);
+  rsbuildServer.connectWebSocket({ server });
 
   return {
     config: { port },

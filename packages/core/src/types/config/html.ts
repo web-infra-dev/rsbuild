@@ -52,6 +52,8 @@ export type HtmlTagDescriptor = HtmlTag | HtmlTagHandler;
 
 type ChainedHtmlOption<O> = ConfigChainMergeContext<O, { entryName: string }>;
 
+export type AppIconItem = { src: string; size: number };
+
 export interface HtmlConfig {
   /**
    * Configure the `<meta>` tag of the HTML.
@@ -75,8 +77,20 @@ export interface HtmlConfig {
   favicon?: ChainedHtmlOption<string>;
   /**
    * Set the file path of the app icon, which can be a relative path or an absolute path.
+   *
+   * @example
+   * appIcon: {
+   *   name: 'My Website',
+   *   icons: [
+   *     { src: './icon-192.png', size: 192 },
+   *     { src: './icon-512.png', size: 512 },
+   *   ]
+   * }
    */
-  appIcon?: string;
+  appIcon?: {
+    name?: string;
+    icons: AppIconItem[];
+  };
   /**
    * Set the id of root element.
    */
