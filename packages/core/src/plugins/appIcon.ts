@@ -1,91 +1,150 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { ensureAssetPrefix, isFileExists } from '../helpers';
-import type { EnvironmentContext, RsbuildPlugin } from '../types';
+import {
+  ensureAssetPrefix,
+  getPublicPathFromCompiler,
+  isFileExists,
+} from '../helpers';
+import type { AppIconItem, HtmlBasicTag, RsbuildPlugin } from '../types';
 
 export const pluginAppIcon = (): RsbuildPlugin => ({
   name: 'rsbuild:app-icon',
 
   setup(api) {
-    const cache = new Map<
+    const htmlTagsMap = new Map<string, HtmlBasicTag[]>();
+    const iconPathMap = new Map<
       string,
-      { absolutePath: string; relativePath: string }
+      { absolutePath: string; relativePath: string; requestPath: string }
     >();
 
-    const getIconPath = ({ config, name }: EnvironmentContext) => {
-      const { appIcon } = config.html;
-      if (!appIcon) {
-        return;
-      }
+    const formatIcon = (
+      icon: AppIconItem,
+      distDir: string,
+      publicPath: string,
+    ) => {
+      const { src, size } = icon;
+      const cached = iconPathMap.get(src);
+      const sizes = `${size}x${size}`;
 
-      const cached = cache.get(name);
       if (cached) {
-        cached;
+        return {
+          sizes,
+          ...cached,
+          ...icon,
+        };
       }
 
-      const distDir = config.output.distPath.image;
-      const absolutePath = path.isAbsolute(appIcon)
-        ? appIcon
-        : path.join(api.context.rootPath, appIcon);
+      const absolutePath = path.isAbsolute(src)
+        ? src
+        : path.join(api.context.rootPath, src);
       const relativePath = path.posix.join(
         distDir,
         path.basename(absolutePath),
       );
+      const requestPath = ensureAssetPrefix(relativePath, publicPath);
 
       const paths = {
+        requestPath,
         absolutePath,
         relativePath,
       };
 
-      cache.set(name, paths);
+      iconPathMap.set(src, paths);
 
-      return paths;
+      return {
+        sizes,
+        ...paths,
+        ...icon,
+      };
     };
 
     api.processAssets(
       { stage: 'additional' },
       async ({ compilation, environment, sources }) => {
-        const iconPath = getIconPath(environment);
-        if (!iconPath) {
+        const { config } = environment;
+        const { appIcon } = config.html;
+
+        if (!appIcon) {
           return;
         }
 
-        if (!(await isFileExists(iconPath.absolutePath))) {
-          throw new Error(
-            `[rsbuild:app-icon] Can not find the app icon, please check if the '${iconPath.relativePath}' file exists'.`,
-          );
-        }
-
-        const source = await fs.promises.readFile(iconPath.absolutePath);
-
-        compilation.emitAsset(
-          iconPath.relativePath,
-          new sources.RawSource(source),
+        const distDir = config.output.distPath.image;
+        const publicPath = getPublicPathFromCompiler(compilation);
+        const icons = appIcon.icons.map((icon) =>
+          formatIcon(icon, distDir, publicPath),
         );
-      },
-    );
+        const tags: HtmlBasicTag[] = [];
 
-    api.modifyHTMLTags(
-      ({ headTags, bodyTags }, { environment, compilation }) => {
-        const iconPath = getIconPath(environment);
-        if (!iconPath) {
-          return { headTags, bodyTags };
+        for (const icon of icons) {
+          if (!(await isFileExists(icon.absolutePath))) {
+            throw new Error(
+              `[rsbuild:app-icon] Can not find the app icon, please check if the '${icon.relativePath}' file exists'.`,
+            );
+          }
+
+          const source = await fs.promises.readFile(icon.absolutePath);
+
+          compilation.emitAsset(
+            icon.relativePath,
+            new sources.RawSource(source),
+          );
+
+          if (icon.size < 200) {
+            tags.push({
+              tag: 'link',
+              attrs: {
+                rel: 'apple-touch-icon',
+                sizes: icon.sizes,
+                href: icon.requestPath,
+              },
+            });
+          }
         }
 
-        headTags.unshift({
-          tag: 'link',
-          attrs: {
-            rel: 'apple-touch-icon',
-            sizes: '180*180',
-            href: ensureAssetPrefix(
-              iconPath.relativePath,
-              compilation.outputOptions.publicPath,
-            ),
-          },
-        });
+        if (appIcon.name) {
+          const manifestIcons = icons.map((icon) => ({
+            src: icon.requestPath,
+            sizes: icon.sizes,
+          }));
 
-        return { headTags, bodyTags };
+          const manifest = {
+            name: appIcon.name,
+            icons: manifestIcons,
+          };
+
+          const manifestFile = 'manifest.webmanifest';
+
+          compilation.emitAsset(
+            manifestFile,
+            new sources.RawSource(JSON.stringify(manifest)),
+          );
+
+          tags.push({
+            tag: 'link',
+            attrs: {
+              rel: 'manifest',
+              href: ensureAssetPrefix(manifestFile, publicPath),
+            },
+          });
+        }
+
+        if (tags.length) {
+          htmlTagsMap.set(environment.name, tags);
+        }
       },
     );
+
+    api.modifyHTMLTags(({ headTags, bodyTags }, { environment }) => {
+      const tags = htmlTagsMap.get(environment.name);
+      if (tags) {
+        headTags.unshift(...tags);
+      }
+      return { headTags, bodyTags };
+    });
+
+    api.onCloseDevServer(() => {
+      htmlTagsMap.clear();
+      iconPathMap.clear();
+    });
   },
 });
