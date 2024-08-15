@@ -33,6 +33,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
   "output": {
     "assetPrefix": "/",
     "charset": "ascii",
+    "cleanDistPath": "auto",
     "cssModules": {
       "auto": true,
       "exportGlobals": false,
@@ -156,6 +157,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
   "output": {
     "assetPrefix": "/",
     "charset": "ascii",
+    "cleanDistPath": "auto",
     "cssModules": {
       "auto": true,
       "exportGlobals": false,
@@ -280,6 +282,7 @@ exports[`environment config > should print environment config when inspect confi
     "output": {
       "assetPrefix": "/",
       "charset": "ascii",
+      "cleanDistPath": "auto",
       "cssModules": {
         "auto": true,
         "exportGlobals": false,
@@ -436,6 +439,7 @@ exports[`environment config > should print environment config when inspect confi
     "output": {
       "assetPrefix": "/",
       "charset": "ascii",
+      "cleanDistPath": "auto",
       "cssModules": {
         "auto": true,
         "exportGlobals": false,
@@ -610,6 +614,7 @@ exports[`environment config > should support modify environment config by api.mo
     "output": {
       "assetPrefix": "/",
       "charset": "ascii",
+      "cleanDistPath": "auto",
       "cssModules": {
         "auto": true,
         "exportGlobals": false,
@@ -767,6 +772,7 @@ exports[`environment config > should support modify environment config by api.mo
     "output": {
       "assetPrefix": "/",
       "charset": "ascii",
+      "cleanDistPath": "auto",
       "cssModules": {
         "auto": true,
         "exportGlobals": false,
@@ -925,6 +931,7 @@ exports[`environment config > should support modify environment config by api.mo
     "output": {
       "assetPrefix": "/",
       "charset": "ascii",
+      "cleanDistPath": "auto",
       "cssModules": {
         "auto": true,
         "exportGlobals": false,
@@ -1086,6 +1093,7 @@ exports[`environment config > should support modify single environment config by
     "output": {
       "assetPrefix": "/",
       "charset": "ascii",
+      "cleanDistPath": "auto",
       "cssModules": {
         "auto": true,
         "exportGlobals": false,
@@ -1243,6 +1251,7 @@ exports[`environment config > should support modify single environment config by
     "output": {
       "assetPrefix": "/",
       "charset": "ascii",
+      "cleanDistPath": "auto",
       "cssModules": {
         "auto": true,
         "exportGlobals": false,
