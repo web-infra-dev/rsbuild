@@ -1,13 +1,13 @@
 # output.cleanDistPath
 
-- **类型：** `boolean`
-- **默认值：** `undefined`
+- **类型：** `boolean | 'auto'`
+- **默认值：** `'auto'`
 
 是否在构建开始前清理产物目录下的所有文件（产物目录默认为 `dist`）。
 
 ## 默认行为
 
-默认情况下，如果产物目录是项目根路径的子目录，Rsbuild 会自动清空产物目录下的文件。
+`output.cleanDistPath` 的默认值为 `'auto'`。如果产物目录是项目根路径的子目录，Rsbuild 会自动清空产物目录下的文件。
 
 当 [output.distPath.root](/config/output/dist-path) 为外部目录，或等于项目根目录时，`cleanDistPath` 不会默认开启，这是为了避免误删其他目录的文件。
 

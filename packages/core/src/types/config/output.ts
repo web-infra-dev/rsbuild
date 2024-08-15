@@ -250,8 +250,9 @@ export interface OutputConfig {
   legalComments?: LegalComments;
   /**
    * Whether to clean all files in the dist path before starting compilation.
+   * @default 'auto'
    */
-  cleanDistPath?: boolean;
+  cleanDistPath?: boolean | 'auto';
   /**
    * Allow to custom CSS Modules options.
    */

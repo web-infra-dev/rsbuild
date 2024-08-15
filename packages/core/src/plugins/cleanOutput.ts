@@ -39,8 +39,8 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
       const { cleanDistPath } = config.output;
 
       if (
-        cleanDistPath ||
-        (cleanDistPath === undefined && isStrictSubdir(rootPath, cleanPath))
+        cleanDistPath === true ||
+        (cleanDistPath === 'auto' && isStrictSubdir(rootPath, cleanPath))
       ) {
         return cleanPath;
       }
@@ -54,7 +54,7 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
       let { cleanDistPath } = config.output;
 
       // only enable cleanDistPath when the dist path is a subdir of root path
-      if (cleanDistPath === undefined) {
+      if (cleanDistPath === 'auto') {
         cleanDistPath = isStrictSubdir(rootPath, distPath);
 
         if (!cleanDistPath) {
@@ -72,6 +72,7 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
       if (cleanDistPath) {
         return distPath;
       }
+
       return undefined;
     };
 
