@@ -129,6 +129,7 @@ const getDefaultPerformanceConfig = (): NormalizedPerformanceConfig => ({
 
 const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
   target: 'web',
+  cleanDistPath: 'auto',
   distPath: {
     root: ROOT_DIST_DIR,
     css: CSS_DIST_DIR,
