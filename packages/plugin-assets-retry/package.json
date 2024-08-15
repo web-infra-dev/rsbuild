@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-assets-retry",
-  "version": "1.0.1-beta.13",
+  "version": "1.0.1-beta.14",
   "description": "Assets retry plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -40,7 +40,7 @@
     "typescript": "^5.5.2"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^1.0.1-beta.13"
+    "@rsbuild/core": "workspace:^1.0.1-beta.14"
   },
   "publishConfig": {
     "access": "public",
