@@ -360,6 +360,27 @@ const server = await rsbuild.createDevServer();
 await server.listen();
 ```
 
+### connectSocket
+
+Rsbuild has a builtin Socket server to support HMR:
+
+1. When a user accesses a page through browser, a Web Socket connection request is automatically initiated to the server.
+2. After the Rsbuild dev server detects the connection request, it instructs the builtin Socket server to process it.
+3. After the browser successfully establishes a connection with the Rsbuild Socket server, real-time communication is possible.
+4. The Rsbuild Socket server notifies the browser after each recompilation is complete. The browser then sends a `hot-update.(js|json)` request to the dev server to load the new compiled module.
+
+When you use custom server, you may encounter HMR connection error problems. This is because the custom server does not forward Web Socket connection requests to Rsbuild's Socket server.
+
+At this time, you need to use the `connectSocket` method to enable Rsbuild to sense and process the Socket connection request from the browser.
+
+```ts
+const rsbuildServer = await rsbuild.createDevServer();
+
+const httpServer = app.listen(rsbuildServer.port);
+
+rsbuildServer.connectSocket({ server: httpServer });
+```
+
 ## rsbuild.preview
 
 Start a server to preview the production build locally. This method should be executed after `rsbuild.build`.

@@ -360,7 +360,6 @@ export async function startDevServer() {
     await rsbuildServer.afterListen();
   });
 
-  // 订阅服务器的 http 升级事件来处理 WebSocket 升级
   rsbuildServer.connectSocket({ server: httpServer });
 }
 ```
@@ -373,6 +372,25 @@ export async function startDevServer() {
 const server = await rsbuild.createDevServer();
 
 await server.listen();
+```
+
+### connectSocket
+
+Rsbuild 内置了 Socket 服务器以支持 HMR 功能：
+
+1. 当用户通过浏览器访问页面时，会自动向服务器发起 Web Socket 连接请求。
+2. Rsbuild 开发服务器检测到连接请求后，会指示内置的 Socket 服务器进行处理。
+3. 浏览器与 Rsbuild Socket 服务器成功建立连接后，便可进行实时通信。
+4. 每次重新编译完成后，Rsbuild Socket 服务器会通知浏览器。随后，浏览器向开发服务器发送 `hot-update.(js|json)` 请求，以加载编译后的新模块。
+
+当你使用自定义的 server 时，可能会遇到 HMR 连接报错的问题，这是因为自定义的 server 没有将 Web Socket 连接请求转发给 Rsbuild 的 Socket 服务器。此时需要通过 `connectSocket` 方法已使 Rsbuild 能够感知并处理来自浏览器的 Socket 连接请求。
+
+```ts
+const rsbuildServer = await rsbuild.createDevServer();
+
+const httpServer = app.listen(rsbuildServer.port);
+
+rsbuildServer.connectSocket({ server: httpServer });
 ```
 
 ## rsbuild.preview
