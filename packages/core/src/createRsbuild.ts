@@ -1,11 +1,13 @@
 import { createContext } from './createContext';
-import { pick } from './helpers';
+import { getNodeEnv, pick, setNodeEnv } from './helpers';
 import { initPluginAPI } from './initPlugins';
 import { initRsbuildConfig } from './internal';
 import { logger } from './logger';
 import { setCssExtractPlugin } from './pluginHelper';
 import { createPluginManager } from './pluginManager';
 import type {
+  Build,
+  CreateDevServer,
   CreateRsbuildOptions,
   InternalContext,
   PluginManager,
@@ -13,6 +15,7 @@ import type {
   ResolvedCreateRsbuildOptions,
   RsbuildInstance,
   RsbuildProvider,
+  StartDevServer,
 } from './types';
 
 const getRspackProvider = async () => {
@@ -133,12 +136,40 @@ export async function createRsbuild(
   });
 
   const preview = async (options?: PreviewServerOptions) => {
+    if (!getNodeEnv()) {
+      setNodeEnv('production');
+    }
     const { startProdServer } = await import('./server/prodServer');
     const config = await initRsbuildConfig({ context, pluginManager });
     return startProdServer(context, config, options);
   };
 
+  const build: Build = (...args) => {
+    if (!getNodeEnv()) {
+      setNodeEnv('production');
+    }
+    return providerInstance.build(...args);
+  };
+
+  const startDevServer: StartDevServer = (...args) => {
+    if (!getNodeEnv()) {
+      setNodeEnv('development');
+    }
+    return providerInstance.startDevServer(...args);
+  };
+
+  const createDevServer: CreateDevServer = (...args) => {
+    if (!getNodeEnv()) {
+      setNodeEnv('development');
+    }
+    return providerInstance.createDevServer(...args);
+  };
+
   const rsbuild = {
+    build,
+    preview,
+    startDevServer,
+    createDevServer,
     ...pick(pluginManager, [
       'addPlugins',
       'getPlugins',
@@ -146,6 +177,7 @@ export async function createRsbuild(
       'isPluginExists',
     ]),
     ...pick(globalPluginAPI, [
+      'context',
       'onBeforeBuild',
       'onBeforeCreateCompiler',
       'onBeforeStartDevServer',
@@ -161,15 +193,10 @@ export async function createRsbuild(
       'getNormalizedConfig',
     ]),
     ...pick(providerInstance, [
-      'build',
       'initConfigs',
       'inspectConfig',
       'createCompiler',
-      'createDevServer',
-      'startDevServer',
     ]),
-    preview,
-    context: globalPluginAPI.context,
   };
 
   if (rsbuildConfig.plugins) {

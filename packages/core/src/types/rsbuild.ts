@@ -79,25 +79,31 @@ export type CreateRsbuildOptions = {
 export type ResolvedCreateRsbuildOptions = CreateRsbuildOptions &
   Required<Omit<CreateRsbuildOptions, 'environment'>>;
 
+export type CreateDevServer = (
+  options?: CreateDevServerOptions,
+) => Promise<RsbuildDevServer>;
+
+export type StartDevServer = (
+  options?: StartDevServerOptions,
+) => Promise<StartServerResult>;
+
+export type Build = (options?: BuildOptions) => Promise<void | {
+  close: () => Promise<void>;
+}>;
+
 export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
   readonly bundler: Bundler;
 
   createCompiler: CreateCompiler;
 
   /**
-   * It is designed for high-level frameworks that require a custom server
+   * It is designed for upper-level frameworks that require a custom server
    */
-  createDevServer: (
-    options?: CreateDevServerOptions,
-  ) => Promise<RsbuildDevServer>;
+  createDevServer: CreateDevServer;
 
-  startDevServer: (
-    options?: StartDevServerOptions,
-  ) => Promise<StartServerResult>;
+  startDevServer: StartDevServer;
 
-  build: (options?: BuildOptions) => Promise<void | {
-    close: () => Promise<void>;
-  }>;
+  build: Build;
 
   initConfigs: () => Promise<
     B extends 'rspack' ? Rspack.Configuration[] : WebpackConfig[]

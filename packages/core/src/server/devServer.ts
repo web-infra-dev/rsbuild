@@ -1,12 +1,7 @@
 import fs from 'node:fs';
 import type Connect from 'connect';
 import { ROOT_DIST_DIR } from '../constants';
-import {
-  getNodeEnv,
-  getPublicPathFromCompiler,
-  isMultiCompiler,
-  setNodeEnv,
-} from '../helpers';
+import { getPublicPathFromCompiler, isMultiCompiler } from '../helpers';
 import { logger } from '../logger';
 import type { CreateDevMiddlewareReturns } from '../provider/createCompiler';
 import type {
@@ -109,10 +104,6 @@ export async function createDevServer<
     runCompile = true,
   }: CreateDevServerOptions = {},
 ): Promise<RsbuildDevServer> {
-  if (!getNodeEnv()) {
-    setNodeEnv('development');
-  }
-
   logger.debug('create dev server');
 
   const { port, host, https } = await getServerConfig({

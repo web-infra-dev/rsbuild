@@ -1,5 +1,4 @@
 import { rspack } from '@rspack/core';
-import { getNodeEnv, setNodeEnv } from '../helpers';
 import { registerBuildHook } from '../hooks';
 import { logger } from '../logger';
 import type { BuildOptions, MultiStats, Rspack, Stats } from '../types';
@@ -12,10 +11,6 @@ export const build = async (
 ): Promise<void | {
   close: () => Promise<void>;
 }> => {
-  if (!getNodeEnv()) {
-    setNodeEnv('production');
-  }
-
   const { context } = initOptions;
 
   let compiler: Rspack.Compiler | Rspack.MultiCompiler;

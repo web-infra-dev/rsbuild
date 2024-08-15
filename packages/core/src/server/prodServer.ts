@@ -1,7 +1,6 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import type Connect from 'connect';
-import { getNodeEnv, setNodeEnv } from '../helpers';
 import { pathnameParse } from '../helpers/path';
 import { logger } from '../logger';
 import type {
@@ -149,10 +148,6 @@ export async function startProdServer(
   config: NormalizedConfig,
   { getPortSilently }: PreviewServerOptions = {},
 ): Promise<StartServerResult> {
-  if (!getNodeEnv()) {
-    setNodeEnv('production');
-  }
-
   const { port, host, https } = await getServerConfig({
     config,
     getPortSilently,

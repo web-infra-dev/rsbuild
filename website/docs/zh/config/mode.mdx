@@ -50,6 +50,9 @@ export default {
 - 开启 HMR，注册 [HotModuleReplacementPlugin](https://rspack.dev/plugins/webpack/hot-module-replacement-plugin)。
 - 生成 JavaScript 的 source map，不生成 CSS 的 source map，详见 [output.sourceMap](/config/output/source-map)。
 - 源代码中的 `process.env.NODE_ENV` 会被替换为 `'development'`。
+- 源代码中的 `import.meta.env.MODE` 会被替换为 `'development'`。
+- 源代码中的 `import.meta.env.DEV` 会被替换为 `true`。
+- 源代码中的 `import.meta.env.PROD` 会被替换为 `false`。
 
 ## Production 模式
 
@@ -61,9 +64,16 @@ export default {
 - 生成的 CSS Modules 类名更简短，详见 [cssModules.localIdentName](/config/output/css-modules#cssmoduleslocalidentname)。
 - 不生成 JavaScript 和 CSS 的 source map，详见 [output.sourceMap](/config/output/source-map)。
 - 源代码中的 `process.env.NODE_ENV` 会被替换为 `'production'`。
+- 源代码中的 `import.meta.env.MODE` 会被替换为 `'production'`。
+- 源代码中的 `import.meta.env.DEV` 会被替换为 `false`。
+- 源代码中的 `import.meta.env.PROD` 会被替换为 `true`。
 
 ## None 模式
 
 当 `mode` 的值为 `none` 时：
 
 - 不开启任何优化。
+- 源代码中的 `process.env.NODE_ENV` 不会被替换。
+- 源代码中的 `import.meta.env.MODE` 会被替换为 `'none'`。
+- 源代码中的 `import.meta.env.DEV` 会被替换为 `false`。
+- 源代码中的 `import.meta.env.PROD` 会被替换为 `false`。
