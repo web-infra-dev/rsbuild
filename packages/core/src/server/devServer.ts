@@ -80,7 +80,7 @@ export type RsbuildDevServer = {
    *
    * It will used when you use custom server
    */
-  connectSocket: (options: { server: HTTPServer }) => void;
+  connectWebSocket: (options: { server: HTTPServer }) => void;
   /**
    * Close the Rsbuild server.
    */
@@ -345,7 +345,7 @@ export async function createDevServer<
         environments: options.context.environments,
       });
     },
-    connectSocket: ({ server }: { server: HTTPServer }) => {
+    connectWebSocket: ({ server }: { server: HTTPServer }) => {
       server.on('upgrade', devMiddlewares.onUpgrade);
     },
     close: async () => {

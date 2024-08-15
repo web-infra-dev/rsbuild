@@ -35,7 +35,7 @@ export async function startDevServer(fixtures) {
     await rsbuildServer.afterListen();
   });
 
-  rsbuildServer.connectSocket({ server });
+  rsbuildServer.connectWebSocket({ server });
 
   return {
     config: { port },

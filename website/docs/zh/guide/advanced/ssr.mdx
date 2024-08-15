@@ -126,7 +126,7 @@ async function startDevServer() {
     await rsbuildServer.afterListen();
   });
 
-  rsbuildServer.connectSocket({ server: httpServer });
+  rsbuildServer.connectWebSocket({ server: httpServer });
 }
 
 startDevServer(process.cwd());
