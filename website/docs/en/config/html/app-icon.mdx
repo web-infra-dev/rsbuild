@@ -29,9 +29,9 @@ Refer to the following documents for more information:
 
 ## Example
 
-You need to prepare multiple icons of different sizes for display on various devices.
+For display on different devices, you will need to prepare several icons of different sizes.
 
-The most commonly used icon sizes are `192x192` and `512x512`, but you can customize the icon sizes and quantities as needed.
+The most commonly used icon sizes are `192x192` and `512x512`, and you can customize the icon sizes and quantities to suit your needs.
 
 ```js
 export default {
@@ -75,7 +75,7 @@ Here, `manifest.webmanifest` is a JSON file that contains information about the 
 - **Type:** `string`
 - **Default value:** `undefined`
 
-The name of the application, displayed when added to the mobile device’s home screen. If not set, the `manifest.webmanifest` file will not be generated.
+The name of the application that will be displayed when it is added to the home screen of the mobile device. If not set, the `manifest.webmanifest` file will not be generated.
 
 > For more details, see [Web app manifests - name](https://developer.mozilla.org/en-US/docs/Web/Manifest/name).
 
@@ -84,7 +84,7 @@ The name of the application, displayed when added to the mobile device’s home 
 - **Type:** `AppIconItem[]`
 - **Default value:** `undefined`
 
-The list of icons where:
+The list of icons:
 
 - `src` is the path to the icon, which can be a relative or absolute path.
 - `size` is the size of the icon in pixels. By default, the manifest file will include all icons, while the `apple-touch-icon` tag will only include icons smaller than `200x200`.

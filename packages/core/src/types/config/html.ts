@@ -52,7 +52,16 @@ export type HtmlTagDescriptor = HtmlTag | HtmlTagHandler;
 
 type ChainedHtmlOption<O> = ConfigChainMergeContext<O, { entryName: string }>;
 
-export type AppIconItem = { src: string; size: number };
+export type AppIconItem = {
+  /**
+   * The path to the icon, can be a relative or absolute path.
+   */
+  src: string;
+  /**
+   * The size of the icon.
+   */
+  size: number;
+};
 
 export interface HtmlConfig {
   /**
@@ -76,7 +85,7 @@ export interface HtmlConfig {
    */
   favicon?: ChainedHtmlOption<string>;
   /**
-   * Set the file path of the app icon, which can be a relative path or an absolute path.
+   * Set the web application icons to display when added to the home screen of a mobile device.
    *
    * @example
    * appIcon: {
@@ -88,7 +97,14 @@ export interface HtmlConfig {
    * }
    */
   appIcon?: {
+    /**
+     * The name of the application.
+     * @see https://developer.mozilla.org/en-US/docs/Web/Manifest/name
+     */
     name?: string;
+    /**
+     * The list of icons.
+     */
     icons: AppIconItem[];
   };
   /**
