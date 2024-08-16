@@ -8,6 +8,7 @@ type AppIconItem = { src: string; size: number };
 type AppIcon = {
   name?: string;
   icons: AppIconItem[];
+  filename?: string;
 };
 ```
 
@@ -70,6 +71,10 @@ export default {
 }
 ```
 
+:::tip 图标大小
+对于 Chrome，你至少需要提供 192x192 像素的图标和 512x512 像素的图标。如果仅提供这两种图标大小，Chrome 会自动缩放图标以适应设备大小。如果你希望缩放自己的图标，并调整图标以实现像素完美，请以 `48dp` 为增量提供图标。
+:::
+
 ## name
 
 - **类型：** `string`
@@ -102,6 +107,23 @@ export default {
         { src: path.resolve(__dirname, './assets/icon-192.png'), size: 192 },
         { src: path.resolve(__dirname, './assets/icon-512.png'), size: 512 },
       ],
+    },
+  },
+};
+```
+
+### filename
+
+- **类型：** `string`
+- **默认值：** `'manifest.webmanifest'`
+
+manifest 文件的文件名。
+
+```js
+export default {
+  html: {
+    appIcon: {
+      filename: 'manifest.json',
     },
   },
 };

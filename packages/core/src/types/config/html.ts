@@ -63,6 +63,23 @@ export type AppIconItem = {
   size: number;
 };
 
+export type AppIcon = {
+  /**
+   * The name of the application.
+   * @see https://developer.mozilla.org/en-US/docs/Web/Manifest/name
+   */
+  name?: string;
+  /**
+   * The list of icons.
+   */
+  icons: AppIconItem[];
+  /**
+   * The filename of the manifest file.
+   * @default 'manifest.webmanifest'
+   */
+  filename?: string;
+};
+
 export interface HtmlConfig {
   /**
    * Configure the `<meta>` tag of the HTML.
@@ -96,17 +113,7 @@ export interface HtmlConfig {
    *   ]
    * }
    */
-  appIcon?: {
-    /**
-     * The name of the application.
-     * @see https://developer.mozilla.org/en-US/docs/Web/Manifest/name
-     */
-    name?: string;
-    /**
-     * The list of icons.
-     */
-    icons: AppIconItem[];
-  };
+  appIcon?: AppIcon;
   /**
    * Set the id of root element.
    */
