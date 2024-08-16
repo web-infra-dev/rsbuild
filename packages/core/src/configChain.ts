@@ -129,6 +129,18 @@ export const CHAIN_ID = {
   },
   /** Predefined rule groups */
   ONE_OF: {
+    IMAGE_URL: 'image-asset-url',
+    IMAGE_ASSET: 'image-asset',
+    IMAGE_INLINE: 'image-asset-inline',
+
+    MEDIA_URL: 'media-asset-url',
+    MEDIA_ASSET: 'media-asset',
+    MEDIA_INLINE: 'media-asset-inline',
+
+    FONT_URL: 'font-asset-url',
+    FONT_ASSET: 'font-asset',
+    FONT_INLINE: 'font-asset-inline',
+
     SVG: 'svg',
     SVG_URL: 'svg-asset-url',
     SVG_ASSET: 'svg-asset',

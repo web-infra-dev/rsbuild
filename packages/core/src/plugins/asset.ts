@@ -1,5 +1,6 @@
 import path from 'node:path';
 import type { GeneratorOptionsByModuleType } from '@rspack/core';
+import type { CHAIN_ID } from '../configChain';
 import {
   AUDIO_EXTENSIONS,
   FONT_EXTENSIONS,
@@ -8,6 +9,8 @@ import {
 } from '../constants';
 import { getFilename } from '../helpers';
 import type { RsbuildPlugin, RspackChain } from '../types';
+
+type ValueOf<T> = T[keyof T];
 
 const chainStaticAssetRule = ({
   emit,
@@ -20,7 +23,7 @@ const chainStaticAssetRule = ({
   rule: RspackChain.Rule;
   maxSize: number;
   filename: string;
-  assetType: string;
+  assetType: 'image' | 'media' | 'font' | 'svg';
 }) => {
   const generatorOptions:
     | GeneratorOptionsByModuleType['asset']
@@ -34,20 +37,22 @@ const chainStaticAssetRule = ({
 
   // force to url: "foo.png?url" or "foo.png?__inline=false"
   rule
-    .oneOf(`${assetType}-asset-url`)
+    .oneOf(`${assetType}-asset-url` satisfies ValueOf<typeof CHAIN_ID.ONE_OF>)
     .type('asset/resource')
     .resourceQuery(/(__inline=false|url)/)
     .set('generator', generatorOptions);
 
   // force to inline: "foo.png?inline"
   rule
-    .oneOf(`${assetType}-asset-inline`)
+    .oneOf(
+      `${assetType}-asset-inline` satisfies ValueOf<typeof CHAIN_ID.ONE_OF>,
+    )
     .type('asset/inline')
     .resourceQuery(/inline/);
 
   // default: when size < dataUrlCondition.maxSize will inline
   rule
-    .oneOf(`${assetType}-asset`)
+    .oneOf(`${assetType}-asset` satisfies ValueOf<typeof CHAIN_ID.ONE_OF>)
     .type('asset')
     .parser({
       dataUrlCondition: {

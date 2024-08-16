@@ -188,11 +188,20 @@ Rsbuild 中预先定义了一些常用的 Chain ID，你可以通过这些 ID �
 
 通过 `ONE_OF.[ID]` 可以匹配到规则数组中的某一类规则。
 
-| ID                  | 描述                                                |
-| ------------------- | --------------------------------------------------- |
-| `ONE_OF.SVG_URL`    | 处理 SVG 的规则，输出为单独文件                     |
-| `ONE_OF.SVG_INLINE` | 处理 SVG 的规则，作为 data URI 内联到 bundle 中     |
-| `ONE_OF.SVG_ASSETS` | 处理 SVG 的规则，在 data URI 和单独文件之间自动选择 |
+| ID                    | 描述                                                  |
+| --------------------- | ----------------------------------------------------- |
+| `ONE_OF.IMAGE_URL`    | 处理 IMAGE 的规则，输出为单独文件                     |
+| `ONE_OF.IMAGE_INLINE` | 处理 IMAGE 的规则，作为 data URI 内联到 bundle 中     |
+| `ONE_OF.IMAGE_ASSETS` | 处理 IMAGE 的规则，在 data URI 和单独文件之间自动选择 |
+| `ONE_OF.MEDIA_URL`    | 处理 MEDIA 的规则，输出为单独文件                     |
+| `ONE_OF.MEDIA_INLINE` | 处理 MEDIA 的规则，作为 data URI 内联到 bundle 中     |
+| `ONE_OF.MEDIA_ASSETS` | 处理 MEDIA 的规则，在 data URI 和单独文件之间自动选择 |
+| `ONE_OF.FONT_URL`     | 处理 FONT 的规则，输出为单独文件                      |
+| `ONE_OF.FONT_INLINE`  | 处理 FONT 的规则，作为 data URI 内联到 bundle 中      |
+| `ONE_OF.FONT_ASSETS`  | 处理 FONT 的规则，在 data URI 和单独文件之间自动选择  |
+| `ONE_OF.SVG_URL`      | 处理 SVG 的规则，输出为单独文件                       |
+| `ONE_OF.SVG_INLINE`   | 处理 SVG 的规则，作为 data URI 内联到 bundle 中       |
+| `ONE_OF.SVG_ASSETS`   | 处理 SVG 的规则，在 data URI 和单独文件之间自动选择   |
 
 ### CHAIN_ID.USE
 
