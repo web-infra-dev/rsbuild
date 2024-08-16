@@ -86,7 +86,7 @@ const initEnvironmentConfigs = (
     !specifiedEnvironments || specifiedEnvironments.includes(name);
 
   const applyEnvironmentDefaultConfig = (config: MergedEnvironmentConfig) => {
-    if (!config.source.entry) {
+    if (!config.source.entry || Object.keys(config.source.entry).length === 0) {
       config.source.entry = getDefaultEntryWithMemo();
     }
 
