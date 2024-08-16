@@ -1,38 +1,108 @@
 # html.appIcon
 
-- **Type:** `string`
+- **Type:**
+
+```ts
+type AppIconItem = { src: string; size: number };
+
+type AppIcon = {
+  name?: string;
+  icons: AppIconItem[];
+};
+```
+
 - **Default:** `undefined`
 
-Set the file path of the apple-touch-icon icon for the iOS system, can be set as a relative path relative to the project root directory, or as an absolute path to the file. Setting it as a CDN URL is not currently supported.
+Set the web application icons to display when added to the home screen of a mobile device:
 
-After config this option, the icon will be automatically copied to the dist directory during the compilation, and the corresponding `link` tag will be added to the HTML.
+- Generate the web app manifest file and its `icons` field.
+- Generate the `apple-touch-icon` and `manifest` tags in the HTML file.
 
-### Example
+:::tip
 
-Set as a relative path:
+Refer to the following documents for more information:
+
+- [MDN - Web app manifests](https://developer.mozilla.org/en-US/docs/Web/Manifest)
+- [How to Favicon: Six files that fit most needs](https://evilmartians.com/chronicles/how-to-favicon-in-2021-six-files-that-fit-most-needs)
+
+:::
+
+## Example
+
+For display on different devices, you will need to prepare several icons of different sizes.
+
+The most commonly used icon sizes are `192x192` and `512x512`, and you can customize the icon sizes and quantities to suit your needs.
 
 ```js
 export default {
   html: {
-    appIcon: './src/assets/icon.png',
+    appIcon: {
+      name: 'My Website',
+      icons: [
+        { src: './src/assets/logo-192.png', size: 192 },
+        { src: './src/assets/logo-512.png', size: 512 },
+      ],
+    },
   },
 };
 ```
 
-Set to an absolute path:
+After compilation, the following tags will be automatically generated in the HTML:
+
+```html
+<link rel="manifest" href="/manifest.webmanifest" />
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="/static/image/logo-192.png"
+/>
+```
+
+Here, `manifest.webmanifest` is a JSON file that contains information about the application's name, icons, and other details.
+
+```json
+{
+  "name": "My Website",
+  "icons": [
+    { "src": "/static/image/logo-192.png", "sizes": "192x192" },
+    { "src": "/static/image/logo-512.png", "sizes": "512x512" }
+  ]
+}
+```
+
+## Name
+
+- **Type:** `string`
+- **Default value:** `undefined`
+
+The name of the application that will be displayed when it is added to the home screen of the mobile device. If not set, the `manifest.webmanifest` file will not be generated.
+
+> For more details, see [Web app manifests - name](https://developer.mozilla.org/en-US/docs/Web/Manifest/name).
+
+## Icons
+
+- **Type:** `AppIconItem[]`
+- **Default value:** `undefined`
+
+The list of icons:
+
+- `src` is the path to the icon, which can be a relative or absolute path.
+- `size` is the size of the icon in pixels. By default, the manifest file will include all icons, while the `apple-touch-icon` tag will only include icons smaller than `200x200`.
+
+`src` can be set to an absolute path:
 
 ```js
 import path from 'node:path';
 
 export default {
   html: {
-    appIcon: path.resolve(__dirname, './src/assets/icon.png'),
+    appIcon: {
+      name: 'My Website',
+      icons: [
+        { src: path.resolve(__dirname, './assets/icon-192.png'), size: 192 },
+        { src: path.resolve(__dirname, './assets/icon-512.png'), size: 512 },
+      ],
+    },
   },
 };
-```
-
-After recompiling, the following tags are automatically generated in the HTML:
-
-```html
-<link rel="apple-touch-icon" sizes="180*180" href="/static/image/icon.png" />
 ```
