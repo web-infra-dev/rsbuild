@@ -69,6 +69,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
         }
 
         const distDir = config.output.distPath.image;
+        const manifestFile = appIcon.filename ?? 'manifest.webmanifest';
         const publicPath = getPublicPathFromCompiler(compilation);
         const icons = appIcon.icons.map((icon) =>
           formatIcon(icon, distDir, publicPath),
@@ -115,8 +116,6 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
             name: appIcon.name,
             icons: manifestIcons,
           };
-
-          const manifestFile = 'manifest.webmanifest';
 
           compilation.emitAsset(
             manifestFile,

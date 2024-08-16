@@ -76,6 +76,43 @@ test('should emit manifest.webmanifest to dist path', async () => {
   });
 });
 
+test('should allow to customize manifest filename', async () => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    rsbuildConfig: {
+      html: {
+        appIcon: {
+          filename: 'manifest.json',
+          name: 'My Website',
+          icons: [
+            { src: '../../../assets/icon.png', size: 180 },
+            { src: '../../../assets/image.png', size: 512 },
+          ],
+        },
+      },
+    },
+  });
+
+  const files = await rsbuild.unwrapOutputJSON();
+  const manifestPath = Object.keys(files).find((file) =>
+    file.endsWith('manifest.json'),
+  );
+  expect(manifestPath).toBeTruthy();
+
+  const html =
+    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+
+  expect(html).toContain('<link rel="manifest" href="/manifest.json">');
+
+  expect(JSON.parse(files[manifestPath!])).toEqual({
+    name: 'My Website',
+    icons: [
+      { src: '/static/image/icon.png', sizes: '180x180' },
+      { src: '/static/image/image.png', sizes: '512x512' },
+    ],
+  });
+});
+
 test('should append dev.assetPrefix to icon URL', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,

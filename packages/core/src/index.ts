@@ -28,6 +28,8 @@ export { PLUGIN_SWC_NAME, PLUGIN_CSS_NAME } from './constants';
 
 // Types
 export type {
+  AppIcon,
+  AppIconItem,
   AliasStrategy,
   BuildOptions,
   BundlerPluginInstance,

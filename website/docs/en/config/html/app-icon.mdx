@@ -8,6 +8,7 @@ type AppIconItem = { src: string; size: number };
 type AppIcon = {
   name?: string;
   icons: AppIconItem[];
+  filename?: string;
 };
 ```
 
@@ -70,7 +71,7 @@ Here, `manifest.webmanifest` is a JSON file that contains information about the 
 }
 ```
 
-## Name
+## name
 
 - **Type:** `string`
 - **Default value:** `undefined`
@@ -79,7 +80,7 @@ The name of the application that will be displayed when it is added to the home 
 
 > For more details, see [Web app manifests - name](https://developer.mozilla.org/en-US/docs/Web/Manifest/name).
 
-## Icons
+## icons
 
 - **Type:** `AppIconItem[]`
 - **Default value:** `undefined`
@@ -102,6 +103,23 @@ export default {
         { src: path.resolve(__dirname, './assets/icon-192.png'), size: 192 },
         { src: path.resolve(__dirname, './assets/icon-512.png'), size: 512 },
       ],
+    },
+  },
+};
+```
+
+### filename
+
+- **Type:** `string`
+- **Default value:** `'manifest.webmanifest'`
+
+The filename of the manifest file.
+
+```js
+export default {
+  html: {
+    appIcon: {
+      filename: 'manifest.json',
     },
   },
 };
