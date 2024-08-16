@@ -130,7 +130,7 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
                 mainConfig.jsMinify ??
                 mainConfig.jsc?.minify ??
                 true,
-              environmentConfig,
+              getEnvironmentConfig: () => environmentConfig,
             },
           ]);
       }
@@ -141,7 +141,7 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
           .use(SwcMinimizerPlugin, [
             {
               cssMinify: mainConfig.cssMinify ?? true,
-              environmentConfig,
+              getEnvironmentConfig: () => environmentConfig,
             },
           ]);
       }
