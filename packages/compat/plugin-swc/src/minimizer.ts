@@ -38,12 +38,12 @@ export class SwcMinimizerPlugin {
   constructor(options: {
     jsMinify?: boolean | JsMinifyOptions;
     cssMinify?: boolean | CssMinifyOptions;
-    environmentConfig: NormalizedEnvironmentConfig;
+    getEnvironmentConfig: () => NormalizedEnvironmentConfig;
   }) {
     this.minifyOptions = {
       jsMinify: options.jsMinify
         ? deepmerge<JsMinifyOptions>(
-            this.getDefaultJsMinifyOptions(options.environmentConfig),
+            this.getDefaultJsMinifyOptions(options.getEnvironmentConfig()),
             normalize(options.jsMinify, {}) ?? {},
           )
         : undefined,
