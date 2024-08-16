@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { logger } from '../logger';
+import type { Rspack } from '../types';
 
 export const isFileSync = (filePath: string): boolean | undefined => {
   try {
@@ -41,6 +42,22 @@ export async function isFileExists(file: string): Promise<boolean> {
     .access(file, fs.constants.F_OK)
     .then(() => true)
     .catch(() => false);
+}
+
+export async function fileExistsByCompilation(
+  compilation: Rspack.Compilation,
+  filePath: string,
+): Promise<boolean> {
+  return new Promise((resolve) => {
+    // TODO remove any in next Rspack release
+    compilation.inputFileSystem.stat(filePath, (err: any, stats: any) => {
+      if (err) {
+        resolve(false);
+      } else {
+        resolve(stats.isFile());
+      }
+    });
+  });
 }
 
 export async function emptyDir(dir: string): Promise<void> {

@@ -1,9 +1,9 @@
-import fs from 'node:fs';
 import path from 'node:path';
+import { promisify } from 'node:util';
 import {
   ensureAssetPrefix,
+  fileExistsByCompilation,
   getPublicPathFromCompiler,
-  isFileExists,
 } from '../helpers';
 import type { AppIconItem, HtmlBasicTag, RsbuildPlugin } from '../types';
 
@@ -76,13 +76,17 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
         const tags: HtmlBasicTag[] = [];
 
         for (const icon of icons) {
-          if (!(await isFileExists(icon.absolutePath))) {
+          if (
+            !(await fileExistsByCompilation(compilation, icon.absolutePath))
+          ) {
             throw new Error(
               `[rsbuild:app-icon] Can not find the app icon, please check if the '${icon.relativePath}' file exists'.`,
             );
           }
 
-          const source = await fs.promises.readFile(icon.absolutePath);
+          const source = await promisify(compilation.inputFileSystem.readFile)(
+            icon.absolutePath,
+          );
 
           compilation.emitAsset(
             icon.relativePath,
