@@ -107,6 +107,8 @@ The list of icons:
 - `size` is the size of the icon in pixels.
 - `target` refers to the intended target for the icon, which can be either `apple-touch-icon` or `web-app-manifest`. If `target` is not set, by default, the manifest file will include all icons, while the `apple-touch-icon` tags will only include icons smaller than `200x200`.
 
+### Example
+
 `src` can be set to an absolute path:
 
 ```js
@@ -119,6 +121,35 @@ export default {
       icons: [
         { src: path.resolve(__dirname, './assets/icon-192.png'), size: 192 },
         { src: path.resolve(__dirname, './assets/icon-512.png'), size: 512 },
+      ],
+    },
+  },
+};
+```
+
+Use `target` to specify the target for the icon:
+
+```js
+export default {
+  html: {
+    appIcon: {
+      name: 'My Website',
+      icons: [
+        {
+          src: './src/assets/logo-180.png',
+          size: 180,
+          target: 'apple-touch-icon',
+        },
+        {
+          src: './src/assets/logo-192.png',
+          size: 192,
+          target: 'web-app-manifest',
+        },
+        {
+          src: './src/assets/logo-512.png',
+          size: 512,
+          target: 'web-app-manifest',
+        },
       ],
     },
   },
