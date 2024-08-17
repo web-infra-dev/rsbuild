@@ -1,5 +1,6 @@
 import path from 'node:path';
 import { promisify } from 'node:util';
+import { lookup } from 'mrmime';
 import {
   ensureAssetPrefix,
   fileExistsByCompilation,
@@ -14,7 +15,12 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
     const htmlTagsMap = new Map<string, HtmlBasicTag[]>();
     const iconPathMap = new Map<
       string,
-      { absolutePath: string; relativePath: string; requestPath: string }
+      {
+        absolutePath: string;
+        relativePath: string;
+        requestPath: string;
+        mimeType?: string;
+      }
     >();
 
     const formatIcon = (
@@ -47,6 +53,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
         requestPath,
         absolutePath,
         relativePath,
+        mimeType: lookup(absolutePath),
       };
 
       iconPathMap.set(src, paths);
@@ -107,10 +114,16 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
         }
 
         if (appIcon.name) {
-          const manifestIcons = icons.map((icon) => ({
-            src: icon.requestPath,
-            sizes: icon.sizes,
-          }));
+          const manifestIcons = icons.map((icon) => {
+            const result = {
+              src: icon.requestPath,
+              sizes: icon.sizes,
+            };
+            if (icon.mimeType) {
+              return { ...result, type: icon.mimeType };
+            }
+            return result;
+          });
 
           const manifest = {
             name: appIcon.name,

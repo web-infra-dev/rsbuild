@@ -70,8 +70,8 @@ test('should emit manifest.webmanifest to dist path', async () => {
   expect(JSON.parse(files[manifestPath!])).toEqual({
     name: 'My Website',
     icons: [
-      { src: '/static/image/icon.png', sizes: '180x180' },
-      { src: '/static/image/image.png', sizes: '512x512' },
+      { src: '/static/image/icon.png', sizes: '180x180', type: 'image/png' },
+      { src: '/static/image/image.png', sizes: '512x512', type: 'image/png' },
     ],
   });
 });
@@ -107,8 +107,8 @@ test('should allow to customize manifest filename', async () => {
   expect(JSON.parse(files[manifestPath!])).toEqual({
     name: 'My Website',
     icons: [
-      { src: '/static/image/icon.png', sizes: '180x180' },
-      { src: '/static/image/image.png', sizes: '512x512' },
+      { src: '/static/image/icon.png', sizes: '180x180', type: 'image/png' },
+      { src: '/static/image/image.png', sizes: '512x512', type: 'image/png' },
     ],
   });
 });
@@ -162,8 +162,16 @@ test('should append dev.assetPrefix to icon URL', async ({ page }) => {
   expect(JSON.parse(files[manifestPath!])).toEqual({
     name: 'My Website',
     icons: [
-      { src: 'http://localhost:3000/static/image/icon.png', sizes: '180x180' },
-      { src: 'http://localhost:3000/static/image/image.png', sizes: '512x512' },
+      {
+        src: 'http://localhost:3000/static/image/icon.png',
+        sizes: '180x180',
+        type: 'image/png',
+      },
+      {
+        src: 'http://localhost:3000/static/image/image.png',
+        sizes: '512x512',
+        type: 'image/png',
+      },
     ],
   });
 
@@ -215,8 +223,16 @@ test('should append output.assetPrefix to icon URL', async () => {
   expect(JSON.parse(files[manifestPath!])).toEqual({
     name: 'My Website',
     icons: [
-      { src: 'https://example.com/static/image/icon.png', sizes: '180x180' },
-      { src: 'https://example.com/static/image/image.png', sizes: '512x512' },
+      {
+        src: 'https://example.com/static/image/icon.png',
+        sizes: '180x180',
+        type: 'image/png',
+      },
+      {
+        src: 'https://example.com/static/image/image.png',
+        sizes: '512x512',
+        type: 'image/png',
+      },
     ],
   });
 });
