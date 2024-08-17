@@ -65,8 +65,16 @@ Here, `manifest.webmanifest` is a JSON file that contains information about the 
 {
   "name": "My Website",
   "icons": [
-    { "src": "/static/image/logo-192.png", "sizes": "192x192" },
-    { "src": "/static/image/logo-512.png", "sizes": "512x512" }
+    {
+      "src": "/static/image/logo-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/image/logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }
 ```

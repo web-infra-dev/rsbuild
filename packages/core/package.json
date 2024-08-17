@@ -79,6 +79,7 @@
     "http-proxy-middleware": "^2.0.6",
     "jiti": "^1.21.6",
     "launch-editor-middleware": "^2.8.1",
+    "mrmime": "^2.0.0",
     "on-finished": "2.4.1",
     "open": "^8.4.0",
     "picocolors": "^1.0.1",
