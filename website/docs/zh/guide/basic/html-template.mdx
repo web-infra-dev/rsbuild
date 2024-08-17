@@ -72,12 +72,18 @@ export default {
 };
 ```
 
-也可以通过 [html.appIcon](/config/html/app-icon) 配置项来设置 iOS 系统下的 apple-touch-icon 图标。
+你也可以通过 [html.appIcon](/config/html/app-icon) 配置项来设置 Web 应用的图标，用于在添加到移动设备的主屏幕时显示。
 
 ```ts
 export default {
   html: {
-    appIcon: './src/assets/icon.png',
+    appIcon: {
+      name: 'My Website',
+      icons: [
+        { src: './src/assets/logo-192.png', size: 192 },
+        { src: './src/assets/logo-512.png', size: 512 },
+      ],
+    },
   },
 };
 ```

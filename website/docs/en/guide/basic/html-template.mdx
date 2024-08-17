@@ -72,12 +72,18 @@ export default {
 };
 ```
 
-You can also set the apple-touch-icon for iOS system through the [html.appIcon](/config/html/app-icon) config.
+You can also set the web application icons to display when added to the home screen of a mobile device through the [html.appIcon](/config/html/app-icon) config.
 
 ```ts
 export default {
   html: {
-    appIcon: './src/assets/icon.png',
+    appIcon: {
+      name: 'My Website',
+      icons: [
+        { src: './src/assets/logo-192.png', size: 192 },
+        { src: './src/assets/logo-512.png', size: 512 },
+      ],
+    },
   },
 };
 ```
