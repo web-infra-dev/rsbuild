@@ -3,7 +3,11 @@
 - **类型：**
 
 ```ts
-type AppIconItem = { src: string; size: number };
+type AppIconItem = {
+  src: string;
+  size: number;
+  target?: 'apple-touch-icon' | 'web-app-manifest';
+};
 
 type AppIcon = {
   name?: string;
@@ -100,7 +104,10 @@ export default {
 图标列表，其中：
 
 - `src` 是图标的路径，可以是相对路径或绝对路径。
-- `size` 是图标的大小，以像素为单位。默认情况下，manifest 文件会包含所有的图标，而 `apple-touch-icon` 标签只会包含小于 `200x200` 的图标。
+- `size` 是图标的大小，以像素为单位。
+- `target` 是图标的目标，可以是 `apple-touch-icon` 或 `web-app-manifest`。如果未设置 `target`，默认情况下，manifest 文件会包含所有的图标，而 `apple-touch-icon` 标签只会包含小于 `200x200` 的图标。
+
+### 示例
 
 `src` 可以设置为绝对路径：
 
@@ -114,6 +121,35 @@ export default {
       icons: [
         { src: path.resolve(__dirname, './assets/icon-192.png'), size: 192 },
         { src: path.resolve(__dirname, './assets/icon-512.png'), size: 512 },
+      ],
+    },
+  },
+};
+```
+
+使用 `target` 选项来指定图标的目标：
+
+```js
+export default {
+  html: {
+    appIcon: {
+      name: 'My Website',
+      icons: [
+        {
+          src: './src/assets/logo-180.png',
+          size: 180,
+          target: 'apple-touch-icon',
+        },
+        {
+          src: './src/assets/logo-192.png',
+          size: 192,
+          target: 'web-app-manifest',
+        },
+        {
+          src: './src/assets/logo-512.png',
+          size: 512,
+          target: 'web-app-manifest',
+        },
       ],
     },
   },

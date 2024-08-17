@@ -92,6 +92,12 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
             );
           }
 
+          if (icon.target === 'web-app-manifest' && !appIcon.name) {
+            throw new Error(
+              "[rsbuild:app-icon] `appIcon.name` is required when `target` is 'web-app-manifest'.",
+            );
+          }
+
           const source = await promisify(compilation.inputFileSystem.readFile)(
             icon.absolutePath,
           );
@@ -101,7 +107,10 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
             new sources.RawSource(source),
           );
 
-          if (icon.size < 200) {
+          if (
+            icon.target === 'apple-touch-icon' ||
+            (!icon.target && icon.size < 200)
+          ) {
             tags.push({
               tag: 'link',
               attrs: {
@@ -114,16 +123,20 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
         }
 
         if (appIcon.name) {
-          const manifestIcons = icons.map((icon) => {
-            const result = {
-              src: icon.requestPath,
-              sizes: icon.sizes,
-            };
-            if (icon.mimeType) {
-              return { ...result, type: icon.mimeType };
-            }
-            return result;
-          });
+          const manifestIcons = icons
+            .filter(
+              (icon) => icon.target === 'web-app-manifest' || !icon.target,
+            )
+            .map((icon) => {
+              const result = {
+                src: icon.requestPath,
+                sizes: icon.sizes,
+              };
+              if (icon.mimeType) {
+                return { ...result, type: icon.mimeType };
+              }
+              return result;
+            });
 
           const manifest = {
             name: appIcon.name,
