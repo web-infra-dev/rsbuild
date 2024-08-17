@@ -61,6 +61,12 @@ export type AppIconItem = {
    * The size of the icon.
    */
   size: number;
+  /**
+   * Specifies the intended target for which the icon should be generated.
+   * - `apple-touch-icon` for iOS system.
+   * - `web-app-manifest` for web application manifest.
+   */
+  target?: 'apple-touch-icon' | 'web-app-manifest';
 };
 
 export type AppIcon = {

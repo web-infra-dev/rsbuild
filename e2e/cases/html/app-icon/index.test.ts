@@ -76,6 +76,79 @@ test('should emit manifest.webmanifest to dist path', async () => {
   });
 });
 
+test('should allow to specify target for each icon', async () => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    rsbuildConfig: {
+      html: {
+        appIcon: {
+          name: 'My Website',
+          icons: [
+            {
+              src: '../../../assets/icon.png',
+              size: 180,
+              target: 'apple-touch-icon',
+            },
+            {
+              src: '../../../assets/circle.svg',
+              size: 192,
+              target: 'web-app-manifest',
+            },
+            {
+              src: '../../../assets/image.png',
+              size: 512,
+              target: 'web-app-manifest',
+            },
+          ],
+        },
+      },
+    },
+  });
+  const files = await rsbuild.unwrapOutputJSON();
+
+  expect(
+    Object.keys(files).some((file) => file.endsWith('static/image/icon.png')),
+  ).toBeTruthy();
+  expect(
+    Object.keys(files).some((file) => file.endsWith('static/image/image.png')),
+  ).toBeTruthy();
+  expect(
+    Object.keys(files).some((file) => file.endsWith('static/image/circle.svg')),
+  ).toBeTruthy();
+
+  const manifestPath = Object.keys(files).find((file) =>
+    file.endsWith('manifest.webmanifest'),
+  );
+  expect(manifestPath).toBeTruthy();
+
+  const html =
+    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+
+  expect(html).toContain(
+    '<link rel="apple-touch-icon" sizes="180x180" href="/static/image/icon.png">',
+  );
+  // do not generate apple-touch-icon for large images
+  expect(html).not.toContain(
+    '<link rel="apple-touch-icon" sizes="512x512" href="/static/image/image.png">',
+  );
+  expect(html).not.toContain(
+    '<link rel="apple-touch-icon" sizes="192x192" href="/static/image/circle.svg">',
+  );
+  expect(html).toContain('<link rel="manifest" href="/manifest.webmanifest">');
+
+  expect(JSON.parse(files[manifestPath!])).toEqual({
+    name: 'My Website',
+    icons: [
+      {
+        src: '/static/image/circle.svg',
+        sizes: '192x192',
+        type: 'image/svg+xml',
+      },
+      { src: '/static/image/image.png', sizes: '512x512', type: 'image/png' },
+    ],
+  });
+});
+
 test('should allow to customize manifest filename', async () => {
   const rsbuild = await build({
     cwd: __dirname,
