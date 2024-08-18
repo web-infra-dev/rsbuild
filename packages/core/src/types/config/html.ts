@@ -54,7 +54,8 @@ type ChainedHtmlOption<O> = ConfigChainMergeContext<O, { entryName: string }>;
 
 export type AppIconItem = {
   /**
-   * The path to the icon, can be a relative or absolute path.
+   * The path to the icon, can be a URL, an absolute file path,
+   * or a relative path to the project root.
    */
   src: string;
   /**

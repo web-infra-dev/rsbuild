@@ -44,8 +44,8 @@ export default {
     appIcon: {
       name: 'My Website',
       icons: [
-        { src: './src/assets/logo-192.png', size: 192 },
-        { src: './src/assets/logo-512.png', size: 512 },
+        { src: './src/assets/icon-192.png', size: 192 },
+        { src: './src/assets/icon-512.png', size: 512 },
       ],
     },
   },
@@ -59,7 +59,7 @@ After compilation, the following tags will be automatically generated in the HTM
 <link
   rel="apple-touch-icon"
   sizes="180x180"
-  href="/static/image/logo-192.png"
+  href="/static/image/icon-192.png"
 />
 ```
 
@@ -70,12 +70,12 @@ Here, `manifest.webmanifest` is a JSON file that contains information about the 
   "name": "My Website",
   "icons": [
     {
-      "src": "/static/image/logo-192.png",
+      "src": "/static/image/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/static/image/logo-512.png",
+      "src": "/static/image/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
@@ -103,7 +103,7 @@ The name of the application that will be displayed when it is added to the home 
 
 The list of icons:
 
-- `src` is the path to the icon, which can be a relative or absolute path.
+- `src` is the path of the icon, which can be a URL, an absolute file path, or a relative path to the project [root](/config/root).
 - `size` is the size of the icon in pixels.
 - `target` refers to the intended target for the icon, which can be either `apple-touch-icon` or `web-app-manifest`. If `target` is not set, by default, the manifest file will include all icons, while the `apple-touch-icon` tags will only include icons smaller than `200x200`.
 
@@ -136,17 +136,17 @@ export default {
       name: 'My Website',
       icons: [
         {
-          src: './src/assets/logo-180.png',
+          src: './src/assets/icon-180.png',
           size: 180,
           target: 'apple-touch-icon',
         },
         {
-          src: './src/assets/logo-192.png',
+          src: './src/assets/icon-192.png',
           size: 192,
           target: 'web-app-manifest',
         },
         {
-          src: './src/assets/logo-512.png',
+          src: './src/assets/icon-512.png',
           size: 512,
           target: 'web-app-manifest',
         },

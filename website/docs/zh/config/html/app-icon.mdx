@@ -44,8 +44,8 @@ export default {
     appIcon: {
       name: 'My Website',
       icons: [
-        { src: './src/assets/logo-192.png', size: 192 },
-        { src: './src/assets/logo-512.png', size: 512 },
+        { src: './src/assets/icon-192.png', size: 192 },
+        { src: './src/assets/icon-512.png', size: 512 },
       ],
     },
   },
@@ -59,7 +59,7 @@ export default {
 <link
   rel="apple-touch-icon"
   sizes="180x180"
-  href="/static/image/logo-192.png"
+  href="/static/image/icon-192.png"
 />
 ```
 
@@ -70,12 +70,12 @@ export default {
   "name": "My Website",
   "icons": [
     {
-      "src": "/static/image/logo-192.png",
+      "src": "/static/image/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/static/image/logo-512.png",
+      "src": "/static/image/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
@@ -103,7 +103,7 @@ export default {
 
 图标列表，其中：
 
-- `src` 是图标的路径，可以是相对路径或绝对路径。
+- `src` 是图标的路径，可以是 URL 地址、文件的绝对路径，或是相对于项目 [root](/config/root) 的相对路径。
 - `size` 是图标的大小，以像素为单位。
 - `target` 是图标的目标，可以是 `apple-touch-icon` 或 `web-app-manifest`。如果未设置 `target`，默认情况下，manifest 文件会包含所有的图标，而 `apple-touch-icon` 标签只会包含小于 `200x200` 的图标。
 
@@ -136,17 +136,17 @@ export default {
       name: 'My Website',
       icons: [
         {
-          src: './src/assets/logo-180.png',
+          src: './src/assets/icon-180.png',
           size: 180,
           target: 'apple-touch-icon',
         },
         {
-          src: './src/assets/logo-192.png',
+          src: './src/assets/icon-192.png',
           size: 192,
           target: 'web-app-manifest',
         },
         {
-          src: './src/assets/logo-512.png',
+          src: './src/assets/icon-512.png',
           size: 512,
           target: 'web-app-manifest',
         },

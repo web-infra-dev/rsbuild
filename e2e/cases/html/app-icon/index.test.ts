@@ -76,6 +76,52 @@ test('should emit manifest.webmanifest to dist path', async () => {
   });
 });
 
+test('should allow to specify URL as icon', async () => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    rsbuildConfig: {
+      html: {
+        appIcon: {
+          name: 'My Website',
+          icons: [
+            { src: 'https://example.com/icon-192.png', size: 192 },
+            { src: 'https://example.com/icon-512.png', size: 512 },
+          ],
+        },
+      },
+    },
+  });
+  const files = await rsbuild.unwrapOutputJSON();
+
+  const manifestPath = Object.keys(files).find((file) =>
+    file.endsWith('manifest.webmanifest'),
+  );
+
+  const html =
+    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+
+  expect(html).toContain(
+    '<link rel="apple-touch-icon" sizes="192x192" href="https://example.com/icon-192.png">',
+  );
+  expect(html).toContain('<link rel="manifest" href="/manifest.webmanifest">');
+
+  expect(JSON.parse(files[manifestPath!])).toEqual({
+    name: 'My Website',
+    icons: [
+      {
+        src: 'https://example.com/icon-192.png',
+        sizes: '192x192',
+        type: 'image/png',
+      },
+      {
+        src: 'https://example.com/icon-512.png',
+        sizes: '512x512',
+        type: 'image/png',
+      },
+    ],
+  });
+});
+
 test('should allow to specify target for each icon', async () => {
   const rsbuild = await build({
     cwd: __dirname,
