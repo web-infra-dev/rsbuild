@@ -69,7 +69,7 @@ Setting `inlineScripts: true` is equivalent to setting [inlineScripts.enable](#e
 
 When `output.inlineScripts` is used, it is recommended to set [html.inject](/config/html/inject) to `'body'`.
 
-As the default injection position of the script tag is the \<head\> tag, changing the injection position to the \<body\> tag can ensure that the inlined script can access the DOM elements in \<body\>.
+As the default injection position of the script tag is the `<head>` tag, changing the injection position to the `<body>` tag can ensure that the inlined script can access the DOM elements in `<body>`.
 
 ```diff
 export default {
@@ -114,6 +114,31 @@ export default {
   output: {
     inlineScripts({ size }) {
       return size < 10 * 1000;
+    },
+  },
+};
+```
+
+### Async Chunks
+
+When you use [dynamic import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) in JavaScript, Rspack will generate an async chunk. By default, `output.inlineScripts` will not inline async chunks into the HTML.
+
+If you want to inline async chunks into the HTML, you can change Rspack's default behavior using the [tools.rspack](/config/tools/rspack) config by setting [module.parser.javascript.dynamicImportMode](https://rspack.dev/config/module#moduleparserjavascriptdynamicimportmode) to `'eager'`. In this case, Rspack will not generate separate JS files for dynamic imports.
+
+```js
+export default {
+  output: {
+    inlineScripts: true,
+  },
+  tools: {
+    rspack: {
+      module: {
+        parser: {
+          javascript: {
+            dynamicImportMode: 'eager',
+          },
+        },
+      },
     },
   },
 };
