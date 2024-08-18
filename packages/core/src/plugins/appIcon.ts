@@ -5,39 +5,53 @@ import {
   ensureAssetPrefix,
   fileExistsByCompilation,
   getPublicPathFromCompiler,
+  isURL,
 } from '../helpers';
 import type { AppIconItem, HtmlBasicTag, RsbuildPlugin } from '../types';
+
+type IconExtra = {
+  sizes: string;
+  isURL?: boolean;
+  absolutePath: string;
+  relativePath: string;
+  requestPath: string;
+  mimeType?: string;
+};
 
 export const pluginAppIcon = (): RsbuildPlugin => ({
   name: 'rsbuild:app-icon',
 
   setup(api) {
     const htmlTagsMap = new Map<string, HtmlBasicTag[]>();
-    const iconPathMap = new Map<
-      string,
-      {
-        absolutePath: string;
-        relativePath: string;
-        requestPath: string;
-        mimeType?: string;
-      }
-    >();
+    const iconFormatMap = new Map<string, IconExtra>();
 
     const formatIcon = (
       icon: AppIconItem,
       distDir: string,
       publicPath: string,
-    ) => {
+    ): AppIconItem & IconExtra => {
       const { src, size } = icon;
-      const cached = iconPathMap.get(src);
-      const sizes = `${size}x${size}`;
+      const cached = iconFormatMap.get(src);
 
       if (cached) {
-        return {
+        return { ...cached, ...icon };
+      }
+
+      const sizes = `${size}x${size}`;
+
+      if (isURL(src)) {
+        const paths = {
           sizes,
-          ...cached,
-          ...icon,
+          isURL: true,
+          requestPath: src,
+          absolutePath: src,
+          relativePath: src,
+          mimeType: lookup(src),
         };
+
+        iconFormatMap.set(src, paths);
+
+        return { ...paths, ...icon };
       }
 
       const absolutePath = path.isAbsolute(src)
@@ -50,19 +64,16 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
       const requestPath = ensureAssetPrefix(relativePath, publicPath);
 
       const paths = {
+        sizes,
         requestPath,
         absolutePath,
         relativePath,
         mimeType: lookup(absolutePath),
       };
 
-      iconPathMap.set(src, paths);
+      iconFormatMap.set(src, paths);
 
-      return {
-        sizes,
-        ...paths,
-        ...icon,
-      };
+      return { ...paths, ...icon };
     };
 
     api.processAssets(
@@ -84,28 +95,30 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
         const tags: HtmlBasicTag[] = [];
 
         for (const icon of icons) {
-          if (
-            !(await fileExistsByCompilation(compilation, icon.absolutePath))
-          ) {
-            throw new Error(
-              `[rsbuild:app-icon] Can not find the app icon, please check if the '${icon.relativePath}' file exists'.`,
-            );
-          }
-
           if (icon.target === 'web-app-manifest' && !appIcon.name) {
             throw new Error(
               "[rsbuild:app-icon] `appIcon.name` is required when `target` is 'web-app-manifest'.",
             );
           }
 
-          const source = await promisify(compilation.inputFileSystem.readFile)(
-            icon.absolutePath,
-          );
+          if (!icon.isURL) {
+            if (
+              !(await fileExistsByCompilation(compilation, icon.absolutePath))
+            ) {
+              throw new Error(
+                `[rsbuild:app-icon] Can not find the app icon, please check if the '${icon.relativePath}' file exists'.`,
+              );
+            }
 
-          compilation.emitAsset(
-            icon.relativePath,
-            new sources.RawSource(source),
-          );
+            const source = await promisify(
+              compilation.inputFileSystem.readFile,
+            )(icon.absolutePath);
+
+            compilation.emitAsset(
+              icon.relativePath,
+              new sources.RawSource(source),
+            );
+          }
 
           if (
             icon.target === 'apple-touch-icon' ||
@@ -173,7 +186,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
 
     api.onCloseDevServer(() => {
       htmlTagsMap.clear();
-      iconPathMap.clear();
+      iconFormatMap.clear();
     });
   },
 });
