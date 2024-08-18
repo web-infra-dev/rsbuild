@@ -151,9 +151,6 @@ importers:
       '@rsbuild/plugin-vue2':
         specifier: workspace:*
         version: link:../packages/plugin-vue2
-      '@rsbuild/plugin-vue2-jsx':
-        specifier: workspace:*
-        version: link:../packages/plugin-vue2-jsx
       '@rsbuild/webpack':
         specifier: workspace:*
         version: link:../packages/compat/webpack
@@ -1176,28 +1173,6 @@ importers:
         specifier: ^5.93.0
         version: 5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))
     devDependencies:
-      '@rsbuild/core':
-        specifier: link:../core
-        version: link:../core
-      '@scripts/test-helper':
-        specifier: workspace:*
-        version: link:../../scripts/test-helper
-      typescript:
-        specifier: ^5.5.2
-        version: 5.5.2
-
-  packages/plugin-vue2-jsx:
-    dependencies:
-      '@rsbuild/plugin-babel':
-        specifier: workspace:*
-        version: link:../plugin-babel
-      '@vue/babel-preset-jsx':
-        specifier: ^1.4.0
-        version: 1.4.0(@babel/core@7.25.2)(vue@3.4.23(typescript@5.5.2))
-    devDependencies:
-      '@babel/core':
-        specifier: ^7.25.2
-        version: 7.25.2
       '@rsbuild/core':
         specifier: link:../core
         version: link:../core
@@ -3288,9 +3263,6 @@ packages:
   '@vitest/utils@2.0.5':
     resolution: {integrity: sha512-d8HKbqIcya+GR67mkZbrzhS5kKhtp8dQLcmRZLGTscGVg7yImT82cIrhtn2L8+VujWcy6KZweApgNmPsTAO/UQ==}
 
-  '@vue/babel-helper-vue-jsx-merge-props@1.4.0':
-    resolution: {integrity: sha512-JkqXfCkUDp4PIlFdDQ0TdXoIejMtTHP67/pvxlgeY+u5k3LEdKuWZ3LK6xkxo52uDoABIVyRwqVkfLQJhk7VBA==}
-
   '@vue/babel-helper-vue-transform-on@1.2.2':
     resolution: {integrity: sha512-nOttamHUR3YzdEqdM/XXDyCSdxMA9VizUKoroLX6yTyRtggzQMHXcmwh8a7ZErcJttIBIc9s68a1B8GZ+Dmvsw==}
 
@@ -3304,50 +3276,6 @@ packages:
 
   '@vue/babel-plugin-resolve-type@1.2.2':
     resolution: {integrity: sha512-EntyroPwNg5IPVdUJupqs0CFzuf6lUrVvCspmv2J1FITLeGnUCuoGNNk78dgCusxEiYj6RMkTJflGSxk5aIC4A==}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
-  '@vue/babel-plugin-transform-vue-jsx@1.4.0':
-    resolution: {integrity: sha512-Fmastxw4MMx0vlgLS4XBX0XiBbUFzoMGeVXuMV08wyOfXdikAFqBTuYPR0tlk+XskL19EzHc39SgjrPGY23JnA==}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
-  '@vue/babel-preset-jsx@1.4.0':
-    resolution: {integrity: sha512-QmfRpssBOPZWL5xw7fOuHNifCQcNQC1PrOo/4fu6xlhlKJJKSA3HqX92Nvgyx8fqHZTUGMPHmFA+IDqwXlqkSA==}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-      vue: '*'
-    peerDependenciesMeta:
-      vue:
-        optional: true
-
-  '@vue/babel-sugar-composition-api-inject-h@1.4.0':
-    resolution: {integrity: sha512-VQq6zEddJHctnG4w3TfmlVp5FzDavUSut/DwR0xVoe/mJKXyMcsIibL42wPntozITEoY90aBV0/1d2KjxHU52g==}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
-  '@vue/babel-sugar-composition-api-render-instance@1.4.0':
-    resolution: {integrity: sha512-6ZDAzcxvy7VcnCjNdHJ59mwK02ZFuP5CnucloidqlZwVQv5CQLijc3lGpR7MD3TWFi78J7+a8J56YxbCtHgT9Q==}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
-  '@vue/babel-sugar-functional-vue@1.4.0':
-    resolution: {integrity: sha512-lTEB4WUFNzYt2In6JsoF9sAYVTo84wC4e+PoZWSgM6FUtqRJz7wMylaEhSRgG71YF+wfLD6cc9nqVeXN2rwBvw==}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
-  '@vue/babel-sugar-inject-h@1.4.0':
-    resolution: {integrity: sha512-muwWrPKli77uO2fFM7eA3G1lAGnERuSz2NgAxuOLzrsTlQl8W4G+wwbM4nB6iewlKbwKRae3nL03UaF5ffAPMA==}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
-  '@vue/babel-sugar-v-model@1.4.0':
-    resolution: {integrity: sha512-0t4HGgXb7WHYLBciZzN5s0Hzqan4Ue+p/3FdQdcaHAb7s5D9WZFGoSxEZHrR1TFVZlAPu1bejTKGeAzaaG3NCQ==}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
-  '@vue/babel-sugar-v-on@1.4.0':
-    resolution: {integrity: sha512-m+zud4wKLzSKgQrWwhqRObWzmTuyzl6vOP7024lrpeJM4x2UhQtRDLgYjXAw9xBXjCwS0pP9kXjg91F9ZNo9JA==}
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
@@ -3729,10 +3657,6 @@ packages:
   camelcase-css@2.0.1:
     resolution: {integrity: sha512-QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA==}
     engines: {node: '>= 6'}
-
-  camelcase@5.3.1:
-    resolution: {integrity: sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==}
-    engines: {node: '>=6'}
 
   camelcase@6.3.0:
     resolution: {integrity: sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==}
@@ -4912,10 +4836,6 @@ packages:
       '@rspack/core':
         optional: true
 
-  html-tags@2.0.0:
-    resolution: {integrity: sha512-+Il6N8cCo2wB/Vd3gqy/8TZhTD3QvcVeQLCnZiGkGCH3JP28IgGAY41giccp2W4R3jfyJPAP318FQTa1yU7K7g==}
-    engines: {node: '>=4'}
-
   html-tags@3.3.1:
     resolution: {integrity: sha512-ztqyC3kLto0e9WbNp0aeP+M3kTt+nbaIveGmUxAtZa+8iFgKLUOD4YKM5j+f3QD89bra7UeumolZHKuOXnTmeQ==}
     engines: {node: '>=8'}
@@ -5434,9 +5354,6 @@ packages:
 
   lodash.debounce@4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
-
-  lodash.kebabcase@4.1.1:
-    resolution: {integrity: sha512-N8XRTIMMqqDgSy4VLKPnJ/+hpGZN+PHQiJnSenYqPaVV/NCqEogTnAdZLQiGKhxX+JCs8waWq2t1XHWKOmlY8g==}
 
   lodash.startcase@4.4.0:
     resolution: {integrity: sha512-+WKqsK294HMSc2jEbNgpHpd0JfIBhp7rEV4aqXWqFr6AlXov+SlcgB1Fv01y2kGe3Gc8nMW7VA0SrGuSkRfIEg==}
@@ -10020,8 +9937,6 @@ snapshots:
       loupe: 3.1.1
       tinyrainbow: 1.2.0
 
-  '@vue/babel-helper-vue-jsx-merge-props@1.4.0': {}
-
   '@vue/babel-helper-vue-transform-on@1.2.2': {}
 
   '@vue/babel-plugin-jsx@1.2.2(@babel/core@7.25.2)':
@@ -10050,75 +9965,6 @@ snapshots:
       '@babel/helper-plugin-utils': 7.24.8
       '@babel/parser': 7.25.3
       '@vue/compiler-sfc': 3.4.23
-
-  '@vue/babel-plugin-transform-vue-jsx@1.4.0(@babel/core@7.25.2)':
-    dependencies:
-      '@babel/core': 7.25.2
-      '@babel/helper-module-imports': 7.24.7
-      '@babel/plugin-syntax-jsx': 7.24.7(@babel/core@7.25.2)
-      '@vue/babel-helper-vue-jsx-merge-props': 1.4.0
-      html-tags: 2.0.0
-      lodash.kebabcase: 4.1.1
-      svg-tags: 1.0.0
-    transitivePeerDependencies:
-      - supports-color
-
-  '@vue/babel-preset-jsx@1.4.0(@babel/core@7.25.2)(vue@3.4.23(typescript@5.5.2))':
-    dependencies:
-      '@babel/core': 7.25.2
-      '@vue/babel-helper-vue-jsx-merge-props': 1.4.0
-      '@vue/babel-plugin-transform-vue-jsx': 1.4.0(@babel/core@7.25.2)
-      '@vue/babel-sugar-composition-api-inject-h': 1.4.0(@babel/core@7.25.2)
-      '@vue/babel-sugar-composition-api-render-instance': 1.4.0(@babel/core@7.25.2)
-      '@vue/babel-sugar-functional-vue': 1.4.0(@babel/core@7.25.2)
-      '@vue/babel-sugar-inject-h': 1.4.0(@babel/core@7.25.2)
-      '@vue/babel-sugar-v-model': 1.4.0(@babel/core@7.25.2)
-      '@vue/babel-sugar-v-on': 1.4.0(@babel/core@7.25.2)
-    optionalDependencies:
-      vue: 3.4.23(typescript@5.5.2)
-    transitivePeerDependencies:
-      - supports-color
-
-  '@vue/babel-sugar-composition-api-inject-h@1.4.0(@babel/core@7.25.2)':
-    dependencies:
-      '@babel/core': 7.25.2
-      '@babel/plugin-syntax-jsx': 7.24.7(@babel/core@7.25.2)
-
-  '@vue/babel-sugar-composition-api-render-instance@1.4.0(@babel/core@7.25.2)':
-    dependencies:
-      '@babel/core': 7.25.2
-      '@babel/plugin-syntax-jsx': 7.24.7(@babel/core@7.25.2)
-
-  '@vue/babel-sugar-functional-vue@1.4.0(@babel/core@7.25.2)':
-    dependencies:
-      '@babel/core': 7.25.2
-      '@babel/plugin-syntax-jsx': 7.24.7(@babel/core@7.25.2)
-
-  '@vue/babel-sugar-inject-h@1.4.0(@babel/core@7.25.2)':
-    dependencies:
-      '@babel/core': 7.25.2
-      '@babel/plugin-syntax-jsx': 7.24.7(@babel/core@7.25.2)
-
-  '@vue/babel-sugar-v-model@1.4.0(@babel/core@7.25.2)':
-    dependencies:
-      '@babel/core': 7.25.2
-      '@babel/plugin-syntax-jsx': 7.24.7(@babel/core@7.25.2)
-      '@vue/babel-helper-vue-jsx-merge-props': 1.4.0
-      '@vue/babel-plugin-transform-vue-jsx': 1.4.0(@babel/core@7.25.2)
-      camelcase: 5.3.1
-      html-tags: 2.0.0
-      svg-tags: 1.0.0
-    transitivePeerDependencies:
-      - supports-color
-
-  '@vue/babel-sugar-v-on@1.4.0(@babel/core@7.25.2)':
-    dependencies:
-      '@babel/core': 7.25.2
-      '@babel/plugin-syntax-jsx': 7.24.7(@babel/core@7.25.2)
-      '@vue/babel-plugin-transform-vue-jsx': 1.4.0(@babel/core@7.25.2)
-      camelcase: 5.3.1
-    transitivePeerDependencies:
-      - supports-color
 
   '@vue/compiler-core@3.4.23':
     dependencies:
@@ -10628,8 +10474,6 @@ snapshots:
   callsites@3.1.0: {}
 
   camelcase-css@2.0.1: {}
-
-  camelcase@5.3.1: {}
 
   camelcase@6.3.0: {}
 
@@ -11769,8 +11613,6 @@ snapshots:
     optionalDependencies:
       '@rspack/core': 1.0.0-beta.5(@swc/helpers@0.5.11)
 
-  html-tags@2.0.0: {}
-
   html-tags@3.3.1: {}
 
   html-to-text@9.0.5:
@@ -12268,8 +12110,6 @@ snapshots:
   lodash.clonedeepwith@4.5.0: {}
 
   lodash.debounce@4.0.8: {}
-
-  lodash.kebabcase@4.1.1: {}
 
   lodash.startcase@4.4.0: {}
 
