@@ -165,6 +165,19 @@ export default defineConfig({
           },
         },
       ],
+      appIcon: {
+        name: 'Rsbuild',
+        icons: [
+          {
+            src: 'https://assets.rspack.dev/rsbuild/rsbuild-logo-192x192.png',
+            size: 192,
+          },
+          {
+            src: 'https://assets.rspack.dev/rsbuild/rsbuild-logo-512x512.png',
+            size: 512,
+          },
+        ],
+      },
     },
   },
 });
