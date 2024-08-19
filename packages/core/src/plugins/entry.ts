@@ -1,7 +1,6 @@
-import type { EntryDescription } from '@rspack/core';
 import color from 'picocolors';
 import { castArray, createVirtualModule } from '../helpers';
-import type { RsbuildPlugin } from '../types';
+import type { RsbuildEntryDescription, RsbuildPlugin } from '../types';
 
 export const pluginEntry = (): RsbuildPlugin => ({
   name: 'rsbuild:entry',
@@ -15,8 +14,13 @@ export const pluginEntry = (): RsbuildPlugin => ({
 
       for (const entryName of Object.keys(entry)) {
         const entryPoint = chain.entry(entryName);
-        const addEntry = (item: string | EntryDescription) => {
-          entryPoint.add(item);
+        const addEntry = (item: string | RsbuildEntryDescription) => {
+          if (typeof item === 'object' && 'html' in item) {
+            const { html, ...rest } = item;
+            entryPoint.add(rest);
+          } else {
+            entryPoint.add(item);
+          }
         };
 
         preEntry.forEach(addEntry);

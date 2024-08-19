@@ -3,7 +3,10 @@
 - **类型：**
 
 ```ts
-type Entry = Record<string, string | string[] | EntryDescription>;
+type Entry = Record<
+  string,
+  string | string[] | (Rspack.EntryDescription & { html?: boolean })
+>;
 ```
 
 - **默认值：**
@@ -70,7 +73,25 @@ export default {
 };
 ```
 
-关于描述对象的完整用法，请参考 [Rspack - 入口描述对象](https://rspack.dev/config/entry#%E5%85%A5%E5%8F%A3%E6%8F%8F%E8%BF%B0%E5%AF%B9%E8%B1%A1)。
+Rsbuild 为描述对象添加了 `html` 属性，用于控制是否生成 HTML 文件。
+
+例如，`bar` 入口不生成 HTML 文件：
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    entry: {
+      foo: './src/foo.js',
+      bar: {
+        import: './src/bar.js',
+        html: false,
+      },
+    },
+  },
+};
+```
+
+> 关于描述对象的完整用法，请参考 [Rspack - 入口描述对象](https://rspack.dev/config/entry#%E5%85%A5%E5%8F%A3%E6%8F%8F%E8%BF%B0%E5%AF%B9%E8%B1%A1)。
 
 ## 基于 environment 设置
 

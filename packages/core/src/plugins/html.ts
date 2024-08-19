@@ -224,7 +224,9 @@ export const pluginHtml = (
 
         const assetPrefix = getPublicPathFromChain(chain, false);
         const entries = chain.entryPoints.entries() || {};
-        const entryNames = Object.keys(entries);
+        const entryNames = Object.keys(entries).filter((entryName) =>
+          Boolean(htmlPaths[entryName]),
+        );
         const htmlInfoMap: Record<string, HtmlInfo> = {};
 
         const finalOptions = await Promise.all(

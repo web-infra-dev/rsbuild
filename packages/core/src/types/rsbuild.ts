@@ -1,4 +1,3 @@
-import type { EntryDescription } from '@rspack/core';
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import type { RsbuildDevServer } from '../server/devServer';
 import type { StartServerResult } from '../server/helper';
@@ -156,6 +155,18 @@ export type RsbuildInstance = {
 
 export type RsbuildTarget = 'web' | 'node' | 'web-worker';
 
-export type RsbuildEntry = Record<string, string | string[] | EntryDescription>;
+export type RsbuildEntryDescription = Rspack.EntryDescription & {
+  /**
+   * Whether to generate an HTML file for the entry.
+   *
+   * @default true
+   */
+  html?: boolean;
+};
+
+export type RsbuildEntry = Record<
+  string,
+  string | string[] | RsbuildEntryDescription
+>;
 
 export type RsbuildMode = 'development' | 'production' | 'none';

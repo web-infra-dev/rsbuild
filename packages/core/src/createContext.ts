@@ -77,7 +77,17 @@ const getEnvironmentHTMLPaths = (
   }
 
   return Object.keys(entry).reduce<Record<string, string>>((prev, key) => {
-    prev[key] = getHTMLPathByEntry(key, config);
+    const entryValue = entry[key];
+
+    // Should not generate HTML file for the entry if `html` is false
+    if (
+      typeof entryValue === 'string' ||
+      Array.isArray(entryValue) ||
+      entryValue.html !== false
+    ) {
+      prev[key] = getHTMLPathByEntry(key, config);
+    }
+
     return prev;
   }, {});
 };
