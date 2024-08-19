@@ -62,11 +62,11 @@ Rsbuild has the following features:
 
 ## 🎯 Position
 
-In addition to being used as a build tool, Rsbuild also provides universal build capabilities for higher-level solutions, such as [Rspress](https://github.com/web-infra-dev/rspress) and [Modern.js](https://github.com/web-infra-dev/modern.js), allowing them to focus on the development of their own domain specific capabilities.
+In addition to being used as a build tool, Rsbuild also provides universal build capabilities for higher-level solutions, such as [Rspress](https://github.com/web-infra-dev/rspress) and [Rslib](https://github.com/web-infra-dev/rslib), allowing them to focus on the development of their own domain specific capabilities.
 
 The following diagram illustrates the relationship between Rsbuild and other tools in the ecosystem:
 
-![Rspack Ecosystem](https://github.com/web-infra-dev/rsbuild/assets/7237365/1ec93ad6-b8b1-475b-963f-cba1e7d79dec)
+![Rspack stack layers](https://assets.rspack.dev/rsbuild/assets/rspack-stack-layers.png)
 
 ## 📚 Getting Started
 
