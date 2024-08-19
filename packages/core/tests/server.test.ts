@@ -164,7 +164,7 @@ test('printServerURLs', () => {
         label: 'local',
       },
       {
-        url: 'http://10.94.62.193:3000/',
+        url: 'http://192.168.0.1:3000/',
         label: 'network',
       },
     ],
@@ -178,7 +178,7 @@ test('printServerURLs', () => {
 
   expect(message!).toMatchInlineSnapshot(`
     "  > local     http://localhost:3000/
-      > network   http://10.94.62.193:3000/
+      > network   http://192.168.0.1:3000/
     "
   `);
 
@@ -191,7 +191,7 @@ test('printServerURLs', () => {
         label: 'local',
       },
       {
-        url: 'http://10.94.62.193:3000/',
+        url: 'http://192.168.0.1:3000/',
         label: 'network',
       },
     ],
@@ -218,9 +218,9 @@ test('printServerURLs', () => {
       - bar      http://localhost:3000/bar
 
       > network
-      - index    http://10.94.62.193:3000/
-      - foo      http://10.94.62.193:3000/html/foo
-      - bar      http://10.94.62.193:3000/bar
+      - index    http://192.168.0.1:3000/
+      - foo      http://192.168.0.1:3000/html/foo
+      - bar      http://192.168.0.1:3000/bar
     "
   `);
 
