@@ -3,7 +3,10 @@
 - **Type:**
 
 ```ts
-type Entry = Record<string, string | string[] | EntryDescription>;
+type Entry = Record<
+  string,
+  string | string[] | (Rspack.EntryDescription & { html?: boolean })
+>;
 ```
 
 - **Default:**
@@ -70,7 +73,25 @@ export default {
 };
 ```
 
-For the complete usage of the description object, please refer to [Rspack - Entry Description Object](https://rspack.dev/config/entry#entry-description-object).
+Rsbuild has added an `html` attribute for the description object, which is used to control whether an HTML file is generated.
+
+For example, the `bar` entry does not generate an HTML file:
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    entry: {
+      foo: './src/foo.js',
+      bar: {
+        import: './src/bar.js',
+        html: false,
+      },
+    },
+  },
+};
+```
+
+> For the complete usage of the description object, please refer to [Rspack - Entry Description Object](https://rspack.dev/config/entry#entry-description-object).
 
 ## Set by environment
 
