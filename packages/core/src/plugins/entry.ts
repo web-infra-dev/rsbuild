@@ -15,7 +15,7 @@ export const pluginEntry = (): RsbuildPlugin => ({
       for (const entryName of Object.keys(entry)) {
         const entryPoint = chain.entry(entryName);
         const addEntry = (item: string | RsbuildEntryDescription) => {
-          if (typeof item === 'object' && item.html) {
+          if (typeof item === 'object' && 'html' in item) {
             const { html, ...rest } = item;
             entryPoint.add(rest);
           } else {
