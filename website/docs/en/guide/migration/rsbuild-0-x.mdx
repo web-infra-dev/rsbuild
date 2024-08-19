@@ -53,6 +53,45 @@ export default defineConfig({
 });
 ```
 
+## [Important] output.targets
+
+:::tip
+Rsbuild v1 removes the `output.targets` option and the target parameters of `source.alias` /`source.entry` and other configs, and instead configures it through `environments` to provide more flexible multi-environment config capabilities.
+
+Compared with the original options, `environments` has a wider coverage and can perform differentiated config of more configs in multiple environments. For details, please refer to [Multiple-Environment Builds](/guide/advanced/environments).
+:::
+
+Removed `output.targets` config, use [output.target](/config/output/target) and [environments](/config/environments) config instead.
+
+- before:
+
+```js
+export default {
+  output: {
+    targets: ['web', 'node'],
+  },
+};
+```
+
+- after:
+
+```js
+export default {
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+      },
+    },
+  },
+};
+```
+
 ## source.alias
 
 Removed `target` param for `source.alias` function, use `environment` config instead.
@@ -303,3 +342,17 @@ export default {
   },
 };
 ```
+
+## Others
+
+Rsbuild 1.0 has made some adjustments and optimizations to plugins API and dev server API.
+
+Includes:
+
+- The `onBeforeBuild` hook supports triggering multiple times in watch mode.
+- Added `onBeforeEnvironmentCompile` and `onAfterEnvironmentCompile` hooks, which are triggered before/after executing the build of a single environment respectively.
+- Removed `api.getHtmlPath` and replaced it with `environment.htmlPaths`.
+- Removed `api.context.entry` and replaced it with `environment.entry`.
+- Removed `api.context.targets` and replaced it with `environment.target`.
+- Removed `api.context.targets` and replaced it with `environment.target`.
+- Removed `rsbuildServer.onHTTPUpgrade` and replaced it with `rsbuildServer.connectWebSocket`.

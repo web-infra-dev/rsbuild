@@ -53,6 +53,45 @@ export default defineConfig({
 });
 ```
 
+## [重要] output.targets
+
+:::tip
+Rsbuild v1 移除了 `output.targets` 选项和 `source.alias` / `source.entry` 等配置的 target 参数，改为通过 `environments` 配置以提供更灵活的多环境配置能力。
+
+对比原有选项，`environments` 覆盖范围更广，可对更多配置项进行多环境差异化配置。详情可参考[多环境构建](/guide/advanced/environments)。
+:::
+
+移除 `output.targets` 参数，改用 [output.target](/config/output/target) 和 [environments](/config/environments) 配置。
+
+- before:
+
+```js
+export default {
+  output: {
+    targets: ['web', 'node'],
+  },
+};
+```
+
+- after:
+
+```js
+export default {
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+      },
+    },
+  },
+};
+```
+
 ## source.alias
 
 移除 `source.alias` 函数的 `target` 参数，改用 `environments` 配置。
@@ -303,3 +342,17 @@ export default {
   },
 };
 ```
+
+## 其他
+
+Rsbuild 1.0 对插件、dev server 等 API 进行了部分调整和优化。
+
+调整包括：
+
+- `onBeforeBuild` 钩子在 watch 模式下支持触发多次。
+- 新增 `onBeforeEnvironmentCompile` 和 `onAfterEnvironmentCompile` 钩子，分别在执行单个 environment 的构建前/后触发。
+- 移除 `api.getHtmlPath`，改为 `environment.htmlPaths`。
+- 移除 `api.context.entry`，改为 `environment.entry`。
+- 移除 `api.context.targets`，改为 `environment.target`。
+- 移除 `api.context.targets`，改为 `environment.target`。
+- 移除 `rsbuildServer.onHTTPUpgrade`，改为 `rsbuildServer.connectWebSocket`。
