@@ -110,6 +110,7 @@ export type {
   RsbuildConfig,
   RsbuildContext,
   RsbuildEntry,
+  RsbuildEntryDescription,
   RsbuildInstance,
   RsbuildMode,
   RsbuildPlugin,

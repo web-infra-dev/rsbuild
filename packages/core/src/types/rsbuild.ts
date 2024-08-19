@@ -155,18 +155,18 @@ export type RsbuildInstance = {
 
 export type RsbuildTarget = 'web' | 'node' | 'web-worker';
 
+export type RsbuildEntryDescription = Rspack.EntryDescription & {
+  /**
+   * Whether to generate an HTML file for the entry.
+   *
+   * @default true
+   */
+  html?: boolean;
+};
+
 export type RsbuildEntry = Record<
   string,
-  | string
-  | string[]
-  | (Rspack.EntryDescription & {
-      /**
-       * Whether to generate an HTML file for the entry.
-       *
-       * @default true
-       */
-      html?: boolean;
-    })
+  string | string[] | RsbuildEntryDescription
 >;
 
 export type RsbuildMode = 'development' | 'production' | 'none';
