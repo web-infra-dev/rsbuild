@@ -34,7 +34,7 @@ Você pode imaginar o Rsbuild como uma versão moderna do Create React App ou Vu
 
 Rsbuild compartilha muitas similaridades com Vite, assim como ambos miram em melhorar a experiência do desenvolvimento frontend. As principais diferenças são:
 
-- **Compatibilidade do ecossistema**: Rsbuild é compatível com a maioria dos plug-ins para webpack e todos os plug-ins do Rspack, enquanto Vite é compatível com plug-ins do Rollup.  Se você estiver usando mais plug-ins e carregadores do ecossistema do Webpack, a migração para o Rsbuild será relativamente fácil.
+- **Compatibilidade do ecossistema**: Rsbuild é compatível com a maioria dos plug-ins para webpack e todos os plug-ins do Rspack, enquanto Vite é compatível com plug-ins do Rollup. Se você estiver usando mais plug-ins e carregadores do ecossistema do Webpack, a migração para o Rsbuild será relativamente fácil.
 - **Consistência em produção**: Rsbuild usa o Rspack para empacotamento durante as compilações de desenvolvimento e produção, garantindo assim um alto nível de consistência entre os resultados de desenvolvimento e produção. Esse também é um dos objetivos que a Vite pretende alcançar com o [Rolldown](https://rolldown.rs/).
 - **Module Federation**: O time do Rsbuild trabalha próximo com o time de [Module Federation](https://rsbuild.dev/guide/advanced/module-federation), fornecendo suporte de primeira classe para o Module Federation para ajudá-lo a desenvolver grandes aplicativos da Web com arquitetura de micro frontend.
 
@@ -62,11 +62,11 @@ O Rsbuild tem os seguintes recursos:
 
 ## 🎯 Função
 
-Além de ser usado como uma ferramenta de compilação, o Rsbuild também oferece recursos de compilação universal para soluções de nível superior, como [Rspress](https://github.com/web-infra-dev/rspress) e [Modern.js](https://github.com/web-infra-dev/modern.js), permitindo que eles se concentrem no desenvolvimento de seus próprios recursos específicos de domínio.
+Além de ser usado como uma ferramenta de compilação, o Rsbuild também oferece recursos de compilação universal para soluções de nível superior, como [Rspress](https://github.com/web-infra-dev/rspress) e [Rslib](https://github.com/web-infra-dev/rslib), permitindo que eles se concentrem no desenvolvimento de seus próprios recursos específicos de domínio.
 
 O diagrama a seguir ilustra a relação entre o Rsbuild e outras ferramentas do ecossistema:
 
-![Rspack Ecossistema](https://github.com/web-infra-dev/rsbuild/assets/7237365/1ec93ad6-b8b1-475b-963f-cba1e7d79dec)
+![Rspack stack layers](https://assets.rspack.dev/rsbuild/assets/rspack-stack-layers.png)
 
 ## 📚 Primeiros passos
 
