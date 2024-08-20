@@ -236,12 +236,27 @@ async function applyCSSRule({
 
   rule.use(CHAIN_ID.USE.CSS).loader(getCompiledPath('css-loader'));
 
+  const postcssLoaderOptions = await getPostcssLoaderOptions({
+    config,
+    root: context.rootPath,
+  });
+
+  // enable postcss-loader if using PostCSS plugins
+  if (postcssLoaderOptions.postcssOptions?.plugins?.length) {
+    importLoaders++;
+    rule
+      .use(CHAIN_ID.USE.POSTCSS)
+      .loader(getCompiledPath('postcss-loader'))
+      .options(postcssLoaderOptions);
+  }
+
+  // Put `builtin:lightningcss-loader` in front of `PostCSS`
+  // `buildin:lightningcss-loader` affects `normalizewhitespace` in the PostCss by cssnano
   if (target === 'web') {
-    // `builtin:lightningcss-loader` is not supported when using webpack and inject styles
+    // `builtin:lightningcss-loader` is not supported when using webpack
     if (
       context.bundlerType === 'rspack' &&
-      config.tools.lightningcssLoader !== false &&
-      config.output.injectStyles !== true
+      config.tools.lightningcssLoader !== false
     ) {
       importLoaders++;
 
@@ -261,20 +276,6 @@ async function applyCSSRule({
         .use(CHAIN_ID.USE.LIGHTNINGCSS)
         .loader('builtin:lightningcss-loader')
         .options(loaderOptions);
-    }
-
-    const postcssLoaderOptions = await getPostcssLoaderOptions({
-      config,
-      root: context.rootPath,
-    });
-
-    // enable postcss-loader if using PostCSS plugins
-    if (postcssLoaderOptions.postcssOptions?.plugins?.length) {
-      importLoaders++;
-      rule
-        .use(CHAIN_ID.USE.POSTCSS)
-        .loader(getCompiledPath('postcss-loader'))
-        .options(postcssLoaderOptions);
     }
   }
 
