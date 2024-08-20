@@ -15,6 +15,7 @@
       "jiti": ["./compiled/jiti"],
       "rslog": ["./compiled/rslog"],
       "dotenv": ["./compiled/dotenv"],
+      "mrmime": ["./compiled/mrmime"],
       "semver": ["./compiled/semver"],
       "connect": ["./compiled/connect"],
       "chokidar": ["./compiled/chokidar"],

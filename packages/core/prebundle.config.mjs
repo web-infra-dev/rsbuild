@@ -50,6 +50,7 @@ export default {
     'rspack-manifest-plugin',
     'webpack-merge',
     'html-rspack-plugin',
+    'mrmime',
     {
       name: 'chokidar',
       externals: {
@@ -139,6 +140,9 @@ export default {
     },
     {
       name: 'rsbuild-dev-middleware',
+      externals: {
+        mrmime: '../mrmime',
+      },
       ignoreDts: true,
     },
     {

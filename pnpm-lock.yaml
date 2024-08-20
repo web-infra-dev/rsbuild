@@ -729,8 +729,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       rsbuild-dev-middleware:
-        specifier: 1.0.0-beta.0
-        version: 1.0.0-beta.0(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
+        specifier: 0.1.0
+        version: 0.1.0(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
       rslog:
         specifier: ^1.2.2
         version: 1.2.2
@@ -3786,9 +3786,6 @@ packages:
   color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
 
-  colorette@2.0.20:
-    resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
-
   combined-stream@1.0.8:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
     engines: {node: '>= 0.8'}
@@ -6411,8 +6408,8 @@ packages:
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
-  rsbuild-dev-middleware@1.0.0-beta.0:
-    resolution: {integrity: sha512-6tSuFZa5UY4kOYGhZs001jbjRvMne35V4TrWR0v8K45G12keTuUTsB5gWcdHTgTV0fFGy87eDYPWZMg0/vskBA==}
+  rsbuild-dev-middleware@0.1.0:
+    resolution: {integrity: sha512-3vJLLIJgMgTE3pPctoyIw+gAjlF4cgGkp/ujtZjgoNnFqv5AomDFv6sg0AE1ehV2zSN8Vx9aeVxARslFofHXUg==}
     engines: {node: '>= 18.12.0'}
     peerDependencies:
       webpack: ^5.0.0
@@ -10622,8 +10619,6 @@ snapshots:
 
   color-name@1.1.4: {}
 
-  colorette@2.0.20: {}
-
   combined-stream@1.0.8:
     dependencies:
       delayed-stream: 1.0.0
@@ -13548,11 +13543,10 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.17.1
       fsevents: 2.3.3
 
-  rsbuild-dev-middleware@1.0.0-beta.0(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
+  rsbuild-dev-middleware@0.1.0(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
     dependencies:
-      colorette: 2.0.20
       memfs: 4.8.2
-      mime-types: 2.1.35
+      mrmime: 2.0.0
       on-finished: 2.4.1
       range-parser: 1.2.1
     optionalDependencies:
