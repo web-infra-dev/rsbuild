@@ -145,7 +145,7 @@ export async function createDevServer<
     const compiler = customCompiler || (await createCompiler());
 
     if (!compiler) {
-      throw new Error('Rspack compiler is not defined');
+      throw new Error('Failed to get compiler instance.');
     }
 
     const { CompilerDevMiddleware } = await import('./compilerDevMiddleware');
