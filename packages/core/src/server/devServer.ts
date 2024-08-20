@@ -6,13 +6,13 @@ import { ROOT_DIST_DIR } from '../constants';
 import { getPublicPathFromCompiler, isMultiCompiler } from '../helpers';
 import { logger } from '../logger';
 import type {
+  CreateCompiler,
   CreateDevServerOptions,
   EnvironmentAPI,
   InternalContext,
   NormalizedConfig,
   NormalizedDevConfig,
   Rspack,
-  StartDevServerOptions,
   Stats,
 } from '../types';
 import { getTransformedHtml, loadBundle } from './environment';
@@ -95,10 +95,7 @@ export async function createDevServer<
   },
 >(
   options: Options,
-  initConfigAndCompiler: (
-    options: Options,
-    compiler: StartDevServerOptions['compiler'],
-  ) => Promise<Rspack.Compiler | Rspack.MultiCompiler>,
+  createCompiler: CreateCompiler,
   config: NormalizedConfig,
   {
     compiler: customCompiler,
@@ -145,7 +142,12 @@ export async function createDevServer<
   const startCompile: () => Promise<
     RsbuildDevMiddlewareOptions['compileMiddlewareAPI']
   > = async () => {
-    const compiler = await initConfigAndCompiler(options, customCompiler);
+    const compiler = customCompiler || (await createCompiler());
+
+    if (!compiler) {
+      throw new Error('Rspack compiler is not defined');
+    }
+
     const { CompilerDevMiddleware } = await import('./compilerDevMiddleware');
 
     const publicPaths = isMultiCompiler(compiler)
