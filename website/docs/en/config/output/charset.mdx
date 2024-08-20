@@ -1,16 +1,26 @@
 # output.charset
 
 - **Type:** `'ascii' | 'utf8'`
-- **Default:** `'ascii'`
+- **Default:** `'utf8'`
 
-By default, Rsbuild's output is ASCII-only and will escape all non-ASCII characters.
+The `charset` config allows you to specify the character encoding format for output files to ensure they are displayed correctly in different environments.
 
-If you want to output the original characters without using escape sequences, you can set `output.charset` to `utf8`.
+## UTF8
+
+By default, Rsbuild's output is UTF8 encoded.
+
+Rsbuild adds the `<meta charset="utf-8">` tag to HTML by default. You can change this using the [html.meta](/config/html/meta) config.
+
+## ASCII
+
+If you want the output files to use ASCII encoding, you can set this in the config file like this:
 
 ```js
 export default {
   output: {
-    charset: 'utf8',
+    charset: 'ascii',
   },
 };
 ```
+
+When using ASCII encoding, all non-ASCII characters are escaped with backslashes, which may make the files slightly larger and harder to read.

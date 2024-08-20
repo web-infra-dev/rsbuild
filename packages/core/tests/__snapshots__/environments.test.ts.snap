@@ -32,7 +32,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
   "mode": "development",
   "output": {
     "assetPrefix": "/",
-    "charset": "ascii",
+    "charset": "utf8",
     "cleanDistPath": "auto",
     "cssModules": {
       "auto": true,
@@ -156,7 +156,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
   "mode": "development",
   "output": {
     "assetPrefix": "/",
-    "charset": "ascii",
+    "charset": "utf8",
     "cleanDistPath": "auto",
     "cssModules": {
       "auto": true,
@@ -281,7 +281,7 @@ exports[`environment config > should print environment config when inspect confi
     "mode": "development",
     "output": {
       "assetPrefix": "/",
-      "charset": "ascii",
+      "charset": "utf8",
       "cleanDistPath": "auto",
       "cssModules": {
         "auto": true,
@@ -438,7 +438,7 @@ exports[`environment config > should print environment config when inspect confi
     "mode": "development",
     "output": {
       "assetPrefix": "/",
-      "charset": "ascii",
+      "charset": "utf8",
       "cleanDistPath": "auto",
       "cssModules": {
         "auto": true,
@@ -613,7 +613,7 @@ exports[`environment config > should support modify environment config by api.mo
     "mode": "development",
     "output": {
       "assetPrefix": "/",
-      "charset": "ascii",
+      "charset": "utf8",
       "cleanDistPath": "auto",
       "cssModules": {
         "auto": true,
@@ -771,7 +771,7 @@ exports[`environment config > should support modify environment config by api.mo
     "mode": "development",
     "output": {
       "assetPrefix": "/",
-      "charset": "ascii",
+      "charset": "utf8",
       "cleanDistPath": "auto",
       "cssModules": {
         "auto": true,
@@ -930,7 +930,7 @@ exports[`environment config > should support modify environment config by api.mo
     "mode": "development",
     "output": {
       "assetPrefix": "/",
-      "charset": "ascii",
+      "charset": "utf8",
       "cleanDistPath": "auto",
       "cssModules": {
         "auto": true,
@@ -1092,7 +1092,7 @@ exports[`environment config > should support modify single environment config by
     "mode": "development",
     "output": {
       "assetPrefix": "/",
-      "charset": "ascii",
+      "charset": "utf8",
       "cleanDistPath": "auto",
       "cssModules": {
         "auto": true,
@@ -1250,7 +1250,7 @@ exports[`environment config > should support modify single environment config by
     "mode": "development",
     "output": {
       "assetPrefix": "/",
-      "charset": "ascii",
+      "charset": "utf8",
       "cleanDistPath": "auto",
       "cssModules": {
         "auto": true,

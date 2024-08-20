@@ -34,7 +34,7 @@ describe('plugin-minimize', () => {
               "extractComments": true,
               "minimizerOptions": {
                 "format": {
-                  "asciiOnly": true,
+                  "asciiOnly": false,
                 },
               },
             },
@@ -217,7 +217,7 @@ describe('plugin-minimize', () => {
                   "drop_console": true,
                 },
                 "format": {
-                  "asciiOnly": true,
+                  "asciiOnly": false,
                 },
               },
             },
@@ -302,7 +302,7 @@ describe('plugin-minimize', () => {
                   ],
                 },
                 "format": {
-                  "asciiOnly": true,
+                  "asciiOnly": false,
                 },
               },
             },

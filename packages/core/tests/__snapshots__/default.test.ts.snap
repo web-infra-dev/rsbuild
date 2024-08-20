@@ -687,7 +687,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "extractComments": true,
             "minimizerOptions": {
               "format": {
-                "asciiOnly": true,
+                "asciiOnly": false,
               },
             },
           },
