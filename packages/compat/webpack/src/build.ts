@@ -12,10 +12,6 @@ export const build = async (
 ): Promise<void | {
   close: () => Promise<void>;
 }> => {
-  if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV = 'production';
-  }
-
   const { context } = initOptions;
 
   let compiler: Rspack.Compiler | Rspack.MultiCompiler;
