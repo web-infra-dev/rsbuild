@@ -226,17 +226,6 @@ exports[`should ensure isolation of PostCSS config objects between different bui
         },
       },
       {
-        "loader": "builtin:lightningcss-loader",
-        "options": {
-          "targets": [
-            "chrome >= 87",
-            "edge >= 88",
-            "firefox >= 78",
-            "safari >= 14",
-          ],
-        },
-      },
-      {
         "loader": "<ROOT>/packages/core/compiled/postcss-loader/index.js",
         "options": {
           "implementation": "<ROOT>/packages/core/compiled/postcss/index.js",
@@ -249,6 +238,17 @@ exports[`should ensure isolation of PostCSS config objects between different bui
             ],
           },
           "sourceMap": false,
+        },
+      },
+      {
+        "loader": "builtin:lightningcss-loader",
+        "options": {
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
         },
       },
     ],

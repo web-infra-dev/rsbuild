@@ -251,7 +251,7 @@ async function applyCSSRule({
   }
 
   // Put `builtin:lightningcss-loader` in front of `PostCSS`
-  // `buildin:lightningcss-loader` affects `normalizewhitespace` in the PostCss by cssnano
+  // `buildIn:lightningcss-loader` affects `normalizeWhitespace` in the PostCss by cssnano
   if (target === 'web') {
     // `builtin:lightningcss-loader` is not supported when using webpack
     if (

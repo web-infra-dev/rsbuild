@@ -153,7 +153,7 @@ describe('plugin-css injectStyles', () => {
   });
 });
 
-it('should ensure isolation of PostCSS config objects between different builds', async () => {
+it('should ensure isolation of PostCSS config is behind builtin:lightningcss-loader', async () => {
   const rsbuild = await createStubRsbuild({
     plugins: [pluginCss()],
     rsbuildConfig: {
