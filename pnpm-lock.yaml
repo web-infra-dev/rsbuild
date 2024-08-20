@@ -756,8 +756,8 @@ importers:
         specifier: ^4.10.2
         version: 4.10.2
       webpack-dev-middleware:
-        specifier: 7.2.1
-        version: 7.2.1(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
+        specifier: 7.4.1
+        version: 7.4.1(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
       webpack-merge:
         specifier: 6.0.1
         version: 6.0.1
@@ -7419,8 +7419,8 @@ packages:
     engines: {node: '>= 10.13.0'}
     hasBin: true
 
-  webpack-dev-middleware@7.2.1:
-    resolution: {integrity: sha512-hRLz+jPQXo999Nx9fXVdKlg/aehsw1ajA9skAneGmT03xwmyuhvF93p6HUKKbWhXdcERtGTzUCtIQr+2IQegrA==}
+  webpack-dev-middleware@7.4.1:
+    resolution: {integrity: sha512-/t6KpZw/bnmCR0VKILjJT05mWecbf1aIM2VxCJUvBbg0iXqaQJFxbJ4PCrsY4iBH7PGwnccm4BYyoP1G+lGfAA==}
     engines: {node: '>= 18.12.0'}
     peerDependencies:
       webpack: ^5.0.0
@@ -14586,7 +14586,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  webpack-dev-middleware@7.2.1(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
+  webpack-dev-middleware@7.4.1(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
     dependencies:
       colorette: 2.0.20
       memfs: 4.8.2
