@@ -10,24 +10,17 @@ import {
 } from '../helpers';
 import { registerDevHook } from '../hooks';
 import { logger } from '../logger';
-import type { DevMiddlewareAPI } from '../server/devMiddleware';
-import type {
-  DevConfig,
-  InternalContext,
-  MultiStats,
-  Rspack,
-  Stats,
-} from '../types';
+import type { DevConfig, MultiStats, Rspack, Stats } from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
-export async function createCompiler({
-  context,
-  rspackConfigs,
-}: {
-  context: InternalContext;
+export async function createCompiler(options: InitConfigsOptions): Promise<{
+  compiler: Rspack.Compiler | Rspack.MultiCompiler;
   rspackConfigs: Rspack.Configuration[];
-}): Promise<Rspack.Compiler | Rspack.MultiCompiler> {
+}> {
   logger.debug('create compiler');
+  const { context } = options;
+  const { rspackConfigs } = await initConfigs(options);
+
   await context.hooks.onBeforeCreateCompiler.call({
     bundlerConfigs: rspackConfigs,
     environments: context.environments,
@@ -124,7 +117,10 @@ export async function createCompiler({
   });
   logger.debug('create compiler done');
 
-  return compiler;
+  return {
+    compiler,
+    rspackConfigs,
+  };
 }
 
 export type MiddlewareCallbacks = {
@@ -154,30 +150,3 @@ export type DevMiddlewareOptions = {
   /** whether use Server Side Render */
   serverSideRender?: boolean;
 };
-
-export type CreateDevMiddlewareReturns = {
-  devMiddleware: (options: DevMiddlewareOptions) => DevMiddlewareAPI;
-  compiler: Rspack.Compiler | Rspack.MultiCompiler;
-};
-
-export async function createDevMiddleware(
-  options: InitConfigsOptions,
-  customCompiler?: Rspack.Compiler | Rspack.MultiCompiler,
-): Promise<CreateDevMiddlewareReturns> {
-  let compiler: Rspack.Compiler | Rspack.MultiCompiler;
-  if (customCompiler) {
-    compiler = customCompiler;
-  } else {
-    const { rspackConfigs } = await initConfigs(options);
-    compiler = await createCompiler({
-      context: options.context,
-      rspackConfigs,
-    });
-  }
-
-  const { getDevMiddleware } = await import('../server/devMiddleware');
-  return {
-    devMiddleware: await getDevMiddleware(compiler),
-    compiler,
-  };
-}

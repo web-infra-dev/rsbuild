@@ -22,5 +22,4 @@ export { getChainUtils, getConfigUtils } from './provider/rspackConfig';
 export { chainToConfig, modifyBundlerChain } from './configChain';
 export { applySwcDecoratorConfig } from './plugins/swc';
 export { getSwcMinimizerOptions } from './plugins/minimize';
-export { getDevMiddleware } from './server/devMiddleware';
 export { createDevServer } from './server/devServer';

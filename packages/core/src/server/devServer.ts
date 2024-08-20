@@ -5,15 +5,14 @@ import type Connect from 'connect';
 import { ROOT_DIST_DIR } from '../constants';
 import { getPublicPathFromCompiler, isMultiCompiler } from '../helpers';
 import { logger } from '../logger';
-import type { CreateDevMiddlewareReturns } from '../provider/createCompiler';
 import type {
+  CreateCompiler,
   CreateDevServerOptions,
   EnvironmentAPI,
   InternalContext,
   NormalizedConfig,
   NormalizedDevConfig,
   Rspack,
-  StartDevServerOptions,
   Stats,
 } from '../types';
 import { getTransformedHtml, loadBundle } from './environment';
@@ -96,10 +95,7 @@ export async function createDevServer<
   },
 >(
   options: Options,
-  createDevMiddleware: (
-    options: Options,
-    compiler: StartDevServerOptions['compiler'],
-  ) => Promise<CreateDevMiddlewareReturns>,
+  createCompiler: CreateCompiler,
   config: NormalizedConfig,
   {
     compiler: customCompiler,
@@ -146,10 +142,12 @@ export async function createDevServer<
   const startCompile: () => Promise<
     RsbuildDevMiddlewareOptions['compileMiddlewareAPI']
   > = async () => {
-    const { devMiddleware, compiler } = await createDevMiddleware(
-      options,
-      customCompiler,
-    );
+    const compiler = customCompiler || (await createCompiler());
+
+    if (!compiler) {
+      throw new Error('Failed to get compiler instance.');
+    }
+
     const { CompilerDevMiddleware } = await import('./compilerDevMiddleware');
 
     const publicPaths = isMultiCompiler(compiler)
@@ -161,7 +159,7 @@ export async function createDevServer<
       dev: devConfig,
       server: config.server,
       publicPaths: publicPaths,
-      devMiddleware,
+      compiler,
     });
 
     await compilerDevMiddleware.init();

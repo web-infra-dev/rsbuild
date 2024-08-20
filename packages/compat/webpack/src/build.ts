@@ -3,7 +3,7 @@ import type { BuildOptions, Rspack } from '@rsbuild/core';
 import type { Configuration as WebpackConfig } from 'webpack';
 import WebpackMultiStats from 'webpack/lib/MultiStats.js';
 import { createCompiler } from './createCompiler';
-import { type InitConfigsOptions, initConfigs } from './initConfigs';
+import type { InitConfigsOptions } from './initConfigs';
 import { registerBuildHook } from './shared';
 
 export const build = async (
@@ -20,14 +20,9 @@ export const build = async (
   if (customCompiler) {
     compiler = customCompiler;
   } else {
-    const { webpackConfigs } = await initConfigs(initOptions);
-    compiler = await createCompiler({
-      context,
-      webpackConfigs,
-    });
-
-    // assign webpackConfigs
-    bundlerConfigs = webpackConfigs;
+    const result = await createCompiler(initOptions);
+    compiler = result.compiler;
+    bundlerConfigs = result.webpackConfigs;
   }
 
   registerBuildHook({

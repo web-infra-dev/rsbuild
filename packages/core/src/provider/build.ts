@@ -3,7 +3,7 @@ import { registerBuildHook } from '../hooks';
 import { logger } from '../logger';
 import type { BuildOptions, MultiStats, Rspack, Stats } from '../types';
 import { createCompiler } from './createCompiler';
-import { type InitConfigsOptions, initConfigs } from './initConfigs';
+import type { InitConfigsOptions } from './initConfigs';
 
 export const build = async (
   initOptions: InitConfigsOptions,
@@ -19,12 +19,9 @@ export const build = async (
   if (customCompiler) {
     compiler = customCompiler as any;
   } else {
-    const { rspackConfigs } = await initConfigs(initOptions);
-    compiler = await createCompiler({
-      context,
-      rspackConfigs,
-    });
-    bundlerConfigs = rspackConfigs;
+    const result = await createCompiler(initOptions);
+    compiler = result.compiler;
+    bundlerConfigs = result.rspackConfigs;
   }
 
   registerBuildHook({
