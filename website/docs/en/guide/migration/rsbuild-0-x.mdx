@@ -94,7 +94,7 @@ export default {
 
 ## source.alias
 
-Removed `target` param for `source.alias` function, use `environment` config instead.
+Removed `target` param for `source.alias` function, use [environments](/config/environments) config instead.
 
 - before:
 
@@ -146,7 +146,7 @@ export default {
 
 ## source.entry
 
-Removed function usage of `source.entry`, use `environments` config instead.
+Removed function usage of `source.entry`, use [environments](/config/environments) config instead.
 
 - before:
 
@@ -203,7 +203,7 @@ export default {
 
 ## output.overrideBrowserslist
 
-`output.overrideBrowserslist` no longer supports `Record<RsbuildTarget, string[]` type, use `environments` config instead.
+`output.overrideBrowserslist` no longer supports `Record<RsbuildTarget, string[]` type, use [environments](/config/environments) config instead.
 
 - before:
 
@@ -239,7 +239,7 @@ export default defineConfig({
 
 ## output.emitAssets
 
-`output.emitAssets` changed to boolean type, use `environments` config instead.
+`output.emitAssets` changed to boolean type, use [environments](/config/environments) config instead.
 
 - before:
 
@@ -274,7 +274,7 @@ export default {
 
 ## output.distPath.server
 
-Removed `output.distPath.server`, use the `environments` config instead.
+Removed `output.distPath.server`, use the [environments](/config/environments) config instead.
 
 ```js
 export default {
@@ -314,9 +314,23 @@ export default {
 
 And we plan to use some faster Rust-based HTML minimizer in the future.
 
+## output.charset
+
+The default value of [output.charset](/config/output/charset) has been changed from `ascii` to `utf8`.
+
+If you need to use `ascii`, you can add the following config:
+
+```ts
+export default {
+  output: {
+    charset: 'ascii',
+  },
+};
+```
+
 ## dev.startUrl
 
-`dev.startUrl` has been renamed to `server.open`:
+`dev.startUrl` has been renamed to [server.open](/config/server/open):
 
 ```diff
 export default {
@@ -338,6 +352,34 @@ export default {
   dev: {
     client: {
       port: '<port>',
+    },
+  },
+};
+```
+
+## html.appIcon
+
+Previously, [html.appIcon](/config/html/app-icon) did not support for web app manifests, meaning it was only available on iOS.
+
+Now `html.appIcon` supports generating web app manifests, and the type of `html.appIcon` has been changed.
+
+- before:
+
+```js
+export default {
+  html: {
+    appIcon: './src/icon.png',
+  },
+};
+```
+
+- after:
+
+```js
+export default {
+  html: {
+    appIcon: {
+      icons: [{ src: './src/icon.png', size: 180 }],
     },
   },
 };

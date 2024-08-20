@@ -56,12 +56,12 @@ export default defineConfig({
 ## [重要] output.targets
 
 :::tip
-Rsbuild v1 移除了 `output.targets` 选项和 `source.alias` / `source.entry` 等配置的 target 参数，改为通过 `environments` 配置以提供更灵活的多环境配置能力。
+Rsbuild v1 移除了 `output.targets` 选项，以及 `source.alias` / `source.entry` 等配置的 target 参数，改为通过 `environments` 配置以提供更灵活的多环境配置能力。
 
 对比原有选项，`environments` 覆盖范围更广，可对更多配置项进行多环境差异化配置。详情可参考[多环境构建](/guide/advanced/environments)。
 :::
 
-移除 `output.targets` 参数，改用 [output.target](/config/output/target) 和 [environments](/config/environments) 配置。
+移除 `output.targets` 配置，改用 [output.target](/config/output/target) 和 [environments](/config/environments) 配置。
 
 - before:
 
@@ -94,7 +94,7 @@ export default {
 
 ## source.alias
 
-移除 `source.alias` 函数的 `target` 参数，改用 `environments` 配置。
+移除 `source.alias` 函数的 `target` 参数，改用 [environments](/config/environments) 配置。
 
 - before:
 
@@ -146,7 +146,7 @@ export default {
 
 ## source.entry
 
-移除了 `source.entry` 函数用法，改为使用 `environments` 配置。
+移除了 `source.entry` 函数用法，改为使用 [environments](/config/environments) 配置。
 
 - before:
 
@@ -203,7 +203,7 @@ export default {
 
 ## output.overrideBrowserslist
 
-`output.overrideBrowserslist` 不再支持 `Record<RsbuildTarget, string[]>` 类型，使用 `environments` 配置代替。
+`output.overrideBrowserslist` 不再支持 `Record<RsbuildTarget, string[]>` 类型，使用 [environments](/config/environments) 配置代替。
 
 - before:
 
@@ -239,7 +239,7 @@ export default defineConfig({
 
 ## output.emitAssets
 
-`output.emitAssets` 调整为 boolean 类型，使用 `environments` 配置代替。
+`output.emitAssets` 调整为 boolean 类型，使用 [environments](/config/environments) 配置代替。
 
 - before:
 
@@ -274,7 +274,7 @@ export default {
 
 ## output.distPath.server
 
-移除 `output.distPath.server`，使用 `environments` 配置代替。
+移除 `output.distPath.server`，使用 [environments](/config/environments) 配置代替。
 
 ```js
 export default {
@@ -314,9 +314,23 @@ export default {
 
 我们计划在未来使用一些性能更好的基于 Rust 的 HTML 压缩器。
 
+## output.charset
+
+[output.charset](/config/output/charset) 的默认值由 `ascii` 调整为 `utf8`。
+
+如果你需要使用 `ascii`，可以添加配置：
+
+```ts
+export default {
+  output: {
+    charset: 'ascii',
+  },
+};
+```
+
 ## dev.startUrl
 
-`dev.startUrl` 被重命名为 `server.open`：
+`dev.startUrl` 被重命名为 [server.open](/config/server/open)：
 
 ```diff
 export default {
@@ -338,6 +352,34 @@ export default {
   dev: {
     client: {
       port: '<port>',
+    },
+  },
+};
+```
+
+## html.appIcon
+
+之前，[html.appIcon](/config/html/app-icon) 不支持 web app manifests，这意味着它仅适用于 iOS。
+
+现在 `html.appIcon` 支持生成 web app manifests，并且 `html.appIcon` 的类型有变更。
+
+- before:
+
+```js
+export default {
+  html: {
+    appIcon: './src/icon.png',
+  },
+};
+```
+
+- after:
+
+```js
+export default {
+  html: {
+    appIcon: {
+      icons: [{ src: './src/icon.png', size: 180 }],
     },
   },
 };
