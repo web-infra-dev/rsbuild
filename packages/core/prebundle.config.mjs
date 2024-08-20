@@ -138,14 +138,8 @@ export default {
       name: 'webpack-bundle-analyzer',
     },
     {
-      name: 'webpack-dev-middleware',
-      externals: {
-        'schema-utils': './schema-utils',
-        'schema-utils/declarations/validate':
-          'schema-utils/declarations/validate',
-      },
+      name: 'rsbuild-dev-middleware',
       ignoreDts: true,
-      afterBundle: writeEmptySchemaUtils,
     },
     {
       name: 'style-loader',

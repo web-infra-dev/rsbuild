@@ -189,7 +189,7 @@ const applyDefaultMiddlewares = async ({
 
     middlewares.push(historyApiFallbackMiddleware);
 
-    // ensure fallback request can be handled by webpack-dev-middleware
+    // ensure fallback request can be handled by rsbuild-dev-middleware
     compileMiddlewareAPI?.middleware &&
       middlewares.push(compileMiddlewareAPI.middleware);
   }

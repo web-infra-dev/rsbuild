@@ -38,7 +38,7 @@ function getClientPaths(devConfig: DevConfig) {
 
 /**
  * Setup compiler-related logic:
- * 1. setup webpack-dev-middleware
+ * 1. setup rsbuild-dev-middleware
  * 2. establish webSocket connect
  */
 export class CompilerDevMiddleware {
@@ -152,7 +152,7 @@ export class CompilerDevMiddleware {
 
     warp.close = middleware.close;
 
-    // warp webpack-dev-middleware to handle html file（without publicPath）
+    // warp rsbuild-dev-middleware to handle html file（without publicPath）
     // maybe we should serve html file by sirv
     return warp;
   }
