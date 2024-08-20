@@ -66,11 +66,8 @@ export class CompilerDevMiddleware {
 
   public async init(): Promise<void> {
     // start compiling
-    this.middleware = this.setupDevMiddleware(
-      await getDevMiddleware(this.compiler),
-      this.publicPaths,
-    );
-
+    const devMiddleware = await getDevMiddleware(this.compiler);
+    this.middleware = this.setupDevMiddleware(devMiddleware, this.publicPaths);
     await this.socketServer.prepare();
   }
 
