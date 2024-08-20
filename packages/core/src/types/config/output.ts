@@ -220,9 +220,9 @@ export interface OutputConfig {
    */
   filename?: FilenameConfig;
   /**
-   * By default, Rsbuild's output is ASCII-only and will escape all non-ASCII characters.
-   * If you want to output the original characters without using escape sequences,
-   * you can set `output.charset` to `utf8`.
+   * Specify the character encoding format for output files.
+   * Can be `ascii` or `utf8`.
+   * @default 'utf8'
    */
   charset?: Charset;
   /**

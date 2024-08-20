@@ -818,7 +818,7 @@ exports[`plugin-swc > should set correct swc minimizer options in production 1`]
         "jsMinify": {
           "compress": false,
           "format": {
-            "asciiOnly": true,
+            "asciiOnly": false,
           },
           "mangle": false,
         },
@@ -845,7 +845,7 @@ exports[`plugin-swc > should set correct swc minimizer options using raw swc con
         "jsMinify": {
           "compress": false,
           "format": {
-            "asciiOnly": true,
+            "asciiOnly": false,
           },
           "mangle": false,
         },
@@ -1037,7 +1037,7 @@ exports[`plugin-swc > should set swc minimizer in production 1`] = `
         "cssMinify": undefined,
         "jsMinify": {
           "format": {
-            "asciiOnly": true,
+            "asciiOnly": false,
           },
           "mangle": true,
         },
@@ -1300,7 +1300,7 @@ exports[`plugin-swc > should use output config 1`] = `
                 "ecma": 2019,
               },
               "format": {
-                "asciiOnly": true,
+                "asciiOnly": false,
               },
               "mangle": true,
             },

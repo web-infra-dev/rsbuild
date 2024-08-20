@@ -1,16 +1,26 @@
 # output.charset
 
 - **类型：** `'ascii' | 'utf8'`
-- **默认值：** `'ascii'`
+- **默认值：** `'utf8'`
 
-默认情况下，Rsbuild 的产物内容是纯 ASCII 的，并且会转义所有非 ASCII 字符。
+`charset` 配置项允许你指定输出文件的字符编码格式，以确保它们在不同的环境中能够正确显示。
 
-如果你不希望对字符进行转义，而是输出所有原始字符，可以将 `output.charset` 设置为 `utf8`。
+## UTF8
+
+默认情况下，Rsbuild 的输出是 UTF8 编码。
+
+Rsbuild 默认会在 HTML 中添加 `<meta charset="utf-8">` 标签，你可以通过 [html.meta](/config/html/meta) 配置项来修改它。
+
+## ASCII
+
+如果你希望输出文件使用 ASCII 编码，可以在配置文件中这样设置：
 
 ```js
 export default {
   output: {
-    charset: 'utf8',
+    charset: 'ascii',
   },
 };
 ```
+
+使用 ASCII 编码时，任何非 ASCII 字符都使用反斜杠进行转义，这通常会生成稍大一点的文件，也使其更难阅读。
