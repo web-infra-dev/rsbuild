@@ -39,18 +39,18 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     },
 
     async createDevServer(options) {
-      const { createDevMiddleware } = await import('./createCompiler');
+      const { initConfigAndCompiler } = await import('./createCompiler');
       const config = await initRsbuildConfig({ context, pluginManager });
       return createDevServer(
         { context, pluginManager, rsbuildOptions },
-        createDevMiddleware,
+        initConfigAndCompiler,
         config,
         options,
       );
     },
 
     async startDevServer(options) {
-      const { createDevMiddleware } = await import('./createCompiler');
+      const { initConfigAndCompiler } = await import('./createCompiler');
       const config = await initRsbuildConfig({
         context,
         pluginManager,
@@ -61,7 +61,7 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
           pluginManager,
           rsbuildOptions,
         },
-        createDevMiddleware,
+        initConfigAndCompiler,
         config,
         options,
       );

@@ -4,7 +4,6 @@ import { type InitConfigsOptions, initConfigs } from './initConfigs';
 import {
   type InternalContext,
   formatStats,
-  getDevMiddleware,
   getStatsOptions,
   registerDevHook,
 } from './shared';
@@ -67,23 +66,17 @@ export async function createCompiler({
   return compiler;
 }
 
-export async function createDevMiddleware(
+export async function initConfigAndCompiler(
   options: InitConfigsOptions,
   customCompiler?: Rspack.Compiler | Rspack.MultiCompiler,
-) {
-  let compiler: Rspack.Compiler | Rspack.MultiCompiler;
+): Promise<Rspack.Compiler | Rspack.MultiCompiler> {
   if (customCompiler) {
-    compiler = customCompiler;
-  } else {
-    const { webpackConfigs } = await initConfigs(options);
-    compiler = await createCompiler({
-      context: options.context,
-      webpackConfigs,
-    });
+    return customCompiler;
   }
 
-  return {
-    devMiddleware: await getDevMiddleware(compiler),
-    compiler,
-  };
+  const { webpackConfigs } = await initConfigs(options);
+  return createCompiler({
+    context: options.context,
+    webpackConfigs,
+  });
 }

@@ -27,11 +27,11 @@ export const rspackProvider: RsbuildProvider = async ({
 
     async createDevServer(options) {
       const { createDevServer } = await import('../server/devServer');
-      const { createDevMiddleware } = await import('./createCompiler');
+      const { initConfigAndCompiler } = await import('./createCompiler');
       const config = await initRsbuildConfig({ context, pluginManager });
       return createDevServer(
         { context, pluginManager, rsbuildOptions },
-        createDevMiddleware,
+        initConfigAndCompiler,
         config,
         options,
       );
@@ -39,12 +39,12 @@ export const rspackProvider: RsbuildProvider = async ({
 
     async startDevServer(options) {
       const { createDevServer } = await import('../server/devServer');
-      const { createDevMiddleware } = await import('./createCompiler');
+      const { initConfigAndCompiler } = await import('./createCompiler');
       const config = await initRsbuildConfig({ context, pluginManager });
 
       const server = await createDevServer(
         { context, pluginManager, rsbuildOptions },
-        createDevMiddleware,
+        initConfigAndCompiler,
         config,
         options,
       );

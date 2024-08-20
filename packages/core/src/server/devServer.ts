@@ -5,7 +5,6 @@ import type Connect from 'connect';
 import { ROOT_DIST_DIR } from '../constants';
 import { getPublicPathFromCompiler, isMultiCompiler } from '../helpers';
 import { logger } from '../logger';
-import type { CreateDevMiddlewareReturns } from '../provider/createCompiler';
 import type {
   CreateDevServerOptions,
   EnvironmentAPI,
@@ -96,10 +95,10 @@ export async function createDevServer<
   },
 >(
   options: Options,
-  createDevMiddleware: (
+  initConfigAndCompiler: (
     options: Options,
     compiler: StartDevServerOptions['compiler'],
-  ) => Promise<CreateDevMiddlewareReturns>,
+  ) => Promise<Rspack.Compiler | Rspack.MultiCompiler>,
   config: NormalizedConfig,
   {
     compiler: customCompiler,
@@ -146,10 +145,7 @@ export async function createDevServer<
   const startCompile: () => Promise<
     RsbuildDevMiddlewareOptions['compileMiddlewareAPI']
   > = async () => {
-    const { devMiddleware, compiler } = await createDevMiddleware(
-      options,
-      customCompiler,
-    );
+    const compiler = await initConfigAndCompiler(options, customCompiler);
     const { CompilerDevMiddleware } = await import('./compilerDevMiddleware');
 
     const publicPaths = isMultiCompiler(compiler)
@@ -161,7 +157,7 @@ export async function createDevServer<
       dev: devConfig,
       server: config.server,
       publicPaths: publicPaths,
-      devMiddleware,
+      compiler,
     });
 
     await compilerDevMiddleware.init();
