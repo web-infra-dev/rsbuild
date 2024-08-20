@@ -237,10 +237,11 @@ async function applyCSSRule({
   rule.use(CHAIN_ID.USE.CSS).loader(getCompiledPath('css-loader'));
 
   if (target === 'web') {
-    // `builtin:lightningcss-loader` is not supported when using webpack
+    // `builtin:lightningcss-loader` is not supported when using webpack and inject styles
     if (
       context.bundlerType === 'rspack' &&
-      config.tools.lightningcssLoader !== false
+      config.tools.lightningcssLoader !== false &&
+      config.output.injectStyles !== true
     ) {
       importLoaders++;
 
