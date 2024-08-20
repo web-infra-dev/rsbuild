@@ -98,7 +98,7 @@ export type DevMiddlewareAPI = Middleware & {
 
 /**
  * The rsbuild/server do nothing about compiler, the devMiddleware need do such things to ensure dev works well:
- * - Call compiler.watch （normally did by webpack-dev-middleware）.
+ * - Call compiler.watch （normally did by rsbuild-dev-middleware）.
  * - Inject the hmr client path into page （the hmr client rsbuild/server already provide）.
  * - Notify server when compiler hooks are triggered.
  */
@@ -107,8 +107,8 @@ export type DevMiddleware = (options: DevMiddlewareOptions) => DevMiddlewareAPI;
 export const getDevMiddleware = async (
   multiCompiler: Compiler | MultiCompiler,
 ): Promise<NonNullable<DevMiddleware>> => {
-  const { default: webpackDevMiddleware } = await import(
-    'webpack-dev-middleware'
+  const { default: rsbuildDevMiddleware } = await import(
+    'rsbuild-dev-middleware'
   );
   return (options) => {
     const { clientPaths, clientConfig, callbacks, liveReload, ...restOptions } =
@@ -129,6 +129,6 @@ export const getDevMiddleware = async (
 
     applyToCompiler(multiCompiler, setupCompiler);
 
-    return webpackDevMiddleware(multiCompiler, restOptions);
+    return rsbuildDevMiddleware(multiCompiler, restOptions);
   };
 };

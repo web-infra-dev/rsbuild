@@ -50,6 +50,7 @@ export default {
     'rspack-manifest-plugin',
     'webpack-merge',
     'html-rspack-plugin',
+    'mrmime',
     {
       name: 'chokidar',
       externals: {
@@ -138,14 +139,11 @@ export default {
       name: 'webpack-bundle-analyzer',
     },
     {
-      name: 'webpack-dev-middleware',
+      name: 'rsbuild-dev-middleware',
       externals: {
-        'schema-utils': './schema-utils',
-        'schema-utils/declarations/validate':
-          'schema-utils/declarations/validate',
+        mrmime: '../mrmime',
       },
       ignoreDts: true,
-      afterBundle: writeEmptySchemaUtils,
     },
     {
       name: 'style-loader',

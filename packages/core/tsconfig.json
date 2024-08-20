@@ -15,6 +15,7 @@
       "jiti": ["./compiled/jiti"],
       "rslog": ["./compiled/rslog"],
       "dotenv": ["./compiled/dotenv"],
+      "mrmime": ["./compiled/mrmime"],
       "semver": ["./compiled/semver"],
       "connect": ["./compiled/connect"],
       "chokidar": ["./compiled/chokidar"],
@@ -30,7 +31,7 @@
       "webpack-bundle-analyzer": ["./compiled/webpack-bundle-analyzer"],
       "postcss-load-config": ["./compiled/postcss-load-config"],
       "rspack-manifest-plugin": ["./compiled/rspack-manifest-plugin"],
-      "webpack-dev-middleware": ["./compiled/webpack-dev-middleware"],
+      "rsbuild-dev-middleware": ["./compiled/rsbuild-dev-middleware"],
       "launch-editor-middleware": ["./compiled/launch-editor-middleware"],
       "browserslist-to-es-version": ["./compiled/browserslist-to-es-version"],
       "connect-history-api-fallback": [

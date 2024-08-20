@@ -728,6 +728,9 @@ importers:
       reduce-configs:
         specifier: ^1.0.0
         version: 1.0.0
+      rsbuild-dev-middleware:
+        specifier: 0.1.0
+        version: 0.1.0(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
       rslog:
         specifier: ^1.2.2
         version: 1.2.2
@@ -755,9 +758,6 @@ importers:
       webpack-bundle-analyzer:
         specifier: ^4.10.2
         version: 4.10.2
-      webpack-dev-middleware:
-        specifier: 7.2.1
-        version: 7.2.1(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
       webpack-merge:
         specifier: 6.0.1
         version: 6.0.1
@@ -3786,9 +3786,6 @@ packages:
   color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
 
-  colorette@2.0.20:
-    resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
-
   combined-stream@1.0.8:
     resolution: {integrity: sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==}
     engines: {node: '>= 0.8'}
@@ -6411,6 +6408,15 @@ packages:
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
+  rsbuild-dev-middleware@0.1.0:
+    resolution: {integrity: sha512-3vJLLIJgMgTE3pPctoyIw+gAjlF4cgGkp/ujtZjgoNnFqv5AomDFv6sg0AE1ehV2zSN8Vx9aeVxARslFofHXUg==}
+    engines: {node: '>= 18.12.0'}
+    peerDependencies:
+      webpack: ^5.0.0
+    peerDependenciesMeta:
+      webpack:
+        optional: true
+
   rsbuild-plugin-google-analytics@1.0.2:
     resolution: {integrity: sha512-V2RjSPW0xFDCpH5W6N7zYuYxyZxklsaE/H3WwNCDW+52vBouYAZ8/SDJ1w8ogbfzysX7TcNm3hId42dJU49IOg==}
     peerDependencies:
@@ -7418,15 +7424,6 @@ packages:
     resolution: {integrity: sha512-vJptkMm9pk5si4Bv922ZbKLV8UTT4zib4FPgXMhgzUny0bfDDkLXAVQs3ly3fS4/TN9ROFtb0NFrm04UXFE/Vw==}
     engines: {node: '>= 10.13.0'}
     hasBin: true
-
-  webpack-dev-middleware@7.2.1:
-    resolution: {integrity: sha512-hRLz+jPQXo999Nx9fXVdKlg/aehsw1ajA9skAneGmT03xwmyuhvF93p6HUKKbWhXdcERtGTzUCtIQr+2IQegrA==}
-    engines: {node: '>= 18.12.0'}
-    peerDependencies:
-      webpack: ^5.0.0
-    peerDependenciesMeta:
-      webpack:
-        optional: true
 
   webpack-merge@6.0.1:
     resolution: {integrity: sha512-hXXvrjtx2PLYx4qruKl+kyRSLc52V+cCvMxRjmKwoA+CBbbF5GfIBtR6kCvl0fYGqTUPKB+1ktVmTHqMOzgCBg==}
@@ -10622,8 +10619,6 @@ snapshots:
 
   color-name@1.1.4: {}
 
-  colorette@2.0.20: {}
-
   combined-stream@1.0.8:
     dependencies:
       delayed-stream: 1.0.0
@@ -13548,6 +13543,15 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.17.1
       fsevents: 2.3.3
 
+  rsbuild-dev-middleware@0.1.0(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
+    dependencies:
+      memfs: 4.8.2
+      mrmime: 2.0.0
+      on-finished: 2.4.1
+      range-parser: 1.2.1
+    optionalDependencies:
+      webpack: 5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))
+
   rsbuild-plugin-google-analytics@1.0.2(@rsbuild/core@packages+core):
     optionalDependencies:
       '@rsbuild/core': link:packages/core
@@ -14585,17 +14589,6 @@ snapshots:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
-
-  webpack-dev-middleware@7.2.1(webpack@5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
-    dependencies:
-      colorette: 2.0.20
-      memfs: 4.8.2
-      mime-types: 2.1.35
-      on-finished: 2.4.1
-      range-parser: 1.2.1
-      schema-utils: 4.2.0
-    optionalDependencies:
-      webpack: 5.93.0(@swc/core@1.6.13(@swc/helpers@0.5.3))
 
   webpack-merge@6.0.1:
     dependencies:
