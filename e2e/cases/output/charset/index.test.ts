@@ -1,10 +1,15 @@
 import { build, gotoPage } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('output.charset default (ascii)', async ({ page }) => {
+test('should allow to set output.charset to ascii', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     runServer: true,
+    rsbuildConfig: {
+      output: {
+        charset: 'ascii',
+      },
+    },
   });
 
   await gotoPage(page, rsbuild);
@@ -24,7 +29,7 @@ test('output.charset default (ascii)', async ({ page }) => {
   await rsbuild.close();
 });
 
-test('output.charset (utf8)', async ({ page }) => {
+test('should allow to set output.charset to utf8', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
