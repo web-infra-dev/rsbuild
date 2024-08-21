@@ -36,7 +36,7 @@ type HTTPServer = Server | Http2SecureServer;
 
 export type RsbuildDevServer = {
   /**
-   * Use rsbuild inner server to listen
+   * Listen the Rsbuild server.
    */
   listen: () => Promise<{
     port: number;
@@ -46,33 +46,31 @@ export type RsbuildDevServer = {
     };
   }>;
 
-  /** The following APIs will be used when you use a custom server */
+  /** The following APIs can be used when using a custom server */
 
-  /** The Rsbuild server environment API */
+  /**
+   * The Rsbuild server environment API
+   */
   environments: EnvironmentAPI;
 
   /**
    * The resolved port.
-   *
-   * By default, Rsbuild Server listens on port `3000` and automatically increments the port number when the port is occupied.
+   * By default, Rsbuild server listens on port `3000` and automatically increments the port number if the port is occupied.
    */
   port: number;
   /**
-   * connect app instance.
-   *
+   * The `connect` app instance.
    * Can be used to attach custom middlewares to the dev server.
    */
   middlewares: Connect.Server;
   /**
-   * Notify Rsbuild Server has started
-   *
-   * In Rsbuild, we will trigger onAfterStartDevServer hook in this stage
+   * Notify that the Rsbuild server has been started.
+   * Rsbuild will trigger `onAfterStartDevServer` hook in this stage.
    */
   afterListen: () => Promise<void>;
   /**
-   * Activate socket connection
-   *
-   * It will used when you use custom server
+   * Activate socket connection.
+   * This is used if you are using a custom server.
    */
   connectWebSocket: (options: { server: HTTPServer }) => void;
   /**
@@ -278,10 +276,9 @@ export async function createDevServer<
     }
   }
 
-  const server = {
+  const server: RsbuildDevServer = {
     port,
     middlewares,
-    outputFileSystem,
     environments: environmentAPI,
     listen: async () => {
       const httpServer = await createHttpServer({
