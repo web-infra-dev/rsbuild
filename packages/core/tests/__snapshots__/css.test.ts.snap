@@ -140,7 +140,7 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
 }
 `;
 
-exports[`should ensure isolation of PostCSS config objects between different builds 1`] = `
+exports[`should ensure isolation of PostCSS config is behind builtin:lightningcss-loader 1`] = `
 [
   {
     "resolve": {
@@ -168,17 +168,6 @@ exports[`should ensure isolation of PostCSS config objects between different bui
         },
       },
       {
-        "loader": "builtin:lightningcss-loader",
-        "options": {
-          "targets": [
-            "chrome >= 87",
-            "edge >= 88",
-            "firefox >= 78",
-            "safari >= 14",
-          ],
-        },
-      },
-      {
         "loader": "<ROOT>/packages/core/compiled/postcss-loader/index.js",
         "options": {
           "implementation": "<ROOT>/packages/core/compiled/postcss/index.js",
@@ -193,12 +182,23 @@ exports[`should ensure isolation of PostCSS config objects between different bui
           "sourceMap": false,
         },
       },
+      {
+        "loader": "builtin:lightningcss-loader",
+        "options": {
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
+        },
+      },
     ],
   },
 ]
 `;
 
-exports[`should ensure isolation of PostCSS config objects between different builds 2`] = `
+exports[`should ensure isolation of PostCSS config is behind builtin:lightningcss-loader 2`] = `
 [
   {
     "resolve": {
