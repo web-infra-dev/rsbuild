@@ -356,3 +356,34 @@ test('inline does not work in development mode when enable is auto', async ({
     ),
   ).resolves.toEqual(1);
 });
+
+test('styles and scripts are not inline by default in development mode when enable not set', async ({
+  page,
+}) => {
+  const rsbuild = await dev({
+    cwd: __dirname,
+    rsbuildConfig: {
+      tools: toolsConfig,
+      output: {
+        inlineStyles: true,
+        inlineScripts: /\.js$/,
+      },
+    },
+  });
+
+  await gotoPage(page, rsbuild);
+
+  // all index.js in page
+  await expect(
+    page.evaluate(
+      `document.querySelectorAll('script[src*="index.js"]').length`,
+    ),
+  ).resolves.toEqual(1);
+
+  // all index.css in page
+  await expect(
+    page.evaluate(
+      `document.querySelectorAll('link[href*="index.css"]').length`,
+    ),
+  ).resolves.toEqual(1);
+});
