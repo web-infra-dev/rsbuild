@@ -264,7 +264,7 @@ await rsbuild.startDevServer({
 
 Rsbuild 配备了一个内置的开发服务器，当你执行 `rsbuild dev` 时，将启动 Rsbuild dev server，并提供页面预览、路由、模块热更新等功能。
 
-如果你希望将 Rsbuild dev server 集成到自定义的 server 中，可以通过该方法获取 Rsbuild dev server 的实例方法，进行按需调用。
+如果你希望将 Rsbuild dev server 集成到自定义的 server 中，可以通过该方法获取 dev server 的实例方法，按需进行调用。
 
 - **类型：**
 
@@ -275,7 +275,6 @@ type EnvironmentAPI = {
      * 获取当前环境的构建信息
      */
     getStats: () => Promise<Stats>;
-
     /**
      * 在服务端加载并执行构建产物
      *
@@ -283,7 +282,6 @@ type EnvironmentAPI = {
      * @returns 入口模块的返回值
      */
     loadBundle: <T = unknown>(entryName: string) => Promise<T>;
-
     /**
      * 获取编译后的 HTML 模版内容
      */
@@ -292,31 +290,49 @@ type EnvironmentAPI = {
 };
 
 type RsbuildDevServer = {
-  /** 启动 Rsbuild DevServer */
+  /**
+   * 监听 Rsbuild server
+   * 当你使用自定义 server 时，不需要调用该方法
+   */
   listen: () => Promise<{
-    urls: string[];
     port: number;
-    server: Server;
+    urls: string[];
+    server: {
+      close: () => Promise<void>;
+    };
   }>;
-
-  /** 以下 API 在使用自定义 Server 时会用到 */
-
-  /** Rsbuild server environment API */
+  /**
+   * Rsbuild server 提供的 environment API
+   */
   environments: EnvironmentAPI;
-
-  /** 解析后的端口号 (默认情况下，Rsbuild Server 会监听 `3000` 端口，并在端口被占用时自动递增端口号。) */
+  /**
+   * 解析后的端口号
+   * 默认情况下，Rsbuild Server 会监听 `3000` 端口，如果端口被占用，则自动递增端口号
+   */
   port: number;
-
-  /** Connect 实例，包含 Rsbuild 内置中间件 */
-  middlewares: Middlewares;
-
-  /** 通知 Rsbuild 自定义 Server 已启动 */
+  /**
+   * `connect` 实例
+   * 可用于向 dev server 附加自定义中间件
+   */
+  middlewares: Connect.Server;
+  /**
+   * 通知 Rsbuild 自定义 Server 已启动
+   * Rsbuild 会在此阶段触发 `onAfterStartDevServer` 钩子
+   */
   afterListen: () => Promise<void>;
-
+  /**
+   * 激活 socket 连接
+   * 这确保了 HMR 正常工作
+   */
   connectWebSocket: (options: { server: HTTPServer }) => void;
-
-  /** 关闭 Rsbuild DevServer */
+  /**
+   * 关闭 Rsbuild server
+   */
   close: () => Promise<void>;
+  /**
+   * 打印 server URLs
+   */
+  printUrls: () => void;
 };
 
 type CreateDevServerOptions = {

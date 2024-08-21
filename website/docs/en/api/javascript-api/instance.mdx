@@ -242,7 +242,7 @@ await rsbuild.startDevServer({
 
 Rsbuild comes with a built-in dev server designed to improve the development experience. When you run the `rsbuild dev` command, the server will start, providing features such as page preview, routing, and hot module reloading.
 
-If you want to integrate Rsbuild dev server into an custom server, you can use this method to get the instance methods of Rsbuild dev server and call them on demand.
+If you want to integrate Rsbuild dev server into an custom server, you can use this method to get the instance methods of dev server and call them on demand.
 
 - **Type:**
 
@@ -253,7 +253,6 @@ type EnvironmentAPI = {
      * Get stats info about current environment.
      */
     getStats: () => Promise<Stats>;
-
     /**
      * Load and execute stats bundle in server.
      *
@@ -261,7 +260,6 @@ type EnvironmentAPI = {
      * @returns the return value of entry module.
      */
     loadBundle: <T = unknown>(entryName: string) => Promise<T>;
-
     /**
      * Get the compiled HTML template.
      */
@@ -270,39 +268,49 @@ type EnvironmentAPI = {
 };
 
 type RsbuildDevServer = {
-  /** start the Rsbuild DevServer */
-  listen: () => Promise<{
-    urls: string[];
-    port: number;
-    server: Server;
-  }>;
-
-  /** The following APIs will be used when you use a custom server */
-
-  /** The Rsbuild server environment API */
-  environments: EnvironmentAPI;
-
   /**
-   * The resolved port
-   *
-   * By default, Rsbuild Server listens on port `3000` and automatically increments the port number when the port is occupied.
+   * Listen the Rsbuild server.
+   * Do not call this method if you are using a custom server.
+   */
+  listen: () => Promise<{
+    port: number;
+    urls: string[];
+    server: {
+      close: () => Promise<void>;
+    };
+  }>;
+  /**
+   * Environment API of Rsbuild server.
+   */
+  environments: EnvironmentAPI;
+  /**
+   * The resolved port.
+   * By default, Rsbuild server listens on port `3000` and automatically increments the port number if the port is occupied.
    */
   port: number;
-
   /**
-   * connect app instance.
-   *
+   * The `connect` app instance.
    * Can be used to attach custom middlewares to the dev server.
    */
-  middlewares: Middlewares;
-
-  /** Notify Rsbuild that the custom server has started */
+  middlewares: Connect.Server;
+  /**
+   * Notify that the Rsbuild server has been started.
+   * Rsbuild will trigger `onAfterStartDevServer` hook in this stage.
+   */
   afterListen: () => Promise<void>;
-
+  /**
+   * Activate socket connection.
+   * This ensures that HMR works properly.
+   */
   connectWebSocket: (options: { server: HTTPServer }) => void;
-
-  /** close the Rsbuild DevServer */
+  /**
+   * Close the Rsbuild server.
+   */
   close: () => Promise<void>;
+  /**
+   * Print the server URLs.
+   */
+  printUrls: () => void;
 };
 
 type CreateDevServerOptions = {
