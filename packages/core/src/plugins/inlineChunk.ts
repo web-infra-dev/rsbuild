@@ -240,9 +240,9 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
 
         if (inlineScripts) {
           if (inlineScripts === true) {
-            scriptTests.push(JS_REGEX);
+            isProdMode && scriptTests.push(JS_REGEX);
           } else if (isRegExp(inlineScripts) || isFunction(inlineScripts)) {
-            scriptTests.push(inlineScripts);
+            isProdMode && scriptTests.push(inlineScripts);
           } else {
             const enable =
               inlineScripts.enable === 'auto'
@@ -256,9 +256,9 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
 
         if (inlineStyles) {
           if (inlineStyles === true) {
-            styleTests.push(CSS_REGEX);
+            isProdMode && styleTests.push(CSS_REGEX);
           } else if (isRegExp(inlineStyles) || isFunction(inlineStyles)) {
-            styleTests.push(inlineStyles);
+            isProdMode && styleTests.push(inlineStyles);
           } else {
             const enable =
               inlineStyles.enable === 'auto' ? isProdMode : inlineStyles.enable;
