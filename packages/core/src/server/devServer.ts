@@ -25,6 +25,7 @@ import {
   getAddressUrls,
   getRoutes,
   getServerConfig,
+  getServerTerminator,
   printServerURLs,
 } from './helper';
 import { createHttpServer } from './httpServer';
@@ -273,7 +274,7 @@ export async function createDevServer<
     }
   }
 
-  const server: RsbuildDevServer = {
+  const devServerAPI: RsbuildDevServer = {
     port,
     middlewares,
     environments: environmentAPI,
@@ -282,6 +283,7 @@ export async function createDevServer<
         serverConfig: config.server,
         middlewares,
       });
+      const serverTerminator = getServerTerminator(httpServer);
       logger.debug('listen dev server');
 
       return new Promise<StartServerResult>((resolve) => {
@@ -301,11 +303,10 @@ export async function createDevServer<
 
             logger.debug('listen dev server done');
 
-            await server.afterListen();
+            await devServerAPI.afterListen();
 
             const closeServer = async () => {
-              await server.close();
-              httpServer.close();
+              await Promise.all([devServerAPI.close(), serverTerminator()]);
             };
 
             onBeforeRestartServer(closeServer);
@@ -333,13 +334,12 @@ export async function createDevServer<
     },
     close: async () => {
       await options.context.hooks.onCloseDevServer.call();
-      await devMiddlewares.close();
-      await fileWatcher?.close();
+      await Promise.all([devMiddlewares.close(), fileWatcher?.close()]);
     },
     printUrls,
   };
 
   logger.debug('create dev server done');
 
-  return server;
+  return devServerAPI;
 }

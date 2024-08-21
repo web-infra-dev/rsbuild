@@ -15,6 +15,7 @@ import {
   getAddressUrls,
   getRoutes,
   getServerConfig,
+  getServerTerminator,
   printServerURLs,
 } from './helper';
 import { createHttpServer } from './httpServer';
@@ -140,7 +141,7 @@ export class RsbuildProdServer {
     });
   }
 
-  public close(): void {}
+  public async close(): Promise<void> {}
 }
 
 export async function startProdServer(
@@ -177,6 +178,7 @@ export async function startProdServer(
     serverConfig,
     middlewares: server.middlewares,
   });
+  const serverTerminator = getServerTerminator(httpServer);
 
   await server.onInit(httpServer);
 
@@ -204,18 +206,15 @@ export async function startProdServer(
           printUrls: serverConfig.printUrls,
         });
 
-        const onClose = () => {
-          server.close();
-          httpServer.close();
+        const onClose = async () => {
+          await Promise.all([server.close(), serverTerminator()]);
         };
 
         resolve({
           port,
           urls: urls.map((item) => item.url),
           server: {
-            close: async () => {
-              onClose();
-            },
+            close: async () => onClose(),
           },
         });
       },

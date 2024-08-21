@@ -1,4 +1,5 @@
-import type { IncomingMessage } from 'node:http';
+import type { IncomingMessage, Server } from 'node:http';
+import type { Http2SecureServer } from 'node:http2';
 import net from 'node:net';
 import type { Socket } from 'node:net';
 import os from 'node:os';
@@ -386,3 +387,35 @@ export const getAddressUrls = ({
 export const getCompilationName = (
   compiler: Rspack.Compiler | Rspack.Compilation,
 ) => `${compiler.name ?? ''}_${compiler.options.output.uniqueName ?? ''}`;
+
+export function getServerTerminator(
+  server: Server | Http2SecureServer,
+): () => Promise<void> {
+  let listened = false;
+  const pendingSockets = new Set<net.Socket>();
+
+  const onConnection = (socket: net.Socket) => {
+    pendingSockets.add(socket);
+    socket.on('close', () => {
+      pendingSockets.delete(socket);
+    });
+  };
+
+  server.on('connection', onConnection);
+  server.on('secureConnection', onConnection);
+  server.once('listening', () => {
+    listened = true;
+  });
+
+  return () =>
+    new Promise<void>((resolve, reject) => {
+      for (const socket of pendingSockets) {
+        socket.destroy();
+      }
+      if (listened) {
+        server.close((err) => (err ? reject(err) : resolve()));
+      } else {
+        resolve();
+      }
+    });
+}
