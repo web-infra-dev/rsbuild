@@ -37,6 +37,7 @@ type HTTPServer = Server | Http2SecureServer;
 export type RsbuildDevServer = {
   /**
    * Listen the Rsbuild server.
+   * Do not call this method if you are using a custom server.
    */
   listen: () => Promise<{
     port: number;
@@ -45,14 +46,10 @@ export type RsbuildDevServer = {
       close: () => Promise<void>;
     };
   }>;
-
-  /** The following APIs can be used when using a custom server */
-
   /**
-   * The Rsbuild server environment API
+   * Environment API of Rsbuild server.
    */
   environments: EnvironmentAPI;
-
   /**
    * The resolved port.
    * By default, Rsbuild server listens on port `3000` and automatically increments the port number if the port is occupied.
@@ -70,13 +67,17 @@ export type RsbuildDevServer = {
   afterListen: () => Promise<void>;
   /**
    * Activate socket connection.
-   * This is used if you are using a custom server.
+   * This ensures that HMR works properly.
    */
   connectWebSocket: (options: { server: HTTPServer }) => void;
   /**
    * Close the Rsbuild server.
    */
   close: () => Promise<void>;
+  /**
+   * Print the server URLs.
+   */
+  printUrls: () => void;
 };
 
 const formatDevConfig = (config: NormalizedDevConfig, port: number) => {
@@ -182,18 +183,7 @@ export async function createDevServer<
     environments: options.context.environments,
   });
 
-  if (runCompile) {
-    options.context.hooks.onBeforeCreateCompiler.tap(() => {
-      // print server url should between listen and beforeCompile
-      printServerURLs({
-        urls,
-        port,
-        routes,
-        protocol,
-        printUrls: config.server.printUrls,
-      });
-    });
-  } else {
+  const printUrls = () => {
     printServerURLs({
       urls,
       port,
@@ -201,6 +191,13 @@ export async function createDevServer<
       protocol,
       printUrls: config.server.printUrls,
     });
+  };
+
+  if (runCompile) {
+    // print server url should between listen and beforeCompile
+    options.context.hooks.onBeforeCreateCompiler.tap(printUrls);
+  } else {
+    printUrls();
   }
 
   const compileMiddlewareAPI = runCompile ? await startCompile() : undefined;
@@ -339,6 +336,7 @@ export async function createDevServer<
       await devMiddlewares.close();
       await fileWatcher?.close();
     },
+    printUrls,
   };
 
   logger.debug('create dev server done');
