@@ -286,10 +286,7 @@ export async function createDevServer<
       const serverTerminator = getServerTerminator(httpServer);
       logger.debug('listen dev server');
 
-      options.context.hooks.onCloseDevServer.tap(() => {
-        console.log('serverTerminator');
-        serverTerminator();
-      });
+      options.context.hooks.onCloseDevServer.tap(serverTerminator);
 
       return new Promise<StartServerResult>((resolve) => {
         httpServer.listen(
