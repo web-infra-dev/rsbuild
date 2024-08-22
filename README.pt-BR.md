@@ -58,7 +58,7 @@ O Rsbuild tem os seguintes recursos:
 
 - **Artefatos estáveis**: O Rsbuild foi projetado com um grande foco na estabilidade dos artefatos de compilação. Ele garante alta consistência entre os artefatos nas compilações de desenvolvimento e produção e conclui automaticamente o downgrade de sintaxe e a injeção de polyfill. O Rsbuild também fornece plug-ins para verificação de tipos e validação de sintaxe de artefatos para evitar problemas de qualidade e compatibilidade no código de produção.
 
-- **Framework Agnóstico**: Rsbuild não está acoplado a nenhuma estrutura de interface do usuário de frontend. Ele oferece suporte a estruturas como React, Vue, Svelte, Solid e Lit por meio de plug-ins, e planeja oferecer suporte a mais estruturas de IU da comunidade no futuro.
+- **Framework Agnóstico**: Rsbuild não está acoplado a nenhuma estrutura de interface do usuário de frontend. Ele oferece suporte a estruturas como React, Vue, Svelte, Solid e Preact por meio de plug-ins, e planeja oferecer suporte a mais estruturas de IU da comunidade no futuro.
 
 ## 🎯 Ecossistema
 
