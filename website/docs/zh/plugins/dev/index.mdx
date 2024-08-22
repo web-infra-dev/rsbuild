@@ -136,7 +136,7 @@ Rsbuild 支持同时为多个环境构建产物，并支持某个插件[仅在�
 
 当你希望你开发的插件支持作为 Environment 插件使用时，需要注意以下几点：
 
-1. environment 配置不等于 rsbuild 配置：
+1. 每个 environment 有自身的 Rsbuild 配置：
    - 使用 [environment 上下文](/guide/advanced/environments#environment-上下文) 代替 `getRsbuildConfig` 获取 environment 信息。
    - 修改特定 environment 的 Rsbuild 配置时，优先使用 [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig) 代替 [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) ，以避免对其他 environments 产生影响。
 2. 避免副作用，你的插件代码可能执行多次：
