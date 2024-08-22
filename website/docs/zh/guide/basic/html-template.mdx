@@ -117,7 +117,21 @@ export default {
 <meta name="description" content="a description of the page" />
 ```
 
-## 模板参数
+## 默认模板引擎
+
+Rsbuild 内置了一个默认的模板引擎来处理 HTML 模板文件，它的语法接近 EJS 的子集，但也有一些不同。当 HTML 模板文件的后缀为 `.html` 时，Rsbuild 会使用内置的模板引擎来解析 HTML 模板。
+
+例如，在模板中定义一个 `text` 参数，值为 `'world'`。Rsbuild 在构建时会自动将 `<%= text %>` 替换为指定的值。
+
+```html
+<!-- 输入  -->
+<div>hello <%= text %>!</div>
+
+<!-- 输出 -->
+<div>hello world!</div>
+```
+
+### 模板参数
 
 在 HTML 模板中，你可以使用丰富的模板参数，Rsbuild 默认注入的模板参数包括：
 
@@ -144,13 +158,9 @@ type DefaultParameters = {
 };
 ```
 
-你也可以通过 [html.templateParameters](/config/html/template-parameters) 配置项来传入自定义的模板参数。
+你可以通过 [html.templateParameters](/config/html/template-parameters) 配置项来传入自定义的模板参数，比如：
 
-### 示例
-
-比如：
-
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     templateParameters: {
@@ -162,53 +172,39 @@ export default {
 
 接下来，你可以在 HTML 模板中，通过 `<%= text %>` 来读取参数：
 
-```html
+```html title="index.html"
 <div>hello <%= text %>!</div>
 ```
 
 编译后的 HTML 代码如下：
 
-```html
+```html title="dist/index.html"
 <div>hello world!</div>
 ```
 
 ### 参数转义
 
-你可以使用 `<%- text %>` 来 escape 参数。
+使用 `<%= text %>` 时，参数不会被转义。你可以使用 `<%- text %>` 来 escape 参数。
 
-比如 text 是 `'<script>'`，则会被转义为 `&lt;script&gt;`：
-
-```html
-<div>hello <%- text %>!</div>
-```
-
-编译后的 HTML 代码如下：
-
-```html
-<div>hello &lt;script&gt;!</div>
-```
-
-## 模板引擎
-
-Rsbuild 支持 [Lodash Template](https://lodashjs.com/docs/lodash.template)、[EJS](https://ejs.co/)、[Pug](https://pugjs.org/) 等多个模板引擎，默认使用最基础的 Lodash Template 作为模板引擎。
-
-### [Lodash Template](https://lodashjs.com/docs/lodash.template)
-
-当模板文件的后缀为 `.html` 时，Rsbuild 会使用 Lodash Template 对模板进行编译。
-
-例如，在模板中定义一个 `text` 参数，值为 `'world'`，在构建时会自动将 `<%= text %>` 替换为对应的值。
+比如参数 `text` 的值是 `'<script>'`，则会被转义为 `&lt;script&gt;`：
 
 ```html
 <!-- 输入  -->
-<div>hello <%= text %>!</div>
+<div>hello <%- text %>!</div>
 
 <!-- 输出 -->
-<div>hello world!</div>
+<div>hello &lt;script&gt;!</div>
 ```
 
-请阅读 [Lodash Template](https://lodashjs.com/docs/lodash.template) 文档来了解完整用法。
+:::tip
+注意，Rsbuild 默认的转义语法是与 EJS 不同的。在 EJS 中，默认的转义语法是 `<%= text %>`，而 Rsbuild 的默认转义语法是 `<%- text %>`。
+:::
 
-### [EJS](https://ejs.co/)
+## 其他模板引擎
+
+Rsbuild 也支持通过插件来使用其他模板引擎，如 [EJS](https://ejs.co/)、[Pug](https://pugjs.org/) 等。
+
+### EJS
 
 当模板文件的后缀为 `.ejs` 时，Rsbuild 会使用 EJS 模板引擎对模板进行编译。EJS 是一套简单的模板语言，支持直接在标签内书写简单、直白的 JavaScript 代码，并通过 JavaScript 输出最终所需的 HTML。
 
@@ -236,9 +232,9 @@ export default {
 
 请阅读 [EJS](https://ejs.co/) 文档来了解完整用法。
 
-### [Pug](https://pugjs.org/)
+### Pug
 
-Rsbuild 通过 Pug 插件来支持 Pug 模板引擎，请阅读 [@rsbuild/plugin-pug](https://github.com/rspack-contrib/rsbuild-plugin-pug) 来了解用法。
+Rsbuild 通过 Pug 插件来支持 [Pug](https://pugjs.org/) 模板引擎，请阅读 [@rsbuild/plugin-pug](https://github.com/rspack-contrib/rsbuild-plugin-pug) 来了解用法。
 
 ## 注入标签
 

@@ -117,7 +117,21 @@ The generated meta tag in HTML is:
 <meta name="description" content="a description of the page" />
 ```
 
-## Template Parameters
+## Default Template Engine
+
+Rsbuild comes with a built-in default template engine to handle HTML template files, and its syntax is similar to a subset of EJS, but it has some differences. When the suffix of an HTML template file is `.html`, Rsbuild will use the built-in template engine to parse the HTML template.
+
+For example, if a `text` param is defined in the template with the value `'world'`, Rsbuild will automatically replace `<%= text %>` with the specified value during the build process.
+
+```html
+<!-- Input  -->
+<div>hello <%= text %>!</div>
+
+<!-- Output -->
+<div>hello world!</div>
+```
+
+### Template Parameters
 
 In HTML templates, you can use a variety of template parameters. The template parameters injected by Rsbuild by default include:
 
@@ -144,13 +158,9 @@ type DefaultParameters = {
 };
 ```
 
-You can also use the [html.templateParameters](/config/html/template-parameters) config to pass in custom template parameters.
+You can use the [html.templateParameters](/config/html/template-parameters) config to pass in custom template parameters. For example:
 
-### Example
-
-For example:
-
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     templateParameters: {
@@ -162,53 +172,39 @@ export default {
 
 Then you can read parameters in the HTML template with `<%= text %>`:
 
-```html
+```html title="index.html"
 <div>hello <%= text %>!</div>
 ```
 
 The compiled HTML code will be:
 
-```html
+```html title="dist/index.html"
 <div>hello world!</div>
 ```
 
 ### Parameter Escaping
 
-You can use `<%- text %>` to escape parameters.
+When using `<%= text %>`, the parameters will not be escaped. You can use `<%- text %>` to escape parameters.
 
-For example, if `text` is `'<script>'`, it will be escaped to `&lt;script&gt;`:
+For example, if the value of the parameter `text` is `'<script>'`, it will be escaped to `&lt;script&gt;`:
 
 ```html
+<!-- Input  -->
 <div>hello <%- text %>!</div>
-```
 
-The compiled HTML code will be:
-
-```html
+<!-- Output -->
 <div>hello &lt;script&gt;!</div>
 ```
 
-## Template Engine
+:::tip
+Note that Rsbuild's default escape syntax is different from EJS. In EJS, the default escape syntax is `<%= text %>`, whereas Rsbuild's default escape syntax is `<%- text %>`.
+:::
 
-Rsbuild supports using [Lodash Template](https://lodashjs.com/docs/lodash.template), [EJS](https://ejs.co/), [Pug](https://pugjs.org/) as template engines, the most basic Lodash Template is used as the default template engine.
+## Other Template Engines
 
-### [Lodash Template](https://lodashjs.com/docs/lodash.template)
+Rsbuild also supports using other template engines through plugins, such as [EJS](https://ejs.co/) and [Pug](https://pugjs.org/).
 
-When the suffix of the template is `.html`, Rsbuild will use Lodash Template to compile it.
-
-For example, if you define a `text` parameter in a template with a value of `'world'`, Rsbuild will automatically replace `<%= text %>` with the value.
-
-```html
-<!-- input -->
-<div>hello <%= text %>!</div>
-
-<!-- output -->
-<div>hello world!</div>
-```
-
-Please read the [Lodash Template](https://lodashjs.com/docs/lodash.template) documentation for details.
-
-### [EJS](https://ejs.co/)
+### EJS
 
 When the suffix of the template is `.ejs`, Rsbuild will use the EJS template engine to compile it. EJS is a simple templating language that lets you generate HTML markup with plain JavaScript.
 
@@ -236,9 +232,9 @@ Then define a `user` parameter in the template with a value of `{ name: 'Jack' }
 
 Please read the [EJS](https://ejs.co/) documentation for details.
 
-### [Pug](https://pugjs.org/)
+### Pug
 
-Rsbuild supports the Pug template engine through the Pug plugin. Please refer to the [@rsbuild/plugin-pug](https://github.com/rspack-contrib/rsbuild-plugin-pug) for usage guide.
+Rsbuild supports the [Pug](https://pugjs.org/) template engine through the Pug plugin. Please refer to the [@rsbuild/plugin-pug](https://github.com/rspack-contrib/rsbuild-plugin-pug) for usage guide.
 
 ## Injecting Tags
 
