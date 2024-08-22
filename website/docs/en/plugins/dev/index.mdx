@@ -138,7 +138,7 @@ If you want the plugin you develop to support use as an Environment plugin, you 
 
 1. The environment configuration is not equal to the rsbuild configuration:
    - Use [environment context](/guide/advanced/environments#environment-context) instead of `getRsbuildConfig` to get environment information.
-   - When modifying a specific environment configuration, use [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig) instead of [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) (to avoid affecting other environments).
+   - When modifying the Rsbuild config for a specific environment, prioritize using [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig) instead of [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) to avoid affecting other environments.
 2. Be aware of side effects, your plugin code may be executed multiple times:
    - When the same plugin is registered multiple times in different environments, it will be regarded as multiple Rsbuild plugins (even if they point to the same plugin instance), because they have different Rsbuild environment contexts.
 
