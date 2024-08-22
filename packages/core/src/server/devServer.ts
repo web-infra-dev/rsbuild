@@ -120,7 +120,6 @@ export async function createDevServer<
   };
 
   let outputFileSystem: Rspack.OutputFileSystem = fs;
-
   let lastStats: Stats[];
 
   // should register onDevCompileDone hook before startCompile
@@ -283,8 +282,11 @@ export async function createDevServer<
         serverConfig: config.server,
         middlewares,
       });
+
       const serverTerminator = getServerTerminator(httpServer);
       logger.debug('listen dev server');
+
+      options.context.hooks.onCloseDevServer.tap(serverTerminator);
 
       return new Promise<StartServerResult>((resolve) => {
         httpServer.listen(
@@ -298,24 +300,19 @@ export async function createDevServer<
             }
 
             middlewares.use(notFoundMiddleware);
-
             httpServer.on('upgrade', devMiddlewares.onUpgrade);
 
             logger.debug('listen dev server done');
 
             await devServerAPI.afterListen();
 
-            const closeServer = async () => {
-              await Promise.all([devServerAPI.close(), serverTerminator()]);
-            };
-
-            onBeforeRestartServer(closeServer);
+            onBeforeRestartServer(devServerAPI.close);
 
             resolve({
               port,
               urls: urls.map((item) => item.url),
               server: {
-                close: closeServer,
+                close: devServerAPI.close,
               },
             });
           },
