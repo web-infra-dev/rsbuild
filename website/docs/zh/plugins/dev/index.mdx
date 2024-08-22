@@ -130,6 +130,41 @@ Rsbuild 官方插件的 `name` 统一使用 `rsbuild:` 作为前缀，比如 `rs
 
 [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template) 是一个最小的 Rsbuild 插件模板仓库，你可以基于该仓库来开发你的 Rsbuild 插件。
 
+### Environment 插件
+
+Rsbuild 支持同时为多个环境构建产物，并支持某个插件[仅在指定环境下运行](/guide/advanced/environments#为指定环境添加插件)。
+
+当你希望你开发的插件支持作为 Environment 插件使用时，需要注意以下几点：
+
+1. 每个 environment 有自身的 Rsbuild 配置：
+   - 使用 [environment 上下文](/guide/advanced/environments#environment-上下文) 代替 `getRsbuildConfig` 获取 environment 信息。
+   - 修改特定 environment 的 Rsbuild 配置时，优先使用 [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig) 代替 [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) ，以避免对其他 environments 产生影响。
+2. 避免副作用，你的插件代码可能执行多次：
+   - 当同一个插件在不同环境下注册多次时，会被视为多个 Rsbuild 插件（哪怕它们指向同一个插件实例），这是因为它们带有不同的 Rsbuild environment 上下文。
+
+下面是一个 Environment 插件例子：
+
+```ts title="pluginFoo.ts"
+import type { RsbuildPlugin } from '@rsbuild/core';
+
+export type PluginFooOptions = {
+  title?: string;
+};
+
+export const pluginFoo = (options: PluginFooOptions = {}): RsbuildPlugin => ({
+  name: 'plugin-foo',
+
+  setup: (api) => {
+    api.modifyEnvironmentConfig((config) => {
+      config.html.title = options.title || 'My Default Title';
+    });
+    api.modifyBundlerChain((chain, { environment }) => {
+      chain.name(environment.config.html.title);
+    });
+  },
+});
+```
+
 ## 生命周期钩子
 
 Rsbuild 在内部按照约定的生命周期进行任务调度，插件可以通过注册钩子来介入工作流程的任意阶段，并实现自己的功能。

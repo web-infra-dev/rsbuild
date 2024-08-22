@@ -130,6 +130,41 @@ The `name` of official Rsbuild plugins uniformly uses `rsbuild:` as a prefix, fo
 
 [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template) is a minimal Rsbuild plugin template repository that you can use as a basis for developing your Rsbuild plugin.
 
+### Environment Plugin
+
+Rsbuild supports building outputs for multiple environments at the same time, and supports [add plugins for specified environment](/guide/advanced/environments#add-plugins-for-specified-environment).
+
+If you want the plugin you develop to support use as an Environment plugin, you need to pay attention to the following points:
+
+1. Each environment has its own Rsbuild config:
+   - Use [environment context](/guide/advanced/environments#environment-context) instead of `getRsbuildConfig` to get environment information.
+   - When modifying the Rsbuild config for a specific environment, prioritize using [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig) instead of [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig) to avoid affecting other environments.
+2. Be aware of side effects, your plugin code may be executed multiple times:
+   - When the same plugin is registered multiple times in different environments, it will be regarded as multiple Rsbuild plugins (even if they point to the same plugin instance), because they have different Rsbuild environment contexts.
+
+Here is an example:
+
+```ts title="pluginFoo.ts"
+import type { RsbuildPlugin } from '@rsbuild/core';
+
+export type PluginFooOptions = {
+  title?: string;
+};
+
+export const pluginFoo = (options: PluginFooOptions = {}): RsbuildPlugin => ({
+  name: 'plugin-foo',
+
+  setup: (api) => {
+    api.modifyEnvironmentConfig((config) => {
+      config.html.title = options.title || 'My Default Title';
+    });
+    api.modifyBundlerChain((chain, { environment }) => {
+      chain.name(environment.config.html.title);
+    });
+  },
+});
+```
+
 ## Lifetime Hooks
 
 Rsbuild uses lifetime planning work internally, and plugins can also register hooks to take part in any stage of the workflow and implement their own features.
