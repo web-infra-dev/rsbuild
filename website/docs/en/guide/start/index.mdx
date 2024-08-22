@@ -21,7 +21,7 @@ You can think of Rsbuild as a modernized version of Create React App or Vue CLI,
 Rsbuild shares many similarities with Vite, as they are both aim to improve the frontend development experience. The main differences are:
 
 - **Ecosystem compatibility**: Rsbuild is compatible with most webpack plugins and all Rspack plugins, while Vite is compatible with Rollup plugins. If you're currently using more plugins and loaders from the webpack ecosystem, migrating to Rsbuild would be relatively easy.
-- **Production consistency**: Rsbuild uses Rspack for bundling during both the development and production builds, thus ensuring a high level of consistency between the development and production outputs. This is also one of the goals Vite aims to achieve with [Rolldown](https://rolldown.rs/).
+- **Production consistency**: Rsbuild uses Rspack for bundling during both the development and production builds, thus ensuring a high level of consistency between the development and production outputs. This is also one of the goals Vite aims to achieve with Rolldown.
 - **Module Federation**: The Rsbuild team works closely with the [Module Federation](/guide/advanced/module-federation) development team, providing first-class support for Module Federation to help you develop large web applications with micro frontend architecture.
 
 ## 🚀 Performance
@@ -46,11 +46,11 @@ Rsbuild has the following features:
 
 - **Stable Artifacts**: Rsbuild is designed with a strong focus on the stability of build artifacts. It ensures high consistency between artifacts in the development and production builds, and automatically completes syntax downgrading and polyfill injection. Rsbuild also provides plugins for type checking and artifact syntax validation to prevent quality and compatibility issues in production code.
 
-- **Framework Agnostic**: Rsbuild is not coupled with any front-end UI framework. It supports frameworks like React, Vue 3, Vue 2, Svelte, Solid, and Lit through plugins, and plans to support more UI frameworks from the community in the future.
+- **Framework Agnostic**: Rsbuild is not coupled with any front-end UI framework. It supports frameworks like React, Vue, Svelte, Solid, and Preact through plugins, and plans to support more UI frameworks from the community in the future.
 
-## 🎯 Position
+## 🎯 Ecosystem
 
-In addition to being used as a build tool, Rsbuild also provides universal build capabilities for higher-level solutions, such as [Rspress](https://github.com/web-infra-dev/rspress) and [Rslib](https://github.com/web-infra-dev/rslib), allowing them to focus on the development of their own domain specific capabilities.
+In addition to being used as a build tool, Rsbuild also provides universal build capabilities for higher-level frameworks and tools, such as [Rspress](https://github.com/web-infra-dev/rspress) and [Rslib](https://github.com/web-infra-dev/rslib), allowing them to focus on the development of their own domain specific capabilities.
 
 The following diagram illustrates the relationship between Rsbuild and other tools in the ecosystem:
 
