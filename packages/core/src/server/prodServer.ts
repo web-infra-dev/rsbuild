@@ -193,6 +193,7 @@ export async function startProdServer(
         await context.hooks.onAfterStartProdServer.call({
           port,
           routes,
+          environments: context.environments,
         });
 
         const protocol = https ? 'https' : 'http';

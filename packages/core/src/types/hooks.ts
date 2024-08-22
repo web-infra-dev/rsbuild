@@ -76,6 +76,7 @@ export type OnAfterStartDevServerFn = (params: {
 export type OnAfterStartProdServerFn = (params: {
   port: number;
   routes: Routes;
+  environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
 
 export type OnBeforeCreateCompilerFn<B = 'rspack'> = (params: {
