@@ -61,7 +61,7 @@ export interface SourceConfig {
   /**
    * Used to import the code and style of the component library on demand.
    */
-  transformImport?: false | TransformImport[];
+  transformImport?: ConfigChain<TransformImport[]> | false;
   /**
    * Configure a custom tsconfig.json file path to use, can be a relative or absolute path.
    * @default 'tsconfig.json'

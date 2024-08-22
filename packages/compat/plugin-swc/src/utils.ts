@@ -4,6 +4,8 @@ import { __internalHelper } from '@rsbuild/core';
 import type {
   ModifyChainUtils,
   NormalizedEnvironmentConfig,
+  NormalizedSourceConfig,
+  TransformImport,
 } from '@rsbuild/core';
 import _ from 'lodash';
 import semver from 'semver';
@@ -184,6 +186,34 @@ const getCoreJsVersion = (corejsPkgPath: string) => {
   }
 };
 
+const isPrimitiveTransformImport = (
+  items: unknown[],
+): items is Array<TransformImport> =>
+  items.every(
+    (item) => Object.prototype.toString.call(item) === '[object Object]',
+  );
+
+const applyTransformImportChain = (
+  defaults: TransformImport[] | false,
+  options: NormalizedSourceConfig['transformImport'],
+): TransformImport[] | false => {
+  if (Array.isArray(options)) {
+    if (isPrimitiveTransformImport(options)) {
+      return defaults ? defaults.concat(options) : options;
+    }
+    return options.reduce<TransformImport[] | false>(
+      applyTransformImportChain,
+      defaults,
+    );
+  }
+
+  if (options === false) {
+    return options;
+  }
+
+  return options?.(defaults || []) ?? defaults;
+};
+
 export async function applyPluginConfig(
   rawOptions: PluginSwcOptions,
   utils: ModifyChainUtils,
@@ -248,9 +278,14 @@ export async function applyPluginConfig(
 
   const extensions = swc.extensions;
 
-  if (rsbuildConfig.source?.transformImport) {
+  const finalPluginImport = applyTransformImportChain(
+    [],
+    rsbuildConfig.source?.transformImport,
+  );
+
+  if (finalPluginImport !== false && finalPluginImport?.length) {
     extensions.pluginImport ??= [];
-    extensions.pluginImport.push(...rsbuildConfig.source.transformImport);
+    extensions.pluginImport.push(...finalPluginImport);
   }
 
   if (pluginOptions?.transformLodash !== false) {
