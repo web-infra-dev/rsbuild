@@ -119,7 +119,7 @@ The generated meta tag in HTML is:
 
 ## Default Template Engine
 
-Rsbuild comes with a built-in default template engine to handle HTML template files, and its syntax is a subset of EJS. When the suffix of an HTML template file is `.html`, Rsbuild will use the built-in template engine to parse the HTML template.
+Rsbuild comes with a built-in default template engine to handle HTML template files, and its syntax is similar to a subset of EJS, but it has some differences. When the suffix of an HTML template file is `.html`, Rsbuild will use the built-in template engine to parse the HTML template.
 
 For example, if a `text` param is defined in the template with the value `'world'`, Rsbuild will automatically replace `<%= text %>` with the specified value during the build process.
 
