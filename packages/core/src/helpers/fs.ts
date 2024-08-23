@@ -45,16 +45,19 @@ export async function isFileExists(file: string): Promise<boolean> {
 }
 
 export async function fileExistsByCompilation(
-  compilation: Rspack.Compilation,
+  { inputFileSystem }: Rspack.Compilation,
   filePath: string,
 ): Promise<boolean> {
   return new Promise((resolve) => {
-    // TODO remove any in next Rspack release
-    compilation.inputFileSystem.stat(filePath, (err: any, stats: any) => {
+    if (!inputFileSystem) {
+      resolve(false);
+      return;
+    }
+    inputFileSystem.stat(filePath, (err, stats) => {
       if (err) {
         resolve(false);
       } else {
-        resolve(stats.isFile());
+        resolve(Boolean(stats?.isFile()));
       }
     });
   });

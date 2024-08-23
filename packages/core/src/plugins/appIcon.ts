@@ -102,6 +102,12 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
           }
 
           if (!icon.isURL) {
+            if (!compilation.inputFileSystem) {
+              throw new Error(
+                `[rsbuild:app-icon] 'compilation.inputFileSystem' is not available.`,
+              );
+            }
+
             if (
               !(await fileExistsByCompilation(compilation, icon.absolutePath))
             ) {
@@ -113,6 +119,12 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
             const source = await promisify(
               compilation.inputFileSystem.readFile,
             )(icon.absolutePath);
+
+            if (!source) {
+              throw new Error(
+                `[rsbuild:app-icon] Failed to read the app icon file, please check if the '${icon.relativePath}' file exists'.`,
+              );
+            }
 
             compilation.emitAsset(
               icon.relativePath,

@@ -253,12 +253,24 @@ export class RsbuildHtmlPlugin {
         return name;
       }
 
+      if (!compilation.inputFileSystem) {
+        throw new Error(
+          `[RsbuildHtmlPlugin] 'compilation.inputFileSystem' is not available.`,
+        );
+      }
+
       const filename = path.resolve(compilation.compiler.context, favicon);
       const buf = await promisify(compilation.inputFileSystem.readFile)(
         filename,
       );
-      const source = new compiler.webpack.sources.RawSource(buf, false);
 
+      if (!buf) {
+        throw new Error(
+          `[RsbuildHtmlPlugin] Failed to read the favicon, please check if the '${filename}' file exists'.`,
+        );
+      }
+
+      const source = new compiler.webpack.sources.RawSource(buf, false);
       compilation.emitAsset(name, source);
 
       return name;
