@@ -14,7 +14,8 @@ type TransformImport =
       transformToDefaultImport?: boolean;
       customName?: string;
       customStyleName?: string;
-    }>;
+    }>
+  | Function;
 ```
 
 - **默认值：** `undefined`
@@ -253,3 +254,35 @@ export default {
 - **默认值：** `undefined`
 
 自定义转换后的样式导入路径，用法与 `customName` 一致。
+
+## Function 类型
+
+`transformImport` 的值定义为函数时，可以接受原本的 transformImport 配置，并对其进行修改。
+
+```ts
+export default {
+  source: {
+    transformImport: (imports) => {
+      return imports.filter(import => import.libraryName !== 'antd');
+    },
+  },
+};
+```
+
+也可以在函数中返回一个新数组作为最终结果，新数组会覆盖原本的 transformImport 配置。
+
+```ts
+export default {
+  source: {
+    transformImport: () => {
+      return [
+        {
+          libraryName: 'antd',
+          libraryDirectory: 'es',
+          style: 'css',
+        },
+      ];
+    },
+  },
+};
+```

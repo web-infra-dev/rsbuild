@@ -8,7 +8,7 @@ import {
   PLUGIN_SWC_NAME,
   SCRIPT_REGEX,
 } from '../constants';
-import { castArray, cloneDeep, isWebTarget } from '../helpers';
+import { castArray, cloneDeep, isFunction, isWebTarget } from '../helpers';
 import type {
   NormalizedEnvironmentConfig,
   NormalizedSourceConfig,
@@ -16,6 +16,7 @@ import type {
   RsbuildContext,
   RsbuildPlugin,
   RspackChain,
+  TransformImport,
 } from '../types';
 
 const builtinSwcLoaderName = 'builtin:swc-loader';
@@ -215,14 +216,34 @@ async function applyCoreJs(
   return coreJsDir;
 }
 
+const reduceTransformImportConfig = (
+  options: NormalizedSourceConfig['transformImport'],
+): TransformImport[] | false => {
+  if (options === false || !options) {
+    return false;
+  }
+
+  let imports: TransformImport[] = [];
+  for (const item of castArray(options)) {
+    if (isFunction(item)) {
+      imports = item(imports) ?? imports;
+    } else {
+      imports.push(item);
+    }
+  }
+  return imports;
+};
+
 function applyTransformImport(
   swcConfig: SwcLoaderOptions,
   pluginImport?: NormalizedSourceConfig['transformImport'],
 ) {
-  if (pluginImport !== false && pluginImport) {
+  const finalPluginImport = reduceTransformImportConfig(pluginImport);
+
+  if (finalPluginImport !== false && finalPluginImport?.length) {
     swcConfig.rspackExperiments ??= {};
     swcConfig.rspackExperiments.import ??= [];
-    swcConfig.rspackExperiments.import.push(...pluginImport);
+    swcConfig.rspackExperiments.import.push(...finalPluginImport);
   }
 }
 

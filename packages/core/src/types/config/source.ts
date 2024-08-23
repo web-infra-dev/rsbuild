@@ -61,7 +61,10 @@ export interface SourceConfig {
   /**
    * Used to import the code and style of the component library on demand.
    */
-  transformImport?: false | TransformImport[];
+  transformImport?:
+    | TransformImportFn
+    | Array<TransformImport | TransformImportFn>
+    | false;
   /**
    * Configure a custom tsconfig.json file path to use, can be a relative or absolute path.
    * @default 'tsconfig.json'
@@ -81,6 +84,10 @@ export type TransformImport = {
   // Use a loose type to compat webpack
   customStyleName?: any;
 };
+
+type TransformImportFn = (
+  imports: TransformImport[],
+) => TransformImport[] | void;
 
 export interface NormalizedSourceConfig extends SourceConfig {
   define: Define;

@@ -4,6 +4,8 @@ import { __internalHelper } from '@rsbuild/core';
 import type {
   ModifyChainUtils,
   NormalizedEnvironmentConfig,
+  NormalizedSourceConfig,
+  TransformImport,
 } from '@rsbuild/core';
 import _ from 'lodash';
 import semver from 'semver';
@@ -16,6 +18,13 @@ import type {
 } from './types';
 
 const { applySwcDecoratorConfig } = __internalHelper;
+
+const castArray = <T>(arr?: T | T[]): T[] => {
+  if (arr === undefined) {
+    return [];
+  }
+  return Array.isArray(arr) ? arr : [arr];
+};
 
 async function findUp({
   filename,
@@ -184,6 +193,24 @@ const getCoreJsVersion = (corejsPkgPath: string) => {
   }
 };
 
+const reduceTransformImportConfig = (
+  options: NormalizedSourceConfig['transformImport'],
+): TransformImport[] | false => {
+  if (options === false || !options) {
+    return false;
+  }
+
+  let imports: TransformImport[] = [];
+  for (const item of castArray(options)) {
+    if (typeof item === 'function') {
+      imports = item(imports) ?? imports;
+    } else {
+      imports.push(item);
+    }
+  }
+  return imports;
+};
+
 export async function applyPluginConfig(
   rawOptions: PluginSwcOptions,
   utils: ModifyChainUtils,
@@ -248,9 +275,13 @@ export async function applyPluginConfig(
 
   const extensions = swc.extensions;
 
-  if (rsbuildConfig.source?.transformImport) {
+  const finalPluginImport = reduceTransformImportConfig(
+    rsbuildConfig.source?.transformImport,
+  );
+
+  if (finalPluginImport !== false && finalPluginImport?.length) {
     extensions.pluginImport ??= [];
-    extensions.pluginImport.push(...rsbuildConfig.source.transformImport);
+    extensions.pluginImport.push(...finalPluginImport);
   }
 
   if (pluginOptions?.transformLodash !== false) {

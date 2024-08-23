@@ -72,6 +72,39 @@ describe('plugin-swc', () => {
     });
   });
 
+  it('should disable pluginImport when return undefined', async () => {
+    await matchConfigSnapshot({
+      source: {
+        transformImport: () => {},
+      },
+    });
+  });
+
+  it('should apply pluginImport correctly when ConfigChain', async () => {
+    await matchConfigSnapshot({
+      source: {
+        transformImport: [
+          {
+            libraryName: 'foo1',
+          },
+          // ignore foo1
+          () => [],
+          {
+            libraryName: 'foo',
+          },
+          {
+            libraryName: 'baz',
+          },
+          {
+            libraryName: 'bar',
+          },
+          // ignore baz
+          (value) => value.filter((v) => v.libraryName !== 'baz'),
+        ],
+      },
+    });
+  });
+
   it('should disable all pluginImport', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSwc(), pluginEntry()],
