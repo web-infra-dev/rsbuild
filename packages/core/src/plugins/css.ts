@@ -252,6 +252,7 @@ async function applyCSSRule({
       const loaderOptions = reduceConfigs<Rspack.LightningcssLoaderOptions>({
         initial: {
           targets: environment.browserslist,
+          minify: config.mode === 'production' && config.output.injectStyles,
         },
         config: userOptions,
       });

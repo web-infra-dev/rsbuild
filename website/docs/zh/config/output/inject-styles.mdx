@@ -36,26 +36,3 @@ export default {
   },
 };
 ```
-
-如果你需要在生产模式下开启该选项，请留意内联的 CSS 代码不会经过 Rsbuild 默认的 CSS 压缩器，你可以手动注册 PostCSS 的 [cssnano](https://github.com/cssnano/cssnano) 插件来对内联代码进行压缩。
-
-1. 安装 cssnano：
-
-```bash
-npm add cssnano -D
-```
-
-2. 使用 `tools.postcss` 注册 cssnano：
-
-```ts
-export default {
-  tools: {
-    postcss: (opts) => {
-      // apply cssnano in production build
-      if (process.env.NODE_ENV === 'production') {
-        opts.postcssOptions?.plugins?.push(require('cssnano'));
-      }
-    },
-  },
-};
-```
