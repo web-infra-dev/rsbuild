@@ -8,7 +8,7 @@ import {
   PLUGIN_SWC_NAME,
   SCRIPT_REGEX,
 } from '../constants';
-import { castArray, cloneDeep, isWebTarget } from '../helpers';
+import { castArray, cloneDeep, isFunction, isWebTarget } from '../helpers';
 import type {
   NormalizedEnvironmentConfig,
   NormalizedSourceConfig,
@@ -216,39 +216,29 @@ async function applyCoreJs(
   return coreJsDir;
 }
 
-const isPrimitiveTransformImport = (
-  items: unknown[],
-): items is Array<TransformImport> =>
-  items.every(
-    (item) => Object.prototype.toString.call(item) === '[object Object]',
-  );
-
-const applyTransformImportChain = (
-  defaults: TransformImport[] | false,
+const reduceTransformImportConfig = (
   options: NormalizedSourceConfig['transformImport'],
 ): TransformImport[] | false => {
-  if (Array.isArray(options)) {
-    if (isPrimitiveTransformImport(options)) {
-      return defaults ? defaults.concat(options) : options;
+  if (options === false || !options) {
+    return false;
+  }
+
+  let imports: TransformImport[] = [];
+  for (const item of castArray(options)) {
+    if (isFunction(item)) {
+      imports = item(imports) ?? imports;
+    } else {
+      imports.push(item);
     }
-    return options.reduce<TransformImport[] | false>(
-      applyTransformImportChain,
-      defaults,
-    );
   }
-
-  if (options === false) {
-    return options;
-  }
-
-  return options?.(defaults || []) ?? defaults;
+  return imports;
 };
 
 function applyTransformImport(
   swcConfig: SwcLoaderOptions,
   pluginImport?: NormalizedSourceConfig['transformImport'],
 ) {
-  const finalPluginImport = applyTransformImportChain([], pluginImport);
+  const finalPluginImport = reduceTransformImportConfig(pluginImport);
 
   if (finalPluginImport !== false && finalPluginImport?.length) {
     swcConfig.rspackExperiments ??= {};

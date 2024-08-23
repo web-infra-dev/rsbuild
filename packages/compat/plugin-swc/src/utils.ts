@@ -19,6 +19,16 @@ import type {
 
 const { applySwcDecoratorConfig } = __internalHelper;
 
+const castArray = <T>(arr?: T | T[]): T[] => {
+  if (arr === undefined) {
+    return [];
+  }
+  return Array.isArray(arr) ? arr : [arr];
+};
+
+const isFunction = (func: unknown): func is (...args: any[]) => any =>
+  typeof func === 'function';
+
 async function findUp({
   filename,
   cwd = process.cwd(),
@@ -186,13 +196,6 @@ const getCoreJsVersion = (corejsPkgPath: string) => {
   }
 };
 
-const isPrimitiveTransformImport = (
-  items: unknown[],
-): items is Array<TransformImport> =>
-  items.every(
-    (item) => Object.prototype.toString.call(item) === '[object Object]',
-  );
-
 const reduceTransformImportConfig = (
   options: NormalizedSourceConfig['transformImport'],
 ): TransformImport[] | false => {
@@ -209,25 +212,6 @@ const reduceTransformImportConfig = (
     }
   }
   return imports;
-};
-  defaults: TransformImport[] | false,
-  options: NormalizedSourceConfig['transformImport'],
-): TransformImport[] | false => {
-  if (Array.isArray(options)) {
-    if (isPrimitiveTransformImport(options)) {
-      return defaults ? defaults.concat(options) : options;
-    }
-    return options.reduce<TransformImport[] | false>(
-      applyTransformImportChain,
-      defaults,
-    );
-  }
-
-  if (options === false) {
-    return options;
-  }
-
-  return options?.(defaults || []) ?? defaults;
 };
 
 export async function applyPluginConfig(
@@ -294,8 +278,7 @@ export async function applyPluginConfig(
 
   const extensions = swc.extensions;
 
-  const finalPluginImport = applyTransformImportChain(
-    [],
+  const finalPluginImport = reduceTransformImportConfig(
     rsbuildConfig.source?.transformImport,
   );
 

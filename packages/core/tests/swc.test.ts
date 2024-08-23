@@ -84,26 +84,20 @@ describe('plugin-swc', () => {
     await matchConfigSnapshot({
       source: {
         transformImport: [
-          [
-            {
-              libraryName: 'foo1',
-            },
-          ],
+          {
+            libraryName: 'foo1',
+          },
           // ignore foo1
           () => [],
-          [
-            {
-              libraryName: 'foo',
-            },
-            {
-              libraryName: 'baz',
-            },
-          ],
-          [
-            {
-              libraryName: 'bar',
-            },
-          ],
+          {
+            libraryName: 'foo',
+          },
+          {
+            libraryName: 'baz',
+          },
+          {
+            libraryName: 'bar',
+          },
           // ignore baz
           (value) => value.filter((v) => v.libraryName !== 'baz'),
         ],
