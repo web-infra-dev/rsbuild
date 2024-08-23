@@ -193,7 +193,23 @@ const isPrimitiveTransformImport = (
     (item) => Object.prototype.toString.call(item) === '[object Object]',
   );
 
-const applyTransformImportChain = (
+const reduceTransformImportConfig = (
+  options: NormalizedSourceConfig['transformImport'],
+): TransformImport[] | false => {
+  if (options === false || !options) {
+    return false;
+  }
+
+  let imports: TransformImport[] = [];
+  for (const item of castArray(options)) {
+    if (isFunction(item)) {
+      imports = item(imports) ?? imports;
+    } else {
+      imports.push(item);
+    }
+  }
+  return imports;
+};
   defaults: TransformImport[] | false,
   options: NormalizedSourceConfig['transformImport'],
 ): TransformImport[] | false => {
