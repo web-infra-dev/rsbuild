@@ -26,9 +26,6 @@ const castArray = <T>(arr?: T | T[]): T[] => {
   return Array.isArray(arr) ? arr : [arr];
 };
 
-const isFunction = (func: unknown): func is (...args: any[]) => any =>
-  typeof func === 'function';
-
 async function findUp({
   filename,
   cwd = process.cwd(),
@@ -205,7 +202,7 @@ const reduceTransformImportConfig = (
 
   let imports: TransformImport[] = [];
   for (const item of castArray(options)) {
-    if (isFunction(item)) {
+    if (typeof item === 'function') {
       imports = item(imports) ?? imports;
     } else {
       imports.push(item);
