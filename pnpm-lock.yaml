@@ -536,7 +536,7 @@ importers:
         specifier: 0.6.10
         version: 0.6.10(@swc/helpers@0.5.11)
       '@swc/helpers':
-        specifier: 0.5.11
+        specifier: ^0.5.11
         version: 0.5.11
       core-js:
         specifier: ~3.38.0
@@ -625,7 +625,7 @@ importers:
         specifier: 1.0.0
         version: 1.0.0
       '@swc/helpers':
-        specifier: 0.5.11
+        specifier: ^0.5.11
         version: 0.5.11
       caniuse-lite:
         specifier: ^1.0.30001651
