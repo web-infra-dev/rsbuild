@@ -206,35 +206,11 @@ Rsbuild 也支持通过插件来使用其他模板引擎，如 [EJS](https://ejs
 
 ### EJS
 
-当模板文件的后缀为 `.ejs` 时，Rsbuild 会使用 EJS 模板引擎对模板进行编译。EJS 是一套简单的模板语言，支持直接在标签内书写简单、直白的 JavaScript 代码，并通过 JavaScript 输出最终所需的 HTML。
-
-例如，你可以先通过 [html.template](/config/html/template) 配置项来引用一个 `.ejs` 模板文件：
-
-```ts
-export default {
-  html: {
-    template: './static/index.ejs',
-  },
-};
-```
-
-接着在模板中定义一个 `user` 参数，值为 `{ name: 'Jack' }`。在构建时，会自动将 `<%= user.name %>` 替换为对应的值。
-
-```html
-<!-- 输入  -->
-<% if (user) { %>
-<h2><%= user.name %></h2>
-<% } %>
-
-<!-- 输出 -->
-<h2>Jack</h2>
-```
-
-请阅读 [EJS](https://ejs.co/) 文档来了解完整用法。
+Rsbuild 内置的模板语法与 [EJS](https://ejs.co/) 存在一些差异，如果你需要使用完整的 EJS 语法，可以通过插件来支持，详见 [rsbuild-plugin-ejs](https://github.com/rspack-contrib/rsbuild-plugin-ejs)。
 
 ### Pug
 
-Rsbuild 通过 Pug 插件来支持 [Pug](https://pugjs.org/) 模板引擎，请阅读 [@rsbuild/plugin-pug](https://github.com/rspack-contrib/rsbuild-plugin-pug) 来了解用法。
+Rsbuild 通过插件来支持 [Pug](https://pugjs.org/) 模板引擎，详见 [@rsbuild/plugin-pug](https://github.com/rspack-contrib/rsbuild-plugin-pug)。
 
 ## 注入标签
 
