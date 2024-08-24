@@ -1,13 +1,11 @@
-import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest('should build basic Vue sfc correctly', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    runServer: true,
+    page,
   });
-
-  await gotoPage(page, rsbuild);
 
   const button1 = page.locator('#button1');
   const button2 = page.locator('#button2');

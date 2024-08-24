@@ -1,4 +1,4 @@
-import { build, dev, gotoPage } from '@e2e/helper';
+import { build, dev } from '@e2e/helper';
 import { proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
@@ -34,6 +34,7 @@ test('should throw error when exist type errors in dev mode', async ({
 
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
     plugins: [
       pluginTypeCheck({
         forkTsCheckerOptions: {
@@ -42,8 +43,6 @@ test('should throw error when exist type errors in dev mode', async ({
       }),
     ],
   });
-
-  await gotoPage(page, rsbuild);
 
   expect(
     logs.find((log) => log.includes('File:') && log.includes('/src/index.ts')),

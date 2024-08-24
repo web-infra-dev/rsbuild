@@ -1,14 +1,12 @@
-import { build, gotoPage } from '@e2e/helper';
+import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 // It's an old bug when use svgr in css and external react.
 test('use SVGR and externals react', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    runServer: true,
+    page,
   });
-
-  await gotoPage(page, rsbuild);
 
   // test svgr（namedExport）
   await expect(

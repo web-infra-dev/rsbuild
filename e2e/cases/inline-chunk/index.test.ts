@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { build, dev, gotoPage } from '@e2e/helper';
+import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import type { RspackChain } from '@rsbuild/core';
 
@@ -22,7 +22,7 @@ test('inline all scripts should work and emit all source maps', async ({
 }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    runServer: true,
+    page,
     rsbuildConfig: {
       source: {
         entry: {
@@ -36,8 +36,6 @@ test('inline all scripts should work and emit all source maps', async ({
       tools: toolsConfig,
     },
   });
-
-  await gotoPage(page, rsbuild);
 
   // test runtime
   expect(await page.evaluate('window.test')).toBe('aaaa');
@@ -161,12 +159,11 @@ test('styles are not inline by default in development mode', async ({
 }) => {
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
     rsbuildConfig: {
       tools: toolsConfig,
     },
   });
-
-  await gotoPage(page, rsbuild);
 
   // index.css in page
   await expect(
@@ -174,11 +171,14 @@ test('styles are not inline by default in development mode', async ({
       `document.querySelectorAll('link[href*="index.css"]').length`,
     ),
   ).resolves.toEqual(1);
+
+  await rsbuild.close();
 });
 
 test('using RegExp to inline styles in development mode', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
     rsbuildConfig: {
       output: {
         inlineStyles: {
@@ -190,14 +190,14 @@ test('using RegExp to inline styles in development mode', async ({ page }) => {
     },
   });
 
-  await gotoPage(page, rsbuild);
-
   // no index.css in page
   await expect(
     page.evaluate(
       `document.querySelectorAll('link[href*="index.css"]').length`,
     ),
   ).resolves.toEqual(0);
+
+  await rsbuild.close();
 });
 
 test('inline styles by filename and file size in development mode', async ({
@@ -205,6 +205,7 @@ test('inline styles by filename and file size in development mode', async ({
 }) => {
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
     rsbuildConfig: {
       output: {
         inlineStyles: {
@@ -218,14 +219,14 @@ test('inline styles by filename and file size in development mode', async ({
     },
   });
 
-  await gotoPage(page, rsbuild);
-
   // no index.css in page
   await expect(
     page.evaluate(
       `document.querySelectorAll('link[href*="index.css"]').length`,
     ),
   ).resolves.toEqual(0);
+
+  await rsbuild.close();
 });
 
 test('inline scripts does not work when enable is false', async () => {
@@ -325,6 +326,7 @@ test('inline does not work in development mode when enable is auto', async ({
 }) => {
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
     rsbuildConfig: {
       output: {
         inlineScripts: {
@@ -340,8 +342,6 @@ test('inline does not work in development mode when enable is auto', async ({
     },
   });
 
-  await gotoPage(page, rsbuild);
-
   // all index.js in page
   await expect(
     page.evaluate(
@@ -355,6 +355,8 @@ test('inline does not work in development mode when enable is auto', async ({
       `document.querySelectorAll('link[href*="index.css"]').length`,
     ),
   ).resolves.toEqual(1);
+
+  await rsbuild.close();
 });
 
 test('styles and scripts are not inline by default in development mode when enable not set', async ({
@@ -362,6 +364,7 @@ test('styles and scripts are not inline by default in development mode when enab
 }) => {
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
     rsbuildConfig: {
       tools: toolsConfig,
       output: {
@@ -371,8 +374,6 @@ test('styles and scripts are not inline by default in development mode when enab
     },
   });
 
-  await gotoPage(page, rsbuild);
-
   // all index.js in page
   await expect(
     page.evaluate(
@@ -386,4 +387,6 @@ test('styles and scripts are not inline by default in development mode when enab
       `document.querySelectorAll('link[href*="index.css"]').length`,
     ),
   ).resolves.toEqual(1);
+
+  await rsbuild.close();
 });

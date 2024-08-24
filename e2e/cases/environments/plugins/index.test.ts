@@ -1,4 +1,4 @@
-import { build, gotoPage } from '@e2e/helper';
+import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 import { pluginReact } from '@rsbuild/plugin-react';
@@ -30,10 +30,8 @@ test('should add single environment plugin correctly', async ({ page }) => {
         },
       },
     },
-    runServer: true,
+    page,
   });
-
-  await gotoPage(page, rsbuild);
 
   const button = page.locator('#test');
   await expect(button).toHaveText('Hello Rsbuild!');

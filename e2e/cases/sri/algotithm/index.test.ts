@@ -1,10 +1,10 @@
-import { build, gotoPage } from '@e2e/helper';
+import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('generate integrity using sha512 algorithm', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    runServer: true,
+    page,
   });
 
   const files = await rsbuild.unwrapOutputJSON();
@@ -19,7 +19,6 @@ test('generate integrity using sha512 algorithm', async ({ page }) => {
     /link href="\/static\/css\/index\.\w{8}\.css" rel="stylesheet" integrity="sha512-[A-Za-z0-9+\/=]+"/,
   );
 
-  await gotoPage(page, rsbuild);
   const testEl = page.locator('#root');
   await expect(testEl).toHaveText('Hello Rsbuild!');
   await rsbuild.close();

@@ -4,7 +4,7 @@ import { expect } from '@playwright/test';
 rspackOnlyTest('should build basic Vue jsx correctly', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    runServer: true,
+    page,
   });
 
   const reactUrl = new URL(`http://localhost:${rsbuild.port}/react`);

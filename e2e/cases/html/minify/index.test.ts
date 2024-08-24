@@ -1,4 +1,4 @@
-import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 const fixtures = __dirname;
@@ -8,7 +8,7 @@ rspackOnlyTest(
   async ({ page }) => {
     const rsbuild = await build({
       cwd: fixtures,
-      runServer: true,
+      page,
       rsbuildConfig: {
         html: {
           template: './static/index.html',
@@ -21,8 +21,6 @@ rspackOnlyTest(
         },
       },
     });
-
-    await gotoPage(page, rsbuild);
 
     const files = await rsbuild.unwrapOutputJSON();
 

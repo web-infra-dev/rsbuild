@@ -1,4 +1,4 @@
-import { dev, gotoPage } from '@e2e/helper';
+import { dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('generate integrity for script and style tags in dev build', async ({
@@ -6,9 +6,9 @@ test('generate integrity for script and style tags in dev build', async ({
 }) => {
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
   });
 
-  await gotoPage(page, rsbuild);
   const testEl = page.locator('#root');
   await expect(testEl).toHaveText('Hello Rsbuild!');
 

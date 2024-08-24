@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev, getRandomPort, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { dev, getRandomPort, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
@@ -17,6 +17,7 @@ rspackOnlyTest('HMR should work by default', async ({ page }) => {
 
   const rsbuild = await dev({
     cwd,
+    page,
     rsbuildConfig: {
       source: {
         entry: {
@@ -31,8 +32,6 @@ rspackOnlyTest('HMR should work by default', async ({ page }) => {
       },
     },
   });
-
-  await gotoPage(page, rsbuild);
 
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
@@ -81,6 +80,7 @@ rspackOnlyTest(
     const port = await getRandomPort();
     const rsbuild = await dev({
       cwd,
+      page,
       rsbuildConfig: {
         source: {
           entry: {
@@ -98,7 +98,6 @@ rspackOnlyTest(
       },
     });
 
-    await gotoPage(page, rsbuild);
     expect(rsbuild.port).toBe(port);
 
     const appPath = join(cwd, 'test-temp-src-1/App.tsx');
@@ -131,6 +130,7 @@ rspackOnlyTest(
     const port = await getRandomPort();
     const rsbuild = await dev({
       cwd,
+      page,
       rsbuildConfig: {
         source: {
           entry: {
@@ -148,7 +148,6 @@ rspackOnlyTest(
       },
     });
 
-    await gotoPage(page, rsbuild);
     expect(rsbuild.port).toBe(port);
 
     const appPath = join(cwd, 'test-temp-src-2/App.tsx');

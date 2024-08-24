@@ -1,4 +1,4 @@
-import { build, dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { build, dev, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest(
@@ -6,9 +6,8 @@ rspackOnlyTest(
   async ({ page }) => {
     const rsbuild = await dev({
       cwd: __dirname,
+      page,
     });
-
-    await gotoPage(page, rsbuild);
 
     const test1Locator = page.locator('#test1');
     await expect(test1Locator).toHaveCSS('color', 'rgb(255, 0, 0)');
@@ -25,9 +24,8 @@ rspackOnlyTest(
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,
-      runServer: true,
+      page,
     });
-    await gotoPage(page, rsbuild);
 
     const test1Locator = page.locator('#test1');
     await expect(test1Locator).toHaveCSS('color', 'rgb(255, 0, 0)');

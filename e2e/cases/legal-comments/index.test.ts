@@ -1,4 +1,4 @@
-import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 
@@ -7,7 +7,7 @@ const fixtures = __dirname;
 rspackOnlyTest('legalComments linked (default)', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    runServer: true,
+    page,
     plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {
@@ -17,8 +17,6 @@ rspackOnlyTest('legalComments linked (default)', async ({ page }) => {
       },
     },
   });
-
-  await gotoPage(page, rsbuild);
 
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild!');
 
@@ -51,7 +49,7 @@ rspackOnlyTest('legalComments linked (default)', async ({ page }) => {
 test('legalComments none', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    runServer: true,
+    page,
     plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {
@@ -64,8 +62,6 @@ test('legalComments none', async ({ page }) => {
       },
     },
   });
-
-  await gotoPage(page, rsbuild);
 
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild!');
 
@@ -92,7 +88,7 @@ test('legalComments none', async ({ page }) => {
 test('legalComments inline', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    runServer: true,
+    page,
     plugins: [pluginReact()],
     rsbuildConfig: {
       performance: {
@@ -105,8 +101,6 @@ test('legalComments inline', async ({ page }) => {
       },
     },
   });
-
-  await gotoPage(page, rsbuild);
 
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild!');
 
