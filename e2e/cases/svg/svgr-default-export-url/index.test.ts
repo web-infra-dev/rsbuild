@@ -1,13 +1,11 @@
-import { build, gotoPage } from '@e2e/helper';
+import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should import default from SVG with SVGR correctly', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    runServer: true,
+    page,
   });
-
-  await gotoPage(page, rsbuild);
 
   // test svgr（namedExport）
   await expect(

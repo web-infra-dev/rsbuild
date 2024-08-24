@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { build, gotoPage } from '@e2e/helper';
+import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should set template via function correctly', async () => {
@@ -39,7 +39,7 @@ test('should set template via function correctly', async () => {
 test('should allow to access templateParameters', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    runServer: true,
+    page,
     rsbuildConfig: {
       html: {
         template: './static/index.html',
@@ -49,8 +49,6 @@ test('should allow to access templateParameters', async ({ page }) => {
       },
     },
   });
-
-  await gotoPage(page, rsbuild);
 
   const testTemplate = page.locator('#test-template');
   await expect(testTemplate).toHaveText('text');

@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { dev, gotoPage } from '@e2e/helper';
+import { dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const appFile = path.join(__dirname, 'src/App.jsx');
@@ -25,9 +25,8 @@ test('should fallback to live-reload when dev.hmr is false', async ({
 
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
   });
-
-  await gotoPage(page, rsbuild);
 
   const testEl = page.locator('#test');
   await expect(testEl).toHaveText('Hello Rsbuild!');
@@ -35,7 +34,7 @@ test('should fallback to live-reload when dev.hmr is false', async ({
   fs.writeFileSync(appFile, appCode.replace('Rsbuild', 'Live Reload'), 'utf-8');
   await expect(testEl).toHaveText('Hello Live Reload!');
 
-  rsbuild.close();
+  await rsbuild.close();
 });
 
 test('should not reload page when live-reload is disabled', async ({
@@ -43,6 +42,7 @@ test('should not reload page when live-reload is disabled', async ({
 }) => {
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
     rsbuildConfig: {
       dev: {
         liveReload: false,
@@ -50,13 +50,11 @@ test('should not reload page when live-reload is disabled', async ({
     },
   });
 
-  await gotoPage(page, rsbuild);
-
   const test = page.locator('#test');
   await expect(test).toHaveText('Hello Rsbuild!');
 
   fs.writeFileSync(appFile, appCode.replace('Rsbuild', 'Live Reload'), 'utf-8');
   await expect(test).toHaveText('Hello Rsbuild!');
 
-  rsbuild.close();
+  await rsbuild.close();
 });

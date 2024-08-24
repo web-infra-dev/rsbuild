@@ -1,10 +1,10 @@
-import { build, gotoPage } from '@e2e/helper';
+import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should allow to set output.charset to ascii', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    runServer: true,
+    page,
     rsbuildConfig: {
       output: {
         charset: 'ascii',
@@ -12,7 +12,6 @@ test('should allow to set output.charset to ascii', async ({ page }) => {
     },
   });
 
-  await gotoPage(page, rsbuild);
   expect(await page.evaluate('window.a')).toBe('你好 world!');
 
   const files = await rsbuild.unwrapOutputJSON();
@@ -37,10 +36,9 @@ test('should allow to set output.charset to utf8', async ({ page }) => {
         charset: 'utf8',
       },
     },
-    runServer: true,
+    page,
   });
 
-  await gotoPage(page, rsbuild);
   expect(await page.evaluate('window.a')).toBe('你好 world!');
 
   const files = await rsbuild.unwrapOutputJSON();

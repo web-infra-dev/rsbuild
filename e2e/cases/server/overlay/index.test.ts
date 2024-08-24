@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev, gotoPage, proxyConsole } from '@e2e/helper';
+import { dev, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
@@ -19,6 +19,7 @@ test('should show overlay correctly', async ({ page }) => {
 
   const rsbuild = await dev({
     cwd,
+    page,
     rsbuildConfig: {
       source: {
         entry: {
@@ -27,8 +28,6 @@ test('should show overlay correctly', async ({ page }) => {
       },
     },
   });
-
-  await gotoPage(page, rsbuild);
 
   const errorOverlay = page.locator('rsbuild-error-overlay');
 

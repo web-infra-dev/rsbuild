@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { dev, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginSvelte } from '@rsbuild/plugin-svelte';
 
@@ -19,6 +19,7 @@ rspackOnlyTest('hmr should work properly', async ({ page }) => {
 
   const rsbuild = await dev({
     cwd: root,
+    page,
     plugins: [pluginSvelte()],
     rsbuildConfig: {
       source: {
@@ -28,8 +29,6 @@ rspackOnlyTest('hmr should work properly', async ({ page }) => {
       },
     },
   });
-
-  await gotoPage(page, rsbuild);
 
   const a = page.locator('#A');
   const b = page.locator('#B');

@@ -1,4 +1,4 @@
-import { build, gotoPage, webpackOnlyTest } from '@e2e/helper';
+import { build, webpackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 webpackOnlyTest(
@@ -6,7 +6,7 @@ webpackOnlyTest(
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,
-      runServer: true,
+      page,
       rsbuildConfig: {
         tools: {
           webpackChain: (chain, { webpack }) => {
@@ -19,8 +19,6 @@ webpackOnlyTest(
         },
       },
     });
-
-    await gotoPage(page, rsbuild);
 
     const testEl = page.locator('#test-el');
     await expect(testEl).toHaveText('aaaaa');

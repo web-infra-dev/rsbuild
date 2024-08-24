@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { build, dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { build, dev, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest(
@@ -25,14 +25,13 @@ rspackOnlyTest(
   async ({ page }) => {
     const rsbuild = await dev({
       cwd: __dirname,
+      page,
       rsbuildConfig: {
         dev: {
           writeToDisk: true,
         },
       },
     });
-
-    await gotoPage(page, rsbuild);
 
     const content = await readFile(
       join(rsbuild.instance.context.distPath, 'static/css/index.css'),

@@ -1,10 +1,10 @@
-import { build, dev, gotoPage } from '@e2e/helper';
+import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('multi compiler build', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    runServer: true,
+    page,
     rsbuildConfig: {
       environments: {
         web: {
@@ -21,8 +21,6 @@ test('multi compiler build', async ({ page }) => {
     },
   });
 
-  await gotoPage(page, rsbuild);
-
   const test = page.locator('#test');
   await expect(test).toHaveText('Hello Rsbuild!');
 
@@ -32,6 +30,7 @@ test('multi compiler build', async ({ page }) => {
 test('multi compiler dev', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
     rsbuildConfig: {
       output: {
         distPath: {
@@ -52,8 +51,6 @@ test('multi compiler dev', async ({ page }) => {
       },
     },
   });
-
-  await gotoPage(page, rsbuild);
 
   const test = page.locator('#test');
   await expect(test).toHaveText('Hello Rsbuild!');

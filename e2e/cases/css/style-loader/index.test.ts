@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { build, dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { build, dev, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const fixtures = __dirname;
@@ -10,10 +10,8 @@ rspackOnlyTest(
   async ({ page }) => {
     const rsbuild = await build({
       cwd: fixtures,
-      runServer: true,
+      page,
     });
-
-    await gotoPage(page, rsbuild);
 
     // injectStyles worked
     const files = await rsbuild.unwrapOutputJSON();
@@ -62,6 +60,7 @@ rspackOnlyTest(
 
     const rsbuild = await dev({
       cwd: fixtures,
+      page,
       rsbuildConfig: {
         source: {
           entry: {
@@ -70,8 +69,6 @@ rspackOnlyTest(
         },
       },
     });
-
-    await gotoPage(page, rsbuild);
 
     // scss worked
     const header = page.locator('#header');

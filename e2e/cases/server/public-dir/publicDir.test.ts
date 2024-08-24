@@ -1,5 +1,5 @@
 import path, { join } from 'node:path';
-import { build, dev, gotoPage } from '@e2e/helper';
+import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import fse from 'fs-extra';
 
@@ -151,7 +151,7 @@ test('should serve publicDir for preview server correctly', async ({
 
   const rsbuild = await build({
     cwd,
-    runServer: true,
+    page,
     rsbuildConfig: {
       output: {
         distPath: {
@@ -177,7 +177,7 @@ test('should serve publicDir for preview server with assetPrefix correctly', asy
 
   const rsbuild = await build({
     cwd,
-    runServer: true,
+    page,
     rsbuildConfig: {
       dev: {
         assetPrefix: '/dev/',
@@ -208,7 +208,7 @@ test('should serve multiple publicDir for preview server correctly', async ({
 
   const rsbuild = await build({
     cwd,
-    runServer: true,
+    page,
     rsbuildConfig: {
       server: {
         publicDir: [{ name: 'test-temp-dir1' }, { name: 'test-temp-dir2' }],
@@ -233,6 +233,7 @@ test('should serve multiple publicDir for preview server correctly', async ({
 test('should reload page when publicDir file changes', async ({ page }) => {
   const rsbuild = await dev({
     cwd,
+    page,
     rsbuildConfig: {
       server: {
         publicDir: {
@@ -241,8 +242,6 @@ test('should reload page when publicDir file changes', async ({ page }) => {
       },
     },
   });
-
-  await gotoPage(page, rsbuild);
 
   const file = path.join(__dirname, '/public/test-temp-file.txt');
 
@@ -262,6 +261,7 @@ test('should reload page when custom publicDir file changes', async ({
 }) => {
   const rsbuild = await dev({
     cwd,
+    page,
     rsbuildConfig: {
       server: {
         publicDir: {
@@ -271,8 +271,6 @@ test('should reload page when custom publicDir file changes', async ({
       },
     },
   });
-
-  await gotoPage(page, rsbuild);
 
   const file = path.join(__dirname, '/public1/test-temp-file.txt');
 

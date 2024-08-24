@@ -1,4 +1,4 @@
-import { dev, getRandomPort, gotoPage } from '@e2e/helper';
+import { dev, getRandomPort } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should allow to set port via server.port', async ({ page }) => {
@@ -8,14 +8,13 @@ test('should allow to set port via server.port', async ({ page }) => {
   const port = await getRandomPort();
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
     rsbuildConfig: {
       server: {
         port,
       },
     },
   });
-
-  await gotoPage(page, rsbuild);
 
   expect(rsbuild.port).toBe(port);
 

@@ -1,18 +1,14 @@
 import { join } from 'node:path';
-import { build, getRandomPort, gotoPage } from '@e2e/helper';
+import { build, getRandomPort } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import type { RsbuildPlugin } from '@rsbuild/core';
 
 test('should preview dist files correctly', async ({ page }) => {
   const cwd = join(__dirname, 'basic');
-
-  const { instance } = await build({
+  const server = await build({
     cwd,
+    page,
   });
-
-  const { port, server } = await instance.preview();
-
-  await gotoPage(page, { port });
 
   const rootEl = page.locator('#root');
   await expect(rootEl).toHaveText('Hello Rsbuild!');
@@ -37,16 +33,14 @@ test('should allow plugin to modify preview server config', async ({
     },
   };
 
-  const { instance } = await build({
+  const server = await build({
     cwd,
     plugins: [plugin],
+    page,
   });
 
-  const { port, server } = await instance.preview();
+  expect(server.port).toEqual(PORT);
 
-  expect(port).toEqual(PORT);
-
-  await gotoPage(page, { port });
   const rootEl = page.locator('#root');
   await expect(rootEl).toHaveText('Hello Rsbuild!');
   await server.close();

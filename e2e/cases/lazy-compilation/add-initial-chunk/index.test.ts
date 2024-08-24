@@ -1,4 +1,4 @@
-import { dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { dev, rspackOnlyTest } from '@e2e/helper';
 import test, { expect } from '@playwright/test';
 
 // https://github.com/web-infra-dev/rspack/issues/6633
@@ -11,11 +11,11 @@ rspackOnlyTest(
     }
     const rsbuild = await dev({
       cwd: __dirname,
+      page,
     });
 
-    await gotoPage(page, rsbuild);
     await expect(page.locator('#test')).toHaveText('Hello World!');
 
-    rsbuild.close();
+    await rsbuild.close();
   },
 );

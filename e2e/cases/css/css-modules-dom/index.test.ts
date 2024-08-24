@@ -1,5 +1,5 @@
 import { resolve } from 'node:path';
-import { build, gotoPage } from '@e2e/helper';
+import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 
@@ -8,7 +8,7 @@ const fixtures = resolve(__dirname);
 test('injectStyles', async ({ page }) => {
   const rsbuild = await build({
     cwd: fixtures,
-    runServer: true,
+    page,
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {
@@ -16,8 +16,6 @@ test('injectStyles', async ({ page }) => {
       },
     },
   });
-
-  await gotoPage(page, rsbuild);
 
   // injectStyles worked
   const files = await rsbuild.unwrapOutputJSON();

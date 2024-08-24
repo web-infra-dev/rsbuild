@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { dev, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 
@@ -20,6 +20,7 @@ rspackOnlyTest(
 
     const rsbuild = await dev({
       cwd,
+      page,
       rsbuildConfig: {
         plugins: [pluginReact()],
         environments: {
@@ -58,8 +59,6 @@ rspackOnlyTest(
 
     const locator1 = web1Page.locator('#test');
     await expect(locator1).toHaveText('Hello Rsbuild (web1)!');
-
-    await gotoPage(page, rsbuild);
 
     const locator = page.locator('#test');
     await expect(locator).toHaveText('Hello Rsbuild!');

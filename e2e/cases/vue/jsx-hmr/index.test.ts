@@ -6,9 +6,8 @@ import { type Page, expect, test } from '@playwright/test';
 rspackOnlyTest('should render', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
   });
-
-  await gotoPage(page, rsbuild);
 
   await expect(page.locator('.named')).toHaveText('named 0');
   await expect(page.locator('.named-specifier')).toHaveText(
@@ -25,9 +24,8 @@ rspackOnlyTest('should render', async ({ page }) => {
 rspackOnlyTest('should update', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
   });
-
-  await gotoPage(page, rsbuild);
 
   await page.locator('.named').click();
   await expect(page.locator('.named')).toHaveText('named 1');

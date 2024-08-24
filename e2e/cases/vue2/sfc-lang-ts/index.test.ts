@@ -1,4 +1,4 @@
-import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest(
@@ -6,10 +6,8 @@ rspackOnlyTest(
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,
-      runServer: true,
+      page,
     });
-
-    await gotoPage(page, rsbuild);
 
     const button = page.locator('#button');
     await expect(button).toHaveText('count: 0 foo: bar');

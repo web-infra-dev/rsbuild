@@ -1,4 +1,4 @@
-import { dev, getRandomPort, gotoPage } from '@e2e/helper';
+import { dev, getRandomPort } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should match resource correctly with specify assetPrefix', async ({
@@ -7,6 +7,7 @@ test('should match resource correctly with specify assetPrefix', async ({
   const port = await getRandomPort();
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
     rsbuildConfig: {
       dev: {
         assetPrefix: '/subpath/',
@@ -16,8 +17,6 @@ test('should match resource correctly with specify assetPrefix', async ({
       },
     },
   });
-
-  await gotoPage(page, rsbuild);
 
   expect(rsbuild.port).toBe(port);
 
@@ -33,6 +32,7 @@ test('should match resource correctly with full url assetPrefix', async ({
   const port = await getRandomPort();
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
     rsbuildConfig: {
       dev: {
         assetPrefix: `http://localhost:${port}/subpath/`,
@@ -42,8 +42,6 @@ test('should match resource correctly with full url assetPrefix', async ({
       },
     },
   });
-
-  await gotoPage(page, rsbuild);
 
   expect(rsbuild.port).toBe(port);
 

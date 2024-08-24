@@ -11,7 +11,6 @@ test.describe('should combine multiple html config correctly', () => {
   test.beforeAll(async () => {
     rsbuild = await build({
       cwd: __dirname,
-      runServer: true,
       rsbuildConfig: {
         source: {
           entry: {
@@ -40,10 +39,6 @@ test.describe('should combine multiple html config correctly', () => {
       join(rsbuild.distPath, 'foo.html'),
       'utf-8',
     );
-  });
-
-  test.afterAll(async () => {
-    await rsbuild.close();
   });
 
   test('appicon', async () => {

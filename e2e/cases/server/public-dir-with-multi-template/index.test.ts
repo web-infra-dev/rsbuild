@@ -29,7 +29,7 @@ test('should serve publicDir with templates for preview server correctly', async
 }) => {
   const rsbuild = await build({
     cwd,
-    runServer: true,
+    page,
   });
 
   const res = await page.goto(`http://localhost:${rsbuild.port}/aa.txt`);

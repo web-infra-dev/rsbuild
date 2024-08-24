@@ -1,4 +1,4 @@
-import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { getPolyfillContent } from '../helper';
 
@@ -23,10 +23,8 @@ test('should add polyfill when set polyfill entry (default)', async ({
         },
       },
     },
-    runServer: true,
+    page,
   });
-
-  await gotoPage(page, rsbuild);
 
   expect(await page.evaluate('window.a')).toEqual(EXPECT_VALUE);
 
@@ -55,14 +53,12 @@ rspackOnlyTest(
           },
         },
       },
-      runServer: true,
+      page,
     });
 
     page.on('pageerror', (err) => {
       console.log('page err', err);
     });
-
-    await gotoPage(page, rsbuild);
 
     expect(await page.evaluate('window.a')).toEqual(EXPECT_VALUE);
 

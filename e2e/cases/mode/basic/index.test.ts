@@ -1,4 +1,4 @@
-import { build, dev, gotoPage } from '@e2e/helper';
+import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should allow to set development mode when building', async () => {
@@ -55,6 +55,7 @@ test('should allow to set production mode when starting dev server', async ({
 }) => {
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
     rsbuildConfig: {
       mode: 'production',
       dev: {
@@ -62,8 +63,6 @@ test('should allow to set production mode when starting dev server', async ({
       },
     },
   });
-
-  await gotoPage(page, rsbuild);
 
   const files = await rsbuild.unwrapOutputJSON(false);
 
