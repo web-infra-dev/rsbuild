@@ -202,39 +202,15 @@ Note that Rsbuild's default escape syntax is different from EJS. In EJS, the def
 
 ## Other Template Engines
 
-Rsbuild also supports using other template engines through plugins, such as [EJS](https://ejs.co/) and [Pug](https://pugjs.org/).
+Rsbuild also supports using other template engines via plugins, such as [EJS](https://ejs.co/) and [Pug](https://pugjs.org/).
 
 ### EJS
 
-When the suffix of the template is `.ejs`, Rsbuild will use the EJS template engine to compile it. EJS is a simple templating language that lets you generate HTML markup with plain JavaScript.
-
-For example, you can first refer to a `.ejs` template through the [html.template](/config/html/template) config:
-
-```ts
-export default {
-  html: {
-    template: './static/index.ejs',
-  },
-};
-```
-
-Then define a `user` parameter in the template with a value of `{ name: 'Jack' }`. Rsbuild will automatically replace `<%= user.name %>` with the value.
-
-```html
-<!-- input -->
-<% if (user) { %>
-<h2><%= user.name %></h2>
-<% } %>
-
-<!-- output -->
-<h2>Jack</h2>
-```
-
-Please read the [EJS](https://ejs.co/) documentation for details.
+Rsbuild's built-in template syntax has some differences from [EJS](https://ejs.co/). If you need to use the full EJS syntax, you can support it through a plugin. See [rsbuild-plugin-ejs](https://github.com/rspack-contrib/rsbuild-plugin-ejs) for more details.
 
 ### Pug
 
-Rsbuild supports the [Pug](https://pugjs.org/) template engine through the Pug plugin. Please refer to the [@rsbuild/plugin-pug](https://github.com/rspack-contrib/rsbuild-plugin-pug) for usage guide.
+Rsbuild supports the [Pug](https://pugjs.org/) template engine via a plugin. See [@rsbuild/plugin-pug](https://github.com/rspack-contrib/rsbuild-plugin-pug) for more details.
 
 ## Injecting Tags
 
