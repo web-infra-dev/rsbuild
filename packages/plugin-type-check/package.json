@@ -32,7 +32,7 @@
     "fork-ts-checker-webpack-plugin": "9.0.2",
     "json5": "^2.2.3",
     "reduce-configs": "^1.0.0",
-    "webpack": "^5.93.0"
+    "webpack": "^5.94.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
