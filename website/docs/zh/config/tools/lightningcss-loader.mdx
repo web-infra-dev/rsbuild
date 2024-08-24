@@ -5,8 +5,10 @@
 
 ```ts
 const defaultOptions = {
-  // use current browserslist config
+  // 使用当前项目的 browserslist 配置
   targets: browserslist,
+  // 在生产模式，且 output.injectStyles 为 true 时，minify 会被启用
+  minify: config.mode === 'production' && config.output.injectStyles,
 };
 ```
 

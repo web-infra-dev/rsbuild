@@ -36,26 +36,3 @@ export default {
   },
 };
 ```
-
-If you need to enable this option in production mode, please note that the inlined CSS code will not go through Rsbuild's default CSS minimizer. You can manually register the [cssnano](https://github.com/cssnano/cssnano) plugin for PostCSS to compress the inlined code.
-
-1. Install cssnano:
-
-```bash
-npm add cssnano -D
-```
-
-2. Register cssnano using `tools.postcss`:
-
-```ts
-export default {
-  tools: {
-    postcss: (opts) => {
-      // apply cssnano in production build
-      if (process.env.NODE_ENV === 'production') {
-        opts.postcssOptions?.plugins?.push(require('cssnano'));
-      }
-    },
-  },
-};
-```

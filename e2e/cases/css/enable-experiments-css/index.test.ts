@@ -35,7 +35,7 @@ rspackOnlyTest(
     const files = await rsbuild.unwrapOutputJSON();
     const content =
       files[Object.keys(files).find((file) => file.endsWith('index.js'))!];
-    expect(content).toContain('color: red;');
+    expect(content).toContain('color:red');
 
     // should have no warnings
     expect(logs.some((log) => log.includes('Compile Warning'))).toBeFalsy();

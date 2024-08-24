@@ -5,38 +5,46 @@ import { expect, test } from '@playwright/test';
 
 const fixtures = __dirname;
 
-test('should inline style when injectStyles is true', async ({ page }) => {
-  const rsbuild = await build({
-    cwd: fixtures,
-    runServer: true,
-  });
+rspackOnlyTest(
+  'should inline style when injectStyles is true',
+  async ({ page }) => {
+    const rsbuild = await build({
+      cwd: fixtures,
+      runServer: true,
+    });
 
-  await gotoPage(page, rsbuild);
+    await gotoPage(page, rsbuild);
 
-  // injectStyles worked
-  const files = await rsbuild.unwrapOutputJSON();
-  const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
-  expect(cssFiles.length).toBe(0);
+    // injectStyles worked
+    const files = await rsbuild.unwrapOutputJSON();
+    const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
+    expect(cssFiles.length).toBe(0);
 
-  // should inline minified css
-  const indexJsFile = Object.keys(files).find(
-    (file) => file.includes('index.') && file.endsWith('.js'),
-  )!;
+    // should inline minified css
+    const indexJsFile = Object.keys(files).find(
+      (file) => file.includes('index.') && file.endsWith('.js'),
+    )!;
 
-  expect(files[indexJsFile].includes('padding: 0;')).toBeTruthy();
-  expect(files[indexJsFile].includes('margin: 0;')).toBeTruthy();
-  expect(files[indexJsFile].includes('text-align: center;')).toBeTruthy();
+    expect(
+      files[indexJsFile].includes('html,body{margin:0;padding:0}'),
+    ).toBeTruthy();
+    expect(
+      files[indexJsFile].includes(
+        '.description{text-align:center;font-size:16px;line-height:1.5}',
+      ),
+    ).toBeTruthy();
 
-  // scss worked
-  const header = page.locator('#header');
-  await expect(header).toHaveCSS('font-size', '20px');
+    // scss worked
+    const header = page.locator('#header');
+    await expect(header).toHaveCSS('font-size', '20px');
 
-  // less worked
-  const title = page.locator('#title');
-  await expect(title).toHaveCSS('font-size', '20px');
+    // less worked
+    const title = page.locator('#title');
+    await expect(title).toHaveCSS('font-size', '20px');
 
-  await rsbuild.close();
-});
+    await rsbuild.close();
+  },
+);
 
 rspackOnlyTest(
   'hmr should work well when injectStyles is true',

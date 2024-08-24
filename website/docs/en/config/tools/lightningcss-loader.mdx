@@ -7,6 +7,8 @@
 const defaultOptions = {
   // use current browserslist config
   targets: browserslist,
+  // minify is enabled when output.injectStyles is true and in production mode
+  minify: config.mode === 'production' && config.output.injectStyles,
 };
 ```
 
