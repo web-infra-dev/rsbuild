@@ -4,7 +4,6 @@
   "plugin-svgr",
   "plugin-vue",
   "plugin-vue-jsx",
-  "plugin-vue2",
   "plugin-preact",
   "plugin-svelte",
   "plugin-solid",
