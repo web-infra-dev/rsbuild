@@ -1,3 +1,9 @@
 import { Animals } from './foo';
 
-console.log('fish is :', Animals.Fish);
+declare global {
+  interface Window {
+    test: string;
+  }
+}
+
+window.test = `Fish ${Animals.Fish}, Cat ${Animals.Cat}`;
