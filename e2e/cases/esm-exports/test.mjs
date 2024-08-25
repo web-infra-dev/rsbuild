@@ -12,7 +12,6 @@ import { pluginSwc } from '@rsbuild/plugin-swc';
 import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
 import { pluginVue } from '@rsbuild/plugin-vue';
 import { pluginVueJsx } from '@rsbuild/plugin-vue-jsx';
-import { pluginVue2 } from '@rsbuild/plugin-vue2';
 import { webpackProvider } from '@rsbuild/webpack';
 
 export default {
@@ -28,7 +27,6 @@ export default {
   pluginSvelte,
   pluginTypeCheck,
   pluginVue,
-  pluginVue2,
   pluginVueJsx,
   pluginSwc,
   webpackProvider,

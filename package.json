@@ -13,7 +13,7 @@
     "build:doc": "cd website && pnpm run build",
     "change": "changeset",
     "changeset": "changeset",
-    "check-dependency-version": "check-dependency-version-consistency . --ignore-dep vue-loader",
+    "check-dependency-version": "check-dependency-version-consistency .",
     "check-spell": "npx cspell",
     "dev:doc": "cd website && pnpm run dev",
     "e2e": "cd ./e2e && pnpm test",
@@ -60,10 +60,6 @@
     "pnpm": ">=9.0.0"
   },
   "pnpm": {
-    "allowedDeprecatedVersions": {
-      "consolidate": "0.15.1",
-      "vue": "2.x"
-    },
     "overrides": {
       "@rsbuild/core": "link:packages/core",
       "@rsbuild/plugin-less": "link:packages/plugin-less",

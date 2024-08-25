@@ -59,9 +59,6 @@
 		"typescript",
 		// related to the SWC version built into Rspack
 		"@swc/helpers",
-		// plugin-vue2 depends on vue 2 and vue-loader v15
-		"vue",
-		"vue-loader",
 		// some loaders still depend on loader-utils v2
 		"loader-utils",
 		// pure esm packages can not be used now

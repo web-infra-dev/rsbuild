@@ -38,7 +38,6 @@
     "@rsbuild/plugin-type-check": "workspace:*",
     "@rsbuild/plugin-vue": "workspace:*",
     "@rsbuild/plugin-vue-jsx": "workspace:*",
-    "@rsbuild/plugin-vue2": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
     "@module-federation/rspack": "0.5.0",
     "@scripts/test-helper": "workspace:*",
