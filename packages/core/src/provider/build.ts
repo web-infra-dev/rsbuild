@@ -1,4 +1,4 @@
-import { rspack } from '@rspack/core';
+import { ValidationError, rspack } from '@rspack/core';
 import { registerBuildHook } from '../hooks';
 import { logger } from '../logger';
 import type { BuildOptions, MultiStats, Rspack, Stats } from '../types';
@@ -19,7 +19,16 @@ export const build = async (
   if (customCompiler) {
     compiler = customCompiler as any;
   } else {
-    const result = await createCompiler(initOptions);
+    let result;
+    try {
+      result = await createCompiler(initOptions);
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        logger.warn(error.message);
+      } else {
+        throw error;
+      }
+    }
     compiler = result.compiler;
     bundlerConfigs = result.rspackConfigs;
   }
