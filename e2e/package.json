@@ -15,7 +15,7 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.1",
     "solid-js": "^1.8.21",
-    "vue": "^3.4.19",
+    "vue": "^3.4.38",
     "vue-router": "^4.4.3"
   },
   "devDependencies": {
@@ -39,12 +39,12 @@
     "@rsbuild/plugin-vue": "workspace:*",
     "@rsbuild/plugin-vue-jsx": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "@module-federation/rspack": "0.5.0",
+    "@module-federation/rspack": "0.5.1",
     "@scripts/test-helper": "workspace:*",
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.7",
     "@types/node": "18.x",
-    "@types/react": "^18.3.3",
+    "@types/react": "^18.3.4",
     "@types/react-dom": "^18.3.0",
     "create-rsbuild": "workspace:*",
     "fast-glob": "^3.3.2",

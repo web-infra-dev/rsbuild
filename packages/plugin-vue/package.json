@@ -28,14 +28,14 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "vue-loader": "^17.4.0",
+    "vue-loader": "^17.4.2",
     "webpack": "^5.94.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "typescript": "^5.5.2",
-    "vue": "^3.4.19",
+    "vue": "^3.4.38",
     "webpack": "^5.94.0"
   },
   "peerDependencies": {
