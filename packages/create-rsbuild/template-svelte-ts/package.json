@@ -9,12 +9,12 @@
     "svelte-check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "dependencies": {
-    "svelte": "^4.2.18"
+    "svelte": "^4.2.19"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-svelte": "workspace:*",
-    "svelte-check": "^3.8.5",
+    "svelte-check": "^3.8.6",
     "typescript": "^5.5.2"
   }
 }

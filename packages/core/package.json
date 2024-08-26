@@ -54,8 +54,8 @@
     "@rspack/core": "1.0.0-rc.0",
     "@rspack/lite-tapable": "1.0.0",
     "@swc/helpers": "^0.5.11",
-    "caniuse-lite": "^1.0.30001651",
-    "core-js": "~3.38.0"
+    "caniuse-lite": "^1.0.30001653",
+    "core-js": "~3.38.1"
   },
   "devDependencies": {
     "@types/connect": "3.4.38",
@@ -97,7 +97,7 @@
     "typescript": "^5.5.2",
     "webpack": "^5.94.0",
     "webpack-bundle-analyzer": "^4.10.2",
-    "rsbuild-dev-middleware": "0.1.0",
+    "rsbuild-dev-middleware": "0.1.1",
     "webpack-merge": "6.0.1",
     "ws": "^8.18.0"
   },
