@@ -12,7 +12,6 @@ exports[`plugins/react > should not apply splitChunks rule when strategy is not 
     },
   },
   "chunks": "all",
-  "enforceSizeThreshold": 50000,
 }
 `;
 
@@ -330,7 +329,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
         },
       },
       "chunks": "all",
-      "enforceSizeThreshold": 50000,
     },
   },
   "output": {

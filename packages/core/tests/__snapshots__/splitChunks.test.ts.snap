@@ -14,7 +14,6 @@ exports[`plugin-split-chunks > should allow forceSplitting to be an object 1`] =
         },
       },
       "chunks": "all",
-      "enforceSizeThreshold": 50000,
     },
   },
   "plugins": [
@@ -59,7 +58,6 @@ exports[`plugin-split-chunks > should set custom config 1`] = `
         },
       },
       "chunks": "all",
-      "enforceSizeThreshold": 50000,
     },
   },
   "plugins": [
@@ -74,7 +72,6 @@ exports[`plugin-split-chunks > should set single-size config 1`] = `
     "splitChunks": {
       "cacheGroups": {},
       "chunks": "all",
-      "enforceSizeThreshold": 50000,
       "maxSize": 5000,
       "minSize": 1000,
     },
@@ -99,7 +96,6 @@ exports[`plugin-split-chunks > should set single-vendor config 1`] = `
         },
       },
       "chunks": "all",
-      "enforceSizeThreshold": 50000,
     },
   },
   "plugins": [
@@ -130,7 +126,6 @@ exports[`plugin-split-chunks > should set split-by-experience config 1`] = `
         },
       },
       "chunks": "all",
-      "enforceSizeThreshold": 50000,
     },
   },
   "plugins": [
@@ -156,7 +151,6 @@ exports[`plugin-split-chunks > should set split-by-experience config correctly w
         },
       },
       "chunks": "all",
-      "enforceSizeThreshold": 50000,
     },
   },
   "plugins": [
@@ -177,7 +171,6 @@ exports[`plugin-split-chunks > should set split-by-module config 1`] = `
         },
       },
       "chunks": "all",
-      "enforceSizeThreshold": 50000,
       "maxInitialRequests": Infinity,
       "minSize": 0,
     },

@@ -294,7 +294,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
         },
       },
       "chunks": "all",
-      "enforceSizeThreshold": 50000,
     },
   },
   "output": {

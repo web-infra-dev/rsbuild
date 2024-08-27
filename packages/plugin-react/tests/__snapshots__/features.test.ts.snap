@@ -25,7 +25,6 @@ exports[`splitChunks > should apply antd/semi/... splitChunks rule when pkg is i
     },
   },
   "chunks": "all",
-  "enforceSizeThreshold": 50000,
 }
 `;
 
@@ -44,7 +43,6 @@ exports[`splitChunks > should apply splitChunks.react/router plugin option when 
     },
   },
   "chunks": "all",
-  "enforceSizeThreshold": 50000,
 }
 `;
 
@@ -60,6 +58,5 @@ exports[`splitChunks > should not apply splitChunks rule when strategy is not sp
     },
   },
   "chunks": "all",
-  "enforceSizeThreshold": 50000,
 }
 `;
