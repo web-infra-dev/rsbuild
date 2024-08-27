@@ -107,6 +107,7 @@ subpage
 subresource
 subresources
 svgr
+sveltejs
 swcrc
 systemjs
 tailwindcss
