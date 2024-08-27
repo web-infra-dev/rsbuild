@@ -218,9 +218,9 @@ async function applyCoreJs(
 
 const reduceTransformImportConfig = (
   options: NormalizedSourceConfig['transformImport'],
-): TransformImport[] | false => {
-  if (options === false || !options) {
-    return false;
+): TransformImport[] => {
+  if (!options) {
+    return [];
   }
 
   let imports: TransformImport[] = [];
@@ -240,7 +240,7 @@ function applyTransformImport(
 ) {
   const finalPluginImport = reduceTransformImportConfig(pluginImport);
 
-  if (finalPluginImport !== false && finalPluginImport?.length) {
+  if (finalPluginImport?.length) {
     swcConfig.rspackExperiments ??= {};
     swcConfig.rspackExperiments.import ??= [];
     swcConfig.rspackExperiments.import.push(...finalPluginImport);

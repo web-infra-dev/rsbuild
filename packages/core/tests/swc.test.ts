@@ -105,45 +105,6 @@ describe('plugin-swc', () => {
     });
   });
 
-  it('should disable all pluginImport', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginSwc(), pluginEntry()],
-      rsbuildConfig: {
-        source: {
-          entry: {
-            main: './src/index.js',
-          },
-          transformImport: false,
-        },
-      },
-    });
-
-    const bundlerConfigs = await rsbuild.initConfigs();
-
-    for (const bundlerConfig of bundlerConfigs) {
-      expect(bundlerConfig).toMatchSnapshot();
-    }
-  });
-
-  it('should add antd pluginImport', async () => {
-    const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
-        source: {
-          entry: {
-            main: './src/index.js',
-          },
-        },
-      },
-      plugins: [pluginSwc(), pluginEntry()],
-    });
-
-    const bundlerConfigs = await rsbuild.initConfigs();
-
-    for (const bundlerConfig of bundlerConfigs) {
-      expect(bundlerConfig).toMatchSnapshot();
-    }
-  });
-
   it('should allow to use `tools.swc` to configure swc-loader options', async () => {
     const rsbuild = await createStubRsbuild({
       rsbuildConfig: {

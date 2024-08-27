@@ -28,6 +28,24 @@ test('should import with template config', async () => {
   expect(files[entry]).toContain('transformImport test succeed');
 });
 
+test('should not transformImport by default', async () => {
+  copyPkgToNodeModules();
+
+  const rsbuild = await build({
+    cwd: __dirname,
+    rsbuildConfig: {
+      performance: {
+        chunkSplit: {
+          strategy: 'all-in-one',
+        },
+      },
+    },
+  });
+  const files = await rsbuild.unwrapOutputJSON(false);
+  const entry = findEntry(files);
+  expect(files[entry]).toContain('test succeed');
+});
+
 for (const c of cases) {
   const [name, entry, config] = c;
   shareTest(`${name}-rspack`, entry, config);
