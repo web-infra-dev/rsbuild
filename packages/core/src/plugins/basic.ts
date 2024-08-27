@@ -63,7 +63,8 @@ export const pluginBasic = (): RsbuildPlugin => ({
           );
         }
 
-        process.env.RSPACK_CONFIG_VALIDATE ||= 'loose-silent';
+        // enable Rspack config schema validation, unrecognized keys are allowed
+        process.env.RSPACK_CONFIG_VALIDATE ||= 'loose-unrecognized-keys';
 
         // improve kill process performance
         // https://github.com/web-infra-dev/rspack/pull/5486
