@@ -195,9 +195,9 @@ const getCoreJsVersion = (corejsPkgPath: string) => {
 
 const reduceTransformImportConfig = (
   options: NormalizedSourceConfig['transformImport'],
-): TransformImport[] | false => {
-  if (options === false || !options) {
-    return false;
+): TransformImport[] => {
+  if (!options) {
+    return [];
   }
 
   let imports: TransformImport[] = [];
@@ -279,7 +279,7 @@ export async function applyPluginConfig(
     rsbuildConfig.source?.transformImport,
   );
 
-  if (finalPluginImport !== false && finalPluginImport?.length) {
+  if (finalPluginImport?.length) {
     extensions.pluginImport ??= [];
     extensions.pluginImport.push(...finalPluginImport);
   }

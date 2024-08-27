@@ -63,8 +63,7 @@ export interface SourceConfig {
    */
   transformImport?:
     | TransformImportFn
-    | Array<TransformImport | TransformImportFn>
-    | false;
+    | Array<TransformImport | TransformImportFn>;
   /**
    * Configure a custom tsconfig.json file path to use, can be a relative or absolute path.
    * @default 'tsconfig.json'
