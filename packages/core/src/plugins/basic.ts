@@ -63,7 +63,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
           );
         }
 
-        process.env.RSPACK_CONFIG_VALIDATE = 'loose-silent';
+        process.env.RSPACK_CONFIG_VALIDATE ||= 'loose-silent';
 
         // improve kill process performance
         // https://github.com/web-infra-dev/rspack/pull/5486
