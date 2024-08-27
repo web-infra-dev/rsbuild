@@ -294,7 +294,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         },
       },
       "chunks": "all",
-      "enforceSizeThreshold": 50000,
     },
   },
   "output": {
@@ -751,7 +750,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         },
       },
       "chunks": "all",
-      "enforceSizeThreshold": 50000,
     },
   },
   "output": {
@@ -1490,7 +1488,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
         },
       },
       "chunks": "all",
-      "enforceSizeThreshold": 50000,
     },
   },
   "output": {

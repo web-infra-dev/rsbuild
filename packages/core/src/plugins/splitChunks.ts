@@ -246,11 +246,15 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
               'async'
             : // split both `initial` and `async` chunks for normal app
               'all',
-          // When chunk size >= 50000 bytes, split it into separate chunk
-          // @ts-expect-error Rspack type missing
-          enforceSizeThreshold: 50000,
           cacheGroups: {},
         };
+
+        if (api.context.bundlerType === 'webpack') {
+          // When chunk size >= 50000 bytes, split it into separate chunk
+          // @ts-expect-error Rspack does not support enforceSizeThreshold yet
+          // https://github.com/web-infra-dev/rspack/issues/3565
+          defaultConfig.enforceSizeThreshold = 50000;
+        }
 
         const { chunkSplit } = config.performance;
         let forceSplittingGroups = {};
