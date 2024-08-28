@@ -14,10 +14,7 @@ type Client = {
   port?: string | number;
   /** Specify the host for the WebSocket request */
   host?: string;
-  /**
-   * Shows overlay in the browser when there are compiler errors
-   * This feature requires the current browser version to support [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
-   */
+  /** Whether to display an error overlay in the browser when a compilation error occurs */
   overlay?: boolean;
 };
 ```
@@ -82,3 +79,27 @@ export default {
 During the HMR process, the page will make GET requests to get hot-update files, including `*.hot-update.json` and `*.hot-update.js`. These files contain the necessary information for hot updates, such as the updated modules and their code.
 
 Hot-update files are considered to be static assets. If you need to configure the URL for hot-update files, please use the [dev.assetPrefix](/config/dev/asset-prefix) option.
+
+## Error Overlay
+
+The `dev.client.overlay` option allows you to choose whether or not to enable the error overlay feature.
+
+By default, Rsbuild will display an error overlay in the browser when a compilation error occurs, providing error messages and stacks:
+
+![error overlay](https://assets.rspack.dev/rsbuild/assets/rsbuild-error-overlay.png)
+
+If you need to disable the error overlay, you can set it to `false`:
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      overlay: false,
+    },
+  },
+};
+```
+
+:::tip
+The error overlay feature requires the current browser to support [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components).
+:::
