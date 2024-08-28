@@ -19,7 +19,7 @@ export * from './fs';
 export * from './path';
 export * from './stats';
 
-export const rspackMinVersion = '0.7.0';
+export const rspackMinVersion = '1.0.0';
 
 export const getNodeEnv = () => process.env.NODE_ENV as string;
 export const setNodeEnv = (env: string): void => {
