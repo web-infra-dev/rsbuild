@@ -22,11 +22,12 @@
     "dist"
   ],
   "scripts": {
-    "build": "modern build",
-    "dev": "modern build --watch",
+    "build": "rslib build",
+    "dev": "rslib build --watch",
     "start": "node ./dist/index.js"
   },
   "devDependencies": {
+    "@rslib/core": "0.0.3",
     "@types/node": "18.x",
     "typescript": "^5.5.2"
   },
