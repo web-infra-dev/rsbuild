@@ -98,6 +98,57 @@ Rsbuild 会在构建时自动注入 `<script>` 标签到生成的 HTML 文件中
 
 你可以参考 [插件列表](/plugins/list/index) 来了解更多可用的插件。
 
+## 配置迁移
+
+以下是 Vite 配置对应的 Rsbuild 配置：
+
+| Vite                                  | Rsbuild                                                          |
+| ------------------------------------- | ---------------------------------------------------------------- |
+| root                                  | [root](/config/root)                                             |
+| mode                                  | [mode](/config/root)                                             |
+| define                                | [source.define](/config/source/define)                           |
+| plugins                               | [plugins](/config/plugins)                                       |
+| envDir                                | [Env Directory](/guide/advanced/env-vars#env-目录)               |
+| publicDir                             | [server.publicDir](/config/server/public-dir)                    |
+| resolve.alias                         | [source.alias](/config/source/alias)                             |
+| resolve.conditions                    | [tools.rspack.resolve.conditionNames](/config/tools/rspack)      |
+| resolve.mainFields                    | [tools.rspack.resolve.mainFields](/config/tools/rspack)          |
+| resolve.extensions                    | [tools.rspack.resolve.extensions](/config/tools/rspack)          |
+| resolve.preserveSymlinks              | [tools.rspack.resolve.symlinks](/config/tools/rspack)            |
+| html.cspNonce                         | [security.nonce](/config/security/nonce)                         |
+| css.modules                           | [output.cssModules](/config/output/css-modules)                  |
+| css.postcss                           | [tools.postcss](/config/tools/postcss)                           |
+| css.preprocessorOptions.sass          | [pluginSass](/plugins/list/plugin-sass)                          |
+| css.preprocessorOptions.less          | [pluginLess](/plugins/list/plugin-less)                          |
+| css.preprocessorOptions.stylus        | [pluginStylus](/plugins/list/plugin-stylus)                      |
+| css.devSourcemap                      | [output.sourceMap](/config/output/source-map)                    |
+| css.lightningcss                      | [tools.lightningcssLoader](/config/tools/lightningcss-loader)    |
+| server.host, preview.host             | [server.host](/config/server/host)                               |
+| server.port, preview.port             | [server.port](/config/server/port)                               |
+| server.strictPort, preview.strictPort | [server.strictPort](/config/server/strict-port)                  |
+| server.https, preview.https           | [server.https](/config/server/https)                             |
+| server.open, preview.open             | [server.open](/config/server/open)                               |
+| server.proxy, preview.cors            | [server.proxy](/config/server/proxy)                             |
+| server.headers, preview.headers       | [server.headers](/config/server/headers)                         |
+| server.hmr                            | [dev.hmr](/config/dev/hmr), [dev.client](/config/dev/client)     |
+| build.target, build.cssTarget         | [Browserslist](/guide/advanced/browserslist)                     |
+| build.outDir, build.assetsDir         | [output.distPath](/config/output/dist-path)                      |
+| build.assetsInlineLimit               | [output.dataUriLimit](/config/output/data-uri-limit)             |
+| build.cssMinify                       | [output.minify](/config/output/minify)                           |
+| build.sourcemap                       | [output.sourceMap](/config/output/source-map)                    |
+| build.lib                             | Use [Rslib](https://github.com/web-infra-dev/rslib)              |
+| build.manifest                        | [output.manifest](/config/output/manifest)                       |
+| build.ssrEmitAssets                   | [output.emitAssets](/config/output/emit-assets)                  |
+| build.minify, build.terserOptions     | [output.minify](/config/output/minify)                           |
+| build.emptyOutDir                     | [output.cleanDistPath](/config/output/clean-dist-path)           |
+| build.copyPublicDir                   | [server.publicDir](/config/server/public-dir)                    |
+| build.reportCompressedSize            | [performance.printFileSize](/config/performance/print-file-size) |
+| ssr, worker                           | [environments](/config/environments)                             |
+
+说明：
+
+- 上述表格尚未覆盖到 Vite 的所有配置，欢迎补充。
+
 ## Glob Import
 
 Vite 提供了 `import.meta.glob()` 来批量导入模块。
