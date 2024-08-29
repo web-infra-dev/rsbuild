@@ -10,9 +10,11 @@ Rsdoctor 是一个构建分析工具，能够可视化地展示各个 loaders �
 
 ## Node.js Profiling
 
-通常而言，JS 侧的性能开销会大于 Rust 侧的性能开销，你可以使用 Node.js Profiling 分析 JS 侧的开销。
+当 Rsbuild 执行一次构建时，会包含 JavaScript 和 Rust 两侧的代码运行开销，以及 JavaScript 和 Rust 之间的数据通信开销。
 
-在项目根目录执行以下命令：
+通常而言，JavaScript 侧的性能开销会大于 Rust 侧，你可以使用 Node.js 的 profiling 来分析 JS 侧的开销，这有助于发现 JS 侧的性能瓶颈。
+
+例如，进行 [CPU profiling](https://nodejs.org/docs/v20.17.0/api/cli.html#--cpu-prof) 分析，在项目根目录执行以下命令：
 
 ```bash
 # dev
@@ -22,7 +24,7 @@ node --cpu-prof ./node_modules/@rsbuild/core/bin/rsbuild.js dev
 node --cpu-prof ./node_modules/@rsbuild/core/bin/rsbuild.js build
 ```
 
-以上命令执行后会生成一个 cpuprofile 文件，我们可以使用 [speedscope](https://github.com/jlfwong/speedscope) 来可视化查看该文件：
+以上命令执行后会生成一个 `*.cpuprofile` 文件，我们可以使用 [speedscope](https://github.com/jlfwong/speedscope) 来可视化查看该文件：
 
 ```bash
 # 安装 speedscope
@@ -37,20 +39,19 @@ speedscope CPU.date.000000.00000.0.001.cpuprofile
 
 Rsbuild 支持使用 `RSPACK_PROFILE` 环境变量来对 Rspack 进行构建性能分析。
 
-在项目根目录执行以下命令：
-
-```bash
-# dev
-RSPACK_PROFILE=ALL rsbuild dev
-
-# build
-RSPACK_PROFILE=ALL rsbuild build
+```json title="package.json"
+{
+  "scripts": {
+    "dev:profile": "RSPACK_PROFILE=ALL rsbuild dev",
+    "build:profile": "RSPACK_PROFILE=ALL rsbuild build"
+  }
+}
 ```
 
-执行该命令后会在当前产物目录下生成一个 `rspack-profile-${timestamp}` 文件夹，该文件夹下会包含 `logging.json`、`trace.json` 和 `jscpuprofile.json` 三个文件：
+执行该命令后，会在产物目录下生成一个 `rspack-profile-${timestamp}` 文件夹，该文件夹下会包含 `logging.json`、`trace.json` 和 `jscpuprofile.json` 三个文件：
 
 - `trace.json`：使用 tracing 细粒度地记录了 Rust 侧各个阶段的耗时，可以使用 [ui.perfetto.dev](https://ui.perfetto.dev/) 进行查看。
 - `jscpuprofile.json`：使用 [Node.js inspector](https://nodejs.org/dist/latest-v18.x/docs/api/inspector.html) 细粒度地记录了 JavaScript 侧的各个阶段的耗时，可以使用 [speedscope.app](https://www.speedscope.app/) 进行查看。
-- `logging.json`：包含一些日志信息，粗粒度地记录了构建的各个阶段耗时 (模式环境下暂不支持)。
+- `logging.json`：包含一些日志信息，粗粒度地记录了构建的各个阶段耗时（开发模式下暂不支持）。
 
-> 更多 Rspack 构建性能分析用法，可参考 [Rspack - Profiling](https://web-infra-dev.github.io/rspack-dev-guide/profiling/intro.html#profiling)。
+> 更多 Rspack 构建性能分析用法，可参考 [Rspack - Profiling](https://rspack.dev/contribute/development/profiling)。
