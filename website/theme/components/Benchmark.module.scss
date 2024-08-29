@@ -21,6 +21,13 @@
   margin-top: 4rem;
 }
 
+.short {
+  // Temp code to fix the width of the graph
+  :global(.container_72b36) {
+    width: 40vw;
+  }
+}
+
 @media (min-width: 640px) {
   .title {
     font-size: 3rem;

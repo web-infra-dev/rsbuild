@@ -79,8 +79,14 @@ const BENCHMARK_DATA: BenchmarkData = {
   },
 };
 
-export function BenchmarkGraph() {
-  return <BaseBenchmark data={BENCHMARK_DATA} />;
+export function BenchmarkGraph(props: { short?: boolean }) {
+  return props.short ? (
+    <div className={styles.short}>
+      <BaseBenchmark data={BENCHMARK_DATA} />
+    </div>
+  ) : (
+    <BaseBenchmark data={BENCHMARK_DATA} />
+  );
 }
 
 export function Benchmark() {
