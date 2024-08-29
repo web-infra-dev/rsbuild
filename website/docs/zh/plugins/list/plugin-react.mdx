@@ -165,8 +165,25 @@ pluginReact({
 
 执行构建脚本时，设置 `REACT_PROFILER=true` 即可：
 
-```bash
-REACT_PROFILER=true npx rsbuild build
+```json title="package.json"
+{
+  "scripts": {
+    "build:profiler": "REACT_PROFILER=true rsbuild build"
+  }
+}
+```
+
+由于 Windows 系统不支持上述用法，你也可以使用 [cross-env](https://www.npmjs.com/package/cross-env) 来设置环境变量，这可以确保在不同的操作系统中都能正常使用：
+
+```json title="package.json"
+{
+  "scripts": {
+    "build:profiler": "cross-env REACT_PROFILER=true rsbuild build"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.0"
+  }
+}
 ```
 
 > 关于使用 React DevTools 进行性能分析的详细信息，请参见 [React 文档](https://legacy.reactjs.org/docs/optimizing-performance.html#profiling-components-with-the-devtools-profiler)。

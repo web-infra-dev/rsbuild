@@ -16,12 +16,27 @@ import { PackageManagerTabs } from '@theme';
 
 2. 在 CLI 命令前添加 `RSDOCTOR=true` 环境变量：
 
-```bash
-# dev
-RSDOCTOR=true rsbuild dev
+```json title="package.json"
+{
+  "scripts": {
+    "dev:rsdoctor": "RSDOCTOR=true rsbuild dev",
+    "build:rsdoctor": "RSDOCTOR=true rsbuild build"
+  }
+}
+```
 
-# build
-RSDOCTOR=true rsbuild build
+由于 Windows 系统不支持上述用法，你也可以使用 [cross-env](https://www.npmjs.com/package/cross-env) 来设置环境变量，这可以确保在不同的操作系统中都能正常使用：
+
+```json title="package.json"
+{
+  "scripts": {
+    "dev:rsdoctor": "cross-env RSDOCTOR=true rsbuild dev",
+    "build:rsdoctor": "cross-env RSDOCTOR=true rsbuild build"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.0"
+  }
+}
 ```
 
 在项目内执行上述命令后，Rsbuild 会自动注册 Rsdoctor 的插件，并在构建完成后打开本次构建的分析页面，请参考 [Rsdoctor 文档](https://rsdoctor.dev/) 来了解完整功能。
