@@ -262,7 +262,7 @@ The `transformImport` can be a function, it will accept the previous value, and 
 export default {
   source: {
     transformImport: (imports) => {
-      return imports.filter(import => import.libraryName !== 'antd');
+      return imports.filter((data) => data.libraryName !== 'antd');
     },
   },
 };
