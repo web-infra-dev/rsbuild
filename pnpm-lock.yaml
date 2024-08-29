@@ -746,8 +746,8 @@ importers:
   packages/create-rsbuild:
     dependencies:
       create-rstack:
-        specifier: 0.0.2
-        version: 0.0.2
+        specifier: 1.0.0-beta.0
+        version: 1.0.0-beta.0
     devDependencies:
       '@types/node':
         specifier: 18.x
@@ -3868,8 +3868,8 @@ packages:
       typescript:
         optional: true
 
-  create-rstack@0.0.2:
-    resolution: {integrity: sha512-vF5Q6JEgjyAn3BXKNjt3qJjwsdYtUO03DDS0CDDYim60RA50RL1wypHbQ3Lqzt9sEwX7d5KQF/W5HMoESIRi+w==}
+  create-rstack@1.0.0-beta.0:
+    resolution: {integrity: sha512-SU9CNnMDIswFSVmwEDxXuqAa6TRkinQ0YUL9jS8/Ivwi1/QW0FO8L8G6rKEzuv9LIGNHLCJLBGxZsLBQTyPziQ==}
 
   cron-parser@4.9.0:
     resolution: {integrity: sha512-p0SaNjrHOnQeR8/VnfGbmg9te2kfyYSQ7Sc/j/6DtPL3JQvKxmjO9TSjNFpujqV3vEYYBvNNvXSxzyksBWAx1Q==}
@@ -10468,7 +10468,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.5.2
 
-  create-rstack@0.0.2: {}
+  create-rstack@1.0.0-beta.0: {}
 
   cron-parser@4.9.0:
     dependencies:

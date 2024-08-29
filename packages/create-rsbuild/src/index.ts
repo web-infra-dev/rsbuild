@@ -26,6 +26,7 @@ async function getTemplateName({ template }: Argv) {
     await select({
       message: 'Select framework',
       options: [
+        { value: 'vanilla', label: 'Vanilla' },
         { value: 'react', label: 'React' },
         { value: 'vue3', label: 'Vue 3' },
         { value: 'vue2', label: 'Vue 2' },
@@ -33,7 +34,6 @@ async function getTemplateName({ template }: Argv) {
         { value: 'preact', label: 'Preact' },
         { value: 'svelte', label: 'Svelte' },
         { value: 'solid', label: 'Solid' },
-        { value: 'vanilla', label: 'Vanilla' },
       ],
     }),
   );
