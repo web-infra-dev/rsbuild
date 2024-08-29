@@ -15,17 +15,38 @@ const defaultConfig = {
 };
 ```
 
-### Enable Bundle Analyze
+## Enable Bundle Analyze
 
-You have two ways to enable `webpack-bundle-analyzer` to analyze the size of the output files:
+You have two ways to enable `webpack-bundle-analyzer` to analyze the size of the output files.
 
-- Add the environment variable `BUNDLE_ANALYZE=true`, for example:
+### Via Environment Variable
 
-```bash
-BUNDLE_ANALYZE=true pnpm build
+Add the environment variable `BUNDLE_ANALYZE=true`, for example:
+
+```json title="package.json"
+{
+  "scripts": {
+    "build:analyze": "BUNDLE_ANALYZE=true rsbuild build"
+  }
+}
 ```
 
-- Configure `performance.bundleAnalyze` to enable it permanently:
+Since the Windows system does not support the above usage, you can also use [cross-env](https://www.npmjs.com/package/cross-env) to set environment variables. This ensures compatibility across different systems:
+
+```json title="package.json"
+{
+  "scripts": {
+    "build:analyze": "cross-env BUNDLE_ANALYZE=true rsbuild build"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.0"
+  }
+}
+```
+
+### Via Configuration
+
+Configure `performance.bundleAnalyze` to enable it permanently:
 
 ```js
 export default {
@@ -34,6 +55,8 @@ export default {
   },
 };
 ```
+
+### Analysis Result
 
 After enabling it, Rsbuild will generate an HTML file that analyzes the size of the output files, and print the following log in the Terminal:
 
@@ -45,7 +68,7 @@ You can manually open the file in the browser and view the detail of the bundle 
 
 ![](https://assets.rspack.dev/rsbuild/assets/bundle-analyzer-example.png)
 
-### Override Default Configuration
+## Override Default Configuration
 
 You can override the default configuration through `performance.bundleAnalyze`, such as enabling the server mode:
 
@@ -62,7 +85,7 @@ export default {
 };
 ```
 
-### Size Types
+## Size Types
 
 In the `webpack-bundle-analyzer` panel, you can control size types in the upper left corner (default is `Parsed`):
 
@@ -70,7 +93,7 @@ In the `webpack-bundle-analyzer` panel, you can control size types in the upper 
 - `Parsed`: The size of the file on the disk, which reflects the size of the code after minification.
 - `Gzipped`: The file size requested in the browser reflects the size of the code after minification and gzip.
 
-### Generate stats.json
+## Generate stats.json
 
 By setting `generateStatsFile` to true, stats JSON file will be generated in bundle output directory.
 
@@ -84,7 +107,7 @@ export default {
 };
 ```
 
-### Notes
+## Notes
 
 1. Enabling the server mode will cause the `build` process to not exit normally.
 2. Enabling `bundleAnalyzer` will reduce build speed. Therefore, this configuration should not be enabled during daily development, and it is recommended to enable it on demand through the `BUNDLE_ANALYZE` environment variable.
