@@ -744,25 +744,14 @@ importers:
         version: 8.18.0
 
   packages/create-rsbuild:
+    dependencies:
+      create-rstack:
+        specifier: 1.0.0
+        version: 1.0.0
     devDependencies:
-      '@clack/prompts':
-        specifier: ^0.7.0
-        version: 0.7.0
-      '@types/minimist':
-        specifier: ^1.2.5
-        version: 1.2.5
       '@types/node':
         specifier: 18.x
         version: 18.19.31
-      deepmerge:
-        specifier: ^4.3.1
-        version: 4.3.1
-      minimist:
-        specifier: ^1.2.8
-        version: 1.2.8
-      rslog:
-        specifier: ^1.2.2
-        version: 1.2.2
       typescript:
         specifier: ^5.5.2
         version: 5.5.2
@@ -2096,14 +2085,6 @@ packages:
   '@changesets/write@0.3.1':
     resolution: {integrity: sha512-SyGtMXzH3qFqlHKcvFY2eX+6b0NGiFcNav8AFsYwy5l8hejOeoeTDemu5Yjmke2V5jpzY+pBvM0vCCQ3gdZpfw==}
 
-  '@clack/core@0.3.4':
-    resolution: {integrity: sha512-H4hxZDXgHtWTwV3RAVenqcC4VbJZNegbBjlPvzOzCouXtS2y3sDvlO3IsbrPNWuLWPPlYVYPghQdSF64683Ldw==}
-
-  '@clack/prompts@0.7.0':
-    resolution: {integrity: sha512-0MhX9/B4iL6Re04jPrttDm+BsP8y6mS7byuv0BvXgdXhbV5PdlsHt55dvNsuBCPZ7xq1oTAOOuotR9NFbQyMSA==}
-    bundledDependencies:
-      - is-unicode-supported
-
   '@discoveryjs/json-ext@0.5.7':
     resolution: {integrity: sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==}
     engines: {node: '>=10.0.0'}
@@ -3153,9 +3134,6 @@ packages:
   '@types/mdx@2.0.13':
     resolution: {integrity: sha512-+OWZQfAYyio6YkJb3HLxDrvnx6SWWDbC0zVPfBRzUk0/nqoDyf6dNxQi3eArPe8rJ473nobTMQ/8Zk+LxJ+Yuw==}
 
-  '@types/minimist@1.2.5':
-    resolution: {integrity: sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==}
-
   '@types/ms@0.7.34':
     resolution: {integrity: sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==}
 
@@ -3889,6 +3867,9 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
+
+  create-rstack@1.0.0:
+    resolution: {integrity: sha512-U2DLfJD1cJSnNGrCJ8mf3/0xa14hS8g0HbeSrd0DVIR/jwSB+jahjorLtDcRiMZd+lIc7Oc3rHYKWjSaeTMzzw==}
 
   cron-parser@4.9.0:
     resolution: {integrity: sha512-p0SaNjrHOnQeR8/VnfGbmg9te2kfyYSQ7Sc/j/6DtPL3JQvKxmjO9TSjNFpujqV3vEYYBvNNvXSxzyksBWAx1Q==}
@@ -6544,9 +6525,6 @@ packages:
     resolution: {integrity: sha512-94Bdh3cC2PKrbgSOUqTiGPWVZeSiXfKOVZNJniWoqrWrRkB1CJzBU3NEbiTsPcYy1lDsANA/THzS+9WBiy5nfQ==}
     engines: {node: '>= 10'}
 
-  sisteransi@1.0.5:
-    resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
-
   slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
@@ -8552,17 +8530,6 @@ snapshots:
       human-id: 1.0.2
       prettier: 2.8.8
 
-  '@clack/core@0.3.4':
-    dependencies:
-      picocolors: 1.0.1
-      sisteransi: 1.0.5
-
-  '@clack/prompts@0.7.0':
-    dependencies:
-      '@clack/core': 0.3.4
-      picocolors: 1.0.1
-      sisteransi: 1.0.5
-
   '@discoveryjs/json-ext@0.5.7': {}
 
   '@emnapi/core@1.2.0':
@@ -9648,8 +9615,6 @@ snapshots:
 
   '@types/mdx@2.0.13': {}
 
-  '@types/minimist@1.2.5': {}
-
   '@types/ms@0.7.34': {}
 
   '@types/node-sass@4.11.7':
@@ -10502,6 +10467,8 @@ snapshots:
       parse-json: 5.2.0
     optionalDependencies:
       typescript: 5.5.2
+
+  create-rstack@1.0.0: {}
 
   cron-parser@4.9.0:
     dependencies:
@@ -13556,8 +13523,6 @@ snapshots:
       '@polka/url': 1.0.0-next.25
       mrmime: 2.0.0
       totalist: 3.0.1
-
-  sisteransi@1.0.5: {}
 
   slash@3.0.0: {}
 
