@@ -6,7 +6,7 @@ import {
   checkCancel,
   create,
   select,
-} from './sdk';
+} from 'create-rstack';
 
 const frameworkAlias: Record<string, string> = {
   vue: 'vue3',
