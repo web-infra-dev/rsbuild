@@ -39,7 +39,7 @@
     "@rsbuild/plugin-vue": "workspace:*",
     "@rsbuild/plugin-vue-jsx": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "@module-federation/rspack": "0.5.1",
+    "@module-federation/rspack": "0.6.0",
     "@scripts/test-helper": "workspace:*",
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.7",
