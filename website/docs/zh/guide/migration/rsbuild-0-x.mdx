@@ -92,6 +92,15 @@ export default {
 };
 ```
 
+## [重要] Rspack 配置校验
+
+Rsbuild 现在默认启用 Rspack 的 scheme 校验，以确保 Rspack 配置的正确性。
+
+- 当 Rspack 配置的类型错误时，会抛出错误并终止构建。
+- 当 Rspack 配置中存在多余的字段时，会抛出错误，但不会终止构建。
+
+> 详见 [Rspack - RSPACK_CONFIG_VALIDATE](https://rspack.dev/guide/migration/webpack#updating-configuration)。
+
 ## source.alias
 
 移除 `source.alias` 函数的 `target` 参数，改用 [environments](/config/environments) 配置。
@@ -334,7 +343,8 @@ export default {
 
 ```diff
 export default {
-  dev: {
+-  dev: {
++  server: {
 -   startUrl: true,
 +   open: true,
   }
