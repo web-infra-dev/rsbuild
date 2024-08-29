@@ -214,15 +214,11 @@ Rsbuild 通过插件来支持 [Pug](https://pugjs.org/) 模板引擎，详见 [@
 
 ## 注入标签
 
-通过配置 `html.tags` 选项可以在最终生成的 HTML 产物中插入任意标签。
+通过配置 [html.tags](/config/html/tags) 选项，可以在 Rsbuild 生成的 HTML 文件中插入任意标签。
 
-:::warning 使用场景
-前端应用的产物最终都会直接或间接地被 HTML 入口引用，但大多数时候直接向 HTML 注入标签都并非首选。
-:::
+在 HTML 的模版中，可以通过 `htmlPlugin.tags` 变量来访问被注入到 HTML 的所有标签：
 
-模版文件中可以通过 `htmlPlugin.tags` 变量来访问需要最终注入到 HTML 的所有标签：
-
-```html
+```html title="index.html"
 <html>
   <head>
     <%= htmlPlugin.tags.headTags %>
@@ -233,86 +229,33 @@ Rsbuild 通过插件来支持 [Pug](https://pugjs.org/) 模板引擎，详见 [@
 </html>
 ```
 
-`html.tags` 的作用就是调整这些模板变量进而修改 HTML，配置的具体定义参考 [API References](/config/html/tags)。
-
-### 对象形式
-
-```ts
-export default {
-  output: {
-    assetPrefix: 'https://example.com/'
-  },
-  html: {
-    tags: [
-      { tag: 'script', attrs: { src: 'a.js' } },
-      { tag: 'script', attrs: { src: 'b.js' }, append: false },
-      { tag: 'link', attrs: { href: 'style.css', rel: 'stylesheet' }, append: true }
-      { tag: 'link', attrs: { href: 'page.css', rel: 'stylesheet' }, publicPath: false }
-      { tag: 'script', attrs: { src: 'c.js' }, head: false },
-      { tag: 'meta', attrs: { name: 'referrer', content: 'origin' } },
-    ],
-  },
-};
-```
-
-标签最终的插入位置由 `head` 和 `append` 选项决定，两个配置相同的元素将被插入到相同区域，并且维持彼此之间的相对位置。
-
-标签默认会启用 `publicPath` 配置，即会将 [output.assetPrefix](/config/output/asset-prefix) 的值拼接到 `script` 标签的 `src` 等表示路径的属性上。
-
-所以以上配置构建出的 HTML 产物将会类似：
-
-```html
-<html>
-  <head>
-    <script src="https://example.com/b.js"></script>
-    <link href="https://example.com/style.css" rel="stylesheet" />
-    <link href="page.css" rel="stylesheet" />
-    <!-- some other headTags... -->
-    <script src="https://example.com/a.js"></script>
-    <meta name="referrer" content="origin" />
-  </head>
-  <body>
-    <!-- some other bodyTags... -->
-    <script src="https://example.com/c.js"></script>
-  </body>
-</html>
-```
-
-### 函数形式
-
-`html.tags` 也支持传入回调函数，常用于修改标签列表或是在插入标签的同时确保其相对位置：
+`html.tags` 的作用就是调整这些 tags 变量，从而修改 HTML 里的标签，下面是一个基本的例子：
 
 ```ts
 export default {
   html: {
     tags: [
-      (tags) => {
-        tags.splice(0, 1);
-      },
-      { tag: 'script', attrs: { src: 'a.js' }, head: false },
-      { tag: 'script', attrs: { src: 'b.js' }, append: false },
-      { tag: 'script', attrs: { src: 'c.js' } },
-      (tags) => [...tags, { tag: 'script', attrs: { src: 'd.js' } }],
+      { tag: 'script', attrs: { src: 'https://cdn.example.com/my-script.js' } },
     ],
   },
 };
 ```
 
-最终产物将会类似：
+- 生成的 HTML 文件如下：
 
 ```html
 <html>
   <head>
+    <script src="https://cdn.example.com/my-script.js"></script>
     <!-- some other headTags... -->
-    <script src="https://example.com/c.js"></script>
-    <script src="https://example.com/d.js"></script>
   </head>
   <body>
     <!-- some other bodyTags... -->
-    <script src="https://example.com/a.js"></script>
   </body>
 </html>
 ```
+
+> 更多用法请参考：[html.tags](/config/html/tags)。
 
 ## HTML 插件
 

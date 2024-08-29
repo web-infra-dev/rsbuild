@@ -14,10 +14,7 @@ type Client = {
   port?: string | number;
   /** 指定 WebSocket 请求的 host */
   host?: string;
-  /**
-   * 当出现编译错误时，在浏览器中显示遮盖
-   * 该功能需要当前浏览器版本支持 [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
-   */
+  /** 当出现编译错误时，是否在浏览器中显示 error overlay */
   overlay?: boolean;
 };
 ```
@@ -82,3 +79,27 @@ export default {
 在热更新过程中，页面会发起 GET 请求来获取 hot-update 文件，包括 `*.hot-update.json` 和 `*.hot-update.js`。这些文件包含了热更新所需的信息，比如被更新的模块、模块的代码等。
 
 hot-update 文件属于静态资源，如果你需要配置 hot-update 文件的 URL，请使用 [dev.assetPrefix](/config/dev/asset-prefix) 选项。
+
+## Error overlay
+
+通过 `dev.client.overlay` 选项，可以选择是否启用 error overlay。
+
+默认情况下，当编译发生错误时，Rsbuild会在浏览器中显示 error overlay，并提供错误信息和错误堆栈：
+
+![error overlay](https://assets.rspack.dev/rsbuild/assets/rsbuild-error-overlay.png)
+
+如果需要禁用 error overlay，可以将其设置为 `false`：
+
+```ts title="rsbuild.config.ts"
+export default {
+  dev: {
+    client: {
+      overlay: false,
+    },
+  },
+};
+```
+
+:::tip
+Error overlay 功能需要当前浏览器版本支持 [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)。
+:::

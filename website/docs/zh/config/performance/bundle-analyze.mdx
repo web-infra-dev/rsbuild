@@ -15,17 +15,38 @@ const defaultConfig = {
 };
 ```
 
-### 启用 Bundle Analyze
+## 启用 Bundle Analyze
 
-你有两种方式开启 `webpack-bundle-analyzer` 来分析构建产物的体积:
+你有两种方式开启 `webpack-bundle-analyzer` 来分析构建产物的体积。
 
-- 添加环境变量 `BUNDLE_ANALYZE=true`，比如：
+### 通过环境变量
 
-```bash
-BUNDLE_ANALYZE=true pnpm build
+添加环境变量 `BUNDLE_ANALYZE=true`，比如：
+
+```json title="package.json"
+{
+  "scripts": {
+    "build:analyze": "BUNDLE_ANALYZE=true rsbuild build"
+  }
+}
 ```
 
-- 配置 `performance.bundleAnalyze` 来固定开启：
+由于 Windows 系统不支持上述用法，你也可以使用 [cross-env](https://www.npmjs.com/package/cross-env) 来设置环境变量，这可以确保在不同的操作系统中都能正常使用：
+
+```json title="package.json"
+{
+  "scripts": {
+    "build:analyze": "cross-env BUNDLE_ANALYZE=true rsbuild build"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.0"
+  }
+}
+```
+
+### 通过配置项
+
+配置 `performance.bundleAnalyze` 来固定开启：
 
 ```js
 export default {
@@ -34,6 +55,8 @@ export default {
   },
 };
 ```
+
+### 分析结果
 
 在启用后，Rsbuild 会生成一个分析构建产物体积的 HTML 文件，并在 Terminal 中打印以下日志：
 
@@ -45,7 +68,7 @@ Webpack Bundle Analyzer saved report to /Project/my-project/dist/report-web.html
 
 ![](https://assets.rspack.dev/rsbuild/assets/bundle-analyzer-example.png)
 
-### 覆盖默认配置
+## 覆盖默认配置
 
 你可以通过 `performance.bundleAnalyze` 来覆盖默认配置，比如开启 `server` 模式：
 
@@ -62,7 +85,7 @@ export default {
 };
 ```
 
-### Size 类型
+## Size 类型
 
 在 `webpack-bundle-analyzer` 的面板中，你可以在左上角控制 Size 类型（默认为 `Parsed`）：
 
@@ -70,7 +93,7 @@ export default {
 - `Parsed`：磁盘上的文件体积，它反映了代码在压缩之后的体积。
 - `Gzipped`：浏览器里请求的文件体积，它反映了代码在压缩和 gzip 后的体积。
 
-### 生成 stats.json
+## 生成 stats.json
 
 `generateStatsFile` 设置为 true 时，将会生成 stats JSON 文件。
 
@@ -84,7 +107,7 @@ export default {
 };
 ```
 
-### 注意事项
+## 注意事项
 
 1. 开启 Server 模式会导致 `build` 进程不能正常退出。
 2. 开启 bundleAnalyzer 会降低构建性能。因此，在日常开发过程中不应该开启此配置项，建议通过 `BUNDLE_ANALYZE` 环境变量来按需开启。
