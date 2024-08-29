@@ -96,7 +96,7 @@ export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
   createCompiler: CreateCompiler;
 
   /**
-   * It is designed for upper-level frameworks that require a custom server
+   * It is designed for higher-level frameworks that require a custom server
    */
   createDevServer: CreateDevServer;
 
