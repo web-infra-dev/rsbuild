@@ -88,8 +88,9 @@ type BuildOptions = {
   compiler?: Compiler | MultiCompiler;
 };
 
-function Build(options?: BuildOptions): Promise<void | {
-  close: () => Promise<void>;
+function Build(options?: BuildOptions): Promise<{
+  stats?: Rspack.Stats | Rspack.MultiStats;
+  close?: () => Promise<void>;
 }>;
 ```
 
@@ -121,14 +122,24 @@ await rsbuild.build({
 });
 ```
 
-The build method returns a `Watching` instance in watch mode that exposes `.close(callback)` method. Calling this method will end watching:
+In watch mode, the `rsbuild.build()` returns a `close` method, which can be used to stop watching:
 
 ```ts
-const watching = await rsbuild.build({
+const result = await rsbuild.build({
   watch: true,
 });
 
-await watching?.close();
+await result.close?.();
+```
+
+### Stats Object
+
+In non-watch mode, the `rsbuild.build() returns an Rspack [stats](https://rspack.dev/api/javascript-api/stats) object:
+
+```ts
+const result = await rsbuild.build();
+
+console.log(result.stats);
 ```
 
 ### Custom Compiler

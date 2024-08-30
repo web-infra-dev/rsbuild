@@ -35,6 +35,11 @@ export type BuildOptions = {
   compiler?: Compiler | MultiCompiler;
 };
 
+export type Build = (options?: BuildOptions) => Promise<{
+  close?: () => Promise<void>;
+  stats?: Rspack.Stats | Rspack.MultiStats;
+}>;
+
 export type InspectConfigOptions = {
   mode?: RsbuildMode;
   verbose?: boolean;
@@ -85,10 +90,6 @@ export type CreateDevServer = (
 export type StartDevServer = (
   options?: StartDevServerOptions,
 ) => Promise<StartServerResult>;
-
-export type Build = (options?: BuildOptions) => Promise<void | {
-  close: () => Promise<void>;
-}>;
 
 export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
   readonly bundler: Bundler;

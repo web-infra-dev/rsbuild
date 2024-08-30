@@ -110,8 +110,9 @@ type BuildOptions = {
   compiler?: Compiler | MultiCompiler;
 };
 
-function Build(options?: BuildOptions): Promise<void | {
-  close: () => Promise<void>;
+function Build(options?: BuildOptions): Promise<{
+  stats?: Rspack.Stats | Rspack.MultiStats;
+  close?: () => Promise<void>;
 }>;
 ```
 
@@ -143,14 +144,24 @@ await rsbuild.build({
 });
 ```
 
-watch 模式下 build 方法会返回一个 `Watching` 实例，该实例会暴露一个 `.close(callback)` 方法。调用该方法将会结束监听：
+在 watch 模式下，`rsbuild.build()` 会返回一个 `close` 方法，调用该方法将会结束监听：
 
 ```ts
-const watching = await rsbuild.build({
+const result = await rsbuild.build({
   watch: true,
 });
 
-await watching?.close();
+await result.close?.();
+```
+
+### Stats 对象
+
+在非 watch 模式下，`rsbuild.build()` 会返回一个 Rspack 的 [stats](https://rspack.dev/api/javascript-api/stats) 对象：
+
+```ts
+const result = await rsbuild.build();
+
+console.log(result.stats);
 ```
 
 ### 自定义 Compiler
