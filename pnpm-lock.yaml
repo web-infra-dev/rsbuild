@@ -742,8 +742,8 @@ importers:
   packages/create-rsbuild:
     dependencies:
       create-rstack:
-        specifier: 1.0.0
-        version: 1.0.0
+        specifier: 1.0.1
+        version: 1.0.1
     devDependencies:
       '@rslib/core':
         specifier: 0.0.3
@@ -1623,12 +1623,6 @@ packages:
 
   '@babel/plugin-transform-block-scoping@7.25.0':
     resolution: {integrity: sha512-yBQjYoOjXlFv9nlXb3f1casSHOZkWr29NX+zChVanLg5Nc157CrbEX9D7hxxtTpuFy7Q0YzmmWfJxzvps4kXrQ==}
-    engines: {node: '>=6.9.0'}
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-
-  '@babel/plugin-transform-class-properties@7.24.7':
-    resolution: {integrity: sha512-vKbfawVYayKcSeSR5YYzzyXvsDFWU2mD8U5TFeXtbCPLFUqe7GyCgvO6XDHzje862ODrOwy6WCPmKeWHbCFJ4w==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -3959,8 +3953,8 @@ packages:
       typescript:
         optional: true
 
-  create-rstack@1.0.0:
-    resolution: {integrity: sha512-U2DLfJD1cJSnNGrCJ8mf3/0xa14hS8g0HbeSrd0DVIR/jwSB+jahjorLtDcRiMZd+lIc7Oc3rHYKWjSaeTMzzw==}
+  create-rstack@1.0.1:
+    resolution: {integrity: sha512-zx+ynJiBJc8BSrtOpDKeFv+3DJm2MOajrMoxpsHHji3vsC+BAflQo4XTcTZ+UMZrI6FKd3sk4WCtlB0bYEzONg==}
 
   cron-parser@4.9.0:
     resolution: {integrity: sha512-p0SaNjrHOnQeR8/VnfGbmg9te2kfyYSQ7Sc/j/6DtPL3JQvKxmjO9TSjNFpujqV3vEYYBvNNvXSxzyksBWAx1Q==}
@@ -7919,14 +7913,6 @@ snapshots:
       '@babel/core': 7.25.2
       '@babel/helper-plugin-utils': 7.24.8
 
-  '@babel/plugin-transform-class-properties@7.24.7(@babel/core@7.25.2)':
-    dependencies:
-      '@babel/core': 7.25.2
-      '@babel/helper-create-class-features-plugin': 7.24.7(@babel/core@7.25.2)
-      '@babel/helper-plugin-utils': 7.24.8
-    transitivePeerDependencies:
-      - supports-color
-
   '@babel/plugin-transform-class-properties@7.25.4(@babel/core@7.25.2)':
     dependencies:
       '@babel/core': 7.25.2
@@ -10664,7 +10650,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.5.2
 
-  create-rstack@1.0.0: {}
+  create-rstack@1.0.1: {}
 
   cron-parser@4.9.0:
     dependencies:
