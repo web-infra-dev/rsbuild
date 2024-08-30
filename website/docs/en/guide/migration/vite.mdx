@@ -149,6 +149,24 @@ Notes:
 
 - The above table does not cover all configurations of Vue CLI, feel free to add more.
 
+## Environment Variables
+
+Vite injects environment variables starting with `VITE_` into the client code by default, while Rsbuild injects environment variables starting with `PUBLIC_` by default (see [public variables](/guide/advanced/env-vars#public-variables)).
+
+To be compatible with Vite's behavior, you can manually call Rsbuild's [loadEnv](/api/javascript-api/core#loadenv) method to read environment variables starting with `VITE_`, and inject them into the client code through the [source.define](/config/source/define) config.
+
+```ts title="rsbuild.config.ts"
+import { defineConfig, loadEnv } from '@rsbuild/core';
+
+const { publicVars } = loadEnv({ prefixes: ['VITE_'] });
+
+export default defineConfig({
+  source: {
+    define: publicVars,
+  },
+});
+```
+
 ## Glob Import
 
 Vite provides `import.meta.glob()` for importing multiple modules.
