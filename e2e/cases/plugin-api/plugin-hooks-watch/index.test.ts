@@ -92,7 +92,7 @@ rspackOnlyTest(
       },
     });
 
-    const watching = await rsbuild.build({ watch: true });
+    const result = await rsbuild.build({ watch: true });
 
     await fs.promises.writeFile(filePath, "console.log('2');");
 
@@ -113,6 +113,6 @@ rspackOnlyTest(
       'AfterBuild',
     ]);
 
-    await watching?.close();
+    await result.close?.();
   },
 );

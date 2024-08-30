@@ -31,6 +31,7 @@ export type {
   AppIcon,
   AppIconItem,
   AliasStrategy,
+  Build,
   BuildOptions,
   BundlerPluginInstance,
   CacheGroup,
