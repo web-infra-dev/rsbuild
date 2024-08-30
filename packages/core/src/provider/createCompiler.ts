@@ -10,7 +10,7 @@ import {
 } from '../helpers';
 import { registerDevHook } from '../hooks';
 import { logger } from '../logger';
-import type { DevConfig, MultiStats, Rspack, Stats } from '../types';
+import type { DevConfig, Rspack } from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
 export async function createCompiler(options: InitConfigsOptions): Promise<{
@@ -61,7 +61,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     compiler.hooks.run.tap('rsbuild:run', logRspackVersion);
   }
 
-  const done = (stats: Stats | MultiStats) => {
+  const done = (stats: Rspack.Stats | Rspack.MultiStats) => {
     const statsJson = stats.toJson({
       all: false,
       timings: true,
@@ -98,9 +98,12 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     isCompiling = false;
   };
 
-  compiler.hooks.done.tap('rsbuild:done', (stats: Stats | MultiStats) => {
-    done(stats);
-  });
+  compiler.hooks.done.tap(
+    'rsbuild:done',
+    (stats: Rspack.Stats | Rspack.MultiStats) => {
+      done(stats);
+    },
+  );
 
   if (context.normalizedConfig?.mode === 'development') {
     registerDevHook({

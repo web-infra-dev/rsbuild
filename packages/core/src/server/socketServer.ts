@@ -4,7 +4,7 @@ import { parse } from 'node:querystring';
 import type Ws from 'ws';
 import { getAllStatsErrors, getAllStatsWarnings } from '../helpers';
 import { logger } from '../logger';
-import type { DevConfig, Stats } from '../types';
+import type { DevConfig, Rspack } from '../types';
 import { getCompilationName } from './helper';
 
 interface ExtWebSocket extends Ws {
@@ -31,7 +31,7 @@ export class SocketServer {
 
   private readonly options: DevConfig;
 
-  private stats: Record<string, Stats>;
+  private stats: Record<string, Rspack.Stats>;
   private initialChunks: Record<string, Set<string>>;
 
   private timer: ReturnType<typeof setInterval> | null = null;
@@ -92,7 +92,7 @@ export class SocketServer {
     });
   }
 
-  public updateStats(stats: Stats): void {
+  public updateStats(stats: Rspack.Stats): void {
     const compilationName = getCompilationName(stats.compilation);
 
     this.stats[compilationName] = stats;

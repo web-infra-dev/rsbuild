@@ -9,12 +9,7 @@ import zlib from 'node:zlib';
 import color from 'picocolors';
 import { CSS_REGEX, HTML_REGEX, JS_REGEX } from '../constants';
 import { logger } from '../logger';
-import type {
-  PrintFileSizeOptions,
-  RsbuildPlugin,
-  Stats,
-  StatsAsset,
-} from '../types';
+import type { PrintFileSizeOptions, RsbuildPlugin, Rspack } from '../types';
 
 const gzip = promisify(zlib.gzip);
 
@@ -82,7 +77,7 @@ const coloringAssetName = (assetName: string) => {
 
 async function printFileSizes(
   options: PrintFileSizeOptions,
-  stats: Stats,
+  stats: Rspack.Stats,
   rootPath: string,
 ) {
   const logs: string[] = [];
@@ -91,7 +86,7 @@ async function printFileSizes(
   }
 
   const formatAsset = async (
-    asset: StatsAsset,
+    asset: Rspack.StatsAsset,
     distPath: string,
     distFolder: string,
   ) => {

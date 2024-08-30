@@ -13,7 +13,6 @@ import type {
   ModifyRspackConfigFn,
   ModifyWebpackChainFn,
   ModifyWebpackConfigFn,
-  MultiStats,
   OnAfterBuildFn,
   OnAfterCreateCompilerFn,
   OnAfterEnvironmentCompileFn,
@@ -28,7 +27,6 @@ import type {
   OnDevCompileDoneFn,
   OnExitFn,
   Rspack,
-  Stats,
 } from './types';
 
 export function createEnvironmentAsyncHook<
@@ -364,7 +362,7 @@ export const registerBuildHook = ({
       ],
     });
 
-  const onDone = async (stats: Stats | MultiStats) => {
+  const onDone = async (stats: Rspack.Stats | Rspack.MultiStats) => {
     const p = context.hooks.onAfterBuild.call({
       isFirstCompile,
       stats,
@@ -375,7 +373,7 @@ export const registerBuildHook = ({
     await p;
   };
 
-  const onEnvironmentDone = async (buildIndex: number, stats: Stats) => {
+  const onEnvironmentDone = async (buildIndex: number, stats: Rspack.Stats) => {
     await context.hooks.onAfterEnvironmentCompile.callInEnvironment({
       environment: environmentList[buildIndex].name,
       args: [
@@ -437,7 +435,7 @@ export const registerDevHook = ({
       ],
     });
 
-  const onDone = async (stats: Stats | MultiStats) => {
+  const onDone = async (stats: Rspack.Stats | Rspack.MultiStats) => {
     const p = context.hooks.onDevCompileDone.call({
       isFirstCompile,
       stats,
@@ -447,7 +445,7 @@ export const registerDevHook = ({
     await p;
   };
 
-  const onEnvironmentDone = async (buildIndex: number, stats: Stats) => {
+  const onEnvironmentDone = async (buildIndex: number, stats: Rspack.Stats) => {
     await context.hooks.onAfterEnvironmentCompile.callInEnvironment({
       environment: environmentList[buildIndex].name,
       args: [
