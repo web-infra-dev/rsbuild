@@ -11,13 +11,9 @@
   "license": "MIT",
   "type": "module",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    }
+    ".": "./dist/index.js"
   },
   "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "bin": {
     "create-rsbuild": "./dist/index.js"
   },
@@ -26,18 +22,17 @@
     "dist"
   ],
   "scripts": {
-    "build": "modern build",
-    "dev": "modern build --watch",
+    "build": "rslib build",
+    "dev": "rslib build --watch",
     "start": "node ./dist/index.js"
   },
   "devDependencies": {
-    "@clack/prompts": "^0.7.0",
-    "@types/minimist": "^1.2.5",
+    "@rslib/core": "0.0.3",
     "@types/node": "18.x",
-    "deepmerge": "^4.3.1",
-    "minimist": "^1.2.8",
-    "rslog": "^1.2.2",
     "typescript": "^5.5.2"
+  },
+  "dependencies": {
+    "create-rstack": "1.0.0"
   },
   "engines": {
     "node": ">=16.7.0"
