@@ -2,7 +2,7 @@ import type { StatsCompilation, StatsValue } from '@rspack/core';
 import color from 'picocolors';
 import { formatStatsMessages } from '../client/format';
 import { logger } from '../logger';
-import type { MultiStats, Rspack, Stats, StatsError } from '../types';
+import type { Rspack } from '../types';
 import { isMultiCompiler } from './';
 
 /**
@@ -93,7 +93,7 @@ export const getAllStatsErrors = (
   // stats error + childCompiler error
   // only append child errors when stats error does not exist, because some errors will exist in both stats and childCompiler
   if (statsData.errorsCount && statsData.errors?.length === 0) {
-    return statsData.children?.reduce<StatsError[]>(
+    return statsData.children?.reduce<Rspack.StatsError[]>(
       (errors, curr) => errors.concat(curr.errors || []),
       [],
     );
@@ -106,7 +106,7 @@ export const getAllStatsWarnings = (
   statsData: StatsCompilation,
 ): Rspack.StatsError[] | undefined => {
   if (statsData.warningsCount && statsData.warnings?.length === 0) {
-    return statsData.children?.reduce<StatsError[]>(
+    return statsData.children?.reduce<Rspack.StatsError[]>(
       (warnings, curr) => warnings.concat(curr.warnings || []),
       [],
     );
@@ -130,7 +130,7 @@ export function getStatsOptions(
 }
 
 export function formatStats(
-  stats: Stats | MultiStats,
+  stats: Rspack.Stats | Rspack.MultiStats,
   options: StatsValue = {},
 ): {
   message?: string;

@@ -4,7 +4,7 @@
  *
  * Tips: this package will be bundled and running in the browser, do not import any Node.js modules.
  */
-import type { ClientConfig, StatsError } from '../types';
+import type { ClientConfig, Rspack } from '../types';
 import { formatStatsMessages } from './format';
 
 const compilationName = RSBUILD_COMPILATION_NAME;
@@ -85,7 +85,7 @@ function handleSuccess() {
 }
 
 // Compilation with warnings (e.g. ESLint).
-function handleWarnings(warnings: StatsError[]) {
+function handleWarnings(warnings: Rspack.StatsError[]) {
   clearOutdatedErrors();
 
   const isHotUpdate = !isFirstCompilation;
@@ -114,7 +114,7 @@ function handleWarnings(warnings: StatsError[]) {
 }
 
 // Compilation with errors (e.g. syntax error or missing modules).
-function handleErrors(errors: StatsError[]) {
+function handleErrors(errors: Rspack.StatsError[]) {
   clearOutdatedErrors();
 
   isFirstCompilation = false;

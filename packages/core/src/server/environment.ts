@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import type { EnvironmentContext, Stats } from '../types';
+import type { EnvironmentContext, Rspack } from '../types';
 import { run } from './runner';
 
 export type ServerUtils = {
@@ -8,7 +8,7 @@ export type ServerUtils = {
 };
 
 export const loadBundle = async <T>(
-  stats: Stats,
+  stats: Rspack.Stats,
   entryName: string,
   utils: ServerUtils,
 ): Promise<T> => {

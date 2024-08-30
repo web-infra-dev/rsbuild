@@ -13,7 +13,6 @@ import type {
   NormalizedConfig,
   NormalizedDevConfig,
   Rspack,
-  Stats,
 } from '../types';
 import { getTransformedHtml, loadBundle } from './environment';
 import {
@@ -120,7 +119,7 @@ export async function createDevServer<
   };
 
   let outputFileSystem: Rspack.OutputFileSystem = fs;
-  let lastStats: Stats[];
+  let lastStats: Rspack.Stats[];
 
   // should register onDevCompileDone hook before startCompile
   const waitFirstCompileDone = runCompile

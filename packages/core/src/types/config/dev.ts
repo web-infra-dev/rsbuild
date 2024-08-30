@@ -1,7 +1,6 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { WatchOptions } from 'chokidar';
 import type { Rspack } from '../rspack';
-import type { Stats } from '../stats';
 
 export type ProgressBarConfig = {
   id?: string;
@@ -20,7 +19,7 @@ export type EnvironmentAPI = {
     /**
      * Get stats info about current environment.
      */
-    getStats: () => Promise<Stats>;
+    getStats: () => Promise<Rspack.Stats>;
 
     /**
      * Load and execute stats bundle in Server.

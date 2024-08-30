@@ -9,7 +9,6 @@ import type {
 } from './config';
 import type { RsbuildEntry, RsbuildTarget } from './rsbuild';
 import type { Rspack } from './rspack';
-import type { MultiStats, Stats } from './stats';
 import type { HtmlRspackPlugin, WebpackConfig } from './thirdParty';
 import type { MaybePromise } from './utils';
 
@@ -36,14 +35,14 @@ export type OnBeforeBuildFn<B = 'rspack'> = (
 
 export type OnAfterEnvironmentCompileFn = (
   params: CompileCommonParams & {
-    stats?: Stats;
+    stats?: Rspack.Stats;
     environment: EnvironmentContext;
   },
 ) => MaybePromise<void>;
 
 export type OnAfterBuildFn = (
   params: CompileCommonParams & {
-    stats?: Stats | MultiStats;
+    stats?: Rspack.Stats | Rspack.MultiStats;
     environments: Record<string, EnvironmentContext>;
   },
 ) => MaybePromise<void>;
@@ -52,7 +51,7 @@ export type OnCloseDevServerFn = () => MaybePromise<void>;
 
 export type OnDevCompileDoneFn = (params: {
   isFirstCompile: boolean;
-  stats: Stats | MultiStats;
+  stats: Rspack.Stats | Rspack.MultiStats;
   environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
 

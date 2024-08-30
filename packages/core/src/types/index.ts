@@ -4,6 +4,5 @@ export * from './context';
 export * from './utils';
 export * from './plugin';
 export * from './config';
-export * from './stats';
 export * from './hooks';
 export * from './thirdParty';
