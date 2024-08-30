@@ -67,12 +67,15 @@ Specifies whether to trigger a page reload or restart the dev server when a file
 
 ### reload-page
 
-`reload-page` means that the browser page will automatically reload when a file changes. This can be used to watch changes to static assets, such as files in the `public` directory.
+`reload-page` means that when a file changes, the page opened in the browser will automatically reload. If the type is not explicitly specified, Rsbuild will default to the `reload-page` behavior.
+
+This can be used to watch changes to static assets, such as files in the `public` directory.
 
 ```js
 export default {
   dev: {
     watchFiles: {
+      type: 'reload-page',
       paths: 'public/**/*',
     },
   },
@@ -94,6 +97,7 @@ export default {
   ...commonConfig,
   dev: {
     watchFiles: {
+      type: 'reload-server',
       paths: ['./config/*.ts'],
     },
   },
