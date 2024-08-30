@@ -19,6 +19,7 @@ jobs:
   # ======== ut ========
   ut-windows:
     runs-on: windows-latest
+    timeout-minutes: 20
     strategy:
       matrix:
         node-version: [18.x]
@@ -67,6 +68,7 @@ jobs:
   # # ======== e2e ========
   e2e-windows:
     runs-on: windows-latest
+    timeout-minutes: 20
     strategy:
       matrix:
         node-version: [18.x]
