@@ -34,7 +34,7 @@ import type {
   OnExitFn,
 } from './hooks';
 import type { RsbuildTarget } from './rsbuild';
-import type { Rspack, RspackSourceMap } from './rspack';
+import type { Rspack } from './rspack';
 import type { HtmlRspackPlugin } from './thirdParty';
 import type { Falsy } from './utils';
 import type { MaybePromise } from './utils';
@@ -218,7 +218,7 @@ type TransformResult =
   | string
   | {
       code: string;
-      map?: string | RspackSourceMap | null;
+      map?: string | Rspack.sources.RawSourceMap | null;
     };
 
 export type TransformContext = {
