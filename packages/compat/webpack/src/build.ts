@@ -25,7 +25,7 @@ export const build = async (
 
   registerBuildHook({
     context,
-    bundlerConfigs: bundlerConfigs as any,
+    bundlerConfigs: bundlerConfigs as Rspack.Configuration[],
     compiler,
     isWatch: Boolean(watch),
     MultiStatsCtor: WebpackMultiStats,

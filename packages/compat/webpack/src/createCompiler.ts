@@ -43,7 +43,7 @@ export async function createCompiler(options: InitConfigsOptions) {
     registerDevHook({
       compiler,
       context,
-      bundlerConfigs: webpackConfigs as any,
+      bundlerConfigs: webpackConfigs as Rspack.Configuration[],
       MultiStatsCtor: WebpackMultiStats,
     });
   }
