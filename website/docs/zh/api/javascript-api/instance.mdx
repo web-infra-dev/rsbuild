@@ -105,14 +105,21 @@ type TsconfigPath = string | undefined;
 
 ```ts
 type BuildOptions = {
+  /**
+   * 是否监听文件变化并重新构建
+   *
+   * @default false
+   */
   watch?: boolean;
-  // 自定义 Compiler 对象
+  /**
+   * 使用自定义的 Rspack Compiler 对象
+   */
   compiler?: Compiler | MultiCompiler;
 };
 
 function Build(options?: BuildOptions): Promise<{
   stats?: Rspack.Stats | Rspack.MultiStats;
-  close?: () => Promise<void>;
+  close: () => Promise<void>;
 }>;
 ```
 
@@ -151,7 +158,7 @@ const result = await rsbuild.build({
   watch: true,
 });
 
-await result.close?.();
+await result.close();
 ```
 
 ### Stats 对象

@@ -68,5 +68,10 @@ export const build = async (
     });
   });
 
-  return { stats };
+  return {
+    stats,
+    // This close method is a noop in non-watch mode
+    // In watch mode, it's defined above to stop watching
+    close: async () => {},
+  };
 };
