@@ -1,3 +1,4 @@
+import type { RsbuildPluginAPI } from '../src';
 import { createPluginManager, initPlugins } from '../src/pluginManager';
 
 describe('initPlugins', () => {
@@ -34,7 +35,10 @@ describe('initPlugins', () => {
       },
     ]);
 
-    await initPlugins({ pluginManager, getPluginAPI: () => ({}) as any });
+    await initPlugins({
+      pluginManager,
+      getPluginAPI: () => ({}) as RsbuildPluginAPI,
+    });
 
     expect(result).toEqual([2, 0, 3, 1]);
   });
@@ -65,7 +69,10 @@ describe('initPlugins', () => {
       },
     ]);
 
-    await initPlugins({ pluginManager, getPluginAPI: () => ({}) as any });
+    await initPlugins({
+      pluginManager,
+      getPluginAPI: () => ({}) as RsbuildPluginAPI,
+    });
 
     expect(result).toEqual([0, 2]);
   });
@@ -113,7 +120,10 @@ describe('initPlugins', () => {
       },
     ]);
 
-    await initPlugins({ pluginManager, getPluginAPI: () => ({}) as any });
+    await initPlugins({
+      pluginManager,
+      getPluginAPI: () => ({}) as RsbuildPluginAPI,
+    });
 
     expect(result).toEqual([0, 2]);
   });

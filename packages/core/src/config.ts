@@ -588,7 +588,7 @@ export function stringifyConfig(config: unknown, verbose?: boolean): string {
     options: { verbose?: boolean },
   ) => string;
 
-  return stringify(config as any, { verbose });
+  return stringify(config, { verbose });
 }
 
 export const normalizePublicDirs = (
