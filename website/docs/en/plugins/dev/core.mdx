@@ -283,7 +283,7 @@ type TransformResult =
   | string
   | {
       code: string;
-      map?: string | RspackSourceMap | null;
+      map?: string | Rspack.sources.RawSourceMap | null;
     };
 
 type TransformHandler = (

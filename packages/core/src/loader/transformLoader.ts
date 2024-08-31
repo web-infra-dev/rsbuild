@@ -1,9 +1,5 @@
 import type { LoaderContext } from '@rspack/core';
-import type {
-  EnvironmentContext,
-  RspackSourceMap,
-  TransformContext,
-} from '../types';
+import type { EnvironmentContext, Rspack, TransformContext } from '../types';
 
 export type TransformLoaderOptions = {
   id: string;
@@ -13,7 +9,7 @@ export type TransformLoaderOptions = {
 export default async function transform(
   this: LoaderContext<TransformLoaderOptions>,
   source: string,
-  map?: string | RspackSourceMap,
+  map?: string | Rspack.sources.RawSourceMap,
 ): Promise<void> {
   const callback = this.async();
   const bypass = () => callback(null, source, map);
