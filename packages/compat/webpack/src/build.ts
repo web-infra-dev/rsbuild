@@ -68,5 +68,5 @@ export const build = async (
     });
   });
 
-  return { stats };
+  return { stats, close: async () => {} };
 };

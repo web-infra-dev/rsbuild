@@ -83,14 +83,20 @@ Perform a production mode build.
 
 ```ts
 type BuildOptions = {
+  /**
+   * Whether to watch for file changes and rebuild.
+   * @default false
+   */
   watch?: boolean;
-  // custom Compiler object
+  /**
+   * Using a custom Rspack Compiler object.
+   */
   compiler?: Compiler | MultiCompiler;
 };
 
 function Build(options?: BuildOptions): Promise<{
   stats?: Rspack.Stats | Rspack.MultiStats;
-  close?: () => Promise<void>;
+  close: () => Promise<void>;
 }>;
 ```
 
@@ -129,7 +135,7 @@ const result = await rsbuild.build({
   watch: true,
 });
 
-await result.close?.();
+await result.close();
 ```
 
 ### Stats Object

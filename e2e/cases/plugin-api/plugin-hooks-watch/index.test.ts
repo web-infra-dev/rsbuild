@@ -113,6 +113,6 @@ rspackOnlyTest(
       'AfterBuild',
     ]);
 
-    await result.close?.();
+    await result.close();
   },
 );

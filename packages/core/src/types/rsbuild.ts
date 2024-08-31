@@ -31,12 +31,25 @@ export type PreviewServerOptions = {
 };
 
 export type BuildOptions = {
+  /**
+   * Whether to watch for file changes and rebuild.
+   * @default false
+   */
   watch?: boolean;
+  /**
+   * Using a custom Rspack Compiler object.
+   */
   compiler?: Compiler | MultiCompiler;
 };
 
 export type Build = (options?: BuildOptions) => Promise<{
-  close?: () => Promise<void>;
+  /**
+   * Stop watching when in watch mode.
+   */
+  close: () => Promise<void>;
+  /**
+   * Rspack's [stats](https://rspack.dev/api/javascript-api/stats) object.
+   */
   stats?: Rspack.Stats | Rspack.MultiStats;
 }>;
 
