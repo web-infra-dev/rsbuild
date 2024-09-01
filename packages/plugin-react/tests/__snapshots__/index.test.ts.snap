@@ -312,11 +312,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
           "priority": 0,
           "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
         },
-        "lib-lodash": {
-          "name": "lib-lodash",
-          "priority": 0,
-          "test": /node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
-        },
         "react": {
           "name": "lib-react",
           "priority": 0,

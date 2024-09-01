@@ -8,11 +8,6 @@ exports[`splitChunks > should apply antd/semi/... splitChunks rule when pkg is i
       "priority": 0,
       "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
     },
-    "lib-lodash": {
-      "name": "lib-lodash",
-      "priority": 0,
-      "test": /node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
-    },
     "react": {
       "name": "lib-react",
       "priority": 0,
@@ -35,11 +30,6 @@ exports[`splitChunks > should apply splitChunks.react/router plugin option when 
       "name": "lib-axios",
       "priority": 0,
       "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
-    },
-    "lib-lodash": {
-      "name": "lib-lodash",
-      "priority": 0,
-      "test": /node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
     },
   },
   "chunks": "all",
