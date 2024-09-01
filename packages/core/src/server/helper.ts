@@ -384,9 +384,13 @@ export const getAddressUrls = ({
 };
 
 // A unique name for WebSocket communication
+const COMPILATION_ID_REGEX = /[^a-zA-Z0-9_-]/g;
 export const getCompilationId = (
   compiler: Rspack.Compiler | Rspack.Compilation,
-) => `${compiler.name ?? ''}_${compiler.options.output.uniqueName ?? ''}`;
+) => {
+  const uniqueName = compiler.options.output.uniqueName ?? '';
+  return `${compiler.name ?? ''}_${uniqueName.replace(COMPILATION_ID_REGEX, '_')}`;
+};
 
 export function getServerTerminator(
   server: Server | Http2SecureServer,
