@@ -222,7 +222,7 @@ function onClose() {
   removeListeners();
   connection = null;
   reconnectCount++;
-  setTimeout(connect, 1000);
+  setTimeout(connect, 1000 * 1.5 ** reconnectCount);
 }
 
 // Establishing a WebSocket connection with the server.
