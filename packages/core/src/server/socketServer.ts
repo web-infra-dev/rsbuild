@@ -5,7 +5,7 @@ import type Ws from 'ws';
 import { getAllStatsErrors, getAllStatsWarnings } from '../helpers';
 import { logger } from '../logger';
 import type { DevConfig, Rspack } from '../types';
-import { getCompilationName } from './helper';
+import { getCompilationId } from './helper';
 
 interface ExtWebSocket extends Ws {
   isAlive: boolean;
@@ -82,7 +82,7 @@ export class SocketServer {
     }, 30000);
 
     this.wsServer.on('connection', (socket, req) => {
-      // /rsbuild-hmr?compilationName=web
+      // /rsbuild-hmr?compilationId=web
       const queryStr = req.url ? req.url.split('?')[1] : '';
 
       this.onConnect(
@@ -93,27 +93,27 @@ export class SocketServer {
   }
 
   public updateStats(stats: Rspack.Stats): void {
-    const compilationName = getCompilationName(stats.compilation);
+    const compilationId = getCompilationId(stats.compilation);
 
-    this.stats[compilationName] = stats;
+    this.stats[compilationId] = stats;
 
     this.sendStats({
-      compilationName,
+      compilationId,
     });
   }
 
   // write message to each socket
   public sockWrite({
     type,
-    compilationName,
+    compilationId,
     data,
   }: {
     type: string;
-    compilationName?: string;
+    compilationId?: string;
     data?: Record<string, any> | string | boolean;
   }): void {
     for (const socket of this.sockets) {
-      this.send(socket, JSON.stringify({ type, data, compilationName }));
+      this.send(socket, JSON.stringify({ type, data, compilationId }));
     }
   }
 
@@ -122,14 +122,14 @@ export class SocketServer {
     {
       type,
       data,
-      compilationName,
+      compilationId,
     }: {
       type: string;
-      compilationName?: string;
+      compilationId?: string;
       data?: Record<string, any> | string | boolean;
     },
   ) {
-    this.send(socket, JSON.stringify({ type, data, compilationName }));
+    this.send(socket, JSON.stringify({ type, data, compilationId }));
   }
 
   public close(): void {
@@ -168,7 +168,7 @@ export class SocketServer {
     if (this.options.hmr || this.options.liveReload) {
       this.singleWrite(connection, {
         type: 'hot',
-        compilationName: params.compilationName,
+        compilationId: params.compilationId,
       });
     }
 
@@ -176,7 +176,7 @@ export class SocketServer {
     if (this.stats) {
       this.sendStats({
         force: true,
-        compilationName: params.compilationName,
+        compilationId: params.compilationId,
       });
     }
   }
@@ -208,12 +208,12 @@ export class SocketServer {
   // determine what message should send by stats
   private sendStats({
     force = false,
-    compilationName,
+    compilationId,
   }: {
-    compilationName: string;
+    compilationId: string;
     force?: boolean;
   }) {
-    const stats = this.getStats(compilationName);
+    const stats = this.getStats(compilationId);
 
     // this should never happened
     if (!stats) {
@@ -241,17 +241,17 @@ export class SocketServer {
       }
     }
 
-    const initialChunks = this.initialChunks[compilationName];
+    const initialChunks = this.initialChunks[compilationId];
     const shouldReload =
       Boolean(stats.entrypoints) &&
       Boolean(initialChunks) &&
       !isEqualSet(initialChunks, newInitialChunks);
 
-    this.initialChunks[compilationName] = newInitialChunks;
+    this.initialChunks[compilationId] = newInitialChunks;
     if (shouldReload) {
       return this.sockWrite({
         type: 'content-changed',
-        compilationName,
+        compilationId,
       });
     }
 
@@ -265,33 +265,33 @@ export class SocketServer {
     if (shouldEmit) {
       return this.sockWrite({
         type: 'still-ok',
-        compilationName,
+        compilationId,
       });
     }
 
     this.sockWrite({
       type: 'hash',
-      compilationName,
+      compilationId,
       data: stats.hash,
     });
 
     if (stats.errorsCount) {
       return this.sockWrite({
         type: 'errors',
-        compilationName,
+        compilationId,
         data: getAllStatsErrors(stats),
       });
     }
     if (stats.warningsCount) {
       return this.sockWrite({
         type: 'warnings',
-        compilationName,
+        compilationId,
         data: getAllStatsWarnings(stats),
       });
     }
     return this.sockWrite({
       type: 'ok',
-      compilationName,
+      compilationId,
     });
   }
 

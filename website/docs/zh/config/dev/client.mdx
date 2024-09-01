@@ -6,15 +6,17 @@
 
 ```ts
 type Client = {
-  /** 指定 WebSocket 请求的协议名称 */
+  // WebSocket 请求的协议名称
   protocol?: 'ws' | 'wss';
-  /** 指定 WebSocket 请求的路径 */
+  // WebSocket 请求的路径
   path?: string;
-  /** 指定 WebSocket 请求的端口号 */
+  // WebSocket 请求的端口号
   port?: string | number;
-  /** 指定 WebSocket 请求的 host */
+  // WebSocket 请求的 host
   host?: string;
-  /** 当出现编译错误时，是否在浏览器中显示 error overlay */
+  // WebSocket 请求断开后的最大重连次数
+  reconnect?: number;
+  // 当出现编译错误时，是否在浏览器中显示 error overlay
   overlay?: boolean;
 };
 ```
@@ -30,6 +32,7 @@ const defaultConfig = {
   host: '',
   // 默认为 "location.protocol === 'https:' ? 'wss' : 'ws'""
   protocol: undefined,
+  reconnect: 100,
   overlay: true,
 };
 ```
@@ -101,5 +104,5 @@ export default {
 ```
 
 :::tip
-Error overlay 功能需要当前浏览器版本支持 [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)。
+Error overlay 功能需要当前浏览器版本支持 [Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)。在不支持的浏览器中，overlay 不会展示。
 :::

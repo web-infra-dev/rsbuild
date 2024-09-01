@@ -1108,13 +1108,40 @@ export type ServerAPIs = {
 };
 
 export type ClientConfig = {
+  /**
+   * The path for the WebSocket request.
+   * @default '/rsbuild-hmr'
+   */
   path?: string;
+  /**
+   * The port number for the WebSocket request.
+   * @default location.port
+   */
   port?: string | number;
+  /**
+   * The host for the WebSocket request.
+   * @default location.hostname
+   */
   host?: string;
+  /**
+   * The protocol name for the WebSocket request.
+   * @default location.protocol === 'https:' ? 'wss' : 'ws'
+   */
   protocol?: 'ws' | 'wss';
-  /** Shows an overlay in the browser when there are compiler errors. */
+  /**
+   * The maximum number of reconnection attempts after a WebSocket request is disconnected.
+   * @default 100
+   */
+  reconnect?: number;
+  /**
+   * Whether to display an error overlay in the browser when a compilation error occurs.
+   * @default true
+   */
   overlay?: boolean;
 };
+
+export type NormalizedClientConfig = Pick<ClientConfig, 'protocol'> &
+  Omit<Required<ClientConfig>, 'protocol'>;
 
 export type ChokidarWatchOptions = WatchOptions;
 
@@ -1146,7 +1173,9 @@ export interface DevConfig {
    * Config for Rsbuild client code.
    */
   client?: ClientConfig;
-  /** Provides the ability to execute a custom function and apply custom middlewares */
+  /**
+   * Provides the ability to execute a custom function and apply custom middlewares.
+   */
   setupMiddlewares?: Array<
     (
       /** Order: `unshift` => internal middlewares => `push` */
@@ -1161,6 +1190,7 @@ export interface DevConfig {
   >;
   /**
    * Controls whether the build output from development mode is written to disk.
+   * @default false
    */
   writeToDisk?: boolean | ((filename: string) => boolean);
   /**
@@ -1169,17 +1199,17 @@ export interface DevConfig {
   watchFiles?: WatchFiles;
   /**
    * Enable lazy compilation.
+   * @default false
    */
   lazyCompilation?: boolean | Rspack.LazyCompilationOptions;
 }
 
 export type NormalizedDevConfig = DevConfig &
   Required<
-    Pick<
-      DevConfig,
-      'hmr' | 'client' | 'liveReload' | 'assetPrefix' | 'writeToDisk'
-    >
-  >;
+    Pick<DevConfig, 'hmr' | 'liveReload' | 'assetPrefix' | 'writeToDisk'>
+  > & {
+    client: NormalizedClientConfig;
+  };
 
 export type ModuleFederationConfig = {
   options: ModuleFederationPluginOptions;

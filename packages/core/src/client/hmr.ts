@@ -1,13 +1,8 @@
-/**
- * This has been adapted from `create-react-app`, authored by Facebook, Inc.
- * see: https://github.com/facebookincubator/create-react-app/tree/master/packages/react-dev-utils
- *
- * Tips: this package will be bundled and running in the browser, do not import any Node.js modules.
- */
-import type { ClientConfig, Rspack } from '../types';
+import type { NormalizedClientConfig, Rspack } from '../types';
 import { formatStatsMessages } from './format';
 
-const compilationName = RSBUILD_COMPILATION_NAME;
+const compilationId = RSBUILD_COMPILATION_NAME;
+const config: NormalizedClientConfig = RSBUILD_CLIENT_CONFIG;
 
 function formatURL({
   port,
@@ -26,25 +21,13 @@ function formatURL({
     url.hostname = hostname;
     url.protocol = protocol;
     url.pathname = pathname;
-    url.searchParams.append('compilationName', compilationName);
+    url.searchParams.append('compilationId', compilationId);
     return url.toString();
   }
 
   // compatible with IE11
   const colon = protocol.indexOf(':') === -1 ? ':' : '';
   return `${protocol}${colon}//${hostname}:${port}${pathname}`;
-}
-
-function getSocketUrl(urlParts: ClientConfig) {
-  const { location } = self;
-  const { host, port, path, protocol } = urlParts;
-
-  return formatURL({
-    protocol: protocol || (location.protocol === 'https:' ? 'wss' : 'ws'),
-    hostname: host || location.hostname,
-    port: port || location.port,
-    pathname: path || '/rsbuild-hmr',
-  });
 }
 
 // Remember some state related to hot module replacement.
@@ -120,7 +103,6 @@ function handleErrors(errors: Rspack.StatsError[]) {
   isFirstCompilation = false;
   hasCompileErrors = true;
 
-  // "Massage" webpack messages.
   const formatted = formatStatsMessages({
     errors,
     warnings: [],
@@ -134,16 +116,11 @@ function handleErrors(errors: Rspack.StatsError[]) {
   if (createOverlay) {
     createOverlay(formatted.errors);
   }
-
-  // Do not attempt to reload now.
-  // We will reload on next success instead.
 }
 
-function isUpdateAvailable() {
-  // __webpack_hash__ is the hash of the current compilation.
-  // It's a global variable injected by webpack / Rspack.
-  return lastCompilationHash !== __webpack_hash__;
-}
+// __webpack_hash__ is the hash of the current compilation.
+// It's a global variable injected by Rspack.
+const isUpdateAvailable = () => lastCompilationHash !== __webpack_hash__;
 
 // Attempt to update code on the fly, fall back to a hard reload.
 function tryApplyUpdates() {
@@ -158,21 +135,20 @@ function tryApplyUpdates() {
     return;
   }
 
-  // webpack disallows updates in other states.
+  // Rspack disallows updates in other states.
   if (import.meta.webpackHot.status() !== 'idle') {
     return;
   }
 
-  function handleApplyUpdates(
+  const handleApplyUpdates = (
     err: unknown,
     updatedModules: (string | number)[] | null,
-  ) {
+  ) => {
     const forcedReload = err || !updatedModules;
     if (forcedReload) {
       if (err) {
         console.error('[HMR] Forced reload caused by: ', err);
       }
-
       reloadPage();
       return;
     }
@@ -181,22 +157,17 @@ function tryApplyUpdates() {
       // While we were updating, there was a new update! Do it again.
       tryApplyUpdates();
     }
-  }
+  };
 
   // https://rspack.dev/api/modules#importmetawebpackhot-webpack-specific
   import.meta.webpackHot.check(true).then(
-    (updatedModules) => {
-      handleApplyUpdates(null, updatedModules);
-    },
-    (err) => {
-      handleApplyUpdates(err, null);
-    },
+    (updatedModules) => handleApplyUpdates(null, updatedModules),
+    (err) => handleApplyUpdates(err, null),
   );
 }
 
-const MAX_RETRIES = 100;
 let connection: WebSocket | null = null;
-let retryCount = 0;
+let reconnectCount = 0;
 
 function onOpen() {
   // Notify users that the HMR has successfully connected.
@@ -206,7 +177,7 @@ function onOpen() {
 function onMessage(e: MessageEvent<string>) {
   const message = JSON.parse(e.data);
 
-  if (message.compilationName && message.compilationName !== compilationName) {
+  if (message.compilationId && message.compilationId !== compilationId) {
     return;
   }
 
@@ -237,44 +208,33 @@ function onMessage(e: MessageEvent<string>) {
   }
 }
 
-function sleep(msec = 1000) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, msec);
-  });
-}
+function onClose() {
+  if (reconnectCount >= config.reconnect) {
+    if (config.reconnect > 0) {
+      console.info(
+        '[HMR] Connection failure after maximum reconnect limit exceeded.',
+      );
+    }
+    return;
+  }
 
-async function onClose() {
   console.info('[HMR] disconnected. Attempting to reconnect.');
-
   removeListeners();
-
-  await sleep(1000);
-  retryCount++;
-
-  if (
-    connection &&
-    (connection.readyState === connection.CONNECTING ||
-      connection.readyState === connection.OPEN)
-  ) {
-    retryCount = 0;
-    return;
-  }
-
-  // Exceeded max retry attempts, stop retry.
-  if (retryCount > MAX_RETRIES) {
-    console.info(
-      '[HMR] Unable to establish a connection after exceeding the maximum retry attempts.',
-    );
-    retryCount = 0;
-    return;
-  }
-
-  reconnect();
+  connection = null;
+  reconnectCount++;
+  setTimeout(connect, 1000);
 }
 
 // Establishing a WebSocket connection with the server.
 function connect() {
-  const socketUrl = getSocketUrl(RSBUILD_CLIENT_CONFIG);
+  const { location } = self;
+  const { host, port, path, protocol } = config;
+  const socketUrl = formatURL({
+    protocol: protocol || (location.protocol === 'https:' ? 'wss' : 'ws'),
+    hostname: host || location.hostname,
+    port: port || location.port,
+    pathname: path || '/rsbuild-hmr',
+  });
 
   connection = new WebSocket(socketUrl);
   connection.addEventListener('open', onOpen);
@@ -290,17 +250,6 @@ function removeListeners() {
     connection.removeEventListener('close', onClose);
     connection.removeEventListener('message', onMessage);
   }
-}
-
-/**
- * Close the current connection if it exists and then establishes a new
- * connection.
- */
-function reconnect() {
-  if (connection) {
-    connection = null;
-  }
-  connect();
 }
 
 function reloadPage() {
