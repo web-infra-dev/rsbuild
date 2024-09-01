@@ -84,7 +84,7 @@ class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
       )
       .replaceAll(
         '__RUNTIME_GLOBALS_GET_MINI_CSS_EXTRACT_FILENAME__',
-        '__webpack_require__.miniCssF',
+        '__webpack_require__.miniCssF'
       )
       .replaceAll('__RUNTIME_GLOBALS_PUBLIC_PATH__', RuntimeGlobals.publicPath)
       .replaceAll('__RUNTIME_GLOBALS_LOAD_SCRIPT__', RuntimeGlobals.loadScript)

@@ -8,9 +8,7 @@ type RsdoctorExports = {
   RsdoctorWebpackPlugin: { new (): BundlerPluginInstance };
 };
 
-type MaybeRsdoctorPlugin = Configuration['plugins'] & {
-  isRsdoctorPlugin?: boolean;
-};
+type MaybeRsdoctorPlugin = Configuration['plugins'] & { isRsdoctorPlugin?: boolean };
 
 export const pluginRsdoctor = (): RsbuildPlugin => ({
   name: 'rsbuild:rsdoctor',
@@ -52,14 +50,12 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
 
       let isAutoRegister = false;
 
-      const isRsdoctorPlugin = (plugin: MaybeRsdoctorPlugin) =>
-        plugin?.isRsdoctorPlugin === true ||
-        plugin?.constructor?.name === pluginName;
+      const isRsdoctorPlugin = (plugin: MaybeRsdoctorPlugin) =>  plugin?.isRsdoctorPlugin === true || plugin?.constructor?.name === pluginName;
 
       for (const config of bundlerConfigs) {
         // If user has added the Rsdoctor plugin to the config file, it will return.
-        const registered = config.plugins?.some((plugin) =>
-          isRsdoctorPlugin(plugin as unknown as MaybeRsdoctorPlugin),
+        const registered = config.plugins?.some(          
+          (plugin) => isRsdoctorPlugin(plugin as unknown as MaybeRsdoctorPlugin),
         );
 
         if (registered) {
