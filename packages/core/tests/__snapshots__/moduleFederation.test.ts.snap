@@ -47,11 +47,6 @@ exports[`plugin-module-federation > should set environment module federation con
             "priority": 0,
             "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
           },
-          "lib-lodash": {
-            "name": "lib-lodash",
-            "priority": 0,
-            "test": /node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
-          },
         },
         "chunks": "all",
       },

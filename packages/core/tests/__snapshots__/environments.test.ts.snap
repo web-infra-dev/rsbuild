@@ -1673,11 +1673,6 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
             "priority": 0,
             "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
           },
-          "lib-lodash": {
-            "name": "lib-lodash",
-            "priority": 0,
-            "test": /node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
-          },
         },
         "chunks": "all",
       },

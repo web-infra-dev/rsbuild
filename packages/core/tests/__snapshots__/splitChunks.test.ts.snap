@@ -114,11 +114,6 @@ exports[`plugin-split-chunks > should set split-by-experience config 1`] = `
           "priority": 0,
           "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
         },
-        "lib-lodash": {
-          "name": "lib-lodash",
-          "priority": 0,
-          "test": /node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
-        },
         "lib-polyfill": {
           "name": "lib-polyfill",
           "priority": 0,
@@ -143,11 +138,6 @@ exports[`plugin-split-chunks > should set split-by-experience config correctly w
           "name": "lib-axios",
           "priority": 0,
           "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
-        },
-        "lib-lodash": {
-          "name": "lib-lodash",
-          "priority": 0,
-          "test": /node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
         },
       },
       "chunks": "all",
