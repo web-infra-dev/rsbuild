@@ -128,7 +128,7 @@ describe('webpackConfig', () => {
     expect(config).toMatchSnapshot();
   });
 
-  it('should export HtmlWebpackPlugin instance', async () => {
+  it('should expose HtmlWebpackPlugin instance via params', async () => {
     await createStubRsbuild({
       rsbuildConfig: {
         tools: {
@@ -175,8 +175,7 @@ describe('webpackConfig', () => {
       plugins: [],
     });
 
-    const config = await rsbuild.unwrapConfig();
-    expect(config.plugins).toEqual([]);
+    expect(await rsbuild.matchBundlerPlugin('DefinePlugin')).toBeFalsy();
   });
 
   it('should allow to add rules', async () => {

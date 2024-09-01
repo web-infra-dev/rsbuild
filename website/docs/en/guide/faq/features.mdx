@@ -22,7 +22,7 @@ export default {
 
 ### How to run ESLint during compilation?
 
-For the sake of compilation performance, Rsbuild will not perform ESLint verification during the compilation process by default. If you require this feature, you can use Rsbuild's [ESLint plugin](/plugins/list/plugin-eslint).
+For the sake of compilation performance, Rsbuild will not perform ESLint verification during the compilation process by default. If you require this feature, you can use Rsbuild's [ESLint plugin](https://github.com/rspack-contrib/rsbuild-plugin-eslint).
 
 ---
 
@@ -42,7 +42,7 @@ export default {
 
 ### How to remove console after production build?
 
-For the production build, we can remove the `console` from the code, so as to avoid the log of the development environment being output to the production.
+For the production build, we can remove the `console` from the code, so as to avoid the log of the development mode being output to the production.
 
 Rsbuild provides a configuration option to remove console by default, please see [performance.removeConsole](/config/performance/remove-console).
 
@@ -64,8 +64,8 @@ debug   add default plugins done [1938.57 ms]
 
 Inspect config succeed, open following files to view the content:
 
-  - Rsbuild Config: /root/my-project/dist/rsbuild.config.mjs
-  - Rspack Config (web): /root/my-project/dist/rspack.config.web.mjs
+  - Rsbuild Config: /root/my-project/dist/.rsbuild/rsbuild.config.mjs
+  - Rspack Config (web): /root/my-project/dist/.rsbuild/rspack.config.web.mjs
 ```
 
 ---

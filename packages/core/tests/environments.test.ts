@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { createRsbuild } from '../src';
+import { type RsbuildPlugin, createRsbuild } from '../src';
 
 describe('environment config', () => {
   it('should normalize context correctly', async () => {
@@ -30,7 +30,6 @@ describe('environment config', () => {
 
     await rsbuild.initConfigs();
 
-    expect(rsbuild.context.environments).toMatchSnapshot();
     expect(rsbuild.context.distPath).toBe(join(cwd, 'dist1'));
   });
 
@@ -91,10 +90,10 @@ describe('environment config', () => {
     ]);
 
     const {
-      origin: { rsbuildConfig },
+      origin: { environmentConfigs },
     } = await rsbuild.inspectConfig();
 
-    expect(rsbuildConfig.environments).toMatchSnapshot();
+    expect(environmentConfigs).toMatchSnapshot();
   });
 
   it('should support modify single environment config by api.modifyEnvironmentConfig', async () => {
@@ -149,10 +148,93 @@ describe('environment config', () => {
     ]);
 
     const {
-      origin: { rsbuildConfig },
+      origin: { environmentConfigs },
     } = await rsbuild.inspectConfig();
 
-    expect(rsbuildConfig.environments).toMatchSnapshot();
+    expect(environmentConfigs).toMatchSnapshot();
+  });
+
+  it('should support add single environment plugin', async () => {
+    process.env.NODE_ENV = 'development';
+    const plugin: (pluginId: string) => RsbuildPlugin = (pluginId) => ({
+      name: 'test-environment',
+      setup: (api) => {
+        api.modifyEnvironmentConfig(
+          (config, { name, mergeEnvironmentConfig }) => {
+            return mergeEnvironmentConfig(config, {
+              source: {
+                alias: {
+                  [pluginId]: name,
+                },
+              },
+            });
+          },
+        );
+      },
+    });
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        environments: {
+          web: {
+            plugins: [plugin('web')],
+          },
+          ssr: {
+            plugins: [plugin('ssr')],
+          },
+        },
+      },
+    });
+
+    rsbuild.addPlugins([plugin('global')]);
+
+    const {
+      origin: { environmentConfigs },
+    } = await rsbuild.inspectConfig();
+
+    expect(
+      Object.fromEntries(
+        Object.entries(environmentConfigs).map(([name, config]) => [
+          name,
+          config.source.alias,
+        ]),
+      ),
+    ).toMatchSnapshot();
+  });
+
+  it('should support run specified environment', async () => {
+    process.env.NODE_ENV = 'development';
+
+    const pluginLogs: string[] = [];
+
+    const plugin: (pluginId: string) => RsbuildPlugin = (pluginId) => ({
+      name: 'test-environment',
+      setup: () => {
+        pluginLogs.push(`run plugin in ${pluginId}`);
+      },
+    });
+
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        environments: {
+          web: {
+            plugins: [plugin('web')],
+          },
+          ssr: {
+            plugins: [plugin('ssr')],
+          },
+        },
+      },
+      environment: ['ssr'],
+    });
+
+    rsbuild.addPlugins([plugin('global')]);
+
+    const {
+      origin: { environmentConfigs },
+    } = await rsbuild.inspectConfig();
+
+    expect(Object.keys(environmentConfigs)).toEqual(['ssr']);
+    expect(pluginLogs).toEqual(['run plugin in ssr', 'run plugin in global']);
   });
 
   it('should normalize environment config correctly', async () => {
@@ -239,9 +321,49 @@ describe('environment config', () => {
     });
 
     const {
-      origin: { rsbuildConfig },
+      origin: { environmentConfigs },
     } = await rsbuild.inspectConfig();
 
-    expect(rsbuildConfig.environments).toMatchSnapshot();
+    expect(environmentConfigs).toMatchSnapshot();
+  });
+
+  it('tools.rspack / bundlerChain can be used in environment config', async () => {
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        tools: {
+          rspack(config) {
+            return {
+              ...config,
+              devtool: 'eval',
+            };
+          },
+        },
+        environments: {
+          web: {
+            tools: {
+              rspack(config) {
+                return {
+                  ...config,
+                  devtool: 'eval-source-map',
+                };
+              },
+            },
+          },
+          node: {
+            output: {
+              target: 'node',
+            },
+            tools: {
+              bundlerChain: (chain) => {
+                chain.output.filename('bundle.js');
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const configs = await rsbuild.initConfigs();
+    expect(configs).toMatchSnapshot();
   });
 });

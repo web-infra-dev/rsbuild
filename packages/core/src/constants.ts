@@ -16,6 +16,7 @@ export const STATIC_PATH: string = join(__dirname, '../static');
 export const COMPILED_PATH: string = join(__dirname, '../compiled');
 export const TS_CONFIG_FILE = 'tsconfig.json';
 export const HMR_SOCKET_PATH = '/rsbuild-hmr';
+export const RSBUILD_OUTPUTS_PATH = '.rsbuild';
 
 // Defaults
 export const DEFAULT_PORT = 3000;
@@ -38,6 +39,7 @@ export const DEFAULT_BROWSERSLIST: Record<string, string[]> = {
 // RegExp
 export const HTML_REGEX: RegExp = /\.html$/;
 export const JS_REGEX: RegExp = /\.(?:js|mjs|cjs|jsx)$/;
+export const SCRIPT_REGEX: RegExp = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
 export const CSS_REGEX: RegExp = /\.css$/;
 export const NODE_MODULES_REGEX: RegExp = /[\\/]node_modules[\\/]/;
 

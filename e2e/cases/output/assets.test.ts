@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { build, gotoPage } from '@e2e/helper';
+import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 
@@ -71,12 +71,10 @@ for (const item of cases) {
   test(item.name, async ({ page }) => {
     const rsbuild = await build({
       cwd: item.cwd,
-      runServer: true,
+      page,
       plugins: [pluginReact()],
       rsbuildConfig: item.config || {},
     });
-
-    await gotoPage(page, rsbuild);
 
     if (item.expected === 'url') {
       await expect(

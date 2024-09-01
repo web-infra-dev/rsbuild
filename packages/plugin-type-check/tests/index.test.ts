@@ -75,11 +75,11 @@ describe('plugin-type-check', () => {
     });
 
     expect(
-      await rsbuild.matchBundlerPlugin('ForkTsCheckerWebpackPlugin'),
+      await rsbuild.matchBundlerPlugin('ForkTsCheckerWebpackPlugin', 0),
     ).toBeTruthy();
-
-    const configs = await rsbuild.initConfigs();
-    expect(configs[1].plugins).toBeFalsy();
+    expect(
+      await rsbuild.matchBundlerPlugin('ForkTsCheckerWebpackPlugin', 1),
+    ).toBeFalsy();
   });
 
   it('should disable type checker when enable is false', async () => {

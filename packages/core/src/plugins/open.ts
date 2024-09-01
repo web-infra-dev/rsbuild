@@ -1,10 +1,9 @@
 import { exec } from 'node:child_process';
 import { promisify } from 'node:util';
-import { type Routes, castArray } from '@rsbuild/shared';
 import { STATIC_PATH } from '../constants';
-import { canParse } from '../helpers';
+import { canParse, castArray } from '../helpers';
 import { logger } from '../logger';
-import type { NormalizedConfig, RsbuildPlugin } from '../types';
+import type { NormalizedConfig, Routes, RsbuildPlugin } from '../types';
 
 const execAsync = promisify(exec);
 
@@ -81,7 +80,7 @@ export async function openBrowser(url: string): Promise<boolean> {
   }
 }
 
-export const replacePlaceholder = (url: string, port: number): string =>
+export const replacePortPlaceholder = (url: string, port: number): string =>
   url.replace(/<port>/g, String(port));
 
 export function resolveUrl(str: string, base: string): string {
@@ -160,7 +159,7 @@ export function pluginOpen(): RsbuildPlugin {
         } else {
           urls.push(
             ...targets.map((target) =>
-              resolveUrl(replacePlaceholder(target, port), baseUrl),
+              resolveUrl(replacePortPlaceholder(target, port), baseUrl),
             ),
           );
         }

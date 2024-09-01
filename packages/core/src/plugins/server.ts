@@ -8,7 +8,10 @@ export const pluginServer = (): RsbuildPlugin => ({
   name: 'rsbuild:server',
 
   setup(api) {
-    api.onBeforeBuild(async () => {
+    api.onBeforeBuild(async ({ isFirstCompile }) => {
+      if (!isFirstCompile) {
+        return;
+      }
       const config = api.getNormalizedConfig();
       const publicDirs = normalizePublicDirs(config.server.publicDir);
 

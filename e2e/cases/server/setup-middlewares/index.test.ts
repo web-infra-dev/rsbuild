@@ -1,7 +1,7 @@
-import { dev, gotoPage } from '@e2e/helper';
+import { dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-// hmr will timeout in CI
+// HMR will timeout in CI
 test('setupMiddlewares', async ({ page }) => {
   // HMR cases will fail in Windows
   if (process.platform === 'win32') {
@@ -14,6 +14,7 @@ test('setupMiddlewares', async ({ page }) => {
   // Only tested to see if it works, not all configurations.
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
     rsbuildConfig: {
       dev: {
         setupMiddlewares: [
@@ -28,8 +29,6 @@ test('setupMiddlewares', async ({ page }) => {
       },
     },
   });
-
-  await gotoPage(page, rsbuild);
 
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');

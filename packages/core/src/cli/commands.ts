@@ -1,16 +1,21 @@
 import { existsSync } from 'node:fs';
-import { type RsbuildMode, color } from '@rsbuild/shared';
 import { type Command, program } from 'commander';
+import color from 'picocolors';
 import { isEmptyDir } from '../helpers';
 import { logger } from '../logger';
+import type { RsbuildMode } from '../types';
 import { init } from './init';
 
 export type CommonOptions = {
+  root?: string;
+  mode?: RsbuildMode;
   config?: string;
+  envDir?: string;
   envMode?: string;
   open?: boolean | string;
   host?: string;
   port?: number;
+  environment?: string[];
 };
 
 export type BuildOptions = CommonOptions & {
@@ -18,7 +23,7 @@ export type BuildOptions = CommonOptions & {
 };
 
 export type InspectOptions = CommonOptions & {
-  env: RsbuildMode;
+  mode: RsbuildMode;
   output: string;
   verbose?: boolean;
 };
@@ -34,9 +39,23 @@ const applyCommonOptions = (command: Command) => {
       'specify the configuration file, can be a relative or absolute path',
     )
     .option(
+      '-r --root <root>',
+      'specify the project root directory, can be an absolute path or a path relative to cwd',
+    )
+    .option(
+      '-m --mode <mode>',
+      'specify the build mode, can be `development`, `production` or `none`',
+    )
+    .option(
       '--env-mode <mode>',
       'specify the env mode to load the `.env.[mode]` file',
-    );
+    )
+    .option<string[]>(
+      '--environment <name>',
+      'specify the name of environment to build',
+      (str, prev) => (prev ? prev.concat(str.split(',')) : str.split(',')),
+    )
+    .option('--env-dir <dir>', 'specify the directory to load `.env` files');
 };
 
 const applyServerOptions = (command: Command) => {
@@ -126,14 +145,12 @@ export function runCli(): void {
 
   inspectCommand
     .description('inspect the Rspack and Rsbuild configs')
-    .option('--env <env>', 'specify env mode', 'development')
-    .option('--output <output>', 'specify inspect content output path', '/')
+    .option('--output <output>', 'specify inspect content output path')
     .option('--verbose', 'show full function definitions in output')
     .action(async (options: InspectOptions) => {
       try {
         const rsbuild = await init({ cliOptions: options });
         await rsbuild?.inspectConfig({
-          env: options.env,
           verbose: options.verbose,
           outputPath: options.output,
           writeToDisk: true,

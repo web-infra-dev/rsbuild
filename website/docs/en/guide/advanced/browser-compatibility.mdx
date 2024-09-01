@@ -12,6 +12,10 @@ Before dealing with compatibility issues, you first need to clarify which browse
 
 After setting the browserslist, if you still encountered some compatibility issues, please continue reading below contents to find some solutions.
 
+:::tip What is polyfill
+A polyfill is a piece of code that provides the functionality of a newer feature to older browsers that do not support that feature natively. It is used to fill in the gaps in older browsers' implementations of web standards, allowing developers to use newer features safely without having to worry about whether or not they will work in older browsers. For example, if a browser does not support the Array.map() method, a polyfill can be used to provide that functionality, allowing code that uses `Array.prototype.flat()` to work in that browser. Polyfills are commonly used to ensure that web applications can work on a wide range of browsers, including older ones.
+:::
+
 ## Background knowledge
 
 Before dealing with compatibility issues, it is recommended that you understand the following background knowledge to better handle related issues.
@@ -145,7 +149,7 @@ import path from 'node:path';
 
 export default {
   source: {
-    include: [/[\\/]node_modules[\\/]query-string[\\/]/],
+    include: [/node_modules[\\/]query-string[\\/]/],
   },
 };
 ```
@@ -179,13 +183,23 @@ export default {
 
 ## Polyfill mode
 
-Rsbuild compiles JavaScript code through Babel or SWC, and injects polyfill libraries like [core-js](https://github.com/zloirock/core-js), [@babel/runtime](https://npmjs.com/package/@babel/runtime) and [@swc/helpers](https://npmjs.com/package/@swc/helpers).
+Rsbuild compiles JavaScript code using SWC and supports injecting polyfills such as [core-js](https://github.com/zloirock/core-js) and [@swc/helpers](https://npmjs.com/package/@swc/helpers).
 
 In different usage scenarios, you may need different polyfill solutions. Rsbuild provides [output.polyfill](/config/output/polyfill) config to switch between different polyfill modes.
 
-### Usage mode
+### Default Behavior
 
-The usage is the default mode and does not need to be set manually, it allows more precise control over which core-js polyfills need to be injected.
+Rsbuild does not inject any polyfills by default:
+
+```ts
+export default {
+  output: {
+    polyfill: 'off',
+  },
+};
+```
+
+### Usage mode
 
 When you enable the usage mode, Rsbuild will analyze the source code in the project and determine which polyfills need to be injected.
 
@@ -228,16 +242,25 @@ export default {
 };
 ```
 
-### Disable Polyfill
+### UA Polyfill
 
-You can disable polyfill injection behavior by setting `output.polyfill` to `'off'`.
+Cloudflare provides a [polyfill service](https://cdnjs.cloudflare.com/polyfill/) that can automatically generate polyfill bundle based on the user's browser User-Agent.
+
+You can use the [html.tags](/config/html/tags) config of Rsbuild to inject scripts. For example, injecting a `<script>` tag at the beginning of the `<head>` tag:
 
 ```ts
 export default {
-  output: {
-    polyfill: 'off',
+  html: {
+    tags: [
+      {
+        tag: 'script',
+        attrs: {
+          defer: true,
+          src: 'https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=default',
+        },
+        append: false,
+      },
+    ],
   },
 };
 ```
-
-When using this config, you need to ensure compatibility by yourself, such as manually import the required polyfill code through [source.preEntry](/config/source/pre-entry).

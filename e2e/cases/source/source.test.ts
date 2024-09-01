@@ -46,7 +46,7 @@ test.describe('source configure multi', () => {
 test('define', async ({ page }) => {
   const rsbuild = await build({
     cwd: join(fixtures, 'global-vars'),
-    runServer: true,
+    page,
     rsbuildConfig: {
       source: {
         define: {

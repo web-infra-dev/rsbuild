@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/core",
-  "version": "0.7.9",
+  "version": "1.0.1-rc.0",
   "description": "The Rspack-based build tool.",
   "homepage": "https://rsbuild.dev",
   "bugs": {
@@ -20,7 +20,7 @@
       "require": "./dist/index.cjs"
     },
     "./client/hmr": {
-      "types": "./dist-types/client/hmr/index.d.ts",
+      "types": "./dist-types/client/hmr.d.ts",
       "default": "./dist/client/hmr.js"
     },
     "./client/overlay": {
@@ -51,45 +51,58 @@
     "prebundle": "prebundle"
   },
   "dependencies": {
-    "@rsbuild/shared": "workspace:*",
-    "@rspack/core": "1.0.0-alpha.0",
-    "@swc/helpers": "0.5.11",
-    "core-js": "~3.37.1",
-    "html-webpack-plugin": "npm:html-rspack-plugin@5.7.2",
-    "postcss": "^8.4.38"
+    "@rspack/core": "1.0.0",
+    "@rspack/lite-tapable": "1.0.0",
+    "@swc/helpers": "^0.5.12",
+    "caniuse-lite": "^1.0.30001653",
+    "core-js": "~3.38.1"
   },
   "devDependencies": {
     "@types/connect": "3.4.38",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "18.x",
     "@types/on-finished": "2.3.4",
-    "@types/ws": "^8.5.10",
+    "@types/webpack-bundle-analyzer": "4.7.0",
+    "@types/ws": "^8.5.12",
+    "browserslist": "4.23.3",
+    "browserslist-to-es-version": "^1.0.0",
+    "chokidar": "3.6.0",
     "commander": "^12.1.0",
     "connect": "3.7.0",
     "connect-history-api-fallback": "^2.0.0",
     "css-loader": "7.1.2",
+    "deepmerge": "^4.3.1",
     "dotenv": "16.4.5",
     "dotenv-expand": "11.0.6",
     "fs-extra": "^11.2.0",
-    "http-compression": "1.0.20",
+    "html-rspack-plugin": "6.0.0",
+    "http-proxy-middleware": "^2.0.6",
     "jiti": "^1.21.6",
-    "launch-editor-middleware": "^2.8.0",
+    "launch-editor-middleware": "^2.8.1",
+    "mrmime": "^2.0.0",
     "on-finished": "2.4.1",
     "open": "^8.4.0",
+    "picocolors": "^1.0.1",
+    "postcss": "^8.4.41",
     "postcss-load-config": "6.0.1",
     "postcss-loader": "8.1.1",
-    "postcss-value-parser": "4.2.0",
-    "prebundle": "1.1.0",
+    "prebundle": "1.2.2",
+    "reduce-configs": "^1.0.0",
     "rslog": "^1.2.2",
-    "rspack-manifest-plugin": "5.0.0",
-    "semver": "^7.6.2",
+    "rspack-chain": "^1.0.0",
+    "rspack-manifest-plugin": "5.0.1",
     "sirv": "^2.0.4",
     "style-loader": "3.3.4",
     "tsc-alias": "^1.8.10",
     "typescript": "^5.5.2",
-    "webpack": "^5.92.1",
-    "webpack-dev-middleware": "7.2.1",
-    "ws": "^8.17.1"
+    "webpack": "^5.94.0",
+    "webpack-bundle-analyzer": "^4.10.2",
+    "rsbuild-dev-middleware": "0.1.1",
+    "webpack-merge": "6.0.1",
+    "ws": "^8.18.0"
+  },
+  "optionalDependencies": {
+    "fsevents": "~2.3.3"
   },
   "engines": {
     "node": ">=16.7.0"

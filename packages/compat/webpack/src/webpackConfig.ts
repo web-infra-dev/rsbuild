@@ -1,19 +1,18 @@
 import {
+  type EnvironmentContext,
+  type ModifyRspackConfigUtils,
+  type ModifyWebpackChainUtils,
+  type ModifyWebpackConfigUtils,
   type RsbuildTarget,
+  type Rspack,
   type RspackChain,
   __internalHelper,
   logger,
-  reduceConfigsWithContext,
 } from '@rsbuild/core';
-import {
-  type EnvironmentContext,
-  type ModifyWebpackChainUtils,
-  type ModifyWebpackConfigUtils,
-  castArray,
-} from '@rsbuild/shared';
-import type { RuleSetRule, WebpackPluginInstance } from 'webpack';
+import { reduceConfigsWithContext } from 'reduce-configs';
 import {
   type InternalContext,
+  castArray,
   chainToConfig,
   getChainUtils as getBaseChainUtils,
   modifyBundlerChain,
@@ -27,13 +26,14 @@ async function modifyWebpackChain(
 ): Promise<RspackChain> {
   logger.debug('modify webpack chain');
 
-  const [modifiedChain] = await context.hooks.modifyWebpackChain.call(
-    chain,
-    utils,
-  );
+  const [modifiedChain] =
+    await context.hooks.modifyWebpackChain.callInEnvironment({
+      environment: utils.environment.name,
+      args: [chain, utils],
+    });
 
-  if (context.config.tools?.webpackChain) {
-    for (const item of castArray(context.config.tools.webpackChain)) {
+  if (utils.environment.config.tools?.webpackChain) {
+    for (const item of castArray(utils.environment.config.tools.webpackChain)) {
       item(modifiedChain, utils);
     }
   }
@@ -49,15 +49,16 @@ async function modifyWebpackConfig(
   utils: ModifyWebpackConfigUtils,
 ): Promise<WebpackConfig> {
   logger.debug('modify webpack config');
-  let [modifiedConfig] = await context.hooks.modifyWebpackConfig.call(
-    webpackConfig,
-    utils,
-  );
+  let [modifiedConfig] =
+    await context.hooks.modifyWebpackConfig.callInEnvironment({
+      environment: utils.environment.name,
+      args: [webpackConfig, utils],
+    });
 
-  if (context.config.tools?.webpack) {
+  if (utils.environment.config.tools?.webpack) {
     modifiedConfig = reduceConfigsWithContext({
       initial: modifiedConfig,
-      config: context.config.tools.webpack,
+      config: utils.environment.config.tools.webpack,
       ctx: utils,
       mergeFn: utils.mergeConfig,
     });
@@ -83,54 +84,6 @@ async function getChainUtils(
     name: nameMap[target] || '',
     webpack,
     HtmlWebpackPlugin: __internalHelper.getHTMLPlugin(),
-  };
-}
-
-async function getConfigUtils(
-  config: WebpackConfig,
-  chainUtils: ModifyWebpackChainUtils,
-): Promise<ModifyWebpackConfigUtils> {
-  const { merge } = await import('@rsbuild/shared/webpack-merge');
-
-  return {
-    ...chainUtils,
-
-    mergeConfig: merge,
-
-    addRules(rules: RuleSetRule | RuleSetRule[]) {
-      const ruleArr = castArray(rules);
-      if (!config.module) {
-        config.module = {};
-      }
-      if (!config.module.rules) {
-        config.module.rules = [];
-      }
-      config.module.rules.unshift(...ruleArr);
-    },
-
-    prependPlugins(plugins: WebpackPluginInstance | WebpackPluginInstance[]) {
-      const pluginArr = castArray(plugins);
-      if (!config.plugins) {
-        config.plugins = [];
-      }
-      config.plugins.unshift(...pluginArr);
-    },
-
-    appendPlugins(plugins: WebpackPluginInstance | WebpackPluginInstance[]) {
-      const pluginArr = castArray(plugins);
-      if (!config.plugins) {
-        config.plugins = [];
-      }
-      config.plugins.push(...pluginArr);
-    },
-
-    removePlugin(pluginName: string) {
-      if (config.plugins) {
-        config.plugins = config.plugins.filter(
-          (item) => item?.constructor.name !== pluginName,
-        );
-      }
-    },
   };
 }
 
@@ -171,10 +124,15 @@ export async function generateWebpackConfig({
 
   let webpackConfig = chainToConfig(chain) as WebpackConfig;
 
+  const configUtils = (await __internalHelper.getConfigUtils(
+    webpackConfig as Rspack.Configuration,
+    chainUtils as unknown as ModifyRspackConfigUtils,
+  )) as unknown as ModifyWebpackConfigUtils;
+
   webpackConfig = await modifyWebpackConfig(
     context,
     webpackConfig,
-    await getConfigUtils(webpackConfig, chainUtils),
+    configUtils,
   );
 
   return webpackConfig;

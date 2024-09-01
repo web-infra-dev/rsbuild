@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import inspector from 'node:inspector';
 import path from 'node:path';
-import { rspack } from '@rspack/core';
+import rspack from '@rspack/core';
 import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
 
@@ -64,7 +64,7 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
       }
 
       if (enableProfileTrace) {
-        rspack.experimental_registerGlobalTrace(
+        rspack.experiments.globalTrace.register(
           'trace',
           'chrome',
           traceFilePath,
@@ -79,7 +79,11 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
       }
     };
 
-    api.onBeforeBuild(onStart);
+    api.onBeforeBuild(({ isFirstCompile }) => {
+      if (isFirstCompile) {
+        onStart();
+      }
+    });
     api.onBeforeStartDevServer(onStart);
 
     api.onAfterBuild(async ({ stats }) => {
@@ -101,7 +105,7 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
 
     api.onExit(() => {
       if (enableProfileTrace) {
-        rspack.experimental_cleanupGlobalTrace();
+        rspack.experiments.globalTrace.cleanup();
       }
       const profileDir = path.join(api.context.distPath, profileDirName);
 

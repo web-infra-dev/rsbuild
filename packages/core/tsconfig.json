@@ -15,25 +15,29 @@
       "jiti": ["./compiled/jiti"],
       "rslog": ["./compiled/rslog"],
       "dotenv": ["./compiled/dotenv"],
+      "mrmime": ["./compiled/mrmime"],
       "semver": ["./compiled/semver"],
       "connect": ["./compiled/connect"],
+      "chokidar": ["./compiled/chokidar"],
       "commander": ["./compiled/commander"],
+      "picocolors": ["./compiled/picocolors"],
       "on-finished": ["./compiled/on-finished"],
+      "browserslist": ["./compiled/browserslist"],
+      "rspack-chain": ["./compiled/rspack-chain"],
       "dotenv-expand": ["./compiled/dotenv-expand"],
-      "http-compression": ["./compiled/http-compression"],
+      "webpack-merge": ["./compiled/webpack-merge"],
+      "html-rspack-plugin": ["./compiled/html-rspack-plugin"],
+      "http-proxy-middleware": ["./compiled/http-proxy-middleware"],
+      "webpack-bundle-analyzer": ["./compiled/webpack-bundle-analyzer"],
       "postcss-load-config": ["./compiled/postcss-load-config"],
       "rspack-manifest-plugin": ["./compiled/rspack-manifest-plugin"],
-      "webpack-dev-middleware": ["./compiled/webpack-dev-middleware"],
+      "rsbuild-dev-middleware": ["./compiled/rsbuild-dev-middleware"],
       "launch-editor-middleware": ["./compiled/launch-editor-middleware"],
+      "browserslist-to-es-version": ["./compiled/browserslist-to-es-version"],
       "connect-history-api-fallback": [
         "./compiled/connect-history-api-fallback"
       ]
     }
   },
-  "references": [
-    {
-      "path": "../shared"
-    }
-  ],
   "include": ["src"]
 }

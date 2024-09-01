@@ -1,6 +1,4 @@
 import { createStubRsbuild } from '@scripts/test-helper';
-import { pluginEntry } from '../src/plugins/entry';
-import { pluginHtml } from '../src/plugins/html';
 import { pluginMinimize } from '../src/plugins/minimize';
 
 describe('plugin-minimize', () => {
@@ -31,35 +29,57 @@ describe('plugin-minimize', () => {
       `
       [
         SwcJsMinimizerRspackPlugin {
-          "_options": {
-            "compress": {
-              "passes": 1,
+          "_args": [
+            {
+              "extractComments": true,
+              "minimizerOptions": {
+                "format": {
+                  "asciiOnly": false,
+                },
+              },
             },
-            "exclude": undefined,
-            "extractComments": {
-              "condition": "@preserve|@lic|@cc_on|^/**!",
-            },
-            "format": {
-              "asciiOnly": true,
-              "comments": false,
-            },
-            "include": undefined,
-            "mangle": true,
-            "module": undefined,
-            "test": undefined,
-          },
+          ],
           "affectedHooks": "compilation",
           "name": "SwcJsMinimizerRspackPlugin",
         },
         LightningCssMinimizerRspackPlugin {
-          "_options": {
-            "browserslist": [
-              "defaults",
-            ],
-            "errorRecovery": false,
-            "removeUnusedLocalIdents": true,
-            "unusedSymbols": [],
-          },
+          "_args": [
+            {
+              "minimizerOptions": {
+                "exclude": {
+                  "clampFunction": false,
+                  "color": false,
+                  "colorFunction": false,
+                  "customMediaQueries": false,
+                  "dirSelector": false,
+                  "doublePositionGradients": false,
+                  "fontFamilySystemUi": false,
+                  "hexAlphaColors": false,
+                  "isSelector": false,
+                  "labColors": false,
+                  "langSelectorList": false,
+                  "logicalProperties": false,
+                  "mediaIntervalSyntax": false,
+                  "mediaQueries": false,
+                  "mediaRangeSyntax": false,
+                  "nesting": false,
+                  "notSelectorList": false,
+                  "oklabColors": false,
+                  "p3Colors": false,
+                  "selectors": false,
+                  "spaceSeparatedColorNotation": false,
+                  "textDecorationThicknessPercent": false,
+                  "vendorPrefixes": false,
+                },
+                "targets": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
+                ],
+              },
+            },
+          ],
           "affectedHooks": undefined,
           "name": "LightningCssMinimizerRspackPlugin",
         },
@@ -94,6 +114,28 @@ describe('plugin-minimize', () => {
     process.env.NODE_ENV = 'test';
   });
 
+  it('should not minimize when both output.minify.js and output.minify.css are false', async () => {
+    process.env.NODE_ENV = 'production';
+
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginMinimize()],
+      rsbuildConfig: {
+        output: {
+          minify: {
+            css: false,
+            js: false,
+          },
+        },
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+
+    expect(bundlerConfigs[0].optimization?.minimize).toBe(false);
+
+    process.env.NODE_ENV = 'test';
+  });
+
   it('should not minimizer for CSS when output.minify.css is false', async () => {
     process.env.NODE_ENV = 'production';
 
@@ -114,31 +156,6 @@ describe('plugin-minimize', () => {
     expect(bundlerConfigs[0].optimization?.minimizer?.[0]).toMatchObject({
       name: 'SwcJsMinimizerRspackPlugin',
     });
-
-    process.env.NODE_ENV = 'test';
-  });
-
-  it('should not minimizer for HTML when output.minify.html is false', async () => {
-    process.env.NODE_ENV = 'production';
-
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
-      rsbuildConfig: {
-        output: {
-          minify: {
-            html: false,
-          },
-        },
-      },
-    });
-
-    expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toMatchObject(
-      {
-        options: {
-          minify: false,
-        },
-      },
-    );
 
     process.env.NODE_ENV = 'test';
   });
@@ -164,39 +181,12 @@ describe('plugin-minimize', () => {
     // implicit assert the order of minimizers here,
     // could also be a guard for the order of minimizers
     expect(bundlerConfigs[0].optimization?.minimizer?.[0]).toMatchObject({
-      _options: {
-        exclude: 'no_js_minify',
-      },
-    });
-
-    process.env.NODE_ENV = 'test';
-  });
-
-  it('should accept and merge options for HTML minimizer', async () => {
-    process.env.NODE_ENV = 'production';
-
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
-      rsbuildConfig: {
-        output: {
-          minify: {
-            htmlOptions: {
-              minifyJS: false,
-            },
-          },
+      _args: [
+        {
+          exclude: 'no_js_minify',
         },
-      },
+      ],
     });
-
-    expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toMatchObject(
-      {
-        options: {
-          minify: {
-            minifyJS: false,
-          },
-        },
-      },
-    );
 
     process.env.NODE_ENV = 'test';
   });
@@ -219,36 +209,60 @@ describe('plugin-minimize', () => {
       `
       [
         SwcJsMinimizerRspackPlugin {
-          "_options": {
-            "compress": {
-              "drop_console": true,
-              "passes": 1,
+          "_args": [
+            {
+              "extractComments": true,
+              "minimizerOptions": {
+                "compress": {
+                  "drop_console": true,
+                },
+                "format": {
+                  "asciiOnly": false,
+                },
+              },
             },
-            "exclude": undefined,
-            "extractComments": {
-              "condition": "@preserve|@lic|@cc_on|^/**!",
-            },
-            "format": {
-              "asciiOnly": true,
-              "comments": false,
-            },
-            "include": undefined,
-            "mangle": true,
-            "module": undefined,
-            "test": undefined,
-          },
+          ],
           "affectedHooks": "compilation",
           "name": "SwcJsMinimizerRspackPlugin",
         },
         LightningCssMinimizerRspackPlugin {
-          "_options": {
-            "browserslist": [
-              "defaults",
-            ],
-            "errorRecovery": false,
-            "removeUnusedLocalIdents": true,
-            "unusedSymbols": [],
-          },
+          "_args": [
+            {
+              "minimizerOptions": {
+                "exclude": {
+                  "clampFunction": false,
+                  "color": false,
+                  "colorFunction": false,
+                  "customMediaQueries": false,
+                  "dirSelector": false,
+                  "doublePositionGradients": false,
+                  "fontFamilySystemUi": false,
+                  "hexAlphaColors": false,
+                  "isSelector": false,
+                  "labColors": false,
+                  "langSelectorList": false,
+                  "logicalProperties": false,
+                  "mediaIntervalSyntax": false,
+                  "mediaQueries": false,
+                  "mediaRangeSyntax": false,
+                  "nesting": false,
+                  "notSelectorList": false,
+                  "oklabColors": false,
+                  "p3Colors": false,
+                  "selectors": false,
+                  "spaceSeparatedColorNotation": false,
+                  "textDecorationThicknessPercent": false,
+                  "vendorPrefixes": false,
+                },
+                "targets": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
+                ],
+              },
+            },
+          ],
           "affectedHooks": undefined,
           "name": "LightningCssMinimizerRspackPlugin",
         },
@@ -277,39 +291,63 @@ describe('plugin-minimize', () => {
       `
       [
         SwcJsMinimizerRspackPlugin {
-          "_options": {
-            "compress": {
-              "passes": 1,
-              "pure_funcs": [
-                "console.log",
-                "console.warn",
-              ],
+          "_args": [
+            {
+              "extractComments": true,
+              "minimizerOptions": {
+                "compress": {
+                  "pure_funcs": [
+                    "console.log",
+                    "console.warn",
+                  ],
+                },
+                "format": {
+                  "asciiOnly": false,
+                },
+              },
             },
-            "exclude": undefined,
-            "extractComments": {
-              "condition": "@preserve|@lic|@cc_on|^/**!",
-            },
-            "format": {
-              "asciiOnly": true,
-              "comments": false,
-            },
-            "include": undefined,
-            "mangle": true,
-            "module": undefined,
-            "test": undefined,
-          },
+          ],
           "affectedHooks": "compilation",
           "name": "SwcJsMinimizerRspackPlugin",
         },
         LightningCssMinimizerRspackPlugin {
-          "_options": {
-            "browserslist": [
-              "defaults",
-            ],
-            "errorRecovery": false,
-            "removeUnusedLocalIdents": true,
-            "unusedSymbols": [],
-          },
+          "_args": [
+            {
+              "minimizerOptions": {
+                "exclude": {
+                  "clampFunction": false,
+                  "color": false,
+                  "colorFunction": false,
+                  "customMediaQueries": false,
+                  "dirSelector": false,
+                  "doublePositionGradients": false,
+                  "fontFamilySystemUi": false,
+                  "hexAlphaColors": false,
+                  "isSelector": false,
+                  "labColors": false,
+                  "langSelectorList": false,
+                  "logicalProperties": false,
+                  "mediaIntervalSyntax": false,
+                  "mediaQueries": false,
+                  "mediaRangeSyntax": false,
+                  "nesting": false,
+                  "notSelectorList": false,
+                  "oklabColors": false,
+                  "p3Colors": false,
+                  "selectors": false,
+                  "spaceSeparatedColorNotation": false,
+                  "textDecorationThicknessPercent": false,
+                  "vendorPrefixes": false,
+                },
+                "targets": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
+                ],
+              },
+            },
+          ],
           "affectedHooks": undefined,
           "name": "LightningCssMinimizerRspackPlugin",
         },
@@ -338,35 +376,57 @@ describe('plugin-minimize', () => {
       `
       [
         SwcJsMinimizerRspackPlugin {
-          "_options": {
-            "compress": {
-              "passes": 1,
+          "_args": [
+            {
+              "extractComments": true,
+              "minimizerOptions": {
+                "format": {
+                  "asciiOnly": false,
+                },
+              },
             },
-            "exclude": undefined,
-            "extractComments": {
-              "condition": "@preserve|@lic|@cc_on|^/**!",
-            },
-            "format": {
-              "asciiOnly": false,
-              "comments": false,
-            },
-            "include": undefined,
-            "mangle": true,
-            "module": undefined,
-            "test": undefined,
-          },
+          ],
           "affectedHooks": "compilation",
           "name": "SwcJsMinimizerRspackPlugin",
         },
         LightningCssMinimizerRspackPlugin {
-          "_options": {
-            "browserslist": [
-              "defaults",
-            ],
-            "errorRecovery": false,
-            "removeUnusedLocalIdents": true,
-            "unusedSymbols": [],
-          },
+          "_args": [
+            {
+              "minimizerOptions": {
+                "exclude": {
+                  "clampFunction": false,
+                  "color": false,
+                  "colorFunction": false,
+                  "customMediaQueries": false,
+                  "dirSelector": false,
+                  "doublePositionGradients": false,
+                  "fontFamilySystemUi": false,
+                  "hexAlphaColors": false,
+                  "isSelector": false,
+                  "labColors": false,
+                  "langSelectorList": false,
+                  "logicalProperties": false,
+                  "mediaIntervalSyntax": false,
+                  "mediaQueries": false,
+                  "mediaRangeSyntax": false,
+                  "nesting": false,
+                  "notSelectorList": false,
+                  "oklabColors": false,
+                  "p3Colors": false,
+                  "selectors": false,
+                  "spaceSeparatedColorNotation": false,
+                  "textDecorationThicknessPercent": false,
+                  "vendorPrefixes": false,
+                },
+                "targets": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
+                ],
+              },
+            },
+          ],
           "affectedHooks": undefined,
           "name": "LightningCssMinimizerRspackPlugin",
         },

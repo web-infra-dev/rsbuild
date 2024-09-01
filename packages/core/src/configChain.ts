@@ -1,17 +1,12 @@
-import {
-  type CreateAsyncHook,
-  type ModifyBundlerChainFn,
-  type ModifyBundlerChainUtils,
-  type RsbuildContext,
-  type RsbuildEntry,
-  type Rspack,
-  RspackChain,
-  type RspackConfig,
-  castArray,
-} from '@rsbuild/shared';
-import { isPlainObject } from './helpers';
+import RspackChain from 'rspack-chain';
+import { castArray, isPlainObject } from './helpers';
 import { logger } from './logger';
-import type { RsbuildConfig } from './types';
+import type {
+  InternalContext,
+  ModifyBundlerChainUtils,
+  RsbuildEntry,
+  Rspack,
+} from './types';
 
 export function getBundlerChain(): RspackChain {
   const bundlerChain = new RspackChain();
@@ -20,25 +15,21 @@ export function getBundlerChain(): RspackChain {
 }
 
 export async function modifyBundlerChain(
-  context: RsbuildContext & {
-    hooks: {
-      modifyBundlerChain: CreateAsyncHook<ModifyBundlerChainFn>;
-    };
-    config: Readonly<RsbuildConfig>;
-  },
+  context: InternalContext,
   utils: ModifyBundlerChainUtils,
 ): Promise<RspackChain> {
   logger.debug('modify bundler chain');
 
   const bundlerChain = getBundlerChain();
 
-  const [modifiedBundlerChain] = await context.hooks.modifyBundlerChain.call(
-    bundlerChain,
-    utils,
-  );
+  const [modifiedBundlerChain] =
+    await context.hooks.modifyBundlerChain.callInEnvironment({
+      environment: utils.environment.name,
+      args: [bundlerChain, utils],
+    });
 
-  if (context.config.tools?.bundlerChain) {
-    for (const item of castArray(context.config.tools.bundlerChain)) {
+  if (utils.environment.config.tools?.bundlerChain) {
+    for (const item of castArray(utils.environment.config.tools.bundlerChain)) {
       await item(modifiedBundlerChain, utils);
     }
   }
@@ -48,12 +39,12 @@ export async function modifyBundlerChain(
   return modifiedBundlerChain;
 }
 
-export function chainToConfig(chain: RspackChain): RspackConfig {
+export function chainToConfig(chain: RspackChain): Rspack.Configuration {
   const config = chain.toConfig();
   const { entry } = config;
 
   if (!isPlainObject(entry)) {
-    return config as RspackConfig;
+    return config as Rspack.Configuration;
   }
 
   const formattedEntry: RsbuildEntry = {};
@@ -94,5 +85,153 @@ export function chainToConfig(chain: RspackChain): RspackConfig {
 
   config.entry = formattedEntry;
 
-  return config as RspackConfig;
+  return config as Rspack.Configuration;
 }
+
+export const CHAIN_ID = {
+  /** Predefined rules */
+  RULE: {
+    /** Rule for .mjs */
+    MJS: 'mjs',
+    /** Rule for fonts */
+    FONT: 'font',
+    /** Rule for images */
+    IMAGE: 'image',
+    /** Rule for media */
+    MEDIA: 'media',
+    /** Rule for js */
+    JS: 'js',
+    /** Rule for data uri encoded javascript */
+    JS_DATA_URI: 'js-data-uri',
+    /** Rule for ts */
+    TS: 'ts',
+    /** Rule for css */
+    CSS: 'css',
+    /** Rule for less */
+    LESS: 'less',
+    /** Rule for sass */
+    SASS: 'sass',
+    /** Rule for stylus */
+    STYLUS: 'stylus',
+    /** Rule for svg */
+    SVG: 'svg',
+    /** Rule for pug */
+    PUG: 'pug',
+    /** Rule for Vue */
+    VUE: 'vue',
+    // TODO: remove
+    /** Rule for yaml */
+    YAML: 'yaml',
+    /** Rule for wasm */
+    WASM: 'wasm',
+    /** Rule for svelte */
+    SVELTE: 'svelte',
+  },
+  /** Predefined rule groups */
+  ONE_OF: {
+    SVG: 'svg',
+    SVG_URL: 'svg-asset-url',
+    SVG_ASSET: 'svg-asset',
+    SVG_REACT: 'svg-react',
+    SVG_INLINE: 'svg-asset-inline',
+  },
+  /** Predefined loaders */
+  USE: {
+    /** ts-loader */
+    TS: 'ts',
+    /** css-loader */
+    CSS: 'css',
+    /** sass-loader */
+    SASS: 'sass',
+    /** less-loader */
+    LESS: 'less',
+    /** stylus-loader */
+    STYLUS: 'stylus',
+    /** url-loader */
+    URL: 'url',
+    /** pug-loader */
+    PUG: 'pug',
+    /** vue-loader */
+    VUE: 'vue',
+    /** swc-loader */
+    SWC: 'swc',
+    /** svgr */
+    SVGR: 'svgr',
+    // TODO: remove
+    /** yaml-loader */
+    YAML: 'yaml',
+    /** babel-loader */
+    BABEL: 'babel',
+    /** style-loader */
+    STYLE: 'style-loader',
+    /** svelte-loader */
+    SVELTE: 'svelte',
+    /** postcss-loader */
+    POSTCSS: 'postcss',
+    /** lightningcss-loader */
+    LIGHTNINGCSS: 'lightningcss',
+    /** ignore-css-loader */
+    IGNORE_CSS: 'ignore-css',
+    /** css-modules-typescript-loader */
+    CSS_MODULES_TS: 'css-modules-typescript',
+    /** CssExtractRspackPlugin.loader */
+    MINI_CSS_EXTRACT: 'mini-css-extract',
+    /** resolve-url-loader */
+    RESOLVE_URL: 'resolve-url-loader',
+  },
+  /** Predefined plugins */
+  PLUGIN: {
+    /** HotModuleReplacementPlugin */
+    HMR: 'hmr',
+    /** CopyRspackPlugin */
+    COPY: 'copy',
+    /** HtmlRspackPlugin */
+    HTML: 'html',
+    // TODO: remove
+    /** ESLintWebpackPlugin */
+    ESLINT: 'eslint',
+    /** DefinePlugin */
+    DEFINE: 'define',
+    /** ProgressPlugin */
+    PROGRESS: 'progress',
+    /** WebpackManifestPlugin */
+    MANIFEST: 'webpack-manifest',
+    /** ForkTsCheckerWebpackPlugin */
+    TS_CHECKER: 'ts-checker',
+    /** WebpackBundleAnalyzer */
+    BUNDLE_ANALYZER: 'bundle-analyze',
+    /** ModuleFederationPlugin */
+    MODULE_FEDERATION: 'module-federation',
+    /** htmlPrefetchPlugin */
+    HTML_PREFETCH: 'html-prefetch-plugin',
+    /** htmlPreloadPlugin */
+    HTML_PRELOAD: 'html-preload-plugin',
+    /** CssExtractRspackPlugin */
+    MINI_CSS_EXTRACT: 'mini-css-extract',
+    /** VueLoaderPlugin */
+    VUE_LOADER_PLUGIN: 'vue-loader-plugin',
+    /** ReactFastRefreshPlugin */
+    REACT_FAST_REFRESH: 'react-fast-refresh',
+    // TODO: remove
+    /** ProvidePlugin for node polyfill */
+    NODE_POLYFILL_PROVIDE: 'node-polyfill-provide',
+    /** WebpackSRIPlugin */
+    SUBRESOURCE_INTEGRITY: 'subresource-integrity',
+    /** AutoSetRootFontSizePlugin */
+    AUTO_SET_ROOT_SIZE: 'auto-set-root-size',
+  },
+  /** Predefined minimizers */
+  MINIMIZER: {
+    /** SwcJsMinimizerRspackPlugin */
+    JS: 'js',
+    /** LightningCssMinimizerRspackPlugin */
+    CSS: 'css',
+  },
+  /** Predefined resolve plugins */
+  RESOLVE_PLUGIN: {
+    /** TsConfigPathsPlugin */
+    TS_CONFIG_PATHS: 'ts-config-paths',
+  },
+} as const;
+
+export type ChainIdentifier = typeof CHAIN_ID;

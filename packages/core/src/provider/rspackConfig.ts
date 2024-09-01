@@ -1,35 +1,34 @@
-import {
-  CHAIN_ID,
-  type EnvironmentContext,
-  type ModifyChainUtils,
-  type ModifyRspackConfigUtils,
-  type RsbuildTarget,
-  type RspackConfig,
-  castArray,
-} from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
-import { chainToConfig, modifyBundlerChain } from '../configChain';
-import { getNodeEnv } from '../helpers';
+import { reduceConfigsAsyncWithContext } from 'reduce-configs';
+import { CHAIN_ID, chainToConfig, modifyBundlerChain } from '../configChain';
+import { castArray, getNodeEnv } from '../helpers';
 import { logger } from '../logger';
 import { getHTMLPlugin } from '../pluginHelper';
-import { reduceConfigsAsyncWithContext } from '../reduceConfigs';
-import type { InternalContext } from '../types';
+import type {
+  EnvironmentContext,
+  InternalContext,
+  ModifyChainUtils,
+  ModifyRspackConfigUtils,
+  RsbuildTarget,
+  Rspack,
+} from '../types';
 
 async function modifyRspackConfig(
   context: InternalContext,
-  rspackConfig: RspackConfig,
+  rspackConfig: Rspack.Configuration,
   utils: ModifyRspackConfigUtils,
 ) {
   logger.debug('modify Rspack config');
-  let [modifiedConfig] = await context.hooks.modifyRspackConfig.call(
-    rspackConfig,
-    utils,
-  );
+  let [modifiedConfig] =
+    await context.hooks.modifyRspackConfig.callInEnvironment({
+      environment: utils.environment.name,
+      args: [rspackConfig, utils],
+    });
 
-  if (context.config.tools?.rspack) {
+  if (utils.environment.config.tools?.rspack) {
     modifiedConfig = await reduceConfigsAsyncWithContext({
       initial: modifiedConfig,
-      config: context.config.tools.rspack,
+      config: utils.environment.config.tools.rspack,
       ctx: utils,
       mergeFn: utils.mergeConfig,
     });
@@ -39,11 +38,11 @@ async function modifyRspackConfig(
   return modifiedConfig;
 }
 
-async function getConfigUtils(
-  config: RspackConfig,
+export async function getConfigUtils(
+  config: Rspack.Configuration,
   chainUtils: ModifyChainUtils,
 ): Promise<ModifyRspackConfigUtils> {
-  const { merge } = await import('@rsbuild/shared/webpack-merge');
+  const { merge } = await import('webpack-merge');
 
   return {
     ...chainUtils,
@@ -80,11 +79,16 @@ async function getConfigUtils(
     },
 
     removePlugin(pluginName) {
-      if (config.plugins) {
-        config.plugins = config.plugins.filter(
-          (p) => p && p.name !== pluginName,
-        );
+      if (!config.plugins) {
+        return;
       }
+      config.plugins = config.plugins.filter((plugin) => {
+        if (!plugin) {
+          return true;
+        }
+        const name = plugin.name || plugin.constructor.name;
+        return name !== pluginName;
+      });
     },
   };
 }
@@ -99,8 +103,8 @@ export function getChainUtils(
     environment,
     env: nodeEnv,
     target,
-    isDev: nodeEnv === 'development',
-    isProd: nodeEnv === 'production',
+    isDev: environment.config.mode === 'development',
+    isProd: environment.config.mode === 'production',
     isServer: target === 'node',
     isWebWorker: target === 'web-worker',
     CHAIN_ID,
@@ -116,7 +120,7 @@ export async function generateRspackConfig({
   environment: string;
   target: RsbuildTarget;
   context: InternalContext;
-}): Promise<RspackConfig> {
+}): Promise<Rspack.Configuration> {
   const chainUtils = getChainUtils(target, context.environments[environment]);
   const {
     BannerPlugin,

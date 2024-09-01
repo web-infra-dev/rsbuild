@@ -1,4 +1,4 @@
-import { color } from '@rsbuild/shared';
+import color from 'picocolors';
 import { type Logger, logger } from 'rslog';
 
 export const isDebug = (): boolean => {

@@ -1,12 +1,10 @@
 import assert from 'node:assert';
-import fs from 'node:fs';
 import net from 'node:net';
 import { join } from 'node:path';
 import { URL } from 'node:url';
 import type {
   CreateRsbuildOptions,
   RsbuildConfig,
-  RsbuildPlugin,
   RsbuildPlugins,
 } from '@rsbuild/core';
 import { pluginSwc } from '@rsbuild/plugin-swc';
@@ -131,11 +129,24 @@ const updateConfigForTest = async (
   return mergeRsbuildConfig(baseConfig, loadedConfig, originalConfig);
 };
 
+const unwrapOutputJSON = async (distPath: string, ignoreMap = true) => {
+  return globContentJSON(distPath, {
+    absolute: true,
+    ignore: ignoreMap ? [join(distPath, '/**/*.map')] : [],
+  });
+};
+
 export async function dev({
   plugins,
+  page,
   ...options
 }: CreateRsbuildOptions & {
-  plugins?: RsbuildPlugin[];
+  plugins?: RsbuildPlugins;
+  /**
+   * Playwright Page instance.
+   * This method will automatically goto the page.
+   */
+  page?: Page;
 }) {
   process.env.NODE_ENV = 'development';
 
@@ -169,20 +180,35 @@ export async function dev({
 
   const result = await rsbuild.startDevServer();
 
+  if (page) {
+    await gotoPage(page, result);
+  }
+
   return {
     ...result,
     instance: rsbuild,
-    close: () => result.server.close(),
+    unwrapOutputJSON: (ignoreMap?: boolean) =>
+      unwrapOutputJSON(rsbuild.context.distPath, ignoreMap),
+    close: async () => result.server.close(),
   };
 }
 
 export async function build({
   plugins,
   runServer = false,
+  page,
   ...options
 }: CreateRsbuildOptions & {
   plugins?: RsbuildPlugins;
+  /**
+   * Whether to run the server.
+   */
   runServer?: boolean;
+  /**
+   * Playwright Page instance.
+   * This method will automatically run the server and goto the page.
+   */
+  page?: Page;
 }) {
   process.env.NODE_ENV = 'production';
 
@@ -197,25 +223,17 @@ export async function build({
 
   const { distPath } = rsbuild.context;
 
-  const {
-    port,
-    server: { close },
-  } = runServer
-    ? await rsbuild.preview()
-    : { port: 0, server: { close: noop } };
+  let port = 0;
+  let server = { close: noop };
 
-  const clean = async () =>
-    fs.promises.rm(distPath, { force: true, recursive: true });
-
-  const unwrapOutputJSON = async (ignoreMap = true) => {
-    return globContentJSON(distPath, {
-      absolute: true,
-      ignore: ignoreMap ? [join(distPath, '/**/*.map')] : [],
-    });
-  };
+  if (runServer || page) {
+    const ret = await rsbuild.preview();
+    port = ret.port;
+    server = ret.server;
+  }
 
   const getIndexFile = async () => {
-    const files = await unwrapOutputJSON();
+    const files = await unwrapOutputJSON(distPath);
     const [name, content] =
       Object.entries(files).find(
         ([file]) => file.includes('index') && file.endsWith('.js'),
@@ -229,14 +247,17 @@ export async function build({
     };
   };
 
+  if (page) {
+    await gotoPage(page, { port });
+  }
+
   return {
     distPath,
     port,
-    clean,
-    close,
-    unwrapOutputJSON,
+    close: server.close,
+    unwrapOutputJSON: (ignoreMap?: boolean) =>
+      unwrapOutputJSON(distPath, ignoreMap),
     getIndexFile,
-    providerType: process.env.PROVIDE_TYPE || 'rspack',
     instance: rsbuild,
   };
 }

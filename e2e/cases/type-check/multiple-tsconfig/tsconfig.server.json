@@ -4,6 +4,8 @@
     "jsx": "react-jsx",
     "baseUrl": "./",
     "outDir": "./dist",
+    // make type checker faster by not including types
+    "types": [],
     "paths": {
       "@/*": ["./src/*"]
     }

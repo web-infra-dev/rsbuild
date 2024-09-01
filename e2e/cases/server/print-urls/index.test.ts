@@ -218,7 +218,7 @@ test('allow only listen to localhost for prod preview', async ({ page }) => {
 
   const rsbuild = await build({
     cwd,
-    runServer: true,
+    page,
     rsbuildConfig: {
       server: {
         host: 'localhost',

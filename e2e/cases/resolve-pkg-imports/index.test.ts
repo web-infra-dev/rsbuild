@@ -1,4 +1,4 @@
-import { build, dev, gotoPage } from '@e2e/helper';
+import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should resolve package.json#imports correctly in dev build', async ({
@@ -6,9 +6,9 @@ test('should resolve package.json#imports correctly in dev build', async ({
 }) => {
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
   });
 
-  await gotoPage(page, rsbuild);
   const foo = page.locator('#foo');
   await expect(foo).toHaveText('foo');
   const test = page.locator('#test');
@@ -22,10 +22,8 @@ test('should resolve package.json#imports correctly in prod build', async ({
 }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    runServer: true,
+    page,
   });
-
-  await gotoPage(page, rsbuild);
 
   const foo = page.locator('#foo');
   await expect(foo).toHaveText('foo');

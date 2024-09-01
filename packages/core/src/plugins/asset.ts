@@ -1,5 +1,4 @@
 import path from 'node:path';
-import type { RspackChain } from '@rsbuild/shared';
 import type { GeneratorOptionsByModuleType } from '@rspack/core';
 import {
   AUDIO_EXTENSIONS,
@@ -8,7 +7,7 @@ import {
   VIDEO_EXTENSIONS,
 } from '../constants';
 import { getFilename } from '../helpers';
-import type { RsbuildPlugin } from '../types';
+import type { RsbuildPlugin, RspackChain } from '../types';
 
 const chainStaticAssetRule = ({
   emit,

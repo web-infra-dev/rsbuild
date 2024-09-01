@@ -1,11 +1,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { dev, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest('should work with string and path to file', async ({ page }) => {
   const file = path.join(__dirname, '/assets/example.txt');
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
     rsbuildConfig: {
       dev: {
         watchFiles: {
@@ -14,7 +15,6 @@ rspackOnlyTest('should work with string and path to file', async ({ page }) => {
       },
     },
   });
-  await gotoPage(page, rsbuild);
 
   await fs.promises.writeFile(file, 'test');
   // check the page is reloaded
@@ -33,6 +33,7 @@ rspackOnlyTest(
     const file = path.join(__dirname, '/assets/example.txt');
     const rsbuild = await dev({
       cwd: __dirname,
+      page,
       rsbuildConfig: {
         dev: {
           watchFiles: {
@@ -41,7 +42,6 @@ rspackOnlyTest(
         },
       },
     });
-    await gotoPage(page, rsbuild);
 
     await fs.promises.writeFile(file, 'test');
 
@@ -60,6 +60,7 @@ rspackOnlyTest('should work with string array directory', async ({ page }) => {
   const other = path.join(__dirname, '/other/other.txt');
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
     rsbuildConfig: {
       dev: {
         watchFiles: {
@@ -71,7 +72,6 @@ rspackOnlyTest('should work with string array directory', async ({ page }) => {
       },
     },
   });
-  await gotoPage(page, rsbuild);
 
   await fs.promises.writeFile(file, 'test');
   // check the page is reloaded
@@ -97,6 +97,7 @@ rspackOnlyTest('should work with string and glob', async ({ page }) => {
   const watchDir = path.join(__dirname, '/assets');
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
     rsbuildConfig: {
       dev: {
         watchFiles: {
@@ -105,7 +106,6 @@ rspackOnlyTest('should work with string and glob', async ({ page }) => {
       },
     },
   });
-  await gotoPage(page, rsbuild);
 
   await fs.promises.writeFile(file, 'test');
   // check the page is reloaded
@@ -122,6 +122,7 @@ rspackOnlyTest('should work with options', async ({ page }) => {
   const file = path.join(__dirname, '/assets/example.txt');
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
     rsbuildConfig: {
       dev: {
         watchFiles: {
@@ -133,7 +134,6 @@ rspackOnlyTest('should work with options', async ({ page }) => {
       },
     },
   });
-  await gotoPage(page, rsbuild);
 
   await fs.promises.writeFile(file, 'test');
   // check the page is reloaded

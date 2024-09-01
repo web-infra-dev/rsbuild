@@ -1,6 +1,6 @@
 import { writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { dev, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const getContent = (
@@ -20,9 +20,9 @@ rspackOnlyTest('should support tailwindcss HMR', async ({ page }) => {
 
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
   });
 
-  await gotoPage(page, rsbuild);
   await expect(page.locator('#root')).toHaveCSS('color', 'rgb(0, 0, 0)');
 
   writeFileSync(tempFile, getContent('text-white'));

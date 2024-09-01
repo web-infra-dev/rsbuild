@@ -11,7 +11,6 @@ test.describe('should combine multiple html config correctly', () => {
   test.beforeAll(async () => {
     rsbuild = await build({
       cwd: __dirname,
-      runServer: true,
       rsbuildConfig: {
         source: {
           entry: {
@@ -24,7 +23,9 @@ test.describe('should combine multiple html config correctly', () => {
             description: 'a description of the page',
           },
           inject: 'body',
-          appIcon: '../../../assets/icon.png',
+          appIcon: {
+            icons: [{ src: '../../../assets/icon.png', size: 180 }],
+          },
           favicon: '../../../assets/icon.png',
         },
       },
@@ -40,13 +41,11 @@ test.describe('should combine multiple html config correctly', () => {
     );
   });
 
-  test.afterAll(async () => {
-    await rsbuild.close();
-  });
-
   test('appicon', async () => {
     const [, iconRelativePath] =
-      /<link.*rel="apple-touch-icon".*href="(.*?)">/.exec(mainContent) || [];
+      /<link rel="apple-touch-icon" sizes="180x180" href="(.*?)">/.exec(
+        mainContent,
+      ) || [];
 
     expect(iconRelativePath).toBeDefined();
 

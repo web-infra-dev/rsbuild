@@ -4,14 +4,15 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
 {
   "entry": {
     "foo": [
-      "src/foo.ts",
+      "./src/foo.ts",
     ],
     "main": [
-      "src/main.ts",
+      "./src/main.ts",
     ],
   },
   "plugins": [
-    HtmlWebpackPlugin {
+    RsbuildCorePlugin {},
+    HtmlRspackPlugin {
       "options": {
         "base": false,
         "cache": true,
@@ -32,38 +33,18 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
-        "minify": false,
         "publicPath": "auto",
         "scriptLoading": "defer",
         "showErrors": true,
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateContent": false,
+        "template": "",
+        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
       },
-      "userOptions": {
-        "chunks": [
-          "main",
-        ],
-        "entryName": "main",
-        "filename": "main.html",
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "minify": false,
-        "scriptLoading": "defer",
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-      },
-      "version": 5,
+      "version": 6,
     },
-    HtmlWebpackPlugin {
+    HtmlRspackPlugin {
       "options": {
         "base": false,
         "cache": true,
@@ -84,41 +65,21 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
-        "minify": false,
         "publicPath": "auto",
         "scriptLoading": "defer",
         "showErrors": true,
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateContent": false,
+        "template": "",
+        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
       },
-      "userOptions": {
-        "chunks": [
-          "foo",
-        ],
-        "entryName": "foo",
-        "filename": "foo.html",
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "minify": false,
-        "scriptLoading": "defer",
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-      },
-      "version": 5,
+      "version": 6,
     },
-    HtmlBasicPlugin {
+    RsbuildHtmlPlugin {
       "getEnvironment": [Function],
       "modifyTagsFn": undefined,
-      "name": "HtmlBasicPlugin",
+      "name": "RsbuildHtmlPlugin",
       "options": {
         "foo": {
           "tagConfig": {
@@ -134,6 +95,7 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
               },
             ],
           },
+          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         },
         "main": {
           "tagConfig": {
@@ -149,6 +111,7 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
               },
             ],
           },
+          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         },
       },
     },
@@ -160,11 +123,12 @@ exports[`plugin-html > should allow to modify plugin options by tools.htmlPlugin
 {
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "plugins": [
-    HtmlWebpackPlugin {
+    RsbuildCorePlugin {},
+    HtmlRspackPlugin {
       "options": {
         "base": false,
         "cache": true,
@@ -177,27 +141,25 @@ exports[`plugin-html > should allow to modify plugin options by tools.htmlPlugin
         "hash": false,
         "inject": true,
         "meta": {},
-        "minify": "auto",
         "publicPath": "auto",
         "scriptLoading": "defer",
         "showErrors": true,
         "template": "auto",
         "templateContent": false,
         "templateParameters": [Function],
-        "title": "Webpack App",
+        "title": "Rspack App",
         "xhtml": false,
       },
-      "userOptions": {
-        "inject": true,
-      },
-      "version": 5,
+      "version": 6,
     },
-    HtmlBasicPlugin {
+    RsbuildHtmlPlugin {
       "getEnvironment": [Function],
       "modifyTagsFn": undefined,
-      "name": "HtmlBasicPlugin",
+      "name": "RsbuildHtmlPlugin",
       "options": {
-        "index": {},
+        "index": {
+          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+        },
       },
     },
   ],
@@ -208,11 +170,12 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
 {
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "plugins": [
-    HtmlWebpackPlugin {
+    RsbuildCorePlugin {},
+    HtmlRspackPlugin {
       "options": {
         "base": false,
         "cache": true,
@@ -223,7 +186,7 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
         "compile": true,
         "entryName": "index",
         "excludeChunks": [],
-        "favicon": "src/favicon.ico",
+        "favicon": false,
         "filename": "index.html",
         "hash": false,
         "inject": "head",
@@ -233,44 +196,26 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
-        "minify": false,
         "publicPath": "auto",
         "scriptLoading": "defer",
         "showErrors": true,
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateContent": false,
+        "template": "",
+        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
       },
-      "userOptions": {
-        "chunks": [
-          "index",
-        ],
-        "entryName": "index",
-        "favicon": "src/favicon.ico",
-        "filename": "index.html",
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "minify": false,
-        "scriptLoading": "defer",
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-      },
-      "version": 5,
+      "version": 6,
     },
-    HtmlBasicPlugin {
+    RsbuildHtmlPlugin {
       "getEnvironment": [Function],
       "modifyTagsFn": undefined,
-      "name": "HtmlBasicPlugin",
+      "name": "RsbuildHtmlPlugin",
       "options": {
-        "index": {},
+        "index": {
+          "favicon": "./src/favicon.ico",
+          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+        },
       },
     },
   ],
@@ -281,11 +226,12 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
 {
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "plugins": [
-    HtmlWebpackPlugin {
+    RsbuildCorePlugin {},
+    HtmlRspackPlugin {
       "options": {
         "base": false,
         "cache": true,
@@ -306,43 +252,25 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
-        "minify": false,
         "publicPath": "auto",
         "scriptLoading": "defer",
         "showErrors": true,
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateContent": false,
+        "template": "",
+        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
       },
-      "userOptions": {
-        "chunks": [
-          "index",
-        ],
-        "entryName": "index",
-        "filename": "index.html",
-        "inject": "body",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "minify": false,
-        "scriptLoading": "defer",
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-      },
-      "version": 5,
+      "version": 6,
     },
-    HtmlBasicPlugin {
+    RsbuildHtmlPlugin {
       "getEnvironment": [Function],
       "modifyTagsFn": undefined,
-      "name": "HtmlBasicPlugin",
+      "name": "RsbuildHtmlPlugin",
       "options": {
-        "index": {},
+        "index": {
+          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+        },
       },
     },
   ],
@@ -353,11 +281,12 @@ exports[`plugin-html > should enable minify in production 1`] = `
 {
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "plugins": [
-    HtmlWebpackPlugin {
+    RsbuildCorePlugin {},
+    HtmlRspackPlugin {
       "options": {
         "base": false,
         "cache": true,
@@ -378,81 +307,25 @@ exports[`plugin-html > should enable minify in production 1`] = `
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
-        "minify": {
-          "collapseWhitespace": true,
-          "keepClosingSlash": true,
-          "minifyCSS": true,
-          "minifyJS": {
-            "format": {
-              "ascii_only": true,
-            },
-            "mangle": {
-              "safari10": true,
-            },
-          },
-          "minifyURLs": true,
-          "removeComments": false,
-          "removeEmptyAttributes": true,
-          "removeRedundantAttributes": true,
-          "removeScriptTypeAttributes": true,
-          "removeStyleLinkTypeAttributes": true,
-          "useShortDoctype": true,
-        },
         "publicPath": "auto",
         "scriptLoading": "defer",
         "showErrors": true,
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateContent": false,
+        "template": "",
+        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
       },
-      "userOptions": {
-        "chunks": [
-          "index",
-        ],
-        "entryName": "index",
-        "filename": "index.html",
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "minify": {
-          "collapseWhitespace": true,
-          "keepClosingSlash": true,
-          "minifyCSS": true,
-          "minifyJS": {
-            "format": {
-              "ascii_only": true,
-            },
-            "mangle": {
-              "safari10": true,
-            },
-          },
-          "minifyURLs": true,
-          "removeComments": false,
-          "removeEmptyAttributes": true,
-          "removeRedundantAttributes": true,
-          "removeScriptTypeAttributes": true,
-          "removeStyleLinkTypeAttributes": true,
-          "useShortDoctype": true,
-        },
-        "scriptLoading": "defer",
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-      },
-      "version": 5,
+      "version": 6,
     },
-    HtmlBasicPlugin {
+    RsbuildHtmlPlugin {
       "getEnvironment": [Function],
       "modifyTagsFn": undefined,
-      "name": "HtmlBasicPlugin",
+      "name": "RsbuildHtmlPlugin",
       "options": {
-        "index": {},
+        "index": {
+          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+        },
       },
     },
   ],
@@ -463,11 +336,12 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
 {
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "plugins": [
-    HtmlWebpackPlugin {
+    RsbuildCorePlugin {},
+    HtmlRspackPlugin {
       "options": {
         "base": false,
         "cache": true,
@@ -488,43 +362,25 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
-        "minify": false,
         "publicPath": "auto",
         "scriptLoading": "defer",
         "showErrors": true,
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateContent": false,
+        "template": "",
+        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
       },
-      "userOptions": {
-        "chunks": [
-          "index",
-        ],
-        "entryName": "index",
-        "filename": "index.html",
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "minify": false,
-        "scriptLoading": "defer",
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-      },
-      "version": 5,
+      "version": 6,
     },
-    HtmlBasicPlugin {
+    RsbuildHtmlPlugin {
       "getEnvironment": [Function],
       "modifyTagsFn": undefined,
-      "name": "HtmlBasicPlugin",
+      "name": "RsbuildHtmlPlugin",
       "options": {
-        "index": {},
+        "index": {
+          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+        },
       },
     },
   ],
@@ -535,11 +391,12 @@ exports[`plugin-html > should stop injecting <script> if inject is '() => false'
 {
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "plugins": [
-    HtmlWebpackPlugin {
+    RsbuildCorePlugin {},
+    HtmlRspackPlugin {
       "options": {
         "base": false,
         "cache": true,
@@ -560,43 +417,25 @@ exports[`plugin-html > should stop injecting <script> if inject is '() => false'
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
-        "minify": false,
         "publicPath": "auto",
         "scriptLoading": "defer",
         "showErrors": true,
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateContent": false,
+        "template": "",
+        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
       },
-      "userOptions": {
-        "chunks": [
-          "index",
-        ],
-        "entryName": "index",
-        "filename": "index.html",
-        "inject": false,
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "minify": false,
-        "scriptLoading": "defer",
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-      },
-      "version": 5,
+      "version": 6,
     },
-    HtmlBasicPlugin {
+    RsbuildHtmlPlugin {
       "getEnvironment": [Function],
       "modifyTagsFn": undefined,
-      "name": "HtmlBasicPlugin",
+      "name": "RsbuildHtmlPlugin",
       "options": {
-        "index": {},
+        "index": {
+          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+        },
       },
     },
   ],
@@ -607,11 +446,12 @@ exports[`plugin-html > should stop injecting <script> if inject is 'false' 1`] =
 {
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "plugins": [
-    HtmlWebpackPlugin {
+    RsbuildCorePlugin {},
+    HtmlRspackPlugin {
       "options": {
         "base": false,
         "cache": true,
@@ -632,43 +472,25 @@ exports[`plugin-html > should stop injecting <script> if inject is 'false' 1`] =
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
-        "minify": false,
         "publicPath": "auto",
         "scriptLoading": "defer",
         "showErrors": true,
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateContent": false,
+        "template": "",
+        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
       },
-      "userOptions": {
-        "chunks": [
-          "index",
-        ],
-        "entryName": "index",
-        "filename": "index.html",
-        "inject": false,
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "minify": false,
-        "scriptLoading": "defer",
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-      },
-      "version": 5,
+      "version": 6,
     },
-    HtmlBasicPlugin {
+    RsbuildHtmlPlugin {
       "getEnvironment": [Function],
       "modifyTagsFn": undefined,
-      "name": "HtmlBasicPlugin",
+      "name": "RsbuildHtmlPlugin",
       "options": {
-        "index": {},
+        "index": {
+          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+        },
       },
     },
   ],
@@ -680,11 +502,12 @@ exports[`plugin-html > should support environment html config 1`] = `
   {
     "entry": {
       "main": [
-        "src/main.ts",
+        "./src/main.ts",
       ],
     },
     "plugins": [
-      HtmlWebpackPlugin {
+      RsbuildCorePlugin {},
+      HtmlRspackPlugin {
         "options": {
           "base": false,
           "cache": true,
@@ -705,43 +528,25 @@ exports[`plugin-html > should support environment html config 1`] = `
             },
             "viewport": "width=device-width, initial-scale=1.0",
           },
-          "minify": false,
           "publicPath": "auto",
           "scriptLoading": "defer",
           "showErrors": true,
-          "template": "<ROOT>/packages/core/static/template.html",
-          "templateContent": false,
+          "template": "",
+          "templateContent": "<!doctype html><html><head></head><body><div id=\\"app\\"></div></body></html>",
           "templateParameters": [Function],
           "title": "web",
           "xhtml": false,
         },
-        "userOptions": {
-          "chunks": [
-            "main",
-          ],
-          "entryName": "main",
-          "filename": "web/main.html",
-          "inject": "head",
-          "meta": {
-            "charset": {
-              "charset": "UTF-8",
-            },
-            "viewport": "width=device-width, initial-scale=1.0",
-          },
-          "minify": false,
-          "scriptLoading": "defer",
-          "template": "<ROOT>/packages/core/static/template.html",
-          "templateParameters": [Function],
-          "title": "web",
-        },
-        "version": 5,
+        "version": 6,
       },
-      HtmlBasicPlugin {
+      RsbuildHtmlPlugin {
         "getEnvironment": [Function],
         "modifyTagsFn": undefined,
-        "name": "HtmlBasicPlugin",
+        "name": "RsbuildHtmlPlugin",
         "options": {
-          "main": {},
+          "main": {
+            "templateContent": "<!doctype html><html><head></head><body><div id=\\"app\\"></div></body></html>",
+          },
         },
       },
     ],
@@ -749,11 +554,12 @@ exports[`plugin-html > should support environment html config 1`] = `
   {
     "entry": {
       "index": [
-        "src/main1.ts",
+        "./src/main1.ts",
       ],
     },
     "plugins": [
-      HtmlWebpackPlugin {
+      RsbuildCorePlugin {},
+      HtmlRspackPlugin {
         "options": {
           "base": false,
           "cache": true,
@@ -774,43 +580,25 @@ exports[`plugin-html > should support environment html config 1`] = `
             },
             "viewport": "width=device-width, initial-scale=1.0",
           },
-          "minify": false,
           "publicPath": "auto",
           "scriptLoading": "defer",
           "showErrors": true,
-          "template": "<ROOT>/packages/core/static/template.html",
-          "templateContent": false,
+          "template": "",
+          "templateContent": "<!doctype html><html><head></head><body><div id=\\"app1\\"></div></body></html>",
           "templateParameters": [Function],
           "title": "web1",
           "xhtml": false,
         },
-        "userOptions": {
-          "chunks": [
-            "index",
-          ],
-          "entryName": "index",
-          "filename": "index.html",
-          "inject": "head",
-          "meta": {
-            "charset": {
-              "charset": "UTF-8",
-            },
-            "viewport": "width=device-width, initial-scale=1.0",
-          },
-          "minify": false,
-          "scriptLoading": "defer",
-          "template": "<ROOT>/packages/core/static/template.html",
-          "templateParameters": [Function],
-          "title": "web1",
-        },
-        "version": 5,
+        "version": 6,
       },
-      HtmlBasicPlugin {
+      RsbuildHtmlPlugin {
         "getEnvironment": [Function],
         "modifyTagsFn": undefined,
-        "name": "HtmlBasicPlugin",
+        "name": "RsbuildHtmlPlugin",
         "options": {
-          "index": {},
+          "index": {
+            "templateContent": "<!doctype html><html><head></head><body><div id=\\"app1\\"></div></body></html>",
+          },
         },
       },
     ],
@@ -822,14 +610,15 @@ exports[`plugin-html > should support multi entry 1`] = `
 {
   "entry": {
     "foo": [
-      "src/foo.ts",
+      "./src/foo.ts",
     ],
     "main": [
-      "src/main.ts",
+      "./src/main.ts",
     ],
   },
   "plugins": [
-    HtmlWebpackPlugin {
+    RsbuildCorePlugin {},
+    HtmlRspackPlugin {
       "options": {
         "base": false,
         "cache": true,
@@ -850,38 +639,18 @@ exports[`plugin-html > should support multi entry 1`] = `
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
-        "minify": false,
         "publicPath": "auto",
         "scriptLoading": "defer",
         "showErrors": true,
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateContent": false,
+        "template": "",
+        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
       },
-      "userOptions": {
-        "chunks": [
-          "main",
-        ],
-        "entryName": "main",
-        "filename": "main.html",
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "minify": false,
-        "scriptLoading": "defer",
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-      },
-      "version": 5,
+      "version": 6,
     },
-    HtmlWebpackPlugin {
+    HtmlRspackPlugin {
       "options": {
         "base": false,
         "cache": true,
@@ -902,44 +671,28 @@ exports[`plugin-html > should support multi entry 1`] = `
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
-        "minify": false,
         "publicPath": "auto",
         "scriptLoading": "defer",
         "showErrors": true,
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateContent": false,
+        "template": "",
+        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
       },
-      "userOptions": {
-        "chunks": [
-          "foo",
-        ],
-        "entryName": "foo",
-        "filename": "foo.html",
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "minify": false,
-        "scriptLoading": "defer",
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-      },
-      "version": 5,
+      "version": 6,
     },
-    HtmlBasicPlugin {
+    RsbuildHtmlPlugin {
       "getEnvironment": [Function],
       "modifyTagsFn": undefined,
-      "name": "HtmlBasicPlugin",
+      "name": "RsbuildHtmlPlugin",
       "options": {
-        "foo": {},
-        "main": {},
+        "foo": {
+          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+        },
+        "main": {
+          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+        },
       },
     },
   ],

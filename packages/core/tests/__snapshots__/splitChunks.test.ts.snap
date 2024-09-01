@@ -9,13 +9,16 @@ exports[`plugin-split-chunks > should allow forceSplitting to be an object 1`] =
           "chunks": "all",
           "enforce": true,
           "name": "axios",
+          "priority": 0,
           "test": /axios/,
         },
       },
       "chunks": "all",
-      "enforceSizeThreshold": 50000,
     },
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;
 
@@ -24,6 +27,9 @@ exports[`plugin-split-chunks > should not split chunks when target is node 1`] =
   "optimization": {
     "splitChunks": false,
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;
 
@@ -32,6 +38,9 @@ exports[`plugin-split-chunks > should set all-in-one config 1`] = `
   "optimization": {
     "splitChunks": false,
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;
 
@@ -44,13 +53,16 @@ exports[`plugin-split-chunks > should set custom config 1`] = `
           "chunks": "all",
           "enforce": true,
           "name": "force-split-0",
+          "priority": 0,
           "test": /react/,
         },
       },
       "chunks": "all",
-      "enforceSizeThreshold": 50000,
     },
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;
 
@@ -60,11 +72,13 @@ exports[`plugin-split-chunks > should set single-size config 1`] = `
     "splitChunks": {
       "cacheGroups": {},
       "chunks": "all",
-      "enforceSizeThreshold": 50000,
       "maxSize": 5000,
       "minSize": 1000,
     },
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;
 
@@ -78,14 +92,15 @@ exports[`plugin-split-chunks > should set single-vendor config 1`] = `
           "enforce": true,
           "name": "vendor",
           "priority": 0,
-          "reuseExistingChunk": true,
           "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
         },
       },
       "chunks": "all",
-      "enforceSizeThreshold": 50000,
     },
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;
 
@@ -97,26 +112,25 @@ exports[`plugin-split-chunks > should set split-by-experience config 1`] = `
         "lib-axios": {
           "name": "lib-axios",
           "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(axios\\|axios-\\.\\+\\)\\[\\\\\\\\/\\]/,
+          "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
         },
         "lib-lodash": {
           "name": "lib-lodash",
           "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(lodash\\|lodash-es\\)\\[\\\\\\\\/\\]/,
+          "test": /node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
         },
         "lib-polyfill": {
           "name": "lib-polyfill",
           "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
+          "test": /node_modules\\[\\\\\\\\/\\]\\(\\?:tslib\\|core-js\\|@swc\\[\\\\\\\\/\\]helpers\\)\\[\\\\\\\\/\\]/,
         },
       },
       "chunks": "all",
-      "enforceSizeThreshold": 50000,
     },
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;
 
@@ -128,20 +142,20 @@ exports[`plugin-split-chunks > should set split-by-experience config correctly w
         "lib-axios": {
           "name": "lib-axios",
           "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(axios\\|axios-\\.\\+\\)\\[\\\\\\\\/\\]/,
+          "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
         },
         "lib-lodash": {
           "name": "lib-lodash",
           "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(lodash\\|lodash-es\\)\\[\\\\\\\\/\\]/,
+          "test": /node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
         },
       },
       "chunks": "all",
-      "enforceSizeThreshold": 50000,
     },
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;
 
@@ -157,10 +171,12 @@ exports[`plugin-split-chunks > should set split-by-module config 1`] = `
         },
       },
       "chunks": "all",
-      "enforceSizeThreshold": 50000,
       "maxInitialRequests": Infinity,
       "minSize": 0,
     },
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;

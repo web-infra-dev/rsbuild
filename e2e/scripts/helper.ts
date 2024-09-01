@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { platform } from 'node:os';
 import { join } from 'node:path';
 import { test } from '@playwright/test';
-import { type ConsoleType, castArray } from '@rsbuild/shared';
+import type { ConsoleType } from '@rsbuild/core';
 import glob, {
   convertPathToPattern,
   type Options as GlobOptions,
@@ -81,7 +81,7 @@ export const proxyConsole = (
   const logs: string[] = [];
   const restores: Array<() => void> = [];
 
-  for (const type of castArray(types)) {
+  for (const type of Array.isArray(types) ? types : [types]) {
     const method = console[type];
 
     restores.push(() => {
@@ -102,3 +102,6 @@ export const proxyConsole = (
     },
   };
 };
+
+// Windows and macOS use different new lines
+export const normalizeNewlines = (str: string) => str.replace(/\r\n/g, '\n');

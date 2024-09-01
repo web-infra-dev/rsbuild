@@ -1,22 +1,8 @@
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
-import { RspackChain, color } from '@rsbuild/shared';
-import type {
-  InspectConfigOptions,
-  NormalizedConfig,
-  NormalizedDevConfig,
-  NormalizedHtmlConfig,
-  NormalizedOutputConfig,
-  NormalizedPerformanceConfig,
-  NormalizedSecurityConfig,
-  NormalizedServerConfig,
-  NormalizedSourceConfig,
-  NormalizedToolsConfig,
-  PublicDir,
-  PublicDirOptions,
-  RsbuildConfig,
-  RsbuildEntry,
-} from '@rsbuild/shared';
+import type { WatchOptions } from 'chokidar';
+import color from 'picocolors';
+import RspackChain from 'rspack-chain';
 import {
   CSS_DIST_DIR,
   DEFAULT_ASSET_PREFIX,
@@ -28,7 +14,6 @@ import {
   HMR_SOCKET_PATH,
   HTML_DIST_DIR,
   IMAGE_DIST_DIR,
-  JS_DIST_DIR,
   MEDIA_DIST_DIR,
   ROOT_DIST_DIR,
   SVG_DIST_DIR,
@@ -46,6 +31,26 @@ import {
 import { logger } from './logger';
 import { mergeRsbuildConfig } from './mergeConfig';
 import { restartDevServer } from './server/restart';
+import type {
+  InspectConfigOptions,
+  InspectConfigResult,
+  NormalizedConfig,
+  NormalizedDevConfig,
+  NormalizedEnvironmentConfig,
+  NormalizedHtmlConfig,
+  NormalizedOutputConfig,
+  NormalizedPerformanceConfig,
+  NormalizedSecurityConfig,
+  NormalizedServerConfig,
+  NormalizedSourceConfig,
+  NormalizedToolsConfig,
+  PluginManager,
+  PublicDir,
+  PublicDirOptions,
+  RsbuildConfig,
+  RsbuildEntry,
+  RsbuildMode,
+} from './types';
 
 const getDefaultDevConfig = (): NormalizedDevConfig => ({
   hmr: true,
@@ -124,9 +129,9 @@ const getDefaultPerformanceConfig = (): NormalizedPerformanceConfig => ({
 
 const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
   target: 'web',
+  cleanDistPath: 'auto',
   distPath: {
     root: ROOT_DIST_DIR,
-    js: JS_DIST_DIR,
     css: CSS_DIST_DIR,
     svg: SVG_DIST_DIR,
     font: FONT_DIST_DIR,
@@ -137,8 +142,8 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
   },
   assetPrefix: DEFAULT_ASSET_PREFIX,
   filename: {},
-  charset: 'ascii',
-  polyfill: 'usage',
+  charset: 'utf8',
+  polyfill: 'off',
   dataUriLimit: {
     svg: DEFAULT_DATA_URL_SIZE,
     font: DEFAULT_DATA_URL_SIZE,
@@ -206,6 +211,7 @@ export const withDefaultConfig = async (
 ): Promise<RsbuildConfig> => {
   const merged = mergeRsbuildConfig(createDefaultConfig(), config);
 
+  merged.root ||= rootPath;
   merged.source ||= {};
 
   if (!merged.source.tsconfigPath) {
@@ -224,11 +230,25 @@ export const withDefaultConfig = async (
  * 2. Object value that should not be empty.
  * 3. Meaningful and can be filled by constant value.
  */
-export const normalizeConfig = (config: RsbuildConfig): NormalizedConfig =>
-  mergeRsbuildConfig(
-    createDefaultConfig(),
+export const normalizeConfig = (config: RsbuildConfig): NormalizedConfig => {
+  const getMode = (): RsbuildMode => {
+    if (config.mode) {
+      return config.mode;
+    }
+    const nodeEnv = getNodeEnv();
+    return nodeEnv === 'production' || nodeEnv === 'development'
+      ? nodeEnv
+      : 'none';
+  };
+
+  return mergeRsbuildConfig(
+    {
+      ...createDefaultConfig(),
+      mode: getMode(),
+    },
     config,
   ) as unknown as NormalizedConfig;
+};
 
 export type ConfigParams = {
   env: string;
@@ -273,9 +293,11 @@ const resolveConfigPath = (root: string, customConfig?: string) => {
   }
 
   const CONFIG_FILES = [
+    // `.mjs` and `.ts` are the most used configuration types,
+    // so we resolve them first for performance
+    'rsbuild.config.mjs',
     'rsbuild.config.ts',
     'rsbuild.config.js',
-    'rsbuild.config.mjs',
     'rsbuild.config.cjs',
     'rsbuild.config.mts',
     'rsbuild.config.cts',
@@ -292,17 +314,21 @@ const resolveConfigPath = (root: string, customConfig?: string) => {
   return null;
 };
 
-export async function watchFiles(files: string[]): Promise<void> {
+export async function watchFiles(
+  files: string[],
+  watchOptions?: WatchOptions,
+): Promise<void> {
   if (!files.length) {
     return;
   }
 
-  const chokidar = await import('@rsbuild/shared/chokidar');
+  const chokidar = await import('chokidar');
   const watcher = chokidar.watch(files, {
     // do not trigger add for initial files
     ignoreInitial: true,
     // If watching fails due to read permissions, the errors will be suppressed silently.
     ignorePermissionErrors: true,
+    ...watchOptions,
   });
 
   const callback = debounce(
@@ -342,65 +368,150 @@ export async function loadConfig({
     return config;
   };
 
-  try {
-    const { default: jiti } = await import('jiti');
-    const loadConfig = jiti(__filename, {
-      esmResolve: true,
-      // disable require cache to support restart CLI and read the new config
-      requireCache: false,
-      interopDefault: true,
-    });
+  let configExport: RsbuildConfigExport;
 
-    const configExport = loadConfig(configFilePath) as RsbuildConfigExport;
-
-    if (typeof configExport === 'function') {
-      const command = process.argv[2];
-      const params: ConfigParams = {
-        env: getNodeEnv(),
-        command,
-        envMode: envMode || getNodeEnv(),
-      };
-
-      const result = await configExport(params);
-
-      if (result === undefined) {
-        throw new Error('The config function must return a config object.');
-      }
-
-      return {
-        content: applyMetaInfo(result),
-        filePath: configFilePath,
-      };
-    }
-
-    if (!isObject(configExport)) {
-      throw new Error(
-        `The config must be an object or a function that returns an object, get ${color.yellow(
-          configExport,
-        )}`,
+  if (/\.(?:js|mjs|cjs)$/.test(configFilePath)) {
+    try {
+      const exportModule = await import(`${configFilePath}?t=${Date.now()}`);
+      configExport = exportModule.default ? exportModule.default : exportModule;
+    } catch (err) {
+      logger.debug(
+        `Failed to load file with dynamic import: ${color.dim(configFilePath)}`,
       );
+    }
+  }
+
+  try {
+    if (configExport! === undefined) {
+      const { default: jiti } = await import('jiti');
+      const loadConfig = jiti(__filename, {
+        esmResolve: true,
+        // disable require cache to support restart CLI and read the new config
+        requireCache: false,
+        interopDefault: true,
+      });
+
+      configExport = loadConfig(configFilePath) as RsbuildConfigExport;
+    }
+  } catch (err) {
+    logger.error(`Failed to load file with jiti: ${color.dim(configFilePath)}`);
+    throw err;
+  }
+
+  if (typeof configExport === 'function') {
+    const command = process.argv[2];
+    const nodeEnv = getNodeEnv();
+    const params: ConfigParams = {
+      env: nodeEnv,
+      command,
+      envMode: envMode || nodeEnv,
+    };
+
+    const result = await configExport(params);
+
+    if (result === undefined) {
+      throw new Error('The config function must return a config object.');
     }
 
     return {
-      content: applyMetaInfo(configExport),
+      content: applyMetaInfo(result),
       filePath: configFilePath,
     };
-  } catch (err) {
-    logger.error(`Failed to load file: ${color.dim(configFilePath)}`);
-    throw err;
   }
+
+  if (!isObject(configExport)) {
+    throw new Error(
+      `The config must be an object or a function that returns an object, get ${color.yellow(
+        configExport,
+      )}`,
+    );
+  }
+
+  return {
+    content: applyMetaInfo(configExport),
+    filePath: configFilePath,
+  };
 }
 
+export const getRsbuildInspectConfig = ({
+  normalizedConfig,
+  inspectOptions,
+  pluginManager,
+}: {
+  normalizedConfig: NormalizedConfig;
+  inspectOptions: InspectConfigOptions;
+  pluginManager: PluginManager;
+}): {
+  rawRsbuildConfig: string;
+  rsbuildConfig: InspectConfigResult['origin']['rsbuildConfig'];
+  rawEnvironmentConfigs: Array<{
+    name: string;
+    content: string;
+  }>;
+  environmentConfigs: InspectConfigResult['origin']['environmentConfigs'];
+} => {
+  const { environments, ...rsbuildConfig } = normalizedConfig;
+
+  const pluginNames = pluginManager.getPlugins().map((p) => p.name);
+
+  const rsbuildDebugConfig: Omit<NormalizedConfig, 'environments'> & {
+    pluginNames: string[];
+  } = {
+    ...rsbuildConfig,
+    pluginNames,
+  };
+
+  const rawRsbuildConfig = stringifyConfig(
+    rsbuildDebugConfig,
+    inspectOptions.verbose,
+  );
+
+  const environmentConfigs: Record<
+    string,
+    NormalizedEnvironmentConfig & {
+      pluginNames: string[];
+    }
+  > = {};
+
+  const rawEnvironmentConfigs: Array<{
+    name: string;
+    content: string;
+  }> = [];
+
+  for (const [name, config] of Object.entries(environments)) {
+    const debugConfig = {
+      ...config,
+      pluginNames: pluginManager
+        .getPlugins({ environment: name })
+        .map((p) => p.name),
+    };
+    rawEnvironmentConfigs.push({
+      name,
+      content: stringifyConfig(debugConfig, inspectOptions.verbose),
+    });
+    environmentConfigs[name] = debugConfig;
+  }
+
+  return {
+    rsbuildConfig: rsbuildDebugConfig,
+    rawRsbuildConfig,
+    environmentConfigs,
+    rawEnvironmentConfigs,
+  };
+};
+
 export async function outputInspectConfigFiles({
-  rawRsbuildConfig,
-  bundlerConfigs,
+  rawBundlerConfigs,
+  rawEnvironmentConfigs,
   inspectOptions,
   configType,
 }: {
   configType: string;
-  rsbuildConfig: NormalizedConfig;
-  rawRsbuildConfig: string;
-  bundlerConfigs: Array<{
+  rawEnvironmentConfigs: Array<{
+    name: string;
+    content: string;
+  }>;
+  rawBundlerConfigs: Array<{
     name: string;
     content: string;
   }>;
@@ -411,12 +522,27 @@ export async function outputInspectConfigFiles({
   const { outputPath } = inspectOptions;
 
   const files = [
-    {
-      path: join(outputPath, 'rsbuild.config.mjs'),
-      label: 'Rsbuild Config',
-      content: rawRsbuildConfig,
-    },
-    ...bundlerConfigs.map(({ name, content }) => {
+    ...rawEnvironmentConfigs.map(({ name, content }) => {
+      if (rawEnvironmentConfigs.length === 1) {
+        const outputFile = 'rsbuild.config.mjs';
+        const outputFilePath = join(outputPath, outputFile);
+
+        return {
+          path: outputFilePath,
+          label: 'Rsbuild Config',
+          content,
+        };
+      }
+      const outputFile = `rsbuild.config.${name}.mjs`;
+      const outputFilePath = join(outputPath, outputFile);
+
+      return {
+        path: outputFilePath,
+        label: `Rsbuild Config (${name})`,
+        content,
+      };
+    }),
+    ...rawBundlerConfigs.map(({ name, content }) => {
       const outputFile = `${configType}.config.${name}.mjs`;
       let outputFilePath = join(outputPath, outputFile);
 
@@ -462,7 +588,7 @@ export function stringifyConfig(config: unknown, verbose?: boolean): string {
     options: { verbose?: boolean },
   ) => string;
 
-  return stringify(config as any, { verbose });
+  return stringify(config, { verbose });
 }
 
 export const normalizePublicDirs = (

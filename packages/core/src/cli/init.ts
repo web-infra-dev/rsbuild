@@ -1,5 +1,6 @@
+import path from 'node:path';
 import { loadConfig, watchFiles } from '../config';
-import { isDev } from '../helpers';
+import { castArray, getAbsolutePath } from '../helpers';
 import { loadEnv } from '../loadEnv';
 import { logger } from '../logger';
 import { onBeforeRestartServer } from '../server/restart';
@@ -7,6 +8,13 @@ import type { RsbuildInstance } from '../types';
 import type { CommonOptions } from './commands';
 
 let commonOpts: CommonOptions = {};
+
+const getEnvDir = (cwd: string, envDir?: string) => {
+  if (envDir) {
+    return path.isAbsolute(envDir) ? envDir : path.resolve(cwd, envDir);
+  }
+  return cwd;
+};
 
 export async function init({
   cliOptions,
@@ -20,15 +28,14 @@ export async function init({
   }
 
   try {
-    const root = process.cwd();
+    const cwd = process.cwd();
+    const root = commonOpts.root ? getAbsolutePath(cwd, commonOpts.root) : cwd;
     const envs = loadEnv({
-      cwd: root,
-      mode: cliOptions?.envMode,
+      cwd: getEnvDir(root, commonOpts.envDir),
+      mode: commonOpts.envMode,
     });
 
-    if (isDev()) {
-      onBeforeRestartServer(envs.cleanup);
-    }
+    onBeforeRestartServer(envs.cleanup);
 
     const { content: config, filePath: configFilePath } = await loadConfig({
       cwd: root,
@@ -39,11 +46,18 @@ export async function init({
     const command = process.argv[2];
     if (command === 'dev') {
       const files = [...envs.filePaths];
+
       if (configFilePath) {
         files.push(configFilePath);
       }
 
-      watchFiles(files);
+      const { watchFiles: watchFilesConfig } = config.dev || {};
+      if (watchFilesConfig?.type === 'reload-server') {
+        files.push(...castArray(watchFilesConfig.paths));
+        watchFiles(files, watchFilesConfig.options);
+      } else {
+        watchFiles(files);
+      }
     }
 
     const { createRsbuild } = await import('../createRsbuild');
@@ -53,6 +67,14 @@ export async function init({
       ...envs.publicVars,
       ...config.source.define,
     };
+
+    if (commonOpts.root) {
+      config.root = root;
+    }
+
+    if (commonOpts.mode) {
+      config.mode = commonOpts.mode;
+    }
 
     if (commonOpts.open && !config.server?.open) {
       config.server ||= {};
@@ -72,6 +94,7 @@ export async function init({
     return createRsbuild({
       cwd: root,
       rsbuildConfig: config,
+      environment: commonOpts.environment,
     });
   } catch (err) {
     if (isRestart) {

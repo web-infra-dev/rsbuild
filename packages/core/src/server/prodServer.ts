@@ -1,21 +1,21 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
-import { join } from 'node:path';
+import type Connect from 'connect';
+import { pathnameParse } from '../helpers/path';
+import { logger } from '../logger';
 import type {
+  InternalContext,
+  NormalizedConfig,
   PreviewServerOptions,
   RequestHandler,
   ServerConfig,
-} from '@rsbuild/shared';
-import type Connect from 'connect';
-import { ROOT_DIST_DIR } from '../constants';
-import { getNodeEnv, setNodeEnv } from '../helpers';
-import { logger } from '../logger';
-import type { InternalContext, NormalizedConfig } from '../types';
+} from '../types';
 import {
   type StartServerResult,
   getAddressUrls,
   getRoutes,
   getServerConfig,
+  getServerTerminator,
   printServerURLs,
 } from './helper';
 import { createHttpServer } from './httpServer';
@@ -28,7 +28,7 @@ type RsbuildProdServerOptions = {
   pwd: string;
   output: {
     path: string;
-    assetPrefix?: string;
+    assetPrefixes: string[];
   };
   serverConfig: ServerConfig;
 };
@@ -60,13 +60,13 @@ export class RsbuildProdServer {
 
     // compression should be the first middleware
     if (compress) {
-      const { default: compression } = await import('http-compression');
-      this.middlewares.use((req, res, next) => {
-        compression({
-          gzip: true,
-          brotli: false,
-        })(req, res, next);
-      });
+      const { gzipMiddleware } = await import('./gzipMiddleware');
+      this.middlewares.use(
+        gzipMiddleware({
+          // simulates the common gzip compression rates
+          level: 6,
+        }),
+      );
     }
 
     if (headers) {
@@ -80,7 +80,7 @@ export class RsbuildProdServer {
 
     if (proxy) {
       const { createProxyMiddleware } = await import('./proxy');
-      const { middlewares, upgrade } = createProxyMiddleware(proxy);
+      const { middlewares, upgrade } = await createProxyMiddleware(proxy);
 
       for (const middleware of middlewares) {
         this.middlewares.use(middleware);
@@ -110,14 +110,13 @@ export class RsbuildProdServer {
 
   private async applyStaticAssetMiddleware() {
     const {
-      output: { path, assetPrefix },
+      output: { path, assetPrefixes },
       serverConfig: { htmlFallback },
-      pwd,
     } = this.options;
 
     const { default: sirv } = await import('sirv');
 
-    const assetMiddleware = sirv(join(pwd, path), {
+    const assetMiddleware = sirv(path, {
       etag: true,
       dev: true,
       ignores: ['favicon.ico'],
@@ -126,6 +125,8 @@ export class RsbuildProdServer {
 
     this.middlewares.use((req, res, next) => {
       const url = req.url;
+      const assetPrefix =
+        url && assetPrefixes.find((prefix) => url.startsWith(prefix));
 
       // handler assetPrefix
       if (assetPrefix && url?.startsWith(assetPrefix)) {
@@ -140,7 +141,7 @@ export class RsbuildProdServer {
     });
   }
 
-  public close(): void {}
+  public async close(): Promise<void> {}
 }
 
 export async function startProdServer(
@@ -148,10 +149,6 @@ export async function startProdServer(
   config: NormalizedConfig,
   { getPortSilently }: PreviewServerOptions = {},
 ): Promise<StartServerResult> {
-  if (!getNodeEnv()) {
-    setNodeEnv('production');
-  }
-
   const { port, host, https } = await getServerConfig({
     config,
     getPortSilently,
@@ -165,8 +162,10 @@ export async function startProdServer(
     {
       pwd: context.rootPath,
       output: {
-        path: config.output.distPath.root || ROOT_DIST_DIR,
-        assetPrefix: config.output.assetPrefix,
+        path: context.distPath,
+        assetPrefixes: Object.values(context.environments).map((e) =>
+          pathnameParse(e.config.output.assetPrefix),
+        ),
       },
       serverConfig,
     },
@@ -179,6 +178,7 @@ export async function startProdServer(
     serverConfig,
     middlewares: server.middlewares,
   });
+  const serverTerminator = getServerTerminator(httpServer);
 
   await server.onInit(httpServer);
 
@@ -193,6 +193,7 @@ export async function startProdServer(
         await context.hooks.onAfterStartProdServer.call({
           port,
           routes,
+          environments: context.environments,
         });
 
         const protocol = https ? 'https' : 'http';
@@ -206,18 +207,15 @@ export async function startProdServer(
           printUrls: serverConfig.printUrls,
         });
 
-        const onClose = () => {
-          server.close();
-          httpServer.close();
+        const onClose = async () => {
+          await Promise.all([server.close(), serverTerminator()]);
         };
 
         resolve({
           port,
           urls: urls.map((item) => item.url),
           server: {
-            close: async () => {
-              onClose();
-            },
+            close: onClose,
           },
         });
       },

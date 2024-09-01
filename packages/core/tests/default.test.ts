@@ -1,5 +1,5 @@
-import type { RsbuildPlugin } from '@rsbuild/shared';
 import { createStubRsbuild } from '@scripts/test-helper';
+import type { RsbuildPlugin } from '../src';
 
 describe('applyDefaultPlugins', () => {
   it('should apply default plugins correctly', async () => {
@@ -30,6 +30,7 @@ describe('applyDefaultPlugins', () => {
     process.env.NODE_ENV = 'test';
     const rsbuild = await createStubRsbuild({
       rsbuildConfig: {
+        mode: 'development',
         output: {
           target: 'node',
         },
@@ -103,6 +104,9 @@ describe('bundlerApi', () => {
     expect(bundlerConfigs[0]).toMatchInlineSnapshot(`
       {
         "devtool": "hidden-source-map",
+        "plugins": [
+          RsbuildCorePlugin {},
+        ],
         "target": "node",
       }
     `);
@@ -143,6 +147,9 @@ describe('bundlerApi', () => {
             },
           ],
         },
+        "plugins": [
+          RsbuildCorePlugin {},
+        ],
       }
     `);
   });
@@ -182,6 +189,9 @@ describe('bundlerApi', () => {
             },
           ],
         },
+        "plugins": [
+          RsbuildCorePlugin {},
+        ],
       }
     `);
   });

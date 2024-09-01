@@ -2,8 +2,8 @@ import type {
   DnsPrefetchOption,
   HtmlBasicTag,
   PreconnectOption,
-} from '@rsbuild/shared';
-import type { RsbuildPlugin } from '../types';
+  RsbuildPlugin,
+} from '../types';
 
 const generateLinks = (
   options: PreconnectOption[] | DnsPrefetchOption[],
@@ -45,13 +45,12 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
     });
 
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
-      const htmlPaths = api.getHTMLPaths({ environment: environment.name });
+      const { config, htmlPaths } = environment;
 
       if (Object.keys(htmlPaths).length === 0) {
         return;
       }
 
-      const { config } = environment;
       const {
         performance: { preload, prefetch },
       } = config;

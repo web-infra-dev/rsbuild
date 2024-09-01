@@ -12,6 +12,12 @@ CSR 是 "Client-Side Rendering"（客户端渲染）的缩写。它表示页面�
 
 在 CSR 中，服务器会向浏览器端发送一个空的 HTML 外壳和一些 JavaScript 脚本，然后由浏览器端从服务器的 API 中拉取数据，并将动态内容渲染到页面中。
 
+## Environment
+
+import Environment from '@zh/shared/environment.mdx';
+
+<Environment />
+
 ## Micro-frontend
 
 微前端（Micro-frontend，简称 MFE）是一种类似于微服务的架构，是一种由独立交付的多个前端应用组成整体的架构风格，它将前端应用分解成一些更小、更简单的能够独立开发、测试、部署的应用，而在用户看来仍然是内聚的单个产品。
@@ -52,11 +58,9 @@ Rspress 是一个基于 Rsbuild 的静态站点生成器。
 
 ## SSR
 
-SSR 是 "Server-Side Rendering"（服务器端渲染）的缩写。它表示由服务器生成网页的 HTML，并将其发送给客户端，而不是只发送一个空的 HTML 外壳，并依赖 JavaScript 来生成页面内容。
+import SSR from '@zh/shared/ssr.mdx';
 
-在传统的客户端渲染中，服务器会向客户端发送一个空的 HTML 外壳和一些 JavaScript 脚本，然后从服务器的 API 中获取数据，并用动态内容填充页面。这会导致页面的初始加载时间较慢，不利于用户体验和 SEO。
-
-使用 SSR 后，服务器会生成已经包含动态内容的 HTML，并将其发送给客户端。这使得首屏加载速度更快，并对 SEO 更加友好，因为搜索引擎可以爬取到渲染后的页面。
+<SSR />
 
 ## SWC
 

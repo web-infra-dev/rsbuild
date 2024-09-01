@@ -1,4 +1,4 @@
-import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest(
@@ -6,7 +6,7 @@ rspackOnlyTest(
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,
-      runServer: true,
+      page,
       rsbuildConfig: {
         output: {
           cssModules: {
@@ -24,7 +24,6 @@ rspackOnlyTest(
       /\.classA-\w{6}{color:red}\.classB-\w{6}{color:#00f}\.classC-\w{6}{color:#ff0}/,
     );
 
-    await gotoPage(page, rsbuild);
     const root = page.locator('#root');
     const text = await root.innerHTML();
 

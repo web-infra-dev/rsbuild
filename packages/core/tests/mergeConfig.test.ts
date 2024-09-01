@@ -1,4 +1,4 @@
-import type { RsbuildConfig, RspackConfig } from '@rsbuild/shared';
+import type { RsbuildConfig, Rspack } from '../src';
 import { mergeRsbuildConfig } from '../src/mergeConfig';
 
 describe('mergeRsbuildConfig', () => {
@@ -108,7 +108,7 @@ describe('mergeRsbuildConfig', () => {
   });
 
   test('should merge function and object correctly', async () => {
-    const rspackFn = (config: RspackConfig) => {
+    const rspackFn = (config: Rspack.Configuration) => {
       config.devtool = 'source-map';
     };
 
@@ -214,6 +214,46 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
+  test('should merge tools.htmlPlugin correctly', async () => {
+    expect(
+      mergeRsbuildConfig(
+        {
+          tools: {
+            htmlPlugin: {},
+          },
+        },
+        {
+          tools: {
+            htmlPlugin: false,
+          },
+        },
+      ),
+    ).toEqual({
+      tools: {
+        htmlPlugin: false,
+      },
+    });
+
+    expect(
+      mergeRsbuildConfig(
+        {
+          tools: {
+            htmlPlugin: false,
+          },
+        },
+        {
+          tools: {
+            htmlPlugin: {},
+          },
+        },
+      ),
+    ).toEqual({
+      tools: {
+        htmlPlugin: {},
+      },
+    });
+  });
+
   it('should merge SWC plugins as expected', () => {
     expect(
       mergeRsbuildConfig(
@@ -254,6 +294,39 @@ describe('mergeRsbuildConfig', () => {
         },
       },
     });
+  });
+
+  it('should merge rspack plugins as expected', () => {
+    class A {
+      a = 1;
+
+      apply() {
+        return this.a;
+      }
+    }
+
+    const pluginA = new A();
+
+    const mergedConfig = mergeRsbuildConfig(
+      {
+        tools: {
+          rspack: {
+            plugins: [pluginA],
+          },
+        },
+      },
+      {},
+    );
+
+    expect(mergedConfig).toEqual({
+      tools: {
+        rspack: {
+          plugins: [pluginA],
+        },
+      },
+    });
+
+    expect(mergedConfig.tools!.rspack.plugins[0] instanceof A).toBeTruthy();
   });
 
   test('should merge overrideBrowserslist in environments as expected', async () => {

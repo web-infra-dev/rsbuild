@@ -16,18 +16,6 @@
 type Version = string;
 ```
 
-### context.entry
-
-构建入口对象，对应 [source.entry](/config/source/entry) 选项。
-
-- **类型：**
-
-```ts
-type RsbuildEntry = Record<string, string | string[] | EntryDescription>;
-```
-
-> 如果 `source.entry` 被设置为函数，并针对不同的 target 返回了不同的 entry 对象，那么 context.entry 仅会包含 web target 对应的入口对象。
-
 ### context.rootPath
 
 当前执行构建的根路径，对应调用 `createRsbuild` 时传入的 `cwd` 选项。
@@ -40,7 +28,11 @@ type RootPath = string;
 
 ### context.distPath
 
-构建产物输出目录的绝对路径，对应 `RsbuildConfig` 中的 `output.distPath.root` 配置项。
+构建产物输出目录的绝对路径，对应 `RsbuildConfig` 中的 [output.distPath.root](/config/output/dist-path) 配置项。
+
+当有多个环境时，Rsbuild 会尝试获取所有环境的父 distPath 作为 `context.distPath`。
+
+如果要获取指定环境的输出目录的绝对路径，建议使用 [environment.distPath](/api/javascript-api/environment-context#distpath)。
 
 - **类型：**
 
@@ -60,7 +52,7 @@ type CachePath = string;
 
 ### context.devServer
 
-Dev Server 相关信息，包含了当前 Dev Server 的 hostname 和端口号。
+Dev server 相关信息，包含了当前 dev server 的 hostname 和端口号。
 
 - **类型：**
 
@@ -107,19 +99,28 @@ type TsconfigPath = string | undefined;
 
 ## rsbuild.build
 
-调用 build 方法时，会执行一次生产环境构建。
+调用 build 方法时，会执行一次生产模式构建。
 
 - **类型：**
 
 ```ts
 type BuildOptions = {
-  mode?: 'development' | 'production';
+  /**
+   * 是否监听文件变化并重新构建
+   *
+   * @default false
+   */
   watch?: boolean;
-  // 自定义 Compiler 对象
+  /**
+   * 使用自定义的 Rspack Compiler 对象
+   */
   compiler?: Compiler | MultiCompiler;
 };
 
-function Build(options?: BuildOptions): Promise<void>;
+function Build(options?: BuildOptions): Promise<{
+  stats?: Rspack.Stats | Rspack.MultiStats;
+  close: () => Promise<void>;
+}>;
 ```
 
 - **示例：**
@@ -140,16 +141,6 @@ try {
 }
 ```
 
-### 开发环境构建
-
-如果需要执行一次开发环境构建，可以将 `mode` 参数设置为 `'development'`。
-
-```ts
-await rsbuild.build({
-  mode: 'development',
-});
-```
-
 ### 监听文件变化
 
 如果需要自动监听文件变化并重新执行构建，可以将 `watch` 参数设置为 `true`。
@@ -158,6 +149,26 @@ await rsbuild.build({
 await rsbuild.build({
   watch: true,
 });
+```
+
+在 watch 模式下，`rsbuild.build()` 会返回一个 `close` 方法，调用该方法将会结束监听：
+
+```ts
+const result = await rsbuild.build({
+  watch: true,
+});
+
+await result.close();
+```
+
+### Stats 对象
+
+在非 watch 模式下，`rsbuild.build()` 会返回一个 Rspack 的 [stats](https://rspack.dev/api/javascript-api/stats) 对象：
+
+```ts
+const result = await rsbuild.build();
+
+console.log(result.stats);
 ```
 
 ### 自定义 Compiler
@@ -202,7 +213,7 @@ function StartDevServer(
 
 - **示例：**
 
-启动 Dev Server：
+启动 dev server：
 
 ```ts
 import { logger } from '@rsbuild/core';
@@ -220,7 +231,7 @@ try {
 }
 ```
 
-成功启动 Dev Server 后，可以看到以下日志信息：
+成功启动 dev server 后，可以看到以下日志信息：
 
 ```
   > Local:    http://localhost:3000
@@ -229,7 +240,7 @@ try {
 
 `startDevServer` 会返回以下参数：
 
-- `urls`：访问 Dev Server 的 URLs
+- `urls`：访问 dev server 的 URLs
 - `port` 实际监听的端口号
 - `server`：Server 实例对象
 
@@ -238,7 +249,7 @@ const { urls, port, server } = await rsbuild.startDevServer();
 console.log(urls); // ['http://localhost:3000', 'http://192.168.0.1:3000']
 console.log(port); // 3000
 
-// 关闭 Dev Server
+// 关闭 dev server
 await server.close();
 ```
 
@@ -271,35 +282,75 @@ await rsbuild.startDevServer({
 
 Rsbuild 配备了一个内置的开发服务器，当你执行 `rsbuild dev` 时，将启动 Rsbuild dev server，并提供页面预览、路由、模块热更新等功能。
 
-如果你希望将 Rsbuild dev server 集成到自定义的 server 中，可以通过该方法获取 Rsbuild dev server 的实例方法，进行按需调用。
+如果你希望将 Rsbuild dev server 集成到自定义的 server 中，可以通过该方法获取 dev server 的实例方法，按需进行调用。
 
 - **类型：**
 
 ```ts
+type EnvironmentAPI = {
+  [name: string]: {
+    /**
+     * 获取当前环境的构建信息
+     */
+    getStats: () => Promise<Stats>;
+    /**
+     * 在服务端加载并执行构建产物
+     *
+     * @param entryName - 入口名称，和 Rsbuild source.entry 的某一个 key 值对应
+     * @returns 入口模块的返回值
+     */
+    loadBundle: <T = unknown>(entryName: string) => Promise<T>;
+    /**
+     * 获取编译后的 HTML 模版内容
+     */
+    getTransformedHtml: (entryName: string) => Promise<string>;
+  };
+};
+
 type RsbuildDevServer = {
-  /** 启动 Rsbuild DevServer */
+  /**
+   * 监听 Rsbuild server
+   * 当你使用自定义 server 时，不需要调用该方法
+   */
   listen: () => Promise<{
-    urls: string[];
     port: number;
-    server: Server;
+    urls: string[];
+    server: {
+      close: () => Promise<void>;
+    };
   }>;
-
-  /** 以下 API 在使用自定义 Server 时会用到 */
-
-  /** 解析后的端口号 (默认情况下，Rsbuild Server 会监听 `3000` 端口，并在端口被占用时自动递增端口号。) */
+  /**
+   * Rsbuild server 提供的 environment API
+   */
+  environments: EnvironmentAPI;
+  /**
+   * 解析后的端口号
+   * 默认情况下，Rsbuild Server 会监听 `3000` 端口，如果端口被占用，则自动递增端口号
+   */
   port: number;
-
-  /** Connect 实例，包含 Rsbuild 内置中间件 */
-  middlewares: Middlewares;
-
-  /** 通知 Rsbuild 自定义 Server 已启动 */
+  /**
+   * `connect` 实例
+   * 可用于向 dev server 附加自定义中间件
+   */
+  middlewares: Connect.Server;
+  /**
+   * 通知 Rsbuild 自定义 Server 已启动
+   * Rsbuild 会在此阶段触发 `onAfterStartDevServer` 钩子
+   */
   afterListen: () => Promise<void>;
-
-  /** 订阅 http upgrade 事件 */
-  onHTTPUpgrade: UpgradeEvent;
-
-  /** 关闭 Rsbuild DevServer */
+  /**
+   * 激活 socket 连接
+   * 这确保了 HMR 正常工作
+   */
+  connectWebSocket: (options: { server: HTTPServer }) => void;
+  /**
+   * 关闭 Rsbuild server
+   */
   close: () => Promise<void>;
+  /**
+   * 打印 server URLs
+   */
+  printUrls: () => void;
 };
 
 type CreateDevServerOptions = {
@@ -343,12 +394,11 @@ export async function startDevServer() {
     await rsbuildServer.afterListen();
   });
 
-  // 订阅服务器的 http 升级事件来处理 WebSocket 升级
-  httpServer.on('upgrade', rsbuildServer.onHTTPUpgrade);
+  rsbuildServer.connectWebSocket({ server: httpServer });
 }
 ```
 
-详细使用情况可参考：[示例](https://github.com/web-infra-dev/rsbuild/blob/main/e2e/cases/server/custom-server/scripts/server.mjs)。
+详细使用情况可参考：[示例](https://github.com/rspack-contrib/rspack-examples/blob/main/rsbuild/express/server.mjs)。
 
 如果你希望直接使用 Rsbuild DevServer 启动项目，可以直接使用 [Rsbuild - startDevServer](#rsbuildstartdevserver) 方法。 `startDevServer` 实际上是以下代码的语法糖：
 
@@ -358,9 +408,28 @@ const server = await rsbuild.createDevServer();
 await server.listen();
 ```
 
+### connectWebSocket
+
+Rsbuild 内置了 WebSocket 处理器以支持 HMR 功能：
+
+1. 当用户通过浏览器访问页面时，会自动向服务器发起 WebSocket 连接请求。
+2. Rsbuild 开发服务器检测到连接请求后，会指示内置的 WebSocket 处理器进行处理。
+3. 浏览器与 Rsbuild WebSocket 处理器成功建立连接后，便可进行实时通信。
+4. 每次重新编译完成后，Rsbuild WebSocket 处理器会通知浏览器。随后，浏览器向开发服务器发送 `hot-update.(js|json)` 请求，以加载编译后的新模块。
+
+当你使用自定义的 server 时，可能会遇到 HMR 连接报错的问题，这是因为自定义的 server 没有将 WebSocket 连接请求转发给 Rsbuild 的 WebSocket 处理器。此时需要通过 `connectWebSocket` 方法已使 Rsbuild 能够感知并处理来自浏览器的 WebSocket 连接请求。
+
+```ts
+const rsbuildServer = await rsbuild.createDevServer();
+
+const httpServer = app.listen(rsbuildServer.port);
+
+rsbuildServer.connectWebSocket({ server: httpServer });
+```
+
 ## rsbuild.preview
 
-在本地启动 Server 来预览生产环境构建的产物，需要在 `rsbuild.build` 方法之后执行。
+在本地启动 Server 来预览生产模式构建的产物，需要在 `rsbuild.build` 方法之后执行。
 
 - **类型：**
 
@@ -427,7 +496,7 @@ function CreateCompiler(): Promise<Compiler | MultiCompiler>;
 const compiler = await rsbuild.createCompiler();
 ```
 
-> 大部分场景下，不需要使用该 API，除非需要进行自定义 Dev Server 等高级操作。
+> 大部分场景下，不需要使用该 API，除非需要进行自定义 dev server 等高级操作。
 
 ## rsbuild.addPlugins
 
@@ -521,7 +590,7 @@ initConfigs 方法用于初始化 Rsbuild 内部的配置，并返回 Rsbuild �
 
 ```ts
 function InitConfigs(): Promise<{
-  rspackConfigs: RspackConfig[];
+  rspackConfigs: Rspack.Configuration[];
 }>;
 ```
 
@@ -545,12 +614,12 @@ inspectConfig 方法通常用于调试 Rsbuild 内部的配置，它会返回 Rs
 type InspectConfigOptions = {
   // 查看指定环境下的配置
   // 默认为 "development"，可以设置为 "production"
-  env?: RsbuildMode;
+  mode?: RsbuildMode;
   // 是否开启冗余模式，展示配置中函数的完整内容
   // 默认为 `false`
   verbose?: boolean;
   // 指定输出路径
-  // 默认为 `output.distPath.root` 配置的值
+  // 默认为 `output.distPath.root` 的值
   outputPath?: string;
   // 是否将结果写入到磁盘中
   // 默认为 `false`
@@ -560,16 +629,18 @@ type InspectConfigOptions = {
 async function InspectConfig(options?: InspectConfigOptions): Promise<{
   rsbuildConfig: string;
   bundlerConfigs: string[];
+  environmentConfigs: string[];
   origin: {
     rsbuildConfig: RsbuildConfig;
+    environmentConfigs: Record<string, EnvironmentConfig>;
     bundlerConfigs: BundlerConfigs[];
   };
 }>;
 ```
 
-- **示例：**
+### 示例
 
-拿到字符串格式的 Config 内容：
+拿到字符串格式的 configs 内容：
 
 ```ts
 const { rsbuildConfig, bundlerConfigs } = await rsbuild.inspectConfig();
@@ -582,6 +653,21 @@ console.log(rsbuildConfig, bundlerConfigs);
 ```ts
 await rsbuild.inspectConfig({
   writeToDisk: true,
+});
+```
+
+### 输出路径
+
+你可以通过 `outputPath` 来设置输出目录，默认为 [output.distPath.root](/config/output/dist-path) 的值。
+
+当 `outputPath` 是一个相对路径时，会相对于 `output.distPath.root` 的值进行拼接。你也可以将 `outputPath` 设置为一个绝对路径，此时会直接将文件写入到该路径下。比如：
+
+```ts
+import path from 'node:path';
+
+await rsbuild.inspectConfig({
+  writeToDisk: true,
+  outputPath: path.join(__dirname, 'custom-dir'),
 });
 ```
 
@@ -755,7 +841,7 @@ import GetRsbuildConfig from '@zh/shared/getRsbuildConfig.mdx';
 
 ```ts
 rsbuild.onBeforeBuild(() => {
-  const config = api.getRsbuildConfig();
+  const config = rsbuild.getRsbuildConfig();
   console.log(config.html?.title);
 });
 ```
@@ -770,22 +856,7 @@ import GetNormalizedConfig from '@zh/shared/getNormalizedConfig.mdx';
 
 ```ts
 rsbuild.onBeforeBuild(() => {
-  const config = api.getNormalizedConfig();
+  const config = rsbuild.getNormalizedConfig();
   console.log(config.html.title);
-});
-```
-
-## rsbuild.getHTMLPaths
-
-import GetHTMLPaths from '@zh/shared/getHtmlPaths.mdx';
-
-<GetHTMLPaths />
-
-- **示例：**
-
-```ts
-rsbuild.onBeforeBuild(() => {
-  const htmlPaths = api.getHTMLPaths();
-  console.log(htmlPaths); // { main: 'html/main/index.html' };
 });
 ```

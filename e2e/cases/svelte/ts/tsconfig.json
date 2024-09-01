@@ -1,7 +1,8 @@
 {
   "extends": "@rsbuild/config/tsconfig",
   "compilerOptions": {
-    "module": "ESNext"
+    "module": "ESNext",
+    "verbatimModuleSyntax": true
   },
   "include": ["src"]
 }

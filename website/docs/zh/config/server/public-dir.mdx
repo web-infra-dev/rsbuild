@@ -92,7 +92,7 @@ export default {
 
 是否监听 public 目录，并在文件发生变化时重新加载页面。
 
-设置 `watch` 为 `true` 后，开发环境下会监控指定公共目录下的文件变化，并在文件发生变化时重新加载页面：
+设置 `watch` 为 `true` 后，开发服务器会监听指定公共目录下的文件变化，并在文件发生变化时重新加载页面：
 
 ```ts
 export default {
@@ -104,7 +104,7 @@ export default {
 };
 ```
 
-需要注意的是，`watch` 选项仅在开发环境下有效。如果 [dev.hmr](/config/dev/hmr) 和 [dev.liveReload](/config/dev/live-reload) 都设置为 false，则 `watch` 将被忽略。
+需要注意的是，`watch` 选项仅在开发模式下有效。如果 [dev.hmr](/config/dev/hmr) 和 [dev.liveReload](/config/dev/live-reload) 都设置为 false，则 `watch` 将被忽略。
 
 ## 多目录
 

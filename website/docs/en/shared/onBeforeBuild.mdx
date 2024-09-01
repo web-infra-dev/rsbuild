@@ -2,12 +2,17 @@
 
 You can access the Rspack configuration array through the `bundlerConfigs` parameter. The array may contain one or more [Rspack configurations](https://rspack.dev/config/). It depends on whether multiple [environments](/config/environments) are configured.
 
+Moreover, you can use `isWatch` to determine whether it is watch mode, and use `isFirstCompile` to determine whether it is the first build on watch mode.
+
 - **Type:**
 
 ```ts
 function OnBeforeBuild(
   callback: (params: {
-    bundlerConfigs?: WebpackConfig[] | RspackConfig[];
+    isWatch: boolean;
+    isFirstCompile: boolean;
+    bundlerConfigs?: Rspack.Configuration[];
+    environments: Record<string, EnvironmentContext>;
   }) => Promise<void> | void,
 ): void;
 ```

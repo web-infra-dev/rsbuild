@@ -3,10 +3,10 @@
 为了便于排查问题，Rsbuild 提供了调试模式，你可以在执行构建时添加 `DEBUG=rsbuild` 环境变量来开启 Rsbuild 的调试模式。
 
 ```bash
-# 调试开发环境
+# 调试开发模式
 DEBUG=rsbuild pnpm dev
 
-# 调试生产环境
+# 调试生产模式
 DEBUG=rsbuild pnpm build
 ```
 
@@ -32,13 +32,13 @@ debug   init plugins done [2389.48 ms]
 ```bash
 Inspect config succeed, open following files to view the content:
 
-  - Rsbuild Config: /Project/demo/dist/rsbuild.config.mjs
-  - Rspack Config (web): /Project/demo/dist/rspack.config.web.mjs
+  - Rsbuild Config: /Project/demo/dist/.rsbuild/rsbuild.config.mjs
+  - Rspack Config (web): /Project/demo/dist/.rsbuild/rspack.config.web.mjs
 ```
 
 ## Rsbuild 配置文件
 
-在调试模式下，Rsbuild 会自动生成 `dist/rsbuild.config.mjs` 文件，这里面包含了最终生成的 Rsbuild 配置。在这个文件里，你可以了解到你传入的 Rsbuild 配置在经过框架层和 Rsbuild 处理后的最终结果。
+在调试模式下，Rsbuild 会自动生成 `dist/.rsbuild/rsbuild.config.mjs` 文件，这里面包含了最终生成的 Rsbuild 配置。在这个文件里，你可以了解到你传入的 Rsbuild 配置在经过框架层和 Rsbuild 处理后的最终结果。
 
 该文件的大致结构如下：
 
@@ -58,7 +58,7 @@ export default {
 
 ## Rspack 配置文件
 
-在调试模式下，Rsbuild 还会自动生成 `dist/rspack.config.web.mjs` 文件，这里面包含了最终生成的 Rspack 配置。在这个文件里，你可以了解到 Rsbuild 最终传递给 Rspack 的配置里包含了哪些内容。
+在调试模式下，Rsbuild 还会自动生成 `dist/.rsbuild/rspack.config.web.mjs` 文件，这里面包含了最终生成的 Rspack 配置。在这个文件里，你可以了解到 Rsbuild 最终传递给 Rspack 的配置里包含了哪些内容。
 
 该文件的大致结构如下：
 

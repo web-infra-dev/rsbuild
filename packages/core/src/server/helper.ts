@@ -1,20 +1,22 @@
-import type { IncomingMessage } from 'node:http';
+import type { IncomingMessage, Server } from 'node:http';
+import type { Http2SecureServer } from 'node:http2';
 import net from 'node:net';
 import type { Socket } from 'node:net';
 import os from 'node:os';
-import { join, relative } from 'node:path';
-import { color } from '@rsbuild/shared';
+import { posix } from 'node:path';
+import color from 'picocolors';
+import { DEFAULT_DEV_HOST, DEFAULT_PORT } from '../constants';
+import { isFunction } from '../helpers';
+import { logger } from '../logger';
 import type {
+  InternalContext,
   NormalizedConfig,
   OutputStructure,
   PrintUrls,
   Routes,
   RsbuildEntry,
-} from '@rsbuild/shared';
-import { DEFAULT_DEV_HOST, DEFAULT_PORT } from '../constants';
-import { isFunction } from '../helpers';
-import { logger } from '../logger';
-import type { InternalContext } from '../types';
+  Rspack,
+} from '../types';
 
 /**
  * It used to subscribe http upgrade event
@@ -51,21 +53,15 @@ const formatPrefix = (prefix: string | undefined) => {
 };
 
 export const getRoutes = (context: InternalContext): Routes => {
-  return Object.entries(context.environments).reduce<Routes>(
-    (prev, [name, environmentContext]) => {
-      const distPrefix = relative(
-        context.distPath,
-        environmentContext.distPath,
-      );
-
-      const environmentConfig = context.pluginAPI!.getNormalizedConfig({
-        environment: name,
-      });
+  return Object.values(context.environments).reduce<Routes>(
+    (prev, environmentContext) => {
+      const { distPath, config } = environmentContext;
+      const distPrefix = posix.relative(context.distPath, distPath);
 
       const routes = formatRoutes(
         environmentContext.htmlPaths,
-        join(distPrefix, environmentConfig.output.distPath.html),
-        environmentConfig.html.outputStructure,
+        posix.join(distPrefix, config.output.distPath.html),
+        config.html.outputStructure,
       );
       return prev.concat(...routes);
     },
@@ -386,3 +382,40 @@ export const getAddressUrls = ({
 
   return addressUrls;
 };
+
+// A unique name for WebSocket communication
+export const getCompilationName = (
+  compiler: Rspack.Compiler | Rspack.Compilation,
+) => `${compiler.name ?? ''}_${compiler.options.output.uniqueName ?? ''}`;
+
+export function getServerTerminator(
+  server: Server | Http2SecureServer,
+): () => Promise<void> {
+  let listened = false;
+  const pendingSockets = new Set<net.Socket>();
+
+  const onConnection = (socket: net.Socket) => {
+    pendingSockets.add(socket);
+    socket.on('close', () => {
+      pendingSockets.delete(socket);
+    });
+  };
+
+  server.on('connection', onConnection);
+  server.on('secureConnection', onConnection);
+  server.once('listening', () => {
+    listened = true;
+  });
+
+  return () =>
+    new Promise<void>((resolve, reject) => {
+      for (const socket of pendingSockets) {
+        socket.destroy();
+      }
+      if (listened) {
+        server.close((err) => (err ? reject(err) : resolve()));
+      } else {
+        resolve();
+      }
+    });
+}

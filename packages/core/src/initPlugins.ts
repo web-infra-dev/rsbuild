@@ -1,63 +1,92 @@
-import { join } from 'node:path';
-import type {
-  GetRsbuildConfig,
-  NormalizedEnvironmentConfig,
-  PluginManager,
-  RsbuildPluginAPI,
-  RspackChain,
-  TransformFn,
-  TransformHandler,
-} from '@rsbuild/shared';
+import { join, posix } from 'node:path';
 import type { Compiler } from '@rspack/core';
 import { LOADER_PATH } from './constants';
 import { createPublicContext } from './createContext';
 import { removeLeadingSlash } from './helpers';
-import type { InternalContext, NormalizedConfig } from './types';
+import type { TransformLoaderOptions } from './loader/transformLoader';
+import { isPluginMatchEnvironment } from './pluginManager';
+import type {
+  GetRsbuildConfig,
+  InternalContext,
+  NormalizedConfig,
+  NormalizedEnvironmentConfig,
+  PluginManager,
+  ProcessAssetsDescriptor,
+  ProcessAssetsFn,
+  ProcessAssetsHandler,
+  ProcessAssetsStage,
+  RsbuildPluginAPI,
+  TransformFn,
+  TransformHandler,
+} from './types';
 
 export function getHTMLPathByEntry(
   entryName: string,
   config: NormalizedEnvironmentConfig,
 ): string {
-  const filename =
-    config.html.outputStructure === 'flat'
-      ? `${entryName}.html`
-      : `${entryName}/index.html`;
+  let filename: string;
 
-  return removeLeadingSlash(`${config.output.distPath.html}/${filename}`);
-}
-
-function applyTransformPlugin(
-  chain: RspackChain,
-  transformer: Record<string, TransformHandler>,
-) {
-  const name = 'RsbuildTransformPlugin';
-
-  if (chain.plugins.get(name)) {
-    return;
+  if (config.output.filename.html) {
+    filename = config.output.filename.html.replace('[name]', entryName);
+  } else if (config.html.outputStructure === 'flat') {
+    filename = `${entryName}.html`;
+  } else {
+    filename = `${entryName}/index.html`;
   }
 
-  class RsbuildTransformPlugin {
-    apply(compiler: Compiler): void {
-      compiler.__rsbuildTransformer = transformer;
-
-      compiler.hooks.thisCompilation.tap(name, (compilation) => {
-        compilation.hooks.childCompiler.tap(name, (childCompiler) => {
-          childCompiler.__rsbuildTransformer = transformer;
-        });
-      });
-    }
-  }
-
-  chain.plugin(name).use(RsbuildTransformPlugin);
+  return removeLeadingSlash(posix.join(config.output.distPath.html, filename));
 }
 
-export function getPluginAPI({
+const mapProcessAssetsStage = (
+  compiler: Compiler,
+  stage: ProcessAssetsStage,
+) => {
+  const { Compilation } = compiler.webpack;
+  switch (stage) {
+    case 'additional':
+      return Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL;
+    case 'pre-process':
+      return Compilation.PROCESS_ASSETS_STAGE_PRE_PROCESS;
+    case 'derived':
+      return Compilation.PROCESS_ASSETS_STAGE_DERIVED;
+    case 'additions':
+      return Compilation.PROCESS_ASSETS_STAGE_ADDITIONS;
+    case 'none':
+      return Compilation.PROCESS_ASSETS_STAGE_NONE;
+    case 'optimize':
+      return Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE;
+    case 'optimize-count':
+      return Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_COUNT;
+    case 'optimize-compatibility':
+      return Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_COMPATIBILITY;
+    case 'optimize-size':
+      return Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_SIZE;
+    case 'dev-tooling':
+      return Compilation.PROCESS_ASSETS_STAGE_DEV_TOOLING;
+    case 'optimize-inline':
+      return Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_INLINE;
+    case 'summarize':
+      return Compilation.PROCESS_ASSETS_STAGE_SUMMARIZE;
+    case 'optimize-hash':
+      return Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_HASH;
+    case 'optimize-transfer':
+      return Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_TRANSFER;
+    case 'analyse':
+      return Compilation.PROCESS_ASSETS_STAGE_ANALYSE;
+    case 'report':
+      return Compilation.PROCESS_ASSETS_STAGE_REPORT;
+    default:
+      throw new Error(`Invalid process assets stage: ${stage}`);
+  }
+};
+
+export function initPluginAPI({
   context,
   pluginManager,
 }: {
   context: InternalContext;
   pluginManager: PluginManager;
-}): RsbuildPluginAPI {
+}): (environment?: string) => RsbuildPluginAPI {
   const { hooks } = context;
   const publicContext = createPublicContext(context);
 
@@ -97,16 +126,6 @@ export function getPluginAPI({
     throw new Error('`getRsbuildConfig` get an invalid type param.');
   }) as GetRsbuildConfig;
 
-  const getHTMLPaths = (options?: { environment: string }) => {
-    if (options?.environment) {
-      return context.environments[options.environment].htmlPaths;
-    }
-    return Object.values(context.environments).reduce(
-      (prev, context) => Object.assign(prev, context.htmlPaths),
-      {} as Record<string, string>,
-    );
-  };
-
   const exposed: Array<{ id: string | symbol; api: any }> = [];
 
   const expose = (id: string | symbol, api: any) => {
@@ -121,53 +140,149 @@ export function getPluginAPI({
 
   let transformId = 0;
   const transformer: Record<string, TransformHandler> = {};
+  const processAssetsFns: Array<{
+    environment?: string;
+    descriptor: ProcessAssetsDescriptor;
+    handler: ProcessAssetsHandler;
+  }> = [];
 
-  const transform: TransformFn = (descriptor, handler) => {
-    const id = `rsbuild-transform-${transformId++}`;
+  hooks.modifyBundlerChain.tap((chain, { target, environment }) => {
+    const pluginName = 'RsbuildCorePlugin';
 
-    transformer[id] = handler;
+    /**
+     * Transform Rsbuild plugin hooks to Rspack plugin hooks
+     */
+    class RsbuildCorePlugin {
+      apply(compiler: Compiler): void {
+        compiler.__rsbuildTransformer = transformer;
 
-    hooks.modifyBundlerChain.tap((chain, { target }) => {
-      if (descriptor.targets && !descriptor.targets.includes(target)) {
-        return;
+        compiler.hooks.thisCompilation.tap(pluginName, (compilation) => {
+          compilation.hooks.childCompiler.tap(pluginName, (childCompiler) => {
+            childCompiler.__rsbuildTransformer = transformer;
+          });
+
+          const { sources } = compiler.webpack;
+
+          for (const {
+            descriptor,
+            handler,
+            environment: pluginEnvironment,
+          } of processAssetsFns) {
+            // filter by targets
+            if (descriptor.targets && !descriptor.targets.includes(target)) {
+              return;
+            }
+
+            // filter by environments
+            if (
+              (descriptor.environments &&
+                !descriptor.environments.includes(environment.name)) ||
+              // the plugin is registered in a specific environment config
+              (pluginEnvironment &&
+                !isPluginMatchEnvironment(pluginEnvironment, environment.name))
+            ) {
+              return;
+            }
+
+            compilation.hooks.processAssets.tapPromise(
+              {
+                name: pluginName,
+                stage: mapProcessAssetsStage(compiler, descriptor.stage),
+              },
+              async (assets) =>
+                handler({
+                  assets,
+                  compiler,
+                  compilation,
+                  environment,
+                  sources,
+                }),
+            );
+          }
+        });
       }
+    }
 
-      const rule = chain.module.rule(id);
-
-      if (descriptor.test) {
-        rule.test(descriptor.test);
-      }
-      if (descriptor.resourceQuery) {
-        rule.resourceQuery(descriptor.resourceQuery);
-      }
-
-      const loaderName = descriptor.raw
-        ? 'transformRawLoader.cjs'
-        : 'transformLoader.cjs';
-      const loaderPath = join(LOADER_PATH, loaderName);
-
-      rule.use(id).loader(loaderPath).options({ id });
-
-      applyTransformPlugin(chain, transformer);
-    });
-  };
-
-  process.on('exit', () => {
-    hooks.onExit.call();
+    chain.plugin(pluginName).use(RsbuildCorePlugin);
   });
 
-  return {
+  const getTransformFn: (environment?: string) => TransformFn =
+    (environment) => (descriptor, handler) => {
+      const id = `rsbuild-transform-${transformId++}`;
+
+      transformer[id] = handler;
+
+      hooks.modifyBundlerChain.tapEnvironment({
+        environment,
+        handler: (chain, { target, environment }) => {
+          // filter by targets
+          if (descriptor.targets && !descriptor.targets.includes(target)) {
+            return;
+          }
+
+          // filter by environments
+          if (
+            descriptor.environments &&
+            !descriptor.environments.includes(environment.name)
+          ) {
+            return;
+          }
+
+          const rule = chain.module.rule(id);
+
+          if (descriptor.test) {
+            rule.test(descriptor.test);
+          }
+          if (descriptor.resourceQuery) {
+            rule.resourceQuery(descriptor.resourceQuery);
+          }
+
+          const loaderName = descriptor.raw
+            ? 'transformRawLoader.cjs'
+            : 'transformLoader.cjs';
+          const loaderPath = join(LOADER_PATH, loaderName);
+
+          rule
+            .use(id)
+            .loader(loaderPath)
+            .options({
+              id,
+              getEnvironment: () => environment,
+            } satisfies TransformLoaderOptions);
+        },
+      });
+    };
+
+  const setProcessAssets: (environment?: string) => ProcessAssetsFn =
+    (environment) => (descriptor, handler) => {
+      processAssetsFns.push({ environment, descriptor, handler });
+    };
+
+  let onExitListened = false;
+
+  const onExit: typeof hooks.onExit.tap = (cb) => {
+    if (!onExitListened) {
+      process.on('exit', () => {
+        hooks.onExit.call();
+      });
+      onExitListened = true;
+    }
+    hooks.onExit.tap(cb);
+  };
+
+  // Each plugin returns different APIs depending on the registered environment info.
+  return (environment?: string) => ({
     context: publicContext,
     expose,
-    transform,
+    transform: getTransformFn(environment),
     useExposed,
-    getHTMLPaths,
+    processAssets: setProcessAssets(environment),
     getRsbuildConfig,
     getNormalizedConfig,
     isPluginExists: pluginManager.isPluginExists,
 
     // Hooks
-    onExit: hooks.onExit.tap,
+    onExit,
     onAfterBuild: hooks.onAfterBuild.tap,
     onBeforeBuild: hooks.onBeforeBuild.tap,
     onCloseDevServer: hooks.onCloseDevServer.tap,
@@ -178,12 +293,46 @@ export function getPluginAPI({
     onBeforeStartDevServer: hooks.onBeforeStartDevServer.tap,
     onAfterStartProdServer: hooks.onAfterStartProdServer.tap,
     onBeforeStartProdServer: hooks.onBeforeStartProdServer.tap,
-    modifyHTMLTags: hooks.modifyHTMLTags.tap,
-    modifyBundlerChain: hooks.modifyBundlerChain.tap,
-    modifyRspackConfig: hooks.modifyRspackConfig.tap,
-    modifyWebpackChain: hooks.modifyWebpackChain.tap,
-    modifyWebpackConfig: hooks.modifyWebpackConfig.tap,
     modifyRsbuildConfig: hooks.modifyRsbuildConfig.tap,
-    modifyEnvironmentConfig: hooks.modifyEnvironmentConfig.tap,
-  };
+    modifyHTMLTags: (handler) =>
+      hooks.modifyHTMLTags.tapEnvironment({
+        environment,
+        handler,
+      }),
+    modifyBundlerChain: (handler) =>
+      hooks.modifyBundlerChain.tapEnvironment({
+        environment,
+        handler,
+      }),
+    modifyRspackConfig: (handler) =>
+      hooks.modifyRspackConfig.tapEnvironment({
+        environment,
+        handler,
+      }),
+    modifyWebpackChain: (handler) =>
+      hooks.modifyWebpackChain.tapEnvironment({
+        environment,
+        handler,
+      }),
+    modifyWebpackConfig: (handler) =>
+      hooks.modifyWebpackConfig.tapEnvironment({
+        environment,
+        handler,
+      }),
+    modifyEnvironmentConfig: (handler) =>
+      hooks.modifyEnvironmentConfig.tapEnvironment({
+        environment,
+        handler,
+      }),
+    onAfterEnvironmentCompile: (handler) =>
+      hooks.onAfterEnvironmentCompile.tapEnvironment({
+        environment,
+        handler,
+      }),
+    onBeforeEnvironmentCompile: (handler) =>
+      hooks.onBeforeEnvironmentCompile.tapEnvironment({
+        environment,
+        handler,
+      }),
+  });
 }

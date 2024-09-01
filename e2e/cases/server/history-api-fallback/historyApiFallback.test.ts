@@ -49,7 +49,7 @@ test('should provide history api fallback for preview server correctly', async (
   const rsbuild = await build({
     cwd,
     plugins: [pluginReact()],
-    runServer: true,
+    page,
     rsbuildConfig: {
       source: {
         entry: {

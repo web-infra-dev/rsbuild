@@ -6,15 +6,18 @@ exports[`plugin-module-federation > should set environment module federation con
     "optimization": {
       "splitChunks": {
         "cacheGroups": {},
-        "chunks": "all",
-        "enforceSizeThreshold": 50000,
+        "chunks": "async",
       },
     },
+    "output": {
+      "uniqueName": "remote",
+    },
     "plugins": [
+      RsbuildCorePlugin {},
       ModuleFederationPlugin {
         "_options": {
           "exposes": {
-            "Button": "src/Button",
+            "./Button": "./src/Button",
           },
           "filename": "remoteEntry.js",
           "name": "remote",
@@ -42,26 +45,20 @@ exports[`plugin-module-federation > should set environment module federation con
           "lib-axios": {
             "name": "lib-axios",
             "priority": 0,
-            "reuseExistingChunk": true,
-            "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(axios\\|axios-\\.\\+\\)\\[\\\\\\\\/\\]/,
+            "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
           },
           "lib-lodash": {
             "name": "lib-lodash",
             "priority": 0,
-            "reuseExistingChunk": true,
-            "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(lodash\\|lodash-es\\)\\[\\\\\\\\/\\]/,
-          },
-          "lib-polyfill": {
-            "name": "lib-polyfill",
-            "priority": 0,
-            "reuseExistingChunk": true,
-            "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
+            "test": /node_modules\\[\\\\\\\\/\\]lodash\\(-es\\)\\?\\[\\\\\\\\/\\]/,
           },
         },
         "chunks": "all",
-        "enforceSizeThreshold": 50000,
       },
     },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
   },
 ]
 `;
@@ -72,15 +69,18 @@ exports[`plugin-module-federation > should set module federation and environment
     "optimization": {
       "splitChunks": {
         "cacheGroups": {},
-        "chunks": "all",
-        "enforceSizeThreshold": 50000,
+        "chunks": "async",
       },
     },
+    "output": {
+      "uniqueName": "remote",
+    },
     "plugins": [
+      RsbuildCorePlugin {},
       ModuleFederationPlugin {
         "_options": {
           "exposes": {
-            "Button": "src/Button",
+            "./Button": "./src/Button",
           },
           "filename": "remoteEntry.js",
           "name": "remote",
@@ -105,11 +105,15 @@ exports[`plugin-module-federation > should set module federation and environment
     "optimization": {
       "splitChunks": false,
     },
+    "output": {
+      "uniqueName": "remote",
+    },
     "plugins": [
+      RsbuildCorePlugin {},
       ModuleFederationPlugin {
         "_options": {
           "exposes": {
-            "Button": "src/Button",
+            "./Button": "./src/Button",
           },
           "filename": "remoteEntry.js",
           "name": "remote",
@@ -138,15 +142,18 @@ exports[`plugin-module-federation > should set module federation config 1`] = `
   "optimization": {
     "splitChunks": {
       "cacheGroups": {},
-      "chunks": "all",
-      "enforceSizeThreshold": 50000,
+      "chunks": "async",
     },
   },
+  "output": {
+    "uniqueName": "remote",
+  },
   "plugins": [
+    RsbuildCorePlugin {},
     ModuleFederationPlugin {
       "_options": {
         "exposes": {
-          "Button": "src/Button",
+          "./Button": "./src/Button",
         },
         "filename": "remoteEntry.js",
         "name": "remote",

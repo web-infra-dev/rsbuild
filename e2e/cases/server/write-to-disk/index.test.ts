@@ -1,4 +1,4 @@
-import { dev, gotoPage } from '@e2e/helper';
+import { dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
@@ -6,6 +6,7 @@ const cwd = __dirname;
 test('writeToDisk default', async ({ page }) => {
   const rsbuild = await dev({
     cwd,
+    page,
     rsbuildConfig: {
       output: {
         distPath: {
@@ -14,8 +15,6 @@ test('writeToDisk default', async ({ page }) => {
       },
     },
   });
-
-  await gotoPage(page, rsbuild);
 
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
@@ -26,6 +25,7 @@ test('writeToDisk default', async ({ page }) => {
 test('writeToDisk false', async ({ page }) => {
   const rsbuild = await dev({
     cwd,
+    page,
     rsbuildConfig: {
       output: {
         distPath: {
@@ -38,8 +38,6 @@ test('writeToDisk false', async ({ page }) => {
     },
   });
 
-  await gotoPage(page, rsbuild);
-
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
@@ -49,6 +47,7 @@ test('writeToDisk false', async ({ page }) => {
 test('writeToDisk true', async ({ page }) => {
   const rsbuild = await dev({
     cwd,
+    page,
     rsbuildConfig: {
       output: {
         distPath: {
@@ -60,8 +59,6 @@ test('writeToDisk true', async ({ page }) => {
       },
     },
   });
-
-  await gotoPage(page, rsbuild);
 
   const test = page.locator('#test');
   await expect(test).toHaveText('Hello Rsbuild!');

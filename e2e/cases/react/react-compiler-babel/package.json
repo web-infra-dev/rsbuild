@@ -7,6 +7,6 @@
     "react-dom": "19.0.0-rc-fb9a90fa48-20240614"
   },
   "devDependencies": {
-    "babel-plugin-react-compiler": "0.0.0-experimental-938cd9a-20240601"
+    "babel-plugin-react-compiler": "0.0.0-experimental-696af53-20240625"
   }
 }

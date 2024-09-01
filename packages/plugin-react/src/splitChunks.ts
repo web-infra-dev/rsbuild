@@ -1,5 +1,4 @@
-import type { RsbuildPluginAPI, SplitChunks } from '@rsbuild/core';
-import { createCacheGroups } from '@rsbuild/shared';
+import type { CacheGroups, RsbuildPluginAPI, SplitChunks } from '@rsbuild/core';
 import type { SplitReactChunkOptions } from '.';
 
 const isPlainObject = (obj: unknown): obj is Record<string, any> =>
@@ -14,7 +13,7 @@ export const applySplitChunksRule = (
     router: true,
   },
 ): void => {
-  api.modifyBundlerChain((chain, { environment }) => {
+  api.modifyBundlerChain((chain, { environment, isProd }) => {
     const { config } = environment;
     if (config.performance.chunkSplit.strategy !== 'split-by-experience') {
       return;
@@ -25,26 +24,24 @@ export const applySplitChunksRule = (
       return;
     }
 
-    const extraGroups: Record<string, (string | RegExp)[]> = {};
+    const extraGroups: CacheGroups = {};
 
     if (options.react) {
-      extraGroups.react = [
-        'react',
-        'react-dom',
-        'scheduler',
-        ...(process.env.NODE_ENV === 'production'
-          ? []
-          : ['react-refresh', /@rspack[\\/]plugin-react-refresh/]),
-      ];
+      extraGroups.react = {
+        name: 'lib-react',
+        test: isProd
+          ? /node_modules[\\/](?:react|react-dom|scheduler)[\\/]/
+          : /node_modules[\\/](?:react|react-dom|scheduler|react-refresh|@rspack[\\/]plugin-react-refresh)[\\/]/,
+        priority: 0,
+      };
     }
 
     if (options.router) {
-      extraGroups.router = [
-        'react-router',
-        'react-router-dom',
-        'history',
-        /@remix-run[\\/]router/,
-      ];
+      extraGroups.router = {
+        name: 'lib-router',
+        test: /node_modules[\\/](?:react-router|react-router-dom|history|@remix-run[\\/]router)[\\/]/,
+        priority: 0,
+      };
     }
 
     if (!Object.keys(extraGroups).length) {
@@ -55,7 +52,7 @@ export const applySplitChunksRule = (
       ...currentConfig,
       cacheGroups: {
         ...(currentConfig as Exclude<SplitChunks, false>).cacheGroups,
-        ...createCacheGroups(extraGroups),
+        ...extraGroups,
       },
     });
   });

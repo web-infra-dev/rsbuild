@@ -4,6 +4,39 @@ Rsbuild supports injecting environment variables or expressions into the code du
 
 ## Default Variables
 
+### import.meta.env.MODE
+
+You can use `import.meta.env.MODE` in the client code to read the value of the [mode](/config/mode) configuration.
+
+```ts
+if (import.meta.env.MODE === 'development') {
+  console.log('this is development mode');
+}
+```
+
+In development mode, the above code will be compiled to:
+
+```js
+if (true) {
+  console.log('this is development mode');
+}
+```
+
+In production mode, the above code will be compiled to:
+
+```js
+if (false) {
+  console.log('this is development mode');
+}
+```
+
+During code minification, `if (false) { ... }` will be recognized as invalid code and removed automatically.
+
+You can also use the following environment variables:
+
+- `import.meta.env.DEV`: If [mode](/config/mode) is `'development'`, the value is `true`; otherwise, it is `false`.
+- `import.meta.env.PROD`: If [mode](/config/mode) is `'production'`, the value is `true`; otherwise, it is `false`.
+
 ### process.env.NODE_ENV
 
 By default, Rsbuild will automatically set the `process.env.NODE_ENV` environment variable to `'development'` in development mode and `'production'` in production mode.
@@ -16,7 +49,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 ```
 
-In the development build, the above code will be compiled as:
+In development mode, the above code will be compiled to:
 
 ```js
 if (true) {
@@ -24,7 +57,7 @@ if (true) {
 }
 ```
 
-In the production build, the above code will be compiled as:
+In production mode, the above code will be compiled to:
 
 ```js
 if (false) {
@@ -32,7 +65,7 @@ if (false) {
 }
 ```
 
-After code minification, `if (false) { ... }` will be recognized as invalid code and removed automatically.
+During code minification, `if (false) { ... }` will be recognized as invalid code and removed automatically.
 
 ### process.env.ASSET_PREFIX
 
@@ -62,13 +95,13 @@ Then we can access the image URL in the client code:
 const Image = <img src={`${process.env.ASSET_PREFIX}/static/icon.png`} />;
 ```
 
-In the development build, the above code will be compiled as:
+In development mode, the above code will be compiled to:
 
 ```jsx
 const Image = <img src={`/static/icon.png`} />;
 ```
 
-In the production build, the above code will be compiled as:
+In production mode, the above code will be compiled to:
 
 ```jsx
 const Image = <img src={`https://example.com/static/icon.png`} />;
@@ -97,7 +130,7 @@ If several of the above files exist at the same time, they will all be loaded, w
 
 ### Env Mode
 
-Rsbuild also supports reading `.env.[mode]` and `.env.[mode].local` files. You can specify the env mode using the `--env-mode <mode>` CLI option.
+Rsbuild also supports reading `.env.[mode]` and `.env.[mode].local` files. You can specify the env mode using the `--env-mode <mode>` flag.
 
 For example, set the env mode as `test`:
 
@@ -118,6 +151,18 @@ The `--env-mode` option takes precedence over `process.env.NODE_ENV`.
 It is recommended to use `--env-mode` to set the env mode, and not to modify `process.env.NODE_ENV`.
 
 :::
+
+### Env Directory
+
+By default, the `.env` file is located in the root directory of the project. You can specify the env directory by using the `--env-dir <dir>` option in the CLI.
+
+For example, to specify the env directory as `config`:
+
+```bash
+npx rsbuild dev --env-dir config
+```
+
+In this case, Rsbuild will read the `./config/.env` and other env files.
 
 ### Example
 
@@ -283,7 +328,7 @@ export default {
 
 If the above usage is adopted, the following problems will be caused:
 
-1. Some unused environment variables are additionally injected, causing the environment variables of the development environment to be leaked into the front-end code.
+1. Some unused environment variables are additionally injected, causing the environment variables of the dev server to be leaked into the front-end code.
 2. As each `process.env` code will be replaced by a complete environment variable object, the bundle size of the front-end code will increase and the performance will decrease.
 
 Therefore, please inject the environment variables on `process.env` according to actual needs and avoid replacing them in its entirety.

@@ -1,6 +1,5 @@
 import path from 'node:path';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { SCRIPT_REGEX } from '@rsbuild/shared';
 import { SwcMinimizerPlugin } from './minimizer';
 import type {
   ObjPluginSwcOptions,
@@ -63,7 +62,7 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
 
           // Insert swc loader and plugin
           rule
-            .test(test || SCRIPT_REGEX)
+            .test(test || /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/)
             .use(CHAIN_ID.USE.SWC)
             .loader(path.resolve(__dirname, './loader.cjs'))
             .options(removeUselessOptions(swcConfig) satisfies TransformConfig);
@@ -109,34 +108,42 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
     api.modifyBundlerChain((chain, { CHAIN_ID, isProd, environment }) => {
       const environmentConfig = environment.config;
 
-      if (checkUseMinify(mainConfig, environmentConfig, isProd)) {
-        const { minify } = environmentConfig.output;
-        const minifyJs =
-          minify === true || (typeof minify === 'object' && minify.js);
-        const minifyCss =
-          minify === true || (typeof minify === 'object' && minify.css);
+      if (!checkUseMinify(mainConfig, environmentConfig, isProd)) {
+        return;
+      }
 
-        if (minifyJs) {
-          chain.optimization
-            .minimizer(CHAIN_ID.MINIMIZER.JS)
-            .use(SwcMinimizerPlugin, [
-              {
-                jsMinify: mainConfig.jsMinify ?? mainConfig.jsc?.minify ?? true,
-                environmentConfig,
-              },
-            ]);
-        }
+      const { minify } = environmentConfig.output;
+      const minifyJs =
+        minify === true || (typeof minify === 'object' && minify.js);
+      const minifyCss =
+        minify === true || (typeof minify === 'object' && minify.css);
 
-        if (minifyCss) {
-          chain.optimization
-            .minimizer(CHAIN_ID.MINIMIZER.CSS)
-            .use(SwcMinimizerPlugin, [
-              {
-                cssMinify: minifyCss ? mainConfig.cssMinify ?? true : false,
-                environmentConfig,
-              },
-            ]);
-        }
+      if (minifyJs) {
+        chain.optimization
+          .minimizer(CHAIN_ID.MINIMIZER.JS)
+          .use(SwcMinimizerPlugin, [
+            {
+              jsMinify:
+                (typeof minify === 'object' && minify.jsOptions
+                  ? minify.jsOptions.minimizerOptions
+                  : undefined) ??
+                mainConfig.jsMinify ??
+                mainConfig.jsc?.minify ??
+                true,
+              getEnvironmentConfig: () => environmentConfig,
+            },
+          ]);
+      }
+
+      if (minifyCss) {
+        chain.optimization
+          .minimizer(CHAIN_ID.MINIMIZER.CSS)
+          .use(SwcMinimizerPlugin, [
+            {
+              cssMinify: mainConfig.cssMinify ?? true,
+              getEnvironmentConfig: () => environmentConfig,
+            },
+          ]);
       }
     });
   },

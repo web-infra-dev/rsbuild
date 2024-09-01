@@ -22,9 +22,7 @@ exports[`svgr > 'configure SVGR options' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.37",
-              "mode": "usage",
-              "shippedProposals": true,
+              "mode": undefined,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -34,6 +32,9 @@ exports[`svgr > 'configure SVGR options' 1`] = `
             },
             "isModule": "unknown",
             "jsc": {
+              "experimental": {
+                "cacheRoot": "<ROOT>/packages/plugin-svgr/tests/node_modules/.cache/.swc",
+              },
               "externalHelpers": true,
               "parser": {
                 "decorators": true,
@@ -114,9 +115,7 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.37",
-              "mode": "usage",
-              "shippedProposals": true,
+              "mode": undefined,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -126,6 +125,9 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
             },
             "isModule": "unknown",
             "jsc": {
+              "experimental": {
+                "cacheRoot": "<ROOT>/packages/plugin-svgr/tests/node_modules/.cache/.swc",
+              },
               "externalHelpers": true,
               "parser": {
                 "decorators": true,
@@ -178,9 +180,7 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.37",
-              "mode": "usage",
-              "shippedProposals": true,
+              "mode": undefined,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -190,6 +190,9 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
             },
             "isModule": "unknown",
             "jsc": {
+              "experimental": {
+                "cacheRoot": "<ROOT>/packages/plugin-svgr/tests/node_modules/.cache/.swc",
+              },
               "externalHelpers": true,
               "parser": {
                 "decorators": true,
@@ -269,9 +272,7 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.37",
-              "mode": "usage",
-              "shippedProposals": true,
+              "mode": undefined,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -281,6 +282,9 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
             },
             "isModule": "unknown",
             "jsc": {
+              "experimental": {
+                "cacheRoot": "<ROOT>/packages/plugin-svgr/tests/node_modules/.cache/.swc",
+              },
               "externalHelpers": true,
               "parser": {
                 "decorators": true,
@@ -333,9 +337,7 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.37",
-              "mode": "usage",
-              "shippedProposals": true,
+              "mode": undefined,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -345,6 +347,9 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
             },
             "isModule": "unknown",
             "jsc": {
+              "experimental": {
+                "cacheRoot": "<ROOT>/packages/plugin-svgr/tests/node_modules/.cache/.swc",
+              },
               "externalHelpers": true,
               "parser": {
                 "decorators": true,
@@ -424,9 +429,7 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.37",
-              "mode": "usage",
-              "shippedProposals": true,
+              "mode": undefined,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -436,6 +439,9 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
             },
             "isModule": "unknown",
             "jsc": {
+              "experimental": {
+                "cacheRoot": "<ROOT>/packages/plugin-svgr/tests/node_modules/.cache/.swc",
+              },
               "externalHelpers": true,
               "parser": {
                 "decorators": true,
@@ -488,9 +494,7 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.37",
-              "mode": "usage",
-              "shippedProposals": true,
+              "mode": undefined,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -500,6 +504,9 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
             },
             "isModule": "unknown",
             "jsc": {
+              "experimental": {
+                "cacheRoot": "<ROOT>/packages/plugin-svgr/tests/node_modules/.cache/.swc",
+              },
               "externalHelpers": true,
               "parser": {
                 "decorators": true,
@@ -579,9 +586,7 @@ exports[`svgr > 'exportType named / mixedImport true' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.37",
-              "mode": "usage",
-              "shippedProposals": true,
+              "mode": undefined,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -591,6 +596,9 @@ exports[`svgr > 'exportType named / mixedImport true' 1`] = `
             },
             "isModule": "unknown",
             "jsc": {
+              "experimental": {
+                "cacheRoot": "<ROOT>/packages/plugin-svgr/tests/node_modules/.cache/.swc",
+              },
               "externalHelpers": true,
               "parser": {
                 "decorators": true,
@@ -643,9 +651,7 @@ exports[`svgr > 'exportType named / mixedImport true' 1`] = `
           "loader": "builtin:swc-loader",
           "options": {
             "env": {
-              "coreJs": "3.37",
-              "mode": "usage",
-              "shippedProposals": true,
+              "mode": undefined,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -655,6 +661,9 @@ exports[`svgr > 'exportType named / mixedImport true' 1`] = `
             },
             "isModule": "unknown",
             "jsc": {
+              "experimental": {
+                "cacheRoot": "<ROOT>/packages/plugin-svgr/tests/node_modules/.cache/.swc",
+              },
               "externalHelpers": true,
               "parser": {
                 "decorators": true,

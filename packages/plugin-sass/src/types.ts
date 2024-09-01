@@ -1,5 +1,4 @@
 import type { ConfigChainWithContext, Rspack } from '@rsbuild/core';
-import type { FileFilterUtil } from '@rsbuild/shared';
 import type {
   LegacyOptions as LegacySassOptions,
   Options as SassOptions,
@@ -8,24 +7,26 @@ import type SassLoader from '../compiled/sass-loader/index.js';
 
 export type SassLoaderOptions = Omit<
   SassLoader.Options,
-  'sassOptions' | 'additionalData'
+  'api' | 'sassOptions' | 'additionalData'
 > &
   (
     | {
-        api?: 'legacy';
-        sassOptions?: Partial<LegacySassOptions<'async'>>;
-      }
-    | {
-        api: 'modern' | 'modern-compiler';
+        api?: 'modern' | 'modern-compiler';
         sassOptions?: SassOptions<'async'>;
       }
+    | {
+        api: 'legacy';
+        sassOptions?: Partial<LegacySassOptions<'async'>>;
+      }
   ) & {
-    // @types/sass-loader is outdated
-    // see https://github.com/web-infra-dev/rsbuild/issues/2582
-    additionalData?: (
-      content: string | Buffer,
-      loaderContext: Rspack.LoaderContext,
-    ) => string;
+    // Use `Rspack.LoaderContext` instead of `webpack.LoaderContext`
+    // see https://github.com/web-infra-dev/rsbuild/pull/2708
+    additionalData?:
+      | string
+      | ((
+          content: string | Buffer,
+          loaderContext: Rspack.LoaderContext,
+        ) => string);
   };
 
 export type PluginSassOptions = {
@@ -40,7 +41,7 @@ export type PluginSassOptions = {
        * @deprecated
        * use `exclude` option instead.
        */
-      addExcludes: FileFilterUtil;
+      addExcludes: (items: string | RegExp | Array<string | RegExp>) => void;
     }
   >;
 

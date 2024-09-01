@@ -13,8 +13,7 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
                 "env": {
-                  "coreJs": "3.37",
-                  "mode": "usage",
+                  "coreJs": "3.38",
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -72,8 +71,7 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
                 "env": {
-                  "coreJs": "3.37",
-                  "mode": "usage",
+                  "coreJs": "3.38",
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -117,6 +115,9 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
         },
       ],
     },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
   },
   {
     "module": {
@@ -129,8 +130,7 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
                 "env": {
-                  "coreJs": "3.37",
-                  "mode": "usage",
+                  "coreJs": "3.38",
                   "targets": [
                     "node >= 16",
                   ],
@@ -186,8 +186,7 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
                 "env": {
-                  "coreJs": "3.37",
-                  "mode": "usage",
+                  "coreJs": "3.38",
                   "targets": [
                     "node >= 16",
                   ],
@@ -229,6 +228,9 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
         },
       ],
     },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
   },
 ]
 `;
@@ -245,8 +247,7 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
             "options": {
               "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
               "env": {
-                "coreJs": "3.37",
-                "mode": "usage",
+                "coreJs": "3.38",
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -304,8 +305,7 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
             "options": {
               "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
               "env": {
-                "coreJs": "3.37",
-                "mode": "usage",
+                "coreJs": "3.38",
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -349,6 +349,9 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;
 
@@ -363,8 +366,7 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
-              "coreJs": "3.37",
-              "mode": "usage",
+              "coreJs": "3.38",
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -422,8 +424,7 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
-              "coreJs": "3.37",
-              "mode": "usage",
+              "coreJs": "3.38",
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -480,8 +481,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
-              "coreJs": "3.37",
-              "mode": "usage",
+              "coreJs": "3.38",
               "targets": [
                 "node >= 16",
               ],
@@ -536,8 +536,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
-              "coreJs": "3.37",
-              "mode": "usage",
+              "coreJs": "3.38",
               "targets": [
                 "node >= 16",
               ],
@@ -591,8 +590,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
-              "coreJs": "3.37",
-              "mode": "usage",
+              "coreJs": "3.38",
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -650,8 +648,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
-              "coreJs": "3.37",
-              "mode": "usage",
+              "coreJs": "3.38",
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -708,8 +705,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
-              "coreJs": "3.37",
-              "mode": "usage",
+              "coreJs": "3.38",
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -767,8 +763,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
             "env": {
-              "coreJs": "3.37",
-              "mode": "usage",
+              "coreJs": "3.38",
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -823,7 +818,7 @@ exports[`plugin-swc > should set correct swc minimizer options in production 1`]
         "jsMinify": {
           "compress": false,
           "format": {
-            "asciiOnly": true,
+            "asciiOnly": false,
           },
           "mangle": false,
         },
@@ -850,7 +845,7 @@ exports[`plugin-swc > should set correct swc minimizer options using raw swc con
         "jsMinify": {
           "compress": false,
           "format": {
-            "asciiOnly": true,
+            "asciiOnly": false,
           },
           "mangle": false,
         },
@@ -878,8 +873,7 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
         "options": {
           "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
           "env": {
-            "coreJs": "3.37",
-            "mode": "usage",
+            "coreJs": "3.38",
             "targets": [
               "chrome >= 87",
               "edge >= 88",
@@ -930,8 +924,7 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
         "options": {
           "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
           "env": {
-            "coreJs": "3.37",
-            "mode": "usage",
+            "coreJs": "3.38",
             "targets": [
               "chrome >= 87",
               "edge >= 88",
@@ -990,8 +983,7 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
         "options": {
           "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
           "env": {
-            "coreJs": "3.37",
-            "mode": "usage",
+            "coreJs": "3.38",
             "targets": [
               "chrome >= 87",
               "edge >= 88",
@@ -1045,7 +1037,7 @@ exports[`plugin-swc > should set swc minimizer in production 1`] = `
         "cssMinify": undefined,
         "jsMinify": {
           "format": {
-            "asciiOnly": true,
+            "asciiOnly": false,
           },
           "mangle": true,
         },
@@ -1075,8 +1067,7 @@ exports[`plugin-swc > should set swc-loader 1`] = `
             "options": {
               "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
               "env": {
-                "coreJs": "3.37",
-                "mode": "usage",
+                "coreJs": "3.38",
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1134,8 +1125,7 @@ exports[`plugin-swc > should set swc-loader 1`] = `
             "options": {
               "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
               "env": {
-                "coreJs": "3.37",
-                "mode": "usage",
+                "coreJs": "3.38",
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1179,5 +1169,149 @@ exports[`plugin-swc > should set swc-loader 1`] = `
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
+`;
+
+exports[`plugin-swc > should use output config 1`] = `
+[
+  {
+    "module": {
+      "rules": [
+        {
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "use": [
+            {
+              "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+              "options": {
+                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                "env": {
+                  "coreJs": "3.38",
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "extensions": {
+                  "lockCorejsVersion": {
+                    "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                    "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+                  },
+                  "lodash": {
+                    "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                    "ids": [
+                      "lodash",
+                      "lodash-es",
+                    ],
+                  },
+                },
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
+                    "react": {
+                      "refresh": false,
+                      "runtime": "classic",
+                    },
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          "mimetype": {
+            "or": [
+              "text/javascript",
+              "application/javascript",
+            ],
+          },
+          "resolve": {
+            "fullySpecified": false,
+          },
+          "use": [
+            {
+              "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+              "options": {
+                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                "env": {
+                  "coreJs": "3.38",
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "extensions": {
+                  "lockCorejsVersion": {
+                    "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                    "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+                  },
+                  "lodash": {
+                    "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                    "ids": [
+                      "lodash",
+                      "lodash-es",
+                    ],
+                  },
+                },
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "preserveAllComments": true,
+                  "transform": {
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
+                    "react": {
+                      "refresh": false,
+                      "runtime": "classic",
+                    },
+                  },
+                },
+              },
+            },
+          ],
+        },
+      ],
+    },
+    "optimization": {
+      "minimizer": [
+        SwcMinimizerPlugin {
+          "minifyOptions": {
+            "cssMinify": undefined,
+            "jsMinify": {
+              "compress": {
+                "ecma": 2019,
+              },
+              "format": {
+                "asciiOnly": false,
+              },
+              "mangle": true,
+            },
+          },
+          "name": "swc-minimizer-plugin",
+        },
+      ],
+    },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
+  },
+]
 `;

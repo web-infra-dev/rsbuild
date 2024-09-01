@@ -1,0 +1,64 @@
+# tools.lightningcssLoader
+
+- **类型：** `Rspack.LightningcssLoaderOptions | Function | boolean`
+- **默认值：**
+
+```ts
+const defaultOptions = {
+  // 使用当前项目的 browserslist 配置
+  targets: browserslist,
+  // 在生产模式，且 output.injectStyles 为 true 时，minify 会被启用
+  minify: config.mode === 'production' && config.output.injectStyles,
+};
+```
+
+- **版本：** `>= 1.0.0`
+
+通过 `tools.lightningcssLoader` 可以设置 [builtin:lightningcss-loader](https://rspack.dev/guide/features/builtin-lightningcss-loader) 的选项。
+
+## Object 类型
+
+当 `tools.lightningcssLoader` 是一个 object 时，它会与默认配置通过 `Object.assign` 合并。
+
+比如，你可以通过 `tools.lightningcssLoader.exclude` 来关闭 vendor prefixes 的添加，此时你可以使用 PostCSS 的 autoprefixer 插件来添加 vendor prefixes。
+
+```js
+export default {
+  tools: {
+    lightningcssLoader: {
+      exclude: {
+        vendorPrefixes: false,
+      },
+    },
+  },
+};
+```
+
+## Function 类型
+
+当 `tools.lightningcssLoader` 是一个 function 时，默认选项会作为第一个参数传入，你可以直接修改这个对象，也可以返回一个新的对象作为最终使用的选项。比如：
+
+```js
+export default {
+  tools: {
+    lightningcssLoader: (config) => {
+      config.exclude = {
+        vendorPrefixes: false,
+      };
+      return config;
+    },
+  },
+};
+```
+
+## 禁用 loader
+
+将 `tools.lightningcssLoader` 设置为 `false`，可以禁用 Rsbuild 内置的 `lightningcss-loader`：
+
+```js
+export default {
+  tools: {
+    lightningcssLoader: false,
+  },
+};
+```

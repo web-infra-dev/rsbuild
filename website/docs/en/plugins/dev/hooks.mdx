@@ -6,12 +6,15 @@ This chapter introduces the plugin hooks available for Rsbuild plugins.
 
 ### Common Hooks
 
-- [modifyRsbuildConfig](#modifyrsbuildconfig): Modify the configuration object passed to Rsbuild.
-- [modifyRspackConfig](#modifyrspackconfig): Modify the configuration object passed to Rspack.
-- [modifyBundlerChain](#modifybundlerchain): Modify the configuration object of Rspack through the chain API.
+- [modifyRsbuildConfig](#modifyrsbuildconfig): Modify the configuration passed to Rsbuild.
+- [modifyEnvironmentConfig](#modifyenvironmentconfig): Modify the Rsbuild configuration of a specific environment.
+- [modifyRspackConfig](#modifyrspackconfig): Modify the configuration passed to Rspack.
+- [modifyBundlerChain](#modifybundlerchain): Modify the configuration of Rspack through the chain API.
 - [modifyHTMLTags](#modifyhtmltags): Modify the tags that are injected into the HTML.
 - [onBeforeCreateCompiler](#onbeforecreatecompiler): Called before creating a compiler instance.
 - [onAfterCreateCompiler](#onaftercreatecompiler): Called after creating a compiler instance and before building.
+- [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile): Called before the compilation of a single environment.
+- [onAfterEnvironmentCompile](#onafterenvironmentcompile): Called after the compilation of a single environment. You can get the build result information.
 - [onExit](#onexit): Called when the process is about to exit.
 
 ### Dev Hooks
@@ -21,7 +24,7 @@ Called only when running the `rsbuild dev` command or the `rsbuild.startDevServe
 - [onBeforeStartDevServer](#onbeforestartdevserver): Called before starting the dev server.
 - [onAfterStartDevServer](#onafterstartdevserver): Called after starting the dev server.
 - [onCloseDevServer](#onclosedevserver): Called when the dev server is closed.
-- [onDevCompileDone](#ondevcompiledone): Called after each build during development.
+- [onDevCompileDone](#ondevcompiledone): Called after each build in development mode.
 
 ### Build Hooks
 
@@ -44,39 +47,94 @@ Called only when running the `rsbuild preview` command or the `rsbuild.preview()
 When the `rsbuild dev` command or `rsbuild.startDevServer()` method is executed, Rsbuild will execute the following hooks in order:
 
 - [modifyRsbuildConfig](#modifyrsbuildconfig)
+- [modifyEnvironmentConfig](#modifyenvironmentconfig)
 - [onBeforeStartDevServer](#onbeforestartdevserver)
 - [modifyBundlerChain](#modifybundlerchain)
 - [modifyRspackConfig](#modifyrspackconfig)
 - [onBeforeCreateCompiler](#onbeforecreatecompiler)
 - [onAfterCreateCompiler](#onaftercreatecompiler)
+- [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [onAfterStartDevServer](#onafterstartdevserver)
 - [modifyHTMLTags](#modifyhtmltags)
+- [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onDevCompileDone](#ondevcompiledone)
 - [onCloseDevServer](#onclosedevserver)
 - [onExit](#onexit)
+
+When rebuilding, the following hooks will be triggered again:
+
+- [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
+- [modifyHTMLTags](#modifyhtmltags)
+- [onAfterEnvironmentCompile](#onafterenvironmentcompile)
+- [onDevCompileDone](#ondevcompiledone)
 
 ### Build Hooks
 
 When the `rsbuild build` command or `rsbuild.build()` method is executed, Rsbuild will execute the following hooks in order:
 
 - [modifyRsbuildConfig](#modifyrsbuildconfig)
+- [modifyEnvironmentConfig](#modifyenvironmentconfig)
 - [modifyBundlerChain](#modifybundlerchain)
 - [modifyRspackConfig](#modifyrspackconfig)
 - [onBeforeCreateCompiler](#onbeforecreatecompiler)
 - [onAfterCreateCompiler](#onaftercreatecompiler)
 - [onBeforeBuild](#onbeforebuild)
+- [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [modifyHTMLTags](#modifyhtmltags)
+- [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onAfterBuild](#onafterbuild)
 - [onExit](#onexit)
+
+When rebuilding, the following hooks will be triggered again:
+
+- [onBeforeBuild](#onbeforebuild)
+- [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
+- [modifyHTMLTags](#modifyhtmltags)
+- [onAfterEnvironmentCompile](#onafterenvironmentcompile)
+- [onAfterBuild](#onafterbuild)
 
 ### Preview Hooks
 
 When executing the `rsbuild preview` command or `rsbuild.preview()` method, Rsbuild will execute the following hooks in order:
 
 - [modifyRsbuildConfig](#modifyrsbuildconfig)
+- [modifyEnvironmentConfig](#modifyenvironmentconfig)
 - [onBeforeStartProdServer](#onbeforestartprodserver)
 - [onAfterStartProdServer](#onafterstartprodserver)
 - [onExit](#onexit)
+
+## Global Hooks vs Environment Hooks
+
+In Rsbuild, some of the plugin hooks are global hooks. The execution of these hooks is often related to Rsbuild's own startup process or global logic and is shared under all environments. Such as:
+
+- `modifyRsbuildConfig` is used to modify the basic configuration of Rsbuild. The basic configuration will eventually be merged with the environment configuration;
+- `onBeforeStartDevServer` and `onAfterStartDevServer` are related to the Rsbuild dev server startup process, all environments share Rsbuild's dev server, middlewares, and Web Socket.
+
+Correspondingly, there are some plugin hooks that are related to the current environment. These hooks are executed with a specific environment context and are triggered multiple times depending on the environment.
+
+### Global Hooks
+
+- [modifyRsbuildConfig](#modifyrsbuildconfig)
+- [onBeforeStartDevServer](#onbeforestartdevserver)
+- [onBeforeCreateCompiler](#onbeforecreatecompiler)
+- [onAfterCreateCompiler](#onaftercreatecompiler)
+- [onAfterStartDevServer](#onafterstartdevserver)
+- [onDevCompileDone](#ondevcompiledone)
+- [onCloseDevServer](#onclosedevserver)
+- [onBeforeBuild](#onbeforebuild)
+- [onAfterBuild](#onafterbuild)
+- [onBeforeStartProdServer](#onbeforestartprodserver)
+- [onAfterStartProdServer](#onafterstartprodserver)
+- [onExit](#onexit)
+
+### Environment Hooks
+
+- [modifyEnvironmentConfig](#modifyenvironmentconfig)
+- [modifyBundlerChain](#modifybundlerchain)
+- [modifyRspackConfig](#modifyrspackconfig)
+- [modifyHTMLTags](#modifyhtmltags)
+- [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
+- [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 
 ## Callback Order
 
@@ -140,6 +198,10 @@ rsbuild.addPlugins([plugin1, plugin2]);
 
 Modify the config passed to the Rsbuild, you can directly modify the config object, or return a new object to replace the previous object.
 
+:::warning
+`modifyRsbuildConfig` is a global hook. To add support for your plugin as an [environment-specific plugin](/guide/advanced/environments#add-plugins-for-specified-environment), you should use [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironmentconfig) instead of `modifyRsbuildConfig`.
+:::
+
 - **Type:**
 
 ```ts
@@ -194,15 +256,88 @@ const myPlugin = () => ({
 });
 ```
 
+:::tip
+`modifyRsbuildConfig` cannot be used to register additional Rsbuild plugins. This is because at the time `modifyRsbuildConfig` is executed, Rsbuild has already initialized all plugins and started executing the callbacks of the hooks.
+:::
+
+### modifyEnvironmentConfig
+
+Modify the Rsbuild configuration of a specific environment.
+
+In the callback function, the config object in the parameters has already been merged with the common Rsbuild configuration. You can directly modify this config object, or you can return a new object to replace it.
+
+- **Type:**
+
+```ts
+type ArrayAtLeastOne<A, B> = [A, ...Array<A | B>] | [...Array<A | B>, A];
+
+type ModifyEnvironmentConfigUtils = {
+  /** Current environment name */
+  name: string;
+  mergeEnvironmentConfig: (
+    ...configs: ArrayAtLeastOne<MergedEnvironmentConfig, EnvironmentConfig>
+  ) => EnvironmentConfig;
+};
+
+function ModifyEnvironmentConfig(
+  callback: (
+    config: EnvironmentConfig,
+    utils: ModifyEnvironmentConfigUtils,
+  ) => MaybePromise<EnvironmentConfig | void>,
+): void;
+```
+
+- **Example:** Set a default value for the Rsbuild config of a specified environment:
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.modifyEnvironmentConfig((config, { name }) => {
+      if (name !== 'web') {
+        return config;
+      }
+      config.html.title = 'My Default Title';
+    });
+  },
+});
+```
+
+- **Example:** Using `mergeEnvironmentConfig` to merge config objects, and return the merged object.
+
+```ts
+import type { EnvironmentConfig } from '@rsbuild/core';
+
+const myPlugin = () => ({
+  setup: (api) => {
+    api.modifyEnvironmentConfig((userConfig, { mergeEnvironmentConfig }) => {
+      const extraConfig: EnvironmentConfig = {
+        source: {
+          // ...
+        },
+        output: {
+          // ...
+        },
+      };
+
+      // extraConfig will override fields in userConfig,
+      // If you do not want to override the fields in userConfig,
+      // you can adjust to `mergeEnvironmentConfig(extraConfig, userConfig)`
+      return mergeEnvironmentConfig(userConfig, extraConfig);
+    });
+  },
+});
+```
+
 ### modifyRspackConfig
 
-To modify the final Rspack config object, you can directly modify the config object, or return a new object to replace the previous object.
+To modify the final Rspack config, you can directly modify the config object, or return a new object to replace the previous object.
 
 - **Type:**
 
 ```ts
 type ModifyRspackConfigUtils = {
-  env: NodeEnv;
+  environment: EnvironmentContext;
+  env: string;
   isDev: boolean;
   isProd: boolean;
   target: RsbuildTarget;
@@ -213,9 +348,9 @@ type ModifyRspackConfigUtils = {
 
 function ModifyRspackConfig(
   callback: (
-    config: RspackConfig,
+    config: Rspack.Configuration,
     utils: ModifyRspackConfigUtils,
-  ) => Promise<RspackConfig | void> | RspackConfig | void,
+  ) => Promise<RspackConfig | void> | Rspack.Configuration | void,
 ): void;
 ```
 
@@ -247,14 +382,15 @@ This hook only supports modifying the configuration of the non-differentiated pa
 
 ```ts
 type ModifyBundlerChainUtils = {
-  env: NodeEnv;
+  environment: EnvironmentContext;
+  env: string;
   isDev: boolean;
   isProd: boolean;
   target: RsbuildTarget;
   isServer: boolean;
   isWebWorker: boolean;
   CHAIN_ID: ChainIdentifier;
-  HtmlPlugin: typeof import('html-webpack-plugin');
+  HtmlPlugin: typeof import('html-rspack-plugin');
   bundler: {
     BannerPlugin: rspack.BannerPlugin;
     DefinePlugin: rspack.DefinePlugin;
@@ -315,6 +451,10 @@ type HTMLTags = {
 
 type Context = {
   /**
+   * The Compiler object of Rspack.
+   */
+  compiler: Rspack.Compiler;
+  /**
    * The Compilation object of Rspack.
    */
   compilation: Rspack.Compilation;
@@ -328,8 +468,10 @@ type Context = {
    * @example 'index.html'
    */
   filename: string;
-  /** The name of the environment to which this build belongs. */
-  environment: string;
+  /**
+   * The environment context for current build.
+   */
+  environment: EnvironmentContext;
 };
 
 function ModifyHTMLTags(
@@ -389,6 +531,45 @@ const myPlugin = () => ({
   setup: (api) => {
     api.onAfterCreateCompiler(({ compiler }) => {
       console.log('the compiler is ', compiler);
+    });
+  },
+});
+```
+
+### onBeforeEnvironmentCompile
+
+import OnBeforeEnvironmentCompile from '@en/shared/onBeforeEnvironmentCompile.mdx';
+
+<OnBeforeEnvironmentCompile />
+
+- **Example:**
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.onBeforeEnvironmentCompile(({ bundlerConfig, environment }) => {
+      console.log(
+        `the bundler config for the ${environment.name} is `,
+        bundlerConfig,
+      );
+    });
+  },
+});
+```
+
+### onAfterEnvironmentCompile
+
+import OnAfterEnvironmentCompile from '@en/shared/onAfterEnvironmentCompile.mdx';
+
+<OnAfterEnvironmentCompile />
+
+- **Example:**
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.onAfterEnvironmentCompile(({ isFirstCompile, stats }) => {
+      console.log(stats?.toJson(), isFirstCompile);
     });
   },
 });
@@ -466,6 +647,28 @@ const myPlugin = () => ({
     api.onAfterStartDevServer(({ port, routes }) => {
       console.log('this port is: ', port);
       console.log('this routes is: ', routes);
+    });
+  },
+});
+```
+
+### onAfterEnvironmentCompile
+
+import OnDevCompileEnvironmentDone from '@en/shared/onAfterEnvironmentCompile.mdx';
+
+<OnDevCompileEnvironmentDone />
+
+- **Example:**
+
+```ts
+const myPlugin = () => ({
+  setup: (api) => {
+    api.onAfterEnvironmentCompile(({ isFirstCompile }) => {
+      if (isFirstCompile) {
+        console.log('first compile!');
+      } else {
+        console.log('re-compile!');
+      }
     });
   },
 });

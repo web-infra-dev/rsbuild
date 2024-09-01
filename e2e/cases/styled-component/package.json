@@ -2,7 +2,7 @@
   "name": "@e2e/styled-component",
   "private": true,
   "dependencies": {
-    "styled-components": "^6.1.11",
-    "@rsbuild/plugin-styled-components": "workspace:*"
+    "styled-components": "^6.1.12",
+    "@rsbuild/plugin-styled-components": "^1.0.1"
   }
 }

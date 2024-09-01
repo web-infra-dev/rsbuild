@@ -1,5 +1,4 @@
-import type { EnvironmentConfig } from '@rsbuild/shared';
-import type { RsbuildConfig, RsbuildPlugin } from '../types';
+import type { EnvironmentConfig, RsbuildConfig, RsbuildPlugin } from '../types';
 
 /**
  * Apply some configs of Rsbuild performance

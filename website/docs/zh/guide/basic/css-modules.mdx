@@ -148,7 +148,7 @@ declare module '*.module.stylus';
 
 上述方法虽然可以解决 CSS Modules 在 TypeScript 中的类型问题，但是无法准确地提示出 CSS Modules 导出了哪些类名。
 
-Rsbuild 支持为 CSS Modules 生成准确的类型声明，你只需要开启 [Typed CSS Modules 插件](/plugins/list/plugin-typed-css-modules)，再执行构建命令，Rsbuild 就会为项目中所有的 CSS Modules 文件生成类型声明文件。
+Rsbuild 支持为 CSS Modules 生成准确的类型声明，你只需要开启 [@rsbuild/plugin-typed-css-modules](https://github.com/rspack-contrib/rsbuild-plugin-typed-css-modules)，再执行构建命令，Rsbuild 就会为项目中所有的 CSS Modules 文件生成类型声明文件。
 
 ```ts title="rsbuild.config.ts"
 import { pluginTypedCSSModules } from '@rsbuild/plugin-typed-css-modules';

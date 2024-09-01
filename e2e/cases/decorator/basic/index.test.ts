@@ -1,14 +1,13 @@
-import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 
 test('should use legacy decorators by default', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    runServer: true,
+    page,
   });
 
-  await gotoPage(page, rsbuild);
   expect(await page.evaluate('window.aaa')).toBe('hello');
   expect(await page.evaluate('window.bbb')).toBe('world');
   expect(await page.evaluate('window.ccc')).toBe('hello world');
@@ -19,7 +18,7 @@ test('should use legacy decorators by default', async ({ page }) => {
 test('should allow to use stage 3 decorators', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    runServer: true,
+    page,
     rsbuildConfig: {
       source: {
         decorators: {
@@ -29,7 +28,6 @@ test('should allow to use stage 3 decorators', async ({ page }) => {
     },
   });
 
-  await gotoPage(page, rsbuild);
   expect(await page.evaluate('window.aaa')).toBe('hello');
   expect(await page.evaluate('window.bbb')).toBe('world');
   expect(await page.evaluate('window.ccc')).toBe('hello world');
@@ -42,11 +40,10 @@ rspackOnlyTest(
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,
-      runServer: true,
+      page,
       plugins: [pluginBabel()],
     });
 
-    await gotoPage(page, rsbuild);
     expect(await page.evaluate('window.aaa')).toBe('hello');
     expect(await page.evaluate('window.bbb')).toBe('world');
     expect(await page.evaluate('window.ccc')).toBe('hello world');
@@ -60,7 +57,7 @@ rspackOnlyTest(
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,
-      runServer: true,
+      page,
       plugins: [pluginBabel()],
       rsbuildConfig: {
         source: {
@@ -71,7 +68,6 @@ rspackOnlyTest(
       },
     });
 
-    await gotoPage(page, rsbuild);
     expect(await page.evaluate('window.aaa')).toBe('hello');
     expect(await page.evaluate('window.bbb')).toBe('world');
     expect(await page.evaluate('window.ccc')).toBe('hello world');

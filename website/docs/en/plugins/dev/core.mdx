@@ -95,11 +95,13 @@ const pluginBar = {
 
 For example, if you register both the Foo and Bar plugins mentioned above, the Foo plugin will not take effect because the Bar plugin declares the removal of the Foo plugin.
 
+It should be noted that if the current plugin is registered as a [specific environment plugin](https://rsbuild.dev/guide/advanced/environments#add-plugins-for-specified-environment), only the removal of plugins in the same environment is supported, and global plugins cannot be removed.
+
 ## api.context
 
 `api.context` is a read-only object that provides some context information.
 
-The content of `api.context` is exactly the same as `rsbuild.context`, please refer to [rsbuild.context](/api/javascript-api/instance#rsbuild-context).
+The content of `api.context` is exactly the same as `rsbuild.context`, please refer to [rsbuild.context](/api/javascript-api/instance#rsbuildcontext).
 
 - **Example:**
 
@@ -161,35 +163,15 @@ export default () => ({
 });
 ```
 
-## api.getHTMLPaths
-
-import GetHTMLPaths from '@en/shared/getHtmlPaths.mdx';
-
-<GetHTMLPaths />
-
-- **Example:**
-
-```ts
-const pluginFoo = () => ({
-  setup(api) {
-    api.modifyRspackConfig(() => {
-      const htmlPaths = api.getHTMLPaths();
-      console.log(htmlPaths); // { index: 'index.html' };
-    });
-  },
-});
-```
-
 ## api.transform
 
 Used to transform the code of modules.
 
-- **Version:** `>= 0.6.0`
 - **Type:**
 
 ```ts
 function Transform(
-  descriptor: { test?: RuleSetCondition | undefined },
+  descriptor: TransformDescriptor,
   handler: TransformHandler,
 ): void;
 ```
@@ -227,6 +209,7 @@ The descriptor param is an object describing the module's matching conditions.
 type TransformDescriptor = {
   test?: RuleSetCondition;
   targets?: RsbuildTarget[];
+  environments?: string[];
   resourceQuery?: RuleSetCondition;
   raw?: boolean;
 };
@@ -246,6 +229,14 @@ api.transform({ test: /\.pug$/ }, ({ code }) => {
 
 ```js
 api.transform({ test: /\.pug$/, targets: ['web'] }, ({ code }) => {
+  // ...
+});
+```
+
+- `environments`: matches the Rsbuild [environment](/guide/advanced/environments) name, and applies the current transform function only to the matched environments.
+
+```js
+api.transform({ test: /\.pug$/, environments: ['web'] }, ({ code }) => {
   // ...
 });
 ```
@@ -278,6 +269,7 @@ type TransformContext = {
   resource: string;
   resourcePath: string;
   resourceQuery: string;
+  environment: EnvironmentContext;
   addDependency: (file: string) => void;
   emitFile: (
     name: string,
@@ -291,7 +283,7 @@ type TransformResult =
   | string
   | {
       code: string;
-      map?: string | RspackSourceMap | null;
+      map?: string | Rspack.sources.RawSourceMap | null;
     };
 
 type TransformHandler = (
@@ -305,6 +297,7 @@ The `handler` function provides the following params:
 - `resource`: The absolute path of the module, including the query.
 - `resourcePath`: The absolute path of the module, without the query.
 - `resourceQuery`: The query of the module.
+- `environment`: The [environment context](/api/javascript-api/environment-context) for current build.
 - `addDependency`: Add an additional file as the dependency. The file will be watched and changes to the file will trigger rebuild.
 - `emitFile`: Emits a file to the build output.
 
@@ -329,6 +322,157 @@ api.transform(
 In Rsbuild plugins, you can quickly implement code transformation functions using `api.transform`, which can handle the majority of common scenarios without having to learn how to write an Rspack loader.
 
 Note that for some complex code transformation scenarios, `api.transform` may not be sufficient. In such situations, you can implement it using the Rspack loader.
+
+## api.processAssets
+
+Modify assets before emitting, the same as Rspack's [compilation.hooks.processAssets](https://rspack.dev/api/plugin-api/compilation-hooks#processassets) hook.
+
+- **Version:** `>= 1.0.0`
+- **Type:**
+
+```ts
+function processAssets(
+  descriptor: ProcessAssetsDescriptor,
+  handler: ProcessAssetsHandler,
+): void;
+```
+
+`api.processAssets` accepts two params:
+
+- `descriptor`: an object to describes the stage and matching conditions that trigger `processAssets`.
+- `handler`: A callback function that receives the assets object and allows you to modify it.
+
+### Example
+
+- Emit a new asset in the `additional` stage:
+
+```js
+api.processAssets(
+  { stage: 'additional' },
+  ({ assets, sources, compilation }) => {
+    const source = new sources.RawSource('This is a new asset!');
+    compilation.emitAsset('new-asset.txt', source);
+  },
+);
+```
+
+- Updating an existing asset:
+
+```js
+api.processAssets(
+  { stage: 'additions' },
+  ({ assets, sources, compilation }) => {
+    const asset = assets['foo.js'];
+    if (!asset) {
+      return;
+    }
+
+    const oldContent = asset.source();
+    const newContent = oldContent + '\nconsole.log("hello world!")';
+    const source = new sources.RawSource(newContent);
+
+    compilation.updateAsset(assetName, source);
+  },
+);
+```
+
+- Removing an asset:
+
+```js
+api.processAssets({ stage: 'stage-optimize' }, ({ assets, compilation }) => {
+  const assetName = 'unwanted-script.js';
+  if (assets[assetName]) {
+    compilation.deleteAsset(assetName);
+  }
+});
+```
+
+### Descriptor Param
+
+The descriptor parameter is an object to describes the stage and matching conditions that trigger `processAssets`.
+
+- **Type:**
+
+```ts
+type ProcessAssetsDescriptor = {
+  stage: ProcessAssetsStage;
+  targets?: RsbuildTarget[];
+  environments?: string[];
+};
+```
+
+The `descriptor` param supports the following properties:
+
+- `stage`: Rspack internally divides `processAssets` into multiple stages (refer to [process assets stages](#process-assets-stages)). You can choose the appropriate stage based on the operations you need to perform.
+
+```js
+api.processAssets({ stage: 'additional' }, ({ assets }) => {
+  // ...
+});
+```
+
+- `targets`: Matches the Rsbuild [output.target](/config/output/target), and applies the current processAssets function only to the matched targets.
+
+```js
+api.processAssets({ stage: 'additional', targets: ['web'] }, ({ assets }) => {
+  // ...
+});
+```
+
+- `environments`: matches the Rsbuild [environment](/guide/advanced/environments) name, and applies the current processAssets function only to the matched environments.
+
+```js
+api.processAssets(
+  { stage: 'additional', environments: ['web'] },
+  ({ assets }) => {
+    // ...
+  },
+);
+```
+
+### Handler Param
+
+The `handler` parameter is a callback function that receives an assets object and allows you to modify it.
+
+- **Type:**
+
+```ts
+type ProcessAssetsHandler = (context: {
+  assets: Record<string, Rspack.sources.Source>;
+  compiler: Rspack.Compiler;
+  compilation: Rspack.Compilation;
+  environment: EnvironmentContext;
+  sources: RspackSources;
+}) => Promise<void> | void;
+```
+
+The `handler` function provides the following parameters:
+
+- `assets`: An object where key is the asset's pathname, and the value is data of the asset represented by the [Source](https://github.com/webpack/webpack-sources#source).
+- `compiler`: The Compiler object of Rspack.
+- `compilation`: The Compilation object of Rspack.
+- `environment`: The [environment context](/api/javascript-api/environment-context) of the current build.
+- `sources`: The [Rspack Sources](https://github.com/webpack/webpack-sources#source) object, which contains multiple classes which represent a Source.
+
+### Process assets stages
+
+Here's the list of supported stages. Rspack will execute these stages sequentially from top to bottom. Please select the appropriate stage based on the operation you need to perform.
+
+- `additional` — add additional assets to the compilation.
+- `pre-process` — basic preprocessing of the assets.
+- `derived` — derive new assets from the existing assets.
+- `additions` — add additional sections to the existing assets e.g. banner or initialization code.
+- `optimize` — optimize existing assets in a general way.
+- `optimize-count` — optimize the count of existing assets, e.g. by merging them.
+- `optimize-compatibility` — optimize the compatibility of existing assets, e.g. add polyfills or vendor prefixes.
+- `optimize-size` — optimize the size of existing assets, e.g. by minimizing or omitting whitespace.
+- `dev-tooling` — add development tooling to the assets, e.g. by extracting a source map.
+- `optimize-inline` — optimize the numbers of existing assets by inlining assets into other assets.
+- `summarize` — summarize the list of existing assets.
+- `optimize-hash` — optimize the hashes of the assets, e.g. by generating real hashes of the asset content.
+- `optimize-transfer` — optimize the transfer of existing assets, e.g. by preparing a compressed (gzip) file as separate asset.
+- `analyse` — analyze the existing assets.
+- `report` — creating assets for the reporting purposes.
 
 ## api.expose
 

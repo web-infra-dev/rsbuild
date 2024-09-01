@@ -4,7 +4,7 @@
 
 ```ts
 type SourceMap = {
-  js?: RspackConfig['devtool'];
+  js?: Rspack.Configuration['devtool'];
   css?: boolean;
 };
 ```
@@ -18,8 +18,6 @@ const defaultSourceMap = {
 };
 ```
 
-- **Version:** `>= 0.2.0`
-
 Used to set whether to generate source map files, and which format of source map to generate.
 
 :::tip What is a source map
@@ -30,8 +28,8 @@ Source map is an information file that saves the source code mapping relationshi
 
 By default, the source map generation rules for Rsbuild are as follows:
 
-- During development builds, source maps for JS files are generated for development debugging, while source maps for CSS files are not generated.
-- During production builds, no source maps for JS and CSS files are generated to improve build performance.
+- In development mode, source maps for JS files are generated for development debugging, while source maps for CSS files are not generated.
+- In production mode, no source maps for JS and CSS files are generated to improve build performance.
 
 ## JS Source Map
 

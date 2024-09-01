@@ -29,17 +29,21 @@ Commands:
 
 ## rsbuild dev
 
-`rsbuild dev` 命令用于启动一个本地开发服务器，对源代码进行开发环境编译。
+`rsbuild dev` 命令用于启动一个本地开发服务器，对源代码进行开发模式编译。
 
 ```bash
 Usage: rsbuild dev [options]
 
 Options:
+  -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
+  -r --root <root>      指定项目根目录，可以是绝对路径或者相对于 cwd 的路径
+  -m --mode <mode>      指定构建模式，可以是 `development`，`production` 或 `none`
   -o, --open [url]      启动时是否在浏览器中打开页面
   --port <port>         设置 Rsbuild Server 监听的端口号
   --host <host>         指定 Rsbuild Server 启动时监听的 host
-  -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
   --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
+  --env-dir <dir>       指定目录来加载 `.env` 文件
+  --environment <name>  指定需要构建的 environment 名称
   -h, --help            显示命令帮助
 ```
 
@@ -71,25 +75,33 @@ rsbuild dev -o
 Usage: rsbuild build [options]
 
 Options:
-  -w --watch            开启 watch 模式, 监听文件变更并重新构建
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
+  -r --root <root>      指定项目根目录，可以是绝对路径或者相对于 cwd 的路径
+  -m --mode <mode>      指定构建模式，可以是 `development`，`production` 或 `none`
+  -w --watch            开启 watch 模式, 监听文件变更并重新构建
   --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
+  --env-dir <dir>       指定目录来加载 `.env` 文件
+  --environment <name>  指定需要构建的 environment 名称
   -h, --help            显示命令帮助
 ```
 
 ## rsbuild preview
 
-`rsbuild preview` 命令用于在本地预览生产环境构建的产物, 注意你需要提前执行 `rsbuild build` 命令构建出对应产物。
+`rsbuild preview` 命令用于在本地预览生产模式构建的产物, 注意你需要提前执行 `rsbuild build` 命令构建出对应产物。
 
 ```bash
 Usage: rsbuild preview [options]
 
 Options:
+  -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
+  -r --root <root>      指定项目根目录，可以是绝对路径或者相对于 cwd 的路径
+  -m --mode <mode>      指定构建模式，可以是 `development`，`production` 或 `none`
   -o, --open [url]      启动时是否在浏览器中打开页面
   --port <port>         设置 Rsbuild Server 监听的端口号
   --host <host>         指定 Rsbuild Server 启动时监听的 host
-  -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
   --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
+  --env-dir <dir>       指定目录来加载 `.env` 文件
+  --environment <name>  指定需要构建的 environment 名称
   -h, --help            显示命令帮助
 ```
 
@@ -105,15 +117,18 @@ preview 命令仅用于本地预览，请勿将它用于生产服务器，因为
 Usage: rsbuild inspect [options]
 
 Options:
-  --env <env>           查看指定环境下的配置 (default: "development")
+  -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
+  -r --root <root>      指定项目根目录，可以是绝对路径或者相对于 cwd 的路径
+  -m --mode <mode>      指定构建模式，可以是 `development`，`production` 或 `none`
   --output <output>     指定在 dist 目录下输出的路径 (default: "/")
   --verbose             在结果中展示函数的完整内容
-  -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
   --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
+  --env-dir <dir>       指定目录来加载 `.env` 文件
+  --environment <name>  指定需要构建的 environment 名称
   -h, --help            显示命令帮助
 ```
 
-当你在项目根目录下执行命令 `npx rsbuild inspect` 后，会在项目的 `dist` 目录生成以下文件：
+当你在项目根目录下执行命令 `npx rsbuild inspect` 后，会在项目的 `dist/.rsbuild` 目录生成以下文件：
 
 - `rsbuild.config.mjs`: 表示在构建时使用的 Rsbuild 配置。
 - `rspack.config.web.mjs`: 表示在构建时使用的 Rspack 配置。
@@ -123,16 +138,16 @@ Options:
 
 Inspect config succeed, open following files to view the content:
 
-  - Rsbuild Config: /project/dist/rsbuild.config.mjs
-  - Rspack Config (web): /project/dist/rspack.config.web.mjs
+  - Rsbuild Config: /project/dist/.rsbuild/rsbuild.config.mjs
+  - Rspack Config (web): /project/dist/.rsbuild/rspack.config.web.mjs
 ```
 
-### 指定环境
+### 指定模式
 
-默认情况下，inspect 命令会输出开发环境的配置，你可以添加 `--env production` 选项来输出生产环境的配置：
+默认情况下，inspect 命令会输出开发模式的配置，你可以添加 `--mode production` 选项来输出生产模式的配置：
 
 ```bash
-rsbuild inspect --env production
+rsbuild inspect --mode production
 ```
 
 ### 完整内容
@@ -145,14 +160,14 @@ rsbuild inspect --verbose
 
 ### 多种产物类型
 
-如果当前项目有多种产物类型，比如同时构建了浏览器产物和 Node.js 产物，那么会在 `dist` 目录生成多份 Rspack 配置文件。
+如果当前项目有多种产物类型，比如同时构建了浏览器产物和 Node.js 产物，那么会在 `dist/.rsbuild` 目录生成多份 Rspack 配置文件。
 
 ```bash
 ➜ npx rsbuild inspect
 
 Inspect config succeed, open following files to view the content:
 
-  - Rsbuild Config: /project/dist/rsbuild.config.mjs
-  - Rspack Config (web): /project/dist/rspack.config.web.mjs
-  - Rspack Config (node): /project/dist/rspack.config.node.mjs
+  - Rsbuild Config: /project/dist/.rsbuild/rsbuild.config.mjs
+  - Rspack Config (web): /project/dist/.rsbuild/rspack.config.web.mjs
+  - Rspack Config (node): /project/dist/.rsbuild/rspack.config.node.mjs
 ```

@@ -1,4 +1,3 @@
-import { isProd } from '../helpers';
 import type {
   NormalizedEnvironmentConfig,
   RsbuildConfig,
@@ -19,10 +18,6 @@ export function pluginBundleAnalyzer(): RsbuildPlugin {
       api.modifyRsbuildConfig({
         order: 'post',
         handler: (config) => {
-          if (isProd()) {
-            return;
-          }
-
           const useAnalyzer =
             isUseAnalyzer(config) ||
             Object.values(config.environments || []).some((config) =>
@@ -49,7 +44,7 @@ export function pluginBundleAnalyzer(): RsbuildPlugin {
         }
 
         const { default: BundleAnalyzer } = await import(
-          '@rsbuild/shared/webpack-bundle-analyzer'
+          'webpack-bundle-analyzer'
         );
 
         chain

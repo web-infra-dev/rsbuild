@@ -35,11 +35,15 @@ The `rsbuild dev` command is used to start a local dev server and compile the so
 Usage: rsbuild dev [options]
 
 Options:
+  -c --config <config>  specify the configuration file, can be a relative or absolute path
+  -r --root <root>      specify the project root directory, can be an absolute path or a path relative to cwd
+  -m --mode <mode>      specify the build mode, can be `development`, `production` or `none`
   -o, --open [url]      open the page in browser on startup
   --port <port>         specify a port number for Rsbuild Server to listen
   --host <host>         specify the host that the Rsbuild Server listens to
-  -c --config <config>  specify the configuration file, can be a relative or absolute path
   --env-mode <mode>     specify the env mode to load the `.env.[mode]` file
+  --env-dir <dir>       specify the directory to load `.env` files
+  --environment <name>  specify the name of environment to build
   -h, --help            display help for command
 ```
 
@@ -71,9 +75,13 @@ The `rsbuild build` command will build the outputs for production in the `dist/`
 Usage: rsbuild build [options]
 
 Options:
-  -w --watch            turn on watch mode, watch for changes and rebuild
   -c --config <config>  specify the configuration file, can be a relative or absolute path
+  -r --root <root>      specify the project root directory, can be an absolute path or a path relative to cwd
+  -m --mode <mode>      specify the build mode, can be `development`, `production` or `none`
+  -w --watch            turn on watch mode, watch for changes and rebuild
   --env-mode <mode>     specify the env mode to load the `.env.[mode]` file
+  --env-dir <dir>       specify the directory to load `.env` files
+  --environment <name>  specify the name of environment to build
   -h, --help            display help for command
 ```
 
@@ -85,11 +93,15 @@ The `rsbuild preview` command is used to preview the production build outputs lo
 Usage: rsbuild preview [options]
 
 Options:
+  -c --config <config>  specify the configuration file, can be a relative or absolute path
+  -r --root <root>      specify the project root directory, can be an absolute path or a path relative to cwd
+  -m --mode <mode>      specify the build mode, can be `development`, `production` or `none`
   -o, --open [url]      open the page in browser on startup
   --port <port>         specify a port number for Rsbuild Server to listen
   --host <host>         specify the host that the Rsbuild Server listens to
-  -c --config <config>  specify the configuration file, can be a relative or absolute path
   --env-mode <mode>     specify the env mode to load the `.env.[mode]` file
+  --env-dir <dir>       specify the directory to load `.env` files
+  --environment <name>  specify the name of environment to build
   -h, --help            display help for command
 ```
 
@@ -105,15 +117,18 @@ The `rsbuild inspect` command is used to view the Rsbuild config and Rspack conf
 Usage: rsbuild inspect [options]
 
 Options:
-  --env <env>           view the configuration in the target environment (default: "development")
-  --output <output>     Specify the path to output in the dist (default: "/")
-  --verbose             Show the full function in the result
   -c --config <config>  specify the configuration file, can be a relative or absolute path
+  -r --root <root>      specify the project root directory, can be an absolute path or a path relative to cwd
+  -m --mode <mode>      specify the build mode, can be `development`, `production` or `none`
+  --output <output>     specify the path to output in the dist (default: "/")
+  --verbose             show the full function in the result
   --env-mode <mode>     specify the env mode to load the `.env.[mode]` file
+  --env-dir <dir>       specify the directory to load `.env` files
+  --environment <name>  specify the name of environment to build
   -h, --help            show command help
 ```
 
-When you run the command `npx rsbuild inspect` in the project root directory, the following files will be generated in the `dist` directory of the project:
+When you run the command `npx rsbuild inspect` in the project root directory, the following files will be generated in the `dist/.rsbuild` directory of the project:
 
 - `rsbuild.config.mjs`: Represents the Rsbuild configuration used during the build.
 - `rspack.config.web.mjs`: Represents the Rspack configuration used during the build.
@@ -123,16 +138,16 @@ When you run the command `npx rsbuild inspect` in the project root directory, th
 
 Inspect config succeed, open following files to view the content:
 
-  - Rsbuild Config: /project/dist/rsbuild.config.mjs
-  - Rspack Config (web): /project/dist/rspack.config.web.mjs
+  - Rsbuild Config: /project/dist/.rsbuild/rsbuild.config.mjs
+  - Rspack Config (web): /project/dist/.rsbuild/rspack.config.web.mjs
 ```
 
-### Specifying Environment
+### Specifying Mode
 
-By default, the inspect command outputs the configuration for the development environment. You can add the `--env production` option to output the configuration for the production build:
+By default, the inspect command outputs the configuration for the development mode. You can add the `--env production` option to output the configuration for the production mode:
 
 ```bash
-rsbuild inspect --env production
+rsbuild inspect --mode production
 ```
 
 ### Verbose content
@@ -145,14 +160,14 @@ rsbuild inspect --verbose
 
 ### Multiple Targets
 
-If the current project has multiple build targets, such as building browser artifact and Node.js artifact simultaneously, multiple Rspack configuration files will be generated in the `dist` directory.
+If the current project has multiple build targets, such as building browser artifact and Node.js artifact simultaneously, multiple Rspack configuration files will be generated in the `dist/.rsbuild` directory.
 
 ```bash
 ➜ npx rsbuild inspect
 
 Inspect config succeed, open following files to view the content:
 
-  - Rsbuild Config: /project/dist/rsbuild.config.mjs
-  - Rspack Config (web): /project/dist/rspack.config.web.mjs
-  - Rspack Config (node): /project/dist/rspack.config.node.mjs
+  - Rsbuild Config: /project/dist/.rsbuild/rsbuild.config.mjs
+  - Rspack Config (web): /project/dist/.rsbuild/rspack.config.web.mjs
+  - Rspack Config (node): /project/dist/.rsbuild/rspack.config.node.mjs
 ```

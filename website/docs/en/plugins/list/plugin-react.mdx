@@ -151,7 +151,7 @@ pluginReact({
 - **Type:** `boolean`
 - **Default:** `false`
 
-When set to `true`, enables the React Profiler for performance analysis in production builds. Use the React DevTools to examine profiling results and identify potential performance optimizations. Profiling adds a slight overhead, so it's disabled by default in production environments.
+When set to `true`, enables the React Profiler for performance analysis in production builds. Use the React DevTools to examine profiling results and identify potential performance optimizations. Profiling adds a slight overhead, so it's disabled by default in production mode.
 
 ```ts title="rsbuild.config.ts"
 pluginReact({
@@ -163,8 +163,25 @@ pluginReact({
 
 Set `REACT_PROFILER=true` when running build script:
 
-```bash
-REACT_PROFILER=true npx rsbuild build
+```json title="package.json"
+{
+  "scripts": {
+    "build:profiler": "REACT_PROFILER=true rsbuild build"
+  }
+}
+```
+
+Since the Windows system does not support the above usage, you can also use [cross-env](https://www.npmjs.com/package/cross-env) to set environment variables. This ensures compatibility across different systems:
+
+```json title="package.json"
+{
+  "scripts": {
+    "build:profiler": "cross-env REACT_PROFILER=true rsbuild build"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.0"
+  }
+}
 ```
 
 > See the [React docs](https://legacy.reactjs.org/docs/optimizing-performance.html#profiling-components-with-the-devtools-profiler) for details about profiling using the React DevTools.

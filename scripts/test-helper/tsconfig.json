@@ -9,9 +9,6 @@
   "references": [
     {
       "path": "../../packages/core"
-    },
-    {
-      "path": "../../packages/shared"
     }
   ],
   "include": ["src"]

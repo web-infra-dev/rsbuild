@@ -3,24 +3,17 @@
 exports[`plugin-assets-retry > should accept user custom options 1`] = `
 {
   "plugins": [
-    AssetsRetryPlugin {
-      "HtmlPlugin": [Function],
-      "distDir": "static/js",
-      "inlineScript": true,
-      "minify": true,
-      "name": "AssetsRetryPlugin",
-      "scriptPath": "",
-    },
+    RsbuildCorePlugin {},
     AsyncChunkRetryPlugin {
       "name": "ASYNC_CHUNK_RETRY_PLUGIN",
       "options": {
         "addQuery": [Function],
         "crossOrigin": true,
         "domain": [
-          "/http/localhost:3003",
-          "/http/localhost:3002",
-          "/http/localhost:3001",
-          "/http/localhost:3000",
+          "http://localhost:3003",
+          "http://localhost:3002",
+          "http://localhost:3001",
+          "http://localhost:3000",
         ],
         "inlineScript": true,
         "isRspack": false,
@@ -38,10 +31,10 @@ exports[`plugin-assets-retry > should accept user custom options 1`] = `
       "runtimeOptions": {
         "addQuery": [Function],
         "domain": [
-          "/http/localhost:3003",
-          "/http/localhost:3002",
-          "/http/localhost:3001",
-          "/http/localhost:3000",
+          "http://localhost:3003",
+          "http://localhost:3002",
+          "http://localhost:3001",
+          "http://localhost:3000",
         ],
         "max": 4,
         "onFail": [Function],
@@ -57,14 +50,7 @@ exports[`plugin-assets-retry > should accept user custom options 1`] = `
 exports[`plugin-assets-retry > should add assets retry plugin 1`] = `
 {
   "plugins": [
-    AssetsRetryPlugin {
-      "HtmlPlugin": [Function],
-      "distDir": "static/js",
-      "inlineScript": true,
-      "minify": false,
-      "name": "AssetsRetryPlugin",
-      "scriptPath": "",
-    },
+    RsbuildCorePlugin {},
     AsyncChunkRetryPlugin {
       "name": "ASYNC_CHUNK_RETRY_PLUGIN",
       "options": {
@@ -78,4 +64,10 @@ exports[`plugin-assets-retry > should add assets retry plugin 1`] = `
 }
 `;
 
-exports[`plugin-assets-retry > should't add assets retry plugin when target is set to 'node' 1`] = `{}`;
+exports[`plugin-assets-retry > should't add assets retry plugin when target is set to 'node' 1`] = `
+{
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
+}
+`;

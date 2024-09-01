@@ -4,9 +4,10 @@
  *
  * Tips: this package will be bundled and running in the browser, do not import any Node.js modules.
  */
-import type { StatsError } from '@rsbuild/shared';
-import type { ClientConfig } from '@rsbuild/shared';
+import type { ClientConfig, Rspack } from '../types';
 import { formatStatsMessages } from './format';
+
+const compilationName = RSBUILD_COMPILATION_NAME;
 
 function formatURL({
   port,
@@ -14,17 +15,18 @@ function formatURL({
   hostname,
   pathname,
 }: {
-  port: string;
+  port: string | number;
   protocol: string;
   hostname: string;
   pathname: string;
 }) {
   if (typeof URL !== 'undefined') {
     const url = new URL('http://localhost');
-    url.port = port;
+    url.port = String(port);
     url.hostname = hostname;
     url.protocol = protocol;
     url.pathname = pathname;
+    url.searchParams.append('compilationName', compilationName);
     return url.toString();
   }
 
@@ -83,7 +85,7 @@ function handleSuccess() {
 }
 
 // Compilation with warnings (e.g. ESLint).
-function handleWarnings(warnings: StatsError[]) {
+function handleWarnings(warnings: Rspack.StatsError[]) {
   clearOutdatedErrors();
 
   const isHotUpdate = !isFirstCompilation;
@@ -112,7 +114,7 @@ function handleWarnings(warnings: StatsError[]) {
 }
 
 // Compilation with errors (e.g. syntax error or missing modules).
-function handleErrors(errors: StatsError[]) {
+function handleErrors(errors: Rspack.StatsError[]) {
   clearOutdatedErrors();
 
   isFirstCompilation = false;
@@ -203,6 +205,11 @@ function onOpen() {
 
 function onMessage(e: MessageEvent<string>) {
   const message = JSON.parse(e.data);
+
+  if (message.compilationName && message.compilationName !== compilationName) {
+    return;
+  }
+
   switch (message.type) {
     case 'hash':
       // Update the last compilation hash

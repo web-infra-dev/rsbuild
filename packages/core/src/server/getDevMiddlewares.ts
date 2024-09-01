@@ -1,5 +1,7 @@
 import { isAbsolute, join } from 'node:path';
 import url from 'node:url';
+import { normalizePublicDirs } from '../config';
+import { logger } from '../logger';
 import type {
   DevConfig,
   EnvironmentAPI,
@@ -7,12 +9,11 @@ import type {
   Rspack,
   ServerAPIs,
   ServerConfig,
-} from '@rsbuild/shared';
-import { normalizePublicDirs } from '../config';
-import { logger } from '../logger';
+} from '../types';
 import type { UpgradeEvent } from './helper';
 import {
   faviconFallbackMiddleware,
+  getHtmlCompletionMiddleware,
   getHtmlFallbackMiddleware,
   getRequestLoggerMiddleware,
 } from './middlewares';
@@ -81,13 +82,8 @@ const applyDefaultMiddlewares = async ({
   const upgradeEvents: UpgradeEvent[] = [];
   // compression should be the first middleware
   if (server.compress) {
-    const { default: compression } = await import('http-compression');
-    middlewares.push((req, res, next) => {
-      compression({
-        gzip: true,
-        brotli: false,
-      })(req, res, next);
-    });
+    const { gzipMiddleware } = await import('./gzipMiddleware');
+    middlewares.push(gzipMiddleware());
   }
 
   middlewares.push((req, res, next) => {
@@ -111,9 +107,8 @@ const applyDefaultMiddlewares = async ({
   // dev proxy handler, each proxy has own handler
   if (server.proxy) {
     const { createProxyMiddleware } = await import('./proxy');
-    const { middlewares: proxyMiddlewares, upgrade } = createProxyMiddleware(
-      server.proxy,
-    );
+    const { middlewares: proxyMiddlewares, upgrade } =
+      await createProxyMiddleware(server.proxy);
     upgradeEvents.push(upgrade);
 
     for (const middleware of proxyMiddlewares) {
@@ -136,13 +131,27 @@ const applyDefaultMiddlewares = async ({
 
     middlewares.push((req, res, next) => {
       // [prevFullHash].hot-update.json will 404 (expected) when rsbuild restart and some file changed
-      if (req.url?.endsWith('.hot-update.json')) {
+      if (req.url?.endsWith('.hot-update.json') && req.method !== 'OPTIONS') {
         res.statusCode = 404;
         res.end();
       } else {
         next();
       }
     });
+  }
+
+  const distPath = isAbsolute(output.distPath)
+    ? output.distPath
+    : join(pwd, output.distPath);
+
+  if (compileMiddlewareAPI) {
+    middlewares.push(
+      getHtmlCompletionMiddleware({
+        distPath,
+        callback: compileMiddlewareAPI.middleware,
+        outputFileSystem,
+      }),
+    );
   }
 
   const publicDirs = normalizePublicDirs(server?.publicDir);
@@ -159,17 +168,16 @@ const applyDefaultMiddlewares = async ({
     middlewares.push(assetMiddleware);
   }
 
-  const { distPath } = output;
-
-  compileMiddlewareAPI &&
+  if (compileMiddlewareAPI) {
     middlewares.push(
       getHtmlFallbackMiddleware({
-        distPath: isAbsolute(distPath) ? distPath : join(pwd, distPath),
+        distPath,
         callback: compileMiddlewareAPI.middleware,
         htmlFallback: server.htmlFallback,
         outputFileSystem,
       }),
     );
+  }
 
   if (server.historyApiFallback) {
     const { default: connectHistoryApiFallback } = await import(
@@ -181,12 +189,26 @@ const applyDefaultMiddlewares = async ({
 
     middlewares.push(historyApiFallbackMiddleware);
 
-    // ensure fallback request can be handled by webpack-dev-middleware
+    // ensure fallback request can be handled by rsbuild-dev-middleware
     compileMiddlewareAPI?.middleware &&
       middlewares.push(compileMiddlewareAPI.middleware);
   }
 
   middlewares.push(faviconFallbackMiddleware);
+
+  // OPTIONS request fallback middleware
+  // Should register this middleware as the last
+  // see: https://github.com/web-infra-dev/rsbuild/pull/2867
+  middlewares.push((req, res, next) => {
+    if (req.method === 'OPTIONS') {
+      // Use 204 as no content to send in the response body
+      res.statusCode = 204;
+      res.setHeader('Content-Length', '0');
+      res.end();
+      return;
+    }
+    next();
+  });
 
   return {
     onUpgrade: (...args) => {

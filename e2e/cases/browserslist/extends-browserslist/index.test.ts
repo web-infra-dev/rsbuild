@@ -1,8 +1,10 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-// TODO Rspack does not supports extends browserslist yet
-test.fail('extends browserslist and downgrade the syntax', async () => {
+test('extends browserslist and downgrade the syntax', async () => {
+  const originalCwd = process.cwd();
+  process.chdir(__dirname);
+
   const rsbuild = await build({
     cwd: __dirname,
   });
@@ -13,4 +15,6 @@ test.fail('extends browserslist and downgrade the syntax', async () => {
     files[Object.keys(files).find((file) => file.endsWith('.js'))!];
 
   expect(indexFile.includes('async ')).toBeFalsy();
+
+  process.chdir(originalCwd);
 });

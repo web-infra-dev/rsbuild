@@ -1,22 +1,22 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import {
-  type Polyfill,
-  type RsbuildContext,
-  type RspackChain,
-  SCRIPT_REGEX,
-  castArray,
-  cloneDeep,
-  deepmerge,
-} from '@rsbuild/shared';
 import type { SwcLoaderOptions } from '@rspack/core';
-import { NODE_MODULES_REGEX, PLUGIN_SWC_NAME } from '../constants';
-import { isWebTarget } from '../helpers';
-import { reduceConfigs } from '../reduceConfigs';
+import deepmerge from 'deepmerge';
+import { reduceConfigs } from 'reduce-configs';
+import {
+  NODE_MODULES_REGEX,
+  PLUGIN_SWC_NAME,
+  SCRIPT_REGEX,
+} from '../constants';
+import { castArray, cloneDeep, isFunction, isWebTarget } from '../helpers';
 import type {
   NormalizedEnvironmentConfig,
   NormalizedSourceConfig,
+  Polyfill,
+  RsbuildContext,
   RsbuildPlugin,
+  RspackChain,
+  TransformImport,
 } from '../types';
 
 const builtinSwcLoaderName = 'builtin:swc-loader';
@@ -63,7 +63,10 @@ function applyScriptCondition({
   }
 }
 
-function getDefaultSwcConfig(browserslist: string[]): SwcLoaderOptions {
+function getDefaultSwcConfig(
+  browserslist: string[],
+  cacheRoot: string,
+): SwcLoaderOptions {
   return {
     jsc: {
       externalHelpers: true,
@@ -75,6 +78,9 @@ function getDefaultSwcConfig(browserslist: string[]): SwcLoaderOptions {
       // Avoid the webpack magic comment to be removed
       // https://github.com/swc-project/swc/issues/6403
       preserveAllComments: true,
+      experimental: {
+        cacheRoot,
+      },
     },
     isModule: 'unknown',
     env: {
@@ -94,6 +100,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
       order: 'pre',
       handler: async (chain, { CHAIN_ID, target, environment }) => {
         const { config, browserslist } = environment;
+        const cacheRoot = path.join(api.context.cachePath, '.swc');
 
         const rule = chain.module
           .rule(CHAIN_ID.RULE.JS)
@@ -120,7 +127,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
           return;
         }
 
-        const swcConfig = getDefaultSwcConfig(browserslist);
+        const swcConfig = getDefaultSwcConfig(browserslist, cacheRoot);
 
         applyTransformImport(swcConfig, config.source.transformImport);
         applySwcDecoratorConfig(swcConfig, config);
@@ -162,7 +169,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
         /**
          * If a script is imported with data URI, it can be compiled by babel too.
          * This is used by some frameworks to create virtual entry.
-         * https://webpack.js.org/api/module-methods/#import
+         * https://rspack.dev/api/runtime-api/module-methods#import
          * @example: import x from 'data:text/javascript,export default 1;';
          */
         dataUriRule.resolve
@@ -209,14 +216,34 @@ async function applyCoreJs(
   return coreJsDir;
 }
 
+const reduceTransformImportConfig = (
+  options: NormalizedSourceConfig['transformImport'],
+): TransformImport[] => {
+  if (!options) {
+    return [];
+  }
+
+  let imports: TransformImport[] = [];
+  for (const item of castArray(options)) {
+    if (isFunction(item)) {
+      imports = item(imports) ?? imports;
+    } else {
+      imports.push(item);
+    }
+  }
+  return imports;
+};
+
 function applyTransformImport(
   swcConfig: SwcLoaderOptions,
   pluginImport?: NormalizedSourceConfig['transformImport'],
 ) {
-  if (pluginImport !== false && pluginImport) {
+  const finalPluginImport = reduceTransformImportConfig(pluginImport);
+
+  if (finalPluginImport?.length) {
     swcConfig.rspackExperiments ??= {};
     swcConfig.rspackExperiments.import ??= [];
-    swcConfig.rspackExperiments.import.push(...pluginImport);
+    swcConfig.rspackExperiments.import.push(...finalPluginImport);
   }
 }
 
@@ -241,6 +268,6 @@ export function applySwcDecoratorConfig(
       swcConfig.jsc.transform.decoratorVersion = '2022-03';
       break;
     default:
-      throw new Error('Unknown decorators version: ${version}');
+      throw new Error(`Unknown decorators version: ${version}`);
   }
 }

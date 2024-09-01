@@ -1,11 +1,5 @@
-import type { NormalizedConfig } from '@rsbuild/shared';
-import autoprefixer from '@rsbuild/shared/autoprefixer';
-import { createStubRsbuild } from '@scripts/test-helper';
-import {
-  applyAutoprefixer,
-  normalizeCssLoaderOptions,
-  pluginCss,
-} from '../src/plugins/css';
+import { createStubRsbuild, matchRules } from '@scripts/test-helper';
+import { normalizeCssLoaderOptions, pluginCss } from '../src/plugins/css';
 
 describe('normalizeCssLoaderOptions', () => {
   it('should enable exportOnlyLocals correctly', () => {
@@ -42,19 +36,6 @@ describe('normalizeCssLoaderOptions', () => {
 });
 
 describe('plugin-css', () => {
-  it('should override browserslist of autoprefixer when using output.overrideBrowserslist config', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginCss()],
-      rsbuildConfig: {
-        output: {
-          overrideBrowserslist: ['Chrome 80'],
-        },
-      },
-    });
-    const bundlerConfigs = await rsbuild.initConfigs();
-    expect(bundlerConfigs[0]).toMatchSnapshot();
-  });
-
   it('should enable source map when output.sourceMap.css is true', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginCss()],
@@ -172,21 +153,32 @@ describe('plugin-css injectStyles', () => {
   });
 });
 
-it('should not apply autoprefixer if user config contains autoprefixer', async () => {
-  const config = {
-    tools: {},
-  } as NormalizedConfig;
+it('should ensure isolation of PostCSS config objects between different builds', async () => {
+  const rsbuild = await createStubRsbuild({
+    plugins: [pluginCss()],
+    rsbuildConfig: {
+      environments: {
+        web: {
+          tools: {
+            postcss(config) {
+              config.postcssOptions ||= {};
+              config.postcssOptions.plugins = [{ postcssPlugin: 'foo' }];
+            },
+          },
+        },
+        web2: {
+          tools: {
+            postcss(config) {
+              config.postcssOptions ||= {};
+              config.postcssOptions.plugins = [{ postcssPlugin: 'bar' }];
+            },
+          },
+        },
+      },
+    },
+  });
 
-  expect(
-    (await applyAutoprefixer([autoprefixer()], ['Chrome >= 100'], config))
-      .length,
-  ).toEqual(1);
-
-  expect(
-    (await applyAutoprefixer([autoprefixer], ['Chrome >= 100'], config)).length,
-  ).toEqual(1);
-
-  expect(
-    (await applyAutoprefixer([], ['Chrome >= 100'], config)).length,
-  ).toEqual(1);
+  const bundlerConfigs = await rsbuild.initConfigs();
+  expect(matchRules(bundlerConfigs[0], 'a.css')).toMatchSnapshot();
+  expect(matchRules(bundlerConfigs[1], 'a.css')).toMatchSnapshot();
 });

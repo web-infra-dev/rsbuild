@@ -1,8 +1,4 @@
 import { posix } from 'node:path';
-import type {
-  NormalizedEnvironmentConfig,
-  RsbuildContext,
-} from '@rsbuild/shared';
 import { rspack } from '@rspack/core';
 import {
   DEFAULT_ASSET_PREFIX,
@@ -11,8 +7,13 @@ import {
 } from '../constants';
 import { formatPublicPath, getFilename } from '../helpers';
 import { getCssExtractPlugin } from '../pluginHelper';
-import type { RsbuildPlugin } from '../types';
+import type {
+  NormalizedEnvironmentConfig,
+  RsbuildContext,
+  RsbuildPlugin,
+} from '../types';
 import { isUseCssExtract } from './css';
+import { replacePortPlaceholder } from './open';
 
 function getPublicPath({
   isProd,
@@ -26,6 +27,7 @@ function getPublicPath({
   const { dev, output } = config;
 
   let publicPath = DEFAULT_ASSET_PREFIX;
+  const port = context.devServer?.port || DEFAULT_PORT;
 
   if (isProd) {
     if (typeof output.assetPrefix === 'string') {
@@ -36,21 +38,35 @@ function getPublicPath({
   } else if (dev.assetPrefix === true) {
     const protocol = context.devServer?.https ? 'https' : 'http';
     const hostname = context.devServer?.hostname || DEFAULT_DEV_HOST;
-    const port = context.devServer?.port || DEFAULT_PORT;
     if (hostname === DEFAULT_DEV_HOST) {
       const localHostname = 'localhost';
       // If user not specify the hostname, it would use 0.0.0.0
       // The http://0.0.0.0:port can't visit in windows, so we shouldn't set publicPath as `//0.0.0.0:${port}/`;
       // Relative to docs:
       // - https://github.com/quarkusio/quarkus/issues/12246
-      publicPath = `${protocol}://${localHostname}:${port}/`;
+      publicPath = `${protocol}://${localHostname}:<port>/`;
     } else {
-      publicPath = `${protocol}://${hostname}:${port}/`;
+      publicPath = `${protocol}://${hostname}:<port>/`;
     }
   }
 
-  return formatPublicPath(publicPath);
+  return formatPublicPath(replacePortPlaceholder(publicPath, port));
 }
+
+const getJsAsyncPath = (
+  jsPath: string,
+  isServer: boolean,
+  jsAsync?: string,
+) => {
+  if (jsAsync !== undefined) {
+    return jsAsync;
+  }
+  if (isServer) {
+    return jsPath;
+  }
+
+  return jsPath ? `${jsPath}/async` : 'async';
+};
 
 export const pluginOutput = (): RsbuildPlugin => ({
   name: 'rsbuild:output',
@@ -68,10 +84,12 @@ export const pluginOutput = (): RsbuildPlugin => ({
 
         // js output
         const jsPath = config.output.distPath.js;
-        const jsAsyncPath =
-          config.output.distPath.jsAsync ??
-          (jsPath ? `${jsPath}/async` : 'async');
-        const jsFilename = getFilename(config, 'js', isProd);
+        const jsAsyncPath = getJsAsyncPath(
+          jsPath,
+          isServer,
+          config.output.distPath.jsAsync,
+        );
+        const jsFilename = getFilename(config, 'js', isProd, isServer);
         const isJsFilenameFn = typeof jsFilename === 'function';
 
         chain.output
@@ -102,13 +120,10 @@ export const pluginOutput = (): RsbuildPlugin => ({
           .hashFunction('xxhash64');
 
         if (isServer) {
-          chain.output
-            .filename('[name].js')
-            .chunkFilename('[name].js')
-            .library({
-              ...(chain.output.get('library') || {}),
-              type: 'commonjs2',
-            });
+          chain.output.library({
+            type: 'commonjs2',
+            ...(chain.output.get('library') || {}),
+          });
         }
 
         if (config.output.copy && api.context.bundlerType === 'rspack') {

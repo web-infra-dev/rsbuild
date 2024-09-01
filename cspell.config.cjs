@@ -17,6 +17,7 @@ module.exports = {
     'doc_build',
     'node_modules',
     'pnpm-lock.yaml',
+    'README.pt-BR.md',
   ],
   flagWords: banWords,
   dictionaries: ['dictionary'],

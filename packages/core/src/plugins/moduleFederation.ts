@@ -1,8 +1,8 @@
-import type { CacheGroup, Rspack } from '@rsbuild/shared';
+import { isRegExp } from 'node:util/types';
 import { rspack } from '@rspack/core';
 import type { RspackPluginInstance } from '@rspack/core';
 import { DEFAULT_ASSET_PREFIX } from '../constants';
-import type { RsbuildPlugin } from '../types';
+import type { CacheGroup, RsbuildPlugin, Rspack } from '../types';
 
 /**
  * Force remote entry not be affected by user's chunkSplit strategy,
@@ -24,14 +24,14 @@ class PatchSplitChunksPlugin implements RspackPluginInstance {
     }
 
     const applyPatch = (cacheGroup: CacheGroup) => {
-      if (typeof cacheGroup !== 'object' || cacheGroup instanceof RegExp) {
+      if (typeof cacheGroup !== 'object' || isRegExp(cacheGroup)) {
         return;
       }
 
       // cacheGroup.chunks will inherit splitChunks.chunks
       // so we only need to modify the chunks that are set separately.
       const { chunks } = cacheGroup;
-      if (!chunks) {
+      if (!chunks || chunks === 'async') {
         return;
       }
 
@@ -88,14 +88,36 @@ export function pluginModuleFederation(): RsbuildPlugin {
     name: 'rsbuild:module-federation',
 
     setup(api) {
+      api.modifyRsbuildConfig((config) => {
+        const { moduleFederation } = config;
+        if (!moduleFederation?.options) {
+          return;
+        }
+
+        // If this is a provider app, Rsbuild should send the ws request to the provider's dev server.
+        // This allows the provider to do HMR when the provider module is loaded in the consumer's page.
+        if (
+          moduleFederation.options.exposes &&
+          config.server?.port &&
+          !config.dev?.client?.port
+        ) {
+          config.dev ||= {};
+          config.dev.client ||= {};
+          config.dev.client.port = config.server.port;
+        }
+      });
+
       api.modifyEnvironmentConfig((config) => {
+        if (!config.moduleFederation?.options) {
+          return;
+        }
+
         /**
          * Currently, splitChunks will take precedence over module federation shared modules.
          * So we need to disable the default split chunks rules to make shared modules to work properly.
          * @see https://github.com/module-federation/module-federation-examples/issues/3161
          */
         if (
-          config.moduleFederation?.options &&
           config.performance?.chunkSplit?.strategy === 'split-by-experience'
         ) {
           config.performance.chunkSplit = {
@@ -103,6 +125,14 @@ export function pluginModuleFederation(): RsbuildPlugin {
             strategy: 'custom',
           };
         }
+
+        // Module Federation runtime uses ES6+ syntax,
+        // adding to include and let SWC transform it
+        config.source.include = [
+          ...(config.source.include || []),
+          /@module-federation[\\/]sdk/,
+          /@module-federation[\\/]runtime/,
+        ];
       });
 
       api.modifyBundlerChain(
@@ -120,9 +150,16 @@ export function pluginModuleFederation(): RsbuildPlugin {
             .use(rspack.container.ModuleFederationPlugin, [options]);
 
           if (options.name) {
-            chain
-              .plugin('mf-patch-split-chunks')
-              .use(PatchSplitChunksPlugin, [options.name]);
+            if (options.exposes) {
+              chain
+                .plugin('mf-patch-split-chunks')
+                .use(PatchSplitChunksPlugin, [options.name]);
+            }
+
+            // `uniqueName` is required for react refresh to work
+            if (!chain.output.get('uniqueName')) {
+              chain.output.set('uniqueName', options.name);
+            }
           }
 
           const publicPath = chain.output.get('publicPath');

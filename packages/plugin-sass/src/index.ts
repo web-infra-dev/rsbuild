@@ -1,11 +1,7 @@
 import { join } from 'node:path';
-import { type RsbuildPlugin, reduceConfigsWithContext } from '@rsbuild/core';
-import {
-  type FileFilterUtil,
-  castArray,
-  cloneDeep,
-  deepmerge,
-} from '@rsbuild/shared';
+import type { RsbuildPlugin } from '@rsbuild/core';
+import deepmerge from 'deepmerge';
+import { reduceConfigsWithContext } from 'reduce-configs';
 import { getResolveUrlJoinFn, patchCompilerGlobalLocation } from './helpers';
 import type { PluginSassOptions, SassLoaderOptions } from './types';
 
@@ -22,8 +18,8 @@ const getSassLoaderOptions = (
 } => {
   const excludes: (RegExp | string)[] = [];
 
-  const addExcludes: FileFilterUtil = (items) => {
-    excludes.push(...castArray(items));
+  const addExcludes = (items: string | RegExp | Array<string | RegExp>) => {
+    excludes.push(...(Array.isArray(items) ? items : [items]));
   };
 
   const mergeFn = (
@@ -102,12 +98,15 @@ export const pluginSass = (
       // Copy the builtin CSS rules
       for (const id of Object.keys(cssRule.uses.entries())) {
         const loader = cssRule.uses.get(id);
-        const options = cloneDeep(loader.get('options'));
+        const options = loader.get('options') ?? {};
+        const clonedOptions = deepmerge<Record<string, any>>({}, options);
+
         if (id === CHAIN_ID.USE.CSS) {
-          // postcss-loader, resolve-url-loader, sass-loader
-          options.importLoaders = 3;
+          // add resolve-url-loader and sass-loader
+          clonedOptions.importLoaders += 2;
         }
-        rule.use(id).loader(loader.get('loader')).options(options);
+
+        rule.use(id).loader(loader.get('loader')).options(clonedOptions);
       }
 
       rule

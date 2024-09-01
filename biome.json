@@ -18,7 +18,13 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignore": ["*.vue", "*.svelte", "template-lit-*/src/my-element.*"],
+    "ignore": [
+      "*.vue",
+      "*.svelte",
+      "template-lit-*/src/my-element.*",
+      "tsconfig.json",
+      "tsconfig.*.json"
+    ],
     "ignoreUnknown": true
   },
   "formatter": {

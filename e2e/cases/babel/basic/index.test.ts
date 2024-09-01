@@ -1,4 +1,4 @@
-import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 
@@ -7,7 +7,7 @@ rspackOnlyTest(
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,
-      runServer: true,
+      page,
       plugins: [
         pluginBabel({
           babelLoaderOptions: (_, { addPlugins }) => {
@@ -17,7 +17,6 @@ rspackOnlyTest(
       ],
     });
 
-    await gotoPage(page, rsbuild);
     expect(await page.evaluate('window.b')).toBe(10);
 
     await rsbuild.close();
@@ -29,7 +28,7 @@ rspackOnlyTest(
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,
-      runServer: true,
+      page,
       rsbuildConfig: {
         source: {
           exclude: [/aa/],
@@ -44,7 +43,6 @@ rspackOnlyTest(
       ],
     });
 
-    await gotoPage(page, rsbuild);
     expect(await page.evaluate('window.b')).toBe(10);
     expect(await page.evaluate('window.bb')).toBeUndefined();
 

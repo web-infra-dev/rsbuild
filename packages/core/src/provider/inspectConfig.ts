@@ -1,13 +1,33 @@
 import { isAbsolute, join } from 'node:path';
+import {
+  getRsbuildInspectConfig,
+  outputInspectConfigFiles,
+  stringifyConfig,
+} from '../config';
+import { RSBUILD_OUTPUTS_PATH } from '../constants';
+import { getNodeEnv, setNodeEnv } from '../helpers';
 import type {
   InspectConfigOptions,
   InspectConfigResult,
-  NormalizedConfig,
-  RspackConfig,
-} from '@rsbuild/shared';
-import { outputInspectConfigFiles, stringifyConfig } from '../config';
-import { getNodeEnv, setNodeEnv } from '../helpers';
+  InternalContext,
+  Rspack,
+} from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
+
+const getInspectOutputPath = (
+  context: InternalContext,
+  inspectOptions: InspectConfigOptions,
+) => {
+  if (inspectOptions.outputPath) {
+    if (isAbsolute(inspectOptions.outputPath)) {
+      return inspectOptions.outputPath;
+    }
+
+    return join(context.distPath, inspectOptions.outputPath);
+  }
+
+  return join(context.distPath, RSBUILD_OUTPUTS_PATH);
+};
 
 export async function inspectConfig({
   context,
@@ -17,10 +37,10 @@ export async function inspectConfig({
   inspectOptions = {},
 }: InitConfigsOptions & {
   inspectOptions?: InspectConfigOptions;
-  bundlerConfigs?: RspackConfig[];
+  bundlerConfigs?: Rspack.Configuration[];
 }): Promise<InspectConfigResult<'rspack'>> {
-  if (inspectOptions.env) {
-    setNodeEnv(inspectOptions.env);
+  if (inspectOptions.mode) {
+    setNodeEnv(inspectOptions.mode);
   } else if (!getNodeEnv()) {
     setNodeEnv('development');
   }
@@ -35,37 +55,28 @@ export async function inspectConfig({
       })
     ).rspackConfigs;
 
-  const rsbuildDebugConfig: NormalizedConfig & {
-    pluginNames: string[];
-  } = {
-    ...context.normalizedConfig!,
-    pluginNames: pluginManager.getPlugins().map((p) => p.name),
-  };
+  const rawBundlerConfigs = rspackConfigs.map((config, index) => ({
+    name: config.name || String(index),
+    content: stringifyConfig(config, inspectOptions.verbose),
+  }));
 
-  const rawRsbuildConfig = stringifyConfig(
-    rsbuildDebugConfig,
-    inspectOptions.verbose,
-  );
+  const {
+    rsbuildConfig,
+    rawRsbuildConfig,
+    environmentConfigs,
+    rawEnvironmentConfigs,
+  } = getRsbuildInspectConfig({
+    normalizedConfig: context.normalizedConfig!,
+    inspectOptions,
+    pluginManager,
+  });
 
-  const rawBundlerConfigs = await Promise.all(
-    rspackConfigs.map(async (config, index) => ({
-      name: config.name || String(index),
-      content: stringifyConfig(config, inspectOptions.verbose),
-    })),
-  );
-
-  let outputPath = inspectOptions.outputPath
-    ? join(context.distPath, inspectOptions.outputPath)
-    : context.distPath;
-  if (!isAbsolute(outputPath)) {
-    outputPath = join(context.rootPath, outputPath);
-  }
+  const outputPath = getInspectOutputPath(context, inspectOptions);
 
   if (inspectOptions.writeToDisk) {
     await outputInspectConfigFiles({
-      rsbuildConfig: context.normalizedConfig!,
-      rawRsbuildConfig,
-      bundlerConfigs: rawBundlerConfigs,
+      rawBundlerConfigs,
+      rawEnvironmentConfigs,
       inspectOptions: {
         ...inspectOptions,
         outputPath,
@@ -76,9 +87,11 @@ export async function inspectConfig({
 
   return {
     rsbuildConfig: rawRsbuildConfig,
+    environmentConfigs: rawEnvironmentConfigs.map((r) => r.content),
     bundlerConfigs: rawBundlerConfigs.map((r) => r.content),
     origin: {
-      rsbuildConfig: rsbuildDebugConfig,
+      rsbuildConfig,
+      environmentConfigs,
       bundlerConfigs: rspackConfigs,
     },
   };

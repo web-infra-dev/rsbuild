@@ -439,4 +439,33 @@ describe('plugin-swc', () => {
 
     expect(config.extensions?.lodash).toBeFalsy();
   });
+
+  it('should use output config', async () => {
+    process.env.NODE_ENV = 'production';
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginSwc()],
+      rsbuildConfig: {
+        provider: webpackProvider,
+        environments: {
+          web: {
+            output: {
+              minify: {
+                js: true,
+                jsOptions: {
+                  minimizerOptions: {
+                    compress: {
+                      ecma: 2019,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+    const configs = await rsbuild.initConfigs();
+
+    expect(configs).toMatchSnapshot();
+  });
 });

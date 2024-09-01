@@ -1,12 +1,16 @@
 import type {
+  BundlerPluginInstance,
   CreateRsbuildOptions,
   RsbuildInstance,
-  RsbuildPlugin,
+  RsbuildPlugins,
+  Rspack,
 } from '@rsbuild/core';
-import type { BundlerPluginInstance, RspackConfig } from '@rsbuild/shared';
 
 /** Match plugin by constructor name. */
-export const matchPlugin = (config: RspackConfig, pluginName: string) => {
+export const matchPlugin = (
+  config: Rspack.Configuration,
+  pluginName: string,
+) => {
   const result = config.plugins?.filter(
     (item) => item?.constructor.name === pluginName,
   );
@@ -25,7 +29,7 @@ export async function createStubRsbuild({
   plugins,
   ...options
 }: CreateRsbuildOptions & {
-  plugins?: RsbuildPlugin[];
+  plugins?: RsbuildPlugins;
 }): Promise<
   RsbuildInstance & {
     unwrapConfig: () => Promise<Record<string, any>>;
@@ -33,7 +37,7 @@ export async function createStubRsbuild({
   }
 > {
   const { createRsbuild } = await import('@rsbuild/core');
-  const rsbuildOptions: Required<CreateRsbuildOptions> = {
+  const rsbuildOptions = {
     cwd: process.env.REBUILD_TEST_SUITE_CWD || process.cwd(),
     rsbuildConfig,
     ...options,
@@ -52,17 +56,17 @@ export async function createStubRsbuild({
   if (plugins) {
     // remove all builtin plugins
     rsbuild.removePlugins(rsbuild.getPlugins().map((item) => item.name));
-    rsbuild.addPlugins(plugins);
+    rsbuild.addPlugins(await Promise.all(plugins));
   }
 
-  const unwrapConfig = async () => {
+  const unwrapConfig = async (index = 0) => {
     const configs = await rsbuild.initConfigs();
-    return configs[0];
+    return configs[index];
   };
 
   /** Match rspack/webpack plugin by constructor name. */
-  const matchBundlerPlugin = async (pluginName: string) => {
-    const config = await unwrapConfig();
+  const matchBundlerPlugin = async (pluginName: string, index?: number) => {
+    const config = await unwrapConfig(index);
 
     return matchPlugin(config, pluginName) as BundlerPluginInstance;
   };

@@ -4,7 +4,6 @@
 
 ```ts
 type TransformImport =
-  | false
   | Array<{
       libraryName: string;
       libraryDirectory?: string;
@@ -14,7 +13,8 @@ type TransformImport =
       transformToDefaultImport?: boolean;
       customName?: string;
       customStyleName?: string;
-    }>;
+    }>
+  | Function;
 ```
 
 - **Default:** `undefined`
@@ -99,7 +99,7 @@ If you want to process the code in node_modules through `transformImport`, pleas
 ```ts
 export default {
   source: {
-    include: [/[\\/]node_modules[\\/]some-package[\\/]/],
+    include: [/node_modules[\\/]some-package[\\/]/],
   },
 };
 ```
@@ -253,3 +253,35 @@ The following formats are supported:
 - **Default:** `undefined`
 
 Customize the transformed style path, the usage is consistent with `customName`.
+
+## Function Type
+
+The `transformImport` can be a function, it will accept the previous value, and you can modify it.
+
+```ts
+export default {
+  source: {
+    transformImport: (imports) => {
+      return imports.filter((data) => data.libraryName !== 'antd');
+    },
+  },
+};
+```
+
+You can also return a new value as the final result in the function, which will replace the previous value.
+
+```ts
+export default {
+  source: {
+    transformImport: () => {
+      return [
+        {
+          libraryName: 'antd',
+          libraryDirectory: 'es',
+          style: 'css',
+        },
+      ];
+    },
+  },
+};
+```

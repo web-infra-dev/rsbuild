@@ -91,7 +91,7 @@ export default {
 
 - **类型：** `boolean`
 
-用于判断当前是否为开发环境构建，比如：
+用于判断当前是否为开发模式构建，比如：
 
 ```js
 export default {
@@ -110,7 +110,7 @@ export default {
 
 - **类型：** `boolean`
 
-用于判断当前是否为生产环境构建，比如：
+用于判断当前是否为生产模式构建，比如：
 
 ```js
 export default {
@@ -200,9 +200,9 @@ export default {
 
 ### HtmlPlugin
 
-- **类型：** `typeof import('html-webpack-plugin')`
+- **类型：** `typeof import('html-rspack-plugin')`
 
-通过这个参数你可以拿到 `html-webpack-plugin` 插件的实例。
+通过这个参数你可以拿到 `html-rspack-plugin` 插件的实例。
 
 ```js
 export default {
@@ -247,6 +247,10 @@ export default {
   },
 };
 ```
+
+:::tip
+`addRules(...)` 会将新规则插入到 Rspack rules 列表的最前面。如果想要在末尾插入新规则，请改用 `config.module.rules.push(...)`。
+:::
 
 ### prependPlugins
 
@@ -308,7 +312,7 @@ export default {
 
 ### mergeConfig
 
-- **类型：** `(...configs: RspackConfig[]) => RspackConfig`
+- **类型：** `(...configs:Rspack.Configuration[]) =>Rspack.Configuration`
 
 用于合并多份 Rspack 配置，等价于 [webpack-merge](https://github.com/survivejs/webpack-merge)。
 

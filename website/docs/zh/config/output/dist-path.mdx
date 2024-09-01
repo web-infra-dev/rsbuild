@@ -24,8 +24,8 @@ type DistPathConfig = {
 const defaultDistPath = {
   root: 'dist',
   html: '/',
-  js: 'static/js',
-  jsAsync: 'static/js/async',
+  js: isServer ? '' : 'static/js',
+  jsAsync: isServer ? '' : 'static/js/async',
   css: 'static/css',
   cssAsync: 'static/css/async',
   svg: 'static/svg',

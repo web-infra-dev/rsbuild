@@ -1,5 +1,5 @@
-import { type RsbuildConfig, castArray, cloneDeep } from '@rsbuild/shared';
-import { isFunction, isPlainObject } from './helpers';
+import { castArray, cloneDeep, isFunction, isPlainObject } from './helpers';
+import type { RsbuildConfig } from './types';
 
 const OVERRIDE_PATHS = [
   'performance.removeConsole',
@@ -36,6 +36,11 @@ const merge = (x: unknown, y: unknown, path = '') => {
   }
   if (y === undefined) {
     return isPlainObject(x) ? cloneDeep(x) : x;
+  }
+
+  // no need to merge boolean with object or function, such as `tools.htmlPlugin`
+  if (typeof x === 'boolean' || typeof y === 'boolean') {
+    return y;
   }
 
   const pair = [x, y];

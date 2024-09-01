@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { dev, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { dev, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 rspackOnlyTest('hmr should work properly', async ({ page }) => {
@@ -13,9 +13,8 @@ rspackOnlyTest('hmr should work properly', async ({ page }) => {
 
   const rsbuild = await dev({
     cwd: root,
+    page,
   });
-
-  await gotoPage(page, rsbuild);
 
   const a = page.locator('#A');
   const b = page.locator('#B');
@@ -46,5 +45,5 @@ rspackOnlyTest('hmr should work properly', async ({ page }) => {
 
   // recover the source code
   fs.writeFileSync(filePath, sourceCodeB, 'utf-8');
-  rsbuild.close();
+  await rsbuild.close();
 });

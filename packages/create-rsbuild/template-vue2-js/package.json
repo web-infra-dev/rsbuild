@@ -8,10 +8,10 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "vue": "^2.7.14"
+    "vue": "^2.7.16"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/plugin-vue2": "workspace:*"
+    "@rsbuild/plugin-vue2": "^1.0.1"
   }
 }
