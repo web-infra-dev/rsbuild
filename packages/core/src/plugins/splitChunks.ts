@@ -68,7 +68,6 @@ function splitByExperience(ctx: SplitChunksContext): SplitChunks {
   const experienceCacheGroup: CacheGroups = {};
 
   const packageRegExps: Record<string, RegExp> = {
-    lodash: /node_modules[\\/]lodash(-es)?[\\/]/,
     axios: /node_modules[\\/]axios(-.+)?[\\/]/,
   };
 
