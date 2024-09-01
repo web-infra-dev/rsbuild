@@ -386,7 +386,10 @@ export const getAddressUrls = ({
 // A unique name for WebSocket communication
 export const getCompilationId = (
   compiler: Rspack.Compiler | Rspack.Compilation,
-) => `${compiler.name ?? ''}_${compiler.options.output.uniqueName ?? ''}`;
+) => {
+  const uniqueName = compiler.options.output.uniqueName ?? '';
+  return `${compiler.name ?? ''}_${uniqueName.replace(/[^a-zA-Z0-9_-]/g, '_')}`;
+};
 
 export function getServerTerminator(
   server: Server | Http2SecureServer,
