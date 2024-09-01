@@ -91,8 +91,8 @@ importers:
         specifier: 0.6.0
         version: 0.6.0(typescript@5.5.2)
       '@playwright/test':
-        specifier: 1.44.1
-        version: 1.44.1
+        specifier: 1.46.1
+        version: 1.46.1
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../packages/core
@@ -175,8 +175,8 @@ importers:
         specifier: ^11.2.0
         version: 11.2.0
       playwright:
-        specifier: 1.44.1
-        version: 1.44.1
+        specifier: 1.46.1
+        version: 1.46.1
       strip-ansi:
         specifier: 6.0.1
         version: 6.0.1
@@ -2594,9 +2594,9 @@ packages:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
 
-  '@playwright/test@1.44.1':
-    resolution: {integrity: sha512-1hZ4TNvD5z9VuhNJ/walIjvMVvYkZKf71axoF/uiAqpntQJXpG64dlXhoDXE3OczPuTuvjf/M5KWFg5VAVUS3Q==}
-    engines: {node: '>=16'}
+  '@playwright/test@1.46.1':
+    resolution: {integrity: sha512-Fq6SwLujA/DOIvNC2EL/SojJnkKf/rAwJ//APpJJHRyMi1PdKrY3Az+4XNQ51N4RTbItbIByQ0jgd1tayq1aeA==}
+    engines: {node: '>=18'}
     hasBin: true
 
   '@polka/url@0.5.0':
@@ -5847,14 +5847,14 @@ packages:
     resolution: {integrity: sha512-Ie9z/WINcxxLp27BKOCHGde4ITq9UklYKDzVo1nhk5sqGEXU3FpkwP5GM2voTGJkGd9B3Otl+Q4uwSOeSUtOBA==}
     engines: {node: '>=14.16'}
 
-  playwright-core@1.44.1:
-    resolution: {integrity: sha512-wh0JWtYTrhv1+OSsLPgFzGzt67Y7BE/ZS3jEqgGBlp2ppp1ZDj8c+9IARNW4dwf1poq5MgHreEM2KV/GuR4cFA==}
-    engines: {node: '>=16'}
+  playwright-core@1.46.1:
+    resolution: {integrity: sha512-h9LqIQaAv+CYvWzsZ+h3RsrqCStkBHlgo6/TJlFst3cOTlLghBQlJwPOZKQJTKNaD3QIB7aAVQ+gfWbN3NXB7A==}
+    engines: {node: '>=18'}
     hasBin: true
 
-  playwright@1.44.1:
-    resolution: {integrity: sha512-qr/0UJ5CFAtloI3avF95Y0L1xQo6r3LQArLIg/z/PoGJ6xa+EwzrwO5lpNr/09STxdHuUoP2mvuELJS+hLdtgg==}
-    engines: {node: '>=16'}
+  playwright@1.46.1:
+    resolution: {integrity: sha512-oPcr1yqoXLCkgKtD5eNUPLiN40rYEM39odNpIb6VE6S7/15gJmA1NzVv6zJYusV0e7tzvkU/utBFNa/Kpxmwng==}
+    engines: {node: '>=18'}
     hasBin: true
 
   plimit-lit@1.6.1:
@@ -9147,9 +9147,9 @@ snapshots:
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
-  '@playwright/test@1.44.1':
+  '@playwright/test@1.46.1':
     dependencies:
-      playwright: 1.44.1
+      playwright: 1.46.1
 
   '@polka/url@0.5.0': {}
 
@@ -12898,11 +12898,11 @@ snapshots:
     dependencies:
       find-up: 6.3.0
 
-  playwright-core@1.44.1: {}
+  playwright-core@1.46.1: {}
 
-  playwright@1.44.1:
+  playwright@1.46.1:
     dependencies:
-      playwright-core: 1.44.1
+      playwright-core: 1.46.1
     optionalDependencies:
       fsevents: 2.3.2
 
