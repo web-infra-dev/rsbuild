@@ -266,8 +266,8 @@ importers:
   e2e/cases/swc-plugin:
     dependencies:
       '@swc/plugin-remove-console':
-        specifier: 2.0.10
-        version: 2.0.10
+        specifier: 3.0.0
+        version: 3.0.0
 
   e2e/cases/vue:
     dependencies:
@@ -3134,8 +3134,8 @@ packages:
   '@swc/helpers@0.5.3':
     resolution: {integrity: sha512-FaruWX6KdudYloq1AHD/4nU+UsMTdNE8CKyrseXWEcgjDAbvkwJg2QGPAnfIJLIWsjZOSPLOAykK6fuYp4vp4A==}
 
-  '@swc/plugin-remove-console@2.0.10':
-    resolution: {integrity: sha512-yp2Nf3tQ1tt1LgOMREfuxJYQY5Ddv0bsrkhytWGlb7UngXpimXoZ9R/lYpQAGCf6rp9ZgnNkf17wYQE34aQhGA==}
+  '@swc/plugin-remove-console@3.0.0':
+    resolution: {integrity: sha512-V2FecDtafoIDVZZ5fazOOP5m/anOuitnuTYnCwC/T9rt4lmBWsw8aDnXPX41cbJm0iMsK1OquxMHcM+Vo2DdCQ==}
 
   '@swc/plugin-styled-components@2.0.11':
     resolution: {integrity: sha512-OIuqXS97sT1q/wq/T6D5wNtBYf3YOO0tfJHTnYaiuIqtsjabeTYu/EJOfB+fbCMPf/lHiKxSWtJVCov2X0v1BA==}
@@ -9693,7 +9693,7 @@ snapshots:
     dependencies:
       tslib: 2.6.2
 
-  '@swc/plugin-remove-console@2.0.10':
+  '@swc/plugin-remove-console@3.0.0':
     dependencies:
       '@swc/counter': 0.1.3
 
