@@ -3,10 +3,10 @@ import type { Compiler, MultiCompiler } from '@rspack/core';
 import { applyToCompiler } from '../helpers';
 import type { DevMiddlewareOptions } from '../provider/createCompiler';
 import type { DevConfig, NextFunction } from '../types';
-import { getCompilationName } from './helper';
+import { getCompilationId } from './helper';
 
 type ServerCallbacks = {
-  onInvalid: (compilationName?: string) => void;
+  onInvalid: (compilationId?: string) => void;
   onDone: (stats: any) => void;
 };
 
@@ -50,10 +50,10 @@ export const setupServerHooks = (
   const { compile, invalid, done } = compiler.hooks;
 
   compile.tap('rsbuild-dev-server', () =>
-    hookCallbacks.onInvalid(getCompilationName(compiler)),
+    hookCallbacks.onInvalid(getCompilationId(compiler)),
   );
   invalid.tap('rsbuild-dev-server', () =>
-    hookCallbacks.onInvalid(getCompilationName(compiler)),
+    hookCallbacks.onInvalid(getCompilationId(compiler)),
   );
   done.tap('rsbuild-dev-server', hookCallbacks.onDone);
 };
@@ -74,7 +74,7 @@ function applyHMREntry({
   }
 
   new compiler.webpack.DefinePlugin({
-    RSBUILD_COMPILATION_NAME: JSON.stringify(getCompilationName(compiler)),
+    RSBUILD_COMPILATION_NAME: JSON.stringify(getCompilationId(compiler)),
     RSBUILD_CLIENT_CONFIG: JSON.stringify(clientConfig),
     RSBUILD_DEV_LIVE_RELOAD: liveReload,
   }).apply(compiler);

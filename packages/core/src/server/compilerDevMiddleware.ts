@@ -98,10 +98,10 @@ export class CompilerDevMiddleware {
     const { devConfig, serverConfig } = this;
 
     const callbacks = {
-      onInvalid: (compilationName?: string) => {
+      onInvalid: (compilationId?: string) => {
         this.socketServer.sockWrite({
           type: 'invalid',
-          compilationName,
+          compilationId,
         });
       },
       onDone: (stats: any) => {

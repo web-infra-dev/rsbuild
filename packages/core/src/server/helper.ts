@@ -384,7 +384,7 @@ export const getAddressUrls = ({
 };
 
 // A unique name for WebSocket communication
-export const getCompilationName = (
+export const getCompilationId = (
   compiler: Rspack.Compiler | Rspack.Compilation,
 ) => `${compiler.name ?? ''}_${compiler.options.output.uniqueName ?? ''}`;
 

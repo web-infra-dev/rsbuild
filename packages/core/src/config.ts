@@ -59,11 +59,10 @@ const getDefaultDevConfig = (): NormalizedDevConfig => ({
   writeToDisk: false,
   client: {
     path: HMR_SOCKET_PATH,
-    // By default it is set to "location.port"
     port: '',
-    // By default it is set to "location.hostname"
     host: '',
     overlay: true,
+    reconnect: 100,
   },
 });
 
