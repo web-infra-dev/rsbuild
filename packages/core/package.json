@@ -54,7 +54,7 @@
     "@rspack/core": "1.0.0",
     "@rspack/lite-tapable": "1.0.0",
     "@swc/helpers": "^0.5.12",
-    "caniuse-lite": "^1.0.30001653",
+    "caniuse-lite": "^1.0.30001655",
     "core-js": "~3.38.1"
   },
   "devDependencies": {
@@ -83,7 +83,7 @@
     "on-finished": "2.4.1",
     "open": "^8.4.0",
     "picocolors": "^1.0.1",
-    "postcss": "^8.4.41",
+    "postcss": "^8.4.43",
     "postcss-load-config": "6.0.1",
     "postcss-loader": "8.1.1",
     "prebundle": "1.2.2",

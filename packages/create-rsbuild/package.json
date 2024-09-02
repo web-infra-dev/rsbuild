@@ -27,7 +27,7 @@
     "start": "node ./dist/index.js"
   },
   "devDependencies": {
-    "@rslib/core": "0.0.3",
+    "@rslib/core": "0.0.4",
     "@types/node": "18.x",
     "typescript": "^5.5.2"
   },

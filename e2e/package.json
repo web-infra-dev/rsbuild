@@ -14,7 +14,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.1",
-    "solid-js": "^1.8.21",
+    "solid-js": "^1.8.22",
     "vue": "^3.4.38",
     "vue-router": "^4.4.3"
   },
@@ -44,7 +44,7 @@
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.7",
     "@types/node": "18.x",
-    "@types/react": "^18.3.4",
+    "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "create-rsbuild": "workspace:*",
     "fast-glob": "^3.3.2",
