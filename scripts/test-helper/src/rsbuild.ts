@@ -61,7 +61,7 @@ export async function createStubRsbuild({
       plugins = (await Promise.all(plugins)).flat(
         Number.POSITIVE_INFINITY as 1,
       );
-    } while (plugins.some((v: any) => isPromise(v)));
+    } while (plugins.some((v) => isPromise(v)));
 
     return plugins as Array<RsbuildPlugin | false | null | undefined>;
   };
