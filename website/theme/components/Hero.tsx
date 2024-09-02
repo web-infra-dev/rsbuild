@@ -14,18 +14,16 @@ export function Hero() {
   return (
     <>
       <style>
-        {`
-:root {
-  --rs-hero-title-gradient: -webkit-linear-gradient(120deg, var(--rp-c-brand) 30%, #42d392);
-  --rs-hero-button-gradient: linear-gradient(275deg, var(--rp-c-brand-dark) 3%, var(--rp-c-brand-light) 97%);
-  --rs-hero-button-border: #0095ff;
-
-  --rs-hero-oval-background: conic-gradient(from 180deg at 50% 50%,var(--rp-c-brand)0deg,180deg,#42d392 1turn);
-  --rs-hero-oval-filter: blur(30px); 
-}
-`}
+        {`.rs-oval {
+            width: 70% !important;
+            height: 70% !important;
+            top: calc(50% + 20px) !important;
+            left: calc(50% + 5px) !important;
+          }
+        `}
       </style>
       <BaseHero
+        showStars
         onClickGetStarted={handleClickGetStarted}
         onClickLearnMore={handleClickLearnMore}
         title="Rsbuild"

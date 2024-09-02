@@ -48,8 +48,23 @@ export function WhyRsbuild() {
     <>
       <style>
         {`.max-w-6xl.flex.m-auto {
-        max-width: 1440px;
-      }`}
+           max-width: 1440px;
+          }
+          html:not(.dark) {
+            --rp-home-feature-bg: linear-gradient(
+              135deg,
+              rgba(255, 255, 255, 1),
+              rgba(249, 249, 249, 0.5)
+              );
+              }
+          html.dark {
+            --rp-home-feature-bg: linear-gradient(
+              135deg,
+              rgba(255, 255, 255, 0),
+              rgba(255, 255, 255, 0.03)
+            );
+          }
+      `}
       </style>
       <section className={containerStyle}>
         <div className={innerContainerStyle}>

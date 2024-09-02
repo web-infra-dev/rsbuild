@@ -1,3 +1,4 @@
+import { BackgroundImage } from '@rstack-dev/doc-ui/background-image';
 import { usePageData } from 'rspress/runtime';
 import { Benchmark } from '../components/Benchmark';
 import { Hero } from '../components/Hero';
@@ -23,16 +24,21 @@ const CopyRight = () => {
 
 export function HomeLayout() {
   return (
-    // <BasicHomeLayout
-    //   afterFeatures={
-    <>
+    <div style={{ position: 'relative' }}>
+      <BackgroundImage />
       <Hero />
       <WhyRsbuild />
       <Benchmark />
       <ToolStack />
       <CopyRight />
-    </>
-    //   }
-    // />
+    </div>
+    //    <BasicHomeLayout
+    //    afterFeatures={
+    //      <>
+    //        <Benchmark />
+    //        <ToolStack />
+    //      </>
+    //    }
+    //  />
   );
 }
