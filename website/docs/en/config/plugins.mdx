@@ -50,7 +50,7 @@ When a plugin internally uses fields that control the order, such as `pre` and `
 
 ## Nested Plugins
 
-Rsbuild also supports adding nested plugins. You can pass in a collection containing multiple plugins as a plugin preset, which is helpful for implementing complex functions that require multiple plugins (such as framework integration).
+Rsbuild also supports adding nested plugins. You can pass in an array containing multiple plugins, similar to a plugin preset collection. This is particularly useful for implementing complex functionalities that require a combination of multiple plugins (such as framework integration).
 
 ```ts title="rsbuild.config.ts"
 function myPlugin() {
