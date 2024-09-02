@@ -105,7 +105,7 @@ The final insertion position on the page is as follows:
 ## Tags Handler
 
 ```ts
-type HtmlTagUtils = {
+type HtmlTagContext = {
   hash: string;
   entryName: string;
   outputName: string;
@@ -114,7 +114,7 @@ type HtmlTagUtils = {
 
 type HtmlTagHandler = (
   tags: HtmlTag[],
-  utils: HtmlTagUtils,
+  context: HtmlTagContext,
 ) => HtmlTag[] | void;
 ```
 
