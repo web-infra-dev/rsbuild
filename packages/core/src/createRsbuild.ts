@@ -206,8 +206,9 @@ export async function createRsbuild(
   const getFlattenedPlugins = async (pluginOptions: RsbuildPlugins) => {
     let plugins = pluginOptions;
     do {
-      // @ts-expect-error Depth is determined by user configuration
-      plugins = (await Promise.all(plugins)).flat(Number.POSITIVE_INFINITY);
+      plugins = (await Promise.all(plugins)).flat(
+        Number.POSITIVE_INFINITY as 1,
+      );
     } while (plugins.some((v: any) => isPromise(v)));
 
     return plugins as Array<RsbuildPlugin | Falsy>;
