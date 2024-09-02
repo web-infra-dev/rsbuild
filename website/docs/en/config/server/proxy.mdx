@@ -1,6 +1,6 @@
 # server.proxy
 
-- **Type:** `Record<string, string> | Record<string, ProxyDetail>`
+- **Type:** `Record<string, string> | Record<string, ProxyOptions> | ProxyOptions[] | ProxyOptions`
 - **Default:** `undefined`
 
 Configure proxy rules for the dev server or preview server to proxy requests to the specified service.
@@ -75,16 +75,16 @@ export default {
 
 ## Options
 
-The Rsbuild Server Proxy makes use of the [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware/tree/2.x) package. Check out its documentation for more advanced usages.
+The Rsbuild server proxy makes use of the [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware/tree/2.x) package. Check out its documentation for more advanced usages.
 
-The full type definition of Rsbuild Server Proxy is:
+The full type definition of Rsbuild server proxy is:
 
 ```ts
 import type { Options as HttpProxyOptions } from 'http-proxy-middleware';
 
 type Filter = string | string[] | ((pathname: string, req: Request) => boolean);
 
-type ProxyDetail = HttpProxyOptions & {
+type ProxyOptions = HttpProxyOptions & {
   bypass?: (
     req: IncomingMessage,
     res: ServerResponse,
@@ -93,14 +93,14 @@ type ProxyDetail = HttpProxyOptions & {
   context?: Filter;
 };
 
-type ProxyOptions =
+type ProxyConfig =
+  | ProxyOptions
+  | ProxyOptions[]
   | Record<string, string>
-  | Record<string, ProxyDetail>
-  | ProxyDetail[]
-  | ProxyDetail;
+  | Record<string, ProxyOptions>;
 ```
 
-In addition to the http-proxy-middleware option, Rsbuild also support the bypass and context configuration.
+In addition to the `http-proxy-middleware` option, Rsbuild also support the `bypass` and `context` options.
 
 ### bypass
 
@@ -132,10 +132,9 @@ export default {
 
 ### context
 
-If you want to proxy multiple, specific paths to the same target, you can use an array of one or more objects with a context property.
+Used to proxy multiple specified paths to the same target.
 
 ```js
-// proxy multiple
 export default {
   server: {
     proxy: [

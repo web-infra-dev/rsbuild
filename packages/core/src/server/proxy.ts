@@ -2,13 +2,13 @@ import type { RequestHandler } from 'http-proxy-middleware';
 import { logger } from '../logger';
 import type {
   RequestHandler as Middleware,
-  ProxyDetail,
+  ProxyConfig,
   ProxyOptions,
 } from '../types';
 import type { UpgradeEvent } from './helper';
 
-function formatProxyOptions(proxyOptions: ProxyOptions) {
-  const ret: ProxyDetail[] = [];
+function formatProxyOptions(proxyOptions: ProxyConfig) {
+  const ret: ProxyOptions[] = [];
 
   if (Array.isArray(proxyOptions)) {
     ret.push(...proxyOptions);
@@ -16,7 +16,7 @@ function formatProxyOptions(proxyOptions: ProxyOptions) {
     ret.push(proxyOptions);
   } else {
     for (const [context, options] of Object.entries(proxyOptions)) {
-      const opts: ProxyDetail = {
+      const opts: ProxyOptions = {
         context,
         changeOrigin: true,
         logLevel: 'warn',
@@ -40,23 +40,23 @@ function formatProxyOptions(proxyOptions: ProxyOptions) {
 }
 
 export const createProxyMiddleware = async (
-  proxyOptions: ProxyOptions,
+  proxyOptions: ProxyConfig,
 ): Promise<{
   middlewares: Middleware[];
   upgrade: UpgradeEvent;
 }> => {
   // If it is not an array, it may be an object that uses the context attribute
   // or an object in the form of { source: ProxyDetail }
-  const formattedOptionsList = formatProxyOptions(proxyOptions);
+  const formattedOptions = formatProxyOptions(proxyOptions);
   const proxyMiddlewares: RequestHandler[] = [];
   const middlewares: Middleware[] = [];
 
-  const { createProxyMiddleware: baseCreateProxyMiddleware } = await import(
+  const { createProxyMiddleware: baseMiddleware } = await import(
     'http-proxy-middleware'
   );
 
-  for (const opts of formattedOptionsList) {
-    const proxyMiddleware = baseCreateProxyMiddleware(opts.context!, opts);
+  for (const opts of formattedOptions) {
+    const proxyMiddleware = baseMiddleware(opts.context!, opts);
 
     const middleware: Middleware = async (req, res, next) => {
       const bypassUrl =

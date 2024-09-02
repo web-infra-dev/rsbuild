@@ -14,7 +14,7 @@ import type {
 } from '@rspack/core';
 import type { WatchOptions } from 'chokidar';
 import type {
-  Options as BaseProxyOptions,
+  Options as HttpProxyOptions,
   Filter as ProxyFilter,
 } from 'http-proxy-middleware';
 import type RspackChain from 'rspack-chain';
@@ -250,20 +250,32 @@ export interface NormalizedSourceConfig extends SourceConfig {
 
 export type HtmlFallback = false | 'index';
 
-export type ProxyDetail = BaseProxyOptions & {
-  bypass?: (
-    req: IncomingMessage,
-    res: ServerResponse,
-    proxyOptions: ProxyOptions,
-  ) => string | undefined | null | boolean;
+export type ProxyBypass = (
+  req: IncomingMessage,
+  res: ServerResponse,
+  proxyOptions: ProxyOptions,
+) => string | undefined | null | boolean;
+
+export type ProxyOptions = HttpProxyOptions & {
+  /**
+   * Bypass the proxy based on the return value of a function.
+   * - Return `null` or `undefined` to continue processing the request with proxy.
+   * - Return `true` to continue processing the request without proxy.
+   * - Return `false` to produce a 404 error for the request.
+   * - Return a path to serve from, instead of continuing to proxy the request.
+   */
+  bypass?: ProxyBypass;
+  /**
+   * Used to proxy multiple specified paths to the same target.
+   */
   context?: ProxyFilter;
 };
 
-export type ProxyOptions =
+export type ProxyConfig =
   | Record<string, string>
-  | Record<string, ProxyDetail>
-  | ProxyDetail[]
-  | ProxyDetail;
+  | Record<string, ProxyOptions>
+  | ProxyOptions[]
+  | ProxyOptions;
 
 export type HistoryApiFallbackContext = {
   match: RegExpMatchArray;
@@ -360,7 +372,7 @@ export interface ServerConfig {
   /**
    * Configure proxy rules for the dev server or preview server to proxy requests to the specified service.
    */
-  proxy?: ProxyOptions;
+  proxy?: ProxyConfig;
   /**
    * Whether to throw an error when the port is occupied.
    */
