@@ -14,17 +14,16 @@ DEBUG=rsbuild pnpm build
 
 ## 日志信息
 
-在调试模式下，你会看到 terminal 中输出了一些额外的信息，其中以 `debug` 开头的是一些流程日志，表明 Rsbuild 内部执行了哪些操作。
+在调试模式下，你会看到 terminal 中输出了一些以 `rsbuild` 开头的日志，包括 Rsbuild 内部执行的操作、当前使用的 Rspack 版本等。
 
 ```bash
 $ DEBUG=rsbuild pnpm dev
 
-debug   create context [1842.90 ms]
-debug   add default plugins [1874.45 ms]
-debug   add default plugins done [1938.57 ms]
-debug   init plugins [2388.29 ms]
-debug   init plugins done [2389.48 ms]
-...
+  ...
+  rsbuild init plugins
+  rsbuild init plugins done
+  rsbuild Use Rspack v1.0.0
+  ...
 ```
 
 此外，terminal 中还会输出以下日志，表示 Rsbuild 将内部生成的构建配置写入到磁盘中，此时你可以打开这些配置文件来查看相应的内容。
