@@ -510,9 +510,9 @@ const compiler = await rsbuild.createCompiler();
 type AddPluginsOptions = { before?: string } | { after?: string };
 
 function AddPlugins(
-  plugins: RsbuildPlugins[],
+  plugins: Array<RsbuildPlugin | Falsy>,
   options?: AddPluginsOptions,
-): Promise<void>;
+): void;
 ```
 
 - **示例：**
