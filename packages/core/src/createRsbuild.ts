@@ -9,11 +9,14 @@ import type {
   Build,
   CreateDevServer,
   CreateRsbuildOptions,
+  Falsy,
   InternalContext,
   PluginManager,
   PreviewServerOptions,
   ResolvedCreateRsbuildOptions,
   RsbuildInstance,
+  RsbuildPlugin,
+  RsbuildPlugins,
   RsbuildProvider,
   StartDevServer,
 } from './types';
@@ -199,8 +202,18 @@ export async function createRsbuild(
     ]),
   };
 
+  const getFlattenedPlugins = async (pluginOptions: RsbuildPlugins) => {
+    let plugins = pluginOptions;
+    do {
+      // @ts-expect-error Depth is determined by user configuration
+      plugins = (await Promise.all(plugins)).flat(Number.POSITIVE_INFINITY);
+    } while (plugins.some((v: any) => v?.then));
+
+    return plugins as Array<RsbuildPlugin | Falsy>;
+  };
+
   if (rsbuildConfig.plugins) {
-    const plugins = await Promise.all(rsbuildConfig.plugins);
+    const plugins = await getFlattenedPlugins(rsbuildConfig.plugins);
     rsbuild.addPlugins(plugins);
   }
 
@@ -212,7 +225,7 @@ export async function createRsbuild(
           !rsbuildOptions.environment ||
           rsbuildOptions.environment.includes(name);
         if (config.plugins && isEnvironmentEnabled) {
-          const plugins = await Promise.all(config.plugins);
+          const plugins = await getFlattenedPlugins(config.plugins);
           rsbuild.addPlugins(plugins, {
             environment: name,
           });
