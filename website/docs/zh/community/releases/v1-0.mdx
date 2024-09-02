@@ -8,26 +8,32 @@ published_at: 2024-09-11 18:00:00
 
 ## 为什么是 Rsbuild
 
-长期以来，webpack 用户饱受两个问题的困扰：**构建慢和配置复杂**。
+长期以来，使用 webpack 的开发者饱受两个问题的困扰：**构建慢和配置复杂**。
 
-通过以 Rust 重写 webpack 的方式，Rspack 很好地解决了构建慢的问题，但为了与 webpack 生态保持兼容，Rspack 仍然保留了 webpack 的配置 API，这意味着 Rspack 依然存在一定的复杂度和学习成本。
+通过使用 Rust 来重写 webpack，[Rspack](https://github.com/web-infra-dev/rspack) 很好地解决了构建慢的问题，但为了与 webpack 生态保持兼容，Rspack 仍然保留了 webpack 的配置和 API，这意味着 Rspack 依然存在一定的复杂度和学习成本。
+
+> 如果你还不了解 Rspack，请参考 [Rspack 介绍](https://rspack.dev/zh/guide/start/introduction)。
 
 ### 生态的发展
 
 在早期，webpack 生态中出现了一些优秀的工具，比如 Create React App（简称 CRA）和 Vue CLI，它们对 React 和 Vue 提供开箱即用的支持，隐藏了复杂的配置细节。因此，React 和 Vue 用户通常更倾向于使用这些工具来创建应用，而不是从零开始配置 webpack。
 
-随着生态的发展，Next.js、Nuxt 和 Remix 等全栈 web 框架变得更加流行；Vite 作为一个轻量化的构建工具，也受到了众多开发者的青睐。而 CRA、Vue CLI 则是逐渐停止了维护。
+随着生态的发展，Next.js、Nuxt 和 Remix 等全栈 web 框架变得流行；Vite 作为一个轻量化的构建工具，也受到了众多开发者的青睐。而 CRA、Vue CLI 则是逐渐停止了维护。
 
-对于 webpack 生态，我们需要承认一个另人遗憾的事实：webpack 生态缺少一个足够好用的构建工具，它既要像 CRA 和 Vue CLI 一样简单易用，又能与 Vite 一样具备轻量、启动快、插件化等特性。
+对于 webpack 生态，我们必须要承认一个让人遗憾的事实：webpack 生态缺少一个足够好用的构建工具，它既要像 CRA 和 Vue CLI 一样简单易用，又能与 Vite 一样具备轻量、启动快、插件化等特性。
+
+当我们查看 webpack、CRA 和 Vue CLI 的 npm 下载量时，会发现仍然有大量项目在使用这些工具。例如，webpack 有约 2500 万的周下载量，CRA 有近 300 万的周下载量。在这些项目中，有很大一部分不需要使用 Next.js、Nuxt 等 web 框架的全栈特性；Vite 看起来是一个不错的选择，但我们在字节跳动的项目中实践后发现，从 webpack 迁移到 Vite 存在很高的迁移成本，并且需要面对迁移带来的新问题，例如开发环境与生产环境的构建产物不一致，以及大型项目在开发过程中页面刷新缓慢等。
 
 ### Rsbuild 的诞生
 
-在一年多以前，我们开始尝试在 Rspack 的基础上，开发一个更现代的构建工具 —— Rsbuild。它以 Rspack 为基础，设计了更易于使用的 API，并内置一套精心设计的构建配置，在充分发挥出 Rspack 性能优势的同时，解决配置复杂的问题。
+在一年多以前，我们意识到了上述问题，并开始尝试在 Rspack 的基础上，开发一个更现代、开发体验更好的构建工具 —— Rsbuild。
 
-我们像 CRA、Vue CLI 和 Vite 这些优秀的项目学习经验，并面向两个使用场景来设计 Rsbuild：
+Rsbuild 是以 Rspack 为基础来实现的，我们为 Rsbuild 设计了易于使用的 API，并内置一套精心设计的构建配置，使它在充分发挥出 Rspack 性能优势的同时，也能解决配置复杂、上手成本高的问题。
+
+在实现 Rsbuild 的过程中，我们向 CRA、Vue CLI 和 Vite 这些优秀的项目学习设计理念和最佳实践，并聚焦于两个使用场景来设计 Rsbuild：
 
 - 作为一个轻量的构建工具：帮助开发者快速搭建 web 应用，为 CSR 应用提供开箱即用的支持，也支持通过扩展来支持 SSR、SSG 等模式。
-- 作为一个共享的基础设施：为上层工具和框架提供 JavaScript API 和 plugin API，允许更多开发者基于 Rsbuild 来开发属于自己的工具或框架。
+- 作为一个共享的基础设施：为上层工具和框架提供 JavaScript API 和 plugin API，允许开发者基于 Rsbuild 来开发属于自己的工具或框架。
 
 ## 谁在使用
 
