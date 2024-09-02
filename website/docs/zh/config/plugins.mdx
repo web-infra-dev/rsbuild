@@ -50,7 +50,7 @@ export default defineConfig({
 
 ## 嵌套插件
 
-Rsbuild 还支持添加嵌套插件，你可以传入一个包含多个插件的集合作为插件预设，这对于实现需要多个插件的复杂功能（例如框架集成）很有帮助。
+Rsbuild 还支持添加嵌套插件，你可以传入一个包含多个插件的数组，类似于一个插件预设集合，这对于实现需要多个插件组合的复杂功能（例如框架集成）很有帮助。
 
 ```ts title="rsbuild.config.ts"
 function myPlugin() {
