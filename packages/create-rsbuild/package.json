@@ -15,11 +15,12 @@
   },
   "main": "./dist/index.js",
   "bin": {
-    "create-rsbuild": "./dist/index.js"
+    "create-rsbuild": "./bin.js"
   },
   "files": [
     "template-*",
-    "dist"
+    "dist",
+    "bin.js"
   ],
   "scripts": {
     "build": "rslib build",
