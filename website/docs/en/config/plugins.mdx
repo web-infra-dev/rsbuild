@@ -12,7 +12,8 @@ type Falsy = false | null | undefined;
 type RsbuildPlugins = (
   | RsbuildPlugin
   | Falsy
-  | Promise<RsbuildPlugin | Falsy>
+  | Promise<RsbuildPlugin | Falsy | RsbuildPlugins>
+  | RsbuildPlugins
 )[];
 ```
 
@@ -46,6 +47,23 @@ export default defineConfig({
 By default, plugins are executed in the order they appear in the `plugins` array. Built-in Rsbuild plugins are executed before user-registered plugins.
 
 When a plugin internally uses fields that control the order, such as `pre` and `post`, the execution order is adjusted based on them. See [Pre Plugins](/plugins/dev/core#pre-pluginss) for more details.
+
+## Nested Plugins
+
+Rsbuild also supports adding nested plugins. You can pass in an array containing multiple plugins, similar to a plugin preset collection. This is particularly useful for implementing complex functionalities that require a combination of multiple plugins (such as framework integration).
+
+```ts title="rsbuild.config.ts"
+function myPlugin() {
+  return [
+    fooPlugin(),
+    barPlugin()
+  ];
+}
+
+export default {
+  plugins: [myPlugin()]
+}
+```
 
 ## Local Plugins
 

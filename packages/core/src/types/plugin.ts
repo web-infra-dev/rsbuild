@@ -201,7 +201,8 @@ type LooseRsbuildPlugin = Omit<RsbuildPlugin, 'setup'> & {
 export type RsbuildPlugins = (
   | LooseRsbuildPlugin
   | Falsy
-  | Promise<LooseRsbuildPlugin | Falsy>
+  | Promise<LooseRsbuildPlugin | Falsy | RsbuildPlugins>
+  | RsbuildPlugins
 )[];
 
 export type GetRsbuildConfig = {

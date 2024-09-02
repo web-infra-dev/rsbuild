@@ -12,7 +12,8 @@ type Falsy = false | null | undefined;
 type RsbuildPlugins = (
   | RsbuildPlugin
   | Falsy
-  | Promise<RsbuildPlugin | Falsy>
+  | Promise<RsbuildPlugin | Falsy | RsbuildPlugins>
+  | RsbuildPlugins
 )[];
 ```
 
@@ -46,6 +47,23 @@ export default defineConfig({
 默认情况下，插件会按照 `plugins` 数组的顺序依次执行，Rsbuild 内置插件的执行时机早于用户注册的插件。
 
 当插件内部使用了控制顺序的相关字段，比如 `pre`、`post` 时，执行顺序会基于它们进行调整，详见 [前置插件](/plugins/dev/core#前置插件)。
+
+## 嵌套插件
+
+Rsbuild 还支持添加嵌套插件，你可以传入一个包含多个插件的数组，类似于一个插件预设集合，这对于实现需要多个插件组合的复杂功能（例如框架集成）很有帮助。
+
+```ts title="rsbuild.config.ts"
+function myPlugin() {
+  return [
+    fooPlugin(),
+    barPlugin()
+  ];
+}
+
+export default {
+  plugins: [myPlugin()]
+}
+```
 
 ## 本地插件
 
