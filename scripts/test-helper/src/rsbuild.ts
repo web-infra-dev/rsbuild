@@ -1,3 +1,4 @@
+import { isPromise } from 'node:util/types';
 import type {
   BundlerPluginInstance,
   CreateRsbuildOptions,
@@ -59,7 +60,7 @@ export async function createStubRsbuild({
     do {
       // @ts-expect-error Depth is determined by user configuration
       plugins = (await Promise.all(plugins)).flat(Number.POSITIVE_INFINITY);
-    } while (plugins.some((v: any) => v?.then));
+    } while (plugins.some((v: any) => isPromise(v)));
 
     return plugins as Array<RsbuildPlugin | false | null | undefined>;
   };

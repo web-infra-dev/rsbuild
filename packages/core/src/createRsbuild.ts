@@ -1,3 +1,4 @@
+import { isPromise } from 'node:util/types';
 import { createContext } from './createContext';
 import { getNodeEnv, pick, setNodeEnv } from './helpers';
 import { initPluginAPI } from './initPlugins';
@@ -207,7 +208,7 @@ export async function createRsbuild(
     do {
       // @ts-expect-error Depth is determined by user configuration
       plugins = (await Promise.all(plugins)).flat(Number.POSITIVE_INFINITY);
-    } while (plugins.some((v: any) => v?.then));
+    } while (plugins.some((v: any) => isPromise(v)));
 
     return plugins as Array<RsbuildPlugin | Falsy>;
   };
