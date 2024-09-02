@@ -129,6 +129,9 @@ export default defineConfig({
     ],
   },
   builderConfig: {
+    output: {
+      charset: 'utf8',
+    },
     plugins: [
       rsbuildPluginOverview,
       pluginGoogleAnalytics({ id: 'G-L6BZ6TKW4R' }),
