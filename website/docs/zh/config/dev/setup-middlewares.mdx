@@ -3,7 +3,7 @@
 - **类型：**
 
 ```ts
-type ServerAPIs = {
+type SetupMiddlewaresServer = {
   sockWrite: (
     type: string,
     data?: string | boolean | Record<string, any>,
@@ -37,7 +37,7 @@ type SetupMiddlewares = Array<
       unshift: (...handlers: RequestHandler[]) => void;
       push: (...handlers: RequestHandler[]) => void;
     },
-    server: ServerAPIs,
+    server: SetupMiddlewaresServer,
   ) => void
 >;
 ```

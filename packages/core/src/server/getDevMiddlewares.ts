@@ -7,8 +7,8 @@ import type {
   EnvironmentAPI,
   RequestHandler,
   Rspack,
-  ServerAPIs,
   ServerConfig,
+  SetupMiddlewaresServer,
 } from '../types';
 import type { UpgradeEvent } from './helper';
 import {
@@ -20,7 +20,7 @@ import {
 
 export type CompileMiddlewareAPI = {
   middleware: RequestHandler;
-  sockWrite: ServerAPIs['sockWrite'];
+  sockWrite: SetupMiddlewaresServer['sockWrite'];
   onUpgrade: UpgradeEvent;
   close: () => void;
 };
@@ -44,7 +44,7 @@ const applySetupMiddlewares = (
 ) => {
   const setupMiddlewares = dev.setupMiddlewares || [];
 
-  const serverOptions: ServerAPIs = {
+  const serverOptions: SetupMiddlewaresServer = {
     sockWrite: (type, data) => compileMiddlewareAPI?.sockWrite(type, data),
     environments,
   };

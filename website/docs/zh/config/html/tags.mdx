@@ -104,7 +104,7 @@ export default {
 ## 函数形式
 
 ```ts
-type HtmlTagUtils = {
+type HtmlTagContext = {
   hash: string;
   entryName: string;
   outputName: string;
@@ -113,7 +113,7 @@ type HtmlTagUtils = {
 
 type HtmlTagHandler = (
   tags: HtmlTag[],
-  utils: HtmlTagUtils,
+  context: HtmlTagContext,
 ) => HtmlTag[] | void;
 ```
 

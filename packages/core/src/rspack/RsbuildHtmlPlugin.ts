@@ -8,8 +8,8 @@ import type {
   EnvironmentContext,
   HtmlBasicTag,
   HtmlTag,
+  HtmlTagContext,
   HtmlTagDescriptor,
-  HtmlTagUtils,
   ModifyHTMLTagsFn,
 } from '../types';
 
@@ -182,7 +182,7 @@ const applyTagConfig = (
     ...formatTags(data.bodyTags, { head: false }),
   ];
 
-  const utils: HtmlTagUtils = {
+  const context: HtmlTagContext = {
     hash: compilationHash,
     entryName,
     outputName: data.outputName,
@@ -191,7 +191,7 @@ const applyTagConfig = (
 
   for (const item of tagConfig.tags) {
     if (isFunction(item)) {
-      tags = item(tags, utils) || tags;
+      tags = item(tags, context) || tags;
     } else {
       tags.push(item);
     }

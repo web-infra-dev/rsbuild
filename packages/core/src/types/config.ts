@@ -938,7 +938,7 @@ export type HtmlTag = HtmlBasicTag & {
   head?: boolean;
 };
 
-export type HtmlTagUtils = {
+export type HtmlTagContext = {
   hash: string;
   entryName: string;
   outputName: string;
@@ -947,7 +947,7 @@ export type HtmlTagUtils = {
 
 export type HtmlTagHandler = (
   tags: HtmlTag[],
-  utils: HtmlTagUtils,
+  context: HtmlTagContext,
 ) => HtmlTag[] | void;
 
 export type HtmlTagDescriptor = HtmlTag | HtmlTagHandler;
@@ -1099,13 +1099,21 @@ export type EnvironmentAPI = {
   };
 };
 
-export type ServerAPIs = {
+export type SetupMiddlewaresServer = {
   sockWrite: (
     type: string,
     data?: string | boolean | Record<string, any>,
   ) => void;
   environments: EnvironmentAPI;
 };
+
+export type SetupMiddlewaresFn = (
+  middlewares: {
+    unshift: (...handlers: RequestHandler[]) => void;
+    push: (...handlers: RequestHandler[]) => void;
+  },
+  server: SetupMiddlewaresServer,
+) => void;
 
 export type ClientConfig = {
   /**
@@ -1176,18 +1184,7 @@ export interface DevConfig {
   /**
    * Provides the ability to execute a custom function and apply custom middlewares.
    */
-  setupMiddlewares?: Array<
-    (
-      /** Order: `unshift` => internal middlewares => `push` */
-      middlewares: {
-        /** Use the `unshift` method if you want to run a middleware before all other middlewares */
-        unshift: (...handlers: RequestHandler[]) => void;
-        /** Use the `push` method if you want to run a middleware after all other middlewares */
-        push: (...handlers: RequestHandler[]) => void;
-      },
-      server: ServerAPIs,
-    ) => void
-  >;
+  setupMiddlewares?: SetupMiddlewaresFn[];
   /**
    * Controls whether the build output from development mode is written to disk.
    * @default false

@@ -1,13 +1,13 @@
 import {
   type RequestHandler,
-  type ServerAPIs,
+  type SetupMiddlewaresServer,
   defineConfig,
   logger,
 } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 export const serverRender =
-  (serverAPI: ServerAPIs): RequestHandler =>
+  (serverAPI: SetupMiddlewaresServer): RequestHandler =>
   async (_req, res, _next) => {
     const indexModule = await serverAPI.environments.ssr.loadBundle<{
       render: () => string;
