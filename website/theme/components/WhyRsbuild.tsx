@@ -1,8 +1,10 @@
-import { useLang } from 'rspress/runtime';
+import {
+  containerStyle,
+  innerContainerStyle,
+} from '@rstack-dev/doc-ui/section-style';
 import { HomeFeature } from 'rspress/theme';
 
 export function WhyRsbuild() {
-  const t = useLang();
   const features = {
     features: [
       {
@@ -42,5 +44,18 @@ export function WhyRsbuild() {
       },
     ],
   };
-  return <HomeFeature frontmatter={features} routePath="/" />;
+  return (
+    <>
+      <style>
+        {`.max-w-6xl.flex.m-auto {
+        max-width: 1440px;
+      }`}
+      </style>
+      <section className={containerStyle}>
+        <div className={innerContainerStyle}>
+          <HomeFeature frontmatter={features} routePath="/" />
+        </div>
+      </section>
+    </>
+  );
 }

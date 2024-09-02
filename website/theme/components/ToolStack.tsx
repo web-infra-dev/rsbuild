@@ -14,7 +14,7 @@ export function ToolStack() {
   const lang = useLang();
   return (
     <section className={containerStyle}>
-      <div className={innerContainerStyle} style={{ maxWidth: '72rem' }}>
+      <div className={innerContainerStyle}>
         <div className={titleAndDescStyle}>
           <h1 className={titleStyle}>{t('toolStackTitle')}</h1>
           <p className={descStyle}>{t('toolStackDesc')}</p>

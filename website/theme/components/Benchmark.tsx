@@ -93,7 +93,7 @@ export function Benchmark() {
   const t = useI18n<typeof import('i18n')>();
   return (
     <section className={containerStyle}>
-      <div className={innerContainerStyle} style={{ maxWidth: '72rem' }}>
+      <div className={innerContainerStyle}>
         <div className={titleAndDescStyle}>
           <h1 className={titleStyle}>{t('benchmarkTitle')}</h1>
           <p className={descStyle}>{t('benchmarkDesc')}</p>
