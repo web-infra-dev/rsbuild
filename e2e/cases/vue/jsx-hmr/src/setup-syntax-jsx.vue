@@ -1,14 +1,14 @@
 <script setup lang="jsx">
-import { ref } from 'vue'
-let count = ref(100)
+import { ref } from 'vue';
+let count = ref(100);
 const increment = () => {
-  count.value++
-}
+  count.value++;
+};
 const Render = () => (
   <div>
     <button onClick={increment}> click!!! </button>
   </div>
-)
+);
 </script>
 
 <template>

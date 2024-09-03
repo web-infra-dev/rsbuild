@@ -54,15 +54,12 @@ Rsbuild 还支持添加嵌套插件，你可以传入一个包含多个插件的
 
 ```ts title="rsbuild.config.ts"
 function myPlugin() {
-  return [
-    fooPlugin(),
-    barPlugin()
-  ];
+  return [fooPlugin(), barPlugin()];
 }
 
 export default {
-  plugins: [myPlugin()]
-}
+  plugins: [myPlugin()],
+};
 ```
 
 ## 本地插件

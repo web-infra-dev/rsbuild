@@ -6,11 +6,11 @@
 </template>
 
 <script setup lang="tsx">
-import { foo } from './TsImportFile'
+import { foo } from './TsImportFile';
 
 const Bar = () => (
   <div class="bar">
     <p>Bar</p>
   </div>
-)
+);
 </script>
