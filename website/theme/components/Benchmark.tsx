@@ -2,8 +2,14 @@ import {
   Benchmark as BaseBenchmark,
   type BenchmarkData,
 } from '@rstack-dev/doc-ui/benchmark';
+import {
+  containerStyle,
+  descStyle,
+  innerContainerStyle,
+  titleAndDescStyle,
+  titleStyle,
+} from '@rstack-dev/doc-ui/section-style';
 import { useI18n } from 'rspress/runtime';
-import styles from './Benchmark.module.scss';
 
 // Benchmark data for different cases
 // Unit: second
@@ -79,25 +85,21 @@ const BENCHMARK_DATA: BenchmarkData = {
   },
 };
 
-export function BenchmarkGraph(props: { short?: boolean }) {
-  return props.short ? (
-    <div className={styles.short}>
-      <BaseBenchmark data={BENCHMARK_DATA} />
-    </div>
-  ) : (
-    <BaseBenchmark data={BENCHMARK_DATA} />
-  );
+export function BenchmarkGraph() {
+  return <BaseBenchmark data={BENCHMARK_DATA} />;
 }
 
 export function Benchmark() {
   const t = useI18n<typeof import('i18n')>();
   return (
-    <div className={styles.root}>
-      <div className={styles.header}>
-        <h2 className={styles.title}>{t('benchmarkTitle')}</h2>
-        <p className={styles.desc}>{t('benchmarkDesc')}</p>
+    <section className={containerStyle}>
+      <div className={innerContainerStyle}>
+        <div className={titleAndDescStyle}>
+          <h1 className={titleStyle}>{t('benchmarkTitle')}</h1>
+          <p className={descStyle}>{t('benchmarkDesc')}</p>
+        </div>
+        <BenchmarkGraph />
       </div>
-      <BenchmarkGraph />
-    </div>
+    </section>
   );
 }

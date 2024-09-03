@@ -129,6 +129,9 @@ export default defineConfig({
     ],
   },
   builderConfig: {
+    dev: {
+      lazyCompilation: true,
+    },
     plugins: [
       rsbuildPluginOverview,
       pluginGoogleAnalytics({ id: 'G-L6BZ6TKW4R' }),

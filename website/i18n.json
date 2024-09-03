@@ -1,4 +1,68 @@
 {
+  "introduction": {
+    "en": "Introduction",
+    "zh": "介绍"
+  },
+  "quickStart": {
+    "en": "Quick Start",
+    "zh": "快速上手"
+  },
+  "subtitle": {
+    "en": "The Rspack Powered Build Tool",
+    "zh": "由 Rspack 驱动的构建工具"
+  },
+  "slogan": {
+    "en": "Build your web application instantly",
+    "zh": "在瞬息之间构建你的 web 应用"
+  },
+  "rspackBased": {
+    "en": "Rspack-based",
+    "zh": "基于 Rspack"
+  },
+  "rspackBasedDesc": {
+    "en": "Using Rspack to bring you the ultimate development experience.",
+    "zh": "享受 Rspack 带来的极致开发体验。"
+  },
+  "batteriesIncluded": {
+    "en": "Batteries Included",
+    "zh": "开箱即用"
+  },
+  "batteriesIncludedDesc": {
+    "en": "Out-of-the-box integration with the most practical building features in the ecosystem.",
+    "zh": "集成生态中最实用的构建功能。"
+  },
+  "frameworkAgnostic": {
+    "en": "Framework Agnostic",
+    "zh": "框架无关"
+  },
+  "frameworkAgnosticDesc": {
+    "en": "Supports React, Vue, Svelte, and more frameworks.",
+    "zh": "支持 React、Vue、Solid、Svelte 等。"
+  },
+  "deepOptimization": {
+    "en": "Deep Optimization",
+    "zh": "深度优化"
+  },
+  "deepOptimizationDesc": {
+    "en": "Automatically optimize static assets to maximizing production performance.",
+    "zh": "自动优化静态资源，最大化生产性能。"
+  },
+  "highlyPluggable": {
+    "en": "Highly Pluggable",
+    "zh": "灵活插拔"
+  },
+  "highlyPluggableDesc": {
+    "en": "Comes with a lightweight plugin system and a set of high quality plugins.",
+    "zh": "提供轻量级插件系统和一系列高质量插件。"
+  },
+  "easyToConfigure": {
+    "en": "EasyToConfigure",
+    "zh": "易于配置"
+  },
+  "easyToConfigureDesc": {
+    "en": "Start with zero configuration and everything is configurable.",
+    "zh": "以零配置启动，然后一切皆可配置。"
+  },
   "toolStackTitle": {
     "en": "Tool Stack",
     "zh": "工具栈"
