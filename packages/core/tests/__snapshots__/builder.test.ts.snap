@@ -378,9 +378,9 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
     "extensions": [
       ".ts",
       ".tsx",
+      ".mjs",
       ".js",
       ".jsx",
-      ".mjs",
       ".json",
     ],
   },

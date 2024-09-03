@@ -29,9 +29,9 @@ function applyExtensions({ chain }: { chain: RspackChain }) {
     // most projects are using TypeScript, resolve .ts(x) files first to reduce resolve time.
     '.ts',
     '.tsx',
+    '.mjs',
     '.js',
     '.jsx',
-    '.mjs',
     '.json',
   ];
 
