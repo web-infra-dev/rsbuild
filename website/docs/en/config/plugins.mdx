@@ -54,15 +54,12 @@ Rsbuild also supports adding nested plugins. You can pass in an array containing
 
 ```ts title="rsbuild.config.ts"
 function myPlugin() {
-  return [
-    fooPlugin(),
-    barPlugin()
-  ];
+  return [fooPlugin(), barPlugin()];
 }
 
 export default {
-  plugins: [myPlugin()]
-}
+  plugins: [myPlugin()],
+};
 ```
 
 ## Local Plugins

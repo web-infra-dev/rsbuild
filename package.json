@@ -25,7 +25,8 @@
     "sort-package-json": "npx sort-package-json \"./package.json\" \"packages/*/package.json\" \"packages/compat/*/package.json\"",
     "test": "pnpm run ut",
     "ut": "vitest run",
-    "ut:watch": "vitest"
+    "ut:watch": "vitest",
+    "format": "prettier --write ."
   },
   "simple-git-hooks": {
     "pre-commit": "npx nano-staged"
