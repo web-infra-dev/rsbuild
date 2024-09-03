@@ -28,31 +28,41 @@ published_at: 2024-09-11 18:00:00
 
 ### Rsbuild 的诞生
 
-在开发 Rspack 的过程中，我们意识到了上述问题，并开始尝试在 Rspack 的基础上，开发一个更现代、开发体验更好的构建工具 —— Rsbuild。
+在开发 Rspack 的过程中，我们意识到了上述问题，并开始尝试在 Rspack 的基础上，开发一个体验更好的现代构建工具 —— Rsbuild。
 
 Rsbuild 是以 Rspack 为核心来实现的，我们为 Rsbuild 设计了易于使用的 API，并内置一套精心设计的构建配置，使它在充分发挥出 Rspack 性能优势的同时，也能解决配置复杂、上手成本高的问题。
 
 在实现 Rsbuild 的过程中，我们向 CRA、Vue CLI 和 Vite 这些优秀的项目学习最佳实践，并聚焦于两个使用场景来设计 Rsbuild：
 
-- 作为一个轻量的构建工具：帮助开发者快速搭建 web 应用，为 CSR 应用提供开箱即用的支持，也支持通过扩展来支持 SSR、SSG 等模式。
-- 作为一个共享的基础设施：为上层工具和框架提供 [JavaScript API](https://rsbuild.dev/api/start/) 和 [插件 API](https://rsbuild.dev/plugins/dev/)，允许开发者基于 Rsbuild 来开发属于自己的工具或框架。
+- 作为一个轻量的构建工具：帮助开发者快速搭建 web 应用，为 CSR 应用提供开箱即用的支持。
+- 作为一个共享的基础设施：为上层工具和框架提供 [JavaScript API](https://rsbuild.dev/api/start/) 和 [插件 API](https://rsbuild.dev/plugins/dev/)，允许开发者基于 Rsbuild 来开发属于自己的工具或框架，实现 SSR、SSG 等特性。
+
+> 请参考 [Rsbuild 介绍](https://rsbuild.dev/zh/guide/start/index) 了解更多内容，例如 Rsbuild 的主要特性、与其他工具的对比。
 
 ## 谁在使用
 
-在 [Rspack 1.0 发布公告](https://rspack.dev/zh/blog/announcing-1-0) 中，我们介绍了 Rspack 正在取得快速增长，这其中约有一半的 Rspack 用户已经在使用 Rsbuild，并给予我们很多正向反馈。
+在 [Rspack 1.0 发布公告](https://rspack.dev/zh/blog/announcing-1-0) 中，我们介绍了 Rspack 正在取得快速增长，这其中约有一半的 Rspack 用户已经在使用 Rsbuild，并给予我们很多正向的反馈。
 
 在字节跳动，我们将 Rsbuild 作为内部研发框架的基石，支持了数千个 web 项目，这些项目涵盖了不同的使用场景，包括 desktop web 应用、mobile web 应用、跨平台 web 应用、文档站等。
 
-在社区中，我们也基于 Rsbuild 开发了一些开源的工具和框架，比如静态站点生成器 [Rspress](https://github.com/web-infra-dev/rspress)，library 构建工具 [Rslib](https://github.com/web-infra-dev/rslib)，基于 React 的全栈框架 [Modern.js](https://github.com/web-infra-dev/modern.js)。在 Rsbuild 1.0 发布后，我们也计划与 Remix 等优秀的社区团队一起探索集成 Rsbuild 的可能性。
+在社区中，我们基于 Rsbuild 开发了一些开源的工具和框架，包括静态站点生成器 [Rspress](https://github.com/web-infra-dev/rspress)，library 构建工具 [Rslib](https://github.com/web-infra-dev/rslib)，基于 React 的全栈框架 [Modern.js](https://github.com/web-infra-dev/modern.js)，基于 Storybook 的 [Storybook Rsbuild](https://github.com/rspack-contrib/storybook-rsbuild)。得益于 Rsbuild 的可扩展性，这些项目能够灵活地集成 Rsbuild，并共享插件生态。
 
-TODO：图片
+在 Rsbuild 1.0 发布后，我们也计划与 [Remix](https://github.com/remix-run/remix) 等优秀的社区团队一起探索集成 Rsbuild 的可能性。
 
 ## 插件生态
 
-我们观察到 Rsbuild 的插件生态在不断增长，社区中已经有超过 50 个 [Rsbuild 插件](https://github.com/web-infra-dev/awesome-rspack?tab=readme-ov-file#rsbuild-plugins)，覆盖了常见的使用场景。此外，受益于 Rspack 对 webpack 的兼容性，Rsbuild 也支持使用大部分 webpack 插件和所有 Rspack 插件。
+Rsbuild 的插件生态正在不断发展，目前社区中已经有超过 50 个 [Rsbuild 插件](https://github.com/web-infra-dev/awesome-rspack?tab=readme-ov-file#rsbuild-plugins)，覆盖了常见的使用场景。此外，受益于 Rspack 对 webpack 的兼容性，Rsbuild 也支持使用大部分 webpack 插件和所有 Rspack 插件。
 
-与 webpack 或 Rspack 相比，Rsbuild 的插件 API 更加简洁和容易上手，使开发者能够轻松地开发插件来解决自己的问题。例如，我们来实现一个插件，它的功能是输出一个文件到产物目录，在 Rspack 和 Rsbuild 中的实现对比如下：
+与 webpack 或 Rspack 相比，Rsbuild 的插件 API 更加简洁和容易上手，使开发者能够轻松地开发插件来满足自己的需求。
+
+例如，我们来实现一个插件，它的功能是输出一个文件到产物目录，在 Rspack 和 Rsbuild 中的实现对比如下：
 
 ![](https://assets.rspack.dev/rsbuild/assets/rsbuild-1-0-plugin-compare.png)
 
-可以看到，Rsbuild 插件的风格与 esbuild 类似，能够通过一个函数来定义。插件的 hooks 经过简化，避免了冗长的 API 设计，使得插件的编写更加简单和符合直觉。
+可以看到，Rsbuild 插件的风格与 esbuild 类似，能够通过一个函数来定义。插件的 hooks 经过简化，避免了冗长的 API 设计，使得插件的编写更符合直觉。
+
+## 如何使用 1.0
+
+- 如果你还未使用过 Rsbuild，可以在 [Rsbuild CodeSandbox 示例](https://codesandbox.io/p/github/rspack-contrib/rsbuild-codesandbox-example) 中进行体验，也可以参考 [快速上手](https://rsbuild.dev/zh/guide/start/quick-start) 来接入 Rsbuild。
+- 如果你正在使用 Rsbuild 0.7 或更早的版本，请留意 1.0 版本包含一些不兼容更新，可参考 [从 Rsbuild 0.x 迁移](https://rsbuild.dev/zh/guide/migration/rsbuild-0-x) 文档进行升级。
+- 同时，Rsbuild 也提供了 CRA、Vue CLI 等项目的迁移指南，详见 [从现有项目迁移](https://rsbuild.dev/zh/guide/start/quick-start#%E4%BB%8E%E7%8E%B0%E6%9C%89%E9%A1%B9%E7%9B%AE%E8%BF%81%E7%A7%BB)。
