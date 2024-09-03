@@ -32,13 +32,5 @@ export function HomeLayout() {
       <ToolStack />
       <CopyRight />
     </div>
-    //    <BasicHomeLayout
-    //    afterFeatures={
-    //      <>
-    //        <Benchmark />
-    //        <ToolStack />
-    //      </>
-    //    }
-    //  />
   );
 }

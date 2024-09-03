@@ -4,63 +4,49 @@ import {
 } from '@rstack-dev/doc-ui/section-style';
 import { useI18n } from 'rspress/runtime';
 import { HomeFeature } from 'rspress/theme';
+import './WhyRsbuild.module.scss';
 
 export function WhyRsbuild() {
   const t = useI18n<typeof import('i18n')>();
   const features = {
     features: [
       {
-        title: 'Rspack-based',
-        details: t('RspackBasedDesc'),
+        title: t('rspackBased'),
+        details: t('rspackBasedDesc'),
         icon: '🚀',
       },
       {
-        title: 'Batteries Included',
-        details: t('BatteriesIncludedDesc'),
+        title: t('batteriesIncluded'),
+        details: t('batteriesIncludedDesc'),
         icon: '🦄',
       },
       {
-        title: 'Framework Agnostic',
-        details: t('FrameworkAgnosticDesc'),
+        title: t('frameworkAgnostic'),
+        details: t('frameworkAgnosticDesc'),
         icon: '🎯',
       },
       {
-        title: 'Deep Optimization',
-        details: t('DeepOptimizationDesc'),
+        title: t('deepOptimization'),
+        details: t('deepOptimizationDesc'),
         icon: '🛠️',
       },
       {
-        title: 'Highly Pluggable',
-        details: t('HighlyPluggableDesc'),
+        title: t('highlyPluggable'),
+        details: t('highlyPluggableDesc'),
         icon: '🎨',
       },
       {
-        title: 'Easy to Configure',
-        details: t('EasyToConfigureDesc'),
+        title: t('easyToConfigure'),
+        details: t('easyToConfigureDesc'),
         icon: '🍭',
       },
     ],
   };
   return (
-    <>
-      <style>
-        {`.max-w-6xl.flex.m-auto {
-           max-width: 1440px;
-          }
-          html.dark {
-            --rp-home-feature-bg: linear-gradient(
-              135deg,
-              rgba(255, 255, 255, 0),
-              rgba(255, 255, 255, 0.03)
-            );
-          }
-      `}
-      </style>
-      <section className={containerStyle}>
-        <div className={innerContainerStyle}>
-          <HomeFeature frontmatter={features} routePath="/" />
-        </div>
-      </section>
-    </>
+    <section className={containerStyle}>
+      <div className={innerContainerStyle}>
+        <HomeFeature frontmatter={features} routePath="/" />
+      </div>
+    </section>
   );
 }
