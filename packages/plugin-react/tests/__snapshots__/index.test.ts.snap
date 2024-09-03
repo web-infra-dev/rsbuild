@@ -423,9 +423,9 @@ exports[`plugins/react > should work with swc-loader 1`] = `
     "extensions": [
       ".ts",
       ".tsx",
+      ".mjs",
       ".js",
       ".jsx",
-      ".mjs",
       ".json",
     ],
   },
