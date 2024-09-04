@@ -24,40 +24,16 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
 
       // Add Rsdoctor plugin to start analysis.
       const isRspack = api.context.bundlerType === 'rspack';
-      const packageName = isRspack
-        ? '@rsdoctor/rspack-plugin'
-        : '@rsdoctor/webpack-plugin';
-
-      let module: RsdoctorExports;
-
-      try {
-        const path = require.resolve(packageName, {
-          paths: [api.context.rootPath],
-        });
-        module = await import(path);
-      } catch (err) {
-        logger.warn(
-          `\`process.env.RSDOCTOR\` enabled, please install ${color.bold(color.yellow(packageName))} package.`,
-        );
-        return;
-      }
-
       const pluginName = isRspack
         ? 'RsdoctorRspackPlugin'
         : 'RsdoctorWebpackPlugin';
-
-      if (!module || !module[pluginName]) {
-        return;
-      }
-
-      let isAutoRegister = false;
 
       const isRsdoctorPlugin = (plugin: MaybeRsdoctorPlugin) =>
         plugin?.isRsdoctorPlugin === true ||
         plugin?.constructor?.name === pluginName;
 
       for (const config of bundlerConfigs) {
-        // If user has added the Rsdoctor plugin to the config file, it will return.
+        // If user has added the Rsdoctor plugin manually, skip the auto-registration.
         const registered = config.plugins?.some((plugin) =>
           isRsdoctorPlugin(plugin as unknown as MaybeRsdoctorPlugin),
         );
@@ -65,15 +41,44 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
         if (registered) {
           return;
         }
+      }
 
+      const packageName = isRspack
+        ? '@rsdoctor/rspack-plugin'
+        : '@rsdoctor/webpack-plugin';
+      let packagePath: string;
+
+      try {
+        packagePath = require.resolve(packageName, {
+          paths: [api.context.rootPath],
+        });
+      } catch (err) {
+        logger.warn(
+          `\`process.env.RSDOCTOR\` enabled, please install ${color.bold(color.yellow(packageName))} package.`,
+        );
+        return;
+      }
+
+      let module: RsdoctorExports;
+      try {
+        module = await import(packagePath);
+      } catch (err) {
+        logger.error(
+          `\`process.env.RSDOCTOR\` enabled, but failed to load ${color.bold(color.yellow(packageName))} module.`,
+        );
+        return;
+      }
+
+      if (!module || !module[pluginName]) {
+        return;
+      }
+
+      for (const config of bundlerConfigs) {
         config.plugins ||= [];
         config.plugins.push(new module[pluginName]());
-        isAutoRegister = true;
       }
 
-      if (isAutoRegister) {
-        logger.info(`${color.bold(color.yellow(packageName))} enabled.`);
-      }
+      logger.info(`${color.bold(color.yellow(packageName))} enabled.`);
     });
   },
 });
