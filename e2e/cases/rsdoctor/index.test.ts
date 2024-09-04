@@ -1,9 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { build, proxyConsole, rspackOnlyTest } from '@e2e/helper';
-import { expect } from '@playwright/test';
-// @ts-expect-error
-import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
+import { expect, test } from '@playwright/test';
 
 const packagePath = path.join(
   __dirname,
@@ -11,12 +9,14 @@ const packagePath = path.join(
 );
 const testFile = path.join(packagePath, 'test-temp.txt');
 
+test.beforeEach(() => {
+  fs.rmSync(packagePath, { recursive: true, force: true });
+  fs.cpSync(path.join(__dirname, 'mock'), packagePath, { recursive: true });
+});
+
 rspackOnlyTest(
   'should register Rsdoctor plugin when process.env.RSDOCTOR is true',
   async () => {
-    fs.rmSync(packagePath, { recursive: true, force: true });
-    fs.cpSync(path.join(__dirname, 'mock'), packagePath, { recursive: true });
-
     const { logs, restore } = proxyConsole();
     process.env.RSDOCTOR = 'true';
 
@@ -37,9 +37,6 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should not register Rsdoctor plugin when process.env.RSDOCTOR is false',
   async () => {
-    fs.rmSync(packagePath, { recursive: true, force: true });
-    fs.cpSync(path.join(__dirname, 'mock'), packagePath, { recursive: true });
-
     process.env.RSDOCTOR = 'false';
 
     await build({
@@ -54,10 +51,9 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should not register Rsdoctor plugin when process.env.RSDOCTOR is true and the plugin has been registered',
   async () => {
-    fs.rmSync(packagePath, { recursive: true, force: true });
-    fs.cpSync(path.join(__dirname, 'mock'), packagePath, { recursive: true });
-
     const { logs, restore } = proxyConsole();
+    const { RsdoctorRspackPlugin } = require('@rsdoctor/rspack-plugin');
+
     process.env.RSDOCTOR = 'true';
 
     await build({
