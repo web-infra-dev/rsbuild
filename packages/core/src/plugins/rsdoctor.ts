@@ -73,7 +73,6 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
         return;
       }
 
-      // TODO: support for multiple compiler
       for (const config of bundlerConfigs) {
         config.plugins ||= [];
         config.plugins.push(new module[pluginName]());
