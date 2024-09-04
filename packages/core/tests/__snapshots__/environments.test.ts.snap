@@ -1722,9 +1722,9 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
       "extensions": [
         ".ts",
         ".tsx",
+        ".mjs",
         ".js",
         ".jsx",
-        ".mjs",
         ".json",
       ],
     },
@@ -2041,9 +2041,9 @@ exports[`environment config > tools.rspack / bundlerChain can be used in environ
       "extensions": [
         ".ts",
         ".tsx",
+        ".mjs",
         ".js",
         ".jsx",
-        ".mjs",
         ".json",
       ],
     },

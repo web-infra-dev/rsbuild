@@ -50,6 +50,10 @@ async function findUp({
   }
 }
 
+export const isVersionBeyond17 = (version: string): boolean => {
+  return semver.gte(semver.minVersion(version)!, '17.0.0');
+};
+
 const isBeyondReact17 = async (cwd: string) => {
   const pkgPath = await findUp({ cwd, filename: 'package.json' });
 
@@ -67,7 +71,7 @@ const isBeyondReact17 = async (cwd: string) => {
     return false;
   }
 
-  return semver.satisfies(semver.minVersion(deps.react)!, '>=17.0.0');
+  return isVersionBeyond17(deps.react);
 };
 
 /**

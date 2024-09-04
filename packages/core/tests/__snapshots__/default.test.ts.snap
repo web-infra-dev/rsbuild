@@ -378,9 +378,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "extensions": [
       ".ts",
       ".tsx",
+      ".mjs",
       ".js",
       ".jsx",
-      ".mjs",
       ".json",
     ],
     "tsConfig": {
@@ -834,9 +834,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "extensions": [
       ".ts",
       ".tsx",
+      ".mjs",
       ".js",
       ".jsx",
-      ".mjs",
       ".json",
     ],
     "tsConfig": {
@@ -1163,9 +1163,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "extensions": [
       ".ts",
       ".tsx",
+      ".mjs",
       ".js",
       ".jsx",
-      ".mjs",
       ".json",
     ],
     "tsConfig": {
@@ -1565,9 +1565,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "extensions": [
       ".ts",
       ".tsx",
+      ".mjs",
       ".js",
       ".jsx",
-      ".mjs",
       ".json",
     ],
     "tsConfig": {

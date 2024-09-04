@@ -489,9 +489,9 @@ This method needs to be called before compiling. If it is called after compiling
 type AddPluginsOptions = { before?: string } | { after?: string };
 
 function AddPlugins(
-  plugins: RsbuildPlugins[],
+  plugins: Array<RsbuildPlugin | Falsy>,
   options?: AddPluginsOptions,
-): Promise<void>;
+): void;
 ```
 
 - **Example:**

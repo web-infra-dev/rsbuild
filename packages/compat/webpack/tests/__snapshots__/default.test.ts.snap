@@ -328,9 +328,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "extensions": [
       ".ts",
       ".tsx",
+      ".mjs",
       ".js",
       ".jsx",
-      ".mjs",
       ".json",
     ],
     "plugins": [
@@ -340,9 +340,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "extensions": [
           ".ts",
           ".tsx",
+          ".mjs",
           ".js",
           ".jsx",
-          ".mjs",
           ".json",
         ],
         "log": {
@@ -686,9 +686,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     "extensions": [
       ".ts",
       ".tsx",
+      ".mjs",
       ".js",
       ".jsx",
-      ".mjs",
       ".json",
     ],
     "plugins": [
@@ -698,9 +698,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "extensions": [
           ".ts",
           ".tsx",
+          ".mjs",
           ".js",
           ".jsx",
-          ".mjs",
           ".json",
         ],
         "log": {
@@ -993,9 +993,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "extensions": [
       ".ts",
       ".tsx",
+      ".mjs",
       ".js",
       ".jsx",
-      ".mjs",
       ".json",
     ],
     "plugins": [
@@ -1005,9 +1005,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "extensions": [
           ".ts",
           ".tsx",
+          ".mjs",
           ".js",
           ".jsx",
-          ".mjs",
           ".json",
         ],
         "log": {
@@ -1283,9 +1283,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "extensions": [
       ".ts",
       ".tsx",
+      ".mjs",
       ".js",
       ".jsx",
-      ".mjs",
       ".json",
     ],
     "plugins": [
@@ -1295,9 +1295,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "extensions": [
           ".ts",
           ".tsx",
+          ".mjs",
           ".js",
           ".jsx",
-          ".mjs",
           ".json",
         ],
         "log": {

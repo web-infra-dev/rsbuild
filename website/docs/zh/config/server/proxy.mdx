@@ -1,6 +1,6 @@
 # server.proxy
 
-- **类型：** `Record<string, string> | Record<string, ProxyDetail>`
+- **类型：** `Record<string, string> | Record<string, ProxyOptions> | ProxyOptions[] | ProxyOptions`
 - **默认值：** `undefined`
 
 为开发服务器或预览服务器配置代理规则，将请求代理到指定的服务上。
@@ -75,16 +75,16 @@ export default {
 
 ## 选项
 
-Rsbuild Server Proxy 基于 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware/tree/2.x) 实现。你可以使用 http-proxy-middleware 的所有配置项，具体可以查看文档。
+Rsbuild server proxy 基于 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware/tree/2.x) 实现。你可以使用 http-proxy-middleware 的所有配置项，具体可以查看文档。
 
-Rsbuild Server Proxy 完整类型定义为：
+Rsbuild server proxy 完整类型定义为：
 
 ```ts
 import type { Options as HttpProxyOptions } from 'http-proxy-middleware';
 
 type Filter = string | string[] | ((pathname: string, req: Request) => boolean);
 
-type ProxyDetail = HttpProxyOptions & {
+type ProxyOptions = HttpProxyOptions & {
   bypass?: (
     req: IncomingMessage,
     res: ServerResponse,
@@ -93,14 +93,14 @@ type ProxyDetail = HttpProxyOptions & {
   context?: Filter;
 };
 
-type ProxyOptions =
+type ProxyConfig =
+  | ProxyOptions
+  | ProxyOptions[]
   | Record<string, string>
-  | Record<string, ProxyDetail>
-  | ProxyDetail[]
-  | ProxyDetail;
+  | Record<string, ProxyOptions>;
 ```
 
-除了 http-proxy-middleware 的选项外，Rsbuild 还支持 bypass 和 context 两个配置项。
+除了 `http-proxy-middleware` 的选项外，Rsbuild 还支持 `bypass` 和 `context` 两个选项。
 
 ### bypass
 
@@ -132,10 +132,9 @@ export default {
 
 ### context
 
-如果你想代理多个特定的路径到同一个目标，可以使用 context 配置项。
+用于代理多个指定的路径到同一个目标。
 
 ```js
-// 代理多个路径到同一个目标
 export default {
   server: {
     proxy: [

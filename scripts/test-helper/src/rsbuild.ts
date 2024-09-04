@@ -1,7 +1,9 @@
+import { isPromise } from 'node:util/types';
 import type {
   BundlerPluginInstance,
   CreateRsbuildOptions,
   RsbuildInstance,
+  RsbuildPlugin,
   RsbuildPlugins,
   Rspack,
 } from '@rsbuild/core';
@@ -53,10 +55,21 @@ export async function createStubRsbuild({
 
   const rsbuild = await createRsbuild(rsbuildOptions);
 
+  const getFlattenedPlugins = async (pluginOptions: RsbuildPlugins) => {
+    let plugins = pluginOptions;
+    do {
+      plugins = (await Promise.all(plugins)).flat(
+        Number.POSITIVE_INFINITY as 1,
+      );
+    } while (plugins.some((v) => isPromise(v)));
+
+    return plugins as Array<RsbuildPlugin | false | null | undefined>;
+  };
+
   if (plugins) {
     // remove all builtin plugins
     rsbuild.removePlugins(rsbuild.getPlugins().map((item) => item.name));
-    rsbuild.addPlugins(await Promise.all(plugins));
+    rsbuild.addPlugins(await getFlattenedPlugins(plugins));
   }
 
   const unwrapConfig = async (index = 0) => {

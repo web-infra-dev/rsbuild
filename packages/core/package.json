@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/core",
-  "version": "1.0.1-rc.2",
+  "version": "1.0.1-rc.3",
   "description": "The Rspack-based build tool.",
   "homepage": "https://rsbuild.dev",
   "bugs": {
@@ -51,7 +51,7 @@
     "prebundle": "prebundle"
   },
   "dependencies": {
-    "@rspack/core": "1.0.0",
+    "@rspack/core": "1.0.1",
     "@rspack/lite-tapable": "1.0.0",
     "@swc/helpers": "^0.5.12",
     "caniuse-lite": "^1.0.30001655",
@@ -82,7 +82,7 @@
     "mrmime": "^2.0.0",
     "on-finished": "2.4.1",
     "open": "^8.4.0",
-    "picocolors": "^1.0.1",
+    "picocolors": "^1.1.0",
     "postcss": "^8.4.43",
     "postcss-load-config": "6.0.1",
     "postcss-loader": "8.1.1",
