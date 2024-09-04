@@ -1,5 +1,6 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
+import type { Rspack } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 import sourceMap from 'source-map';
@@ -26,14 +27,17 @@ async function validateSourceMap(
   return originalPositions;
 }
 
-test('source-map', async () => {
+async function testSourceMapType(devtool: Rspack.Configuration['devtool']) {
   const rsbuild = await build({
     cwd: fixtures,
     plugins: [pluginReact()],
     rsbuildConfig: {
+      dev: {
+        writeToDisk: true,
+      },
       output: {
         sourceMap: {
-          js: 'source-map',
+          js: devtool,
         },
         legalComments: 'none',
       },
@@ -86,23 +90,25 @@ test('source-map', async () => {
     column: 0,
     name: 'window',
   });
-});
+}
 
-test('should not generate source map by default', async () => {
+const productionDevtools: Rspack.Configuration['devtool'][] = [
+  'source-map',
+  'nosources-source-map',
+  'hidden-nosources-source-map',
+  'hidden-source-map',
+];
+
+for (const devtool of productionDevtools) {
+  test(`should generate correct "${devtool}" source map in production build`, async () => {
+    await testSourceMapType(devtool);
+  });
+}
+
+test('should not generate source map by default in production build', async () => {
   const rsbuild = await build({
     cwd: fixtures,
     plugins: [pluginReact()],
-    rsbuildConfig: {
-      output: {
-        distPath: {
-          root: 'dist-3',
-        },
-        sourceMap: {
-          js: 'source-map',
-          css: true,
-        },
-      },
-    },
   });
 
   const files = await rsbuild.unwrapOutputJSON(false);
@@ -113,6 +119,6 @@ test('should not generate source map by default', async () => {
   const cssMapFiles = Object.keys(files).filter((files) =>
     files.endsWith('.css.map'),
   );
-  expect(jsMapFiles.length >= 1).toBeTruthy();
-  expect(cssMapFiles.length >= 1).toBeTruthy();
+  expect(jsMapFiles.length).toEqual(0);
+  expect(cssMapFiles.length).toEqual(0);
 });
