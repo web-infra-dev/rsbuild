@@ -241,7 +241,7 @@ You can read [Browser Compatibility](/guide/advanced/browser-compatibility) to u
 
 CRA has the [eslint-webpack-plugin](https://github.com/webpack-contrib/eslint-webpack-plugin) enabled by default and includes a set of built-in ESLint rules.
 
-In the Rsbuild project, you can add the Rsbuild [ESLint plugin](https://github.com/rspack-contrib/rsbuild-plugin-eslint), and add [CRA rule set](https://www.npmjs.com/package/eslint-config-react-app).
+In an Rsbuild project, if you need similar functionality, you can add [@rsbuild/plugin-eslint](https://github.com/rspack-contrib/rsbuild-plugin-eslint) and use [eslint-config-react-app](https://www.npmjs.com/package/eslint-config-react-app) as the ESLint ruleset.
 
 ```js title=".eslintrc.cjs"
 module.exports = {
