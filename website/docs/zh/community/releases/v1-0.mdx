@@ -12,19 +12,17 @@ published_at: 2024-09-11 18:00:00
 
 长期以来，使用 webpack 的开发者饱受两个问题的困扰：**构建慢和配置复杂**。
 
-[Rspack](https://github.com/web-infra-dev/rspack) 使用 Rust 重写 webpack 并解决了构建慢的问题，但为了与 webpack 生态保持兼容，Rspack 仍然保留了 webpack 的配置和 API，这意味着它依然存在一定的复杂度和学习成本。
-
-> 参考 [Rspack 介绍](https://rspack.dev/zh/guide/start/introduction) 来了解更多关于 Rspack 的信息。
+我们使用 Rust 将 webpack 重写为 [Rspack](https://github.com/web-infra-dev/rspack)，解决了构建慢的问题。但为了兼容 webpack 生态，Rspack 保留了 webpack 的配置和 API，这意味着它依然存在一定的复杂度和学习成本。
 
 ### 生态的发展
 
-在早期，webpack 生态中出现了一些优秀的工具，比如 Create React App（简称 CRA）和 Vue CLI，它们为 React 或 Vue 应用提供最佳实践，隐藏了复杂的配置细节。因此，React 和 Vue 用户通常更倾向于使用这些工具来创建应用，而不是从零开始配置 webpack。
+在早期，webpack 生态中出现了一些优秀的工具，比如 Create React App（简称 CRA）和 Vue CLI，它们为 React 或 Vue 应用提供最佳实践，隐藏了复杂的配置细节。因此，许多 React 和 Vue 用户使用这些工具来创建应用，而不是从零开始配置 webpack。
 
 随着生态的发展，Next.js、Nuxt 和 Remix 等全栈 web 框架变得流行；Vite 推出后，作为一个轻量化的构建工具，也受到了众多开发者的青睐。而 CRA、Vue CLI 则是逐渐停止了维护。
 
-当我们查看 webpack、CRA 和 Vue CLI 的 npm 下载量时，会发现仍然有大量项目在使用这些工具。例如，webpack 有约 2500 万的周下载量，CRA 有近 300 万的周下载量。这些项目有很多是 CSR 应用，不需要使用全栈框架的 SSR 等特性；Vite 看起来是一个不错的选择，但我们在字节跳动的项目中实践后发现，从 webpack 迁移到 Vite 存在很高的成本，并且迁移带来了新的问题，例如开发环境与生产环境的构建产物不一致，以及大型项目在开发过程中页面刷新缓慢等。
+当我们查看 webpack、CRA 和 Vue CLI 的 npm 下载量时，会发现仍然有大量项目在使用这些工具。例如，webpack 有约 2500 万的周下载量，CRA 有近 300 万的周下载量。这些项目有很多是 CSR 应用，不需要使用全栈框架的 SSR 等特性；Vite 看起来是一个不错的选择，但我们在字节跳动的项目中实践后发现，从 webpack 迁移到 Vite 存在很高的成本，并且迁移带来了新的问题，例如开发环境与生产环境的构建产物不一致、大型应用在开发过程中页面刷新缓慢等问题。
 
-对于 webpack 生态，我们必须要承认一个让人遗憾的事实：**webpack 生态缺少一个足够好用的构建工具**，它既要像 CRA 和 Vue CLI 一样简单易用，能够很好地满足 CSR 应用开发的需求，又需要像 Vite 一样具备轻量、启动快、插件化等特性。
+对于 webpack 生态，我们发现了一个让人遗憾的事实：**webpack 生态缺少一个足够好用的构建工具**，它既要像 CRA 和 Vue CLI 一样简单易用，能够很好地满足 CSR 应用开发的需求，又需要像 Vite 一样具备轻量、启动快、插件化等特性。
 
 ### Rsbuild 的诞生
 
