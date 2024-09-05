@@ -237,6 +237,18 @@ CRA 提供了 [react-app-polyfill](https://www.npmjs.com/package/react-app-polyf
 
 你可以参考 [浏览器兼容性](/guide/advanced/browser-compatibility) 来了解 Rsbuild 是如何处理 polyfill 的。
 
+## 添加 ESLint 插件
+
+CRA 默认启用了 [eslint-webpack-plugin](https://github.com/webpack-contrib/eslint-webpack-plugin)，并内置了一套 ESLint 规则集。
+
+在 Rsbuild 项目中，如果你需要保持类似的行为，可以添加 [@rsbuild/plugin-eslint](https://github.com/rspack-contrib/rsbuild-plugin-eslint)，并使用 [eslint-config-react-app](https://www.npmjs.com/package/eslint-config-react-app) 作为 ESLint 规则集。
+
+```js title=".eslintrc.cjs"
+module.exports = {
+  extends: 'react-app',
+};
+```
+
 ## 读取 jsconfig.json
 
 在非 TypeScript 项目中，CRA 支持读取 jsconfig.json 中的 `paths` 字段作为路径别名。

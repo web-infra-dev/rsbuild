@@ -94,6 +94,7 @@ rslog
 rspack
 rspress
 rstack
+ruleset
 selfsign
 selfsigned
 sirv
