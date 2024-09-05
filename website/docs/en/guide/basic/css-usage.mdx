@@ -92,23 +92,28 @@ This will increase the size of your JS Bundle, so it is usually not recommended 
 
 ## Import CSS in node_modules
 
-You can directly import CSS files in node_modules.
+Rsbuild supports importing CSS files in `node_modules`.
 
-- Import in a component:
+- Import in a JS file:
 
-```ts title="src/App.tsx"
-// Import the Arco Design style:
-import '@arco-design/web-react/dist/css/arco.css';
-```
-
-- Import in a style file:
-
-```css title="src/App.css"
+```ts title="src/index.js"
 /* reference normalize.css */
 /* https://github.com/necolas/normalize.css */
+import 'normalize.css';
+```
+
+- Import in a CSS file:
+
+```css title="src/index.css"
 @import 'normalize.css';
 
 body {
   /* */
 }
+```
+
+In Sass and Less files, it is also allowed to add the `~` prefix to resolve style files in `node_modules`. However, this is a **deprecated feature** and it is recommended to remove the `~` prefix from the code.
+
+```scss title="src/index.scss"
+@import 'normalize.css';
 ```

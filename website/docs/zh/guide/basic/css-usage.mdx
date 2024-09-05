@@ -92,23 +92,28 @@ export default {
 
 ## 引用 node_modules 里的样式
 
-你可以直接引用 node_modules 里的样式文件。
+Rsbuild 支持引用 node_modules 里的 CSS 文件。
 
-- 在组件中引用：
+- 在 JS 文件中引用：
 
-```ts title="src/App.tsx"
-// 引用 Arco Design 样式：
-import '@arco-design/web-react/dist/css/arco.css';
-```
-
-- 在样式文件中引用：
-
-```css title="src/App.css"
+```ts title="src/index.js"
 /* 引用 normalize.css */
 /* https://github.com/necolas/normalize.css */
+import 'normalize.css';
+```
+
+- 在 CSS 文件中引用：
+
+```css title="src/index.css"
 @import 'normalize.css';
 
 body {
   /* */
 }
+```
+
+- 在 Sass 和 Less 文件中，也允许添加 `~` 前缀来解析 node_modules 里的样式文件，但这是一个**废弃的特性**，建议从代码中移除 `~` 前缀。
+
+```scss title="src/index.scss"
+@import '~normalize.css';
 ```
