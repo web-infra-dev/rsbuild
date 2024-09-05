@@ -20,7 +20,7 @@ jobs:
   ut-mac:
     # run ut in MacOS, as SWC cases will fail in Ubuntu CI
     runs-on: macos-14
-    timeout-minutes: 20
+    timeout-minutes: 15
     strategy:
       matrix:
         node-version: [18.x]
@@ -64,7 +64,7 @@ jobs:
   # ======== e2e ========
   e2e-ubuntu:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
     strategy:
       matrix:
         node-version: [18.x]

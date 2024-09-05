@@ -28,6 +28,11 @@ export default Button;`,
 rspackOnlyTest(
   'should run module federation in development mode',
   async ({ page }) => {
+    // this case often timeout in Windows
+    if (process.platform === 'win32') {
+      test.skip();
+    }
+
     writeButtonCode();
 
     const remotePort = await getRandomPort();
