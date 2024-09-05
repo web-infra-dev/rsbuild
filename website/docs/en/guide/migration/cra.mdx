@@ -237,6 +237,18 @@ In the Rsbuild project, you can remove the dependency and code related to react-
 
 You can read [Browser Compatibility](/guide/advanced/browser-compatibility) to understand how Rsbuild handles polyfills.
 
+## Add ESLint plugin
+
+CRA integrates the ESLint plugin and has a set of builtin rules by default.
+
+In the Rsbuild project, you can add the Rsbuild [ESLint plugin](https://github.com/rspack-contrib/rsbuild-plugin-eslint), and add [CRA rule set](https://www.npmjs.com/package/eslint-config-react-app).
+
+```js title=".eslintrc.cjs"
+module.exports = {
+  extends: 'react-app',
+};
+```
+
 ## Reading jsconfig.json
 
 In non-TypeScript projects, CRA supports reading the `paths` field in jsconfig.json as the path alias.
