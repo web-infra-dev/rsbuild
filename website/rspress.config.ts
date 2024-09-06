@@ -139,7 +139,8 @@ export default defineConfig({
         title: 'Rsbuild',
         type: 'website',
         url: siteUrl,
-        image: 'https://assets.rspack.dev/rsbuild/rsbuild-og-image.png',
+        image:
+          'https://assets.rspack.dev/rsbuild/assets/rsbuild-og-image-v1-0.png',
         description: 'The Rspack-based build tool',
         twitter: {
           site: '@rspack_dev',
