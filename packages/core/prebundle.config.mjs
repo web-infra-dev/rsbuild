@@ -169,6 +169,12 @@ export default {
             'if (meta && !rawOptions._skipReuseAST) {',
           ),
         );
+        replaceFileContent(join(task.depPath, 'dist/index.js'), (content) =>
+          content.replaceAll(
+            'this.getOptions(_options.default)',
+            'this.getOptions()',
+          ),
+        );
       },
       afterBundle: writeEmptySemver,
     },
