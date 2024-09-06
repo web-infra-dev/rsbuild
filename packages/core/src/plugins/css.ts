@@ -173,6 +173,7 @@ const getCSSLoaderOptions = ({
       localIdentName,
     },
     sourceMap: config.output.sourceMap.css,
+    _skipReuseAST: config.tools.lightningcssLoader !== false,
   };
 
   const mergedCssLoaderOptions = reduceConfigs({

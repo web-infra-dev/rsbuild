@@ -43,6 +43,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
+              "_skipReuseAST": true,
               "importLoaders": 1,
               "modules": {
                 "auto": true,
@@ -437,6 +438,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
+              "_skipReuseAST": true,
               "importLoaders": 1,
               "modules": {
                 "auto": true,
@@ -893,6 +895,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
+              "_skipReuseAST": true,
               "importLoaders": 0,
               "modules": {
                 "auto": true,
@@ -1227,6 +1230,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
+              "_skipReuseAST": true,
               "importLoaders": 1,
               "modules": {
                 "auto": true,

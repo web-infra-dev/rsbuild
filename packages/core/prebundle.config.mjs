@@ -5,13 +5,6 @@ import fs from 'node:fs';
  */
 import { join } from 'node:path';
 
-// The package size of `schema-utils` is large, and validate has a performance overhead of tens of ms.
-// So we skip the validation and let TypeScript to ensure type safety.
-const writeEmptySchemaUtils = (task) => {
-  const schemaUtilsPath = join(task.distPath, 'schema-utils.js');
-  fs.writeFileSync(schemaUtilsPath, 'module.exports.validate = () => {};');
-};
-
 // postcss-loader and css-loader use `semver` to compare PostCSS ast version,
 // Rsbuild uses the same PostCSS version and do not need the comparison.
 const writeEmptySemver = (task) => {
@@ -167,6 +160,21 @@ export default {
         semver: './semver',
         postcss: '../postcss',
         picocolors: '../picocolors',
+      },
+      beforeBundle(task) {
+        // Temp fix for https://github.com/web-infra-dev/rspack/issues/7819
+        replaceFileContent(join(task.depPath, 'dist/index.js'), (content) =>
+          content.replaceAll(
+            'if (meta) {',
+            'if (meta && !rawOptions._skipReuseAST) {',
+          ),
+        );
+        replaceFileContent(join(task.depPath, 'dist/index.js'), (content) =>
+          content.replaceAll(
+            'this.getOptions(_options.default)',
+            'this.getOptions()',
+          ),
+        );
       },
       afterBundle: writeEmptySemver,
     },
