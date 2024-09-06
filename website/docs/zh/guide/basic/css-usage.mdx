@@ -12,12 +12,35 @@ Rsbuild 也提供了多个配置项，允许自定义 CSS 文件的处理规则�
 
 Rsbuild 使用 Rspack 内置的 [lightningcss-loader](https://www.rspack.dev/guide/features/builtin-lightningcss-loader) 来转换 CSS 代码，它会自动读取项目中的 [browserslist](/guide/advanced/browserslist) 配置，并将 CSS 代码转换为目标浏览器支持的语法。
 
+### 特性
+
 - Lightning CSS 会自动添加浏览器前缀，比如 `-webkit-`、`-moz-`、`-ms-` 等，因此你不需要手动添加前缀，或是使用 [autoprefixer](https://github.com/postcss/autoprefixer) 插件。
 - Lightning CSS 会自动将 CSS 语法降级，这允许你在代码中使用现代的 CSS 特性，比如 CSS nesting，custom media queries 等，而无需担心浏览器兼容性问题。
 - 你可以使用 [tools.lightningcssLoader](/config/tools/lightningcss-loader) 来自定义 `lightningcss-loader` 的选项。
-- 如果 Lightning CSS 无法满足你的需求，你也可以使用 [PostCSS](#使用-postcss) 来转换 CSS 代码。
 
 > Rsbuild 从 `1.0.1-beta.7` 版本开始默认启用 Lightning CSS。
+
+### 禁用 Lightning CSS
+
+如果 Lightning CSS 无法满足你的需求，你也可以禁用 Lightning CSS，并使用 [PostCSS](#使用-postcss) 来转换 CSS 代码。
+
+步骤如下：
+
+1. 将 [tools.lightningcssLoader](/config/tools/lightningcss-loader) 设置为 `false` 来禁用 Lightning CSS loader。
+2. 使用 [@rsbuild/plugin-css-minimizer](https://github.com/rspack-contrib/rsbuild-plugin-css-minimizer) 来将 CSS 压缩工具从 Lightning CSS 切换到 cssnano 或其他 CSS 压缩器。
+
+```ts title="rsbuild.config.ts"
+import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
+
+export default {
+  plugins: [pluginCssMinimizer()],
+  tools: {
+    lightningcssLoader: false,
+  },
+};
+```
+
+3. 参考 [使用 PostCSS](#使用-postcss)，配置你需要的 PostCSS 插件。
 
 ## CSS 压缩
 
