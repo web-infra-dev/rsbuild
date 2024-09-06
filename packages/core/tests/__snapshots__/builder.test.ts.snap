@@ -43,6 +43,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
+              "_skipReuseAST": true,
               "importLoaders": 1,
               "modules": {
                 "auto": true,
