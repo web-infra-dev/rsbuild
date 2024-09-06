@@ -198,7 +198,7 @@ console.log(process.env.BAR); // '2'
 
 ### loadEnv
 
-When you use Rsbuild [JavaScript API](/api/start/index) or [Environment API](/guide/advanced/environments#environment-api), you can manually call the [loadEnv](/api/javascript-api/core#loadenv) method to read environment variables and inject them into the code through the [source.define](/config/source/define) configuration.
+When you use Rsbuild [JavaScript API](/api/start/index), you can manually call the [loadEnv](/api/javascript-api/core#loadenv) method to read environment variables and inject them into the code through the [source.define](/config/source/define) configuration.
 
 ```ts
 import { loadEnv, mergeRsbuildConfig } from '@rsbuild/core';
