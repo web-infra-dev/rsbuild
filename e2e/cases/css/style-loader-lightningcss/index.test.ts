@@ -1,7 +1,5 @@
-import fs from 'node:fs';
-import { join } from 'node:path';
-import { build, dev, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { build, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
 const fixtures = __dirname;
 
