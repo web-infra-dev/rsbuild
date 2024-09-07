@@ -120,7 +120,7 @@ Rsbuild 和 Builder 的绝大多数配置项是一致的，仅有少许配置项
 - 浏览器范围：默认最低兼容到支持 [原生 ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) 的浏览器，可参考 [Browserslist 默认值](/guide/advanced/browserslist#browserslist-默认值)。
 - HTML 文件输出位置：默认输出到 dist 目录的根部，可参考 [默认产物目录](/guide/basic/output-files#默认产物目录)。
 - Polyfill 注入方式：默认按需注入，可参考 [output.polyfill](/config/output/polyfill)。
-- TypeScript 类型检查：默认不开启，需要手动注册 [Type Check 插件](/plugins/list/plugin-type-check)。
+- TypeScript 类型检查：默认不开启，需要手动注册 [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check)。
 - 修改 DevServer 配置：通过 `dev` 和 `server` 配置项修改。
 
 ## 验证结果
