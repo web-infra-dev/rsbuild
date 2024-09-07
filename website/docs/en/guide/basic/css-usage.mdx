@@ -12,12 +12,35 @@ Rsbuild also provides several configurations that allow customization of the pro
 
 Rsbuild uses Rspack's built-in [lightningcss-loader](https://www.rspack.dev/guide/features/builtin-lightningcss-loader) to transform CSS code. It automatically reads the project's [browserslist](/guide/advanced/browserslist) config and converts the CSS code to syntax supported by target browsers.
 
+### Features
+
 - Lightning CSS automatically adds vendor prefixes like `-webkit-`, `-moz-`, `-ms-`, etc., so you don't need to manually add prefixes or use the [autoprefixer](https://github.com/postcss/autoprefixer) plugin.
 - Lightning CSS automatically downgrades CSS syntax, allowing you to use modern CSS features such as CSS nesting and custom media queries in your code without worrying about browser compatibility issues.
 - You can use [tools.lightningcssLoader](/config/tools/lightningcss-loader) to customize the options for `lightningcss-loader`.
-- If Lightning CSS does not meet your needs, you can also use [PostCSS](#using-postcss) to transform CSS code.
 
 > Rsbuild has enabled Lightning CSS by default since version `1.0.1-beta.7`.
+
+### Disabling Lightning CSS
+
+If Lightning CSS does not meet your needs, you can disable Lightning CSS and use [PostCSS](#using-postcss) to transform your CSS code.
+
+Steps:
+
+1. Set [tools.lightningcssLoader](/config/tools/lightningcss-loader) to `false` to disable the Lightning CSS loader.
+2. Use [@rsbuild/plugin-css-minimizer](https://github.com/rspack-contrib/rsbuild-plugin-css-minimizer) to switch the CSS minifier from Lightning CSS to cssnano or another CSS minifier.
+
+```ts title="rsbuild.config.ts"
+import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
+
+export default {
+  plugins: [pluginCssMinimizer()],
+  tools: {
+    lightningcssLoader: false,
+  },
+};
+```
+
+3. Refer to [Using PostCSS](#using-postcss) to configure the PostCSS plugins you need.
 
 ## CSS Minification
 
