@@ -1,8 +1,6 @@
-name: Test (Windows)
+name: Test
 
-# Controls when the action will run.
 on:
-  # Triggers the workflow on pull request events but only for the main branch
   pull_request:
     branches: [main]
 
@@ -11,30 +9,24 @@ on:
 
   merge_group:
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # ======== ut ========
-  ut-windows:
-    runs-on: windows-latest
+  ut:
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     strategy:
       matrix:
+        # run ut in MacOS, as SWC cases will fail in Ubuntu CI
+        os: [macos-14, windows-latest]
         node-version: [18.x]
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Git config
-        shell: bash
-        run: |
-          git config --system core.longpaths true
-
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 10
+          fetch-depth: 1
 
       - name: Install Pnpm
         run: corepack enable
@@ -65,25 +57,20 @@ jobs:
         if: steps.changes.outputs.changed == 'true'
         run: pnpm run ut
 
-  # # ======== e2e ========
-  e2e-windows:
-    runs-on: windows-latest
+  # ======== e2e ========
+  e2e:
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 15
     strategy:
       matrix:
+        os: [ubuntu-latest, windows-latest]
         node-version: [18.x]
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Git config
-        shell: bash
-        run: |
-          git config --system core.longpaths true
-
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 10
+          fetch-depth: 1
 
       - name: Install Pnpm
         run: corepack enable
