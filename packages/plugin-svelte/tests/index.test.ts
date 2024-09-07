@@ -1,5 +1,5 @@
 import { createStubRsbuild } from '@scripts/test-helper';
-import { type Transformer, pluginSvelte } from '../src';
+import { pluginSvelte } from '../src';
 
 describe('plugin-svelte', () => {
   it('should add svelte loader properly', async () => {
@@ -65,10 +65,10 @@ describe('plugin-svelte', () => {
               ['pot', 'potatoLanguage'],
             ],
             /** Add a custom language preprocessor */
-            potatoLanguage: (({ content }) => {
+            potatoLanguage: ({ content }: { content: string }) => {
               const { code, map } = require('potato-language').render(content);
               return { code, map };
-            }) as Transformer<unknown>,
+            },
           },
         }),
       ],

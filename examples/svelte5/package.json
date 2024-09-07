@@ -1,0 +1,16 @@
+{
+  "name": "@examples/svelte5",
+  "private": true,
+  "scripts": {
+    "dev": "rsbuild dev --open",
+    "build": "rsbuild build",
+    "preview": "rsbuild preview"
+  },
+  "dependencies": {
+    "svelte": "5.0.0-next.244"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "workspace:*",
+    "@rsbuild/plugin-svelte": "workspace:*"
+  }
+}
