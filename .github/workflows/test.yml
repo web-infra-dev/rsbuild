@@ -23,11 +23,6 @@ jobs:
         node-version: [18.x]
 
     steps:
-      - name: Git config
-        shell: bash
-        run: |
-          git config --system core.longpaths true
-
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -72,11 +67,6 @@ jobs:
         node-version: [18.x]
 
     steps:
-      - name: Git config
-        shell: bash
-        run: |
-          git config --system core.longpaths true
-
       - name: Checkout
         uses: actions/checkout@v4
         with:
