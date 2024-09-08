@@ -10,7 +10,6 @@ import { pluginSvelte } from '@rsbuild/plugin-svelte';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import { pluginSwc } from '@rsbuild/plugin-swc';
 import { pluginVue } from '@rsbuild/plugin-vue';
-import { pluginVueJsx } from '@rsbuild/plugin-vue-jsx';
 import { webpackProvider } from '@rsbuild/webpack';
 
 export default {
@@ -25,7 +24,6 @@ export default {
   pluginStylus,
   pluginSvelte,
   pluginVue,
-  pluginVueJsx,
   pluginSwc,
   webpackProvider,
 };
