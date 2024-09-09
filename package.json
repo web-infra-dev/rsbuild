@@ -19,14 +19,14 @@
     "e2e": "cd ./e2e && pnpm test",
     "e2e:rspack": "cd ./e2e && pnpm test:rspack",
     "e2e:webpack": "cd ./e2e && pnpm test:webpack",
+    "format": "prettier --write .",
     "lint": "biome check . --diagnostic-level=warn && pnpm run check-spell",
     "prebundle": "nx run-many -t prebundle",
     "prepare": "pnpm run build && simple-git-hooks",
     "sort-package-json": "npx sort-package-json \"./package.json\" \"packages/*/package.json\" \"packages/compat/*/package.json\"",
     "test": "pnpm run ut",
     "ut": "vitest run",
-    "ut:watch": "vitest",
-    "format": "prettier --write ."
+    "ut:watch": "vitest"
   },
   "simple-git-hooks": {
     "pre-commit": "npx nano-staged"

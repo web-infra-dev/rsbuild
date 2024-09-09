@@ -132,15 +132,15 @@ importers:
       '@rsbuild/plugin-svgr':
         specifier: workspace:*
         version: link:../packages/plugin-svgr
-      '@rsbuild/plugin-swc':
-        specifier: workspace:*
-        version: link:../packages/compat/plugin-swc
       '@rsbuild/plugin-vue':
         specifier: workspace:*
         version: link:../packages/plugin-vue
       '@rsbuild/plugin-vue-jsx':
         specifier: ^1.0.1
         version: 1.0.1(@babel/core@7.25.2)(@rsbuild/core@packages+core)
+      '@rsbuild/plugin-webpack-swc':
+        specifier: workspace:*
+        version: link:../packages/compat/plugin-webpack-swc
       '@rsbuild/webpack':
         specifier: workspace:*
         version: link:../packages/compat/webpack
@@ -491,9 +491,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@rsbuild/plugin-swc':
+      '@rsbuild/plugin-webpack-swc':
         specifier: workspace:*
-        version: link:../../packages/compat/plugin-swc
+        version: link:../../packages/compat/plugin-webpack-swc
       '@rsbuild/webpack':
         specifier: workspace:*
         version: link:../../packages/compat/webpack
@@ -501,7 +501,7 @@ importers:
         specifier: ^5.5.2
         version: 5.5.2
 
-  packages/compat/plugin-swc:
+  packages/compat/plugin-webpack-swc:
     dependencies:
       '@modern-js/swc-plugins':
         specifier: 0.6.11
@@ -12590,7 +12590,7 @@ snapshots:
 
   nano-staged@0.8.0:
     dependencies:
-      picocolors: 1.0.1
+      picocolors: 1.1.0
 
   nanoid@3.3.7: {}
 
