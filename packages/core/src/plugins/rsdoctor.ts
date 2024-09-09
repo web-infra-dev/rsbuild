@@ -1,3 +1,4 @@
+import { pathToFileURL } from 'node:url';
 import type { Configuration } from '@rspack/core';
 import color from 'picocolors';
 import { logger } from '../logger';
@@ -61,7 +62,7 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
 
       let module: RsdoctorExports;
       try {
-        module = await import(packagePath);
+        module = await import(pathToFileURL(packagePath).toString());
       } catch (err) {
         logger.error(
           `\`process.env.RSDOCTOR\` enabled, but failed to load ${color.bold(color.yellow(packageName))} module.`,
