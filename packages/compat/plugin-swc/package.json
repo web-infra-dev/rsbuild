@@ -1,7 +1,7 @@
 {
-  "name": "@rsbuild/plugin-swc",
+  "name": "@rsbuild/plugin-webpack-swc",
   "version": "1.0.1-rc.5",
-  "description": "SWC plugin for Rsbuild",
+  "description": "SWC plugin for Rsbuild webpack provider",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",

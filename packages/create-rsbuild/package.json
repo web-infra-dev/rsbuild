@@ -27,13 +27,13 @@
     "dev": "rslib build --watch",
     "start": "node ./dist/index.js"
   },
+  "dependencies": {
+    "create-rstack": "1.0.1"
+  },
   "devDependencies": {
     "@rslib/core": "0.0.5",
     "@types/node": "18.x",
     "typescript": "^5.5.2"
-  },
-  "dependencies": {
-    "create-rstack": "1.0.1"
   },
   "engines": {
     "node": ">=16.7.0"

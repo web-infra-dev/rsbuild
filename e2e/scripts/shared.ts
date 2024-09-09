@@ -7,7 +7,7 @@ import type {
   RsbuildConfig,
   RsbuildPlugins,
 } from '@rsbuild/core';
-import { pluginSwc } from '@rsbuild/plugin-swc';
+import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
 import type { Page } from 'playwright';
 import { globContentJSON } from './helper';
 

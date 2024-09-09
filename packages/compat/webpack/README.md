@@ -13,7 +13,7 @@ Note that this package is mainly used for compatibility with Modern.js and Rsbui
 ```ts
 import { defineConfig } from '@rsbuild/core';
 import { webpackProvider } from '@rsbuild/webpack';
-import { pluginSwc } from '@rsbuild/plugin-swc';
+import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
 
 export default defineConfig({
   provider: webpackProvider,

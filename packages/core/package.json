@@ -88,6 +88,7 @@
     "postcss-loader": "8.1.1",
     "prebundle": "1.2.2",
     "reduce-configs": "^1.0.0",
+    "rsbuild-dev-middleware": "0.1.1",
     "rslog": "^1.2.3",
     "rspack-chain": "^1.0.0",
     "rspack-manifest-plugin": "5.0.1",
@@ -97,7 +98,6 @@
     "typescript": "^5.5.2",
     "webpack": "^5.94.0",
     "webpack-bundle-analyzer": "^4.10.2",
-    "rsbuild-dev-middleware": "0.1.1",
     "webpack-merge": "6.0.1",
     "ws": "^8.18.0"
   },
