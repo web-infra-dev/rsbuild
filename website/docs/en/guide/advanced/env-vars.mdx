@@ -109,7 +109,7 @@ const Image = <img src={`https://example.com/static/icon.png`} />;
 
 ## `.env` File
 
-When a `.env` file exists in the project root directory, Rsbuild will automatically use [dotenv](https://npmjs.com/package/dotenv) to load these environment variables and add them to the current Node.js process.
+When a `.env` file exists in the project root directory, Rsbuild CLI will automatically use [dotenv](https://npmjs.com/package/dotenv) to load these environment variables and add them to the current Node.js process.
 
 You can access these environment variables through `import.meta.env.[name]` or `process.env.[name]`.
 
@@ -194,6 +194,25 @@ The value of `BAR` is overwritten to `'2'`:
 ```ts title="rsbuild.config.ts"
 console.log(import.meta.env.BAR); // '2'
 console.log(process.env.BAR); // '2'
+```
+
+### Manually Load Env
+
+If you are not using the Rsbuild CLI and are using the Rsbuild [JavaScript API](/api/start/index) instead, you will need to manually call the [loadEnv](/api/javascript-api/core#loadenv) method to read environment variables and inject them into the code via the [source.define](/config/source/define) config.
+
+```ts
+import { loadEnv, mergeRsbuildConfig } from '@rsbuild/core';
+
+const { parsed, publicVars } = loadEnv();
+
+const mergedConfig = mergeRsbuildConfig(
+  {
+    source: {
+      define: publicVars,
+    },
+  },
+  userConfig,
+);
 ```
 
 ## Public Variables

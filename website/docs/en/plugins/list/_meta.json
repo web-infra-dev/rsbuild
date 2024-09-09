@@ -3,7 +3,6 @@
   "plugin-react",
   "plugin-svgr",
   "plugin-vue",
-  "plugin-vue-jsx",
   "plugin-preact",
   "plugin-svelte",
   "plugin-solid",
@@ -11,6 +10,5 @@
   "plugin-sass",
   "plugin-less",
   "plugin-stylus",
-  "plugin-assets-retry",
-  "plugin-type-check"
+  "plugin-assets-retry"
 ]

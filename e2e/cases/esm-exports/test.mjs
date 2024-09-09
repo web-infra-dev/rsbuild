@@ -9,9 +9,7 @@ import { pluginStylus } from '@rsbuild/plugin-stylus';
 import { pluginSvelte } from '@rsbuild/plugin-svelte';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import { pluginSwc } from '@rsbuild/plugin-swc';
-import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
 import { pluginVue } from '@rsbuild/plugin-vue';
-import { pluginVueJsx } from '@rsbuild/plugin-vue-jsx';
 import { webpackProvider } from '@rsbuild/webpack';
 
 export default {
@@ -25,9 +23,7 @@ export default {
   pluginSolid,
   pluginStylus,
   pluginSvelte,
-  pluginTypeCheck,
   pluginVue,
-  pluginVueJsx,
   pluginSwc,
   webpackProvider,
 };

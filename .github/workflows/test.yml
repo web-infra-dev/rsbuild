@@ -1,0 +1,102 @@
+name: Test
+
+on:
+  pull_request:
+    branches: [main]
+
+  push:
+    branches: [main]
+
+  merge_group:
+
+  workflow_dispatch:
+
+jobs:
+  # ======== ut ========
+  ut:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        # run ut in MacOS, as SWC cases will fail in Ubuntu CI
+        os: [macos-14, windows-latest]
+        node-version: [18.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Install Pnpm
+        run: corepack enable
+
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          predicate-quantifier: 'every'
+          filters: |
+            changed:
+              - "!**/*.md"
+              - "!**/*.mdx"
+              - "!**/_meta.json"
+              - "!**/dictionary.txt"
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        if: steps.changes.outputs.changed == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        if: steps.changes.outputs.changed == 'true'
+        run: pnpm install
+
+      - name: Unit Test
+        if: steps.changes.outputs.changed == 'true'
+        run: pnpm run ut
+
+  # ======== e2e ========
+  e2e:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node-version: [18.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Install Pnpm
+        run: corepack enable
+
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          predicate-quantifier: 'every'
+          filters: |
+            changed:
+              - "!**/*.md"
+              - "!**/*.mdx"
+              - "!**/_meta.json"
+              - "!**/dictionary.txt"
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        if: steps.changes.outputs.changed == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        if: steps.changes.outputs.changed == 'true'
+        run: pnpm install && cd ./e2e && npx playwright install
+
+      - name: E2E Test
+        if: steps.changes.outputs.changed == 'true'
+        run: pnpm run e2e

@@ -61,6 +61,7 @@ mrmime
 mYbzBtlg6o
 napi
 nolyfill
+nosources
 ntqry
 oklab
 onclosetag
@@ -93,6 +94,7 @@ rslog
 rspack
 rspress
 rstack
+ruleset
 selfsign
 selfsigned
 sirv

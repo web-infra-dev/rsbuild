@@ -15,6 +15,7 @@ exports[`plugin-sass > should add sass-loader 1`] = `
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
         "options": {
+          "_skipReuseAST": true,
           "importLoaders": 3,
           "modules": {
             "auto": true,
@@ -72,6 +73,7 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
         "options": {
+          "_skipReuseAST": true,
           "importLoaders": 3,
           "modules": {
             "auto": true,
@@ -132,6 +134,7 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
       {
         "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
         "options": {
+          "_skipReuseAST": true,
           "importLoaders": 3,
           "modules": {
             "auto": true,
