@@ -94,6 +94,34 @@ export default defineConfig({
 });
 ```
 
+## Plugin registration phase
+
+It should be noted that plugin registration can only be performed during the Rsbuild initialization phase. You cannot dynamically add other plugins within a plugin through the plugin API:
+
+```ts title=rsbuild.config.ts
+// Wrong
+function myPlugin() {
+  return {
+    setup: (api) => {
+      api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
+        return mergeRsbuildConfig(config, {
+          plugins: [fooPlugin(), barPlugin()], // <- it won't work
+        });
+      });
+    },
+  };
+}
+
+// Correct
+function myPlugin() {
+  return [fooPlugin(), barPlugin()];
+}
+
+export default {
+  plugins: [myPlugin()],
+};
+```
+
 ## Rspack Plugins
 
 The `plugins` option is used to register Rsbuild plugins. If you need to register Rspack or Webpack plugins, please use [tools.rspack](/config/tools/rspack).
