@@ -19,7 +19,7 @@ export default defineConfig({
   provider: webpackProvider,
   plugins: [
     // @rsbuild/webpack has no built-in transformer and minimizer,
-    // so you need to register the plugin-swc.
+    // so you need to register the @rsbuild/plugin-webpack-swc.
     pluginSwc(),
   ],
 });
