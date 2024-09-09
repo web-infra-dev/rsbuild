@@ -11,8 +11,8 @@
     "preact": "^10.23.2"
   },
   "devDependencies": {
-    "@rsbuild/core": "workspace:*",
-    "@rsbuild/plugin-preact": "workspace:*",
+    "@rsbuild/core": "^1.0.1",
+    "@rsbuild/plugin-preact": "^1.0.1",
     "typescript": "^5.5.2"
   }
 }

@@ -8,7 +8,7 @@
     "preview": "rsbuild preview"
   },
   "devDependencies": {
-    "@rsbuild/core": "workspace:*",
+    "@rsbuild/core": "^1.0.1",
     "typescript": "^5.5.2"
   }
 }
