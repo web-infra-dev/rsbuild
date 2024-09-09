@@ -2,17 +2,17 @@
 published_at: 2024-05-28 18:00:00
 ---
 
-# Announcing Rsbuild v0.7
+# Announcing Rsbuild 0.7
 
 > May 28, 2024
 
 ![](https://assets.rspack.dev/rsbuild/rsbuild-banner-v0-7.png)
 
-Rsbuild v0.7 has been released with Rspack v0.7!
+Rsbuild 0.7 has been released with Rspack 0.7!
 
-This is the last minor release before the Rsbuild v1.0. After this, the Rspack team will focus on the development of v1.0 and aim to launch the Rspack / Rsbuild v1.0 alpha version soon.
+This is the last minor release before the Rsbuild 1.0. After this, the Rspack team will focus on the development of 1.0 and aim to launch the Rspack / Rsbuild 1.0 alpha version soon.
 
-Notable changes in Rsbuild v0.7:
+Notable changes in Rsbuild 0.7:
 
 - [Support for Storybook](#support-for-storybook)
 - [Faster Sass Compilation](#faster-sass-compilation)
@@ -50,9 +50,9 @@ export default config;
 
 ## Faster Sass Compilation
 
-In Rsbuild v0.7, **Sass compilation is 3~10 times faster**. The performance improvements are particularly noticeable on large projects.
+In Rsbuild 0.7, **Sass compilation is 3~10 times faster**. The performance improvements are particularly noticeable on large projects.
 
-Comparison of build times for Rsbuild v0.6 and v0.7 when compiling Bootstrap's Sass code:
+Comparison of build times for Rsbuild 0.6 and 0.7 when compiling Bootstrap's Sass code:
 
 ![](https://assets.rspack.dev/rsbuild/assets/sass-embedded-compare.jpeg)
 
@@ -93,7 +93,7 @@ This allows Rsbuild to support more CSS features, including:
 
 ## Typed CSS Modules
 
-Rsbuild v0.7 added a new [Typed CSS Modules plugin](https://github.com/rspack-contrib/rsbuild-plugin-typed-css-modules), which is used to generate type declaration files for CSS Modules in the project.
+Rsbuild 0.7 added a new [Typed CSS Modules plugin](https://github.com/rspack-contrib/rsbuild-plugin-typed-css-modules), which is used to generate type declaration files for CSS Modules in the project.
 
 When you use CSS Modules in a TypeScript project, the default type definition is as follows. It can only provide basic type support, and cannot accurately prompt which class names are exported by CSS Modules.
 
@@ -153,11 +153,11 @@ ESM/CJS interop is a tricky issue, so we will provide both formats for a long ti
 
 ## Breaking Changes
 
-### Upgrade Rspack to v0.7
+### Upgrade Rspack to 0.7
 
-Rsbuild has upgraded the dependent Rspack to version v0.7 and adapted to the breaking changes included in it. Typically, these breaking changes will not affect you.
+Rsbuild has upgraded the dependent Rspack to version 0.7 and adapted to the breaking changes included in it. Typically, these breaking changes will not affect you.
 
-In the new version, Rspack supports lazy compilation, which can significantly improve the dev startup time for large projects. Please refer to [Announcing Rspack v0.7](https://rspack.dev/blog/announcing-0-7) to learn more.
+In the new version, Rspack supports lazy compilation, which can significantly improve the dev startup time for large projects. Please refer to [Announcing Rspack 0.7](https://rspack.dev/blog/announcing-0-7) to learn more.
 
 In Rsbuild, you can use [dev.lazyCompilation](/config/dev/lazy-compilation) to enable lazy compilation.
 

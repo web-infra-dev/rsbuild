@@ -2,17 +2,17 @@
 published_at: 2024-05-28 18:00:00
 ---
 
-# Rsbuild v0.7 发布
+# Rsbuild 0.7 发布
 
 > May 28, 2024
 
 ![](https://assets.rspack.dev/rsbuild/rsbuild-banner-v0-7.png)
 
-Rsbuild v0.7 已与 Rspack v0.7 同步发布！
+Rsbuild 0.7 已与 Rspack 0.7 同步发布！
 
-这是 Rsbuild v1.0 版本发布前的最后一个 minor 版本，此后 Rspack 团队将投入到 v1.0 版本的开发中，并致力于尽快推出 Rspack / Rsbuild v1.0 alpha 版本。
+这是 Rsbuild 1.0 版本发布前的最后一个 minor 版本，此后 Rspack 团队将投入到 1.0 版本的开发中，并致力于尽快推出 Rspack / Rsbuild 1.0 alpha 版本。
 
-在 Rsbuild v0.7 中，值得关注的变更有：
+在 Rsbuild 0.7 中，值得关注的变更有：
 
 - [支持 Storybook](#支持-storybook)
 - [更快的 Sass 编译](#更快的-sass-编译)
@@ -50,9 +50,9 @@ export default config;
 
 ## 更快的 Sass 编译
 
-在 Rsbuild v0.7 中，**Sass 编译速度提高了 3~10 倍**，在大型项目项目中的性能提升尤为显著。
+在 Rsbuild 0.7 中，**Sass 编译速度提高了 3~10 倍**，在大型项目项目中的性能提升尤为显著。
 
-以编译 Bootstrap 的 Sass 代码为例，Rsbuild v0.6 和 v0.7 的构建时间对比：
+以编译 Bootstrap 的 Sass 代码为例，Rsbuild 0.6 和 0.7 的构建时间对比：
 
 ![](https://assets.rspack.dev/rsbuild/assets/sass-embedded-compare.jpeg)
 
@@ -93,7 +93,7 @@ Rsbuild 现在使用 [CssExtractRspackPlugin](https://www.rspack.dev/plugins/rsp
 
 ## CSS Modules 类型生成
 
-Rsbuild v0.7 新增了 [Typed CSS Modules 插件](https://github.com/rspack-contrib/rsbuild-plugin-typed-css-modules)，用于为项目中的 CSS Modules 文件生成类型声明文件。
+Rsbuild 0.7 新增了 [Typed CSS Modules 插件](https://github.com/rspack-contrib/rsbuild-plugin-typed-css-modules)，用于为项目中的 CSS Modules 文件生成类型声明文件。
 
 当你在 TypeScript 项目里使用 CSS Modules 时，默认的类型定义如下。它只能提供基本的类型支持，无法准确地提示出 CSS Modules 导出了哪些类名。
 
@@ -153,11 +153,11 @@ ESM/CJS 互操作是一个棘手的问题，因此我们计划长期提供这两
 
 ## 不兼容更新
 
-### 升级 Rspack v0.7
+### 升级 Rspack 0.7
 
-Rsbuild 已将依赖的 Rspack 升级至 v0.7 版本，并适配了其中包含的不兼容更新，通常你不会受到这些不兼容更新的影响。
+Rsbuild 已将依赖的 Rspack 升级至 0.7 版本，并适配了其中包含的不兼容更新，通常你不会受到这些不兼容更新的影响。
 
-在新版本中，Rspack 支持了 lazy compilation，可以显著提升大型项目的 dev 启动速度。请参考 [Rspack v0.7 发布公告](https://rspack.dev/zh/blog/announcing-0-7) 了解更多。
+在新版本中，Rspack 支持了 lazy compilation，可以显著提升大型项目的 dev 启动速度。请参考 [Rspack 0.7 发布公告](https://rspack.dev/zh/blog/announcing-0-7) 了解更多。
 
 在 Rsbuild 中，你可以使用 [dev.lazyCompilation](/config/dev/lazy-compilation) 来启用 lazy compilation。
 

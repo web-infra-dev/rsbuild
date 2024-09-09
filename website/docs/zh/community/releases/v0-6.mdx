@@ -2,31 +2,31 @@
 published_at: 2024-04-10 18:00:00
 ---
 
-# Rsbuild v0.6 发布
+# Rsbuild 0.6 发布
 
 > April 10, 2024
 
 ![](https://assets.rspack.dev/rsbuild/rsbuild-banner-v0-6.png)
 
-Rsbuild v0.6 已与 Rspack v0.6 同步发布！
+Rsbuild 0.6 已与 Rspack 0.6 同步发布！
 
 主要变更：
 
-- 升级 Rspack v0.6
+- 升级 Rspack 0.6
 - 默认启用 error overlay
 - 支持 Vue JSX HMR
 - 全新的 transform 插件 API
 - 默认端口调整为 3000
 
-## 升级 Rspack v0.6
+## 升级 Rspack 0.6
 
-Rsbuild 已将依赖的 Rspack 升级至 v0.6 版本，并适配了 Rspack v0.6 包含的 CSS Modules 不兼容更新。
+Rsbuild 已将依赖的 Rspack 升级至 0.6 版本，并适配了 Rspack 0.6 包含的 CSS Modules 不兼容更新。
 
 在新版本中，Rspack 默认开启了新版 tree shaking 算法，使产物体积和产物稳定性得到显著提升。请参考 [Rspack 0.6 发布公告](https://rspack.dev/blog/announcing-0-6) 了解更多。
 
 ## 默认启用 error overlay
 
-从 Rsbuild v0.6 开始，[dev.client.overlay](/config/dev/client) 的默认值调整为 `true`。这意味着当出现编译错误时，Rsbuild 将默认弹出 error overlay 来展示错误信息：
+从 Rsbuild 0.6 开始，[dev.client.overlay](/config/dev/client) 的默认值调整为 `true`。这意味着当出现编译错误时，Rsbuild 将默认弹出 error overlay 来展示错误信息：
 
 ![](https://assets.rspack.dev/rsbuild/assets/rsbuild-error-overlay.png)
 

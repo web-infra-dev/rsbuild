@@ -40,10 +40,6 @@ import Logo from './logo.svg?react';
 export const App = () => <Logo />;
 ```
 
-:::tip
-@rsbuild/plugin-svgr 从 0.4.14 版本开始支持上述用法。
-:::
-
 如果导入的路径不包含 `?react` 后缀，那么 SVG 会被当做普通的静态资源来处理，你会得到一个 URL 字符串：
 
 ```js
