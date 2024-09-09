@@ -504,8 +504,8 @@ importers:
   packages/compat/plugin-swc:
     dependencies:
       '@modern-js/swc-plugins':
-        specifier: 0.6.10
-        version: 0.6.10(@swc/helpers@0.5.12)
+        specifier: 0.6.11
+        version: 0.6.11(@swc/helpers@0.5.12)
       '@swc/helpers':
         specifier: ^0.5.12
         version: 0.5.12
@@ -599,8 +599,8 @@ importers:
         specifier: ^0.5.12
         version: 0.5.12
       caniuse-lite:
-        specifier: ^1.0.30001658
-        version: 1.0.30001658
+        specifier: ^1.0.30001659
+        version: 1.0.30001659
       core-js:
         specifier: ~3.38.1
         version: 3.38.1
@@ -2278,8 +2278,8 @@ packages:
   '@modern-js/plugin@2.59.0':
     resolution: {integrity: sha512-3Nnw7dB6HxyQMP81c4PItazWX1csoRwc58l1WASoVne3G5uj76MOHgMWhPF5zEb4U0Ezm4z//9Atnlm2gMl6NA==}
 
-  '@modern-js/swc-plugins-darwin-arm64@0.6.10':
-    resolution: {integrity: sha512-CRkvOqP5SJvDPE1yaQQFOL1y1BEczklngGoJmrb+C/IKWV7cQNj9hbKj7V5jWX9YhocsxTZqeSy2YAJloybpDQ==}
+  '@modern-js/swc-plugins-darwin-arm64@0.6.11':
+    resolution: {integrity: sha512-UMH0bo20vcD10//F7KaINLfuHawQBVcWCCyJvkYOiBt7e1tUjeybKu+y6eNq1USyFVElEMul8ytnYdwAS9sY+w==}
     engines: {node: '>=14.12'}
     cpu: [arm64]
     os: [darwin]
@@ -2290,8 +2290,8 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
-  '@modern-js/swc-plugins-darwin-x64@0.6.10':
-    resolution: {integrity: sha512-uaLd4p0iDpl2JuLZ2zLWWaCd26Wj4IOEkUaiOD+PNmwWt2ec0aScqQiqqMxtPk1Wyw03QnAGn/WeZdp/4QfSwg==}
+  '@modern-js/swc-plugins-darwin-x64@0.6.11':
+    resolution: {integrity: sha512-qLcXAnM/IGcZX7B0MvxSdZjvgGofhOtHaEdj8CFkt75CzriBMu7lrGsRP4+paXbFAgM4vp7ZV7julaFrrDCoZw==}
     engines: {node: '>=14.12'}
     cpu: [x64]
     os: [darwin]
@@ -2302,8 +2302,8 @@ packages:
     cpu: [x64]
     os: [darwin]
 
-  '@modern-js/swc-plugins-linux-arm64-gnu@0.6.10':
-    resolution: {integrity: sha512-trosM4HAiaRBRSS1ZT80sqO6sZ7OqSvxb55wKQqdMc3qMJlw/wYis6bH1OGAUbtbQp+KvD6xYuHoBizvjbGnCw==}
+  '@modern-js/swc-plugins-linux-arm64-gnu@0.6.11':
+    resolution: {integrity: sha512-3WcTpQqJp7RM/i8lLe+GjOCx17ljKdPbxlIY4LkJe+SQXATd3YducTtNqsEAdBA8Au907rI1ImuhN0kxvR97jQ==}
     engines: {node: '>=14.12'}
     cpu: [arm64]
     os: [linux]
@@ -2314,8 +2314,8 @@ packages:
     cpu: [arm64]
     os: [linux]
 
-  '@modern-js/swc-plugins-linux-arm64-musl@0.6.10':
-    resolution: {integrity: sha512-Dt1RLPDfD6al5KFp2qpx5iA4lj3mbadBszIUkJ9KV0MyMXJnW+p+FhDVdyE1i1D84F51EYjtAUd6D8p5NKPyWw==}
+  '@modern-js/swc-plugins-linux-arm64-musl@0.6.11':
+    resolution: {integrity: sha512-RFE3xJWbABM8ZzPMVqlr3qovgnwamgpGjGN15rJ4tVqieO2FORQ14xSQE1ROBun6kIADUD+TxnepTlGb7EJg0w==}
     engines: {node: '>=14.12'}
     cpu: [arm64]
     os: [linux]
@@ -2326,8 +2326,8 @@ packages:
     cpu: [arm64]
     os: [linux]
 
-  '@modern-js/swc-plugins-linux-x64-gnu@0.6.10':
-    resolution: {integrity: sha512-+gJOmv0gSyNpKqn4tkXXSnK5XJTQ//dA77ZXHwEtB5uq5TtTlgoeQesMflaRpominXNtIde+7YBdAyCbz+OdFQ==}
+  '@modern-js/swc-plugins-linux-x64-gnu@0.6.11':
+    resolution: {integrity: sha512-vSDF5aznEtnS0kHFm7UXHHaFzEZEyTV+CTQOVEp84hU5+HW1fMR+MFmbeCJnqXpB+R8Kg93SL4KWePGzm2ZNWw==}
     engines: {node: '>=14.12'}
     cpu: [x64]
     os: [linux]
@@ -2338,8 +2338,8 @@ packages:
     cpu: [x64]
     os: [linux]
 
-  '@modern-js/swc-plugins-linux-x64-musl@0.6.10':
-    resolution: {integrity: sha512-K+23YV8a6Y7HuYGlpP8ditOOXEk9fDIyOsQyaUfpVppjSVEZRto8r0Nq+L8LcjrKa3FiC8cLiPG+6m5gliymBw==}
+  '@modern-js/swc-plugins-linux-x64-musl@0.6.11':
+    resolution: {integrity: sha512-jfwQeuSmHbgvw9fjFRi5ZkLWejF8WZkYew0MGHqkSyLYZU+p7RgGo+tSpT4CK+b6p9qzh8LxoFpYjx6YycCY/w==}
     engines: {node: '>=14.12'}
     cpu: [x64]
     os: [linux]
@@ -2350,8 +2350,8 @@ packages:
     cpu: [x64]
     os: [linux]
 
-  '@modern-js/swc-plugins-win32-arm64-msvc@0.6.10':
-    resolution: {integrity: sha512-5f36tcvJglm9qKLVqqkS7lO46xM6WoXgZWFm4X6No14ZFTO4WaZa4wqGN50nHivqFlbyDY7vZEnRy7R01SlBQw==}
+  '@modern-js/swc-plugins-win32-arm64-msvc@0.6.11':
+    resolution: {integrity: sha512-MWbuMTdGZ81Xce+OmnM3xsKKQIHmp9Eq0FlueRIPQdSLCO6IogIjALsMum4Vd1tRnEosKXj0xcuD4IsAWgtW6w==}
     engines: {node: '>=14.12'}
     cpu: [arm64]
     os: [win32]
@@ -2362,8 +2362,8 @@ packages:
     cpu: [arm64]
     os: [win32]
 
-  '@modern-js/swc-plugins-win32-x64-msvc@0.6.10':
-    resolution: {integrity: sha512-GkyZQRAb2yiM8kg+RMj3wUufBCR6HraSD/TcgoLIV3D3gD9EUIsiLIo73jwGzDkE4bkYAnuXgXFCq+8kEI5gzw==}
+  '@modern-js/swc-plugins-win32-x64-msvc@0.6.11':
+    resolution: {integrity: sha512-UH4BeAjfs7Z6sZQOaFjgOB9h99qAPRtRFbmkQ+77FDlwNdjii0xPJvdNPCxAJITnqHjHSqrbz9rFDSrWnI9eKg==}
     engines: {node: '>=14.12'}
     cpu: [x64]
     os: [win32]
@@ -2374,8 +2374,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@modern-js/swc-plugins@0.6.10':
-    resolution: {integrity: sha512-ZMp2/n2/YsJSUPypU8up526FGdDvQxV3VztF9KAqt/5+PrzwavsWQlfYZ6W4dpAAuct9Ob+CUHl0gzHbeUC9TQ==}
+  '@modern-js/swc-plugins@0.6.11':
+    resolution: {integrity: sha512-bXwjeFa5mg1hD6zzSHzw94FMNFb9SV458g76zWYfXRw7wMjp97NYl6n3dOTOixdngC0JqZctSbP4mJwSZ0p3Gw==}
     engines: {node: '>=14.17.6'}
     peerDependencies:
       '@swc/helpers': '>=0.5.3'
@@ -3697,8 +3697,8 @@ packages:
   camelize@1.0.1:
     resolution: {integrity: sha512-dU+Tx2fsypxTgtLoE36npi3UqcjSSMNYfkqgmoEhtZrraP5VWq0K7FkWVTYa8eMPtnU/G2txVsfdCJTn9uzpuQ==}
 
-  caniuse-lite@1.0.30001658:
-    resolution: {integrity: sha512-N2YVqWbJELVdrnsW5p+apoQyYt51aBMSsBZki1XZEfeBCexcM/sf4xiAHcXQBkuOwJBXtWF7aW1sYX6tKebPHw==}
+  caniuse-lite@1.0.30001659:
+    resolution: {integrity: sha512-Qxxyfv3RdHAfJcXelgf0hU4DFUVXBGTjqrBUZLUh8AtlGnsDo+CnncYtTd95+ZKfnANUOzxyIQCuU/UeBZBYoA==}
 
   ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
@@ -8853,64 +8853,64 @@ snapshots:
       '@modern-js/utils': 2.59.0
       '@swc/helpers': 0.5.3
 
-  '@modern-js/swc-plugins-darwin-arm64@0.6.10':
+  '@modern-js/swc-plugins-darwin-arm64@0.6.11':
     optional: true
 
   '@modern-js/swc-plugins-darwin-arm64@0.6.6':
     optional: true
 
-  '@modern-js/swc-plugins-darwin-x64@0.6.10':
+  '@modern-js/swc-plugins-darwin-x64@0.6.11':
     optional: true
 
   '@modern-js/swc-plugins-darwin-x64@0.6.6':
     optional: true
 
-  '@modern-js/swc-plugins-linux-arm64-gnu@0.6.10':
+  '@modern-js/swc-plugins-linux-arm64-gnu@0.6.11':
     optional: true
 
   '@modern-js/swc-plugins-linux-arm64-gnu@0.6.6':
     optional: true
 
-  '@modern-js/swc-plugins-linux-arm64-musl@0.6.10':
+  '@modern-js/swc-plugins-linux-arm64-musl@0.6.11':
     optional: true
 
   '@modern-js/swc-plugins-linux-arm64-musl@0.6.6':
     optional: true
 
-  '@modern-js/swc-plugins-linux-x64-gnu@0.6.10':
+  '@modern-js/swc-plugins-linux-x64-gnu@0.6.11':
     optional: true
 
   '@modern-js/swc-plugins-linux-x64-gnu@0.6.6':
     optional: true
 
-  '@modern-js/swc-plugins-linux-x64-musl@0.6.10':
+  '@modern-js/swc-plugins-linux-x64-musl@0.6.11':
     optional: true
 
   '@modern-js/swc-plugins-linux-x64-musl@0.6.6':
     optional: true
 
-  '@modern-js/swc-plugins-win32-arm64-msvc@0.6.10':
+  '@modern-js/swc-plugins-win32-arm64-msvc@0.6.11':
     optional: true
 
   '@modern-js/swc-plugins-win32-arm64-msvc@0.6.6':
     optional: true
 
-  '@modern-js/swc-plugins-win32-x64-msvc@0.6.10':
+  '@modern-js/swc-plugins-win32-x64-msvc@0.6.11':
     optional: true
 
   '@modern-js/swc-plugins-win32-x64-msvc@0.6.6':
     optional: true
 
-  '@modern-js/swc-plugins@0.6.10(@swc/helpers@0.5.12)':
+  '@modern-js/swc-plugins@0.6.11(@swc/helpers@0.5.12)':
     optionalDependencies:
-      '@modern-js/swc-plugins-darwin-arm64': 0.6.10
-      '@modern-js/swc-plugins-darwin-x64': 0.6.10
-      '@modern-js/swc-plugins-linux-arm64-gnu': 0.6.10
-      '@modern-js/swc-plugins-linux-arm64-musl': 0.6.10
-      '@modern-js/swc-plugins-linux-x64-gnu': 0.6.10
-      '@modern-js/swc-plugins-linux-x64-musl': 0.6.10
-      '@modern-js/swc-plugins-win32-arm64-msvc': 0.6.10
-      '@modern-js/swc-plugins-win32-x64-msvc': 0.6.10
+      '@modern-js/swc-plugins-darwin-arm64': 0.6.11
+      '@modern-js/swc-plugins-darwin-x64': 0.6.11
+      '@modern-js/swc-plugins-linux-arm64-gnu': 0.6.11
+      '@modern-js/swc-plugins-linux-arm64-musl': 0.6.11
+      '@modern-js/swc-plugins-linux-x64-gnu': 0.6.11
+      '@modern-js/swc-plugins-linux-x64-musl': 0.6.11
+      '@modern-js/swc-plugins-win32-arm64-msvc': 0.6.11
+      '@modern-js/swc-plugins-win32-x64-msvc': 0.6.11
       '@swc/helpers': 0.5.12
 
   '@modern-js/swc-plugins@0.6.6(@swc/helpers@0.5.3)':
@@ -8933,14 +8933,14 @@ snapshots:
   '@modern-js/utils@2.58.3':
     dependencies:
       '@swc/helpers': 0.5.3
-      caniuse-lite: 1.0.30001658
+      caniuse-lite: 1.0.30001659
       lodash: 4.17.21
       rslog: 1.2.3
 
   '@modern-js/utils@2.59.0':
     dependencies:
       '@swc/helpers': 0.5.3
-      caniuse-lite: 1.0.30001658
+      caniuse-lite: 1.0.30001659
       lodash: 4.17.21
       rslog: 1.2.3
 
@@ -9177,7 +9177,7 @@ snapshots:
       '@rspack/core': 1.0.0(@swc/helpers@0.5.12)
       '@rspack/lite-tapable': 1.0.0
       '@swc/helpers': 0.5.12
-      caniuse-lite: 1.0.30001658
+      caniuse-lite: 1.0.30001659
       core-js: 3.38.1
     optionalDependencies:
       fsevents: 2.3.3
@@ -9187,7 +9187,7 @@ snapshots:
       '@rspack/core': 1.0.3(@swc/helpers@0.5.12)
       '@rspack/lite-tapable': 1.0.0
       '@swc/helpers': 0.5.12
-      caniuse-lite: 1.0.30001658
+      caniuse-lite: 1.0.30001659
       core-js: 3.38.1
     optionalDependencies:
       fsevents: 2.3.3
@@ -9197,7 +9197,7 @@ snapshots:
       '@rspack/core': 1.0.3(@swc/helpers@0.5.12)
       '@rspack/lite-tapable': 1.0.0
       '@swc/helpers': 0.5.12
-      caniuse-lite: 1.0.30001658
+      caniuse-lite: 1.0.30001659
       core-js: 3.38.1
     optionalDependencies:
       fsevents: 2.3.3
@@ -9363,7 +9363,7 @@ snapshots:
       '@module-federation/runtime-tools': 0.5.1
       '@rspack/binding': 1.0.0
       '@rspack/lite-tapable': 1.0.0
-      caniuse-lite: 1.0.30001658
+      caniuse-lite: 1.0.30001659
     optionalDependencies:
       '@swc/helpers': 0.5.12
 
@@ -9372,7 +9372,7 @@ snapshots:
       '@module-federation/runtime-tools': 0.5.1
       '@rspack/binding': 1.0.3
       '@rspack/lite-tapable': 1.0.0
-      caniuse-lite: 1.0.30001658
+      caniuse-lite: 1.0.30001659
     optionalDependencies:
       '@swc/helpers': 0.5.12
 
@@ -10372,14 +10372,14 @@ snapshots:
 
   browserslist@4.23.2:
     dependencies:
-      caniuse-lite: 1.0.30001658
+      caniuse-lite: 1.0.30001659
       electron-to-chromium: 1.4.827
       node-releases: 2.0.14
       update-browserslist-db: 1.1.0(browserslist@4.23.2)
 
   browserslist@4.23.3:
     dependencies:
-      caniuse-lite: 1.0.30001658
+      caniuse-lite: 1.0.30001659
       electron-to-chromium: 1.5.4
       node-releases: 2.0.18
       update-browserslist-db: 1.1.0(browserslist@4.23.3)
@@ -10422,7 +10422,7 @@ snapshots:
 
   camelize@1.0.1: {}
 
-  caniuse-lite@1.0.30001658: {}
+  caniuse-lite@1.0.30001659: {}
 
   ccount@2.0.1: {}
 
