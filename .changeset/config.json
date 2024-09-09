@@ -7,8 +7,7 @@
   "baseBranch": "main",
   "fixed": [["@rsbuild/*", "create-rsbuild"]],
   "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
-    "onlyUpdatePeerDependentsWhenOutOfRange": true,
-    "updateInternalDependents": "always"
+    "onlyUpdatePeerDependentsWhenOutOfRange": true
   },
   "updateInternalDependencies": "patch",
   "ignore": []
