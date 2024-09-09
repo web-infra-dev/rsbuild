@@ -62,6 +62,7 @@ mYbzBtlg6o
 napi
 nolyfill
 nosources
+nuxt
 ntqry
 oklab
 onclosetag
