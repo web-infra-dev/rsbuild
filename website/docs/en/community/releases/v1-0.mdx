@@ -41,14 +41,14 @@ When developing Rsbuild, we learned best practices from the best tools in the co
 
 ## Performance
 
-**Rsbuild is currently the fastest build tool in the webpack and Rspack ecosystem**. Here is a comparison between Rsbuild, Create React App, and Rspack CLI:
+**Rsbuild is currently the fastest build tool in the webpack and Rspack ecosystem**. Here is a comparison between Rsbuild, Create React App, Vite, and Rspack CLI:
 
-| Metric                          | Create React App | Rspack CLI | Rsbuild | Rsbuild vs CRA    |
-| ------------------------------- | ---------------- | ---------- | ------- | ----------------- |
-| dev startup time (1000 modules) | 5.47s            | 0.66s      | 0.39s   | **14x faster**    |
-| build time (1000 modules)       | 5.69s            | 0.51s      | 0.27s   | **20x faster**    |
-| number of npm dependencies      | 1241             | 283        | 14      | **99% reduction** |
-| npm install size                | 146.6MB          | 75.1MB     | 59.1MB  | **60% reduction** |
+| Metric                          | Create React App | Vite (with SWC) | Rspack CLI | Rsbuild | Rsbuild vs CRA    |
+| ------------------------------- | ---------------- | --------------- | ---------- | ------- | ----------------- |
+| dev startup time (1000 modules) | 5.47s            | 1.29s           | 0.66s      | 0.39s   | **14x faster**    |
+| build time (1000 modules)       | 5.69s            | 1.39s           | 0.51s      | 0.27s   | **20x faster**    |
+| npm dependencies count          | 1241             | 15              | 283        | 14      | **99% reduction** |
+| npm install size                | 146.6MB          | 56.3MB          | 75.1MB     | 59.1MB  | **60% reduction** |
 
 Compared to the [Rspack CLI](https://www.npmjs.com/package/@rspack/cli), Rsbuild provides a richer set of features while demonstrating superior performance.
 
@@ -83,6 +83,8 @@ As shown, the API style of the Rsbuild plugin is similar to esbuild, it can be d
 - If you haven't used Rsbuild before, you can experience it through the [CodeSandbox example](https://codesandbox.io/p/github/rspack-contrib/rsbuild-codesandbox-example) or refer to the [Quick Start](https://rsbuild.dev/guide/start/quick-start) to use Rsbuild.
 - If you are using Rsbuild 0.7 or earlier, please note that 1.0 includes some breaking changes. You can refer to the [Migrating from 0.x](https://rsbuild.dev/guide/migration/rsbuild-0-x) document to upgrade.
 - Rsbuild also provides migration guides for projects that use webpack, CRA, Vue CLI, etc. See [Migrate from Existing Projects](https://rsbuild.dev/guide/start/quick-start#migrate-from-existing-projects).
+
+> Give a star 🌟 to the [Rsbuild GitHub repository](https://github.com/web-infra-dev/rsbuild).
 
 ## What's next
 
