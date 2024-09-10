@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-sass",
-  "version": "1.0.1-rc.5",
+  "version": "1.0.1",
   "description": "Sass plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
