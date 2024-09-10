@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@modern-js/swc-plugins": "0.6.11",
-    "@swc/helpers": "^0.5.12",
+    "@swc/helpers": "^0.5.13",
     "core-js": "~3.38.1",
     "deepmerge": "^4.3.1",
     "lodash": "^4.17.21",
