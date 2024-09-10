@@ -67,6 +67,7 @@ If you need to customize the compilation behavior of Stylus, you can use the fol
 ```ts
 type StylusOptions = {
   use?: string[];
+  define?: [string, any, boolean?];
   include?: string[];
   import?: string;
   resolveURL?: boolean;
