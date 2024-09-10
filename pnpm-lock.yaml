@@ -505,10 +505,10 @@ importers:
     dependencies:
       '@modern-js/swc-plugins':
         specifier: 0.6.11
-        version: 0.6.11(@swc/helpers@0.5.12)
+        version: 0.6.11(@swc/helpers@0.5.13)
       '@swc/helpers':
-        specifier: ^0.5.12
-        version: 0.5.12
+        specifier: ^0.5.13
+        version: 0.5.13
       core-js:
         specifier: ~3.38.1
         version: 3.38.1
@@ -591,13 +591,13 @@ importers:
     dependencies:
       '@rspack/core':
         specifier: ~1.0.3
-        version: 1.0.3(@swc/helpers@0.5.12)
+        version: 1.0.3(@swc/helpers@0.5.13)
       '@rspack/lite-tapable':
         specifier: ~1.0.0
         version: 1.0.0
       '@swc/helpers':
-        specifier: ^0.5.12
-        version: 0.5.12
+        specifier: ^0.5.13
+        version: 0.5.13
       caniuse-lite:
         specifier: ^1.0.30001659
         version: 1.0.30001659
@@ -647,7 +647,7 @@ importers:
         version: 2.0.0
       css-loader:
         specifier: 7.1.2
-        version: 7.1.2(@rspack/core@1.0.3(@swc/helpers@0.5.12))(webpack@5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
+        version: 7.1.2(@rspack/core@1.0.3(@swc/helpers@0.5.13))(webpack@5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -662,7 +662,7 @@ importers:
         version: 11.2.0
       html-rspack-plugin:
         specifier: 6.0.1
-        version: 6.0.1(@rspack/core@1.0.3(@swc/helpers@0.5.12))
+        version: 6.0.1(@rspack/core@1.0.3(@swc/helpers@0.5.13))
       http-proxy-middleware:
         specifier: ^2.0.6
         version: 2.0.6
@@ -692,7 +692,7 @@ importers:
         version: 6.0.1(jiti@1.21.6)(postcss@8.4.45)(tsx@4.14.0)(yaml@2.5.0)
       postcss-loader:
         specifier: 8.1.1
-        version: 8.1.1(@rspack/core@1.0.3(@swc/helpers@0.5.12))(postcss@8.4.45)(typescript@5.5.2)(webpack@5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
+        version: 8.1.1(@rspack/core@1.0.3(@swc/helpers@0.5.13))(postcss@8.4.45)(typescript@5.5.2)(webpack@5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
       prebundle:
         specifier: 1.2.2
         version: 1.2.2(typescript@5.5.2)
@@ -710,7 +710,7 @@ importers:
         version: 1.0.0
       rspack-manifest-plugin:
         specifier: 5.0.1
-        version: 5.0.1(@rspack/core@1.0.3(@swc/helpers@0.5.12))
+        version: 5.0.1(@rspack/core@1.0.3(@swc/helpers@0.5.13))
       sirv:
         specifier: ^2.0.4
         version: 2.0.4
@@ -849,7 +849,7 @@ importers:
         version: 4.2.0
       less-loader:
         specifier: ^12.2.0
-        version: 12.2.0(@rspack/core@1.0.3(@swc/helpers@0.5.12))(less@4.2.0)(webpack@5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
+        version: 12.2.0(@rspack/core@1.0.3(@swc/helpers@0.5.13))(less@4.2.0)(webpack@5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
       prebundle:
         specifier: 1.2.2
         version: 1.2.2(typescript@5.5.2)
@@ -926,7 +926,7 @@ importers:
         version: 5.0.0
       sass-loader:
         specifier: ^16.0.1
-        version: 16.0.1(@rspack/core@1.0.3(@swc/helpers@0.5.12))(sass-embedded@1.78.0)(sass@1.78.0)(webpack@5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
+        version: 16.0.1(@rspack/core@1.0.3(@swc/helpers@0.5.13))(sass-embedded@1.78.0)(sass@1.78.0)(webpack@5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
       typescript:
         specifier: ^5.5.2
         version: 5.5.2
@@ -969,7 +969,7 @@ importers:
         version: 0.63.0
       stylus-loader:
         specifier: 8.1.0
-        version: 8.1.0(@rspack/core@1.0.3(@swc/helpers@0.5.12))(stylus@0.63.0)(webpack@5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
+        version: 8.1.0(@rspack/core@1.0.3(@swc/helpers@0.5.13))(stylus@0.63.0)(webpack@5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3)))
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -3089,8 +3089,8 @@ packages:
   '@swc/counter@0.1.3':
     resolution: {integrity: sha512-e2BR4lsJkkRlKZ/qCHPw9ZaSxc0MVUd7gtbtaB7aMvHeJVYe8sOB8DBZkP2DtISHGSku9sCK6T6cnY0CtXrOCQ==}
 
-  '@swc/helpers@0.5.12':
-    resolution: {integrity: sha512-KMZNXiGibsW9kvZAO1Pam2JPTDBm+KSHMMHWdsyI/1DbIZjT2A6Gy3hblVXUMEDvUAKq+e0vL0X0o54owWji7g==}
+  '@swc/helpers@0.5.13':
+    resolution: {integrity: sha512-UoKGxQ3r5kYI9dALKJapMmuK+1zWM/H17Z1+iwnNmzcJRnfFuevZs375TA5rW31pu4BS4NoSy1fRsexDXfWn5w==}
 
   '@swc/helpers@0.5.3':
     resolution: {integrity: sha512-FaruWX6KdudYloq1AHD/4nU+UsMTdNE8CKyrseXWEcgjDAbvkwJg2QGPAnfIJLIWsjZOSPLOAykK6fuYp4vp4A==}
@@ -8898,7 +8898,7 @@ snapshots:
   '@modern-js/swc-plugins-win32-x64-msvc@0.6.6':
     optional: true
 
-  '@modern-js/swc-plugins@0.6.11(@swc/helpers@0.5.12)':
+  '@modern-js/swc-plugins@0.6.11(@swc/helpers@0.5.13)':
     optionalDependencies:
       '@modern-js/swc-plugins-darwin-arm64': 0.6.11
       '@modern-js/swc-plugins-darwin-x64': 0.6.11
@@ -8908,7 +8908,7 @@ snapshots:
       '@modern-js/swc-plugins-linux-x64-musl': 0.6.11
       '@modern-js/swc-plugins-win32-arm64-msvc': 0.6.11
       '@modern-js/swc-plugins-win32-x64-msvc': 0.6.11
-      '@swc/helpers': 0.5.12
+      '@swc/helpers': 0.5.13
 
   '@modern-js/swc-plugins@0.6.6(@swc/helpers@0.5.3)':
     dependencies:
@@ -9164,9 +9164,9 @@ snapshots:
 
   '@rsbuild/core@1.0.1-rc.0':
     dependencies:
-      '@rspack/core': 1.0.0(@swc/helpers@0.5.12)
+      '@rspack/core': 1.0.0(@swc/helpers@0.5.13)
       '@rspack/lite-tapable': 1.0.0
-      '@swc/helpers': 0.5.12
+      '@swc/helpers': 0.5.13
       caniuse-lite: 1.0.30001659
       core-js: 3.38.1
     optionalDependencies:
@@ -9174,9 +9174,9 @@ snapshots:
 
   '@rsbuild/core@1.0.1-rc.4':
     dependencies:
-      '@rspack/core': 1.0.3(@swc/helpers@0.5.12)
+      '@rspack/core': 1.0.3(@swc/helpers@0.5.13)
       '@rspack/lite-tapable': 1.0.0
-      '@swc/helpers': 0.5.12
+      '@swc/helpers': 0.5.13
       caniuse-lite: 1.0.30001659
       core-js: 3.38.1
     optionalDependencies:
@@ -9184,9 +9184,9 @@ snapshots:
 
   '@rsbuild/core@1.0.1-rc.5':
     dependencies:
-      '@rspack/core': 1.0.3(@swc/helpers@0.5.12)
+      '@rspack/core': 1.0.3(@swc/helpers@0.5.13)
       '@rspack/lite-tapable': 1.0.0
-      '@swc/helpers': 0.5.12
+      '@swc/helpers': 0.5.13
       caniuse-lite: 1.0.30001659
       core-js: 3.38.1
     optionalDependencies:
@@ -9348,23 +9348,23 @@ snapshots:
       '@rspack/binding-win32-ia32-msvc': 1.0.3
       '@rspack/binding-win32-x64-msvc': 1.0.3
 
-  '@rspack/core@1.0.0(@swc/helpers@0.5.12)':
+  '@rspack/core@1.0.0(@swc/helpers@0.5.13)':
     dependencies:
       '@module-federation/runtime-tools': 0.5.1
       '@rspack/binding': 1.0.0
       '@rspack/lite-tapable': 1.0.0
       caniuse-lite: 1.0.30001659
     optionalDependencies:
-      '@swc/helpers': 0.5.12
+      '@swc/helpers': 0.5.13
 
-  '@rspack/core@1.0.3(@swc/helpers@0.5.12)':
+  '@rspack/core@1.0.3(@swc/helpers@0.5.13)':
     dependencies:
       '@module-federation/runtime-tools': 0.5.1
       '@rspack/binding': 1.0.3
       '@rspack/lite-tapable': 1.0.0
       caniuse-lite: 1.0.30001659
     optionalDependencies:
-      '@swc/helpers': 0.5.12
+      '@swc/helpers': 0.5.13
 
   '@rspack/lite-tapable@1.0.0': {}
 
@@ -9672,7 +9672,7 @@ snapshots:
 
   '@swc/counter@0.1.3': {}
 
-  '@swc/helpers@0.5.12':
+  '@swc/helpers@0.5.13':
     dependencies:
       tslib: 2.6.2
 
@@ -10678,7 +10678,7 @@ snapshots:
 
   css-color-keywords@1.0.0: {}
 
-  css-loader@7.1.2(@rspack/core@1.0.3(@swc/helpers@0.5.12))(webpack@5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
+  css-loader@7.1.2(@rspack/core@1.0.3(@swc/helpers@0.5.13))(webpack@5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
     dependencies:
       icss-utils: 5.1.0(postcss@8.4.45)
       postcss: 8.4.45
@@ -10689,7 +10689,7 @@ snapshots:
       postcss-value-parser: 4.2.0
       semver: 7.6.3
     optionalDependencies:
-      '@rspack/core': 1.0.3(@swc/helpers@0.5.12)
+      '@rspack/core': 1.0.3(@swc/helpers@0.5.13)
       webpack: 5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3))
 
   css-select@5.1.0:
@@ -11530,11 +11530,11 @@ snapshots:
       relateurl: 0.2.7
       terser: 5.31.6
 
-  html-rspack-plugin@6.0.1(@rspack/core@1.0.3(@swc/helpers@0.5.12)):
+  html-rspack-plugin@6.0.1(@rspack/core@1.0.3(@swc/helpers@0.5.13)):
     dependencies:
       '@rspack/lite-tapable': 1.0.0
     optionalDependencies:
-      '@rspack/core': 1.0.3(@swc/helpers@0.5.12)
+      '@rspack/core': 1.0.3(@swc/helpers@0.5.13)
 
   html-tags@3.3.1: {}
 
@@ -11902,11 +11902,11 @@ snapshots:
 
   leac@0.6.0: {}
 
-  less-loader@12.2.0(@rspack/core@1.0.3(@swc/helpers@0.5.12))(less@4.2.0)(webpack@5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
+  less-loader@12.2.0(@rspack/core@1.0.3(@swc/helpers@0.5.13))(less@4.2.0)(webpack@5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
     dependencies:
       less: 4.2.0
     optionalDependencies:
-      '@rspack/core': 1.0.3(@swc/helpers@0.5.12)
+      '@rspack/core': 1.0.3(@swc/helpers@0.5.13)
       webpack: 5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3))
 
   less@4.2.0:
@@ -12926,14 +12926,14 @@ snapshots:
       tsx: 4.14.0
       yaml: 2.5.0
 
-  postcss-loader@8.1.1(@rspack/core@1.0.3(@swc/helpers@0.5.12))(postcss@8.4.45)(typescript@5.5.2)(webpack@5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
+  postcss-loader@8.1.1(@rspack/core@1.0.3(@swc/helpers@0.5.13))(postcss@8.4.45)(typescript@5.5.2)(webpack@5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
     dependencies:
       cosmiconfig: 9.0.0(typescript@5.5.2)
       jiti: 1.21.6
       postcss: 8.4.45
       semver: 7.6.3
     optionalDependencies:
-      '@rspack/core': 1.0.3(@swc/helpers@0.5.12)
+      '@rspack/core': 1.0.3(@swc/helpers@0.5.13)
       webpack: 5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3))
     transitivePeerDependencies:
       - typescript
@@ -13489,11 +13489,11 @@ snapshots:
       deepmerge: 4.3.1
       javascript-stringify: 2.1.0
 
-  rspack-manifest-plugin@5.0.1(@rspack/core@1.0.3(@swc/helpers@0.5.12)):
+  rspack-manifest-plugin@5.0.1(@rspack/core@1.0.3(@swc/helpers@0.5.13)):
     dependencies:
       '@rspack/lite-tapable': 1.0.0
     optionalDependencies:
-      '@rspack/core': 1.0.3(@swc/helpers@0.5.12)
+      '@rspack/core': 1.0.3(@swc/helpers@0.5.13)
 
   rspack-plugin-virtual-module@0.1.12:
     dependencies:
@@ -13625,11 +13625,11 @@ snapshots:
       sass-embedded-win32-ia32: 1.78.0
       sass-embedded-win32-x64: 1.78.0
 
-  sass-loader@16.0.1(@rspack/core@1.0.3(@swc/helpers@0.5.12))(sass-embedded@1.78.0)(sass@1.78.0)(webpack@5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
+  sass-loader@16.0.1(@rspack/core@1.0.3(@swc/helpers@0.5.13))(sass-embedded@1.78.0)(sass@1.78.0)(webpack@5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
     dependencies:
       neo-async: 2.6.2
     optionalDependencies:
-      '@rspack/core': 1.0.3(@swc/helpers@0.5.12)
+      '@rspack/core': 1.0.3(@swc/helpers@0.5.13)
       sass: 1.78.0
       sass-embedded: 1.78.0
       webpack: 5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3))
@@ -13887,13 +13887,13 @@ snapshots:
 
   stylis@4.3.2: {}
 
-  stylus-loader@8.1.0(@rspack/core@1.0.3(@swc/helpers@0.5.12))(stylus@0.63.0)(webpack@5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
+  stylus-loader@8.1.0(@rspack/core@1.0.3(@swc/helpers@0.5.13))(stylus@0.63.0)(webpack@5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3))):
     dependencies:
       fast-glob: 3.3.2
       normalize-path: 3.0.0
       stylus: 0.63.0
     optionalDependencies:
-      '@rspack/core': 1.0.3(@swc/helpers@0.5.12)
+      '@rspack/core': 1.0.3(@swc/helpers@0.5.13)
       webpack: 5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.3))
 
   stylus@0.63.0:
