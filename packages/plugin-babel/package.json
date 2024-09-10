@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-babel",
-  "version": "1.0.1-rc.5",
+  "version": "1.0.1",
   "description": "Babel plugin for Rsbuild",
   "repository": {
     "type": "git",
