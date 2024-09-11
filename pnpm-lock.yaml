@@ -1085,9 +1085,6 @@ importers:
 
   scripts/test-helper:
     dependencies:
-      '@rsbuild/core':
-        specifier: workspace:*
-        version: link:../../packages/core
       '@types/lodash':
         specifier: ^4.17.7
         version: 4.17.7
@@ -1106,6 +1103,10 @@ importers:
       upath:
         specifier: 2.0.1
         version: 2.0.1
+    devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../packages/core
 
   website:
     devDependencies:
