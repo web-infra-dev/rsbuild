@@ -142,7 +142,7 @@ import logo from '../public/logo.png';
 import logo from './assets/logo.png';
 ```
 
-- During the production build, the files in public folder will be copied to the output folder (default is `dist`). Please be careful to avoid name conflicts with the output files. When files in the `public` folder have the same name as outputs, the outputs have higher priority and will overwrite the files with the same name in the `public` folder. This feature can be disabled by setting `server.publicDir.copyOnBuild` to false.
+- During the production build, the files in public folder will be copied to the output folder (default is `dist`). Please be careful to avoid name conflicts with the output files. When files in the `public` folder have the same name as outputs, the outputs have higher priority and will overwrite the files with the same name in the `public` folder. This feature can be disabled by setting [server.publicDir.copyOnBuild](/config/server/public-dir) to `false`.
 
 ### Custom Behavior
 
