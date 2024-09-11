@@ -17,7 +17,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      (chain, { env, isProd, target, bundler, environment, CHAIN_ID }) => {
+      (chain, { env, isDev, target, bundler, environment, CHAIN_ID }) => {
         const { config } = environment;
 
         chain.name(environment.name);
@@ -46,7 +46,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
           },
         });
 
-        const usingHMR = !isProd && config.dev.hmr && target === 'web';
+        const usingHMR = isDev && config.dev.hmr && target === 'web';
 
         if (usingHMR) {
           chain

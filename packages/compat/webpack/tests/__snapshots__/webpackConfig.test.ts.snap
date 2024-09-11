@@ -8,9 +8,6 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
     },
   },
   RsbuildCorePlugin {},
-  HotModuleReplacementPlugin {
-    "options": {},
-  },
   MiniCssExtractPlugin {
     "_sortedModulesCache": WeakMap {},
     "options": {

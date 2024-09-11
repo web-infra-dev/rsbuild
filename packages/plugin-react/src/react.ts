@@ -45,9 +45,9 @@ export const applyBasicReactSupport = (
   });
 
   api.modifyBundlerChain(
-    async (chain, { CHAIN_ID, environment, isProd, target }) => {
+    async (chain, { CHAIN_ID, environment, isDev, target }) => {
       const { config } = environment;
-      const usingHMR = !isProd && config.dev.hmr && target === 'web';
+      const usingHMR = isDev && config.dev.hmr && target === 'web';
       if (!usingHMR) {
         return;
       }
