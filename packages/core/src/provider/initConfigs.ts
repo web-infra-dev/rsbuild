@@ -5,7 +5,7 @@ import {
   updateContextByNormalizedConfig,
   updateEnvironmentContext,
 } from '../createContext';
-import { camelCase } from '../helpers';
+import { camelCase, pick } from '../helpers';
 import { isDebug, logger } from '../logger';
 import { mergeRsbuildConfig } from '../mergeConfig';
 import { initPlugins } from '../pluginManager';
@@ -80,7 +80,6 @@ const initEnvironmentConfigs = (
   };
   const { environments, dev, server, provider, ...rsbuildSharedConfig } =
     normalizedConfig;
-  const { assetPrefix, lazyCompilation } = dev;
 
   const isEnvironmentEnabled = (name: string) =>
     !specifiedEnvironments || specifiedEnvironments.includes(name);
@@ -107,10 +106,12 @@ const initEnvironmentConfigs = (
             ...(mergeRsbuildConfig(
               {
                 ...rsbuildSharedConfig,
-                dev: {
-                  assetPrefix,
-                  lazyCompilation,
-                },
+                dev: pick(dev, [
+                  'hmr',
+                  'assetPrefix',
+                  'progressBar',
+                  'lazyCompilation',
+                ]),
               } as unknown as MergedEnvironmentConfig,
               config as unknown as MergedEnvironmentConfig,
             ) as unknown as MergedEnvironmentConfig),
@@ -139,10 +140,7 @@ const initEnvironmentConfigs = (
   return {
     [defaultEnvironmentName]: applyEnvironmentDefaultConfig({
       ...rsbuildSharedConfig,
-      dev: {
-        assetPrefix,
-        lazyCompilation,
-      },
+      dev: pick(dev, ['hmr', 'assetPrefix', 'progressBar', 'lazyCompilation']),
     } as MergedEnvironmentConfig),
   };
 };
@@ -176,7 +174,13 @@ export async function initRsbuildConfig({
   );
 
   const {
-    dev: { assetPrefix, lazyCompilation, ...rsbuildSharedDev },
+    dev: {
+      hmr,
+      assetPrefix,
+      progressBar,
+      lazyCompilation,
+      ...rsbuildSharedDev
+    },
     server,
   } = normalizeBaseConfig;
 
