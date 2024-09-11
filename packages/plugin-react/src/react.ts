@@ -1,33 +1,11 @@
 import path from 'node:path';
 import type {
-  ChainIdentifier,
+  EnvironmentConfig,
   RsbuildConfig,
   RsbuildPluginAPI,
   Rspack,
-  RspackChain,
 } from '@rsbuild/core';
 import type { PluginReactOptions } from '.';
-
-const modifySwcLoaderOptions = ({
-  chain,
-  CHAIN_ID,
-  modifier,
-}: {
-  chain: RspackChain;
-  CHAIN_ID: ChainIdentifier;
-  modifier: (config: Rspack.SwcLoaderOptions) => Rspack.SwcLoaderOptions;
-}) => {
-  const ruleIds = [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI];
-
-  for (const ruleId of ruleIds) {
-    if (chain.module.rules.has(ruleId)) {
-      const rule = chain.module.rule(ruleId);
-      if (rule.uses.has(CHAIN_ID.USE.SWC)) {
-        rule.use(CHAIN_ID.USE.SWC).tap(modifier);
-      }
-    }
-  }
-};
 
 export const applyBasicReactSupport = (
   api: RsbuildPluginAPI,
@@ -35,35 +13,41 @@ export const applyBasicReactSupport = (
 ): void => {
   const REACT_REFRESH_PATH = require.resolve('react-refresh');
 
-  api.modifyBundlerChain(
-    async (chain, { CHAIN_ID, environment, isDev, isProd, target }) => {
-      const { config } = environment;
-      const usingHMR = !isProd && config.dev.hmr && target === 'web';
-      const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
-        development: isDev,
-        refresh: usingHMR,
-        runtime: 'automatic',
-        ...options.swcReactOptions,
-      };
+  api.modifyEnvironmentConfig((userConfig, { mergeEnvironmentConfig }) => {
+    const isDev = userConfig.mode === 'development';
 
-      modifySwcLoaderOptions({
-        chain,
-        CHAIN_ID,
-        modifier: (opts) => {
-          opts.jsc ||= {};
-          opts.jsc.transform ||= {};
-          opts.jsc.transform.react = reactOptions;
-          opts.jsc.parser = {
-            ...opts.jsc.parser,
-            syntax: 'typescript',
-            // enable supports for React JSX/TSX compilation
-            tsx: true,
-          };
+    const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
+      development: isDev,
+      refresh:
+        isDev && userConfig.dev.hmr && userConfig.output.target === 'web',
+      runtime: 'automatic',
+      ...options.swcReactOptions,
+    };
 
-          return opts;
+    const extraConfig: EnvironmentConfig = {
+      tools: {
+        swc: {
+          jsc: {
+            parser: {
+              syntax: 'typescript',
+              // enable supports for JSX/TSX compilation
+              tsx: true,
+            },
+            transform: {
+              react: reactOptions,
+            },
+          },
         },
-      });
+      },
+    };
 
+    return mergeEnvironmentConfig(extraConfig, userConfig);
+  });
+
+  api.modifyBundlerChain(
+    async (chain, { CHAIN_ID, environment, isDev, target }) => {
+      const { config } = environment;
+      const usingHMR = isDev && config.dev.hmr && target === 'web';
       if (!usingHMR) {
         return;
       }
