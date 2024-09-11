@@ -263,7 +263,6 @@ exports[`environment config > should print environment config when inspect confi
         "reconnect": 100,
       },
       "hmr": true,
-      "lazyCompilation": undefined,
       "liveReload": true,
       "writeToDisk": false,
     },
@@ -421,7 +420,6 @@ exports[`environment config > should print environment config when inspect confi
         "reconnect": 100,
       },
       "hmr": true,
-      "lazyCompilation": undefined,
       "liveReload": true,
       "writeToDisk": false,
     },
@@ -597,7 +595,6 @@ exports[`environment config > should support modify environment config by api.mo
         "reconnect": 100,
       },
       "hmr": true,
-      "lazyCompilation": undefined,
       "liveReload": true,
       "writeToDisk": false,
     },
@@ -756,7 +753,6 @@ exports[`environment config > should support modify environment config by api.mo
         "reconnect": 100,
       },
       "hmr": true,
-      "lazyCompilation": undefined,
       "liveReload": true,
       "writeToDisk": false,
     },
@@ -916,7 +912,6 @@ exports[`environment config > should support modify environment config by api.mo
         "reconnect": 100,
       },
       "hmr": true,
-      "lazyCompilation": undefined,
       "liveReload": true,
       "writeToDisk": false,
     },
@@ -1079,7 +1074,6 @@ exports[`environment config > should support modify single environment config by
         "reconnect": 100,
       },
       "hmr": true,
-      "lazyCompilation": undefined,
       "liveReload": true,
       "writeToDisk": false,
     },
@@ -1238,7 +1232,6 @@ exports[`environment config > should support modify single environment config by
         "reconnect": 100,
       },
       "hmr": true,
-      "lazyCompilation": undefined,
       "liveReload": true,
       "writeToDisk": false,
     },
@@ -1390,7 +1383,7 @@ exports[`environment config > should support modify single environment config by
 }
 `;
 
-exports[`environment config > tools.rspack / bundlerChain can be used in environment config 1`] = `
+exports[`environment config > tools.rspack / bundlerChain can be configured in environment config 1`] = `
 [
   {
     "context": "<ROOT>",
