@@ -1,4 +1,4 @@
-import { createStubRsbuild } from '@scripts/test-helper';
+import { createStubRsbuild, matchRules } from '@scripts/test-helper';
 import { describe, expect, it } from 'vitest';
 import { pluginReact } from '../src';
 
@@ -13,7 +13,31 @@ describe('plugins/react', () => {
     rsbuild.addPlugins([pluginReact()]);
     const config = await rsbuild.unwrapConfig();
 
-    expect(config).toMatchSnapshot();
+    expect(matchRules(config, 'a.js')).toMatchSnapshot();
+  });
+
+  it('should configuring `tools.swc` to override react runtime', async () => {
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {
+        mode: 'development',
+        tools: {
+          swc: {
+            jsc: {
+              transform: {
+                react: {
+                  runtime: 'classic',
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    rsbuild.addPlugins([pluginReact()]);
+    const config = await rsbuild.unwrapConfig();
+
+    expect(matchRules(config, 'a.js')).toMatchSnapshot();
   });
 
   it('should not apply react refresh when dev.hmr is false', async () => {
