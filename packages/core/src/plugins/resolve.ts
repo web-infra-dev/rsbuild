@@ -5,6 +5,7 @@ import { ensureAbsolutePath } from '../helpers/path';
 import type {
   NormalizedEnvironmentConfig,
   RsbuildPlugin,
+  Rspack,
   RspackChain,
 } from '../types';
 
@@ -88,7 +89,7 @@ export const pluginResolve = (): RsbuildPlugin => ({
     api.modifyBundlerChain({
       order: 'pre',
       handler: (chain, { environment, CHAIN_ID }) => {
-        const { config } = environment;
+        const { config, tsconfigPath } = environment;
 
         applyExtensions({ chain });
 
@@ -98,26 +99,28 @@ export const pluginResolve = (): RsbuildPlugin => ({
           rootPath: api.context.rootPath,
         });
 
-        // in some cases (modern.js), get error when fullySpecified rule after js rule
+        // In some cases (modern.js), there is an error if the fullySpecified rule is after the js rule
         applyFullySpecified({ chain, config, CHAIN_ID });
-      },
-    });
 
-    api.modifyRspackConfig(async (rspackConfig, { environment }) => {
-      const { tsconfigPath, config } = environment;
+        if (
+          tsconfigPath &&
+          // Only Rspack has the tsConfig option
+          api.context.bundlerType === 'rspack' &&
+          config.source.aliasStrategy === 'prefer-tsconfig'
+        ) {
+          const tsConfig: Rspack.ResolveOptions['tsConfig'] =
+            chain.resolve.get('tsConfig');
 
-      if (tsconfigPath && config.source.aliasStrategy === 'prefer-tsconfig') {
-        rspackConfig.resolve ||= {};
+          if (typeof tsConfig === 'string') {
+            return;
+          }
 
-        if (typeof rspackConfig.resolve.tsConfig === 'string') {
-          return;
+          chain.resolve.tsConfig({
+            configFile: tsconfigPath,
+            ...tsConfig,
+          });
         }
-
-        rspackConfig.resolve.tsConfig = {
-          configFile: tsconfigPath,
-          ...rspackConfig.resolve.tsConfig,
-        };
-      }
+      },
     });
   },
 });
