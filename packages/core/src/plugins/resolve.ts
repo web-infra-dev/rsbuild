@@ -5,7 +5,6 @@ import { ensureAbsolutePath } from '../helpers/path';
 import type {
   NormalizedEnvironmentConfig,
   RsbuildPlugin,
-  Rspack,
   RspackChain,
 } from '../types';
 
@@ -108,16 +107,8 @@ export const pluginResolve = (): RsbuildPlugin => ({
           api.context.bundlerType === 'rspack' &&
           config.source.aliasStrategy === 'prefer-tsconfig'
         ) {
-          const tsConfig: Rspack.ResolveOptions['tsConfig'] =
-            chain.resolve.get('tsConfig');
-
-          if (typeof tsConfig === 'string') {
-            return;
-          }
-
           chain.resolve.tsConfig({
             configFile: tsconfigPath,
-            ...tsConfig,
           });
         }
       },
