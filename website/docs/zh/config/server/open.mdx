@@ -14,11 +14,10 @@ type Open =
 ```
 
 - **默认值：** `undefined`
-- **版本：** `>= 0.7.4`
 
 `server.open` 用于配置一组页面 URL，Rsbuild 会在启动 server 后自动在浏览器中打开这些页面。
 
-> 你也可以使用 Rsbuild CLI 的 [--open](/guide/basic/cli#打开页面) 选项来打开页面。
+> 你也可以使用 Rsbuild CLI 的 [--open](/guide/basic/cli#打开页面) 选项来打开页面。当同时使用 `server.open` 和 `--open` 时，`--open` 的优先级更高。
 
 ### 示例
 
@@ -113,7 +112,7 @@ BROWSER="Google Chrome Canary" npx rsbuild dev --open
 ```
 
 :::tip
-你可以将 `BROWSER` 设置在本地的 `.env.local` 文件中，这样能够避免影响其他开发者。
+你可以将 `BROWSER` 设置在本地的 [.env.local](/guide/advanced/env-vars#env-file) 文件中，这样能够避免影响其他开发者。
 :::
 
 ### 回调函数
