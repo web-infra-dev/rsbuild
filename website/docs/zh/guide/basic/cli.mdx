@@ -10,7 +10,7 @@ Rsbuild 内置了一个轻量的命令行工具，包含 dev、build 等命令�
 npx rsbuild -h
 ```
 
-The output is as follows:
+输出如下：
 
 ```text
 Usage: rsbuild <command> [options]
@@ -171,7 +171,8 @@ rsbuild inspect --verbose
 
 Inspect config succeed, open following files to view the content:
 
-  - Rsbuild Config: /project/dist/.rsbuild/rsbuild.config.mjs
+  - Rsbuild Config (web): /project/dist/.rsbuild/rsbuild.config.web.mjs
+  - Rsbuild Config (node): /project/dist/.rsbuild/rsbuild.config.node.mjs
   - Rspack Config (web): /project/dist/.rsbuild/rspack.config.web.mjs
   - Rspack Config (node): /project/dist/.rsbuild/rspack.config.node.mjs
 ```
