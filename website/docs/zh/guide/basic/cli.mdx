@@ -67,6 +67,10 @@ rsbuild dev --open http://localhost:3000/foo
 rsbuild dev -o
 ```
 
+:::tip
+当同时使用 [server.open](/config/server/open) 和 `--open` 时，`--open` 的优先级更高。
+:::
+
 ## rsbuild build
 
 `rsbuild build` 命令默认会在 `dist/` 目录下构建出可用于生产环境的产物。
