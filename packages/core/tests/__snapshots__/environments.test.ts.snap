@@ -50,7 +50,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "distPath": {
       "css": "static/css",
       "font": "static/font",
-      "html": "/",
+      "html": "./",
       "image": "static/image",
       "js": "static/js",
       "media": "static/media",
@@ -175,7 +175,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "distPath": {
       "css": "static/css",
       "font": "static/font",
-      "html": "/",
+      "html": "./",
       "image": "static/image",
       "js": "",
       "media": "static/media",
@@ -300,7 +300,7 @@ exports[`environment config > should print environment config when inspect confi
       "distPath": {
         "css": "static/css",
         "font": "static/font",
-        "html": "/",
+        "html": "./",
         "image": "static/image",
         "js": "static/js",
         "media": "static/media",
@@ -457,7 +457,7 @@ exports[`environment config > should print environment config when inspect confi
       "distPath": {
         "css": "static/css",
         "font": "static/font",
-        "html": "/",
+        "html": "./",
         "image": "static/image",
         "js": "static/js",
         "media": "static/media",
@@ -632,7 +632,7 @@ exports[`environment config > should support modify environment config by api.mo
       "distPath": {
         "css": "static/css",
         "font": "static/font",
-        "html": "/",
+        "html": "./",
         "image": "static/image",
         "js": "static/js",
         "media": "static/media",
@@ -790,7 +790,7 @@ exports[`environment config > should support modify environment config by api.mo
       "distPath": {
         "css": "static/css",
         "font": "static/font",
-        "html": "/",
+        "html": "./",
         "image": "static/image",
         "js": "static/js",
         "media": "static/media",
@@ -949,7 +949,7 @@ exports[`environment config > should support modify environment config by api.mo
       "distPath": {
         "css": "static/css",
         "font": "static/font",
-        "html": "/",
+        "html": "./",
         "image": "static/image",
         "js": "static/js",
         "media": "static/media",
@@ -1111,7 +1111,7 @@ exports[`environment config > should support modify single environment config by
       "distPath": {
         "css": "static/css",
         "font": "static/font",
-        "html": "/",
+        "html": "./",
         "image": "static/image",
         "js": "static/js",
         "media": "static/media",
@@ -1269,7 +1269,7 @@ exports[`environment config > should support modify single environment config by
       "distPath": {
         "css": "static/css",
         "font": "static/font",
-        "html": "/",
+        "html": "./",
         "image": "static/image",
         "js": "static/js",
         "media": "static/media",
