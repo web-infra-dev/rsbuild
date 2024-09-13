@@ -32,6 +32,8 @@ export default {
 
 ## Example
 
+### Default Usage
+
 After registering the plugin, when import an SVG in a JS file, if the imported path contains the `?react` suffix, Rsbuild will call SVGR to transform the SVG into a React component.
 
 ```jsx title="App.jsx"
@@ -48,13 +50,28 @@ import logoURL from './static/logo.svg';
 console.log(logoURL); // => "/static/logo.6c12aba3.png"
 ```
 
-Rsbuild also supports named imports of the `ReactComponent` to use SVGR:
+### Named Import
+
+`@rsbuild/plugin-svgr` supports named imports for `ReactComponent` when using SVGR. You need to set [svgrOptions.exportType](#svgroptionsexporttype) to `'named'`:
+
+```js
+pluginSvgr({
+  svgrOptions: {
+    exportType: 'named',
+  },
+});
+```
 
 ```jsx title="App.jsx"
 import { ReactComponent as Logo } from './logo.svg';
 
 export const App = () => <Logo />;
 ```
+
+`@rsbuild/plugin-svgr` also supports default imports and mixed imports:
+
+- Enable default imports by setting [svgrOptions.exportType](#svgroptionsexporttype) to `'default'`.
+- Enable mixed imports by setting the [mixedImport](#mixedimport) option to use both default and named imports at the same time.
 
 ## Options
 
@@ -163,8 +180,8 @@ Set the export type of SVG React components.
 
 `exportType` can be set as:
 
-- `default`: use default export
-- `named`: use named export (`ReactComponent`)
+- `default`: use default export.
+- `named`: use `ReactComponent` named export.
 
 For example, set the default export of SVG file as a React component:
 
