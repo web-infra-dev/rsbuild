@@ -2,7 +2,7 @@
 
 ## Bundler
 
-指 [Rspack](https://rspack.dev/)、[Webpack](https://webpack.js.org/) 等模块打包工具。
+指 [Rspack](https://rspack.dev/)、[webpack](https://webpack.js.org/) 等模块打包工具。
 
 打包工具的主要目标是将 JavaScript、CSS 等文件打包在一起，打包后的文件可以在浏览器、Node.js 等环境中使用。当 Bundler 处理 Web 应用时，它会构建一个依赖关系图，其中包含应用需要的各个模块，然后将所有模块打包成一个或多个 bundle。
 
@@ -14,9 +14,7 @@ CSR 是 "Client-Side Rendering"（客户端渲染）的缩写。它表示页面�
 
 ## Environment
 
-import Environment from '@zh/shared/environment.mdx';
-
-<Environment />
+`environment` 指的是构建产物的运行环境，详见 [多环境构建](/guide/advanced/environments)。
 
 ## Micro-frontend
 
@@ -29,44 +27,33 @@ import Environment from '@zh/shared/environment.mdx';
 
 ## Modern.js
 
-Modern.js 是字节跳动 Web 工程体系的开源版本，它提供多个解决方案，来帮助开发者解决不同研发场景下的问题。
-
-- [Modern.js 代码仓库](https://github.com/web-infra-dev/modern.js)。
+[Modern.js](https://github.com/web-infra-dev/modern.js) 是一个基于 Rsbuild 实现的渐进式 Web 开发框架。
 
 ## Module Federation
 
-Module Federation 是一种 JavaScript 应用分治的架构模式（类似于服务端的微服务），它允许你在多个 JavaScript 应用程序（或微前端）之间共享代码和资源。这可以帮助你：
+Module Federation 是一种 JavaScript 应用分治的架构模式（类似于服务端的微服务），它允许你在多个 JavaScript 应用程序（或微前端）之间共享代码和资源。
 
-- 减少代码重复
-- 提高代码可维护性
-- 降低应用程序的整体大小
-- 提高应用程序的性能
-
-请参考 [模块联邦指南](/guide/advanced/module-federation) 了解更多。
+详见 [模块联邦](/guide/advanced/module-federation)。
 
 ## Rspack
 
-[Rspack](https://rspack.dev/) 是一个基于 Rust 的高性能 Web 构建工具，具备与 webpack 生态系统的互操作性，可以被 webpack 项目低成本集成，并提供更好的构建性能。
-
-相较于 webpack，Rspack 的构建性能有明显提升，除了 Rust 带来的语言优势，这也来自于它的并行架构和增量编译等特性。经过 benchmark 验证，Rspack 可以带来 5 ～ 10 倍编译性能的提升。
+[Rspack](https://rspack.dev/) 是一个基于 Rust 编写的高性能 JavaScript 打包工具， 它提供对 webpack 生态良好的兼容性，能够无缝替换 webpack， 并提供闪电般的构建速度。
 
 ## Rspress
 
-Rspress 是一个基于 Rsbuild 的静态站点生成器。
-
-- [Rspress 代码仓库](https://github.com/web-infra-dev/rspress)。
+[Rspress](https://github.com/web-infra-dev/rspress) 是一个基于 Rsbuild 的静态站点生成器。
 
 ## SSR
 
-import SSR from '@zh/shared/ssr.mdx';
+SSR 是 "Server-Side Rendering"（服务端渲染）的缩写。它表示由服务器生成网页的 HTML，并将其发送给客户端，而不是只发送一个空的 HTML 外壳，并依赖 JavaScript 来生成页面内容。
 
-<SSR />
+详见 [服务端渲染（SSR）](/guide/advanced/ssr)。
 
 ## SWC
 
-SWC (Speedy Web Compiler) 是基于 Rust 语言编写的高性能 JavaScript 和 TypeScript 转译和压缩工具。在 Polyfill 和语法降级方面可以和 Babel 提供一致的能力，并且性能比 Babel 高出一个数量级。
+SWC (Speedy Web Compiler) 是基于 Rust 语言编写的高性能 JavaScript 和 TypeScript 转译和压缩工具。
 
-Rsbuild 默认支持 SWC 编译，可以为你的 web 应用提供语法降级、polyfill 以及代码压缩。
+详见 [配置 SWC](/guide/basic/configure-swc)。
 
 ## 更多
 
