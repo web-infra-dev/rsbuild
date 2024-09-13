@@ -40,7 +40,9 @@ export const build = async (
     return {
       close: () =>
         new Promise((resolve) => {
-          watching.close(resolve);
+          watching.close(() => {
+            resolve();
+          });
         }),
     };
   }
