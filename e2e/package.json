@@ -13,10 +13,10 @@
     "preact": "^10.23.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.26.1",
+    "react-router-dom": "^6.26.2",
     "solid-js": "^1.8.22",
-    "vue": "^3.5.3",
-    "vue-router": "^4.4.3"
+    "vue": "^3.5.5",
+    "vue-router": "^4.4.5"
   },
   "devDependencies": {
     "@e2e/helper": "workspace:*",
@@ -38,7 +38,7 @@
     "@rsbuild/plugin-vue": "workspace:*",
     "@rsbuild/plugin-vue-jsx": "^1.0.1",
     "@rsbuild/webpack": "workspace:*",
-    "@module-federation/rspack": "0.6.1",
+    "@module-federation/rspack": "0.6.4",
     "@scripts/test-helper": "workspace:*",
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.7",
@@ -50,7 +50,7 @@
     "fs-extra": "^11.2.0",
     "playwright": "1.44.1",
     "strip-ansi": "6.0.1",
-    "tailwindcss": "^3.4.10",
+    "tailwindcss": "^3.4.11",
     "typescript": "^5.5.2"
   }
 }
