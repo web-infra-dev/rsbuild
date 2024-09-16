@@ -1,4 +1,4 @@
-import { replacePortPlaceholder, resolveUrl } from '../src/plugins/open';
+import { replacePortPlaceholder, resolveUrl } from '../src/server/open';
 
 describe('plugin-open', () => {
   it('#replacePortPlaceholder - should replace port number correctly', () => {

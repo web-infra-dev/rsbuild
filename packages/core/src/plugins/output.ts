@@ -7,13 +7,13 @@ import {
 } from '../constants';
 import { formatPublicPath, getFilename } from '../helpers';
 import { getCssExtractPlugin } from '../pluginHelper';
+import { replacePortPlaceholder } from '../server/open';
 import type {
   NormalizedEnvironmentConfig,
   RsbuildContext,
   RsbuildPlugin,
 } from '../types';
 import { isUseCssExtract } from './css';
-import { replacePortPlaceholder } from './open';
 
 function getPublicPath({
   isProd,

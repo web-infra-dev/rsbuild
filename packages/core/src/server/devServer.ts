@@ -29,6 +29,7 @@ import {
 } from './helper';
 import { createHttpServer } from './httpServer';
 import { notFoundMiddleware } from './middlewares';
+import { open } from './open';
 import { onBeforeRestartServer } from './restart';
 import { setupWatchFiles } from './watchFiles';
 
@@ -78,6 +79,10 @@ export type RsbuildDevServer = {
    * Print the server URLs.
    */
   printUrls: () => void;
+  /**
+   * Open URL in the browser after starting the server.
+   */
+  open: () => Promise<void>;
 };
 
 const formatDevConfig = (config: NormalizedDevConfig, port: number) => {
@@ -333,6 +338,15 @@ export async function createDevServer<
       await Promise.all([devMiddlewares.close(), fileWatcher?.close()]);
     },
     printUrls,
+    open: async () => {
+      return open({
+        https,
+        port,
+        routes,
+        config,
+        clearCache: true,
+      });
+    },
   };
 
   logger.debug('create dev server done');

@@ -1,13 +1,28 @@
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
 import { normalizePublicDirs } from '../config';
-import type { RsbuildPlugin } from '../types';
+import { open } from '../server/open';
+import type { OnAfterStartDevServerFn, RsbuildPlugin } from '../types';
 
 // For Rsbuild Server Config
 export const pluginServer = (): RsbuildPlugin => ({
   name: 'rsbuild:server',
 
   setup(api) {
+    const onStartServer: OnAfterStartDevServerFn = async ({ port, routes }) => {
+      const config = api.getNormalizedConfig();
+      if (config.server.open) {
+        open({
+          https: api.context.devServer?.https,
+          port,
+          routes,
+          config,
+        });
+      }
+    };
+
+    api.onAfterStartDevServer(onStartServer);
+    api.onAfterStartProdServer(onStartServer);
     api.onBeforeBuild(async ({ isFirstCompile }) => {
       if (!isFirstCompile) {
         return;
