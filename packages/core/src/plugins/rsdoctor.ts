@@ -62,7 +62,7 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
 
       let module: RsdoctorExports;
       try {
-        module = await import(pathToFileURL(packagePath).toString());
+        module = await import(pathToFileURL(packagePath).href);
       } catch (err) {
         logger.error(
           `\`process.env.RSDOCTOR\` enabled, but failed to load ${color.bold(color.yellow(packageName))} module.`,
