@@ -838,6 +838,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rslib/core':
+        specifier: 0.0.6
+        version: 0.0.6(typescript@5.5.2)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
