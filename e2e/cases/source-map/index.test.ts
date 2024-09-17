@@ -1,8 +1,8 @@
-import { build } from '@e2e/helper';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import type { Rspack } from '@rsbuild/core';
-import { pluginReact } from '@rsbuild/plugin-react';
-
 import sourceMap from 'source-map';
 
 const fixtures = __dirname;
@@ -30,21 +30,12 @@ async function validateSourceMap(
 async function testSourceMapType(devtool: Rspack.Configuration['devtool']) {
   const rsbuild = await build({
     cwd: fixtures,
-    plugins: [pluginReact()],
     rsbuildConfig: {
-      dev: {
-        writeToDisk: true,
-      },
       output: {
         sourceMap: {
           js: devtool,
         },
         legalComments: 'none',
-      },
-      performance: {
-        chunkSplit: {
-          strategy: 'all-in-one',
-        },
       },
     },
   });
@@ -108,7 +99,6 @@ for (const devtool of productionDevtools) {
 test('should not generate source map by default in production build', async () => {
   const rsbuild = await build({
     cwd: fixtures,
-    plugins: [pluginReact()],
   });
 
   const files = await rsbuild.unwrapOutputJSON(false);
@@ -121,4 +111,34 @@ test('should not generate source map by default in production build', async () =
   );
   expect(jsMapFiles.length).toEqual(0);
   expect(cssMapFiles.length).toEqual(0);
+});
+
+test('should generate source map correctly in development build', async ({
+  page,
+}) => {
+  const rsbuild = await dev({
+    cwd: fixtures,
+    page,
+  });
+
+  const files = await rsbuild.unwrapOutputJSON(false);
+
+  const jsMapFile = Object.keys(files).find((files) =>
+    files.endsWith('.js.map'),
+  );
+  expect(jsMapFile).not.toBeUndefined();
+
+  const jsContent = await readFileSync(jsMapFile!, 'utf-8');
+  const jsMap = JSON.parse(jsContent);
+  expect(jsMap.sources.length).toBeGreaterThan(1);
+  expect(jsMap.file).toEqual('static/js/index.js');
+  expect(jsMap.sourcesContent).toContain(
+    readFileSync(join(fixtures, 'src/App.jsx'), 'utf-8'),
+  );
+  expect(jsMap.sourcesContent).toContain(
+    readFileSync(join(fixtures, 'src/index.js'), 'utf-8'),
+  );
+  expect(jsMap.mappings).not.toBeUndefined();
+
+  await rsbuild.close();
 });
