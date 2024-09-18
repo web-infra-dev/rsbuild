@@ -86,11 +86,6 @@ export const emitTypePkgJsonPlugin: CliPlugin<ModuleTools> = {
   },
 };
 
-export const configForDualPackage = defineConfig({
-  plugins: [moduleTools()],
-  buildConfig: dualBuildConfigs,
-});
-
 export const configForSeparateTypesPackage = defineConfig({
   plugins: [moduleTools(), emitTypePkgJsonPlugin],
   buildConfig: [
