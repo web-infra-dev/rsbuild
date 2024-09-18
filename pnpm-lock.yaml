@@ -23,6 +23,9 @@ importers:
       '@rsbuild/config':
         specifier: workspace:*
         version: link:scripts/config
+      '@rslib/core':
+        specifier: 0.0.6
+        version: 0.0.6(typescript@5.5.2)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:scripts/test-helper
@@ -742,9 +745,6 @@ importers:
         specifier: 1.0.3
         version: 1.0.3
     devDependencies:
-      '@rslib/core':
-        specifier: 0.0.6
-        version: 0.0.6(typescript@5.5.2)
       '@types/node':
         specifier: 18.x
         version: 18.19.31
@@ -838,9 +838,6 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
-      '@rslib/core':
-        specifier: 0.0.6
-        version: 0.0.6(typescript@5.5.2)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper

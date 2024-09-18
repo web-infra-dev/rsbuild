@@ -12,6 +12,14 @@ export const define = {
   RSBUILD_VERSION: require('../../packages/core/package.json').version,
 };
 
+export const commonExternals = [
+  'webpack',
+  '@rspack/core',
+  '@rsbuild/core',
+  /[\\/]compiled[\\/]/,
+  /node:/,
+];
+
 export const BUILD_TARGET = {
   node: 'es2021',
   client: 'es2017',
@@ -22,14 +30,6 @@ export const requireShim = {
   js: `import { createRequire } from 'module';
 var require = createRequire(import.meta['url']);\n`,
 };
-
-export const commonExternals = [
-  'webpack',
-  '@rspack/core',
-  '@rsbuild/core',
-  /[\\/]compiled[\\/]/,
-  /node:/,
-];
 
 export const esmBuildConfig: PartialBaseBuildConfig = {
   format: 'esm',
