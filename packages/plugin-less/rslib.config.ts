@@ -1,14 +1,3 @@
-import { defineConfig } from '@rslib/core';
+import { dualPackage } from '@rsbuild/config/rslib.config.ts';
 
-export default defineConfig({
-  lib: [
-    {
-      format: 'esm',
-      dts: { bundle: false },
-    },
-    { format: 'cjs' },
-  ],
-  output: {
-    target: 'node',
-  },
-});
+export default dualPackage;

@@ -1079,6 +1079,9 @@ importers:
 
   scripts/config:
     devDependencies:
+      '@rslib/core':
+        specifier: 0.0.6
+        version: 0.0.6(typescript@5.5.2)
       '@types/node':
         specifier: 18.x
         version: 18.19.31
