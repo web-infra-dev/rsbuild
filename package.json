@@ -44,6 +44,7 @@
     "@changesets/cli": "^2.27.8",
     "@modern-js/module-tools": "^2.60.0",
     "@rsbuild/config": "workspace:*",
+    "@rslib/core": "0.0.6",
     "@scripts/test-helper": "workspace:*",
     "check-dependency-version-consistency": "^4.1.0",
     "cross-env": "^7.0.3",
