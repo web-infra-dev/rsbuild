@@ -75,9 +75,6 @@ function getDefaultSwcConfig(
         syntax: 'typescript',
         decorators: true,
       },
-      // Avoid the webpack magic comment to be removed
-      // https://github.com/swc-project/swc/issues/6403
-      preserveAllComments: true,
       experimental: {
         cacheRoot,
       },

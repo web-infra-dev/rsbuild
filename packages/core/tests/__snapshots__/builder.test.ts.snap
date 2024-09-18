@@ -106,7 +106,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -150,7 +149,6 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,

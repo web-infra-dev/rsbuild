@@ -106,7 +106,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -150,7 +149,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -501,7 +499,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -545,7 +542,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -944,7 +940,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -984,7 +979,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -1293,7 +1287,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -1337,7 +1330,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,

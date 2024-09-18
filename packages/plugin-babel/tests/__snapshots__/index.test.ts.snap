@@ -43,7 +43,6 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
             "syntax": "typescript",
             "tsx": false,
           },
-          "preserveAllComments": true,
           "transform": {
             "decoratorVersion": "2022-03",
             "legacyDecorator": false,
@@ -125,7 +124,6 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
             "syntax": "typescript",
             "tsx": false,
           },
-          "preserveAllComments": true,
           "transform": {
             "decoratorVersion": "2022-03",
             "legacyDecorator": false,
@@ -203,7 +201,6 @@ exports[`plugins/babel > should apply environment config correctly 2`] = `
             "syntax": "typescript",
             "tsx": false,
           },
-          "preserveAllComments": true,
           "transform": {
             "decoratorMetadata": true,
             "legacyDecorator": true,

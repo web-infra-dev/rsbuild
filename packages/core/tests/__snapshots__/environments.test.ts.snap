@@ -1478,7 +1478,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -1522,7 +1521,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -1806,7 +1804,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -1846,7 +1843,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,

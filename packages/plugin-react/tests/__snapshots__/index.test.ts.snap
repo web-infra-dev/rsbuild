@@ -46,7 +46,6 @@ exports[`plugins/react > should configuring \`tools.swc\` to override react runt
               "syntax": "typescript",
               "tsx": true,
             },
-            "preserveAllComments": true,
             "transform": {
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
@@ -125,7 +124,6 @@ exports[`plugins/react > should work with swc-loader 1`] = `
               "syntax": "typescript",
               "tsx": true,
             },
-            "preserveAllComments": true,
             "transform": {
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,

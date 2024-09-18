@@ -41,7 +41,6 @@ exports[`plugin-webpack-swc > should apply multiple environment configs correctl
                     "syntax": "typescript",
                     "tsx": true,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -99,7 +98,6 @@ exports[`plugin-webpack-swc > should apply multiple environment configs correctl
                     "syntax": "typescript",
                     "tsx": true,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -155,7 +153,6 @@ exports[`plugin-webpack-swc > should apply multiple environment configs correctl
                     "syntax": "typescript",
                     "tsx": true,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorMetadata": true,
                     "legacyDecorator": true,
@@ -211,7 +208,6 @@ exports[`plugin-webpack-swc > should apply multiple environment configs correctl
                     "syntax": "typescript",
                     "tsx": true,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorMetadata": true,
                     "legacyDecorator": true,
@@ -275,7 +271,6 @@ exports[`plugin-webpack-swc > should apply source.include and source.exclude cor
                   "syntax": "typescript",
                   "tsx": true,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -333,7 +328,6 @@ exports[`plugin-webpack-swc > should apply source.include and source.exclude cor
                   "syntax": "typescript",
                   "tsx": true,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -394,7 +388,6 @@ exports[`plugin-webpack-swc > should disable react refresh when dev.hmr is false
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -452,7 +445,6 @@ exports[`plugin-webpack-swc > should disable react refresh when dev.hmr is false
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -506,7 +498,6 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -561,7 +552,6 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -618,7 +608,6 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -676,7 +665,6 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -733,7 +721,6 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -791,7 +778,6 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -901,7 +887,6 @@ exports[`plugin-webpack-swc > should set multiple swc-loader 1`] = `
               "syntax": "typescript",
               "tsx": true,
             },
-            "preserveAllComments": true,
             "transform": {
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
@@ -952,7 +937,6 @@ exports[`plugin-webpack-swc > should set multiple swc-loader 1`] = `
               "syntax": "typescript",
               "tsx": true,
             },
-            "preserveAllComments": true,
             "transform": {
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
@@ -1011,7 +995,6 @@ exports[`plugin-webpack-swc > should set multiple swc-loader 1`] = `
               "syntax": "typescript",
               "tsx": true,
             },
-            "preserveAllComments": true,
             "transform": {
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
@@ -1095,7 +1078,6 @@ exports[`plugin-webpack-swc > should set swc-loader 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -1153,7 +1135,6 @@ exports[`plugin-webpack-swc > should set swc-loader 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -1216,7 +1197,6 @@ exports[`plugin-webpack-swc > should use output config 1`] = `
                     "syntax": "typescript",
                     "tsx": true,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -1274,7 +1254,6 @@ exports[`plugin-webpack-swc > should use output config 1`] = `
                     "syntax": "typescript",
                     "tsx": true,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
