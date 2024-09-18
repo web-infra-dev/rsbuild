@@ -41,7 +41,6 @@ exports[`svgr > 'configure SVGR options' 1`] = `
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -134,7 +133,6 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -199,7 +197,6 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -291,7 +288,6 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -356,7 +352,6 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -448,7 +443,6 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -513,7 +507,6 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -605,7 +598,6 @@ exports[`svgr > 'exportType named / mixedImport true' 1`] = `
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -670,7 +662,6 @@ exports[`svgr > 'exportType named / mixedImport true' 1`] = `
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
