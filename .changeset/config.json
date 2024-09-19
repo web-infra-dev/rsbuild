@@ -9,5 +9,5 @@
     "onlyUpdatePeerDependentsWhenOutOfRange": true
   },
   "updateInternalDependencies": "patch",
-  "ignore": ["@rsbuid/test-helper"]
+  "ignore": ["@rsbuild/test-helper"]
 }
