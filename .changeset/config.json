@@ -9,5 +9,5 @@
     "onlyUpdatePeerDependentsWhenOutOfRange": true
   },
   "updateInternalDependencies": "patch",
-  "ignore": []
+  "ignore": ["@scripts/*"]
 }
