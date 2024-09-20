@@ -18,3 +18,25 @@ export default {
 ```
 
 > 参考 [source.include](/config/source/include) 来了解更多。
+
+### 不编译 vs 不打包
+
+`source.exclude` 用于指定不需要编译的 JavaScript/TypeScript 文件。这意味着这些文件不会经过 SWC 或 Babel 转译，但这些文件仍然会被打包到产物中（如果被引用）。
+
+如果你希望某些文件在打包过程中被忽略，不被打包到产物中，可以使用 Rspack 的 [IgnorePlugin](https://rspack.dev/zh/plugins/webpack/ignore-plugin)。
+
+```ts
+export default {
+  tools: {
+    rspack: (config, { rspack }) => {
+      config.plugins?.push(
+        new rspack.IgnorePlugin({
+          resourceRegExp: /^\.\/locale$/,
+          contextRegExp: /moment$/,
+        }),
+      );
+      return config;
+    },
+  },
+};
+```
