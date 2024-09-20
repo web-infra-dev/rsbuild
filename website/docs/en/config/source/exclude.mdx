@@ -21,7 +21,7 @@ export default {
 
 ### Not compiled vs Not bundled
 
-`source.exclude` is used to specify JavaScript/TypeScript files that do not need to be compiled. This means that these files will not be translated by `swc` or `babel`, but they will still be bundled into the product (if referenced).
+`source.exclude` is used to specify JavaScript/TypeScript files that do not need to be compiled. This means that these files will not be translated by `swc` or `babel`, but they will still be bundled into the outputs (if referenced).
 
 If you want certain files to be ignored and not bundled into the outputs, you can use Rspack's [IgnorePlugin](https://rspack.dev/plugins/webpack/ignore-plugin).
 
