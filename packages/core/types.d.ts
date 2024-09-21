@@ -149,11 +149,21 @@ declare module '*.opus' {
 /**
  * Configuration files
  */
+/**
+ * @requires [@rsbuild/plugin-yaml](https://www.npmjs.com/package/@rsbuild/plugin-yaml)
+ */
 declare module '*.yaml' {
   const content: Record<string, any>;
   export default content;
 }
 declare module '*.yml' {
+  const content: Record<string, any>;
+  export default content;
+}
+/**
+ * @requires [@rsbuild/plugin-toml](https://www.npmjs.com/package/@rsbuild/plugin-toml)
+ */
+declare module '*.toml' {
   const content: Record<string, any>;
   export default content;
 }
@@ -180,6 +190,9 @@ declare module '*.module.css' {
   const classes: CSSModuleClasses;
   export default classes;
 }
+/**
+ * @requires [@rsbuild/plugin-sass](https://www.npmjs.com/package/@rsbuild/plugin-sass)
+ */
 declare module '*.module.scss' {
   const classes: CSSModuleClasses;
   export default classes;
@@ -188,10 +201,16 @@ declare module '*.module.sass' {
   const classes: CSSModuleClasses;
   export default classes;
 }
+/**
+ * @requires [@rsbuild/plugin-less](https://www.npmjs.com/package/@rsbuild/plugin-less)
+ */
 declare module '*.module.less' {
   const classes: CSSModuleClasses;
   export default classes;
 }
+/**
+ * @requires [@rsbuild/plugin-stylus](https://www.npmjs.com/package/@rsbuild/plugin-stylus)
+ */
 declare module '*.module.styl' {
   const classes: CSSModuleClasses;
   export default classes;
