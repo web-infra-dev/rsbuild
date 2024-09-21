@@ -10,7 +10,8 @@
     "resolveJsonModule": true,
     "moduleResolution": "bundler",
     "useDefineForClassFields": true,
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "experimentalDecorators": true
   },
   "include": ["src"]
 }
