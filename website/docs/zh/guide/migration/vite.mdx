@@ -167,6 +167,15 @@ export default defineConfig({
 });
 ```
 
+## 预设类型
+
+Vite 通过 `vite-env.d.ts` 文件提供了一些预设的类型定义，迁移到 Rsbuild 时，你可以使用 `@rsbuild/core` 提供的 [预设类型](/guide/basic/typescript#预设类型)：
+
+```diff title="src/env.d.ts"
+- /// <reference types="vite/client" />
++ /// <reference types="@rsbuild/core/types" />
+```
+
 ## Glob Import
 
 Vite 提供了 `import.meta.glob()` 来批量导入模块。
