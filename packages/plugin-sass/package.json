@@ -34,7 +34,7 @@
     "loader-utils": "^2.0.4",
     "postcss": "^8.4.47",
     "reduce-configs": "^1.0.0",
-    "sass-embedded": "^1.79.2"
+    "sass-embedded": "^1.79.3"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
@@ -42,7 +42,7 @@
     "@types/sass-loader": "^8.0.9",
     "prebundle": "1.2.2",
     "resolve-url-loader": "^5.0.0",
-    "sass-loader": "^16.0.1",
+    "sass-loader": "^16.0.2",
     "typescript": "^5.5.2"
   },
   "peerDependencies": {
