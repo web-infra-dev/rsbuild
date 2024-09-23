@@ -62,7 +62,7 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
 
       let module: RsdoctorExports;
       try {
-        const modulePath = pathToFileURL(packagePath).href;
+        const modulePath = pathToFileURL(packagePath).pathname;
         module = await import(modulePath);
       } catch (err) {
         logger.error(
