@@ -7,7 +7,7 @@
   },
   "devDependencies": {
     "less": "^4.2.0",
-    "sass": "^1.79.2",
+    "sass": "^1.79.3",
     "stylus": "0.63.0"
   }
 }

@@ -40,9 +40,9 @@
     "package.json": "pnpm run check-dependency-version"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.1",
+    "@biomejs/biome": "1.9.2",
     "@changesets/cli": "^2.27.8",
-    "@modern-js/module-tools": "^2.60.0",
+    "@modern-js/module-tools": "^2.60.1",
     "@rsbuild/config": "workspace:*",
     "@rslib/core": "0.0.6",
     "@scripts/test-helper": "workspace:*",
