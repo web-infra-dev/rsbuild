@@ -174,7 +174,14 @@ export default {
         postcss: '../postcss',
       },
       ignoreDts: true,
-      beforeBundle: skipSemver,
+      beforeBundle(task) {
+        replaceFileContent(join(task.depPath, 'dist/utils.js'), (content) =>
+          // Rsbuild uses `postcss-load-config` and no need to use `cosmiconfig`.
+          // the ralevent code will never be executed, so we can replace it with an empty object.
+          content.replaceAll('require("cosmiconfig")', '{}'),
+        );
+        skipSemver(task);
+      },
     },
     {
       name: 'postcss-load-config',
