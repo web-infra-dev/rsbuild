@@ -3,6 +3,7 @@ import type { Configuration } from '@rspack/core';
 import color from 'picocolors';
 import { logger } from '../logger';
 import type { BundlerPluginInstance, RsbuildPlugin } from '../types';
+import path from 'node:path';
 
 type RsdoctorExports = {
   RsdoctorRspackPlugin: { new (): BundlerPluginInstance };
@@ -62,7 +63,7 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
 
       let module: RsdoctorExports;
       try {
-        const modulePath = pathToFileURL(packagePath).pathname;
+        const modulePath = pathToFileURL(path.resolve(packagePath)).href;
         module = await import(modulePath);
       } catch (err) {
         logger.error(
