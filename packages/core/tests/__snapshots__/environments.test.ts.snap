@@ -1415,7 +1415,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             {
               "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
               "options": {
-                "_skipReuseAST": true,
                 "importLoaders": 1,
                 "modules": {
                   "auto": true,
@@ -1755,7 +1754,6 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             {
               "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
               "options": {
-                "_skipReuseAST": true,
                 "importLoaders": 0,
                 "modules": {
                   "auto": true,

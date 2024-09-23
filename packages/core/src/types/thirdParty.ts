@@ -187,11 +187,6 @@ export interface CSSLoaderOptions {
    * @default 'array'
    */
   exportType?: 'array' | 'string' | 'css-style-sheet';
-  /**
-   * Temp fix for https://github.com/web-infra-dev/rspack/issues/7819
-   * @private
-   */
-  _skipReuseAST?: boolean;
 }
 
 export type StyleLoaderInjectType =

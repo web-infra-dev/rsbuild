@@ -161,21 +161,6 @@ export default {
         postcss: '../postcss',
         picocolors: '../picocolors',
       },
-      beforeBundle(task) {
-        // Temp fix for https://github.com/web-infra-dev/rspack/issues/7819
-        replaceFileContent(join(task.depPath, 'dist/index.js'), (content) =>
-          content.replaceAll(
-            'if (meta) {',
-            'if (meta && !rawOptions._skipReuseAST) {',
-          ),
-        );
-        replaceFileContent(join(task.depPath, 'dist/index.js'), (content) =>
-          content.replaceAll(
-            'this.getOptions(_options.default)',
-            'this.getOptions()',
-          ),
-        );
-      },
       afterBundle: writeEmptySemver,
     },
     {
