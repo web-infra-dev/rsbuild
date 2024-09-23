@@ -5,13 +5,6 @@ import fs from 'node:fs';
  */
 import { join } from 'node:path';
 
-// postcss-loader and css-loader use `semver` to compare PostCSS ast version,
-// Rsbuild uses the same PostCSS version and do not need the comparison.
-const writeEmptySemver = (task) => {
-  const schemaUtilsPath = join(task.distPath, 'semver.js');
-  fs.writeFileSync(schemaUtilsPath, 'module.exports.satisfies = () => true;');
-};
-
 function replaceFileContent(filePath, replaceFn) {
   const content = fs.readFileSync(filePath, 'utf-8');
   const newContent = replaceFn(content);
@@ -19,6 +12,14 @@ function replaceFileContent(filePath, replaceFn) {
     fs.writeFileSync(filePath, newContent);
   }
 }
+
+// postcss-loader and css-loader use `semver` to compare PostCSS ast version,
+// Rsbuild uses the same PostCSS version and do not need the comparison.
+const skipSemver = (task) => {
+  replaceFileContent(join(task.depPath, 'dist/index.js'), (content) =>
+    content.replaceAll('require("semver")', '({ satisfies: () => true })'),
+  );
+};
 
 /** @type {import('prebundle').Config} */
 export default {
@@ -152,6 +153,9 @@ export default {
     {
       name: 'postcss',
       ignoreDts: true,
+      externals: {
+        picocolors: '../picocolors',
+      },
     },
     {
       name: 'css-loader',
@@ -159,9 +163,8 @@ export default {
       externals: {
         semver: './semver',
         postcss: '../postcss',
-        picocolors: '../picocolors',
       },
-      afterBundle: writeEmptySemver,
+      beforeBundle: skipSemver,
     },
     {
       name: 'postcss-loader',
@@ -171,14 +174,7 @@ export default {
         postcss: '../postcss',
       },
       ignoreDts: true,
-      beforeBundle(task) {
-        replaceFileContent(join(task.depPath, 'dist/utils.js'), (content) =>
-          // Rsbuild uses `postcss-load-config` and no need to use `cosmiconfig`.
-          // the ralevent code will never be executed, so we can replace it with an empty object.
-          content.replaceAll('require("cosmiconfig")', '{}'),
-        );
-      },
-      afterBundle: writeEmptySemver,
+      beforeBundle: skipSemver,
     },
     {
       name: 'postcss-load-config',
