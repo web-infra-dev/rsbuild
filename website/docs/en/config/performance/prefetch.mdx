@@ -90,7 +90,7 @@ The `type` field controls which resources will be pre-fetched, and supports seco
 Currently supported resource types are as follows:
 
 - `async-chunks`: prefetch all asynchronous resources (on the current page), including asynchronous JS and its associated CSS, image, font and other resources.
-- `initial`: prefetch all non-async resources (on the current page). It should be noted that if the current script has been added to the html template, no additional pre-fetching will be performed.
+- `initial`: prefetch all non-async resources (on the current page). It should be noted that if the current script has been added to the HTML template, no additional pre-fetching will be performed.
 - `all-chunks`: prefetch all resources (on the current page), including all asynchronous and non-asynchronous resources.
 - `all-assets`: prefetch all resources, and resources of other pages will be included in the MPA scenario.
 

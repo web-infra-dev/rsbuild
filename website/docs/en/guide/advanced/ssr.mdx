@@ -50,7 +50,7 @@ export default {
         target: 'web',
       },
       html: {
-        // Custom html template
+        // Custom HTML template
         template: './index.html',
       },
     },
@@ -87,7 +87,7 @@ const serverRender = (serverAPI) => async (_req, res) => {
 
   const template = await serverAPI.environments.web.getTransformedHtml('index');
 
-  // Insert SSR rendering content into html template
+  // Insert SSR rendering content into HTML template
   const html = template.replace('<!--app-content-->', markup);
 
   res.writeHead(200, {
