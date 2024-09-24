@@ -112,10 +112,10 @@ For example, you can place files such as `robots.txt`, `manifest.json`, or `favi
 
 You can reference files in the `public` directory via a URL.
 
-For example, in an HTML template, the `./public/favicon.ico` file can be referenced as `/favicon.ico`, [PUBLIC_BASE_PATH](/guide/advanced/env-vars#processenvpublic_base_path) is the base path of the server.
+For example, in an HTML template, the `./public/favicon.ico` file can be referenced as `/favicon.ico`, [BASE_URL](/guide/advanced/env-vars#processenvpublic_base_path) is the base path of the server.
 
 ```html title="index.html"
-<link rel="icon" href="<%= process.env.PUBLIC_BASE_PATH %>/favicon.ico" />
+<link rel="icon" href="<%= process.env.BASE_URL %>/favicon.ico" />
 ```
 
 ### Notes

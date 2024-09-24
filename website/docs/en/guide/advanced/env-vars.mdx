@@ -107,9 +107,9 @@ In production mode, the above code will be compiled to:
 const Image = <img src={`https://example.com/static/icon.png`} />;
 ```
 
-### process.env.PUBLIC_BASE_PATH
+### process.env.BASE_URL
 
-You can use `process.env.PUBLIC_BASE_PATH` in client code to access the server's [base path](/guide/basic/server#base-path). Rsbuild will automatically remove the trailing slash from base path to make string concatenation easier.
+You can use `process.env.BASE_URL` in client code to access the server's [base path](/guide/basic/server#base-path). Rsbuild will automatically remove the trailing slash from base path to make string concatenation easier.
 
 This is helpful for us to reference [public folder](/guide/basic/static-assets#public-folder) assets in HTML templates.
 
@@ -126,7 +126,7 @@ export default {
 Then, the access path to the `favicon.ico` file in the public directory is `http://localhost:3000/foo/favicon.ico`. We can reference `./public/favicon.ico` file in the HTML template in the following way:
 
 ```html title="index.html"
-<link rel="icon" href="<%= process.env.PUBLIC_BASE_PATH %>/favicon.ico" />
+<link rel="icon" href="<%= process.env.BASE_URL %>/favicon.ico" />
 ```
 
 ## `.env` File

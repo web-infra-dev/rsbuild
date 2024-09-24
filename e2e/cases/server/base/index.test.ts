@@ -26,7 +26,7 @@ test('server.base', async ({ page }) => {
 
   expect(page.url().includes('/base/')).toBeTruthy();
 
-  // should define `process.env.PUBLIC_BASE_PATH` correctly
+  // should define `process.env.BASE_URL` correctly
   await expect(page.locator('#public-base-path')).toHaveText('/base');
 
   // should print url with base path

@@ -112,10 +112,10 @@ console.log(logo); // "https://example.com/static/logo.6c12aba3.png"
 
 你可以通过 URL 来引用 public 目录下的文件。
 
-例如，在 HTML 模板中，`./public/favicon.ico` 文件可以被引用为 `/favicon.ico`，[PUBLIC_BASE_PATH](/guide/advanced/env-vars#processenvpublic_base_path) 对应服务端的基础路径。
+例如，在 HTML 模板中，`./public/favicon.ico` 文件可以被引用为 `/favicon.ico`，[BASE_URL](/guide/advanced/env-vars#processenvpublic_base_path) 对应服务端的基础路径。
 
 ```html title="index.html"
-<link rel="icon" href="<%= process.env.PUBLIC_BASE_PATH %>/favicon.ico" />
+<link rel="icon" href="<%= process.env.BASE_URL %>/favicon.ico" />
 ```
 
 ### 注意事项
