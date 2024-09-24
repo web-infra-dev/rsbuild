@@ -21,6 +21,7 @@ import {
 import { createHttpServer } from './httpServer';
 import {
   faviconFallbackMiddleware,
+  getBaseMiddleware,
   getRequestLoggerMiddleware,
 } from './middlewares';
 
@@ -51,7 +52,7 @@ export class RsbuildProdServer {
   }
 
   private async applyDefaultMiddlewares() {
-    const { headers, proxy, historyApiFallback, compress } =
+    const { headers, proxy, historyApiFallback, compress, base } =
       this.options.serverConfig;
 
     if (logger.level === 'verbose') {
@@ -87,6 +88,10 @@ export class RsbuildProdServer {
       }
 
       this.app.on('upgrade', upgrade);
+    }
+
+    if (base && base !== '/') {
+      this.middlewares.use(getBaseMiddleware({ base }));
     }
 
     this.applyStaticAssetMiddleware();

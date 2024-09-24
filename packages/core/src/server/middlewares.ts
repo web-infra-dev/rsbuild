@@ -1,14 +1,15 @@
 import type { IncomingMessage } from 'node:http';
 import path from 'node:path';
-import { parse } from 'node:url';
 import type Connect from 'connect';
 import color from 'picocolors';
+import { addTrailingSlash } from '../helpers';
 import { logger } from '../logger';
 import type {
   HtmlFallback,
   RequestHandler as Middleware,
   Rspack,
 } from '../types';
+import { joinUrlSegments, stripBase } from './helper';
 
 export const faviconFallbackMiddleware: Middleware = (req, res, next) => {
   if (req.url === '/favicon.ico') {
@@ -103,6 +104,12 @@ const maybeHTMLRequest = (req: IncomingMessage) => {
   );
 };
 
+const postfixRE = /[?#].*$/;
+
+const getUrlPathname = (url: string): string => {
+  return url.replace(postfixRE, '');
+};
+
 /**
  * Support access HTML without suffix
  */
@@ -117,17 +124,7 @@ export const getHtmlCompletionMiddleware: (params: {
     }
 
     const url = req.url!;
-    let pathname: string;
-
-    // Handle invalid URLs
-    try {
-      pathname = parse(url, false, true).pathname!;
-    } catch (err) {
-      logger.error(
-        new Error(`Invalid URL: ${color.yellow(url)}`, { cause: err }),
-      );
-      return next();
-    }
+    const pathname = getUrlPathname(url);
 
     const rewrite = (newUrl: string) => {
       req.url = newUrl;
@@ -156,6 +153,57 @@ export const getHtmlCompletionMiddleware: (params: {
     }
 
     next();
+  };
+};
+
+/**
+ * handle `server.base`
+ */
+export const getBaseMiddleware: (params: { base: string }) => Middleware = ({
+  base,
+}) => {
+  return async (req, res, next) => {
+    const url = req.url!;
+    const pathname = getUrlPathname(url);
+
+    if (pathname.startsWith(base)) {
+      req.url = stripBase(url, base);
+      return next();
+    }
+
+    const redirectPath =
+      addTrailingSlash(url) !== base ? joinUrlSegments(base, url) : base;
+
+    if (pathname === '/' || pathname === '/index.html') {
+      // redirect root visit to based url with search and hash
+      res.writeHead(302, {
+        Location: redirectPath,
+      });
+      res.end();
+      return;
+    }
+
+    // non-based page visit
+    if (req.headers.accept?.includes('text/html')) {
+      res.writeHead(404, {
+        'Content-Type': 'text/html',
+      });
+      res.end(
+        `The server is configured with a base URL of ${base} - ` +
+          `did you mean to visit <a href="${redirectPath}">${redirectPath}</a> instead?`,
+      );
+      return;
+    }
+
+    // not found for resources
+    res.writeHead(404, {
+      'Content-Type': 'text/plain',
+    });
+    res.end(
+      `The server is configured with a base URL of ${base} - ` +
+        `did you mean to visit ${redirectPath} instead?`,
+    );
+    return;
   };
 };
 

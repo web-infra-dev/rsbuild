@@ -1,0 +1,50 @@
+# server.base
+
+- **Type:** `string`
+- **Default:** `/`
+
+`server.base` is used to configure the [base path](/guide/basic/server#base-path) of the server.
+
+### Example
+
+By default, the base path of the server is `/`, and users can access `index.html` through http://localhost:3000.
+
+When we want to access `index.html` through http://localhost:3000/foo, we can modify `server.base` to `/foo`.
+
+```ts
+export default {
+  server: {
+    base: '/foo',
+  },
+};
+```
+
+### Modify static asset prefix
+
+It should be noted that this configuration does not modify the static asset prefix.
+
+In order to ensure that static assets can be accessed normally through the Rsbuild dev-server during development, [dev.assetPrefix](/config/dev/asset-prefix) should contain the same url prefix as `server.base`:
+
+```ts
+export default {
+  dev: {
+    assetPrefix: '/foo/',
+  },
+  server: {
+    base: '/foo',
+  },
+};
+```
+
+Similarly，if you want static assets to be accessible normally during [Rsbuild preview](/guide/basic/cli#rsbuild-preview), [output.assetPrefix](/config/output/asset-prefix) should contain the same url prefix as `server.base`:
+
+```ts
+export default {
+  output: {
+    assetPrefix: '/foo/',
+  },
+  server: {
+    base: '/foo',
+  },
+};
+```

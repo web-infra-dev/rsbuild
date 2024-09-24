@@ -1,0 +1,81 @@
+import { dev, proxyConsole } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
+
+test('server.base', async ({ page }) => {
+  const { logs, restore } = proxyConsole('log');
+
+  const rsbuild = await dev({
+    cwd: __dirname,
+    page,
+    rsbuildConfig: {
+      dev: {
+        assetPrefix: '/base/',
+      },
+      html: {
+        template: './src/index.html',
+      },
+      server: {
+        printUrls: true,
+        base: '/base',
+      },
+    },
+  });
+
+  // should redirect root visit to based url
+  await expect(page.locator('#test')).toHaveText('Hello Rsbuild!');
+
+  expect(page.url().includes('/base/')).toBeTruthy();
+
+  // should define `process.env.PUBLIC_BASE_PATH` correctly
+  await expect(page.locator('#public-base-path')).toHaveText('/base');
+
+  // should print url with base path
+  const baseUrlLog = logs.find(
+    (log) =>
+      log.includes('Local:') && log.includes(`localhost:${rsbuild.port}/base`),
+  );
+
+  expect(baseUrlLog).toBeTruthy();
+
+  // should visit base url correctly
+  await page.goto(`http://localhost:${rsbuild.port}/base`);
+
+  await expect(page.locator('#test')).toHaveText('Hello Rsbuild!');
+
+  // should 404 when visit resource without base prefix
+  const indexRes = await page.goto(`http://localhost:${rsbuild.port}/a`);
+  expect(indexRes?.status()).toBe(404);
+  expect(await page.content()).toContain(
+    'The server is configured with a base URL of /base',
+  );
+
+  // should visit public dir correctly with base prefix
+  await page.goto(`http://localhost:${rsbuild.port}/base/aaa.txt`);
+
+  expect(await page.content()).toContain('aaaa');
+
+  restore();
+  await rsbuild.close();
+});
+
+test('should serve resource correctly when assetPrefix is a subPath of server.base', async ({
+  page,
+}) => {
+  const rsbuild = await dev({
+    cwd: __dirname,
+    page,
+    rsbuildConfig: {
+      dev: {
+        assetPrefix: '/base/aaa',
+      },
+      server: {
+        base: '/base',
+      },
+    },
+  });
+
+  const locator = page.locator('#test');
+  await expect(locator).toHaveText('Hello Rsbuild!');
+
+  await rsbuild.close();
+});

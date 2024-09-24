@@ -70,6 +70,7 @@ const getDefaultServerConfig = (): NormalizedServerConfig => ({
   port: DEFAULT_PORT,
   host: DEFAULT_DEV_HOST,
   open: false,
+  base: '/',
   htmlFallback: 'index',
   compress: true,
   printUrls: true,

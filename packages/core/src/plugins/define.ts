@@ -1,4 +1,4 @@
-import { getPublicPathFromChain } from '../helpers';
+import { getPublicPathFromChain, removeTailingSlash } from '../helpers';
 import type { Define, RsbuildPlugin } from '../types';
 
 export const pluginDefine = (): RsbuildPlugin => ({
@@ -13,6 +13,9 @@ export const pluginDefine = (): RsbuildPlugin => ({
         'import.meta.env.PROD': config.mode === 'production',
         'process.env.ASSET_PREFIX': JSON.stringify(
           getPublicPathFromChain(chain, false),
+        ),
+        'process.env.PUBLIC_BASE_PATH': JSON.stringify(
+          removeTailingSlash(config.server.base),
         ),
       };
 
