@@ -72,6 +72,7 @@ export const stripBase = (path: string, base: string): string => {
     return '/';
   }
   const trailingSlashBase = addTrailingSlash(base);
+
   return path.startsWith(trailingSlashBase)
     ? path.slice(trailingSlashBase.length - 1)
     : path;
