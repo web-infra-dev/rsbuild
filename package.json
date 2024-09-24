@@ -19,14 +19,14 @@
     "e2e": "cd ./e2e && pnpm test",
     "e2e:rspack": "cd ./e2e && pnpm test:rspack",
     "e2e:webpack": "cd ./e2e && pnpm test:webpack",
+    "format": "prettier --write .",
     "lint": "biome check . --diagnostic-level=warn && pnpm run check-spell",
     "prebundle": "nx run-many -t prebundle",
     "prepare": "pnpm run build && simple-git-hooks",
     "sort-package-json": "npx sort-package-json \"./package.json\" \"packages/*/package.json\" \"packages/compat/*/package.json\"",
     "test": "pnpm run ut",
     "ut": "vitest run",
-    "ut:watch": "vitest",
-    "format": "prettier --write ."
+    "ut:watch": "vitest"
   },
   "simple-git-hooks": {
     "pre-commit": "npx nano-staged"
@@ -40,20 +40,21 @@
     "package.json": "pnpm run check-dependency-version"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.8.3",
+    "@biomejs/biome": "1.9.2",
     "@changesets/cli": "^2.27.8",
-    "@modern-js/module-tools": "^2.59.0",
+    "@modern-js/module-tools": "^2.60.1",
     "@rsbuild/config": "workspace:*",
+    "@rslib/core": "0.0.6",
     "@scripts/test-helper": "workspace:*",
     "check-dependency-version-consistency": "^4.1.0",
     "cross-env": "^7.0.3",
     "cspell-ban-words": "^0.0.3",
     "nano-staged": "^0.8.0",
-    "nx": "^19.6.5",
+    "nx": "^19.8.0",
     "prettier": "^3.3.3",
     "simple-git-hooks": "^2.11.1",
     "typescript": "^5.5.2",
-    "vitest": "^2.0.5"
+    "vitest": "^2.1.1"
   },
   "packageManager": "pnpm@9.0.6",
   "engines": {

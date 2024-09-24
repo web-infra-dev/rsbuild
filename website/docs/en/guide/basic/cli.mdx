@@ -67,6 +67,10 @@ The `--open` option can also be abbreviated to `-o`:
 rsbuild dev -o
 ```
 
+:::tip
+When using [server.open](/config/server/open) and `--open` at the same time, `--open` takes precedence.
+:::
+
 ## rsbuild build
 
 The `rsbuild build` command will build the outputs for production in the `dist/` directory by default.
@@ -167,7 +171,8 @@ If the current project has multiple build targets, such as building browser arti
 
 Inspect config succeed, open following files to view the content:
 
-  - Rsbuild Config: /project/dist/.rsbuild/rsbuild.config.mjs
+  - Rsbuild Config (web): /project/dist/.rsbuild/rsbuild.config.web.mjs
+  - Rsbuild Config (node): /project/dist/.rsbuild/rsbuild.config.node.mjs
   - Rspack Config (web): /project/dist/.rsbuild/rspack.config.web.mjs
   - Rspack Config (node): /project/dist/.rsbuild/rspack.config.node.mjs
 ```

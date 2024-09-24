@@ -4,4 +4,9 @@ export default defineConfig({
   html: {
     template: './src/index.html',
   },
+  source: {
+    decorators: {
+      version: 'legacy',
+    },
+  },
 });

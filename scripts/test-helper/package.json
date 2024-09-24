@@ -1,7 +1,7 @@
 {
   "name": "@scripts/test-helper",
   "private": true,
-  "version": "1.0.1-rc.5",
+  "version": "1.0.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild"
@@ -21,14 +21,12 @@
     "dist"
   ],
   "scripts": {
-    "build": "modern build",
-    "dev": "modern build --watch"
+    "build": "rslib build",
+    "dev": "rslib build --watch"
   },
   "dependencies": {
     "@rsbuild/core": "workspace:*",
-    "@types/lodash": "^4.17.7",
     "@types/node": "18.x",
-    "lodash": "^4.17.21",
     "path-serializer": "0.0.6",
     "typescript": "^5.5.2",
     "upath": "2.0.1"

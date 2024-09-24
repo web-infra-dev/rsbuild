@@ -42,7 +42,13 @@ export const normalizeUrl = (url: string): string =>
 /**
  * Make sure there is slash before and after prefix
  */
-const formatPrefix = (prefix: string | undefined) => {
+const formatPrefix = (input: string | undefined) => {
+  let prefix = input;
+
+  if (prefix?.startsWith('./')) {
+    prefix = prefix.replace('./', '');
+  }
+
   if (!prefix) {
     return '/';
   }

@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { build, providerType } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { pluginSwc } from '@rsbuild/plugin-swc';
+import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
 
 test('should externalHelpers by default', async () => {
   const rsbuild = await build({

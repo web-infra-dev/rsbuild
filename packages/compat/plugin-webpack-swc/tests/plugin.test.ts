@@ -16,7 +16,7 @@ const TEST_BUILDER_CONFIG = {
 
 const UTILS = { target: 'web', isProd: true } as ModifyChainUtils;
 
-describe('plugin-swc', () => {
+describe('plugin-webpack-swc', () => {
   it('should set swc-loader', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSwc()],

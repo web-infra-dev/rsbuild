@@ -96,7 +96,7 @@ TS2307: Cannot find module './index.module.css' or its corresponding type declar
 
 To fix this, you need to add a type declaration file for the CSS Modules, please create a `src/env.d.ts` file, and add the corresponding type declaration.
 
-- Method 1: If the `@rsbuild/core` package is installed, you can directly reference the type declarations provided by `@rsbuild/core`:
+- Method 1: If the `@rsbuild/core` package is installed, you can reference the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core`:
 
 ```ts
 /// <reference types="@rsbuild/core/types" />

@@ -1,4 +1,5 @@
 import { join } from 'node:path';
+import { matchPlugin } from '@scripts/test-helper';
 import { type RsbuildPlugin, createRsbuild } from '../src';
 
 describe('environment config', () => {
@@ -327,7 +328,7 @@ describe('environment config', () => {
     expect(environmentConfigs).toMatchSnapshot();
   });
 
-  it('tools.rspack / bundlerChain can be used in environment config', async () => {
+  it('tools.rspack / bundlerChain can be configured in environment config', async () => {
     const rsbuild = await createRsbuild({
       rsbuildConfig: {
         tools: {
@@ -365,5 +366,29 @@ describe('environment config', () => {
 
     const configs = await rsbuild.initConfigs();
     expect(configs).toMatchSnapshot();
+  });
+
+  it('dev.hmr can be configured in environment config', async () => {
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        environments: {
+          web: {
+            dev: {
+              hmr: false,
+            },
+          },
+          web2: {
+            dev: {
+              hmr: true,
+            },
+          },
+        },
+      },
+    });
+
+    const configs = await rsbuild.initConfigs();
+
+    expect(matchPlugin(configs[0], 'HotModuleReplacementPlugin')).toBeFalsy();
+    expect(matchPlugin(configs[1], 'HotModuleReplacementPlugin')).toBeTruthy();
   });
 });

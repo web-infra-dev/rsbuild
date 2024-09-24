@@ -1240,7 +1240,10 @@ export interface EnvironmentConfig {
   /**
    * Options for local development.
    */
-  dev?: Pick<DevConfig, 'assetPrefix' | 'lazyCompilation' | 'progressBar'>;
+  dev?: Pick<
+    DevConfig,
+    'hmr' | 'assetPrefix' | 'progressBar' | 'lazyCompilation'
+  >;
   /**
    * Options for HTML generation.
    */
@@ -1318,7 +1321,7 @@ export type MergedEnvironmentConfig = {
   root: string;
   dev: Pick<
     NormalizedDevConfig,
-    'assetPrefix' | 'lazyCompilation' | 'progressBar'
+    'hmr' | 'assetPrefix' | 'progressBar' | 'lazyCompilation'
   >;
   html: NormalizedHtmlConfig;
   tools: NormalizedToolsConfig;

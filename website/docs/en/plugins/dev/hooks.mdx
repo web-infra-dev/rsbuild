@@ -258,6 +258,8 @@ const myPlugin = () => ({
 
 :::tip
 `modifyRsbuildConfig` cannot be used to register additional Rsbuild plugins. This is because at the time `modifyRsbuildConfig` is executed, Rsbuild has already initialized all plugins and started executing the callbacks of the hooks.
+
+For details, please refer to [Plugin registration phase](/config/plugins#plugin-registration-phase).
 :::
 
 ### modifyEnvironmentConfig

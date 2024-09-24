@@ -167,11 +167,20 @@ export default defineConfig({
 });
 ```
 
+## Preset Types
+
+Vite provides some preset type definitions through the `vite-env.d.ts` file. When migrating to Rsbuild, you can use the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core`:
+
+```diff title="src/env.d.ts"
+- /// <reference types="vite/client" />
++ /// <reference types="@rsbuild/core/types" />
+```
+
 ## Glob Import
 
 Vite provides `import.meta.glob()` for importing multiple modules.
 
-When migrating to Rsbuild, you can use the [import.meta.webpackContext()](https://rspack.dev/api/modules/module-variables#importmetawebpackcontext) function of Rspack instead:
+When migrating to Rsbuild, you can use the [import.meta.webpackContext()](https://rspack.dev/api/runtime-api/module-variables#importmetawebpackcontext) function of Rspack instead:
 
 - Vite:
 

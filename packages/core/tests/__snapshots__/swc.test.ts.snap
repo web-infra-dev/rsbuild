@@ -45,7 +45,6 @@ exports[`plugin-swc > should add browserslist 1`] = `
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -86,7 +85,6 @@ exports[`plugin-swc > should add browserslist 1`] = `
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -158,7 +156,6 @@ exports[`plugin-swc > should add pluginImport 1`] = `
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -209,7 +206,6 @@ exports[`plugin-swc > should add pluginImport 1`] = `
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -331,7 +327,6 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
               "syntax": "typescript",
               "tsx": false,
             },
-            "preserveAllComments": true,
             "transform": {
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
@@ -375,7 +370,6 @@ exports[`plugin-swc > should allow to use \`tools.swc\` to configure swc-loader 
               "syntax": "typescript",
               "tsx": false,
             },
-            "preserveAllComments": true,
             "transform": {
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
@@ -438,7 +432,6 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
               "syntax": "typescript",
               "tsx": false,
             },
-            "preserveAllComments": true,
             "transform": {
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
@@ -494,7 +487,6 @@ exports[`plugin-swc > should apply environment config correctly 1`] = `
               "syntax": "typescript",
               "tsx": false,
             },
-            "preserveAllComments": true,
             "transform": {
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
@@ -553,7 +545,6 @@ exports[`plugin-swc > should apply environment config correctly 2`] = `
               "syntax": "typescript",
               "tsx": false,
             },
-            "preserveAllComments": true,
             "transform": {
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
@@ -600,7 +591,6 @@ exports[`plugin-swc > should apply environment config correctly 2`] = `
               "syntax": "typescript",
               "tsx": false,
             },
-            "preserveAllComments": true,
             "transform": {
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
@@ -668,7 +658,6 @@ exports[`plugin-swc > should apply pluginImport correctly when ConfigChain 1`] =
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -722,7 +711,6 @@ exports[`plugin-swc > should apply pluginImport correctly when ConfigChain 1`] =
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -804,7 +792,6 @@ exports[`plugin-swc > should disable pluginImport when return undefined 1`] = `
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -848,7 +835,6 @@ exports[`plugin-swc > should disable pluginImport when return undefined 1`] = `
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -916,7 +902,6 @@ exports[`plugin-swc > should disable preset_env in target other than web 1`] = `
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -956,7 +941,6 @@ exports[`plugin-swc > should disable preset_env in target other than web 1`] = `
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -1028,7 +1012,6 @@ exports[`plugin-swc > should disable preset_env mode 1`] = `
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -1072,7 +1055,6 @@ exports[`plugin-swc > should disable preset_env mode 1`] = `
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -1151,7 +1133,6 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -1199,7 +1180,6 @@ exports[`plugin-swc > should enable entry mode preset_env 1`] = `
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -1278,7 +1258,6 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -1327,7 +1306,6 @@ exports[`plugin-swc > should enable usage mode preset_env 1`] = `
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -1406,7 +1384,6 @@ exports[`plugin-swc > should has correct core-js 1`] = `
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -1454,7 +1431,6 @@ exports[`plugin-swc > should has correct core-js 1`] = `
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -1522,7 +1498,6 @@ exports[`plugin-swc > should has correct core-js 2`] = `
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -1562,7 +1537,6 @@ exports[`plugin-swc > should has correct core-js 2`] = `
                     "syntax": "typescript",
                     "tsx": false,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,

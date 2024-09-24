@@ -8,8 +8,8 @@ import { pluginSolid } from '@rsbuild/plugin-solid';
 import { pluginStylus } from '@rsbuild/plugin-stylus';
 import { pluginSvelte } from '@rsbuild/plugin-svelte';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
-import { pluginSwc } from '@rsbuild/plugin-swc';
 import { pluginVue } from '@rsbuild/plugin-vue';
+import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
 import { webpackProvider } from '@rsbuild/webpack';
 
 export default {

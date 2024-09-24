@@ -29,6 +29,23 @@ export default {
 };
 ```
 
+When merging configurations, `webpack-merge` will automatically concatenate arrays such as `plugins`, `module.rules`, `resolve.extensions`, etc.
+
+```js
+export default {
+  tools: {
+    rspack: {
+      resolve: {
+        // merged with the built-in resolve.extensions
+        extensions: ['.foo'],
+      },
+    },
+  },
+};
+```
+
+If you need to override a configuration rather than merge it with the default value, you can use the function type of `tools.rspack`.
+
 ## Function Type
 
 `tools.rspack` can be configured as a function. The first parameter of this function is the built-in Rspack configuration object, you can modify this object, and then return it. For example:

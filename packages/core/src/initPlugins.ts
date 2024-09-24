@@ -4,6 +4,7 @@ import { LOADER_PATH } from './constants';
 import { createPublicContext } from './createContext';
 import { removeLeadingSlash } from './helpers';
 import type { TransformLoaderOptions } from './loader/transformLoader';
+import { logger } from './logger';
 import { isPluginMatchEnvironment } from './pluginManager';
 import type {
   GetRsbuildConfig,
@@ -34,7 +35,15 @@ export function getHTMLPathByEntry(
     filename = `${entryName}/index.html`;
   }
 
-  return removeLeadingSlash(posix.join(config.output.distPath.html, filename));
+  const prefix = config.output.distPath.html;
+
+  if (prefix.startsWith('/')) {
+    logger.warn(
+      `Absolute path is not recommended at \`output.distPath.html\`: "${prefix}", please use relative path instead.`,
+    );
+  }
+
+  return removeLeadingSlash(posix.join(prefix, filename));
 }
 
 const mapProcessAssetsStage = (

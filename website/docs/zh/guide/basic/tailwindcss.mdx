@@ -47,6 +47,22 @@ module.exports = {
 上述配置仅供参考，你可以根据项目需要进行调整，比如非 TypeScript 项目不需要包含 ts 和 tsx 文件。
 :::
 
+需要注意的是，`content` 选项应包含所有用到 Tailwind 类名的源文件的路径。详情可参考 [tailwindcss - Content 配置](https://tailwindcss.com/docs/content-configuration)。
+
+```js title="tailwind.config.js"
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './src/**/*.{html,js,ts,jsx,tsx}',
+    '../../lib1/src/**/*.{js,ts,jsx,tsx}',
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
 ## 引入 CSS
 
 在 CSS 入口文件中添加 `@tailwind` 指令：

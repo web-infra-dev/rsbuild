@@ -351,6 +351,10 @@ type RsbuildDevServer = {
    * 打印 server URLs
    */
   printUrls: () => void;
+  /**
+   * 启动服务器后，在浏览器中打开 URL
+   */
+  open: () => Promise<void>;
 };
 
 type CreateDevServerOptions = {

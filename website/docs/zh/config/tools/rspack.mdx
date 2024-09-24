@@ -29,6 +29,23 @@ export default {
 };
 ```
 
+在合并配置时，`webpack-merge` 会自动合并数组，比如 `plugins`、`module.rules`、`resolve.extensions` 等配置。
+
+```js
+export default {
+  tools: {
+    rspack: {
+      resolve: {
+        // 与内置的 resolve.extensions 合并
+        extensions: ['.foo'],
+      },
+    },
+  },
+};
+```
+
+如果你需要覆盖某个配置项，而不是与默认值合并，可以使用 `tools.rspack` 的函数类型。
+
 ## Function 类型
 
 `tools.rspack` 也可以配置为一个函数，这个函数接收一个参数，即内置的 Rspack 配置对象，你可以对这个对象进行修改，然后返回一份新的配置。比如：

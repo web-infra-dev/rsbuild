@@ -256,7 +256,7 @@ const myPlugin = () => ({
 ```
 
 :::tip
-`modifyRsbuildConfig` 不能用于注册额外的 Rsbuild 插件。这是因为在执行 `modifyRsbuildConfig` 时，Rsbuild 已经初始化了所有插件，并开始执行 hooks 的回调函数。
+`modifyRsbuildConfig` 不能用于注册额外的 Rsbuild 插件。这是因为在执行 `modifyRsbuildConfig` 时，Rsbuild 已经初始化了所有插件，并开始执行 hooks 的回调函数。详情可参考 [插件注册时机](/config/plugins#插件注册时机)。
 :::
 
 ### modifyEnvironmentConfig

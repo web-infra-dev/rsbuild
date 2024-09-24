@@ -70,7 +70,6 @@ async function applyDefaultPlugins(
     import('./plugins/splitChunks').then(({ pluginSplitChunks }) =>
       pluginSplitChunks(),
     ),
-    import('./plugins/open').then(({ pluginOpen }) => pluginOpen()),
     import('./plugins/inlineChunk').then(({ pluginInlineChunk }) =>
       pluginInlineChunk(),
     ),

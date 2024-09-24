@@ -13,7 +13,7 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "@rsbuild/plugin-swc": "workspace:*",
+    "@rsbuild/plugin-webpack-swc": "workspace:*",
     "typescript": "^5.5.2"
   }
 }

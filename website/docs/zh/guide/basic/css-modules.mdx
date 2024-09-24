@@ -96,7 +96,7 @@ TS2307: Cannot find module './index.module.css' or its corresponding type declar
 
 此时你需要为 CSS Modules 添加类型声明文件，请在项目中创建 `src/env.d.ts` 文件，并添加相应的类型声明。
 
-- 方法一：如果项目里安装了 `@rsbuild/core` 包，你可以直接引用 `@rsbuild/core` 提供的类型声明：
+- 方法一：如果项目里安装了 `@rsbuild/core` 包，你可以直接引用 `@rsbuild/core` 提供的 [预设类型](/guide/basic/typescript#预设类型)：
 
 ```ts
 /// <reference types="@rsbuild/core/types" />

@@ -262,19 +262,19 @@ export default {
 export default {
   tools: {
     bundlerChain: (chain, { env, isProd, target, isServer, isWebWorker }) => {
-      if (utils.env === 'development' || utils.env === 'test') {
+      if (env === 'development' || env === 'test') {
         // ...
       }
-      if (utils.isProd) {
+      if (isProd) {
         // ...
       }
-      if (utils.target === 'node') {
+      if (target === 'node') {
         // ...
       }
-      if (utils.isServer) {
+      if (isServer) {
         // ...
       }
-      if (utils.isWebWorker) {
+      if (isWebWorker) {
         // ...
       }
     },

@@ -1,11 +1,11 @@
 {
-  "name": "@rsbuild/plugin-swc",
-  "version": "1.0.1-rc.5",
-  "description": "SWC plugin for Rsbuild",
+  "name": "@rsbuild/plugin-webpack-swc",
+  "version": "1.0.2",
+  "description": "SWC plugin for Rsbuild webpack provider",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
-    "directory": "packages/compat/plugin-swc"
+    "directory": "packages/compat/plugin-webpack-swc"
   },
   "license": "MIT",
   "type": "module",
@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@modern-js/swc-plugins": "0.6.11",
-    "@swc/helpers": "^0.5.12",
+    "@swc/helpers": "^0.5.13",
     "core-js": "~3.38.1",
     "deepmerge": "^4.3.1",
     "lodash": "^4.17.21",
@@ -44,7 +44,7 @@
     "webpack": "^5.94.0"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^1.0.1-rc.4"
+    "@rsbuild/core": "1.x || ^1.0.1-rc.0"
   },
   "publishConfig": {
     "access": "public",

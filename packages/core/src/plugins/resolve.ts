@@ -24,7 +24,13 @@ function applyFullySpecified({
     .resolve.set('fullySpecified', false);
 }
 
-function applyExtensions({ chain }: { chain: RspackChain }) {
+function applyExtensions({
+  chain,
+  tsconfigPath,
+}: {
+  chain: RspackChain;
+  tsconfigPath: string | undefined;
+}) {
   const extensions = [
     // most projects are using TypeScript, resolve .ts(x) files first to reduce resolve time.
     '.ts',
@@ -36,6 +42,13 @@ function applyExtensions({ chain }: { chain: RspackChain }) {
   ];
 
   chain.resolve.extensions.merge(extensions);
+
+  if (tsconfigPath) {
+    // TypeScript allows importing TS files with `.js` extension
+    chain.resolve.extensionAlias.merge({
+      '.js': ['.ts', '.tsx', '.js'],
+    });
+  }
 }
 
 function applyAlias({
@@ -88,9 +101,9 @@ export const pluginResolve = (): RsbuildPlugin => ({
     api.modifyBundlerChain({
       order: 'pre',
       handler: (chain, { environment, CHAIN_ID }) => {
-        const { config } = environment;
+        const { config, tsconfigPath } = environment;
 
-        applyExtensions({ chain });
+        applyExtensions({ chain, tsconfigPath });
 
         applyAlias({
           chain,
@@ -98,26 +111,20 @@ export const pluginResolve = (): RsbuildPlugin => ({
           rootPath: api.context.rootPath,
         });
 
-        // in some cases (modern.js), get error when fullySpecified rule after js rule
+        // In some cases (modern.js), there is an error if the fullySpecified rule is after the js rule
         applyFullySpecified({ chain, config, CHAIN_ID });
-      },
-    });
 
-    api.modifyRspackConfig(async (rspackConfig, { environment }) => {
-      const { tsconfigPath, config } = environment;
-
-      if (tsconfigPath && config.source.aliasStrategy === 'prefer-tsconfig') {
-        rspackConfig.resolve ||= {};
-
-        if (typeof rspackConfig.resolve.tsConfig === 'string') {
-          return;
+        if (
+          tsconfigPath &&
+          // Only Rspack has the tsConfig option
+          api.context.bundlerType === 'rspack' &&
+          config.source.aliasStrategy === 'prefer-tsconfig'
+        ) {
+          chain.resolve.tsConfig({
+            configFile: tsconfigPath,
+          });
         }
-
-        rspackConfig.resolve.tsConfig = {
-          configFile: tsconfigPath,
-          ...rspackConfig.resolve.tsConfig,
-        };
-      }
+      },
     });
   },
 });

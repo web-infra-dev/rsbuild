@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugin-swc > should apply multiple environment configs correctly 1`] = `
+exports[`plugin-webpack-swc > should apply multiple environment configs correctly 1`] = `
 [
   {
     "module": {
@@ -9,9 +9,9 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "use": [
             {
-              "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
               "options": {
-                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
                   "coreJs": "3.38",
                   "targets": [
@@ -27,7 +27,7 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
                     "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
                   },
                   "lodash": {
-                    "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                    "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                     "ids": [
                       "lodash",
                       "lodash-es",
@@ -41,7 +41,6 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
                     "syntax": "typescript",
                     "tsx": true,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -67,9 +66,9 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
           },
           "use": [
             {
-              "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
               "options": {
-                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
                   "coreJs": "3.38",
                   "targets": [
@@ -85,7 +84,7 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
                     "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
                   },
                   "lodash": {
-                    "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                    "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                     "ids": [
                       "lodash",
                       "lodash-es",
@@ -99,7 +98,6 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
                     "syntax": "typescript",
                     "tsx": true,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -126,9 +124,9 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "use": [
             {
-              "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
               "options": {
-                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
                   "coreJs": "3.38",
                   "targets": [
@@ -141,7 +139,7 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
                     "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
                   },
                   "lodash": {
-                    "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                    "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                     "ids": [
                       "lodash",
                       "lodash-es",
@@ -155,7 +153,6 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
                     "syntax": "typescript",
                     "tsx": true,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorMetadata": true,
                     "legacyDecorator": true,
@@ -182,9 +179,9 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
           },
           "use": [
             {
-              "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
               "options": {
-                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
                   "coreJs": "3.38",
                   "targets": [
@@ -197,7 +194,7 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
                     "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
                   },
                   "lodash": {
-                    "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                    "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                     "ids": [
                       "lodash",
                       "lodash-es",
@@ -211,7 +208,6 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
                     "syntax": "typescript",
                     "tsx": true,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorMetadata": true,
                     "legacyDecorator": true,
@@ -235,7 +231,7 @@ exports[`plugin-swc > should apply multiple environment configs correctly 1`] = 
 ]
 `;
 
-exports[`plugin-swc > should apply source.include and source.exclude correctly 1`] = `
+exports[`plugin-webpack-swc > should apply source.include and source.exclude correctly 1`] = `
 {
   "module": {
     "rules": [
@@ -243,9 +239,9 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
             "options": {
-              "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+              "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
               "env": {
                 "coreJs": "3.38",
                 "targets": [
@@ -261,7 +257,7 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
                   "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
                 },
                 "lodash": {
-                  "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                  "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                   "ids": [
                     "lodash",
                     "lodash-es",
@@ -275,7 +271,6 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
                   "syntax": "typescript",
                   "tsx": true,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -301,9 +296,9 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
         },
         "use": [
           {
-            "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
             "options": {
-              "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+              "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
               "env": {
                 "coreJs": "3.38",
                 "targets": [
@@ -319,7 +314,7 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
                   "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
                 },
                 "lodash": {
-                  "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                  "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                   "ids": [
                     "lodash",
                     "lodash-es",
@@ -333,7 +328,6 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
                   "syntax": "typescript",
                   "tsx": true,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -355,16 +349,16 @@ exports[`plugin-swc > should apply source.include and source.exclude correctly 1
 }
 `;
 
-exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
+exports[`plugin-webpack-swc > should disable react refresh when dev.hmr is false 1`] = `
 {
   "rules": [
     {
       "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
           "options": {
-            "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+            "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
               "coreJs": "3.38",
               "targets": [
@@ -380,7 +374,7 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
                 "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
               },
               "lodash": {
-                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "ids": [
                   "lodash",
                   "lodash-es",
@@ -394,7 +388,6 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -420,9 +413,9 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
       },
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
           "options": {
-            "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+            "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
               "coreJs": "3.38",
               "targets": [
@@ -438,7 +431,7 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
                 "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
               },
               "lodash": {
-                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "ids": [
                   "lodash",
                   "lodash-es",
@@ -452,7 +445,6 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -470,16 +462,16 @@ exports[`plugin-swc > should disable react refresh when dev.hmr is false 1`] = `
 }
 `;
 
-exports[`plugin-swc > should disable react refresh when target is not web 1`] = `
+exports[`plugin-webpack-swc > should disable react refresh when target is not web 1`] = `
 {
   "rules": [
     {
       "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
           "options": {
-            "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+            "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
               "coreJs": "3.38",
               "targets": [
@@ -492,7 +484,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
                 "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
               },
               "lodash": {
-                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "ids": [
                   "lodash",
                   "lodash-es",
@@ -506,7 +498,6 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -532,9 +523,9 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
       },
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
           "options": {
-            "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+            "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
               "coreJs": "3.38",
               "targets": [
@@ -547,7 +538,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
                 "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
               },
               "lodash": {
-                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "ids": [
                   "lodash",
                   "lodash-es",
@@ -561,7 +552,6 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -579,16 +569,16 @@ exports[`plugin-swc > should disable react refresh when target is not web 1`] = 
 }
 `;
 
-exports[`plugin-swc > should disable react refresh when target is not web 2`] = `
+exports[`plugin-webpack-swc > should disable react refresh when target is not web 2`] = `
 {
   "rules": [
     {
       "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
           "options": {
-            "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+            "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
               "coreJs": "3.38",
               "targets": [
@@ -604,7 +594,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
                 "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
               },
               "lodash": {
-                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "ids": [
                   "lodash",
                   "lodash-es",
@@ -618,7 +608,6 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -644,9 +633,9 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
       },
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
           "options": {
-            "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+            "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
               "coreJs": "3.38",
               "targets": [
@@ -662,7 +651,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
                 "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
               },
               "lodash": {
-                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "ids": [
                   "lodash",
                   "lodash-es",
@@ -676,7 +665,6 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -694,16 +682,16 @@ exports[`plugin-swc > should disable react refresh when target is not web 2`] = 
 }
 `;
 
-exports[`plugin-swc > should disable react refresh when target is not web 3`] = `
+exports[`plugin-webpack-swc > should disable react refresh when target is not web 3`] = `
 {
   "rules": [
     {
       "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
           "options": {
-            "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+            "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
               "coreJs": "3.38",
               "targets": [
@@ -719,7 +707,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
                 "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
               },
               "lodash": {
-                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "ids": [
                   "lodash",
                   "lodash-es",
@@ -733,7 +721,6 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -759,9 +746,9 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
       },
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
           "options": {
-            "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+            "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
               "coreJs": "3.38",
               "targets": [
@@ -777,7 +764,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
                 "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
               },
               "lodash": {
-                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "ids": [
                   "lodash",
                   "lodash-es",
@@ -791,7 +778,6 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
                 "syntax": "typescript",
                 "tsx": true,
               },
-              "preserveAllComments": true,
               "transform": {
                 "decoratorVersion": "2022-03",
                 "legacyDecorator": false,
@@ -809,7 +795,7 @@ exports[`plugin-swc > should disable react refresh when target is not web 3`] = 
 }
 `;
 
-exports[`plugin-swc > should set correct swc minimizer options in production 1`] = `
+exports[`plugin-webpack-swc > should set correct swc minimizer options in production 1`] = `
 {
   "minimizer": [
     SwcMinimizerPlugin {
@@ -836,7 +822,7 @@ exports[`plugin-swc > should set correct swc minimizer options in production 1`]
 }
 `;
 
-exports[`plugin-swc > should set correct swc minimizer options using raw swc config 1`] = `
+exports[`plugin-webpack-swc > should set correct swc minimizer options using raw swc config 1`] = `
 {
   "minimizer": [
     SwcMinimizerPlugin {
@@ -863,15 +849,15 @@ exports[`plugin-swc > should set correct swc minimizer options using raw swc con
 }
 `;
 
-exports[`plugin-swc > should set multiple swc-loader 1`] = `
+exports[`plugin-webpack-swc > should set multiple swc-loader 1`] = `
 [
   {
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
     "use": [
       {
-        "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+        "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
         "options": {
-          "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+          "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
           "env": {
             "coreJs": "3.38",
             "targets": [
@@ -887,7 +873,7 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
               "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
             },
             "lodash": {
-              "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+              "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
               "ids": [
                 "lodash",
                 "lodash-es",
@@ -901,7 +887,6 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
               "syntax": "typescript",
               "tsx": true,
             },
-            "preserveAllComments": true,
             "transform": {
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
@@ -920,9 +905,9 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
     "test": /override\\.ts/,
     "use": [
       {
-        "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+        "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
         "options": {
-          "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+          "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
           "env": {
             "coreJs": "3.38",
             "targets": [
@@ -938,7 +923,7 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
               "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
             },
             "lodash": {
-              "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+              "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
               "ids": [
                 "lodash",
                 "lodash-es",
@@ -952,7 +937,6 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
               "syntax": "typescript",
               "tsx": true,
             },
-            "preserveAllComments": true,
             "transform": {
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
@@ -979,9 +963,9 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
     },
     "use": [
       {
-        "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+        "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
         "options": {
-          "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+          "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
           "env": {
             "coreJs": "3.38",
             "targets": [
@@ -997,7 +981,7 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
               "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
             },
             "lodash": {
-              "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+              "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
               "ids": [
                 "lodash",
                 "lodash-es",
@@ -1011,7 +995,6 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
               "syntax": "typescript",
               "tsx": true,
             },
-            "preserveAllComments": true,
             "transform": {
               "decoratorVersion": "2022-03",
               "legacyDecorator": false,
@@ -1029,7 +1012,7 @@ exports[`plugin-swc > should set multiple swc-loader 1`] = `
 ]
 `;
 
-exports[`plugin-swc > should set swc minimizer in production 1`] = `
+exports[`plugin-webpack-swc > should set swc minimizer in production 1`] = `
 {
   "minimizer": [
     SwcMinimizerPlugin {
@@ -1055,7 +1038,7 @@ exports[`plugin-swc > should set swc minimizer in production 1`] = `
 }
 `;
 
-exports[`plugin-swc > should set swc-loader 1`] = `
+exports[`plugin-webpack-swc > should set swc-loader 1`] = `
 {
   "module": {
     "rules": [
@@ -1063,9 +1046,9 @@ exports[`plugin-swc > should set swc-loader 1`] = `
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
             "options": {
-              "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+              "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
               "env": {
                 "coreJs": "3.38",
                 "targets": [
@@ -1081,7 +1064,7 @@ exports[`plugin-swc > should set swc-loader 1`] = `
                   "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
                 },
                 "lodash": {
-                  "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                  "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                   "ids": [
                     "lodash",
                     "lodash-es",
@@ -1095,7 +1078,6 @@ exports[`plugin-swc > should set swc-loader 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -1121,9 +1103,9 @@ exports[`plugin-swc > should set swc-loader 1`] = `
         },
         "use": [
           {
-            "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
             "options": {
-              "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+              "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
               "env": {
                 "coreJs": "3.38",
                 "targets": [
@@ -1139,7 +1121,7 @@ exports[`plugin-swc > should set swc-loader 1`] = `
                   "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
                 },
                 "lodash": {
-                  "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                  "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                   "ids": [
                     "lodash",
                     "lodash-es",
@@ -1153,7 +1135,6 @@ exports[`plugin-swc > should set swc-loader 1`] = `
                   "syntax": "typescript",
                   "tsx": true,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -1175,7 +1156,7 @@ exports[`plugin-swc > should set swc-loader 1`] = `
 }
 `;
 
-exports[`plugin-swc > should use output config 1`] = `
+exports[`plugin-webpack-swc > should use output config 1`] = `
 [
   {
     "module": {
@@ -1184,9 +1165,9 @@ exports[`plugin-swc > should use output config 1`] = `
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "use": [
             {
-              "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
               "options": {
-                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
                   "coreJs": "3.38",
                   "targets": [
@@ -1202,7 +1183,7 @@ exports[`plugin-swc > should use output config 1`] = `
                     "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
                   },
                   "lodash": {
-                    "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                    "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                     "ids": [
                       "lodash",
                       "lodash-es",
@@ -1216,7 +1197,6 @@ exports[`plugin-swc > should use output config 1`] = `
                     "syntax": "typescript",
                     "tsx": true,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,
@@ -1242,9 +1222,9 @@ exports[`plugin-swc > should use output config 1`] = `
           },
           "use": [
             {
-              "loader": "<ROOT>/packages/compat/plugin-swc/src/loader.cjs",
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
               "options": {
-                "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
                   "coreJs": "3.38",
                   "targets": [
@@ -1260,7 +1240,7 @@ exports[`plugin-swc > should use output config 1`] = `
                     "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
                   },
                   "lodash": {
-                    "cwd": "<ROOT>/packages/compat/plugin-swc/tests",
+                    "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                     "ids": [
                       "lodash",
                       "lodash-es",
@@ -1274,7 +1254,6 @@ exports[`plugin-swc > should use output config 1`] = `
                     "syntax": "typescript",
                     "tsx": true,
                   },
-                  "preserveAllComments": true,
                   "transform": {
                     "decoratorVersion": "2022-03",
                     "legacyDecorator": false,

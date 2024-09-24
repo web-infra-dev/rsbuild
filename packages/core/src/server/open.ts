@@ -3,7 +3,7 @@ import { promisify } from 'node:util';
 import { STATIC_PATH } from '../constants';
 import { canParse, castArray } from '../helpers';
 import { logger } from '../logger';
-import type { NormalizedConfig, Routes, RsbuildPlugin } from '../types';
+import type { NormalizedConfig, Routes } from '../types';
 
 const execAsync = promisify(exec);
 
@@ -37,7 +37,7 @@ const getTargetBrowser = async () => {
  * Copyright (c) 2015-present, Facebook, Inc.
  * https://github.com/facebook/create-react-app/blob/master/LICENSE
  */
-export async function openBrowser(url: string): Promise<boolean> {
+async function openBrowser(url: string): Promise<boolean> {
   // If we're on OS X, the user hasn't specifically
   // requested a different browser, we can try opening
   // a Chromium browser with AppleScript. This lets us reuse an
@@ -80,6 +80,12 @@ export async function openBrowser(url: string): Promise<boolean> {
   }
 }
 
+let openedURLs: string[] = [];
+
+const clearOpenedURLs = () => {
+  openedURLs = [];
+};
+
 export const replacePortPlaceholder = (url: string, port: number): string =>
   url.replace(/<port>/g, String(port));
 
@@ -98,17 +104,12 @@ export function resolveUrl(str: string, base: string): string {
   }
 }
 
-const openedURLs: string[] = [];
-
 const normalizeOpenConfig = (
   config: NormalizedConfig,
-): { targets?: string[]; before?: () => Promise<void> | void } => {
+): { targets: string[]; before?: () => Promise<void> | void } => {
   const { open } = config.server;
 
-  if (open === false) {
-    return {};
-  }
-  if (open === true) {
+  if (typeof open === 'boolean') {
     return { targets: [] };
   }
   if (typeof open === 'string') {
@@ -124,67 +125,62 @@ const normalizeOpenConfig = (
   };
 };
 
-export function pluginOpen(): RsbuildPlugin {
-  return {
-    name: 'rsbuild:open',
-    setup(api) {
-      const onStartServer = async (params: {
-        port: number;
-        routes: Routes;
-      }) => {
-        const { port, routes } = params;
-        const config = api.getNormalizedConfig();
-        const { https } = api.context.devServer || {};
-        const { targets, before } = normalizeOpenConfig(config);
+export async function open({
+  https,
+  port,
+  routes,
+  config,
+  clearCache,
+}: {
+  https?: boolean;
+  port: number;
+  routes: Routes;
+  config: NormalizedConfig;
+  clearCache?: boolean;
+}): Promise<void> {
+  const { targets, before } = normalizeOpenConfig(config);
 
-        // Skip open in codesandbox. After being bundled, the `open` package will
-        // try to call system xdg-open, which will cause an error on codesandbox.
-        // https://github.com/codesandbox/codesandbox-client/issues/6642
-        const isCodesandbox = process.env.CSB === 'true';
-        const shouldOpen = targets !== undefined && !isCodesandbox;
+  // Skip open in codesandbox. After being bundled, the `open` package will
+  // try to call system xdg-open, which will cause an error on codesandbox.
+  // https://github.com/codesandbox/codesandbox-client/issues/6642
+  const isCodesandbox = process.env.CSB === 'true';
+  if (isCodesandbox) {
+    return;
+  }
 
-        if (!shouldOpen) {
-          return;
-        }
+  if (clearCache) {
+    clearOpenedURLs();
+  }
 
-        const urls: string[] = [];
-        const protocol = https ? 'https' : 'http';
-        const baseUrl = `${protocol}://localhost:${port}`;
+  const urls: string[] = [];
+  const protocol = https ? 'https' : 'http';
+  const baseUrl = `${protocol}://localhost:${port}`;
 
-        if (!targets.length) {
-          if (routes.length) {
-            // auto open the first one
-            urls.push(`${baseUrl}${routes[0].pathname}`);
-          }
-        } else {
-          urls.push(
-            ...targets.map((target) =>
-              resolveUrl(replacePortPlaceholder(target, port), baseUrl),
-            ),
-          );
-        }
+  if (!targets.length) {
+    if (routes.length) {
+      // auto open the first one
+      urls.push(`${baseUrl}${routes[0].pathname}`);
+    }
+  } else {
+    urls.push(
+      ...targets.map((target) =>
+        resolveUrl(replacePortPlaceholder(target, port), baseUrl),
+      ),
+    );
+  }
 
-        const openUrls = () => {
-          for (const url of urls) {
-            /**
-             * If a URL has been opened in current process, we will not open it again.
-             * It can prevent opening the same URL multiple times.
-             */
-            if (!openedURLs.includes(url)) {
-              openBrowser(url);
-              openedURLs.push(url);
-            }
-          }
-        };
+  if (before) {
+    await before();
+  }
 
-        if (before) {
-          await before();
-        }
-        openUrls();
-      };
-
-      api.onAfterStartDevServer(onStartServer);
-      api.onAfterStartProdServer(onStartServer);
-    },
-  };
+  for (const url of urls) {
+    /**
+     * If an URL has been opened in current process, we will not open it again.
+     * It can prevent opening the same URL multiple times.
+     */
+    if (!openedURLs.includes(url)) {
+      openBrowser(url);
+      openedURLs.push(url);
+    }
+  }
 }

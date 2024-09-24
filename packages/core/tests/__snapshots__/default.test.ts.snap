@@ -43,7 +43,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
-              "_skipReuseAST": true,
               "importLoaders": 1,
               "modules": {
                 "auto": true,
@@ -106,7 +105,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -150,7 +148,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -376,6 +373,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "alias": {
       "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
     },
+    "extensionAlias": {
+      ".js": [
+        ".ts",
+        ".tsx",
+        ".js",
+      ],
+    },
     "extensions": [
       ".ts",
       ".tsx",
@@ -438,7 +442,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
-              "_skipReuseAST": true,
               "importLoaders": 1,
               "modules": {
                 "auto": true,
@@ -501,7 +504,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -545,7 +547,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -833,6 +834,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "alias": {
       "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
     },
+    "extensionAlias": {
+      ".js": [
+        ".ts",
+        ".tsx",
+        ".js",
+      ],
+    },
     "extensions": [
       ".ts",
       ".tsx",
@@ -895,7 +903,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
-              "_skipReuseAST": true,
               "importLoaders": 0,
               "modules": {
                 "auto": true,
@@ -944,7 +951,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -984,7 +990,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -1163,6 +1168,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "alias": {
       "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
     },
+    "extensionAlias": {
+      ".js": [
+        ".ts",
+        ".tsx",
+        ".js",
+      ],
+    },
     "extensions": [
       ".ts",
       ".tsx",
@@ -1230,7 +1242,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
-              "_skipReuseAST": true,
               "importLoaders": 1,
               "modules": {
                 "auto": true,
@@ -1293,7 +1304,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -1337,7 +1347,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
                   "decoratorVersion": "2022-03",
                   "legacyDecorator": false,
@@ -1565,6 +1574,13 @@ exports[`tools.rspack > should match snapshot 1`] = `
   "resolve": {
     "alias": {
       "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+    },
+    "extensionAlias": {
+      ".js": [
+        ".ts",
+        ".tsx",
+        ".js",
+      ],
     },
     "extensions": [
       ".ts",

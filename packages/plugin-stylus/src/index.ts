@@ -6,6 +6,7 @@ export const PLUGIN_STYLUS_NAME = 'rsbuild:stylus';
 
 type StylusOptions = {
   use?: string[];
+  define?: [string, any, boolean?];
   include?: string[];
   import?: string;
   resolveURL?: boolean;

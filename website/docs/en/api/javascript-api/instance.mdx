@@ -328,6 +328,10 @@ type RsbuildDevServer = {
    * Print the server URLs.
    */
   printUrls: () => void;
+  /**
+   * Open URL in the browser after starting the server.
+   */
+  open: () => Promise<void>;
 };
 
 type CreateDevServerOptions = {

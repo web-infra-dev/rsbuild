@@ -14,7 +14,7 @@ Rsbuild 使用 Rspack 内置的 [lightningcss-loader](https://www.rspack.dev/gui
 
 ### 特性
 
-- Lightning CSS 会自动添加浏览器前缀，比如 `-webkit-`、`-moz-`、`-ms-` 等，因此你不需要手动添加前缀，或是使用 [autoprefixer](https://github.com/postcss/autoprefixer) 插件。
+- Lightning CSS 会自动添加浏览器前缀，比如 `-webkit-`、`-moz-`、`-ms-` 等，因此你不需要手动添加前缀，也不需要使用 [autoprefixer](https://github.com/postcss/autoprefixer) 插件。
 - Lightning CSS 会自动将 CSS 语法降级，这允许你在代码中使用现代的 CSS 特性，比如 CSS nesting，custom media queries 等，而无需担心浏览器兼容性问题。
 - 你可以使用 [tools.lightningcssLoader](/config/tools/lightningcss-loader) 来自定义 `lightningcss-loader` 的选项。
 
@@ -40,7 +40,11 @@ export default {
 };
 ```
 
-3. 参考 [使用 PostCSS](#使用-postcss)，配置你需要的 PostCSS 插件。
+3. 参考 [使用 PostCSS](#使用-postcss)，配置你需要的 PostCSS 插件，下面是一些常用的 PostCSS 插件：
+
+- [autoprefixer](https://github.com/postcss/autoprefixer)：添加浏览器前缀。
+- [postcss-preset-env](https://github.com/csstools/postcss-plugins/tree/main/plugin-packs/postcss-preset-env)：将现代 CSS 语法转换为大多数浏览器支持的语法。
+- [postcss-nesting](https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-nesting)：支持 CSS nesting。
 
 ## CSS 压缩
 

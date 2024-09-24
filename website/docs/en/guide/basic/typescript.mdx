@@ -30,6 +30,16 @@ export type { SomeType } from './types';
 
 > See [SWC - Migrating from tsc](https://swc.rs/docs/migrating-from-tsc) for more details about the differences between SWC and tsc.
 
+## Preset types
+
+`@rsbuild/core` provides some preset type definitions, including CSS Modules, static assets, `import.meta` and other types.
+
+You can create a `src/env.d.ts` file to reference it:
+
+```ts title="src/env.d.ts"
+/// <reference types="@rsbuild/core/types" />
+```
+
 ## Type Checking
 
 When transpiling TypeScript code using tools like SWC and Babel, type checking is not performed.

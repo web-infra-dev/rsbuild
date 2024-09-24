@@ -20,7 +20,9 @@ test('should print server urls correctly when printUrls is true', async ({
   await page.goto(`http://localhost:${rsbuild.port}`);
 
   const localLog = logs.find(
-    (log) => log.includes('Local:') && log.includes('http://localhost'),
+    (log) =>
+      log.includes('Local:') &&
+      log.includes(`http://localhost:${rsbuild.port}`),
   );
   const networkLog = logs.find(
     (log) => log.includes('Network:') && log.includes('http://'),
@@ -28,6 +30,8 @@ test('should print server urls correctly when printUrls is true', async ({
 
   expect(localLog).toBeTruthy();
   expect(networkLog).toBeTruthy();
+
+  expect(logs.find((log) => log.includes('/./'))).toBeFalsy();
 
   await rsbuild.close();
   restore();

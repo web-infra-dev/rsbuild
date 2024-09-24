@@ -8,7 +8,10 @@ Rsbuild 支持同时为多个环境构建产物。你可以使用 `environments`
 
 ```ts
 interface EnvironmentConfig {
-  dev?: Pick<DevConfig, 'assetPrefix' | 'lazyCompilation' | 'progressBar'>;
+  dev?: Pick<
+    DevConfig,
+    'hmr' | 'assetPrefix' | 'progressBar' | 'lazyCompilation'
+  >;
   html?: HtmlConfig;
   tools?: ToolsConfig;
   source?: SourceConfig;
