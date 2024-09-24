@@ -196,3 +196,43 @@ describe('bundlerApi', () => {
     `);
   });
 });
+
+describe('default value', () => {
+  it('should apply server.base as assetPrefix default value', async () => {
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {
+        server: {
+          base: '/base',
+        },
+      },
+    });
+
+    const {
+      origin: { rsbuildConfig },
+    } = await rsbuild.inspectConfig();
+    expect(rsbuildConfig.dev.assetPrefix).toBe('/base');
+    expect(rsbuildConfig.output.assetPrefix).toBe('/base');
+  });
+
+  it('should apply dev / output assetPrefix value correctly', async () => {
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {
+        server: {
+          base: '/base',
+        },
+        dev: {
+          assetPrefix: '/base/aaa',
+        },
+        output: {
+          assetPrefix: '/',
+        },
+      },
+    });
+
+    const {
+      origin: { rsbuildConfig },
+    } = await rsbuild.inspectConfig();
+    expect(rsbuildConfig.dev.assetPrefix).toBe('/base/aaa');
+    expect(rsbuildConfig.output.assetPrefix).toBe('/');
+  });
+});
