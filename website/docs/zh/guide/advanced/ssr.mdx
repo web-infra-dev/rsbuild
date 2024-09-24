@@ -52,7 +52,7 @@ export default {
         target: 'web',
       },
       html: {
-        // 自定义 html 模版
+        // 自定义 HTML 模版
         template: './index.html',
       },
     },
@@ -89,7 +89,7 @@ const serverRender = (serverAPI) => async (_req, res) => {
 
   const template = await serverAPI.environments.web.getTransformedHtml('index');
 
-  // 将 SSR 渲染内容插入到 html 模版中
+  // 将 SSR 渲染内容插入到 HTML 模版中
   const html = template.replace('<!--app-content-->', markup);
 
   res.writeHead(200, {
