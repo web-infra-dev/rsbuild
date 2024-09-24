@@ -19,33 +19,3 @@ export default {
   },
 };
 ```
-
-### 修改静态资源前缀
-
-需要注意的是，该配置并不会修改前端生成的静态资源前缀。
-
-为了保证本地开发时，静态资源能够通过 Rsbuild 开发服务器正常访问到，[dev.assetPrefix](/config/dev/asset-prefix) 应当和 `server.base` 包含相同的 url 前缀：
-
-```ts
-export default {
-  dev: {
-    assetPrefix: '/foo/',
-  },
-  server: {
-    base: '/foo',
-  },
-};
-```
-
-同理，如果你希望静态资源能够在 [Rsbuild 预览](/guide/basic/cli#rsbuild-preview) 时正常访问到，[output.assetPrefix](/config/output/asset-prefix) 应当和 `server.base` 包含相同的 url 前缀：
-
-```ts
-export default {
-  output: {
-    assetPrefix: '/foo/',
-  },
-  server: {
-    base: '/foo',
-  },
-};
-```
