@@ -114,34 +114,6 @@ export const pluginMinimize = (): RsbuildPlugin => ({
         const defaultOptions: LightningCssMinimizerRspackPluginOptions = {
           minimizerOptions: {
             targets: environment.browserslist,
-            // TODO: The exclude option of Lightning CSS does not work as expected
-            // so we need to disable all excludes and figure out how to skip the transformation
-            // see: https://github.com/parcel-bundler/lightningcss/issues/792
-            exclude: {
-              nesting: false,
-              notSelectorList: false,
-              dirSelector: false,
-              langSelectorList: false,
-              isSelector: false,
-              textDecorationThicknessPercent: false,
-              mediaIntervalSyntax: false,
-              mediaRangeSyntax: false,
-              customMediaQueries: false,
-              clampFunction: false,
-              colorFunction: false,
-              oklabColors: false,
-              labColors: false,
-              p3Colors: false,
-              hexAlphaColors: false,
-              spaceSeparatedColorNotation: false,
-              fontFamilySystemUi: false,
-              doublePositionGradients: false,
-              vendorPrefixes: false,
-              logicalProperties: false,
-              selectors: false,
-              mediaQueries: false,
-              color: false,
-            },
           },
         };
 
