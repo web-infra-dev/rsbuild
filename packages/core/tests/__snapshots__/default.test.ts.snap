@@ -696,31 +696,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "_args": [
           {
             "minimizerOptions": {
-              "exclude": {
-                "clampFunction": false,
-                "color": false,
-                "colorFunction": false,
-                "customMediaQueries": false,
-                "dirSelector": false,
-                "doublePositionGradients": false,
-                "fontFamilySystemUi": false,
-                "hexAlphaColors": false,
-                "isSelector": false,
-                "labColors": false,
-                "langSelectorList": false,
-                "logicalProperties": false,
-                "mediaIntervalSyntax": false,
-                "mediaQueries": false,
-                "mediaRangeSyntax": false,
-                "nesting": false,
-                "notSelectorList": false,
-                "oklabColors": false,
-                "p3Colors": false,
-                "selectors": false,
-                "spaceSeparatedColorNotation": false,
-                "textDecorationThicknessPercent": false,
-                "vendorPrefixes": false,
-              },
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
