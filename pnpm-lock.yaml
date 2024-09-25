@@ -248,7 +248,7 @@ importers:
     dependencies:
       '@rsbuild/plugin-styled-components':
         specifier: ^1.0.1
-        version: 1.0.1(@rsbuild/core@1.0.3)
+        version: 1.0.1(@rsbuild/core@1.0.7)
       styled-components:
         specifier: ^6.1.13
         version: 6.1.13(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react@19.0.0-rc-fb9a90fa48-20240614)
@@ -549,9 +549,6 @@ importers:
 
   packages/compat/webpack:
     dependencies:
-      '@rsbuild/core':
-        specifier: workspace:*
-        version: link:../../core
       copy-webpack-plugin:
         specifier: 11.0.0
         version: 11.0.0(webpack@5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.13)))
@@ -571,6 +568,9 @@ importers:
         specifier: ^5.94.0
         version: 5.94.0(@swc/core@1.6.13(@swc/helpers@0.5.13))
     devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../core
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../../scripts/test-helper
@@ -2560,13 +2560,13 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rsbuild/core@1.0.3':
-    resolution: {integrity: sha512-d2mrbhyaIruhcU5fCjEog4hzdC1ep/Q2wODdkwOaHO1bddALc4y4A2KBGSjFsFSWukPc+EFtfftVSwPukAvISg==}
+  '@rsbuild/core@1.0.5':
+    resolution: {integrity: sha512-yUWs4k9X9C661P0kwe3Om1GMJKAxliXDMnBV5hHoaEuAovdp/pOG3pk2fVsRrxcwMn3i6FyMGSVB7g0WmQpeHA==}
     engines: {node: '>=16.7.0'}
     hasBin: true
 
-  '@rsbuild/core@1.0.5':
-    resolution: {integrity: sha512-yUWs4k9X9C661P0kwe3Om1GMJKAxliXDMnBV5hHoaEuAovdp/pOG3pk2fVsRrxcwMn3i6FyMGSVB7g0WmQpeHA==}
+  '@rsbuild/core@1.0.7':
+    resolution: {integrity: sha512-NqPAtKnPGdvKituKehTzUd8bnzVsdAs6vLY82OwymkmMlW9zcFYfeVYAfSUS3uTv7vDIFQwff0PHgYYV3ufpwQ==}
     engines: {node: '>=16.7.0'}
     hasBin: true
 
@@ -9055,17 +9055,6 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.17.1':
     optional: true
 
-  '@rsbuild/core@1.0.3':
-    dependencies:
-      '@rspack/core': 1.0.7(@swc/helpers@0.5.13)
-      '@rspack/lite-tapable': 1.0.0
-      '@swc/helpers': 0.5.13
-      caniuse-lite: 1.0.30001663
-      core-js: 3.38.1
-    optionalDependencies:
-      fsevents: 2.3.3
-    optional: true
-
   '@rsbuild/core@1.0.5':
     dependencies:
       '@rspack/core': 1.0.7(@swc/helpers@0.5.13)
@@ -9075,6 +9064,17 @@ snapshots:
       core-js: 3.38.1
     optionalDependencies:
       fsevents: 2.3.3
+
+  '@rsbuild/core@1.0.7':
+    dependencies:
+      '@rspack/core': 1.0.7(@swc/helpers@0.5.13)
+      '@rspack/lite-tapable': 1.0.0
+      '@swc/helpers': 0.5.13
+      caniuse-lite: 1.0.30001663
+      core-js: 3.38.1
+    optionalDependencies:
+      fsevents: 2.3.3
+    optional: true
 
   '@rsbuild/plugin-babel@1.0.1-rc.5(@rsbuild/core@packages+core)':
     dependencies:
@@ -9128,12 +9128,12 @@ snapshots:
       reduce-configs: 1.0.0
       sass-embedded: 1.79.3
 
-  '@rsbuild/plugin-styled-components@1.0.1(@rsbuild/core@1.0.3)':
+  '@rsbuild/plugin-styled-components@1.0.1(@rsbuild/core@1.0.7)':
     dependencies:
       '@swc/plugin-styled-components': 2.0.11
       reduce-configs: 1.0.0
     optionalDependencies:
-      '@rsbuild/core': 1.0.3
+      '@rsbuild/core': 1.0.7
 
   '@rsbuild/plugin-vue-jsx@1.0.1(@babel/core@7.25.2)(@rsbuild/core@packages+core)':
     dependencies:

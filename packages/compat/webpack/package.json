@@ -28,7 +28,6 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@rsbuild/core": "workspace:*",
     "copy-webpack-plugin": "11.0.0",
     "mini-css-extract-plugin": "2.9.1",
     "picocolors": "^1.1.0",
@@ -37,12 +36,16 @@
     "webpack": "^5.94.0"
   },
   "devDependencies": {
+    "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "18.x",
     "ansi-escapes": "4.3.2",
     "cli-truncate": "2.1.0",
     "patch-console": "1.0.0",
     "typescript": "^5.5.2"
+  },
+  "peerDependencies": {
+    "@rsbuild/core": "1.x"
   },
   "publishConfig": {
     "access": "public",
