@@ -18,11 +18,15 @@ const defaultOptions = {
 
 通过 `tools.htmlPlugin` 可以修改 [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin) 的配置项。
 
-:::tip
 Rsbuild 内部基于 [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin) 实现 HTML 相关的能力。它是 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin) 的一个 fork 版本，具备完全一致的功能和选项。
+
+:::tip
+如果你需要修改 `title`、`template`、`templateParameters`、`meta` 等选项，推荐优先使用 Rsbuild 提供的对应 HTML 配置项，如 [html.title](/config/html/title)、[html.template](/config/html/template) 等。
+
+这是因为这些配置间存在一些关联关系，Rsbuild 对于 HTML 配置项提供了一些内部的优化处理，例如，如果当前项目使用的 HTML 模板中已经包含了 `<title>` 标签，那么 `html.title` 将不会生效。
 :::
 
-### Object 类型
+## Object 类型
 
 当 `tools.htmlPlugin` 的值为 `Object` 类型时，会与默认配置通过 `Object.assign` 合并。
 
@@ -36,7 +40,7 @@ export default {
 };
 ```
 
-### Function 类型
+## Function 类型
 
 当 `tools.htmlPlugin` 为 Function 类型时：
 

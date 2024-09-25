@@ -18,11 +18,15 @@ const defaultOptions = {
 
 The configs of [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin) can be modified through `tools.htmlPlugin`.
 
-:::tip
 Rsbuild internally implements HTML-related features based on [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin). It is a fork of [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin), with the same features and options.
+
+:::tip
+If you need to modify options such as `title`, `template`, `templateParameters`, `meta`, it is recommended to use the corresponding HTML configurations provided by Rsbuild first, such as [html.title](/config/html/title), [html .template](/config/html/template) etc.
+
+This is because Rsbuild provides some internal optimization processing for these HTML configurations. For example, if the HTML template used by the current project already contains the `<title>` tag, then `html.title` will not take effect.
 :::
 
-### Object Type
+## Object Type
 
 When `tools.htmlPlugin` is `Object` type, the value will be merged with the default config via `Object.assign`.
 
@@ -36,7 +40,7 @@ export default {
 };
 ```
 
-### Function Type
+## Function Type
 
 When `tools.htmlPlugin` is a Function:
 
