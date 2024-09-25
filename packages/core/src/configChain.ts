@@ -119,9 +119,6 @@ export const CHAIN_ID = {
     PUG: 'pug',
     /** Rule for Vue */
     VUE: 'vue',
-    // TODO: remove
-    /** Rule for yaml */
-    YAML: 'yaml',
     /** Rule for wasm */
     WASM: 'wasm',
     /** Rule for svelte */
@@ -157,9 +154,6 @@ export const CHAIN_ID = {
     SWC: 'swc',
     /** svgr */
     SVGR: 'svgr',
-    // TODO: remove
-    /** yaml-loader */
-    YAML: 'yaml',
     /** babel-loader */
     BABEL: 'babel',
     /** style-loader */
@@ -187,9 +181,6 @@ export const CHAIN_ID = {
     COPY: 'copy',
     /** HtmlRspackPlugin */
     HTML: 'html',
-    // TODO: remove
-    /** ESLintWebpackPlugin */
-    ESLINT: 'eslint',
     /** DefinePlugin */
     DEFINE: 'define',
     /** ProgressPlugin */
@@ -212,9 +203,6 @@ export const CHAIN_ID = {
     VUE_LOADER_PLUGIN: 'vue-loader-plugin',
     /** ReactFastRefreshPlugin */
     REACT_FAST_REFRESH: 'react-fast-refresh',
-    // TODO: remove
-    /** ProvidePlugin for node polyfill */
-    NODE_POLYFILL_PROVIDE: 'node-polyfill-provide',
     /** WebpackSRIPlugin */
     SUBRESOURCE_INTEGRITY: 'subresource-integrity',
     /** AutoSetRootFontSizePlugin */
