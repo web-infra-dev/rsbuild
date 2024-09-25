@@ -38,7 +38,7 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "@types/lodash": "^4.17.7",
+    "@types/lodash": "^4.17.9",
     "@types/semver": "^7.5.8",
     "typescript": "^5.5.2",
     "webpack": "^5.94.0"

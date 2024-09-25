@@ -10,9 +10,9 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rspress/plugin-rss": "1.31.0",
+    "@rspress/plugin-rss": "1.31.1",
     "@types/node": "18.x",
-    "@types/react": "^18.3.8",
+    "@types/react": "^18.3.9",
     "@types/react-dom": "^18.3.0",
     "fast-glob": "^3.3.2",
     "react": "^18.3.1",
@@ -20,7 +20,7 @@
     "rsbuild-plugin-google-analytics": "1.0.3",
     "rsbuild-plugin-open-graph": "1.0.2",
     "@rstack-dev/doc-ui": "1.5.2",
-    "rspress": "1.31.0",
+    "rspress": "1.31.1",
     "rspress-plugin-font-open-sans": "1.0.0",
     "rspress-plugin-sitemap": "^1.1.1"
   }
