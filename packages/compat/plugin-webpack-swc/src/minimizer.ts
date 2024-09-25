@@ -35,15 +35,19 @@ export class SwcMinimizerPlugin {
 
   private name = 'swc-minimizer-plugin';
 
+  private rsbuildSourceMapConfig: NormalizedEnvironmentConfig['output']['sourceMap'];
+
   constructor(options: {
     jsMinify?: boolean | JsMinifyOptions;
     cssMinify?: boolean | CssMinifyOptions;
     getEnvironmentConfig: () => NormalizedEnvironmentConfig;
   }) {
+    const rsbuildConfig = options.getEnvironmentConfig();
+    this.rsbuildSourceMapConfig = rsbuildConfig.output.sourceMap;
     this.minifyOptions = {
       jsMinify: options.jsMinify
         ? deepmerge<JsMinifyOptions>(
-            this.getDefaultJsMinifyOptions(options.getEnvironmentConfig()),
+            this.getDefaultJsMinifyOptions(rsbuildConfig),
             normalize(options.jsMinify, {}) ?? {},
           )
         : undefined,
@@ -84,12 +88,14 @@ export class SwcMinimizerPlugin {
         typeof devtool === 'string' && devtool.includes('inline');
 
       if (jsMinify) {
-        jsMinify.sourceMap = enableMinify;
+        const userSourceMapJS = this.rsbuildSourceMapConfig.js;
+        jsMinify.sourceMap = userSourceMapJS === undefined ?  enableMinify : !!userSourceMapJS;
         jsMinify.inlineSourcesContent = inlineSourceContent;
       }
 
       if (cssMinify) {
-        cssMinify.sourceMap = enableMinify;
+        const userSourceMapCss = this.rsbuildSourceMapConfig.css;
+        cssMinify.sourceMap = userSourceMapCss === undefined ?  enableMinify : !!userSourceMapCss;
         cssMinify.inlineSourceContent = inlineSourceContent;
       }
 
