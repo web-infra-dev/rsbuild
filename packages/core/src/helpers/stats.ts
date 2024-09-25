@@ -130,37 +130,37 @@ export function getStatsOptions(
 }
 
 export function formatStats(
-  stats: Rspack.Stats | Rspack.MultiStats,
-  options: StatsValue = {},
+  statsData: Rspack.StatsCompilation,
+  hasErrors: boolean,
 ): {
   message?: string;
   level?: string;
 } {
-  const statsData = stats.toJson(
-    typeof options === 'object'
-      ? {
-          preset: 'errors-warnings',
-          children: true,
-          ...options,
-        }
-      : options,
-  );
+  // display verbose messages in debug mode
+  const verbose = logger.level === 'verbose';
 
-  const { errors, warnings } = formatStatsMessages(
-    {
-      errors: getAllStatsErrors(statsData),
-      warnings: getAllStatsWarnings(statsData),
-    },
-    // display verbose messages in debug mode
-    logger.level === 'verbose',
-  );
+  if (hasErrors) {
+    const { errors } = formatStatsMessages(
+      {
+        errors: getAllStatsErrors(statsData),
+        warnings: [],
+      },
+      verbose,
+    );
 
-  if (stats.hasErrors()) {
     return {
       message: formatErrorMessage(errors),
       level: 'error',
     };
   }
+
+  const { warnings } = formatStatsMessages(
+    {
+      errors: [],
+      warnings: getAllStatsWarnings(statsData),
+    },
+    verbose,
+  );
 
   if (warnings.length) {
     const title = color.bold(color.yellow('Compile Warning: \n'));

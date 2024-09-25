@@ -62,9 +62,15 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   }
 
   const done = (stats: Rspack.Stats | Rspack.MultiStats) => {
+    const statsOptions = getStatsOptions(compiler);
     const statsJson = stats.toJson({
-      all: false,
+      children: true,
+      // get the compilation time
       timings: true,
+      ...(typeof statsOptions === 'string'
+        ? { preset: statsOptions }
+        : { preset: 'errors-warnings' }),
+      ...(typeof statsOptions === 'object' ? statsOptions : {}),
     });
 
     const printTime = (c: StatsCompilation, index: number) => {
@@ -76,8 +82,10 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
       }
     };
 
-    if (!stats.hasErrors()) {
-      if (statsJson.children) {
+    const hasErrors = stats.hasErrors();
+
+    if (!hasErrors) {
+      if (statsJson.children && statsJson.children.length > 0) {
         statsJson.children.forEach((c, index) => {
           printTime(c, index);
         });
@@ -86,7 +94,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
       }
     }
 
-    const { message, level } = formatStats(stats, getStatsOptions(compiler));
+    const { message, level } = formatStats(statsJson, hasErrors);
 
     if (level === 'error') {
       logger.error(message);
