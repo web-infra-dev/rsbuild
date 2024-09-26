@@ -311,7 +311,7 @@ export default {
       resolve: {
         mainFields: ['browser', 'module', 'main'],
       },
-      plugins:
+      appendPlugins:
         process.env.NODE_ENV === 'development' ? [new MyWebpackPlugin()] : [],
     },
   },
