@@ -280,3 +280,14 @@ export default {
 ```
 
 The above are some common configuration examples. For the complete rspack-chain API, please refer to the [rspack-chain documentation](https://github.com/rspack-contrib/rspack-chain).
+
+## Configuration modification order
+
+Rsbuild supports modifying the Rspack configuration object through `tools.rspack`, `tools.bundlerChain`, `modifyBundlerChain`, etc.
+
+The order of execution between them is:
+
+- [modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain)
+- [tools.bundleChain](/config/tools/bundler-chain)
+- [modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig)
+- [tools.rspack](/config/tools/rspack)
