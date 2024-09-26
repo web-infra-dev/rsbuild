@@ -9,6 +9,22 @@ import { isMultiCompiler } from './';
  * Add node polyfill tip when failed to resolve node built-in modules.
  */
 const hintNodePolyfill = (message: string): string => {
+  const getTips = (moduleName: string) => {
+    const tips = [
+      `Tip: "${moduleName}" is a built-in Node.js module. It cannot be imported in client-side code.`,
+      `Check if you need to import Node.js module. If needed, you can use ${color.cyan('@rsbuild/plugin-node-polyfill')}.`,
+    ];
+
+    return `${message}\n\n${color.yellow(tips.join('\n'))}`;
+  };
+
+  const isNodeProtocolError = message.includes(
+    'need an additional plugin to handle "node:" URIs',
+  );
+  if (isNodeProtocolError) {
+    return getTips('node:*');
+  }
+
   if (!message.includes(`Can't resolve`)) {
     return message;
   }
@@ -61,11 +77,7 @@ const hintNodePolyfill = (message: string): string => {
   ];
 
   if (moduleName && nodeModules.includes(moduleName)) {
-    const tips = [
-      `Tip: "${moduleName}" is a built-in Node.js module and cannot be imported in client-side code.`,
-      `Check if you need to import Node.js module. If needed, you can use "@rsbuild/plugin-node-polyfill".`,
-    ];
-    return `${message}\n\n${color.yellow(tips.join('\n'))}`;
+    return getTips(moduleName);
   }
 
   return message;
