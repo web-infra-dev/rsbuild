@@ -302,6 +302,10 @@ pluginAssetsRetry({
 
 以下场景 Assets Retry 插件可能无法生效：
 
+### 模块联邦
+
+对于模块联邦加载的远程模块，你可以使用模块联邦 2.0 的 [@module-federation/retry-plugin](https://www.npmjs.com/package/@module-federation/retry-plugin) 来实现静态资源重试。
+
 ### 微前端
 
 如果你的工程是微前端应用（比如 Garfish 子应用），那么 Assets Retry 插件可能无法生效，因为微前端子应用通常不是基于 `<script>` 标签直接加载的。
