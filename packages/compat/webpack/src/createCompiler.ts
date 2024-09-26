@@ -21,11 +21,17 @@ export async function createCompiler(options: InitConfigsOptions) {
     | Rspack.Compiler
     | Rspack.MultiCompiler;
 
-  const done = (stats: unknown) => {
-    const { message, level } = formatStats(
-      stats as Rspack.Stats,
-      getStatsOptions(compiler),
-    );
+  const done = (stats: Rspack.Stats) => {
+    const statsOptions = getStatsOptions(compiler);
+    const statsJson = stats.toJson({
+      children: true,
+      ...(typeof statsOptions === 'string'
+        ? { preset: statsOptions }
+        : { preset: 'errors-warnings' }),
+      ...(typeof statsOptions === 'object' ? statsOptions : {}),
+    });
+
+    const { message, level } = formatStats(statsJson, stats.hasErrors());
 
     if (level === 'error') {
       logger.error(message);
@@ -36,7 +42,7 @@ export async function createCompiler(options: InitConfigsOptions) {
   };
 
   compiler.hooks.done.tap('rsbuild:done', (stats: unknown) => {
-    done(stats);
+    done(stats as Rspack.Stats);
   });
 
   if (context.normalizedConfig?.mode === 'development') {
