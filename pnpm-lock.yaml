@@ -24,8 +24,8 @@ importers:
         specifier: workspace:*
         version: link:scripts/config
       '@rslib/core':
-        specifier: 0.0.7
-        version: 0.0.7(typescript@5.5.2)
+        specifier: 0.0.8
+        version: 0.0.8(typescript@5.5.2)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:scripts/test-helper
@@ -2622,8 +2622,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  '@rslib/core@0.0.7':
-    resolution: {integrity: sha512-pTsy1VTjspHMjJ4GRcpAEUS1wgpE7vIp+hGK0xCeZqBgxI5Uz8bPuqLhZh8qoIrLkXFme4kmESLhoyUkM6xuYA==}
+  '@rslib/core@0.0.8':
+    resolution: {integrity: sha512-yOruq9793txYDc7heNsrCFoWx6xoo03cTpslcTHms1xQNS/tuY4k/QWK2PDRcSt2QZOTzMYLKjqw3Yx1GdhVJw==}
     engines: {node: '>=16.0.0'}
     hasBin: true
     peerDependencies:
@@ -6156,8 +6156,8 @@ packages:
       webpack:
         optional: true
 
-  rsbuild-plugin-dts@0.0.7:
-    resolution: {integrity: sha512-f7ZBi9Ag1Id5OjsDbk2aGnzzrlAzavhqz5kTFIacoGY+7Ms6A9RFOTdjiiBRwXKVSa8e4djKhIIoKkuBmVcyQA==}
+  rsbuild-plugin-dts@0.0.8:
+    resolution: {integrity: sha512-tNeXWwJT9rg8rJdB5+EBDb7XEcS7thjw76Qt+4vZw9rs42G5ls36wEWAJF29X94u8Uvjh6m2NhcMdvFGAeyWWg==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       '@microsoft/api-extractor': ^7
@@ -9079,7 +9079,6 @@ snapshots:
       core-js: 3.38.1
     optionalDependencies:
       fsevents: 2.3.3
-    optional: true
 
   '@rsbuild/plugin-babel@1.0.1-rc.5(@rsbuild/core@packages+core)':
     dependencies:
@@ -9151,10 +9150,10 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  '@rslib/core@0.0.7(typescript@5.5.2)':
+  '@rslib/core@0.0.8(typescript@5.5.2)':
     dependencies:
-      '@rsbuild/core': 1.0.5
-      rsbuild-plugin-dts: 0.0.7(@rsbuild/core@1.0.5)(typescript@5.5.2)
+      '@rsbuild/core': 1.0.7
+      rsbuild-plugin-dts: 0.0.8(@rsbuild/core@1.0.7)(typescript@5.5.2)
     optionalDependencies:
       typescript: 5.5.2
 
@@ -13329,9 +13328,9 @@ snapshots:
     optionalDependencies:
       webpack: 5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13))
 
-  rsbuild-plugin-dts@0.0.7(@rsbuild/core@1.0.5)(typescript@5.5.2):
+  rsbuild-plugin-dts@0.0.8(@rsbuild/core@1.0.7)(typescript@5.5.2):
     dependencies:
-      '@rsbuild/core': 1.0.5
+      '@rsbuild/core': 1.0.7
       fast-glob: 3.3.2
       magic-string: 0.30.11
       picocolors: 1.1.0
