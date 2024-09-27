@@ -157,13 +157,13 @@ export default {
 除了使用内置的拆包策略外，你也可以通过 Rsbuild 自定义拆包功能来满足更多的定制化需求。自定义拆包分为两部分:
 
 - 自定义拆包分组
-- 自定义原生 bundler 拆包配置
+- 自定义 Rspack 的 `splitChunks` 配置
 
 值得注意的是，这两种自定义拆包能力可以和内置的拆包策略一起使用，也就是说，你可以使用内置的拆包策略来拆分常用的包，然后再使用自定义拆包功能来拆分其他的包。
 
 ### 自定义分组
 
-Rsbuild 支持自定义拆包分组，这样比内置拆包策略更灵活，同时比手写 bundler 底层配置更简单。
+Rsbuild 支持自定义拆包分组，这样比内置拆包策略更灵活，同时比手写 Rspack 的 `splitChunks` 配置更简单。
 
 比如将 node_modules 下的 `axios` 库拆分到 `axios.js` 中：
 
@@ -171,7 +171,6 @@ Rsbuild 支持自定义拆包分组，这样比内置拆包策略更灵活，同
 export default {
   performance: {
     chunkSplit: {
-      strategy: 'split-by-experience',
       forceSplitting: {
         axios: /node_modules[\\/]axios/,
       },
@@ -188,13 +187,14 @@ export default {
 
 ### 自定义拆包配置
 
-除了使用自定义分组外，你还可以通过 `override` 配置项来自定义底层 bundler 的拆包配置，比如:
+你可以通过 `override` 配置项来自定义 Rspack 的 `splitChunks` 配置，比如:
+
+- 设置 `minSize` 为 30000，表示当模块大小小于 30000 字节时，不进行拆分。
 
 ```ts
 export default {
   performance: {
     chunkSplit: {
-      strategy: 'split-by-experience',
       override: {
         chunks: 'all',
         minSize: 30000,
@@ -204,7 +204,29 @@ export default {
 };
 ```
 
-其中 `override` 中的配置会和 bundler 的配置进行合并，具体配置项请参考 [Rspack - splitChunks](https://rspack.dev/zh/config/optimization#optimization-splitchunks)。
+- 将所有 CSS 文件打包到一个 `styles.css` 中。
+
+```ts
+export default {
+  performance: {
+    chunkSplit: {
+      override: {
+        cacheGroups: {
+          styles: {
+            name: 'styles',
+            minSize: 0,
+            chunks: 'all',
+            test: /\.(?:css|less|sass|scss|styl)$/,
+            priority: 99,
+          },
+        },
+      },
+    },
+  },
+};
+```
+
+其中，`override` 配置会与 Rspack 的 `splitChunks` 配置进行合并，具体配置项请参考 [Rspack - splitChunks](https://rspack.dev/zh/config/optimization#optimization-splitchunks)。
 
 ## 使用 Dynamic Import 拆包
 
