@@ -61,12 +61,14 @@ export const applyBasicReactSupport = (
         '@rspack/plugin-react-refresh'
       );
       const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
+      const NODE_MODULES_REGEX = /[\\/]node_modules[\\/]/;
 
       chain
         .plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)
         .use(ReactRefreshRspackPlugin, [
           {
             include: [SCRIPT_REGEX],
+            exclude: [NODE_MODULES_REGEX],
             ...options.reactRefreshOptions,
           },
         ]);
