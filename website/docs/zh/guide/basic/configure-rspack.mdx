@@ -283,3 +283,14 @@ export default {
 ```
 
 以上是一些常见的配置示例，完整的 API 请见 [rspack-chain 文档](https://github.com/rspack-contrib/rspack-chain)。
+
+## 配置修改顺序
+
+Rsbuild 支持通过 `tools.rspack`、`tools.bundlerChain`、`modifyBundlerChain` 等方式修改 Rspack 配置对象。
+
+它们之间的执行顺序依次为：
+
+- [modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain)
+- [tools.bundleChain](/config/tools/bundler-chain)
+- [modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig)
+- [tools.rspack](/config/tools/rspack)

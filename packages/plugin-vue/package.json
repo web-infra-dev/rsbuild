@@ -29,14 +29,14 @@
   },
   "dependencies": {
     "vue-loader": "^17.4.2",
-    "webpack": "^5.94.0"
+    "webpack": "^5.95.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "typescript": "^5.5.2",
     "vue": "^3.5.8",
-    "webpack": "^5.94.0"
+    "webpack": "^5.95.0"
   },
   "peerDependencies": {
     "@rsbuild/core": "1.x || ^1.0.1-rc.0"

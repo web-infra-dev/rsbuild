@@ -35,9 +35,6 @@ export default {
   },
   dependencies: [
     'open',
-    'commander',
-    'dotenv',
-    'dotenv-expand',
     'ws',
     'on-finished',
     'connect',

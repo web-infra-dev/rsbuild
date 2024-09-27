@@ -328,7 +328,11 @@ const myPlugin = () => ({
 
 ### modifyRspackConfig
 
-修改最终的 Rspack 配置，你可以直接修改传入的 config 对象，也可以返回一个新的对象来替换传入的对象。
+修改 Rspack 配置，你可以直接修改传入的 config 对象，也可以返回一个新的对象来替换传入的对象。
+
+:::tip
+`modifyRspackConfig` 的执行时机早于 [tools.rspack](/config/tools/rspack)。因此，无法在 `modifyRspackConfig` 中获取到 `tools.rspack` 所做的修改。
+:::
 
 - **类型：**
 

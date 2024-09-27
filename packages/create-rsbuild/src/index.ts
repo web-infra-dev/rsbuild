@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import {
   type Argv,
   type ESLintTemplateName,
@@ -6,6 +7,8 @@ import {
   create,
   select,
 } from 'create-rstack';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const frameworkAlias: Record<string, string> = {
   vue: 'vue3',

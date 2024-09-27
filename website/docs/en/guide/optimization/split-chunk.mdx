@@ -161,13 +161,13 @@ export default {
 In addition to using the built-in strategies, you can also customize the splitting strategy to meet more customization needs. Custom strategy is divided into two parts:
 
 - Custom group
-- Custom bundler `splitChunks` config
+- Custom Rspack `splitChunks` config
 
 It is worth noting that these two custom capabilities can be used together with the built-in strategy, that is, you can use the built-in strategy to split commonly used packages, and then use the custom function to split other packages.
 
 ### Custom Group
 
-Rsbuild supports custom group, which is more flexible than the built-in strategies, and simpler than writing bundler config.
+Rsbuild supports custom group, which is more flexible than the built-in strategies, and simpler than writing Rspack's `splitChunks` config.
 
 For example, split the `axios` library under node_modules into `axios.js`:
 
@@ -175,7 +175,6 @@ For example, split the `axios` library under node_modules into `axios.js`:
 export default {
   performance: {
     chunkSplit: {
-      strategy: 'split-by-experience',
       forceSplitting: {
         axios: /node_modules[\\/]axios/,
       },
@@ -192,13 +191,14 @@ Chunks split using the `forceSplitting` configuration will be inserted into the 
 
 ### Custom Config
 
-In addition to using custom grouping, you can also customize the native bundler config through `override`, such as:
+In addition to using custom grouping, you can also customize Rspack's `splitChunks` config through `override`, for example:
+
+- Set `minSize` to 30,000, meaning modules smaller than 30,000 bytes will not be split.
 
 ```ts
 export default {
   performance: {
     chunkSplit: {
-      strategy: 'split-by-experience',
       override: {
         chunks: 'all',
         minSize: 30000,
@@ -208,7 +208,29 @@ export default {
 };
 ```
 
-The config in `override` will be merged with the bundler config. For specific config details, please refer to [Rspack - splitChunks](https://rspack.dev/config/optimization#optimization-splitchunks).
+- Bundle all CSS files into a single `styles.css`.
+
+```ts
+export default {
+  performance: {
+    chunkSplit: {
+      override: {
+        cacheGroups: {
+          styles: {
+            name: 'styles',
+            minSize: 0,
+            chunks: 'all',
+            test: /\.(?:css|less|sass|scss|styl)$/,
+            priority: 99,
+          },
+        },
+      },
+    },
+  },
+};
+```
+
+The `override` config will be merged with Rspack's `splitChunks` config. For specific config details, please refer to [Rspack - splitChunks](https://rspack.dev/config/optimization#optimization-splitchunks).
 
 ## Using Dynamic Import for Code Splitting
 

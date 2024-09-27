@@ -204,6 +204,7 @@ type ReactRefreshOptions = {
 ```js
 const defaultOptions = {
   include: [/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/],
+  exclude: [/[\\/]node_modules[\\/]/],
 };
 ```
 
@@ -214,7 +215,7 @@ Set the options for [@rspack/plugin-react-refresh](https://www.rspack.dev/guide/
 ```js
 pluginReact({
   reactRefreshOptions: {
-    exclude: [/some-module-to-exclude/],
+    exclude: [/some-module-to-exclude/, /[\\/]node_modules[\\/]/],
   },
 });
 ```
