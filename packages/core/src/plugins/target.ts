@@ -1,19 +1,6 @@
 import { DEFAULT_WEB_BROWSERSLIST } from '../constants';
 import type { RsbuildPlugin } from '../types';
 
-const getESVersion = async (browserslist: string[]) => {
-  const { browserslistToESVersion } = await import(
-    'browserslist-to-es-version'
-  );
-
-  // skip calculation if the browserslist is the default value
-  if (browserslist.join(',') === DEFAULT_WEB_BROWSERSLIST.join(',')) {
-    return 2017;
-  }
-
-  return browserslistToESVersion(browserslist);
-};
-
 export const pluginTarget = (): RsbuildPlugin => ({
   name: 'rsbuild:target',
 
@@ -27,14 +14,25 @@ export const pluginTarget = (): RsbuildPlugin => ({
         }
 
         const { browserslist } = environment;
-        const esVersion = await getESVersion(browserslist);
+
+        // skip calculation if the browserslist is the default value
+        const isDefaultBrowserslist =
+          browserslist.join(',') === DEFAULT_WEB_BROWSERSLIST.join(',');
 
         if (target === 'web-worker') {
-          chain.target(['webworker', `es${esVersion}`]);
+          chain.target(
+            isDefaultBrowserslist
+              ? ['webworker', 'es2017']
+              : // TODO: Rspack should support `browserslist:` for webworker target
+                ['webworker', 'es5'],
+          );
           return;
         }
 
-        chain.target(['web', `es${esVersion}`]);
+        const esQuery = isDefaultBrowserslist
+          ? 'es2017'
+          : (`browserslist:${browserslist.join(',')}` as const);
+        chain.target(['web', esQuery]);
       },
     });
   },

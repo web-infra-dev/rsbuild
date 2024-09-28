@@ -10,7 +10,7 @@ describe('plugin-target', () => {
     },
     {
       browserslist: ['Chrome 100'],
-      expected: ['web', 'es2018'],
+      expected: ['web', 'browserslist:Chrome 100'],
     },
     {
       browserslist: null,

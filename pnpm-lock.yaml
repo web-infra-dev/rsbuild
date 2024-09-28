@@ -633,9 +633,6 @@ importers:
       browserslist:
         specifier: 4.24.0
         version: 4.24.0
-      browserslist-to-es-version:
-        specifier: ^1.0.0
-        version: 1.0.0
       chokidar:
         specifier: 3.6.0
         version: 3.6.0
