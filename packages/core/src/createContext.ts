@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import browserslist from 'browserslist';
+import { loadConfig } from 'browserslist-load-config';
 import { withDefaultConfig } from './config';
 import { DEFAULT_BROWSERSLIST, ROOT_DIST_DIR } from './constants';
 import { getAbsolutePath, getCommonParentPath } from './helpers/path';
@@ -37,7 +37,7 @@ export async function getBrowserslist(path: string): Promise<string[] | null> {
     return browsersListCache.get(cacheKey)!;
   }
 
-  const result = browserslist.loadConfig({ path, env });
+  const result = loadConfig({ path, env });
 
   if (result) {
     browsersListCache.set(cacheKey, result);

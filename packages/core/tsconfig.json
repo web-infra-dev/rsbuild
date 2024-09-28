@@ -20,7 +20,6 @@
       "chokidar": ["./compiled/chokidar"],
       "picocolors": ["./compiled/picocolors"],
       "on-finished": ["./compiled/on-finished"],
-      "browserslist": ["./compiled/browserslist"],
       "rspack-chain": ["./compiled/rspack-chain"],
       "webpack-merge": ["./compiled/webpack-merge"],
       "html-rspack-plugin": ["./compiled/html-rspack-plugin"],

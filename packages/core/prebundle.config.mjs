@@ -25,9 +25,6 @@ const skipSemver = (task) => {
 export default {
   prettier: true,
   externals: {
-    // External caniuse-lite data, so users can update it manually.
-    'caniuse-lite': 'caniuse-lite',
-    '/^caniuse-lite(/.*)/': 'caniuse-lite$1',
     '@rspack/core': '@rspack/core',
     '@rspack/lite-tapable': '@rspack/lite-tapable',
     webpack: 'webpack',
@@ -88,18 +85,6 @@ export default {
     {
       name: 'connect-history-api-fallback',
       ignoreDts: true,
-    },
-    {
-      name: 'browserslist',
-      // preserve the `require(require.resolve())`
-      beforeBundle(task) {
-        replaceFileContent(join(task.depPath, 'node.js'), (content) =>
-          content.replaceAll(
-            'require(require.resolve',
-            'eval("require")(require.resolve',
-          ),
-        );
-      },
     },
     {
       name: 'rspack-chain',
