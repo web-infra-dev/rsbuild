@@ -40,8 +40,8 @@ export async function getBrowserslist(path: string): Promise<string[] | null> {
   const result = loadConfig({ path, env });
 
   if (result) {
-    browsersListCache.set(cacheKey, result as string[]);
-    return result as string[];
+    browsersListCache.set(cacheKey, result);
+    return result;
   }
 
   return null;
