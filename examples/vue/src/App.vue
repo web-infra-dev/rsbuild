@@ -19,6 +19,7 @@
   font-size: 3.6rem;
   font-weight: 700;
 }
+
 .content p {
   font-size: 1.2rem;
   font-weight: 400;
