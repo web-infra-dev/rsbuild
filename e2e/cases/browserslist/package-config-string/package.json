@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "browserslist": [
+    "Chrome >= 40",
+    "Edge >= 79"
+  ]
+}
