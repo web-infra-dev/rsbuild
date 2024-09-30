@@ -109,7 +109,7 @@ function getURLMessages(
     return urls
       .map(
         ({ label, url }) =>
-          `  ${`> ${label.padEnd(10)}`}${color.cyan(
+          `  ${`➜ ${label.padEnd(10)}`}${color.cyan(
             normalizeUrl(`${url}${routes[0].pathname}`),
           )}\n`,
       )
@@ -122,7 +122,7 @@ function getURLMessages(
     if (index > 0) {
       message += '\n';
     }
-    message += `  ${`> ${label}`}\n`;
+    message += `  ${`➜ ${label}`}\n`;
 
     for (const r of routes) {
       message += `  ${color.dim('-')} ${color.dim(
@@ -199,13 +199,11 @@ export const getPort = async ({
   port,
   strictPort,
   tryLimits = 20,
-  silent = false,
 }: {
   host: string;
   port: string | number;
   strictPort: boolean;
   tryLimits?: number;
-  silent?: boolean;
 }): Promise<number> => {
   if (typeof port === 'string') {
     port = Number.parseInt(port, 10);
@@ -245,11 +243,6 @@ export const getPort = async ({
         `Port "${original}" is occupied, please choose another one.`,
       );
     }
-    if (!silent) {
-      logger.info(
-        `Port ${original} is in use, ${color.yellow(`using port ${port}.`)}\n`,
-      );
-    }
   }
 
   return port;
@@ -257,24 +250,33 @@ export const getPort = async ({
 
 export const getServerConfig = async ({
   config,
-  getPortSilently,
 }: {
   config: NormalizedConfig;
-  getPortSilently?: boolean;
 }): Promise<{
   port: number;
   host: string;
   https: boolean;
+  portTip: string | undefined;
 }> => {
   const host = config.server.host || DEFAULT_DEV_HOST;
+  const originalPort = config.server.port || DEFAULT_PORT;
   const port = await getPort({
     host,
-    port: config.server.port || DEFAULT_PORT,
+    port: originalPort,
     strictPort: config.server.strictPort || false,
-    silent: getPortSilently,
   });
   const https = Boolean(config.server.https) || false;
-  return { port, host, https };
+  const portTip =
+    port !== originalPort
+      ? `Port ${originalPort} is in use, ${color.yellow(`using port ${port}.`)}`
+      : undefined;
+
+  return {
+    port,
+    host,
+    https,
+    portTip,
+  };
 };
 
 const getIpv4Interfaces = () => {
