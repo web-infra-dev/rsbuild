@@ -201,7 +201,11 @@ importers:
         specifier: workspace:*
         version: link:../browserslist-config-mock
 
-  e2e/cases/browserslist/package-json-config: {}
+  e2e/cases/browserslist/package-config-array: {}
+
+  e2e/cases/browserslist/package-config-object: {}
+
+  e2e/cases/browserslist/package-config-string: {}
 
   e2e/cases/html-loader:
     dependencies:
