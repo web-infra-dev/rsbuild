@@ -266,15 +266,16 @@ export const getServerConfig = async ({
     strictPort: config.server.strictPort || false,
   });
   const https = Boolean(config.server.https) || false;
+  const portTip =
+    port !== originalPort
+      ? `Port ${originalPort} is in use, ${color.yellow(`using port ${port}.`)}`
+      : undefined;
 
   return {
     port,
     host,
     https,
-    portTip:
-      port !== originalPort
-        ? `Port ${originalPort} is in use, ${color.yellow(`using port ${port}.`)}`
-        : undefined,
+    portTip,
   };
 };
 
