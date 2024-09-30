@@ -14,6 +14,7 @@ import type {
   NormalizedDevConfig,
   Rspack,
 } from '../types';
+import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
 import { getTransformedHtml, loadBundle } from './environment';
 import {
   type RsbuildDevMiddlewareOptions,
@@ -186,14 +187,24 @@ export async function createDevServer<
     environments: options.context.environments,
   });
 
-  const printUrls = () => {
+  const cliShortcutsEnabled = isCliShortcutsEnabled(devConfig);
+
+  const printUrls = () =>
     printServerURLs({
       urls,
       port,
       routes,
       protocol,
       printUrls: config.server.printUrls,
+      trailingLineBreak: !cliShortcutsEnabled,
     });
+
+  const beforeCreateCompiler = () => {
+    printUrls();
+
+    if (cliShortcutsEnabled) {
+      setupCliShortcuts([]);
+    }
 
     if (!getPortSilently && portTip) {
       logger.info(portTip);
@@ -202,9 +213,9 @@ export async function createDevServer<
 
   if (runCompile) {
     // print server url should between listen and beforeCompile
-    options.context.hooks.onBeforeCreateCompiler.tap(printUrls);
+    options.context.hooks.onBeforeCreateCompiler.tap(beforeCreateCompiler);
   } else {
-    printUrls();
+    beforeCreateCompiler();
   }
 
   const compileMiddlewareAPI = runCompile ? await startCompile() : undefined;

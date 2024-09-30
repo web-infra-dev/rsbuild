@@ -57,6 +57,7 @@ const getDefaultDevConfig = (): NormalizedDevConfig => ({
   liveReload: true,
   assetPrefix: DEFAULT_ASSET_PREFIX,
   writeToDisk: false,
+  cliShortcuts: false,
   client: {
     path: HMR_SOCKET_PATH,
     port: '',
