@@ -36,7 +36,7 @@
     "@babel/preset-typescript": "^7.24.7",
     "@rsbuild/core": "workspace:*",
     "@types/serialize-javascript": "^5.0.4",
-    "terser": "5.34.0",
+    "terser": "5.34.1",
     "typescript": "^5.5.2"
   },
   "peerDependencies": {
