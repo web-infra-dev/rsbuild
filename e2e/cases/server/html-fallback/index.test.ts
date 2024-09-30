@@ -36,6 +36,11 @@ test('should access / success and htmlFallback success by default', async ({
 
   await expect(page.locator('#test')).toHaveText('Hello Rsbuild!');
 
+  // compat invalid route and fallback success
+  await page.goto(`http://localhost:${rsbuild.port}//aaaaa`);
+
+  await expect(page.locator('#test')).toHaveText('Hello Rsbuild!');
+
   await rsbuild.close();
 });
 
