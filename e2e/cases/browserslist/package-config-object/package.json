@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "browserslist": {
+    "production": [
+      "Chrome >= 40",
+      "Edge >= 79"
+    ]
+  }
+}

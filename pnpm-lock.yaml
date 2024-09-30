@@ -201,6 +201,8 @@ importers:
         specifier: workspace:*
         version: link:../browserslist-config-mock
 
+  e2e/cases/browserslist/package-json-config: {}
+
   e2e/cases/html-loader:
     dependencies:
       html-loader:
@@ -248,7 +250,7 @@ importers:
     dependencies:
       '@rsbuild/plugin-styled-components':
         specifier: ^1.0.1
-        version: 1.0.1(@rsbuild/core@1.0.7)
+        version: 1.0.1(@rsbuild/core@1.0.8)
       styled-components:
         specifier: ^6.1.13
         version: 6.1.13(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react@19.0.0-rc-fb9a90fa48-20240614)
@@ -628,8 +630,8 @@ importers:
         specifier: ^8.5.12
         version: 8.5.12
       browserslist-load-config:
-        specifier: 0.0.2
-        version: 0.0.2
+        specifier: 0.1.1
+        version: 0.1.1
       chokidar:
         specifier: 3.6.0
         version: 3.6.0
@@ -2564,6 +2566,11 @@ packages:
     engines: {node: '>=16.7.0'}
     hasBin: true
 
+  '@rsbuild/core@1.0.8':
+    resolution: {integrity: sha512-c5tdq+mcP3xZWaNN5J+Rderzcp6uA9NfbyQtYMqYvlNfEw9RcsqQYMPoUMqpx1V9jqbKHSNl/fTtves1X+TS2A==}
+    engines: {node: '>=16.7.0'}
+    hasBin: true
+
   '@rsbuild/plugin-babel@1.0.1-rc.5':
     resolution: {integrity: sha512-8Tr566hx+dK5mQRqDNPCUvjPKWtmYdwKmFEuwNmCm5674VSzcTZmsPTK0df4A3ZTnvlowsQTiP6hhNW2DTi6cQ==}
     peerDependencies:
@@ -3515,8 +3522,8 @@ packages:
     resolution: {integrity: sha512-b8um+L1RzM3WDSzvhm6gIz1yfTbBt6YTlcEKAvsmqCZZFw46z626lVj9j1yEPW33H5H+lBQpZMP1k8l+78Ha0A==}
     engines: {node: '>=8'}
 
-  browserslist-load-config@0.0.2:
-    resolution: {integrity: sha512-RgkU70UnPPvnNQlYfOgkflcIz13nIlk5y1ALN9RminnqyZiYW3VxJDcm8n6gqdVoth7528URtzJFW8YwZ2zYbg==}
+  browserslist-load-config@0.1.1:
+    resolution: {integrity: sha512-YDAbxHkpE1IkRFUuTtXHrAlUfhdU6VFYXSCrG33o8rKzfJJuWITKY+TZseSr9AmdLgt1d/XAv/4syMR/n7YkSA==}
 
   browserslist-to-es-version@1.0.0:
     resolution: {integrity: sha512-i6dR03ClGy9ti97FSa4s0dpv01zW/t5VbvGjFfTLsrRQFsPgSeyGkCrlU7BTJuI5XDHVY5S2JgDnDsvQXifJ8w==}
@@ -9077,6 +9084,16 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
+  '@rsbuild/core@1.0.8':
+    dependencies:
+      '@rspack/core': 1.0.8(@swc/helpers@0.5.13)
+      '@rspack/lite-tapable': 1.0.1
+      '@swc/helpers': 0.5.13
+      core-js: 3.38.1
+    optionalDependencies:
+      fsevents: 2.3.3
+    optional: true
+
   '@rsbuild/plugin-babel@1.0.1-rc.5(@rsbuild/core@packages+core)':
     dependencies:
       '@babel/core': 7.25.2
@@ -9129,12 +9146,12 @@ snapshots:
       reduce-configs: 1.0.0
       sass-embedded: 1.79.3
 
-  '@rsbuild/plugin-styled-components@1.0.1(@rsbuild/core@1.0.7)':
+  '@rsbuild/plugin-styled-components@1.0.1(@rsbuild/core@1.0.8)':
     dependencies:
       '@swc/plugin-styled-components': 2.0.11
       reduce-configs: 1.0.0
     optionalDependencies:
-      '@rsbuild/core': 1.0.7
+      '@rsbuild/core': 1.0.8
 
   '@rsbuild/plugin-vue-jsx@1.0.1(@babel/core@7.25.2)(@rsbuild/core@packages+core)':
     dependencies:
@@ -10215,7 +10232,7 @@ snapshots:
     dependencies:
       fill-range: 7.0.1
 
-  browserslist-load-config@0.0.2: {}
+  browserslist-load-config@0.1.1: {}
 
   browserslist-to-es-version@1.0.0:
     dependencies:
