@@ -1,6 +1,5 @@
 import type { IncomingMessage } from 'node:http';
 import path from 'node:path';
-import { parse } from 'node:url';
 import type Connect from 'connect';
 import color from 'picocolors';
 import { logger } from '../logger';
@@ -103,6 +102,12 @@ const maybeHTMLRequest = (req: IncomingMessage) => {
   );
 };
 
+const postfixRE = /[?#].*$/;
+
+const getUrlPathname = (url: string): string => {
+  return url.replace(postfixRE, '');
+};
+
 /**
  * Support access HTML without suffix
  */
@@ -117,17 +122,8 @@ export const getHtmlCompletionMiddleware: (params: {
     }
 
     const url = req.url!;
-    let pathname: string;
 
-    // Handle invalid URLs
-    try {
-      pathname = parse(url, false, true).pathname!;
-    } catch (err) {
-      logger.error(
-        new Error(`Invalid URL: ${color.yellow(url)}`, { cause: err }),
-      );
-      return next();
-    }
+    const pathname = getUrlPathname(url);
 
     const rewrite = (newUrl: string) => {
       req.url = newUrl;
