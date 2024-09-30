@@ -53,27 +53,26 @@
 		}
 	],
 	"ignoreDeps": [
-		// manually update some packages
+		// manually update
 		"pnpm",
-		"esbuild",
-		"typescript",
-		// related to the SWC version built into Rspack
-		"@swc/helpers",
 		// some loaders still depend on loader-utils v2
 		"loader-utils",
 		// pure esm packages can not be used now
-		"globby",
 		"open",
 		"strip-ansi",
 		"ansi-escapes",
 		"cli-truncate",
 		"patch-console",
-		// buffer v6 has compatibility issues as node polyfill
-		"buffer",
 		// align Node.js version minimum requirements
 		"@types/node",
 		"node",
 		// does not follow semver
-		"babel-plugin-react-compiler"
+		"babel-plugin-react-compiler",
+		// require Node 18
+		"copy-webpack-plugin",
+		// major version contains breaking changes
+		"chokidar",
+		"style-loader",
+		"http-proxy-middleware"
 	]
 }
