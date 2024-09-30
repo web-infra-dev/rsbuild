@@ -14,17 +14,13 @@
       "sirv": ["./compiled/sirv"],
       "jiti": ["./compiled/jiti"],
       "rslog": ["./compiled/rslog"],
-      "dotenv": ["./compiled/dotenv"],
       "mrmime": ["./compiled/mrmime"],
       "semver": ["./compiled/semver"],
       "connect": ["./compiled/connect"],
       "chokidar": ["./compiled/chokidar"],
-      "commander": ["./compiled/commander"],
       "picocolors": ["./compiled/picocolors"],
       "on-finished": ["./compiled/on-finished"],
-      "browserslist": ["./compiled/browserslist"],
       "rspack-chain": ["./compiled/rspack-chain"],
-      "dotenv-expand": ["./compiled/dotenv-expand"],
       "webpack-merge": ["./compiled/webpack-merge"],
       "html-rspack-plugin": ["./compiled/html-rspack-plugin"],
       "http-proxy-middleware": ["./compiled/http-proxy-middleware"],
@@ -33,7 +29,6 @@
       "rspack-manifest-plugin": ["./compiled/rspack-manifest-plugin"],
       "rsbuild-dev-middleware": ["./compiled/rsbuild-dev-middleware"],
       "launch-editor-middleware": ["./compiled/launch-editor-middleware"],
-      "browserslist-to-es-version": ["./compiled/browserslist-to-es-version"],
       "connect-history-api-fallback": [
         "./compiled/connect-history-api-fallback"
       ]

@@ -154,9 +154,8 @@ export async function startProdServer(
   config: NormalizedConfig,
   { getPortSilently }: PreviewServerOptions = {},
 ): Promise<StartServerResult> {
-  const { port, host, https } = await getServerConfig({
+  const { port, host, https, portTip } = await getServerConfig({
     config,
-    getPortSilently,
   });
 
   const { default: connect } = await import('connect');
@@ -211,6 +210,10 @@ export async function startProdServer(
           protocol,
           printUrls: serverConfig.printUrls,
         });
+
+        if (portTip && !getPortSilently) {
+          logger.info(portTip);
+        }
 
         const onClose = async () => {
           await Promise.all([server.close(), serverTerminator()]);

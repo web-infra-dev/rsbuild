@@ -5,13 +5,6 @@ import fs from 'node:fs';
  */
 import { join } from 'node:path';
 
-// postcss-loader and css-loader use `semver` to compare PostCSS ast version,
-// Rsbuild uses the same PostCSS version and do not need the comparison.
-const writeEmptySemver = (task) => {
-  const schemaUtilsPath = join(task.distPath, 'semver.js');
-  fs.writeFileSync(schemaUtilsPath, 'module.exports.satisfies = () => true;');
-};
-
 function replaceFileContent(filePath, replaceFn) {
   const content = fs.readFileSync(filePath, 'utf-8');
   const newContent = replaceFn(content);
@@ -20,13 +13,18 @@ function replaceFileContent(filePath, replaceFn) {
   }
 }
 
+// postcss-loader and css-loader use `semver` to compare PostCSS ast version,
+// Rsbuild uses the same PostCSS version and do not need the comparison.
+const skipSemver = (task) => {
+  replaceFileContent(join(task.depPath, 'dist/index.js'), (content) =>
+    content.replaceAll('require("semver")', '({ satisfies: () => true })'),
+  );
+};
+
 /** @type {import('prebundle').Config} */
 export default {
   prettier: true,
   externals: {
-    // External caniuse-lite data, so users can update it manually.
-    'caniuse-lite': 'caniuse-lite',
-    '/^caniuse-lite(/.*)/': 'caniuse-lite$1',
     '@rspack/core': '@rspack/core',
     '@rspack/lite-tapable': '@rspack/lite-tapable',
     webpack: 'webpack',
@@ -34,9 +32,6 @@ export default {
   },
   dependencies: [
     'open',
-    'commander',
-    'dotenv',
-    'dotenv-expand',
     'ws',
     'on-finished',
     'connect',
@@ -92,18 +87,6 @@ export default {
       ignoreDts: true,
     },
     {
-      name: 'browserslist',
-      // preserve the `require(require.resolve())`
-      beforeBundle(task) {
-        replaceFileContent(join(task.depPath, 'node.js'), (content) =>
-          content.replaceAll(
-            'require(require.resolve',
-            'eval("require")(require.resolve',
-          ),
-        );
-      },
-    },
-    {
       name: 'rspack-chain',
       externals: {
         '@rspack/core': '@rspack/core',
@@ -152,6 +135,9 @@ export default {
     {
       name: 'postcss',
       ignoreDts: true,
+      externals: {
+        picocolors: '../picocolors',
+      },
     },
     {
       name: 'css-loader',
@@ -159,24 +145,8 @@ export default {
       externals: {
         semver: './semver',
         postcss: '../postcss',
-        picocolors: '../picocolors',
       },
-      beforeBundle(task) {
-        // Temp fix for https://github.com/web-infra-dev/rspack/issues/7819
-        replaceFileContent(join(task.depPath, 'dist/index.js'), (content) =>
-          content.replaceAll(
-            'if (meta) {',
-            'if (meta && !rawOptions._skipReuseAST) {',
-          ),
-        );
-        replaceFileContent(join(task.depPath, 'dist/index.js'), (content) =>
-          content.replaceAll(
-            'this.getOptions(_options.default)',
-            'this.getOptions()',
-          ),
-        );
-      },
-      afterBundle: writeEmptySemver,
+      beforeBundle: skipSemver,
     },
     {
       name: 'postcss-loader',
@@ -192,8 +162,8 @@ export default {
           // the ralevent code will never be executed, so we can replace it with an empty object.
           content.replaceAll('require("cosmiconfig")', '{}'),
         );
+        skipSemver(task);
       },
-      afterBundle: writeEmptySemver,
     },
     {
       name: 'postcss-load-config',

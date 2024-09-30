@@ -109,9 +109,8 @@ export async function createDevServer<
 ): Promise<RsbuildDevServer> {
   logger.debug('create dev server');
 
-  const { port, host, https } = await getServerConfig({
+  const { port, host, https, portTip } = await getServerConfig({
     config,
-    getPortSilently,
   });
   const devConfig = formatDevConfig(config.dev, port);
 
@@ -195,6 +194,10 @@ export async function createDevServer<
       protocol,
       printUrls: config.server.printUrls,
     });
+
+    if (!getPortSilently && portTip) {
+      logger.info(portTip);
+    }
   };
 
   if (runCompile) {

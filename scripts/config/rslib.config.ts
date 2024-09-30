@@ -9,9 +9,10 @@ export const dualPackage = defineConfig({
   lib: [
     {
       format: 'esm',
+      syntax: 'es2021',
       dts: { bundle: false },
     },
-    { format: 'cjs' },
+    { format: 'cjs', syntax: 'es2021' },
   ],
   output: {
     target: 'node',

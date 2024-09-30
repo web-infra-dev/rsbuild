@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-webpack-swc",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "SWC plugin for Rsbuild webpack provider",
   "repository": {
     "type": "git",
@@ -38,10 +38,10 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "@types/lodash": "^4.17.7",
+    "@types/lodash": "^4.17.9",
     "@types/semver": "^7.5.8",
     "typescript": "^5.5.2",
-    "webpack": "^5.94.0"
+    "webpack": "^5.95.0"
   },
   "peerDependencies": {
     "@rsbuild/core": "1.x || ^1.0.1-rc.0"

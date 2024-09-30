@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/core",
-  "version": "1.0.5",
+  "version": "1.0.9",
   "description": "The Rspack-based build tool.",
   "homepage": "https://rsbuild.dev",
   "bugs": {
@@ -51,10 +51,9 @@
     "prebundle": "prebundle"
   },
   "dependencies": {
-    "@rspack/core": "~1.0.5",
-    "@rspack/lite-tapable": "~1.0.0",
+    "@rspack/core": "~1.0.8",
+    "@rspack/lite-tapable": "~1.0.1",
     "@swc/helpers": "^0.5.13",
-    "caniuse-lite": "^1.0.30001662",
     "core-js": "~3.38.1"
   },
   "devDependencies": {
@@ -64,8 +63,7 @@
     "@types/on-finished": "2.3.4",
     "@types/webpack-bundle-analyzer": "4.7.0",
     "@types/ws": "^8.5.12",
-    "browserslist": "4.23.3",
-    "browserslist-to-es-version": "^1.0.0",
+    "browserslist-load-config": "0.1.1",
     "chokidar": "3.6.0",
     "commander": "^12.1.0",
     "connect": "3.7.0",
@@ -90,13 +88,13 @@
     "reduce-configs": "^1.0.0",
     "rsbuild-dev-middleware": "0.1.1",
     "rslog": "^1.2.3",
-    "rspack-chain": "^1.0.1",
+    "rspack-chain": "^1.0.3",
     "rspack-manifest-plugin": "5.0.1",
     "sirv": "^2.0.4",
     "style-loader": "3.3.4",
     "tsc-alias": "^1.8.10",
     "typescript": "^5.5.2",
-    "webpack": "^5.94.0",
+    "webpack": "^5.95.0",
     "webpack-bundle-analyzer": "^4.10.2",
     "webpack-merge": "6.0.1",
     "ws": "^8.18.0"

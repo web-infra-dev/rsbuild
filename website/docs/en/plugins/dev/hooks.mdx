@@ -332,7 +332,11 @@ const myPlugin = () => ({
 
 ### modifyRspackConfig
 
-To modify the final Rspack config, you can directly modify the config object, or return a new object to replace the previous object.
+To modify the Rspack config, you can directly modify the config object, or return a new object to replace the previous object.
+
+:::tip
+`modifyRspackConfig` is executed earlier than [tools.rspack](/config/tools/rspack). Therefore, the modifications made by `tools.rspack` cannot be obtained in `modifyRspackConfig`.
+:::
 
 - **Type:**
 
