@@ -11,7 +11,9 @@ This config is only used in production mode. In development mode, please use the
 
 ## Example
 
-After setting, the URLs of JavaScript, CSS and other static files will be prefixed with `output.assetPrefix`:
+Setting `output.assetPrefix` will add the value as a prefix to the URLs of all static assets like JavaScript, CSS, images, etc.
+
+- For example, setting it to a CDN address:
 
 ```js
 export default {
@@ -21,13 +23,29 @@ export default {
 };
 ```
 
-After building, you can see that the JS files are loaded from:
+After the build, the URL of the JS file will be:
 
 ```html
 <script
   defer
-  src="https://cdn.example.com/assets/static/js/main.ebc4ff4f.js"
+  src="https://cdn.example.com/assets/static/js/index.ebc4ff4f.js"
 ></script>
+```
+
+- Setting it to a relative path:
+
+```js
+export default {
+  output: {
+    assetPrefix: './',
+  },
+};
+```
+
+After the build, the URL of the JS file will be:
+
+```html
+<script defer src="./static/js/index.ebc4ff4f.js"></script>
 ```
 
 ## Path Types
@@ -35,6 +53,7 @@ After building, you can see that the JS files are loaded from:
 assetPrefix can be set to the following types of paths:
 
 - **absolute path**: This is the most common practice, can be specific server paths, like `/assets/`, or setting to CDN paths, like `https://cdn.example.com/assets/`.
+- **relative path**: such as `./assets/`.
 - **'auto'**: Rspack will automatically calculate the path and generate relative paths based on file location.
 
 :::tip

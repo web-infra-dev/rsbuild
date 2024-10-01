@@ -11,7 +11,9 @@
 
 ## 示例
 
-设置后，项目的 JavaScript、CSS、图片等静态资源的 URL 都会加上 `output.assetPrefix` 作为前缀：
+设置 `output.assetPrefix` 后，JavaScript、CSS、图片等静态资源的 URL 都会加上 `output.assetPrefix` 的值作为前缀。
+
+- 例如，设置为一个 CDN 地址：
 
 ```js
 export default {
@@ -21,13 +23,29 @@ export default {
 };
 ```
 
-构建之后，可以看到 JS 文件从以下地址加载：
+构建后，JS 文件的 URL 如下：
 
 ```html
 <script
   defer
-  src="https://cdn.example.com/assets/static/js/main.ebc4ff4f.js"
+  src="https://cdn.example.com/assets/static/js/index.ebc4ff4f.js"
 ></script>
+```
+
+- 设置为相对路径：
+
+```js
+export default {
+  output: {
+    assetPrefix: './',
+  },
+};
+```
+
+构建后，JS 文件的 URL 如下：
+
+```html
+<script defer src="./static/js/index.ebc4ff4f.js"></script>
 ```
 
 ## 路径类型
@@ -35,10 +53,11 @@ export default {
 assetPrefix 可以设置为以下类型的路径：
 
 - **绝对路径**：这是最常见的做法，可以为指定服务器路径，比如 `/assets/`，或是设置为 CDN 路径，比如 `https://cdn.example.com/assets/`。
+- **相对路径**：比如 `./assets/`。
 - **'auto'**：Rspack 将自动计算路径，并生成基于文件所在位置的相对路径。
 
 :::tip
-不建议将 assetPrefix 设置为相对路径，比如 `'./assets/'`。因为当资源位于不同的路径深度时，使用相对路径可能会导致资源无法正确加载。
+通常不建议将 assetPrefix 设置为相对路径，因为当资源位于不同的路径深度时，使用相对路径可能会导致资源无法正确加载。
 :::
 
 ## 对比 `publicPath`
