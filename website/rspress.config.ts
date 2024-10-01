@@ -80,9 +80,6 @@ export default defineConfig({
     exclude: ['**/zh/shared/**', '**/en/shared/**', './theme', './src'],
   },
   themeConfig: {
-    footer: {
-      message: 'Copyright © 2024 ByteDance.',
-    },
     socialLinks: [
       {
         icon: 'github',
