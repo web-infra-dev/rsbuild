@@ -28,7 +28,7 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@types/node": "18.x",
-    "typescript": "^5.5.2"
+    "typescript": "^5.6.2"
   },
   "peerDependencies": {
     "@rsbuild/core": "1.x || ^1.0.1-rc.0"
