@@ -44,4 +44,21 @@ describe('plugin-sass', () => {
     const bundlerConfigs = await rsbuild.initConfigs();
     expect(matchRules(bundlerConfigs[0], 'a.scss')).toMatchSnapshot();
   });
+
+  it('should allow to use legacy API and mute deprecation warnings', async () => {
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        plugins: [
+          pluginSass({
+            sassLoaderOptions: {
+              api: 'legacy',
+            },
+          }),
+        ],
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+    expect(matchRules(bundlerConfigs[0], 'a.scss')).toMatchSnapshot();
+  });
 });
