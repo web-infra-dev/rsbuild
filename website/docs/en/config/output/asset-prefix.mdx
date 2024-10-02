@@ -34,7 +34,7 @@ After building, you can see that the JS files are loaded from:
 
 The default value of `output.assetPrefix` is the same as [server.base](/config/server/base).
 
-When `server.base` is `/foo`, `index.html` and static assets can be accessed through http://localhost:3000/foo.
+When `server.base` is `/foo`, `index.html` and static assets can be accessed through `http://localhost:3000/foo/`.
 
 It should be noted that when customizing the `output.assetPrefix` option, if you want static assets to be accessible normally during [Rsbuild preview](/guide/basic/cli#rsbuild-preview), `output.assetPrefix` should contain the same url prefix as `server.base`, such as:
 

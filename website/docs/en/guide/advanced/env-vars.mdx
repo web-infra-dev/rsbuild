@@ -123,7 +123,7 @@ export default {
 };
 ```
 
-Then, the access path to the `favicon.ico` file in the public directory is `http://localhost:3000/foo/favicon.ico`. We can reference `./public/favicon.ico` file in the HTML template in the following way:
+Then, the access path to the `favicon.ico` file in the public directory is `http://localhost:3000/foo/favicon.ico`. We can reference `./public/favicon.ico` file in the HTML template like this:
 
 ```html title="index.html"
 <link rel="icon" href="<%= process.env.BASE_URL %>/favicon.ico" />

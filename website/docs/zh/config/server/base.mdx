@@ -1,7 +1,6 @@
 # server.base
 
 - **类型：** `string`
-
 - **默认值：** `/`
 
 `server.base` 用于配置服务端的[基础路径](/guide/basic/server#服务端基础路径)。
@@ -10,7 +9,7 @@
 
 默认情况下，服务端的基础路径为 `/`，用户可通过 http://localhost:3000 访问到 `index.html`。
 
-当我们希望通过 http://localhost:3000/foo 访问到 `index.html` 时，可将 `server.base` 修改为 `/foo`。
+当你希望通过 `http://localhost:3000/foo/` 访问到 `index.html` 时，可以将 `server.base` 修改为 `/foo`。
 
 ```ts
 export default {
@@ -30,7 +29,7 @@ export default {
 <script defer src="/foo/static/js/index.js"></script>
 ```
 
-此时，可通过 http://localhost:3000/foo 访问到 `index.html` 及静态资源产物。
+此时，可通过 `http://localhost:3000/foo/` 访问到 `index.html` 及静态资源产物。
 
 如果您不希望使用此默认行为，可以通过显式设置 `dev.assetPrefix` / `output.assetPrefix` 来覆盖：
 
