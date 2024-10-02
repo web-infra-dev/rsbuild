@@ -1,7 +1,7 @@
 # dev.assetPrefix
 
 - **类型：** `boolean | string | 'auto'`
-- **默认值：** [`server.base`](/config/server/base)
+- **默认值：** [server.base](/config/server/base)
 
 设置 [开发模式](/config/mode) 下的静态资源 URL 前缀。
 
@@ -15,7 +15,7 @@
 
 当 `server.base` 为 `/foo` 时，可通过 `http://localhost:3000/foo/` 访问到 `index.html` 及其他静态资源产物。
 
-需要注意的是，当自定义 `dev.assetPrefix` 选项时，如果希望静态资源能够通过 Rsbuild 开发服务器正常访问到，`dev.assetPrefix` 应和 `server.base` 包含相同的 url 前缀，如：
+需要注意的是，当自定义 `dev.assetPrefix` 选项时，如果希望静态资源能够通过 Rsbuild 开发服务器正常访问到，`dev.assetPrefix` 应和 `server.base` 包含相同的 URL 前缀，如：
 
 ```ts
 export default {

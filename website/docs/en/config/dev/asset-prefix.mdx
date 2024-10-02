@@ -1,7 +1,7 @@
 # dev.assetPrefix
 
 - **Type:** `boolean | string | 'auto'`
-- **Default:** [`server.base`](/config/server/base)
+- **Default:** [server.base](/config/server/base)
 
 Set the URL prefix of static assets in [development mode](/config/mode).
 
@@ -15,7 +15,7 @@ The default value of `dev.assetPrefix` is the same as [server.base](/config/serv
 
 When `server.base` is `/foo`, `index.html` and other static assets can be accessed through `http://localhost:3000/foo/`.
 
-It should be noted that when customizing the `dev.assetPrefix` option, if you want static assets to be normally accessible through the Rsbuild dev server, `dev.assetPrefix` should contain the same url prefix as `server.base`, such as:
+It should be noted that when customizing the `dev.assetPrefix` option, if you want static assets to be normally accessible through the Rsbuild dev server, `dev.assetPrefix` should contain the same URL prefix as `server.base`, such as:
 
 ```ts
 export default {

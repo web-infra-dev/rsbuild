@@ -1,7 +1,7 @@
 # output.assetPrefix
 
 - **Type:** `string | 'auto'`
-- **Default:** [`server.base`](/config/server/base)
+- **Default:** [server.base](/config/server/base)
 
 In [production mode](/config/mode), use this option to set the URL prefix for static assets, such as setting it to a CDN URL.
 
@@ -54,7 +54,7 @@ The default value of `output.assetPrefix` is the same as [server.base](/config/s
 
 When `server.base` is `/foo`, `index.html` and static assets can be accessed through `http://localhost:3000/foo/`.
 
-It should be noted that when customizing the `output.assetPrefix` option, if you want static assets to be accessible normally during [Rsbuild preview](/guide/basic/cli#rsbuild-preview), `output.assetPrefix` should contain the same url prefix as `server.base`, such as:
+It should be noted that when customizing the `output.assetPrefix` option, if you want static assets to be accessible normally during [Rsbuild preview](/guide/basic/cli#rsbuild-preview), `output.assetPrefix` should contain the same URL prefix as `server.base`, such as:
 
 ```ts
 export default {

@@ -4,9 +4,9 @@ Rsbuild 配备了一个内置的开发服务器，旨在提升开发体验。当
 
 ## 服务端基础路径
 
-默认情况下，服务端的基础路径为 `/`，用户可通过 http://localhost:3000/ 访问到 `index.html` 等产物资源及 public 目录资源。
+默认情况下，服务端的基础路径为 `/`，用户可通过 http://localhost:3000/ 访问到 `index.html` 等产物资源、以及 public 目录下的资源。
 
-Rsbuild 支持通过 [server.base](/config/server/base) 修改服务端的基础路径。当我们希望通过 http://localhost:3000/foo/ 访问到这些资源时，可进行如下配置：
+Rsbuild 支持通过 [server.base](/config/server/base) 修改服务端的基础路径。当我们希望通过 http://localhost:3000/foo/ 访问到这些资源时，可以添加如下配置：
 
 ```ts title="rsbuild.config.ts"
 export default {
