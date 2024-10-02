@@ -122,7 +122,8 @@ export async function createDevServer<
     https,
   };
 
-  let outputFileSystem: Rspack.OutputFileSystem = fs;
+  // TODO: remove this type assertion after Rspack fix the type definition
+  let outputFileSystem = fs as Rspack.OutputFileSystem;
   let lastStats: Rspack.Stats[];
 
   // should register onDevCompileDone hook before startCompile
@@ -166,10 +167,11 @@ export async function createDevServer<
 
     await compilerDevMiddleware.init();
 
+    // TODO: remove this type assertion after Rspack fix the type definition
     outputFileSystem =
       (isMultiCompiler(compiler)
         ? compiler.compilers[0].outputFileSystem
-        : compiler.outputFileSystem) || fs;
+        : compiler.outputFileSystem) || (fs as Rspack.OutputFileSystem);
 
     return {
       middleware: compilerDevMiddleware.middleware,
