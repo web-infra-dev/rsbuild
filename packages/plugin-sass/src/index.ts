@@ -58,7 +58,7 @@ const getSassLoaderOptions = (
     mergedOptions.api === 'legacy' &&
     !mergedOptions.sassOptions?.silenceDeprecations
   ) {
-    // mute the noisy Sass legacy API warnings
+    // mute the noisy legacy API deprecation warnings
     mergedOptions.sassOptions ||= {};
     mergedOptions.sassOptions.silenceDeprecations = ['legacy-js-api'];
   }
