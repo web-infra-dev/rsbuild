@@ -9,7 +9,7 @@
 
 By default, the base path of the server is `/`, and users can access `index.html` through http://localhost:3000.
 
-If you want to access `index.html` through `http://localhost:3000/foo`, you can change `server.base` to `/foo`.
+If you want to access `index.html` through `http://localhost:3000/foo/`, you can change `server.base` to `/foo`.
 
 ```ts
 export default {
@@ -29,7 +29,7 @@ When `server.base` is `/foo`, the default resource URL loaded in the browser is 
 <script defer src="/foo/static/js/index.js"></script>
 ```
 
-Then, `index.html` and static asset outputs can be accessed through http://localhost:3000/foo.
+Then, `index.html` and static asset outputs can be accessed through `http://localhost:3000/foo/`.
 
 If you do not want to use this default behavior, you can override it by explicitly setting `dev.assetPrefix` / `output.assetPrefix` :
 
