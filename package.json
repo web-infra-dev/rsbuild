@@ -40,7 +40,7 @@
     "package.json": "pnpm run check-dependency-version"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.2",
+    "@biomejs/biome": "1.9.3",
     "@changesets/cli": "^2.27.8",
     "@modern-js/module-tools": "^2.60.2",
     "@rsbuild/config": "workspace:*",
@@ -50,7 +50,7 @@
     "cross-env": "^7.0.3",
     "cspell-ban-words": "^0.0.4",
     "nano-staged": "^0.8.0",
-    "nx": "^19.8.2",
+    "nx": "^19.8.3",
     "prettier": "^3.3.3",
     "simple-git-hooks": "^2.11.1",
     "typescript": "^5.5.2",
