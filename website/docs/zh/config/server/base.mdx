@@ -2,6 +2,7 @@
 
 - **类型：** `string`
 - **默认值：** `/`
+- **版本：** `>= 1.0.10`
 
 `server.base` 用于配置服务端的[基础路径](/guide/basic/server#服务端基础路径)。
 
@@ -35,11 +36,11 @@ export default {
 
 ```ts
 export default {
-  output: {
-    assetPrefix: '/',
-  },
   dev: {
     assetPrefix: '/',
+  },
+  output: {
+    assetPrefix: 'https://cdn.example.com/assets/',
   },
   server: {
     base: '/foo',
