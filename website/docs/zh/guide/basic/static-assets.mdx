@@ -103,7 +103,7 @@ console.log(logo); // "https://example.com/static/logo.6c12aba3.png"
 
 项目根目录下的 public 目录可以用于放置一些静态资源，这些资源不会被 Rsbuild 构建，并且可以直接通过 URL 引用。
 
-- 当你启动开发服务器时，这些资源会被托管在 `/` 根路径下。
+- 当你启动开发服务器时，这些资源会被托管在 [server.base](/config/server/base) 根路径下（默认 `/`）。
 - 当你执行生产模式构建时，这些资源会被拷贝到 [dist 目录](/guide/basic/output-files)。
 
 比如，你可以在 public 目录下放置 `robots.txt`、`manifest.json` 或 `favicon.ico` 等文件。
@@ -112,10 +112,10 @@ console.log(logo); // "https://example.com/static/logo.6c12aba3.png"
 
 你可以通过 URL 来引用 public 目录下的文件。
 
-例如，在 HTML 模板中，`./public/favicon.ico` 文件可以被引用为 `/favicon.ico`。
+例如，在 HTML 模板中，`./public/favicon.ico` 文件可以被引用为 `/favicon.ico`，[BASE_URL](/guide/advanced/env-vars#processenvpublic_base_path) 对应服务端的基础路径。
 
 ```html title="index.html"
-<link rel="icon" href="/favicon.ico" />
+<link rel="icon" href="<%= process.env.BASE_URL %>/favicon.ico" />
 ```
 
 ### 注意事项

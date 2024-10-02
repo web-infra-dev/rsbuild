@@ -92,6 +92,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     },
   },
   "server": {
+    "base": "/",
     "compress": true,
     "host": "0.0.0.0",
     "htmlFallback": "index",
@@ -217,6 +218,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
     },
   },
   "server": {
+    "base": "/",
     "compress": true,
     "host": "0.0.0.0",
     "htmlFallback": "index",
@@ -377,6 +379,7 @@ exports[`environment config > should print environment config when inspect confi
       },
     },
     "server": {
+      "base": "/",
       "compress": true,
       "host": "0.0.0.0",
       "htmlFallback": "index",
@@ -533,6 +536,7 @@ exports[`environment config > should print environment config when inspect confi
       },
     },
     "server": {
+      "base": "/",
       "compress": true,
       "host": "0.0.0.0",
       "htmlFallback": "index",
@@ -708,6 +712,7 @@ exports[`environment config > should support modify environment config by api.mo
       },
     },
     "server": {
+      "base": "/",
       "compress": true,
       "host": "0.0.0.0",
       "htmlFallback": "index",
@@ -865,6 +870,7 @@ exports[`environment config > should support modify environment config by api.mo
       },
     },
     "server": {
+      "base": "/",
       "compress": true,
       "host": "0.0.0.0",
       "htmlFallback": "index",
@@ -1023,6 +1029,7 @@ exports[`environment config > should support modify environment config by api.mo
       },
     },
     "server": {
+      "base": "/",
       "compress": true,
       "host": "0.0.0.0",
       "htmlFallback": "index",
@@ -1184,6 +1191,7 @@ exports[`environment config > should support modify single environment config by
       },
     },
     "server": {
+      "base": "/",
       "compress": true,
       "host": "0.0.0.0",
       "htmlFallback": "index",
@@ -1341,6 +1349,7 @@ exports[`environment config > should support modify single environment config by
       },
     },
     "server": {
+      "base": "/",
       "compress": true,
       "host": "0.0.0.0",
       "htmlFallback": "index",
@@ -1693,6 +1702,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             "import.meta.env.MODE": ""development"",
             "import.meta.env.PROD": false,
             "process.env.ASSET_PREFIX": """",
+            "process.env.BASE_URL": "\\"/\\"",
           },
         ],
         "affectedHooks": "compilation",
@@ -2010,6 +2020,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             "import.meta.env.MODE": ""development"",
             "import.meta.env.PROD": false,
             "process.env.ASSET_PREFIX": """",
+            "process.env.BASE_URL": "\\"/\\"",
           },
         ],
         "affectedHooks": "compilation",

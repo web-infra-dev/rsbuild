@@ -6,7 +6,7 @@ import os from 'node:os';
 import { posix } from 'node:path';
 import color from 'picocolors';
 import { DEFAULT_DEV_HOST, DEFAULT_PORT } from '../constants';
-import { isFunction } from '../helpers';
+import { addTrailingSlash, isFunction, removeLeadingSlash } from '../helpers';
 import { logger } from '../logger';
 import type {
   InternalContext,
@@ -58,6 +58,26 @@ const formatPrefix = (input: string | undefined) => {
   return `${hasLeadingSlash ? '' : '/'}${prefix}${hasTailSlash ? '' : '/'}`;
 };
 
+// /a + /b => /a/b
+export const joinUrlSegments = (s1: string, s2: string): string => {
+  if (!s1 || !s2) {
+    return s1 || s2 || '';
+  }
+
+  return addTrailingSlash(s1) + removeLeadingSlash(s2);
+};
+
+export const stripBase = (path: string, base: string): string => {
+  if (path === base) {
+    return '/';
+  }
+  const trailingSlashBase = addTrailingSlash(base);
+
+  return path.startsWith(trailingSlashBase)
+    ? path.slice(trailingSlashBase.length - 1)
+    : path;
+};
+
 export const getRoutes = (context: InternalContext): Routes => {
   return Object.values(context.environments).reduce<Routes>(
     (prev, environmentContext) => {
@@ -66,6 +86,7 @@ export const getRoutes = (context: InternalContext): Routes => {
 
       const routes = formatRoutes(
         environmentContext.htmlPaths,
+        context.normalizedConfig!.server.base,
         posix.join(distPrefix, config.output.distPath.html),
         config.html.outputStructure,
       );
@@ -80,10 +101,11 @@ export const getRoutes = (context: InternalContext): Routes => {
  */
 export const formatRoutes = (
   entry: RsbuildEntry,
-  prefix: string | undefined,
+  base: string,
+  distPathPrefix: string | undefined,
   outputStructure: OutputStructure | undefined,
 ): Routes => {
-  const formattedPrefix = formatPrefix(prefix);
+  const prefix = joinUrlSegments(base, formatPrefix(distPathPrefix));
 
   return (
     Object.keys(entry)
@@ -93,7 +115,7 @@ export const formatRoutes = (
         const displayName = isIndex ? '' : entryName;
         return {
           entryName,
-          pathname: formattedPrefix + displayName,
+          pathname: prefix + displayName,
         };
       })
       // adjust the index route to be the first

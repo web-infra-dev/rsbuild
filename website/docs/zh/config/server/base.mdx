@@ -1,0 +1,48 @@
+# server.base
+
+- **类型：** `string`
+- **默认值：** `/`
+
+`server.base` 用于配置服务端的[基础路径](/guide/basic/server#服务端基础路径)。
+
+### 示例
+
+默认情况下，服务端的基础路径为 `/`，用户可通过 http://localhost:3000 访问到 `index.html`。
+
+当你希望通过 `http://localhost:3000/foo/` 访问到 `index.html` 时，可以将 `server.base` 修改为 `/foo`。
+
+```ts
+export default {
+  server: {
+    base: '/foo',
+  },
+};
+```
+
+### 静态资源 URL 前缀
+
+默认情况下，[dev.assetPrefix](/config/dev/asset-prefix) 和 [output.assetPrefix](/config/output/asset-prefix) 会读取 `server.base` 的值作为 `assetPrefix` 的默认值。
+
+当 `server.base` 为 `/foo` 时，默认在浏览器中加载的资源 URL 如下：
+
+```html
+<script defer src="/foo/static/js/index.js"></script>
+```
+
+此时，可以通过 `http://localhost:3000/foo/` 访问到 `index.html` 以及其他静态资源产物。
+
+如果您不希望使用此默认行为，可以通过显式设置 `dev.assetPrefix` / `output.assetPrefix` 来覆盖：
+
+```ts
+export default {
+  output: {
+    assetPrefix: '/',
+  },
+  dev: {
+    assetPrefix: '/',
+  },
+  server: {
+    base: '/foo',
+  },
+};
+```

@@ -89,13 +89,15 @@ export class SwcMinimizerPlugin {
 
       if (jsMinify) {
         const userSourceMapJS = this.rsbuildSourceMapConfig.js;
-        jsMinify.sourceMap = userSourceMapJS === undefined ?  enableMinify : !!userSourceMapJS;
+        jsMinify.sourceMap =
+          userSourceMapJS === undefined ? enableMinify : !!userSourceMapJS;
         jsMinify.inlineSourcesContent = inlineSourceContent;
       }
 
       if (cssMinify) {
         const userSourceMapCss = this.rsbuildSourceMapConfig.css;
-        cssMinify.sourceMap = userSourceMapCss === undefined ?  enableMinify : !!userSourceMapCss;
+        cssMinify.sourceMap =
+          userSourceMapCss === undefined ? enableMinify : !!userSourceMapCss;
         cssMinify.inlineSourceContent = inlineSourceContent;
       }
 

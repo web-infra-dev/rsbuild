@@ -107,6 +107,28 @@ const Image = <img src={`/static/icon.png`} />;
 const Image = <img src={`https://example.com/static/icon.png`} />;
 ```
 
+### process.env.BASE_URL
+
+你可以在 client 代码中使用 `process.env.BASE_URL` 来访问服务端的[基础路径](/guide/basic/server#服务端基础路径)。
+
+这对于我们在 html 模版中引用 [public 目录](/guide/basic/static-assets#public-目录) 资源很有帮助。
+
+比如，我们通过 [server.base](/config/server/base) 配置，将服务端的基础路径设置为 `/foo`：
+
+```ts
+export default {
+  server: {
+    base: '/foo',
+  },
+};
+```
+
+此时，public 目录下 `favicon.ico` 文件的访问路径为 `http://localhost:3000/foo/favicon.ico`，我们可以采用如下方式在 HTML 模板中引用 `./public/favicon.ico` 文件：
+
+```html title="index.html"
+<link rel="icon" href="<%= process.env.BASE_URL %>/favicon.ico" />
+```
+
 ## `.env` 文件
 
 当项目根目录存在 `.env` 文件时，Rsbuild CLI 会自动使用 [dotenv](https://npmjs.com/package/dotenv) 来加载这些环境变量，并添加到当前 Node.js 进程中。

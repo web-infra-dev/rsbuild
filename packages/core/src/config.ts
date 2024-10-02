@@ -55,6 +55,7 @@ import type {
 const getDefaultDevConfig = (): NormalizedDevConfig => ({
   hmr: true,
   liveReload: true,
+  // Temporary placeholder, default: `${server.base}`
   assetPrefix: DEFAULT_ASSET_PREFIX,
   writeToDisk: false,
   client: {
@@ -70,6 +71,7 @@ const getDefaultServerConfig = (): NormalizedServerConfig => ({
   port: DEFAULT_PORT,
   host: DEFAULT_DEV_HOST,
   open: false,
+  base: '/',
   htmlFallback: 'index',
   compress: true,
   printUrls: true,
@@ -139,6 +141,7 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
     image: IMAGE_DIST_DIR,
     media: MEDIA_DIST_DIR,
   },
+  // Temporary placeholder, default: `${server.base}`
   assetPrefix: DEFAULT_ASSET_PREFIX,
   filename: {},
   charset: 'utf8',
@@ -212,6 +215,18 @@ export const withDefaultConfig = async (
 
   merged.root ||= rootPath;
   merged.source ||= {};
+
+  if (merged.server?.base) {
+    if (config.dev?.assetPrefix === undefined) {
+      merged.dev ||= {};
+      merged.dev.assetPrefix = merged.server.base;
+    }
+
+    if (config.output?.assetPrefix === undefined) {
+      merged.output ||= {};
+      merged.output.assetPrefix = merged.server.base;
+    }
+  }
 
   if (!merged.source.tsconfigPath) {
     const tsconfigPath = join(rootPath, TS_CONFIG_FILE);

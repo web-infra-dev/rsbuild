@@ -14,6 +14,7 @@ export const pluginDefine = (): RsbuildPlugin => ({
         'process.env.ASSET_PREFIX': JSON.stringify(
           getPublicPathFromChain(chain, false),
         ),
+        'process.env.BASE_URL': JSON.stringify(config.server.base),
       };
 
       chain

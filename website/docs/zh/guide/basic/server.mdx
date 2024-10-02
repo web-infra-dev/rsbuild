@@ -2,15 +2,31 @@
 
 Rsbuild 配备了一个内置的开发服务器，旨在提升开发体验。当你执行 `rsbuild dev` 或 `rsbuild preview` 命令时，该服务器将启动，并提供页面预览、路由、模块热更新等功能。
 
+## 服务端基础路径
+
+默认情况下，服务端的基础路径为 `/`，用户可通过 http://localhost:3000/ 访问到 `index.html` 等产物资源及 public 目录资源。
+
+Rsbuild 支持通过 [server.base](/config/server/base) 修改服务端的基础路径。当我们希望通过 http://localhost:3000/foo/ 访问到这些资源时，可进行如下配置：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    base: '/foo',
+  },
+};
+```
+
 ## 页面路由
 
 Rsbuild 的 Server 提供一套默认的路由约定，并允许用户通过配置项定制。
 
 ### 默认行为
 
-Rsbuild Server 会根据 [source.entry](/config/source/entry) 配置生成对应的页面路由。
+Rsbuild Server 会根据 [server.base](/config/server/base) 和 [source.entry](/config/source/entry) 配置生成对应的页面路由。
 
 当 entry 为 index 时，可通过 `/` 访问页面；当 entry 为 foo 时，可通过 `/foo` 访问该页面。
+
+当 server.base 为 `/base` 时，可通过 `/base` 访问 index 页面，通过 `/base/foo` 访问 foo 页面。
 
 ```ts title="rsbuild.config.ts"
 export default {

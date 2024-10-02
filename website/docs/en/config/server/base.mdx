@@ -1,0 +1,48 @@
+# server.base
+
+- **Type:** `string`
+- **Default:** `/`
+
+`server.base` is used to configure the [base path](/guide/basic/server#base-path) of the server.
+
+### Example
+
+By default, the base path of the server is `/`, and users can access `index.html` through http://localhost:3000.
+
+If you want to access `index.html` through `http://localhost:3000/foo/`, you can change `server.base` to `/foo`.
+
+```ts
+export default {
+  server: {
+    base: '/foo',
+  },
+};
+```
+
+### The URL prefix of static assets
+
+By default, [dev.assetPrefix](/config/dev/asset-prefix) and [output.assetPrefix](/config/output/asset-prefix) will read the value of `server.base` as the default value.
+
+When `server.base` is `/foo`, the default resource URL loaded in the browser is as follows:
+
+```html
+<script defer src="/foo/static/js/index.js"></script>
+```
+
+Then, `index.html` and static asset outputs can be accessed through `http://localhost:3000/foo/`.
+
+If you do not want to use this default behavior, you can override it by explicitly setting `dev.assetPrefix` / `output.assetPrefix` :
+
+```ts
+export default {
+  output: {
+    assetPrefix: '/',
+  },
+  dev: {
+    assetPrefix: '/',
+  },
+  server: {
+    base: '/foo',
+  },
+};
+```

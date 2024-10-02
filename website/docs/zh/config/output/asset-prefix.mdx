@@ -1,7 +1,7 @@
 # output.assetPrefix
 
 - **类型：** `string | 'auto'`
-- **默认值：** `'/'`
+- **默认值：** [`server.base`](/config/server/base)
 
 在 [生产模式](/config/mode) 下，可以使用该选项设置静态资源的 URL 前缀，比如设置为 CDN 地址。
 
@@ -48,6 +48,25 @@ export default {
 <script defer src="./static/js/index.ebc4ff4f.js"></script>
 ```
 
+## 默认值
+
+`output.assetPrefix` 的默认值与 [server.base](/config/server/base) 相同。
+
+当 `server.base` 为 `/foo` 时，可通过 `http://localhost:3000/foo/` 访问到 `index.html` 及静态资源产物。
+
+需要注意的是，当自定义 `output.assetPrefix` 选项时，如果希望静态资源能够通过 Rsbuild 预览服务器正常访问，`output.assetPrefix` 应和 `server.base` 包含相同的 URL 前缀，如：
+
+```ts
+export default {
+  output: {
+    assetPrefix: '/foo/bar/',
+  },
+  server: {
+    base: '/foo',
+  },
+};
+```
+
 ## 路径类型
 
 assetPrefix 可以设置为以下类型的路径：
@@ -67,5 +86,6 @@ assetPrefix 可以设置为以下类型的路径：
 它与原生配置的区别在于：
 
 - `output.assetPrefix` 仅在生产模式下生效。
+- `output.assetPrefix` 默认值与 [server.base](/config/server/base) 相同。
 - `output.assetPrefix` 默认会自动补全尾部的 `/`。
 - `output.assetPrefix` 的值会写入 [process.env.ASSET_PREFIX](/guide/advanced/env-vars#processenvasset_prefix) 环境变量（只能在 client 代码中访问）。

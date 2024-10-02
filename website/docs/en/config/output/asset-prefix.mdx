@@ -1,7 +1,7 @@
 # output.assetPrefix
 
 - **Type:** `string | 'auto'`
-- **Default:** `'/'`
+- **Default:** [`server.base`](/config/server/base)
 
 In [production mode](/config/mode), use this option to set the URL prefix for static assets, such as setting it to a CDN URL.
 
@@ -48,6 +48,25 @@ After the build, the URL of the JS file will be:
 <script defer src="./static/js/index.ebc4ff4f.js"></script>
 ```
 
+## Default Value
+
+The default value of `output.assetPrefix` is the same as [server.base](/config/server/base).
+
+When `server.base` is `/foo`, `index.html` and static assets can be accessed through `http://localhost:3000/foo/`.
+
+It should be noted that when customizing the `output.assetPrefix` option, if you want static assets to be accessible normally during [Rsbuild preview](/guide/basic/cli#rsbuild-preview), `output.assetPrefix` should contain the same url prefix as `server.base`, such as:
+
+```ts
+export default {
+  output: {
+    assetPrefix: '/foo/bar/',
+  },
+  server: {
+    base: '/foo',
+  },
+};
+```
+
 ## Path Types
 
 assetPrefix can be set to the following types of paths:
@@ -67,5 +86,6 @@ The functionality of `output.assetPrefix` is basically the same as the [output.p
 The differences from the native configuration are as follows:
 
 - `output.assetPrefix` only takes effect in production mode.
+- `output.assetPrefix` default value is the same as [server.base](/config/server/base).
 - `output.assetPrefix` automatically appends a trailing `/` by default.
 - The value of `output.assetPrefix` is written to the [process.env.ASSET_PREFIX](/guide/advanced/env-vars#processenvasset_prefix) environment variable (can only be accessed in client code).

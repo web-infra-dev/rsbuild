@@ -107,6 +107,28 @@ In production mode, the above code will be compiled to:
 const Image = <img src={`https://example.com/static/icon.png`} />;
 ```
 
+### process.env.BASE_URL
+
+You can use `process.env.BASE_URL` in client code to access the server's [base path](/guide/basic/server#base-path).
+
+This is helpful for us to reference [public folder](/guide/basic/static-assets#public-folder) assets in HTML templates.
+
+For example, we set the base path of the server to `/foo` through [server.base](/config/server/base) configuration:
+
+```ts
+export default {
+  server: {
+    base: '/foo',
+  },
+};
+```
+
+Then, the access path to the `favicon.ico` file in the public directory is `http://localhost:3000/foo/favicon.ico`. We can reference `./public/favicon.ico` file in the HTML template like this:
+
+```html title="index.html"
+<link rel="icon" href="<%= process.env.BASE_URL %>/favicon.ico" />
+```
+
 ## `.env` File
 
 When a `.env` file exists in the project root directory, Rsbuild CLI will automatically use [dotenv](https://npmjs.com/package/dotenv) to load these environment variables and add them to the current Node.js process.

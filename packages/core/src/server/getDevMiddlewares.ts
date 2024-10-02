@@ -13,6 +13,7 @@ import type {
 import type { UpgradeEvent } from './helper';
 import {
   faviconFallbackMiddleware,
+  getBaseMiddleware,
   getHtmlCompletionMiddleware,
   getHtmlFallbackMiddleware,
   getRequestLoggerMiddleware,
@@ -114,6 +115,10 @@ const applyDefaultMiddlewares = async ({
     for (const middleware of proxyMiddlewares) {
       middlewares.push(middleware);
     }
+  }
+
+  if (server.base && server.base !== '/') {
+    middlewares.push(getBaseMiddleware({ base: server.base }));
   }
 
   const { default: launchEditorMiddleware } = await import(

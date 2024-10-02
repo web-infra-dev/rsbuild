@@ -1,13 +1,32 @@
 # dev.assetPrefix
 
 - **Type:** `boolean | string | 'auto'`
-- **Default:** `'/'`
+- **Default:** [`server.base`](/config/server/base)
 
 Set the URL prefix of static assets in [development mode](/config/mode).
 
 `assetPrefix` will affect the URLs of most of the static assets, including JavaScript files, CSS files, images, videos, etc. If an incorrect value is specified, you'll receive 404 errors while loading these resources.
 
 This config is only used in development mode. In the production mode, please use the [output.assetPrefix](/config/output/asset-prefix) to set the URL prefix.
+
+## Default Value
+
+The default value of `dev.assetPrefix` is the same as [server.base](/config/server/base).
+
+When `server.base` is `/foo`, `index.html` and other static assets can be accessed through `http://localhost:3000/foo/`.
+
+It should be noted that when customizing the `dev.assetPrefix` option, if you want static assets to be normally accessible through the Rsbuild dev server, `dev.assetPrefix` should contain the same url prefix as `server.base`, such as:
+
+```ts
+export default {
+  dev: {
+    assetPrefix: '/foo/bar/',
+  },
+  server: {
+    base: '/foo',
+  },
+};
+```
 
 ## Boolean Type
 
@@ -100,5 +119,6 @@ The functionality of `dev.assetPrefix` is basically the same as the [output.publ
 The differences from the native configuration are as follows:
 
 - `dev.assetPrefix` only takes effect in development mode.
+- `dev.assetPrefix` default value is the same as [server.base](/config/server/base).
 - `dev.assetPrefix` automatically appends a trailing `/` by default.
 - The value of `dev.assetPrefix` is written to the [process.env.ASSET_PREFIX](/guide/advanced/env-vars#processenvasset_prefix) environment variable (can only be accessed in client code).

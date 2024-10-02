@@ -467,7 +467,7 @@ describe('plugin-webpack-swc', () => {
     const configs = await rsbuild.initConfigs();
 
     expect(configs).toMatchSnapshot();
-    process.env.NODE_ENV = 'test'
+    process.env.NODE_ENV = 'test';
   });
 
   it('output.sourceMap config for swcMinimizerPlugin', async () => {
@@ -482,7 +482,7 @@ describe('plugin-webpack-swc', () => {
               sourceMap: {
                 js: 'cheap-source-map',
                 css: false,
-              }
+              },
             },
           },
         },
@@ -491,7 +491,7 @@ describe('plugin-webpack-swc', () => {
     const configs = await rsbuild.initConfigs();
 
     expect(configs).toMatchSnapshot();
-    
-    process.env.NODE_ENV = 'test'
+
+    process.env.NODE_ENV = 'test';
   });
 });

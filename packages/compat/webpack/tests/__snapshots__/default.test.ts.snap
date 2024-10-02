@@ -306,6 +306,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "import.meta.env.MODE": ""development"",
         "import.meta.env.PROD": false,
         "process.env.ASSET_PREFIX": """",
+        "process.env.BASE_URL": "\\"/\\"",
       },
     },
     ProgressPlugin {
@@ -664,6 +665,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "import.meta.env.MODE": ""production"",
         "import.meta.env.PROD": true,
         "process.env.ASSET_PREFIX": """",
+        "process.env.BASE_URL": "\\"/\\"",
       },
     },
     ProgressPlugin {
@@ -971,6 +973,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "import.meta.env.MODE": ""production"",
         "import.meta.env.PROD": true,
         "process.env.ASSET_PREFIX": """",
+        "process.env.BASE_URL": "\\"/\\"",
       },
     },
     ProgressPlugin {
@@ -1261,6 +1264,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "import.meta.env.MODE": ""production"",
         "import.meta.env.PROD": true,
         "process.env.ASSET_PREFIX": """",
+        "process.env.BASE_URL": "\\"/\\"",
       },
     },
     ProgressPlugin {
