@@ -167,6 +167,39 @@ export default defineConfig({
 });
 ```
 
+Rsbuild injects the following [environment variables](/guide/advanced/env-vars) by default:
+
+- `import.meta.env.MODE`
+- `import.meta.env.BASE_URL`
+- `import.meta.env.PROD`
+- `import.meta.env.DEV`
+
+For `import.meta.env.SSR`, you can set it through the [environments](/config/environments) and [source.define](/config/source/define) configuration options:
+
+```ts title="rsbuild.config.ts"
+export default defineConfig({
+  environments: {
+    web: {
+      source: {
+        define: {
+          'import.meta.env.SSR': JSON.stringify(false),
+        },
+      },
+    },
+    node: {
+      source: {
+        define: {
+          'import.meta.env.SSR': JSON.stringify(true),
+        },
+      },
+      output: {
+        target: 'node',
+      },
+    },
+  },
+});
+```
+
 ## Preset Types
 
 Vite provides some preset type definitions through the `vite-env.d.ts` file. When migrating to Rsbuild, you can use the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core`:

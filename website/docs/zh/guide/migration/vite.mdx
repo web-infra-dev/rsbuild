@@ -167,6 +167,39 @@ export default defineConfig({
 });
 ```
 
+Rsbuild 默认注入了以下 [环境变量](/guide/advanced/env-vars)：
+
+- `import.meta.env.MODE`
+- `import.meta.env.BASE_URL`
+- `import.meta.env.PROD`
+- `import.meta.env.DEV`
+
+对于 `import.meta.env.SSR`，你可以通过 [environments](/config/environments) 和 [source.define](/config/source/define) 配置项来设置：
+
+```ts title="rsbuild.config.ts"
+export default defineConfig({
+  environments: {
+    web: {
+      source: {
+        define: {
+          'import.meta.env.SSR': JSON.stringify(false),
+        },
+      },
+    },
+    node: {
+      source: {
+        define: {
+          'import.meta.env.SSR': JSON.stringify(true),
+        },
+      },
+      output: {
+        target: 'node',
+      },
+    },
+  },
+});
+```
+
 ## 预设类型
 
 Vite 通过 `vite-env.d.ts` 文件提供了一些预设的类型定义，迁移到 Rsbuild 时，你可以使用 `@rsbuild/core` 提供的 [预设类型](/guide/basic/typescript#预设类型)：
