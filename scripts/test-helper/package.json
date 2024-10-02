@@ -28,7 +28,7 @@
     "@rsbuild/core": "workspace:*",
     "@types/node": "18.x",
     "path-serializer": "0.0.6",
-    "typescript": "^5.5.2",
+    "typescript": "^5.6.2",
     "upath": "2.0.1"
   },
   "publishConfig": {

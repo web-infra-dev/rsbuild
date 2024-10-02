@@ -105,7 +105,7 @@ export const pluginSri = (): RsbuildPlugin => ({
 
         const hash = crypto
           .createHash(algorithm)
-          .update(data)
+          .update(data as unknown as Uint8Array)
           .digest()
           .toString('base64');
         const integrity = `${algorithm}-${hash}`;
