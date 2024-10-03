@@ -8,6 +8,7 @@ exports[`plugin-define > should register define plugin correctly 1`] = `
       "_args": [
         {
           "NAME": ""Jack"",
+          "import.meta.env.BASE_URL": "\\"/\\"",
           "import.meta.env.DEV": false,
           "import.meta.env.MODE": ""none"",
           "import.meta.env.PROD": false,

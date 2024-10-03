@@ -24,7 +24,10 @@ test('server.base when dev', async ({ page }) => {
   expect(page.url().includes('/base/')).toBeTruthy();
 
   // should define `process.env.BASE_URL` correctly
-  await expect(page.locator('#public-base-path')).toHaveText('/base');
+  await expect(page.locator('#public-base-path-process')).toHaveText('/base');
+
+  // should define `import.meta.env.BASE_URL` correctly
+  await expect(page.locator('#public-base-path-meta')).toHaveText('/base');
 
   // should print url with base path
   const baseUrlLog = logs.find(
@@ -79,7 +82,10 @@ test('server.base when build & preview', async ({ page }) => {
   expect(page.url().includes('/base/')).toBeTruthy();
 
   // should define `process.env.BASE_URL` correctly
-  await expect(page.locator('#public-base-path')).toHaveText('/base');
+  await expect(page.locator('#public-base-path-process')).toHaveText('/base');
+
+  // should define `import.meta.env.BASE_URL` correctly
+  await expect(page.locator('#public-base-path-meta')).toHaveText('/base');
 
   // should print url with base path
   const baseUrlLog = logs.find(
