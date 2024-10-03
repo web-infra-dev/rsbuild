@@ -95,17 +95,15 @@ pluginSass({
 });
 ```
 
-## Modifying Sass Version
+## Custom Sass
 
-In some scenarios, if you need to use a specific version of Sass instead of the built-in Sass embedded in Rsbuild, you can install the desired Sass version in your project and set it up using the `implementation` option of the `sass-loader`.
+### Sass Implementation
 
-```js
-pluginSass({
-  sassLoaderOptions: {
-    implementation: require('sass'),
-  },
-});
-```
+Sass provides several implementations, including [sass](https://www.npmjs.com/package/sass), [sass-embedded](https://www.npmjs.com/package/sass-embedded), and [node-sass](https://www.npmjs.com/package/node-sass).
+
+Rsbuild uses the latest `sass-embedded` implementation by default. `sass-embedded` is a JavaScript wrapper around the native Dart Sass executable, providing a consistent API and optimal performance.
+
+If you need to use a different Sass implementation instead of the built-in `sass-embedded` included in Rsbuild, you can install the preferred Sass implementation in your project and specify it using the `sass-loader`'s [implementation](https://github.com/webpack-contrib/sass-loader?tab=readme-ov-file#implementation) option.
 
 ```ts
 pluginSass({
@@ -115,13 +113,22 @@ pluginSass({
 });
 ```
 
-Rsbuild defaults to using the latest `modern-compiler` API. If you are using an older version of Sass, please set the [api](https://github.com/webpack-contrib/sass-loader?tab=readme-ov-file#api) option of sass-loader to `legacy` to avoid exceptions caused by version mismatches.
+:::tip
+Switching from `sass-embedded` to another Sass implementation can significantly decrease build performance.
+:::
+
+### Sass API
+
+Rsbuild uses the latest `modern-compiler` API by default. If you rely on the `legacy` API of Sass, you can set the `api` option of the sass-loader to `legacy` to maintain compatibility with some deprecated Sass syntax.
 
 ```ts
 pluginSass({
   sassLoaderOptions: {
     api: 'legacy',
-    implementation: require.resolve('sass'),
   },
 });
 ```
+
+:::tip
+Sass's `legacy` API has been deprecated and will be removed in Sass 2.0. It is recommended to migrate to the `modern-compiler` API. For more details, see [Sass - Legacy JS API](https://sass-lang.com/documentation/breaking-changes/legacy-js-api/).
+:::
