@@ -1698,6 +1698,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       DefinePlugin {
         "_args": [
           {
+            "import.meta.env.BASE_URL": "\\"/\\"",
             "import.meta.env.DEV": true,
             "import.meta.env.MODE": ""development"",
             "import.meta.env.PROD": false,
@@ -2016,6 +2017,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       DefinePlugin {
         "_args": [
           {
+            "import.meta.env.BASE_URL": "\\"/\\"",
             "import.meta.env.DEV": true,
             "import.meta.env.MODE": ""development"",
             "import.meta.env.PROD": false,

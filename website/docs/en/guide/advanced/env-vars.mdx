@@ -37,6 +37,39 @@ You can also use the following environment variables:
 - `import.meta.env.DEV`: If [mode](/config/mode) is `'development'`, the value is `true`; otherwise, it is `false`.
 - `import.meta.env.PROD`: If [mode](/config/mode) is `'production'`, the value is `true`; otherwise, it is `false`.
 
+### import.meta.env.BASE_URL
+
+You can use `import.meta.env.BASE_URL` in the client code to access the server's [base path](/guide/basic/server#base-path), which is determined by the [server.base](/config/server/base) configuration, which is helpful for referencing [public folder](/guide/basic/static-assets#public-folder) assets in the code.
+
+For example, we set the base path of the server to `/foo` through [server.base](/config/server/base) configuration:
+
+```ts
+export default {
+  server: {
+    base: '/foo',
+  },
+};
+```
+
+Then, the access URL to the `favicon.ico` file in the public directory is `http://localhost:3000/foo/favicon.ico`. You can use `import.meta.env.BASE_URL` to concatenate the URL in JS files:
+
+```js title="index.js"
+const image = new Image();
+// Equivalent to "/foo/favicon.ico"
+image.src = `${import.meta.env.BASE_URL}/favicon.ico`;
+```
+
+In the HTML template, you can also use `import.meta.env.BASE_URL` to concatenate the URL:
+
+```html title="index.html"
+<!-- Equivalent to "/foo/favicon.ico" -->
+<link rel="icon" href="<%= import.meta.env.BASE_URL %>/favicon.ico" />
+```
+
+Additionally, you can use the following environment variables:
+
+- `process.env.BASE_URL`: Equivalent to `import.meta.env.BASE_URL`.
+
 ### process.env.NODE_ENV
 
 By default, Rsbuild will automatically set the `process.env.NODE_ENV` environment variable to `'development'` in development mode and `'production'` in production mode.
@@ -105,28 +138,6 @@ In production mode, the above code will be compiled to:
 
 ```jsx
 const Image = <img src={`https://example.com/static/icon.png`} />;
-```
-
-### process.env.BASE_URL
-
-You can use `process.env.BASE_URL` in client code to access the server's [base path](/guide/basic/server#base-path).
-
-This is helpful for us to reference [public folder](/guide/basic/static-assets#public-folder) assets in HTML templates.
-
-For example, we set the base path of the server to `/foo` through [server.base](/config/server/base) configuration:
-
-```ts
-export default {
-  server: {
-    base: '/foo',
-  },
-};
-```
-
-Then, the access path to the `favicon.ico` file in the public directory is `http://localhost:3000/foo/favicon.ico`. We can reference `./public/favicon.ico` file in the HTML template like this:
-
-```html title="index.html"
-<link rel="icon" href="<%= process.env.BASE_URL %>/favicon.ico" />
 ```
 
 ## `.env` File

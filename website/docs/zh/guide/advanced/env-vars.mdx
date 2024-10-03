@@ -37,6 +37,39 @@ if (false) {
 - `import.meta.env.DEV`：当 [mode](/config/mode) 为 `'development'` 时，值为 `true`，否则为 `false`。
 - `import.meta.env.PROD`：当 [mode](/config/mode) 为 `'production'` 时，值为 `true`，否则为 `false`。
 
+### import.meta.env.BASE_URL
+
+你可以在 client 代码中使用 `import.meta.env.BASE_URL` 来访问服务端的[基础路径](/guide/basic/server#服务端基础路径)，它由 [server.base](/config/server/base) 配置项决定，这有助于在代码中引用 [public 目录](/guide/basic/static-assets#public-目录) 下的资源。
+
+比如，我们通过 [server.base](/config/server/base) 配置，将服务端的基础路径设置为 `/foo`：
+
+```ts
+export default {
+  server: {
+    base: '/foo',
+  },
+};
+```
+
+此时，public 目录下 `favicon.ico` 文件的访问 URL 为 `http://localhost:3000/foo/favicon.ico`，在 JS 文件中可以使用 `import.meta.env.BASE_URL` 来拼接 URL：
+
+```js title="index.js"
+const image = new Image();
+// 等价于 "/foo/favicon.ico"
+image.src = `${import.meta.env.BASE_URL}/favicon.ico`;
+```
+
+在 HTML 模板中，也可以使用 `import.meta.env.BASE_URL` 来拼接 URL：
+
+```html title="index.html"
+<!-- 等价于 "/foo/favicon.ico" -->
+<link rel="icon" href="<%= import.meta.env.BASE_URL %>/favicon.ico" />
+```
+
+此外，你还可以使用以下环境变量：
+
+- `process.env.BASE_URL`：等同于 `import.meta.env.BASE_URL`。
+
 ### process.env.NODE_ENV
 
 默认情况下，Rsbuild 会自动设置 `process.env.NODE_ENV` 环境变量，在开发模式为 `'development'`，生产模式为 `'production'`。
@@ -105,28 +138,6 @@ const Image = <img src={`/static/icon.png`} />;
 
 ```jsx
 const Image = <img src={`https://example.com/static/icon.png`} />;
-```
-
-### process.env.BASE_URL
-
-你可以在 client 代码中使用 `process.env.BASE_URL` 来访问服务端的[基础路径](/guide/basic/server#服务端基础路径)。
-
-这对于我们在 HTML 模版中引用 [public 目录](/guide/basic/static-assets#public-目录) 资源很有帮助。
-
-比如，我们通过 [server.base](/config/server/base) 配置，将服务端的基础路径设置为 `/foo`：
-
-```ts
-export default {
-  server: {
-    base: '/foo',
-  },
-};
-```
-
-此时，public 目录下 `favicon.ico` 文件的访问路径为 `http://localhost:3000/foo/favicon.ico`，我们可以采用如下方式在 HTML 模板中引用 `./public/favicon.ico` 文件：
-
-```html title="index.html"
-<link rel="icon" href="<%= process.env.BASE_URL %>/favicon.ico" />
 ```
 
 ## `.env` 文件

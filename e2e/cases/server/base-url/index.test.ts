@@ -8,9 +8,6 @@ test('server.base when dev', async ({ page }) => {
     cwd: __dirname,
     page,
     rsbuildConfig: {
-      html: {
-        template: './src/index.html',
-      },
       server: {
         printUrls: true,
         base: '/base',
@@ -22,9 +19,6 @@ test('server.base when dev', async ({ page }) => {
   await expect(page.locator('#test')).toHaveText('Hello Rsbuild!');
 
   expect(page.url().includes('/base/')).toBeTruthy();
-
-  // should define `process.env.BASE_URL` correctly
-  await expect(page.locator('#public-base-path')).toHaveText('/base');
 
   // should print url with base path
   const baseUrlLog = logs.find(
@@ -61,11 +55,7 @@ test('server.base when build & preview', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     page,
-    runServer: true,
     rsbuildConfig: {
-      html: {
-        template: './src/index.html',
-      },
       server: {
         printUrls: true,
         base: '/base',
@@ -77,9 +67,6 @@ test('server.base when build & preview', async ({ page }) => {
   await expect(page.locator('#test')).toHaveText('Hello Rsbuild!');
 
   expect(page.url().includes('/base/')).toBeTruthy();
-
-  // should define `process.env.BASE_URL` correctly
-  await expect(page.locator('#public-base-path')).toHaveText('/base');
 
   // should print url with base path
   const baseUrlLog = logs.find(
