@@ -30,9 +30,9 @@
   },
   "dependencies": {
     "@babel/core": "^7.25.2",
-    "@babel/plugin-proposal-decorators": "^7.24.7",
+    "@babel/plugin-proposal-decorators": "^7.25.7",
     "@babel/plugin-transform-class-properties": "^7.25.4",
-    "@babel/preset-typescript": "^7.24.7",
+    "@babel/preset-typescript": "^7.25.7",
     "@types/babel__core": "^7.20.5",
     "deepmerge": "^4.3.1",
     "reduce-configs": "^1.0.0",
