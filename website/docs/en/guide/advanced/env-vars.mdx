@@ -1,8 +1,25 @@
 # Environment Variables
 
-Rsbuild supports injecting environment variables or expressions into the code during compilation, which is helpful for distinguishing the running environment or replacing constants. This chapter introduces how to use environment variables.
+Rsbuild supports injecting env variables or expressions into the code during build, which is helpful for distinguishing the running environment or replacing constants.
+
+This chapter introduces how to use env variables in Rsbuild.
 
 ## Default Variables
+
+Rsbuild by default injects the some env variables into the code using [source.define](#using-define). These will be replaced with specified values during the build:
+
+`import.meta.env` contains these env variables:
+
+- [import.meta.env.MODE](#importmetaenvmode)
+- [import.meta.env.DEV](#importmetaenvdev)
+- [import.meta.env.PROD](#importmetaenvprod)
+- [import.meta.env.BASE_URL](#importmetaenvbase_url)
+
+`process.env` contains these env variables:
+
+- [process.env.NODE_ENV](#processenvnode_env)
+- [process.env.BASE_URL](#importmetaenvbase_url)
+- [process.env.ASSET_PREFIX](#processenvasset_prefix)
 
 ### import.meta.env.MODE
 
@@ -32,10 +49,25 @@ if (false) {
 
 During code minification, `if (false) { ... }` will be recognized as invalid code and removed automatically.
 
-You can also use the following environment variables:
+### import.meta.env.DEV
 
-- `import.meta.env.DEV`: If [mode](/config/mode) is `'development'`, the value is `true`; otherwise, it is `false`.
-- `import.meta.env.PROD`: If [mode](/config/mode) is `'production'`, the value is `true`; otherwise, it is `false`.
+If [mode](/config/mode) is `'development'`, the value is `true`; otherwise, it is `false`.
+
+```ts
+if (import.meta.env.DEV) {
+  console.log('this is development mode');
+}
+```
+
+### import.meta.env.PROD
+
+If [mode](/config/mode) is `'production'`, the value is `true`; otherwise, it is `false`.
+
+```ts
+if (import.meta.env.PROD) {
+  console.log('this is production mode');
+}
+```
 
 ### import.meta.env.BASE_URL
 
@@ -66,7 +98,7 @@ In the HTML template, you can also use `import.meta.env.BASE_URL` to concatenate
 <link rel="icon" href="<%= import.meta.env.BASE_URL %>/favicon.ico" />
 ```
 
-Additionally, you can use the following environment variables:
+Additionally, you can use the following env variables:
 
 - `process.env.BASE_URL`: Equivalent to `import.meta.env.BASE_URL`.
 
@@ -142,9 +174,9 @@ const Image = <img src={`https://example.com/static/icon.png`} />;
 
 ## `.env` File
 
-When a `.env` file exists in the project root directory, Rsbuild CLI will automatically use [dotenv](https://npmjs.com/package/dotenv) to load these environment variables and add them to the current Node.js process.
+When a `.env` file exists in the project root directory, Rsbuild CLI will automatically use [dotenv](https://npmjs.com/package/dotenv) to load these env variables and add them to the current Node.js process.
 
-You can access these environment variables through `import.meta.env.[name]` or `process.env.[name]`.
+You can access these env variables through `import.meta.env.[name]` or `process.env.[name]`.
 
 ### File Types
 
@@ -206,7 +238,7 @@ FOO=hello
 BAR=1
 ```
 
-Then in the `rsbuild.config.ts` file, you can access the above environment variables using `import.meta.env.[name]` or `process.env.[name]`:
+Then in the `rsbuild.config.ts` file, you can access the above env variables using `import.meta.env.[name]` or `process.env.[name]`:
 
 ```ts title="rsbuild.config.ts"
 console.log(import.meta.env.FOO); // 'hello'
@@ -231,7 +263,7 @@ console.log(process.env.BAR); // '2'
 
 ### Manually Load Env
 
-If you are not using the Rsbuild CLI and are using the Rsbuild [JavaScript API](/api/start/index) instead, you will need to manually call the [loadEnv](/api/javascript-api/core#loadenv) method to read environment variables and inject them into the code via the [source.define](/config/source/define) config.
+If you are not using the Rsbuild CLI and are using the Rsbuild [JavaScript API](/api/start/index) instead, you will need to manually call the [loadEnv](/api/javascript-api/core#loadenv) method to read env variables and inject them into the code via the [source.define](/config/source/define) config.
 
 ```ts
 import { loadEnv, mergeRsbuildConfig } from '@rsbuild/core';
@@ -250,14 +282,14 @@ const mergedConfig = mergeRsbuildConfig(
 
 ## Public Variables
 
-All environment variables starting with `PUBLIC_` can be accessed in client code. For example, if the following variables are defined:
+All env variables starting with `PUBLIC_` can be accessed in client code. For example, if the following variables are defined:
 
 ```bash title=".env"
 PUBLIC_NAME=jack
 PASSWORD=123
 ```
 
-In the client code, you can access these environment variables through `import.meta.env.PUBLIC_*` or `process.env.PUBLIC_*`. Rsbuild will match the identifiers and replace them with the corresponding values.
+In the client code, you can access these env variables through `import.meta.env.PUBLIC_*` or `process.env.PUBLIC_*`. Rsbuild will match the identifiers and replace them with the corresponding values.
 
 ```ts title="src/index.ts"
 console.log(import.meta.env.PUBLIC_NAME); // -> 'jack'
@@ -291,9 +323,9 @@ Note that public variables will not replace identifiers in the following files:
 
 ### Custom Prefix
 
-Rsbuild provides the [loadEnv](/api/javascript-api/core#loadenv) method, which can inject environment variables with any prefix into client code.
+Rsbuild provides the [loadEnv](/api/javascript-api/core#loadenv) method, which can inject env variables with any prefix into client code.
 
-For example, when migrating a Create React App project to Rsbuild, you can read environment variables starting with `REACT_APP_` and inject them through the [source.define](/config/source/define) config as follows:
+For example, when migrating a Create React App project to Rsbuild, you can read env variables starting with `REACT_APP_` and inject them through the [source.define](/config/source/define) config as follows:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig, loadEnv } from '@rsbuild/core';
@@ -311,7 +343,7 @@ export default defineConfig({
 
 By using [source.define](/config/source/define), you can replace global identifiers with some expressions or values in compile time.
 
-`define` is similar to the macro definition capabilities provided by other languages. It is often used to inject environment variables and other information to the code during build time.
+`define` is similar to the macro definition capabilities provided by other languages. It is often used to inject env variables and other information to the code during build time.
 
 ### Replace Identifiers
 
@@ -380,12 +412,12 @@ export default {
 
 If the above usage is adopted, the following problems will be caused:
 
-1. Some unused environment variables are additionally injected, causing the environment variables of the dev server to be leaked into the front-end code.
+1. Some unused env variables are additionally injected, causing the env variables of the dev server to be leaked into the front-end code.
 2. As each `process.env` code will be replaced by a complete environment variable object, the bundle size of the front-end code will increase and the performance will decrease.
 
-Therefore, please inject the environment variables on `process.env` according to actual needs and avoid replacing them in its entirety.
+Therefore, please inject the env variables on `process.env` according to actual needs and avoid replacing them in its entirety.
 
-## Type of Environment Variable
+## Type Declarations
 
 When you access an environment variable in a TypeScript file, TypeScript may prompt that the variable lacks a type definition, and you need to add the corresponding type declaration.
 
