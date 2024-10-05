@@ -1,8 +1,25 @@
 # 环境变量
 
-Rsbuild 支持在编译过程中向代码中注入环境变量或表达式，这对于区分运行环境、替换常量值等场景很有帮助。本章节会介绍环境变量的使用方式。
+Rsbuild 支持在构建过程中向代码中注入环境变量或表达式，这对于区分运行环境、替换常量值等场景很有帮助。
+
+本章节将介绍如何在 Rsbuild 中使用环境变量。
 
 ## 默认环境变量
+
+Rsbuild 默认通过 [source.define](#使用-define) 向代码中注入以下环境变量，它们会在构建时被替换为指定的值：
+
+`import.meta.env` 包含以下环境变量：
+
+- [import.meta.env.MODE](#importmetaenvmode)
+- [import.meta.env.DEV](#importmetaenvdev)
+- [import.meta.env.PROD](#importmetaenvprod)
+- [import.meta.env.BASE_URL](#importmetaenvbase_url)
+
+`process.env` 包含以下环境变量：
+
+- [process.env.NODE_ENV](#processenvnode_env)
+- [process.env.BASE_URL](#importmetaenvbase_url)
+- [process.env.ASSET_PREFIX](#processenvasset_prefix)
 
 ### import.meta.env.MODE
 
@@ -32,10 +49,25 @@ if (false) {
 
 在代码压缩过程中，`if (false) { ... }` 会被识别为无效代码，并被自动移除。
 
-此外，你还可以使用以下环境变量：
+### import.meta.env.DEV
 
-- `import.meta.env.DEV`：当 [mode](/config/mode) 为 `'development'` 时，值为 `true`，否则为 `false`。
-- `import.meta.env.PROD`：当 [mode](/config/mode) 为 `'production'` 时，值为 `true`，否则为 `false`。
+当 [mode](/config/mode) 为 `'development'` 时，值为 `true`，否则为 `false`。
+
+```ts
+if (import.meta.env.DEV) {
+  console.log('this is development mode');
+}
+```
+
+### import.meta.env.PROD
+
+当 [mode](/config/mode) 为 `'production'` 时，值为 `true`，否则为 `false`。
+
+```ts
+if (import.meta.env.PROD) {
+  console.log('this is production mode');
+}
+```
 
 ### import.meta.env.BASE_URL
 
@@ -385,7 +417,7 @@ export default {
 
 因此，请按照实际需求来注入 `process.env` 上的环境变量，避免全量替换。
 
-## 环境变量类型
+## 类型声明
 
 当你在 TypeScript 代码中访问环境变量时，TypeScript 可能会提示该变量缺少类型定义，此时你需要添加相应的类型声明。
 
