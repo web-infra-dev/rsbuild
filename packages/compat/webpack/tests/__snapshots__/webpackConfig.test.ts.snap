@@ -67,6 +67,7 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
   },
   DefinePlugin {
     "definitions": {
+      "import.meta.env.ASSET_PREFIX": """",
       "import.meta.env.BASE_URL": "\\"/\\"",
       "import.meta.env.DEV": false,
       "import.meta.env.MODE": ""none"",
