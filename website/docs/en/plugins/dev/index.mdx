@@ -253,67 +253,30 @@ Therefore, the best way to use configuration options is to
 - **Modify the config** with `api.modifyRsbuildConfig(config => {})`
 - Read `api.getNormalizedConfig()` as the **actual config used by the plugin** in the further lifetime.
 
-## Modifying Rspack Configuration
+## Modify Rspack Configuration
 
-The Rsbuild plugin can modify the configuration of Rspack in various ways.
+Rsbuild plugin allows you to modify the built-in Rspack configuration, including:
 
-- `api.modifyRspackConfig(config => {})` modifies the final Rspack configuration.
-- `api.modifyBundlerChain(chain => {})` modifies the `rspack-chain`, usage is similar to [rspack-chain](https://github.com/rspack-contrib/rspack-chain).
-- `api.onAfterCreateCompiler({ compiler } => {})` directly operates on the Rspack compiler instance.
+- [api.modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig): Modify the Rspack configuration object.
+- [api.modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain): Modify the Rspack configuration through [rspack-chain](https://github.com/rspack-contrib/rspack-chain).
 
-## Example References
+### Example
 
-### Modifying Loader
-
-Loaders can read and process different types of file modules, refer to [loaders](https://rspack.dev/api/loader-api).
+For example, register [eslint-rspack-plugin](https://github.com/rspack-contrib/eslint-rspack-plugin) via Rsbuild plugin:
 
 ```ts
 import type { RsbuildPlugin } from '@rsbuild/core';
-
-export const pluginTypeScriptExt = (): RsbuildPlugin => ({
-  name: 'plugin-typescript-ext',
-  setup(api) {
-    api.modifyBundlerChain(async (chain) => {
-      // Set ts-loader to recognize more files as typescript modules
-      chain.module.rule(CHAIN_ID.RULE.TS).test(/\.(?:ts|mts|cts|tsx|tss|tsm)$/);
-    });
-  },
-});
-```
-
-### Adding Module Entry
-
-```ts
-import type { RsbuildPlugin } from '@rsbuild/core';
-
-export const pluginAdminPanel = (): RsbuildPlugin => ({
-  name: 'plugin-admin-panel',
-  setup(api) {
-    api.modifyBundlerChain(async (chain) => {
-      config.entry('admin-panel').add('src/admin/panel.js');
-    });
-  },
-});
-```
-
-### Registering Rspack Plugin
-
-You can register Rspack plugins within Rsbuild plugins, such as registering `eslint-webpack-plugin`:
-
-```ts
-import type { RsbuildPlugin } from '@rsbuild/core';
-import ESLintPlugin from 'eslint-webpack-plugin';
+import ESLintRspackPlugin from 'eslint-rspack-plugin';
 
 export const pluginEslint = (options?: Options): RsbuildPlugin => ({
   name: 'plugin-eslint',
   setup(api) {
-    // Use rspack-chain to register a bundler plugin.
-    api.modifyBundlerChain(async (chain) => {
-      chain.plugin('eslint-webpack-plugin').use(ESLintPlugin, [
-        {
+    api.modifyRspackConfig((config) => {
+      config.plugins?.push(
+        new ESLintRspackPlugin({
           // plugins options
-        },
-      ]);
+        }),
+      );
     });
   },
 });

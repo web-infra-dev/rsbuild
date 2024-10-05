@@ -254,65 +254,28 @@ type NormalizedConfig = {
 
 ## 修改 Rspack 配置
 
-Rsbuild 插件可以通过多种方式修改 Rspack 的配置项。
+Rsbuild 插件允许你修改内置的 Rspack 配置，包括：
 
-- `api.modifyRspackConfig(config => {})` 修改最终的 Rspack 配置。
-- `api.modifyBundlerChain(chain => {})` 修改 `rspack-chain`，用法与 [rspack-chain](https://github.com/rspack-contrib/rspack-chain) 相同。
-- `api.onAfterCreateCompiler({ compiler } => {})` 直接操作 Rspack 的 compiler 实例。
+- [api.modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig)：修改 Rspack 配置对象。
+- [api.modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain) 通过 [rspack-chain](https://github.com/rspack-contrib/rspack-chain) 来修改 Rspack 配置。
 
-## 参考范例
+### 示例
 
-### 修改 Loader
-
-Loader 可以读取和处理不同类型的文件模块，具体参考 [loaders](https://rspack.dev/zh/api/loader-api)。
+比如，通过 Rsbuild 插件来注册 [eslint-rspack-plugin](https://github.com/rspack-contrib/eslint-rspack-plugin)：
 
 ```ts
 import type { RsbuildPlugin } from '@rsbuild/core';
-
-export const pluginTypeScriptExt = (): RsbuildPlugin => ({
-  name: 'plugin-typescript-ext',
-  setup(api) {
-    api.modifyBundlerChain(async (chain) => {
-      // 设置 ts-loader 将更多的文件识别为 typescript 模块
-      chain.module.rule(CHAIN_ID.RULE.TS).test(/\.(?:ts|mts|cts|tsx|tss|tsm)$/);
-    });
-  },
-});
-```
-
-### 添加模块入口
-
-```ts
-import type { RsbuildPlugin } from '@rsbuild/core';
-
-export const pluginAdminPanel = (): RsbuildPlugin => ({
-  name: 'plugin-admin-panel',
-  setup(api) {
-    api.modifyBundlerChain(async (chain) => {
-      config.entry('admin-panel').add('src/admin/panel.js');
-    });
-  },
-});
-```
-
-### 注册 Rspack 插件
-
-你可以在 Rsbuild 插件中注册 Rspack 插件，比如注册 `eslint-webpack-plugin`：
-
-```ts
-import type { RsbuildPlugin } from '@rsbuild/core';
-import ESLintPlugin from 'eslint-webpack-plugin';
+import ESLintRspackPlugin from 'eslint-rspack-plugin';
 
 export const pluginEslint = (options?: Options): RsbuildPlugin => ({
   name: 'plugin-eslint',
   setup(api) {
-    // Use rspack-chain to register a bundler plugin.
-    api.modifyBundlerChain(async (chain) => {
-      chain.plugin('eslint-webpack-plugin').use(ESLintPlugin, [
-        {
+    api.modifyRspackConfig((config) => {
+      config.plugins?.push(
+        new ESLintRspackPlugin({
           // plugins options
-        },
-      ]);
+        }),
+      );
     });
   },
 });
