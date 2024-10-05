@@ -359,6 +359,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     DefinePlugin {
       "_args": [
         {
+          "import.meta.env.ASSET_PREFIX": """",
           "import.meta.env.BASE_URL": "\\"/\\"",
           "import.meta.env.DEV": true,
           "import.meta.env.MODE": ""development"",
@@ -781,6 +782,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     DefinePlugin {
       "_args": [
         {
+          "import.meta.env.ASSET_PREFIX": """",
           "import.meta.env.BASE_URL": "\\"/\\"",
           "import.meta.env.DEV": false,
           "import.meta.env.MODE": ""production"",
@@ -1119,6 +1121,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     DefinePlugin {
       "_args": [
         {
+          "import.meta.env.ASSET_PREFIX": """",
           "import.meta.env.BASE_URL": "\\"/\\"",
           "import.meta.env.DEV": true,
           "import.meta.env.MODE": ""development"",
@@ -1521,6 +1524,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
     DefinePlugin {
       "_args": [
         {
+          "import.meta.env.ASSET_PREFIX": """",
           "import.meta.env.BASE_URL": "\\"/\\"",
           "import.meta.env.DEV": true,
           "import.meta.env.MODE": ""development"",

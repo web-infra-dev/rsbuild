@@ -78,6 +78,7 @@ DefinePlugin {
       "__VUE_OPTIONS_API__": true,
       "__VUE_PROD_DEVTOOLS__": false,
       "__VUE_PROD_HYDRATION_MISMATCH_DETAILS__": false,
+      "import.meta.env.ASSET_PREFIX": """",
       "import.meta.env.BASE_URL": "\\"/\\"",
       "import.meta.env.DEV": false,
       "import.meta.env.MODE": ""none"",

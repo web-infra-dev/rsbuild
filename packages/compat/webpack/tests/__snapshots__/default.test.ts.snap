@@ -302,6 +302,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     },
     DefinePlugin {
       "definitions": {
+        "import.meta.env.ASSET_PREFIX": """",
         "import.meta.env.BASE_URL": "\\"/\\"",
         "import.meta.env.DEV": true,
         "import.meta.env.MODE": ""development"",
@@ -662,6 +663,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     },
     DefinePlugin {
       "definitions": {
+        "import.meta.env.ASSET_PREFIX": """",
         "import.meta.env.BASE_URL": "\\"/\\"",
         "import.meta.env.DEV": false,
         "import.meta.env.MODE": ""production"",
@@ -971,6 +973,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     RsbuildCorePlugin {},
     DefinePlugin {
       "definitions": {
+        "import.meta.env.ASSET_PREFIX": """",
         "import.meta.env.BASE_URL": "\\"/\\"",
         "import.meta.env.DEV": false,
         "import.meta.env.MODE": ""production"",
@@ -1263,6 +1266,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     RsbuildCorePlugin {},
     DefinePlugin {
       "definitions": {
+        "import.meta.env.ASSET_PREFIX": """",
         "import.meta.env.BASE_URL": "\\"/\\"",
         "import.meta.env.DEV": false,
         "import.meta.env.MODE": ""production"",

@@ -13,7 +13,11 @@ test('should allow dev.assetPrefix to be `auto`', async ({ page }) => {
   });
 
   const testEl = page.locator('#test');
-  await expect(testEl).toHaveText('Hello Rsbuild!');
+  await expect(testEl).toHaveText('auto');
+
+  const testEl2 = page.locator('#test2');
+  await expect(testEl2).toHaveText('auto');
+
   await rsbuild.close();
 });
 
@@ -29,7 +33,7 @@ test('should allow dev.assetPrefix to be true', async ({ page }) => {
   });
 
   const testEl = page.locator('#test');
-  await expect(testEl).toHaveText('Hello Rsbuild!');
+  await expect(testEl).toHaveText(`http://localhost:${rsbuild.port}`);
   await rsbuild.close();
 });
 
@@ -46,8 +50,12 @@ test('should allow dev.assetPrefix to have <port> placeholder', async ({
     },
   });
 
-  const testEl = page.locator('#test-port');
+  const testEl = page.locator('#test');
   await expect(testEl).toHaveText(`http://localhost:${rsbuild.port}`);
+
+  const testEl2 = page.locator('#test2');
+  await expect(testEl2).toHaveText(`http://localhost:${rsbuild.port}`);
+
   await rsbuild.close();
 });
 
@@ -63,7 +71,7 @@ test('should allow output.assetPrefix to be `auto`', async ({ page }) => {
   });
 
   const testEl = page.locator('#test');
-  await expect(testEl).toHaveText('Hello Rsbuild!');
+  await expect(testEl).toHaveText('auto');
   await rsbuild.close();
 });
 
