@@ -51,12 +51,15 @@ export async function init({
         files.push(configFilePath);
       }
 
-      const { watchFiles: watchFilesConfig } = config.dev || {};
-      if (watchFilesConfig?.type === 'reload-server') {
-        files.push(...castArray(watchFilesConfig.paths));
-        watchFiles(files, watchFilesConfig.options);
-      } else {
-        watchFiles(files);
+      if (config.dev?.watchFiles) {
+        for (const watchFilesConfig of castArray(config.dev.watchFiles)) {
+          if (watchFilesConfig?.type === 'reload-server') {
+            files.push(...castArray(watchFilesConfig.paths));
+            watchFiles(files, watchFilesConfig.options);
+          } else {
+            watchFiles(files);
+          }
+        }
       }
     }
 

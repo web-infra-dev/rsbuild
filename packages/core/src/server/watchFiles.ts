@@ -1,4 +1,6 @@
+import type { FSWatcher } from 'chokidar';
 import { normalizePublicDirs } from '../config';
+import { castArray } from '../helpers';
 import type {
   ChokidarWatchOptions,
   DevConfig,
@@ -26,7 +28,7 @@ export async function setupWatchFiles(options: WatchFilesOptions): Promise<
     return;
   }
 
-  const devFilesWatcher = await watchDevFiles(dev, compileMiddlewareAPI);
+  const closeDevFilesWatcher = await watchDevFiles(dev, compileMiddlewareAPI);
   const serverFilesWatcher = await watchServerFiles(
     server,
     compileMiddlewareAPI,
@@ -35,7 +37,7 @@ export async function setupWatchFiles(options: WatchFilesOptions): Promise<
   return {
     async close() {
       await Promise.all([
-        devFilesWatcher?.close(),
+        closeDevFilesWatcher?.(),
         serverFilesWatcher?.close(),
       ]);
     },
@@ -51,12 +53,21 @@ async function watchDevFiles(
     return;
   }
 
-  const watchOptions = prepareWatchOptions(
-    watchFiles.paths,
-    watchFiles.options,
-    watchFiles.type,
-  );
-  return startWatchFiles(watchOptions, compileMiddlewareAPI);
+  const watchers: FSWatcher[] = [];
+
+  for (const { paths, options, type } of castArray(watchFiles)) {
+    const watchOptions = prepareWatchOptions(paths, options, type);
+    const watcher = await startWatchFiles(watchOptions, compileMiddlewareAPI);
+    if (watcher) {
+      watchers.push(watcher);
+    }
+  }
+
+  return async () => {
+    for (const watcher of watchers) {
+      await watcher.close();
+    }
+  };
 }
 
 function watchServerFiles(
