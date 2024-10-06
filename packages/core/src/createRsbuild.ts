@@ -1,6 +1,8 @@
+import { existsSync } from 'node:fs';
 import { isPromise } from 'node:util/types';
+import color from 'picocolors';
 import { createContext } from './createContext';
-import { getNodeEnv, pick, setNodeEnv } from './helpers';
+import { getNodeEnv, isEmptyDir, pick, setNodeEnv } from './helpers';
 import { initPluginAPI } from './initPlugins';
 import { initRsbuildConfig } from './internal';
 import { logger } from './logger';
@@ -142,6 +144,25 @@ export async function createRsbuild(
     if (!getNodeEnv()) {
       setNodeEnv('production');
     }
+
+    const { distPath } = context;
+
+    if (!existsSync(distPath)) {
+      throw new Error(
+        `The output directory ${color.yellow(
+          distPath,
+        )} does not exist, please build the project before previewing.`,
+      );
+    }
+
+    if (isEmptyDir(distPath)) {
+      throw new Error(
+        `The output directory ${color.yellow(
+          distPath,
+        )} is empty, please build the project before previewing.`,
+      );
+    }
+
     const { startProdServer } = await import('./server/prodServer');
     const config = await initRsbuildConfig({ context, pluginManager });
     return startProdServer(context, config, options);
