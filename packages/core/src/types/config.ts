@@ -1212,7 +1212,7 @@ export interface DevConfig {
   /**
    * This option allows you to configure a list of globs/directories/files to watch for file changes.
    */
-  watchFiles?: WatchFiles;
+  watchFiles?: WatchFiles | WatchFiles[];
   /**
    * Enable lazy compilation.
    * @default false

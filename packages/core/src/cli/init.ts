@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { loadConfig, watchFiles } from '../config';
+import { loadConfig, watchFilesForRestart } from '../config';
 import { castArray, getAbsolutePath } from '../helpers';
 import { loadEnv } from '../loadEnv';
 import { logger } from '../logger';
@@ -51,13 +51,22 @@ export async function init({
         files.push(configFilePath);
       }
 
-      const { watchFiles: watchFilesConfig } = config.dev || {};
-      if (watchFilesConfig?.type === 'reload-server') {
-        files.push(...castArray(watchFilesConfig.paths));
-        watchFiles(files, watchFilesConfig.options);
-      } else {
-        watchFiles(files);
+      if (config.dev?.watchFiles) {
+        for (const watchFilesConfig of castArray(config.dev.watchFiles)) {
+          if (watchFilesConfig.type === 'reload-page') {
+            continue;
+          }
+
+          const paths = castArray(watchFilesConfig.paths);
+          if (watchFilesConfig.options) {
+            watchFilesForRestart(paths, watchFilesConfig.options);
+          } else {
+            files.push(...paths);
+          }
+        }
       }
+
+      watchFilesForRestart(files);
     }
 
     const { createRsbuild } = await import('../createRsbuild');
