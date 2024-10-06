@@ -21,7 +21,7 @@ export default defineConfig({
     watchFiles: [
       {
         type: 'reload-page',
-        paths: ['./some-unexist-file.ts'],
+        paths: ['./some-file.ts'],
       },
       {
         type: 'reload-server',
