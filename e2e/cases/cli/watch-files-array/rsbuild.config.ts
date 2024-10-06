@@ -18,15 +18,16 @@ const testPlugin: RsbuildPlugin = {
 export default defineConfig({
   dev: {
     writeToDisk: true,
-    watchFiles: {
-      type: process.env.WATCH_FILES_TYPE as 'reload-page' | 'reload-server',
-      paths: ['./test-temp-config.ts'],
-    },
-  },
-  output: {
-    distPath: {
-      root: 'dist',
-    },
+    watchFiles: [
+      {
+        type: 'reload-page',
+        paths: ['./some-unexist-file.ts'],
+      },
+      {
+        type: 'reload-server',
+        paths: ['./test-temp-config.ts'],
+      },
+    ],
   },
   plugins: [testPlugin],
   server: {

@@ -328,7 +328,7 @@ const resolveConfigPath = (root: string, customConfig?: string) => {
   return null;
 };
 
-export async function watchFiles(
+export async function watchFilesForRestart(
   files: string[],
   watchOptions?: WatchOptions,
 ): Promise<void> {
