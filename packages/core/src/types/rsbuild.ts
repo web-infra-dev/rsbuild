@@ -27,6 +27,10 @@ export type CreateDevServerOptions = StartDevServerOptions & {
 };
 
 export type PreviewServerOptions = {
+  /**
+   * Whether to get port silently
+   * @default false
+   */
   getPortSilently?: boolean;
 };
 
