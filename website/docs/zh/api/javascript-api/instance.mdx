@@ -194,9 +194,14 @@ await rsbuild.build({
 
 ```ts
 type StartDevServerOptions = {
-  // 自定义 Compiler 对象
+  /**
+   * 使用自定义的 Rspack Compiler 对象
+   */
   compiler?: Compiler | MultiCompiler;
-  // 是否在启动时静默获取端口号，默认为 false
+  /**
+   * 是否在启动时静默获取端口号，不输出任何日志
+   * @default false
+   */
   getPortSilently?: boolean;
 };
 
@@ -358,13 +363,19 @@ type RsbuildDevServer = {
 };
 
 type CreateDevServerOptions = {
-  /** 自定义 Compiler 对象 */
+  /**
+   * 自定义 Compiler 对象
+   */
   compiler?: Compiler | MultiCompiler;
-
-  /** 是否在启动时静默获取端口号，默认为 false */
+  /**
+   * 是否在启动时静默获取端口号，不输出任何日志
+   * @default false
+   */
   getPortSilently?: boolean;
-
-  /** 是否触发 Rsbuild 编译，默认为 true */
+  /**
+   * 是否触发 Rsbuild 编译
+   * @default true
+   */
   runCompile?: boolean;
 };
 
@@ -440,10 +451,15 @@ rsbuildServer.connectWebSocket({ server: httpServer });
 ```ts
 type PreviewOptions = {
   /**
-   * Whether to get port silently
+   * 是否在启动时静默获取端口号，不输出任何日志
    * @default false
    */
   getPortSilently?: boolean;
+  /**
+   * 是否检查 dist 目录存在且不为空
+   * @default true
+   */
+  checkDistDir?: boolean;
 };
 
 type StartServerResult = {

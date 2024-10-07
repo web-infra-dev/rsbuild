@@ -1,8 +1,6 @@
-import { join } from 'node:path';
 import { getRandomPort, gotoPage, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
-import { outputFile } from 'fs-extra';
 
 const createPlugin = () => {
   const names: string[] = [];
@@ -154,16 +152,13 @@ rspackOnlyTest(
       },
     });
 
-    await rsbuild.initConfigs();
-    await outputFile(join(rsbuild.context.distPath, 'index.html'), '');
-
-    const result = await rsbuild.preview();
+    const result = await rsbuild.preview({
+      checkDistDir: false,
+    });
 
     expect(names).toEqual([
       'ModifyRsbuildConfig',
       'ModifyEnvironmentConfig',
-      'ModifyBundlerChain',
-      'ModifyBundlerConfig',
       'BeforeStartProdServer',
       'AfterStartProdServer',
     ]);

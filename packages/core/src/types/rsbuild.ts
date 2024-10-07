@@ -13,7 +13,14 @@ export type Bundler = 'rspack' | 'webpack';
 export type CreateCompilerOptions = { watch?: boolean };
 
 export type StartDevServerOptions = {
+  /**
+   * Using a custom Rspack Compiler object.
+   */
   compiler?: Compiler | MultiCompiler;
+  /**
+   * Whether to get port silently and not print any logs.
+   * @default false
+   */
   getPortSilently?: boolean;
 };
 
@@ -28,10 +35,15 @@ export type CreateDevServerOptions = StartDevServerOptions & {
 
 export type PreviewOptions = {
   /**
-   * Whether to get port silently
+   * Whether to get port silently and not print any logs.
    * @default false
    */
   getPortSilently?: boolean;
+  /**
+   * Whether to check if the dist directory exists and is not empty.
+   * @default true
+   */
+  checkDistDir?: boolean;
 };
 
 export type BuildOptions = {

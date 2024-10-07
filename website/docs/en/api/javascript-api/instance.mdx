@@ -171,9 +171,14 @@ Start the local dev server.
 
 ```ts
 type StartDevServerOptions = {
-  // custom Compiler object
+  /**
+   * Using a custom Rspack Compiler object.
+   */
   compiler?: Compiler | MultiCompiler;
-  // Whether to get the port silently, the default is false
+  /**
+   * Whether to get port silently and not print any logs.
+   * @default false
+   */
   getPortSilently?: boolean;
 };
 
@@ -335,13 +340,19 @@ type RsbuildDevServer = {
 };
 
 type CreateDevServerOptions = {
-  /** Custom Compiler */
+  /**
+   * Using a custom Rspack Compiler object.
+   */
   compiler?: Compiler | MultiCompiler;
-
-  /** Whether to get the port silently, the default is false */
+  /**
+   * Whether to get port silently and not print any logs.
+   * @default false
+   */
   getPortSilently?: boolean;
-
-  /** Whether to trigger Rsbuild compilation, the default is true */
+  /**
+   * Whether to trigger Rsbuild compilation
+   * @default true
+   */
   runCompile?: boolean;
 };
 
@@ -423,6 +434,11 @@ type PreviewOptions = {
    * @default false
    */
   getPortSilently?: boolean;
+  /**
+   * Whether to check if the dist directory exists and is not empty.
+   * @default true
+   */
+  checkDistDir?: boolean;
 };
 
 type StartServerResult = {
