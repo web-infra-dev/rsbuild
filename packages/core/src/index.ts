@@ -113,6 +113,7 @@ export type {
   Polyfill,
   PostCSSLoaderOptions,
   PostCSSPlugin,
+  PreviewOptions,
   PreconnectOption,
   ProxyConfig,
   ProxyOptions,

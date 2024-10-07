@@ -6,7 +6,7 @@ import { logger } from '../logger';
 import type {
   InternalContext,
   NormalizedConfig,
-  PreviewServerOptions,
+  PreviewOptions,
   RequestHandler,
   ServerConfig,
 } from '../types';
@@ -152,7 +152,7 @@ export class RsbuildProdServer {
 export async function startProdServer(
   context: InternalContext,
   config: NormalizedConfig,
-  { getPortSilently }: PreviewServerOptions = {},
+  { getPortSilently }: PreviewOptions = {},
 ): Promise<StartServerResult> {
   const { port, host, https, portTip } = await getServerConfig({
     config,

@@ -15,7 +15,7 @@ import type {
   Falsy,
   InternalContext,
   PluginManager,
-  PreviewServerOptions,
+  PreviewOptions,
   ResolvedCreateRsbuildOptions,
   RsbuildInstance,
   RsbuildPlugin,
@@ -140,7 +140,7 @@ export async function createRsbuild(
     setCssExtractPlugin,
   });
 
-  const preview = async (options?: PreviewServerOptions) => {
+  const preview = async (options?: PreviewOptions) => {
     if (!getNodeEnv()) {
       setNodeEnv('production');
     }
