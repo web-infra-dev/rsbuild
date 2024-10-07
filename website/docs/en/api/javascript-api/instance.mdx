@@ -18,7 +18,7 @@ type Version = string;
 
 ### context.rootPath
 
-The root path of current build, corresponding to the `cwd` option of `createRsbuild` method.
+The root path of current build, corresponding to the `cwd` option of [createRsbuild](/api/javascript-api/core#creatersbuild) method.
 
 - **Type:**
 
@@ -489,9 +489,7 @@ await server.close();
 
 ## rsbuild.createCompiler
 
-Create a Compiler object.
-
-When the `target` option of `createRsbuild` contains only one value, the return value is `Compiler`; when `target` contains multiple values, the return value is `MultiCompiler`.
+Create an Rspack [Compiler](https://rspack.dev/api/javascript-api/compiler) instance. If there are multiple [environments](/config/environments) for this build, the return value is `MultiCompiler`.
 
 - **Type:**
 
@@ -505,7 +503,7 @@ function CreateCompiler(): Promise<Compiler | MultiCompiler>;
 const compiler = await rsbuild.createCompiler();
 ```
 
-> In most scenarios, you do not need to use this API unless you need to custom the dev server or other advanced scenarios.
+> You do not need to use this API unless you need to custom the dev server or other advanced scenarios.
 
 ## rsbuild.addPlugins
 
