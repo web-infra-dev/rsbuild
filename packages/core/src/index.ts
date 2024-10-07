@@ -42,7 +42,6 @@ export type {
   ConfigChainWithContext,
   ConsoleType,
   CreateCompiler,
-  CreateCompilerOptions,
   CreateRsbuildOptions,
   CrossOrigin,
   CSSLoaderOptions,

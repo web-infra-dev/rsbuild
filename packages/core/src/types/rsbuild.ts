@@ -10,8 +10,6 @@ import type { WebpackConfig } from './thirdParty';
 
 export type Bundler = 'rspack' | 'webpack';
 
-export type CreateCompilerOptions = { watch?: boolean };
-
 export type StartDevServerOptions = {
   /**
    * Using a custom Rspack Compiler object.
@@ -96,9 +94,8 @@ export type InspectConfigResult<B extends 'rspack' | 'webpack' = 'rspack'> = {
   };
 };
 
-export type CreateCompiler =
-  // Allow user to manually narrow Compiler type
-  <C = Compiler | MultiCompiler>(options?: CreateCompilerOptions) => Promise<C>;
+// Allow user to manually narrow Compiler type
+export type CreateCompiler = <C = Compiler | MultiCompiler>() => Promise<C>;
 
 export type CreateRsbuildOptions = {
   /** The root path of current project. */
