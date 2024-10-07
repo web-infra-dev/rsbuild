@@ -433,18 +433,28 @@ rsbuildServer.connectWebSocket({ server: httpServer });
 
 ## rsbuild.preview
 
-在本地启动 Server 来预览生产模式构建的产物，需要在 `rsbuild.build` 方法之后执行。
+在本地启动 server 来预览生产模式构建的产物，需要在 [rsbuild.build](#rsbuildbuild) 方法之后执行。
 
 - **类型：**
 
 ```ts
+type PreviewOptions = {
+  /**
+   * Whether to get port silently
+   * @default false
+   */
+  getPortSilently?: boolean;
+};
+
 type StartServerResult = {
   urls: string[];
   port: number;
-  server: Server;
+  server: {
+    close: () => Promise<void>;
+  };
 };
 
-function server(): Promise<StartServerResult>;
+function preview(options?: PreviewOptions): Promise<StartServerResult>;
 ```
 
 - **示例：**

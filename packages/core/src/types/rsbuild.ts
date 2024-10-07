@@ -26,7 +26,7 @@ export type CreateDevServerOptions = StartDevServerOptions & {
   runCompile?: boolean;
 };
 
-export type PreviewServerOptions = {
+export type PreviewOptions = {
   /**
    * Whether to get port silently
    * @default false
@@ -148,7 +148,7 @@ export type RsbuildInstance = {
   isPluginExists: PluginManager['isPluginExists'];
 
   build: ProviderInstance['build'];
-  preview: (options?: PreviewServerOptions) => Promise<StartServerResult>;
+  preview: (options?: PreviewOptions) => Promise<StartServerResult>;
   initConfigs: ProviderInstance['initConfigs'];
   inspectConfig: ProviderInstance['inspectConfig'];
   createCompiler: ProviderInstance['createCompiler'];

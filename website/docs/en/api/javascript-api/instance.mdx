@@ -412,18 +412,28 @@ rsbuildServer.connectWebSocket({ server: httpServer });
 
 ## rsbuild.preview
 
-Start a server to preview the production build locally. This method should be executed after `rsbuild.build`.
+Start a server to preview the production build locally. This method should be executed after [rsbuild.build](#rsbuildbuild).
 
 - **Type:**
 
 ```ts
+type PreviewOptions = {
+  /**
+   * Whether to get port silently
+   * @default false
+   */
+  getPortSilently?: boolean;
+};
+
 type StartServerResult = {
   urls: string[];
   port: number;
-  server: Server;
+  server: {
+    close: () => Promise<void>;
+  };
 };
 
-function server(): Promise<StartServerResult>;
+function preview(options?: PreviewOptions): Promise<StartServerResult>;
 ```
 
 - **Example:**
