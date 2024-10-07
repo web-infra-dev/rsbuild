@@ -1,7 +1,4 @@
-import { existsSync } from 'node:fs';
 import { type Command, program } from 'commander';
-import color from 'picocolors';
-import { isEmptyDir } from '../helpers';
 import { logger } from '../logger';
 import type { RsbuildMode } from '../types';
 import { init } from './init';
@@ -114,27 +111,6 @@ export function runCli(): void {
       try {
         const rsbuild = await init({ cliOptions: options });
         await rsbuild?.initConfigs();
-
-        if (rsbuild) {
-          const { distPath } = rsbuild.context;
-
-          if (!existsSync(distPath)) {
-            throw new Error(
-              `The output directory ${color.yellow(
-                distPath,
-              )} does not exist, please build the project before previewing.`,
-            );
-          }
-
-          if (isEmptyDir(distPath)) {
-            throw new Error(
-              `The output directory ${color.yellow(
-                distPath,
-              )} is empty, please build the project before previewing.`,
-            );
-          }
-        }
-
         await rsbuild?.preview();
       } catch (err) {
         logger.error('Failed to start preview server.');
