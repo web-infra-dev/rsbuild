@@ -145,6 +145,7 @@ export async function createRsbuild(
       setNodeEnv('production');
     }
 
+    const config = await initRsbuildConfig({ context, pluginManager });
     const { distPath } = context;
 
     if (!existsSync(distPath)) {
@@ -164,7 +165,6 @@ export async function createRsbuild(
     }
 
     const { startProdServer } = await import('./server/prodServer');
-    const config = await initRsbuildConfig({ context, pluginManager });
     return startProdServer(context, config, options);
   };
 

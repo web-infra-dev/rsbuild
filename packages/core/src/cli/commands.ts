@@ -110,7 +110,6 @@ export function runCli(): void {
     .action(async (options: PreviewOptions) => {
       try {
         const rsbuild = await init({ cliOptions: options });
-        await rsbuild?.initConfigs();
         await rsbuild?.preview();
       } catch (err) {
         logger.error('Failed to start preview server.');
