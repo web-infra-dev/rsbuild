@@ -140,28 +140,31 @@ export async function createRsbuild(
     setCssExtractPlugin,
   });
 
-  const preview = async (options?: PreviewOptions) => {
+  const preview = async (options: PreviewOptions = {}) => {
     if (!getNodeEnv()) {
       setNodeEnv('production');
     }
 
     const config = await initRsbuildConfig({ context, pluginManager });
     const { distPath } = context;
+    const { checkDistDir = true } = options;
 
-    if (!existsSync(distPath)) {
-      throw new Error(
-        `The output directory ${color.yellow(
-          distPath,
-        )} does not exist, please build the project before previewing.`,
-      );
-    }
+    if (checkDistDir) {
+      if (!existsSync(distPath)) {
+        throw new Error(
+          `The output directory ${color.yellow(
+            distPath,
+          )} does not exist, please build the project before previewing.`,
+        );
+      }
 
-    if (isEmptyDir(distPath)) {
-      throw new Error(
-        `The output directory ${color.yellow(
-          distPath,
-        )} is empty, please build the project before previewing.`,
-      );
+      if (isEmptyDir(distPath)) {
+        throw new Error(
+          `The output directory ${color.yellow(
+            distPath,
+          )} is empty, please build the project before previewing.`,
+        );
+      }
     }
 
     const { startProdServer } = await import('./server/prodServer');
