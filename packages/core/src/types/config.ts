@@ -1178,6 +1178,21 @@ export type WatchFiles = {
   type?: 'reload-page' | 'reload-server';
 };
 
+export type CliShortcut = {
+  /**
+   * The key to trigger the shortcut.
+   */
+  key: string;
+  /**
+   * The description of the shortcut.
+   */
+  description: string;
+  /**
+   * The action to execute when the shortcut is triggered.
+   */
+  action: () => void | Promise<void>;
+};
+
 export interface DevConfig {
   /**
    * Whether to enable Hot Module Replacement.
@@ -1203,7 +1218,16 @@ export interface DevConfig {
   /**
    * Whether to enable CLI shortcuts.
    */
-  cliShortcuts?: boolean;
+  cliShortcuts?:
+    | boolean
+    | {
+        /**
+         * Customize the CLI shortcuts.
+         * @param shortcuts - The default CLI shortcuts.
+         * @returns - The customized CLI shortcuts.
+         */
+        custom?: (shortcuts?: CliShortcut[]) => CliShortcut[];
+      };
   /**
    * Provides the ability to execute a custom function and apply custom middlewares.
    */

@@ -38,6 +38,7 @@ export type {
   CacheGroups,
   Charset,
   ClientConfig,
+  CliShortcut,
   ConfigChain,
   ConfigChainWithContext,
   ConsoleType,

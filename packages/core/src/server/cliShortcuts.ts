@@ -1,14 +1,8 @@
 import readline from 'node:readline';
 import color from 'picocolors';
 import { logger } from '../logger';
-import type { NormalizedDevConfig } from '../types/config';
+import type { CliShortcut, NormalizedDevConfig } from '../types/config';
 import { onBeforeRestartServer } from './restart';
-
-export type CliShortcut = {
-  key: string;
-  description: string;
-  action: () => void | Promise<void>;
-};
 
 export const isCliShortcutsEnabled = (
   devConfig: NormalizedDevConfig,
@@ -19,13 +13,15 @@ export function setupCliShortcuts({
   closeServer,
   printUrls,
   restartServer,
+  customShortcuts,
 }: {
   openPage: () => Promise<void>;
   closeServer: () => Promise<void>;
   printUrls: () => void;
   restartServer?: () => Promise<void>;
+  customShortcuts?: (shortcuts: CliShortcut[]) => CliShortcut[];
 }): void {
-  const shortcuts = [
+  let shortcuts = [
     {
       key: 'c',
       description: `${color.bold('c + enter')}  ${color.dim('clear console')}`,
@@ -62,6 +58,14 @@ export function setupCliShortcuts({
       action: printUrls,
     },
   ].filter(Boolean) as CliShortcut[];
+
+  if (customShortcuts) {
+    shortcuts = customShortcuts(shortcuts);
+
+    if (!Array.isArray(shortcuts)) {
+      throw new Error('`dev.cliShortcuts` must return an array of shortcuts.');
+    }
+  }
 
   logger.log(
     `  ➜ ${color.dim('press')} ${color.bold('h + enter')} ${color.dim('to show shortcuts')}\n`,

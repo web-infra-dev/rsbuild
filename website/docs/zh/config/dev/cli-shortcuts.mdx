@@ -1,10 +1,33 @@
 # dev.cliShortcuts
 
-- **类型：** `boolean`
+- **类型：**
+
+```ts
+type CliShortcuts =
+  | boolean
+  | {
+      custom?: (shortcuts?: CliShortcut[]) => CliShortcut[];
+    };
+```
+
+- **默认值：** 当使用 Rsbuild CLI 时默认为 `true`，否则为 `false`。
 - **默认值：** 当使用 Rsbuild CLI 时默认为 `true`，否则为 `false`。
 - **版本：** `>= 1.0.11`
 
 是否启用 CLI 快捷键。
+
+## 所有快捷键
+
+按 `h + Enter` 以显示所有快捷键：
+
+```
+  Shortcuts:
+  c + enter  clear console
+  o + enter  open in browser
+  q + enter  quit process
+  r + enter  restart server
+  u + enter  show urls
+```
 
 ## 示例
 
@@ -28,15 +51,39 @@ export default {
 };
 ```
 
-## 所有快捷键
+- 禁用部分快捷键：
 
-按 `h + Enter` 以显示所有快捷键：
-
+```js
+export default {
+  dev: {
+    cliShortcuts: {
+      custom: (shortcuts) => {
+        return shortcuts.filter((shortcut) => shortcut.key !== 'o');
+      },
+    },
+  },
+};
 ```
-  Shortcuts:
-  c + enter  clear console
-  o + enter  open in browser
-  q + enter  quit process
-  r + enter  restart server
-  u + enter  show urls
+
+- 添加自定义快捷键：
+
+```js
+export default {
+  dev: {
+    cliShortcuts: {
+      custom: (shortcuts) => {
+        return [
+          ...shortcuts,
+          {
+            key: 's',
+            description: 'say hello',
+            action: () => {
+              console.log('hello world!');
+            },
+          },
+        ];
+      },
+    },
+  },
+};
 ```

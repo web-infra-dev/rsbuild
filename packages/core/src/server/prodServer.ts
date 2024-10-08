@@ -237,6 +237,10 @@ export async function startProdServer(
             openPage,
             closeServer,
             printUrls,
+            customShortcuts:
+              typeof config.dev.cliShortcuts === 'boolean'
+                ? undefined
+                : config.dev.cliShortcuts.custom,
           });
         }
 
