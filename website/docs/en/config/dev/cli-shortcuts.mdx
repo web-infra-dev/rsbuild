@@ -1,0 +1,42 @@
+# dev.cliShortcuts
+
+- **Type:** `boolean`
+- **Default:** `true` when using Rsbuild CLI, `false` otherwise.
+- **Version:** `>= 1.0.11`
+
+Whether to enable CLI shortcuts.
+
+## Example
+
+- Enable:
+
+```js
+export default {
+  dev: {
+    cliShortcuts: true,
+  },
+};
+```
+
+- Disable:
+
+```js
+export default {
+  dev: {
+    cliShortcuts: false,
+  },
+};
+```
+
+## All Shortcuts
+
+Press `h + Enter` to show all shortcuts:
+
+```
+  Shortcuts:
+  c + enter  clear console
+  o + enter  open in browser
+  q + enter  quit process
+  r + enter  restart server
+  u + enter  show urls
+```

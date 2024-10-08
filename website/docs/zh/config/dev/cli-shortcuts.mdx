@@ -1,0 +1,42 @@
+# dev.cliShortcuts
+
+- **类型：** `boolean`
+- **默认值：** 当使用 Rsbuild CLI 时默认为 `true`，否则为 `false`。
+- **版本：** `>= 1.0.11`
+
+是否启用 CLI 快捷键。
+
+## 示例
+
+- 启用：
+
+```js
+export default {
+  dev: {
+    cliShortcuts: true,
+  },
+};
+```
+
+- 禁用：
+
+```js
+export default {
+  dev: {
+    cliShortcuts: false,
+  },
+};
+```
+
+## 所有快捷键
+
+按 `h + Enter` 以显示所有快捷键：
+
+```
+  Shortcuts:
+  c + enter  clear console
+  o + enter  open in browser
+  q + enter  quit process
+  r + enter  restart server
+  u + enter  show urls
+```
