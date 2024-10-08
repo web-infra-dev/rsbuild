@@ -225,6 +225,10 @@ export async function createDevServer<
         closeServer,
         printUrls,
         restartServer: () => restartDevServer({ clear: false }),
+        customShortcuts:
+          typeof devConfig.cliShortcuts === 'boolean'
+            ? undefined
+            : devConfig.cliShortcuts.custom,
       });
     }
 

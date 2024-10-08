@@ -1,10 +1,32 @@
 # dev.cliShortcuts
 
-- **Type:** `boolean`
+- **Type:**
+
+```ts
+type CliShortcuts =
+  | boolean
+  | {
+      custom?: (shortcuts?: CliShortcut[]) => CliShortcut[];
+    };
+```
+
 - **Default:** `true` when using Rsbuild CLI, `false` otherwise.
 - **Version:** `>= 1.0.11`
 
 Whether to enable CLI shortcuts.
+
+## All Shortcuts
+
+Press `h + Enter` to show all shortcuts:
+
+```
+  Shortcuts:
+  c + enter  clear console
+  o + enter  open in browser
+  q + enter  quit process
+  r + enter  restart server
+  u + enter  show urls
+```
 
 ## Example
 
@@ -28,15 +50,39 @@ export default {
 };
 ```
 
-## All Shortcuts
+- Disable some shortcuts:
 
-Press `h + Enter` to show all shortcuts:
-
+```js
+export default {
+  dev: {
+    cliShortcuts: {
+      custom: (shortcuts) => {
+        return shortcuts.filter((shortcut) => shortcut.key !== 'o');
+      },
+    },
+  },
+};
 ```
-  Shortcuts:
-  c + enter  clear console
-  o + enter  open in browser
-  q + enter  quit process
-  r + enter  restart server
-  u + enter  show urls
+
+- Add custom shortcuts:
+
+```js
+export default {
+  dev: {
+    cliShortcuts: {
+      custom: (shortcuts) => {
+        return [
+          ...shortcuts,
+          {
+            key: 's',
+            description: 'say hello',
+            action: () => {
+              console.log('hello world!');
+            },
+          },
+        ];
+      },
+    },
+  },
+};
 ```
