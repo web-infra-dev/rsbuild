@@ -10,6 +10,7 @@ import type {
   RequestHandler,
   ServerConfig,
 } from '../types';
+import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
 import {
   type StartServerResult,
   getAddressUrls,
@@ -24,6 +25,7 @@ import {
   getBaseMiddleware,
   getRequestLoggerMiddleware,
 } from './middlewares';
+import { open } from './open';
 
 type RsbuildProdServerOptions = {
   pwd: string;
@@ -202,28 +204,51 @@ export async function startProdServer(
 
         const protocol = https ? 'https' : 'http';
         const urls = getAddressUrls({ protocol, port, host });
+        const cliShortcutsEnabled = isCliShortcutsEnabled(config.dev);
 
-        printServerURLs({
-          urls,
-          port,
-          routes,
-          protocol,
-          printUrls: serverConfig.printUrls,
-        });
-
-        if (portTip && !getPortSilently) {
-          logger.info(portTip);
-        }
-
-        const onClose = async () => {
+        const closeServer = async () => {
           await Promise.all([server.close(), serverTerminator()]);
         };
+
+        const printUrls = () =>
+          printServerURLs({
+            urls,
+            port,
+            routes,
+            protocol,
+            printUrls: serverConfig.printUrls,
+            trailingLineBreak: !cliShortcutsEnabled,
+          });
+
+        const openPage = async () => {
+          return open({
+            https,
+            port,
+            routes,
+            config,
+            clearCache: true,
+          });
+        };
+
+        printUrls();
+
+        if (cliShortcutsEnabled) {
+          setupCliShortcuts({
+            openPage,
+            closeServer,
+            printUrls,
+          });
+        }
+
+        if (!getPortSilently && portTip) {
+          logger.info(portTip);
+        }
 
         resolve({
           port,
           urls: urls.map((item) => item.url),
           server: {
-            close: onClose,
+            close: closeServer,
           },
         });
       },

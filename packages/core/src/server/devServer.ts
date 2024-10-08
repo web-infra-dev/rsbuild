@@ -2,7 +2,6 @@ import fs from 'node:fs';
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import type Connect from 'connect';
-import color from 'picocolors';
 import { ROOT_DIST_DIR } from '../constants';
 import { getPublicPathFromCompiler, isMultiCompiler } from '../helpers';
 import { logger } from '../logger';
@@ -221,36 +220,11 @@ export async function createDevServer<
     printUrls();
 
     if (cliShortcutsEnabled) {
-      setupCliShortcuts([
-        {
-          key: 'c',
-          description: `${color.bold('c + enter')}  ${color.dim('clear console')}`,
-          action: () => {
-            console.clear();
-          },
-        },
-        {
-          key: 'o',
-          description: `${color.bold('o + enter')}  ${color.dim('open in browser')}`,
-          action: openPage,
-        },
-        {
-          key: 'q',
-          description: `${color.bold('q + enter')}  ${color.dim('quit process')}`,
-          action: async () => {
-            try {
-              await closeServer();
-            } finally {
-              process.exit(0);
-            }
-          },
-        },
-        {
-          key: 'u',
-          description: `${color.bold('u + enter')}  ${color.dim('show urls')}`,
-          action: printUrls,
-        },
-      ]);
+      setupCliShortcuts({
+        openPage,
+        closeServer,
+        printUrls,
+      });
     }
 
     if (!getPortSilently && portTip) {

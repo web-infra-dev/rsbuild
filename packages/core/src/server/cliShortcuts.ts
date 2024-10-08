@@ -14,7 +14,46 @@ export const isCliShortcutsEnabled = (
   devConfig: NormalizedDevConfig,
 ): boolean => devConfig.cliShortcuts && process.stdin.isTTY && !process.env.CI;
 
-export function setupCliShortcuts(shortcuts: CliShortcut[]): void {
+export function setupCliShortcuts({
+  openPage,
+  closeServer,
+  printUrls,
+}: {
+  openPage: () => Promise<void>;
+  closeServer: () => Promise<void>;
+  printUrls: () => void;
+}): void {
+  const shortcuts: CliShortcut[] = [
+    {
+      key: 'c',
+      description: `${color.bold('c + enter')}  ${color.dim('clear console')}`,
+      action: () => {
+        console.clear();
+      },
+    },
+    {
+      key: 'o',
+      description: `${color.bold('o + enter')}  ${color.dim('open in browser')}`,
+      action: openPage,
+    },
+    {
+      key: 'q',
+      description: `${color.bold('q + enter')}  ${color.dim('quit process')}`,
+      action: async () => {
+        try {
+          await closeServer();
+        } finally {
+          process.exit(0);
+        }
+      },
+    },
+    {
+      key: 'u',
+      description: `${color.bold('u + enter')}  ${color.dim('show urls')}`,
+      action: printUrls,
+    },
+  ];
+
   logger.log(
     `  ➜ ${color.dim('press')} ${color.bold('h + enter')} ${color.dim('to show shortcuts')}\n`,
   );
