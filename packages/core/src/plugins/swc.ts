@@ -15,6 +15,7 @@ import type {
   Polyfill,
   RsbuildContext,
   RsbuildPlugin,
+  RsbuildTarget,
   RspackChain,
   TransformImport,
 } from '../types';
@@ -23,42 +24,36 @@ const builtinSwcLoaderName = 'builtin:swc-loader';
 
 function applyScriptCondition({
   rule,
-  chain,
+  isDev,
   config,
   context,
-  includes,
-  excludes,
+  rsbuildTarget,
 }: {
   rule: RspackChain.Rule;
-  chain: RspackChain;
+  isDev: boolean;
   config: NormalizedEnvironmentConfig;
   context: RsbuildContext;
-  includes: (string | RegExp)[];
-  excludes: (string | RegExp)[];
+  rsbuildTarget: RsbuildTarget;
 }): void {
-  // compile all folders in app directory, exclude node_modules
-  // which can be removed next version of rspack
+  // compile all modules in the app directory, exclude node_modules
   rule.include.add({
     and: [context.rootPath, { not: NODE_MODULES_REGEX }],
   });
 
-  // Always compile TS and JSX files.
-  // Otherwise, it will lead to compilation errors and incorrect output.
+  // always compile TS and JSX files.
+  // otherwise, it may cause compilation errors and incorrect output
   rule.include.add(/\.(?:ts|tsx|jsx|mts|cts)$/);
 
-  // The Rsbuild runtime code is es2017 by default,
-  // transform the runtime code if user target < es2017
-  const target = castArray(chain.get('target'));
-  const legacyTarget = ['es5', 'es6', 'es2015', 'es2016'];
-  if (legacyTarget.some((item) => target.includes(item))) {
+  // transform the Rsbuild runtime code to support legacy browsers
+  if (rsbuildTarget === 'web' && isDev) {
     rule.include.add(/[\\/]@rsbuild[\\/]core[\\/]dist[\\/]/);
   }
 
-  for (const condition of [...includes, ...(config.source.include || [])]) {
+  for (const condition of config.source.include || []) {
     rule.include.add(condition);
   }
 
-  for (const condition of [...excludes, ...(config.source.exclude || [])]) {
+  for (const condition of config.source.exclude || []) {
     rule.exclude.add(condition);
   }
 }
@@ -95,7 +90,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
   setup(api) {
     api.modifyBundlerChain({
       order: 'pre',
-      handler: async (chain, { CHAIN_ID, target, environment }) => {
+      handler: async (chain, { CHAIN_ID, isDev, target, environment }) => {
         const { config, browserslist } = environment;
         const cacheRoot = path.join(api.context.cachePath, '.swc');
 
@@ -112,11 +107,10 @@ export const pluginSwc = (): RsbuildPlugin => ({
 
         applyScriptCondition({
           rule,
-          chain,
+          isDev,
           config,
           context: api.context,
-          includes: [],
-          excludes: [],
+          rsbuildTarget: target,
         });
 
         // Rspack builtin SWC is not suitable for webpack
