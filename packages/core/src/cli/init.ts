@@ -100,6 +100,12 @@ export async function init({
       config.server.port = commonOpts.port;
     }
 
+    // enable CLI shortcuts by default when using Rsbuild CLI
+    if (config.dev?.cliShortcuts === undefined) {
+      config.dev ||= {};
+      config.dev.cliShortcuts = true;
+    }
+
     return createRsbuild({
       cwd: root,
       rsbuildConfig: config,
