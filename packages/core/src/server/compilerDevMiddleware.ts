@@ -7,6 +7,7 @@ import {
   type DevMiddlewareAPI,
   getDevMiddleware,
 } from './devMiddleware';
+import { stripBase } from './helper';
 import { SocketServer } from './socketServer';
 
 type Options = {
@@ -95,7 +96,10 @@ export class CompilerDevMiddleware {
     devMiddleware: CustomDevMiddleware,
     publicPaths: string[],
   ): DevMiddlewareAPI {
-    const { devConfig, serverConfig } = this;
+    const {
+      devConfig,
+      serverConfig: { headers, base },
+    } = this;
 
     const callbacks = {
       onInvalid: (compilationId?: string) => {
@@ -112,7 +116,7 @@ export class CompilerDevMiddleware {
     const clientPaths = getClientPaths(devConfig);
 
     const middleware = devMiddleware({
-      headers: serverConfig.headers,
+      headers,
       publicPath: '/',
       stats: false,
       callbacks,
@@ -126,7 +130,11 @@ export class CompilerDevMiddleware {
       etag: 'weak',
     });
 
-    const assetPrefixes = publicPaths.map(pathnameParse);
+    const assetPrefixes = publicPaths
+      .map(pathnameParse)
+      .map((prefix) =>
+        base && base !== '/' ? stripBase(prefix, base) : prefix,
+      );
 
     const warp = async (
       req: IncomingMessage,

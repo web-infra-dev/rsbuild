@@ -152,7 +152,9 @@ rspackOnlyTest(
       },
     });
 
-    const result = await rsbuild.preview();
+    const result = await rsbuild.preview({
+      checkDistDir: false,
+    });
 
     expect(names).toEqual([
       'ModifyRsbuildConfig',

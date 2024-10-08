@@ -326,6 +326,12 @@ export type PublicDir = false | PublicDirOptions | PublicDirOptions[];
 
 export interface ServerConfig {
   /**
+   * Configure the base path of the server.
+   *
+   * @default '/'
+   */
+  base?: string;
+  /**
    * Whether to enable gzip compression
    */
   compress?: boolean;
@@ -394,6 +400,7 @@ export type NormalizedServerConfig = ServerConfig &
       | 'strictPort'
       | 'printUrls'
       | 'open'
+      | 'base'
     >
   >;
 
@@ -1209,7 +1216,7 @@ export interface DevConfig {
   /**
    * This option allows you to configure a list of globs/directories/files to watch for file changes.
    */
-  watchFiles?: WatchFiles;
+  watchFiles?: WatchFiles | WatchFiles[];
   /**
    * Enable lazy compilation.
    * @default false

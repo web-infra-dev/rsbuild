@@ -105,7 +105,8 @@ Rsbuild 会在构建时自动注入 `<script>` 标签到生成的 HTML 文件中
 | Vite                                  | Rsbuild                                                          |
 | ------------------------------------- | ---------------------------------------------------------------- |
 | root                                  | [root](/config/root)                                             |
-| mode                                  | [mode](/config/root)                                             |
+| mode                                  | [mode](/config/mode)                                             |
+| base                                  | [server.base](/config/server/base)                               |
 | define                                | [source.define](/config/source/define)                           |
 | plugins                               | [plugins](/config/plugins)                                       |
 | envDir                                | [Env Directory](/guide/advanced/env-vars#env-目录)               |
@@ -163,6 +164,39 @@ const { publicVars } = loadEnv({ prefixes: ['VITE_'] });
 export default defineConfig({
   source: {
     define: publicVars,
+  },
+});
+```
+
+Rsbuild 默认注入了以下 [环境变量](/guide/advanced/env-vars)：
+
+- `import.meta.env.MODE`
+- `import.meta.env.BASE_URL`
+- `import.meta.env.PROD`
+- `import.meta.env.DEV`
+
+对于 `import.meta.env.SSR`，你可以通过 [environments](/config/environments) 和 [source.define](/config/source/define) 配置项来设置：
+
+```ts title="rsbuild.config.ts"
+export default defineConfig({
+  environments: {
+    web: {
+      source: {
+        define: {
+          'import.meta.env.SSR': JSON.stringify(false),
+        },
+      },
+    },
+    node: {
+      source: {
+        define: {
+          'import.meta.env.SSR': JSON.stringify(true),
+        },
+      },
+      output: {
+        target: 'node',
+      },
+    },
   },
 });
 ```

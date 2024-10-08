@@ -85,7 +85,8 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     const hasErrors = stats.hasErrors();
 
     if (!hasErrors) {
-      if (statsJson.children && statsJson.children.length > 0) {
+      // only print children compiler time when multi compiler
+      if (rspackConfigs.length > 1 && statsJson.children?.length) {
         statsJson.children.forEach((c, index) => {
           printTime(c, index);
         });

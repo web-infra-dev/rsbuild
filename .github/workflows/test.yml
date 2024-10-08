@@ -20,7 +20,6 @@ jobs:
       matrix:
         # run ut in MacOS, as SWC cases will fail in Ubuntu CI
         os: [macos-14, windows-latest]
-        node-version: [18.x]
 
     steps:
       - name: Checkout
@@ -42,11 +41,11 @@ jobs:
               - "!**/_meta.json"
               - "!**/dictionary.txt"
 
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js
         if: steps.changes.outputs.changed == 'true'
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 22
           cache: 'pnpm'
 
       - name: Install Dependencies
@@ -64,7 +63,6 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        node-version: [18.x]
 
     steps:
       - name: Checkout
@@ -86,11 +84,11 @@ jobs:
               - "!**/_meta.json"
               - "!**/dictionary.txt"
 
-      - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js
         if: steps.changes.outputs.changed == 'true'
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 22
           cache: 'pnpm'
 
       - name: Install Dependencies

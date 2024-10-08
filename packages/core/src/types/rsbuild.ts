@@ -10,10 +10,15 @@ import type { WebpackConfig } from './thirdParty';
 
 export type Bundler = 'rspack' | 'webpack';
 
-export type CreateCompilerOptions = { watch?: boolean };
-
 export type StartDevServerOptions = {
+  /**
+   * Using a custom Rspack Compiler object.
+   */
   compiler?: Compiler | MultiCompiler;
+  /**
+   * Whether to get port silently and not print any logs.
+   * @default false
+   */
   getPortSilently?: boolean;
 };
 
@@ -26,8 +31,17 @@ export type CreateDevServerOptions = StartDevServerOptions & {
   runCompile?: boolean;
 };
 
-export type PreviewServerOptions = {
+export type PreviewOptions = {
+  /**
+   * Whether to get port silently and not print any logs.
+   * @default false
+   */
   getPortSilently?: boolean;
+  /**
+   * Whether to check if the dist directory exists and is not empty.
+   * @default true
+   */
+  checkDistDir?: boolean;
 };
 
 export type BuildOptions = {
@@ -80,9 +94,8 @@ export type InspectConfigResult<B extends 'rspack' | 'webpack' = 'rspack'> = {
   };
 };
 
-export type CreateCompiler =
-  // Allow user to manually narrow Compiler type
-  <C = Compiler | MultiCompiler>(options?: CreateCompilerOptions) => Promise<C>;
+// Allow user to manually narrow Compiler type
+export type CreateCompiler = <C = Compiler | MultiCompiler>() => Promise<C>;
 
 export type CreateRsbuildOptions = {
   /** The root path of current project. */
@@ -144,7 +157,7 @@ export type RsbuildInstance = {
   isPluginExists: PluginManager['isPluginExists'];
 
   build: ProviderInstance['build'];
-  preview: (options?: PreviewServerOptions) => Promise<StartServerResult>;
+  preview: (options?: PreviewOptions) => Promise<StartServerResult>;
   initConfigs: ProviderInstance['initConfigs'];
   inspectConfig: ProviderInstance['inspectConfig'];
   createCompiler: ProviderInstance['createCompiler'];

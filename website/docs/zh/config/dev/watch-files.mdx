@@ -3,12 +3,14 @@
 - **类型：**
 
 ```ts
-type WatchFiles = {
+type WatchFilesOptions = {
   paths: string | string[];
   type?: 'reload-page' | 'reload-server';
   //  chokidar 选项
   options?: WatchOptions;
 };
+
+type WatchFilesConfig = WatchFiles | WatchFiles[];
 ```
 
 - **默认值：** `undefined`
@@ -109,7 +111,7 @@ export default {
 - **类型：** `WatchOptions`
 - **默认值：** `undefined`
 
-`watchFiles` 是基于 [chokidar](https://github.com/paulmillr/chokidar#api) 实现的，你可以通过 `options` 传入 chokidar 的选项。
+`watchFiles` 是基于 [chokidar v3](https://github.com/paulmillr/chokidar#api) 实现的，你可以通过 `options` 传入 chokidar 的选项。
 
 ```js
 export default {
@@ -120,6 +122,27 @@ export default {
         usePolling: false,
       },
     },
+  },
+};
+```
+
+## 传入数组
+
+`dev.watchFiles` 支持传入一个数组，这允许你同时配置不同 `type` 的监听器，或是为不同的目录配置不同的 `watchOptions`。
+
+```js
+export default {
+  dev: {
+    watchFiles: [
+      {
+        type: 'reload-page',
+        paths: 'public/**/*',
+      },
+      {
+        type: 'reload-server',
+        paths: ['./config/*.ts'],
+      },
+    ],
   },
 };
 ```

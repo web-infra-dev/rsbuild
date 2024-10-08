@@ -380,9 +380,7 @@ import RspackChain from '@en/shared/rspackChain.mdx';
 
 <RspackChain />
 
-`modifyBundlerChain` is used to call the rspack-chain to modify the Rspack configuration.
-
-This hook only supports modifying the configuration of the non-differentiated parts of Rspack and webpack. For example, modifying the devtool configuration option (Rspack and webpack have the same devtool property value type), or adding an [Rspack-compatible](https://rspack.dev/guide/compatibility/plugin) webpack plugin.
+`modifyBundlerChain` is used to call `rspack-chain` to modify the Rspack configuration. Its usage is the same as [tools.bundlerChain](/config/tools/bundler-chain).
 
 - **Type:**
 

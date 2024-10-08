@@ -23,11 +23,6 @@ export default defineConfig({
       paths: ['./test-temp-config.ts'],
     },
   },
-  output: {
-    distPath: {
-      root: 'dist',
-    },
-  },
   plugins: [testPlugin],
   server: {
     port: Number(process.env.PORT),

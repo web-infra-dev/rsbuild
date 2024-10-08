@@ -18,7 +18,7 @@ type Version = string;
 
 ### context.rootPath
 
-当前执行构建的根路径，对应调用 `createRsbuild` 时传入的 `cwd` 选项。
+当前执行构建的根路径，对应调用 [createRsbuild](/api/javascript-api/core#creatersbuild) 时传入的 `cwd` 选项。
 
 - **类型：**
 
@@ -194,9 +194,14 @@ await rsbuild.build({
 
 ```ts
 type StartDevServerOptions = {
-  // 自定义 Compiler 对象
+  /**
+   * 使用自定义的 Rspack Compiler 对象
+   */
   compiler?: Compiler | MultiCompiler;
-  // 是否在启动时静默获取端口号，默认为 false
+  /**
+   * 是否在启动时静默获取端口号，不输出任何日志
+   * @default false
+   */
   getPortSilently?: boolean;
 };
 
@@ -358,13 +363,19 @@ type RsbuildDevServer = {
 };
 
 type CreateDevServerOptions = {
-  /** 自定义 Compiler 对象 */
+  /**
+   * 自定义 Compiler 对象
+   */
   compiler?: Compiler | MultiCompiler;
-
-  /** 是否在启动时静默获取端口号，默认为 false */
+  /**
+   * 是否在启动时静默获取端口号，不输出任何日志
+   * @default false
+   */
   getPortSilently?: boolean;
-
-  /** 是否触发 Rsbuild 编译，默认为 true */
+  /**
+   * 是否触发 Rsbuild 编译
+   * @default true
+   */
   runCompile?: boolean;
 };
 
@@ -433,18 +444,33 @@ rsbuildServer.connectWebSocket({ server: httpServer });
 
 ## rsbuild.preview
 
-在本地启动 Server 来预览生产模式构建的产物，需要在 `rsbuild.build` 方法之后执行。
+在本地启动 server 来预览生产模式构建的产物，需要在 [rsbuild.build](#rsbuildbuild) 方法之后执行。
 
 - **类型：**
 
 ```ts
+type PreviewOptions = {
+  /**
+   * 是否在启动时静默获取端口号，不输出任何日志
+   * @default false
+   */
+  getPortSilently?: boolean;
+  /**
+   * 是否检查 dist 目录存在且不为空
+   * @default true
+   */
+  checkDistDir?: boolean;
+};
+
 type StartServerResult = {
   urls: string[];
   port: number;
-  server: Server;
+  server: {
+    close: () => Promise<void>;
+  };
 };
 
-function server(): Promise<StartServerResult>;
+function preview(options?: PreviewOptions): Promise<StartServerResult>;
 ```
 
 - **示例：**
@@ -484,9 +510,7 @@ await server.close();
 
 ## rsbuild.createCompiler
 
-创建一个 compiler 对象。
-
-当 `createRsbuild` 的 `target` 选项包含一个值时，返回值为 `Compiler`；当 `target` 包含多个值时，返回值为 `MultiCompiler`。
+创建一个 Rspack [Compiler](https://rspack.dev/api/javascript-api/compiler) 实例；如果本次构建存在多个 [environments](/config/environments)，则返回值为 `MultiCompiler`。
 
 - **类型：**
 
@@ -500,7 +524,7 @@ function CreateCompiler(): Promise<Compiler | MultiCompiler>;
 const compiler = await rsbuild.createCompiler();
 ```
 
-> 大部分场景下，不需要使用该 API，除非需要进行自定义 dev server 等高级操作。
+> 大部分场景下，你不需要使用该 API，除非需要进行自定义 dev server 等高级操作。
 
 ## rsbuild.addPlugins
 

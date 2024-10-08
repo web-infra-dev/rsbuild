@@ -8,6 +8,11 @@ test('should getRoutes correctly', () => {
   expect(
     getRoutes({
       distPath: '/project/dist',
+      normalizedConfig: {
+        server: {
+          base: '/',
+        },
+      },
       environments: {
         web: {
           distPath: '/project/dist',

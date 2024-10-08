@@ -103,7 +103,7 @@ console.log(logo); // "https://example.com/static/logo.6c12aba3.png"
 
 The public folder at the project root can be used to place some static assets. These assets will not be built by Rsbuild and can be directly referenced via URL.
 
-- When you start the dev server, these assets will be served under the root path, `/`.
+- When you start the dev server, these assets will be served under the root [server.base](/config/server/base) path, default `/`.
 - When you perform a production build, these assets will be copied to the [dist directory](/guide/basic/output-files).
 
 For example, you can place files such as `robots.txt`, `manifest.json`, or `favicon.ico` in the public folder.
@@ -112,10 +112,10 @@ For example, you can place files such as `robots.txt`, `manifest.json`, or `favi
 
 You can reference files in the `public` directory via a URL.
 
-For example, in an HTML template, the `./public/favicon.ico` file can be referenced as `/favicon.ico`.
+For example, in an HTML template, the `./public/favicon.ico` file can be referenced as `/favicon.ico`, [BASE_URL](/guide/advanced/env-vars#processenvpublic_base_path) is the base path of the server.
 
 ```html title="index.html"
-<link rel="icon" href="/favicon.ico" />
+<link rel="icon" href="<%= process.env.BASE_URL %>/favicon.ico" />
 ```
 
 ### Notes

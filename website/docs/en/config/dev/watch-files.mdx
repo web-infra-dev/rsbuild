@@ -9,6 +9,8 @@ type WatchFiles = {
   // watch options for chokidar
   options?: WatchOptions;
 };
+
+type WatchFilesConfig = WatchFiles | WatchFiles[];
 ```
 
 - **Default:** `undefined`
@@ -109,7 +111,7 @@ export default {
 - **Type:** `WatchOptions`
 - **Default:** `undefined`
 
-`watchFiles` is implemented based on [chokidar](https://github.com/paulmillr/chokidar#api), and you can pass chokidar options through `options`.
+`watchFiles` is implemented based on [chokidar v3](https://github.com/paulmillr/chokidar#api), and you can pass chokidar options through `options`.
 
 ```js
 export default {

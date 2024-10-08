@@ -302,10 +302,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     },
     DefinePlugin {
       "definitions": {
+        "import.meta.env.ASSET_PREFIX": """",
+        "import.meta.env.BASE_URL": "\\"/\\"",
         "import.meta.env.DEV": true,
         "import.meta.env.MODE": ""development"",
         "import.meta.env.PROD": false,
         "process.env.ASSET_PREFIX": """",
+        "process.env.BASE_URL": "\\"/\\"",
       },
     },
     ProgressPlugin {
@@ -660,10 +663,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     },
     DefinePlugin {
       "definitions": {
+        "import.meta.env.ASSET_PREFIX": """",
+        "import.meta.env.BASE_URL": "\\"/\\"",
         "import.meta.env.DEV": false,
         "import.meta.env.MODE": ""production"",
         "import.meta.env.PROD": true,
         "process.env.ASSET_PREFIX": """",
+        "process.env.BASE_URL": "\\"/\\"",
       },
     },
     ProgressPlugin {
@@ -967,10 +973,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     RsbuildCorePlugin {},
     DefinePlugin {
       "definitions": {
+        "import.meta.env.ASSET_PREFIX": """",
+        "import.meta.env.BASE_URL": "\\"/\\"",
         "import.meta.env.DEV": false,
         "import.meta.env.MODE": ""production"",
         "import.meta.env.PROD": true,
         "process.env.ASSET_PREFIX": """",
+        "process.env.BASE_URL": "\\"/\\"",
       },
     },
     ProgressPlugin {
@@ -1257,10 +1266,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     RsbuildCorePlugin {},
     DefinePlugin {
       "definitions": {
+        "import.meta.env.ASSET_PREFIX": """",
+        "import.meta.env.BASE_URL": "\\"/\\"",
         "import.meta.env.DEV": false,
         "import.meta.env.MODE": ""production"",
         "import.meta.env.PROD": true,
         "process.env.ASSET_PREFIX": """",
+        "process.env.BASE_URL": "\\"/\\"",
       },
     },
     ProgressPlugin {

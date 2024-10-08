@@ -1,6 +1,8 @@
+import { existsSync } from 'node:fs';
 import { isPromise } from 'node:util/types';
+import color from 'picocolors';
 import { createContext } from './createContext';
-import { getNodeEnv, pick, setNodeEnv } from './helpers';
+import { getNodeEnv, isEmptyDir, pick, setNodeEnv } from './helpers';
 import { initPluginAPI } from './initPlugins';
 import { initRsbuildConfig } from './internal';
 import { logger } from './logger';
@@ -13,7 +15,7 @@ import type {
   Falsy,
   InternalContext,
   PluginManager,
-  PreviewServerOptions,
+  PreviewOptions,
   ResolvedCreateRsbuildOptions,
   RsbuildInstance,
   RsbuildPlugin,
@@ -138,12 +140,34 @@ export async function createRsbuild(
     setCssExtractPlugin,
   });
 
-  const preview = async (options?: PreviewServerOptions) => {
+  const preview = async (options: PreviewOptions = {}) => {
     if (!getNodeEnv()) {
       setNodeEnv('production');
     }
-    const { startProdServer } = await import('./server/prodServer');
+
     const config = await initRsbuildConfig({ context, pluginManager });
+    const { distPath } = context;
+    const { checkDistDir = true } = options;
+
+    if (checkDistDir) {
+      if (!existsSync(distPath)) {
+        throw new Error(
+          `The output directory ${color.yellow(
+            distPath,
+          )} does not exist, please build the project before previewing.`,
+        );
+      }
+
+      if (isEmptyDir(distPath)) {
+        throw new Error(
+          `The output directory ${color.yellow(
+            distPath,
+          )} is empty, please build the project before previewing.`,
+        );
+      }
+    }
+
+    const { startProdServer } = await import('./server/prodServer');
     return startProdServer(context, config, options);
   };
 
