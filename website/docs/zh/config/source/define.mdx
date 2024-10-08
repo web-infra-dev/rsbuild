@@ -14,7 +14,7 @@
 
 > 更多用法请参考 [使用 define](/guide/advanced/env-vars#使用-define) 和 [Rspack - DefinePlugin](https://rspack.dev/zh/plugins/webpack/define-plugin)。
 
-### 示例
+## 示例
 
 ```js
 export default {
@@ -26,7 +26,7 @@ export default {
       TWO: '1 + 1',
       'typeof window': JSON.stringify('object'),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-      'import.meta': { test: undefined },
+      'import.meta.test': JSON.stringify('foo'),
     },
   },
 };

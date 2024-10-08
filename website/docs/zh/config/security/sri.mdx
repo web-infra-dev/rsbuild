@@ -13,7 +13,7 @@ type SriOptions = {
 
 为 HTML 所引入的 `<script>` 和 `<link rel="stylesheet">` 标签添加完整性属性 —— `integrity`，使浏览器能够验证引入资源的完整性，以此防止下载的资源被篡改。
 
-## 介绍
+## 什么是 SRI
 
 子资源完整性 Subresource Integrity（SRI）是专门用来校验资源的一种方案，它读取资源标签中的 integrity 属性，将其中的信息摘要值，和资源实际的信息摘要值进行对比，如果发现无法匹配，那么浏览器就会拒绝执行资源。
 
