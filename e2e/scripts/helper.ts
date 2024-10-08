@@ -59,20 +59,29 @@ export const globContentJSON = async (path: string, options?: GlobOptions) => {
   return ret;
 };
 
-export const awaitFileExists = async (dir: string) => {
-  const maxChecks = 100;
-  const interval = 100;
+export const waitFor = async (
+  fn: () => boolean,
+  maxChecks = 100,
+  interval = 100,
+) => {
   let checks = 0;
 
   while (checks < maxChecks) {
-    if (fs.existsSync(dir)) {
-      return;
+    if (fn()) {
+      return true;
     }
     checks++;
     await new Promise((resolve) => setTimeout(resolve, interval));
   }
 
-  throw new Error(`awaitFileExists failed: ${dir}`);
+  return false;
+};
+
+export const awaitFileExists = async (dir: string) => {
+  const result = await waitFor(() => fs.existsSync(dir));
+  if (!result) {
+    throw new Error(`awaitFileExists failed: ${dir}`);
+  }
 };
 
 export const proxyConsole = (
