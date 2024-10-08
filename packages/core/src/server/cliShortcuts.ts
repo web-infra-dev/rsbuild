@@ -18,12 +18,14 @@ export function setupCliShortcuts({
   openPage,
   closeServer,
   printUrls,
+  restartServer,
 }: {
   openPage: () => Promise<void>;
   closeServer: () => Promise<void>;
   printUrls: () => void;
+  restartServer?: () => Promise<void>;
 }): void {
-  const shortcuts: CliShortcut[] = [
+  const shortcuts = [
     {
       key: 'c',
       description: `${color.bold('c + enter')}  ${color.dim('clear console')}`,
@@ -47,12 +49,19 @@ export function setupCliShortcuts({
         }
       },
     },
+    restartServer
+      ? {
+          key: 'r',
+          description: `${color.bold('r + enter')}  ${color.dim('restart server')}`,
+          action: restartServer,
+        }
+      : null,
     {
       key: 'u',
       description: `${color.bold('u + enter')}  ${color.dim('show urls')}`,
       action: printUrls,
     },
-  ];
+  ].filter(Boolean) as CliShortcut[];
 
   logger.log(
     `  ➜ ${color.dim('press')} ${color.bold('h + enter')} ${color.dim('to show shortcuts')}\n`,
