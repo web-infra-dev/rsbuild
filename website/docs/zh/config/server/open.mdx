@@ -19,7 +19,7 @@ type Open =
 
 > 你也可以使用 Rsbuild CLI 的 [--open](/guide/basic/cli#打开页面) 选项来打开页面。当同时使用 `server.open` 和 `--open` 时，`--open` 的优先级更高。
 
-### 示例
+## 示例
 
 `server.open` 可以设置为如下的值。
 
@@ -73,7 +73,7 @@ export default {
 };
 ```
 
-### 端口号占位符
+## 端口号占位符
 
 Rsbuild server 监听的端口号可能会发生变更。比如，当端口被占用时，Rsbuild 会自动递增端口号，直至找到一个可用端口。
 
@@ -90,7 +90,7 @@ export default {
 };
 ```
 
-### 打开指定浏览器
+## 打开指定浏览器
 
 Rsbuild 默认会在当前系统的默认浏览器中打开页面。
 
@@ -115,7 +115,7 @@ BROWSER="Google Chrome Canary" npx rsbuild dev --open
 你可以将 `BROWSER` 设置在本地的 [.env.local](/guide/advanced/env-vars#env-file) 文件中，这样能够避免影响其他开发者。
 :::
 
-### 回调函数
+## 回调函数
 
 通过 `open.before`，可以在打开页面之前触发一个回调函数。
 

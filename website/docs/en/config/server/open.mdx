@@ -19,7 +19,7 @@ type Open =
 
 > You can also use the [--open](/guide/basic/cli#opening-page) option of Rsbuild CLI to open the pages. When using `server.open` and `--open` at the same time, `--open` takes precedence.
 
-### Example
+## Example
 
 `server.open` can be set to the following values.
 
@@ -73,7 +73,7 @@ export default {
 };
 ```
 
-### Port placeholder
+## Port placeholder
 
 The port number that Rsbuild server listens on may change. For example, if the port is in use, Rsbuild will automatically increment the port number until it finds an available port.
 
@@ -90,7 +90,7 @@ export default {
 };
 ```
 
-### Open the specified browser
+## Open the specified browser
 
 Rsbuild by default will open the page in the system's default browser.
 
@@ -115,7 +115,7 @@ BROWSER="Google Chrome Canary" npx rsbuild dev --open
 You can set `BROWSER` in the local [.env.local](/guide/advanced/env-vars#env-file) file, which helps avoid impacting other developers.
 :::
 
-### Callback
+## Callback
 
 By using `open.before`, you can trigger a callback function before opening the page.
 

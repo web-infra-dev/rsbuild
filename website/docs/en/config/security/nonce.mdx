@@ -10,7 +10,7 @@ type Nonce = string;
 
 Adding a `nonce` attribute to the scripts resources introduced for HTML. This allows the browser to determine whether the script can be executed when it parses inline scripts with matching nonce values.
 
-#### Introduce nonce
+## What is nonce
 
 The nonce mechanism plays a crucial role in Content Security Policy (CSP), enhancing webpage security. It allows developers to define a unique and random string value, i.e., nonce, for inline `<script>` tags and `<style>` tags within CSP.
 
@@ -21,7 +21,7 @@ For more information about nonce, you can refer to:
 - [nonce - MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce)
 - [webpack - Content Security Policies](https://webpack.js.org/guides/csp/)
 
-### Example
+## Example
 
 By default, `nonce` is not enabled by Rsbuild, you can define this value based on your needs:
 
@@ -35,7 +35,7 @@ export default {
 
 Typically, we can define a fixed value in the project, and replace it with a random value on downstream servers such as Nginx, Web Server, gateway, etc.
 
-### Scope of Effect
+## Scope of Effect
 
 The `security.nonce` config adds the nonce attribute to the following tags:
 
