@@ -22,13 +22,23 @@ const clearConsole = () => {
 
 export const restartDevServer = async ({
   filePath,
+  clear = true,
 }: {
-  filePath: string;
-}): Promise<void> => {
-  clearConsole();
+  filePath?: string;
+  clear?: boolean;
+} = {}): Promise<void> => {
+  if (clear) {
+    clearConsole();
+  }
 
-  const filename = path.basename(filePath);
-  logger.info(`Restart because ${color.yellow(filename)} is changed.\n`);
+  if (filePath) {
+    const filename = path.basename(filePath);
+    logger.info(
+      `Restart server because ${color.yellow(filename)} is changed.\n`,
+    );
+  } else {
+    logger.info('Restarting server...\n');
+  }
 
   for (const cleaner of cleaners) {
     await cleaner();

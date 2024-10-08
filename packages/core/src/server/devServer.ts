@@ -31,7 +31,7 @@ import {
 import { createHttpServer } from './httpServer';
 import { notFoundMiddleware } from './middlewares';
 import { open } from './open';
-import { onBeforeRestartServer } from './restart';
+import { onBeforeRestartServer, restartDevServer } from './restart';
 import { setupWatchFiles } from './watchFiles';
 
 type HTTPServer = Server | Http2SecureServer;
@@ -224,6 +224,7 @@ export async function createDevServer<
         openPage,
         closeServer,
         printUrls,
+        restartServer: () => restartDevServer({ clear: false }),
       });
     }
 
