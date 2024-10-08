@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import type Connect from 'connect';
+import color from 'picocolors';
 import { ROOT_DIST_DIR } from '../constants';
 import { getPublicPathFromCompiler, isMultiCompiler } from '../helpers';
 import { logger } from '../logger';
@@ -201,11 +202,55 @@ export async function createDevServer<
       trailingLineBreak: !cliShortcutsEnabled,
     });
 
+  const openPage = async () => {
+    return open({
+      https,
+      port,
+      routes,
+      config,
+      clearCache: true,
+    });
+  };
+
+  const closeServer = async () => {
+    await options.context.hooks.onCloseDevServer.call();
+    await Promise.all([devMiddlewares.close(), fileWatcher?.close()]);
+  };
+
   const beforeCreateCompiler = () => {
     printUrls();
 
     if (cliShortcutsEnabled) {
-      setupCliShortcuts([]);
+      setupCliShortcuts([
+        {
+          key: 'c',
+          description: `${color.bold('c + enter')}  ${color.dim('clear console')}`,
+          action: () => {
+            console.clear();
+          },
+        },
+        {
+          key: 'o',
+          description: `${color.bold('o + enter')}  ${color.dim('open in browser')}`,
+          action: openPage,
+        },
+        {
+          key: 'q',
+          description: `${color.bold('q + enter')}  ${color.dim('quit process')}`,
+          action: async () => {
+            try {
+              await closeServer();
+            } finally {
+              process.exit(0);
+            }
+          },
+        },
+        {
+          key: 'u',
+          description: `${color.bold('u + enter')}  ${color.dim('show urls')}`,
+          action: printUrls,
+        },
+      ]);
     }
 
     if (!getPortSilently && portTip) {
@@ -349,20 +394,9 @@ export async function createDevServer<
     connectWebSocket: ({ server }: { server: HTTPServer }) => {
       server.on('upgrade', devMiddlewares.onUpgrade);
     },
-    close: async () => {
-      await options.context.hooks.onCloseDevServer.call();
-      await Promise.all([devMiddlewares.close(), fileWatcher?.close()]);
-    },
+    close: closeServer,
     printUrls,
-    open: async () => {
-      return open({
-        https,
-        port,
-        routes,
-        config,
-        clearCache: true,
-      });
-    },
+    open: openPage,
   };
 
   logger.debug('create dev server done');

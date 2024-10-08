@@ -25,7 +25,18 @@ export function setupCliShortcuts(shortcuts: CliShortcut[]): void {
 
   rl.on('line', (input) => {
     if (input === 'h') {
-      console.log(shortcuts);
+      let message = `\n  ${color.bold(color.blue('Shortcuts:'))}\n`;
+      for (const shortcut of shortcuts) {
+        message += `  ${shortcut.description}\n`;
+      }
+      logger.log(message);
+    }
+
+    for (const shortcut of shortcuts) {
+      if (input === shortcut.key) {
+        shortcut.action();
+        return;
+      }
     }
   });
 
