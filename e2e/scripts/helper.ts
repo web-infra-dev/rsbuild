@@ -61,8 +61,13 @@ export const globContentJSON = async (path: string, options?: GlobOptions) => {
 
 export const waitFor = async (
   fn: () => boolean,
-  maxChecks = 100,
-  interval = 100,
+  {
+    maxChecks = 100,
+    interval = 20,
+  }: {
+    maxChecks?: number;
+    interval?: number;
+  } = {},
 ) => {
   let checks = 0;
 
@@ -78,7 +83,7 @@ export const waitFor = async (
 };
 
 export const awaitFileExists = async (dir: string) => {
-  const result = await waitFor(() => fs.existsSync(dir));
+  const result = await waitFor(() => fs.existsSync(dir), { interval: 50 });
   if (!result) {
     throw new Error(`awaitFileExists failed: ${dir}`);
   }
