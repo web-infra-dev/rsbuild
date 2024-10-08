@@ -90,7 +90,7 @@ test('should display shortcuts as expected in preview', async () => {
 });
 
 test('should allow to custom shortcuts in dev', async () => {
-  const devProcess = exec('node ./dev-custom.mjs', {
+  const devProcess = exec('node ./devCustom.mjs', {
     cwd: __dirname,
   });
 
@@ -117,7 +117,7 @@ test('should allow to custom shortcuts in dev', async () => {
 });
 
 test('should allow to custom shortcuts in preview', async () => {
-  const devProcess = exec('node ./preview-custom.mjs', {
+  const devProcess = exec('node ./previewCustom.mjs', {
     cwd: __dirname,
   });
 
