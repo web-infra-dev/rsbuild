@@ -129,12 +129,11 @@ function getURLMessages(
 ) {
   if (routes.length === 1) {
     return urls
-      .map(
-        ({ label, url }) =>
-          `  ${`➜ ${label.padEnd(10)}`}${color.cyan(
-            normalizeUrl(`${url}${routes[0].pathname}`),
-          )}\n`,
-      )
+      .map(({ label, url }) => {
+        const pathname = normalizeUrl(`${url}${routes[0].pathname}`);
+        const prefix = `➜ ${color.dim(label.padEnd(10))}`;
+        return `  ${prefix}${color.cyan(pathname)}\n`;
+      })
       .join('');
   }
 
@@ -162,12 +161,14 @@ export function printServerURLs({
   routes,
   protocol,
   printUrls,
+  trailingLineBreak = true,
 }: {
   urls: Array<{ url: string; label: string }>;
   port: number;
   routes: Routes;
   protocol: string;
   printUrls?: PrintUrls;
+  trailingLineBreak?: boolean;
 }): string | null {
   if (printUrls === false) {
     return null;
@@ -203,7 +204,12 @@ export function printServerURLs({
     return null;
   }
 
-  const message = getURLMessages(urls, routes);
+  let message = getURLMessages(urls, routes);
+
+  if (trailingLineBreak === false && message.endsWith('\n')) {
+    message = message.slice(0, -1);
+  }
+
   logger.log(message);
 
   return message;

@@ -1201,6 +1201,10 @@ export interface DevConfig {
    */
   client?: ClientConfig;
   /**
+   * Whether to enable CLI shortcuts.
+   */
+  cliShortcuts?: boolean;
+  /**
    * Provides the ability to execute a custom function and apply custom middlewares.
    */
   setupMiddlewares?: SetupMiddlewaresFn[];
@@ -1222,7 +1226,10 @@ export interface DevConfig {
 
 export type NormalizedDevConfig = DevConfig &
   Required<
-    Pick<DevConfig, 'hmr' | 'liveReload' | 'assetPrefix' | 'writeToDisk'>
+    Pick<
+      DevConfig,
+      'hmr' | 'liveReload' | 'assetPrefix' | 'writeToDisk' | 'cliShortcuts'
+    >
   > & {
     client: NormalizedClientConfig;
   };

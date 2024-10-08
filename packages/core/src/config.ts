@@ -58,6 +58,7 @@ const getDefaultDevConfig = (): NormalizedDevConfig => ({
   // Temporary placeholder, default: `${server.base}`
   assetPrefix: DEFAULT_ASSET_PREFIX,
   writeToDisk: false,
+  cliShortcuts: false,
   client: {
     path: HMR_SOCKET_PATH,
     port: '',
