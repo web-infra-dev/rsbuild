@@ -153,10 +153,12 @@ export async function generateRspackConfig({
   // validate plugins
   if (rspackConfig.plugins) {
     for (const plugin of rspackConfig.plugins) {
-      if (!plugin || plugin.apply !== undefined) {
-        continue;
-      }
-      if ('name' in plugin && 'setup' in plugin) {
+      if (
+        plugin &&
+        plugin.apply === undefined &&
+        'name' in plugin &&
+        'setup' in plugin
+      ) {
         const name = color.bold(color.yellow(plugin.name));
         throw new Error(
           `${name} appears to be an Rsbuild plugin. It cannot be used as an Rspack plugin.`,
