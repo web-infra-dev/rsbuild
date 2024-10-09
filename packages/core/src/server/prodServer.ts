@@ -96,7 +96,7 @@ export class RsbuildProdServer {
       this.middlewares.use(getBaseMiddleware({ base }));
     }
 
-    this.applyStaticAssetMiddleware();
+    await this.applyStaticAssetMiddleware();
 
     if (historyApiFallback) {
       const { default: connectHistoryApiFallback } = await import(
