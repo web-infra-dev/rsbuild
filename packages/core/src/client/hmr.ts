@@ -159,7 +159,7 @@ function tryApplyUpdates() {
     }
   };
 
-  // https://rspack.dev/api/modules#importmetawebpackhot-webpack-specific
+  // https://rspack.dev/api/runtime-api/module-variables#importmetawebpackhot
   import.meta.webpackHot.check(true).then(
     (updatedModules) => handleApplyUpdates(null, updatedModules),
     (err) => handleApplyUpdates(err, null),
