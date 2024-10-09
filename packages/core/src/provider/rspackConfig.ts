@@ -1,4 +1,5 @@
 import { rspack } from '@rspack/core';
+import color from 'picocolors';
 import { reduceConfigsAsyncWithContext } from 'reduce-configs';
 import { CHAIN_ID, chainToConfig, modifyBundlerChain } from '../configChain';
 import { castArray, getNodeEnv } from '../helpers';
@@ -148,6 +149,23 @@ export async function generateRspackConfig({
     rspackConfig,
     await getConfigUtils(rspackConfig, chainUtils),
   );
+
+  // validate plugins
+  if (rspackConfig.plugins) {
+    for (const plugin of rspackConfig.plugins) {
+      if (
+        plugin &&
+        plugin.apply === undefined &&
+        'name' in plugin &&
+        'setup' in plugin
+      ) {
+        const name = color.bold(color.yellow(plugin.name));
+        throw new Error(
+          `${name} appears to be an Rsbuild plugin. It cannot be used as an Rspack plugin.`,
+        );
+      }
+    }
+  }
 
   return rspackConfig;
 }
