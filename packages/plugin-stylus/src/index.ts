@@ -1,6 +1,9 @@
+import { createRequire } from 'node:module';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import deepmerge from 'deepmerge';
 import { reduceConfigs } from 'reduce-configs';
+
+const require = createRequire(import.meta.url);
 
 export const PLUGIN_STYLUS_NAME = 'rsbuild:stylus';
 
