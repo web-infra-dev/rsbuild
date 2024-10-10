@@ -232,6 +232,8 @@ export const pluginFileSize = (): RsbuildPlugin => ({
         return;
       }
 
+      let printed = false;
+
       await Promise.all(
         Object.values(environments).map(async (environment, index) => {
           const { printFileSize } = environment.config.performance;
@@ -263,9 +265,16 @@ export const pluginFileSize = (): RsbuildPlugin => ({
             environment.name,
           );
 
+          // log a separator line after the previous print
+          if (printed) {
+            logger.log(color.dim('  -----'));
+          }
+
           for (const log of statsLog) {
             logger.log(log);
           }
+
+          printed = true;
         }),
       ).catch((err) => {
         logger.warn('Failed to print file size.');
