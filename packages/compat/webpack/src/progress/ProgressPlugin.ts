@@ -83,7 +83,7 @@ export class ProgressPlugin extends webpack.ProgressPlugin {
 
         if (!this.hasCompileErrors) {
           const suffix = this.id ? color.gray(` (${this.id})`) : '';
-          logger.ready(`Compiled in ${this.compileTime} ${suffix}`);
+          logger.ready(`Built in ${this.compileTime} ${suffix}`);
         }
       }
     });
