@@ -27,7 +27,7 @@
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "svelte-loader": "3.2.3",
+    "svelte-loader": "3.2.4",
     "svelte-preprocess": "^6.0.3"
   },
   "devDependencies": {
@@ -35,7 +35,7 @@
     "@scripts/test-helper": "workspace:*",
     "@types/node": "18.x",
     "svelte": "^4.2.19",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.3"
   },
   "peerDependencies": {
     "@rsbuild/core": "1.x || ^1.0.1-rc.0"

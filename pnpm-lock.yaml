@@ -16,13 +16,13 @@ importers:
         version: 2.27.9
       '@modern-js/module-tools':
         specifier: ^2.60.2
-        version: 2.60.2(typescript@5.6.2)
+        version: 2.60.2(typescript@5.6.3)
       '@rsbuild/config':
         specifier: workspace:*
         version: link:scripts/config
       '@rslib/core':
-        specifier: 0.0.8
-        version: 0.0.8(typescript@5.6.2)
+        specifier: 0.0.10
+        version: 0.0.10(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:scripts/test-helper
@@ -48,8 +48,8 @@ importers:
         specifier: ^2.11.1
         version: 2.11.1
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
       vitest:
         specifier: ^2.1.2
         version: 2.1.2(@types/node@18.19.31)(jsdom@25.0.1)(less@4.2.0)(lightningcss@1.25.1)(sass@1.79.4)(stylus@0.63.0)(terser@5.34.1)
@@ -75,21 +75,21 @@ importers:
         specifier: ^6.26.2
         version: 6.26.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       solid-js:
-        specifier: ^1.9.1
-        version: 1.9.1
+        specifier: ^1.9.2
+        version: 1.9.2
       vue:
         specifier: ^3.5.11
-        version: 3.5.11(typescript@5.6.2)
+        version: 3.5.11(typescript@5.6.3)
       vue-router:
         specifier: ^4.4.5
-        version: 4.4.5(vue@3.5.11(typescript@5.6.2))
+        version: 4.4.5(vue@3.5.11(typescript@5.6.3))
     devDependencies:
       '@e2e/helper':
         specifier: workspace:*
         version: link:scripts
       '@module-federation/rspack':
-        specifier: 0.6.9
-        version: 0.6.9(typescript@5.6.2)
+        specifier: 0.6.10
+        version: 0.6.10(typescript@5.6.3)
       '@playwright/test':
         specifier: 1.44.1
         version: 1.44.1
@@ -181,8 +181,8 @@ importers:
         specifier: ^3.4.13
         version: 3.4.13
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
 
   e2e/cases/babel/decorator:
     devDependencies:
@@ -251,7 +251,7 @@ importers:
     dependencies:
       '@rsbuild/plugin-styled-components':
         specifier: ^1.0.1
-        version: 1.0.1(@rsbuild/core@1.0.11)
+        version: 1.0.1(@rsbuild/core@1.0.12)
       styled-components:
         specifier: ^6.1.13
         version: 6.1.13(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react@19.0.0-rc-fb9a90fa48-20240614)
@@ -282,7 +282,7 @@ importers:
     dependencies:
       vue:
         specifier: ^3.5.11
-        version: 3.5.11(typescript@5.6.2)
+        version: 3.5.11(typescript@5.6.3)
 
   e2e/scripts: {}
 
@@ -292,11 +292,11 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       lit:
-        specifier: ^3.2.0
-        version: 3.2.0
+        specifier: ^3.2.1
+        version: 3.2.1
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
 
   examples/module-federation-v2/host:
     dependencies:
@@ -308,8 +308,8 @@ importers:
         version: 18.3.1(react@18.3.1)
     devDependencies:
       '@module-federation/rspack':
-        specifier: 0.6.9
-        version: 0.6.9(typescript@5.6.2)
+        specifier: 0.6.10
+        version: 0.6.10(typescript@5.6.3)
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../../../packages/core
@@ -327,8 +327,8 @@ importers:
         version: 18.3.1(react@18.3.1)
     devDependencies:
       '@module-federation/rspack':
-        specifier: 0.6.9
-        version: 0.6.9(typescript@5.6.2)
+        specifier: 0.6.10
+        version: 0.6.10(typescript@5.6.3)
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../../../packages/core
@@ -377,8 +377,8 @@ importers:
         specifier: 18.x
         version: 18.19.31
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
 
   examples/preact:
     dependencies:
@@ -393,8 +393,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/plugin-preact
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
 
   examples/react:
     dependencies:
@@ -418,14 +418,14 @@ importers:
         specifier: ^18.3.0
         version: 18.3.0
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
 
   examples/solid:
     dependencies:
       solid-js:
-        specifier: ^1.9.1
-        version: 1.9.1
+        specifier: ^1.9.2
+        version: 1.9.2
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -453,8 +453,8 @@ importers:
   examples/svelte5:
     dependencies:
       svelte:
-        specifier: 5.0.0-next.262
-        version: 5.0.0-next.262
+        specifier: 5.0.0-next.264
+        version: 5.0.0-next.264
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -469,14 +469,14 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
 
   examples/vue:
     dependencies:
       vue:
         specifier: ^3.5.11
-        version: 3.5.11(typescript@5.6.2)
+        version: 3.5.11(typescript@5.6.3)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -504,8 +504,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compat/webpack
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
 
   packages/compat/plugin-webpack-swc:
     dependencies:
@@ -544,8 +544,8 @@ importers:
         specifier: ^7.5.8
         version: 7.5.8
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
       webpack:
         specifier: ^5.95.0
         version: 5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13))
@@ -590,8 +590,8 @@ importers:
         specifier: 1.0.0
         version: 1.0.0
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
 
   packages/core:
     dependencies:
@@ -692,10 +692,10 @@ importers:
         version: 6.0.1(jiti@1.21.6)(postcss@8.4.47)(tsx@4.14.0)(yaml@2.5.0)
       postcss-loader:
         specifier: 8.1.1
-        version: 8.1.1(@rspack/core@1.0.9(@swc/helpers@0.5.13))(postcss@8.4.47)(typescript@5.6.2)(webpack@5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13)))
+        version: 8.1.1(@rspack/core@1.0.9(@swc/helpers@0.5.13))(postcss@8.4.47)(typescript@5.6.3)(webpack@5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13)))
       prebundle:
         specifier: 1.2.2
-        version: 1.2.2(typescript@5.6.2)
+        version: 1.2.2(typescript@5.6.3)
       reduce-configs:
         specifier: ^1.0.0
         version: 1.0.0
@@ -721,8 +721,8 @@ importers:
         specifier: ^1.8.10
         version: 1.8.10
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
       webpack:
         specifier: ^5.95.0
         version: 5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13))
@@ -746,8 +746,8 @@ importers:
         specifier: 18.x
         version: 18.19.31
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
 
   packages/plugin-assets-retry:
     dependencies:
@@ -774,8 +774,8 @@ importers:
         specifier: 5.34.1
         version: 5.34.1
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
 
   packages/plugin-babel:
     dependencies:
@@ -818,10 +818,10 @@ importers:
         version: 9.2.1(@babel/core@7.25.7)(webpack@5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13)))
       prebundle:
         specifier: 1.2.2
-        version: 1.2.2(typescript@5.6.2)
+        version: 1.2.2(typescript@5.6.3)
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
 
   packages/plugin-less:
     dependencies:
@@ -849,10 +849,10 @@ importers:
         version: 12.2.0(@rspack/core@1.0.9(@swc/helpers@0.5.13))(less@4.2.0)(webpack@5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13)))
       prebundle:
         specifier: 1.2.2
-        version: 1.2.2(typescript@5.6.2)
+        version: 1.2.2(typescript@5.6.3)
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
 
   packages/plugin-preact:
     devDependencies:
@@ -863,8 +863,8 @@ importers:
         specifier: 18.x
         version: 18.19.31
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
 
   packages/plugin-react:
     dependencies:
@@ -885,8 +885,8 @@ importers:
         specifier: 18.x
         version: 18.19.31
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
 
   packages/plugin-sass:
     dependencies:
@@ -917,7 +917,7 @@ importers:
         version: 8.0.9
       prebundle:
         specifier: 1.2.2
-        version: 1.2.2(typescript@5.6.2)
+        version: 1.2.2(typescript@5.6.3)
       resolve-url-loader:
         specifier: ^5.0.0
         version: 5.0.0
@@ -925,8 +925,8 @@ importers:
         specifier: ^16.0.2
         version: 16.0.2(@rspack/core@1.0.9(@swc/helpers@0.5.13))(sass-embedded@1.79.4)(sass@1.79.4)(webpack@5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13)))
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
 
   packages/plugin-solid:
     dependencies:
@@ -934,11 +934,11 @@ importers:
         specifier: workspace:*
         version: link:../plugin-babel
       babel-preset-solid:
-        specifier: ^1.9.0
-        version: 1.9.0(@babel/core@7.25.7)
+        specifier: ^1.9.2
+        version: 1.9.2(@babel/core@7.25.7)
       solid-refresh:
         specifier: 0.6.3
-        version: 0.6.3(solid-js@1.9.1)
+        version: 0.6.3(solid-js@1.9.2)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -950,8 +950,8 @@ importers:
         specifier: ^7.20.5
         version: 7.20.5
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
 
   packages/plugin-stylus:
     dependencies:
@@ -975,17 +975,17 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
 
   packages/plugin-svelte:
     dependencies:
       svelte-loader:
-        specifier: 3.2.3
-        version: 3.2.3(svelte@4.2.19)
+        specifier: 3.2.4
+        version: 3.2.4(svelte@4.2.19)
       svelte-preprocess:
         specifier: ^6.0.3
-        version: 6.0.3(@babel/core@7.25.7)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.47)(tsx@4.14.0)(yaml@2.5.0))(postcss@8.4.47)(pug@3.0.3)(sass@1.79.4)(stylus@0.63.0)(svelte@4.2.19)(typescript@5.6.2)
+        version: 6.0.3(@babel/core@7.25.7)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.47)(tsx@4.14.0)(yaml@2.5.0))(postcss@8.4.47)(pug@3.0.3)(sass@1.79.4)(stylus@0.63.0)(svelte@4.2.19)(typescript@5.6.3)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1000,8 +1000,8 @@ importers:
         specifier: ^4.2.19
         version: 4.2.19
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
 
   packages/plugin-svgr:
     dependencies:
@@ -1010,13 +1010,13 @@ importers:
         version: link:../plugin-react
       '@svgr/core':
         specifier: 8.1.0
-        version: 8.1.0(typescript@5.6.2)
+        version: 8.1.0(typescript@5.6.3)
       '@svgr/plugin-jsx':
         specifier: 8.1.0
-        version: 8.1.0(@svgr/core@8.1.0(typescript@5.6.2))
+        version: 8.1.0(@svgr/core@8.1.0(typescript@5.6.3))
       '@svgr/plugin-svgo':
         specifier: 8.1.0
-        version: 8.1.0(@svgr/core@8.1.0(typescript@5.6.2))(typescript@5.6.2)
+        version: 8.1.0(@svgr/core@8.1.0(typescript@5.6.3))(typescript@5.6.3)
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -1038,13 +1038,13 @@ importers:
         version: 6.2.0(webpack@5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13)))
       prebundle:
         specifier: 1.2.2
-        version: 1.2.2(typescript@5.6.2)
+        version: 1.2.2(typescript@5.6.3)
       svgo:
         specifier: ^3.3.2
         version: 3.3.2
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
       url-loader:
         specifier: 4.1.1
         version: 4.1.1(file-loader@6.2.0(webpack@5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13))))(webpack@5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13)))
@@ -1053,7 +1053,7 @@ importers:
     dependencies:
       vue-loader:
         specifier: ^17.4.2
-        version: 17.4.2(vue@3.5.11(typescript@5.6.2))(webpack@5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13)))
+        version: 17.4.2(vue@3.5.11(typescript@5.6.3))(webpack@5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13)))
       webpack:
         specifier: ^5.95.0
         version: 5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13))
@@ -1065,11 +1065,11 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
       vue:
         specifier: ^3.5.11
-        version: 3.5.11(typescript@5.6.2)
+        version: 3.5.11(typescript@5.6.3)
 
   scripts/config:
     devDependencies:
@@ -1077,8 +1077,8 @@ importers:
         specifier: 18.x
         version: 18.19.31
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
 
   scripts/test-helper:
     dependencies:
@@ -1092,8 +1092,8 @@ importers:
         specifier: 0.0.6
         version: 0.0.6
       typescript:
-        specifier: ^5.6.2
-        version: 5.6.2
+        specifier: ^5.6.3
+        version: 5.6.3
       upath:
         specifier: 2.0.1
         version: 2.0.1
@@ -2602,11 +2602,11 @@ packages:
   '@modern-js/utils@2.60.2':
     resolution: {integrity: sha512-7T95WiwSlfoX/3vQiTSRE1QGt5GIm0/DeXFbN4pyQzqzFLWrgnVmlloKHKQSejDlgp7ttRZZpBiRVmIiqZX98Q==}
 
-  '@module-federation/bridge-react-webpack-plugin@0.6.9':
-    resolution: {integrity: sha512-KXTPO0vkrtHEIcthU3TIQEkPxoytcmdyNXRwOojZEVQhqEefykAek48ndFiVTmyOu2LW2EuzP49Le8zY7nESWQ==}
+  '@module-federation/bridge-react-webpack-plugin@0.6.10':
+    resolution: {integrity: sha512-zrdLzav0QAz2WvQXwXU1dq1OqmWBkJzuV6yUrl8lUPeRWVDm8DH2m2BOyImdNw0cOwkssjtYVjOEL+3z6C9iUg==}
 
-  '@module-federation/dts-plugin@0.6.9':
-    resolution: {integrity: sha512-uiMjjEFcMlOvRtNu8/tt7sJ5y7WTosTVym0V7lMQjgoeX0QesvZqRhgzw5gQcPcFvbk54RwTUI2rS8OEGScCFw==}
+  '@module-federation/dts-plugin@0.6.10':
+    resolution: {integrity: sha512-JgRL32GHnQJZUT7R9bJFvNJEz6z0tlhO9U1zkjAZDrh0jDOkXbkot4O0F98Ge619wVU2ikwY/yEGs6RUbslVdg==}
     peerDependencies:
       typescript: ^4.9.0 || ^5.0.0
       vue-tsc: '>=1.0.24'
@@ -2614,14 +2614,14 @@ packages:
       vue-tsc:
         optional: true
 
-  '@module-federation/managers@0.6.9':
-    resolution: {integrity: sha512-q3AOQXcWWpdUZI1gDIi9j/UqcP+FJBYXj/e4pNp3QAteJwS/Ve9UP3y0hW27bIbAWZSSajWsYbf/+YLnktA/kQ==}
+  '@module-federation/managers@0.6.10':
+    resolution: {integrity: sha512-uOLc8gNemIGoVs14GVZ1UK6/o0n97fmLcIZ4lIZw3H0VAlaK6tBMhHGMd9AqbjtQGukKzc3BRN8YumozTTt2EQ==}
 
-  '@module-federation/manifest@0.6.9':
-    resolution: {integrity: sha512-JMSPDpHODXOmTyJes8GJ950mbN7tqjQzqgFVUubDOVFOmlC0/MYaRzRPmkApz6d8nUfMbLZYzxNSaBHx8GP0/Q==}
+  '@module-federation/manifest@0.6.10':
+    resolution: {integrity: sha512-RImJWzsQLj8PaNP2rO6ZZ7aM8VxxUNm5jyLWMIf6x6mwnpLotXS26j32CVYhYJYymOH0lF9ez13lCIrtM2JobQ==}
 
-  '@module-federation/rspack@0.6.9':
-    resolution: {integrity: sha512-N5yBqN8ijSRZKd0kbIvpZNil0y8rFa8cREKI1QsW1+EYUKwOUBFwF55tFdTmNCKmpZqSEBtcNjRGZXknsYPQxg==}
+  '@module-federation/rspack@0.6.10':
+    resolution: {integrity: sha512-BqHp9/A1D5GMJsLjQzRHKDNtRkayDEsyLTrb6+WTCSv5II8q+66VULgN7w2FvNn7gmmxmn51TVfMbP/QJBjILA==}
     peerDependencies:
       typescript: ^4.9.0 || ^5.0.0
       vue-tsc: '>=1.0.24'
@@ -2634,29 +2634,29 @@ packages:
   '@module-federation/runtime-tools@0.5.1':
     resolution: {integrity: sha512-nfBedkoZ3/SWyO0hnmaxuz0R0iGPSikHZOAZ0N/dVSQaIzlffUo35B5nlC2wgWIc0JdMZfkwkjZRrnuuDIJbzg==}
 
-  '@module-federation/runtime-tools@0.6.9':
-    resolution: {integrity: sha512-AhsEBXo8IW1ATMKS1xfJaxBiHu9n5z6WUOAIWdPpWXXBJhTFgOs0K1xAod0xLJY4YH/B5cwEcHRPN3FEs2/0Ww==}
+  '@module-federation/runtime-tools@0.6.10':
+    resolution: {integrity: sha512-4/Kv3l4rP8n4568hGsVUFXrTjpFIBcBcPFX2dAu8XMGWpSe2xT8dDL73TZyafDUSchyoUgGJTvLorKhMZQwApQ==}
 
   '@module-federation/runtime@0.5.1':
     resolution: {integrity: sha512-xgiMUWwGLWDrvZc9JibuEbXIbhXg6z2oUkemogSvQ4LKvrl/n0kbqP1Blk669mXzyWbqtSp6PpvNdwaE1aN5xQ==}
 
-  '@module-federation/runtime@0.6.9':
-    resolution: {integrity: sha512-G1x+6jyW5sW1X+TtWaKigGhwqiHE8MESvi3ntE9ICxwELAGBonmsqDqnLSrdEy6poBKslvPANPJr0Nn9pvW9lg==}
+  '@module-federation/runtime@0.6.10':
+    resolution: {integrity: sha512-mm/iUn5TdOHM1Zq0iB87fGx8cRp+j7g0/ndgokjbDaEbsYcS3pmQpZ5V+wiqB1fxuBtc+7NgNFWhp3Gwgaxoeg==}
 
   '@module-federation/sdk@0.5.1':
     resolution: {integrity: sha512-exvchtjNURJJkpqjQ3/opdbfeT2wPKvrbnGnyRkrwW5o3FH1LaST1tkiNviT6OXTexGaVc2DahbdniQHVtQ7pA==}
 
-  '@module-federation/sdk@0.6.9':
-    resolution: {integrity: sha512-xmTxb9LgncxPGsBrN6AT/+aHnFGv8swbeNl0PcSeVbXTGLu3Gp7j+5J+AhJoWNB++SLguRwBd8LjB1d8mNKLDg==}
+  '@module-federation/sdk@0.6.10':
+    resolution: {integrity: sha512-i6ofHnImB4zCn/bt7Ft0zh9o/PxvsJj8Wc88EAeJg4IrY6+bzwwo1G2h44w1Yt3go4skZZFQCK0UxoaV6l/t/A==}
 
-  '@module-federation/third-party-dts-extractor@0.6.9':
-    resolution: {integrity: sha512-im00IQyX/siJz+SaAmJo6vGmMBig7UYzcrPD1N5NeiZonxdT1RZk9iXUP419UESgovYy4hM6w4qdCq6PMMl2bw==}
+  '@module-federation/third-party-dts-extractor@0.6.10':
+    resolution: {integrity: sha512-PvSOtQUd3wCunvelJ9mF7jWTPMKaCQoq7cBlHDOBSDy8YMml0GCt0p8xRKx+7nNNq68Sg4Yk1Wq9KESqB/FvtA==}
 
   '@module-federation/webpack-bundler-runtime@0.5.1':
     resolution: {integrity: sha512-mMhRFH0k2VjwHt3Jol9JkUsmI/4XlrAoBG3E0o7HoyoPYv1UFOWyqAflfANcUPgbYpvqmyLzDcO+3IT36LXnrA==}
 
-  '@module-federation/webpack-bundler-runtime@0.6.9':
-    resolution: {integrity: sha512-ME1MjNT/a4MFI3HaJDM06olJ+/+H8lk4oDOdwwEZI2JSH3UoqCDrMcjSKCjBNMGzza57AowGobo1LHQeY8yZ8Q==}
+  '@module-federation/webpack-bundler-runtime@0.6.10':
+    resolution: {integrity: sha512-RJTHXiB0p3YjS3p2+EavnDyurWuVyuYUNvGAFZ04VkBLAPPKJN/dBp6fG1GwekbqbrtT129Hfv/0aOqpIfqIjA==}
 
   '@napi-rs/wasm-runtime@0.2.4':
     resolution: {integrity: sha512-9zESzOO5aDByvhIAsOy9TbpZ0Ur2AJbUI7UT73kcUTS2mxAMHOBaa1st/jAymNoCtvrit99kkzT1FZuXVcgfIQ==}
@@ -2841,13 +2841,8 @@ packages:
     engines: {node: '>=16.7.0'}
     hasBin: true
 
-  '@rsbuild/core@1.0.11':
-    resolution: {integrity: sha512-kYM5gl8XbYK9DX/7uAJ+DyOgHUN8Ihk2P8buJDjIa/sbbuYixjF2KtDgcqxWDzP4oRi2NMPPe4gqzksVwVvmqw==}
-    engines: {node: '>=16.7.0'}
-    hasBin: true
-
-  '@rsbuild/core@1.0.7':
-    resolution: {integrity: sha512-NqPAtKnPGdvKituKehTzUd8bnzVsdAs6vLY82OwymkmMlW9zcFYfeVYAfSUS3uTv7vDIFQwff0PHgYYV3ufpwQ==}
+  '@rsbuild/core@1.0.12':
+    resolution: {integrity: sha512-qYfdlGFMa7IhuFLSR63qaLEgp4/CgQTsy9ypBOSrFofibicnog9mlCQQgGqIPus9zTO6cX331qGAnYmAfmqi3A==}
     engines: {node: '>=16.7.0'}
     hasBin: true
 
@@ -2903,8 +2898,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  '@rslib/core@0.0.8':
-    resolution: {integrity: sha512-yOruq9793txYDc7heNsrCFoWx6xoo03cTpslcTHms1xQNS/tuY4k/QWK2PDRcSt2QZOTzMYLKjqw3Yx1GdhVJw==}
+  '@rslib/core@0.0.10':
+    resolution: {integrity: sha512-zxkxoJE6uCKIKJGDGDPJnv7FTu80ckpCvQbmVUVsVCVPU+MUpDycWW1NfGFc96VBWoIChmRyakzCgAFzKnIg6w==}
     engines: {node: '>=16.0.0'}
     hasBin: true
     peerDependencies:
@@ -3728,8 +3723,8 @@ packages:
       '@babel/core': ^7.12.0
       webpack: '>=5'
 
-  babel-plugin-jsx-dom-expressions@0.39.0:
-    resolution: {integrity: sha512-PXMD+aFTw+pZaVsNRhxGkVMjscCMmHAwLlNbMj0PG/9Uj3tFR4+ZHjg4RDRSydXiDL0Xoacpoxhc5GiYS6yd6Q==}
+  babel-plugin-jsx-dom-expressions@0.39.2:
+    resolution: {integrity: sha512-rCkSYFuLl5/XD+BXjZk1XxFAsIBgNe9WZ7xBHjQV1dBliI64kO+EWktAD3b6Bj/SXk+LpVXFyMVydhnI35svWQ==}
     peerDependencies:
       '@babel/core': ^7.20.12
 
@@ -3754,8 +3749,8 @@ packages:
   babel-plugin-vue-jsx-hmr@1.0.0:
     resolution: {integrity: sha512-XRq+XTD4bub6HkavELMhihvLX2++JkSBAxRXlqQK32b+Tb0S9PEqxrDSMpOEZ1iGyOaJZj9Y0uU/FzICdyL9MA==}
 
-  babel-preset-solid@1.9.0:
-    resolution: {integrity: sha512-Txrk9RQEAQ1yn8K3E4pvwUDCqR1YVe55WflFWrwLGSeQWI0oAJMXx4u6BxYaZU3C5ctmVovthKetLjpJ6OG4Qg==}
+  babel-preset-solid@1.9.2:
+    resolution: {integrity: sha512-rWx968GIDghgFStRDQaoqelGspEm9rgPci/yNzNPFlkzMqHaL2yob+t7BbzyqZw5b9/llkzjqUNIOybT9Z9mcg==}
     peerDependencies:
       '@babel/core': ^7.0.0
 
@@ -5373,8 +5368,8 @@ packages:
   lit-html@3.2.0:
     resolution: {integrity: sha512-pwT/HwoxqI9FggTrYVarkBKFN9MlTUpLrDHubTmW4SrkL3kkqW5gxwbxMMUnbbRHBC0WTZnYHcjDSCM559VyfA==}
 
-  lit@3.2.0:
-    resolution: {integrity: sha512-s6tI33Lf6VpDu7u4YqsSX78D28bYQulM+VAzsGch4fx2H0eLZnJsUBsPWmGYSGoKDNbjtRv02rio1o+UdPVwvw==}
+  lit@3.2.1:
+    resolution: {integrity: sha512-1BBa1E/z0O9ye5fZprPtdqnc0BFzxIxTTOO/tQFmyC/hj1O3jL4TfmLBw0WEwjAokdLwpclkvGgDJwTIh0/22w==}
 
   loader-runner@4.3.0:
     resolution: {integrity: sha512-3R/1M+yS3j5ou80Me59j7F9IMs4PXs3VqRrm0TU3AbKPxlmpoY1TNscJV/oGJXo8qCatFGTfDbY6W6ipGOYXfg==}
@@ -6467,8 +6462,8 @@ packages:
       webpack:
         optional: true
 
-  rsbuild-plugin-dts@0.0.8:
-    resolution: {integrity: sha512-tNeXWwJT9rg8rJdB5+EBDb7XEcS7thjw76Qt+4vZw9rs42G5ls36wEWAJF29X94u8Uvjh6m2NhcMdvFGAeyWWg==}
+  rsbuild-plugin-dts@0.0.10:
+    resolution: {integrity: sha512-DOfCRTH/43BiSz4QNnFbhldqTS3XSM3oQc+0IKfGd3mjdIXS0xEc1lfBRXLjJpvE+RptYwkEtYz0lllK1Ft7lQ==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       '@microsoft/api-extractor': ^7
@@ -6826,8 +6821,8 @@ packages:
   snake-case@3.0.4:
     resolution: {integrity: sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg==}
 
-  solid-js@1.9.1:
-    resolution: {integrity: sha512-Gd6QWRFfO2XKKZqVK4YwbhWZkr0jWw1dYHOt+VYebomeyikGP0SuMflf42XcDuU9HAEYDArFJIYsBNjlE7iZsw==}
+  solid-js@1.9.2:
+    resolution: {integrity: sha512-fe/K03nV+kMFJYhAOE8AIQHcGxB4rMIEoEyrulbtmf217NffbbwBqJnJI4ovt16e+kaIt0czE2WA7mP/pYN9yg==}
 
   solid-refresh@0.6.3:
     resolution: {integrity: sha512-F3aPsX6hVw9ttm5LYlth8Q15x6MlI/J3Dn+o3EQyRTtTxidepSTwAYdozt01/YA+7ObcciagGEyXIopGZzQtbA==}
@@ -7000,8 +6995,8 @@ packages:
     peerDependencies:
       svelte: '>=3.19.0'
 
-  svelte-loader@3.2.3:
-    resolution: {integrity: sha512-ntitVuO0EneIlw5Zsn/GNnxu8+KkqbfrsjEGvk7qrd67IA24OBVqY9p0NjUGlpewPxGL3iD4z/8VA+hM9AsZxA==}
+  svelte-loader@3.2.4:
+    resolution: {integrity: sha512-e0HdDnkYH/MDx4/IfTSka5AOFg9yYJcPuoZJB5x0l60fkHjVjNvrrxr+rJegDG9J7ZymmdHt00/hdLw+QF299w==}
     peerDependencies:
       svelte: ^3.0.0 || ^4.0.0-next.0 || ^5.0.0-next.1
 
@@ -7046,8 +7041,8 @@ packages:
     resolution: {integrity: sha512-IY1rnGr6izd10B0A8LqsBfmlT5OILVuZ7XsI0vdGPEvuonFV7NYEUK4dAkm9Zg2q0Um92kYjTpS1CAP3Nh/KWw==}
     engines: {node: '>=16'}
 
-  svelte@5.0.0-next.262:
-    resolution: {integrity: sha512-gAY0POArLN5yI/ihvItG0wQCh7ycfvxSvvVlvPECshFKmR/ep6ZAlqX50+aUGDSG/5megFqnSJfP7piC6lOtew==}
+  svelte@5.0.0-next.264:
+    resolution: {integrity: sha512-vmlzMGxYTdIPhVl1vQhbcqHmSztG/sXzi+TooHiv57FgAVSBc/66cpvqtT5Wfxg9gQOEKOXl9tUV9OzBrBBwiw==}
     engines: {node: '>=18'}
 
   svg-parser@2.0.4:
@@ -7239,8 +7234,8 @@ packages:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
     engines: {node: '>= 0.6'}
 
-  typescript@5.6.2:
-    resolution: {integrity: sha512-NW8ByodCSNCwZeghjN3o+JX5OFH0Ojg6sadjEKY4huZ52TqbJTJnDo5+Tw98lSy63NZvi4n+ez5m2u5d4PkZyw==}
+  typescript@5.6.3:
+    resolution: {integrity: sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -7556,18 +7551,6 @@ packages:
     peerDependencies:
       bufferutil: ^4.0.1
       utf-8-validate: ^5.0.2
-    peerDependenciesMeta:
-      bufferutil:
-        optional: true
-      utf-8-validate:
-        optional: true
-
-  ws@8.17.1:
-    resolution: {integrity: sha512-6XQFvXTkbfUOZOKKILFG1PDK2NDQs4azKQl26T0YS5CxqWLgXajbPZ+h4gZekJyRqFU8pvnbAbbs/3TgRPy+GQ==}
-    engines: {node: '>=10.0.0'}
-    peerDependencies:
-      bufferutil: ^4.0.1
-      utf-8-validate: '>=5.0.2'
     peerDependenciesMeta:
       bufferutil:
         optional: true
@@ -9183,7 +9166,7 @@ snapshots:
       '@modern-js/utils': 2.60.2
       '@swc/helpers': 0.5.13
 
-  '@modern-js/module-tools@2.60.2(typescript@5.6.2)':
+  '@modern-js/module-tools@2.60.2(typescript@5.6.3)':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@ast-grep/napi': 0.16.0
@@ -9212,7 +9195,7 @@ snapshots:
       terser: 5.34.1
       tsconfig-paths-webpack-plugin: 4.1.0
     optionalDependencies:
-      typescript: 5.6.2
+      typescript: 5.6.3
     transitivePeerDependencies:
       - debug
       - supports-color
@@ -9291,47 +9274,47 @@ snapshots:
       lodash: 4.17.21
       rslog: 1.2.3
 
-  '@module-federation/bridge-react-webpack-plugin@0.6.9':
+  '@module-federation/bridge-react-webpack-plugin@0.6.10':
     dependencies:
-      '@module-federation/sdk': 0.6.9
+      '@module-federation/sdk': 0.6.10
       '@types/semver': 7.5.8
       semver: 7.6.3
 
-  '@module-federation/dts-plugin@0.6.9(typescript@5.6.2)':
+  '@module-federation/dts-plugin@0.6.10(typescript@5.6.3)':
     dependencies:
-      '@module-federation/managers': 0.6.9
-      '@module-federation/sdk': 0.6.9
-      '@module-federation/third-party-dts-extractor': 0.6.9
+      '@module-federation/managers': 0.6.10
+      '@module-federation/sdk': 0.6.10
+      '@module-federation/third-party-dts-extractor': 0.6.10
       adm-zip: 0.5.14
       ansi-colors: 4.1.3
       axios: 1.7.4
       chalk: 3.0.0
       fs-extra: 9.1.0
-      isomorphic-ws: 5.0.0(ws@8.17.1)
+      isomorphic-ws: 5.0.0(ws@8.18.0)
       koa: 2.15.3
       lodash.clonedeepwith: 4.5.0
       log4js: 6.9.1
       node-schedule: 2.1.1
       rambda: 9.2.1
-      typescript: 5.6.2
-      ws: 8.17.1
+      typescript: 5.6.3
+      ws: 8.18.0
     transitivePeerDependencies:
       - bufferutil
       - debug
       - supports-color
       - utf-8-validate
 
-  '@module-federation/managers@0.6.9':
+  '@module-federation/managers@0.6.10':
     dependencies:
-      '@module-federation/sdk': 0.6.9
+      '@module-federation/sdk': 0.6.10
       find-pkg: 2.0.0
       fs-extra: 9.1.0
 
-  '@module-federation/manifest@0.6.9(typescript@5.6.2)':
+  '@module-federation/manifest@0.6.10(typescript@5.6.3)':
     dependencies:
-      '@module-federation/dts-plugin': 0.6.9(typescript@5.6.2)
-      '@module-federation/managers': 0.6.9
-      '@module-federation/sdk': 0.6.9
+      '@module-federation/dts-plugin': 0.6.10(typescript@5.6.3)
+      '@module-federation/managers': 0.6.10
+      '@module-federation/sdk': 0.6.10
       chalk: 3.0.0
       find-pkg: 2.0.0
     transitivePeerDependencies:
@@ -9342,16 +9325,16 @@ snapshots:
       - utf-8-validate
       - vue-tsc
 
-  '@module-federation/rspack@0.6.9(typescript@5.6.2)':
+  '@module-federation/rspack@0.6.10(typescript@5.6.3)':
     dependencies:
-      '@module-federation/bridge-react-webpack-plugin': 0.6.9
-      '@module-federation/dts-plugin': 0.6.9(typescript@5.6.2)
-      '@module-federation/managers': 0.6.9
-      '@module-federation/manifest': 0.6.9(typescript@5.6.2)
-      '@module-federation/runtime-tools': 0.6.9
-      '@module-federation/sdk': 0.6.9
+      '@module-federation/bridge-react-webpack-plugin': 0.6.10
+      '@module-federation/dts-plugin': 0.6.10(typescript@5.6.3)
+      '@module-federation/managers': 0.6.10
+      '@module-federation/manifest': 0.6.10(typescript@5.6.3)
+      '@module-federation/runtime-tools': 0.6.10
+      '@module-federation/sdk': 0.6.10
     optionalDependencies:
-      typescript: 5.6.2
+      typescript: 5.6.3
     transitivePeerDependencies:
       - bufferutil
       - debug
@@ -9363,24 +9346,24 @@ snapshots:
       '@module-federation/runtime': 0.5.1
       '@module-federation/webpack-bundler-runtime': 0.5.1
 
-  '@module-federation/runtime-tools@0.6.9':
+  '@module-federation/runtime-tools@0.6.10':
     dependencies:
-      '@module-federation/runtime': 0.6.9
-      '@module-federation/webpack-bundler-runtime': 0.6.9
+      '@module-federation/runtime': 0.6.10
+      '@module-federation/webpack-bundler-runtime': 0.6.10
 
   '@module-federation/runtime@0.5.1':
     dependencies:
       '@module-federation/sdk': 0.5.1
 
-  '@module-federation/runtime@0.6.9':
+  '@module-federation/runtime@0.6.10':
     dependencies:
-      '@module-federation/sdk': 0.6.9
+      '@module-federation/sdk': 0.6.10
 
   '@module-federation/sdk@0.5.1': {}
 
-  '@module-federation/sdk@0.6.9': {}
+  '@module-federation/sdk@0.6.10': {}
 
-  '@module-federation/third-party-dts-extractor@0.6.9':
+  '@module-federation/third-party-dts-extractor@0.6.10':
     dependencies:
       find-pkg: 2.0.0
       fs-extra: 9.1.0
@@ -9391,10 +9374,10 @@ snapshots:
       '@module-federation/runtime': 0.5.1
       '@module-federation/sdk': 0.5.1
 
-  '@module-federation/webpack-bundler-runtime@0.6.9':
+  '@module-federation/webpack-bundler-runtime@0.6.10':
     dependencies:
-      '@module-federation/runtime': 0.6.9
-      '@module-federation/sdk': 0.6.9
+      '@module-federation/runtime': 0.6.10
+      '@module-federation/sdk': 0.6.10
 
   '@napi-rs/wasm-runtime@0.2.4':
     dependencies:
@@ -9519,22 +9502,11 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  '@rsbuild/core@1.0.11':
+  '@rsbuild/core@1.0.12':
     dependencies:
       '@rspack/core': 1.0.9(@swc/helpers@0.5.13)
       '@rspack/lite-tapable': 1.0.1
       '@swc/helpers': 0.5.13
-      core-js: 3.38.1
-    optionalDependencies:
-      fsevents: 2.3.3
-    optional: true
-
-  '@rsbuild/core@1.0.7':
-    dependencies:
-      '@rspack/core': 1.0.9(@swc/helpers@0.5.13)
-      '@rspack/lite-tapable': 1.0.1
-      '@swc/helpers': 0.5.13
-      caniuse-lite: 1.0.30001663
       core-js: 3.38.1
     optionalDependencies:
       fsevents: 2.3.3
@@ -9591,12 +9563,12 @@ snapshots:
       reduce-configs: 1.0.0
       sass-embedded: 1.79.4
 
-  '@rsbuild/plugin-styled-components@1.0.1(@rsbuild/core@1.0.11)':
+  '@rsbuild/plugin-styled-components@1.0.1(@rsbuild/core@1.0.12)':
     dependencies:
       '@swc/plugin-styled-components': 2.0.11
       reduce-configs: 1.0.0
     optionalDependencies:
-      '@rsbuild/core': 1.0.11
+      '@rsbuild/core': 1.0.12
 
   '@rsbuild/plugin-vue-jsx@1.0.1(@babel/core@7.25.7)(@rsbuild/core@packages+core)':
     dependencies:
@@ -9609,12 +9581,12 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  '@rslib/core@0.0.8(typescript@5.6.2)':
+  '@rslib/core@0.0.10(typescript@5.6.3)':
     dependencies:
-      '@rsbuild/core': 1.0.7
-      rsbuild-plugin-dts: 0.0.8(@rsbuild/core@1.0.7)(typescript@5.6.2)
+      '@rsbuild/core': 1.0.12
+      rsbuild-plugin-dts: 0.0.10(@rsbuild/core@1.0.12)(typescript@5.6.3)
     optionalDependencies:
-      typescript: 5.6.2
+      typescript: 5.6.3
 
   '@rspack/binding-darwin-arm64@1.0.9':
     optional: true
@@ -9885,12 +9857,12 @@ snapshots:
       '@svgr/babel-plugin-transform-react-native-svg': 8.1.0(@babel/core@7.25.7)
       '@svgr/babel-plugin-transform-svg-component': 8.0.0(@babel/core@7.25.7)
 
-  '@svgr/core@8.1.0(typescript@5.6.2)':
+  '@svgr/core@8.1.0(typescript@5.6.3)':
     dependencies:
       '@babel/core': 7.25.7
       '@svgr/babel-preset': 8.1.0(@babel/core@7.25.7)
       camelcase: 6.3.0
-      cosmiconfig: 8.3.6(typescript@5.6.2)
+      cosmiconfig: 8.3.6(typescript@5.6.3)
       snake-case: 3.0.4
     transitivePeerDependencies:
       - supports-color
@@ -9901,20 +9873,20 @@ snapshots:
       '@babel/types': 7.25.7
       entities: 4.5.0
 
-  '@svgr/plugin-jsx@8.1.0(@svgr/core@8.1.0(typescript@5.6.2))':
+  '@svgr/plugin-jsx@8.1.0(@svgr/core@8.1.0(typescript@5.6.3))':
     dependencies:
       '@babel/core': 7.25.7
       '@svgr/babel-preset': 8.1.0(@babel/core@7.25.7)
-      '@svgr/core': 8.1.0(typescript@5.6.2)
+      '@svgr/core': 8.1.0(typescript@5.6.3)
       '@svgr/hast-util-to-babel-ast': 8.0.0
       svg-parser: 2.0.4
     transitivePeerDependencies:
       - supports-color
 
-  '@svgr/plugin-svgo@8.1.0(@svgr/core@8.1.0(typescript@5.6.2))(typescript@5.6.2)':
+  '@svgr/plugin-svgo@8.1.0(@svgr/core@8.1.0(typescript@5.6.3))(typescript@5.6.3)':
     dependencies:
-      '@svgr/core': 8.1.0(typescript@5.6.2)
-      cosmiconfig: 8.3.6(typescript@5.6.2)
+      '@svgr/core': 8.1.0(typescript@5.6.3)
+      cosmiconfig: 8.3.6(typescript@5.6.3)
       deepmerge: 4.3.1
       svgo: 3.3.2
     transitivePeerDependencies:
@@ -10319,11 +10291,11 @@ snapshots:
       '@vue/shared': 3.5.11
       csstype: 3.1.3
 
-  '@vue/server-renderer@3.5.11(vue@3.5.11(typescript@5.6.2))':
+  '@vue/server-renderer@3.5.11(vue@3.5.11(typescript@5.6.3))':
     dependencies:
       '@vue/compiler-ssr': 3.5.11
       '@vue/shared': 3.5.11
-      vue: 3.5.11(typescript@5.6.2)
+      vue: 3.5.11(typescript@5.6.3)
 
   '@vue/shared@3.5.10': {}
 
@@ -10456,6 +10428,7 @@ snapshots:
       debug: 4.3.7
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   ajv-formats@2.1.1(ajv@8.12.0):
     optionalDependencies:
@@ -10568,21 +10541,16 @@ snapshots:
       schema-utils: 4.2.0
       webpack: 5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13))
 
-  babel-plugin-jsx-dom-expressions@0.39.0(@babel/core@7.25.7):
+  babel-plugin-jsx-dom-expressions@0.39.2(@babel/core@7.25.7):
     dependencies:
       '@babel/core': 7.25.7
       '@babel/helper-module-imports': 7.18.6
-      '@babel/plugin-syntax-jsx': 7.24.7(@babel/core@7.25.7)
+      '@babel/plugin-syntax-jsx': 7.25.7(@babel/core@7.25.7)
       '@babel/types': 7.25.7
       html-entities: 2.3.3
       jest-diff: 29.7.0
-      jsdom: 25.0.1
+      parse5: 7.1.2
       validate-html-nesting: 1.2.2
-    transitivePeerDependencies:
-      - bufferutil
-      - canvas
-      - supports-color
-      - utf-8-validate
 
   babel-plugin-polyfill-corejs2@0.4.10(@babel/core@7.25.7):
     dependencies:
@@ -10625,15 +10593,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  babel-preset-solid@1.9.0(@babel/core@7.25.7):
+  babel-preset-solid@1.9.2(@babel/core@7.25.7):
     dependencies:
       '@babel/core': 7.25.7
-      babel-plugin-jsx-dom-expressions: 0.39.0(@babel/core@7.25.7)
-    transitivePeerDependencies:
-      - bufferutil
-      - canvas
-      - supports-color
-      - utf-8-validate
+      babel-plugin-jsx-dom-expressions: 0.39.2(@babel/core@7.25.7)
 
   babel-walk@3.0.0-canary-5:
     dependencies:
@@ -10959,23 +10922,23 @@ snapshots:
 
   core-js@3.38.1: {}
 
-  cosmiconfig@8.3.6(typescript@5.6.2):
+  cosmiconfig@8.3.6(typescript@5.6.3):
     dependencies:
       import-fresh: 3.3.0
       js-yaml: 4.1.0
       parse-json: 5.2.0
       path-type: 4.0.0
     optionalDependencies:
-      typescript: 5.6.2
+      typescript: 5.6.3
 
-  cosmiconfig@9.0.0(typescript@5.6.2):
+  cosmiconfig@9.0.0(typescript@5.6.3):
     dependencies:
       env-paths: 2.2.1
       import-fresh: 3.3.0
       js-yaml: 4.1.0
       parse-json: 5.2.0
     optionalDependencies:
-      typescript: 5.6.2
+      typescript: 5.6.3
 
   create-rstack@1.0.3: {}
 
@@ -11052,6 +11015,7 @@ snapshots:
   cssstyle@4.1.0:
     dependencies:
       rrweb-cssom: 0.7.1
+    optional: true
 
   csstype@3.1.3: {}
 
@@ -11061,6 +11025,7 @@ snapshots:
     dependencies:
       whatwg-mimetype: 4.0.0
       whatwg-url: 14.0.0
+    optional: true
 
   date-format@4.0.14: {}
 
@@ -11078,7 +11043,8 @@ snapshots:
     dependencies:
       ms: 2.1.3
 
-  decimal.js@10.4.3: {}
+  decimal.js@10.4.3:
+    optional: true
 
   decode-named-character-reference@1.0.2:
     dependencies:
@@ -11889,6 +11855,7 @@ snapshots:
   html-encoding-sniffer@4.0.0:
     dependencies:
       whatwg-encoding: 3.1.1
+    optional: true
 
   html-entities@2.3.3: {}
 
@@ -11974,6 +11941,7 @@ snapshots:
       debug: 4.3.7
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   http-proxy-middleware@2.0.6:
     dependencies:
@@ -11999,6 +11967,7 @@ snapshots:
       debug: 4.3.7
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   human-id@1.0.2: {}
 
@@ -12011,6 +11980,7 @@ snapshots:
   iconv-lite@0.6.3:
     dependencies:
       safer-buffer: 2.1.2
+    optional: true
 
   icss-replace-symbols@1.1.0: {}
 
@@ -12121,7 +12091,8 @@ snapshots:
     dependencies:
       isobject: 3.0.1
 
-  is-potential-custom-element-name@1.0.1: {}
+  is-potential-custom-element-name@1.0.1:
+    optional: true
 
   is-primitive@3.0.1: {}
 
@@ -12158,9 +12129,9 @@ snapshots:
 
   isobject@3.0.1: {}
 
-  isomorphic-ws@5.0.0(ws@8.17.1):
+  isomorphic-ws@5.0.0(ws@8.18.0):
     dependencies:
-      ws: 8.17.1
+      ws: 8.18.0
 
   iterate-object@1.3.4: {}
 
@@ -12230,6 +12201,7 @@ snapshots:
       - bufferutil
       - supports-color
       - utf-8-validate
+    optional: true
 
   jsesc@0.5.0: {}
 
@@ -12398,7 +12370,7 @@ snapshots:
     dependencies:
       '@types/trusted-types': 2.0.7
 
-  lit@3.2.0:
+  lit@3.2.1:
     dependencies:
       '@lit/reactive-element': 2.0.4
       lit-element: 4.1.0
@@ -13056,7 +13028,8 @@ snapshots:
     dependencies:
       boolbase: 1.0.0
 
-  nwsapi@2.2.12: {}
+  nwsapi@2.2.12:
+    optional: true
 
   nx@20.0.0(@swc/core@1.6.13(@swc/helpers@0.5.13)):
     dependencies:
@@ -13330,9 +13303,9 @@ snapshots:
       tsx: 4.14.0
       yaml: 2.5.0
 
-  postcss-loader@8.1.1(@rspack/core@1.0.9(@swc/helpers@0.5.13))(postcss@8.4.47)(typescript@5.6.2)(webpack@5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13))):
+  postcss-loader@8.1.1(@rspack/core@1.0.9(@swc/helpers@0.5.13))(postcss@8.4.47)(typescript@5.6.3)(webpack@5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13))):
     dependencies:
-      cosmiconfig: 9.0.0(typescript@5.6.2)
+      cosmiconfig: 9.0.0(typescript@5.6.3)
       jiti: 1.21.6
       postcss: 8.4.47
       semver: 7.6.3
@@ -13401,12 +13374,12 @@ snapshots:
 
   preact@10.24.2: {}
 
-  prebundle@1.2.2(typescript@5.6.2):
+  prebundle@1.2.2(typescript@5.6.3):
     dependencies:
       '@vercel/ncc': 0.38.1
       prettier: 3.3.3
       rollup: 4.17.1
-      rollup-plugin-dts: 6.1.0(rollup@4.17.1)(typescript@5.6.2)
+      rollup-plugin-dts: 6.1.0(rollup@4.17.1)(typescript@5.6.3)
       terser: 5.31.3
     transitivePeerDependencies:
       - typescript
@@ -13812,11 +13785,11 @@ snapshots:
 
   rfdc@1.4.1: {}
 
-  rollup-plugin-dts@6.1.0(rollup@4.17.1)(typescript@5.6.2):
+  rollup-plugin-dts@6.1.0(rollup@4.17.1)(typescript@5.6.3):
     dependencies:
       magic-string: 0.30.11
       rollup: 4.17.1
-      typescript: 5.6.2
+      typescript: 5.6.3
     optionalDependencies:
       '@babel/code-frame': 7.25.7
 
@@ -13842,7 +13815,8 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.17.1
       fsevents: 2.3.3
 
-  rrweb-cssom@0.7.1: {}
+  rrweb-cssom@0.7.1:
+    optional: true
 
   rsbuild-dev-middleware@0.1.1(webpack@5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13))):
     dependencies:
@@ -13853,14 +13827,14 @@ snapshots:
     optionalDependencies:
       webpack: 5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13))
 
-  rsbuild-plugin-dts@0.0.8(@rsbuild/core@1.0.7)(typescript@5.6.2):
+  rsbuild-plugin-dts@0.0.10(@rsbuild/core@1.0.12)(typescript@5.6.3):
     dependencies:
-      '@rsbuild/core': 1.0.7
+      '@rsbuild/core': 1.0.12
       fast-glob: 3.3.2
       magic-string: 0.30.11
       picocolors: 1.1.0
     optionalDependencies:
-      typescript: 5.6.2
+      typescript: 5.6.3
 
   rsbuild-plugin-google-analytics@1.0.3(@rsbuild/core@packages+core):
     optionalDependencies:
@@ -14034,6 +14008,7 @@ snapshots:
   saxes@6.0.0:
     dependencies:
       xmlchars: 2.2.0
+    optional: true
 
   scheduler@0.23.2:
     dependencies:
@@ -14152,18 +14127,18 @@ snapshots:
       dot-case: 3.0.4
       tslib: 2.6.2
 
-  solid-js@1.9.1:
+  solid-js@1.9.2:
     dependencies:
       csstype: 3.1.3
       seroval: 1.1.0
       seroval-plugins: 1.1.0(seroval@1.1.0)
 
-  solid-refresh@0.6.3(solid-js@1.9.1):
+  solid-refresh@0.6.3(solid-js@1.9.2):
     dependencies:
       '@babel/generator': 7.25.0
       '@babel/helper-module-imports': 7.24.7
       '@babel/types': 7.25.0
-      solid-js: 1.9.1
+      solid-js: 1.9.2
     transitivePeerDependencies:
       - supports-color
 
@@ -14332,14 +14307,14 @@ snapshots:
     dependencies:
       svelte: 4.2.19
 
-  svelte-loader@3.2.3(svelte@4.2.19):
+  svelte-loader@3.2.4(svelte@4.2.19):
     dependencies:
       loader-utils: 2.0.4
       svelte: 4.2.19
       svelte-dev-helper: 1.1.9
       svelte-hmr: 0.14.12(svelte@4.2.19)
 
-  svelte-preprocess@6.0.3(@babel/core@7.25.7)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.47)(tsx@4.14.0)(yaml@2.5.0))(postcss@8.4.47)(pug@3.0.3)(sass@1.79.4)(stylus@0.63.0)(svelte@4.2.19)(typescript@5.6.2):
+  svelte-preprocess@6.0.3(@babel/core@7.25.7)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.47)(tsx@4.14.0)(yaml@2.5.0))(postcss@8.4.47)(pug@3.0.3)(sass@1.79.4)(stylus@0.63.0)(svelte@4.2.19)(typescript@5.6.3):
     dependencies:
       svelte: 4.2.19
     optionalDependencies:
@@ -14350,7 +14325,7 @@ snapshots:
       pug: 3.0.3
       sass: 1.79.4
       stylus: 0.63.0
-      typescript: 5.6.2
+      typescript: 5.6.3
 
   svelte@4.2.19:
     dependencies:
@@ -14369,7 +14344,7 @@ snapshots:
       magic-string: 0.30.10
       periscopic: 3.1.0
 
-  svelte@5.0.0-next.262:
+  svelte@5.0.0-next.264:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@jridgewell/sourcemap-codec': 1.5.0
@@ -14399,7 +14374,8 @@ snapshots:
       csso: 5.0.5
       picocolors: 1.1.0
 
-  symbol-tree@3.2.4: {}
+  symbol-tree@3.2.4:
+    optional: true
 
   table@6.8.2:
     dependencies:
@@ -14498,11 +14474,13 @@ snapshots:
 
   tinyspy@3.0.0: {}
 
-  tldts-core@6.1.47: {}
+  tldts-core@6.1.47:
+    optional: true
 
   tldts@6.1.47:
     dependencies:
       tldts-core: 6.1.47
+    optional: true
 
   tmp@0.0.33:
     dependencies:
@@ -14528,10 +14506,12 @@ snapshots:
   tough-cookie@5.0.0:
     dependencies:
       tldts: 6.1.47
+    optional: true
 
   tr46@5.0.0:
     dependencies:
       punycode: 2.3.1
+    optional: true
 
   trim-lines@3.0.1: {}
 
@@ -14587,7 +14567,7 @@ snapshots:
       media-typer: 0.3.0
       mime-types: 2.1.35
 
-  typescript@5.6.2: {}
+  typescript@5.6.3: {}
 
   undici-types@5.26.5: {}
 
@@ -14804,35 +14784,36 @@ snapshots:
   void-elements@3.1.0:
     optional: true
 
-  vue-loader@17.4.2(vue@3.5.11(typescript@5.6.2))(webpack@5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13))):
+  vue-loader@17.4.2(vue@3.5.11(typescript@5.6.3))(webpack@5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13))):
     dependencies:
       chalk: 4.1.2
       hash-sum: 2.0.0
       watchpack: 2.4.1
       webpack: 5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13))
     optionalDependencies:
-      vue: 3.5.11(typescript@5.6.2)
+      vue: 3.5.11(typescript@5.6.3)
 
-  vue-router@4.4.5(vue@3.5.11(typescript@5.6.2)):
+  vue-router@4.4.5(vue@3.5.11(typescript@5.6.3)):
     dependencies:
       '@vue/devtools-api': 6.6.4
-      vue: 3.5.11(typescript@5.6.2)
+      vue: 3.5.11(typescript@5.6.3)
 
-  vue@3.5.11(typescript@5.6.2):
+  vue@3.5.11(typescript@5.6.3):
     dependencies:
       '@vue/compiler-dom': 3.5.11
       '@vue/compiler-sfc': 3.5.11
       '@vue/runtime-dom': 3.5.11
-      '@vue/server-renderer': 3.5.11(vue@3.5.11(typescript@5.6.2))
+      '@vue/server-renderer': 3.5.11(vue@3.5.11(typescript@5.6.3))
       '@vue/shared': 3.5.11
     optionalDependencies:
-      typescript: 5.6.2
+      typescript: 5.6.3
 
   w-json@1.3.10: {}
 
   w3c-xmlserializer@5.0.0:
     dependencies:
       xml-name-validator: 5.0.0
+    optional: true
 
   watchpack@2.4.1:
     dependencies:
@@ -14847,7 +14828,8 @@ snapshots:
 
   web-streams-polyfill@3.3.3: {}
 
-  webidl-conversions@7.0.0: {}
+  webidl-conversions@7.0.0:
+    optional: true
 
   webpack-bundle-analyzer@4.10.2:
     dependencies:
@@ -14908,13 +14890,16 @@ snapshots:
   whatwg-encoding@3.1.1:
     dependencies:
       iconv-lite: 0.6.3
+    optional: true
 
-  whatwg-mimetype@4.0.0: {}
+  whatwg-mimetype@4.0.0:
+    optional: true
 
   whatwg-url@14.0.0:
     dependencies:
       tr46: 5.0.0
       webidl-conversions: 7.0.0
+    optional: true
 
   which@1.3.1:
     dependencies:
@@ -14955,17 +14940,17 @@ snapshots:
 
   ws@7.5.9: {}
 
-  ws@8.17.1: {}
-
   ws@8.18.0: {}
 
   xml-js@1.6.11:
     dependencies:
       sax: 1.3.0
 
-  xml-name-validator@5.0.0: {}
+  xml-name-validator@5.0.0:
+    optional: true
 
-  xmlchars@2.2.0: {}
+  xmlchars@2.2.0:
+    optional: true
 
   xtend@4.0.2: {}
 
