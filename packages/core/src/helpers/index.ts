@@ -160,9 +160,8 @@ export const getPublicPathFromCompiler = (
 };
 
 const urlJoin = (base: string, path: string) => {
-  const fullUrl = new URL(base);
-  fullUrl.pathname = posix.join(fullUrl.pathname, path);
-  return fullUrl.toString();
+  const [urlProtocol, baseUrl] = base.split('://');
+  return `${urlProtocol}://${posix.join(baseUrl, path)}`;
 };
 
 // Can be replaced with URL.canParse when we drop support for Node.js 16
