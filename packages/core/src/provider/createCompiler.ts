@@ -52,7 +52,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   compiler.hooks.watchRun.tap('rsbuild:compiling', () => {
     logRspackVersion();
     if (!isCompiling) {
-      logger.start('Compiling...');
+      logger.start('Building...');
     }
     isCompiling = true;
   });
@@ -78,7 +78,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
         const time = prettyTime(c.time / 1000);
         const { name } = rspackConfigs[index];
         const suffix = name ? color.gray(` (${name})`) : '';
-        logger.ready(`Compiled in ${time}${suffix}`);
+        logger.ready(`Built in ${time}${suffix}`);
       }
     };
 
