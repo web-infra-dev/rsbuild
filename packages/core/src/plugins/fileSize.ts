@@ -36,12 +36,13 @@ function getHeader(
   longestFileLength: number,
   longestLabelLength: number,
   options: PrintFileSizeOptions,
+  environmentName: string,
 ) {
   const longestLengths = [longestFileLength, longestLabelLength];
-  const rowTypes = ['File', 'Size'];
+  const rowTypes = [`File (${environmentName})`, 'Size'];
 
   if (options.compressed) {
-    rowTypes.push('Gzipped');
+    rowTypes.push('Gzip');
   }
 
   const headerRow = rowTypes.reduce((prev, cur, index) => {
@@ -54,7 +55,7 @@ function getHeader(
     return `${prev + curLabel}    `;
   }, '  ');
 
-  return color.bold(color.blue(headerRow));
+  return color.blue(headerRow);
 }
 
 const calcFileSize = (len: number) => {
@@ -79,6 +80,7 @@ async function printFileSizes(
   options: PrintFileSizeOptions,
   stats: Rspack.Stats,
   rootPath: string,
+  environmentName: string,
 ) {
   const logs: string[] = [];
   if (options.detail === false && options.total === false) {
@@ -142,6 +144,8 @@ async function printFileSizes(
     return logs;
   }
 
+  logs.push('');
+
   assets.sort((a, b) => a.size - b.size);
 
   const longestLabelLength = Math.max(...assets.map((a) => a.sizeLabel.length));
@@ -150,7 +154,14 @@ async function printFileSizes(
   );
 
   if (options.detail !== false) {
-    logs.push(getHeader(longestFileLength, longestLabelLength, options));
+    logs.push(
+      getHeader(
+        longestFileLength,
+        longestLabelLength,
+        options,
+        environmentName,
+      ),
+    );
   }
 
   let totalSize = 0;
@@ -193,18 +204,17 @@ async function printFileSizes(
   }
 
   if (options.total !== false) {
-    const totalSizeLabel = `${color.bold(
-      color.blue('Total size:'),
-    )}  ${calcFileSize(totalSize)}`;
+    const totalSizeLabel = `${color.blue('Total:')} ${calcFileSize(totalSize)}`;
 
-    let log = `\n  ${totalSizeLabel}\n`;
+    let log = `\n  ${totalSizeLabel}`;
 
     if (options.compressed) {
-      const gzippedSizeLabel = `${color.bold(
-        color.blue('Gzipped size:'),
-      )}  ${calcFileSize(totalGzipSize)}`;
-      log += `  ${gzippedSizeLabel}\n`;
+      log += color.dim(` (gzip: ${calcFileSize(totalGzipSize)})`);
     }
+
+    // log += ` ${color.dim(`(${environmentName})`)}`;
+
+    log += '\n';
 
     logs.push(log);
   }
@@ -221,6 +231,8 @@ export const pluginFileSize = (): RsbuildPlugin => ({
       if (!stats || stats.hasErrors() || !isFirstCompile) {
         return;
       }
+
+      let printed = false;
 
       await Promise.all(
         Object.values(environments).map(async (environment, index) => {
@@ -250,14 +262,19 @@ export const pluginFileSize = (): RsbuildPlugin => ({
             mergedConfig,
             multiStats[index],
             api.context.rootPath,
+            environment.name,
           );
 
-          const name = color.green(environment.name);
-          logger.info(`Production file sizes for ${name}:\n`);
+          // log a separator line after the previous print
+          if (printed) {
+            logger.log(color.dim('  -----'));
+          }
 
           for (const log of statsLog) {
             logger.log(log);
           }
+
+          printed = true;
         }),
       ).catch((err) => {
         logger.warn('Failed to print file size.');
