@@ -29,8 +29,8 @@ test.describe('should print file size correctly', async () => {
     });
 
     expect(logs.some((log) => log.includes('index.html'))).toBeTruthy();
-    expect(logs.some((log) => log.includes('Total size:'))).toBeTruthy();
-    expect(logs.some((log) => log.includes('Gzipped size:'))).toBeTruthy();
+    expect(logs.some((log) => log.includes('Total:'))).toBeTruthy();
+    expect(logs.some((log) => log.includes('gzip:'))).toBeTruthy();
   });
 
   test('should print size of multiple environments correctly', async () => {
@@ -62,11 +62,7 @@ test.describe('should print file size correctly', async () => {
     });
 
     // dist/index.html
-    expect(
-      logs.some(
-        (log) => log.includes('Production file sizes') && log.includes('web'),
-      ),
-    ).toBeTruthy();
+    expect(logs.some((log) => log.includes('File (web)'))).toBeTruthy();
 
     expect(
       logs.some(
@@ -78,11 +74,7 @@ test.describe('should print file size correctly', async () => {
     ).toBeTruthy();
 
     // dist/server/index.js
-    expect(
-      logs.some(
-        (log) => log.includes('Production file sizes') && log.includes('node'),
-      ),
-    ).toBeTruthy();
+    expect(logs.some((log) => log.includes('File (node)'))).toBeTruthy();
     expect(
       logs.some(
         (log) =>
@@ -103,11 +95,11 @@ test.describe('should print file size correctly', async () => {
     ).toBeTruthy();
 
     expect(
-      logs.some((log) => log.includes('Total size:') && log.includes('kB')),
+      logs.some((log) => log.includes('Total:') && log.includes('kB')),
     ).toBeTruthy();
 
     expect(
-      logs.some((log) => log.includes('Gzipped size:') && log.includes('kB')),
+      logs.some((log) => log.includes('gzip:') && log.includes('kB')),
     ).toBeTruthy();
   });
 
@@ -122,8 +114,8 @@ test.describe('should print file size correctly', async () => {
     });
 
     expect(logs.some((log) => log.includes('index.html'))).toBeFalsy();
-    expect(logs.some((log) => log.includes('Total size:'))).toBeFalsy();
-    expect(logs.some((log) => log.includes('Gzipped size:'))).toBeFalsy();
+    expect(logs.some((log) => log.includes('Total:'))).toBeFalsy();
+    expect(logs.some((log) => log.includes('gzip:'))).toBeFalsy();
   });
 
   test('printFileSize.detail: false should work', async () => {
@@ -139,8 +131,8 @@ test.describe('should print file size correctly', async () => {
     });
 
     expect(logs.some((log) => log.includes('index.html'))).toBeFalsy();
-    expect(logs.some((log) => log.includes('Total size:'))).toBeTruthy();
-    expect(logs.some((log) => log.includes('Gzipped size:'))).toBeTruthy();
+    expect(logs.some((log) => log.includes('Total:'))).toBeTruthy();
+    expect(logs.some((log) => log.includes('gzip:'))).toBeTruthy();
   });
 
   test('printFileSize.total: false should work', async () => {
@@ -156,8 +148,8 @@ test.describe('should print file size correctly', async () => {
     });
 
     expect(logs.some((log) => log.includes('index.html'))).toBeTruthy();
-    expect(logs.some((log) => log.includes('Total size:'))).toBeFalsy();
-    expect(logs.some((log) => log.includes('Gzipped size:'))).toBeFalsy();
+    expect(logs.some((log) => log.includes('Total:'))).toBeFalsy();
+    expect(logs.some((log) => log.includes('gzip:'))).toBeFalsy();
   });
 
   test('should print dist folder correctly if it is not a subdir of root', async () => {
@@ -195,7 +187,7 @@ test.describe('should print file size correctly', async () => {
     });
 
     expect(logs.some((log) => log.includes('index.html'))).toBeTruthy();
-    expect(logs.some((log) => log.includes('Total size:'))).toBeTruthy();
-    expect(logs.some((log) => log.includes('Gzipped size:'))).toBeFalsy();
+    expect(logs.some((log) => log.includes('Total:'))).toBeTruthy();
+    expect(logs.some((log) => log.includes('gzip:'))).toBeFalsy();
   });
 });
