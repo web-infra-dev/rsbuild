@@ -232,7 +232,7 @@ export const pluginFileSize = (): RsbuildPlugin => ({
         return;
       }
 
-      let printed = false;
+      const logs: string[] = [];
 
       await Promise.all(
         Object.values(environments).map(async (environment, index) => {
@@ -258,7 +258,7 @@ export const pluginFileSize = (): RsbuildPlugin => ({
                   ...printFileSize,
                 };
 
-          const statsLog = await printFileSizes(
+          const statsLogs = await printFileSizes(
             mergedConfig,
             multiStats[index],
             api.context.rootPath,
@@ -266,20 +266,17 @@ export const pluginFileSize = (): RsbuildPlugin => ({
           );
 
           // log a separator line after the previous print
-          if (printed) {
-            logger.log(color.dim('  -----'));
+          if (logs.length) {
+            logs.push(color.dim('  -----'));
           }
-
-          for (const log of statsLog) {
-            logger.log(log);
-          }
-
-          printed = true;
+          logs.push(...statsLogs);
         }),
       ).catch((err) => {
         logger.warn('Failed to print file size.');
         logger.warn(err as Error);
       });
+
+      logger.log(logs.join('\n'));
     });
   },
 });
