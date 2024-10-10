@@ -44,7 +44,7 @@
     "@changesets/cli": "^2.27.9",
     "@modern-js/module-tools": "^2.60.2",
     "@rsbuild/config": "workspace:*",
-    "@rslib/core": "0.0.8",
+    "@rslib/core": "0.0.10",
     "@scripts/test-helper": "workspace:*",
     "check-dependency-version-consistency": "^4.1.0",
     "cross-env": "^7.0.3",
@@ -53,7 +53,7 @@
     "nx": "^20.0.0",
     "prettier": "^3.3.3",
     "simple-git-hooks": "^2.11.1",
-    "typescript": "^5.6.2",
+    "typescript": "^5.6.3",
     "vitest": "^2.1.2"
   },
   "packageManager": "pnpm@9.11.0",
