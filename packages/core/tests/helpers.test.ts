@@ -159,7 +159,7 @@ describe('ensureAssetPrefix', () => {
     expect(ensureAssetPrefix('/bar.js', '//foo.com')).toBe('//foo.com/bar.js');
   });
 
-  it('should keep url original', () => {
+  it('should keep the original URL', () => {
     expect(ensureAssetPrefix('foo/bar.js', CAPITAL_ASSET_PREFIX)).toBe(
       'https://www.{{CDN}}.com/{{CDN_PATH}}/foo/bar.js',
     );
