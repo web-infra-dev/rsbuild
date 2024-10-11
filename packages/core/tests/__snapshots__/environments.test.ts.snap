@@ -49,6 +49,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
       "svg": 4096,
     },
     "distPath": {
+      "assets": "static/assets",
       "css": "static/css",
       "font": "static/font",
       "html": "./",
@@ -176,6 +177,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
       "svg": 4096,
     },
     "distPath": {
+      "assets": "static/assets",
       "css": "static/css",
       "font": "static/font",
       "html": "./",
@@ -303,6 +305,7 @@ exports[`environment config > should print environment config when inspect confi
         "svg": 4096,
       },
       "distPath": {
+        "assets": "static/assets",
         "css": "static/css",
         "font": "static/font",
         "html": "./",
@@ -461,6 +464,7 @@ exports[`environment config > should print environment config when inspect confi
         "svg": 4096,
       },
       "distPath": {
+        "assets": "static/assets",
         "css": "static/css",
         "font": "static/font",
         "html": "./",
@@ -637,6 +641,7 @@ exports[`environment config > should support modify environment config by api.mo
         "svg": 4096,
       },
       "distPath": {
+        "assets": "static/assets",
         "css": "static/css",
         "font": "static/font",
         "html": "./",
@@ -796,6 +801,7 @@ exports[`environment config > should support modify environment config by api.mo
         "svg": 4096,
       },
       "distPath": {
+        "assets": "static/assets",
         "css": "static/css",
         "font": "static/font",
         "html": "./",
@@ -956,6 +962,7 @@ exports[`environment config > should support modify environment config by api.mo
         "svg": 4096,
       },
       "distPath": {
+        "assets": "static/assets",
         "css": "static/css",
         "font": "static/font",
         "html": "./",
@@ -1119,6 +1126,7 @@ exports[`environment config > should support modify single environment config by
         "svg": 4096,
       },
       "distPath": {
+        "assets": "static/assets",
         "css": "static/css",
         "font": "static/font",
         "html": "./",
@@ -1278,6 +1286,7 @@ exports[`environment config > should support modify single environment config by
         "svg": 4096,
       },
       "distPath": {
+        "assets": "static/assets",
         "css": "static/css",
         "font": "static/font",
         "html": "./",
@@ -1681,6 +1690,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       },
     },
     "output": {
+      "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
       "chunkFilename": "static/js/async/[name].js",
       "devtoolModuleFilenameTemplate": [Function],
       "filename": "static/js/[name].js",
@@ -2008,6 +2018,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "splitChunks": false,
     },
     "output": {
+      "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
       "chunkFilename": "[name].js",
       "devtoolModuleFilenameTemplate": [Function],
       "filename": "bundle.js",

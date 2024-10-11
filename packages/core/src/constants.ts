@@ -11,6 +11,7 @@ export const FONT_DIST_DIR = 'static/font';
 export const WASM_DIST_DIR = 'static/wasm';
 export const IMAGE_DIST_DIR = 'static/image';
 export const MEDIA_DIST_DIR = 'static/media';
+export const ASSETS_DIST_DIR = 'static/assets';
 export const LOADER_PATH: string = join(__dirname);
 export const STATIC_PATH: string = join(__dirname, '../static');
 export const COMPILED_PATH: string = join(__dirname, '../compiled');

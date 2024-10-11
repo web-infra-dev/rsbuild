@@ -291,6 +291,7 @@ exports[`should use rspack as default bundler > apply rspack correctly 1`] = `
     },
   },
   "output": {
+    "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
     "chunkFilename": "static/js/async/[name].js",
     "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",

@@ -4,6 +4,7 @@ import type { WatchOptions } from 'chokidar';
 import color from 'picocolors';
 import RspackChain from 'rspack-chain';
 import {
+  ASSETS_DIST_DIR,
   CSS_DIST_DIR,
   DEFAULT_ASSET_PREFIX,
   DEFAULT_DATA_URL_SIZE,
@@ -141,6 +142,7 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
     wasm: WASM_DIST_DIR,
     image: IMAGE_DIST_DIR,
     media: MEDIA_DIST_DIR,
+    assets: ASSETS_DIST_DIR,
   },
   // Temporary placeholder, default: `${server.base}`
   assetPrefix: DEFAULT_ASSET_PREFIX,

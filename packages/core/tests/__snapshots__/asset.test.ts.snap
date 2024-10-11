@@ -114,6 +114,9 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
       },
     ],
   },
+  "output": {
+    "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+  },
   "plugins": [
     RsbuildCorePlugin {},
   ],
@@ -233,6 +236,9 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
         "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
       },
     ],
+  },
+  "output": {
+    "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
   },
   "plugins": [
     RsbuildCorePlugin {},
@@ -354,6 +360,9 @@ exports[`plugin-asset > should allow to use distPath.image to modify dist path 1
       },
     ],
   },
+  "output": {
+    "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+  },
   "plugins": [
     RsbuildCorePlugin {},
   ],
@@ -473,6 +482,9 @@ exports[`plugin-asset > should allow to use filename.image to modify filename 1`
         "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
       },
     ],
+  },
+  "output": {
+    "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
   },
   "plugins": [
     RsbuildCorePlugin {},
