@@ -1,6 +1,6 @@
 import path from 'node:path';
 import deepmerge from 'deepmerge';
-import type { AcceptedPlugin } from 'postcss';
+import type { AcceptedPlugin, PluginCreator } from 'postcss';
 import { reduceConfigs, reduceConfigsWithContext } from 'reduce-configs';
 import { CSS_REGEX, LOADER_PATH } from '../constants';
 import { getCompiledPath } from '../helpers/path';
@@ -106,6 +106,12 @@ async function loadUserPostcssrc(root: string): Promise<PostCSSOptions> {
   });
 }
 
+const isPostcssPluginCreator = (
+  plugin: AcceptedPlugin,
+): plugin is PluginCreator<unknown> =>
+  typeof plugin === 'function' &&
+  (plugin as PluginCreator<unknown>).postcss === true;
+
 const getPostcssLoaderOptions = async ({
   config,
   root,
@@ -136,21 +142,29 @@ const getPostcssLoaderOptions = async ({
     sourceMap: config.output.sourceMap.css,
   };
 
-  const mergedConfig = reduceConfigsWithContext({
+  const merged = reduceConfigsWithContext({
     initial: defaultPostcssConfig,
     config: config.tools.postcss,
     ctx: utils,
   });
 
+  merged.postcssOptions ||= {};
+  merged.postcssOptions.plugins ||= [];
+
   if (extraPlugins.length) {
-    mergedConfig?.postcssOptions?.plugins!.push(...extraPlugins);
+    merged.postcssOptions.plugins.push(...extraPlugins);
   }
 
-  // always use postcss-load-config to load external config
-  mergedConfig.postcssOptions ||= {};
-  mergedConfig.postcssOptions.config = false;
+  // initialize the plugin to avoid multiple initialization
+  // https://github.com/web-infra-dev/rsbuild/issues/3618
+  merged.postcssOptions.plugins = merged.postcssOptions.plugins.map((plugin) =>
+    isPostcssPluginCreator(plugin) ? plugin() : plugin,
+  );
 
-  return mergedConfig;
+  // always use postcss-load-config to load external config
+  merged.postcssOptions.config = false;
+
+  return merged;
 };
 
 const getCSSLoaderOptions = ({
