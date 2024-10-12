@@ -45,7 +45,7 @@ type TitleFunction = ({ value: string; entryName: string }) => string | void;
 ```js
 export default {
   html: {
-    title({ entryName }) {
+    title({ entryName }) =>{
       const titles = {
         foo: 'Foo Page',
         bar: 'Bar Page',
