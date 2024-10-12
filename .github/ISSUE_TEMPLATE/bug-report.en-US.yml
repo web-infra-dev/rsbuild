@@ -1,7 +1,7 @@
-name: "🐞 Bug Report"
+name: '🐞 Bug Report'
 description: Report a Bug to Rsbuild
-title: "[Bug]: "
-labels: ["🐞 bug"]
+title: '[Bug]: '
+labels: ['🐞 bug']
 body:
   - type: markdown
     attributes:
@@ -9,8 +9,8 @@ body:
         Thanks for taking the time to report this issue! Before submitting, please note:
 
          - Confirm that your problem cannot be solved by official documentation.
-         - Make sure you searched in the [Issues](https://github.com/web-infra-dev/rsbuild/issues) and didn't find the same issue.
-         - If it's not bug report, please post on the [Discussions](https://github.com/web-infra-dev/rsbuild/discussions).
+         - Make sure you've searched in the [Issues](https://github.com/web-infra-dev/rsbuild/issues) and haven't found the same issue.
+         - If it's not a bug report, please post to the [Discussions](https://github.com/web-infra-dev/rsbuild/discussions).
 
   - type: textarea
     id: versions
@@ -37,7 +37,7 @@ body:
     id: repro
     attributes:
       label: Reproduce link
-      description: "Please provide a simplest reproduction of the problem (minimal demo without redundant dependencies). You can create it on CodePen ([<kbd>⌘</kbd>Click here to open the template](https://codepen.io/Justineo/pen/yLbxxOR)), or provide the URL of the project:"
+      description: 'Please provide a minimal reproduction of the issue. You can create a GitHub repo and use `npm create rsbuild@latest` as a starter. Or fork from the the [rsbuild-codesandbox-example](https://codesandbox.io/p/github/rspack-contrib/rsbuild-codesandbox-example).'
       placeholder: paste link here
     validations:
       required: true
@@ -46,10 +46,10 @@ body:
     id: reproduce-steps
     attributes:
       label: Reproduce Steps
-      description: Please provide the simplest steps so that we can quickly reproduce the problem.
+      description: Please provide the minimal steps so that we can quickly reproduce the problem.
       placeholder: |
         for example:
-        1. execute `yarn dev`
-        2. find the error message in the console
+        1. run `pnpm i && pnpm dev`
+        2. check the error logs
     validations:
       required: true
