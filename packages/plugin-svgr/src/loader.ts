@@ -9,7 +9,7 @@
 import { normalize } from 'node:path';
 import { callbackify } from 'node:util';
 import type { Rspack } from '@rsbuild/core';
-import { type Config, type State, transform } from '@svgr/core';
+import { type Config, type Plugin, type State, transform } from '@svgr/core';
 import jsx from '@svgr/plugin-jsx';
 import svgo from '@svgr/plugin-svgo';
 
@@ -34,11 +34,11 @@ function svgrLoader(
     return exportMatches ? `export default ${exportMatches[1]}` : null;
   })();
 
-  const state = {
+  const state: Partial<State> = {
     caller: {
       name: '@rsbuild/plugin-svgr',
       previousExport,
-      defaultPlugins: [svgo, jsx],
+      defaultPlugins: [svgo, jsx] as unknown as Plugin[],
     },
     filePath: normalize(this.resourcePath),
   };
