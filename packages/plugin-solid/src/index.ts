@@ -1,6 +1,9 @@
+import { createRequire } from 'node:module';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import { modifyBabelLoaderOptions } from '@rsbuild/plugin-babel';
-import type { SolidPresetOptions } from './types';
+import type { SolidPresetOptions } from './types.js';
+
+const require = createRequire(import.meta.url);
 
 export type PluginSolidOptions = {
   /**
