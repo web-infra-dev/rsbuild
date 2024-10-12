@@ -6,12 +6,11 @@ import type {
 } from '@rsbuild/core';
 import deepmerge from 'deepmerge';
 import { reduceConfigsWithContext } from 'reduce-configs';
-import type Less from '../compiled/less';
 
 export const PLUGIN_LESS_NAME = 'rsbuild:less';
 
 export type LessLoaderOptions = {
-  lessOptions?: Less.Options;
+  lessOptions?: import('../compiled/less/index.js').default.Options;
   additionalData?:
     | string
     | ((
