@@ -1,5 +1,4 @@
 // @ts-check
-import fs from 'node:fs';
 
 /** @type {import('prebundle').Config} */
 export default {
