@@ -11,7 +11,7 @@ import type {
   PluginBabelOptions,
   PresetEnvOptions,
   PresetReactOptions,
-} from './types';
+} from './types.js';
 
 export const BABEL_JS_RULE = 'babel-js';
 

@@ -5,6 +5,8 @@
     "baseUrl": "./",
     "rootDir": "src",
     "composite": true,
+    "module": "Node16",
+    "moduleResolution": "Node16",
     "isolatedDeclarations": true
   },
   "references": [
