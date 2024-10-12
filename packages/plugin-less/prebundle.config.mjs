@@ -1,14 +1,5 @@
-import fs from 'node:fs';
 // @ts-check
-import { join } from 'node:path';
-
-function replaceFileContent(filePath, replaceFn) {
-  const content = fs.readFileSync(filePath, 'utf-8');
-  const newContent = replaceFn(content);
-  if (newContent !== content) {
-    fs.writeFileSync(filePath, newContent);
-  }
-}
+import fs from 'node:fs';
 
 /** @type {import('prebundle').Config} */
 export default {
