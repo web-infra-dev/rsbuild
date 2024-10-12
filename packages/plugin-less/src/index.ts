@@ -10,7 +10,7 @@ import { reduceConfigsWithContext } from 'reduce-configs';
 export const PLUGIN_LESS_NAME = 'rsbuild:less';
 
 export type LessLoaderOptions = {
-  lessOptions?: import('less').Options;
+  lessOptions?: import('../compiled/less/index.js').default.Options;
   additionalData?:
     | string
     | ((
