@@ -1,5 +1,5 @@
 import type { CacheGroups, RsbuildPluginAPI, SplitChunks } from '@rsbuild/core';
-import type { SplitVueChunkOptions } from '.';
+import type { SplitVueChunkOptions } from './index.js';
 
 const isPlainObject = (obj: unknown): obj is Record<string, any> =>
   obj !== null &&
