@@ -1,3 +1,4 @@
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import type {
   EnvironmentConfig,
@@ -5,7 +6,9 @@ import type {
   RsbuildPluginAPI,
   Rspack,
 } from '@rsbuild/core';
-import type { PluginReactOptions } from '.';
+import type { PluginReactOptions } from './index.js';
+
+const require = createRequire(import.meta.url);
 
 export const applyBasicReactSupport = (
   api: RsbuildPluginAPI,

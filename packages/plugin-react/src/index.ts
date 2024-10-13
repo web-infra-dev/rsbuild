@@ -1,7 +1,7 @@
 import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
 import type { PluginOptions as ReactRefreshOptions } from '@rspack/plugin-react-refresh';
-import { applyBasicReactSupport, applyReactProfiler } from './react';
-import { applySplitChunksRule } from './splitChunks';
+import { applyBasicReactSupport, applyReactProfiler } from './react.js';
+import { applySplitChunksRule } from './splitChunks.js';
 
 export type SplitReactChunkOptions = {
   /**
