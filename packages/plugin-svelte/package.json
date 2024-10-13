@@ -11,20 +11,19 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist-types/index.d.ts",
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     }
   },
   "main": "./dist/index.cjs",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/index.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "scripts": {
-    "build": "modern build",
-    "dev": "modern build --watch"
+    "build": "rslib build",
+    "dev": "rslib build --watch"
   },
   "dependencies": {
     "svelte-loader": "3.2.4",

@@ -2,7 +2,7 @@ import { promises } from 'node:fs';
 import path from 'node:path';
 import { logger } from '@rsbuild/core';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import type { sveltePreprocess } from 'svelte-preprocess';
+import { sveltePreprocess } from 'svelte-preprocess';
 import type { CompileOptions } from 'svelte/compiler';
 
 export type AutoPreprocessOptions = NonNullable<
@@ -73,10 +73,6 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
 
       api.modifyBundlerChain(
         async (chain, { CHAIN_ID, environment, isDev, isProd }) => {
-          const { default: sveltePreprocess } = await import(
-            'svelte-preprocess'
-          );
-
           const svelte5 = await isSvelte5(sveltePath);
 
           const environmentConfig = environment.config;
