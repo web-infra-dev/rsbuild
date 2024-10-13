@@ -73,9 +73,7 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
 
       api.modifyBundlerChain(
         async (chain, { CHAIN_ID, environment, isDev, isProd }) => {
-          const { default: sveltePreprocess } = await import(
-            'svelte-preprocess'
-          );
+          const { sveltePreprocess } = await import('svelte-preprocess');
 
           const svelte5 = await isSvelte5(sveltePath);
 
