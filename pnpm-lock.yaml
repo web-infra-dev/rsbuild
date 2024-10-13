@@ -912,6 +912,9 @@ importers:
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
+      '@types/node':
+        specifier: 18.x
+        version: 18.19.31
       '@types/sass-loader':
         specifier: ^8.0.9
         version: 8.0.9
