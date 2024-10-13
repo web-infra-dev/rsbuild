@@ -3,10 +3,10 @@ import type {
   LegacyOptions as LegacySassOptions,
   Options as SassOptions,
 } from 'sass-embedded';
-import type SassLoader from '../compiled/sass-loader/index.js';
+import type { LoaderOptions } from '../compiled/sass-loader/index.js';
 
 export type SassLoaderOptions = Omit<
-  SassLoader.Options,
+  LoaderOptions,
   'api' | 'sassOptions' | 'additionalData'
 > &
   (

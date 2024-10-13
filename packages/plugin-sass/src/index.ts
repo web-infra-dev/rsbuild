@@ -1,9 +1,12 @@
+import { createRequire } from 'node:module';
 import { join } from 'node:path';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import deepmerge from 'deepmerge';
 import { reduceConfigsWithContext } from 'reduce-configs';
-import { getResolveUrlJoinFn, patchCompilerGlobalLocation } from './helpers';
-import type { PluginSassOptions, SassLoaderOptions } from './types';
+import { getResolveUrlJoinFn, patchCompilerGlobalLocation } from './helpers.js';
+import type { PluginSassOptions, SassLoaderOptions } from './types.js';
+
+const require = createRequire(import.meta.url);
 
 export const PLUGIN_SASS_NAME = 'rsbuild:sass';
 
