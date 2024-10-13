@@ -15,6 +15,7 @@ type DistPathConfig = {
   wasm?: string;
   image?: string;
   media?: string;
+  assets?: string;
 };
 ```
 
@@ -33,6 +34,7 @@ const defaultDistPath = {
   wasm: 'static/wasm',
   image: 'static/image',
   media: 'static/media',
+  assets: 'static/assets';
 };
 ```
 
@@ -51,6 +53,7 @@ const defaultDistPath = {
 - `wasm`：表示 WebAssembly 文件的输出目录。
 - `image`：表示非 SVG 图片的输出目录。
 - `media`：表示视频等媒体资源的输出目录。
+- `assets`：表示除了上述类型之外，其他也命中 [Asset Modules](https://rspack.dev/guide/features/asset-module) 的文件的输出目录。
 
 ### 根目录
 

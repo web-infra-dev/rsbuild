@@ -32,10 +32,18 @@ import logo from './static/logo.png';
 export default = () => <img src={logo} />;
 ```
 
-也支持使用[路径别名](/guide/advanced/alias)来引用：
+也可以使用[路径别名](/guide/advanced/alias)来引用：
 
 ```tsx
 import logo from '@/static/logo.png';
+
+export default = () => <img src={logo} />;
+```
+
+也支持使用 ESM 原生功能中的 [URL](https://developer.mozilla.org/docs/Web/API/URL) 和 [import.meta.url](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/import.meta) 相配合，来引用静态资源。
+
+```tsx
+const logo = new URL('./static/logo.png', import.meta.url).href;
 
 export default = () => <img src={logo} />;
 ```

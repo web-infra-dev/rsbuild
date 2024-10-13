@@ -255,6 +255,8 @@ export function getFilename(
       return filename.image ?? `[name]${hash}[ext]`;
     case 'media':
       return filename.media ?? `[name]${hash}[ext]`;
+    case 'assets':
+      return filename.assets ?? `[name]${hash}[ext]`;
     default:
       throw new Error(`unknown key ${type} in "output.filename"`);
   }

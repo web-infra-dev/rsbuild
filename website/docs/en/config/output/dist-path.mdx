@@ -15,6 +15,7 @@ type DistPathConfig = {
   wasm?: string;
   image?: string;
   media?: string;
+  assets?: string;
 };
 ```
 
@@ -33,6 +34,7 @@ const defaultDistPath = {
   wasm: 'static/wasm',
   image: 'static/image',
   media: 'static/media',
+  assets: 'static/assets',
 };
 ```
 
@@ -51,6 +53,7 @@ Detail:
 - `wasm`: The output directory of WebAssembly files.
 - `image`: The output directory of non-SVG images.
 - `media`: The output directory of media assets, such as videos.
+- `assets`: The output directory of assets except the types mentioned above, which also match [Asset Modules](https://rspack.dev/guide/features/asset-module).
 
 ### Root Directory
 

@@ -652,6 +652,11 @@ export type DistPathConfig = {
    * @default 'static/media'
    */
   media?: string;
+  /**
+   * The output directory of assets, except for above (image, svg, font, html, wasm...)
+   * @default 'static/assets'
+   */
+  assets?: string;
 };
 
 export type FilenameConfig = {
@@ -694,6 +699,11 @@ export type FilenameConfig = {
    * @default '[name].[contenthash:8][ext]'
    */
   media?: string;
+  /**
+   * the name of other assets, except for above (image, svg, font, html, wasm...)
+   * @default '[name].[contenthash:8][ext]'
+   */
+  assets?: string;
 };
 
 export type DataUriLimit = {

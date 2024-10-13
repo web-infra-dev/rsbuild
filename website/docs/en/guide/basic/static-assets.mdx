@@ -23,7 +23,7 @@ SVG image is a special case. Rsbuild support convert SVG to React components, so
 
 ## Import Assets in JS file
 
-In JS files, you can import static assets in relative paths:
+In JS files, you can import static assets with relative paths:
 
 ```tsx
 // Import the logo.png image in the static directory
@@ -32,10 +32,18 @@ import logo from './static/logo.png';
 export default = () => <img src={logo} />;
 ```
 
-Import with [alias](/guide/advanced/alias) are also supported:
+Import with [alias](/guide/advanced/alias) is also available:
 
 ```tsx
 import logo from '@/static/logo.png';
+
+export default = () => <img src={logo} />;
+```
+
+You can also combine [URL](https://developer.mozilla.org/docs/Web/API/URL) with [import.meta.url](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/import.meta) which are native ESM features to import static assets.
+
+```tsx
+const logo = new URL('./static/logo.png', import.meta.url).href;
 
 export default = () => <img src={logo} />;
 ```

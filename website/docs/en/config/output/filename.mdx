@@ -13,6 +13,7 @@ type FilenameConfig = {
   font?: string;
   image?: string;
   media?: string;
+  assets?: string;
 };
 ```
 
@@ -28,6 +29,7 @@ const devDefaultFilename = {
   font: '[name].[contenthash:8][ext]',
   image: '[name].[contenthash:8][ext]',
   media: '[name].[contenthash:8][ext]',
+  assets: '[name].[contenthash:8][ext]',
 };
 
 // Production mode
@@ -39,6 +41,7 @@ const prodDefaultFilename = {
   font: '[name].[contenthash:8][ext]',
   image: '[name].[contenthash:8][ext]',
   media: '[name].[contenthash:8][ext]',
+  assets: '[name].[contenthash:8][ext]',
 };
 ```
 
@@ -55,6 +58,7 @@ The following are the details of each filename:
 - `font`: The name of the font files.
 - `image`: The name of non-SVG images.
 - `media`: The name of media assets, such as video.
+- `assets`: The name of assets except the types mentioned above, which match [Asset Modules](https://rspack.dev/guide/features/asset-module).
 
 > See [Output Files](/guide/basic/output-files) for more information.
 

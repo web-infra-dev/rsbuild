@@ -76,14 +76,20 @@ export const pluginAsset = (): RsbuildPlugin => ({
     api.modifyBundlerChain((chain, { isProd, environment }) => {
       const { config } = environment;
 
+      const getMergedFilename = (
+        assetType: 'svg' | 'font' | 'image' | 'media' | 'assets',
+      ) => {
+        const distDir = config.output.distPath[assetType];
+        const filename = getFilename(config, assetType, isProd);
+        return path.posix.join(distDir, filename);
+      };
+
       const createAssetRule = (
-        assetType: 'image' | 'media' | 'font' | 'svg',
+        assetType: 'svg' | 'font' | 'image' | 'media',
         exts: string[],
         emit: boolean,
       ) => {
         const regExp = getRegExpForExts(exts);
-        const distDir = config.output.distPath[assetType];
-        const filename = getFilename(config, assetType, isProd);
         const { dataUriLimit } = config.output;
         const maxSize =
           typeof dataUriLimit === 'number'
@@ -95,21 +101,31 @@ export const pluginAsset = (): RsbuildPlugin => ({
           emit,
           rule,
           maxSize,
-          filename: path.posix.join(distDir, filename),
+          filename: getMergedFilename(assetType),
           assetType,
         });
       };
 
       const { emitAssets } = config.output;
 
+      // image
       createAssetRule('image', IMAGE_EXTENSIONS, emitAssets);
+      // svg
       createAssetRule('svg', ['svg'], emitAssets);
+      // media
       createAssetRule(
         'media',
         [...VIDEO_EXTENSIONS, ...AUDIO_EXTENSIONS],
         emitAssets,
       );
+      // font
       createAssetRule('font', FONT_EXTENSIONS, emitAssets);
+      // assets
+      const assetsFilename = getMergedFilename('assets');
+      chain.output.assetModuleFilename(assetsFilename);
+      if (!emitAssets) {
+        chain.module.generator.merge({ 'asset/resource': { emit: false } });
+      }
     });
   },
 });
