@@ -1,5 +1,6 @@
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import resolveUrlHelpers from '../compiled/resolve-url-loader/index.js';
 
 const GLOBAL_PATCHED_SYMBOL: unique symbol = Symbol('GLOBAL_PATCHED_SYMBOL');
 
@@ -57,7 +58,7 @@ export const getResolveUrlJoinFn = async (): Promise<
     asGenerator,
     createJoinImplementation,
     defaultJoinGenerator,
-  } = await import('../compiled/resolve-url-loader/index.js');
+  } = resolveUrlHelpers;
 
   const rsbuildGenerator = asGenerator((item: any, ...rest: any[]) => {
     // only handle relative path (not absolutely accurate, but can meet common scenarios)
