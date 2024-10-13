@@ -6,7 +6,7 @@ import type {
 import type SassLoader from '../compiled/sass-loader/index.js';
 
 export type SassLoaderOptions = Omit<
-  SassLoader.Options,
+  SassLoader.default.Options,
   'api' | 'sassOptions' | 'additionalData'
 > &
   (
