@@ -98,20 +98,3 @@ jobs:
       - name: E2E Test
         if: steps.changes.outputs.changed == 'true'
         run: pnpm run e2e
-
-  # ======== ecosystem_ci ========
-  ecosystem_ci:
-    name: Run Ecosystem CI
-    runs-on: ubuntu-latest
-    if: github.ref_name == 'main' && github.repository_owner == 'web-infra-dev'
-    steps:
-      - name: Run Ecosystem CI
-        id: eco_ci
-        uses: convictional/trigger-workflow-and-wait@v1.6.5
-        with:
-          owner: "rspack-contrib"
-          repo: "rsbuild-ecosystem-ci"
-          workflow_file_name: "ecosystem-ci-from-commit.yml"
-          github_token: ${{ secrets.REPO_SCOPED_TOKEN }}
-          ref: "main"
-          client_payload: '{"commitSHA":"${{ github.sha }}","repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'

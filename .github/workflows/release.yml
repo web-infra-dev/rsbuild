@@ -17,6 +17,10 @@ on:
         description: 'Release Branch (confirm release branch)'
         required: true
         default: 'main'
+      run_eco_ci:
+        description: 'Run Rsbuild ecosystem CI before release'
+        required: false
+        default: true
   issue_comment:
     types: [created]
 
@@ -29,6 +33,17 @@ jobs:
     if: github.repository == 'web-infra-dev/rsbuild' && github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
+      - name: Run Ecosystem CI
+        if: github.event.inputs.run_eco_ci == true
+        uses: convictional/trigger-workflow-and-wait@v1.6.5
+        with:
+          owner: "rspack-contrib"
+          repo: "rsbuild-ecosystem-ci"
+          workflow_file_name: "ecosystem-ci-selected.yml"
+          github_token: ${{ secrets.REPO_SCOPED_TOKEN }}
+          ref: ${{ github.event.inputs.branch }}
+          client_payload: '{"commitSHA":"${{ github.sha }}","repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
