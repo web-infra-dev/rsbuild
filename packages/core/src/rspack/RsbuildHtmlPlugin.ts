@@ -213,13 +213,15 @@ const applyTagConfig = (
 };
 
 const addTitleTag = (headTags: HtmlTagObject[], title = '') => {
-  headTags.unshift({
-    tagName: 'title',
-    innerHTML: title,
-    attributes: {},
-    voidTag: false,
-    meta: {},
-  });
+  if (title !== '' && title !== undefined) {
+    headTags.unshift({
+      tagName: 'title',
+      innerHTML: title,
+      attributes: {},
+      voidTag: false,
+      meta: {},
+    });
+  }
 };
 
 export class RsbuildHtmlPlugin {
