@@ -21,8 +21,8 @@ importers:
         specifier: workspace:*
         version: link:scripts/config
       '@rslib/core':
-        specifier: 0.0.11
-        version: 0.0.11(typescript@5.6.3)
+        specifier: 0.0.0-next-20241012061647
+        version: 0.0.0-next-20241012061647(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:scripts/test-helper
@@ -739,8 +739,8 @@ importers:
   packages/create-rsbuild:
     dependencies:
       create-rstack:
-        specifier: 1.0.4
-        version: 1.0.4
+        specifier: 1.0.5
+        version: 1.0.5
     devDependencies:
       '@types/node':
         specifier: 18.x
@@ -2889,8 +2889,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  '@rslib/core@0.0.11':
-    resolution: {integrity: sha512-zVW8q5RuLLwNsp+ODqhmpogmQqMvNQepIrHQGP+XEt4nQ/HfhoHFVNscKCIb04EaQDxVWorEYchqIZ2FBWG6tg==}
+  '@rslib/core@0.0.0-next-20241012061647':
+    resolution: {integrity: sha512-5uXItTOtczAgv4bcvlw5DOe9wFbzojZshMoPgjH3ZuSwujKeitQmgNu7hmfkIl/jZCiWgAWRk+C8JDPNPFPHaQ==}
     engines: {node: '>=16.0.0'}
     hasBin: true
     peerDependencies:
@@ -4083,8 +4083,8 @@ packages:
       typescript:
         optional: true
 
-  create-rstack@1.0.4:
-    resolution: {integrity: sha512-vihz8Med/RJ64FxGD3SOrV15Qv+EtKSblEpL3KF7D//rqrl0MZhuTKbQMhliYYe+nbCdYI8Zf25N2fbDmyyBrw==}
+  create-rstack@1.0.5:
+    resolution: {integrity: sha512-ShEpRtBDxqQqZ5Tg9hfkRp7razYqdDQtFAYb5hbf/CRek8eaebxU4iC3WnH39Sq7IrwcCc0mIuMbvKHfzy3QRQ==}
 
   cron-parser@4.9.0:
     resolution: {integrity: sha512-p0SaNjrHOnQeR8/VnfGbmg9te2kfyYSQ7Sc/j/6DtPL3JQvKxmjO9TSjNFpujqV3vEYYBvNNvXSxzyksBWAx1Q==}
@@ -6443,8 +6443,8 @@ packages:
       webpack:
         optional: true
 
-  rsbuild-plugin-dts@0.0.11:
-    resolution: {integrity: sha512-jC/tIdyEUCZK+DNQOtlgvULBLYWekb9c9qWl2peLVUl+FJfiiDtt1RJ7xGN5TfZzSwvD42nCt8EwgYvJWQMteQ==}
+  rsbuild-plugin-dts@0.0.0-next-20241012061647:
+    resolution: {integrity: sha512-+iT1pDvHQzfoYVNvgDyXfDIeJIqoq+Xd0/JXbPiByrYFyuB2ciX0JemqdICN9kB9z0Ky0oNNbRrWUdz57GqItg==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       '@microsoft/api-extractor': ^7
@@ -9408,7 +9408,6 @@ snapshots:
       core-js: 3.38.1
     optionalDependencies:
       fsevents: 2.3.3
-    optional: true
 
   '@rsbuild/plugin-babel@1.0.1-rc.5(@rsbuild/core@packages+core)':
     dependencies:
@@ -9480,10 +9479,10 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  '@rslib/core@0.0.11(typescript@5.6.3)':
+  '@rslib/core@0.0.0-next-20241012061647(typescript@5.6.3)':
     dependencies:
-      '@rsbuild/core': 1.0.12
-      rsbuild-plugin-dts: 0.0.11(@rsbuild/core@1.0.12)(typescript@5.6.3)
+      '@rsbuild/core': 1.0.13
+      rsbuild-plugin-dts: 0.0.0-next-20241012061647(@rsbuild/core@1.0.13)(typescript@5.6.3)
     optionalDependencies:
       typescript: 5.6.3
 
@@ -10499,7 +10498,7 @@ snapshots:
 
   babel-walk@3.0.0-canary-5:
     dependencies:
-      '@babel/types': 7.25.7
+      '@babel/types': 7.25.8
     optional: true
 
   bail@2.0.2: {}
@@ -10774,8 +10773,8 @@ snapshots:
 
   constantinople@4.0.1:
     dependencies:
-      '@babel/parser': 7.25.7
-      '@babel/types': 7.25.7
+      '@babel/parser': 7.25.8
+      '@babel/types': 7.25.8
     optional: true
 
   content-disposition@0.5.4:
@@ -10839,7 +10838,7 @@ snapshots:
     optionalDependencies:
       typescript: 5.6.3
 
-  create-rstack@1.0.4: {}
+  create-rstack@1.0.5: {}
 
   cron-parser@4.9.0:
     dependencies:
@@ -13712,9 +13711,9 @@ snapshots:
     optionalDependencies:
       webpack: 5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13))
 
-  rsbuild-plugin-dts@0.0.11(@rsbuild/core@1.0.12)(typescript@5.6.3):
+  rsbuild-plugin-dts@0.0.0-next-20241012061647(@rsbuild/core@1.0.13)(typescript@5.6.3):
     dependencies:
-      '@rsbuild/core': 1.0.12
+      '@rsbuild/core': 1.0.13
       fast-glob: 3.3.2
       magic-string: 0.30.12
       picocolors: 1.1.0
@@ -14804,8 +14803,8 @@ snapshots:
 
   with@7.0.2:
     dependencies:
-      '@babel/parser': 7.25.7
-      '@babel/types': 7.25.7
+      '@babel/parser': 7.25.8
+      '@babel/types': 7.25.8
       assert-never: 1.2.1
       babel-walk: 3.0.0-canary-5
     optional: true
