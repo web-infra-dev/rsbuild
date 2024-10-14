@@ -19,6 +19,7 @@ jobs:
     steps:
       - name: Run Ecosystem CI with notify
         id: eco_ci
+        continue-on-error: true
         uses: convictional/trigger-workflow-and-wait@v1.6.5
         with:
           owner: "rspack-contrib"
