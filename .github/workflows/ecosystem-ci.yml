@@ -13,7 +13,7 @@ on:
 
 jobs:
   ecosystem_ci_notify:
-    name: Run Ecosystem CI
+    name: Run Ecosystem CI With Notify
     runs-on: ubuntu-latest
     if: github.repository == 'web-infra-dev/rsbuild' && github.event_name != 'workflow_dispatch'
     steps:

@@ -16,46 +16,48 @@ if (!LARK_WEBHOOK_URL) {
   process.exit(0);
 }
 
-const res = await fetch(LARK_WEBHOOK_URL, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    msg_type: 'interactive',
-    card: {
-      header: {
-        template: TPL_COLOR,
-        title: {
-          content: TITLE,
-          tag: 'plain_text',
-        },
-      },
-      elements: [
-        {
-          tag: 'markdown',
-          content: DESCRIPTION,
-        },
-        URL && {
-          tag: 'action',
-          actions: [
-            {
-              tag: 'button',
-              text: {
-                content: 'Details',
-                tag: 'plain_text',
-              },
-              url: URL,
-              type: TPL_BTN_TYPE,
-            },
-          ],
-        },
-      ].filter(Boolean),
+(async function notify() {
+  const res = await fetch(LARK_WEBHOOK_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
     },
-  }),
-});
+    body: JSON.stringify({
+      msg_type: 'interactive',
+      card: {
+        header: {
+          template: TPL_COLOR,
+          title: {
+            content: TITLE,
+            tag: 'plain_text',
+          },
+        },
+        elements: [
+          {
+            tag: 'markdown',
+            content: DESCRIPTION,
+          },
+          URL && {
+            tag: 'action',
+            actions: [
+              {
+                tag: 'button',
+                text: {
+                  content: 'Details',
+                  tag: 'plain_text',
+                },
+                url: URL,
+                type: TPL_BTN_TYPE,
+              },
+            ],
+          },
+        ].filter(Boolean),
+      },
+    }),
+  });
 
-if (!res.ok) {
-  const data = await res.text();
-  throw new Error(`send alert failed with ${data}`);
-}
+  if (!res.ok) {
+    const data = await res.text();
+    throw new Error(`send alert failed with ${data}`);
+  }
+})();
