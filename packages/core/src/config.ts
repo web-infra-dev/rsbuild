@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import { isAbsolute, join } from 'node:path';
+import { dirname, isAbsolute, join } from 'node:path';
 import type { WatchOptions } from 'chokidar';
 import color from 'picocolors';
 import RspackChain from 'rspack-chain';
@@ -80,15 +80,25 @@ const getDefaultServerConfig = (): NormalizedServerConfig => ({
   strictPort: false,
 });
 
-const getDefaultSourceConfig = (): NormalizedSourceConfig => ({
-  alias: {},
-  define: {},
-  aliasStrategy: 'prefer-tsconfig',
-  preEntry: [],
-  decorators: {
-    version: '2022-03',
-  },
-});
+let swcHelpersPath: string;
+
+const getDefaultSourceConfig = (): NormalizedSourceConfig => {
+  if (!swcHelpersPath) {
+    swcHelpersPath = dirname(require.resolve('@swc/helpers/package.json'));
+  }
+
+  return {
+    alias: {
+      '@swc/helpers': swcHelpersPath,
+    },
+    define: {},
+    aliasStrategy: 'prefer-tsconfig',
+    preEntry: [],
+    decorators: {
+      version: '2022-03',
+    },
+  };
+};
 
 const getDefaultHtmlConfig = (): NormalizedHtmlConfig => ({
   meta: {

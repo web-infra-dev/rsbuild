@@ -6,7 +6,13 @@
 type Alias = Record<string, string | false | (string | false)[]> | Function;
 ```
 
-- **默认值：** `undefined`
+- **默认值：**
+
+```ts
+const defaultAlias = {
+  '@swc/helpers': path.dirname(require.resolve('@swc/helpers/package.json')),
+};
+```
 
 设置文件引用的别名，对应 Rspack 的 [resolve.alias](https://rspack.dev/zh/config/resolve#resolvealias) 配置。
 
@@ -44,7 +50,19 @@ export default {
 };
 ```
 
-也可以在函数中返回一个新对象作为最终结果，新对象会覆盖预设的 alias 对象。
+如果你需要移除 Rsbuild 内置的 `@swc/helpers` 别名，可以在函数中删除它：
+
+```js
+export default {
+  source: {
+    alias: (alias) => {
+      delete alias['@swc/helpers'];
+    },
+  },
+};
+```
+
+你也可以在函数中返回一个新对象作为最终结果，新对象会覆盖预设的 alias 对象。
 
 ```js
 export default {
