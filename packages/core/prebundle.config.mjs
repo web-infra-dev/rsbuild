@@ -91,6 +91,14 @@ export default {
       externals: {
         '@rspack/core': '@rspack/core',
       },
+      ignoreDts: true,
+      afterBundle(task) {
+        // copy types to dist because prebundle will break the types
+        fs.cpSync(
+          join(task.depPath, 'types/index.d.ts'),
+          join(task.distPath, 'index.d.ts'),
+        );
+      },
     },
     {
       name: 'http-proxy-middleware',
