@@ -1,7 +1,7 @@
 import { type Rspack, logger } from '@rsbuild/core';
 import WebpackMultiStats from 'webpack/lib/MultiStats.js';
-import { type InitConfigsOptions, initConfigs } from './initConfigs';
-import { formatStats, getStatsOptions, registerDevHook } from './shared';
+import { type InitConfigsOptions, initConfigs } from './initConfigs.js';
+import { formatStats, getStatsOptions, registerDevHook } from './shared.js';
 
 export async function createCompiler(options: InitConfigsOptions) {
   logger.debug('create compiler');

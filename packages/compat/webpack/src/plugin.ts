@@ -6,7 +6,7 @@ import type {
   Rspack,
   RspackChain,
 } from '@rsbuild/core';
-import { castArray } from './shared';
+import { castArray } from './shared.js';
 
 async function applyTsConfigPathsPlugin({
   chain,
@@ -77,7 +77,7 @@ export const pluginAdaptor = (): RsbuildPlugin => ({
       // enable progress bar for webpack by default
       const progress = config.dev.progressBar ?? true;
       if (progress) {
-        const { ProgressPlugin } = await import('./progress/ProgressPlugin');
+        const { ProgressPlugin } = await import('./progress/ProgressPlugin.js');
         chain.plugin(CHAIN_ID.PLUGIN.PROGRESS).use(ProgressPlugin, [
           {
             id: environment.name,

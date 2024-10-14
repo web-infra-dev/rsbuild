@@ -4,10 +4,10 @@ import {
   type ResolvedCreateRsbuildOptions,
   logger,
 } from '@rsbuild/core';
-import { inspectConfig } from './inspectConfig';
-import { type InternalContext, initRsbuildConfig } from './shared';
-import type { WebpackConfig } from './types';
-import { generateWebpackConfig } from './webpackConfig';
+import { inspectConfig } from './inspectConfig.js';
+import { type InternalContext, initRsbuildConfig } from './shared.js';
+import type { WebpackConfig } from './types.js';
+import { generateWebpackConfig } from './webpackConfig.js';
 
 export type InitConfigsOptions = {
   context: InternalContext;

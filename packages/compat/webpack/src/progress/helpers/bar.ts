@@ -1,7 +1,7 @@
 import cliTruncate from 'cli-truncate';
 import colors from 'picocolors';
-import type { Props } from './types';
-import { clamp } from './utils';
+import type { Props } from './types.js';
+import { clamp } from './utils.js';
 
 const defaultOption: Props = {
   total: 100,
