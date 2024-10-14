@@ -103,7 +103,8 @@ jobs:
   ecosystem_ci:
     name: Run Ecosystem CI
     runs-on: ubuntu-latest
-    if: github.ref_name == 'main' && github.repository_owner == 'web-infra-dev'
+    if: github.repository_owner == 'web-infra-dev'
+    # if: github.ref_name == 'main' && github.repository_owner == 'web-infra-dev'
     steps:
       - name: Run Ecosystem CI
         id: eco_ci
@@ -112,6 +113,8 @@ jobs:
           owner: "rspack-contrib"
           repo: "rsbuild-ecosystem-ci"
           workflow_file_name: "ecosystem-ci-from-commit.yml"
+          propagate_failure: false
+          wait_workflow: false
           github_token: ${{ secrets.REPO_SCOPED_TOKEN }}
           ref: "main"
           client_payload: '{"commitSHA":"${{ github.sha }}","repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
