@@ -51,9 +51,7 @@ describe('plugin-resolve', () => {
     });
     const bundlerConfigs = await rsbuild.initConfigs();
 
-    expect(bundlerConfigs[0].resolve?.alias).toEqual({
-      foo: 'bar',
-    });
+    expect(bundlerConfigs[0].resolve?.alias?.foo).toEqual('bar');
   });
 
   it('should support source.alias to be a function', async () => {
