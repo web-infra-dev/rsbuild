@@ -6,7 +6,13 @@
 type Alias = Record<string, string | false | (string | false)[]> | Function;
 ```
 
-- **Default:** `undefined`
+- **Default:**
+
+```ts
+const defaultAlias = {
+  '@swc/helpers': path.dirname(require.resolve('@swc/helpers/package.json')),
+};
+```
 
 Create aliases to import or require certain modules, same as the [resolve.alias](https://rspack.dev/config/resolve#resolvealias) config of Rspack.
 
@@ -44,7 +50,19 @@ export default {
 };
 ```
 
-You can also return a new object as the final result in the function, which will replace the previous alias object.
+If you need to remove the built-in `@swc/helpers` alias, you can delete it in the function:
+
+```js
+export default {
+  source: {
+    alias: (alias) => {
+      delete alias['@swc/helpers'];
+    },
+  },
+};
+```
+
+You can also return a new object as the final result in the function, which will replace the preset alias object.
 
 ```js
 export default {

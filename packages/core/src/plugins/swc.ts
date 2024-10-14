@@ -123,13 +123,6 @@ export const pluginSwc = (): RsbuildPlugin => ({
         applyTransformImport(swcConfig, config.source.transformImport);
         applySwcDecoratorConfig(swcConfig, config);
 
-        if (swcConfig.jsc?.externalHelpers) {
-          chain.resolve.alias.set(
-            '@swc/helpers',
-            path.dirname(require.resolve('@swc/helpers/package.json')),
-          );
-        }
-
         // apply polyfill
         if (isWebTarget(target)) {
           const polyfillMode = config.output.polyfill;
