@@ -93,6 +93,7 @@ export default {
       },
       ignoreDts: true,
       afterBundle(task) {
+        // copy types to dist because prebundle will break the types
         fs.cpSync(
           join(task.depPath, 'types/index.d.ts'),
           join(task.distPath, 'index.d.ts'),
