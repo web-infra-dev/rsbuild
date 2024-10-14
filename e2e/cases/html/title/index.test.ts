@@ -18,7 +18,7 @@ test('should generate default title correctly', async () => {
   expect(html).toContain('<title>Rsbuild App</title>');
 });
 
-test('should allow setting empty title to override default title', async () => {
+test('should allow setting empty title to unset the default title', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
@@ -34,7 +34,7 @@ test('should allow setting empty title to override default title', async () => {
 
   const html =
     files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];
-  expect(html).toContain('<title></title>');
+  expect(html).not.toContain('<title>');
 });
 
 test('should generate title correctly', async () => {
