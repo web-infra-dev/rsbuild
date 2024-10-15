@@ -9,13 +9,13 @@ import type {
 } from '@rsbuild/core';
 import _ from 'lodash';
 import semver from 'semver';
-import { CORE_JS_DIR, CORE_JS_PKG_PATH, SWC_HELPERS_DIR } from './constants';
-import { getDefaultSwcConfig } from './plugin';
+import { CORE_JS_DIR, CORE_JS_PKG_PATH, SWC_HELPERS_DIR } from './constants.js';
+import { getDefaultSwcConfig } from './plugin.js';
 import type {
   ObjPluginSwcOptions,
   PluginSwcOptions,
   TransformConfig,
-} from './types';
+} from './types.js';
 
 const { applySwcDecoratorConfig } = __internalHelper;
 

@@ -6,9 +6,9 @@ import {
 import type { webpack } from '@rsbuild/webpack';
 import deepmerge from 'deepmerge';
 import color from 'picocolors';
-import { minify, minifyCss } from './binding';
-import { JS_REGEX } from './constants';
-import type { CssMinifyOptions, JsMinifyOptions, Output } from './types';
+import { minify, minifyCss } from './binding.js';
+import { JS_REGEX } from './constants.js';
+import type { CssMinifyOptions, JsMinifyOptions, Output } from './types.js';
 
 export interface NormalizedSwcMinifyOption {
   jsMinify?: JsMinifyOptions;

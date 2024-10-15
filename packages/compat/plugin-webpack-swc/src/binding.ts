@@ -1,5 +1,5 @@
 import { type Output, Compiler as RawCompiler } from '@modern-js/swc-plugins';
-import type { TransformConfig } from './types';
+import type { TransformConfig } from './types.js';
 
 export {
   minify,
