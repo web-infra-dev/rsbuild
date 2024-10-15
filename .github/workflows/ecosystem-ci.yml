@@ -57,4 +57,4 @@ jobs:
           workflow_file_name: "ecosystem-ci-selected.yml"
           github_token: ${{ secrets.REPO_SCOPED_TOKEN }}
           ref: ${{ github.event.inputs.branch }}
-          client_payload: '{"repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
+          client_payload: '{"ref":"${{ github.event.inputs.branch }}","repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
