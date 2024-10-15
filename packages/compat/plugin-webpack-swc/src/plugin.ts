@@ -1,16 +1,16 @@
 import path from 'node:path';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { SwcMinimizerPlugin } from './minimizer';
+import { SwcMinimizerPlugin } from './minimizer.js';
 import type {
   ObjPluginSwcOptions,
   PluginSwcOptions,
   TransformConfig,
-} from './types';
+} from './types.js';
 import {
   applyPluginConfig,
   checkUseMinify,
   removeUselessOptions,
-} from './utils';
+} from './utils.js';
 
 /**
  * In this plugin, we do:

@@ -1,4 +1,4 @@
-export { default as SwcLoader } from './loader';
-export { pluginSwc } from './plugin';
-export * from './binding';
-export * from './types';
+export { default as SwcLoader } from './loader.js';
+export { pluginSwc } from './plugin.js';
+export * from './binding.js';
+export * from './types.js';
