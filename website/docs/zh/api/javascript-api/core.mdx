@@ -82,7 +82,7 @@ const rsbuild = await createRsbuild({
 
 - **类型：**
 
-```ts
+````ts
 type LoadEnvOptions = {
   /**
    * 加载 env 文件的根路径
@@ -107,12 +107,35 @@ function loadEnv(options: LoadEnvOptions): {
   parsed: Record<string, string>;
   /** 所有 env 文件的绝对路径 */
   filePaths: string[];
-  /** 以 prefixes 开头的环境变量 */
+  /**
+   * 以 prefixes 开头的环境变量
+   *
+   * @example
+   * ```ts
+   * {
+   *   PUBLIC_FOO: 'bar',
+   * }
+   * ```
+   **/
+  rawPublicVars: Record<string, string | undefined>;
+  /**
+   * 以 prefix 开头的环境变量，并经过格式化。
+   * key 包含前缀 `process.env.*` 和 `import.meta.env.*`。
+   * value 经过 `JSON.stringify` 处理。
+   *
+   * @example
+   * ```ts
+   * {
+   *   'process.env.PUBLIC_FOO': '"bar"',
+   *   'import.meta.env.PUBLIC_FOO': '"bar"',
+   * }
+   * ```
+   **/
   publicVars: Record<string, string>;
   /** 从 `process.env` 上清除挂载的环境变量 */
   cleanup: () => void;
 };
-```
+````
 
 - **示例：**
 
