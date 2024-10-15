@@ -103,7 +103,7 @@ type LoadEnvOptions = {
 };
 
 function loadEnv(options: LoadEnvOptions): {
-  /** All environment variables in the .env file */
+  /** All env variables in the .env file */
   parsed: Record<string, string>;
   /** The absolute paths to all env files */
   filePaths: string[];
@@ -132,7 +132,7 @@ function loadEnv(options: LoadEnvOptions): {
    * ```
    **/
   publicVars: Record<string, string>;
-  /** Clear the environment variables mounted on `process.env` */
+  /** Clear the env variables mounted on `process.env` */
   cleanup: () => void;
 };
 ````
