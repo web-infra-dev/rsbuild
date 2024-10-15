@@ -12,23 +12,19 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist-types/index.d.ts",
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     }
   },
   "main": "./dist/index.cjs",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/index.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "scripts": {
-    "build": "modern build && node scripts/postCompile.mjs",
-    "dev": "modern build --watch"
-  },
-  "dependencies": {
-    "serialize-javascript": "^6.0.2"
+    "build": "rslib build && node scripts/postCompile.mjs",
+    "dev": "rslib build --watch"
   },
   "devDependencies": {
     "@babel/core": "^7.25.8",
@@ -36,6 +32,7 @@
     "@babel/preset-typescript": "^7.25.7",
     "@rsbuild/core": "workspace:*",
     "@types/serialize-javascript": "^5.0.4",
+    "serialize-javascript": "^6.0.2",
     "terser": "5.34.1",
     "typescript": "^5.6.3"
   },
