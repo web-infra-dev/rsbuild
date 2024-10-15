@@ -19,6 +19,7 @@ on:
         default: 'main'
       run_eco_ci:
         description: 'Run Rsbuild ecosystem CI before release'
+        type: boolean
         required: false
         default: true
   issue_comment:
