@@ -24,7 +24,7 @@ jobs:
           workflow_file_name: "ecosystem-ci-from-commit.yml"
           github_token: ${{ secrets.REPO_SCOPED_TOKEN }}
           ref: "main"
-          client_payload: '{"commitSHA":"${{ github.sha }}","repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
+          client_payload: '{"commitSHA":"${{ github.sha }}","updateComment":true,"repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
 
       - if: steps.eco_ci.outcome == 'failure'
         uses: actions/checkout@v4
