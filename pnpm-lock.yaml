@@ -750,10 +750,6 @@ importers:
         version: 5.6.3
 
   packages/plugin-assets-retry:
-    dependencies:
-      serialize-javascript:
-        specifier: ^6.0.2
-        version: 6.0.2
     devDependencies:
       '@babel/core':
         specifier: ^7.25.8
@@ -770,6 +766,9 @@ importers:
       '@types/serialize-javascript':
         specifier: ^5.0.4
         version: 5.0.4
+      serialize-javascript:
+        specifier: ^6.0.2
+        version: 6.0.2
       terser:
         specifier: 5.34.1
         version: 5.34.1
