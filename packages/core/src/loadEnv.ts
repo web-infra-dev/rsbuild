@@ -27,13 +27,36 @@ export function loadEnv({
   mode = getNodeEnv(),
   prefixes = ['PUBLIC_'],
 }: LoadEnvOptions = {}): {
-  /** All environment variables in the .env file */
+  /** All env variables in the .env file */
   parsed: Record<string, string>;
   /** The absolute paths to all env files */
   filePaths: string[];
-  /** Environment variables that start with prefixes */
+  /**
+   * Env variables that start with prefixes.
+   *
+   * @example
+   * ```ts
+   * {
+   *   PUBLIC_FOO: 'bar',
+   * }
+   * ```
+   **/
+  rawPublicVars: Record<string, string | undefined>;
+  /**
+   * Formatted env variables that start with prefixes.
+   * The keys contain the prefixes `process.env.*` and `import.meta.env.*`.
+   * The values are processed by `JSON.stringify`.
+   *
+   * @example
+   * ```ts
+   * {
+   *   'process.env.PUBLIC_FOO': '"bar"',
+   *   'import.meta.env.PUBLIC_FOO': '"bar"',
+   * }
+   * ```
+   **/
   publicVars: Record<string, string>;
-  /** Clear the environment variables mounted on `process.env` */
+  /** Clear the env variables mounted on `process.env` */
   cleanup: () => void;
 } {
   if (mode === 'local') {
@@ -69,12 +92,14 @@ export function loadEnv({
   expand({ parsed });
 
   const publicVars: Record<string, string> = {};
+  const rawPublicVars: Record<string, string | undefined> = {};
 
   for (const key of Object.keys(process.env)) {
     if (prefixes.some((prefix) => key.startsWith(prefix))) {
       const val = process.env[key];
       publicVars[`import.meta.env.${key}`] = JSON.stringify(val);
       publicVars[`process.env.${key}`] = JSON.stringify(val);
+      rawPublicVars[key] = val;
     }
   }
 
@@ -104,5 +129,6 @@ export function loadEnv({
     cleanup,
     filePaths,
     publicVars,
+    rawPublicVars,
   };
 }

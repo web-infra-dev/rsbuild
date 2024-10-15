@@ -28,6 +28,12 @@ rspackOnlyTest('should load env files correctly', () => {
     'process.env.REACT_VERSION': '"18"',
   });
 
+  expect(env.rawPublicVars).toEqual({
+    REACT_EMPTY_STRING: '',
+    REACT_NAME: 'react',
+    REACT_VERSION: '18',
+  });
+
   expect(env.filePaths.find((item) => item.endsWith('.env'))).toBeTruthy();
   expect(
     env.filePaths.find((item) => item.endsWith('.env.staging')),
