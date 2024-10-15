@@ -42,7 +42,7 @@ jobs:
           workflow_file_name: "ecosystem-ci-selected.yml"
           github_token: ${{ secrets.REPO_SCOPED_TOKEN }}
           ref: ${{ github.event.inputs.branch }}
-          client_payload: '{"commitSHA":"${{ github.sha }}","repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
+          client_payload: '{"repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
 
       - name: Checkout
         uses: actions/checkout@v4
