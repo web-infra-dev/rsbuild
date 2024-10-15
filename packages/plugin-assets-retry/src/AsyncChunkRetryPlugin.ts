@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { type Rspack, rspack } from '@rsbuild/core';
 import serialize from 'serialize-javascript';
-import type { PluginAssetsRetryOptions, RuntimeRetryOptions } from './types';
+import type { PluginAssetsRetryOptions, RuntimeRetryOptions } from './types.js';
 
 // https://github.com/web-infra-dev/rspack/pull/5370
 function appendWebpackScript(module: any, appendSource: string) {

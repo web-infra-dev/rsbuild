@@ -1,6 +1,6 @@
 // rsbuild/runtime/initial-chunk-retry
 import type { CrossOrigin } from '@rsbuild/core';
-import type { AssetsRetryHookContext, RuntimeRetryOptions } from '../types';
+import type { AssetsRetryHookContext, RuntimeRetryOptions } from '../types.js';
 
 interface ScriptElementAttributes {
   url: string;

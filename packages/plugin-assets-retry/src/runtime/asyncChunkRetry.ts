@@ -1,5 +1,5 @@
 // rsbuild/runtime/async-chunk-retry
-import type { AssetsRetryHookContext, RuntimeRetryOptions } from '../types';
+import type { AssetsRetryHookContext, RuntimeRetryOptions } from '../types.js';
 
 type ChunkId = string; // e.g: src_AsyncCompTest_tsx
 type ChunkFilename = string; // e.g: static/js/async/src_AsyncCompTest_tsx.js

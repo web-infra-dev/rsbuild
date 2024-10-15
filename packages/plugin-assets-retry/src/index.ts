@@ -6,7 +6,9 @@ import type {
   RsbuildPlugin,
 } from '@rsbuild/core';
 import { ensureAssetPrefix } from '@rsbuild/core';
-import type { PluginAssetsRetryOptions } from './types';
+import serialize from 'serialize-javascript';
+import { AsyncChunkRetryPlugin } from './AsyncChunkRetryPlugin.js';
+import type { PluginAssetsRetryOptions } from './types.js';
 
 export type { PluginAssetsRetryOptions };
 
@@ -15,7 +17,6 @@ export const PLUGIN_ASSETS_RETRY_NAME = 'rsbuild:assets-retry';
 async function getRetryCode(
   options: PluginAssetsRetryOptions,
 ): Promise<string> {
-  const { default: serialize } = await import('serialize-javascript');
   const filename = 'initialChunkRetry';
   const { minify, inlineScript: _, ...restOptions } = options;
 
@@ -106,7 +107,6 @@ export const pluginAssetsRetry = (
         return;
       }
 
-      const { AsyncChunkRetryPlugin } = await import('./AsyncChunkRetryPlugin');
       const options = formatOptions(config);
       const isRspack = api.context.bundlerType === 'rspack';
 
