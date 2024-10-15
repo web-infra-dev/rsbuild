@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run Ecosystem CI
-        if: github.event.inputs.run_eco_ci == true
+        if: inputs.run_eco_ci == true
         uses: convictional/trigger-workflow-and-wait@v1.6.5
         with:
           owner: "rspack-contrib"
