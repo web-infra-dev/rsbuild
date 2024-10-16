@@ -20,7 +20,7 @@ type PrintUrls =
 
 - **Default:** `true`
 
-Whether to print the server's urls.
+Whether to print the server's URLs.
 
 By default, when you start the dev server or preview server, Rsbuild will print the following logs:
 
@@ -41,7 +41,7 @@ If the `printUrls` function returns an URLs array, Rsbuild prints these URLs to 
 export default {
   server: {
     printUrls({ urls }) {
-      return urls.map((url) => `${url}/base`);
+      return urls.map((url) => `${url}/base/`);
     },
   },
 };
@@ -94,7 +94,7 @@ export default {
 
 ## Disable Output
 
-Setting `server.printUrls` to `false` will prevent Rsbuild from printing the server urls.
+Setting `server.printUrls` to `false` will prevent Rsbuild from printing the server URLs.
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -102,4 +102,27 @@ export default {
     printUrls: false,
   },
 };
+```
+
+### HTML Disabled
+
+If [tools.htmlPlugin](/config/tools/html-plugin) is set to `false`, Rsbuild will not generate HTML files or output the server URL.
+
+However, you can still print the server URLs using the `server.printUrls` function, which has a higher priority.
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    htmlPlugin: false,
+  },
+  server: {
+    printUrls: ({ port }) => [`http://localhost:${port}`],
+  },
+};
+```
+
+Output:
+
+```
+  ➜ Local:    http://localhost:3000
 ```

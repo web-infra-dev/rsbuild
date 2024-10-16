@@ -127,12 +127,13 @@ function getURLMessages(
   urls: Array<{ url: string; label: string }>,
   routes: Routes,
 ) {
-  if (routes.length === 1) {
+  if (routes.length <= 1) {
+    const pathname = routes.length ? routes[0].pathname : '';
     return urls
       .map(({ label, url }) => {
-        const pathname = normalizeUrl(`${url}${routes[0].pathname}`);
+        const normalizedPathname = normalizeUrl(`${url}${pathname}`);
         const prefix = `➜ ${color.dim(label.padEnd(10))}`;
-        return `  ${prefix}${color.cyan(pathname)}\n`;
+        return `  ${prefix}${color.cyan(normalizedPathname)}\n`;
       })
       .join('');
   }
@@ -175,8 +176,9 @@ export function printServerURLs({
   }
 
   let urls = originalUrls;
+  const useCustomUrl = isFunction(printUrls);
 
-  if (isFunction(printUrls)) {
+  if (useCustomUrl) {
     const newUrls = printUrls({
       urls: urls.map((item) => item.url),
       port,
@@ -200,7 +202,13 @@ export function printServerURLs({
     }));
   }
 
-  if (urls.length === 0 || routes.length === 0) {
+  // If no urls, skip printing
+  if (urls.length === 0) {
+    return null;
+  }
+
+  // If no routes and not use custom url, skip printing
+  if (routes.length === 0 && !useCustomUrl) {
     return null;
   }
 
