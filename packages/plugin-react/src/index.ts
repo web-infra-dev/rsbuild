@@ -38,25 +38,38 @@ export type PluginReactOptions = {
    * @see https://rspack.dev/guide/tech/react#rspackplugin-react-refresh
    */
   reactRefreshOptions?: ReactRefreshOptions;
+  /**
+   * Whether to enable React Fast Refresh in development mode.
+   * @default true
+   */
+  fastRefresh?: boolean;
 };
 
 export const PLUGIN_REACT_NAME = 'rsbuild:react';
 
-export const pluginReact = ({
-  enableProfiler = false,
-  ...options
-}: PluginReactOptions = {}): RsbuildPlugin => ({
+export const pluginReact = (
+  options: PluginReactOptions = {},
+): RsbuildPlugin => ({
   name: PLUGIN_REACT_NAME,
 
   setup(api) {
-    if (api.context.bundlerType === 'rspack') {
-      applyBasicReactSupport(api, options);
+    const defaultOptions: PluginReactOptions = {
+      fastRefresh: true,
+      enableProfiler: false,
+    };
+    const finalOptions = {
+      ...defaultOptions,
+      ...options,
+    };
 
-      if (enableProfiler) {
+    if (api.context.bundlerType === 'rspack') {
+      applyBasicReactSupport(api, finalOptions);
+
+      if (finalOptions.enableProfiler) {
         applyReactProfiler(api);
       }
     }
 
-    applySplitChunksRule(api, options?.splitChunks);
+    applySplitChunksRule(api, finalOptions?.splitChunks);
   },
 });

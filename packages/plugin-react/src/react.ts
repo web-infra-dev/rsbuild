@@ -14,15 +14,17 @@ export const applyBasicReactSupport = (
   api: RsbuildPluginAPI,
   options: PluginReactOptions,
 ): void => {
-  const REACT_REFRESH_PATH = require.resolve('react-refresh');
+  const REACT_REFRESH_PATH = options.fastRefresh
+    ? require.resolve('react-refresh')
+    : '';
 
-  api.modifyEnvironmentConfig((userConfig, { mergeEnvironmentConfig }) => {
-    const isDev = userConfig.mode === 'development';
+  api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
+    const isDev = config.mode === 'development';
+    const usingHMR = isDev && config.dev.hmr && config.output.target === 'web';
 
     const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
       development: isDev,
-      refresh:
-        isDev && userConfig.dev.hmr && userConfig.output.target === 'web',
+      refresh: usingHMR && options.fastRefresh,
       runtime: 'automatic',
       ...options.swcReactOptions,
     };
@@ -44,14 +46,14 @@ export const applyBasicReactSupport = (
       },
     };
 
-    return mergeEnvironmentConfig(extraConfig, userConfig);
+    return mergeEnvironmentConfig(extraConfig, config);
   });
 
   api.modifyBundlerChain(
     async (chain, { CHAIN_ID, environment, isDev, target }) => {
       const { config } = environment;
       const usingHMR = isDev && config.dev.hmr && target === 'web';
-      if (!usingHMR) {
+      if (!usingHMR || !options.fastRefresh) {
         return;
       }
 
