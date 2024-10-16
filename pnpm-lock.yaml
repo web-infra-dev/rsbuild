@@ -52,7 +52,7 @@ importers:
         version: 5.6.3
       vitest:
         specifier: ^2.1.2
-        version: 2.1.2(@types/node@18.19.31)(jsdom@25.0.1)(less@4.2.0)(lightningcss@1.25.1)(sass@1.79.5)(stylus@0.63.0)(terser@5.34.1)
+        version: 2.1.2(@types/node@18.19.31)(jsdom@25.0.1)(less@4.2.0)(lightningcss@1.25.1)(sass@1.79.5)(stylus@0.63.0)(terser@5.35.0)
 
   e2e:
     dependencies:
@@ -770,8 +770,8 @@ importers:
         specifier: ^6.0.2
         version: 6.0.2
       terser:
-        specifier: 5.34.1
-        version: 5.34.1
+        specifier: 5.35.0
+        version: 5.35.0
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -7092,6 +7092,11 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  terser@5.35.0:
+    resolution: {integrity: sha512-TmYbQnzVfrx3RQsPoItoPplymixIAtp2R2xlpyVBYmFmvI34IzLhCLj8SimRb/kZXlq4t1gA+vbcTqLQ3+5Q5g==}
+    engines: {node: '>=10'}
+    hasBin: true
+
   thenify-all@1.6.0:
     resolution: {integrity: sha512-RNxQH/qI8/t3thXJDwcstUO4zeqo64+Uy/+sNVRBx4Xn2OX+OZ9oP+iJnNFqplFra2ZUVeKCSa2oVWi3T4uVmA==}
     engines: {node: '>=0.8'}
@@ -10043,13 +10048,13 @@ snapshots:
       chai: 5.1.1
       tinyrainbow: 1.2.0
 
-  '@vitest/mocker@2.1.2(@vitest/spy@2.1.2)(vite@5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.25.1)(sass@1.79.5)(stylus@0.63.0)(terser@5.34.1))':
+  '@vitest/mocker@2.1.2(@vitest/spy@2.1.2)(vite@5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.25.1)(sass@1.79.5)(stylus@0.63.0)(terser@5.35.0))':
     dependencies:
       '@vitest/spy': 2.1.2
       estree-walker: 3.0.3
       magic-string: 0.30.11
     optionalDependencies:
-      vite: 5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.25.1)(sass@1.79.5)(stylus@0.63.0)(terser@5.34.1)
+      vite: 5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.25.1)(sass@1.79.5)(stylus@0.63.0)(terser@5.35.0)
 
   '@vitest/pretty-format@2.1.2':
     dependencies:
@@ -11766,7 +11771,7 @@ snapshots:
       entities: 4.5.0
       param-case: 3.0.4
       relateurl: 0.2.7
-      terser: 5.34.1
+      terser: 5.35.0
 
   html-rspack-plugin@6.0.1(@rspack/core@1.0.12(@swc/helpers@0.5.13)):
     dependencies:
@@ -14315,7 +14320,7 @@ snapshots:
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
-      terser: 5.34.1
+      terser: 5.35.0
       webpack: 5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13))
     optionalDependencies:
       '@swc/core': 1.6.13(@swc/helpers@0.5.13)
@@ -14335,6 +14340,13 @@ snapshots:
       source-map-support: 0.5.21
 
   terser@5.34.1:
+    dependencies:
+      '@jridgewell/source-map': 0.3.6
+      acorn: 8.12.1
+      commander: 2.20.3
+      source-map-support: 0.5.21
+
+  terser@5.35.0:
     dependencies:
       '@jridgewell/source-map': 0.3.6
       acorn: 8.12.1
@@ -14602,12 +14614,12 @@ snapshots:
       unist-util-stringify-position: 4.0.0
       vfile-message: 4.0.2
 
-  vite-node@2.1.2(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.25.1)(sass@1.79.5)(stylus@0.63.0)(terser@5.34.1):
+  vite-node@2.1.2(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.25.1)(sass@1.79.5)(stylus@0.63.0)(terser@5.35.0):
     dependencies:
       cac: 6.7.14
       debug: 4.3.7
       pathe: 1.1.2
-      vite: 5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.25.1)(sass@1.79.5)(stylus@0.63.0)(terser@5.34.1)
+      vite: 5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.25.1)(sass@1.79.5)(stylus@0.63.0)(terser@5.35.0)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -14618,7 +14630,7 @@ snapshots:
       - supports-color
       - terser
 
-  vite@5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.25.1)(sass@1.79.5)(stylus@0.63.0)(terser@5.34.1):
+  vite@5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.25.1)(sass@1.79.5)(stylus@0.63.0)(terser@5.35.0):
     dependencies:
       esbuild: 0.20.2
       postcss: 8.4.47
@@ -14630,12 +14642,12 @@ snapshots:
       lightningcss: 1.25.1
       sass: 1.79.5
       stylus: 0.63.0
-      terser: 5.34.1
+      terser: 5.35.0
 
-  vitest@2.1.2(@types/node@18.19.31)(jsdom@25.0.1)(less@4.2.0)(lightningcss@1.25.1)(sass@1.79.5)(stylus@0.63.0)(terser@5.34.1):
+  vitest@2.1.2(@types/node@18.19.31)(jsdom@25.0.1)(less@4.2.0)(lightningcss@1.25.1)(sass@1.79.5)(stylus@0.63.0)(terser@5.35.0):
     dependencies:
       '@vitest/expect': 2.1.2
-      '@vitest/mocker': 2.1.2(@vitest/spy@2.1.2)(vite@5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.25.1)(sass@1.79.5)(stylus@0.63.0)(terser@5.34.1))
+      '@vitest/mocker': 2.1.2(@vitest/spy@2.1.2)(vite@5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.25.1)(sass@1.79.5)(stylus@0.63.0)(terser@5.35.0))
       '@vitest/pretty-format': 2.1.2
       '@vitest/runner': 2.1.2
       '@vitest/snapshot': 2.1.2
@@ -14650,8 +14662,8 @@ snapshots:
       tinyexec: 0.3.0
       tinypool: 1.0.0
       tinyrainbow: 1.2.0
-      vite: 5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.25.1)(sass@1.79.5)(stylus@0.63.0)(terser@5.34.1)
-      vite-node: 2.1.2(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.25.1)(sass@1.79.5)(stylus@0.63.0)(terser@5.34.1)
+      vite: 5.2.9(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.25.1)(sass@1.79.5)(stylus@0.63.0)(terser@5.35.0)
+      vite-node: 2.1.2(@types/node@18.19.31)(less@4.2.0)(lightningcss@1.25.1)(sass@1.79.5)(stylus@0.63.0)(terser@5.35.0)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 18.19.31
