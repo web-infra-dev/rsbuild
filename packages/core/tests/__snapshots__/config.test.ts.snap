@@ -4,7 +4,7 @@ exports[`stringifyConfig > should stringify Rsbuild config correctly 1`] = `
 "{
   tools: {
     bundlerChain(chain) {
-      chain.devtool("eval");
+      chain.devtool(\\"eval\\");
     }
   }
 }"
@@ -32,7 +32,7 @@ exports[`stringifyConfig > should stringify Rspack config with verbose option co
   mode: 'development',
   output: {
     filename() {
-      const a = "[name.js]";
+      const a = \\"[name.js]\\";
       return a;
     }
   },
