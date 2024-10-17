@@ -10,6 +10,12 @@ export default defineConfig({
 
         return '/some-path/[name].js';
       },
+      css: (pathData) => {
+        if (pathData.chunk?.name === 'index') {
+          return 'my-index.css';
+        }
+        return '/some-path/[name].css';
+      },
     },
   },
 });
