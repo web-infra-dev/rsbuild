@@ -8,7 +8,9 @@ type FilenameConfig = {
   js?:
     | string
     | ((pathData: Rspack.PathData, assetInfo: Rspack.JsAssetInfo) => string);
-  css?: string;
+  css?:
+    | string
+    | ((pathData: Rspack.PathData, assetInfo: Rspack.JsAssetInfo) => string);
   svg?: string;
   font?: string;
   image?: string;

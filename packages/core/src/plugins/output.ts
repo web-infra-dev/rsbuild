@@ -141,6 +141,8 @@ export const pluginOutput = (): RsbuildPlugin => ({
 
           const cssPath = config.output.distPath.css;
           const cssFilename = getFilename(config, 'css', isProd);
+          const isCssFilenameFn = typeof cssFilename === 'function';
+
           const cssAsyncPath =
             config.output.distPath.cssAsync ??
             (cssPath ? `${cssPath}/async` : 'async');
@@ -149,8 +151,18 @@ export const pluginOutput = (): RsbuildPlugin => ({
             .plugin(CHAIN_ID.PLUGIN.MINI_CSS_EXTRACT)
             .use(getCssExtractPlugin(), [
               {
-                filename: posix.join(cssPath, cssFilename),
-                chunkFilename: posix.join(cssAsyncPath, cssFilename),
+                filename: isCssFilenameFn
+                  ? (...args) => {
+                      const name = cssFilename(...args);
+                      return posix.join(cssPath, name);
+                    }
+                  : posix.join(cssPath, cssFilename),
+                chunkFilename: isCssFilenameFn
+                  ? (...args) => {
+                      const name = cssFilename(...args);
+                      return posix.join(cssAsyncPath, name);
+                    }
+                  : posix.join(cssAsyncPath, cssFilename),
                 ...extractPluginOptions,
               },
             ]);
