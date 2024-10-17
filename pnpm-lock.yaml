@@ -251,7 +251,7 @@ importers:
     dependencies:
       '@rsbuild/plugin-styled-components':
         specifier: ^1.0.1
-        version: 1.0.1(@rsbuild/core@1.0.14)
+        version: 1.0.1(@rsbuild/core@1.0.15)
       styled-components:
         specifier: ^6.1.13
         version: 6.1.13(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react@19.0.0-rc-fb9a90fa48-20240614)
@@ -661,8 +661,8 @@ importers:
         specifier: ^11.2.0
         version: 11.2.0
       html-rspack-plugin:
-        specifier: 6.0.1
-        version: 6.0.1(@rspack/core@1.0.13(@swc/helpers@0.5.13))
+        specifier: 6.0.2
+        version: 6.0.2(@rspack/core@1.0.13(@swc/helpers@0.5.13))
       http-proxy-middleware:
         specifier: ^2.0.6
         version: 2.0.6
@@ -2828,8 +2828,8 @@ packages:
     engines: {node: '>=16.7.0'}
     hasBin: true
 
-  '@rsbuild/core@1.0.14':
-    resolution: {integrity: sha512-00d0DzRUK2CncKK+dHGG8AZuiXzltVzt58BbTba2AKyLHIb2nwYW4ah33sNrDAbYzdz1kPNfsWrmQvY7z71LfA==}
+  '@rsbuild/core@1.0.15':
+    resolution: {integrity: sha512-LIOgs4UzfFeT3sZnPMww1JbqF7zkGNMZdMJ6vV8xEXGOU4t8Z6QAtM5A0FGRfb2mYW5u2+XnMog+JAbo2RrN/A==}
     engines: {node: '>=16.7.0'}
     hasBin: true
 
@@ -4869,8 +4869,8 @@ packages:
     engines: {node: ^14.13.1 || >=16.0.0}
     hasBin: true
 
-  html-rspack-plugin@6.0.1:
-    resolution: {integrity: sha512-7RAFL+4T9C9XUm0x7H9ZRvatRygc5MCAc4XqU+T+NYHRncwPS8G/r64/lcaUBWkE0Gjws27lxJZBpudTB6z6vA==}
+  html-rspack-plugin@6.0.2:
+    resolution: {integrity: sha512-34ICP1ULwi9uFq0QJzT3jdnIp6RmZozp9PUPaH6YLaM69cy1r7WvSh1Mjqk5XEG2XQoktjbGz2WQPdW5O6jELw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       '@rspack/core': 0.x || 1.x
@@ -9398,7 +9398,7 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  '@rsbuild/core@1.0.14':
+  '@rsbuild/core@1.0.15':
     dependencies:
       '@rspack/core': 1.0.13(@swc/helpers@0.5.13)
       '@rspack/lite-tapable': 1.0.1
@@ -9460,12 +9460,12 @@ snapshots:
       reduce-configs: 1.0.0
       sass-embedded: 1.79.5
 
-  '@rsbuild/plugin-styled-components@1.0.1(@rsbuild/core@1.0.14)':
+  '@rsbuild/plugin-styled-components@1.0.1(@rsbuild/core@1.0.15)':
     dependencies:
       '@swc/plugin-styled-components': 2.0.11
       reduce-configs: 1.0.0
     optionalDependencies:
-      '@rsbuild/core': 1.0.14
+      '@rsbuild/core': 1.0.15
 
   '@rsbuild/plugin-vue-jsx@1.0.1(@babel/core@7.25.8)(@rsbuild/core@packages+core)':
     dependencies:
@@ -11773,7 +11773,7 @@ snapshots:
       relateurl: 0.2.7
       terser: 5.35.0
 
-  html-rspack-plugin@6.0.1(@rspack/core@1.0.13(@swc/helpers@0.5.13)):
+  html-rspack-plugin@6.0.2(@rspack/core@1.0.13(@swc/helpers@0.5.13)):
     dependencies:
       '@rspack/lite-tapable': 1.0.1
     optionalDependencies:
