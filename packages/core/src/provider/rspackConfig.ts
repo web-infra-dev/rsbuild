@@ -63,6 +63,17 @@ export async function getConfigUtils(
       config.module.rules.unshift(...ruleArr);
     },
 
+    appendRules(rules) {
+      const ruleArr = castArray(rules);
+      if (!config.module) {
+        config.module = {};
+      }
+      if (!config.module.rules) {
+        config.module.rules = [];
+      }
+      config.module.rules.push(...ruleArr);
+    },
+
     prependPlugins(plugins) {
       const pluginArr = castArray(plugins);
       if (!config.plugins) {

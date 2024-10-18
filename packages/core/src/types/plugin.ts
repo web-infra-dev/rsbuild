@@ -90,6 +90,7 @@ export type ModifyWebpackChainUtils = ModifyChainUtils & {
 
 export type ModifyWebpackConfigUtils = ModifyWebpackChainUtils & {
   addRules: (rules: RuleSetRule | RuleSetRule[]) => void;
+  appendRules: (rules: RuleSetRule | RuleSetRule[]) => void;
   prependPlugins: (
     plugins: WebpackPluginInstance | WebpackPluginInstance[],
   ) => void;
