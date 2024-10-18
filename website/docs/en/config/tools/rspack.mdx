@@ -237,7 +237,7 @@ export default {
 
 Add additional [Rspack rules](https://rspack.dev/config/module#modulerules) to the head of the internal Rspack module rules array.
 
-It should be noted that Rspack Loader will be executed in right-to-left order. If you want the Loader you added to be executed before other Loaders (Normal Phase), you should use [appendRules](#appendrules) to add the rule to the end.
+It should be noted that Rspack loaders will be executed in right-to-left order. If you want the loader you added to be executed before other loaders (Normal Phase), you should use [appendRules](#appendrules) to add the rule to the end.
 
 For example:
 
