@@ -189,7 +189,7 @@ export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
   apply(compiler: Compiler): void {
     compiler.hooks.compilation.tap(this.constructor.name, (compilation) => {
       getHTMLPlugin()
-        .getCompilationHooks(compilation)
+        .getHooks(compilation)
         .beforeAssetTagGeneration.tap(
           `HTML${upperFirst(this.type)}Plugin`,
           (htmlPluginData) => {
@@ -206,7 +206,7 @@ export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
         );
 
       getHTMLPlugin()
-        .getCompilationHooks(compilation)
+        .getHooks(compilation)
         .alterAssetTags.tap(
           `HTML${upperFirst(this.type)}Plugin`,
           (htmlPluginData) => {
