@@ -235,7 +235,7 @@ export default {
 
 - **Type:** `(rules: RuleSetRule | RuleSetRule[]) => void`
 
-Add additional [Rspack rules](https://rspack.dev/config/module#modulerules).
+Add additional [Rspack rules](https://rspack.dev/config/module#modulerules) to the head of the internal Rspack module rules array.
 
 For example:
 
@@ -265,9 +265,39 @@ export default {
 };
 ```
 
-:::tip
-The `addRules(...)` method will prepend rules to Rspack rule list. To append rules, use `config.module.rules.push(...)` instead.
-:::
+### appendRules
+
+- **Type:** `(rules: RuleSetRule | RuleSetRule[]) => void`
+
+Add additional [Rspack rules](https://rspack.dev/config/module#modulerules) to the end of the internal Rspack module rules array.
+
+For example:
+
+```ts
+export default {
+  tools: {
+    rspack: (config, { appendRules }) => {
+      // add a single rule
+      appendRules({
+        test: /\.foo/,
+        loader: require.resolve('foo-loader'),
+      });
+
+      // Add multiple rules as an array
+      appendRules([
+        {
+          test: /\.foo/,
+          loader: require.resolve('foo-loader'),
+        },
+        {
+          test: /\.bar/,
+          loader: require.resolve('bar-loader'),
+        },
+      ]);
+    },
+  },
+};
+```
 
 ### prependPlugins
 

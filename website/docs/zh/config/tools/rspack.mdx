@@ -235,7 +235,7 @@ export default {
 
 - **类型：** `(rules: RuleSetRule | RuleSetRule[]) => void`
 
-添加额外的 [Rspack rules](https://rspack.dev/config/module#modulerules)。
+添加额外的 [Rspack rules](https://rspack.dev/config/module#modulerules) 到 Rspack rules 列表的最前面。
 
 示例：
 
@@ -265,9 +265,39 @@ export default {
 };
 ```
 
-:::tip
-`addRules(...)` 会将新规则插入到 Rspack rules 列表的最前面。如果想要在末尾插入新规则，请改用 `config.module.rules.push(...)`。
-:::
+### appendRules
+
+- **类型：** `(rules: RuleSetRule | RuleSetRule[]) => void`
+
+添加额外的 [Rspack rules](https://rspack.dev/config/module#modulerules) 到 Rspack rules 列表的最后面。
+
+示例：
+
+```ts
+export default {
+  tools: {
+    rspack: (config, { appendRules }) => {
+      // 追加单条规则
+      appendRules({
+        test: /\.foo/,
+        loader: require.resolve('foo-loader'),
+      });
+
+      // 以数组形式追加多条规则
+      appendRules([
+        {
+          test: /\.foo/,
+          loader: require.resolve('foo-loader'),
+        },
+        {
+          test: /\.bar/,
+          loader: require.resolve('bar-loader'),
+        },
+      ]);
+    },
+  },
+};
+```
 
 ### prependPlugins
 
