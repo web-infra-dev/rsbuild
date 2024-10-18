@@ -237,6 +237,8 @@ export default {
 
 添加额外的 [Rspack rules](https://rspack.dev/config/module#modulerules) 到 Rspack rules 列表的最前面。
 
+需要注意的是，Rspack Loader 会按照从右到左的顺序执行，如果你希望你添加的 Loader（Normal Phase）先于其他 Loader 执行，应使用 [appendRules](#appendrules) 将该规则添加到最后面。
+
 示例：
 
 ```ts
