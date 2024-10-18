@@ -76,6 +76,7 @@ export type ToolsHtmlPluginConfig = ConfigChainWithContext<
 
 export type ModifyRspackConfigUtils = ModifyChainUtils & {
   addRules: (rules: RspackRule | RspackRule[]) => void;
+  appendRules: (rules: RspackRule | RspackRule[]) => void;
   prependPlugins: (
     plugins: BundlerPluginInstance | BundlerPluginInstance[],
   ) => void;

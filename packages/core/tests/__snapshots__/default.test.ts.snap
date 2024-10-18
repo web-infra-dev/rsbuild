@@ -1440,6 +1440,10 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "test": /\\\\\\.wasm\\$/,
         "type": "asset/resource",
       },
+      {
+        "loader": "foo-loader",
+        "test": /\\\\\\.foo/,
+      },
     ],
   },
   "name": "web",
