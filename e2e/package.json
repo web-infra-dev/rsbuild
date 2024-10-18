@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@e2e/helper": "workspace:*",
-    "@playwright/test": "1.44.1",
+    "@playwright/test": "1.48.1",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-assets-retry": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
@@ -48,7 +48,7 @@
     "create-rsbuild": "workspace:*",
     "fast-glob": "^3.3.2",
     "fs-extra": "^11.2.0",
-    "playwright": "1.44.1",
+    "playwright": "1.48.1",
     "strip-ansi": "6.0.1",
     "tailwindcss": "^3.4.13",
     "typescript": "^5.6.3"
