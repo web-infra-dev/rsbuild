@@ -128,7 +128,7 @@ After specifying the module name as above, the generated file will be `dist/stat
 
 ## Using Function
 
-You can pass a function to `output.filename.js`, allowing you to dynamically generate filenames based on file information:
+You can pass a function to `output.filename.js` or `output.filename.css`, allowing you to dynamically generate filenames based on file information:
 
 ```js
 export default {
@@ -143,6 +143,14 @@ export default {
         }
 
         return '/some-path/[name].js';
+      },
+      css: (pathData, assetInfo) => {
+        if (pathData.chunk?.name === 'index') {
+          const isProd = process.env.NODE_ENV === 'production';
+          return isProd ? '[name].[contenthash:8].css' : '[name].css';
+        }
+
+        return '/some-path/[name].css';
       },
     },
   },

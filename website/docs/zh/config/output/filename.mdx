@@ -8,7 +8,9 @@ type FilenameConfig = {
   js?:
     | string
     | ((pathData: Rspack.PathData, assetInfo: Rspack.JsAssetInfo) => string);
-  css?: string;
+  css?:
+    | string
+    | ((pathData: Rspack.PathData, assetInfo: Rspack.JsAssetInfo) => string);
   svg?: string;
   font?: string;
   image?: string;
@@ -127,7 +129,7 @@ const { add } = await import(
 
 ## 使用函数
 
-`output.filename.js` 可以传入一个函数，这允许你根据文件信息动态生成文件名：
+`output.filename.js` 和 `output.filename.css` 可以传入一个函数，这允许你根据文件信息动态生成文件名：
 
 ```js
 export default {
@@ -142,6 +144,14 @@ export default {
         }
 
         return '/some-path/[name].js';
+      },
+      css: (pathData, assetInfo) => {
+        if (pathData.chunk?.name === 'index') {
+          const isProd = process.env.NODE_ENV === 'production';
+          return isProd ? '[name].[contenthash:8].css' : '[name].css';
+        }
+
+        return '/some-path/[name].css';
       },
     },
   },
