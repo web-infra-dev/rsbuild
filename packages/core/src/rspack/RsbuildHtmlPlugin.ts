@@ -310,7 +310,7 @@ export class RsbuildHtmlPlugin {
 
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
       getHTMLPlugin()
-        .getCompilationHooks(compilation)
+        .getHooks(compilation)
         .alterAssetTagGroups.tapPromise(this.name, async (data) => {
           const entryName = data.plugin.options?.entryName;
 
