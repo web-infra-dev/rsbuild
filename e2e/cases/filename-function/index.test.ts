@@ -20,4 +20,16 @@ test('should allow to custom filename by function', async () => {
       filename.includes('dist/static/js/async/some-path/foo.js'),
     ),
   ).toBeTruthy();
+
+  // CSS
+  expect(
+    filenames.some((filename) =>
+      filename.includes('dist/static/css/my-index.css'),
+    ),
+  ).toBeTruthy();
+  expect(
+    filenames.some((filename) =>
+      filename.includes('dist/static/css/async/some-path/foo.css'),
+    ),
+  ).toBeTruthy();
 });
