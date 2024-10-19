@@ -7,10 +7,16 @@ type FilenameConfig = {
   html?: string;
   js?:
     | string
-    | ((pathData: Rspack.PathData, assetInfo: Rspack.JsAssetInfo) => string);
+    | ((
+        pathData: Rspack.PathData,
+        assetInfo: Rspack.JsAssetInfo | undefined,
+      ) => string);
   css?:
     | string
-    | ((pathData: Rspack.PathData, assetInfo: Rspack.JsAssetInfo) => string);
+    | ((
+        pathData: Rspack.PathData,
+        assetInfo: Rspack.JsAssetInfo | undefined,
+      ) => string);
   svg?: string;
   font?: string;
   image?: string;
