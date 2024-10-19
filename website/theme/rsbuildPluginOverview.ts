@@ -1,6 +1,6 @@
 import path from 'node:path';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import glob from 'fast-glob';
+import { glob } from 'tinyglobby';
 import type { Group } from './components/Overview';
 
 const camelCase = (input: string): string =>
@@ -13,7 +13,7 @@ export const rsbuildPluginOverview: RsbuildPlugin = {
     const root = path.join(__dirname, '../docs/en/config/');
     const globPath = path.join(root, '**/*.{mdx,md}');
 
-    const files = await glob(globPath);
+    const files = await glob(globPath, { absolute: true });
     const groups: Group[] = [
       {
         name: 'top level',
