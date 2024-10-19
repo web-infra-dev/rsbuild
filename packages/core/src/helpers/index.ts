@@ -221,7 +221,12 @@ export function getFilename(
 ): NonNullable<FilenameConfig['js']>;
 export function getFilename(
   config: NormalizedConfig | NormalizedEnvironmentConfig,
-  type: Exclude<keyof FilenameConfig, 'js'>,
+  type: 'css',
+  isProd: boolean,
+): NonNullable<FilenameConfig['css']>;
+export function getFilename(
+  config: NormalizedConfig | NormalizedEnvironmentConfig,
+  type: Exclude<keyof FilenameConfig, 'js' | 'css'>,
   isProd: boolean,
   isServer?: boolean,
 ): string;
