@@ -33,7 +33,7 @@
     "@rsbuild/core": "workspace:*",
     "@types/serialize-javascript": "^5.0.4",
     "serialize-javascript": "^6.0.2",
-    "terser": "5.35.0",
+    "terser": "5.36.0",
     "typescript": "^5.6.3"
   },
   "peerDependencies": {
