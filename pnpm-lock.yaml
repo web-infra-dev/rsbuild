@@ -437,7 +437,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/plugin-solid
 
-  examples/svelte:
+  examples/svelte4:
     dependencies:
       svelte:
         specifier: ^4.2.19
@@ -453,7 +453,7 @@ importers:
   examples/svelte5:
     dependencies:
       svelte:
-        specifier: ^5.0.2
+        specifier: ^5.0.3
         version: 5.0.3
     devDependencies:
       '@rsbuild/core':

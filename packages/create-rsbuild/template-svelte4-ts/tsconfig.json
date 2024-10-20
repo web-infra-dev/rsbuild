@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["DOM", "ES2020"],
+    "module": "ESNext",
+    "noEmit": true,
+    "strict": true,
+    "skipLibCheck": true,
+    // svelte-preprocess cannot figure out whether you have a value or a type, so tell TypeScript
+    // to enforce using `import type` instead of `import` for Types.
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "bundler",
+    "useDefineForClassFields": true,
+    "allowImportingTsExtensions": true
+  },
+  "include": ["src"]
+}
