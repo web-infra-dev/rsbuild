@@ -1,10 +1,9 @@
 import fs from 'node:fs';
-import { platform } from 'node:os';
 import { join } from 'node:path';
 import { test } from '@playwright/test';
 import type { ConsoleType } from '@rsbuild/core';
 import stripAnsi from 'strip-ansi';
-import { type GlobOptions, convertPathToPattern, glob } from 'tinyglobby';
+import { type GlobOptions, glob } from 'tinyglobby';
 
 export const providerType = process.env.PROVIDE_TYPE || 'rspack';
 
@@ -33,17 +32,8 @@ export const getProviderTest = (
 export const webpackOnlyTest = getProviderTest(['webpack']);
 export const rspackOnlyTest = getProviderTest(['rspack']);
 
-// fast-glob only accepts posix path
-// https://github.com/mrmlnc/fast-glob#convertpathtopatternpath
-const convertPath = (path: string) => {
-  if (platform() === 'win32') {
-    return convertPathToPattern(path);
-  }
-  return path;
-};
-
 export const globContentJSON = async (path: string, options?: GlobOptions) => {
-  const files = await glob(convertPath(join(path, '**/*')), {
+  const files = await glob(join(path, '**/*'), {
     absolute: true,
     ...options,
   });
