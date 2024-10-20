@@ -1,5 +1,5 @@
 {
-  "name": "@examples/svelte",
+  "name": "@examples/svelte4",
   "private": true,
   "scripts": {
     "dev": "rsbuild dev --open",

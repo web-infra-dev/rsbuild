@@ -1,5 +1,5 @@
 {
-  "name": "rsbuild-svelte-ts",
+  "name": "rsbuild-svelte4-ts",
   "private": true,
   "version": "1.0.0",
   "scripts": {
@@ -9,7 +9,7 @@
     "svelte-check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "dependencies": {
-    "svelte": "^5.0.3"
+    "svelte": "^4.2.19"
   },
   "devDependencies": {
     "@rsbuild/core": "^1.0.13",
