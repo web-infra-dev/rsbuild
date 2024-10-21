@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type {
   ConfigChainWithContext,
   RsbuildPlugin,
@@ -6,6 +7,8 @@ import type {
 } from '@rsbuild/core';
 import deepmerge from 'deepmerge';
 import { reduceConfigsWithContext } from 'reduce-configs';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const PLUGIN_LESS_NAME = 'rsbuild:less';
 

@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import { SwcMinimizerPlugin } from './minimizer.js';
 import type {
@@ -11,6 +12,8 @@ import {
   checkUseMinify,
   removeUselessOptions,
 } from './utils.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**
  * In this plugin, we do:
