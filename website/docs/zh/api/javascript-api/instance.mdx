@@ -118,7 +118,13 @@ type BuildOptions = {
 };
 
 function Build(options?: BuildOptions): Promise<{
+  /**
+   * Rspack 的 [stats](https://rspack.dev/api/javascript-api/stats) 对象。
+   */
   stats?: Rspack.Stats | Rspack.MultiStats;
+  /**
+   * 停止监听文件变化。
+   */
   close: () => Promise<void>;
 }>;
 ```
@@ -128,16 +134,24 @@ function Build(options?: BuildOptions): Promise<{
 ```ts
 import { logger } from '@rsbuild/core';
 
-// build
+// Example 1: run build
 await rsbuild.build();
 
-// build and handle the error
+// Example 2: build and handle the error
 try {
   await rsbuild.build();
 } catch (err) {
   logger.error('Failed to build.');
   logger.error(err);
   process.exit(1);
+}
+
+// Example 3: build and get all stats
+const { stats } = await rsbuild.build();
+
+if (stats) {
+  const { assets } = stats.toJson({ assets: true });
+  console.log(assets);
 }
 ```
 
