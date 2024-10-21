@@ -80,7 +80,7 @@
     "mrmime": "^2.0.0",
     "on-finished": "2.4.1",
     "open": "^8.4.0",
-    "picocolors": "^1.1.0",
+    "picocolors": "^1.1.1",
     "postcss": "^8.4.47",
     "postcss-load-config": "6.0.1",
     "postcss-loader": "8.1.1",
