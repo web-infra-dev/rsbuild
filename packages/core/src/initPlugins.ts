@@ -16,6 +16,8 @@ import type {
   ProcessAssetsFn,
   ProcessAssetsHandler,
   ProcessAssetsStage,
+  ResolveFn,
+  ResolveHandler,
   RsbuildPluginAPI,
   TransformFn,
   TransformHandler,
@@ -155,6 +157,11 @@ export function initPluginAPI({
     handler: ProcessAssetsHandler;
   }> = [];
 
+  const resolveFns: Array<{
+    environment?: string;
+    handler: ResolveHandler;
+  }> = [];
+
   hooks.modifyBundlerChain.tap((chain, { target, environment }) => {
     const pluginName = 'RsbuildCorePlugin';
 
@@ -164,6 +171,31 @@ export function initPluginAPI({
     class RsbuildCorePlugin {
       apply(compiler: Compiler): void {
         compiler.__rsbuildTransformer = transformer;
+
+        for (const { handler, environment: pluginEnvironment } of resolveFns) {
+          if (
+            pluginEnvironment &&
+            !isPluginMatchEnvironment(pluginEnvironment, environment.name)
+          ) {
+            return;
+          }
+
+          compiler.hooks.compilation.tap(
+            pluginName,
+            (compilation, { normalModuleFactory }) => {
+              normalModuleFactory.hooks.resolve.tapPromise(
+                pluginName,
+                async (resolveData) =>
+                  handler({
+                    compiler,
+                    compilation,
+                    environment,
+                    resolveData,
+                  }),
+              );
+            },
+          );
+        }
 
         compiler.hooks.thisCompilation.tap(pluginName, (compilation) => {
           compilation.hooks.childCompiler.tap(pluginName, (childCompiler) => {
@@ -267,6 +299,11 @@ export function initPluginAPI({
       processAssetsFns.push({ environment, descriptor, handler });
     };
 
+  const setResolve: (environment?: string) => ResolveFn =
+    (environment) => (handler) => {
+      resolveFns.push({ environment, handler });
+    };
+
   let onExitListened = false;
 
   const onExit: typeof hooks.onExit.tap = (cb) => {
@@ -286,6 +323,7 @@ export function initPluginAPI({
     transform: getTransformFn(environment),
     useExposed,
     processAssets: setProcessAssets(environment),
+    resolve: setResolve(environment),
     getRsbuildConfig,
     getNormalizedConfig,
     isPluginExists: pluginManager.isPluginExists,
