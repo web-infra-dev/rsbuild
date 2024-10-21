@@ -21,8 +21,8 @@ importers:
         specifier: workspace:*
         version: link:scripts/config
       '@rslib/core':
-        specifier: 0.0.0-next-20241012061647
-        version: 0.0.0-next-20241012061647(typescript@5.6.3)
+        specifier: 0.0.13
+        version: 0.0.13(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:scripts/test-helper
@@ -2823,11 +2823,6 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rsbuild/core@1.0.13':
-    resolution: {integrity: sha512-YPjd+Aal+lMqAYRt2DGEJc3dI9ZcP5j9kefobYszxs0NlgpoK+y+malXYXW4yVu3s84EqtHp+tSoJzaSK23Txw==}
-    engines: {node: '>=16.7.0'}
-    hasBin: true
-
   '@rsbuild/core@1.0.15':
     resolution: {integrity: sha512-LIOgs4UzfFeT3sZnPMww1JbqF7zkGNMZdMJ6vV8xEXGOU4t8Z6QAtM5A0FGRfb2mYW5u2+XnMog+JAbo2RrN/A==}
     engines: {node: '>=16.7.0'}
@@ -2890,8 +2885,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  '@rslib/core@0.0.0-next-20241012061647':
-    resolution: {integrity: sha512-5uXItTOtczAgv4bcvlw5DOe9wFbzojZshMoPgjH3ZuSwujKeitQmgNu7hmfkIl/jZCiWgAWRk+C8JDPNPFPHaQ==}
+  '@rslib/core@0.0.13':
+    resolution: {integrity: sha512-q0PIEv1snJdiW38sa4bwARhzYbDdbHHVFekiHheLkQwtapvf1/4+n9Ud1mlUhq180wHVAsSJQrRpcW4g7w47OA==}
     engines: {node: '>=16.0.0'}
     hasBin: true
     peerDependencies:
@@ -6425,8 +6420,8 @@ packages:
       webpack:
         optional: true
 
-  rsbuild-plugin-dts@0.0.0-next-20241012061647:
-    resolution: {integrity: sha512-+iT1pDvHQzfoYVNvgDyXfDIeJIqoq+Xd0/JXbPiByrYFyuB2ciX0JemqdICN9kB9z0Ky0oNNbRrWUdz57GqItg==}
+  rsbuild-plugin-dts@0.0.13:
+    resolution: {integrity: sha512-coAX6+JiGkyAYsXFGbtExvKgcB2Fn2ZEd8fTWxMImeFpoNxdDL6Ky90c5hSwE4zuxZJ4b0T3KrVzOCxLK0eMQw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       '@microsoft/api-extractor': ^7
@@ -9374,15 +9369,6 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.17.1':
     optional: true
 
-  '@rsbuild/core@1.0.13':
-    dependencies:
-      '@rspack/core': 1.0.13(@swc/helpers@0.5.13)
-      '@rspack/lite-tapable': 1.0.1
-      '@swc/helpers': 0.5.13
-      core-js: 3.38.1
-    optionalDependencies:
-      fsevents: 2.3.3
-
   '@rsbuild/core@1.0.15':
     dependencies:
       '@rspack/core': 1.0.13(@swc/helpers@0.5.13)
@@ -9471,10 +9457,10 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  '@rslib/core@0.0.0-next-20241012061647(typescript@5.6.3)':
+  '@rslib/core@0.0.13(typescript@5.6.3)':
     dependencies:
-      '@rsbuild/core': 1.0.13
-      rsbuild-plugin-dts: 0.0.0-next-20241012061647(@rsbuild/core@1.0.13)(typescript@5.6.3)
+      '@rsbuild/core': 1.0.16
+      rsbuild-plugin-dts: 0.0.13(@rsbuild/core@1.0.16)(typescript@5.6.3)
     optionalDependencies:
       typescript: 5.6.3
 
@@ -13685,9 +13671,9 @@ snapshots:
     optionalDependencies:
       webpack: 5.95.0(@swc/core@1.6.13(@swc/helpers@0.5.13))
 
-  rsbuild-plugin-dts@0.0.0-next-20241012061647(@rsbuild/core@1.0.13)(typescript@5.6.3):
+  rsbuild-plugin-dts@0.0.13(@rsbuild/core@1.0.16)(typescript@5.6.3):
     dependencies:
-      '@rsbuild/core': 1.0.13
+      '@rsbuild/core': 1.0.16
       fast-glob: 3.3.2
       magic-string: 0.30.12
       picocolors: 1.1.0

@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type {
   EnvironmentContext,
   NormalizedEnvironmentConfig,
@@ -9,6 +10,8 @@ import { ensureAssetPrefix } from '@rsbuild/core';
 import serialize from 'serialize-javascript';
 import { AsyncChunkRetryPlugin } from './AsyncChunkRetryPlugin.js';
 import type { PluginAssetsRetryOptions } from './types.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export type { PluginAssetsRetryOptions };
 

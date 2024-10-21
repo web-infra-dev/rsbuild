@@ -1,9 +1,12 @@
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
 import { PLUGIN_REACT_NAME } from '@rsbuild/plugin-react';
 import type { Config as SvgrOptions } from '@svgr/core';
 import deepmerge from 'deepmerge';
 import type { Config as SvgoConfig } from 'svgo';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 type SvgoPluginConfig = NonNullable<SvgoConfig['plugins']>[0];
 
