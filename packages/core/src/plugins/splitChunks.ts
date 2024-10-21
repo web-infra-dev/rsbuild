@@ -275,8 +275,8 @@ export const pluginSplitChunks = (): RsbuildPlugin => ({
           chunkSplit.strategy || 'split-by-experience'
         ]({
           defaultConfig,
-          override: override || {},
           forceSplittingGroups,
+          override: override || {},
           userConfig: chunkSplit,
           rootPath: api.context.rootPath,
           polyfill: config.output.polyfill,

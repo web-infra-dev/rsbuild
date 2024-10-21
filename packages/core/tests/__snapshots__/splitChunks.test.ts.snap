@@ -22,6 +22,36 @@ exports[`plugin-split-chunks > should allow forceSplitting to be an object 1`] =
 }
 `;
 
+exports[`plugin-split-chunks > should allow override default config 1`] = `
+{
+  "optimization": {
+    "splitChunks": {
+      "cacheGroups": {
+        "axios": {
+          "name": "override-lib-common",
+          "priority": 100,
+          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(axios\\)\\[\\\\\\\\/\\]/,
+        },
+        "lib-axios": {
+          "name": "lib-axios",
+          "priority": 0,
+          "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
+        },
+        "lib-polyfill": {
+          "name": "lib-polyfill",
+          "priority": 0,
+          "test": /node_modules\\[\\\\\\\\/\\]\\(\\?:tslib\\|core-js\\|@swc\\[\\\\\\\\/\\]helpers\\)\\[\\\\\\\\/\\]/,
+        },
+      },
+      "chunks": "all",
+    },
+  },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
+}
+`;
+
 exports[`plugin-split-chunks > should not split chunks when target is node 1`] = `
 {
   "optimization": {

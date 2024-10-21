@@ -170,6 +170,33 @@ describe('plugin-split-chunks', () => {
     expect(config).toMatchSnapshot();
   });
 
+  it('should allow override default config', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginSplitChunks()],
+      rsbuildConfig: {
+        performance: {
+          chunkSplit: {
+            override: {
+              cacheGroups: {
+                axios: {
+                  name: 'override-lib-common',
+                  test: /[\\/]node_modules[\\/](axios)[\\/]/,
+                  priority: 100,
+                },
+              },
+            },
+          },
+        },
+        output: {
+          polyfill: 'entry',
+        },
+      },
+    });
+
+    const config = await rsbuild.unwrapConfig();
+    expect(config).toMatchSnapshot();
+  });
+
   it('should not split chunks when target is node', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSplitChunks()],
