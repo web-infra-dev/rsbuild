@@ -351,24 +351,8 @@ handler 参数是一个回调函数，接收一个模块的请求信息，并允
 - **类型：**
 
 ```ts
-type ResolveData = {
-  contextInfo: {
-    issuer: string;
-  };
-  context: string;
-  request: string;
-  fileDependencies: string[];
-  missingDependencies: string[];
-  contextDependencies: string[];
-  createData?: {
-    request?: string;
-    userRequest?: string;
-    resource?: string;
-  };
-};
-
 type ResolveHandler = (context: {
-  resolveData: ResolveData;
+  resolveData: Rspack.ResolveData;
   compiler: Rspack.Compiler;
   compilation: Rspack.Compilation;
   environment: EnvironmentContext;

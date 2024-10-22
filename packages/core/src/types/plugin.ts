@@ -368,25 +368,9 @@ export type ProcessAssetsHandler = (context: {
   sources: RspackSources;
 }) => Promise<void> | void;
 
-type ResolveData = {
-  contextInfo: {
-    issuer: string;
-  };
-  context: string;
-  request: string;
-  fileDependencies: string[];
-  missingDependencies: string[];
-  contextDependencies: string[];
-  createData?: {
-    request?: string;
-    userRequest?: string;
-    resource?: string;
-  };
-};
-
 export type ResolveHandler = (context: {
   /** Module request information */
-  resolveData: ResolveData;
+  resolveData: Rspack.ResolveData;
   /** The environment context for current build. */
   environment: EnvironmentContext;
   compiler: Rspack.Compiler;
