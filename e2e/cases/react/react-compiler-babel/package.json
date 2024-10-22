@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "react": "19.0.0-rc-fb9a90fa48-20240614",
-    "react-dom": "19.0.0-rc-fb9a90fa48-20240614"
+    "react": "^19.0.0-rc.0",
+    "react-dom": "^19.0.0-rc.0"
   },
   "devDependencies": {
-    "babel-plugin-react-compiler": "0.0.0-experimental-696af53-20240625"
+    "babel-plugin-react-compiler": "^19.0.0-beta.0"
   }
 }
