@@ -19,7 +19,7 @@ self.onmessage = (event) => {
 };
 ```
 
-Then use this Worker in the main thread:
+Then use this worker in the main thread:
 
 ```js
 const worker = new Worker(new URL('./worker.js', import.meta.url));
