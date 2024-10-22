@@ -285,7 +285,7 @@ export type TransformDescriptor = {
   resourceQuery?: Rspack.RuleSetCondition;
   /**
    * Match based on the Rsbuild targets and only apply the transform to certain targets.
-   * @see https://rsbuild.dev/config/output/targets
+   * @see https://rsbuild.dev/config/output/target
    */
   targets?: RsbuildTarget[];
   /**
@@ -330,7 +330,7 @@ export type ProcessAssetsDescriptor = {
   stage: ProcessAssetsStage;
   /**
    * Match based on the Rsbuild targets and only process the assets of certain targets.
-   * @see https://rsbuild.dev/config/output/targets
+   * @see https://rsbuild.dev/config/output/target
    */
   targets?: RsbuildTarget[];
   /**
