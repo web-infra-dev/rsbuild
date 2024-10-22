@@ -1,0 +1,50 @@
+# 使用 Web Worker
+
+本文将介绍在 Rsbuild 项目中如何配置和使用 [Web Worker](https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Workers_API/Using_web_workers)。
+
+import WebWorker from '@zh/shared/webWorker.mdx';
+
+<WebWorker />
+
+## 使用 Web Worker
+
+[Web Worker](https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Workers_API/Using_web_workers) 是 Rspack 的一等公民，这意味着你不需要任何的 Loader 就可以直接在 Rspack / Rsbuild 项目中使用 Web Worker。详情可参考 [Rspack - Web Worker](https://rspack.dev/zh/guide/features/web-workers)。
+
+例如，创建一个名为 worker.js 的文件：
+
+```js title=worker.js
+self.onmessage = (event) => {
+  const result = event.data * 2;
+  self.postMessage(result);
+};
+```
+
+然后在主线程中使用这个 Worker：
+
+```js
+const worker = new Worker(new URL('./worker.js', import.meta.url));
+
+worker.onmessage = (event) => {
+  console.log('The results from Workers:', event.data);
+};
+
+worker.postMessage(10);
+```
+
+:::tip
+当你在使用 Web Worker 时可能遇到跨域问题，此时可以使用 [import-web-worker](https://github.com/jantimon/remote-web-worker) 或参考 [Discussions - webpack 5 web worker support for CORS?](https://github.com/webpack/webpack/discussions/14648) 获得解决方案。
+:::
+
+## 构建 Web Worker 产物
+
+Rsbuild 支持独立构建 Web Worker 产物，这在你需要将 Web Worker 产物提供给其他应用使用时很有帮助。
+
+将 Rsbuild 的 [output.target](/config/output/target) 配置项设置为 `'web-worker'` 即可生成适用于 Web Worker 环境的构建产物。
+
+```ts
+export default {
+  output: {
+    target: 'web-worker',
+  },
+};
+```

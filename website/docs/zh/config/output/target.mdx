@@ -76,9 +76,9 @@ export default {
 
 指运行在 [Web Worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) 环境的产物。
 
-:::tip Web Worker
-Web Worker 是一种 JavaScript API，它允许网页在后台线程中执行脚本，与主线程（网页）分离。这意味着，您可以使用 Web Worker 来执行计算密集型或长时间运行的任务，而无需阻塞主线程，进而影响网页的性能。
-:::
+import WebWorker from '@zh/shared/webWorker.mdx';
+
+<WebWorker />
 
 当 `target` 设置为 `'web-worker'` 时，Rsbuild 会进行以下处理：
 
