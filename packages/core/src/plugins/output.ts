@@ -5,7 +5,7 @@ import {
   DEFAULT_DEV_HOST,
   DEFAULT_PORT,
 } from '../constants';
-import { formatPublicPath, getFilename } from '../helpers';
+import { formatPublicPath, getFilename, urlJoin } from '../helpers';
 import { getCssExtractPlugin } from '../pluginHelper';
 import { replacePortPlaceholder } from '../server/open';
 import type {
@@ -24,7 +24,7 @@ function getPublicPath({
   config: NormalizedEnvironmentConfig;
   context: RsbuildContext;
 }) {
-  const { dev, output } = config;
+  const { dev, output, server } = config;
 
   let publicPath = DEFAULT_ASSET_PREFIX;
   const port = context.devServer?.port || DEFAULT_PORT;
@@ -38,6 +38,7 @@ function getPublicPath({
   } else if (dev.assetPrefix === true) {
     const protocol = context.devServer?.https ? 'https' : 'http';
     const hostname = context.devServer?.hostname || DEFAULT_DEV_HOST;
+
     if (hostname === DEFAULT_DEV_HOST) {
       const localHostname = 'localhost';
       // If user not specify the hostname, it would use 0.0.0.0
@@ -47,6 +48,10 @@ function getPublicPath({
       publicPath = `${protocol}://${localHostname}:<port>/`;
     } else {
       publicPath = `${protocol}://${hostname}:<port>/`;
+    }
+
+    if (server.base && server.base !== '/') {
+      publicPath = urlJoin(publicPath, server.base);
     }
   }
 

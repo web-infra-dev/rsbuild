@@ -159,7 +159,7 @@ export const getPublicPathFromCompiler = (
   return DEFAULT_ASSET_PREFIX;
 };
 
-const urlJoin = (base: string, path: string) => {
+export const urlJoin = (base: string, path: string) => {
   const [urlProtocol, baseUrl] = base.split('://');
   return `${urlProtocol}://${posix.join(baseUrl, path)}`;
 };
