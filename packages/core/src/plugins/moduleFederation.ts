@@ -1,7 +1,6 @@
 import { isRegExp } from 'node:util/types';
 import { rspack } from '@rspack/core';
 import type { RspackPluginInstance } from '@rspack/core';
-import { DEFAULT_ASSET_PREFIX } from '../constants';
 import type { CacheGroup, RsbuildPlugin, Rspack } from '../types';
 
 /**
@@ -115,7 +114,7 @@ export function pluginModuleFederation(): RsbuildPlugin {
           const originalConfig = api.getRsbuildConfig('original');
           if (
             originalConfig.dev?.assetPrefix === undefined &&
-            config.dev.assetPrefix === DEFAULT_ASSET_PREFIX
+            config.dev.assetPrefix === config.server?.base
           ) {
             config.dev.assetPrefix = true;
           }
