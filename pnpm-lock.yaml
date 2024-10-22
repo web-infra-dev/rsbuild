@@ -213,15 +213,15 @@ importers:
   e2e/cases/react/react-compiler-babel:
     dependencies:
       react:
-        specifier: 19.0.0-rc-fb9a90fa48-20240614
+        specifier: ^19.0.0-rc.0
         version: 19.0.0-rc-fb9a90fa48-20240614
       react-dom:
-        specifier: 19.0.0-rc-fb9a90fa48-20240614
+        specifier: ^19.0.0-rc.0
         version: 19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614)
     devDependencies:
       babel-plugin-react-compiler:
-        specifier: 0.0.0-experimental-696af53-20240625
-        version: 0.0.0-experimental-696af53-20240625
+        specifier: ^19.0.0-beta.0
+        version: 19.0.0-beta-8a03594-20241020
 
   e2e/cases/resolve-pkg-imports: {}
 
@@ -3730,8 +3730,8 @@ packages:
     peerDependencies:
       '@babel/core': ^7.4.0 || ^8.0.0-0 <8.0.0
 
-  babel-plugin-react-compiler@0.0.0-experimental-696af53-20240625:
-    resolution: {integrity: sha512-OUDKms8qmcm5bX0D+sJWC1YcKcd7AZ2aJ7eY6gkR+Xr7PDfkXLbqAld4Qs9B0ntjVbUMEtW/PjlQrxDtY4raHg==}
+  babel-plugin-react-compiler@19.0.0-beta-8a03594-20241020:
+    resolution: {integrity: sha512-Wk0748DZzQEmjkEN4SbBujM5al4q5TfRBapA32ax0AID/Yek3emS+eyCvPvb4zPddYJTAF4LaJNLt8uHYfdKAQ==}
 
   babel-plugin-vue-jsx-hmr@1.0.0:
     resolution: {integrity: sha512-XRq+XTD4bub6HkavELMhihvLX2++JkSBAxRXlqQK32b+Tb0S9PEqxrDSMpOEZ1iGyOaJZj9Y0uU/FzICdyL9MA==}
@@ -7673,7 +7673,7 @@ snapshots:
 
   '@babel/generator@7.2.0':
     dependencies:
-      '@babel/types': 7.25.0
+      '@babel/types': 7.25.8
       jsesc: 2.5.2
       lodash: 4.17.21
       source-map: 0.5.7
@@ -10452,10 +10452,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  babel-plugin-react-compiler@0.0.0-experimental-696af53-20240625:
+  babel-plugin-react-compiler@19.0.0-beta-8a03594-20241020:
     dependencies:
       '@babel/generator': 7.2.0
-      '@babel/types': 7.25.0
+      '@babel/types': 7.25.8
       chalk: 4.1.2
       invariant: 2.2.4
       pretty-format: 24.9.0
