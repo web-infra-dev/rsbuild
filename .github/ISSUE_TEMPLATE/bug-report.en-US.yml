@@ -11,6 +11,7 @@ body:
          - Confirm that your problem cannot be solved by official documentation.
          - Make sure you've searched in the [Issues](https://github.com/web-infra-dev/rsbuild/issues) and haven't found the same issue.
          - If it's not a bug report, please post to the [Discussions](https://github.com/web-infra-dev/rsbuild/discussions).
+         - If it's an upsteam bug, please report it to the relevant repository, such as [Rspack](https://github.com/web-infra-dev/rspack), [SWC](https://github.com/swc-project/swc) and [Lightning CSS](https://github.com/parcel-bundler/lightningcss).
 
   - type: textarea
     id: versions
