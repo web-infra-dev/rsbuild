@@ -39,7 +39,7 @@ worker.postMessage(10);
 
 Rsbuild 支持独立构建 Web Worker 产物，这在你需要将 Web Worker 产物提供给其他应用使用时很有帮助。
 
-将 Rsbuild 的 [output.target](/config/output/target) 配置项设置为 `'web-worker'` 即可生成适用于 Web Worker 环境的构建产物。
+将 Rsbuild 的 [output.target](/config/output/target) 配置项设置为 `'web-worker'`，即可生成运行在 Worker 线程的构建产物。
 
 ```ts
 export default {
