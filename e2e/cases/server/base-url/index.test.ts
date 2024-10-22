@@ -49,6 +49,31 @@ test('server.base when dev', async ({ page }) => {
   await rsbuild.close();
 });
 
+test('server.base with dev.assetPrefix: true', async ({ page }) => {
+  const rsbuild = await dev({
+    cwd: __dirname,
+    page,
+    rsbuildConfig: {
+      server: {
+        base: '/base',
+      },
+      dev: {
+        assetPrefix: true,
+      },
+    },
+  });
+
+  // should visit base url correctly
+  await page.goto(`http://localhost:${rsbuild.port}/base`);
+  await expect(page.locator('#test')).toHaveText('Hello Rsbuild!');
+
+  // should visit public dir correctly with base prefix
+  await page.goto(`http://localhost:${rsbuild.port}/base/aaa.txt`);
+  expect(await page.content()).toContain('aaaa');
+
+  await rsbuild.close();
+});
+
 test('server.base when build & preview', async ({ page }) => {
   const { logs, restore } = proxyConsole('log');
 
