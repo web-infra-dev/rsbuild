@@ -1,0 +1,50 @@
+# Use Web Workers
+
+This chapter introduces how to configure and use [Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers) in Rsbuild project.
+
+import WebWorkers from '@en/shared/webWorkers.mdx';
+
+<WebWorkers />
+
+## Use Web Workers
+
+[Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers) is first-class citizen of Rspack, which means you don't need any loader to use web workers directly in Rspack or Rsbuild projects.
+
+For example, create a file called `worker.js`:
+
+```js title=worker.js
+self.onmessage = (event) => {
+  const result = event.data * 2;
+  self.postMessage(result);
+};
+```
+
+Then use this worker in the main thread:
+
+```js
+const worker = new Worker(new URL('./worker.js', import.meta.url));
+
+worker.onmessage = (event) => {
+  console.log('The results from Workers:', event.data);
+};
+
+worker.postMessage(10);
+```
+
+:::tip
+When you use Web Workers, you may encounter CORS exceptions. In this case, you can use [import-web-worker](https://github.com/jantimon/remote-web-worker) or refer to [Discussions - webpack 5 web worker support for CORS?](https://github.com/webpack/webpack/discussions/14648) to get the solution.
+:::
+
+## Build Web Workers outputs
+
+Rsbuild supports building Web Workers outputs independently, which is helpful when you need to provide Web Workers outputs for use by other applications.
+
+You can set Rsbuild's [output.target](/config/output/target) configuration to `'web-worker'`, and Rsbuild will generate build outputs suitable for the Web Workers environment.
+
+```ts
+export default {
+  output: {
+    target: 'web-worker',
+  },
+};
+```

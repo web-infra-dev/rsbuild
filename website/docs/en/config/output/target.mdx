@@ -76,9 +76,9 @@ When `target` is set to `'node'`, Rsbuild will:
 
 Refers to the build target running in the [Web Worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) environment.
 
-import WebWorker from '@en/shared/webWorker.mdx';
+import WebWorkers from '@en/shared/webWorkers.mdx';
 
-<WebWorker />
+<WebWorkers />
 
 When `target` is set to `'web-worker'`, Rsbuild will:
 
@@ -87,6 +87,8 @@ When `target` is set to `'web-worker'`, Rsbuild will:
 - CSS code will not be bundled or extracted, but the id information of CSS Modules will be included in the bundle.
 - The default code split strategy will be disabled, and **dynamic import can not work**, because the Web Worker only runs a single JavaScript file.
 - Disable the HMR.
+
+For more information, please refer to: [Using Web Workers](/guide/basic/web-workers).
 
 ## Other targets
 

@@ -76,9 +76,9 @@ export default {
 
 指运行在 [Web Worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) 环境的产物。
 
-import WebWorker from '@zh/shared/webWorker.mdx';
+import WebWorkers from '@zh/shared/webWorkers.mdx';
 
-<WebWorker />
+<WebWorkers />
 
 当 `target` 设置为 `'web-worker'` 时，Rsbuild 会进行以下处理：
 
@@ -87,6 +87,8 @@ import WebWorker from '@zh/shared/webWorker.mdx';
 - 不会打包或抽取 CSS 代码，但产物中会包含 CSS Modules 的 id 信息。
 - 不会开启默认的拆包策略，**并且 dynamic import 也不会生效**，因为 Web Worker 仅运行支持单个 JavaScript 文件。
 - 不会开启热更新相关的能力。
+
+更多信息可参考 [使用 Web Workers](/guide/basic/web-workers)。
 
 ## 其他 target
 
