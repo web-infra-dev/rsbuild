@@ -10,7 +10,9 @@
     "skipLibCheck": true,
     "isolatedModules": true,
     "resolveJsonModule": true,
-    "moduleResolution": "bundler",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "moduleResolution": "Bundler",
     "useDefineForClassFields": true,
     "allowImportingTsExtensions": true,
     "paths": {
