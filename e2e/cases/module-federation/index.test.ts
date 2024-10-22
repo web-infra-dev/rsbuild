@@ -55,6 +55,45 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest(
+  'should run module federation in development mode with server.base',
+  async ({ page }) => {
+    writeButtonCode();
+
+    const remotePort = await getRandomPort();
+
+    process.env.REMOTE_PORT = remotePort.toString();
+
+    const remoteApp = await dev({
+      cwd: remote,
+      rsbuildConfig: {
+        server: {
+          base: '/remote',
+        },
+      },
+    });
+    const hostApp = await dev({
+      cwd: host,
+      rsbuildConfig: {
+        server: {
+          base: '/host',
+        },
+      },
+    });
+
+    await gotoPage(page, remoteApp);
+    await expect(page.locator('#title')).toHaveText('Remote');
+    await expect(page.locator('#button')).toHaveText('Button from remote');
+
+    await gotoPage(page, hostApp);
+    await expect(page.locator('#title')).toHaveText('Host');
+    await expect(page.locator('#button')).toHaveText('Button from remote');
+
+    await hostApp.close();
+    await remoteApp.close();
+  },
+);
+
+rspackOnlyTest(
   'should allow remote module to perform HMR',
   async ({ page }) => {
     // HMR cases will fail in Windows
