@@ -8,7 +8,7 @@ import WebWorkers from '@en/shared/webWorkers.mdx';
 
 ## Use Web Workers
 
-[Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers) is first-class citizen of Rspack, which means you don't need any loader to use web workers directly in Rspack or Rsbuild projects.
+Web Workers are first-class citizens of Rspack, which means you don't need any loader to use web workers directly in Rspack or Rsbuild projects.
 
 For example, create a file called `worker.js`:
 
@@ -21,7 +21,7 @@ self.onmessage = (event) => {
 
 Then use this worker in the main thread:
 
-```js
+```js title=index.js
 const worker = new Worker(new URL('./worker.js', import.meta.url));
 
 worker.onmessage = (event) => {
@@ -31,9 +31,27 @@ worker.onmessage = (event) => {
 worker.postMessage(10);
 ```
 
-:::tip
-When you use Web Workers, you may encounter CORS exceptions. In this case, you can use [import-web-worker](https://github.com/jantimon/remote-web-worker) or refer to [Discussions - webpack 5 web worker support for CORS?](https://github.com/webpack/webpack/discussions/14648) to get the solution.
-:::
+### Loading scripts from remote URLs (cross-origin)
+
+By default, worker scripts are output as a separate chunk. Worker scripts support uploading to CDN, but you may encounter cross-domain issues when using remote scripts. A common solution is to load via [importScripts](https://developer.mozilla.org/en-US/docs/Web/API/WorkerGlobalScope/importScripts) (not subject to CORS).
+You can refer to the following code:
+
+```js title=index.js {2}
+// https://github.com/jantimon/remote-web-worker
+import 'remote-web-worker';
+
+const worker = new Worker(new URL('./worker.js', import.meta.url), {
+  type: 'classic',
+});
+
+worker.onmessage = (event) => {
+  console.log('The results from Workers:', event.data);
+};
+
+worker.postMessage(10);
+```
+
+For detailed discussions on cross-domain issues, please refer to [Discussions - webpack 5 web worker support for CORS?](https://github.com/webpack/webpack/discussions/14648)
 
 ## Build Web Workers outputs
 

@@ -8,7 +8,7 @@ import WebWorkers from '@zh/shared/webWorkers.mdx';
 
 ## 使用 Web Workers
 
-[Web Workers](https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Workers_API/Using_web_workers) 是 Rspack 的一等公民，这意味着你不需要任何的 Loader 就可以直接在 Rspack / Rsbuild 项目中使用 Web Workers。详情可参考 [Rspack - Web Workers](https://rspack.dev/zh/guide/features/web-workers)。
+Web Workers 是 Rspack 的一等公民，这意味着你不需要任何的 Loader 就可以直接在 Rspack / Rsbuild 项目中使用 Web Workers。详情可参考 [Rspack - Web Workers](https://rspack.dev/zh/guide/features/web-workers)。
 
 例如，创建一个名为 worker.js 的文件：
 
@@ -21,7 +21,7 @@ self.onmessage = (event) => {
 
 然后在主线程中使用这个 worker：
 
-```js
+```js title=index.js
 const worker = new Worker(new URL('./worker.js', import.meta.url));
 
 worker.onmessage = (event) => {
@@ -31,9 +31,26 @@ worker.onmessage = (event) => {
 worker.postMessage(10);
 ```
 
-:::tip
-当你在使用 Web Workers 时可能遇到跨域问题，此时可以使用 [import-web-worker](https://github.com/jantimon/remote-web-worker) 或参考 [Discussions - webpack 5 web worker support for CORS?](https://github.com/webpack/webpack/discussions/14648) 获得解决方案。
-:::
+### 从远程 URL 加载脚本（跨域）
+
+默认情况下，worker 脚本会输出成一个独立的 chunk。worker 脚本支持上传到 CDN，但在加载远程脚本时可能会遇到跨域问题。常见解法是通过 [importScripts](https://developer.mozilla.org/zh-CN/docs/Web/API/WorkerGlobalScope/importScripts) (不受 CORS 约束) 加载。可参考如下代码：
+
+```js title=index.js {2}
+// https://github.com/jantimon/remote-web-worker
+import 'remote-web-worker';
+
+const worker = new Worker(new URL('./worker.js', import.meta.url), {
+  type: 'classic',
+});
+
+worker.onmessage = (event) => {
+  console.log('The results from Workers:', event.data);
+};
+
+worker.postMessage(10);
+```
+
+关于跨域问题的详细讨论可参考 [Discussions - webpack 5 web worker support for CORS?](https://github.com/webpack/webpack/discussions/14648)
 
 ## 构建 Web Workers 产物
 
