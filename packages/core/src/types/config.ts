@@ -864,6 +864,11 @@ export interface OutputConfig {
    */
   assetPrefix?: string;
   /**
+   * Include additional files that should be treated as static assets.
+   * @default undefined
+   */
+  assetsInclude?: Rspack.RuleSetCondition;
+  /**
    * Set the size threshold to inline static assets such as images and fonts.
    * By default, static assets will be Base64 encoded and inline into the page if the size is less than 4KiB.
    */
