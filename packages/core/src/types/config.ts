@@ -184,6 +184,11 @@ export interface SourceConfig {
    */
   aliasStrategy?: AliasStrategy;
   /**
+   * Include additional files that should be treated as static assets.
+   * @default undefined
+   */
+  assetsInclude?: Rspack.RuleSetCondition;
+  /**
    * Specify directories or modules that need additional compilation.
    * In order to maintain faster compilation speed, Rsbuild will not compile files under node_modules through
    * `babel-loader` or `ts-loader` by default, as will as the files outside the current project directory.
@@ -863,11 +868,6 @@ export interface OutputConfig {
    * @default `server.base`
    */
   assetPrefix?: string;
-  /**
-   * Include additional files that should be treated as static assets.
-   * @default undefined
-   */
-  assetsInclude?: Rspack.RuleSetCondition;
   /**
    * Set the size threshold to inline static assets such as images and fonts.
    * By default, static assets will be Base64 encoded and inline into the page if the size is less than 4KiB.

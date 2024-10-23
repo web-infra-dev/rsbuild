@@ -129,8 +129,9 @@ export const pluginAsset = (): RsbuildPlugin => ({
       }
 
       // additional assets
-      if (config.output.assetsInclude) {
-        const { assetsInclude, dataUriLimit } = config.output;
+      const { assetsInclude } = config.source;
+      if (assetsInclude) {
+        const { dataUriLimit } = config.output;
         const rule = chain.module.rule('additional-assets').test(assetsInclude);
         const maxSize =
           typeof dataUriLimit === 'number'
