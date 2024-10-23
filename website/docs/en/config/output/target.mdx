@@ -76,10 +76,6 @@ When `target` is set to `'node'`, Rsbuild will:
 
 Refers to the build target running in the [Web Worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) environment.
 
-:::tip Web Worker
-A web worker is a type of JavaScript program that runs in the background, independently of other scripts, without affecting the performance of the page. This makes it possible to run long-running scripts, such as ones that handle complex calculations or access remote resources, without blocking the user interface or other scripts. Web workers provide an easy way to run tasks in the background and improve the overall performance of web applications.
-:::
-
 When `target` is set to `'web-worker'`, Rsbuild will:
 
 - Set Rspack's [target](https://rspack.dev/config/target) to `'webworker'`.
@@ -87,6 +83,8 @@ When `target` is set to `'web-worker'`, Rsbuild will:
 - CSS code will not be bundled or extracted, but the id information of CSS Modules will be included in the bundle.
 - The default code split strategy will be disabled, and **dynamic import can not work**, because the Web Worker only runs a single JavaScript file.
 - Disable the HMR.
+
+For more information, please refer to: [Using Web Workers](/guide/basic/web-workers).
 
 ## Other targets
 

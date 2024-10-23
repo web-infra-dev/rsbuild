@@ -1,0 +1,69 @@
+# 使用 Web Workers
+
+本文将介绍在 Rsbuild 项目中如何配置和使用 [Web Workers](https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Workers_API/Using_web_workers)。
+
+:::tip Web Workers
+Web Workers 是一种 JavaScript API，它允许网页在后台线程中执行脚本，与主线程（网页）分离。这意味着，您可以使用 Web Workers 来执行计算密集型或长时间运行的任务，而无需阻塞主线程，进而影响网页的性能。
+:::
+
+## 使用 Web Workers
+
+Web Workers 是 Rspack 的一等公民，这意味着你不需要任何的 Loader 就可以直接在 Rspack / Rsbuild 项目中使用 Web Workers。详情可参考 [Rspack - Web Workers](https://rspack.dev/zh/guide/features/web-workers)。
+
+例如，创建一个名为 worker.js 的文件：
+
+```js title=worker.js
+self.onmessage = (event) => {
+  const result = event.data * 2;
+  self.postMessage(result);
+};
+```
+
+然后在主线程中使用这个 worker：
+
+```js title=index.js
+const worker = new Worker(new URL('./worker.js', import.meta.url));
+
+worker.onmessage = (event) => {
+  console.log('The results from Workers:', event.data);
+};
+
+worker.postMessage(10);
+```
+
+### 从远程 URL 加载脚本（跨域）
+
+默认情况下，worker 脚本会输出成一个独立的 chunk。worker 脚本支持上传到 CDN，但在加载远程脚本时需要遵守[同源策略](https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy)。
+
+如果你希望你的 worker 脚本可以跨域访问，常见解法是通过 [importScripts](https://developer.mozilla.org/zh-CN/docs/Web/API/WorkerGlobalScope/importScripts) (不受 CORS 约束) 加载，可参考如下代码：
+
+```js title=index.js {2}
+// https://github.com/jantimon/remote-web-worker
+import 'remote-web-worker';
+
+const worker = new Worker(new URL('./worker.js', import.meta.url), {
+  type: 'classic',
+});
+
+worker.onmessage = (event) => {
+  console.log('The results from Workers:', event.data);
+};
+
+worker.postMessage(10);
+```
+
+关于跨域问题的详细讨论可参考 [Discussions - webpack 5 web worker support for CORS?](https://github.com/webpack/webpack/discussions/14648)
+
+## 构建 Web Workers 产物
+
+Rsbuild 支持独立构建 Web Workers 产物，这在你需要将 Web Workers 产物提供给其他应用使用时很有帮助。
+
+将 Rsbuild 的 [output.target](/config/output/target) 配置项设置为 `'web-worker'`，即可生成运行在 Worker 线程的构建产物。
+
+```ts
+export default {
+  output: {
+    target: 'web-worker',
+  },
+};
+```
