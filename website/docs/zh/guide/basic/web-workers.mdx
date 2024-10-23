@@ -33,7 +33,9 @@ worker.postMessage(10);
 
 ### 从远程 URL 加载脚本（跨域）
 
-默认情况下，worker 脚本会输出成一个独立的 chunk。worker 脚本支持上传到 CDN，但在加载远程脚本时可能会遇到跨域问题。常见解法是通过 [importScripts](https://developer.mozilla.org/zh-CN/docs/Web/API/WorkerGlobalScope/importScripts) (不受 CORS 约束) 加载。可参考如下代码：
+默认情况下，worker 脚本会输出成一个独立的 chunk。worker 脚本支持上传到 CDN，但在加载远程脚本时需要遵守[同源策略](https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy)。
+
+如果你希望你的 worker 脚本可以跨域访问，常见解法是通过 [importScripts](https://developer.mozilla.org/zh-CN/docs/Web/API/WorkerGlobalScope/importScripts) (不受 CORS 约束) 加载，可参考如下代码：
 
 ```js title=index.js {2}
 // https://github.com/jantimon/remote-web-worker
