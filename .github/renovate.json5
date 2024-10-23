@@ -26,6 +26,11 @@
 			"groupSlug": "rspress"
 		},
 		{
+			"groupName": "rslib",
+			"packagePatterns": ["rslib"],
+			"groupSlug": "rslib"
+		},
+		{
 			"groupName": "modern-js",
 			"packagePatterns": ["modern-js"],
 			"groupSlug": "modern-js"
