@@ -708,13 +708,25 @@ export type FilenameConfig = {
 };
 
 export type DataUriLimit = {
-  /** The data URI limit of the SVG image. */
+  /**
+   * The data URI limit of the SVG image.
+   * @default 4096
+   */
   svg?: number;
-  /** The data URI limit of the font file. */
+  /**
+   * The data URI limit of the font file.
+   * @default 4096
+   */
   font?: number;
-  /** The data URI limit of non-SVG images. */
+  /**
+   * The data URI limit of non-SVG images.
+   * @default 4096
+   */
   image?: number;
-  /** The data URI limit of media resources such as videos. */
+  /**
+   * The data URI limit of media resources such as videos.
+   * @default 4096
+   */
   media?: number;
 };
 
@@ -727,7 +739,15 @@ export type NormalizedDataUriLimit = Required<DataUriLimit>;
 export type Polyfill = 'usage' | 'entry' | 'off';
 
 export type SourceMap = {
+  /**
+   * The source map type for JavaScript files.
+   * @default isDev ? 'cheap-module-source-map' : false
+   */
   js?: Rspack.Configuration['devtool'];
+  /**
+   * Whether to generate source map for CSS files.
+   * @default false
+   */
   css?: boolean;
 };
 
@@ -741,26 +761,32 @@ export type CSSModulesLocalsConvention =
 export type CSSModules = {
   /**
    * Allows CSS Modules to be automatically enabled based on their filenames.
+   * @default true
    */
   auto?: CSSLoaderModulesOptions['auto'];
   /**
    * Allows exporting names from global class names, so you can use them via import.
+   * @default false
    */
   exportGlobals?: boolean;
   /**
    * Style of exported class names.
+   * @default 'camelCase'
    */
   exportLocalsConvention?: CSSModulesLocalsConvention;
   /**
    * Set the local ident name of CSS Modules.
+   * @default isProd ? '[local]-[hash:base64:6]' : '[path][name]__[local]-[hash:base64:6]'
    */
   localIdentName?: string;
   /**
    * Controls the level of compilation applied to the input styles.
+   * @default 'local'
    */
   mode?: CSSLoaderModulesOptions['mode'];
   /**
    * Whether to enable ES modules named export for locals.
+   * @default false
    */
   namedExport?: boolean;
 };
@@ -807,6 +833,7 @@ export interface OutputConfig {
   /**
    * At build time, prevent some `import` dependencies from being packed into bundles in your code, and instead fetch them externally at runtime.
    * For more information, please see: [Rspack Externals](https://rspack.dev/config/externals)
+   * @default undefined
    */
   externals?: Externals;
   /**
@@ -826,12 +853,14 @@ export interface OutputConfig {
   charset?: Charset;
   /**
    * Configure how the polyfill is injected.
+   * @default 'off'
    */
   polyfill?: Polyfill;
   /**
    * When using CDN in the production,
    * you can use this option to set the URL prefix of static assets,
    * similar to the output.publicPath config of webpack.
+   * @default `server.base`
    */
   assetPrefix?: string;
   /**
@@ -845,6 +874,7 @@ export interface OutputConfig {
    * comment in CSS that contains @license or @preserve or that starts with //! or /\*!.
    * These comments are preserved in output files by default since that follows the intent
    * of the original authors of the code.
+   * @default 'linked'
    */
   legalComments?: LegalComments;
   /**
@@ -858,30 +888,44 @@ export interface OutputConfig {
   cssModules?: CSSModules;
   /**
    * Whether to disable code minification in production build.
+   * @default true
    */
   minify?: Minify;
   /**
    * Whether to generate manifest file.
+   * @default false
    */
   manifest?: string | boolean;
   /**
-   * Whether to generate source map files, and which format of source map to generate
+   * Whether to generate source map files, and which format of source map to generate.
+   *
+   * @default
+   * ```js
+   * const defaultSourceMap = {
+   *   js: isDev ? 'cheap-module-source-map' : false,
+   *   css: false,
+   * };
+   * ```
    */
   sourceMap?: SourceMap;
   /**
    * Whether to add filename hash after production build.
+   * @default true
    */
   filenameHash?: boolean | string;
   /**
    * Whether to inline output scripts files (.js files) into HTML with `<script>` tags.
+   * @default false
    */
   inlineScripts?: InlineChunkConfig;
   /**
    * Whether to inline output style files (.css files) into html with `<style>` tags.
+   * @default false
    */
   inlineStyles?: InlineChunkConfig;
   /**
    * Whether to inject styles into the DOM via `style-loader`.
+   * @default false
    */
   injectStyles?: boolean;
   /**
@@ -889,15 +933,18 @@ export interface OutputConfig {
    * This value will be used by [SWC](https://github.com/swc-project/swc) and
    * [Lightning CSS](https://github.com/parcel-bundler/lightningcss) to identify the JavaScript syntax that
    * need to be transformed and the CSS browser prefixes that need to be added.
+   * @default undefined
    */
   overrideBrowserslist?: string[];
   /**
    * Copies the specified file or directory to the dist directory.
+   * @default undefined
    */
   copy?: CopyRspackPluginOptions | CopyRspackPluginOptions['patterns'];
   /**
    * Whether to emit static assets such as image, font, etc.
    * Return `false` to avoid outputting unnecessary assets for some scenarios such as SSR.
+   * @default true
    */
   emitAssets?: boolean;
 }
@@ -905,11 +952,8 @@ export interface OutputConfig {
 export interface NormalizedOutputConfig extends OutputConfig {
   target: RsbuildTarget;
   filename: FilenameConfig;
-  distPath: Omit<Required<DistPathConfig>, 'jsAsync' | 'cssAsync' | 'js'> & {
-    js?: string;
-    jsAsync?: string;
-    cssAsync?: string;
-  };
+  distPath: Omit<Required<DistPathConfig>, 'jsAsync' | 'cssAsync' | 'js'> &
+    Pick<DistPathConfig, 'jsAsync' | 'cssAsync' | 'js'>;
   polyfill: Polyfill;
   sourceMap: {
     js?: Rspack.Configuration['devtool'];
@@ -1022,27 +1066,40 @@ export type AppIcon = {
 export interface HtmlConfig {
   /**
    * Configure the `<meta>` tag of the HTML.
+   *
+   * @default
+   * ```js
+   * const defaultMeta = {
+   *   charset: { charset: 'UTF-8' },
+   *   viewport: 'width=device-width, initial-scale=1.0',
+   * };
+   * ```
    */
   meta?: ChainedHtmlOption<MetaOptions>;
   /**
    * Set the title tag of the HTML page.
+   * @default 'Rsbuild App'
    */
   title?: ChainedHtmlOption<string>;
   /**
    * Set the inject position of the `<script>` tag.
+   * @default 'head'
    */
   inject?: ChainedHtmlOption<ScriptInject>;
   /**
    * Inject custom html tags into the output html files.
+   * @default undefined
    */
   tags?: OneOrMany<HtmlTagDescriptor>;
   /**
    * Set the favicon icon for all pages.
+   * @default undefined
    */
   favicon?: ChainedHtmlOption<string>;
   /**
    * Set the web application icons to display when added to the home screen of a mobile device.
    *
+   * @default undefined
    * @example
    * appIcon: {
    *   name: 'My Website',
@@ -1055,20 +1112,24 @@ export interface HtmlConfig {
   appIcon?: AppIcon;
   /**
    * Set the id of root element.
+   * @default 'root'
    */
   mountId?: string;
   /**
    * Set the [crossorigin](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/crossorigin) attribute
    * of the `<script>` tag.
+   * @default false
    */
   crossorigin?: boolean | CrossOrigin;
   /**
    * Define the directory structure of the HTML output files.
+   * @default 'flat'
    */
   outputStructure?: OutputStructure;
   /**
    * Define the path to the HTML template,
    * corresponding to the `template` config of [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin).
+   * @default A built-in HTML template
    */
   template?: ChainedHtmlOption<string>;
   /**
@@ -1081,6 +1142,7 @@ export interface HtmlConfig {
   >;
   /**
    * Set the loading mode of the `<script>` tag.
+   * @default 'defer'
    */
   scriptLoading?: ScriptLoading;
 }
