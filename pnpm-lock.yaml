@@ -204,7 +204,7 @@ importers:
 
   e2e/cases/browserslist/package-config-string: {}
 
-  e2e/cases/html-loader:
+  e2e/cases/html/html-loader:
     dependencies:
       html-loader:
         specifier: ^5.1.0
@@ -251,7 +251,7 @@ importers:
     dependencies:
       '@rsbuild/plugin-styled-components':
         specifier: ^1.0.1
-        version: 1.0.1(@rsbuild/core@1.0.16)
+        version: 1.0.1(@rsbuild/core@1.0.17)
       styled-components:
         specifier: ^6.1.13
         version: 6.1.13(react-dom@19.0.0-rc-fb9a90fa48-20240614(react@19.0.0-rc-fb9a90fa48-20240614))(react@19.0.0-rc-fb9a90fa48-20240614)
@@ -2830,6 +2830,11 @@ packages:
 
   '@rsbuild/core@1.0.16':
     resolution: {integrity: sha512-ioQg9HfDh5eXPZi+An7yCRaSE9TH4W3IBqrxBrv4IjOg/ajpVpKidiKwyYpX3QPbxY1ybfvQTH7HwATND4crCA==}
+    engines: {node: '>=16.7.0'}
+    hasBin: true
+
+  '@rsbuild/core@1.0.17':
+    resolution: {integrity: sha512-XbRrFsX5YiYrArD2f27a+WGhRWvoYgogaTMX/kiL7xcZOFuV+PbPBdU0e2o00NROGLRyVn7cTfkIkyMSr1B9Vg==}
     engines: {node: '>=16.7.0'}
     hasBin: true
 
@@ -9387,6 +9392,16 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
+  '@rsbuild/core@1.0.17':
+    dependencies:
+      '@rspack/core': 1.0.14(@swc/helpers@0.5.13)
+      '@rspack/lite-tapable': 1.0.1
+      '@swc/helpers': 0.5.13
+      core-js: 3.38.1
+    optionalDependencies:
+      fsevents: 2.3.3
+    optional: true
+
   '@rsbuild/plugin-babel@1.0.1-rc.5(@rsbuild/core@packages+core)':
     dependencies:
       '@babel/core': 7.25.8
@@ -9439,12 +9454,12 @@ snapshots:
       reduce-configs: 1.0.0
       sass-embedded: 1.80.3
 
-  '@rsbuild/plugin-styled-components@1.0.1(@rsbuild/core@1.0.16)':
+  '@rsbuild/plugin-styled-components@1.0.1(@rsbuild/core@1.0.17)':
     dependencies:
       '@swc/plugin-styled-components': 2.0.11
       reduce-configs: 1.0.0
     optionalDependencies:
-      '@rsbuild/core': 1.0.16
+      '@rsbuild/core': 1.0.17
 
   '@rsbuild/plugin-vue-jsx@1.0.1(@babel/core@7.25.8)(@rsbuild/core@packages+core)':
     dependencies:
