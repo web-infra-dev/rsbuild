@@ -194,9 +194,33 @@ declare module '*.png' {
 
 ## 扩展静态资源类型
 
-如果 Rsbuild 内置的静态资源类型不能满足你的需求，那么你可以通过 [tools.rspack](/config/tools/rspack) 来修改内置的 Rspack 配置，并扩展你需要的静态资源类型。
+如果 Rsbuild 内置的静态资源类型不能满足你的需求，可以通过以下方式扩展额外的静态资源类型。
 
-比如，你需要把 `*.pdf` 文件当做静态资源直接输出到产物目录，可以添加以下配置：
+### 使用 `source.assetsInclude`
+
+通过 [source.assetsInclude](/config/source/assets-include) 配置项，你可以指定需要被视为静态资源的额外文件类型。
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    assetsInclude: /\.pdf$/,
+  },
+};
+```
+
+添加以上配置后，你就可以在代码里引用 `*.pdf` 文件了，比如：
+
+```js
+import myFile from './static/myFile.pdf';
+
+console.log(myFile); // "/static/myFile.6c12aba3.pdf"
+```
+
+### 使用 `tools.rspack`
+
+可以通过 [tools.rspack](/config/tools/rspack) 来修改内置的 Rspack 配置，并添加自定义的静态资源处理规则。
+
+比如，把 `*.pdf` 文件当做静态资源输出到产物目录，可以添加以下配置：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -212,14 +236,6 @@ export default {
     },
   },
 };
-```
-
-添加以上配置后，你就可以在代码里引用 `*.pdf` 文件了，比如：
-
-```js
-import myFile from './static/myFile.pdf';
-
-console.log(myFile); // "/static/myFile.6c12aba3.pdf"
 ```
 
 关于 asset modules 的更多介绍，请参考 [Rspack - Asset modules](https://rspack.dev/guide/features/asset-module)。
