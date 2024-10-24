@@ -15,13 +15,8 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
       ],
     },
     /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-    /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]query-string\\[\\\\\\\\/\\]/,
+    /node_modules\\[\\\\\\\\/\\]query-string\\[\\\\\\\\/\\]/,
   ],
-  "resolve": {
-    "alias": {
-      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-    },
-  },
   "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   "type": "javascript/auto",
   "use": [
@@ -29,9 +24,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
       "loader": "builtin:swc-loader",
       "options": {
         "env": {
-          "coreJs": "3.37",
-          "mode": "usage",
-          "shippedProposals": true,
+          "mode": undefined,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -41,17 +34,18 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
         },
         "isModule": "unknown",
         "jsc": {
+          "experimental": {
+            "cacheRoot": "<ROOT>/packages/plugin-babel/tests/node_modules/.cache/.swc",
+          },
           "externalHelpers": true,
           "parser": {
             "decorators": true,
             "syntax": "typescript",
             "tsx": false,
           },
-          "preserveAllComments": true,
           "transform": {
-            "decoratorMetadata": true,
-            "legacyDecorator": true,
-            "useDefineForClassFields": false,
+            "decoratorVersion": "2022-03",
+            "legacyDecorator": false,
           },
         },
       },
@@ -66,10 +60,9 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
           [
             "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
             {
-              "version": "legacy",
+              "version": "2022-03",
             },
           ],
-          "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
         ],
         "presets": [
           [
@@ -105,11 +98,6 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
     },
     /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
   ],
-  "resolve": {
-    "alias": {
-      "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-    },
-  },
   "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
   "type": "javascript/auto",
   "use": [
@@ -117,9 +105,7 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
       "loader": "builtin:swc-loader",
       "options": {
         "env": {
-          "coreJs": "3.37",
-          "mode": "usage",
-          "shippedProposals": true,
+          "mode": undefined,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -129,13 +115,15 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
         },
         "isModule": "unknown",
         "jsc": {
+          "experimental": {
+            "cacheRoot": "<ROOT>/packages/plugin-babel/tests/node_modules/.cache/.swc",
+          },
           "externalHelpers": true,
           "parser": {
             "decorators": true,
             "syntax": "typescript",
             "tsx": false,
           },
-          "preserveAllComments": true,
           "transform": {
             "decoratorVersion": "2022-03",
             "legacyDecorator": false,
@@ -204,13 +192,15 @@ exports[`plugins/babel > should apply environment config correctly 2`] = `
         },
         "isModule": "unknown",
         "jsc": {
+          "experimental": {
+            "cacheRoot": "<ROOT>/packages/plugin-babel/tests/node_modules/.cache/.swc",
+          },
           "externalHelpers": true,
           "parser": {
             "decorators": true,
             "syntax": "typescript",
             "tsx": false,
           },
-          "preserveAllComments": true,
           "transform": {
             "decoratorMetadata": true,
             "legacyDecorator": true,
@@ -269,10 +259,9 @@ exports[`plugins/babel > should set babel-loader 1`] = `
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
                   {
-                    "version": "legacy",
+                    "version": "2022-03",
                   },
                 ],
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
               ],
               "presets": [
                 [
@@ -292,6 +281,9 @@ exports[`plugins/babel > should set babel-loader 1`] = `
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;
 
@@ -315,10 +307,9 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
                 [
                   "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-proposal-decorators/lib/index.js",
                   {
-                    "version": "legacy",
+                    "version": "2022-03",
                   },
                 ],
-                "<ROOT>/node_modules/<PNPM_INNER>/@babel/plugin-transform-class-properties/lib/index.js",
                 [
                   "babel-plugin-import",
                   {
@@ -346,5 +337,8 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;

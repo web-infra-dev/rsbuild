@@ -1,45 +1,26 @@
-import {
-  type NormalizedEnvironmentConfig,
-  type RsbuildEntry,
-  type RsbuildTarget,
-  castArray,
-  color,
-} from '@rsbuild/shared';
-import type { EntryDescription } from '@rspack/core';
-import { createVirtualModule } from '../helpers';
-import { reduceConfigsMergeContext } from '../reduceConfigs';
-import type { NormalizedConfig, RsbuildConfig, RsbuildPlugin } from '../types';
-
-export function getEntryObject(
-  config: RsbuildConfig | NormalizedConfig | NormalizedEnvironmentConfig,
-  target: RsbuildTarget,
-): RsbuildEntry {
-  if (!config.source?.entry) {
-    return {};
-  }
-
-  return reduceConfigsMergeContext({
-    initial: {},
-    config: config.source?.entry,
-    ctx: { target },
-  });
-}
+import color from 'picocolors';
+import { castArray, createVirtualModule } from '../helpers';
+import type { RsbuildEntryDescription, RsbuildPlugin } from '../types';
 
 export const pluginEntry = (): RsbuildPlugin => ({
   name: 'rsbuild:entry',
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { environment, isServer }) => {
-      const config = api.getNormalizedConfig({ environment });
+      const { config, entry } = environment;
       const { preEntry } = config.source;
-      const { entry } = api.context.environments[environment];
 
       const injectCoreJsEntry = config.output.polyfill === 'entry' && !isServer;
 
       for (const entryName of Object.keys(entry)) {
         const entryPoint = chain.entry(entryName);
-        const addEntry = (item: string | EntryDescription) => {
-          entryPoint.add(item);
+        const addEntry = (item: string | RsbuildEntryDescription) => {
+          if (typeof item === 'object' && 'html' in item) {
+            const { html, ...rest } = item;
+            entryPoint.add(rest);
+          } else {
+            entryPoint.add(item);
+          }
         };
 
         preEntry.forEach(addEntry);

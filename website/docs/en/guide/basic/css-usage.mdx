@@ -2,11 +2,60 @@
 
 Rsbuild provides out-of-the-box support for CSS, including PostCSS, CSS Modules, CSS preprocessors, CSS inlining, and CSS compression.
 
-In addition, Rsbuild also provides multiple configs to customize the compile rules of style resources.
+Rsbuild also provides several configurations that allow customization of the processing rules for CSS files.
+
+## Lightning CSS
+
+:::tip
+[Lightning CSS](https://lightningcss.dev) is a high performance CSS parser, transformer and minifier written in Rust. It supports parsing and transforming many modern CSS features into syntax supported by target browsers, and also provides a better compression ratio.
+:::
+
+Rsbuild uses Rspack's built-in [lightningcss-loader](https://www.rspack.dev/guide/features/builtin-lightningcss-loader) to transform CSS code. It automatically reads the project's [browserslist](/guide/advanced/browserslist) config and converts the CSS code to syntax supported by target browsers.
+
+### Features
+
+- Lightning CSS automatically adds vendor prefixes like `-webkit-`, `-moz-`, `-ms-`, etc., so you don't need to manually add prefixes or use the [autoprefixer](https://github.com/postcss/autoprefixer) plugin.
+- Lightning CSS automatically downgrades CSS syntax, allowing you to use modern CSS features such as CSS nesting and custom media queries in your code without worrying about browser compatibility issues.
+- You can use [tools.lightningcssLoader](/config/tools/lightningcss-loader) to customize the options for `lightningcss-loader`.
+
+> Rsbuild has enabled Lightning CSS by default since version `1.0.1-beta.7`.
+
+### Disabling Lightning CSS
+
+If Lightning CSS does not meet your needs, you can disable Lightning CSS and use [PostCSS](#using-postcss) to transform your CSS code.
+
+Steps:
+
+1. Set [tools.lightningcssLoader](/config/tools/lightningcss-loader) to `false` to disable the Lightning CSS loader.
+2. Use [@rsbuild/plugin-css-minimizer](https://github.com/rspack-contrib/rsbuild-plugin-css-minimizer) to switch the CSS minifier from Lightning CSS to cssnano or another CSS minifier.
+
+```ts title="rsbuild.config.ts"
+import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
+
+export default {
+  plugins: [pluginCssMinimizer()],
+  tools: {
+    lightningcssLoader: false,
+  },
+};
+```
+
+3. Refer to [Using PostCSS](#using-postcss) to configure the PostCSS plugins you need. Here are some commonly used PostCSS plugins:
+
+- [autoprefixer](https://github.com/postcss/autoprefixer): Adds vendor prefixes.
+- [postcss-preset-env](https://github.com/csstools/postcss-plugins/tree/main/plugin-packs/postcss-preset-env): Converts modern CSS into something most browsers can understand.
+- [postcss-nesting](https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-nesting): Supports CSS nesting.
+
+## CSS Minification
+
+When building for production, Rsbuild enables Rspack's built-in [LightningCssMinimizerRspackPlugin](https://rspack.dev/plugins/rspack/lightning-css-minimizer-rspack-plugin) plugin to minify CSS assets for better transmission efficiency.
+
+- You can disable CSS minification through the [output.minify](/config/output/minify) option or customize the options for `LightningCssMinimizerRspackPlugin`.
+- You can use [@rsbuild/plugin-css-minimizer](https://github.com/rspack-contrib/rsbuild-plugin-css-minimizer) to customize the CSS minimizer, switching to [cssnano](https://github.com/cssnano/cssnano) or other CSS minimizer.
 
 ## Using PostCSS
 
-Rsbuild has built-in [PostCSS](https://postcss.org/) to transform the CSS code. You can configure PostCSS in the following ways:
+Rsbuild supports transforming CSS code through [PostCSS](https://postcss.org/). You can configure PostCSS in the following ways:
 
 1. Rsbuild uses [postcss-load-config](https://github.com/postcss/postcss-load-config) to load the PostCSS configuration file in the root directory of the current project, such as `postcss.config.js`:
 
@@ -33,15 +82,8 @@ export default {
 };
 ```
 
-When you configure both the `postcss.config.js` file and the `tools.postcss` option, both will take effect, and the `tools.postcss` option will take precedence.
-
-### Builtin PostCSS plugins
-
-Rsbuild has built-in [autoprefixer](https://github.com/postcss/autoprefixer) plugin, which is used to add vendor prefixes to CSS rules. If you need to configure the target browser, you can use [browserslist](/guide/advanced/browserslist).
-
-:::tip
-If the autoprefixer plugin is already registered in your project, Rsbuild will not register the autoprefixer plugin again.
-:::
+- When you configure both the `postcss.config.js` file and the `tools.postcss` option, both will take effect, and the `tools.postcss` option will take precedence.
+- If there is no `postcss.config.js` file in the project and the `tools.postcss` option is not configured, Rsbuild will not register `postcss-loader`.
 
 ## Using CSS Modules
 
@@ -58,14 +100,6 @@ Rsbuild supports popular CSS preprocessors through plugins, including Sass, Less
 ## CSS-in-JS
 
 Please read the [React - CSS-in-JS](/guide/framework/react#css-in-js) section to learn how to use common CSS-in-JS libraries in Rsbuild.
-
-## CSS Minify
-
-During the production build, Rsbuild compresses static assets such as CSS and JS to provide better transmission efficiency.
-
-Rsbuild by default uses the built-in `SwcCssMinimizerRspackPlugin` plugin from Rspack to automatically compress CSS code during production builds.
-
-You can customize the CSS minimizer by using the [CSS Minimizer plugin](/plugins/list/plugin-css-minimizer) to switch to cssnano or other tools for CSS compression.
 
 ## Inline CSS Files
 
@@ -85,23 +119,28 @@ This will increase the size of your JS Bundle, so it is usually not recommended 
 
 ## Import CSS in node_modules
 
-You can directly import CSS files in node_modules.
+Rsbuild supports importing CSS files in `node_modules`.
 
-- Import in a component:
+- Import in a JS file:
 
-```ts title="src/App.tsx"
-// Import the Arco Design style:
-import '@arco-design/web-react/dist/css/arco.css';
-```
-
-- Import in a style file:
-
-```css title="src/App.css"
+```ts title="src/index.js"
 /* reference normalize.css */
 /* https://github.com/necolas/normalize.css */
+import 'normalize.css';
+```
+
+- Import in a CSS file:
+
+```css title="src/index.css"
 @import 'normalize.css';
 
 body {
   /* */
 }
+```
+
+In Sass and Less files, it is also allowed to add the `~` prefix to resolve style files in `node_modules`. However, this is a **deprecated feature** and it is recommended to remove the `~` prefix from the code.
+
+```scss title="src/index.scss"
+@import 'normalize.css';
 ```

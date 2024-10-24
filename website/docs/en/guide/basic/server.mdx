@@ -2,15 +2,31 @@
 
 Rsbuild comes with a built-in dev server designed to improve the development experience. When you run the `rsbuild dev` or `rsbuild preview` commands, the server will start, providing features such as page preview, routing, and hot module reloading.
 
+## Base Path
+
+By default, the base path of the server is `/`, and users can access output files such as `index.html` and public folder assets through http://localhost:3000/.
+
+Rsbuild supports modifying the base path of the server through [server.base](/config/server/base). If you to access these files through `http://localhost:3000/foo/`, you can configure the following:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    base: '/foo',
+  },
+};
+```
+
 ## Page Routing
 
 Rsbuild Server offers a set of default routing convention, and allows users to customize it through configurations.
 
 ### Default Behavior
 
-Rsbuild Server will generate the corresponding page route based on the [source.entry](/config/source/entry) configuration.
+Rsbuild Server will generate the corresponding page route based on the [server.base](/config/server/base) and [source.entry](/config/source/entry) configurations.
 
 When entry is index, the page can be accessed through `/`; when entry is foo, the page can be accessed through `/foo`.
+
+When server.base is `/base`, the index page can be accessed through `/base` and the foo page can be accessed through `/base/foo`.
 
 ```ts title=rsbuild.config.ts
 export default {
@@ -84,7 +100,7 @@ export default {
 
 ## Rspack Dev Server
 
-The built-in dev server of Rspack CLI is [@rspack/dev-server](https://www.npmjs.com/package/@rspack/dev-server). Rsbuild does not use `@rspack/dev-server`, but implements a lighter version based on [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware).
+The built-in dev server of Rspack CLI is [@rspack/dev-server](https://www.npmjs.com/package/@rspack/dev-server). Rsbuild does not use `@rspack/dev-server`, but instead implemented its own more lightweight version.
 
 ### Comparison
 
@@ -98,7 +114,7 @@ The dev server of Rsbuild and `@rspack/dev-server` have the following difference
 
 Rsbuild does not support using Rspack's [devServer](https://rspack.dev/config/dev-server) config. Instead, you can use Rsbuild's `dev` and `server` configs.
 
-In Rsbuild, `dev` contains some configs that are only work during development, while the `server` config works for both dev and preview servers.
+In Rsbuild, `dev` contains some configs that are only work in development mode, while the `server` config works for both dev and preview servers.
 
 Below are the Rsbuild configs that correspond to the Rspack CLI's `devServer` config:
 

@@ -1,11 +1,10 @@
 import path from 'node:path';
-import { isProd } from '../helpers';
 import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
 
 const getJsSourceMap = (config: NormalizedEnvironmentConfig) => {
   const { sourceMap } = config.output;
   if (sourceMap.js === undefined) {
-    return isProd() ? false : 'cheap-module-source-map';
+    return config.mode === 'production' ? false : 'cheap-module-source-map';
   }
   return sourceMap.js;
 };
@@ -18,17 +17,17 @@ export const pluginBasic = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      (chain, { env, isProd, target, bundler, environment, CHAIN_ID }) => {
-        const config = api.getNormalizedConfig({ environment });
+      (chain, { env, isDev, target, bundler, environment, CHAIN_ID }) => {
+        const { config } = environment;
 
-        chain.name(environment);
+        chain.name(environment.name);
 
         chain.devtool(getJsSourceMap(config));
 
         // The base directory for resolving entry points and loaders from the configuration.
         chain.context(api.context.rootPath);
 
-        chain.mode(isProd ? 'production' : 'development');
+        chain.mode(environment.config.mode);
 
         chain.merge({
           infrastructureLogging: {
@@ -47,12 +46,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
           },
         });
 
-        const isMinimize = isProd && config.output.minify !== false;
-
-        // set minimize to allow users to disable minimize
-        chain.optimization.minimize(isMinimize);
-
-        const usingHMR = !isProd && config.dev.hmr && target === 'web';
+        const usingHMR = isDev && config.dev.hmr && target === 'web';
 
         if (usingHMR) {
           chain
@@ -69,7 +63,8 @@ export const pluginBasic = (): RsbuildPlugin => ({
           );
         }
 
-        process.env.RSPACK_CONFIG_VALIDATE = 'loose-silent';
+        // enable Rspack config schema validation, unrecognized keys are allowed
+        process.env.RSPACK_CONFIG_VALIDATE ||= 'loose-unrecognized-keys';
 
         // improve kill process performance
         // https://github.com/web-infra-dev/rspack/pull/5486

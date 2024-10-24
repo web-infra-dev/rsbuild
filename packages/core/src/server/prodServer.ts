@@ -1,34 +1,37 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
-import { join } from 'node:path';
+import type Connect from 'connect';
+import { pathnameParse } from '../helpers/path';
+import { logger } from '../logger';
 import type {
-  PreviewServerOptions,
+  InternalContext,
+  NormalizedConfig,
+  PreviewOptions,
   RequestHandler,
   ServerConfig,
-} from '@rsbuild/shared';
-import type Connect from 'connect';
-import { ROOT_DIST_DIR } from '../constants';
-import { getNodeEnv, setNodeEnv } from '../helpers';
-import { logger } from '../logger';
-import type { InternalContext, NormalizedConfig } from '../types';
+} from '../types';
+import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
 import {
   type StartServerResult,
-  formatRoutes,
   getAddressUrls,
+  getRoutes,
   getServerConfig,
+  getServerTerminator,
   printServerURLs,
 } from './helper';
 import { createHttpServer } from './httpServer';
 import {
   faviconFallbackMiddleware,
+  getBaseMiddleware,
   getRequestLoggerMiddleware,
 } from './middlewares';
+import { open } from './open';
 
 type RsbuildProdServerOptions = {
   pwd: string;
   output: {
     path: string;
-    assetPrefix?: string;
+    assetPrefixes: string[];
   };
   serverConfig: ServerConfig;
 };
@@ -44,14 +47,14 @@ export class RsbuildProdServer {
   }
 
   // Complete the preparation of services
-  public async onInit(app: Server | Http2SecureServer) {
+  public async onInit(app: Server | Http2SecureServer): Promise<void> {
     this.app = app;
 
     await this.applyDefaultMiddlewares();
   }
 
   private async applyDefaultMiddlewares() {
-    const { headers, proxy, historyApiFallback, compress } =
+    const { headers, proxy, historyApiFallback, compress, base } =
       this.options.serverConfig;
 
     if (logger.level === 'verbose') {
@@ -60,13 +63,13 @@ export class RsbuildProdServer {
 
     // compression should be the first middleware
     if (compress) {
-      const { default: compression } = await import('http-compression');
-      this.middlewares.use((req, res, next) => {
-        compression({
-          gzip: true,
-          brotli: false,
-        })(req, res, next);
-      });
+      const { gzipMiddleware } = await import('./gzipMiddleware');
+      this.middlewares.use(
+        gzipMiddleware({
+          // simulates the common gzip compression rates
+          level: 6,
+        }),
+      );
     }
 
     if (headers) {
@@ -80,7 +83,7 @@ export class RsbuildProdServer {
 
     if (proxy) {
       const { createProxyMiddleware } = await import('./proxy');
-      const { middlewares, upgrade } = createProxyMiddleware(proxy);
+      const { middlewares, upgrade } = await createProxyMiddleware(proxy);
 
       for (const middleware of middlewares) {
         this.middlewares.use(middleware);
@@ -89,7 +92,11 @@ export class RsbuildProdServer {
       this.app.on('upgrade', upgrade);
     }
 
-    this.applyStaticAssetMiddleware();
+    if (base && base !== '/') {
+      this.middlewares.use(getBaseMiddleware({ base }));
+    }
+
+    await this.applyStaticAssetMiddleware();
 
     if (historyApiFallback) {
       const { default: connectHistoryApiFallback } = await import(
@@ -110,14 +117,13 @@ export class RsbuildProdServer {
 
   private async applyStaticAssetMiddleware() {
     const {
-      output: { path, assetPrefix },
+      output: { path, assetPrefixes },
       serverConfig: { htmlFallback },
-      pwd,
     } = this.options;
 
     const { default: sirv } = await import('sirv');
 
-    const assetMiddleware = sirv(join(pwd, path), {
+    const assetMiddleware = sirv(path, {
       etag: true,
       dev: true,
       ignores: ['favicon.ico'],
@@ -126,6 +132,8 @@ export class RsbuildProdServer {
 
     this.middlewares.use((req, res, next) => {
       const url = req.url;
+      const assetPrefix =
+        url && assetPrefixes.find((prefix) => url.startsWith(prefix));
 
       // handler assetPrefix
       if (assetPrefix && url?.startsWith(assetPrefix)) {
@@ -140,21 +148,16 @@ export class RsbuildProdServer {
     });
   }
 
-  public close() {}
+  public async close(): Promise<void> {}
 }
 
 export async function startProdServer(
   context: InternalContext,
   config: NormalizedConfig,
-  { getPortSilently }: PreviewServerOptions = {},
-) {
-  if (!getNodeEnv()) {
-    setNodeEnv('production');
-  }
-
-  const { port, host, https } = await getServerConfig({
+  { getPortSilently }: PreviewOptions = {},
+): Promise<StartServerResult> {
+  const { port, host, https, portTip } = await getServerConfig({
     config,
-    getPortSilently,
   });
 
   const { default: connect } = await import('connect');
@@ -165,8 +168,10 @@ export async function startProdServer(
     {
       pwd: context.rootPath,
       output: {
-        path: config.output.distPath.root || ROOT_DIST_DIR,
-        assetPrefix: config.output.assetPrefix,
+        path: context.distPath,
+        assetPrefixes: Object.values(context.environments).map((e) =>
+          pathnameParse(e.config.output.assetPrefix),
+        ),
       },
       serverConfig,
     },
@@ -179,6 +184,7 @@ export async function startProdServer(
     serverConfig,
     middlewares: server.middlewares,
   });
+  const serverTerminator = getServerTerminator(httpServer);
 
   await server.onInit(httpServer);
 
@@ -189,42 +195,64 @@ export async function startProdServer(
         port,
       },
       async () => {
-        const routes = formatRoutes(
-          Object.values(context.environments).reduce(
-            (prev, context) => Object.assign(prev, context.htmlPaths),
-            {},
-          ),
-          config.output.distPath.html,
-          config.html.outputStructure,
-        );
+        const routes = getRoutes(context);
         await context.hooks.onAfterStartProdServer.call({
           port,
           routes,
+          environments: context.environments,
         });
 
         const protocol = https ? 'https' : 'http';
         const urls = getAddressUrls({ protocol, port, host });
+        const cliShortcutsEnabled = isCliShortcutsEnabled(config.dev);
 
-        printServerURLs({
-          urls,
-          port,
-          routes,
-          protocol,
-          printUrls: serverConfig.printUrls,
-        });
-
-        const onClose = () => {
-          server.close();
-          httpServer.close();
+        const closeServer = async () => {
+          await Promise.all([server.close(), serverTerminator()]);
         };
+
+        const printUrls = () =>
+          printServerURLs({
+            urls,
+            port,
+            routes,
+            protocol,
+            printUrls: serverConfig.printUrls,
+            trailingLineBreak: !cliShortcutsEnabled,
+          });
+
+        const openPage = async () => {
+          return open({
+            https,
+            port,
+            routes,
+            config,
+            clearCache: true,
+          });
+        };
+
+        printUrls();
+
+        if (cliShortcutsEnabled) {
+          setupCliShortcuts({
+            openPage,
+            closeServer,
+            printUrls,
+            customShortcuts:
+              typeof config.dev.cliShortcuts === 'boolean'
+                ? undefined
+                : config.dev.cliShortcuts.custom,
+          });
+        }
+
+        if (!getPortSilently && portTip) {
+          logger.info(portTip);
+        }
 
         resolve({
           port,
           urls: urls.map((item) => item.url),
           server: {
-            close: async () => {
-              onClose();
-            },
+            close: closeServer,
           },
         });
       },

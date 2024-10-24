@@ -1,10 +1,10 @@
 import { logger } from '@rsbuild/core';
-import { color } from '@rsbuild/shared';
+import color from 'picocolors';
 import webpack from 'webpack';
 import { prettyTime } from '../shared';
 import { bus, createFriendlyPercentage } from './helpers';
 import { createNonTTYLogger } from './helpers/nonTty';
-import type { Props } from './helpers/type';
+import type { Props } from './helpers/types';
 
 export interface ProgressOptions
   extends Omit<Partial<Props>, 'message' | 'total' | 'current' | 'done'> {
@@ -83,7 +83,7 @@ export class ProgressPlugin extends webpack.ProgressPlugin {
 
         if (!this.hasCompileErrors) {
           const suffix = this.id ? color.gray(` (${this.id})`) : '';
-          logger.ready(`Compiled in ${this.compileTime} ${suffix}`);
+          logger.ready(`Built in ${this.compileTime} ${suffix}`);
         }
       }
     });

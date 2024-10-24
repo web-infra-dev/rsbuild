@@ -13,13 +13,13 @@ Note that this package is mainly used for compatibility with Modern.js and Rsbui
 ```ts
 import { defineConfig } from '@rsbuild/core';
 import { webpackProvider } from '@rsbuild/webpack';
-import { pluginSwc } from '@rsbuild/plugin-swc';
+import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
 
 export default defineConfig({
   provider: webpackProvider,
   plugins: [
     // @rsbuild/webpack has no built-in transformer and minimizer,
-    // so you need to register the plugin-swc.
+    // so you need to register the @rsbuild/plugin-webpack-swc.
     pluginSwc(),
   ],
 });

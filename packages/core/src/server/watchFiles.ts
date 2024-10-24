@@ -1,10 +1,12 @@
+import type { FSWatcher } from 'chokidar';
+import { normalizePublicDirs } from '../config';
+import { castArray } from '../helpers';
 import type {
   ChokidarWatchOptions,
   DevConfig,
   ServerConfig,
   WatchFiles,
-} from '@rsbuild/shared';
-import { normalizePublicDirs } from '../config';
+} from '../types';
 import type { CompileMiddlewareAPI } from './getDevMiddlewares';
 
 type WatchFilesOptions = {
@@ -13,7 +15,12 @@ type WatchFilesOptions = {
   compileMiddlewareAPI?: CompileMiddlewareAPI;
 };
 
-export async function setupWatchFiles(options: WatchFilesOptions) {
+export async function setupWatchFiles(options: WatchFilesOptions): Promise<
+  | {
+      close(): Promise<void>;
+    }
+  | undefined
+> {
   const { dev, server, compileMiddlewareAPI } = options;
 
   const { hmr, liveReload } = dev;
@@ -21,7 +28,7 @@ export async function setupWatchFiles(options: WatchFilesOptions) {
     return;
   }
 
-  const devFilesWatcher = await watchDevFiles(dev, compileMiddlewareAPI);
+  const closeDevFilesWatcher = await watchDevFiles(dev, compileMiddlewareAPI);
   const serverFilesWatcher = await watchServerFiles(
     server,
     compileMiddlewareAPI,
@@ -30,7 +37,7 @@ export async function setupWatchFiles(options: WatchFilesOptions) {
   return {
     async close() {
       await Promise.all([
-        devFilesWatcher?.close(),
+        closeDevFilesWatcher?.(),
         serverFilesWatcher?.close(),
       ]);
     },
@@ -46,11 +53,21 @@ async function watchDevFiles(
     return;
   }
 
-  const watchOptions = prepareWatchOptions(
-    watchFiles.paths,
-    watchFiles.options,
-  );
-  return startWatchFiles(watchOptions, compileMiddlewareAPI);
+  const watchers: FSWatcher[] = [];
+
+  for (const { paths, options, type } of castArray(watchFiles)) {
+    const watchOptions = prepareWatchOptions(paths, options, type);
+    const watcher = await startWatchFiles(watchOptions, compileMiddlewareAPI);
+    if (watcher) {
+      watchers.push(watcher);
+    }
+  }
+
+  return async () => {
+    for (const watcher of watchers) {
+      await watcher.close();
+    }
+  };
 }
 
 function watchServerFiles(
@@ -77,18 +94,25 @@ function watchServerFiles(
 function prepareWatchOptions(
   paths: string | string[],
   options: ChokidarWatchOptions = {},
+  type?: WatchFiles['type'],
 ) {
   return {
     paths: typeof paths === 'string' ? [paths] : paths,
     options,
+    type,
   };
 }
 
 async function startWatchFiles(
-  { paths, options }: WatchFiles,
+  { paths, options, type }: ReturnType<typeof prepareWatchOptions>,
   compileMiddlewareAPI: CompileMiddlewareAPI,
 ) {
-  const chokidar = await import('@rsbuild/shared/chokidar');
+  // If `type` is 'reload-server', skip it.
+  if (type === 'reload-server') {
+    return;
+  }
+
+  const chokidar = await import('chokidar');
   const watcher = chokidar.watch(paths, options);
 
   watcher.on('change', () => {

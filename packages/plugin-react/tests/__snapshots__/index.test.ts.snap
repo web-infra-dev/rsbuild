@@ -1,5 +1,69 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`plugins/react > should configuring \`tools.swc\` to override react runtime 1`] = `
+[
+  {
+    "resolve": {
+      "fullySpecified": false,
+    },
+    "test": /\\\\\\.m\\?js/,
+  },
+  {
+    "include": [
+      {
+        "and": [
+          "<ROOT>/packages/plugin-react/tests",
+          {
+            "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+          },
+        ],
+      },
+      /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+      /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
+    ],
+    "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+    "type": "javascript/auto",
+    "use": [
+      {
+        "loader": "builtin:swc-loader",
+        "options": {
+          "env": {
+            "mode": undefined,
+            "targets": [
+              "chrome >= 87",
+              "edge >= 88",
+              "firefox >= 78",
+              "safari >= 14",
+            ],
+          },
+          "isModule": "unknown",
+          "jsc": {
+            "experimental": {
+              "cacheRoot": "<ROOT>/packages/plugin-react/tests/node_modules/.cache/.swc",
+            },
+            "externalHelpers": true,
+            "parser": {
+              "decorators": true,
+              "syntax": "typescript",
+              "tsx": true,
+            },
+            "transform": {
+              "decoratorVersion": "2022-03",
+              "legacyDecorator": false,
+              "react": {
+                "development": true,
+                "refresh": true,
+                "runtime": "classic",
+              },
+            },
+          },
+        },
+      },
+    ],
+  },
+]
+`;
+
 exports[`plugins/react > should not apply splitChunks rule when strategy is not split-by-experience 1`] = `
 {
   "cacheGroups": {
@@ -8,488 +72,73 @@ exports[`plugins/react > should not apply splitChunks rule when strategy is not 
       "enforce": true,
       "name": "vendor",
       "priority": 0,
-      "reuseExistingChunk": true,
       "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
     },
   },
   "chunks": "all",
-  "enforceSizeThreshold": 50000,
 }
 `;
 
 exports[`plugins/react > should work with swc-loader 1`] = `
-{
-  "context": "<ROOT>/packages/plugin-react/tests",
-  "devtool": "cheap-module-source-map",
-  "entry": {
-    "index": [
-      "src/index.js",
-    ],
-  },
-  "experiments": {
-    "asyncWebAssembly": true,
-    "css": false,
-  },
-  "infrastructureLogging": {
-    "level": "error",
-  },
-  "mode": "development",
-  "module": {
-    "parser": {
-      "javascript": {
-        "exportsPresence": "error",
-      },
+[
+  {
+    "resolve": {
+      "fullySpecified": false,
     },
-    "rules": [
+    "test": /\\\\\\.m\\?js/,
+  },
+  {
+    "include": [
       {
-        "resolve": {
-          "fullySpecified": false,
-        },
-        "test": /\\\\\\.m\\?js/,
-      },
-      {
-        "resolve": {
-          "preferRelative": true,
-        },
-        "sideEffects": true,
-        "test": /\\\\\\.css\\$/,
-        "use": [
+        "and": [
+          "<ROOT>/packages/plugin-react/tests",
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader",
-            "options": {
-              "importLoaders": 1,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-            "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [
-                  {
-                    "browsers": [
-                      "chrome >= 87",
-                      "edge >= 88",
-                      "firefox >= 78",
-                      "safari >= 14",
-                    ],
-                    "info": [Function],
-                    "options": {
-                      "flexbox": "no-2009",
-                      "overrideBrowserslist": [
-                        "chrome >= 87",
-                        "edge >= 88",
-                        "firefox >= 78",
-                        "safari >= 14",
-                      ],
-                    },
-                    "postcssPlugin": "autoprefixer",
-                    "prepare": [Function],
-                  },
-                ],
-              },
-              "sourceMap": false,
-            },
+            "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
           },
         ],
       },
+      /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+      /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
+    ],
+    "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+    "type": "javascript/auto",
+    "use": [
       {
-        "include": [
-          {
-            "and": [
-              "<ROOT>/packages/plugin-react/tests",
-              {
-                "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
-              },
+        "loader": "builtin:swc-loader",
+        "options": {
+          "env": {
+            "mode": undefined,
+            "targets": [
+              "chrome >= 87",
+              "edge >= 88",
+              "firefox >= 78",
+              "safari >= 14",
             ],
           },
-          /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
-        ],
-        "resolve": {
-          "alias": {
-            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+          "isModule": "unknown",
+          "jsc": {
+            "experimental": {
+              "cacheRoot": "<ROOT>/packages/plugin-react/tests/node_modules/.cache/.swc",
+            },
+            "externalHelpers": true,
+            "parser": {
+              "decorators": true,
+              "syntax": "typescript",
+              "tsx": true,
+            },
+            "transform": {
+              "decoratorVersion": "2022-03",
+              "legacyDecorator": false,
+              "react": {
+                "development": true,
+                "refresh": true,
+                "runtime": "automatic",
+              },
+            },
           },
         },
-        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        "type": "javascript/auto",
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "coreJs": "3.37",
-                "mode": "usage",
-                "shippedProposals": true,
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-              },
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
-                },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "react": {
-                    "development": false,
-                    "refresh": true,
-                    "runtime": "automatic",
-                  },
-                  "useDefineForClassFields": false,
-                },
-              },
-            },
-          },
-        ],
-      },
-      {
-        "mimetype": {
-          "or": [
-            "text/javascript",
-            "application/javascript",
-          ],
-        },
-        "resolve": {
-          "alias": {
-            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-          },
-          "fullySpecified": false,
-        },
-        "use": [
-          {
-            "loader": "builtin:swc-loader",
-            "options": {
-              "env": {
-                "coreJs": "3.37",
-                "mode": "usage",
-                "shippedProposals": true,
-                "targets": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-              },
-              "isModule": "unknown",
-              "jsc": {
-                "externalHelpers": true,
-                "parser": {
-                  "decorators": true,
-                  "syntax": "typescript",
-                  "tsx": true,
-                },
-                "preserveAllComments": true,
-                "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "react": {
-                    "development": false,
-                    "refresh": true,
-                    "runtime": "automatic",
-                  },
-                  "useDefineForClassFields": false,
-                },
-              },
-            },
-          },
-        ],
-      },
-      {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
-            },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/image/[name].[contenthash:8][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
-      },
-      {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
-            },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/svg/[name].[contenthash:8].svg",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.svg\\$/i,
-      },
-      {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
-            },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/media/[name].[contenthash:8][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mov\\|mp3\\|wav\\|flac\\|aac\\|m4a\\|opus\\)\\$/i,
-      },
-      {
-        "oneOf": [
-          {
-            "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
-            },
-            "resourceQuery": /\\(__inline=false\\|url\\)/,
-            "type": "asset/resource",
-          },
-          {
-            "resourceQuery": /inline/,
-            "type": "asset/inline",
-          },
-          {
-            "generator": {
-              "filename": "static/font/[name].[contenthash:8][ext]",
-            },
-            "parser": {
-              "dataUrlCondition": {
-                "maxSize": 4096,
-              },
-            },
-            "type": "asset",
-          },
-        ],
-        "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
-      },
-      {
-        "dependency": "url",
-        "generator": {
-          "filename": "static/wasm/[hash].module.wasm",
-        },
-        "test": /\\\\\\.wasm\\$/,
-        "type": "asset/resource",
       },
     ],
   },
-  "name": "web",
-  "optimization": {
-    "minimize": false,
-    "splitChunks": {
-      "cacheGroups": {
-        "lib-axios": {
-          "name": "lib-axios",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(axios\\|axios-\\.\\+\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-lodash": {
-          "name": "lib-lodash",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(lodash\\|lodash-es\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-polyfill": {
-          "name": "lib-polyfill",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-react": {
-          "name": "lib-react",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react\\|react-dom\\|scheduler\\|react-refresh\\|@rspack\\[\\\\\\\\/\\]plugin-react-refresh\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-router": {
-          "name": "lib-router",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(react-router\\|react-router-dom\\|history\\|@remix-run\\[\\\\\\\\/\\]router\\)\\[\\\\\\\\/\\]/,
-        },
-      },
-      "chunks": "all",
-      "enforceSizeThreshold": 50000,
-    },
-  },
-  "output": {
-    "chunkFilename": "static/js/async/[name].js",
-    "filename": "static/js/[name].js",
-    "hashFunction": "xxhash64",
-    "path": "<ROOT>/packages/plugin-react/tests/dist",
-    "pathinfo": false,
-    "publicPath": "/",
-    "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
-  },
-  "performance": {
-    "hints": false,
-  },
-  "plugins": [
-    HotModuleReplacementPlugin {
-      "name": "HotModuleReplacementPlugin",
-    },
-    CssExtractRspackPlugin {
-      "options": {
-        "chunkFilename": "static/css/async/[name].css",
-        "filename": "static/css/[name].css",
-        "ignoreOrder": true,
-      },
-    },
-    HtmlWebpackPlugin {
-      "options": {
-        "base": false,
-        "cache": true,
-        "chunks": [
-          "index",
-        ],
-        "chunksSortMode": "auto",
-        "compile": true,
-        "entryName": "index",
-        "excludeChunks": [],
-        "favicon": false,
-        "filename": "index.html",
-        "hash": false,
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "minify": false,
-        "publicPath": "auto",
-        "scriptLoading": "defer",
-        "showErrors": true,
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateContent": false,
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-        "xhtml": false,
-      },
-      "userOptions": {
-        "chunks": [
-          "index",
-        ],
-        "entryName": "index",
-        "filename": "index.html",
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "minify": false,
-        "scriptLoading": "defer",
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-      },
-      "version": 5,
-    },
-    HtmlBasicPlugin {
-      "environment": "web",
-      "modifyTagsFn": [Function],
-      "name": "HtmlBasicPlugin",
-      "options": {
-        "index": {},
-      },
-    },
-    DefinePlugin {
-      "_options": {
-        "process.env.ASSET_PREFIX": """",
-        "process.env.NODE_ENV": ""test"",
-      },
-      "affectedHooks": "compilation",
-      "name": "DefinePlugin",
-    },
-    ReactRefreshRspackPlugin {
-      "options": {
-        "exclude": /node_modules/i,
-        "forceEnable": false,
-        "include": [
-          /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
-        ],
-      },
-    },
-  ],
-  "resolve": {
-    "alias": {
-      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-      "react-refresh": "<ROOT>/node_modules/<PNPM_INNER>/react-refresh",
-    },
-    "extensions": [
-      ".ts",
-      ".tsx",
-      ".js",
-      ".jsx",
-      ".mjs",
-      ".json",
-    ],
-  },
-  "target": [
-    "web",
-    "es2017",
-  ],
-}
+]
 `;

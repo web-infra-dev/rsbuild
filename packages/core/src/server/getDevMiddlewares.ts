@@ -1,24 +1,27 @@
 import { isAbsolute, join } from 'node:path';
 import url from 'node:url';
-import type {
-  DevConfig,
-  RequestHandler,
-  Rspack,
-  ServerAPIs,
-  ServerConfig,
-} from '@rsbuild/shared';
 import { normalizePublicDirs } from '../config';
 import { logger } from '../logger';
+import type {
+  DevConfig,
+  EnvironmentAPI,
+  RequestHandler,
+  Rspack,
+  ServerConfig,
+  SetupMiddlewaresServer,
+} from '../types';
 import type { UpgradeEvent } from './helper';
 import {
   faviconFallbackMiddleware,
+  getBaseMiddleware,
+  getHtmlCompletionMiddleware,
   getHtmlFallbackMiddleware,
   getRequestLoggerMiddleware,
 } from './middlewares';
 
 export type CompileMiddlewareAPI = {
   middleware: RequestHandler;
-  sockWrite: ServerAPIs['sockWrite'];
+  sockWrite: SetupMiddlewaresServer['sockWrite'];
   onUpgrade: UpgradeEvent;
   close: () => void;
 };
@@ -27,6 +30,7 @@ export type RsbuildDevMiddlewareOptions = {
   pwd: string;
   dev: DevConfig;
   server: ServerConfig;
+  environments: EnvironmentAPI;
   compileMiddlewareAPI?: CompileMiddlewareAPI;
   outputFileSystem: Rspack.OutputFileSystem;
   output: {
@@ -36,12 +40,14 @@ export type RsbuildDevMiddlewareOptions = {
 
 const applySetupMiddlewares = (
   dev: RsbuildDevMiddlewareOptions['dev'],
+  environments: EnvironmentAPI,
   compileMiddlewareAPI?: CompileMiddlewareAPI,
 ) => {
   const setupMiddlewares = dev.setupMiddlewares || [];
 
-  const serverOptions: ServerAPIs = {
+  const serverOptions: SetupMiddlewaresServer = {
     sockWrite: (type, data) => compileMiddlewareAPI?.sockWrite(type, data),
+    environments,
   };
 
   const before: RequestHandler[] = [];
@@ -77,13 +83,8 @@ const applyDefaultMiddlewares = async ({
   const upgradeEvents: UpgradeEvent[] = [];
   // compression should be the first middleware
   if (server.compress) {
-    const { default: compression } = await import('http-compression');
-    middlewares.push((req, res, next) => {
-      compression({
-        gzip: true,
-        brotli: false,
-      })(req, res, next);
-    });
+    const { gzipMiddleware } = await import('./gzipMiddleware');
+    middlewares.push(gzipMiddleware());
   }
 
   middlewares.push((req, res, next) => {
@@ -107,14 +108,17 @@ const applyDefaultMiddlewares = async ({
   // dev proxy handler, each proxy has own handler
   if (server.proxy) {
     const { createProxyMiddleware } = await import('./proxy');
-    const { middlewares: proxyMiddlewares, upgrade } = createProxyMiddleware(
-      server.proxy,
-    );
+    const { middlewares: proxyMiddlewares, upgrade } =
+      await createProxyMiddleware(server.proxy);
     upgradeEvents.push(upgrade);
 
     for (const middleware of proxyMiddlewares) {
       middlewares.push(middleware);
     }
+  }
+
+  if (server.base && server.base !== '/') {
+    middlewares.push(getBaseMiddleware({ base: server.base }));
   }
 
   const { default: launchEditorMiddleware } = await import(
@@ -132,13 +136,27 @@ const applyDefaultMiddlewares = async ({
 
     middlewares.push((req, res, next) => {
       // [prevFullHash].hot-update.json will 404 (expected) when rsbuild restart and some file changed
-      if (req.url?.endsWith('.hot-update.json')) {
+      if (req.url?.endsWith('.hot-update.json') && req.method !== 'OPTIONS') {
         res.statusCode = 404;
         res.end();
       } else {
         next();
       }
     });
+  }
+
+  const distPath = isAbsolute(output.distPath)
+    ? output.distPath
+    : join(pwd, output.distPath);
+
+  if (compileMiddlewareAPI) {
+    middlewares.push(
+      getHtmlCompletionMiddleware({
+        distPath,
+        callback: compileMiddlewareAPI.middleware,
+        outputFileSystem,
+      }),
+    );
   }
 
   const publicDirs = normalizePublicDirs(server?.publicDir);
@@ -155,17 +173,16 @@ const applyDefaultMiddlewares = async ({
     middlewares.push(assetMiddleware);
   }
 
-  const { distPath } = output;
-
-  compileMiddlewareAPI &&
+  if (compileMiddlewareAPI) {
     middlewares.push(
       getHtmlFallbackMiddleware({
-        distPath: isAbsolute(distPath) ? distPath : join(pwd, distPath),
+        distPath,
         callback: compileMiddlewareAPI.middleware,
         htmlFallback: server.htmlFallback,
         outputFileSystem,
       }),
     );
+  }
 
   if (server.historyApiFallback) {
     const { default: connectHistoryApiFallback } = await import(
@@ -177,12 +194,26 @@ const applyDefaultMiddlewares = async ({
 
     middlewares.push(historyApiFallbackMiddleware);
 
-    // ensure fallback request can be handled by webpack-dev-middleware
+    // ensure fallback request can be handled by rsbuild-dev-middleware
     compileMiddlewareAPI?.middleware &&
       middlewares.push(compileMiddlewareAPI.middleware);
   }
 
   middlewares.push(faviconFallbackMiddleware);
+
+  // OPTIONS request fallback middleware
+  // Should register this middleware as the last
+  // see: https://github.com/web-infra-dev/rsbuild/pull/2867
+  middlewares.push((req, res, next) => {
+    if (req.method === 'OPTIONS') {
+      // Use 204 as no content to send in the response body
+      res.statusCode = 204;
+      res.setHeader('Content-Length', '0');
+      res.end();
+      return;
+    }
+    next();
+  });
 
   return {
     onUpgrade: (...args) => {
@@ -193,9 +224,15 @@ const applyDefaultMiddlewares = async ({
   };
 };
 
-export const getMiddlewares = async (options: RsbuildDevMiddlewareOptions) => {
+export const getMiddlewares = async (
+  options: RsbuildDevMiddlewareOptions,
+): Promise<{
+  close: () => Promise<void>;
+  onUpgrade: UpgradeEvent;
+  middlewares: Middlewares;
+}> => {
   const middlewares: Middlewares = [];
-  const { compileMiddlewareAPI } = options;
+  const { environments, compileMiddlewareAPI } = options;
 
   if (logger.level === 'verbose') {
     middlewares.push(await getRequestLoggerMiddleware());
@@ -204,6 +241,7 @@ export const getMiddlewares = async (options: RsbuildDevMiddlewareOptions) => {
   // Order: setupMiddlewares.unshift => internal middlewares => setupMiddlewares.push
   const { before, after } = applySetupMiddlewares(
     options.dev,
+    environments,
     compileMiddlewareAPI,
   );
 

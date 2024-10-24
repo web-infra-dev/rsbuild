@@ -5,32 +5,22 @@
 # Rsbuild
 
 <p>
-  <a href="https://discord.gg/XsaKEEk4mW">
-    <img src="https://img.shields.io/badge/chat-discord-blue?style=flat-square&logo=discord&colorA=564341&colorB=EDED91" alt="discord channel" />
-  </a>
-  <a href="https://npmjs.com/package/@rsbuild/shared?activeTab=readme">
-   <img src="https://img.shields.io/npm/v/@rsbuild/shared?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" />
-  </a>
-  <a href="https://npmcharts.com/compare/@rsbuild/core?minimal=true">
-    <img src="https://img.shields.io/npm/dm/@rsbuild/core.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="downloads" />
-  </a>
-  <a href="https://nodejs.org/en/about/previous-releases">
-    <img src="https://img.shields.io/node/v/@rsbuild/core.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="node version">
-  </a>
-  <a href="https://github.com/web-infra-dev/rsbuild/blob/main/LICENSE">
-    <img src="https://img.shields.io/npm/l/@rsbuild/shared?style=flat-square&colorA=564341&colorB=EDED91" alt="license" />
-  </a>
+  <a href="https://discord.gg/XsaKEEk4mW"><img src="https://img.shields.io/badge/chat-discord-blue?style=flat-square&logo=discord&colorA=564341&colorB=EDED91" alt="discord channel" /></a>
+  <a href="https://npmjs.com/package/@rsbuild/core?activeTab=readme"><img src="https://img.shields.io/npm/v/@rsbuild/core?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" /></a>
+  <a href="https://npmcharts.com/compare/@rsbuild/core?minimal=true"><img src="https://img.shields.io/npm/dm/@rsbuild/core.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="downloads" /></a>
+  <a href="https://nodejs.org/en/about/previous-releases"><img src="https://img.shields.io/node/v/@rsbuild/core.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="node version"></a>
+  <a href="https://github.com/web-infra-dev/rsbuild/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="license" /></a>
 </p>
 
-[English](./README.md) | 简体中文
+[English](./README.md) | [Portuguese](./README.pt-BR.md) | 简体中文
 
 Rsbuild 是由 [Rspack](https://rspack.dev/) 驱动的高性能构建工具，它默认包含了一套精心设计的构建配置，提供开箱即用的开发体验，并能够充分发挥出 Rspack 的性能优势。
 
-Rsbuild 提供 [丰富的构建功能](https://rsbuild.dev/zh/guide/start/features)，包括编译 TypeScript，JSX，Sass，Less，CSS Modules，Wasm，以及其他资源，也支持模块联邦、图片压缩、类型检查、PostCSS，Lighting CSS 等功能。
+Rsbuild 提供 [丰富的构建功能](https://rsbuild.dev/zh/guide/start/features)，包括编译 TypeScript，JSX，Sass，Less，CSS Modules，Wasm，以及其他资源，也支持模块联邦、图片压缩、类型检查、PostCSS，Lightning CSS 等功能。
 
 ## 💡 对比其他工具
 
-Rsbuild 是与 [Vite](https://vitejs.dev/)、[Create React App](https://github.com/facebook/create-react-app) 或 [Vue CLI](https://github.com/vuejs/vue-cli) 处于同一层级的构建工具，它们都默认包含了开发服务器、命令行工具和合理的构建配置，以此来提供开箱即用的体验。
+Rsbuild 是与 [Vite](https://vitejs.dev/)、[Create React App](https://github.com/facebook/create-react-app) 或 [Vue CLI](https://github.com/vuejs/vue-cli) 相似的构建工具，它们都默认包含了开发服务器、命令行工具和合理的构建配置，以此来提供开箱即用的体验。
 
 ### CRA / Vue CLI
 
@@ -45,14 +35,14 @@ Rsbuild 是与 [Vite](https://vitejs.dev/)、[Create React App](https://github.c
 Rsbuild 与 Vite 有许多相似之处，它们皆致力于提升前端的开发体验。其主要区别在于：
 
 - **生态兼容性**：Rsbuild 兼容大部分的 webpack 插件和所有 Rspack 插件，而 Vite 则是兼容 Rollup 插件。如果你目前更多地使用了 webpack 生态的插件和 loaders，那么迁移到 Rsbuild 是相对容易的。
-- **生产一致性**：Rsbuild 在开发阶段和生产构建均使用 Rspack 进行打包，因此开发和生产构建的产物具备较强的一致性，这也是 Vite 通过 [Rolldown](https://rolldown.rs/) 想要实现的目标之一。
+- **生产一致性**：Rsbuild 在开发阶段和生产构建均使用 Rspack 进行打包，因此开发和生产构建的产物具备较强的一致性，这也是 Vite 通过 Rolldown 想要实现的目标之一。
 - **模块联邦**：Rsbuild 团队与 [Module Federation](https://rsbuild.dev/zh/guide/advanced/module-federation) 的开发团队密切合作，并为 Module Federation 提供一流的支持，帮助你开发微前端架构的大型 Web 应用。
 
 ## 🚀 性能
 
-Rsbuild 的构建性能与原生 Rspack 处于同一水平，以下是构建 1000 个 React 组件的时间：
+Rsbuild 能够充分发挥 Rspack 的性能优势，以下是构建 1000 个 React 组件的时间：
 
-![benchmark](https://github.com/web-infra-dev/rsbuild/assets/7237365/2909b68f-8928-49c6-8eb3-cd1486dbf876)
+![benchmark](https://assets.rspack.dev/rsbuild/assets/benchmark-latest.jpeg)
 
 > 以上数据来自 [performance-compare](https://github.com/rspack-contrib/performance-compare) benchmark。
 
@@ -68,15 +58,15 @@ Rsbuild 具备以下特性：
 
 - **产物稳定**：Rsbuild 设计时充分考虑了构建产物的稳定性，它的开发和生产构建产物具备较强的一致性，并自动完成语法降级和 polyfill 注入。Rsbuild 也提供插件来进行 TypeScript 类型检查和产物语法检查，以避免线上代码的质量问题和兼容性问题。
 
-- **框架无关**：Rsbuild 不与前端 UI 框架耦合，并通过插件来支持 React、Vue 3、Vue 2、Svelte、Solid、Lit 等框架，未来也计划支持社区中更多的 UI 框架。
+- **框架无关**：Rsbuild 不与前端 UI 框架耦合，并通过插件来支持 React、Vue、Svelte、Solid、Preact 等框架，未来也计划支持社区中更多的 UI 框架。
 
-## 🎯 定位
+## 🎯 生态
 
-除了作为一个构建工具使用，Rsbuild 也为上层的解决方案提供通用的构建能力，比如 [Rspress](https://github.com/web-infra-dev/rspress) 和 [Modern.js](https://github.com/web-infra-dev/modern.js)，使他们能够专注于开发自己领域特定的能力。
+Rsbuild 为上层的框架和工具提供了 JavaScript API 和 plugin API。例如，我们基于 Rsbuild 实现了 [Rspress](https://github.com/web-infra-dev/rspress) 和 [Rslib](https://github.com/web-infra-dev/rslib)，并充分复用 Rsbuild 的能力和生态。
 
 下图说明了 Rsbuild 与生态中其他工具之间的关系：
 
-![Rspack Ecosystem](https://github.com/web-infra-dev/rsbuild/assets/7237365/1ec93ad6-b8b1-475b-963f-cba1e7d79dec)
+![Rspack stack layers](https://assets.rspack.dev/rsbuild/assets/rspack-stack-layers.png)
 
 ## 📚 快速上手
 
@@ -86,13 +76,14 @@ Rsbuild 具备以下特性：
 
 - [Rspack](https://github.com/web-infra-dev/rspack)：基于 Rust 的高性能打包工具。
 - [Rspress](https://github.com/web-infra-dev/rspress)：基于 Rsbuild 的静态站点生成器。
-- [Rsdoctor](https://github.com/web-infra-dev/rsdoctor)：针对 Rspack 和 Webpack 的一站式构建分析工具。
+- [Rsdoctor](https://github.com/web-infra-dev/rsdoctor)：针对 Rspack 和 webpack 的一站式构建分析工具。
+- [Rslib](https://github.com/web-infra-dev/rslib): 基于 Rsbuild 的 library 构建工具。
 - [Modern.js](https://github.com/web-infra-dev/modern.js)：基于 Rsbuild 的渐进式 React 框架。
 - [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack)：与 Rspack 和 Rsbuild 相关的精彩内容列表。
 - [rspack-examples](https://github.com/rspack-contrib/rspack-examples)：Rspack、Rsbuild、Rspress 和 Rsdoctor 的示例项目。
 - [storybook-rsbuild](https://github.com/rspack-contrib/storybook-rsbuild): 基于 Rsbuild 构建的 Storybook。
 - [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template)：使用此模板创建你的 Rsbuild 插件。
-- [rsfamily-design-resources](https://github.com/rspack-contrib/rsfamily-design-resources)：Rspack、Rsbuild、Rspress 和 Rsdoctor 的设计资源。
+- [rstack-design-resources](https://github.com/rspack-contrib/rstack-design-resources)：Rspack、Rsbuild、Rspress 和 Rsdoctor 的设计资源。
 
 ## 🤝 参与贡献
 

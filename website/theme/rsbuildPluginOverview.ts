@@ -1,7 +1,7 @@
 import path from 'node:path';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import glob from 'fast-glob';
-import type { Group } from '../components/Overview';
+import type { Group } from './components/Overview';
 
 const camelCase = (input: string): string =>
   input.replace(/[-_](\w)/g, (_, c) => c.toUpperCase());
@@ -14,7 +14,29 @@ export const rsbuildPluginOverview: RsbuildPlugin = {
     const globPath = path.join(root, '**/*.{mdx,md}');
 
     const files = await glob(globPath);
-    const groups: Group[] = [];
+    const groups: Group[] = [
+      {
+        name: 'top level',
+        items: [
+          {
+            text: 'root',
+            link: '/config/root',
+          },
+          {
+            text: 'mode',
+            link: '/config/mode',
+          },
+          {
+            text: 'plugins',
+            link: '/config/plugins',
+          },
+          {
+            text: 'environments',
+            link: '/config/environments',
+          },
+        ],
+      },
+    ];
 
     for (const file of files) {
       const filename = file.replace(root, '').replace(/\.mdx?/, '');
@@ -40,6 +62,7 @@ export const rsbuildPluginOverview: RsbuildPlugin = {
     }
 
     const order = [
+      'top level',
       'source',
       'output',
       'html',

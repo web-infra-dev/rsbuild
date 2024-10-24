@@ -1,11 +1,10 @@
 import { Console } from 'node:console';
-import type { Colors } from '@rsbuild/shared';
 import cliTruncate from 'cli-truncate';
 import patchConsole from 'patch-console';
 import { FULL_WIDTH, renderBar } from './bar';
 import { create } from './log';
 import type { LogUpdate } from './log';
-import type { Props } from './type';
+import type { Colors, Props } from './types';
 
 const colorList: Colors[] = ['green', 'cyan', 'yellow', 'blue', 'magenta'];
 

@@ -1,5 +1,4 @@
-import type { RsbuildConfig, RsbuildPlugin, Rspack } from '@rsbuild/core';
-import { SCRIPT_REGEX } from '@rsbuild/shared';
+import type { EnvironmentConfig, RsbuildPlugin, Rspack } from '@rsbuild/core';
 
 export type PluginPreactOptions = {
   /**
@@ -24,14 +23,14 @@ export const pluginPreact = (
   setup(api) {
     const { reactAliasesEnabled = true, prefreshEnabled = true } = options;
 
-    api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
+    api.modifyEnvironmentConfig((userConfig, { mergeEnvironmentConfig }) => {
       const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
-        development: process.env.NODE_ENV === 'development',
+        development: userConfig.mode === 'development',
         runtime: 'automatic',
         importSource: 'preact',
       };
 
-      const extraConfig: RsbuildConfig = {
+      const extraConfig: EnvironmentConfig = {
         tools: {
           swc: {
             jsc: {
@@ -58,7 +57,7 @@ export const pluginPreact = (
         };
       }
 
-      return mergeRsbuildConfig(extraConfig, userConfig);
+      return mergeEnvironmentConfig(extraConfig, userConfig);
     });
 
     api.modifyBundlerChain(async (chain, { isProd, target }) => {
@@ -73,7 +72,7 @@ export const pluginPreact = (
         '@rspack/plugin-preact-refresh'
       );
 
-      // @ts-expect-error https://github.com/web-infra-dev/rspack/pull/6850
+      const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
       chain.plugin('preact-refresh').use(PreactRefreshPlugin, [
         {
           include: [SCRIPT_REGEX],

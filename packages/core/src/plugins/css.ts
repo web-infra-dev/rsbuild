@@ -1,27 +1,28 @@
 import path from 'node:path';
-import {
-  type AutoprefixerOptions,
-  type CSSLoaderModulesMode,
-  type CSSLoaderOptions,
-  type ModifyChainUtils,
-  type PostCSSLoaderOptions,
-  type PostCSSOptions,
-  type RsbuildContext,
-  type RsbuildTarget,
-  type RspackChain,
-  deepmerge,
-} from '@rsbuild/shared';
-import type { AcceptedPlugin } from 'postcss';
+import deepmerge from 'deepmerge';
+import type { AcceptedPlugin, PluginCreator } from 'postcss';
+import { reduceConfigs, reduceConfigsWithContext } from 'reduce-configs';
 import { CSS_REGEX, LOADER_PATH } from '../constants';
-import { getCompiledPath, isFunction, isPlainObject } from '../helpers';
+import { getCompiledPath } from '../helpers/path';
 import { getCssExtractPlugin } from '../pluginHelper';
-import { reduceConfigs, reduceConfigsWithContext } from '../reduceConfigs';
-import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
+import type {
+  CSSLoaderModulesMode,
+  CSSLoaderOptions,
+  ModifyChainUtils,
+  NormalizedEnvironmentConfig,
+  PostCSSLoaderOptions,
+  PostCSSOptions,
+  RsbuildContext,
+  RsbuildPlugin,
+  RsbuildTarget,
+  Rspack,
+  RspackChain,
+} from '../types';
 
 export const isUseCssExtract = (
   config: NormalizedEnvironmentConfig,
   target: RsbuildTarget,
-) =>
+): boolean =>
   !config.output.injectStyles && target !== 'node' && target !== 'web-worker';
 
 const getCSSModulesLocalIdentName = (
@@ -41,7 +42,7 @@ const getCSSModulesLocalIdentName = (
 export const normalizeCssLoaderOptions = (
   options: CSSLoaderOptions,
   exportOnlyLocals: boolean,
-) => {
+): CSSLoaderOptions => {
   if (options.modules && exportOnlyLocals) {
     let { modules } = options;
     if (modules === true) {
@@ -73,11 +74,18 @@ const userPostcssrcCache = new Map<
   PostCSSOptions | Promise<PostCSSOptions>
 >();
 
+// Create a new config object,
+// ensure isolation of config objects between different builds
+const clonePostCSSConfig = (config: PostCSSOptions) => ({
+  ...config,
+  plugins: config.plugins ? [...config.plugins] : undefined,
+});
+
 async function loadUserPostcssrc(root: string): Promise<PostCSSOptions> {
   const cached = userPostcssrcCache.get(root);
 
   if (cached) {
-    return cached;
+    return clonePostCSSConfig(await cached);
   }
 
   const { default: postcssrc } = await import('postcss-load-config');
@@ -92,60 +100,22 @@ async function loadUserPostcssrc(root: string): Promise<PostCSSOptions> {
 
   userPostcssrcCache.set(root, promise);
 
-  promise.then((config: PostCSSOptions) => {
+  return promise.then((config: PostCSSOptions) => {
     userPostcssrcCache.set(root, config);
+    return clonePostCSSConfig(config);
   });
-
-  return promise;
 }
 
-/**
- * Apply autoprefixer to the postcss plugins
- * Check if autoprefixer is already in the plugins, if not, add it
- */
-export const applyAutoprefixer = async (
-  plugins: unknown[],
-  browserslist: string[],
-  config: NormalizedEnvironmentConfig,
-) => {
-  const pluginObjects: AcceptedPlugin[] = plugins.map((plugin) =>
-    isFunction(plugin) ? plugin({}) : plugin,
-  );
-
-  const hasAutoprefixer = pluginObjects.some((pluginObject) => {
-    if (isPlainObject(pluginObject) && 'postcssPlugin' in pluginObject) {
-      return pluginObject.postcssPlugin === 'autoprefixer';
-    }
-    return false;
-  });
-
-  if (!hasAutoprefixer) {
-    const { default: autoprefixer } = await import(
-      '@rsbuild/shared/autoprefixer'
-    );
-
-    const autoprefixerOptions = reduceConfigs<AutoprefixerOptions>({
-      initial: {
-        flexbox: 'no-2009',
-        overrideBrowserslist: browserslist,
-      },
-      config: config.tools.autoprefixer,
-    });
-
-    // Place autoprefixer as the last plugin to correctly process the results of other plugins
-    // such as tailwindcss
-    pluginObjects.push(autoprefixer(autoprefixerOptions));
-  }
-
-  return pluginObjects;
-};
+const isPostcssPluginCreator = (
+  plugin: AcceptedPlugin,
+): plugin is PluginCreator<unknown> =>
+  typeof plugin === 'function' &&
+  (plugin as PluginCreator<unknown>).postcss === true;
 
 const getPostcssLoaderOptions = async ({
-  browserslist,
   config,
   root,
 }: {
-  browserslist: string[];
   config: NormalizedEnvironmentConfig;
   root: string;
 }): Promise<PostCSSLoaderOptions> => {
@@ -163,37 +133,38 @@ const getPostcssLoaderOptions = async ({
 
   const userPostcssConfig = await loadUserPostcssrc(root);
 
-  let postcssPlugins = userPostcssConfig.plugins?.slice() || [];
-
-  postcssPlugins = await applyAutoprefixer(
-    postcssPlugins,
-    browserslist,
-    config,
-  );
+  // init the plugins array
+  userPostcssConfig.plugins ||= [];
 
   const defaultPostcssConfig: PostCSSLoaderOptions = {
-    postcssOptions: {
-      ...userPostcssConfig,
-      plugins: postcssPlugins,
-    },
+    implementation: getCompiledPath('postcss'),
+    postcssOptions: userPostcssConfig,
     sourceMap: config.output.sourceMap.css,
   };
 
-  const mergedConfig = reduceConfigsWithContext({
+  const merged = reduceConfigsWithContext({
     initial: defaultPostcssConfig,
     config: config.tools.postcss,
     ctx: utils,
   });
 
+  merged.postcssOptions ||= {};
+  merged.postcssOptions.plugins ||= [];
+
   if (extraPlugins.length) {
-    mergedConfig?.postcssOptions?.plugins!.push(...extraPlugins);
+    merged.postcssOptions.plugins.push(...extraPlugins);
   }
 
-  // always use postcss-load-config to load external config
-  mergedConfig.postcssOptions ||= {};
-  mergedConfig.postcssOptions.config = false;
+  // initialize the plugin to avoid multiple initialization
+  // https://github.com/web-infra-dev/rsbuild/issues/3618
+  merged.postcssOptions.plugins = merged.postcssOptions.plugins.map((plugin) =>
+    isPostcssPluginCreator(plugin) ? plugin() : plugin,
+  );
 
-  return mergedConfig;
+  // always use postcss-load-config to load external config
+  merged.postcssOptions.config = false;
+
+  return merged;
 };
 
 const getCSSLoaderOptions = ({
@@ -237,30 +208,16 @@ async function applyCSSRule({
   config,
   context,
   utils: { target, isProd, CHAIN_ID, environment },
-  importLoaders = 1,
 }: {
   rule: RspackChain.Rule;
   config: NormalizedEnvironmentConfig;
   context: RsbuildContext;
   utils: ModifyChainUtils;
-  importLoaders?: number;
 }) {
-  const { browserslist } = context.environments[environment];
-
-  // 1. Check user config
+  // Check user config
   const enableExtractCSS = isUseCssExtract(config, target);
 
-  // 2. Prepare loader options
-  const localIdentName = getCSSModulesLocalIdentName(config, isProd);
-
-  const cssLoaderOptions = getCSSLoaderOptions({
-    config,
-    importLoaders,
-    target,
-    localIdentName,
-  });
-
-  // 3. Create Rspack rule
+  // Create Rspack rule
   // Order: style-loader/CssExtractRspackPlugin -> css-loader -> postcss-loader
   if (target === 'web') {
     // use CssExtractRspackPlugin loader
@@ -268,8 +225,7 @@ async function applyCSSRule({
       rule
         .use(CHAIN_ID.USE.MINI_CSS_EXTRACT)
         .loader(getCssExtractPlugin().loader)
-        .options(config.tools.cssExtract.loaderOptions)
-        .end();
+        .options(config.tools.cssExtract.loaderOptions);
     }
     // use style-loader
     else {
@@ -281,35 +237,74 @@ async function applyCSSRule({
       rule
         .use(CHAIN_ID.USE.STYLE)
         .loader(getCompiledPath('style-loader'))
-        .options(styleLoaderOptions)
-        .end();
+        .options(styleLoaderOptions);
     }
   } else {
     rule
       .use(CHAIN_ID.USE.IGNORE_CSS)
-      .loader(path.join(LOADER_PATH, 'ignoreCssLoader.cjs'))
-      .end();
+      .loader(path.join(LOADER_PATH, 'ignoreCssLoader.cjs'));
   }
 
-  rule
-    .use(CHAIN_ID.USE.CSS)
-    .loader(getCompiledPath('css-loader'))
-    .options(cssLoaderOptions)
-    .end();
+  // Number of loaders applied before css-loader for `@import` at-rules
+  let importLoaders = 0;
+
+  rule.use(CHAIN_ID.USE.CSS).loader(getCompiledPath('css-loader'));
 
   if (target === 'web') {
+    // `builtin:lightningcss-loader` is not supported when using webpack
+    if (
+      context.bundlerType === 'rspack' &&
+      config.tools.lightningcssLoader !== false
+    ) {
+      importLoaders++;
+
+      const userOptions =
+        config.tools.lightningcssLoader === true
+          ? {}
+          : config.tools.lightningcssLoader;
+
+      const initialOptions: Rspack.LightningcssLoaderOptions = {
+        targets: environment.browserslist,
+      };
+
+      if (config.mode === 'production' && config.output.injectStyles) {
+        initialOptions.minify = true;
+      }
+
+      const loaderOptions = reduceConfigs<Rspack.LightningcssLoaderOptions>({
+        initial: initialOptions,
+        config: userOptions,
+      });
+
+      rule
+        .use(CHAIN_ID.USE.LIGHTNINGCSS)
+        .loader('builtin:lightningcss-loader')
+        .options(loaderOptions);
+    }
+
     const postcssLoaderOptions = await getPostcssLoaderOptions({
-      browserslist,
       config,
       root: context.rootPath,
     });
 
-    rule
-      .use(CHAIN_ID.USE.POSTCSS)
-      .loader(getCompiledPath('postcss-loader'))
-      .options(postcssLoaderOptions)
-      .end();
+    // enable postcss-loader if using PostCSS plugins
+    if (postcssLoaderOptions.postcssOptions?.plugins?.length) {
+      importLoaders++;
+      rule
+        .use(CHAIN_ID.USE.POSTCSS)
+        .loader(getCompiledPath('postcss-loader'))
+        .options(postcssLoaderOptions);
+    }
   }
+
+  const localIdentName = getCSSModulesLocalIdentName(config, isProd);
+  const cssLoaderOptions = getCSSLoaderOptions({
+    config,
+    importLoaders,
+    target,
+    localIdentName,
+  });
+  rule.use(CHAIN_ID.USE.CSS).options(cssLoaderOptions);
 
   // CSS imports should always be treated as sideEffects
   rule.merge({ sideEffects: true });
@@ -326,10 +321,13 @@ export const pluginCss = (): RsbuildPlugin => ({
       order: 'pre',
       handler: async (chain, utils) => {
         const rule = chain.module.rule(utils.CHAIN_ID.RULE.CSS);
-        const config = api.getNormalizedConfig({
-          environment: utils.environment,
-        });
-        rule.test(CSS_REGEX);
+        const { config } = utils.environment;
+
+        rule
+          .test(CSS_REGEX)
+          // specify type to allow enabling Rspack `experiments.css`
+          .type('javascript/auto');
+
         await applyCSSRule({
           rule,
           utils,
@@ -337,11 +335,6 @@ export const pluginCss = (): RsbuildPlugin => ({
           context: api.context,
         });
       },
-    });
-
-    api.modifyRspackConfig(async (rspackConfig) => {
-      rspackConfig.experiments ||= {};
-      rspackConfig.experiments.css = false;
     });
   },
 });

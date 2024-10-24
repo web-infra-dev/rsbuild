@@ -1,12 +1,12 @@
-import { build, dev, gotoPage } from '@e2e/helper';
+import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should apply nonce to dynamic chunks in dev build', async ({ page }) => {
   const rsbuild = await dev({
     cwd: __dirname,
+    page,
   });
 
-  await gotoPage(page, rsbuild);
   expect(await page.evaluate('window.dynamicChunkNonce')).toEqual(
     'CSP_NONCE_PLACEHOLDER',
   );
@@ -17,10 +17,9 @@ test('should apply nonce to dynamic chunks in dev build', async ({ page }) => {
 test('should apply nonce to dynamic chunks in prod build', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    runServer: true,
+    page,
   });
 
-  await gotoPage(page, rsbuild);
   expect(await page.evaluate('window.dynamicChunkNonce')).toEqual(
     'CSP_NONCE_PLACEHOLDER',
   );

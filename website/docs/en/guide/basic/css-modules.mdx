@@ -96,7 +96,7 @@ TS2307: Cannot find module './index.module.css' or its corresponding type declar
 
 To fix this, you need to add a type declaration file for the CSS Modules, please create a `src/env.d.ts` file, and add the corresponding type declaration.
 
-- Method 1: If the `@rsbuild/core` package is installed, you can directly reference the type declarations provided by `@rsbuild/core`:
+- Method 1: If the `@rsbuild/core` package is installed, you can reference the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core`:
 
 ```ts
 /// <reference types="@rsbuild/core/types" />
@@ -148,7 +148,7 @@ After adding the type declaration, if the type error still exists, you can try t
 
 Although the above method can provide the type of CSS Modules, it cannot accurately prompt which classNames are exported by a certain CSS file.
 
-Rsbuild supports generating accurate type declarations for CSS Modules, you only need to register the [Typed CSS Modules Plugin](/plugins/list/plugin-typed-css-modules), and then execute the build, Rsbuild will generate type declaration files for all CSS Modules.
+Rsbuild supports generating accurate type declarations for CSS Modules, you only need to register the [@rsbuild/plugin-typed-css-modules](https://github.com/rspack-contrib/rsbuild-plugin-typed-css-modules), and then execute the build, Rsbuild will generate type declaration files for all CSS Modules.
 
 ```ts file=rsbuild.config.ts
 import { pluginTypedCSSModules } from '@rsbuild/plugin-typed-css-modules';

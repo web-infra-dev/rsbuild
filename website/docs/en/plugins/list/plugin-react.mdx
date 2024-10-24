@@ -151,7 +151,7 @@ pluginReact({
 - **Type:** `boolean`
 - **Default:** `false`
 
-When set to `true`, enables the React Profiler for performance analysis in production builds. Use the React DevTools to examine profiling results and identify potential performance optimizations. Profiling adds a slight overhead, so it's disabled by default in production environments.
+When set to `true`, enables the React Profiler for performance analysis in production builds. Use the React DevTools to examine profiling results and identify potential performance optimizations. Profiling adds a slight overhead, so it's disabled by default in production mode.
 
 ```ts title="rsbuild.config.ts"
 pluginReact({
@@ -163,8 +163,25 @@ pluginReact({
 
 Set `REACT_PROFILER=true` when running build script:
 
-```bash
-REACT_PROFILER=true npx rsbuild build
+```json title="package.json"
+{
+  "scripts": {
+    "build:profiler": "REACT_PROFILER=true rsbuild build"
+  }
+}
+```
+
+Since the Windows system does not support the above usage, you can also use [cross-env](https://www.npmjs.com/package/cross-env) to set environment variables. This ensures compatibility across different systems:
+
+```json title="package.json"
+{
+  "scripts": {
+    "build:profiler": "cross-env REACT_PROFILER=true rsbuild build"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.0"
+  }
+}
 ```
 
 > See the [React docs](https://legacy.reactjs.org/docs/optimizing-performance.html#profiling-components-with-the-devtools-profiler) for details about profiling using the React DevTools.
@@ -187,6 +204,7 @@ type ReactRefreshOptions = {
 ```js
 const defaultOptions = {
   include: [/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/],
+  exclude: [/[\\/]node_modules[\\/]/],
 };
 ```
 
@@ -197,7 +215,22 @@ Set the options for [@rspack/plugin-react-refresh](https://www.rspack.dev/guide/
 ```js
 pluginReact({
   reactRefreshOptions: {
-    exclude: [/some-module-to-exclude/],
+    exclude: [/some-module-to-exclude/, /[\\/]node_modules[\\/]/],
   },
+});
+```
+
+### fastRefresh
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+Whether to enable React [Fast Refresh](https://www.npmjs.com/package/react-refresh) in development mode.
+
+If you need to disable Fast Refresh, you can set it to `false`:
+
+```ts
+pluginReact({
+  fastRefresh: false,
 });
 ```

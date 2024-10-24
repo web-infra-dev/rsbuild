@@ -1,4 +1,4 @@
-import { build, gotoPage } from '@e2e/helper';
+import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('tsconfig paths should work and override the alias config', async ({
@@ -6,7 +6,7 @@ test('tsconfig paths should work and override the alias config', async ({
 }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    runServer: true,
+    page,
     rsbuildConfig: {
       source: {
         alias: {
@@ -15,8 +15,6 @@ test('tsconfig paths should work and override the alias config', async ({
       },
     },
   });
-
-  await gotoPage(page, rsbuild);
 
   const foo = page.locator('#foo');
   await expect(foo).toHaveText('tsconfig paths worked');
@@ -29,7 +27,7 @@ test('tsconfig paths should not work when aliasStrategy is "prefer-alias"', asyn
 }) => {
   const rsbuild = await build({
     cwd: __dirname,
-    runServer: true,
+    page,
     rsbuildConfig: {
       source: {
         alias: {
@@ -39,8 +37,6 @@ test('tsconfig paths should not work when aliasStrategy is "prefer-alias"', asyn
       },
     },
   });
-
-  await gotoPage(page, rsbuild);
 
   const foo = page.locator('#foo');
   await expect(foo).toHaveText('source.alias worked');

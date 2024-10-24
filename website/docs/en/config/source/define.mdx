@@ -14,7 +14,7 @@ Each key passed into options is an identifier or multiple identifiers joined wit
 
 > For more usage, please refer to [Using define](/guide/advanced/env-vars#using-define) and [Rspack - DefinePlugin](https://rspack.dev/plugins/webpack/define-plugin).
 
-### Example
+## Example
 
 ```js
 export default {
@@ -26,7 +26,7 @@ export default {
       TWO: '1 + 1',
       'typeof window': JSON.stringify('object'),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-      'import.meta': { test: undefined },
+      'import.meta.test': JSON.stringify('foo'),
     },
   },
 };

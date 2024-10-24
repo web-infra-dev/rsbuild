@@ -1,73 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`plugin-css > should override browserslist of autoprefixer when using output.overrideBrowserslist config 1`] = `
-{
-  "experiments": {
-    "css": false,
-  },
-  "module": {
-    "rules": [
-      {
-        "resolve": {
-          "preferRelative": true,
-        },
-        "sideEffects": true,
-        "test": /\\\\\\.css\\$/,
-        "use": [
-          {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/css-loader",
-            "options": {
-              "importLoaders": 1,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
-              "sourceMap": false,
-            },
-          },
-          {
-            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
-            "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [
-                  {
-                    "browsers": [
-                      "Chrome 80",
-                    ],
-                    "info": [Function],
-                    "options": {
-                      "flexbox": "no-2009",
-                      "overrideBrowserslist": [
-                        "Chrome 80",
-                      ],
-                    },
-                    "postcssPlugin": "autoprefixer",
-                    "prepare": [Function],
-                  },
-                ],
-              },
-              "sourceMap": false,
-            },
-          },
-        ],
-      },
-    ],
-  },
-}
-`;
-
 exports[`plugin-css > should use custom cssModules rule when using output.cssModules config 1`] = `
 {
-  "experiments": {
-    "css": false,
-  },
   "module": {
     "rules": [
       {
@@ -76,12 +10,13 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
           },
           {
-            "loader": "<ROOT>/packages/core/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -95,48 +30,28 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
             },
           },
           {
-            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
+            "loader": "builtin:lightningcss-loader",
             "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [
-                  {
-                    "browsers": [
-                      "chrome >= 87",
-                      "edge >= 88",
-                      "firefox >= 78",
-                      "safari >= 14",
-                    ],
-                    "info": [Function],
-                    "options": {
-                      "flexbox": "no-2009",
-                      "overrideBrowserslist": [
-                        "chrome >= 87",
-                        "edge >= 88",
-                        "firefox >= 78",
-                        "safari >= 14",
-                      ],
-                    },
-                    "postcssPlugin": "autoprefixer",
-                    "prepare": [Function],
-                  },
-                ],
-              },
-              "sourceMap": false,
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
             },
           },
         ],
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;
 
 exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyles is true and target is node 1`] = `
 {
-  "experiments": {
-    "css": false,
-  },
   "module": {
     "rules": [
       {
@@ -145,14 +60,15 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/packages/core/src/ignoreCssLoader.cjs",
           },
           {
-            "loader": "<ROOT>/packages/core/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
-              "importLoaders": 1,
+              "importLoaders": 0,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -168,14 +84,14 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
 `;
 
 exports[`plugin-css injectStyles > should use css-loader + style-loader when injectStyles is true 1`] = `
 {
-  "experiments": {
-    "css": false,
-  },
   "module": {
     "rules": [
       {
@@ -184,12 +100,13 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
         "use": [
           {
-            "loader": "<ROOT>/packages/core/compiled/style-loader",
+            "loader": "<ROOT>/packages/core/compiled/style-loader/index.js",
           },
           {
-            "loader": "<ROOT>/packages/core/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -203,39 +120,138 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
             },
           },
           {
-            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
+            "loader": "builtin:lightningcss-loader",
             "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [
-                  {
-                    "browsers": [
-                      "chrome >= 87",
-                      "edge >= 88",
-                      "firefox >= 78",
-                      "safari >= 14",
-                    ],
-                    "info": [Function],
-                    "options": {
-                      "flexbox": "no-2009",
-                      "overrideBrowserslist": [
-                        "chrome >= 87",
-                        "edge >= 88",
-                        "firefox >= 78",
-                        "safari >= 14",
-                      ],
-                    },
-                    "postcssPlugin": "autoprefixer",
-                    "prepare": [Function],
-                  },
-                ],
-              },
-              "sourceMap": false,
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
             },
           },
         ],
       },
     ],
   },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
 }
+`;
+
+exports[`should ensure isolation of PostCSS config objects between different builds 1`] = `
+[
+  {
+    "resolve": {
+      "preferRelative": true,
+    },
+    "sideEffects": true,
+    "test": /\\\\\\.css\\$/,
+    "type": "javascript/auto",
+    "use": [
+      {
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+      },
+      {
+        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+        "options": {
+          "importLoaders": 2,
+          "modules": {
+            "auto": true,
+            "exportGlobals": false,
+            "exportLocalsConvention": "camelCase",
+            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+            "namedExport": false,
+          },
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "builtin:lightningcss-loader",
+        "options": {
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/core/compiled/postcss-loader/index.js",
+        "options": {
+          "implementation": "<ROOT>/packages/core/compiled/postcss/index.js",
+          "postcssOptions": {
+            "config": false,
+            "plugins": [
+              {
+                "postcssPlugin": "foo",
+              },
+            ],
+          },
+          "sourceMap": false,
+        },
+      },
+    ],
+  },
+]
+`;
+
+exports[`should ensure isolation of PostCSS config objects between different builds 2`] = `
+[
+  {
+    "resolve": {
+      "preferRelative": true,
+    },
+    "sideEffects": true,
+    "test": /\\\\\\.css\\$/,
+    "type": "javascript/auto",
+    "use": [
+      {
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+      },
+      {
+        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+        "options": {
+          "importLoaders": 2,
+          "modules": {
+            "auto": true,
+            "exportGlobals": false,
+            "exportLocalsConvention": "camelCase",
+            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+            "namedExport": false,
+          },
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "builtin:lightningcss-loader",
+        "options": {
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/core/compiled/postcss-loader/index.js",
+        "options": {
+          "implementation": "<ROOT>/packages/core/compiled/postcss/index.js",
+          "postcssOptions": {
+            "config": false,
+            "plugins": [
+              {
+                "postcssPlugin": "bar",
+              },
+            ],
+          },
+          "sourceMap": false,
+        },
+      },
+    ],
+  },
+]
 `;

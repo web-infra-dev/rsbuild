@@ -94,27 +94,35 @@ dist
 
 ## Node.js Output Directory
 
-When the [output.targets](/config/output/targets) of Rsbuild contains `'node'`, or you have enabled server-side features such as SSR in the higher level solutions, Rsbuild will generate some output files for Node.js and output them to the `server` directory:
+When the [output.target](/config/output/target) of Rsbuild is `'node'`, Rsbuild will generate output files for Node.js:
 
 ```bash
 dist
-├── server
-│   └── [name].js
 ├── static
-└── [name].html
+└── [name].js
 ```
 
-Node.js files usually only contain JS files, no HTML or CSS. Also, JS file names will not contain hash.
+Node.js outputs usually only contain JS files, no HTML or CSS. And the JS file names will not contain hash.
 
-You can modify the output path of Node.js files through the [output.distPath.server](/config/output/dist-path) config.
+You can modify the output path of Node.js files via the [environments](/config/environments) config.
 
 For example, output Node.js files to the `server` directory:
 
 ```ts
 export default {
-  output: {
-    distPath: {
-      server: 'server',
+  environments: {
+    web: {
+      output: {
+        target: 'web',
+      },
+    },
+    node: {
+      output: {
+        target: 'node',
+        distPath: {
+          root: 'dist/server',
+        },
+      },
     },
   },
 };
@@ -148,9 +156,9 @@ dist
 └── [name].html
 ```
 
-## Writing Outputs to Disk
+## Output to Disk
 
-By default, Rsbuild does not write the output files to disk during development. Instead, the files are stored in the memory of the dev server to reduce the overhead of file operations.
+By default, Rsbuild does not write the output files to disk in development mode. Instead, the files are stored in the memory of the dev server to reduce the overhead of file operations.
 
 You can write the output files to disk, which is typically used for inspecting the contents of the build artifacts or configuring proxy rules for static assets.
 

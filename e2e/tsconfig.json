@@ -15,5 +15,10 @@
     "playwright.config.ts",
     "cases/**/*.test.ts"
   ],
+  "references": [
+    {
+      "path": "../packages/core"
+    }
+  ],
   "exclude": ["**/node_modules", "**/.*/"]
 }

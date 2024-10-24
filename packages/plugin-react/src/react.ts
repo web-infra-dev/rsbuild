@@ -1,74 +1,59 @@
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import type {
-  ChainIdentifier,
+  EnvironmentConfig,
   RsbuildConfig,
   RsbuildPluginAPI,
   Rspack,
-  RspackChain,
 } from '@rsbuild/core';
-import { SCRIPT_REGEX, deepmerge } from '@rsbuild/shared';
-import type { PluginReactOptions } from '.';
+import type { PluginReactOptions } from './index.js';
 
-const modifySwcLoaderOptions = ({
-  chain,
-  CHAIN_ID,
-  modifier,
-}: {
-  chain: RspackChain;
-  CHAIN_ID: ChainIdentifier;
-  modifier: (config: Rspack.SwcLoaderOptions) => Rspack.SwcLoaderOptions;
-}) => {
-  const ruleIds = [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI];
-
-  for (const ruleId of ruleIds) {
-    if (chain.module.rules.has(ruleId)) {
-      const rule = chain.module.rule(ruleId);
-      if (rule.uses.has(CHAIN_ID.USE.SWC)) {
-        rule.use(CHAIN_ID.USE.SWC).tap(modifier);
-      }
-    }
-  }
-};
+const require = createRequire(import.meta.url);
 
 export const applyBasicReactSupport = (
   api: RsbuildPluginAPI,
   options: PluginReactOptions,
-) => {
-  const REACT_REFRESH_PATH = require.resolve('react-refresh');
+): void => {
+  const REACT_REFRESH_PATH = options.fastRefresh
+    ? require.resolve('react-refresh')
+    : '';
+
+  api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
+    const isDev = config.mode === 'development';
+    const usingHMR = isDev && config.dev.hmr && config.output.target === 'web';
+
+    const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
+      development: isDev,
+      refresh: usingHMR && options.fastRefresh,
+      runtime: 'automatic',
+      ...options.swcReactOptions,
+    };
+
+    const extraConfig: EnvironmentConfig = {
+      tools: {
+        swc: {
+          jsc: {
+            parser: {
+              syntax: 'typescript',
+              // enable supports for JSX/TSX compilation
+              tsx: true,
+            },
+            transform: {
+              react: reactOptions,
+            },
+          },
+        },
+      },
+    };
+
+    return mergeEnvironmentConfig(extraConfig, config);
+  });
 
   api.modifyBundlerChain(
-    async (chain, { CHAIN_ID, environment, isDev, isProd, target }) => {
-      const config = api.getNormalizedConfig({ environment });
-      const usingHMR = !isProd && config.dev.hmr && target === 'web';
-      const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
-        development: isDev,
-        refresh: usingHMR,
-        runtime: 'automatic',
-        ...options.swcReactOptions,
-      };
-
-      modifySwcLoaderOptions({
-        chain,
-        CHAIN_ID,
-        modifier: (opts) => {
-          const extraOptions: Rspack.SwcLoaderOptions = {
-            jsc: {
-              parser: {
-                syntax: 'typescript',
-                // enable supports for React JSX/TSX compilation
-                tsx: true,
-              },
-              transform: {
-                react: reactOptions,
-              },
-            },
-          };
-
-          return deepmerge(opts, extraOptions);
-        },
-      });
-
-      if (!usingHMR) {
+    async (chain, { CHAIN_ID, environment, isDev, target }) => {
+      const { config } = environment;
+      const usingHMR = isDev && config.dev.hmr && target === 'web';
+      if (!usingHMR || !options.fastRefresh) {
         return;
       }
 
@@ -80,12 +65,15 @@ export const applyBasicReactSupport = (
       const { default: ReactRefreshRspackPlugin } = await import(
         '@rspack/plugin-react-refresh'
       );
+      const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
+      const NODE_MODULES_REGEX = /[\\/]node_modules[\\/]/;
 
       chain
         .plugin(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)
         .use(ReactRefreshRspackPlugin, [
           {
             include: [SCRIPT_REGEX],
+            exclude: [NODE_MODULES_REGEX],
             ...options.reactRefreshOptions,
           },
         ]);
@@ -93,25 +81,35 @@ export const applyBasicReactSupport = (
   );
 };
 
-export const applyReactProfiler = (api: RsbuildPluginAPI) => {
-  api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
+export const applyReactProfiler = (api: RsbuildPluginAPI): void => {
+  api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
+    if (config.mode !== 'production') {
+      return;
+    }
+
     const enableProfilerConfig: RsbuildConfig = {
       output: {
         minify: {
           jsOptions: {
-            // Need to keep classnames and function names like Components for debugging purposes.
-            mangle: {
-              keep_classnames: true,
-              keep_fnames: true,
+            minimizerOptions: {
+              // Need to keep classnames and function names like Components for debugging purposes.
+              mangle: {
+                keep_classnames: true,
+                keep_fnames: true,
+              },
             },
           },
         },
       },
     };
-    return mergeRsbuildConfig(config, enableProfilerConfig);
+    return mergeEnvironmentConfig(config, enableProfilerConfig);
   });
 
-  api.modifyBundlerChain((chain) => {
+  api.modifyBundlerChain((chain, { isProd }) => {
+    if (!isProd) {
+      return;
+    }
+
     // Replace react-dom with the profiling version.
     // Reference: https://gist.github.com/bvaughn/25e6233aeb1b4f0cdb8d8366e54a3977
     chain.resolve.alias.set('react-dom$', 'react-dom/profiling');

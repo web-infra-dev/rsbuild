@@ -153,7 +153,7 @@ pluginReact({
 - **类型：** `boolean`
 - **默认值：** `false`
 
-当设置为 `true` 时，在生产构建中启用 React 性能分析器以用于性能分析。需要搭配 React DevTools 来检查分析结果并识别潜在的性能优化方案。分析会增加一些额外开销，因此出于性能考虑，在生产环境中默认是禁用的。
+当设置为 `true` 时，在生产构建中启用 React 性能分析器以用于性能分析。需要搭配 React DevTools 来检查分析结果并识别潜在的性能优化方案。分析会增加一些额外开销，因此出于性能考虑，在生产模式中默认是禁用的。
 
 ```ts title="rsbuild.config.ts"
 pluginReact({
@@ -165,8 +165,25 @@ pluginReact({
 
 执行构建脚本时，设置 `REACT_PROFILER=true` 即可：
 
-```bash
-REACT_PROFILER=true npx rsbuild build
+```json title="package.json"
+{
+  "scripts": {
+    "build:profiler": "REACT_PROFILER=true rsbuild build"
+  }
+}
+```
+
+由于 Windows 系统不支持上述用法，你也可以使用 [cross-env](https://www.npmjs.com/package/cross-env) 来设置环境变量，这可以确保在不同的操作系统中都能正常使用：
+
+```json title="package.json"
+{
+  "scripts": {
+    "build:profiler": "cross-env REACT_PROFILER=true rsbuild build"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.0"
+  }
+}
 ```
 
 > 关于使用 React DevTools 进行性能分析的详细信息，请参见 [React 文档](https://legacy.reactjs.org/docs/optimizing-performance.html#profiling-components-with-the-devtools-profiler)。
@@ -189,6 +206,7 @@ type ReactRefreshOptions = {
 ```js
 const defaultOptions = {
   include: [/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/],
+  exclude: [/[\\/]node_modules[\\/]/],
 };
 ```
 
@@ -199,7 +217,22 @@ const defaultOptions = {
 ```js
 pluginReact({
   reactRefreshOptions: {
-    exclude: [/some-module-to-exclude/],
+    exclude: [/some-module-to-exclude/, /[\\/]node_modules[\\/]/],
   },
+});
+```
+
+### fastRefresh
+
+- **类型：** `boolean`
+- **默认值：** `true`
+
+是否在开发模式下启用 React [Fast Refresh](https://www.npmjs.com/package/react-refresh)。
+
+如果你需要禁用 Fast Refresh，可以将其设置为 `false`：
+
+```ts
+pluginReact({
+  fastRefresh: false,
 });
 ```

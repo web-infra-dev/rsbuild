@@ -1,12 +1,7 @@
 import { isAbsolute, normalize, sep } from 'node:path';
 import type { PluginOptions as BabelPluginOptions } from '@babel/core';
-import {
-  type ChainIdentifier,
-  type NormalizedConfig,
-  type RspackChain,
-  reduceConfigsWithContext,
-} from '@rsbuild/core';
-import { castArray } from '@rsbuild/shared';
+import type { ChainIdentifier, RspackChain } from '@rsbuild/core';
+import { reduceConfigsWithContext } from 'reduce-configs';
 import upath from 'upath';
 import type {
   BabelConfigUtils,
@@ -16,9 +11,16 @@ import type {
   PluginBabelOptions,
   PresetEnvOptions,
   PresetReactOptions,
-} from './types';
+} from './types.js';
 
 export const BABEL_JS_RULE = 'babel-js';
+
+export const castArray = <T>(arr?: T | T[]): T[] => {
+  if (arr === undefined) {
+    return [];
+  }
+  return Array.isArray(arr) ? arr : [arr];
+};
 
 const normalizeToPosixPath = (p: string | undefined) =>
   upath
@@ -170,14 +172,6 @@ export const applyUserBabelConfig = (
   return defaultOptions;
 };
 
-export const getUseBuiltIns = (config: NormalizedConfig) => {
-  const { polyfill } = config.output;
-  if (polyfill === 'off') {
-    return false;
-  }
-  return polyfill;
-};
-
 export const modifyBabelLoaderOptions = ({
   chain,
   CHAIN_ID,
@@ -186,7 +180,7 @@ export const modifyBabelLoaderOptions = ({
   chain: RspackChain;
   CHAIN_ID: ChainIdentifier;
   modifier: (config: BabelTransformOptions) => BabelTransformOptions;
-}) => {
+}): void => {
   const ruleIds = [CHAIN_ID.RULE.JS, CHAIN_ID.RULE.JS_DATA_URI, BABEL_JS_RULE];
 
   for (const ruleId of ruleIds) {

@@ -1,9 +1,9 @@
 import {
-  type CreateRsbuildOptions,
   type InspectConfigOptions,
+  type PluginManager,
+  type ResolvedCreateRsbuildOptions,
   logger,
 } from '@rsbuild/core';
-import type { PluginManager } from '@rsbuild/shared';
 import { inspectConfig } from './inspectConfig';
 import { type InternalContext, initRsbuildConfig } from './shared';
 import type { WebpackConfig } from './types';
@@ -12,7 +12,7 @@ import { generateWebpackConfig } from './webpackConfig';
 export type InitConfigsOptions = {
   context: InternalContext;
   pluginManager: PluginManager;
-  rsbuildOptions: Required<CreateRsbuildOptions>;
+  rsbuildOptions: ResolvedCreateRsbuildOptions;
 };
 
 export async function initConfigs({
@@ -54,7 +54,11 @@ export async function initConfigs({
     };
 
     // run inspect later to avoid cleaned by cleanOutput plugin
-    context.hooks.onBeforeBuild.tap(inspect);
+    context.hooks.onBeforeBuild.tap(({ isFirstCompile }) => {
+      if (isFirstCompile) {
+        inspect();
+      }
+    });
     context.hooks.onAfterStartDevServer.tap(inspect);
   }
 

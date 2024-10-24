@@ -1,0 +1,1475 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`plugin-webpack-swc > output.sourceMap config for swcMinimizerPlugin 1`] = `
+[
+  {
+    "module": {
+      "rules": [
+        {
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "use": [
+            {
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "options": {
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                "env": {
+                  "coreJs": "3.38",
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "extensions": {
+                  "lockCorejsVersion": {
+                    "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                    "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+                  },
+                  "lodash": {
+                    "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                    "ids": [
+                      "lodash",
+                      "lodash-es",
+                    ],
+                  },
+                },
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "transform": {
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
+                    "react": {
+                      "refresh": false,
+                      "runtime": "classic",
+                    },
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          "mimetype": {
+            "or": [
+              "text/javascript",
+              "application/javascript",
+            ],
+          },
+          "resolve": {
+            "fullySpecified": false,
+          },
+          "use": [
+            {
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "options": {
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                "env": {
+                  "coreJs": "3.38",
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "extensions": {
+                  "lockCorejsVersion": {
+                    "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                    "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+                  },
+                  "lodash": {
+                    "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                    "ids": [
+                      "lodash",
+                      "lodash-es",
+                    ],
+                  },
+                },
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "transform": {
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
+                    "react": {
+                      "refresh": false,
+                      "runtime": "classic",
+                    },
+                  },
+                },
+              },
+            },
+          ],
+        },
+      ],
+    },
+    "optimization": {
+      "minimizer": [
+        SwcMinimizerPlugin {
+          "minifyOptions": {
+            "cssMinify": undefined,
+            "jsMinify": {
+              "format": {
+                "asciiOnly": false,
+              },
+              "mangle": true,
+            },
+          },
+          "name": "swc-minimizer-plugin",
+          "rsbuildSourceMapConfig": {
+            "css": false,
+            "js": "cheap-source-map",
+          },
+        },
+        SwcMinimizerPlugin {
+          "minifyOptions": {
+            "cssMinify": {},
+            "jsMinify": undefined,
+          },
+          "name": "swc-minimizer-plugin",
+          "rsbuildSourceMapConfig": {
+            "css": false,
+            "js": "cheap-source-map",
+          },
+        },
+      ],
+    },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
+  },
+]
+`;
+
+exports[`plugin-webpack-swc > should apply multiple environment configs correctly 1`] = `
+[
+  {
+    "module": {
+      "rules": [
+        {
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "use": [
+            {
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "options": {
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                "env": {
+                  "coreJs": "3.38",
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "extensions": {
+                  "lockCorejsVersion": {
+                    "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                    "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+                  },
+                  "lodash": {
+                    "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                    "ids": [
+                      "lodash",
+                      "lodash-es",
+                    ],
+                  },
+                },
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "transform": {
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
+                    "react": {
+                      "refresh": true,
+                      "runtime": "classic",
+                    },
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          "mimetype": {
+            "or": [
+              "text/javascript",
+              "application/javascript",
+            ],
+          },
+          "resolve": {
+            "fullySpecified": false,
+          },
+          "use": [
+            {
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "options": {
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                "env": {
+                  "coreJs": "3.38",
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "extensions": {
+                  "lockCorejsVersion": {
+                    "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                    "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+                  },
+                  "lodash": {
+                    "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                    "ids": [
+                      "lodash",
+                      "lodash-es",
+                    ],
+                  },
+                },
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "transform": {
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
+                    "react": {
+                      "refresh": true,
+                      "runtime": "classic",
+                    },
+                  },
+                },
+              },
+            },
+          ],
+        },
+      ],
+    },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
+  },
+  {
+    "module": {
+      "rules": [
+        {
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "use": [
+            {
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "options": {
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                "env": {
+                  "coreJs": "3.38",
+                  "targets": [
+                    "node >= 16",
+                  ],
+                },
+                "extensions": {
+                  "lockCorejsVersion": {
+                    "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                    "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+                  },
+                  "lodash": {
+                    "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                    "ids": [
+                      "lodash",
+                      "lodash-es",
+                    ],
+                  },
+                },
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                    "react": {
+                      "refresh": false,
+                      "runtime": "classic",
+                    },
+                    "useDefineForClassFields": false,
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          "mimetype": {
+            "or": [
+              "text/javascript",
+              "application/javascript",
+            ],
+          },
+          "resolve": {
+            "fullySpecified": false,
+          },
+          "use": [
+            {
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "options": {
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                "env": {
+                  "coreJs": "3.38",
+                  "targets": [
+                    "node >= 16",
+                  ],
+                },
+                "extensions": {
+                  "lockCorejsVersion": {
+                    "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                    "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+                  },
+                  "lodash": {
+                    "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                    "ids": [
+                      "lodash",
+                      "lodash-es",
+                    ],
+                  },
+                },
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "transform": {
+                    "decoratorMetadata": true,
+                    "legacyDecorator": true,
+                    "react": {
+                      "refresh": false,
+                      "runtime": "classic",
+                    },
+                    "useDefineForClassFields": false,
+                  },
+                },
+              },
+            },
+          ],
+        },
+      ],
+    },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
+  },
+]
+`;
+
+exports[`plugin-webpack-swc > should apply source.include and source.exclude correctly 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+            "options": {
+              "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+              "env": {
+                "coreJs": "3.38",
+                "targets": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
+                ],
+              },
+              "extensions": {
+                "lockCorejsVersion": {
+                  "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                  "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+                },
+                "lodash": {
+                  "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                  "ids": [
+                    "lodash",
+                    "lodash-es",
+                  ],
+                },
+              },
+              "jsc": {
+                "externalHelpers": true,
+                "parser": {
+                  "decorators": true,
+                  "syntax": "typescript",
+                  "tsx": true,
+                },
+                "transform": {
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
+                  "react": {
+                    "refresh": true,
+                    "runtime": "classic",
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
+      {
+        "mimetype": {
+          "or": [
+            "text/javascript",
+            "application/javascript",
+          ],
+        },
+        "resolve": {
+          "fullySpecified": false,
+        },
+        "use": [
+          {
+            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+            "options": {
+              "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+              "env": {
+                "coreJs": "3.38",
+                "targets": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
+                ],
+              },
+              "extensions": {
+                "lockCorejsVersion": {
+                  "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                  "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+                },
+                "lodash": {
+                  "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                  "ids": [
+                    "lodash",
+                    "lodash-es",
+                  ],
+                },
+              },
+              "jsc": {
+                "externalHelpers": true,
+                "parser": {
+                  "decorators": true,
+                  "syntax": "typescript",
+                  "tsx": true,
+                },
+                "transform": {
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
+                  "react": {
+                    "refresh": true,
+                    "runtime": "classic",
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
+    ],
+  },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
+}
+`;
+
+exports[`plugin-webpack-swc > should disable react refresh when dev.hmr is false 1`] = `
+{
+  "rules": [
+    {
+      "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+      "use": [
+        {
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "options": {
+            "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+            "env": {
+              "coreJs": "3.38",
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+            "extensions": {
+              "lockCorejsVersion": {
+                "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+              },
+              "lodash": {
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                "ids": [
+                  "lodash",
+                  "lodash-es",
+                ],
+              },
+            },
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "transform": {
+                "decoratorVersion": "2022-03",
+                "legacyDecorator": false,
+                "react": {
+                  "refresh": false,
+                  "runtime": "classic",
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
+    {
+      "mimetype": {
+        "or": [
+          "text/javascript",
+          "application/javascript",
+        ],
+      },
+      "resolve": {
+        "fullySpecified": false,
+      },
+      "use": [
+        {
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "options": {
+            "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+            "env": {
+              "coreJs": "3.38",
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+            "extensions": {
+              "lockCorejsVersion": {
+                "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+              },
+              "lodash": {
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                "ids": [
+                  "lodash",
+                  "lodash-es",
+                ],
+              },
+            },
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "transform": {
+                "decoratorVersion": "2022-03",
+                "legacyDecorator": false,
+                "react": {
+                  "refresh": false,
+                  "runtime": "classic",
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`plugin-webpack-swc > should disable react refresh when target is not web 1`] = `
+{
+  "rules": [
+    {
+      "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+      "use": [
+        {
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "options": {
+            "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+            "env": {
+              "coreJs": "3.38",
+              "targets": [
+                "node >= 16",
+              ],
+            },
+            "extensions": {
+              "lockCorejsVersion": {
+                "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+              },
+              "lodash": {
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                "ids": [
+                  "lodash",
+                  "lodash-es",
+                ],
+              },
+            },
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "transform": {
+                "decoratorVersion": "2022-03",
+                "legacyDecorator": false,
+                "react": {
+                  "refresh": false,
+                  "runtime": "classic",
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
+    {
+      "mimetype": {
+        "or": [
+          "text/javascript",
+          "application/javascript",
+        ],
+      },
+      "resolve": {
+        "fullySpecified": false,
+      },
+      "use": [
+        {
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "options": {
+            "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+            "env": {
+              "coreJs": "3.38",
+              "targets": [
+                "node >= 16",
+              ],
+            },
+            "extensions": {
+              "lockCorejsVersion": {
+                "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+              },
+              "lodash": {
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                "ids": [
+                  "lodash",
+                  "lodash-es",
+                ],
+              },
+            },
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "transform": {
+                "decoratorVersion": "2022-03",
+                "legacyDecorator": false,
+                "react": {
+                  "refresh": false,
+                  "runtime": "classic",
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`plugin-webpack-swc > should disable react refresh when target is not web 2`] = `
+{
+  "rules": [
+    {
+      "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+      "use": [
+        {
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "options": {
+            "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+            "env": {
+              "coreJs": "3.38",
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+            "extensions": {
+              "lockCorejsVersion": {
+                "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+              },
+              "lodash": {
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                "ids": [
+                  "lodash",
+                  "lodash-es",
+                ],
+              },
+            },
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "transform": {
+                "decoratorVersion": "2022-03",
+                "legacyDecorator": false,
+                "react": {
+                  "refresh": true,
+                  "runtime": "classic",
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
+    {
+      "mimetype": {
+        "or": [
+          "text/javascript",
+          "application/javascript",
+        ],
+      },
+      "resolve": {
+        "fullySpecified": false,
+      },
+      "use": [
+        {
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "options": {
+            "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+            "env": {
+              "coreJs": "3.38",
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+            "extensions": {
+              "lockCorejsVersion": {
+                "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+              },
+              "lodash": {
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                "ids": [
+                  "lodash",
+                  "lodash-es",
+                ],
+              },
+            },
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "transform": {
+                "decoratorVersion": "2022-03",
+                "legacyDecorator": false,
+                "react": {
+                  "refresh": true,
+                  "runtime": "classic",
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`plugin-webpack-swc > should disable react refresh when target is not web 3`] = `
+{
+  "rules": [
+    {
+      "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+      "use": [
+        {
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "options": {
+            "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+            "env": {
+              "coreJs": "3.38",
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+            "extensions": {
+              "lockCorejsVersion": {
+                "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+              },
+              "lodash": {
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                "ids": [
+                  "lodash",
+                  "lodash-es",
+                ],
+              },
+            },
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "transform": {
+                "decoratorVersion": "2022-03",
+                "legacyDecorator": false,
+                "react": {
+                  "refresh": false,
+                  "runtime": "classic",
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
+    {
+      "mimetype": {
+        "or": [
+          "text/javascript",
+          "application/javascript",
+        ],
+      },
+      "resolve": {
+        "fullySpecified": false,
+      },
+      "use": [
+        {
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "options": {
+            "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+            "env": {
+              "coreJs": "3.38",
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+            "extensions": {
+              "lockCorejsVersion": {
+                "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+              },
+              "lodash": {
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                "ids": [
+                  "lodash",
+                  "lodash-es",
+                ],
+              },
+            },
+            "jsc": {
+              "externalHelpers": true,
+              "parser": {
+                "decorators": true,
+                "syntax": "typescript",
+                "tsx": true,
+              },
+              "transform": {
+                "decoratorVersion": "2022-03",
+                "legacyDecorator": false,
+                "react": {
+                  "refresh": false,
+                  "runtime": "classic",
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`plugin-webpack-swc > should set correct swc minimizer options in production 1`] = `
+{
+  "minimizer": [
+    SwcMinimizerPlugin {
+      "minifyOptions": {
+        "cssMinify": undefined,
+        "jsMinify": {
+          "compress": false,
+          "format": {
+            "asciiOnly": false,
+          },
+          "mangle": false,
+        },
+      },
+      "name": "swc-minimizer-plugin",
+      "rsbuildSourceMapConfig": {
+        "css": false,
+        "js": undefined,
+      },
+    },
+    SwcMinimizerPlugin {
+      "minifyOptions": {
+        "cssMinify": {},
+        "jsMinify": undefined,
+      },
+      "name": "swc-minimizer-plugin",
+      "rsbuildSourceMapConfig": {
+        "css": false,
+        "js": undefined,
+      },
+    },
+  ],
+}
+`;
+
+exports[`plugin-webpack-swc > should set correct swc minimizer options using raw swc config 1`] = `
+{
+  "minimizer": [
+    SwcMinimizerPlugin {
+      "minifyOptions": {
+        "cssMinify": undefined,
+        "jsMinify": {
+          "compress": false,
+          "format": {
+            "asciiOnly": false,
+          },
+          "mangle": false,
+        },
+      },
+      "name": "swc-minimizer-plugin",
+      "rsbuildSourceMapConfig": {
+        "css": false,
+        "js": undefined,
+      },
+    },
+    SwcMinimizerPlugin {
+      "minifyOptions": {
+        "cssMinify": {},
+        "jsMinify": undefined,
+      },
+      "name": "swc-minimizer-plugin",
+      "rsbuildSourceMapConfig": {
+        "css": false,
+        "js": undefined,
+      },
+    },
+  ],
+}
+`;
+
+exports[`plugin-webpack-swc > should set multiple swc-loader 1`] = `
+[
+  {
+    "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+    "use": [
+      {
+        "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+        "options": {
+          "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+          "env": {
+            "coreJs": "3.38",
+            "targets": [
+              "chrome >= 87",
+              "edge >= 88",
+              "firefox >= 78",
+              "safari >= 14",
+            ],
+          },
+          "extensions": {
+            "lockCorejsVersion": {
+              "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+              "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+            },
+            "lodash": {
+              "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+              "ids": [
+                "lodash",
+                "lodash-es",
+              ],
+            },
+          },
+          "jsc": {
+            "externalHelpers": true,
+            "parser": {
+              "decorators": true,
+              "syntax": "typescript",
+              "tsx": true,
+            },
+            "transform": {
+              "decoratorVersion": "2022-03",
+              "legacyDecorator": false,
+              "react": {
+                "refresh": true,
+                "runtime": "classic",
+              },
+              "useDefineForClassFields": true,
+            },
+          },
+        },
+      },
+    ],
+  },
+  {
+    "test": /override\\.ts/,
+    "use": [
+      {
+        "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+        "options": {
+          "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+          "env": {
+            "coreJs": "3.38",
+            "targets": [
+              "chrome >= 87",
+              "edge >= 88",
+              "firefox >= 78",
+              "safari >= 14",
+            ],
+          },
+          "extensions": {
+            "lockCorejsVersion": {
+              "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+              "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+            },
+            "lodash": {
+              "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+              "ids": [
+                "lodash",
+                "lodash-es",
+              ],
+            },
+          },
+          "jsc": {
+            "externalHelpers": true,
+            "parser": {
+              "decorators": true,
+              "syntax": "typescript",
+              "tsx": true,
+            },
+            "transform": {
+              "decoratorVersion": "2022-03",
+              "legacyDecorator": false,
+              "react": {
+                "refresh": true,
+                "runtime": "classic",
+              },
+              "useDefineForClassFields": false,
+            },
+          },
+        },
+      },
+    ],
+  },
+  {
+    "mimetype": {
+      "or": [
+        "text/javascript",
+        "application/javascript",
+      ],
+    },
+    "resolve": {
+      "fullySpecified": false,
+    },
+    "use": [
+      {
+        "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+        "options": {
+          "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+          "env": {
+            "coreJs": "3.38",
+            "targets": [
+              "chrome >= 87",
+              "edge >= 88",
+              "firefox >= 78",
+              "safari >= 14",
+            ],
+          },
+          "extensions": {
+            "lockCorejsVersion": {
+              "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+              "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+            },
+            "lodash": {
+              "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+              "ids": [
+                "lodash",
+                "lodash-es",
+              ],
+            },
+          },
+          "jsc": {
+            "externalHelpers": true,
+            "parser": {
+              "decorators": true,
+              "syntax": "typescript",
+              "tsx": true,
+            },
+            "transform": {
+              "decoratorVersion": "2022-03",
+              "legacyDecorator": false,
+              "react": {
+                "refresh": true,
+                "runtime": "classic",
+              },
+              "useDefineForClassFields": true,
+            },
+          },
+        },
+      },
+    ],
+  },
+]
+`;
+
+exports[`plugin-webpack-swc > should set swc minimizer in production 1`] = `
+{
+  "minimizer": [
+    SwcMinimizerPlugin {
+      "minifyOptions": {
+        "cssMinify": undefined,
+        "jsMinify": {
+          "format": {
+            "asciiOnly": false,
+          },
+          "mangle": true,
+        },
+      },
+      "name": "swc-minimizer-plugin",
+      "rsbuildSourceMapConfig": {
+        "css": false,
+        "js": undefined,
+      },
+    },
+    SwcMinimizerPlugin {
+      "minifyOptions": {
+        "cssMinify": {},
+        "jsMinify": undefined,
+      },
+      "name": "swc-minimizer-plugin",
+      "rsbuildSourceMapConfig": {
+        "css": false,
+        "js": undefined,
+      },
+    },
+  ],
+}
+`;
+
+exports[`plugin-webpack-swc > should set swc-loader 1`] = `
+{
+  "module": {
+    "rules": [
+      {
+        "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+        "use": [
+          {
+            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+            "options": {
+              "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+              "env": {
+                "coreJs": "3.38",
+                "targets": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
+                ],
+              },
+              "extensions": {
+                "lockCorejsVersion": {
+                  "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                  "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+                },
+                "lodash": {
+                  "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                  "ids": [
+                    "lodash",
+                    "lodash-es",
+                  ],
+                },
+              },
+              "jsc": {
+                "externalHelpers": true,
+                "parser": {
+                  "decorators": true,
+                  "syntax": "typescript",
+                  "tsx": true,
+                },
+                "transform": {
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
+                  "react": {
+                    "refresh": true,
+                    "runtime": "classic",
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
+      {
+        "mimetype": {
+          "or": [
+            "text/javascript",
+            "application/javascript",
+          ],
+        },
+        "resolve": {
+          "fullySpecified": false,
+        },
+        "use": [
+          {
+            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+            "options": {
+              "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+              "env": {
+                "coreJs": "3.38",
+                "targets": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
+                ],
+              },
+              "extensions": {
+                "lockCorejsVersion": {
+                  "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                  "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+                },
+                "lodash": {
+                  "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                  "ids": [
+                    "lodash",
+                    "lodash-es",
+                  ],
+                },
+              },
+              "jsc": {
+                "externalHelpers": true,
+                "parser": {
+                  "decorators": true,
+                  "syntax": "typescript",
+                  "tsx": true,
+                },
+                "transform": {
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
+                  "react": {
+                    "refresh": true,
+                    "runtime": "classic",
+                  },
+                },
+              },
+            },
+          },
+        ],
+      },
+    ],
+  },
+  "plugins": [
+    RsbuildCorePlugin {},
+  ],
+}
+`;
+
+exports[`plugin-webpack-swc > should use output config 1`] = `
+[
+  {
+    "module": {
+      "rules": [
+        {
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "use": [
+            {
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "options": {
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                "env": {
+                  "coreJs": "3.38",
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "extensions": {
+                  "lockCorejsVersion": {
+                    "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                    "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+                  },
+                  "lodash": {
+                    "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                    "ids": [
+                      "lodash",
+                      "lodash-es",
+                    ],
+                  },
+                },
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "transform": {
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
+                    "react": {
+                      "refresh": false,
+                      "runtime": "classic",
+                    },
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          "mimetype": {
+            "or": [
+              "text/javascript",
+              "application/javascript",
+            ],
+          },
+          "resolve": {
+            "fullySpecified": false,
+          },
+          "use": [
+            {
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "options": {
+                "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                "env": {
+                  "coreJs": "3.38",
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "extensions": {
+                  "lockCorejsVersion": {
+                    "corejs": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
+                    "swcHelpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+                  },
+                  "lodash": {
+                    "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
+                    "ids": [
+                      "lodash",
+                      "lodash-es",
+                    ],
+                  },
+                },
+                "jsc": {
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": true,
+                  },
+                  "transform": {
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
+                    "react": {
+                      "refresh": false,
+                      "runtime": "classic",
+                    },
+                  },
+                },
+              },
+            },
+          ],
+        },
+      ],
+    },
+    "optimization": {
+      "minimizer": [
+        SwcMinimizerPlugin {
+          "minifyOptions": {
+            "cssMinify": undefined,
+            "jsMinify": {
+              "compress": {
+                "ecma": 2019,
+              },
+              "format": {
+                "asciiOnly": false,
+              },
+              "mangle": true,
+            },
+          },
+          "name": "swc-minimizer-plugin",
+          "rsbuildSourceMapConfig": {
+            "css": false,
+            "js": undefined,
+          },
+        },
+      ],
+    },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
+  },
+]
+`;

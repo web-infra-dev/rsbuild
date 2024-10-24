@@ -1,24 +1,15 @@
-import { type Rspack, logger } from '@rsbuild/core';
-import type {
-  BuildOptions,
-  MultiStats,
-  RspackConfig,
-  Stats,
-} from '@rsbuild/shared';
+import { logger } from '@rsbuild/core';
+import type { Build, BuildOptions, Rspack } from '@rsbuild/core';
 import type { Configuration as WebpackConfig } from 'webpack';
 import WebpackMultiStats from 'webpack/lib/MultiStats.js';
 import { createCompiler } from './createCompiler';
-import { type InitConfigsOptions, initConfigs } from './initConfigs';
-import { onCompileDone } from './shared';
+import type { InitConfigsOptions } from './initConfigs';
+import { registerBuildHook } from './shared';
 
 export const build = async (
   initOptions: InitConfigsOptions,
-  { mode = 'production', watch, compiler: customCompiler }: BuildOptions = {},
-) => {
-  if (!process.env.NODE_ENV) {
-    process.env.NODE_ENV = mode;
-  }
-
+  { watch, compiler: customCompiler }: BuildOptions = {},
+): Promise<ReturnType<Build>> => {
   const { context } = initOptions;
 
   let compiler: Rspack.Compiler | Rspack.MultiCompiler;
@@ -27,43 +18,43 @@ export const build = async (
   if (customCompiler) {
     compiler = customCompiler;
   } else {
-    const { webpackConfigs } = await initConfigs(initOptions);
-    compiler = await createCompiler({
-      context,
-      webpackConfigs,
-    });
-
-    // assign webpackConfigs
-    bundlerConfigs = webpackConfigs;
+    const result = await createCompiler(initOptions);
+    compiler = result.compiler;
+    bundlerConfigs = result.webpackConfigs;
   }
 
-  let isFirstCompile = true;
-  await context.hooks.onBeforeBuild.call({
-    bundlerConfigs: bundlerConfigs as RspackConfig[],
+  registerBuildHook({
+    context,
+    bundlerConfigs: bundlerConfigs as Rspack.Configuration[],
+    compiler,
+    isWatch: Boolean(watch),
+    MultiStatsCtor: WebpackMultiStats,
   });
 
-  const onDone = async (stats: Stats | MultiStats) => {
-    const p = context.hooks.onAfterBuild.call({ isFirstCompile, stats });
-    isFirstCompile = false;
-    await p;
-  };
-
-  onCompileDone(compiler, onDone, WebpackMultiStats);
-
   if (watch) {
-    compiler.watch({}, (err) => {
+    const watching = compiler.watch({}, (err) => {
       if (err) {
         logger.error(err);
       }
     });
-    return;
+    return {
+      close: () =>
+        new Promise((resolve) => {
+          watching.close(() => {
+            resolve();
+          });
+        }),
+    };
   }
 
-  await new Promise<{ stats: Stats | MultiStats }>((resolve, reject) => {
+  const { stats } = await new Promise<{
+    stats?: Rspack.Stats | Rspack.MultiStats;
+  }>((resolve, reject) => {
     compiler.run((err, stats) => {
-      if (err || stats?.hasErrors()) {
-        const buildError = err || new Error('Webpack build failed!');
-        reject(buildError);
+      if (err) {
+        reject(err);
+      } else if (stats?.hasErrors()) {
+        reject(new Error('Webpack build failed!'));
       }
       // If there is a compilation error, the close method should not be called.
       // Otherwise bundler may generate an invalid cache.
@@ -73,10 +64,16 @@ export const build = async (
         compiler.close((closeErr) => {
           closeErr && logger.error(closeErr);
 
-          // Assert type of stats must align to compiler.
-          resolve({ stats: stats as any });
+          resolve({ stats });
         });
       }
     });
   });
+
+  return {
+    stats,
+    // This close method is a noop in non-watch mode
+    // In watch mode, it's defined above to stop watching
+    close: async () => {},
+  };
 };

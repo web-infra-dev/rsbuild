@@ -63,15 +63,15 @@ Rsbuild 和 Builder 的插件系统不兼容，因此需要将 Builder 的插件
 
 下面是 Builder 插件和 Rsbuild 插件的对应关系：
 
-| Builder                                  | Rsbuild                                                               |
-| ---------------------------------------- | --------------------------------------------------------------------- |
-| @modern-js/builder-plugin-vue            | [@rsbuild/plugin-vue](/plugins/list/plugin-vue)                       |
-| @modern-js/builder-plugin-vue2           | [@rsbuild/plugin-vue2](/plugins/list/plugin-vue2)                     |
-| @modern-js/builder-plugin-stylus         | [@rsbuild/plugin-stylus](/plugins/list/plugin-stylus)                 |
-| @modern-js/builder-plugin-node-polyfill  | [@rsbuild/plugin-node-polyfill](/plugins/list/plugin-node-polyfill)   |
-| @modern-js/builder-plugin-image-compress | [@rsbuild/plugin-image-compress](/plugins/list/plugin-image-compress) |
-| @modern-js/builder-plugin-swc            | 默认生效，无须使用                                                    |
-| @modern-js/builder-plugin-esbuild        | 不再支持                                                              |
+| Builder                                  | Rsbuild                                                                                           |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| @modern-js/builder-plugin-vue            | [@rsbuild/plugin-vue](/plugins/list/plugin-vue)                                                   |
+| @modern-js/builder-plugin-vue2           | [@rsbuild/plugin-vue2](https://github.com/rspack-contrib/rsbuild-plugin-vue2)                     |
+| @modern-js/builder-plugin-stylus         | [@rsbuild/plugin-stylus](/plugins/list/plugin-stylus)                                             |
+| @modern-js/builder-plugin-node-polyfill  | [@rsbuild/plugin-node-polyfill](https://github.com/rspack-contrib/rsbuild-plugin-node-polyfill)   |
+| @modern-js/builder-plugin-image-compress | [@rsbuild/plugin-image-compress](https://github.com/rspack-contrib/rsbuild-plugin-image-compress) |
+| @modern-js/builder-plugin-swc            | 默认生效，无须使用                                                                                |
+| @modern-js/builder-plugin-esbuild        | 不再支持                                                                                          |
 
 以 `@modern-js/builder-plugin-vue` 为例，你需要先安装 `@rsbuild/plugin-vue`，然后在 `rsbuild.config.ts` 中引入插件，并添加到 `plugins` 字段中。
 
@@ -120,7 +120,7 @@ Rsbuild 和 Builder 的绝大多数配置项是一致的，仅有少许配置项
 - 浏览器范围：默认最低兼容到支持 [原生 ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) 的浏览器，可参考 [Browserslist 默认值](/guide/advanced/browserslist#browserslist-默认值)。
 - HTML 文件输出位置：默认输出到 dist 目录的根部，可参考 [默认产物目录](/guide/basic/output-files#默认产物目录)。
 - Polyfill 注入方式：默认按需注入，可参考 [output.polyfill](/config/output/polyfill)。
-- TypeScript 类型检查：默认不开启，需要手动注册 [Type Check 插件](/plugins/list/plugin-type-check)。
+- TypeScript 类型检查：默认不开启，需要手动注册 [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check)。
 - 修改 DevServer 配置：通过 `dev` 和 `server` 配置项修改。
 
 ## 验证结果

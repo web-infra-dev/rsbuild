@@ -10,10 +10,10 @@ exports[`plugin-sass > should add sass-loader 1`] = `
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
     "use": [
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
       },
       {
-        "loader": "<ROOT>/packages/core/compiled/css-loader",
+        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
         "options": {
           "importLoaders": 3,
           "modules": {
@@ -27,34 +27,14 @@ exports[`plugin-sass > should add sass-loader 1`] = `
         },
       },
       {
-        "loader": "<ROOT>/packages/core/compiled/postcss-loader",
+        "loader": "builtin:lightningcss-loader",
         "options": {
-          "postcssOptions": {
-            "config": false,
-            "plugins": [
-              {
-                "browsers": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-                "info": [Function],
-                "options": {
-                  "flexbox": "no-2009",
-                  "overrideBrowserslist": [
-                    "chrome >= 87",
-                    "edge >= 88",
-                    "firefox >= 78",
-                    "safari >= 14",
-                  ],
-                },
-                "postcssPlugin": "autoprefixer",
-                "prepare": [Function],
-              },
-            ],
-          },
-          "sourceMap": false,
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
         },
       },
       {
@@ -87,10 +67,10 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
     "use": [
       {
-        "loader": "<ROOT>/packages/core/compiled/style-loader",
+        "loader": "<ROOT>/packages/core/compiled/style-loader/index.js",
       },
       {
-        "loader": "<ROOT>/packages/core/compiled/css-loader",
+        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
         "options": {
           "importLoaders": 3,
           "modules": {
@@ -104,34 +84,14 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
         },
       },
       {
-        "loader": "<ROOT>/packages/core/compiled/postcss-loader",
+        "loader": "builtin:lightningcss-loader",
         "options": {
-          "postcssOptions": {
-            "config": false,
-            "plugins": [
-              {
-                "browsers": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-                "info": [Function],
-                "options": {
-                  "flexbox": "no-2009",
-                  "overrideBrowserslist": [
-                    "chrome >= 87",
-                    "edge >= 88",
-                    "firefox >= 78",
-                    "safari >= 14",
-                  ],
-                },
-                "postcssPlugin": "autoprefixer",
-                "prepare": [Function],
-              },
-            ],
-          },
-          "sourceMap": false,
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
         },
       },
       {
@@ -167,10 +127,10 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
     "use": [
       {
-        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
       },
       {
-        "loader": "<ROOT>/packages/core/compiled/css-loader",
+        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
         "options": {
           "importLoaders": 3,
           "modules": {
@@ -184,34 +144,14 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
         },
       },
       {
-        "loader": "<ROOT>/packages/core/compiled/postcss-loader",
+        "loader": "builtin:lightningcss-loader",
         "options": {
-          "postcssOptions": {
-            "config": false,
-            "plugins": [
-              {
-                "browsers": [
-                  "chrome >= 87",
-                  "edge >= 88",
-                  "firefox >= 78",
-                  "safari >= 14",
-                ],
-                "info": [Function],
-                "options": {
-                  "flexbox": "no-2009",
-                  "overrideBrowserslist": [
-                    "chrome >= 87",
-                    "edge >= 88",
-                    "firefox >= 78",
-                    "safari >= 14",
-                  ],
-                },
-                "postcssPlugin": "autoprefixer",
-                "prepare": [Function],
-              },
-            ],
-          },
-          "sourceMap": false,
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
         },
       },
       {
@@ -226,6 +166,68 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
         "options": {
           "api": "modern-compiler",
           "implementation": "<ROOT>/node_modules/<PNPM_INNER>/sass-embedded/dist/lib/index.js",
+          "sourceMap": true,
+        },
+      },
+    ],
+  },
+]
+`;
+
+exports[`plugin-sass > should allow to use legacy API and mute deprecation warnings 1`] = `
+[
+  {
+    "resolve": {
+      "preferRelative": true,
+    },
+    "sideEffects": true,
+    "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
+    "use": [
+      {
+        "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+      },
+      {
+        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+        "options": {
+          "importLoaders": 3,
+          "modules": {
+            "auto": true,
+            "exportGlobals": false,
+            "exportLocalsConvention": "camelCase",
+            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+            "namedExport": false,
+          },
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "builtin:lightningcss-loader",
+        "options": {
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/plugin-sass/compiled/resolve-url-loader/index.js",
+        "options": {
+          "join": [Function],
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/plugin-sass/compiled/sass-loader/index.js",
+        "options": {
+          "api": "legacy",
+          "implementation": "<ROOT>/node_modules/<PNPM_INNER>/sass-embedded/dist/lib/index.js",
+          "sassOptions": {
+            "silenceDeprecations": [
+              "legacy-js-api",
+            ],
+          },
           "sourceMap": true,
         },
       },

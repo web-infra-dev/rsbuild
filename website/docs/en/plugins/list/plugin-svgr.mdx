@@ -32,6 +32,8 @@ export default {
 
 ## Example
 
+### Default Usage
+
 After registering the plugin, when import an SVG in a JS file, if the imported path contains the `?react` suffix, Rsbuild will call SVGR to transform the SVG into a React component.
 
 ```jsx title="App.jsx"
@@ -39,10 +41,6 @@ import Logo from './logo.svg?react';
 
 export const App = () => <Logo />;
 ```
-
-:::tip
-@rsbuild/plugin-svgr supports the above usage since v0.4.14.
-:::
 
 If the imported path does not contain the `?react` suffix, then the SVG will be treated as a normal static asset and you will get a URL:
 
@@ -52,13 +50,28 @@ import logoURL from './static/logo.svg';
 console.log(logoURL); // => "/static/logo.6c12aba3.png"
 ```
 
-Rsbuild also supports named imports of the `ReactComponent` to use SVGR:
+### Named Import
+
+`@rsbuild/plugin-svgr` supports named imports for `ReactComponent` when using SVGR. You need to set [svgrOptions.exportType](#svgroptionsexporttype) to `'named'`:
+
+```js
+pluginSvgr({
+  svgrOptions: {
+    exportType: 'named',
+  },
+});
+```
 
 ```jsx title="App.jsx"
 import { ReactComponent as Logo } from './logo.svg';
 
 export const App = () => <Logo />;
 ```
+
+`@rsbuild/plugin-svgr` also supports default imports and mixed imports:
+
+- Enable default imports by setting [svgrOptions.exportType](#svgroptionsexporttype) to `'default'`.
+- Enable mixed imports by setting the [mixedImport](#mixedimport) option to use both default and named imports at the same time.
 
 ## Options
 
@@ -118,6 +131,46 @@ pluginSvgr({
 });
 ```
 
+When you set `svgoConfig.plugins`, the configuration for plugins with the same name is automatically merged. For example, the following configuration will be merged with the built-in `preset-default`:
+
+```ts
+pluginSvgr({
+  svgrOptions: {
+    svgoConfig: {
+      plugins: [
+        {
+          name: 'preset-default',
+          params: {
+            overrides: {
+              cleanupIds: false,
+            },
+          },
+        },
+      ],
+    },
+  },
+});
+```
+
+The merged `svgoConfig` will be:
+
+```ts
+const mergedSvgoConfig = {
+  plugins: [
+    {
+      name: 'preset-default',
+      params: {
+        overrides: {
+          removeViewBox: true,
+          cleanupIds: false,
+        },
+      },
+    },
+    'prefixIds',
+  ],
+};
+```
+
 ### svgrOptions.exportType
 
 Set the export type of SVG React components.
@@ -127,8 +180,8 @@ Set the export type of SVG React components.
 
 `exportType` can be set as:
 
-- `default`: use default export
-- `named`: use named export (`ReactComponent`)
+- `default`: use default export.
+- `named`: use `ReactComponent` named export.
 
 For example, set the default export of SVG file as a React component:
 
@@ -164,7 +217,6 @@ When `svgrOptions.exportType` is set to `'default'`, the named imports (ReactCom
 
 - **Type:** `boolean`
 - **Default:** `false`
-- **Version:** `>= 0.5.0`
 
 Whether to enable mixed import, allowing to use default import and named import at the same time.
 
@@ -199,7 +251,6 @@ It is recommended to use `?react` to transform SVG to React component instead of
 
 - **Type:** `RegExp`
 - **Default:** `/react/`
-- **Version:** `>= 0.5.2`
 
 Used to custom the query suffix to match SVGR transformation.
 

@@ -2,13 +2,13 @@
 published_at: 2024-02-06 08:00:00
 ---
 
-# Rsbuild v0.4 发布
+# Rsbuild 0.4 发布
 
 > February 06, 2024
 
 ![](https://assets.rspack.dev/rsbuild/rsbuild-banner-v0-4.png)
 
-Rsbuild v0.4 版本提供内置的模块联邦支持。此外，还包含一些 API 的不兼容更新，请参考当前文档进行升级。
+Rsbuild 0.4 版本提供内置的模块联邦支持。此外，还包含一些 API 的不兼容更新，请参考当前文档进行升级。
 
 ### 模块联邦配置
 
@@ -73,7 +73,7 @@ export default {
 
 ## 移除 postcss-flexbugs-fixes
 
-Rsbuild v0.4 移除了内置的 [postcss-flexbugs-fixes](https://github.com/luisrudge/postcss-flexbugs-fixes) 插件。
+Rsbuild 0.4 移除了内置的 [postcss-flexbugs-fixes](https://github.com/luisrudge/postcss-flexbugs-fixes) 插件。
 
 该插件用于修复 IE 10 / 11 中的一些 flex bug。考虑到现代浏览器已经不再存在这些 flex 问题，我们移除了这个插件以提高构建性能。
 
@@ -144,9 +144,9 @@ export default {
 ```js
 import { loadConfig } from '@rsbuild/core';
 
-// v0.3
+// 0.3
 const config = await loadConfig();
 
-// v0.4
+// 0.4
 const { content, filePath } = await loadConfig();
 ```

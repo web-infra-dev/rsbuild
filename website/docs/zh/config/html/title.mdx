@@ -9,7 +9,7 @@
 如果当前项目使用的 HTML 模板中已经包含了 `<title>` 标签，那么 `html.title` 将不会生效。
 :::
 
-### 字符串用法
+## 字符串用法
 
 当 `html.title` 可以直接设置为一个字符串：
 
@@ -27,7 +27,7 @@ export default {
 <title>Example</title>
 ```
 
-### 函数用法
+## 函数用法
 
 - **类型：**
 
@@ -52,6 +52,18 @@ export default {
       };
       return titles[entryName] || 'Other Page';
     },
+  },
+};
+```
+
+## 不注入 title 标签
+
+当 `html.title` 设置为空字符串时，Rsbuild 不会注入 `<title>` 标签：
+
+```js
+export default {
+  html: {
+    title: '',
   },
 };
 ```

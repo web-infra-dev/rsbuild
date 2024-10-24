@@ -29,6 +29,23 @@ export default {
 };
 ```
 
+When merging configurations, `webpack-merge` will automatically concatenate arrays such as `plugins`, `module.rules`, `resolve.extensions`, etc.
+
+```js
+export default {
+  tools: {
+    rspack: {
+      resolve: {
+        // merged with the built-in resolve.extensions
+        extensions: ['.foo'],
+      },
+    },
+  },
+};
+```
+
+If you need to override a configuration rather than merge it with the default value, you can use the function type of `tools.rspack`.
+
 ## Function Type
 
 `tools.rspack` can be configured as a function. The first parameter of this function is the built-in Rspack configuration object, you can modify this object, and then return it. For example:
@@ -200,9 +217,9 @@ export default {
 
 ### HtmlPlugin
 
-- **Type:** `typeof import('html-webpack-plugin')`
+- **Type:** `typeof import('html-rspack-plugin')`
 
-The instance of `html-webpack-plugin`:
+The instance of `html-rspack-plugin`:
 
 ```js
 export default {
@@ -218,7 +235,9 @@ export default {
 
 - **Type:** `(rules: RuleSetRule | RuleSetRule[]) => void`
 
-Add additional [Rspack rules](https://rspack.dev/config/module#modulerules).
+Add additional [Rspack rules](https://rspack.dev/config/module#modulerules) to the head of the internal Rspack module rules array.
+
+It should be noted that Rspack loaders will be executed in right-to-left order. If you want the loader you added to be executed before other loaders (Normal Phase), you should use [appendRules](#appendrules) to add the rule to the end.
 
 For example:
 
@@ -234,6 +253,40 @@ export default {
 
       // Add multiple rules as an array
       addRules([
+        {
+          test: /\.foo/,
+          loader: require.resolve('foo-loader'),
+        },
+        {
+          test: /\.bar/,
+          loader: require.resolve('bar-loader'),
+        },
+      ]);
+    },
+  },
+};
+```
+
+### appendRules
+
+- **Type:** `(rules: RuleSetRule | RuleSetRule[]) => void`
+
+Add additional [Rspack rules](https://rspack.dev/config/module#modulerules) to the end of the internal Rspack module rules array.
+
+For example:
+
+```ts
+export default {
+  tools: {
+    rspack: (config, { appendRules }) => {
+      // add a single rule
+      appendRules({
+        test: /\.foo/,
+        loader: require.resolve('foo-loader'),
+      });
+
+      // Add multiple rules as an array
+      appendRules([
         {
           test: /\.foo/,
           loader: require.resolve('foo-loader'),
@@ -308,7 +361,7 @@ export default {
 
 ### mergeConfig
 
-- **Type:** `(...configs: RspackConfig[]) => RspackConfig`
+- **Type:** `(...configs:Rspack.Configuration[]) =>Rspack.Configuration`
 
 Used to merge multiple Rspack configs, same as [webpack-merge](https://github.com/survivejs/webpack-merge).
 

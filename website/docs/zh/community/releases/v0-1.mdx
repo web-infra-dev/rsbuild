@@ -2,23 +2,25 @@
 published_at: 2023-11-22 08:00:00
 ---
 
-# Rsbuild v0.1 发布
+# Rsbuild 0.1 发布
 
 > November 22, 2023
 
 ![](https://assets.rspack.dev/rsbuild/rsbuild-banner-v0-1.png)
 
-我们很高兴地宣布 **[Rsbuild](https://github.com/web-infra-dev/rsbuild)** **v0.1** 的发布！
+我们很高兴地宣布 **[Rsbuild](https://github.com/web-infra-dev/rsbuild)** **0.1** 的发布！
 
 Rsbuild 是基于 Rspack 的构建工具，旨在成为**增强版的 Rspack CLI**，更加容易上手和开箱即用。Rsbuild 是 Webpack 应用迁移到 Rspack 的最佳方案，他能帮助你减少 90% 配置并获得 10 倍构建速度。
 
 ### 🚀 性能
 
-Rsbuild 的构建性能与原生 Rspack 处于同一水平。由于 Rsbuild 内置了更多开箱即用的功能，因此性能数据会略微低于 Rspack。
+Rsbuild 能够充分发挥 Rspack 的性能优势。由于 Rsbuild 内置了更多开箱即用的功能，因此性能数据会略微低于 Rspack。
 
 以下是构建 1000 个 React 组件的时间：
 
-![](https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/benchmark-11211255.png)
+import { BenchmarkGraph } from '@components/Benchmark';
+
+<BenchmarkGraph />
 
 > 以上数据基于 Farm 团队搭建的 benchmark，更多信息请参考 [performance-compare](https://github.com/rspack-contrib/performance-compare)。
 
@@ -34,7 +36,7 @@ Rsbuild 具备以下特性：
 
 - **产物稳定**：Rsbuild 设计时充分考虑了构建产物的稳定性，它的开发和生产构建产物具备较强的一致性，并自动完成语法降级和 polyfill 注入。Rsbuild 也提供插件来进行 TypeScript 类型检查和产物语法检查，以避免线上代码的质量问题和兼容性问题。
 
-- **框架无关**：Rsbuild 不与前端 UI 框架耦合，并通过插件来支持 React、Vue 3、Vue 2、Svelte、Solid、Lit 等框架，未来也计划支持社区中更多的 UI 框架。
+- **框架无关**：Rsbuild 不与前端 UI 框架耦合，并通过插件来支持 React、Vue、Svelte、Solid、Preact 等框架，未来也计划支持社区中更多的 UI 框架。
 
 ### 💡 下一步
 
@@ -42,6 +44,6 @@ Rsbuild 具备以下特性：
 
 比如，我们正在开发 **Rsdoctor**，这是一个强大的构建分析工具，可以用于所有 Rspack 和 Webpack 项目。它提供可视化 UI，来帮助开发者分析项目中的构建耗时、重复依赖、代码转换过程等，使构建问题更加容易被定位和解决。
 
-![Rsdoctor preview](https://lf3-static.bytednsdoc.com/obj/eden-cn/rjhwzy/ljhwZthlaukjlkulzlp/rsbuild/rsbuild-doctor-preview-1122.jpg)
+![Rsdoctor preview](https://assets.rspack.dev/rsbuild/assets/rsdoctor-preview.jpg)
 
 我们将在近期发布 Rsdoctor 的第一个可用版本，后续 Rsbuild 会与 Rspack 同步迭代，并计划于 2024 年上半年发布 1.0 版本。

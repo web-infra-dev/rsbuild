@@ -3,11 +3,32 @@
 - **类型：**
 
 ```ts
-type ServerAPIs = {
+type SetupMiddlewaresServer = {
   sockWrite: (
     type: string,
     data?: string | boolean | Record<string, any>,
   ) => void;
+  environments: {
+    [name: string]: {
+      /**
+       * 获取当前环境的构建信息
+       */
+      getStats: () => Promise<Stats>;
+
+      /**
+       * 在服务端加载并执行构建产物
+       *
+       * @param entryName - 入口名称，和 Rsbuild source.entry 的某一个 key 值对应
+       * @returns 入口模块的返回值
+       */
+      loadBundle: <T = unknown>(entryName: string) => Promise<T>;
+
+      /**
+       * 获取编译后的 HTML 模版内容
+       */
+      getTransformedHtml: (entryName: string) => Promise<string>;
+    };
+  };
 };
 
 type SetupMiddlewares = Array<
@@ -16,7 +37,7 @@ type SetupMiddlewares = Array<
       unshift: (...handlers: RequestHandler[]) => void;
       push: (...handlers: RequestHandler[]) => void;
     },
-    server: ServerAPIs,
+    server: SetupMiddlewaresServer,
   ) => void
 >;
 ```
@@ -57,6 +78,26 @@ export default {
         // 添加自定义 watcher 并在文件更新时触发页面刷新
         watcher.on('change', (changed) => {
           server.sockWrite('content-changed');
+        });
+      },
+    ],
+  },
+};
+```
+
+- environments。允许对指定的 environment 产物进行操作。
+
+```ts
+export default {
+  dev: {
+    setupMiddlewares: [
+      (middlewares, server) => {
+        middlewares.unshift(async (req, _res, next) => {
+          const webStats = await server.environments.web.getStats();
+
+          console.log(webStats.toJson({ all: false }));
+
+          next();
         });
       },
     ],

@@ -1,26 +1,16 @@
 import { type Rspack, logger } from '@rsbuild/core';
-import type { RspackConfig, Stats } from '@rsbuild/shared';
 import WebpackMultiStats from 'webpack/lib/MultiStats.js';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
-import {
-  type InternalContext,
-  formatStats,
-  getDevMiddleware,
-  getStatsOptions,
-} from './shared';
-import { onCompileDone } from './shared';
-import type { WebpackConfig } from './types';
+import { formatStats, getStatsOptions, registerDevHook } from './shared';
 
-export async function createCompiler({
-  context,
-  webpackConfigs,
-}: {
-  context: InternalContext;
-  webpackConfigs: WebpackConfig[];
-}) {
+export async function createCompiler(options: InitConfigsOptions) {
   logger.debug('create compiler');
+  const { context } = options;
+  const { webpackConfigs } = await initConfigs(options);
+
   await context.hooks.onBeforeCreateCompiler.call({
-    bundlerConfigs: webpackConfigs as RspackConfig[],
+    bundlerConfigs: webpackConfigs as Rspack.Configuration[],
+    environments: context.environments,
   });
 
   const { default: webpack } = await import('webpack');
@@ -31,11 +21,17 @@ export async function createCompiler({
     | Rspack.Compiler
     | Rspack.MultiCompiler;
 
-  const done = async (stats: unknown) => {
-    const { message, level } = formatStats(
-      stats as Stats,
-      getStatsOptions(compiler),
-    );
+  const done = (stats: Rspack.Stats) => {
+    const statsOptions = getStatsOptions(compiler);
+    const statsJson = stats.toJson({
+      children: true,
+      ...(typeof statsOptions === 'string'
+        ? { preset: statsOptions }
+        : { preset: 'errors-warnings' }),
+      ...(typeof statsOptions === 'object' ? statsOptions : {}),
+    });
+
+    const { message, level } = formatStats(statsJson, stats.hasErrors());
 
     if (level === 'error') {
       logger.error(message);
@@ -43,46 +39,29 @@ export async function createCompiler({
     if (level === 'warning') {
       logger.warn(message);
     }
-
-    if (process.env.NODE_ENV === 'development') {
-      await context.hooks.onDevCompileDone.call({
-        isFirstCompile,
-        stats: stats as Stats,
-      });
-    }
-
-    isFirstCompile = false;
   };
 
-  let isFirstCompile = true;
-
-  onCompileDone(compiler, done, WebpackMultiStats);
-
-  await context.hooks.onAfterCreateCompiler.call({
-    compiler,
+  compiler.hooks.done.tap('rsbuild:done', (stats: unknown) => {
+    done(stats as Rspack.Stats);
   });
-  logger.debug('create compiler done');
 
-  return compiler;
-}
-
-export async function createDevMiddleware(
-  options: InitConfigsOptions,
-  customCompiler?: Rspack.Compiler | Rspack.MultiCompiler,
-) {
-  let compiler: Rspack.Compiler | Rspack.MultiCompiler;
-  if (customCompiler) {
-    compiler = customCompiler;
-  } else {
-    const { webpackConfigs } = await initConfigs(options);
-    compiler = await createCompiler({
-      context: options.context,
-      webpackConfigs,
+  if (context.normalizedConfig?.mode === 'development') {
+    registerDevHook({
+      compiler,
+      context,
+      bundlerConfigs: webpackConfigs as Rspack.Configuration[],
+      MultiStatsCtor: WebpackMultiStats,
     });
   }
 
-  return {
-    devMiddleware: await getDevMiddleware(compiler),
+  await context.hooks.onAfterCreateCompiler.call({
     compiler,
+    environments: context.environments,
+  });
+  logger.debug('create compiler done');
+
+  return {
+    compiler,
+    webpackConfigs,
   };
 }

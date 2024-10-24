@@ -1,18 +1,22 @@
-import type { IncomingMessage } from 'node:http';
+import type { IncomingMessage, Server } from 'node:http';
+import type { Http2SecureServer } from 'node:http2';
 import net from 'node:net';
 import type { Socket } from 'node:net';
 import os from 'node:os';
-import { color } from '@rsbuild/shared';
+import { posix } from 'node:path';
+import color from 'picocolors';
+import { DEFAULT_DEV_HOST, DEFAULT_PORT } from '../constants';
+import { addTrailingSlash, isFunction, removeLeadingSlash } from '../helpers';
+import { logger } from '../logger';
 import type {
+  InternalContext,
   NormalizedConfig,
   OutputStructure,
   PrintUrls,
   Routes,
   RsbuildEntry,
-} from '@rsbuild/shared';
-import { DEFAULT_DEV_HOST, DEFAULT_PORT } from '../constants';
-import { isFunction } from '../helpers';
-import { logger } from '../logger';
+  Rspack,
+} from '../types';
 
 /**
  * It used to subscribe http upgrade event
@@ -32,12 +36,19 @@ export type StartServerResult = {
 };
 
 // remove repeat '/'
-export const normalizeUrl = (url: string) => url.replace(/([^:]\/)\/+/g, '$1');
+export const normalizeUrl = (url: string): string =>
+  url.replace(/([^:]\/)\/+/g, '$1');
 
 /**
  * Make sure there is slash before and after prefix
  */
-const formatPrefix = (prefix: string | undefined) => {
+const formatPrefix = (input: string | undefined) => {
+  let prefix = input;
+
+  if (prefix?.startsWith('./')) {
+    prefix = prefix.replace('./', '');
+  }
+
   if (!prefix) {
     return '/';
   }
@@ -47,15 +58,54 @@ const formatPrefix = (prefix: string | undefined) => {
   return `${hasLeadingSlash ? '' : '/'}${prefix}${hasTailSlash ? '' : '/'}`;
 };
 
+// /a + /b => /a/b
+export const joinUrlSegments = (s1: string, s2: string): string => {
+  if (!s1 || !s2) {
+    return s1 || s2 || '';
+  }
+
+  return addTrailingSlash(s1) + removeLeadingSlash(s2);
+};
+
+export const stripBase = (path: string, base: string): string => {
+  if (path === base) {
+    return '/';
+  }
+  const trailingSlashBase = addTrailingSlash(base);
+
+  return path.startsWith(trailingSlashBase)
+    ? path.slice(trailingSlashBase.length - 1)
+    : path;
+};
+
+export const getRoutes = (context: InternalContext): Routes => {
+  return Object.values(context.environments).reduce<Routes>(
+    (prev, environmentContext) => {
+      const { distPath, config } = environmentContext;
+      const distPrefix = posix.relative(context.distPath, distPath);
+
+      const routes = formatRoutes(
+        environmentContext.htmlPaths,
+        context.normalizedConfig!.server.base,
+        posix.join(distPrefix, config.output.distPath.html),
+        config.html.outputStructure,
+      );
+      return prev.concat(...routes);
+    },
+    [],
+  );
+};
+
 /*
  * format route by entry and adjust the index route to be the first
  */
 export const formatRoutes = (
   entry: RsbuildEntry,
-  prefix: string | undefined,
+  base: string,
+  distPathPrefix: string | undefined,
   outputStructure: OutputStructure | undefined,
 ): Routes => {
-  const formattedPrefix = formatPrefix(prefix);
+  const prefix = joinUrlSegments(base, formatPrefix(distPathPrefix));
 
   return (
     Object.keys(entry)
@@ -65,7 +115,7 @@ export const formatRoutes = (
         const displayName = isIndex ? '' : entryName;
         return {
           entryName,
-          pathname: formattedPrefix + displayName,
+          pathname: prefix + displayName,
         };
       })
       // adjust the index route to be the first
@@ -77,14 +127,14 @@ function getURLMessages(
   urls: Array<{ url: string; label: string }>,
   routes: Routes,
 ) {
-  if (routes.length === 1) {
+  if (routes.length <= 1) {
+    const pathname = routes.length ? routes[0].pathname : '';
     return urls
-      .map(
-        ({ label, url }) =>
-          `  ${`> ${label.padEnd(10)}`}${color.cyan(
-            normalizeUrl(`${url}${routes[0].pathname}`),
-          )}\n`,
-      )
+      .map(({ label, url }) => {
+        const normalizedPathname = normalizeUrl(`${url}${pathname}`);
+        const prefix = `➜ ${color.dim(label.padEnd(10))}`;
+        return `  ${prefix}${color.cyan(normalizedPathname)}\n`;
+      })
       .join('');
   }
 
@@ -94,7 +144,7 @@ function getURLMessages(
     if (index > 0) {
       message += '\n';
     }
-    message += `  ${`> ${label}`}\n`;
+    message += `  ${`➜ ${label}`}\n`;
 
     for (const r of routes) {
       message += `  ${color.dim('-')} ${color.dim(
@@ -112,20 +162,23 @@ export function printServerURLs({
   routes,
   protocol,
   printUrls,
+  trailingLineBreak = true,
 }: {
   urls: Array<{ url: string; label: string }>;
   port: number;
   routes: Routes;
   protocol: string;
   printUrls?: PrintUrls;
+  trailingLineBreak?: boolean;
 }): string | null {
   if (printUrls === false) {
     return null;
   }
 
   let urls = originalUrls;
+  const useCustomUrl = isFunction(printUrls);
 
-  if (isFunction(printUrls)) {
+  if (useCustomUrl) {
     const newUrls = printUrls({
       urls: urls.map((item) => item.url),
       port,
@@ -149,11 +202,22 @@ export function printServerURLs({
     }));
   }
 
-  if (urls.length === 0 || routes.length === 0) {
+  // If no urls, skip printing
+  if (urls.length === 0) {
     return null;
   }
 
-  const message = getURLMessages(urls, routes);
+  // If no routes and not use custom url, skip printing
+  if (routes.length === 0 && !useCustomUrl) {
+    return null;
+  }
+
+  let message = getURLMessages(urls, routes);
+
+  if (trailingLineBreak === false && message.endsWith('\n')) {
+    message = message.slice(0, -1);
+  }
+
   logger.log(message);
 
   return message;
@@ -171,13 +235,11 @@ export const getPort = async ({
   port,
   strictPort,
   tryLimits = 20,
-  silent = false,
 }: {
   host: string;
   port: string | number;
   strictPort: boolean;
   tryLimits?: number;
-  silent?: boolean;
 }): Promise<number> => {
   if (typeof port === 'string') {
     port = Number.parseInt(port, 10);
@@ -217,11 +279,6 @@ export const getPort = async ({
         `Port "${original}" is occupied, please choose another one.`,
       );
     }
-    if (!silent) {
-      logger.info(
-        `Port ${original} is in use, ${color.yellow(`using port ${port}.`)}\n`,
-      );
-    }
   }
 
   return port;
@@ -229,20 +286,33 @@ export const getPort = async ({
 
 export const getServerConfig = async ({
   config,
-  getPortSilently,
 }: {
   config: NormalizedConfig;
-  getPortSilently?: boolean;
-}) => {
+}): Promise<{
+  port: number;
+  host: string;
+  https: boolean;
+  portTip: string | undefined;
+}> => {
   const host = config.server.host || DEFAULT_DEV_HOST;
+  const originalPort = config.server.port || DEFAULT_PORT;
   const port = await getPort({
     host,
-    port: config.server.port || DEFAULT_PORT,
+    port: originalPort,
     strictPort: config.server.strictPort || false,
-    silent: getPortSilently,
   });
   const https = Boolean(config.server.https) || false;
-  return { port, host, https };
+  const portTip =
+    port !== originalPort
+      ? `Port ${originalPort} is in use, ${color.yellow(`using port ${port}.`)}`
+      : undefined;
+
+  return {
+    port,
+    host,
+    https,
+    portTip,
+  };
 };
 
 const getIpv4Interfaces = () => {
@@ -296,7 +366,7 @@ const concatUrl = ({
 const LOCAL_LABEL = 'Local:  ';
 const NETWORK_LABEL = 'Network:  ';
 
-export const getUrlLabel = (url: string) => {
+const getUrlLabel = (url: string) => {
   try {
     const { host } = new URL(url);
     return isLoopbackHost(host) ? LOCAL_LABEL : NETWORK_LABEL;
@@ -356,3 +426,44 @@ export const getAddressUrls = ({
 
   return addressUrls;
 };
+
+// A unique name for WebSocket communication
+const COMPILATION_ID_REGEX = /[^a-zA-Z0-9_-]/g;
+export const getCompilationId = (
+  compiler: Rspack.Compiler | Rspack.Compilation,
+) => {
+  const uniqueName = compiler.options.output.uniqueName ?? '';
+  return `${compiler.name ?? ''}_${uniqueName.replace(COMPILATION_ID_REGEX, '_')}`;
+};
+
+export function getServerTerminator(
+  server: Server | Http2SecureServer,
+): () => Promise<void> {
+  let listened = false;
+  const pendingSockets = new Set<net.Socket>();
+
+  const onConnection = (socket: net.Socket) => {
+    pendingSockets.add(socket);
+    socket.on('close', () => {
+      pendingSockets.delete(socket);
+    });
+  };
+
+  server.on('connection', onConnection);
+  server.on('secureConnection', onConnection);
+  server.once('listening', () => {
+    listened = true;
+  });
+
+  return () =>
+    new Promise<void>((resolve, reject) => {
+      for (const socket of pendingSockets) {
+        socket.destroy();
+      }
+      if (listened) {
+        server.close((err) => (err ? reject(err) : resolve()));
+      } else {
+        resolve();
+      }
+    });
+}

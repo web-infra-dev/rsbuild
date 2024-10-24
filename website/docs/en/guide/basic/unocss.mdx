@@ -20,13 +20,11 @@ You can register the `unocss` PostCSS plugin through [postcss.config.mjs](https:
 import UnoCSS from '@unocss/postcss';
 
 export default {
-  plugins: [
-    UnoCSS(),
-  ],
+  plugins: [UnoCSS()],
 };
 ```
 
-Rsbuild has integrated [autoprefixer](https://github.com/postcss/autoprefixer), so you only need to register the `tailwindcss` plugin.
+Rsbuild has integrated [autoprefixer](https://github.com/postcss/autoprefixer), so you only need to register the `UnoCSS` plugin.
 
 ## Configuring UnoCSS
 

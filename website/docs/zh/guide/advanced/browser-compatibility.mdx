@@ -12,6 +12,10 @@
 
 在设置浏览器范围之后，如果你依然在开发中遇到了一些兼容性问题，请继续阅读下面的内容来寻找解决方案。
 
+:::tip 什么是 polyfill
+polyfill 是一种用于解决浏览器兼容问题的技术。它用于模拟某些浏览器不支持的新特性，使得这些特性能在不支持的浏览器中正常工作。例如，如果某个浏览器不支持 `Array.prototype.flat()` 方法，那么我们可以使用 polyfill 来模拟这个方法，从而让代码在这个浏览器中也能正常工作。
+:::
+
 ## 背景知识
 
 在处理兼容性问题之前，建议你了解以下背景知识，以更好地处理相关问题。
@@ -145,7 +149,7 @@ import path from 'node:path';
 
 export default {
   source: {
-    include: [/[\\/]node_modules[\\/]query-string[\\/]/],
+    include: [/node_modules[\\/]query-string[\\/]/],
   },
 };
 ```
@@ -179,13 +183,23 @@ export default {
 
 ## Polyfill 方案
 
-Rsbuild 底层通过 Babel 或 SWC 编译 JavaScript 代码，并注入 [core-js](https://github.com/zloirock/core-js)、[@babel/runtime](https://npmjs.com/package/@babel/runtime)、[@swc/helpers](https://npmjs.com/package/@swc/helpers) 等 polyfill 库。
+Rsbuild 通过 SWC 编译 JavaScript 代码，并支持注入 [core-js](https://github.com/zloirock/core-js)、[@swc/helpers](https://npmjs.com/package/@swc/helpers) 等 polyfills。
 
 在不同的使用场景下，你可能会需要不同的 polyfill 方案。Rsbuild 提供了 [output.polyfill](/config/output/polyfill) 配置项来切换不同的 polyfill 方案。
 
-### usage 方案
+### 默认行为
 
-usage 为默认方案，无须手动设置，它可以精确地控制需要注入哪些 core-js polyfill。
+Rsbuild 默认不注入任何 polyfill：
+
+```ts
+export default {
+  output: {
+    polyfill: 'off',
+  },
+};
+```
+
+### usage 方案
 
 当你开启 usage 方案时，Rsbuild 会分析项目中的源代码，并判断需要注入哪些 polyfill。
 
@@ -228,16 +242,25 @@ export default {
 };
 ```
 
-### 不注入 Polyfill
+### UA Polyfill
 
-你可以将 `output.polyfill` 设置为 `'off'` 来禁用 polyfill 注入的行为。
+Cloudflare 提供了一个 [polyfill 服务](https://cdnjs.cloudflare.com/polyfill/)，可以根据用户浏览器的 User-Agent 自动生成 polyfill 文件。
+
+你可以通过 Rsbuild 的 [html.tags](/config/html/tags) 配置来注入脚本，例如在 `<head>` 标签的开头插入 `<script>` 标签：
 
 ```ts
 export default {
-  output: {
-    polyfill: 'off',
+  html: {
+    tags: [
+      {
+        tag: 'script',
+        attrs: {
+          defer: true,
+          src: 'https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=default',
+        },
+        append: false,
+      },
+    ],
   },
 };
 ```
-
-使用此选项时，你需要自行保证代码的兼容性，比如通过 [source.preEntry](/config/source/pre-entry) 来手动引用所需的 polyfill 代码。

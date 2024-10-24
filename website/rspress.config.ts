@@ -3,14 +3,20 @@ import { pluginRss } from '@rspress/plugin-rss';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
+import pluginSitemap from 'rspress-plugin-sitemap';
 import { defineConfig } from 'rspress/config';
 import { rsbuildPluginOverview } from './theme/rsbuildPluginOverview';
 
+const siteUrl = 'https://rsbuild.dev';
+
 export default defineConfig({
   plugins: [
+    pluginSitemap({
+      domain: siteUrl,
+    }),
     pluginFontOpenSans(),
     pluginRss({
-      siteUrl: 'https://rsbuild.dev',
+      siteUrl,
       feed: [
         {
           id: 'releases-rss',
@@ -62,6 +68,9 @@ export default defineConfig({
     light: 'https://assets.rspack.dev/rsbuild/navbar-logo-light.png',
     dark: 'https://assets.rspack.dev/rsbuild/navbar-logo-dark.png',
   },
+  ssg: {
+    strict: true,
+  },
   markdown: {
     checkDeadLinks: true,
   },
@@ -71,9 +80,6 @@ export default defineConfig({
     exclude: ['**/zh/shared/**', '**/en/shared/**', './theme', './src'],
   },
   themeConfig: {
-    footer: {
-      message: 'Copyright © 2024 ByteDance.',
-    },
     socialLinks: [
       {
         icon: 'github',
@@ -81,7 +87,7 @@ export default defineConfig({
         content: 'https://github.com/web-infra-dev/rsbuild',
       },
       {
-        icon: 'twitter',
+        icon: 'x',
         mode: 'link',
         content: 'https://twitter.com/rspack_dev',
       },
@@ -120,14 +126,18 @@ export default defineConfig({
     ],
   },
   builderConfig: {
+    dev: {
+      lazyCompilation: true,
+    },
     plugins: [
       rsbuildPluginOverview,
       pluginGoogleAnalytics({ id: 'G-L6BZ6TKW4R' }),
       pluginOpenGraph({
         title: 'Rsbuild',
         type: 'website',
-        url: 'https://rsbuild.dev/',
-        image: 'https://assets.rspack.dev/rsbuild/rsbuild-og-image.png',
+        url: siteUrl,
+        image:
+          'https://assets.rspack.dev/rsbuild/assets/rsbuild-og-image-v1-0.png',
         description: 'The Rspack-based build tool',
         twitter: {
           site: '@rspack_dev',
@@ -137,13 +147,38 @@ export default defineConfig({
     ],
     source: {
       alias: {
-        '@components': path.join(__dirname, 'components'),
+        '@components': path.join(__dirname, '@components'),
         '@en': path.join(__dirname, 'docs/en'),
         '@zh': path.join(__dirname, 'docs/zh'),
       },
     },
     server: {
       open: 'http://localhost:<port>/',
+    },
+    html: {
+      tags: [
+        // for baidu SEO verification
+        {
+          tag: 'meta',
+          attrs: {
+            name: 'baidu-site-verification',
+            content: 'codeva-mYbzBtlg6o',
+          },
+        },
+      ],
+      appIcon: {
+        name: 'Rsbuild',
+        icons: [
+          {
+            src: 'https://assets.rspack.dev/rsbuild/rsbuild-logo-192x192.png',
+            size: 192,
+          },
+          {
+            src: 'https://assets.rspack.dev/rsbuild/rsbuild-logo-512x512.png',
+            size: 512,
+          },
+        ],
+      },
     },
   },
 });

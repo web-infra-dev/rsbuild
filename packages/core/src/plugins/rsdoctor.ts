@@ -1,10 +1,15 @@
-import { type BundlerPluginInstance, color } from '@rsbuild/shared';
+import type { Configuration } from '@rspack/core';
+import color from 'picocolors';
 import { logger } from '../logger';
-import type { RsbuildPlugin } from '../types';
+import type { BundlerPluginInstance, RsbuildPlugin } from '../types';
 
 type RsdoctorExports = {
   RsdoctorRspackPlugin: { new (): BundlerPluginInstance };
   RsdoctorWebpackPlugin: { new (): BundlerPluginInstance };
+};
+
+type MaybeRsdoctorPlugin = Configuration['plugins'] & {
+  isRsdoctorPlugin?: boolean;
 };
 
 export const pluginRsdoctor = (): RsbuildPlugin => ({
@@ -12,22 +17,41 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
 
   setup(api) {
     api.onBeforeCreateCompiler(async ({ bundlerConfigs }) => {
+      // If Rsdoctor isn't enabled, skip this plugin.
       if (process.env.RSDOCTOR !== 'true') {
         return;
       }
 
+      // Add Rsdoctor plugin to start analysis.
       const isRspack = api.context.bundlerType === 'rspack';
+      const pluginName = isRspack
+        ? 'RsdoctorRspackPlugin'
+        : 'RsdoctorWebpackPlugin';
+
+      const isRsdoctorPlugin = (plugin: MaybeRsdoctorPlugin) =>
+        plugin?.isRsdoctorPlugin === true ||
+        plugin?.constructor?.name === pluginName;
+
+      for (const config of bundlerConfigs) {
+        // If user has added the Rsdoctor plugin manually, skip the auto-registration.
+        const registered = config.plugins?.some((plugin) =>
+          isRsdoctorPlugin(plugin as unknown as MaybeRsdoctorPlugin),
+        );
+
+        if (registered) {
+          return;
+        }
+      }
+
       const packageName = isRspack
         ? '@rsdoctor/rspack-plugin'
         : '@rsdoctor/webpack-plugin';
-
-      let module: RsdoctorExports;
+      let packagePath: string;
 
       try {
-        const path = require.resolve(packageName, {
+        packagePath = require.resolve(packageName, {
           paths: [api.context.rootPath],
         });
-        module = await import(path);
       } catch (err) {
         logger.warn(
           `\`process.env.RSDOCTOR\` enabled, please install ${color.bold(color.yellow(packageName))} package.`,
@@ -35,33 +59,26 @@ export const pluginRsdoctor = (): RsbuildPlugin => ({
         return;
       }
 
-      const pluginName = isRspack
-        ? 'RsdoctorRspackPlugin'
-        : 'RsdoctorWebpackPlugin';
+      let module: RsdoctorExports;
+      try {
+        module = await import(packagePath);
+      } catch (err) {
+        logger.error(
+          `\`process.env.RSDOCTOR\` enabled, but failed to load ${color.bold(color.yellow(packageName))} module.`,
+        );
+        return;
+      }
 
       if (!module || !module[pluginName]) {
         return;
       }
 
-      let isAutoRegister = false;
-
       for (const config of bundlerConfigs) {
-        const registered = config.plugins?.some(
-          (plugin) => plugin?.constructor?.name === pluginName,
-        );
-
-        if (registered) {
-          return;
-        }
-
         config.plugins ||= [];
         config.plugins.push(new module[pluginName]());
-        isAutoRegister = true;
       }
 
-      if (isAutoRegister) {
-        logger.info(`${color.bold(color.yellow(packageName))} enabled.`);
-      }
+      logger.info(`${color.bold(color.yellow(packageName))} enabled.`);
     });
   },
 });

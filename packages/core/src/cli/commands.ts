@@ -1,17 +1,18 @@
-import { existsSync } from 'node:fs';
-import { join } from 'node:path';
-import { type RsbuildMode, color } from '@rsbuild/shared';
 import { type Command, program } from 'commander';
-import { isEmptyDir } from '../helpers';
 import { logger } from '../logger';
+import type { RsbuildMode } from '../types';
 import { init } from './init';
 
 export type CommonOptions = {
+  root?: string;
+  mode?: RsbuildMode;
   config?: string;
+  envDir?: string;
   envMode?: string;
   open?: boolean | string;
   host?: string;
   port?: number;
+  environment?: string[];
 };
 
 export type BuildOptions = CommonOptions & {
@@ -19,7 +20,7 @@ export type BuildOptions = CommonOptions & {
 };
 
 export type InspectOptions = CommonOptions & {
-  env: RsbuildMode;
+  mode: RsbuildMode;
   output: string;
   verbose?: boolean;
 };
@@ -35,9 +36,23 @@ const applyCommonOptions = (command: Command) => {
       'specify the configuration file, can be a relative or absolute path',
     )
     .option(
+      '-r --root <root>',
+      'specify the project root directory, can be an absolute path or a path relative to cwd',
+    )
+    .option(
+      '-m --mode <mode>',
+      'specify the build mode, can be `development`, `production` or `none`',
+    )
+    .option(
       '--env-mode <mode>',
       'specify the env mode to load the `.env.[mode]` file',
-    );
+    )
+    .option<string[]>(
+      '--environment <name>',
+      'specify the name of environment to build',
+      (str, prev) => (prev ? prev.concat(str.split(',')) : str.split(',')),
+    )
+    .option('--env-dir <dir>', 'specify the directory to load `.env` files');
 };
 
 const applyServerOptions = (command: Command) => {
@@ -47,7 +62,7 @@ const applyServerOptions = (command: Command) => {
     .option('--host <host>', 'specify the host that the server listens to');
 };
 
-export function runCli() {
+export function runCli(): void {
   program.name('rsbuild').usage('<command> [options]').version(RSBUILD_VERSION);
 
   const devCommand = program.command('dev');
@@ -95,27 +110,6 @@ export function runCli() {
     .action(async (options: PreviewOptions) => {
       try {
         const rsbuild = await init({ cliOptions: options });
-
-        if (rsbuild) {
-          const { distPath } = rsbuild.context;
-
-          if (!existsSync(distPath)) {
-            throw new Error(
-              `The output directory ${color.yellow(
-                distPath,
-              )} does not exist, please build the project before previewing.`,
-            );
-          }
-
-          if (isEmptyDir(distPath)) {
-            throw new Error(
-              `The output directory ${color.yellow(
-                distPath,
-              )} is empty, please build the project before previewing.`,
-            );
-          }
-        }
-
         await rsbuild?.preview();
       } catch (err) {
         logger.error('Failed to start preview server.');
@@ -126,16 +120,14 @@ export function runCli() {
 
   inspectCommand
     .description('inspect the Rspack and Rsbuild configs')
-    .option('--env <env>', 'specify env mode', 'development')
-    .option('--output <output>', 'specify inspect content output path', '/')
+    .option('--output <output>', 'specify inspect content output path')
     .option('--verbose', 'show full function definitions in output')
     .action(async (options: InspectOptions) => {
       try {
         const rsbuild = await init({ cliOptions: options });
         await rsbuild?.inspectConfig({
-          env: options.env,
           verbose: options.verbose,
-          outputPath: join(rsbuild.context.distPath, options.output),
+          outputPath: options.output,
           writeToDisk: true,
         });
       } catch (err) {

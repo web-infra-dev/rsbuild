@@ -1,13 +1,18 @@
 `onBeforeBuild` is a callback function that is triggered before the production build is executed.
 
-You can access the Rspack configuration array through the `bundlerConfigs` parameter. The array may contain one or more [Rspack configurations](https://rspack.dev/config/), depending on the value of the Rsbuild's [output.targets](/config/output/targets) configuration.
+You can access the Rspack configuration array through the `bundlerConfigs` parameter. The array may contain one or more [Rspack configurations](https://rspack.dev/config/). It depends on whether multiple [environments](/config/environments) are configured.
+
+Moreover, you can use `isWatch` to determine whether it is watch mode, and use `isFirstCompile` to determine whether it is the first build on watch mode.
 
 - **Type:**
 
 ```ts
 function OnBeforeBuild(
   callback: (params: {
-    bundlerConfigs?: WebpackConfig[] | RspackConfig[];
+    isWatch: boolean;
+    isFirstCompile: boolean;
+    bundlerConfigs?: Rspack.Configuration[];
+    environments: Record<string, EnvironmentContext>;
   }) => Promise<void> | void,
 ): void;
 ```

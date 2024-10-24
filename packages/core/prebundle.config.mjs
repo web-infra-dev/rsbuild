@@ -5,13 +5,6 @@ import fs from 'node:fs';
  */
 import { join } from 'node:path';
 
-// The package size of `schema-utils` is large, and validate has a performance overhead of tens of ms.
-// So we skip the validation and let TypeScript to ensure type safety.
-const writeEmptySchemaUtils = (task) => {
-  const schemaUtilsPath = join(task.distPath, 'schema-utils.js');
-  fs.writeFileSync(schemaUtilsPath, 'module.exports.validate = () => {};');
-};
-
 function replaceFileContent(filePath, replaceFn) {
   const content = fs.readFileSync(filePath, 'utf-8');
   const newContent = replaceFn(content);
@@ -20,28 +13,47 @@ function replaceFileContent(filePath, replaceFn) {
   }
 }
 
+// postcss-loader and css-loader use `semver` to compare PostCSS ast version,
+// Rsbuild uses the same PostCSS version and do not need the comparison.
+const skipSemver = (task) => {
+  replaceFileContent(join(task.depPath, 'dist/index.js'), (content) =>
+    content.replaceAll('require("semver")', '({ satisfies: () => true })'),
+  );
+};
+
 /** @type {import('prebundle').Config} */
 export default {
+  prettier: true,
   externals: {
-    // External caniuse-lite data, so users can update it manually.
-    'caniuse-lite': 'caniuse-lite',
-    '/^caniuse-lite(/.*)/': 'caniuse-lite$1',
+    '@rspack/core': '@rspack/core',
+    '@rspack/lite-tapable': '@rspack/lite-tapable',
     webpack: 'webpack',
-    postcss: 'postcss',
     typescript: 'typescript',
   },
   dependencies: [
     'open',
-    'commander',
-    'dotenv',
-    'dotenv-expand',
     'ws',
     'on-finished',
     'connect',
     'rspack-manifest-plugin',
+    'webpack-merge',
+    'html-rspack-plugin',
+    'mrmime',
     {
-      name: 'semver',
-      ignoreDts: true,
+      name: 'chokidar',
+      externals: {
+        fsevents: 'fsevents',
+      },
+    },
+    {
+      name: 'picocolors',
+      beforeBundle({ depPath }) {
+        const typesFile = join(depPath, 'types.ts');
+        // Fix type bundle
+        if (fs.existsSync(typesFile)) {
+          fs.renameSync(typesFile, join(depPath, 'types.d.ts'));
+        }
+      },
     },
     {
       name: 'rslog',
@@ -55,25 +67,19 @@ export default {
     },
     {
       name: 'jiti',
+      // jiti has been minified, we do not need to prettier it
+      prettier: false,
       ignoreDts: true,
     },
     {
       name: 'launch-editor-middleware',
       ignoreDts: true,
       externals: {
-        picocolors: '@rsbuild/shared/picocolors',
+        picocolors: '../picocolors',
       },
     },
     {
-      name: 'postcss-value-parser',
-      ignoreDts: true,
-    },
-    {
       name: 'sirv',
-      ignoreDts: true,
-    },
-    {
-      name: 'http-compression',
       ignoreDts: true,
     },
     {
@@ -81,14 +87,47 @@ export default {
       ignoreDts: true,
     },
     {
-      name: 'webpack-dev-middleware',
+      name: 'rspack-chain',
       externals: {
-        'schema-utils': './schema-utils',
-        'schema-utils/declarations/validate':
-          'schema-utils/declarations/validate',
+        '@rspack/core': '@rspack/core',
       },
       ignoreDts: true,
-      afterBundle: writeEmptySchemaUtils,
+      afterBundle(task) {
+        // copy types to dist because prebundle will break the types
+        fs.cpSync(
+          join(task.depPath, 'types/index.d.ts'),
+          join(task.distPath, 'index.d.ts'),
+        );
+      },
+    },
+    {
+      name: 'http-proxy-middleware',
+      externals: {
+        // express is a peer dependency, no need to provide express type
+        express: 'express',
+      },
+      beforeBundle(task) {
+        replaceFileContent(
+          join(task.depPath, 'dist/types.d.ts'),
+          (content) =>
+            `${content.replace(
+              "import type * as httpProxy from 'http-proxy'",
+              "import type httpProxy from 'http-proxy'",
+            )}`,
+        );
+      },
+    },
+    {
+      // The webpack-bundle-analyzer version was locked to v4.9.0 to be compatible with Rspack
+      // If we need to upgrade the version, please check if the chunk detail can be displayed correctly
+      name: 'webpack-bundle-analyzer',
+    },
+    {
+      name: 'rsbuild-dev-middleware',
+      externals: {
+        mrmime: '../mrmime',
+      },
+      ignoreDts: true,
     },
     {
       name: 'style-loader',
@@ -102,20 +141,37 @@ export default {
       },
     },
     {
+      name: 'postcss',
+      ignoreDts: true,
+      externals: {
+        picocolors: '../picocolors',
+      },
+    },
+    {
       name: 'css-loader',
       ignoreDts: true,
       externals: {
-        'postcss-value-parser': '../postcss-value-parser',
-        semver: '../semver',
+        semver: './semver',
+        postcss: '../postcss',
       },
+      beforeBundle: skipSemver,
     },
     {
       name: 'postcss-loader',
       externals: {
         jiti: '../jiti',
-        semver: '../semver',
+        semver: './semver',
+        postcss: '../postcss',
       },
       ignoreDts: true,
+      beforeBundle(task) {
+        replaceFileContent(join(task.depPath, 'dist/utils.js'), (content) =>
+          // Rsbuild uses `postcss-load-config` and no need to use `cosmiconfig`.
+          // the ralevent code will never be executed, so we can replace it with an empty object.
+          content.replaceAll('require("cosmiconfig")', '{}'),
+        );
+        skipSemver(task);
+      },
     },
     {
       name: 'postcss-load-config',

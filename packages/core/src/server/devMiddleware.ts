@@ -1,11 +1,12 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import type { CompilerTapFn, DevConfig, NextFunction } from '@rsbuild/shared';
 import type { Compiler, MultiCompiler } from '@rspack/core';
 import { applyToCompiler } from '../helpers';
 import type { DevMiddlewareOptions } from '../provider/createCompiler';
+import type { DevConfig, NextFunction } from '../types';
+import { getCompilationId } from './helper';
 
 type ServerCallbacks = {
-  onInvalid: () => void;
+  onInvalid: (compilationId?: string) => void;
   onDone: (stats: any) => void;
 };
 
@@ -13,7 +14,7 @@ export const isClientCompiler = (compiler: {
   options: {
     target?: Compiler['options']['target'];
   };
-}) => {
+}): boolean => {
   const { target } = compiler.options;
 
   if (target) {
@@ -23,7 +24,7 @@ export const isClientCompiler = (compiler: {
   return false;
 };
 
-export const isNodeCompiler = (compiler: {
+const isNodeCompiler = (compiler: {
   options: {
     target?: Compiler['options']['target'];
   };
@@ -38,18 +39,9 @@ export const isNodeCompiler = (compiler: {
 };
 
 export const setupServerHooks = (
-  compiler: {
-    options: {
-      target?: Compiler['options']['target'];
-    };
-    hooks: {
-      compile: CompilerTapFn<ServerCallbacks['onInvalid']>;
-      invalid: CompilerTapFn<ServerCallbacks['onInvalid']>;
-      done: CompilerTapFn<ServerCallbacks['onDone']>;
-    };
-  },
+  compiler: Compiler,
   hookCallbacks: ServerCallbacks,
-) => {
+): void => {
   // TODO: node SSR HMR is not supported yet
   if (isNodeCompiler(compiler)) {
     return;
@@ -57,8 +49,12 @@ export const setupServerHooks = (
 
   const { compile, invalid, done } = compiler.hooks;
 
-  compile.tap('rsbuild-dev-server', hookCallbacks.onInvalid);
-  invalid.tap('rsbuild-dev-server', hookCallbacks.onInvalid);
+  compile.tap('rsbuild-dev-server', () =>
+    hookCallbacks.onInvalid(getCompilationId(compiler)),
+  );
+  invalid.tap('rsbuild-dev-server', () =>
+    hookCallbacks.onInvalid(getCompilationId(compiler)),
+  );
   done.tap('rsbuild-dev-server', hookCallbacks.onDone);
 };
 
@@ -78,6 +74,7 @@ function applyHMREntry({
   }
 
   new compiler.webpack.DefinePlugin({
+    RSBUILD_COMPILATION_NAME: JSON.stringify(getCompilationId(compiler)),
     RSBUILD_CLIENT_CONFIG: JSON.stringify(clientConfig),
     RSBUILD_DEV_LIVE_RELOAD: liveReload,
   }).apply(compiler);
@@ -101,7 +98,7 @@ export type DevMiddlewareAPI = Middleware & {
 
 /**
  * The rsbuild/server do nothing about compiler, the devMiddleware need do such things to ensure dev works well:
- * - Call compiler.watch （normally did by webpack-dev-middleware）.
+ * - Call compiler.watch （normally did by rsbuild-dev-middleware）.
  * - Inject the hmr client path into page （the hmr client rsbuild/server already provide）.
  * - Notify server when compiler hooks are triggered.
  */
@@ -110,8 +107,8 @@ export type DevMiddleware = (options: DevMiddlewareOptions) => DevMiddlewareAPI;
 export const getDevMiddleware = async (
   multiCompiler: Compiler | MultiCompiler,
 ): Promise<NonNullable<DevMiddleware>> => {
-  const { default: webpackDevMiddleware } = await import(
-    'webpack-dev-middleware'
+  const { default: rsbuildDevMiddleware } = await import(
+    'rsbuild-dev-middleware'
   );
   return (options) => {
     const { clientPaths, clientConfig, callbacks, liveReload, ...restOptions } =
@@ -132,6 +129,6 @@ export const getDevMiddleware = async (
 
     applyToCompiler(multiCompiler, setupCompiler);
 
-    return webpackDevMiddleware(multiCompiler, restOptions);
+    return rsbuildDevMiddleware(multiCompiler, restOptions);
   };
 };

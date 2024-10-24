@@ -2,31 +2,31 @@
 published_at: 2024-04-10 18:00:00
 ---
 
-# Announcing Rsbuild v0.6
+# Announcing Rsbuild 0.6
 
 > April 10, 2024
 
 ![](https://assets.rspack.dev/rsbuild/rsbuild-banner-v0-6.png)
 
-Rsbuild v0.6 has been released along with Rspack v0.6!
+Rsbuild 0.6 has been released along with Rspack 0.6!
 
 Notable changes:
 
-- Upgrade to Rspack v0.6
+- Upgrade to Rspack 0.6
 - Error overlay enabled by default
 - Support for Vue JSX HMR
 - New transform plugin API
 - Default port changed to 3000
 
-## Upgrade to Rspack v0.6
+## Upgrade to Rspack 0.6
 
-Rsbuild has upgraded the dependent Rspack to version v0.6, and adapted the breaking changes of CSS Modules contained in Rspack v0.6.
+Rsbuild has upgraded the dependent Rspack to version 0.6, and adapted the breaking changes of CSS Modules contained in Rspack 0.6.
 
 In the new version, Rspack has enabled the new tree shaking algorithm by default, resulting in a significant improvement in bundle size and artifact stability. Please refer to the [Rspack 0.6 release announcement](https://rspack.dev/blog/announcing-0-6) to learn more.
 
 ## Error overlay enabled by default
 
-Starting from Rsbuild v0.6, the default value of [dev.client.overlay](/config/dev/client) has been adjusted to `true`. This means that when a compilation error occurs, Rsbuild will pop up the error overlay by default to display the error information:
+Starting from Rsbuild 0.6, the default value of [dev.client.overlay](/config/dev/client) has been adjusted to `true`. This means that when a compilation error occurs, Rsbuild will pop up the error overlay by default to display the error information:
 
 ![](https://assets.rspack.dev/rsbuild/assets/rsbuild-error-overlay.png)
 

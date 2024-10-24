@@ -28,13 +28,25 @@ export { SomeType } from './types';
 export type { SomeType } from './types';
 ```
 
+> 参考 [SWC - Migrating from tsc](https://swc.rs/docs/migrating-from-tsc) 了解更多 SWC 和 tsc 的差异。
+
+## 预设类型
+
+`@rsbuild/core` 提供了一些预设的类型定义，包含 CSS Modules、静态资源、`import.meta` 等类型。
+
+你可以创建一个 `src/env.d.ts` 文件来引用：
+
+```ts title="src/env.d.ts"
+/// <reference types="@rsbuild/core/types" />
+```
+
 ## 类型检查
 
 在进行 TypeScript 转译时，SWC 和 Babel 等工具不会执行类型检查。
 
 Rsbuild 提供了 Type Check 插件，用于在单独的进程中运行 TypeScript 类型检查，插件内部集成了 [fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin)。
 
-请参考 [Type Check 插件](/plugins/list/plugin-type-check) 了解用法。
+请参考 [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check) 了解用法。
 
 ## tsconfig.json 路径
 

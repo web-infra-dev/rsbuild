@@ -3,7 +3,10 @@
 - **Type:**
 
 ```ts
-type Entry = Record<string, string | string[] | EntryDescription> | Function;
+type Entry = Record<
+  string,
+  string | string[] | (Rspack.EntryDescription & { html?: boolean })
+>;
 ```
 
 - **Default:**
@@ -17,7 +20,7 @@ const defaultEntry = {
 
 Used to set the entry modules for building.
 
-The usage of `source.entry` is similar to the `entry` option in [Rspack](https://rspack.dev/config/entry). The main difference is that Rsbuild will register [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin) for each entry in `source.entry` to generate the corresponding HTML files.
+The usage of `source.entry` is similar to the `entry` option in [Rspack](https://rspack.dev/config/entry). The main difference is that Rsbuild will register [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin) for each entry in `source.entry` to generate the corresponding HTML files.
 
 - **Example:**
 
@@ -70,32 +73,55 @@ export default {
 };
 ```
 
-For the complete usage of the description object, please refer to [Rspack - Entry Description Object](https://rspack.dev/config/entry#entry-description-object).
+Rsbuild has added an `html` attribute for the description object, which is used to control whether an HTML file is generated.
 
-## Function Usage
-
-`source.entry` supports setting as a function, which is commonly used to set different entry objects for different build target.
-
-For example, set entry for web target and node target separately:
+For example, the `bar` entry does not generate an HTML file:
 
 ```ts title="rsbuild.config.ts"
 export default {
   source: {
-    entry({ target }) {
-      if (target === 'web') {
-        return {
-          index: './src/index.client.js',
-        };
-      }
-      if (target === 'node') {
-        return {
-          index: './src/index.server.js',
-        };
-      }
+    entry: {
+      foo: './src/foo.js',
+      bar: {
+        import: './src/bar.js',
+        html: false,
+      },
     },
   },
-  output: {
-    targets: ['web', 'node'],
+};
+```
+
+> For the complete usage of the description object, please refer to [Rspack - Entry Description Object](https://rspack.dev/config/entry#entry-description-object).
+
+## Set by environment
+
+When you build for multiple [environments](/config/environments), you can set different entry for each environment:
+
+For example, set different entry for `web` and `node` environments:
+
+```js
+export default {
+  environments: {
+    web: {
+      source: {
+        entry: {
+          index: './src/index.client.js',
+        },
+      },
+      output: {
+        target: 'web',
+      },
+    },
+    node: {
+      source: {
+        entry: {
+          index: './src/index.server.js',
+        },
+      },
+      output: {
+        target: 'node',
+      },
+    },
   },
 };
 ```

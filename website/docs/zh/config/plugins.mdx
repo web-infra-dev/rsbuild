@@ -12,7 +12,8 @@ type Falsy = false | null | undefined;
 type RsbuildPlugins = (
   | RsbuildPlugin
   | Falsy
-  | Promise<RsbuildPlugin | Falsy>
+  | Promise<RsbuildPlugin | Falsy | RsbuildPlugins>
+  | RsbuildPlugins
 )[];
 ```
 
@@ -47,6 +48,20 @@ export default defineConfig({
 
 当插件内部使用了控制顺序的相关字段，比如 `pre`、`post` 时，执行顺序会基于它们进行调整，详见 [前置插件](/plugins/dev/core#前置插件)。
 
+## 嵌套插件
+
+Rsbuild 还支持添加嵌套插件，你可以传入一个包含多个插件的数组，类似于一个插件预设集合，这对于实现需要多个插件组合的复杂功能（例如框架集成）很有帮助。
+
+```ts title="rsbuild.config.ts"
+function myPlugin() {
+  return [fooPlugin(), barPlugin()];
+}
+
+export default {
+  plugins: [myPlugin()],
+};
+```
+
 ## 本地插件
 
 如果本地代码仓库中包含了一些 Rsbuild 插件，你可以直接通过相对路径引入。
@@ -79,10 +94,32 @@ export default defineConfig({
 });
 ```
 
-## 异步插件
+## 插件注册时机
 
-```ts
-import { RsbuildPlugin } from '@rsbuild/core';
+需要注意的是，插件的注册只能在 Rsbuild 初始化阶段进行，你不能在一个插件内通过插件 API 动态地添加其他插件：
+
+```ts title=rsbuild.config.ts
+// 错误
+function myPlugin() {
+  return {
+    setup: (api) => {
+      api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
+        return mergeRsbuildConfig(config, {
+          plugins: [fooPlugin(), barPlugin()], // <- it won't work
+        });
+      });
+    },
+  };
+}
+
+// 正确
+function myPlugin() {
+  return [fooPlugin(), barPlugin()];
+}
+
+export default {
+  plugins: [myPlugin()],
+};
 ```
 
 ## Rspack 插件

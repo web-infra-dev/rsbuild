@@ -24,6 +24,7 @@ exports[`plugin-vue > should add vue-loader and VueLoaderPlugin correctly 1`] = 
     ],
   },
   "plugins": [
+    RsbuildCorePlugin {},
     Plugin {},
   ],
   "resolve": {
@@ -59,6 +60,7 @@ exports[`plugin-vue > should allow to configure vueLoader options 1`] = `
     ],
   },
   "plugins": [
+    RsbuildCorePlugin {},
     Plugin {},
   ],
   "resolve": {
@@ -71,13 +73,20 @@ exports[`plugin-vue > should allow to configure vueLoader options 1`] = `
 
 exports[`plugin-vue > should define feature flags correctly 1`] = `
 DefinePlugin {
-  "_options": {
-    "__VUE_OPTIONS_API__": "true",
-    "__VUE_PROD_DEVTOOLS__": "false",
-    "__VUE_PROD_HYDRATION_MISMATCH_DETAILS__": "false",
-    "process.env.ASSET_PREFIX": """",
-    "process.env.NODE_ENV": ""test"",
-  },
+  "_args": [
+    {
+      "__VUE_OPTIONS_API__": true,
+      "__VUE_PROD_DEVTOOLS__": false,
+      "__VUE_PROD_HYDRATION_MISMATCH_DETAILS__": false,
+      "import.meta.env.ASSET_PREFIX": "\\"\\"",
+      "import.meta.env.BASE_URL": "\\"/\\"",
+      "import.meta.env.DEV": false,
+      "import.meta.env.MODE": "\\"none\\"",
+      "import.meta.env.PROD": false,
+      "process.env.ASSET_PREFIX": "\\"\\"",
+      "process.env.BASE_URL": "\\"/\\"",
+    },
+  ],
   "affectedHooks": "compilation",
   "name": "DefinePlugin",
 }

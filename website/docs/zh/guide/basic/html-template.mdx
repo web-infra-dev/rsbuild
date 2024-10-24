@@ -16,6 +16,18 @@ export default {
 };
 ```
 
+未设置 `html.template` 时，Rsbuild 会使用内置的 HTML 模板：
+
+```html title="defaultTemplate.html"
+<!doctype html>
+<html>
+  <head></head>
+  <body>
+    <div id="<%= mountId %>"></div>
+  </body>
+</html>
+```
+
 ## 设置页面标题
 
 你可以通过 [html.title](/config/html/title) 配置项来设置 HTML 的 `<title>` 标签。
@@ -60,12 +72,18 @@ export default {
 };
 ```
 
-也可以通过 [html.appIcon](/config/html/app-icon) 配置项来设置 iOS 系统下的 apple-touch-icon 图标。
+你也可以通过 [html.appIcon](/config/html/app-icon) 配置项来设置 Web 应用的图标，用于在添加到移动设备的主屏幕时显示。
 
 ```ts
 export default {
   html: {
-    appIcon: './src/assets/icon.png',
+    appIcon: {
+      name: 'My Website',
+      icons: [
+        { src: './src/assets/logo-192.png', size: 192 },
+        { src: './src/assets/logo-512.png', size: 512 },
+      ],
+    },
   },
 };
 ```
@@ -74,7 +92,14 @@ export default {
 
 你可以通过 [html.meta](/config/html/meta) 配置项来设置 HTML 的 `<meta>` 标签。
 
-比如设置 description：
+Rsbuild 默认设置了 charset 和 viewport meta 标签：
+
+```html
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+```
+
+你也可以添加自定义的 meta 标签，比如设置 description：
 
 ```ts
 export default {
@@ -92,7 +117,21 @@ export default {
 <meta name="description" content="a description of the page" />
 ```
 
-## 设置模板参数
+## 默认模板引擎
+
+Rsbuild 内置了一个默认的模板引擎来处理 HTML 模板文件，它的语法接近 EJS 的子集，但也有一些不同。当 HTML 模板文件的后缀为 `.html` 时，Rsbuild 会使用内置的模板引擎来解析 HTML 模板。
+
+例如，在模板中定义一个 `text` 参数，值为 `'world'`。Rsbuild 在构建时会自动将 `<%= text %>` 替换为指定的值。
+
+```html
+<!-- 输入  -->
+<div>hello <%= text %>!</div>
+
+<!-- 输出 -->
+<div>hello world!</div>
+```
+
+### 模板参数
 
 在 HTML 模板中，你可以使用丰富的模板参数，Rsbuild 默认注入的模板参数包括：
 
@@ -102,25 +141,30 @@ type DefaultParameters = {
   entryName: string; // 入口名称
   assetPrefix: string; // 对应 dev.assetPrefix 和 output.assetPrefix 配置
   compilation: Compilation; // 对应 Rspack 的 compilation 对象
-  // htmlWebpackPlugin 内置的参数
-  // 详见 https://github.com/jantimon/html-webpack-plugin
-  htmlWebpackPlugin: {
-    tags: object;
-    files: object;
-    options: object;
+  rspackConfig: Rspack.Configuration; // Rspack 的配置对象
+  // html-rspack-plugin 生成的参数
+  htmlPlugin: {
+    tags: {
+      headTags: HtmlTagObject[];
+      bodyTags: HtmlTagObject[];
+    };
+    files: {
+      publicPath: string;
+      js: Array<string>;
+      css: Array<string>;
+      favicon?: string;
+    };
   };
 };
 ```
 
-你也可以通过 [html.templateParameters](/config/html/template-parameters) 配置项来传入自定义的模板参数。
+你可以通过 [html.templateParameters](/config/html/template-parameters) 配置项来传入自定义的模板参数，比如：
 
-比如：
-
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   html: {
     templateParameters: {
-      text: 'World',
+      text: 'world',
     },
   },
 };
@@ -128,169 +172,90 @@ export default {
 
 接下来，你可以在 HTML 模板中，通过 `<%= text %>` 来读取参数：
 
-```js
+```html title="index.html"
 <div>hello <%= text %>!</div>
 ```
 
-经过编译后的最终 HTML 代码如下：
+编译后的 HTML 代码如下：
 
-```js
+```html title="dist/index.html"
 <div>hello world!</div>
 ```
 
-## 模板引擎
+### 参数转义
 
-Rsbuild 支持 [Lodash Template](https://lodashjs.com/docs/lodash.template)、[EJS](https://ejs.co/)、[Pug](https://pugjs.org/) 等多个模板引擎，默认使用最基础的 Lodash Template 作为模板引擎。
+使用 `<%= text %>` 时，参数不会被转义。你可以使用 `<%- text %>` 来 escape 参数。
 
-### [Lodash Template](https://lodashjs.com/docs/lodash.template)
-
-当模板文件的后缀为 `.html` 时，Rsbuild 会使用 Lodash Template 对模板进行编译。
-
-例如，在模板中定义一个 `text` 参数，值为 `'world'`，在构建时会自动将 `<%= text %>` 替换为对应的值。
+比如参数 `text` 的值是 `'<script>'`，则会被转义为 `&lt;script&gt;`：
 
 ```html
 <!-- 输入  -->
-<div>hello <%= text %>!</div>
+<div>hello <%- text %>!</div>
 
 <!-- 输出 -->
-<div>hello world!</div>
+<div>hello &lt;script&gt;!</div>
 ```
 
-请阅读 [Lodash Template](https://lodashjs.com/docs/lodash.template) 文档来了解完整用法。
+:::tip
+注意，Rsbuild 默认的转义语法是与 EJS 不同的。在 EJS 中，默认的转义语法是 `<%= text %>`，而 Rsbuild 的默认转义语法是 `<%- text %>`。
+:::
 
-### [EJS](https://ejs.co/)
+## 其他模板引擎
 
-当模板文件的后缀为 `.ejs` 时，Rsbuild 会使用 EJS 模板引擎对模板进行编译。EJS 是一套简单的模板语言，支持直接在标签内书写简单、直白的 JavaScript 代码，并通过 JavaScript 输出最终所需的 HTML。
+Rsbuild 也支持通过插件来使用其他模板引擎，如 [EJS](https://ejs.co/)、[Pug](https://pugjs.org/) 等。
 
-例如，你可以先通过 [html.template](/config/html/template) 配置项来引用一个 `.ejs` 模板文件：
+### EJS
 
-```ts
-export default {
-  html: {
-    template: './static/index.ejs',
-  },
-};
-```
+Rsbuild 内置的模板语法与 [EJS](https://ejs.co/) 存在一些差异，如果你需要使用完整的 EJS 语法，可以通过插件来支持，详见 [rsbuild-plugin-ejs](https://github.com/rspack-contrib/rsbuild-plugin-ejs)。
 
-接着在模板中定义一个 `user` 参数，值为 `{ name: 'Jack' }`。在构建时，会自动将 `<%= user.name %>` 替换为对应的值。
+### Pug
 
-```html
-<!-- 输入  -->
-<% if (user) { %>
-<h2><%= user.name %></h2>
-<% } %>
-
-<!-- 输出 -->
-<h2>Jack</h2>
-```
-
-请阅读 [EJS](https://ejs.co/) 文档来了解完整用法。
-
-### [Pug](https://pugjs.org/)
-
-Rsbuild 通过 Pug 插件来支持 Pug 模板引擎，请阅读 [Pug 插件文档](/plugins/list/plugin-pug) 来了解用法。
+Rsbuild 通过插件来支持 [Pug](https://pugjs.org/) 模板引擎，详见 [@rsbuild/plugin-pug](https://github.com/rspack-contrib/rsbuild-plugin-pug)。
 
 ## 注入标签
 
-通过配置 `html.tags` 选项可以在最终生成的 HTML 产物中插入任意标签。
+通过配置 [html.tags](/config/html/tags) 选项，可以在 Rsbuild 生成的 HTML 文件中插入任意标签。
 
-:::warning 使用场景
-前端应用的产物最终都会直接或间接地被 HTML 入口引用，但大多数时候直接向 HTML 注入标签都并非首选。
-:::
+在 HTML 的模版中，可以通过 `htmlPlugin.tags` 变量来访问被注入到 HTML 的所有标签：
 
-模版文件中可以通过 `htmlWebpackPlugin.tags` 变量来访问需要最终注入到 HTML 的所有标签：
-
-```html
+```html title="index.html"
 <html>
   <head>
-    <%= htmlWebpackPlugin.tags.headTags %>
+    <%= htmlPlugin.tags.headTags %>
   </head>
   <body>
-    <%= htmlWebpackPlugin.tags.bodyTags %>
+    <%= htmlPlugin.tags.bodyTags %>
   </body>
 </html>
 ```
 
-`html.tags` 的作用就是调整这些模板变量进而修改 HTML，配置的具体定义参考 [API References](/config/html/tags)。
-
-### 对象形式
-
-```ts
-export default {
-  output: {
-    assetPrefix: 'https://example.com/'
-  },
-  html: {
-    tags: [
-      { tag: 'script', attrs: { src: 'a.js' } },
-      { tag: 'script', attrs: { src: 'b.js' }, append: false },
-      { tag: 'link', attrs: { href: 'style.css', rel: 'stylesheet' }, append: true }
-      { tag: 'link', attrs: { href: 'page.css', rel: 'stylesheet' }, publicPath: false }
-      { tag: 'script', attrs: { src: 'c.js' }, head: false },
-      { tag: 'meta', attrs: { name: 'referrer', content: 'origin' } },
-    ],
-  },
-};
-```
-
-标签最终的插入位置由 `head` 和 `append` 选项决定，两个配置相同的元素将被插入到相同区域，并且维持彼此之间的相对位置。
-
-标签默认会启用 `publicPath` 配置，即会将 `output.assetPrefix` 的值拼接到 `script` 标签的 `src` 等表示路径的属性上。
-
-所以以上配置构建出的 HTML 产物将会类似：
-
-```html
-<html>
-  <head>
-    <script src="https://example.com/b.js"></script>
-    <link href="https://example.com/style.css" rel="stylesheet" />
-    <link href="page.css" rel="stylesheet" />
-    <!-- some other headTags... -->
-    <script src="https://example.com/a.js"></script>
-    <meta name="referrer" content="origin" />
-  </head>
-  <body>
-    <!-- some other bodyTags... -->
-    <script src="https://example.com/c.js"></script>
-  </body>
-</html>
-```
-
-### 函数形式
-
-`html.tags` 也支持传入回调函数，常用于修改标签列表或是在插入标签的同时确保其相对位置：
+`html.tags` 的作用就是调整这些 tags 变量，从而修改 HTML 里的标签，下面是一个基本的例子：
 
 ```ts
 export default {
   html: {
     tags: [
-      (tags) => {
-        tags.splice(0, 1);
-      },
-      { tag: 'script', attrs: { src: 'a.js' }, head: false },
-      { tag: 'script', attrs: { src: 'b.js' }, append: false },
-      { tag: 'script', attrs: { src: 'c.js' } },
-      (tags) => [...tags, { tag: 'script', attrs: { src: 'd.js' } }],
+      { tag: 'script', attrs: { src: 'https://cdn.example.com/my-script.js' } },
     ],
   },
 };
 ```
 
-最终产物将会类似：
+- 生成的 HTML 文件如下：
 
 ```html
 <html>
   <head>
+    <script src="https://cdn.example.com/my-script.js"></script>
     <!-- some other headTags... -->
-    <script src="https://example.com/c.js"></script>
-    <script src="https://example.com/d.js"></script>
   </head>
   <body>
     <!-- some other bodyTags... -->
-    <script src="https://example.com/a.js"></script>
   </body>
 </html>
 ```
+
+> 更多用法请参考：[html.tags](/config/html/tags)。
 
 ## HTML 插件
 
@@ -311,3 +276,7 @@ export default {
   },
 };
 ```
+
+## HTML 压缩
+
+Rsbuild 目前不对 HTML 文件进行压缩，如果你需要压缩 HTML 文件，可以使用 [rsbuild-plugin-html-minifier-terser 插件](https://github.com/rspack-contrib/rsbuild-plugin-html-minifier-terser)。

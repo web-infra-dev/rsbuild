@@ -3,7 +3,7 @@
 - **Type:** `boolean | ((filename: string) => boolean)`
 - **Default:** `false`
 
-Used to control whether the build artifacts of the development environment are written to the disk.
+Controls whether the build output from development mode is written to disk.
 
 Rsbuild by default saves the build artifacts in the memory of the dev server, thereby reducing the overhead caused by file operations.
 
@@ -22,7 +22,7 @@ export default {
 ```
 
 :::tip
-Setting `writeToDisk: true` is used for viewing the build artifacts in a development environment. It does not change the behavior of the dev server. When accessing files through a browser, the dev server will still read the file content from memory.
+Setting `writeToDisk: true` is used for viewing the build output from development mode. It does not change the behavior of the dev server. When accessing files through a browser, the dev server will still read the file content from memory.
 :::
 
 ## Matching Specific Files

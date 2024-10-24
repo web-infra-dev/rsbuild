@@ -48,9 +48,6 @@ export async function startDevServerPure(fixtures) {
     await rsbuildServer.afterListen();
   });
 
-  // subscribe the server's http upgrade event to handle WebSocket upgrade
-  server.on('upgrade', rsbuildServer.onHTTPUpgrade);
-
   return {
     config: { port: rsbuildServer.port },
     close: async () => {

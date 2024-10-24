@@ -1,14 +1,11 @@
 import fs from 'node:fs';
 import inspector from 'node:inspector';
 import path from 'node:path';
-import { rspack } from '@rspack/core';
+import rspack from '@rspack/core';
 import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
 
-export const stopProfiler = (
-  output: string,
-  profileSession?: inspector.Session,
-) => {
+const stopProfiler = (output: string, profileSession?: inspector.Session) => {
   if (!profileSession) {
     return;
   }
@@ -43,10 +40,7 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
     }
 
     const timestamp = Date.now();
-    const profileDir = path.join(
-      api.context.distPath,
-      `rspack-profile-${timestamp}`,
-    );
+    const profileDirName = `rspack-profile-${timestamp}`;
 
     let profileSession: inspector.Session | undefined;
 
@@ -59,17 +53,18 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
     const enableLogging =
       RSPACK_PROFILE === 'ALL' || RSPACK_PROFILE.includes('LOGGING');
 
-    const traceFilePath = path.join(profileDir, 'trace.json');
-    const cpuProfilePath = path.join(profileDir, 'jscpuprofile.json');
-    const loggingFilePath = path.join(profileDir, 'logging.json');
-
     const onStart = () => {
+      // can't get precise api.context.distPath before config init
+      const profileDir = path.join(api.context.distPath, profileDirName);
+
+      const traceFilePath = path.join(profileDir, 'trace.json');
+
       if (!fs.existsSync(profileDir)) {
         fs.mkdirSync(profileDir, { recursive: true });
       }
 
       if (enableProfileTrace) {
-        rspack.experimental_registerGlobalTrace(
+        rspack.experiments.globalTrace.register(
           'trace',
           'chrome',
           traceFilePath,
@@ -84,10 +79,20 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
       }
     };
 
-    api.onBeforeBuild(onStart);
+    api.onBeforeBuild(({ isFirstCompile }) => {
+      if (isFirstCompile) {
+        onStart();
+      }
+    });
     api.onBeforeStartDevServer(onStart);
 
     api.onAfterBuild(async ({ stats }) => {
+      const loggingFilePath = path.join(
+        api.context.distPath,
+        profileDirName,
+        'logging.json',
+      );
+
       if (enableLogging && stats) {
         const logging = stats.toJson({
           all: false,
@@ -100,8 +105,11 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
 
     api.onExit(() => {
       if (enableProfileTrace) {
-        rspack.experimental_cleanupGlobalTrace();
+        rspack.experiments.globalTrace.cleanup();
       }
+      const profileDir = path.join(api.context.distPath, profileDirName);
+
+      const cpuProfilePath = path.join(profileDir, 'jscpuprofile.json');
 
       stopProfiler(cpuProfilePath, profileSession);
 

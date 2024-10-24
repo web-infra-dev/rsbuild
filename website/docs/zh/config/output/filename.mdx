@@ -4,10 +4,19 @@
 
 ```ts
 type FilenameConfig = {
+  html?: string;
   js?:
     | string
-    | ((pathData: Rspack.PathData, assetInfo: Rspack.JsAssetInfo) => string);
-  css?: string;
+    | ((
+        pathData: Rspack.PathData,
+        assetInfo: Rspack.JsAssetInfo | undefined,
+      ) => string);
+  css?:
+    | string
+    | ((
+        pathData: Rspack.PathData,
+        assetInfo: Rspack.JsAssetInfo | undefined,
+      ) => string);
   svg?: string;
   font?: string;
   image?: string;
@@ -18,39 +27,47 @@ type FilenameConfig = {
 - **默认值：**
 
 ```js
-// 开发环境
+// 开发模式构建
 const devDefaultFilename = {
+  html: '[name].html',
   js: '[name].js',
   css: '[name].css',
   svg: '[name].[contenthash:8].svg',
   font: '[name].[contenthash:8][ext]',
   image: '[name].[contenthash:8][ext]',
   media: '[name].[contenthash:8][ext]',
+  assets: '[name].[contenthash:8][ext]',
 };
 
-// 生产环境
+// 生产模式构建
 const prodDefaultFilename = {
-  js: '[name].[contenthash:8].js',
+  html: '[name].html',
+  js: output.target === 'node' ? '[name].js' : '[name].[contenthash:8].js',
   css: '[name].[contenthash:8].css',
   svg: '[name].[contenthash:8].svg',
   font: '[name].[contenthash:8][ext]',
   image: '[name].[contenthash:8][ext]',
   media: '[name].[contenthash:8][ext]',
+  assets: '[name].[contenthash:8][ext]',
 };
 ```
 
 设置构建产物的名称。
 
-在生产环境构建后，Rsbuild 会自动在文件名中间添加 hash 值，如果不需要添加，可以将 [output.filenameHash](/config/output/filename-hash) 设置为 `false` 来禁用该行为。
+在生产模式构建后，Rsbuild 会自动在文件名中间添加 hash 值，如果不需要添加，可以将 [output.filenameHash](/config/output/filename-hash) 设置为 `false` 来禁用该行为。
 
 下面是各个文件类型的说明：
 
+- `html`：表示 HTML 文件的名称。
 - `js`：表示 JavaScript 文件的名称。
 - `css`：表示 CSS 样式文件的名称。
 - `svg`：表示 SVG 图片的名称。
 - `font`：表示字体文件的名称。
 - `image`：表示非 SVG 图片的名称。
 - `media`：表示视频等媒体资源的名称。
+- `assets`：表示除了上述类型之外，其他命中 [Asset Modules](https://rspack.dev/guide/features/asset-module) 的文件名称。
+
+> 查看 [构建产物目录](/guide/basic/output-files) 了解更多。
 
 ## 示例
 
@@ -70,23 +87,43 @@ export default {
 ```
 
 :::tip 文件名中的 hash 值
-通常来说，我们只会在生产环境下设置文件名的 hash 值（即 `process.env.NODE_ENV === 'production'` 时）。
+通常来说，Rsbuild 只会在生产模式下设置文件名的 hash 值（即 `process.env.NODE_ENV === 'production'` 时）。
 
-如果你在开发环境下设置了文件名的 hash，那么可能会导致热更新不生效（尤其是 CSS 文件）。这是因为每次文件内容变化时，都会引起 hash 变化，导致打包工具无法读取到最新的文件内容。
+如果你在开发模式下设置了文件名的 hash，那么可能会导致热更新不生效（尤其是 CSS 文件）。这是因为每次文件内容变化时，都会引起 hash 变化，导致打包工具无法读取到最新的文件内容。
+:::
+
+## 模板字符串
+
+在 `output.filename` 的值中，你可以使用模板字符串来动态生成文件名。
+
+常用的模板字符串有：
+
+- `[name]` - entry 名称，即 [source.entry](/config/source/entry) 的 key。
+- `[contenthash]` - 基于文件内容生成的 hash 值。
+- `[contenthash:<length>]` - 基于文件内容生成的 hash 值，并指定 hash 长度。
+- `[ext]` - 文件后缀名，包含点号。
+
+> 更多模板字符串可以参考 [Rspack - Template String](https://rspack.dev/config/output#template-string)。
+
+:::tip
+
+- `filename.html` 只能使用部分模板字符串，如 `[name]`、`[contenthash:<length>]`。
+- `filename.js` 和 `filename.css` 不支持 `[ext]`。
+
 :::
 
 ## 异步模块文件名
 
 当你在代码中通过 dynamic import 的方式引入模块时，该模块会被单独打包成一个文件，它默认的命名规则如下：
 
-- 在开发环境下会基于模块路径生成名称，比如 `dist/static/js/async/src_add_ts.js`。
-- 在生产环境下会是一个随机的数字 id，比如 `dist/static/js/async/798.27e3083e.js`，这是为了避免在生产环境中泄露源代码的路径，同时字符数也更少。
+- 在开发模式下会基于模块路径生成名称，比如 `dist/static/js/async/src_add_ts.js`。
+- 在生产模式下会是一个随机的数字 id，比如 `dist/static/js/async/798.27e3083e.js`，这是为了避免在生产模式中泄露源代码的路径，同时字符数也更少。
 
 ```js title="src/index.ts"
 const { add } = await import('./add.ts');
 ```
 
-如果你希望为异步模块指定一个固定的名称，可以通过打包工具提供的 [magic comments](https://rspack.dev/api/modules#magic-comments) 来实现，通过 `webpackChunkName` 指定模块名称：
+如果你希望为异步模块指定一个固定的名称，可以通过 Rspack 提供的 [magic comments](https://rspack.dev/api/modules#magic-comments) 来实现，通过 `webpackChunkName` 指定模块名称：
 
 ```js title="src/index.ts"
 const { add } = await import(
@@ -98,7 +135,7 @@ const { add } = await import(
 
 ## 使用函数
 
-`output.filename.js` 可以传入一个函数，这允许你根据文件信息动态生成文件名：
+`output.filename.js` 和 `output.filename.css` 可以传入一个函数，这允许你根据文件信息动态生成文件名：
 
 ```js
 export default {
@@ -113,6 +150,14 @@ export default {
         }
 
         return '/some-path/[name].js';
+      },
+      css: (pathData, assetInfo) => {
+        if (pathData.chunk?.name === 'index') {
+          const isProd = process.env.NODE_ENV === 'production';
+          return isProd ? '[name].[contenthash:8].css' : '[name].css';
+        }
+
+        return '/some-path/[name].css';
       },
     },
   },
@@ -146,7 +191,7 @@ export default {
 <!doctype html>
 <html>
   <head>
-    <script defer="defer" src="/static/js/index.js?v=b8565050"></script>
+    <script defer src="/static/js/index.js?v=b8565050"></script>
     <link href="/static/css/index.css?v=02d157ca" rel="stylesheet" />
   </head>
 </html>

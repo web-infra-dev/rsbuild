@@ -1,12 +1,61 @@
 # 引用 CSS 文件
 
-Rsbuild 对 CSS 提供开箱即用的支持，包括 PostCSS、CSS Modules、CSS 预处理器、CSS 内联和 CSS 压缩。
+Rsbuild 对 CSS 提供开箱即用的支持，包括 Lightning CSS、PostCSS、CSS Modules、CSS 预处理器、CSS 内联和 CSS 压缩。
 
-除此之外，Rsbuild 也提供了多个配置项来自定义样式资源的处理规则。
+Rsbuild 也提供了多个配置项，允许自定义 CSS 文件的处理规则。
+
+## Lightning CSS
+
+:::tip
+[Lightning CSS](https://lightningcss.dev) 是一个基于 Rust 编写的高性能 CSS 解析、转译和压缩工具。它支持将许多现代的 CSS 特性解析并转化为指定浏览器支持的语法，并提供更好的压缩比例。
+:::
+
+Rsbuild 使用 Rspack 内置的 [lightningcss-loader](https://www.rspack.dev/guide/features/builtin-lightningcss-loader) 来转换 CSS 代码，它会自动读取项目中的 [browserslist](/guide/advanced/browserslist) 配置，并将 CSS 代码转换为目标浏览器支持的语法。
+
+### 特性
+
+- Lightning CSS 会自动添加浏览器前缀，比如 `-webkit-`、`-moz-`、`-ms-` 等，因此你不需要手动添加前缀，也不需要使用 [autoprefixer](https://github.com/postcss/autoprefixer) 插件。
+- Lightning CSS 会自动将 CSS 语法降级，这允许你在代码中使用现代的 CSS 特性，比如 CSS nesting，custom media queries 等，而无需担心浏览器兼容性问题。
+- 你可以使用 [tools.lightningcssLoader](/config/tools/lightningcss-loader) 来自定义 `lightningcss-loader` 的选项。
+
+> Rsbuild 从 `1.0.1-beta.7` 版本开始默认启用 Lightning CSS。
+
+### 禁用 Lightning CSS
+
+如果 Lightning CSS 无法满足你的需求，你也可以禁用 Lightning CSS，并使用 [PostCSS](#使用-postcss) 来转换 CSS 代码。
+
+步骤如下：
+
+1. 将 [tools.lightningcssLoader](/config/tools/lightningcss-loader) 设置为 `false` 来禁用 Lightning CSS loader。
+2. 使用 [@rsbuild/plugin-css-minimizer](https://github.com/rspack-contrib/rsbuild-plugin-css-minimizer) 来将 CSS 压缩工具从 Lightning CSS 切换到 cssnano 或其他 CSS 压缩器。
+
+```ts title="rsbuild.config.ts"
+import { pluginCssMinimizer } from '@rsbuild/plugin-css-minimizer';
+
+export default {
+  plugins: [pluginCssMinimizer()],
+  tools: {
+    lightningcssLoader: false,
+  },
+};
+```
+
+3. 参考 [使用 PostCSS](#使用-postcss)，配置你需要的 PostCSS 插件，下面是一些常用的 PostCSS 插件：
+
+- [autoprefixer](https://github.com/postcss/autoprefixer)：添加浏览器前缀。
+- [postcss-preset-env](https://github.com/csstools/postcss-plugins/tree/main/plugin-packs/postcss-preset-env)：将现代 CSS 语法转换为大多数浏览器支持的语法。
+- [postcss-nesting](https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-nesting)：支持 CSS nesting。
+
+## CSS 压缩
+
+在生产模式构建时， Rsbuild 会开启 Rspack 内置的 [LightningCssMinimizerRspackPlugin](https://rspack.dev/plugins/rspack/lightning-css-minimizer-rspack-plugin) 插件，将 CSS 资源压缩，以达到更好的传输效率。
+
+- 你可以通过 [output.minify](/config/output/minify) 选项来禁用 CSS 压缩，或是自定义 `LightningCssMinimizerRspackPlugin` 的选项。
+- 你可以通过 [@rsbuild/plugin-css-minimizer](https://github.com/rspack-contrib/rsbuild-plugin-css-minimizer) 来自定义 CSS 压缩工具，切换到 [cssnano](https://github.com/cssnano/cssnano) 或是其他 CSS 压缩器。
 
 ## 使用 PostCSS
 
-Rsbuild 内置了 [PostCSS](https://postcss.org/) 来转换 CSS 代码。你可以通过以下方式来配置 PostCSS：
+Rsbuild 支持通过 [PostCSS](https://postcss.org/) 来转换 CSS 代码。你可以通过以下方式来配置 PostCSS：
 
 1. Rsbuild 使用 [postcss-load-config](https://github.com/postcss/postcss-load-config) 来加载当前项目根目录下的 PostCSS 配置文件，比如 `postcss.config.js`：
 
@@ -33,15 +82,8 @@ export default {
 };
 ```
 
-当你同时配置 `postcss.config.js` 文件和 `tools.postcss` 选项时，两者都会生效，并且 `tools.postcss` 的优先级更高。
-
-### 内置 PostCSS 插件
-
-Rsbuild 内置了[autoprefixer](https://github.com/postcss/autoprefixer) 插件，来自动补齐 CSS 的浏览器前缀。如果你需要配置目标浏览器，可以使用 [browserslist](/guide/advanced/browserslist) 进行配置。
-
-:::tip
-如果你的项目中已经注册了 autoprefixer 插件，Rsbuild 不会再次注册 autoprefixer 插件。
-:::
+- 当你同时配置 `postcss.config.js` 文件和 `tools.postcss` 选项时，两者都会生效，并且 `tools.postcss` 的优先级更高。
+- 如果项目中没有 `postcss.config.js` 文件，也没有配置 `tools.postcss` 选项，Rsbuild 将不会注册 `postcss-loader`。
 
 ## 使用 CSS Modules
 
@@ -58,14 +100,6 @@ Rsbuild 通过插件来支持社区流行的 CSS 预处理器，包括 Sass、Le
 ## CSS-in-JS
 
 请阅读 [React - CSS-in-JS](/guide/framework/react#css-in-js) 章节来了解如何在 Rsbuild 中使用常见的 CSS-in-JS 库。
-
-## CSS 压缩
-
-在生产环境构建时， Rsbuild 会将 CSS、JS 等静态资源进行压缩，以达到更好的传输效率。
-
-Rsbuild 默认使用 Rspack 内置的 `SwcCssMinimizerRspackPlugin` 插件，在生产环境构建时自动压缩 CSS 代码。
-
-你可以通过 [CSS Minimizer 插件](/plugins/list/plugin-css-minimizer) 来自定义 CSS 压缩工具，切换到 cssnano 或其他工具进行 CSS 压缩。
 
 ## 内联 CSS 文件
 
@@ -85,23 +119,28 @@ export default {
 
 ## 引用 node_modules 里的样式
 
-你可以直接引用 node_modules 里的样式文件。
+Rsbuild 支持引用 node_modules 里的 CSS 文件。
 
-- 在组件中引用：
+- 在 JS 文件中引用：
 
-```ts title="src/App.tsx"
-// 引用 Arco Design 样式：
-import '@arco-design/web-react/dist/css/arco.css';
-```
-
-- 在样式文件中引用：
-
-```css title="src/App.css"
+```ts title="src/index.js"
 /* 引用 normalize.css */
 /* https://github.com/necolas/normalize.css */
+import 'normalize.css';
+```
+
+- 在 CSS 文件中引用：
+
+```css title="src/index.css"
 @import 'normalize.css';
 
 body {
   /* */
 }
+```
+
+- 在 Sass 和 Less 文件中，也允许添加 `~` 前缀来解析 node_modules 里的样式文件，但这是一个**废弃的特性**，建议从代码中移除 `~` 前缀。
+
+```scss title="src/index.scss"
+@import '~normalize.css';
 ```

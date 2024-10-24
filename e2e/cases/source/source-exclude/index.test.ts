@@ -19,7 +19,7 @@ test('should not compile specified file when source.exclude', async () => {
         },
       },
     }),
-  ).rejects.toThrowError('[Syntax Checker]');
+  ).rejects.toThrowError('[@rsbuild/plugin-check-syntax]');
 
   restore();
 

@@ -1,10 +1,15 @@
 import type { Buffer } from 'node:buffer';
 import crypto from 'node:crypto';
-import type { Rspack, SriAlgorithm, SriOptions } from '@rsbuild/shared';
 import { HTML_REGEX } from '../constants';
-import { isProd, removeLeadingSlash } from '../helpers';
+import { removeLeadingSlash } from '../helpers';
 import { logger } from '../logger';
-import type { RsbuildPlugin } from '../types';
+import type {
+  EnvironmentContext,
+  RsbuildPlugin,
+  Rspack,
+  SriAlgorithm,
+  SriOptions,
+} from '../types';
 
 const getAssetName = (url: string, assetPrefix: string) => {
   if (url.startsWith(assetPrefix)) {
@@ -19,10 +24,11 @@ export const pluginSri = (): RsbuildPlugin => ({
   setup(api) {
     const placeholder = 'RSBUILD_INTEGRITY_PLACEHOLDER:';
 
-    const getAlgorithm = (environment: string) => {
-      const config = api.getNormalizedConfig({ environment });
+    const getAlgorithm = (environment: EnvironmentContext) => {
+      const { config } = environment;
       const { sri } = config.security;
-      const enable = sri.enable === 'auto' ? isProd() : sri.enable;
+      const enable =
+        sri.enable === 'auto' ? config.mode === 'production' : sri.enable;
 
       if (!enable) {
         return null;
@@ -99,7 +105,7 @@ export const pluginSri = (): RsbuildPlugin => ({
 
         const hash = crypto
           .createHash(algorithm)
-          .update(data)
+          .update(data as unknown as Uint8Array)
           .digest()
           .toString('base64');
         const integrity = `${algorithm}-${hash}`;
@@ -140,67 +146,40 @@ export const pluginSri = (): RsbuildPlugin => ({
       return replacedHtml;
     };
 
-    class SriReplaceIntegrityPlugin {
-      algorithm: SriAlgorithm;
+    api.processAssets(
+      {
+        // use to final stage to get the final asset content
+        stage: 'report',
+      },
+      ({ assets, sources, environment }) => {
+        const { htmlPaths } = environment;
 
-      constructor(algorithm: SriAlgorithm) {
-        this.algorithm = algorithm;
-      }
+        if (Object.keys(htmlPaths).length === 0) {
+          return;
+        }
 
-      apply(compiler: Rspack.Compiler) {
-        compiler.hooks.compilation.tap(
-          'SriReplaceIntegrityPlugin',
-          (compilation) => {
-            compilation.hooks.processAssets.tapPromise(
-              {
-                name: 'SriReplaceIntegrityPlugin',
-                // use to final stage to get the final asset content
-                stage: compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_REPORT,
-              },
-              async (assets) => {
-                const integrityCache = new Map<string, string>();
+        const algorithm = getAlgorithm(environment);
+        if (!algorithm) {
+          return;
+        }
 
-                for (const asset of Object.keys(assets)) {
-                  if (!HTML_REGEX.test(asset)) {
-                    continue;
-                  }
+        const integrityCache = new Map<string, string>();
 
-                  const htmlContent: string = assets[asset].source();
-                  if (!htmlContent.includes(placeholder)) {
-                    continue;
-                  }
+        for (const asset of Object.keys(assets)) {
+          if (!HTML_REGEX.test(asset)) {
+            continue;
+          }
 
-                  assets[asset] = new compiler.webpack.sources.RawSource(
-                    replaceIntegrity(
-                      htmlContent,
-                      assets,
-                      this.algorithm,
-                      integrityCache,
-                    ),
-                  );
-                }
-              },
-            );
-          },
-        );
-      }
-    }
+          const htmlContent = assets[asset].source() as string;
+          if (!htmlContent.includes(placeholder)) {
+            continue;
+          }
 
-    api.modifyBundlerChain((chain, { environment }) => {
-      const htmlPaths = api.getHTMLPaths({ environment });
-
-      if (Object.keys(htmlPaths).length === 0) {
-        return;
-      }
-
-      const algorithm = getAlgorithm(environment);
-      if (!algorithm) {
-        return;
-      }
-
-      chain
-        .plugin('rsbuild-sri-replace')
-        .use(SriReplaceIntegrityPlugin, [algorithm]);
-    });
+          assets[asset] = new sources.RawSource(
+            replaceIntegrity(htmlContent, assets, algorithm, integrityCache),
+          );
+        }
+      },
+    );
   },
 });

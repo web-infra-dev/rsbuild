@@ -1,5 +1,5 @@
 <script>
-  import B from './B.svelte';
+  import B from './test-temp-B.svelte';
   export let count = 0;
 </script>
 

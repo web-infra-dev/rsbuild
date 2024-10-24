@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-babel",
-  "version": "0.7.9",
+  "version": "1.0.2",
   "description": "Babel plugin for Rsbuild",
   "repository": {
     "type": "git",
@@ -23,29 +23,30 @@
     "compiled"
   ],
   "scripts": {
-    "build": "modern build",
-    "dev": "modern build --watch",
+    "build": "rslib build",
+    "dev": "rslib build --watch",
     "prebundle": "prebundle"
   },
   "dependencies": {
-    "@babel/core": "^7.24.7",
-    "@babel/plugin-proposal-decorators": "^7.24.7",
-    "@babel/plugin-transform-class-properties": "^7.24.7",
-    "@babel/preset-typescript": "^7.24.7",
-    "@rsbuild/shared": "workspace:*",
+    "@babel/core": "^7.25.8",
+    "@babel/plugin-proposal-decorators": "^7.25.7",
+    "@babel/plugin-transform-class-properties": "^7.25.7",
+    "@babel/preset-typescript": "^7.25.7",
     "@types/babel__core": "^7.20.5",
+    "deepmerge": "^4.3.1",
+    "reduce-configs": "^1.0.0",
     "upath": "2.0.1"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "18.x",
-    "babel-loader": "9.1.3",
-    "prebundle": "1.1.0",
-    "typescript": "^5.5.2"
+    "babel-loader": "9.2.1",
+    "prebundle": "1.2.2",
+    "typescript": "^5.6.3"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.7.9"
+    "@rsbuild/core": "1.x || ^1.0.1-rc.0"
   },
   "publishConfig": {
     "access": "public",

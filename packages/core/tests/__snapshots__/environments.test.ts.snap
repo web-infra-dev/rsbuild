@@ -4,13 +4,16 @@ exports[`environment config > should normalize environment config correctly 1`] 
 {
   "dev": {
     "assetPrefix": "/",
+    "cliShortcuts": false,
     "client": {
       "host": "",
       "overlay": true,
       "path": "/rsbuild-hmr",
       "port": "",
+      "reconnect": 100,
     },
     "hmr": true,
+    "lazyCompilation": true,
     "liveReload": true,
     "writeToDisk": false,
   },
@@ -28,9 +31,11 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "scriptLoading": "defer",
     "title": "Rsbuild App",
   },
+  "mode": "development",
   "output": {
     "assetPrefix": "/",
-    "charset": "ascii",
+    "charset": "utf8",
+    "cleanDistPath": "auto",
     "cssModules": {
       "auto": true,
       "exportGlobals": false,
@@ -44,14 +49,14 @@ exports[`environment config > should normalize environment config correctly 1`] 
       "svg": 4096,
     },
     "distPath": {
+      "assets": "static/assets",
       "css": "static/css",
       "font": "static/font",
-      "html": "/",
+      "html": "./",
       "image": "static/image",
       "js": "static/js",
       "media": "static/media",
       "root": "dist",
-      "server": "server",
       "svg": "static/svg",
       "wasm": "static/wasm",
     },
@@ -64,7 +69,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "legalComments": "linked",
     "manifest": false,
     "minify": true,
-    "polyfill": "usage",
+    "polyfill": "off",
     "sourceMap": {
       "css": false,
       "js": undefined,
@@ -81,6 +86,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "removeConsole": false,
     "removeMomentLocale": false,
   },
+  "root": "<ROOT>",
   "security": {
     "nonce": "",
     "sri": {
@@ -88,6 +94,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     },
   },
   "server": {
+    "base": "/",
     "compress": true,
     "host": "0.0.0.0",
     "htmlFallback": "index",
@@ -98,15 +105,145 @@ exports[`environment config > should normalize environment config correctly 1`] 
   },
   "source": {
     "alias": {
-      "@common": "src/common",
+      "@common": "./src/common",
+      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
     },
     "aliasStrategy": "prefer-tsconfig",
     "decorators": {
-      "version": "legacy",
+      "version": "2022-03",
     },
     "define": {},
     "entry": {
-      "index": "src/index.client.js",
+      "index": "./src/index.client.js",
+    },
+    "preEntry": [],
+  },
+  "tools": {
+    "cssExtract": {
+      "loaderOptions": {},
+      "pluginOptions": {
+        "ignoreOrder": true,
+      },
+    },
+  },
+}
+`;
+
+exports[`environment config > should normalize environment config correctly 2`] = `
+{
+  "dev": {
+    "assetPrefix": "/foo",
+    "cliShortcuts": false,
+    "client": {
+      "host": "",
+      "overlay": true,
+      "path": "/rsbuild-hmr",
+      "port": "",
+      "reconnect": 100,
+    },
+    "hmr": true,
+    "lazyCompilation": false,
+    "liveReload": true,
+    "writeToDisk": false,
+  },
+  "html": {
+    "crossorigin": false,
+    "inject": "head",
+    "meta": {
+      "charset": {
+        "charset": "UTF-8",
+      },
+      "viewport": "width=device-width, initial-scale=1.0",
+    },
+    "mountId": "root",
+    "outputStructure": "flat",
+    "scriptLoading": "defer",
+    "title": "Rsbuild App",
+  },
+  "mode": "development",
+  "output": {
+    "assetPrefix": "/",
+    "charset": "utf8",
+    "cleanDistPath": "auto",
+    "cssModules": {
+      "auto": true,
+      "exportGlobals": false,
+      "exportLocalsConvention": "camelCase",
+      "namedExport": false,
+    },
+    "dataUriLimit": {
+      "font": 4096,
+      "image": 4096,
+      "media": 4096,
+      "svg": 4096,
+    },
+    "distPath": {
+      "assets": "static/assets",
+      "css": "static/css",
+      "font": "static/font",
+      "html": "./",
+      "image": "static/image",
+      "js": "",
+      "media": "static/media",
+      "root": "dist",
+      "svg": "static/svg",
+      "wasm": "static/wasm",
+    },
+    "emitAssets": true,
+    "filename": {},
+    "filenameHash": true,
+    "injectStyles": false,
+    "inlineScripts": false,
+    "inlineStyles": false,
+    "legalComments": "linked",
+    "manifest": false,
+    "minify": true,
+    "polyfill": "off",
+    "sourceMap": {
+      "css": false,
+      "js": undefined,
+    },
+    "target": "node",
+  },
+  "performance": {
+    "buildCache": true,
+    "chunkSplit": {
+      "strategy": "split-by-experience",
+    },
+    "printFileSize": true,
+    "profile": false,
+    "removeConsole": false,
+    "removeMomentLocale": false,
+  },
+  "root": "<ROOT>",
+  "security": {
+    "nonce": "",
+    "sri": {
+      "enable": false,
+    },
+  },
+  "server": {
+    "base": "/",
+    "compress": true,
+    "host": "0.0.0.0",
+    "htmlFallback": "index",
+    "open": false,
+    "port": 3000,
+    "printUrls": true,
+    "strictPort": false,
+  },
+  "source": {
+    "alias": {
+      "@common": "./src/common",
+      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+    },
+    "aliasStrategy": "prefer-tsconfig",
+    "decorators": {
+      "version": "2022-03",
+    },
+    "define": {},
+    "entry": {
+      "index": "./src/index.server.js",
     },
     "preEntry": [],
   },
@@ -126,11 +263,13 @@ exports[`environment config > should print environment config when inspect confi
   "ssr": {
     "dev": {
       "assetPrefix": "/",
+      "cliShortcuts": false,
       "client": {
         "host": "",
         "overlay": true,
         "path": "/rsbuild-hmr",
         "port": "",
+        "reconnect": 100,
       },
       "hmr": true,
       "liveReload": true,
@@ -150,9 +289,11 @@ exports[`environment config > should print environment config when inspect confi
       "scriptLoading": "defer",
       "title": "Rsbuild App",
     },
+    "mode": "development",
     "output": {
       "assetPrefix": "/",
-      "charset": "ascii",
+      "charset": "utf8",
+      "cleanDistPath": "auto",
       "cssModules": {
         "auto": true,
         "exportGlobals": false,
@@ -166,14 +307,14 @@ exports[`environment config > should print environment config when inspect confi
         "svg": 4096,
       },
       "distPath": {
+        "assets": "static/assets",
         "css": "static/css",
         "font": "static/font",
-        "html": "/",
+        "html": "./",
         "image": "static/image",
         "js": "static/js",
         "media": "static/media",
         "root": "dist",
-        "server": "server",
         "svg": "static/svg",
         "wasm": "static/wasm",
       },
@@ -186,7 +327,7 @@ exports[`environment config > should print environment config when inspect confi
       "legalComments": "linked",
       "manifest": false,
       "minify": true,
-      "polyfill": "usage",
+      "polyfill": "off",
       "sourceMap": {
         "css": false,
         "js": undefined,
@@ -203,6 +344,42 @@ exports[`environment config > should print environment config when inspect confi
       "removeConsole": false,
       "removeMomentLocale": false,
     },
+    "pluginNames": [
+      "rsbuild:basic",
+      "rsbuild:entry",
+      "rsbuild:cache",
+      "rsbuild:target",
+      "rsbuild:output",
+      "rsbuild:resolve",
+      "rsbuild:file-size",
+      "rsbuild:clean-output",
+      "rsbuild:asset",
+      "rsbuild:html",
+      "rsbuild:app-icon",
+      "rsbuild:wasm",
+      "rsbuild:moment",
+      "rsbuild:node-addons",
+      "rsbuild:define",
+      "rsbuild:css",
+      "rsbuild:minimize",
+      "rsbuild:progress",
+      "rsbuild:swc",
+      "rsbuild:externals",
+      "rsbuild:split-chunks",
+      "rsbuild:inline-chunk",
+      "rsbuild:rsdoctor",
+      "rsbuild:resource-hints",
+      "rsbuild:performance",
+      "rsbuild:bundle-analyzer",
+      "rsbuild:server",
+      "rsbuild:manifest",
+      "rsbuild:module-federation",
+      "rsbuild:rspack-profile",
+      "rsbuild:lazy-compilation",
+      "rsbuild:sri",
+      "rsbuild:nonce",
+    ],
+    "root": "<ROOT>",
     "security": {
       "nonce": "",
       "sri": {
@@ -210,6 +387,7 @@ exports[`environment config > should print environment config when inspect confi
       },
     },
     "server": {
+      "base": "/",
       "compress": true,
       "host": "0.0.0.0",
       "htmlFallback": "index",
@@ -220,15 +398,16 @@ exports[`environment config > should print environment config when inspect confi
     },
     "source": {
       "alias": {
-        "@common": "src/common",
+        "@common": "./src/common",
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
       },
       "aliasStrategy": "prefer-tsconfig",
       "decorators": {
-        "version": "legacy",
+        "version": "2022-03",
       },
       "define": {},
       "entry": {
-        "index": "src/index.server.js",
+        "index": "./src/index.server.js",
       },
       "preEntry": [],
     },
@@ -244,11 +423,13 @@ exports[`environment config > should print environment config when inspect confi
   "web": {
     "dev": {
       "assetPrefix": "/",
+      "cliShortcuts": false,
       "client": {
         "host": "",
         "overlay": true,
         "path": "/rsbuild-hmr",
         "port": "",
+        "reconnect": 100,
       },
       "hmr": true,
       "liveReload": true,
@@ -268,9 +449,11 @@ exports[`environment config > should print environment config when inspect confi
       "scriptLoading": "defer",
       "title": "Rsbuild App",
     },
+    "mode": "development",
     "output": {
       "assetPrefix": "/",
-      "charset": "ascii",
+      "charset": "utf8",
+      "cleanDistPath": "auto",
       "cssModules": {
         "auto": true,
         "exportGlobals": false,
@@ -284,14 +467,14 @@ exports[`environment config > should print environment config when inspect confi
         "svg": 4096,
       },
       "distPath": {
+        "assets": "static/assets",
         "css": "static/css",
         "font": "static/font",
-        "html": "/",
+        "html": "./",
         "image": "static/image",
         "js": "static/js",
         "media": "static/media",
         "root": "dist",
-        "server": "server",
         "svg": "static/svg",
         "wasm": "static/wasm",
       },
@@ -304,7 +487,7 @@ exports[`environment config > should print environment config when inspect confi
       "legalComments": "linked",
       "manifest": false,
       "minify": true,
-      "polyfill": "usage",
+      "polyfill": "off",
       "sourceMap": {
         "css": false,
         "js": undefined,
@@ -321,6 +504,42 @@ exports[`environment config > should print environment config when inspect confi
       "removeConsole": false,
       "removeMomentLocale": false,
     },
+    "pluginNames": [
+      "rsbuild:basic",
+      "rsbuild:entry",
+      "rsbuild:cache",
+      "rsbuild:target",
+      "rsbuild:output",
+      "rsbuild:resolve",
+      "rsbuild:file-size",
+      "rsbuild:clean-output",
+      "rsbuild:asset",
+      "rsbuild:html",
+      "rsbuild:app-icon",
+      "rsbuild:wasm",
+      "rsbuild:moment",
+      "rsbuild:node-addons",
+      "rsbuild:define",
+      "rsbuild:css",
+      "rsbuild:minimize",
+      "rsbuild:progress",
+      "rsbuild:swc",
+      "rsbuild:externals",
+      "rsbuild:split-chunks",
+      "rsbuild:inline-chunk",
+      "rsbuild:rsdoctor",
+      "rsbuild:resource-hints",
+      "rsbuild:performance",
+      "rsbuild:bundle-analyzer",
+      "rsbuild:server",
+      "rsbuild:manifest",
+      "rsbuild:module-federation",
+      "rsbuild:rspack-profile",
+      "rsbuild:lazy-compilation",
+      "rsbuild:sri",
+      "rsbuild:nonce",
+    ],
+    "root": "<ROOT>",
     "security": {
       "nonce": "",
       "sri": {
@@ -328,6 +547,7 @@ exports[`environment config > should print environment config when inspect confi
       },
     },
     "server": {
+      "base": "/",
       "compress": true,
       "host": "0.0.0.0",
       "htmlFallback": "index",
@@ -338,15 +558,16 @@ exports[`environment config > should print environment config when inspect confi
     },
     "source": {
       "alias": {
-        "@common": "src/common",
+        "@common": "./src/common",
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
       },
       "aliasStrategy": "prefer-tsconfig",
       "decorators": {
-        "version": "legacy",
+        "version": "2022-03",
       },
       "define": {},
       "entry": {
-        "index": "src/index.client.js",
+        "index": "./src/index.client.js",
       },
       "preEntry": [],
     },
@@ -362,16 +583,33 @@ exports[`environment config > should print environment config when inspect confi
 }
 `;
 
+exports[`environment config > should support add single environment plugin 1`] = `
+{
+  "ssr": {
+    "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+    "global": "ssr",
+    "ssr": "ssr",
+  },
+  "web": {
+    "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+    "global": "web",
+    "web": "web",
+  },
+}
+`;
+
 exports[`environment config > should support modify environment config by api.modifyRsbuildConfig 1`] = `
 {
   "ssr": {
     "dev": {
       "assetPrefix": "/",
+      "cliShortcuts": false,
       "client": {
         "host": "",
         "overlay": true,
         "path": "/rsbuild-hmr",
         "port": "",
+        "reconnect": 100,
       },
       "hmr": true,
       "liveReload": true,
@@ -391,9 +629,11 @@ exports[`environment config > should support modify environment config by api.mo
       "scriptLoading": "defer",
       "title": "Rsbuild App",
     },
+    "mode": "development",
     "output": {
       "assetPrefix": "/",
-      "charset": "ascii",
+      "charset": "utf8",
+      "cleanDistPath": "auto",
       "cssModules": {
         "auto": true,
         "exportGlobals": false,
@@ -407,14 +647,14 @@ exports[`environment config > should support modify environment config by api.mo
         "svg": 4096,
       },
       "distPath": {
+        "assets": "static/assets",
         "css": "static/css",
         "font": "static/font",
-        "html": "/",
+        "html": "./",
         "image": "static/image",
         "js": "static/js",
         "media": "static/media",
         "root": "dist",
-        "server": "server",
         "svg": "static/svg",
         "wasm": "static/wasm",
       },
@@ -427,7 +667,7 @@ exports[`environment config > should support modify environment config by api.mo
       "legalComments": "linked",
       "manifest": false,
       "minify": true,
-      "polyfill": "usage",
+      "polyfill": "off",
       "sourceMap": {
         "css": false,
         "js": undefined,
@@ -444,6 +684,43 @@ exports[`environment config > should support modify environment config by api.mo
       "removeConsole": false,
       "removeMomentLocale": false,
     },
+    "pluginNames": [
+      "rsbuild:basic",
+      "rsbuild:entry",
+      "rsbuild:cache",
+      "rsbuild:target",
+      "rsbuild:output",
+      "rsbuild:resolve",
+      "rsbuild:file-size",
+      "rsbuild:clean-output",
+      "rsbuild:asset",
+      "rsbuild:html",
+      "rsbuild:app-icon",
+      "rsbuild:wasm",
+      "rsbuild:moment",
+      "rsbuild:node-addons",
+      "rsbuild:define",
+      "rsbuild:css",
+      "rsbuild:minimize",
+      "rsbuild:progress",
+      "rsbuild:swc",
+      "rsbuild:externals",
+      "rsbuild:split-chunks",
+      "rsbuild:inline-chunk",
+      "rsbuild:rsdoctor",
+      "rsbuild:resource-hints",
+      "rsbuild:performance",
+      "rsbuild:bundle-analyzer",
+      "rsbuild:server",
+      "rsbuild:manifest",
+      "rsbuild:module-federation",
+      "rsbuild:rspack-profile",
+      "rsbuild:lazy-compilation",
+      "rsbuild:sri",
+      "rsbuild:nonce",
+      "test-environment",
+    ],
+    "root": "<ROOT>",
     "security": {
       "nonce": "",
       "sri": {
@@ -451,6 +728,7 @@ exports[`environment config > should support modify environment config by api.mo
       },
     },
     "server": {
+      "base": "/",
       "compress": true,
       "host": "0.0.0.0",
       "htmlFallback": "index",
@@ -461,15 +739,16 @@ exports[`environment config > should support modify environment config by api.mo
     },
     "source": {
       "alias": {
-        "@common": "src/common",
+        "@common": "./src/common",
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
       },
       "aliasStrategy": "prefer-tsconfig",
       "decorators": {
-        "version": "legacy",
+        "version": "2022-03",
       },
       "define": {},
       "entry": {
-        "index": "src/index.server.js",
+        "index": "./src/index.server.js",
       },
       "preEntry": [],
     },
@@ -485,11 +764,13 @@ exports[`environment config > should support modify environment config by api.mo
   "web": {
     "dev": {
       "assetPrefix": "/",
+      "cliShortcuts": false,
       "client": {
         "host": "",
         "overlay": true,
         "path": "/rsbuild-hmr",
         "port": "",
+        "reconnect": 100,
       },
       "hmr": true,
       "liveReload": true,
@@ -509,9 +790,11 @@ exports[`environment config > should support modify environment config by api.mo
       "scriptLoading": "defer",
       "title": "Rsbuild App",
     },
+    "mode": "development",
     "output": {
       "assetPrefix": "/",
-      "charset": "ascii",
+      "charset": "utf8",
+      "cleanDistPath": "auto",
       "cssModules": {
         "auto": true,
         "exportGlobals": false,
@@ -525,14 +808,14 @@ exports[`environment config > should support modify environment config by api.mo
         "svg": 4096,
       },
       "distPath": {
+        "assets": "static/assets",
         "css": "static/css",
         "font": "static/font",
-        "html": "/",
+        "html": "./",
         "image": "static/image",
         "js": "static/js",
         "media": "static/media",
         "root": "dist",
-        "server": "server",
         "svg": "static/svg",
         "wasm": "static/wasm",
       },
@@ -545,7 +828,7 @@ exports[`environment config > should support modify environment config by api.mo
       "legalComments": "linked",
       "manifest": false,
       "minify": true,
-      "polyfill": "usage",
+      "polyfill": "off",
       "sourceMap": {
         "css": false,
         "js": undefined,
@@ -562,6 +845,43 @@ exports[`environment config > should support modify environment config by api.mo
       "removeConsole": false,
       "removeMomentLocale": false,
     },
+    "pluginNames": [
+      "rsbuild:basic",
+      "rsbuild:entry",
+      "rsbuild:cache",
+      "rsbuild:target",
+      "rsbuild:output",
+      "rsbuild:resolve",
+      "rsbuild:file-size",
+      "rsbuild:clean-output",
+      "rsbuild:asset",
+      "rsbuild:html",
+      "rsbuild:app-icon",
+      "rsbuild:wasm",
+      "rsbuild:moment",
+      "rsbuild:node-addons",
+      "rsbuild:define",
+      "rsbuild:css",
+      "rsbuild:minimize",
+      "rsbuild:progress",
+      "rsbuild:swc",
+      "rsbuild:externals",
+      "rsbuild:split-chunks",
+      "rsbuild:inline-chunk",
+      "rsbuild:rsdoctor",
+      "rsbuild:resource-hints",
+      "rsbuild:performance",
+      "rsbuild:bundle-analyzer",
+      "rsbuild:server",
+      "rsbuild:manifest",
+      "rsbuild:module-federation",
+      "rsbuild:rspack-profile",
+      "rsbuild:lazy-compilation",
+      "rsbuild:sri",
+      "rsbuild:nonce",
+      "test-environment",
+    ],
+    "root": "<ROOT>",
     "security": {
       "nonce": "",
       "sri": {
@@ -569,6 +889,7 @@ exports[`environment config > should support modify environment config by api.mo
       },
     },
     "server": {
+      "base": "/",
       "compress": true,
       "host": "0.0.0.0",
       "htmlFallback": "index",
@@ -579,16 +900,17 @@ exports[`environment config > should support modify environment config by api.mo
     },
     "source": {
       "alias": {
-        "@common": "src/common",
-        "@common1": "src/common1",
+        "@common": "./src/common",
+        "@common1": "./src/common1",
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
       },
       "aliasStrategy": "prefer-tsconfig",
       "decorators": {
-        "version": "legacy",
+        "version": "2022-03",
       },
       "define": {},
       "entry": {
-        "index": "src/index.client.js",
+        "index": "./src/index.client.js",
       },
       "preEntry": [],
     },
@@ -604,11 +926,13 @@ exports[`environment config > should support modify environment config by api.mo
   "web1": {
     "dev": {
       "assetPrefix": "/",
+      "cliShortcuts": false,
       "client": {
         "host": "",
         "overlay": true,
         "path": "/rsbuild-hmr",
         "port": "",
+        "reconnect": 100,
       },
       "hmr": true,
       "liveReload": true,
@@ -628,9 +952,11 @@ exports[`environment config > should support modify environment config by api.mo
       "scriptLoading": "defer",
       "title": "Rsbuild App",
     },
+    "mode": "development",
     "output": {
       "assetPrefix": "/",
-      "charset": "ascii",
+      "charset": "utf8",
+      "cleanDistPath": "auto",
       "cssModules": {
         "auto": true,
         "exportGlobals": false,
@@ -644,14 +970,14 @@ exports[`environment config > should support modify environment config by api.mo
         "svg": 4096,
       },
       "distPath": {
+        "assets": "static/assets",
         "css": "static/css",
         "font": "static/font",
-        "html": "/",
+        "html": "./",
         "image": "static/image",
         "js": "static/js",
         "media": "static/media",
         "root": "dist",
-        "server": "server",
         "svg": "static/svg",
         "wasm": "static/wasm",
       },
@@ -664,7 +990,7 @@ exports[`environment config > should support modify environment config by api.mo
       "legalComments": "linked",
       "manifest": false,
       "minify": true,
-      "polyfill": "usage",
+      "polyfill": "off",
       "sourceMap": {
         "css": false,
         "js": undefined,
@@ -681,6 +1007,43 @@ exports[`environment config > should support modify environment config by api.mo
       "removeConsole": false,
       "removeMomentLocale": false,
     },
+    "pluginNames": [
+      "rsbuild:basic",
+      "rsbuild:entry",
+      "rsbuild:cache",
+      "rsbuild:target",
+      "rsbuild:output",
+      "rsbuild:resolve",
+      "rsbuild:file-size",
+      "rsbuild:clean-output",
+      "rsbuild:asset",
+      "rsbuild:html",
+      "rsbuild:app-icon",
+      "rsbuild:wasm",
+      "rsbuild:moment",
+      "rsbuild:node-addons",
+      "rsbuild:define",
+      "rsbuild:css",
+      "rsbuild:minimize",
+      "rsbuild:progress",
+      "rsbuild:swc",
+      "rsbuild:externals",
+      "rsbuild:split-chunks",
+      "rsbuild:inline-chunk",
+      "rsbuild:rsdoctor",
+      "rsbuild:resource-hints",
+      "rsbuild:performance",
+      "rsbuild:bundle-analyzer",
+      "rsbuild:server",
+      "rsbuild:manifest",
+      "rsbuild:module-federation",
+      "rsbuild:rspack-profile",
+      "rsbuild:lazy-compilation",
+      "rsbuild:sri",
+      "rsbuild:nonce",
+      "test-environment",
+    ],
+    "root": "<ROOT>",
     "security": {
       "nonce": "",
       "sri": {
@@ -688,6 +1051,7 @@ exports[`environment config > should support modify environment config by api.mo
       },
     },
     "server": {
+      "base": "/",
       "compress": true,
       "host": "0.0.0.0",
       "htmlFallback": "index",
@@ -698,12 +1062,13 @@ exports[`environment config > should support modify environment config by api.mo
     },
     "source": {
       "alias": {
-        "@common": "src/common",
-        "@common1": "src/common1",
+        "@common": "./src/common",
+        "@common1": "./src/common1",
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
       },
       "aliasStrategy": "prefer-tsconfig",
       "decorators": {
-        "version": "legacy",
+        "version": "2022-03",
       },
       "define": {},
       "entry": {},
@@ -719,4 +1084,999 @@ exports[`environment config > should support modify environment config by api.mo
     },
   },
 }
+`;
+
+exports[`environment config > should support modify single environment config by api.modifyEnvironmentConfig 1`] = `
+{
+  "ssr": {
+    "dev": {
+      "assetPrefix": "/",
+      "cliShortcuts": false,
+      "client": {
+        "host": "",
+        "overlay": true,
+        "path": "/rsbuild-hmr",
+        "port": "",
+        "reconnect": 100,
+      },
+      "hmr": true,
+      "liveReload": true,
+      "writeToDisk": false,
+    },
+    "html": {
+      "crossorigin": false,
+      "inject": "head",
+      "meta": {
+        "charset": {
+          "charset": "UTF-8",
+        },
+        "viewport": "width=device-width, initial-scale=1.0",
+      },
+      "mountId": "root",
+      "outputStructure": "flat",
+      "scriptLoading": "defer",
+      "title": "Rsbuild App",
+    },
+    "mode": "development",
+    "output": {
+      "assetPrefix": "/",
+      "charset": "utf8",
+      "cleanDistPath": "auto",
+      "cssModules": {
+        "auto": true,
+        "exportGlobals": false,
+        "exportLocalsConvention": "camelCase",
+        "namedExport": false,
+      },
+      "dataUriLimit": {
+        "font": 4096,
+        "image": 4096,
+        "media": 4096,
+        "svg": 4096,
+      },
+      "distPath": {
+        "assets": "static/assets",
+        "css": "static/css",
+        "font": "static/font",
+        "html": "./",
+        "image": "static/image",
+        "js": "static/js",
+        "media": "static/media",
+        "root": "dist",
+        "svg": "static/svg",
+        "wasm": "static/wasm",
+      },
+      "emitAssets": true,
+      "filename": {},
+      "filenameHash": true,
+      "injectStyles": false,
+      "inlineScripts": false,
+      "inlineStyles": false,
+      "legalComments": "linked",
+      "manifest": false,
+      "minify": true,
+      "polyfill": "off",
+      "sourceMap": {
+        "css": false,
+        "js": undefined,
+      },
+      "target": "web",
+    },
+    "performance": {
+      "buildCache": true,
+      "chunkSplit": {
+        "strategy": "split-by-experience",
+      },
+      "printFileSize": true,
+      "profile": false,
+      "removeConsole": false,
+      "removeMomentLocale": false,
+    },
+    "pluginNames": [
+      "rsbuild:basic",
+      "rsbuild:entry",
+      "rsbuild:cache",
+      "rsbuild:target",
+      "rsbuild:output",
+      "rsbuild:resolve",
+      "rsbuild:file-size",
+      "rsbuild:clean-output",
+      "rsbuild:asset",
+      "rsbuild:html",
+      "rsbuild:app-icon",
+      "rsbuild:wasm",
+      "rsbuild:moment",
+      "rsbuild:node-addons",
+      "rsbuild:define",
+      "rsbuild:css",
+      "rsbuild:minimize",
+      "rsbuild:progress",
+      "rsbuild:swc",
+      "rsbuild:externals",
+      "rsbuild:split-chunks",
+      "rsbuild:inline-chunk",
+      "rsbuild:rsdoctor",
+      "rsbuild:resource-hints",
+      "rsbuild:performance",
+      "rsbuild:bundle-analyzer",
+      "rsbuild:server",
+      "rsbuild:manifest",
+      "rsbuild:module-federation",
+      "rsbuild:rspack-profile",
+      "rsbuild:lazy-compilation",
+      "rsbuild:sri",
+      "rsbuild:nonce",
+      "test-environment",
+    ],
+    "root": "<ROOT>",
+    "security": {
+      "nonce": "",
+      "sri": {
+        "enable": false,
+      },
+    },
+    "server": {
+      "base": "/",
+      "compress": true,
+      "host": "0.0.0.0",
+      "htmlFallback": "index",
+      "open": false,
+      "port": 3000,
+      "printUrls": true,
+      "strictPort": false,
+    },
+    "source": {
+      "alias": {
+        "@common": "./src/common",
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+      },
+      "aliasStrategy": "prefer-tsconfig",
+      "decorators": {
+        "version": "2022-03",
+      },
+      "define": {},
+      "entry": {
+        "index": "./src/index.server.js",
+      },
+      "preEntry": [],
+    },
+    "tools": {
+      "cssExtract": {
+        "loaderOptions": {},
+        "pluginOptions": {
+          "ignoreOrder": true,
+        },
+      },
+    },
+  },
+  "web": {
+    "dev": {
+      "assetPrefix": "/",
+      "cliShortcuts": false,
+      "client": {
+        "host": "",
+        "overlay": true,
+        "path": "/rsbuild-hmr",
+        "port": "",
+        "reconnect": 100,
+      },
+      "hmr": true,
+      "liveReload": true,
+      "writeToDisk": false,
+    },
+    "html": {
+      "crossorigin": false,
+      "inject": "head",
+      "meta": {
+        "charset": {
+          "charset": "UTF-8",
+        },
+        "viewport": "width=device-width, initial-scale=1.0",
+      },
+      "mountId": "root",
+      "outputStructure": "flat",
+      "scriptLoading": "defer",
+      "title": "Rsbuild App",
+    },
+    "mode": "development",
+    "output": {
+      "assetPrefix": "/",
+      "charset": "utf8",
+      "cleanDistPath": "auto",
+      "cssModules": {
+        "auto": true,
+        "exportGlobals": false,
+        "exportLocalsConvention": "camelCase",
+        "namedExport": false,
+      },
+      "dataUriLimit": {
+        "font": 4096,
+        "image": 4096,
+        "media": 4096,
+        "svg": 4096,
+      },
+      "distPath": {
+        "assets": "static/assets",
+        "css": "static/css",
+        "font": "static/font",
+        "html": "./",
+        "image": "static/image",
+        "js": "static/js",
+        "media": "static/media",
+        "root": "dist",
+        "svg": "static/svg",
+        "wasm": "static/wasm",
+      },
+      "emitAssets": true,
+      "filename": {},
+      "filenameHash": true,
+      "injectStyles": false,
+      "inlineScripts": false,
+      "inlineStyles": false,
+      "legalComments": "linked",
+      "manifest": false,
+      "minify": true,
+      "polyfill": "off",
+      "sourceMap": {
+        "css": false,
+        "js": undefined,
+      },
+      "target": "web",
+    },
+    "performance": {
+      "buildCache": true,
+      "chunkSplit": {
+        "strategy": "split-by-experience",
+      },
+      "printFileSize": true,
+      "profile": false,
+      "removeConsole": false,
+      "removeMomentLocale": false,
+    },
+    "pluginNames": [
+      "rsbuild:basic",
+      "rsbuild:entry",
+      "rsbuild:cache",
+      "rsbuild:target",
+      "rsbuild:output",
+      "rsbuild:resolve",
+      "rsbuild:file-size",
+      "rsbuild:clean-output",
+      "rsbuild:asset",
+      "rsbuild:html",
+      "rsbuild:app-icon",
+      "rsbuild:wasm",
+      "rsbuild:moment",
+      "rsbuild:node-addons",
+      "rsbuild:define",
+      "rsbuild:css",
+      "rsbuild:minimize",
+      "rsbuild:progress",
+      "rsbuild:swc",
+      "rsbuild:externals",
+      "rsbuild:split-chunks",
+      "rsbuild:inline-chunk",
+      "rsbuild:rsdoctor",
+      "rsbuild:resource-hints",
+      "rsbuild:performance",
+      "rsbuild:bundle-analyzer",
+      "rsbuild:server",
+      "rsbuild:manifest",
+      "rsbuild:module-federation",
+      "rsbuild:rspack-profile",
+      "rsbuild:lazy-compilation",
+      "rsbuild:sri",
+      "rsbuild:nonce",
+      "test-environment",
+    ],
+    "root": "<ROOT>",
+    "security": {
+      "nonce": "",
+      "sri": {
+        "enable": false,
+      },
+    },
+    "server": {
+      "base": "/",
+      "compress": true,
+      "host": "0.0.0.0",
+      "htmlFallback": "index",
+      "open": false,
+      "port": 3000,
+      "printUrls": true,
+      "strictPort": false,
+    },
+    "source": {
+      "alias": {
+        "@common": "./src/common",
+        "@common1": "./src/common1",
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+      },
+      "aliasStrategy": "prefer-tsconfig",
+      "decorators": {
+        "version": "2022-03",
+      },
+      "define": {},
+      "entry": {
+        "index": "./src/index.client.js",
+      },
+      "preEntry": [],
+    },
+    "tools": {
+      "cssExtract": {
+        "loaderOptions": {},
+        "pluginOptions": {
+          "ignoreOrder": true,
+        },
+      },
+    },
+  },
+}
+`;
+
+exports[`environment config > tools.rspack / bundlerChain can be configured in environment config 1`] = `
+[
+  {
+    "context": "<ROOT>",
+    "devtool": "eval-source-map",
+    "experiments": {
+      "asyncWebAssembly": true,
+    },
+    "infrastructureLogging": {
+      "level": "error",
+    },
+    "mode": "development",
+    "module": {
+      "parser": {
+        "javascript": {
+          "exportsPresence": "error",
+        },
+      },
+      "rules": [
+        {
+          "resolve": {
+            "fullySpecified": false,
+          },
+          "test": /\\\\\\.m\\?js/,
+        },
+        {
+          "resolve": {
+            "preferRelative": true,
+          },
+          "sideEffects": true,
+          "test": /\\\\\\.css\\$/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
+            },
+            {
+              "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+              "options": {
+                "importLoaders": 1,
+                "modules": {
+                  "auto": true,
+                  "exportGlobals": false,
+                  "exportLocalsConvention": "camelCase",
+                  "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                  "namedExport": false,
+                },
+                "sourceMap": false,
+              },
+            },
+            {
+              "loader": "builtin:lightningcss-loader",
+              "options": {
+                "targets": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
+                ],
+              },
+            },
+          ],
+        },
+        {
+          "include": [
+            {
+              "and": [
+                "<ROOT>",
+                {
+                  "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+                },
+              ],
+            },
+            /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+            /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
+          ],
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "mode": undefined,
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "isModule": "unknown",
+                "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                  },
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": false,
+                  },
+                  "transform": {
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          "mimetype": {
+            "or": [
+              "text/javascript",
+              "application/javascript",
+            ],
+          },
+          "resolve": {
+            "fullySpecified": false,
+          },
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "mode": undefined,
+                  "targets": [
+                    "chrome >= 87",
+                    "edge >= 88",
+                    "firefox >= 78",
+                    "safari >= 14",
+                  ],
+                },
+                "isModule": "unknown",
+                "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                  },
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": false,
+                  },
+                  "transform": {
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          "oneOf": [
+            {
+              "generator": {
+                "filename": "static/image/[name].[contenthash:8][ext]",
+              },
+              "resourceQuery": /\\(__inline=false\\|url\\)/,
+              "type": "asset/resource",
+            },
+            {
+              "resourceQuery": /inline/,
+              "type": "asset/inline",
+            },
+            {
+              "generator": {
+                "filename": "static/image/[name].[contenthash:8][ext]",
+              },
+              "parser": {
+                "dataUrlCondition": {
+                  "maxSize": 4096,
+                },
+              },
+              "type": "asset",
+            },
+          ],
+          "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
+        },
+        {
+          "oneOf": [
+            {
+              "generator": {
+                "filename": "static/svg/[name].[contenthash:8].svg",
+              },
+              "resourceQuery": /\\(__inline=false\\|url\\)/,
+              "type": "asset/resource",
+            },
+            {
+              "resourceQuery": /inline/,
+              "type": "asset/inline",
+            },
+            {
+              "generator": {
+                "filename": "static/svg/[name].[contenthash:8].svg",
+              },
+              "parser": {
+                "dataUrlCondition": {
+                  "maxSize": 4096,
+                },
+              },
+              "type": "asset",
+            },
+          ],
+          "test": /\\\\\\.svg\\$/i,
+        },
+        {
+          "oneOf": [
+            {
+              "generator": {
+                "filename": "static/media/[name].[contenthash:8][ext]",
+              },
+              "resourceQuery": /\\(__inline=false\\|url\\)/,
+              "type": "asset/resource",
+            },
+            {
+              "resourceQuery": /inline/,
+              "type": "asset/inline",
+            },
+            {
+              "generator": {
+                "filename": "static/media/[name].[contenthash:8][ext]",
+              },
+              "parser": {
+                "dataUrlCondition": {
+                  "maxSize": 4096,
+                },
+              },
+              "type": "asset",
+            },
+          ],
+          "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mov\\|mp3\\|wav\\|flac\\|aac\\|m4a\\|opus\\)\\$/i,
+        },
+        {
+          "oneOf": [
+            {
+              "generator": {
+                "filename": "static/font/[name].[contenthash:8][ext]",
+              },
+              "resourceQuery": /\\(__inline=false\\|url\\)/,
+              "type": "asset/resource",
+            },
+            {
+              "resourceQuery": /inline/,
+              "type": "asset/inline",
+            },
+            {
+              "generator": {
+                "filename": "static/font/[name].[contenthash:8][ext]",
+              },
+              "parser": {
+                "dataUrlCondition": {
+                  "maxSize": 4096,
+                },
+              },
+              "type": "asset",
+            },
+          ],
+          "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
+        },
+        {
+          "dependency": "url",
+          "generator": {
+            "filename": "static/wasm/[hash].module.wasm",
+          },
+          "test": /\\\\\\.wasm\\$/,
+          "type": "asset/resource",
+        },
+      ],
+    },
+    "name": "web",
+    "optimization": {
+      "minimize": false,
+      "splitChunks": {
+        "cacheGroups": {
+          "lib-axios": {
+            "name": "lib-axios",
+            "priority": 0,
+            "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
+          },
+        },
+        "chunks": "all",
+      },
+    },
+    "output": {
+      "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+      "chunkFilename": "static/js/async/[name].js",
+      "devtoolModuleFilenameTemplate": [Function],
+      "filename": "static/js/[name].js",
+      "hashFunction": "xxhash64",
+      "path": "<ROOT>/dist",
+      "pathinfo": false,
+      "publicPath": "/",
+      "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
+    },
+    "performance": {
+      "hints": false,
+    },
+    "plugins": [
+      RsbuildCorePlugin {},
+      HotModuleReplacementPlugin {
+        "name": "HotModuleReplacementPlugin",
+      },
+      CssExtractRspackPlugin {
+        "options": {
+          "chunkFilename": "static/css/async/[name].css",
+          "filename": "static/css/[name].css",
+          "ignoreOrder": true,
+        },
+      },
+      DefinePlugin {
+        "_args": [
+          {
+            "import.meta.env.ASSET_PREFIX": "\\"\\"",
+            "import.meta.env.BASE_URL": "\\"/\\"",
+            "import.meta.env.DEV": true,
+            "import.meta.env.MODE": "\\"development\\"",
+            "import.meta.env.PROD": false,
+            "process.env.ASSET_PREFIX": "\\"\\"",
+            "process.env.BASE_URL": "\\"/\\"",
+          },
+        ],
+        "affectedHooks": "compilation",
+        "name": "DefinePlugin",
+      },
+    ],
+    "resolve": {
+      "alias": {
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+      },
+      "extensions": [
+        ".ts",
+        ".tsx",
+        ".mjs",
+        ".js",
+        ".jsx",
+        ".json",
+      ],
+    },
+    "target": [
+      "web",
+      "es2017",
+    ],
+  },
+  {
+    "context": "<ROOT>",
+    "devtool": "eval",
+    "experiments": {
+      "asyncWebAssembly": true,
+    },
+    "infrastructureLogging": {
+      "level": "error",
+    },
+    "mode": "development",
+    "module": {
+      "parser": {
+        "javascript": {
+          "exportsPresence": "error",
+        },
+      },
+      "rules": [
+        {
+          "resolve": {
+            "fullySpecified": false,
+          },
+          "test": /\\\\\\.m\\?js/,
+        },
+        {
+          "resolve": {
+            "preferRelative": true,
+          },
+          "sideEffects": true,
+          "test": /\\\\\\.css\\$/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "<ROOT>/packages/core/src/ignoreCssLoader.cjs",
+            },
+            {
+              "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+              "options": {
+                "importLoaders": 0,
+                "modules": {
+                  "auto": true,
+                  "exportGlobals": false,
+                  "exportLocalsConvention": "camelCase",
+                  "exportOnlyLocals": true,
+                  "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                  "namedExport": false,
+                },
+                "sourceMap": false,
+              },
+            },
+          ],
+        },
+        {
+          "include": [
+            {
+              "and": [
+                "<ROOT>",
+                {
+                  "not": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]/,
+                },
+              ],
+            },
+            /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          ],
+          "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "targets": [
+                    "node >= 16",
+                  ],
+                },
+                "isModule": "unknown",
+                "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                  },
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": false,
+                  },
+                  "transform": {
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          "mimetype": {
+            "or": [
+              "text/javascript",
+              "application/javascript",
+            ],
+          },
+          "resolve": {
+            "fullySpecified": false,
+          },
+          "use": [
+            {
+              "loader": "builtin:swc-loader",
+              "options": {
+                "env": {
+                  "targets": [
+                    "node >= 16",
+                  ],
+                },
+                "isModule": "unknown",
+                "jsc": {
+                  "experimental": {
+                    "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                  },
+                  "externalHelpers": true,
+                  "parser": {
+                    "decorators": true,
+                    "syntax": "typescript",
+                    "tsx": false,
+                  },
+                  "transform": {
+                    "decoratorVersion": "2022-03",
+                    "legacyDecorator": false,
+                  },
+                },
+              },
+            },
+          ],
+        },
+        {
+          "oneOf": [
+            {
+              "generator": {
+                "filename": "static/image/[name].[contenthash:8][ext]",
+              },
+              "resourceQuery": /\\(__inline=false\\|url\\)/,
+              "type": "asset/resource",
+            },
+            {
+              "resourceQuery": /inline/,
+              "type": "asset/inline",
+            },
+            {
+              "generator": {
+                "filename": "static/image/[name].[contenthash:8][ext]",
+              },
+              "parser": {
+                "dataUrlCondition": {
+                  "maxSize": 4096,
+                },
+              },
+              "type": "asset",
+            },
+          ],
+          "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
+        },
+        {
+          "oneOf": [
+            {
+              "generator": {
+                "filename": "static/svg/[name].[contenthash:8].svg",
+              },
+              "resourceQuery": /\\(__inline=false\\|url\\)/,
+              "type": "asset/resource",
+            },
+            {
+              "resourceQuery": /inline/,
+              "type": "asset/inline",
+            },
+            {
+              "generator": {
+                "filename": "static/svg/[name].[contenthash:8].svg",
+              },
+              "parser": {
+                "dataUrlCondition": {
+                  "maxSize": 4096,
+                },
+              },
+              "type": "asset",
+            },
+          ],
+          "test": /\\\\\\.svg\\$/i,
+        },
+        {
+          "oneOf": [
+            {
+              "generator": {
+                "filename": "static/media/[name].[contenthash:8][ext]",
+              },
+              "resourceQuery": /\\(__inline=false\\|url\\)/,
+              "type": "asset/resource",
+            },
+            {
+              "resourceQuery": /inline/,
+              "type": "asset/inline",
+            },
+            {
+              "generator": {
+                "filename": "static/media/[name].[contenthash:8][ext]",
+              },
+              "parser": {
+                "dataUrlCondition": {
+                  "maxSize": 4096,
+                },
+              },
+              "type": "asset",
+            },
+          ],
+          "test": /\\\\\\.\\(\\?:mp4\\|webm\\|ogg\\|mov\\|mp3\\|wav\\|flac\\|aac\\|m4a\\|opus\\)\\$/i,
+        },
+        {
+          "oneOf": [
+            {
+              "generator": {
+                "filename": "static/font/[name].[contenthash:8][ext]",
+              },
+              "resourceQuery": /\\(__inline=false\\|url\\)/,
+              "type": "asset/resource",
+            },
+            {
+              "resourceQuery": /inline/,
+              "type": "asset/inline",
+            },
+            {
+              "generator": {
+                "filename": "static/font/[name].[contenthash:8][ext]",
+              },
+              "parser": {
+                "dataUrlCondition": {
+                  "maxSize": 4096,
+                },
+              },
+              "type": "asset",
+            },
+          ],
+          "test": /\\\\\\.\\(\\?:woff\\|woff2\\|eot\\|ttf\\|otf\\|ttc\\)\\$/i,
+        },
+        {
+          "dependency": "url",
+          "generator": {
+            "filename": "static/wasm/[hash].module.wasm",
+          },
+          "test": /\\\\\\.wasm\\$/,
+          "type": "asset/resource",
+        },
+        {
+          "test": /\\\\\\.node\\$/,
+          "use": [
+            {
+              "loader": "<ROOT>/packages/core/src/transformRawLoader.cjs",
+              "options": {
+                "getEnvironment": [Function],
+                "id": "rsbuild-transform-0",
+              },
+            },
+          ],
+        },
+      ],
+    },
+    "name": "node",
+    "optimization": {
+      "minimize": false,
+      "splitChunks": false,
+    },
+    "output": {
+      "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
+      "chunkFilename": "[name].js",
+      "devtoolModuleFilenameTemplate": [Function],
+      "filename": "bundle.js",
+      "hashFunction": "xxhash64",
+      "library": {
+        "type": "commonjs2",
+      },
+      "path": "<ROOT>/dist",
+      "pathinfo": false,
+      "publicPath": "/",
+      "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
+    },
+    "performance": {
+      "hints": false,
+    },
+    "plugins": [
+      RsbuildCorePlugin {},
+      DefinePlugin {
+        "_args": [
+          {
+            "import.meta.env.ASSET_PREFIX": "\\"\\"",
+            "import.meta.env.BASE_URL": "\\"/\\"",
+            "import.meta.env.DEV": true,
+            "import.meta.env.MODE": "\\"development\\"",
+            "import.meta.env.PROD": false,
+            "process.env.ASSET_PREFIX": "\\"\\"",
+            "process.env.BASE_URL": "\\"/\\"",
+          },
+        ],
+        "affectedHooks": "compilation",
+        "name": "DefinePlugin",
+      },
+    ],
+    "resolve": {
+      "alias": {
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+      },
+      "extensions": [
+        ".ts",
+        ".tsx",
+        ".mjs",
+        ".js",
+        ".jsx",
+        ".json",
+      ],
+    },
+    "target": "node",
+  },
+]
 `;

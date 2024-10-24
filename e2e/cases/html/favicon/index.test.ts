@@ -23,6 +23,29 @@ test('should emit local favicon to dist path', async () => {
   expect(html).toContain('<link rel="icon" href="/icon.png">');
 });
 
+test('should add type attribute for SVG favicon', async () => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    rsbuildConfig: {
+      html: {
+        favicon: '../../../assets/mobile.svg',
+      },
+    },
+  });
+  const files = await rsbuild.unwrapOutputJSON();
+
+  expect(
+    Object.keys(files).some((file) => file.endsWith('/mobile.svg')),
+  ).toBeTruthy();
+
+  const html =
+    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+
+  expect(html).toContain(
+    '<link rel="icon" href="/mobile.svg" type="image/svg+xml">',
+  );
+});
+
 test('should apply asset prefix to favicon URL', async () => {
   const rsbuild = await build({
     cwd: __dirname,

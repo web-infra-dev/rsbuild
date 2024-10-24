@@ -20,7 +20,9 @@ test('should print server urls correctly when printUrls is true', async ({
   await page.goto(`http://localhost:${rsbuild.port}`);
 
   const localLog = logs.find(
-    (log) => log.includes('Local:') && log.includes('http://localhost'),
+    (log) =>
+      log.includes('Local:') &&
+      log.includes(`http://localhost:${rsbuild.port}`),
   );
   const networkLog = logs.find(
     (log) => log.includes('Network:') && log.includes('http://'),
@@ -28,6 +30,64 @@ test('should print server urls correctly when printUrls is true', async ({
 
   expect(localLog).toBeTruthy();
   expect(networkLog).toBeTruthy();
+
+  expect(logs.find((log) => log.includes('/./'))).toBeFalsy();
+
+  await rsbuild.close();
+  restore();
+});
+
+test('should print different environment server urls correctly', async ({
+  page,
+}) => {
+  const { logs, restore } = proxyConsole('log');
+
+  const rsbuild = await dev({
+    cwd,
+    rsbuildConfig: {
+      server: {
+        printUrls: true,
+      },
+      environments: {
+        web: {
+          output: {
+            distPath: {
+              html: 'html0',
+            },
+          },
+        },
+        web1: {
+          source: {
+            entry: {
+              main: './src/index.js',
+            },
+          },
+          html: {
+            outputStructure: 'nested',
+          },
+          output: {
+            distPath: {
+              html: 'html1',
+            },
+          },
+        },
+      },
+    },
+  });
+
+  await page.goto(`http://localhost:${rsbuild.port}`);
+
+  const localIndexLog = logs.find(
+    (log) => log.includes('Local:') && log.includes('/html0'),
+  );
+
+  expect(localIndexLog).toBeTruthy();
+
+  const localMainLog = logs.find(
+    (log) => log.includes('Local:') && log.includes('/html1/main'),
+  );
+
+  expect(localMainLog).toBeTruthy();
 
   await rsbuild.close();
   restore();
@@ -162,7 +222,7 @@ test('allow only listen to localhost for prod preview', async ({ page }) => {
 
   const rsbuild = await build({
     cwd,
-    runServer: true,
+    page,
     rsbuildConfig: {
       server: {
         host: 'localhost',
@@ -183,6 +243,60 @@ test('allow only listen to localhost for prod preview', async ({ page }) => {
   expect(localLog).toBeTruthy();
   expect(networkLog).toBeFalsy();
 
+  await rsbuild.close();
+  restore();
+});
+
+test('should not print server urls when HTML is disabled', async ({ page }) => {
+  const { logs, restore } = proxyConsole('log');
+
+  const rsbuild = await build({
+    cwd,
+    page,
+    rsbuildConfig: {
+      tools: {
+        htmlPlugin: false,
+      },
+    },
+  });
+
+  const localLog = logs.find(
+    (log) => log.includes('Local:') && log.includes('http://localhost'),
+  );
+  const networkLog = logs.find(
+    (log) => log.includes('Network:') && log.includes('http://'),
+  );
+
+  expect(localLog).toBeFalsy();
+  expect(networkLog).toBeFalsy();
+
+  await rsbuild.close();
+  restore();
+});
+
+test('should print server urls when HTML is disabled but printUrls is a custom function', async ({
+  page,
+}) => {
+  const { logs, restore } = proxyConsole('log');
+
+  const rsbuild = await build({
+    cwd,
+    page,
+    rsbuildConfig: {
+      tools: {
+        htmlPlugin: false,
+      },
+      server: {
+        printUrls: ({ port }) => [`http://localhost:${port}`],
+      },
+    },
+  });
+
+  const localLog = logs.find((log) =>
+    log.includes(`➜ Network:  http://localhost:${rsbuild.port}`),
+  );
+
+  expect(localLog).toBeTruthy();
   await rsbuild.close();
   restore();
 });

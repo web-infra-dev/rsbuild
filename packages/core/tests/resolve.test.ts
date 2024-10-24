@@ -12,12 +12,15 @@ describe('plugin-resolve', () => {
     expect(bundlerConfigs[0].resolve?.extensions).toEqual([
       '.ts',
       '.tsx',
+      '.mjs',
       '.js',
       '.jsx',
-      '.mjs',
       '.json',
     ]);
-    expect(bundlerConfigs[0].resolve?.tsConfigPath).toBeDefined();
+    expect(
+      (bundlerConfigs[0].resolve?.tsConfig as { configFile: string })
+        .configFile,
+    ).toBeDefined();
   });
 
   it('should not apply tsConfigPath when aliasStrategy is "prefer-alias"', async () => {
@@ -32,7 +35,7 @@ describe('plugin-resolve', () => {
 
     const bundlerConfigs = await rsbuild.initConfigs();
 
-    expect(bundlerConfigs[0].resolve?.tsConfigPath).toBeUndefined();
+    expect(bundlerConfigs[0].resolve?.tsConfig).toBeUndefined();
   });
 
   it('should allow to use source.alias to config alias', async () => {
@@ -48,9 +51,7 @@ describe('plugin-resolve', () => {
     });
     const bundlerConfigs = await rsbuild.initConfigs();
 
-    expect(bundlerConfigs[0].resolve?.alias).toEqual({
-      foo: 'bar',
-    });
+    expect(bundlerConfigs[0].resolve?.alias?.foo).toEqual('bar');
   });
 
   it('should support source.alias to be a function', async () => {

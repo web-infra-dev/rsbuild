@@ -1,17 +1,43 @@
-import { createStubRsbuild } from '@scripts/test-helper';
-import { describe, expect, it, vi } from 'vitest';
+import { createStubRsbuild, matchRules } from '@scripts/test-helper';
+import { describe, expect, it } from 'vitest';
 import { pluginReact } from '../src';
 
 describe('plugins/react', () => {
   it('should work with swc-loader', async () => {
     const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {},
+      rsbuildConfig: {
+        mode: 'development',
+      },
     });
 
     rsbuild.addPlugins([pluginReact()]);
     const config = await rsbuild.unwrapConfig();
 
-    expect(config).toMatchSnapshot();
+    expect(matchRules(config, 'a.js')).toMatchSnapshot();
+  });
+
+  it('should configuring `tools.swc` to override react runtime', async () => {
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {
+        mode: 'development',
+        tools: {
+          swc: {
+            jsc: {
+              transform: {
+                react: {
+                  runtime: 'classic',
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    rsbuild.addPlugins([pluginReact()]);
+    const config = await rsbuild.unwrapConfig();
+
+    expect(matchRules(config, 'a.js')).toMatchSnapshot();
   });
 
   it('should not apply react refresh when dev.hmr is false', async () => {
@@ -89,5 +115,39 @@ describe('plugins/react', () => {
     const config = await rsbuild.unwrapConfig();
 
     expect(JSON.stringify(config)).toContain(`"importSource":"@emotion/react"`);
+  });
+
+  it('should allow to add react plugin as single environment plugin', async () => {
+    process.env.NODE_ENV = 'production';
+
+    const rsbuild = await createStubRsbuild({
+      rsbuildConfig: {
+        environments: {
+          web: {},
+          web1: {},
+        },
+      },
+    });
+
+    rsbuild.addPlugins(
+      [
+        pluginReact({
+          enableProfiler: true,
+        }),
+      ],
+      {
+        environment: 'web',
+      },
+    );
+    const { bundlerConfigs, environmentConfigs } =
+      await rsbuild.inspectConfig();
+
+    expect(bundlerConfigs[0]).toContain('lib-react');
+    expect(environmentConfigs[0]).toContain('keep_classnames');
+
+    expect(bundlerConfigs[1]).not.toContain('lib-react');
+    expect(environmentConfigs[1]).not.toContain('keep_classnames');
+
+    delete process.env.NODE_ENV;
   });
 });

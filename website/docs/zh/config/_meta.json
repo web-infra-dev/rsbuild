@@ -4,8 +4,10 @@
     "name": "index",
     "label": "Overview"
   },
-  "environments",
+  "root",
+  "mode",
   "plugins",
+  "environments",
   {
     "type": "dir",
     "name": "dev",

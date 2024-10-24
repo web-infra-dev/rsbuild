@@ -7,11 +7,11 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "preact": "^10.22.0"
+    "preact": "^10.24.3"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-preact": "workspace:*",
-    "typescript": "^5.5.2"
+    "typescript": "^5.6.3"
   }
 }

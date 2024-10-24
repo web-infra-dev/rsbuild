@@ -72,11 +72,9 @@ It will add a `script` tag to the end of the `head` of the HTML:
 </html>
 ```
 
-Fields in the tag that indicate the path to the external assets are affected by the `publicPath` and `hash` options.
-These fields include `src` for the `script` tag and `href` for the `link` tag.
+Fields in the tag that indicate the path to the external assets are affected by the `publicPath` and `hash` options. These fields include `src` for the `script` tag and `href` for the `link` tag.
 
-Enabling `publicPath` will splice the `output.assetPrefix` field before the attribute representing the path in the tag.
-And the `hash` field causes the filename to be followed by an additional hash query to control browser caching, with the same hash string as the HTML file product.
+Enabling `publicPath` will splice the [output.assetPrefix](/config/output/asset-prefix) field before the attribute representing the path in the tag. And the `hash` field causes the filename to be followed by an additional hash query to control browser caching, with the same hash string as the HTML file product.
 
 You can also pass functions to those fields to control the path joining.
 
@@ -107,7 +105,7 @@ The final insertion position on the page is as follows:
 ## Tags Handler
 
 ```ts
-type HtmlTagUtils = {
+type HtmlTagContext = {
   hash: string;
   entryName: string;
   outputName: string;
@@ -116,7 +114,7 @@ type HtmlTagUtils = {
 
 type HtmlTagHandler = (
   tags: HtmlTag[],
-  utils: HtmlTagUtils,
+  context: HtmlTagContext,
 ) => HtmlTag[] | void;
 ```
 
@@ -190,7 +188,7 @@ export default {
 };
 ```
 
-The tag object here will be directly added to the HTML product after simple processing, but the `polyfill.ts` will not be transpiled or bundled, so there will be a 404 error when processing this script in the application.
+The tag object here will be directly added to the HTML file after processing, but the `polyfill.ts` will not be transpiled or bundled, so there will be a 404 error when processing this script in the application.
 
 ```html
 <body>

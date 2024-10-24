@@ -1,12 +1,12 @@
-import {
-  type ChainIdentifier,
-  type NormalizedEnvironmentConfig,
-  type RspackChain,
-  castArray,
-} from '@rsbuild/shared';
-import { ensureAbsolutePath } from '../helpers';
-import { reduceConfigs } from '../reduceConfigs';
-import type { RsbuildPlugin } from '../types';
+import { reduceConfigs } from 'reduce-configs';
+import type { ChainIdentifier } from '../configChain';
+import { castArray } from '../helpers';
+import { ensureAbsolutePath } from '../helpers/path';
+import type {
+  NormalizedEnvironmentConfig,
+  RsbuildPlugin,
+  RspackChain,
+} from '../types';
 
 // compatible with legacy packages with type="module"
 // https://github.com/webpack/webpack/issues/11467
@@ -29,9 +29,9 @@ function applyExtensions({ chain }: { chain: RspackChain }) {
     // most projects are using TypeScript, resolve .ts(x) files first to reduce resolve time.
     '.ts',
     '.tsx',
+    '.mjs',
     '.js',
     '.jsx',
-    '.mjs',
     '.json',
   ];
 
@@ -88,7 +88,7 @@ export const pluginResolve = (): RsbuildPlugin => ({
     api.modifyBundlerChain({
       order: 'pre',
       handler: (chain, { environment, CHAIN_ID }) => {
-        const config = api.getNormalizedConfig({ environment });
+        const { config, tsconfigPath } = environment;
 
         applyExtensions({ chain });
 
@@ -98,20 +98,20 @@ export const pluginResolve = (): RsbuildPlugin => ({
           rootPath: api.context.rootPath,
         });
 
-        // in some cases (modern.js), get error when fullySpecified rule after js rule
+        // In some cases (modern.js), there is an error if the fullySpecified rule is after the js rule
         applyFullySpecified({ chain, config, CHAIN_ID });
+
+        if (
+          tsconfigPath &&
+          // Only Rspack has the tsConfig option
+          api.context.bundlerType === 'rspack' &&
+          config.source.aliasStrategy === 'prefer-tsconfig'
+        ) {
+          chain.resolve.tsConfig({
+            configFile: tsconfigPath,
+          });
+        }
       },
-    });
-
-    api.modifyRspackConfig(async (rspackConfig, { environment }) => {
-      const isTsProject = Boolean(api.context.tsconfigPath);
-      const config = api.getNormalizedConfig({ environment });
-
-      rspackConfig.resolve ||= {};
-
-      if (isTsProject && config.source.aliasStrategy === 'prefer-tsconfig') {
-        rspackConfig.resolve.tsConfigPath = api.context.tsconfigPath;
-      }
     });
   },
 });

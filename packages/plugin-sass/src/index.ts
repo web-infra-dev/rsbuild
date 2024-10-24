@@ -1,13 +1,14 @@
-import { join } from 'node:path';
-import { type RsbuildPlugin, reduceConfigsWithContext } from '@rsbuild/core';
-import {
-  type FileFilterUtil,
-  castArray,
-  cloneDeep,
-  deepmerge,
-} from '@rsbuild/shared';
-import { getResolveUrlJoinFn, patchCompilerGlobalLocation } from './helpers';
-import type { PluginSassOptions, SassLoaderOptions } from './types';
+import { createRequire } from 'node:module';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import type { RsbuildPlugin } from '@rsbuild/core';
+import deepmerge from 'deepmerge';
+import { reduceConfigsWithContext } from 'reduce-configs';
+import { getResolveUrlJoinFn, patchCompilerGlobalLocation } from './helpers.js';
+import type { PluginSassOptions, SassLoaderOptions } from './types.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
 
 export const PLUGIN_SASS_NAME = 'rsbuild:sass';
 
@@ -22,8 +23,8 @@ const getSassLoaderOptions = (
 } => {
   const excludes: (RegExp | string)[] = [];
 
-  const addExcludes: FileFilterUtil = (items) => {
-    excludes.push(...castArray(items));
+  const addExcludes = (items: string | RegExp | Array<string | RegExp>) => {
+    excludes.push(...(Array.isArray(items) ? items : [items]));
   };
 
   const mergeFn = (
@@ -57,6 +58,15 @@ const getSassLoaderOptions = (
     ctx: { addExcludes },
     mergeFn,
   });
+
+  if (
+    mergedOptions.api === 'legacy' &&
+    !mergedOptions.sassOptions?.silenceDeprecations
+  ) {
+    // mute the noisy legacy API deprecation warnings
+    mergedOptions.sassOptions ||= {};
+    mergedOptions.sassOptions.silenceDeprecations = ['legacy-js-api'];
+  }
 
   return {
     options: mergedOptions,
@@ -102,17 +112,20 @@ export const pluginSass = (
       // Copy the builtin CSS rules
       for (const id of Object.keys(cssRule.uses.entries())) {
         const loader = cssRule.uses.get(id);
-        const options = cloneDeep(loader.get('options'));
+        const options = loader.get('options') ?? {};
+        const clonedOptions = deepmerge<Record<string, any>>({}, options);
+
         if (id === CHAIN_ID.USE.CSS) {
-          // postcss-loader, resolve-url-loader, sass-loader
-          options.importLoaders = 3;
+          // add resolve-url-loader and sass-loader
+          clonedOptions.importLoaders += 2;
         }
-        rule.use(id).loader(loader.get('loader')).options(options);
+
+        rule.use(id).loader(loader.get('loader')).options(clonedOptions);
       }
 
       rule
         .use(CHAIN_ID.USE.RESOLVE_URL)
-        .loader(join(__dirname, '../compiled/resolve-url-loader/index.js'))
+        .loader(path.join(__dirname, '../compiled/resolve-url-loader/index.js'))
         .options({
           join: await getResolveUrlJoinFn(),
           // 'resolve-url-loader' relies on 'adjust-sourcemap-loader',
@@ -122,7 +135,7 @@ export const pluginSass = (
         })
         .end()
         .use(CHAIN_ID.USE.SASS)
-        .loader(join(__dirname, '../compiled/sass-loader/index.js'))
+        .loader(path.join(__dirname, '../compiled/sass-loader/index.js'))
         .options(options);
     });
   },

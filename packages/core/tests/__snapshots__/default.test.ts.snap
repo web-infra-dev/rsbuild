@@ -6,12 +6,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
   "devtool": "cheap-module-source-map",
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "css": false,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -36,12 +35,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
           },
           {
-            "loader": "<ROOT>/packages/core/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -55,34 +55,14 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
           },
           {
-            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
+            "loader": "builtin:lightningcss-loader",
             "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [
-                  {
-                    "browsers": [
-                      "chrome >= 87",
-                      "edge >= 88",
-                      "firefox >= 78",
-                      "safari >= 14",
-                    ],
-                    "info": [Function],
-                    "options": {
-                      "flexbox": "no-2009",
-                      "overrideBrowserslist": [
-                        "chrome >= 87",
-                        "edge >= 88",
-                        "firefox >= 78",
-                        "safari >= 14",
-                      ],
-                    },
-                    "postcssPlugin": "autoprefixer",
-                    "prepare": [Function],
-                  },
-                ],
-              },
-              "sourceMap": false,
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
             },
           },
         ],
@@ -98,12 +78,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             ],
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
         ],
-        "resolve": {
-          "alias": {
-            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-          },
-        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
@@ -111,9 +87,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.37",
-                "mode": "usage",
-                "shippedProposals": true,
+                "mode": undefined,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -123,17 +97,18 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               },
               "isModule": "unknown",
               "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                },
                 "externalHelpers": true,
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -148,9 +123,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           ],
         },
         "resolve": {
-          "alias": {
-            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-          },
           "fullySpecified": false,
         },
         "use": [
@@ -158,9 +130,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.37",
-                "mode": "usage",
-                "shippedProposals": true,
+                "mode": undefined,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -170,17 +140,18 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               },
               "isModule": "unknown",
               "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                },
                 "externalHelpers": true,
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -313,27 +284,14 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "lib-axios": {
           "name": "lib-axios",
           "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(axios\\|axios-\\.\\+\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-lodash": {
-          "name": "lib-lodash",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(lodash\\|lodash-es\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-polyfill": {
-          "name": "lib-polyfill",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
+          "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
         },
       },
       "chunks": "all",
-      "enforceSizeThreshold": 50000,
     },
   },
   "output": {
+    "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
     "chunkFilename": "static/js/async/[name].js",
     "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
@@ -347,6 +305,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "hints": false,
   },
   "plugins": [
+    RsbuildCorePlugin {},
     HotModuleReplacementPlugin {
       "name": "HotModuleReplacementPlugin",
     },
@@ -357,7 +316,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "ignoreOrder": true,
       },
     },
-    HtmlWebpackPlugin {
+    HtmlRspackPlugin {
       "options": {
         "base": false,
         "cache": true,
@@ -378,50 +337,39 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
-        "minify": false,
         "publicPath": "auto",
         "scriptLoading": "defer",
         "showErrors": true,
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateContent": false,
+        "template": "",
+        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
       },
-      "userOptions": {
-        "chunks": [
-          "index",
-        ],
-        "entryName": "index",
-        "filename": "index.html",
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "minify": false,
-        "scriptLoading": "defer",
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-      },
-      "version": 5,
+      "version": 6,
     },
-    HtmlBasicPlugin {
-      "environment": "web",
+    RsbuildHtmlPlugin {
+      "getEnvironment": [Function],
       "modifyTagsFn": [Function],
-      "name": "HtmlBasicPlugin",
+      "name": "RsbuildHtmlPlugin",
       "options": {
-        "index": {},
+        "index": {
+          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+        },
       },
     },
     DefinePlugin {
-      "_options": {
-        "process.env.ASSET_PREFIX": """",
-        "process.env.NODE_ENV": ""development"",
-      },
+      "_args": [
+        {
+          "import.meta.env.ASSET_PREFIX": "\\"\\"",
+          "import.meta.env.BASE_URL": "\\"/\\"",
+          "import.meta.env.DEV": true,
+          "import.meta.env.MODE": "\\"development\\"",
+          "import.meta.env.PROD": false,
+          "process.env.ASSET_PREFIX": "\\"\\"",
+          "process.env.BASE_URL": "\\"/\\"",
+        },
+      ],
       "affectedHooks": "compilation",
       "name": "DefinePlugin",
     },
@@ -433,12 +381,14 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "extensions": [
       ".ts",
       ".tsx",
+      ".mjs",
       ".js",
       ".jsx",
-      ".mjs",
       ".json",
     ],
-    "tsConfigPath": "<ROOT>/packages/core/tests/tsconfig.json",
+    "tsConfig": {
+      "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
+    },
   },
   "target": [
     "web",
@@ -453,12 +403,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
   "devtool": false,
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "css": false,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -483,12 +432,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
           },
           {
-            "loader": "<ROOT>/packages/core/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -502,34 +452,14 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             },
           },
           {
-            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
+            "loader": "builtin:lightningcss-loader",
             "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [
-                  {
-                    "browsers": [
-                      "chrome >= 87",
-                      "edge >= 88",
-                      "firefox >= 78",
-                      "safari >= 14",
-                    ],
-                    "info": [Function],
-                    "options": {
-                      "flexbox": "no-2009",
-                      "overrideBrowserslist": [
-                        "chrome >= 87",
-                        "edge >= 88",
-                        "firefox >= 78",
-                        "safari >= 14",
-                      ],
-                    },
-                    "postcssPlugin": "autoprefixer",
-                    "prepare": [Function],
-                  },
-                ],
-              },
-              "sourceMap": false,
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
             },
           },
         ],
@@ -546,11 +476,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
         ],
-        "resolve": {
-          "alias": {
-            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-          },
-        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
@@ -558,9 +483,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.37",
-                "mode": "usage",
-                "shippedProposals": true,
+                "mode": undefined,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -570,17 +493,18 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               },
               "isModule": "unknown",
               "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                },
                 "externalHelpers": true,
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -595,9 +519,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           ],
         },
         "resolve": {
-          "alias": {
-            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-          },
           "fullySpecified": false,
         },
         "use": [
@@ -605,9 +526,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.37",
-                "mode": "usage",
-                "shippedProposals": true,
+                "mode": undefined,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -617,17 +536,18 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               },
               "isModule": "unknown",
               "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                },
                 "externalHelpers": true,
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -757,25 +677,34 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "minimize": true,
     "minimizer": [
       SwcJsMinimizerRspackPlugin {
-        "_options": {
-          "compress": "{"passes":1,"pure_funcs":[],"drop_console":false}",
-          "exclude": undefined,
-          "extractComments": {
-            "condition": "@preserve|@lic|@cc_on|^/**!",
+        "_args": [
+          {
+            "extractComments": true,
+            "minimizerOptions": {
+              "format": {
+                "asciiOnly": false,
+              },
+            },
           },
-          "format": "{"comments":false,"asciiOnly":true}",
-          "include": undefined,
-          "mangle": "{"keep_classnames":false,"keep_fnames":false}",
-          "module": undefined,
-          "test": undefined,
-        },
+        ],
         "affectedHooks": "compilation",
         "name": "SwcJsMinimizerRspackPlugin",
       },
-      SwcCssMinimizerRspackPlugin {
-        "_options": undefined,
+      LightningCssMinimizerRspackPlugin {
+        "_args": [
+          {
+            "minimizerOptions": {
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+          },
+        ],
         "affectedHooks": undefined,
-        "name": "SwcCssMinimizerRspackPlugin",
+        "name": "LightningCssMinimizerRspackPlugin",
       },
     ],
     "splitChunks": {
@@ -783,27 +712,14 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "lib-axios": {
           "name": "lib-axios",
           "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(axios\\|axios-\\.\\+\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-lodash": {
-          "name": "lib-lodash",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(lodash\\|lodash-es\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-polyfill": {
-          "name": "lib-polyfill",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
+          "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
         },
       },
       "chunks": "all",
-      "enforceSizeThreshold": 50000,
     },
   },
   "output": {
+    "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
     "chunkFilename": "static/js/async/[name].[contenthash:8].js",
     "filename": "static/js/[name].[contenthash:8].js",
     "hashFunction": "xxhash64",
@@ -816,6 +732,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "hints": false,
   },
   "plugins": [
+    RsbuildCorePlugin {},
     CssExtractRspackPlugin {
       "options": {
         "chunkFilename": "static/css/async/[name].[contenthash:8].css",
@@ -823,7 +740,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "ignoreOrder": true,
       },
     },
-    HtmlWebpackPlugin {
+    HtmlRspackPlugin {
       "options": {
         "base": false,
         "cache": true,
@@ -844,99 +761,48 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
-        "minify": {
-          "collapseWhitespace": true,
-          "keepClosingSlash": true,
-          "minifyCSS": true,
-          "minifyJS": {
-            "format": {
-              "ascii_only": true,
-            },
-            "mangle": {
-              "safari10": true,
-            },
-          },
-          "minifyURLs": true,
-          "removeComments": false,
-          "removeEmptyAttributes": true,
-          "removeRedundantAttributes": true,
-          "removeScriptTypeAttributes": true,
-          "removeStyleLinkTypeAttributes": true,
-          "useShortDoctype": true,
-        },
         "publicPath": "auto",
         "scriptLoading": "defer",
         "showErrors": true,
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateContent": false,
+        "template": "",
+        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
       },
-      "userOptions": {
-        "chunks": [
-          "index",
-        ],
-        "entryName": "index",
-        "filename": "index.html",
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "minify": {
-          "collapseWhitespace": true,
-          "keepClosingSlash": true,
-          "minifyCSS": true,
-          "minifyJS": {
-            "format": {
-              "ascii_only": true,
-            },
-            "mangle": {
-              "safari10": true,
-            },
-          },
-          "minifyURLs": true,
-          "removeComments": false,
-          "removeEmptyAttributes": true,
-          "removeRedundantAttributes": true,
-          "removeScriptTypeAttributes": true,
-          "removeStyleLinkTypeAttributes": true,
-          "useShortDoctype": true,
-        },
-        "scriptLoading": "defer",
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-      },
-      "version": 5,
+      "version": 6,
     },
-    HtmlBasicPlugin {
-      "environment": "web",
+    RsbuildHtmlPlugin {
+      "getEnvironment": [Function],
       "modifyTagsFn": [Function],
-      "name": "HtmlBasicPlugin",
+      "name": "RsbuildHtmlPlugin",
       "options": {
-        "index": {},
+        "index": {
+          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+        },
       },
     },
     DefinePlugin {
-      "_options": {
-        "process.env.ASSET_PREFIX": """",
-        "process.env.NODE_ENV": ""production"",
-      },
+      "_args": [
+        {
+          "import.meta.env.ASSET_PREFIX": "\\"\\"",
+          "import.meta.env.BASE_URL": "\\"/\\"",
+          "import.meta.env.DEV": false,
+          "import.meta.env.MODE": "\\"production\\"",
+          "import.meta.env.PROD": true,
+          "process.env.ASSET_PREFIX": "\\"\\"",
+          "process.env.BASE_URL": "\\"/\\"",
+        },
+      ],
       "affectedHooks": "compilation",
       "name": "DefinePlugin",
     },
     ProgressPlugin {
-      "_options": {
-        "prefix": "web",
-        "profile": false,
-        "progressChars": "━━",
-        "template": "● {prefix:.bold} {bar:25.green/white.dim} ({percent}%) {wide_msg:.dim}",
-        "tick": undefined,
-      },
+      "_args": [
+        {
+          "prefix": "web",
+        },
+      ],
       "affectedHooks": undefined,
       "name": "ProgressPlugin",
     },
@@ -948,12 +814,14 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "extensions": [
       ".ts",
       ".tsx",
+      ".mjs",
       ".js",
       ".jsx",
-      ".mjs",
       ".json",
     ],
-    "tsConfigPath": "<ROOT>/packages/core/tests/tsconfig.json",
+    "tsConfig": {
+      "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
+    },
   },
   "target": [
     "web",
@@ -968,12 +836,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
   "devtool": "cheap-module-source-map",
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "css": false,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -998,14 +865,15 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
         "use": [
           {
             "loader": "<ROOT>/packages/core/dist/ignoreCssLoader.cjs",
           },
           {
-            "loader": "<ROOT>/packages/core/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
-              "importLoaders": 1,
+              "importLoaders": 0,
               "modules": {
                 "auto": true,
                 "exportGlobals": false,
@@ -1044,17 +912,18 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               },
               "isModule": "unknown",
               "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                },
                 "externalHelpers": true,
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -1082,17 +951,18 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               },
               "isModule": "unknown",
               "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                },
                 "externalHelpers": true,
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -1221,6 +1091,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           {
             "loader": "<ROOT>/packages/core/dist/transformRawLoader.cjs",
             "options": {
+              "getEnvironment": [Function],
               "id": "rsbuild-transform-0",
             },
           },
@@ -1234,13 +1105,14 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "splitChunks": false,
   },
   "output": {
+    "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
     "chunkFilename": "[name].js",
     "filename": "[name].js",
     "hashFunction": "xxhash64",
     "library": {
       "type": "commonjs2",
     },
-    "path": "<ROOT>/packages/core/tests/dist/server",
+    "path": "<ROOT>/packages/core/tests/dist",
     "pathinfo": false,
     "publicPath": "/",
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
@@ -1249,12 +1121,19 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "hints": false,
   },
   "plugins": [
-    RsbuildTransformPlugin {},
+    RsbuildCorePlugin {},
     DefinePlugin {
-      "_options": {
-        "process.env.ASSET_PREFIX": """",
-        "process.env.NODE_ENV": ""test"",
-      },
+      "_args": [
+        {
+          "import.meta.env.ASSET_PREFIX": "\\"\\"",
+          "import.meta.env.BASE_URL": "\\"/\\"",
+          "import.meta.env.DEV": true,
+          "import.meta.env.MODE": "\\"development\\"",
+          "import.meta.env.PROD": false,
+          "process.env.ASSET_PREFIX": "\\"\\"",
+          "process.env.BASE_URL": "\\"/\\"",
+        },
+      ],
       "affectedHooks": "compilation",
       "name": "DefinePlugin",
     },
@@ -1266,12 +1145,14 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "extensions": [
       ".ts",
       ".tsx",
+      ".mjs",
       ".js",
       ".jsx",
-      ".mjs",
       ".json",
     ],
-    "tsConfigPath": "<ROOT>/packages/core/tests/tsconfig.json",
+    "tsConfig": {
+      "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
+    },
   },
   "target": "node",
 }
@@ -1283,12 +1164,11 @@ exports[`tools.rspack > should match snapshot 1`] = `
   "devtool": "cheap-module-source-map",
   "entry": {
     "index": [
-      "src/index.js",
+      "./src/index.js",
     ],
   },
   "experiments": {
     "asyncWebAssembly": true,
-    "css": false,
   },
   "infrastructureLogging": {
     "level": "error",
@@ -1321,12 +1201,13 @@ exports[`tools.rspack > should match snapshot 1`] = `
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
           },
           {
-            "loader": "<ROOT>/packages/core/compiled/css-loader",
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
               "importLoaders": 1,
               "modules": {
@@ -1340,34 +1221,14 @@ exports[`tools.rspack > should match snapshot 1`] = `
             },
           },
           {
-            "loader": "<ROOT>/packages/core/compiled/postcss-loader",
+            "loader": "builtin:lightningcss-loader",
             "options": {
-              "postcssOptions": {
-                "config": false,
-                "plugins": [
-                  {
-                    "browsers": [
-                      "chrome >= 87",
-                      "edge >= 88",
-                      "firefox >= 78",
-                      "safari >= 14",
-                    ],
-                    "info": [Function],
-                    "options": {
-                      "flexbox": "no-2009",
-                      "overrideBrowserslist": [
-                        "chrome >= 87",
-                        "edge >= 88",
-                        "firefox >= 78",
-                        "safari >= 14",
-                      ],
-                    },
-                    "postcssPlugin": "autoprefixer",
-                    "prepare": [Function],
-                  },
-                ],
-              },
-              "sourceMap": false,
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
             },
           },
         ],
@@ -1383,12 +1244,8 @@ exports[`tools.rspack > should match snapshot 1`] = `
             ],
           },
           /\\\\\\.\\(\\?:ts\\|tsx\\|jsx\\|mts\\|cts\\)\\$/,
+          /\\[\\\\\\\\/\\]@rsbuild\\[\\\\\\\\/\\]core\\[\\\\\\\\/\\]dist\\[\\\\\\\\/\\]/,
         ],
-        "resolve": {
-          "alias": {
-            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-          },
-        },
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "type": "javascript/auto",
         "use": [
@@ -1396,9 +1253,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.37",
-                "mode": "usage",
-                "shippedProposals": true,
+                "mode": undefined,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1408,17 +1263,18 @@ exports[`tools.rspack > should match snapshot 1`] = `
               },
               "isModule": "unknown",
               "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                },
                 "externalHelpers": true,
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -1433,9 +1289,6 @@ exports[`tools.rspack > should match snapshot 1`] = `
           ],
         },
         "resolve": {
-          "alias": {
-            "core-js": "<ROOT>/node_modules/<PNPM_INNER>/core-js",
-          },
           "fullySpecified": false,
         },
         "use": [
@@ -1443,9 +1296,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "loader": "builtin:swc-loader",
             "options": {
               "env": {
-                "coreJs": "3.37",
-                "mode": "usage",
-                "shippedProposals": true,
+                "mode": undefined,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1455,17 +1306,18 @@ exports[`tools.rspack > should match snapshot 1`] = `
               },
               "isModule": "unknown",
               "jsc": {
+                "experimental": {
+                  "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                },
                 "externalHelpers": true,
                 "parser": {
                   "decorators": true,
                   "syntax": "typescript",
                   "tsx": false,
                 },
-                "preserveAllComments": true,
                 "transform": {
-                  "decoratorMetadata": true,
-                  "legacyDecorator": true,
-                  "useDefineForClassFields": false,
+                  "decoratorVersion": "2022-03",
+                  "legacyDecorator": false,
                 },
               },
             },
@@ -1588,6 +1440,10 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "test": /\\\\\\.wasm\\$/,
         "type": "asset/resource",
       },
+      {
+        "loader": "foo-loader",
+        "test": /\\\\\\.foo/,
+      },
     ],
   },
   "name": "web",
@@ -1598,27 +1454,14 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "lib-axios": {
           "name": "lib-axios",
           "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(axios\\|axios-\\.\\+\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-lodash": {
-          "name": "lib-lodash",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(lodash\\|lodash-es\\)\\[\\\\\\\\/\\]/,
-        },
-        "lib-polyfill": {
-          "name": "lib-polyfill",
-          "priority": 0,
-          "reuseExistingChunk": true,
-          "test": /\\[\\\\\\\\/\\]node_modules\\[\\\\\\\\/\\]\\(tslib\\|core-js\\|@babel\\\\/runtime\\|@swc\\\\/helpers\\)\\[\\\\\\\\/\\]/,
+          "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
         },
       },
       "chunks": "all",
-      "enforceSizeThreshold": 50000,
     },
   },
   "output": {
+    "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
     "chunkFilename": "static/js/async/[name].js",
     "devtoolModuleFilenameTemplate": [Function],
     "filename": "static/js/[name].js",
@@ -1635,6 +1478,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
     TestPlugin {
       "name": "TestPlugin",
     },
+    RsbuildCorePlugin {},
     HotModuleReplacementPlugin {
       "name": "HotModuleReplacementPlugin",
     },
@@ -1645,7 +1489,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "ignoreOrder": true,
       },
     },
-    HtmlWebpackPlugin {
+    HtmlRspackPlugin {
       "options": {
         "base": false,
         "cache": true,
@@ -1666,50 +1510,39 @@ exports[`tools.rspack > should match snapshot 1`] = `
           },
           "viewport": "width=device-width, initial-scale=1.0",
         },
-        "minify": false,
         "publicPath": "auto",
         "scriptLoading": "defer",
         "showErrors": true,
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateContent": false,
+        "template": "",
+        "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
         "templateParameters": [Function],
         "title": "Rsbuild App",
         "xhtml": false,
       },
-      "userOptions": {
-        "chunks": [
-          "index",
-        ],
-        "entryName": "index",
-        "filename": "index.html",
-        "inject": "head",
-        "meta": {
-          "charset": {
-            "charset": "UTF-8",
-          },
-          "viewport": "width=device-width, initial-scale=1.0",
-        },
-        "minify": false,
-        "scriptLoading": "defer",
-        "template": "<ROOT>/packages/core/static/template.html",
-        "templateParameters": [Function],
-        "title": "Rsbuild App",
-      },
-      "version": 5,
+      "version": 6,
     },
-    HtmlBasicPlugin {
-      "environment": "web",
+    RsbuildHtmlPlugin {
+      "getEnvironment": [Function],
       "modifyTagsFn": [Function],
-      "name": "HtmlBasicPlugin",
+      "name": "RsbuildHtmlPlugin",
       "options": {
-        "index": {},
+        "index": {
+          "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+        },
       },
     },
     DefinePlugin {
-      "_options": {
-        "process.env.ASSET_PREFIX": """",
-        "process.env.NODE_ENV": ""development"",
-      },
+      "_args": [
+        {
+          "import.meta.env.ASSET_PREFIX": "\\"\\"",
+          "import.meta.env.BASE_URL": "\\"/\\"",
+          "import.meta.env.DEV": true,
+          "import.meta.env.MODE": "\\"development\\"",
+          "import.meta.env.PROD": false,
+          "process.env.ASSET_PREFIX": "\\"\\"",
+          "process.env.BASE_URL": "\\"/\\"",
+        },
+      ],
       "affectedHooks": "compilation",
       "name": "DefinePlugin",
     },
@@ -1721,12 +1554,14 @@ exports[`tools.rspack > should match snapshot 1`] = `
     "extensions": [
       ".ts",
       ".tsx",
+      ".mjs",
       ".js",
       ".jsx",
-      ".mjs",
       ".json",
     ],
-    "tsConfigPath": "<ROOT>/packages/core/tests/tsconfig.json",
+    "tsConfig": {
+      "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
+    },
   },
   "target": [
     "web",

@@ -10,7 +10,7 @@ test('should apply defer by default', async () => {
   const html =
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
 
-  expect(html).toContain('<script defer="defer" src="');
+  expect(html).toContain('<script defer src="');
 });
 
 test('should remove defer when scriptLoading is "blocking"', async () => {

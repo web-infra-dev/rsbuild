@@ -1,7 +1,8 @@
 /**
- * @license
- * Copyright 2018 Google Inc.
+ * This method is modified based on source found in
  * https://github.com/vuejs/preload-webpack-plugin/blob/master/src/index.js
+ *
+ * Copyright 2018 Google Inc.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,16 +16,15 @@
  * limitations under the License.
  */
 
-import type { PreloadOrPreFetchOption } from '@rsbuild/shared';
 import type {
   Chunk,
   Compilation,
   Compiler,
   RspackPluginInstance,
 } from '@rspack/core';
-import type HtmlWebpackPlugin from 'html-webpack-plugin';
 import { ensureAssetPrefix, upperFirst } from '../../helpers';
 import { getHTMLPlugin } from '../../pluginHelper';
+import type { HtmlRspackPlugin, PreloadOrPreFetchOption } from '../../types';
 import {
   type As,
   type BeforeAssetTagGenerationHtmlPluginData,
@@ -48,9 +48,9 @@ interface Attributes {
 }
 
 function filterResourceHints(
-  resourceHints: HtmlWebpackPlugin.HtmlTagObject[],
-  scripts: HtmlWebpackPlugin.HtmlTagObject[],
-): HtmlWebpackPlugin.HtmlTagObject[] {
+  resourceHints: HtmlRspackPlugin.HtmlTagObject[],
+  scripts: HtmlRspackPlugin.HtmlTagObject[],
+): HtmlRspackPlugin.HtmlTagObject[] {
   return resourceHints.filter(
     (resourceHint) =>
       !scripts.find(
@@ -65,7 +65,7 @@ function generateLinks(
   compilation: Compilation,
   htmlPluginData: BeforeAssetTagGenerationHtmlPluginData,
   HTMLCount: number,
-): HtmlWebpackPlugin.HtmlTagObject[] {
+): HtmlRspackPlugin.HtmlTagObject[] {
   // get all chunks
   const extractedChunks = extractChunks({
     compilation,
@@ -76,7 +76,7 @@ function generateLinks(
     // Handle all chunks.
     options.type === 'all-assets' || HTMLCount === 1
       ? extractedChunks
-      : // Only handle chunks imported by this HtmlWebpackPlugin.
+      : // Only handle chunks imported by this HtmlRspackPlugin.
         extractedChunks.filter((chunk) =>
           doesChunkBelongToHtml({
             chunk: chunk as Chunk,
@@ -117,7 +117,7 @@ function generateLinks(
 
   // Sort to ensure the output is predictable.
   const sortedFilteredFiles = filteredFiles.sort();
-  const links: HtmlWebpackPlugin.HtmlTagObject[] = [];
+  const links: HtmlRspackPlugin.HtmlTagObject[] = [];
   const { publicPath, crossOriginLoading } = compilation.outputOptions;
 
   for (const file of sortedFilteredFiles) {
@@ -167,7 +167,7 @@ function generateLinks(
 export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
   readonly options: PreloadOrPreFetchOption;
 
-  resourceHints: HtmlWebpackPlugin.HtmlTagObject[] = [];
+  resourceHints: HtmlRspackPlugin.HtmlTagObject[] = [];
 
   type: LinkType;
 

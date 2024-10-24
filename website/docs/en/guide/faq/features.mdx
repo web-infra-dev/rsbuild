@@ -22,7 +22,7 @@ export default {
 
 ### How to run ESLint during compilation?
 
-For the sake of compilation performance, Rsbuild will not perform ESLint verification during the compilation process by default. If you require this feature, you can use Rsbuild's [ESLint plugin](/plugins/list/plugin-eslint).
+For the sake of compilation performance, Rsbuild will not perform ESLint verification during the compilation process by default. If you require this feature, you can use Rsbuild's [ESLint plugin](https://github.com/rspack-contrib/rsbuild-plugin-eslint).
 
 ---
 
@@ -42,7 +42,7 @@ export default {
 
 ### How to remove console after production build?
 
-For the production build, we can remove the `console` from the code, so as to avoid the log of the development environment being output to the production.
+For the production build, we can remove the `console` from the code, so as to avoid the log of the development mode being output to the production.
 
 Rsbuild provides a configuration option to remove console by default, please see [performance.removeConsole](/config/performance/remove-console).
 
@@ -57,15 +57,16 @@ You can enable the debug mode of Rsbuild by adding the `DEBUG=rsbuild` environme
 ```bash
 ➜ DEBUG=rsbuild pnpm dev
 
-debug   create context [1842.90 ms]
-debug   add default plugins [1874.45 ms]
-debug   add default plugins done [1938.57 ms]
-...
+  ...
+  rsbuild init plugins
+  rsbuild init plugins done
+  rsbuild Use Rspack v1.0.0
+  ...
 
 Inspect config succeed, open following files to view the content:
 
-  - Rsbuild Config: /root/my-project/dist/rsbuild.config.mjs
-  - Rspack Config (web): /root/my-project/dist/rspack.config.web.mjs
+  - Rsbuild Config: /root/my-project/dist/.rsbuild/rsbuild.config.mjs
+  - Rspack Config (web): /root/my-project/dist/.rsbuild/rspack.config.web.mjs
 ```
 
 ---
@@ -79,8 +80,8 @@ If a large number of warning logs are generated due to the three-party package, 
 ```ts
 export default {
   tools: {
-    bundlerChain: (chain) => {
-      chain.ignoreWarnings([/Using \/ for division outside of calc()/]);
+    rspack: {
+      ignoreWarnings: [/Using \/ for division outside of calc()/],
     },
   },
 };

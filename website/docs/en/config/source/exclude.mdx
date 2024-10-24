@@ -1,6 +1,6 @@
 # source.exclude
 
-- **Type:** [RuleSetCondition[]](https://rspack.dev/config/module#condition)
+- **Type:** [Rspack.RuleSetCondition](https://rspack.dev/config/module#condition)
 - **Default:** `[]`
 
 Specifies JavaScript/TypeScript files that do not need to be compiled. The usage is consistent with [Rule.exclude](https://rspack.dev/config/module#ruleexclude) in Rspack, which supports passing in strings or regular expressions to match the module path.
@@ -13,6 +13,30 @@ import path from 'node:path';
 export default {
   source: {
     exclude: [path.resolve(__dirname, 'src/module-a'), /src\/module-b/],
+  },
+};
+```
+
+> Refer to [source.include](/config/source/include) to learn more.
+
+### Not compiled vs Not bundled
+
+`source.exclude` is used to specify JavaScript/TypeScript files that do not need to be compiled. This means that these files will not be translated by SWC or Babel, but they will still be bundled into the outputs (if referenced).
+
+If you want certain files to be ignored and not bundled into the outputs, you can use Rspack's [IgnorePlugin](https://rspack.dev/plugins/webpack/ignore-plugin).
+
+```ts
+export default {
+  tools: {
+    rspack: (config, { rspack }) => {
+      config.plugins?.push(
+        new rspack.IgnorePlugin({
+          resourceRegExp: /^\.\/locale$/,
+          contextRegExp: /moment$/,
+        }),
+      );
+      return config;
+    },
   },
 };
 ```

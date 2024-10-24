@@ -1,7 +1,7 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { build, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
-test('should allow plugin to transform code', async () => {
+rspackOnlyTest('should allow plugin to transform code', async () => {
   const rsbuild = await build({
     cwd: __dirname,
   });
@@ -18,6 +18,6 @@ test('should allow plugin to transform code', async () => {
   );
 
   expect(files[indexJs!].includes('world')).toBeTruthy();
-  expect(files[indexCss!].includes('blue')).toBeTruthy();
+  expect(files[indexCss!].includes('#00f')).toBeTruthy();
   expect(files[helloTxt!].includes('hello world')).toBeTruthy();
 });

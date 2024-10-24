@@ -1,6 +1,6 @@
 # Rsbuild Contribution Guide
 
-Thanks for that you are interested in contributing to Rsbuild. Before starting your contribution, please take a moment to read the following guidelines.
+Thank you for your interest in contributing to Rsbuild! Before you start your contribution, please take a moment to read the following guidelines.
 
 ---
 
@@ -18,7 +18,7 @@ own GitHub account and then [clone](https://help.github.com/articles/cloning-a-r
 
 ### Install Node.js
 
-We recommend using Node.js 20. You can check your currently used Node.js version with the following command:
+We recommend using Node.js 20. You can check your current Node.js version using the following command:
 
 ```bash
 node -v

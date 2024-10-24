@@ -1,12 +1,12 @@
 import { join } from 'node:path';
-import { build, gotoPage } from '@e2e/helper';
+import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should allow to import wasm file', async ({ page }) => {
   const root = join(__dirname, 'wasm-basic');
   const rsbuild = await build({
     cwd: root,
-    runServer: true,
+    page,
   });
   const files = await rsbuild.unwrapOutputJSON();
 
@@ -16,8 +16,6 @@ test('should allow to import wasm file', async ({ page }) => {
 
   expect(wasmFile).toBeTruthy();
   expect(/static[\\/]wasm/g.test(wasmFile!)).toBeTruthy();
-
-  await gotoPage(page, rsbuild);
 
   await page.waitForFunction(() => {
     return Boolean(document.querySelector('#root')?.innerHTML);
@@ -50,7 +48,7 @@ test('should allow to use new URL to get path of wasm file', async ({
   const root = join(__dirname, 'wasm-url');
   const rsbuild = await build({
     cwd: root,
-    runServer: true,
+    page,
   });
   const files = await rsbuild.unwrapOutputJSON();
 
@@ -60,8 +58,6 @@ test('should allow to use new URL to get path of wasm file', async ({
 
   expect(wasmFile).toBeTruthy();
   expect(/static[\\/]wasm/g.test(wasmFile!)).toBeTruthy();
-
-  await gotoPage(page, rsbuild);
 
   await page.waitForFunction(() => {
     return Boolean(document.querySelector('#root')?.innerHTML);

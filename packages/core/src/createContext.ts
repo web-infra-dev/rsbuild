@@ -1,28 +1,22 @@
-import { isAbsolute, join } from 'node:path';
-import type {
-  BundlerType,
-  NormalizedEnvironmentConfig,
-  RsbuildContext,
-  RsbuildEntry,
-  RsbuildTarget,
-} from '@rsbuild/shared';
-import browserslist from '@rsbuild/shared/browserslist';
+import { join } from 'node:path';
+import { loadConfig } from 'browserslist-load-config';
 import { withDefaultConfig } from './config';
 import { DEFAULT_BROWSERSLIST, ROOT_DIST_DIR } from './constants';
-import { initHooks } from './initHooks';
+import { getAbsolutePath, getCommonParentPath } from './helpers/path';
+import { initHooks } from './hooks';
 import { getHTMLPathByEntry } from './initPlugins';
 import { logger } from './logger';
-import { getEntryObject } from './plugins/entry';
 import type {
-  CreateRsbuildOptions,
+  BundlerType,
+  EnvironmentContext,
   InternalContext,
   NormalizedConfig,
+  NormalizedEnvironmentConfig,
+  ResolvedCreateRsbuildOptions,
   RsbuildConfig,
+  RsbuildContext,
+  RsbuildEntry,
 } from './types';
-
-function getAbsolutePath(root: string, filepath: string) {
-  return isAbsolute(filepath) ? filepath : join(root, filepath);
-}
 
 function getAbsoluteDistPath(
   cwd: string,
@@ -32,39 +26,10 @@ function getAbsoluteDistPath(
   return getAbsolutePath(cwd, dirRoot);
 }
 
-/**
- * Create context by config.
- */
-async function createContextByConfig(
-  options: Required<CreateRsbuildOptions>,
-  bundlerType: BundlerType,
-  config: RsbuildConfig = {},
-): Promise<RsbuildContext> {
-  const { cwd } = options;
-  const rootPath = cwd;
-  const distPath = getAbsoluteDistPath(cwd, config);
-  const cachePath = join(rootPath, 'node_modules', '.cache');
-  const tsconfigPath = config.source?.tsconfigPath;
-
-  return {
-    entry: getEntryObject(config, 'web'),
-    targets: [config.output?.target || 'web'],
-    version: RSBUILD_VERSION,
-    environments: {},
-    rootPath,
-    distPath,
-    cachePath,
-    bundlerType,
-    tsconfigPath: tsconfigPath
-      ? getAbsolutePath(rootPath, tsconfigPath)
-      : undefined,
-  };
-}
-
 // using cache to avoid multiple calls to loadConfig
 const browsersListCache = new Map<string, string[]>();
 
-export async function getBrowserslist(path: string) {
+export async function getBrowserslist(path: string): Promise<string[] | null> {
   const env = process.env.NODE_ENV;
   const cacheKey = path + env;
 
@@ -72,7 +37,7 @@ export async function getBrowserslist(path: string) {
     return browsersListCache.get(cacheKey)!;
   }
 
-  const result = browserslist.loadConfig({ path, env });
+  const result = loadConfig({ path, env });
 
   if (result) {
     browsersListCache.set(cacheKey, result);
@@ -103,97 +68,95 @@ export async function getBrowserslistByEnvironment(
   return DEFAULT_BROWSERSLIST[target];
 }
 
-const hasHTML = (
-  config: NormalizedEnvironmentConfig,
-  target: RsbuildTarget,
-) => {
-  const { htmlPlugin } = config.tools as {
-    htmlPlugin: boolean | Array<unknown>;
-  };
-  const pluginDisabled =
-    htmlPlugin === false ||
-    (Array.isArray(htmlPlugin) && htmlPlugin.includes(false));
-
-  return target === 'web' && !pluginDisabled;
-};
-
 const getEnvironmentHTMLPaths = (
   entry: RsbuildEntry,
   config: NormalizedEnvironmentConfig,
 ) => {
-  if (!hasHTML(config, config.output.target)) {
+  if (config.output.target !== 'web' || config.tools.htmlPlugin === false) {
     return {};
   }
 
   return Object.keys(entry).reduce<Record<string, string>>((prev, key) => {
-    prev[key] = getHTMLPathByEntry(key, config);
+    const entryValue = entry[key];
+
+    // Should not generate HTML file for the entry if `html` is false
+    if (
+      typeof entryValue === 'string' ||
+      Array.isArray(entryValue) ||
+      entryValue.html !== false
+    ) {
+      prev[key] = getHTMLPathByEntry(key, config);
+    }
+
     return prev;
   }, {});
 };
 
 export async function updateEnvironmentContext(
-  context: RsbuildContext,
+  context: InternalContext,
   configs: Record<string, NormalizedEnvironmentConfig>,
-) {
+): Promise<void> {
   context.environments ||= {};
 
-  for (const [name, config] of Object.entries(configs)) {
+  for (const [index, [name, config]] of Object.entries(configs).entries()) {
     const tsconfigPath = config.source.tsconfigPath
       ? getAbsolutePath(context.rootPath, config.source.tsconfigPath)
       : undefined;
-    const entry = getEntryObject(config, config.output.target);
 
     const browserslist = await getBrowserslistByEnvironment(
       context.rootPath,
       config,
     );
 
+    const entry = config.source.entry ?? {};
     const htmlPaths = getEnvironmentHTMLPaths(entry, config);
 
-    context.environments[name] = {
-      target: config.output.target,
+    const environmentContext = {
+      index,
+      name,
       distPath: getAbsoluteDistPath(context.rootPath, config),
-      entry: getEntryObject(config, config.output.target),
+      entry,
       browserslist,
       htmlPaths,
       tsconfigPath,
+      config,
     };
+
+    // EnvironmentContext is readonly.
+    context.environments[name] = new Proxy(environmentContext, {
+      get(target, prop: keyof EnvironmentContext) {
+        return target[prop];
+      },
+      set(_, prop: keyof EnvironmentContext) {
+        logger.error(
+          `EnvironmentContext is readonly, you can not assign to the "environment.${prop}" prop.`,
+        );
+        return true;
+      },
+    });
   }
 }
 
 export function updateContextByNormalizedConfig(
-  context: RsbuildContext,
-  config: NormalizedConfig,
-) {
-  context.distPath = getAbsoluteDistPath(context.rootPath, config);
-
-  if (config.source.entry) {
-    context.entry = getEntryObject(config, 'web');
-  }
-
-  if (config.source.tsconfigPath) {
-    context.tsconfigPath = getAbsolutePath(
-      context.rootPath,
-      config.source.tsconfigPath,
-    );
-  }
+  context: InternalContext,
+): void {
+  // Try to get the parent dist path from all environments
+  const distPaths = Object.values(context.environments).map(
+    (item) => item.distPath,
+  );
+  context.distPath = getCommonParentPath(distPaths);
 }
 
 export function createPublicContext(
   context: RsbuildContext,
 ): Readonly<RsbuildContext> {
-  const exposedKeys = [
-    'entry',
-    'targets',
+  const exposedKeys: Array<keyof RsbuildContext> = [
     'version',
     'rootPath',
     'distPath',
     'devServer',
     'cachePath',
-    'configPath',
-    'tsconfigPath',
     'bundlerType',
-    'environments',
   ];
 
   // Using Proxy to get the current value of context.
@@ -218,21 +181,27 @@ export function createPublicContext(
  * which can have a lot of overhead and take some side effects.
  */
 export async function createContext(
-  options: Required<CreateRsbuildOptions>,
-  userRsbuildConfig: RsbuildConfig,
+  options: ResolvedCreateRsbuildOptions,
+  userConfig: RsbuildConfig,
   bundlerType: BundlerType,
 ): Promise<InternalContext> {
-  const rsbuildConfig = await withDefaultConfig(options.cwd, userRsbuildConfig);
-  const context = await createContextByConfig(
-    options,
-    bundlerType,
-    rsbuildConfig,
-  );
+  const { cwd } = options;
+  const rootPath = userConfig.root
+    ? getAbsolutePath(cwd, userConfig.root)
+    : cwd;
+  const rsbuildConfig = await withDefaultConfig(rootPath, userConfig);
+  const cachePath = join(rootPath, 'node_modules', '.cache');
 
   return {
-    ...context,
+    version: RSBUILD_VERSION,
+    rootPath,
+    distPath: '',
+    cachePath,
+    bundlerType,
+    environments: {},
     hooks: initHooks(),
     config: { ...rsbuildConfig },
-    originalConfig: userRsbuildConfig,
+    originalConfig: userConfig,
+    specifiedEnvironments: options.environment,
   };
 }

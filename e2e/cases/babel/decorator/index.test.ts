@@ -1,4 +1,4 @@
-import { build, gotoPage, rspackOnlyTest } from '@e2e/helper';
+import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 
@@ -7,11 +7,10 @@ rspackOnlyTest(
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,
-      runServer: true,
+      page,
       plugins: [pluginBabel()],
     });
 
-    await gotoPage(page, rsbuild);
     expect(await page.evaluate('window.aaa')).toBe('hello');
     expect(await page.evaluate('window.bbb')).toBe('world');
     expect(await page.evaluate('window.FooService')).toBeTruthy();
@@ -24,7 +23,7 @@ rspackOnlyTest(
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,
-      runServer: true,
+      page,
       plugins: [pluginBabel()],
       rsbuildConfig: {
         source: {
@@ -35,7 +34,6 @@ rspackOnlyTest(
       },
     });
 
-    await gotoPage(page, rsbuild);
     expect(await page.evaluate('window.aaa')).toBe('hello');
     expect(await page.evaluate('window.bbb')).toBe('world');
     expect(await page.evaluate('window.FooService')).toBeTruthy();
@@ -48,7 +46,7 @@ rspackOnlyTest(
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,
-      runServer: true,
+      page,
       plugins: [
         pluginBabel({
           babelLoaderOptions(options, { addPresets }) {
@@ -76,7 +74,6 @@ rspackOnlyTest(
       },
     });
 
-    await gotoPage(page, rsbuild);
     expect(await page.evaluate('window.aaa')).toBe('hello');
     expect(await page.evaluate('window.bbb')).toBe('world');
     expect(await page.evaluate('window.FooService')).toBeTruthy();

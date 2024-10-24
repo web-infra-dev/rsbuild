@@ -15,7 +15,7 @@ Specifies that the user agent should preemptively connect to the target resource
 
 Configuring this property will establish a connection with the server. If the site is HTTPS, this process includes DNS resolution, TCP connection establishment, and TLS handshake. Combining Preconnect and DnsPrefetch can further reduce the delay of cross-domain requests.
 
-### Example
+## Example
 
 ```js
 export default {
@@ -23,4 +23,10 @@ export default {
     preconnect: ['https://example.com/'],
   },
 };
+```
+
+The generated HTML tag is:
+
+```html
+<link ref="preconnect" href="https://example.com" />
 ```

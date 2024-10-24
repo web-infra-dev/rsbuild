@@ -29,6 +29,23 @@ export default {
 };
 ```
 
+在合并配置时，`webpack-merge` 会自动合并数组，比如 `plugins`、`module.rules`、`resolve.extensions` 等配置。
+
+```js
+export default {
+  tools: {
+    rspack: {
+      resolve: {
+        // 与内置的 resolve.extensions 合并
+        extensions: ['.foo'],
+      },
+    },
+  },
+};
+```
+
+如果你需要覆盖某个配置项，而不是与默认值合并，可以使用 `tools.rspack` 的函数类型。
+
 ## Function 类型
 
 `tools.rspack` 也可以配置为一个函数，这个函数接收一个参数，即内置的 Rspack 配置对象，你可以对这个对象进行修改，然后返回一份新的配置。比如：
@@ -91,7 +108,7 @@ export default {
 
 - **类型：** `boolean`
 
-用于判断当前是否为开发环境构建，比如：
+用于判断当前是否为开发模式构建，比如：
 
 ```js
 export default {
@@ -110,7 +127,7 @@ export default {
 
 - **类型：** `boolean`
 
-用于判断当前是否为生产环境构建，比如：
+用于判断当前是否为生产模式构建，比如：
 
 ```js
 export default {
@@ -126,7 +143,7 @@ export default {
 
 ### target
 
-- **类型：** `'web' | 'node' | 'web-worker' | 'service-worker'`
+- **类型：** `'web' | 'node' | 'web-worker'`
 
 通过 target 参数可以判断构建的目标运行时环境。比如：
 
@@ -200,9 +217,9 @@ export default {
 
 ### HtmlPlugin
 
-- **类型：** `typeof import('html-webpack-plugin')`
+- **类型：** `typeof import('html-rspack-plugin')`
 
-通过这个参数你可以拿到 `html-webpack-plugin` 插件的实例。
+通过这个参数你可以拿到 `html-rspack-plugin` 插件的实例。
 
 ```js
 export default {
@@ -218,7 +235,9 @@ export default {
 
 - **类型：** `(rules: RuleSetRule | RuleSetRule[]) => void`
 
-添加额外的 [Rspack rules](https://rspack.dev/config/module#modulerules)。
+添加额外的 [Rspack rules](https://rspack.dev/config/module#modulerules) 到 Rspack rules 列表的最前面。
+
+需要注意的是，Rspack loaders 会按照从右到左的顺序执行，如果你希望你添加的 loader（Normal Phase）先于其他 loader 执行，应使用 [appendRules](#appendrules) 将该规则添加到最后面。
 
 示例：
 
@@ -234,6 +253,40 @@ export default {
 
       // 以数组形式添加多条规则
       addRules([
+        {
+          test: /\.foo/,
+          loader: require.resolve('foo-loader'),
+        },
+        {
+          test: /\.bar/,
+          loader: require.resolve('bar-loader'),
+        },
+      ]);
+    },
+  },
+};
+```
+
+### appendRules
+
+- **类型：** `(rules: RuleSetRule | RuleSetRule[]) => void`
+
+添加额外的 [Rspack rules](https://rspack.dev/config/module#modulerules) 到 Rspack rules 列表的最后面。
+
+示例：
+
+```ts
+export default {
+  tools: {
+    rspack: (config, { appendRules }) => {
+      // 追加单条规则
+      appendRules({
+        test: /\.foo/,
+        loader: require.resolve('foo-loader'),
+      });
+
+      // 以数组形式追加多条规则
+      appendRules([
         {
           test: /\.foo/,
           loader: require.resolve('foo-loader'),
@@ -308,7 +361,7 @@ export default {
 
 ### mergeConfig
 
-- **类型：** `(...configs: RspackConfig[]) => RspackConfig`
+- **类型：** `(...configs:Rspack.Configuration[]) =>Rspack.Configuration`
 
 用于合并多份 Rspack 配置，等价于 [webpack-merge](https://github.com/survivejs/webpack-merge)。
 

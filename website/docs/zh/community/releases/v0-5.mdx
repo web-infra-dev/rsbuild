@@ -2,13 +2,13 @@
 published_at: 2024-03-19 08:00:00
 ---
 
-# Rsbuild v0.5 发布
+# Rsbuild 0.5 发布
 
 > March 19, 2024
 
 ![](https://assets.rspack.dev/rsbuild/rsbuild-banner-v0-5.png)
 
-Rsbuild v0.5 是一个重要的里程碑，从该版本开始，Rsbuild 的绝大部分 API 已经达到稳定状态，我们预计在 2024 年 Q3 发布 Rsbuild v1.0。
+Rsbuild 0.5 是一个重要的里程碑，从该版本开始，Rsbuild 的绝大部分 API 已经达到稳定状态，我们预计在 2024 年 Q3 发布 Rsbuild v1.0。
 
 主要变更：
 
@@ -21,7 +21,7 @@ Rsbuild v0.5 是一个重要的里程碑，从该版本开始，Rsbuild 的绝�
 
 Lightning CSS 是一个基于 Rust 编写的高性能 CSS 解析、转译和压缩工具。它支持将许多现代的 CSS 特性解析并转化为指定浏览器支持的语法，并提供更好的压缩比例。
 
-Rsbuild 提供了 [Lightning CSS 插件](/plugins/list/plugin-lightningcss)，用于按需开启 Lightning CSS 能力，并替代 Rsbuild 内置的 PostCSS、autoprefixer 和 SWC CSS minimizer。
+Rsbuild 提供了 Lightning CSS 插件，用于按需开启 Lightning CSS 能力，并替代 Rsbuild 内置的 PostCSS、autoprefixer 和 SWC CSS minimizer。
 
 只需要在 Rsbuild 配置中注册 Lightning CSS 插件，即可完成切换：
 
@@ -103,7 +103,9 @@ export default {
   output: {
     minify: {
       jsOptions: {
-        mangle: false,
+        minimizerOptions: {
+          mangle: false,
+        },
       },
     },
   },

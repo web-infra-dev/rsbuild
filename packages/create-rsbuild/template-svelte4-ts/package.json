@@ -1,0 +1,20 @@
+{
+  "name": "rsbuild-svelte4-ts",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "rsbuild dev --open",
+    "build": "rsbuild build",
+    "preview": "rsbuild preview",
+    "svelte-check": "svelte-check --tsconfig ./tsconfig.json"
+  },
+  "dependencies": {
+    "svelte": "^4.2.19"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "^1.0.16",
+    "@rsbuild/plugin-svelte": "^1.0.2",
+    "svelte-check": "^4.0.5",
+    "typescript": "^5.6.3"
+  }
+}

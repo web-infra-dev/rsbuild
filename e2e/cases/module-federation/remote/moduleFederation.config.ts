@@ -3,7 +3,7 @@ import type { Rspack } from '@rsbuild/core';
 export const mfConfig: Rspack.ModuleFederationPluginOptions = {
   name: 'remote',
   exposes: {
-    './Button': './src/Button',
+    './Button': './src/test-temp-Button',
   },
   filename: 'remoteEntry.js',
   shared: {

@@ -1,5 +1,4 @@
 import { rspack } from '@rspack/core';
-import { isProd } from '../helpers';
 import type { RsbuildPlugin } from '../types';
 
 export const pluginProgress = (): RsbuildPlugin => ({
@@ -12,18 +11,20 @@ export const pluginProgress = (): RsbuildPlugin => ({
     }
 
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
-      const config = api.getNormalizedConfig();
+      const { config } = environment;
       const options =
         config.dev.progressBar ??
-        // enable progress bar in production by default
-        isProd();
+        // enable progress bar in production mode by default
+        config.mode === 'production';
 
       if (!options) {
         return;
       }
 
       const prefix =
-        options !== true && options.id !== undefined ? options.id : environment;
+        options !== true && options.id !== undefined
+          ? options.id
+          : environment.name;
 
       chain.plugin(CHAIN_ID.PLUGIN.PROGRESS).use(rspack.ProgressPlugin, [
         {

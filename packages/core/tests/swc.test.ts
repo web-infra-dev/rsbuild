@@ -1,5 +1,5 @@
-import type { RsbuildConfig } from '@rsbuild/shared';
 import { createStubRsbuild } from '@scripts/test-helper';
+import type { RsbuildConfig } from '../src';
 import { pluginEntry } from '../src/plugins/entry';
 import { pluginSwc } from '../src/plugins/swc';
 
@@ -72,43 +72,37 @@ describe('plugin-swc', () => {
     });
   });
 
-  it('should disable all pluginImport', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginSwc(), pluginEntry()],
-      rsbuildConfig: {
-        source: {
-          entry: {
-            main: './src/index.js',
-          },
-          transformImport: false,
-        },
+  it('should disable pluginImport when return undefined', async () => {
+    await matchConfigSnapshot({
+      source: {
+        transformImport: () => {},
       },
     });
-
-    const bundlerConfigs = await rsbuild.initConfigs();
-
-    for (const bundlerConfig of bundlerConfigs) {
-      expect(bundlerConfig).toMatchSnapshot();
-    }
   });
 
-  it('should add antd pluginImport', async () => {
-    const rsbuild = await createStubRsbuild({
-      rsbuildConfig: {
-        source: {
-          entry: {
-            main: './src/index.js',
+  it('should apply pluginImport correctly when ConfigChain', async () => {
+    await matchConfigSnapshot({
+      source: {
+        transformImport: [
+          {
+            libraryName: 'foo1',
           },
-        },
+          // ignore foo1
+          () => [],
+          {
+            libraryName: 'foo',
+          },
+          {
+            libraryName: 'baz',
+          },
+          {
+            libraryName: 'bar',
+          },
+          // ignore baz
+          (value) => value.filter((v) => v.libraryName !== 'baz'),
+        ],
       },
-      plugins: [pluginSwc(), pluginEntry()],
     });
-
-    const bundlerConfigs = await rsbuild.initConfigs();
-
-    for (const bundlerConfig of bundlerConfigs) {
-      expect(bundlerConfig).toMatchSnapshot();
-    }
   });
 
   it('should allow to use `tools.swc` to configure swc-loader options', async () => {

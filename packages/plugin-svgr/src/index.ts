@@ -1,19 +1,25 @@
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
 import { PLUGIN_REACT_NAME } from '@rsbuild/plugin-react';
-import { SCRIPT_REGEX, deepmerge } from '@rsbuild/shared';
-import type { Config } from '@svgr/core';
+import type { Config as SvgrOptions } from '@svgr/core';
+import deepmerge from 'deepmerge';
+import type { Config as SvgoConfig } from 'svgo';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+type SvgoPluginConfig = NonNullable<SvgoConfig['plugins']>[0];
 
 export type SvgDefaultExport = 'component' | 'url';
 
-export const SVG_REGEX = /\.svg$/;
+const SVG_REGEX = /\.svg$/;
 
 export type PluginSvgrOptions = {
   /**
    * Configure SVGR options.
    * @see https://react-svgr.com/docs/options/
    */
-  svgrOptions?: Config;
+  svgrOptions?: SvgrOptions;
 
   /**
    * Whether to allow the use of default import and named import at the same time.
@@ -38,23 +44,88 @@ export type PluginSvgrOptions = {
   excludeImporter?: Rspack.RuleSetCondition;
 };
 
-function getSvgoDefaultConfig() {
-  return {
-    plugins: [
-      {
-        name: 'preset-default',
-        params: {
-          overrides: {
-            // viewBox is required to resize SVGs with CSS.
-            // @see https://github.com/svg/svgo/issues/1128
-            removeViewBox: false,
-          },
+const getSvgoDefaultConfig = (): SvgoConfig => ({
+  plugins: [
+    {
+      name: 'preset-default',
+      params: {
+        overrides: {
+          // viewBox is required to resize SVGs with CSS.
+          // @see https://github.com/svg/svgo/issues/1128
+          removeViewBox: false,
         },
       },
-      'prefixIds',
-    ],
-  };
-}
+    },
+    'prefixIds',
+  ],
+});
+
+/**
+ * Dedupe SVGO plugins config.
+ *
+ * @example
+ * Input:
+ *   {
+ *     plugins: [
+ *       { name: 'preset-default', params: { foo: true }],
+ *       { name: 'preset-default', params: { bar: true }],
+ *     ]
+ *   }
+ * Output:
+ *   {
+ *     plugins: [
+ *       { name: 'preset-default', params: { foo: true, bar: true }],
+ *     ]
+ *   }
+ */
+const dedupeSvgoPlugins = (config: SvgoConfig): SvgoConfig => {
+  if (!config.plugins) {
+    return config;
+  }
+
+  let mergedPlugins: SvgoPluginConfig[] = [];
+
+  for (const plugin of config.plugins) {
+    if (typeof plugin === 'string') {
+      const exist = mergedPlugins.find(
+        (item) =>
+          item === plugin || (typeof item === 'object' && item.name === plugin),
+      );
+
+      if (!exist) {
+        mergedPlugins.push(plugin);
+      }
+
+      continue;
+    }
+
+    const strIndex = mergedPlugins.findIndex(
+      (item) => typeof item === 'string' && item === plugin.name,
+    );
+    if (strIndex !== -1) {
+      mergedPlugins[strIndex] = plugin;
+      continue;
+    }
+
+    let isMerged = false;
+
+    mergedPlugins = mergedPlugins.map((item) => {
+      if (typeof item === 'object' && item.name === plugin.name) {
+        isMerged = true;
+        return deepmerge<SvgoPluginConfig>(item, plugin);
+      }
+      return item;
+    });
+
+    if (!isMerged) {
+      mergedPlugins.push(plugin);
+    }
+  }
+
+  config.plugins = mergedPlugins;
+
+  return config;
+};
 
 export const PLUGIN_SVGR_NAME = 'rsbuild:svgr';
 
@@ -65,7 +136,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
-      const config = api.getNormalizedConfig({ environment });
+      const { config } = environment;
       const { dataUriLimit } = config.output;
       const maxSize =
         typeof dataUriLimit === 'number' ? dataUriLimit : dataUriLimit.svg;
@@ -85,13 +156,15 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
 
       const rule = chain.module.rule(CHAIN_ID.RULE.SVG).test(SVG_REGEX);
 
-      const svgrOptions = deepmerge(
+      const svgrOptions = deepmerge<SvgrOptions>(
         {
           svgo: true,
           svgoConfig: getSvgoDefaultConfig(),
         },
         options.svgrOptions || {},
       );
+
+      svgrOptions.svgoConfig = dedupeSvgoPlugins(svgrOptions.svgoConfig);
 
       // force to url: "foo.svg?url",
       rule
@@ -116,7 +189,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         .options({
           ...svgrOptions,
           exportType: 'default',
-        } satisfies Config)
+        } satisfies SvgrOptions)
         .end();
 
       // SVG in JS files
@@ -124,7 +197,10 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
       if (mixedImport || svgrOptions.exportType) {
         const { exportType = mixedImport ? 'named' : undefined } = svgrOptions;
 
-        const issuerInclude = [SCRIPT_REGEX, /\.mdx$/];
+        const issuerInclude = [
+          /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/,
+          /\.mdx$/,
+        ];
         const issuer = options.excludeImporter
           ? { and: [issuerInclude, { not: options.excludeImporter }] }
           : issuerInclude;

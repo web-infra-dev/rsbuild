@@ -67,7 +67,8 @@ console.log(style.title);
 ```ts
 type StylusOptions = {
   use?: string[];
-  include?: string;
+  define?: [string, any, boolean?];
+  include?: string[];
   import?: string;
   resolveURL?: boolean;
   lineNumbers?: boolean;

@@ -22,7 +22,7 @@ export default {
 
 ### 如何在编译过程中进行 ESLint 代码校验？
 
-出于编译性能的考虑，Rsbuild 默认不会在编译过程中进行 ESLint 校验，如果你需要该功能，可以使用 Rsbuild 的 [ESLint 插件](/plugins/list/plugin-eslint)。
+出于编译性能的考虑，Rsbuild 默认不会在编译过程中进行 ESLint 校验，如果你需要该功能，可以使用 Rsbuild 的 [ESLint 插件](https://github.com/rspack-contrib/rsbuild-plugin-eslint)。
 
 ---
 
@@ -42,7 +42,7 @@ export default {
 
 ### 如何移除代码中的 console？
 
-在生产环境构建时，我们可以移除代码中的 `console`，从而避免开发环境的日志被输出到生产环境。
+在生产模式构建时，我们可以移除代码中的 `console`，从而避免开发模式的日志被输出到生产模式。
 
 Rsbuild 默认提供了移除 console 的配置项，请查看 [performance.removeConsole](/config/performance/remove-console)。
 
@@ -57,15 +57,16 @@ Rsbuild 默认提供了移除 console 的配置项，请查看 [performance.remo
 ```bash
 ➜ DEBUG=rsbuild pnpm dev
 
-debug   create context [1842.90 ms]
-debug   add default plugins [1874.45 ms]
-debug   add default plugins done [1938.57 ms]
-...
+  ...
+  rsbuild init plugins
+  rsbuild init plugins done
+  rsbuild Use Rspack v1.0.0
+  ...
 
 Inspect config succeed, open following files to view the content:
 
-  - Rsbuild Config: /root/my-project/dist/rsbuild.config.mjs
-  - Rspack Config (web): /root/my-project/dist/rspack.config.web.mjs
+  - Rsbuild Config: /root/my-project/dist/.rsbuild/rsbuild.config.mjs
+  - Rspack Config (web): /root/my-project/dist/.rsbuild/rspack.config.web.mjs
 ```
 
 ---
@@ -79,8 +80,8 @@ Inspect config succeed, open following files to view the content:
 ```ts
 export default {
   tools: {
-    bundlerChain: (chain) => {
-      chain.ignoreWarnings([/Using \/ for division outside of calc()/]);
+    rspack: {
+      ignoreWarnings: [/Using \/ for division outside of calc()/],
     },
   },
 };

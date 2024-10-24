@@ -1,5 +1,4 @@
-import type { RsbuildProvider } from '@rsbuild/core';
-import type { CreateCompiler } from '@rsbuild/shared';
+import type { CreateCompiler, RsbuildProvider } from '@rsbuild/core';
 import { initConfigs } from './initConfigs';
 import { createDevServer, initRsbuildConfig } from './shared';
 
@@ -14,12 +13,12 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
 
   const createCompiler = (async () => {
     const { createCompiler } = await import('./createCompiler');
-    const { webpackConfigs } = await initConfigs({
+    const result = await createCompiler({
       context,
       pluginManager,
       rsbuildOptions,
     });
-    return createCompiler({ context, webpackConfigs });
+    return result.compiler;
   }) as CreateCompiler;
 
   const { pluginAdaptor } = await import('./plugin');
@@ -40,18 +39,16 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     },
 
     async createDevServer(options) {
-      const { createDevMiddleware } = await import('./createCompiler');
       const config = await initRsbuildConfig({ context, pluginManager });
       return createDevServer(
         { context, pluginManager, rsbuildOptions },
-        createDevMiddleware,
+        createCompiler,
         config,
         options,
       );
     },
 
     async startDevServer(options) {
-      const { createDevMiddleware } = await import('./createCompiler');
       const config = await initRsbuildConfig({
         context,
         pluginManager,
@@ -62,7 +59,7 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
           pluginManager,
           rsbuildOptions,
         },
-        createDevMiddleware,
+        createCompiler,
         config,
         options,
       );

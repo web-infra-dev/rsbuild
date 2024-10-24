@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import type { CompilerTapFn } from '@rsbuild/shared';
+import resolveUrlHelpers from '../compiled/resolve-url-loader/index.js';
 
 const GLOBAL_PATCHED_SYMBOL: unique symbol = Symbol('GLOBAL_PATCHED_SYMBOL');
 
@@ -26,6 +26,10 @@ function unpatchGlobalLocation() {
   }
 }
 
+type CompilerTapFn<CallBack extends (...args: any[]) => void = () => void> = {
+  tap: (name: string, cb: CallBack) => void;
+};
+
 export function patchCompilerGlobalLocation(compiler: {
   hooks: {
     run: CompilerTapFn;
@@ -33,7 +37,7 @@ export function patchCompilerGlobalLocation(compiler: {
     watchClose: CompilerTapFn;
     done: CompilerTapFn;
   };
-}) {
+}): void {
   // https://github.com/webpack/webpack/blob/136b723023f8f26d71eabdd16badf04c1c8554e4/lib/MultiCompiler.js#L64
   compiler.hooks.run.tap('PatchGlobalLocation', patchGlobalLocation);
   compiler.hooks.watchRun.tap('PatchGlobalLocation', patchGlobalLocation);
@@ -46,13 +50,15 @@ export function patchCompilerGlobalLocation(compiler: {
  *
  * reference: https://github.com/bholloway/resolve-url-loader/blob/e2695cde68f325f617825e168173df92236efb93/packages/resolve-url-loader/docs/advanced-features.md
  */
-export const getResolveUrlJoinFn = async () => {
+export const getResolveUrlJoinFn = async (): Promise<
+  (...args: unknown[]) => void
+> => {
   const {
     createJoinFunction,
     asGenerator,
     createJoinImplementation,
     defaultJoinGenerator,
-  } = await import('../compiled/resolve-url-loader/index.js');
+  } = resolveUrlHelpers;
 
   const rsbuildGenerator = asGenerator((item: any, ...rest: any[]) => {
     // only handle relative path (not absolutely accurate, but can meet common scenarios)

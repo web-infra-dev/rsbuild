@@ -1,4 +1,4 @@
-import type { RsbuildPlugin } from '@rsbuild/shared';
+import type { RsbuildPlugin } from '@rsbuild/core';
 import { createStubRsbuild } from './helper';
 
 describe('applyDefaultPlugins', () => {
@@ -94,6 +94,9 @@ describe('bundlerApi', () => {
     expect(config).toMatchInlineSnapshot(`
       {
         "devtool": "hidden-source-map",
+        "plugins": [
+          RsbuildCorePlugin {},
+        ],
         "target": "node",
       }
     `);

@@ -13,6 +13,7 @@ test('formatRoutes', () => {
         foo: 'src/index.ts',
         bar: 'src/index.ts',
       },
+      '/',
       undefined,
       undefined,
     ),
@@ -37,6 +38,7 @@ test('formatRoutes', () => {
         index: 'src/index.ts',
         foo: 'src/index.ts',
       },
+      '/',
       '/hello',
       undefined,
     ),
@@ -57,6 +59,7 @@ test('formatRoutes', () => {
         index: 'src/index.ts',
         foo: 'src/index.ts',
       },
+      '/',
       '/hello/',
       undefined,
     ),
@@ -78,6 +81,7 @@ test('formatRoutes', () => {
         bar: 'src/index.ts',
         index: 'src/index.ts',
       },
+      '/',
       undefined,
       undefined,
     ),
@@ -101,6 +105,7 @@ test('formatRoutes', () => {
       {
         foo: 'src/index.ts',
       },
+      '/',
       undefined,
       undefined,
     ),
@@ -118,6 +123,7 @@ test('formatRoutes', () => {
         foo: 'src/index.ts',
         bar: 'src/index.ts',
       },
+      '/',
       'html',
       undefined,
     ),
@@ -141,6 +147,7 @@ test('formatRoutes', () => {
       {
         index: 'src/index.ts',
       },
+      '/',
       'html',
       'nested',
     ),
@@ -164,7 +171,7 @@ test('printServerURLs', () => {
         label: 'local',
       },
       {
-        url: 'http://10.94.62.193:3000/',
+        url: 'http://192.168.0.1:3000/',
         label: 'network',
       },
     ],
@@ -177,8 +184,8 @@ test('printServerURLs', () => {
   });
 
   expect(message!).toMatchInlineSnapshot(`
-    "  > local     http:/localhost:3000/
-      > network   http:/10.94.62.193:3000/
+    "  ➜ local     http://localhost:3000/
+      ➜ network   http://192.168.0.1:3000/
     "
   `);
 
@@ -191,7 +198,7 @@ test('printServerURLs', () => {
         label: 'local',
       },
       {
-        url: 'http://10.94.62.193:3000/',
+        url: 'http://192.168.0.1:3000/',
         label: 'network',
       },
     ],
@@ -212,15 +219,15 @@ test('printServerURLs', () => {
   });
 
   expect(message!).toMatchInlineSnapshot(`
-    "  > local
-      - index    http:/localhost:3000/
-      - foo      http:/localhost:3000/html/foo
-      - bar      http:/localhost:3000/bar
+    "  ➜ local
+      - index    http://localhost:3000/
+      - foo      http://localhost:3000/html/foo
+      - bar      http://localhost:3000/bar
 
-      > network
-      - index    http:/10.94.62.193:3000/
-      - foo      http:/10.94.62.193:3000/html/foo
-      - bar      http:/10.94.62.193:3000/bar
+      ➜ network
+      - index    http://192.168.0.1:3000/
+      - foo      http://192.168.0.1:3000/html/foo
+      - bar      http://192.168.0.1:3000/bar
     "
   `);
 
@@ -252,18 +259,6 @@ describe('test dev server', () => {
     );
 
     expect(isOnDoneRegistered).toBeTruthy();
-
-    const isCompileHookRegistered = compiler.hooks.compile.taps.some(
-      (tap) => tap.fn === onInvalidFn,
-    );
-
-    expect(isCompileHookRegistered).toBeTruthy();
-
-    const isInvalidHookRegistered = compiler.hooks.invalid.taps.some(
-      (tap) => tap.fn === onInvalidFn,
-    );
-
-    expect(isInvalidHookRegistered).toBeTruthy();
   });
   test('should not setupServerHooks when compiler is server', () => {
     const compiler = rspack({

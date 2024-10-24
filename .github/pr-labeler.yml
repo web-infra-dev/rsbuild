@@ -1,10 +1,10 @@
-"change: feat":
-  - "/^(feat|types|style)/"
-"change: fix":
-  - "/^fix/"
-"change: perf":
-  - "/^perf/"
-"change: breaking":
-  - "/^breaking change/"
-"change: docs":
-  - "/^docs/"
+'release: feature':
+  - '/^(feat|types|style)/'
+'release: bug fix':
+  - '/^fix/'
+'release: performance':
+  - '/^perf/'
+'release: breaking change':
+  - '/^breaking change/'
+'release: document':
+  - '/^docs/'

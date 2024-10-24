@@ -1,0 +1,172 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`plugin-module-federation > should set environment module federation config correctly 1`] = `
+[
+  {
+    "optimization": {
+      "splitChunks": {
+        "cacheGroups": {},
+        "chunks": "async",
+      },
+    },
+    "output": {
+      "uniqueName": "remote",
+    },
+    "plugins": [
+      RsbuildCorePlugin {},
+      _ModuleFederationPlugin {
+        "_options": {
+          "exposes": {
+            "./Button": "./src/Button",
+          },
+          "filename": "remoteEntry.js",
+          "name": "remote",
+          "shared": {
+            "react": {
+              "requiredVersion": "^18.2.0",
+              "singleton": true,
+            },
+            "react-dom": {
+              "requiredVersion": "^18.2.0",
+              "singleton": true,
+            },
+          },
+        },
+      },
+      PatchSplitChunksPlugin {
+        "name": "remote",
+      },
+    ],
+  },
+  {
+    "optimization": {
+      "splitChunks": {
+        "cacheGroups": {
+          "lib-axios": {
+            "name": "lib-axios",
+            "priority": 0,
+            "test": /node_modules\\[\\\\\\\\/\\]axios\\(-\\.\\+\\)\\?\\[\\\\\\\\/\\]/,
+          },
+        },
+        "chunks": "all",
+      },
+    },
+    "plugins": [
+      RsbuildCorePlugin {},
+    ],
+  },
+]
+`;
+
+exports[`plugin-module-federation > should set module federation and environment chunkSplit config correctly 1`] = `
+[
+  {
+    "optimization": {
+      "splitChunks": {
+        "cacheGroups": {},
+        "chunks": "async",
+      },
+    },
+    "output": {
+      "uniqueName": "remote",
+    },
+    "plugins": [
+      RsbuildCorePlugin {},
+      _ModuleFederationPlugin {
+        "_options": {
+          "exposes": {
+            "./Button": "./src/Button",
+          },
+          "filename": "remoteEntry.js",
+          "name": "remote",
+          "shared": {
+            "react": {
+              "requiredVersion": "^18.2.0",
+              "singleton": true,
+            },
+            "react-dom": {
+              "requiredVersion": "^18.2.0",
+              "singleton": true,
+            },
+          },
+        },
+      },
+      PatchSplitChunksPlugin {
+        "name": "remote",
+      },
+    ],
+  },
+  {
+    "optimization": {
+      "splitChunks": false,
+    },
+    "output": {
+      "uniqueName": "remote",
+    },
+    "plugins": [
+      RsbuildCorePlugin {},
+      _ModuleFederationPlugin {
+        "_options": {
+          "exposes": {
+            "./Button": "./src/Button",
+          },
+          "filename": "remoteEntry.js",
+          "name": "remote",
+          "shared": {
+            "react": {
+              "requiredVersion": "^18.2.0",
+              "singleton": true,
+            },
+            "react-dom": {
+              "requiredVersion": "^18.2.0",
+              "singleton": true,
+            },
+          },
+        },
+      },
+      PatchSplitChunksPlugin {
+        "name": "remote",
+      },
+    ],
+  },
+]
+`;
+
+exports[`plugin-module-federation > should set module federation config 1`] = `
+{
+  "optimization": {
+    "splitChunks": {
+      "cacheGroups": {},
+      "chunks": "async",
+    },
+  },
+  "output": {
+    "uniqueName": "remote",
+  },
+  "plugins": [
+    RsbuildCorePlugin {},
+    _ModuleFederationPlugin {
+      "_options": {
+        "exposes": {
+          "./Button": "./src/Button",
+        },
+        "filename": "remoteEntry.js",
+        "name": "remote",
+        "shared": {
+          "react": {
+            "requiredVersion": "^18.2.0",
+            "singleton": true,
+          },
+          "react-dom": {
+            "requiredVersion": "^18.2.0",
+            "singleton": true,
+          },
+        },
+      },
+    },
+    PatchSplitChunksPlugin {
+      "name": "remote",
+    },
+  ],
+}
+`;

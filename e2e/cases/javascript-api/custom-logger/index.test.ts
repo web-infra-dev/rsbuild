@@ -8,9 +8,7 @@ rspackOnlyTest('should allow to customize logger', async () => {
     cwd: __dirname,
   });
 
-  expect(
-    logs.find((item) => item.includes('[READY] Compiled in')),
-  ).toBeTruthy();
+  expect(logs.find((item) => item.includes('[READY] Built in'))).toBeTruthy();
 
   restore();
 });

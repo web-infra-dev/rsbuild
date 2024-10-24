@@ -11,14 +11,14 @@ describe('plugin-output', () => {
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
-  it('should allow to custom server directory with distPath.server', async () => {
+  it('should allow to custom server directory with distPath.root', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
       rsbuildConfig: {
         output: {
           target: 'node',
           distPath: {
-            server: 'server',
+            root: 'dist/server',
           },
         },
       },
@@ -80,6 +80,27 @@ describe('plugin-output', () => {
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
+  it('output config should works when target is node', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginOutput()],
+      rsbuildConfig: {
+        output: {
+          target: 'node',
+          distPath: {
+            js: 'bundle',
+          },
+          filename: {
+            js: 'foo.js',
+            css: '[name].css',
+          },
+        },
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+    expect(bundlerConfigs[0]).toMatchSnapshot();
+  });
+
   it('should allow to use copy plugin', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
@@ -100,7 +121,7 @@ describe('plugin-output', () => {
     expect(bundlerConfigs[0]).toMatchSnapshot();
   });
 
-  it('should allow to use copy plugin with multiply config', async () => {
+  it('should allow to use copy plugin with multiple config', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginOutput()],
       rsbuildConfig: {
@@ -140,5 +161,35 @@ describe('plugin-output', () => {
 
     const bundlerConfigs = await rsbuild.initConfigs();
     expect(bundlerConfigs[0]?.output?.publicPath).toEqual('auto');
+  });
+
+  it('should replace `<port>` placeholder with default port', async () => {
+    vi.stubEnv('NODE_ENV', 'development');
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginOutput()],
+      rsbuildConfig: {
+        dev: {
+          assetPrefix: 'http://example-<port>.com:<port>/',
+        },
+      },
+    });
+
+    const [config] = await rsbuild.initConfigs();
+    expect(config?.output?.publicPath).toEqual('http://example-3000.com:3000/');
+  });
+
+  it('should replace `<port>` placeholder of `output.assetPrefix` with default port', async () => {
+    vi.stubEnv('NODE_ENV', 'production');
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginOutput()],
+      rsbuildConfig: {
+        output: {
+          assetPrefix: 'http://example.com:<port>/',
+        },
+      },
+    });
+
+    const [config] = await rsbuild.initConfigs();
+    expect(config?.output?.publicPath).toEqual('http://example.com:3000/');
   });
 });

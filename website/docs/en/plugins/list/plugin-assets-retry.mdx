@@ -40,6 +40,7 @@ type AssetsRetryHookContext = {
   domain: string;
   url: string;
   tagName: string;
+  isAsyncChunk: boolean;
 };
 
 type AssetsRetryOptions = {
@@ -153,9 +154,9 @@ The callback function when the asset is being retried. For example:
 
 ```js
 pluginAssetsRetry({
-  onRetry: ({ times, domain, url, tagName }) => {
+  onRetry: ({ times, domain, url, tagName, isAsyncChunk }) => {
     console.log(
-      `Retry ${times} times, domain: ${domain}, url: ${url}, tagName: ${tagName}`,
+      `Retry ${times} times, domain: ${domain}, url: ${url}, tagName: ${tagName}, isAsyncChunk: ${isAsyncChunk}`,
     );
   },
 });
@@ -169,9 +170,9 @@ The callback function when the asset is successfully retried. For example:
 
 ```js
 pluginAssetsRetry({
-  onSuccess: ({ times, domain, url, tagName }) => {
+  onSuccess: ({ times, domain, url, tagName, isAsyncChunk }) => {
     console.log(
-      `Retry ${times} times, domain: ${domain}, url: ${url}, tagName: ${tagName}`,
+      `Retry ${times} times, domain: ${domain}, url: ${url}, tagName: ${tagName}, isAsyncChunk: ${isAsyncChunk}`,
     );
   },
 });
@@ -185,9 +186,9 @@ The callback function when the asset is failed to be retried. For example:
 
 ```js
 pluginAssetsRetry({
-  onFail: ({ times, domain, url, tagName }) => {
+  onFail: ({ times, domain, url, tagName, isAsyncChunk }) => {
     console.log(
-      `Retry ${times} times, domain: ${domain}, url: ${url}, tagName: ${tagName}`,
+      `Retry ${times} times, domain: ${domain}, url: ${url}, tagName: ${tagName}, isAsyncChunk: ${isAsyncChunk}`,
     );
   },
 });
@@ -301,6 +302,10 @@ pluginAssetsRetry({
 
 Assets Retry plugin may not work in the following scenarios:
 
+### Module Federation
+
+For remote modules loaded by Module Federation, you can use the [@module-federation/retry-plugin](https://www.npmjs.com/package/@module-federation/retry-plugin) from Module Federation 2.0 to implement static asset retries.
+
 ### Micro-frontend
 
 If your project is a micro-frontend application (such as a Garfish sub-application), the assets retry may not work because micro-frontend sub-applications are typically not loaded directly based on the `<script>` tag.
@@ -311,7 +316,7 @@ If you need to retry assets in micro-frontend scenarios, please contact the deve
 
 Assets Retry plugin listens to the page error event to know whether the current resource fails to load and needs to be retried. Therefore, if the resource in the custom template is executed earlier than Assets Retry plugin, then Assets Retry plugin cannot listen to the event that the resource fails to load, so it will not be retried.
 
-If you want Assets Retry plugin to work on resources in custom templates, you can refer to [Custom Insertion Example](https://github.com/jantimon/html-webpack-plugin/tree/main/examples/custom-insertion-position) to modify [html.inject](/config/html/inject) configuration and custom template.
+If you want Assets Retry plugin to work on resources in custom templates, you can refer to [Custom Insertion Example](https://github.com/rspack-contrib/html-rspack-plugin/tree/main/examples/custom-insertion-position) to modify [html.inject](/config/html/inject) configuration and custom template.
 
 ```diff
 <!DOCTYPE html>
@@ -319,12 +324,12 @@ If you want Assets Retry plugin to work on resources in custom templates, you ca
   <head>
     <meta charset="utf-8">
     <title>custom template</title>
-+   <%= htmlWebpackPlugin.tags.headTags %>
++   <%= htmlPlugin.tags.headTags %>
     <script src="https://example.com/assets/a.js"></script>
   </head>
   <body>
     <div id="root" />
-+    <%= htmlWebpackPlugin.tags.bodyTags %>
++    <%= htmlPlugin.tags.bodyTags %>
   </body>
 </html>
 ```

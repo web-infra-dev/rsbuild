@@ -1,12 +1,11 @@
-import { type RsbuildConfig, castArray } from '@rsbuild/shared';
-import { isFunction, isPlainObject } from './helpers';
+import { castArray, cloneDeep, isFunction, isPlainObject } from './helpers';
+import type { RsbuildConfig } from './types';
 
-const OVERRIDE_PATH = [
+const OVERRIDE_PATHS = [
   'performance.removeConsole',
   'output.inlineScripts',
   'output.inlineStyles',
   'output.cssModules.auto',
-  'output.targets',
   'output.overrideBrowserslist',
   'server.open',
   'server.printUrls',
@@ -16,7 +15,14 @@ const OVERRIDE_PATH = [
 /**
  * When merging configs, some properties prefer `override` over `merge to array`
  */
-const isOverridePath = (key: string) => OVERRIDE_PATH.includes(key);
+const isOverridePath = (key: string) => {
+  // ignore environments name prefix, such as `environments.web`
+  if (key.startsWith('environments.')) {
+    const realKey = key.split('.').slice(2).join('.');
+    return OVERRIDE_PATHS.includes(realKey);
+  }
+  return OVERRIDE_PATHS.includes(key);
+};
 
 const merge = (x: unknown, y: unknown, path = '') => {
   // force some keys to override
@@ -26,10 +32,15 @@ const merge = (x: unknown, y: unknown, path = '') => {
 
   // ignore undefined property
   if (x === undefined) {
-    return y;
+    return isPlainObject(y) ? cloneDeep(y) : y;
   }
   if (y === undefined) {
-    return x;
+    return isPlainObject(x) ? cloneDeep(x) : x;
+  }
+
+  // no need to merge boolean with object or function, such as `tools.htmlPlugin`
+  if (typeof x === 'boolean' || typeof y === 'boolean') {
+    return y;
   }
 
   const pair = [x, y];

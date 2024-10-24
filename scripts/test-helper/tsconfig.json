@@ -1,5 +1,5 @@
 {
-  "extends": "@rsbuild/config/tsconfig",
+  "extends": "@rsbuild/config/tsconfig-node16",
   "compilerOptions": {
     "outDir": "./dist",
     "baseUrl": "./",
@@ -9,9 +9,6 @@
   "references": [
     {
       "path": "../../packages/core"
-    },
-    {
-      "path": "../../packages/shared"
     }
   ],
   "include": ["src"]

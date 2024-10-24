@@ -1,11 +1,16 @@
-import { type RsbuildPlugin, reduceConfigs } from '@rsbuild/core';
-import { cloneDeep, deepmerge } from '@rsbuild/shared';
+import { createRequire } from 'node:module';
+import type { RsbuildPlugin } from '@rsbuild/core';
+import deepmerge from 'deepmerge';
+import { reduceConfigs } from 'reduce-configs';
+
+const require = createRequire(import.meta.url);
 
 export const PLUGIN_STYLUS_NAME = 'rsbuild:stylus';
 
 type StylusOptions = {
   use?: string[];
-  include?: string;
+  define?: [string, any, boolean?];
+  include?: string[];
   import?: string;
   resolveURL?: boolean;
   lineNumbers?: boolean;
@@ -28,7 +33,7 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
-      const config = api.getNormalizedConfig({ environment });
+      const { config } = environment;
 
       const mergedOptions = reduceConfigs({
         initial: {
@@ -50,11 +55,15 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
       // Copy the builtin CSS rules
       for (const id of Object.keys(cssRule.uses.entries())) {
         const loader = cssRule.uses.get(id);
-        const options = cloneDeep(loader.get('options'));
+        const options = loader.get('options') ?? {};
+        const clonedOptions = deepmerge<Record<string, any>>({}, options);
+
         if (id === CHAIN_ID.USE.CSS) {
-          options.importLoaders = 2;
+          // add stylus-loader
+          clonedOptions.importLoaders += 1;
         }
-        rule.use(id).loader(loader.get('loader')).options(options);
+
+        rule.use(id).loader(loader.get('loader')).options(clonedOptions);
       }
 
       rule

@@ -6,7 +6,7 @@ class RsdoctorRspackPlugin {
 
   apply(compiler) {
     compiler.hooks.done.tap('rsdoctor:test', () => {
-      fse.outputFileSync(path.join(__dirname, './test.txt'), 'test');
+      fse.outputFileSync(path.join(__dirname, './test-temp.txt'), 'test');
     });
   }
 }

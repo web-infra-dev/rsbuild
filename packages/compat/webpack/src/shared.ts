@@ -5,13 +5,14 @@ const {
   initRsbuildConfig,
   createDevServer,
   formatStats,
-  getDevMiddleware,
   getStatsOptions,
   stringifyConfig,
   outputInspectConfigFiles,
+  getRsbuildInspectConfig,
   chainToConfig,
   modifyBundlerChain,
-  onCompileDone,
+  registerDevHook,
+  registerBuildHook,
   prettyTime,
 } = __internalHelper;
 
@@ -20,14 +21,22 @@ export {
   initRsbuildConfig,
   createDevServer,
   formatStats,
-  getDevMiddleware,
   getStatsOptions,
   stringifyConfig,
   outputInspectConfigFiles,
   chainToConfig,
   modifyBundlerChain,
-  onCompileDone,
+  registerDevHook,
+  registerBuildHook,
   prettyTime,
+  getRsbuildInspectConfig,
 };
 
 export type InternalContext = __internalHelper.InternalContext;
+
+export const castArray = <T>(arr?: T | T[]): T[] => {
+  if (arr === undefined) {
+    return [];
+  }
+  return Array.isArray(arr) ? arr : [arr];
+};

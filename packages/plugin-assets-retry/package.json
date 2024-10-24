@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-assets-retry",
-  "version": "0.7.9",
+  "version": "1.0.3",
   "description": "Assets retry plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -23,25 +23,21 @@
     "dist"
   ],
   "scripts": {
-    "build": "modern build && node scripts/postCompile.mjs",
-    "dev": "modern build --watch"
-  },
-  "dependencies": {
-    "@rsbuild/shared": "workspace:*",
-    "serialize-javascript": "^6.0.2"
+    "build": "rslib build && node scripts/postCompile.mjs",
+    "dev": "rslib build --watch"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.7",
-    "@babel/preset-env": "^7.24.7",
-    "@babel/preset-typescript": "^7.24.7",
+    "@babel/core": "^7.25.8",
+    "@babel/preset-env": "^7.25.8",
+    "@babel/preset-typescript": "^7.25.7",
     "@rsbuild/core": "workspace:*",
     "@types/serialize-javascript": "^5.0.4",
-    "html-webpack-plugin": "npm:html-rspack-plugin@5.7.2",
-    "terser": "5.31.1",
-    "typescript": "^5.5.2"
+    "serialize-javascript": "^6.0.2",
+    "terser": "5.36.0",
+    "typescript": "^5.6.3"
   },
   "peerDependencies": {
-    "@rsbuild/core": "workspace:^0.7.9"
+    "@rsbuild/core": "1.x || ^1.0.1-rc.0"
   },
   "publishConfig": {
     "access": "public",

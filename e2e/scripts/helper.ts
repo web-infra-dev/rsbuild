@@ -2,11 +2,12 @@ import fs from 'node:fs';
 import { platform } from 'node:os';
 import { join } from 'node:path';
 import { test } from '@playwright/test';
-import { type ConsoleType, castArray } from '@rsbuild/shared';
+import type { ConsoleType } from '@rsbuild/core';
 import glob, {
   convertPathToPattern,
   type Options as GlobOptions,
 } from 'fast-glob';
+import stripAnsi from 'strip-ansi';
 
 export const providerType = process.env.PROVIDE_TYPE || 'rspack';
 
@@ -59,29 +60,44 @@ export const globContentJSON = async (path: string, options?: GlobOptions) => {
   return ret;
 };
 
-export const awaitFileExists = async (dir: string) => {
-  const maxChecks = 100;
-  const interval = 100;
+export const waitFor = async (
+  fn: () => boolean,
+  {
+    maxChecks = 100,
+    interval = 20,
+  }: {
+    maxChecks?: number;
+    interval?: number;
+  } = {},
+) => {
   let checks = 0;
 
   while (checks < maxChecks) {
-    if (fs.existsSync(dir)) {
-      return;
+    if (fn()) {
+      return true;
     }
     checks++;
     await new Promise((resolve) => setTimeout(resolve, interval));
   }
 
-  throw new Error(`awaitFileExists failed: ${dir}`);
+  return false;
+};
+
+export const awaitFileExists = async (dir: string) => {
+  const result = await waitFor(() => fs.existsSync(dir), { interval: 50 });
+  if (!result) {
+    throw new Error(`awaitFileExists failed: ${dir}`);
+  }
 };
 
 export const proxyConsole = (
   types: ConsoleType | ConsoleType[] = ['log', 'warn', 'info', 'error'],
+  keepAnsi = false,
 ) => {
   const logs: string[] = [];
   const restores: Array<() => void> = [];
 
-  for (const type of castArray(types)) {
+  for (const type of Array.isArray(types) ? types : [types]) {
     const method = console[type];
 
     restores.push(() => {
@@ -89,7 +105,7 @@ export const proxyConsole = (
     });
 
     console[type] = (log) => {
-      logs.push(log);
+      logs.push(keepAnsi ? log : stripAnsi(log));
     };
   }
 
@@ -102,3 +118,6 @@ export const proxyConsole = (
     },
   };
 };
+
+// Windows and macOS use different new lines
+export const normalizeNewlines = (str: string) => str.replace(/\r\n/g, '\n');

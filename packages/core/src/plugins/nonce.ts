@@ -5,19 +5,27 @@ export const pluginNonce = (): RsbuildPlugin => ({
   name: 'rsbuild:nonce',
 
   setup(api) {
-    api.onAfterCreateCompiler(({ compiler }) => {
-      const { nonce } = api.getNormalizedConfig().security;
+    api.onAfterCreateCompiler(({ compiler, environments }) => {
+      const nonces = Object.values(environments).map((environment) => {
+        const { nonce } = environment.config.security;
 
-      if (!nonce) {
+        return nonce;
+      });
+
+      if (!nonces.some((nonce) => !!nonce)) {
         return;
       }
 
-      applyToCompiler(compiler, (compiler) => {
-        const { plugins } = compiler.options;
-        const hasHTML = plugins.some(
-          (plugin) => plugin && plugin.constructor.name === 'HtmlBasicPlugin',
+      const environmentList = Object.values(environments);
+
+      applyToCompiler(compiler, (compiler, index) => {
+        const nonce = nonces[index];
+        const environment = environmentList.find(
+          (item) => item.index === index,
         );
-        if (!hasHTML) {
+        const hasHTML = Object.keys(environment?.htmlPaths ?? {}).length;
+
+        if (!hasHTML || !nonce) {
           return;
         }
 
@@ -35,8 +43,8 @@ export const pluginNonce = (): RsbuildPlugin => ({
     api.modifyHTMLTags({
       // ensure `nonce` can be applied to all tags
       order: 'post',
-      handler: ({ headTags, bodyTags }) => {
-        const config = api.getNormalizedConfig();
+      handler: ({ headTags, bodyTags }, { environment }) => {
+        const { config } = environment;
         const { nonce } = config.security;
         const allTags = [...headTags, ...bodyTags];
 

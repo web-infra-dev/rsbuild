@@ -1,0 +1,135 @@
+# Configure SWC
+
+[SWC](https://github.com/swc-project/swc) (Speedy Web Compiler) is a transformer and minimizer for JavaScript and TypeScript based on Rust. SWC provides similar functionality to Babel and Terser, and it is 20x faster than Babel on a single thread and 70x faster on four cores.
+
+Rsbuild enables the following SWC features by default:
+
+- Transform JavaScript and TypeScript code using Rspack's [builtin:swc-loader](https://rspack.dev/guide/features/builtin-swc-loader), which is the Rust version of [swc-loader](https://github.com/swc-project/pkgs/tree/main/packages/swc-loader).
+- Minify JavaScript code using Rspack's [SwcJsMinimizerRspackPlugin](https://rspack.dev/plugins/rspack/swc-js-minimizer-rspack-plugin).
+
+## Loader Options
+
+The options for `builtin:swc-loader` are consistent with the JS version of swc-loader. Rsbuild provides the [tools.swc](/config/tools/swc) option to configure `builtin:swc-loader`. Here are some examples:
+
+### Register SWC Plugin
+
+`tools.swc` can be used to register SWC's Wasm plugins, for example, registering [@swc/plugin-styled-components](https://www.npmjs.com/package/@swc/plugin-styled-components):
+
+```js
+export default {
+  tools: {
+    swc: {
+      jsc: {
+        experimental: {
+          plugins: [['@swc/plugin-styled-components', {}]],
+        },
+      },
+    },
+  },
+};
+```
+
+> You can check out the [awesome-swc](https://github.com/swc-contrib/awesome-swc) repository to see the SWC plugins available in the community.
+
+### SWC Plugin Version
+
+Please note that the SWC plugin is still an experimental feature, and the SWC Wasm plugin is currently not backward compatible. The version of the SWC plugin is closely tied to the version of `swc_core` that Rspack depends on.
+
+This means that you must to choose an SWC plugin that matches the current version of `swc_core` to ensure that it works properly. If the version of the SWC plugin you are using does not match the version of `swc_core` that Rspack depends on, Rspack will throw the following error during the build process:
+
+```text
+1: failed to run Wasm plugin transform. Please ensure the version of `swc_core`
+   used by the plugin is compatible with the host runtime.
+```
+
+If you encounter the above issues, a common solution is to upgrade both the Rsbuild and SWC plugins to the latest versions.
+
+Alternatively, you can follow these steps to select a suitable SWC plugin version:
+
+1. Check the current version of Rspack you are using, this can be done by enabling [debug mode](/guide/debug/debug-mode).
+2. Visit [plugins.swc.rs](https://plugins.swc.rs/) and select the version of Rspack you are currently using.
+3. The website will list the range of SWC plugin versions that match to your current Rspack version. Then select the matched version of the SWC plugin to use.
+
+If the SWC plugin you are using is not listed on [plugins.swc.rs](https://plugins.swc.rs/), you can find the version information of `swc_core` in the Cargo.toml file within the Rust code repository. For example, in the Rspack repository, you can open [Cargo.toml](https://github.com/web-infra-dev/rspack/blob/main/Cargo.toml) and search for the keyword `swc_core` to find the version. Then read [SWC - Selecting the version](https://swc.rs/docs/plugin/selecting-swc-core) for further guidance.
+
+### Enable Emotion Support
+
+Example of enabling the Emotion support using the `builtin:swc-loader`:
+
+```js
+export default {
+  tools: {
+    swc: {
+      jsc: {
+        experimental: {
+          plugins: [['@swc/plugin-emotion', {}]],
+        },
+      },
+    },
+  },
+};
+```
+
+For more options, please refer to [@swc/plugin-emotion](https://www.npmjs.com/package/@swc/plugin-emotion).
+
+### Enable Relay Support
+
+Example of enabling the Relay support using the `builtin:swc-loader`:
+
+```js
+export default {
+  tools: {
+    swc: {
+      jsc: {
+        experimental: {
+          plugins: [['@swc/plugin-relay', {}]],
+        },
+      },
+    },
+  },
+};
+```
+
+For more options, please refer to [@swc/plugin-relay](https://www.npmjs.com/package/@swc/plugin-relay).
+
+## Minimizer Options
+
+Rsbuild provides the [output.minify.js](/config/output/minify) option to configure the SwcJsMinimizerRspackPlugin. Here are some examples:
+
+### Exclude Files
+
+You can exclude certain files from being minified using the `exclude` option:
+
+```ts
+export default {
+  output: {
+    minify: {
+      jsOptions: {
+        exclude: /foo\/bar/,
+      },
+    },
+  },
+};
+```
+
+## Switching Minimizer
+
+If the `SwcJsMinimizerRspackPlugin` does not meet your needs, you can switch to other minimizers through the [tools.bundlerChain](/config/tools/bundler-chain) option.
+
+For example, to switch to [Terser](https://github.com/webpack-contrib/terser-webpack-plugin) for minifying JavaScript, which is more stable but performs worse compared to SWC:
+
+```ts
+export default {
+  tools: {
+    bundlerChain(chain, { CHAIN_ID, isProd }) {
+      if (isProd) {
+        chain.optimization.minimizer(CHAIN_ID.MINIMIZER.JS).use(TerserPlugin, [
+          {
+            minify: TerserPlugin.terserMinify,
+          },
+        ]);
+      }
+    },
+  },
+};
+```

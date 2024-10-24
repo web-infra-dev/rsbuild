@@ -2,12 +2,8 @@ export {
   pluginBabel,
   getDefaultBabelOptions,
   PLUGIN_BABEL_NAME,
-} from './plugin';
-export {
-  getBabelUtils,
-  getUseBuiltIns,
-  modifyBabelLoaderOptions,
-} from './helper';
+} from './plugin.js';
+export { getBabelUtils, modifyBabelLoaderOptions } from './helper.js';
 export type {
   PresetEnvOptions,
   PresetEnvTargets,
@@ -15,4 +11,4 @@ export type {
   BabelConfigUtils,
   BabelTransformOptions,
   PluginBabelOptions,
-} from './types';
+} from './types.js';

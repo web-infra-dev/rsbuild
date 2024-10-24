@@ -8,11 +8,11 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "solid-js": "^1.8.17"
+    "solid-js": "^1.9.2"
   },
   "devDependencies": {
-    "@rsbuild/core": "workspace:*",
-    "@rsbuild/plugin-babel": "workspace:*",
-    "@rsbuild/plugin-solid": "workspace:*"
+    "@rsbuild/core": "^1.0.16",
+    "@rsbuild/plugin-babel": "^1.0.2",
+    "@rsbuild/plugin-solid": "^1.0.3"
   }
 }

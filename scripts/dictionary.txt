@@ -1,4 +1,5 @@
 # Custom Dictionary Words
+analyse
 antd
 apng
 applescript
@@ -13,6 +14,7 @@ Chunktmp
 classname
 codegen
 codesandbox
+codeva
 compat
 consolas
 contentful
@@ -23,6 +25,7 @@ crossorigin
 datauri
 deepmerge
 docgen
+dppx
 envinfo
 estree
 facti
@@ -42,6 +45,7 @@ jfif
 jiti
 jscpuprofile
 jsesc
+kaios
 koppers
 lightningcss
 liyincode
@@ -49,12 +53,18 @@ longpaths
 manypkg
 mattcompiles
 menlo
+Mergeable
 microfrontend
 microfrontends
 modularly
+mrmime
+mYbzBtlg6o
 napi
 nolyfill
+nosources
+nuxt
 ntqry
+oklab
 onclosetag
 onopentag
 ontext
@@ -80,9 +90,12 @@ rolldown
 rsbuild
 rsdoctor
 rsfamily
+rslib
 rslog
 rspack
 rspress
+rstack
+ruleset
 selfsign
 selfsigned
 sirv
@@ -97,6 +110,7 @@ subpage
 subresource
 subresources
 svgr
+sveltejs
 swcrc
 systemjs
 tailwindcss

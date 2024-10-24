@@ -1,5 +1,5 @@
-import type { HtmlConfig } from '@rsbuild/shared';
 import { createStubRsbuild } from '@scripts/test-helper';
+import type { HtmlConfig } from '../src';
 import { pluginEntry } from '../src/plugins/entry';
 import { pluginHtml } from '../src/plugins/html';
 
@@ -18,7 +18,7 @@ describe('plugin-html', () => {
     });
     const config = await rsbuild.unwrapConfig();
 
-    expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toBeTruthy();
+    expect(await rsbuild.matchBundlerPlugin('HtmlRspackPlugin')).toBeTruthy();
     expect(config).toMatchSnapshot();
   });
 
@@ -31,7 +31,7 @@ describe('plugin-html', () => {
         },
       },
     });
-    expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toBeFalsy();
+    expect(await rsbuild.matchBundlerPlugin('HtmlRspackPlugin')).toBeFalsy();
   });
 
   it('should not register html plugin when target is web-worker', async () => {
@@ -43,20 +43,7 @@ describe('plugin-html', () => {
         },
       },
     });
-    expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toBeFalsy();
-  });
-
-  it('should register appIcon plugin when using html.appIcon', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
-      rsbuildConfig: {
-        html: {
-          appIcon: './src/assets/icon.png',
-        },
-      },
-    });
-
-    expect(await rsbuild.matchBundlerPlugin('HtmlAppIconPlugin')).toBeTruthy();
+    expect(await rsbuild.matchBundlerPlugin('HtmlRspackPlugin')).toBeFalsy();
   });
 
   it('should allow to set favicon by html.favicon option', async () => {
@@ -130,20 +117,7 @@ describe('plugin-html', () => {
       },
     });
 
-    expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toBeFalsy();
-  });
-
-  it('should disable html plugin when htmlPlugin is an array and contains false', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginEntry(), pluginHtml()],
-      rsbuildConfig: {
-        tools: {
-          htmlPlugin: [{}, false],
-        },
-      },
-    });
-
-    expect(await rsbuild.matchBundlerPlugin('HtmlWebpackPlugin')).toBeFalsy();
+    expect(await rsbuild.matchBundlerPlugin('HtmlRspackPlugin')).toBeFalsy();
   });
 
   it('should support multi entry', async () => {

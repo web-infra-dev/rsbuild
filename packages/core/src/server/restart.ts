@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { color } from '@rsbuild/shared';
+import color from 'picocolors';
 import { init } from '../cli/init';
 import { logger } from '../logger';
 
@@ -10,7 +10,7 @@ let cleaners: Cleaner[] = [];
 /**
  * Add a cleaner to handle side effects
  */
-export const onBeforeRestartServer = (cleaner: Cleaner) => {
+export const onBeforeRestartServer = (cleaner: Cleaner): void => {
   cleaners.push(cleaner);
 };
 
@@ -20,11 +20,25 @@ const clearConsole = () => {
   }
 };
 
-export const restartDevServer = async ({ filePath }: { filePath: string }) => {
-  clearConsole();
+export const restartDevServer = async ({
+  filePath,
+  clear = true,
+}: {
+  filePath?: string;
+  clear?: boolean;
+} = {}): Promise<void> => {
+  if (clear) {
+    clearConsole();
+  }
 
-  const filename = path.basename(filePath);
-  logger.info(`Restart because ${color.yellow(filename)} is changed.\n`);
+  if (filePath) {
+    const filename = path.basename(filePath);
+    logger.info(
+      `Restart server because ${color.yellow(filename)} is changed.\n`,
+    );
+  } else {
+    logger.info('Restarting server...\n');
+  }
 
   for (const cleaner of cleaners) {
     await cleaner();

@@ -2,13 +2,13 @@
 published_at: 2024-02-06 08:00:00
 ---
 
-# Announcing Rsbuild v0.4
+# Announcing Rsbuild 0.4
 
 > February 06, 2024
 
 ![](https://assets.rspack.dev/rsbuild/rsbuild-banner-v0-4.png)
 
-Rsbuild v0.4 provides built-in support for module federation. It also contains some incompatible API updates. Please refer to the current document for upgrading.
+Rsbuild 0.4 provides built-in support for module federation. It also contains some incompatible API updates. Please refer to the current document for upgrading.
 
 ### Module Federation Config
 
@@ -73,7 +73,7 @@ export default {
 
 ## Remove postcss-flexbugs-fixes
 
-Rsbuild v0.4 removed the builtin [postcss-flexbugs-fixes](https://github.com/luisrudge/postcss-flexbugs-fixes) plugin.
+Rsbuild 0.4 removed the builtin [postcss-flexbugs-fixes](https://github.com/luisrudge/postcss-flexbugs-fixes) plugin.
 
 This plugin is used to fix some flex bugs for IE 10 / 11. Considering that modern browsers no longer have these flex issues, we removed this plugin to improve build performance.
 
@@ -144,9 +144,9 @@ The `loadConfig` method now returns both the contents of the config and the path
 ```js
 import { loadConfig } from '@rsbuild/core';
 
-// v0.3
+// 0.3
 const config = await loadConfig();
 
-// v0.4
+// 0.4
 const { content, filePath } = await loadConfig();
 ```

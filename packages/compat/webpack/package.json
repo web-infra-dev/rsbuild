@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/webpack",
-  "version": "0.7.9",
+  "version": "1.0.11",
   "homepage": "https://rsbuild.dev",
   "repository": {
     "type": "git",
@@ -11,36 +11,41 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./dist-types/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     }
   },
   "main": "./dist/index.cjs",
-  "types": "./dist/index.d.ts",
+  "types": "./dist-types/index.d.ts",
   "files": [
     "static",
-    "dist"
+    "dist",
+    "dist-types"
   ],
   "scripts": {
     "build": "modern build",
     "dev": "modern build --watch"
   },
   "dependencies": {
-    "@rsbuild/core": "workspace:*",
-    "@rsbuild/shared": "workspace:*",
-    "copy-webpack-plugin": "9.1.0",
-    "mini-css-extract-plugin": "2.9.0",
+    "copy-webpack-plugin": "11.0.0",
+    "mini-css-extract-plugin": "2.9.1",
+    "picocolors": "^1.1.1",
+    "reduce-configs": "^1.0.0",
     "tsconfig-paths-webpack-plugin": "4.1.0",
-    "webpack": "^5.92.0"
+    "webpack": "^5.95.0"
   },
   "devDependencies": {
+    "@rsbuild/core": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "18.x",
     "ansi-escapes": "4.3.2",
     "cli-truncate": "2.1.0",
     "patch-console": "1.0.0",
-    "typescript": "^5.5.2"
+    "typescript": "^5.6.3"
+  },
+  "peerDependencies": {
+    "@rsbuild/core": "1.x"
   },
   "publishConfig": {
     "access": "public",

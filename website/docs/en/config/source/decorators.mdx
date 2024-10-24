@@ -13,18 +13,9 @@ Used to configure the decorators syntax.
 ## decorators.version
 
 - **Type:** `'legacy' | '2022-03'`
-- **Default:** `'legacy'`
+- **Default:** `'2022-03'`
 
 Specify the decorator syntax version to be used.
-
-### legacy
-
-Rsbuild uses legacy syntax by default (Stage 1 proposal), equivalent to TypeScript's `experimentalDecorators: true`.
-
-Reference documentation:
-
-- [A Complete Guide to TypeScript Decorators](https://mirone.me/a-complete-guide-to-typescript-decorator/)
-- [TypeScript Decorators](https://www.typescriptlang.org/docs/handbook/decorators.html)
 
 ### 2022-03
 
@@ -44,3 +35,22 @@ Reference documentation:
 
 - [JavaScript meta programming with the 2022-03 decorators API](https://2ality.com/2022/10/javascript-decorators.html)
 - [TypeScript 5.0 Decorators](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-0.html#decorators)
+
+### legacy
+
+Equivalent to TypeScript's `experimentalDecorators: true`.
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    decorators: {
+      version: 'legacy',
+    },
+  },
+};
+```
+
+Reference documentation:
+
+- [A Complete Guide to TypeScript Decorators](https://mirone.me/a-complete-guide-to-typescript-decorator/)
+- [TypeScript Decorators](https://www.typescriptlang.org/docs/handbook/decorators.html)

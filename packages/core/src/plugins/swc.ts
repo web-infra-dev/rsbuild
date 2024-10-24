@@ -1,25 +1,67 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import {
-  type Polyfill,
-  SCRIPT_REGEX,
-  applyScriptCondition,
-  cloneDeep,
-  deepmerge,
-} from '@rsbuild/shared';
 import type { SwcLoaderOptions } from '@rspack/core';
-import { PLUGIN_SWC_NAME } from '../constants';
-import { isWebTarget } from '../helpers';
-import { reduceConfigs } from '../reduceConfigs';
+import deepmerge from 'deepmerge';
+import { reduceConfigs } from 'reduce-configs';
+import {
+  NODE_MODULES_REGEX,
+  PLUGIN_SWC_NAME,
+  SCRIPT_REGEX,
+} from '../constants';
+import { castArray, cloneDeep, isFunction, isWebTarget } from '../helpers';
 import type {
   NormalizedEnvironmentConfig,
   NormalizedSourceConfig,
+  Polyfill,
+  RsbuildContext,
   RsbuildPlugin,
+  RsbuildTarget,
+  RspackChain,
+  TransformImport,
 } from '../types';
 
 const builtinSwcLoaderName = 'builtin:swc-loader';
 
-function getDefaultSwcConfig(browserslist: string[]): SwcLoaderOptions {
+function applyScriptCondition({
+  rule,
+  isDev,
+  config,
+  context,
+  rsbuildTarget,
+}: {
+  rule: RspackChain.Rule;
+  isDev: boolean;
+  config: NormalizedEnvironmentConfig;
+  context: RsbuildContext;
+  rsbuildTarget: RsbuildTarget;
+}): void {
+  // compile all modules in the app directory, exclude node_modules
+  rule.include.add({
+    and: [context.rootPath, { not: NODE_MODULES_REGEX }],
+  });
+
+  // always compile TS and JSX files.
+  // otherwise, it may cause compilation errors and incorrect output
+  rule.include.add(/\.(?:ts|tsx|jsx|mts|cts)$/);
+
+  // transform the Rsbuild runtime code to support legacy browsers
+  if (rsbuildTarget === 'web' && isDev) {
+    rule.include.add(/[\\/]@rsbuild[\\/]core[\\/]dist[\\/]/);
+  }
+
+  for (const condition of config.source.include || []) {
+    rule.include.add(condition);
+  }
+
+  for (const condition of config.source.exclude || []) {
+    rule.exclude.add(condition);
+  }
+}
+
+function getDefaultSwcConfig(
+  browserslist: string[],
+  cacheRoot: string,
+): SwcLoaderOptions {
   return {
     jsc: {
       externalHelpers: true,
@@ -28,9 +70,9 @@ function getDefaultSwcConfig(browserslist: string[]): SwcLoaderOptions {
         syntax: 'typescript',
         decorators: true,
       },
-      // Avoid the webpack magic comment to be removed
-      // https://github.com/swc-project/swc/issues/6403
-      preserveAllComments: true,
+      experimental: {
+        cacheRoot,
+      },
     },
     isModule: 'unknown',
     env: {
@@ -46,15 +88,11 @@ export const pluginSwc = (): RsbuildPlugin => ({
   name: PLUGIN_SWC_NAME,
 
   setup(api) {
-    // This plugin uses Rspack builtin SWC and is not suitable for webpack
-    if (api.context.bundlerType === 'webpack') {
-      return;
-    }
-
     api.modifyBundlerChain({
       order: 'pre',
-      handler: async (chain, { CHAIN_ID, target, environment }) => {
-        const config = api.getNormalizedConfig({ environment });
+      handler: async (chain, { CHAIN_ID, isDev, target, environment }) => {
+        const { config, browserslist } = environment;
+        const cacheRoot = path.join(api.context.cachePath, '.swc');
 
         const rule = chain.module
           .rule(CHAIN_ID.RULE.JS)
@@ -69,26 +107,21 @@ export const pluginSwc = (): RsbuildPlugin => ({
 
         applyScriptCondition({
           rule,
-          chain,
+          isDev,
           config,
           context: api.context,
-          includes: [],
-          excludes: [],
+          rsbuildTarget: target,
         });
 
-        const { browserslist } = api.context.environments[environment];
+        // Rspack builtin SWC is not suitable for webpack
+        if (api.context.bundlerType === 'webpack') {
+          return;
+        }
 
-        const swcConfig = getDefaultSwcConfig(browserslist);
+        const swcConfig = getDefaultSwcConfig(browserslist, cacheRoot);
 
         applyTransformImport(swcConfig, config.source.transformImport);
         applySwcDecoratorConfig(swcConfig, config);
-
-        if (swcConfig.jsc?.externalHelpers) {
-          chain.resolve.alias.set(
-            '@swc/helpers',
-            path.dirname(require.resolve('@swc/helpers/package.json')),
-          );
-        }
 
         // apply polyfill
         if (isWebTarget(target)) {
@@ -120,7 +153,7 @@ export const pluginSwc = (): RsbuildPlugin => ({
         /**
          * If a script is imported with data URI, it can be compiled by babel too.
          * This is used by some frameworks to create virtual entry.
-         * https://webpack.js.org/api/module-methods/#import
+         * https://rspack.dev/api/runtime-api/module-methods#import
          * @example: import x from 'data:text/javascript,export default 1;';
          */
         dataUriRule.resolve
@@ -167,21 +200,41 @@ async function applyCoreJs(
   return coreJsDir;
 }
 
+const reduceTransformImportConfig = (
+  options: NormalizedSourceConfig['transformImport'],
+): TransformImport[] => {
+  if (!options) {
+    return [];
+  }
+
+  let imports: TransformImport[] = [];
+  for (const item of castArray(options)) {
+    if (isFunction(item)) {
+      imports = item(imports) ?? imports;
+    } else {
+      imports.push(item);
+    }
+  }
+  return imports;
+};
+
 function applyTransformImport(
   swcConfig: SwcLoaderOptions,
   pluginImport?: NormalizedSourceConfig['transformImport'],
 ) {
-  if (pluginImport !== false && pluginImport) {
+  const finalPluginImport = reduceTransformImportConfig(pluginImport);
+
+  if (finalPluginImport?.length) {
     swcConfig.rspackExperiments ??= {};
     swcConfig.rspackExperiments.import ??= [];
-    swcConfig.rspackExperiments.import.push(...pluginImport);
+    swcConfig.rspackExperiments.import.push(...finalPluginImport);
   }
 }
 
 export function applySwcDecoratorConfig(
   swcConfig: SwcLoaderOptions,
   config: NormalizedEnvironmentConfig,
-) {
+): void {
   swcConfig.jsc ||= {};
   swcConfig.jsc.transform ||= {};
 
@@ -199,6 +252,6 @@ export function applySwcDecoratorConfig(
       swcConfig.jsc.transform.decoratorVersion = '2022-03';
       break;
     default:
-      throw new Error('Unknown decorators version: ${version}');
+      throw new Error(`Unknown decorators version: ${version}`);
   }
 }

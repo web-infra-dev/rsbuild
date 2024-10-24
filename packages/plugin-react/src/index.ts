@@ -1,7 +1,7 @@
 import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
 import type { PluginOptions as ReactRefreshOptions } from '@rspack/plugin-react-refresh';
-import { applyBasicReactSupport, applyReactProfiler } from './react';
-import { applySplitChunksRule } from './splitChunks';
+import { applyBasicReactSupport, applyReactProfiler } from './react.js';
+import { applySplitChunksRule } from './splitChunks.js';
 
 export type SplitReactChunkOptions = {
   /**
@@ -38,27 +38,38 @@ export type PluginReactOptions = {
    * @see https://rspack.dev/guide/tech/react#rspackplugin-react-refresh
    */
   reactRefreshOptions?: ReactRefreshOptions;
+  /**
+   * Whether to enable React Fast Refresh in development mode.
+   * @default true
+   */
+  fastRefresh?: boolean;
 };
 
 export const PLUGIN_REACT_NAME = 'rsbuild:react';
 
-export const pluginReact = ({
-  enableProfiler = false,
-  ...options
-}: PluginReactOptions = {}): RsbuildPlugin => ({
+export const pluginReact = (
+  options: PluginReactOptions = {},
+): RsbuildPlugin => ({
   name: PLUGIN_REACT_NAME,
 
   setup(api) {
-    if (api.context.bundlerType === 'rspack') {
-      applyBasicReactSupport(api, options);
+    const defaultOptions: PluginReactOptions = {
+      fastRefresh: true,
+      enableProfiler: false,
+    };
+    const finalOptions = {
+      ...defaultOptions,
+      ...options,
+    };
 
-      const isProdProfile =
-        enableProfiler && process.env.NODE_ENV === 'production';
-      if (isProdProfile) {
+    if (api.context.bundlerType === 'rspack') {
+      applyBasicReactSupport(api, finalOptions);
+
+      if (finalOptions.enableProfiler) {
         applyReactProfiler(api);
       }
     }
 
-    applySplitChunksRule(api, options?.splitChunks);
+    applySplitChunksRule(api, finalOptions?.splitChunks);
   },
 });
