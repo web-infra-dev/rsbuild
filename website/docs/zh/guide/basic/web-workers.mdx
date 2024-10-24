@@ -8,6 +8,8 @@ Web Workers 是一种 JavaScript API，它允许网页在后台线程中执行�
 
 ## 使用 Web Workers
 
+### 使用 Worker 构造器
+
 Web Workers 是 Rspack 的一等公民，这意味着你不需要任何的 Loader 就可以直接在 Rspack / Rsbuild 项目中使用 Web Workers。详情可参考 [Rspack - Web Workers](https://rspack.dev/zh/guide/features/web-workers)。
 
 例如，创建一个名为 worker.js 的文件：
@@ -29,6 +31,29 @@ worker.onmessage = (event) => {
 };
 
 worker.postMessage(10);
+```
+
+### 使用 worker-loader
+
+> `worker-loader` 已不再维护，推荐使用 `new Worker()` 语法。
+
+如果你的项目已经在使用 `worker-loader`，或者希望使用 `worker-loader` 内的 `inline` 等配置能力，在 Rsbuild / Rspack 项目中可以使用 `worker-loader` 的替代方案 [worker-rspack-loader](https://github.com/rspack-contrib/worker-rspack-loader)。
+
+```ts
+export default {
+  tools: {
+    rspack: {
+      module: {
+        rules: [
+          {
+            test: /\.worker\.js$/,
+            loader: 'worker-rspack-loader',
+          },
+        ],
+      },
+    },
+  },
+};
 ```
 
 ### 从远程 URL 加载脚本（跨域）
