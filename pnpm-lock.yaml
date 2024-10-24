@@ -862,8 +862,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0
       '@rspack/plugin-preact-refresh':
-        specifier: 0.7.4
-        version: 0.7.4(@prefresh/core@1.5.2(preact@10.24.3))(@prefresh/utils@1.2.0)
+        specifier: ^1.0.0
+        version: 1.0.1(@prefresh/core@1.5.2(preact@10.24.3))(@prefresh/utils@1.2.0)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -2977,8 +2977,8 @@ packages:
     resolution: {integrity: sha512-VynGOEsVw2s8TAlLf/uESfrgfrq2+rcXB1muPJYBWbsm1Oa6r5qVQhjA5ggM6z/coYPrsVMgovl3Ff7Q7OCp1w==}
     engines: {node: '>=16.0.0'}
 
-  '@rspack/plugin-preact-refresh@0.7.4':
-    resolution: {integrity: sha512-ZgO4Ie4jDv5lz3ArrKUJycOqtMmrjq0y1lJ1k1IV3QC80ZkC7ncbP/HBERsuBr1ID8moujYNrq98Cu8CZqjr/Q==}
+  '@rspack/plugin-preact-refresh@1.0.1':
+    resolution: {integrity: sha512-KS4N2frFQ2egj9VcZX7nmP59OEKgxzvNC8wf0ztGvl9YQp8VdCOheoS4/YGWyby3KQoacY7o54PwoRFgBmzOXA==}
     peerDependencies:
       '@prefresh/core': ^1.5.0
       '@prefresh/utils': ^1.2.0
@@ -9544,7 +9544,7 @@ snapshots:
 
   '@rspack/lite-tapable@1.0.1': {}
 
-  '@rspack/plugin-preact-refresh@0.7.4(@prefresh/core@1.5.2(preact@10.24.3))(@prefresh/utils@1.2.0)':
+  '@rspack/plugin-preact-refresh@1.0.1(@prefresh/core@1.5.2(preact@10.24.3))(@prefresh/utils@1.2.0)':
     dependencies:
       '@prefresh/core': 1.5.2(preact@10.24.3)
       '@prefresh/utils': 1.2.0
