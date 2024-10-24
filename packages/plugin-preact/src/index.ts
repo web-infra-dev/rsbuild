@@ -77,12 +77,10 @@ export const pluginPreact = (
       );
 
       const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
-      const NODE_MODULES_REGEX = /[\\/]node_modules[\\/]/;
 
       chain.plugin('preact-refresh').use(PreactRefreshPlugin, [
         {
           include: [SCRIPT_REGEX],
-          exclude: [NODE_MODULES_REGEX],
         },
       ]);
     });
