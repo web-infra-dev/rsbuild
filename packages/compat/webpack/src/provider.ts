@@ -1,6 +1,10 @@
 import type { CreateCompiler, RsbuildProvider } from '@rsbuild/core';
-import { initConfigs } from './initConfigs';
-import { createDevServer, initRsbuildConfig } from './shared';
+import { build } from './build.js';
+import { createCompiler as baseCreateCompiler } from './createCompiler.js';
+import { initConfigs } from './initConfigs.js';
+import { inspectConfig } from './inspectConfig.js';
+import { pluginAdaptor } from './plugin.js';
+import { createDevServer, initRsbuildConfig } from './shared.js';
 
 export const webpackProvider: RsbuildProvider<'webpack'> = async ({
   context,
@@ -12,8 +16,7 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
   setCssExtractPlugin(cssExtractPlugin);
 
   const createCompiler = (async () => {
-    const { createCompiler } = await import('./createCompiler');
-    const result = await createCompiler({
+    const result = await baseCreateCompiler({
       context,
       pluginManager,
       rsbuildOptions,
@@ -21,7 +24,6 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     return result.compiler;
   }) as CreateCompiler;
 
-  const { pluginAdaptor } = await import('./plugin');
   pluginManager.addPlugins([pluginAdaptor()]);
 
   return {
@@ -68,12 +70,10 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     },
 
     async build(options) {
-      const { build } = await import('./build');
       return build({ context, pluginManager, rsbuildOptions }, options);
     },
 
     async inspectConfig(inspectOptions) {
-      const { inspectConfig } = await import('./inspectConfig');
       return await inspectConfig({
         context,
         pluginManager,
