@@ -35,9 +35,9 @@ worker.postMessage(10);
 
 ### 使用 worker-loader
 
-> worker-loader 已不再维护，推荐使用 `new Worker()` 语法。
+> `worker-loader` 已不再维护，推荐使用 `new Worker()` 语法。
 
-在 Rsbuild / Rspack 项目中可以使用 `worker-loader` 的替代方案 [worker-rspack-loader](https://github.com/rspack-contrib/worker-rspack-loader)。
+如果你的项目已经在使用 `worker-loader`，或者希望使用 `worker-loader` 内的 `inline` 等配置能力，在 Rsbuild / Rspack 项目中可以使用 `worker-loader` 的替代方案 [worker-rspack-loader](https://github.com/rspack-contrib/worker-rspack-loader)。
 
 ```ts
 export default {
