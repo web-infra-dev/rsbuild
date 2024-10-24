@@ -66,6 +66,34 @@ export default = () => <img src={logo} />;
 }
 ```
 
+如果需要在 CSS 文件中引用绝对路径下的静态资源：
+
+```css
+@font-face {
+  font-family: DingTalk;
+  src: url('/image/font/foo.ttf');
+}
+```
+
+默认情况下，Rsbuild 内置的 `css-loader` 会解析 `url()` 中的绝对路径并寻找指定的模块。如果你希望跳过绝对路径的解析，可以配置 [`tools.cssLoader`](/config/tools/css-loader#toolscssloader) 来过滤指定的路径，被过滤的路径将被原样保留在代码中。
+
+```ts
+export default {
+  tools: {
+    cssLoader: {
+      url: {
+        filter: (url) => {
+          if (/\/image\/font/.test(url)) {
+            return false;
+          }
+          return true;
+        },
+      },
+    },
+  },
+};
+```
+
 ## 引用结果
 
 引用静态资源的结果取决于文件体积：

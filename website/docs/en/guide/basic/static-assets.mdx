@@ -66,6 +66,34 @@ Import with [alias](/guide/advanced/alias) are also supported:
 }
 ```
 
+If you want to reference static assets in absolute paths in CSS files:
+
+```css
+@font-face {
+  font-family: DingTalk;
+  src: url('/image/font/foo.ttf');
+}
+```
+
+By default, the built-in `css-loader` in Rsbuild will resolve absolute paths in `url()` and look for the specified modules. If you want to skip resolving absolute paths, you can configure [`tools.cssLoader`](/config/tools/css-loader#toolscssloader) to filter out the specified paths. The filtered paths are left as they are in the code.
+
+```ts
+export default {
+  tools: {
+    cssLoader: {
+      url: {
+        filter: (url) => {
+          if (/\/image\/font/.test(url)) {
+            return false;
+          }
+          return true;
+        },
+      },
+    },
+  },
+};
+```
+
 ## Import Results
 
 The result of importing static assets depends on the file size:
