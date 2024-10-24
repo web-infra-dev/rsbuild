@@ -79,17 +79,7 @@ export function createPluginManager(): PluginManager {
 
       validatePlugin(newPlugin);
 
-      const existPlugin = plugins.find(
-        (item) =>
-          item.instance.name === newPlugin.name &&
-          item.environment === environment,
-      );
-
-      if (existPlugin) {
-        logger.warn(
-          `Rsbuild plugin "${newPlugin.name}" registered multiple times.`,
-        );
-      } else if (before) {
+      if (before) {
         const index = plugins.findIndex(
           (item) => item.instance.name === before,
         );
