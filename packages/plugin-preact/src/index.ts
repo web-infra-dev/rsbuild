@@ -23,9 +23,13 @@ export const pluginPreact = (
   setup(api) {
     const { reactAliasesEnabled = true, prefreshEnabled = true } = options;
 
-    api.modifyEnvironmentConfig((userConfig, { mergeEnvironmentConfig }) => {
+    api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
+      const isDev = config.mode === 'development';
+      const usingHMR =
+        isDev && config.dev.hmr && config.output.target === 'web';
       const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
-        development: userConfig.mode === 'development',
+        development: config.mode === 'development',
+        refresh: usingHMR && options.prefreshEnabled,
         runtime: 'automatic',
         importSource: 'preact',
       };
@@ -57,7 +61,7 @@ export const pluginPreact = (
         };
       }
 
-      return mergeEnvironmentConfig(extraConfig, userConfig);
+      return mergeEnvironmentConfig(extraConfig, config);
     });
 
     api.modifyBundlerChain(async (chain, { isProd, target }) => {
