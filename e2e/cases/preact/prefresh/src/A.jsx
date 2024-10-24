@@ -1,13 +1,13 @@
-import { createSignal } from 'solid-js';
+import { useState } from 'preact/hooks';
 import B from './B';
 
 const App = () => {
-  const [count, setCount] = createSignal(0);
+  const [count, setCount] = useState(0);
 
   return (
     <div>
-      <button id="A" type="button" onClick={() => setCount(count() + 1)}>
-        A: {count()}
+      <button id="A" type="button" onClick={() => setCount(count + 1)}>
+        A: {count}
       </button>
       <B count={count} />
     </div>
