@@ -528,7 +528,7 @@ This method needs to be called before compiling. If it is called after compiling
 - **Type:**
 
 ```ts
-type AddPluginsOptions = { before?: string } | { after?: string };
+type AddPluginsOptions = { before?: string; environment?: string };
 
 function AddPlugins(
   plugins: Array<RsbuildPlugin | Falsy>,
@@ -544,8 +544,8 @@ rsbuild.addPlugins([pluginFoo(), pluginBar()]);
 // Insert before the bar plugin
 rsbuild.addPlugins([pluginFoo()], { before: 'bar' });
 
-// Insert after the bar plugin
-rsbuild.addPlugins([pluginFoo()], { after: 'bar' });
+// Add plugin for node environment
+rsbuild.addPlugins([pluginFoo()], { environment: 'node' });
 ```
 
 ## rsbuild.getPlugins
