@@ -549,7 +549,7 @@ const compiler = await rsbuild.createCompiler();
 - **类型：**
 
 ```ts
-type AddPluginsOptions = { before?: string } | { after?: string };
+type AddPluginsOptions = { before?: string; environment?: string };
 
 function AddPlugins(
   plugins: Array<RsbuildPlugin | Falsy>,
@@ -565,8 +565,8 @@ rsbuild.addPlugins([pluginFoo(), pluginBar()]);
 // 在 bar 插件之前插入
 rsbuild.addPlugins([pluginFoo()], { before: 'bar' });
 
-// 在 bar 插件之后插入
-rsbuild.addPlugins([pluginFoo()], { after: 'bar' });
+// 为 node 环境添加插件
+rsbuild.addPlugins([pluginFoo()], { environment: 'node' });
 ```
 
 ## rsbuild.getPlugins
