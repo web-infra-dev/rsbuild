@@ -184,6 +184,11 @@ export interface SourceConfig {
    */
   aliasStrategy?: AliasStrategy;
   /**
+   * Include additional files that should be treated as static assets.
+   * @default undefined
+   */
+  assetsInclude?: Rspack.RuleSetCondition;
+  /**
    * Specify directories or modules that need additional compilation.
    * In order to maintain faster compilation speed, Rsbuild will not compile files under node_modules through
    * `babel-loader` or `ts-loader` by default, as will as the files outside the current project directory.

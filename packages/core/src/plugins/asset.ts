@@ -2,6 +2,7 @@ import path from 'node:path';
 import type { GeneratorOptionsByModuleType } from '@rspack/core';
 import {
   AUDIO_EXTENSIONS,
+  DEFAULT_DATA_URL_SIZE,
   FONT_EXTENSIONS,
   IMAGE_EXTENSIONS,
   VIDEO_EXTENSIONS,
@@ -125,6 +126,25 @@ export const pluginAsset = (): RsbuildPlugin => ({
       chain.output.assetModuleFilename(assetsFilename);
       if (!emitAssets) {
         chain.module.generator.merge({ 'asset/resource': { emit: false } });
+      }
+
+      // additional assets
+      const { assetsInclude } = config.source;
+      if (assetsInclude) {
+        const { dataUriLimit } = config.output;
+        const rule = chain.module.rule('additional-assets').test(assetsInclude);
+        const maxSize =
+          typeof dataUriLimit === 'number'
+            ? dataUriLimit
+            : DEFAULT_DATA_URL_SIZE;
+
+        chainStaticAssetRule({
+          emit: emitAssets,
+          rule,
+          maxSize,
+          filename: assetsFilename,
+          assetType: 'additional',
+        });
       }
     });
   },
