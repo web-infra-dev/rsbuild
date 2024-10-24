@@ -66,6 +66,34 @@ Import with [alias](/guide/advanced/alias) are also supported:
 }
 ```
 
+If you want to reference static assets in absolute paths in CSS files:
+
+```css
+@font-face {
+  font-family: DingTalk;
+  src: url('/image/font/foo.ttf');
+}
+```
+
+You can configure [`tools.cssLoader`](/config/tools/css-loader#toolscssloader) to filter some urls:
+
+```ts
+export default {
+  tools: {
+    cssLoader: {
+      url: {
+        filter: (url) => {
+          if (/\/image\/font/.test(url)) {
+            return false;
+          }
+          return true;
+        },
+      },
+    },
+  },
+};
+```
+
 ## Import Results
 
 The result of importing static assets depends on the file size:
