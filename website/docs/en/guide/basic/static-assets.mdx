@@ -268,6 +268,14 @@ export default {
 
 For more information about asset modules, please refer to [Rspack - Asset modules](https://rspack.dev/guide/features/asset-module).
 
+### Related Configurations
+
+Extended static asset types will be affected by the following configurations:
+
+- [output.filename.assets](/config/output/filename): Set the name of extended static assets.
+- [output.distPath.assets](/config/output/dist-path): Set the output directory of extended static assets.
+- [output.dataUriLimit.assets](/config/output/data-uri-limit): Set the threshold of inlining for extended static assets.
+
 ## Custom Rules
 
 In some scenarios, you may need to bypass the built-in assets processing rules of Rsbuild and add some custom rules.

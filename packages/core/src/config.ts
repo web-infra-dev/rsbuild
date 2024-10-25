@@ -164,6 +164,7 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
     font: DEFAULT_DATA_URL_SIZE,
     image: DEFAULT_DATA_URL_SIZE,
     media: DEFAULT_DATA_URL_SIZE,
+    assets: DEFAULT_DATA_URL_SIZE,
   },
   legalComments: 'linked',
   injectStyles: false,
