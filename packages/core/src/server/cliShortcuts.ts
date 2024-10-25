@@ -1,12 +1,13 @@
 import readline from 'node:readline';
 import color from 'picocolors';
+import { isTTY } from '../helpers';
 import { logger } from '../logger';
 import type { CliShortcut, NormalizedDevConfig } from '../types/config';
 import { onBeforeRestartServer } from './restart';
 
 export const isCliShortcutsEnabled = (
   devConfig: NormalizedDevConfig,
-): boolean => devConfig.cliShortcuts && process.stdin.isTTY && !process.env.CI;
+): boolean => devConfig.cliShortcuts && isTTY('stdin');
 
 export function setupCliShortcuts({
   openPage,

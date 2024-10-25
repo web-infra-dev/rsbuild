@@ -1,6 +1,7 @@
 import path from 'node:path';
 import color from 'picocolors';
 import { init } from '../cli/init';
+import { isTTY } from '../helpers';
 import { logger } from '../logger';
 
 type Cleaner = () => Promise<unknown> | unknown;
@@ -15,7 +16,7 @@ export const onBeforeRestartServer = (cleaner: Cleaner): void => {
 };
 
 const clearConsole = () => {
-  if (process.stdout.isTTY && !process.env.DEBUG) {
+  if (isTTY() && !process.env.DEBUG) {
     process.stdout.write('\x1B[H\x1B[2J');
   }
 };
