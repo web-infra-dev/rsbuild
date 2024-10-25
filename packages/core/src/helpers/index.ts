@@ -35,26 +35,12 @@ export const isFunction = (func: unknown): func is (...args: any[]) => any =>
 export const isObject = (obj: unknown): obj is Record<string, any> =>
   Object.prototype.toString.call(obj) === '[object Object]';
 
-export const isPlainObject = (o: unknown): o is Record<string, any> => {
-  if (isObject(o) === false) return false;
-
-  // If has modified constructor
-  const ctor = (o as Record<string, any>).constructor;
-  if (ctor === undefined) return true;
-
-  // If has modified prototype
-  const prot = ctor.prototype;
-  if (isObject(prot) === false) return false;
-
-  // If constructor does not have an Object-specific method
-
-  // biome-ignore lint/suspicious/noPrototypeBuiltins: <explanation>
-  if (prot.hasOwnProperty('isPrototypeOf') === false) {
-    return false;
-  }
-
-  // Most likely a plain Object
-  return true;
+export const isPlainObject = (obj: unknown): obj is Record<string, any> => {
+  return (
+    obj !== null &&
+    typeof obj === 'object' &&
+    Object.getPrototypeOf(obj) === Object.prototype
+  );
 };
 
 export const castArray = <T>(arr?: T | T[]): T[] => {
