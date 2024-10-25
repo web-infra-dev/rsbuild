@@ -16,7 +16,12 @@ export {
 } from './config';
 export type { InternalContext } from './types';
 export { setHTMLPlugin, getHTMLPlugin } from './pluginHelper';
-export { formatStats, getStatsOptions, prettyTime } from './helpers';
+export {
+  formatStats,
+  getStatsOptions,
+  prettyTime,
+  isPlainObject,
+} from './helpers';
 export { registerBuildHook, registerDevHook, onCompileDone } from './hooks';
 export { getChainUtils, getConfigUtils } from './provider/rspackConfig';
 export { chainToConfig, modifyBundlerChain } from './configChain';

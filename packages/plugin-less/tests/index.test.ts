@@ -63,4 +63,30 @@ describe('plugin-less', () => {
     const bundlerConfigs = await rsbuild.initConfigs();
     expect(matchRules(bundlerConfigs[0], 'a.less')).toMatchSnapshot();
   });
+
+  it('should add less-loader with plugins', async () => {
+    class MockPlugin {
+      options?: any;
+      constructor(options?: any) {
+        this.options = options;
+      }
+      install(less: any, pluginManager: any) {}
+    }
+    const mockPlugin = new MockPlugin();
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        plugins: [
+          pluginLess({
+            lessLoaderOptions: {
+              lessOptions: {
+                plugins: [mockPlugin],
+              },
+            },
+          }),
+        ],
+      },
+    });
+    const bundlerConfigs = await rsbuild.initConfigs();
+    expect(matchRules(bundlerConfigs[0], 'a.less')).toMatchSnapshot();
+  });
 });

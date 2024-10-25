@@ -5,6 +5,7 @@ import type {
   RsbuildPlugin,
   Rspack,
 } from '@rsbuild/core';
+import { __internalHelper } from '@rsbuild/core';
 import deepmerge from 'deepmerge';
 import { reduceConfigsWithContext } from 'reduce-configs';
 
@@ -75,7 +76,9 @@ const getLessLoaderOptions = (
   ): LessLoaderOptions => {
     const getLessOptions = () => {
       if (defaults.lessOptions && userOptions.lessOptions) {
-        return deepmerge(defaults.lessOptions, userOptions.lessOptions);
+        return deepmerge(defaults.lessOptions, userOptions.lessOptions, {
+          isMergeableObject: __internalHelper.isPlainObject,
+        });
       }
       return userOptions.lessOptions || defaults.lessOptions;
     };
