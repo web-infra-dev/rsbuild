@@ -3,13 +3,14 @@
 - **Type:**
 
 ```ts
-type DataUriLimitConfig =
+type DataUriLimit =
   | number
   | {
       svg?: number;
       font?: number;
       image?: number;
       media?: number;
+      assets?: number;
     };
 ```
 
@@ -21,6 +22,7 @@ const defaultDatUriLimit = {
   font: 4096,
   image: 4096,
   media: 4096,
+  assets: 4096,
 };
 ```
 
@@ -36,6 +38,7 @@ Detail:
 - `font`: The threshold of the font file.
 - `image`: The threshold of non-SVG images.
 - `media`: The threshold of media assets such as videos.
+- `assets`: The threshold of other static assets. Such as the assets defined in [Extend Asset Types](/guide/basic/static-assets#扩展静态资源类型).
 
 ## Example
 

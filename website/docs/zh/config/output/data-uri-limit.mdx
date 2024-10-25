@@ -3,13 +3,14 @@
 - **类型：**
 
 ```ts
-type DataUriLimitConfig =
+type DataUriLimit =
   | number
   | {
       svg?: number;
       font?: number;
       image?: number;
       media?: number;
+      assets?: number;
     };
 ```
 
@@ -21,6 +22,7 @@ const defaultDatUriLimit = {
   font: 4096,
   image: 4096,
   media: 4096,
+  assets: 4096,
 };
 ```
 
@@ -36,6 +38,7 @@ const defaultDatUriLimit = {
 - `font`：表示字体文件的体积阈值。
 - `image`：表示非 SVG 图片的体积阈值。
 - `media`：表示视频等媒体资源的体积阈值。
+- `assets`：其他静态资源的体积阈值。例如 [扩展静态资源类型](/guide/basic/static-assets#扩展静态资源类型) 中定义的资源。
 
 ## 示例
 

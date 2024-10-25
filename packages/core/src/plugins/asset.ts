@@ -2,7 +2,6 @@ import path from 'node:path';
 import type { GeneratorOptionsByModuleType } from '@rspack/core';
 import {
   AUDIO_EXTENSIONS,
-  DEFAULT_DATA_URL_SIZE,
   FONT_EXTENSIONS,
   IMAGE_EXTENSIONS,
   VIDEO_EXTENSIONS,
@@ -134,9 +133,7 @@ export const pluginAsset = (): RsbuildPlugin => ({
         const { dataUriLimit } = config.output;
         const rule = chain.module.rule('additional-assets').test(assetsInclude);
         const maxSize =
-          typeof dataUriLimit === 'number'
-            ? dataUriLimit
-            : DEFAULT_DATA_URL_SIZE;
+          typeof dataUriLimit === 'number' ? dataUriLimit : dataUriLimit.assets;
 
         chainStaticAssetRule({
           emit: emitAssets,

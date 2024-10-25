@@ -733,6 +733,11 @@ export type DataUriLimit = {
    * @default 4096
    */
   media?: number;
+  /**
+   * The data URI limit of other static assets.
+   * @default 4096
+   */
+  assets?: number;
 };
 
 export type Charset = 'ascii' | 'utf8';
