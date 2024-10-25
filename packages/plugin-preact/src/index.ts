@@ -1,4 +1,7 @@
+import { createRequire } from 'node:module';
 import type { EnvironmentConfig, RsbuildPlugin, Rspack } from '@rsbuild/core';
+
+const require = createRequire(import.meta.url);
 
 export type PluginPreactOptions = {
   /**
@@ -77,10 +80,20 @@ export const pluginPreact = (
       );
 
       const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
+      const preactPath = require.resolve('preact', {
+        paths: [api.context.rootPath],
+      });
 
       chain.plugin('preact-refresh').use(PreactRefreshPlugin, [
         {
           include: [SCRIPT_REGEX],
+          exclude: [
+            /node_modules/,
+            // exclude Rsbuild internal HMR client
+            // TODO: use better way to exclude
+            /packages\/core\/dist/,
+          ],
+          preactPath,
         },
       ]);
     });
