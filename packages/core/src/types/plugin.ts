@@ -128,10 +128,12 @@ export type PluginManager = {
   addPlugins: (
     plugins: Array<RsbuildPlugin | Falsy>,
     options?: {
+      /**
+       * Insert before the specified plugin.
+       */
       before?: string;
       /**
        * Add a plugin for the specified environment.
-       *
        * If environment is not specified, it will be registered as a global plugin (effective in all environments)
        */
       environment?: string;

@@ -66,6 +66,34 @@ Import with [alias](/guide/advanced/alias) are also supported:
 }
 ```
 
+If you want to reference static assets in absolute paths in CSS files:
+
+```css
+@font-face {
+  font-family: DingTalk;
+  src: url('/image/font/foo.ttf');
+}
+```
+
+By default, the built-in `css-loader` in Rsbuild will resolve absolute paths in `url()` and look for the specified modules. If you want to skip resolving absolute paths, you can configure [`tools.cssLoader`](/config/tools/css-loader#toolscssloader) to filter out the specified paths. The filtered paths are left as they are in the code.
+
+```ts
+export default {
+  tools: {
+    cssLoader: {
+      url: {
+        filter: (url) => {
+          if (/\/image\/font/.test(url)) {
+            return false;
+          }
+          return true;
+        },
+      },
+    },
+  },
+};
+```
+
 ## Import Results
 
 The result of importing static assets depends on the file size:
@@ -239,6 +267,14 @@ export default {
 ```
 
 For more information about asset modules, please refer to [Rspack - Asset modules](https://rspack.dev/guide/features/asset-module).
+
+### Related Configurations
+
+Extended static asset types will be affected by the following configurations:
+
+- [output.filename.assets](/config/output/filename): Set the name of extended static assets.
+- [output.distPath.assets](/config/output/dist-path): Set the output directory of extended static assets.
+- [output.dataUriLimit.assets](/config/output/data-uri-limit): Set the threshold of inlining for extended static assets.
 
 ## Custom Rules
 

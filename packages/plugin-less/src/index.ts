@@ -10,6 +10,14 @@ import { reduceConfigsWithContext } from 'reduce-configs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+export const isPlainObject = (obj: unknown): obj is Record<string, any> => {
+  return (
+    obj !== null &&
+    typeof obj === 'object' &&
+    Object.getPrototypeOf(obj) === Object.prototype
+  );
+};
+
 export const PLUGIN_LESS_NAME = 'rsbuild:less';
 
 export type LessLoaderOptions = {
@@ -75,7 +83,9 @@ const getLessLoaderOptions = (
   ): LessLoaderOptions => {
     const getLessOptions = () => {
       if (defaults.lessOptions && userOptions.lessOptions) {
-        return deepmerge(defaults.lessOptions, userOptions.lessOptions);
+        return deepmerge(defaults.lessOptions, userOptions.lessOptions, {
+          isMergeableObject: isPlainObject,
+        });
       }
       return userOptions.lessOptions || defaults.lessOptions;
     };

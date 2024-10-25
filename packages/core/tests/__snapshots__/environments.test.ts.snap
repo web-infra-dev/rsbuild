@@ -43,6 +43,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
       "namedExport": false,
     },
     "dataUriLimit": {
+      "assets": 4096,
       "font": 4096,
       "image": 4096,
       "media": 4096,
@@ -172,6 +173,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
       "namedExport": false,
     },
     "dataUriLimit": {
+      "assets": 4096,
       "font": 4096,
       "image": 4096,
       "media": 4096,
@@ -301,6 +303,7 @@ exports[`environment config > should print environment config when inspect confi
         "namedExport": false,
       },
       "dataUriLimit": {
+        "assets": 4096,
         "font": 4096,
         "image": 4096,
         "media": 4096,
@@ -461,6 +464,7 @@ exports[`environment config > should print environment config when inspect confi
         "namedExport": false,
       },
       "dataUriLimit": {
+        "assets": 4096,
         "font": 4096,
         "image": 4096,
         "media": 4096,
@@ -641,6 +645,7 @@ exports[`environment config > should support modify environment config by api.mo
         "namedExport": false,
       },
       "dataUriLimit": {
+        "assets": 4096,
         "font": 4096,
         "image": 4096,
         "media": 4096,
@@ -802,6 +807,7 @@ exports[`environment config > should support modify environment config by api.mo
         "namedExport": false,
       },
       "dataUriLimit": {
+        "assets": 4096,
         "font": 4096,
         "image": 4096,
         "media": 4096,
@@ -964,6 +970,7 @@ exports[`environment config > should support modify environment config by api.mo
         "namedExport": false,
       },
       "dataUriLimit": {
+        "assets": 4096,
         "font": 4096,
         "image": 4096,
         "media": 4096,
@@ -1129,6 +1136,7 @@ exports[`environment config > should support modify single environment config by
         "namedExport": false,
       },
       "dataUriLimit": {
+        "assets": 4096,
         "font": 4096,
         "image": 4096,
         "media": 4096,
@@ -1290,6 +1298,7 @@ exports[`environment config > should support modify single environment config by
         "namedExport": false,
       },
       "dataUriLimit": {
+        "assets": 4096,
         "font": 4096,
         "image": 4096,
         "media": 4096,
