@@ -19,20 +19,33 @@ export type PluginPreactOptions = {
 export const PLUGIN_PREACT_NAME = 'rsbuild:preact';
 
 export const pluginPreact = (
-  options: PluginPreactOptions = {},
+  userOptions: PluginPreactOptions = {},
 ): RsbuildPlugin => ({
   name: PLUGIN_PREACT_NAME,
 
   setup(api) {
-    const { reactAliasesEnabled = true, prefreshEnabled = true } = options;
+    const options = {
+      prefreshEnabled: true,
+      reactAliasesEnabled: true,
+      ...userOptions,
+    };
+
+    // @rspack/plugin-preact-refresh does not support Windows yet
+    if (process.platform === 'win32') {
+      options.prefreshEnabled = false;
+    }
 
     api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
       const isDev = config.mode === 'development';
-      const usingHMR =
-        isDev && config.dev.hmr && config.output.target === 'web';
+      const usePrefresh =
+        isDev &&
+        options.prefreshEnabled &&
+        config.dev.hmr &&
+        config.output.target === 'web';
+
       const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
         development: config.mode === 'development',
-        refresh: usingHMR && options.prefreshEnabled,
+        refresh: usePrefresh,
         runtime: 'automatic',
         importSource: 'preact',
       };
@@ -54,8 +67,16 @@ export const pluginPreact = (
         },
       };
 
-      if (reactAliasesEnabled) {
-        extraConfig.source ||= {};
+      extraConfig.source ||= {};
+
+      if (usePrefresh) {
+        // transpile `@prefresh/core` and `@prefresh/utils` to ensure browser compatibility
+        extraConfig.source.include = [
+          /node_modules[\\/]@prefresh[\\/](core|utils)/,
+        ];
+      }
+
+      if (options.reactAliasesEnabled) {
         extraConfig.source.alias = {
           react: 'preact/compat',
           'react-dom/test-utils': 'preact/test-utils',
@@ -67,16 +88,12 @@ export const pluginPreact = (
       return mergeEnvironmentConfig(extraConfig, config);
     });
 
-    api.modifyBundlerChain(async (chain, { isProd, target }) => {
+    api.modifyBundlerChain(async (chain, { isDev, target }) => {
       const config = api.getNormalizedConfig();
-      const usingHMR = !isProd && config.dev.hmr && target === 'web';
+      const usePrefresh =
+        isDev && options.prefreshEnabled && config.dev.hmr && target === 'web';
 
-      if (
-        !usingHMR ||
-        !prefreshEnabled ||
-        // @rspack/plugin-preact-refresh does not support Windows yet
-        process.platform === 'win32'
-      ) {
+      if (!usePrefresh) {
         return;
       }
 
