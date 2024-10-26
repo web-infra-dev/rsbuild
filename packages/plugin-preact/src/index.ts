@@ -71,7 +71,12 @@ export const pluginPreact = (
       const config = api.getNormalizedConfig();
       const usingHMR = !isProd && config.dev.hmr && target === 'web';
 
-      if (!usingHMR || !prefreshEnabled) {
+      if (
+        !usingHMR ||
+        !prefreshEnabled ||
+        // @rspack/plugin-preact-refresh does not support Windows yet
+        process.platform === 'win32'
+      ) {
         return;
       }
 
