@@ -27,9 +27,9 @@
     "dev": "rslib build --watch"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.8",
-    "@babel/preset-env": "^7.25.8",
-    "@babel/preset-typescript": "^7.25.7",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-typescript": "^7.26.0",
     "@rsbuild/core": "workspace:*",
     "@types/serialize-javascript": "^5.0.4",
     "serialize-javascript": "^6.0.2",
