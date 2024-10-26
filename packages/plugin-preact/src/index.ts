@@ -30,6 +30,11 @@ export const pluginPreact = (
       ...userOptions,
     };
 
+    // @rspack/plugin-preact-refresh does not support Windows yet
+    if (process.platform === 'win32') {
+      options.prefreshEnabled = false;
+    }
+
     api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
       const isDev = config.mode === 'development';
       const usePrefresh =
@@ -88,11 +93,7 @@ export const pluginPreact = (
       const usePrefresh =
         isDev && options.prefreshEnabled && config.dev.hmr && target === 'web';
 
-      if (
-        !usePrefresh ||
-        // @rspack/plugin-preact-refresh does not support Windows yet
-        process.platform === 'win32'
-      ) {
+      if (!usePrefresh) {
         return;
       }
 
