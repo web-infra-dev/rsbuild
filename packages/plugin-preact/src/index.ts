@@ -1,4 +1,7 @@
+import { createRequire } from 'node:module';
 import type { EnvironmentConfig, RsbuildPlugin, Rspack } from '@rsbuild/core';
+
+const require = createRequire(import.meta.url);
 
 export type PluginPreactOptions = {
   /**
@@ -6,6 +9,11 @@ export type PluginPreactOptions = {
    * @default true
    */
   reactAliasesEnabled?: boolean;
+  /**
+   * Whether to inject Prefresh for HMR
+   * @default true
+   */
+  prefreshEnabled?: boolean;
 };
 
 export const PLUGIN_PREACT_NAME = 'rsbuild:preact';
@@ -16,11 +24,15 @@ export const pluginPreact = (
   name: PLUGIN_PREACT_NAME,
 
   setup(api) {
-    const { reactAliasesEnabled = true } = options;
+    const { reactAliasesEnabled = true, prefreshEnabled = true } = options;
 
-    api.modifyEnvironmentConfig((userConfig, { mergeEnvironmentConfig }) => {
+    api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
+      const isDev = config.mode === 'development';
+      const usingHMR =
+        isDev && config.dev.hmr && config.output.target === 'web';
       const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
-        development: userConfig.mode === 'development',
+        development: config.mode === 'development',
+        refresh: usingHMR && options.prefreshEnabled,
         runtime: 'automatic',
         importSource: 'preact',
       };
@@ -52,7 +64,43 @@ export const pluginPreact = (
         };
       }
 
-      return mergeEnvironmentConfig(extraConfig, userConfig);
+      return mergeEnvironmentConfig(extraConfig, config);
+    });
+
+    api.modifyBundlerChain(async (chain, { isProd, target }) => {
+      const config = api.getNormalizedConfig();
+      const usingHMR = !isProd && config.dev.hmr && target === 'web';
+
+      if (
+        !usingHMR ||
+        !prefreshEnabled ||
+        // @rspack/plugin-preact-refresh does not support Windows yet
+        process.platform === 'win32'
+      ) {
+        return;
+      }
+
+      const { default: PreactRefreshPlugin } = await import(
+        '@rspack/plugin-preact-refresh'
+      );
+
+      const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
+      const preactPath = require.resolve('preact', {
+        paths: [api.context.rootPath],
+      });
+
+      chain.plugin('preact-refresh').use(PreactRefreshPlugin, [
+        {
+          include: [SCRIPT_REGEX],
+          exclude: [
+            /node_modules/,
+            // exclude Rsbuild internal HMR client
+            // TODO: use better way to exclude
+            /packages\/core\/dist/,
+          ],
+          preactPath,
+        },
+      ]);
     });
   },
 });

@@ -25,9 +25,15 @@
     "build": "rslib build",
     "dev": "rslib build --watch"
   },
+  "dependencies": {
+    "@prefresh/core": "^1.5.2",
+    "@prefresh/utils": "^1.2.0",
+    "@rspack/plugin-preact-refresh": "^1.1.0"
+  },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@types/node": "18.x",
+    "preact": "^10.24.3",
     "typescript": "^5.6.3"
   },
   "peerDependencies": {

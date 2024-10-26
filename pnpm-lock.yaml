@@ -854,6 +854,16 @@ importers:
         version: 5.6.3
 
   packages/plugin-preact:
+    dependencies:
+      '@prefresh/core':
+        specifier: ^1.5.2
+        version: 1.5.2(preact@10.24.3)
+      '@prefresh/utils':
+        specifier: ^1.2.0
+        version: 1.2.0
+      '@rspack/plugin-preact-refresh':
+        specifier: ^1.1.0
+        version: 1.1.0(@prefresh/core@1.5.2(preact@10.24.3))(@prefresh/utils@1.2.0)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -861,6 +871,9 @@ importers:
       '@types/node':
         specifier: 18.x
         version: 18.19.31
+      preact:
+        specifier: ^10.24.3
+        version: 10.24.3
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -2735,6 +2748,14 @@ packages:
   '@polka/url@1.0.0-next.25':
     resolution: {integrity: sha512-j7P6Rgr3mmtdkeDGTe0E/aYyWEWVtc5yFXtHCRHs28/jptDEWfaVOc5T7cblqy1XKPPfCxJc/8DwQ5YgLOZOVQ==}
 
+  '@prefresh/core@1.5.2':
+    resolution: {integrity: sha512-A/08vkaM1FogrCII5PZKCrygxSsc11obExBScm3JF1CryK2uDS3ZXeni7FeKCx1nYdUkj4UcJxzPzc1WliMzZA==}
+    peerDependencies:
+      preact: ^10.0.0
+
+  '@prefresh/utils@1.2.0':
+    resolution: {integrity: sha512-KtC/fZw+oqtwOLUFM9UtiitB0JsVX0zLKNyRTA332sqREqSALIIQQxdUCS1P3xR/jT1e2e8/5rwH6gdcMLEmsQ==}
+
   '@remix-run/router@1.20.0':
     resolution: {integrity: sha512-mUnk8rPJBI9loFDZ+YzPGdeniYK+FTmRD1TMCz7ev2SNIozyKKpnGgsxO34u6Z4z/t0ITuu7voi/AshfsGsgFg==}
     engines: {node: '>=14.0.0'}
@@ -2958,6 +2979,12 @@ packages:
   '@rspack/lite-tapable@1.0.1':
     resolution: {integrity: sha512-VynGOEsVw2s8TAlLf/uESfrgfrq2+rcXB1muPJYBWbsm1Oa6r5qVQhjA5ggM6z/coYPrsVMgovl3Ff7Q7OCp1w==}
     engines: {node: '>=16.0.0'}
+
+  '@rspack/plugin-preact-refresh@1.1.0':
+    resolution: {integrity: sha512-WQpJZWyypMn/RLog+nKJMXW3LmGl0UDrvLv6OS+/BT1Iy53mdw3quOB1lVaKRlJ4MxZ1TTb/TeYUYZJQzyBVgQ==}
+    peerDependencies:
+      '@prefresh/core': ^1.5.0
+      '@prefresh/utils': ^1.2.0
 
   '@rspack/plugin-react-refresh@1.0.0':
     resolution: {integrity: sha512-WvXkLewW5G0Mlo5H1b251yDh5FFiH4NDAbYlFpvFjcuXX2AchZRf9zdw57BDE/ADyWsJgA8kixN/zZWBTN3iYA==}
@@ -9314,6 +9341,12 @@ snapshots:
 
   '@polka/url@1.0.0-next.25': {}
 
+  '@prefresh/core@1.5.2(preact@10.24.3)':
+    dependencies:
+      preact: 10.24.3
+
+  '@prefresh/utils@1.2.0': {}
+
   '@remix-run/router@1.20.0': {}
 
   '@rollup/pluginutils@4.1.1':
@@ -9513,6 +9546,11 @@ snapshots:
       '@swc/helpers': 0.5.13
 
   '@rspack/lite-tapable@1.0.1': {}
+
+  '@rspack/plugin-preact-refresh@1.1.0(@prefresh/core@1.5.2(preact@10.24.3))(@prefresh/utils@1.2.0)':
+    dependencies:
+      '@prefresh/core': 1.5.2(preact@10.24.3)
+      '@prefresh/utils': 1.2.0
 
   '@rspack/plugin-react-refresh@1.0.0(react-refresh@0.14.2)':
     dependencies:
