@@ -14,6 +14,18 @@ export type PluginPreactOptions = {
    * @default true
    */
   prefreshEnabled?: boolean;
+  /**
+   * Include files to be processed by the `@rspack/plugin-preact-refresh` plugin.
+   * The value is the same as the `rule.test` option in Rspack.
+   * @default /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/
+   */
+  include?: Rspack.RuleSetCondition;
+  /**
+   * Exclude files from being processed by the `@rspack/plugin-preact-refresh` plugin.
+   * The value is the same as the `rule.exclude` option in Rspack.
+   * @default /[\\/]node_modules[\\/]/
+   */
+  exclude?: Rspack.RuleSetCondition;
 };
 
 export const PLUGIN_PREACT_NAME = 'rsbuild:preact';
@@ -25,6 +37,8 @@ export const pluginPreact = (
 
   setup(api) {
     const options = {
+      include: /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/,
+      exclude: /[\\/]node_modules[\\/]/,
       prefreshEnabled: true,
       reactAliasesEnabled: true,
       ...userOptions,
@@ -101,20 +115,14 @@ export const pluginPreact = (
         '@rspack/plugin-preact-refresh'
       );
 
-      const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
       const preactPath = require.resolve('preact', {
         paths: [api.context.rootPath],
       });
 
       chain.plugin('preact-refresh').use(PreactRefreshPlugin, [
         {
-          include: [SCRIPT_REGEX],
-          exclude: [
-            /node_modules/,
-            // exclude Rsbuild internal HMR client
-            // TODO: use better way to exclude
-            /packages\/core\/dist/,
-          ],
+          include: options.include,
+          exclude: options.exclude,
           preactPath,
         },
       ]);
