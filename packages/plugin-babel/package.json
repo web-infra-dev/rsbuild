@@ -28,10 +28,10 @@
     "prebundle": "prebundle"
   },
   "dependencies": {
-    "@babel/core": "^7.25.8",
+    "@babel/core": "^7.26.0",
     "@babel/plugin-proposal-decorators": "^7.25.7",
     "@babel/plugin-transform-class-properties": "^7.25.7",
-    "@babel/preset-typescript": "^7.25.7",
+    "@babel/preset-typescript": "^7.26.0",
     "@types/babel__core": "^7.20.5",
     "deepmerge": "^4.3.1",
     "reduce-configs": "^1.0.0",
