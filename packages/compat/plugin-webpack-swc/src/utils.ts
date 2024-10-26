@@ -139,7 +139,7 @@ export async function finalizeConfig(
   const objConfig = isUsingFnOptions ? {} : userConfig;
   const defaultConfig = getDefaultSwcConfig();
 
-  // apply swc default config
+  // apply SWC default config
   let swcConfig: ObjPluginSwcOptions = _.merge(
     {},
     defaultConfig,

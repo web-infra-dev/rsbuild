@@ -83,7 +83,7 @@ export const isSatisfyRspackVersion = async (
 ): Promise<boolean> => {
   let version = originalVersion;
 
-  // The nightly version of rspack is to append `-canary-abc` to the current version
+  // The nightly version of Rspack is to append `-canary-abc` to the current version
   if (version.includes('-canary')) {
     version = version.split('-canary')[0];
   }

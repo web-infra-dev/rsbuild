@@ -88,7 +88,7 @@ const applyDefaultMiddlewares = async ({
   }
 
   middlewares.push((req, res, next) => {
-    // allow hmr request cross-domain, because the user may use global proxy
+    // allow HMR request cross-domain, because the user may use global proxy
     res.setHeader('Access-Control-Allow-Origin', '*');
     const path = req.url ? url.parse(req.url).pathname : '';
     if (path?.includes('hot-update')) {

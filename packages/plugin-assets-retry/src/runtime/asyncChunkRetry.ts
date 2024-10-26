@@ -211,9 +211,9 @@ function ensureChunk(chunkId: string): Promise<unknown> {
     const { existRetryTimes, originalSrcUrl, nextRetryUrl, nextDomain } =
       nextRetry(chunkId);
 
-    // At present, we don't consider the switching domain and addQuery of async css chunk
-    // 1. Async js chunk will be requested first. It is rare for async css chunk to fail alone.
-    // 2. the code of loading css in webpack runtime is complex and it may be modified by cssExtractPlugin, increase the complexity of this plugin.
+    // At present, we don't consider the switching domain and addQuery of async CSS chunk
+    // 1. Async js chunk will be requested first. It is rare for async CSS chunk to fail alone.
+    // 2. the code of loading CSS in webpack runtime is complex and it may be modified by cssExtractPlugin, increase the complexity of this plugin.
     const isCssAsyncChunkLoadFailed = Boolean(
       error?.message?.includes('CSS chunk'),
     );

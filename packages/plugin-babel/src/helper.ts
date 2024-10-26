@@ -27,7 +27,7 @@ const normalizeToPosixPath = (p: string | undefined) =>
     .normalizeSafe(normalize(p || ''))
     .replace(/^([a-zA-Z]+):/, (_, m: string) => `/${m.toLowerCase()}`);
 
-// compatible with windows path
+// compatible with Windows path
 const formatPath = (originPath: string) => {
   if (isAbsolute(originPath)) {
     return originPath.split(sep).join('/');

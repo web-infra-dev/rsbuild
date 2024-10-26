@@ -79,7 +79,7 @@ rspackOnlyTest(
 
     await expect(locatorKeep.innerHTML()).resolves.toBe(keepNum);
 
-    // index hmr correctly
+    // index HMR correctly
     const appPath = join(cwd, 'test-temp-src/App.tsx');
 
     await fs.promises.writeFile(

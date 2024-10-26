@@ -296,7 +296,7 @@ describe('mergeRsbuildConfig', () => {
     });
   });
 
-  it('should merge rspack plugins as expected', () => {
+  it('should merge Rspack plugins as expected', () => {
     class A {
       a = 1;
 

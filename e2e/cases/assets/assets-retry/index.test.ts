@@ -185,7 +185,7 @@ test('@rsbuild/plugin-assets-retry should work when blocking async chunk`', asyn
   logger.level = 'log';
 });
 
-test('@rsbuild/plugin-assets-retry should work when blocking async css chunk`', async ({
+test('@rsbuild/plugin-assets-retry should work when blocking async CSS chunk`', async ({
   page,
 }) => {
   logger.level = 'verbose';

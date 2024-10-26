@@ -1,7 +1,7 @@
 import { createRsbuild } from '../src';
 
-describe('should use rspack as default bundler', () => {
-  it('apply rspack correctly', async () => {
+describe('should use Rspack as the default bundler', () => {
+  it('apply Rspack correctly', async () => {
     const { NODE_ENV } = process.env;
     process.env.NODE_ENV = 'development';
     const rsbuild = await createRsbuild({

@@ -19,7 +19,7 @@ function appendWebpackScript(module: any, appendSource: string) {
 }
 
 function appendRspackScript(
-  module: any, // JsRuntimeModule type is not exported by rspack temporarily */
+  module: any, // JsRuntimeModule type is not exported by Rspack temporarily */
   appendSource: string,
 ) {
   try {

@@ -159,7 +159,7 @@ export async function dev({
 
   rsbuild.addPlugins([
     {
-      // fix hmr problem temporary (only appears in rsbuild repo, because css-loader is not in node_modules/ )
+      // fix HMR problem temporary (only appears in rsbuild repo, because css-loader is not in node_modules/ )
       // https://github.com/web-infra-dev/rspack/issues/5723
       name: 'fix-react-refresh-in-rsbuild',
       setup(api) {

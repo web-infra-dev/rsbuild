@@ -63,7 +63,7 @@ describe('plugin-webpack-swc', () => {
     expect(configs).toMatchSnapshot();
   });
 
-  it('should set swc minimizer in production', async () => {
+  it('should set SWC minimizer in production', async () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
       plugins: [pluginSwc()],
@@ -136,7 +136,7 @@ describe('plugin-webpack-swc', () => {
     process.env.NODE_ENV = 'test';
   });
 
-  it('should set correct swc minimizer options in production', async () => {
+  it('should set correct SWC minimizer options in production', async () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
       plugins: [
@@ -157,7 +157,7 @@ describe('plugin-webpack-swc', () => {
     process.env.NODE_ENV = 'test';
   });
 
-  it('should set correct swc minimizer options using raw swc config', async () => {
+  it('should set correct SWC minimizer options using raw SWC config', async () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
       plugins: [
@@ -180,7 +180,7 @@ describe('plugin-webpack-swc', () => {
     process.env.NODE_ENV = 'test';
   });
 
-  it('should disable swc minify', async () => {
+  it('should disable SWC minify', async () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
       plugins: [
@@ -198,7 +198,7 @@ describe('plugin-webpack-swc', () => {
     process.env.NODE_ENV = 'test';
   });
 
-  it('should disable swc minify when raw swc config', async () => {
+  it('should disable SWC minify when raw SWC config', async () => {
     process.env.NODE_ENV = 'production';
     const rsbuild = await createStubRsbuild({
       plugins: [
