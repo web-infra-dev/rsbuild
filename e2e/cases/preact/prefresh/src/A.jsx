@@ -1,5 +1,5 @@
 import { useState } from 'preact/hooks';
-import B from './B';
+import B from './test-temp-B';
 
 const App = () => {
   const [count, setCount] = useState(0);
