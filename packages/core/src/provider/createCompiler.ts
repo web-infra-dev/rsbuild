@@ -141,7 +141,7 @@ export type MiddlewareCallbacks = {
 };
 
 export type DevMiddlewareOptions = {
-  /** To ensure HMR works, the devMiddleware need inject the hmr client path into page when HMR enable. */
+  /** To ensure HMR works, the devMiddleware need inject the HMR client path into page when HMR enable. */
   clientPaths?: string[];
   clientConfig: DevConfig['client'];
   publicPath?: string;

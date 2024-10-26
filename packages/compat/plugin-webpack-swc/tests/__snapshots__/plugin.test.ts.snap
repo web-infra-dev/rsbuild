@@ -946,7 +946,41 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
 }
 `;
 
-exports[`plugin-webpack-swc > should set correct swc minimizer options in production 1`] = `
+exports[`plugin-webpack-swc > should set SWC minimizer in production 1`] = `
+{
+  "minimizer": [
+    SwcMinimizerPlugin {
+      "minifyOptions": {
+        "cssMinify": undefined,
+        "jsMinify": {
+          "format": {
+            "asciiOnly": false,
+          },
+          "mangle": true,
+        },
+      },
+      "name": "swc-minimizer-plugin",
+      "rsbuildSourceMapConfig": {
+        "css": false,
+        "js": undefined,
+      },
+    },
+    SwcMinimizerPlugin {
+      "minifyOptions": {
+        "cssMinify": {},
+        "jsMinify": undefined,
+      },
+      "name": "swc-minimizer-plugin",
+      "rsbuildSourceMapConfig": {
+        "css": false,
+        "js": undefined,
+      },
+    },
+  ],
+}
+`;
+
+exports[`plugin-webpack-swc > should set correct SWC minimizer options in production 1`] = `
 {
   "minimizer": [
     SwcMinimizerPlugin {
@@ -981,7 +1015,7 @@ exports[`plugin-webpack-swc > should set correct swc minimizer options in produc
 }
 `;
 
-exports[`plugin-webpack-swc > should set correct swc minimizer options using raw swc config 1`] = `
+exports[`plugin-webpack-swc > should set correct SWC minimizer options using raw SWC config 1`] = `
 {
   "minimizer": [
     SwcMinimizerPlugin {
@@ -1177,40 +1211,6 @@ exports[`plugin-webpack-swc > should set multiple swc-loader 1`] = `
     ],
   },
 ]
-`;
-
-exports[`plugin-webpack-swc > should set swc minimizer in production 1`] = `
-{
-  "minimizer": [
-    SwcMinimizerPlugin {
-      "minifyOptions": {
-        "cssMinify": undefined,
-        "jsMinify": {
-          "format": {
-            "asciiOnly": false,
-          },
-          "mangle": true,
-        },
-      },
-      "name": "swc-minimizer-plugin",
-      "rsbuildSourceMapConfig": {
-        "css": false,
-        "js": undefined,
-      },
-    },
-    SwcMinimizerPlugin {
-      "minifyOptions": {
-        "cssMinify": {},
-        "jsMinify": undefined,
-      },
-      "name": "swc-minimizer-plugin",
-      "rsbuildSourceMapConfig": {
-        "css": false,
-        "js": undefined,
-      },
-    },
-  ],
-}
 `;
 
 exports[`plugin-webpack-swc > should set swc-loader 1`] = `

@@ -63,7 +63,7 @@ export type CSSLoaderExportLocalsConvention =
 
 export interface CSSLoaderModulesOptions {
   /**
-   * Allows auto enable CSS modules/ICSS based on the filename, query or fragment.
+   * Allows auto enable CSS Modules/ICSS based on the filename, query or fragment.
    */
   auto?:
     | boolean
@@ -126,7 +126,7 @@ export interface CSSLoaderModulesOptions {
    */
   namedExport?: boolean;
   /**
-   * Enables a callback to output the CSS modules mapping JSON.
+   * Enables a callback to output the CSS Modules mapping JSON.
    */
   getJSON?: (context: {
     resourcePath: string;

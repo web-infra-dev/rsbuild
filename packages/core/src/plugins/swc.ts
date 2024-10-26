@@ -82,7 +82,7 @@ function getDefaultSwcConfig(
 }
 
 /**
- * Provide some swc configs of rspack
+ * Provide some SWC configs of Rspack
  */
 export const pluginSwc = (): RsbuildPlugin => ({
   name: PLUGIN_SWC_NAME,

@@ -10,16 +10,6 @@ describe('plugin-solid', () => {
     },
   };
 
-  it('should apply solid preset correctly in rspack mode', async () => {
-    const rsbuild = await createStubRsbuild({
-      rsbuildConfig,
-      plugins: [pluginSolid(), pluginBabel()],
-    });
-    const config = await rsbuild.unwrapConfig();
-
-    expect(config).toMatchSnapshot();
-  });
-
   it('should apply solid preset correctly', async () => {
     const rsbuild = await createStubRsbuild({
       rsbuildConfig,

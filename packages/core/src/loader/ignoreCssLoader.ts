@@ -10,6 +10,6 @@ export default function (this: LoaderContext<unknown>, source: string): string {
     return '';
   }
 
-  // Preserve css modules export for SSR.
+  // Preserve CSS Modules export for SSR.
   return source;
 }

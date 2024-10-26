@@ -53,7 +53,7 @@ rspackOnlyTest(
   },
 );
 
-// test cases for css preprocessors
+// test cases for CSS preprocessors
 for (const name of ['less', 'scss', 'stylus']) {
   rspackOnlyTest(
     `should build svelte component with ${name}`,

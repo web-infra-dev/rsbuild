@@ -42,7 +42,7 @@ function getPublicPath({
     if (hostname === DEFAULT_DEV_HOST) {
       const localHostname = 'localhost';
       // If user not specify the hostname, it would use 0.0.0.0
-      // The http://0.0.0.0:port can't visit in windows, so we shouldn't set publicPath as `//0.0.0.0:${port}/`;
+      // The http://0.0.0.0:port can't visit in Windows, so we shouldn't set publicPath as `//0.0.0.0:${port}/`;
       // Relative to docs:
       // - https://github.com/quarkusio/quarkus/issues/12246
       publicPath = `${protocol}://${localHostname}:<port>/`;
@@ -140,7 +140,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
             .use(rspack.CopyRspackPlugin, [options]);
         }
 
-        // css output
+        // CSS output
         if (isUseCssExtract(config, target)) {
           const extractPluginOptions = config.tools.cssExtract.pluginOptions;
 

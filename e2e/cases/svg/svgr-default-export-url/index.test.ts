@@ -12,19 +12,19 @@ test('should import default from SVG with SVGR correctly', async ({ page }) => {
     page.evaluate(`document.getElementById('component').tagName === 'svg'`),
   ).resolves.toBeTruthy();
 
-  // test svg asset
+  // test SVG asset
   await expect(
     page.evaluate(`document.getElementById('large-img').src`),
   ).resolves.toMatch(/http:/);
 
-  // test svg asset
+  // test SVG asset
   await expect(
     page.evaluate(
       `document.getElementById('small-img').src.startsWith('data:image/svg')`,
     ),
   ).resolves.toBeTruthy();
 
-  // test svg asset in css
+  // test SVG asset in CSS
   await expect(
     page.evaluate(
       `getComputedStyle(document.getElementById('test-css-small')).backgroundImage.includes('url("data:image/svg')`,

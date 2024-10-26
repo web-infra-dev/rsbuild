@@ -14,7 +14,7 @@ test('should import default from SVG with react query and dynamic import correct
     page.evaluate(`document.getElementById('component').tagName === 'svg'`),
   ).resolves.toBeTruthy();
 
-  // test svg asset
+  // test SVG asset
   await expect(
     page.evaluate(`document.getElementById('url').src`),
   ).resolves.toMatch(/http:/);

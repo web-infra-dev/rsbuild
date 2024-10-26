@@ -3,7 +3,7 @@ import { expect } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 import stripAnsi from 'strip-ansi';
 
-rspackOnlyTest('should validate rspack config by default', async () => {
+rspackOnlyTest('should validate Rspack config by default', async () => {
   try {
     await build({
       cwd: __dirname,
@@ -44,7 +44,7 @@ rspackOnlyTest('should warn when passing unrecognized keys', async () => {
   restore();
 });
 
-rspackOnlyTest('should allow to override rspack config validate', async () => {
+rspackOnlyTest('should allow to override Rspack config validate', async () => {
   const { RSPACK_CONFIG_VALIDATE } = process.env;
   process.env.RSPACK_CONFIG_VALIDATE = 'loose';
 

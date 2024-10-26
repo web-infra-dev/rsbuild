@@ -18,7 +18,7 @@ rspackOnlyTest(
     const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
     expect(cssFiles.length).toBe(0);
 
-    // should inline minified css
+    // should inline minified CSS
     const indexJsFile = Object.keys(files).find(
       (file) => file.includes('index.') && file.endsWith('.js'),
     )!;
@@ -45,7 +45,7 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest(
-  'hmr should work well when injectStyles is true',
+  'HMR should work well when injectStyles is true',
   async ({ page }) => {
     // HMR cases will fail in Windows
     if (process.platform === 'win32') {
@@ -88,10 +88,10 @@ rspackOnlyTest(
       fs.readFileSync(filePath, 'utf-8').replace('20px', '40px'),
     );
 
-    // css hmr works well
+    // CSS HMR works well
     await expect(title).toHaveCSS('font-size', '40px');
 
-    // #test-keep should unchanged when css hmr
+    // #test-keep should unchanged when CSS HMR
     await expect(locatorKeep.innerHTML()).resolves.toBe(keepNum);
 
     await rsbuild.close();

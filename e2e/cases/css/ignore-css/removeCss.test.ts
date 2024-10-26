@@ -1,7 +1,7 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should ignore css content when build node target', async () => {
+test('should ignore CSS content when build node target', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
@@ -15,14 +15,14 @@ test('should ignore css content when build node target', async () => {
   const content =
     files[Object.keys(files).find((file) => file.endsWith('.js'))!];
 
-  // preserve css modules mapping
+  // preserve CSS Modules mapping
   expect(content.includes('"title-class":')).toBeTruthy();
-  // remove css content
+  // remove CSS content
   expect(content.includes('.title-class')).toBeFalsy();
   expect(content.includes('.header-class')).toBeFalsy();
 });
 
-test('should ignore css content when build web-worker target', async () => {
+test('should ignore CSS content when build web-worker target', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
@@ -36,9 +36,9 @@ test('should ignore css content when build web-worker target', async () => {
   const content =
     files[Object.keys(files).find((file) => file.endsWith('.js'))!];
 
-  // preserve css modules mapping
+  // preserve CSS Modules mapping
   expect(content.includes('"title-class":')).toBeTruthy();
-  // remove css content
+  // remove CSS content
   expect(content.includes('.title-class')).toBeFalsy();
   expect(content.includes('.header-class')).toBeFalsy();
 });

@@ -99,7 +99,7 @@ export type DevMiddlewareAPI = Middleware & {
 /**
  * The rsbuild/server do nothing about compiler, the devMiddleware need do such things to ensure dev works well:
  * - Call compiler.watch （normally did by rsbuild-dev-middleware）.
- * - Inject the hmr client path into page （the hmr client rsbuild/server already provide）.
+ * - Inject the HMR client path into page （the HMR client rsbuild/server already provide）.
  * - Notify server when compiler hooks are triggered.
  */
 export type DevMiddleware = (options: DevMiddlewareOptions) => DevMiddlewareAPI;
