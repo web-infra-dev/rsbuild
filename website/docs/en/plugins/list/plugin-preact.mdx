@@ -60,3 +60,31 @@ pluginPreact({
   prefreshEnabled: false,
 });
 ```
+
+### include
+
+Include files to be processed by the [@rspack/plugin-preact-refresh](https://github.com/rspack-contrib/rspack-plugin-preact-refresh) plugin. The value is the same as the `rule.test` option in Rspack.
+
+- **Type:** [RuleSetCondition](https://rspack.dev/zh/config/module#condition)
+- **Default:** `/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/`
+- **Version:** `>= v1.1.0`
+
+```ts
+pluginPreact({
+  include: [/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/, /some-other-module/],
+});
+```
+
+### exclude
+
+Exclude files from being processed by the [@rspack/plugin-preact-refresh](https://github.com/rspack-contrib/rspack-plugin-preact-refresh) plugin. The value is the same as the `rule.exclude` option in Rspack.
+
+- **Type:** [RuleSetCondition](https://rspack.dev/zh/config/module#condition)
+- **Default:** `/[\\/]node_modules[\\/]/`
+- **Version:** `>= v1.1.0`
+
+```ts
+pluginPreact({
+  exclude: [/[\\/]node_modules[\\/]/, /some-other-module/],
+});
+```
