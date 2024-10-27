@@ -89,6 +89,22 @@ pluginLess({
 `lessLoaderOptions.lessOptions` 是直接传递给 Less 的配置，请参阅 [Less 文档](https://lesscss.org/usage/#command-line-usage-options) 以了解所有可用选项。
 :::
 
+### include
+
+- **类型：** [RuleSetCondition](https://rspack.dev/config/module#condition)
+- **默认值：** `/\.less$/`
+- **版本：** `>= 1.1.0`
+
+用于指定一部分 `.less` 模块，这些模块会被 `less-loader` 编译。这个值与 Rspack 中的 `rule.test` 选项相同。
+
+比如：
+
+```ts
+pluginLess({
+  include: /\.custom\.less$/,
+});
+```
+
 ### exclude
 
 - **类型：** [RuleSetCondition](https://rspack.dev/config/module#condition)

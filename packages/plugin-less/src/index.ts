@@ -51,7 +51,14 @@ export type PluginLessOptions = {
   >;
 
   /**
+   * Include some `.less` files, they will be transformed by less-loader.
+   * @default /\.less$/
+   */
+  include?: Rspack.RuleSetCondition;
+
+  /**
    * Exclude some `.less` files, they will not be transformed by less-loader.
+   * @default undefined
    */
   exclude?: Rspack.RuleSetCondition;
 };
@@ -134,7 +141,7 @@ export const pluginLess = (
       const ruleId = findRuleId(chain, CHAIN_ID.RULE.LESS);
       const rule = chain.module
         .rule(ruleId)
-        .test(/\.less$/)
+        .test(pluginOptions.include ?? /\.less$/)
         .merge({ sideEffects: true })
         .resolve.preferRelative(true)
         .end();
