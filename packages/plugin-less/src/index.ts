@@ -4,6 +4,7 @@ import type {
   ConfigChainWithContext,
   RsbuildPlugin,
   Rspack,
+  RspackChain,
 } from '@rsbuild/core';
 import deepmerge from 'deepmerge';
 import { reduceConfigsWithContext } from 'reduce-configs';
@@ -110,6 +111,17 @@ const getLessLoaderOptions = (
   };
 };
 
+// Find a unique rule id for the less rule,
+// this allows to add multiple less rules.
+const findRuleId = (chain: RspackChain, defaultId: string) => {
+  let id = defaultId;
+  let index = 0;
+  while (chain.module.rules.has(id)) {
+    id = `${defaultId}-${++index}`;
+  }
+  return id;
+};
+
 export const pluginLess = (
   pluginOptions: PluginLessOptions = {},
 ): RsbuildPlugin => ({
@@ -118,8 +130,10 @@ export const pluginLess = (
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
+
+      const ruleId = findRuleId(chain, CHAIN_ID.RULE.LESS);
       const rule = chain.module
-        .rule(CHAIN_ID.RULE.LESS)
+        .rule(ruleId)
         .test(/\.less$/)
         .merge({ sideEffects: true })
         .resolve.preferRelative(true)
