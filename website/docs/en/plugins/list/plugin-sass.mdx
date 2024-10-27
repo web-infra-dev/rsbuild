@@ -132,3 +132,31 @@ pluginSass({
 :::tip
 Sass's `legacy` API has been deprecated and will be removed in Sass 2.0. It is recommended to migrate to the `modern-compiler` API. For more details, see [Sass - Legacy JS API](https://sass-lang.com/documentation/breaking-changes/legacy-js-api/).
 :::
+
+## Sass Deprecation Warnings
+
+Sass uses warning logs to notify you of deprecated usages that will be removed in future major releases of Sass. It is recommended to make changes as suggested by the logs. If you do not want to see these logs, you can ignore these warnings by using the [silenceDeprecations](https://sass-lang.com/documentation/js-api/interfaces/stringoptions/#silenceDeprecations) option in Sass.
+
+For example, `@import` has been deprecated in Sass. If you use this syntax, Sass will output the following prompt:
+
+```
+Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+ 0 | @import './b.scss';
+```
+
+You can suppress the `@import` warning with the following configuration:
+
+```ts
+pluginSass({
+  sassLoaderOptions: {
+    sassOptions: {
+      silenceDeprecations: ['import'],
+    },
+  },
+});
+```
+
+> For more information, see [Sass Deprecations](https://sass-lang.com/documentation/js-api/interfaces/deprecations/).
