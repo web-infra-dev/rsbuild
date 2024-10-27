@@ -89,6 +89,22 @@ pluginLess({
 The `lessLoaderOptions.lessOptions` config is passed to Less. See the [Less documentation](https://lesscss.org/usage/#command-line-usage-options) for all available options.
 :::
 
+### include
+
+- **Type:** [RuleSetCondition](https://rspack.dev/config/module#condition)
+- **Default:** `/\.less$/`
+- **Version:** `>= 1.1.0`
+
+Include some `.less` files, they will be transformed by `less-loader`. The value is the same as the `rule.test` option in Rspack.
+
+For example:
+
+```ts
+pluginLess({
+  include: /\.custom\.less$/,
+});
+```
+
 ### exclude
 
 - **Type:** [RuleSetCondition](https://rspack.dev/config/module#condition)

@@ -112,16 +112,27 @@ export function matchRules(
   if (!config.module?.rules) {
     return [];
   }
-  return config.module.rules.filter((rule) => {
-    if (
-      rule &&
-      typeof rule === 'object' &&
-      rule.test &&
-      rule.test instanceof RegExp &&
-      rule.test.test(testFile)
-    ) {
+
+  const isMatch = (test: Rspack.RuleSetCondition, testFile: string) => {
+    if (test instanceof RegExp && test.test(testFile)) {
       return true;
     }
+  };
+
+  return config.module.rules.filter((rule) => {
+    if (rule && typeof rule === 'object' && rule.test) {
+      if (isMatch(rule.test, testFile)) {
+        return true;
+      }
+
+      if (
+        Array.isArray(rule.test) &&
+        rule.test.some((test) => isMatch(test, testFile))
+      ) {
+        return true;
+      }
+    }
+
     return false;
   });
 }
