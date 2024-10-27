@@ -33,3 +33,31 @@ export default defineConfig({
   plugins: [pluginPreact()],
 });
 ```
+
+## Preact Fast Refresh
+
+Preact 插件使用 [@preact/prefresh](https://github.com/preactjs/prefresh) 和 [@rspack/plugin-preact-refresh](https://github.com/rspack-contrib/rspack-plugin-preact-refresh) 来热替换 Preact 组件。
+
+### 识别
+
+Prefresh 需要能够识别你的组件，这意味着组件名称应该以大写字母开头，hook 名称应该以 `use` 开头，后跟一个大写字母。这使得插件能够有效地识别这些内容。
+
+注意，如下所示的组件是没有命名的：
+
+```jsx
+export default () => {
+  return <p>Want to refresh</p>;
+};
+```
+
+相反，应该这样写：
+
+```jsx
+const MyComponent = () => {
+  return <p>Want to refresh</p>;
+};
+
+export default MyComponent;
+```
+
+当使用高阶组件（HOC）时，请确保设置 `displayName` 以便插件能够将其识别为组件。
