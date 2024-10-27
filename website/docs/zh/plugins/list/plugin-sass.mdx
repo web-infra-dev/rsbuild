@@ -132,3 +132,31 @@ pluginSass({
 :::tip
 Sass 的 `legacy` API 已经被废弃，并且将在 Sass 2.0 中被移除，建议迁移到 `modern-compiler` API，详见 [Sass - Legacy JS API](https://sass-lang.com/documentation/breaking-changes/legacy-js-api/)。
 :::
+
+## Sass 废弃提示
+
+Sass 会通过 warning 日志提示你一些废弃的写法，这些写法在 Sass 未来的大版本中将会被移除，建议根据日志进行修改。如果你不想看到这些日志，可以通过 Sass 的 [silenceDeprecations](https://sass-lang.com/documentation/js-api/interfaces/stringoptions/#silenceDeprecations) 选项来忽略这些警告。
+
+例如，`@import` 已经被 Sass 废弃，当你使用该语法时，Sass 会输出如下日志：
+
+```
+Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+
+More info and automated migrator: https://sass-lang.com/d/import
+
+ 0 | @import './b.scss';
+```
+
+可以通过如下的配置来忽略 `@import` 的警告：
+
+```ts
+pluginSass({
+  sassLoaderOptions: {
+    sassOptions: {
+      silenceDeprecations: ['import'],
+    },
+  },
+});
+```
+
+> 请查看 [Sass Deprecations](https://sass-lang.com/documentation/js-api/interfaces/deprecations/) 了解更多信息。
