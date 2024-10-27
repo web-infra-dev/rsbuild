@@ -92,4 +92,22 @@ describe('plugin-less', () => {
 
     expect(matchRules(bundlerConfigs[0], 'a.less')).toMatchSnapshot();
   });
+
+  it('should allow to add multiple less rules', async () => {
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        plugins: [
+          pluginLess(),
+          pluginLess({
+            exclude: /b\.less/,
+          }),
+        ],
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+    const lessRule = matchRules(bundlerConfigs[0], 'a.less');
+    expect(lessRule.length).toBe(2);
+    expect(lessRule).toMatchSnapshot();
+  });
 });
