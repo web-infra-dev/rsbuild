@@ -1,7 +1,7 @@
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildPlugin, RspackChain } from '@rsbuild/core';
 import deepmerge from 'deepmerge';
 import { reduceConfigsWithContext } from 'reduce-configs';
 import { getResolveUrlJoinFn, patchCompilerGlobalLocation } from './helpers.js';
@@ -74,6 +74,17 @@ const getSassLoaderOptions = (
   };
 };
 
+// Find a unique rule id for the sass rule,
+// this allows to add multiple sass rules.
+const findRuleId = (chain: RspackChain, defaultId: string) => {
+  let id = defaultId;
+  let index = 0;
+  while (chain.module.rules.has(id)) {
+    id = `${defaultId}-${++index}`;
+  }
+  return id;
+};
+
 export const pluginSass = (
   pluginOptions: PluginSassOptions = {},
 ): RsbuildPlugin => ({
@@ -92,8 +103,9 @@ export const pluginSass = (
         true,
       );
 
+      const ruleId = findRuleId(chain, CHAIN_ID.RULE.SASS);
       const rule = chain.module
-        .rule(CHAIN_ID.RULE.SASS)
+        .rule(ruleId)
         .test(/\.s(?:a|c)ss$/)
         .merge({ sideEffects: true })
         .resolve.preferRelative(true)
