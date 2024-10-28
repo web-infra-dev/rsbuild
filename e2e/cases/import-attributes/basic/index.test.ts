@@ -4,11 +4,6 @@ import { expect } from '@playwright/test';
 rspackOnlyTest('should support import attributes syntax', async () => {
   const rsbuild = await build({
     cwd: __dirname,
-    rsbuildConfig: {
-      source: {
-        assetsInclude: [/\.json5$/],
-      },
-    },
   });
 
   const indexJs = await rsbuild.getIndexFile();
