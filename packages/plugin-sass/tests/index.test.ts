@@ -61,4 +61,23 @@ describe('plugin-sass', () => {
     const bundlerConfigs = await rsbuild.initConfigs();
     expect(matchRules(bundlerConfigs[0], 'a.scss')).toMatchSnapshot();
   });
+
+  it('should allow to add multiple sass rules', async () => {
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        plugins: [
+          pluginSass({
+            include: [/a\.scss/, /b\.scss/],
+          }),
+          pluginSass({
+            include: /b\.scss/,
+          }),
+        ],
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+    expect(matchRules(bundlerConfigs[0], 'a.scss').length).toBe(1);
+    expect(matchRules(bundlerConfigs[0], 'b.scss').length).toBe(2);
+  });
 });

@@ -80,6 +80,22 @@ pluginSass({
 });
 ```
 
+### include
+
+- **类型：** [RuleSetCondition](https://rspack.dev/config/module#condition)
+- **默认值：** `/\.s(?:a|c)ss$/`
+- **版本：** `>= 1.1.0`
+
+用于指定一部分 `.scss` 或 `.sass` 模块，这些模块会被 `sass-loader` 编译。这个值与 Rspack 中的 `rule.test` 选项相同。
+
+比如：
+
+```ts
+pluginSass({
+  include: /\.custom\.scss$/,
+});
+```
+
 ### exclude
 
 - **类型：** [RuleSetCondition](https://rspack.dev/config/module#condition)

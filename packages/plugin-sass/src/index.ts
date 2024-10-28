@@ -106,7 +106,7 @@ export const pluginSass = (
       const ruleId = findRuleId(chain, CHAIN_ID.RULE.SASS);
       const rule = chain.module
         .rule(ruleId)
-        .test(/\.s(?:a|c)ss$/)
+        .test(pluginOptions.include ?? /\.s(?:a|c)ss$/)
         .merge({ sideEffects: true })
         .resolve.preferRelative(true)
         .end();

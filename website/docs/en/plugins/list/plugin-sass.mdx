@@ -80,6 +80,22 @@ pluginSass({
 });
 ```
 
+### include
+
+- **Type:** [RuleSetCondition](https://rspack.dev/config/module#condition)
+- **Default:** `/\.s(?:a|c)ss$/`
+- **Version:** `>= 1.1.0`
+
+Include some `.scss` or `.sass` files, they will be transformed by `sass-loader`. The value is the same as the `rule.test` option in Rspack.
+
+For example:
+
+```ts
+pluginSass({
+  include: /\.custom\.scss$/,
+});
+```
+
 ### exclude
 
 - **Type:** [RuleSetCondition](https://rspack.dev/config/module#condition)
