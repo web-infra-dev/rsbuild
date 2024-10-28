@@ -18,6 +18,13 @@ const getAssetName = (url: string, assetPrefix: string) => {
   return removeLeadingSlash(url);
 };
 
+const isSriLinkRel = (rel: string | boolean | null | undefined) => {
+  return (
+    typeof rel === 'string' &&
+    ['stylesheet', 'preload', 'modulepreload'].includes(rel)
+  );
+};
+
 export const pluginSri = (): RsbuildPlugin => ({
   name: 'rsbuild:sri',
 
@@ -61,7 +68,7 @@ export const pluginSri = (): RsbuildPlugin => ({
             url = tag.attrs.src;
           } else if (
             tag.tag === 'link' &&
-            tag.attrs.rel === 'stylesheet' &&
+            isSriLinkRel(tag.attrs.rel) &&
             typeof tag.attrs.href === 'string'
           ) {
             url = tag.attrs.href;
