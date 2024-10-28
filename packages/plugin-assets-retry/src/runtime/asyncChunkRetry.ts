@@ -241,7 +241,9 @@ function ensureChunk(
     const context = createContext(existRetryTimes);
 
     if (existRetryTimes >= maxRetries) {
-      error.message = `Loading chunk ${chunkId} from ${originalSrcUrl} failed after ${maxRetries} retries: "${error.message}"`;
+      error.message = Boolean(error.message?.includes('retries:'))
+        ? error.message
+        : `Loading chunk ${chunkId} from ${originalSrcUrl} failed after ${maxRetries} retries: "${error.message}"`;
       if (typeof config.onFail === 'function') {
         config.onFail(context);
       }
