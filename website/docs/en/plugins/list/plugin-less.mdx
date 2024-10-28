@@ -132,6 +132,30 @@ pluginLess({
 });
 ```
 
+## Practices
+
+### Configure multiple Less plugins
+
+By using the `include` and `exclude` options, you can register multiple Less plugins and specify different options for each plugin.
+
+For example:
+
+```ts
+export default {
+  plugins: [
+    pluginLess({
+      exclude: /\.another\.less$/,
+    }),
+    pluginLess({
+      include: /\.another\.less$/,
+      lessLoaderOptions: {
+        // some custom options
+      },
+    }),
+  ],
+};
+```
+
 ## FAQ
 
 ### Division in Less file doesn't work?
