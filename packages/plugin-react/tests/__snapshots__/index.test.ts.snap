@@ -40,6 +40,7 @@ exports[`plugins/react > should configuring \`tools.swc\` to override react runt
           "jsc": {
             "experimental": {
               "cacheRoot": "<ROOT>/packages/plugin-react/tests/node_modules/.cache/.swc",
+              "keepImportAttributes": true,
             },
             "externalHelpers": true,
             "parser": {
@@ -119,6 +120,7 @@ exports[`plugins/react > should work with swc-loader 1`] = `
           "jsc": {
             "experimental": {
               "cacheRoot": "<ROOT>/packages/plugin-react/tests/node_modules/.cache/.swc",
+              "keepImportAttributes": true,
             },
             "externalHelpers": true,
             "parser": {

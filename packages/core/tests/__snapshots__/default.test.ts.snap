@@ -99,6 +99,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               "jsc": {
                 "experimental": {
                   "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
                 "parser": {
@@ -142,6 +143,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               "jsc": {
                 "experimental": {
                   "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
                 "parser": {
@@ -495,6 +497,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               "jsc": {
                 "experimental": {
                   "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
                 "parser": {
@@ -538,6 +541,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               "jsc": {
                 "experimental": {
                   "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
                 "parser": {
@@ -914,6 +918,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               "jsc": {
                 "experimental": {
                   "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
                 "parser": {
@@ -953,6 +958,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               "jsc": {
                 "experimental": {
                   "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
                 "parser": {
@@ -1265,6 +1271,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
               "jsc": {
                 "experimental": {
                   "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
                 "parser": {
@@ -1308,6 +1315,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
               "jsc": {
                 "experimental": {
                   "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
                 "parser": {
