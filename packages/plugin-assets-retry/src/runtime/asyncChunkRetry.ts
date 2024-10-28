@@ -129,12 +129,12 @@ function getNextRetryUrl(
 }
 
 // shared between ensureChunk and loadScript
-let globalCurrRetry: Retry | undefined = undefined;
+let globalCurrRetrying: Retry | undefined = undefined;
 function getCurrentRetry(
   chunkId: string,
-  existTimes: number,
+  existRetryTimes: number,
 ): Retry | undefined {
-  return retryCollector[chunkId]?.[existTimes];
+  return retryCollector[chunkId]?.[existRetryTimes];
 }
 
 function initRetry(chunkId: string): Retry {
@@ -155,13 +155,13 @@ function initRetry(chunkId: string): Retry {
   };
 }
 
-function nextRetry(chunkId: string, existTimes: number): Retry {
-  const currRetry = getCurrentRetry(chunkId, existTimes);
+function nextRetry(chunkId: string, existRetryTimes: number): Retry {
+  const currRetry = getCurrentRetry(chunkId, existRetryTimes);
 
   let nextRetry: Retry;
-  const nextExistTimes = existTimes + 1;
+  const nextExistRetryTimes = existRetryTimes + 1;
 
-  if (existTimes === 0 || currRetry === undefined) {
+  if (existRetryTimes === 0 || currRetry === undefined) {
     nextRetry = initRetry(chunkId);
     retryCollector[chunkId] = [];
   } else {
@@ -170,19 +170,15 @@ function nextRetry(chunkId: string, existTimes: number): Retry {
 
     nextRetry = {
       nextDomain,
-      nextRetryUrl: getNextRetryUrl(
-        nextExistTimes,
-        nextDomain,
-        originalSrcUrl,
-      ),
+      nextRetryUrl: getNextRetryUrl(nextExistRetryTimes, nextDomain, originalSrcUrl),
 
       originalScriptFilename,
       originalSrcUrl,
     };
   }
 
-  retryCollector[chunkId][nextExistTimes] = nextRetry;
-  globalCurrRetry = nextRetry;
+  retryCollector[chunkId][nextExistRetryTimes] = nextRetry;
+  globalCurrRetrying = nextRetry;
   return nextRetry;
 }
 
@@ -197,7 +193,10 @@ const originalGetCssFilename =
 const originalLoadScript = __RUNTIME_GLOBALS_LOAD_SCRIPT__;
 
 // if users want to support es5, add Promise polyfill first https://github.com/webpack/webpack/issues/12877
-function ensureChunk(chunkId: string, existTime: number = 0): Promise<unknown> {
+function ensureChunk(
+  chunkId: string,
+  callingCounter: { count: number } = { count: 0 },
+): Promise<unknown> {
   const result = originalEnsureChunk(chunkId);
   const originalScriptFilename = originalGetChunkScriptFilename(chunkId);
   const originalCssFilename = originalGetCssFilename(chunkId);
@@ -211,10 +210,14 @@ function ensureChunk(chunkId: string, existTime: number = 0): Promise<unknown> {
       window.__RB_ASYNC_CHUNKS__[originalCssFilename] = true;
     }
   }
+  callingCounter.count += 1;
 
   return result.catch((error: Error) => {
-    const { originalSrcUrl, nextRetryUrl, nextDomain } =
-      nextRetry(chunkId, existTime);
+    const existRetryTimes = callingCounter.count - 1; // the first calling is not retry
+    const { originalSrcUrl, nextRetryUrl, nextDomain } = nextRetry(
+      chunkId,
+      existRetryTimes,
+    );
 
     // At present, we don't consider the switching domain and addQuery of async CSS chunk
     // 1. Async js chunk will be requested first. It is rare for async CSS chunk to fail alone.
@@ -231,9 +234,9 @@ function ensureChunk(chunkId: string, existTime: number = 0): Promise<unknown> {
       isAsyncChunk: true,
     });
 
-    const context = createContext(existTime);
+    const context = createContext(existRetryTimes);
 
-    if (existTime >= maxRetries) {
+    if (existRetryTimes >= maxRetries) {
       error.message = `Loading chunk ${chunkId} from ${originalSrcUrl} failed after ${maxRetries} retries: "${error.message}"`;
       if (typeof config.onFail === 'function') {
         config.onFail(context);
@@ -267,18 +270,17 @@ function ensureChunk(chunkId: string, existTime: number = 0): Promise<unknown> {
       config.onRetry(context);
     }
 
-    const nextRetryTimes = existTime + 1;
-    const nextPromise = ensureChunk(chunkId, nextRetryTimes);
-    if (existTime === 0) {
-      return nextPromise.then((result) => {
-        if (typeof config.onSuccess === 'function') {
-          const context = createContext(nextRetryTimes);
-          config.onSuccess(context);
-        }
-        return result;
-      });
-    }
-    return nextPromise;
+    const nextPromise = ensureChunk(chunkId, callingCounter);
+    return nextPromise.then((result) => {
+      if (
+        typeof config.onSuccess === 'function' &&
+        callingCounter.count === existRetryTimes + 2
+      ) {
+        const context = createContext(existRetryTimes + 1);
+        config.onSuccess(context);
+      }
+      return result;
+    });
   });
 }
 
@@ -288,7 +290,7 @@ function loadScript(
   key: string,
   chunkId: ChunkId,
 ) {
-  const retry = globalCurrRetry;
+  const retry = globalCurrRetrying;
   return originalLoadScript(
     retry ? retry.nextRetryUrl : originalUrl,
     done,
