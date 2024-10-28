@@ -117,9 +117,7 @@ async function createRsbuildWithMiddleware(
   return rsbuild;
 }
 
-test('@rsbuild/plugin-assets-retry should work when blocking initial chunk index.js', async ({
-  page,
-}) => {
+test('should work when blocking initial chunk index.js', async ({ page }) => {
   logger.level = 'verbose';
   const { logs, restore } = proxyConsole();
   const blockedMiddleware = createBlockMiddleware({
@@ -138,7 +136,7 @@ test('@rsbuild/plugin-assets-retry should work when blocking initial chunk index
   logger.level = 'log';
 });
 
-test('@rsbuild/plugin-assets-retry should work with minified runtime code when blocking initial chunk index.js', async ({
+test('should work with minified runtime code when blocking initial chunk index.js', async ({
   page,
 }) => {
   logger.level = 'verbose';
@@ -161,9 +159,7 @@ test('@rsbuild/plugin-assets-retry should work with minified runtime code when b
   logger.level = 'log';
 });
 
-test('@rsbuild/plugin-assets-retry should work when blocking async chunk`', async ({
-  page,
-}) => {
+test('should work when blocking async chunk', async ({ page }) => {
   logger.level = 'verbose';
   const { logs, restore } = proxyConsole();
   const blockedMiddleware = createBlockMiddleware({
@@ -185,9 +181,7 @@ test('@rsbuild/plugin-assets-retry should work when blocking async chunk`', asyn
   logger.level = 'log';
 });
 
-test('@rsbuild/plugin-assets-retry should work when blocking async CSS chunk`', async ({
-  page,
-}) => {
+test('should work when blocking async css chunk`', async ({ page }) => {
   logger.level = 'verbose';
   const { logs, restore } = proxyConsole();
   const blockedMiddleware = createBlockMiddleware({
@@ -210,7 +204,7 @@ test('@rsbuild/plugin-assets-retry should work when blocking async CSS chunk`', 
   logger.level = 'log';
 });
 
-test('@rsbuild/plugin-assets-retry should work with minified runtime code when blocking async chunk', async ({
+test('should work with minified runtime code when blocking async chunk', async ({
   page,
 }) => {
   logger.level = 'verbose';
@@ -236,7 +230,7 @@ test('@rsbuild/plugin-assets-retry should work with minified runtime code when b
   logger.level = 'log';
 });
 
-test('@rsbuild/plugin-assets-retry should catch error by react ErrorBoundary when all retries failed', async ({
+test('react ErrorBoundary should catch error when all retries failed', async ({
   page,
 }) => {
   logger.level = 'verbose';
@@ -313,7 +307,7 @@ async function proxyPageConsole(page: Page, port: number) {
   };
 }
 
-test('@rsbuild/plugin-assets-retry onRetry and onSuccess options should work in successfully retrying initial chunk', async ({
+test('onRetry and onSuccess options should work when retrying initial chunk successfully', async ({
   page,
 }) => {
   const blockedMiddleware = createBlockMiddleware({
@@ -383,7 +377,7 @@ test('@rsbuild/plugin-assets-retry onRetry and onSuccess options should work in 
   await rsbuild.close();
 });
 
-test('@rsbuild/plugin-assets-retry onRetry and onSuccess options should work in successfully retrying async chunk', async ({
+test('onRetry and onSuccess options should work when retrying async chunk successfully', async ({
   page,
 }) => {
   const blockedMiddleware = createBlockMiddleware({
@@ -454,7 +448,7 @@ test('@rsbuild/plugin-assets-retry onRetry and onSuccess options should work in 
   await rsbuild.close();
 });
 
-test('@rsbuild/plugin-assets-retry onRetry and onFail options should work in failed retrying initial chunk', async ({
+test('onRetry and onFail options should work when retrying initial chunk failed', async ({
   page,
 }) => {
   const blockedMiddleware = createBlockMiddleware({
@@ -530,7 +524,7 @@ test('@rsbuild/plugin-assets-retry onRetry and onFail options should work in fai
   await rsbuild.close();
 });
 
-test('@rsbuild/plugin-assets-retry onRetry and onFail options should work in failed retrying async chunk', async ({
+test('onRetry and onFail options should work when retrying async chunk failed', async ({
   page,
 }) => {
   const blockedMiddleware = createBlockMiddleware({
@@ -610,9 +604,7 @@ test('@rsbuild/plugin-assets-retry onRetry and onFail options should work in fai
   await rsbuild.close();
 });
 
-test('@rsbuild/plugin-assets-retry should work with addQuery boolean option', async ({
-  page,
-}) => {
+test('should work with addQuery boolean option', async ({ page }) => {
   logger.level = 'verbose';
   const { logs, restore } = proxyConsole();
   const initialChunkBlockedMiddleware = createBlockMiddleware({
@@ -663,9 +655,7 @@ test('@rsbuild/plugin-assets-retry should work with addQuery boolean option', as
   logger.level = 'log';
 });
 
-test('@rsbuild/plugin-assets-retry should work with addQuery function type option', async ({
-  page,
-}) => {
+test('should work with addQuery function type option', async ({ page }) => {
   logger.level = 'verbose';
   const { logs, restore } = proxyConsole();
   const initialChunkBlockedMiddleware = createBlockMiddleware({
@@ -720,7 +710,7 @@ test('@rsbuild/plugin-assets-retry should work with addQuery function type optio
   logger.level = 'log';
 });
 
-test('@rsbuild/plugin-assets-retry should preserve users query when set addQuery option', async ({
+test('should preserve users query when set addQuery option', async ({
   page,
 }) => {
   logger.level = 'verbose';
@@ -768,4 +758,105 @@ test('@rsbuild/plugin-assets-retry should preserve users query when set addQuery
   await rsbuild.close();
   restore();
   logger.level = 'log';
+});
+
+test('onRetry and onFail options should work when multiple parallel retrying async chunk', async ({
+  page,
+}) => {
+  const blockedMiddleware = createBlockMiddleware({
+    blockNum: 100,
+    urlPrefix: '/static/js/async/src_AsyncCompTest_tsx.js',
+  });
+
+  const rsbuild = await createRsbuildWithMiddleware(
+    blockedMiddleware,
+    {
+      minify: true,
+      onRetry(context) {
+        console.info('onRetry', context);
+      },
+      onSuccess(context) {
+        console.info('onSuccess', context);
+      },
+      onFail(context) {
+        console.info('onFail', context);
+      },
+    },
+    './src/testParallelRetryEntry.js',
+  );
+
+  const { onRetryContextList, onFailContextList, onSuccessContextList } =
+    await proxyPageConsole(page, rsbuild.port);
+
+  await gotoPage(page, rsbuild);
+  await delay();
+
+  expect({
+    onRetryContextList,
+    onFailContextList,
+    onSuccessContextList,
+  }).toMatchObject({
+    onRetryContextList: [
+      {
+        times: 0,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+        isAsyncChunk: true,
+      },
+      {
+        times: 0,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+        isAsyncChunk: true,
+      },
+      {
+        times: 1,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+        isAsyncChunk: true,
+      },
+      {
+        times: 1,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+        isAsyncChunk: true,
+      },
+      {
+        times: 2,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+        isAsyncChunk: true,
+      },
+      {
+        times: 2,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+        isAsyncChunk: true,
+      },
+    ],
+    onFailContextList: [
+      {
+        domain: '<ORIGIN>',
+        isAsyncChunk: true,
+        tagName: 'script',
+        times: 3,
+        url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
+      },
+      {
+        domain: '<ORIGIN>',
+        isAsyncChunk: true,
+        tagName: 'script',
+        times: 3,
+        url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
+      },
+    ],
+    onSuccessContextList: [],
+  });
+  await rsbuild.close();
 });

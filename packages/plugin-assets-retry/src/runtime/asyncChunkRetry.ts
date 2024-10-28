@@ -170,7 +170,11 @@ function nextRetry(chunkId: string, existRetryTimes: number): Retry {
 
     nextRetry = {
       nextDomain,
-      nextRetryUrl: getNextRetryUrl(nextExistRetryTimes, nextDomain, originalSrcUrl),
+      nextRetryUrl: getNextRetryUrl(
+        nextExistRetryTimes,
+        nextDomain,
+        originalSrcUrl,
+      ),
 
       originalScriptFilename,
       originalSrcUrl,
@@ -272,10 +276,9 @@ function ensureChunk(
 
     const nextPromise = ensureChunk(chunkId, callingCounter);
     return nextPromise.then((result) => {
-      if (
-        typeof config.onSuccess === 'function' &&
-        callingCounter.count === existRetryTimes + 2
-      ) {
+      // when after retrying 3 times aka "ensureChunk(chunkId, 2)", the callingCounter.count is 4
+      const isLastSuccessRetry = callingCounter.count === existRetryTimes + 2;
+      if (typeof config.onSuccess === 'function' && isLastSuccessRetry) {
         const context = createContext(existRetryTimes + 1);
         config.onSuccess(context);
       }
