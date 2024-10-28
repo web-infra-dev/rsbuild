@@ -1518,6 +1518,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                 "jsc": {
                   "experimental": {
                     "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                    "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
                   "parser": {
@@ -1561,6 +1562,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                 "jsc": {
                   "experimental": {
                     "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                    "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
                   "parser": {
@@ -1847,6 +1849,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                 "jsc": {
                   "experimental": {
                     "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                    "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
                   "parser": {
@@ -1886,6 +1889,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                 "jsc": {
                   "experimental": {
                     "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                    "keepImportAttributes": true,
                   },
                   "externalHelpers": true,
                   "parser": {

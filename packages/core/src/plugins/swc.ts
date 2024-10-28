@@ -72,6 +72,10 @@ function getDefaultSwcConfig(
       },
       experimental: {
         cacheRoot,
+        /**
+         * Preserve `with` in imports and exports.
+         */
+        keepImportAttributes: true,
       },
     },
     isModule: 'unknown',

@@ -99,6 +99,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
               "jsc": {
                 "experimental": {
                   "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                  "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
                 "parser": {
@@ -142,6 +143,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
               "jsc": {
                 "experimental": {
                   "cacheRoot": "<ROOT>/node_modules/.cache/.swc",
+                  "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
                 "parser": {
