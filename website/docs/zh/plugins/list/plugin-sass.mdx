@@ -111,9 +111,9 @@ pluginSass({
 });
 ```
 
-## 自定义 Sass
+## 实践
 
-### Sass implementation
+### 修改 Sass implementation
 
 Sass 提供了多种实现，包括 [sass](https://www.npmjs.com/package/sass)、[sass-embedded](https://www.npmjs.com/package/sass-embedded) 和 [node-sass](https://www.npmjs.com/package/node-sass)。
 
@@ -133,7 +133,7 @@ pluginSass({
 将 `sass-embedded` 修改为其他 Sass 实现，可能会构建性能显著下降。
 :::
 
-### Sass API
+### 选择 Sass API
 
 Rsbuild 默认使用最新的 `modern-compiler` API，如果你依赖了 Sass 的 `legacy` API，可以将 sass-loader 的 [api](https://github.com/webpack-contrib/sass-loader?tab=readme-ov-file#api) 选项设置为 `legacy`，以兼容一些废弃的 Sass 写法。
 
@@ -149,7 +149,7 @@ pluginSass({
 Sass 的 `legacy` API 已经被废弃，并且将在 Sass 2.0 中被移除，建议迁移到 `modern-compiler` API，详见 [Sass - Legacy JS API](https://sass-lang.com/documentation/breaking-changes/legacy-js-api/)。
 :::
 
-## Sass 废弃提示
+### 忽略 Sass 废弃提示
 
 Sass 会通过 warning 日志提示你一些废弃的写法，这些写法在 Sass 未来的大版本中将会被移除，建议根据日志进行修改。如果你不想看到这些日志，可以通过 Sass 的 [silenceDeprecations](https://sass-lang.com/documentation/js-api/interfaces/stringoptions/#silenceDeprecations) 选项来忽略这些警告。
 
@@ -176,3 +176,25 @@ pluginSass({
 ```
 
 > 请查看 [Sass Deprecations](https://sass-lang.com/documentation/js-api/interfaces/deprecations/) 了解更多信息。
+
+### 配置多个 Sass 插件
+
+通过使用 `include` 和 `exclude` 选项，你可以同时注册多个 Sass 插件，并为每个插件指定不同的选项。
+
+例如：
+
+```ts
+export default {
+  plugins: [
+    pluginSass({
+      exclude: /\.another\.scss$/,
+    }),
+    pluginSass({
+      include: /\.another\.scss$/,
+      sassLoaderOptions: {
+        // some custom options
+      },
+    }),
+  ],
+};
+```

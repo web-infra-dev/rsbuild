@@ -111,9 +111,9 @@ pluginSass({
 });
 ```
 
-## Custom Sass
+## Practices
 
-### Sass Implementation
+### Modify Sass Implementation
 
 Sass provides several implementations, including [sass](https://www.npmjs.com/package/sass), [sass-embedded](https://www.npmjs.com/package/sass-embedded), and [node-sass](https://www.npmjs.com/package/node-sass).
 
@@ -133,7 +133,7 @@ pluginSass({
 Switching from `sass-embedded` to another Sass implementation can significantly decrease build performance.
 :::
 
-### Sass API
+### Select Sass API
 
 Rsbuild uses the latest `modern-compiler` API by default. If you rely on the `legacy` API of Sass, you can set the `api` option of the sass-loader to `legacy` to maintain compatibility with some deprecated Sass syntax.
 
@@ -149,7 +149,7 @@ pluginSass({
 Sass's `legacy` API has been deprecated and will be removed in Sass 2.0. It is recommended to migrate to the `modern-compiler` API. For more details, see [Sass - Legacy JS API](https://sass-lang.com/documentation/breaking-changes/legacy-js-api/).
 :::
 
-## Sass Deprecation Warnings
+### Ignore Sass Deprecation Warnings
 
 Sass uses warning logs to notify you of deprecated usages that will be removed in future major releases of Sass. It is recommended to make changes as suggested by the logs. If you do not want to see these logs, you can ignore these warnings by using the [silenceDeprecations](https://sass-lang.com/documentation/js-api/interfaces/stringoptions/#silenceDeprecations) option in Sass.
 
@@ -176,3 +176,25 @@ pluginSass({
 ```
 
 > For more information, see [Sass Deprecations](https://sass-lang.com/documentation/js-api/interfaces/deprecations/).
+
+### Configure multiple Sass plugins
+
+By using the `include` and `exclude` options, you can register multiple Sass plugins and specify different options for each plugin.
+
+For example:
+
+```ts
+export default {
+  plugins: [
+    pluginSass({
+      exclude: /\.another\.scss$/,
+    }),
+    pluginSass({
+      include: /\.another\.scss$/,
+      sassLoaderOptions: {
+        // some custom options
+      },
+    }),
+  ],
+};
+```
