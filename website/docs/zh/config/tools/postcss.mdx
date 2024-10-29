@@ -16,9 +16,9 @@ Rsbuild 默认集成 PostCSS，你可以通过 `tools.postcss` 对 [postcss-load
 
 ## Function 类型
 
-值为 Function 类型时，内部默认配置作为第一参数传入，可以直接修改配置对象不做返回，也可以返回一个对象作为最终结果；第二个参数为修改 postcss-loader 配置的工具函数集合。
+当 `tools.postcss` 是一个 function 时，默认选项会作为第一个参数传入，你可以直接修改这个对象，也可以返回一个新的对象作为最终使用的选项。函数的第二个参数为修改 `postcss-loader` 配置的工具函数。
 
-例如，需要在原有插件的基础上新增一个 PostCSS 插件，在 postcssOptions.plugins 数组中 push 一个新的插件即可：
+例如，需要在原有插件的基础上新增一个 PostCSS 插件，在 `postcssOptions.plugins` 数组中 push 一个新的插件即可：
 
 ```ts
 export default {
@@ -63,7 +63,7 @@ export default {
 
 ## Object 类型
 
-当此值为 Object 类型时，与默认配置通过 `Object.assign` 合并。注意 `Object.assign` 是浅拷贝，会完全覆盖内置的 `plugins` 数组，请谨慎使用。
+当 `tools.postcss` 是一个 object 时，它会与默认配置通过 `Object.assign` 合并。注意 `Object.assign` 是浅拷贝，它会完全覆盖内置的 `plugins` 数组，请谨慎使用。
 
 ```js
 export default {
@@ -98,6 +98,37 @@ export default {
   },
 };
 ```
+
+## 实践
+
+### 多份 PostCSS 选项
+
+`tools.postcss.postcssOptions` 可以设置为一个函数，函数接收 Rspack 的 `loaderContext` 作为参数，这允许你根据不同的文件路径使用不同的 PostCSS 选项。
+
+例如，为路径中包含 `foo` 的文件使用 `postcss-plugin-a`，为其他文件使用 `postcss-plugin-b`：
+
+```js
+export default {
+  tools: {
+    postcss: {
+      postcssOptions: (loaderContext) => {
+        if (/foo/.test(loaderContext.resourcePath)) {
+          return {
+            plugins: [require('postcss-plugin-a')],
+          };
+        }
+        return {
+          plugins: [require('postcss-plugin-b')],
+        };
+      },
+    },
+  },
+};
+```
+
+:::tip
+如果项目中包含 `postcss.config.*` 配置文件，该文件的内容会与 `tools.postcss.postcssOptions` 合并，后者的优先级更高，`plugins` 数组会被合并到一个数组中。
+:::
 
 ## 注意事项
 

@@ -24,20 +24,26 @@ export type PostCSSOptions = ProcessOptions & {
 export type PostCSSLoaderOptions = {
   /**
    * Enable PostCSS Parser support in CSS-in-JS. If you use JS styles the postcss-js parser, add the execute option.
+   * @default undefined
    */
   execute?: boolean;
   /**
-   * By default generation of source maps depends on the devtool option. All values enable source map generation except eval and false value.
+   * Whether to generate source maps.
+   * @default `rsbuildConfig.output.sourceMap.css`
    */
   sourceMap?: boolean;
   /**
    * The special implementation option determines which implementation of PostCSS to use.
+   * @default `@rsbuild/core/compiled/postcss`
    */
   implementation?: unknown;
   /**
    * Allows to set PostCSS options and plugins.
+   * @default undefined
    */
-  postcssOptions?: PostCSSOptions;
+  postcssOptions?:
+    | PostCSSOptions
+    | ((loaderContext: Rspack.LoaderContext) => PostCSSOptions);
 };
 
 export type { AcceptedPlugin as PostCSSPlugin } from 'postcss';
