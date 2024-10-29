@@ -68,6 +68,11 @@ export const pluginPreact = (
         tools: {
           swc: {
             jsc: {
+              experimental: {
+                plugins: usePrefresh
+                  ? [[require.resolve('@swc/plugin-prefresh'), {}]]
+                  : undefined,
+              },
               parser: {
                 syntax: 'typescript',
                 // enable supports for JSX/TSX compilation
