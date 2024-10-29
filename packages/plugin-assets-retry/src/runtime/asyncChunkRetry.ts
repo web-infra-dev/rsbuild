@@ -8,12 +8,11 @@ type ChunkSrcUrl = string; // publicPath + ChunkFilename e.g: http://localhost:3
 type Retry = {
   nextDomain: string;
   nextRetryUrl: ChunkSrcUrl;
-  existRetryTimes: number;
   originalScriptFilename: ChunkFilename;
   originalSrcUrl: ChunkSrcUrl;
 };
 
-type RetryCollector = Record<ChunkId, Retry>;
+type RetryCollector = Record<ChunkId, Record<number, Retry>>;
 
 declare global {
   // RuntimeGlobals.require
@@ -129,8 +128,13 @@ function getNextRetryUrl(
   );
 }
 
-function getCurrentRetry(chunkId: string): Retry | undefined {
-  return retryCollector[chunkId];
+// shared between ensureChunk and loadScript
+let globalCurrRetrying: Retry | undefined = undefined;
+function getCurrentRetry(
+  chunkId: string,
+  existRetryTimes: number,
+): Retry | undefined {
+  return retryCollector[chunkId]?.[existRetryTimes];
 }
 
 function initRetry(chunkId: string): Retry {
@@ -143,7 +147,6 @@ function initRetry(chunkId: string): Retry {
   const nextDomain = config.domain?.[0] ?? window.origin;
 
   return {
-    existRetryTimes,
     nextDomain,
     nextRetryUrl: getNextRetryUrl(existRetryTimes, nextDomain, originalSrcUrl),
 
@@ -152,22 +155,23 @@ function initRetry(chunkId: string): Retry {
   };
 }
 
-function nextRetry(chunkId: string): Retry {
-  const currRetry = getCurrentRetry(chunkId);
+function nextRetry(chunkId: string, existRetryTimes: number): Retry {
+  const currRetry = getCurrentRetry(chunkId, existRetryTimes);
 
   let nextRetry: Retry;
-  if (!currRetry) {
+  const nextExistRetryTimes = existRetryTimes + 1;
+
+  if (existRetryTimes === 0 || currRetry === undefined) {
     nextRetry = initRetry(chunkId);
+    retryCollector[chunkId] = [];
   } else {
     const { originalScriptFilename, originalSrcUrl } = currRetry;
-    const existRetryTimes = currRetry.existRetryTimes + 1;
     const nextDomain = findNextDomain(currRetry.nextDomain);
 
     nextRetry = {
-      existRetryTimes,
       nextDomain,
       nextRetryUrl: getNextRetryUrl(
-        existRetryTimes,
+        nextExistRetryTimes,
         nextDomain,
         originalSrcUrl,
       ),
@@ -177,7 +181,8 @@ function nextRetry(chunkId: string): Retry {
     };
   }
 
-  retryCollector[chunkId] = nextRetry;
+  retryCollector[chunkId][nextExistRetryTimes] = nextRetry;
+  globalCurrRetrying = nextRetry;
   return nextRetry;
 }
 
@@ -192,7 +197,10 @@ const originalGetCssFilename =
 const originalLoadScript = __RUNTIME_GLOBALS_LOAD_SCRIPT__;
 
 // if users want to support es5, add Promise polyfill first https://github.com/webpack/webpack/issues/12877
-function ensureChunk(chunkId: string): Promise<unknown> {
+function ensureChunk(
+  chunkId: string,
+  callingCounter: { count: number } = { count: 0 },
+): Promise<unknown> {
   const result = originalEnsureChunk(chunkId);
   const originalScriptFilename = originalGetChunkScriptFilename(chunkId);
   const originalCssFilename = originalGetCssFilename(chunkId);
@@ -206,10 +214,16 @@ function ensureChunk(chunkId: string): Promise<unknown> {
       window.__RB_ASYNC_CHUNKS__[originalCssFilename] = true;
     }
   }
+  callingCounter.count += 1;
 
   return result.catch((error: Error) => {
-    const { existRetryTimes, originalSrcUrl, nextRetryUrl, nextDomain } =
-      nextRetry(chunkId);
+    // the first calling is not retry
+    // if the failed request is 4 in network panel, callingCounter.count === 4, the first one is the normal request, and existRetryTimes is 3, retried 3 times
+    const existRetryTimes = callingCounter.count - 1;
+    const { originalSrcUrl, nextRetryUrl, nextDomain } = nextRetry(
+      chunkId,
+      existRetryTimes,
+    );
 
     // At present, we don't consider the switching domain and addQuery of async CSS chunk
     // 1. Async js chunk will be requested first. It is rare for async CSS chunk to fail alone.
@@ -226,10 +240,12 @@ function ensureChunk(chunkId: string): Promise<unknown> {
       isAsyncChunk: true,
     });
 
-    const context = createContext(existRetryTimes - 1);
+    const context = createContext(existRetryTimes);
 
-    if (existRetryTimes > maxRetries) {
-      error.message = `Loading chunk ${chunkId} from ${originalSrcUrl} failed after ${maxRetries} retries: "${error.message}"`;
+    if (existRetryTimes >= maxRetries) {
+      error.message = error.message?.includes('retries:')
+        ? error.message
+        : `Loading chunk ${chunkId} from ${originalSrcUrl} failed after ${maxRetries} retries: "${error.message}"`;
       if (typeof config.onFail === 'function') {
         config.onFail(context);
       }
@@ -262,15 +278,15 @@ function ensureChunk(chunkId: string): Promise<unknown> {
       config.onRetry(context);
     }
 
-    return ensureChunk(chunkId).then((result) => {
-      if (typeof config.onSuccess === 'function') {
-        const context = createContext(existRetryTimes);
-        const { existRetryTimes: currRetryTimes } =
-          getCurrentRetry(chunkId) ?? {};
-
-        if (currRetryTimes === existRetryTimes) {
-          config.onSuccess(context);
-        }
+    const nextPromise = ensureChunk(chunkId, callingCounter);
+    return nextPromise.then((result) => {
+      // when after retrying the third time
+      // ensureChunk(chunkId, { count: 3 }), at that time, existRetryTimes === 2
+      // after all, callingCounter.count is 4
+      const isLastSuccessRetry = callingCounter.count === existRetryTimes + 2;
+      if (typeof config.onSuccess === 'function' && isLastSuccessRetry) {
+        const context = createContext(existRetryTimes + 1);
+        config.onSuccess(context);
       }
       return result;
     });
@@ -283,7 +299,7 @@ function loadScript(
   key: string,
   chunkId: ChunkId,
 ) {
-  const retry = getCurrentRetry(chunkId);
+  const retry = globalCurrRetrying;
   return originalLoadScript(
     retry ? retry.nextRetryUrl : originalUrl,
     done,
