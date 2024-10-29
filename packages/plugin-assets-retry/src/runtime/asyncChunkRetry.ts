@@ -129,7 +129,7 @@ function getNextRetryUrl(
 }
 
 // shared between ensureChunk and loadScript
-let globalCurrRetrying: Retry | undefined = undefined;
+const globalCurrRetrying: Record<ChunkId, Retry> = {};
 function getCurrentRetry(
   chunkId: string,
   existRetryTimes: number,
@@ -182,7 +182,7 @@ function nextRetry(chunkId: string, existRetryTimes: number): Retry {
   }
 
   retryCollector[chunkId][nextExistRetryTimes] = nextRetry;
-  globalCurrRetrying = nextRetry;
+  globalCurrRetrying[chunkId] = nextRetry;
   return nextRetry;
 }
 
@@ -299,7 +299,7 @@ function loadScript(
   key: string,
   chunkId: ChunkId,
 ) {
-  const retry = globalCurrRetrying;
+  const retry = globalCurrRetrying[chunkId];
   return originalLoadScript(
     retry ? retry.nextRetryUrl : originalUrl,
     done,
