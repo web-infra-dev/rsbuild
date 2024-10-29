@@ -6,14 +6,13 @@
 ```js
 const defaultOptions = {
   postcssOptions: {
+    config: false,
     sourceMap: rsbuildConfig.output.sourceMap.css,
   },
 };
 ```
 
 Rsbuild integrates PostCSS by default, you can configure [postcss-loader](https://github.com/webpack-contrib/postcss-loader) through `tools.postcss`.
-
-Note that, for performance, Rsbuild uses [postcss-load-config](https://github.com/postcss/postcss-load-config) to load external config files and merges them with the default config.
 
 ## Function Type
 
@@ -100,6 +99,14 @@ export default {
 };
 ```
 
-:::tip
-Rsbuild uses the PostCSS v8 version. When you use third-party PostCSS plugins, please pay attention to whether the PostCSS version is compatible. Some legacy plugins may not work in PostCSS v8.
-:::
+## Notes
+
+### PostCSS Version
+
+Rsbuild uses the PostCSS v8. When you use third-party PostCSS plugins, please pay attention to whether the PostCSS version is compatible. Some legacy plugins may not work in PostCSS v8.
+
+### PostCSS Config Loading
+
+Rsbuild uses [postcss-load-config](https://github.com/postcss/postcss-load-config) to load PostCSS config files and merge them with the default config.
+
+Rsbuild internally sets the `postcss-loader`'s `postcssOptions.config` option to `false` to avoid loading config files repeatedly.
