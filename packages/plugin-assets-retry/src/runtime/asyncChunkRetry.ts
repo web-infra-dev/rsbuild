@@ -217,7 +217,9 @@ function ensureChunk(
   callingCounter.count += 1;
 
   return result.catch((error: Error) => {
-    const existRetryTimes = callingCounter.count - 1; // the first calling is not retry
+    // the first calling is not retry
+    // if the error request is 4 in network panel, the first one is the normal request, and existRetryTimes is 3, retried 3 times
+    const existRetryTimes = callingCounter.count - 1;
     const { originalSrcUrl, nextRetryUrl, nextDomain } = nextRetry(
       chunkId,
       existRetryTimes,
@@ -278,7 +280,7 @@ function ensureChunk(
 
     const nextPromise = ensureChunk(chunkId, callingCounter);
     return nextPromise.then((result) => {
-      // when after retrying 3 times aka "ensureChunk(chunkId, 2)", the callingCounter.count is 4
+      // when after retrying the third time, that is after "ensureChunk(chunkId, 2)", the callingCounter.count is 4
       const isLastSuccessRetry = callingCounter.count === existRetryTimes + 2;
       if (typeof config.onSuccess === 'function' && isLastSuccessRetry) {
         const context = createContext(existRetryTimes + 1);
