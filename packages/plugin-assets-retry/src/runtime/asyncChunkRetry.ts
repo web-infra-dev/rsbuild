@@ -218,7 +218,7 @@ function ensureChunk(
 
   return result.catch((error: Error) => {
     // the first calling is not retry
-    // if the error request is 4 in network panel, the first one is the normal request, and existRetryTimes is 3, retried 3 times
+    // if the failed request is 4 in network panel, callingCounter.count === 4, the first one is the normal request, and existRetryTimes is 3, retried 3 times
     const existRetryTimes = callingCounter.count - 1;
     const { originalSrcUrl, nextRetryUrl, nextDomain } = nextRetry(
       chunkId,
