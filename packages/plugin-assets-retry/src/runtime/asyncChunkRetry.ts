@@ -280,7 +280,9 @@ function ensureChunk(
 
     const nextPromise = ensureChunk(chunkId, callingCounter);
     return nextPromise.then((result) => {
-      // when after retrying the third time, that is after "ensureChunk(chunkId, 2)", the callingCounter.count is 4
+      // when after retrying the third time
+      // "ensureChunk(chunkId, { count: 3 })"
+      // callingCounter.count is 4
       const isLastSuccessRetry = callingCounter.count === existRetryTimes + 2;
       if (typeof config.onSuccess === 'function' && isLastSuccessRetry) {
         const context = createContext(existRetryTimes + 1);
