@@ -11,7 +11,7 @@ type SriOptions = {
 
 - **默认值：** `undefined`
 
-为 HTML 所引入的 `<script>` 和 `<link rel="stylesheet">` 标签添加完整性属性 —— `integrity`，使浏览器能够验证引入资源的完整性，以此防止下载的资源被篡改。
+为 HTML 所引入的 `<script>` 和 `<link>` 标签添加完整性属性 —— `integrity`，使浏览器能够验证引入资源的完整性，以此防止下载的资源被篡改。
 
 ## 什么是 SRI
 
@@ -38,7 +38,7 @@ export default {
 };
 ```
 
-Rsbuild 生成的 `<script>` 和 `<link rel="stylesheet">` 标签上会带有 `integrity` 和 `crossorigin` 属性：
+Rsbuild 生成的 `<script>` 和 `<link>` 标签上会带有 `integrity` 和 `crossorigin` 属性：
 
 ```html
 <script
@@ -56,13 +56,19 @@ Rsbuild 生成的 `<script>` 和 `<link rel="stylesheet">` 标签上会带有 `i
 />
 ```
 
-## 局限性
+## 注意
 
 Rsbuild 的 `security.sri` 仅会作用于 Rsbuild 生成的标签，不会作用于：
 
 - HTML 模板中原有的标签。
 - Rspack 异步注入的标签。
 - 通过客户端 JavaScript 代码插入的标签。
+
+Rsbuild 会处理以下几种 `<link>` 标签：
+
+- `<link rel="preload">`
+- `<link rel="stylesheet">`
+- `<link rel="modulepreload">`
 
 ## 选项
 
