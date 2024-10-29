@@ -43,6 +43,12 @@ worker.postMessage(10);
 export default {
   tools: {
     rspack: {
+      resolveLoader: {
+        alias: {
+          // 修改内联 loader 中 worker-loader 的指向，如 `worker-loader!pdfjs-dist/es5/build/pdf.worker.js`
+          'worker-loader': require.resolve('worker-rspack-loader'),
+        },
+      },
       module: {
         rules: [
           {
