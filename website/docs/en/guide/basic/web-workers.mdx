@@ -45,6 +45,12 @@ If your project already uses `worker-loader`, or you want to use the `inline` an
 export default {
   tools: {
     rspack: {
+      resolveLoader: {
+        alias: {
+          // Modify the resolution of worker-loader in the inline loader, such as `worker-loader!pdfjs-dist/es5/build/pdf.worker.js`
+          'worker-loader': require.resolve('worker-rspack-loader'),
+        },
+      },
       module: {
         rules: [
           {
