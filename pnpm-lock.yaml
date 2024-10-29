@@ -864,6 +864,9 @@ importers:
       '@rspack/plugin-preact-refresh':
         specifier: ^1.1.0
         version: 1.1.0(@prefresh/core@1.5.2(preact@10.24.3))(@prefresh/utils@1.2.0)
+      '@swc/plugin-prefresh':
+        specifier: ^3.0.3
+        version: 3.0.3
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -3288,6 +3291,9 @@ packages:
 
   '@swc/helpers@0.5.13':
     resolution: {integrity: sha512-UoKGxQ3r5kYI9dALKJapMmuK+1zWM/H17Z1+iwnNmzcJRnfFuevZs375TA5rW31pu4BS4NoSy1fRsexDXfWn5w==}
+
+  '@swc/plugin-prefresh@3.0.3':
+    resolution: {integrity: sha512-HXRBKFwGcUuEgPsYz4tEfZ97nM0V8raDvn322tSx7vBWSxN+XdtJx4xtoIlLZNr+YSV/NXV9UpfskQZ1Dfa9bQ==}
 
   '@swc/plugin-remove-console@3.0.3':
     resolution: {integrity: sha512-Q7Gp0KzjBgXSJA2jOcAraJ2I/phK/RnpZDWewgqSPsElFe/Pdo3A+w2FVCEoXAd3rUtPbrav1kjpBrGmeFBpFQ==}
@@ -9974,6 +9980,10 @@ snapshots:
   '@swc/helpers@0.5.13':
     dependencies:
       tslib: 2.6.2
+
+  '@swc/plugin-prefresh@3.0.3':
+    dependencies:
+      '@swc/counter': 0.1.3
 
   '@swc/plugin-remove-console@3.0.3':
     dependencies:
