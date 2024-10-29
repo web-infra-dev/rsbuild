@@ -1,3 +1,3 @@
 export default {
-  plugins: [require('./postcss-plugin.cjs')],
+  plugins: [require('./postcssPlugin.cjs')],
 };
