@@ -13,7 +13,7 @@ The following style files are considered CSS Modules:
 - `*.module.styl`
 - `*.module.stylus`
 
-## Example
+## Usage Example
 
 - Write style:
 
@@ -33,7 +33,21 @@ export default () => {
 };
 ```
 
-- You can also reference class names through named imports:
+## Named Import
+
+If you prefer to use named imports in CSS Modules, you can enable it through the [output.cssModules.namedExport](/config/output/css-modules#cssmodulesnamedexport) config.
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    cssModules: {
+      namedExport: true,
+    },
+  },
+};
+```
+
+If enabled, you can reference class names using named imports:
 
 ```tsx title="Button.tsx"
 import { red } from './button.module.css';
