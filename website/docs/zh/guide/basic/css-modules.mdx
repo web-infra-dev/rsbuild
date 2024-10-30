@@ -13,7 +13,7 @@ Rsbuild 默认支持使用 CSS Modules，无需添加额外的配置。我们约
 - `*.module.styl`
 - `*.module.stylus`
 
-## 示例
+## 用法示例
 
 - 编写样式：
 
@@ -33,7 +33,21 @@ export default () => {
 };
 ```
 
-- 你也可以通过具名导入来引用类名：
+## 具名导入
+
+如果你倾向于在 CSS Modules 中使用具名导入，可以通过 [output.cssModules.namedExport](/config/output/css-modules#cssmodulesnamedexport) 配置项来开启。
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    cssModules: {
+      namedExport: true,
+    },
+  },
+};
+```
+
+开启后，你可以通过具名导入来引用类名：
 
 ```tsx title="Button.tsx"
 import { red } from './button.module.css';
