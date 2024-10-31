@@ -38,7 +38,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -99,6 +99,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               "jsc": {
                 "experimental": {
                   "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
                 "parser": {
@@ -142,6 +143,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
               "jsc": {
                 "experimental": {
                   "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
                 "parser": {
@@ -361,12 +363,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     DefinePlugin {
       "_args": [
         {
-          "import.meta.env.ASSET_PREFIX": """",
+          "import.meta.env.ASSET_PREFIX": "\\"\\"",
           "import.meta.env.BASE_URL": "\\"/\\"",
           "import.meta.env.DEV": true,
-          "import.meta.env.MODE": ""development"",
+          "import.meta.env.MODE": "\\"development\\"",
           "import.meta.env.PROD": false,
-          "process.env.ASSET_PREFIX": """",
+          "process.env.ASSET_PREFIX": "\\"\\"",
           "process.env.BASE_URL": "\\"/\\"",
         },
       ],
@@ -435,7 +437,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -495,6 +497,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               "jsc": {
                 "experimental": {
                   "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
                 "parser": {
@@ -538,6 +541,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
               "jsc": {
                 "experimental": {
                   "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
                 "parser": {
@@ -785,12 +789,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     DefinePlugin {
       "_args": [
         {
-          "import.meta.env.ASSET_PREFIX": """",
+          "import.meta.env.ASSET_PREFIX": "\\"\\"",
           "import.meta.env.BASE_URL": "\\"/\\"",
           "import.meta.env.DEV": false,
-          "import.meta.env.MODE": ""production"",
+          "import.meta.env.MODE": "\\"production\\"",
           "import.meta.env.PROD": true,
-          "process.env.ASSET_PREFIX": """",
+          "process.env.ASSET_PREFIX": "\\"\\"",
           "process.env.BASE_URL": "\\"/\\"",
         },
       ],
@@ -914,6 +918,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               "jsc": {
                 "experimental": {
                   "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
                 "parser": {
@@ -953,6 +958,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
               "jsc": {
                 "experimental": {
                   "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
                 "parser": {
@@ -1125,12 +1131,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     DefinePlugin {
       "_args": [
         {
-          "import.meta.env.ASSET_PREFIX": """",
+          "import.meta.env.ASSET_PREFIX": "\\"\\"",
           "import.meta.env.BASE_URL": "\\"/\\"",
           "import.meta.env.DEV": true,
-          "import.meta.env.MODE": ""development"",
+          "import.meta.env.MODE": "\\"development\\"",
           "import.meta.env.PROD": false,
-          "process.env.ASSET_PREFIX": """",
+          "process.env.ASSET_PREFIX": "\\"\\"",
           "process.env.BASE_URL": "\\"/\\"",
         },
       ],
@@ -1204,7 +1210,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/builtin-plugin/css-extract/loader.js",
+            "loader": "<ROOT>/node_modules/<PNPM_INNER>/@rspack/core/dist/cssExtractLoader.js",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -1265,6 +1271,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
               "jsc": {
                 "experimental": {
                   "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
                 "parser": {
@@ -1308,6 +1315,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
               "jsc": {
                 "experimental": {
                   "cacheRoot": "<ROOT>/packages/core/tests/node_modules/.cache/.swc",
+                  "keepImportAttributes": true,
                 },
                 "externalHelpers": true,
                 "parser": {
@@ -1440,6 +1448,10 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "test": /\\\\\\.wasm\\$/,
         "type": "asset/resource",
       },
+      {
+        "loader": "foo-loader",
+        "test": /\\\\\\.foo/,
+      },
     ],
   },
   "name": "web",
@@ -1530,12 +1542,12 @@ exports[`tools.rspack > should match snapshot 1`] = `
     DefinePlugin {
       "_args": [
         {
-          "import.meta.env.ASSET_PREFIX": """",
+          "import.meta.env.ASSET_PREFIX": "\\"\\"",
           "import.meta.env.BASE_URL": "\\"/\\"",
           "import.meta.env.DEV": true,
-          "import.meta.env.MODE": ""development"",
+          "import.meta.env.MODE": "\\"development\\"",
           "import.meta.env.PROD": false,
-          "process.env.ASSET_PREFIX": """",
+          "process.env.ASSET_PREFIX": "\\"\\"",
           "process.env.BASE_URL": "\\"/\\"",
         },
       ],

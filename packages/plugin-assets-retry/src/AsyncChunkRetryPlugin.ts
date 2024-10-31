@@ -1,8 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { type Rspack, rspack } from '@rsbuild/core';
 import serialize from 'serialize-javascript';
-import type { PluginAssetsRetryOptions, RuntimeRetryOptions } from './types';
+import type { PluginAssetsRetryOptions, RuntimeRetryOptions } from './types.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://github.com/web-infra-dev/rspack/pull/5370
 function appendWebpackScript(module: any, appendSource: string) {
@@ -16,7 +19,7 @@ function appendWebpackScript(module: any, appendSource: string) {
 }
 
 function appendRspackScript(
-  module: any, // JsRuntimeModule type is not exported by rspack temporarily */
+  module: any, // JsRuntimeModule type is not exported by Rspack temporarily */
   appendSource: string,
 ) {
   try {

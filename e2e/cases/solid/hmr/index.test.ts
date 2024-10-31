@@ -3,13 +3,22 @@ import path from 'node:path';
 import { dev, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-rspackOnlyTest('hmr should work properly', async ({ page }) => {
+rspackOnlyTest('HMR should work properly', async ({ page }) => {
   // HMR cases will fail in Windows
   if (process.platform === 'win32') {
     test.skip();
   }
 
   const root = __dirname;
+  const compFilePath = path.join(root, 'src/test-temp-B.jsx');
+  const compSourceCode = `const B = (props) => {
+  return <div id="B">B: {props.count()}</div>;
+};
+
+export default B;
+`;
+
+  fs.writeFileSync(compFilePath, compSourceCode, 'utf-8');
 
   const rsbuild = await dev({
     cwd: root,
@@ -27,9 +36,11 @@ rspackOnlyTest('hmr should work properly', async ({ page }) => {
   await expect(b).toHaveText('B: 5');
 
   // simulate a change to component B's source code
-  const filePath = path.join(root, 'src/B.jsx');
-  const sourceCodeB = fs.readFileSync(filePath, 'utf-8');
-  fs.writeFileSync(filePath, sourceCodeB.replace('B:', 'Beep:'), 'utf-8');
+  fs.writeFileSync(
+    compFilePath,
+    compSourceCode.replace('B:', 'Beep:'),
+    'utf-8',
+  );
 
   await page.waitForFunction(() => {
     const aText = document.querySelector('#A')!.textContent;
@@ -43,7 +54,5 @@ rspackOnlyTest('hmr should work properly', async ({ page }) => {
     );
   });
 
-  // recover the source code
-  fs.writeFileSync(filePath, sourceCodeB, 'utf-8');
   await rsbuild.close();
 });

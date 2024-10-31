@@ -33,3 +33,34 @@ export default defineConfig({
   plugins: [pluginPreact()],
 });
 ```
+
+## Preact Fast Refresh
+
+Preact plugin uses [@preact/prefresh](https://github.com/preactjs/prefresh) and [@rspack/plugin-preact-refresh](https://github.com/rspack-contrib/rspack-plugin-preact-refresh) to hot reload Preact components.
+
+### Recognition
+
+Prefresh need to be able to recognize your components, this means that components should
+start with a capital letter and hook should start with `use` followed by a capital letter.
+This allows the plugin to effectively recognize these.
+
+Do note that a component as seen below is not named:
+
+```jsx
+export default () => {
+  return <p>Want to refresh</p>;
+};
+```
+
+Instead do:
+
+```jsx
+const MyComponent = () => {
+  return <p>Want to refresh</p>;
+};
+
+export default MyComponent;
+```
+
+When you are working with HOC's be sure to lift up the `displayName` so the plugin can
+recognize it as a component.

@@ -1,23 +1,26 @@
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type { RsbuildPlugin } from '@rsbuild/core';
-import { SwcMinimizerPlugin } from './minimizer';
+import { SwcMinimizerPlugin } from './minimizer.js';
 import type {
   ObjPluginSwcOptions,
   PluginSwcOptions,
   TransformConfig,
-} from './types';
+} from './types.js';
 import {
   applyPluginConfig,
   checkUseMinify,
   removeUselessOptions,
-} from './utils';
+} from './utils.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**
  * In this plugin, we do:
  * - Remove Babel loader if exists
- * - Add our own swc loader
+ * - Add our own swc-loader
  * - Remove JS minifier
- * - Add swc minifier plugin
+ * - Add SWC minifier plugin
  */
 export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
   name: 'rsbuild-webpack:swc',
@@ -60,7 +63,7 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
             i > 0 ? CHAIN_ID.RULE.JS + i.toString() : CHAIN_ID.RULE.JS;
           const rule = chain.module.rule(ruleId);
 
-          // Insert swc loader and plugin
+          // Insert SWC loader and plugin
           rule
             .test(test || /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/)
             .use(CHAIN_ID.USE.SWC)
@@ -149,7 +152,7 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
   },
 });
 
-/// default swc configuration
+/// default SWC configuration
 export function getDefaultSwcConfig(): TransformConfig {
   const cwd = process.cwd();
   return {

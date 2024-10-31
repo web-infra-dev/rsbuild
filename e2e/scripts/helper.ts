@@ -7,6 +7,7 @@ import glob, {
   convertPathToPattern,
   type Options as GlobOptions,
 } from 'fast-glob';
+import stripAnsi from 'strip-ansi';
 
 export const providerType = process.env.PROVIDE_TYPE || 'rspack';
 
@@ -91,6 +92,7 @@ export const awaitFileExists = async (dir: string) => {
 
 export const proxyConsole = (
   types: ConsoleType | ConsoleType[] = ['log', 'warn', 'info', 'error'],
+  keepAnsi = false,
 ) => {
   const logs: string[] = [];
   const restores: Array<() => void> = [];
@@ -103,7 +105,7 @@ export const proxyConsole = (
     });
 
     console[type] = (log) => {
-      logs.push(log);
+      logs.push(keepAnsi ? log : stripAnsi(log));
     };
   }
 

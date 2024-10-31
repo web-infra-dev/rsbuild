@@ -111,6 +111,7 @@ Here is the corresponding Rsbuild configuration for Vite configuration:
 | plugins                               | [plugins](/config/plugins)                                       |
 | envDir                                | [Env Directory](/guide/advanced/env-vars#env-directory)          |
 | publicDir                             | [server.publicDir](/config/server/public-dir)                    |
+| assetsInclude                         | [source.assetsInclude](/config/source/assets-include)            |
 | resolve.alias                         | [source.alias](/config/source/alias)                             |
 | resolve.conditions                    | [tools.rspack.resolve.conditionNames](/config/tools/rspack)      |
 | resolve.mainFields                    | [tools.rspack.resolve.mainFields](/config/tools/rspack)          |
@@ -148,7 +149,7 @@ Here is the corresponding Rsbuild configuration for Vite configuration:
 
 Notes:
 
-- The above table does not cover all configurations of Vue CLI, feel free to add more.
+- The above table does not cover all configurations of Vite, feel free to add more.
 
 ## Environment Variables
 
@@ -245,7 +246,7 @@ for (const path of context.keys()) {
 
 ## Validating Results
 
-After completing the above steps, you have completed the basic migration from Vite to Rsbuild. You can now run the `npm run serve` command to try starting the dev server.
+After completing the above steps, you have completed the basic migration from Vite to Rsbuild. You can now run the `npm run dev` command to try starting the dev server.
 
 If you encounter any issues during the build process, please debug according to the error log, or check the Vite configuration to see if there are any necessary configurations that have not been migrated to Rsbuild.
 

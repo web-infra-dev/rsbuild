@@ -76,10 +76,6 @@ export default {
 
 指运行在 [Web Worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) 环境的产物。
 
-:::tip Web Worker
-Web Worker 是一种 JavaScript API，它允许网页在后台线程中执行脚本，与主线程（网页）分离。这意味着，您可以使用 Web Worker 来执行计算密集型或长时间运行的任务，而无需阻塞主线程，进而影响网页的性能。
-:::
-
 当 `target` 设置为 `'web-worker'` 时，Rsbuild 会进行以下处理：
 
 - 将 Rspack 的 [target](https://rspack.dev/config/target) 设置为 `'webworker'`。
@@ -87,6 +83,8 @@ Web Worker 是一种 JavaScript API，它允许网页在后台线程中执行脚
 - 不会打包或抽取 CSS 代码，但产物中会包含 CSS Modules 的 id 信息。
 - 不会开启默认的拆包策略，**并且 dynamic import 也不会生效**，因为 Web Worker 仅运行支持单个 JavaScript 文件。
 - 不会开启热更新相关的能力。
+
+更多信息可参考 [使用 Web Workers](/guide/basic/web-workers)。
 
 ## 其他 target
 

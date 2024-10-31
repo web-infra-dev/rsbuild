@@ -2,7 +2,7 @@
 
 Rsbuild 提供了丰富的配置项，并为每个配置项预设了一个通用的默认值，它可以满足大部分使用场景。因此，在大多数情况下，你不需要声明任何 Rsbuild 配置，直接开箱使用即可。
 
-如果你需要定制一些构建行为，那么可以这些配置项。
+如果你需要定制一些构建行为，那么可以使用这些配置项。
 
 ## 配置结构
 
@@ -200,7 +200,7 @@ export default defineConfig(async ({ env, command }) => {
 
 ## 合并配置
 
-你可以使用 `@rspack/core` 导出的 [mergeRsbuildConfig](/api/javascript-api/core#mergersbuildconfig) 函数来合并多个配置。
+你可以使用 `@rsbuild/core` 导出的 [mergeRsbuildConfig](/api/javascript-api/core#mergersbuildconfig) 函数来合并多个配置。
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig, mergeRsbuildConfig } from '@rsbuild/core';

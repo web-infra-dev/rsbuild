@@ -24,7 +24,7 @@ describe('plugin-svelte', () => {
     expect(config).toMatchSnapshot();
   });
 
-  it('should turn off hmr by hand correctly', async () => {
+  it('should turn off HMR by hand correctly', async () => {
     const rsbuild = await createStubRsbuild({
       rsbuildConfig: {
         dev: {

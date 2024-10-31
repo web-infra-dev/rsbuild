@@ -1,17 +1,23 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
     "lib": ["DOM", "ES2020"],
-    "module": "ESNext",
+    "target": "ES2020",
     "noEmit": true,
-    "strict": true,
     "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+
+    /* modules */
+    "module": "ESNext",
     "isolatedModules": true,
     "resolveJsonModule": true,
-    "moduleResolution": "bundler",
-    "useDefineForClassFields": false,
+    "moduleResolution": "Bundler",
     "allowImportingTsExtensions": true,
-    "experimentalDecorators": true
+
+    /* type checking */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
   },
   "include": ["src"]
 }

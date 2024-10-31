@@ -36,6 +36,7 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
         "jsc": {
           "experimental": {
             "cacheRoot": "<ROOT>/packages/plugin-babel/tests/node_modules/.cache/.swc",
+            "keepImportAttributes": true,
           },
           "externalHelpers": true,
           "parser": {
@@ -117,6 +118,7 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
         "jsc": {
           "experimental": {
             "cacheRoot": "<ROOT>/packages/plugin-babel/tests/node_modules/.cache/.swc",
+            "keepImportAttributes": true,
           },
           "externalHelpers": true,
           "parser": {
@@ -194,6 +196,7 @@ exports[`plugins/babel > should apply environment config correctly 2`] = `
         "jsc": {
           "experimental": {
             "cacheRoot": "<ROOT>/packages/plugin-babel/tests/node_modules/.cache/.swc",
+            "keepImportAttributes": true,
           },
           "externalHelpers": true,
           "parser": {

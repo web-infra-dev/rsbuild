@@ -221,3 +221,18 @@ pluginReact({
   },
 });
 ```
+
+### fastRefresh
+
+- **类型：** `boolean`
+- **默认值：** `true`
+
+是否在开发模式下启用 React [Fast Refresh](https://www.npmjs.com/package/react-refresh)。
+
+如果你需要禁用 Fast Refresh，可以将其设置为 `false`：
+
+```ts
+pluginReact({
+  fastRefresh: false,
+});
+```

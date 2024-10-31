@@ -1,7 +1,6 @@
 import { isRegExp } from 'node:util/types';
 import { rspack } from '@rspack/core';
 import type { RspackPluginInstance } from '@rspack/core';
-import { DEFAULT_ASSET_PREFIX } from '../constants';
 import type { CacheGroup, RsbuildPlugin, Rspack } from '../types';
 
 /**
@@ -99,16 +98,26 @@ export function pluginModuleFederation(): RsbuildPlugin {
           return;
         }
 
-        // If this is a provider app, Rsbuild should send the ws request to the provider's dev server.
-        // This allows the provider to do HMR when the provider module is loaded in the consumer's page.
-        if (
-          moduleFederation.options.exposes &&
-          config.server?.port &&
-          !config.dev?.client?.port
-        ) {
+        // Change some default configs for remote modules
+        if (moduleFederation.options.exposes) {
           config.dev ||= {};
-          config.dev.client ||= {};
-          config.dev.client.port = config.server.port;
+
+          // For remote modules, Rsbuild should send the ws request to the provider's dev server.
+          // This allows the provider to do HMR when the provider module is loaded in the consumer's page.
+          if (config.server?.port && !config.dev.client?.port) {
+            config.dev.client ||= {};
+            config.dev.client.port = config.server.port;
+          }
+
+          // Change the default assetPrefix to `true` for remote modules.
+          // This ensures that the remote module's assets can be requested by consumer apps with the correct URL.
+          const originalConfig = api.getRsbuildConfig('original');
+          if (
+            originalConfig.dev?.assetPrefix === undefined &&
+            config.dev.assetPrefix === config.server?.base
+          ) {
+            config.dev.assetPrefix = true;
+          }
         }
       });
 
@@ -165,13 +174,6 @@ export function pluginModuleFederation(): RsbuildPlugin {
             if (!chain.output.get('uniqueName')) {
               chain.output.set('uniqueName', options.name);
             }
-          }
-
-          const publicPath = chain.output.get('publicPath');
-
-          // set the default publicPath to 'auto' to make MF work
-          if (publicPath === DEFAULT_ASSET_PREFIX) {
-            chain.output.set('publicPath', 'auto');
           }
         },
       );

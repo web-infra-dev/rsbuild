@@ -82,7 +82,7 @@ Load the `.env` file and return all environment variables starting with the spec
 
 - **Type:**
 
-```ts
+````ts
 type LoadEnvOptions = {
   /**
    * The root path to load the env file
@@ -103,16 +103,39 @@ type LoadEnvOptions = {
 };
 
 function loadEnv(options: LoadEnvOptions): {
-  /** All environment variables in the .env file */
+  /** All env variables in the .env file */
   parsed: Record<string, string>;
   /** The absolute paths to all env files */
   filePaths: string[];
-  /** Environment variables that start with prefixes */
+  /**
+   * Env variables that start with prefixes.
+   *
+   * @example
+   * ```ts
+   * {
+   *   PUBLIC_FOO: 'bar',
+   * }
+   * ```
+   **/
+  rawPublicVars: Record<string, string | undefined>;
+  /**
+   * Formatted env variables that start with prefixes.
+   * The keys contain the prefixes `process.env.*` and `import.meta.env.*`.
+   * The values are processed by `JSON.stringify`.
+   *
+   * @example
+   * ```ts
+   * {
+   *   'process.env.PUBLIC_FOO': '"bar"',
+   *   'import.meta.env.PUBLIC_FOO': '"bar"',
+   * }
+   * ```
+   **/
   publicVars: Record<string, string>;
-  /** Clear the environment variables mounted on `process.env` */
+  /** Clear the env variables mounted on `process.env` */
   cleanup: () => void;
 };
-```
+````
 
 - **Example:**
 

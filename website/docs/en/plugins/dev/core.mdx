@@ -323,6 +323,51 @@ In Rsbuild plugins, you can quickly implement code transformation functions usin
 
 Note that for some complex code transformation scenarios, `api.transform` may not be sufficient. In such situations, you can implement it using the Rspack loader.
 
+## api.resolve
+
+Intercept and modify module request information before module resolution begins. The same as Rspack's [normalModuleFactory.hooks.resolve](https://rspack.dev/api/plugin-api/normal-module-factory-hooks#resolve) hook.
+
+- **Version:** `>= 1.0.17`
+- **Type:**
+
+```ts
+function ResolveFn(handler: ResolveHandler): void;
+```
+
+### Example
+
+- Modify the request of `a.js` file：
+
+```js
+api.resolve(({ resolveData }) => {
+  if (resolveData.request === './a.js') {
+    resolveData.request = './b.js';
+  }
+});
+```
+
+### `handler` Param
+
+The `handler` parameter is a callback function that receives a module require information and allows you to modify it.
+
+- **Type:**
+
+```ts
+type ResolveHandler = (context: {
+  resolveData: Rspack.ResolveData;
+  compiler: Rspack.Compiler;
+  compilation: Rspack.Compilation;
+  environment: EnvironmentContext;
+}) => Promise<void> | void;
+```
+
+The `handler` function provides the following parameters:
+
+- `resolveData`: Module request information. For details, please refer to [Rspack - resolve hook](https://rspack.dev/api/plugin-api/normal-module-factory-hooks#resolve).
+- `compiler`: The Compiler object of Rspack.
+- `compilation`: The Compilation object of Rspack.
+- `environment`: The environment context of the current build.
+
 ## api.processAssets
 
 Modify assets before emitting, the same as Rspack's [compilation.hooks.processAssets](https://rspack.dev/api/plugin-api/compilation-hooks#processassets) hook.

@@ -321,6 +321,51 @@ api.transform(
 
 注意，对于一些复杂的代码转换场景，`api.transform` 可能无法满足，此时你可以使用 Rspack loader 进行实现。
 
+## api.resolve
+
+在模块解析开始之前，拦截并修改模块的请求信息。等价于 Rspack 的 [normalModuleFactory.hooks.resolve](https://rspack.dev/zh/api/plugin-api/normal-module-factory-hooks#resolve) hook。
+
+- **版本：** `>= 1.0.17`
+- **类型：**
+
+```ts
+function ResolveFn(handler: ResolveHandler): void;
+```
+
+### 示例
+
+- 修改 `a.js` 文件请求：
+
+```js
+api.resolve(({ resolveData }) => {
+  if (resolveData.request === './a.js') {
+    resolveData.request = './b.js';
+  }
+});
+```
+
+### `handler` 参数
+
+handler 参数是一个回调函数，接收一个模块的请求信息，并允许你修改它。
+
+- **类型：**
+
+```ts
+type ResolveHandler = (context: {
+  resolveData: Rspack.ResolveData;
+  compiler: Rspack.Compiler;
+  compilation: Rspack.Compilation;
+  environment: EnvironmentContext;
+}) => Promise<void> | void;
+```
+
+handler 函数提供以下参数：
+
+- `resolveData`：当前模块请求信息，详情可参考 [Rspack - resolve 钩子](https://rspack.dev/zh/api/plugin-api/normal-module-factory-hooks#resolve)。
+- `compiler`：Rspack 的 Compiler 对象。
+- `compilation`：Rspack 的 Compilation 对象。
+- `environment`: 当前构建的 [environment 上下文](/api/javascript-api/environment-context)。
+
 ## api.processAssets
 
 在输出产物之前对 assets 进行修改，等价于 Rspack 的 [compilation.hooks.processAssets](https://rspack.dev/api/plugin-api/compilation-hooks#processassets) hook。

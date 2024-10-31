@@ -78,7 +78,7 @@ export const createProxyMiddleware = async (
     middlewares.push(middleware);
 
     // only proxy WebSocket request when user specified
-    // fix WebSocket error when user forget filter hmr path
+    // fix WebSocket error when user forget filter HMR path
     opts.ws && proxyMiddlewares.push(proxyMiddleware);
   }
 

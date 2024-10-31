@@ -1,11 +1,23 @@
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type {
   ConfigChainWithContext,
   RsbuildPlugin,
   Rspack,
+  RspackChain,
 } from '@rsbuild/core';
 import deepmerge from 'deepmerge';
 import { reduceConfigsWithContext } from 'reduce-configs';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+export const isPlainObject = (obj: unknown): obj is Record<string, any> => {
+  return (
+    obj !== null &&
+    typeof obj === 'object' &&
+    Object.getPrototypeOf(obj) === Object.prototype
+  );
+};
 
 export const PLUGIN_LESS_NAME = 'rsbuild:less';
 
@@ -39,7 +51,14 @@ export type PluginLessOptions = {
   >;
 
   /**
+   * Include some `.less` files, they will be transformed by less-loader.
+   * @default /\.less$/
+   */
+  include?: Rspack.RuleSetCondition;
+
+  /**
    * Exclude some `.less` files, they will not be transformed by less-loader.
+   * @default undefined
    */
   exclude?: Rspack.RuleSetCondition;
 };
@@ -72,7 +91,9 @@ const getLessLoaderOptions = (
   ): LessLoaderOptions => {
     const getLessOptions = () => {
       if (defaults.lessOptions && userOptions.lessOptions) {
-        return deepmerge(defaults.lessOptions, userOptions.lessOptions);
+        return deepmerge(defaults.lessOptions, userOptions.lessOptions, {
+          isMergeableObject: isPlainObject,
+        });
       }
       return userOptions.lessOptions || defaults.lessOptions;
     };
@@ -97,6 +118,17 @@ const getLessLoaderOptions = (
   };
 };
 
+// Find a unique rule id for the less rule,
+// this allows to add multiple less rules.
+const findRuleId = (chain: RspackChain, defaultId: string) => {
+  let id = defaultId;
+  let index = 0;
+  while (chain.module.rules.has(id)) {
+    id = `${defaultId}-${++index}`;
+  }
+  return id;
+};
+
 export const pluginLess = (
   pluginOptions: PluginLessOptions = {},
 ): RsbuildPlugin => ({
@@ -105,9 +137,11 @@ export const pluginLess = (
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
+
+      const ruleId = findRuleId(chain, CHAIN_ID.RULE.LESS);
       const rule = chain.module
-        .rule(CHAIN_ID.RULE.LESS)
-        .test(/\.less$/)
+        .rule(ruleId)
+        .test(pluginOptions.include ?? /\.less$/)
         .merge({ sideEffects: true })
         .resolve.preferRelative(true)
         .end();

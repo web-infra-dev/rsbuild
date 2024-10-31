@@ -163,7 +163,7 @@ By default, CRA uses Babel to compile dependencies in node_modules, but Rsbuild 
 
 If you need to handle syntax compatibility issues caused by dependencies in node_modules, you can use the [source.include](/config/source/include#compile-node_modules) config to compile node_modules.
 
-## Environment Variables
+## Env Variables
 
 CRA injects environment variables starting with `REACT_APP_` into the client code by default, while Rsbuild injects environment variables starting with `PUBLIC_` by default (see [public variables](/guide/advanced/env-vars#public-variables)).
 
@@ -177,6 +177,32 @@ const { publicVars } = loadEnv({ prefixes: ['REACT_APP_'] });
 export default defineConfig({
   source: {
     define: publicVars,
+  },
+});
+```
+
+Note that CRA allows access to the full `process.env` object in the code and also allows destructuring of `process.env`. However, Rsbuild does not define the `process.env` object due to bundle size and security concerns.
+
+```ts title="src/index.js"
+// In CRA, you can access it like this
+const { PUBLIC_URL } = process.env;
+console.log(PUBLIC_URL);
+console.log(process.env);
+```
+
+In Rsbuild, you can use the [source.define](/config/source/define) config to set `process.env` and read the `rawPublicVars` returned by the `loadEnv` method to allow the above usage:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig, loadEnv } from '@rsbuild/core';
+
+const { publicVars, rawPublicVars } = loadEnv({ prefixes: ['REACT_APP_'] });
+
+export default defineConfig({
+  source: {
+    define: {
+      ...publicVars,
+      'process.env': JSON.stringify(rawPublicVars),
+    },
   },
 });
 ```

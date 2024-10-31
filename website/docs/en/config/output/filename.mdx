@@ -7,8 +7,16 @@ type FilenameConfig = {
   html?: string;
   js?:
     | string
-    | ((pathData: Rspack.PathData, assetInfo: Rspack.JsAssetInfo) => string);
-  css?: string;
+    | ((
+        pathData: Rspack.PathData,
+        assetInfo: Rspack.JsAssetInfo | undefined,
+      ) => string);
+  css?:
+    | string
+    | ((
+        pathData: Rspack.PathData,
+        assetInfo: Rspack.JsAssetInfo | undefined,
+      ) => string);
   svg?: string;
   font?: string;
   image?: string;
@@ -58,7 +66,7 @@ The following are the details of each filename:
 - `font`: The name of the font files.
 - `image`: The name of non-SVG images.
 - `media`: The name of media assets, such as video.
-- `assets`: The name of assets except the types mentioned above, which match [Asset Modules](https://rspack.dev/guide/features/asset-module).
+- `assets`: The name of other static assets. Such as the assets defined in [Extend Asset Types](/guide/basic/static-assets#extend-asset-types).
 
 > See [Output Files](/guide/basic/output-files) for more information.
 
@@ -128,7 +136,7 @@ After specifying the module name as above, the generated file will be `dist/stat
 
 ## Using Function
 
-You can pass a function to `output.filename.js`, allowing you to dynamically generate filenames based on file information:
+You can pass a function to `output.filename.js` or `output.filename.css`, allowing you to dynamically generate filenames based on file information:
 
 ```js
 export default {
@@ -143,6 +151,14 @@ export default {
         }
 
         return '/some-path/[name].js';
+      },
+      css: (pathData, assetInfo) => {
+        if (pathData.chunk?.name === 'index') {
+          const isProd = process.env.NODE_ENV === 'production';
+          return isProd ? '[name].[contenthash:8].css' : '[name].css';
+        }
+
+        return '/some-path/[name].css';
       },
     },
   },

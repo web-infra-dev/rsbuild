@@ -2,7 +2,7 @@ import path from 'node:path';
 import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
-rspackOnlyTest('should emit multiple css files correctly', async () => {
+rspackOnlyTest('should emit multiple CSS files correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {

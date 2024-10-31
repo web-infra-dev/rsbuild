@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-webpack-swc",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "description": "SWC plugin for Rsbuild webpack provider",
   "repository": {
     "type": "git",
@@ -11,20 +11,19 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist-types/index.d.ts",
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     }
   },
   "main": "./dist/index.cjs",
-  "types": "./dist-types/index.d.ts",
+  "types": "./dist/index.d.ts",
   "files": [
-    "dist",
-    "dist-types"
+    "dist"
   ],
   "scripts": {
-    "build": "modern build",
-    "dev": "modern build --watch"
+    "build": "rslib build",
+    "dev": "rslib build --watch"
   },
   "dependencies": {
     "@modern-js/swc-plugins": "0.6.11",
@@ -32,19 +31,19 @@
     "core-js": "~3.38.1",
     "deepmerge": "^4.3.1",
     "lodash": "^4.17.21",
-    "picocolors": "^1.1.0",
+    "picocolors": "^1.1.1",
     "semver": "^7.6.3"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "@types/lodash": "^4.17.10",
+    "@types/lodash": "^4.17.12",
     "@types/semver": "^7.5.8",
     "typescript": "^5.6.3",
     "webpack": "^5.95.0"
   },
   "peerDependencies": {
-    "@rsbuild/core": "1.x || ^1.0.1-rc.0"
+    "@rsbuild/core": "1.x"
   },
   "publishConfig": {
     "access": "public",

@@ -20,7 +20,7 @@ test('should allow to set output.charset to ascii', async ({ page }) => {
     ([name]) => name.endsWith('.js') && name.includes('static/js/index'),
   )!;
 
-  // in rspack is: \\u4f60\\u597D world!
+  // in Rspack is: \\u4f60\\u597D world!
   expect(
     content.toLocaleLowerCase().includes('\\u4f60\\u597d world!'),
   ).toBeTruthy();

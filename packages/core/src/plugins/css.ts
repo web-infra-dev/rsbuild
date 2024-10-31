@@ -3,6 +3,7 @@ import deepmerge from 'deepmerge';
 import type { AcceptedPlugin, PluginCreator } from 'postcss';
 import { reduceConfigs, reduceConfigsWithContext } from 'reduce-configs';
 import { CSS_REGEX, LOADER_PATH } from '../constants';
+import { castArray } from '../helpers';
 import { getCompiledPath } from '../helpers/path';
 import { getCssExtractPlugin } from '../pluginHelper';
 import type {
@@ -123,48 +124,78 @@ const getPostcssLoaderOptions = async ({
 
   const utils = {
     addPlugins(plugins: AcceptedPlugin | AcceptedPlugin[]) {
-      if (Array.isArray(plugins)) {
-        extraPlugins.push(...plugins);
-      } else {
-        extraPlugins.push(plugins);
-      }
+      extraPlugins.push(...castArray(plugins));
     },
   };
 
-  const userPostcssConfig = await loadUserPostcssrc(root);
+  const userOptions = await loadUserPostcssrc(root);
 
   // init the plugins array
-  userPostcssConfig.plugins ||= [];
+  userOptions.plugins ||= [];
 
-  const defaultPostcssConfig: PostCSSLoaderOptions = {
+  const defaultOptions: PostCSSLoaderOptions = {
     implementation: getCompiledPath('postcss'),
-    postcssOptions: userPostcssConfig,
+    postcssOptions: userOptions,
     sourceMap: config.output.sourceMap.css,
   };
 
-  const merged = reduceConfigsWithContext({
-    initial: defaultPostcssConfig,
+  const finalOptions = reduceConfigsWithContext({
+    initial: defaultOptions,
     config: config.tools.postcss,
     ctx: utils,
   });
 
-  merged.postcssOptions ||= {};
-  merged.postcssOptions.plugins ||= [];
+  finalOptions.postcssOptions ||= {};
 
-  if (extraPlugins.length) {
-    merged.postcssOptions.plugins.push(...extraPlugins);
+  const updatePostcssOptions = (options: PostCSSOptions) => {
+    options.plugins ||= [];
+
+    if (extraPlugins.length) {
+      options.plugins.push(...extraPlugins);
+    }
+
+    // initialize the plugin to avoid multiple initialization
+    // https://github.com/web-infra-dev/rsbuild/issues/3618
+    options.plugins = options.plugins.map((plugin) =>
+      isPostcssPluginCreator(plugin) ? plugin() : plugin,
+    );
+
+    // always use postcss-load-config to load external config
+    options.config = false;
+
+    return options;
+  };
+
+  const { postcssOptions } = finalOptions;
+  if (typeof postcssOptions === 'function') {
+    const postcssOptionsWrapper = (loaderContext: Rspack.LoaderContext) => {
+      const options = postcssOptions(loaderContext);
+
+      if (typeof options !== 'object' || options === null) {
+        throw new Error(
+          `\`postcssOptions\` function must return a PostCSSOptions object, got "${typeof options}".`,
+        );
+      }
+
+      const mergedOptions = {
+        ...userOptions,
+        ...options,
+        plugins: [...(userOptions.plugins || []), ...(options.plugins || [])],
+      };
+      return updatePostcssOptions(mergedOptions);
+    };
+
+    // always use postcss-load-config to load external config
+    postcssOptionsWrapper.config = false;
+
+    return {
+      ...finalOptions,
+      postcssOptions: postcssOptionsWrapper,
+    };
   }
 
-  // initialize the plugin to avoid multiple initialization
-  // https://github.com/web-infra-dev/rsbuild/issues/3618
-  merged.postcssOptions.plugins = merged.postcssOptions.plugins.map((plugin) =>
-    isPostcssPluginCreator(plugin) ? plugin() : plugin,
-  );
-
-  // always use postcss-load-config to load external config
-  merged.postcssOptions.config = false;
-
-  return merged;
+  finalOptions.postcssOptions = updatePostcssOptions(postcssOptions);
+  return finalOptions;
 };
 
 const getCSSLoaderOptions = ({
@@ -288,7 +319,10 @@ async function applyCSSRule({
     });
 
     // enable postcss-loader if using PostCSS plugins
-    if (postcssLoaderOptions.postcssOptions?.plugins?.length) {
+    if (
+      typeof postcssLoaderOptions.postcssOptions === 'function' ||
+      postcssLoaderOptions.postcssOptions?.plugins?.length
+    ) {
       importLoaders++;
       rule
         .use(CHAIN_ID.USE.POSTCSS)

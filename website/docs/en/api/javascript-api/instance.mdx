@@ -95,7 +95,13 @@ type BuildOptions = {
 };
 
 function Build(options?: BuildOptions): Promise<{
+  /**
+   * Rspack's [stats](https://rspack.dev/api/javascript-api/stats) object.
+   */
   stats?: Rspack.Stats | Rspack.MultiStats;
+  /**
+   * Stop watching when in watch mode.
+   */
   close: () => Promise<void>;
 }>;
 ```
@@ -105,16 +111,24 @@ function Build(options?: BuildOptions): Promise<{
 ```ts
 import { logger } from '@rsbuild/core';
 
-// build
+// Example 1: run build
 await rsbuild.build();
 
-// build and handle the error
+// Example 2: build and handle the error
 try {
   await rsbuild.build();
 } catch (err) {
   logger.error('Failed to build.');
   logger.error(err);
   process.exit(1);
+}
+
+// Example 3: build and get all stats
+const { stats } = await rsbuild.build();
+
+if (stats) {
+  const { assets } = stats.toJson({ assets: true });
+  console.log(assets);
 }
 ```
 
@@ -514,7 +528,7 @@ This method needs to be called before compiling. If it is called after compiling
 - **Type:**
 
 ```ts
-type AddPluginsOptions = { before?: string } | { after?: string };
+type AddPluginsOptions = { before?: string; environment?: string };
 
 function AddPlugins(
   plugins: Array<RsbuildPlugin | Falsy>,
@@ -530,8 +544,8 @@ rsbuild.addPlugins([pluginFoo(), pluginBar()]);
 // Insert before the bar plugin
 rsbuild.addPlugins([pluginFoo()], { before: 'bar' });
 
-// Insert after the bar plugin
-rsbuild.addPlugins([pluginFoo()], { after: 'bar' });
+// Add plugin for node environment
+rsbuild.addPlugins([pluginFoo()], { environment: 'node' });
 ```
 
 ## rsbuild.getPlugins

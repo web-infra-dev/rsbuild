@@ -126,6 +126,23 @@ export const pluginAsset = (): RsbuildPlugin => ({
       if (!emitAssets) {
         chain.module.generator.merge({ 'asset/resource': { emit: false } });
       }
+
+      // additional assets
+      const { assetsInclude } = config.source;
+      if (assetsInclude) {
+        const { dataUriLimit } = config.output;
+        const rule = chain.module.rule('additional-assets').test(assetsInclude);
+        const maxSize =
+          typeof dataUriLimit === 'number' ? dataUriLimit : dataUriLimit.assets;
+
+        chainStaticAssetRule({
+          emit: emitAssets,
+          rule,
+          maxSize,
+          filename: assetsFilename,
+          assetType: 'additional',
+        });
+      }
     });
   },
 });

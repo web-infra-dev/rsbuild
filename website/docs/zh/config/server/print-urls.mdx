@@ -41,7 +41,7 @@ type PrintUrls =
 export default {
   server: {
     printUrls({ urls }) {
-      return urls.map((url) => `${url}/base`);
+      return urls.map((url) => `${url}/base/`);
     },
   },
 };
@@ -102,4 +102,27 @@ export default {
     printUrls: false,
   },
 };
+```
+
+### 禁用 HTML
+
+当 [tools.htmlPlugin](/config/tools/html-plugin) 被设置为 `false` 时，Rsbuild 不会生成 HTML 文件，也不会输出 server 的 URL 地址。
+
+但你仍然可以通过 `server.printUrls` 函数来输出 URL 地址，它具有更高的优先级。
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    htmlPlugin: false,
+  },
+  server: {
+    printUrls: ({ port }) => [`http://localhost:${port}`],
+  },
+};
+```
+
+输出：
+
+```
+  ➜ Local:    http://localhost:3000
 ```

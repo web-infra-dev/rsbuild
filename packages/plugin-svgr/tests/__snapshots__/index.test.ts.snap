@@ -34,6 +34,7 @@ exports[`svgr > 'configure SVGR options' 1`] = `
             "jsc": {
               "experimental": {
                 "cacheRoot": "<ROOT>/packages/plugin-svgr/tests/node_modules/.cache/.swc",
+                "keepImportAttributes": true,
               },
               "externalHelpers": true,
               "parser": {
@@ -126,6 +127,7 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
             "jsc": {
               "experimental": {
                 "cacheRoot": "<ROOT>/packages/plugin-svgr/tests/node_modules/.cache/.swc",
+                "keepImportAttributes": true,
               },
               "externalHelpers": true,
               "parser": {
@@ -190,6 +192,7 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
             "jsc": {
               "experimental": {
                 "cacheRoot": "<ROOT>/packages/plugin-svgr/tests/node_modules/.cache/.swc",
+                "keepImportAttributes": true,
               },
               "externalHelpers": true,
               "parser": {
@@ -281,6 +284,7 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
             "jsc": {
               "experimental": {
                 "cacheRoot": "<ROOT>/packages/plugin-svgr/tests/node_modules/.cache/.swc",
+                "keepImportAttributes": true,
               },
               "externalHelpers": true,
               "parser": {
@@ -345,6 +349,7 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
             "jsc": {
               "experimental": {
                 "cacheRoot": "<ROOT>/packages/plugin-svgr/tests/node_modules/.cache/.swc",
+                "keepImportAttributes": true,
               },
               "externalHelpers": true,
               "parser": {
@@ -436,6 +441,7 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
             "jsc": {
               "experimental": {
                 "cacheRoot": "<ROOT>/packages/plugin-svgr/tests/node_modules/.cache/.swc",
+                "keepImportAttributes": true,
               },
               "externalHelpers": true,
               "parser": {
@@ -500,6 +506,7 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
             "jsc": {
               "experimental": {
                 "cacheRoot": "<ROOT>/packages/plugin-svgr/tests/node_modules/.cache/.swc",
+                "keepImportAttributes": true,
               },
               "externalHelpers": true,
               "parser": {
@@ -591,6 +598,7 @@ exports[`svgr > 'exportType named / mixedImport true' 1`] = `
             "jsc": {
               "experimental": {
                 "cacheRoot": "<ROOT>/packages/plugin-svgr/tests/node_modules/.cache/.swc",
+                "keepImportAttributes": true,
               },
               "externalHelpers": true,
               "parser": {
@@ -655,6 +663,7 @@ exports[`svgr > 'exportType named / mixedImport true' 1`] = `
             "jsc": {
               "experimental": {
                 "cacheRoot": "<ROOT>/packages/plugin-svgr/tests/node_modules/.cache/.swc",
+                "keepImportAttributes": true,
               },
               "externalHelpers": true,
               "parser": {

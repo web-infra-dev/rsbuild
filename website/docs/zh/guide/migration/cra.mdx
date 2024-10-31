@@ -181,6 +181,32 @@ export default defineConfig({
 });
 ```
 
+值得注意的是，CRA 允许在代码中访问完整的 `process.env` 对象，也允许对 `process.env` 进行解构。而 Rsbuild 出于包体积和安全的考虑，并没有注入完整的 `process.env` 对象。
+
+```ts title="src/index.js"
+// CRA 中可以这样访问
+const { PUBLIC_URL } = process.env;
+console.log(PUBLIC_URL);
+console.log(process.env);
+```
+
+在 Rsbuild 中，你可以通过 [source.define](/config/source/define) 配置项设置 `process.env`，读取 `loadEnv` 方法返回的 `rawPublicVars`，来允许以上用法：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig, loadEnv } from '@rsbuild/core';
+
+const { publicVars, rawPublicVars } = loadEnv({ prefixes: ['REACT_APP_'] });
+
+export default defineConfig({
+  source: {
+    define: {
+      ...publicVars,
+      'process.env': JSON.stringify(rawPublicVars),
+    },
+  },
+});
+```
+
 ## 引用未知资源
 
 在 CRA 中，如果你引用了一个构建工具无法识别的资源，CRA 默认会将该文件输出到 `build/static/media` 目录下，比如 `document.pdf` 文件：

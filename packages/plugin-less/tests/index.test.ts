@@ -63,4 +63,52 @@ describe('plugin-less', () => {
     const bundlerConfigs = await rsbuild.initConfigs();
     expect(matchRules(bundlerConfigs[0], 'a.less')).toMatchSnapshot();
   });
+
+  it('should allow to use Less plugins', async () => {
+    class MockPlugin {
+      options?: unknown;
+      constructor(options?: unknown) {
+        this.options = options;
+      }
+      install() {}
+    }
+
+    const mockPlugin = new MockPlugin({ foo: 'bar' });
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        plugins: [
+          pluginLess({
+            lessLoaderOptions: {
+              lessOptions: {
+                plugins: [mockPlugin],
+              },
+            },
+          }),
+        ],
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+
+    expect(matchRules(bundlerConfigs[0], 'a.less')).toMatchSnapshot();
+  });
+
+  it('should allow to add multiple less rules', async () => {
+    const rsbuild = await createRsbuild({
+      rsbuildConfig: {
+        plugins: [
+          pluginLess({
+            include: [/a\.less/, /b\.less/],
+          }),
+          pluginLess({
+            include: /b\.less/,
+          }),
+        ],
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+    expect(matchRules(bundlerConfigs[0], 'a.less').length).toBe(1);
+    expect(matchRules(bundlerConfigs[0], 'b.less').length).toBe(2);
+  });
 });

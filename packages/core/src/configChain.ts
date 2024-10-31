@@ -105,7 +105,7 @@ export const CHAIN_ID = {
     JS_DATA_URI: 'js-data-uri',
     /** Rule for ts */
     TS: 'ts',
-    /** Rule for css */
+    /** Rule for CSS */
     CSS: 'css',
     /** Rule for less */
     LESS: 'less',

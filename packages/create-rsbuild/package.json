@@ -1,6 +1,6 @@
 {
   "name": "create-rsbuild",
-  "version": "1.0.2",
+  "version": "1.0.6",
   "description": "Create a new Rsbuild project",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -28,7 +28,7 @@
     "start": "node ./dist/index.js"
   },
   "dependencies": {
-    "create-rstack": "1.0.5"
+    "create-rstack": "1.0.8"
   },
   "devDependencies": {
     "@types/node": "18.x",

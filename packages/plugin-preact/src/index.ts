@@ -1,4 +1,7 @@
+import { createRequire } from 'node:module';
 import type { EnvironmentConfig, RsbuildPlugin, Rspack } from '@rsbuild/core';
+
+const require = createRequire(import.meta.url);
 
 export type PluginPreactOptions = {
   /**
@@ -6,21 +9,57 @@ export type PluginPreactOptions = {
    * @default true
    */
   reactAliasesEnabled?: boolean;
+  /**
+   * Whether to inject Prefresh for HMR
+   * @default true
+   */
+  prefreshEnabled?: boolean;
+  /**
+   * Include files to be processed by the `@rspack/plugin-preact-refresh` plugin.
+   * The value is the same as the `rule.test` option in Rspack.
+   * @default /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/
+   */
+  include?: Rspack.RuleSetCondition;
+  /**
+   * Exclude files from being processed by the `@rspack/plugin-preact-refresh` plugin.
+   * The value is the same as the `rule.exclude` option in Rspack.
+   * @default /[\\/]node_modules[\\/]/
+   */
+  exclude?: Rspack.RuleSetCondition;
 };
 
 export const PLUGIN_PREACT_NAME = 'rsbuild:preact';
 
 export const pluginPreact = (
-  options: PluginPreactOptions = {},
+  userOptions: PluginPreactOptions = {},
 ): RsbuildPlugin => ({
   name: PLUGIN_PREACT_NAME,
 
   setup(api) {
-    const { reactAliasesEnabled = true } = options;
+    const options = {
+      include: /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/,
+      exclude: /[\\/]node_modules[\\/]/,
+      prefreshEnabled: true,
+      reactAliasesEnabled: true,
+      ...userOptions,
+    };
 
-    api.modifyEnvironmentConfig((userConfig, { mergeEnvironmentConfig }) => {
+    // @rspack/plugin-preact-refresh does not support Windows yet
+    if (process.platform === 'win32') {
+      options.prefreshEnabled = false;
+    }
+
+    api.modifyEnvironmentConfig((config, { mergeEnvironmentConfig }) => {
+      const isDev = config.mode === 'development';
+      const usePrefresh =
+        isDev &&
+        options.prefreshEnabled &&
+        config.dev.hmr &&
+        config.output.target === 'web';
+
       const reactOptions: Rspack.SwcLoaderTransformConfig['react'] = {
-        development: userConfig.mode === 'development',
+        development: config.mode === 'development',
+        refresh: usePrefresh,
         runtime: 'automatic',
         importSource: 'preact',
       };
@@ -29,6 +68,11 @@ export const pluginPreact = (
         tools: {
           swc: {
             jsc: {
+              experimental: {
+                plugins: usePrefresh
+                  ? [[require.resolve('@swc/plugin-prefresh'), {}]]
+                  : undefined,
+              },
               parser: {
                 syntax: 'typescript',
                 // enable supports for JSX/TSX compilation
@@ -42,8 +86,16 @@ export const pluginPreact = (
         },
       };
 
-      if (reactAliasesEnabled) {
-        extraConfig.source ||= {};
+      extraConfig.source ||= {};
+
+      if (usePrefresh) {
+        // transpile `@prefresh/core` and `@prefresh/utils` to ensure browser compatibility
+        extraConfig.source.include = [
+          /node_modules[\\/]@prefresh[\\/](core|utils)/,
+        ];
+      }
+
+      if (options.reactAliasesEnabled) {
         extraConfig.source.alias = {
           react: 'preact/compat',
           'react-dom/test-utils': 'preact/test-utils',
@@ -52,7 +104,33 @@ export const pluginPreact = (
         };
       }
 
-      return mergeEnvironmentConfig(extraConfig, userConfig);
+      return mergeEnvironmentConfig(extraConfig, config);
+    });
+
+    api.modifyBundlerChain(async (chain, { isDev, target }) => {
+      const config = api.getNormalizedConfig();
+      const usePrefresh =
+        isDev && options.prefreshEnabled && config.dev.hmr && target === 'web';
+
+      if (!usePrefresh) {
+        return;
+      }
+
+      const { default: PreactRefreshPlugin } = await import(
+        '@rspack/plugin-preact-refresh'
+      );
+
+      const preactPath = require.resolve('preact', {
+        paths: [api.context.rootPath],
+      });
+
+      chain.plugin('preact-refresh').use(PreactRefreshPlugin, [
+        {
+          include: options.include,
+          exclude: options.exclude,
+          preactPath,
+        },
+      ]);
     });
   },
 });

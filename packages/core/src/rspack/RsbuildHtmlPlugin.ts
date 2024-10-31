@@ -213,13 +213,15 @@ const applyTagConfig = (
 };
 
 const addTitleTag = (headTags: HtmlTagObject[], title = '') => {
-  headTags.unshift({
-    tagName: 'title',
-    innerHTML: title,
-    attributes: {},
-    voidTag: false,
-    meta: {},
-  });
+  if (title !== '' && title !== undefined) {
+    headTags.unshift({
+      tagName: 'title',
+      innerHTML: title,
+      attributes: {},
+      voidTag: false,
+      meta: {},
+    });
+  }
 };
 
 export class RsbuildHtmlPlugin {
@@ -308,6 +310,7 @@ export class RsbuildHtmlPlugin {
 
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
       getHTMLPlugin()
+        // TODO: use getCompilationHooks in minor release
         .getHooks(compilation)
         .alterAssetTagGroups.tapPromise(this.name, async (data) => {
           const entryName = data.plugin.options?.entryName;

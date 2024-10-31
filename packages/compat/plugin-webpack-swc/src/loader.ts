@@ -1,7 +1,7 @@
 import type { Options as SwcOptions } from '@modern-js/swc-plugins';
 import type { LoaderContext, LoaderDefinitionFunction } from 'webpack';
-import { Compiler } from './binding';
-import type { TransformConfig } from './types';
+import { Compiler } from './binding.js';
+import type { TransformConfig } from './types.js';
 
 function setReactDevMode(
   swc: SwcOptions,

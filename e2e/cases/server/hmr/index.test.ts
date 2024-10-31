@@ -66,7 +66,7 @@ rspackOnlyTest('HMR should work by default', async ({ page }) => {
 });
 
 rspackOnlyTest(
-  'hmr should work when setting dev.port & client',
+  'HMR should work when setting dev.port & client',
   async ({ page }) => {
     // HMR cases will fail in Windows
     if (process.platform === 'win32') {
@@ -116,7 +116,7 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest(
-  'hmr should work when dev.port is `<port>`',
+  'HMR should work when dev.port is `<port>`',
   async ({ page }) => {
     // HMR cases will fail in Windows
     if (process.platform === 'win32') {

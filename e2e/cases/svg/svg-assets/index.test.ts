@@ -7,14 +7,14 @@ test('SVGR basic usage', async ({ page }) => {
     page,
   });
 
-  // test svg asset
+  // test SVG asset
   await expect(
     page.evaluate(
       `document.getElementById('test-img').src.includes('static/svg/mobile')`,
     ),
   ).resolves.toBeTruthy();
 
-  // test svg asset in css
+  // test SVG asset in CSS
   await expect(
     page.evaluate(
       `getComputedStyle(document.getElementById('test-css')).backgroundImage.includes('static/svg/mobile')`,

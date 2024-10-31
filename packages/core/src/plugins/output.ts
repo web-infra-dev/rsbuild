@@ -5,7 +5,7 @@ import {
   DEFAULT_DEV_HOST,
   DEFAULT_PORT,
 } from '../constants';
-import { formatPublicPath, getFilename } from '../helpers';
+import { formatPublicPath, getFilename, urlJoin } from '../helpers';
 import { getCssExtractPlugin } from '../pluginHelper';
 import { replacePortPlaceholder } from '../server/open';
 import type {
@@ -24,7 +24,7 @@ function getPublicPath({
   config: NormalizedEnvironmentConfig;
   context: RsbuildContext;
 }) {
-  const { dev, output } = config;
+  const { dev, output, server } = config;
 
   let publicPath = DEFAULT_ASSET_PREFIX;
   const port = context.devServer?.port || DEFAULT_PORT;
@@ -38,15 +38,20 @@ function getPublicPath({
   } else if (dev.assetPrefix === true) {
     const protocol = context.devServer?.https ? 'https' : 'http';
     const hostname = context.devServer?.hostname || DEFAULT_DEV_HOST;
+
     if (hostname === DEFAULT_DEV_HOST) {
       const localHostname = 'localhost';
       // If user not specify the hostname, it would use 0.0.0.0
-      // The http://0.0.0.0:port can't visit in windows, so we shouldn't set publicPath as `//0.0.0.0:${port}/`;
+      // The http://0.0.0.0:port can't visit in Windows, so we shouldn't set publicPath as `//0.0.0.0:${port}/`;
       // Relative to docs:
       // - https://github.com/quarkusio/quarkus/issues/12246
       publicPath = `${protocol}://${localHostname}:<port>/`;
     } else {
       publicPath = `${protocol}://${hostname}:<port>/`;
+    }
+
+    if (server.base && server.base !== '/') {
+      publicPath = urlJoin(publicPath, server.base);
     }
   }
 
@@ -135,12 +140,14 @@ export const pluginOutput = (): RsbuildPlugin => ({
             .use(rspack.CopyRspackPlugin, [options]);
         }
 
-        // css output
+        // CSS output
         if (isUseCssExtract(config, target)) {
           const extractPluginOptions = config.tools.cssExtract.pluginOptions;
 
           const cssPath = config.output.distPath.css;
           const cssFilename = getFilename(config, 'css', isProd);
+          const isCssFilenameFn = typeof cssFilename === 'function';
+
           const cssAsyncPath =
             config.output.distPath.cssAsync ??
             (cssPath ? `${cssPath}/async` : 'async');
@@ -149,8 +156,18 @@ export const pluginOutput = (): RsbuildPlugin => ({
             .plugin(CHAIN_ID.PLUGIN.MINI_CSS_EXTRACT)
             .use(getCssExtractPlugin(), [
               {
-                filename: posix.join(cssPath, cssFilename),
-                chunkFilename: posix.join(cssAsyncPath, cssFilename),
+                filename: isCssFilenameFn
+                  ? (...args) => {
+                      const name = cssFilename(...args);
+                      return posix.join(cssPath, name);
+                    }
+                  : posix.join(cssPath, cssFilename),
+                chunkFilename: isCssFilenameFn
+                  ? (...args) => {
+                      const name = cssFilename(...args);
+                      return posix.join(cssAsyncPath, name);
+                    }
+                  : posix.join(cssAsyncPath, cssFilename),
                 ...extractPluginOptions,
               },
             ]);

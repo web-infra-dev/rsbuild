@@ -1,5 +1,5 @@
 import { createSignal } from 'solid-js';
-import B from './B';
+import B from './test-temp-B';
 
 const App = () => {
   const [count, setCount] = createSignal(0);
