@@ -1,19 +1,23 @@
-import { defineConfig } from '@rslib/core';
+import { type LibConfig, defineConfig } from '@rslib/core';
 
 export const commonExternals: Array<string | RegExp> = [
   'webpack',
   /[\\/]compiled[\\/]/,
 ];
 
+export const esmConfig: LibConfig = {
+  format: 'esm',
+  syntax: 'es2021',
+  dts: { bundle: false },
+};
+
+export const cjsConfig: LibConfig = {
+  format: 'cjs',
+  syntax: 'es2021',
+};
+
 export const dualPackage = defineConfig({
-  lib: [
-    {
-      format: 'esm',
-      syntax: 'es2021',
-      dts: { bundle: false },
-    },
-    { format: 'cjs', syntax: 'es2021' },
-  ],
+  lib: [esmConfig, cjsConfig],
   output: {
     target: 'node',
   },
@@ -22,4 +26,9 @@ export const dualPackage = defineConfig({
       externals: commonExternals,
     },
   },
+});
+
+export const pureEsmPackage = defineConfig({
+  ...dualPackage,
+  lib: [esmConfig],
 });

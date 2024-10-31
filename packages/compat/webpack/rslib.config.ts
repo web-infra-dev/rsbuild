@@ -1,15 +1,15 @@
-import { dualPackage } from '@rsbuild/config/rslib.config.ts';
+import path from 'node:path';
+import { pureEsmPackage } from '@rsbuild/config/rslib.config.ts';
 import { defineConfig } from '@rslib/core';
 
 export default defineConfig({
-  ...dualPackage,
+  ...pureEsmPackage,
   output: {
-    target: 'node',
-    externals: {
-      webpack: 'import webpack',
-      'copy-webpack-plugin': 'import copy-webpack-plugin',
-      'mini-css-extract-plugin': 'import mini-css-extract-plugin',
-      'tsconfig-paths-webpack-plugin': 'import tsconfig-paths-webpack-plugin',
-    },
+    ...pureEsmPackage.output,
+    copy: [
+      {
+        from: path.resolve(__dirname, 'src/index.cjs'),
+      },
+    ],
   },
 });
