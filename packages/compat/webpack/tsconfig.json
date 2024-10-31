@@ -1,7 +1,6 @@
 {
-  "extends": "@rsbuild/config/tsconfig",
+  "extends": "@rsbuild/config/tsconfig-node16",
   "compilerOptions": {
-    "declarationDir": "./dist-types",
     "outDir": "./dist",
     "baseUrl": "./",
     "rootDir": "src",

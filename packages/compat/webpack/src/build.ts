@@ -2,9 +2,9 @@ import { logger } from '@rsbuild/core';
 import type { Build, BuildOptions, Rspack } from '@rsbuild/core';
 import type { Configuration as WebpackConfig } from 'webpack';
 import WebpackMultiStats from 'webpack/lib/MultiStats.js';
-import { createCompiler } from './createCompiler';
-import type { InitConfigsOptions } from './initConfigs';
-import { registerBuildHook } from './shared';
+import { createCompiler } from './createCompiler.js';
+import type { InitConfigsOptions } from './initConfigs.js';
+import { registerBuildHook } from './shared.js';
 
 export const build = async (
   initOptions: InitConfigsOptions,

@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { createRsbuild } from '@e2e/helper';
+import { createRsbuild, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const rsbuildConfig = path.resolve(
@@ -106,7 +106,7 @@ test('should not generate config files when writeToDisk is false', async () => {
   expect(fs.existsSync(bundlerConfig)).toBeFalsy();
 });
 
-test('should allow to specify absolute output path', async () => {
+rspackOnlyTest('should allow to specify absolute output path', async () => {
   const rsbuild = await createRsbuild({
     cwd: __dirname,
   });

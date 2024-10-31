@@ -16,8 +16,8 @@ import {
   chainToConfig,
   getChainUtils as getBaseChainUtils,
   modifyBundlerChain,
-} from './shared';
-import type { WebpackConfig } from './types';
+} from './shared.js';
+import type { WebpackConfig } from './types.js';
 
 async function modifyWebpackChain(
   context: InternalContext,
