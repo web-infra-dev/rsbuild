@@ -27,8 +27,3 @@ export const dualPackage = defineConfig({
     },
   },
 });
-
-export const pureEsmPackage = defineConfig({
-  ...dualPackage,
-  lib: [esmConfig],
-});
