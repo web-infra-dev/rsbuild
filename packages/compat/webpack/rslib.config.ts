@@ -13,6 +13,7 @@ export default defineConfig({
       ...cjsConfig,
       output: {
         target: 'node',
+        // TODO https://github.com/web-infra-dev/rslib/issues/287
         externals: {
           webpack: 'import webpack',
           'copy-webpack-plugin': 'import copy-webpack-plugin',
@@ -22,6 +23,7 @@ export default defineConfig({
         },
       },
       footer: {
+        // TODO https://github.com/web-infra-dev/rslib/issues/351
         js: `// Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = { webpackProvider: exports.webpackProvider });`,
       },
