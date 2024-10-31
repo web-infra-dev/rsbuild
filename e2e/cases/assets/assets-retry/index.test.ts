@@ -1,11 +1,5 @@
-import {
-  dev,
-  getRandomPort,
-  gotoPage,
-  proxyConsole,
-  rspackOnlyTest,
-} from '@e2e/helper';
-import { type Page, expect } from '@playwright/test';
+import { dev, getRandomPort, gotoPage, proxyConsole } from '@e2e/helper';
+import { type Page, expect, test } from '@playwright/test';
 import { type RequestHandler, logger } from '@rsbuild/core';
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 import type { PluginAssetsRetryOptions } from '@rsbuild/plugin-assets-retry';
@@ -123,53 +117,49 @@ async function createRsbuildWithMiddleware(
   return rsbuild;
 }
 
-rspackOnlyTest(
-  'should work when blocking initial chunk index.js',
-  async ({ page }) => {
-    logger.level = 'verbose';
-    const { logs, restore } = proxyConsole();
-    const blockedMiddleware = createBlockMiddleware({
-      blockNum: 3,
-      urlPrefix: '/static/js/index.js',
-    });
-    const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {});
+test('should work when blocking initial chunk index.js', async ({ page }) => {
+  logger.level = 'verbose';
+  const { logs, restore } = proxyConsole();
+  const blockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/js/index.js',
+  });
+  const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {});
 
-    await gotoPage(page, rsbuild);
-    const compTestElement = page.locator('#comp-test');
-    await expect(compTestElement).toHaveText('Hello CompTest');
-    const blockedResponseCount = count404Response(logs, '/static/js/index.js');
-    expect(blockedResponseCount).toBe(3);
-    await rsbuild.close();
-    restore();
-    logger.level = 'log';
-  },
-);
+  await gotoPage(page, rsbuild);
+  const compTestElement = page.locator('#comp-test');
+  await expect(compTestElement).toHaveText('Hello CompTest');
+  const blockedResponseCount = count404Response(logs, '/static/js/index.js');
+  expect(blockedResponseCount).toBe(3);
+  await rsbuild.close();
+  restore();
+  logger.level = 'log';
+});
 
-rspackOnlyTest(
-  'should work with minified runtime code when blocking initial chunk index.js',
-  async ({ page }) => {
-    logger.level = 'verbose';
-    const { logs, restore } = proxyConsole();
-    const blockedMiddleware = createBlockMiddleware({
-      blockNum: 3,
-      urlPrefix: '/static/js/index.js',
-    });
-    const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {
-      minify: true,
-    });
+test('should work with minified runtime code when blocking initial chunk index.js', async ({
+  page,
+}) => {
+  logger.level = 'verbose';
+  const { logs, restore } = proxyConsole();
+  const blockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/js/index.js',
+  });
+  const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {
+    minify: true,
+  });
 
-    await gotoPage(page, rsbuild);
-    const compTestElement = page.locator('#comp-test');
-    await expect(compTestElement).toHaveText('Hello CompTest');
-    const blockedResponseCount = count404Response(logs, '/static/js/index.js');
-    expect(blockedResponseCount).toBe(3);
-    await rsbuild.close();
-    restore();
-    logger.level = 'log';
-  },
-);
+  await gotoPage(page, rsbuild);
+  const compTestElement = page.locator('#comp-test');
+  await expect(compTestElement).toHaveText('Hello CompTest');
+  const blockedResponseCount = count404Response(logs, '/static/js/index.js');
+  expect(blockedResponseCount).toBe(3);
+  await rsbuild.close();
+  restore();
+  logger.level = 'log';
+});
 
-rspackOnlyTest('should work when blocking async chunk', async ({ page }) => {
+test('should work when blocking async chunk', async ({ page }) => {
   logger.level = 'verbose';
   const { logs, restore } = proxyConsole();
   const blockedMiddleware = createBlockMiddleware({
@@ -191,90 +181,82 @@ rspackOnlyTest('should work when blocking async chunk', async ({ page }) => {
   logger.level = 'log';
 });
 
-rspackOnlyTest(
-  'should work when blocking async css chunk`',
-  async ({ page }) => {
-    logger.level = 'verbose';
-    const { logs, restore } = proxyConsole();
-    const blockedMiddleware = createBlockMiddleware({
-      blockNum: 3,
-      urlPrefix: '/static/css/async/src_AsyncCompTest_tsx.css',
-    });
-    const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {});
+test('should work when blocking async css chunk`', async ({ page }) => {
+  logger.level = 'verbose';
+  const { logs, restore } = proxyConsole();
+  const blockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/css/async/src_AsyncCompTest_tsx.css',
+  });
+  const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {});
 
-    await gotoPage(page, rsbuild);
-    const compTestElement = page.locator('#async-comp-test');
-    await expect(compTestElement).toHaveText('Hello AsyncCompTest');
-    await expect(compTestElement).toHaveCSS(
-      'background-color',
-      'rgb(0, 0, 139)',
-    );
-    const blockedResponseCount = count404Response(
-      logs,
-      '/static/css/async/src_AsyncCompTest_tsx.css',
-    );
-    expect(blockedResponseCount).toBe(3);
-    await rsbuild.close();
-    restore();
-    logger.level = 'log';
-  },
-);
+  await gotoPage(page, rsbuild);
+  const compTestElement = page.locator('#async-comp-test');
+  await expect(compTestElement).toHaveText('Hello AsyncCompTest');
+  await expect(compTestElement).toHaveCSS('background-color', 'rgb(0, 0, 139)');
+  const blockedResponseCount = count404Response(
+    logs,
+    '/static/css/async/src_AsyncCompTest_tsx.css',
+  );
+  expect(blockedResponseCount).toBe(3);
+  await rsbuild.close();
+  restore();
+  logger.level = 'log';
+});
 
-rspackOnlyTest(
-  'should work with minified runtime code when blocking async chunk',
-  async ({ page }) => {
-    logger.level = 'verbose';
-    const { logs, restore } = proxyConsole();
-    const blockedMiddleware = createBlockMiddleware({
-      blockNum: 3,
-      urlPrefix: '/static/js/async/src_AsyncCompTest_tsx.js',
-    });
-    const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {
-      minify: true,
-    });
+test('should work with minified runtime code when blocking async chunk', async ({
+  page,
+}) => {
+  logger.level = 'verbose';
+  const { logs, restore } = proxyConsole();
+  const blockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/js/async/src_AsyncCompTest_tsx.js',
+  });
+  const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {
+    minify: true,
+  });
 
-    await gotoPage(page, rsbuild);
-    const compTestElement = page.locator('#async-comp-test');
-    await expect(compTestElement).toHaveText('Hello AsyncCompTest');
-    const blockedResponseCount = count404Response(
-      logs,
-      '/static/js/async/src_AsyncCompTest_tsx.js',
-    );
-    expect(blockedResponseCount).toBe(3);
-    await rsbuild.close();
-    restore();
-    logger.level = 'log';
-  },
-);
+  await gotoPage(page, rsbuild);
+  const compTestElement = page.locator('#async-comp-test');
+  await expect(compTestElement).toHaveText('Hello AsyncCompTest');
+  const blockedResponseCount = count404Response(
+    logs,
+    '/static/js/async/src_AsyncCompTest_tsx.js',
+  );
+  expect(blockedResponseCount).toBe(3);
+  await rsbuild.close();
+  restore();
+  logger.level = 'log';
+});
 
-rspackOnlyTest(
-  'react ErrorBoundary should catch error when all retries failed',
-  async ({ page }) => {
-    logger.level = 'verbose';
-    const { logs, restore } = proxyConsole();
-    const blockedMiddleware = createBlockMiddleware({
-      blockNum: 100,
-      urlPrefix: '/static/js/async/src_AsyncCompTest_tsx.js',
-    });
-    const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {});
+test('react ErrorBoundary should catch error when all retries failed', async ({
+  page,
+}) => {
+  logger.level = 'verbose';
+  const { logs, restore } = proxyConsole();
+  const blockedMiddleware = createBlockMiddleware({
+    blockNum: 100,
+    urlPrefix: '/static/js/async/src_AsyncCompTest_tsx.js',
+  });
+  const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {});
 
-    await gotoPage(page, rsbuild);
-    const compTestElement = page.locator('#async-comp-test-error');
-    await expect(compTestElement).toHaveText(
-      /ChunkLoadError: Loading chunk src_AsyncCompTest_tsx from \/static\/js\/async\/src_AsyncCompTest_tsx\.js failed after 3 retries: "Loading chunk src_AsyncCompTest_tsx failed.*/,
-    );
-    const blockedResponseCount = count404Response(
-      logs,
-      '/static/js/async/src_AsyncCompTest_tsx.js',
-    );
-    // 1 first request failed
-    // 2 3 4 retried again three times and failed all of them
-    expect(blockedResponseCount).toBe(4);
-    await rsbuild.close();
-    restore();
-    logger.level = 'log';
-  },
-);
+  await gotoPage(page, rsbuild);
+  const compTestElement = page.locator('#async-comp-test-error');
+  await expect(compTestElement).toHaveText(
+    /ChunkLoadError: Loading chunk src_AsyncCompTest_tsx from \/static\/js\/async\/src_AsyncCompTest_tsx\.js failed after 3 retries: "Loading chunk src_AsyncCompTest_tsx failed.*/,
+  );
+  const blockedResponseCount = count404Response(
+    logs,
+    '/static/js/async/src_AsyncCompTest_tsx.js',
+  );
+  // 1 first request failed
+  // 2 3 4 retried again three times and failed all of them
+  expect(blockedResponseCount).toBe(4);
+  await rsbuild.close();
+  restore();
+  logger.level = 'log';
+});
 
 function delay(ms = 300) {
   return new Promise((resolve) => {
@@ -325,16 +307,161 @@ async function proxyPageConsole(page: Page, port: number) {
   };
 }
 
-rspackOnlyTest(
-  'onRetry and onSuccess options should work when retrying initial chunk successfully',
-  async ({ page }) => {
-    const blockedMiddleware = createBlockMiddleware({
-      blockNum: 3,
-      urlPrefix: '/static/js/index.js',
-    });
+test('onRetry and onSuccess options should work when retrying initial chunk successfully', async ({
+  page,
+}) => {
+  const blockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/js/index.js',
+  });
 
-    const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {
+  const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {
+    minify: true,
+    onRetry(context) {
+      console.info('onRetry', context);
+    },
+    onSuccess(context) {
+      console.info('onSuccess', context);
+    },
+    onFail(context) {
+      console.info('onFail', context);
+    },
+  });
+
+  const { onRetryContextList, onFailContextList, onSuccessContextList } =
+    await proxyPageConsole(page, rsbuild.port);
+  await gotoPage(page, rsbuild);
+  const compTestElement = page.locator('#comp-test');
+  await expect(compTestElement).toHaveText('Hello CompTest');
+  await delay();
+
+  expect({
+    onRetryContextList,
+    onFailContextList,
+    onSuccessContextList,
+  }).toMatchObject({
+    onRetryContextList: [
+      {
+        times: 0,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/index.js',
+        tagName: 'script',
+        isAsyncChunk: false,
+      },
+      {
+        times: 1,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/index.js',
+        tagName: 'script',
+        isAsyncChunk: false,
+      },
+      {
+        times: 2,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/index.js',
+        tagName: 'script',
+        isAsyncChunk: false,
+      },
+    ],
+    onFailContextList: [],
+    onSuccessContextList: [
+      {
+        times: 3,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/index.js',
+        tagName: 'script',
+        isAsyncChunk: false,
+      },
+    ],
+  });
+  await rsbuild.close();
+});
+
+test('onRetry and onSuccess options should work when retrying async chunk successfully', async ({
+  page,
+}) => {
+  const blockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/js/async/src_AsyncCompTest_tsx.js',
+  });
+
+  const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {
+    minify: true,
+    onRetry(context) {
+      console.info('onRetry', context);
+    },
+    onSuccess(context) {
+      console.info('onSuccess', context);
+    },
+    onFail(context) {
+      console.info('onFail', context);
+    },
+  });
+
+  const { onRetryContextList, onFailContextList, onSuccessContextList } =
+    await proxyPageConsole(page, rsbuild.port);
+
+  await gotoPage(page, rsbuild);
+  const compTestElement = page.locator('#async-comp-test');
+  await expect(compTestElement).toHaveText('Hello AsyncCompTest');
+  await delay();
+
+  expect({
+    onRetryContextList,
+    onFailContextList,
+    onSuccessContextList,
+  }).toMatchObject({
+    onRetryContextList: [
+      {
+        times: 0,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+        isAsyncChunk: true,
+      },
+      {
+        times: 1,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+        isAsyncChunk: true,
+      },
+      {
+        times: 2,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+        isAsyncChunk: true,
+      },
+    ],
+    onFailContextList: [],
+    onSuccessContextList: [
+      {
+        times: 3,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+        isAsyncChunk: true,
+      },
+    ],
+  });
+  await rsbuild.close();
+});
+
+test('onRetry and onFail options should work when retrying initial chunk failed', async ({
+  page,
+}) => {
+  const blockedMiddleware = createBlockMiddleware({
+    blockNum: 100,
+    urlPrefix: '/static/js/index.js',
+  });
+
+  const port = await getRandomPort();
+  const rsbuild = await createRsbuildWithMiddleware(
+    blockedMiddleware,
+    {
       minify: true,
+      domain: [`http://localhost:${port}`, 'http://a.com', 'http://b.com'],
       onRetry(context) {
         console.info('onRetry', context);
       },
@@ -344,68 +471,73 @@ rspackOnlyTest(
       onFail(context) {
         console.info('onFail', context);
       },
-    });
+    },
+    undefined,
+    port,
+  );
 
-    const { onRetryContextList, onFailContextList, onSuccessContextList } =
-      await proxyPageConsole(page, rsbuild.port);
-    await gotoPage(page, rsbuild);
-    const compTestElement = page.locator('#comp-test');
-    await expect(compTestElement).toHaveText('Hello CompTest');
-    await delay();
+  const { onRetryContextList, onFailContextList, onSuccessContextList } =
+    await proxyPageConsole(page, rsbuild.port);
 
-    expect({
-      onRetryContextList,
-      onFailContextList,
-      onSuccessContextList,
-    }).toMatchObject({
-      onRetryContextList: [
-        {
-          times: 0,
-          domain: '<ORIGIN>',
-          url: '<ORIGIN>/static/js/index.js',
-          tagName: 'script',
-          isAsyncChunk: false,
-        },
-        {
-          times: 1,
-          domain: '<ORIGIN>',
-          url: '<ORIGIN>/static/js/index.js',
-          tagName: 'script',
-          isAsyncChunk: false,
-        },
-        {
-          times: 2,
-          domain: '<ORIGIN>',
-          url: '<ORIGIN>/static/js/index.js',
-          tagName: 'script',
-          isAsyncChunk: false,
-        },
-      ],
-      onFailContextList: [],
-      onSuccessContextList: [
-        {
-          times: 3,
-          domain: '<ORIGIN>',
-          url: '<ORIGIN>/static/js/index.js',
-          tagName: 'script',
-          isAsyncChunk: false,
-        },
-      ],
-    });
-    await rsbuild.close();
-  },
-);
+  await gotoPage(page, rsbuild);
+  await delay();
 
-rspackOnlyTest(
-  'onRetry and onSuccess options should work when retrying async chunk successfully',
-  async ({ page }) => {
-    const blockedMiddleware = createBlockMiddleware({
-      blockNum: 3,
-      urlPrefix: '/static/js/async/src_AsyncCompTest_tsx.js',
-    });
+  expect({
+    onRetryContextList,
+    onFailContextList,
+    onSuccessContextList,
+  }).toMatchObject({
+    onRetryContextList: [
+      {
+        times: 0,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/index.js',
+        tagName: 'script',
+        isAsyncChunk: false,
+      },
+      {
+        times: 1,
+        domain: 'http://a.com',
+        url: 'http://a.com/static/js/index.js',
+        tagName: 'script',
+        isAsyncChunk: false,
+      },
+      {
+        times: 2,
+        domain: 'http://b.com',
+        url: 'http://b.com/static/js/index.js',
+        tagName: 'script',
+        isAsyncChunk: false,
+      },
+    ],
+    onFailContextList: [
+      {
+        times: 3,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/index.js',
+        tagName: 'script',
+        isAsyncChunk: false,
+      },
+    ],
+    onSuccessContextList: [],
+  });
+  await rsbuild.close();
+});
 
-    const rsbuild = await createRsbuildWithMiddleware(blockedMiddleware, {
+test('onRetry and onFail options should work when retrying async chunk failed', async ({
+  page,
+}) => {
+  const blockedMiddleware = createBlockMiddleware({
+    blockNum: 100,
+    urlPrefix: '/static/js/async/src_AsyncCompTest_tsx.js',
+  });
+
+  const port = await getRandomPort();
+  const rsbuild = await createRsbuildWithMiddleware(
+    blockedMiddleware,
+    {
       minify: true,
+      domain: [`http://localhost:${port}`, 'http://a.com', 'http://b.com'],
       onRetry(context) {
         console.info('onRetry', context);
       },
@@ -415,218 +547,64 @@ rspackOnlyTest(
       onFail(context) {
         console.info('onFail', context);
       },
-    });
+    },
+    undefined,
+    port,
+  );
 
-    const { onRetryContextList, onFailContextList, onSuccessContextList } =
-      await proxyPageConsole(page, rsbuild.port);
+  const { onRetryContextList, onFailContextList, onSuccessContextList } =
+    await proxyPageConsole(page, rsbuild.port);
 
-    await gotoPage(page, rsbuild);
-    const compTestElement = page.locator('#async-comp-test');
-    await expect(compTestElement).toHaveText('Hello AsyncCompTest');
-    await delay();
+  await gotoPage(page, rsbuild);
+  const compTestElement = page.locator('#async-comp-test-error');
+  await expect(compTestElement).toHaveText(
+    /ChunkLoadError: Loading chunk src_AsyncCompTest_tsx from \/static\/js\/async\/src_AsyncCompTest_tsx\.js failed after 3 retries: "Loading chunk src_AsyncCompTest_tsx failed.*/,
+  );
+  await delay();
 
-    expect({
-      onRetryContextList,
-      onFailContextList,
-      onSuccessContextList,
-    }).toMatchObject({
-      onRetryContextList: [
-        {
-          times: 0,
-          domain: '<ORIGIN>',
-          url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
-          tagName: 'script',
-          isAsyncChunk: true,
-        },
-        {
-          times: 1,
-          domain: '<ORIGIN>',
-          url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
-          tagName: 'script',
-          isAsyncChunk: true,
-        },
-        {
-          times: 2,
-          domain: '<ORIGIN>',
-          url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
-          tagName: 'script',
-          isAsyncChunk: true,
-        },
-      ],
-      onFailContextList: [],
-      onSuccessContextList: [
-        {
-          times: 3,
-          domain: '<ORIGIN>',
-          url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
-          tagName: 'script',
-          isAsyncChunk: true,
-        },
-      ],
-    });
-    await rsbuild.close();
-  },
-);
-
-rspackOnlyTest(
-  'onRetry and onFail options should work when retrying initial chunk failed',
-  async ({ page }) => {
-    const blockedMiddleware = createBlockMiddleware({
-      blockNum: 100,
-      urlPrefix: '/static/js/index.js',
-    });
-
-    const port = await getRandomPort();
-    const rsbuild = await createRsbuildWithMiddleware(
-      blockedMiddleware,
+  expect({
+    onRetryContextList,
+    onFailContextList,
+    onSuccessContextList,
+  }).toMatchObject({
+    onRetryContextList: [
       {
-        minify: true,
-        domain: [`http://localhost:${port}`, 'http://a.com', 'http://b.com'],
-        onRetry(context) {
-          console.info('onRetry', context);
-        },
-        onSuccess(context) {
-          console.info('onSuccess', context);
-        },
-        onFail(context) {
-          console.info('onFail', context);
-        },
+        times: 0,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+        isAsyncChunk: true,
       },
-      undefined,
-      port,
-    );
-
-    const { onRetryContextList, onFailContextList, onSuccessContextList } =
-      await proxyPageConsole(page, rsbuild.port);
-
-    await gotoPage(page, rsbuild);
-    await delay();
-
-    expect({
-      onRetryContextList,
-      onFailContextList,
-      onSuccessContextList,
-    }).toMatchObject({
-      onRetryContextList: [
-        {
-          times: 0,
-          domain: '<ORIGIN>',
-          url: '<ORIGIN>/static/js/index.js',
-          tagName: 'script',
-          isAsyncChunk: false,
-        },
-        {
-          times: 1,
-          domain: 'http://a.com',
-          url: 'http://a.com/static/js/index.js',
-          tagName: 'script',
-          isAsyncChunk: false,
-        },
-        {
-          times: 2,
-          domain: 'http://b.com',
-          url: 'http://b.com/static/js/index.js',
-          tagName: 'script',
-          isAsyncChunk: false,
-        },
-      ],
-      onFailContextList: [
-        {
-          times: 3,
-          domain: '<ORIGIN>',
-          url: '<ORIGIN>/static/js/index.js',
-          tagName: 'script',
-          isAsyncChunk: false,
-        },
-      ],
-      onSuccessContextList: [],
-    });
-    await rsbuild.close();
-  },
-);
-
-rspackOnlyTest(
-  'onRetry and onFail options should work when retrying async chunk failed',
-  async ({ page }) => {
-    const blockedMiddleware = createBlockMiddleware({
-      blockNum: 100,
-      urlPrefix: '/static/js/async/src_AsyncCompTest_tsx.js',
-    });
-
-    const port = await getRandomPort();
-    const rsbuild = await createRsbuildWithMiddleware(
-      blockedMiddleware,
       {
-        minify: true,
-        domain: [`http://localhost:${port}`, 'http://a.com', 'http://b.com'],
-        onRetry(context) {
-          console.info('onRetry', context);
-        },
-        onSuccess(context) {
-          console.info('onSuccess', context);
-        },
-        onFail(context) {
-          console.info('onFail', context);
-        },
+        times: 1,
+        domain: 'http://a.com',
+        url: 'http://a.com/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+        isAsyncChunk: true,
       },
-      undefined,
-      port,
-    );
+      {
+        times: 2,
+        domain: 'http://b.com',
+        url: 'http://b.com/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+        isAsyncChunk: true,
+      },
+    ],
+    onFailContextList: [
+      {
+        times: 3,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+        isAsyncChunk: true,
+      },
+    ],
+    onSuccessContextList: [],
+  });
+  await rsbuild.close();
+});
 
-    const { onRetryContextList, onFailContextList, onSuccessContextList } =
-      await proxyPageConsole(page, rsbuild.port);
-
-    await gotoPage(page, rsbuild);
-    const compTestElement = page.locator('#async-comp-test-error');
-    await expect(compTestElement).toHaveText(
-      /ChunkLoadError: Loading chunk src_AsyncCompTest_tsx from \/static\/js\/async\/src_AsyncCompTest_tsx\.js failed after 3 retries: "Loading chunk src_AsyncCompTest_tsx failed.*/,
-    );
-    await delay();
-
-    expect({
-      onRetryContextList,
-      onFailContextList,
-      onSuccessContextList,
-    }).toMatchObject({
-      onRetryContextList: [
-        {
-          times: 0,
-          domain: '<ORIGIN>',
-          url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
-          tagName: 'script',
-          isAsyncChunk: true,
-        },
-        {
-          times: 1,
-          domain: 'http://a.com',
-          url: 'http://a.com/static/js/async/src_AsyncCompTest_tsx.js',
-          tagName: 'script',
-          isAsyncChunk: true,
-        },
-        {
-          times: 2,
-          domain: 'http://b.com',
-          url: 'http://b.com/static/js/async/src_AsyncCompTest_tsx.js',
-          tagName: 'script',
-          isAsyncChunk: true,
-        },
-      ],
-      onFailContextList: [
-        {
-          times: 3,
-          domain: '<ORIGIN>',
-          url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
-          tagName: 'script',
-          isAsyncChunk: true,
-        },
-      ],
-      onSuccessContextList: [],
-    });
-    await rsbuild.close();
-  },
-);
-
-rspackOnlyTest('should work with addQuery boolean option', async ({ page }) => {
+test('should work with addQuery boolean option', async ({ page }) => {
   logger.level = 'verbose';
   const { logs, restore } = proxyConsole();
   const initialChunkBlockedMiddleware = createBlockMiddleware({
@@ -677,215 +655,208 @@ rspackOnlyTest('should work with addQuery boolean option', async ({ page }) => {
   logger.level = 'log';
 });
 
-rspackOnlyTest(
-  'should work with addQuery function type option',
-  async ({ page }) => {
-    logger.level = 'verbose';
-    const { logs, restore } = proxyConsole();
-    const initialChunkBlockedMiddleware = createBlockMiddleware({
-      blockNum: 3,
-      urlPrefix: '/static/js/index.js',
-    });
+test('should work with addQuery function type option', async ({ page }) => {
+  logger.level = 'verbose';
+  const { logs, restore } = proxyConsole();
+  const initialChunkBlockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/js/index.js',
+  });
 
-    const asyncChunkBlockedMiddleware = createBlockMiddleware({
-      blockNum: 3,
-      urlPrefix: '/static/js/async/src_AsyncCompTest_tsx.js',
-    });
-    const rsbuild = await createRsbuildWithMiddleware(
-      [initialChunkBlockedMiddleware, asyncChunkBlockedMiddleware],
-      {
-        minify: true,
-        addQuery: ({ times, originalQuery }) => {
-          const query =
-            times === 3
-              ? `retryCount=${times}&isLast=1`
-              : `retryCount=${times}`;
-          return originalQuery ? `${originalQuery}&${query}` : `?${query}`;
-        },
+  const asyncChunkBlockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/js/async/src_AsyncCompTest_tsx.js',
+  });
+  const rsbuild = await createRsbuildWithMiddleware(
+    [initialChunkBlockedMiddleware, asyncChunkBlockedMiddleware],
+    {
+      minify: true,
+      addQuery: ({ times, originalQuery }) => {
+        const query =
+          times === 3 ? `retryCount=${times}&isLast=1` : `retryCount=${times}`;
+        return originalQuery ? `${originalQuery}&${query}` : `?${query}`;
       },
-    );
+    },
+  );
 
-    await gotoPage(page, rsbuild);
-    const compTestElement = page.locator('#comp-test');
-    await expect(compTestElement).toHaveText('Hello CompTest');
+  await gotoPage(page, rsbuild);
+  const compTestElement = page.locator('#comp-test');
+  await expect(compTestElement).toHaveText('Hello CompTest');
 
-    const asyncCompTestElement = page.locator('#async-comp-test');
-    await expect(asyncCompTestElement).toHaveText('Hello AsyncCompTest');
+  const asyncCompTestElement = page.locator('#async-comp-test');
+  await expect(asyncCompTestElement).toHaveText('Hello AsyncCompTest');
 
-    const blockedResponseCount = count404ResponseByUrl(
-      logs,
-      '/static/js/index.js',
-    );
-    expect(blockedResponseCount).toMatchObject({
-      '/static/js/index.js': 1,
-      '/static/js/index.js?retryCount=1': 1,
-      '/static/js/index.js?retryCount=2': 1,
-    });
-    const blockedAsyncChunkResponseCount = count404ResponseByUrl(
-      logs,
-      '/static/js/async/src_AsyncCompTest_tsx.js',
-    );
-    expect(blockedAsyncChunkResponseCount).toMatchObject({
-      '/static/js/async/src_AsyncCompTest_tsx.js': 1,
-      '/static/js/async/src_AsyncCompTest_tsx.js?retryCount=1': 1,
-      '/static/js/async/src_AsyncCompTest_tsx.js?retryCount=2': 1,
-    });
+  const blockedResponseCount = count404ResponseByUrl(
+    logs,
+    '/static/js/index.js',
+  );
+  expect(blockedResponseCount).toMatchObject({
+    '/static/js/index.js': 1,
+    '/static/js/index.js?retryCount=1': 1,
+    '/static/js/index.js?retryCount=2': 1,
+  });
+  const blockedAsyncChunkResponseCount = count404ResponseByUrl(
+    logs,
+    '/static/js/async/src_AsyncCompTest_tsx.js',
+  );
+  expect(blockedAsyncChunkResponseCount).toMatchObject({
+    '/static/js/async/src_AsyncCompTest_tsx.js': 1,
+    '/static/js/async/src_AsyncCompTest_tsx.js?retryCount=1': 1,
+    '/static/js/async/src_AsyncCompTest_tsx.js?retryCount=2': 1,
+  });
 
-    await rsbuild.close();
-    restore();
-    logger.level = 'log';
-  },
-);
+  await rsbuild.close();
+  restore();
+  logger.level = 'log';
+});
 
-rspackOnlyTest(
-  'should preserve users query when set addQuery option',
-  async ({ page }) => {
-    logger.level = 'verbose';
-    const { logs, restore } = proxyConsole();
+test('should preserve users query when set addQuery option', async ({
+  page,
+}) => {
+  logger.level = 'verbose';
+  const { logs, restore } = proxyConsole();
 
-    const blockedMiddleware1 = createBlockMiddleware({
-      blockNum: 3,
-      urlPrefix: '/test-query?a=1&b=1',
-    });
-    const blockedMiddleware2 = createBlockMiddleware({
-      blockNum: 3,
-      urlPrefix: '/test-query-hash?a=1&b=1',
-    });
+  const blockedMiddleware1 = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/test-query?a=1&b=1',
+  });
+  const blockedMiddleware2 = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/test-query-hash?a=1&b=1',
+  });
 
-    const rsbuild = await createRsbuildWithMiddleware(
-      [blockedMiddleware1, blockedMiddleware2],
-      {
-        addQuery: true,
-        minify: true,
+  const rsbuild = await createRsbuildWithMiddleware(
+    [blockedMiddleware1, blockedMiddleware2],
+    {
+      addQuery: true,
+      minify: true,
+    },
+    './src/testQueryEntry.js',
+  );
+
+  await gotoPage(page, rsbuild);
+  const blockedResponseCount1 = count404ResponseByUrl(
+    logs,
+    '/test-query?a=1&b=1',
+  );
+  expect(blockedResponseCount1).toMatchObject({
+    '/test-query?a=1&b=1': 1,
+    '/test-query?a=1&b=1&retry=1': 1,
+    '/test-query?a=1&b=1&retry=2': 1,
+  });
+
+  const blockedResponseCount2 = count404ResponseByUrl(
+    logs,
+    '/test-query-hash?a=1&b=1',
+  );
+  expect(blockedResponseCount2).toMatchObject({
+    '/test-query-hash?a=1&b=1': 1,
+    '/test-query-hash?a=1&b=1&retry=1': 1,
+    '/test-query-hash?a=1&b=1&retry=2': 1,
+  });
+
+  await rsbuild.close();
+  restore();
+  logger.level = 'log';
+});
+
+test('onRetry and onFail options should work when multiple parallel retrying async chunk', async ({
+  page,
+}) => {
+  const blockedMiddleware = createBlockMiddleware({
+    blockNum: 100,
+    urlPrefix: '/static/js/async/src_AsyncCompTest_tsx.js',
+  });
+
+  const rsbuild = await createRsbuildWithMiddleware(
+    blockedMiddleware,
+    {
+      minify: true,
+      onRetry(context) {
+        console.info('onRetry', context);
       },
-      './src/testQueryEntry.js',
-    );
-
-    await gotoPage(page, rsbuild);
-    const blockedResponseCount1 = count404ResponseByUrl(
-      logs,
-      '/test-query?a=1&b=1',
-    );
-    expect(blockedResponseCount1).toMatchObject({
-      '/test-query?a=1&b=1': 1,
-      '/test-query?a=1&b=1&retry=1': 1,
-      '/test-query?a=1&b=1&retry=2': 1,
-    });
-
-    const blockedResponseCount2 = count404ResponseByUrl(
-      logs,
-      '/test-query-hash?a=1&b=1',
-    );
-    expect(blockedResponseCount2).toMatchObject({
-      '/test-query-hash?a=1&b=1': 1,
-      '/test-query-hash?a=1&b=1&retry=1': 1,
-      '/test-query-hash?a=1&b=1&retry=2': 1,
-    });
-
-    await rsbuild.close();
-    restore();
-    logger.level = 'log';
-  },
-);
-
-rspackOnlyTest(
-  'onRetry and onFail options should work when multiple parallel retrying async chunk',
-  async ({ page }) => {
-    const blockedMiddleware = createBlockMiddleware({
-      blockNum: 100,
-      urlPrefix: '/static/js/async/src_AsyncCompTest_tsx.js',
-    });
-
-    const rsbuild = await createRsbuildWithMiddleware(
-      blockedMiddleware,
-      {
-        minify: true,
-        onRetry(context) {
-          console.info('onRetry', context);
-        },
-        onSuccess(context) {
-          console.info('onSuccess', context);
-        },
-        onFail(context) {
-          console.info('onFail', context);
-        },
+      onSuccess(context) {
+        console.info('onSuccess', context);
       },
-      './src/testParallelRetryEntry.js',
-    );
+      onFail(context) {
+        console.info('onFail', context);
+      },
+    },
+    './src/testParallelRetryEntry.js',
+  );
 
-    const { onRetryContextList, onFailContextList, onSuccessContextList } =
-      await proxyPageConsole(page, rsbuild.port);
+  const { onRetryContextList, onFailContextList, onSuccessContextList } =
+    await proxyPageConsole(page, rsbuild.port);
 
-    await gotoPage(page, rsbuild);
-    await delay();
+  await gotoPage(page, rsbuild);
+  await delay();
 
-    expect({
-      onRetryContextList,
-      onFailContextList,
-      onSuccessContextList,
-    }).toMatchObject({
-      onRetryContextList: [
-        {
-          times: 0,
-          domain: '<ORIGIN>',
-          url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
-          tagName: 'script',
-          isAsyncChunk: true,
-        },
-        {
-          times: 0,
-          domain: '<ORIGIN>',
-          url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
-          tagName: 'script',
-          isAsyncChunk: true,
-        },
-        {
-          times: 1,
-          domain: '<ORIGIN>',
-          url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
-          tagName: 'script',
-          isAsyncChunk: true,
-        },
-        {
-          times: 1,
-          domain: '<ORIGIN>',
-          url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
-          tagName: 'script',
-          isAsyncChunk: true,
-        },
-        {
-          times: 2,
-          domain: '<ORIGIN>',
-          url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
-          tagName: 'script',
-          isAsyncChunk: true,
-        },
-        {
-          times: 2,
-          domain: '<ORIGIN>',
-          url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
-          tagName: 'script',
-          isAsyncChunk: true,
-        },
-      ],
-      onFailContextList: [
-        {
-          domain: '<ORIGIN>',
-          isAsyncChunk: true,
-          tagName: 'script',
-          times: 3,
-          url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
-        },
-        {
-          domain: '<ORIGIN>',
-          isAsyncChunk: true,
-          tagName: 'script',
-          times: 3,
-          url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
-        },
-      ],
-      onSuccessContextList: [],
-    });
-    await rsbuild.close();
-  },
-);
+  expect({
+    onRetryContextList,
+    onFailContextList,
+    onSuccessContextList,
+  }).toMatchObject({
+    onRetryContextList: [
+      {
+        times: 0,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+        isAsyncChunk: true,
+      },
+      {
+        times: 0,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+        isAsyncChunk: true,
+      },
+      {
+        times: 1,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+        isAsyncChunk: true,
+      },
+      {
+        times: 1,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+        isAsyncChunk: true,
+      },
+      {
+        times: 2,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+        isAsyncChunk: true,
+      },
+      {
+        times: 2,
+        domain: '<ORIGIN>',
+        url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
+        tagName: 'script',
+        isAsyncChunk: true,
+      },
+    ],
+    onFailContextList: [
+      {
+        domain: '<ORIGIN>',
+        isAsyncChunk: true,
+        tagName: 'script',
+        times: 3,
+        url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
+      },
+      {
+        domain: '<ORIGIN>',
+        isAsyncChunk: true,
+        tagName: 'script',
+        times: 3,
+        url: '<ORIGIN>/static/js/async/src_AsyncCompTest_tsx.js',
+      },
+    ],
+    onSuccessContextList: [],
+  });
+  await rsbuild.close();
+});
