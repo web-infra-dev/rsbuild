@@ -29,6 +29,7 @@ export class CommonJsRunner extends BasicRunner {
         return timeout;
       }) as typeof setTimeout,
       clearTimeout: clearTimeout,
+      queueMicrotask,
     };
   }
 
@@ -43,6 +44,7 @@ export class CommonJsRunner extends BasicRunner {
         });
         return m;
       },
+      queueMicrotask,
     };
     return baseModuleScope;
   }
