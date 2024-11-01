@@ -81,6 +81,7 @@ export type {
   ModifyRsbuildConfigFn,
   ModifyWebpackChainFn,
   ModifyWebpackChainUtils,
+  ModifyWebpackConfigFn,
   ModifyWebpackConfigUtils,
   ModuleFederationConfig,
   MergedEnvironmentConfig,
