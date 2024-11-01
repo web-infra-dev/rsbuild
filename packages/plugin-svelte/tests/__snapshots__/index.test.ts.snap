@@ -5,7 +5,7 @@ exports[`plugin-svelte > should add svelte loader properly 1`] = `
   "module": {
     "rules": [
       {
-        "test": /\\\\\\.svelte\\$/,
+        "test": /\\\\\\.\\(\\?:svelte\\|svelte\\\\\\.js\\|svelte\\\\\\.ts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
@@ -30,9 +30,6 @@ exports[`plugin-svelte > should add svelte loader properly 1`] = `
     RsbuildCorePlugin {},
   ],
   "resolve": {
-    "alias": {
-      "svelte": "<ROOT>/node_modules/<PNPM_INNER>/svelte/src/runtime",
-    },
     "conditionNames": [
       "svelte",
       "...",
@@ -58,7 +55,7 @@ exports[`plugin-svelte > should override default svelte-loader options throw opt
   "module": {
     "rules": [
       {
-        "test": /\\\\\\.svelte\\$/,
+        "test": /\\\\\\.\\(\\?:svelte\\|svelte\\\\\\.js\\|svelte\\\\\\.ts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
@@ -79,9 +76,6 @@ exports[`plugin-svelte > should override default svelte-loader options throw opt
     RsbuildCorePlugin {},
   ],
   "resolve": {
-    "alias": {
-      "svelte": "<ROOT>/node_modules/<PNPM_INNER>/svelte/src/runtime",
-    },
     "conditionNames": [
       "svelte",
       "...",
@@ -107,7 +101,7 @@ exports[`plugin-svelte > should set dev and hotReload to false in production mod
   "module": {
     "rules": [
       {
-        "test": /\\\\\\.svelte\\$/,
+        "test": /\\\\\\.\\(\\?:svelte\\|svelte\\\\\\.js\\|svelte\\\\\\.ts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
@@ -132,9 +126,6 @@ exports[`plugin-svelte > should set dev and hotReload to false in production mod
     RsbuildCorePlugin {},
   ],
   "resolve": {
-    "alias": {
-      "svelte": "<ROOT>/node_modules/<PNPM_INNER>/svelte/src/runtime",
-    },
     "conditionNames": [
       "svelte",
       "...",
@@ -160,7 +151,7 @@ exports[`plugin-svelte > should support pass custom preprocess options 1`] = `
   "module": {
     "rules": [
       {
-        "test": /\\\\\\.svelte\\$/,
+        "test": /\\\\\\.\\(\\?:svelte\\|svelte\\\\\\.js\\|svelte\\\\\\.ts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
@@ -185,9 +176,6 @@ exports[`plugin-svelte > should support pass custom preprocess options 1`] = `
     RsbuildCorePlugin {},
   ],
   "resolve": {
-    "alias": {
-      "svelte": "<ROOT>/node_modules/<PNPM_INNER>/svelte/src/runtime",
-    },
     "conditionNames": [
       "svelte",
       "...",
@@ -213,7 +201,7 @@ exports[`plugin-svelte > should turn off HMR by hand correctly 1`] = `
   "module": {
     "rules": [
       {
-        "test": /\\\\\\.svelte\\$/,
+        "test": /\\\\\\.\\(\\?:svelte\\|svelte\\\\\\.js\\|svelte\\\\\\.ts\\)\\$/,
         "use": [
           {
             "loader": "<ROOT>/node_modules/<PNPM_INNER>/svelte-loader/index.js",
@@ -238,9 +226,6 @@ exports[`plugin-svelte > should turn off HMR by hand correctly 1`] = `
     RsbuildCorePlugin {},
   ],
   "resolve": {
-    "alias": {
-      "svelte": "<ROOT>/node_modules/<PNPM_INNER>/svelte/src/runtime",
-    },
     "conditionNames": [
       "svelte",
       "...",
