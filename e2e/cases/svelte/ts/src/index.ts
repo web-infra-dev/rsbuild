@@ -1,10 +1,10 @@
-import type { SvelteComponent } from 'svelte';
+import { mount } from 'svelte';
 import App from './App.svelte';
 
-const app: SvelteComponent = new App({
+const app = mount(App, {
   target: document.body,
   props: {
-    name: 'world',
+    name: 'world' as const,
   },
 });
 
