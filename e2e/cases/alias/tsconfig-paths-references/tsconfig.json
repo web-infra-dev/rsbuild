@@ -1,0 +1,9 @@
+{
+  "extends": "@rsbuild/config/tsconfig",
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    }
+  ],
+  "include": []
+}
