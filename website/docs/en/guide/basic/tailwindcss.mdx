@@ -72,6 +72,7 @@ module.exports = {
   plugins: {
     tailwindcss: {
       content: ['./src/**/*.{html,js,ts,jsx,tsx}'],
+      // ...other options
     },
   },
 };
@@ -85,7 +86,12 @@ import tailwindcss from 'tailwindcss';
 export default {
   tools: {
     postcss: {
-      plugins: [tailwindcss({ content: ['./src/**/*.{html,js,ts,jsx,tsx}'] })],
+      plugins: [
+        tailwindcss({
+          content: ['./src/**/*.{html,js,ts,jsx,tsx}'],
+          // ...other options
+        }),
+      ],
     },
   },
 };
