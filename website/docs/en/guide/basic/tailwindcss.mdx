@@ -63,6 +63,42 @@ module.exports = {
 };
 ```
 
+### Other Configuration Methods
+
+- You can directly pass the Tailwind CSS configuration to `postcss.config.cjs`:
+
+```js title="postcss.config.cjs"
+module.exports = {
+  plugins: {
+    tailwindcss: {
+      content: ['./src/**/*.{html,js,ts,jsx,tsx}'],
+      // ...other options
+    },
+  },
+};
+```
+
+- You can also set the Tailwind CSS configuration through [tools.postcss](/config/tools/postcss):
+
+```js title="rsbuild.config.js"
+import tailwindcss from 'tailwindcss';
+
+export default {
+  tools: {
+    postcss: {
+      plugins: [
+        tailwindcss({
+          content: ['./src/**/*.{html,js,ts,jsx,tsx}'],
+          // ...other options
+        }),
+      ],
+    },
+  },
+};
+```
+
+But we recommend placing the Tailwind CSS configuration in `tailwind.config.*` because other methods may cause the Tailwind CSS build performance to degrade, refer to [tailwindcss/issues/14229](https://github.com/tailwindlabs/tailwindcss/issues/14229).
+
 ## Importing CSS
 
 Add the `@tailwind` directives in your CSS entry file:

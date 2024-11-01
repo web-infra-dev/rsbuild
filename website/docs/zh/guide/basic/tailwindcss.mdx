@@ -63,6 +63,42 @@ module.exports = {
 };
 ```
 
+### 其他配置方式
+
+- 你可以在 `postcss.config.cjs` 中直接传入 Tailwind CSS 的配置：
+
+```js title="postcss.config.cjs"
+module.exports = {
+  plugins: {
+    tailwindcss: {
+      content: ['./src/**/*.{html,js,ts,jsx,tsx}'],
+      // ...other options
+    },
+  },
+};
+```
+
+- 也可以通过 [tools.postcss](/config/tools/postcss) 来设置 Tailwind CSS 的配置：
+
+```js title="rsbuild.config.js"
+import tailwindcss from 'tailwindcss';
+
+export default {
+  tools: {
+    postcss: {
+      plugins: [
+        tailwindcss({
+          content: ['./src/**/*.{html,js,ts,jsx,tsx}'],
+          // ...other options
+        }),
+      ],
+    },
+  },
+};
+```
+
+但我们建议将 Tailwind CSS 的配置放在 `tailwind.config.*` 中，因为其他方式可能会导致 Tailwind CSS 的构建性能劣化，参考 [tailwindcss/issues/14229](https://github.com/tailwindlabs/tailwindcss/issues/14229)。
+
 ## 引入 CSS
 
 在 CSS 入口文件中添加 `@tailwind` 指令：
