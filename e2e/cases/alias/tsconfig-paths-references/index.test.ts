@@ -1,21 +1,24 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { build, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
-test('tsconfig paths should work with references', async ({ page }) => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    page,
-    rsbuildConfig: {
-      source: {
-        alias: {
-          '@common': './src/common2',
+rspackOnlyTest(
+  'tsconfig paths should work with references',
+  async ({ page }) => {
+    const rsbuild = await build({
+      cwd: __dirname,
+      page,
+      rsbuildConfig: {
+        source: {
+          alias: {
+            '@common': './src/common2',
+          },
         },
       },
-    },
-  });
+    });
 
-  const foo = page.locator('#foo');
-  await expect(foo).toHaveText('tsconfig paths worked');
+    const foo = page.locator('#foo');
+    await expect(foo).toHaveText('tsconfig paths worked');
 
-  await rsbuild.close();
-});
+    await rsbuild.close();
+  },
+);
