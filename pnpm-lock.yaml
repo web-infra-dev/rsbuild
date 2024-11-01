@@ -247,8 +247,8 @@ importers:
   e2e/cases/svelte:
     dependencies:
       svelte:
-        specifier: ^4.2.19
-        version: 4.2.19
+        specifier: ^5.0.3
+        version: 5.1.9
     devDependencies:
       less:
         specifier: ^4.2.0
@@ -425,20 +425,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/plugin-solid
 
-  examples/svelte4:
-    dependencies:
-      svelte:
-        specifier: ^4.2.19
-        version: 4.2.19
-    devDependencies:
-      '@rsbuild/core':
-        specifier: workspace:*
-        version: link:../../packages/core
-      '@rsbuild/plugin-svelte':
-        specifier: workspace:*
-        version: link:../../packages/plugin-svelte
-
-  examples/svelte5:
+  examples/svelte:
     dependencies:
       svelte:
         specifier: ^5.0.3
@@ -991,10 +978,10 @@ importers:
     dependencies:
       svelte-loader:
         specifier: 3.2.4
-        version: 3.2.4(svelte@4.2.19)
+        version: 3.2.4(svelte@5.1.9)
       svelte-preprocess:
         specifier: ^6.0.3
-        version: 6.0.3(@babel/core@7.26.0)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.47)(yaml@2.6.0))(postcss@8.4.47)(sass@1.80.5)(stylus@0.64.0)(svelte@4.2.19)(typescript@5.6.3)
+        version: 6.0.3(@babel/core@7.26.0)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.47)(yaml@2.6.0))(postcss@8.4.47)(sass@1.80.5)(stylus@0.64.0)(svelte@5.1.9)(typescript@5.6.3)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1006,8 +993,8 @@ importers:
         specifier: 18.x
         version: 18.19.63
       svelte:
-        specifier: ^4.2.19
-        version: 4.2.19
+        specifier: ^5.0.3
+        version: 5.1.9
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -3802,9 +3789,6 @@ packages:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
     engines: {iojs: '>= 1.0.0', node: '>= 0.12.0'}
 
-  code-red@1.0.4:
-    resolution: {integrity: sha512-7qJWqItLA8/VPVlKJlFXU+NBlo/qyfs39aJcuMT/2ere32ZqvF5OSxgdM5xOfJJ7O429gg2HM47y8v9P+9wrNw==}
-
   color-convert@1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}
 
@@ -6594,10 +6578,6 @@ packages:
         optional: true
       typescript:
         optional: true
-
-  svelte@4.2.19:
-    resolution: {integrity: sha512-IY1rnGr6izd10B0A8LqsBfmlT5OILVuZ7XsI0vdGPEvuonFV7NYEUK4dAkm9Zg2q0Um92kYjTpS1CAP3Nh/KWw==}
-    engines: {node: '>=16'}
 
   svelte@5.1.9:
     resolution: {integrity: sha512-nzq+PPKGS2PoEWDjAcXSrKSbXmmmOAxd6dAz1IhRusUpVkFS6DMELWPyBPGwu6TpO/gsgtFXwX0M4+pAR5gzKw==}
@@ -9998,14 +9978,6 @@ snapshots:
 
   co@4.6.0: {}
 
-  code-red@1.0.4:
-    dependencies:
-      '@jridgewell/sourcemap-codec': 1.5.0
-      '@types/estree': 1.0.6
-      acorn: 8.14.0
-      estree-walker: 3.0.3
-      periscopic: 3.1.0
-
   color-convert@1.9.3:
     dependencies:
       color-name: 1.1.3
@@ -13094,20 +13066,20 @@ snapshots:
 
   svelte-dev-helper@1.1.9: {}
 
-  svelte-hmr@0.14.12(svelte@4.2.19):
+  svelte-hmr@0.14.12(svelte@5.1.9):
     dependencies:
-      svelte: 4.2.19
+      svelte: 5.1.9
 
-  svelte-loader@3.2.4(svelte@4.2.19):
+  svelte-loader@3.2.4(svelte@5.1.9):
     dependencies:
       loader-utils: 2.0.4
-      svelte: 4.2.19
+      svelte: 5.1.9
       svelte-dev-helper: 1.1.9
-      svelte-hmr: 0.14.12(svelte@4.2.19)
+      svelte-hmr: 0.14.12(svelte@5.1.9)
 
-  svelte-preprocess@6.0.3(@babel/core@7.26.0)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.47)(yaml@2.6.0))(postcss@8.4.47)(sass@1.80.5)(stylus@0.64.0)(svelte@4.2.19)(typescript@5.6.3):
+  svelte-preprocess@6.0.3(@babel/core@7.26.0)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.47)(yaml@2.6.0))(postcss@8.4.47)(sass@1.80.5)(stylus@0.64.0)(svelte@5.1.9)(typescript@5.6.3):
     dependencies:
-      svelte: 4.2.19
+      svelte: 5.1.9
     optionalDependencies:
       '@babel/core': 7.26.0
       less: 4.2.0
@@ -13116,23 +13088,6 @@ snapshots:
       sass: 1.80.5
       stylus: 0.64.0
       typescript: 5.6.3
-
-  svelte@4.2.19:
-    dependencies:
-      '@ampproject/remapping': 2.3.0
-      '@jridgewell/sourcemap-codec': 1.5.0
-      '@jridgewell/trace-mapping': 0.3.25
-      '@types/estree': 1.0.6
-      acorn: 8.14.0
-      aria-query: 5.3.2
-      axobject-query: 4.1.0
-      code-red: 1.0.4
-      css-tree: 2.3.1
-      estree-walker: 3.0.3
-      is-reference: 3.0.2
-      locate-character: 3.0.0
-      magic-string: 0.30.12
-      periscopic: 3.1.0
 
   svelte@5.1.9:
     dependencies:

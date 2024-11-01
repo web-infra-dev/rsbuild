@@ -21,13 +21,6 @@ rspackOnlyTest('HMR should work properly', async ({ page }) => {
     cwd: root,
     page,
     plugins: [pluginSvelte()],
-    rsbuildConfig: {
-      source: {
-        entry: {
-          index: path.join(root, 'src/index.js'),
-        },
-      },
-    },
   });
 
   const a = page.locator('#A');
