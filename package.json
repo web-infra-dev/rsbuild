@@ -13,7 +13,7 @@
     "build:doc": "cd website && pnpm run build",
     "change": "changeset",
     "changeset": "changeset",
-    "check-dependency-version": "check-dependency-version-consistency .",
+    "check-dependency-version": "npx check-dependency-version-consistency .",
     "check-spell": "npx cspell",
     "dev:doc": "cd website && pnpm run dev",
     "e2e": "cd ./e2e && pnpm test",
@@ -36,8 +36,7 @@
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
       "biome check --write --formatter-enabled=false --linter-enabled=false --no-errors-on-unmatched",
       "prettier --write"
-    ],
-    "package.json": "pnpm run check-dependency-version"
+    ]
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
@@ -46,7 +45,6 @@
     "@rsbuild/config": "workspace:*",
     "@rslib/core": "0.0.14",
     "@scripts/test-helper": "workspace:*",
-    "check-dependency-version-consistency": "^4.1.0",
     "cross-env": "^7.0.3",
     "cspell-ban-words": "^0.0.4",
     "nano-staged": "^0.8.0",
