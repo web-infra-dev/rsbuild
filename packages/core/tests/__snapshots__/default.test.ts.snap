@@ -390,6 +390,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     ],
     "tsConfig": {
       "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
+      "references": "auto",
     },
   },
   "target": [
@@ -825,6 +826,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     ],
     "tsConfig": {
       "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
+      "references": "auto",
     },
   },
   "target": [
@@ -1158,6 +1160,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     ],
     "tsConfig": {
       "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
+      "references": "auto",
     },
   },
   "target": "node",
@@ -1569,6 +1572,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
     ],
     "tsConfig": {
       "configFile": "<ROOT>/packages/core/tests/tsconfig.json",
+      "references": "auto",
     },
   },
   "target": [

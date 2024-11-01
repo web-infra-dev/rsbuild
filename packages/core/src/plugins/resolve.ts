@@ -109,6 +109,8 @@ export const pluginResolve = (): RsbuildPlugin => ({
         ) {
           chain.resolve.tsConfig({
             configFile: tsconfigPath,
+            // read `paths` in referenced tsconfig files
+            references: 'auto',
           });
         }
       },
