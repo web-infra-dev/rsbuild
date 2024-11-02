@@ -17,6 +17,7 @@ import {
   getHtmlCompletionMiddleware,
   getHtmlFallbackMiddleware,
   getRequestLoggerMiddleware,
+  viewerFilesMiddleware,
 } from './middlewares';
 
 export type CompileMiddlewareAPI = {
@@ -149,6 +150,7 @@ const applyDefaultMiddlewares = async ({
     ? output.distPath
     : join(pwd, output.distPath);
 
+  middlewares.push(viewerFilesMiddleware({ distPath, outputFileSystem }));
   if (compileMiddlewareAPI) {
     middlewares.push(
       getHtmlCompletionMiddleware({

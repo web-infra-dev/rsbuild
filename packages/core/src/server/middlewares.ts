@@ -244,3 +244,54 @@ export const getHtmlFallbackMiddleware: (params: {
     next();
   };
 };
+
+export const viewerFilesMiddleware: (params: {
+  distPath: string;
+  outputFileSystem: Rspack.OutputFileSystem;
+}) => Middleware =
+  ({ outputFileSystem, distPath }) =>
+  async (req, res, next) => {
+    console.log('%c Line:256 🥟 req.url', 'color:#93c0a4', req.url);
+    if (req.url === '/rspack-dev-server') {
+      const processDirectory = async (
+        directory: string,
+        list: string[] = [],
+      ) => {
+        const items = await new Promise((resolve, reject) => {
+          outputFileSystem.readdir(directory, (err, results) => {
+            if (err) reject(err);
+            else resolve(results);
+          });
+        });
+
+        for (const item of items as any) {
+          const fullPath = path.join(directory, item) as string;
+          const stats = (await new Promise((resolve, reject) => {
+            outputFileSystem.stat(fullPath, (err, stats) => {
+              if (err) reject(err);
+              else resolve(stats);
+            });
+          })) as any;
+
+          if (stats?.isDirectory()) {
+            await processDirectory(fullPath, list);
+          } else {
+            list.push(fullPath.replace(distPath, '') as string); // remove the root dist path for readability
+          }
+        }
+
+        return list;
+      };
+
+      try {
+        const files = await processDirectory(distPath);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(files, null, 2)); // Pretty print the JSON response
+      } catch (err) {
+        res.writeHead(500);
+        res.end('Failed to list the files');
+      }
+    } else {
+      next();
+    }
+  };
