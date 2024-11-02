@@ -300,6 +300,13 @@ export type TransformDescriptor = {
    * @see https://rspack.dev/api/loader-api/examples#raw-loader
    */
   raw?: boolean;
+  /**
+   * Used to mark the layer of the matching module.
+   * A group of modules could be united in one layer which could then be used in
+   * split chunks, stats or entry options.
+   * @see https://rspack.dev/config/module#rulelayer
+   */
+  layer?: string;
 };
 
 export type TransformFn = (

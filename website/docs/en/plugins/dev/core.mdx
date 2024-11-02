@@ -212,6 +212,7 @@ type TransformDescriptor = {
   environments?: string[];
   resourceQuery?: RuleSetCondition;
   raw?: boolean;
+  layer?: string;
 };
 ```
 
@@ -256,6 +257,8 @@ api.transform({ test: /\.node$/, raw: true }, ({ code }) => {
   // ...
 });
 ```
+
+- `layer`: the same as Rspack's [Rule.layer](https://rspack.dev/config/module#rulelayer).
 
 ### Handler Param
 
