@@ -286,17 +286,20 @@ export type TransformDescriptor = {
    */
   resourceQuery?: Rspack.RuleSetCondition;
   /**
-   * Match based on the Rsbuild targets and only apply the transform to certain targets.
+   * Match based on the Rsbuild targets and only apply the transform to
+   * certain targets.
    * @see https://rsbuild.dev/config/output/target
    */
   targets?: RsbuildTarget[];
   /**
-   * Match based on the Rsbuild environment names and only apply the transform to certain environments.
+   * Match based on the Rsbuild environment names and only apply the transform
+   * to certain environments.
    * @see https://rsbuild.dev/config/environments
    */
   environments?: string[];
   /**
-   * If raw is `true`, the transform handler will receive the Buffer type code instead of the string type.
+   * If raw is `true`, the transform handler will receive the Buffer type code
+   * instead of the string type.
    * @see https://rspack.dev/api/loader-api/examples#raw-loader
    */
   raw?: boolean;
@@ -307,6 +310,12 @@ export type TransformDescriptor = {
    * @see https://rspack.dev/config/module#rulelayer
    */
   layer?: string;
+  /**
+   * Matches all modules that match this resource, and will match against layer of
+   * the module that issued the current module.
+   * @see https://rspack.dev/config/module#ruleissuerlayer
+   */
+  issuerLayer?: string;
 };
 
 export type TransformFn = (
