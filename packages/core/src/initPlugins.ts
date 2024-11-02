@@ -280,6 +280,9 @@ export function initPluginAPI({
           if (descriptor.layer) {
             rule.layer(descriptor.layer);
           }
+          if (descriptor.issuerLayer) {
+            rule.issuerLayer(descriptor.issuerLayer);
+          }
 
           const loaderName = descriptor.raw
             ? 'transformRawLoader.cjs'
