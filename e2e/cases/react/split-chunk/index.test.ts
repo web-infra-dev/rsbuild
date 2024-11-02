@@ -34,3 +34,28 @@ test('should not split react chunks when strategy is `all-in-one`', async () => 
   expect(filesNames.find((file) => file.includes('lib-react'))).toBeFalsy();
   expect(filesNames.find((file) => file.includes('lib-router'))).toBeFalsy();
 });
+
+test('should not override user defined cache groups', async () => {
+  const rsbuild = await build({
+    cwd: fixtures,
+    plugins: [pluginReact()],
+    rsbuildConfig: {
+      performance: {
+        chunkSplit: {
+          override: {
+            cacheGroups: {
+              react: {
+                name: 'my-react',
+                test: /react/,
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  const files = await rsbuild.unwrapOutputJSON();
+  const filesNames = Object.keys(files);
+  expect(filesNames.find((file) => file.includes('my-react'))).toBeTruthy();
+});
