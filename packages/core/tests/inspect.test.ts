@@ -13,10 +13,7 @@ describe('inspectConfig', () => {
       },
     });
 
-    const {
-      origin: { rsbuildConfig },
-    } = await rsbuild.inspectConfig();
-
-    expect(rsbuildConfig.pluginNames).toMatchSnapshot();
+    const { rsbuildConfig } = await rsbuild.inspectConfig();
+    expect(rsbuildConfig).toMatchSnapshot();
   });
 });

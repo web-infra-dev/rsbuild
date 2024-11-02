@@ -51,6 +51,7 @@ import type {
   RsbuildConfig,
   RsbuildEntry,
   RsbuildMode,
+  RsbuildPlugin,
 } from './types';
 
 const getDefaultDevConfig = (): NormalizedDevConfig => ({
@@ -461,6 +462,15 @@ export async function loadConfig({
   };
 }
 
+const normalizePluginObject = (plugin: RsbuildPlugin): RsbuildPlugin => {
+  const { setup: _, ...rest } = plugin;
+  return {
+    ...rest,
+    // use empty `setup` function as it's not meaningful in inspect config
+    setup() {},
+  };
+};
+
 export const getRsbuildInspectConfig = ({
   normalizedConfig,
   inspectOptions,
@@ -480,26 +490,13 @@ export const getRsbuildInspectConfig = ({
 } => {
   const { environments, ...rsbuildConfig } = normalizedConfig;
 
-  const pluginNames = pluginManager.getPlugins().map((p) => p.name);
-
-  const rsbuildDebugConfig: Omit<NormalizedConfig, 'environments'> & {
-    pluginNames: string[];
-  } = {
+  const debugConfig: Omit<NormalizedConfig, 'environments'> = {
     ...rsbuildConfig,
-    pluginNames,
+    plugins: pluginManager.getPlugins().map(normalizePluginObject),
   };
 
-  const rawRsbuildConfig = stringifyConfig(
-    rsbuildDebugConfig,
-    inspectOptions.verbose,
-  );
-
-  const environmentConfigs: Record<
-    string,
-    NormalizedEnvironmentConfig & {
-      pluginNames: string[];
-    }
-  > = {};
+  const rawRsbuildConfig = stringifyConfig(debugConfig, inspectOptions.verbose);
+  const environmentConfigs: Record<string, NormalizedEnvironmentConfig> = {};
 
   const rawEnvironmentConfigs: Array<{
     name: string;
@@ -509,9 +506,9 @@ export const getRsbuildInspectConfig = ({
   for (const [name, config] of Object.entries(environments)) {
     const debugConfig = {
       ...config,
-      pluginNames: pluginManager
+      plugins: pluginManager
         .getPlugins({ environment: name })
-        .map((p) => p.name),
+        .map(normalizePluginObject),
     };
     rawEnvironmentConfigs.push({
       name,
@@ -521,9 +518,9 @@ export const getRsbuildInspectConfig = ({
   }
 
   return {
-    rsbuildConfig: rsbuildDebugConfig,
+    rsbuildConfig,
     rawRsbuildConfig,
-    environmentConfigs,
+    environmentConfigs: environments,
     rawEnvironmentConfigs,
   };
 };
