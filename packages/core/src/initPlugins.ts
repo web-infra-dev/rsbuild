@@ -277,6 +277,9 @@ export function initPluginAPI({
           if (descriptor.resourceQuery) {
             rule.resourceQuery(descriptor.resourceQuery);
           }
+          if (descriptor.layer) {
+            rule.layer(descriptor.layer);
+          }
 
           const loaderName = descriptor.raw
             ? 'transformRawLoader.cjs'
