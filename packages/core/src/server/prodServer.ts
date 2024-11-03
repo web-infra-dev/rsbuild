@@ -233,14 +233,17 @@ export async function startProdServer(
         printUrls();
 
         if (cliShortcutsEnabled) {
+          const shortcutsOptions =
+            typeof config.dev.cliShortcuts === 'boolean'
+              ? {}
+              : config.dev.cliShortcuts;
+
           setupCliShortcuts({
             openPage,
             closeServer,
             printUrls,
-            customShortcuts:
-              typeof config.dev.cliShortcuts === 'boolean'
-                ? undefined
-                : config.dev.cliShortcuts.custom,
+            help: shortcutsOptions.help,
+            customShortcuts: shortcutsOptions.custom,
           });
         }
 

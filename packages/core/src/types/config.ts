@@ -1310,6 +1310,11 @@ export interface DevConfig {
          * @returns - The customized CLI shortcuts.
          */
         custom?: (shortcuts?: CliShortcut[]) => CliShortcut[];
+        /**
+         * Whether to print the help hint when the server is started.
+         * @default true
+         */
+        help?: boolean;
       };
   /**
    * Provides the ability to execute a custom function and apply custom middlewares.
