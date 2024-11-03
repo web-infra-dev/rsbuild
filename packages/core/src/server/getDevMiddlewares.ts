@@ -150,7 +150,6 @@ const applyDefaultMiddlewares = async ({
     ? output.distPath
     : join(pwd, output.distPath);
 
-  console.log('%c Line:154 🥒 distPath', 'color:#fca650', distPath);
   middlewares.push(viewerFilesMiddleware({ distPath, outputFileSystem }));
   if (compileMiddlewareAPI) {
     middlewares.push(

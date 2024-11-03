@@ -5,6 +5,7 @@ import color from 'picocolors';
 import { addTrailingSlash } from '../helpers';
 import { logger } from '../logger';
 import type {
+  EnvironmentAPI,
   HtmlFallback,
   RequestHandler as Middleware,
   Rspack,
@@ -245,14 +246,19 @@ export const getHtmlFallbackMiddleware: (params: {
   };
 };
 
+/**
+ * support `/rspack-dev-server` to list all files in distPath
+ */
 export const viewerFilesMiddleware: (params: {
   distPath: string;
   outputFileSystem: Rspack.OutputFileSystem;
 }) => Middleware =
   ({ outputFileSystem, distPath }) =>
   async (req, res, next) => {
-    console.log('%c Line:256 🥟 req.url', 'color:#93c0a4', req.url);
-    if (req.url === '/rspack-dev-server') {
+    const url = req.url!;
+    const pathname = getUrlPathname(url);
+
+    if (pathname === '/rspack-dev-server') {
       const processDirectory = async (
         directory: string,
         list: string[] = [],
@@ -283,14 +289,16 @@ export const viewerFilesMiddleware: (params: {
             if (stats?.isDirectory()) {
               await processDirectory(fullPath, list);
             } else {
+              // Format path into hyperlink inside <li>
+              const relativePath = fullPath?.replace(`${distPath}/`, '');
               list.push(
-                `<li><a href="${fullPath.replace(distPath, '')}">${item}</a></li>`,
-              ); // Format path into hyperlink inside <li>
+                `<li><a target="_blank" href="${relativePath}">${relativePath}</a></li>`,
+              );
             }
           }
           return list;
         } catch (e) {
-          // throw new Error("Failed to read directory: " + e);
+          logger.error(e);
           return [];
         }
       };
@@ -300,9 +308,9 @@ export const viewerFilesMiddleware: (params: {
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
         res.end(`<!DOCTYPE html><html>
         <h1>Assets Report:</h1>
-        <body><ul>${files.join('')}</ul></body></html>`); // Return as HTML document
+        <body><ul>${files?.join('')}</ul></body></html>`); // Return as HTML document
       } catch (err) {
-        console.error('Error listing files:', err);
+        logger.error(err);
         res.writeHead(500);
         res.end('Failed to list the files');
       }
