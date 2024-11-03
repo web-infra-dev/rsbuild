@@ -245,12 +245,6 @@ export async function createDevServer<
   }
 
   const compileMiddlewareAPI = runCompile ? await startCompile() : undefined;
-  console.log(
-    '%c Line:128 🥑 outputFileSystem',
-    'color:#fca650',
-    outputFileSystem,
-  );
-  logger.debug(outputFileSystem);
 
   const fileWatcher = await setupWatchFiles({
     dev: devConfig,

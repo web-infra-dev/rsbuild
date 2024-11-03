@@ -256,38 +256,53 @@ export const viewerFilesMiddleware: (params: {
       const processDirectory = async (
         directory: string,
         list: string[] = [],
-      ) => {
-        const items = await new Promise((resolve, reject) => {
-          outputFileSystem.readdir(directory, (err, results) => {
-            if (err) reject(err);
-            else resolve(results);
-          });
-        });
-
-        for (const item of items as any) {
-          const fullPath = path.join(directory, item) as string;
-          const stats = (await new Promise((resolve, reject) => {
-            outputFileSystem.stat(fullPath, (err, stats) => {
-              if (err) reject(err);
-              else resolve(stats);
+      ): Promise<string[]> => {
+        try {
+          const items: string[] = await new Promise((resolve, reject) => {
+            outputFileSystem.readdir(directory, (err, results) => {
+              if (err) {
+                reject(err);
+              } else {
+                resolve(results as string[]);
+              }
             });
-          })) as any;
+          });
 
-          if (stats?.isDirectory()) {
-            await processDirectory(fullPath, list);
-          } else {
-            list.push(fullPath.replace(distPath, '') as string); // remove the root dist path for readability
+          for (const item of items) {
+            const fullPath = path.join(directory, item);
+            const stats = (await new Promise((resolve, reject) => {
+              outputFileSystem.stat(fullPath, (err, stats) => {
+                if (err) {
+                  reject(err);
+                } else {
+                  resolve(stats as any);
+                }
+              });
+            })) as any;
+
+            if (stats?.isDirectory()) {
+              await processDirectory(fullPath, list);
+            } else {
+              list.push(
+                `<li><a href="${fullPath.replace(distPath, '')}">${item}</a></li>`,
+              ); // Format path into hyperlink inside <li>
+            }
           }
+          return list;
+        } catch (e) {
+          // throw new Error("Failed to read directory: " + e);
+          return [];
         }
-
-        return list;
       };
 
       try {
         const files = await processDirectory(distPath);
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(files, null, 2)); // Pretty print the JSON response
+        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+        res.end(`<!DOCTYPE html><html>
+        <h1>Assets Report:</h1>
+        <body><ul>${files.join('')}</ul></body></html>`); // Return as HTML document
       } catch (err) {
+        console.error('Error listing files:', err);
         res.writeHead(500);
         res.end('Failed to list the files');
       }
