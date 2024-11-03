@@ -76,6 +76,7 @@ const applyDefaultMiddlewares = async ({
   output,
   pwd,
   outputFileSystem,
+  environments,
 }: RsbuildDevMiddlewareOptions & {
   middlewares: Middlewares;
 }): Promise<{
@@ -150,7 +151,7 @@ const applyDefaultMiddlewares = async ({
     ? output.distPath
     : join(pwd, output.distPath);
 
-  middlewares.push(viewerFilesMiddleware({ distPath, outputFileSystem }));
+  middlewares.push(viewerFilesMiddleware({ environments }));
   if (compileMiddlewareAPI) {
     middlewares.push(
       getHtmlCompletionMiddleware({

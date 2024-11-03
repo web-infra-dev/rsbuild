@@ -250,65 +250,36 @@ export const getHtmlFallbackMiddleware: (params: {
  * support `/rspack-dev-server` to list all files in distPath
  */
 export const viewerFilesMiddleware: (params: {
-  distPath: string;
-  outputFileSystem: Rspack.OutputFileSystem;
+  environments: EnvironmentAPI;
 }) => Middleware =
-  ({ outputFileSystem, distPath }) =>
+  ({ environments }) =>
   async (req, res, next) => {
     const url = req.url!;
     const pathname = getUrlPathname(url);
 
     if (pathname === '/rspack-dev-server') {
-      const processDirectory = async (
-        directory: string,
-        list: string[] = [],
-      ): Promise<string[]> => {
-        try {
-          const items: string[] = await new Promise((resolve, reject) => {
-            outputFileSystem.readdir(directory, (err, results) => {
-              if (err) {
-                reject(err);
-              } else {
-                resolve(results as string[]);
-              }
-            });
-          });
-
-          for (const item of items) {
-            const fullPath = path.join(directory, item);
-            const stats = (await new Promise((resolve, reject) => {
-              outputFileSystem.stat(fullPath, (err, stats) => {
-                if (err) {
-                  reject(err);
-                } else {
-                  resolve(stats as any);
-                }
-              });
-            })) as any;
-
-            if (stats?.isDirectory()) {
-              await processDirectory(fullPath, list);
-            } else {
-              // Format path into hyperlink inside <li>
-              const relativePath = fullPath?.replace(`${distPath}/`, '');
-              list.push(
-                `<li><a target="_blank" href="${relativePath}">${relativePath}</a></li>`,
-              );
-            }
-          }
-          return list;
-        } catch (e) {
-          logger.error(e);
-          return [];
-        }
-      };
-
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.write(
+        '<!DOCTYPE html><html><head><meta charset="utf-8"/></head><body><h1>Assets Report:</h1>',
+      );
       try {
-        const files = await processDirectory(distPath);
-        res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-        res.end(`<!DOCTYPE html><html>
-        <h1>Assets Report:</h1>
-        <body><ul>${files?.join('')}</ul></body></html>`); // Return as HTML document
+        for (const key in environments) {
+          const list = [];
+          res.write(`<h1>Compilation: ${key}</h1>`);
+          const environment = environments[key];
+          const stats = await environment.getStats();
+          const statsForPrint = stats.toJson();
+          const { assets = [] } = statsForPrint;
+          res.write('<ul>');
+          for (const asset of assets) {
+            list.push(
+              `<li><a target="_blank" href="${asset?.name}">${asset?.name}</a></li>`,
+            );
+          }
+          res.write(list?.join(''));
+          res.write('</ul>');
+        }
+        res.end('</body></html>');
       } catch (err) {
         logger.error(err);
         res.writeHead(500);
