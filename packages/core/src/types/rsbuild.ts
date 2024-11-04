@@ -79,15 +79,8 @@ export type InspectConfigResult<B extends 'rspack' | 'webpack' = 'rspack'> = {
   bundlerConfigs: string[];
   environmentConfigs: string[];
   origin: {
-    rsbuildConfig: Omit<NormalizedConfig, 'environments'> & {
-      pluginNames: string[];
-    };
-    environmentConfigs: Record<
-      string,
-      NormalizedEnvironmentConfig & {
-        pluginNames: string[];
-      }
-    >;
+    rsbuildConfig: Omit<NormalizedConfig, 'environments'>;
+    environmentConfigs: Record<string, NormalizedEnvironmentConfig>;
     bundlerConfigs: B extends 'rspack'
       ? Rspack.Configuration[]
       : WebpackConfig[];

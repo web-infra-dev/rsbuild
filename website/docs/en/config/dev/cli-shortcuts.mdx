@@ -6,6 +6,7 @@
 type CliShortcuts =
   | boolean
   | {
+      help?: boolean;
       custom?: (shortcuts?: CliShortcut[]) => CliShortcut[];
     };
 ```
@@ -50,19 +51,9 @@ export default {
 };
 ```
 
-- Disable some shortcuts:
+## Custom Shortcuts
 
-```js
-export default {
-  dev: {
-    cliShortcuts: {
-      custom: (shortcuts) => {
-        return shortcuts.filter((shortcut) => shortcut.key !== 'o');
-      },
-    },
-  },
-};
-```
+`custom` option can be used to custom shortcuts, the value is a function that receives the default shortcuts array and returns a new shortcuts array.
 
 - Add custom shortcuts:
 
@@ -82,6 +73,40 @@ export default {
           },
         ];
       },
+    },
+  },
+};
+```
+
+- Disable some shortcuts:
+
+```js
+export default {
+  dev: {
+    cliShortcuts: {
+      custom: (shortcuts) => {
+        return shortcuts.filter((shortcut) => shortcut.key !== 'o');
+      },
+    },
+  },
+};
+```
+
+## Print Help
+
+`help` option can be used to control whether to print the help hint when the server is started:
+
+```bash
+  ➜ press h + enter to show shortcuts
+```
+
+- Disable:
+
+```js
+export default {
+  dev: {
+    cliShortcuts: {
+      help: false,
     },
   },
 };

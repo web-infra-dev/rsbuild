@@ -54,7 +54,7 @@
     "@rspack/core": "~1.1.0-beta.0",
     "@rspack/lite-tapable": "~1.0.1",
     "@swc/helpers": "^0.5.13",
-    "core-js": "~3.38.1"
+    "core-js": "~3.39.0"
   },
   "devDependencies": {
     "@types/connect": "3.4.38",
@@ -62,7 +62,7 @@
     "@types/node": "18.x",
     "@types/on-finished": "2.3.4",
     "@types/webpack-bundle-analyzer": "4.7.0",
-    "@types/ws": "^8.5.12",
+    "@types/ws": "^8.5.13",
     "browserslist-load-config": "0.1.1",
     "chokidar": "3.6.0",
     "commander": "^12.1.0",
@@ -94,7 +94,7 @@
     "style-loader": "3.3.4",
     "tsc-alias": "^1.8.10",
     "typescript": "^5.6.3",
-    "webpack": "^5.95.0",
+    "webpack": "^5.96.1",
     "webpack-bundle-analyzer": "^4.10.2",
     "webpack-merge": "6.0.1",
     "ws": "^8.18.0"

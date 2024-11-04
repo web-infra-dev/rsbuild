@@ -25,6 +25,7 @@ test('should run inspect command correctly', async () => {
   expect(rsbuildConfig).toBeTruthy();
   expect(files[rsbuildConfig!]).toContain("'rsbuild:basic'");
   expect(files[rsbuildConfig!]).toContain('hmr: true');
+  expect(files[rsbuildConfig!]).toContain('plugins:');
 
   const rspackConfig = fileNames.find((item) =>
     item.includes('rspack.config.web.mjs'),

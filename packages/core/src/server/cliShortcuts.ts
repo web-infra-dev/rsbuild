@@ -10,12 +10,14 @@ export const isCliShortcutsEnabled = (
 ): boolean => devConfig.cliShortcuts && isTTY('stdin');
 
 export function setupCliShortcuts({
+  help = true,
   openPage,
   closeServer,
   printUrls,
   restartServer,
   customShortcuts,
 }: {
+  help?: boolean;
   openPage: () => Promise<void>;
   closeServer: () => Promise<void>;
   printUrls: () => void;
@@ -68,9 +70,11 @@ export function setupCliShortcuts({
     }
   }
 
-  logger.log(
-    `  ➜ ${color.dim('press')} ${color.bold('h + enter')} ${color.dim('to show shortcuts')}\n`,
-  );
+  if (help) {
+    logger.log(
+      `  ➜ ${color.dim('press')} ${color.bold('h + enter')} ${color.dim('to show shortcuts')}\n`,
+    );
+  }
 
   const rl = readline.createInterface({
     input: process.stdin,
