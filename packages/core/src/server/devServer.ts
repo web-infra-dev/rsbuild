@@ -220,15 +220,18 @@ export async function createDevServer<
     printUrls();
 
     if (cliShortcutsEnabled) {
+      const shortcutsOptions =
+        typeof devConfig.cliShortcuts === 'boolean'
+          ? {}
+          : devConfig.cliShortcuts;
+
       setupCliShortcuts({
         openPage,
         closeServer,
         printUrls,
         restartServer: () => restartDevServer({ clear: false }),
-        customShortcuts:
-          typeof devConfig.cliShortcuts === 'boolean'
-            ? undefined
-            : devConfig.cliShortcuts.custom,
+        help: shortcutsOptions.help,
+        customShortcuts: shortcutsOptions.custom,
       });
     }
 

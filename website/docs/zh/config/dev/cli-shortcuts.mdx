@@ -6,6 +6,7 @@
 type CliShortcuts =
   | boolean
   | {
+      help?: boolean;
       custom?: (shortcuts?: CliShortcut[]) => CliShortcut[];
     };
 ```
@@ -50,19 +51,9 @@ export default {
 };
 ```
 
-- 禁用部分快捷键：
+## 自定义快捷键
 
-```js
-export default {
-  dev: {
-    cliShortcuts: {
-      custom: (shortcuts) => {
-        return shortcuts.filter((shortcut) => shortcut.key !== 'o');
-      },
-    },
-  },
-};
-```
+`custom` 选项可以自定义快捷键，`custom` 的值是一个函数，接收默认的 shortcuts 列表，并返回一个新的 shortcuts 列表。
 
 - 添加自定义快捷键：
 
@@ -82,6 +73,40 @@ export default {
           },
         ];
       },
+    },
+  },
+};
+```
+
+- 禁用部分快捷键：
+
+```js
+export default {
+  dev: {
+    cliShortcuts: {
+      custom: (shortcuts) => {
+        return shortcuts.filter((shortcut) => shortcut.key !== 'o');
+      },
+    },
+  },
+};
+```
+
+## 打印帮助
+
+`help` 选项可以控制是否在启动服务器时打印帮助提示：
+
+```bash
+  ➜ press h + enter to show shortcuts
+```
+
+- 禁用：
+
+```js
+export default {
+  dev: {
+    cliShortcuts: {
+      help: false,
     },
   },
 };
