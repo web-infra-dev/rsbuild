@@ -2,7 +2,7 @@
   "name": "@examples/react",
   "private": true,
   "scripts": {
-    "dev": "DEBUG=rsbuild rsbuild dev --open",
+    "dev": "rsbuild dev --open",
     "build": "rsbuild build",
     "preview": "rsbuild preview"
   },
