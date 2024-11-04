@@ -2,7 +2,7 @@ import { dev, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest(
-  'should show assets on /rspack-dev-server path',
+  'should show assets on /rsbuild-dev-server path',
   async ({ page }) => {
     const rsbuild = await dev({
       cwd: __dirname,
@@ -10,7 +10,7 @@ rspackOnlyTest(
       rsbuildConfig: {},
     });
 
-    await page.goto(`http://localhost:${rsbuild.port}/rspack-dev-server`);
+    await page.goto(`http://localhost:${rsbuild.port}/rsbuild-dev-server`);
 
     await page.waitForSelector('h1', { state: 'attached' });
     await page.waitForSelector('ul', { state: 'attached' });
@@ -38,7 +38,7 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest(
-  'should show assets on /rspack-dev-server path with server.base and assetPrefix',
+  'should show assets on /rsbuild-dev-server path with server.base and assetPrefix',
   async ({ page }) => {
     const rsbuild = await dev({
       cwd: __dirname,
@@ -54,7 +54,7 @@ rspackOnlyTest(
     });
 
     await page.goto(
-      `http://localhost:${rsbuild.port}/testing/rspack-dev-server`,
+      `http://localhost:${rsbuild.port}/testing/rsbuild-dev-server`,
     );
     await page.waitForSelector('h1', { state: 'attached' });
     await page.waitForSelector('ul', { state: 'attached' });
@@ -81,7 +81,7 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest(
-  'should show assets on /rspack-dev-server path with environments',
+  'should show assets on /rsbuild-dev-server path with environments',
   async ({ page }) => {
     const entry1 = './src/index.tsx';
     const entry2 = './src2/index.tsx';
@@ -109,7 +109,7 @@ rspackOnlyTest(
       },
     });
 
-    await page.goto(`http://localhost:${rsbuild.port}/rspack-dev-server`);
+    await page.goto(`http://localhost:${rsbuild.port}/rsbuild-dev-server`);
     await page.waitForSelector('h1', { state: 'attached' });
     await page.waitForSelector('ul', { state: 'attached' });
     const titles = await page.$$eval('h1', (nodes) =>
