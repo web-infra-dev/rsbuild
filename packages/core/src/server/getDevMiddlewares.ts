@@ -17,7 +17,7 @@ import {
   getHtmlCompletionMiddleware,
   getHtmlFallbackMiddleware,
   getRequestLoggerMiddleware,
-  viewerFilesMiddleware,
+  viewingServedFilesMiddleware,
 } from './middlewares';
 
 export type CompileMiddlewareAPI = {
@@ -128,6 +128,8 @@ const applyDefaultMiddlewares = async ({
   );
   middlewares.push(['/__open-in-editor', launchEditorMiddleware()]);
 
+  middlewares.push(viewingServedFilesMiddleware({ environments }));
+
   if (compileMiddlewareAPI) {
     middlewares.push(compileMiddlewareAPI.middleware);
 
@@ -151,7 +153,6 @@ const applyDefaultMiddlewares = async ({
     ? output.distPath
     : join(pwd, output.distPath);
 
-  middlewares.push(viewerFilesMiddleware({ environments }));
   if (compileMiddlewareAPI) {
     middlewares.push(
       getHtmlCompletionMiddleware({

@@ -247,10 +247,9 @@ export const getHtmlFallbackMiddleware: (params: {
 };
 
 /**
- * support `/rsbuild-dev-server` to list all files
- *
+ * Support viewing served files via /rsbuild-dev-server route
  */
-export const viewerFilesMiddleware: (params: {
+export const viewingServedFilesMiddleware: (params: {
   environments: EnvironmentAPI;
 }) => Middleware =
   ({ environments }) =>
