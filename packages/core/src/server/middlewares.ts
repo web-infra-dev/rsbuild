@@ -247,7 +247,8 @@ export const getHtmlFallbackMiddleware: (params: {
 };
 
 /**
- * support `/rspack-dev-server` to list all files in distPath
+ * support `/rspack-dev-server` to list all files
+ *
  */
 export const viewerFilesMiddleware: (params: {
   environments: EnvironmentAPI;
@@ -265,7 +266,7 @@ export const viewerFilesMiddleware: (params: {
       try {
         for (const key in environments) {
           const list = [];
-          res.write(`<h1>Compilation: ${key}</h1>`);
+          res.write(`<h2>Compilation: ${key}</h2>`);
           const environment = environments[key];
           const stats = await environment.getStats();
           const statsForPrint = stats.toJson();
