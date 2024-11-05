@@ -18,7 +18,7 @@ rspackOnlyTest(
     const titles = await page.$$eval('h1', (nodes) =>
       nodes.map((n) => n.textContent),
     );
-    expect(titles.includes('Assets Report:')).toBe(true);
+    expect(titles.includes('Assets Report')).toBe(true);
 
     // check all href are valid
     const hrefList = await page.$$eval('ul li a', (nodes) =>
@@ -61,7 +61,7 @@ rspackOnlyTest(
     const titles = await page.$$eval('h1', (nodes) =>
       nodes.map((n) => n.textContent),
     );
-    expect(titles.includes('Assets Report:')).toBe(true);
+    expect(titles.includes('Assets Report')).toBe(true);
 
     // check all href are valid
     const hrefList = await page.$$eval('ul li a', (nodes) =>
@@ -118,9 +118,9 @@ rspackOnlyTest(
     const subTitles = await page.$$eval('h2', (nodes) =>
       nodes.map((n) => n.textContent),
     );
-    expect(titles.includes('Assets Report:')).toBe(true);
-    expect(subTitles.includes('Compilation: test1')).toBe(true);
-    expect(subTitles.includes('Compilation: test2')).toBe(true);
+    expect(titles.includes('Assets Report')).toBe(true);
+    expect(subTitles.includes('Environment: test1')).toBe(true);
+    expect(subTitles.includes('Environment: test2')).toBe(true);
 
     // check all href are valid
     const hrefList = await page.$$eval('ul li a', (nodes) =>
