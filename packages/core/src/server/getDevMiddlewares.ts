@@ -17,6 +17,7 @@ import {
   getHtmlCompletionMiddleware,
   getHtmlFallbackMiddleware,
   getRequestLoggerMiddleware,
+  viewingServedFilesMiddleware,
 } from './middlewares';
 
 export type CompileMiddlewareAPI = {
@@ -75,6 +76,7 @@ const applyDefaultMiddlewares = async ({
   output,
   pwd,
   outputFileSystem,
+  environments,
 }: RsbuildDevMiddlewareOptions & {
   middlewares: Middlewares;
 }): Promise<{
@@ -125,6 +127,8 @@ const applyDefaultMiddlewares = async ({
     'launch-editor-middleware'
   );
   middlewares.push(['/__open-in-editor', launchEditorMiddleware()]);
+
+  middlewares.push(viewingServedFilesMiddleware({ environments }));
 
   if (compileMiddlewareAPI) {
     middlewares.push(compileMiddlewareAPI.middleware);

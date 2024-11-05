@@ -5,6 +5,7 @@ import color from 'picocolors';
 import { addTrailingSlash } from '../helpers';
 import { logger } from '../logger';
 import type {
+  EnvironmentAPI,
   HtmlFallback,
   RequestHandler as Middleware,
   Rspack,
@@ -244,3 +245,47 @@ export const getHtmlFallbackMiddleware: (params: {
     next();
   };
 };
+
+/**
+ * Support viewing served files via /rsbuild-dev-server route
+ */
+export const viewingServedFilesMiddleware: (params: {
+  environments: EnvironmentAPI;
+}) => Middleware =
+  ({ environments }) =>
+  async (req, res, next) => {
+    const url = req.url!;
+    const pathname = getUrlPathname(url);
+
+    if (pathname === '/rsbuild-dev-server') {
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.write(
+        '<!DOCTYPE html><html><head><meta charset="utf-8"/></head><body><h1>Assets Report:</h1>',
+      );
+      try {
+        for (const key in environments) {
+          const list = [];
+          res.write(`<h2>Compilation: ${key}</h2>`);
+          const environment = environments[key];
+          const stats = await environment.getStats();
+          const statsForPrint = stats.toJson();
+          const { assets = [] } = statsForPrint;
+          res.write('<ul>');
+          for (const asset of assets) {
+            list.push(
+              `<li><a target="_blank" href="${asset?.name}">${asset?.name}</a></li>`,
+            );
+          }
+          res.write(list?.join(''));
+          res.write('</ul>');
+        }
+        res.end('</body></html>');
+      } catch (err) {
+        logger.error(err);
+        res.writeHead(500);
+        res.end('Failed to list the files');
+      }
+    } else {
+      next();
+    }
+  };
