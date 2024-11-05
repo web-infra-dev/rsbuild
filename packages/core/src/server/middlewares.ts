@@ -260,12 +260,54 @@ export const viewingServedFilesMiddleware: (params: {
     if (pathname === '/rsbuild-dev-server') {
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
       res.write(
-        '<!DOCTYPE html><html><head><meta charset="utf-8"/></head><body><h1>Assets Report:</h1>',
+        `<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body {
+        margin: 0;
+        color: #f6f7f9;
+        padding: 32px 40px;
+        line-height: 1.8;
+        min-height: 100vh;
+        background-image: linear-gradient(#020917, #101725);
+        font-family: ui-sans-serif,system-ui,sans-serif;
+      }
+      h1, h2 {
+        font-weight: 500;
+      }
+      h1 {
+        margin: 0;
+        font-size: 36px;
+      }
+      h2 {
+        font-size: 20px;
+        margin: 24px 0 16px;
+      }
+      ul {
+        margin: 0;
+        padding-left: 16px;
+      }
+      a {
+        color: #58c4dc;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Assets Report</h1>
+  </body>
+</html>`,
       );
       try {
         for (const key in environments) {
           const list = [];
-          res.write(`<h2>Compilation: ${key}</h2>`);
+          res.write(`<h2>Environment: ${key}</h2>`);
           const environment = environments[key];
           const stats = await environment.getStats();
           const statsForPrint = stats.toJson();
