@@ -330,8 +330,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     },
   ],
   "resolve": {
-    "alias": {
-      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+    "extensionAlias": {
+      ".js": [
+        ".ts",
+        ".tsx",
+        ".js",
+      ],
     },
     "extensions": [
       ".ts",
@@ -695,8 +699,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     },
   ],
   "resolve": {
-    "alias": {
-      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+    "extensionAlias": {
+      ".js": [
+        ".ts",
+        ".tsx",
+        ".js",
+      ],
     },
     "extensions": [
       ".ts",
@@ -1009,8 +1017,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     },
   ],
   "resolve": {
-    "alias": {
-      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+    "extensionAlias": {
+      ".js": [
+        ".ts",
+        ".tsx",
+        ".js",
+      ],
     },
     "extensions": [
       ".ts",
@@ -1306,8 +1318,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     },
   ],
   "resolve": {
-    "alias": {
-      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+    "extensionAlias": {
+      ".js": [
+        ".ts",
+        ".tsx",
+        ".js",
+      ],
     },
     "extensions": [
       ".ts",
