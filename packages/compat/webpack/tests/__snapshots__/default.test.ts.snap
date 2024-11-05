@@ -339,6 +339,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         ".tsx",
         ".js",
       ],
+      ".jsx": [
+        ".tsx",
+        ".jsx",
+      ],
     },
     "extensions": [
       ".ts",
@@ -711,6 +715,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         ".tsx",
         ".js",
       ],
+      ".jsx": [
+        ".tsx",
+        ".jsx",
+      ],
     },
     "extensions": [
       ".ts",
@@ -1032,6 +1040,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         ".tsx",
         ".js",
       ],
+      ".jsx": [
+        ".tsx",
+        ".jsx",
+      ],
     },
     "extensions": [
       ".ts",
@@ -1335,6 +1347,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         ".ts",
         ".tsx",
         ".js",
+      ],
+      ".jsx": [
+        ".tsx",
+        ".jsx",
       ],
     },
     "extensions": [

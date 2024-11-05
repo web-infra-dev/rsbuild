@@ -386,6 +386,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         ".tsx",
         ".js",
       ],
+      ".jsx": [
+        ".tsx",
+        ".jsx",
+      ],
     },
     "extensions": [
       ".ts",
@@ -829,6 +833,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         ".tsx",
         ".js",
       ],
+      ".jsx": [
+        ".tsx",
+        ".jsx",
+      ],
     },
     "extensions": [
       ".ts",
@@ -1169,6 +1177,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         ".ts",
         ".tsx",
         ".js",
+      ],
+      ".jsx": [
+        ".tsx",
+        ".jsx",
       ],
     },
     "extensions": [
@@ -1588,6 +1600,10 @@ exports[`tools.rspack > should match snapshot 1`] = `
         ".ts",
         ".tsx",
         ".js",
+      ],
+      ".jsx": [
+        ".tsx",
+        ".jsx",
       ],
     },
     "extensions": [
