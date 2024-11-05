@@ -24,7 +24,13 @@ function applyFullySpecified({
     .resolve.set('fullySpecified', false);
 }
 
-function applyExtensions({ chain }: { chain: RspackChain }) {
+function applyExtensions({
+  chain,
+  tsconfigPath,
+}: {
+  chain: RspackChain;
+  tsconfigPath: string | undefined;
+}) {
   const extensions = [
     // most projects are using TypeScript, resolve .ts(x) files first to reduce resolve time.
     '.ts',
@@ -36,6 +42,13 @@ function applyExtensions({ chain }: { chain: RspackChain }) {
   ];
 
   chain.resolve.extensions.merge(extensions);
+
+  if (tsconfigPath) {
+    // TypeScript allows importing TS files with `.js` extension
+    chain.resolve.extensionAlias.merge({
+      '.js': ['.ts', '.tsx', '.js'],
+    });
+  }
 }
 
 function applyAlias({
@@ -90,7 +103,7 @@ export const pluginResolve = (): RsbuildPlugin => ({
       handler: (chain, { environment, CHAIN_ID }) => {
         const { config, tsconfigPath } = environment;
 
-        applyExtensions({ chain });
+        applyExtensions({ chain, tsconfigPath });
 
         applyAlias({
           chain,
