@@ -684,8 +684,8 @@ importers:
         specifier: ^1.0.3
         version: 1.0.3
       rspack-manifest-plugin:
-        specifier: 5.0.1
-        version: 5.0.1(@rspack/core@1.1.0-beta.0(@swc/helpers@0.5.13))
+        specifier: 5.0.2
+        version: 5.0.2(@rspack/core@1.1.0-beta.0(@swc/helpers@0.5.13))
       sirv:
         specifier: ^3.0.0
         version: 3.0.0
@@ -6082,8 +6082,8 @@ packages:
   rspack-chain@1.0.3:
     resolution: {integrity: sha512-U6PAlAClpX0ZYliwi97p0FyJAzdnG2XPIqPE1LR3jTTXlGKbctici1jsjG6c9mG9x7l+3TuKy2QWLIEHljxCtg==}
 
-  rspack-manifest-plugin@5.0.1:
-    resolution: {integrity: sha512-K2g7kcOdj+cHTi+xvzwdLZ4rdL1nnphJhs9P8VH5sVcoQd1U/FxpNXnEm5ARxhE7qZO0yfqaL74aXwcQH0T0Ig==}
+  rspack-manifest-plugin@5.0.2:
+    resolution: {integrity: sha512-VnILlrJfDMM+KvAmbIYFboTwktrr29GtrewSUpwOZc0PGVyh/aoCD5O7i6eKZqVybY1GUv2+LTV/jX/rmOUYgg==}
     engines: {node: '>=14'}
     peerDependencies:
       '@rspack/core': 0.x || 1.x
@@ -12682,7 +12682,7 @@ snapshots:
       deepmerge: 4.3.1
       javascript-stringify: 2.1.0
 
-  rspack-manifest-plugin@5.0.1(@rspack/core@1.1.0-beta.0(@swc/helpers@0.5.13)):
+  rspack-manifest-plugin@5.0.2(@rspack/core@1.1.0-beta.0(@swc/helpers@0.5.13)):
     dependencies:
       '@rspack/lite-tapable': 1.0.1
     optionalDependencies:

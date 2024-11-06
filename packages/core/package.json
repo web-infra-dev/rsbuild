@@ -89,7 +89,7 @@
     "rsbuild-dev-middleware": "0.1.1",
     "rslog": "^1.2.3",
     "rspack-chain": "^1.0.3",
-    "rspack-manifest-plugin": "5.0.1",
+    "rspack-manifest-plugin": "5.0.2",
     "sirv": "^3.0.0",
     "style-loader": "3.3.4",
     "tsc-alias": "^1.8.10",
