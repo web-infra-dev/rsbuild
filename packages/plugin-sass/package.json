@@ -40,7 +40,7 @@
     "@scripts/test-helper": "workspace:*",
     "@types/node": "18.x",
     "@types/sass-loader": "^8.0.9",
-    "prebundle": "1.2.2",
+    "prebundle": "1.2.5",
     "resolve-url-loader": "^5.0.0",
     "sass-loader": "^16.0.3",
     "typescript": "^5.6.3"
