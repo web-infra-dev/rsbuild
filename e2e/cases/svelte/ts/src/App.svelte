@@ -1,9 +1,11 @@
 <script lang="ts">
+  import { getCount } from './count.svelte';
   export let name: string;
 </script>
 
 <main>
   <h1 id="title">Hello {name}!</h1>
+  <p id="count" >Count: {getCount()}</p>
 </main>
 
 <style>
