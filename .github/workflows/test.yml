@@ -27,9 +27,6 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Install Pnpm
-        run: corepack enable
-
       - uses: dorny/paths-filter@v3
         id: changes
         with:
@@ -47,6 +44,9 @@ jobs:
         with:
           node-version: 22
           cache: 'pnpm'
+
+      - name: Install Pnpm
+        run: corepack enable
 
       - name: Install Dependencies
         if: steps.changes.outputs.changed == 'true'
