@@ -13,7 +13,7 @@
     "preact": "^10.24.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.27.0",
+    "react-router-dom": "^6.28.0",
     "solid-js": "^1.9.3",
     "vue": "^3.5.12",
     "vue-router": "^4.4.5"
