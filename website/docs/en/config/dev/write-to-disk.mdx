@@ -5,7 +5,9 @@
 
 Controls whether the build output from development mode is written to disk.
 
-Rsbuild by default saves the build artifacts in the memory of the dev server, thereby reducing the overhead caused by file operations.
+:::tip
+In development mode, Rsbuild stores the build outputs in memory on the dev server by default, rather than writing then to disk. This can reduce the overhead of fs operations. You can refer to [View Static Assets](/guide/basic/server#view-static-assets) to view all static assets generated in the current build.
+:::
 
 ## Writing to Disk
 
