@@ -36,6 +36,22 @@ In addition, JS files and CSS files sometimes generate some related files:
 
 In the filename, `[name]` represents the entry name corresponding to this file, such as `index`, `main`. `[hash]` is the hash value generated based on the content of the file.
 
+## Development Mode Output
+
+In development mode, Rsbuild stores the build outputs in memory on the dev server by default, rather than writing then to disk. This can reduce the overhead of fs operations. You can refer to [View Static Assets](/guide/basic/server#view-static-assets) to view all static assets generated in the current build.
+
+You can choose to write the output files to disk, which is typically used for inspecting the contents of the build artifacts or configuring proxy rules for static assets.
+
+Just set the [dev.writeToDisk](/config/dev/write-to-disk) configuration to `true`:
+
+```ts
+export default {
+  dev: {
+    writeToDisk: true,
+  },
+};
+```
+
 ## Modify the Directory
 
 Rsbuild provides some configs to modify the directory or filename, you can:
@@ -154,20 +170,4 @@ dist
 ├── [name].[hash].js
 ├── [name].[hash].js.map
 └── [name].html
-```
-
-## Output to Disk
-
-By default, Rsbuild does not write the output files to disk in development mode. Instead, the files are stored in the memory of the dev server to reduce the overhead of file operations.
-
-You can write the output files to disk, which is typically used for inspecting the contents of the build artifacts or configuring proxy rules for static assets.
-
-Set the [dev.writeToDisk](/config/dev/write-to-disk) configuration option to `true` as follows:
-
-```ts
-export default {
-  dev: {
-    writeToDisk: true,
-  },
-};
 ```

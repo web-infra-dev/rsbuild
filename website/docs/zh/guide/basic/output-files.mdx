@@ -36,6 +36,22 @@ dist
 
 在产物的文件名称中，`[name]` 表示这个文件对应的入口名称，比如 `index`, `main`。`[hash]` 则是基于该文件的内容生成的哈希值。
 
+## 开发模式产物
+
+在开发模式下，Rsbuild 默认会将构建产物保存在 dev server 的内存中，而不是写入磁盘，这样可以减少 fs 操作产生的开销。你可以参考 [查看静态资源](/guide/basic/server#查看静态资源) 查看当前构建生成的所有静态资源。
+
+你也可以选择将构建产物写入磁盘，这通常用于排查构建产物的内容，或是配置静态资源的代理规则。
+
+将 [dev.writeToDisk](/config/dev/write-to-disk) 配置项设置为 `true` 即可：
+
+```ts
+export default {
+  dev: {
+    writeToDisk: true,
+  },
+};
+```
+
 ## 修改产物目录
 
 Rsbuild 提供了多个配置项来修改产物目录和产物名称，你可以：
@@ -154,20 +170,4 @@ dist
 ├── [name].[hash].js
 ├── [name].[hash].js.map
 └── [name].html
-```
-
-## 产物写入磁盘
-
-默认情况下，Rsbuild 在开发模式不会将构建产物写入磁盘，而是将文件保存在 dev server 的内存中，从而减少文件操作产生的开销。
-
-你可以选择将构建产物写入磁盘，这通常用于排查构建产物的内容，或是配置静态资源的代理规则。
-
-将 [dev.writeToDisk](/config/dev/write-to-disk) 配置项设置为 `true` 即可：
-
-```ts
-export default {
-  dev: {
-    writeToDisk: true,
-  },
-};
 ```
