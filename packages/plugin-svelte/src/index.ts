@@ -127,9 +127,13 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
           const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
           if (svelte5 && jsRule) {
             const swcUse = jsRule.uses.get(CHAIN_ID.USE.SWC);
+            const regexp = /\.(?:svelte\.js|svelte\.ts)$/;
+
+            jsRule.exclude.add(regexp);
+
             chain.module
               .rule('svelte-js')
-              .test(/\.(?:svelte\.js|svelte\.ts)$/)
+              .test(regexp)
               .use(CHAIN_ID.USE.SVELTE)
               .loader(loaderPath)
               .options(svelteLoaderOptions)
