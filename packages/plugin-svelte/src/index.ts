@@ -119,10 +119,25 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
 
           chain.module
             .rule(CHAIN_ID.RULE.SVELTE)
-            .test(svelte5 ? /\.(?:svelte|svelte\.js|svelte\.ts)$/ : /\.svelte$/)
+            .test(/\.svelte$/)
             .use(CHAIN_ID.USE.SVELTE)
             .loader(loaderPath)
             .options(svelteLoaderOptions);
+
+          const jsRule = chain.module.rules.get(CHAIN_ID.RULE.JS);
+          if (svelte5 && jsRule) {
+            const swcUse = jsRule.uses.get(CHAIN_ID.USE.SWC);
+            chain.module
+              .rule('svelte-js')
+              .test(/\.(?:svelte\.js|svelte\.ts)$/)
+              .use(CHAIN_ID.USE.SVELTE)
+              .loader(loaderPath)
+              .options(svelteLoaderOptions)
+              .end()
+              .use(CHAIN_ID.USE.SWC)
+              .loader(swcUse.get('loader'))
+              .options(swcUse.get('options'));
+          }
         },
       );
     },
