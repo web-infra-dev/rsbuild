@@ -1,83 +1,73 @@
 {
-	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["config:recommended", "schedule:weekly"],
-	"ignorePaths": ["**/tests/**", "**/node_modules/**"],
-	"packageRules": [
-		// Use chore as semantic commit type for commit messages
+	$schema: "https://docs.renovatebot.com/renovate-schema.json",
+	extends: ["config:recommended", "schedule:weekly"],
+	ignorePaths: ["**/tests/**", "**/node_modules/**"],
+	packageRules: [
 		{
-			"matchPackagePatterns": ["*"],
-			"semanticCommitType": "chore",
-			// always bump package.json
-			"rangeStrategy": "bump"
+			semanticCommitType: "chore",
+			rangeStrategy: "bump",
+			matchPackageNames: ["*"],
 		},
 		{
-			"groupName": "babel",
-			"packagePatterns": ["babel"],
-			"groupSlug": "babel"
+			groupName: "babel",
+			groupSlug: "babel",
+			matchPackageNames: ["/babel/"],
 		},
 		{
-			"groupName": "rspack",
-			"packagePatterns": ["rspack"],
-			"groupSlug": "rspack"
+			groupName: "rspack",
+			groupSlug: "rspack",
+			matchPackageNames: ["/rspack/"],
 		},
 		{
-			"groupName": "rspress",
-			"packagePatterns": ["rspress"],
-			"groupSlug": "rspress"
+			groupName: "rspress",
+			groupSlug: "rspress",
+			matchPackageNames: ["/rspress/"],
 		},
 		{
-			"groupName": "rslib",
-			"packagePatterns": ["rslib"],
-			"groupSlug": "rslib"
+			groupName: "rslib",
+			groupSlug: "rslib",
+			matchPackageNames: ["/rslib/"],
 		},
 		{
-			"groupName": "modern-js",
-			"packagePatterns": ["modern-js"],
-			"groupSlug": "modern-js"
+			groupName: "modern-js",
+			groupSlug: "modern-js",
+			matchPackageNames: ["/modern-js/"],
 		},
 		{
-			"groupName": "eslint",
-			"packagePatterns": ["eslint"],
-			"groupSlug": "eslint"
+			groupName: "eslint",
+			groupSlug: "eslint",
+			matchPackageNames: ["/eslint/"],
 		},
 		{
-			"groupName": "types",
-			"packagePatterns": ["^@types/"],
-			"groupSlug": "types"
+			groupName: "types",
+			groupSlug: "types",
+			matchPackageNames: ["/^@types//"],
 		},
 		{
-			"groupName": "all patch dependencies",
-			"groupSlug": "all-patch",
-			"matchPackagePatterns": ["*"],
-			"matchUpdateTypes": ["patch"]
+			groupName: "all patch dependencies",
+			groupSlug: "all-patch",
+			matchUpdateTypes: ["patch"],
+			matchPackageNames: ["*"],
 		},
-		// manually update peer dependencies
 		{
-			"depTypeList": ["peerDependencies"],
-			"enabled": false
-		}
+			matchDepTypes: ["peerDependencies"],
+			enabled: false,
+		},
 	],
-	"ignoreDeps": [
-		// manually update
+	ignoreDeps: [
 		"pnpm",
-		// some loaders still depend on loader-utils v2
 		"loader-utils",
-		// pure esm packages can not be used now
 		"open",
 		"strip-ansi",
 		"ansi-escapes",
 		"cli-truncate",
 		"patch-console",
-		// align Node.js version minimum requirements
 		"@types/node",
 		"node",
-		// does not follow semver
 		"babel-plugin-react-compiler",
-		// require Node 18
 		"copy-webpack-plugin",
-		// major version contains breaking changes
 		"chokidar",
 		"style-loader",
-		"http-proxy-middleware"
-	]
+		"http-proxy-middleware",
+	],
 }
