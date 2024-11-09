@@ -100,8 +100,8 @@ importers:
         specifier: workspace:*
         version: link:../packages/plugin-babel
       '@rsbuild/plugin-check-syntax':
-        specifier: ^1.0.1
-        version: 1.0.1(@rsbuild/core@packages+core)
+        specifier: ^1.1.0
+        version: 1.1.0(@rsbuild/core@packages+core)
       '@rsbuild/plugin-less':
         specifier: workspace:*
         version: link:../packages/plugin-less
@@ -2789,8 +2789,8 @@ packages:
     peerDependencies:
       '@rsbuild/core': 1.x
 
-  '@rsbuild/plugin-check-syntax@1.0.1':
-    resolution: {integrity: sha512-LN6OVmLJahFwv3dp9Q6k1E4GIpF78cUf7aXxKBvtvYXD0/rRP/1PPs4OWeyOqIcqSikcIdmERj50OECzPdWmpA==}
+  '@rsbuild/plugin-check-syntax@1.1.0':
+    resolution: {integrity: sha512-hv+dtzdtx+ieyFPwJFTGNP0b+hpudFxDtITC1yVt3dozwVpUBWrHo7XGF8In+pH8aXHeiZe7Fue2nYsgz3bpcA==}
     peerDependencies:
       '@rsbuild/core': 0.x || 1.x
     peerDependenciesMeta:
@@ -8845,7 +8845,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rsbuild/plugin-check-syntax@1.0.1(@rsbuild/core@packages+core)':
+  '@rsbuild/plugin-check-syntax@1.1.0(@rsbuild/core@packages+core)':
     dependencies:
       acorn: 8.14.0
       browserslist-to-es-version: 1.0.0
