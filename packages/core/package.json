@@ -63,7 +63,7 @@
     "@types/on-finished": "2.3.4",
     "@types/webpack-bundle-analyzer": "4.7.0",
     "@types/ws": "^8.5.13",
-    "browserslist-load-config": "0.1.1",
+    "browserslist-load-config": "1.0.0",
     "chokidar": "3.6.0",
     "commander": "^12.1.0",
     "connect": "3.7.0",
