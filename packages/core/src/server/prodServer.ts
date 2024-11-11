@@ -11,6 +11,7 @@ import type {
   ServerConfig,
 } from '../types';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
+import { gzipMiddleware } from './gzipMiddleware';
 import {
   type StartServerResult,
   getAddressUrls,
@@ -26,6 +27,7 @@ import {
   getRequestLoggerMiddleware,
 } from './middlewares';
 import { open } from './open';
+import { createProxyMiddleware } from './proxy';
 
 type RsbuildProdServerOptions = {
   pwd: string;
@@ -63,7 +65,6 @@ export class RsbuildProdServer {
 
     // compression should be the first middleware
     if (compress) {
-      const { gzipMiddleware } = await import('./gzipMiddleware');
       this.middlewares.use(
         gzipMiddleware({
           // simulates the common gzip compression rates
@@ -82,7 +83,6 @@ export class RsbuildProdServer {
     }
 
     if (proxy) {
-      const { createProxyMiddleware } = await import('./proxy');
       const { middlewares, upgrade } = await createProxyMiddleware(proxy);
 
       for (const middleware of middlewares) {

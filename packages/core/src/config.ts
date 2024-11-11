@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { createRequire } from 'node:module';
 import { dirname, isAbsolute, join } from 'node:path';
 import type { WatchOptions } from 'chokidar';
 import color from 'picocolors';
@@ -53,6 +54,8 @@ import type {
   RsbuildMode,
   RsbuildPlugin,
 } from './types';
+
+const require = createRequire(import.meta.url);
 
 const getDefaultDevConfig = (): NormalizedDevConfig => ({
   hmr: true,

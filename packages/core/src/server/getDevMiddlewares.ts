@@ -10,6 +10,7 @@ import type {
   ServerConfig,
   SetupMiddlewaresServer,
 } from '../types';
+import { gzipMiddleware } from './gzipMiddleware';
 import type { UpgradeEvent } from './helper';
 import {
   faviconFallbackMiddleware,
@@ -19,6 +20,7 @@ import {
   getRequestLoggerMiddleware,
   viewingServedFilesMiddleware,
 } from './middlewares';
+import { createProxyMiddleware } from './proxy';
 
 export type CompileMiddlewareAPI = {
   middleware: RequestHandler;
@@ -85,7 +87,6 @@ const applyDefaultMiddlewares = async ({
   const upgradeEvents: UpgradeEvent[] = [];
   // compression should be the first middleware
   if (server.compress) {
-    const { gzipMiddleware } = await import('./gzipMiddleware');
     middlewares.push(gzipMiddleware());
   }
 
@@ -109,7 +110,6 @@ const applyDefaultMiddlewares = async ({
 
   // dev proxy handler, each proxy has own handler
   if (server.proxy) {
-    const { createProxyMiddleware } = await import('./proxy');
     const { middlewares: proxyMiddlewares, upgrade } =
       await createProxyMiddleware(server.proxy);
     upgradeEvents.push(upgrade);

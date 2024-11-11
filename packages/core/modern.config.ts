@@ -74,22 +74,6 @@ const aliasCompiledPlugin = {
 export default defineConfig({
   plugins: [moduleTools(), emitTypePkgJsonPlugin],
   buildConfig: [
-    // Node / ESM
-    {
-      format: 'esm',
-      target: BUILD_TARGET.node,
-      define,
-      autoExtension: true,
-      shims: true,
-      banner: requireShim,
-      input: ['src/index.ts'],
-      externals,
-      dts: false,
-      esbuildOptions(options) {
-        options.plugins?.unshift(aliasCompiledPlugin);
-        return options;
-      },
-    },
     // Node / CJS
     {
       format: 'cjs',
@@ -97,12 +81,7 @@ export default defineConfig({
       define,
       autoExtension: true,
       dts: false,
-      input: [
-        'src/index.ts',
-        'src/loader/ignoreCssLoader.ts',
-        'src/loader/transformLoader.ts',
-        'src/loader/transformRawLoader.ts',
-      ],
+      input: ['src/index.ts'],
       externals,
       esbuildOptions(options) {
         options.plugins?.unshift(aliasCompiledPlugin);

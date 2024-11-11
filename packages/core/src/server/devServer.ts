@@ -15,6 +15,7 @@ import type {
   Rspack,
 } from '../types';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
+import { CompilerDevMiddleware } from './compilerDevMiddleware';
 import { getTransformedHtml, loadBundle } from './environment';
 import {
   type RsbuildDevMiddlewareOptions,
@@ -151,8 +152,6 @@ export async function createDevServer<
     if (!compiler) {
       throw new Error('Failed to get compiler instance.');
     }
-
-    const { CompilerDevMiddleware } = await import('./compilerDevMiddleware');
 
     const publicPaths = isMultiCompiler(compiler)
       ? compiler.compilers.map(getPublicPathFromCompiler)

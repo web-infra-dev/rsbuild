@@ -1,6 +1,6 @@
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import vm from 'node:vm';
-
 import { BasicRunner } from './basic';
 import type {
   BasicGlobalContext,
@@ -9,6 +9,8 @@ import type {
   ModuleObject,
   RunnerRequirer,
 } from './type';
+
+const require = createRequire(import.meta.url);
 
 const define = (...args: unknown[]) => {
   const factory = args.pop() as () => void;

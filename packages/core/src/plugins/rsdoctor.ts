@@ -1,7 +1,10 @@
+import { createRequire } from 'node:module';
 import type { Configuration } from '@rspack/core';
 import color from 'picocolors';
 import { logger } from '../logger';
 import type { BundlerPluginInstance, RsbuildPlugin } from '../types';
+
+const require = createRequire(import.meta.url);
 
 type RsdoctorExports = {
   RsdoctorRspackPlugin: { new (): BundlerPluginInstance };

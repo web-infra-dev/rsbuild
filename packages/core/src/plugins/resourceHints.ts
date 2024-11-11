@@ -1,3 +1,4 @@
+import { HtmlPreloadOrPrefetchPlugin } from '../rspack/preload/HtmlPreloadOrPrefetchPlugin';
 import type {
   DnsPrefetchOption,
   HtmlBasicTag,
@@ -55,10 +56,6 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
         performance: { preload, prefetch },
       } = config;
       const HTMLCount = chain.entryPoints.values().length;
-
-      const { HtmlPreloadOrPrefetchPlugin } = await import(
-        '../rspack/preload/HtmlPreloadOrPrefetchPlugin'
-      );
 
       if (prefetch) {
         chain

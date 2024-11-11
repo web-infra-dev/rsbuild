@@ -1,5 +1,6 @@
 import path from 'node:path';
 import { loadConfig, watchFilesForRestart } from '../config';
+import { createRsbuild } from '../createRsbuild';
 import { castArray, getAbsolutePath } from '../helpers';
 import { loadEnv } from '../loadEnv';
 import { logger } from '../logger';
@@ -68,8 +69,6 @@ export async function init({
 
       watchFilesForRestart(files);
     }
-
-    const { createRsbuild } = await import('../createRsbuild');
 
     config.source ||= {};
     config.source.define = {

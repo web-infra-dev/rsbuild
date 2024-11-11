@@ -46,9 +46,10 @@
     "types.d.ts"
   ],
   "scripts": {
-    "build": "modern build && rslib build && tsc-alias -p tsconfig.json",
+    "build": "rslib build && tsc-alias -p tsconfig.json",
+    "build:modern": "modern build",
     "build:rslib": "rslib build",
-    "dev": "modern build --watch",
+    "dev": "rslib build --watch",
     "prebundle": "prebundle"
   },
   "dependencies": {
