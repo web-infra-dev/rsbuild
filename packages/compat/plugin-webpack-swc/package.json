@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@modern-js/swc-plugins": "0.6.11",
+    "@rslib/core": "0.0.16",
     "@swc/helpers": "^0.5.15",
     "core-js": "~3.39.0",
     "deepmerge": "^4.3.1",

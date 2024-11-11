@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
+    "@rslib/core": "0.0.16",
     "@scripts/test-helper": "workspace:*",
     "@types/babel__core": "^7.20.5",
     "typescript": "^5.6.3"

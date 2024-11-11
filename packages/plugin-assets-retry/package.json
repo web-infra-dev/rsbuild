@@ -31,6 +31,7 @@
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-typescript": "^7.26.0",
     "@rsbuild/core": "workspace:*",
+    "@rslib/core": "0.0.16",
     "@types/serialize-javascript": "^5.0.4",
     "serialize-javascript": "^6.0.2",
     "terser": "5.36.0",

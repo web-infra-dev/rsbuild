@@ -14,15 +14,9 @@ importers:
       '@changesets/cli':
         specifier: ^2.27.9
         version: 2.27.9
-      '@modern-js/module-tools':
-        specifier: ^2.61.0
-        version: 2.61.0(typescript@5.6.3)
       '@rsbuild/config':
         specifier: workspace:*
         version: link:scripts/config
-      '@rslib/core':
-        specifier: 0.0.16
-        version: 0.0.16(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:scripts/test-helper
@@ -487,6 +481,9 @@ importers:
       '@modern-js/swc-plugins':
         specifier: 0.6.11
         version: 0.6.11(@swc/helpers@0.5.15)
+      '@rslib/core':
+        specifier: 0.0.16
+        version: 0.0.16(typescript@5.6.3)
       '@swc/helpers':
         specifier: ^0.5.15
         version: 0.5.15
@@ -549,6 +546,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../../core
+      '@rslib/core':
+        specifier: 0.0.16
+        version: 0.0.16(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../../scripts/test-helper
@@ -587,6 +587,9 @@ importers:
         specifier: ~2.3.3
         version: 2.3.3
     devDependencies:
+      '@modern-js/module-tools':
+        specifier: ^2.61.0
+        version: 2.61.0(typescript@5.6.3)
       '@types/connect':
         specifier: 3.4.38
         version: 3.4.38
@@ -717,6 +720,9 @@ importers:
         specifier: 1.0.9
         version: 1.0.9
     devDependencies:
+      '@rslib/core':
+        specifier: 0.0.16
+        version: 0.0.16(typescript@5.6.3)
       '@types/node':
         specifier: 18.x
         version: 18.19.63
@@ -738,6 +744,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rslib/core':
+        specifier: 0.0.16
+        version: 0.0.16(typescript@5.6.3)
       '@types/serialize-javascript':
         specifier: ^5.0.4
         version: 5.0.4
@@ -781,6 +790,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rslib/core':
+        specifier: 0.0.16
+        version: 0.0.16(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -809,6 +821,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rslib/core':
+        specifier: 0.0.16
+        version: 0.0.16(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -846,6 +861,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rslib/core':
+        specifier: 0.0.16
+        version: 0.0.16(typescript@5.6.3)
       '@types/node':
         specifier: 18.x
         version: 18.19.63
@@ -868,6 +886,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rslib/core':
+        specifier: 0.0.16
+        version: 0.0.16(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -899,6 +920,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rslib/core':
+        specifier: 0.0.16
+        version: 0.0.16(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -936,6 +960,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rslib/core':
+        specifier: 0.0.16
+        version: 0.0.16(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -964,6 +991,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rslib/core':
+        specifier: 0.0.16
+        version: 0.0.16(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -986,6 +1016,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rslib/core':
+        specifier: 0.0.16
+        version: 0.0.16(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1023,6 +1056,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rslib/core':
+        specifier: 0.0.16
+        version: 0.0.16(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1057,6 +1093,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
+      '@rslib/core':
+        specifier: 0.0.16
+        version: 0.0.16(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1093,6 +1132,10 @@ importers:
       upath:
         specifier: 2.0.1
         version: 2.0.1
+    devDependencies:
+      '@rslib/core':
+        specifier: 0.0.16
+        version: 0.0.16(typescript@5.6.3)
 
   website:
     devDependencies:
@@ -8439,8 +8482,8 @@ snapshots:
       enhanced-resolve: 5.12.0
       esbuild: 0.19.2
       magic-string: 0.30.12
-      postcss: 8.4.47
-      postcss-modules: 4.3.1(postcss@8.4.47)
+      postcss: 8.4.48
+      postcss-modules: 4.3.1(postcss@8.4.48)
       safe-identifier: 0.4.2
       source-map: 0.7.4
       style-inject: 0.3.0
@@ -11086,10 +11129,6 @@ snapshots:
 
   icss-replace-symbols@1.1.0: {}
 
-  icss-utils@5.1.0(postcss@8.4.47):
-    dependencies:
-      postcss: 8.4.47
-
   icss-utils@5.1.0(postcss@8.4.48):
     dependencies:
       postcss: 8.4.48
@@ -12304,20 +12343,9 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  postcss-modules-extract-imports@3.1.0(postcss@8.4.47):
-    dependencies:
-      postcss: 8.4.47
-
   postcss-modules-extract-imports@3.1.0(postcss@8.4.48):
     dependencies:
       postcss: 8.4.48
-
-  postcss-modules-local-by-default@4.0.5(postcss@8.4.47):
-    dependencies:
-      icss-utils: 5.1.0(postcss@8.4.47)
-      postcss: 8.4.47
-      postcss-selector-parser: 6.1.2
-      postcss-value-parser: 4.2.0
 
   postcss-modules-local-by-default@4.0.5(postcss@8.4.48):
     dependencies:
@@ -12326,36 +12354,26 @@ snapshots:
       postcss-selector-parser: 6.1.2
       postcss-value-parser: 4.2.0
 
-  postcss-modules-scope@3.2.0(postcss@8.4.47):
-    dependencies:
-      postcss: 8.4.47
-      postcss-selector-parser: 6.1.2
-
   postcss-modules-scope@3.2.0(postcss@8.4.48):
     dependencies:
       postcss: 8.4.48
       postcss-selector-parser: 6.1.2
-
-  postcss-modules-values@4.0.0(postcss@8.4.47):
-    dependencies:
-      icss-utils: 5.1.0(postcss@8.4.47)
-      postcss: 8.4.47
 
   postcss-modules-values@4.0.0(postcss@8.4.48):
     dependencies:
       icss-utils: 5.1.0(postcss@8.4.48)
       postcss: 8.4.48
 
-  postcss-modules@4.3.1(postcss@8.4.47):
+  postcss-modules@4.3.1(postcss@8.4.48):
     dependencies:
       generic-names: 4.0.0
       icss-replace-symbols: 1.1.0
       lodash.camelcase: 4.3.0
-      postcss: 8.4.47
-      postcss-modules-extract-imports: 3.1.0(postcss@8.4.47)
-      postcss-modules-local-by-default: 4.0.5(postcss@8.4.47)
-      postcss-modules-scope: 3.2.0(postcss@8.4.47)
-      postcss-modules-values: 4.0.0(postcss@8.4.47)
+      postcss: 8.4.48
+      postcss-modules-extract-imports: 3.1.0(postcss@8.4.48)
+      postcss-modules-local-by-default: 4.0.5(postcss@8.4.48)
+      postcss-modules-scope: 3.2.0(postcss@8.4.48)
+      postcss-modules-values: 4.0.0(postcss@8.4.48)
       string-hash: 1.1.3
 
   postcss-nested@6.2.0(postcss@8.4.47):
