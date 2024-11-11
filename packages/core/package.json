@@ -46,9 +46,7 @@
     "types.d.ts"
   ],
   "scripts": {
-    "build": "rslib build && tsc-alias -p tsconfig.json",
-    "build:modern": "modern build",
-    "build:rslib": "rslib build",
+    "build": "rimraf ./dist-types && rslib build && tsc-alias -p tsconfig.json",
     "dev": "rslib build --watch",
     "prebundle": "prebundle"
   },
@@ -89,6 +87,7 @@
     "postcss-loader": "8.1.1",
     "prebundle": "1.2.5",
     "reduce-configs": "^1.0.0",
+    "rimraf": "^6.0.1",
     "rsbuild-dev-middleware": "0.1.1",
     "rslog": "^1.2.3",
     "rspack-chain": "^1.0.3",
