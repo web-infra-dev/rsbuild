@@ -57,6 +57,7 @@
     "core-js": "~3.39.0"
   },
   "devDependencies": {
+    "@modern-js/module-tools": "^2.61.0",
     "@types/connect": "3.4.38",
     "@types/fs-extra": "^11.0.4",
     "@types/node": "18.x",
