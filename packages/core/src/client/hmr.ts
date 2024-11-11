@@ -120,7 +120,7 @@ function handleErrors(errors: Rspack.StatsError[]) {
 
 // __webpack_hash__ is the hash of the current compilation.
 // It's a global variable injected by Rspack.
-const isUpdateAvailable = () => lastCompilationHash !== __webpack_hash__;
+const isUpdateAvailable = () => lastCompilationHash !== WEBPACK_HASH;
 
 // Attempt to update code on the fly, fall back to a hard reload.
 function tryApplyUpdates() {

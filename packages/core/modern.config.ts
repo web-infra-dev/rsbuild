@@ -109,26 +109,6 @@ export default defineConfig({
         return options;
       },
     },
-    // Client / ESM
-    {
-      format: 'esm',
-      input: {
-        hmr: 'src/client/hmr.ts',
-        overlay: 'src/client/overlay.ts',
-      },
-      target: BUILD_TARGET.client,
-      dts: false,
-      externals: ['./hmr'],
-      outDir: './dist/client',
-      autoExtension: true,
-      externalHelpers: true,
-      // Skip esbuild transform and only use SWC to transform,
-      // because esbuild will transform `import.meta`.
-      esbuildOptions: (options) => {
-        options.target = undefined;
-        return options;
-      },
-    },
     // Types
     {
       externals,
