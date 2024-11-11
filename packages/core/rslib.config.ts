@@ -70,7 +70,7 @@ export default defineConfig({
         },
       },
       dts: {
-        distPath: '../dist-types',
+        distPath: './dist-types',
       },
     },
     // Node / CJS
