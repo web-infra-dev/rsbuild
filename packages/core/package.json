@@ -46,8 +46,8 @@
     "types.d.ts"
   ],
   "scripts": {
-    "build": "pnpm run build:types && rslib build && tsc-alias -p tsconfig.json",
-    "build:types": "rimraf ./dist-types && tsc --build --force --emitDeclarationOnly",
+    "build": "pnpm run build:types && rslib build",
+    "build:types": "rimraf ./dist-types && tsc --build --force --emitDeclarationOnly && tsc-alias -p tsconfig.json",
     "dev": "pnpm run build:types && rslib build --watch",
     "prebundle": "prebundle"
   },
