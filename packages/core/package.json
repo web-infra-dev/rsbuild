@@ -59,7 +59,6 @@
     "core-js": "~3.39.0"
   },
   "devDependencies": {
-    "@modern-js/module-tools": "^2.61.0",
     "@rslib/core": "0.0.16",
     "@types/connect": "3.4.38",
     "@types/fs-extra": "^11.0.4",
