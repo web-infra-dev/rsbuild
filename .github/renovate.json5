@@ -1,83 +1,80 @@
 {
-	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["config:recommended", "schedule:weekly"],
-	"ignorePaths": ["**/tests/**", "**/node_modules/**"],
-	"packageRules": [
-		// Use chore as semantic commit type for commit messages
-		{
-			"matchPackagePatterns": ["*"],
-			"semanticCommitType": "chore",
-			// always bump package.json
-			"rangeStrategy": "bump"
-		},
-		{
-			"groupName": "babel",
-			"packagePatterns": ["babel"],
-			"groupSlug": "babel"
-		},
-		{
-			"groupName": "rspack",
-			"packagePatterns": ["rspack"],
-			"groupSlug": "rspack"
-		},
-		{
-			"groupName": "rspress",
-			"packagePatterns": ["rspress"],
-			"groupSlug": "rspress"
-		},
-		{
-			"groupName": "rslib",
-			"packagePatterns": ["rslib"],
-			"groupSlug": "rslib"
-		},
-		{
-			"groupName": "modern-js",
-			"packagePatterns": ["modern-js"],
-			"groupSlug": "modern-js"
-		},
-		{
-			"groupName": "eslint",
-			"packagePatterns": ["eslint"],
-			"groupSlug": "eslint"
-		},
-		{
-			"groupName": "types",
-			"packagePatterns": ["^@types/"],
-			"groupSlug": "types"
-		},
-		{
-			"groupName": "all patch dependencies",
-			"groupSlug": "all-patch",
-			"matchPackagePatterns": ["*"],
-			"matchUpdateTypes": ["patch"]
-		},
-		// manually update peer dependencies
-		{
-			"depTypeList": ["peerDependencies"],
-			"enabled": false
-		}
-	],
-	"ignoreDeps": [
-		// manually update
-		"pnpm",
-		// some loaders still depend on loader-utils v2
-		"loader-utils",
-		// pure esm packages can not be used now
-		"open",
-		"strip-ansi",
-		"ansi-escapes",
-		"cli-truncate",
-		"patch-console",
-		// align Node.js version minimum requirements
-		"@types/node",
-		"node",
-		// does not follow semver
-		"babel-plugin-react-compiler",
-		// require Node 18
-		"copy-webpack-plugin",
-		// major version contains breaking changes
-		"chokidar",
-		"style-loader",
-		"http-proxy-middleware"
-	]
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: ['config:recommended', 'schedule:weekly'],
+  ignorePaths: ['**/tests/**', '**/node_modules/**'],
+  packageRules: [
+    // Use chore as semantic commit type for commit messages
+    {
+      semanticCommitType: 'chore',
+      // always bump package.json
+      rangeStrategy: 'bump',
+      matchPackageNames: ['*'],
+    },
+    {
+      groupName: 'babel',
+      groupSlug: 'babel',
+      matchPackageNames: ['/babel/'],
+    },
+    {
+      groupName: 'rspack',
+      groupSlug: 'rspack',
+      matchPackageNames: ['/rspack/'],
+    },
+    {
+      groupName: 'rspress',
+      groupSlug: 'rspress',
+      matchPackageNames: ['/rspress/'],
+    },
+    {
+      groupName: 'rslib',
+      groupSlug: 'rslib',
+      matchPackageNames: ['/rslib/'],
+    },
+    {
+      groupName: 'modern-js',
+      groupSlug: 'modern-js',
+      matchPackageNames: ['/modern-js/'],
+    },
+    {
+      groupName: 'eslint',
+      groupSlug: 'eslint',
+      matchPackageNames: ['/eslint/'],
+    },
+    {
+      groupName: 'types',
+      groupSlug: 'types',
+      matchPackageNames: ['/^@types//'],
+    },
+    {
+      groupName: 'all patch dependencies',
+      groupSlug: 'all-patch',
+      matchUpdateTypes: ['patch'],
+      matchPackageNames: ['*'],
+    },
+    // manually update peer dependencies
+    {
+      matchDepTypes: ['peerDependencies'],
+      enabled: false,
+    },
+  ],
+  ignoreDeps: [
+    'pnpm',
+    // some loaders still depend on loader-utils v2
+    'loader-utils',
+    // pure ESM packages can not be used now
+    'open',
+    'strip-ansi',
+    'ansi-escapes',
+    'cli-truncate',
+    'patch-console',
+    'node',
+    // does not follow semver
+    'babel-plugin-react-compiler',
+    // require Node 18
+    'copy-webpack-plugin',
+    // major version contains breaking changes
+    'chokidar',
+    'style-loader',
+    'http-proxy-middleware',
+  ],
 }
