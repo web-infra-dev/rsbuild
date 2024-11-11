@@ -116,6 +116,22 @@ export default {
             )}`,
         );
       },
+      afterBundle(task) {
+        replaceFileContent(
+          join(task.distPath, 'index.d.ts'),
+          (content) =>
+            // TODO: Due to the breaking change of http-proxy-middleware, it needs to be upgraded in rsbuild 2.0
+            // https://github.com/chimurai/http-proxy-middleware/pull/730
+            `${content
+              .replace('express.Request', 'http.IncomingMessage')
+              .replace('express.Response', 'http.ServerResponse')
+              .replace(
+                'extends express.RequestHandler {',
+                `{
+  (req: Request, res: Response, next?: (err?: any) => void): void | Promise<void>;`,
+              )}`,
+        );
+      },
     },
     {
       // The webpack-bundle-analyzer version was locked to v4.9.0 to be compatible with Rspack
