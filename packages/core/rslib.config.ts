@@ -1,7 +1,10 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import { defineConfig } from '@rslib/core';
 import type { Configuration } from '@rspack/core';
 import pkgJson from './package.json';
 import prebundleConfig from './prebundle.config.mjs';
+import type { RsbuildPlugin } from './src';
 
 const define = {
   RSBUILD_VERSION: JSON.stringify(pkgJson.version),
@@ -48,6 +51,27 @@ const externals: Configuration['externals'] = [
 //   version
 // });
 
+const pluginFixDtsTypes: RsbuildPlugin = {
+  name: 'fix-dts-types',
+  setup(api) {
+    api.onAfterBuild(() => {
+      const typesDir = path.join(process.cwd(), 'dist-types');
+      const pkgPath = path.join(typesDir, 'package.json');
+      if (!fs.existsSync(typesDir)) {
+        fs.mkdirSync(typesDir);
+      }
+      fs.writeFileSync(
+        pkgPath,
+        JSON.stringify({
+          '//': 'This file is for making TypeScript work with moduleResolution node16+.',
+          version: '1.0.0',
+        }),
+        'utf8',
+      );
+    });
+  },
+};
+
 export default defineConfig({
   source: {
     define,
@@ -55,7 +79,6 @@ export default defineConfig({
   output: {
     target: 'node',
     externals,
-    cleanDistPath: false,
   },
   lib: [
     // Node / ESM
@@ -72,6 +95,7 @@ export default defineConfig({
       dts: {
         distPath: './dist-types',
       },
+      plugins: [pluginFixDtsTypes],
     },
     // Node / CJS
     {
