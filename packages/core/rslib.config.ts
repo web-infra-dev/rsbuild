@@ -91,9 +91,6 @@ export default defineConfig({
           __dirname: true,
         },
       },
-      dts: {
-        distPath: './dist-types',
-      },
       plugins: [pluginFixDtsTypes],
     },
     // Node / CJS

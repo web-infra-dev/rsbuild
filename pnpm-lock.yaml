@@ -1102,6 +1102,9 @@ importers:
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
+      '@types/node':
+        specifier: 18.x
+        version: 18.19.63
       typescript:
         specifier: ^5.6.3
         version: 5.6.3

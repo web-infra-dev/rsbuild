@@ -1,8 +1,8 @@
-import fs from 'node:fs';
 // @ts-check
 /**
  * Tip: please add the prebundled packages to `tsconfig.json#paths`.
  */
+import fs from 'node:fs';
 import { join } from 'node:path';
 
 function replaceFileContent(filePath, replaceFn) {

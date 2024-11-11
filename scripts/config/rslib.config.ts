@@ -8,7 +8,7 @@ export const commonExternals: Array<string | RegExp> = [
 export const esmConfig: LibConfig = {
   format: 'esm',
   syntax: 'es2021',
-  dts: { bundle: false },
+  dts: { bundle: false, build: true },
 };
 
 export const cjsConfig: LibConfig = {
