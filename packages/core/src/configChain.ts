@@ -1,4 +1,4 @@
-import RspackChain from '../compiled/rspack-chain';
+import RspackChain from 'rspack-chain';
 import { castArray, isPlainObject } from './helpers';
 import { logger } from './logger';
 import type {

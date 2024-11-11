@@ -1,9 +1,9 @@
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, isAbsolute, join } from 'node:path';
+import type { WatchOptions } from 'chokidar';
 import color from 'picocolors';
 import RspackChain from 'rspack-chain';
-import type { WatchOptions } from '../compiled/chokidar';
 import {
   ASSETS_DIST_DIR,
   CSS_DIST_DIR,
