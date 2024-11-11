@@ -53,7 +53,7 @@
   "dependencies": {
     "@rspack/core": "~1.1.0",
     "@rspack/lite-tapable": "~1.0.1",
-    "@swc/helpers": "^0.5.13",
+    "@swc/helpers": "^0.5.15",
     "core-js": "~3.39.0"
   },
   "devDependencies": {
@@ -81,7 +81,7 @@
     "on-finished": "2.4.1",
     "open": "^8.4.0",
     "picocolors": "^1.1.1",
-    "postcss": "^8.4.47",
+    "postcss": "^8.4.48",
     "postcss-load-config": "6.0.1",
     "postcss-loader": "8.1.1",
     "prebundle": "1.2.5",
