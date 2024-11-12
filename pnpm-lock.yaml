@@ -1111,6 +1111,12 @@ importers:
 
   scripts/config:
     devDependencies:
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@rslib/core':
+        specifier: 0.0.16
+        version: 0.0.16(typescript@5.6.3)
       '@types/node':
         specifier: ^22.9.0
         version: 22.9.0

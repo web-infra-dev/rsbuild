@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { pluginCleanTscCache } from '@rsbuild/config/rslib.config';
 import { defineConfig } from '@rslib/core';
 import type { Configuration } from '@rspack/core';
 import pkgJson from './package.json';
@@ -81,7 +82,10 @@ export default defineConfig({
           __dirname: true,
         },
       },
-      plugins: [pluginFixDtsTypes],
+      plugins: [pluginFixDtsTypes, pluginCleanTscCache],
+      dts: {
+        build: true,
+      },
     },
     // Node / CJS
     {
@@ -124,6 +128,7 @@ export default defineConfig({
           overlay: 'src/client/overlay.ts',
         },
         define: {
+          // use define to avoid compile time evaluation of __webpack_hash__
           WEBPACK_HASH: '__webpack_hash__',
         },
       },
