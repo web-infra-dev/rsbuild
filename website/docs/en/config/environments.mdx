@@ -10,7 +10,7 @@ Rsbuild supports building outputs for multiple environments. You can use `enviro
 interface EnvironmentConfig {
   dev?: Pick<
     DevConfig,
-    'hmr' | 'assetPrefix' | 'progressBar' | 'lazyCompilation'
+    'hmr' | 'assetPrefix' | 'progressBar' | 'lazyCompilation' | 'writeToDisk'
   >;
   html?: HtmlConfig;
   tools?: ToolsConfig;

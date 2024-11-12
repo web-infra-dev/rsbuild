@@ -1368,7 +1368,7 @@ export interface EnvironmentConfig {
    */
   dev?: Pick<
     DevConfig,
-    'hmr' | 'assetPrefix' | 'progressBar' | 'lazyCompilation'
+    'hmr' | 'assetPrefix' | 'progressBar' | 'lazyCompilation' | 'writeToDisk'
   >;
   /**
    * Options for HTML generation.
@@ -1447,7 +1447,7 @@ export type MergedEnvironmentConfig = {
   root: string;
   dev: Pick<
     NormalizedDevConfig,
-    'hmr' | 'assetPrefix' | 'progressBar' | 'lazyCompilation'
+    'hmr' | 'assetPrefix' | 'progressBar' | 'lazyCompilation' | 'writeToDisk'
   >;
   html: NormalizedHtmlConfig;
   tools: NormalizedToolsConfig;

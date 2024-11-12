@@ -107,6 +107,7 @@ const initEnvironmentConfigs = (
               {
                 ...rsbuildSharedConfig,
                 dev: pick(dev, [
+                  'writeToDisk',
                   'hmr',
                   'assetPrefix',
                   'progressBar',
@@ -140,7 +141,13 @@ const initEnvironmentConfigs = (
   return {
     [defaultEnvironmentName]: applyEnvironmentDefaultConfig({
       ...rsbuildSharedConfig,
-      dev: pick(dev, ['hmr', 'assetPrefix', 'progressBar', 'lazyCompilation']),
+      dev: pick(dev, [
+        'hmr',
+        'assetPrefix',
+        'progressBar',
+        'lazyCompilation',
+        'writeToDisk',
+      ]),
     } as MergedEnvironmentConfig),
   };
 };
@@ -179,6 +186,7 @@ export async function initRsbuildConfig({
       assetPrefix,
       progressBar,
       lazyCompilation,
+      writeToDisk,
       ...rsbuildSharedDev
     },
     server,

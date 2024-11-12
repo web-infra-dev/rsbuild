@@ -1,7 +1,13 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Socket } from 'node:net';
 import { pathnameParse } from '../helpers/path';
-import type { DevConfig, NextFunction, Rspack, ServerConfig } from '../types';
+import type {
+  EnvironmentContext,
+  NextFunction,
+  DevConfig as OriginDevConfig,
+  Rspack,
+  ServerConfig,
+} from '../types';
 import {
   type DevMiddleware as CustomDevMiddleware,
   type DevMiddlewareAPI,
@@ -12,9 +18,52 @@ import { SocketServer } from './socketServer';
 
 type Options = {
   publicPaths: string[];
-  dev: DevConfig;
+  environments: Record<string, EnvironmentContext>;
+  dev: OriginDevConfig;
   server: ServerConfig;
   compiler: Rspack.Compiler | Rspack.MultiCompiler;
+};
+
+type DevConfig = Omit<OriginDevConfig, 'writeToDisk'> & {
+  writeToDisk?:
+    | boolean
+    | ((filename: string, compilationName?: string) => boolean);
+};
+
+// allow to configure dev.writeToDisk in environments
+const formatDevConfig = (
+  config: OriginDevConfig,
+  environments: Record<string, EnvironmentContext>,
+): DevConfig => {
+  const newDevConfig: DevConfig = { ...config };
+  const defaultWriteToDisk = config.writeToDisk;
+
+  const values = Object.values(environments).map(
+    (e) => e.config.dev.writeToDisk,
+  );
+
+  const isSame =
+    values.every((v) => v === true) || values.every((v) => v === false);
+
+  if (isSame) {
+    newDevConfig.writeToDisk = values[0];
+  } else {
+    newDevConfig.writeToDisk = (filePath, compilationName) => {
+      let writeToDisk = defaultWriteToDisk;
+
+      if (compilationName && environments[compilationName]) {
+        writeToDisk =
+          environments[compilationName].config.dev.writeToDisk ??
+          defaultWriteToDisk;
+      }
+
+      return typeof writeToDisk === 'function'
+        ? writeToDisk(filePath)
+        : writeToDisk!;
+    };
+  }
+
+  return newDevConfig;
 };
 
 const noop = () => {
@@ -55,8 +104,8 @@ export class CompilerDevMiddleware {
 
   private socketServer: SocketServer;
 
-  constructor({ dev, server, compiler, publicPaths }: Options) {
-    this.devConfig = dev;
+  constructor({ dev, server, compiler, publicPaths, environments }: Options) {
+    this.devConfig = formatDevConfig(dev, environments);
     this.serverConfig = server;
     this.compiler = compiler;
     this.publicPaths = publicPaths;
