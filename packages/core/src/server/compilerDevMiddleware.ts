@@ -38,37 +38,27 @@ const formatDevConfig = (
   config: OriginDevConfig,
   environments: Record<string, EnvironmentContext>,
 ): DevConfig => {
-  const newDevConfig: DevConfig = { ...config };
-  const defaultWriteToDisk = config.writeToDisk;
-
-  const values = Object.values(environments).map(
-    (e) => e.config.dev.writeToDisk,
+  const writeToDiskValues = Object.values(environments).map(
+    (env) => env.config.dev.writeToDisk,
   );
+  if (new Set(writeToDiskValues).size === 1) {
+    return config;
+  }
 
-  const isSame =
-    values.every((v) => v === true) || values.every((v) => v === false);
-
-  if (isSame) {
-    newDevConfig.writeToDisk = values[0];
-  } else {
-    newDevConfig.writeToDisk = (filePath, compilationName) => {
-      let writeToDisk = defaultWriteToDisk;
-
+  return {
+    ...config,
+    writeToDisk(filePath: string, compilationName?: string) {
+      let { writeToDisk } = config;
       if (compilationName && environments[compilationName]) {
         writeToDisk =
-          environments[compilationName].config.dev.writeToDisk ??
-          defaultWriteToDisk;
+          environments[compilationName].config.dev.writeToDisk ?? writeToDisk;
       }
-
       return typeof writeToDisk === 'function'
         ? writeToDisk(filePath)
         : writeToDisk!;
-    };
-  }
-
-  return newDevConfig;
+    },
+  };
 };
-
 const noop = () => {
   // noop
 };
