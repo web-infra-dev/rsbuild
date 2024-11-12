@@ -165,6 +165,26 @@ export const pluginFoo = (options: PluginFooOptions = {}): RsbuildPlugin => ({
 });
 ```
 
+### Reference Other Plugins
+
+Rsbuild's [plugins](/config/plugins) config supports passing a nested array, which means you can reference and register other Rsbuild plugins within your plugin.
+
+For example, register `pluginBar` within `pluginFoo`:
+
+```ts
+import { pluginBar } from 'rsbuild-plugin-bar';
+
+export const pluginFoo = (): RsbuildPlugin => {
+  const foo = {
+    name: 'plugin-foo',
+    setup(api) {
+      // ...
+    },
+  };
+  return [foo, pluginBar()];
+};
+```
+
 ## Lifetime Hooks
 
 Rsbuild uses lifetime planning work internally, and plugins can also register hooks to take part in any stage of the workflow and implement their own features.
