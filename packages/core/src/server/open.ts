@@ -139,6 +139,7 @@ export async function open({
   clearCache?: boolean;
 }): Promise<void> {
   const { targets, before } = normalizeOpenConfig(config);
+  const host = config.server.host || 'localhost';
 
   // Skip open in codesandbox. After being bundled, the `open` package will
   // try to call system xdg-open, which will cause an error on codesandbox.
@@ -154,7 +155,7 @@ export async function open({
 
   const urls: string[] = [];
   const protocol = https ? 'https' : 'http';
-  const baseUrl = `${protocol}://localhost:${port}`;
+  const baseUrl = `${protocol}://${host}:${port}`;
 
   if (!targets.length) {
     if (routes.length) {
