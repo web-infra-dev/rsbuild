@@ -145,7 +145,7 @@ importers:
         specifier: ^4.17.13
         version: 4.17.13
       '@types/node':
-        specifier: 22.9.0
+        specifier: ^22.9.0
         version: 22.9.0
       '@types/react':
         specifier: ^18.3.12
@@ -356,7 +356,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       '@types/node':
-        specifier: 22.9.0
+        specifier: ^22.9.0
         version: 22.9.0
       typescript:
         specifier: ^5.6.3
@@ -553,7 +553,7 @@ importers:
         specifier: workspace:*
         version: link:../../../scripts/test-helper
       '@types/node':
-        specifier: 22.9.0
+        specifier: ^22.9.0
         version: 22.9.0
       ansi-escapes:
         specifier: 4.3.2
@@ -597,7 +597,7 @@ importers:
         specifier: ^11.0.4
         version: 11.0.4
       '@types/node':
-        specifier: 22.9.0
+        specifier: ^22.9.0
         version: 22.9.0
       '@types/on-finished':
         specifier: 2.3.4
@@ -724,7 +724,7 @@ importers:
         specifier: 0.0.16
         version: 0.0.16(typescript@5.6.3)
       '@types/node':
-        specifier: 22.9.0
+        specifier: ^22.9.0
         version: 22.9.0
       typescript:
         specifier: ^5.6.3
@@ -797,7 +797,7 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: 22.9.0
+        specifier: ^22.9.0
         version: 22.9.0
       babel-loader:
         specifier: 9.2.1
@@ -865,7 +865,7 @@ importers:
         specifier: 0.0.16
         version: 0.0.16(typescript@5.6.3)
       '@types/node':
-        specifier: 22.9.0
+        specifier: ^22.9.0
         version: 22.9.0
       preact:
         specifier: ^10.24.3
@@ -893,7 +893,7 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: 22.9.0
+        specifier: ^22.9.0
         version: 22.9.0
       typescript:
         specifier: ^5.6.3
@@ -927,7 +927,7 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: 22.9.0
+        specifier: ^22.9.0
         version: 22.9.0
       '@types/sass-loader':
         specifier: ^8.0.9
@@ -998,7 +998,7 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: 22.9.0
+        specifier: ^22.9.0
         version: 22.9.0
       typescript:
         specifier: ^5.6.3
@@ -1023,7 +1023,7 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: 22.9.0
+        specifier: ^22.9.0
         version: 22.9.0
       svelte:
         specifier: ^5.1.13
@@ -1063,7 +1063,7 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: 22.9.0
+        specifier: ^22.9.0
         version: 22.9.0
       file-loader:
         specifier: 6.2.0
@@ -1112,7 +1112,7 @@ importers:
   scripts/config:
     devDependencies:
       '@types/node':
-        specifier: 22.9.0
+        specifier: ^22.9.0
         version: 22.9.0
       typescript:
         specifier: ^5.6.3
@@ -1124,7 +1124,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       '@types/node':
-        specifier: 22.9.0
+        specifier: ^22.9.0
         version: 22.9.0
       path-serializer:
         specifier: 0.2.2
@@ -1152,7 +1152,7 @@ importers:
         specifier: 1.5.3
         version: 1.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/node':
-        specifier: 22.9.0
+        specifier: ^22.9.0
         version: 22.9.0
       '@types/react':
         specifier: ^18.3.12
