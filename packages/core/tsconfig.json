@@ -7,10 +7,7 @@
     "declarationDir": "./dist-types",
     "composite": true,
     "isolatedDeclarations": true,
-    "types": ["@rspack/core/module"],
-    "paths": {
-      "picocolors": ["./compiled/picocolors"]
-    }
+    "types": ["@rspack/core/module"]
   },
   "include": ["src"]
 }
