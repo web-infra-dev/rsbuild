@@ -6,8 +6,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { promisify } from 'node:util';
 import zlib from 'node:zlib';
-import color from 'picocolors';
 import { CSS_REGEX, HTML_REGEX, JS_REGEX } from '../constants';
+import { color } from '../helpers';
 import { logger } from '../logger';
 import type { PrintFileSizeOptions, RsbuildPlugin, Rspack } from '../types';
 

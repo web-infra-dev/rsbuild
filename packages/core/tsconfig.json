@@ -7,32 +7,7 @@
     "declarationDir": "./dist-types",
     "composite": true,
     "isolatedDeclarations": true,
-    "types": ["@rspack/core/module"],
-    "paths": {
-      "ws": ["./compiled/ws"],
-      "open": ["./compiled/open"],
-      "sirv": ["./compiled/sirv"],
-      "jiti": ["./compiled/jiti"],
-      "rslog": ["./compiled/rslog"],
-      "mrmime": ["./compiled/mrmime"],
-      "semver": ["./compiled/semver"],
-      "connect": ["./compiled/connect"],
-      "chokidar": ["./compiled/chokidar"],
-      "picocolors": ["./compiled/picocolors"],
-      "on-finished": ["./compiled/on-finished"],
-      "rspack-chain": ["./compiled/rspack-chain"],
-      "webpack-merge": ["./compiled/webpack-merge"],
-      "html-rspack-plugin": ["./compiled/html-rspack-plugin"],
-      "http-proxy-middleware": ["./compiled/http-proxy-middleware"],
-      "webpack-bundle-analyzer": ["./compiled/webpack-bundle-analyzer"],
-      "postcss-load-config": ["./compiled/postcss-load-config"],
-      "rspack-manifest-plugin": ["./compiled/rspack-manifest-plugin"],
-      "rsbuild-dev-middleware": ["./compiled/rsbuild-dev-middleware"],
-      "launch-editor-middleware": ["./compiled/launch-editor-middleware"],
-      "connect-history-api-fallback": [
-        "./compiled/connect-history-api-fallback"
-      ]
-    }
+    "types": ["@rspack/core/module"]
   },
   "include": ["src"]
 }

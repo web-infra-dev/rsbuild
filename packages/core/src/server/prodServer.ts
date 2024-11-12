@@ -1,6 +1,6 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
-import type Connect from 'connect';
+import type Connect from '../../compiled/connect/index.js';
 import { pathnameParse } from '../helpers/path';
 import { logger } from '../logger';
 import type {
@@ -11,6 +11,7 @@ import type {
   ServerConfig,
 } from '../types';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
+import { gzipMiddleware } from './gzipMiddleware';
 import {
   type StartServerResult,
   getAddressUrls,
@@ -26,6 +27,7 @@ import {
   getRequestLoggerMiddleware,
 } from './middlewares';
 import { open } from './open';
+import { createProxyMiddleware } from './proxy';
 
 type RsbuildProdServerOptions = {
   pwd: string;
@@ -63,7 +65,6 @@ export class RsbuildProdServer {
 
     // compression should be the first middleware
     if (compress) {
-      const { gzipMiddleware } = await import('./gzipMiddleware');
       this.middlewares.use(
         gzipMiddleware({
           // simulates the common gzip compression rates
@@ -82,7 +83,6 @@ export class RsbuildProdServer {
     }
 
     if (proxy) {
-      const { createProxyMiddleware } = await import('./proxy');
       const { middlewares, upgrade } = await createProxyMiddleware(proxy);
 
       for (const middleware of middlewares) {
@@ -100,7 +100,7 @@ export class RsbuildProdServer {
 
     if (historyApiFallback) {
       const { default: connectHistoryApiFallback } = await import(
-        'connect-history-api-fallback'
+        '../../compiled/connect-history-api-fallback/index.js'
       );
       const historyApiFallbackMiddleware = connectHistoryApiFallback(
         historyApiFallback === true ? {} : historyApiFallback,
@@ -121,7 +121,7 @@ export class RsbuildProdServer {
       serverConfig: { htmlFallback },
     } = this.options;
 
-    const { default: sirv } = await import('sirv');
+    const { default: sirv } = await import('../../compiled/sirv/index.js');
 
     const assetMiddleware = sirv(path, {
       etag: true,
@@ -160,7 +160,7 @@ export async function startProdServer(
     config,
   });
 
-  const { default: connect } = await import('connect');
+  const { default: connect } = await import('../../compiled/connect/index.js');
   const middlewares = connect();
 
   const serverConfig = config.server;

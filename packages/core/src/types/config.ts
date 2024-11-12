@@ -12,13 +12,13 @@ import type {
   SwcLoaderOptions,
   rspack,
 } from '@rspack/core';
-import type { WatchOptions } from 'chokidar';
+import type { WatchOptions } from '../../compiled/chokidar/index.js';
 import type {
   Options as HttpProxyOptions,
   Filter as ProxyFilter,
-} from 'http-proxy-middleware';
-import type RspackChain from 'rspack-chain';
-import type { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+} from '../../compiled/http-proxy-middleware/index.js';
+import type RspackChain from '../../compiled/rspack-chain/index.js';
+import type { BundleAnalyzerPlugin } from '../../compiled/webpack-bundle-analyzer/index.js';
 import type {
   ModifyBundlerChainUtils,
   ModifyChainUtils,
@@ -84,7 +84,7 @@ export type ModifyRspackConfigUtils = ModifyChainUtils & {
     plugins: BundlerPluginInstance | BundlerPluginInstance[],
   ) => void;
   removePlugin: (pluginName: string) => void;
-  mergeConfig: typeof import('webpack-merge').merge;
+  mergeConfig: typeof import('../../compiled/webpack-merge/index.js').merge;
   rspack: typeof rspack;
 };
 

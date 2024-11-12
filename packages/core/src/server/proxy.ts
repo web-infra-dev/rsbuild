@@ -1,4 +1,4 @@
-import type { RequestHandler } from 'http-proxy-middleware';
+import type { RequestHandler } from '../../compiled/http-proxy-middleware/index.js';
 import { logger } from '../logger';
 import type {
   RequestHandler as Middleware,
@@ -52,7 +52,7 @@ export const createProxyMiddleware = async (
   const middlewares: Middleware[] = [];
 
   const { createProxyMiddleware: baseMiddleware } = await import(
-    'http-proxy-middleware'
+    '../../compiled/http-proxy-middleware/index.js'
   );
 
   for (const opts of formattedOptions) {

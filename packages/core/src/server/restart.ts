@@ -1,7 +1,6 @@
 import path from 'node:path';
-import color from 'picocolors';
 import { init } from '../cli/init';
-import { isTTY } from '../helpers';
+import { color, isTTY } from '../helpers';
 import { logger } from '../logger';
 
 type Cleaner = () => Promise<unknown> | unknown;

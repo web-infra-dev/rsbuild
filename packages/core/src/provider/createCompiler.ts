@@ -1,7 +1,7 @@
 import { rspack } from '@rspack/core';
 import type { StatsCompilation } from '@rspack/core';
-import color from 'picocolors';
 import {
+  color,
   formatStats,
   getStatsOptions,
   isSatisfyRspackVersion,

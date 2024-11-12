@@ -1,4 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
+import { createRequire } from 'node:module';
 import type { Socket } from 'node:net';
 import { pathnameParse } from '../helpers/path';
 import type {
@@ -15,6 +16,8 @@ import {
 } from './devMiddleware';
 import { stripBase } from './helper';
 import { SocketServer } from './socketServer';
+
+const require = createRequire(import.meta.url);
 
 type Options = {
   publicPaths: string[];

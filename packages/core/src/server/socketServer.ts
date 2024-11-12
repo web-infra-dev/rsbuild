@@ -56,7 +56,8 @@ export class SocketServer {
 
   // create socket, install socket handler, bind socket event
   public async prepare(): Promise<void> {
-    const { default: ws } = await import('ws');
+    const { default: ws } = await import('../../compiled/ws/index.js');
+    // @ts-expect-error HTTP not match
     this.wsServer = new ws.Server({
       noServer: true,
       path: this.options.client?.path,

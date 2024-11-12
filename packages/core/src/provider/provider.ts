@@ -1,5 +1,9 @@
+import { createDevServer } from '../server/devServer';
 import type { CreateCompiler, RsbuildProvider } from '../types';
+import { build } from './build';
+import { createCompiler as baseCreateCompiler } from './createCompiler';
 import { initConfigs, initRsbuildConfig } from './initConfigs';
+import { inspectConfig } from './inspectConfig';
 
 export const rspackProvider: RsbuildProvider = async ({
   context,
@@ -7,8 +11,7 @@ export const rspackProvider: RsbuildProvider = async ({
   rsbuildOptions,
 }) => {
   const createCompiler = (async () => {
-    const { createCompiler } = await import('./createCompiler');
-    const result = await createCompiler({
+    const result = await baseCreateCompiler({
       context,
       pluginManager,
       rsbuildOptions,
@@ -22,7 +25,6 @@ export const rspackProvider: RsbuildProvider = async ({
     createCompiler,
 
     async createDevServer(options) {
-      const { createDevServer } = await import('../server/devServer');
       const config = await initRsbuildConfig({ context, pluginManager });
       return createDevServer(
         { context, pluginManager, rsbuildOptions },
@@ -33,9 +35,7 @@ export const rspackProvider: RsbuildProvider = async ({
     },
 
     async startDevServer(options) {
-      const { createDevServer } = await import('../server/devServer');
       const config = await initRsbuildConfig({ context, pluginManager });
-
       const server = await createDevServer(
         { context, pluginManager, rsbuildOptions },
         createCompiler,
@@ -47,7 +47,6 @@ export const rspackProvider: RsbuildProvider = async ({
     },
 
     async build(options) {
-      const { build } = await import('./build');
       return build({ context, pluginManager, rsbuildOptions }, options);
     },
 
@@ -61,7 +60,6 @@ export const rspackProvider: RsbuildProvider = async ({
     },
 
     async inspectConfig(inspectOptions) {
-      const { inspectConfig } = await import('./inspectConfig');
       return inspectConfig({
         context,
         pluginManager,

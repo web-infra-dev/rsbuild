@@ -1,18 +1,22 @@
 import fs from 'node:fs';
 import path, { isAbsolute } from 'node:path';
 import type { EntryDescription } from '@rspack/core';
-import color from 'picocolors';
 import {
   reduceConfigsMergeContext,
   reduceConfigsWithContext,
 } from 'reduce-configs';
 import {
   castArray,
+  color,
   getPublicPathFromChain,
   isFileExists,
   isPlainObject,
 } from '../helpers';
-import type { HtmlInfo, TagConfig } from '../rspack/RsbuildHtmlPlugin';
+import {
+  type HtmlInfo,
+  RsbuildHtmlPlugin,
+  type TagConfig,
+} from '../rspack/RsbuildHtmlPlugin';
 import type {
   HtmlConfig,
   HtmlRspackPlugin,
@@ -317,10 +321,6 @@ export const pluginHtml = (
             .plugin(`${CHAIN_ID.PLUGIN.HTML}-${entryName}`)
             .use(HtmlPlugin, [finalOptions[index]]);
         });
-
-        const { RsbuildHtmlPlugin } = await import(
-          '../rspack/RsbuildHtmlPlugin'
-        );
 
         chain
           .plugin('rsbuild-html-plugin')
