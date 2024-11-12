@@ -1100,8 +1100,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: 18.x
-        version: 18.19.64
+        specifier: ^22.9.0
+        version: 22.9.0
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -2924,9 +2924,6 @@ packages:
 
   '@types/node@12.20.55':
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
-
-  '@types/node@18.19.64':
-    resolution: {integrity: sha512-955mDqvO2vFf/oL7V3WiUtiz+BugyX8uVbaT2H8oj3+8dRyH2FLiNdowe7eNqRM7IOIZvzDH76EoAT+gwm6aIQ==}
 
   '@types/node@22.9.0':
     resolution: {integrity: sha512-vuyHg81vvWA1Z1ELfvLko2c8f34gyA0zaic0+Rllc5lbCnbSyuvb2Oxpm6TAUAC/2xZN3QGqxBNggD1nNR2AfQ==}
@@ -6358,9 +6355,6 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  undici-types@5.26.5:
-    resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
-
   undici-types@6.19.8:
     resolution: {integrity: sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==}
 
@@ -8693,10 +8687,6 @@ snapshots:
       '@types/node': 22.9.0
 
   '@types/node@12.20.55': {}
-
-  '@types/node@18.19.64':
-    dependencies:
-      undici-types: 5.26.5
 
   '@types/node@22.9.0':
     dependencies:
@@ -12500,8 +12490,6 @@ snapshots:
       mime-types: 2.1.35
 
   typescript@5.6.3: {}
-
-  undici-types@5.26.5: {}
 
   undici-types@6.19.8: {}
 
