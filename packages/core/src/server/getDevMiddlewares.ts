@@ -124,7 +124,7 @@ const applyDefaultMiddlewares = async ({
   }
 
   const { default: launchEditorMiddleware } = await import(
-    'launch-editor-middleware'
+    '../../compiled/launch-editor-middleware/index.js'
   );
   middlewares.push(['/__open-in-editor', launchEditorMiddleware()]);
 
@@ -165,7 +165,7 @@ const applyDefaultMiddlewares = async ({
 
   const publicDirs = normalizePublicDirs(server?.publicDir);
   for (const publicDir of publicDirs) {
-    const { default: sirv } = await import('sirv');
+    const { default: sirv } = await import('../../compiled/sirv/index.js');
     const { name } = publicDir;
     const normalizedPath = isAbsolute(name) ? name : join(pwd, name);
 
@@ -190,7 +190,7 @@ const applyDefaultMiddlewares = async ({
 
   if (server.historyApiFallback) {
     const { default: connectHistoryApiFallback } = await import(
-      'connect-history-api-fallback'
+      '../../compiled/connect-history-api-fallback/index.js'
     );
     const historyApiFallbackMiddleware = connectHistoryApiFallback(
       server.historyApiFallback === true ? {} : server.historyApiFallback,

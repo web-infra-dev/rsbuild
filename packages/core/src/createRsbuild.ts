@@ -1,8 +1,7 @@
 import { existsSync } from 'node:fs';
 import { isPromise } from 'node:util/types';
-import color from 'picocolors';
 import { createContext } from './createContext';
-import { getNodeEnv, isEmptyDir, pick, setNodeEnv } from './helpers';
+import { color, getNodeEnv, isEmptyDir, pick, setNodeEnv } from './helpers';
 import { initPluginAPI } from './initPlugins';
 import { initRsbuildConfig } from './internal';
 import { logger } from './logger';

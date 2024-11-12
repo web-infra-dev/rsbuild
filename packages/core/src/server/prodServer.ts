@@ -1,6 +1,6 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
-import type Connect from 'connect';
+import type Connect from '../../compiled/connect/index.js';
 import { pathnameParse } from '../helpers/path';
 import { logger } from '../logger';
 import type {
@@ -100,7 +100,7 @@ export class RsbuildProdServer {
 
     if (historyApiFallback) {
       const { default: connectHistoryApiFallback } = await import(
-        'connect-history-api-fallback'
+        '../../compiled/connect-history-api-fallback/index.js'
       );
       const historyApiFallbackMiddleware = connectHistoryApiFallback(
         historyApiFallback === true ? {} : historyApiFallback,
@@ -121,7 +121,7 @@ export class RsbuildProdServer {
       serverConfig: { htmlFallback },
     } = this.options;
 
-    const { default: sirv } = await import('sirv');
+    const { default: sirv } = await import('../../compiled/sirv/index.js');
 
     const assetMiddleware = sirv(path, {
       etag: true,
@@ -160,7 +160,7 @@ export async function startProdServer(
     config,
   });
 
-  const { default: connect } = await import('connect');
+  const { default: connect } = await import('../../compiled/connect/index.js');
   const middlewares = connect();
 
   const serverConfig = config.server;

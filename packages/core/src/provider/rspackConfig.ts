@@ -1,8 +1,7 @@
 import { rspack } from '@rspack/core';
-import color from 'picocolors';
 import { reduceConfigsAsyncWithContext } from 'reduce-configs';
 import { CHAIN_ID, chainToConfig, modifyBundlerChain } from '../configChain';
-import { castArray, getNodeEnv } from '../helpers';
+import { castArray, color, getNodeEnv } from '../helpers';
 import { logger } from '../logger';
 import { getHTMLPlugin } from '../pluginHelper';
 import type {
@@ -43,7 +42,7 @@ export async function getConfigUtils(
   config: Rspack.Configuration,
   chainUtils: ModifyChainUtils,
 ): Promise<ModifyRspackConfigUtils> {
-  const { merge } = await import('webpack-merge');
+  const { merge } = await import('../../compiled/webpack-merge/index.js');
 
   return {
     ...chainUtils,

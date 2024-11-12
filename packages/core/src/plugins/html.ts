@@ -1,13 +1,13 @@
 import fs from 'node:fs';
 import path, { isAbsolute } from 'node:path';
 import type { EntryDescription } from '@rspack/core';
-import color from 'picocolors';
 import {
   reduceConfigsMergeContext,
   reduceConfigsWithContext,
 } from 'reduce-configs';
 import {
   castArray,
+  color,
   getPublicPathFromChain,
   isFileExists,
   isPlainObject,

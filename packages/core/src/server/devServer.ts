@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
-import type Connect from 'connect';
+import type Connect from '../../compiled/connect/index.js';
 import { ROOT_DIST_DIR } from '../constants';
 import { getPublicPathFromCompiler, isMultiCompiler } from '../helpers';
 import { logger } from '../logger';
@@ -308,7 +308,7 @@ export async function createDevServer<
     outputFileSystem,
   });
 
-  const { default: connect } = await import('connect');
+  const { default: connect } = await import('../../compiled/connect/index.js');
   const middlewares = connect();
 
   for (const item of devMiddlewares.middlewares) {

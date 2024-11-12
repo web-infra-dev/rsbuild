@@ -20,7 +20,7 @@ export const setHTMLPlugin = (plugin: typeof HtmlRspackPlugin): void => {
 
 export const getHTMLPlugin = (): typeof HtmlRspackPlugin => {
   if (!htmlPlugin) {
-    htmlPlugin = require('html-rspack-plugin');
+    htmlPlugin = require('../compiled/html-rspack-plugin/index.js');
   }
   return htmlPlugin;
 };

@@ -2,9 +2,9 @@ import type {
   CssExtractRspackLoaderOptions,
   CssExtractRspackPluginOptions,
 } from '@rspack/core';
-import type HtmlRspackPlugin from 'html-rspack-plugin';
 import type { AcceptedPlugin, ProcessOptions } from 'postcss';
 import type { Configuration as WebpackConfig } from 'webpack';
+import type HtmlRspackPlugin from '../../compiled/html-rspack-plugin/index.js';
 import type { Rspack } from './rspack';
 
 export type { HtmlRspackPlugin };

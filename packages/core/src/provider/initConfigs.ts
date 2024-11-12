@@ -1,11 +1,10 @@
-import color from 'picocolors';
 import { getDefaultEntry, normalizeConfig } from '../config';
 import { JS_DIST_DIR } from '../constants';
 import {
   updateContextByNormalizedConfig,
   updateEnvironmentContext,
 } from '../createContext';
-import { camelCase, pick } from '../helpers';
+import { camelCase, color, pick } from '../helpers';
 import { isDebug, logger } from '../logger';
 import { mergeRsbuildConfig } from '../mergeConfig';
 import { initPlugins } from '../pluginManager';

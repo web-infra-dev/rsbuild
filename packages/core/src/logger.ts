@@ -1,5 +1,5 @@
-import color from 'picocolors';
-import { type Logger, logger } from 'rslog';
+import { type Logger, logger } from '../compiled/rslog/index.js';
+import { color } from './helpers';
 
 export const isDebug = (): boolean => {
   if (!process.env.DEBUG) {

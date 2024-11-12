@@ -1,6 +1,6 @@
 import { createRequire } from 'node:module';
 import type { Configuration } from '@rspack/core';
-import color from 'picocolors';
+import { color } from '../helpers';
 import { logger } from '../logger';
 import type { BundlerPluginInstance, RsbuildPlugin } from '../types';
 

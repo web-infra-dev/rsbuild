@@ -1,4 +1,4 @@
-import type { FSWatcher } from 'chokidar';
+import type { FSWatcher } from '../../compiled/chokidar/index.js';
 import { normalizePublicDirs } from '../config';
 import { castArray } from '../helpers';
 import type {
@@ -112,7 +112,7 @@ async function startWatchFiles(
     return;
   }
 
-  const chokidar = await import('chokidar');
+  const chokidar = await import('../../compiled/chokidar/index.js');
   const watcher = chokidar.watch(paths, options);
 
   watcher.on('change', () => {

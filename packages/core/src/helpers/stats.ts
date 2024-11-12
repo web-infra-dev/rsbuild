@@ -1,5 +1,5 @@
 import type { StatsCompilation, StatsValue } from '@rspack/core';
-import color from 'picocolors';
+import color from '../../compiled/picocolors/index.js';
 import { formatStatsMessages } from '../client/format';
 import { logger } from '../logger';
 import type { Rspack } from '../types';

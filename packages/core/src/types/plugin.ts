@@ -1,9 +1,9 @@
-import type RspackChain from 'rspack-chain';
 import type {
   RuleSetRule,
   Configuration as WebpackConfig,
   WebpackPluginInstance,
 } from 'webpack';
+import type RspackChain from '../../compiled/rspack-chain/index.js';
 import type { ChainIdentifier } from '../configChain';
 import type {
   ModifyRspackConfigUtils,
@@ -98,7 +98,7 @@ export type ModifyWebpackConfigUtils = ModifyWebpackChainUtils & {
     plugins: WebpackPluginInstance | WebpackPluginInstance[],
   ) => void;
   removePlugin: (pluginName: string) => void;
-  mergeConfig: typeof import('webpack-merge').merge;
+  mergeConfig: typeof import('../../compiled/webpack-merge/index.js').merge;
 };
 
 export type ModifyWebpackChainFn = (

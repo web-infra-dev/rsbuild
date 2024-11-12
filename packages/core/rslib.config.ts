@@ -10,11 +10,11 @@ const define = {
   RSBUILD_VERSION: JSON.stringify(pkgJson.version),
 };
 
-const compiledExternals: Record<string, RegExp> = {};
+const regexpMap: Record<string, RegExp> = {};
 
 for (const item of prebundleConfig.dependencies) {
   const depName = typeof item === 'string' ? item : item.name;
-  compiledExternals[depName] = new RegExp(`^${depName}$`);
+  regexpMap[depName] = new RegExp(`compiled[\\/]${depName}(?:[\\/]|$)`);
 }
 
 const externals: Configuration['externals'] = [
@@ -24,11 +24,17 @@ const externals: Configuration['externals'] = [
   '@rsbuild/core/client/hmr',
   '@rsbuild/core/client/overlay',
   ({ request }, callback) => {
-    const names = Object.keys(compiledExternals);
+    const entries = Object.entries(regexpMap);
     if (request) {
-      const name = names.find((name) => compiledExternals[name].test(request));
-      if (name) {
-        return callback(undefined, `../compiled/${name}/index.js`);
+      for (const [name, test] of entries) {
+        if (request === name) {
+          throw new Error(
+            `"${name}" is not allowed to be imported, use "../compiled/${name}/index.js" instead.`,
+          );
+        }
+        if (test.test(request)) {
+          return callback(undefined, `../compiled/${name}/index.js`);
+        }
       }
     }
     callback();
