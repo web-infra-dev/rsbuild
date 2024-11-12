@@ -47,7 +47,7 @@
   ],
   "scripts": {
     "build": "pnpm run build:types && rslib build",
-    "build:types": "rimraf ./dist-types && tsc --build --force --emitDeclarationOnly && tsc-alias -p tsconfig.json",
+    "build:types": "rimraf ./dist-types && tsc --build --force --emitDeclarationOnly",
     "dev": "pnpm run build:types && rslib build --watch",
     "prebundle": "prebundle"
   },
@@ -95,7 +95,6 @@
     "rspack-manifest-plugin": "5.0.2",
     "sirv": "^3.0.0",
     "style-loader": "3.3.4",
-    "tsc-alias": "^1.8.10",
     "typescript": "^5.6.3",
     "webpack": "^5.96.1",
     "webpack-bundle-analyzer": "^4.10.2",
