@@ -2,7 +2,13 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
 import { createRequire } from 'node:module';
 import type { Socket } from 'node:net';
 import { pathnameParse } from '../helpers/path';
-import type { DevConfig, NextFunction, Rspack, ServerConfig } from '../types';
+import type {
+  EnvironmentContext,
+  NextFunction,
+  DevConfig as OriginDevConfig,
+  Rspack,
+  ServerConfig,
+} from '../types';
 import {
   type DevMiddleware as CustomDevMiddleware,
   type DevMiddlewareAPI,
@@ -15,11 +21,44 @@ const require = createRequire(import.meta.url);
 
 type Options = {
   publicPaths: string[];
-  dev: DevConfig;
+  environments: Record<string, EnvironmentContext>;
+  dev: OriginDevConfig;
   server: ServerConfig;
   compiler: Rspack.Compiler | Rspack.MultiCompiler;
 };
 
+type DevConfig = Omit<OriginDevConfig, 'writeToDisk'> & {
+  writeToDisk?:
+    | boolean
+    | ((filename: string, compilationName?: string) => boolean);
+};
+
+// allow to configure dev.writeToDisk in environments
+const formatDevConfig = (
+  config: OriginDevConfig,
+  environments: Record<string, EnvironmentContext>,
+): DevConfig => {
+  const writeToDiskValues = Object.values(environments).map(
+    (env) => env.config.dev.writeToDisk,
+  );
+  if (new Set(writeToDiskValues).size === 1) {
+    return config;
+  }
+
+  return {
+    ...config,
+    writeToDisk(filePath: string, compilationName?: string) {
+      let { writeToDisk } = config;
+      if (compilationName && environments[compilationName]) {
+        writeToDisk =
+          environments[compilationName].config.dev.writeToDisk ?? writeToDisk;
+      }
+      return typeof writeToDisk === 'function'
+        ? writeToDisk(filePath)
+        : writeToDisk!;
+    },
+  };
+};
 const noop = () => {
   // noop
 };
@@ -58,8 +97,8 @@ export class CompilerDevMiddleware {
 
   private socketServer: SocketServer;
 
-  constructor({ dev, server, compiler, publicPaths }: Options) {
-    this.devConfig = dev;
+  constructor({ dev, server, compiler, publicPaths, environments }: Options) {
+    this.devConfig = formatDevConfig(dev, environments);
     this.serverConfig = server;
     this.compiler = compiler;
     this.publicPaths = publicPaths;

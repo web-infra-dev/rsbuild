@@ -681,8 +681,8 @@ importers:
         specifier: ^6.0.1
         version: 6.0.1
       rsbuild-dev-middleware:
-        specifier: 0.1.1
-        version: 0.1.1(webpack@5.96.1)
+        specifier: 0.1.2
+        version: 0.1.2(webpack@5.96.1)
       rslog:
         specifier: ^1.2.3
         version: 1.2.3
@@ -5663,8 +5663,8 @@ packages:
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
-  rsbuild-dev-middleware@0.1.1:
-    resolution: {integrity: sha512-9XgPQjSmWIMdrrCYU6/ZZlRKUu+te6FhftOe+cG5nUE75PnfXWcLc92Fj/KmhUNWmCrJ/R1BIaPw+r7wW5t/kQ==}
+  rsbuild-dev-middleware@0.1.2:
+    resolution: {integrity: sha512-vq9F42QIK+K4N6LaHZ12NpZ23q9A8eqo5Myqy3m05d3AmGdjNySmfMNLdobtWLsVMLQT9T+suxd6NkROELIfeQ==}
     engines: {node: '>= 18.12.0'}
     peerDependencies:
       webpack: ^5.0.0
@@ -11875,7 +11875,7 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.24.3
       fsevents: 2.3.3
 
-  rsbuild-dev-middleware@0.1.1(webpack@5.96.1):
+  rsbuild-dev-middleware@0.1.2(webpack@5.96.1):
     dependencies:
       memfs: 4.14.0
       mrmime: 2.0.0

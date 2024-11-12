@@ -163,6 +163,7 @@ export async function createDevServer<
       server: config.server,
       publicPaths: publicPaths,
       compiler,
+      environments: options.context.environments,
     });
 
     await compilerDevMiddleware.init();

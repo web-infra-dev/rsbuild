@@ -153,7 +153,9 @@ export type DevMiddlewareOptions = {
 
   /** The options need by compiler middleware (like webpackMiddleware) */
   headers?: Record<string, string | string[]>;
-  writeToDisk?: boolean | ((filename: string) => boolean);
+  writeToDisk?:
+    | boolean
+    | ((filename: string, compilationName?: string) => boolean);
   stats?: boolean;
 
   /** should trigger when compiler hook called */
