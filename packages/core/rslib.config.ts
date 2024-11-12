@@ -82,6 +82,9 @@ export default defineConfig({
         },
       },
       plugins: [pluginFixDtsTypes],
+      dts: {
+        build: true,
+      },
     },
     // Node / CJS
     {
