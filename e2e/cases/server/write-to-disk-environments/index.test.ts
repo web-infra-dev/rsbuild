@@ -5,7 +5,7 @@ import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
 
-test('Multiple environments writeToDisk should work correctly', async ({
+test('multiple environments writeToDisk should work correctly', async ({
   page,
 }) => {
   const rsbuild = await dev({
