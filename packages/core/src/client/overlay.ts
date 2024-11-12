@@ -179,7 +179,7 @@ class ErrorOverlay extends HTMLElement {
     const root = this.attachShadow({ mode: 'open' });
     root.innerHTML = overlayTemplate;
 
-    linkedText(root, '.content', stripAnsi(message.join('/n')).trim());
+    linkedText(root, '.content', stripAnsi(message.join('\n')).trim());
 
     root.querySelector('.close')?.addEventListener('click', this.close);
 
