@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
-import type Connect from 'connect';
+import type Connect from '../../compiled/connect/index.js';
 import { ROOT_DIST_DIR } from '../constants';
 import { getPublicPathFromCompiler, isMultiCompiler } from '../helpers';
 import { logger } from '../logger';
@@ -15,6 +15,7 @@ import type {
   Rspack,
 } from '../types';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
+import { CompilerDevMiddleware } from './compilerDevMiddleware';
 import { getTransformedHtml, loadBundle } from './environment';
 import {
   type RsbuildDevMiddlewareOptions,
@@ -151,8 +152,6 @@ export async function createDevServer<
     if (!compiler) {
       throw new Error('Failed to get compiler instance.');
     }
-
-    const { CompilerDevMiddleware } = await import('./compilerDevMiddleware');
 
     const publicPaths = isMultiCompiler(compiler)
       ? compiler.compilers.map(getPublicPathFromCompiler)
@@ -309,7 +308,7 @@ export async function createDevServer<
     outputFileSystem,
   });
 
-  const { default: connect } = await import('connect');
+  const { default: connect } = await import('../../compiled/connect/index.js');
   const middlewares = connect();
 
   for (const item of devMiddlewares.middlewares) {

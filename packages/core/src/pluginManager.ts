@@ -1,5 +1,4 @@
-import color from 'picocolors';
-import { isFunction } from './helpers';
+import { color, isFunction } from './helpers';
 import { logger } from './logger';
 import type {
   BundlerPluginInstance,

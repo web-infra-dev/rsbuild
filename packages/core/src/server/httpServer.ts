@@ -1,6 +1,6 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
-import type Connect from 'connect';
+import type Connect from '../../compiled/connect/index.js';
 import type { ServerConfig } from '../types';
 
 export const createHttpServer = async ({

@@ -8,7 +8,6 @@
       "{projectRoot}/tsconfig.json",
       "{projectRoot}/package.json",
       "{projectRoot}/rslib.config.*",
-      "{projectRoot}/modern.config.*",
       "{projectRoot}/scripts/**/*"
     ],
     "prebundle": [

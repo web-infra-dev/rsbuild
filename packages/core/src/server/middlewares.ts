@@ -1,8 +1,7 @@
 import type { IncomingMessage } from 'node:http';
 import path from 'node:path';
-import type Connect from 'connect';
-import color from 'picocolors';
-import { addTrailingSlash } from '../helpers';
+import type Connect from '../../compiled/connect/index.js';
+import { addTrailingSlash, color } from '../helpers';
 import { logger } from '../logger';
 import type {
   EnvironmentAPI,
@@ -39,7 +38,9 @@ const getStatusCodeColor = (status: number) => {
 
 export const getRequestLoggerMiddleware: () => Promise<Connect.NextHandleFunction> =
   async () => {
-    const { default: onFinished } = await import('on-finished');
+    const { default: onFinished } = await import(
+      '../../compiled/on-finished/index.js'
+    );
 
     return (req, res, next) => {
       const _startAt = process.hrtime();

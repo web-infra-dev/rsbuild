@@ -1,13 +1,47 @@
 import { existsSync } from 'node:fs';
 import { isPromise } from 'node:util/types';
-import color from 'picocolors';
 import { createContext } from './createContext';
-import { getNodeEnv, isEmptyDir, pick, setNodeEnv } from './helpers';
+import { color, getNodeEnv, isEmptyDir, pick, setNodeEnv } from './helpers';
 import { initPluginAPI } from './initPlugins';
 import { initRsbuildConfig } from './internal';
 import { logger } from './logger';
 import { setCssExtractPlugin } from './pluginHelper';
 import { createPluginManager } from './pluginManager';
+import { pluginAppIcon } from './plugins/appIcon';
+import { pluginAsset } from './plugins/asset';
+import { pluginBasic } from './plugins/basic';
+import { pluginBundleAnalyzer } from './plugins/bundleAnalyzer';
+import { pluginCache } from './plugins/cache';
+import { pluginCleanOutput } from './plugins/cleanOutput';
+import { pluginCss } from './plugins/css';
+import { pluginDefine } from './plugins/define';
+import { pluginEntry } from './plugins/entry';
+import { pluginExternals } from './plugins/externals';
+import { pluginFileSize } from './plugins/fileSize';
+import { pluginHtml } from './plugins/html';
+import { pluginInlineChunk } from './plugins/inlineChunk';
+import { pluginLazyCompilation } from './plugins/lazyCompilation';
+import { pluginManifest } from './plugins/manifest';
+import { pluginMinimize } from './plugins/minimize';
+import { pluginModuleFederation } from './plugins/moduleFederation';
+import { pluginMoment } from './plugins/moment';
+import { pluginNodeAddons } from './plugins/nodeAddons';
+import { pluginNonce } from './plugins/nonce';
+import { pluginOutput } from './plugins/output';
+import { pluginPerformance } from './plugins/performance';
+import { pluginProgress } from './plugins/progress';
+import { pluginResolve } from './plugins/resolve';
+import { pluginResourceHints } from './plugins/resourceHints';
+import { pluginRsdoctor } from './plugins/rsdoctor';
+import { pluginRspackProfile } from './plugins/rspackProfile';
+import { pluginServer } from './plugins/server';
+import { pluginSplitChunks } from './plugins/splitChunks';
+import { pluginSri } from './plugins/sri';
+import { pluginSwc } from './plugins/swc';
+import { pluginTarget } from './plugins/target';
+import { pluginWasm } from './plugins/wasm';
+import { rspackProvider } from './provider/provider';
+import { startProdServer } from './server/prodServer';
 import type {
   Build,
   CreateDevServer,
@@ -24,83 +58,52 @@ import type {
   StartDevServer,
 } from './types';
 
-const getRspackProvider = async () => {
-  const { rspackProvider } = await import('./provider/provider');
-  return rspackProvider;
-};
-
 async function applyDefaultPlugins(
   pluginManager: PluginManager,
   context: InternalContext,
 ) {
-  const plugins = await Promise.all([
-    import('./plugins/basic').then(({ pluginBasic }) => pluginBasic()),
-    import('./plugins/entry').then(({ pluginEntry }) => pluginEntry()),
-    import('./plugins/cache').then(({ pluginCache }) => pluginCache()),
-    import('./plugins/target').then(({ pluginTarget }) => pluginTarget()),
-    import('./plugins/output').then(({ pluginOutput }) => pluginOutput()),
-    import('./plugins/resolve').then(({ pluginResolve }) => pluginResolve()),
-    import('./plugins/fileSize').then(({ pluginFileSize }) => pluginFileSize()),
+  pluginManager.addPlugins([
+    pluginBasic(),
+    pluginEntry(),
+    pluginCache(),
+    pluginTarget(),
+    pluginOutput(),
+    pluginResolve(),
+    pluginFileSize(),
     // cleanOutput plugin should before the html plugin
-    import('./plugins/cleanOutput').then(({ pluginCleanOutput }) =>
-      pluginCleanOutput(),
-    ),
-    import('./plugins/asset').then(({ pluginAsset }) => pluginAsset()),
-    import('./plugins/html').then(({ pluginHtml }) =>
-      pluginHtml((environment: string) => async (...args) => {
-        const result = await context.hooks.modifyHTMLTags.callInEnvironment({
-          environment,
-          args,
-        });
-        return result[0];
-      }),
-    ),
-    import('./plugins/appIcon').then(({ pluginAppIcon }) => pluginAppIcon()),
-    import('./plugins/wasm').then(({ pluginWasm }) => pluginWasm()),
-    import('./plugins/moment').then(({ pluginMoment }) => pluginMoment()),
-    import('./plugins/nodeAddons').then(({ pluginNodeAddons }) =>
-      pluginNodeAddons(),
-    ),
-    import('./plugins/define').then(({ pluginDefine }) => pluginDefine()),
-    import('./plugins/css').then(({ pluginCss }) => pluginCss()),
-    import('./plugins/minimize').then(({ pluginMinimize }) => pluginMinimize()),
-    import('./plugins/progress').then(({ pluginProgress }) => pluginProgress()),
-    import('./plugins/swc').then(({ pluginSwc }) => pluginSwc()),
-    import('./plugins/externals').then(({ pluginExternals }) =>
-      pluginExternals(),
-    ),
-    import('./plugins/splitChunks').then(({ pluginSplitChunks }) =>
-      pluginSplitChunks(),
-    ),
-    import('./plugins/inlineChunk').then(({ pluginInlineChunk }) =>
-      pluginInlineChunk(),
-    ),
-    import('./plugins/rsdoctor').then(({ pluginRsdoctor }) => pluginRsdoctor()),
-    import('./plugins/resourceHints').then(({ pluginResourceHints }) =>
-      pluginResourceHints(),
-    ),
-    import('./plugins/performance').then(({ pluginPerformance }) =>
-      pluginPerformance(),
-    ),
-    import('./plugins/bundleAnalyzer').then(({ pluginBundleAnalyzer }) =>
-      pluginBundleAnalyzer(),
-    ),
-    import('./plugins/server').then(({ pluginServer }) => pluginServer()),
-    import('./plugins/manifest').then(({ pluginManifest }) => pluginManifest()),
-    import('./plugins/moduleFederation').then(({ pluginModuleFederation }) =>
-      pluginModuleFederation(),
-    ),
-    import('./plugins/rspackProfile').then(({ pluginRspackProfile }) =>
-      pluginRspackProfile(),
-    ),
-    import('./plugins/lazyCompilation').then(({ pluginLazyCompilation }) =>
-      pluginLazyCompilation(),
-    ),
-    import('./plugins/sri').then(({ pluginSri }) => pluginSri()),
-    import('./plugins/nonce').then(({ pluginNonce }) => pluginNonce()),
+    pluginCleanOutput(),
+    pluginAsset(),
+    pluginHtml((environment: string) => async (...args) => {
+      const result = await context.hooks.modifyHTMLTags.callInEnvironment({
+        environment,
+        args,
+      });
+      return result[0];
+    }),
+    pluginAppIcon(),
+    pluginWasm(),
+    pluginMoment(),
+    pluginNodeAddons(),
+    pluginDefine(),
+    pluginCss(),
+    pluginMinimize(),
+    pluginProgress(),
+    pluginSwc(),
+    pluginExternals(),
+    pluginSplitChunks(),
+    pluginInlineChunk(),
+    pluginRsdoctor(),
+    pluginResourceHints(),
+    pluginPerformance(),
+    pluginBundleAnalyzer(),
+    pluginServer(),
+    pluginManifest(),
+    pluginModuleFederation(),
+    pluginRspackProfile(),
+    pluginLazyCompilation(),
+    pluginSri(),
+    pluginNonce(),
   ]);
-
-  pluginManager.addPlugins(plugins);
 }
 
 export async function createRsbuild(
@@ -130,8 +133,8 @@ export async function createRsbuild(
   await applyDefaultPlugins(pluginManager, context);
   logger.debug('add default plugins done');
 
-  const provider = (rsbuildConfig.provider ||
-    (await getRspackProvider())) as RsbuildProvider;
+  const provider =
+    (rsbuildConfig.provider as RsbuildProvider) || rspackProvider;
 
   const providerInstance = await provider({
     context,
@@ -167,7 +170,6 @@ export async function createRsbuild(
       }
     }
 
-    const { startProdServer } = await import('./server/prodServer');
     return startProdServer(context, config, options);
   };
 

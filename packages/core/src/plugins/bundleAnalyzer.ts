@@ -44,7 +44,7 @@ export function pluginBundleAnalyzer(): RsbuildPlugin {
         }
 
         const { default: BundleAnalyzer } = await import(
-          'webpack-bundle-analyzer'
+          '../../compiled/webpack-bundle-analyzer/index.js'
         );
 
         chain

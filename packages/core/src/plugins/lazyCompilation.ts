@@ -1,4 +1,4 @@
-import type { RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildPlugin } from '../types';
 
 export const pluginLazyCompilation = (): RsbuildPlugin => ({
   name: 'rsbuild:lazy-compilation',

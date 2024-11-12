@@ -1,8 +1,8 @@
 import fs from 'node:fs';
+import { createRequire } from 'node:module';
 import { dirname, isAbsolute, join } from 'node:path';
-import type { WatchOptions } from 'chokidar';
-import color from 'picocolors';
-import RspackChain from 'rspack-chain';
+import type { WatchOptions } from '../compiled/chokidar/index.js';
+import RspackChain from '../compiled/rspack-chain/index.js';
 import {
   ASSETS_DIST_DIR,
   CSS_DIST_DIR,
@@ -22,6 +22,7 @@ import {
   WASM_DIST_DIR,
 } from './constants';
 import {
+  color,
   debounce,
   findExists,
   getNodeEnv,
@@ -53,6 +54,8 @@ import type {
   RsbuildMode,
   RsbuildPlugin,
 } from './types';
+
+const require = createRequire(import.meta.url);
 
 const getDefaultDevConfig = (): NormalizedDevConfig => ({
   hmr: true,
@@ -351,7 +354,7 @@ export async function watchFilesForRestart(
     return;
   }
 
-  const chokidar = await import('chokidar');
+  const chokidar = await import('../compiled/chokidar/index.js');
   const watcher = chokidar.watch(files, {
     // do not trigger add for initial files
     ignoreInitial: true,
@@ -412,7 +415,7 @@ export async function loadConfig({
 
   try {
     if (configExport! === undefined) {
-      const { default: jiti } = await import('jiti');
+      const { default: jiti } = await import('../compiled/jiti/index.js');
       const loadConfig = jiti(__filename, {
         esmResolve: true,
         // disable require cache to support restart CLI and read the new config

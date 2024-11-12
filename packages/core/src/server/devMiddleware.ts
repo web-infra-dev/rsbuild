@@ -108,7 +108,7 @@ export const getDevMiddleware = async (
   multiCompiler: Compiler | MultiCompiler,
 ): Promise<NonNullable<DevMiddleware>> => {
   const { default: rsbuildDevMiddleware } = await import(
-    'rsbuild-dev-middleware'
+    '../../compiled/rsbuild-dev-middleware/index.js'
   );
   return (options) => {
     const { clientPaths, clientConfig, callbacks, liveReload, ...restOptions } =

@@ -1,6 +1,5 @@
 import readline from 'node:readline';
-import color from 'picocolors';
-import { isTTY } from '../helpers';
+import { color, isTTY } from '../helpers';
 import { logger } from '../logger';
 import type { CliShortcut, NormalizedDevConfig } from '../types/config';
 import { onBeforeRestartServer } from './restart';

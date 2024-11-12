@@ -4,9 +4,13 @@ import net from 'node:net';
 import type { Socket } from 'node:net';
 import os from 'node:os';
 import { posix } from 'node:path';
-import color from 'picocolors';
 import { DEFAULT_DEV_HOST, DEFAULT_PORT } from '../constants';
-import { addTrailingSlash, isFunction, removeLeadingSlash } from '../helpers';
+import {
+  addTrailingSlash,
+  color,
+  isFunction,
+  removeLeadingSlash,
+} from '../helpers';
 import { logger } from '../logger';
 import type {
   InternalContext,

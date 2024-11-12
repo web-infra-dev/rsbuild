@@ -1,5 +1,5 @@
-import type RspackChain from 'rspack-chain';
 import type { ChainIdentifier } from '..';
+import type RspackChain from '../../compiled/rspack-chain/index.js';
 import type {
   EnvironmentConfig,
   HtmlBasicTag,

@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { promisify } from 'node:util';
-import { lookup } from 'mrmime';
+import { lookup } from '../../compiled/mrmime/index.js';
 import {
   ensureAssetPrefix,
   fileExistsByCompilation,

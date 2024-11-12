@@ -1,11 +1,11 @@
 import { posix } from 'node:path';
 import deepmerge from 'deepmerge';
-import color from 'picocolors';
-import type RspackChain from 'rspack-chain';
 import type {
   Compiler as WebpackCompiler,
   MultiCompiler as WebpackMultiCompiler,
 } from 'webpack';
+import color from '../../compiled/picocolors/index.js';
+import type RspackChain from '../../compiled/rspack-chain/index.js';
 import { DEFAULT_ASSET_PREFIX } from '../constants';
 import type {
   FilenameConfig,
@@ -18,6 +18,8 @@ import type {
 export * from './fs';
 export * from './path';
 export * from './stats';
+
+export { color };
 
 export const rspackMinVersion = '1.0.0';
 

@@ -1,7 +1,6 @@
 import { join, sep } from 'node:path';
-import color from 'picocolors';
 import { RSBUILD_OUTPUTS_PATH } from '../constants';
-import { emptyDir } from '../helpers';
+import { color, emptyDir } from '../helpers';
 import { logger } from '../logger';
 import type { EnvironmentContext, RsbuildPlugin } from '../types';
 
