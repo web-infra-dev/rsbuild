@@ -59,3 +59,30 @@ export default {
   },
 };
 ```
+
+## Path Extensions
+
+When importing another module in a TypeScript module, TypeScript allows using the `.js` file extension:
+
+```ts title="src/index.ts"
+// The actual referenced module could be `./some-module.ts` or `./some-module.tsx`
+import { someFn } from './some-module.js';
+```
+
+Rsbuild supports this feature through Rspack's [extensionAlias](https://rspack.dev/config/resolve#resolveextensionalias) configuration. In TypeScript projects, Rsbuild adds the following configuration by default:
+
+```js
+const rspackConfig = {
+  resolve: {
+    extensionAlias: {
+      '.js': ['.ts', '.tsx', '.js'],
+      '.jsx': ['.tsx', '.jsx'],
+    },
+  },
+};
+```
+
+This means:
+
+- You can use the `.js` extension to import `.ts` or `.tsx` files.
+- You can use the `.jsx` extension to import `.tsx` files.
