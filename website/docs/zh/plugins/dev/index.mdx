@@ -165,6 +165,26 @@ export const pluginFoo = (options: PluginFooOptions = {}): RsbuildPlugin => ({
 });
 ```
 
+### 引用其他插件
+
+Rsbuild 的 [plugins](/config/plugins) 配置项支持传入一个嵌套的数组，这意味着你可以通过这种方式在插件内部引用其他 Rsbuild 插件。
+
+例如，在 `pluginFoo` 内部引用并注册 `pluginBar`：
+
+```ts
+import { pluginBar } from 'rsbuild-plugin-bar';
+
+export const pluginFoo = (): RsbuildPlugin => {
+  const foo = {
+    name: 'plugin-foo',
+    setup(api) {
+      // ...
+    },
+  };
+  return [foo, pluginBar()];
+};
+```
+
 ## 生命周期钩子
 
 Rsbuild 在内部按照约定的生命周期进行任务调度，插件可以通过注册钩子来介入工作流程的任意阶段，并实现自己的功能。
