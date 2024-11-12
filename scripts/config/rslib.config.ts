@@ -8,6 +8,7 @@ export const commonExternals: Array<string | RegExp> = [
   /[\\/]compiled[\\/]/,
 ];
 
+// Clean tsc cache to ensure the dts files can be generated correctly
 export const pluginCleanTscCache: RsbuildPlugin = {
   name: 'plugin-clean-tsc-cache',
   setup(api) {
