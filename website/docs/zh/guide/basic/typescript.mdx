@@ -59,3 +59,30 @@ export default {
   },
 };
 ```
+
+## 路径后缀
+
+当在一个 TypeScript 模块中导入另一个模块时，TypeScript 允许使用 `.js` 文件扩展名：
+
+```ts title="src/index.ts"
+// 实际引用的模块可能是 `./some-module.ts` 或 `./some-module.tsx`
+import { someFn } from './some-module.js';
+```
+
+Rsbuild 通过 Rspack 的 [extensionAlias](https://rspack.dev/config/resolve#resolveextensionalias) 配置来支持该特性。在 TypeScript 项目中，Rsbuild 默认会添加以下配置：
+
+```js
+const rspackConfig = {
+  resolve: {
+    extensionAlias: {
+      '.js': ['.ts', '.tsx', '.js'],
+      '.jsx': ['.tsx', '.jsx'],
+    },
+  },
+};
+```
+
+这意味着：
+
+- 允许使用 `.js` 文件扩展名导入 `.ts` 或 `.tsx` 文件。
+- 允许使用 `.jsx` 文件扩展名导入 `.tsx` 文件。
