@@ -127,6 +127,7 @@ export default defineConfig({
           overlay: 'src/client/overlay.ts',
         },
         define: {
+          // use define to avoid compile time evaluation of __webpack_hash__
           WEBPACK_HASH: '__webpack_hash__',
         },
       },
