@@ -12,7 +12,6 @@ export default defineConfig({
     {
       ...cjsConfig,
       output: {
-        target: 'node',
         // TODO https://github.com/web-infra-dev/rslib/issues/287
         externals: {
           webpack: 'import webpack',

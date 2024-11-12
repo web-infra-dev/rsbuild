@@ -40,9 +40,6 @@ export const cjsConfig: LibConfig = {
 
 export const dualPackage = defineConfig({
   lib: [esmConfig, cjsConfig],
-  output: {
-    target: 'node',
-  },
   tools: {
     rspack: {
       externals: commonExternals,
