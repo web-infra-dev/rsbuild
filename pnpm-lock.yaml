@@ -482,8 +482,8 @@ importers:
         specifier: 0.6.11
         version: 0.6.11(@swc/helpers@0.5.15)
       '@rslib/core':
-        specifier: 0.0.16
-        version: 0.0.16(typescript@5.6.3)
+        specifier: 0.0.18
+        version: 0.0.18(typescript@5.6.3)
       '@swc/helpers':
         specifier: ^0.5.15
         version: 0.5.15
@@ -547,8 +547,8 @@ importers:
         specifier: workspace:*
         version: link:../../core
       '@rslib/core':
-        specifier: 0.0.16
-        version: 0.0.16(typescript@5.6.3)
+        specifier: 0.0.18
+        version: 0.0.18(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../../scripts/test-helper
@@ -588,8 +588,8 @@ importers:
         version: 2.3.3
     devDependencies:
       '@rslib/core':
-        specifier: 0.0.16
-        version: 0.0.16(typescript@5.6.3)
+        specifier: 0.0.18
+        version: 0.0.18(typescript@5.6.3)
       '@types/connect':
         specifier: 3.4.38
         version: 3.4.38
@@ -721,8 +721,8 @@ importers:
         version: 1.0.9
     devDependencies:
       '@rslib/core':
-        specifier: 0.0.16
-        version: 0.0.16(typescript@5.6.3)
+        specifier: 0.0.18
+        version: 0.0.18(typescript@5.6.3)
       '@types/node':
         specifier: ^22.9.0
         version: 22.9.0
@@ -745,8 +745,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.0.16
-        version: 0.0.16(typescript@5.6.3)
+        specifier: 0.0.18
+        version: 0.0.18(typescript@5.6.3)
       '@types/serialize-javascript':
         specifier: ^5.0.4
         version: 5.0.4
@@ -791,8 +791,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.0.16
-        version: 0.0.16(typescript@5.6.3)
+        specifier: 0.0.18
+        version: 0.0.18(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -822,8 +822,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.0.16
-        version: 0.0.16(typescript@5.6.3)
+        specifier: 0.0.18
+        version: 0.0.18(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -862,8 +862,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.0.16
-        version: 0.0.16(typescript@5.6.3)
+        specifier: 0.0.18
+        version: 0.0.18(typescript@5.6.3)
       '@types/node':
         specifier: ^22.9.0
         version: 22.9.0
@@ -887,8 +887,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.0.16
-        version: 0.0.16(typescript@5.6.3)
+        specifier: 0.0.18
+        version: 0.0.18(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -921,8 +921,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.0.16
-        version: 0.0.16(typescript@5.6.3)
+        specifier: 0.0.18
+        version: 0.0.18(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -961,8 +961,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.0.16
-        version: 0.0.16(typescript@5.6.3)
+        specifier: 0.0.18
+        version: 0.0.18(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -992,8 +992,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.0.16
-        version: 0.0.16(typescript@5.6.3)
+        specifier: 0.0.18
+        version: 0.0.18(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1017,8 +1017,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.0.16
-        version: 0.0.16(typescript@5.6.3)
+        specifier: 0.0.18
+        version: 0.0.18(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1057,8 +1057,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.0.16
-        version: 0.0.16(typescript@5.6.3)
+        specifier: 0.0.18
+        version: 0.0.18(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1094,8 +1094,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.0.16
-        version: 0.0.16(typescript@5.6.3)
+        specifier: 0.0.18
+        version: 0.0.18(typescript@5.6.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1115,8 +1115,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       '@rslib/core':
-        specifier: 0.0.16
-        version: 0.0.16(typescript@5.6.3)
+        specifier: 0.0.18
+        version: 0.0.18(typescript@5.6.3)
       '@types/node':
         specifier: ^22.9.0
         version: 22.9.0
@@ -1143,8 +1143,8 @@ importers:
         version: 2.0.1
     devDependencies:
       '@rslib/core':
-        specifier: 0.0.16
-        version: 0.0.16(typescript@5.6.3)
+        specifier: 0.0.18
+        version: 0.0.18(typescript@5.6.3)
 
   website:
     devDependencies:
@@ -2473,6 +2473,11 @@ packages:
     engines: {node: '>=16.7.0'}
     hasBin: true
 
+  '@rsbuild/core@1.1.0':
+    resolution: {integrity: sha512-SyQlJjWgR1VwLt4nuiY0g6L9INv2koH232TeDZuopvNgbRytskD3kJ8bbGWBBXsQjZjtqBEh5ishqf8CIfF8dQ==}
+    engines: {node: '>=16.7.0'}
+    hasBin: true
+
   '@rsbuild/plugin-babel@1.0.3':
     resolution: {integrity: sha512-3S/ykXv7KRo0FxVpkjoHFUwB04nKINIET1kuv4xiRaDmeww1Tp0wl9h4u8a7d7gU/4FllyoUflY8TVhci/o05g==}
     peerDependencies:
@@ -2517,8 +2522,8 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  '@rslib/core@0.0.16':
-    resolution: {integrity: sha512-g6IFUZW0K7DDKK/27kF7DOKhP5JIqZoIVAU0c9DZffRE3Pw9sWTyEyVN/kaEnp5k3gaeQTBpcV9nSW+41B2slQ==}
+  '@rslib/core@0.0.18':
+    resolution: {integrity: sha512-TN3WOgpX5FvHDA5oWm/5vG+sQQhzkUiHx0YjgEQHA0IiRUJNwaqDvSyRyQkBqWrQw5o6WpVet9kM/P6+rm4RSw==}
     engines: {node: '>=16.0.0'}
     hasBin: true
     peerDependencies:
@@ -5678,8 +5683,8 @@ packages:
       webpack:
         optional: true
 
-  rsbuild-plugin-dts@0.0.16:
-    resolution: {integrity: sha512-Yfc7h1cTTp55baLgS6DVa3mlLaFlNfoUVmcX7hCH1BT1fNbMabnngvXDtfqJpP62QyXcfrXNmcW0fznTYKgKmA==}
+  rsbuild-plugin-dts@0.0.18:
+    resolution: {integrity: sha512-svOrOUi3INkEEhUShMtUBqpBKNdco6qY8BmvO7wAHzU736p3bemlf79ubxDpWFR1WbML9ahv6MqrIQunu3aDNg==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       '@microsoft/api-extractor': ^7
@@ -8152,6 +8157,15 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
+  '@rsbuild/core@1.1.0':
+    dependencies:
+      '@rspack/core': 1.1.1(@swc/helpers@0.5.15)
+      '@rspack/lite-tapable': 1.0.1
+      '@swc/helpers': 0.5.15
+      core-js: 3.39.0
+    optionalDependencies:
+      fsevents: 2.3.3
+
   '@rsbuild/plugin-babel@1.0.3(@rsbuild/core@packages+core)':
     dependencies:
       '@babel/core': 7.26.0
@@ -8215,10 +8229,10 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  '@rslib/core@0.0.16(typescript@5.6.3)':
+  '@rslib/core@0.0.18(typescript@5.6.3)':
     dependencies:
-      '@rsbuild/core': 1.0.19
-      rsbuild-plugin-dts: 0.0.16(@rsbuild/core@1.0.19)(typescript@5.6.3)
+      '@rsbuild/core': 1.1.0
+      rsbuild-plugin-dts: 0.0.18(@rsbuild/core@1.1.0)(typescript@5.6.3)
       tinyglobby: 0.2.10
     optionalDependencies:
       typescript: 5.6.3
@@ -11890,9 +11904,9 @@ snapshots:
     optionalDependencies:
       webpack: 5.96.1
 
-  rsbuild-plugin-dts@0.0.16(@rsbuild/core@1.0.19)(typescript@5.6.3):
+  rsbuild-plugin-dts@0.0.18(@rsbuild/core@1.1.0)(typescript@5.6.3):
     dependencies:
-      '@rsbuild/core': 1.0.19
+      '@rsbuild/core': 1.1.0
       magic-string: 0.30.12
       picocolors: 1.1.1
       tinyglobby: 0.2.10

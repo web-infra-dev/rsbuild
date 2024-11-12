@@ -68,7 +68,6 @@ export default defineConfig({
     define,
   },
   output: {
-    target: 'node',
     externals,
   },
   lib: [
