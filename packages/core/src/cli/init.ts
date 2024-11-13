@@ -60,14 +60,14 @@ export async function init({
 
           const paths = castArray(watchFilesConfig.paths);
           if (watchFilesConfig.options) {
-            watchFilesForRestart(paths, watchFilesConfig.options);
+            watchFilesForRestart(paths, root, watchFilesConfig.options);
           } else {
             files.push(...paths);
           }
         }
       }
 
-      watchFilesForRestart(files);
+      watchFilesForRestart(files, root);
     }
 
     config.source ||= {};

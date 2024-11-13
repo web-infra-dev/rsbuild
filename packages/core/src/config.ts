@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, isAbsolute, join } from 'node:path';
-import type { WatchOptions } from '../compiled/chokidar/index.js';
+import type { ChokidarOptions } from '../compiled/chokidar/index.js';
 import RspackChain from '../compiled/rspack-chain/index.js';
 import {
   ASSETS_DIST_DIR,
@@ -33,6 +33,7 @@ import {
 import { logger } from './logger';
 import { mergeRsbuildConfig } from './mergeConfig';
 import { restartDevServer } from './server/restart';
+import { createChokidar } from './server/watchFiles.js';
 import type {
   InspectConfigOptions,
   InspectConfigResult,
@@ -348,14 +349,14 @@ const resolveConfigPath = (root: string, customConfig?: string) => {
 
 export async function watchFilesForRestart(
   files: string[],
-  watchOptions?: WatchOptions,
+  root: string,
+  watchOptions?: ChokidarOptions,
 ): Promise<void> {
   if (!files.length) {
     return;
   }
 
-  const chokidar = await import('../compiled/chokidar/index.js');
-  const watcher = chokidar.watch(files, {
+  const watcher = await createChokidar(files, root, {
     // do not trigger add for initial files
     ignoreInitial: true,
     // If watching fails due to read permissions, the errors will be suppressed silently.

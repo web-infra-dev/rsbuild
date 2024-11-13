@@ -62,8 +62,8 @@ mYbzBtlg6o
 napi
 nolyfill
 nosources
-nuxt
 ntqry
+nuxt
 oklab
 onclosetag
 onopentag
@@ -109,13 +109,14 @@ subdir
 subpage
 subresource
 subresources
-svgr
 sveltejs
+svgr
 swcrc
 systemjs
 tailwindcss
 taze
 templating
+tinyglobby
 transpiling
 treeshaking
 tsbuildinfo

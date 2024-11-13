@@ -39,6 +39,7 @@ export default {
     'webpack-merge',
     'html-rspack-plugin',
     'mrmime',
+    'tinyglobby',
     {
       name: 'chokidar',
       externals: {
