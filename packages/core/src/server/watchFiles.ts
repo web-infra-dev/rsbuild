@@ -150,12 +150,15 @@ export async function createChokidar(
 }
 
 async function startWatchFiles(
-  { paths, options, type }: ReturnType<typeof prepareWatchOptions>,
+  {
+    paths,
+    options,
+    type = 'reload-page',
+  }: ReturnType<typeof prepareWatchOptions>,
   compileMiddlewareAPI: CompileMiddlewareAPI,
   root: string,
 ) {
-  // If `type` is 'reload-server', skip it.
-  if (type === 'reload-server') {
+  if (type !== 'reload-page') {
     return;
   }
 

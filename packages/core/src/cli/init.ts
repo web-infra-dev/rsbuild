@@ -54,7 +54,7 @@ export async function init({
 
       if (config.dev?.watchFiles) {
         for (const watchFilesConfig of castArray(config.dev.watchFiles)) {
-          if (watchFilesConfig.type === 'reload-page') {
+          if (watchFilesConfig.type !== 'reload-server') {
             continue;
           }
 

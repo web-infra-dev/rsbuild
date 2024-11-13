@@ -6,9 +6,9 @@ import content from './test-temp-config';
 const testPlugin: RsbuildPlugin = {
   name: 'test-plugin',
   setup(api) {
-    api.onBeforeBuild(() => {
+    api.onBeforeCreateCompiler(() => {
       fse.outputFileSync(
-        path.join(api.context.distPath, 'temp.txt'),
+        path.join(__dirname, 'test-temp-file.txt'),
         JSON.stringify(content),
       );
     });
