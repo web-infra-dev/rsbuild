@@ -249,13 +249,14 @@ export async function createDevServer<
 
   const compileMiddlewareAPI = runCompile ? await startCompile() : undefined;
 
+  const root = options.context.rootPath;
+
   const fileWatcher = await setupWatchFiles({
     dev: devConfig,
     server: config.server,
     compileMiddlewareAPI,
+    root,
   });
-
-  const pwd = options.context.rootPath;
 
   const readFileSync = (fileName: string) => {
     if ('readFileSync' in outputFileSystem) {
@@ -298,7 +299,7 @@ export async function createDevServer<
   );
 
   const devMiddlewares = await getMiddlewares({
-    pwd,
+    pwd: root,
     compileMiddlewareAPI,
     dev: devConfig,
     server: config.server,

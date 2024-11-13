@@ -39,12 +39,8 @@ export default {
     'webpack-merge',
     'html-rspack-plugin',
     'mrmime',
-    {
-      name: 'chokidar',
-      externals: {
-        fsevents: 'fsevents',
-      },
-    },
+    'tinyglobby',
+    'chokidar',
     {
       name: 'picocolors',
       beforeBundle({ depPath }) {

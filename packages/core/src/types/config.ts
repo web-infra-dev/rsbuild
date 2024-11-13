@@ -12,7 +12,7 @@ import type {
   SwcLoaderOptions,
   rspack,
 } from '@rspack/core';
-import type { WatchOptions } from '../../compiled/chokidar/index.js';
+import type { ChokidarOptions } from '../../compiled/chokidar/index.js';
 import type {
   Options as HttpProxyOptions,
   Filter as ProxyFilter,
@@ -1253,11 +1253,11 @@ export type ClientConfig = {
 export type NormalizedClientConfig = Pick<ClientConfig, 'protocol'> &
   Omit<Required<ClientConfig>, 'protocol'>;
 
-export type ChokidarWatchOptions = WatchOptions;
+export type { ChokidarOptions };
 
 export type WatchFiles = {
   paths: string | string[];
-  options?: WatchOptions;
+  options?: ChokidarOptions;
   type?: 'reload-page' | 'reload-server';
 };
 
