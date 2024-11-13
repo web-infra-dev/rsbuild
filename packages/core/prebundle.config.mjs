@@ -40,12 +40,7 @@ export default {
     'html-rspack-plugin',
     'mrmime',
     'tinyglobby',
-    {
-      name: 'chokidar',
-      externals: {
-        fsevents: 'fsevents',
-      },
-    },
+    'chokidar',
     {
       name: 'picocolors',
       beforeBundle({ depPath }) {
