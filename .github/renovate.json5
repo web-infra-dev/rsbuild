@@ -73,7 +73,6 @@
     // require Node 18
     'copy-webpack-plugin',
     // major version contains breaking changes
-    'chokidar',
     'style-loader',
     'http-proxy-middleware',
   ],

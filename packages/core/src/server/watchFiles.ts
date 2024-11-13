@@ -117,7 +117,7 @@ function prepareWatchOptions(
 }
 
 export async function createChokidar(
-  pathsOrGlobs: string[],
+  pathOrGlobs: string[],
   root: string,
   options: ChokidarOptions,
 ): Promise<FSWatcher> {
@@ -125,11 +125,11 @@ export async function createChokidar(
 
   const watchFiles: Set<string> = new Set();
 
-  const globPatterns = pathsOrGlobs.filter((pathsOrGlob) => {
-    if (isGlob(pathsOrGlob)) {
+  const globPatterns = pathOrGlobs.filter((pathOrGlob) => {
+    if (isGlob(pathOrGlob)) {
       return true;
     }
-    watchFiles.add(pathsOrGlob);
+    watchFiles.add(pathOrGlob);
     return false;
   });
 
