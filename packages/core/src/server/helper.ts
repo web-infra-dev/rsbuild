@@ -350,7 +350,10 @@ const isLoopbackHost = (host: string) => {
   return loopbackHosts.includes(host);
 };
 
-const getHostInUrl = (host: string) => {
+export const getHostInUrl = (host: string): string => {
+  if (host === DEFAULT_DEV_HOST) {
+    return 'localhost';
+  }
   if (net.isIPv6(host)) {
     return host === '::' ? '[::1]' : `[${host}]`;
   }

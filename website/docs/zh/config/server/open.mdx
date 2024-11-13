@@ -23,7 +23,7 @@ type Open =
 
 `server.open` 可以设置为如下的值。
 
-- 打开项目的默认页面，等价于 `http://localhost:<port>`：
+- 打开项目的默认页面，默认为 `http://localhost:<port>`。如果配置了 [server.host](/config/server/host)，则默认为 `http://<host>:<port>`。
 
 ```js
 export default {

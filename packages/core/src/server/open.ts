@@ -4,6 +4,7 @@ import { STATIC_PATH } from '../constants';
 import { canParse, castArray } from '../helpers';
 import { logger } from '../logger';
 import type { NormalizedConfig, Routes } from '../types';
+import { getHostInUrl } from './helper';
 
 const execAsync = promisify(exec);
 
@@ -139,7 +140,6 @@ export async function open({
   clearCache?: boolean;
 }): Promise<void> {
   const { targets, before } = normalizeOpenConfig(config);
-  const host = config.server.host || 'localhost';
 
   // Skip open in codesandbox. After being bundled, the `open` package will
   // try to call system xdg-open, which will cause an error on codesandbox.
@@ -155,6 +155,7 @@ export async function open({
 
   const urls: string[] = [];
   const protocol = https ? 'https' : 'http';
+  const host = getHostInUrl(config.server.host);
   const baseUrl = `${protocol}://${host}:${port}`;
 
   if (!targets.length) {
