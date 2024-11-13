@@ -64,3 +64,31 @@ test('should not restart dev server if `watchFiles.type` is `reload-page`', asyn
 
   childProcess.kill();
 });
+
+test('should not restart dev server if `watchFiles.type` is not set', async () => {
+  const dist = path.join(__dirname, 'dist');
+  const extraConfigFile = path.join(__dirname, tempConfigPath);
+
+  fs.rmSync(extraConfigFile, { force: true });
+  fs.rmSync(dist, { recursive: true, force: true });
+  fs.writeFileSync(extraConfigFile, 'export default { foo: 1 };');
+
+  const childProcess = exec('npx rsbuild dev', {
+    cwd: __dirname,
+    env: {
+      ...process.env,
+      PORT: String(await getRandomPort()),
+    },
+  });
+
+  await awaitFileExists(dist);
+
+  fs.rmSync(dist, { recursive: true });
+  // temp config changed
+  fs.writeFileSync(extraConfigFile, 'export default { foo: 2 };');
+
+  await new Promise((resolve) => setTimeout(resolve, 300));
+  expect(fs.existsSync(path.join(dist, 'temp.txt'))).toBeFalsy();
+
+  childProcess.kill();
+});

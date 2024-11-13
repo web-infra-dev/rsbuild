@@ -104,11 +104,14 @@ function prepareWatchOptions(
 }
 
 async function startWatchFiles(
-  { paths, options, type }: ReturnType<typeof prepareWatchOptions>,
+  {
+    paths,
+    options,
+    type = 'reload-page',
+  }: ReturnType<typeof prepareWatchOptions>,
   compileMiddlewareAPI: CompileMiddlewareAPI,
 ) {
-  // If `type` is 'reload-server', skip it.
-  if (type === 'reload-server') {
+  if (type !== 'reload-page') {
     return;
   }
 
