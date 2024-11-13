@@ -134,10 +134,10 @@ export async function createChokidar(
   });
 
   if (globPatterns.length) {
-    const { default: tinyglobby } = await import(
-      '../../compiled/tinyglobby/index.js'
-    );
-    const files = await tinyglobby.glob(globPatterns, {
+    const tinyglobby = await import('../../compiled/tinyglobby/index.js');
+    // interop default to make both CJS and ESM work
+    const { glob } = tinyglobby.default || tinyglobby;
+    const files = await glob(globPatterns, {
       cwd: root,
       absolute: true,
     });
