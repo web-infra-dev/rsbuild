@@ -23,7 +23,7 @@ type Open =
 
 `server.open` can be set to the following values.
 
-- Open the project's default preview page, equivalent to `http://localhost:<port>`:
+- Open the project's default preview page, which defaults to `http://localhost:<port>`. If [server.host](/config/server/host) is configured, it defaults to `http://<host>:<port>`.
 
 ```js
 export default {
