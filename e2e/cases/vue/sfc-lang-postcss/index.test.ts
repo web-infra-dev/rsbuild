@@ -2,7 +2,7 @@ import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest(
-  'should build Vue sfc with lang="postcss" correctly',
+  'should build Vue SFC with lang="postcss" correctly',
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,

@@ -2,7 +2,7 @@ import { build, dev, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest(
-  'should build Vue sfc with CSS Modules correctly in dev build',
+  'should build Vue SFC with CSS Modules correctly in dev build',
   async ({ page }) => {
     const rsbuild = await dev({
       cwd: __dirname,
@@ -22,7 +22,7 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest(
-  'should build Vue sfc with CSS Modules correctly in prod build',
+  'should build Vue SFC with CSS Modules correctly in prod build',
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,

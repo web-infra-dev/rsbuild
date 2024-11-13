@@ -1,7 +1,7 @@
 import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
-rspackOnlyTest('should build Vue sfc style correctly', async ({ page }) => {
+rspackOnlyTest('should build Vue SFC style correctly', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     page,
