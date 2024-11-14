@@ -94,7 +94,10 @@ export function runCli(): void {
     .description('build the app for production')
     .action(async (options: BuildOptions) => {
       try {
-        const rsbuild = await init({ cliOptions: options });
+        const rsbuild = await init({
+          cliOptions: options,
+          isBuildWatch: options.watch,
+        });
         await rsbuild?.build({
           watch: options.watch,
         });

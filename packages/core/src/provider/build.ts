@@ -1,6 +1,7 @@
 import { rspack } from '@rspack/core';
 import { registerBuildHook } from '../hooks';
 import { logger } from '../logger';
+import { onBeforeRestartServer } from '../server/restart';
 import type { Build, BuildOptions, Rspack } from '../types';
 import { createCompiler } from './createCompiler';
 import type { InitConfigsOptions } from './initConfigs';
@@ -36,13 +37,17 @@ export const build = async (
         logger.error(err);
       }
     });
+    const close = () =>
+      new Promise<void>((resolve) => {
+        compiler.close(() => {
+          resolve();
+        });
+      });
+
+    onBeforeRestartServer(close);
+
     return {
-      close: () =>
-        new Promise((resolve) => {
-          compiler.close(() => {
-            resolve();
-          });
-        }),
+      close,
     };
   }
 
