@@ -18,6 +18,4 @@ export { formatStats, getStatsOptions, prettyTime } from './helpers';
 export { registerBuildHook, registerDevHook } from './hooks';
 export { getChainUtils, getConfigUtils } from './provider/rspackConfig';
 export { chainToConfig, modifyBundlerChain } from './configChain';
-export { applySwcDecoratorConfig } from './plugins/swc';
-export { getSwcMinimizerOptions } from './plugins/minimize';
 export { createDevServer } from './server/devServer';
