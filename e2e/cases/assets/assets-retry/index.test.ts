@@ -1,10 +1,10 @@
+import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import { dev, getRandomPort, gotoPage, proxyConsole } from '@e2e/helper';
 import { type Page, expect, test } from '@playwright/test';
 import { type RequestHandler, logger } from '@rsbuild/core';
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 import type { PluginAssetsRetryOptions } from '@rsbuild/plugin-assets-retry';
 import { pluginReact } from '@rsbuild/plugin-react';
-import stripAnsi from 'strip-ansi';
 
 // TODO: write a common testMiddleware instead of collect DEBUG logger
 

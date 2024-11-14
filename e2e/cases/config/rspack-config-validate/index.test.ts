@@ -1,7 +1,7 @@
+import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import { build, proxyConsole, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
-import stripAnsi from 'strip-ansi';
 
 rspackOnlyTest('should validate Rspack config by default', async () => {
   try {

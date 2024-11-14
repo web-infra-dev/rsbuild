@@ -165,9 +165,6 @@ importers:
       playwright:
         specifier: 1.44.1
         version: 1.44.1
-      strip-ansi:
-        specifier: 6.0.1
-        version: 6.0.1
       tailwindcss:
         specifier: ^3.4.14
         version: 3.4.14
