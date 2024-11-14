@@ -1,11 +1,10 @@
 import { type Rspack, logger } from '@rsbuild/core';
 import WebpackMultiStats from 'webpack/lib/MultiStats.js';
 import { type InitConfigsOptions, initConfigs } from './initConfigs.js';
-import { formatStats, getStatsOptions, registerDevHook } from './shared.js';
 
 export async function createCompiler(options: InitConfigsOptions) {
   logger.debug('create compiler');
-  const { context } = options;
+  const { helpers, context } = options;
   const { webpackConfigs } = await initConfigs(options);
 
   await context.hooks.onBeforeCreateCompiler.call({
@@ -22,7 +21,7 @@ export async function createCompiler(options: InitConfigsOptions) {
     | Rspack.MultiCompiler;
 
   const done = (stats: Rspack.Stats) => {
-    const statsOptions = getStatsOptions(compiler);
+    const statsOptions = helpers.getStatsOptions(compiler);
     const statsJson = stats.toJson({
       children: true,
       ...(typeof statsOptions === 'string'
@@ -31,7 +30,10 @@ export async function createCompiler(options: InitConfigsOptions) {
       ...(typeof statsOptions === 'object' ? statsOptions : {}),
     });
 
-    const { message, level } = formatStats(statsJson, stats.hasErrors());
+    const { message, level } = helpers.formatStats(
+      statsJson,
+      stats.hasErrors(),
+    );
 
     if (level === 'error') {
       logger.error(message);
@@ -46,7 +48,7 @@ export async function createCompiler(options: InitConfigsOptions) {
   });
 
   if (context.normalizedConfig?.mode === 'development') {
-    registerDevHook({
+    helpers.registerDevHook({
       compiler,
       context,
       bundlerConfigs: webpackConfigs as Rspack.Configuration[],

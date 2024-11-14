@@ -3,9 +3,7 @@ import { isPromise } from 'node:util/types';
 import { createContext } from './createContext';
 import { color, getNodeEnv, isEmptyDir, pick, setNodeEnv } from './helpers';
 import { initPluginAPI } from './initPlugins';
-import { initRsbuildConfig } from './internal';
 import { logger } from './logger';
-import { setCssExtractPlugin } from './pluginHelper';
 import { createPluginManager } from './pluginManager';
 import { pluginAppIcon } from './plugins/appIcon';
 import { pluginAsset } from './plugins/asset';
@@ -40,6 +38,8 @@ import { pluginSri } from './plugins/sri';
 import { pluginSwc } from './plugins/swc';
 import { pluginTarget } from './plugins/target';
 import { pluginWasm } from './plugins/wasm';
+import * as providerHelpers from './provider/helpers';
+import { initRsbuildConfig } from './provider/initConfigs';
 import { rspackProvider } from './provider/provider';
 import { startProdServer } from './server/prodServer';
 import type {
@@ -140,7 +140,7 @@ export async function createRsbuild(
     context,
     pluginManager,
     rsbuildOptions,
-    setCssExtractPlugin,
+    helpers: providerHelpers,
   });
 
   const preview = async (options: PreviewOptions = {}) => {

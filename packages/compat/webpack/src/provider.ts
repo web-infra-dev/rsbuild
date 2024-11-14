@@ -4,27 +4,27 @@ import { createCompiler as baseCreateCompiler } from './createCompiler.js';
 import { initConfigs } from './initConfigs.js';
 import { inspectConfig } from './inspectConfig.js';
 import { pluginAdaptor } from './plugin.js';
-import { createDevServer, initRsbuildConfig } from './shared.js';
 
 export const webpackProvider: RsbuildProvider<'webpack'> = async ({
   context,
   pluginManager,
   rsbuildOptions,
-  setCssExtractPlugin,
+  helpers,
 }) => {
   const { default: cssExtractPlugin } = await import('mini-css-extract-plugin');
-  setCssExtractPlugin(cssExtractPlugin);
+  helpers.setCssExtractPlugin(cssExtractPlugin);
 
   const createCompiler = (async () => {
     const result = await baseCreateCompiler({
       context,
       pluginManager,
       rsbuildOptions,
+      helpers,
     });
     return result.compiler;
   }) as CreateCompiler;
 
-  pluginManager.addPlugins([pluginAdaptor()]);
+  pluginManager.addPlugins([pluginAdaptor(helpers)]);
 
   return {
     bundler: 'webpack',
@@ -36,13 +36,17 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
         context,
         pluginManager,
         rsbuildOptions,
+        helpers,
       });
       return webpackConfigs;
     },
 
     async createDevServer(options) {
-      const config = await initRsbuildConfig({ context, pluginManager });
-      return createDevServer(
+      const config = await helpers.initRsbuildConfig({
+        context,
+        pluginManager,
+      });
+      return helpers.createDevServer(
         { context, pluginManager, rsbuildOptions },
         createCompiler,
         config,
@@ -51,11 +55,11 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     },
 
     async startDevServer(options) {
-      const config = await initRsbuildConfig({
+      const config = await helpers.initRsbuildConfig({
         context,
         pluginManager,
       });
-      const server = await createDevServer(
+      const server = await helpers.createDevServer(
         {
           context,
           pluginManager,
@@ -70,7 +74,10 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     },
 
     async build(options) {
-      return build({ context, pluginManager, rsbuildOptions }, options);
+      return build(
+        { context, pluginManager, rsbuildOptions, helpers },
+        options,
+      );
     },
 
     async inspectConfig(inspectOptions) {
@@ -79,6 +86,7 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
         pluginManager,
         rsbuildOptions,
         inspectOptions,
+        helpers,
       });
     },
   };

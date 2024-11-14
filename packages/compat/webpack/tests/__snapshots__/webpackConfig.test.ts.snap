@@ -85,6 +85,7 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
     "modulesCount": 5000,
     "name": "ProgressPlugin",
     "percentBy": null,
+    "prettyTime": [Function],
     "profile": false,
     "showActiveModules": false,
     "showDependencies": true,

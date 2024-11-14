@@ -4,13 +4,12 @@ import type { Configuration as WebpackConfig } from 'webpack';
 import WebpackMultiStats from 'webpack/lib/MultiStats.js';
 import { createCompiler } from './createCompiler.js';
 import type { InitConfigsOptions } from './initConfigs.js';
-import { registerBuildHook } from './shared.js';
 
 export const build = async (
   initOptions: InitConfigsOptions,
   { watch, compiler: customCompiler }: BuildOptions = {},
 ): Promise<ReturnType<Build>> => {
-  const { context } = initOptions;
+  const { helpers, context } = initOptions;
 
   let compiler: Rspack.Compiler | Rspack.MultiCompiler;
   let bundlerConfigs: WebpackConfig[] | undefined;
@@ -23,7 +22,7 @@ export const build = async (
     bundlerConfigs = result.webpackConfigs;
   }
 
-  registerBuildHook({
+  helpers.registerBuildHook({
     context,
     bundlerConfigs: bundlerConfigs as Rspack.Configuration[],
     compiler,

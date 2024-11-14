@@ -1,22 +1,17 @@
 import {
   type EnvironmentContext,
+  type InternalContext,
   type ModifyRspackConfigUtils,
   type ModifyWebpackChainUtils,
   type ModifyWebpackConfigUtils,
+  type RsbuildProviderHelpers,
   type RsbuildTarget,
   type Rspack,
   type RspackChain,
-  __internalHelper,
   logger,
 } from '@rsbuild/core';
 import { reduceConfigsWithContext } from 'reduce-configs';
-import {
-  type InternalContext,
-  castArray,
-  chainToConfig,
-  getChainUtils as getBaseChainUtils,
-  modifyBundlerChain,
-} from './shared.js';
+import { castArray } from './shared.js';
 import type { WebpackConfig } from './types.js';
 
 async function modifyWebpackChain(
@@ -71,6 +66,7 @@ async function modifyWebpackConfig(
 async function getChainUtils(
   target: RsbuildTarget,
   environment: EnvironmentContext,
+  helpers: RsbuildProviderHelpers,
 ): Promise<ModifyWebpackChainUtils> {
   const { default: webpack } = await import('webpack');
   const nameMap = {
@@ -80,10 +76,10 @@ async function getChainUtils(
   };
 
   return {
-    ...getBaseChainUtils(target, environment),
+    ...helpers.getChainUtils(target, environment),
     name: nameMap[target] || '',
     webpack,
-    HtmlWebpackPlugin: __internalHelper.getHTMLPlugin(),
+    HtmlWebpackPlugin: helpers.getHTMLPlugin(),
   };
 }
 
@@ -91,14 +87,17 @@ export async function generateWebpackConfig({
   target,
   context,
   environment,
+  helpers,
 }: {
   environment: string;
   target: RsbuildTarget;
   context: InternalContext;
+  helpers: RsbuildProviderHelpers;
 }): Promise<WebpackConfig> {
   const chainUtils = await getChainUtils(
     target,
     context.environments[environment],
+    helpers,
   );
   const { default: webpack } = await import('webpack');
   const {
@@ -109,7 +108,7 @@ export async function generateWebpackConfig({
     HotModuleReplacementPlugin,
   } = webpack;
 
-  const bundlerChain = await modifyBundlerChain(context, {
+  const bundlerChain = await helpers.modifyBundlerChain(context, {
     ...chainUtils,
     bundler: {
       BannerPlugin,
@@ -122,9 +121,9 @@ export async function generateWebpackConfig({
 
   const chain = await modifyWebpackChain(context, chainUtils, bundlerChain);
 
-  let webpackConfig = chainToConfig(chain) as WebpackConfig;
+  let webpackConfig = helpers.chainToConfig(chain) as WebpackConfig;
 
-  const configUtils = (await __internalHelper.getConfigUtils(
+  const configUtils = (await helpers.getConfigUtils(
     webpackConfig as Rspack.Configuration,
     chainUtils as unknown as ModifyRspackConfigUtils,
   )) as unknown as ModifyWebpackConfigUtils;

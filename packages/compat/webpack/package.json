@@ -45,7 +45,7 @@
     "typescript": "^5.6.3"
   },
   "peerDependencies": {
-    "@rsbuild/core": "1.x"
+    "@rsbuild/core": "^1.1.2"
   },
   "publishConfig": {
     "access": "public",
