@@ -16,7 +16,11 @@ export const nodeMinifyConfig: Minify = {
       // preserve variable name and disable minify for easier debugging
       mangle: false,
       minify: false,
-      compress: true,
+      compress: {
+        defaults: true,
+        // do not inline functions as this breaks readability of functions
+        reduce_funcs: false,
+      },
     },
   },
 };
