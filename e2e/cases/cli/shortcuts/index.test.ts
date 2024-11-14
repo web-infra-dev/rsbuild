@@ -1,7 +1,7 @@
 import { exec } from 'node:child_process';
+import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import { expect, test } from '@playwright/test';
 import { waitFor } from 'scripts';
-import stripAnsi from 'strip-ansi';
 
 test('should display shortcuts as expected in dev', async () => {
   const devProcess = exec('node ./dev.mjs', {

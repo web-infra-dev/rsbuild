@@ -1,13 +1,13 @@
 import fs from 'node:fs';
 import { platform } from 'node:os';
 import { join } from 'node:path';
+import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import { test } from '@playwright/test';
 import type { ConsoleType } from '@rsbuild/core';
 import glob, {
   convertPathToPattern,
   type Options as GlobOptions,
 } from 'fast-glob';
-import stripAnsi from 'strip-ansi';
 
 export const providerType = process.env.PROVIDE_TYPE || 'rspack';
 

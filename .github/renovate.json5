@@ -63,7 +63,6 @@
     'loader-utils',
     // pure ESM packages can not be used now
     'open',
-    'strip-ansi',
     'ansi-escapes',
     'cli-truncate',
     'patch-console',
