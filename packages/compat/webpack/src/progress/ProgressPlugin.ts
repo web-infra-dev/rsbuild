@@ -1,10 +1,25 @@
 import { logger } from '@rsbuild/core';
 import color from 'picocolors';
 import webpack from 'webpack';
-import { prettyTime } from '../shared.js';
 import { bus, createFriendlyPercentage } from './helpers/index.js';
 import { createNonTTYLogger } from './helpers/nonTty.js';
 import type { Props } from './helpers/types.js';
+
+const prettyTime = (seconds: number): string => {
+  const format = (time: string) => color.bold(time);
+
+  if (seconds < 10) {
+    const digits = seconds >= 0.01 ? 2 : 3;
+    return `${format(seconds.toFixed(digits))} s`;
+  }
+
+  if (seconds < 60) {
+    return `${format(seconds.toFixed(1))} s`;
+  }
+
+  const minutes = seconds / 60;
+  return `${format(minutes.toFixed(2))} m`;
+};
 
 export interface ProgressOptions
   extends Omit<Partial<Props>, 'message' | 'total' | 'current' | 'done'> {

@@ -1,4 +1,5 @@
 import type { Compiler, MultiCompiler } from '@rspack/core';
+import type * as providerHelpers from '../provider/helpers';
 import type { RsbuildDevServer } from '../server/devServer';
 import type { StartServerResult } from '../server/helper';
 import type { RsbuildConfig } from './config';
@@ -133,12 +134,14 @@ export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
   ) => Promise<InspectConfigResult<B>>;
 };
 
+export type RsbuildProviderHelpers = typeof providerHelpers;
+
 export type RsbuildProvider<B extends 'rspack' | 'webpack' = 'rspack'> =
   (options: {
     context: InternalContext;
     pluginManager: PluginManager;
     rsbuildOptions: ResolvedCreateRsbuildOptions;
-    setCssExtractPlugin: (plugin: unknown) => void;
+    helpers: RsbuildProviderHelpers;
   }) => Promise<ProviderInstance<B>>;
 
 export type RsbuildInstance = {

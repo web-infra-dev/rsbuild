@@ -1,11 +1,12 @@
 import {
   type InspectConfigOptions,
+  type InternalContext,
   type PluginManager,
   type ResolvedCreateRsbuildOptions,
+  type RsbuildProviderHelpers,
   logger,
 } from '@rsbuild/core';
 import { inspectConfig } from './inspectConfig.js';
-import { type InternalContext, initRsbuildConfig } from './shared.js';
 import type { WebpackConfig } from './types.js';
 import { generateWebpackConfig } from './webpackConfig.js';
 
@@ -13,16 +14,18 @@ export type InitConfigsOptions = {
   context: InternalContext;
   pluginManager: PluginManager;
   rsbuildOptions: ResolvedCreateRsbuildOptions;
+  helpers: RsbuildProviderHelpers;
 };
 
 export async function initConfigs({
   context,
   pluginManager,
   rsbuildOptions,
+  helpers,
 }: InitConfigsOptions): Promise<{
   webpackConfigs: WebpackConfig[];
 }> {
-  const normalizedConfig = await initRsbuildConfig({
+  const normalizedConfig = await helpers.initRsbuildConfig({
     context,
     pluginManager,
   });
@@ -33,6 +36,7 @@ export async function initConfigs({
         target: config.output.target,
         context,
         environment,
+        helpers,
       }),
     ),
   );
@@ -50,6 +54,7 @@ export async function initConfigs({
         inspectOptions,
         rsbuildOptions,
         bundlerConfigs: webpackConfigs,
+        helpers,
       });
     };
 
