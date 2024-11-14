@@ -285,8 +285,8 @@ export function initPluginAPI({
           }
 
           const loaderName = descriptor.raw
-            ? 'transformRawLoader.cjs'
-            : 'transformLoader.cjs';
+            ? 'transformRawLoader.mjs'
+            : 'transformLoader.mjs';
           const loaderPath = join(LOADER_PATH, loaderName);
 
           rule

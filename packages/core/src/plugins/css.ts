@@ -266,7 +266,7 @@ async function applyCSSRule({
   } else {
     rule
       .use(CHAIN_ID.USE.IGNORE_CSS)
-      .loader(path.join(LOADER_PATH, 'ignoreCssLoader.cjs'));
+      .loader(path.join(LOADER_PATH, 'ignoreCssLoader.mjs'));
   }
 
   // Number of loaders applied before css-loader for `@import` at-rules
