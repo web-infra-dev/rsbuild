@@ -530,7 +530,8 @@ export interface PerformanceConfig {
   /**
    * Used to control resource `Prefetch`.
    *
-   * Specifies that the user agent should preemptively fetch and cache the target resource as it is likely to be required for a followup navigation.
+   * Specifies that the user agent should preemptively fetch and cache the target resource as it
+   * is likely to be required for a followup navigation.
    */
   prefetch?: true | PreloadOrPreFetchOption;
 
@@ -841,7 +842,8 @@ export interface OutputConfig {
    */
   target?: RsbuildTarget;
   /**
-   * At build time, prevent some `import` dependencies from being packed into bundles in your code, and instead fetch them externally at runtime.
+   * At build time, prevent some `import` dependencies from being packed into bundles in your code,
+   * and instead fetch them externally at runtime.
    * For more information, please see: [Rspack Externals](https://rspack.dev/config/externals)
    * @default undefined
    */
@@ -957,6 +959,13 @@ export interface OutputConfig {
    * @default true
    */
   emitAssets?: boolean;
+  /**
+   * Whether to emit CSS to the output bundles.
+   * If `false`, the CSS will not be extracted to separate files or injected into the JavaScript
+   * bundles via `output.injectStyles`.
+   * @default `true` when `output.target` is `web`, otherwise `false`
+   */
+  emitCss?: boolean;
 }
 
 export interface NormalizedOutputConfig extends OutputConfig {

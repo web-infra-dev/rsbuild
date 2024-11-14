@@ -13,7 +13,6 @@ import type {
   RsbuildContext,
   RsbuildPlugin,
 } from '../types';
-import { isUseCssExtract } from './css';
 
 function getPublicPath({
   isProd,
@@ -141,7 +140,8 @@ export const pluginOutput = (): RsbuildPlugin => ({
         }
 
         // CSS output
-        if (isUseCssExtract(config, target)) {
+        const emitCss = config.output.emitCss ?? target === 'web';
+        if (!config.output.injectStyles && emitCss) {
           const extractPluginOptions = config.tools.cssExtract.pluginOptions;
 
           const cssPath = config.output.distPath.css;

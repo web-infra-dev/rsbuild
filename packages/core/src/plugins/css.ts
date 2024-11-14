@@ -15,16 +15,9 @@ import type {
   PostCSSOptions,
   RsbuildContext,
   RsbuildPlugin,
-  RsbuildTarget,
   Rspack,
   RspackChain,
 } from '../types';
-
-export const isUseCssExtract = (
-  config: NormalizedEnvironmentConfig,
-  target: RsbuildTarget,
-): boolean =>
-  !config.output.injectStyles && target !== 'node' && target !== 'web-worker';
 
 const getCSSModulesLocalIdentName = (
   config: NormalizedEnvironmentConfig,
@@ -203,13 +196,13 @@ const getPostcssLoaderOptions = async ({
 const getCSSLoaderOptions = ({
   config,
   importLoaders,
-  target,
   localIdentName,
+  emitCss,
 }: {
   config: NormalizedEnvironmentConfig;
   importLoaders: number;
-  target: RsbuildTarget;
   localIdentName: string;
+  emitCss: boolean;
 }) => {
   const { cssModules } = config.output;
 
@@ -230,7 +223,7 @@ const getCSSLoaderOptions = ({
 
   const cssLoaderOptions = normalizeCssLoaderOptions(
     mergedCssLoaderOptions,
-    target !== 'web',
+    !emitCss,
   );
 
   return cssLoaderOptions;
@@ -247,30 +240,28 @@ async function applyCSSRule({
   context: RsbuildContext;
   utils: ModifyChainUtils;
 }) {
-  // Check user config
-  const enableExtractCSS = isUseCssExtract(config, target);
+  const emitCss = config.output.emitCss ?? target === 'web';
 
   // Create Rspack rule
   // Order: style-loader/CssExtractRspackPlugin -> css-loader -> postcss-loader
-  if (target === 'web') {
-    // use CssExtractRspackPlugin loader
-    if (enableExtractCSS) {
-      rule
-        .use(CHAIN_ID.USE.MINI_CSS_EXTRACT)
-        .loader(getCssExtractPlugin().loader)
-        .options(config.tools.cssExtract.loaderOptions);
-    }
+  if (emitCss) {
     // use style-loader
-    else {
+    if (config.output.injectStyles) {
       const styleLoaderOptions = reduceConfigs({
         initial: {},
         config: config.tools.styleLoader,
       });
-
       rule
         .use(CHAIN_ID.USE.STYLE)
         .loader(getCompiledPath('style-loader'))
         .options(styleLoaderOptions);
+    }
+    // use CssExtractRspackPlugin loader
+    else {
+      rule
+        .use(CHAIN_ID.USE.MINI_CSS_EXTRACT)
+        .loader(getCssExtractPlugin().loader)
+        .options(config.tools.cssExtract.loaderOptions);
     }
   } else {
     rule
@@ -283,7 +274,7 @@ async function applyCSSRule({
 
   rule.use(CHAIN_ID.USE.CSS).loader(getCompiledPath('css-loader'));
 
-  if (target === 'web') {
+  if (emitCss) {
     // `builtin:lightningcss-loader` is not supported when using webpack
     if (
       context.bundlerType === 'rspack' &&
@@ -337,8 +328,8 @@ async function applyCSSRule({
   const cssLoaderOptions = getCSSLoaderOptions({
     config,
     importLoaders,
-    target,
     localIdentName,
+    emitCss,
   });
   rule.use(CHAIN_ID.USE.CSS).options(cssLoaderOptions);
 
