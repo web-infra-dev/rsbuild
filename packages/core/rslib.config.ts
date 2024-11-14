@@ -1,6 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { pluginCleanTscCache } from '@rsbuild/config/rslib.config';
+import {
+  nodeMinifyConfig,
+  pluginCleanTscCache,
+} from '@rsbuild/config/rslib.config';
 import { defineConfig } from '@rslib/core';
 import type { Configuration } from '@rspack/core';
 import pkgJson from './package.json';
@@ -85,6 +88,9 @@ export default defineConfig({
       dts: {
         build: true,
       },
+      output: {
+        minify: nodeMinifyConfig,
+      },
     },
     // Node / CJS
     {
@@ -97,6 +103,9 @@ export default defineConfig({
           transformLoader: './src/loader/transformLoader.ts',
           transformRawLoader: './src/loader/transformRawLoader.ts',
         },
+      },
+      output: {
+        minify: nodeMinifyConfig,
       },
       footer: {
         // TODO https://github.com/web-infra-dev/rslib/issues/351

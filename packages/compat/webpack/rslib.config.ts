@@ -3,14 +3,14 @@ import {
   dualPackage,
   esmConfig,
 } from '@rsbuild/config/rslib.config.ts';
+import { mergeRsbuildConfig } from '@rsbuild/core';
 import { defineConfig } from '@rslib/core';
 
 export default defineConfig({
   ...dualPackage,
   lib: [
     esmConfig,
-    {
-      ...cjsConfig,
+    mergeRsbuildConfig(cjsConfig, {
       output: {
         // TODO https://github.com/web-infra-dev/rslib/issues/287
         externals: {
@@ -26,6 +26,6 @@ export default defineConfig({
         js: `// Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = { webpackProvider: exports.webpackProvider });`,
       },
-    },
+    }),
   ],
 });
