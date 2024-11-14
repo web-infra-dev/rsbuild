@@ -39,7 +39,7 @@ export const build = async (
 
     return {
       close: () =>
-        new Promise<void>((resolve) => {
+        new Promise((resolve) => {
           compiler.close(() => {
             resolve();
           });
