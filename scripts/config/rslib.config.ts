@@ -13,6 +13,7 @@ export const nodeMinifyConfig: Minify = {
   css: false,
   jsOptions: {
     minimizerOptions: {
+      // preserve variable name and disable minify for easier debugging
       mangle: false,
       minify: false,
       compress: true,
