@@ -1,4 +1,4 @@
 import './a.css';
-import style from './b.module.scss';
+import style from './b.module.css';
 
 console.log(style);

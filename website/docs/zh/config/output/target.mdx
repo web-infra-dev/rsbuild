@@ -67,10 +67,10 @@ export default {
 
 - 将 Rspack 的 [target](https://rspack.dev/config/target) 设置为 `'node'`。
 - 不会生成 HTML 文件，与 HTML 相关的逻辑也不会执行，因为 Node.js 环境不需要 HTML。
-- 不会打包或抽取 CSS 代码，但产物中会包含 CSS Modules 的 id 信息。
 - 不会开启默认的拆包策略，但 dynamic import 依然可以生效。
 - 不会开启热更新相关的能力。
-- 将 Browserslist 的默认值调整为 `['node >= 16']`。
+- 将 Browserslist 的默认值设置为 `['node >= 16']`。
+- 将 [output.emitCss](/config/output/emit-css) 的默认值设置为 `false`。这意味着 CSS 代码不会被抽取为单独的文件，但产物中会包含 CSS Modules 的 id 信息。
 
 ## Web Worker 产物
 
@@ -80,8 +80,8 @@ export default {
 
 - 将 Rspack 的 [target](https://rspack.dev/config/target) 设置为 `'webworker'`。
 - 不会生成 HTML 文件，与 HTML 相关的逻辑也不会执行，因为 Web Worker 环境不需要 HTML。
-- 不会打包或抽取 CSS 代码，但产物中会包含 CSS Modules 的 id 信息。
 - 不会开启默认的拆包策略，**并且 dynamic import 也不会生效**，因为 Web Worker 仅运行支持单个 JavaScript 文件。
+- 将 [output.emitCss](/config/output/emit-css) 的默认值设置为 `false`。这意味着 CSS 代码不会被抽取为单独的文件，但产物中会包含 CSS Modules 的 id 信息。
 - 不会开启热更新相关的能力。
 
 更多信息可参考 [使用 Web Workers](/guide/basic/web-workers)。
