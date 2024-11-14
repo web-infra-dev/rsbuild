@@ -1,10 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { __internalHelper } from '@rsbuild/core';
 import type {
   ModifyChainUtils,
   NormalizedEnvironmentConfig,
   NormalizedSourceConfig,
+  Rspack,
   TransformImport,
 } from '@rsbuild/core';
 import _ from 'lodash';
@@ -17,7 +17,30 @@ import type {
   TransformConfig,
 } from './types.js';
 
-const { applySwcDecoratorConfig } = __internalHelper;
+export function applySwcDecoratorConfig(
+  swcConfig: Rspack.SwcLoaderOptions,
+  config: NormalizedEnvironmentConfig,
+): void {
+  swcConfig.jsc ||= {};
+  swcConfig.jsc.transform ||= {};
+
+  const { version } = config.source.decorators;
+
+  switch (version) {
+    case 'legacy':
+      swcConfig.jsc.transform.legacyDecorator = true;
+      swcConfig.jsc.transform.decoratorMetadata = true;
+      // see: https://github.com/swc-project/swc/issues/6571
+      swcConfig.jsc.transform.useDefineForClassFields = false;
+      break;
+    case '2022-03':
+      swcConfig.jsc.transform.legacyDecorator = false;
+      swcConfig.jsc.transform.decoratorVersion = '2022-03';
+      break;
+    default:
+      throw new Error(`Unknown decorators version: ${version}`);
+  }
+}
 
 const castArray = <T>(arr?: T | T[]): T[] => {
   if (arr === undefined) {
