@@ -32,7 +32,7 @@ import {
 } from './helpers';
 import { logger } from './logger';
 import { mergeRsbuildConfig } from './mergeConfig';
-import { restartDevServer } from './server/restart';
+import { restartBuild, restartDevServer } from './server/restart';
 import { createChokidar } from './server/watchFiles.js';
 import type {
   InspectConfigOptions,
@@ -350,6 +350,7 @@ const resolveConfigPath = (root: string, customConfig?: string) => {
 export async function watchFilesForRestart(
   files: string[],
   root: string,
+  isBuildWatch: boolean,
   watchOptions?: ChokidarOptions,
 ): Promise<void> {
   if (!files.length) {
@@ -367,7 +368,11 @@ export async function watchFilesForRestart(
   const callback = debounce(
     async (filePath) => {
       watcher.close();
-      await restartDevServer({ filePath });
+      if (isBuildWatch) {
+        await restartBuild({ filePath });
+      } else {
+        await restartDevServer({ filePath });
+      }
     },
     // set 300ms debounce to avoid restart frequently
     300,

@@ -36,6 +36,7 @@ export const build = async (
         logger.error(err);
       }
     });
+
     return {
       close: () =>
         new Promise((resolve) => {

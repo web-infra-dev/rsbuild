@@ -20,9 +20,11 @@ const getEnvDir = (cwd: string, envDir?: string) => {
 export async function init({
   cliOptions,
   isRestart,
+  isBuildWatch = false,
 }: {
   cliOptions?: CommonOptions;
   isRestart?: boolean;
+  isBuildWatch?: boolean;
 }): Promise<RsbuildInstance | undefined> {
   if (cliOptions) {
     commonOpts = cliOptions;
@@ -45,7 +47,7 @@ export async function init({
     });
 
     const command = process.argv[2];
-    if (command === 'dev') {
+    if (command === 'dev' || isBuildWatch) {
       const files = [...envs.filePaths];
 
       if (configFilePath) {
@@ -60,14 +62,19 @@ export async function init({
 
           const paths = castArray(watchFilesConfig.paths);
           if (watchFilesConfig.options) {
-            watchFilesForRestart(paths, root, watchFilesConfig.options);
+            watchFilesForRestart(
+              paths,
+              root,
+              isBuildWatch,
+              watchFilesConfig.options,
+            );
           } else {
             files.push(...paths);
           }
         }
       }
 
-      watchFilesForRestart(files, root);
+      watchFilesForRestart(files, root, isBuildWatch);
     }
 
     config.source ||= {};
