@@ -1,5 +1,0 @@
----
-'@rsbuild/webpack': patch
----
-
-bump
