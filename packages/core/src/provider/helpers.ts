@@ -10,7 +10,7 @@ export {
   outputInspectConfigFiles,
 } from '../config';
 export { getHTMLPlugin } from '../pluginHelper';
-export { formatStats, getStatsOptions } from '../helpers';
+export { formatStats, getStatsOptions, prettyTime } from '../helpers';
 export { registerBuildHook, registerDevHook } from '../hooks';
 export { getChainUtils, getConfigUtils } from './rspackConfig';
 export { chainToConfig, modifyBundlerChain } from '../configChain';

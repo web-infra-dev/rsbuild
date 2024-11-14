@@ -5,25 +5,10 @@ import { bus, createFriendlyPercentage } from './helpers/index.js';
 import { createNonTTYLogger } from './helpers/nonTty.js';
 import type { Props } from './helpers/types.js';
 
-const prettyTime = (seconds: number): string => {
-  const format = (time: string) => color.bold(time);
-
-  if (seconds < 10) {
-    const digits = seconds >= 0.01 ? 2 : 3;
-    return `${format(seconds.toFixed(digits))} s`;
-  }
-
-  if (seconds < 60) {
-    return `${format(seconds.toFixed(1))} s`;
-  }
-
-  const minutes = seconds / 60;
-  return `${format(minutes.toFixed(2))} m`;
-};
-
 export interface ProgressOptions
   extends Omit<Partial<Props>, 'message' | 'total' | 'current' | 'done'> {
   id?: string;
+  prettyTime: (seconds: number) => string;
 }
 
 export class ProgressPlugin extends webpack.ProgressPlugin {
@@ -34,6 +19,8 @@ export class ProgressPlugin extends webpack.ProgressPlugin {
   hasCompileErrors = false;
 
   compileTime: string | null = null;
+
+  prettyTime: (seconds: number) => string;
 
   constructor(options: ProgressOptions) {
     const { id = 'Rsbuild' } = options;
@@ -76,6 +63,7 @@ export class ProgressPlugin extends webpack.ProgressPlugin {
     });
 
     this.id = id;
+    this.prettyTime = options.prettyTime;
   }
 
   apply(compiler: webpack.Compiler): void {
@@ -93,7 +81,7 @@ export class ProgressPlugin extends webpack.ProgressPlugin {
         this.hasCompileErrors = stat.hasErrors();
         const hrtime = process.hrtime(startTime);
         const seconds = hrtime[0] + hrtime[1] / 1e9;
-        this.compileTime = prettyTime(seconds);
+        this.compileTime = this.prettyTime(seconds);
         startTime = null;
 
         if (!this.hasCompileErrors) {

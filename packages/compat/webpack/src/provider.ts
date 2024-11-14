@@ -24,7 +24,7 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
     return result.compiler;
   }) as CreateCompiler;
 
-  pluginManager.addPlugins([pluginAdaptor()]);
+  pluginManager.addPlugins([pluginAdaptor(helpers)]);
 
   return {
     bundler: 'webpack',
