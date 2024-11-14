@@ -31,7 +31,7 @@ export const build = async (
   });
 
   if (watch) {
-    const watching = compiler.watch({}, (err) => {
+    compiler.watch({}, (err) => {
       if (err) {
         logger.error(err);
       }
@@ -39,7 +39,7 @@ export const build = async (
     return {
       close: () =>
         new Promise((resolve) => {
-          watching.close(() => {
+          compiler.close(() => {
             resolve();
           });
         }),
@@ -73,8 +73,11 @@ export const build = async (
 
   return {
     stats,
-    // This close method is a noop in non-watch mode
-    // In watch mode, it's defined above to stop watching
-    close: async () => {},
+    close: () =>
+      new Promise((resolve) => {
+        compiler.close(() => {
+          resolve();
+        });
+      }),
   };
 };
