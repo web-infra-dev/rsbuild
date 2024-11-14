@@ -11,7 +11,12 @@ type StylusOptions = {
   use?: string[];
   define?: [string, any, boolean?];
   include?: string[];
-  import?: string;
+  /**
+   * Import the specified Stylus files/paths, can not be relative path.
+   * @example import: ["nib", path.join(__dirname, "src/styl/mixins")],
+   * @default []
+   */
+  import?: string[];
   resolveURL?: boolean;
   lineNumbers?: boolean;
   hoistAtrules?: boolean;
