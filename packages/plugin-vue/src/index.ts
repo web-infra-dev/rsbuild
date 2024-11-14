@@ -49,6 +49,8 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
               __VUE_PROD_DEVTOOLS__: false,
               __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false,
             },
+            // should transpile all scripts from Vue SFC
+            include: [/\.vue.js$/],
           },
         };
 
