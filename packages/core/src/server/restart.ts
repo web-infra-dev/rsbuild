@@ -83,5 +83,7 @@ export const restartBuild = async ({
     return;
   }
 
-  await rsbuild.build({ watch: true });
+  const buildInstance = await rsbuild.build({ watch: true });
+
+  onBeforeRestartServer(buildInstance.close);
 };
