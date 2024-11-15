@@ -10,6 +10,7 @@ import * as __internalHelper from './internal';
 export { loadEnv } from './loadEnv';
 export { createRsbuild } from './createRsbuild';
 export { loadConfig, defineConfig } from './config';
+export { runCLI } from './cli';
 
 // Rsbuild version
 export const version: string = RSBUILD_VERSION;
