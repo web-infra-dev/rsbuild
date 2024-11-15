@@ -78,12 +78,6 @@ export default defineConfig({
     {
       format: 'esm',
       syntax: 'es2021',
-      shims: {
-        esm: {
-          __filename: true,
-          __dirname: true,
-        },
-      },
       plugins: [pluginFixDtsTypes, pluginCleanTscCache],
       dts: {
         build: true,

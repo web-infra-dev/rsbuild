@@ -20,6 +20,7 @@ import {
   SVG_DIST_DIR,
   TS_CONFIG_FILE,
   WASM_DIST_DIR,
+  __filename,
 } from './constants';
 import {
   color,
