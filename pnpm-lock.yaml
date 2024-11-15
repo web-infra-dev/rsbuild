@@ -589,9 +589,6 @@ importers:
       '@types/fs-extra':
         specifier: ^11.0.4
         version: 11.0.4
-      '@types/is-glob':
-        specifier: ^4.0.4
-        version: 4.0.4
       '@types/node':
         specifier: ^22.9.0
         version: 22.9.0
@@ -640,9 +637,6 @@ importers:
       http-proxy-middleware:
         specifier: ^2.0.6
         version: 2.0.7
-      is-glob:
-        specifier: ^4.0.3
-        version: 4.0.3
       jiti:
         specifier: ^1.21.6
         version: 1.21.6
@@ -2910,9 +2904,6 @@ packages:
 
   '@types/http-proxy@1.17.15':
     resolution: {integrity: sha512-25g5atgiVNTIv0LBDTg1H74Hvayx0ajtJPLLcYE3whFv75J0pWNtOBzaXJQgDTmrX1bx5U9YC2w/n65BN1HwRQ==}
-
-  '@types/is-glob@4.0.4':
-    resolution: {integrity: sha512-3mFBtIPQ0TQetKRDe94g8YrxJZxdMillMGegyv6zRBXvq4peRRhf2wLZ/Dl53emtTsC29dQQBwYvovS20yXpiQ==}
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
@@ -8688,8 +8679,6 @@ snapshots:
   '@types/http-proxy@1.17.15':
     dependencies:
       '@types/node': 22.9.0
-
-  '@types/is-glob@4.0.4': {}
 
   '@types/json-schema@7.0.15': {}
 
