@@ -1,4 +1,4 @@
-import type { StatsCompilation, StatsValue } from '@rspack/core';
+import type { StatsCompilation } from '@rspack/core';
 import color from '../../compiled/picocolors/index.js';
 import { formatStatsMessages } from '../client/format';
 import { logger } from '../logger';
@@ -128,17 +128,26 @@ export const getAllStatsWarnings = (
 };
 
 export function getStatsOptions(
-  compiler: Parameters<typeof isMultiCompiler>[0],
-): StatsValue | undefined {
+  compiler: Rspack.Compiler | Rspack.MultiCompiler,
+): Rspack.StatsOptions {
   if (isMultiCompiler(compiler)) {
     return {
       children: compiler.compilers.map((compiler) =>
         compiler.options ? compiler.options.stats : undefined,
       ),
-    } as unknown as StatsValue;
+    } as unknown as Rspack.StatsOptions;
   }
 
-  return compiler.options ? (compiler.options.stats as StatsValue) : undefined;
+  const { stats } = compiler.options;
+
+  if (typeof stats === 'string') {
+    return { preset: stats };
+  }
+  if (typeof stats === 'object') {
+    return stats;
+  }
+
+  return {};
 }
 
 export function formatStats(

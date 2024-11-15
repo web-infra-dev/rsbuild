@@ -208,15 +208,7 @@ export class SocketServer {
     };
 
     const statsOptions = getStatsOptions(curStats.compilation.compiler);
-
-    const userOptions =
-      typeof statsOptions === 'string'
-        ? { preset: statsOptions }
-        : typeof statsOptions === 'object'
-          ? statsOptions
-          : {};
-
-    return curStats.toJson({ ...defaultStats, ...userOptions });
+    return curStats.toJson({ ...defaultStats, ...statsOptions });
   }
 
   // determine what message should send by stats
