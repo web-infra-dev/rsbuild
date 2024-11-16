@@ -186,7 +186,7 @@ if (false) {
 
 ## `.env` 文件
 
-当项目根目录存在 `.env` 文件时，Rsbuild CLI 会自动使用 [dotenv](https://npmjs.com/package/dotenv) 来加载这些环境变量，并添加到当前 Node.js 进程中。
+当项目根目录存在 `.env` 文件时，Rsbuild CLI 会自动使用 [dotenv](https://npmjs.com/package/dotenv) 来加载这些环境变量，并添加到当前 Node.js 进程中，其中的 [public 变量](#public-变量) 会被暴露在 `client` 代码中。
 
 你可以通过 `import.meta.env.[name]` 或 `process.env.[name]` 来访问这些环境变量。
 
@@ -280,6 +280,7 @@ console.log(process.env.BAR); // '2'
 ```ts
 import { loadEnv, mergeRsbuildConfig } from '@rsbuild/core';
 
+// 默认情况下，`publicVars` 是以 `PUBLIC_` 为前缀的变量
 const { parsed, publicVars } = loadEnv();
 
 const mergedConfig = mergeRsbuildConfig(
