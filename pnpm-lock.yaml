@@ -478,9 +478,6 @@ importers:
       '@modern-js/swc-plugins':
         specifier: 0.6.11
         version: 0.6.11(@swc/helpers@0.5.15)
-      '@rslib/core':
-        specifier: 0.0.18
-        version: 0.0.18(typescript@5.6.3)
       '@swc/helpers':
         specifier: ^0.5.15
         version: 0.5.15
@@ -506,6 +503,9 @@ importers:
       '@rsbuild/webpack':
         specifier: workspace:*
         version: link:../webpack
+      '@rslib/core':
+        specifier: 0.0.18
+        version: 0.0.18(typescript@5.6.3)
       '@types/lodash':
         specifier: ^4.17.13
         version: 4.17.13
