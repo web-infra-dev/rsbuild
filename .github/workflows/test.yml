@@ -93,7 +93,7 @@ jobs:
 
       - name: Install Dependencies
         if: steps.changes.outputs.changed == 'true'
-        run: pnpm install && cd ./e2e && npx playwright install
+        run: pnpm install && cd ./e2e && npx playwright install chromium
 
       - name: E2E Test
         if: steps.changes.outputs.changed == 'true'
