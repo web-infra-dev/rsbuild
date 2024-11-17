@@ -53,6 +53,10 @@ const getSassLoaderOptions = (
       sourceMap: isUseCssSourceMap,
       api: 'modern-compiler',
       implementation: require.resolve('sass-embedded'),
+      sassOptions: {
+        // mute deprecation warnings of dependencies
+        quietDeps: true,
+      },
     },
     config: userOptions,
     ctx: { addExcludes },
