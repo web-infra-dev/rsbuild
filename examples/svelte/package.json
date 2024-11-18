@@ -7,7 +7,7 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "svelte": "^5.1.13"
+    "svelte": "^5.2.2"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
