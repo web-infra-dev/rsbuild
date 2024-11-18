@@ -205,6 +205,7 @@ export class SocketServer {
       errorDetails: false,
       entrypoints: true,
       children: true,
+      moduleTrace: true,
     };
 
     const statsOptions = getStatsOptions(curStats.compilation.compiler);

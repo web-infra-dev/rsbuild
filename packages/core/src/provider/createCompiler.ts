@@ -65,6 +65,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     const statsOptions = getStatsOptions(compiler);
     const statsJson = stats.toJson({
       children: true,
+      moduleTrace: true,
       // get the compilation time
       timings: true,
       preset: 'errors-warnings',

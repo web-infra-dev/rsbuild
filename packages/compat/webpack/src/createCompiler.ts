@@ -23,11 +23,10 @@ export async function createCompiler(options: InitConfigsOptions) {
   const done = (stats: Rspack.Stats) => {
     const statsOptions = helpers.getStatsOptions(compiler);
     const statsJson = stats.toJson({
+      moduleTrace: true,
       children: true,
-      ...(typeof statsOptions === 'string'
-        ? { preset: statsOptions }
-        : { preset: 'errors-warnings' }),
-      ...(typeof statsOptions === 'object' ? statsOptions : {}),
+      preset: 'errors-warnings',
+      ...statsOptions,
     });
 
     const { message, level } = helpers.formatStats(
