@@ -11,7 +11,7 @@
     "svelte": "^5.1.13"
   },
   "devDependencies": {
-    "@rsbuild/core": "^1.1.0",
-    "@rsbuild/plugin-svelte": "^1.0.4"
+    "@rsbuild/core": "^1.1.2",
+    "@rsbuild/plugin-svelte": "^1.0.5"
   }
 }
