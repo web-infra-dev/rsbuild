@@ -1,7 +1,7 @@
 import { build, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should log error module trace when enable moduleTrace', async () => {
+test('should log error module trace', async () => {
   const { restore, logs } = proxyConsole();
 
   await expect(
