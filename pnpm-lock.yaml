@@ -238,8 +238,8 @@ importers:
   e2e/cases/svelte:
     dependencies:
       svelte:
-        specifier: ^5.1.13
-        version: 5.1.13
+        specifier: ^5.2.2
+        version: 5.2.2
     devDependencies:
       less:
         specifier: ^4.2.0
@@ -419,8 +419,8 @@ importers:
   examples/svelte:
     dependencies:
       svelte:
-        specifier: ^5.1.13
-        version: 5.1.13
+        specifier: ^5.2.2
+        version: 5.2.2
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1004,10 +1004,10 @@ importers:
     dependencies:
       svelte-loader:
         specifier: 3.2.4
-        version: 3.2.4(svelte@5.1.13)
+        version: 3.2.4(svelte@5.2.2)
       svelte-preprocess:
         specifier: ^6.0.3
-        version: 6.0.3(@babel/core@7.26.0)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.49)(yaml@2.6.0))(postcss@8.4.49)(sass@1.81.0)(stylus@0.64.0)(svelte@5.1.13)(typescript@5.6.3)
+        version: 6.0.3(@babel/core@7.26.0)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.49)(yaml@2.6.0))(postcss@8.4.49)(sass@1.81.0)(stylus@0.64.0)(svelte@5.2.2)(typescript@5.6.3)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1022,8 +1022,8 @@ importers:
         specifier: ^22.9.0
         version: 22.9.0
       svelte:
-        specifier: ^5.1.13
-        version: 5.1.13
+        specifier: ^5.2.2
+        version: 5.2.2
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -4516,6 +4516,9 @@ packages:
   is-reference@3.0.2:
     resolution: {integrity: sha512-v3rht/LgVcsdZa3O2Nqs+NMowLOxeOm7Ay9+/ARQ2F+qEoANRcqrjAZKGN0v8ymUetZGgkp26LTnGT7H0Qo9Pg==}
 
+  is-reference@3.0.3:
+    resolution: {integrity: sha512-ixkJoqQvAP88E6wLydLGGqCJsrFUnqoH6HnaczB8XmDH1oaWU+xxdptvikTgaEhtZ53Ky6YXiBuUI2WXLMCwjw==}
+
   is-stream@2.0.1:
     resolution: {integrity: sha512-hFoiJiTl63nn+kstHGBtewWSKnQLpyb155KHheA1l39uvtO9nWIop1p3udqPcUd/xbF1VLMO4n7OI6p7RbngDg==}
     engines: {node: '>=8'}
@@ -6219,8 +6222,8 @@ packages:
       typescript:
         optional: true
 
-  svelte@5.1.13:
-    resolution: {integrity: sha512-xVNk8yLsZNfkyqWzVg8+nfU9ewiSjVW0S4qyTxfKa6Y7P5ZBhA+LDsh2cHWIXJQMltikQAk6W3sqGdQZSH58PA==}
+  svelte@5.2.2:
+    resolution: {integrity: sha512-eHIJRcvA6iuXdRGMESTmBtWTQCcCiol4gyH9DA60ybS35W1x27cvtbndNvWDqX72blyf+AYeQ4gzZ0XGg3L8sw==}
     engines: {node: '>=18'}
 
   svg-parser@2.0.4:
@@ -10459,6 +10462,10 @@ snapshots:
     dependencies:
       '@types/estree': 1.0.6
 
+  is-reference@3.0.3:
+    dependencies:
+      '@types/estree': 1.0.6
+
   is-stream@2.0.1: {}
 
   is-subdir@1.2.0:
@@ -12373,20 +12380,20 @@ snapshots:
 
   svelte-dev-helper@1.1.9: {}
 
-  svelte-hmr@0.14.12(svelte@5.1.13):
+  svelte-hmr@0.14.12(svelte@5.2.2):
     dependencies:
-      svelte: 5.1.13
+      svelte: 5.2.2
 
-  svelte-loader@3.2.4(svelte@5.1.13):
+  svelte-loader@3.2.4(svelte@5.2.2):
     dependencies:
       loader-utils: 2.0.4
-      svelte: 5.1.13
+      svelte: 5.2.2
       svelte-dev-helper: 1.1.9
-      svelte-hmr: 0.14.12(svelte@5.1.13)
+      svelte-hmr: 0.14.12(svelte@5.2.2)
 
-  svelte-preprocess@6.0.3(@babel/core@7.26.0)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.49)(yaml@2.6.0))(postcss@8.4.49)(sass@1.81.0)(stylus@0.64.0)(svelte@5.1.13)(typescript@5.6.3):
+  svelte-preprocess@6.0.3(@babel/core@7.26.0)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.49)(yaml@2.6.0))(postcss@8.4.49)(sass@1.81.0)(stylus@0.64.0)(svelte@5.2.2)(typescript@5.6.3):
     dependencies:
-      svelte: 5.1.13
+      svelte: 5.2.2
     optionalDependencies:
       '@babel/core': 7.26.0
       less: 4.2.0
@@ -12396,7 +12403,7 @@ snapshots:
       stylus: 0.64.0
       typescript: 5.6.3
 
-  svelte@5.1.13:
+  svelte@5.2.2:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@jridgewell/sourcemap-codec': 1.5.0
@@ -12407,7 +12414,7 @@ snapshots:
       axobject-query: 4.1.0
       esm-env: 1.1.4
       esrap: 1.2.2
-      is-reference: 3.0.2
+      is-reference: 3.0.3
       locate-character: 3.0.0
       magic-string: 0.30.12
       zimmerframe: 1.1.2
