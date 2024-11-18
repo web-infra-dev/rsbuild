@@ -534,8 +534,8 @@ importers:
         specifier: ^1.0.0
         version: 1.0.0
       tsconfig-paths-webpack-plugin:
-        specifier: 4.1.0
-        version: 4.1.0
+        specifier: 4.2.0
+        version: 4.2.0
       webpack:
         specifier: ^5.96.1
         version: 5.96.1
@@ -6360,8 +6360,8 @@ packages:
   ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
 
-  tsconfig-paths-webpack-plugin@4.1.0:
-    resolution: {integrity: sha512-xWFISjviPydmtmgeUAuXp4N1fky+VCtfhOkDUFIv5ea7p4wuTomI4QTrXvFBX2S4jZsmyTSrStQl+E+4w+RzxA==}
+  tsconfig-paths-webpack-plugin@4.2.0:
+    resolution: {integrity: sha512-zbem3rfRS8BgeNK50Zz5SIQgXzLafiHjOwUAvk/38/o1jHn/V5QAgVUcz884or7WYcPaH3N2CIfUc2u0ul7UcA==}
     engines: {node: '>=10.13.0'}
 
   tsconfig-paths@4.2.0:
@@ -12551,10 +12551,11 @@ snapshots:
 
   ts-interface-checker@0.1.13: {}
 
-  tsconfig-paths-webpack-plugin@4.1.0:
+  tsconfig-paths-webpack-plugin@4.2.0:
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 5.17.1
+      tapable: 2.2.1
       tsconfig-paths: 4.2.0
 
   tsconfig-paths@4.2.0:
