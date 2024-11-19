@@ -3,4 +3,12 @@ import { pluginReact } from '@rsbuild/plugin-react';
 
 export default defineConfig({
   plugins: [pluginReact()],
+  dev: {
+    writeToDisk: true,
+  },
+  security: {
+    sri: {
+      enable: true,
+    },
+  },
 });
