@@ -9,14 +9,11 @@ import { getCssExtractPlugin } from '../pluginHelper';
 import type {
   CSSLoaderModulesMode,
   CSSLoaderOptions,
-  ModifyChainUtils,
   NormalizedEnvironmentConfig,
   PostCSSLoaderOptions,
   PostCSSOptions,
-  RsbuildContext,
   RsbuildPlugin,
   Rspack,
-  RspackChain,
 } from '../types';
 
 const getCSSModulesLocalIdentName = (
@@ -229,138 +226,123 @@ const getCSSLoaderOptions = ({
   return cssLoaderOptions;
 };
 
-async function applyCSSRule({
-  rule,
-  config,
-  context,
-  utils: { target, isProd, CHAIN_ID, environment },
-}: {
-  rule: RspackChain.Rule;
-  config: NormalizedEnvironmentConfig;
-  context: RsbuildContext;
-  utils: ModifyChainUtils;
-}) {
-  const emitCss = config.output.emitCss ?? target === 'web';
-
-  // Create Rspack rule
-  // Order: style-loader/CssExtractRspackPlugin -> css-loader -> postcss-loader
-  if (emitCss) {
-    // use style-loader
-    if (config.output.injectStyles) {
-      const styleLoaderOptions = reduceConfigs({
-        initial: {},
-        config: config.tools.styleLoader,
-      });
-      rule
-        .use(CHAIN_ID.USE.STYLE)
-        .loader(getCompiledPath('style-loader'))
-        .options(styleLoaderOptions);
-    }
-    // use CssExtractRspackPlugin loader
-    else {
-      rule
-        .use(CHAIN_ID.USE.MINI_CSS_EXTRACT)
-        .loader(getCssExtractPlugin().loader)
-        .options(config.tools.cssExtract.loaderOptions);
-    }
-  } else {
-    rule
-      .use(CHAIN_ID.USE.IGNORE_CSS)
-      .loader(path.join(LOADER_PATH, 'ignoreCssLoader.cjs'));
-  }
-
-  // Number of loaders applied before css-loader for `@import` at-rules
-  let importLoaders = 0;
-
-  rule.use(CHAIN_ID.USE.CSS).loader(getCompiledPath('css-loader'));
-
-  if (emitCss) {
-    // `builtin:lightningcss-loader` is not supported when using webpack
-    if (
-      context.bundlerType === 'rspack' &&
-      config.tools.lightningcssLoader !== false
-    ) {
-      importLoaders++;
-
-      const userOptions =
-        config.tools.lightningcssLoader === true
-          ? {}
-          : config.tools.lightningcssLoader;
-
-      const initialOptions: Rspack.LightningcssLoaderOptions = {
-        targets: environment.browserslist,
-      };
-
-      if (config.mode === 'production' && config.output.injectStyles) {
-        initialOptions.minify = true;
-      }
-
-      const loaderOptions = reduceConfigs<Rspack.LightningcssLoaderOptions>({
-        initial: initialOptions,
-        config: userOptions,
-      });
-
-      rule
-        .use(CHAIN_ID.USE.LIGHTNINGCSS)
-        .loader('builtin:lightningcss-loader')
-        .options(loaderOptions);
-    }
-
-    const postcssLoaderOptions = await getPostcssLoaderOptions({
-      config,
-      root: context.rootPath,
-    });
-
-    // enable postcss-loader if using PostCSS plugins
-    if (
-      typeof postcssLoaderOptions.postcssOptions === 'function' ||
-      postcssLoaderOptions.postcssOptions?.plugins?.length
-    ) {
-      importLoaders++;
-      rule
-        .use(CHAIN_ID.USE.POSTCSS)
-        .loader(getCompiledPath('postcss-loader'))
-        .options(postcssLoaderOptions);
-    }
-  }
-
-  const localIdentName = getCSSModulesLocalIdentName(config, isProd);
-  const cssLoaderOptions = getCSSLoaderOptions({
-    config,
-    importLoaders,
-    localIdentName,
-    emitCss,
-  });
-  rule.use(CHAIN_ID.USE.CSS).options(cssLoaderOptions);
-
-  // CSS imports should always be treated as sideEffects
-  rule.merge({ sideEffects: true });
-
-  // Enable preferRelative by default, which is consistent with the default behavior of css-loader
-  // see: https://github.com/webpack-contrib/css-loader/blob/579fc13/src/plugins/postcss-import-parser.js#L234
-  rule.resolve.preferRelative(true);
-}
-
 export const pluginCss = (): RsbuildPlugin => ({
   name: 'rsbuild:css',
   setup(api) {
     api.modifyBundlerChain({
       order: 'pre',
-      handler: async (chain, utils) => {
-        const rule = chain.module.rule(utils.CHAIN_ID.RULE.CSS);
-        const { config } = utils.environment;
+      handler: async (chain, { target, isProd, CHAIN_ID, environment }) => {
+        const rule = chain.module.rule(CHAIN_ID.RULE.CSS);
+        const { config } = environment;
 
         rule
           .test(CSS_REGEX)
           // specify type to allow enabling Rspack `experiments.css`
-          .type('javascript/auto');
+          .type('javascript/auto')
+          // When using `new URL('./path/to/foo.css', import.meta.url)`,
+          // the module should be treated as an asset module rather than a JS module.
+          .dependency({ not: 'url' });
 
-        await applyCSSRule({
-          rule,
-          utils,
+        const emitCss = config.output.emitCss ?? target === 'web';
+
+        // Create Rspack rule
+        // Order: style-loader/CssExtractRspackPlugin -> css-loader -> postcss-loader
+        if (emitCss) {
+          // use style-loader
+          if (config.output.injectStyles) {
+            const styleLoaderOptions = reduceConfigs({
+              initial: {},
+              config: config.tools.styleLoader,
+            });
+            rule
+              .use(CHAIN_ID.USE.STYLE)
+              .loader(getCompiledPath('style-loader'))
+              .options(styleLoaderOptions);
+          }
+          // use CssExtractRspackPlugin loader
+          else {
+            rule
+              .use(CHAIN_ID.USE.MINI_CSS_EXTRACT)
+              .loader(getCssExtractPlugin().loader)
+              .options(config.tools.cssExtract.loaderOptions);
+          }
+        } else {
+          rule
+            .use(CHAIN_ID.USE.IGNORE_CSS)
+            .loader(path.join(LOADER_PATH, 'ignoreCssLoader.cjs'));
+        }
+
+        // Number of loaders applied before css-loader for `@import` at-rules
+        let importLoaders = 0;
+
+        rule.use(CHAIN_ID.USE.CSS).loader(getCompiledPath('css-loader'));
+
+        if (emitCss) {
+          // `builtin:lightningcss-loader` is not supported when using webpack
+          if (
+            api.context.bundlerType === 'rspack' &&
+            config.tools.lightningcssLoader !== false
+          ) {
+            importLoaders++;
+
+            const userOptions =
+              config.tools.lightningcssLoader === true
+                ? {}
+                : config.tools.lightningcssLoader;
+
+            const initialOptions: Rspack.LightningcssLoaderOptions = {
+              targets: environment.browserslist,
+            };
+
+            if (config.mode === 'production' && config.output.injectStyles) {
+              initialOptions.minify = true;
+            }
+
+            const loaderOptions =
+              reduceConfigs<Rspack.LightningcssLoaderOptions>({
+                initial: initialOptions,
+                config: userOptions,
+              });
+
+            rule
+              .use(CHAIN_ID.USE.LIGHTNINGCSS)
+              .loader('builtin:lightningcss-loader')
+              .options(loaderOptions);
+          }
+
+          const postcssLoaderOptions = await getPostcssLoaderOptions({
+            config,
+            root: api.context.rootPath,
+          });
+
+          // enable postcss-loader if using PostCSS plugins
+          if (
+            typeof postcssLoaderOptions.postcssOptions === 'function' ||
+            postcssLoaderOptions.postcssOptions?.plugins?.length
+          ) {
+            importLoaders++;
+            rule
+              .use(CHAIN_ID.USE.POSTCSS)
+              .loader(getCompiledPath('postcss-loader'))
+              .options(postcssLoaderOptions);
+          }
+        }
+
+        const localIdentName = getCSSModulesLocalIdentName(config, isProd);
+        const cssLoaderOptions = getCSSLoaderOptions({
           config,
-          context: api.context,
+          importLoaders,
+          localIdentName,
+          emitCss,
         });
+        rule.use(CHAIN_ID.USE.CSS).options(cssLoaderOptions);
+
+        // CSS imports should always be treated as sideEffects
+        rule.merge({ sideEffects: true });
+
+        // Enable preferRelative by default, which is consistent with the default behavior of css-loader
+        // see: https://github.com/webpack-contrib/css-loader/blob/579fc13/src/plugins/postcss-import-parser.js#L234
+        rule.resolve.preferRelative(true);
       },
     });
   },

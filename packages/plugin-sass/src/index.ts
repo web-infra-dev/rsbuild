@@ -123,9 +123,10 @@ export const pluginSass = (
         rule.exclude.add(pluginOptions.exclude);
       }
 
-      const cssRule = chain.module.rules.get(CHAIN_ID.RULE.CSS);
-
       // Copy the builtin CSS rules
+      const cssRule = chain.module.rules.get(CHAIN_ID.RULE.CSS);
+      rule.dependency(cssRule.get('dependency'));
+
       for (const id of Object.keys(cssRule.uses.entries())) {
         const loader = cssRule.uses.get(id);
         const options = loader.get('options') ?? {};

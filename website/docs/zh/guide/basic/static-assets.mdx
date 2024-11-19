@@ -65,6 +65,15 @@ const fooTs = new URL('./foo.ts', import.meta.url).href;
 console.log(fooTs); // "/static/foo.[hash].ts"
 ```
 
+同理，当使用 `new URL()` 引用 `.css` 或 `.scss` 文件时，它们将被视为 URL assets，不会经过 Rsbuild 内置的 CSS loaders 处理。
+
+```tsx
+// foo.css 文件将保持原始内容被输出到产物目录下
+const fooCss = new URL('./foo.css', import.meta.url).href;
+
+console.log(fooCss); // "/static/foo.[hash].css"
+```
+
 ## 在 CSS 文件中引用
 
 在 CSS 文件中，可以引用相对路径下的静态资源：

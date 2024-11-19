@@ -65,6 +65,15 @@ const fooTs = new URL('./foo.ts', import.meta.url).href;
 console.log(fooTs); // "/static/foo.[hash].ts"
 ```
 
+Similarly, when using `new URL()` to reference `.css` or `.scss` files, they will be treated as URL assets and will not be processed by Rsbuild's built-in CSS loaders.
+
+```tsx
+// foo.css will remain the original content and be output to the dist directory
+const fooCss = new URL('./foo.css', import.meta.url).href;
+
+console.log(fooCss); // "/static/foo.[hash].css"
+```
+
 ## Import Assets in CSS file
 
 In CSS files, you can reference static assets in relative paths:
