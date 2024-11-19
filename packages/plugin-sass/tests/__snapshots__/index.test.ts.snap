@@ -3,6 +3,9 @@
 exports[`plugin-sass > should add sass-loader 1`] = `
 [
   {
+    "dependency": {
+      "not": "url",
+    },
     "resolve": {
       "preferRelative": true,
     },
@@ -63,6 +66,9 @@ exports[`plugin-sass > should add sass-loader 1`] = `
 exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1`] = `
 [
   {
+    "dependency": {
+      "not": "url",
+    },
     "resolve": {
       "preferRelative": true,
     },
@@ -123,6 +129,9 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
 exports[`plugin-sass > should add sass-loader with excludes 1`] = `
 [
   {
+    "dependency": {
+      "not": "url",
+    },
     "exclude": [
       /node_modules/,
     ],
@@ -186,6 +195,9 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
 exports[`plugin-sass > should allow to use legacy API and mute deprecation warnings 1`] = `
 [
   {
+    "dependency": {
+      "not": "url",
+    },
     "resolve": {
       "preferRelative": true,
     },

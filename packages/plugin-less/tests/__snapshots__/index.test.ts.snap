@@ -3,6 +3,9 @@
 exports[`plugin-less > should add less-loader 1`] = `
 [
   {
+    "dependency": {
+      "not": "url",
+    },
     "resolve": {
       "preferRelative": true,
     },
@@ -58,6 +61,9 @@ exports[`plugin-less > should add less-loader 1`] = `
 exports[`plugin-less > should add less-loader and css-loader when injectStyles 1`] = `
 [
   {
+    "dependency": {
+      "not": "url",
+    },
     "resolve": {
       "preferRelative": true,
     },
@@ -113,6 +119,9 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
 exports[`plugin-less > should add less-loader with excludes 1`] = `
 [
   {
+    "dependency": {
+      "not": "url",
+    },
     "exclude": [
       /node_modules/,
     ],
@@ -171,6 +180,9 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
 exports[`plugin-less > should add less-loader with tools.less 1`] = `
 [
   {
+    "dependency": {
+      "not": "url",
+    },
     "resolve": {
       "preferRelative": true,
     },
@@ -226,6 +238,9 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
 exports[`plugin-less > should allow to use Less plugins 1`] = `
 [
   {
+    "dependency": {
+      "not": "url",
+    },
     "resolve": {
       "preferRelative": true,
     },

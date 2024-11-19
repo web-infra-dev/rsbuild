@@ -30,6 +30,9 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         "test": /\\\\\\.m\\?js/,
       },
       {
+        "dependency": {
+          "not": "url",
+        },
         "resolve": {
           "preferRelative": true,
         },

@@ -1199,6 +1199,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "test": /\\\\\\.m\\?js/,
         },
         {
+          "dependency": {
+            "not": "url",
+          },
           "resolve": {
             "preferRelative": true,
           },
@@ -1548,6 +1551,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "test": /\\\\\\.m\\?js/,
         },
         {
+          "dependency": {
+            "not": "url",
+          },
           "resolve": {
             "preferRelative": true,
           },
