@@ -287,7 +287,7 @@ export type ConfigParams = {
   env: string;
   command: string;
   envMode?: string;
-  params?: Record<string, unknown>;
+  meta?: Record<string, unknown>;
 };
 
 export type RsbuildConfigAsyncFn = (
@@ -388,12 +388,12 @@ export async function loadConfig({
   cwd = process.cwd(),
   path,
   envMode,
-  params,
+  meta,
 }: {
   cwd?: string;
   path?: string;
   envMode?: string;
-  params?: Record<string, any>;
+  meta?: Record<string, unknown>;
 } = {}): Promise<{ content: RsbuildConfig; filePath: string | null }> {
   const configFilePath = resolveConfigPath(cwd, path);
 
@@ -446,7 +446,7 @@ export async function loadConfig({
       env: nodeEnv,
       command,
       envMode: envMode || nodeEnv,
-      params,
+      meta,
     };
 
     const result = await configExport(configParams);
