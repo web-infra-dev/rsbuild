@@ -308,14 +308,20 @@ test('should get posix route correctly', async ({ page }) => {
     cwd,
     rsbuildConfig: {
       server: {
-        printUrls: ({ routes }) => {
+        printUrls: ({ urls, routes }) => {
           expect(routes[0].pathname).toBe('/dist/');
-          expect(routes[1].pathname).toBe('/.dist/web1/');
+          expect(routes[1].pathname).toBe('/.dist/web1/index1');
+          return urls;
         },
       },
       environments: {
         web: {},
         web1: {
+          source: {
+            entry: {
+              index1: './src/index.js',
+            },
+          },
           output: {
             distPath: {
               root: '.dist/web1',
@@ -328,15 +334,11 @@ test('should get posix route correctly', async ({ page }) => {
 
   await page.goto(`http://localhost:${rsbuild.port}`);
 
-  const webLog = logs.find(
-    (log) =>
-      log.includes('Local:') &&
-      log.includes(`http://localhost${rsbuild.port}/dist/`),
+  const webLog = logs.find((log) =>
+    log.includes(`http://localhost:${rsbuild.port}/dist/`),
   );
-  const web1Log = logs.find(
-    (log) =>
-      log.includes('Local:') &&
-      log.includes(`http://localhost${rsbuild.port}/.dist1/web1/`),
+  const web1Log = logs.find((log) =>
+    log.includes(`http://localhost:${rsbuild.port}/.dist/web1/index1`),
   );
 
   expect(webLog).toBeTruthy();
