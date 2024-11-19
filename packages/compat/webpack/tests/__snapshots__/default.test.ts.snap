@@ -43,6 +43,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "test": /\\\\\\.m\\?js/,
       },
       {
+        "dependency": {
+          "not": "url",
+        },
         "resolve": {
           "preferRelative": true,
         },
@@ -428,6 +431,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "test": /\\\\\\.m\\?js/,
       },
       {
+        "dependency": {
+          "not": "url",
+        },
         "resolve": {
           "preferRelative": true,
         },
@@ -808,6 +814,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.m\\?js/,
       },
       {
+        "dependency": {
+          "not": "url",
+        },
         "resolve": {
           "preferRelative": true,
         },
@@ -1135,6 +1144,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.m\\?js/,
       },
       {
+        "dependency": {
+          "not": "url",
+        },
         "resolve": {
           "preferRelative": true,
         },
