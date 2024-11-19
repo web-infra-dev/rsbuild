@@ -104,7 +104,10 @@ export const pluginSwc = (): RsbuildPlugin => ({
         const rule = chain.module
           .rule(CHAIN_ID.RULE.JS)
           .test(SCRIPT_REGEX)
-          .type('javascript/auto');
+          .type('javascript/auto')
+          // When using `new URL('./path/to/foo.js', import.meta.url)`,
+          // the module should be treated as an asset module rather than a JS module.
+          .dependency({ not: 'url' });
 
         const dataUriRule = chain.module
           .rule(CHAIN_ID.RULE.JS_DATA_URI)

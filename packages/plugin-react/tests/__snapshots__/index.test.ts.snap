@@ -9,6 +9,9 @@ exports[`plugins/react > should configuring \`tools.swc\` to override react runt
     "test": /\\\\\\.m\\?js/,
   },
   {
+    "dependency": {
+      "not": "url",
+    },
     "include": [
       {
         "and": [
@@ -89,6 +92,9 @@ exports[`plugins/react > should work with swc-loader 1`] = `
     "test": /\\\\\\.m\\?js/,
   },
   {
+    "dependency": {
+      "not": "url",
+    },
     "include": [
       {
         "and": [

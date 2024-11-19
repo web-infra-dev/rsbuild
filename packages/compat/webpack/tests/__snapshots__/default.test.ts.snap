@@ -70,6 +70,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         ],
       },
       {
+        "dependency": {
+          "not": "url",
+        },
         "include": [
           {
             "and": [
@@ -452,6 +455,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         ],
       },
       {
+        "dependency": {
+          "not": "url",
+        },
         "include": [
           {
             "and": [
@@ -830,6 +836,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         ],
       },
       {
+        "dependency": {
+          "not": "url",
+        },
         "include": [
           {
             "and": [
@@ -1154,6 +1163,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         ],
       },
       {
+        "dependency": {
+          "not": "url",
+        },
         "include": [
           {
             "and": [

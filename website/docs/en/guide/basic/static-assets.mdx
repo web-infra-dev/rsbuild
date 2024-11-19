@@ -29,6 +29,8 @@ In JS files, you can import static assets with relative paths:
 // Import the logo.png image in the static directory
 import logo from './static/logo.png';
 
+console.log(logo); // "/static/logo.[hash].png"
+
 export default = () => <img src={logo} />;
 ```
 
@@ -37,15 +39,30 @@ Import with [alias](/guide/advanced/alias) is also available:
 ```tsx
 import logo from '@/static/logo.png';
 
+console.log(logo); // "/static/logo.[hash].png"
+
 export default = () => <img src={logo} />;
 ```
 
-You can also combine [URL](https://developer.mozilla.org/docs/Web/API/URL) with [import.meta.url](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/import.meta) which are native ESM features to import static assets.
+### URL assets
+
+Rsbuild supports using JavaScript's native [URL](https://developer.mozilla.org/docs/Web/API/URL) and [import.meta.url](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/import.meta) to import static assets.
 
 ```tsx
 const logo = new URL('./static/logo.png', import.meta.url).href;
 
+console.log(logo); // "/static/logo.[hash].png"
+
 export default = () => <img src={logo} />;
+```
+
+If you use `new URL()` to reference `.js` or `.ts` files, they will be treated as URL assets and will not be processed by Rsbuild's built-in `swc-loader`.
+
+```tsx
+// foo.ts will remain the original content and be output to the dist directory
+const fooTs = new URL('./foo.ts', import.meta.url).href;
+
+console.log(fooTs); // "/static/foo.[hash].ts"
 ```
 
 ## Import Assets in CSS file
@@ -105,7 +122,7 @@ The result of importing static assets depends on the file size:
 import largeImage from './static/largeImage.png';
 import smallImage from './static/smallImage.png';
 
-console.log(largeImage); // "/static/largeImage.6c12aba3.png"
+console.log(largeImage); // "/static/largeImage.[hash].png"
 console.log(smallImage); // "data:image/png;base64,iVBORw0KGgo..."
 ```
 
@@ -132,7 +149,7 @@ For example, you can set `output.assetPrefix` to `https://example.com`:
 ```js
 import logo from './static/logo.png';
 
-console.log(logo); // "https://example.com/static/logo.6c12aba3.png"
+console.log(logo); // "https://example.com/static/logo.[hash].png"
 ```
 
 ## Public Folder
@@ -241,7 +258,7 @@ After adding the above configuration, you can import `*.pdf` files in your code,
 ```js
 import myFile from './static/myFile.pdf';
 
-console.log(myFile); // "/static/myFile.6c12aba3.pdf"
+console.log(myFile); // "/static/myFile.[hash].pdf"
 ```
 
 ### Use `tools.rspack`

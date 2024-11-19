@@ -1237,6 +1237,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           ],
         },
         {
+          "dependency": {
+            "not": "url",
+          },
           "include": [
             {
               "and": [
@@ -1573,6 +1576,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           ],
         },
         {
+          "dependency": {
+            "not": "url",
+          },
           "include": [
             {
               "and": [

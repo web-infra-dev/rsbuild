@@ -68,6 +68,9 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         ],
       },
       {
+        "dependency": {
+          "not": "url",
+        },
         "include": [
           {
             "and": [
