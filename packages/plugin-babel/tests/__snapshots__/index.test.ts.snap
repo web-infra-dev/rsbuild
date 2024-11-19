@@ -2,6 +2,9 @@
 
 exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] = `
 {
+  "dependency": {
+    "not": "url",
+  },
   "exclude": [
     "src/example",
   ],
@@ -85,6 +88,9 @@ exports[`plugins/babel > babel-loader should works with builtin:swc-loader 1`] =
 
 exports[`plugins/babel > should apply environment config correctly 1`] = `
 {
+  "dependency": {
+    "not": "url",
+  },
   "exclude": [
     "src/example",
   ],
@@ -167,6 +173,9 @@ exports[`plugins/babel > should apply environment config correctly 1`] = `
 
 exports[`plugins/babel > should apply environment config correctly 2`] = `
 {
+  "dependency": {
+    "not": "url",
+  },
   "exclude": [
     "src/example1",
   ],

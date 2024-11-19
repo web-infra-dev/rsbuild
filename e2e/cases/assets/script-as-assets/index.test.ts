@@ -1,0 +1,47 @@
+import { build } from '@e2e/helper';
+import { expect, test } from '@playwright/test';
+
+function isIncludeFile(filenames: string[], includeFilename: string) {
+  return filenames.some((filename) => filename.includes(includeFilename));
+}
+
+test('should allow to use `new URL` to reference script as assets', async ({
+  page,
+}) => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    page,
+  });
+
+  const files = await rsbuild.unwrapOutputJSON();
+  const filenames = Object.keys(files);
+
+  const test1 = filenames.find((filename) =>
+    filename.includes('dist/static/assets/test1.js'),
+  );
+  const test2 = filenames.find((filename) =>
+    filename.includes('dist/static/assets/test2.ts'),
+  );
+  const test3 = filenames.find((filename) =>
+    filename.includes('dist/static/assets/test3.mjs'),
+  );
+
+  expect(test1).toBeDefined();
+  expect(test2).toBeDefined();
+  expect(test3).toBeDefined();
+
+  expect(files[test1!]).toEqual('export const test="test1";');
+  expect(files[test2!]).toEqual(`export const test2: string = 'test2';
+`);
+  expect(files[test3!]).toEqual('export const test="test3";');
+
+  expect(await page.evaluate('window.test1')).toBe(
+    `http://localhost:${rsbuild.port}/static/assets/test1.js`,
+  );
+  expect(await page.evaluate('window.test2')).toBe(
+    `http://localhost:${rsbuild.port}/static/assets/test2.ts`,
+  );
+  expect(await page.evaluate('window.test3')).toBe(
+    `http://localhost:${rsbuild.port}/static/assets/test3.mjs`,
+  );
+});
