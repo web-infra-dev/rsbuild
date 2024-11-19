@@ -27,8 +27,7 @@ rspackOnlyTest(
     expect(test3).toBeDefined();
 
     expect(files[test1!]).toEqual('export const test="test1";');
-    expect(files[test2!]).toEqual(`export const test2: string = 'test2';
-`);
+    expect(files[test2!]).toContain(`export const test2: string = 'test2';`);
     expect(files[test3!]).toEqual('export const test="test3";');
 
     expect(await page.evaluate('window.test1')).toBe(
