@@ -406,15 +406,24 @@ export type LoadConfigOptions = {
   envMode?: string;
 };
 
+export type LoadConfigResult = {
+  /**
+   * The loaded configuration object.
+   */
+  content: RsbuildConfig;
+  /**
+   * The path to the loaded configuration file.
+   * Return `null` if the configuration file is not found.
+   */
+  filePath: string | null;
+};
+
 export async function loadConfig({
   cwd = process.cwd(),
   path,
   envMode,
   meta,
-}: LoadConfigOptions = {}): Promise<{
-  content: RsbuildConfig;
-  filePath: string | null;
-}> {
+}: LoadConfigOptions = {}): Promise<LoadConfigResult> {
   const configFilePath = resolveConfigPath(cwd, path);
 
   if (!configFilePath) {
