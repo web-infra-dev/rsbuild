@@ -18,18 +18,22 @@ declare global {
   // RuntimeGlobals.require
   var __RUNTIME_GLOBALS_REQUIRE__: unknown;
   // RuntimeGlobals.ensure
-  var __RUNTIME_GLOBALS_ENSURE_CHUNK__: (chunkId: ChunkId) => Promise<unknown>;
+  var __RUNTIME_GLOBALS_ENSURE_CHUNK__: (
+    chunkId: ChunkId,
+    ...args: unknown[]
+  ) => Promise<unknown>;
   // RuntimeGlobals.getChunkScriptFilename
   var __RUNTIME_GLOBALS_GET_CHUNK_SCRIPT_FILENAME__: (
     chunkId: ChunkId,
+    ...args: unknown[]
   ) => string;
   // RuntimeGlobals.getChunkCssFilename
   var __RUNTIME_GLOBALS_GET_CSS_FILENAME__:
-    | ((chunkId: ChunkId) => string)
+    | ((chunkId: ChunkId, ...args: unknown[]) => string)
     | undefined;
   // RuntimeGlobals.getChunkCssFilename when using Rspack.CssExtractPlugin
   var __RUNTIME_GLOBALS_GET_MINI_CSS_EXTRACT_FILENAME__:
-    | ((chunkId: ChunkId) => string)
+    | ((chunkId: ChunkId, ...args: unknown[]) => string)
     | undefined;
   // RuntimeGlobals.loadScript
   var __RUNTIME_GLOBALS_LOAD_SCRIPT__: (
@@ -37,6 +41,7 @@ declare global {
     done: unknown,
     key: string,
     chunkId: ChunkId,
+    ...args: unknown[]
   ) => void;
   // RuntimeGlobals.publicPath
   var __RUNTIME_GLOBALS_PUBLIC_PATH__: string;
@@ -199,21 +204,52 @@ const originalLoadScript = __RUNTIME_GLOBALS_LOAD_SCRIPT__;
 // if users want to support es5, add Promise polyfill first https://github.com/webpack/webpack/issues/12877
 function ensureChunk(
   chunkId: string,
+  // args placeholder, to avoid that other webpack runtime would add arg for __webpack_require__.e
+  arg0: unknown,
+  arg1: unknown,
+  arg2: unknown,
+  arg3: unknown,
+  arg4: unknown,
+  arg5: unknown,
+  arg6: unknown,
   callingCounter: { count: number } = { count: 0 },
+  ...args: unknown[]
 ): Promise<unknown> {
-  const result = originalEnsureChunk(chunkId);
-  const originalScriptFilename = originalGetChunkScriptFilename(chunkId);
-  const originalCssFilename = originalGetCssFilename(chunkId);
+  const result = originalEnsureChunk(
+    chunkId,
+    arg0,
+    arg1,
+    arg2,
+    arg3,
+    arg4,
+    arg5,
+    arg6,
+    callingCounter,
+    ...args,
+  );
 
-  // mark the async chunk name in the global variables and share it with initial chunk retry to avoid duplicate retrying
-  if (typeof window !== 'undefined') {
-    if (originalScriptFilename) {
-      window.__RB_ASYNC_CHUNKS__[originalScriptFilename] = true;
+  try {
+    const originalScriptFilename = originalGetChunkScriptFilename(chunkId);
+    const originalCssFilename = originalGetCssFilename(chunkId);
+
+    // mark the async chunk name in the global variables and share it with initial chunk retry to avoid duplicate retrying
+    if (typeof window !== 'undefined') {
+      if (originalScriptFilename) {
+        window.__RB_ASYNC_CHUNKS__[originalScriptFilename] = true;
+      }
+      if (originalCssFilename) {
+        window.__RB_ASYNC_CHUNKS__[originalCssFilename] = true;
+      }
     }
-    if (originalCssFilename) {
-      window.__RB_ASYNC_CHUNKS__[originalCssFilename] = true;
-    }
+  } catch (e) {
+    console.log('[@rsbuild/plugin-assets-retry] get original script or css filename error', e);
   }
+
+  // if __webpack_require__.e is polluted by other runtime codes, fallback to originalEnsureChunk
+  if (!callingCounter || typeof callingCounter.count !== 'number') {
+    return result;
+  }
+
   callingCounter.count += 1;
 
   return result.catch((error: Error) => {
@@ -278,12 +314,23 @@ function ensureChunk(
       config.onRetry(context);
     }
 
-    const nextPromise = ensureChunk(chunkId, callingCounter);
+    const nextPromise = ensureChunk(
+      chunkId,
+      arg0,
+      arg1,
+      arg2,
+      arg3,
+      arg4,
+      arg5,
+      arg6,
+      callingCounter,
+      ...args,
+    );
     return nextPromise.then((result) => {
       // when after retrying the third time
       // ensureChunk(chunkId, { count: 3 }), at that time, existRetryTimes === 2
       // after all, callingCounter.count is 4
-      const isLastSuccessRetry = callingCounter.count === existRetryTimes + 2;
+      const isLastSuccessRetry = callingCounter?.count === existRetryTimes + 2;
       if (typeof config.onSuccess === 'function' && isLastSuccessRetry) {
         const context = createContext(existRetryTimes + 1);
         config.onSuccess(context);
@@ -298,6 +345,7 @@ function loadScript(
   done: unknown,
   key: string,
   chunkId: ChunkId,
+  ...args: unknown[]
 ) {
   const retry = globalCurrRetrying[chunkId];
   return originalLoadScript(
@@ -305,6 +353,7 @@ function loadScript(
     done,
     key,
     chunkId,
+    ...args,
   );
 }
 
@@ -316,7 +365,10 @@ function registerAsyncChunkRetry() {
 
   if (typeof __RUNTIME_GLOBALS_REQUIRE__ !== 'undefined') {
     try {
-      __RUNTIME_GLOBALS_ENSURE_CHUNK__ = ensureChunk;
+      __RUNTIME_GLOBALS_ENSURE_CHUNK__ = ensureChunk as (
+        chunkId: string,
+        ...args: unknown[]
+      ) => Promise<unknown>;
       __RUNTIME_GLOBALS_LOAD_SCRIPT__ = loadScript;
     } catch (e) {
       console.error(
