@@ -127,7 +127,7 @@ export class CompilerDevMiddleware {
       });
     }
 
-    // middleware close only stop watching for file changes.
+    // `middleware.close()` only stop watching for file changes, compiler should also be closed.
     await new Promise<void>((resolve) => {
       this.compiler.close(() => {
         resolve();
