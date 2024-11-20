@@ -20,6 +20,20 @@ function resolveFileName(stats: StatsError) {
   return file ? `File: ${file}\n` : '';
 }
 
+function resolveModuleTrace(stats: StatsError) {
+  let traceStr = '';
+  if (stats.moduleTrace) {
+    for (const trace of stats.moduleTrace) {
+      if (trace.originName) {
+        // TODO: missing moduleTrace.dependencies[].loc in rspack
+        traceStr += `\n @ ${trace.originName}`;
+      }
+    }
+  }
+
+  return traceStr;
+}
+
 function hintUnknownFiles(message: string): string {
   const hint = 'You may need an appropriate loader to handle this file type.';
 
@@ -61,8 +75,9 @@ function formatMessage(stats: StatsError | string, verbose?: boolean) {
     const details =
       verbose && stats.details ? `\nDetails: ${stats.details}\n` : '';
     const stack = verbose && stats.stack ? `\n${stats.stack}` : '';
+    const moduleTrace = resolveModuleTrace(stats);
 
-    message = `${fileName}${mainMessage}${details}${stack}`;
+    message = `${fileName}${mainMessage}${details}${stack}${moduleTrace}`;
   } else {
     message = stats;
   }

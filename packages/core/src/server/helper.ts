@@ -3,7 +3,7 @@ import type { Http2SecureServer } from 'node:http2';
 import net from 'node:net';
 import type { Socket } from 'node:net';
 import os from 'node:os';
-import { posix } from 'node:path';
+import { posix, relative, sep } from 'node:path';
 import { DEFAULT_DEV_HOST, DEFAULT_PORT } from '../constants';
 import {
   addTrailingSlash,
@@ -86,7 +86,9 @@ export const getRoutes = (context: InternalContext): Routes => {
   return Object.values(context.environments).reduce<Routes>(
     (prev, environmentContext) => {
       const { distPath, config } = environmentContext;
-      const distPrefix = posix.relative(context.distPath, distPath);
+      const distPrefix = relative(context.distPath, distPath)
+        .split(sep)
+        .join('/');
 
       const routes = formatRoutes(
         environmentContext.htmlPaths,

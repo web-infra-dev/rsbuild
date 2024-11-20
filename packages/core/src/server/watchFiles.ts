@@ -1,4 +1,3 @@
-import isGlob from 'is-glob';
 import type { FSWatcher } from '../../compiled/chokidar/index.js';
 import { normalizePublicDirs } from '../config';
 import { castArray } from '../helpers';
@@ -115,6 +114,13 @@ function prepareWatchOptions(
     type,
   };
 }
+
+const GLOB_REGEX = /[*?{}[\]()!@+|]/;
+/**
+ * A simple glob pattern checker.
+ * This can help us to avoid unnecessary tinyglobby import and call.
+ */
+const isGlob = (str: string): boolean => GLOB_REGEX.test(str);
 
 export async function createChokidar(
   pathOrGlobs: string[],

@@ -186,7 +186,7 @@ During code minification, `if (false) { ... }` will be recognized as invalid cod
 
 ## `.env` File
 
-When a `.env` file exists in the project root directory, Rsbuild CLI will automatically use [dotenv](https://npmjs.com/package/dotenv) to load these env variables and add them to the current Node.js process.
+When a `.env` file exists in the project root directory, Rsbuild CLI will automatically use [dotenv](https://npmjs.com/package/dotenv) to load these env variables and add them to the current Node.js process. The [Public Variables](#public-variables) will be exposed in the client code.
 
 You can access these env variables through `import.meta.env.[name]` or `process.env.[name]`.
 
@@ -280,6 +280,7 @@ If you are not using the Rsbuild CLI and are using the Rsbuild [JavaScript API](
 ```ts
 import { loadEnv, mergeRsbuildConfig } from '@rsbuild/core';
 
+// By default, `publicVars` are variables prefixed with `PUBLIC_`
 const { parsed, publicVars } = loadEnv();
 
 const mergedConfig = mergeRsbuildConfig(

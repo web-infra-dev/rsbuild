@@ -300,3 +300,50 @@ test('should print server urls when HTML is disabled but printUrls is a custom f
   await rsbuild.close();
   restore();
 });
+
+test('should get posix route correctly', async ({ page }) => {
+  const { logs, restore } = proxyConsole('log');
+
+  const rsbuild = await dev({
+    cwd,
+    rsbuildConfig: {
+      server: {
+        printUrls: ({ urls, routes }) => {
+          expect(routes[0].pathname).toBe('/dist/');
+          expect(routes[1].pathname).toBe('/.dist/web1/index1');
+          return urls;
+        },
+      },
+      environments: {
+        web: {},
+        web1: {
+          source: {
+            entry: {
+              index1: './src/index.js',
+            },
+          },
+          output: {
+            distPath: {
+              root: '.dist/web1',
+            },
+          },
+        },
+      },
+    },
+  });
+
+  await page.goto(`http://localhost:${rsbuild.port}`);
+
+  const webLog = logs.find((log) =>
+    log.includes(`http://localhost:${rsbuild.port}/dist/`),
+  );
+  const web1Log = logs.find((log) =>
+    log.includes(`http://localhost:${rsbuild.port}/.dist/web1/index1`),
+  );
+
+  expect(webLog).toBeTruthy();
+  expect(web1Log).toBeTruthy();
+
+  await rsbuild.close();
+  restore();
+});

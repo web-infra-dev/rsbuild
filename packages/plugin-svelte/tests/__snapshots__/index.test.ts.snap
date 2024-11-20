@@ -9,6 +9,9 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
     "test": /\\\\\\.m\\?js/,
   },
   {
+    "dependency": {
+      "not": "url",
+    },
     "exclude": [
       /\\\\\\.\\(\\?:svelte\\\\\\.js\\|svelte\\\\\\.ts\\)\\$/,
     ],
@@ -116,6 +119,9 @@ exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` a
 exports[`plugin-svelte > should add rule for \`.svelte.js\` and \`.svelte.ts\` as expected 2`] = `
 [
   {
+    "dependency": {
+      "not": "url",
+    },
     "exclude": [
       /\\\\\\.\\(\\?:svelte\\\\\\.js\\|svelte\\\\\\.ts\\)\\$/,
     ],

@@ -53,6 +53,10 @@ const defaultOptions = {
   api: 'modern-compiler',
   implementation: require.resolve('sass-embedded'),
   sourceMap: rsbuildConfig.output.sourceMap.css,
+  sassOptions: {
+    quietDeps: true,
+    silenceDeprecations: api === 'legacy' ? ['legacy-js-api'] : undefined,
+  },
 };
 ```
 

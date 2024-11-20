@@ -288,6 +288,7 @@ export type ConfigParams = {
   env: string;
   command: string;
   envMode?: string;
+  meta?: Record<string, unknown>;
 };
 
 export type RsbuildConfigAsyncFn = (
@@ -384,15 +385,46 @@ export async function watchFilesForRestart(
   watcher.on('unlink', callback);
 }
 
+export type LoadConfigOptions = {
+  /**
+   * The root path to resolve the config file.
+   * @default process.cwd()
+   */
+  cwd?: string;
+  /**
+   * The path to the config file, can be a relative or absolute path.
+   * If `path` is not provided, the function will search for the config file in the `cwd`.
+   */
+  path?: string;
+  /**
+   * A custom meta object to be passed into the config function of `defineConfig`.
+   */
+  meta?: Record<string, unknown>;
+  /**
+   * The `envMode` passed into the config function of `defineConfig`.
+   * @default process.env.NODE_ENV
+   */
+  envMode?: string;
+};
+
+export type LoadConfigResult = {
+  /**
+   * The loaded configuration object.
+   */
+  content: RsbuildConfig;
+  /**
+   * The path to the loaded configuration file.
+   * Return `null` if the configuration file is not found.
+   */
+  filePath: string | null;
+};
+
 export async function loadConfig({
   cwd = process.cwd(),
   path,
   envMode,
-}: {
-  cwd?: string;
-  path?: string;
-  envMode?: string;
-} = {}): Promise<{ content: RsbuildConfig; filePath: string | null }> {
+  meta,
+}: LoadConfigOptions = {}): Promise<LoadConfigResult> {
   const configFilePath = resolveConfigPath(cwd, path);
 
   if (!configFilePath) {
@@ -440,13 +472,14 @@ export async function loadConfig({
   if (typeof configExport === 'function') {
     const command = process.argv[2];
     const nodeEnv = getNodeEnv();
-    const params: ConfigParams = {
+    const configParams: ConfigParams = {
       env: nodeEnv,
       command,
       envMode: envMode || nodeEnv,
+      meta,
     };
 
-    const result = await configExport(params);
+    const result = await configExport(configParams);
 
     if (result === undefined) {
       throw new Error('The config function must return a config object.');
