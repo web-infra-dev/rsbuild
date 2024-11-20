@@ -54,6 +54,8 @@ function loadConfig(params?: {
   cwd?: string;
   // Specify the configuration file, can be a relative or absolute path
   path?: string;
+  meta?: Record<string, unknown>;
+  envMode?: string;
 }): Promise<{
   content: RsbuildConfig;
   filePath: string | null;
@@ -65,6 +67,7 @@ function loadConfig(params?: {
 ```ts
 import { loadConfig } from '@rsbuild/core';
 
+// Load `rsbuild.config.*` file by default
 const { content } = await loadConfig();
 
 console.log(content); // -> Rsbuild config object
@@ -75,6 +78,43 @@ const rsbuild = await createRsbuild({
 ```
 
 If the Rsbuild config file does not exist in the cwd directory, the return value of the loadConfig method is `{ content: {}, filePath: null }`.
+
+### Specify the configuration file
+
+Use the `path` option to load the `my-config.ts` configuration file:
+
+```ts
+import { join } from 'node:path';
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  path: join(__dirname, 'my-config.ts'),
+});
+```
+
+### Passing meta object
+
+Load the configuration file and pass in a custom meta object:
+
+```ts
+import { join } from 'node:path';
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  meta: {
+    foo: 'bar',
+  },
+});
+```
+
+In the `defineConfig` configuration function, you can access the `foo` variable through the `meta` object:
+
+```ts title="rsbuild.config.ts"
+export default defineConfig((config, { meta }) => {
+  console.log(meta.foo); // bar
+  return config;
+});
+```
 
 ## loadEnv
 

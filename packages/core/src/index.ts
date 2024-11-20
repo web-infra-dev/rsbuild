@@ -9,7 +9,7 @@ import * as __internalHelper from './internal';
 // Core methods
 export { loadEnv } from './loadEnv';
 export { createRsbuild } from './createRsbuild';
-export { loadConfig, defineConfig } from './config';
+export { loadConfig, defineConfig, type LoadConfigOptions } from './config';
 export { runCLI } from './cli';
 
 // Rsbuild version

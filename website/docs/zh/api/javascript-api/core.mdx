@@ -54,6 +54,8 @@ function loadConfig(params?: {
   cwd?: string;
   // 指定配置文件路径，可以为相对路径或绝对路径
   path?: string;
+  meta?: Record<string, unknown>;
+  envMode?: string;
 }): Promise<{
   content: RsbuildConfig;
   filePath: string | null;
@@ -65,6 +67,7 @@ function loadConfig(params?: {
 ```ts
 import { loadConfig } from '@rsbuild/core';
 
+// 默认加载 `rsbuild.config.*` 配置文件
 const { content } = await loadConfig();
 
 console.log(content); // -> Rsbuild config object
@@ -75,6 +78,43 @@ const rsbuild = await createRsbuild({
 ```
 
 如果 cwd 目录下不存在 Rsbuild 配置文件，loadConfig 方法的返回值为 `{ content: {}, filePath: null }`。
+
+### 指定配置文件
+
+使用 `path` 选项加载 `my-config.ts` 配置文件：
+
+```ts
+import { join } from 'node:path';
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  path: join(__dirname, 'my-config.ts'),
+});
+```
+
+### 传入 meta 对象
+
+加载配置文件，并传入自定义的 meta 对象：
+
+```ts
+import { join } from 'node:path';
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  meta: {
+    foo: 'bar',
+  },
+});
+```
+
+在 `defineConfig` 定义的配置函数中，你可以通过 `meta` 对象访问到 `foo` 变量：
+
+```ts title="rsbuild.config.ts"
+export default defineConfig((config, { meta }) => {
+  console.log(meta.foo); // bar
+  return config;
+});
+```
 
 ## loadEnv
 

@@ -384,17 +384,37 @@ export async function watchFilesForRestart(
   watcher.on('unlink', callback);
 }
 
+export type LoadConfigOptions = {
+  /**
+   * The root path to resolve the config file.
+   * @default process.cwd()
+   */
+  cwd?: string;
+  /**
+   * The path to the config file, can be a relative or absolute path.
+   * If `path` is not provided, the function will search for the config file in the `cwd`.
+   */
+  path?: string;
+  /**
+   * A custom meta object to be passed into the config function of `defineConfig`.
+   */
+  meta?: Record<string, unknown>;
+  /**
+   * The `envMode` passed into the config function of `defineConfig`.
+   * @default process.env.NODE_ENV
+   */
+  envMode?: string;
+};
+
 export async function loadConfig({
   cwd = process.cwd(),
   path,
   envMode,
   meta,
-}: {
-  cwd?: string;
-  path?: string;
-  envMode?: string;
-  meta?: Record<string, unknown>;
-} = {}): Promise<{ content: RsbuildConfig; filePath: string | null }> {
+}: LoadConfigOptions = {}): Promise<{
+  content: RsbuildConfig;
+  filePath: string | null;
+}> {
   const configFilePath = resolveConfigPath(cwd, path);
 
   if (!configFilePath) {
