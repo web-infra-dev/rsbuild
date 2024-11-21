@@ -69,7 +69,7 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<ROOT>/packages/core/src/ignoreCssLoader.cjs",
+            "loader": "<ROOT>/packages/core/src/ignoreCssLoader.mjs",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",

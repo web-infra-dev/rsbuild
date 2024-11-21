@@ -92,6 +92,40 @@ export default defineConfig({
         minify: nodeMinifyConfig,
       },
     },
+    // Node / ESM / loaders
+    {
+      format: 'esm',
+      syntax: 'es2021',
+      source: {
+        entry: {
+          ignoreCssLoader: './src/loader/ignoreCssLoader.ts',
+          transformLoader: './src/loader/transformLoader.ts',
+        },
+      },
+      output: {
+        filename: {
+          js: '[name].mjs',
+        },
+        minify: nodeMinifyConfig,
+      },
+    },
+    // Node / ESM / loaders 2
+    // TODO: https://github.com/web-infra-dev/rslib/issues/452
+    {
+      format: 'esm',
+      syntax: 'es2021',
+      source: {
+        entry: {
+          transformRawLoader: './src/loader/transformRawLoader.ts',
+        },
+      },
+      output: {
+        filename: {
+          js: '[name].mjs',
+        },
+        minify: nodeMinifyConfig,
+      },
+    },
     // Node / CJS
     {
       format: 'cjs',
@@ -99,9 +133,6 @@ export default defineConfig({
       source: {
         entry: {
           index: './src/index.ts',
-          ignoreCssLoader: './src/loader/ignoreCssLoader.ts',
-          transformLoader: './src/loader/transformLoader.ts',
-          transformRawLoader: './src/loader/transformRawLoader.ts',
         },
       },
       output: {

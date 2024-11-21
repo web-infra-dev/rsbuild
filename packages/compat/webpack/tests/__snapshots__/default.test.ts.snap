@@ -825,7 +825,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<ROOT>/packages/core/dist/ignoreCssLoader.cjs",
+            "loader": "<ROOT>/packages/core/dist/ignoreCssLoader.mjs",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -990,7 +990,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.node\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/core/dist/transformRawLoader.cjs",
+            "loader": "<ROOT>/packages/core/dist/transformRawLoader.mjs",
             "options": {
               "getEnvironment": [Function],
               "id": "rsbuild-transform-0",
@@ -1155,7 +1155,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "type": "javascript/auto",
         "use": [
           {
-            "loader": "<ROOT>/packages/core/dist/ignoreCssLoader.cjs",
+            "loader": "<ROOT>/packages/core/dist/ignoreCssLoader.mjs",
           },
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",

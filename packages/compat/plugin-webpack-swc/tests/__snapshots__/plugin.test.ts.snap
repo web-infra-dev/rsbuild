@@ -9,7 +9,7 @@ exports[`plugin-webpack-swc > output.sourceMap config for swcMinimizerPlugin 1`]
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "use": [
             {
-              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
@@ -66,7 +66,7 @@ exports[`plugin-webpack-swc > output.sourceMap config for swcMinimizerPlugin 1`]
           },
           "use": [
             {
-              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
@@ -160,7 +160,7 @@ exports[`plugin-webpack-swc > should apply multiple environment configs correctl
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "use": [
             {
-              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
@@ -217,7 +217,7 @@ exports[`plugin-webpack-swc > should apply multiple environment configs correctl
           },
           "use": [
             {
-              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
@@ -275,7 +275,7 @@ exports[`plugin-webpack-swc > should apply multiple environment configs correctl
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "use": [
             {
-              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
@@ -330,7 +330,7 @@ exports[`plugin-webpack-swc > should apply multiple environment configs correctl
           },
           "use": [
             {
-              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
@@ -390,7 +390,7 @@ exports[`plugin-webpack-swc > should apply source.include and source.exclude cor
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
             "options": {
               "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
               "env": {
@@ -447,7 +447,7 @@ exports[`plugin-webpack-swc > should apply source.include and source.exclude cor
         },
         "use": [
           {
-            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
             "options": {
               "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
               "env": {
@@ -507,7 +507,7 @@ exports[`plugin-webpack-swc > should disable react refresh when dev.hmr is false
       "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
@@ -564,7 +564,7 @@ exports[`plugin-webpack-swc > should disable react refresh when dev.hmr is false
       },
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
@@ -620,7 +620,7 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
       "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
@@ -674,7 +674,7 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
       },
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
@@ -727,7 +727,7 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
       "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
@@ -784,7 +784,7 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
       },
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
@@ -840,7 +840,7 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
       "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
@@ -897,7 +897,7 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
       },
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
@@ -1056,7 +1056,7 @@ exports[`plugin-webpack-swc > should set multiple swc-loader 1`] = `
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
     "use": [
       {
-        "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+        "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
         "options": {
           "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
           "env": {
@@ -1106,7 +1106,7 @@ exports[`plugin-webpack-swc > should set multiple swc-loader 1`] = `
     "test": /override\\.ts/,
     "use": [
       {
-        "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+        "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
         "options": {
           "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
           "env": {
@@ -1164,7 +1164,7 @@ exports[`plugin-webpack-swc > should set multiple swc-loader 1`] = `
     },
     "use": [
       {
-        "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+        "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
         "options": {
           "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
           "env": {
@@ -1221,7 +1221,7 @@ exports[`plugin-webpack-swc > should set swc-loader 1`] = `
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
             "options": {
               "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
               "env": {
@@ -1278,7 +1278,7 @@ exports[`plugin-webpack-swc > should set swc-loader 1`] = `
         },
         "use": [
           {
-            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
             "options": {
               "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
               "env": {
@@ -1340,7 +1340,7 @@ exports[`plugin-webpack-swc > should use output config 1`] = `
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "use": [
             {
-              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
@@ -1397,7 +1397,7 @@ exports[`plugin-webpack-swc > should use output config 1`] = `
           },
           "use": [
             {
-              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {

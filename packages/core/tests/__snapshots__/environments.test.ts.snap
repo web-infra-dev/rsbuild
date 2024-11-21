@@ -1562,7 +1562,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "type": "javascript/auto",
           "use": [
             {
-              "loader": "<ROOT>/packages/core/src/ignoreCssLoader.cjs",
+              "loader": "<ROOT>/packages/core/src/ignoreCssLoader.mjs",
             },
             {
               "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -1788,7 +1788,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "test": /\\\\\\.node\\$/,
           "use": [
             {
-              "loader": "<ROOT>/packages/core/src/transformRawLoader.cjs",
+              "loader": "<ROOT>/packages/core/src/transformRawLoader.mjs",
               "options": {
                 "getEnvironment": [Function],
                 "id": "rsbuild-transform-0",
