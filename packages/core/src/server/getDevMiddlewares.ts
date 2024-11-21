@@ -26,7 +26,7 @@ export type CompileMiddlewareAPI = {
   middleware: RequestHandler;
   sockWrite: SetupMiddlewaresServer['sockWrite'];
   onUpgrade: UpgradeEvent;
-  close: () => void;
+  close: () => Promise<void>;
 };
 
 export type RsbuildDevMiddlewareOptions = {
@@ -260,7 +260,7 @@ export const getMiddlewares = async (
 
   return {
     close: async () => {
-      compileMiddlewareAPI?.close();
+      await compileMiddlewareAPI?.close();
     },
     onUpgrade,
     middlewares,
