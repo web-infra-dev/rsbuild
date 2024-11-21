@@ -919,7 +919,7 @@ export interface OutputConfig {
    * };
    * ```
    */
-  sourceMap?: SourceMap;
+  sourceMap?: boolean | SourceMap;
   /**
    * Whether to add filename hash after production build.
    * @default true
@@ -974,10 +974,12 @@ export interface NormalizedOutputConfig extends OutputConfig {
   distPath: Omit<Required<DistPathConfig>, 'jsAsync' | 'cssAsync' | 'js'> &
     Pick<DistPathConfig, 'jsAsync' | 'cssAsync' | 'js'>;
   polyfill: Polyfill;
-  sourceMap: {
-    js?: Rspack.Configuration['devtool'];
-    css: boolean;
-  };
+  sourceMap:
+    | boolean
+    | {
+        js?: Rspack.Configuration['devtool'];
+        css: boolean;
+      };
   filenameHash: boolean | string;
   assetPrefix: string;
   dataUriLimit: number | NormalizedDataUriLimit;

@@ -40,9 +40,10 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
 
+      const { sourceMap } = config.output;
       const mergedOptions = reduceConfigs({
         initial: {
-          sourceMap: config.output.sourceMap.css,
+          sourceMap: typeof sourceMap === 'boolean' ? sourceMap : sourceMap.css,
         },
         config: options,
         mergeFn: deepmerge,

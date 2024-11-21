@@ -1,10 +1,24 @@
 import path from 'node:path';
-import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
+import type {
+  NormalizedEnvironmentConfig,
+  RsbuildPlugin,
+  Rspack,
+} from '../types';
 
-const getJsSourceMap = (config: NormalizedEnvironmentConfig) => {
+const getJsSourceMap = (
+  config: NormalizedEnvironmentConfig,
+): Rspack.DevTool => {
   const { sourceMap } = config.output;
+  const isProd = config.mode === 'production';
+
+  if (sourceMap === false) {
+    return false;
+  }
+  if (sourceMap === true) {
+    return isProd ? 'source-map' : 'cheap-module-source-map';
+  }
   if (sourceMap.js === undefined) {
-    return config.mode === 'production' ? false : 'cheap-module-source-map';
+    return isProd ? false : 'cheap-module-source-map';
   }
   return sourceMap.js;
 };

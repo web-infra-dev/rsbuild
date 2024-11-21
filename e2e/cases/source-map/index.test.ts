@@ -113,6 +113,50 @@ test('should not generate source map by default in production build', async () =
   expect(cssMapFiles.length).toEqual(0);
 });
 
+test('should generate source map if `output.sourceMap` is true', async () => {
+  const rsbuild = await build({
+    cwd: fixtures,
+    rsbuildConfig: {
+      output: {
+        sourceMap: true,
+      },
+    },
+  });
+
+  const files = await rsbuild.unwrapOutputJSON(false);
+
+  const jsMapFiles = Object.keys(files).filter((files) =>
+    files.endsWith('.js.map'),
+  );
+  const cssMapFiles = Object.keys(files).filter((files) =>
+    files.endsWith('.css.map'),
+  );
+  expect(jsMapFiles.length).toBeGreaterThan(0);
+  expect(cssMapFiles.length).toBeGreaterThan(0);
+});
+
+test('should not generate source map if `output.sourceMap` is false', async () => {
+  const rsbuild = await build({
+    cwd: fixtures,
+    rsbuildConfig: {
+      output: {
+        sourceMap: false,
+      },
+    },
+  });
+
+  const files = await rsbuild.unwrapOutputJSON(false);
+
+  const jsMapFiles = Object.keys(files).filter((files) =>
+    files.endsWith('.js.map'),
+  );
+  const cssMapFiles = Object.keys(files).filter((files) =>
+    files.endsWith('.css.map'),
+  );
+  expect(jsMapFiles.length).toEqual(0);
+  expect(cssMapFiles.length).toEqual(0);
+});
+
 test('should generate source map correctly in development build', async ({
   page,
 }) => {

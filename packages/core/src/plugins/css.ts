@@ -72,6 +72,11 @@ const clonePostCSSConfig = (config: PostCSSOptions) => ({
   plugins: config.plugins ? [...config.plugins] : undefined,
 });
 
+const getCSSSourceMap = (config: NormalizedEnvironmentConfig): boolean => {
+  const { sourceMap } = config.output;
+  return typeof sourceMap === 'boolean' ? sourceMap : sourceMap.css;
+};
+
 async function loadUserPostcssrc(root: string): Promise<PostCSSOptions> {
   const cached = userPostcssrcCache.get(root);
 
@@ -128,7 +133,7 @@ const getPostcssLoaderOptions = async ({
   const defaultOptions: PostCSSLoaderOptions = {
     implementation: getCompiledPath('postcss'),
     postcssOptions: userOptions,
-    sourceMap: config.output.sourceMap.css,
+    sourceMap: getCSSSourceMap(config),
   };
 
   const finalOptions = reduceConfigsWithContext({
@@ -209,7 +214,7 @@ const getCSSLoaderOptions = ({
       ...cssModules,
       localIdentName,
     },
-    sourceMap: config.output.sourceMap.css,
+    sourceMap: getCSSSourceMap(config),
   };
 
   const mergedCssLoaderOptions = reduceConfigs({
