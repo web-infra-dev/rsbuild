@@ -14,11 +14,11 @@ export default defineConfig({
       output: {
         // TODO https://github.com/web-infra-dev/rslib/issues/287
         externals: {
-          webpack: 'import webpack',
-          'copy-webpack-plugin': 'import copy-webpack-plugin',
-          'mini-css-extract-plugin': 'import mini-css-extract-plugin',
-          'tsconfig-paths-webpack-plugin':
-            'import tsconfig-paths-webpack-plugin',
+          // webpack: 'import webpack',
+          // 'copy-webpack-plugin': 'import copy-webpack-plugin',
+          // 'mini-css-extract-plugin': 'import mini-css-extract-plugin',
+          // 'tsconfig-paths-webpack-plugin':
+          //   'import tsconfig-paths-webpack-plugin',
         },
       },
       footer: {
