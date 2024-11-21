@@ -1,4 +1,8 @@
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+export const __filename: string = fileURLToPath(import.meta.url);
+export const __dirname: string = dirname(__filename);
 
 // Paths
 // loaders will be emitted to the same folder of the main bundle
