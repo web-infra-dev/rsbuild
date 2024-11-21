@@ -126,7 +126,7 @@ exports[`plugin-webpack-swc > output.sourceMap config for swcMinimizerPlugin 1`]
             },
           },
           "name": "swc-minimizer-plugin",
-          "rsbuildSourceMapConfig": {
+          "sourceMapConfig": {
             "css": false,
             "js": "cheap-source-map",
           },
@@ -137,7 +137,7 @@ exports[`plugin-webpack-swc > output.sourceMap config for swcMinimizerPlugin 1`]
             "jsMinify": undefined,
           },
           "name": "swc-minimizer-plugin",
-          "rsbuildSourceMapConfig": {
+          "sourceMapConfig": {
             "css": false,
             "js": "cheap-source-map",
           },
@@ -960,7 +960,7 @@ exports[`plugin-webpack-swc > should set SWC minimizer in production 1`] = `
         },
       },
       "name": "swc-minimizer-plugin",
-      "rsbuildSourceMapConfig": {
+      "sourceMapConfig": {
         "css": false,
         "js": undefined,
       },
@@ -971,7 +971,7 @@ exports[`plugin-webpack-swc > should set SWC minimizer in production 1`] = `
         "jsMinify": undefined,
       },
       "name": "swc-minimizer-plugin",
-      "rsbuildSourceMapConfig": {
+      "sourceMapConfig": {
         "css": false,
         "js": undefined,
       },
@@ -995,7 +995,7 @@ exports[`plugin-webpack-swc > should set correct SWC minimizer options in produc
         },
       },
       "name": "swc-minimizer-plugin",
-      "rsbuildSourceMapConfig": {
+      "sourceMapConfig": {
         "css": false,
         "js": undefined,
       },
@@ -1006,7 +1006,7 @@ exports[`plugin-webpack-swc > should set correct SWC minimizer options in produc
         "jsMinify": undefined,
       },
       "name": "swc-minimizer-plugin",
-      "rsbuildSourceMapConfig": {
+      "sourceMapConfig": {
         "css": false,
         "js": undefined,
       },
@@ -1030,7 +1030,7 @@ exports[`plugin-webpack-swc > should set correct SWC minimizer options using raw
         },
       },
       "name": "swc-minimizer-plugin",
-      "rsbuildSourceMapConfig": {
+      "sourceMapConfig": {
         "css": false,
         "js": undefined,
       },
@@ -1041,7 +1041,7 @@ exports[`plugin-webpack-swc > should set correct SWC minimizer options using raw
         "jsMinify": undefined,
       },
       "name": "swc-minimizer-plugin",
-      "rsbuildSourceMapConfig": {
+      "sourceMapConfig": {
         "css": false,
         "js": undefined,
       },
@@ -1460,7 +1460,7 @@ exports[`plugin-webpack-swc > should use output config 1`] = `
             },
           },
           "name": "swc-minimizer-plugin",
-          "rsbuildSourceMapConfig": {
+          "sourceMapConfig": {
             "css": false,
             "js": undefined,
           },

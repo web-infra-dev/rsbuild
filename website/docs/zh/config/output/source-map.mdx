@@ -3,17 +3,19 @@
 - **类型：**
 
 ```ts
-type SourceMap = {
-  js?: Rspack.Configuration['devtool'];
-  css?: boolean;
-};
+type SourceMap =
+  | boolean
+  | {
+      js?: Rspack.Configuration['devtool'];
+      css?: boolean;
+    };
 ```
 
 - **默认值：**
 
 ```ts
 const defaultSourceMap = {
-  js: isDev ? 'cheap-module-source-map' : false,
+  js: mode === 'development' ? 'cheap-module-source-map' : false,
   css: false,
 };
 ```
@@ -30,6 +32,34 @@ source map 是保存源代码映射关系的信息文件，它记录了编译后
 
 - 在开发模式构建时，会生成 JS 文件的 source map，便于进行开发调试；不会生成 CSS 文件的 source map。
 - 在生产模式构建时，不会生成 JS 和 CSS 文件的 source map，以提供最佳的构建性能。
+
+## 布尔值
+
+如果 `output.sourceMap` 为 `true`，则会根据 [mode](/config/mode) 生成 JS 和 CSS 文件的 source map，等价于：
+
+```js
+export default {
+  output: {
+    sourceMap: {
+      js: mode === 'development' ? 'cheap-module-source-map' : 'source-map',
+      css: true,
+    },
+  },
+};
+```
+
+如果 `output.sourceMap` 为 `false`，则不会生成 JS 和 CSS 文件的 source map，等价于：
+
+```js
+export default {
+  output: {
+    sourceMap: {
+      js: false,
+      css: false,
+    },
+  },
+};
+```
 
 ## JS Source Map
 
