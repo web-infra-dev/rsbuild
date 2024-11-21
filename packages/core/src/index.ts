@@ -9,7 +9,13 @@ import * as __internalHelper from './internal';
 // Core methods
 export { loadEnv } from './loadEnv';
 export { createRsbuild } from './createRsbuild';
-export { loadConfig, defineConfig } from './config';
+export {
+  loadConfig,
+  defineConfig,
+  type LoadConfigOptions,
+  type LoadConfigResult,
+} from './config';
+export { runCLI } from './cli';
 
 // Rsbuild version
 export const version: string = RSBUILD_VERSION;
@@ -69,6 +75,7 @@ export type {
   InlineChunkConfig,
   InlineChunkTest,
   InlineChunkTestFunction,
+  InternalContext,
   LegalComments,
   MetaAttrs,
   MetaOptions,
@@ -134,6 +141,7 @@ export type {
   RsbuildPluginAPI,
   RsbuildPlugins,
   RsbuildProvider,
+  RsbuildProviderHelpers,
   RsbuildTarget,
   RspackChain,
   RspackRule,

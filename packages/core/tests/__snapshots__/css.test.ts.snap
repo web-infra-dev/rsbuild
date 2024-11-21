@@ -5,6 +5,9 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
   "module": {
     "rules": [
       {
+        "dependency": {
+          "not": "url",
+        },
         "resolve": {
           "preferRelative": true,
         },
@@ -55,6 +58,9 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
   "module": {
     "rules": [
       {
+        "dependency": {
+          "not": "url",
+        },
         "resolve": {
           "preferRelative": true,
         },
@@ -95,6 +101,9 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
   "module": {
     "rules": [
       {
+        "dependency": {
+          "not": "url",
+        },
         "resolve": {
           "preferRelative": true,
         },
@@ -143,6 +152,9 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
 exports[`should ensure isolation of PostCSS config objects between different builds 1`] = `
 [
   {
+    "dependency": {
+      "not": "url",
+    },
     "resolve": {
       "preferRelative": true,
     },
@@ -201,6 +213,9 @@ exports[`should ensure isolation of PostCSS config objects between different bui
 exports[`should ensure isolation of PostCSS config objects between different builds 2`] = `
 [
   {
+    "dependency": {
+      "not": "url",
+    },
     "resolve": {
       "preferRelative": true,
     },

@@ -1,5 +1,6 @@
 import { type Command, program } from 'commander';
 import { logger } from '../logger';
+import { onBeforeRestartServer } from '../server/restart';
 import type { RsbuildMode } from '../types';
 import { init } from './init';
 
@@ -62,7 +63,7 @@ const applyServerOptions = (command: Command) => {
     .option('--host <host>', 'specify the host that the server listens to');
 };
 
-export function runCli(): void {
+export function setupCommands(): void {
   program.name('rsbuild').usage('<command> [options]').version(RSBUILD_VERSION);
 
   const devCommand = program.command('dev');
@@ -94,10 +95,17 @@ export function runCli(): void {
     .description('build the app for production')
     .action(async (options: BuildOptions) => {
       try {
-        const rsbuild = await init({ cliOptions: options });
-        await rsbuild?.build({
+        const rsbuild = await init({
+          cliOptions: options,
+          isBuildWatch: options.watch,
+        });
+        const buildInstance = await rsbuild?.build({
           watch: options.watch,
         });
+
+        if (options.watch && buildInstance) {
+          onBeforeRestartServer(buildInstance.close);
+        }
       } catch (err) {
         logger.error('Failed to build.');
         logger.error(err);

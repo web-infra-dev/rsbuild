@@ -13,7 +13,7 @@ test('should log warning by default', async () => {
     logs.some((log) =>
       log.includes('Using / for division outside of calc() is deprecated'),
     ),
-  );
+  ).toBeTruthy();
 
   restore();
 });

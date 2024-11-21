@@ -2,7 +2,11 @@ import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
 import { parse } from 'node:querystring';
 import type Ws from 'ws';
-import { getAllStatsErrors, getAllStatsWarnings } from '../helpers';
+import {
+  getAllStatsErrors,
+  getAllStatsWarnings,
+  getStatsOptions,
+} from '../helpers';
 import { logger } from '../logger';
 import type { DevConfig, Rspack } from '../types';
 import { getCompilationId } from './helper';
@@ -201,9 +205,11 @@ export class SocketServer {
       errorDetails: false,
       entrypoints: true,
       children: true,
+      moduleTrace: true,
     };
 
-    return curStats.toJson(defaultStats);
+    const statsOptions = getStatsOptions(curStats.compilation.compiler);
+    return curStats.toJson({ ...defaultStats, ...statsOptions });
   }
 
   // determine what message should send by stats

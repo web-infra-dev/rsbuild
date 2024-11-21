@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import type {
   ChainIdentifier,
   RsbuildPlugin,
+  RsbuildProviderHelpers,
   RsbuildTarget,
   Rspack,
   RspackChain,
@@ -57,7 +58,9 @@ const getMainFields = (chain: RspackChain, target: RsbuildTarget) => {
 /**
  * Handling differences between Webpack and Rspack
  */
-export const pluginAdaptor = (): RsbuildPlugin => ({
+export const pluginAdaptor = (
+  helpers: RsbuildProviderHelpers,
+): RsbuildPlugin => ({
   name: 'rsbuild-webpack:adaptor',
 
   setup(api) {
@@ -81,6 +84,7 @@ export const pluginAdaptor = (): RsbuildPlugin => ({
         chain.plugin(CHAIN_ID.PLUGIN.PROGRESS).use(ProgressPlugin, [
           {
             id: environment.name,
+            prettyTime: helpers.prettyTime,
             ...(progress === true ? {} : progress),
           },
         ]);

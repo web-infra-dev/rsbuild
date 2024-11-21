@@ -43,6 +43,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "test": /\\\\\\.m\\?js/,
       },
       {
+        "dependency": {
+          "not": "url",
+        },
         "resolve": {
           "preferRelative": true,
         },
@@ -70,6 +73,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         ],
       },
       {
+        "dependency": {
+          "not": "url",
+        },
         "include": [
           {
             "and": [
@@ -322,6 +328,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "modulesCount": 5000,
       "name": "ProgressPlugin",
       "percentBy": null,
+      "prettyTime": [Function],
       "profile": false,
       "showActiveModules": false,
       "showDependencies": true,
@@ -424,6 +431,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "test": /\\\\\\.m\\?js/,
       },
       {
+        "dependency": {
+          "not": "url",
+        },
         "resolve": {
           "preferRelative": true,
         },
@@ -451,6 +461,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         ],
       },
       {
+        "dependency": {
+          "not": "url",
+        },
         "include": [
           {
             "and": [
@@ -698,6 +711,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
       "modulesCount": 5000,
       "name": "ProgressPlugin",
       "percentBy": null,
+      "prettyTime": [Function],
       "profile": false,
       "showActiveModules": false,
       "showDependencies": true,
@@ -800,6 +814,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.m\\?js/,
       },
       {
+        "dependency": {
+          "not": "url",
+        },
         "resolve": {
           "preferRelative": true,
         },
@@ -828,6 +845,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         ],
       },
       {
+        "dependency": {
+          "not": "url",
+        },
         "include": [
           {
             "and": [
@@ -1023,6 +1043,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       "modulesCount": 5000,
       "name": "ProgressPlugin",
       "percentBy": null,
+      "prettyTime": [Function],
       "profile": false,
       "showActiveModules": false,
       "showDependencies": true,
@@ -1123,6 +1144,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "test": /\\\\\\.m\\?js/,
       },
       {
+        "dependency": {
+          "not": "url",
+        },
         "resolve": {
           "preferRelative": true,
         },
@@ -1151,6 +1175,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         ],
       },
       {
+        "dependency": {
+          "not": "url",
+        },
         "include": [
           {
             "and": [
@@ -1331,6 +1358,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
       "modulesCount": 5000,
       "name": "ProgressPlugin",
       "percentBy": null,
+      "prettyTime": [Function],
       "profile": false,
       "showActiveModules": false,
       "showDependencies": true,

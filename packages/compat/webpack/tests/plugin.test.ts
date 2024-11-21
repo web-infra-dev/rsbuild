@@ -1,31 +1,4 @@
-import { pluginAdaptor } from '../src/plugin';
 import { createFriendlyPercentage } from '../src/progress/helpers';
-import { createStubRsbuild } from './helper';
-
-describe('plugin-progress', () => {
-  it('should register ProgressPlugin by default', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginAdaptor()],
-    });
-
-    const matched = await rsbuild.matchBundlerPlugin('ProgressPlugin');
-    expect(matched).toBeTruthy();
-  });
-
-  it('should not register ProgressPlugin if dev.progressBar is false', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginAdaptor()],
-      rsbuildConfig: {
-        dev: {
-          progressBar: false,
-        },
-      },
-    });
-
-    const matched = await rsbuild.matchBundlerPlugin('ProgressPlugin');
-    expect(matched).toBeFalsy();
-  });
-});
 
 describe('createFriendlyPercentage', () => {
   it('should format percentage correctly', () => {

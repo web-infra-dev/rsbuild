@@ -20,7 +20,7 @@ const clearConsole = () => {
   }
 };
 
-export const restartDevServer = async ({
+const beforeRestart = async ({
   filePath,
   clear = true,
 }: {
@@ -42,8 +42,18 @@ export const restartDevServer = async ({
 
   for (const cleaner of cleaners) {
     await cleaner();
-    cleaners = [];
   }
+  cleaners = [];
+};
+
+export const restartDevServer = async ({
+  filePath,
+  clear = true,
+}: {
+  filePath?: string;
+  clear?: boolean;
+} = {}): Promise<void> => {
+  await beforeRestart({ filePath, clear });
 
   const rsbuild = await init({ isRestart: true });
 
@@ -54,4 +64,26 @@ export const restartDevServer = async ({
   }
 
   await rsbuild.startDevServer();
+};
+
+export const restartBuild = async ({
+  filePath,
+  clear = true,
+}: {
+  filePath?: string;
+  clear?: boolean;
+} = {}): Promise<void> => {
+  await beforeRestart({ filePath, clear });
+
+  const rsbuild = await init({ isRestart: true, isBuildWatch: true });
+
+  // Skip the following logic if restart failed,
+  // maybe user is editing config file and write some invalid config
+  if (!rsbuild) {
+    return;
+  }
+
+  const buildInstance = await rsbuild.build({ watch: true });
+
+  onBeforeRestartServer(buildInstance.close);
 };

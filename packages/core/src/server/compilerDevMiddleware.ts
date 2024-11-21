@@ -59,9 +59,6 @@ const formatDevConfig = (
     },
   };
 };
-const noop = () => {
-  // noop
-};
 
 function getClientPaths(devConfig: DevConfig) {
   const clientPaths: string[] = [];
@@ -118,10 +115,24 @@ export class CompilerDevMiddleware {
     this.socketServer.upgrade(req, sock, head);
   }
 
-  public close(): void {
+  public async close(): Promise<void> {
     // socketServer close should before app close
     this.socketServer.close();
-    this.middleware?.close(noop);
+
+    if (this.middleware) {
+      await new Promise<void>((resolve) => {
+        this.middleware.close(() => {
+          resolve();
+        });
+      });
+    }
+
+    // `middleware.close()` only stop watching for file changes, compiler should also be closed.
+    await new Promise<void>((resolve) => {
+      this.compiler.close(() => {
+        resolve();
+      });
+    });
   }
 
   public sockWrite(

@@ -74,7 +74,7 @@ export default defineConfig({
     externals,
   },
   lib: [
-    // Node / ESM
+    // Node / ESM / index
     {
       format: 'esm',
       syntax: 'es2021',
