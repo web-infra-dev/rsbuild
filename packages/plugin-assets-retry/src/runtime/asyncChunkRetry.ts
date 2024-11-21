@@ -18,18 +18,22 @@ declare global {
   // RuntimeGlobals.require
   var __RUNTIME_GLOBALS_REQUIRE__: unknown;
   // RuntimeGlobals.ensure
-  var __RUNTIME_GLOBALS_ENSURE_CHUNK__: (chunkId: ChunkId) => Promise<unknown>;
+  var __RUNTIME_GLOBALS_ENSURE_CHUNK__: (
+    chunkId: ChunkId,
+    ...args: unknown[]
+  ) => Promise<unknown>;
   // RuntimeGlobals.getChunkScriptFilename
   var __RUNTIME_GLOBALS_GET_CHUNK_SCRIPT_FILENAME__: (
     chunkId: ChunkId,
+    ...args: unknown[]
   ) => string;
   // RuntimeGlobals.getChunkCssFilename
   var __RUNTIME_GLOBALS_GET_CSS_FILENAME__:
-    | ((chunkId: ChunkId) => string)
+    | ((chunkId: ChunkId, ...args: unknown[]) => string)
     | undefined;
   // RuntimeGlobals.getChunkCssFilename when using Rspack.CssExtractPlugin
   var __RUNTIME_GLOBALS_GET_MINI_CSS_EXTRACT_FILENAME__:
-    | ((chunkId: ChunkId) => string)
+    | ((chunkId: ChunkId, ...args: unknown[]) => string)
     | undefined;
   // RuntimeGlobals.loadScript
   var __RUNTIME_GLOBALS_LOAD_SCRIPT__: (
@@ -37,6 +41,7 @@ declare global {
     done: unknown,
     key: string,
     chunkId: ChunkId,
+    ...args: unknown[]
   ) => void;
   // RuntimeGlobals.publicPath
   var __RUNTIME_GLOBALS_PUBLIC_PATH__: string;
@@ -196,34 +201,76 @@ const originalGetCssFilename =
   (() => null);
 const originalLoadScript = __RUNTIME_GLOBALS_LOAD_SCRIPT__;
 
+const ERROR_PREFIX = '[@rsbuild/plugin-assets-retry] ';
+
 // if users want to support es5, add Promise polyfill first https://github.com/webpack/webpack/issues/12877
 function ensureChunk(
   chunkId: string,
+  // args placeholder, to avoid that other webpack runtime would add arg for __webpack_require__.e
+  arg0: unknown,
+  arg1: unknown,
+  arg2: unknown,
+  arg3: unknown,
+  arg4: unknown,
+  arg5: unknown,
+  arg6: unknown,
   callingCounter: { count: number } = { count: 0 },
+  ...args: unknown[]
 ): Promise<unknown> {
-  const result = originalEnsureChunk(chunkId);
-  const originalScriptFilename = originalGetChunkScriptFilename(chunkId);
-  const originalCssFilename = originalGetCssFilename(chunkId);
+  const result = originalEnsureChunk(
+    chunkId,
+    arg0,
+    arg1,
+    arg2,
+    arg3,
+    arg4,
+    arg5,
+    arg6,
+    callingCounter,
+    ...args,
+  );
 
-  // mark the async chunk name in the global variables and share it with initial chunk retry to avoid duplicate retrying
-  if (typeof window !== 'undefined') {
-    if (originalScriptFilename) {
-      window.__RB_ASYNC_CHUNKS__[originalScriptFilename] = true;
+  try {
+    const originalScriptFilename = originalGetChunkScriptFilename(chunkId);
+    const originalCssFilename = originalGetCssFilename(chunkId);
+
+    // mark the async chunk name in the global variables and share it with initial chunk retry to avoid duplicate retrying
+    if (typeof window !== 'undefined') {
+      if (originalScriptFilename) {
+        window.__RB_ASYNC_CHUNKS__[originalScriptFilename] = true;
+      }
+      if (originalCssFilename) {
+        window.__RB_ASYNC_CHUNKS__[originalCssFilename] = true;
+      }
     }
-    if (originalCssFilename) {
-      window.__RB_ASYNC_CHUNKS__[originalCssFilename] = true;
-    }
+  } catch (e) {
+    console.error(ERROR_PREFIX, 'get original script or css filename error', e);
   }
+
+  // if __webpack_require__.e is polluted by other runtime codes, fallback to originalEnsureChunk
+  if (typeof callingCounter?.count !== 'number') {
+    return result;
+  }
+
   callingCounter.count += 1;
 
   return result.catch((error: Error) => {
     // the first calling is not retry
     // if the failed request is 4 in network panel, callingCounter.count === 4, the first one is the normal request, and existRetryTimes is 3, retried 3 times
     const existRetryTimes = callingCounter.count - 1;
-    const { originalSrcUrl, nextRetryUrl, nextDomain } = nextRetry(
-      chunkId,
-      existRetryTimes,
-    );
+    let originalSrcUrl: string;
+    let nextRetryUrl: string;
+    let nextDomain: string;
+
+    try {
+      const retryResult = nextRetry(chunkId, existRetryTimes);
+      originalSrcUrl = retryResult.originalSrcUrl;
+      nextRetryUrl = retryResult.nextRetryUrl;
+      nextDomain = retryResult.nextDomain;
+    } catch (e) {
+      console.error(ERROR_PREFIX, 'failed to get nextRetryUrl', e);
+      throw error;
+    }
 
     // At present, we don't consider the switching domain and addQuery of async CSS chunk
     // 1. Async js chunk will be requested first. It is rare for async CSS chunk to fail alone.
@@ -278,12 +325,23 @@ function ensureChunk(
       config.onRetry(context);
     }
 
-    const nextPromise = ensureChunk(chunkId, callingCounter);
+    const nextPromise = ensureChunk(
+      chunkId,
+      arg0,
+      arg1,
+      arg2,
+      arg3,
+      arg4,
+      arg5,
+      arg6,
+      callingCounter,
+      ...args,
+    );
     return nextPromise.then((result) => {
       // when after retrying the third time
       // ensureChunk(chunkId, { count: 3 }), at that time, existRetryTimes === 2
       // after all, callingCounter.count is 4
-      const isLastSuccessRetry = callingCounter.count === existRetryTimes + 2;
+      const isLastSuccessRetry = callingCounter?.count === existRetryTimes + 2;
       if (typeof config.onSuccess === 'function' && isLastSuccessRetry) {
         const context = createContext(existRetryTimes + 1);
         config.onSuccess(context);
@@ -298,6 +356,7 @@ function loadScript(
   done: unknown,
   key: string,
   chunkId: ChunkId,
+  ...args: unknown[]
 ) {
   const retry = globalCurrRetrying[chunkId];
   return originalLoadScript(
@@ -305,6 +364,7 @@ function loadScript(
     done,
     key,
     chunkId,
+    ...args,
   );
 }
 
@@ -316,11 +376,15 @@ function registerAsyncChunkRetry() {
 
   if (typeof __RUNTIME_GLOBALS_REQUIRE__ !== 'undefined') {
     try {
-      __RUNTIME_GLOBALS_ENSURE_CHUNK__ = ensureChunk;
+      __RUNTIME_GLOBALS_ENSURE_CHUNK__ = ensureChunk as (
+        chunkId: string,
+        ...args: unknown[]
+      ) => Promise<unknown>;
       __RUNTIME_GLOBALS_LOAD_SCRIPT__ = loadScript;
     } catch (e) {
       console.error(
-        '[@rsbuild/plugin-assets-retry] Register async chunk retry runtime failed',
+        ERROR_PREFIX,
+        'Register async chunk retry runtime failed',
         e,
       );
     }
