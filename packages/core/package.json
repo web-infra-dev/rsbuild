@@ -86,7 +86,7 @@
     "postcss-load-config": "6.0.1",
     "postcss-loader": "8.1.1",
     "prebundle": "1.2.5",
-    "reduce-configs": "^1.0.0",
+    "reduce-configs": "^1.1.0",
     "rimraf": "^6.0.1",
     "rsbuild-dev-middleware": "0.1.2",
     "rslog": "^1.2.3",

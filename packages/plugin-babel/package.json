@@ -34,7 +34,7 @@
     "@babel/preset-typescript": "^7.26.0",
     "@types/babel__core": "^7.20.5",
     "deepmerge": "^4.3.1",
-    "reduce-configs": "^1.0.0",
+    "reduce-configs": "^1.1.0",
     "upath": "2.0.1"
   },
   "devDependencies": {

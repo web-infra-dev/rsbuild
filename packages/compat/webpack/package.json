@@ -30,7 +30,7 @@
     "copy-webpack-plugin": "11.0.0",
     "mini-css-extract-plugin": "2.9.2",
     "picocolors": "^1.1.1",
-    "reduce-configs": "^1.0.0",
+    "reduce-configs": "^1.1.0",
     "tsconfig-paths-webpack-plugin": "4.2.0",
     "webpack": "^5.96.1"
   },
