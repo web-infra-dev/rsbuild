@@ -77,7 +77,7 @@ To get started with Rsbuild, see the [Quick Start](https://rsbuild.dev/guide/sta
 - [Rspack](https://github.com/web-infra-dev/rspack): A fast Rust-based web bundler.
 - [Rspress](https://github.com/web-infra-dev/rspress): A fast static site generator based on Rsbuild.
 - [Rsdoctor](https://github.com/web-infra-dev/rsdoctor): A one-stop build analyzer for Rspack and webpack.
-- [Rslib](https://github.com/web-infra-dev/rslib): The library build tool powered by Rsbuild.
+- [Rslib](https://github.com/web-infra-dev/rslib): The library development tool powered by Rsbuild.
 - [Modern.js](https://github.com/web-infra-dev/modern.js): A progressive React framework based on Rsbuild.
 - [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack): A curated list of awesome things related to Rspack and Rsbuild.
 - [rspack-examples](https://github.com/rspack-contrib/rspack-examples): Examples for Rspack, Rsbuild, Rspress and Rsdoctor.
