@@ -442,6 +442,18 @@ export type BuildCacheOptions = {
   cacheDigest?: Array<string | undefined>;
 };
 
+export type PrintFileSizeAsset = {
+  /**
+   * The name of the asset.
+   * @example 'index.html', 'static/js/index.[hash].js'
+   */
+  name: string;
+  /**
+   * The size of the asset in bytes.
+   */
+  size: number;
+};
+
 export type PrintFileSizeOptions = {
   /**
    * Whether to print the total size of all static assets.
@@ -459,6 +471,13 @@ export type PrintFileSizeOptions = {
    * @default true
    */
   compressed?: boolean;
+  /**
+   * A filter function to determine which static assets to print.
+   * If returned `false`, the static asset will be excluded and not included in the
+   * total size or detailed size.
+   * @default undefined
+   */
+  include?: (asset: PrintFileSizeAsset) => boolean;
 };
 
 export interface PreconnectOption {
