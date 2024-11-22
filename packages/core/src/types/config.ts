@@ -443,8 +443,21 @@ export type BuildCacheOptions = {
 };
 
 export type PrintFileSizeOptions = {
+  /**
+   * Whether to print the total size of all static assets.
+   * @default true
+   */
   total?: boolean;
+  /**
+   * Whether to print the size of each static asset.
+   * @default true
+   */
   detail?: boolean;
+  /**
+   * Whether to print the gzip-compressed size of each static asset.
+   * Disable this option can save some gzip computation time for large projects.
+   * @default true
+   */
   compressed?: boolean;
 };
 

@@ -4,21 +4,24 @@
 
 ```ts
 type PrintFileSizeOptions =
+  | boolean
   | {
       /**
-       * whether to print total size
+       * Whether to print the total size of all static assets.
+       * @default true
        */
       total?: boolean;
       /**
-       * whether to print size of each file
+       * Whether to print the size of each static asset.
+       * @default true
        */
       detail?: boolean;
       /**
-       * whether to print gzip-compressed size
+       * Whether to print the gzip-compressed size of each static asset.
+       * @default true
        */
       compressed?: boolean;
-    }
-  | boolean;
+    };
 ```
 
 - **Default:** `true`

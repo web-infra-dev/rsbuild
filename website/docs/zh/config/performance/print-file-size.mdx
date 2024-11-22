@@ -4,21 +4,24 @@
 
 ```ts
 type PrintFileSizeOptions =
+  | boolean
   | {
       /**
-       * 是否输出所有静态资源文件的总体积
+       * 是否输出所有静态资源的总体积
+       * @default true
        */
       total?: boolean;
       /**
-       * 是否输出每个静态资源文件的体积
+       * 是否输出每个静态资源的体积
+       * @default true
        */
       detail?: boolean;
       /**
        * 是否输出 gzip 压缩后的体积
+       * @default true
        */
       compressed?: boolean;
-    }
-  | boolean;
+    };
 ```
 
 - **默认值：** `true`
