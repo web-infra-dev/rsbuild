@@ -103,7 +103,7 @@ test.describe('should print file size correctly', async () => {
     ).toBeTruthy();
   });
 
-  test('printFileSize: false should work', async () => {
+  test('printFileSize: false should not print logs', async () => {
     await build({
       cwd,
       rsbuildConfig: {
@@ -189,5 +189,39 @@ test.describe('should print file size correctly', async () => {
     expect(logs.some((log) => log.includes('index.html'))).toBeTruthy();
     expect(logs.some((log) => log.includes('Total:'))).toBeTruthy();
     expect(logs.some((log) => log.includes('gzip:'))).toBeFalsy();
+  });
+
+  test('should allow to filter assets by name', async () => {
+    await build({
+      cwd,
+      rsbuildConfig: {
+        performance: {
+          printFileSize: {
+            include: (asset) => asset.name.endsWith('.js'),
+          },
+        },
+      },
+    });
+
+    expect(logs.some((log) => log.includes('index.html'))).toBeFalsy();
+    expect(logs.some((log) => log.includes('.css'))).toBeFalsy();
+    expect(logs.some((log) => log.includes('.js'))).toBeTruthy();
+  });
+
+  test('should allow to filter assets by size', async () => {
+    await build({
+      cwd,
+      rsbuildConfig: {
+        performance: {
+          printFileSize: {
+            include: (asset) => asset.size > 10 * 1000,
+          },
+        },
+      },
+    });
+
+    expect(logs.some((log) => log.includes('index.html'))).toBeFalsy();
+    expect(logs.some((log) => log.includes('.js'))).toBeTruthy();
+    expect(logs.some((log) => log.includes('.css'))).toBeFalsy();
   });
 });

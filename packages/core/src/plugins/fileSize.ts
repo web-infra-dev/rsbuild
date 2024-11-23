@@ -128,9 +128,18 @@ async function printFileSizes(
       groupAssetsByEmitStatus: false,
     });
 
-    const filteredAssets = origin.assets!.filter((asset) =>
-      filterAsset(asset.name),
-    );
+    const filteredAssets = origin.assets!.filter((asset) => {
+      if (!filterAsset(asset.name)) {
+        return false;
+      }
+      if (options.include) {
+        return options.include({
+          name: asset.name,
+          size: asset.size,
+        });
+      }
+      return true;
+    });
 
     const distFolder = path.relative(rootPath, distPath);
 
@@ -244,7 +253,7 @@ export const pluginFileSize = (): RsbuildPlugin => ({
 
           const multiStats = 'stats' in stats ? stats.stats : [stats];
 
-          const defaultConfig = {
+          const defaultConfig: PrintFileSizeOptions = {
             total: true,
             detail: true,
             compressed: true,
