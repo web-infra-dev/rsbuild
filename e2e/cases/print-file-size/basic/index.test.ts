@@ -224,4 +224,23 @@ test.describe('should print file size correctly', async () => {
     expect(logs.some((log) => log.includes('.js'))).toBeTruthy();
     expect(logs.some((log) => log.includes('.css'))).toBeFalsy();
   });
+
+  test('should allow to custom exclude function', async () => {
+    await build({
+      cwd,
+      rsbuildConfig: {
+        performance: {
+          printFileSize: {
+            exclude: (asset) =>
+              /\.(?:map|LICENSE\.txt)$/.test(asset.name) ||
+              /\.html$/.test(asset.name),
+          },
+        },
+      },
+    });
+
+    expect(logs.some((log) => log.includes('index.html'))).toBeFalsy();
+    expect(logs.some((log) => log.includes('.js'))).toBeTruthy();
+    expect(logs.some((log) => log.includes('.css'))).toBeTruthy();
+  });
 });
