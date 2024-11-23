@@ -39,8 +39,8 @@ importers:
         specifier: ^2.11.1
         version: 2.11.1
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
       vitest:
         specifier: ^2.1.5
         version: 2.1.5(@types/node@22.9.1)(less@4.2.0)(sass-embedded@1.81.0)(sass@1.81.0)(stylus@0.64.0)(terser@5.36.0)
@@ -70,17 +70,17 @@ importers:
         version: 1.9.3
       vue:
         specifier: ^3.5.13
-        version: 3.5.13(typescript@5.6.3)
+        version: 3.5.13(typescript@5.7.2)
       vue-router:
         specifier: ^4.4.5
-        version: 4.4.5(vue@3.5.13(typescript@5.6.3))
+        version: 4.4.5(vue@3.5.13(typescript@5.7.2))
     devDependencies:
       '@e2e/helper':
         specifier: workspace:*
         version: link:scripts
       '@module-federation/rsbuild-plugin':
         specifier: 0.7.6
-        version: 0.7.6(@module-federation/enhanced@0.7.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3)(webpack@5.96.1))(@rsbuild/core@packages+core)
+        version: 0.7.6(@module-federation/enhanced@0.7.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)(webpack@5.96.1))(@rsbuild/core@packages+core)
       '@playwright/test':
         specifier: 1.44.1
         version: 1.44.1
@@ -169,8 +169,8 @@ importers:
         specifier: ^3.4.15
         version: 3.4.15
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
 
   e2e/cases/babel/decorator:
     devDependencies:
@@ -261,7 +261,7 @@ importers:
     dependencies:
       vue:
         specifier: ^3.5.13
-        version: 3.5.13(typescript@5.6.3)
+        version: 3.5.13(typescript@5.7.2)
 
   e2e/scripts: {}
 
@@ -274,8 +274,8 @@ importers:
         specifier: ^3.2.1
         version: 3.2.1
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
 
   examples/module-federation-v2/host:
     dependencies:
@@ -288,7 +288,7 @@ importers:
     devDependencies:
       '@module-federation/rsbuild-plugin':
         specifier: 0.7.6
-        version: 0.7.6(@module-federation/enhanced@0.7.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3)(webpack@5.96.1))(@rsbuild/core@packages+core)
+        version: 0.7.6(@module-federation/enhanced@0.7.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)(webpack@5.96.1))(@rsbuild/core@packages+core)
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../../../packages/core
@@ -307,7 +307,7 @@ importers:
     devDependencies:
       '@module-federation/rsbuild-plugin':
         specifier: 0.7.6
-        version: 0.7.6(@module-federation/enhanced@0.7.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3)(webpack@5.96.1))(@rsbuild/core@packages+core)
+        version: 0.7.6(@module-federation/enhanced@0.7.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)(webpack@5.96.1))(@rsbuild/core@packages+core)
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../../../packages/core
@@ -356,8 +356,8 @@ importers:
         specifier: ^22.9.1
         version: 22.9.1
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
 
   examples/preact:
     dependencies:
@@ -372,8 +372,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/plugin-preact
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
 
   examples/react:
     dependencies:
@@ -397,8 +397,8 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
 
   examples/solid:
     dependencies:
@@ -435,14 +435,14 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
 
   examples/vue:
     dependencies:
       vue:
         specifier: ^3.5.13
-        version: 3.5.13(typescript@5.6.3)
+        version: 3.5.13(typescript@5.7.2)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -470,8 +470,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/compat/webpack
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
 
   packages/compat/plugin-webpack-swc:
     dependencies:
@@ -505,7 +505,7 @@ importers:
         version: link:../webpack
       '@rslib/core':
         specifier: 0.1.0
-        version: 0.1.0(typescript@5.6.3)
+        version: 0.1.0(typescript@5.7.2)
       '@types/lodash':
         specifier: ^4.17.13
         version: 4.17.13
@@ -513,8 +513,8 @@ importers:
         specifier: ^7.5.8
         version: 7.5.8
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
       webpack:
         specifier: ^5.96.1
         version: 5.96.1
@@ -545,7 +545,7 @@ importers:
         version: link:../../core
       '@rslib/core':
         specifier: 0.1.0
-        version: 0.1.0(typescript@5.6.3)
+        version: 0.1.0(typescript@5.7.2)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../../scripts/test-helper
@@ -562,8 +562,8 @@ importers:
         specifier: 1.0.0
         version: 1.0.0
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
 
   packages/core:
     dependencies:
@@ -582,7 +582,7 @@ importers:
     devDependencies:
       '@rslib/core':
         specifier: 0.1.0
-        version: 0.1.0(typescript@5.6.3)
+        version: 0.1.0(typescript@5.7.2)
       '@types/connect':
         specifier: 3.4.38
         version: 3.4.38
@@ -663,10 +663,10 @@ importers:
         version: 6.0.1(jiti@1.21.6)(postcss@8.4.49)(yaml@2.6.0)
       postcss-loader:
         specifier: 8.1.1
-        version: 8.1.1(@rspack/core@1.1.3(@swc/helpers@0.5.15))(postcss@8.4.49)(typescript@5.6.3)(webpack@5.96.1)
+        version: 8.1.1(@rspack/core@1.1.3(@swc/helpers@0.5.15))(postcss@8.4.49)(typescript@5.7.2)(webpack@5.96.1)
       prebundle:
         specifier: 1.2.5
-        version: 1.2.5(typescript@5.6.3)
+        version: 1.2.5(typescript@5.7.2)
       reduce-configs:
         specifier: ^1.1.0
         version: 1.1.0
@@ -695,8 +695,8 @@ importers:
         specifier: ^0.2.10
         version: 0.2.10
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
       webpack:
         specifier: ^5.96.1
         version: 5.96.1
@@ -718,13 +718,13 @@ importers:
     devDependencies:
       '@rslib/core':
         specifier: 0.1.0
-        version: 0.1.0(typescript@5.6.3)
+        version: 0.1.0(typescript@5.7.2)
       '@types/node':
         specifier: ^22.9.1
         version: 22.9.1
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
 
   packages/plugin-assets-retry:
     devDependencies:
@@ -742,7 +742,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.1.0
-        version: 0.1.0(typescript@5.6.3)
+        version: 0.1.0(typescript@5.7.2)
       '@types/serialize-javascript':
         specifier: ^5.0.4
         version: 5.0.4
@@ -753,8 +753,8 @@ importers:
         specifier: 5.36.0
         version: 5.36.0
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
 
   packages/plugin-babel:
     dependencies:
@@ -788,7 +788,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.1.0
-        version: 0.1.0(typescript@5.6.3)
+        version: 0.1.0(typescript@5.7.2)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -800,10 +800,10 @@ importers:
         version: 9.2.1(@babel/core@7.26.0)(webpack@5.96.1)
       prebundle:
         specifier: 1.2.5
-        version: 1.2.5(typescript@5.6.3)
+        version: 1.2.5(typescript@5.7.2)
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
 
   packages/plugin-less:
     dependencies:
@@ -819,7 +819,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.1.0
-        version: 0.1.0(typescript@5.6.3)
+        version: 0.1.0(typescript@5.7.2)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -834,10 +834,10 @@ importers:
         version: 12.2.0(@rspack/core@1.1.3(@swc/helpers@0.5.15))(less@4.2.0)(webpack@5.96.1)
       prebundle:
         specifier: 1.2.5
-        version: 1.2.5(typescript@5.6.3)
+        version: 1.2.5(typescript@5.7.2)
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
 
   packages/plugin-preact:
     dependencies:
@@ -859,7 +859,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.1.0
-        version: 0.1.0(typescript@5.6.3)
+        version: 0.1.0(typescript@5.7.2)
       '@types/node':
         specifier: ^22.9.1
         version: 22.9.1
@@ -867,8 +867,8 @@ importers:
         specifier: ^10.24.3
         version: 10.24.3
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
 
   packages/plugin-react:
     dependencies:
@@ -884,7 +884,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.1.0
-        version: 0.1.0(typescript@5.6.3)
+        version: 0.1.0(typescript@5.7.2)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -892,8 +892,8 @@ importers:
         specifier: ^22.9.1
         version: 22.9.1
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
 
   packages/plugin-sass:
     dependencies:
@@ -918,7 +918,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.1.0
-        version: 0.1.0(typescript@5.6.3)
+        version: 0.1.0(typescript@5.7.2)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -930,7 +930,7 @@ importers:
         version: 8.0.9
       prebundle:
         specifier: 1.2.5
-        version: 1.2.5(typescript@5.6.3)
+        version: 1.2.5(typescript@5.7.2)
       resolve-url-loader:
         specifier: ^5.0.0
         version: 5.0.0
@@ -938,8 +938,8 @@ importers:
         specifier: ^16.0.3
         version: 16.0.3(@rspack/core@1.1.3(@swc/helpers@0.5.15))(sass-embedded@1.81.0)(sass@1.81.0)(webpack@5.96.1)
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
 
   packages/plugin-solid:
     dependencies:
@@ -958,7 +958,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.1.0
-        version: 0.1.0(typescript@5.6.3)
+        version: 0.1.0(typescript@5.7.2)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -966,8 +966,8 @@ importers:
         specifier: ^7.20.5
         version: 7.20.5
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
 
   packages/plugin-stylus:
     dependencies:
@@ -989,7 +989,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.1.0
-        version: 0.1.0(typescript@5.6.3)
+        version: 0.1.0(typescript@5.7.2)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -997,8 +997,8 @@ importers:
         specifier: ^22.9.1
         version: 22.9.1
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
 
   packages/plugin-svelte:
     dependencies:
@@ -1007,14 +1007,14 @@ importers:
         version: 3.2.4(svelte@5.2.7)
       svelte-preprocess:
         specifier: ^6.0.3
-        version: 6.0.3(@babel/core@7.26.0)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.49)(yaml@2.6.0))(postcss@8.4.49)(sass@1.81.0)(stylus@0.64.0)(svelte@5.2.7)(typescript@5.6.3)
+        version: 6.0.3(@babel/core@7.26.0)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.49)(yaml@2.6.0))(postcss@8.4.49)(sass@1.81.0)(stylus@0.64.0)(svelte@5.2.7)(typescript@5.7.2)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
         specifier: 0.1.0
-        version: 0.1.0(typescript@5.6.3)
+        version: 0.1.0(typescript@5.7.2)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1025,8 +1025,8 @@ importers:
         specifier: ^5.2.7
         version: 5.2.7
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
 
   packages/plugin-svgr:
     dependencies:
@@ -1035,13 +1035,13 @@ importers:
         version: link:../plugin-react
       '@svgr/core':
         specifier: 8.1.0
-        version: 8.1.0(typescript@5.6.3)
+        version: 8.1.0(typescript@5.7.2)
       '@svgr/plugin-jsx':
         specifier: 8.1.0
-        version: 8.1.0(@svgr/core@8.1.0(typescript@5.6.3))
+        version: 8.1.0(@svgr/core@8.1.0(typescript@5.7.2))
       '@svgr/plugin-svgo':
         specifier: 8.1.0
-        version: 8.1.0(@svgr/core@8.1.0(typescript@5.6.3))(typescript@5.6.3)
+        version: 8.1.0(@svgr/core@8.1.0(typescript@5.7.2))(typescript@5.7.2)
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -1054,7 +1054,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.1.0
-        version: 0.1.0(typescript@5.6.3)
+        version: 0.1.0(typescript@5.7.2)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1066,13 +1066,13 @@ importers:
         version: 6.2.0(webpack@5.96.1)
       prebundle:
         specifier: 1.2.5
-        version: 1.2.5(typescript@5.6.3)
+        version: 1.2.5(typescript@5.7.2)
       svgo:
         specifier: ^3.3.2
         version: 3.3.2
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
       url-loader:
         specifier: 4.1.1
         version: 4.1.1(file-loader@6.2.0(webpack@5.96.1))(webpack@5.96.1)
@@ -1081,7 +1081,7 @@ importers:
     dependencies:
       vue-loader:
         specifier: ^17.4.2
-        version: 17.4.2(vue@3.5.13(typescript@5.6.3))(webpack@5.96.1)
+        version: 17.4.2(vue@3.5.13(typescript@5.7.2))(webpack@5.96.1)
       webpack:
         specifier: ^5.96.1
         version: 5.96.1
@@ -1091,7 +1091,7 @@ importers:
         version: link:../core
       '@rslib/core':
         specifier: 0.1.0
-        version: 0.1.0(typescript@5.6.3)
+        version: 0.1.0(typescript@5.7.2)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1099,11 +1099,11 @@ importers:
         specifier: ^22.9.1
         version: 22.9.1
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
       vue:
         specifier: ^3.5.13
-        version: 3.5.13(typescript@5.6.3)
+        version: 3.5.13(typescript@5.7.2)
 
   scripts/config:
     devDependencies:
@@ -1112,13 +1112,13 @@ importers:
         version: link:../../packages/core
       '@rslib/core':
         specifier: 0.1.0
-        version: 0.1.0(typescript@5.6.3)
+        version: 0.1.0(typescript@5.7.2)
       '@types/node':
         specifier: ^22.9.1
         version: 22.9.1
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
 
   scripts/test-helper:
     dependencies:
@@ -1132,15 +1132,15 @@ importers:
         specifier: 0.2.2
         version: 0.2.2
       typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
+        specifier: ^5.7.2
+        version: 5.7.2
       upath:
         specifier: 2.0.1
         version: 2.0.1
     devDependencies:
       '@rslib/core':
         specifier: 0.1.0
-        version: 0.1.0(typescript@5.6.3)
+        version: 0.1.0(typescript@5.7.2)
 
   website:
     devDependencies:
@@ -6262,8 +6262,8 @@ packages:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
     engines: {node: '>= 0.6'}
 
-  typescript@5.6.3:
-    resolution: {integrity: sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw==}
+  typescript@5.7.2:
+    resolution: {integrity: sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -7750,7 +7750,7 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@module-federation/dts-plugin@0.7.6(typescript@5.6.3)':
+  '@module-federation/dts-plugin@0.7.6(typescript@5.7.2)':
     dependencies:
       '@module-federation/error-codes': 0.7.6
       '@module-federation/managers': 0.7.6
@@ -7767,7 +7767,7 @@ snapshots:
       log4js: 6.9.1
       node-schedule: 2.1.1
       rambda: 9.3.0
-      typescript: 5.6.3
+      typescript: 5.7.2
       ws: 8.18.0
     transitivePeerDependencies:
       - bufferutil
@@ -7775,20 +7775,20 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@module-federation/enhanced@0.7.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3)(webpack@5.96.1)':
+  '@module-federation/enhanced@0.7.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)(webpack@5.96.1)':
     dependencies:
       '@module-federation/bridge-react-webpack-plugin': 0.7.6
       '@module-federation/data-prefetch': 0.7.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@module-federation/dts-plugin': 0.7.6(typescript@5.6.3)
+      '@module-federation/dts-plugin': 0.7.6(typescript@5.7.2)
       '@module-federation/managers': 0.7.6
-      '@module-federation/manifest': 0.7.6(typescript@5.6.3)
-      '@module-federation/rspack': 0.7.6(typescript@5.6.3)
+      '@module-federation/manifest': 0.7.6(typescript@5.7.2)
+      '@module-federation/rspack': 0.7.6(typescript@5.7.2)
       '@module-federation/runtime-tools': 0.7.6
       '@module-federation/sdk': 0.7.6
       btoa: 1.2.1
       upath: 2.0.1
     optionalDependencies:
-      typescript: 5.6.3
+      typescript: 5.7.2
       webpack: 5.96.1
     transitivePeerDependencies:
       - bufferutil
@@ -7806,9 +7806,9 @@ snapshots:
       find-pkg: 2.0.0
       fs-extra: 9.1.0
 
-  '@module-federation/manifest@0.7.6(typescript@5.6.3)':
+  '@module-federation/manifest@0.7.6(typescript@5.7.2)':
     dependencies:
-      '@module-federation/dts-plugin': 0.7.6(typescript@5.6.3)
+      '@module-federation/dts-plugin': 0.7.6(typescript@5.7.2)
       '@module-federation/managers': 0.7.6
       '@module-federation/sdk': 0.7.6
       chalk: 3.0.0
@@ -7821,22 +7821,22 @@ snapshots:
       - utf-8-validate
       - vue-tsc
 
-  '@module-federation/rsbuild-plugin@0.7.6(@module-federation/enhanced@0.7.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3)(webpack@5.96.1))(@rsbuild/core@packages+core)':
+  '@module-federation/rsbuild-plugin@0.7.6(@module-federation/enhanced@0.7.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)(webpack@5.96.1))(@rsbuild/core@packages+core)':
     dependencies:
-      '@module-federation/enhanced': 0.7.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3)(webpack@5.96.1)
+      '@module-federation/enhanced': 0.7.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)(webpack@5.96.1)
       '@module-federation/sdk': 0.7.6
       '@rsbuild/core': link:packages/core
 
-  '@module-federation/rspack@0.7.6(typescript@5.6.3)':
+  '@module-federation/rspack@0.7.6(typescript@5.7.2)':
     dependencies:
       '@module-federation/bridge-react-webpack-plugin': 0.7.6
-      '@module-federation/dts-plugin': 0.7.6(typescript@5.6.3)
+      '@module-federation/dts-plugin': 0.7.6(typescript@5.7.2)
       '@module-federation/managers': 0.7.6
-      '@module-federation/manifest': 0.7.6(typescript@5.6.3)
+      '@module-federation/manifest': 0.7.6(typescript@5.7.2)
       '@module-federation/runtime-tools': 0.7.6
       '@module-federation/sdk': 0.7.6
     optionalDependencies:
-      typescript: 5.6.3
+      typescript: 5.7.2
     transitivePeerDependencies:
       - bufferutil
       - debug
@@ -8132,13 +8132,13 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  '@rslib/core@0.1.0(typescript@5.6.3)':
+  '@rslib/core@0.1.0(typescript@5.7.2)':
     dependencies:
       '@rsbuild/core': 1.1.4
-      rsbuild-plugin-dts: 0.1.0(@rsbuild/core@1.1.4)(typescript@5.6.3)
+      rsbuild-plugin-dts: 0.1.0(@rsbuild/core@1.1.4)(typescript@5.7.2)
       tinyglobby: 0.2.10
     optionalDependencies:
-      typescript: 5.6.3
+      typescript: 5.7.2
 
   '@rspack/binding-darwin-arm64@1.1.3':
     optional: true
@@ -8397,12 +8397,12 @@ snapshots:
       '@svgr/babel-plugin-transform-react-native-svg': 8.1.0(@babel/core@7.26.0)
       '@svgr/babel-plugin-transform-svg-component': 8.0.0(@babel/core@7.26.0)
 
-  '@svgr/core@8.1.0(typescript@5.6.3)':
+  '@svgr/core@8.1.0(typescript@5.7.2)':
     dependencies:
       '@babel/core': 7.26.0
       '@svgr/babel-preset': 8.1.0(@babel/core@7.26.0)
       camelcase: 6.3.0
-      cosmiconfig: 8.3.6(typescript@5.6.3)
+      cosmiconfig: 8.3.6(typescript@5.7.2)
       snake-case: 3.0.4
     transitivePeerDependencies:
       - supports-color
@@ -8413,20 +8413,20 @@ snapshots:
       '@babel/types': 7.26.0
       entities: 4.5.0
 
-  '@svgr/plugin-jsx@8.1.0(@svgr/core@8.1.0(typescript@5.6.3))':
+  '@svgr/plugin-jsx@8.1.0(@svgr/core@8.1.0(typescript@5.7.2))':
     dependencies:
       '@babel/core': 7.26.0
       '@svgr/babel-preset': 8.1.0(@babel/core@7.26.0)
-      '@svgr/core': 8.1.0(typescript@5.6.3)
+      '@svgr/core': 8.1.0(typescript@5.7.2)
       '@svgr/hast-util-to-babel-ast': 8.0.0
       svg-parser: 2.0.4
     transitivePeerDependencies:
       - supports-color
 
-  '@svgr/plugin-svgo@8.1.0(@svgr/core@8.1.0(typescript@5.6.3))(typescript@5.6.3)':
+  '@svgr/plugin-svgo@8.1.0(@svgr/core@8.1.0(typescript@5.7.2))(typescript@5.7.2)':
     dependencies:
-      '@svgr/core': 8.1.0(typescript@5.6.3)
-      cosmiconfig: 8.3.6(typescript@5.6.3)
+      '@svgr/core': 8.1.0(typescript@5.7.2)
+      cosmiconfig: 8.3.6(typescript@5.7.2)
       deepmerge: 4.3.1
       svgo: 3.3.2
     transitivePeerDependencies:
@@ -8766,11 +8766,11 @@ snapshots:
       '@vue/shared': 3.5.13
       csstype: 3.1.3
 
-  '@vue/server-renderer@3.5.13(vue@3.5.13(typescript@5.6.3))':
+  '@vue/server-renderer@3.5.13(vue@3.5.13(typescript@5.7.2))':
     dependencies:
       '@vue/compiler-ssr': 3.5.13
       '@vue/shared': 3.5.13
-      vue: 3.5.13(typescript@5.6.3)
+      vue: 3.5.13(typescript@5.7.2)
 
   '@vue/shared@3.5.12': {}
 
@@ -9279,23 +9279,23 @@ snapshots:
 
   core-js@3.39.0: {}
 
-  cosmiconfig@8.3.6(typescript@5.6.3):
+  cosmiconfig@8.3.6(typescript@5.7.2):
     dependencies:
       import-fresh: 3.3.0
       js-yaml: 4.1.0
       parse-json: 5.2.0
       path-type: 4.0.0
     optionalDependencies:
-      typescript: 5.6.3
+      typescript: 5.7.2
 
-  cosmiconfig@9.0.0(typescript@5.6.3):
+  cosmiconfig@9.0.0(typescript@5.7.2):
     dependencies:
       env-paths: 2.2.1
       import-fresh: 3.3.0
       js-yaml: 4.1.0
       parse-json: 5.2.0
     optionalDependencies:
-      typescript: 5.6.3
+      typescript: 5.7.2
 
   create-rstack@1.0.9: {}
 
@@ -11281,9 +11281,9 @@ snapshots:
       postcss: 8.4.49
       yaml: 2.6.0
 
-  postcss-loader@8.1.1(@rspack/core@1.1.3(@swc/helpers@0.5.15))(postcss@8.4.49)(typescript@5.6.3)(webpack@5.96.1):
+  postcss-loader@8.1.1(@rspack/core@1.1.3(@swc/helpers@0.5.15))(postcss@8.4.49)(typescript@5.7.2)(webpack@5.96.1):
     dependencies:
-      cosmiconfig: 9.0.0(typescript@5.6.3)
+      cosmiconfig: 9.0.0(typescript@5.7.2)
       jiti: 1.21.6
       postcss: 8.4.49
       semver: 7.6.3
@@ -11334,12 +11334,12 @@ snapshots:
 
   preact@10.24.3: {}
 
-  prebundle@1.2.5(typescript@5.6.3):
+  prebundle@1.2.5(typescript@5.7.2):
     dependencies:
       '@vercel/ncc': 0.38.1
       prettier: 3.3.3
       rollup: 4.24.3
-      rollup-plugin-dts: 6.1.1(rollup@4.24.3)(typescript@5.6.3)
+      rollup-plugin-dts: 6.1.1(rollup@4.24.3)(typescript@5.7.2)
       terser: 5.36.0
     transitivePeerDependencies:
       - typescript
@@ -11607,11 +11607,11 @@ snapshots:
       glob: 11.0.0
       package-json-from-dist: 1.0.1
 
-  rollup-plugin-dts@6.1.1(rollup@4.24.3)(typescript@5.6.3):
+  rollup-plugin-dts@6.1.1(rollup@4.24.3)(typescript@5.7.2):
     dependencies:
       magic-string: 0.30.12
       rollup: 4.24.3
-      typescript: 5.6.3
+      typescript: 5.7.2
     optionalDependencies:
       '@babel/code-frame': 7.26.2
 
@@ -11648,14 +11648,14 @@ snapshots:
     optionalDependencies:
       webpack: 5.96.1
 
-  rsbuild-plugin-dts@0.1.0(@rsbuild/core@1.1.4)(typescript@5.6.3):
+  rsbuild-plugin-dts@0.1.0(@rsbuild/core@1.1.4)(typescript@5.7.2):
     dependencies:
       '@rsbuild/core': 1.1.4
       magic-string: 0.30.12
       picocolors: 1.1.1
       tinyglobby: 0.2.10
     optionalDependencies:
-      typescript: 5.6.3
+      typescript: 5.7.2
 
   rsbuild-plugin-google-analytics@1.0.3(@rsbuild/core@packages+core):
     optionalDependencies:
@@ -12071,7 +12071,7 @@ snapshots:
       svelte-dev-helper: 1.1.9
       svelte-hmr: 0.14.12(svelte@5.2.7)
 
-  svelte-preprocess@6.0.3(@babel/core@7.26.0)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.49)(yaml@2.6.0))(postcss@8.4.49)(sass@1.81.0)(stylus@0.64.0)(svelte@5.2.7)(typescript@5.6.3):
+  svelte-preprocess@6.0.3(@babel/core@7.26.0)(less@4.2.0)(postcss-load-config@6.0.1(jiti@1.21.6)(postcss@8.4.49)(yaml@2.6.0))(postcss@8.4.49)(sass@1.81.0)(stylus@0.64.0)(svelte@5.2.7)(typescript@5.7.2):
     dependencies:
       svelte: 5.2.7
     optionalDependencies:
@@ -12081,7 +12081,7 @@ snapshots:
       postcss-load-config: 6.0.1(jiti@1.21.6)(postcss@8.4.49)(yaml@2.6.0)
       sass: 1.81.0
       stylus: 0.64.0
-      typescript: 5.6.3
+      typescript: 5.7.2
 
   svelte@5.2.7:
     dependencies:
@@ -12255,7 +12255,7 @@ snapshots:
       media-typer: 0.3.0
       mime-types: 2.1.35
 
-  typescript@5.6.3: {}
+  typescript@5.7.2: {}
 
   undici-types@6.19.8: {}
 
@@ -12460,29 +12460,29 @@ snapshots:
       - supports-color
       - terser
 
-  vue-loader@17.4.2(vue@3.5.13(typescript@5.6.3))(webpack@5.96.1):
+  vue-loader@17.4.2(vue@3.5.13(typescript@5.7.2))(webpack@5.96.1):
     dependencies:
       chalk: 4.1.2
       hash-sum: 2.0.0
       watchpack: 2.4.2
       webpack: 5.96.1
     optionalDependencies:
-      vue: 3.5.13(typescript@5.6.3)
+      vue: 3.5.13(typescript@5.7.2)
 
-  vue-router@4.4.5(vue@3.5.13(typescript@5.6.3)):
+  vue-router@4.4.5(vue@3.5.13(typescript@5.7.2)):
     dependencies:
       '@vue/devtools-api': 6.6.4
-      vue: 3.5.13(typescript@5.6.3)
+      vue: 3.5.13(typescript@5.7.2)
 
-  vue@3.5.13(typescript@5.6.3):
+  vue@3.5.13(typescript@5.7.2):
     dependencies:
       '@vue/compiler-dom': 3.5.13
       '@vue/compiler-sfc': 3.5.13
       '@vue/runtime-dom': 3.5.13
-      '@vue/server-renderer': 3.5.13(vue@3.5.13(typescript@5.6.3))
+      '@vue/server-renderer': 3.5.13(vue@3.5.13(typescript@5.7.2))
       '@vue/shared': 3.5.13
     optionalDependencies:
-      typescript: 5.6.3
+      typescript: 5.7.2
 
   watchpack@2.4.2:
     dependencies:
