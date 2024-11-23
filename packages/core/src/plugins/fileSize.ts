@@ -9,7 +9,12 @@ import zlib from 'node:zlib';
 import { CSS_REGEX, HTML_REGEX, JS_REGEX } from '../constants';
 import { color } from '../helpers';
 import { logger } from '../logger';
-import type { PrintFileSizeOptions, RsbuildPlugin, Rspack } from '../types';
+import type {
+  PrintFileSizeAsset,
+  PrintFileSizeOptions,
+  RsbuildPlugin,
+  Rspack,
+} from '../types';
 
 const gzip = promisify(zlib.gzip);
 
@@ -18,9 +23,9 @@ async function gzipSize(input: Buffer) {
   return data.length;
 }
 
-/** Filter source map and license files */
-export const filterAsset = (asset: string): boolean =>
-  !/\.map$/.test(asset) && !/\.LICENSE\.txt$/.test(asset);
+/** Exclude source map and license files by default */
+export const excludeAsset = (asset: PrintFileSizeAsset): boolean =>
+  /\.(?:map|LICENSE\.txt)$/.test(asset.name);
 
 const getAssetColor = (size: number) => {
   if (size > 300 * 1000) {
@@ -128,15 +133,17 @@ async function printFileSizes(
       groupAssetsByEmitStatus: false,
     });
 
+    const exclude = options.exclude ?? excludeAsset;
     const filteredAssets = origin.assets!.filter((asset) => {
-      if (!filterAsset(asset.name)) {
+      const assetInfo: PrintFileSizeAsset = {
+        name: asset.name,
+        size: asset.size,
+      };
+      if (exclude(assetInfo)) {
         return false;
       }
       if (options.include) {
-        return options.include({
-          name: asset.name,
-          size: asset.size,
-        });
+        return options.include(assetInfo);
       }
       return true;
     });

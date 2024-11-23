@@ -139,13 +139,41 @@ export default {
 };
 ```
 
-或者只输出 `.js` 文件：
+或者只输出体积大于 10kB 的 `.js` 文件：
 
 ```ts
 export default {
   performance: {
     printFileSize: {
-      include: (asset) => /\.js$/.test(asset.name),
+      include: (asset) => /\.js$/.test(asset.name) && asset.size > 10 * 1000,
+    },
+  },
+};
+```
+
+### exclude
+
+- **类型：**
+
+```ts
+type Exclude = (asset: PrintFileSizeAsset) => boolean;
+```
+
+- **默认值：** `(asset) => /\.(?:map|LICENSE\.txt)$/.test(asset.name)`
+
+一个过滤函数，用于确定哪些静态资源需要被排除。如果同时设置了 `include` 和 `exclude`，则 `exclude` 优先级更高。
+
+Rsbuild 默认排除 source map 和 license 文件，因为这些文件不会影响页面加载的性能。
+
+例如，额外再排除 `.html` 文件：
+
+```ts
+export default {
+  performance: {
+    printFileSize: {
+      exclude: (asset) =>
+        /\.(?:map|LICENSE\.txt)$/.test(asset.name) ||
+        /\.html$/.test(asset.name),
     },
   },
 };

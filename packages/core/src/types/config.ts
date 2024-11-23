@@ -478,6 +478,12 @@ export type PrintFileSizeOptions = {
    * @default undefined
    */
   include?: (asset: PrintFileSizeAsset) => boolean;
+  /**
+   * A filter function to exclude static assets from the total size or detailed size.
+   * If both `include` and `exclude` are set, `exclude` will take precedence.
+   * @default (asset) => /\.(?:map|LICENSE\.txt)$/.test(asset.name)
+   */
+  exclude?: (asset: PrintFileSizeAsset) => boolean;
 };
 
 export interface PreconnectOption {

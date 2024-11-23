@@ -139,13 +139,41 @@ export default {
 };
 ```
 
-Or only output `.js` files:
+Or only output `.js` files larger than 10kB:
 
 ```ts
 export default {
   performance: {
     printFileSize: {
-      include: (asset) => /\.js$/.test(asset.name),
+      include: (asset) => /\.js$/.test(asset.name) && asset.size > 10 * 1000,
+    },
+  },
+};
+```
+
+### exclude
+
+- **Type:**
+
+```ts
+type Exclude = (asset: PrintFileSizeAsset) => boolean;
+```
+
+- **Default:** `(asset) => /\.(?:map|LICENSE\.txt)$/.test(asset.name)`
+
+A filter function to determine which static assets to exclude. If both `include` and `exclude` are set, `exclude` will take precedence.
+
+Rsbuild defaults to excluding source map and license files, as these files do not affect page load performance.
+
+For example, exclude `.html` files in addition to the default:
+
+```ts
+export default {
+  performance: {
+    printFileSize: {
+      exclude: (asset) =>
+        /\.(?:map|LICENSE\.txt)$/.test(asset.name) ||
+        /\.html$/.test(asset.name),
     },
   },
 };
