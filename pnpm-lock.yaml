@@ -54,8 +54,8 @@ importers:
         specifier: ^2.30.1
         version: 2.30.1
       preact:
-        specifier: ^10.24.3
-        version: 10.24.3
+        specifier: ^10.25.0
+        version: 10.25.0
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -362,8 +362,8 @@ importers:
   examples/preact:
     dependencies:
       preact:
-        specifier: ^10.24.3
-        version: 10.24.3
+        specifier: ^10.25.0
+        version: 10.25.0
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -843,13 +843,13 @@ importers:
     dependencies:
       '@prefresh/core':
         specifier: ^1.5.3
-        version: 1.5.3(preact@10.24.3)
+        version: 1.5.3(preact@10.25.0)
       '@prefresh/utils':
         specifier: ^1.2.0
         version: 1.2.0
       '@rspack/plugin-preact-refresh':
         specifier: ^1.1.1
-        version: 1.1.1(@prefresh/core@1.5.3(preact@10.24.3))(@prefresh/utils@1.2.0)
+        version: 1.1.1(@prefresh/core@1.5.3(preact@10.25.0))(@prefresh/utils@1.2.0)
       '@swc/plugin-prefresh':
         specifier: ^5.0.0
         version: 5.0.0
@@ -864,8 +864,8 @@ importers:
         specifier: ^22.9.1
         version: 22.9.1
       preact:
-        specifier: ^10.24.3
-        version: 10.24.3
+        specifier: ^10.25.0
+        version: 10.25.0
       typescript:
         specifier: ^5.7.2
         version: 5.7.2
@@ -5320,8 +5320,8 @@ packages:
     resolution: {integrity: sha512-OCVPnIObs4N29kxTjzLfUryOkvZEq+pf8jTF0lg8E7uETuWHA+v7j3c/xJmiqpX450191LlmZfUKkXxkTry7nA==}
     engines: {node: ^10 || ^12 || >=14}
 
-  preact@10.24.3:
-    resolution: {integrity: sha512-Z2dPnBnMUfyQfSQ+GBdsGa16hz35YmLmtTLhM169uW944hYL6xzTYkJjC07j+Wosz733pMWx0fgON3JNw1jJQA==}
+  preact@10.25.0:
+    resolution: {integrity: sha512-6bYnzlLxXV3OSpUxLdaxBmE7PMOu0aR3pG6lryK/0jmvcDFPlcXGQAt5DpK3RITWiDrfYZRI0druyaK/S9kYLg==}
 
   prebundle@1.2.5:
     resolution: {integrity: sha512-Q5MG7i+AqurdHLuit5INkFNsekfA40KAhsqpddDAmIR5NSEVc7sGiSAf7Cmu3OafvkI3QUl4RRTvvjfVP4nqrA==}
@@ -8000,9 +8000,9 @@ snapshots:
 
   '@polka/url@1.0.0-next.28': {}
 
-  '@prefresh/core@1.5.3(preact@10.24.3)':
+  '@prefresh/core@1.5.3(preact@10.25.0)':
     dependencies:
-      preact: 10.24.3
+      preact: 10.25.0
 
   '@prefresh/utils@1.2.0': {}
 
@@ -8190,9 +8190,9 @@ snapshots:
 
   '@rspack/lite-tapable@1.0.1': {}
 
-  '@rspack/plugin-preact-refresh@1.1.1(@prefresh/core@1.5.3(preact@10.24.3))(@prefresh/utils@1.2.0)':
+  '@rspack/plugin-preact-refresh@1.1.1(@prefresh/core@1.5.3(preact@10.25.0))(@prefresh/utils@1.2.0)':
     dependencies:
-      '@prefresh/core': 1.5.3(preact@10.24.3)
+      '@prefresh/core': 1.5.3(preact@10.25.0)
       '@prefresh/utils': 1.2.0
 
   '@rspack/plugin-react-refresh@1.0.0(react-refresh@0.14.2)':
@@ -11332,7 +11332,7 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  preact@10.24.3: {}
+  preact@10.25.0: {}
 
   prebundle@1.2.5(typescript@5.7.2):
     dependencies:
