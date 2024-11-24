@@ -224,6 +224,7 @@ Rsbuild 通过插件来支持 [Pug](https://pugjs.org/) 模板引擎，详见 [@
     <%= htmlPlugin.tags.headTags %>
   </head>
   <body>
+    <div id="root"></div>
     <%= htmlPlugin.tags.bodyTags %>
   </body>
 </html>
@@ -256,6 +257,10 @@ export default {
 ```
 
 > 更多用法请参考：[html.tags](/config/html/tags)。
+
+:::tip
+通常你不需要手动使用 `htmlPlugin.tags.headTags` 和 `htmlPlugin.tags.bodyTags` 模板参数，因为 Rsbuild 会自动注入这些标签。参考 [html.inject](/config/html/inject) 了解调整标签注入位置。
+:::
 
 ## HTML 插件
 
