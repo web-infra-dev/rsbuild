@@ -82,3 +82,25 @@ export default {
   },
 };
 ```
+
+## 手动注入
+
+当 `html.inject` 设置为 `false` 时，Rsbuild 不会在 HTML 中自动插入标签，[html.tags](/config/html/tags) 中定义的标签也不会生效。
+
+此时，你可以通过 `htmlPlugin.tags` 模板参数来访问所有待注入的标签，并手动插入到指定的位置。
+
+例如，在 `a.js` 和 `b.js` 两个脚本之间插入 Rsbuild 生成的 `<script>` 标签：
+
+```html title="index.html"
+<html>
+  <head>
+    <script src="https://example.com/a.js"></script>
+    <%= htmlPlugin.tags.headTags %>
+    <script src="https://example.com/b.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <%= htmlPlugin.tags.bodyTags %>
+  </body>
+</html>
+```

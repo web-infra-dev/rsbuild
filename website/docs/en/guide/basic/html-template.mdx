@@ -224,6 +224,7 @@ In the HTML template, the `htmlPlugin.tags` variable gives you access to all the
     <%= htmlPlugin.tags.headTags %>
   </head>
   <body>
+    <div id="root"></div>
     <%= htmlPlugin.tags.bodyTags %>
   </body>
 </html>
@@ -256,6 +257,10 @@ export default {
 ```
 
 > For more usage, please refer to: [html.tags](/config/html/tags).
+
+:::tip
+Typically, you do not need to manually use the `htmlPlugin.tags.headTags` and `htmlPlugin.tags.bodyTags` template parameters, because Rsbuild will automatically inject these tags. See [html.inject](/config/html/inject) for more details on adjusting the injection location.
+:::
 
 ## HTML Plugin
 
