@@ -60,7 +60,7 @@
     "@rslib/core": "0.1.0",
     "@types/connect": "3.4.38",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^22.9.1",
+    "@types/node": "^22.9.3",
     "@types/on-finished": "2.3.4",
     "@types/webpack-bundle-analyzer": "4.7.0",
     "@types/ws": "^8.5.13",
