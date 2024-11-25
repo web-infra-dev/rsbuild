@@ -22,8 +22,8 @@ Rsbuild 是与 [Vite](https://vitejs.dev/)、[Create React App](https://github.c
 
 Rsbuild 与 Vite 有许多相似之处，它们皆致力于提升前端的开发体验。其主要区别在于：
 
-- **生态兼容性**：Rsbuild 兼容大部分的 webpack 插件和所有 Rspack 插件，而 Vite 则是兼容 Rollup 插件。如果你目前更多地使用了 webpack 生态的插件和 loaders，那么迁移到 Rsbuild 是相对容易的。
-- **生产一致性**：Rsbuild 在开发阶段和生产构建均使用 Rspack 进行打包，因此开发和生产构建的产物具备较强的一致性，这也是 Vite 通过 Rolldown 想要实现的目标之一。
+- **生产一致性**：Rsbuild 在开发阶段和生产构建均使用 Rspack 进行打包，因此开发和生产构建的产物具备强一致性。而 Vite 在开发阶段使用 ESM 加载模块，这虽然提升了启动速度，但开发和生产构建的产物容易出现不一致。
+- **生态兼容性**：Rsbuild 兼容大部分的 webpack 插件和所有 Rspack 插件，而 Vite 则是兼容 Rollup 插件。如果你目前更多地使用了 webpack 生态的插件和 loaders，那么迁移到 Rsbuild 会更容易。
 - **模块联邦**：Rsbuild 团队与 [Module Federation](/guide/advanced/module-federation) 的开发团队密切合作，并为 Module Federation 提供一流的支持，帮助你开发微前端架构的大型 Web 应用。
 
 ## 🚀 性能
@@ -32,7 +32,7 @@ Rsbuild 能够充分发挥 Rspack 的性能优势，以下是构建 1000 个 Rea
 
 import { BenchmarkGraph } from '@components/Benchmark';
 
-<BenchmarkGraph short />
+<BenchmarkGraph />
 
 > 以上数据来自 [performance-compare](https://github.com/rspack-contrib/performance-compare) benchmark。
 
