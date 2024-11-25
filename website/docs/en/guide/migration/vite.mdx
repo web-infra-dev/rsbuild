@@ -1,6 +1,6 @@
 # Vite
 
-Vite is an excellent and powerful build tool. In some cases, you might need to migrate a Vite application to Rsbuild. You can refer to this guide to perform the migration.
+This chapter introduces how to migrate a Vite project to Rsbuild.
 
 ## Installing Dependencies
 
@@ -95,6 +95,7 @@ Most common Vite plugins can be easily migrated to Rsbuild plugins, such as:
 | [vite-plugin-static-copy](https://www.npmjs.com/package/vite-plugin-static-copy)           | [output.copy](/config/output/copy)                                                              |
 | [vite-plugin-node-polyfills](https://www.npmjs.com/package/vite-plugin-node-polyfills)     | [@rsbuild/plugin-node-polyfill](https://github.com/rspack-contrib/rsbuild-plugin-node-polyfill) |
 | [vite-plugin-solid](https://www.npmjs.com/package/vite-plugin-solid)                       | [@rsbuild/plugin-solid](/plugins/list/plugin-solid)                                             |
+| [@preact/preset-vite](https://www.npmjs.com/package/@preact/preset-vite)                   | [@rsbuild/plugin-preact](/plugins/list/plugin-preact)                                           |
 
 You can refer to [Plugin List](/plugins/list/index) to learn more about available plugins.
 
