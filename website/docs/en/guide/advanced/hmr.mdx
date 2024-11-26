@@ -48,6 +48,26 @@ export default {
 };
 ```
 
+## File Watching
+
+By default, Rsbuild does not watching files in the `.git/` and `node_modules/` directories. When files in these directories changed, Rsbuild will not trigger a rebuild. This helps to reduce memory usage and improve build performance.
+
+If you want to watch these directories, you can manually configure Rspack's [watchOptions.ignored](https://rspack.dev/config/watch#watchoptionsignored) to override the default behavior.
+
+For example, to watch the `node_modules/` directory and ignore the `.git/` directory, you can configure it as follows:
+
+```js title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: {
+      watchOptions: {
+        ignored: /\.git/,
+      },
+    },
+  },
+};
+```
+
 ## FAQ
 
 Please refer to [HMR FAQ](/guide/faq/hmr).
