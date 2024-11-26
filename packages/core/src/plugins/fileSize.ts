@@ -263,7 +263,8 @@ export const pluginFileSize = (): RsbuildPlugin => ({
           const defaultConfig: PrintFileSizeOptions = {
             total: true,
             detail: true,
-            compressed: true,
+            // print compressed size for the browser targets by default
+            compressed: environment.config.output.target !== 'node',
           };
 
           const mergedConfig =
