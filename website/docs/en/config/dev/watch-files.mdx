@@ -134,16 +134,4 @@ export default {
 
 If you want to prevent some files from triggering a rebuild when they change, you can use Rspack's [watchOptions.ignored](https://rspack.dev/config/watch#watchoptionsignored) configuration item.
 
-For example, to prevent changes in the `node_modules` directory from triggering a rebuild, you can add the following configuration:
-
-```js
-export default {
-  tools: {
-    rspack: {
-      watchOptions: {
-        ignored: /node_modules/,
-      },
-    },
-  },
-};
-```
+> See [HMR - File Watching](/guide/advanced/hmr#file-watching) for more details.
