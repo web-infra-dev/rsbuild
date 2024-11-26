@@ -263,7 +263,7 @@ export const pluginFileSize = (): RsbuildPlugin => ({
           const defaultConfig: PrintFileSizeOptions = {
             total: true,
             detail: true,
-            // print compressed size only in the browser environment by default
+            // print compressed size for the browser targets by default
             compressed: environment.config.output.target !== 'node',
           };
 
