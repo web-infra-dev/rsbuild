@@ -28,6 +28,9 @@ exports[`plugin-basic > should apply basic config correctly in development 1`] =
       "name": "HotModuleReplacementPlugin",
     },
   ],
+  "watchOptions": {
+    "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
+  },
 }
 `;
 
@@ -53,5 +56,8 @@ exports[`plugin-basic > should apply basic config correctly in production 1`] = 
   "plugins": [
     RsbuildCorePlugin {},
   ],
+  "watchOptions": {
+    "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
+  },
 }
 `;

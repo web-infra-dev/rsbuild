@@ -399,5 +399,8 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
     "web",
     "es2017",
   ],
+  "watchOptions": {
+    "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
+  },
 }
 `;
