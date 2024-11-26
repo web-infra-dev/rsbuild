@@ -74,11 +74,6 @@ export const build = async (
 
   return {
     stats,
-    close: () =>
-      new Promise((resolve) => {
-        compiler.close(() => {
-          resolve();
-        });
-      }),
+    close: async () => {},
   };
 };

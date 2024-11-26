@@ -63,6 +63,9 @@ const createPlugin = () => {
       api.onDevCompileDone(() => {
         names.push('OnDevCompileDone');
       });
+      api.onCloseBuild(() => {
+        names.push('OnCloseBuild');
+      });
     },
   };
 
@@ -80,7 +83,9 @@ rspackOnlyTest(
       },
     });
 
-    await rsbuild.build();
+    const buildInstance = await rsbuild.build();
+
+    await buildInstance.close();
 
     expect(names).toEqual([
       'ModifyRsbuildConfig',
@@ -94,6 +99,7 @@ rspackOnlyTest(
       'ModifyHTMLTags',
       'AfterEnvironmentCompile',
       'AfterBuild',
+      'OnCloseBuild',
     ]);
   },
 );

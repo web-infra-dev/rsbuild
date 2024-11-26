@@ -748,6 +748,20 @@ rsbuild.onAfterBuild(({ stats }) => {
 });
 ```
 
+## rsbuild.onCloseBuild
+
+import OnCloseBuild from '@en/shared/onCloseBuild.mdx';
+
+<OnCloseBuild />
+
+- **Example:**
+
+```ts
+rsbuild.onCloseBuild(async () => {
+  console.log('close build!');
+});
+```
+
 ## rsbuild.onBeforeStartDevServer
 
 import OnBeforeStartDevServer from '@en/shared/onBeforeStartDevServer.mdx';

@@ -173,11 +173,18 @@ export async function createRsbuild(
     return startProdServer(context, config, options);
   };
 
-  const build: Build = (...args) => {
+  const build: Build = async (...args) => {
     if (!getNodeEnv()) {
       setNodeEnv('production');
     }
-    return providerInstance.build(...args);
+    const buildInstance = await providerInstance.build(...args);
+    return {
+      ...buildInstance,
+      close: async () => {
+        await context.hooks.onCloseBuild.call();
+        await buildInstance.close();
+      },
+    };
   };
 
   const startDevServer: StartDevServer = (...args) => {
@@ -207,6 +214,7 @@ export async function createRsbuild(
     ]),
     ...pick(globalPluginAPI, [
       'context',
+      'onCloseBuild',
       'onBeforeBuild',
       'onBeforeCreateCompiler',
       'onBeforeStartDevServer',
