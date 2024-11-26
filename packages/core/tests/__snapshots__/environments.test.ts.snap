@@ -1526,6 +1526,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "web",
       "es2017",
     ],
+    "watchOptions": {
+      "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
+    },
   },
   {
     "context": "<ROOT>",
@@ -1852,6 +1855,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       ],
     },
     "target": "node",
+    "watchOptions": {
+      "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
+    },
   },
 ]
 `;

@@ -388,6 +388,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "web",
     "es2017",
   ],
+  "watchOptions": {
+    "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
+  },
 }
 `;
 
@@ -771,6 +774,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     "web",
     "es2017",
   ],
+  "watchOptions": {
+    "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
+  },
 }
 `;
 
@@ -1100,6 +1106,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     ],
   },
   "target": "node",
+  "watchOptions": {
+    "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
+  },
 }
 `;
 
@@ -1418,5 +1427,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "webworker",
     "es2017",
   ],
+  "watchOptions": {
+    "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
+  },
 }
 `;
