@@ -29,6 +29,7 @@ exports[`plugin-basic > should apply basic config correctly in development 1`] =
     },
   ],
   "watchOptions": {
+    "aggregateTimeout": 0,
     "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
   },
 }
@@ -57,6 +58,7 @@ exports[`plugin-basic > should apply basic config correctly in production 1`] = 
     RsbuildCorePlugin {},
   ],
   "watchOptions": {
+    "aggregateTimeout": 0,
     "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
   },
 }

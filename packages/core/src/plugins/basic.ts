@@ -50,9 +50,11 @@ export const pluginBasic = (): RsbuildPlugin => ({
           },
         });
 
-        // Ignore watching files in node_modules to reduce memory usage and make startup faster
         chain.watchOptions({
+          // Ignore watching files in node_modules to reduce memory usage and make startup faster
           ignored: /[\\/](?:\.git|node_modules)[\\/]/,
+          // Remove the delay before rebuilding once the first file changed
+          aggregateTimeout: 0,
         });
 
         // Disable performance hints, these logs are too complex
