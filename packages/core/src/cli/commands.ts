@@ -103,8 +103,12 @@ export function setupCommands(): void {
           watch: options.watch,
         });
 
-        if (options.watch && buildInstance) {
-          onBeforeRestartServer(buildInstance.close);
+        if (buildInstance) {
+          if (options.watch) {
+            onBeforeRestartServer(buildInstance.close);
+          } else {
+            await buildInstance.close();
+          }
         }
       } catch (err) {
         logger.error('Failed to build.');
