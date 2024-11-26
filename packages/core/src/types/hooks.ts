@@ -24,6 +24,8 @@ export type OnBeforeEnvironmentCompile<B = 'rspack'> = (
   },
 ) => MaybePromise<void>;
 
+export type OnCloseBuildFn = () => MaybePromise<void>;
+
 export type OnBeforeBuildFn<B = 'rspack'> = (
   params: CompileCommonParams & {
     environments: Record<string, EnvironmentContext>;

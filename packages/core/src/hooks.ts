@@ -23,6 +23,7 @@ import type {
   OnBeforeEnvironmentCompile,
   OnBeforeStartDevServerFn,
   OnBeforeStartProdServerFn,
+  OnCloseBuildFn,
   OnCloseDevServerFn,
   OnDevCompileDoneFn,
   OnExitFn,
@@ -150,6 +151,7 @@ export function initHooks(): {
   /** The following hooks are global hooks */
   onExit: AsyncHook<OnExitFn>;
   onAfterBuild: AsyncHook<OnAfterBuildFn>;
+  onCloseBuild: AsyncHook<OnCloseBuildFn>;
   onBeforeBuild: AsyncHook<OnBeforeBuildFn>;
   onDevCompileDone: AsyncHook<OnDevCompileDoneFn>;
   onCloseDevServer: AsyncHook<OnCloseDevServerFn>;
@@ -172,6 +174,7 @@ export function initHooks(): {
 } {
   return {
     onExit: createAsyncHook<OnExitFn>(),
+    onCloseBuild: createAsyncHook<OnCloseBuildFn>(),
     onAfterBuild: createAsyncHook<OnAfterBuildFn>(),
     onBeforeBuild: createAsyncHook<OnBeforeBuildFn>(),
     onDevCompileDone: createAsyncHook<OnDevCompileDoneFn>(),

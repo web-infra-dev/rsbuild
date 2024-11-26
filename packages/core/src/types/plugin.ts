@@ -29,6 +29,7 @@ import type {
   OnBeforeEnvironmentCompile,
   OnBeforeStartDevServerFn,
   OnBeforeStartProdServerFn,
+  OnCloseBuildFn,
   OnCloseDevServerFn,
   OnDevCompileDoneFn,
   OnExitFn,
@@ -415,6 +416,7 @@ export type RsbuildPluginAPI = Readonly<{
   isPluginExists: PluginManager['isPluginExists'];
 
   onExit: PluginHook<OnExitFn>;
+  onCloseBuild: PluginHook<OnCloseBuildFn>;
   onAfterBuild: PluginHook<OnAfterBuildFn>;
   onBeforeBuild: PluginHook<OnBeforeBuildFn>;
   onAfterEnvironmentCompile: PluginHook<OnAfterEnvironmentCompileFn>;

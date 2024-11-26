@@ -174,6 +174,7 @@ export type RsbuildInstance = {
   onCloseDevServer: RsbuildPluginAPI['onCloseDevServer'];
   onDevCompileDone: RsbuildPluginAPI['onDevCompileDone'];
   onExit: RsbuildPluginAPI['onExit'];
+  onCloseBuild: RsbuildPluginAPI['onCloseBuild'];
 };
 
 export type RsbuildTarget = 'web' | 'node' | 'web-worker';
