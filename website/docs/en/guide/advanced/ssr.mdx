@@ -152,6 +152,50 @@ If you need to preview the online effect of SSR rendering, you also need to modi
 
 Now, you can run the `npm run dev` command to start the dev server with SSR rendering function, and visit `http://localhost:3000/` to see that the SSR content has been rendered to the HTML page.
 
+## Get Manifest
+
+By default, scripts and links associated with the current page are automatically inserted into the HTML template. At this time, the compiled HTML template content can be obtained through [getTransformedHtml](/guide/advanced/environments#environment-api).
+
+If your HTML template is provided by the server, you need to inject the web output files into the HTML template. Output manifests can be easily obtained using the [output.manifest](/config/output/manifest) configuration. You can refer to the following example:
+
+```ts title=rsbuild.config.ts
+export default {
+  output: {
+    manifest: true,
+  },
+};
+```
+
+```ts title=server.ts
+function renderHtmlPage(): string {
+  const { entries } = JSON.parse(
+    fs.readFileSync('./dist/manifest.json', 'utf-8'),
+  );
+
+  const { js, css } = entries['index'].initial;
+
+  const scriptTags = js
+    .map((file) => `<script src="${file}" defer></script>`)
+    .join('\n');
+  const styleTags = css
+    .map((file) => `<link rel="stylesheet" href="${file}">`)
+    .join('\n');
+
+  return `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        ${scriptTags}
+        ${styleTags}
+      </head>
+      <body>
+        <div id="root"></div>
+      </body>
+    </html>`;
+}
+```
+
 ## Examples
 
 - [SSR + Express Example](https://github.com/rspack-contrib/rspack-examples/blob/main/rsbuild/ssr-express)
+- [SSR + Express + Manifest Example](https://github.com/rspack-contrib/rspack-examples/blob/main/rsbuild/ssr-express-with-manifest)

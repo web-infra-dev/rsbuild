@@ -163,6 +163,7 @@ export const pluginManifest = (): RsbuildPlugin => ({
       chain.plugin(CHAIN_ID.PLUGIN.MANIFEST).use(RspackManifestPlugin, [
         {
           fileName,
+          writeToFileEmit: true,
           generate: generateManifest(htmlPaths),
         },
       ]);
