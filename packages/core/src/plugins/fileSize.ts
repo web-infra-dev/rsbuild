@@ -219,7 +219,8 @@ async function printFileSizes(
     }
   }
 
-  if (options.total !== false) {
+  // only print total size if there are more than one asset
+  if (options.total !== false && assets.length > 1) {
     const totalSizeLabel = `${color.blue('Total:')} ${calcFileSize(totalSize)}`;
 
     let log = `\n  ${totalSizeLabel}`;
