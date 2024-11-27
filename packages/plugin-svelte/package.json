@@ -33,7 +33,7 @@
     "@rsbuild/core": "workspace:*",
     "@rslib/core": "0.1.0",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.9.3",
+    "@types/node": "^22.10.0",
     "svelte": "^5.2.7",
     "typescript": "^5.7.2"
   },
