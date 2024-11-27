@@ -156,7 +156,7 @@ startDevServer(process.cwd());
 
 默认情况下，和当前页面关联的 scripts 和 links 会自动插入到 HTML 模版中，此时通过 [getTransformedHtml](/guide/advanced/environments#environment-api) 即可获取编译后的 HTML 模版内容。
 
-如果你的 HTML 模版是由服务器端提供，此时需要将 web 端的 js 和 css 产物资源注入到 HTML 模版中。使用 [output.manifest](/config/output/manifest) 配置可以轻松获取资源清单。可参考以下示例：
+当需要在服务器端动态生成 HTML 时，你需要将 JavaScript 和 CSS 资源的 URL 注入到 HTML 中。通过配置 [output.manifest](/config/output/manifest)，你可以方便地获取这些资源的清单信息。示例如下：
 
 ```ts title=rsbuild.config.ts
 export default {
