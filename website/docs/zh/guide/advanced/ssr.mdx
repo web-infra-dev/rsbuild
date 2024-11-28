@@ -83,7 +83,7 @@ import { createRsbuild, loadConfig } from '@rsbuild/core';
 // 实现 SSR 渲染功能
 const serverRender = (serverAPI) => async (_req, res) => {
   // 加载 SSR bundle
-  const indexModule = await serverAPI.environments.ssr.loadBundle('index');
+  const indexModule = await serverAPI.environments.node.loadBundle('index');
 
   const markup = indexModule.render();
 
