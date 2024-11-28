@@ -86,7 +86,7 @@ rspackOnlyTest(
     } catch (e) {
       expect(e).toBeTruthy();
       expect(stripAnsi((e as Error).message)).toContain(
-        'rsbuild:react appears to be an Rsbuild plugin. It cannot be used as an Rspack plugin.',
+        '[rsbuild:plugin] "rsbuild:react" appears to be an Rsbuild plugin. It cannot be used as an Rspack plugin.',
       );
     }
   },
