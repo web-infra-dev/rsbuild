@@ -82,8 +82,8 @@ import { createRsbuild, loadConfig } from '@rsbuild/core';
 
 // Implement SSR rendering function
 const serverRender = (serverAPI) => async (_req, res) => {
-  // Load SSR bundle
-  const indexModule = await serverAPI.environments.ssr.loadBundle('index');
+  // Load Node bundle for SSR
+  const indexModule = await serverAPI.environments.node.loadBundle('index');
 
   const markup = indexModule.render();
 
