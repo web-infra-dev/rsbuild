@@ -116,7 +116,7 @@ export abstract class BasicRunner implements Runner {
     this.requirers.set(
       'entry',
       (_currentDirectory, _modulePath, _context = {}) => {
-        throw new Error('Not implement');
+        throw new Error('[rsbuild:runner] Not implement');
       },
     );
   }

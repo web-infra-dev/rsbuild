@@ -34,7 +34,7 @@ export class BasicRunnerFactory implements RunnerFactory {
       compilerOptions.target === 'webworker'
     ) {
       throw new Error(
-        `not support run ${compilerOptions.target} resource in rsbuild server`,
+        `[rsbuild:runner] Not support run "${compilerOptions.target}" resource in Rsbuild server`,
       );
     }
     return new EsmRunner(runnerOptions);

@@ -123,7 +123,7 @@ const initEnvironmentConfigs = (
 
     if (!Object.keys(resolvedEnvironments).length) {
       throw new Error(
-        `The current build is specified to run only in the ${color.yellow(specifiedEnvironments?.join(','))} environment, but the configuration of the specified environment was not found.`,
+        `[rsbuild:config] The current build is specified to run only in the ${color.yellow(specifiedEnvironments?.join(','))} environment, but the configuration of the specified environment was not found.`,
       );
     }
     return resolvedEnvironments;
@@ -133,7 +133,7 @@ const initEnvironmentConfigs = (
 
   if (!isEnvironmentEnabled(defaultEnvironmentName)) {
     throw new Error(
-      `The current build is specified to run only in the ${color.yellow(specifiedEnvironments?.join(','))} environment, but the configuration of the specified environment was not found.`,
+      `[rsbuild:config] The current build is specified to run only in the ${color.yellow(specifiedEnvironments?.join(','))} environment, but the configuration of the specified environment was not found.`,
     );
   }
 
