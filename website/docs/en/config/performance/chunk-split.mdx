@@ -172,4 +172,22 @@ export default {
 };
 ```
 
-> When the Rsbuild target is "node", since Node Bundles do not need to be split to optimize loading performance, the chunkSplit rule will not take effect.
+## Targets
+
+`performance.chunkSplit` only works when [output.target](/config/output/target) is `web`. This means that when `output.target` is `node` or `web-worker`, `performance.chunkSplit` will not take effect.
+
+Typically, Node bundles do not need to be split to optimize loading performance, if you need to split Node bundles, you can use the [tools.rspack](/config/tools/rspack) configuration to configure Rspack's [optimization.splitChunks](https://rspack.dev/plugins/webpack/split-chunks-plugin#optimizationsplitchunks) option:
+
+```ts
+export default {
+  tools: {
+    rspack: {
+      optimization: {
+        splitChunks: {
+          // options
+        },
+      },
+    },
+  },
+};
+```
