@@ -198,7 +198,7 @@ export function printServerURLs({
 
     if (!Array.isArray(newUrls)) {
       throw new Error(
-        `"server.printUrls" must return an array, but got ${typeof newUrls}.`,
+        `[rsbuild:config] "server.printUrls" must return an array, but got ${typeof newUrls}.`,
       );
     }
 
@@ -282,7 +282,7 @@ export const getPort = async ({
   if (port !== original) {
     if (strictPort) {
       throw new Error(
-        `Port "${original}" is occupied, please choose another one.`,
+        `[rsbuild:server] Port "${original}" is occupied, please choose another one.`,
       );
     }
   }

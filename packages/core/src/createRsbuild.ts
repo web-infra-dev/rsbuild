@@ -155,7 +155,7 @@ export async function createRsbuild(
     if (checkDistDir) {
       if (!existsSync(distPath)) {
         throw new Error(
-          `The output directory ${color.yellow(
+          `[rsbuild:preview] The output directory ${color.yellow(
             distPath,
           )} does not exist, please build the project before previewing.`,
         );
@@ -163,7 +163,7 @@ export async function createRsbuild(
 
       if (isEmptyDir(distPath)) {
         throw new Error(
-          `The output directory ${color.yellow(
+          `[rsbuild:preview] The output directory ${color.yellow(
             distPath,
           )} is empty, please build the project before previewing.`,
         );

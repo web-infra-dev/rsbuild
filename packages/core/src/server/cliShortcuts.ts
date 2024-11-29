@@ -65,7 +65,9 @@ export function setupCliShortcuts({
     shortcuts = customShortcuts(shortcuts);
 
     if (!Array.isArray(shortcuts)) {
-      throw new Error('`dev.cliShortcuts` must return an array of shortcuts.');
+      throw new Error(
+        '[rsbuild:config] `dev.cliShortcuts` must return an array of shortcuts.',
+      );
     }
   }
 
