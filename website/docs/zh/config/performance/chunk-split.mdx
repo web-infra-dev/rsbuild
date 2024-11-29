@@ -172,4 +172,22 @@ export default {
 };
 ```
 
-> 当 Rsbuild 构建 "node" 类型的产物时，由于 Node Bundles 不需要通过拆包来优化加载性能，因此 chunkSplit 规则不会生效。
+## 产物类型
+
+`performance.chunkSplit` 仅在 [output.target](/config/output/target) 为 `web` 时生效。这意味着，当 `output.target` 为 `node` 或 `web-worker` 时，`performance.chunkSplit` 配置项不会生效。
+
+通常 Node bundles 不需要通过 split chunks 来优化加载性能，如果你需要对 Node bundles 进行拆包，可以使用 [tools.rspack](/config/tools/rspack) 来配置 Rspack 的 [optimization.splitChunks](https://rspack.dev/plugins/webpack/split-chunks-plugin#optimizationsplitchunks) 选项：
+
+```ts
+export default {
+  tools: {
+    rspack: {
+      optimization: {
+        splitChunks: {
+          // options
+        },
+      },
+    },
+  },
+};
+```
