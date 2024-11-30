@@ -1395,6 +1395,16 @@ export type NormalizedDevConfig = DevConfig &
     client: NormalizedClientConfig;
   };
 
+export interface ResolveConfig {
+  /**
+   * Force Rsbuild to resolve the specified packages from project root,
+   * which is useful for deduplicating packages and reducing the bundle size.
+   */
+  dedupe?: string[];
+}
+
+export type NormalizedResolveConfig = ResolveConfig;
+
 export type ModuleFederationConfig = {
   options: ModuleFederationPluginOptions;
 };
@@ -1427,6 +1437,10 @@ export interface EnvironmentConfig {
    * Options for the low-level tools.
    */
   tools?: ToolsConfig;
+  /**
+   * Options for configuring module resolving.
+   */
+  resolve?: ResolveConfig;
   /**
    * Options for source code parsing and compilation.
    */
@@ -1500,6 +1514,7 @@ export type MergedEnvironmentConfig = {
   >;
   html: NormalizedHtmlConfig;
   tools: NormalizedToolsConfig;
+  resolve: NormalizedResolveConfig;
   source: NormalizedSourceConfig;
   output: Omit<NormalizedOutputConfig, 'distPath'> & {
     distPath: Omit<Required<DistPathConfig>, 'jsAsync' | 'cssAsync'> & {

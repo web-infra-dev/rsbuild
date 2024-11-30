@@ -196,6 +196,7 @@ const createDefaultConfig = (): RsbuildConfig => ({
   dev: getDefaultDevConfig(),
   server: getDefaultServerConfig(),
   html: getDefaultHtmlConfig(),
+  resolve: {},
   source: getDefaultSourceConfig(),
   output: getDefaultOutputConfig(),
   tools: getDefaultToolsConfig(),

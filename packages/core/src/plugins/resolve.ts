@@ -1,12 +1,17 @@
+import { createRequire } from 'node:module';
+import { dirname, sep } from 'node:path';
 import { reduceConfigs } from 'reduce-configs';
 import type { ChainIdentifier } from '../configChain';
 import { castArray } from '../helpers';
 import { ensureAbsolutePath } from '../helpers/path';
+import { logger } from '../logger';
 import type {
   NormalizedEnvironmentConfig,
   RsbuildPlugin,
   RspackChain,
 } from '../types';
+
+const require = createRequire(import.meta.url);
 
 // compatible with legacy packages with type="module"
 // https://github.com/webpack/webpack/issues/11467
@@ -72,6 +77,51 @@ function applyAlias({
     initial: {},
     config: alias,
   });
+
+  if (config.resolve.dedupe) {
+    for (const pkgName of config.resolve.dedupe) {
+      if (mergedAlias[pkgName]) {
+        logger.debug(
+          `[rsbuild:resolve] The package "${pkgName}" is already in the alias config, dedupe option for "${pkgName}" will be ignored.`,
+        );
+        continue;
+      }
+
+      let pkgPath: string | undefined;
+      try {
+        pkgPath = dirname(
+          require.resolve(`${pkgName}/package.json`, {
+            paths: [rootPath],
+          }),
+        );
+      } catch (e) {}
+
+      // some package does not export `package.json`,
+      // so we try to resolve the package by its name
+      if (!pkgPath) {
+        try {
+          pkgPath = require.resolve(pkgName, {
+            paths: [rootPath],
+          });
+
+          const trailing = sep === '/' ? pkgName : pkgName.split('/').join(sep);
+          while (
+            !pkgPath.endsWith(trailing) &&
+            pkgPath.includes('node_modules')
+          ) {
+            pkgPath = dirname(pkgPath);
+          }
+        } catch (e) {
+          logger.debug(
+            `[rsbuild:resolve] The package "${pkgName}" is not resolved in the project, dedupe option for "${pkgName}" will be ignored.`,
+          );
+          continue;
+        }
+      }
+
+      mergedAlias[pkgName] = pkgPath;
+    }
+  }
 
   /**
    * Format alias value:
