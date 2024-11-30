@@ -79,8 +79,8 @@ importers:
         specifier: workspace:*
         version: link:scripts
       '@module-federation/rsbuild-plugin':
-        specifier: 0.7.6
-        version: 0.7.6(@module-federation/enhanced@0.7.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)(webpack@5.96.1))(@rsbuild/core@packages+core)
+        specifier: 0.8.0
+        version: 0.8.0(@module-federation/enhanced@0.7.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)(webpack@5.96.1))(@rsbuild/core@packages+core)
       '@playwright/test':
         specifier: 1.44.1
         version: 1.44.1
@@ -287,8 +287,8 @@ importers:
         version: 18.3.1(react@18.3.1)
     devDependencies:
       '@module-federation/rsbuild-plugin':
-        specifier: 0.7.6
-        version: 0.7.6(@module-federation/enhanced@0.7.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)(webpack@5.96.1))(@rsbuild/core@packages+core)
+        specifier: 0.8.0
+        version: 0.8.0(@module-federation/enhanced@0.7.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)(webpack@5.96.1))(@rsbuild/core@packages+core)
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../../../packages/core
@@ -306,8 +306,8 @@ importers:
         version: 18.3.1(react@18.3.1)
     devDependencies:
       '@module-federation/rsbuild-plugin':
-        specifier: 0.7.6
-        version: 0.7.6(@module-federation/enhanced@0.7.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)(webpack@5.96.1))(@rsbuild/core@packages+core)
+        specifier: 0.8.0
+        version: 0.8.0(@module-federation/enhanced@0.7.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)(webpack@5.96.1))(@rsbuild/core@packages+core)
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../../../packages/core
@@ -2160,11 +2160,11 @@ packages:
   '@module-federation/manifest@0.7.6':
     resolution: {integrity: sha512-xBrFwLjDMUjKRnp+P4X29ZNyhgXSsp+SfrBxVsKJpEESOHalDoNClbo6gXvZAvkBZyo9sY3SJhAwduDwNkg04w==}
 
-  '@module-federation/rsbuild-plugin@0.7.6':
-    resolution: {integrity: sha512-aptyTzo6UCBLWlyfNZacqsmhTy9r+JmPb8x12mQjdvfL4TiW4azax41Ux5rl2o9uhU2+etwntmBXBbfW8CGa2Q==}
+  '@module-federation/rsbuild-plugin@0.8.0':
+    resolution: {integrity: sha512-/CbaSRrpNtt6c5S3TuaQQ3CiUY7QfvaU0J33CyWkv8h0xKfYN6A0aMoxQvYi3z5qyTPth2V49YnlRUlQnaecPA==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
-      '@module-federation/enhanced': 0.7.6
+      '@module-federation/enhanced': 0.8.0
       '@rsbuild/core': 1.x
 
   '@module-federation/rspack@0.7.6':
@@ -2195,6 +2195,9 @@ packages:
 
   '@module-federation/sdk@0.7.6':
     resolution: {integrity: sha512-MFE+RtsHnutZOCp2eKpa3A/yzZ8tOPmjX7QRdVnB2qqR9JA2SH3ZP5+cYq76tzFQZvU1BCWAQVNMvqGOW2yVZQ==}
+
+  '@module-federation/sdk@0.8.0':
+    resolution: {integrity: sha512-V2cNGO//sWCyHTaQ0iTcoslolqVgdBIBOkZVLyk9AkZ4B3CO49pe/TmIIaVs9jVg3GO+ZmmazBFKRkqdn2PdRg==}
 
   '@module-federation/third-party-dts-extractor@0.7.6':
     resolution: {integrity: sha512-JME76/rgr41AKXG6kUTQXdQJiMCypN3qHOgPv4VuIag10UdLo/0gdeN6PYronvYmvPOQMfYev80GcEwl4l531A==}
@@ -7797,10 +7800,10 @@ snapshots:
       - utf-8-validate
       - vue-tsc
 
-  '@module-federation/rsbuild-plugin@0.7.6(@module-federation/enhanced@0.7.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)(webpack@5.96.1))(@rsbuild/core@packages+core)':
+  '@module-federation/rsbuild-plugin@0.8.0(@module-federation/enhanced@0.7.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)(webpack@5.96.1))(@rsbuild/core@packages+core)':
     dependencies:
       '@module-federation/enhanced': 0.7.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)(webpack@5.96.1)
-      '@module-federation/sdk': 0.7.6
+      '@module-federation/sdk': 0.8.0
       '@rsbuild/core': link:packages/core
 
   '@module-federation/rspack@0.7.6(typescript@5.7.2)':
@@ -7841,6 +7844,10 @@ snapshots:
   '@module-federation/sdk@0.5.1': {}
 
   '@module-federation/sdk@0.7.6':
+    dependencies:
+      isomorphic-rslog: 0.0.6
+
+  '@module-federation/sdk@0.8.0':
     dependencies:
       isomorphic-rslog: 0.0.6
 
