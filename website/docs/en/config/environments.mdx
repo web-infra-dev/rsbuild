@@ -8,6 +8,7 @@ Rsbuild supports building outputs for multiple environments. You can use `enviro
 
 ```ts
 interface EnvironmentConfig {
+  plugins?: RsbuildPlugins;
   dev?: Pick<
     DevConfig,
     'hmr' | 'assetPrefix' | 'progressBar' | 'lazyCompilation' | 'writeToDisk'
@@ -16,10 +17,10 @@ interface EnvironmentConfig {
   tools?: ToolsConfig;
   source?: SourceConfig;
   output?: OutputConfig;
+  resolve?: ResolveConfig;
   security?: SecurityConfig;
   performance?: PerformanceConfig;
   moduleFederation?: ModuleFederationConfig;
-  plugins?: RsbuildPlugins[];
 }
 
 type Environments = {
