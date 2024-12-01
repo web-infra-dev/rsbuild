@@ -32,6 +32,10 @@ export default defineConfig({
 });
 ```
 
+Note that using `resolve.dedupe` to unify different major versions of a package, it may cause some packages to fail because they may depend on specific versions of APIs or features.
+
+For example, if `foo` depends on a React 17-specific API or feature, then unifying React 17 and React 18 with React 18 using `resolve.dedupe` may cause `foo` to fail.
+
 ## How it works
 
 `resolve.dedupe` is implemented based on [source.alias](/config/source/alias), it will get the path of the specified package through `require.resolve` in the project root directory and set it to the alias.
