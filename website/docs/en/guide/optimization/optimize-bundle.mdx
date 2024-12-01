@@ -18,6 +18,8 @@ For more details, see [Rsdoctor - Duplicate Dependency Problem](https://rsdoctor
 
 We can eliminate duplicate dependencies with the package manager.
 
+- Rsbuild provides the [resolve.dedupe](/config/resolve/dedupe) config, which allows you to force the specified packages to be resolved from the project root directory, thereby removing duplicate packages.
+
 - If you are using `pnpm >= 7.26.0`, you can use the [pnpm dedupe](https://pnpm.io/cli/dedupe) command to upgrade and eliminate duplicate dependencies.
 
 ```bash

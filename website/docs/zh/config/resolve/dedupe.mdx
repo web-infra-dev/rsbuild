@@ -32,6 +32,10 @@ export default defineConfig({
 });
 ```
 
+注意，如果使用 `resolve.dedupe` 将一个包的不同 major 版本统一为同一个，可能导致一些包无法正常工作，因为它们可能依赖于特定版本的 API 或功能。
+
+例如，如果 `foo` 依赖了一个 React 17 特有的 API 或功能，此时将 React 17 和 React 18 统一为 React 18，就可能会导致 `foo` 无法正常工作。
+
 ## 实现原理
 
 `resolve.dedupe` 是基于 [source.alias](/config/source/alias) 实现的，它会在当前项目的根目录下通过 `require.resolve` 获取指定包的路径，并设置到 alias 中。
