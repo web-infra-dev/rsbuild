@@ -175,11 +175,14 @@ export const pluginResolve = (): RsbuildPlugin => ({
         // In some cases (modern.js), there is an error if the fullySpecified rule is after the js rule
         applyFullySpecified({ chain, config, CHAIN_ID });
 
+        const aliasStrategy =
+          config.source.aliasStrategy ?? config.resolve.aliasStrategy;
+
         if (
           tsconfigPath &&
           // Only Rspack has the tsConfig option
           api.context.bundlerType === 'rspack' &&
-          config.source.aliasStrategy === 'prefer-tsconfig'
+          aliasStrategy === 'prefer-tsconfig'
         ) {
           chain.resolve.tsConfig({
             configFile: tsconfigPath,

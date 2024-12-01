@@ -37,9 +37,9 @@ rspackOnlyTest(
           alias: {
             '@/common': './src/common2',
           },
+          aliasStrategy: 'prefer-alias',
         },
         source: {
-          aliasStrategy: 'prefer-alias',
           tsconfigPath: './jsconfig.json',
         },
       },

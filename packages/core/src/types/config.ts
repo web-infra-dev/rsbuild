@@ -179,8 +179,8 @@ export interface SourceConfig {
    */
   alias?: ConfigChain<Alias>;
   /**
-   * Used to control the priority between the `paths` option in `tsconfig.json`
-   * and the `alias` option in the bundler.
+   * @deprecated Use `resolve.aliasStrategy` instead.
+   * `source.aliasStrategy` will be removed in v2.0.0.
    */
   aliasStrategy?: AliasStrategy;
   /**
@@ -253,7 +253,6 @@ export interface NormalizedSourceConfig extends SourceConfig {
    * `source.alias` will be removed in v2.0.0.
    */
   alias: ConfigChain<Alias>;
-  aliasStrategy: AliasStrategy;
   preEntry: string[];
   decorators: Required<Decorators>;
 }
@@ -1410,10 +1409,16 @@ export interface ResolveConfig {
    * same as the [resolve.alias](https://rspack.dev/config/resolve) config of Rspack.
    */
   alias?: ConfigChain<Alias>;
+  /**
+   * Control the priority between the `paths` option in `tsconfig.json`
+   * and the `resolve.alias` option of Rsbuild.
+   * @default 'prefer-tsconfig'
+   */
+  aliasStrategy?: AliasStrategy;
 }
 
 export type NormalizedResolveConfig = ResolveConfig &
-  Pick<Required<ResolveConfig>, 'alias'>;
+  Pick<Required<ResolveConfig>, 'alias' | 'aliasStrategy'>;
 
 export type ModuleFederationConfig = {
   options: ModuleFederationPluginOptions;
