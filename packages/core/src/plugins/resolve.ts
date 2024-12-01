@@ -69,10 +69,6 @@ function applyAlias({
 }) {
   const { alias } = config.source;
 
-  if (!alias) {
-    return;
-  }
-
   const mergedAlias = reduceConfigs({
     initial: {},
     config: alias,
