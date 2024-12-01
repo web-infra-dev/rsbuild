@@ -110,7 +110,7 @@ const updateConfigForTest = async (
     dev: {
       progressBar: false,
     },
-    source: {
+    resolve: {
       alias: {
         '@assets': join(__dirname, '../assets'),
       },

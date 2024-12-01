@@ -44,6 +44,7 @@ import type {
   NormalizedHtmlConfig,
   NormalizedOutputConfig,
   NormalizedPerformanceConfig,
+  NormalizedResolveConfig,
   NormalizedSecurityConfig,
   NormalizedServerConfig,
   NormalizedSourceConfig,
@@ -192,11 +193,15 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
   emitAssets: true,
 });
 
+const getDefaultResolveConfig = (): NormalizedResolveConfig => ({
+  alias: {},
+});
+
 const createDefaultConfig = (): RsbuildConfig => ({
   dev: getDefaultDevConfig(),
   server: getDefaultServerConfig(),
   html: getDefaultHtmlConfig(),
-  resolve: {},
+  resolve: getDefaultResolveConfig(),
   source: getDefaultSourceConfig(),
   output: getDefaultOutputConfig(),
   tools: getDefaultToolsConfig(),

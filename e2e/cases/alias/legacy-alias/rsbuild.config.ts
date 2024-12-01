@@ -6,7 +6,7 @@ export default defineConfig({
   },
   environments: {
     web: {
-      resolve: {
+      source: {
         alias: {
           '@common': './src/common',
         },
@@ -16,7 +16,7 @@ export default defineConfig({
       },
     },
     node: {
-      resolve: {
+      source: {
         alias: {
           '@common': './src/common2',
         },

@@ -174,8 +174,8 @@ export type Decorators = {
 
 export interface SourceConfig {
   /**
-   * Create aliases to import or require certain modules,
-   * same as the [resolve.alias](https://rspack.dev/config/resolve) config of Rspack.
+   * @deprecated Use `resolve.alias` instead.
+   * `source.alias` will be removed in v2.0.0.
    */
   alias?: ConfigChain<Alias>;
   /**
@@ -248,6 +248,10 @@ type TransformImportFn = (
 
 export interface NormalizedSourceConfig extends SourceConfig {
   define: Define;
+  /**
+   * @deprecated Use `resolve.alias` instead.
+   * `source.alias` will be removed in v2.0.0.
+   */
   alias: ConfigChain<Alias>;
   aliasStrategy: AliasStrategy;
   preEntry: string[];
@@ -1401,9 +1405,15 @@ export interface ResolveConfig {
    * which is useful for deduplicating packages and reducing the bundle size.
    */
   dedupe?: string[];
+  /**
+   * Create aliases to import or require certain modules,
+   * same as the [resolve.alias](https://rspack.dev/config/resolve) config of Rspack.
+   */
+  alias?: ConfigChain<Alias>;
 }
 
-export type NormalizedResolveConfig = ResolveConfig;
+export type NormalizedResolveConfig = ResolveConfig &
+  Pick<Required<ResolveConfig>, 'alias'>;
 
 export type ModuleFederationConfig = {
   options: ModuleFederationPluginOptions;

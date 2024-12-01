@@ -16,10 +16,12 @@ test.describe('source configure multi', () => {
           entry: {
             index: join(fixtures, 'basic/src/index.js'),
           },
+          preEntry: ['./src/pre.js'],
+        },
+        resolve: {
           alias: {
             '@common': './src/common',
           },
-          preEntry: ['./src/pre.js'],
         },
       },
     });

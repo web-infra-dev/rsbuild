@@ -8,10 +8,12 @@ rspackOnlyTest(
       cwd: __dirname,
       page,
       rsbuildConfig: {
-        source: {
+        resolve: {
           alias: {
             '@common': './src/common2',
           },
+        },
+        source: {
           tsconfigPath: './jsconfig.json',
         },
       },
@@ -31,10 +33,12 @@ rspackOnlyTest(
       cwd: __dirname,
       page,
       rsbuildConfig: {
-        source: {
+        resolve: {
           alias: {
             '@/common': './src/common2',
           },
+        },
+        source: {
           aliasStrategy: 'prefer-alias',
           tsconfigPath: './jsconfig.json',
         },
@@ -42,7 +46,7 @@ rspackOnlyTest(
     });
 
     const foo = page.locator('#foo');
-    await expect(foo).toHaveText('source.alias worked');
+    await expect(foo).toHaveText('resolve.alias worked');
 
     await rsbuild.close();
   },
