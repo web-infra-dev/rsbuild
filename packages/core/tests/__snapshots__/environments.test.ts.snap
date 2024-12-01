@@ -89,6 +89,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
   },
   "resolve": {
     "alias": {},
+    "aliasStrategy": "prefer-tsconfig",
   },
   "root": "<ROOT>",
   "security": {
@@ -112,7 +113,6 @@ exports[`environment config > should normalize environment config correctly 1`] 
       "@common": "./src/common",
       "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
     },
-    "aliasStrategy": "prefer-tsconfig",
     "decorators": {
       "version": "2022-03",
     },
@@ -222,6 +222,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
   },
   "resolve": {
     "alias": {},
+    "aliasStrategy": "prefer-tsconfig",
   },
   "root": "<ROOT>",
   "security": {
@@ -245,7 +246,6 @@ exports[`environment config > should normalize environment config correctly 2`] 
       "@common": "./src/common",
       "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
     },
-    "aliasStrategy": "prefer-tsconfig",
     "decorators": {
       "version": "2022-03",
     },
@@ -355,6 +355,7 @@ exports[`environment config > should print environment config when inspect confi
     },
     "resolve": {
       "alias": {},
+      "aliasStrategy": "prefer-tsconfig",
     },
     "root": "<ROOT>",
     "security": {
@@ -378,7 +379,6 @@ exports[`environment config > should print environment config when inspect confi
         "@common": "./src/common",
         "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
       },
-      "aliasStrategy": "prefer-tsconfig",
       "decorators": {
         "version": "2022-03",
       },
@@ -484,6 +484,7 @@ exports[`environment config > should print environment config when inspect confi
     },
     "resolve": {
       "alias": {},
+      "aliasStrategy": "prefer-tsconfig",
     },
     "root": "<ROOT>",
     "security": {
@@ -507,7 +508,6 @@ exports[`environment config > should print environment config when inspect confi
         "@common": "./src/common",
         "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
       },
-      "aliasStrategy": "prefer-tsconfig",
       "decorators": {
         "version": "2022-03",
       },
@@ -633,6 +633,7 @@ exports[`environment config > should support modify environment config by api.mo
     },
     "resolve": {
       "alias": {},
+      "aliasStrategy": "prefer-tsconfig",
     },
     "root": "<ROOT>",
     "security": {
@@ -656,7 +657,6 @@ exports[`environment config > should support modify environment config by api.mo
         "@common": "./src/common",
         "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
       },
-      "aliasStrategy": "prefer-tsconfig",
       "decorators": {
         "version": "2022-03",
       },
@@ -762,6 +762,7 @@ exports[`environment config > should support modify environment config by api.mo
     },
     "resolve": {
       "alias": {},
+      "aliasStrategy": "prefer-tsconfig",
     },
     "root": "<ROOT>",
     "security": {
@@ -786,7 +787,6 @@ exports[`environment config > should support modify environment config by api.mo
         "@common1": "./src/common1",
         "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
       },
-      "aliasStrategy": "prefer-tsconfig",
       "decorators": {
         "version": "2022-03",
       },
@@ -892,6 +892,7 @@ exports[`environment config > should support modify environment config by api.mo
     },
     "resolve": {
       "alias": {},
+      "aliasStrategy": "prefer-tsconfig",
     },
     "root": "<ROOT>",
     "security": {
@@ -916,7 +917,6 @@ exports[`environment config > should support modify environment config by api.mo
         "@common1": "./src/common1",
         "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
       },
-      "aliasStrategy": "prefer-tsconfig",
       "decorators": {
         "version": "2022-03",
       },
@@ -1025,6 +1025,7 @@ exports[`environment config > should support modify single environment config by
     },
     "resolve": {
       "alias": {},
+      "aliasStrategy": "prefer-tsconfig",
     },
     "root": "<ROOT>",
     "security": {
@@ -1048,7 +1049,6 @@ exports[`environment config > should support modify single environment config by
         "@common": "./src/common",
         "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
       },
-      "aliasStrategy": "prefer-tsconfig",
       "decorators": {
         "version": "2022-03",
       },
@@ -1154,6 +1154,7 @@ exports[`environment config > should support modify single environment config by
     },
     "resolve": {
       "alias": {},
+      "aliasStrategy": "prefer-tsconfig",
     },
     "root": "<ROOT>",
     "security": {
@@ -1178,7 +1179,6 @@ exports[`environment config > should support modify single environment config by
         "@common1": "./src/common1",
         "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
       },
-      "aliasStrategy": "prefer-tsconfig",
       "decorators": {
         "version": "2022-03",
       },

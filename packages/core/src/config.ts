@@ -99,7 +99,6 @@ const getDefaultSourceConfig = (): NormalizedSourceConfig => {
       '@swc/helpers': swcHelpersPath,
     },
     define: {},
-    aliasStrategy: 'prefer-tsconfig',
     preEntry: [],
     decorators: {
       version: '2022-03',
@@ -195,6 +194,7 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
 
 const getDefaultResolveConfig = (): NormalizedResolveConfig => ({
   alias: {},
+  aliasStrategy: 'prefer-tsconfig',
 });
 
 const createDefaultConfig = (): RsbuildConfig => ({

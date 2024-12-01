@@ -27,7 +27,7 @@ describe('plugin-resolve', () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
       rsbuildConfig: {
-        source: {
+        resolve: {
           aliasStrategy: 'prefer-alias',
         },
       },
