@@ -8,7 +8,7 @@ rspackOnlyTest(
       cwd: __dirname,
       page,
       rsbuildConfig: {
-        source: {
+        resolve: {
           alias: {
             '@common': './src/common2',
           },

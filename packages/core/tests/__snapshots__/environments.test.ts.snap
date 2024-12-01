@@ -87,7 +87,9 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "removeConsole": false,
     "removeMomentLocale": false,
   },
-  "resolve": {},
+  "resolve": {
+    "alias": {},
+  },
   "root": "<ROOT>",
   "security": {
     "nonce": "",
@@ -218,7 +220,9 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "removeConsole": false,
     "removeMomentLocale": false,
   },
-  "resolve": {},
+  "resolve": {
+    "alias": {},
+  },
   "root": "<ROOT>",
   "security": {
     "nonce": "",
@@ -349,7 +353,9 @@ exports[`environment config > should print environment config when inspect confi
       "removeConsole": false,
       "removeMomentLocale": false,
     },
-    "resolve": {},
+    "resolve": {
+      "alias": {},
+    },
     "root": "<ROOT>",
     "security": {
       "nonce": "",
@@ -476,7 +482,9 @@ exports[`environment config > should print environment config when inspect confi
       "removeConsole": false,
       "removeMomentLocale": false,
     },
-    "resolve": {},
+    "resolve": {
+      "alias": {},
+    },
     "root": "<ROOT>",
     "security": {
       "nonce": "",
@@ -623,7 +631,9 @@ exports[`environment config > should support modify environment config by api.mo
       "removeConsole": false,
       "removeMomentLocale": false,
     },
-    "resolve": {},
+    "resolve": {
+      "alias": {},
+    },
     "root": "<ROOT>",
     "security": {
       "nonce": "",
@@ -750,7 +760,9 @@ exports[`environment config > should support modify environment config by api.mo
       "removeConsole": false,
       "removeMomentLocale": false,
     },
-    "resolve": {},
+    "resolve": {
+      "alias": {},
+    },
     "root": "<ROOT>",
     "security": {
       "nonce": "",
@@ -878,7 +890,9 @@ exports[`environment config > should support modify environment config by api.mo
       "removeConsole": false,
       "removeMomentLocale": false,
     },
-    "resolve": {},
+    "resolve": {
+      "alias": {},
+    },
     "root": "<ROOT>",
     "security": {
       "nonce": "",
@@ -1009,7 +1023,9 @@ exports[`environment config > should support modify single environment config by
       "removeConsole": false,
       "removeMomentLocale": false,
     },
-    "resolve": {},
+    "resolve": {
+      "alias": {},
+    },
     "root": "<ROOT>",
     "security": {
       "nonce": "",
@@ -1136,7 +1152,9 @@ exports[`environment config > should support modify single environment config by
       "removeConsole": false,
       "removeMomentLocale": false,
     },
-    "resolve": {},
+    "resolve": {
+      "alias": {},
+    },
     "root": "<ROOT>",
     "security": {
       "nonce": "",

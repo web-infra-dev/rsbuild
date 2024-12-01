@@ -67,12 +67,25 @@ function applyAlias({
   config: NormalizedEnvironmentConfig;
   rootPath: string;
 }) {
-  const { alias } = config.source;
+  // TODO: remove `source.alias` in the next major version
+  const mergedSourceAlias = config.source.alias
+    ? reduceConfigs({
+        initial: {},
+        config: config.source.alias,
+      })
+    : {};
 
-  const mergedAlias = reduceConfigs({
-    initial: {},
-    config: alias,
-  });
+  const mergedResolveAlias = config.resolve.alias
+    ? reduceConfigs({
+        initial: {},
+        config: config.resolve.alias,
+      })
+    : {};
+
+  const mergedAlias = {
+    ...mergedSourceAlias,
+    ...mergedResolveAlias,
+  };
 
   if (config.resolve.dedupe) {
     for (const pkgName of config.resolve.dedupe) {
