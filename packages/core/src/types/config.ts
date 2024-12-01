@@ -1448,11 +1448,11 @@ export interface EnvironmentConfig {
    */
   tools?: ToolsConfig;
   /**
-   * Options for configuring module resolving.
+   * Options for module resolution.
    */
   resolve?: ResolveConfig;
   /**
-   * Options for source code parsing and compilation.
+   * Options for input source code.
    */
   source?: SourceConfig;
   /**
