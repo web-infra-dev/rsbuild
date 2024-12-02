@@ -34,10 +34,10 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.1.0",
+    "@rslib/core": "0.1.1",
     "@scripts/test-helper": "workspace:*",
     "@types/less": "^3.0.7",
-    "less": "^4.2.0",
+    "less": "^4.2.1",
     "less-loader": "^12.2.0",
     "prebundle": "1.2.5",
     "typescript": "^5.7.2"
