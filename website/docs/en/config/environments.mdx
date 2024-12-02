@@ -37,7 +37,7 @@ Configure Rsbuild configuration for `web` (client) and `node` (SSR) environments
 ```ts title="rsbuild.config.ts"
 export default {
   // Shared configuration for all environments
-  source: {
+  resolve: {
     alias: {
       '@common': './src/common',
     },
@@ -46,9 +46,6 @@ export default {
     // configuration for client
     web: {
       source: {
-        alias: {
-          '@common1': './src/web/common1',
-        },
         entry: {
           index: './src/index.client.js',
         },
@@ -56,19 +53,26 @@ export default {
       output: {
         target: 'web',
       },
+      resolve: {
+        alias: {
+          '@common1': './src/web/common1',
+        },
+      },
     },
     // configuration for SSR
     node: {
       source: {
-        alias: {
-          '@common1': './src/ssr/common1',
-        },
         entry: {
           index: './src/index.server.js',
         },
       },
       output: {
         target: 'node',
+      },
+      resolve: {
+        alias: {
+          '@common1': './src/ssr/common1',
+        },
       },
     },
   },
@@ -80,16 +84,18 @@ For the `web` environment, the merged Rsbuild configuration is:
 ```js
 const webConfig = {
   source: {
-    alias: {
-      '@common': './src/common',
-      '@common1': './src/web/common1',
-    },
     entry: {
       index: './src/index.client.js',
     },
   },
   output: {
     target: 'web',
+  },
+  resolve: {
+    alias: {
+      '@common': './src/common',
+      '@common1': './src/web/common1',
+    },
   },
 };
 ```
@@ -99,16 +105,18 @@ For the `node` environment, the merged Rsbuild configuration is:
 ```js
 const nodeConfig = {
   source: {
-    alias: {
-      '@common': './src/common',
-      '@common1': './src/ssr/common1',
-    },
     entry: {
       index: './src/index.server.js',
     },
   },
   output: {
     target: 'node',
+  },
+  resolve: {
+    alias: {
+      '@common': './src/common',
+      '@common1': './src/ssr/common1',
+    },
   },
 };
 ```

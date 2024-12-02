@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { pluginClientRedirects } from '@rspress/plugin-client-redirects';
 import { pluginRss } from '@rspress/plugin-rss';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
@@ -55,6 +56,18 @@ export default defineConfig({
           output: {
             type: 'atom',
           },
+        },
+      ],
+    }),
+    pluginClientRedirects({
+      redirects: [
+        {
+          from: '/config/source/alias',
+          to: '/config/resolve/alias',
+        },
+        {
+          from: '/config/source/alias-strategy',
+          to: '/config/resolve/alias-strategy',
         },
       ],
     }),

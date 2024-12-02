@@ -7,7 +7,7 @@
 在 Rsbuild 中，你有两种方式可以设置路径别名:
 
 - 通过 `tsconfig.json` 中的 `paths` 配置。
-- 通过 [source.alias](/config/source/alias) 配置。
+- 通过 [resolve.alias](/config/resolve/alias) 配置。
 
 ## 通过 `tsconfig.json` 的 `paths` 配置
 
@@ -31,25 +31,25 @@
 你可以阅读 [TypeScript - paths](https://typescriptlang.org/tsconfig#paths) 文档来了解更多用法。
 :::
 
-## 通过 `source.alias` 配置
+## 通过 `resolve.alias` 配置
 
-Rsbuild 提供了 [source.alias](/config/source/alias) 配置项，对应 Rspack 原生的 [resolve.alias](https://rspack.dev/zh/config/resolve#resolvealias) 配置，你可以通过对象或者函数的方式来配置这个选项。
+Rsbuild 提供了 [resolve.alias](/config/resolve/alias) 配置项，对应 Rspack 原生的 [resolve.alias](https://rspack.dev/zh/config/resolve#resolvealias) 配置，你可以通过对象或者函数的方式来配置这个选项。
 
 ### 使用场景
 
 由于 `tsconfig.json` 的 `paths` 配置是写在静态 JSON 文件里的，因此它不具备动态性。
 
-而 `source.alias` 则可以弥补这一不足，你可以通过 JavaScript 代码来动态设置 `source.alias`（比如基于环境变量来设置）。
+而 `resolve.alias` 则可以弥补这一不足，你可以通过 JavaScript 代码来动态设置 `resolve.alias`（比如基于环境变量来设置）。
 
 ### 对象用法
 
-你可以通过对象的方式来配置 `source.alias`，其中的相对路径会被自动补全为绝对路径。
+你可以通过对象的方式来配置 `resolve.alias`，其中的相对路径会被自动补全为绝对路径。
 
 比如：
 
 ```js
 export default {
-  source: {
+  resolve: {
     alias: {
       '@common': './src/common',
     },
@@ -61,13 +61,13 @@ export default {
 
 ### 函数用法
 
-你也可以将 `source.alias` 配置为一个函数，拿到内置的 `alias` 对象，对其进行修改。
+你也可以将 `resolve.alias` 配置为一个函数，拿到内置的 `alias` 对象，对其进行修改。
 
 比如：
 
 ```js
 export default {
-  source: {
+  resolve: {
     alias: (alias) => {
       alias['@common'] = './src/common';
       return alias;
@@ -78,6 +78,6 @@ export default {
 
 ### 优先级
 
-`tsconfig.json` 的 `paths` 配置的优先级高于 `source.alias`，当一个路径同时匹配到这两者定义的规则时，会优先使用 `tsconfig.json` 的 `paths` 定义的值。
+`tsconfig.json` 的 `paths` 配置的优先级高于 `resolve.alias`，当一个路径同时匹配到这两者定义的规则时，会优先使用 `tsconfig.json` 的 `paths` 定义的值。
 
-你可以通过 [source.aliasStrategy](/config/source/alias-strategy) 来调整这两个选项的优先级。
+你可以通过 [resolve.aliasStrategy](/config/resolve/alias-strategy) 来调整这两个选项的优先级。

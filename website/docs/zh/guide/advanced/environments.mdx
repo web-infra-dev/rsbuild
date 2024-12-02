@@ -32,13 +32,15 @@ export default {
         entry: {
           index: './src/index.client.js',
         },
-        alias: {
-          '@common': './src/client/common',
-        },
       },
       output: {
         // 浏览器产物的 target 类型为 'web'
         target: 'web',
+      },
+      resolve: {
+        alias: {
+          '@common': './src/client/common',
+        },
       },
     },
     // 配置 node 环境，用于 SSR
@@ -47,13 +49,15 @@ export default {
         entry: {
           index: './src/index.server.js',
         },
-        alias: {
-          '@common': './src/server/common',
-        },
       },
       output: {
         // Node.js 产物的 target 类型为 'node'
         target: 'node',
+      },
+      resolve: {
+        alias: {
+          '@common': './src/server/common',
+        },
       },
     },
   },

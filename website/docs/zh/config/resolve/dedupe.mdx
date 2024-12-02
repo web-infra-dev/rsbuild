@@ -38,7 +38,7 @@ export default defineConfig({
 
 ## 实现原理
 
-`resolve.dedupe` 是基于 [source.alias](/config/source/alias) 实现的，它会在当前项目的根目录下通过 `require.resolve` 获取指定包的路径，并设置到 alias 中。
+`resolve.dedupe` 是基于 [resolve.alias](/config/resolve/alias) 实现的，它会在当前项目的根目录下通过 `require.resolve` 获取指定包的路径，并设置到 alias 中。
 
 在上述的例子中，`resolve.dedupe` 会被转换为以下 alias 配置：
 
@@ -49,4 +49,4 @@ const alias = {
 };
 ```
 
-`resolve.dedupe` 生成的 alias 会与项目中配置的 `source.alias` 合并，当两者配置了相同的 key 时，`source.alias` 的优先级更高。
+`resolve.dedupe` 生成的 alias 会与项目中配置的 `resolve.alias` 合并，当两者配置了相同的 key 时，`resolve.alias` 的优先级更高。
