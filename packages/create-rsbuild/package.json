@@ -31,8 +31,8 @@
     "create-rstack": "1.0.9"
   },
   "devDependencies": {
-    "@rslib/core": "0.1.0",
-    "@types/node": "^22.10.0",
+    "@rslib/core": "0.1.1",
+    "@types/node": "^22.10.1",
     "typescript": "^5.7.2"
   },
   "engines": {
