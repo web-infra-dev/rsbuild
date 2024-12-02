@@ -113,7 +113,8 @@ function applyAlias({
             paths: [rootPath],
           });
 
-          const trailing = sep === '/' ? pkgName : pkgName.split('/').join(sep);
+          // Ensure the package path is `node_modules/@scope/package-name`
+          const trailing = ['node_modules', ...pkgName.split('/')].join(sep);
           while (
             !pkgPath.endsWith(trailing) &&
             pkgPath.includes('node_modules')
