@@ -1,4 +1,4 @@
-# source.alias
+# resolve.alias
 
 - **类型：**
 
@@ -14,10 +14,14 @@ const defaultAlias = {
 };
 ```
 
+- **版本：** `>=1.1.7`
+
 设置文件引用的别名，对应 Rspack 的 [resolve.alias](https://rspack.dev/zh/config/resolve#resolvealias) 配置。
 
+对于 TypeScript 项目，你只需要在 `tsconfig.json` 中配置 [compilerOptions.paths](https://typescriptlang.org/tsconfig#paths) 即可，Rsbuild 会自动识别它，不需要额外配置 `resolve.alias` 字段，详见 [「路径别名」](/guide/advanced/alias)。
+
 :::tip
-对于 TypeScript 项目，你只需要在 `tsconfig.json` 中配置 [compilerOptions.paths](https://typescriptlang.org/tsconfig#paths) 即可，Rsbuild 会自动识别它，不需要额外配置 `source.alias` 字段，详见 [「路径别名」](/guide/advanced/alias)。
+在 Rsbuild 1.1.7 之前的版本，你可以使用 `source.alias` 来设置 alias，但该字段将在下一个大版本中被移除。
 :::
 
 ## Object 类型
@@ -26,7 +30,7 @@ const defaultAlias = {
 
 ```js
 export default {
-  source: {
+  resolve: {
     alias: {
       '@common': './src/common',
     },
@@ -42,7 +46,7 @@ export default {
 
 ```js
 export default {
-  source: {
+  resolve: {
     alias: (alias) => {
       alias['@common'] = './src/common';
     },
@@ -54,7 +58,7 @@ export default {
 
 ```js
 export default {
-  source: {
+  resolve: {
     alias: (alias) => {
       delete alias['@swc/helpers'];
     },
@@ -66,7 +70,7 @@ export default {
 
 ```js
 export default {
-  source: {
+  resolve: {
     alias: (alias) => {
       return {
         '@common': './src/common',
@@ -86,7 +90,7 @@ export default {
 export default {
   environments: {
     web: {
-      source: {
+      resolve: {
         alias: {
           '@common': './src/web/common',
         },
@@ -96,7 +100,7 @@ export default {
       },
     },
     node: {
-      source: {
+      resolve: {
         alias: {
           '@common': './src/node/common',
         },
@@ -111,13 +115,13 @@ export default {
 
 ## 精确匹配
 
-默认情况，`source.alias` 会自动匹配子路径，比如以下配置：
+默认情况，`resolve.alias` 会自动匹配子路径，比如以下配置：
 
 ```js
 import path from 'node:path';
 
 export default {
-  source: {
+  resolve: {
     alias: {
       '@common': './src/common',
     },
@@ -138,7 +142,7 @@ import b from '@common/util'; // 解析为 `./src/common/util`
 import path from 'node:path';
 
 export default {
-  source: {
+  resolve: {
     alias: {
       '@common$': './src/common',
     },
@@ -163,7 +167,7 @@ import b from '@common/util'; // 保持 `@common/util` 不变
 import path from 'node:path';
 
 export default {
-  source: {
+  resolve: {
     alias: {
       react: path.resolve(__dirname, './node_modules/react'),
     },
@@ -177,7 +181,7 @@ export default {
 
 ## 处理 Loader
 
-`source.alias` 不支持为 loader 设置别名。如果你需要为 loader 设置别名，可以使用 Rspack 的 [resolveLoader](https://rspack.dev/zh/config/resolve-loader) 配置项。
+`resolve.alias` 不支持为 loader 设置别名。如果你需要为 loader 设置别名，可以使用 Rspack 的 [resolveLoader](https://rspack.dev/zh/config/resolve-loader) 配置项。
 
 ```ts
 export default {

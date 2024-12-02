@@ -32,13 +32,15 @@ export default {
         entry: {
           index: './src/index.client.js',
         },
-        alias: {
-          '@common': './src/client/common',
-        },
       },
       output: {
         // Use 'web' target for the browser outputs
         target: 'web',
+      },
+      resolve: {
+        alias: {
+          '@common': './src/client/common',
+        },
       },
     },
     // Configure the node environment for SSR
@@ -47,13 +49,15 @@ export default {
         entry: {
           index: './src/index.server.js',
         },
-        alias: {
-          '@common': './src/server/common',
-        },
       },
       output: {
         // Use 'node' target for the Node.js outputs
         target: 'node',
+      },
+      resolve: {
+        alias: {
+          '@common': './src/server/common',
+        },
       },
     },
   },

@@ -4,6 +4,8 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+packageExtensionsChecksum: 242b46cb3413dd5fe1495d77579faef4
+
 importers:
 
   .:
@@ -1138,6 +1140,9 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../packages/core
+      '@rspress/plugin-client-redirects':
+        specifier: ^1.37.3
+        version: 1.37.3(@rspress/runtime@1.37.3)
       '@rspress/plugin-rss':
         specifier: 1.37.3
         version: 1.37.3(react@18.3.1)(rspress@1.37.3(webpack@5.96.1))
@@ -2677,6 +2682,12 @@ packages:
   '@rspress/plugin-auto-nav-sidebar@1.37.3':
     resolution: {integrity: sha512-8PrfUitBCm6PFruMU969Wr5qA+wr0RisEM2iuHwdm2NBQnpwc9Ag73OagCMPwBUYyDod3kXXRyN4Yz/VuQIpDA==}
     engines: {node: '>=14.17.6'}
+
+  '@rspress/plugin-client-redirects@1.37.3':
+    resolution: {integrity: sha512-SNlWpNWcV7+ngSK003GVgT74YAl18pv6PZlRVc1a6ozF8XO0fjN66y5AUhxMDSsx1g5jiVmPdL8RSR6fwp9JoA==}
+    engines: {node: '>=14.17.6'}
+    peerDependencies:
+      '@rspress/runtime': ^1.37.3
 
   '@rspress/plugin-container-syntax@1.37.3':
     resolution: {integrity: sha512-xiGjF2j4QPtD/s6Cmme1KEdr0mHRM/A5bDOmSXAqLssRiQyE7zunPjVIu78sfQndZxzAXWY51lQHbNT8IG5FdA==}
@@ -8293,6 +8304,11 @@ snapshots:
     dependencies:
       '@rspress/shared': 1.37.3
 
+  '@rspress/plugin-client-redirects@1.37.3(@rspress/runtime@1.37.3)':
+    dependencies:
+      '@rspress/runtime': 1.37.3
+      '@rspress/shared': 1.37.3
+
   '@rspress/plugin-container-syntax@1.37.3':
     dependencies:
       '@rspress/shared': 1.37.3
@@ -8323,7 +8339,7 @@ snapshots:
 
   '@rspress/shared@1.37.3':
     dependencies:
-      '@rsbuild/core': 1.1.4
+      '@rsbuild/core': 1.1.7
       chalk: 5.3.0
       execa: 5.1.1
       fs-extra: 11.2.0

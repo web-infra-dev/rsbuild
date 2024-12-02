@@ -1,13 +1,14 @@
-# source.aliasStrategy
+# resolve.aliasStrategy
 
 - **Type:** `'prefer-tsconfig' | 'prefer-alias'`
 - **Default:** `'prefer-tsconfig'`
+- **Version:** `>=1.1.7`
 
-Control the priority between the `paths` option in `tsconfig.json` and the [resolve.alias](/config/source/alias) option of Rsbuild.
+Control the priority between the `paths` option in `tsconfig.json` and the [resolve.alias](/config/resolve/alias) option of Rsbuild.
 
 ### prefer-tsconfig
 
-By default, `source.aliasStrategy` is set to `'prefer-tsconfig'`. In this case, both the `paths` option in `tsconfig.json` and the `alias` option in the bundler will take effect, but the `paths` option in tsconfig has a higher priority.
+By default, `resolve.aliasStrategy` is set to `'prefer-tsconfig'`. In this case, both the `paths` option in `tsconfig.json` and the `alias` option in the bundler will take effect, but the `paths` option in tsconfig has a higher priority.
 
 For example, if the following configurations are set at the same time:
 
@@ -23,11 +24,11 @@ For example, if the following configurations are set at the same time:
 }
 ```
 
-- `source.alias`:
+- `resolve.alias`:
 
 ```ts
 export default {
-  source: {
+  resolve: {
     alias: {
       '@common': './src/common-2',
       '@utils': './src/utils',
@@ -39,15 +40,15 @@ export default {
 Since the tsconfig paths have a higher priority, the following will happen:
 
 - `@common` will use the value defined in tsconfig paths, pointing to `./src/common-1`
-- `@utils` will use the value defined in `source.alias`, pointing to `./src/utils`
+- `@utils` will use the value defined in `resolve.alias`, pointing to `./src/utils`
 
 ### prefer-alias
 
-If the value of `source.aliasStrategy` is set to `prefer-alias`, the `paths` option in `tsconfig.json` will only be used to provide TypeScript type definitions and will not affect the bundling result. In this case, the bundler will only read the `alias` option as the path alias.
+If the value of `resolve.aliasStrategy` is set to `prefer-alias`, the `paths` option in `tsconfig.json` will only be used to provide TypeScript type definitions and will not affect the bundling result. In this case, the bundler will only read the `alias` option as the path alias.
 
 ```ts
 export default {
-  source: {
+  resolve: {
     aliasStrategy: 'prefer-alias',
   },
 };
@@ -68,11 +69,11 @@ For example, if the following configurations are set at the same time:
 }
 ```
 
-- `source.alias`:
+- `resolve.alias`:
 
 ```ts
 export default {
-  source: {
+  resolve: {
     alias: {
       '@common': './src/common-2',
     },
@@ -86,7 +87,7 @@ In most cases, you don't need to use `prefer-alias`, but you can consider using 
 
 ```ts
 export default {
-  source: {
+  resolve: {
     alias: {
       '@common':
         process.env.NODE_ENV === 'production'

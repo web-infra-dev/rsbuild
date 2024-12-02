@@ -1,4 +1,4 @@
-# source.alias
+# resolve.alias
 
 - **Type:**
 
@@ -14,10 +14,14 @@ const defaultAlias = {
 };
 ```
 
+- **Version:** `>=1.1.7`
+
 Create aliases to import or require certain modules, same as the [resolve.alias](https://rspack.dev/config/resolve#resolvealias) config of Rspack.
 
+For TypeScript projects, you only need to configure [compilerOptions.paths](https://typescriptlang.org/tsconfig#paths) in the `tsconfig.json` file. The Rsbuild will automatically recognize it, so there is no need to configure the `resolve.alias` option separately. For more details, please refer to [Path Aliases](/guide/advanced/alias).
+
 :::tip
-For TypeScript projects, you only need to configure [compilerOptions.paths](https://typescriptlang.org/tsconfig#paths) in the `tsconfig.json` file. The Rsbuild will automatically recognize it, so there is no need to configure the `source.alias` option separately. For more details, please refer to [Path Aliases](/guide/advanced/alias).
+In versions prior to Rsbuild 1.1.7, you can use the `source.alias` to set alias, but it will be removed in the next major version.
 :::
 
 ## Object Type
@@ -26,7 +30,7 @@ The `alias` can be an Object, and the relative path will be automatically conver
 
 ```js
 export default {
-  source: {
+  resolve: {
     alias: {
       '@common': './src/common',
     },
@@ -42,7 +46,7 @@ The `alias` can be a function, it will accept the previous alias object, and you
 
 ```js
 export default {
-  source: {
+  resolve: {
     alias: (alias) => {
       alias['@common'] = './src/common';
     },
@@ -54,7 +58,7 @@ If you need to remove the built-in `@swc/helpers` alias, you can delete it in th
 
 ```js
 export default {
-  source: {
+  resolve: {
     alias: (alias) => {
       delete alias['@swc/helpers'];
     },
@@ -66,7 +70,7 @@ You can also return a new object as the final result in the function, which will
 
 ```js
 export default {
-  source: {
+  resolve: {
     alias: (alias) => {
       return {
         '@common': './src/common',
@@ -86,7 +90,7 @@ For example, set different alias for `web` and `node` environments:
 export default {
   environments: {
     web: {
-      source: {
+      resolve: {
         alias: {
           '@common': './src/web/common',
         },
@@ -96,7 +100,7 @@ export default {
       },
     },
     node: {
-      source: {
+      resolve: {
         alias: {
           '@common': './src/node/common',
         },
@@ -111,13 +115,13 @@ export default {
 
 ## Exact Matching
 
-By default, `source.alias` will automatically match sub-paths, for example, with the following configuration:
+By default, `resolve.alias` will automatically match sub-paths, for example, with the following configuration:
 
 ```js
 import path from 'node:path';
 
 export default {
-  source: {
+  resolve: {
     alias: {
       '@common': './src/common',
     },
@@ -138,7 +142,7 @@ You can add the `$` symbol to enable exact matching, which will not automaticall
 import path from 'node:path';
 
 export default {
-  source: {
+  resolve: {
     alias: {
       '@common$': './src/common',
     },
@@ -163,7 +167,7 @@ For example, if multiple versions of the `react` are installed in the project, y
 import path from 'node:path';
 
 export default {
-  source: {
+  resolve: {
     alias: {
       react: path.resolve(__dirname, './node_modules/react'),
     },
@@ -177,7 +181,7 @@ For example, if a module or npm dependency in your project uses the React 18 API
 
 ## Handling Loader
 
-`source.alias` does not support creating aliases for loaders.
+`resolve.alias` does not support creating aliases for loaders.
 
 If you need to create aliases for loaders, you can use Rspack's [resolveLoader](https://rspack.dev/config/resolve-loader) configuration.
 
