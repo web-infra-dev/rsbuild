@@ -16,11 +16,11 @@ describe('mergeRsbuildConfig', () => {
   test('should set value when target value is not undefined', () => {
     expect(
       mergeRsbuildConfig(
-        { source: { alias: {} } },
+        { resolve: { alias: {} } },
         { output: { minify: false } },
       ),
     ).toEqual({
-      source: {
+      resolve: {
         alias: {},
       },
       output: {
@@ -32,13 +32,13 @@ describe('mergeRsbuildConfig', () => {
   test('should ignore undefined property', () => {
     const noop = () => ({});
     const config = mergeRsbuildConfig(
-      { source: { alias: {} } },
-      { source: { alias: undefined } },
+      { resolve: { alias: {} } },
+      { resolve: { alias: undefined } },
       { tools: { rspack: noop } },
       { tools: { rspack: undefined } },
     );
     expect(config).toEqual({
-      source: {
+      resolve: {
         alias: {},
       },
       tools: {
@@ -162,7 +162,7 @@ describe('mergeRsbuildConfig', () => {
 
   it('should not modify the original objects when the merged config modified', () => {
     const obj: RsbuildConfig = {
-      source: {
+      resolve: {
         alias: {},
       },
     };
@@ -172,14 +172,17 @@ describe('mergeRsbuildConfig', () => {
     const res = mergeRsbuildConfig(obj, other);
 
     if (!res.source?.entry) {
-      res.source!.entry = {
+      res.source ||= {};
+      res.source.entry = {
         index: './index',
       };
     }
 
     expect(res).toEqual({
-      source: {
+      resolve: {
         alias: {},
+      },
+      source: {
         entry: {
           index: './index',
         },
@@ -187,7 +190,7 @@ describe('mergeRsbuildConfig', () => {
     });
 
     expect(obj).toEqual({
-      source: {
+      resolve: {
         alias: {},
       },
     });
