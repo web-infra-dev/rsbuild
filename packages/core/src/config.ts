@@ -90,14 +90,8 @@ const getDefaultServerConfig = (): NormalizedServerConfig => ({
 let swcHelpersPath: string;
 
 const getDefaultSourceConfig = (): NormalizedSourceConfig => {
-  if (!swcHelpersPath) {
-    swcHelpersPath = dirname(require.resolve('@swc/helpers/package.json'));
-  }
-
   return {
-    alias: {
-      '@swc/helpers': swcHelpersPath,
-    },
+    alias: {},
     define: {},
     preEntry: [],
     decorators: {
@@ -192,10 +186,18 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
   emitAssets: true,
 });
 
-const getDefaultResolveConfig = (): NormalizedResolveConfig => ({
-  alias: {},
-  aliasStrategy: 'prefer-tsconfig',
-});
+const getDefaultResolveConfig = (): NormalizedResolveConfig => {
+  if (!swcHelpersPath) {
+    swcHelpersPath = dirname(require.resolve('@swc/helpers/package.json'));
+  }
+
+  return {
+    alias: {
+      '@swc/helpers': swcHelpersPath,
+    },
+    aliasStrategy: 'prefer-tsconfig',
+  };
+};
 
 const createDefaultConfig = (): RsbuildConfig => ({
   dev: getDefaultDevConfig(),

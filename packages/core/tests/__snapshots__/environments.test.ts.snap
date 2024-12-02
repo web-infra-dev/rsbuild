@@ -88,7 +88,10 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "removeMomentLocale": false,
   },
   "resolve": {
-    "alias": {},
+    "alias": {
+      "@common": "./src/common",
+      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+    },
     "aliasStrategy": "prefer-tsconfig",
   },
   "root": "<ROOT>",
@@ -109,10 +112,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "strictPort": false,
   },
   "source": {
-    "alias": {
-      "@common": "./src/common",
-      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-    },
+    "alias": {},
     "decorators": {
       "version": "2022-03",
     },
@@ -221,7 +221,10 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "removeMomentLocale": false,
   },
   "resolve": {
-    "alias": {},
+    "alias": {
+      "@common": "./src/common",
+      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+    },
     "aliasStrategy": "prefer-tsconfig",
   },
   "root": "<ROOT>",
@@ -242,10 +245,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "strictPort": false,
   },
   "source": {
-    "alias": {
-      "@common": "./src/common",
-      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-    },
+    "alias": {},
     "decorators": {
       "version": "2022-03",
     },
@@ -354,7 +354,10 @@ exports[`environment config > should print environment config when inspect confi
       "removeMomentLocale": false,
     },
     "resolve": {
-      "alias": {},
+      "alias": {
+        "@common": "./src/common",
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+      },
       "aliasStrategy": "prefer-tsconfig",
     },
     "root": "<ROOT>",
@@ -375,10 +378,7 @@ exports[`environment config > should print environment config when inspect confi
       "strictPort": false,
     },
     "source": {
-      "alias": {
-        "@common": "./src/common",
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-      },
+      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -483,7 +483,10 @@ exports[`environment config > should print environment config when inspect confi
       "removeMomentLocale": false,
     },
     "resolve": {
-      "alias": {},
+      "alias": {
+        "@common": "./src/common",
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+      },
       "aliasStrategy": "prefer-tsconfig",
     },
     "root": "<ROOT>",
@@ -504,10 +507,7 @@ exports[`environment config > should print environment config when inspect confi
       "strictPort": false,
     },
     "source": {
-      "alias": {
-        "@common": "./src/common",
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-      },
+      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -632,7 +632,10 @@ exports[`environment config > should support modify environment config by api.mo
       "removeMomentLocale": false,
     },
     "resolve": {
-      "alias": {},
+      "alias": {
+        "@common": "./src/common",
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+      },
       "aliasStrategy": "prefer-tsconfig",
     },
     "root": "<ROOT>",
@@ -653,10 +656,7 @@ exports[`environment config > should support modify environment config by api.mo
       "strictPort": false,
     },
     "source": {
-      "alias": {
-        "@common": "./src/common",
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-      },
+      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -761,7 +761,11 @@ exports[`environment config > should support modify environment config by api.mo
       "removeMomentLocale": false,
     },
     "resolve": {
-      "alias": {},
+      "alias": {
+        "@common": "./src/common",
+        "@common1": "./src/common1",
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+      },
       "aliasStrategy": "prefer-tsconfig",
     },
     "root": "<ROOT>",
@@ -782,11 +786,7 @@ exports[`environment config > should support modify environment config by api.mo
       "strictPort": false,
     },
     "source": {
-      "alias": {
-        "@common": "./src/common",
-        "@common1": "./src/common1",
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-      },
+      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -891,7 +891,11 @@ exports[`environment config > should support modify environment config by api.mo
       "removeMomentLocale": false,
     },
     "resolve": {
-      "alias": {},
+      "alias": {
+        "@common": "./src/common",
+        "@common1": "./src/common1",
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+      },
       "aliasStrategy": "prefer-tsconfig",
     },
     "root": "<ROOT>",
@@ -912,11 +916,7 @@ exports[`environment config > should support modify environment config by api.mo
       "strictPort": false,
     },
     "source": {
-      "alias": {
-        "@common": "./src/common",
-        "@common1": "./src/common1",
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-      },
+      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -1024,7 +1024,10 @@ exports[`environment config > should support modify single environment config by
       "removeMomentLocale": false,
     },
     "resolve": {
-      "alias": {},
+      "alias": {
+        "@common": "./src/common",
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+      },
       "aliasStrategy": "prefer-tsconfig",
     },
     "root": "<ROOT>",
@@ -1045,10 +1048,7 @@ exports[`environment config > should support modify single environment config by
       "strictPort": false,
     },
     "source": {
-      "alias": {
-        "@common": "./src/common",
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-      },
+      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -1153,7 +1153,11 @@ exports[`environment config > should support modify single environment config by
       "removeMomentLocale": false,
     },
     "resolve": {
-      "alias": {},
+      "alias": {
+        "@common": "./src/common",
+        "@common1": "./src/common1",
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+      },
       "aliasStrategy": "prefer-tsconfig",
     },
     "root": "<ROOT>",
@@ -1174,11 +1178,7 @@ exports[`environment config > should support modify single environment config by
       "strictPort": false,
     },
     "source": {
-      "alias": {
-        "@common": "./src/common",
-        "@common1": "./src/common1",
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-      },
+      "alias": {},
       "decorators": {
         "version": "2022-03",
       },

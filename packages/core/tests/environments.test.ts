@@ -38,7 +38,7 @@ describe('environment config', () => {
     process.env.NODE_ENV = 'development';
     const rsbuild = await createRsbuild({
       rsbuildConfig: {
-        source: {
+        resolve: {
           alias: {
             '@common': './src/common',
           },
@@ -70,14 +70,14 @@ describe('environment config', () => {
             return mergeRsbuildConfig(config, {
               environments: {
                 web: {
-                  source: {
+                  resolve: {
                     alias: {
                       '@common1': './src/common1',
                     },
                   },
                 },
                 web1: {
-                  source: {
+                  resolve: {
                     alias: {
                       '@common1': './src/common1',
                     },
@@ -101,7 +101,7 @@ describe('environment config', () => {
     process.env.NODE_ENV = 'development';
     const rsbuild = await createRsbuild({
       rsbuildConfig: {
-        source: {
+        resolve: {
           alias: {
             '@common': './src/common',
           },
@@ -136,7 +136,7 @@ describe('environment config', () => {
               }
 
               return mergeEnvironmentConfig(config, {
-                source: {
+                resolve: {
                   alias: {
                     '@common1': './src/common1',
                   },
@@ -163,7 +163,7 @@ describe('environment config', () => {
         api.modifyEnvironmentConfig(
           (config, { name, mergeEnvironmentConfig }) => {
             return mergeEnvironmentConfig(config, {
-              source: {
+              resolve: {
                 alias: {
                   [pluginId]: name,
                 },
@@ -196,7 +196,7 @@ describe('environment config', () => {
       Object.fromEntries(
         Object.entries(environmentConfigs).map(([name, config]) => [
           name,
-          config.source.alias,
+          config.resolve.alias,
         ]),
       ),
     ).toMatchSnapshot();
@@ -242,7 +242,7 @@ describe('environment config', () => {
     process.env.NODE_ENV = 'development';
     const rsbuild = await createRsbuild({
       rsbuildConfig: {
-        source: {
+        resolve: {
           alias: {
             '@common': './src/common',
           },
@@ -297,7 +297,7 @@ describe('environment config', () => {
     process.env.NODE_ENV = 'development';
     const rsbuild = await createRsbuild({
       rsbuildConfig: {
-        source: {
+        resolve: {
           alias: {
             '@common': './src/common',
           },

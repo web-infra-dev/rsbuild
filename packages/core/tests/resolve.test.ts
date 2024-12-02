@@ -38,11 +38,11 @@ describe('plugin-resolve', () => {
     expect(bundlerConfigs[0].resolve?.tsConfig).toBeUndefined();
   });
 
-  it('should allow to use source.alias to config alias', async () => {
+  it('should allow to use resolve.alias to configure alias', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
       rsbuildConfig: {
-        source: {
+        resolve: {
           alias: {
             foo: 'bar',
           },
@@ -54,11 +54,11 @@ describe('plugin-resolve', () => {
     expect(bundlerConfigs[0].resolve?.alias?.foo).toEqual('bar');
   });
 
-  it('should support source.alias to be a function', async () => {
+  it('should allow resolve.alias to be a function', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
       rsbuildConfig: {
-        source: {
+        resolve: {
           alias() {
             return {
               foo: 'bar',
