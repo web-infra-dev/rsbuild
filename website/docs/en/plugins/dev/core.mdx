@@ -301,9 +301,9 @@ The `handler` function provides the following params:
 - `resource`: The absolute path of the module, including the query.
 - `resourcePath`: The absolute path of the module, without the query.
 - `resourceQuery`: The query of the module.
-- `environment`: The [environment context](/api/javascript-api/environment-context) for current build.
-- `addDependency`: Add an additional file as the dependency. The file will be watched and changes to the file will trigger rebuild.
-- `emitFile`: Emits a file to the build output.
+- `environment`: The [environment context](/api/javascript-api/environment-api#environment-context) for current build.
+- `addDependency`: Add an additional file as the dependency. The file will be watched and changes to the file will trigger rebuild. The same as Rspack loader's [this.addDependency](https://rspack.dev/api/loader-api/context#thisadddependency).
+- `emitFile`: Emits a file to the build output. The same as Rspack loader's [this.emitFile](https://rspack.dev/api/loader-api/context#thisemitfile).
 
 For example:
 
@@ -500,7 +500,7 @@ The `handler` function provides the following parameters:
 - `assets`: An object where key is the asset's pathname, and the value is data of the asset represented by the [Source](https://github.com/webpack/webpack-sources#source).
 - `compiler`: The Compiler object of Rspack.
 - `compilation`: The Compilation object of Rspack.
-- `environment`: The [environment context](/api/javascript-api/environment-context) of the current build.
+- `environment`: The [environment context](/api/javascript-api/environment-api#environment-context) of the current build.
 - `sources`: The [Rspack Sources](https://github.com/webpack/webpack-sources#source) object, which contains multiple classes which represent a Source.
 
 ### Process assets stages
