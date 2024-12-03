@@ -8,26 +8,7 @@ type SetupMiddlewaresServer = {
     type: string,
     data?: string | boolean | Record<string, any>,
   ) => void;
-  environments: {
-    [name: string]: {
-      /**
-       * Get stats info about current environment.
-       */
-      getStats: () => Promise<Stats>;
-      /**
-       * Load and execute stats bundle in server.
-       *
-       * @param entryName - relate to Rsbuild's `source.entry`
-       * @returns the return value of entry module.
-       */
-      loadBundle: <T = unknown>(entryName: string) => Promise<T>;
-
-      /**
-       * Get the compiled HTML template.
-       */
-      getTransformedHtml: (entryName: string) => Promise<string>;
-    };
-  };
+  environments: EnvironmentAPI;
 };
 
 type SetupMiddlewares = Array<
@@ -84,7 +65,7 @@ export default {
 };
 ```
 
-- environments. Allow operations in the specified environment.
+- environments. Allow operations in the specified environment through the [environment API](/api/javascript-api/environment-context#environment-api).
 
 ```ts
 export default {

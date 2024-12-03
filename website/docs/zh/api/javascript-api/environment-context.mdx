@@ -1,4 +1,8 @@
-# Environment Context
+# Environment API
+
+本章节描述了 Rsbuild environment API 相关的一些类型定义。
+
+## Environment Context
 
 Environment context 是一个只读对象，提供一些和当前环境有关的上下文信息。
 
@@ -16,19 +20,19 @@ type EnvironmentContext = {
 };
 ```
 
-## name
+### name
 
 当前环境的唯一名称，用于区分和定位环境，对应于 [environments](/config/environments) 配置中的 key。
 
 - **类型：** `string`
 
-## browserslist
+### browserslist
 
 项目兼容的目标浏览器范围。详情可参考 [设置浏览器范围](/guide/advanced/browserslist).
 
 - **类型：** `string[]`
 
-## config
+### config
 
 归一化后当前环境的 Rsbuild 配置
 
@@ -49,13 +53,13 @@ type NormalizedEnvironmentConfig = DeepReadonly<{
 }>;
 ```
 
-## distPath
+### distPath
 
 构建产物输出目录的绝对路径，对应 RsbuildConfig 中的 [output.distPath.root](/config/output/dist-path) 配置项。
 
 - **类型：** `string`
 
-## entry
+### entry
 
 构建入口对象，对应 [source.entry](/config/source/entry) 选项。
 
@@ -65,7 +69,7 @@ type NormalizedEnvironmentConfig = DeepReadonly<{
 type RsbuildEntry = Record<string, string | string[] | EntryDescription>;
 ```
 
-## htmlPaths
+### htmlPaths
 
 HTML 产物的路径信息。该 API 会返回一个对象，对象的 key 为 entry 名称，value 为 HTML 文件在产物目录下的相对路径。
 
@@ -75,7 +79,7 @@ HTML 产物的路径信息。该 API 会返回一个对象，对象的 key 为 e
 type htmlPaths = Record<string, string>;
 ```
 
-## tsconfigPath
+### tsconfigPath
 
 tsconfig.json 文件的绝对路径，若项目中不存在 tsconfig.json 文件，则为 undefined。
 
@@ -84,3 +88,77 @@ tsconfig.json 文件的绝对路径，若项目中不存在 tsconfig.json 文件
 ```ts
 type TsconfigPath = string | undefined;
 ```
+
+## Environment API
+
+Environment API 提供了一系列和构建环境相关的 API。
+
+你可以在 [Rsbuild DevMiddleware](/config/dev/setup-middlewares) 或[自定义 Server](/api/javascript-api/instance#rsbuildcreatedevserver) 中使用 environment API 对特定环境下的构建产物进行操作。
+
+```ts
+type EnvironmentAPI = {
+  [name: string]: {
+    getStats: () => Promise<Stats>;
+    loadBundle: <T = unknown>(entryName: string) => Promise<T>;
+    getTransformedHtml: (entryName: string) => Promise<string>;
+  };
+};
+```
+
+### getStats
+
+获取当前环境的产物信息。
+
+- **类型：**
+
+```ts
+type GetStats = () => Promise<Stats>;
+```
+
+- **示例：**
+
+```ts
+const webStats = await environments.web.getStats();
+
+console.log(webStats.toJson({ all: false }));
+```
+
+### loadBundle
+
+在服务端加载并执行构建产物。该方法会返回入口模块导出的内容。
+
+- **类型：**
+
+```ts
+/**
+ * @param entryName - 入口名称，和 Rsbuild `source.entry` 的某一个 key 值对应
+ * @returns 入口模块的返回值
+ */
+type LoadBundle = <T = unknown>(entryName: string) => Promise<T>;
+```
+
+- **示例：**
+
+```ts
+// 加载 main 入口的构建产物
+const result = await environments.node.loadBundle('main');
+```
+
+### getTransformedHtml
+
+获取经过编译和转换后的 HTML 模版内容。
+
+- **类型：**
+
+```ts
+type GetTransformedHtml = (entryName: string) => Promise<string>;
+```
+
+- **示例：**
+
+```ts
+// 获取 main 入口的 HTML 内容
+const html = await environments.web.getTransformedHtml('main');
+```
+
+该方法会返回完整的 HTML 字符串，包含了所有通过 HTML 插件注入的资源和内容。
