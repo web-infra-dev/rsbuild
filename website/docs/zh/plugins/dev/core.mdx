@@ -299,9 +299,9 @@ handler 函数提供以下参数：
 - `resource`：模块的绝对路径，包含 query。
 - `resourcePath`：模块的绝对路径，不包含 query。
 - `resourceQuery`：模块路径上的 query。
-- `environment`: 当前构建的 [environment 上下文](/api/javascript-api/environment-context).
-- `addDependency`：添加一个额外的文件作为依赖。该文件将被监听，并在发生变更时触发重新构建。
-- `emitFile`：将一个文件输出到构建结果中。
+- `environment`: 当前构建的 [environment 上下文](/api/javascript-api/environment-api#environment-context).
+- `addDependency`：添加一个额外的文件作为依赖。该文件将被监听，并在发生变更时触发重新构建。与 Rspack loader 的 [this.addDependency](https://rspack.dev/api/loader-api/context#thisadddependency) 相同。
+- `emitFile`：将一个文件输出到构建结果中。与 Rspack loader 的 [this.emitFile](https://rspack.dev/api/loader-api/context#thisemitfile) 相同。
 
 比如：
 
@@ -368,7 +368,7 @@ handler 函数提供以下参数：
 - `resolveData`：当前模块请求信息，详情可参考 [Rspack - resolve 钩子](https://rspack.dev/zh/api/plugin-api/normal-module-factory-hooks#resolve)。
 - `compiler`：Rspack 的 Compiler 对象。
 - `compilation`：Rspack 的 Compilation 对象。
-- `environment`: 当前构建的 [environment 上下文](/api/javascript-api/environment-context)。
+- `environment`: 当前构建的 [environment 上下文](/api/javascript-api/environment-api#environment-context)。
 
 ## api.processAssets
 
@@ -498,7 +498,7 @@ handler 函数提供以下参数：
 - `assets`：一个对象，其中 key 是 asset 的路径名，值是由 [Source](https://github.com/webpack/webpack-sources#source) 表示的 asset 数据。
 - `compiler`：Rspack 的 Compiler 对象。
 - `compilation`：Rspack 的 Compilation 对象。
-- `environment`: 当前构建的 [environment 上下文](/api/javascript-api/environment-context).
+- `environment`: 当前构建的 [environment 上下文](/api/javascript-api/environment-api#environment-context).
 - `sources`：[Rspack Sources](https://github.com/webpack/webpack-sources#source) 对象，它包含了多种表示 Sources 的 classes。
 
 ### Process assets stages

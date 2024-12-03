@@ -210,7 +210,7 @@ const myPlugin = () => ({
 
 ## Environment context
 
-[Environment context](/api/javascript-api/environment-context) is a read-only object that provides some context infos about the current environment. Rsbuild supports obtaining environment context information in plugin hooks.
+[Environment context](/api/javascript-api/environment-api#environment-context) is a read-only object that provides some context infos about the current environment. Rsbuild supports obtaining environment context information in plugin hooks.
 
 For some plugin hooks related to the build environment (such as [modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig) and [modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain)), Rsbuild supports obtaining the current environment context through the `environment` parameter.
 
@@ -242,7 +242,7 @@ const myPlugin = () => ({
 
 ## Environment API
 
-Rsbuild server provides a series of APIs related to the build environment. Users can operate the build artifacts in a specific environment on the server side through the Rsbuild [environment API](/api/javascript-api/environment-context#environment-api).
+Rsbuild server provides a series of APIs related to the build environment. Users can operate the build artifacts in a specific environment on the server side through the Rsbuild [environment API](/api/javascript-api/environment-api#environment-api).
 
 You can use the environment API in [Rsbuild DevMiddleware](/config/dev/setup-middlewares) or [Custom Server](/api/javascript-api/instance#rsbuildcreatedevserver).
 

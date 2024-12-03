@@ -210,7 +210,7 @@ const myPlugin = () => ({
 
 ## Environment 上下文
 
-[Environment context](/api/javascript-api/environment-context) 是一个只读对象，提供一些和当前环境有关的上下文信息。Rsbuild 支持在 plugin hook 中获取 environment context 信息。
+[Environment context](/api/javascript-api/environment-api#environment-context) 是一个只读对象，提供一些和当前环境有关的上下文信息。Rsbuild 支持在 plugin hook 中获取 environment context 信息。
 
 对于一些与构建环境相关的 plugin hooks（如 [modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig)、[modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain) 等）, Rsbuild 支持通过 `environment` 参数获取当前 environment 上下文。
 
@@ -242,7 +242,7 @@ const myPlugin = () => ({
 
 ## Environment API
 
-Rsbuild Server 提供了一系列和构建环境相关的 API，用户可通过 Rsbuild [environment API](/api/javascript-api/environment-context#environment-api) 在服务器端操作特定环境下的构建产物。
+Rsbuild Server 提供了一系列和构建环境相关的 API，用户可通过 Rsbuild [environment API](/api/javascript-api/environment-api#environment-api) 在服务器端操作特定环境下的构建产物。
 
 你可以在 [Rsbuild DevMiddleware](/config/dev/setup-middlewares) 或[自定义 Server](/api/javascript-api/instance#rsbuildcreatedevserver) 中使用 environment API。
 
