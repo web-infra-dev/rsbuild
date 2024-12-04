@@ -72,6 +72,25 @@ When `target` is set to `'node'`, Rsbuild will:
 - Set the default value of Browserslist to `['node >= 16']`.
 - Set the default value of [output.emitCss](/config/output/emit-css) to `false`. This means that CSS code will not be extracted to separate files, but the id information of CSS Modules will be included in the bundle.
 
+### Node Addons
+
+When `target` is set to `'node'`, Rsbuild allows you to import Node.js [Addons](https://nodejs.org/api/addons.html) in JavaScript files.
+
+For example:
+
+```js title="src/index.js"
+import addon from './addon.node';
+
+addon.doSomething();
+```
+
+The referenced addons file will be output to the `dist` directory:
+
+```
+dist/index.js
+dist/addon.node
+```
+
 ## Web Worker Target
 
 Refers to the build target running in the [Web Worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) environment.
