@@ -54,6 +54,9 @@ exports[`plugin-sass > should add sass-loader 1`] = `
           "implementation": "<ROOT>/node_modules/<PNPM_INNER>/sass-embedded/dist/lib/index.js",
           "sassOptions": {
             "quietDeps": true,
+            "silenceDeprecations": [
+              "import",
+            ],
           },
           "sourceMap": true,
         },
@@ -117,6 +120,9 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
           "implementation": "<ROOT>/node_modules/<PNPM_INNER>/sass-embedded/dist/lib/index.js",
           "sassOptions": {
             "quietDeps": true,
+            "silenceDeprecations": [
+              "import",
+            ],
           },
           "sourceMap": true,
         },
@@ -183,6 +189,9 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
           "implementation": "<ROOT>/node_modules/<PNPM_INNER>/sass-embedded/dist/lib/index.js",
           "sassOptions": {
             "quietDeps": true,
+            "silenceDeprecations": [
+              "import",
+            ],
           },
           "sourceMap": true,
         },
@@ -247,6 +256,7 @@ exports[`plugin-sass > should allow to use legacy API and mute deprecation warni
           "sassOptions": {
             "quietDeps": true,
             "silenceDeprecations": [
+              "import",
               "legacy-js-api",
             ],
           },
