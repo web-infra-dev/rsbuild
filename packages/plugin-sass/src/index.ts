@@ -63,13 +63,16 @@ const getSassLoaderOptions = (
     mergeFn,
   });
 
-  if (
-    mergedOptions.api === 'legacy' &&
-    !mergedOptions.sassOptions?.silenceDeprecations
-  ) {
-    // mute the noisy legacy API deprecation warnings
-    mergedOptions.sassOptions ||= {};
-    mergedOptions.sassOptions.silenceDeprecations = ['legacy-js-api'];
+  mergedOptions.sassOptions ||= {};
+
+  if (!mergedOptions.sassOptions.silenceDeprecations) {
+    // `import` is widely used and will not be removed within two years
+    mergedOptions.sassOptions.silenceDeprecations = ['import'];
+
+    if (mergedOptions.api === 'legacy') {
+      // mute the noisy legacy API deprecation warnings
+      mergedOptions.sassOptions.silenceDeprecations.push('legacy-js-api');
+    }
   }
 
   return {
