@@ -99,14 +99,14 @@ export const createCacheableFunction = <T>(
     utils: ServerUtils,
   ): Promise<T> => {
     const cachedEntries = cache.get(stats);
-    if (cacheEntry?.[entryName]) {
-      return cacheEntry[entryName];
+    if (cachedEntries?.[entryName]) {
+      return cachedEntries[entryName];
     }
 
     const res = await getter(stats, entryName, utils);
 
-    resultCache.set(stats, {
-      ...(cacheEntry || {}),
+    cache.set(stats, {
+      ...(cachedEntries || {}),
       [entryName]: res,
     });
     return res;

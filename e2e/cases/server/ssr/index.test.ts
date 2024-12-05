@@ -9,16 +9,16 @@ rspackOnlyTest('support SSR', async ({ page }) => {
     rsbuildConfig: {},
   });
 
-  const url1 = new URL(`http://localhost:${rsbuild.port}`);
+  const url = new URL(`http://localhost:${rsbuild.port}`);
 
-  const res = await page.goto(url1.href);
+  const res = await page.goto(url.href);
 
   expect(await res?.text()).toMatch(/Rsbuild with React/);
 
-  await page.goto(url1.href);
+  await page.goto(url.href);
 
   // bundle result should cacheable and only load once.
-  expect(logs.filter((log) => log.includes('load ssr')).length).toBe(1);
+  expect(logs.filter((log) => log.includes('load SSR')).length).toBe(1);
 
   await rsbuild.close();
 
