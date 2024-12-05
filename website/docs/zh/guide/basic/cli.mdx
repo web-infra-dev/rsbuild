@@ -1,6 +1,6 @@
 # 命令行工具
 
-Rsbuild 内置了一个轻量的命令行工具，包含 dev、build 等命令。
+Rsbuild 内置了一个轻量的命令行工具，包含 [rsbuild dev](#rsbuild-dev)、[rsbuild build](#rsbuild-build) 等命令。
 
 ## rsbuild -h
 
@@ -16,15 +16,15 @@ npx rsbuild -h
 Usage: rsbuild <command> [options]
 
 Options:
-  -V, --version      output the version number
-  -h, --help         display help for command
+  -V, --version      显示版本号
+  -h, --help         显示命令帮助
 
 Commands:
-  dev [options]      starting the dev server
-  build [options]    build the app for production
-  preview [options]  preview the production build locally
-  inspect [options]  inspect the Rspack and Rsbuild configs
-  help [command]     display help for command
+  dev [options]      启动开发服务器
+  build [options]    构建生产环境产物
+  preview [options]  本地预览生产环境产物
+  inspect [options]  检查 Rspack 和 Rsbuild 配置
+  help [command]     显示命令帮助
 ```
 
 ## rsbuild dev
@@ -124,7 +124,7 @@ Options:
   -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
   -r --root <root>      指定项目根目录，可以是绝对路径或者相对于 cwd 的路径
   -m --mode <mode>      指定构建模式，可以是 `development`，`production` 或 `none`
-  --output <output>     指定在 dist 目录下输出的路径 (default: "/")
+  --output <output>     指定在 dist 目录下输出的路径 (default: ".rsbuild")
   --verbose             在结果中展示函数的完整内容
   --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
   --env-dir <dir>       指定目录来加载 `.env` 文件
