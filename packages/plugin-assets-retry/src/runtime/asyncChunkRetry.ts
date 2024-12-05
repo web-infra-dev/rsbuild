@@ -99,37 +99,15 @@ function getUrlRetryQuery(
   return '';
 }
 
-function removeDomainFromUrl(url: string): string {
-  const protocolStartIndex = url.indexOf('//');
-
-  // case /app/main/static/js/index.js
-  if (protocolStartIndex === -1 && url.startsWith('/')) {
-    return url;
-  }
-
-  // case "//cdn.com/app/main/static/js/index.js"
-  // case "http://cdn.com/app/main/static/js/index.js"
-  const protocolEndIndex = protocolStartIndex + 2;
-  const pathStartIndex = url.indexOf('/', protocolEndIndex);
-
-  return url.slice(pathStartIndex);
-}
-
-// "http://cdn.com/app/main/static/js/index.js?query=1#hash" -> "/app/main/static/js/index.js"
-function getAbsolutePathFromUrl(url: string): string {
-  return cleanUrl(removeDomainFromUrl(url));
-}
-
 function getNextRetryUrl(
-  existRetryTimes: number,
+  currRetryUrl: string,
+  domain: string,
   nextDomain: string,
-  originalSrcUrl: string,
+  existRetryTimes: number,
 ) {
-  const absolutePath = getAbsolutePathFromUrl(originalSrcUrl);
   return (
-    nextDomain +
-    absolutePath +
-    getUrlRetryQuery(existRetryTimes, getQueryFromUrl(originalSrcUrl))
+    cleanUrl(currRetryUrl.replace(domain, nextDomain)) +
+    getUrlRetryQuery(existRetryTimes + 1, getQueryFromUrl(currRetryUrl))
   );
 }
 
@@ -145,15 +123,22 @@ function getCurrentRetry(
 function initRetry(chunkId: string): Retry {
   const originalScriptFilename = originalGetChunkScriptFilename(chunkId);
 
-  const originalSrcUrl =
-    __RUNTIME_GLOBALS_PUBLIC_PATH__ + originalScriptFilename;
+  const originalPublicPath = __RUNTIME_GLOBALS_PUBLIC_PATH__;
+  const originalSrcUrl = originalPublicPath.startsWith('/')
+    ? window.origin + originalPublicPath + originalScriptFilename
+    : originalPublicPath + originalScriptFilename;
 
   const existRetryTimes = 1;
   const nextDomain = config.domain?.[0] ?? window.origin;
 
   return {
     nextDomain,
-    nextRetryUrl: getNextRetryUrl(existRetryTimes, nextDomain, originalSrcUrl),
+    nextRetryUrl: getNextRetryUrl(
+      originalSrcUrl,
+      nextDomain,
+      nextDomain,
+      existRetryTimes,
+    ),
 
     originalScriptFilename,
     originalSrcUrl,
@@ -176,9 +161,10 @@ function nextRetry(chunkId: string, existRetryTimes: number): Retry {
     nextRetry = {
       nextDomain,
       nextRetryUrl: getNextRetryUrl(
-        nextExistRetryTimes,
+        currRetry.nextRetryUrl,
+        currRetry.nextDomain,
         nextDomain,
-        originalSrcUrl,
+        existRetryTimes,
       ),
 
       originalScriptFilename,

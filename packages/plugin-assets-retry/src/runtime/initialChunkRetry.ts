@@ -246,7 +246,12 @@ function retry(config: RuntimeRetryOptions, e: Event) {
   // if the initial request is "/static/js/async/src_Hello_tsx.js?q=1", retry url would be "/static/js/async/src_Hello_tsx.js?q=1&retry=1"
   const originalQuery =
     target.dataset.rsbuildOriginalQuery ?? getQueryFromUrl(url);
-  function getUrlRetryQuery(existRetryTimes: number): string {
+
+  // this function is same with async chunk retry
+  function getUrlRetryQuery(
+    existRetryTimes: number,
+    originalQuery: string,
+  ): string {
     if (config.addQuery === true) {
       return originalQuery !== ''
         ? `${originalQuery}&retry=${existRetryTimes}`
@@ -258,15 +263,26 @@ function retry(config: RuntimeRetryOptions, e: Event) {
     return '';
   }
 
+  // this function is same with async chunk retry
+  function getNextRetryUrl(
+    currRetryUrl: string,
+    domain: string,
+    nextDomain: string,
+    existRetryTimes: number,
+  ) {
+    return (
+      cleanUrl(currRetryUrl.replace(domain, nextDomain)) +
+      getUrlRetryQuery(existRetryTimes + 1, getQueryFromUrl(currRetryUrl))
+    );
+  }
+
   const isAsync =
     Boolean(target.dataset.rsbuildAsync) ||
     (target as HTMLScriptElement).async ||
     (target as HTMLScriptElement).defer;
 
   const attributes: ScriptElementAttributes = {
-    url:
-      cleanUrl(url.replace(domain, nextDomain)) +
-      getUrlRetryQuery(existRetryTimes + 1),
+    url: getNextRetryUrl(url, domain, nextDomain, existRetryTimes),
     times: existRetryTimes + 1,
     crossOrigin: config.crossOrigin,
     isAsync,
