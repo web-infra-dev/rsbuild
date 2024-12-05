@@ -78,3 +78,31 @@ export const getTransformedHtml = async (
 
   return fileContent;
 };
+
+export const cacheableLoadBundle = () => {
+  const bundleResultCache = new WeakMap<
+    Rspack.Stats,
+    {
+      [entryName: string]: unknown;
+    }
+  >();
+
+  return async <T>(
+    stats: Rspack.Stats,
+    entryName: string,
+    utils: ServerUtils,
+  ): Promise<T> => {
+    const cacheEntry = bundleResultCache.get(stats);
+    if (cacheEntry?.[entryName]) {
+      return cacheEntry![entryName] as T;
+    }
+
+    const res = await loadBundle<T>(stats, entryName, utils);
+
+    bundleResultCache.set(stats, {
+      ...(cacheEntry || {}),
+      [entryName]: res,
+    });
+    return res;
+  };
+};

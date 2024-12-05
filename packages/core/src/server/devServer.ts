@@ -16,7 +16,7 @@ import type {
 } from '../types';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
 import { CompilerDevMiddleware } from './compilerDevMiddleware';
-import { getTransformedHtml, loadBundle } from './environment';
+import { cacheableLoadBundle, getTransformedHtml } from './environment';
 import {
   type RsbuildDevMiddlewareOptions,
   getMiddlewares,
@@ -266,6 +266,8 @@ export async function createDevServer<
     }
     return fs.readFileSync(fileName, 'utf-8');
   };
+
+  const loadBundle = cacheableLoadBundle();
 
   const environmentAPI = Object.fromEntries(
     Object.entries(options.context.environments).map(([name, environment]) => {
