@@ -98,7 +98,7 @@ export const createCacheableFunction = <T>(
     entryName: string,
     utils: ServerUtils,
   ): Promise<T> => {
-    const cacheEntry = resultCache.get(stats);
+    const cachedEntries = cache.get(stats);
     if (cacheEntry?.[entryName]) {
       return cacheEntry[entryName];
     }
