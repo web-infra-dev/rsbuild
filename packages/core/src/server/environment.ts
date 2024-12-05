@@ -86,7 +86,7 @@ export const createCacheableFunction = <T>(
     utils: ServerUtils,
   ) => Promise<T>,
 ) => {
-  const resultCache = new WeakMap<
+  const cache = new WeakMap<
     Rspack.Stats,
     {
       [entryName: string]: T;
