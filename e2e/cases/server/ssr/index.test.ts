@@ -17,6 +17,7 @@ rspackOnlyTest('support SSR', async ({ page }) => {
 
   await page.goto(url1.href);
 
+  // bundle result should cacheable and only load once.
   expect(logs.filter((log) => log.includes('load ssr')).length).toBe(1);
 
   await rsbuild.close();
