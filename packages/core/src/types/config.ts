@@ -1361,7 +1361,7 @@ export interface DevConfig {
          * @param shortcuts - The default CLI shortcuts.
          * @returns - The customized CLI shortcuts.
          */
-        custom?: (shortcuts?: CliShortcut[]) => CliShortcut[];
+        custom?: (shortcuts: CliShortcut[]) => CliShortcut[];
         /**
          * Whether to print the help hint when the server is started.
          * @default true
