@@ -79,27 +79,33 @@ export const getTransformedHtml = async (
   return fileContent;
 };
 
-export const cacheableLoadBundle = () => {
-  const bundleResultCache = new WeakMap<
+export const createCacheableFunction = <T>(
+  getter: (
+    stats: Rspack.Stats,
+    entryName: string,
+    utils: ServerUtils,
+  ) => Promise<T>,
+) => {
+  const resultCache = new WeakMap<
     Rspack.Stats,
     {
-      [entryName: string]: unknown;
+      [entryName: string]: T;
     }
   >();
 
-  return async <T>(
+  return async (
     stats: Rspack.Stats,
     entryName: string,
     utils: ServerUtils,
   ): Promise<T> => {
-    const cacheEntry = bundleResultCache.get(stats);
+    const cacheEntry = resultCache.get(stats);
     if (cacheEntry?.[entryName]) {
-      return cacheEntry![entryName] as T;
+      return cacheEntry[entryName];
     }
 
-    const res = await loadBundle<T>(stats, entryName, utils);
+    const res = await getter(stats, entryName, utils);
 
-    bundleResultCache.set(stats, {
+    resultCache.set(stats, {
       ...(cacheEntry || {}),
       [entryName]: res,
     });

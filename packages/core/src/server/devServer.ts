@@ -16,7 +16,11 @@ import type {
 } from '../types';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
 import { CompilerDevMiddleware } from './compilerDevMiddleware';
-import { cacheableLoadBundle, getTransformedHtml } from './environment';
+import {
+  createCacheableFunction,
+  getTransformedHtml,
+  loadBundle,
+} from './environment';
 import {
   type RsbuildDevMiddlewareOptions,
   getMiddlewares,
@@ -267,7 +271,10 @@ export async function createDevServer<
     return fs.readFileSync(fileName, 'utf-8');
   };
 
-  const loadBundle = cacheableLoadBundle();
+  const cacheableLoadBundle = createCacheableFunction(loadBundle);
+  const cacheableTransformedHtml = createCacheableFunction<string>(
+    (_stats, entryName, utils) => getTransformedHtml(entryName, utils),
+  );
 
   const environmentAPI = Object.fromEntries(
     Object.entries(options.context.environments).map(([name, environment]) => {
@@ -285,17 +292,25 @@ export async function createDevServer<
           },
           loadBundle: async <T>(entryName: string) => {
             await waitFirstCompileDone;
-            return loadBundle<T>(lastStats[environment.index], entryName, {
-              readFileSync,
-              environment,
-            });
+            return cacheableLoadBundle(
+              lastStats[environment.index],
+              entryName,
+              {
+                readFileSync,
+                environment,
+              },
+            ) as T;
           },
           getTransformedHtml: async (entryName: string) => {
             await waitFirstCompileDone;
-            return getTransformedHtml(entryName, {
-              readFileSync,
-              environment,
-            });
+            return cacheableTransformedHtml(
+              lastStats[environment.index],
+              entryName,
+              {
+                readFileSync,
+                environment,
+              },
+            );
           },
         },
       ];
