@@ -272,7 +272,7 @@ function retry(config: RuntimeRetryOptions, e: Event) {
   ) {
     return (
       cleanUrl(currRetryUrl.replace(domain, nextDomain)) +
-      getUrlRetryQuery(existRetryTimes + 1, getQueryFromUrl(currRetryUrl))
+      getUrlRetryQuery(existRetryTimes + 1, originalQuery)
     );
   }
 
