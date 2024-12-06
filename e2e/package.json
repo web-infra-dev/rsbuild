@@ -24,7 +24,7 @@
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-assets-retry": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
-    "@rsbuild/plugin-check-syntax": "^1.1.0",
+    "@rsbuild/plugin-check-syntax": "^1.2.0",
     "@rsbuild/plugin-less": "workspace:*",
     "@rsbuild/plugin-preact": "workspace:*",
     "@rsbuild/plugin-react": "workspace:*",
