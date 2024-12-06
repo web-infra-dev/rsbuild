@@ -461,8 +461,10 @@ export async function loadConfig({
         requireCache: false,
         interopDefault: true,
       });
-
-      configExport = loadConfig(configFilePath) as RsbuildConfigExport;
+      const exportModule = loadConfig(configFilePath);
+      configExport = exportModule.default
+        ? exportModule.default
+        : (exportModule as RsbuildConfigExport);
     }
   } catch (err) {
     logger.error(`Failed to load file with jiti: ${color.dim(configFilePath)}`);
