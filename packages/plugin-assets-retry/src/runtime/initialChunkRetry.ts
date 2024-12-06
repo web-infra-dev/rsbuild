@@ -247,7 +247,7 @@ function retry(config: RuntimeRetryOptions, e: Event) {
   const originalQuery =
     target.dataset.rsbuildOriginalQuery ?? getQueryFromUrl(url);
 
-  // this function is same with async chunk retry
+  // this function is the same as async chunk retry
   function getUrlRetryQuery(
     existRetryTimes: number,
     originalQuery: string,
@@ -263,12 +263,13 @@ function retry(config: RuntimeRetryOptions, e: Event) {
     return '';
   }
 
-  // this function is same with async chunk retry
+  // this function is the same as async chunk retry
   function getNextRetryUrl(
     currRetryUrl: string,
     domain: string,
     nextDomain: string,
     existRetryTimes: number,
+    originalQuery: string, // to get originalQuery
   ) {
     return (
       cleanUrl(currRetryUrl.replace(domain, nextDomain)) +
@@ -282,7 +283,7 @@ function retry(config: RuntimeRetryOptions, e: Event) {
     (target as HTMLScriptElement).defer;
 
   const attributes: ScriptElementAttributes = {
-    url: getNextRetryUrl(url, domain, nextDomain, existRetryTimes),
+    url: getNextRetryUrl(url, domain, nextDomain, existRetryTimes, originalQuery),
     times: existRetryTimes + 1,
     crossOrigin: config.crossOrigin,
     isAsync,

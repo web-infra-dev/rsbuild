@@ -10,6 +10,7 @@ type Retry = {
   nextRetryUrl: ChunkSrcUrl;
   originalScriptFilename: ChunkFilename;
   originalSrcUrl: ChunkSrcUrl;
+  originalQuery: string;
 };
 
 type RetryCollector = Record<ChunkId, Record<number, Retry>>;
@@ -104,11 +105,11 @@ function getNextRetryUrl(
   domain: string,
   nextDomain: string,
   existRetryTimes: number,
-  originalSrcUrl: string, // to get originalQuery
+  originalQuery: string, // to get originalQuery
 ) {
   return (
     cleanUrl(currRetryUrl.replace(domain, nextDomain)) +
-    getUrlRetryQuery(existRetryTimes + 1, getQueryFromUrl(originalSrcUrl))
+    getUrlRetryQuery(existRetryTimes + 1, originalQuery)
   );
 }
 
@@ -128,6 +129,7 @@ function initRetry(chunkId: string): Retry {
   const originalSrcUrl = originalPublicPath.startsWith('/')
     ? window.origin + originalPublicPath + originalScriptFilename
     : originalPublicPath + originalScriptFilename;
+  const originalQuery = getQueryFromUrl(originalSrcUrl);
 
   const existRetryTimes = 0;
   const nextDomain = config.domain?.[0] ?? window.origin;
@@ -139,11 +141,12 @@ function initRetry(chunkId: string): Retry {
       nextDomain,
       nextDomain,
       existRetryTimes,
-      originalSrcUrl,
+      originalQuery,
     ),
 
     originalScriptFilename,
     originalSrcUrl,
+    originalQuery,
   };
 }
 
@@ -157,7 +160,7 @@ function nextRetry(chunkId: string, existRetryTimes: number): Retry {
     nextRetry = initRetry(chunkId);
     retryCollector[chunkId] = [];
   } else {
-    const { originalScriptFilename, originalSrcUrl } = currRetry;
+    const { originalScriptFilename, originalSrcUrl, originalQuery } = currRetry;
     const nextDomain = findNextDomain(currRetry.nextDomain);
 
     nextRetry = {
@@ -167,11 +170,12 @@ function nextRetry(chunkId: string, existRetryTimes: number): Retry {
         currRetry.nextDomain,
         nextDomain,
         existRetryTimes,
-        originalSrcUrl,
+        originalQuery,
       ),
 
       originalScriptFilename,
       originalSrcUrl,
+      originalQuery,
     };
   }
 
