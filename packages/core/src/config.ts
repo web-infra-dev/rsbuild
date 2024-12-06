@@ -44,6 +44,7 @@ import type {
   NormalizedHtmlConfig,
   NormalizedOutputConfig,
   NormalizedPerformanceConfig,
+  NormalizedResolveConfig,
   NormalizedSecurityConfig,
   NormalizedServerConfig,
   NormalizedSourceConfig,
@@ -89,16 +90,9 @@ const getDefaultServerConfig = (): NormalizedServerConfig => ({
 let swcHelpersPath: string;
 
 const getDefaultSourceConfig = (): NormalizedSourceConfig => {
-  if (!swcHelpersPath) {
-    swcHelpersPath = dirname(require.resolve('@swc/helpers/package.json'));
-  }
-
   return {
-    alias: {
-      '@swc/helpers': swcHelpersPath,
-    },
+    alias: {},
     define: {},
-    aliasStrategy: 'prefer-tsconfig',
     preEntry: [],
     decorators: {
       version: '2022-03',
@@ -192,10 +186,24 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
   emitAssets: true,
 });
 
+const getDefaultResolveConfig = (): NormalizedResolveConfig => {
+  if (!swcHelpersPath) {
+    swcHelpersPath = dirname(require.resolve('@swc/helpers/package.json'));
+  }
+
+  return {
+    alias: {
+      '@swc/helpers': swcHelpersPath,
+    },
+    aliasStrategy: 'prefer-tsconfig',
+  };
+};
+
 const createDefaultConfig = (): RsbuildConfig => ({
   dev: getDefaultDevConfig(),
   server: getDefaultServerConfig(),
   html: getDefaultHtmlConfig(),
+  resolve: getDefaultResolveConfig(),
   source: getDefaultSourceConfig(),
   output: getDefaultOutputConfig(),
   tools: getDefaultToolsConfig(),
@@ -484,7 +492,9 @@ export async function loadConfig({
     const result = await configExport(configParams);
 
     if (result === undefined) {
-      throw new Error('The config function must return a config object.');
+      throw new Error(
+        '[rsbuild:loadConfig] The config function must return a config object.',
+      );
     }
 
     return {
@@ -495,7 +505,7 @@ export async function loadConfig({
 
   if (!isObject(configExport)) {
     throw new Error(
-      `The config must be an object or a function that returns an object, get ${color.yellow(
+      `[rsbuild:loadConfig] The config must be an object or a function that returns an object, get ${color.yellow(
         configExport,
       )}`,
     );

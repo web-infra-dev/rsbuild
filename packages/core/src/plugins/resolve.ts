@@ -1,12 +1,17 @@
+import { createRequire } from 'node:module';
+import { dirname, sep } from 'node:path';
 import { reduceConfigs } from 'reduce-configs';
 import type { ChainIdentifier } from '../configChain';
 import { castArray } from '../helpers';
 import { ensureAbsolutePath } from '../helpers/path';
+import { logger } from '../logger';
 import type {
   NormalizedEnvironmentConfig,
   RsbuildPlugin,
   RspackChain,
 } from '../types';
+
+const require = createRequire(import.meta.url);
 
 // compatible with legacy packages with type="module"
 // https://github.com/webpack/webpack/issues/11467
@@ -62,16 +67,62 @@ function applyAlias({
   config: NormalizedEnvironmentConfig;
   rootPath: string;
 }) {
-  const { alias } = config.source;
-
-  if (!alias) {
-    return;
-  }
-
-  const mergedAlias = reduceConfigs({
+  let mergedAlias = reduceConfigs({
     initial: {},
-    config: alias,
+    config: config.resolve.alias,
   });
+
+  // TODO: remove `source.alias` in the next major version
+  mergedAlias = reduceConfigs({
+    initial: mergedAlias,
+    config: config.source.alias,
+  });
+
+  if (config.resolve.dedupe) {
+    for (const pkgName of config.resolve.dedupe) {
+      if (mergedAlias[pkgName]) {
+        logger.debug(
+          `[rsbuild:resolve] The package "${pkgName}" is already in the alias config, dedupe option for "${pkgName}" will be ignored.`,
+        );
+        continue;
+      }
+
+      let pkgPath: string | undefined;
+      try {
+        pkgPath = dirname(
+          require.resolve(`${pkgName}/package.json`, {
+            paths: [rootPath],
+          }),
+        );
+      } catch (e) {}
+
+      // some package does not export `package.json`,
+      // so we try to resolve the package by its name
+      if (!pkgPath) {
+        try {
+          pkgPath = require.resolve(pkgName, {
+            paths: [rootPath],
+          });
+
+          // Ensure the package path is `node_modules/@scope/package-name`
+          const trailing = ['node_modules', ...pkgName.split('/')].join(sep);
+          while (
+            !pkgPath.endsWith(trailing) &&
+            pkgPath.includes('node_modules')
+          ) {
+            pkgPath = dirname(pkgPath);
+          }
+        } catch (e) {
+          logger.debug(
+            `[rsbuild:resolve] The package "${pkgName}" is not resolved in the project, dedupe option for "${pkgName}" will be ignored.`,
+          );
+          continue;
+        }
+      }
+
+      mergedAlias[pkgName] = pkgPath;
+    }
+  }
 
   /**
    * Format alias value:
@@ -116,11 +167,14 @@ export const pluginResolve = (): RsbuildPlugin => ({
         // In some cases (modern.js), there is an error if the fullySpecified rule is after the js rule
         applyFullySpecified({ chain, config, CHAIN_ID });
 
+        const aliasStrategy =
+          config.source.aliasStrategy ?? config.resolve.aliasStrategy;
+
         if (
           tsconfigPath &&
           // Only Rspack has the tsConfig option
           api.context.bundlerType === 'rspack' &&
-          config.source.aliasStrategy === 'prefer-tsconfig'
+          aliasStrategy === 'prefer-tsconfig'
         ) {
           chain.resolve.tsConfig({
             configFile: tsconfigPath,

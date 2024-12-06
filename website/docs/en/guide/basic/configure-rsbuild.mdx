@@ -25,8 +25,11 @@ export default {
   output: {
     // options for build outputs
   },
+  resolve: {
+    // options for module resolution
+  },
   source: {
-    // options for source code parsing and compilation
+    // options for input source code
   },
   server: {
     // options for the Rsbuild Server,
@@ -62,13 +65,13 @@ When you use the CLI of Rsbuild, Rsbuild will automatically read the configurati
 
 We recommend using the `.mjs` or `.ts` format for the configuration file and importing the `defineConfig` utility function from `@rsbuild/core`. It provides friendly TypeScript type hints and autocompletion, which can help you avoid errors in the configuration.
 
-For example, in `rsbuild.config.ts`, you can define the Rsbuild [source.alias](/config/source/alias) configuration:
+For example, in `rsbuild.config.ts`, you can define the Rsbuild [resolve.alias](/config/resolve/alias) configuration:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
-  source: {
+  resolve: {
     alias: {
       '@common': './src/common',
     },
@@ -82,7 +85,7 @@ If you are developing a non-TypeScript project, you can use the `.mjs` format fo
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
-  source: {
+  resolve: {
     alias: (opts) => {
       opts['@common'] = './src/common';
     },
@@ -122,7 +125,7 @@ In the configuration file, you can use Node.js environment variables such as `pr
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
-  source: {
+  resolve: {
     alias: {
       '@request':
         process.env.NODE_ENV === 'development'
@@ -141,7 +144,7 @@ Rsbuild supports the export of a function in the config file, where you can dyna
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig(({ env, command, envMode }) => ({
-  source: {
+  resolve: {
     alias: {
       '@foo': env === 'development' ? './src/foo.dev.ts' : './src/foo.prod.ts',
     },

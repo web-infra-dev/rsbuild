@@ -34,21 +34,17 @@ Module Federation（MF） 目前有多个主要版本，你可以根据你的需
 
 [Module Federation 2.0](https://module-federation.io/blog/announcement.html) 在 Module Federation 的基础上，开箱即用的提供了一些额外的功能，比如动态 TS 类型提示、Chrome devtool、Runtime plugin、预加载，这些功能让 Module Federation 更适用于支持大型 Web 应用的微前端架构，Module Federation v2.0 在 v1.5 的基础上实现。
 
-你需要安装额外的 `@module-federation/enhanced` 插件，才能使用 Module Federation v2.0。
+你需要安装额外的 [@module-federation/rsbuild-plugin](https://www.npmjs.com/package/@module-federation/rsbuild-plugin) 插件，才能使用 Module Federation v2.0。
 
 ```ts title="rsbuild.config.ts"
-import { ModuleFederationPlugin } from '@module-federation/enhanced/rspack';
+import { pluginModuleFederation } from '@module-federation/rsbuild-plugin';
 
 export default defineConfig({
-  tools: {
-    rspack: {
-      plugins: [
-        new ModuleFederationPlugin({
-          name: 'provider',
-          // other options
-        }),
-      ],
-    },
+  plugins: {
+    pluginModuleFederation({
+      name: 'remote',
+     // other options
+    }),
   },
 });
 ```

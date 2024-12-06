@@ -66,7 +66,7 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
         logger.error(
           'Cannot resolve `svelte` package under the project directory, did you forget to install it?',
         );
-        throw new Error('Cannot resolve `svelte` package', {
+        throw new Error('[rsbuild:svelte] Failed to resolve `svelte` package', {
           cause: err,
         });
       }

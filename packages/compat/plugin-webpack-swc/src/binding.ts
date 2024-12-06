@@ -38,7 +38,9 @@ export function transform(
   try {
     compiler = new Compiler(config);
   } catch (e) {
-    throw new Error(`[plugin-webpack-swc] Failed to initialize config: \n${e}`);
+    throw new Error(
+      `[rsbuild:plugin-webpack-swc] Failed to initialize config: \n${e}`,
+    );
   }
   return compiler.transform(filename, code, map);
 }

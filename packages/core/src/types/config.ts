@@ -174,13 +174,13 @@ export type Decorators = {
 
 export interface SourceConfig {
   /**
-   * Create aliases to import or require certain modules,
-   * same as the [resolve.alias](https://rspack.dev/config/resolve) config of Rspack.
+   * @deprecated Use `resolve.alias` instead.
+   * `source.alias` will be removed in v2.0.0.
    */
   alias?: ConfigChain<Alias>;
   /**
-   * Used to control the priority between the `paths` option in `tsconfig.json`
-   * and the `alias` option in the bundler.
+   * @deprecated Use `resolve.aliasStrategy` instead.
+   * `source.aliasStrategy` will be removed in v2.0.0.
    */
   aliasStrategy?: AliasStrategy;
   /**
@@ -248,8 +248,11 @@ type TransformImportFn = (
 
 export interface NormalizedSourceConfig extends SourceConfig {
   define: Define;
+  /**
+   * @deprecated Use `resolve.alias` instead.
+   * `source.alias` will be removed in v2.0.0.
+   */
   alias: ConfigChain<Alias>;
-  aliasStrategy: AliasStrategy;
   preEntry: string[];
   decorators: Required<Decorators>;
 }
@@ -1358,7 +1361,7 @@ export interface DevConfig {
          * @param shortcuts - The default CLI shortcuts.
          * @returns - The customized CLI shortcuts.
          */
-        custom?: (shortcuts?: CliShortcut[]) => CliShortcut[];
+        custom?: (shortcuts: CliShortcut[]) => CliShortcut[];
         /**
          * Whether to print the help hint when the server is started.
          * @default true
@@ -1395,6 +1398,28 @@ export type NormalizedDevConfig = DevConfig &
     client: NormalizedClientConfig;
   };
 
+export interface ResolveConfig {
+  /**
+   * Force Rsbuild to resolve the specified packages from project root,
+   * which is useful for deduplicating packages and reducing the bundle size.
+   */
+  dedupe?: string[];
+  /**
+   * Create aliases to import or require certain modules,
+   * same as the [resolve.alias](https://rspack.dev/config/resolve) config of Rspack.
+   */
+  alias?: ConfigChain<Alias>;
+  /**
+   * Control the priority between the `paths` option in `tsconfig.json`
+   * and the `resolve.alias` option of Rsbuild.
+   * @default 'prefer-tsconfig'
+   */
+  aliasStrategy?: AliasStrategy;
+}
+
+export type NormalizedResolveConfig = ResolveConfig &
+  Pick<Required<ResolveConfig>, 'alias' | 'aliasStrategy'>;
+
 export type ModuleFederationConfig = {
   options: ModuleFederationPluginOptions;
 };
@@ -1428,7 +1453,11 @@ export interface EnvironmentConfig {
    */
   tools?: ToolsConfig;
   /**
-   * Options for source code parsing and compilation.
+   * Options for module resolution.
+   */
+  resolve?: ResolveConfig;
+  /**
+   * Options for input source code.
    */
   source?: SourceConfig;
   /**
@@ -1500,6 +1529,7 @@ export type MergedEnvironmentConfig = {
   >;
   html: NormalizedHtmlConfig;
   tools: NormalizedToolsConfig;
+  resolve: NormalizedResolveConfig;
   source: NormalizedSourceConfig;
   output: Omit<NormalizedOutputConfig, 'distPath'> & {
     distPath: Omit<Required<DistPathConfig>, 'jsAsync' | 'cssAsync'> & {

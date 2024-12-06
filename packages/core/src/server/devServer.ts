@@ -150,7 +150,7 @@ export async function createDevServer<
     const compiler = customCompiler || (await createCompiler());
 
     if (!compiler) {
-      throw new Error('Failed to get compiler instance.');
+      throw new Error('[rsbuild:server] Failed to get compiler instance.');
     }
 
     const publicPaths = isMultiCompiler(compiler)
@@ -274,7 +274,9 @@ export async function createDevServer<
         {
           getStats: async () => {
             if (!runCompile) {
-              throw new Error("can't get stats info when runCompile is false");
+              throw new Error(
+                '[rsbuild:server] Can not get stats info when "runCompile" is false',
+              );
             }
             await waitFirstCompileDone;
             return lastStats[environment.index];

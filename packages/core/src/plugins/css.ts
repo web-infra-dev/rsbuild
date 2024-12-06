@@ -170,7 +170,7 @@ const getPostcssLoaderOptions = async ({
 
       if (typeof options !== 'object' || options === null) {
         throw new Error(
-          `\`postcssOptions\` function must return a PostCSSOptions object, got "${typeof options}".`,
+          `[rsbuild:css] \`postcssOptions\` function must return a PostCSSOptions object, got "${typeof options}".`,
         );
       }
 

@@ -251,7 +251,9 @@ export function getFilename(
     case 'assets':
       return filename.assets ?? `[name]${hash}[ext]`;
     default:
-      throw new Error(`unknown key ${type} in "output.filename"`);
+      throw new Error(
+        `[rsbuild:config] unknown key ${type} in "output.filename"`,
+      );
   }
 }
 

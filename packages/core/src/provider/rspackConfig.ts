@@ -171,7 +171,7 @@ export async function generateRspackConfig({
       ) {
         const name = color.bold(color.yellow(plugin.name));
         throw new Error(
-          `${name} appears to be an Rsbuild plugin. It cannot be used as an Rspack plugin.`,
+          `[rsbuild:plugin] "${name}" appears to be an Rsbuild plugin. It cannot be used as an Rspack plugin.`,
         );
       }
     }

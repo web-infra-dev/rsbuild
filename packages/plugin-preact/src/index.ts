@@ -87,6 +87,7 @@ export const pluginPreact = (
       };
 
       extraConfig.source ||= {};
+      extraConfig.resolve ||= {};
 
       if (usePrefresh) {
         // transpile `@prefresh/core` and `@prefresh/utils` to ensure browser compatibility
@@ -96,7 +97,7 @@ export const pluginPreact = (
       }
 
       if (options.reactAliasesEnabled) {
-        extraConfig.source.alias = {
+        extraConfig.resolve.alias = {
           react: 'preact/compat',
           'react-dom/test-utils': 'preact/test-utils',
           'react-dom': 'preact/compat',

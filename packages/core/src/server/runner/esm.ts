@@ -42,7 +42,7 @@ export class EsmRunner extends CommonJsRunner {
     return (currentDirectory, modulePath, context = {}) => {
       if (!vm.SourceTextModule) {
         throw new Error(
-          "Running esm bundle needs add Node.js option '--experimental-vm-modules'.",
+          '[rsbuild:runner] Running ESM bundle needs add Node.js option "--experimental-vm-modules".',
         );
       }
       const _require = this.getRequire();

@@ -1,4 +1,8 @@
-# Environment Context
+# Environment API
+
+This section describes some type definitions related to Rsbuild environment API.
+
+## Environment Context
 
 Environment context is a read-only object that provides some context information about the current environment.
 
@@ -16,19 +20,19 @@ type EnvironmentContext = {
 };
 ```
 
-## name
+### name
 
 The unique name of the current environment is used to distinguish and locate the environment, corresponds to the key in the [environments](/config/environments) configuration.
 
 - **Type:** `string`
 
-## browserslist
+### browserslist
 
 The range of target browsers that the project is compatible with. See details in [Browserslist](/guide/advanced/browserslist).
 
 - **Type:** `string[]`
 
-## config
+### config
 
 The Rsbuild environment configuration after normalization.
 
@@ -49,13 +53,13 @@ type NormalizedEnvironmentConfig = DeepReadonly<{
 }>;
 ```
 
-## distPath
+### distPath
 
 The absolute path of the output directory, corresponding to the [output.distPath.root](/config/output/dist-path) config in `RsbuildConfig`.
 
 - **Type:** `string`
 
-## entry
+### entry
 
 The entry object from the [source.entry](/config/source/entry) option.
 
@@ -65,7 +69,7 @@ The entry object from the [source.entry](/config/source/entry) option.
 type RsbuildEntry = Record<string, string | string[] | EntryDescription>;
 ```
 
-## htmlPaths
+### htmlPaths
 
 The path information for all HTML assets.
 
@@ -77,7 +81,7 @@ This API will return an object, the key is the entry name and the value is the r
 type htmlPaths = Record<string, string>;
 ```
 
-## tsconfigPath
+### tsconfigPath
 
 The absolute path of the tsconfig.json file, or `undefined` if the tsconfig.json file does not exist in current project.
 
@@ -86,3 +90,77 @@ The absolute path of the tsconfig.json file, or `undefined` if the tsconfig.json
 ```ts
 type TsconfigPath = string | undefined;
 ```
+
+## Environment API
+
+Environment API provides a series of APIs related to the build environment.
+
+You can use environment API in [Rsbuild DevMiddleware](/config/dev/setup-middlewares) or [Custom Server](/api/javascript-api/instance#rsbuildcreatedevserver) to operate the build artifacts in a specific environment.
+
+```ts
+type EnvironmentAPI = {
+  [name: string]: {
+    getStats: () => Promise<Stats>;
+    loadBundle: <T = unknown>(entryName: string) => Promise<T>;
+    getTransformedHtml: (entryName: string) => Promise<string>;
+  };
+};
+```
+
+### getStats
+
+Get the build stats of current environment.
+
+- **Type:**
+
+```ts
+type GetStats = () => Promise<Stats>;
+```
+
+- **Example:**
+
+```ts
+const webStats = await environments.web.getStats();
+
+console.log(webStats.toJson({ all: false }));
+```
+
+### loadBundle
+
+Load and execute the build artifacts on the server side. This method returns the exports of the entry module.
+
+- **Type:**
+
+```ts
+/**
+ * @param entryName - Entry name, corresponding to a key in Rsbuild `source.entry`
+ * @returns The return value of the entry module
+ */
+type LoadBundle = <T = unknown>(entryName: string) => Promise<T>;
+```
+
+- **Example:**
+
+```ts
+// Load the build artifacts of main entry
+const result = await environments.node.loadBundle('main');
+```
+
+### getTransformedHtml
+
+Get the HTML template content after compilation and transformation.
+
+- **Type:**
+
+```ts
+type GetTransformedHtml = (entryName: string) => Promise<string>;
+```
+
+- **Example:**
+
+```ts
+// Get the HTML content of main entry
+const html = await environments.web.getTransformedHtml('main');
+```
+
+This method returns the complete HTML string, including all resources and content injected through HTML plugins.

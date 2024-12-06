@@ -8,7 +8,7 @@ test('tsconfig paths should work and override the alias config', async ({
     cwd: __dirname,
     page,
     rsbuildConfig: {
-      source: {
+      resolve: {
         alias: {
           '@common': './src/common2',
         },
@@ -29,7 +29,7 @@ test('tsconfig paths should not work when aliasStrategy is "prefer-alias"', asyn
     cwd: __dirname,
     page,
     rsbuildConfig: {
-      source: {
+      resolve: {
         alias: {
           '@/common': './src/common2',
         },
@@ -39,7 +39,7 @@ test('tsconfig paths should not work when aliasStrategy is "prefer-alias"', asyn
   });
 
   const foo = page.locator('#foo');
-  await expect(foo).toHaveText('source.alias worked');
+  await expect(foo).toHaveText('resolve.alias worked');
 
   await rsbuild.close();
 });

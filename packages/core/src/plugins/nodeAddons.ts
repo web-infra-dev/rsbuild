@@ -28,7 +28,9 @@ export const pluginNodeAddons = (): RsbuildPlugin => ({
         const name = getFilename(resourcePath);
 
         if (name === null) {
-          throw new Error(`Failed to load Node.js addon: "${resourcePath}"`);
+          throw new Error(
+            `[rsbuild:node-addons] Failed to load Node.js addon: "${resourcePath}"`,
+          );
         }
 
         emitFile(name, code);

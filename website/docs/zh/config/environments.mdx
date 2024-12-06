@@ -8,6 +8,7 @@ Rsbuild 支持同时为多个环境构建产物。你可以使用 `environments`
 
 ```ts
 interface EnvironmentConfig {
+  plugins?: RsbuildPlugins;
   dev?: Pick<
     DevConfig,
     'hmr' | 'assetPrefix' | 'progressBar' | 'lazyCompilation' | 'writeToDisk'
@@ -16,10 +17,10 @@ interface EnvironmentConfig {
   tools?: ToolsConfig;
   source?: SourceConfig;
   output?: OutputConfig;
+  resolve?: ResolveConfig;
   security?: SecurityConfig;
   performance?: PerformanceConfig;
   moduleFederation?: ModuleFederationConfig;
-  plugins?: RsbuildPlugins[];
 }
 
 type Environments = {
@@ -36,7 +37,7 @@ type Environments = {
 ```ts title="rsbuild.config.ts"
 export default {
   // 所有环境共享配置
-  source: {
+  resolve: {
     alias: {
       '@common': './src/common',
     },
@@ -45,9 +46,6 @@ export default {
     // client 环境配置
     web: {
       source: {
-        alias: {
-          '@common1': './src/web/common1',
-        },
         entry: {
           index: './src/index.client.js',
         },
@@ -55,19 +53,26 @@ export default {
       output: {
         target: 'web',
       },
+      resolve: {
+        alias: {
+          '@common1': './src/web/common1',
+        },
+      },
     },
     // SSR 环境配置
     node: {
       source: {
-        alias: {
-          '@common1': './src/ssr/common1',
-        },
         entry: {
           index: './src/index.server.js',
         },
       },
       output: {
         target: 'node',
+      },
+      resolve: {
+        alias: {
+          '@common1': './src/ssr/common1',
+        },
       },
     },
   },
@@ -79,16 +84,18 @@ export default {
 ```js
 const webConfig = {
   source: {
-    alias: {
-      '@common': './src/common',
-      '@common1': './src/web/common1',
-    },
     entry: {
       index: './src/index.client.js',
     },
   },
   output: {
     target: 'web',
+  },
+  resolve: {
+    alias: {
+      '@common': './src/common',
+      '@common1': './src/web/common1',
+    },
   },
 };
 ```
@@ -98,16 +105,18 @@ const webConfig = {
 ```js
 const nodeConfig = {
   source: {
-    alias: {
-      '@common': './src/common',
-      '@common1': './src/ssr/common1',
-    },
     entry: {
       index: './src/index.server.js',
     },
   },
   output: {
     target: 'node',
+  },
+  resolve: {
+    alias: {
+      '@common': './src/common',
+      '@common1': './src/ssr/common1',
+    },
   },
 };
 ```

@@ -143,9 +143,10 @@ export const pluginManifest = (): RsbuildPlugin => ({
   name: 'rsbuild:manifest',
 
   setup(api) {
-    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment, isDev }) => {
       const {
         output: { manifest },
+        dev: { writeToDisk },
       } = environment.config;
 
       if (manifest === false) {
@@ -163,6 +164,7 @@ export const pluginManifest = (): RsbuildPlugin => ({
       chain.plugin(CHAIN_ID.PLUGIN.MANIFEST).use(RspackManifestPlugin, [
         {
           fileName,
+          writeToFileEmit: isDev && writeToDisk !== true,
           generate: generateManifest(htmlPaths),
         },
       ]);

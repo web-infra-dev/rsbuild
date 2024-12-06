@@ -10,13 +10,13 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "moment": "^2.30.1",
-    "preact": "^10.25.0",
+    "preact": "^10.25.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^7.0.1",
+    "react-router-dom": "^7.0.2",
     "solid-js": "^1.9.3",
     "vue": "^3.5.13",
-    "vue-router": "^4.4.5"
+    "vue-router": "^4.5.0"
   },
   "devDependencies": {
     "@e2e/helper": "workspace:*",
@@ -38,11 +38,11 @@
     "@rsbuild/plugin-vue": "workspace:*",
     "@rsbuild/plugin-vue-jsx": "^1.0.1",
     "@rsbuild/webpack": "workspace:*",
-    "@module-federation/rsbuild-plugin": "0.7.6",
+    "@module-federation/rsbuild-plugin": "0.8.0",
     "@scripts/test-helper": "workspace:*",
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.13",
-    "@types/node": "^22.9.3",
+    "@types/node": "^22.10.1",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "create-rsbuild": "workspace:*",

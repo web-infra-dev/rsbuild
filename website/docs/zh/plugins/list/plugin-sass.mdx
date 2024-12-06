@@ -55,7 +55,7 @@ const defaultOptions = {
   sourceMap: rsbuildConfig.output.sourceMap.css,
   sassOptions: {
     quietDeps: true,
-    silenceDeprecations: api === 'legacy' ? ['legacy-js-api'] : undefined,
+    silenceDeprecations: ['legacy-js-api', 'import'],
   },
 };
 ```
@@ -167,7 +167,7 @@ More info and automated migrator: https://sass-lang.com/d/import
  0 | @import './b.scss';
 ```
 
-可以通过如下的配置来忽略 `@import` 的警告：
+`@rsbuild/plugin-sass` 默认添加了如下配置来忽略 `@import` 的警告，如果你需要忽略其他废弃警告，可以使用同样的方式。
 
 ```ts
 pluginSass({

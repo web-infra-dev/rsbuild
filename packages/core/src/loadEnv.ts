@@ -61,7 +61,7 @@ export function loadEnv({
 } {
   if (mode === 'local') {
     throw new Error(
-      `'local' cannot be used as a value for env mode, because ".env.local" represents a temporary local file. Please use another value.`,
+      `[rsbuild:loadEnv] 'local' cannot be used as a value for env mode, because ".env.local" represents a temporary local file. Please use another value.`,
     );
   }
 

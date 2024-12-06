@@ -55,7 +55,7 @@ const defaultOptions = {
   sourceMap: rsbuildConfig.output.sourceMap.css,
   sassOptions: {
     quietDeps: true,
-    silenceDeprecations: api === 'legacy' ? ['legacy-js-api'] : undefined,
+    silenceDeprecations: ['legacy-js-api', 'import'],
   },
 };
 ```
@@ -167,7 +167,7 @@ More info and automated migrator: https://sass-lang.com/d/import
  0 | @import './b.scss';
 ```
 
-You can suppress the `@import` warning with the following configuration:
+`@rsbuild/plugin-sass` adds the following configuration by default to silence the `@import` warning, if you need to silence other deprecated warnings, you can use the same method.
 
 ```ts
 pluginSass({
