@@ -8,7 +8,7 @@ Force Rsbuild to resolve the specified packages from project root, which is usef
 
 ## Example
 
-For example, assume your project is based on React 18, and you are using the `foo` package that depends on React 17, then your project will have two different versions of the React:
+For example, assume your project is based on React 19, and you are using the `foo` package that depends on React 17, then your project will have two different versions of the React:
 
 ```
 app/
@@ -18,8 +18,8 @@ app/
     │   └── node_modules/
     │       ├── react (v17)
     │       └── react-dom (v17)
-    ├── react (v18)
-    └── react-dom (v18)
+    ├── react (v19)
+    └── react-dom (v19)
 ```
 
 In this case, you can use the `resolve.dedupe` config to remove the duplicate React packages, and resolve all `react` and `react-dom` packages to `/node_modules/react` and `/node_modules/react-dom`:
@@ -34,7 +34,7 @@ export default defineConfig({
 
 Note that using `resolve.dedupe` to unify different major versions of a package, it may cause some packages to fail because they may depend on specific versions of APIs or features.
 
-For example, if `foo` depends on a React 17-specific API or feature, then unifying React 17 and React 18 with React 18 using `resolve.dedupe` may cause `foo` to fail.
+For example, if `foo` depends on a React 17-specific API or feature, then unifying React 17 and React 19 with React 19 using `resolve.dedupe` may cause `foo` to fail.
 
 ## How it works
 

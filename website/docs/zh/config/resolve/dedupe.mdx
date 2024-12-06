@@ -8,7 +8,7 @@
 
 ## 示例
 
-例如，假设你的项目是基于 React 18 开发的，而你正在使用的 `foo` 包依赖了 React 17，那么你的项目中就会存在两个不同版本的 React：
+例如，假设你的项目是基于 React 19 开发的，而你正在使用的 `foo` 包依赖了 React 17，那么你的项目中就会存在两个不同版本的 React：
 
 ```
 app/
@@ -18,8 +18,8 @@ app/
     │   └── node_modules/
     │       ├── react (v17)
     │       └── react-dom (v17)
-    ├── react (v18)
-    └── react-dom (v18)
+    ├── react (v19)
+    └── react-dom (v19)
 ```
 
 在这种情况下，你可以使用 `resolve.dedupe` 配置项来移除重复的 React 包，将所有 `react` 和 `react-dom` 包都解析到 `/node_modules/react` 和 `/node_modules/react-dom`：
@@ -34,7 +34,7 @@ export default defineConfig({
 
 注意，如果使用 `resolve.dedupe` 将一个包的不同 major 版本统一为同一个，可能导致一些包无法正常工作，因为它们可能依赖于特定版本的 API 或功能。
 
-例如，如果 `foo` 依赖了一个 React 17 特有的 API 或功能，此时将 React 17 和 React 18 统一为 React 18，就可能会导致 `foo` 无法正常工作。
+例如，如果 `foo` 依赖了一个 React 17 特有的 API 或功能，此时将 React 17 和 React 19 统一为 React 19，就可能会导致 `foo` 无法正常工作。
 
 ## 实现原理
 
