@@ -1415,10 +1415,16 @@ export interface ResolveConfig {
    * @default 'prefer-tsconfig'
    */
   aliasStrategy?: AliasStrategy;
+  /**
+   * Automatically resolve file extensions when importing modules.
+   * This means you can import files without explicitly writing their extensions.
+   * @default ['.ts', '.tsx', '.mjs', '.js', '.jsx', '.json']
+   */
+  extensions?: string[];
 }
 
 export type NormalizedResolveConfig = ResolveConfig &
-  Pick<Required<ResolveConfig>, 'alias' | 'aliasStrategy'>;
+  Pick<Required<ResolveConfig>, 'alias' | 'aliasStrategy' | 'extensions'>;
 
 export type ModuleFederationConfig = {
   options: ModuleFederationPluginOptions;

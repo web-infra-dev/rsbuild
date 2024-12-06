@@ -23,6 +23,20 @@ describe('plugin-resolve', () => {
     ).toBeDefined();
   });
 
+  it('should allow to customize extensions', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginResolve()],
+      rsbuildConfig: {
+        resolve: {
+          extensions: ['.ts', '.js'],
+        },
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+    expect(bundlerConfigs[0].resolve?.extensions).toEqual(['.ts', '.js']);
+  });
+
   it('should not apply tsConfigPath when aliasStrategy is "prefer-alias"', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
