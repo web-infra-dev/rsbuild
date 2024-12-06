@@ -9,6 +9,7 @@ const OVERRIDE_PATHS = [
   'output.overrideBrowserslist',
   'server.open',
   'server.printUrls',
+  'resolve.extensions',
   'provider',
 ];
 

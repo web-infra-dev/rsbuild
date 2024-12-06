@@ -1,7 +1,6 @@
 import { createRequire } from 'node:module';
 import { dirname, sep } from 'node:path';
 import { reduceConfigs } from 'reduce-configs';
-import type { ChainIdentifier } from '../configChain';
 import { castArray } from '../helpers';
 import { ensureAbsolutePath } from '../helpers/path';
 import { logger } from '../logger';
@@ -12,51 +11,6 @@ import type {
 } from '../types';
 
 const require = createRequire(import.meta.url);
-
-// compatible with legacy packages with type="module"
-// https://github.com/webpack/webpack/issues/11467
-function applyFullySpecified({
-  chain,
-  CHAIN_ID,
-}: {
-  chain: RspackChain;
-  config: NormalizedEnvironmentConfig;
-  CHAIN_ID: ChainIdentifier;
-}) {
-  chain.module
-    .rule(CHAIN_ID.RULE.MJS)
-    .test(/\.m?js/)
-    .resolve.set('fullySpecified', false);
-}
-
-function applyExtensions({
-  chain,
-  tsconfigPath,
-}: {
-  chain: RspackChain;
-  tsconfigPath: string | undefined;
-}) {
-  const extensions = [
-    // most projects are using TypeScript, resolve .ts(x) files first to reduce resolve time.
-    '.ts',
-    '.tsx',
-    '.mjs',
-    '.js',
-    '.jsx',
-    '.json',
-  ];
-
-  chain.resolve.extensions.merge(extensions);
-
-  if (tsconfigPath) {
-    // TypeScript allows importing TS files with `.js` extension
-    // See: https://github.com/microsoft/TypeScript/blob/c09e2ab4/src/compiler/moduleNameResolver.ts#L2151-L2168
-    chain.resolve.extensionAlias.merge({
-      '.js': ['.ts', '.tsx', '.js'],
-      '.jsx': ['.tsx', '.jsx'],
-    });
-  }
-}
 
 function applyAlias({
   chain,
@@ -156,7 +110,16 @@ export const pluginResolve = (): RsbuildPlugin => ({
       handler: (chain, { environment, CHAIN_ID }) => {
         const { config, tsconfigPath } = environment;
 
-        applyExtensions({ chain, tsconfigPath });
+        chain.resolve.extensions.merge([...config.resolve.extensions]);
+
+        if (tsconfigPath) {
+          // TypeScript allows importing TS files with `.js` extension
+          // See: https://github.com/microsoft/TypeScript/blob/c09e2ab4/src/compiler/moduleNameResolver.ts#L2151-L2168
+          chain.resolve.extensionAlias.merge({
+            '.js': ['.ts', '.tsx', '.js'],
+            '.jsx': ['.tsx', '.jsx'],
+          });
+        }
 
         applyAlias({
           chain,
@@ -164,8 +127,13 @@ export const pluginResolve = (): RsbuildPlugin => ({
           rootPath: api.context.rootPath,
         });
 
+        // compatible with legacy packages with type="module"
+        // https://github.com/webpack/webpack/issues/11467
         // In some cases (modern.js), there is an error if the fullySpecified rule is after the js rule
-        applyFullySpecified({ chain, config, CHAIN_ID });
+        chain.module
+          .rule(CHAIN_ID.RULE.MJS)
+          .test(/\.m?js/)
+          .resolve.set('fullySpecified', false);
 
         const aliasStrategy =
           config.source.aliasStrategy ?? config.resolve.aliasStrategy;

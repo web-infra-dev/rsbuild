@@ -196,6 +196,15 @@ const getDefaultResolveConfig = (): NormalizedResolveConfig => {
       '@swc/helpers': swcHelpersPath,
     },
     aliasStrategy: 'prefer-tsconfig',
+    extensions: [
+      // most projects are using TypeScript, resolve .ts(x) files first to reduce resolve time.
+      '.ts',
+      '.tsx',
+      '.mjs',
+      '.js',
+      '.jsx',
+      '.json',
+    ],
   };
 };
 
