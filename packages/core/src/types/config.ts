@@ -490,15 +490,17 @@ export type PrintFileSizeOptions = {
 };
 
 export interface PreconnectOption {
+  /**
+   * The URL of the resource to preconnect to.
+   */
   href: string;
+  /**
+   * Whether to add `crossorigin` attribute to the `<link>` element.
+   */
   crossorigin?: boolean;
 }
 
 export type Preconnect = Array<string | PreconnectOption>;
-
-export interface DnsPrefetchOption {
-  href: string;
-}
 
 export type DnsPrefetch = string[];
 

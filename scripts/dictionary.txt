@@ -81,6 +81,7 @@ pmmmwh
 postcssrc
 preact
 prebundle
+preconnecting
 preflights
 prefresh
 preprocessors

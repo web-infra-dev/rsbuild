@@ -1,13 +1,8 @@
 import { HtmlPreloadOrPrefetchPlugin } from '../rspack/preload/HtmlPreloadOrPrefetchPlugin';
-import type {
-  DnsPrefetchOption,
-  HtmlBasicTag,
-  PreconnectOption,
-  RsbuildPlugin,
-} from '../types';
+import type { HtmlBasicTag, PreconnectOption, RsbuildPlugin } from '../types';
 
 const generateLinks = (
-  options: PreconnectOption[] | DnsPrefetchOption[],
+  options: PreconnectOption[],
   rel: 'preconnect' | 'dns-prefetch',
 ): HtmlBasicTag[] =>
   options.map((option) => ({
