@@ -10,6 +10,7 @@ type Retry = {
   nextRetryUrl: ChunkSrcUrl;
   originalScriptFilename: ChunkFilename;
   originalSrcUrl: ChunkSrcUrl;
+  originalQuery: string;
 };
 
 type RetryCollector = Record<ChunkId, Record<number, Retry>>;
@@ -99,37 +100,16 @@ function getUrlRetryQuery(
   return '';
 }
 
-function removeDomainFromUrl(url: string): string {
-  const protocolStartIndex = url.indexOf('//');
-
-  // case /app/main/static/js/index.js
-  if (protocolStartIndex === -1 && url.startsWith('/')) {
-    return url;
-  }
-
-  // case "//cdn.com/app/main/static/js/index.js"
-  // case "http://cdn.com/app/main/static/js/index.js"
-  const protocolEndIndex = protocolStartIndex + 2;
-  const pathStartIndex = url.indexOf('/', protocolEndIndex);
-
-  return url.slice(pathStartIndex);
-}
-
-// "http://cdn.com/app/main/static/js/index.js?query=1#hash" -> "/app/main/static/js/index.js"
-function getAbsolutePathFromUrl(url: string): string {
-  return cleanUrl(removeDomainFromUrl(url));
-}
-
 function getNextRetryUrl(
-  existRetryTimes: number,
+  currRetryUrl: string,
+  domain: string,
   nextDomain: string,
-  originalSrcUrl: string,
+  existRetryTimes: number,
+  originalQuery: string,
 ) {
-  const absolutePath = getAbsolutePathFromUrl(originalSrcUrl);
   return (
-    nextDomain +
-    absolutePath +
-    getUrlRetryQuery(existRetryTimes, getQueryFromUrl(originalSrcUrl))
+    cleanUrl(currRetryUrl.replace(domain, nextDomain)) +
+    getUrlRetryQuery(existRetryTimes + 1, originalQuery)
   );
 }
 
@@ -145,18 +125,28 @@ function getCurrentRetry(
 function initRetry(chunkId: string): Retry {
   const originalScriptFilename = originalGetChunkScriptFilename(chunkId);
 
-  const originalSrcUrl =
-    __RUNTIME_GLOBALS_PUBLIC_PATH__ + originalScriptFilename;
+  const originalPublicPath = __RUNTIME_GLOBALS_PUBLIC_PATH__;
+  const originalSrcUrl = originalPublicPath.startsWith('/')
+    ? window.origin + originalPublicPath + originalScriptFilename
+    : originalPublicPath + originalScriptFilename;
+  const originalQuery = getQueryFromUrl(originalSrcUrl);
 
-  const existRetryTimes = 1;
+  const existRetryTimes = 0;
   const nextDomain = config.domain?.[0] ?? window.origin;
 
   return {
     nextDomain,
-    nextRetryUrl: getNextRetryUrl(existRetryTimes, nextDomain, originalSrcUrl),
+    nextRetryUrl: getNextRetryUrl(
+      originalSrcUrl,
+      nextDomain,
+      nextDomain,
+      existRetryTimes,
+      originalQuery,
+    ),
 
     originalScriptFilename,
     originalSrcUrl,
+    originalQuery,
   };
 }
 
@@ -170,19 +160,22 @@ function nextRetry(chunkId: string, existRetryTimes: number): Retry {
     nextRetry = initRetry(chunkId);
     retryCollector[chunkId] = [];
   } else {
-    const { originalScriptFilename, originalSrcUrl } = currRetry;
+    const { originalScriptFilename, originalSrcUrl, originalQuery } = currRetry;
     const nextDomain = findNextDomain(currRetry.nextDomain);
 
     nextRetry = {
       nextDomain,
       nextRetryUrl: getNextRetryUrl(
-        nextExistRetryTimes,
+        currRetry.nextRetryUrl,
+        currRetry.nextDomain,
         nextDomain,
-        originalSrcUrl,
+        existRetryTimes,
+        originalQuery,
       ),
 
       originalScriptFilename,
       originalSrcUrl,
+      originalQuery,
     };
   }
 
@@ -258,13 +251,13 @@ function ensureChunk(
     // the first calling is not retry
     // if the failed request is 4 in network panel, callingCounter.count === 4, the first one is the normal request, and existRetryTimes is 3, retried 3 times
     const existRetryTimes = callingCounter.count - 1;
-    let originalSrcUrl: string;
+    let originalScriptFilename: string;
     let nextRetryUrl: string;
     let nextDomain: string;
 
     try {
       const retryResult = nextRetry(chunkId, existRetryTimes);
-      originalSrcUrl = retryResult.originalSrcUrl;
+      originalScriptFilename = retryResult.originalScriptFilename;
       nextRetryUrl = retryResult.nextRetryUrl;
       nextDomain = retryResult.nextDomain;
     } catch (e) {
@@ -292,7 +285,7 @@ function ensureChunk(
     if (existRetryTimes >= maxRetries) {
       error.message = error.message?.includes('retries:')
         ? error.message
-        : `Loading chunk ${chunkId} from ${originalSrcUrl} failed after ${maxRetries} retries: "${error.message}"`;
+        : `Loading chunk ${chunkId} from "${originalScriptFilename}" failed after ${maxRetries} retries: "${error.message}"`;
       if (typeof config.onFail === 'function') {
         config.onFail(context);
       }
