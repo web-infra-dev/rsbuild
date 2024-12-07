@@ -244,7 +244,7 @@ test('react ErrorBoundary should catch error when all retries failed', async ({
   await gotoPage(page, rsbuild);
   const compTestElement = page.locator('#async-comp-test-error');
   await expect(compTestElement).toHaveText(
-    /ChunkLoadError: Loading chunk src_AsyncCompTest_tsx from \/static\/js\/async\/src_AsyncCompTest_tsx\.js failed after 3 retries: "Loading chunk src_AsyncCompTest_tsx failed.*/,
+    /ChunkLoadError: Loading chunk src_AsyncCompTest_tsx from "static\/js\/async\/src_AsyncCompTest_tsx\.js" failed after 3 retries: "Loading chunk src_AsyncCompTest_tsx failed.*/,
   );
   const blockedResponseCount = count404Response(
     logs,
@@ -448,7 +448,7 @@ test('onRetry and onSuccess options should work when retrying async chunk succes
   await rsbuild.close();
 });
 
-test('onRetry and onFail options should work when retrying initial chunk failed', async ({
+test('domain, onRetry and onFail options should work when retrying initial chunk failed', async ({
   page,
 }) => {
   const blockedMiddleware = createBlockMiddleware({
@@ -461,7 +461,7 @@ test('onRetry and onFail options should work when retrying initial chunk failed'
     blockedMiddleware,
     {
       minify: true,
-      domain: [`http://localhost:${port}`, 'http://a.com', 'http://b.com'],
+      domain: [`http://localhost:${port}`, 'http://a.com/foo-path', 'http://b.com'],
       onRetry(context) {
         console.info('onRetry', context);
       },
@@ -497,8 +497,8 @@ test('onRetry and onFail options should work when retrying initial chunk failed'
       },
       {
         times: 1,
-        domain: 'http://a.com',
-        url: 'http://a.com/static/js/index.js',
+        domain: 'http://a.com/foo-path',
+        url: 'http://a.com/foo-path/static/js/index.js',
         tagName: 'script',
         isAsyncChunk: false,
       },
@@ -524,7 +524,7 @@ test('onRetry and onFail options should work when retrying initial chunk failed'
   await rsbuild.close();
 });
 
-test('onRetry and onFail options should work when retrying async chunk failed', async ({
+test('domain, onRetry and onFail options should work when retrying async chunk failed', async ({
   page,
 }) => {
   const blockedMiddleware = createBlockMiddleware({
@@ -537,7 +537,7 @@ test('onRetry and onFail options should work when retrying async chunk failed', 
     blockedMiddleware,
     {
       minify: true,
-      domain: [`http://localhost:${port}`, 'http://a.com', 'http://b.com'],
+      domain: [`http://localhost:${port}`, 'http://a.com/foo-path', 'http://b.com'],
       onRetry(context) {
         console.info('onRetry', context);
       },
@@ -558,7 +558,7 @@ test('onRetry and onFail options should work when retrying async chunk failed', 
   await gotoPage(page, rsbuild);
   const compTestElement = page.locator('#async-comp-test-error');
   await expect(compTestElement).toHaveText(
-    /ChunkLoadError: Loading chunk src_AsyncCompTest_tsx from \/static\/js\/async\/src_AsyncCompTest_tsx\.js failed after 3 retries: "Loading chunk src_AsyncCompTest_tsx failed.*/,
+    /ChunkLoadError: Loading chunk src_AsyncCompTest_tsx from "static\/js\/async\/src_AsyncCompTest_tsx\.js" failed after 3 retries: "Loading chunk src_AsyncCompTest_tsx failed.*/,
   );
   await delay();
 
@@ -577,8 +577,8 @@ test('onRetry and onFail options should work when retrying async chunk failed', 
       },
       {
         times: 1,
-        domain: 'http://a.com',
-        url: 'http://a.com/static/js/async/src_AsyncCompTest_tsx.js',
+        domain: 'http://a.com/foo-path',
+        url: 'http://a.com/foo-path/static/js/async/src_AsyncCompTest_tsx.js',
         tagName: 'script',
         isAsyncChunk: true,
       },
