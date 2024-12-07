@@ -22,6 +22,7 @@ declare global {
   var __RB_ASYNC_CHUNKS__: Record<string, boolean>;
 }
 
+// this function is the same as async chunk retry
 function findCurrentDomain(url: string, domainList: string[]) {
   let domain = '';
   for (let i = 0; i < domainList.length; i++) {
@@ -33,6 +34,7 @@ function findCurrentDomain(url: string, domainList: string[]) {
   return domain || window.origin;
 }
 
+// this function is the same as async chunk retry
 function findNextDomain(url: string, domainList: string[]) {
   const currentDomain = findCurrentDomain(url, domainList);
   const index = domainList.indexOf(currentDomain);
@@ -248,10 +250,7 @@ function retry(config: RuntimeRetryOptions, e: Event) {
     target.dataset.rsbuildOriginalQuery ?? getQueryFromUrl(url);
 
   // this function is the same as async chunk retry
-  function getUrlRetryQuery(
-    existRetryTimes: number,
-    originalQuery: string,
-  ): string {
+  function getUrlRetryQuery(existRetryTimes: number): string {
     if (config.addQuery === true) {
       return originalQuery !== ''
         ? `${originalQuery}&retry=${existRetryTimes}`
@@ -269,11 +268,10 @@ function retry(config: RuntimeRetryOptions, e: Event) {
     domain: string,
     nextDomain: string,
     existRetryTimes: number,
-    originalQuery: string,
   ) {
     return (
       cleanUrl(currRetryUrl.replace(domain, nextDomain)) +
-      getUrlRetryQuery(existRetryTimes + 1, originalQuery)
+      getUrlRetryQuery(existRetryTimes + 1)
     );
   }
 
@@ -283,7 +281,7 @@ function retry(config: RuntimeRetryOptions, e: Event) {
     (target as HTMLScriptElement).defer;
 
   const attributes: ScriptElementAttributes = {
-    url: getNextRetryUrl(url, domain, nextDomain, existRetryTimes, originalQuery),
+    url: getNextRetryUrl(url, domain, nextDomain, existRetryTimes),
     times: existRetryTimes + 1,
     crossOrigin: config.crossOrigin,
     isAsync,
