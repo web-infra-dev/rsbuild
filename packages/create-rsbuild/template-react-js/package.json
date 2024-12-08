@@ -13,6 +13,6 @@
   },
   "devDependencies": {
     "@rsbuild/core": "^1.1.8",
-    "@rsbuild/plugin-react": "^1.0.7"
+    "@rsbuild/plugin-react": "^1.1.0"
   }
 }
