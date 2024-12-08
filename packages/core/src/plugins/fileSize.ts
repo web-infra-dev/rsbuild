@@ -229,12 +229,10 @@ async function printFileSizes(
       log += color.dim(` (gzip: ${calcFileSize(totalGzipSize)})`);
     }
 
-    // log += ` ${color.dim(`(${environmentName})`)}`;
-
-    log += '\n';
-
     logs.push(log);
   }
+
+  logs.push('');
 
   return logs;
 }
