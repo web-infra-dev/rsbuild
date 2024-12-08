@@ -97,5 +97,7 @@ export function setupCliShortcuts({
     }
   });
 
-  return rl.close;
+  return () => {
+    rl.close();
+  };
 }
