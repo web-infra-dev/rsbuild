@@ -4,7 +4,6 @@ import { createRsbuild } from '../createRsbuild';
 import { castArray, getAbsolutePath } from '../helpers';
 import { loadEnv } from '../loadEnv';
 import { logger } from '../logger';
-import { onBeforeRestartServer } from '../server/restart';
 import type { RsbuildInstance } from '../types';
 import type { CommonOptions } from './commands';
 
@@ -37,8 +36,6 @@ export async function init({
       cwd: getEnvDir(root, commonOpts.envDir),
       mode: commonOpts.envMode,
     });
-
-    onBeforeRestartServer(envs.cleanup);
 
     const { content: config, filePath: configFilePath } = await loadConfig({
       cwd: root,
@@ -112,11 +109,16 @@ export async function init({
       config.dev.cliShortcuts = true;
     }
 
-    return createRsbuild({
+    const rsbuild = await createRsbuild({
       cwd: root,
       rsbuildConfig: config,
       environment: commonOpts.environment,
     });
+
+    rsbuild.onCloseBuild(envs.cleanup);
+    rsbuild.onCloseDevServer(envs.cleanup);
+
+    return rsbuild;
   } catch (err) {
     if (isRestart) {
       logger.error(err);

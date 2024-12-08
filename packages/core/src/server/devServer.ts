@@ -229,7 +229,7 @@ export async function createDevServer<
           ? {}
           : devConfig.cliShortcuts;
 
-      setupCliShortcuts({
+      const cleanup = setupCliShortcuts({
         openPage,
         closeServer,
         printUrls,
@@ -237,6 +237,7 @@ export async function createDevServer<
         help: shortcutsOptions.help,
         customShortcuts: shortcutsOptions.custom,
       });
+      options.context.hooks.onCloseDevServer.tap(cleanup);
     }
 
     if (!getPortSilently && portTip) {
