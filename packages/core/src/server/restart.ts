@@ -39,7 +39,7 @@ const beforeRestart = async ({
       `Restart ${id} because ${color.yellow(filename)} is changed.\n`,
     );
   } else {
-    logger.info('Restarting ${id}...\n');
+    logger.info(`Restarting ${id}...\n`);
   }
 
   for (const cleaner of cleaners) {
