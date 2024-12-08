@@ -26,21 +26,21 @@ const rsbuild = await createRsbuild({
 });
 ```
 
-### options
+### Options
 
 `createRsbuild` 的第一个参数是一个 `options` 对象，你可以传入以下选项：
 
 ```ts
 type CreateRsbuildOptions = {
   cwd?: string;
+  environment?: string[];
   rsbuildConfig?: RsbuildConfig;
 };
 ```
 
-各个选项的作用：
-
 - `cwd`：当前执行构建的根路径，默认值为 `process.cwd()`
-- `rsbuildConfig`：Rsbuild 配置对象。Rsbuild 提供了丰富的配置项，允许你对构建行为进行灵活定制，你可以在[配置](/config/)中找到所有可用的配置项。
+- `environment`：只构建指定的 [environments](/guide/advanced/environments)。
+- `rsbuildConfig`：Rsbuild 配置对象。参考 [配置总览](/config/) 查看所有可用的配置项。
 
 ## loadConfig
 

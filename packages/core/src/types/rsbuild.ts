@@ -92,12 +92,19 @@ export type InspectConfigResult<B extends 'rspack' | 'webpack' = 'rspack'> = {
 export type CreateCompiler = <C = Compiler | MultiCompiler>() => Promise<C>;
 
 export type CreateRsbuildOptions = {
-  /** The root path of current project. */
+  /**
+   * The root path of current project.
+   * @default process.cwd()
+   */
   cwd?: string;
-  /** Configurations of Rsbuild. */
-  rsbuildConfig?: RsbuildConfig;
-  /** Only build specified environment. */
+  /**
+   * Only build specified environments.
+   */
   environment?: string[];
+  /**
+   * Rsbuild configurations.
+   */
+  rsbuildConfig?: RsbuildConfig;
 };
 
 export type ResolvedCreateRsbuildOptions = CreateRsbuildOptions &
