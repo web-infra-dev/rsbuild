@@ -254,8 +254,8 @@ importers:
   e2e/cases/swc-plugin:
     dependencies:
       '@swc/plugin-remove-console':
-        specifier: 5.0.2
-        version: 5.0.2
+        specifier: 6.0.2
+        version: 6.0.2
 
   e2e/cases/vue:
     dependencies:
@@ -2806,8 +2806,8 @@ packages:
   '@swc/plugin-prefresh@5.0.2':
     resolution: {integrity: sha512-C/TRrSdQDR0H0Lq3+tHlpzaYJ1yFCtR2naNEIlXCoZq5yhPlPyQ3YxaFPXvEvGUGs+PZBm0cayIq7asTTIZVVQ==}
 
-  '@swc/plugin-remove-console@5.0.2':
-    resolution: {integrity: sha512-xgupiMiOza3SQl9uWIVzfoTvbKOLgIyMXUiz+xflGT7+JOa1i8yfJn6BW6AIXYrtUXD7OrEqYINhGiR8ZlNAFA==}
+  '@swc/plugin-remove-console@6.0.2':
+    resolution: {integrity: sha512-T8x7f7HM4X8TsSe1LEHdQy2BAxFsyOyFIR+S0MeyyGFL03I2HpIBaoVWZW6+dhim2lPsWv/6nN5v1U3An1nMyQ==}
 
   '@trysound/sax@0.2.0':
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
@@ -8466,7 +8466,7 @@ snapshots:
     dependencies:
       '@swc/counter': 0.1.3
 
-  '@swc/plugin-remove-console@5.0.2':
+  '@swc/plugin-remove-console@6.0.2':
     dependencies:
       '@swc/counter': 0.1.3
 
