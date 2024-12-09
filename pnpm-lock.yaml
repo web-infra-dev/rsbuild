@@ -842,8 +842,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2(@prefresh/core@1.5.3(preact@10.25.1))(@prefresh/utils@1.2.0)
       '@swc/plugin-prefresh':
-        specifier: ^5.0.2
-        version: 5.0.2
+        specifier: ^6.0.2
+        version: 6.0.2
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -2803,8 +2803,8 @@ packages:
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
 
-  '@swc/plugin-prefresh@5.0.2':
-    resolution: {integrity: sha512-C/TRrSdQDR0H0Lq3+tHlpzaYJ1yFCtR2naNEIlXCoZq5yhPlPyQ3YxaFPXvEvGUGs+PZBm0cayIq7asTTIZVVQ==}
+  '@swc/plugin-prefresh@6.0.2':
+    resolution: {integrity: sha512-xhLulL5MJqi2UqfHr+MRDTSncp2hwVI510VBMGGLPYgB19uBVPpwMiJFS5eJ3W2FDTHIdgeSGGMeo412fkoX0A==}
 
   '@swc/plugin-remove-console@5.0.2':
     resolution: {integrity: sha512-xgupiMiOza3SQl9uWIVzfoTvbKOLgIyMXUiz+xflGT7+JOa1i8yfJn6BW6AIXYrtUXD7OrEqYINhGiR8ZlNAFA==}
@@ -8462,7 +8462,7 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@swc/plugin-prefresh@5.0.2':
+  '@swc/plugin-prefresh@6.0.2':
     dependencies:
       '@swc/counter': 0.1.3
 
