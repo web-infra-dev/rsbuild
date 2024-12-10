@@ -144,6 +144,8 @@ export async function createRsbuild(
   });
 
   const preview = async (options: PreviewOptions = {}) => {
+    context.command = 'preview';
+
     if (!getNodeEnv()) {
       setNodeEnv('production');
     }
@@ -174,9 +176,12 @@ export async function createRsbuild(
   };
 
   const build: Build = async (...args) => {
+    context.command = 'build';
+
     if (!getNodeEnv()) {
       setNodeEnv('production');
     }
+
     const buildInstance = await providerInstance.build(...args);
     return {
       ...buildInstance,
@@ -188,16 +193,22 @@ export async function createRsbuild(
   };
 
   const startDevServer: StartDevServer = (...args) => {
+    context.command = 'dev';
+
     if (!getNodeEnv()) {
       setNodeEnv('development');
     }
+
     return providerInstance.startDevServer(...args);
   };
 
   const createDevServer: CreateDevServer = (...args) => {
+    context.command = 'dev';
+
     if (!getNodeEnv()) {
       setNodeEnv('development');
     }
+
     return providerInstance.createDevServer(...args);
   };
 
