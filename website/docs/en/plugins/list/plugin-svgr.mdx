@@ -42,7 +42,7 @@ import Logo from './logo.svg?react';
 export const App = () => <Logo />;
 ```
 
-If the imported path does not contain the `?react` suffix, then the SVG will be treated as a normal static asset and you will get a URL:
+If the imported path does not contain the `?react` suffix, then the SVG will be treated as a normal static asset and you will get a URL string or base64 URL, see [Import Static Assets](/guide/basic/static-assets).
 
 ```js
 import logoURL from './static/logo.svg';
