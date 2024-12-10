@@ -8,6 +8,7 @@ import {
   rspackOnlyTest,
 } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
+import type { RsbuildConfig } from '@rsbuild/core';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 
 const host = join(__dirname, 'host');
@@ -99,45 +100,42 @@ rspackOnlyTest(
   },
 );
 
-// TODO downgrade syntax
-test.skip('should transform module federation runtime with SWC', async () => {
+rspackOnlyTest('should downgrade syntax as expected', async () => {
   writeButtonCode();
 
   const remotePort = await getRandomPort();
 
   process.env.REMOTE_PORT = remotePort.toString();
 
+  const rsbuildConfig: RsbuildConfig = {
+    output: {
+      sourceMap: true,
+      overrideBrowserslist: ['Chrome >= 51'],
+    },
+    performance: {
+      chunkSplit: {
+        strategy: 'all-in-one',
+      },
+    },
+    plugins: [
+      pluginCheckSyntax({
+        // MF runtime contains dynamic import, which can not pass syntax checking
+        exclude: [/@module-federation[\\/]runtime/],
+      }),
+    ],
+  };
+
   await expect(
     build({
       cwd: remote,
-      rsbuildConfig: {
-        output: {
-          overrideBrowserslist: ['Chrome >= 51'],
-        },
-        performance: {
-          chunkSplit: {
-            strategy: 'all-in-one',
-          },
-        },
-        plugins: [pluginCheckSyntax()],
-      },
+      rsbuildConfig,
     }),
   ).resolves.toBeTruthy();
 
   await expect(
     build({
       cwd: host,
-      rsbuildConfig: {
-        output: {
-          overrideBrowserslist: ['Chrome >= 51'],
-        },
-        performance: {
-          chunkSplit: {
-            strategy: 'all-in-one',
-          },
-        },
-        plugins: [pluginCheckSyntax()],
-      },
+      rsbuildConfig,
     }),
   ).resolves.toBeTruthy();
 });
