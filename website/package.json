@@ -10,19 +10,19 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rspress/plugin-client-redirects": "^1.37.4",
-    "@rspress/plugin-rss": "1.37.4",
+    "@rspress/plugin-client-redirects": "^1.38.0",
+    "@rspress/plugin-rss": "^1.38.0",
     "@rstack-dev/doc-ui": "1.5.4",
     "@types/node": "^22.10.1",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.1",
     "fast-glob": "^3.3.2",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "rsbuild-plugin-google-analytics": "1.0.3",
-    "rsbuild-plugin-open-graph": "1.0.2",
-    "rspress": "1.37.4",
-    "rspress-plugin-font-open-sans": "1.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "rsbuild-plugin-google-analytics": "^1.0.3",
+    "rsbuild-plugin-open-graph": "^1.0.2",
+    "rspress": "^1.38.0",
+    "rspress-plugin-font-open-sans": "^1.0.0",
     "rspress-plugin-sitemap": "^1.1.1"
   }
 }
