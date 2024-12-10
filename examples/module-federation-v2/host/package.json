@@ -10,6 +10,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@module-federation/enhanced": "0.8.1",
     "@module-federation/rsbuild-plugin": "0.8.1",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-react": "workspace:*"

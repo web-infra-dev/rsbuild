@@ -38,6 +38,7 @@
     "@rsbuild/plugin-vue": "workspace:*",
     "@rsbuild/plugin-vue-jsx": "^1.0.1",
     "@rsbuild/webpack": "workspace:*",
+    "@module-federation/enhanced": "0.8.1",
     "@module-federation/rsbuild-plugin": "0.8.1",
     "@scripts/test-helper": "workspace:*",
     "@types/fs-extra": "^11.0.4",
