@@ -100,7 +100,7 @@ rspackOnlyTest(
   },
 );
 
-rspackOnlyTest('should handle syntax issues as expected', async () => {
+rspackOnlyTest('should downgrade syntax as expected', async () => {
   writeButtonCode();
 
   const remotePort = await getRandomPort();
