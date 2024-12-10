@@ -105,6 +105,39 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest(
+  'should run plugin hooks correctly when running build and mode is development',
+  async () => {
+    const { plugin, names } = createPlugin();
+    const rsbuild = await createRsbuild({
+      cwd: __dirname,
+      rsbuildConfig: {
+        mode: 'development',
+        plugins: [plugin],
+      },
+    });
+
+    const buildInstance = await rsbuild.build();
+
+    await buildInstance.close();
+
+    expect(names).toEqual([
+      'ModifyRsbuildConfig',
+      'ModifyEnvironmentConfig',
+      'ModifyBundlerChain',
+      'ModifyBundlerConfig',
+      'BeforeCreateCompiler',
+      'AfterCreateCompiler',
+      'BeforeBuild',
+      'BeforeEnvironmentCompile',
+      'ModifyHTMLTags',
+      'AfterEnvironmentCompile',
+      'AfterBuild',
+      'OnCloseBuild',
+    ]);
+  },
+);
+
+rspackOnlyTest(
   'should run plugin hooks correctly when running startDevServer',
   async ({ page }) => {
     process.env.NODE_ENV = 'development';
