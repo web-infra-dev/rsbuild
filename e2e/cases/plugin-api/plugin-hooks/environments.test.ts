@@ -73,6 +73,7 @@ const createPlugin = () => {
 rspackOnlyTest(
   'should run plugin hooks correctly when running build with multiple environments',
   async () => {
+    process.env.NODE_ENV = 'production';
     const { plugin, names } = createPlugin();
     const rsbuild = await createRsbuild({
       cwd: __dirname,
@@ -121,6 +122,8 @@ rspackOnlyTest(
       'AfterEnvironmentCompile node',
       'AfterBuild',
     ]);
+
+    process.env.NODE_ENV = 'test';
   },
 );
 
