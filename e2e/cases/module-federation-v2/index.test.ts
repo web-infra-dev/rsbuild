@@ -100,7 +100,7 @@ rspackOnlyTest(
   },
 );
 
-test('should transform module federation runtime with SWC', async () => {
+rspackOnlyTest('should handle syntax issues as expected', async () => {
   writeButtonCode();
 
   const remotePort = await getRandomPort();
