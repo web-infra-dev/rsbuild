@@ -42,7 +42,7 @@ export default {
 };
 ```
 
-当你的项目中有多个页面时，可以基于入口名称来为不同的页面设置对应的标题。
+当你的项目中有多个页面时，可以基于入口名称，来为不同的页面设置对应的标题。
 
 ```ts
 export default {
@@ -57,6 +57,10 @@ export default {
   },
 };
 ```
+
+:::tip
+对于单页应用（SPA），Rsbuild 会在 HTML 页面中包含一个初始的 title，但你通常需要在路由切换时动态更新页面标题，例如使用一些路由库，或是 [React Helmet](https://github.com/nfl/react-helmet) 这类库。
+:::
 
 ## 设置页面图标
 
