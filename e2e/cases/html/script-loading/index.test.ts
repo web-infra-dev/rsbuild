@@ -1,8 +1,7 @@
-import path from 'node:path';
-import { build } from '@e2e/helper';
+import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should apply defer by default', async () => {
+rspackOnlyTest('should apply defer by default', async () => {
   const rsbuild = await build({
     cwd: __dirname,
   });

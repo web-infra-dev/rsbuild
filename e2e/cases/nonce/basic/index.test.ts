@@ -1,7 +1,7 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { build, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
-test('should apply nonce to script and style tags', async () => {
+rspackOnlyTest('should apply nonce to script and style tags', async () => {
   const rsbuild = await build({
     cwd: __dirname,
   });
@@ -12,7 +12,7 @@ test('should apply nonce to script and style tags', async () => {
   expect(html).toContain(`<style nonce="CSP_NONCE_PLACEHOLDER">body{`);
 });
 
-test('should apply environment nonce', async () => {
+rspackOnlyTest('should apply environment nonce', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {

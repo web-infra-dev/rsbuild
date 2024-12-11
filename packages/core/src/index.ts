@@ -168,6 +168,7 @@ export type { ChainIdentifier } from './configChain';
 export {
   /**
    * @private
+   * TODO: remove this in Rspack v1.2.0
    */
   __internalHelper,
 };
