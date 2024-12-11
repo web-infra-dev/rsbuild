@@ -1,7 +1,7 @@
-import { build, normalizeNewlines } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { build, normalizeNewlines, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
-test('should inject tags with function usage correctly', async () => {
+rspackOnlyTest('should inject tags with function usage correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
   });

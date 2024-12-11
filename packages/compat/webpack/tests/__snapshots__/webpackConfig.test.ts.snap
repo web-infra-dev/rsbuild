@@ -23,7 +23,7 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
       "linkType": "text/css",
     },
   },
-  HtmlRspackPlugin {
+  HtmlWebpackPlugin {
     "options": {
       "base": false,
       "cache": true,
@@ -44,6 +44,7 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
         },
         "viewport": "width=device-width, initial-scale=1.0",
       },
+      "minify": "auto",
       "publicPath": "auto",
       "scriptLoading": "defer",
       "showErrors": true,
@@ -53,7 +54,26 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
       "title": "Rsbuild App",
       "xhtml": false,
     },
-    "version": 6,
+    "userOptions": {
+      "chunks": [
+        "index",
+      ],
+      "entryName": "index",
+      "filename": "index.html",
+      "inject": "head",
+      "meta": {
+        "charset": {
+          "charset": "UTF-8",
+        },
+        "viewport": "width=device-width, initial-scale=1.0",
+      },
+      "scriptLoading": "defer",
+      "template": "",
+      "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+      "templateParameters": [Function],
+      "title": "Rsbuild App",
+    },
+    "version": 5,
   },
   RsbuildHtmlPlugin {
     "getEnvironment": [Function],

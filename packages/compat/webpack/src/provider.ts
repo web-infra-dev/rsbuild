@@ -14,6 +14,13 @@ export const webpackProvider: RsbuildProvider<'webpack'> = async ({
   const { default: cssExtractPlugin } = await import('mini-css-extract-plugin');
   helpers.setCssExtractPlugin(cssExtractPlugin);
 
+  if (helpers.setHTMLPlugin) {
+    const { default: htmlPlugin } = await import('html-webpack-plugin');
+    helpers.setHTMLPlugin(
+      htmlPlugin as unknown as Parameters<typeof helpers.setHTMLPlugin>[0],
+    );
+  }
+
   const createCompiler = (async () => {
     const result = await baseCreateCompiler({
       context,

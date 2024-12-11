@@ -2,7 +2,7 @@
  * Helpers for `@rsbuild/webpack`.
  */
 
-export { setCssExtractPlugin } from '../pluginHelper';
+export { setCssExtractPlugin, setHTMLPlugin } from '../pluginHelper';
 export { initRsbuildConfig } from './initConfigs';
 export {
   stringifyConfig,
