@@ -85,6 +85,7 @@ const getDefaultServerConfig = (): NormalizedServerConfig => ({
   compress: true,
   printUrls: true,
   strictPort: false,
+  cors: true,
 });
 
 let swcHelpersPath: string;

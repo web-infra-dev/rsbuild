@@ -56,7 +56,7 @@ export class RsbuildProdServer {
   }
 
   private async applyDefaultMiddlewares() {
-    const { headers, proxy, historyApiFallback, compress, base } =
+    const { headers, proxy, historyApiFallback, compress, base, cors } =
       this.options.serverConfig;
 
     if (logger.level === 'verbose') {
@@ -80,6 +80,15 @@ export class RsbuildProdServer {
         }
         next();
       });
+    }
+
+    if (cors) {
+      const { default: corsMiddleware } = await import(
+        '../../compiled/cors/index.js'
+      );
+      this.middlewares.use(
+        corsMiddleware(typeof cors === 'boolean' ? {} : cors),
+      );
     }
 
     if (proxy) {

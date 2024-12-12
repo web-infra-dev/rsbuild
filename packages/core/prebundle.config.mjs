@@ -41,6 +41,7 @@ export default {
     'mrmime',
     'tinyglobby',
     'chokidar',
+    'cors',
     {
       name: 'picocolors',
       beforeBundle({ depPath }) {
