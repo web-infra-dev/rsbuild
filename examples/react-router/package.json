@@ -9,16 +9,15 @@
   },
   "scripts": {
     "build": "rsbuild build",
-    "dev": "NODE_ENV=development tsx ./server.mjs",
+    "dev": "NODE_ENV=development node ./server.mjs",
     "start": "NODE_ENV=production node ./dist/server.js",
-    "build:server": "node server.mjs",
+    "build:server": "tsc server.ts --esModuleInterop --module esnext --target esnext --moduleResolution bundler --allowJs --outDir dist",
     "build:all": "npm run build:server && npm run build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@rsbuild/plugin-typed-css-modules": "^1.0.2",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-react": "workspace:*",
     "@rsbuild/plugin-react-router": "workspace:*",
@@ -35,6 +34,7 @@
     "@types/react-dom": "^18.2.18",
     "concurrently": "^9.1.0",
     "prettier": "^3.3.3",
+    "tsx": "^4.7.0",
     "typescript": "^5.5.4"
   }
 }

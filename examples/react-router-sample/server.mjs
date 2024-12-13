@@ -1,53 +1,19 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createRsbuild, loadConfig } from '@rsbuild/core';
-import type { RsbuildInstance } from '@rsbuild/core';
-//@ts-nocheck
 import express from 'express';
-import type {
-  Request as ExpressRequest,
-  Response as ExpressResponse,
-  NextFunction,
-} from 'express';
-import type { Assets } from './app/context';
 
 const PORT = process.env.PORT ? Number.parseInt(process.env.PORT, 10) : 4000;
 
-interface ServerError extends Error {
-  status?: number;
-  code?: string;
-}
-
-interface Manifest {
-  entries: {
-    [key: string]: {
-      initial: {
-        js: string[];
-        css: string[];
-      };
-    };
-  };
-  namedChunks: {
-    [key: string]: {
-      js?: string[];
-      css?: string[];
-    };
-  };
-}
-
-interface ServerModule {
-  handler: (request: Request, assets?: Assets) => Promise<Response>;
-}
-
-async function getManifestAssets(routeId?: string): Promise<Assets> {
+async function getManifestAssets(routeId) {
   try {
     const manifestPath = path.join(process.cwd(), 'dist/manifest.json');
     const manifestContent = await fs.readFile(manifestPath, 'utf-8');
-    const manifest = JSON.parse(manifestContent) as Manifest;
+    const manifest = JSON.parse(manifestContent);
     const { js = [], css = [] } = manifest.entries.client.initial;
 
     // Get route-specific assets if routeId is provided
-    let routeAssets: { js: string[]; css: string[] } = { js: [], css: [] };
+    let routeAssets = { js: [], css: [] };
     if (routeId && manifest.namedChunks[routeId]) {
       const { js: routeJs = [], css: routeCss = [] } =
         manifest.namedChunks[routeId];
@@ -64,28 +30,23 @@ async function getManifestAssets(routeId?: string): Promise<Assets> {
   }
 }
 
-async function createSSRHandler(rsbuildServer: RsbuildInstance) {
-  return async (
-    req: ExpressRequest,
-    res: ExpressResponse,
-    next: NextFunction,
-  ) => {
+async function createSSRHandler(rsbuildServer) {
+  return async (req, res, next) => {
     try {
       if (!req.headers.host) {
-        const error: ServerError = new Error('No host header present');
+        const error = new Error('No host header present');
         error.status = 400;
         throw error;
       }
 
       // Load Node bundle for SSR
-      const serverModule = (await rsbuildServer.environments?.node.loadBundle(
-        'server',
-      )) as ServerModule;
+      const serverModule =
+        await rsbuildServer.environments?.node.loadBundle('server');
 
       const url = new URL(req.url, `http://${req.headers.host}`);
       const request = new Request(url, {
         method: req.method,
-        headers: req.headers as HeadersInit,
+        headers: req.headers,
         ...(req.method !== 'GET' && { body: req.body }),
       });
 
@@ -101,12 +62,11 @@ async function createSSRHandler(rsbuildServer: RsbuildInstance) {
       });
       res.send(responseText);
     } catch (err) {
-      const error = err as ServerError;
-      console.error('SSR render error:', error);
+      console.error('SSR render error:', err);
       if (process.env.NODE_ENV === 'production') {
-        res.status(error.status || 500).send('Internal Server Error');
+        res.status(err.status || 500).send('Internal Server Error');
       } else {
-        next(error);
+        next(err);
       }
     }
   };
@@ -115,11 +75,11 @@ async function createSSRHandler(rsbuildServer: RsbuildInstance) {
 async function startDevServer() {
   const app = express();
 
-  let rsbuildServer: RsbuildDevServer;
+  let rsbuildServer;
   try {
     const { content } = await loadConfig({});
     if (!content) {
-      const error: ServerError = new Error('Failed to load Rsbuild config');
+      const error = new Error('Failed to load Rsbuild config');
       error.code = 'CONFIG_LOAD_ERROR';
       throw error;
     }
@@ -130,8 +90,7 @@ async function startDevServer() {
 
     rsbuildServer = await rsbuild.createDevServer();
   } catch (err) {
-    const error = err as ServerError;
-    console.error('Failed to initialize Rsbuild:', error);
+    console.error('Failed to initialize Rsbuild:', err);
     process.exit(1);
   }
 
@@ -152,7 +111,7 @@ async function startDevServer() {
   rsbuildServer.connectWebSocket({ server: httpServer });
 
   // Handle graceful shutdown
-  const shutdown = (signal: string) => {
+  const shutdown = (signal) => {
     console.log(`Received ${signal}. Shutting down gracefully...`);
     httpServer.close(() => {
       console.log('Server closed');
@@ -164,7 +123,7 @@ async function startDevServer() {
   process.on('SIGINT', () => shutdown('SIGINT'));
 
   // Handle uncaught errors
-  process.on('uncaughtException', (err: Error) => {
+  process.on('uncaughtException', (err) => {
     console.error('Uncaught exception:', err);
     httpServer.close(() => process.exit(1));
   });
@@ -187,7 +146,7 @@ async function startProdServer() {
   // Initialize Rsbuild for production
   const { content } = await loadConfig({});
   if (!content) {
-    const error: ServerError = new Error('Failed to load Rsbuild config');
+    const error = new Error('Failed to load Rsbuild config');
     error.code = 'CONFIG_LOAD_ERROR';
     throw error;
   }
@@ -216,7 +175,7 @@ async function startProdServer() {
   });
 
   // Handle graceful shutdown
-  const shutdown = (signal: string) => {
+  const shutdown = (signal) => {
     console.log(`Received ${signal}. Shutting down gracefully...`);
     server.close(() => {
       console.log('Server closed');
@@ -228,7 +187,7 @@ async function startProdServer() {
   process.on('SIGINT', () => shutdown('SIGINT'));
 
   // Handle uncaught errors
-  process.on('uncaughtException', (err: Error) => {
+  process.on('uncaughtException', (err) => {
     console.error('Uncaught exception:', err);
     server.close(() => process.exit(1));
   });
@@ -236,12 +195,12 @@ async function startProdServer() {
 
 // Start the appropriate server based on NODE_ENV
 if (process.env.NODE_ENV === 'production') {
-  startProdServer().catch((err: Error) => {
+  startProdServer().catch((err) => {
     console.error('Failed to start production server:', err);
     process.exit(1);
   });
 } else {
-  startDevServer().catch((err: Error) => {
+  startDevServer().catch((err) => {
     console.error('Failed to start development server:', err);
     process.exit(1);
   });
