@@ -1,0 +1,60 @@
+# server.cors
+
+- **Type:** `boolean | import('cors').CorsOptions`
+- **Default:** `true`
+- **Version:** `>= 1.1.11`
+
+Configure [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) options for the dev server or preview server, based on the [cors](https://github.com/expressjs/cors) middleware.
+
+- `true`：Enable CORS with default options.
+- `false`：Disable CORS.
+- `object`：Enable CORS with the specified options.
+
+## Example
+
+Only enable CORS for the dev server:
+
+```ts
+export default {
+  server: {
+    cors: process.env.NODE_ENV === 'development',
+  },
+};
+```
+
+Disable CORS:
+
+```ts
+export default {
+  server: {
+    cors: false,
+  },
+};
+```
+
+## Options
+
+The `cors` option can be an object, which is the same as the [cors](https://github.com/expressjs/cors) middleware options.
+
+The default configuration is the equivalent of:
+
+```js
+const defaultOptions = {
+  origin: '*',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+};
+```
+
+For example, use the `origin` option to configure the `Access-Control-Allow-Origin` header:
+
+```ts
+export default {
+  server: {
+    cors: {
+      origin: 'https://example.com',
+    },
+  },
+};
+```
