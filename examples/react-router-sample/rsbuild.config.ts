@@ -4,7 +4,17 @@ import { pluginReactRouter } from '@rsbuild/plugin-react-router';
 import { pluginTypedCSSModules } from '@rsbuild/plugin-typed-css-modules';
 
 export default defineConfig({
-  plugins: [pluginReact(), pluginReactRouter(), pluginTypedCSSModules()],
+  plugins: [
+    pluginReact(),
+    pluginReactRouter({
+      // React Router specific options
+      router: {
+        staticHandler: true, // Enable static handler for React Router
+        dataRouter: true, // Enable data router for React Router
+      },
+    }),
+    pluginTypedCSSModules(),
+  ],
   environments: {
     // Configure the web environment for browsers
     web: {
@@ -17,9 +27,6 @@ export default defineConfig({
         manifest: true,
         target: 'web',
       },
-      // html: {
-      //   template: './index.html',
-      // },
     },
     // Configure the node environment for SSR
     node: {
