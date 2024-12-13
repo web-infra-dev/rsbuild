@@ -1,10 +1,14 @@
+import { lazy } from 'react';
 import type { ActionFunctionArgs, LoaderFunctionArgs } from 'react-router';
-import About from './about.js';
 import aboutLoader from './about.loader.js';
-import Home from './home.js';
 import Layout from './layout.js';
+// import Home from './home.js';
+// import About from './about.js';
 
 const isServer = typeof document === 'undefined';
+
+const Home = lazy(() => import(/* webpackChunkName: "home" */ './home.js'));
+const About = lazy(() => import(/* webpackChunkName: "about" */ './about.js'));
 
 export default [
   {

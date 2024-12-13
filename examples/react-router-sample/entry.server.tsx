@@ -1,5 +1,7 @@
+/* cspell:words Pipeable */
+import { Writable } from 'node:stream';
 import { StrictMode } from 'react';
-import { renderToString } from 'react-dom/server';
+import { renderToPipeableStream } from 'react-dom/server';
 import {
   StaticRouterProvider,
   createStaticHandler,
@@ -25,17 +27,35 @@ export async function handleDocumentRequest(request: Request, assets?: Assets) {
   }
 
   const router = createStaticRouter(dataRoutes, context);
+  const deepestMatch = context.matches[context.matches.length - 1];
+  const routeId = deepestMatch.route.id;
+
+  // Get assets including route-specific ones
+  const routeAssets = assets || { scriptTags: [], styleTags: [] };
 
   // Render the app content
-  const appHtml = renderToString(
+  let appHtml = '';
+  const stream = renderToPipeableStream(
     <StrictMode>
-      <AssetsContext.Provider
-        value={assets || { scriptTags: [], styleTags: [] }}
-      >
+      <AssetsContext.Provider value={routeAssets}>
         <StaticRouterProvider router={router} context={context} />
       </AssetsContext.Provider>
     </StrictMode>,
   );
+
+  await new Promise<void>((resolve) => {
+    const writable = new Writable({
+      write(chunk, _encoding, callback) {
+        appHtml += chunk;
+        callback();
+      },
+      final(callback) {
+        resolve();
+        callback();
+      },
+    });
+    stream.pipe(writable);
+  });
 
   // Create the full HTML document with hydration data
   const html = `<!DOCTYPE html>
@@ -43,7 +63,7 @@ export async function handleDocumentRequest(request: Request, assets?: Assets) {
   <head>
     <meta charset="UTF-8" />
     <title>React Router Custom Framework</title>
-    ${assets?.styleTags.map((tag) => `<link rel="stylesheet" href="${tag}" />`).join('\n    ') || ''}
+    ${routeAssets.styleTags.map((tag) => `<link rel="stylesheet" href="${tag}" />`).join('\n    ') || ''}
   </head>
   <body>
     <div id="root">${appHtml}</div>
@@ -53,13 +73,12 @@ export async function handleDocumentRequest(request: Request, assets?: Assets) {
         '\\u003c',
       )};
     </script>
-    ${assets?.scriptTags.map((tag) => `<script defer src="${tag}"></script>`).join('\n    ') || ''}
+    ${routeAssets.scriptTags.map((tag) => `<script defer src="${tag}"></script>`).join('\n    ') || ''}
   </body>
 </html>`;
 
-  const deepestMatch = context.matches[context.matches.length - 1];
-  const actionHeaders = context.actionHeaders[deepestMatch.route.id];
-  const loaderHeaders = context.loaderHeaders[deepestMatch.route.id];
+  const actionHeaders = context.actionHeaders[routeId];
+  const loaderHeaders = context.loaderHeaders[routeId];
 
   const headers = new Headers(actionHeaders);
 

@@ -27,22 +27,36 @@ interface Manifest {
       };
     };
   };
+  namedChunks: {
+    [key: string]: {
+      js?: string[];
+      css?: string[];
+    };
+  };
 }
 
 interface ServerModule {
   handler: (request: Request, assets?: Assets) => Promise<Response>;
 }
 
-async function getManifestAssets(): Promise<Assets> {
+async function getManifestAssets(routeId?: string): Promise<Assets> {
   try {
     const manifestPath = path.join(process.cwd(), 'dist/manifest.json');
     const manifestContent = await fs.readFile(manifestPath, 'utf-8');
     const manifest = JSON.parse(manifestContent) as Manifest;
-    const { js, css } = manifest.entries.client.initial;
+    const { js = [], css = [] } = manifest.entries.client.initial;
+
+    // Get route-specific assets if routeId is provided
+    let routeAssets: { js: string[]; css: string[] } = { js: [], css: [] };
+    if (routeId && manifest.namedChunks[routeId]) {
+      const { js: routeJs = [], css: routeCss = [] } =
+        manifest.namedChunks[routeId];
+      routeAssets = { js: routeJs, css: routeCss };
+    }
 
     return {
-      scriptTags: js,
-      styleTags: css,
+      scriptTags: [...js, ...routeAssets.js],
+      styleTags: [...css, ...routeAssets.css],
     };
   } catch (error) {
     console.error('Error reading manifest:', error);
@@ -75,7 +89,9 @@ async function createSSRHandler(rsbuildServer: RsbuildInstance) {
         ...(req.method !== 'GET' && { body: req.body }),
       });
 
-      const assets = await getManifestAssets();
+      // Get route ID from URL path
+      const routeId = url.pathname.split('/').pop() || 'home';
+      const assets = await getManifestAssets(routeId);
       const response = await serverModule.handler(request, assets);
       const responseText = await response.text();
 
