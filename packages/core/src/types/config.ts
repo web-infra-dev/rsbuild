@@ -13,6 +13,7 @@ import type {
   rspack,
 } from '@rspack/core';
 import type { ChokidarOptions } from '../../compiled/chokidar/index.js';
+import type cors from '../../compiled/cors/index.js';
 import type {
   Options as HttpProxyOptions,
   Filter as ProxyFilter,
@@ -385,6 +386,15 @@ export interface ServerConfig {
         before?: () => Promise<void> | void;
       };
   /**
+   * Configure CORS for the dev server or preview server.
+   * - true: enable CORS with default options.
+   * - false: disable CORS.
+   * - object: enable CORS with the specified options.
+   * @default true
+   * @link https://github.com/expressjs/cors
+   */
+  cors?: boolean | cors.CorsOptions;
+  /**
    * Configure proxy rules for the dev server or preview server to proxy requests to the specified service.
    */
   proxy?: ProxyConfig;
@@ -410,6 +420,7 @@ export type NormalizedServerConfig = ServerConfig &
       | 'printUrls'
       | 'open'
       | 'base'
+      | 'cors'
     >
   >;
 

@@ -108,6 +108,15 @@ const applyDefaultMiddlewares = async ({
     next();
   });
 
+  if (server.cors) {
+    const { default: corsMiddleware } = await import(
+      '../../compiled/cors/index.js'
+    );
+    middlewares.push(
+      corsMiddleware(typeof server.cors === 'boolean' ? {} : server.cors),
+    );
+  }
+
   // dev proxy handler, each proxy has own handler
   if (server.proxy) {
     const { middlewares: proxyMiddlewares, upgrade } =
