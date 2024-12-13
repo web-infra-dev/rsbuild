@@ -31,7 +31,7 @@ export type RouterOptions = {
   dataRouter?: boolean;
 };
 
-export type PluginReactOptions = {
+export type PluginReactRouterOptions = {
   /**
    * Configure the behavior of SWC to transform React code,
    * the same as SWC's [jsc.transform.react](https://swc.rs/docs/configuration/compilation#jsctransformreact).
@@ -60,19 +60,25 @@ export type PluginReactOptions = {
    * React Router specific options
    */
   router?: RouterOptions;
+  /**
+   * Whether to enable Server-Side Rendering (SSR) support.
+   * @default true
+   */
+  ssr?: boolean;
 };
 
 export const PLUGIN_REACT_ROUTER_NAME = 'rsbuild:react-router';
 
 export const pluginReactRouter = (
-  options: PluginReactOptions = {},
+  options: PluginReactRouterOptions = {},
 ): RsbuildPlugin => ({
   name: PLUGIN_REACT_ROUTER_NAME,
 
   setup(api) {
-    const defaultOptions: PluginReactOptions = {
+    const defaultOptions: PluginReactRouterOptions = {
       fastRefresh: true,
       enableProfiler: false,
+      ssr: true,
       router: {
         staticHandler: true,
         dataRouter: true,
@@ -89,8 +95,8 @@ export const pluginReactRouter = (
 
     // Detect if SSR is enabled by checking if node environment exists
     // const isSSR = Boolean(api.context.environments?.node);
-    const isSSR = true;
-    if (isSSR) {
+
+    if (options.ssr) {
       api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
         const ssrConfig = {
           output: {

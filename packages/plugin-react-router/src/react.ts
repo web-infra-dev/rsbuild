@@ -6,13 +6,13 @@ import type {
   RsbuildPluginAPI,
   Rspack,
 } from '@rsbuild/core';
-import type { PluginReactOptions } from './index.js';
+import type { PluginReactRouterOptions } from './index.js';
 
 const require = createRequire(import.meta.url);
 
 export const applyBasicReactSupport = (
   api: RsbuildPluginAPI,
-  options: PluginReactOptions,
+  options: PluginReactRouterOptions,
 ): void => {
   const REACT_REFRESH_PATH = options.fastRefresh
     ? require.resolve('react-refresh')
