@@ -1,9 +1,12 @@
 import { promises } from 'node:fs';
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import { logger } from '@rsbuild/core';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import { sveltePreprocess } from 'svelte-preprocess';
 import type { CompileOptions } from 'svelte/compiler';
+
+const require = createRequire(import.meta.url);
 
 export type AutoPreprocessOptions = NonNullable<
   Parameters<typeof sveltePreprocess>[0]
