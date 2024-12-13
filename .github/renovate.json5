@@ -31,9 +31,9 @@
       matchPackageNames: ['/rslib/'],
     },
     {
-      groupName: 'modern-js',
-      groupSlug: 'modern-js',
-      matchPackageNames: ['/modern-js/'],
+      groupName: 'sass',
+      groupSlug: 'sass',
+      matchPackageNames: ['/sass/'],
     },
     {
       groupName: 'eslint',
