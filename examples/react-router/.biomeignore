@@ -1,0 +1,8 @@
+# Build output directories
+**/dist/**
+**/public/js/**
+**/build/**
+
+# Other common build artifacts
+**/.cache/**
+**/.temp/** 

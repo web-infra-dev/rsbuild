@@ -409,6 +409,49 @@ importers:
         specifier: ^5.7.2
         version: 5.7.2
 
+  examples/react-router:
+    dependencies:
+      '@mjackson/node-fetch-server':
+        specifier: ^0.3.0
+        version: 0.3.0
+      '@rsbuild/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@rsbuild/plugin-react':
+        specifier: workspace:*
+        version: link:../../packages/plugin-react
+      '@types/react':
+        specifier: ^18.2.48
+        version: 18.3.16
+      '@types/react-dom':
+        specifier: ^18.2.18
+        version: 18.3.5(@types/react@18.3.16)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+      react-router:
+        specifier: 7.0.0-pre.6
+        version: 7.0.0-pre.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+    devDependencies:
+      '@types/node':
+        specifier: ^22.4.1
+        version: 22.10.1
+      concurrently:
+        specifier: ^9.1.0
+        version: 9.1.0
+      prettier:
+        specifier: ^3.3.3
+        version: 3.4.2
+      tsimp:
+        specifier: ^2.0.11
+        version: 2.0.12(typescript@5.7.2)
+      typescript:
+        specifier: ^5.5.4
+        version: 5.7.2
+
   examples/solid:
     dependencies:
       solid-js:
@@ -2005,6 +2048,12 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@isaacs/cached@1.0.1':
+    resolution: {integrity: sha512-7kGcJ9Hc1f4qpTApWz3swxbF9Qv1NF/GxuPtXeTptbsgvJIoufSd0h854Nq/2bw80F5C1onsFgEI05l+q0e4vw==}
+
+  '@isaacs/catcher@1.0.4':
+    resolution: {integrity: sha512-g2klMwbnguClWNnCeQ1zYaDJsvPbIbnjdJPDE0z09MqoejJDZSLK5vIKiClq2Bkg5ubuI8vaN6wfIUi5GYzMVA==}
+
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
     engines: {node: '>=12'}
@@ -2076,6 +2125,9 @@ packages:
     resolution: {integrity: sha512-zQH//gdOmuu7nt2oJR29vFhDv88oGPmVw6BggmrHeMI+xgEkp1B2dX9/bMBSYtK0dyLX/aOmesKS09g222K1/g==}
     peerDependencies:
       react: '>=16'
+
+  '@mjackson/node-fetch-server@0.3.0':
+    resolution: {integrity: sha512-p+wzVVjYI6pi+t9hRMZngfwywE4CaPu3ZuYkB3+fkS1bSPAxZikXeIdeuOTiy5oqltOOODG0hoe55FR2PRmF/A==}
 
   '@modern-js/swc-plugins-darwin-arm64@0.6.11':
     resolution: {integrity: sha512-UMH0bo20vcD10//F7KaINLfuHawQBVcWCCyJvkYOiBt7e1tUjeybKu+y6eNq1USyFVElEMul8ytnYdwAS9sY+w==}
@@ -2488,11 +2540,6 @@ packages:
     resolution: {integrity: sha512-HGZgRFFYrMrP3TJlq58nR1xy8zHKId25vhmm5S9jETEfDf6xybPxsavFTJaufe2zgOGYJBskGlj49CwtEuFhWQ==}
     cpu: [x64]
     os: [win32]
-
-  '@rsbuild/core@1.1.8':
-    resolution: {integrity: sha512-UhP260og3aJcqGWpnRcQXLVapdOZZ09JXaQKY+tE55A7nBw8DQy+qrtTsFZYvVKas1bq8GzhGfLxuglCst4Lnw==}
-    engines: {node: '>=16.7.0'}
-    hasBin: true
 
   '@rsbuild/core@1.1.9':
     resolution: {integrity: sha512-mHZveEwlTtW9nxWa+T0xUm6ssm+HkDYZ0NENLfWMUmsL0LjMJrpQzRlbD+p5+9Uf+KXUo3Dbtv0ScA+p7cuGTg==}
@@ -2915,8 +2962,19 @@ packages:
   '@types/on-finished@2.3.4':
     resolution: {integrity: sha512-Ld4UQD3udYcKPaAWlI1EYXKhefkZcTlpqOLkQRmN3u5Ml/tUypMivUHbNH8LweP4H4FlhGGO+uBjJI1Y1dkE1g==}
 
+  '@types/prop-types@15.7.14':
+    resolution: {integrity: sha512-gNMvNH49DJ7OJYv+KAKn0Xp45p8PLl6zo2YnvDIbTd4J6MER2BmWN49TG7n9LvkyihINxeKW8+3bfS2yDC9dzQ==}
+
+  '@types/react-dom@18.3.5':
+    resolution: {integrity: sha512-P4t6saawp+b/dFrUr2cvkVsfvPguwsxtH6dNIYRllMsefqFzkZk5UIjzyDOv5g1dXIPdG4Sp1yCR4Z6RCUsG/Q==}
+    peerDependencies:
+      '@types/react': ^18.0.0
+
   '@types/react-dom@19.0.1':
     resolution: {integrity: sha512-hljHij7MpWPKF6u5vojuyfV0YA4YURsQG7KT6SzV0Zs2BXAtgdTxG6A229Ub/xiWV4w/7JL8fi6aAyjshH4meA==}
+
+  '@types/react@18.3.16':
+    resolution: {integrity: sha512-oh8AMIC4Y2ciKufU8hnKgs+ufgbA/dhPTACaZPM86AbwX9QwnFtSoPWEeRUj8fge+v6kFt78BXcDhAU1SrrAsw==}
 
   '@types/react@19.0.1':
     resolution: {integrity: sha512-YW6614BDhqbpR5KtUYzTA+zlA7nayzJRA9ljz9CQoxthR0sDisYZLuvSMsil36t4EH/uAt8T52Xb4sVw17G+SQ==}
@@ -3504,6 +3562,11 @@ packages:
 
   common-path-prefix@3.0.0:
     resolution: {integrity: sha512-QE33hToZseCH3jS0qN96O/bSh3kaw/h+Tq7ngyY9eWDUnTlTNUyqfqvCXioLe5Na5jFsL78ra/wuBU4iuEgd4w==}
+
+  concurrently@9.1.0:
+    resolution: {integrity: sha512-VxkzwMAn4LP7WyMnJNbHN5mKV9L2IbyDjpzemKr99sXNR3GqRNMMHdm7prV1ws9wg7ETj6WUkNOigZVsptwbgg==}
+    engines: {node: '>=18'}
+    hasBin: true
 
   connect-history-api-fallback@2.0.0:
     resolution: {integrity: sha512-U73+6lQFmfiNPrYbXqr6kZ1i1wiRqXnp2nhMsINseWXO8lDau0LGEffJ8kQi4EjLZympVgRdvqjAgiZ1tgzDDA==}
@@ -4136,6 +4199,11 @@ packages:
     resolution: {integrity: sha512-7Bv8RF0k6xjo7d4A/PxYLbUCfb6c+Vpd2/mB2yRDlew7Jb5hEXiCD9ibfO7wpk8i4sevK6DFny9h7EYbM3/sHg==}
     hasBin: true
 
+  glob@11.0.0:
+    resolution: {integrity: sha512-9UiX/Bl6J2yaBbxKoEBRm4Cipxgok8kQYcOPEhScPwebu2I0HoQOuYdIO6S3hLuWoZgpDpwQZMzTFxgpkyT76g==}
+    engines: {node: 20 || >=22}
+    hasBin: true
+
   global-modules@1.0.0:
     resolution: {integrity: sha512-sKzpEkf11GpOFuw0Zzjzmt4B4UZwjOcG757PPvrfhxcLFbq0wpsgpOqxpxtxFiCG4DtG93M6XRVbF2oGdev7bg==}
     engines: {node: '>=0.10.0'}
@@ -4508,6 +4576,10 @@ packages:
   jackspeak@3.4.3:
     resolution: {integrity: sha512-OGlZQpz2yfahA/Rd1Y8Cd9SIEsqvXkLVoSw/cgwhnhFMDbsQFeZYoJJ7bIZBS9BcamUW96asq/npPWugM+RQBw==}
 
+  jackspeak@4.0.2:
+    resolution: {integrity: sha512-bZsjR/iRjl1Nk1UkjGpAzLNfQtzuijhn2g+pbZb98HQ1Gk8vM9hfbxeMBP+M2/UUdwj0RqGG3mlvk2MsAqwvEw==}
+    engines: {node: 20 || >=22}
+
   javascript-stringify@2.1.0:
     resolution: {integrity: sha512-JVAfqNPTvNq3sB/VHQJAFxN/sPgKnsKrCwyRt15zwNCdrMMJDdcEOdubuy+DuJYYdm0ox1J4uzEuYKkN+9yhVg==}
 
@@ -4703,6 +4775,10 @@ packages:
 
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
+
+  lru-cache@11.0.2:
+    resolution: {integrity: sha512-123qHRfJBmo2jXDbo/a5YOQrJoHF/GNQTLzQ5+IdK5pWpceK17yRc6ozlWd25FxvGKQbIUs91fDFkXmDHTKcyA==}
+    engines: {node: 20 || >=22}
 
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
@@ -4939,6 +5015,10 @@ packages:
     peerDependencies:
       webpack: ^5.0.0
 
+  minimatch@10.0.1:
+    resolution: {integrity: sha512-ethXTt3SGGR+95gudmqJ1eNhRO7eGEGIgYA9vnPatK4/etz2MEVDno5GMCibdMTuBMyElzIlgxMna3K94XDIDQ==}
+    engines: {node: 20 || >=22}
+
   minimatch@9.0.3:
     resolution: {integrity: sha512-RHiac9mvaRw0x3AYRgDC1CxAP7HTcNrrECeA8YYJeWnpo+2Q5CegtZjaotWTWxDG3UeGA1coE05iH1mPjT/2mg==}
     engines: {node: '>=16 || 14 >=14.17'}
@@ -4953,6 +5033,11 @@ packages:
   minipass@7.1.2:
     resolution: {integrity: sha512-qOOzS1cBTWYF4BH8fVePDBOO9iptMnGUEZwNc/cMWnTV2nVLZ7VoNWEPHkYczZA0pdoA7dl6e7FL659nX9S2aw==}
     engines: {node: '>=16 || 14 >=14.17'}
+
+  mkdirp@3.0.1:
+    resolution: {integrity: sha512-+NsyUUAZDmo6YVHzL/stxSu3t9YS1iljliy3BSDrXJ/dkn1KYdmtZODGGjLcc9XLgVVpH4KshHB8XmZgMhaBXg==}
+    engines: {node: '>=10'}
+    hasBin: true
 
   moment@2.30.1:
     resolution: {integrity: sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==}
@@ -5191,6 +5276,10 @@ packages:
   path-scurry@1.11.1:
     resolution: {integrity: sha512-Xa4Nw17FS9ApQFJ9umLiJS4orGjm7ZzwUrwamcGQuHSzDyth9boKDaycYdDcZDuqYATXw4HFXgaqWTctW/v1HA==}
     engines: {node: '>=16 || 14 >=14.18'}
+
+  path-scurry@2.0.0:
+    resolution: {integrity: sha512-ypGJsmGtdXUOeM5u93TyeIEfEhM6s+ljAhrk5vAvSx8uyY/02OvrZnA0YNGUrPXfpJMgI1ODd3nwz8Npx4O4cg==}
+    engines: {node: 20 || >=22}
 
   path-serializer@0.3.4:
     resolution: {integrity: sha512-bqNF6KKbFn2hrTgybBTqAqjKOneLvpFmvYx43ppm8IcmfgYLh4aMmR35+GnnKYdd0l6gtBlaok+aRR0PSwtGaQ==}
@@ -5464,6 +5553,16 @@ packages:
     peerDependencies:
       react: '>=16.8'
 
+  react-router@7.0.0-pre.6:
+    resolution: {integrity: sha512-ln9gXs3ilZLGdggPetKYWzxrmMNykTipWxSXHUcB0qSJECkPTe3NcKo8fJx6dQfS4gS1zhCXGpHWRVasinnxOw==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+
   react-router@7.0.2:
     resolution: {integrity: sha512-m5AcPfTRUcjwmhBzOJGEl6Y7+Crqyju0+TgTQxoS4SO+BkWbhOrcfZNq6wSWdl2BBbJbsAoBUb8ZacOFT+/JlA==}
     engines: {node: '>=20.0.0'}
@@ -5608,6 +5707,15 @@ packages:
 
   rfdc@1.4.1:
     resolution: {integrity: sha512-q1b3N5QkRUWUl7iyylaaj3kOpIT0N2i9MqIEQXP73GVsN9cw3fdx8X63cEmWhJGi2PPCF23Ijp7ktmd39rawIA==}
+
+  rimraf@5.0.10:
+    resolution: {integrity: sha512-l0OE8wL34P4nJH/H2ffoaniAokM2qSmrtXHmlpvYr5AVVX8msAyW0l8NVJFDxlSK4u3Uh/f41cQheDVdnYijwQ==}
+    hasBin: true
+
+  rimraf@6.0.1:
+    resolution: {integrity: sha512-9dkvaxAsk/xNXSJzMgFqqMCuFgt2+KsOFek3TMLfo8NCPfWpBmqwyNn5Y+NX56QUYfCtsyhF3ayiboEoUmJk/A==}
+    engines: {node: 20 || >=22}
+    hasBin: true
 
   rollup-plugin-dts@6.1.1:
     resolution: {integrity: sha512-aSHRcJ6KG2IHIioYlvAOcEq6U99sVtqDDKVhnwt70rW6tsz3tv5OSjEiWcgzfsHdLyGXZ/3b/7b/+Za3Y6r1XA==}
@@ -5966,6 +6074,13 @@ packages:
   snake-case@3.0.4:
     resolution: {integrity: sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg==}
 
+  sock-daemon@1.4.2:
+    resolution: {integrity: sha512-IzbegWshWWR+UzQ7487mbdYNmfJ1jXUXQBUHooqtpylO+aW0vMVbFN2d2ug3CSPZ0wbG7ZTTGwpUuthIDFIOGg==}
+    engines: {node: 16 >=16.17.0 || 18 >= 18.6.0 || >=20}
+
+  socket-post-message@1.0.3:
+    resolution: {integrity: sha512-UhJaB3xR2oF+HvddFOq2cBZi4zVKOHvdiBo+BaScNxsEUg3TLWSP8BkweKfe07kfH1thjn1hJR0af/w1EtBFjg==}
+
   solid-js@1.9.3:
     resolution: {integrity: sha512-5ba3taPoZGt9GY3YlsCB24kCg0Lv/rie/HTD4kG6h4daZZz7+yK02xn8Vx8dLYBc9i6Ps5JwAbEiqjmKaLB3Ag==}
 
@@ -6280,6 +6395,10 @@ packages:
     peerDependencies:
       tslib: '2'
 
+  tree-kill@1.2.2:
+    resolution: {integrity: sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==}
+    hasBin: true
+
   trim-lines@3.0.1:
     resolution: {integrity: sha512-kRj8B+YHZCc9kQYdWfJB2/oUl9rA99qbowYYBtr4ui4mZyAQ2JpvVBd/6U2YloATfqBhBTSMhTpgBHtU0Mf3Rg==}
 
@@ -6300,6 +6419,13 @@ packages:
   tsconfig-paths@4.2.0:
     resolution: {integrity: sha512-NoZ4roiN7LnbKn9QqE1amc9DJfzvZXxF4xDavcOWt1BPkdx+m+0gJuPM+S0vCe7zTJMYUP0R8pO2XMr+Y8oLIg==}
     engines: {node: '>=6'}
+
+  tsimp@2.0.12:
+    resolution: {integrity: sha512-0XbhMfDB1BlN4iuheUaCUVB2iAjWb9z6Ik/6WcxREc4MhjYmkScK+CRNf34wkDO8wMvmFBb0lYdrd8H44g9yjg==}
+    engines: {node: 16 >=16.17.0 || 18 >= 18.6.0 || >=20}
+    hasBin: true
+    peerDependencies:
+      typescript: ^5.1.0
 
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
@@ -6545,6 +6671,10 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
+
+  walk-up-path@4.0.0:
+    resolution: {integrity: sha512-3hu+tD8YzSLGuFYtPRb48vdhKMi0KQV5sn+uWr8+7dMEq/2G/dtLrdDinkLjqq5TIbIBjYJ4Ax/n3YiaW7QM8A==}
+    engines: {node: 20 || >=22}
 
   watchpack@2.4.2:
     resolution: {integrity: sha512-TnbFSbcOCcDgjZ4piURLCbJ3nJhznVh9kw6F6iokjiFPl8ONxe9A6nMDVXDiNbrSfLILs6vB07F7wLBrwPYzJw==}
@@ -7660,6 +7790,12 @@ snapshots:
   '@esbuild/win32-x64@0.21.5':
     optional: true
 
+  '@isaacs/cached@1.0.1':
+    dependencies:
+      '@isaacs/catcher': 1.0.4
+
+  '@isaacs/catcher@1.0.4': {}
+
   '@isaacs/cliui@8.0.2':
     dependencies:
       string-width: 5.1.2
@@ -7768,6 +7904,8 @@ snapshots:
       '@types/mdx': 2.0.13
       '@types/react': 19.0.1
       react: 18.3.1
+
+  '@mjackson/node-fetch-server@0.3.0': {}
 
   '@modern-js/swc-plugins-darwin-arm64@0.6.11':
     optional: true
@@ -8133,13 +8271,6 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.24.3':
     optional: true
 
-  '@rsbuild/core@1.1.8':
-    dependencies:
-      '@rspack/core': 1.1.6(@swc/helpers@0.5.15)
-      '@rspack/lite-tapable': 1.0.1
-      '@swc/helpers': 0.5.15
-      core-js: 3.39.0
-
   '@rsbuild/core@1.1.9':
     dependencies:
       '@rspack/core': 1.1.6(@swc/helpers@0.5.15)
@@ -8212,8 +8343,8 @@ snapshots:
 
   '@rslib/core@0.1.3(typescript@5.7.2)':
     dependencies:
-      '@rsbuild/core': 1.1.8
-      rsbuild-plugin-dts: 0.1.3(@rsbuild/core@1.1.8)(typescript@5.7.2)
+      '@rsbuild/core': 1.1.9
+      rsbuild-plugin-dts: 0.1.3(@rsbuild/core@1.1.9)(typescript@5.7.2)
       tinyglobby: 0.2.10
     optionalDependencies:
       typescript: 5.7.2
@@ -8636,9 +8767,20 @@ snapshots:
     dependencies:
       '@types/node': 22.10.1
 
+  '@types/prop-types@15.7.14': {}
+
+  '@types/react-dom@18.3.5(@types/react@18.3.16)':
+    dependencies:
+      '@types/react': 18.3.16
+
   '@types/react-dom@19.0.1':
     dependencies:
       '@types/react': 19.0.1
+
+  '@types/react@18.3.16':
+    dependencies:
+      '@types/prop-types': 15.7.14
+      csstype: 3.1.3
 
   '@types/react@19.0.1':
     dependencies:
@@ -9284,6 +9426,16 @@ snapshots:
 
   common-path-prefix@3.0.0: {}
 
+  concurrently@9.1.0:
+    dependencies:
+      chalk: 4.1.2
+      lodash: 4.17.21
+      rxjs: 7.8.1
+      shell-quote: 1.8.1
+      supports-color: 8.1.1
+      tree-kill: 1.2.2
+      yargs: 17.7.2
+
   connect-history-api-fallback@2.0.0: {}
 
   connect@3.7.0:
@@ -9900,6 +10052,15 @@ snapshots:
       package-json-from-dist: 1.0.1
       path-scurry: 1.11.1
 
+  glob@11.0.0:
+    dependencies:
+      foreground-child: 3.3.0
+      jackspeak: 4.0.2
+      minimatch: 10.0.1
+      minipass: 7.1.2
+      package-json-from-dist: 1.0.1
+      path-scurry: 2.0.0
+
   global-modules@1.0.0:
     dependencies:
       global-prefix: 1.0.2
@@ -10302,6 +10463,10 @@ snapshots:
     optionalDependencies:
       '@pkgjs/parseargs': 0.11.0
 
+  jackspeak@4.0.2:
+    dependencies:
+      '@isaacs/cliui': 8.0.2
+
   javascript-stringify@2.1.0: {}
 
   jest-diff@29.7.0:
@@ -10516,6 +10681,8 @@ snapshots:
       highlight.js: 10.7.3
 
   lru-cache@10.4.3: {}
+
+  lru-cache@11.0.2: {}
 
   lru-cache@5.1.1:
     dependencies:
@@ -11002,6 +11169,10 @@ snapshots:
       tapable: 2.2.1
       webpack: 5.97.1
 
+  minimatch@10.0.1:
+    dependencies:
+      brace-expansion: 2.0.1
+
   minimatch@9.0.3:
     dependencies:
       brace-expansion: 2.0.1
@@ -11013,6 +11184,8 @@ snapshots:
   minimist@1.2.8: {}
 
   minipass@7.1.2: {}
+
+  mkdirp@3.0.1: {}
 
   moment@2.30.1: {}
 
@@ -11281,6 +11454,11 @@ snapshots:
       lru-cache: 10.4.3
       minipass: 7.1.2
 
+  path-scurry@2.0.0:
+    dependencies:
+      lru-cache: 11.0.2
+      minipass: 7.1.2
+
   path-serializer@0.3.4: {}
 
   path-type@4.0.0: {}
@@ -11513,6 +11691,16 @@ snapshots:
       '@remix-run/router': 1.21.0
       react: 18.3.1
 
+  react-router@7.0.0-pre.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      '@types/cookie': 0.6.0
+      cookie: 1.0.2
+      react: 18.3.1
+      set-cookie-parser: 2.7.1
+      turbo-stream: 2.4.0
+    optionalDependencies:
+      react-dom: 18.3.1(react@18.3.1)
+
   react-router@7.0.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       '@types/cookie': 0.6.0
@@ -11702,6 +11890,15 @@ snapshots:
 
   rfdc@1.4.1: {}
 
+  rimraf@5.0.10:
+    dependencies:
+      glob: 10.4.5
+
+  rimraf@6.0.1:
+    dependencies:
+      glob: 11.0.0
+      package-json-from-dist: 1.0.1
+
   rollup-plugin-dts@6.1.1(rollup@4.24.3)(typescript@5.7.2):
     dependencies:
       magic-string: 0.30.14
@@ -11743,9 +11940,9 @@ snapshots:
     optionalDependencies:
       webpack: 5.97.1
 
-  rsbuild-plugin-dts@0.1.3(@rsbuild/core@1.1.8)(typescript@5.7.2):
+  rsbuild-plugin-dts@0.1.3(@rsbuild/core@1.1.9)(typescript@5.7.2):
     dependencies:
-      '@rsbuild/core': 1.1.8
+      '@rsbuild/core': 1.1.9
       magic-string: 0.30.14
       picocolors: 1.1.1
       tinyglobby: 0.2.10
@@ -12017,6 +12214,14 @@ snapshots:
     dependencies:
       dot-case: 3.0.4
       tslib: 2.8.1
+
+  sock-daemon@1.4.2:
+    dependencies:
+      rimraf: 5.0.10
+      signal-exit: 4.1.0
+      socket-post-message: 1.0.3
+
+  socket-post-message@1.0.3: {}
 
   solid-js@1.9.3:
     dependencies:
@@ -12325,6 +12530,8 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
+  tree-kill@1.2.2: {}
+
   trim-lines@3.0.1: {}
 
   trough@2.2.0: {}
@@ -12347,6 +12554,19 @@ snapshots:
       json5: 2.2.3
       minimist: 1.2.8
       strip-bom: 3.0.0
+
+  tsimp@2.0.12(typescript@5.7.2):
+    dependencies:
+      '@isaacs/cached': 1.0.1
+      '@isaacs/catcher': 1.0.4
+      foreground-child: 3.3.0
+      mkdirp: 3.0.1
+      pirates: 4.0.6
+      rimraf: 6.0.1
+      signal-exit: 4.1.0
+      sock-daemon: 1.4.2
+      typescript: 5.7.2
+      walk-up-path: 4.0.0
 
   tslib@2.8.1: {}
 
@@ -12606,6 +12826,8 @@ snapshots:
       '@vue/shared': 3.5.13
     optionalDependencies:
       typescript: 5.7.2
+
+  walk-up-path@4.0.0: {}
 
   watchpack@2.4.2:
     dependencies:

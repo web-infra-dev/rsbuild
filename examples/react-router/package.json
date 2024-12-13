@@ -1,0 +1,35 @@
+{
+  "name": "react-router-custom",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:server": "tsc --outDir dist",
+    "watch:server": "tsc --outDir dist --watch",
+    "build:client": "rsbuild build",
+    "watch:client": "rsbuild dev",
+    "dev": "concurrently 'pnpm run watch:server' 'pnpm run watch:client' 'node --watch ./dist/server.js'",
+    "start": "pnpm run build:server && pnpm run build:client && node ./dist/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@mjackson/node-fetch-server": "^0.3.0",
+    "@rsbuild/core": "workspace:*",
+    "@rsbuild/plugin-react": "workspace:*",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router": "7.0.0-pre.6"
+  },
+  "devDependencies": {
+    "@types/node": "^22.4.1",
+    "concurrently": "^9.1.0",
+    "prettier": "^3.3.3",
+    "tsimp": "^2.0.11",
+    "typescript": "^5.5.4"
+  }
+}
