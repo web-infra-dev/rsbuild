@@ -1,5 +1,6 @@
 import type { ActionFunctionArgs, LoaderFunctionArgs } from 'react-router';
 
+// Import the shared db from server
 const db = { message: 'Hello world!' };
 
 export async function loader(args: LoaderFunctionArgs) {
@@ -10,5 +11,6 @@ export async function loader(args: LoaderFunctionArgs) {
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   db.message = String(formData.get('message'));
-  return { ok: true };
+  console.log(db);
+  return { message: db.message };
 }

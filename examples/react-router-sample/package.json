@@ -1,0 +1,41 @@
+{
+  "name": "react-router-custom",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "exports": {
+    "./server": "./server"
+  },
+  "scripts": {
+    "build": "rsbuild build",
+    "dev": "NODE_ENV=development tsx ./server.ts",
+    "start": "NODE_ENV=production node ./dist/server.js",
+    "build:server": "tsc server.ts --esModuleInterop --module esnext --target esnext --moduleResolution bundler --allowJs --outDir dist",
+    "build:all": "npm run build:server && npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@rsbuild/plugin-typed-css-modules": "^1.0.2",
+    "@rsbuild/core": "workspace:*",
+    "@rsbuild/plugin-react": "workspace:*",
+    "@rsbuild/plugin-react-router": "workspace:*",
+    "express": "^4.21.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router": "^7.0.2",
+    "react-router-dom": "^7.0.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.4.1",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "concurrently": "^9.1.0",
+    "prettier": "^3.3.3",
+    "tsx": "^4.7.0",
+    "typescript": "^5.5.4"
+  }
+}

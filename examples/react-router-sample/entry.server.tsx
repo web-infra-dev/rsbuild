@@ -5,41 +5,58 @@ import {
   createStaticHandler,
   createStaticRouter,
 } from 'react-router';
+import { type Assets, AssetsContext } from './app/context';
 import routes from './app/routes.js';
 
 const { query, dataRoutes, queryRoute } = createStaticHandler(routes);
 
-export async function handler(request: Request) {
-  // Decide if this is a request for data from our client loaders or the initial
-  // document request for HTML. React Router Vite uses [path].data to make this
-  // decision, headers could cause problems with a CDN, but it's good for
-  // illustration here
+export async function handler(request: Request, assets?: Assets) {
   if (request.headers.get('Accept')?.includes('application/json')) {
     return handleDataRequest(request);
   }
-  return handleDocumentRequest(request);
+  return handleDocumentRequest(request, assets);
 }
 
-export async function handleDocumentRequest(request: Request) {
-  // 1. Run action/loaders to get the routing context with `query`
+export async function handleDocumentRequest(request: Request, assets?: Assets) {
   const context = await query(request);
 
-  // If `query` returns a Response, send it raw (a route probably a redirected)
   if (context instanceof Response) {
     return context;
   }
 
-  // 2. Create a static router for SSR
   const router = createStaticRouter(dataRoutes, context);
 
-  // 3. Render everything with StaticRouterProvider
-  const html = renderToString(
+  // Render the app content
+  const appHtml = renderToString(
     <StrictMode>
-      <StaticRouterProvider router={router} context={context} />
+      <AssetsContext.Provider
+        value={assets || { scriptTags: [], styleTags: [] }}
+      >
+        <StaticRouterProvider router={router} context={context} />
+      </AssetsContext.Provider>
     </StrictMode>,
   );
 
-  // Setup headers from action and loaders from deepest match
+  // Create the full HTML document with hydration data
+  const html = `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>React Router Custom Framework</title>
+    ${assets?.styleTags.map((tag) => `<link rel="stylesheet" href="${tag}" />`).join('\n    ') || ''}
+  </head>
+  <body>
+    <div id="root">${appHtml}</div>
+    <script>
+      window.__staticRouterHydrationData = ${JSON.stringify(context).replace(
+        /</g,
+        '\\u003c',
+      )};
+    </script>
+    ${assets?.scriptTags.map((tag) => `<script defer src="${tag}"></script>`).join('\n    ') || ''}
+  </body>
+</html>`;
+
   const deepestMatch = context.matches[context.matches.length - 1];
   const actionHeaders = context.actionHeaders[deepestMatch.route.id];
   const loaderHeaders = context.loaderHeaders[deepestMatch.route.id];
@@ -47,15 +64,15 @@ export async function handleDocumentRequest(request: Request) {
   const headers = new Headers(actionHeaders);
 
   if (loaderHeaders) {
-    loaderHeaders.forEach((value, key) => {
+    //@ts-ignore
+    for (const [key, value] of loaderHeaders.entries()) {
       headers.append(key, value);
-    });
+    }
   }
 
   headers.set('Content-Type', 'text/html; charset=utf-8');
-  return new Response(`<!DOCTYPE html>${html}`, {
+  return new Response(html, {
     status: context.statusCode,
-    // 4. send proper headers
     headers,
   });
 }

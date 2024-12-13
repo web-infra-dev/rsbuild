@@ -5,13 +5,14 @@ import { RouterProvider } from 'react-router/dom';
 import routes from './app/routes.js';
 
 const router = createBrowserRouter(routes, {
-  // need to ensure this script runs AFTER <StaticRouterProvider> in
-  // entry.server.tsx so that window.__staticRouterHydrationData is available
   hydrationData: window.__staticRouterHydrationData,
 });
 
+const root = document.getElementById('root');
+if (!root) throw new Error('Root element not found');
+
 hydrateRoot(
-  document,
+  root,
   <StrictMode>
     <RouterProvider router={router} />
   </StrictMode>,
