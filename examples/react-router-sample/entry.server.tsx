@@ -6,20 +6,32 @@ import {
   StaticRouterProvider,
   createStaticHandler,
   createStaticRouter,
-} from 'react-router';
+} from 'react-router-dom';
 import { type Assets, AssetsContext } from './app/context';
 import routes from './app/routes.js';
 
 const { query, dataRoutes, queryRoute } = createStaticHandler(routes);
 
-export async function handler(request: Request, assets?: Assets) {
+interface RenderOptions {
+  mode?: 'buffered' | 'streaming';
+}
+
+export async function handler(
+  request: Request,
+  assets?: Assets,
+  options: RenderOptions = {},
+) {
   if (request.headers.get('Accept')?.includes('application/json')) {
     return handleDataRequest(request);
   }
-  return handleDocumentRequest(request, assets);
+  return handleDocumentRequest(request, assets, options);
 }
 
-export async function handleDocumentRequest(request: Request, assets?: Assets) {
+export async function handleDocumentRequest(
+  request: Request,
+  assets?: Assets,
+  options: RenderOptions = {},
+) {
   const context = await query(request);
 
   if (context instanceof Response) {
@@ -33,32 +45,26 @@ export async function handleDocumentRequest(request: Request, assets?: Assets) {
   // Get assets including route-specific ones
   const routeAssets = assets || { scriptTags: [], styleTags: [] };
 
-  // Render the app content
-  let appHtml = '';
-  const stream = renderToPipeableStream(
-    <StrictMode>
-      <AssetsContext.Provider value={routeAssets}>
-        <StaticRouterProvider router={router} context={context} />
-      </AssetsContext.Provider>
-    </StrictMode>,
-  );
+  const headers = new Headers();
+  const actionHeaders = context.actionHeaders[routeId];
+  const loaderHeaders = context.loaderHeaders[routeId];
 
-  await new Promise<void>((resolve) => {
-    const writable = new Writable({
-      write(chunk, _encoding, callback) {
-        appHtml += chunk;
-        callback();
-      },
-      final(callback) {
-        resolve();
-        callback();
-      },
-    });
-    stream.pipe(writable);
-  });
+  if (actionHeaders) {
+    for (const [key, value] of actionHeaders.entries()) {
+      headers.append(key, value);
+    }
+  }
 
-  // Create the full HTML document with hydration data
-  const html = `<!DOCTYPE html>
+  if (loaderHeaders) {
+    for (const [key, value] of loaderHeaders.entries()) {
+      headers.append(key, value);
+    }
+  }
+
+  headers.set('Content-Type', 'text/html; charset=utf-8');
+
+  // Create the HTML shell
+  const htmlStart = `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -66,7 +72,9 @@ export async function handleDocumentRequest(request: Request, assets?: Assets) {
     ${routeAssets.styleTags.map((tag) => `<link rel="stylesheet" href="${tag}" />`).join('\n    ') || ''}
   </head>
   <body>
-    <div id="root">${appHtml}</div>
+    <div id="root">`;
+
+  const htmlEnd = `</div>
     <script>
       window.__staticRouterHydrationData = ${JSON.stringify(context).replace(
         /</g,
@@ -77,23 +85,70 @@ export async function handleDocumentRequest(request: Request, assets?: Assets) {
   </body>
 </html>`;
 
-  const actionHeaders = context.actionHeaders[routeId];
-  const loaderHeaders = context.loaderHeaders[routeId];
+  if (options.mode === 'streaming') {
+    const stream = renderToPipeableStream(
+      <StrictMode>
+        <AssetsContext.Provider value={routeAssets}>
+          <StaticRouterProvider router={router} context={context} />
+        </AssetsContext.Provider>
+      </StrictMode>,
+    );
 
-  const headers = new Headers(actionHeaders);
+    const { readable, writable } = new TransformStream();
+    const writer = writable.getWriter();
 
-  if (loaderHeaders) {
-    //@ts-ignore
-    for (const [key, value] of loaderHeaders.entries()) {
-      headers.append(key, value);
-    }
+    // Write the HTML prefix
+    await writer.write(new TextEncoder().encode(htmlStart));
+
+    // Pipe the React stream
+    stream.pipe(
+      new WritableStream({
+        write(chunk) {
+          writer.write(chunk);
+        },
+        close() {
+          writer.write(new TextEncoder().encode(htmlEnd));
+          writer.close();
+        },
+      }),
+    );
+
+    return new Response(readable, {
+      status: context.statusCode,
+      headers,
+    });
+  } else {
+    // Buffered mode
+    let appHtml = '';
+    const stream = renderToPipeableStream(
+      <StrictMode>
+        <AssetsContext.Provider value={routeAssets}>
+          <StaticRouterProvider router={router} context={context} />
+        </AssetsContext.Provider>
+      </StrictMode>,
+    );
+
+    await new Promise<void>((resolve) => {
+      const writable = new Writable({
+        write(chunk, _encoding, callback) {
+          appHtml += chunk;
+          callback();
+        },
+        final(callback) {
+          resolve();
+          callback();
+        },
+      });
+      stream.pipe(writable);
+    });
+
+    const fullHtml = htmlStart + appHtml + htmlEnd;
+
+    return new Response(fullHtml, {
+      status: context.statusCode,
+      headers,
+    });
   }
-
-  headers.set('Content-Type', 'text/html; charset=utf-8');
-  return new Response(html, {
-    status: context.statusCode,
-    headers,
-  });
 }
 
 export async function handleDataRequest(request: Request) {

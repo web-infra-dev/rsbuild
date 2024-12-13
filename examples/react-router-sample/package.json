@@ -4,12 +4,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "exports": {
-    "./server": "./server"
-  },
   "scripts": {
     "build": "rsbuild build",
-    "dev": "NODE_ENV=development tsx ./server.mjs",
+    "dev": "NODE_ENV=development node ./server.mjs",
     "start": "NODE_ENV=production node ./dist/server.js",
     "build:server": "node server.mjs",
     "build:all": "npm run build:server && npm run build"
