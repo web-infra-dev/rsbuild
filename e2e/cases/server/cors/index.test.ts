@@ -10,7 +10,7 @@ test('should include CORS headers by default for dev server', async ({
     page,
   });
 
-  const response = await request.get(`http://localhost:${rsbuild.port}`);
+  const response = await request.get(`http://127.0.0.1:${rsbuild.port}`);
   expect(response.headers()['access-control-allow-origin']).toEqual('*');
 
   await rsbuild.close();
@@ -25,7 +25,7 @@ test('should include CORS headers by default for preview server', async ({
     page,
   });
 
-  const response = await request.get(`http://localhost:${rsbuild.port}`);
+  const response = await request.get(`http://127.0.0.1:${rsbuild.port}`);
   expect(response.headers()['access-control-allow-origin']).toEqual('*');
 
   await rsbuild.close();
@@ -42,7 +42,7 @@ test('should allow to disable CORS', async ({ page, request }) => {
     },
   });
 
-  const response = await request.get(`http://localhost:${rsbuild.port}`);
+  const response = await request.get(`http://127.0.0.1:${rsbuild.port}`);
   expect(response.headers()).not.toHaveProperty('access-control-allow-origin');
 
   await rsbuild.close();
@@ -61,7 +61,7 @@ test('should allow to configure CORS', async ({ page, request }) => {
     },
   });
 
-  const response = await request.get(`http://localhost:${rsbuild.port}`);
+  const response = await request.get(`http://127.0.0.1:${rsbuild.port}`);
   expect(response.headers()['access-control-allow-origin']).toEqual(
     'https://example.com',
   );
