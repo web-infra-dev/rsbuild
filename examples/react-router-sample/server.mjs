@@ -3,9 +3,11 @@ import path from 'node:path';
 import { createRsbuild, loadConfig } from '@rsbuild/core';
 import express from 'express';
 
+// Configuration Constants
 const PORT = process.env.PORT ? Number.parseInt(process.env.PORT, 10) : 4000;
 const FORCE_STREAMING = (process.env.FORCE_STREAMING || 'true') === 'true';
 
+// Asset Management
 async function getManifestAssets(routeId) {
   try {
     const manifestPath = path.join(process.cwd(), 'dist/manifest.json');
@@ -30,6 +32,28 @@ async function getManifestAssets(routeId) {
   }
 }
 
+// SSR Handler
+async function handleStreamResponse(response, res) {
+  if (response.pipe) {
+    response.pipe(res);
+  } else if (response.body && typeof response.body.pipe === 'function') {
+    response.body.pipe(res);
+    response.body.on('error', (err) => {
+      console.error('Streaming error:', err);
+      if (!res.headersSent) {
+        res.status(500).send('Streaming error occurred');
+      } else {
+        res.end();
+      }
+    });
+  }
+}
+
+async function handleBufferedResponse(response, res) {
+  const text = await response.text();
+  res.send(text);
+}
+
 async function createSSRHandler(rsbuildServer, isProduction = false) {
   return async (req, res, next) => {
     try {
@@ -51,40 +75,28 @@ async function createSSRHandler(rsbuildServer, isProduction = false) {
         ...(req.method !== 'GET' && { body: req.body }),
       });
 
-      // Use streaming if client accepts it or if forced
       const streamingPreferred =
         FORCE_STREAMING || req.headers.accept?.includes('text/html-streaming');
+
       const response = await serverModule.handler(request, assets, {
         mode: streamingPreferred ? 'streaming' : 'buffered',
       });
 
+      // Set response status and headers
       res.status(response.status);
-
-      // Set headers
       for (const [key, value] of response.headers.entries()) {
         res.setHeader(key, value);
       }
 
-      if (response.pipe) {
-        // Handle streaming response
-        response.pipe(res);
-      } else if (response.body && typeof response.body.pipe === 'function') {
-        // Handle streaming response from body
-        response.body.pipe(res);
-
-        // Handle any stream errors
-        response.body.on('error', (err) => {
-          console.error('Streaming error:', err);
-          if (!res.headersSent) {
-            res.status(500).send('Streaming error occurred');
-          } else {
-            res.end();
-          }
-        });
+      // Handle response based on mode and response type
+      if (
+        streamingPreferred &&
+        (response.pipe ||
+          (response.body && typeof response.body.pipe === 'function'))
+      ) {
+        await handleStreamResponse(response, res);
       } else {
-        // Handle buffered response
-        const text = await response.text();
-        res.send(text);
+        await handleBufferedResponse(response, res);
       }
     } catch (err) {
       console.error('SSR render error:', err);
@@ -93,11 +105,13 @@ async function createSSRHandler(rsbuildServer, isProduction = false) {
   };
 }
 
+// Server Setup and Configuration
 async function startServer(isProduction = false) {
   const app = express();
   let rsbuildServer;
 
   try {
+    // Initialize Rsbuild
     const { content } = await loadConfig({});
     if (!content) {
       throw new Error('Failed to load Rsbuild config');
@@ -113,14 +127,12 @@ async function startServer(isProduction = false) {
           streamingPreferred: false,
         });
 
-    // Parse JSON bodies
+    // Middleware Setup
     app.use(express.json());
 
     if (!isProduction) {
-      // Use Rsbuild dev middleware for static assets in dev
       app.use(rsbuildServer.middlewares);
     } else {
-      // Serve static assets with cache headers in prod
       app.use(
         express.static(path.join(process.cwd(), 'dist/web'), {
           maxAge: '1y',
@@ -130,9 +142,10 @@ async function startServer(isProduction = false) {
       );
     }
 
-    // Handle SSR requests
+    // Route Handler
     app.all('*', await createSSRHandler(rsbuildServer, isProduction));
 
+    // Server Startup
     const server = app.listen(PORT, async () => {
       console.log(`Server started at http://localhost:${PORT}`);
       if (!isProduction) {
@@ -144,7 +157,7 @@ async function startServer(isProduction = false) {
       rsbuildServer.connectWebSocket({ server });
     }
 
-    // Handle uncaught errors
+    // Error Handling
     process.on('uncaughtException', (err) => {
       console.error('Uncaught exception:', err);
       server.close(() => process.exit(1));
@@ -155,7 +168,7 @@ async function startServer(isProduction = false) {
   }
 }
 
-// Start the appropriate server based on NODE_ENV
+// Server Initialization
 if (process.env.NODE_ENV === 'production') {
   startServer(true).catch((err) => {
     console.error('Failed to start production server:', err);
