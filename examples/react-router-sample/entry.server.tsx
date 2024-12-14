@@ -1,3 +1,4 @@
+// cspell:words Pipeable
 import type { ServerResponse } from 'node:http';
 import { PassThrough, Writable } from 'node:stream';
 import { StrictMode } from 'react';
