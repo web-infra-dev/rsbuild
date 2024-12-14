@@ -1,12 +1,14 @@
 # Environment API
 
-本章节描述了 Rsbuild environment API 相关的一些类型定义。
+在这里你可以找到所有与 environment 相关的 API。
+
+> 参考 [多环境构建](/guide/advanced/environments) 了解更多。
 
 ## Environment Context
 
 Environment context 是一个只读对象，提供一些和当前环境有关的上下文信息。
 
-在 Rsbuild 的 hooks 中，你可以通过 `environment` 或 `environments` 入参获取 environment context 对象。
+在 Rsbuild 的 [Plugin hooks](/plugins/dev/hooks#plugin-hooks) 中，你可以通过 `environment` 或 `environments` 入参获取 environment context 对象。
 
 ```ts
 type EnvironmentContext = {
@@ -25,16 +27,34 @@ type EnvironmentContext = {
 当前环境的唯一名称，用于区分和定位环境，对应于 [environments](/config/environments) 配置中的 key。
 
 - **类型：** `string`
+- **示例：**
+
+```js
+api.modifyRspackConfig((config, { environment }) => {
+  if (environment.name === 'node') {
+    // modify config for node environment
+  }
+  return config;
+});
+```
 
 ### browserslist
 
-项目兼容的目标浏览器范围。详情可参考 [设置浏览器范围](/guide/advanced/browserslist).
+当前环境设置的目标浏览器范围。详见 [设置浏览器范围](/guide/advanced/browserslist)。
 
 - **类型：** `string[]`
+- **示例：**
+
+```js
+api.modifyRspackConfig((config, { environment }) => {
+  console.log(environment.browserslist);
+  return config;
+});
+```
 
 ### config
 
-归一化后当前环境的 Rsbuild 配置
+当前环境使用的 Rsbuild 配置（经过归一化处理）。
 
 - **类型：**
 
@@ -53,11 +73,31 @@ type NormalizedEnvironmentConfig = DeepReadonly<{
 }>;
 ```
 
+- **示例：**
+
+```js
+api.modifyRspackConfig((config, { environment }) => {
+  // Rspack
+  console.log(config);
+  // Rsbuild config for current environment
+  console.log(environment.config);
+  return config;
+});
+```
+
 ### distPath
 
 构建产物输出目录的绝对路径，对应 RsbuildConfig 中的 [output.distPath.root](/config/output/dist-path) 配置项。
 
 - **类型：** `string`
+- **示例：**
+
+```js
+api.modifyRspackConfig((config, { environment }) => {
+  console.log(environment.distPath);
+  return config;
+});
+```
 
 ### entry
 
@@ -69,9 +109,20 @@ type NormalizedEnvironmentConfig = DeepReadonly<{
 type RsbuildEntry = Record<string, string | string[] | EntryDescription>;
 ```
 
+- **示例：**
+
+```js
+api.modifyRspackConfig((config, { environment }) => {
+  console.log(environment.entry);
+  return config;
+});
+```
+
 ### htmlPaths
 
-HTML 产物的路径信息。该 API 会返回一个对象，对象的 key 为 entry 名称，value 为 HTML 文件在产物目录下的相对路径。
+HTML 产物的路径信息。
+
+该 API 会返回一个对象，对象的 key 为 entry 名称，value 为 HTML 文件在产物目录下的相对路径。
 
 - **类型：**
 
@@ -79,9 +130,18 @@ HTML 产物的路径信息。该 API 会返回一个对象，对象的 key 为 e
 type htmlPaths = Record<string, string>;
 ```
 
+- **示例：**
+
+```js
+api.modifyRspackConfig((config, { environment }) => {
+  console.log(environment.htmlPaths);
+  return config;
+});
+```
+
 ### tsconfigPath
 
-tsconfig.json 文件的绝对路径，若项目中不存在 tsconfig.json 文件，则为 undefined。
+tsconfig.json 文件的绝对路径，若项目中不存在 tsconfig.json 文件，则为 `undefined`。
 
 - **类型：**
 
@@ -89,11 +149,20 @@ tsconfig.json 文件的绝对路径，若项目中不存在 tsconfig.json 文件
 type TsconfigPath = string | undefined;
 ```
 
+- **示例：**
+
+```js
+api.modifyRspackConfig((config, { environment }) => {
+  console.log(environment.tsconfigPath);
+  return config;
+});
+```
+
 ## Environment API
 
-Environment API 提供了一系列和构建环境相关的 API。
+Environment API 包了一些与多环境构建相关的 API。
 
-你可以在 [Rsbuild DevMiddleware](/config/dev/setup-middlewares) 或[自定义 Server](/api/javascript-api/instance#rsbuildcreatedevserver) 中使用 environment API 对特定环境下的构建产物进行操作。
+你可以通过 [rsbuild.createDevServer()](/api/javascript-api/instance#rsbuildcreatedevserver) 或 [dev.setupMiddlewares](/config/dev/setup-middlewares) 使用 environment API，这允许你在服务端获取特定环境下的构建产物信息。
 
 ```ts
 type EnvironmentAPI = {
@@ -140,7 +209,7 @@ type LoadBundle = <T = unknown>(entryName: string) => Promise<T>;
 - **示例：**
 
 ```ts
-// 加载 main 入口的构建产物
+// 加载 `main` 入口的 bundle
 const result = await environments.node.loadBundle('main');
 ```
 
