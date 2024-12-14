@@ -60,33 +60,31 @@ async function createSSRHandler(rsbuildServer, isProduction = false) {
 
       res.status(response.status);
 
-      // Set headers from plain object
-      for (const [key, value] of Object.entries(response.headers)) {
+      // Set headers
+      for (const [key, value] of response.headers.entries()) {
         res.setHeader(key, value);
       }
 
-      if (response.body && streamingPreferred) {
+      if (response.pipe) {
         // Handle streaming response
-        if (typeof response.body.pipe === 'function') {
-          // If it's a Node.js stream
-          response.body.pipe(res);
+        response.pipe(res);
+      } else if (response.body && typeof response.body.pipe === 'function') {
+        // Handle streaming response from body
+        response.body.pipe(res);
 
-          // Handle any stream errors
-          response.body.on('error', (err) => {
-            console.error('Streaming error:', err);
-            if (!res.headersSent) {
-              res.status(500).send('Streaming error occurred');
-            } else {
-              res.end();
-            }
-          });
-        } else {
-          // If it's not a stream, send it directly
-          res.send(response.body);
-        }
+        // Handle any stream errors
+        response.body.on('error', (err) => {
+          console.error('Streaming error:', err);
+          if (!res.headersSent) {
+            res.status(500).send('Streaming error occurred');
+          } else {
+            res.end();
+          }
+        });
       } else {
         // Handle buffered response
-        res.send(response.body);
+        const text = await response.text();
+        res.send(text);
       }
     } catch (err) {
       console.error('SSR render error:', err);

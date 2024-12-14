@@ -1,13 +1,15 @@
+import type { ServerResponse } from 'node:http';
 /* cspell:words Pipeable */
 import { StrictMode } from 'react';
 import { renderToPipeableStream } from 'react-dom/server';
 import {
+  type StaticHandlerContext,
   StaticRouterProvider,
   createStaticHandler,
   createStaticRouter,
-  type StaticHandlerContext,
 } from 'react-router-dom';
-import { type Assets, AssetsContext } from './app/context';
+import type { Assets } from './app/context.js';
+import { AssetsContext } from './app/context.js';
 import routes from './app/routes.js';
 
 const { query, dataRoutes, queryRoute } = createStaticHandler(routes);
@@ -43,54 +45,30 @@ export async function handleDocumentRequest(
   // 2. Create a static router for SSR
   const router = createStaticRouter(dataRoutes, context);
 
-  // Get assets including route-specific ones
-  const routeAssets = assets || { scriptTags: [], styleTags: [] };
-
   // Setup headers from action and loaders from deepest match
   const deepestMatch = context.matches[context.matches.length - 1];
   const actionHeaders = context.actionHeaders[deepestMatch.route.id];
   const loaderHeaders = context.loaderHeaders[deepestMatch.route.id];
 
-  const headers = new Headers();
-  if (actionHeaders) {
-    actionHeaders.forEach((value, key) => {
-      headers.append(key, value);
-    });
-  }
+  const headers = new Headers(actionHeaders);
+
   if (loaderHeaders) {
     loaderHeaders.forEach((value, key) => {
       headers.append(key, value);
     });
   }
-  headers.set('content-type', 'text/html; charset=utf-8');
 
-  // Create the HTML shell
-  const htmlStart = `<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>React Router Custom Framework</title>
-    ${routeAssets.styleTags.map((tag) => `<link rel="stylesheet" href="${tag}" />`).join('\n    ') || ''}
-  </head>
-  <body>
-    <div id="root">`;
+  headers.set('Content-Type', 'text/html; charset=utf-8');
 
-  const htmlEnd = `</div>
-    <script>
-      window.__staticRouterHydrationData = ${JSON.stringify(context).replace(
-        /</g,
-        '\\u003c',
-      )};
-    </script>
-    ${routeAssets.scriptTags.map((tag) => `<script defer src="${tag}"></script>`).join('\n    ') || ''}
-  </body>
-</html>`;
+  // Get assets including route-specific ones
+  const routeAssets = assets || { scriptTags: [], styleTags: [] };
 
   if (options.mode === 'streaming') {
-    return handleStreamingResponse(router, context, routeAssets, htmlStart, htmlEnd, headers);
+    console.log('is streaming');
+    return handleStreamingResponse(router, context, routeAssets, headers);
   }
 
-  // Buffered mode
+  // Buffered mode - collect stream into string
   let appHtml = '';
   const { Writable } = require('node:stream');
   const stream = renderToPipeableStream(
@@ -103,11 +81,15 @@ export async function handleDocumentRequest(
 
   await new Promise<void>((resolve) => {
     const writable = new Writable({
-      write(chunk, _encoding, callback) {
+      write(
+        chunk: Buffer,
+        _encoding: BufferEncoding,
+        callback: (error?: Error | null) => void,
+      ) {
         appHtml += chunk;
         callback();
       },
-      final(callback) {
+      final(callback: (error?: Error | null) => void) {
         resolve();
         callback();
       },
@@ -115,30 +97,77 @@ export async function handleDocumentRequest(
     stream.pipe(writable);
   });
 
-  const fullHtml = htmlStart + appHtml + htmlEnd;
+  const fullHtml = `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>React Router Custom Framework</title>
+    ${routeAssets.styleTags.map((tag) => `<link rel="stylesheet" href="${tag}" />`).join('\n    ') || ''}
+  </head>
+  <body>
+    <div id="root">${appHtml}</div>
+    <script>
+      window.__staticRouterHydrationData = ${JSON.stringify(context).replace(
+        /</g,
+        '\\u003c',
+      )};
+    </script>
+    ${routeAssets.scriptTags.map((tag) => `<script defer src="${tag}"></script>`).join('\n    ') || ''}
+  </body>
+</html>`;
 
-  return {
+  return new Response(fullHtml, {
     status: context.statusCode,
     headers,
-    body: fullHtml,
-  };
+  });
+}
+
+interface StreamingResponse {
+  status: number;
+  headers: Headers;
+  pipe: (res: ServerResponse) => void;
+}
+
+interface ErrorResponse {
+  status: number;
+  headers: Headers;
+  body: string;
 }
 
 async function handleStreamingResponse(
   router: ReturnType<typeof createStaticRouter>,
   context: StaticHandlerContext,
   assets: Assets,
-  htmlStart: string,
-  htmlEnd: string,
   headers: Headers,
-) {
+): Promise<StreamingResponse | ErrorResponse> {
   let didError = false;
-  
+
+  const htmlStart = `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>React Router Custom Framework</title>
+    ${assets.styleTags.map((tag) => `<link rel="stylesheet" href="${tag}" />`).join('\n    ') || ''}
+  </head>
+  <body>
+    <div id="root">`;
+
+  const htmlEnd = `</div>
+    <script>
+      window.__staticRouterHydrationData = ${JSON.stringify(context).replace(
+        /</g,
+        '\\u003c',
+      )};
+    </script>
+    ${assets.scriptTags.map((tag) => `<script defer src="${tag}"></script>`).join('\n    ') || ''}
+  </body>
+</html>`;
+
   return new Promise((resolve) => {
     const { PassThrough } = require('node:stream');
     const responseStream = new PassThrough();
 
-    const stream = renderToPipeableStream(
+    const { pipe } = renderToPipeableStream(
       <StrictMode>
         <AssetsContext.Provider value={assets}>
           <StaticRouterProvider router={router} context={context} />
@@ -148,27 +177,33 @@ async function handleStreamingResponse(
         bootstrapScripts: assets.scriptTags,
         onShellReady() {
           responseStream.write(htmlStart);
-          stream.pipe(responseStream, { end: false });
+          pipe(responseStream);
           resolve({
             status: didError ? 500 : context.statusCode,
             headers,
-            body: responseStream,
+            pipe: (res: ServerResponse) => {
+              responseStream.pipe(res);
+            },
           });
         },
-        onCompleteAll() {
-          responseStream.end(htmlEnd);
+        onAllReady() {
+          responseStream.write(htmlEnd);
+          responseStream.end();
+        },
+        onShellError(error) {
+          didError = true;
+          console.error('Shell render error:', error);
+          resolve({
+            status: 500,
+            headers: new Headers({
+              'content-type': 'text/html; charset=utf-8',
+            }),
+            body: '<!doctype html><html><body><h1>Something went wrong</h1></body></html>',
+          });
         },
         onError(error) {
           didError = true;
           console.error('Streaming render error:', error);
-          const { Readable } = require('node:stream');
-          resolve({
-            status: 500,
-            headers: { 'content-type': 'text/html; charset=utf-8' },
-            body: Readable.from(
-              `<!doctype html><p>Fatal Error: ${error instanceof Error ? error.message : 'Unknown Error'}</p>`,
-            ),
-          });
         },
       },
     );
