@@ -475,7 +475,7 @@ export async function loadConfig({
       const { createJiti } = await import('jiti');
       const jiti = createJiti(__filename, {
         // disable require cache to support restart CLI and read the new config
-        requireCache: false,
+        moduleCache: false,
         interopDefault: true,
       });
 
