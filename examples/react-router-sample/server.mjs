@@ -61,23 +61,29 @@ async function createSSRHandler(rsbuildServer, isProduction = false) {
       res.status(response.status);
 
       // Set headers from plain object
-      Object.entries(response.headers).forEach(([key, value]) => {
+      for (const [key, value] of Object.entries(response.headers)) {
         res.setHeader(key, value);
-      });
+      }
 
       if (response.body && streamingPreferred) {
         // Handle streaming response
-        response.body.pipe(res);
+        if (typeof response.body.pipe === 'function') {
+          // If it's a Node.js stream
+          response.body.pipe(res);
 
-        // Handle any stream errors
-        response.body.on('error', (err) => {
-          console.error('Streaming error:', err);
-          if (!res.headersSent) {
-            res.status(500).send('Streaming error occurred');
-          } else {
-            res.end();
-          }
-        });
+          // Handle any stream errors
+          response.body.on('error', (err) => {
+            console.error('Streaming error:', err);
+            if (!res.headersSent) {
+              res.status(500).send('Streaming error occurred');
+            } else {
+              res.end();
+            }
+          });
+        } else {
+          // If it's not a stream, send it directly
+          res.send(response.body);
+        }
       } else {
         // Handle buffered response
         res.send(response.body);
@@ -106,7 +112,7 @@ async function startServer(isProduction = false) {
     rsbuildServer = isProduction
       ? rsbuild
       : await rsbuild.createDevServer({
-          streamingPreferred: FORCE_STREAMING,
+          streamingPreferred: false,
         });
 
     // Parse JSON bodies

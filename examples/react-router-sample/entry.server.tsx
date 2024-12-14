@@ -1,11 +1,11 @@
 /* cspell:words Pipeable */
-import { Writable } from 'node:stream';
 import { StrictMode } from 'react';
 import { renderToPipeableStream } from 'react-dom/server';
 import {
   StaticRouterProvider,
   createStaticHandler,
   createStaticRouter,
+  type StaticHandlerContext,
 } from 'react-router-dom';
 import { type Assets, AssetsContext } from './app/context';
 import routes from './app/routes.js';
@@ -32,38 +32,37 @@ export async function handleDocumentRequest(
   assets?: Assets,
   options: RenderOptions = {},
 ) {
+  // 1. Run action/loaders to get the routing context with `query`
   const context = await query(request);
 
+  // If `query` returns a Response, send it raw (a route probably redirected)
   if (context instanceof Response) {
     return context;
   }
 
+  // 2. Create a static router for SSR
   const router = createStaticRouter(dataRoutes, context);
-  const deepestMatch = context.matches[context.matches.length - 1];
-  const routeId = deepestMatch.route.id;
 
   // Get assets including route-specific ones
   const routeAssets = assets || { scriptTags: [], styleTags: [] };
 
-  // Create headers object
-  const responseHeaders = {
-    'content-type': 'text/html; charset=utf-8',
-  };
+  // Setup headers from action and loaders from deepest match
+  const deepestMatch = context.matches[context.matches.length - 1];
+  const actionHeaders = context.actionHeaders[deepestMatch.route.id];
+  const loaderHeaders = context.loaderHeaders[deepestMatch.route.id];
 
-  const actionHeaders = context.actionHeaders[routeId];
-  const loaderHeaders = context.loaderHeaders[routeId];
-
+  const headers = new Headers();
   if (actionHeaders) {
-    for (const [key, value] of actionHeaders.entries()) {
-      responseHeaders[key] = value;
-    }
+    actionHeaders.forEach((value, key) => {
+      headers.append(key, value);
+    });
   }
-
   if (loaderHeaders) {
-    for (const [key, value] of loaderHeaders.entries()) {
-      responseHeaders[key] = value;
-    }
+    loaderHeaders.forEach((value, key) => {
+      headers.append(key, value);
+    });
   }
+  headers.set('content-type', 'text/html; charset=utf-8');
 
   // Create the HTML shell
   const htmlStart = `<!DOCTYPE html>
@@ -88,90 +87,92 @@ export async function handleDocumentRequest(
 </html>`;
 
   if (options.mode === 'streaming') {
-    let didError = false;
-    return new Promise((resolve) => {
-      const { PassThrough } = require('node:stream');
-      const responseStream = new PassThrough();
+    return handleStreamingResponse(router, context, routeAssets, htmlStart, htmlEnd, headers);
+  }
 
-      const stream = renderToPipeableStream(
-        <StrictMode>
-          <AssetsContext.Provider value={routeAssets}>
-            <StaticRouterProvider router={router} context={context} />
-          </AssetsContext.Provider>
-        </StrictMode>,
-        {
-          bootstrapScripts: routeAssets.scriptTags,
-          onShellReady() {
-            // Write the HTML start
-            responseStream.write(htmlStart);
+  // Buffered mode
+  let appHtml = '';
+  const { Writable } = require('node:stream');
+  const stream = renderToPipeableStream(
+    <StrictMode>
+      <AssetsContext.Provider value={routeAssets}>
+        <StaticRouterProvider router={router} context={context} />
+      </AssetsContext.Provider>
+    </StrictMode>,
+  );
 
-            // Pipe the React rendered content
-            stream.pipe(responseStream, { end: false });
-
-            resolve({
-              status: didError ? 500 : context.statusCode,
-              headers: responseHeaders,
-              body: responseStream,
-            });
-          },
-          onCompleteAll() {
-            // Write the ending HTML and close
-            responseStream.write(
-              `<script>window.__staticRouterHydrationData = ${JSON.stringify(
-                context,
-              ).replace(/</g, '\\u003c')};</script>${htmlEnd}`,
-            );
-            responseStream.end();
-          },
-          onError(error) {
-            didError = true;
-            console.error('Streaming render error:', error);
-            const { Readable } = require('node:stream');
-            resolve({
-              status: 500,
-              headers: { 'content-type': 'text/html; charset=utf-8' },
-              body: Readable.from(
-                `<!doctype html><p>Fatal Error: ${error instanceof Error ? error.message : 'Unknown Error'}</p>`,
-              ),
-            });
-          },
-        },
-      );
+  await new Promise<void>((resolve) => {
+    const writable = new Writable({
+      write(chunk, _encoding, callback) {
+        appHtml += chunk;
+        callback();
+      },
+      final(callback) {
+        resolve();
+        callback();
+      },
     });
-  } else {
-    // Buffered mode
-    let appHtml = '';
-    const { Writable } = require('node:stream');
+    stream.pipe(writable);
+  });
+
+  const fullHtml = htmlStart + appHtml + htmlEnd;
+
+  return {
+    status: context.statusCode,
+    headers,
+    body: fullHtml,
+  };
+}
+
+async function handleStreamingResponse(
+  router: ReturnType<typeof createStaticRouter>,
+  context: StaticHandlerContext,
+  assets: Assets,
+  htmlStart: string,
+  htmlEnd: string,
+  headers: Headers,
+) {
+  let didError = false;
+  
+  return new Promise((resolve) => {
+    const { PassThrough } = require('node:stream');
+    const responseStream = new PassThrough();
+
     const stream = renderToPipeableStream(
       <StrictMode>
-        <AssetsContext.Provider value={routeAssets}>
+        <AssetsContext.Provider value={assets}>
           <StaticRouterProvider router={router} context={context} />
         </AssetsContext.Provider>
       </StrictMode>,
+      {
+        bootstrapScripts: assets.scriptTags,
+        onShellReady() {
+          responseStream.write(htmlStart);
+          stream.pipe(responseStream, { end: false });
+          resolve({
+            status: didError ? 500 : context.statusCode,
+            headers,
+            body: responseStream,
+          });
+        },
+        onCompleteAll() {
+          responseStream.end(htmlEnd);
+        },
+        onError(error) {
+          didError = true;
+          console.error('Streaming render error:', error);
+          const { Readable } = require('node:stream');
+          resolve({
+            status: 500,
+            headers: { 'content-type': 'text/html; charset=utf-8' },
+            body: Readable.from(
+              `<!doctype html><p>Fatal Error: ${error instanceof Error ? error.message : 'Unknown Error'}</p>`,
+            ),
+          });
+        },
+      },
     );
-
-    await new Promise<void>((resolve) => {
-      const writable = new Writable({
-        write(chunk, _encoding, callback) {
-          appHtml += chunk;
-          callback();
-        },
-        final(callback) {
-          resolve();
-          callback();
-        },
-      });
-      stream.pipe(writable);
-    });
-
-    const fullHtml = htmlStart + appHtml + htmlEnd;
-
-    return {
-      status: context.statusCode,
-      headers: responseHeaders,
-      body: fullHtml,
-    };
-  }
+  });
 }
 
 export async function handleDataRequest(request: Request) {
