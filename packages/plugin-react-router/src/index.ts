@@ -93,15 +93,29 @@ export const pluginReactRouter = (
       },
     };
 
-    // Detect if SSR is enabled by checking if node environment exists
-    // const isSSR = Boolean(api.context.environments?.node);
+    // General configuration for all cases
+    api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
+      const generalConfig = {
+        server: {
+          htmlFallback: 'index' as const,
+        },
+        environments: {
+          web: {
+            source: {
+              entry: {
+                client: './entry.client.tsx',
+              },
+            },
+          },
+        },
+      };
+      return mergeRsbuildConfig(config, generalConfig);
+    });
 
+    // SSR-specific configuration
     if (options.ssr) {
       api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
         const ssrConfig = {
-          output: {
-            manifest: true,
-          },
           source: {
             define: {
               __SSR__: 'true',
@@ -109,11 +123,41 @@ export const pluginReactRouter = (
               __DATA_ROUTER__: String(finalOptions.router?.dataRouter),
             },
           },
-          server: {
-            htmlFallback: 'index' as const,
+          environments: {
+            node: {
+              source: {
+                entry: {
+                  server: './entry.server.tsx',
+                },
+              },
+            },
           },
         };
         return mergeRsbuildConfig(config, ssrConfig);
+      });
+
+      api.modifyEnvironmentConfig((config, { name }) => {
+        if (name === 'web') {
+          return {
+            ...config,
+            output: {
+              ...config.output,
+              manifest: true,
+              target: 'web',
+            },
+          };
+        }
+        if (name === 'node') {
+          return {
+            ...config,
+            output: {
+              ...config.output,
+              target: 'node',
+              manifest: false,
+            },
+          };
+        }
+        return config;
       });
 
       // Add router-specific aliases for SSR

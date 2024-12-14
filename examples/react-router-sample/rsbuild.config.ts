@@ -5,7 +5,6 @@ import { pluginTypedCSSModules } from '@rsbuild/plugin-typed-css-modules';
 
 export default defineConfig({
   plugins: [
-    pluginReact(),
     pluginReactRouter({
       // React Router specific options
       router: {
@@ -13,6 +12,7 @@ export default defineConfig({
         dataRouter: true, // Enable data router for React Router
       },
     }),
+    pluginReact(),
     pluginTypedCSSModules(),
   ],
   environments: {
