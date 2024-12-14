@@ -1,4 +1,3 @@
-import path from 'node:path';
 import { pluginClientRedirects } from '@rspress/plugin-client-redirects';
 import { pluginRss } from '@rspress/plugin-rss';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
@@ -72,9 +71,7 @@ export default defineConfig({
       ],
     }),
   ],
-  root: path.join(__dirname, 'docs'),
   lang: 'en',
-  base: '/',
   title: 'Rsbuild',
   icon: 'https://assets.rspack.dev/rsbuild/favicon-128x128.png',
   logo: {
@@ -114,7 +111,6 @@ export default defineConfig({
       {
         lang: 'en',
         label: 'English',
-        title: 'Rsbuild',
         description: 'The Rspack-based build tool for the web',
         editLink: {
           docRepoBaseUrl:
@@ -125,11 +121,10 @@ export default defineConfig({
       {
         lang: 'zh',
         label: '简体中文',
-        title: 'Rsbuild',
         outlineTitle: '目录',
         prevPageText: '上一页',
         nextPageText: '下一页',
-        description: '基于 Rspack 的 Web 构建工具',
+        description: '由 Rspack 驱动的构建工具',
         editLink: {
           docRepoBaseUrl:
             'https://github.com/web-infra-dev/rsbuild/tree/main/website/docs',
@@ -158,15 +153,8 @@ export default defineConfig({
         },
       }),
     ],
-    source: {
-      alias: {
-        '@components': path.join(__dirname, '@components'),
-        '@en': path.join(__dirname, 'docs/en'),
-        '@zh': path.join(__dirname, 'docs/zh'),
-      },
-    },
     server: {
-      open: 'http://localhost:<port>/',
+      open: true,
     },
     html: {
       tags: [

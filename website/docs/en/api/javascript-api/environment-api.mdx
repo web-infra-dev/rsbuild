@@ -1,12 +1,14 @@
 # Environment API
 
-This section describes some type definitions related to Rsbuild environment API.
+Here you can find all the environment related APIs.
+
+> See [Multi-Environment Builds](/guide/advanced/environments) for more details.
 
 ## Environment Context
 
 Environment context is a read-only object that provides some context information about the current environment.
 
-In Rsbuild's hooks, you can get the environment context object through the `environment` or `environments` parameter.
+In Rsbuild's [Plugin hooks](/plugins/dev/hooks#plugin-hooks), you can get the environment context object through the `environment` or `environments` parameter.
 
 ```ts
 type EnvironmentContext = {
@@ -25,16 +27,34 @@ type EnvironmentContext = {
 The unique name of the current environment is used to distinguish and locate the environment, corresponds to the key in the [environments](/config/environments) configuration.
 
 - **Type:** `string`
+- **Example:**
+
+```js
+api.modifyRspackConfig((config, { environment }) => {
+  if (environment.name === 'node') {
+    // modify config for node environment
+  }
+  return config;
+});
+```
 
 ### browserslist
 
-The range of target browsers that the project is compatible with. See details in [Browserslist](/guide/advanced/browserslist).
+The browserslist configuration of the current environment. See [Browserslist](/guide/advanced/browserslist) for more details.
 
 - **Type:** `string[]`
+- **Example:**
+
+```js
+api.modifyRspackConfig((config, { environment }) => {
+  console.log(environment.browserslist);
+  return config;
+});
+```
 
 ### config
 
-The Rsbuild environment configuration after normalization.
+The normalized Rsbuild config for the current environment.
 
 - **Type:**
 
@@ -53,11 +73,30 @@ type NormalizedEnvironmentConfig = DeepReadonly<{
 }>;
 ```
 
+- **Example:**
+
+```js
+api.modifyRspackConfig((config, { environment }) => {
+  // Rspack config
+  console.log(config);
+  // Rsbuild config for current environment
+  console.log(environment.config);
+  return config;
+});
+```
+
 ### distPath
 
 The absolute path of the output directory, corresponding to the [output.distPath.root](/config/output/dist-path) config in `RsbuildConfig`.
 
 - **Type:** `string`
+
+```js
+api.modifyRspackConfig((config, { environment }) => {
+  console.log(environment.distPath);
+  return config;
+});
+```
 
 ### entry
 
@@ -67,6 +106,15 @@ The entry object from the [source.entry](/config/source/entry) option.
 
 ```ts
 type RsbuildEntry = Record<string, string | string[] | EntryDescription>;
+```
+
+- **Example:**
+
+```js
+api.modifyRspackConfig((config, { environment }) => {
+  console.log(environment.entry);
+  return config;
+});
 ```
 
 ### htmlPaths
@@ -81,6 +129,15 @@ This API will return an object, the key is the entry name and the value is the r
 type htmlPaths = Record<string, string>;
 ```
 
+- **Example:**
+
+```js
+api.modifyRspackConfig((config, { environment }) => {
+  console.log(environment.htmlPaths);
+  return config;
+});
+```
+
 ### tsconfigPath
 
 The absolute path of the tsconfig.json file, or `undefined` if the tsconfig.json file does not exist in current project.
@@ -91,11 +148,20 @@ The absolute path of the tsconfig.json file, or `undefined` if the tsconfig.json
 type TsconfigPath = string | undefined;
 ```
 
+- **Example:**
+
+```js
+api.modifyRspackConfig((config, { environment }) => {
+  console.log(environment.tsconfigPath);
+  return config;
+});
+```
+
 ## Environment API
 
-Environment API provides a series of APIs related to the build environment.
+Environment API provides some APIs related to the multi-environment build.
 
-You can use environment API in [Rsbuild DevMiddleware](/config/dev/setup-middlewares) or [Custom Server](/api/javascript-api/instance#rsbuildcreatedevserver) to operate the build artifacts in a specific environment.
+You can use environment API via [rsbuild.createDevServer()](/api/javascript-api/instance#rsbuildcreatedevserver) or [dev.setupMiddlewares](/config/dev/setup-middlewares), which allows you to get the build outputs information for a specific environment in the server side.
 
 ```ts
 type EnvironmentAPI = {
@@ -127,7 +193,7 @@ console.log(webStats.toJson({ all: false }));
 
 ### loadBundle
 
-Load and execute the build artifacts on the server side. This method returns the exports of the entry module.
+Load and execute the bundles on the server side. This method returns the exports of the entry module.
 
 - **Type:**
 
@@ -142,7 +208,7 @@ type LoadBundle = <T = unknown>(entryName: string) => Promise<T>;
 - **Example:**
 
 ```ts
-// Load the build artifacts of main entry
+// Load the bundle of `main` entry
 const result = await environments.node.loadBundle('main');
 ```
 
