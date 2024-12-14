@@ -409,58 +409,6 @@ importers:
         specifier: ^5.7.2
         version: 5.7.2
 
-  examples/react-router:
-    dependencies:
-      '@rsbuild/core':
-        specifier: workspace:*
-        version: link:../../packages/core
-      '@rsbuild/plugin-react':
-        specifier: workspace:*
-        version: link:../../packages/plugin-react
-      '@rsbuild/plugin-react-router':
-        specifier: workspace:*
-        version: link:../../packages/plugin-react-router
-      express:
-        specifier: ^4.21.2
-        version: 4.21.2
-      react:
-        specifier: ^18.3.1
-        version: 18.3.1
-      react-dom:
-        specifier: ^18.3.1
-        version: 18.3.1(react@18.3.1)
-      react-router:
-        specifier: ^7.0.2
-        version: 7.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react-router-dom:
-        specifier: ^7.0.2
-        version: 7.0.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-    devDependencies:
-      '@types/express':
-        specifier: ^5.0.0
-        version: 5.0.0
-      '@types/node':
-        specifier: ^22.4.1
-        version: 22.10.1
-      '@types/react':
-        specifier: ^18.2.48
-        version: 18.3.16
-      '@types/react-dom':
-        specifier: ^18.2.18
-        version: 18.3.5(@types/react@18.3.16)
-      concurrently:
-        specifier: ^9.1.0
-        version: 9.1.0
-      prettier:
-        specifier: ^3.3.3
-        version: 3.4.2
-      tsx:
-        specifier: ^4.7.0
-        version: 4.19.2
-      typescript:
-        specifier: ^5.5.4
-        version: 5.7.2
-
   examples/react-router-sample:
     dependencies:
       '@rsbuild/core':
@@ -506,6 +454,9 @@ importers:
       concurrently:
         specifier: ^9.1.0
         version: 9.1.0
+      hono:
+        specifier: ^4.6.0
+        version: 4.6.13
       prettier:
         specifier: ^3.3.3
         version: 3.4.2
@@ -4647,6 +4598,10 @@ packages:
   homedir-polyfill@1.0.3:
     resolution: {integrity: sha512-eSmmWE5bZTK2Nou4g0AI3zZ9rswp7GRKoKXS1BLUkvPviOqs4YTN1djQIqrXy9k5gEtdLPy86JjRwsNM9tnDcA==}
     engines: {node: '>=0.10.0'}
+
+  hono@4.6.13:
+    resolution: {integrity: sha512-haV0gaMdSjy9URCRN9hxBPlqHa7fMm/T72kAImIxvw4eQLbNz1rgjN4hHElLJSieDiNuiIAXC//cC6YGz2KCbg==}
+    engines: {node: '>=16.9.0'}
 
   html-entities@2.3.3:
     resolution: {integrity: sha512-DV5Ln36z34NNTDgnz0EWGBLZENelNAtkiFA4kyNOG2tDI6Mz1uSWiq1wAKdyjnJwyDiDO7Fa2SO1CTxPXL8VxA==}
@@ -10335,6 +10290,7 @@ snapshots:
       '@esbuild/win32-arm64': 0.23.1
       '@esbuild/win32-ia32': 0.23.1
       '@esbuild/win32-x64': 0.23.1
+    optional: true
 
   escalade@3.2.0: {}
 
@@ -10668,6 +10624,7 @@ snapshots:
   get-tsconfig@4.8.1:
     dependencies:
       resolve-pkg-maps: 1.0.0
+    optional: true
 
   github-slugger@2.0.0: {}
 
@@ -10839,6 +10796,8 @@ snapshots:
   homedir-polyfill@1.0.3:
     dependencies:
       parse-passwd: 1.0.0
+
+  hono@4.6.13: {}
 
   html-entities@2.3.3: {}
 
@@ -12529,7 +12488,8 @@ snapshots:
 
   resolve-from@5.0.0: {}
 
-  resolve-pkg-maps@1.0.0: {}
+  resolve-pkg-maps@1.0.0:
+    optional: true
 
   resolve-url-loader@5.0.0:
     dependencies:
@@ -13278,6 +13238,7 @@ snapshots:
       get-tsconfig: 4.8.1
     optionalDependencies:
       fsevents: 2.3.3
+    optional: true
 
   turbo-stream@2.4.0: {}
 

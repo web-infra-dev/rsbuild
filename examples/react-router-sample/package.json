@@ -26,6 +26,7 @@
     "react-router-dom": "^7.0.2"
   },
   "devDependencies": {
+    "hono": "^4.6.0",
     "@types/express": "^5.0.0",
     "@types/node": "^22.4.1",
     "@types/react": "^18.2.48",

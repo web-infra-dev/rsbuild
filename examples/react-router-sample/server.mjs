@@ -4,6 +4,7 @@ import { createRsbuild, loadConfig } from '@rsbuild/core';
 import express from 'express';
 
 const PORT = process.env.PORT ? Number.parseInt(process.env.PORT, 10) : 4000;
+const FORCE_STREAMING = (process.env.FORCE_STREAMING || 'true') === 'true';
 
 async function getManifestAssets(routeId) {
   try {
@@ -12,7 +13,6 @@ async function getManifestAssets(routeId) {
     const manifest = JSON.parse(manifestContent);
     const { js = [], css = [] } = manifest.entries.client.initial;
 
-    // Get route-specific assets if routeId is provided
     let routeAssets = { js: [], css: [] };
     if (routeId && manifest.namedChunks[routeId]) {
       const { js: routeJs = [], css: routeCss = [] } =
@@ -30,177 +30,135 @@ async function getManifestAssets(routeId) {
   }
 }
 
-async function createSSRHandler(rsbuildServer) {
+async function createSSRHandler(rsbuildServer, isProduction = false) {
   return async (req, res, next) => {
     try {
       if (!req.headers.host) {
-        const error = new Error('No host header present');
-        error.status = 400;
-        throw error;
+        throw new Error('No host header present');
       }
 
-      // Load Node bundle for SSR
-      const serverModule =
-        await rsbuildServer.environments?.node.loadBundle('server');
+      const serverModule = await (isProduction
+        ? rsbuildServer.loadBundle('server')
+        : rsbuildServer.environments?.node.loadBundle('server'));
 
       const url = new URL(req.url, `http://${req.headers.host}`);
+      const routeId = url.pathname.split('/').pop() || 'home';
+      const assets = await getManifestAssets(routeId);
+
       const request = new Request(url, {
         method: req.method,
         headers: req.headers,
         ...(req.method !== 'GET' && { body: req.body }),
       });
 
-      // Get route ID from URL path
-      const routeId = url.pathname.split('/').pop() || 'home';
-      const assets = await getManifestAssets(routeId);
-      const response = await serverModule.handler(request, assets);
-      const responseText = await response.text();
+      // Use streaming if client accepts it or if forced
+      const streamingPreferred =
+        FORCE_STREAMING || req.headers.accept?.includes('text/html-streaming');
+      const response = await serverModule.handler(request, assets, {
+        mode: streamingPreferred ? 'streaming' : 'buffered',
+      });
 
       res.status(response.status);
-      response.headers.forEach((value, key) => {
+
+      // Set headers from plain object
+      Object.entries(response.headers).forEach(([key, value]) => {
         res.setHeader(key, value);
       });
-      res.send(responseText);
+
+      if (response.body && streamingPreferred) {
+        // Handle streaming response
+        response.body.pipe(res);
+
+        // Handle any stream errors
+        response.body.on('error', (err) => {
+          console.error('Streaming error:', err);
+          if (!res.headersSent) {
+            res.status(500).send('Streaming error occurred');
+          } else {
+            res.end();
+          }
+        });
+      } else {
+        // Handle buffered response
+        res.send(response.body);
+      }
     } catch (err) {
       console.error('SSR render error:', err);
-      if (process.env.NODE_ENV === 'production') {
-        res.status(err.status || 500).send('Internal Server Error');
-      } else {
-        next(err);
-      }
+      next(err);
     }
   };
 }
 
-async function startDevServer() {
+async function startServer(isProduction = false) {
   const app = express();
-
   let rsbuildServer;
+
   try {
     const { content } = await loadConfig({});
     if (!content) {
-      const error = new Error('Failed to load Rsbuild config');
-      error.code = 'CONFIG_LOAD_ERROR';
-      throw error;
+      throw new Error('Failed to load Rsbuild config');
     }
 
     const rsbuild = await createRsbuild({
       rsbuildConfig: content,
     });
 
-    rsbuildServer = await rsbuild.createDevServer();
+    rsbuildServer = isProduction
+      ? rsbuild
+      : await rsbuild.createDevServer({
+          streamingPreferred: FORCE_STREAMING,
+        });
+
+    // Parse JSON bodies
+    app.use(express.json());
+
+    if (!isProduction) {
+      // Use Rsbuild dev middleware for static assets in dev
+      app.use(rsbuildServer.middlewares);
+    } else {
+      // Serve static assets with cache headers in prod
+      app.use(
+        express.static(path.join(process.cwd(), 'dist/web'), {
+          maxAge: '1y',
+          etag: true,
+          immutable: true,
+        }),
+      );
+    }
+
+    // Handle SSR requests
+    app.all('*', await createSSRHandler(rsbuildServer, isProduction));
+
+    const server = app.listen(PORT, async () => {
+      console.log(`Server started at http://localhost:${PORT}`);
+      if (!isProduction) {
+        await rsbuildServer.afterListen();
+      }
+    });
+
+    if (!isProduction) {
+      rsbuildServer.connectWebSocket({ server });
+    }
+
+    // Handle uncaught errors
+    process.on('uncaughtException', (err) => {
+      console.error('Uncaught exception:', err);
+      server.close(() => process.exit(1));
+    });
   } catch (err) {
-    console.error('Failed to initialize Rsbuild:', err);
+    console.error('Failed to start server:', err);
     process.exit(1);
   }
-
-  // Parse JSON bodies
-  app.use(express.json());
-
-  // Use Rsbuild dev middleware first for static assets
-  app.use(rsbuildServer.middlewares);
-
-  // Handle SSR requests
-  app.all('*', await createSSRHandler(rsbuildServer));
-
-  const httpServer = app.listen(PORT, async () => {
-    console.log(`Server started at http://localhost:${PORT}`);
-    await rsbuildServer.afterListen();
-  });
-
-  rsbuildServer.connectWebSocket({ server: httpServer });
-
-  // Handle graceful shutdown
-  const shutdown = (signal) => {
-    console.log(`Received ${signal}. Shutting down gracefully...`);
-    httpServer.close(() => {
-      console.log('Server closed');
-      process.exit(0);
-    });
-  };
-
-  process.on('SIGTERM', () => shutdown('SIGTERM'));
-  process.on('SIGINT', () => shutdown('SIGINT'));
-
-  // Handle uncaught errors
-  process.on('uncaughtException', (err) => {
-    console.error('Uncaught exception:', err);
-    httpServer.close(() => process.exit(1));
-  });
-}
-
-async function startProdServer() {
-  const app = express();
-  const distDir = path.join(process.cwd(), 'dist');
-
-  // Verify dist directory exists
-  try {
-    await fs.access(path.join(distDir, 'web'));
-  } catch (err) {
-    console.error(
-      'Error: Build directory not found. Please run npm run build first.',
-    );
-    process.exit(1);
-  }
-
-  // Initialize Rsbuild for production
-  const { content } = await loadConfig({});
-  if (!content) {
-    const error = new Error('Failed to load Rsbuild config');
-    error.code = 'CONFIG_LOAD_ERROR';
-    throw error;
-  }
-
-  const rsbuild = await createRsbuild({
-    rsbuildConfig: content,
-  });
-
-  // Parse JSON bodies
-  app.use(express.json());
-
-  // Serve static assets with cache headers
-  app.use(
-    express.static(path.join(distDir, 'web'), {
-      maxAge: '1y',
-      etag: true,
-      immutable: true,
-    }),
-  );
-
-  // Handle SSR requests using loadBundle
-  app.all('*', await createSSRHandler(rsbuild));
-
-  const server = app.listen(PORT, () => {
-    console.log(`Production server started at http://localhost:${PORT}`);
-  });
-
-  // Handle graceful shutdown
-  const shutdown = (signal) => {
-    console.log(`Received ${signal}. Shutting down gracefully...`);
-    server.close(() => {
-      console.log('Server closed');
-      process.exit(0);
-    });
-  };
-
-  process.on('SIGTERM', () => shutdown('SIGTERM'));
-  process.on('SIGINT', () => shutdown('SIGINT'));
-
-  // Handle uncaught errors
-  process.on('uncaughtException', (err) => {
-    console.error('Uncaught exception:', err);
-    server.close(() => process.exit(1));
-  });
 }
 
 // Start the appropriate server based on NODE_ENV
 if (process.env.NODE_ENV === 'production') {
-  startProdServer().catch((err) => {
+  startServer(true).catch((err) => {
     console.error('Failed to start production server:', err);
     process.exit(1);
   });
 } else {
-  startDevServer().catch((err) => {
+  startServer(false).catch((err) => {
     console.error('Failed to start development server:', err);
     process.exit(1);
   });

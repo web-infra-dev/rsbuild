@@ -45,23 +45,25 @@ export async function handleDocumentRequest(
   // Get assets including route-specific ones
   const routeAssets = assets || { scriptTags: [], styleTags: [] };
 
-  const headers = new Headers();
+  // Create headers object
+  const responseHeaders = {
+    'content-type': 'text/html; charset=utf-8',
+  };
+
   const actionHeaders = context.actionHeaders[routeId];
   const loaderHeaders = context.loaderHeaders[routeId];
 
   if (actionHeaders) {
     for (const [key, value] of actionHeaders.entries()) {
-      headers.append(key, value);
+      responseHeaders[key] = value;
     }
   }
 
   if (loaderHeaders) {
     for (const [key, value] of loaderHeaders.entries()) {
-      headers.append(key, value);
+      responseHeaders[key] = value;
     }
   }
-
-  headers.set('Content-Type', 'text/html; charset=utf-8');
 
   // Create the HTML shell
   const htmlStart = `<!DOCTYPE html>
@@ -86,40 +88,60 @@ export async function handleDocumentRequest(
 </html>`;
 
   if (options.mode === 'streaming') {
-    const stream = renderToPipeableStream(
-      <StrictMode>
-        <AssetsContext.Provider value={routeAssets}>
-          <StaticRouterProvider router={router} context={context} />
-        </AssetsContext.Provider>
-      </StrictMode>,
-    );
+    let didError = false;
+    return new Promise((resolve) => {
+      const { PassThrough } = require('node:stream');
+      const responseStream = new PassThrough();
 
-    const { readable, writable } = new TransformStream();
-    const writer = writable.getWriter();
+      const stream = renderToPipeableStream(
+        <StrictMode>
+          <AssetsContext.Provider value={routeAssets}>
+            <StaticRouterProvider router={router} context={context} />
+          </AssetsContext.Provider>
+        </StrictMode>,
+        {
+          bootstrapScripts: routeAssets.scriptTags,
+          onShellReady() {
+            // Write the HTML start
+            responseStream.write(htmlStart);
 
-    // Write the HTML prefix
-    await writer.write(new TextEncoder().encode(htmlStart));
+            // Pipe the React rendered content
+            stream.pipe(responseStream, { end: false });
 
-    // Pipe the React stream
-    stream.pipe(
-      new WritableStream({
-        write(chunk) {
-          writer.write(chunk);
+            resolve({
+              status: didError ? 500 : context.statusCode,
+              headers: responseHeaders,
+              body: responseStream,
+            });
+          },
+          onCompleteAll() {
+            // Write the ending HTML and close
+            responseStream.write(
+              `<script>window.__staticRouterHydrationData = ${JSON.stringify(
+                context,
+              ).replace(/</g, '\\u003c')};</script>${htmlEnd}`,
+            );
+            responseStream.end();
+          },
+          onError(error) {
+            didError = true;
+            console.error('Streaming render error:', error);
+            const { Readable } = require('node:stream');
+            resolve({
+              status: 500,
+              headers: { 'content-type': 'text/html; charset=utf-8' },
+              body: Readable.from(
+                `<!doctype html><p>Fatal Error: ${error instanceof Error ? error.message : 'Unknown Error'}</p>`,
+              ),
+            });
+          },
         },
-        close() {
-          writer.write(new TextEncoder().encode(htmlEnd));
-          writer.close();
-        },
-      }),
-    );
-
-    return new Response(readable, {
-      status: context.statusCode,
-      headers,
+      );
     });
   } else {
     // Buffered mode
     let appHtml = '';
+    const { Writable } = require('node:stream');
     const stream = renderToPipeableStream(
       <StrictMode>
         <AssetsContext.Provider value={routeAssets}>
@@ -144,10 +166,11 @@ export async function handleDocumentRequest(
 
     const fullHtml = htmlStart + appHtml + htmlEnd;
 
-    return new Response(fullHtml, {
+    return {
       status: context.statusCode,
-      headers,
-    });
+      headers: responseHeaders,
+      body: fullHtml,
+    };
   }
 }
 
