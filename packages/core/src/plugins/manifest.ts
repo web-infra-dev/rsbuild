@@ -25,6 +25,14 @@ type ManifestList = {
   };
   /** Flatten all assets */
   allFiles: FilePath[];
+  /** Assets grouped by chunk name */
+  namedChunks: {
+    [chunkName: string]: {
+      js?: FilePath[];
+      css?: FilePath[];
+      assets?: FilePath[];
+    };
+  };
 };
 
 type FileDescriptor = {
@@ -38,8 +46,11 @@ const generateManifest =
   (htmlPaths: Record<string, string>) =>
   (_seed: Record<string, any>, files: FileDescriptor[]) => {
     const chunkEntries = new Map<string, FileDescriptor[]>();
-
     const licenseMap = new Map<string, string>();
+    const chunkMap = new Map<
+      string,
+      { js: string[]; css: string[]; assets: Set<string> }
+    >();
 
     const allFiles = files.map((file) => {
       if (file.chunk) {
@@ -48,11 +59,44 @@ const generateManifest =
         for (const name of names) {
           chunkEntries.set(name, [file, ...(chunkEntries.get(name) || [])]);
         }
+
+        // Track files by chunk name
+        if (file.chunk.name) {
+          if (!chunkMap.has(file.chunk.name)) {
+            chunkMap.set(file.chunk.name, {
+              js: [],
+              css: [],
+              assets: new Set(),
+            });
+          }
+          const chunkFiles = chunkMap.get(file.chunk.name)!;
+
+          if (file.path.endsWith('.css')) {
+            chunkFiles.css.push(file.path);
+          } else if (file.path.endsWith('.js')) {
+            chunkFiles.js.push(file.path);
+          }
+
+          // Add auxiliary files to assets
+          for (const auxiliaryFile of file.chunk.auxiliaryFiles) {
+            chunkFiles.assets.add(auxiliaryFile);
+          }
+        }
       }
 
       if (file.path.endsWith('.LICENSE.txt')) {
         const sourceFilePath = file.path.split('.LICENSE.txt')[0];
         licenseMap.set(sourceFilePath, file.path);
+
+        // Add license files to corresponding chunk assets
+        for (const [_, chunkFiles] of chunkMap.entries()) {
+          if (
+            chunkFiles.js.includes(sourceFilePath) ||
+            chunkFiles.css.includes(sourceFilePath)
+          ) {
+            chunkFiles.assets.add(file.path);
+          }
+        }
       }
       return file.path;
     });
@@ -133,10 +177,22 @@ const generateManifest =
       entries[name] = entryManifest;
     }
 
-    return {
+    const result: ManifestList = {
       allFiles,
       entries,
+      namedChunks: {},
     };
+
+    // Add chunks to manifest
+    for (const [chunkName, files] of chunkMap.entries()) {
+      result.namedChunks[chunkName] = {
+        js: files.js.length > 0 ? files.js : undefined,
+        css: files.css.length > 0 ? files.css : undefined,
+        assets: files.assets.size > 0 ? Array.from(files.assets) : undefined,
+      };
+    }
+
+    return result;
   };
 
 export const pluginManifest = (): RsbuildPlugin => ({

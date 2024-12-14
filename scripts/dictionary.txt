@@ -132,3 +132,4 @@ vnode
 watchpack
 webm
 webp
+mjackson

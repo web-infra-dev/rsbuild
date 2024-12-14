@@ -1,0 +1,48 @@
+{
+  "name": "@rsbuild/plugin-react-router",
+  "version": "0.0.1",
+  "description": "React plugin for Rsbuild",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-infra-dev/rsbuild",
+    "directory": "packages/plugin-react"
+  },
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "dev": "rslib build --watch"
+  },
+  "dependencies": {
+    "@mjackson/node-fetch-server": "^0.3.0",
+    "@rspack/plugin-react-refresh": "~1.0.0",
+    "react-refresh": "^0.16.0"
+  },
+  "devDependencies": {
+    "@rsbuild/core": "workspace:*",
+    "@rslib/core": "0.1.3",
+    "@scripts/test-helper": "workspace:*",
+    "@types/node": "^22.10.1",
+    "typescript": "^5.7.2"
+  },
+  "peerDependencies": {
+    "@rsbuild/core": "1.x"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  }
+}
