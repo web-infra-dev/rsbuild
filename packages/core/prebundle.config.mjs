@@ -63,12 +63,6 @@ export default {
       },
     },
     {
-      name: 'jiti',
-      // jiti has been minified, we do not need to prettier it
-      prettier: false,
-      ignoreDts: true,
-    },
-    {
       name: 'launch-editor-middleware',
       ignoreDts: true,
       externals: {
@@ -172,7 +166,7 @@ export default {
     {
       name: 'postcss-loader',
       externals: {
-        jiti: '../jiti',
+        jiti: 'jiti',
         semver: './semver',
         postcss: '../postcss',
       },
@@ -190,16 +184,14 @@ export default {
       name: 'postcss-load-config',
       externals: {
         yaml: 'yaml',
-        '../jiti': '../jiti',
+        jiti: 'jiti',
       },
       ignoreDts: true,
       // this is a trick to avoid ncc compiling the dynamic import syntax
       // https://github.com/vercel/ncc/issues/935
       beforeBundle(task) {
         replaceFileContent(join(task.depPath, 'src/req.js'), (content) =>
-          content
-            .replaceAll('await import', 'await __import')
-            .replaceAll(`import('jiti')`, `import('../jiti/index.js')`),
+          content.replaceAll('await import', 'await __import'),
         );
       },
       afterBundle(task) {
