@@ -426,7 +426,7 @@ api.processAssets(
 - 移除一个 asset：
 
 ```js
-api.processAssets({ stage: 'stage-optimize' }, ({ assets, compilation }) => {
+api.processAssets({ stage: 'optimize' }, ({ assets, compilation }) => {
   const assetName = 'unwanted-script.js';
   if (assets[assetName]) {
     compilation.deleteAsset(assetName);
