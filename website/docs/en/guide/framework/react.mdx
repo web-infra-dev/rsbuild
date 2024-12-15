@@ -88,7 +88,7 @@ Before you start using React Compiler, it's recommended to read the [React Compi
 
 The steps to use React Compiler in Rsbuild:
 
-1. Upgrade versions of `react` and `react-dom` to 19.
+1. Upgrade versions of `react` and `react-dom` to 19. If you are unable to upgrade, you can install the extra [react-compiler-runtime](https://www.npmjs.com/package/react-compiler-runtime) package which will allow the compiled code to run on versions prior to 19.
 2. React Compiler currently only provides a Babel plugin, you need to install [@rsbuild/plugin-babel](/plugins/list/plugin-babel) and [babel-plugin-react-compiler](https://www.npmjs.com/package/babel-plugin-react-compiler).
 3. Register the Babel plugin in your Rsbuild config file:
 
@@ -114,7 +114,7 @@ export default defineConfig({
 
 ### Configuration
 
-Set the config for React Compiler as follows
+Set the config for React Compiler as follows:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -139,6 +139,14 @@ export default defineConfig({
     }),
   ],
 });
+```
+
+For React 17 and 18 projects, you need to install [react-compiler-runtime](https://www.npmjs.com/package/react-compiler-runtime) and specify the `target`:
+
+```ts title="rsbuild.config.ts"
+const ReactCompilerConfig = {
+  target: '18', // '17' | '18' | '19'
+};
 ```
 
 ## Router
