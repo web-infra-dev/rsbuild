@@ -88,7 +88,7 @@ React Compiler 是 React 19 引入的一个实验性编译器，它可以自动�
 
 在 Rsbuild 中使用 React Compiler 的步骤如下：
 
-1. 升级 `react` 和 `react-dom` 版本到 19。
+1. 升级 `react` 和 `react-dom` 版本到 19。如果你暂时无法升级，可以在 React 17 或 18 项目中安装 [react-compiler-runtime](https://www.npmjs.com/package/react-compiler-runtime)，以允许编译后的代码在 19 之前的版本上运行。
 2. 目前 React Compiler 仅提供了 Babel 插件，你需要安装 [@rsbuild/plugin-babel](/plugins/list/plugin-babel) 和 [babel-plugin-react-compiler](https://www.npmjs.com/package/babel-plugin-react-compiler)。
 3. 在你的 Rsbuild 配置文件中注册 Babel 插件：
 
@@ -139,6 +139,14 @@ export default defineConfig({
     }),
   ],
 });
+```
+
+对于 React 17 和 18 的项目，除了安装 [react-compiler-runtime](https://www.npmjs.com/package/react-compiler-runtime)，还需要指定 `target`：
+
+```ts title="rsbuild.config.ts"
+const ReactCompilerConfig = {
+  target: '18', // '17' | '18' | '19'
+};
 ```
 
 ## Router
