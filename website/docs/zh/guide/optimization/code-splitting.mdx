@@ -1,8 +1,10 @@
-# 拆包最佳实践
+# 代码拆分
 
 良好的拆包策略对于提升应用的加载性能是十分重要的，可以充分利用浏览器的缓存机制，减少请求数量，加快页面加载速度。
 
 在 Rsbuild 中内置了多种拆包策略，可以满足大部分应用的需求，你也可以根据自己的使用场景，自定义拆包配置。
+
+> 参考：[Rspack - 代码拆分](https://rspack.dev/zh/guide/optimization/code-splitting) 了解更多细节。
 
 ## 拆包策略
 
@@ -230,7 +232,7 @@ export default {
 
 ## 使用 Dynamic Import 拆包
 
-除了 `chunkSplit` 配置，使用 dynamic import 拆包也是一项重要的优化手段，它可以有效减少首屏的包体积。
+除了 `chunkSplit` 配置，使用 [dynamic import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) 拆包也是一项重要的优化手段，它可以有效减少首屏的包体积。
 
 :::tip 关于 dynamic import
 Dynamic import 是 ECMAScript 2020 引入的一个新特性，它允许你动态地加载一些 JavaScript 模块。Rsbuild 底层的 Rspack 默认支持 dynamic import，所以你可以直接在代码中使用它。
