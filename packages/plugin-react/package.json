@@ -26,14 +26,14 @@
     "dev": "rslib build --watch"
   },
   "dependencies": {
-    "@rspack/plugin-react-refresh": "~1.0.0",
+    "@rspack/plugin-react-refresh": "~1.0.1",
     "react-refresh": "^0.16.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.1.3",
+    "@rslib/core": "0.1.4",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.10.1",
+    "@types/node": "^22.10.2",
     "typescript": "^5.7.2"
   },
   "peerDependencies": {
