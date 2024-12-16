@@ -46,7 +46,7 @@
     "cross-env": "^7.0.3",
     "cspell-ban-words": "^0.0.4",
     "nano-staged": "^0.8.0",
-    "nx": "^20.2.1",
+    "nx": "^20.2.2",
     "prettier": "^3.4.2",
     "simple-git-hooks": "^2.11.1",
     "typescript": "^5.7.2",

@@ -7,7 +7,7 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "preact": "^10.25.1"
+    "preact": "^10.25.2"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
