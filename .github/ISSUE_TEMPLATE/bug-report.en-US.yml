@@ -2,7 +2,6 @@ name: '🐞 Bug Report'
 description: Report a Bug to Rsbuild
 title: '[Bug]: '
 type: Bug
-labels: ['🐞 bug']
 body:
   - type: markdown
     attributes:
