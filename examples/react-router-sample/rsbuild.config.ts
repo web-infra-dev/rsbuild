@@ -6,6 +6,7 @@ import { pluginTypedCSSModules } from '@rsbuild/plugin-typed-css-modules';
 export default defineConfig({
   plugins: [
     pluginReactRouter({
+      ssr: true,
       // React Router specific options
       router: {
         staticHandler: true, // Enable static handler for React Router
@@ -29,16 +30,16 @@ export default defineConfig({
       },
     },
     // Configure the node environment for SSR
-    node: {
-      source: {
-        entry: {
-          server: './entry.server.tsx',
-        },
-      },
-      output: {
-        target: 'node',
-        manifest: false,
-      },
-    },
+    // node: {
+    //   // source: {
+    //   //   entry: {
+    //   //     server: './entry.server.tsx',
+    //   //   },
+    //   // },
+    //   // output: {
+    //   //   target: 'node',
+    //   //   manifest: false,
+    //   // },
+    // },
   },
 });

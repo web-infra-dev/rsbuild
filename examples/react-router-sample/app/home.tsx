@@ -1,4 +1,5 @@
 import styles from './home.module.css';
+export const ServerAction = async () => {};
 
 export default function Home() {
   return (

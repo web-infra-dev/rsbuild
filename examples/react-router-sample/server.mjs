@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { createRequestHandler } from '@react-router/express';
 import { createRsbuild, loadConfig } from '@rsbuild/core';
 import express from 'express';
 
@@ -68,36 +69,8 @@ async function createSSRHandler(rsbuildServer, isProduction = false) {
       const url = new URL(req.url, `http://${req.headers.host}`);
       const routeId = url.pathname.split('/').pop() || 'home';
       const assets = await getManifestAssets(routeId);
-
-      const request = new Request(url, {
-        method: req.method,
-        headers: req.headers,
-        ...(req.method !== 'GET' && { body: req.body }),
-      });
-
-      const streamingPreferred =
-        FORCE_STREAMING || req.headers.accept?.includes('text/html-streaming');
-
-      const response = await serverModule.handler(request, assets, {
-        mode: streamingPreferred ? 'streaming' : 'buffered',
-      });
-
-      // Set response status and headers
-      res.status(response.status);
-      for (const [key, value] of response.headers.entries()) {
-        res.setHeader(key, value);
-      }
-
-      // Handle response based on mode and response type
-      if (
-        streamingPreferred &&
-        (response.pipe ||
-          (response.body && typeof response.body.pipe === 'function'))
-      ) {
-        await handleStreamResponse(response, res);
-      } else {
-        await handleBufferedResponse(response, res);
-      }
+      debugger;
+      return createRequestHandler(serverModule)(req, res, next);
     } catch (err) {
       console.error('SSR render error:', err);
       next(err);

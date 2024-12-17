@@ -1,5 +1,8 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
 import type { PluginOptions as ReactRefreshOptions } from '@rspack/plugin-react-refresh';
+import { createJiti } from 'jiti';
 import { applyBasicReactSupport, applyReactProfiler } from './react.js';
 import { applySplitChunksRule } from './splitChunks.js';
 
@@ -74,7 +77,11 @@ export const pluginReactRouter = (
 ): RsbuildPlugin => ({
   name: PLUGIN_REACT_ROUTER_NAME,
 
-  setup(api) {
+  async setup(api) {
+    const jiti = createJiti(process.cwd());
+    //@ts-ignore
+    let configModule = await jiti.import('./app/routes', {});
+    console.log(configModule);
     const defaultOptions: PluginReactRouterOptions = {
       fastRefresh: true,
       enableProfiler: false,
@@ -93,6 +100,32 @@ export const pluginReactRouter = (
       },
     };
 
+    // Function to check if user has provided their own entry files
+    const checkUserEntry = (filename: string) => {
+      const userEntry = path.join(api.context.rootPath, filename);
+      return fs.existsSync(userEntry);
+    };
+
+    // Get the appropriate entry path
+    const getEntryPath = (filename: string) => {
+      const userEntry = `./${filename}`;
+      if (checkUserEntry(filename)) {
+        return userEntry;
+      }
+      // Return the path to our default template
+      return path.join(__dirname, 'templates', filename);
+    };
+
+    // Add resolve configuration for user-routes
+    api.modifyBundlerChain((chain) => {
+      chain.resolve.alias.set(
+        'user-routes',
+        checkUserEntry('app/routes.tsx')
+          ? path.join(api.context.rootPath, 'app/routes.js')
+          : path.join(api.context.rootPath, 'app/routes.tsx'),
+      );
+    });
+
     // General configuration for all cases
     api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
       const generalConfig = {
@@ -103,7 +136,7 @@ export const pluginReactRouter = (
           web: {
             source: {
               entry: {
-                client: './entry.client.tsx',
+                client: getEntryPath('entry.client.tsx'),
               },
             },
           },
@@ -127,7 +160,7 @@ export const pluginReactRouter = (
             node: {
               source: {
                 entry: {
-                  server: './entry.server.tsx',
+                  server: `${getEntryPath('entry.server.tsx')}?virtual`,
                 },
               },
             },
@@ -135,6 +168,44 @@ export const pluginReactRouter = (
         };
         return mergeRsbuildConfig(config, ssrConfig);
       });
+
+      // Add transform for virtual server entry
+      api.transform(
+        {
+          test: /entry\.server\.(tsx?|jsx?|mjs)$/,
+          resourceQuery: /\?virtual/,
+        },
+        ({ resourcePath }) => {
+          // Return the virtual server entry content
+          return `
+import type { ServerBuild } from "react-router";
+import * as userServerEntry from '${resourcePath.replace(/\?.*$/, '')}';
+
+export const entry: ServerBuild["entry"] = {
+  module: userServerEntry
+};
+
+// Import routes from the user's app
+import routes from 'user-routes';
+// Export the routes configuration
+export { routes };
+
+// Export other required ServerBuild properties
+export const assets: ServerBuild["assets"] = {
+  entry: { imports: [], module: "" },
+  routes: {},
+  url: "",
+  version: "1"
+};
+
+export const publicPath: ServerBuild["publicPath"] = "/";
+export const assetsBuildDirectory: ServerBuild["assetsBuildDirectory"] = "";
+export const future: ServerBuild["future"] = {};
+export const isSpaMode: ServerBuild["isSpaMode"] = false;
+export const basename: ServerBuild["basename"] = undefined;
+`;
+        },
+      );
 
       api.modifyEnvironmentConfig((config, { name }) => {
         if (name === 'web') {
