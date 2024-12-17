@@ -255,6 +255,7 @@ export class SocketServer {
       !isEqualSet(initialChunks, newInitialChunks);
 
     this.initialChunks[compilationId] = newInitialChunks;
+
     if (shouldReload) {
       return this.sockWrite({
         type: 'content-changed',

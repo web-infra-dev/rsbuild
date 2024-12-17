@@ -6,7 +6,7 @@ import type { DevConfig, NextFunction } from '../types';
 import { getCompilationId } from './helper';
 
 type ServerCallbacks = {
-  onInvalid: (compilationId?: string) => void;
+  onInvalid: (compilationId?: string, fileName?: string | null) => void;
   onDone: (stats: any) => void;
 };
 
@@ -49,12 +49,12 @@ export const setupServerHooks = (
 
   const { compile, invalid, done } = compiler.hooks;
 
-  compile.tap('rsbuild-dev-server', () =>
-    hookCallbacks.onInvalid(getCompilationId(compiler)),
-  );
-  invalid.tap('rsbuild-dev-server', () =>
-    hookCallbacks.onInvalid(getCompilationId(compiler)),
-  );
+  compile.tap('rsbuild-dev-server', () => {
+    hookCallbacks.onInvalid(getCompilationId(compiler));
+  });
+  invalid.tap('rsbuild-dev-server', (fileName) => {
+    hookCallbacks.onInvalid(getCompilationId(compiler), fileName);
+  });
   done.tap('rsbuild-dev-server', hookCallbacks.onDone);
 };
 
