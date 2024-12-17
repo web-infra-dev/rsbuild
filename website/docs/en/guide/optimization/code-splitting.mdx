@@ -1,8 +1,10 @@
-# Chunk Splitting Practice
+# Code Splitting
 
 A great chunk splitting strategy is very important to improve the loading performance of the application. It can make full use of the browser's caching mechanism to reduce the number of requests and improve the loading speed of the application.
 
-Several [chunk splitting strategies](/guide/optimization/split-chunk) are built into Rsbuild. These should meet the needs of most applications. You can also customize the chunk splitting config to suit your own usage scenario.
+Several [chunk splitting strategies](/guide/optimization/code-splitting) are built into Rsbuild. These should meet the needs of most applications. You can also customize the chunk splitting config to suit your own usage scenario.
+
+> See [Rspack - Code Splitting](https://rspack.dev/guide/optimization/code-splitting) for more details.
 
 ## Strategies
 
@@ -234,7 +236,7 @@ The `override` config will be merged with Rspack's `splitChunks` config. For spe
 
 ## Using Dynamic Import for Code Splitting
 
-In addition to the `chunkSplit` configurations, using dynamic import for code splitting is also an important optimization technique that can effectively reduce the initial bundle size.
+In addition to the `chunkSplit` configurations, using [dynamic import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) for code splitting is also an important optimization technique that can effectively reduce the initial bundle size.
 
 :::tip About dynamic import
 Dynamic import is a new feature introduced in ECMAScript 2020 that allows you to dynamically load JavaScript modules. The underlying Rspack used by the Rsbuild supports dynamic import by default, so you can use it directly in your code.
