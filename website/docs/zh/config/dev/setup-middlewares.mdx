@@ -26,6 +26,8 @@ type SetupMiddlewares = Array<
 
 提供执行自定义函数和应用自定义中间件的能力。
 
+## 执行顺序
+
 中间件的执行顺序是: `unshift` => 内置中间件 => `push`。
 
 ```js
@@ -34,10 +36,12 @@ export default {
     setupMiddlewares: [
       (middlewares, server) => {
         middlewares.unshift((req, res, next) => {
+          console.log('first');
           next();
         });
 
         middlewares.push((req, res, next) => {
+          console.log('last');
           next();
         });
       },
@@ -46,26 +50,33 @@ export default {
 };
 ```
 
-一些特殊场景需求可能需要使用服务器 API：
+## Server API
 
-- sockWrite。允许向 HMR 客户端传递一些消息，HMR 客户端将根据接收到的消息类型进行不同的处理。如果你发送一个 "content-changed " 的消息，页面将会重新加载。
+在 `setupMiddlewares` 函数中，你可以访问到 `server` 对象，该对象提供了一些服务器 API。
+
+### sockWrite
+
+`sockWrite` 允许中间件向 HMR 客户端传递一些消息，HMR 客户端将根据接收到的消息类型进行不同的处理。
+
+例如，如果你发送一个 `'content-changed'` 的消息，页面将会重新加载。
 
 ```js
 export default {
   dev: {
     setupMiddlewares: [
       (middlewares, server) => {
-        // 添加自定义 watcher 并在文件更新时触发页面刷新
-        watcher.on('change', (changed) => {
+        if (someCondition) {
           server.sockWrite('content-changed');
-        });
+        }
       },
     ],
   },
 };
 ```
 
-- environments。允许通过 [environment API](/api/javascript-api/environment-api#environment-api) 对指定的 environment 产物进行操作。
+### environments
+
+`environments` 包含 Rsbuild 的 [environment API](/api/javascript-api/environment-api#environment-api)，这允许你在服务端获取特定环境下的构建产物信息。
 
 ```ts
 export default {
