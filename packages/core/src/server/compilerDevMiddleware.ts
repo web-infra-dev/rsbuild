@@ -158,7 +158,7 @@ export class CompilerDevMiddleware {
     const callbacks = {
       onInvalid: (compilationId?: string, fileName?: string | null) => {
         // reload page when HTML template changed
-        if (fileName && HTML_REGEX.test(fileName)) {
+        if (typeof fileName === 'string' && HTML_REGEX.test(fileName)) {
           this.socketServer.sockWrite({
             type: 'content-changed',
             compilationId,
