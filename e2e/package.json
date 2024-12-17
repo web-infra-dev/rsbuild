@@ -37,7 +37,7 @@
     "@rsbuild/plugin-svgr": "workspace:*",
     "@rsbuild/plugin-webpack-swc": "workspace:*",
     "@rsbuild/plugin-vue": "workspace:*",
-    "@rsbuild/plugin-vue-jsx": "^1.0.1",
+    "@rsbuild/plugin-vue-jsx": "^1.1.0",
     "@rsbuild/webpack": "workspace:*",
     "@module-federation/enhanced": "0.8.4",
     "@module-federation/rsbuild-plugin": "0.8.4",
