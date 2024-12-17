@@ -1,6 +1,7 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { createRequire } from 'node:module';
 import type { Socket } from 'node:net';
+import { HTML_REGEX } from '../constants';
 import { pathnameParse } from '../helpers/path';
 import type {
   EnvironmentContext,
@@ -155,7 +156,16 @@ export class CompilerDevMiddleware {
     } = this;
 
     const callbacks = {
-      onInvalid: (compilationId?: string) => {
+      onInvalid: (compilationId?: string, fileName?: string | null) => {
+        // reload page when HTML template changed
+        if (typeof fileName === 'string' && HTML_REGEX.test(fileName)) {
+          this.socketServer.sockWrite({
+            type: 'content-changed',
+            compilationId,
+          });
+          return;
+        }
+
         this.socketServer.sockWrite({
           type: 'invalid',
           compilationId,
