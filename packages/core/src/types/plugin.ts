@@ -263,12 +263,11 @@ export type TransformContext = {
    * @param sourceMap source map of the asset
    * @param assetInfo additional asset information
    */
-  emitFile: (
-    name: string,
-    content: string | Buffer,
-    sourceMap?: string,
-    assetInfo?: Record<string, any>,
-  ) => void;
+  emitFile: Rspack.LoaderContext['emitFile'];
+  /**
+   * Compile and execute a module at the build time.
+   */
+  importModule: Rspack.LoaderContext['importModule'];
 };
 
 export type TransformHandler = (

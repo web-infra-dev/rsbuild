@@ -1,5 +1,5 @@
 import type { LoaderContext } from '@rspack/core';
-import type { EnvironmentContext, Rspack, TransformContext } from '../types';
+import type { EnvironmentContext, Rspack } from '../types';
 
 export type TransformLoaderOptions = {
   id: string;
@@ -30,8 +30,9 @@ export default async function transform(
     resourcePath: this.resourcePath,
     resourceQuery: this.resourceQuery,
     environment: getEnvironment(),
-    addDependency: this.addDependency,
-    emitFile: this.emitFile as TransformContext['emitFile'],
+    addDependency: this.addDependency.bind(this),
+    emitFile: this.emitFile.bind(this),
+    importModule: this.importModule.bind(this),
   });
 
   if (result === null || result === undefined) {
