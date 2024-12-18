@@ -30,9 +30,9 @@ export default async function transform(
     resourcePath: this.resourcePath,
     resourceQuery: this.resourceQuery,
     environment: getEnvironment(),
-    addDependency: this.addDependency,
+    addDependency: this.addDependency.bind(this),
+    emitFile: this.emitFile.bind(this),
     importModule: this.importModule.bind(this),
-    emitFile: this.emitFile,
   });
 
   if (result === null || result === undefined) {
