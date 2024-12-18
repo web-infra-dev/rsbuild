@@ -146,14 +146,14 @@ export const pluginReactRouter = (
           node: {
             source: {
               entry: {
-                server: `${getEntryPath('entry.server.tsx')}?virtual`,
+                server: `${getEntryPath('entry.server')}?virtual`,
               },
             },
           },
           web: {
             source: {
               entry: {
-                client: getEntryPath('entry.client.tsx'),
+                client: getEntryPath('entry.client'),
               },
             },
           },
@@ -415,10 +415,9 @@ export const routes = ${JSON.stringify(routes, null, 2).replace(/"(route\d+)"/g,
 
           // Return the virtual server entry content
           return `
-import type { ServerBuild } from "react-router";
 import * as userServerEntry from '${resourcePath.replace(/\?.*$/, '')}';
 
-export const entry: ServerBuild["entry"] = {
+export const entry = {
   module: userServerEntry
 };
 
