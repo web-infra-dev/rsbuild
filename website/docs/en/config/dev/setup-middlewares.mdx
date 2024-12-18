@@ -26,6 +26,8 @@ type SetupMiddlewares = Array<
 
 Provides the ability to execute a custom function and apply custom middlewares.
 
+## Execution Order
+
 The order among several different types of middleware is: `unshift` => internal middlewares => `push`.
 
 ```js
@@ -34,10 +36,12 @@ export default {
     setupMiddlewares: [
       (middlewares, server) => {
         middlewares.unshift((req, res, next) => {
+          console.log('first');
           next();
         });
 
         middlewares.push((req, res, next) => {
+          console.log('last');
           next();
         });
       },
@@ -46,26 +50,33 @@ export default {
 };
 ```
 
-It is possible to use some server api to meet special scenario requirements:
+## Server API
 
-- sockWrite. Allow send some message to HMR client, and then the HMR client will take different actions depending on the message type. If you send a "content changed" message, the page will reload.
+In the `setupMiddlewares` function, you can access the `server` object, which provides some server APIs.
+
+### sockWrite
+
+`sockWrite` allows middlewares to send some message to HMR client, and then the HMR client will take different actions depending on the message type.
+
+For example, if you send a `'content-changed'` message, the page will reload.
 
 ```js
 export default {
   dev: {
     setupMiddlewares: [
       (middlewares, server) => {
-        // add custom watch & trigger page reload when change
-        watcher.on('change', (changed) => {
+        if (someCondition) {
           server.sockWrite('content-changed');
-        });
+        }
       },
     ],
   },
 };
 ```
 
-- environments. Allow operations in the specified environment through the [environment API](/api/javascript-api/environment-api#environment-api).
+### environments
+
+`environments` includes Rsbuild's [environment API](/api/javascript-api/environment-api#environment-api), which allows you to get the build outputs information for a specific environment in the server side.
 
 ```ts
 export default {
