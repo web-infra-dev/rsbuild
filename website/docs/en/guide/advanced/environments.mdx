@@ -300,23 +300,57 @@ export async function startDevServer() {
 
 For detailed usage, please refer to: [SSR + Express Example](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/ssr-express).
 
-## Add environment dependencies
+## Build order
 
-By default, Rsbuild builds all environments in parallel. If an environment in your project depends on other environments to be compiled first, you can add the name of the environment you need to depend on to Rspack's [dependencies](https://rspack.dev/config/other-options#dependencies) configuration.
+By default, Rsbuild builds all environments in parallel.
 
-For example, the node environment depends on the web environment to be compiled first. You can add the following configuration:
+If you need to control the build order between different environments, you can set build dependencies through Rspack's [dependencies](https://rspack.dev/config/other-options#dependencies) configuration.
+
+For example, if you need to build the `web` environment first, then build the `node` environment, you can add the following configuration:
 
 ```ts title=rsbuild.config.ts
 export default {
   environments: {
-    web: {},
+    web: {
+      tools: {
+        rspack: {
+          name: 'foo',
+        },
+      },
+    },
     node: {
       tools: {
         rspack: {
-          dependencies: ['web'],
+          dependencies: ['foo'],
         },
       },
     },
   },
 };
+```
+
+We can use a simple plugin to test the build order of multiple environments:
+
+```ts
+const testPlugin: RsbuildPlugin = {
+  name: 'test-plugin',
+  setup(api) {
+    api.onBeforeEnvironmentCompile(({ environment }) => {
+      console.log('build start:', environment.name);
+    });
+
+    api.onAfterEnvironmentCompile(({ stats, environment }) => {
+      console.log('build done:', environment.name);
+      console.log('stats', stats);
+    });
+  },
+};
+
+// The plugin will output:
+// - build start: web
+// - build done: web
+// - stats: { ... }
+// - build start: node
+// - build done: node
+// - stats: { ... }
 ```
