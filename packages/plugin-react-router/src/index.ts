@@ -101,8 +101,17 @@ export const pluginReactRouter = (
 
     // Function to check if user has provided their own entry files
     const checkUserEntry = (filename: string) => {
-      const userEntry = path.join(api.context.rootPath, filename);
-      return fs.existsSync(userEntry);
+      const extensions = ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs'];
+      const baseFilename = filename.replace(/\.[^/.]+$/, ''); // Remove extension if present
+      
+      for (const ext of extensions) {
+        const filePath = path.join(api.context.rootPath, `${baseFilename}${ext}`);
+        if (fs.existsSync(filePath)) {
+          return true;
+        }
+      }
+      
+      return false;
     };
 
     // Helper function to find the first existing routes file
@@ -128,7 +137,7 @@ export const pluginReactRouter = (
         return userEntry;
       }
       // Return the path to our default template
-      return path.join(__dirname, 'templates', filename);
+      return path.join('@rsbuild/plugin-react-router', 'templates', filename);
     };
 
     // Add resolve configuration for user-routes

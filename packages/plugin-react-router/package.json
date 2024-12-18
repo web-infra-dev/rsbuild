@@ -14,6 +14,16 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
+    },
+    "./templates/entry.client": {
+      "types": "./dist/templates/entry.client.d.ts",
+      "import": "./dist/templates/entry.client.js",
+      "require": "./dist/templates/entry.client.cjs"
+    },
+    "./templates/entry.server": {
+      "types": "./dist/templates/entry.server.d.ts",
+      "import": "./dist/templates/entry.server.js",
+      "require": "./dist/templates/entry.server.cjs"
     }
   },
   "main": "./dist/index.cjs",
