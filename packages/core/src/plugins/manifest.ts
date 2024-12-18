@@ -4,6 +4,26 @@ import type { RsbuildPlugin } from '../types';
 
 type FilePath = string;
 
+type FileDescriptor = {
+  chunk?: Chunk;
+  isInitial: boolean;
+  name: string;
+  path: string;
+};
+
+type GenerateFunction = (
+  seed: Record<string, any>,
+  files: FileDescriptor[],
+) => ManifestList;
+
+type ManifestConfig =
+  | boolean
+  | string
+  | {
+      fileName?: string;
+      generate?: GenerateFunction;
+    };
+
 type ManifestByEntry = {
   initial?: {
     js?: FilePath[];
@@ -33,13 +53,6 @@ type ManifestList = {
       assets?: FilePath[];
     };
   };
-};
-
-type FileDescriptor = {
-  chunk?: Chunk;
-  isInitial: boolean;
-  name: string;
-  path: string;
 };
 
 const generateManifest =
@@ -209,19 +222,30 @@ export const pluginManifest = (): RsbuildPlugin => ({
         return;
       }
 
-      const fileName =
-        typeof manifest === 'string' ? manifest : 'manifest.json';
+      let fileName = 'manifest.json';
+      let generate = generateManifest(environment.htmlPaths);
+
+      if (typeof manifest === 'string') {
+        fileName = manifest;
+      } else if (
+        typeof manifest === 'object' &&
+        manifest !== null &&
+        !Array.isArray(manifest)
+      ) {
+        const manifestConfig = manifest as Extract<ManifestConfig, object>;
+        fileName = manifestConfig.fileName || 'manifest.json';
+        generate = manifestConfig.generate || generate;
+      }
 
       const { RspackManifestPlugin } = await import(
         '../../compiled/rspack-manifest-plugin/index.js'
       );
-      const { htmlPaths } = environment;
 
       chain.plugin(CHAIN_ID.PLUGIN.MANIFEST).use(RspackManifestPlugin, [
         {
           fileName,
           writeToFileEmit: isDev && writeToDisk !== true,
-          generate: generateManifest(htmlPaths),
+          generate,
         },
       ]);
     });

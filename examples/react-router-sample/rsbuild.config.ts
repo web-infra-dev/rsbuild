@@ -16,30 +16,4 @@ export default defineConfig({
     pluginReact(),
     pluginTypedCSSModules(),
   ],
-  environments: {
-    // Configure the web environment for browsers
-    web: {
-      source: {
-        entry: {
-          client: './entry.client.tsx',
-        },
-      },
-      output: {
-        manifest: true,
-        target: 'web',
-      },
-    },
-    // Configure the node environment for SSR
-    // node: {
-    //   // source: {
-    //   //   entry: {
-    //   //     server: './entry.server.tsx',
-    //   //   },
-    //   // },
-    //   // output: {
-    //   //   target: 'node',
-    //   //   manifest: false,
-    //   // },
-    // },
-  },
 });

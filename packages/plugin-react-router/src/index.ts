@@ -1,6 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import type { RouteConfig, RouteConfigEntry } from '@react-router/dev/routes';
 import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
+import type { StatsAsset, StatsChunk } from '@rspack/core';
 import type { PluginOptions as ReactRefreshOptions } from '@rspack/plugin-react-refresh';
 import { createJiti } from 'jiti';
 import { applyBasicReactSupport, applyReactProfiler } from './react.js';
@@ -78,10 +80,7 @@ export const pluginReactRouter = (
   name: PLUGIN_REACT_ROUTER_NAME,
 
   async setup(api) {
-    const jiti = createJiti(process.cwd());
-    //@ts-ignore
-    let configModule = await jiti.import('./app/routes', {});
-    console.log(configModule);
+    const jiti = createJiti(api.context.rootPath);
     const defaultOptions: PluginReactRouterOptions = {
       fastRefresh: true,
       enableProfiler: false,
@@ -106,6 +105,22 @@ export const pluginReactRouter = (
       return fs.existsSync(userEntry);
     };
 
+    // Helper function to find the first existing routes file
+    const findRoutesFile = () => {
+      const extensions = ['.ts', '.tsx', '.js', '.jsx', '.mjs'];
+      const baseRoutesPath = path.join(api.context.rootPath, 'app/routes');
+
+      for (const ext of extensions) {
+        const filePath = `${baseRoutesPath}${ext}`;
+        if (fs.existsSync(filePath)) {
+          return filePath;
+        }
+      }
+
+      // Default to .tsx if no file is found
+      return path.join(api.context.rootPath, 'app/routes.tsx');
+    };
+
     // Get the appropriate entry path
     const getEntryPath = (filename: string) => {
       const userEntry = `./${filename}`;
@@ -118,12 +133,7 @@ export const pluginReactRouter = (
 
     // Add resolve configuration for user-routes
     api.modifyBundlerChain((chain) => {
-      chain.resolve.alias.set(
-        'user-routes',
-        checkUserEntry('app/routes.tsx')
-          ? path.join(api.context.rootPath, 'app/routes.js')
-          : path.join(api.context.rootPath, 'app/routes.tsx'),
-      );
+      chain.resolve.alias.set('user-routes', findRoutesFile());
     });
 
     // General configuration for all cases
@@ -133,6 +143,13 @@ export const pluginReactRouter = (
           htmlFallback: 'index' as const,
         },
         environments: {
+          node: {
+            source: {
+              entry: {
+                server: `${getEntryPath('entry.server.tsx')}?virtual`,
+              },
+            },
+          },
           web: {
             source: {
               entry: {
@@ -141,7 +158,24 @@ export const pluginReactRouter = (
             },
           },
         },
+      } as {
+        server: { htmlFallback: 'index' };
+        environments: {
+          web: {
+            source: {
+              entry: { client: string };
+            };
+          };
+          node?: {
+            source: {
+              entry: { server: string };
+            };
+          };
+        };
       };
+      if (!options.ssr) {
+        delete generalConfig.environments.node;
+      }
       return mergeRsbuildConfig(config, generalConfig);
     });
 
@@ -156,18 +190,145 @@ export const pluginReactRouter = (
               __DATA_ROUTER__: String(finalOptions.router?.dataRouter),
             },
           },
-          environments: {
-            node: {
-              source: {
-                entry: {
-                  server: `${getEntryPath('entry.server.tsx')}?virtual`,
-                },
-              },
-            },
-          },
         };
         return mergeRsbuildConfig(config, ssrConfig);
       });
+
+      let clientStats: Rspack.StatsCompilation | undefined;
+      let clientStatsPromise: Promise<Rspack.StatsCompilation | undefined>;
+      let clientStatsResolve!: (
+        stats: Rspack.StatsCompilation | undefined,
+      ) => void;
+      let clientStatsReject!: (error: Error) => void;
+      let isWebCompilationComplete = false;
+
+      // Reset promise on each new compilation cycle
+      const resetClientStatsPromise = () => {
+        clientStatsPromise = new Promise((resolve, reject) => {
+          clientStatsResolve = resolve;
+          clientStatsReject = reject;
+        });
+        isWebCompilationComplete = false;
+      };
+
+      api.onAfterEnvironmentCompile(({ stats, environment }) => {
+        if (environment.name === 'web') {
+          try {
+            clientStats = stats?.toJson();
+            isWebCompilationComplete = true;
+            clientStatsResolve(stats?.toJson());
+          } catch (error) {
+            clientStatsReject(
+              error instanceof Error
+                ? error
+                : new Error('Failed to process web compilation stats'),
+            );
+          }
+        }
+      });
+
+      resetClientStatsPromise();
+
+      api.onBeforeEnvironmentCompile(({ environment }) => {
+        if (environment.name === 'node' && !isWebCompilationComplete) {
+          return clientStatsPromise
+            .catch((error) => {
+              console.error('Failed to get web compilation stats:', error);
+              throw error;
+            })
+            .then(() => undefined);
+        }
+      });
+
+      api.onDevCompileDone(() => {
+        resetClientStatsPromise();
+      });
+
+      // Transform for routes file
+      api.transform(
+        {
+          test: new RegExp(findRoutesFile().replace(/\./g, '\\.')),
+          environments: ['node'],
+        },
+        async ({ resourcePath }) => {
+          const configModule = await (jiti.import(resourcePath, {
+            default: true,
+          }) as RouteConfig);
+
+          // Wrap the config in a root route
+          const rootConfig: RouteConfig = [
+            {
+              file: 'root.tsx',
+              children: configModule,
+            },
+          ];
+
+          const routeImports: string[] = [];
+          let moduleCounter = 0;
+
+          function processRoute(route: RouteConfigEntry) {
+            const moduleVar = `route${moduleCounter++}`;
+            // Skip dynamic import for root file
+            if (/^root\.(tsx?|jsx?|mjs|js)$/.test(route.file)) {
+              routeImports.push(`import ${moduleVar} from './${route.file}';`);
+              return moduleVar;
+            }
+            // Convert file path to chunk name by removing extension and converting slashes to dashes
+            const chunkName = route.file
+              .replace(/\.[^/.]+$/, '') // remove extension
+              .replace(/\//g, '-'); // replace slashes with dashes
+            routeImports.push(
+              `const ${moduleVar} = import(/* webpackChunkName: "routes/${chunkName}" */ './${route.file}');`,
+            );
+            return moduleVar;
+          }
+
+          interface RouteObject {
+            id: string;
+            parentId: string | undefined;
+            path: string | undefined;
+            index: boolean | undefined;
+            caseSensitive: boolean | undefined;
+            module: string;
+          }
+
+          const routes: Record<string, RouteObject> = {};
+
+          function processRouteRecursive(
+            route: RouteConfigEntry,
+            parentId?: string,
+          ) {
+            const moduleVar = processRoute(route);
+            const routeId = path.parse(route.file).name;
+            routes[routeId] = {
+              id: routeId,
+              parentId,
+              path: route.path ?? undefined,
+              index: route.index ?? undefined,
+              caseSensitive: route.caseSensitive ?? undefined,
+              module: moduleVar,
+            };
+
+            if (route.children) {
+              for (const child of route.children) {
+                processRouteRecursive(child, routeId);
+              }
+            }
+          }
+
+          for (const route of rootConfig) {
+            processRouteRecursive(route);
+          }
+
+          const fileContent = `
+${routeImports.join('\n')}
+
+export const routes = ${JSON.stringify(routes, null, 2).replace(/"(route\d+)"/g, '$1')};
+`;
+
+          return fileContent;
+        },
+      );
 
       // Add transform for virtual server entry
       api.transform(
@@ -176,6 +337,82 @@ export const pluginReactRouter = (
           resourceQuery: /\?virtual/,
         },
         ({ resourcePath }) => {
+          const normalized = api.getNormalizedConfig();
+          const serverStats = clientStats;
+          const entrypoint = serverStats?.entrypoints?.client;
+          const namedChunks = serverStats?.namedChunkGroups || {};
+          const publicPath = normalized.output?.assetPrefix || '/';
+          const basename = normalized.server?.base || '/';
+          const distPath = normalized.output?.distPath;
+          const rootDistPath = distPath?.root || 'dist';
+
+          // Helper function to get asset path with correct dist directory
+          const getAssetPath = (assetName: string) => {
+            if (assetName.endsWith('.css')) {
+              return `${distPath?.css || 'static/css'}/${assetName}`;
+            }
+            if (assetName.endsWith('.js')) {
+              return `${distPath?.js || 'static/js'}/${assetName}`;
+            }
+            return `${distPath?.assets || 'static/assets'}/${assetName}`;
+          };
+
+          // Process routes to include chunk information
+          const routeManifest: Record<string, any> = {};
+          for (const [name, chunk] of Object.entries(
+            namedChunks as Record<string, StatsChunk>,
+          )) {
+            if (!name.startsWith('routes/') && name !== 'root') continue;
+
+            const id = name;
+            const parentId = name === 'root' ? undefined : 'root';
+            const isIndex = name !== 'root';
+
+            // Filter JS and CSS assets
+            const jsAssets =
+              chunk.assets
+                ?.filter((asset: StatsAsset) => asset.name.endsWith('.js'))
+                .map((asset: StatsAsset) => getAssetPath(asset.name)) || [];
+
+            const cssAssets =
+              chunk.assets
+                ?.filter((asset: StatsAsset) => asset.name.endsWith('.css'))
+                .map((asset: StatsAsset) => getAssetPath(asset.name)) || [];
+
+            routeManifest[name] = {
+              id,
+              parentId,
+              path: name === 'root' ? '' : undefined,
+              index: isIndex,
+              caseSensitive: undefined,
+              hasAction: false,
+              hasLoader: false,
+              hasClientAction: false,
+              hasClientLoader: false,
+              hasErrorBoundary: name === 'root',
+              module: jsAssets[0] || '',
+              imports: jsAssets.slice(1) || [],
+              css: cssAssets,
+            };
+          }
+
+          const manifest = {
+            entry: {
+              module: entrypoint?.assets?.[0]?.name
+                ? getAssetPath(entrypoint.assets[0].name)
+                : '',
+              imports: (entrypoint?.assets?.slice(1) || [])
+                .filter((asset) => asset.name.endsWith('.js'))
+                .map((asset) => getAssetPath(asset.name)),
+              css: (entrypoint?.assets || [])
+                .filter((asset) => asset.name.endsWith('.css'))
+                .map((asset) => getAssetPath(asset.name)),
+            },
+            routes: routeManifest,
+            url: `${distPath?.js || 'static/js'}/manifest-${serverStats?.hash}.js`,
+            version: serverStats?.hash || '',
+          };
+
           // Return the virtual server entry content
           return `
 import type { ServerBuild } from "react-router";
@@ -186,23 +423,26 @@ export const entry: ServerBuild["entry"] = {
 };
 
 // Import routes from the user's app
-import routes from 'user-routes';
-// Export the routes configuration
-export { routes };
+import { routes } from 'user-routes';
 
-// Export other required ServerBuild properties
-export const assets: ServerBuild["assets"] = {
-  entry: { imports: [], module: "" },
-  routes: {},
-  url: "",
-  version: "1"
+// Export server manifest and other required properties
+const serverManifest = ${JSON.stringify(manifest, null, 2)};
+const assetsBuildDirectory = ${JSON.stringify(rootDistPath)};
+const basename = ${JSON.stringify(basename)};
+const future = { "unstable_optimizeDeps": false };
+const isSpaMode = false;
+const publicPath = ${JSON.stringify(publicPath)};
+
+export {
+  serverManifest as assets,
+  assetsBuildDirectory,
+  basename,
+  entry,
+  future,
+  isSpaMode,
+  publicPath,
+  routes
 };
-
-export const publicPath: ServerBuild["publicPath"] = "/";
-export const assetsBuildDirectory: ServerBuild["assetsBuildDirectory"] = "";
-export const future: ServerBuild["future"] = {};
-export const isSpaMode: ServerBuild["isSpaMode"] = false;
-export const basename: ServerBuild["basename"] = undefined;
 `;
         },
       );

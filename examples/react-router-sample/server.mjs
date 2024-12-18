@@ -6,7 +6,6 @@ import express from 'express';
 
 // Configuration Constants
 const PORT = process.env.PORT ? Number.parseInt(process.env.PORT, 10) : 4000;
-const FORCE_STREAMING = (process.env.FORCE_STREAMING || 'true') === 'true';
 
 // Asset Management
 async function getManifestAssets(routeId) {
@@ -34,27 +33,6 @@ async function getManifestAssets(routeId) {
 }
 
 // SSR Handler
-async function handleStreamResponse(response, res) {
-  if (response.pipe) {
-    response.pipe(res);
-  } else if (response.body && typeof response.body.pipe === 'function') {
-    response.body.pipe(res);
-    response.body.on('error', (err) => {
-      console.error('Streaming error:', err);
-      if (!res.headersSent) {
-        res.status(500).send('Streaming error occurred');
-      } else {
-        res.end();
-      }
-    });
-  }
-}
-
-async function handleBufferedResponse(response, res) {
-  const text = await response.text();
-  res.send(text);
-}
-
 async function createSSRHandler(rsbuildServer, isProduction = false) {
   return async (req, res, next) => {
     try {
@@ -66,11 +44,7 @@ async function createSSRHandler(rsbuildServer, isProduction = false) {
         ? rsbuildServer.loadBundle('server')
         : rsbuildServer.environments?.node.loadBundle('server'));
 
-      const url = new URL(req.url, `http://${req.headers.host}`);
-      const routeId = url.pathname.split('/').pop() || 'home';
-      const assets = await getManifestAssets(routeId);
-      debugger;
-      return createRequestHandler(serverModule)(req, res, next);
+      return createRequestHandler({ build: serverModule })(req, res, next);
     } catch (err) {
       console.error('SSR render error:', err);
       next(err);
