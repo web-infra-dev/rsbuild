@@ -322,7 +322,7 @@ export const pluginReactRouter = (
             // );
 
             routeImports.push(
-              `import  * as ${moduleVar} from './${route.file}';`,
+              `import * as ${moduleVar} from './${route.file}';`,
             );
             return moduleVar;
           }
@@ -407,7 +407,17 @@ export const routes = ${JSON.stringify(routes, null, 2).replace(/"(route\d+)"/g,
           };
 
           // Process routes to include chunk information
-          const routeManifest: Record<string, any> = {};
+          const routeManifest: Record<string, any> = {
+            root: {
+              id: 'root',
+              parentId: undefined,
+              path: '',
+              index: false,
+              caseSensitive: undefined,
+              hasAction: false,
+              hasLoader: false,
+            },
+          };
           for (let [name, chunk] of Object.entries(
             namedChunks as Record<string, StatsChunk>,
           )) {

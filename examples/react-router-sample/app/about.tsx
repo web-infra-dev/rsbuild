@@ -14,7 +14,7 @@ export default function About() {
       </p>
       <div className={styles.loaderDemo}>
         <h3>Loader Demo</h3>
-        <p className={styles.message}>{data.message}</p>
+        <p className={styles.message}>{data?.message || 'no data'}</p>
         <p className={styles.note}>
           This message was loaded using React Router's loader functionality,
           demonstrating server/client data loading capabilities.
