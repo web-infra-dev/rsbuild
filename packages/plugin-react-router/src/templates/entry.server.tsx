@@ -1,7 +1,7 @@
 import { PassThrough } from 'node:stream';
-
 import { createReadableStreamFromReadable } from '@react-router/node';
 import { isbot } from 'isbot';
+import React from 'react';
 import type { RenderToPipeableStreamOptions } from 'react-dom/server';
 import { renderToPipeableStream } from 'react-dom/server';
 import type {

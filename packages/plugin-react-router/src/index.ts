@@ -1,12 +1,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import type { RouteConfig, RouteConfigEntry } from '@react-router/dev/routes';
-import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
+import type { CacheGroups, RsbuildPlugin, Rspack } from '@rsbuild/core';
 import type { StatsAsset, StatsChunk } from '@rspack/core';
-import type { PluginOptions as ReactRefreshOptions } from '@rspack/plugin-react-refresh';
 import { createJiti } from 'jiti';
 import { applyBasicReactSupport, applyReactProfiler } from './react.js';
-import { applySplitChunksRule } from './splitChunks.js';
+import { applySplitChunksRule, isPlainObject } from './splitChunks.js';
 
 export type SplitReactChunkOptions = {
   /**
@@ -51,11 +50,6 @@ export type PluginReactRouterOptions = {
    * @default false
    */
   enableProfiler?: boolean;
-  /**
-   * Options passed to `@rspack/plugin-react-refresh`
-   * @see https://rspack.dev/guide/tech/react#rspackplugin-react-refresh
-   */
-  reactRefreshOptions?: ReactRefreshOptions;
   /**
    * Whether to enable React Fast Refresh in development mode.
    * @default true
@@ -202,65 +196,99 @@ export const pluginReactRouter = (
               __DATA_ROUTER__: String(finalOptions.router?.dataRouter),
             },
           },
+          environments: {
+            web: {
+              tools: {
+                rspack: {
+                  name: 'web',
+                },
+              },
+            },
+            node: {
+              tools: {
+                rspack: {
+                  dependencies: ['web'],
+                },
+              },
+            },
+          },
         };
         return mergeRsbuildConfig(config, ssrConfig);
       });
-
       let clientStats: Rspack.StatsCompilation | undefined;
-      let clientStatsPromise: Promise<Rspack.StatsCompilation | undefined>;
-      let clientStatsResolve!: (
-        stats: Rspack.StatsCompilation | undefined,
-      ) => void;
-      let clientStatsReject!: (error: Error) => void;
-      let isWebCompilationComplete = false;
-
-      // Reset promise on each new compilation cycle
-      const resetClientStatsPromise = () => {
-        clientStatsPromise = new Promise((resolve, reject) => {
-          clientStatsResolve = resolve;
-          clientStatsReject = reject;
-        });
-        isWebCompilationComplete = false;
-      };
-
       api.onAfterEnvironmentCompile(({ stats, environment }) => {
         if (environment.name === 'web') {
-          try {
-            clientStats = stats?.toJson();
-            isWebCompilationComplete = true;
-            clientStatsResolve(stats?.toJson());
-          } catch (error) {
-            clientStatsReject(
-              error instanceof Error
-                ? error
-                : new Error('Failed to process web compilation stats'),
-            );
+          clientStats = stats?.toJson();
+        }
+      });
+
+      api.modifyBundlerChain(async (chain, { environment, isProd, target }) => {
+        const { config } = environment;
+        if (config.performance.chunkSplit.strategy !== 'split-by-experience') {
+          return;
+        }
+
+        const routesFile = findRoutesFile();
+
+        const configModule = await (jiti.import(routesFile, {
+          default: true,
+        }) as RouteConfig);
+
+        const routePaths: string[] = [];
+        function collectRoutePaths(routes: RouteConfigEntry[]) {
+          for (const route of routes) {
+            if (route.file && !/^root\.(tsx?|jsx?|mjs|js)$/.test(route.file)) {
+              routePaths.push(route.file);
+            }
+            if (route.children) {
+              collectRoutePaths(route.children);
+            }
           }
         }
-      });
-
-      resetClientStatsPromise();
-
-      api.onBeforeEnvironmentCompile(({ environment }) => {
-        if (environment.name === 'node' && !isWebCompilationComplete) {
-          return clientStatsPromise
-            .catch((error) => {
-              console.error('Failed to get web compilation stats:', error);
-              throw error;
-            })
-            .then(() => undefined);
+        collectRoutePaths(configModule);
+        const currentConfig = chain.optimization.splitChunks.values();
+        if (!isPlainObject(currentConfig)) {
+          return;
         }
-      });
 
-      api.onDevCompileDone(() => {
-        resetClientStatsPromise();
+        // Only apply chunk splitting for web target
+        if (target === 'web') {
+          const extraGroups: Record<string, CacheGroups> = {};
+
+          // Add routes cache group for splitting route chunks
+          extraGroups.routes = {
+            test: new RegExp(
+              routePaths.map((p) => p.replace(/\./g, '\\.')).join('|'),
+            ),
+            name(module: any) {
+              const routePath = module?.resource || '';
+              const matchedRoute = routePaths.find((p) =>
+                routePath.includes(p),
+              );
+              if (!matchedRoute) return false;
+              const name = `routes/${matchedRoute.replace(/\.[^/.]+$/, '').replace(/\//g, '-')}`;
+              return name;
+            },
+            enforce: true,
+            chunks: 'all',
+            priority: 10,
+          };
+
+          chain.optimization.splitChunks({
+            ...currentConfig,
+            cacheGroups: {
+              ...extraGroups,
+              ...((currentConfig as any).cacheGroups || {}),
+            },
+          });
+        }
       });
 
       // Transform for routes file
       api.transform(
         {
           test: new RegExp(findRoutesFile().replace(/\./g, '\\.')),
-          environments: ['node'],
+          environments: ['node', 'web'],
         },
         async ({ resourcePath }) => {
           const configModule = await (jiti.import(resourcePath, {
@@ -293,7 +321,9 @@ export const pluginReactRouter = (
             //   `const ${moduleVar} = import(/* webpackChunkName: "routes/${chunkName}" */ './${route.file}');`,
             // );
 
-            routeImports.push(`import ${moduleVar} from './${route.file}';`);
+            routeImports.push(
+              `import  * as ${moduleVar} from './${route.file}';`,
+            );
             return moduleVar;
           }
 
@@ -352,15 +382,20 @@ export const routes = ${JSON.stringify(routes, null, 2).replace(/"(route\d+)"/g,
         },
         ({ resourcePath }) => {
           const normalized = api.getNormalizedConfig();
-          const serverStats = clientStats;
-          const entrypoint = serverStats?.entrypoints?.client;
-          const namedChunks = serverStats?.namedChunkGroups || {};
           const publicPath = normalized.output?.assetPrefix || '/';
           const basename = normalized.server?.base || '/';
           const distPath = normalized.output?.distPath;
           const rootDistPath = distPath?.root || 'dist';
+          const chunks = clientStats?.chunks || [];
+          const namedChunks = Object.fromEntries(
+            chunks.map((chunk: StatsChunk) => [
+              chunk.names?.[0] || chunk.id,
+              chunk,
+            ]),
+          );
+          const entrypoint = chunks.find((chunk: StatsChunk) => chunk.initial);
 
-          // Helper function to get asset path with correct dist directory
+          // Helper function to get asset path
           const getAssetPath = (assetName: string) => {
             if (assetName.endsWith('.css')) {
               return `${distPath?.css || 'static/css'}/${assetName}`;
@@ -373,25 +408,25 @@ export const routes = ${JSON.stringify(routes, null, 2).replace(/"(route\d+)"/g,
 
           // Process routes to include chunk information
           const routeManifest: Record<string, any> = {};
-          for (const [name, chunk] of Object.entries(
+          for (let [name, chunk] of Object.entries(
             namedChunks as Record<string, StatsChunk>,
           )) {
             if (!name.startsWith('routes/') && name !== 'root') continue;
-
+            name = name.replace('routes/', '');
             const id = name;
             const parentId = name === 'root' ? undefined : 'root';
             const isIndex = name !== 'root';
 
             // Filter JS and CSS assets
             const jsAssets =
-              chunk.assets
-                ?.filter((asset: StatsAsset) => asset.name.endsWith('.js'))
-                .map((asset: StatsAsset) => getAssetPath(asset.name)) || [];
+              (chunk.files || [])
+                .filter((file: string) => file.endsWith('.js'))
+                .map((file: string) => getAssetPath(file)) || [];
 
             const cssAssets =
-              chunk.assets
-                ?.filter((asset: StatsAsset) => asset.name.endsWith('.css'))
-                .map((asset: StatsAsset) => getAssetPath(asset.name)) || [];
+              (chunk.files || [])
+                .filter((file: string) => file.endsWith('.css'))
+                .map((file: string) => getAssetPath(file)) || [];
 
             routeManifest[name] = {
               id,
@@ -412,20 +447,21 @@ export const routes = ${JSON.stringify(routes, null, 2).replace(/"(route\d+)"/g,
 
           const manifest = {
             entry: {
-              module: entrypoint?.assets?.[0]?.name
-                ? getAssetPath(entrypoint.assets[0].name)
+              module: entrypoint?.files?.[0]
+                ? getAssetPath(entrypoint.files[0])
                 : '',
-              imports: (entrypoint?.assets?.slice(1) || [])
-                .filter((asset) => asset.name.endsWith('.js'))
-                .map((asset) => getAssetPath(asset.name)),
-              css: (entrypoint?.assets || [])
-                .filter((asset) => asset.name.endsWith('.css'))
-                .map((asset) => getAssetPath(asset.name)),
+              imports: (entrypoint?.files?.slice(1) || [])
+                .filter((file: string) => file.endsWith('.js'))
+                .map((file: string) => getAssetPath(file)),
+              css: (entrypoint?.files || [])
+                .filter((file: string) => file.endsWith('.css'))
+                .map((file: string) => getAssetPath(file)),
             },
             routes: routeManifest,
-            url: `${distPath?.js || 'static/js'}/manifest-${serverStats?.hash}.js`,
-            version: serverStats?.hash || '',
+            url: `${distPath?.js || 'static/js'}/manifest-${clientStats?.hash}.js`,
+            version: clientStats?.hash || '',
           };
+
           // Return the virtual server entry content
           return `
 import * as userServerEntry from '${resourcePath.replace(/\?.*$/, '')}';

@@ -10,6 +10,9 @@ export default defineConfig({
       return config;
     },
   },
+  dev: {
+    writeToDisk: true,
+  },
   plugins: [
     pluginReactRouter({
       ssr: true,

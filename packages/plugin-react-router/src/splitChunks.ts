@@ -1,7 +1,7 @@
 import type { CacheGroups, RsbuildPluginAPI, SplitChunks } from '@rsbuild/core';
 import type { SplitReactChunkOptions } from './index.js';
 
-const isPlainObject = (obj: unknown): obj is Record<string, any> =>
+export const isPlainObject = (obj: unknown): obj is Record<string, any> =>
   obj !== null &&
   typeof obj === 'object' &&
   Object.prototype.toString.call(obj) === '[object Object]';
