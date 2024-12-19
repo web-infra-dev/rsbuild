@@ -286,12 +286,14 @@ export const pluginReactRouter = (
               return moduleVar;
             }
             // Convert file path to chunk name by removing extension and converting slashes to dashes
-            const chunkName = route.file
-              .replace(/\.[^/.]+$/, '') // remove extension
-              .replace(/\//g, '-'); // replace slashes with dashes
-            routeImports.push(
-              `const ${moduleVar} = import(/* webpackChunkName: "routes/${chunkName}" */ './${route.file}');`,
-            );
+            // const chunkName = route.file
+            //   .replace(/\.[^/.]+$/, '') // remove extension
+            //   .replace(/\//g, '-'); // replace slashes with dashes
+            // routeImports.push(
+            //   `const ${moduleVar} = import(/* webpackChunkName: "routes/${chunkName}" */ './${route.file}');`,
+            // );
+
+            routeImports.push(`import ${moduleVar} from './${route.file}';`);
             return moduleVar;
           }
 
@@ -439,7 +441,7 @@ import { routes } from 'user-routes';
 const serverManifest = ${JSON.stringify(manifest, null, 2)};
 const assetsBuildDirectory = ${JSON.stringify(rootDistPath)};
 const basename = ${JSON.stringify(basename)};
-const future = { "unstable_optimizeDeps": false };
+const future = { };
 const isSpaMode = false;
 const publicPath = ${JSON.stringify(publicPath)};
 
@@ -504,14 +506,22 @@ export {
             'async function _loadRouteModule',
           );
 
+          // Replace the dynamic import pattern
+          newCode = newCode.replace(
+            /let routeModule = await import/,
+            'let routeModule = await __webpack_require__.e',
+          );
+
           // Then add our new function implementation
           const newLoadRouteModule = `
 async function loadRouteModule(route, routeModulesCache) {
+debugger;
   if (route.id in routeModulesCache) {
     return routeModulesCache[route.id];
   }
   try {
-    let routeModule = await import(route.module);
+  console.log(route.module);
+    let routeModule = await __webpack_require__.e(route.module);
     routeModulesCache[route.id] = routeModule;
     return routeModule;
   } catch (error) {
@@ -530,9 +540,7 @@ async function loadRouteModule(route, routeModulesCache) {
           // Add the new function after the renamed one
           newCode = `${newCode}\n\n${newLoadRouteModule}`;
           // debugger;
-          return {
-            code: newCode,
-          };
+          return newCode;
         },
       );
 

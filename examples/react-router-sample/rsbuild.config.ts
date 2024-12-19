@@ -4,6 +4,12 @@ import { pluginReactRouter } from '@rsbuild/plugin-react-router';
 import { pluginTypedCSSModules } from '@rsbuild/plugin-typed-css-modules';
 
 export default defineConfig({
+  tools: {
+    rspack: (config) => {
+      config.devtool = false;
+      return config;
+    },
+  },
   plugins: [
     pluginReactRouter({
       ssr: true,

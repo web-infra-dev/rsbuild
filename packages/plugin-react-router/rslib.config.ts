@@ -20,6 +20,7 @@ const config = defineConfig({
         ...commonExternals,
         'user-routes',
         /react-router-dom/,
+        /react-router/,
         'react',
         /react-dom/,
       ],
