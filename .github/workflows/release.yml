@@ -22,8 +22,6 @@ on:
         type: boolean
         required: false
         default: true
-  issue_comment:
-    types: [created]
 
 permissions:
   id-token: write

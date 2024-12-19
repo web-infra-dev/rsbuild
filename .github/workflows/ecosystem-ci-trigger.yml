@@ -1,8 +1,9 @@
 name: ecosystem-ci trigger
 
-on:
-  issue_comment:
-    types: [created]
+# TODO: switch to actions
+# on:
+#   issue_comment:
+#     types: [created]
 
 jobs:
   trigger:

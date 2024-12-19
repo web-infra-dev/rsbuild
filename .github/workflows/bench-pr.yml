@@ -1,8 +1,9 @@
 name: Benchmark PR
 
-on:
-  issue_comment:
-    types: [created]
+# TODO: switch to actions
+# on:
+#   issue_comment:
+#     types: [created]
 
 # cancel previous job runs for the same workflow + pr
 concurrency:
