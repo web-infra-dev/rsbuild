@@ -103,14 +103,17 @@ export const pluginReactRouter = (
     const checkUserEntry = (filename: string) => {
       const extensions = ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs'];
       const baseFilename = filename.replace(/\.[^/.]+$/, ''); // Remove extension if present
-      
+
       for (const ext of extensions) {
-        const filePath = path.join(api.context.rootPath, `${baseFilename}${ext}`);
+        const filePath = path.join(
+          api.context.rootPath,
+          `${baseFilename}${ext}`,
+        );
         if (fs.existsSync(filePath)) {
           return true;
         }
       }
-      
+
       return false;
     };
 
@@ -421,7 +424,6 @@ export const routes = ${JSON.stringify(routes, null, 2).replace(/"(route\d+)"/g,
             url: `${distPath?.js || 'static/js'}/manifest-${serverStats?.hash}.js`,
             version: serverStats?.hash || '',
           };
-
           // Return the virtual server entry content
           return `
 import * as userServerEntry from '${resourcePath.replace(/\?.*$/, '')}';
@@ -491,6 +493,48 @@ export {
 
     if (api.context.bundlerType === 'rspack') {
       applyBasicReactSupport(api, finalOptions);
+
+      // Add transform to handle react-router development imports
+      api.transform(
+        { test: /react-router\/dist\/development\/index/ },
+        ({ code }) => {
+          // First rename the original function to _loadRouteModule
+          let newCode = code.replace(
+            /async function loadRouteModule/,
+            'async function _loadRouteModule',
+          );
+
+          // Then add our new function implementation
+          const newLoadRouteModule = `
+async function loadRouteModule(route, routeModulesCache) {
+  if (route.id in routeModulesCache) {
+    return routeModulesCache[route.id];
+  }
+  try {
+    let routeModule = await import(route.module);
+    routeModulesCache[route.id] = routeModule;
+    return routeModule;
+  } catch (error) {
+    console.error(
+      \`Error loading route module \${route.module}, reloading page...\`,
+    );
+    console.error(error);
+    if (window.__reactRouterContext && window.__reactRouterContext.isSpaMode) {
+      throw error;
+    }
+    window.location.reload();
+    return new Promise(() => {});
+  }
+}`;
+
+          // Add the new function after the renamed one
+          newCode = `${newCode}\n\n${newLoadRouteModule}`;
+          // debugger;
+          return {
+            code: newCode,
+          };
+        },
+      );
 
       if (finalOptions.enableProfiler) {
         applyReactProfiler(api);
