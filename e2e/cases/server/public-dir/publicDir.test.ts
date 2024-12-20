@@ -170,6 +170,45 @@ test('should serve publicDir for preview server correctly', async ({
   await rsbuild.close();
 });
 
+test('should copy publicDir to the environment distDir when multiple environments', async () => {
+  await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
+
+  const rsbuild = await build({
+    cwd,
+    rsbuildConfig: {
+      environments: {
+        web1: {
+          output: {
+            distPath: {
+              root: 'dist-build-web-1',
+            },
+          },
+        },
+        web2: {
+          output: {
+            distPath: {
+              root: 'dist-build-web-2',
+            },
+          },
+        },
+      },
+    },
+  });
+  const files = await rsbuild.unwrapOutputJSON();
+  const filenames = Object.keys(files);
+
+  expect(
+    filenames.some((filename) =>
+      filename.includes('dist-build-web-1/test-temp-file.txt'),
+    ),
+  ).toBeTruthy();
+  expect(
+    filenames.some((filename) =>
+      filename.includes('dist-build-web-2/test-temp-file.txt'),
+    ),
+  ).toBeTruthy();
+});
+
 test('should serve publicDir for preview server with assetPrefix correctly', async ({
   page,
 }) => {
