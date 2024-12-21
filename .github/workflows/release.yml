@@ -38,11 +38,11 @@ jobs:
         if: inputs.run_eco_ci == true
         uses: convictional/trigger-workflow-and-wait@v1.6.5
         with:
-          owner: "rspack-contrib"
-          repo: "rsbuild-ecosystem-ci"
-          workflow_file_name: "ecosystem-ci-selected.yml"
+          owner: 'rspack-contrib'
+          repo: 'rsbuild-ecosystem-ci'
+          workflow_file_name: 'ecosystem-ci-selected.yml'
           github_token: ${{ secrets.REPO_RSBUILD_ECO_CI_GITHUB_TOKEN }}
-          ref: "main"
+          ref: 'main'
           client_payload: '{"ref":"${{ github.event.inputs.branch }}","repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
 
       - name: Checkout
@@ -64,6 +64,8 @@ jobs:
         run: pnpm install
 
       - name: Publish to npm
-        run: pnpm -r publish --tag ${{ github.event.inputs.npm_tag }} --publish-branch ${{ github.event.inputs.branch }}
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.RSBUILD_NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.RSBUILD_NPM_TOKEN }}
+        run: |
+          npm config set "//registry.npmjs.org/:_authToken" "${NPM_TOKEN}"
+          pnpm -r publish --tag ${{ github.event.inputs.npm_tag }} --publish-branch ${{ github.event.inputs.branch }}
