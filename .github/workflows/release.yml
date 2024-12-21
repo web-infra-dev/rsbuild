@@ -5,14 +5,15 @@ on:
     inputs:
       npm_tag:
         type: choice
-        description: 'Specify npm tag (latest, alpha, beta, rc)'
+        description: 'Specify npm tag'
         required: true
         default: 'latest'
         options:
+          - latest
           - alpha
           - beta
           - rc
-          - latest
+          - canary
       branch:
         description: 'Release Branch (confirm release branch)'
         required: true
