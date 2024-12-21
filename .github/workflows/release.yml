@@ -63,6 +63,17 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
+      - name: Check if NPM token exists
+        run: |
+          if [ -z "$NODE_AUTH_TOKEN" ]; then
+            echo "::error::NPM token is not set"
+            exit 1
+          else
+            echo "NPM token is available"
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.RSBUILD_NPM_TOKEN }}
+
       - name: Publish to npm
         run: pnpm -r publish --tag ${{ github.event.inputs.npm_tag }}
         env:
