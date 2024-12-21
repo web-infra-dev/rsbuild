@@ -7,13 +7,13 @@ on:
         type: choice
         description: 'Specify npm tag'
         required: true
-        default: 'latest'
+        default: 'alpha'
         options:
-          - latest
           - alpha
           - beta
           - rc
           - canary
+          - latest
       branch:
         description: 'Release Branch (confirm release branch)'
         required: true
@@ -64,6 +64,6 @@ jobs:
         run: pnpm install
 
       - name: Publish to npm
-        run: pnpm -r publish --tag ${{ github.event.inputs.npm_tag }}
+        run: pnpm -r publish --tag ${{ github.event.inputs.npm_tag }} --publish-branch ${{ github.event.inputs.branch }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.RSBUILD_NPM_TOKEN }}
