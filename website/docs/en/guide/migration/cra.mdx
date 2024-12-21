@@ -279,15 +279,7 @@ module.exports = {
 
 In non-TypeScript projects, CRA supports reading the `paths` field in jsconfig.json as the path alias.
 
-If you want to use this feature in Rsbuild, you can set the [source.tsconfigPath](/config/source/tsconfig-path) option, so that Rsbuild can recognize the `paths` field in jsconfig.json.
-
-```js title="rsbuild.config.mjs"
-export default {
-  source: {
-    tsconfigPath: './jsconfig.json',
-  },
-};
-```
+If you want to use this feature in Rsbuild, you can refer to the [Path Alias - jsconfig.json](/guide/advanced/alias#jsconfigjson).
 
 ## CRACO Migration
 
