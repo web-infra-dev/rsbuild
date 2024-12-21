@@ -64,6 +64,9 @@ jobs:
         run: pnpm install
 
       - name: Publish to npm
-        run: pnpm -r publish --tag ${{ github.event.inputs.npm_tag }} --publish-branch ${{ github.event.inputs.branch }}
         env:
           NPM_TOKEN: ${{ secrets.RSBUILD_NPM_TOKEN }}
+        run: |
+          npm config set "//registry.npmjs.org/:_authToken" "${NPM_TOKEN}"
+          pnpm -r publish --tag ${{ github.event.inputs.npm_tag }} --publish-branch ${{ github.event.inputs.branch }}
+
