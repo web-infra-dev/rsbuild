@@ -4,6 +4,7 @@
  */
 import { rspack } from '@rspack/core';
 import type * as Rspack from '@rspack/core';
+import * as __internalHelper from './internal';
 
 // Core methods
 export { loadEnv } from './loadEnv';
@@ -163,3 +164,11 @@ export type {
   WatchFiles,
 } from './types';
 export type { ChainIdentifier } from './configChain';
+
+export {
+  /**
+   * @private
+   * TODO: remove this in Rspack v1.2.0
+   */
+  __internalHelper,
+};
