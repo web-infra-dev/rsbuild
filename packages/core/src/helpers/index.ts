@@ -1,4 +1,5 @@
 import { posix } from 'node:path';
+import { URL } from 'node:url';
 import deepmerge from 'deepmerge';
 import type {
   Compiler as WebpackCompiler,
@@ -159,6 +160,14 @@ export const canParse = (url: string): boolean => {
     return true;
   } catch {
     return false;
+  }
+};
+
+export const parseUrl = (url: string): URL | null => {
+  try {
+    return new URL(url);
+  } catch {
+    return null;
   }
 };
 
