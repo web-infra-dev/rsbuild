@@ -1,5 +1,4 @@
 import { isAbsolute, join } from 'node:path';
-import { URL } from 'node:url';
 import { normalizePublicDirs } from '../config';
 import { parseUrl } from '../helpers';
 import { logger } from '../logger';

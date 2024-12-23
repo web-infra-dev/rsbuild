@@ -1,4 +1,5 @@
 import { posix } from 'node:path';
+import { URL } from 'node:url';
 import deepmerge from 'deepmerge';
 import type {
   Compiler as WebpackCompiler,
