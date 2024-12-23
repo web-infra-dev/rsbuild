@@ -14,7 +14,7 @@
     "@rspress/plugin-rss": "^1.38.0",
     "@rstack-dev/doc-ui": "1.5.4",
     "@types/node": "^22.10.2",
-    "@types/react": "^19.0.1",
+    "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
     "fast-glob": "^3.3.2",
     "react": "^19.0.0",
