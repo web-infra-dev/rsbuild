@@ -25,7 +25,7 @@ jobs:
           owner: "rspack-contrib"
           repo: "rsbuild-ecosystem-ci"
           workflow_file_name: "ecosystem-ci-from-commit.yml"
-          github_token: ${{ secrets.REPO_SCOPED_TOKEN }}
+          github_token: ${{ secrets.REPO_RSBUILD_ECO_CI_GITHUB_TOKEN }}
           ref: "main"
           client_payload: '{"commitSHA":"${{ github.sha }}","updateComment":true,"repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
 
@@ -44,7 +44,7 @@ jobs:
           DESCRIPTION: |
             commitID: [${{github.sha}}](${{github.server_url}}/${{github.repository}}/commit/${{github.sha}})
           URL: ${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}
-          LARK_WEBHOOK_URL: ${{secrets.LARK_WEBHOOK_URL}}
+          LARK_WEBHOOK_URL: ${{ secrets.LARK_WEBHOOK_URL }}
 
   ecosystem_ci:
     name: Run Ecosystem CI
@@ -58,6 +58,6 @@ jobs:
           owner: "rspack-contrib"
           repo: "rsbuild-ecosystem-ci"
           workflow_file_name: "ecosystem-ci-selected.yml"
-          github_token: ${{ secrets.REPO_SCOPED_TOKEN }}
+          github_token: ${{ secrets.REPO_RSBUILD_ECO_CI_GITHUB_TOKEN }}
           ref: "main"
           client_payload: '{"ref":"${{ github.event.inputs.branch }}","repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
