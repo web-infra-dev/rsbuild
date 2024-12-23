@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { createRsbuild, rspackOnlyTest } from '@e2e/helper';
+import { createRsbuild, proxyConsole, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const rsbuildConfig = path.resolve(
@@ -22,6 +22,8 @@ const bundlerNodeConfig = path.resolve(
 );
 
 test('should generate config files when writeToDisk is true', async () => {
+  const { logs, restore } = proxyConsole();
+
   const rsbuild = await createRsbuild({
     cwd: __dirname,
   });
@@ -32,11 +34,19 @@ test('should generate config files when writeToDisk is true', async () => {
   expect(fs.existsSync(bundlerConfig)).toBeTruthy();
   expect(fs.existsSync(rsbuildConfig)).toBeTruthy();
 
+  expect(
+    logs.some((log) => log.includes('Inspect config succeed')),
+  ).toBeTruthy();
+
   fs.rmSync(rsbuildConfig, { force: true });
   fs.rmSync(bundlerConfig, { force: true });
+
+  restore();
 });
 
 test('should generate config files correctly when output is specified', async () => {
+  const { logs, restore } = proxyConsole();
+
   const rsbuild = await createRsbuild({
     cwd: __dirname,
   });
@@ -58,11 +68,19 @@ test('should generate config files correctly when output is specified', async ()
   expect(fs.existsSync(bundlerConfig)).toBeTruthy();
   expect(fs.existsSync(rsbuildConfig)).toBeTruthy();
 
+  expect(
+    logs.some((log) => log.includes('Inspect config succeed')),
+  ).toBeTruthy();
+
   fs.rmSync(rsbuildConfig, { force: true });
   fs.rmSync(bundlerConfig, { force: true });
+
+  restore();
 });
 
 test('should generate bundler config for node when target contains node', async () => {
+  const { logs, restore } = proxyConsole();
+
   const rsbuild = await createRsbuild({
     cwd: __dirname,
     rsbuildConfig: {
@@ -88,10 +106,16 @@ test('should generate bundler config for node when target contains node', async 
   expect(fs.existsSync(bundlerConfig)).toBeTruthy();
   expect(fs.existsSync(bundlerNodeConfig)).toBeTruthy();
 
+  expect(
+    logs.some((log) => log.includes('Inspect config succeed')),
+  ).toBeTruthy();
+
   fs.rmSync(rsbuildConfig, { force: true });
   fs.rmSync(rsbuildNodeConfig, { force: true });
   fs.rmSync(bundlerConfig, { force: true });
   fs.rmSync(bundlerNodeConfig, { force: true });
+
+  restore();
 });
 
 test('should not generate config files when writeToDisk is false', async () => {
@@ -107,6 +131,8 @@ test('should not generate config files when writeToDisk is false', async () => {
 });
 
 rspackOnlyTest('should allow to specify absolute output path', async () => {
+  const { logs, restore } = proxyConsole();
+
   const rsbuild = await createRsbuild({
     cwd: __dirname,
   });
@@ -118,8 +144,14 @@ rspackOnlyTest('should allow to specify absolute output path', async () => {
   });
 
   expect(
+    logs.some((log) => log.includes('Inspect config succeed')),
+  ).toBeTruthy();
+
+  expect(
     fs.existsSync(path.join(outputPath, 'rspack.config.web.mjs')),
   ).toBeTruthy();
 
   fs.rmSync(rsbuildConfig, { force: true });
+
+  restore();
 });
