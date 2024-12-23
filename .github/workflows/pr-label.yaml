@@ -6,6 +6,10 @@ on:
       - opened
       - edited
 
+permissions:
+  issues: write
+  contents: read
+
 jobs:
   change-labeling:
     name: Labeling for changes
