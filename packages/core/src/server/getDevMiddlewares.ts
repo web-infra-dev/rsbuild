@@ -1,6 +1,7 @@
 import { isAbsolute, join } from 'node:path';
 import { URL } from 'node:url';
 import { normalizePublicDirs } from '../config';
+import { parseUrl } from '../helpers';
 import { logger } from '../logger';
 import type {
   DevConfig,
@@ -93,7 +94,7 @@ const applyDefaultMiddlewares = async ({
   middlewares.push((req, res, next) => {
     // allow HMR request cross-domain, because the user may use global proxy
     res.setHeader('Access-Control-Allow-Origin', '*');
-    const path = req.url ? new URL(req.url).pathname : '';
+    const path = req.url ? parseUrl(req.url)?.pathname : '';
     if (path?.includes('hot-update')) {
       res.setHeader('Access-Control-Allow-Credentials', 'false');
     }

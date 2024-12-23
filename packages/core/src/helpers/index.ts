@@ -162,6 +162,14 @@ export const canParse = (url: string): boolean => {
   }
 };
 
+export const parseUrl = (url: string): URL | null => {
+  try {
+    return new URL(url);
+  } catch {
+    return null;
+  }
+};
+
 export const ensureAssetPrefix = (
   url: string,
   assetPrefix: Rspack.PublicPath = DEFAULT_ASSET_PREFIX,
