@@ -1,9 +1,9 @@
 import type { StatsCompilation } from '@rspack/core';
 import color from '../../compiled/picocolors/index.js';
-import { formatStatsMessages } from '../client/format';
 import { logger } from '../logger';
 import type { Rspack } from '../types';
 import { isMultiCompiler } from './';
+import { formatStatsMessages } from './format.js';
 
 /**
  * Add node polyfill tip when failed to resolve node built-in modules.

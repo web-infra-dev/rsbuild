@@ -7,6 +7,7 @@ import {
   getAllStatsWarnings,
   getStatsOptions,
 } from '../helpers';
+import { formatStatsMessages } from '../helpers/format';
 import { logger } from '../logger';
 import type { DevConfig, Rspack } from '../types';
 import { getCompilationId } from './helper';
@@ -284,19 +285,31 @@ export class SocketServer {
     });
 
     if (stats.errorsCount) {
+      const errors = getAllStatsErrors(stats);
+      const { errors: formattedErrors } = formatStatsMessages({
+        errors,
+        warnings: [],
+      });
       return this.sockWrite({
         type: 'errors',
         compilationId,
-        data: getAllStatsErrors(stats),
+        data: formattedErrors,
       });
     }
+
     if (stats.warningsCount) {
+      const warnings = getAllStatsWarnings(stats);
+      const { warnings: formattedWarnings } = formatStatsMessages({
+        warnings,
+        errors: [],
+      });
       return this.sockWrite({
         type: 'warnings',
         compilationId,
-        data: getAllStatsWarnings(stats),
+        data: formattedWarnings,
       });
     }
+
     return this.sockWrite({
       type: 'ok',
       compilationId,
