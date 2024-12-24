@@ -1,5 +1,4 @@
-import type { NormalizedClientConfig, Rspack } from '../types';
-import { formatStatsMessages } from './format';
+import type { NormalizedClientConfig } from '../types';
 
 const compilationId = RSBUILD_COMPILATION_NAME;
 const config: NormalizedClientConfig = RSBUILD_CLIENT_CONFIG;
@@ -68,26 +67,21 @@ function handleSuccess() {
 }
 
 // Compilation with warnings (e.g. ESLint).
-function handleWarnings(warnings: Rspack.StatsError[]) {
+function handleWarnings(warnings: string[]) {
   clearOutdatedErrors();
 
   const isHotUpdate = !isFirstCompilation;
   isFirstCompilation = false;
   hasCompileErrors = false;
 
-  const formatted = formatStatsMessages({
-    warnings,
-    errors: [],
-  });
-
-  for (let i = 0; i < formatted.warnings.length; i++) {
+  for (let i = 0; i < warnings.length; i++) {
     if (i === 5) {
       console.warn(
         'There were more warnings in other files, you can find a complete log in the terminal.',
       );
       break;
     }
-    console.warn(formatted.warnings[i]);
+    console.warn(warnings[i]);
   }
 
   // Attempt to apply hot updates or reload.
@@ -97,24 +91,19 @@ function handleWarnings(warnings: Rspack.StatsError[]) {
 }
 
 // Compilation with errors (e.g. syntax error or missing modules).
-function handleErrors(errors: Rspack.StatsError[]) {
+function handleErrors(errors: string[]) {
   clearOutdatedErrors();
 
   isFirstCompilation = false;
   hasCompileErrors = true;
 
-  const formatted = formatStatsMessages({
-    errors,
-    warnings: [],
-  });
-
   // Also log them to the console.
-  for (const error of formatted.errors) {
+  for (const error of errors) {
     console.error(error);
   }
 
   if (createOverlay) {
-    createOverlay(formatted.errors);
+    createOverlay(errors);
   }
 }
 
