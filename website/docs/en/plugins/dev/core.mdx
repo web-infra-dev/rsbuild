@@ -275,12 +275,8 @@ type TransformContext = {
   resourceQuery: string;
   environment: EnvironmentContext;
   addDependency: (file: string) => void;
-  emitFile: (
-    name: string,
-    content: string | Buffer,
-    sourceMap?: string,
-    assetInfo?: Record<string, any>,
-  ) => void;
+  emitFile: Rspack.LoaderContext['emitFile'];
+  importModule: Rspack.LoaderContext['importModule'];
 };
 
 type TransformResult =
@@ -304,6 +300,7 @@ The `handler` function provides the following params:
 - `environment`: The [environment context](/api/javascript-api/environment-api#environment-context) for current build.
 - `addDependency`: Add an additional file as the dependency. The file will be watched and changes to the file will trigger rebuild. The same as Rspack loader's [this.addDependency](https://rspack.dev/api/loader-api/context#thisadddependency).
 - `emitFile`: Emits a file to the build output. The same as Rspack loader's [this.emitFile](https://rspack.dev/api/loader-api/context#thisemitfile).
+- `importModule`: Compile and execute a module at the build time. The same as Rspack loader's [this.importModule](https://rspack.dev/api/loader-api/context#thisimportmodule).
 
 For example:
 
