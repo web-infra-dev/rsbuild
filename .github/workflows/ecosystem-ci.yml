@@ -29,6 +29,17 @@ jobs:
           ref: "main"
           client_payload: '{"commitSHA":"${{ github.sha }}","updateComment":true,"repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
 
+      - name: Send Failure Notification
+        if: steps.eco_ci.outcome == 'failure'
+        shell: bash
+        run: ./scripts/alert/lark.js
+        env:
+          TITLE: Rsbuild Ecosystem CI failed
+          DESCRIPTION: |
+            commitID: [${{github.sha}}](${{github.server_url}}/${{github.repository}}/commit/${{github.sha}})
+          URL: ${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}
+          LARK_WEBHOOK_URL: ${{ secrets.LARK_WEBHOOK_URL }}
+
       - name: Get CI Result
         id: get-ci-result
         if: steps.eco_ci.outcome == 'failure'
@@ -48,17 +59,6 @@ jobs:
               repo: 'rsbuild',
               body: ${{ steps.get-ci-result.outputs.result }}
             })
-
-      - name: Send Failure Notification
-        if: steps.eco_ci.outcome == 'failure'
-        shell: bash
-        run: ./scripts/alert/lark.js
-        env:
-          TITLE: Rsbuild Ecosystem CI failed
-          DESCRIPTION: |
-            commitID: [${{github.sha}}](${{github.server_url}}/${{github.repository}}/commit/${{github.sha}})
-          URL: ${{github.server_url}}/${{github.repository}}/actions/runs/${{github.run_id}}
-          LARK_WEBHOOK_URL: ${{ secrets.LARK_WEBHOOK_URL }}
 
   ecosystem_ci:
     name: Run Ecosystem CI
