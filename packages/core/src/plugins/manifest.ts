@@ -1,4 +1,4 @@
-import type { Chunk } from '@rspack/core';
+import type { FileDescriptor } from 'rspack-manifest-plugin';
 import { recursiveChunkEntryNames } from '../rspack/preload/helpers';
 import type { RsbuildPlugin } from '../types';
 
@@ -25,13 +25,6 @@ type ManifestList = {
   };
   /** Flatten all assets */
   allFiles: FilePath[];
-};
-
-type FileDescriptor = {
-  chunk?: Chunk;
-  isInitial: boolean;
-  name: string;
-  path: string;
 };
 
 const generateManifest =
