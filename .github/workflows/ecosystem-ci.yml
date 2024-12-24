@@ -85,10 +85,10 @@ jobs:
           script: |
             const url = `${context.serverUrl}//${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
             const urlLink = `[Open](${url})`
-            const prNumber = ${{ steps.get-pr-number.outputs.result.num }}
+            const prData = ${{ steps.get-pr-number.outputs.result }}
 
             const { data: comment } = await github.rest.issues.createComment({
-              issue_number: prNumber,
+              issue_number: prData.num,
               owner: 'web-infra-dev',
               repo: 'rsbuild',
               body: `⏳ Triggered ecosystem CI: ${urlLink}`
