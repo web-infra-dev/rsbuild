@@ -115,7 +115,7 @@ jobs:
           script: |
             const owner = "rspack-contrib"
             const repo = "rsbuild-ecosystem-ci"
-            const runId = process.env.CI_OUTPUT.workflow_id
+            const runId = JSON.parse(process.env.CI_OUTPUT).workflow_id
 
             const { data: { jobs } = {} } = await github.rest.actions.listJobsForWorkflowRun({
               owner,
