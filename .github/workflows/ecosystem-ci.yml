@@ -65,20 +65,20 @@ jobs:
 
             if(pr) {
               console.log(`Get PR info: ${pr.url}`)
+
+              return {
+                num: pr.number,
+                branchName: pr.head.ref,
+                repo: pr.head.repo.full_name
+              }
             } else {
               console.log(`can't find PR for branch: ${context.payload.inputs.branch}`)
             }
 
-            return pr ? {
-              num: pr.number,
-              branchName: pr.head.ref,
-              repo: pr.head.repo.full_name
-            } : {}
-
       - id: create-comment
         name: Create Comment
         uses: actions/github-script@v6
-        if: steps.get-pr-number.outputs.result.num
+        if: steps.get-pr-number.outputs.result
         with:
           github-token: ${{ secrets.ECOSYSTEM_CI_ACCESS_TOKEN }}
           result-encoding: string
