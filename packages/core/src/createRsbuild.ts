@@ -44,6 +44,7 @@ import { rspackProvider } from './provider/provider';
 import { startProdServer } from './server/prodServer';
 import type {
   Build,
+  CreateCompiler,
   CreateDevServer,
   CreateRsbuildOptions,
   Falsy,
@@ -212,10 +213,18 @@ export async function createRsbuild(
     return providerInstance.createDevServer(...args);
   };
 
+  const createCompiler: CreateCompiler = (...args) => {
+    if (!context.command) {
+      context.command = getNodeEnv() === 'development' ? 'dev' : 'build';
+    }
+    return providerInstance.createCompiler(...args);
+  };
+
   const rsbuild = {
     build,
     preview,
     startDevServer,
+    createCompiler,
     createDevServer,
     ...pick(pluginManager, [
       'addPlugins',
@@ -240,11 +249,7 @@ export async function createRsbuild(
       'getRsbuildConfig',
       'getNormalizedConfig',
     ]),
-    ...pick(providerInstance, [
-      'initConfigs',
-      'inspectConfig',
-      'createCompiler',
-    ]),
+    ...pick(providerInstance, ['initConfigs', 'inspectConfig']),
   };
 
   const getFlattenedPlugins = async (pluginOptions: RsbuildPlugins) => {
