@@ -97,7 +97,6 @@ export default defineConfig({
                 runtimeChunk: true,
                 splitChunks: {
                   chunks: 'all',
-                  enforceSizeThreshold: 50000,
                   minSize: 0,
                   cacheGroups: {
                     'lib-react': {
