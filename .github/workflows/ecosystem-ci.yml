@@ -80,7 +80,7 @@ jobs:
         uses: actions/github-script@v6
         if: steps.get-pr-number.outputs.result
         with:
-          github-token: ${{ secrets.ECOSYSTEM_CI_ACCESS_TOKEN }}
+          github_token: ${{ secrets.REPO_RSBUILD_ECO_CI_GITHUB_TOKEN }}
           result-encoding: string
           script: |
             const url = `${context.serverUrl}//${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
@@ -150,6 +150,9 @@ jobs:
             |-------|--------|
             ${result.map(r => `| [${r.suite}](${r.link}) | ${conclusionEmoji[r.conclusion]} ${r.conclusion} |`).join("\n")}
             `
+
+            console.log(body);
+
             return body;
 
       - id: update-comment
