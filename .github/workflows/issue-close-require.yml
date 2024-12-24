@@ -5,12 +5,11 @@ on:
     - cron: '0 0 * * *'
 
 permissions:
+  issues: write
   contents: read
 
 jobs:
   issue-close-require:
-    permissions:
-      issues: write
     runs-on: ubuntu-latest
     if: github.repository == 'web-infra-dev/rsbuild'
     steps:

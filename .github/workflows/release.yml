@@ -24,9 +24,6 @@ on:
         required: false
         default: true
 
-permissions:
-  id-token: write
-
 jobs:
   release:
     name: Release
