@@ -80,7 +80,6 @@ jobs:
         uses: actions/github-script@v6
         if: steps.get-pr-number.outputs.result
         with:
-          github_token: ${{ secrets.REPO_RSBUILD_ECO_CI_GITHUB_TOKEN }}
           result-encoding: string
           script: |
             const url = `${context.serverUrl}//${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
@@ -98,6 +97,7 @@ jobs:
       - name: Run Ecosystem CI
         id: eco_ci
         uses: convictional/trigger-workflow-and-wait@v1.6.5
+        continue-on-error: true
         with:
           owner: "rspack-contrib"
           repo: "rsbuild-ecosystem-ci"
