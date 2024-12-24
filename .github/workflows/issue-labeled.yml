@@ -6,11 +6,11 @@ on:
 
 permissions:
   contents: read
+  issues: write
 
 jobs:
   reply-labeled:
-    permissions:
-      issues: write
+    name: Reply need reproduction
     runs-on: ubuntu-latest
     if: github.repository == 'web-infra-dev/rsbuild'
     steps:
