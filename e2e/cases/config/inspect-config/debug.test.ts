@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { build, dev, gotoPage } from '@e2e/helper';
+import { build, dev, gotoPage, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { logger } from '@rsbuild/core';
 
@@ -18,6 +18,7 @@ test('should generate config files when build (with DEBUG)', async () => {
   logger.level = 'verbose';
 
   const distRoot = 'dist-1';
+  const { logs, restore } = proxyConsole();
 
   await build({
     cwd: __dirname,
@@ -34,8 +35,16 @@ test('should generate config files when build (with DEBUG)', async () => {
   expect(fs.existsSync(getRsbuildConfig(distRoot))).toBeTruthy();
   expect(fs.existsSync(getBundlerConfig(distRoot))).toBeTruthy();
 
+  expect(
+    logs.some((log) => log.includes('Inspect config succeed')),
+  ).toBeTruthy();
+
+  expect(logs.some((log) => log.includes('create compiler'))).toBeTruthy();
+
   delete process.env.DEBUG;
   logger.level = 'log';
+
+  restore();
 });
 
 test('should generate config files when dev (with DEBUG)', async ({ page }) => {
@@ -43,6 +52,7 @@ test('should generate config files when dev (with DEBUG)', async ({ page }) => {
   logger.level = 'verbose';
 
   const distRoot = 'dist-2';
+  const { logs, restore } = proxyConsole();
 
   const rsbuild = await dev({
     cwd: __dirname,
@@ -63,8 +73,16 @@ test('should generate config files when dev (with DEBUG)', async ({ page }) => {
   expect(fs.existsSync(getRsbuildConfig(distRoot))).toBeTruthy();
   expect(fs.existsSync(getBundlerConfig(distRoot))).toBeTruthy();
 
+  expect(
+    logs.some((log) => log.includes('Inspect config succeed')),
+  ).toBeTruthy();
+
+  expect(logs.some((log) => log.includes('create compiler'))).toBeTruthy();
+
   delete process.env.DEBUG;
   logger.level = 'log';
 
   await rsbuild.close();
+
+  restore();
 });
