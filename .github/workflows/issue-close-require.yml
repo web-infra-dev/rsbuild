@@ -5,6 +5,7 @@ on:
     - cron: '0 0 * * *'
 
 permissions:
+  # Permits `actions-cool/issues-helper` to close an issue
   issues: write
   contents: read
 

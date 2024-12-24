@@ -6,6 +6,7 @@ on:
 
 permissions:
   contents: read
+  # Permits `actions-cool/issues-helper` to comment on an issue
   issues: write
 
 jobs:
