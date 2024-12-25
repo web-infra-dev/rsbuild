@@ -1,6 +1,10 @@
-type Tags = Record<string, string>;
-type Styles = Record<string, string>;
-type Colors = Record<string, string>;
+/**
+ * This module is modified based on `ansi-html-community`
+ * https://github.com/mahdyar/ansi-html-community
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * https://github.com/mahdyar/ansi-html-community/blob/master/LICENSE
+ */
 
 // https://github.com/chalk/ansi-regex
 function ansiRegex() {
@@ -14,7 +18,7 @@ function ansiRegex() {
   return new RegExp(pattern, 'g');
 }
 
-const defaultColors: Colors = {
+const colors: Record<string, string> = {
   black: '000',
   // hsl(0deg 95% 70%)
   red: 'fb6a6a',
@@ -32,7 +36,7 @@ const defaultColors: Colors = {
   darkgrey: '888',
 };
 
-const styles: Styles = {
+const styles: Record<string, string> = {
   30: 'black',
   31: 'red',
   32: 'green',
@@ -43,7 +47,7 @@ const styles: Styles = {
   37: 'lightgrey',
 };
 
-const openTags: Tags = {
+const openTags: Record<string, string> = {
   '1': 'font-weight:bold', // bold
   '2': 'opacity:0.5', // dim
   '3': '<i>', // italic
@@ -52,7 +56,7 @@ const openTags: Tags = {
   '9': '<del>', // delete
 };
 
-const closeTags: Tags = {
+const closeTags: Record<string, string> = {
   '23': '</i>', // reset italic
   '24': '</u>', // reset underscore
   '29': '</del>', // reset delete
@@ -109,16 +113,16 @@ export function ansiHTML(text: string): string {
   return ret;
 }
 
-function setTags(colors: Colors): void {
+function setTags(): void {
   openTags['90'] = `color:#${colors.darkgrey}`;
 
   for (const code in styles) {
     const color = styles[code];
-    const oriColor = colors[color] || defaultColors.black;
+    const oriColor = colors[color] || colors.black;
     openTags[code] = `color:#${oriColor}`;
   }
 }
 
-setTags(defaultColors);
+setTags();
 
 export default ansiHTML;
