@@ -1,16 +1,5 @@
 import { registerOverlay } from './hmr';
 
-function stripAnsi(content: string) {
-  const pattern = [
-    '[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)',
-    '(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))',
-  ].join('|');
-
-  const regex = new RegExp(pattern, 'g');
-
-  return content.replace(regex, '');
-}
-
 function linkedText(root: ShadowRoot, selector: string, text: string): void {
   const el = root.querySelector(selector)!;
   const fileRegex = /(?:[a-zA-Z]:\\|\/).*?:\d+:\d+/g;
@@ -21,7 +10,7 @@ function linkedText(root: ShadowRoot, selector: string, text: string): void {
     const { 0: file, index } = match;
     if (index != null) {
       const frag = text.slice(curIndex, index);
-      el.appendChild(document.createTextNode(frag));
+      el.insertAdjacentHTML('beforeend', frag);
       const link = document.createElement('a');
       link.textContent = file;
       link.className = 'file-link';
@@ -36,7 +25,7 @@ function linkedText(root: ShadowRoot, selector: string, text: string): void {
   }
 
   const frag = text.slice(curIndex);
-  el.appendChild(document.createTextNode(frag));
+  el.insertAdjacentHTML('beforeend', frag);
 }
 
 const overlayTemplate = `
@@ -76,7 +65,7 @@ const overlayTemplate = `
   padding-bottom: 12px;
   font-size: 17px;
   font-weight: 600;
-  color: #fc5e5e;
+  color: #fb6a6a;
   border-bottom: 2px solid rgba(252,94,94,.66);
 }
 .content {
@@ -85,15 +74,15 @@ const overlayTemplate = `
   font-family: inherit;
   overflow-x: scroll;
   scrollbar-width: none;
-  color: #b8b8b8;
 }
 .content::-webkit-scrollbar {
   display: none;
 }
 .file-link {
   cursor: pointer;
-  color: #27caca;
+  color: #6eecf7;
   text-decoration: underline;
+  text-underline-offset: 3px;
   &:hover {
     opacity: 0.8;
   }
@@ -150,7 +139,7 @@ const overlayTemplate = `
 <div class="root">
   <div class="container">
     <div class="close"></div>
-    <p class="title">Compilation failed</p>
+    <p class="title">Build failed</p>
     <pre class="content"></pre>
     <footer class="footer">
       <p><span>Fix error</span>, click outside, or press Esc to close the overlay.</p>
@@ -179,7 +168,7 @@ class ErrorOverlay extends HTMLElement {
     const root = this.attachShadow({ mode: 'open' });
     root.innerHTML = overlayTemplate;
 
-    linkedText(root, '.content', stripAnsi(message.join('\n')).trim());
+    linkedText(root, '.content', message.join('\n\n').trim());
 
     root.querySelector('.close')?.addEventListener('click', this.close);
 
