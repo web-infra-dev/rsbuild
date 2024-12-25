@@ -57,13 +57,16 @@ test('multiple environments writeToDisk should work correctly', async ({
   await rsbuild.close();
 });
 
-test('writeToDisk correctly when environment writeToDisk configuration same', async ({
+test('should writeToDisk correctly when environment writeToDisk configuration same', async ({
   page,
 }) => {
   const rsbuild = await dev({
     cwd,
     page,
     rsbuildConfig: {
+      dev: {
+        writeToDisk: false,
+      },
       environments: {
         web: {
           output: {
