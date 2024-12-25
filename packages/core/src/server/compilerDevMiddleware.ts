@@ -43,7 +43,10 @@ const formatDevConfig = (
     (env) => env.config.dev.writeToDisk,
   );
   if (new Set(writeToDiskValues).size === 1) {
-    return config;
+    return {
+      ...config,
+      writeToDisk: writeToDiskValues[0],
+    };
   }
 
   return {

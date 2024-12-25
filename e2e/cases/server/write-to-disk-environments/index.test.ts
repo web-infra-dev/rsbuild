@@ -56,3 +56,44 @@ test('multiple environments writeToDisk should work correctly', async ({
 
   await rsbuild.close();
 });
+
+test('writeToDisk correctly when environment writeToDisk configurations same', async ({
+  page,
+}) => {
+  const rsbuild = await dev({
+    cwd,
+    page,
+    rsbuildConfig: {
+      environments: {
+        web: {
+          output: {
+            distPath: {
+              root: 'dist-same',
+            },
+          },
+          dev: {
+            writeToDisk: true,
+          },
+        },
+        web1: {
+          output: {
+            distPath: {
+              root: 'dist-same-1',
+            },
+          },
+          dev: {
+            writeToDisk: true,
+          },
+        },
+      },
+    },
+  });
+
+  const test = page.locator('#test');
+  await expect(test).toHaveText('Hello Rsbuild!');
+
+  expect(fs.existsSync(join(cwd, 'dist-same/index.html'))).toBeTruthy();
+  expect(fs.existsSync(join(cwd, 'dist-same-1/index.html'))).toBeTruthy();
+
+  await rsbuild.close();
+});
