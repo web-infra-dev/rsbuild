@@ -42,23 +42,45 @@ function hintUnknownFiles(message: string): string {
     return message;
   }
 
-  if (/File: .+\.s(c|a)ss/.test(message)) {
-    return message.replace(
-      hint,
-      `To enable support for Sass, use "${color.yellow('@rsbuild/plugin-sass')}".`,
-    );
-  }
-  if (/File: .+\.less/.test(message)) {
-    return message.replace(
-      hint,
-      `To enable support for Less, use "${color.yellow('@rsbuild/plugin-less')}".`,
-    );
-  }
-  if (/File: .+\.styl(us)?/.test(message)) {
-    return message.replace(
-      hint,
-      `To enable support for Stylus, use "${color.yellow('@rsbuild/plugin-stylus')}".`,
-    );
+  const recommendPlugins = [
+    {
+      test: /File: .+\.s(c|a)ss/,
+      hint: `To enable support for Sass, use "${color.yellow('@rsbuild/plugin-sass')}".`,
+    },
+    {
+      test: /File: .+\.less/,
+      hint: `To enable support for Less, use "${color.yellow('@rsbuild/plugin-less')}".`,
+    },
+    {
+      test: /File: .+\.styl(us)?/,
+      hint: `To enable support for Stylus, use "${color.yellow('@rsbuild/plugin-stylus')}".`,
+    },
+    {
+      test: /File: .+\.vue?/,
+      hint: `To enable support for Vue, use "${color.yellow('@rsbuild/plugin-vue')}".`,
+    },
+    {
+      test: /File: .+\.svelte?/,
+      hint: `To enable support for Svelte, use "${color.yellow('@rsbuild/plugin-svelte')}".`,
+    },
+    {
+      test: /File: .+\.mdx/,
+      hint: `To enable support for MDX, use "${color.yellow('@rsbuild/plugin-mdx')}".`,
+    },
+    {
+      test: /File: .+\.toml/,
+      hint: `To enable support for TOML, use "${color.yellow('@rsbuild/plugin-toml')}".`,
+    },
+    {
+      test: /File: .+\.yaml/,
+      hint: `To enable support for YAML, use "${color.yellow('@rsbuild/plugin-yaml')}".`,
+    },
+  ];
+
+  for (const plugin of recommendPlugins) {
+    if (plugin.test.test(message)) {
+      return message.replace(hint, plugin.hint);
+    }
   }
 
   return message;
