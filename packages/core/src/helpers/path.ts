@@ -45,3 +45,17 @@ export const pathnameParse = (publicPath: string): string => {
     return publicPath;
   }
 };
+
+/** dedupe and remove nested paths */
+export const dedupeNestedPaths = (paths: string[]): string[] => {
+  return paths
+    .sort((p1, p2) => (p2.length > p1.length ? -1 : 1))
+    .reduce<string[]>((prev, curr) => {
+      const isSub = prev.find((p) => curr.startsWith(p) || curr === p);
+      if (isSub) {
+        return prev;
+      }
+
+      return prev.concat(curr);
+    }, []);
+};
