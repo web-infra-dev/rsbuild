@@ -126,6 +126,9 @@ importers:
       '@rsbuild/plugin-svgr':
         specifier: workspace:*
         version: link:../packages/plugin-svgr
+      '@rsbuild/plugin-type-check':
+        specifier: ^1.2.0
+        version: 1.2.0(@rsbuild/core@packages+core)(@rspack/core@1.1.8(@swc/helpers@0.5.15))(typescript@5.7.2)
       '@rsbuild/plugin-vue':
         specifier: workspace:*
         version: link:../packages/plugin-vue
@@ -2532,6 +2535,14 @@ packages:
     resolution: {integrity: sha512-h/7WZbRloMxAAt/X52Pbyy3cNEIAKSSl39WG1VSoIBx6agW9qSLRx7zhRf1YlNt3C5G0n1pgDLpvtJSynqZ8OQ==}
     peerDependencies:
       '@rsbuild/core': 1.x
+
+  '@rsbuild/plugin-type-check@1.2.0':
+    resolution: {integrity: sha512-bx+WmtK7K5Jc07IQn2cBDqcP/Kt98u16NiW3EyxqJGhQ1OgFvK6ewc70+AJnBvtjE+MMB70NAXEl8MNOtSxz6g==}
+    peerDependencies:
+      '@rsbuild/core': 1.x
+    peerDependenciesMeta:
+      '@rsbuild/core':
+        optional: true
 
   '@rsbuild/plugin-vue-jsx@1.1.0':
     resolution: {integrity: sha512-ZvYXPs00bG5mMhAFsJ5cVbHgF7Kz+rRpMlRHOJQhKGihFEiUK1Wx8Qfmn5ZrMBIgIGp0BaOnHoGSPH7fVQikCA==}
@@ -6289,6 +6300,16 @@ packages:
     resolution: {integrity: sha512-kr8SKKw94OI+xTGOkfsvwZQ8mWoikZDd2n8XZHjJVZUARZT+4/VV6cacRS6CLsH9bNm+HFIPU1Zx4CnNnb4qlQ==}
     engines: {node: '>=6'}
 
+  ts-checker-rspack-plugin@1.1.0:
+    resolution: {integrity: sha512-nhUzSuSjfgVAJjc+vJa9q8uE7MxAbustG9InRp4ylMfIbkqyJjh7gSuEcL//l76ZSwoKcCod+5lv2mNO0Ugh8g==}
+    engines: {node: '>=16.0.0'}
+    peerDependencies:
+      '@rspack/core': ^1.0.0
+      typescript: '>=3.8.0'
+    peerDependenciesMeta:
+      '@rspack/core':
+        optional: true
+
   ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
 
@@ -8186,6 +8207,18 @@ snapshots:
       postcss: 8.4.49
       reduce-configs: 1.1.0
       sass-embedded: 1.83.0
+
+  '@rsbuild/plugin-type-check@1.2.0(@rsbuild/core@packages+core)(@rspack/core@1.1.8(@swc/helpers@0.5.15))(typescript@5.7.2)':
+    dependencies:
+      deepmerge: 4.3.1
+      json5: 2.2.3
+      reduce-configs: 1.1.0
+      ts-checker-rspack-plugin: 1.1.0(@rspack/core@1.1.8(@swc/helpers@0.5.15))(typescript@5.7.2)
+    optionalDependencies:
+      '@rsbuild/core': link:packages/core
+    transitivePeerDependencies:
+      - '@rspack/core'
+      - typescript
 
   '@rsbuild/plugin-vue-jsx@1.1.0(@babel/core@7.26.0)(@rsbuild/core@packages+core)':
     dependencies:
@@ -12321,6 +12354,18 @@ snapshots:
   trouter@2.0.1:
     dependencies:
       matchit: 1.1.0
+
+  ts-checker-rspack-plugin@1.1.0(@rspack/core@1.1.8(@swc/helpers@0.5.15))(typescript@5.7.2):
+    dependencies:
+      '@babel/code-frame': 7.26.2
+      '@rspack/lite-tapable': 1.0.1
+      chokidar: 3.6.0
+      memfs: 4.14.0
+      minimatch: 9.0.5
+      picocolors: 1.1.1
+      typescript: 5.7.2
+    optionalDependencies:
+      '@rspack/core': 1.1.8(@swc/helpers@0.5.15)
 
   ts-interface-checker@0.1.13: {}
 

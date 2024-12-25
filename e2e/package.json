@@ -35,6 +35,7 @@
     "@rsbuild/plugin-stylus": "workspace:*",
     "@rsbuild/plugin-svelte": "workspace:*",
     "@rsbuild/plugin-svgr": "workspace:*",
+    "@rsbuild/plugin-type-check": "^1.2.0",
     "@rsbuild/plugin-webpack-swc": "workspace:*",
     "@rsbuild/plugin-vue": "workspace:*",
     "@rsbuild/plugin-vue-jsx": "^1.1.0",
