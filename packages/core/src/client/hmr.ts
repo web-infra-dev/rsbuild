@@ -67,21 +67,21 @@ function handleSuccess() {
 }
 
 // Compilation with warnings (e.g. ESLint).
-function handleWarnings(warnings: string[]) {
+function handleWarnings({ text }: { text: string[] }) {
   clearOutdatedErrors();
 
   const isHotUpdate = !isFirstCompilation;
   isFirstCompilation = false;
   hasCompileErrors = false;
 
-  for (let i = 0; i < warnings.length; i++) {
+  for (let i = 0; i < text.length; i++) {
     if (i === 5) {
       console.warn(
         'There were more warnings in other files, you can find a complete log in the terminal.',
       );
       break;
     }
-    console.warn(warnings[i]);
+    console.warn(text[i]);
   }
 
   // Attempt to apply hot updates or reload.
@@ -91,19 +91,19 @@ function handleWarnings(warnings: string[]) {
 }
 
 // Compilation with errors (e.g. syntax error or missing modules).
-function handleErrors(errors: string[]) {
+function handleErrors({ text, html }: { text: string[]; html: string[] }) {
   clearOutdatedErrors();
 
   isFirstCompilation = false;
   hasCompileErrors = true;
 
   // Also log them to the console.
-  for (const error of errors) {
+  for (const error of text) {
     console.error(error);
   }
 
   if (createOverlay) {
-    createOverlay(errors);
+    createOverlay(html);
   }
 }
 
