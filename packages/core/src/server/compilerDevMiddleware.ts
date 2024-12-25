@@ -163,7 +163,7 @@ export class CompilerDevMiddleware {
         // reload page when HTML template changed
         if (typeof fileName === 'string' && HTML_REGEX.test(fileName)) {
           this.socketServer.sockWrite({
-            type: 'content-changed',
+            type: 'static-changed',
             compilationId,
           });
           return;
