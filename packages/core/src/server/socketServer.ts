@@ -294,7 +294,10 @@ export class SocketServer {
       return this.sockWrite({
         type: 'errors',
         compilationId,
-        data: formattedErrors.map((item) => ansiHTML(escapeHtml(item))),
+        data: {
+          text: formattedErrors,
+          html: formattedErrors.map((item) => ansiHTML(escapeHtml(item))),
+        },
       });
     }
 
@@ -307,7 +310,9 @@ export class SocketServer {
       return this.sockWrite({
         type: 'warnings',
         compilationId,
-        data: formattedWarnings.map((item) => ansiHTML(escapeHtml(item))),
+        data: {
+          text: formattedWarnings,
+        },
       });
     }
 
