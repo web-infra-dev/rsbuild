@@ -18,7 +18,6 @@ runs:
       uses: actions/github-script@v7
       env:
         CI_OUTPUT: ${{ inputs.workflow-output }}
-      shell: bash
       with:
         script: |
           const owner = "rspack-contrib"

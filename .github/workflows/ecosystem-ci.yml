@@ -91,7 +91,7 @@ jobs:
 
       - id: create-comment
         name: Create Comment
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         if: steps.get-pr-number.outputs.result
         with:
           result-encoding: string
