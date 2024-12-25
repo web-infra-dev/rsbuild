@@ -19,21 +19,21 @@ function ansiRegex() {
 }
 
 const colors: Record<string, string> = {
-  black: '000',
+  black: '#000',
   // hsl(0deg 95% 70%)
-  red: 'fb6a6a',
+  red: '#fb6a6a',
   // hsl(135deg 90% 70%)
-  green: '6ef790',
+  green: '#6ef790',
   // hsl(65deg 90% 75%)
-  yellow: 'eff986',
+  yellow: '#eff986',
   // hsl(185deg 90% 70%)
-  cyan: '6eecf7',
+  cyan: '#6eecf7',
   // hsl(210deg 90% 70%)
-  blue: '6eb2f7',
+  blue: '#6eb2f7',
   // hsl(325deg 90% 70%)
-  magenta: 'f76ebe',
-  lightgrey: 'f0f0f0',
-  darkgrey: '888',
+  magenta: '#f76ebe',
+  lightgrey: '#f0f0f0',
+  darkgrey: '#888',
 };
 
 const styles: Record<string, string> = {
@@ -114,12 +114,12 @@ export function ansiHTML(text: string): string {
 }
 
 function setTags(): void {
-  openTags['90'] = `color:#${colors.darkgrey}`;
+  openTags['90'] = `color:${colors.darkgrey}`;
 
   for (const code in styles) {
     const color = styles[code];
     const oriColor = colors[color] || colors.black;
-    openTags[code] = `color:#${oriColor}`;
+    openTags[code] = `color:${oriColor}`;
   }
 }
 
