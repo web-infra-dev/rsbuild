@@ -121,7 +121,7 @@ jobs:
           client_payload: '{"ref":"${{ github.event.inputs.branch }}","repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
 
       - id: get-ci-result
-        uses: ./.github/actions/get-ci-result
+        uses: ./.github/actions/eco-ci-result
         name: Get CI Result
         with:
           workflow-output: ${{ toJson(steps.eco_ci.outputs) }}
