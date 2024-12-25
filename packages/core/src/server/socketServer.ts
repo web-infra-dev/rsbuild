@@ -260,7 +260,7 @@ export class SocketServer {
 
     if (shouldReload) {
       return this.sockWrite({
-        type: 'content-changed',
+        type: 'static-changed',
         compilationId,
       });
     }
