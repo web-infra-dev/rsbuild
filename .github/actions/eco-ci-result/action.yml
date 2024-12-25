@@ -1,4 +1,4 @@
-name: 'Get CI Result'
+name: 'Eco CI Result'
 description: 'Get ecosystem CI result and format it'
 
 inputs:
