@@ -10,7 +10,8 @@ import {
 import { formatStatsMessages } from '../helpers/format';
 import { logger } from '../logger';
 import type { DevConfig, Rspack } from '../types';
-import { getCompilationId } from './helper';
+import ansiHTML from './ansiHTML';
+import { escapeHtml, getCompilationId } from './helper';
 
 interface ExtWebSocket extends Ws {
   isAlive: boolean;
@@ -293,7 +294,7 @@ export class SocketServer {
       return this.sockWrite({
         type: 'errors',
         compilationId,
-        data: formattedErrors,
+        data: formattedErrors.map((item) => ansiHTML(escapeHtml(item))),
       });
     }
 
@@ -306,7 +307,7 @@ export class SocketServer {
       return this.sockWrite({
         type: 'warnings',
         compilationId,
-        data: formattedWarnings,
+        data: formattedWarnings.map((item) => ansiHTML(escapeHtml(item))),
       });
     }
 

@@ -476,3 +476,21 @@ export function getServerTerminator(
       }
     });
 }
+
+/**
+ * Escape HTML characters
+ * @example
+ * escapeHtml('<div>Hello</div>') // '&lt;div&gt;Hello&lt;/div&gt;'
+ */
+export function escapeHtml(text: string | null | undefined): string {
+  if (!text) {
+    return '';
+  }
+  // `&` must be replaced first to avoid double-escaping
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
