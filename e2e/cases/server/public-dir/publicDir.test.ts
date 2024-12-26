@@ -191,14 +191,6 @@ test('should copy publicDir to the environment distDir when multiple environment
             },
           },
         },
-        // node: {
-        //   output: {
-        //     target: 'node',
-        //     distPath: {
-        //       root: 'dist-build-node',
-        //     },
-        //   },
-        // },
       },
     },
   });
