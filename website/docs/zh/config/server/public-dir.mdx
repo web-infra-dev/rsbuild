@@ -85,6 +85,13 @@ export default {
 在 dev 构建时，如果你需要拷贝一些静态资源到构建产物目录，可以使用 [output.copy](/config/output/copy) 选项代替。
 :::
 
+#### 多环境
+
+当执行 [多环境构建](/guide/advanced/environments) 时，Rsbuild 会将文件从 public 目录拷贝到各个环境的输出目录下。如果输出目录存在嵌套的情况，则只会拷贝文件到输出目录的根目录下。例如：
+
+- `web` 环境的构建产物目录设置为 `dist`，`web1` 环境的构建产物目录设置为 `dist/web1`。由于 `dist` 和 `dist/web1` 存在嵌套关系，此时，public 目录文件仅复制到 `dist` 目录下。
+- `esm` 环境的构建产物目录设置为 `dist/esm`，`cjs` 环境的构建产物目录设置为 `dist/cjs`。由于 `dist/esm` 和 `dist/cjs` 不存在嵌套关系，此时，public 目录文件将分别复制到 `dist/esm` 和 `dist/cjs` 目录下。
+
 ### watch
 
 - **类型：** `boolean`

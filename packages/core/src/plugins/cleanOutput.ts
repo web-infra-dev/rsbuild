@@ -1,6 +1,6 @@
 import { join, sep } from 'node:path';
 import { RSBUILD_OUTPUTS_PATH } from '../constants';
-import { color, emptyDir } from '../helpers';
+import { color, dedupeNestedPaths, emptyDir } from '../helpers';
 import { logger } from '../logger';
 import type { EnvironmentContext, RsbuildPlugin } from '../types';
 
@@ -10,19 +10,6 @@ const isStrictSubdir = (parent: string, child: string) => {
   const parentDir = addTrailingSep(parent);
   const childDir = addTrailingSep(child);
   return parentDir !== childDir && childDir.startsWith(parentDir);
-};
-
-export const dedupeCleanPaths = (paths: string[]): string[] => {
-  return paths
-    .sort((p1, p2) => (p2.length > p1.length ? -1 : 1))
-    .reduce<string[]>((prev, curr) => {
-      const isSub = prev.find((p) => curr.startsWith(p) || curr === p);
-      if (isSub) {
-        return prev;
-      }
-
-      return prev.concat(curr);
-    }, []);
 };
 
 export const pluginCleanOutput = (): RsbuildPlugin => ({
@@ -92,7 +79,7 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
         .concat(getRsbuildCleanPath())
         .filter((p): p is string => !!p);
 
-      await Promise.all(dedupeCleanPaths(cleanPaths).map((p) => emptyDir(p)));
+      await Promise.all(dedupeNestedPaths(cleanPaths).map((p) => emptyDir(p)));
     };
 
     api.onBeforeBuild(async ({ isFirstCompile, environments }) => {

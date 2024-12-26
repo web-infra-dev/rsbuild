@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
 import { normalizePublicDirs } from '../config';
+import { dedupeNestedPaths } from '../helpers';
 import { open } from '../server/open';
 import type { OnAfterStartDevServerFn, RsbuildPlugin } from '../types';
 
@@ -23,7 +24,7 @@ export const pluginServer = (): RsbuildPlugin => ({
 
     api.onAfterStartDevServer(onStartServer);
     api.onAfterStartProdServer(onStartServer);
-    api.onBeforeBuild(async ({ isFirstCompile }) => {
+    api.onBeforeBuild(async ({ isFirstCompile, environments }) => {
       if (!isFirstCompile) {
         return;
       }
@@ -45,14 +46,22 @@ export const pluginServer = (): RsbuildPlugin => ({
           continue;
         }
 
+        const distPaths = dedupeNestedPaths(
+          Object.values(environments).map((e) => e.distPath),
+        );
+
         try {
           // async errors will missing error stack on copy, move
           // https://github.com/jprichardson/node-fs-extra/issues/769
-          await fs.promises.cp(normalizedPath, api.context.distPath, {
-            recursive: true,
-            // dereference symlinks
-            dereference: true,
-          });
+          await Promise.all(
+            distPaths.map((distPath) =>
+              fs.promises.cp(normalizedPath, distPath, {
+                recursive: true,
+                // dereference symlinks
+                dereference: true,
+              }),
+            ),
+          );
         } catch (err) {
           if (err instanceof Error) {
             err.message = `Copy public dir (${normalizedPath}) to dist failed:\n${err.message}`;
