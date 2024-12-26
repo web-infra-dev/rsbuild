@@ -191,14 +191,14 @@ test('should copy publicDir to the environment distDir when multiple environment
             },
           },
         },
-        node: {
-          output: {
-            target: 'node',
-            distPath: {
-              root: 'dist-build-node',
-            },
-          },
-        },
+        // node: {
+        //   output: {
+        //     target: 'node',
+        //     distPath: {
+        //       root: 'dist-build-node',
+        //     },
+        //   },
+        // },
       },
     },
   });
@@ -213,44 +213,6 @@ test('should copy publicDir to the environment distDir when multiple environment
   expect(
     filenames.some((filename) =>
       filename.includes('dist-build-web-2/test-temp-file.txt'),
-    ),
-  ).toBeTruthy();
-  expect(
-    filenames.some((filename) =>
-      filename.includes('dist-build-node/test-temp-file.txt'),
-    ),
-  ).toBeFalsy();
-});
-
-test('should copy publicDir to the node environment distDir when copyOnBuild is specified as true', async () => {
-  await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
-
-  const rsbuild = await build({
-    cwd,
-    rsbuildConfig: {
-      server: {
-        publicDir: {
-          copyOnBuild: true,
-        },
-      },
-      environments: {
-        node: {
-          output: {
-            target: 'node',
-            distPath: {
-              root: 'dist-build-node-1',
-            },
-          },
-        },
-      },
-    },
-  });
-  const files = await rsbuild.unwrapOutputJSON();
-  const filenames = Object.keys(files);
-
-  expect(
-    filenames.some((filename) =>
-      filename.includes('dist-build-node-1/test-temp-file.txt'),
     ),
   ).toBeTruthy();
 });

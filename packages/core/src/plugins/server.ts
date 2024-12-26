@@ -34,7 +34,7 @@ export const pluginServer = (): RsbuildPlugin => ({
       for (const publicDir of publicDirs) {
         const { name, copyOnBuild } = publicDir;
 
-        if (copyOnBuild === false || !name) {
+        if (!copyOnBuild || !name) {
           continue;
         }
 
@@ -47,11 +47,7 @@ export const pluginServer = (): RsbuildPlugin => ({
         }
 
         const distPaths = dedupeNestedPaths(
-          Object.values(environments)
-            .filter(
-              (e) => copyOnBuild === true || e.config.output.target !== 'node',
-            )
-            .map((e) => e.distPath),
+          Object.values(environments).map((e) => e.distPath),
         );
 
         try {
