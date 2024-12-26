@@ -18,7 +18,7 @@ test('should display type errors on overlay correctly', async ({ page }) => {
   // The first span is "<span style="color:#888">TS2322: </span>"
   const firstSpan = errorOverlay.locator('span').first();
   expect(await firstSpan.textContent()).toEqual('TS2322: ');
-  expect(await firstSpan.getAttribute('style')).toEqual('color:#888');
+  expect(await firstSpan.getAttribute('style')).toEqual('color:#888;');
 
   // The first link is "<a class="file-link">/src/index.ts:3:1</a>"
   const firstLink = errorOverlay.locator('.file-link').first();
