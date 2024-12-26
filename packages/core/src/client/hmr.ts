@@ -41,11 +41,11 @@ function clearOutdatedErrors() {
   }
 }
 
-let createOverlay: undefined | ((err: string[]) => void);
+let createOverlay: undefined | ((overlay: string, errors: string[]) => void);
 let clearOverlay: undefined | (() => void);
 
 export const registerOverlay = (
-  createFn: (err: string[]) => void,
+  createFn: (overlay: string, errors: string[]) => void,
   clearFn: () => void,
 ): void => {
   createOverlay = createFn;
@@ -91,7 +91,15 @@ function handleWarnings({ text }: { text: string[] }) {
 }
 
 // Compilation with errors (e.g. syntax error or missing modules).
-function handleErrors({ text, html }: { text: string[]; html: string[] }) {
+function handleErrors({
+  text,
+  html,
+  overlay,
+}: {
+  text: string[];
+  html: string[];
+  overlay: string;
+}) {
   clearOutdatedErrors();
 
   isFirstCompilation = false;
@@ -103,7 +111,7 @@ function handleErrors({ text, html }: { text: string[]; html: string[] }) {
   }
 
   if (createOverlay) {
-    createOverlay(html);
+    createOverlay(overlay, html);
   }
 }
 
