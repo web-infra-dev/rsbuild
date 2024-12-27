@@ -39,7 +39,7 @@ type CreateRsbuildOptions = {
 ```
 
 - `cwd`: The root path of the current build, defaults to `process.cwd()`.
-- `environment`: Only build specified [environments](/guide/advanced/environments).
+- `environment`: Only build specified [environments](/guide/advanced/environments). If not specified or passing an empty array, all environments will be built.
 - `rsbuildConfig`: Rsbuild configuration object. Refer to [Configuration Overview](/config/) for all available configuration options.
 
 ## loadConfig
