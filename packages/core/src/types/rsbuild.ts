@@ -99,6 +99,8 @@ export type CreateRsbuildOptions = {
   cwd?: string;
   /**
    * Only build specified environments.
+   * For example, passing `['web']` will only build the `web` environment.
+   * If not specified or passing an empty array, all environments will be built.
    */
   environment?: string[];
   /**

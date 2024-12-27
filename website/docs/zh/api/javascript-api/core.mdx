@@ -39,7 +39,7 @@ type CreateRsbuildOptions = {
 ```
 
 - `cwd`：当前执行构建的根路径，默认值为 `process.cwd()`
-- `environment`：只构建指定的 [environments](/guide/advanced/environments)。
+- `environment`：只构建指定的 [environments](/guide/advanced/environments)，如果未指定或传入空数组，则构建所有环境。
 - `rsbuildConfig`：Rsbuild 配置对象。参考 [配置总览](/config/) 查看所有可用的配置项。
 
 ## loadConfig
