@@ -59,8 +59,8 @@ const applyCommonOptions = (cli: CAC) => {
     .option('--env-dir <dir>', 'specify the directory to load `.env` files');
 };
 
-const applyServerOptions = (cli: Command) => {
-  cli
+const applyServerOptions = (command: Command) => {
+  command
     .option('-o, --open [url]', 'open the page in browser on startup')
     .option('--port <port>', 'specify a port number for server to listen')
     .option('--host <host>', 'specify the host that the server listens to');
