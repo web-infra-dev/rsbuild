@@ -57,7 +57,7 @@ describe('ansiHTML', () => {
   it('should convert ANSI underline codes to HTML', () => {
     const input = '\x1B[4mHello, World!\x1B[0m';
     const expected =
-      '<span style="text-decoration:underline;">Hello, World!</span>';
+      '<span style="text-decoration:underline;text-underline-offset:3px;">Hello, World!</span>';
     expect(ansiHTML(input)).toEqual(expected);
   });
 
@@ -65,6 +65,51 @@ describe('ansiHTML', () => {
     const input = '\x1B[9mHello, World!\x1B[0m';
     const expected =
       '<span style="text-decoration:line-through;">Hello, World!</span>';
+    expect(ansiHTML(input)).toEqual(expected);
+  });
+
+  it('should convert multiple styles ', () => {
+    const input = '\x1B[31;1;4mHello, World!\x1B[0m';
+    const expected =
+      '<span style="color:#fb6a6a;font-weight:bold;text-decoration:underline;text-underline-offset:3px;">Hello, World!</span>';
+    expect(ansiHTML(input)).toEqual(expected);
+  });
+
+  it('should convert file path with ANSI color codes to HTML', () => {
+    const input = '[\u001b[36;1;4m/path/to/src/index.js\u001b[0m:4:1]';
+    const expected =
+      '[<span style="color:#6eecf7;font-weight:bold;text-decoration:underline;text-underline-offset:3px;">/path/to/src/index.js</span>:4:1]';
+    expect(ansiHTML(input)).toEqual(expected);
+  });
+
+  it('should ignore background colors', () => {
+    const bgRedInput = '\x1B[41mHello, World!\x1B[0m';
+    const bgRedExpected = 'Hello, World!';
+    expect(ansiHTML(bgRedInput)).toEqual(bgRedExpected);
+
+    const bgBlueInput = '\x1B[44;1mHello, World!\x1B[0m';
+    const bgBlueExpected =
+      '<span style="font-weight:bold;">Hello, World!</span>';
+    expect(ansiHTML(bgBlueInput)).toEqual(bgBlueExpected);
+  });
+
+  it('should handle nested styles', () => {
+    const input = '\x1B[31mRed \x1B[1mBold Red \x1B[34mBold Blue\x1B[0m';
+    const expected =
+      '<span style="color:#fb6a6a;">Red <span style="font-weight:bold;">Bold Red <span style="color:#6eb2f7;">Bold Blue</span></span></span>';
+    expect(ansiHTML(input)).toEqual(expected);
+  });
+
+  it('should handle bright colors', () => {
+    const input = '\x1B[91mBright Red\x1B[0m';
+    const expected = '<span style="color:#fb6a6a;">Bright Red</span>';
+    expect(ansiHTML(input)).toEqual(expected);
+  });
+
+  it('should handle reset within text', () => {
+    const input = '\x1B[31mRed\x1B[0m Normal \x1B[34mBlue\x1B[0m';
+    const expected =
+      '<span style="color:#fb6a6a;">Red</span> Normal <span style="color:#6eb2f7;">Blue</span>';
     expect(ansiHTML(input)).toEqual(expected);
   });
 });
