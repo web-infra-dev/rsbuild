@@ -322,7 +322,7 @@ export type PublicDirOptions = {
   name?: string;
   /**
    * Whether to copy files from the publicDir to the distDir on production build
-   * @default true
+   * @default target !== 'node'
    */
   copyOnBuild?: boolean;
   /**
