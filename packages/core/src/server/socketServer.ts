@@ -17,8 +17,27 @@ interface ExtWebSocket extends Ws {
   isAlive: boolean;
 }
 
+function convertLinksInHtml(text: string): string {
+  const fileRegex = /(?:[a-zA-Z]:\\|\/).*?:\d+:\d+/g;
+
+  return text.replace(fileRegex, (file) => {
+    // If the file contains `</span>`, it means the file path contains ANSI codes.
+    // We need to move the `</span>` to the end of the file path.
+    const hasClosingSpan = file.includes('</span>') && !file.includes('<span');
+    const filePath = hasClosingSpan ? file.replace('</span>', '') : file;
+
+    return `<a class="file-link" data-file="${filePath}">${filePath}</a>${
+      hasClosingSpan ? '</span>' : ''
+    }`;
+  });
+}
+
 // HTML template for error overlay
-const overlayTemplate = `
+function genOverlayHTML(errors: string[]) {
+  const htmlItems = errors.map((item) =>
+    convertLinksInHtml(ansiHTML(escapeHtml(item))),
+  );
+  return `
 <style>
 .root {
   position: fixed;
@@ -130,7 +149,7 @@ const overlayTemplate = `
   <div class="container">
     <div class="close"></div>
     <p class="title">Build failed</p>
-    <pre class="content"></pre>
+    <pre class="content">${htmlItems.join('\n\n').trim()}</pre>
     <footer class="footer">
       <p><span>Fix error</span>, click outside, or press Esc to close the overlay.</p>
       <p>Disable overlay by setting Rsbuild's <span>dev.client.overlay</span> config to false.<p>
@@ -138,18 +157,16 @@ const overlayTemplate = `
   </div>
 </div>
 `;
+}
 
 function isEqualSet(a: Set<string>, b: Set<string>): boolean {
-  if (a.size !== b.size) {
-    return false;
-  }
+  return a.size === b.size && [...a].every((value) => b.has(value));
+}
 
-  for (const v of a.values()) {
-    if (!b.has(v)) {
-      return false;
-    }
-  }
-  return true;
+interface SocketMessage {
+  type: string;
+  compilationId?: string;
+  data?: Record<string, any> | string | boolean;
 }
 
 export class SocketServer {
@@ -232,15 +249,7 @@ export class SocketServer {
   }
 
   // write message to each socket
-  public sockWrite({
-    type,
-    compilationId,
-    data,
-  }: {
-    type: string;
-    compilationId?: string;
-    data?: Record<string, any> | string | boolean;
-  }): void {
+  public sockWrite({ type, compilationId, data }: SocketMessage): void {
     for (const socket of this.sockets) {
       this.send(socket, JSON.stringify({ type, data, compilationId }));
     }
@@ -248,15 +257,7 @@ export class SocketServer {
 
   private singleWrite(
     socket: Ws,
-    {
-      type,
-      data,
-      compilationId,
-    }: {
-      type: string;
-      compilationId?: string;
-      data?: Record<string, any> | string | boolean;
-    },
+    { type, data, compilationId }: SocketMessage,
   ) {
     this.send(socket, JSON.stringify({ type, data, compilationId }));
   }
@@ -413,13 +414,13 @@ export class SocketServer {
         errors,
         warnings: [],
       });
+
       return this.sockWrite({
         type: 'errors',
         compilationId,
         data: {
           text: formattedErrors,
-          html: formattedErrors.map((item) => ansiHTML(escapeHtml(item))),
-          overlay: overlayTemplate,
+          html: genOverlayHTML(formattedErrors),
         },
       });
     }
