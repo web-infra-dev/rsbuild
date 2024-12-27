@@ -616,6 +616,9 @@ importers:
       browserslist-load-config:
         specifier: 1.0.0
         version: 1.0.0
+      cac:
+        specifier: ^6.7.14
+        version: 6.7.14
       chokidar:
         specifier: ^4.0.3
         version: 4.0.3
