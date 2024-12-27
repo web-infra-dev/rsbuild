@@ -1,4 +1,5 @@
 import { ansiHTML } from '../src/server/ansiHTML';
+import { convertLinksInHtml } from '../src/server/overlay';
 
 describe('ansiHTML', () => {
   it('should convert ANSI color codes to HTML', () => {
@@ -111,5 +112,19 @@ describe('ansiHTML', () => {
     const expected =
       '<span style="color:#fb6a6a;">Red</span> Normal <span style="color:#6eb2f7;">Blue</span>';
     expect(ansiHTML(input)).toEqual(expected);
+  });
+});
+
+describe('convertLinksInHtml', () => {
+  it('should convert file path with ANSI color codes to HTML', () => {
+    const input1 = '[\u001b[36;1;4m/path/to/src/index.js\u001b[0m:4:1]\n';
+    const expected1 =
+      '[<span style="color:#6eecf7;font-weight:bold;text-decoration:underline;text-underline-offset:3px;"><a class="file-link" data-file="/path/to/src/index.js:4:1">/path/to/src/index.js:4:1</a></span>]\n';
+    expect(convertLinksInHtml(ansiHTML(input1))).toEqual(expected1);
+
+    const input2 = '[\u001b[36;1;4m/path/to/src/index.js:4:1\u001b[0m]\n';
+    const expected2 =
+      '[<span style="color:#6eecf7;font-weight:bold;text-decoration:underline;text-underline-offset:3px;"><a class="file-link" data-file="/path/to/src/index.js:4:1">/path/to/src/index.js:4:1</a></span>]\n';
+    expect(convertLinksInHtml(ansiHTML(input2))).toEqual(expected2);
   });
 });

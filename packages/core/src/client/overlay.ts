@@ -1,40 +1,12 @@
 import { registerOverlay } from './hmr';
 
-function linkedText(root: ShadowRoot, selector: string, text: string): void {
-  const el = root.querySelector(selector)!;
-  const fileRegex = /(?:[a-zA-Z]:\\|\/).*?:\d+:\d+/g;
-
-  let curIndex = 0;
-  let match = fileRegex.exec(text);
-  while (match !== null) {
-    const { 0: file, index } = match;
-    if (index != null) {
-      const frag = text.slice(curIndex, index);
-      el.insertAdjacentHTML('beforeend', frag);
-      const link = document.createElement('a');
-      link.textContent = file;
-      link.className = 'file-link';
-
-      link.onclick = () => {
-        fetch(`/__open-in-editor?file=${encodeURIComponent(file)}`);
-      };
-      el.appendChild(link);
-      curIndex += frag.length + file.length;
-    }
-    match = fileRegex.exec(text);
-  }
-
-  const frag = text.slice(curIndex);
-  el.insertAdjacentHTML('beforeend', frag);
-}
-
 const {
   HTMLElement = class {} as typeof globalThis.HTMLElement,
   customElements,
 } = typeof window !== 'undefined' ? window : globalThis;
 
 class ErrorOverlay extends HTMLElement {
-  constructor(overlay: string, errors: string[]) {
+  constructor(html: string) {
     super();
 
     if (!this.attachShadow) {
@@ -45,13 +17,18 @@ class ErrorOverlay extends HTMLElement {
     }
 
     const root = this.attachShadow({ mode: 'open' });
-    root.innerHTML = overlay;
+    root.innerHTML = html;
 
-    linkedText(root, '.content', errors.join('\n\n').trim());
-    root.querySelector('.close')?.addEventListener('click', this.close);
+    root.querySelector('.close')!.addEventListener('click', this.close);
     // close overlay when click outside
     this.addEventListener('click', this.close);
     root.querySelector('.container')!.addEventListener('click', (e) => {
+      if (e.target) {
+        const { file } = (e.target as HTMLLinkElement).dataset;
+        if (file) {
+          fetch(`/__open-in-editor?file=${encodeURIComponent(file)}`);
+        }
+      }
       e.stopPropagation();
     });
 
@@ -84,9 +61,9 @@ if (customElements && !customElements.get(overlayId)) {
   customElements.define(overlayId, ErrorOverlay);
 }
 
-function createOverlay(overlay: string, errors: string[]) {
+function createOverlay(html: string) {
   clearOverlay();
-  document.body.appendChild(new ErrorOverlay(overlay, errors));
+  document.body.appendChild(new ErrorOverlay(html));
 }
 
 function clearOverlay() {
