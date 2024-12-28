@@ -958,10 +958,27 @@ export interface OutputConfig {
    */
   minify?: Minify;
   /**
-   * Whether to generate manifest file.
+   * Configure how to generate the manifest file.
+   * - `true`: Generate a manifest file in `dist/manifest.json`.
+   * - `false`: Do not generate the manifest file.
+   * - `string`: Generate a manifest file with the specified filename.
+   * - `object`: Generate a manifest file with the specified options.
    * @default false
    */
-  manifest?: string | boolean;
+  manifest?:
+    | string
+    | boolean
+    | {
+        /**
+         * The filename or path of the manifest file.
+         * @default 'manifest.json'
+         */
+        filename?: string;
+        /**
+         * A custom function to generate the content of the manifest file.
+         */
+        generate?: () => Record<string, unknown>;
+      };
   /**
    * Whether to generate source map files, and which format of source map to generate.
    *
