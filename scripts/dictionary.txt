@@ -4,6 +4,7 @@ antd
 apng
 applescript
 atrules
+attributify
 biomejs
 brotli
 browserslistrc
