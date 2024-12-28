@@ -650,8 +650,8 @@ importers:
         specifier: ^2.0.6
         version: 2.0.7
       jiti:
-        specifier: ^1.21.7
-        version: 1.21.7
+        specifier: ^2.4.2
+        version: 2.4.2
       launch-editor-middleware:
         specifier: ^2.9.1
         version: 2.9.1
@@ -672,7 +672,7 @@ importers:
         version: 8.4.49
       postcss-load-config:
         specifier: 6.0.1
-        version: 6.0.1(jiti@1.21.7)(postcss@8.4.49)(yaml@2.6.0)
+        version: 6.0.1(jiti@2.4.2)(postcss@8.4.49)(yaml@2.6.0)
       postcss-loader:
         specifier: 8.1.1
         version: 8.1.1(@rspack/core@1.1.8(@swc/helpers@0.5.15))(postcss@8.4.49)(typescript@5.7.2)(webpack@5.97.1)
@@ -1016,7 +1016,7 @@ importers:
         version: 3.2.4(svelte@5.16.0)
       svelte-preprocess:
         specifier: ^6.0.3
-        version: 6.0.3(@babel/core@7.26.0)(less@4.2.1)(postcss-load-config@6.0.1(jiti@1.21.7)(postcss@8.4.49)(yaml@2.6.0))(postcss@8.4.49)(sass@1.83.0)(stylus@0.64.0)(svelte@5.16.0)(typescript@5.7.2)
+        version: 6.0.3(@babel/core@7.26.0)(less@4.2.1)(postcss-load-config@6.0.1(jiti@2.4.2)(postcss@8.4.49)(yaml@2.6.0))(postcss@8.4.49)(sass@1.83.0)(stylus@0.64.0)(svelte@5.16.0)(typescript@5.7.2)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -4540,6 +4540,10 @@ packages:
 
   jiti@1.21.7:
     resolution: {integrity: sha512-/imKNG4EbWNrVjoNC/1H5/9GFy+tqjGBHCaSsN+P2RnPqjsLmv6UD3Ej+Kj8nBWaRAwyk7kK5ZUc+OEatnTR3A==}
+    hasBin: true
+
+  jiti@2.4.2:
+    resolution: {integrity: sha512-rg9zJN+G4n2nfJl5MW3BMygZX56zKPNVEYYqq7adpmMh4Jn2QNEwhvQlFy6jPVdcod7txZtKHWnyZiA3a0zP7A==}
     hasBin: true
 
   js-tokens@4.0.0:
@@ -10350,6 +10354,8 @@ snapshots:
 
   jiti@1.21.7: {}
 
+  jiti@2.4.2: {}
+
   js-tokens@4.0.0: {}
 
   js-yaml@3.14.1:
@@ -11371,11 +11377,11 @@ snapshots:
     optionalDependencies:
       postcss: 8.4.49
 
-  postcss-load-config@6.0.1(jiti@1.21.7)(postcss@8.4.49)(yaml@2.6.0):
+  postcss-load-config@6.0.1(jiti@2.4.2)(postcss@8.4.49)(yaml@2.6.0):
     dependencies:
       lilconfig: 3.1.2
     optionalDependencies:
-      jiti: 1.21.7
+      jiti: 2.4.2
       postcss: 8.4.49
       yaml: 2.6.0
 
@@ -12196,14 +12202,14 @@ snapshots:
       svelte-dev-helper: 1.1.9
       svelte-hmr: 0.14.12(svelte@5.16.0)
 
-  svelte-preprocess@6.0.3(@babel/core@7.26.0)(less@4.2.1)(postcss-load-config@6.0.1(jiti@1.21.7)(postcss@8.4.49)(yaml@2.6.0))(postcss@8.4.49)(sass@1.83.0)(stylus@0.64.0)(svelte@5.16.0)(typescript@5.7.2):
+  svelte-preprocess@6.0.3(@babel/core@7.26.0)(less@4.2.1)(postcss-load-config@6.0.1(jiti@2.4.2)(postcss@8.4.49)(yaml@2.6.0))(postcss@8.4.49)(sass@1.83.0)(stylus@0.64.0)(svelte@5.16.0)(typescript@5.7.2):
     dependencies:
       svelte: 5.16.0
     optionalDependencies:
       '@babel/core': 7.26.0
       less: 4.2.1
       postcss: 8.4.49
-      postcss-load-config: 6.0.1(jiti@1.21.7)(postcss@8.4.49)(yaml@2.6.0)
+      postcss-load-config: 6.0.1(jiti@2.4.2)(postcss@8.4.49)(yaml@2.6.0)
       sass: 1.83.0
       stylus: 0.64.0
       typescript: 5.7.2
