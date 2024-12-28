@@ -244,8 +244,8 @@ importers:
   e2e/cases/svelte:
     dependencies:
       svelte:
-        specifier: ^5.15.0
-        version: 5.15.0
+        specifier: ^5.16.0
+        version: 5.16.0
     devDependencies:
       less:
         specifier: ^4.2.1
@@ -431,8 +431,8 @@ importers:
   examples/svelte:
     dependencies:
       svelte:
-        specifier: ^5.15.0
-        version: 5.15.0
+        specifier: ^5.16.0
+        version: 5.16.0
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1013,10 +1013,10 @@ importers:
     dependencies:
       svelte-loader:
         specifier: 3.2.4
-        version: 3.2.4(svelte@5.15.0)
+        version: 3.2.4(svelte@5.16.0)
       svelte-preprocess:
         specifier: ^6.0.3
-        version: 6.0.3(@babel/core@7.26.0)(less@4.2.1)(postcss-load-config@6.0.1(jiti@1.21.7)(postcss@8.4.49)(yaml@2.6.0))(postcss@8.4.49)(sass@1.83.0)(stylus@0.64.0)(svelte@5.15.0)(typescript@5.7.2)
+        version: 6.0.3(@babel/core@7.26.0)(less@4.2.1)(postcss-load-config@6.0.1(jiti@1.21.7)(postcss@8.4.49)(yaml@2.6.0))(postcss@8.4.49)(sass@1.83.0)(stylus@0.64.0)(svelte@5.16.0)(typescript@5.7.2)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1031,8 +1031,8 @@ importers:
         specifier: ^22.10.2
         version: 22.10.2
       svelte:
-        specifier: ^5.15.0
-        version: 5.15.0
+        specifier: ^5.16.0
+        version: 5.16.0
       typescript:
         specifier: ^5.7.2
         version: 5.7.2
@@ -3469,6 +3469,10 @@ packages:
   clone@1.0.4:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
+
+  clsx@2.1.1:
+    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
+    engines: {node: '>=6'}
 
   co@4.6.0:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
@@ -6160,8 +6164,8 @@ packages:
       typescript:
         optional: true
 
-  svelte@5.15.0:
-    resolution: {integrity: sha512-YWl8rAd4hSjERLtLvP6h2pflGtmrJwv+L12BgrOtHYJCpvLS9WKp/YNAdyolw3FymXtcYZqhSWvWlu5O1X7tgQ==}
+  svelte@5.16.0:
+    resolution: {integrity: sha512-Ygqsiac6UogVED2ruKclU+pOeMThxWtp9LG+li7BXeDKC2paVIsRTMkNmcON4Zejerd1s5sZHWx6ZtU85xklVg==}
     engines: {node: '>=18'}
 
   svg-parser@2.0.4:
@@ -9277,6 +9281,8 @@ snapshots:
 
   clone@1.0.4: {}
 
+  clsx@2.1.1: {}
+
   co@4.6.0: {}
 
   color-convert@2.0.1:
@@ -12179,20 +12185,20 @@ snapshots:
 
   svelte-dev-helper@1.1.9: {}
 
-  svelte-hmr@0.14.12(svelte@5.15.0):
+  svelte-hmr@0.14.12(svelte@5.16.0):
     dependencies:
-      svelte: 5.15.0
+      svelte: 5.16.0
 
-  svelte-loader@3.2.4(svelte@5.15.0):
+  svelte-loader@3.2.4(svelte@5.16.0):
     dependencies:
       loader-utils: 2.0.4
-      svelte: 5.15.0
+      svelte: 5.16.0
       svelte-dev-helper: 1.1.9
-      svelte-hmr: 0.14.12(svelte@5.15.0)
+      svelte-hmr: 0.14.12(svelte@5.16.0)
 
-  svelte-preprocess@6.0.3(@babel/core@7.26.0)(less@4.2.1)(postcss-load-config@6.0.1(jiti@1.21.7)(postcss@8.4.49)(yaml@2.6.0))(postcss@8.4.49)(sass@1.83.0)(stylus@0.64.0)(svelte@5.15.0)(typescript@5.7.2):
+  svelte-preprocess@6.0.3(@babel/core@7.26.0)(less@4.2.1)(postcss-load-config@6.0.1(jiti@1.21.7)(postcss@8.4.49)(yaml@2.6.0))(postcss@8.4.49)(sass@1.83.0)(stylus@0.64.0)(svelte@5.16.0)(typescript@5.7.2):
     dependencies:
-      svelte: 5.15.0
+      svelte: 5.16.0
     optionalDependencies:
       '@babel/core': 7.26.0
       less: 4.2.1
@@ -12202,7 +12208,7 @@ snapshots:
       stylus: 0.64.0
       typescript: 5.7.2
 
-  svelte@5.15.0:
+  svelte@5.16.0:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@jridgewell/sourcemap-codec': 1.5.0
@@ -12211,6 +12217,7 @@ snapshots:
       acorn-typescript: 1.4.13(acorn@8.14.0)
       aria-query: 5.3.2
       axobject-query: 4.1.0
+      clsx: 2.1.1
       esm-env: 1.2.1
       esrap: 1.3.2
       is-reference: 3.0.3
