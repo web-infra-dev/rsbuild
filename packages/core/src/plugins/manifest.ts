@@ -1,34 +1,16 @@
 import type { FileDescriptor } from 'rspack-manifest-plugin';
+import { isObject } from '../helpers';
 import { recursiveChunkEntryNames } from '../rspack/preload/helpers';
-import type { RsbuildPlugin } from '../types';
-
-type FilePath = string;
-
-type ManifestByEntry = {
-  initial?: {
-    js?: FilePath[];
-    css?: FilePath[];
-  };
-  async?: {
-    js?: FilePath[];
-    css?: FilePath[];
-  };
-  /** other assets (e.g. png、svg、source map) related to the current entry */
-  assets?: FilePath[];
-  html?: FilePath[];
-};
-
-type ManifestList = {
-  entries: {
-    /** relate to rsbuild source.entry */
-    [entryName: string]: ManifestByEntry;
-  };
-  /** Flatten all assets */
-  allFiles: FilePath[];
-};
+import type {
+  ManifestByEntry,
+  ManifestConfig,
+  ManifestData,
+  ManifestObjectConfig,
+  RsbuildPlugin,
+} from '../types';
 
 const generateManifest =
-  (htmlPaths: Record<string, string>) =>
+  (htmlPaths: Record<string, string>, manifestOptions: ManifestObjectConfig) =>
   (_seed: Record<string, any>, files: FileDescriptor[]) => {
     const chunkEntries = new Map<string, FileDescriptor[]>();
 
@@ -50,7 +32,7 @@ const generateManifest =
       return file.path;
     });
 
-    const entries: ManifestList['entries'] = {};
+    const entries: ManifestData['entries'] = {};
 
     for (const [name, chunkFiles] of chunkEntries) {
       const assets = new Set<string>();
@@ -126,11 +108,51 @@ const generateManifest =
       entries[name] = entryManifest;
     }
 
-    return {
+    const manifestData: ManifestData = {
       allFiles,
       entries,
     };
+
+    if (manifestOptions.generate) {
+      const generatedManifest = manifestOptions.generate({
+        files,
+        manifestData,
+      });
+
+      if (isObject(generatedManifest)) {
+        return generatedManifest;
+      }
+
+      throw new Error(
+        '[rsbuild:manifest] `manifest.generate` function must return a valid manifest object.',
+      );
+    }
+
+    return manifestData;
   };
+
+function normalizeManifestObjectConfig(
+  manifest?: ManifestConfig,
+): ManifestObjectConfig {
+  if (typeof manifest === 'string') {
+    return {
+      filename: manifest,
+    };
+  }
+
+  const defaultOptions: ManifestObjectConfig = {
+    filename: 'manifest.json',
+  };
+
+  if (typeof manifest === 'boolean') {
+    return defaultOptions;
+  }
+
+  return {
+    ...defaultOptions,
+    ...manifest,
+  };
+}
 
 export const pluginManifest = (): RsbuildPlugin => ({
   name: 'rsbuild:manifest',
@@ -146,8 +168,7 @@ export const pluginManifest = (): RsbuildPlugin => ({
         return;
       }
 
-      const fileName =
-        typeof manifest === 'string' ? manifest : 'manifest.json';
+      const manifestOptions = normalizeManifestObjectConfig(manifest);
 
       const { RspackManifestPlugin } = await import(
         '../../compiled/rspack-manifest-plugin/index.js'
@@ -156,9 +177,9 @@ export const pluginManifest = (): RsbuildPlugin => ({
 
       chain.plugin(CHAIN_ID.PLUGIN.MANIFEST).use(RspackManifestPlugin, [
         {
-          fileName,
+          fileName: manifestOptions.filename,
           writeToFileEmit: isDev && writeToDisk !== true,
-          generate: generateManifest(htmlPaths),
+          generate: generateManifest(htmlPaths, manifestOptions),
         },
       ]);
     });
