@@ -107,11 +107,15 @@ export function resolveUrl(str: string, base: string): string {
 
 const normalizeOpenConfig = (
   config: NormalizedConfig,
-): { targets: string[]; before?: () => Promise<void> | void } => {
+): {
+  targets: string[];
+  before?: () => Promise<void> | void;
+  skip?: boolean;
+} => {
   const { open } = config.server;
 
   if (typeof open === 'boolean') {
-    return { targets: [] };
+    return { targets: [], skip: !open };
   }
   if (typeof open === 'string') {
     return { targets: [open] };
@@ -139,7 +143,10 @@ export async function open({
   config: NormalizedConfig;
   clearCache?: boolean;
 }): Promise<void> {
-  const { targets, before } = normalizeOpenConfig(config);
+  const { targets, before, skip } = normalizeOpenConfig(config);
+  if (skip) {
+    return;
+  }
 
   // Skip open in codesandbox. After being bundled, the `open` package will
   // try to call system xdg-open, which will cause an error on codesandbox.

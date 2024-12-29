@@ -1,4 +1,5 @@
-import { replacePortPlaceholder, resolveUrl } from '../src/server/open';
+import type { NormalizedConfig, NormalizedServerConfig } from '../dist-types';
+import { open, replacePortPlaceholder, resolveUrl } from '../src/server/open';
 
 describe('plugin-open', () => {
   it('#replacePortPlaceholder - should replace port number correctly', () => {

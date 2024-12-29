@@ -73,6 +73,16 @@ export default {
 };
 ```
 
+- Do not open any browser at all:
+
+```js
+export default {
+  server: {
+    open: false,
+  },
+};
+```
+
 ## Port placeholder
 
 The port number that Rsbuild server listens on may change. For example, if the port is in use, Rsbuild will automatically increment the port number until it finds an available port.
