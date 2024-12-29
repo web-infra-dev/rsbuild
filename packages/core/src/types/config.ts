@@ -889,6 +889,46 @@ export type InlineChunkConfig =
   | InlineChunkTest
   | { enable?: boolean | 'auto'; test: InlineChunkTest };
 
+export type ManifestByEntry = {
+  initial?: {
+    js?: string[];
+    css?: string[];
+  };
+  async?: {
+    js?: string[];
+    css?: string[];
+  };
+  /** other assets (e.g. png、svg、source map) related to the current entry */
+  assets?: string[];
+  html?: string[];
+};
+
+export type ManifestData = {
+  entries: {
+    /** relate to Rsbuild's source.entry config */
+    [entryName: string]: ManifestByEntry;
+  };
+  /** Flatten all assets */
+  allFiles: string[];
+};
+
+export type ManifestObjectConfig = {
+  /**
+   * The filename or path of the manifest file.
+   * @default 'manifest.json'
+   */
+  filename?: string;
+  /**
+   * A custom function to generate the content of the manifest file.
+   */
+  generate?: (params: {
+    files: import('rspack-manifest-plugin').FileDescriptor[];
+    manifestData: ManifestData;
+  }) => Record<string, unknown>;
+};
+
+export type ManifestConfig = string | boolean | ManifestObjectConfig;
+
 export interface OutputConfig {
   /**
    * Specify build target to run in specified environment.
@@ -965,20 +1005,7 @@ export interface OutputConfig {
    * - `object`: Generate a manifest file with the specified options.
    * @default false
    */
-  manifest?:
-    | string
-    | boolean
-    | {
-        /**
-         * The filename or path of the manifest file.
-         * @default 'manifest.json'
-         */
-        filename?: string;
-        /**
-         * A custom function to generate the content of the manifest file.
-         */
-        generate?: () => Record<string, unknown>;
-      };
+  manifest?: ManifestConfig;
   /**
    * Whether to generate source map files, and which format of source map to generate.
    *
@@ -1054,6 +1081,7 @@ export interface NormalizedOutputConfig extends OutputConfig {
   filenameHash: boolean | string;
   assetPrefix: string;
   dataUriLimit: number | NormalizedDataUriLimit;
+  manifest: ManifestConfig;
   minify: Minify;
   inlineScripts: InlineChunkConfig;
   inlineStyles: InlineChunkConfig;
