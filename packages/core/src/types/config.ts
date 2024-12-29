@@ -915,6 +915,7 @@ export type ManifestData = {
 export type ManifestObjectConfig = {
   /**
    * The filename or path of the manifest file.
+   * The manifest file will be emitted to the output directory.
    * @default 'manifest.json'
    */
   filename?: string;
@@ -999,9 +1000,9 @@ export interface OutputConfig {
   minify?: Minify;
   /**
    * Configure how to generate the manifest file.
-   * - `true`: Generate a manifest file in `dist/manifest.json`.
+   * - `true`: Generate a manifest file named `manifest.json` in the output directory.
    * - `false`: Do not generate the manifest file.
-   * - `string`: Generate a manifest file with the specified filename.
+   * - `string`: Generate a manifest file with the specified filename or path.
    * - `object`: Generate a manifest file with the specified options.
    * @default false
    */
