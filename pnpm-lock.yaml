@@ -641,8 +641,8 @@ importers:
         specifier: 16.4.7
         version: 16.4.7
       dotenv-expand:
-        specifier: 11.0.7
-        version: 11.0.7
+        specifier: 12.0.1
+        version: 12.0.1
       html-rspack-plugin:
         specifier: 6.0.2
         version: 6.0.2(@rspack/core@1.2.0-alpha.0(@swc/helpers@0.5.15))
@@ -3862,6 +3862,10 @@ packages:
 
   dotenv-expand@11.0.7:
     resolution: {integrity: sha512-zIHwmZPRshsCdpMDyVsqGmgyP0yT8GAgXUnkdAoJisxvf33k7yO6OuoKmcTGuXPWSsm8Oh88nZicRLA9Y0rUeA==}
+    engines: {node: '>=12'}
+
+  dotenv-expand@12.0.1:
+    resolution: {integrity: sha512-LaKRbou8gt0RNID/9RoI+J2rvXsBRPMV7p+ElHlPhcSARbCPDYcYG2s1TIzAfWv4YSgyY5taidWzzs31lNV3yQ==}
     engines: {node: '>=12'}
 
   dotenv@16.4.7:
@@ -9720,6 +9724,10 @@ snapshots:
       tslib: 2.8.1
 
   dotenv-expand@11.0.7:
+    dependencies:
+      dotenv: 16.4.7
+
+  dotenv-expand@12.0.1:
     dependencies:
       dotenv: 16.4.7
 
