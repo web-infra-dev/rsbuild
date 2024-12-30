@@ -679,18 +679,16 @@ export function stringifyConfig(config: unknown, verbose?: boolean): string {
   return stringify(config, { verbose });
 }
 
-type NormalizePublicDirOptions = PublicDirOptions &
-  Required<Omit<PublicDirOptions, 'copyOnBuild'>>;
-
 export const normalizePublicDirs = (
   publicDir?: PublicDir,
-): NormalizePublicDirOptions[] => {
+): Required<PublicDirOptions>[] => {
   if (publicDir === false) {
     return [];
   }
 
-  const defaultConfig: NormalizePublicDirOptions = {
+  const defaultConfig: Required<PublicDirOptions> = {
     name: 'public',
+    copyOnBuild: 'auto',
     watch: false,
   };
 

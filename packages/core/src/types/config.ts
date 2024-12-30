@@ -321,10 +321,13 @@ export type PublicDirOptions = {
    */
   name?: string;
   /**
-   * Whether to copy files from the publicDir to the distDir on production build
-   * @default target !== 'node'
+   * Whether to copy files from the public directory to the dist directory on production build.
+   * - `true`: copy files
+   * - `false`: do not copy files
+   * - `'auto'`: if `output.target` is not `'node'`, copy files, otherwise do not copy
+   * @default 'auto'
    */
-  copyOnBuild?: boolean;
+  copyOnBuild?: boolean | 'auto';
   /**
    * whether to watch the public directory and reload the page when the files change
    * @default false
