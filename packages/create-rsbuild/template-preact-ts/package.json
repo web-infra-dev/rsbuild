@@ -8,10 +8,10 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "preact": "^10.25.3"
+    "preact": "^10.25.4"
   },
   "devDependencies": {
-    "@rsbuild/core": "^1.1.12",
+    "@rsbuild/core": "^1.1.13",
     "@rsbuild/plugin-preact": "^1.2.0",
     "typescript": "^5.7.2"
   }
