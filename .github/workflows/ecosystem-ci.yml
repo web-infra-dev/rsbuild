@@ -34,12 +34,17 @@ jobs:
         uses: actions/checkout@v4.2.2
         with:
           fetch-depth: 1
+
+      - name: Install Pnpm
+        run: corepack enable
+
       - name: Setup Node.js
         if: steps.eco_ci.outcome == 'failure'
         uses: actions/setup-node@v4.1.0
         with:
           node-version: 22
           cache: 'pnpm'
+
       - name: Send Failure Notification
         if: steps.eco_ci.outcome == 'failure'
         shell: bash
