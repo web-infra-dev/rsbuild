@@ -138,7 +138,6 @@ export default defineConfig({
 0 && (module.exports = {
   PLUGIN_CSS_NAME,
   PLUGIN_SWC_NAME,
-  __internalHelper,
   createRsbuild,
   defineConfig,
   ensureAssetPrefix,
