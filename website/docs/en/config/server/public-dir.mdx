@@ -16,7 +16,7 @@ type PublicDir = false | PublicDirOptions | PublicDirOptions[];
 ```js
 const defaultValue = {
   name: 'public',
-  copyOnBuild: true,
+  copyOnBuild: target !== 'node',
 };
 ```
 
@@ -62,7 +62,7 @@ export default {
 ### copyOnBuild
 
 - **Type:** `boolean`
-- **Default:** `true`
+- **Default:** `target !== 'node'`
 
 Whether to copy files from the publicDir to the distDir on production build.
 
@@ -79,6 +79,18 @@ export default {
 ```
 
 Note that setting the value of `copyOnBuild` to false means that when you run `rsbuild preview` for a production preview, you will not be able to access the corresponding static resources.
+
+By default, the public directory is not copied in the node target environment. If you need to copy files from the public directory to the distDir in the node target environment, you can manually enable `copyOnBuild`:
+
+```ts
+export default {
+  server: {
+    publicDir: {
+      copyOnBuild: true,
+    },
+  },
+};
+```
 
 :::tip
 During dev builds, if you need to copy some static assets to the output directory, you can use the [output.copy](/config/output/copy) option instead.

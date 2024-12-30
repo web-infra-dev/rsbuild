@@ -16,7 +16,7 @@ type PublicDir = false | PublicDirOptions | PublicDirOptions[];
 ```js
 const defaultValue = {
   name: 'public',
-  copyOnBuild: true,
+  copyOnBuild: target !== 'node',
   watch: false,
 };
 ```
@@ -63,7 +63,7 @@ export default {
 ### copyOnBuild
 
 - **类型：** `boolean`
-- **默认值：** `true`
+- **默认值：** `target !== 'node'`
 
 在生产构建时，是否将文件从 public 目录复制到构建产物目录。
 
@@ -80,6 +80,18 @@ export default {
 ```
 
 需要注意的是，将 `copyOnBuild` 的值为 false 后，如果执行 `rsbuild preview` 进行生产环境预览，将无法访问对应的静态资源文件。
+
+默认情况下，node 环境下不会进行复制。如果你需要在 node 环境下将文件从 public 目录复制到构建产物目录，可手动开启 `copyOnBuild`：
+
+```ts
+export default {
+  server: {
+    publicDir: {
+      copyOnBuild: true,
+    },
+  },
+};
+```
 
 :::tip
 在 dev 构建时，如果你需要拷贝一些静态资源到构建产物目录，可以使用 [output.copy](/config/output/copy) 选项代替。
