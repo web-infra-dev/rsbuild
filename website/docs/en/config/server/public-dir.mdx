@@ -5,7 +5,7 @@
 ```ts
 type PublicDirOptions = {
   name?: string;
-  copyOnBuild?: boolean;
+  copyOnBuild?: boolean | 'auto';
   watch?: boolean;
 };
 type PublicDir = false | PublicDirOptions | PublicDirOptions[];
@@ -16,7 +16,8 @@ type PublicDir = false | PublicDirOptions | PublicDirOptions[];
 ```js
 const defaultValue = {
   name: 'public',
-  copyOnBuild: target !== 'node',
+  copyOnBuild: 'auto',
+  watch: false,
 };
 ```
 
@@ -61,10 +62,20 @@ export default {
 
 ### copyOnBuild
 
-- **Type:** `boolean`
-- **Default:** `target !== 'node'`
+- **Type:** `boolean | 'auto'`
+- **Default:** `'auto'`
 
-Whether to copy files from the publicDir to the distDir on production build.
+Whether to copy files from the public directory to the dist directory on production build.
+
+- `true`: copy files.
+- `false`: do not copy files.
+- `'auto'`: if [output.target](/config/output/target) is not `'node'`, copy files, otherwise do not copy.
+
+:::tip
+During dev builds, if you need to copy some static assets to the output directory, you can use the [output.copy](/config/output/copy) option instead.
+:::
+
+#### Disable
 
 For example, disable `copyOnBuild`:
 
@@ -80,10 +91,17 @@ export default {
 
 Note that setting the value of `copyOnBuild` to false means that when you run `rsbuild preview` for a production preview, you will not be able to access the corresponding static resources.
 
-By default, the public directory is not copied in the node target environment. If you need to copy files from the public directory to the distDir in the node target environment, you can manually enable `copyOnBuild`:
+#### Node Target
+
+By default, when [output.target](/config/output/target) is `'node'`, Rsbuild will not copy files from the public directory.
+
+You can set `copyOnBuild` to `true` to copy files for the `node` target:
 
 ```ts
 export default {
+  output: {
+    target: 'node',
+  },
   server: {
     publicDir: {
       copyOnBuild: true,
@@ -91,10 +109,6 @@ export default {
   },
 };
 ```
-
-:::tip
-During dev builds, if you need to copy some static assets to the output directory, you can use the [output.copy](/config/output/copy) option instead.
-:::
 
 #### Multiple environments
 
