@@ -184,3 +184,57 @@ const files = [
   },
 ];
 ```
+
+### filter
+
+- **类型：**
+
+```ts
+type ManifestFilter = (file: FileDescriptor) => boolean;
+```
+
+- **默认值：** `file => !file.name.endsWith('.LICENSE.txt')`
+- **版本：** `>= 1.2.0`
+
+允许你过滤包含在 manifest 中的文件。该函数接收一个 `file` 参数，返回 `true` 表示保留该文件，返回 `false` 表示不保留该文件。
+
+默认情况下，`*.LICENSE.txt` 文件不会被包含在 manifest 文件中，因为这些许可证文件仅用于声明开源协议，不会在运行时被使用。
+
+例如，仅保留 `*.js` 文件：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    manifest: {
+      filter: (file) => file.name.endsWith('.js'),
+    },
+  },
+};
+```
+
+生成的 manifest 文件中仅会包含 `*.js` 文件：
+
+```json title="dist/manifest.json"
+{
+  "allFiles": ["/static/js/index.[hash].js"],
+  "entries": {
+    "index": {
+      "initial": {
+        "js": ["/static/js/index.[hash].js"]
+      }
+    }
+  }
+}
+```
+
+或者是包含所有文件：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    manifest: {
+      filter: () => true,
+    },
+  },
+};
+```

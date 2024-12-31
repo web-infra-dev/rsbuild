@@ -19,6 +19,7 @@ import type {
   Filter as ProxyFilter,
 } from '../../compiled/http-proxy-middleware/index.js';
 import type RspackChain from '../../compiled/rspack-chain/index.js';
+import type { FileDescriptor } from '../../compiled/rspack-manifest-plugin';
 import type { BundleAnalyzerPlugin } from '../../compiled/webpack-bundle-analyzer/index.js';
 import type {
   ModifyBundlerChainUtils,
@@ -926,9 +927,15 @@ export type ManifestObjectConfig = {
    * A custom function to generate the content of the manifest file.
    */
   generate?: (params: {
-    files: import('rspack-manifest-plugin').FileDescriptor[];
+    files: FileDescriptor[];
     manifestData: ManifestData;
   }) => Record<string, unknown>;
+  /**
+   * Allows you to filter the files included in the manifest.
+   * The function receives a `file` parameter and returns `true` to keep the file, or `false` to exclude it.
+   * @default (file: FileDescriptor) => !file.name.endsWith('.LICENSE.txt')
+   */
+  filter?: (file: FileDescriptor) => boolean;
 };
 
 export type ManifestConfig = string | boolean | ManifestObjectConfig;
