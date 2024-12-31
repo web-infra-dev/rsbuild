@@ -1,600 +1,669 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import type { RouteConfig, RouteConfigEntry } from '@react-router/dev/routes';
-import type { CacheGroups, RsbuildPlugin, Rspack } from '@rsbuild/core';
-import type { StatsAsset, StatsChunk } from '@rspack/core';
+import type { ParseResult } from '@babel/parser';
+import type { NodePath } from '@babel/traverse';
+import type {
+  CallExpression,
+  Declaration,
+  ExportDeclaration,
+  Expression,
+  File,
+  FunctionDeclaration,
+  Identifier,
+  ImportDeclaration,
+  ImportSpecifier,
+  Node,
+  StringLiteral,
+  VariableDeclaration,
+  VariableDeclarator,
+} from '@babel/types';
+import type { Config } from '@react-router/dev/config';
+import type { RouteConfigEntry } from '@react-router/dev/routes';
+import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
+import * as esbuild from 'esbuild';
+import { $ } from 'execa';
 import { createJiti } from 'jiti';
-import { applyBasicReactSupport, applyReactProfiler } from './react.js';
-import { applySplitChunksRule, isPlainObject } from './splitChunks.js';
+import jsesc from 'jsesc';
+import { isAbsolute, relative, resolve } from 'pathe';
+import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
+import { generate, parse, t, traverse } from './babel.js';
+import {
+  combineURLs,
+  createRouteId,
+  generateWithProps,
+  removeExports,
+  toFunctionExpression,
+} from './plugin-utils.js';
 
-export type SplitReactChunkOptions = {
-  /**
-   * Whether to enable split chunking for React-related dependencies (e.g., react, react-dom, scheduler).
-   *
-   * @default true
-   */
-  react?: boolean;
-  /**
-   * Whether to enable split chunking for routing-related dependencies (e.g., react-router, react-router-dom, history).
-   *
-   * @default true
-   */
-  router?: boolean;
-};
-
-export type RouterOptions = {
-  /**
-   * Whether to enable static handler for React Router
-   * @default true
-   */
-  staticHandler?: boolean;
-  /**
-   * Whether to enable data router for React Router
-   * @default true
-   */
-  dataRouter?: boolean;
-};
-
-export type PluginReactRouterOptions = {
-  /**
-   * Configure the behavior of SWC to transform React code,
-   * the same as SWC's [jsc.transform.react](https://swc.rs/docs/configuration/compilation#jsctransformreact).
-   */
-  swcReactOptions?: Rspack.SwcLoaderTransformConfig['react'];
-  /**
-   * Configuration for chunk splitting of React-related dependencies.
-   */
-  splitChunks?: SplitReactChunkOptions;
-  /**
-   * When set to `true`, enables the React Profiler for performance analysis in production builds.
-   * @default false
-   */
-  enableProfiler?: boolean;
-  /**
-   * Whether to enable React Fast Refresh in development mode.
-   * @default true
-   */
-  fastRefresh?: boolean;
-  /**
-   * React Router specific options
-   */
-  router?: RouterOptions;
+export type PluginOptions = {
   /**
    * Whether to enable Server-Side Rendering (SSR) support.
    * @default true
    */
   ssr?: boolean;
+  /**
+   * Build directory for output files
+   * @default 'build'
+   */
+  buildDirectory?: string;
+  /**
+   * Application source directory
+   * @default 'app'
+   */
+  appDirectory?: string;
+  /**
+   * Base URL path
+   * @default '/'
+   */
+  basename?: string;
 };
 
-export const PLUGIN_REACT_ROUTER_NAME = 'rsbuild:react-router';
+export const PLUGIN_NAME = 'rsbuild:react-router';
 
-export const pluginReactRouter = (
-  options: PluginReactRouterOptions = {},
+export const SERVER_ONLY_ROUTE_EXPORTS = [
+  'loader',
+  'action',
+  'headers',
+] as const;
+export const CLIENT_ROUTE_EXPORTS = [
+  'clientAction',
+  'clientLoader',
+  'default',
+  'ErrorBoundary',
+  'handle',
+  'HydrateFallback',
+  'Layout',
+  'links',
+  'meta',
+  'shouldRevalidate',
+] as const;
+export const NAMED_COMPONENT_EXPORTS = [
+  'HydrateFallback',
+  'ErrorBoundary',
+] as const;
+
+export type Route = {
+  id: string;
+  parentId?: string;
+  file: string;
+  path?: string;
+  index?: boolean;
+  caseSensitive?: boolean;
+  children?: Route[];
+};
+
+export type RouteManifestItem = Omit<Route, 'file' | 'children'> & {
+  module: string;
+  hasAction: boolean;
+  hasLoader: boolean;
+  hasClientAction: boolean;
+  hasClientLoader: boolean;
+  hasErrorBoundary: boolean;
+  imports: string[];
+  css: string[];
+};
+
+export const reactRouterPlugin = (
+  options: PluginOptions = {},
 ): RsbuildPlugin => ({
-  name: PLUGIN_REACT_ROUTER_NAME,
+  name: PLUGIN_NAME,
 
   async setup(api) {
-    const jiti = createJiti(api.context.rootPath);
-    const defaultOptions: PluginReactRouterOptions = {
-      fastRefresh: true,
-      enableProfiler: false,
+    const defaultOptions = {
       ssr: true,
-      router: {
-        staticHandler: true,
-        dataRouter: true,
-      },
+      buildDirectory: 'build',
+      appDirectory: 'app',
+      basename: '/',
     };
+
     const finalOptions = {
       ...defaultOptions,
       ...options,
-      router: {
-        ...defaultOptions.router,
-        ...options.router,
-      },
     };
 
-    // Function to check if user has provided their own entry files
-    const checkUserEntry = (filename: string) => {
-      const extensions = ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs'];
-      const baseFilename = filename.replace(/\.[^/.]+$/, ''); // Remove extension if present
-
-      for (const ext of extensions) {
-        const filePath = path.join(
-          api.context.rootPath,
-          `${baseFilename}${ext}`,
-        );
-        if (fs.existsSync(filePath)) {
-          return true;
-        }
-      }
-
-      return false;
-    };
-
-    // Helper function to find the first existing routes file
-    const findRoutesFile = () => {
-      const extensions = ['.ts', '.tsx', '.js', '.jsx', '.mjs'];
-      const baseRoutesPath = path.join(api.context.rootPath, 'app/routes');
-
-      for (const ext of extensions) {
-        const filePath = `${baseRoutesPath}${ext}`;
-        if (fs.existsSync(filePath)) {
-          return filePath;
-        }
-      }
-
-      // Default to .tsx if no file is found
-      return path.join(api.context.rootPath, 'app/routes.tsx');
-    };
-
-    // Get the appropriate entry path
-    const getEntryPath = (filename: string) => {
-      const userEntry = `./${filename}`;
-      if (checkUserEntry(filename)) {
-        return userEntry;
-      }
-      // Return the path to our default template
-      return path.join('@rsbuild/plugin-react-router', 'templates', filename);
-    };
-
-    // Add resolve configuration for user-routes
-    api.modifyBundlerChain((chain) => {
-      chain.resolve.alias.set('user-routes', findRoutesFile());
+    // Run typegen on build/dev
+    api.onBeforeStartDevServer(async () => {
+      $`npx --yes react-router typegen --watch`;
     });
 
-    // General configuration for all cases
-    api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
-      const generalConfig = {
-        server: {
-          htmlFallback: 'index' as const,
+    api.onBeforeBuild(async () => {
+      await $`npx --yes react-router typegen`;
+    });
+
+    const jiti = createJiti(process.cwd());
+
+    // Read the react-router.config.ts file first
+    const {
+      appDirectory = finalOptions.appDirectory,
+      basename = finalOptions.basename,
+      buildDirectory = finalOptions.buildDirectory,
+      ssr = finalOptions.ssr,
+    } = await jiti
+      .import<Config>('./react-router.config.ts', {
+        default: true,
+      })
+      .catch(() => {
+        console.error(
+          'No react-router.config.ts found, using default configuration.',
+        );
+        return {} as Config;
+      });
+
+    // Update finalOptions with config values
+    finalOptions.appDirectory = appDirectory;
+    finalOptions.basename = basename;
+    finalOptions.buildDirectory = buildDirectory;
+    finalOptions.ssr = ssr;
+
+    // Then read the routes
+    const routeConfig = await jiti
+      .import<RouteConfigEntry[]>(
+        resolve(finalOptions.appDirectory, 'routes.ts'),
+        {
+          default: true,
+        },
+      )
+      .catch(() => {
+        console.error('No routes.ts found in app directory.');
+        return [] as RouteConfigEntry[];
+      });
+
+    const entryClientPath = resolve(
+      finalOptions.appDirectory,
+      'entry.client.tsx',
+    );
+    const entryServerPath = resolve(
+      finalOptions.appDirectory,
+      'entry.server.tsx',
+    );
+    const rootRouteFile = relative(
+      finalOptions.appDirectory,
+      resolve(finalOptions.appDirectory, 'root.tsx'),
+    );
+
+    const routes = {
+      root: { path: '', id: 'root', file: rootRouteFile },
+      ...configRoutesToRouteManifest(finalOptions.appDirectory, routeConfig),
+    };
+
+    const outputClientPath = resolve(finalOptions.buildDirectory, 'client');
+    const assetsBuildDirectory = relative(process.cwd(), outputClientPath);
+
+    let clientStats: Rspack.StatsCompilation | undefined;
+    api.onAfterEnvironmentCompile(({ stats, environment }) => {
+      if (environment.name === 'web') {
+        clientStats = stats?.toJson();
+      }
+    });
+
+    // Create virtual modules for React Router
+    const vmodPlugin = new RspackVirtualModulePlugin({
+      'virtual/react-router/browser-manifest': 'export default {};',
+      'virtual/react-router/server-manifest': 'export default {};',
+      'virtual/react-router/server-build': generateServerBuild(routes, {
+        entryServerPath,
+        assetsBuildDirectory,
+        basename: finalOptions.basename,
+        appDirectory: finalOptions.appDirectory,
+        ssr: finalOptions.ssr,
+      }),
+      'virtual/react-router/with-props': generateWithProps(),
+    });
+
+    // Modify Rsbuild config
+    api.modifyRsbuildConfig(async (config, { mergeRsbuildConfig }) => {
+      return mergeRsbuildConfig(config, {
+        output: {
+          assetPrefix: '/',
+        },
+        dev: {
+          writeToDisk: true,
+        },
+        tools: {
+          rspack: {
+            plugins: [vmodPlugin],
+          },
         },
         environments: {
+          web: {
+            source: {
+              entry: {
+                'entry.client': entryClientPath,
+                'virtual/react-router/browser-manifest':
+                  'virtual/react-router/browser-manifest',
+                ...Object.values(routes).reduce(
+                  (acc, route) =>
+                    Object.assign({}, acc, {
+                      [route.file.slice(0, route.file.lastIndexOf('.'))]:
+                        `${resolve(
+                          finalOptions.appDirectory,
+                          route.file,
+                        )}?react-router-route`,
+                    }),
+                  {},
+                ),
+              },
+            },
+            output: {
+              distPath: {
+                root: outputClientPath,
+              },
+            },
+            tools: {
+              rspack: {
+                name: 'web',
+                devtool: false,
+                experiments: {
+                  outputModule: true,
+                },
+                externalsType: 'module',
+                output: {
+                  chunkFormat: 'module',
+                  chunkLoading: 'import',
+                  workerChunkLoading: 'import',
+                  wasmLoading: 'fetch',
+                  library: { type: 'module' },
+                  module: true,
+                },
+                optimization: {
+                  runtimeChunk: 'single',
+                },
+              },
+            },
+          },
           node: {
             source: {
               entry: {
-                server: `${getEntryPath('entry.server')}?virtual`,
+                app: './server/app.ts',
+                'entry.server': entryServerPath,
               },
             },
-          },
-          web: {
-            source: {
-              entry: {
-                client: getEntryPath('entry.client'),
+            output: {
+              distPath: {
+                root: resolve(finalOptions.buildDirectory, 'server'),
+              },
+              target: 'node',
+            },
+            tools: {
+              rspack: {
+                externals: ['express'],
+                dependencies: ['web'],
               },
             },
           },
         },
-      } as {
-        server: { htmlFallback: 'index' };
-        environments: {
-          web: {
-            source: {
-              entry: { client: string };
-            };
-          };
-          node?: {
-            source: {
-              entry: { server: string };
-            };
-          };
-        };
-      };
-      if (!options.ssr) {
-        delete generalConfig.environments.node;
-      }
-      return mergeRsbuildConfig(config, generalConfig);
+      });
     });
 
-    // SSR-specific configuration
-    if (options.ssr) {
-      api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
-        const ssrConfig = {
-          source: {
-            define: {
-              __SSR__: 'true',
-              __STATIC_HANDLER__: String(finalOptions.router?.staticHandler),
-              __DATA_ROUTER__: String(finalOptions.router?.dataRouter),
-            },
-          },
-          environments: {
-            web: {
-              tools: {
-                rspack: {
-                  name: 'web',
-                },
+    // Add environment-specific modifications
+    api.modifyEnvironmentConfig(
+      async (config, { name, mergeEnvironmentConfig }) => {
+        if (name === 'web') {
+          return mergeEnvironmentConfig(config, {
+            tools: {
+              rspack: (rspackConfig) => {
+                if (rspackConfig.plugins) {
+                  rspackConfig.plugins.push({
+                    apply(compiler: Rspack.Compiler) {
+                      compiler.hooks.emit.tapAsync(
+                        'ModifyBrowserManifest',
+                        async (compilation: Rspack.Compilation, callback) => {
+                          const manifest = await getReactRouterManifestForDev(
+                            routes,
+                            finalOptions,
+                            compilation.getStats().toJson(),
+                          );
+
+                          const manifestPath =
+                            'static/js/virtual/react-router/browser-manifest.js';
+                          const manifestContent = `window.__reactRouterManifest=${jsesc(manifest, { es6: true })};`;
+
+                          if (compilation.assets[manifestPath]) {
+                            const originalSource = compilation.assets[
+                              manifestPath
+                            ]
+                              .source()
+                              .toString();
+                            const newSource = originalSource.replace(
+                              /["'`]PLACEHOLDER["'`]/,
+                              jsesc(manifest, { es6: true }),
+                            );
+                            compilation.assets[manifestPath] = {
+                              source: () => newSource,
+                              size: () => newSource.length,
+                              map: () => ({
+                                version: 3,
+                                sources: [manifestPath],
+                                names: [],
+                                mappings: '',
+                                file: manifestPath,
+                                sourcesContent: [newSource],
+                              }),
+                              sourceAndMap: () => ({
+                                source: newSource,
+                                map: {
+                                  version: 3,
+                                  sources: [manifestPath],
+                                  names: [],
+                                  mappings: '',
+                                  file: manifestPath,
+                                  sourcesContent: [newSource],
+                                },
+                              }),
+                              updateHash: (hash) => hash.update(newSource),
+                              buffer: () => Buffer.from(newSource),
+                            };
+                          }
+                          callback();
+                        },
+                      );
+                    },
+                  });
+                }
+                return rspackConfig;
               },
-            },
-            node: {
-              tools: {
-                rspack: {
-                  dependencies: ['web'],
-                },
-              },
-            },
-          },
-        };
-        return mergeRsbuildConfig(config, ssrConfig);
-      });
-      let clientStats: Rspack.StatsCompilation | undefined;
-      api.onAfterEnvironmentCompile(({ stats, environment }) => {
-        if (environment.name === 'web') {
-          clientStats = stats?.toJson();
-        }
-      });
-
-      api.modifyBundlerChain(async (chain, { environment, isProd, target }) => {
-        const { config } = environment;
-        if (config.performance.chunkSplit.strategy !== 'split-by-experience') {
-          return;
-        }
-
-        const routesFile = findRoutesFile();
-
-        const configModule = await (jiti.import(routesFile, {
-          default: true,
-        }) as RouteConfig);
-
-        const routePaths: string[] = [];
-        function collectRoutePaths(routes: RouteConfigEntry[]) {
-          for (const route of routes) {
-            if (route.file && !/^root\.(tsx?|jsx?|mjs|js)$/.test(route.file)) {
-              routePaths.push(route.file);
-            }
-            if (route.children) {
-              collectRoutePaths(route.children);
-            }
-          }
-        }
-        collectRoutePaths(configModule);
-        const currentConfig = chain.optimization.splitChunks.values();
-        if (!isPlainObject(currentConfig)) {
-          return;
-        }
-
-        // Only apply chunk splitting for web target
-        if (target === 'web') {
-          const extraGroups: Record<string, CacheGroups> = {};
-
-          // Add routes cache group for splitting route chunks
-          extraGroups.routes = {
-            test: new RegExp(
-              routePaths.map((p) => p.replace(/\./g, '\\.')).join('|'),
-            ),
-            name(module: any) {
-              const routePath = module?.resource || '';
-              const matchedRoute = routePaths.find((p) =>
-                routePath.includes(p),
-              );
-              if (!matchedRoute) return false;
-              const name = `routes/${matchedRoute.replace(/\.[^/.]+$/, '').replace(/\//g, '-')}`;
-              return name;
-            },
-            enforce: true,
-            chunks: 'all',
-            priority: 10,
-          };
-
-          chain.optimization.splitChunks({
-            ...currentConfig,
-            cacheGroups: {
-              ...extraGroups,
-              ...((currentConfig as any).cacheGroups || {}),
             },
           });
         }
-      });
-
-      // Transform for routes file
-      api.transform(
-        {
-          test: new RegExp(findRoutesFile().replace(/\./g, '\\.')),
-          environments: ['node', 'web'],
-        },
-        async ({ resourcePath }) => {
-          const configModule = await (jiti.import(resourcePath, {
-            default: true,
-          }) as RouteConfig);
-
-          // Wrap the config in a root route
-          const rootConfig: RouteConfig = [
-            {
-              file: 'root.tsx',
-              children: configModule,
-            },
-          ];
-
-          const routeImports: string[] = [];
-          let moduleCounter = 0;
-
-          function processRoute(route: RouteConfigEntry) {
-            const moduleVar = `route${moduleCounter++}`;
-            // Skip dynamic import for root file
-            if (/^root\.(tsx?|jsx?|mjs|js)$/.test(route.file)) {
-              routeImports.push(`import ${moduleVar} from './${route.file}';`);
-              return moduleVar;
-            }
-            // Convert file path to chunk name by removing extension and converting slashes to dashes
-            // const chunkName = route.file
-            //   .replace(/\.[^/.]+$/, '') // remove extension
-            //   .replace(/\//g, '-'); // replace slashes with dashes
-            // routeImports.push(
-            //   `const ${moduleVar} = import(/* webpackChunkName: "routes/${chunkName}" */ './${route.file}');`,
-            // );
-
-            routeImports.push(
-              `import * as ${moduleVar} from './${route.file}';`,
-            );
-            return moduleVar;
-          }
-
-          interface RouteObject {
-            id: string;
-            parentId: string | undefined;
-            path: string | undefined;
-            index: boolean | undefined;
-            caseSensitive: boolean | undefined;
-            module: string;
-          }
-
-          const routes: Record<string, RouteObject> = {};
-
-          function processRouteRecursive(
-            route: RouteConfigEntry,
-            parentId?: string,
-          ) {
-            const moduleVar = processRoute(route);
-            const routeId = path.parse(route.file).name;
-            routes[routeId] = {
-              id: routeId,
-              parentId,
-              path: route.path ?? undefined,
-              index: route.index ?? undefined,
-              caseSensitive: route.caseSensitive ?? undefined,
-              module: moduleVar,
-            };
-
-            if (route.children) {
-              for (const child of route.children) {
-                processRouteRecursive(child, routeId);
-              }
-            }
-          }
-
-          for (const route of rootConfig) {
-            processRouteRecursive(route);
-          }
-
-          const fileContent = `
-${routeImports.join('\n')}
-
-export const routes = ${JSON.stringify(routes, null, 2).replace(/"(route\d+)"/g, '$1')};
-`;
-
-          return fileContent;
-        },
-      );
-
-      // Add transform for virtual server entry
-      api.transform(
-        {
-          test: /entry\.server\.(tsx?|jsx?|mjs)$/,
-          resourceQuery: /\?virtual/,
-        },
-        ({ resourcePath }) => {
-          const normalized = api.getNormalizedConfig();
-          const publicPath = normalized.output?.assetPrefix || '/';
-          const basename = normalized.server?.base || '/';
-          const distPath = normalized.output?.distPath;
-          const rootDistPath = distPath?.root || 'dist';
-          const chunks = clientStats?.chunks || [];
-          const namedChunks = Object.fromEntries(
-            chunks.map((chunk: StatsChunk) => [
-              chunk.names?.[0] || chunk.id,
-              chunk,
-            ]),
-          );
-          const entrypoint = chunks.find((chunk: StatsChunk) => chunk.initial);
-
-          // Helper function to get asset path
-          const getAssetPath = (assetName: string) => {
-            if (assetName.endsWith('.css')) {
-              return `${distPath?.css || 'static/css'}/${assetName}`;
-            }
-            if (assetName.endsWith('.js')) {
-              return `${distPath?.js || 'static/js'}/${assetName}`;
-            }
-            return `${distPath?.assets || 'static/assets'}/${assetName}`;
-          };
-
-          // Process routes to include chunk information
-          const routeManifest: Record<string, any> = {
-            root: {
-              id: 'root',
-              parentId: undefined,
-              path: '',
-              index: false,
-              caseSensitive: undefined,
-              hasAction: false,
-              hasLoader: false,
-            },
-          };
-          for (let [name, chunk] of Object.entries(
-            namedChunks as Record<string, StatsChunk>,
-          )) {
-            if (!name.startsWith('routes/') && name !== 'root') continue;
-            name = name.replace('routes/', '');
-            const id = name;
-            const parentId = name === 'root' ? undefined : 'root';
-            const isIndex = name !== 'root';
-
-            // Filter JS and CSS assets
-            const jsAssets =
-              (chunk.files || [])
-                .filter((file: string) => file.endsWith('.js'))
-                .map((file: string) => getAssetPath(file)) || [];
-
-            const cssAssets =
-              (chunk.files || [])
-                .filter((file: string) => file.endsWith('.css'))
-                .map((file: string) => getAssetPath(file)) || [];
-
-            routeManifest[name] = {
-              id,
-              parentId,
-              path: name === 'root' ? '' : undefined,
-              index: isIndex,
-              caseSensitive: undefined,
-              hasAction: false,
-              hasLoader: false,
-              hasClientAction: false,
-              hasClientLoader: false,
-              hasErrorBoundary: name === 'root',
-              module: jsAssets[0] || '',
-              imports: jsAssets.slice(1) || [],
-              css: cssAssets,
-            };
-          }
-
-          const manifest = {
-            entry: {
-              module: entrypoint?.files?.[0]
-                ? getAssetPath(entrypoint.files[0])
-                : '',
-              imports: (entrypoint?.files?.slice(1) || [])
-                .filter((file: string) => file.endsWith('.js'))
-                .map((file: string) => getAssetPath(file)),
-              css: (entrypoint?.files || [])
-                .filter((file: string) => file.endsWith('.css'))
-                .map((file: string) => getAssetPath(file)),
-            },
-            routes: routeManifest,
-            url: `${distPath?.js || 'static/js'}/manifest-${clientStats?.hash}.js`,
-            version: clientStats?.hash || '',
-          };
-
-          // Return the virtual server entry content
-          return `
-import * as userServerEntry from '${resourcePath.replace(/\?.*$/, '')}';
-
-export const entry = {
-  module: userServerEntry
-};
-
-// Import routes from the user's app
-import { routes } from 'user-routes';
-
-// Export server manifest and other required properties
-const serverManifest = ${JSON.stringify(manifest, null, 2)};
-const assetsBuildDirectory = ${JSON.stringify(rootDistPath)};
-const basename = ${JSON.stringify(basename)};
-const future = { };
-const isSpaMode = false;
-const publicPath = ${JSON.stringify(publicPath)};
-
-export {
-  serverManifest as assets,
-  assetsBuildDirectory,
-  basename,
-  entry,
-  future,
-  isSpaMode,
-  publicPath,
-  routes
-};
-`;
-        },
-      );
-
-      api.modifyEnvironmentConfig((config, { name }) => {
-        if (name === 'web') {
-          return {
-            ...config,
-            output: {
-              ...config.output,
-              manifest: true,
-              target: 'web',
-            },
-          };
-        }
-        if (name === 'node') {
-          return {
-            ...config,
-            output: {
-              ...config.output,
-              target: 'node',
-              manifest: false,
-            },
-          };
-        }
         return config;
-      });
-
-      // Add router-specific aliases for SSR
-      // api.modifyBundlerChain((chain) => {
-      //   if (finalOptions.router?.staticHandler) {
-      //     chain.resolve.alias
-      //       .set('react-router', 'react-router/server')
-      //       .set('react-router-dom', 'react-router-dom/server');
-      //   }
-      // });
-    }
-
-    if (api.context.bundlerType === 'rspack') {
-      applyBasicReactSupport(api, finalOptions);
-
-      // Add transform to handle react-router development imports
-      api.transform(
-        { test: /react-router\/dist\/development\/index/ },
-        ({ code }) => {
-          // First rename the original function to _loadRouteModule
-          let newCode = code.replace(
-            /async function loadRouteModule/,
-            'async function _loadRouteModule',
-          );
-
-          // Replace the dynamic import pattern
-          newCode = newCode.replace(
-            /let routeModule = await import/,
-            'let routeModule = await __webpack_require__.e',
-          );
-
-          // Then add our new function implementation
-          const newLoadRouteModule = `
-async function loadRouteModule(route, routeModulesCache) {
-debugger;
-  if (route.id in routeModulesCache) {
-    return routeModulesCache[route.id];
-  }
-  try {
-  console.log(route.module);
-    let routeModule = await __webpack_require__.e(route.module);
-    routeModulesCache[route.id] = routeModule;
-    return routeModule;
-  } catch (error) {
-    console.error(
-      \`Error loading route module \${route.module}, reloading page...\`,
+      },
     );
-    console.error(error);
-    if (window.__reactRouterContext && window.__reactRouterContext.isSpaMode) {
-      throw error;
-    }
-    window.location.reload();
-    return new Promise(() => {});
-  }
-}`;
 
-          // Add the new function after the renamed one
-          newCode = `${newCode}\n\n${newLoadRouteModule}`;
-          // debugger;
-          return newCode;
-        },
-      );
+    // Add manifest transformations
+    api.transform(
+      {
+        test: /virtual\/react-router\/(browser|server)-manifest/,
+      },
+      async (args) => {
+        // For browser manifest, return a placeholder that will be modified by the plugin
+        if (args.environment.name === 'web') {
+          return {
+            code: `window.__reactRouterManifest = "PLACEHOLDER";`,
+          };
+        }
 
-      if (finalOptions.enableProfiler) {
-        applyReactProfiler(api);
-      }
-    }
+        // For server manifest, use the clientStats as before
+        const manifest = await getReactRouterManifestForDev(
+          routes,
+          finalOptions,
+          clientStats,
+        );
+        return {
+          code: `export default ${jsesc(manifest, { es6: true })};`,
+        };
+      },
+    );
 
-    applySplitChunksRule(api, finalOptions?.splitChunks);
+    // Add route transformation
+    api.transform(
+      {
+        resourceQuery: /\?react-router-route/,
+      },
+      async (args) => {
+        let code = (
+          await esbuild.transform(args.code, {
+            jsx: 'automatic',
+            format: 'esm',
+            platform: 'neutral',
+            loader: args.resourcePath.endsWith('x') ? 'tsx' : 'ts',
+          })
+        ).code;
+
+        const defaultExportMatch = code.match(
+          /\n\s{0,}([\w\d_]+)\sas default,?/,
+        );
+        if (
+          defaultExportMatch &&
+          typeof defaultExportMatch.index === 'number'
+        ) {
+          code =
+            code.slice(0, defaultExportMatch.index) +
+            code.slice(defaultExportMatch.index + defaultExportMatch[0].length);
+          code += `\nexport default ${defaultExportMatch[1]};`;
+        }
+
+        const ast = parse(code, { sourceType: 'module' });
+        if (args.environment.name === 'web') {
+          removeExports(ast, [...SERVER_ONLY_ROUTE_EXPORTS]);
+        }
+        transformRoute(ast);
+
+        return generate(ast, {
+          sourceMaps: true,
+          filename: args.resource,
+          sourceFileName: args.resourcePath,
+        });
+      },
+    );
   },
 });
+
+// Helper functions
+function configRoutesToRouteManifest(
+  appDirectory: string,
+  routes: RouteConfigEntry[],
+  rootId = 'root',
+) {
+  const routeManifest: Record<string, Route> = {};
+
+  function walk(route: RouteConfigEntry, parentId: string) {
+    const id = route.id || createRouteId(route.file);
+    const manifestItem = {
+      id,
+      parentId,
+      file: isAbsolute(route.file)
+        ? relative(appDirectory, route.file)
+        : route.file,
+      path: route.path,
+      index: route.index,
+      caseSensitive: route.caseSensitive,
+    };
+
+    if (Object.prototype.hasOwnProperty.call(routeManifest, id)) {
+      throw new Error(
+        `Unable to define routes with duplicate route id: "${id}"`,
+      );
+    }
+    routeManifest[id] = manifestItem;
+
+    if (route.children) {
+      for (const child of route.children) {
+        walk(child, id);
+      }
+    }
+  }
+
+  for (const route of routes) {
+    walk(route, rootId);
+  }
+
+  return routeManifest;
+}
+
+async function getReactRouterManifestForDev(
+  routes: Record<string, Route>,
+  options: PluginOptions,
+  clientStats?: Rspack.StatsCompilation,
+) {
+  const result: Record<string, RouteManifestItem> = {};
+  for (const [key, route] of Object.entries(routes)) {
+    const assets = clientStats?.assetsByChunkName?.[route.id];
+    const jsAssets = assets?.filter((asset) => asset.endsWith('.js')) || [];
+    const cssAssets = assets?.filter((asset) => asset.endsWith('.css')) || [];
+    result[key] = {
+      id: route.id,
+      parentId: route.parentId,
+      path: route.path,
+      index: route.index,
+      caseSensitive: route.caseSensitive,
+      module: combineURLs(
+        '/static/js/',
+        `${route.file.slice(0, route.file.lastIndexOf('.'))}.js`,
+      ),
+      hasAction: false,
+      hasLoader: route.id === 'routes/home',
+      hasClientAction: false,
+      hasClientLoader: false,
+      hasErrorBoundary: route.id === 'root',
+      imports: jsAssets.map((asset) => combineURLs('/', asset)),
+      css: cssAssets.map((asset) => combineURLs('/', asset)),
+    };
+  }
+
+  const entryAssets = clientStats?.assetsByChunkName?.['entry.client'];
+  const entryJsAssets =
+    entryAssets?.filter((asset) => asset.endsWith('.js')) || [];
+  const entryCssAssets =
+    entryAssets?.filter((asset) => asset.endsWith('.css')) || [];
+
+  return {
+    version: String(Math.random()),
+    url: '/static/js/virtual/react-router/browser-manifest.js',
+    entry: {
+      module: '/static/js/entry.client.js',
+      imports: entryJsAssets.map((asset) => combineURLs('/', asset)),
+      css: entryCssAssets.map((asset) => combineURLs('/', asset)),
+    },
+    routes: result,
+  };
+}
+
+/**
+ * Generates the server build module content
+ * @param routes The route manifest
+ * @param options Build options
+ * @returns The generated module content as a string
+ */
+function generateServerBuild(
+  routes: Record<string, Route>,
+  options: {
+    entryServerPath: string;
+    assetsBuildDirectory: string;
+    basename: string;
+    appDirectory: string;
+    ssr: boolean;
+  },
+): string {
+  return `
+    import * as entryServer from ${JSON.stringify(options.entryServerPath)};
+    ${Object.keys(routes)
+      .map((key, index) => {
+        const route = routes[key];
+        return `import * as route${index} from ${JSON.stringify(
+          `${resolve(options.appDirectory, route.file)}?react-router-route`,
+        )};`;
+      })
+      .join('\n')}
+
+    export { default as assets } from "virtual/react-router/server-manifest";
+    export const assetsBuildDirectory = ${JSON.stringify(
+      options.assetsBuildDirectory,
+    )};
+    export const basename = ${JSON.stringify(options.basename)};
+    export const future = ${JSON.stringify({})};
+    export const isSpaMode = ${!options.ssr};
+    export const publicPath = "/";
+    export const entry = { module: entryServer };
+    export const routes = {
+      ${Object.keys(routes)
+        .map((key, index) => {
+          const route = routes[key];
+          return `${JSON.stringify(key)}: {
+            id: ${JSON.stringify(route.id)},
+            parentId: ${JSON.stringify(route.parentId)},
+            path: ${JSON.stringify(route.path)},
+            index: ${JSON.stringify(route.index)},
+            caseSensitive: ${JSON.stringify(route.caseSensitive)},
+            module: route${index}
+          }`;
+        })
+        .join(',\n  ')}
+    };
+  `;
+}
+
+export const transformRoute = (ast: ParseResult<File>): void => {
+  const hocs: Array<[string, Identifier]> = [];
+  function getHocUid(path: NodePath, hocName: string): Identifier {
+    const uid = path.scope.generateUidIdentifier(hocName);
+    hocs.push([hocName, uid]);
+    return uid;
+  }
+
+  traverse(ast, {
+    ExportDeclaration(path: NodePath) {
+      if (path.isExportDefaultDeclaration()) {
+        const declaration = path.get('declaration');
+        // prettier-ignore
+        const expr =
+              declaration.isExpression() ? declaration.node :
+                  declaration.isFunctionDeclaration() ? toFunctionExpression(declaration.node) :
+                      undefined
+        if (expr) {
+          const uid = getHocUid(path, 'withComponentProps');
+          declaration.replaceWith(t.callExpression(uid, [expr]));
+        }
+        return;
+      }
+
+      if (path.isExportNamedDeclaration()) {
+        const decl = path.get('declaration');
+
+        if (decl.isVariableDeclaration()) {
+          // biome-ignore lint/complexity/noForEach: <explanation>
+          decl.get('declarations').forEach((varDeclarator: NodePath) => {
+            const id = varDeclarator.get('id');
+            const init = varDeclarator.get('init');
+            if (Array.isArray(init)) return;
+            if (Array.isArray(id)) return;
+            const expr = init.node;
+            if (!expr) return;
+            if (!id.isIdentifier()) return;
+            const { name } = id.node;
+            if (
+              !NAMED_COMPONENT_EXPORTS.includes(
+                name as (typeof NAMED_COMPONENT_EXPORTS)[number],
+              )
+            )
+              return;
+
+            const uid = getHocUid(path, `with${name}Props`);
+            init.replaceWith(t.callExpression(uid, [expr as Expression]));
+          });
+          return;
+        }
+
+        if (decl.isFunctionDeclaration()) {
+          const { id } = decl.node;
+          if (!id) return;
+          const { name } = id;
+          if (
+            !NAMED_COMPONENT_EXPORTS.includes(
+              name as (typeof NAMED_COMPONENT_EXPORTS)[number],
+            )
+          )
+            return;
+
+          const uid = getHocUid(path, `with${name}Props`);
+          decl.replaceWith(
+            t.variableDeclaration('const', [
+              t.variableDeclarator(
+                t.identifier(name),
+                t.callExpression(uid, [toFunctionExpression(decl.node)]),
+              ),
+            ]),
+          );
+        }
+      }
+    },
+  });
+
+  if (hocs.length > 0) {
+    ast.program.body.unshift(
+      t.importDeclaration(
+        hocs.map(([name, identifier]) =>
+          t.importSpecifier(identifier, t.identifier(name)),
+        ),
+        t.stringLiteral('virtual/react-router/with-props'),
+      ),
+    );
+  }
+};
