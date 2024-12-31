@@ -1,4 +1,4 @@
-import type { FileDescriptor } from 'rspack-manifest-plugin';
+import type { FileDescriptor } from '../../compiled/rspack-manifest-plugin';
 import { isObject } from '../helpers';
 import { recursiveChunkEntryNames } from '../rspack/preload/helpers';
 import type {
@@ -175,9 +175,15 @@ export const pluginManifest = (): RsbuildPlugin => ({
       );
       const { htmlPaths } = environment;
 
+      // Exclude `*.LICENSE.txt` files by default
+      const filter =
+        manifestOptions.filter ??
+        ((file: FileDescriptor) => !file.name.endsWith('.LICENSE.txt'));
+
       chain.plugin(CHAIN_ID.PLUGIN.MANIFEST).use(RspackManifestPlugin, [
         {
           fileName: manifestOptions.filename,
+          filter,
           writeToFileEmit: isDev && writeToDisk !== true,
           generate: generateManifest(htmlPaths, manifestOptions),
         },

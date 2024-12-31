@@ -184,3 +184,57 @@ const files = [
   },
 ];
 ```
+
+### filter
+
+- **Type:**
+
+```ts
+type ManifestFilter = (file: FileDescriptor) => boolean;
+```
+
+- **Default:** `file => !file.name.endsWith('.LICENSE.txt')`
+- **Version:** `>= 1.2.0`
+
+Allows you to filter the files included in the manifest. The function receives a `file` parameter and returns `true` to keep the file, or `false` to exclude it.
+
+By default, `*.LICENSE.txt` files are excluded from the manifest, as these license files are only used to declare open source licenses and are not used at runtime.
+
+For example, to only keep `*.js` files:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    manifest: {
+      filter: (file) => file.name.endsWith('.js'),
+    },
+  },
+};
+```
+
+The generated manifest file will only include `*.js` files:
+
+```json title="dist/manifest.json"
+{
+  "allFiles": ["/static/js/index.[hash].js"],
+  "entries": {
+    "index": {
+      "initial": {
+        "js": ["/static/js/index.[hash].js"]
+      }
+    }
+  }
+}
+```
+
+Or include all files:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    manifest: {
+      filter: () => true,
+    },
+  },
+};
+```

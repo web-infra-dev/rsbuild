@@ -15,7 +15,6 @@ const rsbuildConfig: RsbuildConfig = {
         };
       },
     },
-    legalComments: 'none',
     sourceMap: false,
     filenameHash: false,
   },
