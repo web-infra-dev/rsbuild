@@ -21,10 +21,7 @@ import {
   getTransformedHtml,
   loadBundle,
 } from './environment';
-import {
-  type RsbuildDevMiddlewareOptions,
-  getMiddlewares,
-} from './getDevMiddlewares';
+import { type CompileMiddlewareAPI, getMiddlewares } from './getDevMiddlewares';
 import {
   type StartServerResult,
   getAddressUrls,
@@ -128,8 +125,7 @@ export async function createDevServer<
     https,
   };
 
-  // TODO: remove this type assertion after Rspack fix the type definition
-  let outputFileSystem = fs as Rspack.OutputFileSystem;
+  let outputFileSystem: Rspack.OutputFileSystem = fs;
   let lastStats: Rspack.Stats[];
 
   // should register onDevCompileDone hook before startCompile
@@ -148,9 +144,7 @@ export async function createDevServer<
       })
     : Promise.resolve();
 
-  const startCompile: () => Promise<
-    RsbuildDevMiddlewareOptions['compileMiddlewareAPI']
-  > = async () => {
+  const startCompile: () => Promise<CompileMiddlewareAPI> = async () => {
     const compiler = customCompiler || (await createCompiler());
 
     if (!compiler) {
@@ -172,11 +166,10 @@ export async function createDevServer<
 
     await compilerDevMiddleware.init();
 
-    // TODO: remove this type assertion after Rspack fix the type definition
     outputFileSystem =
       (isMultiCompiler(compiler)
         ? compiler.compilers[0].outputFileSystem
-        : compiler.outputFileSystem) || (fs as Rspack.OutputFileSystem);
+        : compiler.outputFileSystem) || fs;
 
     return {
       middleware: compilerDevMiddleware.middleware,
