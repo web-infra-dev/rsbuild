@@ -77,6 +77,7 @@ async function createRsbuildWithMiddleware(
   options: PluginAssetsRetryOptions,
   entry?: string,
   port?: number,
+  assetPrefix?: string
 ) {
   const rsbuild = await dev({
     cwd: __dirname,
@@ -93,6 +94,9 @@ async function createRsbuildWithMiddleware(
             middlewares.unshift(...addMiddleWares);
           },
         ],
+        ...(assetPrefix ? {
+          assetPrefix
+        }: {})
       },
       ...(port
         ? {
@@ -860,3 +864,31 @@ test('onRetry and onFail options should work when multiple parallel retrying asy
   });
   await rsbuild.close();
 });
+
+test('should work when the first cdn site is all failed', async ({page}) => {
+  const port = await getRandomPort();
+  const rsbuild = await createRsbuildWithMiddleware(
+    [],
+    {
+      minify: true,
+      domain: ['http://a.com/foo-path', 'http://b.com', `http://localhost:${port}`],
+      addQuery: true,
+      onRetry(context) {
+        console.info('onRetry', context);
+      },
+      onSuccess(context) {
+        console.info('onSuccess', context);
+      },
+      onFail(context) {
+        console.info('onFail', context);
+      },
+    },
+    undefined,
+    port,
+    'http://a.com/foo-path'
+  );
+
+  await gotoPage(page, rsbuild);
+  const compTestElement = page.locator('#async-comp-test');
+  await expect(compTestElement).toHaveText('Hello AsyncCompTest');
+})
