@@ -201,7 +201,7 @@ function ensureChunk(chunkId: string): Promise<unknown> {
   const args = Array.prototype.slice.call(arguments);
 
   // Other webpack runtimes would add arguments for `__webpack_require__.e`,
-  // So we use `arguments[10]` avoid conflicts with other runtimes
+  // So we use `arguments[10]` to avoid conflicts with other runtimes
   if (!args[10]) {
     args[10] = { count: 0 };
   }
