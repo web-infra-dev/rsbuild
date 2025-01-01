@@ -362,13 +362,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     },
     "extensionAlias": {
       ".js": [
+        ".js",
         ".ts",
         ".tsx",
-        ".js",
       ],
       ".jsx": [
-        ".tsx",
         ".jsx",
+        ".tsx",
       ],
     },
     "extensions": [
@@ -769,13 +769,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     },
     "extensionAlias": {
       ".js": [
+        ".js",
         ".ts",
         ".tsx",
-        ".js",
       ],
       ".jsx": [
-        ".tsx",
         ".jsx",
+        ".tsx",
       ],
     },
     "extensions": [
@@ -1105,13 +1105,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     },
     "extensionAlias": {
       ".js": [
+        ".js",
         ".ts",
         ".tsx",
-        ".js",
       ],
       ".jsx": [
-        ".tsx",
         ".jsx",
+        ".tsx",
       ],
     },
     "extensions": [
@@ -1424,13 +1424,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     },
     "extensionAlias": {
       ".js": [
+        ".js",
         ".ts",
         ".tsx",
-        ".js",
       ],
       ".jsx": [
-        ".tsx",
         ".jsx",
+        ".tsx",
       ],
     },
     "extensions": [

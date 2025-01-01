@@ -75,8 +75,8 @@ Rsbuild 通过 Rspack 的 [extensionAlias](https://rspack.dev/config/resolve#res
 const rspackConfig = {
   resolve: {
     extensionAlias: {
-      '.js': ['.ts', '.tsx', '.js'],
-      '.jsx': ['.tsx', '.jsx'],
+      '.js': ['.js', '.ts', '.tsx'],
+      '.jsx': ['.jsx', '.tsx'],
     },
   },
 };

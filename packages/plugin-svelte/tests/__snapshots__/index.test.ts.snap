@@ -262,13 +262,13 @@ exports[`plugin-svelte > should add svelte loader and resolve config properly 2`
   ],
   "extensionAlias": {
     ".js": [
+      ".js",
       ".ts",
       ".tsx",
-      ".js",
     ],
     ".jsx": [
-      ".tsx",
       ".jsx",
+      ".tsx",
     ],
   },
   "extensions": [

@@ -388,13 +388,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     },
     "extensionAlias": {
       ".js": [
+        ".js",
         ".ts",
         ".tsx",
-        ".js",
       ],
       ".jsx": [
-        ".tsx",
         ".jsx",
+        ".tsx",
       ],
     },
     "extensions": [
@@ -845,13 +845,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     },
     "extensionAlias": {
       ".js": [
+        ".js",
         ".ts",
         ".tsx",
-        ".js",
       ],
       ".jsx": [
-        ".tsx",
         ".jsx",
+        ".tsx",
       ],
     },
     "extensions": [
@@ -1200,13 +1200,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     },
     "extensionAlias": {
       ".js": [
+        ".js",
         ".ts",
         ".tsx",
-        ".js",
       ],
       ".jsx": [
-        ".tsx",
         ".jsx",
+        ".tsx",
       ],
     },
     "extensions": [
@@ -1633,13 +1633,13 @@ exports[`tools.rspack > should match snapshot 1`] = `
     },
     "extensionAlias": {
       ".js": [
+        ".js",
         ".ts",
         ".tsx",
-        ".js",
       ],
       ".jsx": [
-        ".tsx",
         ".jsx",
+        ".tsx",
       ],
     },
     "extensions": [
