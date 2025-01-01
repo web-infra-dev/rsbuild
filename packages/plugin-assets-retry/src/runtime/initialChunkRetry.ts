@@ -1,7 +1,4 @@
 // rsbuild/runtime/initial-chunk-retry
-import type { CrossOrigin } from '@rsbuild/core';
-import type { AssetsRetryHookContext, RuntimeRetryOptions } from '../types.js';
-
 interface ScriptElementAttributes {
   url: string;
   times: number;
@@ -20,6 +17,7 @@ const TYPES = Object.keys(TAG_TYPE);
 declare global {
   // global variables shared with async chunk
   var __RB_ASYNC_CHUNKS__: Record<string, boolean>;
+  var __RUNTIME_GLOBALS_OPTIONS__: RuntimeRetryOptions;
 }
 
 // this function is the same as async chunk retry
@@ -354,55 +352,53 @@ function resourceMonitor(
   }
 }
 
-// @ts-expect-error init is a global function, ignore ts(6133)
-function init(options: RuntimeRetryOptions) {
-  const config: RuntimeRetryOptions = {};
+const config: RuntimeRetryOptions = {};
+const options = __RUNTIME_GLOBALS_OPTIONS__;
 
-  for (const key in defaultConfig) {
-    // @ts-ignore
-    config[key] = defaultConfig[key];
-  }
+for (const key in defaultConfig) {
+  // @ts-ignore
+  config[key] = defaultConfig[key];
+}
 
-  for (const key in options) {
-    // @ts-ignore
-    config[key] = options[key];
-  }
+for (const key in options) {
+  // @ts-ignore
+  config[key] = options[key];
+}
 
-  // Normalize config
-  if (!Array.isArray(config.type) || config.type.length === 0) {
-    config.type = defaultConfig.type;
-  }
-  if (!Array.isArray(config.domain) || config.domain.length === 0) {
-    config.domain = defaultConfig.domain;
-  }
+// Normalize config
+if (!Array.isArray(config.type) || config.type.length === 0) {
+  config.type = defaultConfig.type;
+}
+if (!Array.isArray(config.domain) || config.domain.length === 0) {
+  config.domain = defaultConfig.domain;
+}
 
-  if (Array.isArray(config.domain)) {
-    config.domain = config.domain.filter(Boolean);
-  }
+if (Array.isArray(config.domain)) {
+  config.domain = config.domain.filter(Boolean);
+}
 
-  // init global variables shared with async chunk
-  if (typeof window !== 'undefined' && !window.__RB_ASYNC_CHUNKS__) {
-    window.__RB_ASYNC_CHUNKS__ = {};
-  }
-  // Bind event in window
-  try {
-    resourceMonitor(
-      (e: Event) => {
-        try {
-          retry(config, e);
-        } catch (err) {
-          console.error('retry error captured', err);
-        }
-      },
-      (e: Event) => {
-        try {
-          load(config, e);
-        } catch (err) {
-          console.error('load error captured', err);
-        }
-      },
-    );
-  } catch (err) {
-    console.error('monitor error captured', err);
-  }
+// init global variables shared with async chunk
+if (typeof window !== 'undefined' && !window.__RB_ASYNC_CHUNKS__) {
+  window.__RB_ASYNC_CHUNKS__ = {};
+}
+// Bind event in window
+try {
+  resourceMonitor(
+    (e: Event) => {
+      try {
+        retry(config, e);
+      } catch (err) {
+        console.error('retry error captured', err);
+      }
+    },
+    (e: Event) => {
+      try {
+        load(config, e);
+      } catch (err) {
+        console.error('load error captured', err);
+      }
+    },
+  );
+} catch (err) {
+  console.error('monitor error captured', err);
 }
