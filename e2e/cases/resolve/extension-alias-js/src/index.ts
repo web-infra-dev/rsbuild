@@ -1,9 +1,9 @@
-import { bar } from './bar.jsx';
-import { foo } from './foo.jsx';
+import { bar } from './bar.js';
+import { foo } from './foo.js';
 
 declare global {
   interface Window {
-    test: number;
+    test: string;
   }
 }
 
