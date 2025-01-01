@@ -204,6 +204,12 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0(webpack@5.97.1)
 
+  e2e/cases/output/source-map:
+    dependencies:
+      source-map:
+        specifier: 0.7.4
+        version: 0.7.4
+
   e2e/cases/react/react-compiler-babel:
     dependencies:
       react:
@@ -217,7 +223,7 @@ importers:
         specifier: ^19.0.0-beta.0
         version: 19.0.0-beta-6fc168f-20241025
 
-  e2e/cases/resolve-pkg-imports: {}
+  e2e/cases/resolve/pkg-imports: {}
 
   e2e/cases/rsdoctor/mock: {}
 
@@ -228,18 +234,6 @@ importers:
         version: 0.5.2
 
   e2e/cases/server/ssr: {}
-
-  e2e/cases/source-map:
-    dependencies:
-      react:
-        specifier: ^19.0.0
-        version: 19.0.0
-      react-dom:
-        specifier: ^19.0.0
-        version: 19.0.0(react@19.0.0)
-      source-map:
-        specifier: 0.7.4
-        version: 0.7.4
 
   e2e/cases/svelte:
     dependencies:
