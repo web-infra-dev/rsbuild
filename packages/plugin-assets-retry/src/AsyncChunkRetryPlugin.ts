@@ -107,6 +107,15 @@ class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
           constructorName === 'PublicPathRuntimeModule' ||
           constructorName === 'AutoPublicPathRuntimeModule';
 
+        if (constructorName.includes('CssLoadingRuntimeModule')) {
+          // @ts-ignore
+          const source = module.source.source.toString();
+          const toCode = source.replace('var fullhref = __webpack_require__.p + href;', 'var fullhref = __webpack_require__.rsbuildAsyncCssRetry ? __webpack_require__.rsbuildAsyncCssRetry(href, chunkId) : (__webpack_require__.p + href);');
+          console.log(toCode, 2222222)
+          // @ts-ignore
+          module.source.source = Buffer.from(toCode, 'utf-8');
+        }
+
         if (!isPublicPathModule) {
           return;
         }
