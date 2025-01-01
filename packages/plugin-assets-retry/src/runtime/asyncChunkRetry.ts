@@ -324,12 +324,12 @@ function ensureChunk(chunkId: string): Promise<unknown> {
 
 function loadScript() {
   // biome-ignore lint/style/noArguments: allowed
-  const args = Array.prototype.slice.call(arguments);
+  const args = Array.prototype.slice.call(arguments) as Parameters<LoadScript>;
   const retry = globalCurrRetrying[args[3]];
   if (retry) {
     args[0] = retry.nextRetryUrl;
   }
-  return originalLoadScript.apply(null, args as Parameters<LoadScript>);
+  return originalLoadScript.apply(null, args);
 }
 
 function registerAsyncChunkRetry() {
