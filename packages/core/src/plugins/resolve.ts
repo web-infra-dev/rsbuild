@@ -116,8 +116,8 @@ export const pluginResolve = (): RsbuildPlugin => ({
           // TypeScript allows importing TS files with `.js` extension
           // See: https://github.com/microsoft/TypeScript/blob/c09e2ab4/src/compiler/moduleNameResolver.ts#L2151-L2168
           chain.resolve.extensionAlias.merge({
-            '.js': ['.ts', '.tsx', '.js'],
-            '.jsx': ['.tsx', '.jsx'],
+            '.js': ['.js', '.ts', '.tsx'],
+            '.jsx': ['.jsx', '.tsx'],
           });
         }
 
