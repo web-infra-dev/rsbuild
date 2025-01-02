@@ -8,26 +8,36 @@ import type { PluginAssetsRetryOptions, RuntimeRetryOptions } from './types.js';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://github.com/web-infra-dev/rspack/pull/5370
-function appendWebpackScript(module: any, appendSource: string) {
+function modifyWebpackRuntimeModule(module: any, modifier:(originSource: string) => string) {
   try {
     const originSource = module.getGeneratedCode();
-    module.getGeneratedCode = () => `${originSource}\n${appendSource}`;
+    module.getGeneratedCode = () => modifier(originSource);
   } catch (err) {
     console.error('Failed to modify Webpack RuntimeModule');
     throw err;
   }
 }
 
-function appendRspackScript(
+function modifyRspackRuntimeModule(
   module: any, // JsRuntimeModule type is not exported by Rspack temporarily */
-  appendSource: string,
+  modifier:(originSource: string) => string
 ) {
   try {
-    const source = module.source.source.toString();
-    module.source.source = Buffer.from(`${source}\n${appendSource}`, 'utf-8');
+    const originSource = module.source.source.toString();
+    module.source.source = Buffer.from(modifier(originSource), 'utf-8');
   } catch (err) {
     console.error('Failed to modify Rspack RuntimeModule');
     throw err;
+  }
+}
+
+function modifyRuntimeModule(
+  module: any, modifier:(originSource: string) => string, isRspack: boolean
+) {
+  if(isRspack) {
+    modifyRspackRuntimeModule(module, modifier);
+  } else {
+    modifyWebpackRuntimeModule(module, modifier);
   }
 }
 
@@ -103,12 +113,11 @@ class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
           : module.constructor?.name;
 
         const isCssLoadingRuntimeModule = constructorName === 'CssLoadingRuntimeModule';
+
         if (isCssLoadingRuntimeModule) {
-          // @ts-ignore
-          const source = module.source.source.toString();
-          const toCode = source.replace('var fullhref = __webpack_require__.p + href;', 'var fullhref = __webpack_require__.rsbuildAsyncCssRetry ? __webpack_require__.rsbuildAsyncCssRetry(href, chunkId) : (__webpack_require__.p + href);');
-          // @ts-ignore
-          module.source.source = Buffer.from(toCode, 'utf-8');
+          modifyRuntimeModule(module, (originSource) => 
+originSource.replace('var fullhref = __webpack_require__.p + href;', 'var fullhref = __webpack_require__.rsbuildAsyncCssRetry ? __webpack_require__.rsbuildAsyncCssRetry(href, chunkId) : (__webpack_require__.p + href);'), isRspack
+        );
           return
         }
 
@@ -122,11 +131,7 @@ class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
 
           // Rspack currently does not have module.addRuntimeModule on the js side,
           // so we insert our runtime code after PublicPathRuntimeModule or AutoPublicPathRuntimeModule.
-          if (isRspack) {
-            appendRspackScript(module, runtimeCode);
-          } else {
-            appendWebpackScript(module, runtimeCode);
-          }
+          modifyRuntimeModule(module, (originSource) => `${originSource}\n${runtimeCode}`, isRspack);
         }
       });
     });
