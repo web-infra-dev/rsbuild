@@ -102,32 +102,31 @@ class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
           ? module.constructorName
           : module.constructor?.name;
 
-        const isPublicPathModule =
-          module.name === 'publicPath' ||
-          constructorName === 'PublicPathRuntimeModule' ||
-          constructorName === 'AutoPublicPathRuntimeModule';
-
-        if (constructorName.includes('CssLoadingRuntimeModule')) {
+        const isCssLoadingRuntimeModule = constructorName === 'CssLoadingRuntimeModule';
+        if (isCssLoadingRuntimeModule) {
           // @ts-ignore
           const source = module.source.source.toString();
           const toCode = source.replace('var fullhref = __webpack_require__.p + href;', 'var fullhref = __webpack_require__.rsbuildAsyncCssRetry ? __webpack_require__.rsbuildAsyncCssRetry(href, chunkId) : (__webpack_require__.p + href);');
-          console.log(toCode, 2222222)
           // @ts-ignore
           module.source.source = Buffer.from(toCode, 'utf-8');
+          return
         }
 
-        if (!isPublicPathModule) {
-          return;
-        }
+        const isPublicPathModule =
+        module.name === 'publicPath' ||
+        constructorName === 'PublicPathRuntimeModule' ||
+        constructorName === 'AutoPublicPathRuntimeModule';
 
-        const runtimeCode = this.getRawRuntimeRetryCode();
+        if (isPublicPathModule) {
+          const runtimeCode = this.getRawRuntimeRetryCode();
 
-        // Rspack currently does not have module.addRuntimeModule on the js side,
-        // so we insert our runtime code after PublicPathRuntimeModule or AutoPublicPathRuntimeModule.
-        if (isRspack) {
-          appendRspackScript(module, runtimeCode);
-        } else {
-          appendWebpackScript(module, runtimeCode);
+          // Rspack currently does not have module.addRuntimeModule on the js side,
+          // so we insert our runtime code after PublicPathRuntimeModule or AutoPublicPathRuntimeModule.
+          if (isRspack) {
+            appendRspackScript(module, runtimeCode);
+          } else {
+            appendWebpackScript(module, runtimeCode);
+          }
         }
       });
     });
