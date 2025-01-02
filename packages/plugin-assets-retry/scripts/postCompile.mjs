@@ -1,9 +1,10 @@
+// @ts-check
 import { existsSync } from 'node:fs';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { performance } from 'node:perf_hooks';
 import { fileURLToPath } from 'node:url';
-import { transformAsync } from '@babel/core';
+import { minify, transform } from '@swc/core';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,34 +18,31 @@ const __dirname = path.dirname(__filename);
 async function compileRuntimeFile(filename) {
   const sourceFilePath = path.join(__dirname, `../src/runtime/${filename}.ts`);
 
-  const { minify } = await import('terser');
   const runtimeCode = await readFile(sourceFilePath, 'utf8');
   const distPath = path.join(__dirname, `../dist/runtime/${filename}.js`);
   const distMinPath = path.join(
     __dirname,
     `../dist/runtime/${filename}.min.js`,
   );
-  const { code } = await transformAsync(runtimeCode, {
-    presets: [
-      '@babel/preset-typescript',
-      [
-        '@babel/preset-env',
-        {
-          targets:
-            'iOS >= 9, Android >= 4.4, last 2 versions, > 0.2%, not dead',
-        },
-      ],
-    ],
-    filename: sourceFilePath,
+
+  const { code } = await transform(runtimeCode, {
+    jsc: {
+      target: 'es5',
+      parser: {
+        syntax: 'typescript',
+      },
+    },
+    // Output script file to be used in `<script>` tag
+    isModule: false,
+    sourceFileName: sourceFilePath,
   });
-  const { code: minifiedRuntimeCode } = await minify(
-    {
-      [distPath]: code,
-    },
-    {
-      ecma: 5,
-    },
-  );
+
+  const { code: minifiedRuntimeCode } = await minify(code, {
+    ecma: 5,
+    // allows SWC to mangle function names
+    module: true,
+  });
+
   await Promise.all([
     writeFile(distPath, code),
     writeFile(distMinPath, minifiedRuntimeCode),
