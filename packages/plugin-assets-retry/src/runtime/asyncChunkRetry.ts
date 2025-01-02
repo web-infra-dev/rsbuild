@@ -14,15 +14,20 @@ type Retry = {
 };
 
 type RetryCollector = Record<ChunkId, Record<number, Retry>>;
+type EnsureChunk = (chunkId: ChunkId, ...args: unknown[]) => Promise<unknown>;
+type LoadScript = (
+  url: ChunkSrcUrl,
+  done: unknown,
+  key: string,
+  chunkId: ChunkId,
+  ...args: unknown[]
+) => void;
 
 declare global {
   // RuntimeGlobals.require
   var __RUNTIME_GLOBALS_REQUIRE__: unknown;
   // RuntimeGlobals.ensure
-  var __RUNTIME_GLOBALS_ENSURE_CHUNK__: (
-    chunkId: ChunkId,
-    ...args: unknown[]
-  ) => Promise<unknown>;
+  var __RUNTIME_GLOBALS_ENSURE_CHUNK__: EnsureChunk;
   // RuntimeGlobals.getChunkScriptFilename
   var __RUNTIME_GLOBALS_GET_CHUNK_SCRIPT_FILENAME__: (
     chunkId: ChunkId,
@@ -37,13 +42,7 @@ declare global {
     | ((chunkId: ChunkId, ...args: unknown[]) => string)
     | undefined;
   // RuntimeGlobals.loadScript
-  var __RUNTIME_GLOBALS_LOAD_SCRIPT__: (
-    url: ChunkSrcUrl,
-    done: unknown,
-    key: string,
-    chunkId: ChunkId,
-    ...args: unknown[]
-  ) => void;
+  var __RUNTIME_GLOBALS_LOAD_SCRIPT__: LoadScript;
   // RuntimeGlobals.publicPath
   var __RUNTIME_GLOBALS_PUBLIC_PATH__: string;
   // user options
@@ -197,30 +196,20 @@ const originalLoadScript = __RUNTIME_GLOBALS_LOAD_SCRIPT__;
 const ERROR_PREFIX = '[@rsbuild/plugin-assets-retry] ';
 
 // if users want to support es5, add Promise polyfill first https://github.com/webpack/webpack/issues/12877
-function ensureChunk(
-  chunkId: string,
-  // args placeholder, to avoid that other webpack runtime would add arg for __webpack_require__.e
-  arg0: unknown,
-  arg1: unknown,
-  arg2: unknown,
-  arg3: unknown,
-  arg4: unknown,
-  arg5: unknown,
-  arg6: unknown,
-  callingCounter: { count: number } = { count: 0 },
-  ...args: unknown[]
-): Promise<unknown> {
-  const result = originalEnsureChunk(
-    chunkId,
-    arg0,
-    arg1,
-    arg2,
-    arg3,
-    arg4,
-    arg5,
-    arg6,
-    callingCounter,
-    ...args,
+function ensureChunk(chunkId: string): Promise<unknown> {
+  // biome-ignore lint/style/noArguments: allowed
+  const args = Array.prototype.slice.call(arguments);
+
+  // Other webpack runtimes would add arguments for `__webpack_require__.e`,
+  // So we use `arguments[10]` to avoid conflicts with other runtimes
+  if (!args[10]) {
+    args[10] = { count: 0 };
+  }
+  const callingCounter: { count: number } = args[10];
+
+  const result = originalEnsureChunk.apply(
+    null,
+    args as Parameters<EnsureChunk>,
   );
 
   try {
@@ -237,7 +226,7 @@ function ensureChunk(
       }
     }
   } catch (e) {
-    console.error(ERROR_PREFIX, 'get original script or css filename error', e);
+    console.error(ERROR_PREFIX, 'get original script or CSS filename error', e);
   }
 
   // if __webpack_require__.e is polluted by other runtime codes, fallback to originalEnsureChunk
@@ -318,18 +307,7 @@ function ensureChunk(
       config.onRetry(context);
     }
 
-    const nextPromise = ensureChunk(
-      chunkId,
-      arg0,
-      arg1,
-      arg2,
-      arg3,
-      arg4,
-      arg5,
-      arg6,
-      callingCounter,
-      ...args,
-    );
+    const nextPromise = ensureChunk.apply(ensureChunk, args as [string]);
     return nextPromise.then((result) => {
       // when after retrying the third time
       // ensureChunk(chunkId, { count: 3 }), at that time, existRetryTimes === 2
@@ -344,21 +322,14 @@ function ensureChunk(
   });
 }
 
-function loadScript(
-  originalUrl: ChunkSrcUrl,
-  done: unknown,
-  key: string,
-  chunkId: ChunkId,
-  ...args: unknown[]
-) {
-  const retry = globalCurrRetrying[chunkId];
-  return originalLoadScript(
-    retry ? retry.nextRetryUrl : originalUrl,
-    done,
-    key,
-    chunkId,
-    ...args,
-  );
+function loadScript() {
+  // biome-ignore lint/style/noArguments: allowed
+  const args = Array.prototype.slice.call(arguments) as Parameters<LoadScript>;
+  const retry = globalCurrRetrying[args[3]];
+  if (retry) {
+    args[0] = retry.nextRetryUrl;
+  }
+  return originalLoadScript.apply(null, args);
 }
 
 function registerAsyncChunkRetry() {
