@@ -23,7 +23,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "rslib build && node scripts/postCompile.mjs",
+    "build": "rslib build",
     "dev": "rslib build --watch"
   },
   "devDependencies": {
