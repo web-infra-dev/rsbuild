@@ -260,7 +260,8 @@ function ensureChunk(chunkId: string): Promise<unknown> {
 
   // if __webpack_require__.e is polluted by other runtime codes, fallback to originalEnsureChunk
   if (
-    typeof callingCounter?.count !== 'number' ||
+    !callingCounter ||
+    typeof callingCounter.count !== 'number' ||
     typeof callingCounter.cssFailedCount !== 'number'
   ) {
     return result;
