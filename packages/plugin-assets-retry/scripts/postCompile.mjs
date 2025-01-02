@@ -24,6 +24,7 @@ async function compileRuntimeFile(filename) {
     __dirname,
     `../dist/runtime/${filename}.min.js`,
   );
+
   const { code } = await transform(runtimeCode, {
     jsc: {
       target: 'es5',
@@ -31,13 +32,17 @@ async function compileRuntimeFile(filename) {
         syntax: 'typescript',
       },
     },
+    // Output script file to be used in `<script>` tag
     isModule: false,
     sourceFileName: sourceFilePath,
   });
+
   const { code: minifiedRuntimeCode } = await minify(code, {
     ecma: 5,
+    // allows SWC to mangle function names
     module: true,
   });
+
   await Promise.all([
     writeFile(distPath, code),
     writeFile(distMinPath, minifiedRuntimeCode),
