@@ -684,7 +684,11 @@ test('should work with addQuery boolean option when retrying async css chunk', a
     logs,
     '/static/css/async/src_AsyncCompTest_tsx.css',
   );
-  expect(blockedAsyncChunkResponseCount).toMatchObject({});
+  expect(blockedAsyncChunkResponseCount).toMatchObject({
+    '/static/css/async/src_AsyncCompTest_tsx.css': 1,
+    '/static/css/async/src_AsyncCompTest_tsx.css?retry=1': 1,
+    '/static/css/async/src_AsyncCompTest_tsx.css?retry=2': 1,
+  });
 
   await rsbuild.close();
   restore();
@@ -897,8 +901,8 @@ test('onRetry and onFail options should work when multiple parallel retrying asy
   await rsbuild.close();
 });
 
-test('should work when the first cdn site is all failed', async ({ page }) => {
-  // this is a real world case
+test('should work when the first, second cdn are all failed and the third is success', async ({ page }) => {
+  // this is a real world case for assets-retry
   const port = await getRandomPort();
   const rsbuild = await createRsbuildWithMiddleware(
     [],
