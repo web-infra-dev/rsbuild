@@ -38,6 +38,7 @@ flexbugs
 fnames
 frontends
 fullhash
+fullhref
 gzipped
 icss
 idents

@@ -77,6 +77,7 @@ async function createRsbuildWithMiddleware(
   options: PluginAssetsRetryOptions,
   entry?: string,
   port?: number,
+  assetPrefix?: string
 ) {
   const rsbuild = await dev({
     cwd: __dirname,
@@ -93,6 +94,9 @@ async function createRsbuildWithMiddleware(
             middlewares.unshift(...addMiddleWares);
           },
         ],
+        ...(assetPrefix ? {
+          assetPrefix
+        }: {})
       },
       ...(port
         ? {
@@ -655,6 +659,42 @@ test('should work with addQuery boolean option', async ({ page }) => {
   logger.level = 'log';
 });
 
+test('should work with addQuery boolean option when retrying async css chunk', async ({ page }) => {
+  logger.level = 'verbose';
+  const { logs, restore } = proxyConsole();
+
+  const asyncChunkBlockedMiddleware = createBlockMiddleware({
+    blockNum: 3,
+    urlPrefix: '/static/css/async/src_AsyncCompTest_tsx.css',
+  });
+  const rsbuild = await createRsbuildWithMiddleware(
+    asyncChunkBlockedMiddleware,
+    {
+      minify: true,
+      addQuery: true,
+    },
+  );
+
+  await gotoPage(page, rsbuild);
+  const asyncCompTestElement = page.locator('#async-comp-test');
+  await expect(asyncCompTestElement).toHaveText('Hello AsyncCompTest');
+  await expect(asyncCompTestElement).toHaveCSS('background-color', 'rgb(0, 0, 139)');
+
+  const blockedAsyncChunkResponseCount = count404ResponseByUrl(
+    logs,
+    '/static/css/async/src_AsyncCompTest_tsx.css',
+  );
+  expect(blockedAsyncChunkResponseCount).toMatchObject({
+    '/static/css/async/src_AsyncCompTest_tsx.css': 1,
+    '/static/css/async/src_AsyncCompTest_tsx.css?retry=1': 1,
+    '/static/css/async/src_AsyncCompTest_tsx.css?retry=2': 1,
+  });
+
+  await rsbuild.close();
+  restore();
+  logger.level = 'log';
+});
+
 test('should work with addQuery function type option', async ({ page }) => {
   logger.level = 'verbose';
   const { logs, restore } = proxyConsole();
@@ -860,3 +900,33 @@ test('onRetry and onFail options should work when multiple parallel retrying asy
   });
   await rsbuild.close();
 });
+
+test('should work when the first, second cdn are all failed and the third is success', async ({ page }) => {
+  // this is a real world case for assets-retry
+  const port = await getRandomPort();
+  const rsbuild = await createRsbuildWithMiddleware(
+    [],
+    {
+      minify: true,
+      domain: ['http://a.com/foo-path', 'http://b.com', `http://localhost:${port}`],
+      addQuery: true,
+      onRetry(context) {
+        console.info('onRetry', context);
+      },
+      onSuccess(context) {
+        console.info('onSuccess', context);
+      },
+      onFail(context) {
+        console.info('onFail', context);
+      },
+    },
+    undefined,
+    port,
+    'http://a.com/foo-path'
+  );
+
+  await gotoPage(page, rsbuild);
+  const compTestElement = page.locator('#async-comp-test');
+  await expect(compTestElement).toHaveText('Hello AsyncCompTest');
+  await expect(compTestElement).toHaveCSS('background-color', 'rgb(0, 0, 139)');
+})
