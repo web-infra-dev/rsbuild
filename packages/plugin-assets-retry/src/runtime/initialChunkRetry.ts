@@ -12,7 +12,6 @@ const TAG_TYPE: { [propName: string]: new () => HTMLElement } = {
   script: HTMLScriptElement,
   img: HTMLImageElement,
 };
-const TYPES = Object.keys(TAG_TYPE);
 
 declare global {
   // global variables shared with async chunk
@@ -51,13 +50,6 @@ function getRequestUrl(element: HTMLElement) {
   }
   return null;
 }
-
-const defaultConfig: RuntimeRetryOptions = {
-  max: 3,
-  type: TYPES,
-  domain: [],
-  crossOrigin: false,
-};
 
 function validateTargetInfo(
   config: RuntimeRetryOptions,
@@ -352,37 +344,13 @@ function resourceMonitor(
   }
 }
 
-const config: RuntimeRetryOptions = {};
-const options = __RUNTIME_GLOBALS_OPTIONS__;
-
-for (const key in defaultConfig) {
-  // @ts-ignore
-  config[key] = defaultConfig[key];
-}
-
-for (const key in options) {
-  // @ts-ignore
-  config[key] = options[key];
-}
-
-// Normalize config
-if (!Array.isArray(config.type) || config.type.length === 0) {
-  config.type = defaultConfig.type;
-}
-if (!Array.isArray(config.domain) || config.domain.length === 0) {
-  config.domain = defaultConfig.domain;
-}
-
-if (Array.isArray(config.domain)) {
-  config.domain = config.domain.filter(Boolean);
-}
-
 // init global variables shared with async chunk
 if (typeof window !== 'undefined' && !window.__RB_ASYNC_CHUNKS__) {
   window.__RB_ASYNC_CHUNKS__ = {};
 }
 // Bind event in window
 try {
+  const config = __RUNTIME_GLOBALS_OPTIONS__;
   resourceMonitor(
     (e: Event) => {
       try {
