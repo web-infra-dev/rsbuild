@@ -77,7 +77,7 @@ async function createRsbuildWithMiddleware(
   options: PluginAssetsRetryOptions,
   entry?: string,
   port?: number,
-  assetPrefix?: string
+  assetPrefix?: string,
 ) {
   const rsbuild = await dev({
     cwd: __dirname,
@@ -94,9 +94,11 @@ async function createRsbuildWithMiddleware(
             middlewares.unshift(...addMiddleWares);
           },
         ],
-        ...(assetPrefix ? {
-          assetPrefix
-        }: {})
+        ...(assetPrefix
+          ? {
+              assetPrefix,
+            }
+          : {}),
       },
       ...(port
         ? {
@@ -111,10 +113,7 @@ async function createRsbuildWithMiddleware(
           }
         : {}),
       output: {
-        sourceMap: {
-          css: false,
-          js: false,
-        },
+        sourceMap: false,
       },
     },
   });
@@ -465,7 +464,11 @@ test('domain, onRetry and onFail options should work when retrying initial chunk
     blockedMiddleware,
     {
       minify: true,
-      domain: [`http://localhost:${port}`, 'http://a.com/foo-path', 'http://b.com'],
+      domain: [
+        `http://localhost:${port}`,
+        'http://a.com/foo-path',
+        'http://b.com',
+      ],
       onRetry(context) {
         console.info('onRetry', context);
       },
@@ -541,7 +544,11 @@ test('domain, onRetry and onFail options should work when retrying async chunk f
     blockedMiddleware,
     {
       minify: true,
-      domain: [`http://localhost:${port}`, 'http://a.com/foo-path', 'http://b.com'],
+      domain: [
+        `http://localhost:${port}`,
+        'http://a.com/foo-path',
+        'http://b.com',
+      ],
       onRetry(context) {
         console.info('onRetry', context);
       },
@@ -659,7 +666,9 @@ test('should work with addQuery boolean option', async ({ page }) => {
   logger.level = 'log';
 });
 
-test('should work with addQuery boolean option when retrying async css chunk', async ({ page }) => {
+test('should work with addQuery boolean option when retrying async css chunk', async ({
+  page,
+}) => {
   logger.level = 'verbose';
   const { logs, restore } = proxyConsole();
 
@@ -678,7 +687,10 @@ test('should work with addQuery boolean option when retrying async css chunk', a
   await gotoPage(page, rsbuild);
   const asyncCompTestElement = page.locator('#async-comp-test');
   await expect(asyncCompTestElement).toHaveText('Hello AsyncCompTest');
-  await expect(asyncCompTestElement).toHaveCSS('background-color', 'rgb(0, 0, 139)');
+  await expect(asyncCompTestElement).toHaveCSS(
+    'background-color',
+    'rgb(0, 0, 139)',
+  );
 
   const blockedAsyncChunkResponseCount = count404ResponseByUrl(
     logs,
@@ -901,14 +913,20 @@ test('onRetry and onFail options should work when multiple parallel retrying asy
   await rsbuild.close();
 });
 
-test('should work when the first, second cdn are all failed and the third is success', async ({ page }) => {
+test('should work when the first, second cdn are all failed and the third is success', async ({
+  page,
+}) => {
   // this is a real world case for assets-retry
   const port = await getRandomPort();
   const rsbuild = await createRsbuildWithMiddleware(
     [],
     {
       minify: true,
-      domain: ['http://a.com/foo-path', 'http://b.com', `http://localhost:${port}`],
+      domain: [
+        'http://a.com/foo-path',
+        'http://b.com',
+        `http://localhost:${port}`,
+      ],
       addQuery: true,
       onRetry(context) {
         console.info('onRetry', context);
@@ -922,11 +940,11 @@ test('should work when the first, second cdn are all failed and the third is suc
     },
     undefined,
     port,
-    'http://a.com/foo-path'
+    'http://a.com/foo-path',
   );
 
   await gotoPage(page, rsbuild);
   const compTestElement = page.locator('#async-comp-test');
   await expect(compTestElement).toHaveText('Hello AsyncCompTest');
   await expect(compTestElement).toHaveCSS('background-color', 'rgb(0, 0, 139)');
-})
+});

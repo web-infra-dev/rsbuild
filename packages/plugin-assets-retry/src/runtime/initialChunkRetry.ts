@@ -20,11 +20,11 @@ declare global {
 }
 
 // this function is the same as async chunk retry
-function findCurrentDomain(url: string, domainList: string[]) {
+function findCurrentDomain(url: string, domains: string[]) {
   let domain = '';
-  for (let i = 0; i < domainList.length; i++) {
-    if (url.indexOf(domainList[i]) !== -1) {
-      domain = domainList[i];
+  for (let i = 0; i < domains.length; i++) {
+    if (url.indexOf(domains[i]) !== -1) {
+      domain = domains[i];
       break;
     }
   }
@@ -32,10 +32,10 @@ function findCurrentDomain(url: string, domainList: string[]) {
 }
 
 // this function is the same as async chunk retry
-function findNextDomain(url: string, domainList: string[]) {
-  const currentDomain = findCurrentDomain(url, domainList);
-  const index = domainList.indexOf(currentDomain);
-  return domainList[(index + 1) % domainList.length] || url;
+function findNextDomain(url: string, domains: string[]) {
+  const currentDomain = findCurrentDomain(url, domains);
+  const index = domains.indexOf(currentDomain);
+  return domains[(index + 1) % domains.length] || url;
 }
 
 function getRequestUrl(element: HTMLElement) {
@@ -56,7 +56,7 @@ function validateTargetInfo(
   e: Event,
 ): { target: HTMLElement; tagName: string; url: string } | false {
   const target: HTMLElement = e.target as HTMLElement;
-  const tagName = target.tagName?.toLocaleLowerCase();
+  const tagName = target.tagName.toLocaleLowerCase();
   const allowTags = config.type!;
   const url = getRequestUrl(target);
   if (
