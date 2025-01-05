@@ -106,7 +106,7 @@ class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
       )
       .replaceAll(
         '__RUNTIME_GLOBALS_RSBUILD_LOAD_STYLESHEET__',
-        '__webpack_require__.rsbuildLoadStyleSheet',
+        '__webpack_require__.rbLoadStyleSheet',
       )
       .replaceAll('__RUNTIME_GLOBALS_PUBLIC_PATH__', RuntimeGlobals.publicPath)
       .replaceAll('__RUNTIME_GLOBALS_LOAD_SCRIPT__', RuntimeGlobals.loadScript)
@@ -131,7 +131,7 @@ class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
             (originSource) =>
               originSource.replace(
                 'var fullhref = __webpack_require__.p + href;',
-                'var fullhref = __webpack_require__.rsbuildLoadStyleSheet ? __webpack_require__.rsbuildLoadStyleSheet(href, chunkId) : (__webpack_require__.p + href);',
+                'var fullhref = __webpack_require__.rbLoadStyleSheet ? __webpack_require__.rbLoadStyleSheet(href, chunkId) : (__webpack_require__.p + href);',
               ),
             isRspack,
           );
