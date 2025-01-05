@@ -60,11 +60,11 @@ const retryCollector: RetryCollector = {};
 const retryCssCollector: RetryCollector = {};
 
 function findCurrentDomain(url: string) {
-  const domainList = config.domain ?? [];
+  const domains = config.domain || [];
   let domain = '';
-  for (let i = 0; i < domainList.length; i++) {
-    if (url.indexOf(domainList[i]) !== -1) {
-      domain = domainList[i];
+  for (let i = 0; i < domains.length; i++) {
+    if (url.indexOf(domains[i]) !== -1) {
+      domain = domains[i];
       break;
     }
   }
@@ -72,10 +72,10 @@ function findCurrentDomain(url: string) {
 }
 
 function findNextDomain(url: string) {
-  const domainList = config.domain ?? [];
+  const domains = config.domain || [];
   const currentDomain = findCurrentDomain(url);
-  const index = domainList.indexOf(currentDomain);
-  return domainList[(index + 1) % domainList.length] || url;
+  const index = domains.indexOf(currentDomain);
+  return domains[(index + 1) % domains.length] || url;
 }
 
 const postfixRE = /[?#].*$/;
@@ -146,7 +146,7 @@ function initRetry(chunkId: string, isCssAsyncChunk: boolean): Retry {
   const originalQuery = getQueryFromUrl(originalSrcUrl);
 
   const existRetryTimes = 0;
-  const nextDomain = config.domain?.[0] ?? window.origin;
+  const nextDomain = config.domain?.[0] || window.origin;
 
   return {
     nextDomain,
@@ -215,8 +215,8 @@ const originalEnsureChunk = __RUNTIME_GLOBALS_ENSURE_CHUNK__;
 const originalGetChunkScriptFilename =
   __RUNTIME_GLOBALS_GET_CHUNK_SCRIPT_FILENAME__;
 const originalGetCssFilename =
-  __RUNTIME_GLOBALS_GET_MINI_CSS_EXTRACT_FILENAME__ ??
-  __RUNTIME_GLOBALS_GET_CSS_FILENAME__ ??
+  __RUNTIME_GLOBALS_GET_MINI_CSS_EXTRACT_FILENAME__ ||
+  __RUNTIME_GLOBALS_GET_CSS_FILENAME__ ||
   (() => null);
 const originalLoadScript = __RUNTIME_GLOBALS_LOAD_SCRIPT__;
 
@@ -335,11 +335,7 @@ function ensureChunk(chunkId: string): Promise<unknown> {
       }
     }
 
-    if (
-      config.domain &&
-      config.domain.length > 0 &&
-      config.domain.indexOf(nextDomain) === -1
-    ) {
+    if (config.domain && config.domain.indexOf(nextDomain) === -1) {
       throw error;
     }
 
@@ -376,11 +372,10 @@ function loadScript() {
 
 function loadStyleSheet(href: string, chunkId: ChunkId): string {
   const retry = globalCurrRetryingCss[chunkId];
-  if (retry?.nextRetryUrl) {
-    return retry.nextRetryUrl;
-  }
-
-  return __RUNTIME_GLOBALS_PUBLIC_PATH__ + href;
+  return (
+    // biome-ignore lint/complexity/useOptionalChain: for less code
+    (retry && retry.nextRetryUrl) || __RUNTIME_GLOBALS_PUBLIC_PATH__ + href
+  );
 }
 
 function registerAsyncChunkRetry() {
