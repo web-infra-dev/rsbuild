@@ -237,7 +237,7 @@ function retry(config: RuntimeRetryOptions, e: Event) {
 
   // if the initial request is "/static/js/async/src_Hello_tsx.js?q=1", retry url would be "/static/js/async/src_Hello_tsx.js?q=1&retry=1"
   const originalQuery =
-    target.dataset.rsbuildOriginalQuery || getQueryFromUrl(url);
+    target.dataset.rsbuildOriginalQuery ?? getQueryFromUrl(url);
 
   // this function is the same as async chunk retry
   function getUrlRetryQuery(existRetryTimes: number): string {
