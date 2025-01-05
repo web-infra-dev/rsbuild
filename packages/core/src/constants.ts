@@ -77,6 +77,7 @@ export const IMAGE_EXTENSIONS: string[] = [
   'tif',
   'tiff',
   'jfif',
+  'cur',
 ];
 export const VIDEO_EXTENSIONS: string[] = ['mp4', 'webm', 'ogg', 'mov'];
 export const AUDIO_EXTENSIONS: string[] = [
