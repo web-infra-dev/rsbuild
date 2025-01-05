@@ -20,7 +20,7 @@ import type {
   OnAfterStartProdServerFn,
   OnBeforeBuildFn,
   OnBeforeCreateCompilerFn,
-  OnBeforeEnvironmentCompile,
+  OnBeforeEnvironmentCompileFn,
   OnBeforeStartDevServerFn,
   OnBeforeStartProdServerFn,
   OnCloseBuildFn,
@@ -169,7 +169,7 @@ export function initHooks(): {
   modifyWebpackConfig: EnvironmentAsyncHook<ModifyWebpackConfigFn>;
   modifyRsbuildConfig: AsyncHook<ModifyRsbuildConfigFn>;
   modifyEnvironmentConfig: EnvironmentAsyncHook<ModifyEnvironmentConfigFn>;
-  onBeforeEnvironmentCompile: EnvironmentAsyncHook<OnBeforeEnvironmentCompile>;
+  onBeforeEnvironmentCompile: EnvironmentAsyncHook<OnBeforeEnvironmentCompileFn>;
   onAfterEnvironmentCompile: EnvironmentAsyncHook<OnAfterEnvironmentCompileFn>;
 } {
   return {
@@ -194,7 +194,7 @@ export function initHooks(): {
     modifyEnvironmentConfig:
       createEnvironmentAsyncHook<ModifyEnvironmentConfigFn>(),
     onBeforeEnvironmentCompile:
-      createEnvironmentAsyncHook<OnBeforeEnvironmentCompile>(),
+      createEnvironmentAsyncHook<OnBeforeEnvironmentCompileFn>(),
     onAfterEnvironmentCompile:
       createEnvironmentAsyncHook<OnAfterEnvironmentCompileFn>(),
   };
