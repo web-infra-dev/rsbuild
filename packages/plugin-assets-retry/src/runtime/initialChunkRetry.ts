@@ -89,13 +89,13 @@ function createElement(
     attributes.crossOrigin === true ? 'anonymous' : attributes.crossOrigin;
   const crossOriginAttr = crossOrigin ? `crossorigin="${crossOrigin}"` : '';
   const retryTimesAttr = attributes.times
-    ? `data-rsbuild-retry-times="${attributes.times}"`
+    ? `data-rb-retry-times="${attributes.times}"`
     : '';
 
   const originalQueryAttr = attributes.originalQuery
-    ? `data-rsbuild-original-query="${attributes.originalQuery}"`
+    ? `data-rb-original-query="${attributes.originalQuery}"`
     : '';
-  const isAsyncAttr = attributes.isAsync ? 'data-rsbuild-async' : '';
+  const isAsyncAttr = attributes.isAsync ? 'data-rb-async' : '';
 
   if (origin instanceof HTMLScriptElement) {
     const script = document.createElement('script');
@@ -104,13 +104,13 @@ function createElement(
       script.crossOrigin = crossOrigin;
     }
     if (attributes.times) {
-      script.dataset.rsbuildRetryTimes = String(attributes.times);
+      script.dataset.rbRetryTimes = String(attributes.times);
     }
     if (attributes.isAsync) {
-      script.dataset.rsbuildAsync = '';
+      script.dataset.rbAsync = '';
     }
     if (attributes.originalQuery !== undefined) {
-      script.dataset.rsbuildOriginalQuery = attributes.originalQuery;
+      script.dataset.rbOriginalQuery = attributes.originalQuery;
     }
 
     return {
@@ -135,10 +135,10 @@ function createElement(
       link.crossOrigin = crossOrigin;
     }
     if (attributes.times) {
-      link.dataset.rsbuildRetryTimes = String(attributes.times);
+      link.dataset.rbRetryTimes = String(attributes.times);
     }
     if (attributes.originalQuery !== undefined) {
-      link.dataset.rsbuildOriginalQuery = attributes.originalQuery;
+      link.dataset.rbOriginalQuery = attributes.originalQuery;
     }
     return {
       element: link,
@@ -170,8 +170,8 @@ function reloadElementResource(
 
   if (origin instanceof HTMLImageElement) {
     origin.src = attributes.url;
-    origin.dataset.rsbuildRetryTimes = String(attributes.times);
-    origin.dataset.rsbuildOriginalQuery = String(attributes.originalQuery);
+    origin.dataset.rbRetryTimes = String(attributes.times);
+    origin.dataset.rbOriginalQuery = String(attributes.originalQuery);
   }
 }
 
@@ -217,7 +217,7 @@ function retry(config: RuntimeRetryOptions, e: Event) {
   }
 
   // If the retry times has exceeded the maximum, fail
-  const existRetryTimes = Number(target.dataset.rsbuildRetryTimes) || 0;
+  const existRetryTimes = Number(target.dataset.rbRetryTimes) || 0;
   if (existRetryTimes === config.max!) {
     if (typeof config.onFail === 'function') {
       const context: AssetsRetryHookContext = {
@@ -236,8 +236,7 @@ function retry(config: RuntimeRetryOptions, e: Event) {
   const nextDomain = findNextDomain(domain, config.domain!);
 
   // if the initial request is "/static/js/async/src_Hello_tsx.js?q=1", retry url would be "/static/js/async/src_Hello_tsx.js?q=1&retry=1"
-  const originalQuery =
-    target.dataset.rsbuildOriginalQuery ?? getQueryFromUrl(url);
+  const originalQuery = target.dataset.rbOriginalQuery ?? getQueryFromUrl(url);
 
   // this function is the same as async chunk retry
   function getUrlRetryQuery(existRetryTimes: number): string {
@@ -266,7 +265,7 @@ function retry(config: RuntimeRetryOptions, e: Event) {
   }
 
   const isAsync =
-    Boolean(target.dataset.rsbuildAsync) ||
+    Boolean(target.dataset.rbAsync) ||
     (target as HTMLScriptElement).async ||
     (target as HTMLScriptElement).defer;
 
@@ -280,7 +279,7 @@ function retry(config: RuntimeRetryOptions, e: Event) {
 
   const element = createElement(target, attributes)!;
 
-  if (config.onRetry && typeof config.onRetry === 'function') {
+  if (typeof config.onRetry === 'function') {
     const context: AssetsRetryHookContext = {
       times: existRetryTimes,
       domain,
@@ -301,7 +300,7 @@ function load(config: RuntimeRetryOptions, e: Event) {
   }
   const { target, tagName, url } = targetInfo;
   const domain = findCurrentDomain(url, config.domain!);
-  const retryTimes = Number(target.dataset.rsbuildRetryTimes) || 0;
+  const retryTimes = Number(target.dataset.rbRetryTimes) || 0;
   if (retryTimes === 0) {
     return;
   }

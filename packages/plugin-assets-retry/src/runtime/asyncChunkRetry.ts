@@ -43,7 +43,7 @@ declare global {
     | undefined;
   // RuntimeGlobals.loadScript
   var __RUNTIME_GLOBALS_LOAD_SCRIPT__: LoadScript;
-  // __webpack_require__.rsbuildLoadStyleSheet
+  // __webpack_require__.rbLoadStyleSheet
   var __RUNTIME_GLOBALS_RSBUILD_LOAD_STYLESHEET__: LoadStyleSheet;
   // RuntimeGlobals.publicPath
   var __RUNTIME_GLOBALS_PUBLIC_PATH__: string;
