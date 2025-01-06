@@ -17,7 +17,7 @@ type CompileCommonParams = {
   isWatch: boolean;
 };
 
-export type OnBeforeEnvironmentCompile<B = 'rspack'> = (
+export type OnBeforeEnvironmentCompileFn<B = 'rspack'> = (
   params: CompileCommonParams & {
     environment: EnvironmentContext;
     bundlerConfig?: B extends 'rspack' ? Rspack.Configuration : WebpackConfig;
