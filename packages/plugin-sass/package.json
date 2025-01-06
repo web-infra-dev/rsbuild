@@ -33,13 +33,13 @@
     "loader-utils": "^2.0.4",
     "postcss": "^8.4.49",
     "reduce-configs": "^1.1.0",
-    "sass-embedded": "^1.83.0"
+    "sass-embedded": "^1.83.1"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rslib/core": "0.2.2",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.10.2",
+    "@types/node": "^22.10.5",
     "@types/sass-loader": "^8.0.9",
     "prebundle": "1.2.5",
     "resolve-url-loader": "^5.0.0",

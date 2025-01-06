@@ -59,7 +59,7 @@
   "devDependencies": {
     "@rslib/core": "0.2.2",
     "@types/connect": "3.4.38",
-    "@types/node": "^22.10.2",
+    "@types/node": "^22.10.5",
     "@types/on-finished": "2.3.4",
     "@types/webpack-bundle-analyzer": "4.7.0",
     "@types/ws": "^8.5.13",
@@ -88,7 +88,7 @@
     "reduce-configs": "^1.1.0",
     "rsbuild-dev-middleware": "0.1.2",
     "rslog": "^1.2.3",
-    "rspack-chain": "^1.1.0",
+    "rspack-chain": "^1.1.1",
     "rspack-manifest-plugin": "5.0.3",
     "sirv": "^3.0.0",
     "style-loader": "3.3.4",
