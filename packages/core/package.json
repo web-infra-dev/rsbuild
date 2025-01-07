@@ -57,7 +57,7 @@
     "core-js": "~3.39.0"
   },
   "devDependencies": {
-    "@rslib/core": "0.2.2",
+    "@rslib/core": "0.3.0",
     "@types/connect": "3.4.38",
     "@types/node": "^22.10.5",
     "@types/on-finished": "2.3.4",

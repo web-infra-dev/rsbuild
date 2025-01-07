@@ -32,7 +32,7 @@
     "upath": "2.0.1"
   },
   "devDependencies": {
-    "@rslib/core": "0.2.2"
+    "@rslib/core": "0.3.0"
   },
   "publishConfig": {
     "access": "public",
