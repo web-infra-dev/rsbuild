@@ -167,6 +167,8 @@ function generateLinks(
 export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
   readonly options: PreloadOrPreFetchOption;
 
+  name = 'HtmlPreloadOrPrefetchPlugin';
+
   resourceHints: HtmlRspackPlugin.HtmlTagObject[] = [];
 
   type: LinkType;
@@ -187,7 +189,7 @@ export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
   }
 
   apply(compiler: Compiler): void {
-    compiler.hooks.compilation.tap(this.constructor.name, (compilation) => {
+    compiler.hooks.compilation.tap(this.name, (compilation) => {
       getHTMLPlugin()
         .getHooks(compilation)
         .beforeAssetTagGeneration.tap(

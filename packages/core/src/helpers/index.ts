@@ -333,7 +333,7 @@ export const isMultiCompiler = <
 >(
   compiler: C | M,
 ): compiler is M => {
-  return compiler.constructor.name === 'MultiCompiler';
+  return 'compilers' in compiler && Array.isArray(compiler.compilers);
 };
 
 export function pick<T, U extends keyof T>(

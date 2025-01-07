@@ -1590,7 +1590,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "hints": false,
     },
     "plugins": [
-      RsbuildCorePlugin {},
+      RsbuildCorePlugin {
+        "name": "RsbuildCorePlugin",
+      },
       HotModuleReplacementPlugin {
         "name": "HotModuleReplacementPlugin",
       },
@@ -1933,7 +1935,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "hints": false,
     },
     "plugins": [
-      RsbuildCorePlugin {},
+      RsbuildCorePlugin {
+        "name": "RsbuildCorePlugin",
+      },
       DefinePlugin {
         "_args": [
           {

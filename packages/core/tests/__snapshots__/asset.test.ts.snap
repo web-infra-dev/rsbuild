@@ -118,7 +118,9 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
     "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -241,7 +243,9 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
     "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -364,7 +368,9 @@ exports[`plugin-asset > should allow to use distPath.image to modify dist path 1
     "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -487,7 +493,9 @@ exports[`plugin-asset > should allow to use filename.image to modify filename 1`
     "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;

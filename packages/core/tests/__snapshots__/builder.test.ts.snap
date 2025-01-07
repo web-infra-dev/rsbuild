@@ -313,7 +313,9 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
     "hints": false,
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    RsbuildCorePlugin {
+      "name": "RsbuildCorePlugin",
+    },
     HotModuleReplacementPlugin {
       "name": "HotModuleReplacementPlugin",
     },
