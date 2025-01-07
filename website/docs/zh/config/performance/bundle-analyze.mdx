@@ -107,6 +107,27 @@ export default {
 };
 ```
 
+在产物目录下会生成 `stats.json` 和 `report-web.html` 文件。
+
+```
+└── dist
+    ├── stats.json
+    └── report-web.html
+```
+
+如果你不需要 `report-web.html`，可以设置 `analyzerMode` 为 `disabled`。
+
+```js
+export default {
+  performance: {
+    bundleAnalyze: {
+      analyzerMode: 'disabled',
+      generateStatsFile: true,
+    },
+  },
+};
+```
+
 ## 注意事项
 
 1. 开启 Server 模式会导致 `build` 进程不能正常退出。

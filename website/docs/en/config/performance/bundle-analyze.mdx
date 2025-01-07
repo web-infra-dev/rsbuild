@@ -107,6 +107,27 @@ export default {
 };
 ```
 
+In the output directory, you will see `stats.json` and `report-web.html` files.
+
+```
+└── dist
+    ├── stats.json
+    └── report-web.html
+```
+
+If you don't need the `report-web.html`, you can set `analyzerMode` to `disabled`.
+
+```js
+export default {
+  performance: {
+    bundleAnalyze: {
+      analyzerMode: 'disabled',
+      generateStatsFile: true,
+    },
+  },
+};
+```
+
 ## Notes
 
 1. Enabling the server mode will cause the `build` process to not exit normally.
