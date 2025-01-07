@@ -3,7 +3,9 @@
 exports[`plugin-assets-retry > should accept user custom options 1`] = `
 {
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
     AsyncChunkRetryPlugin {
       "name": "ASYNC_CHUNK_RETRY_PLUGIN",
       "options": {
@@ -50,7 +52,9 @@ exports[`plugin-assets-retry > should accept user custom options 1`] = `
 exports[`plugin-assets-retry > should add assets retry plugin 1`] = `
 {
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
     AsyncChunkRetryPlugin {
       "name": "ASYNC_CHUNK_RETRY_PLUGIN",
       "options": {
@@ -67,7 +71,9 @@ exports[`plugin-assets-retry > should add assets retry plugin 1`] = `
 exports[`plugin-assets-retry > should't add assets retry plugin when target is set to 'node' 1`] = `
 {
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;

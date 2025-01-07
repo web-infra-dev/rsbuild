@@ -173,11 +173,4 @@ export default defineConfig({
       },
     },
   ],
-  tools: {
-    swc: {
-      jsc: {
-        keepClassNames: true,
-      },
-    },
-  },
 });

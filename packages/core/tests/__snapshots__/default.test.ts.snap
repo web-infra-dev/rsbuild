@@ -313,7 +313,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "hints": false,
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
     HotModuleReplacementPlugin {
       "name": "HotModuleReplacementPlugin",
     },
@@ -764,7 +766,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "hints": false,
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
     CssExtractRspackPlugin {
       "options": {
         "chunkFilename": "static/css/async/[name].[contenthash:8].css",
@@ -1177,7 +1181,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "hints": false,
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
     DefinePlugin {
       "_args": [
         {
@@ -1558,7 +1564,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
     TestPlugin {
       "name": "TestPlugin",
     },
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
     HotModuleReplacementPlugin {
       "name": "HotModuleReplacementPlugin",
     },

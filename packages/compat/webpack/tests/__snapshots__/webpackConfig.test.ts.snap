@@ -7,7 +7,9 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
       "foo": "2",
     },
   },
-  RsbuildCorePlugin {},
+  {
+    "name": "RsbuildCorePlugin",
+  },
   MiniCssExtractPlugin {
     "_sortedModulesCache": WeakMap {},
     "options": {
@@ -124,7 +126,9 @@ exports[`webpackConfig > should allow to use tools.webpackChain to modify config
 {
   "devtool": "eval",
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -133,7 +137,9 @@ exports[`webpackConfig > should allow tools.webpack to be an array 1`] = `
 {
   "devtool": "source-map",
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -142,7 +148,9 @@ exports[`webpackConfig > should allow tools.webpack to be an object 1`] = `
 {
   "devtool": "eval",
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -151,7 +159,9 @@ exports[`webpackConfig > should allow tools.webpack to modify config object 1`] 
 {
   "devtool": "eval-cheap-source-map",
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -160,7 +170,9 @@ exports[`webpackConfig > should allow tools.webpack to return config 1`] = `
 {
   "devtool": "eval",
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -169,7 +181,9 @@ exports[`webpackConfig > should allow tools.webpackChain to be an array 1`] = `
 {
   "devtool": "source-map",
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -178,7 +192,9 @@ exports[`webpackConfig > should provide mergeConfig util in tools.webpack functi
 {
   "devtool": "eval",
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;

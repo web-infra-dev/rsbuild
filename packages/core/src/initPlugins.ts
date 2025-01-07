@@ -169,6 +169,8 @@ export function initPluginAPI({
      * Transform Rsbuild plugin hooks to Rspack plugin hooks
      */
     class RsbuildCorePlugin {
+      name = pluginName;
+
       apply(compiler: Compiler): void {
         compiler.__rsbuildTransformer = transformer;
 
