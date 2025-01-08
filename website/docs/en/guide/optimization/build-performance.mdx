@@ -18,11 +18,17 @@ The following are some general optimization methods, which can speed up the deve
 
 Optimizing the number of modules referenced by the application can reduce the bundle size and improve build performance. Please read the [Bundle Size Optimization](/guide/optimization/optimize-bundle) section to learn some optimization methods.
 
+### Optimize Tailwind CSS
+
+When using Tailwind CSS, if the `content` field in `tailwind.config.js` is not correctly configured, this can lead to poor build performance and HMR performance.
+
+Please refer to [Tailwind CSS - Optimize Build Performance](/guide/basic/tailwindcss#optimize-build-performance) for more details.
+
 ## Development optimization
 
 The following are methods for improving performance in development mode.
 
-## Enable Lazy Compilation
+### Enable Lazy Compilation
 
 Enabling lazy compilation can significantly reduce the number of modules compiled at dev startup and improve startup time.
 

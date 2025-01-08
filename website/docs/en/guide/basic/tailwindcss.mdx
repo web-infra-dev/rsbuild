@@ -129,7 +129,7 @@ Tailwind CSS provides a [Tailwind CSS IntelliSense](https://github.com/tailwindl
 
 You can install this plugin in VS Code to enable the autocompletion feature.
 
-## Build Performance
+## Optimize Build Performance
 
 When using Tailwind CSS, if the `content` field in `tailwind.config.js` is not correctly configured, this can lead to poor build performance and HMR performance. This is because Tailwind CSS internally matches files based on the glob defined in `content`. The more files it matches, the greater the performance overhead.
 
@@ -144,6 +144,19 @@ module.exports = {
     './src/**/*.{html,js,ts,jsx,tsx}',
     // Scanning a large number of files, leading to performance degradation
     './node_modules/**/*.js',
+  ],
+};
+```
+
+Sometimes, you may accidentally scan the `node_modules` directory, for example, when scanning files in a monorepo:
+
+```js title="tailwind.config.js"
+module.exports = {
+  content: [
+    './src/**/*.{html,js,ts,jsx,tsx}',
+    // Incorrectly includes the `packages/ui/node_modules` directory
+    // Should be '../../packages/ui/src/**/*.{html,js,ts,jsx,tsx}'
+    '../../packages/ui/**/*.{html,js,ts,jsx,tsx}',
   ],
 };
 ```
