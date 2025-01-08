@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  http-proxy@1.18.1:
+    hash: rg7rdv5wkqlu467sapxhhl2w2i
+    path: patches/http-proxy@1.18.1.patch
+
 importers:
 
   .:
@@ -10564,14 +10569,14 @@ snapshots:
   http-proxy-middleware@2.0.7:
     dependencies:
       '@types/http-proxy': 1.17.15
-      http-proxy: 1.18.1
+      http-proxy: 1.18.1(patch_hash=rg7rdv5wkqlu467sapxhhl2w2i)
       is-glob: 4.0.3
       is-plain-obj: 3.0.0
       micromatch: 4.0.8
     transitivePeerDependencies:
       - debug
 
-  http-proxy@1.18.1:
+  http-proxy@1.18.1(patch_hash=rg7rdv5wkqlu467sapxhhl2w2i):
     dependencies:
       eventemitter3: 4.0.7
       follow-redirects: 1.15.9

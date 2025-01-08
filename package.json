@@ -52,6 +52,11 @@
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"
   },
+  "pnpm": {
+    "patchedDependencies": {
+      "http-proxy@1.18.1": "patches/http-proxy@1.18.1.patch"
+    }
+  },
   "packageManager": "pnpm@9.11.0",
   "engines": {
     "node": ">=18.0.0",
