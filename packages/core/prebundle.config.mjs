@@ -1,7 +1,4 @@
 // @ts-check
-/**
- * Tip: please add the prebundled packages to `tsconfig.json#paths`.
- */
 import fs from 'node:fs';
 import { join } from 'node:path';
 
@@ -12,14 +9,6 @@ function replaceFileContent(filePath, replaceFn) {
     fs.writeFileSync(filePath, newContent);
   }
 }
-
-// postcss-loader and css-loader use `semver` to compare PostCSS ast version,
-// Rsbuild uses the same PostCSS version and do not need the comparison.
-const skipSemver = (task) => {
-  replaceFileContent(join(task.depPath, 'dist/index.js'), (content) =>
-    content.replaceAll('require("semver")', '({ satisfies: () => true })'),
-  );
-};
 
 /** @type {import('prebundle').Config} */
 export default {
@@ -85,9 +74,6 @@ export default {
     },
     {
       name: 'rspack-chain',
-      externals: {
-        '@rspack/core': '@rspack/core',
-      },
       ignoreDts: true,
       afterBundle(task) {
         // copy types to dist because prebundle will break the types
@@ -131,8 +117,6 @@ export default {
       },
     },
     {
-      // The webpack-bundle-analyzer version was locked to v4.9.0 to be compatible with Rspack
-      // If we need to upgrade the version, please check if the chunk detail can be displayed correctly
       name: 'webpack-bundle-analyzer',
     },
     {
@@ -164,27 +148,16 @@ export default {
       name: 'css-loader',
       ignoreDts: true,
       externals: {
-        semver: './semver',
         postcss: '../postcss',
       },
-      beforeBundle: skipSemver,
     },
     {
       name: 'postcss-loader',
       externals: {
         jiti: '../jiti',
-        semver: './semver',
         postcss: '../postcss',
       },
       ignoreDts: true,
-      beforeBundle(task) {
-        replaceFileContent(join(task.depPath, 'dist/utils.js'), (content) =>
-          // Rsbuild uses `postcss-load-config` and no need to use `cosmiconfig`.
-          // the ralevent code will never be executed, so we can replace it with an empty object.
-          content.replaceAll('require("cosmiconfig")', '{}'),
-        );
-        skipSemver(task);
-      },
     },
     {
       name: 'postcss-load-config',
