@@ -18,11 +18,17 @@ Rsbuild 默认对构建性能进行了充分优化，但是随着使用场景变
 
 对应用引用的模块数量进行优化，可以减少产物体积并提升构建性能，请阅读 [优化产物体积](/guide/optimization/optimize-bundle) 章节来了解一些优化方法。
 
+### 优化 Tailwind CSS
+
+在使用 Tailwind CSS 时，如果没有正确地配置 `tailwind.config.js` 中的 `content` 字段，可能会导致构建性能和热更新性能下降。
+
+请参考 [Tailwind CSS - 优化构建性能](/guide/basic/tailwindcss#优化构建性能) 了解更多。
+
 ## 开发模式优化
 
 以下是针对开发构建进行提速的方法。
 
-## 启动 Lazy Compilation
+### 开启 Lazy Compilation
 
 启用 lazy compilation 可以显著减少开发启动时编译的模块数量，从而提升启动时间。
 

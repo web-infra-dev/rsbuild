@@ -129,7 +129,7 @@ Tailwind CSS 提供了 [Tailwind CSS IntelliSense](https://github.com/tailwindla
 
 你可以在 VS Code 中安装该插件，即可开启自动补全功能。
 
-## 构建性能
+## 优化构建性能
 
 在使用 Tailwind CSS 时，如果没有正确地配置 `tailwind.config.js` 中的 `content` 字段，可能会导致构建性能和热更新性能下降。这是因为 Tailwind CSS 内部会基于 `content` 定义的 glob 来匹配文件，扫描的文件数量越多，产生的性能开销越大。
 
@@ -144,6 +144,19 @@ module.exports = {
     './src/**/*.{html,js,ts,jsx,tsx}',
     // 扫描大量文件，导致性能下降
     './node_modules/**/*.js',
+  ],
+};
+```
+
+有时，你可能会不小心扫描 `node_modules` 目录，例如在 monorepo 中扫描其他包的文件时：
+
+```js title="tailwind.config.js"
+module.exports = {
+  content: [
+    './src/**/*.{html,js,ts,jsx,tsx}',
+    // 错误地包含了 `packages/ui/node_modules` 目录
+    // 正确写法为 '../../packages/ui/src/**/*.{html,js,ts,jsx,tsx}'
+    '../../packages/ui/**/*.{html,js,ts,jsx,tsx}',
   ],
 };
 ```
