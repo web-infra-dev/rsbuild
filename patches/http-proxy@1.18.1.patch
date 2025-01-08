@@ -1,3 +1,4 @@
+# ref: https://github.com/web-infra-dev/rsbuild/issues/4344
 diff --git a/lib/http-proxy/common.js b/lib/http-proxy/common.js
 index 6513e81d80d5250ea249ea833f819ece67897c7e..486d4c896d65a3bb7cf63307af68facb3ddb886b 100644
 --- a/lib/http-proxy/common.js
