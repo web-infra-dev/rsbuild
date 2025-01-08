@@ -54,7 +54,9 @@
   },
   "pnpm": {
     "patchedDependencies": {
-      "http-proxy@1.18.1": "patches/http-proxy@1.18.1.patch"
+      "http-proxy@1.18.1": "patches/http-proxy@1.18.1.patch",
+      "postcss-loader@8.1.1": "patches/postcss-loader@8.1.1.patch",
+      "css-loader@7.1.2": "patches/css-loader@7.1.2.patch"
     }
   },
   "packageManager": "pnpm@9.11.0",

@@ -5,9 +5,15 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
+  css-loader@7.1.2:
+    hash: hgmoyq6bbvmxg74vxs5gi6q7sa
+    path: patches/css-loader@7.1.2.patch
   http-proxy@1.18.1:
     hash: rg7rdv5wkqlu467sapxhhl2w2i
     path: patches/http-proxy@1.18.1.patch
+  postcss-loader@8.1.1:
+    hash: vfmtcjxhomso2wgrjs2ahhjxfy
+    path: patches/postcss-loader@8.1.1.patch
 
 importers:
 
@@ -632,7 +638,7 @@ importers:
         version: 2.8.5
       css-loader:
         specifier: 7.1.2
-        version: 7.1.2(@rspack/core@1.2.0-beta.0(@swc/helpers@0.5.15))(webpack@5.97.1(@swc/core@1.10.4(@swc/helpers@0.5.15)))
+        version: 7.1.2(patch_hash=hgmoyq6bbvmxg74vxs5gi6q7sa)(@rspack/core@1.2.0-beta.0(@swc/helpers@0.5.15))(webpack@5.97.1(@swc/core@1.10.4(@swc/helpers@0.5.15)))
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -674,7 +680,7 @@ importers:
         version: 6.0.1(jiti@1.21.7)(postcss@8.4.49)(yaml@2.6.0)
       postcss-loader:
         specifier: 8.1.1
-        version: 8.1.1(@rspack/core@1.2.0-beta.0(@swc/helpers@0.5.15))(postcss@8.4.49)(typescript@5.7.2)(webpack@5.97.1(@swc/core@1.10.4(@swc/helpers@0.5.15)))
+        version: 8.1.1(patch_hash=vfmtcjxhomso2wgrjs2ahhjxfy)(@rspack/core@1.2.0-beta.0(@swc/helpers@0.5.15))(postcss@8.4.49)(typescript@5.7.2)(webpack@5.97.1(@swc/core@1.10.4(@swc/helpers@0.5.15)))
       prebundle:
         specifier: 1.2.5
         version: 1.2.5(typescript@5.7.2)
@@ -9800,7 +9806,7 @@ snapshots:
 
   cspell-ban-words@0.0.4: {}
 
-  css-loader@7.1.2(@rspack/core@1.2.0-beta.0(@swc/helpers@0.5.15))(webpack@5.97.1(@swc/core@1.10.4(@swc/helpers@0.5.15))):
+  css-loader@7.1.2(patch_hash=hgmoyq6bbvmxg74vxs5gi6q7sa)(@rspack/core@1.2.0-beta.0(@swc/helpers@0.5.15))(webpack@5.97.1(@swc/core@1.10.4(@swc/helpers@0.5.15))):
     dependencies:
       icss-utils: 5.1.0(postcss@8.4.49)
       postcss: 8.4.49
@@ -11778,7 +11784,7 @@ snapshots:
       postcss: 8.4.49
       yaml: 2.6.0
 
-  postcss-loader@8.1.1(@rspack/core@1.2.0-beta.0(@swc/helpers@0.5.15))(postcss@8.4.49)(typescript@5.7.2)(webpack@5.97.1(@swc/core@1.10.4(@swc/helpers@0.5.15))):
+  postcss-loader@8.1.1(patch_hash=vfmtcjxhomso2wgrjs2ahhjxfy)(@rspack/core@1.2.0-beta.0(@swc/helpers@0.5.15))(postcss@8.4.49)(typescript@5.7.2)(webpack@5.97.1(@swc/core@1.10.4(@swc/helpers@0.5.15))):
     dependencies:
       cosmiconfig: 9.0.0(typescript@5.7.2)
       jiti: 1.21.7
