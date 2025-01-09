@@ -1,4 +1,4 @@
-# Sass Plugin
+# Sass plugin
 
 import { SourceCode } from 'rspress/theme';
 
@@ -6,9 +6,9 @@ import { SourceCode } from 'rspress/theme';
 
 Use [Sass](https://sass-lang.com/) as the CSS preprocessor, implemented based on [sass-loader](https://github.com/webpack-contrib/sass-loader).
 
-## Quick Start
+## Quick start
 
-### Install Plugin
+### Install plugin
 
 You can install the plugin using the following command:
 
@@ -23,7 +23,7 @@ import { PackageManagerTabs } from '@theme';
 
 :::
 
-### Register Plugin
+### Register plugin
 
 You can register the plugin in the `rsbuild.config.ts` file:
 
@@ -117,7 +117,7 @@ pluginSass({
 
 ## Practices
 
-### Modify Sass Implementation
+### Modify Sass implementation
 
 Sass provides several implementations, including [sass](https://www.npmjs.com/package/sass), [sass-embedded](https://www.npmjs.com/package/sass-embedded), and [node-sass](https://www.npmjs.com/package/node-sass).
 
@@ -153,7 +153,7 @@ pluginSass({
 Sass's `legacy` API has been deprecated and will be removed in Sass 2.0. It is recommended to migrate to the `modern-compiler` API. For more details, see [Sass - Legacy JS API](https://sass-lang.com/documentation/breaking-changes/legacy-js-api/).
 :::
 
-### Ignore Sass Deprecation Warnings
+### Ignore Sass deprecation warnings
 
 Sass uses warning logs to notify you of deprecated usages that will be removed in future major releases of Sass. It is recommended to make changes as suggested by the logs. If you do not want to see these logs, you can ignore these warnings by using the [silenceDeprecations](https://sass-lang.com/documentation/js-api/interfaces/stringoptions/#silenceDeprecations) option in Sass.
 

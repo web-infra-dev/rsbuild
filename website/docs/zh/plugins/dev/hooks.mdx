@@ -1,10 +1,10 @@
-# Plugin Hooks
+# Plugin hooks
 
 本章节介绍 Rsbuild 插件可用的 plugin hooks。
 
 ## 总览
 
-### Common Hooks
+### Common hooks
 
 - [modifyRsbuildConfig](#modifyrsbuildconfig)：修改传递给 Rsbuild 的配置。
 - [modifyEnvironmentConfig](#modifyenvironmentconfig): 修改特定 environment 的 Rsbuild 配置。
@@ -17,7 +17,7 @@
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile): 在每次单个 environment 的构建结束后调用。
 - [onExit](#onexit)：在进程即将退出时调用。
 
-### Dev Hooks
+### Dev hooks
 
 仅在执行 `rsbuild dev` 命令或 `rsbuild.startDevServer()` 方法时调用。
 
@@ -29,7 +29,7 @@
 
 - [onCloseDevServer](#onclosedevserver)：在关闭开发服务器时调用。
 
-### Build Hooks
+### Build hooks
 
 仅在执行 `rsbuild build` 命令或 `rsbuild.build()` 方法时调用。
 
@@ -40,7 +40,7 @@
 
 - [onCloseBuild](#onclosebuild)：在关闭构建时调用。
 
-### Preview Hooks
+### Preview hooks
 
 仅在执行 `rsbuild preview` 命令或 `rsbuild.preview()` 方法时调用。
 
@@ -49,7 +49,7 @@
 
 ## Hooks 顺序
 
-### Dev Hooks
+### Dev hooks
 
 执行 `rsbuild dev` 命令或 `rsbuild.startDevServer()` 方法时，Rsbuild 会依次执行以下 hooks：
 
@@ -75,7 +75,7 @@
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onDevCompileDone](#ondevcompiledone)
 
-### Build Hooks
+### Build hooks
 
 执行 `rsbuild build` 命令或 `rsbuild.build()` 方法时，Rsbuild 会依次执行以下 hooks：
 
@@ -101,7 +101,7 @@
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onAfterBuild](#onafterbuild)
 
-### Preview Hooks
+### Preview hooks
 
 执行 `rsbuild preview` 命令或 `rsbuild.preview()` 方法时，Rsbuild 会依次执行以下 hooks：
 
@@ -111,16 +111,16 @@
 - [onAfterStartProdServer](#onafterstartprodserver)
 - [onExit](#onexit)
 
-## Global Hooks vs Environment Hooks
+## Global hooks vs environment hooks
 
 在 Rsbuild 中，有一些插件 hooks 是全局 hooks，这些 hook 的执行往往和 Rsbuild 自身的启动流程或全局逻辑相关，在所有 environment 下共享。如：
 
 - `modifyRsbuildConfig` 用来修改 Rsbuild 的基础配置，基础配置最终会和 environment 配置合并；
-- `onBeforeStartDevServer`、`onAfterStartDevServer` 和 Rsbuild dev server 启动流程相关，所有 environments 共享 Rsbuild 的 dev server、middlewares、Web Socket。
+- `onBeforeStartDevServer`、`onAfterStartDevServer` 和 Rsbuild dev server 启动流程相关，所有 environments 共享 Rsbuild 的 dev server、middlewares、WebSocket。
 
 与之对应的，有一些插件 hooks 是和当前 environment 相关的 hook，这些 hook 执行时会带有特定的 environment 上下文，并根据 environment 的不同而触发多次。
 
-### Global Hooks
+### Global hooks
 
 - [modifyRsbuildConfig](#modifyrsbuildconfig)
 - [onBeforeStartDevServer](#onbeforestartdevserver)
@@ -136,7 +136,7 @@
 - [onAfterStartProdServer](#onafterstartprodserver)
 - [onExit](#onexit)
 
-### Environment Hooks
+### Environment hooks
 
 - [modifyEnvironmentConfig](#modifyenvironmentconfig)
 - [modifyBundlerChain](#modifybundlerchain)
@@ -201,7 +201,7 @@ const plugin2 = () => ({
 rsbuild.addPlugins([plugin1, plugin2]);
 ```
 
-## Common Hooks
+## Common hooks
 
 ### modifyRsbuildConfig
 
@@ -584,7 +584,7 @@ const myPlugin = () => ({
 });
 ```
 
-## Build Hooks
+## Build hooks
 
 ### onBeforeBuild
 
@@ -640,7 +640,7 @@ const myPlugin = () => ({
 });
 ```
 
-## Dev Hooks
+## Dev hooks
 
 ### onBeforeStartDevServer
 
@@ -737,7 +737,7 @@ rsbuild.onCloseDevServer(async () => {
 });
 ```
 
-## Preview Hooks
+## Preview hooks
 
 ### onBeforeStartProdServer
 
@@ -776,7 +776,7 @@ const myPlugin = () => ({
 });
 ```
 
-## Other Hooks
+## Other hooks
 
 ### onExit
 

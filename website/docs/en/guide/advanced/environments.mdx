@@ -1,4 +1,4 @@
-# Multi-Environment Builds
+# MMulti-environment builds
 
 Rsbuild supports building outputs for multiple environments at the same time. You can use [environments](/config/environments) to build multiple environments in parallel and set a different Rsbuild config for each environment.
 
@@ -64,7 +64,7 @@ export default {
 };
 ```
 
-### Config Merging
+### Config merging
 
 If you configure `environments`, Rsbuild will merge the config in `environments` with the outer base config. When merging, the config in `environments` has higher priority.
 
@@ -75,7 +75,7 @@ In the example above, after merging the configs, Rsbuild generates two standalon
 
 Then, Rsbuild will use these environments configs to internally generate two Rspack configs and execute a single build using Rspack’s MultiCompiler.
 
-### Debug Config
+### Debug config
 
 When you execute the command `npx rsbuild inspect` in the project root directory, you will find the following output:
 

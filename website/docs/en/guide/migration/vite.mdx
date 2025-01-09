@@ -2,7 +2,7 @@
 
 This chapter introduces how to migrate a Vite project to Rsbuild.
 
-## Installing Dependencies
+## Installing dependencies
 
 First, you need to replace the npm dependencies of Vite with Rsbuild's dependencies.
 
@@ -33,7 +33,7 @@ Next, you need to update the npm scripts in your package.json to use Rsbuild's C
 }
 ```
 
-## Create Configuration File
+## Create configuration file
 
 Create a Rsbuild configuration file `rsbuild.config.ts` in the same directory as package.json, and add the following content:
 
@@ -45,7 +45,7 @@ export default defineConfig({
 });
 ```
 
-## Build Entry
+## Build entry
 
 The default build entry points for Rsbuild and Vite are different. Vite uses `index.html` as the default entry, while Rsbuild uses `src/index.js`.
 
@@ -74,7 +74,7 @@ export default {
 
 Rsbuild will automatically inject the `<script>` tags into the generated HTML files during the build process.
 
-## Migrating Plugins
+## Migrating plugins
 
 Most common Vite plugins can be easily migrated to Rsbuild plugins, such as:
 
@@ -99,7 +99,7 @@ Most common Vite plugins can be easily migrated to Rsbuild plugins, such as:
 
 You can refer to [Plugin List](/plugins/list/index) to learn more about available plugins.
 
-## Configuration Migration
+## Configuration migration
 
 Here is the corresponding Rsbuild configuration for Vite configuration:
 
@@ -155,7 +155,7 @@ Notes:
 
 - The above table does not cover all configurations of Vite, feel free to add more.
 
-## Environment Variables
+## Environment variables
 
 Vite injects environment variables starting with `VITE_` into the client code by default, while Rsbuild injects environment variables starting with `PUBLIC_` by default (see [public variables](/guide/advanced/env-vars#public-variables)).
 
@@ -206,7 +206,7 @@ export default defineConfig({
 });
 ```
 
-## Preset Types
+## Preset types
 
 Vite provides some preset type definitions through the `vite-env.d.ts` file. When migrating to Rsbuild, you can use the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core`:
 
@@ -215,7 +215,7 @@ Vite provides some preset type definitions through the `vite-env.d.ts` file. Whe
 + /// <reference types="@rsbuild/core/types" />
 ```
 
-## Glob Import
+## Glob import
 
 Vite provides `import.meta.glob()` for importing multiple modules.
 
@@ -248,13 +248,13 @@ for (const path of context.keys()) {
 }
 ```
 
-## Validating Results
+## Validating results
 
 After completing the above steps, you have completed the basic migration from Vite to Rsbuild. You can now run the `npm run dev` command to try starting the dev server.
 
 If you encounter any issues during the build process, please debug according to the error log, or check the Vite configuration to see if there are any necessary configurations that have not been migrated to Rsbuild.
 
-## Contents Supplement
+## Contents supplement
 
 The current document only covers part of the migration process. If you find suitable content to add, feel free to contribute to the documentation via pull request 🤝.
 

@@ -1,4 +1,4 @@
-# Hot Module Replacement
+# Hot module replacement
 
 Hot Module Replacement (HMR) exchanges, adds, or removes modules while an application is running, without a full reload. This can significantly speed up development in a few ways:
 
@@ -6,7 +6,7 @@ Hot Module Replacement (HMR) exchanges, adds, or removes modules while an applic
 - Save valuable development time by only updating what's changed.
 - Instantly update the browser when modifications are made to CSS / JS in the source code, which is almost comparable to changing styles directly in the browser's dev tools.
 
-## HMR Toggle
+## HMR toggle
 
 Rsbuild has built-in support for HMR, which is enabled by default in development mode.
 
@@ -20,7 +20,7 @@ export default {
 };
 ```
 
-If you need to disable both HMR and liveReload, you can set both [dev.hmr](/config/dev/hmr) and [dev.liveReload](/config/dev/live-reload) to `false`. Then, no Web Socket requests will be made to the dev server on the page, and the page will not automatically refresh when files change.
+If you need to disable both HMR and liveReload, you can set both [dev.hmr](/config/dev/hmr) and [dev.liveReload](/config/dev/live-reload) to `false`. Then, no WebSocket requests will be made to the dev server on the page, and the page will not automatically refresh when files change.
 
 ```js title="rsbuild.config.ts"
 export default {
@@ -48,7 +48,7 @@ export default {
 };
 ```
 
-## File Watching
+## File watching
 
 By default, Rsbuild does not watching files in the `.git/` and `node_modules/` directories. When files in these directories changed, Rsbuild will not trigger a rebuild. This helps to reduce memory usage and improve build performance.
 

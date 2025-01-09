@@ -24,7 +24,7 @@ For TypeScript projects, you only need to configure [compilerOptions.paths](http
 In versions prior to Rsbuild 1.1.7, you can use the `source.alias` to set alias, but it will be removed in the next major version.
 :::
 
-## Object Type
+## Object type
 
 The `alias` can be an Object, and the relative path will be automatically converted to absolute path.
 
@@ -40,7 +40,7 @@ export default {
 
 With above configuration, if `@common/Foo.tsx` is import in the code, it will be mapped to the `<project>/src/common/Foo.tsx` path.
 
-## Function Type
+## Function type
 
 The `alias` can be a function, it will accept the previous alias object, and you can modify it.
 
@@ -113,7 +113,7 @@ export default {
 };
 ```
 
-## Exact Matching
+## Exact matching
 
 By default, `resolve.alias` will automatically match sub-paths, for example, with the following configuration:
 
@@ -179,7 +179,7 @@ When using alias to handle npm packages, please be aware of whether different ma
 
 For example, if a module or npm dependency in your project uses the React 19 API, and you alias React to version 17, the module will not be able to reference the React 19 API, resulting in code exceptions.
 
-## Handling Loader
+## Handling loader
 
 `resolve.alias` does not support creating aliases for loaders.
 

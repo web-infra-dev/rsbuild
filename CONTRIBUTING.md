@@ -1,12 +1,12 @@
-# Rsbuild Contribution Guide
+# Rsbuild contribution guide
 
 Thank you for your interest in contributing to Rsbuild! Before you start your contribution, please take a moment to read the following guidelines.
 
 ---
 
-## Setup the Environment
+## Setup the environment
 
-### Fork the Repo
+### Fork the repo
 
 [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your
 own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local.
@@ -39,7 +39,7 @@ nvm alias default 20
 nvm use 20
 ```
 
-### Install Dependencies
+### Install dependencies
 
 Enable [pnpm](https://pnpm.io/) with corepack:
 
@@ -59,7 +59,7 @@ What this will do:
 - Create symlinks between packages in the monorepo
 - Run the `prepare` script to build all packages, powered by [nx](https://nx.dev/).
 
-### Set Git Email
+### Set git email
 
 Please make sure you have your email set up in `<https://github.com/settings/emails>`. This will be needed later when you want to submit a pull request.
 
@@ -83,11 +83,11 @@ git config user.email "SOME_EMAIL@example.com"
 
 ---
 
-## Making Changes and Building
+## Making changes and building
 
 Once you have set up the local development environment in your forked repo, we can start development.
 
-### Checkout A New Branch
+### Checkout a new branch
 
 It is recommended to develop on a new branch, as it will make things easier later when you submit a pull request:
 
@@ -95,7 +95,7 @@ It is recommended to develop on a new branch, as it will make things easier late
 git checkout -b MY_BRANCH_NAME
 ```
 
-### Build the Package
+### Build the package
 
 Use [nx build](https://nx.dev/nx-api/nx/documents/run) to build the package you want to change:
 
@@ -113,13 +113,13 @@ pnpm run build
 
 ## Testing
 
-### Add New Tests
+### Add new tests
 
 If you've fixed a bug or added code that should be tested, then add some tests.
 
 You can add unit test cases in the `<PACKAGE_DIR>/tests` folder. The test runner is based on [Vitest](https://vitest.dev/).
 
-### Run Unit Tests
+### Run unit tests
 
 Before submitting a pull request, it's important to make sure that the changes haven't introduced any regressions or bugs. You can run the unit tests for the project by executing the following command:
 
@@ -133,7 +133,7 @@ You can also run the unit tests of single package:
 pnpm run ut packages/core
 ```
 
-### Run E2E Tests
+### Run E2E tests
 
 Rsbuild uses [playwright](https://github.com/microsoft/playwright) to run end-to-end tests.
 
@@ -174,9 +174,9 @@ You can find the Rsbuild documentation in the [website](./website) folder.
 
 ---
 
-## Submitting Changes
+## Submitting changes
 
-### Committing your Changes
+### Committing your changes
 
 Commit your changes to your forked repo, and [create a pull request](https://help.github.com/articles/creating-a-pull-request/).
 

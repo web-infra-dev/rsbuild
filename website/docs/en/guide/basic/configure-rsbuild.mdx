@@ -4,7 +4,7 @@ Rsbuild provides a wide range of configuration options and sets a common default
 
 If you need to customize build behaviors, you can use these configuration options.
 
-## Configuration Structure
+## Configuration structure
 
 The configuration structure of Rsbuild looks like this:
 
@@ -52,7 +52,7 @@ export default {
 
 You can find detailed descriptions of all configs on the [Configure Overview](/config/) page.
 
-## Configuration File
+## Configuration file
 
 When you use the CLI of Rsbuild, Rsbuild will automatically read the configuration file in the root directory of the current project and resolve it in the following order:
 
@@ -97,7 +97,7 @@ export default defineConfig({
 When you use the `.ts`, `.mts`, and `.cts` extensions, Rsbuild will use [jiti](https://github.com/unjs/jiti) to load configuration files, providing interoperability between ESM and CommonJS. The behavior of module resolution differs slightly from the native behavior of Node.js.
 :::
 
-## Specify Config File
+## Specify config file
 
 Rsbuild CLI uses the `--config` option to specify the config file, which can be set to a relative path or an absolute path.
 
@@ -117,7 +117,7 @@ You can also abbreviate the `--config` option to `-c`:
 rsbuild build -c rsbuild.prod.config.mjs
 ```
 
-## Using Environment Variables
+## Using environment variables
 
 In the configuration file, you can use Node.js environment variables such as `process.env.NODE_ENV` to dynamically set different configurations:
 
@@ -136,7 +136,7 @@ export default defineConfig({
 });
 ```
 
-## Export Function
+## Export function
 
 Rsbuild supports the export of a function in the config file, where you can dynamically compute the config and return it to Rsbuild.
 
@@ -183,7 +183,7 @@ For example, when running `rsbuild build --env-mode test`, the value of `envMode
 
 The current running CLI command, such as `dev`, `build`, `preview`.
 
-## Export Async Function
+## Export async function
 
 Rsbuild also supports the export of an async function in the config file, where you can perform some async operations:
 
@@ -201,7 +201,7 @@ export default defineConfig(async ({ env, command }) => {
 });
 ```
 
-## Merge Configurations
+## Merge configurations
 
 You can use the [mergeRsbuildConfig](/api/javascript-api/core#mergersbuildconfig) function exported by `@rsbuild/core` to merge multiple configurations.
 

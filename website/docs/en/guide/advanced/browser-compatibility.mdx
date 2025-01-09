@@ -1,4 +1,4 @@
-# Browser Compatibility
+# Browser compatibility
 
 This chapter introduces how to use the capabilities provided by Rsbuild to deal with browser compatibility issues.
 
@@ -74,7 +74,7 @@ If the engine encounters an unrecognized syntax when converting to AST, it will 
 
 If the code is successfully converted to AST, the engine will convert the AST into executable code and execute it normally inside the engine.
 
-### API Polyfill
+### API polyfill
 
 JavaScript is an interpreted scripting language, unlike compiled languages like Rust. Rust will check the calls in the code during the compilation phase, and JavaScript does not know whether the function called by this line of code exists before it actually runs to a certain line of code, so some errors will only appear at runtime.
 
@@ -187,7 +187,7 @@ Rsbuild compiles JavaScript code using SWC and supports injecting polyfills such
 
 In different usage scenarios, you may need different polyfill solutions. Rsbuild provides [output.polyfill](/config/output/polyfill) config to switch between different polyfill modes.
 
-### Default Behavior
+### Default behavior
 
 Rsbuild does not inject any polyfills by default:
 
@@ -242,7 +242,7 @@ export default {
 };
 ```
 
-### UA Polyfill
+### UA polyfill
 
 Cloudflare provides a [polyfill service](https://cdnjs.cloudflare.com/polyfill/) that can automatically generate polyfill bundle based on the user's browser User-Agent.
 

@@ -47,7 +47,7 @@ Options:
   -h, --help            display help for command
 ```
 
-### Opening Page
+### Opening page
 
 The `--open` option allows you to automatically open a page when starting the dev server, which is equivalent to setting [server.open](/config/server/open) to `true`.
 
@@ -146,7 +146,7 @@ Inspect config succeed, open following files to view the content:
   - Rspack Config (web): /project/dist/.rsbuild/rspack.config.web.mjs
 ```
 
-### Specifying Mode
+### Specifying mode
 
 By default, the inspect command outputs the configuration for the development mode. You can add the `--env production` option to output the configuration for the production mode:
 
@@ -162,7 +162,7 @@ By default, the inspect command omits the content of functions in the configurat
 rsbuild inspect --verbose
 ```
 
-### Multiple Targets
+### Multiple targets
 
 If the current project has multiple build targets, such as building browser artifact and Node.js artifact simultaneously, multiple Rspack configuration files will be generated in the `dist/.rsbuild` directory.
 
