@@ -74,7 +74,7 @@ foo === null || foo === void 0 ? void 0 : foo.bar();
 
 如果代码被转换为 AST 成功，引擎会将 AST 转为可执行代码，并在引擎内部正常执行。
 
-### API Polyfill
+### API polyfill
 
 JavaScript 是解释型脚本语言，不同于 Rust 等编译型语言。Rust 会在编译阶段对代码中的调用进行检查，而 JavaScript 在真正运行到某一行代码之前，并不知道这一行代码所调用的函数是否存在，因此一些错误只有在运行时才会出现。
 
@@ -242,7 +242,7 @@ export default {
 };
 ```
 
-### UA Polyfill
+### UA polyfill
 
 Cloudflare 提供了一个 [polyfill 服务](https://cdnjs.cloudflare.com/polyfill/)，可以根据用户浏览器的 User-Agent 自动生成 polyfill 文件。
 

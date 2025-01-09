@@ -63,7 +63,7 @@ module.exports = {
 };
 ```
 
-### Other Configuration Methods
+### Other configuration methods
 
 - You can directly pass the Tailwind CSS configuration to `postcss.config.cjs`:
 
@@ -123,13 +123,13 @@ You can use Tailwind's utility classes in any component or HTML, such as:
 
 For more usage details, refer to the [Tailwind CSS documentation](https://tailwindcss.com/).
 
-## VS Code Extension
+## VS Code extension
 
 Tailwind CSS provides a [Tailwind CSS IntelliSense](https://github.com/tailwindlabs/tailwindcss-intellisense) plugin for VS Code to automatically complete Tailwind CSS class names, CSS functions, and directives.
 
 You can install this plugin in VS Code to enable the autocompletion feature.
 
-## Optimize Build Performance
+## Optimize build performance
 
 When using Tailwind CSS, if the `content` field in `tailwind.config.js` is not correctly configured, this can lead to poor build performance and HMR performance. This is because Tailwind CSS internally matches files based on the glob defined in `content`. The more files it matches, the greater the performance overhead.
 
@@ -161,7 +161,7 @@ module.exports = {
 };
 ```
 
-## Optimize CSS Size
+## Optimize CSS size
 
 If you need to optimize the size of Tailwind CSS styles, you can try [rsbuild-plugin-tailwindcss](https://github.com/rspack-contrib/rsbuild-plugin-tailwindcss).
 

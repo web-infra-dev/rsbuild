@@ -1,4 +1,4 @@
-# Rsbuild Core
+# Rsbuild core
 
 This section describes some of the core methods provided by Rsbuild.
 
@@ -212,7 +212,7 @@ The `mergeRsbuildConfig` function takes multiple configuration objects as parame
 function mergeRsbuildConfig(...configs: RsbuildConfig[]): RsbuildConfig;
 ```
 
-### Basic Example
+### Basic example
 
 ```ts
 import { mergeRsbuildConfig } from '@rsbuild/core';
@@ -235,7 +235,7 @@ console.log(mergedConfig); // { dev: { https: true } }
 
 > This method will not modify the config object in the input parameter.
 
-### Merge Rules
+### Merge rules
 
 In addition to deep merging, the `mergeRsbuildConfig` function also handles some options in a special way.
 
@@ -337,7 +337,7 @@ logger.debug('This is a debug message');
 logger.log('This is a log message');
 ```
 
-### Custom Logger
+### Custom logger
 
 You can use the `logger.override` method to override partial or all methods of the default logger:
 

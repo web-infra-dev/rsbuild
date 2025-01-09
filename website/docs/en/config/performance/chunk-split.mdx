@@ -20,7 +20,7 @@ Rsbuild supports the following chunk splitting strategies:
 - `single-vendor`: bundle all NPM packages into a single chunk.
 - `custom`: custom chunk splitting strategy.
 
-## Type Definition
+## Type definition
 
 The type of `performance.chunkSplit` is as follows:
 
@@ -51,7 +51,7 @@ interface SplitCustom extends BaseSplitRules {
 type ChunkSplit = BaseChunkSplit | SplitBySize | SplitCustom;
 ```
 
-### Default Strategy
+### Default strategy
 
 By default, Rsbuild uses the `split-by-experience` strategy. If you want to use other chunk splitting strategies, you can specify them through the `strategy` option, for example:
 

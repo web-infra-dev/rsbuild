@@ -1,4 +1,4 @@
-# Path Aliases
+# Path aliases
 
 Path aliases allow developers to define aliases for modules, making it easier to reference them in code. This can be useful when you want to use a short, easy-to-remember name for a module instead of a long, complex path.
 
@@ -53,13 +53,13 @@ export default {
 
 Rsbuild provides the [resolve.alias](/config/resolve/alias) configuration option, which corresponds to the webpack/Rspack native [resolve.alias](https://rspack.dev/config/resolve#resolvealias) configuration. You can configure this option using an object or a function.
 
-### Use Cases
+### Use cases
 
 Since the `paths` configuration in `tsconfig.json` is written in a static JSON file, it lacks dynamism.
 
 The `resolve.alias` configuration can address this limitation by allowing you to dynamically set the `resolve.alias` using JavaScript code, such as based on environment variables.
 
-### Object Usage
+### Object usage
 
 You can configure `resolve.alias` using an object, where the relative paths will be automatically resolved to absolute paths.
 
@@ -77,7 +77,7 @@ export default {
 
 After configuring, if you reference `@common/Foo.tsx` in your code, it will be mapped to the `<project>/src/common/Foo.tsx` path.
 
-### Function Usage
+### Function usage
 
 You can also configure `resolve.alias` as a function, which receives the built-in `alias` object and allows you to modify it.
 

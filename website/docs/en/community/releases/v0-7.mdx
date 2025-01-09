@@ -48,7 +48,7 @@ export default config;
 
 > For more usage, please refer to [storybook-rsbuild repository](https://github.com/rspack-contrib/storybook-rsbuild).
 
-## Faster Sass Compilation
+## Faster Sass compilation
 
 In Rsbuild 0.7, **Sass compilation is 3~10 times faster**. The performance improvements are particularly noticeable on large projects.
 
@@ -60,7 +60,7 @@ This improvement is due to Rsbuild's default use of [sass-embedded](https://www.
 
 Rsbuild has also enabled the latest sass-loader's [modern-compiler](https://github.com/webpack-contrib/sass-loader/releases/tag/v14.2.0) API. This can enable Sass's shared resources feature, which allows the same compiler process to be reused when compiling multiple files, improving build performance.
 
-## Better CSS Supports
+## Better CSS supports
 
 Rsbuild now uses [CssExtractRspackPlugin](https://www.rspack.dev/plugins/rspack/css-extract-rspack-plugin) to extract CSS into separate files, rather than using the [experimental.css](https://www.rspack.dev/config/experiments#experimentscss) config to do so.
 
@@ -151,7 +151,7 @@ const { createRsbuild } = require('@rsbuild/core');
 
 ESM/CJS interop is a tricky issue, so we will provide both formats for a long time to make it easier for more users to use.
 
-## Breaking Changes
+## Breaking changes
 
 ### Upgrade Rspack to 0.7
 
@@ -161,7 +161,7 @@ In the new version, Rspack supports lazy compilation, which can significantly im
 
 In Rsbuild, you can use [dev.lazyCompilation](/config/dev/lazy-compilation) to enable lazy compilation.
 
-### Sass and Less Plugins
+### Sass and Less plugins
 
 Rsbuild's Sass and Less plugins are now two separate npm packages instead of being built into `@rsbuild/core` as before. This change allows users to enable Sass and Less compilation as needed.
 
@@ -187,7 +187,7 @@ export default {
 };
 ```
 
-### dataUriLimit Defaults
+### dataUriLimit defaults
 
 The default value for [output.dataUriLimit](/config/output/data-uri-limit) has been changed from `10000 (10kB)` to `4096 (4KiB)`.
 

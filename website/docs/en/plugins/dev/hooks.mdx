@@ -1,10 +1,10 @@
-# Plugin Hooks
+# Plugin hooks
 
 This chapter introduces the plugin hooks available for Rsbuild plugins.
 
 ## Overview
 
-### Common Hooks
+### Common hooks
 
 - [modifyRsbuildConfig](#modifyrsbuildconfig): Modify the configuration passed to Rsbuild.
 - [modifyEnvironmentConfig](#modifyenvironmentconfig): Modify the Rsbuild configuration of a specific environment.
@@ -17,7 +17,7 @@ This chapter introduces the plugin hooks available for Rsbuild plugins.
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile): Called after the compilation of a single environment. You can get the build result information.
 - [onExit](#onexit): Called when the process is about to exit.
 
-### Dev Hooks
+### Dev hooks
 
 Called only when running the `rsbuild dev` command or the `rsbuild.startDevServer()` method.
 
@@ -29,7 +29,7 @@ Called only when Rsbuild is restarted or when the `close()` method of `rsbuild.b
 
 - [onCloseDevServer](#onclosedevserver): Called when the dev server is closed.
 
-### Build Hooks
+### Build hooks
 
 Called only when running the `rsbuild build` command or the `rsbuild.build()` method.
 
@@ -40,16 +40,16 @@ Called only when Rsbuild is restarted or when the `close()` method of `rsbuild.b
 
 - [onCloseBuild](#onclosebuild): Called when the build is closed.
 
-### Preview Hooks
+### Preview hooks
 
 Called only when running the `rsbuild preview` command or the `rsbuild.preview()` method.
 
 - [onBeforeStartProdServer](#onbeforestartprodserver): Called before starting the production server.
 - [onAfterStartProdServer](#onafterstartprodserver): Called after starting the production server.
 
-## Hooks Order
+## Hooks order
 
-### Dev Hooks
+### Dev hooks
 
 When the `rsbuild dev` command or `rsbuild.startDevServer()` method is executed, Rsbuild will execute the following hooks in order:
 
@@ -75,7 +75,7 @@ When rebuilding, the following hooks will be triggered again:
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onDevCompileDone](#ondevcompiledone)
 
-### Build Hooks
+### Build hooks
 
 When the `rsbuild build` command or `rsbuild.build()` method is executed, Rsbuild will execute the following hooks in order:
 
@@ -101,7 +101,7 @@ When rebuilding, the following hooks will be triggered again:
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onAfterBuild](#onafterbuild)
 
-### Preview Hooks
+### Preview hooks
 
 When executing the `rsbuild preview` command or `rsbuild.preview()` method, Rsbuild will execute the following hooks in order:
 
@@ -111,16 +111,16 @@ When executing the `rsbuild preview` command or `rsbuild.preview()` method, Rsbu
 - [onAfterStartProdServer](#onafterstartprodserver)
 - [onExit](#onexit)
 
-## Global Hooks vs Environment Hooks
+## Global hooks vs environment hooks
 
 In Rsbuild, some of the plugin hooks are global hooks. The execution of these hooks is often related to Rsbuild's own startup process or global logic and is shared under all environments. Such as:
 
 - `modifyRsbuildConfig` is used to modify the basic configuration of Rsbuild. The basic configuration will eventually be merged with the environment configuration;
-- `onBeforeStartDevServer` and `onAfterStartDevServer` are related to the Rsbuild dev server startup process, all environments share Rsbuild's dev server, middlewares, and Web Socket.
+- `onBeforeStartDevServer` and `onAfterStartDevServer` are related to the Rsbuild dev server startup process, all environments share Rsbuild's dev server, middlewares, and WebSocket.
 
 Correspondingly, there are some plugin hooks that are related to the current environment. These hooks are executed with a specific environment context and are triggered multiple times depending on the environment.
 
-### Global Hooks
+### Global hooks
 
 - [modifyRsbuildConfig](#modifyrsbuildconfig)
 - [onBeforeStartDevServer](#onbeforestartdevserver)
@@ -136,7 +136,7 @@ Correspondingly, there are some plugin hooks that are related to the current env
 - [onAfterStartProdServer](#onafterstartprodserver)
 - [onExit](#onexit)
 
-### Environment Hooks
+### Environment hooks
 
 - [modifyEnvironmentConfig](#modifyenvironmentconfig)
 - [modifyBundlerChain](#modifybundlerchain)
@@ -145,9 +145,9 @@ Correspondingly, there are some plugin hooks that are related to the current env
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 
-## Callback Order
+## Callback order
 
-### Default Behavior
+### Default behavior
 
 If multiple plugins register the same hook, the callback functions of the hook will execute in the order in which they were registered.
 
@@ -201,7 +201,7 @@ const plugin2 = () => ({
 rsbuild.addPlugins([plugin1, plugin2]);
 ```
 
-## Common Hooks
+## Common hooks
 
 ### modifyRsbuildConfig
 
@@ -588,7 +588,7 @@ const myPlugin = () => ({
 });
 ```
 
-## Build Hooks
+## Build hooks
 
 ### onBeforeBuild
 
@@ -644,7 +644,7 @@ const myPlugin = () => ({
 });
 ```
 
-## Dev Hooks
+## Dev hooks
 
 ### onBeforeStartDevServer
 
@@ -741,7 +741,7 @@ rsbuild.onCloseDevServer(async () => {
 });
 ```
 
-## Preview Hooks
+## Preview hooks
 
 ### onBeforeStartProdServer
 
@@ -780,7 +780,7 @@ const myPlugin = () => ({
 });
 ```
 
-## Other Hooks
+## Other hooks
 
 ### onExit
 

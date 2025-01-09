@@ -1,8 +1,8 @@
-# Deploy Static Site
+# Deploy static site
 
 This section introduces how to deploy the build outputs of Rsbuild as a static site.
 
-## Background Information
+## Background information
 
 Before starting the deployment, you need to understand some background information:
 
@@ -10,7 +10,7 @@ Before starting the deployment, you need to understand some background informati
 - The directory structure of the build outputs.
 - The URL prefix of static assets.
 
-### Build Commands
+### Build commands
 
 The build commands provided by Rsbuild:
 
@@ -30,7 +30,7 @@ The build commands provided by Rsbuild:
 The preview command is only used for local preview. Do not use it for production servers, as it is not designed for that.
 :::
 
-### Output Directory
+### Output directory
 
 Rsbuild's build outputs typically includes HTML, JS, CSS, and other assets, and is output to the `dist` directory by default. The name and structure of the dist directory can be changed using some configuration options. See the [Output Files](/guide/basic/output-files) section for more information.
 
@@ -43,7 +43,7 @@ dist
 └── [name].html
 ```
 
-### Asset Prefix
+### Asset prefix
 
 We can divide the build output into two parts: **HTML files** and **static assets**.
 
@@ -80,7 +80,7 @@ In this way, when referencing static assets in HTML, the specified prefix will b
 <script src="https://cdn.com/path/static/js/index.some-hash.js"></script>
 ```
 
-## GitHub Pages
+## GitHub pages
 
 [GitHub Pages](https://pages.github.com/) is a static site hosting service that takes HTML, CSS, and JavaScript files straight from a repository on GitHub
 
@@ -112,7 +112,7 @@ on:
   # Runs on pushes targeting the default branch
   push:
     branches: ['main']
-  # Allows you to run this workflow manually from the Actions tab
+  # Allows you to run this workflow manually from the actions tab
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -166,7 +166,7 @@ jobs:
 
 [Netlify Core](https://www.netlify.com/) is a frontend cloud solution for developers to build and deploy future-proof digital solutions with modern, composable tooling.
 
-### Add New Site
+### Add new site
 
 Netlify provides a detailed guide, you can follow the instructions in [Netlify - Add new site](https://docs.netlify.com/welcome/add-new-site/), set up some basic information, and then you can start the deployment.
 
@@ -177,7 +177,7 @@ You need to configure the following two fields:
 
 Then click on the **Deploy site** button to start the deployment.
 
-### Custom Domains
+### Custom domains
 
 If you want to make your sites accessible at your own domain names, you can configure it in the "Domain management" section of Netlify.
 
@@ -187,7 +187,7 @@ If you want to make your sites accessible at your own domain names, you can conf
 
 [Vercel](https://vercel.com/) is a platform for developers that provides the tools, workflows, and infrastructure you need to build and deploy your web apps faster, without the need for additional configuration.
 
-### Add New Site
+### Add new site
 
 Vercel provides a detailed guide that you can follow [Vercel - Projects](https://vercel.com/docs/projects/overview) to create a project in your dashboard and configure some basic information to start deployment.
 
@@ -197,7 +197,7 @@ You only need to configure the fields under "Build and Output Settings":
 
 Then click the **Deploy** button to start the deployment.
 
-### Configure Domains
+### Configure domains
 
 If you want to make your sites accessible at your own domain names, you can configure it in the "Domains" section of Vercel.
 

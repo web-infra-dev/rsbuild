@@ -12,7 +12,7 @@ In traditional client-side rendering, the server sends an empty HTML shell and s
 
 With SSR, the server generates HTML that already contains dynamic content and sends it to the client. This makes the initial page loading faster and more SEO-friendly, as search engines can crawl the rendered page.
 
-## File Structure
+## File structure
 
 A typical SSR application will have the following files:
 
@@ -152,7 +152,7 @@ If you need to preview the online effect of SSR rendering, you also need to modi
 
 Now, you can run the `npm run dev` command to start the dev server with SSR rendering function, and visit `http://localhost:3000/` to see that the SSR content has been rendered to the HTML page.
 
-## Get Manifest
+## Get manifest
 
 By default, scripts and links associated with the current page are automatically inserted into the HTML template. At this time, the compiled HTML template content can be obtained through [getTransformedHtml](/guide/advanced/environments#environment-api).
 

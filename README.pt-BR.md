@@ -138,7 +138,7 @@ Por favor leia o [Guia de Contribuição](https://github.com/web-infra-dev/rsbui
   </table>
 </a>
 
-### Código de Conduta
+### Código de conduta
 
 Este repositório adotou o código de conduta de código aberto da ByteDance. Por favor, verifique [Código de Conduta](./CODE_OF_CONDUCT.md) para mais detalhes.
 

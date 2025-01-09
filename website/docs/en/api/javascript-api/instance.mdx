@@ -1,4 +1,4 @@
-# Rsbuild Instance
+# Rsbuild instance
 
 This section describes all the properties and methods on the Rsbuild instance object.
 
@@ -152,7 +152,7 @@ const result = await rsbuild.build({
 await result.close();
 ```
 
-### Stats Object
+### Stats object
 
 In non-watch mode, the `rsbuild.build() returns an Rspack [stats](https://rspack.dev/api/javascript-api/stats) object:
 
@@ -162,7 +162,7 @@ const result = await rsbuild.build();
 console.log(result.stats);
 ```
 
-### Custom Compiler
+### Custom compiler
 
 In some cases, you may want to use a custom compiler:
 
@@ -249,7 +249,7 @@ console.log(port); // 3000
 await server.close();
 ```
 
-### Custom Compiler
+### Custom compiler
 
 In some cases, you may want to use a custom compiler:
 
@@ -264,7 +264,7 @@ await rsbuild.startDevServer({
 });
 ```
 
-### Get Port Silently
+### Get port silently
 
 In some cases, the default startup port number is already occupied. In this situation, Rsbuild will automatically increment the port number until it finds an available one. This process will output a prompt log. If you do not want this log, you can set `getPortSilently` to `true`.
 
@@ -677,7 +677,7 @@ await rsbuild.inspectConfig({
 });
 ```
 
-### Output Path
+### Output path
 
 You can set the output path using `outputPath`. The default value is [output.distPath.root](/config/output/dist-path).
 

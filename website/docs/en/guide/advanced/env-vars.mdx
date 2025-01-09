@@ -1,10 +1,10 @@
-# Environment Variables
+# Environment variables
 
 Rsbuild supports injecting env variables or expressions into the code during build, which is helpful for distinguishing the running environment or replacing constants.
 
 This chapter introduces how to use env variables in Rsbuild.
 
-## Default Variables
+## Default variables
 
 Rsbuild by default injects the some env variables into the code using [source.define](#using-define). These will be replaced with specified values during the build:
 
@@ -190,7 +190,7 @@ When a `.env` file exists in the project root directory, Rsbuild CLI will automa
 
 You can access these env variables through `import.meta.env.[name]` or `process.env.[name]`.
 
-### File Types
+### File types
 
 Rsbuild supports reading the following types of env files:
 
@@ -205,7 +205,7 @@ Rsbuild supports reading the following types of env files:
 
 If several of the above files exist at the same time, they will all be loaded, with the files listed at the bottom of the table having higher priority.
 
-### Env Mode
+### Env mode
 
 Rsbuild also supports reading `.env.[mode]` and `.env.[mode].local` files. You can specify the env mode using the `--env-mode <mode>` flag.
 
@@ -229,7 +229,7 @@ It is recommended to use `--env-mode` to set the env mode, and not to modify `pr
 
 :::
 
-### Env Directory
+### Env directory
 
 By default, the `.env` file is located in the root directory of the project. You can specify the env directory by using the `--env-dir <dir>` option in the CLI.
 
@@ -273,7 +273,7 @@ console.log(import.meta.env.BAR); // '2'
 console.log(process.env.BAR); // '2'
 ```
 
-### Manually Load Env
+### Manually load env
 
 If you are not using the Rsbuild CLI and are using the Rsbuild [JavaScript API](/api/start/index) instead, you will need to manually call the [loadEnv](/api/javascript-api/core#loadenv) method to read env variables and inject them into the code via the [source.define](/config/source/define) config.
 
@@ -293,7 +293,7 @@ const mergedConfig = mergeRsbuildConfig(
 );
 ```
 
-## Public Variables
+## Public variables
 
 All env variables starting with `PUBLIC_` can be accessed in client code. For example, if the following variables are defined:
 
@@ -319,7 +319,7 @@ console.log(process.env.PASSWORD); // -> undefined
 
 :::
 
-### Replacement Scope
+### Replacement scope
 
 Public variables will replace identifiers in the client code, with the replacement scope including:
 
@@ -334,7 +334,7 @@ Note that public variables will not replace identifiers in the following files:
 
 - CSS files, such as `.css`, `.scss`, `.less`, etc.
 
-### Custom Prefix
+### Custom prefix
 
 Rsbuild provides the [loadEnv](/api/javascript-api/core#loadenv) method, which can inject env variables with any prefix into client code.
 
@@ -358,7 +358,7 @@ By using [source.define](/config/source/define), you can replace global identifi
 
 `define` is similar to the macro definition capabilities provided by other languages. It is often used to inject env variables and other information to the code during build time.
 
-### Replace Identifiers
+### Replace identifiers
 
 The most basic use case for `define` is to replace global identifiers in compile time.
 
@@ -384,7 +384,7 @@ For more about `source.define`, just refer to [API References](/config/source/de
 The environment variable `NODE_ENV` shown in the example above is already injected by the Rsbuild, and you usually do not need to configure it manually.
 :::
 
-### Identifiers Matching
+### Identifiers matching
 
 Note that `source.define` can only match complete global identifiers. You can think of it as a text replacement process.
 
@@ -430,7 +430,7 @@ If the above usage is adopted, the following problems will be caused:
 
 Therefore, please inject the env variables on `process.env` according to actual needs and avoid replacing them in its entirety.
 
-## Type Declarations
+## Type declarations
 
 When you access an environment variable in a TypeScript file, TypeScript may prompt that the variable lacks a type definition, and you need to add the corresponding type declaration.
 
@@ -480,7 +480,7 @@ declare namespace NodeJS {
 }
 ```
 
-## Tree Shaking
+## Tree shaking
 
 `define` can also be used to mark dead code to assist the Rspack with tree shaking optimization.
 

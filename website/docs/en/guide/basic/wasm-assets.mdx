@@ -1,4 +1,4 @@
-# Import Wasm Assets
+# Import Wasm assets
 
 Rsbuild supports import WebAssembly assets in code.
 
@@ -35,7 +35,7 @@ const wasmURL = new URL('./add.wasm', import.meta.url);
 console.log(wasmURL).pathname; // "/static/wasm/[hash].module.wasm"
 ```
 
-## Output Directory
+## Output directory
 
 When a `.wasm` asset is imported, it will be output by Rsbuild to the `dist/static/wasm` directory by default.
 
@@ -51,7 +51,7 @@ export default {
 };
 ```
 
-## Type Declaration
+## Type declaration
 
 When you import a Wasm file in TypeScript code, you usually need to add the corresponding type declaration.
 
