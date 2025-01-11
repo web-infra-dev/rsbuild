@@ -6,13 +6,13 @@ settings:
 
 patchedDependencies:
   css-loader@7.1.2:
-    hash: hgmoyq6bbvmxg74vxs5gi6q7sa
+    hash: f108465818eeda8955fecc4aa57dbfd6219c34a7a876fc224f229836292996a6
     path: patches/css-loader@7.1.2.patch
   http-proxy@1.18.1:
-    hash: rg7rdv5wkqlu467sapxhhl2w2i
+    hash: 424b689da454f1f336d635615733f30568882789c1173f861c30f95ba8b05723
     path: patches/http-proxy@1.18.1.patch
   postcss-loader@8.1.1:
-    hash: vfmtcjxhomso2wgrjs2ahhjxfy
+    hash: 7f10237e1665e9913e0f735a822545af08363f5cc67eacc2c37408aee7553d47
     path: patches/postcss-loader@8.1.1.patch
 
 importers:
@@ -638,7 +638,7 @@ importers:
         version: 2.8.5
       css-loader:
         specifier: 7.1.2
-        version: 7.1.2(patch_hash=hgmoyq6bbvmxg74vxs5gi6q7sa)(@rspack/core@1.2.0-beta.0(@swc/helpers@0.5.15))(webpack@5.97.1(@swc/core@1.10.4(@swc/helpers@0.5.15)))
+        version: 7.1.2(patch_hash=f108465818eeda8955fecc4aa57dbfd6219c34a7a876fc224f229836292996a6)(@rspack/core@1.2.0-beta.0(@swc/helpers@0.5.15))(webpack@5.97.1(@swc/core@1.10.4(@swc/helpers@0.5.15)))
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -680,7 +680,7 @@ importers:
         version: 6.0.1(jiti@1.21.7)(postcss@8.4.49)(yaml@2.6.0)
       postcss-loader:
         specifier: 8.1.1
-        version: 8.1.1(patch_hash=vfmtcjxhomso2wgrjs2ahhjxfy)(@rspack/core@1.2.0-beta.0(@swc/helpers@0.5.15))(postcss@8.4.49)(typescript@5.7.2)(webpack@5.97.1(@swc/core@1.10.4(@swc/helpers@0.5.15)))
+        version: 8.1.1(patch_hash=7f10237e1665e9913e0f735a822545af08363f5cc67eacc2c37408aee7553d47)(@rspack/core@1.2.0-beta.0(@swc/helpers@0.5.15))(postcss@8.4.49)(typescript@5.7.2)(webpack@5.97.1(@swc/core@1.10.4(@swc/helpers@0.5.15)))
       prebundle:
         specifier: 1.2.5
         version: 1.2.5(typescript@5.7.2)
@@ -9811,7 +9811,7 @@ snapshots:
 
   cspell-ban-words@0.0.4: {}
 
-  css-loader@7.1.2(patch_hash=hgmoyq6bbvmxg74vxs5gi6q7sa)(@rspack/core@1.2.0-beta.0(@swc/helpers@0.5.15))(webpack@5.97.1(@swc/core@1.10.4(@swc/helpers@0.5.15))):
+  css-loader@7.1.2(patch_hash=f108465818eeda8955fecc4aa57dbfd6219c34a7a876fc224f229836292996a6)(@rspack/core@1.2.0-beta.0(@swc/helpers@0.5.15))(webpack@5.97.1(@swc/core@1.10.4(@swc/helpers@0.5.15))):
     dependencies:
       icss-utils: 5.1.0(postcss@8.4.49)
       postcss: 8.4.49
@@ -10580,14 +10580,14 @@ snapshots:
   http-proxy-middleware@2.0.7:
     dependencies:
       '@types/http-proxy': 1.17.15
-      http-proxy: 1.18.1(patch_hash=rg7rdv5wkqlu467sapxhhl2w2i)
+      http-proxy: 1.18.1(patch_hash=424b689da454f1f336d635615733f30568882789c1173f861c30f95ba8b05723)
       is-glob: 4.0.3
       is-plain-obj: 3.0.0
       micromatch: 4.0.8
     transitivePeerDependencies:
       - debug
 
-  http-proxy@1.18.1(patch_hash=rg7rdv5wkqlu467sapxhhl2w2i):
+  http-proxy@1.18.1(patch_hash=424b689da454f1f336d635615733f30568882789c1173f861c30f95ba8b05723):
     dependencies:
       eventemitter3: 4.0.7
       follow-redirects: 1.15.9
@@ -11789,7 +11789,7 @@ snapshots:
       postcss: 8.4.49
       yaml: 2.6.0
 
-  postcss-loader@8.1.1(patch_hash=vfmtcjxhomso2wgrjs2ahhjxfy)(@rspack/core@1.2.0-beta.0(@swc/helpers@0.5.15))(postcss@8.4.49)(typescript@5.7.2)(webpack@5.97.1(@swc/core@1.10.4(@swc/helpers@0.5.15))):
+  postcss-loader@8.1.1(patch_hash=7f10237e1665e9913e0f735a822545af08363f5cc67eacc2c37408aee7553d47)(@rspack/core@1.2.0-beta.0(@swc/helpers@0.5.15))(postcss@8.4.49)(typescript@5.7.2)(webpack@5.97.1(@swc/core@1.10.4(@swc/helpers@0.5.15))):
     dependencies:
       cosmiconfig: 9.0.0(typescript@5.7.2)
       jiti: 1.21.7

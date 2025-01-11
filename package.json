@@ -59,9 +59,9 @@
       "css-loader@7.1.2": "patches/css-loader@7.1.2.patch"
     }
   },
-  "packageManager": "pnpm@9.11.0",
+  "packageManager": "pnpm@10.0.0",
   "engines": {
     "node": ">=18.0.0",
-    "pnpm": ">=9.0.0"
+    "pnpm": ">=10.0.0"
   }
 }
