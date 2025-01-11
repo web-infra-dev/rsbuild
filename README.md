@@ -70,7 +70,7 @@ The following diagram illustrates the relationship between Rsbuild and other too
 
 ## 📚 Getting started
 
-To get started with Rsbuild, see the [Quick Start](https://rsbuild.dev/guide/start/quick-start).
+To get started with Rsbuild, see the [Quick start](https://rsbuild.dev/guide/start/quick-start).
 
 ## 🦀 Links
 
@@ -140,7 +140,7 @@ Please read the [Contributing Guide](https://github.com/web-infra-dev/rsbuild/bl
 
 ### Code of conduct
 
-This repo has adopted the ByteDance Open Source Code of Conduct. Please check [Code of Conduct](./CODE_OF_CONDUCT.md) for more details.
+This repo has adopted the ByteDance open source code of conduct. Please check [Code of conduct](./CODE_OF_CONDUCT.md) for more details.
 
 ## 🧑‍💻 Community
 
