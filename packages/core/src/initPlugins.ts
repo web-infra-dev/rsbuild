@@ -286,6 +286,14 @@ export function initPluginAPI({
             rule.issuerLayer(descriptor.issuerLayer);
           }
 
+          if (descriptor.issuer) {
+            rule.issuer(descriptor.issuer);
+          }
+
+          if (descriptor.with) {
+            rule.with(descriptor.with);
+          }
+
           const loaderName = descriptor.raw
             ? 'transformRawLoader.mjs'
             : 'transformLoader.mjs';
