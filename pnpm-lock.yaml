@@ -499,8 +499,8 @@ importers:
         specifier: ^0.5.15
         version: 0.5.15
       core-js:
-        specifier: ~3.39.0
-        version: 3.39.0
+        specifier: ~3.40.0
+        version: 3.40.0
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -597,8 +597,8 @@ importers:
         specifier: ^0.5.15
         version: 0.5.15
       core-js:
-        specifier: ~3.39.0
-        version: 3.39.0
+        specifier: ~3.40.0
+        version: 3.40.0
     devDependencies:
       '@rslib/core':
         specifier: 0.3.0
@@ -3778,6 +3778,9 @@ packages:
 
   core-js@3.39.0:
     resolution: {integrity: sha512-raM0ew0/jJUqkJ0E6e8UDtl+y/7ktFivgWvqw8dNSQeNWoSDLvQ1H/RN3aPXB9tBd4/FhyR4RDPGhsNIMsAn7g==}
+
+  core-js@3.40.0:
+    resolution: {integrity: sha512-7vsMc/Lty6AGnn7uFpYT56QesI5D2Y/UkgKounk87OP9Z2H9Z8kj6jzcSGAxFmUtDOS0ntK6lbQz+Nsa0Jj6mQ==}
 
   cors@2.8.5:
     resolution: {integrity: sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==}
@@ -9764,6 +9767,8 @@ snapshots:
       browserslist: 4.24.2
 
   core-js@3.39.0: {}
+
+  core-js@3.40.0: {}
 
   cors@2.8.5:
     dependencies:
