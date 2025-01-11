@@ -316,6 +316,17 @@ export type TransformDescriptor = {
    * @see https://rspack.dev/config/module#ruleissuerlayer
    */
   issuerLayer?: string;
+  /**
+   * Matches all modules that match this resource, and will match against Resource
+   * (the absolute path without query and fragment) of the module that issued the current module.
+   * @see https://rspack.dev/config/module#ruleissuer
+   */
+  issuer?: Rspack.RuleSetCondition;
+  /**
+   * `with` can be used in conjunction with [import attributes](https://github.com/tc39/proposal-import-attributes).
+   * @see https://rspack.dev/config/module#rulewith
+   */
+  with?: Record<string, Rspack.RuleSetCondition>;
 };
 
 export type TransformFn = (
