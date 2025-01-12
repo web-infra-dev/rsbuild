@@ -1,7 +1,17 @@
 # source.include
 
 - **Type:** [Rspack.RuleSetCondition](https://rspack.dev/config/module#condition)
-- **Default:**
+
+Specify additional JavaScript files that need to be compiled by [SWC](/guide/basic/configure-swc).
+
+## Default value
+
+To avoid double compilation, by default, Rsbuild's built-in [swc-loader](https://rspack.dev/guide/features/builtin-swc-loader) compiles the following files:
+
+- TypeScript and JSX files in any directory, matching file extensions `.ts`, `.tsx`, `.jsx`, `.mts`, `.cts`.
+- JavaScript files in the [root](/config/root) directory, excluding the `node_modules` directory, matching file extensions `.js`, `.mjs`, `.cjs`.
+
+The default value of `source.include` can be expressed as:
 
 ```ts
 const defaultInclude = [
@@ -12,15 +22,13 @@ const defaultInclude = [
 ];
 ```
 
-The `source.include` is used to specify additional JavaScript files that need to be compiled.
-
-To avoid redundant compilation, by default, Rsbuild only compiles JavaScript files in the current directory and TypeScript and JSX files in all directories. It does not compile JavaScript files under node_modules.
+## Usage
 
 Through the `source.include` config, you can specify directories or modules that need to be compiled by Rsbuild. The usage of `source.include` is consistent with [Rule.include](https://rspack.dev/config/module#ruleinclude) in Rspack, which supports passing in strings or regular expressions to match the module path.
 
 For example:
 
-```ts
+```ts title="rsbuild.config.ts"
 import path from 'node:path';
 
 export default {
@@ -40,20 +48,20 @@ If you are unsure which third-party dependencies in node_modules contain ESNext 
 
 Take `query-string` as an example, you can add the following config:
 
-```ts
+```ts title="rsbuild.config.ts"
 import path from 'node:path';
 
 export default {
   source: {
     include: [
       // Method 1:
-      // First get the path of the module by require.resolve
-      // Then pass path.dirname to point to the corresponding directory
-      path.dirname(require.resolve('query-string')),
-      // Method 2:
       // Match by regular expression
       // All paths containing `node_modules/query-string/` will be matched
       /node_modules[\\/]query-string[\\/]/,
+      // Method 2:
+      // First get the path of the module by require.resolve
+      // Then pass path.dirname to point to the corresponding directory
+      path.dirname(require.resolve('query-string')),
     ],
   },
 };
@@ -71,7 +79,7 @@ When you compile an npm package via `source.include`, Rsbuild will only compile 
 
 Take `query-string` for example, it depends on the `decode-uri-component` package, which also has ESNext code, so you need to add the `decode-uri-component` package to `source.include` as well.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     include: [
@@ -86,7 +94,7 @@ export default {
 
 When developing in Monorepo, if you need to refer to the source code of other libraries in Monorepo, you can add the corresponding library to `source.include`:
 
-```ts
+```ts title="rsbuild.config.ts"
 import path from 'node:path';
 
 const packagesDir = path.resolve(__dirname, '../../packages');
@@ -114,7 +122,7 @@ For example, if you symlink the `packages/foo` path in Monorepo to the `node_mod
 
 In general, `source.include` should not be used to compile the entire `node_modules` directory. For example, the following configuration is not recommended:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     include: [/[\\/]node_modules[\\/]/],
@@ -126,7 +134,7 @@ This is because most of the npm packages in `node_modules` are already compiled,
 
 If you are willing to accept the increase in compilation time, you can use the following configuration to compile all JavaScript files but exclude `core-js':
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     include: [{ not: /[\\/]core-js[\\/]/ }],
