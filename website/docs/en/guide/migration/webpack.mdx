@@ -154,6 +154,57 @@ Most of the common webpack loaders and plugins can still be used in Rsbuild, but
 
 Rsbuild does not support the use of Rspack's [devServer](https://rspack.dev/config/dev-server) config. Please refer to [Rspack Dev Server](/guide/basic/server#rspack-dev-server) for replacement.
 
+## Babel migration
+
+Rsbuild uses SWC by default, so most commonly used Babel plugins are no longer required. Here are some common Babel plugins migration examples.
+
+### @babel/preset-env
+
+`@babel/preset-env` is no longer required, Rsbuild will automatically downgrade code based on the [browserslist](/guide/advanced/browserslist) configuration.
+
+Note that Rsbuild does not inject polyfill by default. You can refer to [Polyfill mode](/guide/advanced/browser-compatibility#polyfill-mode) for how to inject.
+
+### @babel/preset-typescript
+
+`@babel/preset-typescript` is no longer required, as Rsbuild enables SWC's TypeScript transformation by default.
+
+### @babel/preset-react
+
+`@babel/preset-react` is no longer required, replace it with [@rsbuild/plugin-react](/plugins/list/plugin-react).
+
+### @babel/plugin-transform-runtime
+
+`@babel/plugin-transform-runtime` is no longer required, Rsbuild has built-in equivalent `@swc/helpers` as runtime helpers.
+
+### babel-plugin-import
+
+`babel-plugin-import` can be replaced with the [source.transformImport](/config/source/transform-import) configuration in Rsbuild.
+
+- Babel configuration:
+
+```js title="babel.config.js"
+module.exports = {
+  plugins: [
+    [
+      'import',
+      { libraryName: 'some-library', libraryDirectory: 'es', style: true },
+    ],
+  ],
+};
+```
+
+- Rsbuild configuration:
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    transformImport: [
+      { libraryName: 'some-library', libraryDirectory: 'es', style: true },
+    ],
+  },
+};
+```
+
 ## Validating results
 
 After completing the above steps, you have completed the basic migration from webpack to Rsbuild. You can now run the `npm run dev` command to try starting the dev server.
