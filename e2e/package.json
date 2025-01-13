@@ -46,7 +46,7 @@
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.14",
     "@types/node": "^22.10.5",
-    "@types/react": "^19.0.5",
+    "@types/react": "^19.0.6",
     "@types/react-dom": "^19.0.3",
     "create-rsbuild": "workspace:*",
     "fast-glob": "^3.3.3",

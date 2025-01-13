@@ -165,11 +165,11 @@ importers:
         specifier: ^22.10.5
         version: 22.10.5
       '@types/react':
-        specifier: ^19.0.5
-        version: 19.0.5
+        specifier: ^19.0.6
+        version: 19.0.6
       '@types/react-dom':
         specifier: ^19.0.3
-        version: 19.0.3(@types/react@19.0.5)
+        version: 19.0.3(@types/react@19.0.6)
       create-rsbuild:
         specifier: workspace:*
         version: link:../packages/create-rsbuild
@@ -408,11 +408,11 @@ importers:
         specifier: workspace:*
         version: link:../../packages/plugin-react
       '@types/react':
-        specifier: ^19.0.5
-        version: 19.0.5
+        specifier: ^19.0.6
+        version: 19.0.6
       '@types/react-dom':
         specifier: ^19.0.3
-        version: 19.0.3(@types/react@19.0.5)
+        version: 19.0.3(@types/react@19.0.6)
       typescript:
         specifier: ^5.7.3
         version: 5.7.3
@@ -1165,11 +1165,11 @@ importers:
         specifier: ^22.10.5
         version: 22.10.5
       '@types/react':
-        specifier: ^19.0.5
-        version: 19.0.5
+        specifier: ^19.0.6
+        version: 19.0.6
       '@types/react-dom':
         specifier: ^19.0.3
-        version: 19.0.3(@types/react@19.0.5)
+        version: 19.0.3(@types/react@19.0.6)
       fast-glob:
         specifier: ^3.3.3
         version: 3.3.3
@@ -3087,8 +3087,8 @@ packages:
     peerDependencies:
       '@types/react': ^19.0.0
 
-  '@types/react@19.0.5':
-    resolution: {integrity: sha512-i4OQzFiqsUCfoBns/KHpz+4QcvfjoCsTUi+mugo3lrSRA3+x0gJVvhZhAJrwLGEqz4EXiFVP4hPnOugx+m2uhg==}
+  '@types/react@19.0.6':
+    resolution: {integrity: sha512-gIlMztcTeDgXCUj0vCBOqEuSEhX//63fW9SZtCJ+agxoQTOklwDfiEMlTWn4mR/C/UK5VHlpwsCsOyf7/hc4lw==}
 
   '@types/sass-loader@8.0.9':
     resolution: {integrity: sha512-OAzsrLMYVMprsR5Je2eIGqwsJ6FulUG5fHkzPemv5ejhyX05lpqNw5tbvdJqZi31RFELVeoR9yij17Xu6Qk1xA==}
@@ -7947,7 +7947,7 @@ snapshots:
   '@mdx-js/react@2.3.0(react@18.3.1)':
     dependencies:
       '@types/mdx': 2.0.13
-      '@types/react': 19.0.5
+      '@types/react': 19.0.6
       react: 18.3.1
 
   '@modern-js/swc-plugins-darwin-arm64@0.6.11':
@@ -8963,11 +8963,11 @@ snapshots:
     dependencies:
       '@types/node': 22.10.5
 
-  '@types/react-dom@19.0.3(@types/react@19.0.5)':
+  '@types/react-dom@19.0.3(@types/react@19.0.6)':
     dependencies:
-      '@types/react': 19.0.5
+      '@types/react': 19.0.6
 
-  '@types/react@19.0.5':
+  '@types/react@19.0.6':
     dependencies:
       csstype: 3.1.3
 
