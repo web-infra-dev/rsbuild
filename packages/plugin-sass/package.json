@@ -37,14 +37,14 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.3.0",
+    "@rslib/core": "0.3.1",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^22.10.5",
     "@types/sass-loader": "^8.0.9",
     "prebundle": "1.2.5",
     "resolve-url-loader": "^5.0.0",
     "sass-loader": "^16.0.4",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.3"
   },
   "peerDependencies": {
     "@rsbuild/core": "1.x"

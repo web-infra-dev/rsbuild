@@ -29,14 +29,14 @@
     "@prefresh/core": "^1.5.3",
     "@prefresh/utils": "^1.2.0",
     "@rspack/plugin-preact-refresh": "^1.1.2",
-    "@swc/plugin-prefresh": "^6.0.2"
+    "@swc/plugin-prefresh": "^6.0.3"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.3.0",
+    "@rslib/core": "0.3.1",
     "@types/node": "^22.10.5",
     "preact": "^10.25.4",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.3"
   },
   "peerDependencies": {
     "@rsbuild/core": "1.x"
