@@ -179,3 +179,4 @@ export type {
   WatchFiles,
 } from './types';
 export type { ChainIdentifier } from './configChain';
+export type { RsbuildDevServer } from './server/devServer';
