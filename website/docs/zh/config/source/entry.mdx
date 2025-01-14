@@ -136,7 +136,7 @@ import { glob } from 'glob';
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig(async () => {
-  const entryFiles = await glob('./src/**/main.ts');
+  const entryFiles = await glob('./src/**/main.{ts,tsx,js,jsx}');
 
   const entry = Object.fromEntries(
     entryFiles.map((file) => {
