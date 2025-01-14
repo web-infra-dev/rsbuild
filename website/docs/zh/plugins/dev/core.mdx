@@ -139,8 +139,10 @@ import GetNormalizedConfig from '@zh/shared/getNormalizedConfig.mdx';
 ```ts
 const pluginFoo = () => ({
   setup(api) {
-    const config = api.getNormalizedConfig();
-    console.log(config.html.title);
+    api.onBeforeBuild(({ bundlerConfigs }) => {
+      const config = api.getNormalizedConfig();
+      console.log(config.html.title);
+    });
   },
 });
 ```
