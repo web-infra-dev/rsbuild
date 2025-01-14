@@ -125,3 +125,30 @@ export default {
   },
 };
 ```
+
+## 异步设置
+
+如果你需要异步设置 entry，例如使用 [glob](https://www.npmjs.com/package/glob) 来扫描目录，可以在 `rsbuild.config.ts` 中导出一个异步函数：
+
+```ts
+import path from 'node:path';
+import { glob } from 'glob';
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig(async () => {
+  const entryFiles = await glob('./src/**/main.ts');
+
+  const entry = Object.fromEntries(
+    entryFiles.map((file) => {
+      const entryName = path.basename(path.dirname(file));
+      return [entryName, `./${file}`];
+    }),
+  );
+
+  return {
+    source: {
+      entry: entry,
+    },
+  };
+});
+```
