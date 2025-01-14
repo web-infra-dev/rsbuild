@@ -99,7 +99,7 @@ export default {
 
 比如为 `web` 和 `node` 环境设置不同的 entry：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   environments: {
     web: {
@@ -130,7 +130,7 @@ export default {
 
 如果你需要异步设置 entry，例如使用 [glob](https://www.npmjs.com/package/glob) 来扫描目录，可以在 `rsbuild.config.ts` 中导出一个异步函数：
 
-```ts
+```ts title="rsbuild.config.ts"
 import path from 'node:path';
 import { glob } from 'glob';
 import { defineConfig } from '@rsbuild/core';

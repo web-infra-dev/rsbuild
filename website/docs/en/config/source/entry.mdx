@@ -99,7 +99,7 @@ When you build for multiple [environments](/config/environments), you can set di
 
 For example, set different entry for `web` and `node` environments:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   environments: {
     web: {
@@ -130,7 +130,7 @@ export default {
 
 If you need to set entry asynchronously, for example, use [glob](https://www.npmjs.com/package/glob) to scan the directory, you can export an async function in `rsbuild.config.ts`:
 
-```ts
+```ts title="rsbuild.config.ts"
 import path from 'node:path';
 import { glob } from 'glob';
 import { defineConfig } from '@rsbuild/core';
