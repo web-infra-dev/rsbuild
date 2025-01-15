@@ -73,18 +73,24 @@ export async function emptyDir(
   }
 
   try {
-    const entries = await fs.promises.readdir(dir, { withFileTypes: true });
+    const entries = await fs.promises.readdir(dir, {
+      withFileTypes: true,
+    });
+
     await Promise.all(
       entries.map(async (entry) => {
-        const absolutePath = path.resolve(dir, entry.name);
-        if (keep.some((reg) => reg.test(absolutePath))) {
+        const fullPath = path.resolve(dir, entry.name);
+        if (keep.some((reg) => reg.test(fullPath))) {
           return;
         }
 
         if (entry.isDirectory()) {
-          await emptyDir(absolutePath, keep, false);
+          await emptyDir(fullPath, keep, false);
+          if (!keep.length) {
+            await fs.promises.rmdir(fullPath);
+          }
         } else {
-          await fs.promises.unlink(absolutePath);
+          await fs.promises.unlink(fullPath);
         }
       }),
     );
