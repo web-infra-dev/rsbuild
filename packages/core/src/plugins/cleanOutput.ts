@@ -121,6 +121,7 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
         getRsbuildOutputPath(),
       ].filter((pathInfo): pathInfo is PathInfo => !!pathInfo);
 
+      // Use `for...of` to handle nested directories correctly
       for (const pathInfo of pathInfos) {
         await emptyDir(pathInfo.path, pathInfo.keep);
       }
