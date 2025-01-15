@@ -108,6 +108,15 @@ pluginReact({
 });
 ```
 
+### swcReactOptions.refresh
+
+- **Type:** `boolean`
+- **Default:** based on [fastRefresh](#fastrefresh) and [dev.hmr](/config/dev/hmr)
+
+Whether to enable [React Fast Refresh](https://www.npmjs.com/package/react-refresh).
+
+Most of the time, you should use the plugin's [fastRefresh](#fastrefresh) option to enable or disable Fast Refresh.
+
 ### splitChunks
 
 When [chunkSplit.strategy](/config/performance/chunk-split) set to `split-by-experience`, Rsbuild will automatically split `react` and `router` related packages into separate chunks by default:
@@ -225,7 +234,9 @@ pluginReact({
 - **Type:** `boolean`
 - **Default:** `true`
 
-Whether to enable React [Fast Refresh](https://www.npmjs.com/package/react-refresh) in development mode.
+Whether to enable [React Fast Refresh](https://www.npmjs.com/package/react-refresh) in development mode.
+
+If `fastRefresh` is set to `true`, `@rsbuild/plugin-react` will automatically register the [@rspack/plugin-react-refresh](https://www.npmjs.com/package/@rspack/plugin-react-refresh) plugin.
 
 If you need to disable Fast Refresh, you can set it to `false`:
 
