@@ -943,6 +943,7 @@ export type ManifestConfig = string | boolean | ManifestObjectConfig;
 export type CleanDistPathObject = {
   /**
    * Whether to clean the dist path.
+   * @default 'auto'
    */
   enable?: boolean | 'auto';
   /**
