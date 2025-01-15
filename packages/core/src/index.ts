@@ -44,6 +44,8 @@ export type {
   Charset,
   ClientConfig,
   CliShortcut,
+  CleanDistPath,
+  CleanDistPathObject,
   ConfigChain,
   ConfigChainWithContext,
   ConsoleType,
