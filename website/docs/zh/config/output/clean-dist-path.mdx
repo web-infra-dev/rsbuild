@@ -1,6 +1,11 @@
 # output.cleanDistPath
 
-- **类型：** `boolean | 'auto'`
+- **类型：**
+
+```ts
+type CleanDistPath = boolean | 'auto' | CleanDistPathObject;
+```
+
 - **默认值：** `'auto'`
 
 是否在构建开始前清理产物目录下的所有文件（产物目录默认为 `dist`）。
@@ -44,3 +49,48 @@ export default {
   },
 };
 ```
+
+## 选项
+
+`output.cleanDistPath` 支持配置为对象，以实现更细粒度的控制。
+
+### enable
+
+- **类型：** `boolean | 'auto'`
+- **默认值：** `'auto'`
+
+是否在构建开始前清理产物目录下的所有文件。
+
+```js
+export default {
+  output: {
+    // 等价于 `cleanDistPath: true`
+    cleanDistPath: {
+      enable: true,
+    },
+  },
+};
+```
+
+### keep
+
+- **类型：** `RegExp[]`
+- **默认值：** `undefined`
+
+指定在产物目录下保留的文件。如果文件的绝对路径可以匹配到 `keep` 中的正则表达式，则该文件不会被删除。
+
+例如，保留 `dist/foo.json` 文件：
+
+```js
+export default {
+  output: {
+    cleanDistPath: {
+      keep: [/dist[\\/]foo.json/],
+    },
+  },
+};
+```
+
+:::tip
+在正则表达式的例子中，我们使用 `[\\/]` 来匹配路径分隔符，这是因为不同的操作系统使用了不同的路径分隔符，使用 `[\\/]` 可以保证 macOS、Linux 和 Windows 的路径都被匹配到。
+:::
