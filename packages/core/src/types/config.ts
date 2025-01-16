@@ -940,6 +940,20 @@ export type ManifestObjectConfig = {
 
 export type ManifestConfig = string | boolean | ManifestObjectConfig;
 
+export type CleanDistPathObject = {
+  /**
+   * Whether to clean the dist path.
+   * @default 'auto'
+   */
+  enable?: boolean | 'auto';
+  /**
+   * The files to keep in the dist path.
+   */
+  keep?: RegExp[];
+};
+
+export type CleanDistPath = boolean | 'auto' | CleanDistPathObject;
+
 export interface OutputConfig {
   /**
    * Specify build target to run in specified environment.
@@ -998,7 +1012,7 @@ export interface OutputConfig {
    * Whether to clean all files in the dist path before starting compilation.
    * @default 'auto'
    */
-  cleanDistPath?: boolean | 'auto';
+  cleanDistPath?: CleanDistPath;
   /**
    * Allow to custom CSS Modules options.
    */
@@ -1089,6 +1103,7 @@ export interface NormalizedOutputConfig extends OutputConfig {
         js?: Rspack.Configuration['devtool'];
         css: boolean;
       };
+  cleanDistPath: CleanDistPath;
   filenameHash: boolean | string;
   assetPrefix: string;
   dataUriLimit: number | NormalizedDataUriLimit;
