@@ -1,13 +1,18 @@
 # output.cleanDistPath
 
-- **Type:** `boolean | 'auto'`
+- **Type:**
+
+```ts
+type CleanDistPath = boolean | 'auto' | CleanDistPathObject;
+```
+
 - **Default:** `'auto'`
 
 Whether to clean up all files under the output directory before the build starts (the output directory defaults to `dist`).
 
 ## Default behavior
 
-The default value of `output.cleanDistPath` is `'auto'`. If the output directory is a subdir of the project root path, Rsbuild will automatically clean all files under the build directory.
+The default value of `output.cleanDistPath` is `'auto'`. If the output directory is a subdir of the project root path, Rsbuild will automatically clean all files under the output directory.
 
 When [output.distPath.root](/config/output/dist-path) is an external directory, or equals to the project root directory, `cleanDistPath` is not enabled by default, to avoid accidentally deleting files from other directories.
 
@@ -44,3 +49,48 @@ export default {
   },
 };
 ```
+
+## Options
+
+`output.cleanDistPath` supports configuration as an object to achieve more granular control.
+
+### enable
+
+- **Type:** `boolean | 'auto'`
+- **Default:** `'auto'`
+
+Whether to clean up all files under the output directory before the build starts.
+
+```js
+export default {
+  output: {
+    // Equivalent to `cleanDistPath: true`
+    cleanDistPath: {
+      enable: true,
+    },
+  },
+};
+```
+
+### keep
+
+- **Type:** `RegExp[]`
+- **Default:** `undefined`
+
+Specify the files to keep in the output directory. If the file's absolute path matches the regular expression in `keep`, the file will not be removed.
+
+For example, to keep the `dist/foo.json` file:
+
+```js
+export default {
+  output: {
+    cleanDistPath: {
+      keep: [/dist[\\/]foo.json/],
+    },
+  },
+};
+```
+
+:::tip
+In the regular expression example, we use `[\\/]` to match the path separator because different operating systems use different path separators. Using `[\\/]` ensures that the paths can be matched in macOS, Linux and Windows.
+:::

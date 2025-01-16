@@ -942,12 +942,14 @@ export type ManifestConfig = string | boolean | ManifestObjectConfig;
 
 export type CleanDistPathObject = {
   /**
-   * Whether to clean the dist path.
+   * Whether to clean up all files under the output directory before the build starts.
    * @default 'auto'
    */
   enable?: boolean | 'auto';
   /**
-   * The files to keep in the dist path.
+   * Specify the files to keep in the output directory.
+   * If the file's absolute path matches the regular expression in `keep`, the file will not be removed.
+   * @default undefined
    */
   keep?: RegExp[];
 };
@@ -1009,7 +1011,7 @@ export interface OutputConfig {
    */
   legalComments?: LegalComments;
   /**
-   * Whether to clean all files in the dist path before starting compilation.
+   * Whether to clean up all files under the output directory before the build starts.
    * @default 'auto'
    */
   cleanDistPath?: CleanDistPath;
