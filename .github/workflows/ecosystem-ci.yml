@@ -11,6 +11,12 @@ on:
         required: true
         default: 'main'
 
+permissions:
+  # Allow commenting on commits
+  contents: write
+  # Allow commenting on issues
+  issues: write
+
 jobs:
   ecosystem_ci_notify:
     name: Run Ecosystem CI With Notify
