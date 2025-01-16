@@ -9,7 +9,7 @@
     "svelte-check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "dependencies": {
-    "svelte": "^5.17.3"
+    "svelte": "^5.18.0"
   },
   "devDependencies": {
     "@rsbuild/core": "^1.1.13",

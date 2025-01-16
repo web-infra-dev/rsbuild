@@ -249,8 +249,8 @@ importers:
   e2e/cases/svelte:
     dependencies:
       svelte:
-        specifier: ^5.17.3
-        version: 5.17.3
+        specifier: ^5.18.0
+        version: 5.18.0
     devDependencies:
       less:
         specifier: ^4.2.1
@@ -436,8 +436,8 @@ importers:
   examples/svelte:
     dependencies:
       svelte:
-        specifier: ^5.17.3
-        version: 5.17.3
+        specifier: ^5.18.0
+        version: 5.18.0
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1009,10 +1009,10 @@ importers:
     dependencies:
       svelte-loader:
         specifier: 3.2.4
-        version: 3.2.4(svelte@5.17.3)
+        version: 3.2.4(svelte@5.18.0)
       svelte-preprocess:
         specifier: ^6.0.3
-        version: 6.0.3(@babel/core@7.26.0)(less@4.2.1)(postcss-load-config@6.0.1(jiti@1.21.7)(postcss@8.4.49)(yaml@2.6.0))(postcss@8.4.49)(sass@1.83.1)(stylus@0.64.0)(svelte@5.17.3)(typescript@5.7.3)
+        version: 6.0.3(@babel/core@7.26.0)(less@4.2.1)(postcss-load-config@6.0.1(jiti@1.21.7)(postcss@8.4.49)(yaml@2.6.0))(postcss@8.4.49)(sass@1.83.1)(stylus@0.64.0)(svelte@5.18.0)(typescript@5.7.3)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1027,8 +1027,8 @@ importers:
         specifier: ^22.10.5
         version: 22.10.5
       svelte:
-        specifier: ^5.17.3
-        version: 5.17.3
+        specifier: ^5.18.0
+        version: 5.18.0
       typescript:
         specifier: ^5.7.3
         version: 5.7.3
@@ -4052,8 +4052,8 @@ packages:
     engines: {node: '>=4'}
     hasBin: true
 
-  esrap@1.3.2:
-    resolution: {integrity: sha512-C4PXusxYhFT98GjLSmb20k9PREuUdporer50dhzGuJu9IJXktbMddVCMLAERl5dAHyAi73GWWCE4FVHGP1794g==}
+  esrap@1.4.3:
+    resolution: {integrity: sha512-Xddc1RsoFJ4z9nR7W7BFaEPIp4UXoeQ0+077UdWLxbafMQFyU79sQJMk7kxNgRwQ9/aVgaKacCHC2pUACGwmYw==}
 
   esrecurse@4.3.0:
     resolution: {integrity: sha512-KmfKL3b6G+RXvP8N1vr3Tq1kL/oCFgn2NYXEtqP8/L3pKapUA4G8cFVaoF3SU323CD4XypR/ffioHmkti6/Tag==}
@@ -6329,8 +6329,8 @@ packages:
       typescript:
         optional: true
 
-  svelte@5.17.3:
-    resolution: {integrity: sha512-eLgtpR2JiTgeuNQRCDcLx35Z7Lu9Qe09GPOz+gvtR9nmIZu5xgFd6oFiLGQlxLD0/u7xVyF5AUkjDVyFHe6Bvw==}
+  svelte@5.18.0:
+    resolution: {integrity: sha512-/Eb81lB8bVUxQPmkPVNBYrU9cZ544+9hE91ZUUXTMf7eWcGW84N1hS3gvv/XsUNOWLLg3IicXP2qa8W3KpTUHA==}
     engines: {node: '>=18'}
 
   svg-parser@2.0.4:
@@ -9979,7 +9979,7 @@ snapshots:
 
   esprima@4.0.1: {}
 
-  esrap@1.3.2:
+  esrap@1.4.3:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.0
 
@@ -12500,20 +12500,20 @@ snapshots:
 
   svelte-dev-helper@1.1.9: {}
 
-  svelte-hmr@0.14.12(svelte@5.17.3):
+  svelte-hmr@0.14.12(svelte@5.18.0):
     dependencies:
-      svelte: 5.17.3
+      svelte: 5.18.0
 
-  svelte-loader@3.2.4(svelte@5.17.3):
+  svelte-loader@3.2.4(svelte@5.18.0):
     dependencies:
       loader-utils: 2.0.4
-      svelte: 5.17.3
+      svelte: 5.18.0
       svelte-dev-helper: 1.1.9
-      svelte-hmr: 0.14.12(svelte@5.17.3)
+      svelte-hmr: 0.14.12(svelte@5.18.0)
 
-  svelte-preprocess@6.0.3(@babel/core@7.26.0)(less@4.2.1)(postcss-load-config@6.0.1(jiti@1.21.7)(postcss@8.4.49)(yaml@2.6.0))(postcss@8.4.49)(sass@1.83.1)(stylus@0.64.0)(svelte@5.17.3)(typescript@5.7.3):
+  svelte-preprocess@6.0.3(@babel/core@7.26.0)(less@4.2.1)(postcss-load-config@6.0.1(jiti@1.21.7)(postcss@8.4.49)(yaml@2.6.0))(postcss@8.4.49)(sass@1.83.1)(stylus@0.64.0)(svelte@5.18.0)(typescript@5.7.3):
     dependencies:
-      svelte: 5.17.3
+      svelte: 5.18.0
     optionalDependencies:
       '@babel/core': 7.26.0
       less: 4.2.1
@@ -12523,7 +12523,7 @@ snapshots:
       stylus: 0.64.0
       typescript: 5.7.3
 
-  svelte@5.17.3:
+  svelte@5.18.0:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@jridgewell/sourcemap-codec': 1.5.0
@@ -12534,7 +12534,7 @@ snapshots:
       axobject-query: 4.1.0
       clsx: 2.1.1
       esm-env: 1.2.1
-      esrap: 1.3.2
+      esrap: 1.4.3
       is-reference: 3.0.3
       locate-character: 3.0.0
       magic-string: 0.30.17
