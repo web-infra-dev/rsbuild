@@ -99,6 +99,8 @@ export const CHAIN_ID = {
     IMAGE: 'image',
     /** Rule for media */
     MEDIA: 'media',
+    /** Rule for additional asset */
+    ADDITIONAL: 'additional',
     /** Rule for js */
     JS: 'js',
     /** Rule for data uri encoded javascript */
