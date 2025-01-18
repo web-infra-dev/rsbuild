@@ -71,7 +71,7 @@ test('should allow to use `cleanDistPath.keep` to keep some files', async () => 
     rsbuildConfig: {
       output: {
         cleanDistPath: {
-          keep: [/dist[\\/]test.json/, /dist[\\/]foo[\\/]bar[\\/]test.json/],
+          keep: [/dist\/test.json/, /dist\/foo\/bar\/test.json/],
         },
       },
     },
