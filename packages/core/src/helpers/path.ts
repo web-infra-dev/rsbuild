@@ -59,3 +59,15 @@ export const dedupeNestedPaths = (paths: string[]): string[] => {
       return prev.concat(curr);
     }, []);
 };
+
+/**
+ * Convert Windows backslash paths to posix forward slashes
+ * @example
+ * toPosixPath('foo\\bar') // returns 'foo/bar'
+ */
+export const toPosixPath = (filepath: string): string => {
+  if (sep === '/') {
+    return filepath;
+  }
+  return filepath.replace(/\\/g, '/');
+};

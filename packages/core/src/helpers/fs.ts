@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { logger } from '../logger';
 import type { Rspack } from '../types';
+import { toPosixPath } from './path';
 
 export const isFileSync = (filePath: string): boolean | undefined => {
   try {
@@ -80,7 +81,7 @@ export async function emptyDir(
     await Promise.all(
       entries.map(async (entry) => {
         const fullPath = path.resolve(dir, entry.name);
-        if (keep.some((reg) => reg.test(fullPath))) {
+        if (keep.some((reg) => reg.test(toPosixPath(fullPath)))) {
           return;
         }
 

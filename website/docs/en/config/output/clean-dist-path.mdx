@@ -85,12 +85,8 @@ For example, to keep the `dist/foo.json` file:
 export default {
   output: {
     cleanDistPath: {
-      keep: [/dist[\\/]foo.json/],
+      keep: [/dist\/foo.json/],
     },
   },
 };
 ```
-
-:::tip
-In the regular expression example, we use `[\\/]` to match the path separator because different operating systems use different path separators. Using `[\\/]` ensures that the paths can be matched in macOS, Linux and Windows.
-:::
