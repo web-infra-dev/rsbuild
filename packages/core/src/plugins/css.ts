@@ -26,6 +26,29 @@ const getCSSModulesLocalIdentName = (
     ? '[local]-[hash:base64:6]'
     : '[path][name]__[local]-[hash:base64:6]');
 
+export const getLightningCSSLoaderOptions = (
+  config: NormalizedEnvironmentConfig,
+  targets: string[],
+): Rspack.LightningcssLoaderOptions => {
+  const userOptions =
+    typeof config.tools.lightningcssLoader === 'object'
+      ? config.tools.lightningcssLoader
+      : {};
+
+  const initialOptions: Rspack.LightningcssLoaderOptions = {
+    targets,
+  };
+
+  if (config.mode === 'production' && config.output.injectStyles) {
+    initialOptions.minify = true;
+  }
+
+  return reduceConfigs<Rspack.LightningcssLoaderOptions>({
+    initial: initialOptions,
+    config: userOptions,
+  });
+};
+
 // If the target is not `web` and the modules option of css-loader is enabled,
 // we must enable exportOnlyLocals to only exports the modules identifier mappings.
 // Otherwise, the compiled CSS code may contain invalid code, such as `new URL`.
@@ -290,29 +313,15 @@ export const pluginCss = (): RsbuildPlugin => ({
           ) {
             importLoaders++;
 
-            const userOptions =
-              config.tools.lightningcssLoader === true
-                ? {}
-                : config.tools.lightningcssLoader;
-
-            const initialOptions: Rspack.LightningcssLoaderOptions = {
-              targets: environment.browserslist,
-            };
-
-            if (config.mode === 'production' && config.output.injectStyles) {
-              initialOptions.minify = true;
-            }
-
-            const loaderOptions =
-              reduceConfigs<Rspack.LightningcssLoaderOptions>({
-                initial: initialOptions,
-                config: userOptions,
-              });
+            const lightningcssOptions = getLightningCSSLoaderOptions(
+              config,
+              environment.browserslist,
+            );
 
             rule
               .use(CHAIN_ID.USE.LIGHTNINGCSS)
               .loader('builtin:lightningcss-loader')
-              .options(loaderOptions);
+              .options(lightningcssOptions);
           }
 
           const postcssLoaderOptions = await getPostcssLoaderOptions({
