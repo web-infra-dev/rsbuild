@@ -112,7 +112,7 @@ exports[`environment config > should normalize environment config correctly 1`] 
   "server": {
     "base": "/",
     "compress": true,
-    "cors": true,
+    "cors": false,
     "host": "0.0.0.0",
     "htmlFallback": "index",
     "open": false,
@@ -254,7 +254,7 @@ exports[`environment config > should normalize environment config correctly 2`] 
   "server": {
     "base": "/",
     "compress": true,
-    "cors": true,
+    "cors": false,
     "host": "0.0.0.0",
     "htmlFallback": "index",
     "open": false,
@@ -396,7 +396,7 @@ exports[`environment config > should print environment config when inspect confi
     "server": {
       "base": "/",
       "compress": true,
-      "cors": true,
+      "cors": false,
       "host": "0.0.0.0",
       "htmlFallback": "index",
       "open": false,
@@ -534,7 +534,7 @@ exports[`environment config > should print environment config when inspect confi
     "server": {
       "base": "/",
       "compress": true,
-      "cors": true,
+      "cors": false,
       "host": "0.0.0.0",
       "htmlFallback": "index",
       "open": false,
@@ -692,7 +692,7 @@ exports[`environment config > should support modify environment config by api.mo
     "server": {
       "base": "/",
       "compress": true,
-      "cors": true,
+      "cors": false,
       "host": "0.0.0.0",
       "htmlFallback": "index",
       "open": false,
@@ -831,7 +831,7 @@ exports[`environment config > should support modify environment config by api.mo
     "server": {
       "base": "/",
       "compress": true,
-      "cors": true,
+      "cors": false,
       "host": "0.0.0.0",
       "htmlFallback": "index",
       "open": false,
@@ -970,7 +970,7 @@ exports[`environment config > should support modify environment config by api.mo
     "server": {
       "base": "/",
       "compress": true,
-      "cors": true,
+      "cors": false,
       "host": "0.0.0.0",
       "htmlFallback": "index",
       "open": false,
@@ -1111,7 +1111,7 @@ exports[`environment config > should support modify single environment config by
     "server": {
       "base": "/",
       "compress": true,
-      "cors": true,
+      "cors": false,
       "host": "0.0.0.0",
       "htmlFallback": "index",
       "open": false,
@@ -1250,7 +1250,7 @@ exports[`environment config > should support modify single environment config by
     "server": {
       "base": "/",
       "compress": true,
-      "cors": true,
+      "cors": false,
       "host": "0.0.0.0",
       "htmlFallback": "index",
       "open": false,
