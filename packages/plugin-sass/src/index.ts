@@ -110,6 +110,8 @@ export const pluginSass = (
         true,
       );
 
+      const { rewriteUrls = true } = pluginOptions;
+
       const ruleId = findRuleId(chain, CHAIN_ID.RULE.SASS);
       const rule = chain.module
         .rule(ruleId)
@@ -137,8 +139,9 @@ export const pluginSass = (
 
         if (id === CHAIN_ID.USE.CSS) {
           // add resolve-url-loader
-          if (!pluginOptions.useOriginalUrlResolver)
+          if (rewriteUrls) {
             clonedOptions.importLoaders += 1;
+          }
           // add sass-loader
           clonedOptions.importLoaders += 1;
         }
@@ -146,8 +149,8 @@ export const pluginSass = (
         rule.use(id).loader(loader.get('loader')).options(clonedOptions);
       }
 
-      // use resolve-url-loader if useOriginalResolver is not set
-      if (!pluginOptions.useOriginalUrlResolver)
+      // use `resolve-url-loader` to rewrite urls
+      if (rewriteUrls)
         rule
           .use(CHAIN_ID.USE.RESOLVE_URL)
           .loader(

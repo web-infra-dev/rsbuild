@@ -57,7 +57,8 @@ export type PluginSassOptions = {
   exclude?: Rspack.RuleSetCondition;
 
   /**
-   * Use original url resolver instead of resolve-url-loader.
+   * Whether to use `resolve-url-loader` to rewrite urls.
+   * @default true
    */
-  useOriginalUrlResolver?: boolean;
+  rewriteUrls?: boolean;
 };
