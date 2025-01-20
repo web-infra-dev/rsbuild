@@ -1,7 +1,7 @@
 # server.cors
 
 - **Type:** `boolean | import('cors').CorsOptions`
-- **Default:** `true`
+- **Default:** `false`
 - **Version:** `>= 1.1.11`
 
 Configure [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) options for the dev server or preview server, based on the [cors](https://github.com/expressjs/cors) middleware.
@@ -10,14 +10,25 @@ Configure [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) options
 - `false`：Disable CORS.
 - `object`：Enable CORS with the specified options.
 
+:::tip
+Although `cors` can be set to `true`, we recommend setting a specified `origin` option to prevent untrusted origins from accessing your dev server.
+:::
+
 ## Example
 
 Only enable CORS for the dev server:
 
 ```ts
+const isDev = process.env.NODE_ENV === 'development';
+
 export default {
   server: {
-    cors: process.env.NODE_ENV === 'development',
+    cors: isDev
+      ? {
+          // Configures the `Access-Control-Allow-Origin` CORS response header
+          origin: 'https://example.com',
+        }
+      : false,
   },
 };
 ```
