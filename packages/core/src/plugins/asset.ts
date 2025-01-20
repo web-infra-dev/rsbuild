@@ -86,7 +86,7 @@ export const pluginAsset = (): RsbuildPlugin => ({
       };
 
       const createAssetRule = (
-        assetType: 'svg' | 'font' | 'image' | 'media' | 'assets',
+        assetType: 'svg' | 'font' | 'image' | 'media',
         exts: string[],
         emit: boolean,
       ) => {
