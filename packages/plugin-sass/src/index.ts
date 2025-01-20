@@ -136,24 +136,33 @@ export const pluginSass = (
         const clonedOptions = deepmerge<Record<string, any>>({}, options);
 
         if (id === CHAIN_ID.USE.CSS) {
-          // add resolve-url-loader and sass-loader
-          clonedOptions.importLoaders += 2;
+          // add resolve-url-loader
+          if (!pluginOptions.useOriginalUrlResolver)
+            clonedOptions.importLoaders += 1;
+          // add sass-loader
+          clonedOptions.importLoaders += 1;
         }
 
         rule.use(id).loader(loader.get('loader')).options(clonedOptions);
       }
 
+      // use resolve-url-loader if useOriginalResolver is not set
+      if (!pluginOptions.useOriginalUrlResolver)
+        rule
+          .use(CHAIN_ID.USE.RESOLVE_URL)
+          .loader(
+            path.join(__dirname, '../compiled/resolve-url-loader/index.js'),
+          )
+          .options({
+            join: await getResolveUrlJoinFn(),
+            // 'resolve-url-loader' relies on 'adjust-sourcemap-loader',
+            // it has performance regression issues in some scenarios,
+            // so we need to disable the sourceMap option.
+            sourceMap: false,
+          })
+          .end();
+
       rule
-        .use(CHAIN_ID.USE.RESOLVE_URL)
-        .loader(path.join(__dirname, '../compiled/resolve-url-loader/index.js'))
-        .options({
-          join: await getResolveUrlJoinFn(),
-          // 'resolve-url-loader' relies on 'adjust-sourcemap-loader',
-          // it has performance regression issues in some scenarios,
-          // so we need to disable the sourceMap option.
-          sourceMap: false,
-        })
-        .end()
         .use(CHAIN_ID.USE.SASS)
         .loader(path.join(__dirname, '../compiled/sass-loader/index.js'))
         .options(options);

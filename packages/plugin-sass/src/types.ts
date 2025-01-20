@@ -55,4 +55,9 @@ export type PluginSassOptions = {
    * Exclude some `.scss` or `.sass` files, they will not be transformed by sass-loader.
    */
   exclude?: Rspack.RuleSetCondition;
+
+  /**
+   * Use original url resolver instead of resolve-url-loader.
+   */
+  useOriginalUrlResolver?: boolean;
 };
