@@ -121,7 +121,17 @@ pluginSass({
 - **Default:** `true`
 - **Version:** `>= 1.2.0`
 
-Whether to use `resolve-url-loader` to rewrite urls.
+Whether to use [resolve-url-loader](https://github.com/bholloway/resolve-url-loader/tree/v5/packages/resolve-url-loader) to rewrite URLs.
+
+When enabled, `resolve-url-loader` allows you to write relative URLs in your Sass files that are correctly resolved from the current Sass file's location, rather than being relative to the Sass entry file (e.g. `main.scss`).
+
+If you set this option to `false`, the build performance will be improved, but Rsbuild will use the native URL resolution of Sass, which means all URLs must be relative to the Sass entry file.
+
+```ts
+pluginSass({
+  rewriteUrls: false,
+});
+```
 
 ## Practices
 
