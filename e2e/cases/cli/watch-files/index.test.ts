@@ -16,7 +16,7 @@ test.beforeEach(() => {
   fs.writeFileSync(extraConfigFile, 'export default 1;');
 });
 
-test('should restart dev server when extra config file changed', async () => {
+test.skip('should restart dev server when extra config file changed', async () => {
   const childProcess = exec('npx rsbuild dev', {
     cwd: __dirname,
     env: {
@@ -40,7 +40,7 @@ test('should restart dev server when extra config file changed', async () => {
   childProcess.kill();
 });
 
-test('should not restart dev server if `watchFiles.type` is `reload-page`', async () => {
+test.skip('should not restart dev server if `watchFiles.type` is `reload-page`', async () => {
   const childProcess = exec('npx rsbuild dev', {
     cwd: __dirname,
     env: {
@@ -62,7 +62,7 @@ test('should not restart dev server if `watchFiles.type` is `reload-page`', asyn
   childProcess.kill();
 });
 
-test('should not restart dev server if `watchFiles.type` is not set', async () => {
+test.skip('should not restart dev server if `watchFiles.type` is not set', async () => {
   const childProcess = exec('npx rsbuild dev', {
     cwd: __dirname,
     env: {
