@@ -51,7 +51,7 @@
     "prebundle": "prebundle"
   },
   "dependencies": {
-    "@rspack/core": "1.2.0",
+    "@rspack/core": "npm:@rspack-canary/core@1.2.1-canary-341853be-20250122111636",
     "@rspack/lite-tapable": "~1.0.1",
     "@swc/helpers": "^0.5.15",
     "core-js": "~3.40.0"
