@@ -1,10 +1,10 @@
 import { execSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { globContentJSON } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { globContentJSON, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
-test('should allow to export function in config file', async () => {
+rspackOnlyTest('should allow to export function in config file', async () => {
   const targetDir = path.join(__dirname, 'dist-production-build');
 
   fs.rmSync(targetDir, { recursive: true, force: true });
