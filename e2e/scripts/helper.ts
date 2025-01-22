@@ -84,7 +84,9 @@ export const waitFor = async (
 };
 
 export const awaitFileExists = async (dir: string) => {
-  const result = await waitFor(() => fs.existsSync(dir), { interval: 50 });
+  console.time(dir);
+  const result = await waitFor(() => fs.existsSync(dir), { interval: 500 });
+  console.timeEnd(dir);
   if (!result) {
     throw new Error(`awaitFileExists failed: ${dir}`);
   }
