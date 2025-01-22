@@ -110,7 +110,7 @@ const { content } = await loadConfig({
 在 `defineConfig` 定义的配置函数中，你可以通过 `meta` 对象访问到 `foo` 变量：
 
 ```ts title="rsbuild.config.ts"
-export default defineConfig((config, { meta }) => {
+export default defineConfig(({ meta }) => {
   console.log(meta.foo); // bar
   return config;
 });
