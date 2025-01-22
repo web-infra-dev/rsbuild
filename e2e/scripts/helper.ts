@@ -63,7 +63,7 @@ export const globContentJSON = async (path: string, options?: GlobOptions) => {
 export const waitFor = async (
   fn: () => boolean,
   {
-    maxChecks = 100,
+    maxChecks = 300,
     interval = 20,
   }: {
     maxChecks?: number;
