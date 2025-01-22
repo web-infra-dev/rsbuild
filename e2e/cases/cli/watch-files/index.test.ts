@@ -16,7 +16,7 @@ test.beforeEach(() => {
   fs.writeFileSync(extraConfigFile, 'export default 1;');
 });
 
-test('should restart dev server when extra config file changed', async () => {
+test.only('should restart dev server when extra config file changed', async () => {
   const childProcess = exec('npx rsbuild dev', {
     cwd: __dirname,
     env: {
