@@ -110,7 +110,7 @@ const { content } = await loadConfig({
 In the `defineConfig` configuration function, you can access the `foo` variable through the `meta` object:
 
 ```ts title="rsbuild.config.ts"
-export default defineConfig((config, { meta }) => {
+export default defineConfig(({ meta }) => {
   console.log(meta.foo); // bar
   return config;
 });
