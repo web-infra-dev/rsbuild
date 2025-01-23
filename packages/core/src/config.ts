@@ -230,6 +230,8 @@ export function getDefaultEntry(root: string): RsbuildEntry {
     'js',
     'tsx',
     'jsx',
+    'mts',
+    'cts',
     'mjs',
     'cjs',
   ].map((ext) => join(root, `src/index.${ext}`));
