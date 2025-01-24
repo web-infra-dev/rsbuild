@@ -272,6 +272,7 @@ handler 参数是一个转换函数，接收模块当前的代码，并返回转
 ```ts
 type TransformContext = {
   code: string;
+  context: string | null;
   resource: string;
   resourcePath: string;
   resourceQuery: string;
@@ -279,6 +280,7 @@ type TransformContext = {
   addDependency: (file: string) => void;
   emitFile: Rspack.LoaderContext['emitFile'];
   importModule: Rspack.LoaderContext['importModule'];
+  resolve: Rspack.LoaderContext['resolve'];
 };
 
 type TransformResult =
@@ -296,6 +298,8 @@ type TransformHandler = (
 handler 函数提供以下参数：
 
 - `code`：模块的代码。
+- `context`：当前被处理的模块所在的目录路径。与 Rspack loader 的 [this.context](https://rspack.dev/zh/api/loader-api/context#thiscontext) 相同。
+- `resolve`：解析一个模块标识符。与 Rspack loader 的 [this.resolve](https://rspack.dev/zh/api/loader-api/context#thisresolve) 相同。
 - `resource`：模块的绝对路径，包含 query。
 - `resourcePath`：模块的绝对路径，不包含 query。
 - `resourceQuery`：模块路径上的 query。

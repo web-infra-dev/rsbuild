@@ -5,6 +5,7 @@ import { awaitFileExists, getRandomPort, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const dist = path.join(__dirname, 'dist');
+const distIndexFile = path.join(__dirname, 'dist/static/js/index.js');
 const tempConfigPath = './test-temp-config.ts';
 const tempOutputFile = path.join(__dirname, 'test-temp-file.txt');
 const extraConfigFile = path.join(__dirname, tempConfigPath);
@@ -29,7 +30,7 @@ rspackOnlyTest(
     });
 
     // the first build
-    await awaitFileExists(dist);
+    await awaitFileExists(distIndexFile);
 
     fs.rmSync(tempOutputFile, { force: true });
     // temp config changed and trigger rebuild
@@ -55,9 +56,9 @@ rspackOnlyTest(
       },
     });
 
-    await awaitFileExists(dist);
+    await awaitFileExists(distIndexFile);
 
-    fs.rmSync(dist, { recursive: true });
+    fs.rmSync(distIndexFile);
     // temp config changed
     fs.writeFileSync(extraConfigFile, 'export default 2;');
 
@@ -79,9 +80,11 @@ rspackOnlyTest(
       },
     });
 
-    await awaitFileExists(dist);
+    // Fix occasional 'directory not empty' error when wait and rm dist.
+    // Sometimes the dist directory exists, but the files in the dist directory have not been completely written.
+    await awaitFileExists(distIndexFile);
 
-    fs.rmSync(dist, { recursive: true });
+    fs.rmSync(distIndexFile);
     // temp config changed
     fs.writeFileSync(extraConfigFile, 'export default 2;');
 

@@ -274,6 +274,7 @@ The handler param is a transformation function that takes the current module cod
 ```ts
 type TransformContext = {
   code: string;
+  context: string | null;
   resource: string;
   resourcePath: string;
   resourceQuery: string;
@@ -281,6 +282,7 @@ type TransformContext = {
   addDependency: (file: string) => void;
   emitFile: Rspack.LoaderContext['emitFile'];
   importModule: Rspack.LoaderContext['importModule'];
+  resolve: Rspack.LoaderContext['resolve'];
 };
 
 type TransformResult =
@@ -298,6 +300,8 @@ type TransformHandler = (
 The `handler` function provides the following params:
 
 - `code`: The code of the module.
+- `context`: The directory path of the currently processed module. The same as Rspack loader's [this.context](https://rspack.dev/api/loader-api/context#thiscontext).
+- `resolve`: Resolve a module specifier. The same as Rspack loader's [this.resolve](https://rspack.dev/api/loader-api/context#thisresolve).
 - `resource`: The absolute path of the module, including the query.
 - `resourcePath`: The absolute path of the module, without the query.
 - `resourceQuery`: The query of the module.
