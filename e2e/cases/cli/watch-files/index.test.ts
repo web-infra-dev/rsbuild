@@ -84,7 +84,7 @@ rspackOnlyTest(
     // Sometimes the dist directory exists, but the files in the dist directory have not been completely written.
     await awaitFileExists(distIndexFile);
 
-    fs.rmSync(distIndexFile, { recursive: true });
+    fs.rmSync(distIndexFile);
     // temp config changed
     fs.writeFileSync(extraConfigFile, 'export default 2;');
 
