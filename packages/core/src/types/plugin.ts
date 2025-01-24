@@ -232,6 +232,11 @@ export type TransformContext = {
    */
   code: string;
   /**
+   * The directory path of the currently processed module,
+   * which changes with the location of each processed module.
+   */
+  context: string | null;
+  /**
    * The absolute path of the module, including the query.
    * @example '/home/user/project/src/index.js?foo=123'
    */
@@ -268,6 +273,10 @@ export type TransformContext = {
    * Compile and execute a module at the build time.
    */
   importModule: Rspack.LoaderContext['importModule'];
+  /**
+   * Resolve a module specifier.
+   */
+  resolve: Rspack.LoaderContext['resolve'];
 };
 
 export type TransformHandler = (

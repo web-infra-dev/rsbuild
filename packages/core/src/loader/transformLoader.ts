@@ -26,6 +26,7 @@ export default async function transform(
 
   const result = await transform({
     code: source,
+    context: this.context,
     resource: this.resource,
     resourcePath: this.resourcePath,
     resourceQuery: this.resourceQuery,
@@ -33,6 +34,7 @@ export default async function transform(
     addDependency: this.addDependency.bind(this),
     emitFile: this.emitFile.bind(this),
     importModule: this.importModule.bind(this),
+    resolve: this.resolve.bind(this),
   });
 
   if (result === null || result === undefined) {
