@@ -58,7 +58,7 @@ rspackOnlyTest(
 
     await awaitFileExists(distIndexFile);
 
-    fs.rmSync(distIndexFile, { recursive: true });
+    fs.rmSync(distIndexFile);
     // temp config changed
     fs.writeFileSync(extraConfigFile, 'export default 2;');
 
