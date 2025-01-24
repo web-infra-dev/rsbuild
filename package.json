@@ -58,6 +58,15 @@
       "http-proxy@1.18.1": "patches/http-proxy@1.18.1.patch",
       "postcss-loader@8.1.1": "patches/postcss-loader@8.1.1.patch",
       "css-loader@7.1.2": "patches/css-loader@7.1.2.patch"
+    },
+    "overrides": {
+      "@rspack/core": "npm:@rspack-canary/core@1.2.3-canary-23f7c8d4-20250124015945",
+      "@rspack/cli": "npm:@rspack-canary/cli@1.2.3-canary-23f7c8d4-20250124015945"
+    },
+    "peerDependencyRules": {
+      "allowAny": [
+        "@rspack/*"
+      ]
     }
   },
   "packageManager": "pnpm@10.0.0",
