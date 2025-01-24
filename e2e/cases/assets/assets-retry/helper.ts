@@ -1,7 +1,7 @@
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import { dev } from '@e2e/helper';
-import { type Page } from '@playwright/test';
-import { type RequestHandler } from '@rsbuild/core';
+import type { Page } from '@playwright/test';
+import type { RequestHandler } from '@rsbuild/core';
 import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 import type { PluginAssetsRetryOptions } from '@rsbuild/plugin-assets-retry';
 import { pluginReact } from '@rsbuild/plugin-react';
