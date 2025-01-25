@@ -123,6 +123,31 @@ export function getChainUtils(
   };
 }
 
+function validateRspackConfig(config: Rspack.Configuration) {
+  // validate plugins
+  if (config.plugins) {
+    for (const plugin of config.plugins) {
+      if (
+        plugin &&
+        plugin.apply === undefined &&
+        'name' in plugin &&
+        'setup' in plugin
+      ) {
+        const name = color.bold(color.yellow(plugin.name));
+        throw new Error(
+          `[rsbuild:plugin] "${name}" appears to be an Rsbuild plugin. It cannot be used as an Rspack plugin.`,
+        );
+      }
+    }
+  }
+
+  if (config.devServer) {
+    logger.warn(
+      `[rsbuild:config] Find invalid Rspack config: "${color.yellow('devServer')}". Note that Rspack's "devServer" config is not supported by Rsbuild. You can use Rsbuild's "dev" config to configure the Rsbuild dev server.`,
+    );
+  }
+}
+
 export async function generateRspackConfig({
   target,
   context,
@@ -160,22 +185,7 @@ export async function generateRspackConfig({
     await getConfigUtils(rspackConfig, chainUtils),
   );
 
-  // validate plugins
-  if (rspackConfig.plugins) {
-    for (const plugin of rspackConfig.plugins) {
-      if (
-        plugin &&
-        plugin.apply === undefined &&
-        'name' in plugin &&
-        'setup' in plugin
-      ) {
-        const name = color.bold(color.yellow(plugin.name));
-        throw new Error(
-          `[rsbuild:plugin] "${name}" appears to be an Rsbuild plugin. It cannot be used as an Rspack plugin.`,
-        );
-      }
-    }
-  }
+  validateRspackConfig(rspackConfig);
 
   return rspackConfig;
 }
