@@ -202,7 +202,7 @@ export class CompilerDevMiddleware {
         base && base !== '/' ? stripBase(prefix, base) : prefix,
       );
 
-    const warp = async (
+    const wrapper = async (
       req: IncomingMessage,
       res: ServerResponse,
       next: NextFunction,
@@ -224,10 +224,10 @@ export class CompilerDevMiddleware {
       }
     };
 
-    warp.close = middleware.close;
+    wrapper.close = middleware.close;
 
-    // warp rsbuild-dev-middleware to handle html file（without publicPath）
-    // maybe we should serve html file by sirv
-    return warp;
+    // wrap rsbuild-dev-middleware to handle HTML file（without publicPath）
+    // maybe we should serve HTML file by sirv
+    return wrapper;
   }
 }
