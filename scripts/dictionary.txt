@@ -27,6 +27,7 @@ darkgrey
 datauri
 deepmerge
 docgen
+domcontentloaded
 dppx
 envinfo
 estree
