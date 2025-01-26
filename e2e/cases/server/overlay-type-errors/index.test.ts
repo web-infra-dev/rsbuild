@@ -17,7 +17,7 @@ test('should display type errors on overlay correctly', async ({ page }) => {
     page,
     plugins: [
       {
-        name: 'remove-pre-ts-check',
+        name: 'remove-pre-ts-check-plugin',
         remove: [pluginTypeCheck.name],
         setup() {},
       },
