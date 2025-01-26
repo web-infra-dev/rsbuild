@@ -1,4 +1,4 @@
-import { dev, proxyConsole } from '@e2e/helper';
+import { dev, gotoPage, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
 
@@ -14,7 +14,6 @@ test('should display type errors on overlay correctly', async ({ page }) => {
 
   const rsbuild = await dev({
     cwd,
-    page,
     plugins: [
       {
         name: 'remove-pre-ts-check-plugin',
@@ -37,6 +36,7 @@ test('should display type errors on overlay correctly', async ({ page }) => {
 
   await waitTsCheckDone;
 
+  await gotoPage(page, rsbuild);
   const errorOverlay = page.locator('rsbuild-error-overlay');
 
   await expect(errorOverlay.locator('.title')).toHaveText('Build failed');
