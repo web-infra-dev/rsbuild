@@ -272,15 +272,22 @@ export async function createRsbuild(
   if (rsbuildConfig.environments) {
     await Promise.all(
       Object.entries(rsbuildConfig.environments).map(async ([name, config]) => {
-        const isEnvironmentEnabled =
-          !rsbuildOptions.environment ||
-          rsbuildOptions.environment.includes(name);
-        if (config.plugins && isEnvironmentEnabled) {
-          const plugins = await getFlattenedPlugins(config.plugins);
-          rsbuild.addPlugins(plugins, {
-            environment: name,
-          });
+        if (!config.plugins) {
+          return;
         }
+
+        // The current environment is not specified, skip it
+        if (
+          context.specifiedEnvironments &&
+          !context.specifiedEnvironments.includes(name)
+        ) {
+          return;
+        }
+
+        const plugins = await getFlattenedPlugins(config.plugins);
+        rsbuild.addPlugins(plugins, {
+          environment: name,
+        });
       }),
     );
   }
