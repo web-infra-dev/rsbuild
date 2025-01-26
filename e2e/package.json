@@ -20,6 +20,8 @@
   },
   "devDependencies": {
     "@e2e/helper": "workspace:*",
+    "@module-federation/enhanced": "0.8.9",
+    "@module-federation/rsbuild-plugin": "0.8.9",
     "@playwright/test": "1.44.1",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-assets-retry": "workspace:*",
@@ -35,13 +37,12 @@
     "@rsbuild/plugin-svelte": "workspace:*",
     "@rsbuild/plugin-svgr": "workspace:*",
     "@rsbuild/plugin-type-check": "^1.2.1",
-    "@rsbuild/plugin-webpack-swc": "workspace:*",
     "@rsbuild/plugin-vue": "workspace:*",
     "@rsbuild/plugin-vue-jsx": "^1.1.0",
+    "@rsbuild/plugin-webpack-swc": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "@module-federation/enhanced": "0.8.9",
-    "@module-federation/rsbuild-plugin": "0.8.9",
     "@scripts/test-helper": "workspace:*",
+    "@tailwindcss/postcss": "^4.0.0",
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.14",
     "@types/node": "^22.10.7",
@@ -51,7 +52,7 @@
     "fast-glob": "^3.3.3",
     "fs-extra": "^11.3.0",
     "playwright": "1.44.1",
-    "tailwindcss": "^3.4.17",
+    "tailwindcss": "^4.0.0",
     "typescript": "^5.7.3"
   }
 }
