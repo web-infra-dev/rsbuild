@@ -1,7 +1,7 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { build, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
-test('should load postcss.config.ts correctly', async () => {
+rspackOnlyTest('should load postcss.config.ts correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
   });
