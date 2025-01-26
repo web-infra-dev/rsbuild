@@ -1,42 +1,44 @@
-# Use Tailwind CSS
+# Use Tailwind CSS v4
 
 [Tailwind CSS](https://tailwindcss.com/) is a CSS framework and design system based on utility class, which can quickly add common styles to components, and support flexible extension of theme styles.
 
 You can integrate Tailwind CSS in Rsbuild via PostCSS plugins.
 
+## Choosing Tailwind CSS version
+
+This document introduces the integration of Tailwind CSS v4.
+
+Please note that Tailwind CSS v4 uses many modern CSS features, such as [Cascade Layers](https://developer.mozilla.org/zh-CN/docs/Learn_web_development/Core/Styling_basics/Cascade_layers), if your target browser does not support these features, please use Tailwind CSS v3 first, see [Using Tailwind CSS v3](/guide/basic/tailwindcss-v3) for more details.
+
+More information can be found in [Tailwind CSS - Compatibility](https://tailwindcss.com/docs/compatibility).
+
 ## Installing Tailwind CSS
 
-Since Rsbuild has built-in support for `postcss` and `autoprefixer`, you only need to install `tailwindcss` and there is no need to install other npm packages:
+Rsbuild has built-in support for PostCSS, you can install `tailwindcss` and `@tailwindcss/postcss` packages to integrate Tailwind CSS:
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add tailwindcss @tailwindcss/postcss postcss -D" />
+<PackageManagerTabs command="add tailwindcss @tailwindcss/postcss -D" />
 
 ## Configuring PostCSS
 
-You can register the `tailwindcss` PostCSS plugin through [postcss.config.cjs](https://www.npmjs.com/package/postcss-loader#config) or [tools.postcss](/config/tools/postcss).
+You can register the Tailwind CSS PostCSS plugin through [postcss.config.cjs](https://www.npmjs.com/package/postcss-loader#config) or [tools.postcss](/config/tools/postcss).
 
 ```js title="postcss.config.mjs"
 export default {
   plugins: {
-    "@tailwindcss/postcss": {},
-  }
-}
+    '@tailwindcss/postcss': {},
+  },
+};
 ```
-
-:::tip
-Rsbuild has built-in [autoprefixer](https://github.com/postcss/autoprefixer), so you only need to register the `tailwindcss` plugin.
-:::
 
 ## Importing CSS
 
-Add the `@tailwind` directives in your CSS entry file:
+Add an `@import` to your CSS entry file that imports Tailwind CSS.
 
-```css title="main.css"
-@tailwind tailwindcss;
+```css title="src/index.css"
+@import 'tailwindcss';
 ```
-
-Depending on your needs, you can selectively import the CSS styles provided by Tailwind CSS. Please refer to the [@tailwind documentation](https://tailwindcss.com/docs/functions-and-directives#tailwind) for detailed usage of the `@tailwind` directives.
 
 ## Done
 
