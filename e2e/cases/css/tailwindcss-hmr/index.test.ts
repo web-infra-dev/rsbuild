@@ -3,9 +3,6 @@ import { join } from 'node:path';
 import { dev, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-// Ensure tailwindcss only watch files in the current directory
-process.chdir(__dirname);
-
 const getContent = (
   classNames: string,
 ) => `document.querySelector('#root').className = '${classNames}';
