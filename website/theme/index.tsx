@@ -5,7 +5,8 @@ import { HomeLayout } from './pages';
 import './index.scss';
 import { NoSSR, useLang, usePageData } from 'rspress/runtime';
 
-const ANNOUNCEMENT_URL = '/community/releases/v1-0';
+// Enable announcement when we have something to announce
+const ANNOUNCEMENT_URL = '';
 
 const Layout = () => {
   const { page } = usePageData();
@@ -15,20 +16,22 @@ const Layout = () => {
     <Theme.Layout
       beforeNavTitle={<NavIcon />}
       beforeNav={
-        <NoSSR>
-          <Announcement
-            href={
-              lang === 'en' ? ANNOUNCEMENT_URL : `/${lang}${ANNOUNCEMENT_URL}`
-            }
-            message={
-              lang === 'en'
-                ? 'Rsbuild 1.0 has been released!'
-                : 'Rsbuild 1.0 正式发布！'
-            }
-            localStorageKey="rsbuild-announcement-closed"
-            display={page.pageType === 'home'}
-          />
-        </NoSSR>
+        ANNOUNCEMENT_URL ? (
+          <NoSSR>
+            <Announcement
+              href={
+                lang === 'en' ? ANNOUNCEMENT_URL : `/${lang}${ANNOUNCEMENT_URL}`
+              }
+              message={
+                lang === 'en'
+                  ? 'Rsbuild 1.0 has been released!'
+                  : 'Rsbuild 1.0 正式发布！'
+              }
+              localStorageKey="rsbuild-announcement-closed"
+              display={page.pageType === 'home'}
+            />
+          </NoSSR>
+        ) : null
       }
     />
   );
