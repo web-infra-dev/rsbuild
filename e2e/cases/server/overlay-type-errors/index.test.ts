@@ -1,15 +1,41 @@
 import { dev, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
+import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
 
 const cwd = __dirname;
 
 test('should display type errors on overlay correctly', async ({ page }) => {
   const { restore } = proxyConsole();
 
+  let tsCheckDoneResolve: () => void;
+  const waitTsCheckDone = new Promise<void>((resolve) => {
+    tsCheckDoneResolve = resolve;
+  });
+
   const rsbuild = await dev({
     cwd,
     page,
+    plugins: [
+      {
+        name: 'remove-pre-ts-check',
+        remove: [pluginTypeCheck.name],
+        setup() {},
+      },
+      pluginTypeCheck({
+        forkTsCheckerOptions: {
+          logger: {
+            log: console.log,
+            error: (...args: any[]) => {
+              tsCheckDoneResolve();
+              return console.error(...args);
+            },
+          },
+        },
+      }),
+    ],
   });
+
+  await waitTsCheckDone;
 
   const errorOverlay = page.locator('rsbuild-error-overlay');
 
