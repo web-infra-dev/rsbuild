@@ -15,11 +15,6 @@ test('should display type errors on overlay correctly', async ({ page }) => {
   const rsbuild = await dev({
     cwd,
     plugins: [
-      {
-        name: 'remove-pre-ts-check-plugin',
-        remove: [pluginTypeCheck.name],
-        setup() {},
-      },
       pluginTypeCheck({
         forkTsCheckerOptions: {
           logger: {
