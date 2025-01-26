@@ -276,7 +276,7 @@ export async function createRsbuild(
           return;
         }
 
-        // The current environment is not specified, skip it
+        // If the current environment is not specified, skip it
         if (
           context.specifiedEnvironments &&
           !context.specifiedEnvironments.includes(name)
