@@ -1,37 +1,20 @@
-import { dev, gotoPage, proxyConsole } from '@e2e/helper';
+import { dev, getHrefByEntryName, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
 
 const cwd = __dirname;
 
 test('should display type errors on overlay correctly', async ({ page }) => {
   const { restore } = proxyConsole();
 
-  let tsCheckDoneResolve: () => void;
-  const waitTsCheckDone = new Promise<void>((resolve) => {
-    tsCheckDoneResolve = resolve;
-  });
-
   const rsbuild = await dev({
     cwd,
-    plugins: [
-      pluginTypeCheck({
-        forkTsCheckerOptions: {
-          logger: {
-            log: console.log,
-            error: (...args: any[]) => {
-              tsCheckDoneResolve();
-              return console.error(...args);
-            },
-          },
-        },
-      }),
-    ],
+    waitFirstCompileDone: false,
   });
 
-  await waitTsCheckDone;
+  const url = getHrefByEntryName('index', rsbuild.port);
 
-  await gotoPage(page, rsbuild);
+  await page.goto(url, { waitUntil: 'domcontentloaded' });
+
   const errorOverlay = page.locator('rsbuild-error-overlay');
 
   await expect(errorOverlay.locator('.title')).toHaveText('Build failed');
