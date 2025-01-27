@@ -59,10 +59,10 @@
   "devDependencies": {
     "@rslib/core": "0.3.2",
     "@types/connect": "3.4.38",
-    "@types/node": "^22.10.7",
+    "@types/node": "^22.10.10",
     "@types/on-finished": "2.3.4",
     "@types/webpack-bundle-analyzer": "4.7.0",
-    "@types/ws": "^8.5.13",
+    "@types/ws": "^8.5.14",
     "browserslist-load-config": "1.0.0",
     "cac": "^6.7.14",
     "chokidar": "^4.0.3",
