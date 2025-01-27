@@ -2,6 +2,7 @@ import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
 import { parse } from 'node:querystring';
 import type Ws from 'ws';
+import type { Server } from 'ws';
 import {
   getAllStatsErrors,
   getAllStatsWarnings,
@@ -28,7 +29,7 @@ interface SocketMessage {
 }
 
 export class SocketServer {
-  private wsServer!: Ws.Server;
+  private wsServer!: Server;
 
   private readonly sockets: Ws[] = [];
 
