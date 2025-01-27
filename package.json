@@ -40,18 +40,18 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@changesets/cli": "^2.27.11",
+    "@changesets/cli": "^2.27.12",
     "@rsbuild/config": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "cross-env": "^7.0.3",
     "cspell-ban-words": "^0.0.4",
     "heading-case": "^0.1.4",
     "nano-staged": "^0.8.0",
-    "nx": "^20.3.2",
+    "nx": "^20.3.3",
     "prettier": "^3.4.2",
     "simple-git-hooks": "^2.11.1",
     "typescript": "^5.7.3",
-    "vitest": "^3.0.2"
+    "vitest": "^3.0.4"
   },
   "pnpm": {
     "patchedDependencies": {
