@@ -1,6 +1,0 @@
-{
-  "name": "@e2e/postcss-function-options",
-  "devDependencies": {
-    "tailwindcss": "^3.4.17"
-  }
-}
