@@ -1165,8 +1165,8 @@ importers:
         specifier: ^1.40.2
         version: 1.40.2(react@19.0.0)(rspress@1.40.2(webpack@5.97.1(@swc/core@1.10.9(@swc/helpers@0.5.15))))
       '@rstack-dev/doc-ui':
-        specifier: 1.5.4
-        version: 1.5.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        specifier: 1.6.0
+        version: 1.6.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@types/node':
         specifier: ^22.10.10
         version: 22.10.10
@@ -2821,8 +2821,8 @@ packages:
     resolution: {integrity: sha512-oYY3LlNFX486en34/qev/mivD5oGmOyZaAPKlwlaghqUK+CueRmI81jPPMATqXRtWPR9gEsziqPzbMhj9CofRg==}
     engines: {node: '>=14.17.6'}
 
-  '@rstack-dev/doc-ui@1.5.4':
-    resolution: {integrity: sha512-3gWxmlNcxTImERWEejxsCImjN7tOXwfBnv/vxKSTenHmPARB/BBUGa9tqFfIaW78XAGQZDR4R42bOCAiMj+DMA==}
+  '@rstack-dev/doc-ui@1.6.0':
+    resolution: {integrity: sha512-rFWEqKjHSrbIgBHv0DGiX7jMJssvRA1mXPgZx1aF90feoGdk0Ud+fzcK5+Cze9zpmKnqX3wbpttxBZ3uQ9u9iw==}
 
   '@selderee/plugin-htmlparser2@0.11.0':
     resolution: {integrity: sha512-P33hHGdldxGabLFjPPpaTxVolMrzrcegejx+0GxjrIb9Zv48D8yAIA/QTDR2dFl7Uz7urX8aX6+5bCZslr+gWQ==}
@@ -4271,8 +4271,8 @@ packages:
     resolution: {integrity: sha512-wzsgA6WOq+09wrU1tsJ09udeR/YZRaeArL9e1wPbFg3GG2yDnC2ldKpxs4xunpFF9DgqCqOIra3bc1HWrJ37Ww==}
     engines: {node: '>=0.4.x'}
 
-  framer-motion@11.13.5:
-    resolution: {integrity: sha512-rArI0zPU9VkpS3Wt0J7dmRxAFUWtzPWoSofNQAP0UO276CmJ+Xlf5xN19GMw3w2QsdrS2sU+0+Q2vtuz4IEZaw==}
+  framer-motion@12.0.5:
+    resolution: {integrity: sha512-OgfUHfL+u80uCf6VzkV7j3+H2W9zPMdV+40bug4ftB0C2+0FpfNca2rbH2Fouq2R7//bjw6tJhOwXsrsM4+LKw==}
     peerDependencies:
       '@emotion/is-prop-valid': '*'
       react: ^18.0.0 || ^19.0.0
@@ -5248,11 +5248,11 @@ packages:
   moment@2.30.1:
     resolution: {integrity: sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==}
 
-  motion-dom@11.13.0:
-    resolution: {integrity: sha512-Oc1MLGJQ6nrvXccXA89lXtOqFyBmvHtaDcTRGT66o8Czl7nuA8BeHAd9MQV1pQKX0d2RHFBFaw5g3k23hQJt0w==}
+  motion-dom@12.0.0:
+    resolution: {integrity: sha512-CvYd15OeIR6kHgMdonCc1ihsaUG4MYh/wrkz8gZ3hBX/uamyZCXN9S9qJoYF03GqfTt7thTV/dxnHYX4+55vDg==}
 
-  motion-utils@11.13.0:
-    resolution: {integrity: sha512-lq6TzXkH5c/ysJQBxgLXgM01qwBH1b4goTPh57VvZWJbVJZF/0SB31UWEn4EIqbVPf3au88n2rvK17SpDTja1A==}
+  motion-utils@12.0.0:
+    resolution: {integrity: sha512-MNFiBKbbqnmvOjkPyOKgHUp3Q6oiokLkI1bEwm5QA28cxMZrv0CbbBGDNmhF6DIXsi1pCQBSs0dX8xjeER1tmA==}
 
   mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
@@ -8734,9 +8734,9 @@ snapshots:
     transitivePeerDependencies:
       - '@rspack/tracing'
 
-  '@rstack-dev/doc-ui@1.5.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@rstack-dev/doc-ui@1.6.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
-      framer-motion: 11.13.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      framer-motion: 12.0.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
     transitivePeerDependencies:
       - '@emotion/is-prop-valid'
       - react
@@ -10234,10 +10234,10 @@ snapshots:
 
   format@0.2.2: {}
 
-  framer-motion@11.13.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+  framer-motion@12.0.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
-      motion-dom: 11.13.0
-      motion-utils: 11.13.0
+      motion-dom: 12.0.0
+      motion-utils: 12.0.0
       tslib: 2.8.1
     optionalDependencies:
       react: 19.0.0
@@ -11478,9 +11478,11 @@ snapshots:
 
   moment@2.30.1: {}
 
-  motion-dom@11.13.0: {}
+  motion-dom@12.0.0:
+    dependencies:
+      motion-utils: 12.0.0
 
-  motion-utils@11.13.0: {}
+  motion-utils@12.0.0: {}
 
   mri@1.2.0: {}
 
