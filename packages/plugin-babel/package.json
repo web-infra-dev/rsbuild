@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.3.2",
+    "@rslib/core": "0.4.0",
     "@scripts/test-helper": "workspace:*",
     "@types/node": "^22.10.10",
     "babel-loader": "9.2.1",
