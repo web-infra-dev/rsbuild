@@ -4,7 +4,6 @@
  */
 import { rspack } from '@rspack/core';
 import type * as Rspack from '@rspack/core';
-import * as __internalHelper from './internal';
 
 // Core methods
 export { loadEnv } from './loadEnv';
@@ -45,6 +44,8 @@ export type {
   Charset,
   ClientConfig,
   CliShortcut,
+  CleanDistPath,
+  CleanDistPathObject,
   ConfigChain,
   ConfigChainWithContext,
   ConsoleType,
@@ -77,12 +78,20 @@ export type {
   InlineChunkTestFunction,
   InternalContext,
   LegalComments,
+  ManifestData,
+  ManifestConfig,
+  ManifestObjectConfig,
   MetaAttrs,
   MetaOptions,
   Minify,
   ModifyBundlerChainFn,
   ModifyBundlerChainUtils,
   ModifyChainUtils,
+  ModifyEnvironmentConfigFn,
+  ModifyEnvironmentConfigUtils,
+  ModifyHTMLTagsContext,
+  ModifyHTMLTagsFn,
+  ModifyRsbuildConfigUtils,
   ModifyRspackConfigFn,
   ModifyRspackConfigUtils,
   ModifyRsbuildConfigFn,
@@ -103,6 +112,9 @@ export type {
   NormalizedServerConfig,
   NormalizedSourceConfig,
   NormalizedToolsConfig,
+  OnAfterEnvironmentCompileFn,
+  OnBeforeEnvironmentCompileFn,
+  OnCloseBuildFn,
   OnAfterBuildFn,
   OnAfterCreateCompilerFn,
   OnAfterStartDevServerFn,
@@ -116,10 +128,12 @@ export type {
   OnExitFn,
   OutputConfig,
   OutputStructure,
+  PreloadIncludeType,
   PerformanceConfig,
   PluginManager,
   Polyfill,
   PostCSSLoaderOptions,
+  PostCSSOptions,
   PostCSSPlugin,
   PreviewOptions,
   PreconnectOption,
@@ -145,6 +159,7 @@ export type {
   RsbuildTarget,
   RspackChain,
   RspackRule,
+  StartDevServerOptions,
   SriOptions,
   SriAlgorithm,
   ScriptInject,
@@ -157,6 +172,8 @@ export type {
   SourceConfig,
   SplitChunks,
   StyleLoaderOptions,
+  TransformContext,
+  TransformDescriptor,
   ToolsConfig,
   TransformFn,
   TransformHandler,
@@ -164,11 +181,4 @@ export type {
   WatchFiles,
 } from './types';
 export type { ChainIdentifier } from './configChain';
-
-export {
-  /**
-   * @private
-   * TODO: remove this in Rspack v1.2.0
-   */
-  __internalHelper,
-};
+export type { RsbuildDevServer } from './server/devServer';

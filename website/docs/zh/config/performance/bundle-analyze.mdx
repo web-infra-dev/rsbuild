@@ -15,7 +15,7 @@ const defaultConfig = {
 };
 ```
 
-## 启用 Bundle Analyze
+## 启用 Bundle analyze
 
 你有两种方式开启 `webpack-bundle-analyzer` 来分析构建产物的体积。
 
@@ -101,6 +101,27 @@ export default {
 export default {
   performance: {
     bundleAnalyze: {
+      generateStatsFile: true,
+    },
+  },
+};
+```
+
+在产物目录下会生成 `stats.json` 和 `report-web.html` 文件。
+
+```
+└── dist
+    ├── stats.json
+    └── report-web.html
+```
+
+如果你不需要 `report-web.html`，可以设置 `analyzerMode` 为 `disabled`。
+
+```js
+export default {
+  performance: {
+    bundleAnalyze: {
+      analyzerMode: 'disabled',
       generateStatsFile: true,
     },
   },

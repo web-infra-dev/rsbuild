@@ -191,7 +191,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\|cur\\)\\$/i,
       },
       {
         "oneOf": [
@@ -313,7 +313,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "hints": false,
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
     HotModuleReplacementPlugin {
       "name": "HotModuleReplacementPlugin",
     },
@@ -388,13 +390,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     },
     "extensionAlias": {
       ".js": [
+        ".js",
         ".ts",
         ".tsx",
-        ".js",
       ],
       ".jsx": [
-        ".tsx",
         ".jsx",
+        ".tsx",
       ],
     },
     "extensions": [
@@ -611,7 +613,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\|cur\\)\\$/i,
       },
       {
         "oneOf": [
@@ -764,7 +766,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     "hints": false,
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
     CssExtractRspackPlugin {
       "options": {
         "chunkFilename": "static/css/async/[name].[contenthash:8].css",
@@ -845,13 +849,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
     },
     "extensionAlias": {
       ".js": [
+        ".js",
         ".ts",
         ".tsx",
-        ".js",
       ],
       ".jsx": [
-        ".tsx",
         ".jsx",
+        ".tsx",
       ],
     },
     "extensions": [
@@ -1050,7 +1054,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\|cur\\)\\$/i,
       },
       {
         "oneOf": [
@@ -1177,7 +1181,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     "hints": false,
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
     DefinePlugin {
       "_args": [
         {
@@ -1200,13 +1206,13 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
     },
     "extensionAlias": {
       ".js": [
+        ".js",
         ".ts",
         ".tsx",
-        ".js",
       ],
       ".jsx": [
-        ".tsx",
         ".jsx",
+        ".tsx",
       ],
     },
     "extensions": [
@@ -1429,7 +1435,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\|cur\\)\\$/i,
       },
       {
         "oneOf": [
@@ -1558,7 +1564,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
     TestPlugin {
       "name": "TestPlugin",
     },
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
     HotModuleReplacementPlugin {
       "name": "HotModuleReplacementPlugin",
     },
@@ -1633,13 +1641,13 @@ exports[`tools.rspack > should match snapshot 1`] = `
     },
     "extensionAlias": {
       ".js": [
+        ".js",
         ".ts",
         ".tsx",
-        ".js",
       ],
       ".jsx": [
-        ".tsx",
         ".jsx",
+        ".tsx",
       ],
     },
     "extensions": [

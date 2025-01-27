@@ -279,15 +279,7 @@ module.exports = {
 
 在非 TypeScript 项目中，CRA 支持读取 jsconfig.json 中的 `paths` 字段作为路径别名。
 
-如果你需要在 Rsbuild 中使用该特性，可以使用 [source.tsconfigPath](/config/source/tsconfig-path) 选项，使 Rsbuild 能够识别 jsconfig.json 中的 `paths` 字段。
-
-```js title="rsbuild.config.mjs"
-export default {
-  source: {
-    tsconfigPath: './jsconfig.json',
-  },
-};
-```
+如果你需要在 Rsbuild 中使用该特性，可以参考 [路径别名 - jsconfig.json](/guide/advanced/alias#jsconfigjson)。
 
 ## CRACO 迁移
 

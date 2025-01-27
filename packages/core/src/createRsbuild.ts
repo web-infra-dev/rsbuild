@@ -44,6 +44,7 @@ import { rspackProvider } from './provider/provider';
 import { startProdServer } from './server/prodServer';
 import type {
   Build,
+  CreateCompiler,
   CreateDevServer,
   CreateRsbuildOptions,
   Falsy,
@@ -212,10 +213,18 @@ export async function createRsbuild(
     return providerInstance.createDevServer(...args);
   };
 
+  const createCompiler: CreateCompiler = (...args) => {
+    if (!context.command) {
+      context.command = getNodeEnv() === 'development' ? 'dev' : 'build';
+    }
+    return providerInstance.createCompiler(...args);
+  };
+
   const rsbuild = {
     build,
     preview,
     startDevServer,
+    createCompiler,
     createDevServer,
     ...pick(pluginManager, [
       'addPlugins',
@@ -240,11 +249,7 @@ export async function createRsbuild(
       'getRsbuildConfig',
       'getNormalizedConfig',
     ]),
-    ...pick(providerInstance, [
-      'initConfigs',
-      'inspectConfig',
-      'createCompiler',
-    ]),
+    ...pick(providerInstance, ['initConfigs', 'inspectConfig']),
   };
 
   const getFlattenedPlugins = async (pluginOptions: RsbuildPlugins) => {
@@ -267,15 +272,22 @@ export async function createRsbuild(
   if (rsbuildConfig.environments) {
     await Promise.all(
       Object.entries(rsbuildConfig.environments).map(async ([name, config]) => {
-        const isEnvironmentEnabled =
-          !rsbuildOptions.environment ||
-          rsbuildOptions.environment.includes(name);
-        if (config.plugins && isEnvironmentEnabled) {
-          const plugins = await getFlattenedPlugins(config.plugins);
-          rsbuild.addPlugins(plugins, {
-            environment: name,
-          });
+        if (!config.plugins) {
+          return;
         }
+
+        // If the current environment is not specified, skip it
+        if (
+          context.specifiedEnvironments &&
+          !context.specifiedEnvironments.includes(name)
+        ) {
+          return;
+        }
+
+        const plugins = await getFlattenedPlugins(config.plugins);
+        rsbuild.addPlugins(plugins, {
+          environment: name,
+        });
       }),
     );
   }

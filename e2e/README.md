@@ -2,7 +2,7 @@
 
 This folder contains the e2e test cases of Rsbuild.
 
-## Tech Stack
+## Tech stack
 
 - [playwright](https://github.com/microsoft/playwright): The e2e test framework.
 
@@ -11,13 +11,13 @@ This folder contains the e2e test cases of Rsbuild.
 Most of the E2E tests in Rsbuild are run by both Rspack and Webpack at the same time. This is to check that the functionality of Rspack is correctly aligned with Webpack.
 
 ```bash
-# Run all test cases, including Rspack and Webpack
+# Run all test cases, including Rspack and webpack
 pnpm test
 
 # Run test cases for Rspack
 pnpm test:rspack
 
-# Run test cases for Webpack
+# Run test cases for webpack
 pnpm test:webpack
 
 # Run specific test case, such as "css"
@@ -25,7 +25,7 @@ pnpm test:webpack css
 pnpm test:rspack css
 ```
 
-## Add Test Cases
+## Add test cases
 
 Test cases added using the `test` method will run in both Rspack and Webpack.
 

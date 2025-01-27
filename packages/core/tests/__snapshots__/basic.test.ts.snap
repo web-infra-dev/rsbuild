@@ -23,7 +23,9 @@ exports[`plugin-basic > should apply basic config correctly in development 1`] =
     "hints": false,
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
     HotModuleReplacementPlugin {
       "name": "HotModuleReplacementPlugin",
     },
@@ -55,7 +57,9 @@ exports[`plugin-basic > should apply basic config correctly in production 1`] = 
     "hints": false,
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
   "watchOptions": {
     "aggregateTimeout": 0,

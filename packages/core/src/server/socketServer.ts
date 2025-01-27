@@ -2,34 +2,34 @@ import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
 import { parse } from 'node:querystring';
 import type Ws from 'ws';
+import type { Server } from 'ws';
 import {
   getAllStatsErrors,
   getAllStatsWarnings,
   getStatsOptions,
 } from '../helpers';
+import { formatStatsMessages } from '../helpers/format';
 import { logger } from '../logger';
 import type { DevConfig, Rspack } from '../types';
 import { getCompilationId } from './helper';
+import { genOverlayHTML } from './overlay';
 
 interface ExtWebSocket extends Ws {
   isAlive: boolean;
 }
 
 function isEqualSet(a: Set<string>, b: Set<string>): boolean {
-  if (a.size !== b.size) {
-    return false;
-  }
+  return a.size === b.size && [...a].every((value) => b.has(value));
+}
 
-  for (const v of a.values()) {
-    if (!b.has(v)) {
-      return false;
-    }
-  }
-  return true;
+interface SocketMessage {
+  type: string;
+  compilationId?: string;
+  data?: Record<string, any> | string | boolean;
 }
 
 export class SocketServer {
-  private wsServer!: Ws.Server;
+  private wsServer!: Server;
 
   private readonly sockets: Ws[] = [];
 
@@ -108,15 +108,7 @@ export class SocketServer {
   }
 
   // write message to each socket
-  public sockWrite({
-    type,
-    compilationId,
-    data,
-  }: {
-    type: string;
-    compilationId?: string;
-    data?: Record<string, any> | string | boolean;
-  }): void {
+  public sockWrite({ type, compilationId, data }: SocketMessage): void {
     for (const socket of this.sockets) {
       this.send(socket, JSON.stringify({ type, data, compilationId }));
     }
@@ -124,15 +116,7 @@ export class SocketServer {
 
   private singleWrite(
     socket: Ws,
-    {
-      type,
-      data,
-      compilationId,
-    }: {
-      type: string;
-      compilationId?: string;
-      data?: Record<string, any> | string | boolean;
-    },
+    { type, data, compilationId }: SocketMessage,
   ) {
     this.send(socket, JSON.stringify({ type, data, compilationId }));
   }
@@ -255,9 +239,10 @@ export class SocketServer {
       !isEqualSet(initialChunks, newInitialChunks);
 
     this.initialChunks[compilationId] = newInitialChunks;
+
     if (shouldReload) {
       return this.sockWrite({
-        type: 'content-changed',
+        type: 'static-changed',
         compilationId,
       });
     }
@@ -283,19 +268,37 @@ export class SocketServer {
     });
 
     if (stats.errorsCount) {
+      const errors = getAllStatsErrors(stats);
+      const { errors: formattedErrors } = formatStatsMessages({
+        errors,
+        warnings: [],
+      });
+
       return this.sockWrite({
         type: 'errors',
         compilationId,
-        data: getAllStatsErrors(stats),
+        data: {
+          text: formattedErrors,
+          html: genOverlayHTML(formattedErrors),
+        },
       });
     }
+
     if (stats.warningsCount) {
+      const warnings = getAllStatsWarnings(stats);
+      const { warnings: formattedWarnings } = formatStatsMessages({
+        warnings,
+        errors: [],
+      });
       return this.sockWrite({
         type: 'warnings',
         compilationId,
-        data: getAllStatsWarnings(stats),
+        data: {
+          text: formattedWarnings,
+        },
       });
     }
+
     return this.sockWrite({
       type: 'ok',
       compilationId,

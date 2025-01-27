@@ -1,4 +1,4 @@
-# Rsbuild Project
+# Rsbuild project
 
 ## Setup
 
@@ -8,7 +8,7 @@ Install the dependencies:
 pnpm install
 ```
 
-## Get Started
+## Get started
 
 Start the dev server:
 

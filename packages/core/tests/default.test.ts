@@ -110,7 +110,9 @@ describe('bundlerApi', () => {
       {
         "devtool": "hidden-source-map",
         "plugins": [
-          RsbuildCorePlugin {},
+          {
+            "name": "RsbuildCorePlugin",
+          },
         ],
         "target": "node",
       }
@@ -153,7 +155,9 @@ describe('bundlerApi', () => {
           ],
         },
         "plugins": [
-          RsbuildCorePlugin {},
+          {
+            "name": "RsbuildCorePlugin",
+          },
         ],
       }
     `);
@@ -195,7 +199,9 @@ describe('bundlerApi', () => {
           ],
         },
         "plugins": [
-          RsbuildCorePlugin {},
+          {
+            "name": "RsbuildCorePlugin",
+          },
         ],
       }
     `);

@@ -46,7 +46,9 @@ exports[`plugin-solid > should allow to configure solid preset options 1`] = `
     ],
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
   "resolve": {
     "alias": {
@@ -99,7 +101,9 @@ exports[`plugin-solid > should apply solid preset correctly 1`] = `
     ],
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
   "resolve": {
     "alias": {

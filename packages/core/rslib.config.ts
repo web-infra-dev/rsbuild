@@ -94,22 +94,6 @@ export default defineConfig({
         entry: {
           ignoreCssLoader: './src/loader/ignoreCssLoader.ts',
           transformLoader: './src/loader/transformLoader.ts',
-        },
-      },
-      output: {
-        filename: {
-          js: '[name].mjs',
-        },
-        minify: nodeMinifyConfig,
-      },
-    },
-    // Node / ESM / loaders 2
-    // TODO: https://github.com/web-infra-dev/rslib/issues/452
-    {
-      format: 'esm',
-      syntax: 'es2021',
-      source: {
-        entry: {
           transformRawLoader: './src/loader/transformRawLoader.ts',
         },
       },
@@ -138,7 +122,6 @@ export default defineConfig({
 0 && (module.exports = {
   PLUGIN_CSS_NAME,
   PLUGIN_SWC_NAME,
-  __internalHelper,
   createRsbuild,
   defineConfig,
   ensureAssetPrefix,

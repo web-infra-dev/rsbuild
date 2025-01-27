@@ -55,4 +55,10 @@ export type PluginSassOptions = {
    * Exclude some `.scss` or `.sass` files, they will not be transformed by sass-loader.
    */
   exclude?: Rspack.RuleSetCondition;
+
+  /**
+   * Whether to use `resolve-url-loader` to rewrite urls.
+   * @default true
+   */
+  rewriteUrls?: boolean;
 };

@@ -1,4 +1,4 @@
-# Rsbuild Core
+# Rsbuild core
 
 本章节描述了 Rsbuild 提供的一些核心方法。
 
@@ -39,7 +39,7 @@ type CreateRsbuildOptions = {
 ```
 
 - `cwd`：当前执行构建的根路径，默认值为 `process.cwd()`
-- `environment`：只构建指定的 [environments](/guide/advanced/environments)。
+- `environment`：只构建指定的 [environments](/guide/advanced/environments)，如果未指定或传入空数组，则构建所有环境。
 - `rsbuildConfig`：Rsbuild 配置对象。参考 [配置总览](/config/) 查看所有可用的配置项。
 
 ## loadConfig
@@ -110,7 +110,7 @@ const { content } = await loadConfig({
 在 `defineConfig` 定义的配置函数中，你可以通过 `meta` 对象访问到 `foo` 变量：
 
 ```ts title="rsbuild.config.ts"
-export default defineConfig((config, { meta }) => {
+export default defineConfig(({ meta }) => {
   console.log(meta.foo); // bar
   return config;
 });

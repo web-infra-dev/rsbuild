@@ -1,6 +1,4 @@
 // rsbuild/runtime/async-chunk-retry
-import type { AssetsRetryHookContext, RuntimeRetryOptions } from '../types.js';
-
 type ChunkId = string; // e.g: src_AsyncCompTest_tsx
 type ChunkFilename = string; // e.g: static/js/async/src_AsyncCompTest_tsx.js
 type ChunkSrcUrl = string; // publicPath + ChunkFilename e.g: http://localhost:3000/static/js/async/src_AsyncCompTest_tsx.js
@@ -8,21 +6,28 @@ type ChunkSrcUrl = string; // publicPath + ChunkFilename e.g: http://localhost:3
 type Retry = {
   nextDomain: string;
   nextRetryUrl: ChunkSrcUrl;
+
   originalScriptFilename: ChunkFilename;
   originalSrcUrl: ChunkSrcUrl;
   originalQuery: string;
 };
 
 type RetryCollector = Record<ChunkId, Record<number, Retry>>;
+type EnsureChunk = (chunkId: ChunkId, ...args: unknown[]) => Promise<unknown>;
+type LoadScript = (
+  url: ChunkSrcUrl,
+  done: unknown,
+  key: string,
+  chunkId: ChunkId,
+  ...args: unknown[]
+) => void;
+type LoadStyleSheet = (href: string, chunkId: ChunkId) => string;
 
 declare global {
   // RuntimeGlobals.require
   var __RUNTIME_GLOBALS_REQUIRE__: unknown;
   // RuntimeGlobals.ensure
-  var __RUNTIME_GLOBALS_ENSURE_CHUNK__: (
-    chunkId: ChunkId,
-    ...args: unknown[]
-  ) => Promise<unknown>;
+  var __RUNTIME_GLOBALS_ENSURE_CHUNK__: EnsureChunk;
   // RuntimeGlobals.getChunkScriptFilename
   var __RUNTIME_GLOBALS_GET_CHUNK_SCRIPT_FILENAME__: (
     chunkId: ChunkId,
@@ -37,13 +42,9 @@ declare global {
     | ((chunkId: ChunkId, ...args: unknown[]) => string)
     | undefined;
   // RuntimeGlobals.loadScript
-  var __RUNTIME_GLOBALS_LOAD_SCRIPT__: (
-    url: ChunkSrcUrl,
-    done: unknown,
-    key: string,
-    chunkId: ChunkId,
-    ...args: unknown[]
-  ) => void;
+  var __RUNTIME_GLOBALS_LOAD_SCRIPT__: LoadScript;
+  // __webpack_require__.rbLoadStyleSheet
+  var __RUNTIME_GLOBALS_RSBUILD_LOAD_STYLESHEET__: LoadStyleSheet;
   // RuntimeGlobals.publicPath
   var __RUNTIME_GLOBALS_PUBLIC_PATH__: string;
   // user options
@@ -56,13 +57,14 @@ declare global {
 const config = __RETRY_OPTIONS__;
 const maxRetries = config.max || 3;
 const retryCollector: RetryCollector = {};
+const retryCssCollector: RetryCollector = {};
 
 function findCurrentDomain(url: string) {
-  const domainList = config.domain ?? [];
+  const domains = config.domain || [];
   let domain = '';
-  for (let i = 0; i < domainList.length; i++) {
-    if (url.indexOf(domainList[i]) !== -1) {
-      domain = domainList[i];
+  for (let i = 0; i < domains.length; i++) {
+    if (url.indexOf(domains[i]) !== -1) {
+      domain = domains[i];
       break;
     }
   }
@@ -70,10 +72,10 @@ function findCurrentDomain(url: string) {
 }
 
 function findNextDomain(url: string) {
-  const domainList = config.domain ?? [];
+  const domains = config.domain || [];
   const currentDomain = findCurrentDomain(url);
-  const index = domainList.indexOf(currentDomain);
-  return domainList[(index + 1) % domainList.length] || url;
+  const index = domains.indexOf(currentDomain);
+  return domains[(index + 1) % domains.length] || url;
 }
 
 const postfixRE = /[?#].*$/;
@@ -114,16 +116,28 @@ function getNextRetryUrl(
 }
 
 // shared between ensureChunk and loadScript
-const globalCurrRetrying: Record<ChunkId, Retry> = {};
+const globalCurrRetrying: Record<ChunkId, Retry | undefined> = {};
+// shared between ensureChunk and loadStyleSheet
+const globalCurrRetryingCss: Record<ChunkId, Retry | undefined> = {};
+
 function getCurrentRetry(
   chunkId: string,
   existRetryTimes: number,
+  isCssAsyncChunk: boolean,
 ): Retry | undefined {
-  return retryCollector[chunkId]?.[existRetryTimes];
+  return isCssAsyncChunk
+    ? retryCssCollector[chunkId]?.[existRetryTimes]
+    : retryCollector[chunkId]?.[existRetryTimes];
 }
 
-function initRetry(chunkId: string): Retry {
-  const originalScriptFilename = originalGetChunkScriptFilename(chunkId);
+function initRetry(chunkId: string, isCssAsyncChunk: boolean): Retry {
+  const originalScriptFilename = isCssAsyncChunk
+    ? originalGetCssFilename(chunkId)
+    : originalGetChunkScriptFilename(chunkId);
+
+  if (!originalScriptFilename) {
+    throw new Error('only support cssExtract');
+  }
 
   const originalPublicPath = __RUNTIME_GLOBALS_PUBLIC_PATH__;
   const originalSrcUrl = originalPublicPath.startsWith('/')
@@ -132,7 +146,7 @@ function initRetry(chunkId: string): Retry {
   const originalQuery = getQueryFromUrl(originalSrcUrl);
 
   const existRetryTimes = 0;
-  const nextDomain = config.domain?.[0] ?? window.origin;
+  const nextDomain = config.domain?.[0] || window.origin;
 
   return {
     nextDomain,
@@ -143,22 +157,29 @@ function initRetry(chunkId: string): Retry {
       existRetryTimes,
       originalQuery,
     ),
-
     originalScriptFilename,
     originalSrcUrl,
     originalQuery,
   };
 }
 
-function nextRetry(chunkId: string, existRetryTimes: number): Retry {
-  const currRetry = getCurrentRetry(chunkId, existRetryTimes);
+function nextRetry(
+  chunkId: string,
+  existRetryTimes: number,
+  isCssAsyncChunk: boolean,
+): Retry {
+  const currRetry = getCurrentRetry(chunkId, existRetryTimes, isCssAsyncChunk);
 
   let nextRetry: Retry;
   const nextExistRetryTimes = existRetryTimes + 1;
 
   if (existRetryTimes === 0 || currRetry === undefined) {
-    nextRetry = initRetry(chunkId);
-    retryCollector[chunkId] = [];
+    nextRetry = initRetry(chunkId, isCssAsyncChunk);
+    if (isCssAsyncChunk) {
+      retryCssCollector[chunkId] = [];
+    } else {
+      retryCollector[chunkId] = [];
+    }
   } else {
     const { originalScriptFilename, originalSrcUrl, originalQuery } = currRetry;
     const nextDomain = findNextDomain(currRetry.nextDomain);
@@ -179,8 +200,13 @@ function nextRetry(chunkId: string, existRetryTimes: number): Retry {
     };
   }
 
-  retryCollector[chunkId][nextExistRetryTimes] = nextRetry;
-  globalCurrRetrying[chunkId] = nextRetry;
+  if (isCssAsyncChunk) {
+    retryCssCollector[chunkId][nextExistRetryTimes] = nextRetry;
+    globalCurrRetryingCss[chunkId] = nextRetry;
+  } else {
+    retryCollector[chunkId][nextExistRetryTimes] = nextRetry;
+    globalCurrRetrying[chunkId] = nextRetry;
+  }
   return nextRetry;
 }
 
@@ -189,38 +215,28 @@ const originalEnsureChunk = __RUNTIME_GLOBALS_ENSURE_CHUNK__;
 const originalGetChunkScriptFilename =
   __RUNTIME_GLOBALS_GET_CHUNK_SCRIPT_FILENAME__;
 const originalGetCssFilename =
-  __RUNTIME_GLOBALS_GET_MINI_CSS_EXTRACT_FILENAME__ ??
-  __RUNTIME_GLOBALS_GET_CSS_FILENAME__ ??
+  __RUNTIME_GLOBALS_GET_MINI_CSS_EXTRACT_FILENAME__ ||
+  __RUNTIME_GLOBALS_GET_CSS_FILENAME__ ||
   (() => null);
 const originalLoadScript = __RUNTIME_GLOBALS_LOAD_SCRIPT__;
 
 const ERROR_PREFIX = '[@rsbuild/plugin-assets-retry] ';
 
 // if users want to support es5, add Promise polyfill first https://github.com/webpack/webpack/issues/12877
-function ensureChunk(
-  chunkId: string,
-  // args placeholder, to avoid that other webpack runtime would add arg for __webpack_require__.e
-  arg0: unknown,
-  arg1: unknown,
-  arg2: unknown,
-  arg3: unknown,
-  arg4: unknown,
-  arg5: unknown,
-  arg6: unknown,
-  callingCounter: { count: number } = { count: 0 },
-  ...args: unknown[]
-): Promise<unknown> {
-  const result = originalEnsureChunk(
-    chunkId,
-    arg0,
-    arg1,
-    arg2,
-    arg3,
-    arg4,
-    arg5,
-    arg6,
-    callingCounter,
-    ...args,
+function ensureChunk(chunkId: string): Promise<unknown> {
+  // biome-ignore lint/style/noArguments: allowed
+  const args = Array.prototype.slice.call(arguments);
+
+  // Other webpack runtimes would add arguments for `__webpack_require__.e`,
+  // So we use `arguments[10]` to avoid conflicts with other runtimes
+  if (!args[10]) {
+    args[10] = { count: 0, cssFailedCount: 0 };
+  }
+  const callingCounter: { count: number; cssFailedCount: number } = args[10];
+
+  const result = originalEnsureChunk.apply(
+    null,
+    args as Parameters<EnsureChunk>,
   );
 
   try {
@@ -237,11 +253,15 @@ function ensureChunk(
       }
     }
   } catch (e) {
-    console.error(ERROR_PREFIX, 'get original script or css filename error', e);
+    console.error(ERROR_PREFIX, 'get original script or CSS filename error', e);
   }
 
   // if __webpack_require__.e is polluted by other runtime codes, fallback to originalEnsureChunk
-  if (typeof callingCounter?.count !== 'number') {
+  if (
+    !callingCounter ||
+    typeof callingCounter.count !== 'number' ||
+    typeof callingCounter.cssFailedCount !== 'number'
+  ) {
     return result;
   }
 
@@ -250,13 +270,30 @@ function ensureChunk(
   return result.catch((error: Error) => {
     // the first calling is not retry
     // if the failed request is 4 in network panel, callingCounter.count === 4, the first one is the normal request, and existRetryTimes is 3, retried 3 times
-    const existRetryTimes = callingCounter.count - 1;
+    const existRetryTimesAll = callingCounter.count - 1;
+    const cssExistRetryTimes = callingCounter.cssFailedCount;
+    const jsExistRetryTimes = existRetryTimesAll - cssExistRetryTimes;
     let originalScriptFilename: string;
     let nextRetryUrl: string;
     let nextDomain: string;
 
+    const isCssAsyncChunkLoadFailed = Boolean(
+      error?.message?.includes('CSS chunk'),
+    );
+    if (isCssAsyncChunkLoadFailed) {
+      callingCounter.cssFailedCount += 1;
+    }
+
+    const existRetryTimes = isCssAsyncChunkLoadFailed
+      ? cssExistRetryTimes
+      : jsExistRetryTimes;
+
     try {
-      const retryResult = nextRetry(chunkId, existRetryTimes);
+      const retryResult = nextRetry(
+        chunkId,
+        existRetryTimes,
+        isCssAsyncChunkLoadFailed,
+      );
       originalScriptFilename = retryResult.originalScriptFilename;
       nextRetryUrl = retryResult.nextRetryUrl;
       nextDomain = retryResult.nextDomain;
@@ -264,13 +301,6 @@ function ensureChunk(
       console.error(ERROR_PREFIX, 'failed to get nextRetryUrl', e);
       throw error;
     }
-
-    // At present, we don't consider the switching domain and addQuery of async CSS chunk
-    // 1. Async js chunk will be requested first. It is rare for async CSS chunk to fail alone.
-    // 2. the code of loading CSS in webpack runtime is complex and it may be modified by cssExtractPlugin, increase the complexity of this plugin.
-    const isCssAsyncChunkLoadFailed = Boolean(
-      error?.message?.includes('CSS chunk'),
-    );
 
     const createContext = (times: number): AssetsRetryHookContext => ({
       times,
@@ -305,11 +335,7 @@ function ensureChunk(
       }
     }
 
-    if (
-      config.domain &&
-      config.domain.length > 0 &&
-      config.domain.indexOf(nextDomain) === -1
-    ) {
+    if (config.domain && config.domain.indexOf(nextDomain) === -1) {
       throw error;
     }
 
@@ -318,23 +344,13 @@ function ensureChunk(
       config.onRetry(context);
     }
 
-    const nextPromise = ensureChunk(
-      chunkId,
-      arg0,
-      arg1,
-      arg2,
-      arg3,
-      arg4,
-      arg5,
-      arg6,
-      callingCounter,
-      ...args,
-    );
+    const nextPromise = ensureChunk.apply(ensureChunk, args as [string]);
     return nextPromise.then((result) => {
       // when after retrying the third time
       // ensureChunk(chunkId, { count: 3 }), at that time, existRetryTimes === 2
-      // after all, callingCounter.count is 4
-      const isLastSuccessRetry = callingCounter?.count === existRetryTimes + 2;
+      // at the end, callingCounter.count is 4
+      const isLastSuccessRetry =
+        callingCounter?.count === existRetryTimesAll + 2;
       if (typeof config.onSuccess === 'function' && isLastSuccessRetry) {
         const context = createContext(existRetryTimes + 1);
         config.onSuccess(context);
@@ -344,20 +360,21 @@ function ensureChunk(
   });
 }
 
-function loadScript(
-  originalUrl: ChunkSrcUrl,
-  done: unknown,
-  key: string,
-  chunkId: ChunkId,
-  ...args: unknown[]
-) {
-  const retry = globalCurrRetrying[chunkId];
-  return originalLoadScript(
-    retry ? retry.nextRetryUrl : originalUrl,
-    done,
-    key,
-    chunkId,
-    ...args,
+function loadScript() {
+  // biome-ignore lint/style/noArguments: allowed
+  const args = Array.prototype.slice.call(arguments) as Parameters<LoadScript>;
+  const retry = globalCurrRetrying[args[3]];
+  if (retry) {
+    args[0] = retry.nextRetryUrl;
+  }
+  return originalLoadScript.apply(null, args);
+}
+
+function loadStyleSheet(href: string, chunkId: ChunkId): string {
+  const retry = globalCurrRetryingCss[chunkId];
+  return (
+    // biome-ignore lint/complexity/useOptionalChain: for less code
+    (retry && retry.nextRetryUrl) || __RUNTIME_GLOBALS_PUBLIC_PATH__ + href
   );
 }
 
@@ -374,6 +391,7 @@ function registerAsyncChunkRetry() {
         ...args: unknown[]
       ) => Promise<unknown>;
       __RUNTIME_GLOBALS_LOAD_SCRIPT__ = loadScript;
+      __RUNTIME_GLOBALS_RSBUILD_LOAD_STYLESHEET__ = loadStyleSheet;
     } catch (e) {
       console.error(
         ERROR_PREFIX,

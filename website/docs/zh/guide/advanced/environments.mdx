@@ -300,23 +300,57 @@ export async function startDevServer() {
 
 详细使用情况可参考：[SSR + Express 示例](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/ssr-express)。
 
-## 添加 environment 依赖
+## 构建顺序
 
-默认情况下，Rsbuild 会并行构建所有环境。如果你的项目中某一个环境依赖其他环境预先编译完成，可以将你需要依赖的环境名称添加到 Rspack 的 [dependencies](https://rspack.dev/zh/config/other-options#dependencies) 配置中。
+默认情况下，Rsbuild 会并行构建所有环境。
 
-例如，node 环境依赖 web 环境预先编译完成，可以添加如下配置：
+如果你需要控制不同环境之间的构建顺序，可以通过 Rspack 的 [dependencies](https://rspack.dev/zh/config/other-options#dependencies) 配置来设置构建依赖关系。
+
+例如，假设你需要先完成 `web` 环境的构建，再开始构建 `node` 环境，可以添加如下配置：
 
 ```ts title=rsbuild.config.ts
 export default {
   environments: {
-    web: {},
+    web: {
+      tools: {
+        rspack: {
+          name: 'foo',
+        },
+      },
+    },
     node: {
       tools: {
         rspack: {
-          dependencies: ['web'],
+          dependencies: ['foo'],
         },
       },
     },
   },
 };
+```
+
+我们可以通过一个简单的插件来测试多个环境的构建顺序：
+
+```ts
+const testPlugin: RsbuildPlugin = {
+  name: 'test-plugin',
+  setup(api) {
+    api.onBeforeEnvironmentCompile(({ environment }) => {
+      console.log('build start:', environment.name);
+    });
+
+    api.onAfterEnvironmentCompile(({ stats, environment }) => {
+      console.log('build done:', environment.name);
+      console.log('stats', stats);
+    });
+  },
+};
+
+// 插件会依次输出：
+// - build start: web
+// - build done: web
+// - stats: { ... }
+// - build start: node
+// - build done: node
+// - stats: { ... }
 ```

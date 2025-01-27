@@ -1,5 +1,6 @@
 import path from 'node:path';
 import type { GeneratorOptionsByModuleType } from '@rspack/core';
+import { CHAIN_ID } from '../configChain';
 import {
   AUDIO_EXTENSIONS,
   FONT_EXTENSIONS,
@@ -109,17 +110,17 @@ export const pluginAsset = (): RsbuildPlugin => ({
       const { emitAssets } = config.output;
 
       // image
-      createAssetRule('image', IMAGE_EXTENSIONS, emitAssets);
+      createAssetRule(CHAIN_ID.RULE.IMAGE, IMAGE_EXTENSIONS, emitAssets);
       // svg
-      createAssetRule('svg', ['svg'], emitAssets);
+      createAssetRule(CHAIN_ID.RULE.SVG, ['svg'], emitAssets);
       // media
       createAssetRule(
-        'media',
+        CHAIN_ID.RULE.MEDIA,
         [...VIDEO_EXTENSIONS, ...AUDIO_EXTENSIONS],
         emitAssets,
       );
       // font
-      createAssetRule('font', FONT_EXTENSIONS, emitAssets);
+      createAssetRule(CHAIN_ID.RULE.FONT, FONT_EXTENSIONS, emitAssets);
       // assets
       const assetsFilename = getMergedFilename('assets');
       chain.output.assetModuleFilename(assetsFilename);
@@ -131,7 +132,9 @@ export const pluginAsset = (): RsbuildPlugin => ({
       const { assetsInclude } = config.source;
       if (assetsInclude) {
         const { dataUriLimit } = config.output;
-        const rule = chain.module.rule('additional-assets').test(assetsInclude);
+        const rule = chain.module
+          .rule(CHAIN_ID.RULE.ADDITIONAL_ASSETS)
+          .test(assetsInclude);
         const maxSize =
           typeof dataUriLimit === 'number' ? dataUriLimit : dataUriLimit.assets;
 
@@ -140,7 +143,7 @@ export const pluginAsset = (): RsbuildPlugin => ({
           rule,
           maxSize,
           filename: assetsFilename,
-          assetType: 'additional',
+          assetType: 'additional-assets',
         });
       }
     });

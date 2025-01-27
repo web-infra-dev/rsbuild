@@ -31,7 +31,7 @@ HTTPS:
 Rsbuild enables HTTP/2 server by default. However, when you use [server.proxy](/config/server/proxy), the server will downgrade to HTTP/1, because the underlying `http-proxy` does not support HTTP/2.
 :::
 
-## Set Certificate
+## Set certificate
 
 You can manually pass in the certificate and the private key required in the `server.https` option. This parameter will be directly passed to the `createServer` method of the https module in Node.js.
 

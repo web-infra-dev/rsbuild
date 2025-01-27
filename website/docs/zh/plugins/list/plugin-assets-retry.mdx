@@ -1,4 +1,4 @@
-# Assets Retry 插件
+# Assets retry 插件
 
 import { SourceCode } from 'rspress/theme';
 
@@ -276,7 +276,7 @@ pluginAssetsRetry({
 
 ## 注意事项
 
-当你使用 Assets Retry 插件时，Rsbuild 会向 HTML 中注入一段运行时代码，并将 Assets Retry 插件配置的内容序列化，插入到这段代码中，因此你需要注意：
+当你使用 Assets Retry 插件时，Rsbuild 会分别向 HTML 和 [Rspack Runtime](https://rspack.dev/zh/misc/glossary#runtime) 中注入运行时代码，并将 Assets Retry 插件配置的内容序列化后插入到这些代码中，因此你需要注意：
 
 - 避免在 Assets Retry 插件中配置敏感信息，比如内部使用的 token。
 - 避免在 `onRetry`，`onSuccess`，`onFail` 中引用函数外部的变量或方法。

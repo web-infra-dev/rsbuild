@@ -23,7 +23,7 @@ test('setupMiddlewares', async ({ page }) => {
               i++;
               next();
             });
-            reloadFn = () => server.sockWrite('content-changed');
+            reloadFn = () => server.sockWrite('static-changed');
           },
         ],
       },

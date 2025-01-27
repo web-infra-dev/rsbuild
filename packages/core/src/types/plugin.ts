@@ -26,7 +26,7 @@ import type {
   OnAfterStartProdServerFn,
   OnBeforeBuildFn,
   OnBeforeCreateCompilerFn,
-  OnBeforeEnvironmentCompile,
+  OnBeforeEnvironmentCompileFn,
   OnBeforeStartDevServerFn,
   OnBeforeStartProdServerFn,
   OnCloseBuildFn,
@@ -232,6 +232,11 @@ export type TransformContext = {
    */
   code: string;
   /**
+   * The directory path of the currently processed module,
+   * which changes with the location of each processed module.
+   */
+  context: string | null;
+  /**
    * The absolute path of the module, including the query.
    * @example '/home/user/project/src/index.js?foo=123'
    */
@@ -263,12 +268,15 @@ export type TransformContext = {
    * @param sourceMap source map of the asset
    * @param assetInfo additional asset information
    */
-  emitFile: (
-    name: string,
-    content: string | Buffer,
-    sourceMap?: string,
-    assetInfo?: Record<string, any>,
-  ) => void;
+  emitFile: Rspack.LoaderContext['emitFile'];
+  /**
+   * Compile and execute a module at the build time.
+   */
+  importModule: Rspack.LoaderContext['importModule'];
+  /**
+   * Resolve a module specifier.
+   */
+  resolve: Rspack.LoaderContext['resolve'];
 };
 
 export type TransformHandler = (
@@ -317,6 +325,17 @@ export type TransformDescriptor = {
    * @see https://rspack.dev/config/module#ruleissuerlayer
    */
   issuerLayer?: string;
+  /**
+   * Matches all modules that match this resource, and will match against Resource
+   * (the absolute path without query and fragment) of the module that issued the current module.
+   * @see https://rspack.dev/config/module#ruleissuer
+   */
+  issuer?: Rspack.RuleSetCondition;
+  /**
+   * `with` can be used in conjunction with [import attributes](https://github.com/tc39/proposal-import-attributes).
+   * @see https://rspack.dev/config/module#rulewith
+   */
+  with?: Record<string, Rspack.RuleSetCondition>;
 };
 
 export type TransformFn = (
@@ -420,7 +439,7 @@ export type RsbuildPluginAPI = Readonly<{
   onAfterBuild: PluginHook<OnAfterBuildFn>;
   onBeforeBuild: PluginHook<OnBeforeBuildFn>;
   onAfterEnvironmentCompile: PluginHook<OnAfterEnvironmentCompileFn>;
-  onBeforeEnvironmentCompile: PluginHook<OnBeforeEnvironmentCompile>;
+  onBeforeEnvironmentCompile: PluginHook<OnBeforeEnvironmentCompileFn>;
   onCloseDevServer: PluginHook<OnCloseDevServerFn>;
   onDevCompileDone: PluginHook<OnDevCompileDoneFn>;
   onAfterStartDevServer: PluginHook<OnAfterStartDevServerFn>;

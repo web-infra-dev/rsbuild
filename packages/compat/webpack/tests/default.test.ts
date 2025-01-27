@@ -95,7 +95,9 @@ describe('bundlerApi', () => {
       {
         "devtool": "hidden-source-map",
         "plugins": [
-          RsbuildCorePlugin {},
+          {
+            "name": "RsbuildCorePlugin",
+          },
         ],
         "target": "node",
       }

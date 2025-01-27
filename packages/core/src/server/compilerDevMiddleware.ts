@@ -1,6 +1,7 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { createRequire } from 'node:module';
 import type { Socket } from 'node:net';
+import { HTML_REGEX } from '../constants';
 import { pathnameParse } from '../helpers/path';
 import type {
   EnvironmentContext,
@@ -42,7 +43,10 @@ const formatDevConfig = (
     (env) => env.config.dev.writeToDisk,
   );
   if (new Set(writeToDiskValues).size === 1) {
-    return config;
+    return {
+      ...config,
+      writeToDisk: writeToDiskValues[0],
+    };
   }
 
   return {
@@ -155,7 +159,16 @@ export class CompilerDevMiddleware {
     } = this;
 
     const callbacks = {
-      onInvalid: (compilationId?: string) => {
+      onInvalid: (compilationId?: string, fileName?: string | null) => {
+        // reload page when HTML template changed
+        if (typeof fileName === 'string' && HTML_REGEX.test(fileName)) {
+          this.socketServer.sockWrite({
+            type: 'static-changed',
+            compilationId,
+          });
+          return;
+        }
+
         this.socketServer.sockWrite({
           type: 'invalid',
           compilationId,
@@ -189,7 +202,7 @@ export class CompilerDevMiddleware {
         base && base !== '/' ? stripBase(prefix, base) : prefix,
       );
 
-    const warp = async (
+    const wrapper = async (
       req: IncomingMessage,
       res: ServerResponse,
       next: NextFunction,
@@ -211,10 +224,10 @@ export class CompilerDevMiddleware {
       }
     };
 
-    warp.close = middleware.close;
+    wrapper.close = middleware.close;
 
-    // warp rsbuild-dev-middleware to handle html file（without publicPath）
-    // maybe we should serve html file by sirv
-    return warp;
+    // wrap rsbuild-dev-middleware to handle HTML file（without publicPath）
+    // maybe we should serve HTML file by sirv
+    return wrapper;
   }
 }

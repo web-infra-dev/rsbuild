@@ -7,11 +7,17 @@ Rsbuild enables the following SWC features by default:
 - Transform JavaScript and TypeScript code using Rspack's [builtin:swc-loader](https://rspack.dev/guide/features/builtin-swc-loader), which is the Rust version of [swc-loader](https://github.com/swc-project/pkgs/tree/main/packages/swc-loader).
 - Minify JavaScript code using Rspack's [SwcJsMinimizerRspackPlugin](https://rspack.dev/plugins/rspack/swc-js-minimizer-rspack-plugin).
 
-## Loader Options
+## Loader options
 
-The options for `builtin:swc-loader` are consistent with the JS version of swc-loader. Rsbuild provides the [tools.swc](/config/tools/swc) option to configure `builtin:swc-loader`. Here are some examples:
+The options for `builtin:swc-loader` are the same as those for the JS version of `swc-loader`. Rsbuild exposes some options to configure `builtin:swc-loader`:
 
-### Register SWC Plugin
+- [tools.swc](/config/tools/swc)：to configure the options for `builtin:swc-loader`.
+- [source.include](/config/source/include)：to specify files that need to be compiled by SWC.
+- [source.exclude](/config/source/exclude)：to exclude files that do not need to be compiled by SWC.
+
+Here are some examples:
+
+### Register SWC plugin
 
 `tools.swc` can be used to register SWC's Wasm plugins, for example, registering [@swc/plugin-styled-components](https://www.npmjs.com/package/@swc/plugin-styled-components):
 
@@ -31,28 +37,13 @@ export default {
 
 > You can check out the [awesome-swc](https://github.com/swc-contrib/awesome-swc) repository to see the SWC plugins available in the community.
 
-### SWC Plugin Version
+### SWC plugin version
 
 Please note that the SWC plugin is still an experimental feature, and the SWC Wasm plugin is currently not backward compatible. The version of the SWC plugin is closely tied to the version of `swc_core` that Rspack depends on.
 
-This means that you must to choose an SWC plugin that matches the current version of `swc_core` to ensure that it works properly. If the version of the SWC plugin you are using does not match the version of `swc_core` that Rspack depends on, Rspack will throw the following error during the build process:
+This means that you must to choose an SWC plugin that matches the current version of `swc_core` to ensure that it works properly. If the version of the SWC plugin you are using does not match the version of `swc_core` that Rspack depends on, Rspack will throw an error during the build process. Please refer to [Rspack FAQ - SWC Plugin Version Unmatched](https://rspack.dev/errors/swc-plugin-version) for more information.
 
-```text
-1: failed to run Wasm plugin transform. Please ensure the version of `swc_core`
-   used by the plugin is compatible with the host runtime.
-```
-
-If you encounter the above issues, a common solution is to upgrade both the Rsbuild and SWC plugins to the latest versions.
-
-Alternatively, you can follow these steps to select a suitable SWC plugin version:
-
-1. Check the current version of Rspack you are using, this can be done by enabling [debug mode](/guide/debug/debug-mode).
-2. Visit [plugins.swc.rs](https://plugins.swc.rs/) and select the version of Rspack you are currently using.
-3. The website will list the range of SWC plugin versions that match to your current Rspack version. Then select the matched version of the SWC plugin to use.
-
-If the SWC plugin you are using is not listed on [plugins.swc.rs](https://plugins.swc.rs/), you can find the version information of `swc_core` in the Cargo.toml file within the Rust code repository. For example, in the Rspack repository, you can open [Cargo.toml](https://github.com/web-infra-dev/rspack/blob/main/Cargo.toml) and search for the keyword `swc_core` to find the version. Then read [SWC - Selecting the version](https://swc.rs/docs/plugin/selecting-swc-core) for further guidance.
-
-### Enable Emotion Support
+### Enable Emotion support
 
 Example of enabling the Emotion support using the `builtin:swc-loader`:
 
@@ -72,7 +63,7 @@ export default {
 
 For more options, please refer to [@swc/plugin-emotion](https://www.npmjs.com/package/@swc/plugin-emotion).
 
-### Enable Relay Support
+### Enable Relay support
 
 Example of enabling the Relay support using the `builtin:swc-loader`:
 
@@ -92,11 +83,11 @@ export default {
 
 For more options, please refer to [@swc/plugin-relay](https://www.npmjs.com/package/@swc/plugin-relay).
 
-## Minimizer Options
+## Minimizer options
 
 Rsbuild provides the [output.minify.js](/config/output/minify) option to configure the SwcJsMinimizerRspackPlugin. Here are some examples:
 
-### Exclude Files
+### Exclude files
 
 You can exclude certain files from being minified using the `exclude` option:
 
@@ -112,7 +103,7 @@ export default {
 };
 ```
 
-## Switching Minimizer
+## Switching minimizer
 
 If the `SwcJsMinimizerRspackPlugin` does not meet your needs, you can switch to other minimizers through the [tools.bundlerChain](/config/tools/bundler-chain) option.
 

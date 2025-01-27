@@ -1,5 +1,5 @@
 <picture>
-  <img alt="Rsbuild Banner" src="https://github.com/web-infra-dev/rsbuild/assets/7237365/84abc13e-b620-468f-a90b-dbf28e7e9427">
+  <img alt="Rsbuild Banner" src="https://assets.rspack.dev/rsbuild/rsbuild-banner.png">
 </picture>
 
 # Rsbuild
@@ -138,7 +138,7 @@ Por favor leia o [Guia de Contribuição](https://github.com/web-infra-dev/rsbui
   </table>
 </a>
 
-### Código de Conduta
+### Código de conduta
 
 Este repositório adotou o código de conduta de código aberto da ByteDance. Por favor, verifique [Código de Conduta](./CODE_OF_CONDUCT.md) para mais detalhes.
 

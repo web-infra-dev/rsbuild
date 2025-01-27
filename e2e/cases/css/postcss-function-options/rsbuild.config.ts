@@ -1,4 +1,3 @@
-import path from 'node:path';
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
@@ -16,10 +15,12 @@ export default defineConfig({
   tools: {
     postcss: {
       postcssOptions(loaderContext) {
-        const name = loaderContext.resourcePath.includes('foo') ? 'foo' : 'bar';
-        const config = path.join(__dirname, `./tailwind.config.${name}.cjs`);
         return {
-          plugins: [require('tailwindcss')({ config })],
+          plugins: [
+            require('@tailwindcss/postcss')({
+              base: loaderContext.context,
+            }),
+          ],
         };
       },
     },

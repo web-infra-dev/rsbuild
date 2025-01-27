@@ -7,9 +7,9 @@ type Minify =
   | boolean
   | {
       js?: boolean;
-      jsOptions?: SwcJsMinimizerRspackPluginOptions;
+      jsOptions?: Rspack.SwcJsMinimizerRspackPluginOptions;
       css?: boolean;
-      cssOptions?: LightningCssMinimizerRspackPluginOptions;
+      cssOptions?: Rspack.LightningcssMinimizerRspackPluginOptions;
     };
 ```
 
@@ -19,18 +19,13 @@ type Minify =
 
 默认情况下，JS 和 CSS 代码会在生产模式构建时被自动压缩，从而提升页面性能。如果你不希望执行代码压缩，可以将 `minify` 设置为 `false` 关闭对所有代码的压缩。或者可以通过 `minify` 选项的详细配置来控制代码压缩的行为。
 
-下面是各个字段的说明：
-
-- `js`: 是否开启对 JavaScript 代码的压缩。
-- `jsOptions`: JS 代码压缩配置，将会与默认配置合并传给 SWC。
-- `css`: 是否开启对 CSS 代码的压缩。
-- `cssOptions`: CSS 代码压缩配置，将会与默认配置合并传给 Lightning CSS。
-
 ## 示例
 
-### 禁用所有压缩
+### 禁用压缩
 
-```js
+将 `minify` 设置为 `false` 可以禁用 JS 和 CSS 代码的压缩：
+
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     minify: false,
@@ -39,12 +34,21 @@ export default {
 ```
 
 :::tip
-该配置项通常用于代码调试和问题排查，不建议在生产模式禁用代码压缩，否则会导致页面性能显著下降。
+该用法通常用于代码调试和问题排查，不建议在生产模式禁用代码压缩，否则会导致页面性能显著下降。
 :::
 
-### 禁用 JavaScript 压缩
+## 选项
 
-```js
+### minify.js
+
+- **类型：** `boolean`
+- **默认值：** `mode === 'production'`
+
+是否开启对 JavaScript 代码的压缩。
+
+例如禁用 JavaScript 压缩：
+
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     minify: {
@@ -54,13 +58,16 @@ export default {
 };
 ```
 
-### JavaScript 压缩选项
+### minify.jsOptions
 
-`output.minify.jsOptions` 用于配置 SWC 的压缩选项，具体配置项请参考 [SwcJsMinimizerRspackPlugin 文档](https://rspack.dev/plugins/rspack/swc-js-minimizer-rspack-plugin)。
+- **类型：** `Rspack.SwcJsMinimizerRspackPluginOptions`
+- **默认值：** `{}`
+
+`output.minify.jsOptions` 用于配置 SWC 的压缩选项，具体配置项请参考 [SwcJsMinimizerRspackPlugin 文档](https://rspack.dev/zh/plugins/rspack/swc-js-minimizer-rspack-plugin)。
 
 例如，关闭变量和函数名的重命名：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     minify: {
@@ -76,11 +83,35 @@ export default {
 
 > 参考 [配置 SWC](/guide/basic/configure-swc) 了解更多。
 
-### CSS 压缩选项
+### minify.css
 
-`output.minify.cssOptions` 用于配置 Lightning CSS 的压缩选项，具体配置项请参考 [LightningCssMinimizerRspackPlugin 文档](https://rspack.dev/plugins/rspack/lightning-css-minimizer-rspack-plugin)。
+- **类型：** `boolean`
+- **默认值：** `mode === 'production'`
 
-```js
+是否开启对 CSS 代码的压缩。
+
+例如禁用 CSS 压缩：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    minify: {
+      css: false,
+    },
+  },
+};
+```
+
+### minify.cssOptions
+
+- **类型：** `Rspack.LightningcssMinimizerRspackPluginOptions`
+- **默认值：** 继承 [tools.lightningcssLoader](/config/tools/lightningcss-loader) 的值
+
+`output.minify.cssOptions` 用于配置 Lightning CSS 的压缩选项，具体配置项请参考 [LightningCssMinimizerRspackPlugin 文档](https://rspack.dev/zh/plugins/rspack/lightning-css-minimizer-rspack-plugin)。
+
+例如，关闭 `errorRecovery` 选项：
+
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     minify: {
@@ -93,3 +124,7 @@ export default {
   },
 };
 ```
+
+:::tip
+当你在 [tools.lightningcssLoader](/config/tools/lightningcss-loader) 中配置了一些选项时，`output.minify.cssOptions` 会自动继承这些选项，这样可以确保开发环境和生产环境的 CSS 代码转换行为保持一致。
+:::

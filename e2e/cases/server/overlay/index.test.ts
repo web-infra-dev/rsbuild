@@ -40,7 +40,7 @@ test('should show overlay correctly', async ({ page }) => {
     fs.readFileSync(appPath, 'utf-8').replace('</div>', '</aaaaa>'),
   );
 
-  await expect(errorOverlay.locator('.title')).toHaveText('Compilation failed');
+  await expect(errorOverlay.locator('.title')).toHaveText('Build failed');
 
   await rsbuild.close();
 

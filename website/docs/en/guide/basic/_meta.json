@@ -1,8 +1,8 @@
 [
   "cli",
+  "css-usage",
   "server",
   "output-files",
-  "css-usage",
   "static-assets",
   "json-files",
   "wasm-assets",
@@ -13,6 +13,7 @@
   "css-modules",
   "typescript",
   "tailwindcss",
+  "tailwindcss-v3",
   "unocss",
   "web-workers",
   "static-deploy",

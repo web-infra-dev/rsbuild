@@ -9,7 +9,7 @@
 The built-in Rspack config in Rsbuild may change with iterations, and these changes won't be reflected in semver. Therefore, your custom config may become invalid when you upgrade Rsbuild.
 :::
 
-## Object Type
+## Object type
 
 `tools.rspack` can be configured as an object to be deep merged with the built-in Rspack configuration through [webpack-merge](https://github.com/survivejs/webpack-merge).
 
@@ -46,7 +46,7 @@ export default {
 
 If you need to override a configuration rather than merge it with the default value, you can use the function type of `tools.rspack`.
 
-## Function Type
+## Function type
 
 `tools.rspack` can be configured as a function. The first parameter of this function is the built-in Rspack configuration object, you can modify this object, and then return it. For example:
 

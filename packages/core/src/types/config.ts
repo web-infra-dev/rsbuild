@@ -19,6 +19,7 @@ import type {
   Filter as ProxyFilter,
 } from '../../compiled/http-proxy-middleware/index.js';
 import type RspackChain from '../../compiled/rspack-chain/index.js';
+import type { FileDescriptor } from '../../compiled/rspack-manifest-plugin';
 import type { BundleAnalyzerPlugin } from '../../compiled/webpack-bundle-analyzer/index.js';
 import type {
   ModifyBundlerChainUtils,
@@ -321,10 +322,13 @@ export type PublicDirOptions = {
    */
   name?: string;
   /**
-   * Whether to copy files from the publicDir to the distDir on production build
-   * @default true
+   * Whether to copy files from the public directory to the dist directory on production build.
+   * - `true`: copy files
+   * - `false`: do not copy files
+   * - `'auto'`: if `output.target` is not `'node'`, copy files, otherwise do not copy
+   * @default 'auto'
    */
-  copyOnBuild?: boolean;
+  copyOnBuild?: boolean | 'auto';
   /**
    * whether to watch the public directory and reload the page when the files change
    * @default false
@@ -390,7 +394,7 @@ export interface ServerConfig {
    * - true: enable CORS with default options.
    * - false: disable CORS.
    * - object: enable CORS with the specified options.
-   * @default true
+   * @default false
    * @link https://github.com/expressjs/cors
    */
   cors?: boolean | cors.CorsOptions;
@@ -889,6 +893,69 @@ export type InlineChunkConfig =
   | InlineChunkTest
   | { enable?: boolean | 'auto'; test: InlineChunkTest };
 
+export type ManifestByEntry = {
+  initial?: {
+    js?: string[];
+    css?: string[];
+  };
+  async?: {
+    js?: string[];
+    css?: string[];
+  };
+  /** other assets (e.g. png、svg、source map) related to the current entry */
+  assets?: string[];
+  html?: string[];
+};
+
+export type ManifestData = {
+  entries: {
+    /** relate to Rsbuild's source.entry config */
+    [entryName: string]: ManifestByEntry;
+  };
+  /** Flatten all assets */
+  allFiles: string[];
+};
+
+export type ManifestObjectConfig = {
+  /**
+   * The filename or path of the manifest file.
+   * The manifest file will be emitted to the output directory.
+   * @default 'manifest.json'
+   */
+  filename?: string;
+  /**
+   * A custom function to generate the content of the manifest file.
+   */
+  generate?: (params: {
+    files: FileDescriptor[];
+    manifestData: ManifestData;
+  }) => Record<string, unknown>;
+  /**
+   * Allows you to filter the files included in the manifest.
+   * The function receives a `file` parameter and returns `true` to keep the file, or `false` to exclude it.
+   * @default (file: FileDescriptor) => !file.name.endsWith('.LICENSE.txt')
+   */
+  filter?: (file: FileDescriptor) => boolean;
+};
+
+export type ManifestConfig = string | boolean | ManifestObjectConfig;
+
+export type CleanDistPathObject = {
+  /**
+   * Whether to clean up all files under the output directory before the build starts.
+   * @default 'auto'
+   */
+  enable?: boolean | 'auto';
+  /**
+   * Specify the files to keep in the output directory.
+   * If the file's absolute path matches the regular expression in `keep`, the file will not be removed.
+   * @default undefined
+   */
+  keep?: RegExp[];
+};
+
+export type CleanDistPath = boolean | 'auto' | CleanDistPathObject;
+
 export interface OutputConfig {
   /**
    * Specify build target to run in specified environment.
@@ -944,10 +1011,10 @@ export interface OutputConfig {
    */
   legalComments?: LegalComments;
   /**
-   * Whether to clean all files in the dist path before starting compilation.
+   * Whether to clean up all files under the output directory before the build starts.
    * @default 'auto'
    */
-  cleanDistPath?: boolean | 'auto';
+  cleanDistPath?: CleanDistPath;
   /**
    * Allow to custom CSS Modules options.
    */
@@ -958,10 +1025,14 @@ export interface OutputConfig {
    */
   minify?: Minify;
   /**
-   * Whether to generate manifest file.
+   * Configure how to generate the manifest file.
+   * - `true`: Generate a manifest file named `manifest.json` in the output directory.
+   * - `false`: Do not generate the manifest file.
+   * - `string`: Generate a manifest file with the specified filename or path.
+   * - `object`: Generate a manifest file with the specified options.
    * @default false
    */
-  manifest?: string | boolean;
+  manifest?: ManifestConfig;
   /**
    * Whether to generate source map files, and which format of source map to generate.
    *
@@ -1034,9 +1105,11 @@ export interface NormalizedOutputConfig extends OutputConfig {
         js?: Rspack.Configuration['devtool'];
         css: boolean;
       };
+  cleanDistPath: CleanDistPath;
   filenameHash: boolean | string;
   assetPrefix: string;
   dataUriLimit: number | NormalizedDataUriLimit;
+  manifest: ManifestConfig;
   minify: Minify;
   inlineScripts: InlineChunkConfig;
   inlineStyles: InlineChunkConfig;

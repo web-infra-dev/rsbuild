@@ -110,6 +110,15 @@ pluginReact({
 });
 ```
 
+### swcReactOptions.refresh
+
+- **类型：** `boolean`
+- **默认值：** 基于 [fastRefresh](#fastrefresh) 和 [dev.hmr](/config/dev/hmr)
+
+是否启用 [React Fast Refresh](https://www.npmjs.com/package/react-refresh)。
+
+大多数情况下，你应该使用插件的 [fastRefresh](#fastrefresh) 选项来启用或禁用 Fast Refresh。
+
 ### splitChunks
 
 在 [chunkSplit.strategy](/config/performance/chunk-split) 设置为 `split-by-experience` 时，Rsbuild 默认会自动将 `react` 和 `router` 相关的包拆分为单独的 chunk:
@@ -227,7 +236,9 @@ pluginReact({
 - **类型：** `boolean`
 - **默认值：** `true`
 
-是否在开发模式下启用 React [Fast Refresh](https://www.npmjs.com/package/react-refresh)。
+是否在开发模式下启用 [React Fast Refresh](https://www.npmjs.com/package/react-refresh)。
+
+当 `fastRefresh` 设置为 `true` 时，`@rsbuild/plugin-react` 会自动注册 [@rspack/plugin-react-refresh](https://www.npmjs.com/package/@rspack/plugin-react-refresh) 插件。
 
 如果你需要禁用 Fast Refresh，可以将其设置为 `false`：
 

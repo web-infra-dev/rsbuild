@@ -17,7 +17,9 @@ exports[`plugin-split-chunks > should allow forceSplitting to be an object 1`] =
     },
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -28,7 +30,9 @@ exports[`plugin-split-chunks > should not split chunks when target is node 1`] =
     "splitChunks": false,
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -39,7 +43,9 @@ exports[`plugin-split-chunks > should set all-in-one config 1`] = `
     "splitChunks": false,
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -61,7 +67,9 @@ exports[`plugin-split-chunks > should set custom config 1`] = `
     },
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -77,7 +85,9 @@ exports[`plugin-split-chunks > should set single-size config 1`] = `
     },
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -99,7 +109,9 @@ exports[`plugin-split-chunks > should set single-vendor config 1`] = `
     },
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -124,7 +136,9 @@ exports[`plugin-split-chunks > should set split-by-experience config 1`] = `
     },
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -144,7 +158,9 @@ exports[`plugin-split-chunks > should set split-by-experience config correctly w
     },
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -166,7 +182,9 @@ exports[`plugin-split-chunks > should set split-by-module config 1`] = `
     },
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;

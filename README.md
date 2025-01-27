@@ -1,5 +1,5 @@
 <picture>
-  <img alt="Rsbuild Banner" src="https://github.com/web-infra-dev/rsbuild/assets/7237365/84abc13e-b620-468f-a90b-dbf28e7e9427">
+  <img alt="Rsbuild Banner" src="https://assets.rspack.dev/rsbuild/rsbuild-banner.png">
 </picture>
 
 # Rsbuild
@@ -68,9 +68,9 @@ The following diagram illustrates the relationship between Rsbuild and other too
 
 ![Rspack stack layers](https://assets.rspack.dev/rsbuild/assets/rspack-stack-layers.png)
 
-## 📚 Getting Started
+## 📚 Getting started
 
-To get started with Rsbuild, see the [Quick Start](https://rsbuild.dev/guide/start/quick-start).
+To get started with Rsbuild, see the [Quick start](https://rsbuild.dev/guide/start/quick-start).
 
 ## 🦀 Links
 
@@ -138,9 +138,9 @@ Please read the [Contributing Guide](https://github.com/web-infra-dev/rsbuild/bl
   </table>
 </a>
 
-### Code of Conduct
+### Code of conduct
 
-This repo has adopted the ByteDance Open Source Code of Conduct. Please check [Code of Conduct](./CODE_OF_CONDUCT.md) for more details.
+This repo has adopted the ByteDance open source code of conduct. Please check [Code of conduct](./CODE_OF_CONDUCT.md) for more details.
 
 ## 🧑‍💻 Community
 

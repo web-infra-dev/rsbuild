@@ -169,6 +169,8 @@ export function initPluginAPI({
      * Transform Rsbuild plugin hooks to Rspack plugin hooks
      */
     class RsbuildCorePlugin {
+      name = pluginName;
+
       apply(compiler: Compiler): void {
         compiler.__rsbuildTransformer = transformer;
 
@@ -282,6 +284,12 @@ export function initPluginAPI({
           }
           if (descriptor.issuerLayer) {
             rule.issuerLayer(descriptor.issuerLayer);
+          }
+          if (descriptor.issuer) {
+            rule.issuer(descriptor.issuer);
+          }
+          if (descriptor.with) {
+            rule.with(descriptor.with);
           }
 
           const loaderName = descriptor.raw

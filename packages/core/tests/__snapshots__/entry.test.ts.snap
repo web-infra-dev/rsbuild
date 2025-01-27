@@ -9,7 +9,9 @@ exports[`plugin-entry > should apply different environments entry config correct
       ],
     },
     "plugins": [
-      RsbuildCorePlugin {},
+      {
+        "name": "RsbuildCorePlugin",
+      },
     ],
   },
   {
@@ -19,7 +21,9 @@ exports[`plugin-entry > should apply different environments entry config correct
       ],
     },
     "plugins": [
-      RsbuildCorePlugin {},
+      {
+        "name": "RsbuildCorePlugin",
+      },
     ],
   },
 ]
@@ -34,7 +38,9 @@ exports[`plugin-entry > should apply environments entry config correctly 1`] = `
       ],
     },
     "plugins": [
-      RsbuildCorePlugin {},
+      {
+        "name": "RsbuildCorePlugin",
+      },
     ],
   },
   {
@@ -44,7 +50,9 @@ exports[`plugin-entry > should apply environments entry config correctly 1`] = `
       ],
     },
     "plugins": [
-      RsbuildCorePlugin {},
+      {
+        "name": "RsbuildCorePlugin",
+      },
     ],
   },
 ]

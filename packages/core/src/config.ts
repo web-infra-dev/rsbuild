@@ -85,7 +85,7 @@ const getDefaultServerConfig = (): NormalizedServerConfig => ({
   compress: true,
   printUrls: true,
   strictPort: false,
-  cors: true,
+  cors: false,
 });
 
 let swcHelpersPath: string;
@@ -230,6 +230,8 @@ export function getDefaultEntry(root: string): RsbuildEntry {
     'js',
     'tsx',
     'jsx',
+    'mts',
+    'cts',
     'mjs',
     'cjs',
   ].map((ext) => join(root, `src/index.${ext}`));
@@ -689,7 +691,7 @@ export const normalizePublicDirs = (
 
   const defaultConfig: Required<PublicDirOptions> = {
     name: 'public',
-    copyOnBuild: true,
+    copyOnBuild: 'auto',
     watch: false,
   };
 
