@@ -98,19 +98,24 @@ export const pluginSass = (
   name: PLUGIN_SASS_NAME,
 
   setup(api) {
+    const { rewriteUrls = true } = pluginOptions;
+
     api.onAfterCreateCompiler(({ compiler }) => {
       patchCompilerGlobalLocation(compiler);
     });
 
-    api.modifyBundlerChain(async (chain, { CHAIN_ID }) => {
+    api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
+      const { config } = environment;
+      const { sourceMap } = config.output;
+      const isUseSourceMap =
+        typeof sourceMap === 'boolean' ? sourceMap : sourceMap.css;
+
       const { excludes, options } = getSassLoaderOptions(
         pluginOptions.sassLoaderOptions,
-        // source-maps required for loaders preceding resolve-url-loader
-        // otherwise the resolve-url-loader will throw an error
-        true,
+        // If `rewriteUrls` is true, source maps are required for loaders that run before
+        // `resolve-url-loader`, otherwise the `resolve-url-loader` will throw an error.
+        rewriteUrls ? true : isUseSourceMap,
       );
-
-      const { rewriteUrls = true } = pluginOptions;
 
       const ruleId = findRuleId(chain, CHAIN_ID.RULE.SASS);
       const rule = chain.module
