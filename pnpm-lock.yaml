@@ -603,8 +603,8 @@ importers:
         specifier: ^0.5.15
         version: 0.5.15
       core-js:
-        specifier: ~3.34.0
-        version: 3.34.0
+        specifier: ~3.40.0
+        version: 3.40.0
       jiti:
         specifier: 2.4.2
         version: 2.4.2
@@ -3834,9 +3834,6 @@ packages:
 
   core-js-compat@3.39.0:
     resolution: {integrity: sha512-VgEUx3VwlExr5no0tXlBt+silBvhTryPwCXRI2Id1PN8WTKu7MreethvddqOubrYxkFdv/RnYrqlv1sFNAUelw==}
-
-  core-js@3.34.0:
-    resolution: {integrity: sha512-aDdvlDder8QmY91H88GzNi9EtQi2TjvQhpCX6B1v/dAZHU1AuLgHvRh54RiOerpEhEW46Tkf+vgAViB/CWC0ag==}
 
   core-js@3.40.0:
     resolution: {integrity: sha512-7vsMc/Lty6AGnn7uFpYT56QesI5D2Y/UkgKounk87OP9Z2H9Z8kj6jzcSGAxFmUtDOS0ntK6lbQz+Nsa0Jj6mQ==}
@@ -9856,8 +9853,6 @@ snapshots:
   core-js-compat@3.39.0:
     dependencies:
       browserslist: 4.24.2
-
-  core-js@3.34.0: {}
 
   core-js@3.40.0: {}
 
