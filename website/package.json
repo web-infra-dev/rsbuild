@@ -12,7 +12,7 @@
     "@rsbuild/core": "workspace:*",
     "@rspress/plugin-client-redirects": "^1.40.2",
     "@rspress/plugin-rss": "^1.40.2",
-    "@rstack-dev/doc-ui": "1.5.4",
+    "@rstack-dev/doc-ui": "1.6.0",
     "@types/node": "^22.10.10",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
