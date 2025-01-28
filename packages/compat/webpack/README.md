@@ -4,7 +4,7 @@
 
 # @rsbuild/webpack
 
-This package can be used to switch Rsbuild's bundler from "Rspack" to "Webpack".
+This package can be used to switch Rsbuild's bundler from Rspack to webpack.
 
 Note that this package is mainly used for compatibility with Modern.js and Rsbuild internal testing. We do not recommend you to use this package in a Rsbuild project. The API of the current package may change over iterations.
 

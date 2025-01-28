@@ -14,7 +14,7 @@ Rsbuild 是与 [Vite](https://vitejs.dev/)、[Create React App](https://github.c
 
 你可以将 Rsbuild 理解为一个现代化的 Create React App 或 Vue CLI，它与这些工具的主要区别在于：
 
-- 底层的打包工具由 Webpack 替换为 Rspack，提供 5 ~ 10 倍的构建性能。
+- 底层的打包工具由 webpack 替换为 Rspack，提供 5 ~ 10 倍的构建性能。
 - 与前端 UI 框架解耦，并通过 [插件](/plugins/list/index) 来支持所有 UI 框架，包括 React、Vue、Svelte、Solid 等。
 - 提供更好的扩展性，你可以通过 [配置](/config/index)、 [插件 API](/plugins/dev/index) 和 [JavaScript API](/api/start/index) 来灵活地扩展 Rsbuild。
 
@@ -34,7 +34,7 @@ import { BenchmarkGraph } from '@components/Benchmark';
 
 <BenchmarkGraph />
 
-> 以上数据来自 [performance-compare](https://github.com/rspack-contrib/performance-compare) benchmark。
+> 以上数据来自 [build-tools-performance](https://github.com/rspack-contrib/build-tools-performance) benchmark。
 
 ## 🔥 特性
 
@@ -56,7 +56,11 @@ Rsbuild 为上层的框架和工具提供了 JavaScript API 和 plugin API。例
 
 下图说明了 Rsbuild 与生态中其他工具之间的关系：
 
-![Rspack stack layers](https://assets.rspack.dev/rsbuild/assets/rspack-stack-layers.png)
+<img
+  src="https://assets.rspack.dev/rsbuild/assets/rspack-stack-layers.png"
+  alt="Rspack stack layers"
+  width="760"
+/>
 
 ## 🦀 链接
 
