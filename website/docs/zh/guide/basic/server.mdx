@@ -130,21 +130,22 @@ Rsbuild 不支持使用 Rspack 的 [devServer](https://rspack.dev/config/dev-ser
 
 以下是 Rspack CLI 的 `devServer` 配置对应的 Rsbuild 配置：
 
-| Rspack CLI                                                                                       | Rsbuild                                                          |
-| ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [devServer.client](https://rspack.dev/config/dev-server#devserverclient)                         | [dev.client](/config/dev/client)                                 |
-| [devServer.compress](https://rspack.dev/config/dev-server#devservercompress)                     | [server.compress](/config/server/compress)                       |
-| [devServer.headers](https://rspack.dev/config/dev-server#devserverheaders)                       | [server.headers](/config/server/headers)                         |
-| [devServer.historyApiFallback](https://rspack.dev/config/dev-server#devserverhistoryapifallback) | [server.historyApiFallback](/config/server/history-api-fallback) |
-| [devServer.host](https://rspack.dev/config/dev-server#devserverhost)                             | [server.host](/config/server/host)                               |
-| [devServer.hot](https://rspack.dev/config/dev-server#devserverhot)                               | [dev.hmr](/config/dev/hmr)                                       |
-| [devServer.liveReload](https://rspack.dev/config/dev-server#devserverlivereload)                 | [dev.liveReload](/config/dev/live-reload)                        |
-| [devServer.open](https://rspack.dev/config/dev-server#devserveropen)                             | [server.open](/config/server/open)                               |
-| [devServer.port](https://rspack.dev/config/dev-server#devserverport)                             | [server.port](/config/server/port)                               |
-| [devServer.proxy](https://rspack.dev/config/dev-server#devserverproxy)                           | [server.proxy](/config/server/proxy)                             |
-| [devServer.setupMiddlewares](https://rspack.dev/config/dev-server#devserversetupmiddlewares)     | [dev.setupMiddlewares](/config/dev/setup-middlewares)            |
-| [devServer.static](https://rspack.dev/config/dev-server#devserverstatic)                         | [server.publicDir](/config/server/public-dir)                    |
-| [devServer.watchFiles](https://rspack.dev/config/dev-server#devserverwatchfiles)                 | [dev.watchFiles](/config/dev/watch-files)                        |
+| Rspack CLI                                                                                         | Rsbuild                                                          |
+| -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [devServer.client](https://rspack.dev/config/dev-server#devserverclient)                           | [dev.client](/config/dev/client)                                 |
+| [devServer.compress](https://rspack.dev/config/dev-server#devservercompress)                       | [server.compress](/config/server/compress)                       |
+| [devServer.devMiddleware.writeToDisk](https://rspack.dev/config/dev-server#devserverdevmiddleware) | [dev.writeToDisk](/config/dev/write-to-disk)                     |
+| [devServer.headers](https://rspack.dev/config/dev-server#devserverheaders)                         | [server.headers](/config/server/headers)                         |
+| [devServer.historyApiFallback](https://rspack.dev/config/dev-server#devserverhistoryapifallback)   | [server.historyApiFallback](/config/server/history-api-fallback) |
+| [devServer.host](https://rspack.dev/config/dev-server#devserverhost)                               | [server.host](/config/server/host)                               |
+| [devServer.hot](https://rspack.dev/config/dev-server#devserverhot)                                 | [dev.hmr](/config/dev/hmr)                                       |
+| [devServer.liveReload](https://rspack.dev/config/dev-server#devserverlivereload)                   | [dev.liveReload](/config/dev/live-reload)                        |
+| [devServer.open](https://rspack.dev/config/dev-server#devserveropen)                               | [server.open](/config/server/open)                               |
+| [devServer.port](https://rspack.dev/config/dev-server#devserverport)                               | [server.port](/config/server/port)                               |
+| [devServer.proxy](https://rspack.dev/config/dev-server#devserverproxy)                             | [server.proxy](/config/server/proxy)                             |
+| [devServer.setupMiddlewares](https://rspack.dev/config/dev-server#devserversetupmiddlewares)       | [dev.setupMiddlewares](/config/dev/setup-middlewares)            |
+| [devServer.static](https://rspack.dev/config/dev-server#devserverstatic)                           | [server.publicDir](/config/server/public-dir)                    |
+| [devServer.watchFiles](https://rspack.dev/config/dev-server#devserverwatchfiles)                   | [dev.watchFiles](/config/dev/watch-files)                        |
 
 > 更多配置请参考 [Config 总览](/config/index)。
 
