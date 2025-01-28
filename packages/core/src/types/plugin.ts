@@ -455,9 +455,9 @@ export type RsbuildPluginAPI = Readonly<{
   modifyBundlerChain: PluginHook<ModifyBundlerChainFn>;
   /** Only works when bundler is Rspack */
   modifyRspackConfig: PluginHook<ModifyRspackConfigFn>;
-  /** Only works when bundler is Webpack */
+  /** Only works when bundler is webpack */
   modifyWebpackChain: PluginHook<ModifyWebpackChainFn>;
-  /** Only works when bundler is Webpack */
+  /** Only works when bundler is webpack */
   modifyWebpackConfig: PluginHook<ModifyWebpackConfigFn>;
 
   getRsbuildConfig: GetRsbuildConfig;

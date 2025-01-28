@@ -2,7 +2,7 @@ import { build, webpackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 webpackOnlyTest(
-  'should allow to use tools.webpackChain to configure Webpack',
+  'should allow to use tools.webpackChain to configure webpack',
   async ({ page }) => {
     const rsbuild = await build({
       cwd: __dirname,
