@@ -163,6 +163,7 @@ export async function generateRspackConfig({
     DefinePlugin,
     IgnorePlugin,
     ProvidePlugin,
+    SourceMapDevToolPlugin,
     HotModuleReplacementPlugin,
   } = rspack;
 
@@ -173,6 +174,7 @@ export async function generateRspackConfig({
       DefinePlugin,
       IgnorePlugin,
       ProvidePlugin,
+      SourceMapDevToolPlugin,
       HotModuleReplacementPlugin,
     },
   });
