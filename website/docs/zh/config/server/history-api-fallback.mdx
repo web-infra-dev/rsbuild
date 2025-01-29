@@ -3,13 +3,36 @@
 - **类型：** `boolean | ConnectHistoryApiFallbackOptions`
 - **默认值：** `false`
 
-当 Rsbuild 默认的 [页面路由](/guide/basic/server#page-routing) 行为无法满足你的需求时，例如，希望在访问 `/` 时可以访问 `main.html`，可通过 `server.historyApiFallback` 进行设置。
+当 Rsbuild 默认的 [页面路由](/guide/basic/server#page-routing) 行为无法满足你的需求时，例如，希望在访问 `/` 时可以访问 `main.html` ，你可以通过 `server.historyApiFallback` 配置项来实现这个功能。
 
 ## 示例
 
-将 `historyApiFallback.index` 设置为 `main.html`，此时在访问 `/` 或其他原本会 404 的路由时可以访问到 `main.html`。
+`server.historyApiFallback` 基于 [connect-history-api-fallback](https://github.com/bripkens/connect-history-api-fallback) 实现，将 `server.historyApiFallback` 设置为 `true` 时，等价于使用 `connect-history-api-fallback` 的默认选项。
 
-```js
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    historyApiFallback: true,
+  },
+};
+```
+
+默认情况下，`connect-history-api-fallback` 会将所有的 HTML GET 请求重定向到 `index.html`。
+
+## 选项
+
+`server.historyApiFallback` 也支持传入一个对象来配置 `connect-history-api-fallback` 的行为。
+
+下面是一些常用的选项，更多选项和详细信息可参考 [connect-history-api-fallback](https://github.com/bripkens/connect-history-api-fallback) 文档。
+
+### index
+
+- **类型：** `string`
+- **默认值：** `'index.html'`
+
+通过将 `historyApiFallback.index` 设置为 `main.html`，当访问根路径 `/` 或其他可能导致 404 的路由时，页面会自动重定向到 `main.html`。
+
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     entry: {
@@ -25,9 +48,22 @@ export default {
 };
 ```
 
-当你的应用包含多个 entry 时，你可能希望不同的访问可以 fallback 到不同的页面上。此时，你可以通过 `rewrites` 选项来设置更复杂的规则：
+### rewrites
 
-```js
+- **类型：**
+
+```ts
+type Rewrites = Array<{
+  from: RegExp;
+  to: string | RegExp | ((context: HistoryApiFallbackContext) => string);
+}>;
+```
+
+- **默认值：** `[]`
+
+当你的应用包含多个入口（entry）时，你可能需要将不同的访问路径重定向到不同的页面。此时，你可以通过 `rewrites` 选项来配置更灵活的重定向规则：
+
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     historyApiFallback: {
@@ -40,5 +76,3 @@ export default {
   },
 };
 ```
-
-更多选项和详细信息可参考 [connect-history-api-fallback](https://github.com/bripkens/connect-history-api-fallback) 文档。
