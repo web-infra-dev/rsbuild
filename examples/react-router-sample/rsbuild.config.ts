@@ -4,14 +4,6 @@ import { pluginReactRouter } from '@rsbuild/plugin-react-router';
 
 export default defineConfig(() => {
   return {
-    plugins: [
-      pluginReactRouter({
-        ssr: true,
-        buildDirectory: 'build',
-        appDirectory: 'app',
-        basename: '/',
-      }),
-      pluginReact(),
-    ],
+    plugins: [pluginReactRouter(), pluginReact()],
   };
 });
