@@ -200,6 +200,8 @@ export const pluginReactRouter = (
         },
         dev: {
           writeToDisk: true,
+          hmr: false,
+          liveReload: true,
         },
         tools: {
           rspack: {
@@ -234,7 +236,7 @@ export const pluginReactRouter = (
             tools: {
               rspack: {
                 name: 'web',
-                devtool: false,
+                // devtool: false,
                 experiments: {
                   outputModule: true,
                 },
