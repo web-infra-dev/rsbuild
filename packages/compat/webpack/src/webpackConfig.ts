@@ -123,7 +123,7 @@ export async function generateWebpackConfig({
 
   const chain = await modifyWebpackChain(context, chainUtils, bundlerChain);
 
-  let webpackConfig = helpers.chainToConfig(chain) as WebpackConfig;
+  let webpackConfig = chain.toConfig() as WebpackConfig;
 
   const configUtils = (await helpers.getConfigUtils(
     webpackConfig as Rspack.Configuration,
