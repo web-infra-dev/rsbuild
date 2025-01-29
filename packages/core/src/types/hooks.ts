@@ -192,6 +192,7 @@ export type ModifyBundlerChainUtils = ModifyChainUtils & {
     DefinePlugin: PluginInstance;
     IgnorePlugin: PluginInstance;
     ProvidePlugin: PluginInstance;
+    SourceMapDevToolPlugin: PluginInstance;
     HotModuleReplacementPlugin: PluginInstance;
   };
 };
