@@ -1,27 +1,13 @@
-import type { ParseResult } from '@babel/parser';
-import type { NodePath } from '@babel/traverse';
-import type {
-  ArrayPattern,
-  ExportDeclaration,
-  ExportDefaultSpecifier,
-  ExportNamespaceSpecifier,
-  ExportSpecifier,
-  File,
-  FunctionDeclaration,
-  FunctionExpression,
-  Node,
-  ObjectPattern,
-  VariableDeclarator,
-} from '@babel/types';
 import {
   deadCodeElimination,
   findReferencedIdentifiers,
 } from 'babel-dead-code-elimination';
 import { normalize } from 'pathe';
+import type { Babel, NodePath, ParseResult } from './babel.js';
 import { t, traverse } from './babel.js';
 
 export function validateDestructuredExports(
-  id: ArrayPattern | ObjectPattern,
+  id: Babel.ArrayPattern | Babel.ObjectPattern,
   exportsToRemove: string[],
 ): void {
   if (id.type === 'ArrayPattern') {
@@ -99,9 +85,7 @@ export function invalidDestructureError(name: string): Error {
   return new Error(`Cannot remove destructured export "${name}"`);
 }
 
-export function toFunctionExpression(
-  decl: FunctionDeclaration,
-): FunctionExpression {
+export function toFunctionExpression(decl: Babel.FunctionDeclaration): any {
   return t.functionExpression(
     decl.id,
     decl.params,
@@ -125,7 +109,7 @@ export function createRouteId(file: string): string {
   return normalize(stripFileExtension(file));
 }
 
-export function generateWithProps(): string {
+export function generateWithProps() {
   return `
     import { createElement as h } from "react";
     import { useActionData, useLoaderData, useMatches, useParams, useRouteError } from "react-router";
@@ -166,12 +150,12 @@ export function generateWithProps(): string {
 }
 
 export const removeExports = (
-  ast: ParseResult<File>,
+  ast: ParseResult<Babel.File>,
   exportsToRemove: string[],
 ): void => {
   const previouslyReferencedIdentifiers = findReferencedIdentifiers(ast);
   let exportsFiltered = false;
-  const markedForRemoval = new Set<NodePath<Node>>();
+  const markedForRemoval = new Set<NodePath<Babel.Node>>();
 
   traverse(ast, {
     ExportDeclaration(path: NodePath) {
@@ -179,13 +163,9 @@ export const removeExports = (
       // export { bar } from "./module";
       if (path.node.type === 'ExportNamedDeclaration') {
         if (path.node.specifiers.length) {
+          //@ts-ignore
           path.node.specifiers = path.node.specifiers.filter(
-            (
-              specifier:
-                | ExportDefaultSpecifier
-                | ExportNamespaceSpecifier
-                | ExportSpecifier,
-            ) => {
+            (specifier: Babel.ExportSpecifier) => {
               // Filter out individual specifiers
               if (
                 specifier.type === 'ExportSpecifier' &&
@@ -210,7 +190,7 @@ export const removeExports = (
         if (path.node.declaration?.type === 'VariableDeclaration') {
           const declaration = path.node.declaration;
           declaration.declarations = declaration.declarations.filter(
-            (declaration: VariableDeclarator) => {
+            (declaration: Babel.VariableDeclarator) => {
               // export const foo = ...;
               // export const foo = ..., bar = ...;
               if (

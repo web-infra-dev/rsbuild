@@ -1,20 +1,3 @@
-import type { ParseResult } from '@babel/parser';
-import type { NodePath } from '@babel/traverse';
-import type {
-  CallExpression,
-  Declaration,
-  ExportDeclaration,
-  Expression,
-  File,
-  FunctionDeclaration,
-  Identifier,
-  ImportDeclaration,
-  ImportSpecifier,
-  Node,
-  StringLiteral,
-  VariableDeclaration,
-  VariableDeclarator,
-} from '@babel/types';
 import type { Config } from '@react-router/dev/config';
 import type { RouteConfigEntry } from '@react-router/dev/routes';
 import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
@@ -24,6 +7,7 @@ import { createJiti } from 'jiti';
 import jsesc from 'jsesc';
 import { isAbsolute, relative, resolve } from 'pathe';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
+import type { Babel, NodePath, ParseResult } from './babel.js';
 import { generate, parse, t, traverse } from './babel.js';
 import {
   combineURLs,
@@ -101,7 +85,7 @@ export type RouteManifestItem = Omit<Route, 'file' | 'children'> & {
   css: string[];
 };
 
-export const reactRouterPlugin = (
+export const pluginReactRouter = (
   options: PluginOptions = {},
 ): RsbuildPlugin => ({
   name: PLUGIN_NAME,
@@ -230,15 +214,15 @@ export const reactRouterPlugin = (
                 'virtual/react-router/browser-manifest':
                   'virtual/react-router/browser-manifest',
                 ...Object.values(routes).reduce(
-                  (acc, route) =>
-                    Object.assign({}, acc, {
-                      [route.file.slice(0, route.file.lastIndexOf('.'))]:
-                        `${resolve(
-                          finalOptions.appDirectory,
-                          route.file,
-                        )}?react-router-route`,
-                    }),
-                  {},
+                  (acc: Record<string, string>, route) => {
+                    acc[route.file.slice(0, route.file.lastIndexOf('.'))] =
+                      `${resolve(
+                        finalOptions.appDirectory,
+                        route.file,
+                      )}?react-router-route`;
+                    return acc;
+                  },
+                  {} as Record<string, string>,
                 ),
               },
             },
@@ -314,8 +298,6 @@ export const reactRouterPlugin = (
 
                           const manifestPath =
                             'static/js/virtual/react-router/browser-manifest.js';
-                          const manifestContent = `window.__reactRouterManifest=${jsesc(manifest, { es6: true })};`;
-
                           if (compilation.assets[manifestPath]) {
                             const originalSource = compilation.assets[
                               manifestPath
@@ -422,7 +404,8 @@ export const reactRouterPlugin = (
 
         const ast = parse(code, { sourceType: 'module' });
         if (args.environment.name === 'web') {
-          removeExports(ast, [...SERVER_ONLY_ROUTE_EXPORTS]);
+          const mutableServerOnlyRouteExports = [...SERVER_ONLY_ROUTE_EXPORTS];
+          removeExports(ast, mutableServerOnlyRouteExports);
         }
         transformRoute(ast);
 
@@ -480,9 +463,19 @@ function configRoutesToRouteManifest(
 
 async function getReactRouterManifestForDev(
   routes: Record<string, Route>,
+  //@ts-ignore
   options: PluginOptions,
   clientStats?: Rspack.StatsCompilation,
-) {
+): Promise<{
+  version: string;
+  url: string;
+  entry: {
+    module: string;
+    imports: string[];
+    css: string[];
+  };
+  routes: Record<string, RouteManifestItem>;
+}> {
   const result: Record<string, RouteManifestItem> = {};
   for (const [key, route] of Object.entries(routes)) {
     const assets = clientStats?.assetsByChunkName?.[route.id];
@@ -580,9 +573,15 @@ function generateServerBuild(
   `;
 }
 
-export const transformRoute = (ast: ParseResult<File>): void => {
-  const hocs: Array<[string, Identifier]> = [];
-  function getHocUid(path: NodePath, hocName: string): Identifier {
+function isNamedComponentExport(
+  name: string,
+): name is (typeof NAMED_COMPONENT_EXPORTS)[number] {
+  return (NAMED_COMPONENT_EXPORTS as readonly string[]).includes(name);
+}
+
+export const transformRoute = (ast: ParseResult<Babel.File>): void => {
+  const hocs: Array<[string, Babel.Identifier]> = [];
+  function getHocUid(path: NodePath, hocName: string) {
     const uid = path.scope.generateUidIdentifier(hocName);
     hocs.push([hocName, uid]);
     return uid;
@@ -599,7 +598,7 @@ export const transformRoute = (ast: ParseResult<File>): void => {
                       undefined
         if (expr) {
           const uid = getHocUid(path, 'withComponentProps');
-          declaration.replaceWith(t.callExpression(uid, [expr]));
+          declaration.replaceWith(t.callExpression(uid, [expr]) as any);
         }
         return;
       }
@@ -610,23 +609,16 @@ export const transformRoute = (ast: ParseResult<File>): void => {
         if (decl.isVariableDeclaration()) {
           // biome-ignore lint/complexity/noForEach: <explanation>
           decl.get('declarations').forEach((varDeclarator: NodePath) => {
-            const id = varDeclarator.get('id');
-            const init = varDeclarator.get('init');
-            if (Array.isArray(init)) return;
-            if (Array.isArray(id)) return;
-            const expr = init.node;
+            const id = varDeclarator.get('id') as any;
+            const init = varDeclarator.get('init') as any;
+            const expr = init.node as any;
             if (!expr) return;
             if (!id.isIdentifier()) return;
             const { name } = id.node;
-            if (
-              !NAMED_COMPONENT_EXPORTS.includes(
-                name as (typeof NAMED_COMPONENT_EXPORTS)[number],
-              )
-            )
-              return;
+            if (!isNamedComponentExport(name)) return;
 
             const uid = getHocUid(path, `with${name}Props`);
-            init.replaceWith(t.callExpression(uid, [expr as Expression]));
+            init.replaceWith(t.callExpression(uid, [expr]));
           });
           return;
         }
@@ -635,12 +627,7 @@ export const transformRoute = (ast: ParseResult<File>): void => {
           const { id } = decl.node;
           if (!id) return;
           const { name } = id;
-          if (
-            !NAMED_COMPONENT_EXPORTS.includes(
-              name as (typeof NAMED_COMPONENT_EXPORTS)[number],
-            )
-          )
-            return;
+          if (!isNamedComponentExport(name)) return;
 
           const uid = getHocUid(path, `with${name}Props`);
           decl.replaceWith(
@@ -649,7 +636,7 @@ export const transformRoute = (ast: ParseResult<File>): void => {
                 t.identifier(name),
                 t.callExpression(uid, [toFunctionExpression(decl.node)]),
               ),
-            ]),
+            ]) as any,
           );
         }
       }
@@ -663,7 +650,7 @@ export const transformRoute = (ast: ParseResult<File>): void => {
           t.importSpecifier(identifier, t.identifier(name)),
         ),
         t.stringLiteral('virtual/react-router/with-props'),
-      ),
+      ) as any,
     );
   }
 };
