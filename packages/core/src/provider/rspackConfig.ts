@@ -1,6 +1,6 @@
 import { rspack } from '@rspack/core';
 import { reduceConfigsAsyncWithContext } from 'reduce-configs';
-import { CHAIN_ID, chainToConfig, modifyBundlerChain } from '../configChain';
+import { CHAIN_ID, modifyBundlerChain } from '../configChain';
 import { castArray, color, getNodeEnv } from '../helpers';
 import { logger } from '../logger';
 import { getHTMLPlugin } from '../pluginHelper';
@@ -179,7 +179,7 @@ export async function generateRspackConfig({
     },
   });
 
-  let rspackConfig = chainToConfig(chain);
+  let rspackConfig = chain.toConfig();
 
   rspackConfig = await modifyRspackConfig(
     context,
