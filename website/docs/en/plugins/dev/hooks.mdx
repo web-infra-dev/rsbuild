@@ -732,8 +732,12 @@ import OnCloseDevServer from '@en/shared/onCloseDevServer.mdx';
 - **Example:**
 
 ```ts
-rsbuild.onCloseDevServer(async () => {
-  console.log('close dev server!');
+const myPlugin = () => ({
+  setup: (api) => {
+    api.onCloseDevServer(async () => {
+      console.log('close dev server!');
+    });
+  },
 });
 ```
 
