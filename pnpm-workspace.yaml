@@ -3,7 +3,7 @@ packages:
   - 'e2e/**'
   - 'scripts/**'
   - 'packages/**'
-  - 'examples/**'
+  - 'examples/react-router/**'
   - '!**/compiled/**'
   - '!**/dist-types/**'
   - '!**/create-rsbuild/template-*/**'

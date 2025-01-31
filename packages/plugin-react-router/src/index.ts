@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs';
 import type { Config } from '@react-router/dev/config';
 import type { RouteConfigEntry } from '@react-router/dev/routes';
 import type { RsbuildPlugin, Rspack } from '@rsbuild/core';
@@ -137,27 +138,62 @@ export const pluginReactRouter = (
     finalOptions.buildDirectory = buildDirectory;
     finalOptions.ssr = ssr;
 
+    console.log('finalOptions', finalOptions);
+
+    // Add debug logs for routes.ts loading
+    const routesPath = resolve(finalOptions.appDirectory, 'routes.ts');
+    console.log('Attempting to load routes from:', routesPath);
+    console.log('Current working directory:', process.cwd());
+
     // Then read the routes
     const routeConfig = await jiti
-      .import<RouteConfigEntry[]>(
-        resolve(finalOptions.appDirectory, 'routes.ts'),
-        {
-          default: true,
-        },
-      )
-      .catch(() => {
+      .import<RouteConfigEntry[]>(routesPath, {
+        default: true,
+      })
+      .catch((error) => {
+        console.error('Failed to load routes.ts:', error);
         console.error('No routes.ts found in app directory.');
         return [] as RouteConfigEntry[];
       });
 
-    const entryClientPath = resolve(
-      finalOptions.appDirectory,
-      'entry.client.tsx',
+    const jsExtensions = ['.tsx', '.ts', '.jsx', '.js', '.mjs'];
+
+    const findEntryFile = (basePath: string) => {
+      for (const ext of jsExtensions) {
+        const filePath = `${basePath}${ext}`;
+        if (existsSync(filePath)) {
+          return filePath;
+        }
+      }
+      return `${basePath}.tsx`; // Default to .tsx if no file exists
+    };
+
+    const entryClientPath = findEntryFile(
+      resolve(finalOptions.appDirectory, 'entry.client'),
     );
-    const entryServerPath = resolve(
-      finalOptions.appDirectory,
-      'entry.server.tsx',
+    const entryServerPath = findEntryFile(
+      resolve(finalOptions.appDirectory, 'entry.server'),
     );
+
+    // Check for server app file
+    const serverAppPath = findEntryFile(
+      resolve(finalOptions.appDirectory, '../server/app'),
+    );
+    const hasServerApp = existsSync(serverAppPath);
+
+    // Add fallback logic for entry files
+    const templateDir = resolve(__dirname, 'templates');
+    const templateClientPath = resolve(templateDir, 'entry.client.js');
+    const templateServerPath = resolve(templateDir, 'entry.server.js');
+
+    // Use template files if user files don't exist
+    const finalEntryClientPath = existsSync(entryClientPath)
+      ? entryClientPath
+      : templateClientPath;
+    const finalEntryServerPath = existsSync(entryServerPath)
+      ? entryServerPath
+      : templateServerPath;
+
     const rootRouteFile = relative(
       finalOptions.appDirectory,
       resolve(finalOptions.appDirectory, 'root.tsx'),
@@ -183,7 +219,7 @@ export const pluginReactRouter = (
       'virtual/react-router/browser-manifest': 'export default {};',
       'virtual/react-router/server-manifest': 'export default {};',
       'virtual/react-router/server-build': generateServerBuild(routes, {
-        entryServerPath,
+        entryServerPath: finalEntryServerPath,
         assetsBuildDirectory,
         basename: finalOptions.basename,
         appDirectory: finalOptions.appDirectory,
@@ -212,7 +248,7 @@ export const pluginReactRouter = (
           web: {
             source: {
               entry: {
-                'entry.client': entryClientPath,
+                'entry.client': finalEntryClientPath,
                 'virtual/react-router/browser-manifest':
                   'virtual/react-router/browser-manifest',
                 ...Object.values(routes).reduce(
@@ -236,7 +272,6 @@ export const pluginReactRouter = (
             tools: {
               rspack: {
                 name: 'web',
-                // devtool: false,
                 experiments: {
                   outputModule: true,
                 },
@@ -258,15 +293,20 @@ export const pluginReactRouter = (
           node: {
             source: {
               entry: {
-                app: './server/app.ts',
-                'entry.server': entryServerPath,
+                ...(hasServerApp
+                  ? { app: serverAppPath }
+                  : { app: 'virtual/react-router/server-build' }),
+                'entry.server': finalEntryServerPath,
               },
             },
             output: {
               distPath: {
                 root: resolve(finalOptions.buildDirectory, 'server'),
               },
-              target: 'node',
+              target: config.environments?.node?.output?.target || 'node',
+              filename: {
+                js: 'static/js/[name].js',
+              },
             },
             tools: {
               rspack: {
@@ -348,6 +388,14 @@ export const pluginReactRouter = (
           });
         }
         return config;
+      },
+    );
+
+    api.processAssets(
+      { stage: 'additional', targets: ['node'] },
+      ({ assets, sources, compilation }) => {
+        const source = new sources.RawSource('{"type": "commonjs"}');
+        compilation.emitAsset('package.json', source);
       },
     );
 

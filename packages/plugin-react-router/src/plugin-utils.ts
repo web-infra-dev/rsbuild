@@ -165,7 +165,12 @@ export const removeExports = (
         if (path.node.specifiers.length) {
           //@ts-ignore
           path.node.specifiers = path.node.specifiers.filter(
-            (specifier: Babel.ExportSpecifier) => {
+            (
+              specifier:
+                | Babel.ExportSpecifier
+                | Babel.ExportDefaultSpecifier
+                | Babel.ExportNamespaceSpecifier,
+            ) => {
               // Filter out individual specifiers
               if (
                 specifier.type === 'ExportSpecifier' &&

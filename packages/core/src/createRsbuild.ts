@@ -265,7 +265,6 @@ export async function createRsbuild(
 
   // Register environment plugin
   if (rsbuildConfig.environments) {
-    debugger;
     await Promise.all(
       Object.entries(rsbuildConfig.environments).map(async ([name, config]) => {
         const isEnvironmentEnabled =

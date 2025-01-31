@@ -1,0 +1,8 @@
+workers_dev = true
+name = "my-react-router-worker"
+compatibility_date = "2024-11-18"
+main = "./build/server/static/js/app.js"
+assets = { directory = "./build/client/" }
+
+[vars]
+VALUE_FROM_CLOUDFLARE = "Hello from Cloudflare"
