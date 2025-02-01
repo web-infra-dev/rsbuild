@@ -307,6 +307,9 @@ importers:
       '@rsbuild/plugin-react-router':
         specifier: workspace:*
         version: link:../../../packages/plugin-react-router
+      '@tailwindcss/postcss':
+        specifier: ^4.0.0
+        version: 4.0.1
       '@types/node':
         specifier: ^20
         version: 20.17.6
@@ -325,8 +328,6 @@ importers:
       wrangler:
         specifier: ^3.106.0
         version: 3.106.0(@cloudflare/workers-types@4.20250129.0)
-
-  examples/react-router/cloudflare/build/server: {}
 
   examples/react-router/custom-node-server:
     dependencies:

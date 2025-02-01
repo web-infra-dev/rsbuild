@@ -393,7 +393,7 @@ export const pluginReactRouter = (
 
     api.processAssets(
       { stage: 'additional', targets: ['node'] },
-      ({ assets, sources, compilation }) => {
+      ({ sources, compilation }) => {
         const source = new sources.RawSource('{"type": "commonjs"}');
         compilation.emitAsset('package.json', source);
       },

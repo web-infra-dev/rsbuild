@@ -17,12 +17,10 @@ declare module 'react-router' {
     };
   }
 }
+// @ts-expect-error - virtual module provided by React Router at build time
+import * as serverBuild from 'virtual/react-router/server-build';
 
-const requestHandler = createRequestHandler(
-  // @ts-expect-error - virtual module provided by React Router at build time
-  () => import('virtual/react-router/server-build'),
-  import.meta.env.MODE,
-);
+const requestHandler = createRequestHandler(serverBuild, import.meta.env.MODE);
 
 export default {
   fetch(request, env, ctx) {
