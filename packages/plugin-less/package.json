@@ -36,7 +36,7 @@
     "@rsbuild/core": "workspace:*",
     "@rslib/core": "0.4.0",
     "@scripts/test-helper": "workspace:*",
-    "@types/less": "^3.0.7",
+    "@types/less": "^3.0.8",
     "less": "^4.2.2",
     "less-loader": "^12.2.0",
     "prebundle": "1.2.7",
