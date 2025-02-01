@@ -13,7 +13,7 @@
     "preact": "^10.25.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.1.3",
+    "react-router-dom": "^7.1.5",
     "solid-js": "^1.9.4",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
@@ -42,9 +42,9 @@
     "@rsbuild/plugin-webpack-swc": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
     "@scripts/test-helper": "workspace:*",
-    "@tailwindcss/postcss": "^4.0.0",
+    "@tailwindcss/postcss": "^4.0.2",
     "@types/fs-extra": "^11.0.4",
-    "@types/lodash": "^4.17.14",
+    "@types/lodash": "^4.17.15",
     "@types/node": "^22.12.0",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
@@ -52,7 +52,7 @@
     "fast-glob": "^3.3.3",
     "fs-extra": "^11.3.0",
     "playwright": "1.44.1",
-    "tailwindcss": "^4.0.0",
+    "tailwindcss": "^4.0.2",
     "typescript": "^5.7.3"
   }
 }
