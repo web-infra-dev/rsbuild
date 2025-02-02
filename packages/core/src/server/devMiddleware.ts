@@ -117,9 +117,18 @@ export const getDevMiddleware = async (
     '../../compiled/rsbuild-dev-middleware/index.js'
   );
   return async (options) => {
-    const { clientPaths, clientConfig, callbacks, liveReload, ...restOptions } =
-      options;
-    const resolvedClientConfig = await getResolvedClientConfig(clientConfig);
+    const {
+      clientPaths,
+      clientConfig,
+      callbacks,
+      liveReload,
+      serverConfig,
+      ...restOptions
+    } = options;
+    const resolvedClientConfig = await getResolvedClientConfig(
+      clientConfig,
+      serverConfig,
+    );
 
     const setupCompiler = (compiler: Compiler) => {
       if (clientPaths) {

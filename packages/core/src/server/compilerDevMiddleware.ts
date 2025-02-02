@@ -156,10 +156,8 @@ export class CompilerDevMiddleware {
     devMiddleware: CustomDevMiddleware,
     publicPaths: string[],
   ): Promise<DevMiddlewareAPI> {
-    const {
-      devConfig,
-      serverConfig: { headers, base },
-    } = this;
+    const { devConfig, serverConfig } = this;
+    const { headers, base } = serverConfig;
 
     const callbacks = {
       onInvalid: (compilationId?: string, fileName?: string | null) => {
@@ -197,6 +195,7 @@ export class CompilerDevMiddleware {
       // weak is enough in dev
       // https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests#weak_validation
       etag: 'weak',
+      serverConfig,
     });
 
     const assetPrefixes = publicPaths

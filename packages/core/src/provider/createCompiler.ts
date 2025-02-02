@@ -1,5 +1,5 @@
-import { rspack } from '@rspack/core';
 import type { StatsCompilation } from '@rspack/core';
+import { rspack } from '@rspack/core';
 import {
   color,
   formatStats,
@@ -10,7 +10,7 @@ import {
 } from '../helpers';
 import { registerDevHook } from '../hooks';
 import { logger } from '../logger';
-import type { DevConfig, Rspack } from '../types';
+import type { DevConfig, Rspack, ServerConfig } from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
 export async function createCompiler(options: InitConfigsOptions): Promise<{
@@ -162,4 +162,6 @@ export type DevMiddlewareOptions = {
 
   /** whether use Server Side Render */
   serverSideRender?: boolean;
+
+  serverConfig: ServerConfig;
 };

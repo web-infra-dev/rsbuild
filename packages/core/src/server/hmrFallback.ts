@@ -1,5 +1,5 @@
 import { promises as dns } from 'node:dns';
-import { DevConfig } from 'src/types/config';
+import { DevConfig, ServerConfig } from 'src/types/config';
 
 type Hostname = {
   host?: string;
@@ -61,12 +61,14 @@ export async function getLocalhostAddressIfDiffersFromDNS(): Promise<
 }
 
 export async function getResolvedClientConfig(
-  config: DevConfig['client'] = {},
+  clientConfig: DevConfig['client'],
+  serverConfig: ServerConfig,
 ): Promise<DevConfig['client']> {
-  const resolvedServerHostname = (await resolveHostname(config.host)).name;
-  const resolvedServerPort = config.port!;
+  const resolvedServerHostname = (await resolveHostname(serverConfig.host))
+    .name;
+  const resolvedServerPort = serverConfig.port!;
   return {
-    ...config,
+    ...clientConfig,
     host: resolvedServerHostname,
     port: resolvedServerPort,
   };
