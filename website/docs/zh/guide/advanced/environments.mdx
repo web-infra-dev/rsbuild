@@ -277,7 +277,7 @@ export async function startDevServer() {
 
   const app = express();
 
-  // Create Rsbuild DevServer instance
+  // Create Rsbuild dev server instance
   const rsbuildServer = await rsbuild.createDevServer();
 
   const serverRenderMiddleware = serverRender(rsbuildServer);
