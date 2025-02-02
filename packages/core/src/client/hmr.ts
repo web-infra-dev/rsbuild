@@ -2,6 +2,7 @@ import type { NormalizedClientConfig } from '../types';
 
 const compilationId = RSBUILD_COMPILATION_NAME;
 const config: NormalizedClientConfig = RSBUILD_CLIENT_CONFIG;
+const resolvedConfig: NormalizedClientConfig = RSBUILD_RESOLVED_CLIENT_CONFIG;
 
 function formatURL({
   port,
@@ -211,13 +212,18 @@ function onClose() {
   removeListeners();
   connection = null;
   reconnectCount++;
-  setTimeout(connect, 1000 * 1.5 ** reconnectCount);
+  setTimeout(() => connect(resolvedConfig), 1000 * 1.5 ** reconnectCount);
 }
 
 // Establishing a WebSocket connection with the server.
-function connect() {
+function connect(cfg?: NormalizedClientConfig) {
+  if (!cfg) {
+    cfg = resolvedConfig;
+    console.info('[HMR] Using direct websocket fallback');
+  }
+
   const { location } = self;
-  const { host, port, path, protocol } = config;
+  const { host, port, path, protocol } = cfg;
   const socketUrl = formatURL({
     protocol: protocol || (location.protocol === 'https:' ? 'wss' : 'ws'),
     hostname: host || location.hostname,

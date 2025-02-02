@@ -111,7 +111,10 @@ export class CompilerDevMiddleware {
   public async init(): Promise<void> {
     // start compiling
     const devMiddleware = await getDevMiddleware(this.compiler);
-    this.middleware = this.setupDevMiddleware(devMiddleware, this.publicPaths);
+    this.middleware = await this.setupDevMiddleware(
+      devMiddleware,
+      this.publicPaths,
+    );
     await this.socketServer.prepare();
   }
 
@@ -149,10 +152,10 @@ export class CompilerDevMiddleware {
     });
   }
 
-  private setupDevMiddleware(
+  private async setupDevMiddleware(
     devMiddleware: CustomDevMiddleware,
     publicPaths: string[],
-  ): DevMiddlewareAPI {
+  ): Promise<DevMiddlewareAPI> {
     const {
       devConfig,
       serverConfig: { headers, base },
@@ -181,7 +184,7 @@ export class CompilerDevMiddleware {
 
     const clientPaths = getClientPaths(devConfig);
 
-    const middleware = devMiddleware({
+    const middleware = await devMiddleware({
       headers,
       publicPath: '/',
       stats: false,
