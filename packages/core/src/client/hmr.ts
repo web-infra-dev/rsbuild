@@ -212,12 +212,13 @@ function onClose() {
   removeListeners();
   connection = null;
   reconnectCount++;
-  setTimeout(() => connect(resolvedConfig), 1000 * 1.5 ** reconnectCount);
+  setTimeout(() => connect(true), 1000 * 1.5 ** reconnectCount);
 }
 
 // Establishing a WebSocket connection with the server.
-function connect(cfg?: NormalizedClientConfig) {
-  if (!cfg) {
+function connect(fallback: boolean = false) {
+  let cfg = config;
+  if (fallback) {
     cfg = resolvedConfig;
     console.info('[HMR] Using direct websocket fallback');
   }
