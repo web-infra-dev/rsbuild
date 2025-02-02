@@ -134,7 +134,7 @@ if (stats) {
 
 ### Monitor file changes
 
-If you need to watch file changes and re-build, you can set the `watch` option to `true`.
+To watch file changes and re-build, set the `watch` option to `true`.
 
 ```ts
 await rsbuild.build({
@@ -389,10 +389,10 @@ export async function startDevServer() {
 
   const app = express();
 
-  // Create Rsbuild DevServer instance
+  // Create Rsbuild dev server instance
   const rsbuildServer = await rsbuild.createDevServer();
 
-  // Apply Rsbuild’s built-in middlewares
+  // Apply Rsbuild's built-in middlewares
   app.use(rsbuildServer.middlewares);
 
   const httpServer = app.listen(rsbuildServer.port, async () => {
@@ -406,7 +406,7 @@ export async function startDevServer() {
 
 For detailed usage, please refer to: [Example](https://github.com/rspack-contrib/rspack-examples/blob/main/rsbuild/express/server.mjs).
 
-If you want to use Rsbuild DevServer to start the project directly, you can use the [Rsbuild - startDevServer](#rsbuildstartdevserver) method directly. `startDevServer` is actually syntactic sugar for the following code:
+If you want to use Rsbuild dev server to start the project directly, you can use the [Rsbuild - startDevServer](#rsbuildstartdevserver) method directly. `startDevServer` is actually syntactic sugar for the following code:
 
 ```ts
 const server = await rsbuild.createDevServer();
@@ -627,7 +627,7 @@ console.log(rspackConfigs);
 
 The inspectConfig method is typically used for debugging the internal configuration of Rsbuild. It returns the internally generated Rsbuild config and Rspack config, serializes them into strings, and supports writing them to the disk.
 
-If you need to view the Rsbuild and Rspack configurations during the build process, you can use [debug mode](/guide/debug/debug-mode), or obtain them through hooks such as [onBeforeBuild](#rsbuildonbeforebuild), [onBeforeCreateCompile](#rsbuildonbeforecreatecompiler).
+To view the Rsbuild and Rspack configurations during the build process, use [debug mode](/guide/debug/debug-mode), or obtain them through hooks such as [onBeforeBuild](#rsbuildonbeforebuild), [onBeforeCreateCompile](#rsbuildonbeforecreatecompiler).
 
 - **Type:**
 

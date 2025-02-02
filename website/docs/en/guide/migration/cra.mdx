@@ -161,7 +161,7 @@ Notes:
 
 By default, CRA uses Babel to compile dependencies in node_modules, but Rsbuild does not, to avoid the performance overhead and potential compilation errors caused by secondary compilation.
 
-If you need to handle syntax compatibility issues caused by dependencies in node_modules, you can use the [source.include](/config/source/include#compile-node_modules) config to compile node_modules.
+To handle syntax compatibility issues caused by dependencies in node_modules, you can use the [source.include](/config/source/include#compile-node_modules) config to compile node_modules.
 
 ## Env variables
 
@@ -279,7 +279,7 @@ module.exports = {
 
 In non-TypeScript projects, CRA supports reading the `paths` field in jsconfig.json as the path alias.
 
-If you want to use this feature in Rsbuild, you can refer to the [Path Alias - jsconfig.json](/guide/advanced/alias#jsconfigjson).
+To use this feature in Rsbuild, refer to the [Path Alias - jsconfig.json](/guide/advanced/alias#jsconfigjson).
 
 ## CRACO migration
 

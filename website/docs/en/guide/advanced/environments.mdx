@@ -277,7 +277,7 @@ export async function startDevServer() {
 
   const app = express();
 
-  // Create Rsbuild DevServer instance
+  // Create Rsbuild dev server instance
   const rsbuildServer = await rsbuild.createDevServer();
 
   const serverRenderMiddleware = serverRender(rsbuildServer);
@@ -304,7 +304,7 @@ For detailed usage, please refer to: [SSR + Express Example](https://github.com/
 
 By default, Rsbuild builds all environments in parallel.
 
-If you need to control the build order between different environments, you can set build dependencies through Rspack's [dependencies](https://rspack.dev/config/other-options#dependencies) configuration.
+To control the build order between different environments, you can set build dependencies through Rspack's [dependencies](https://rspack.dev/config/other-options#dependencies) configuration.
 
 For example, if you need to build the `web` environment first, then build the `node` environment, you can add the following configuration:
 

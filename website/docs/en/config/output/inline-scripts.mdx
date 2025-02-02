@@ -84,9 +84,9 @@ export default {
 
 ### Using RegExp
 
-If you need to inline part of the JS files, you can set `inlineScripts` to a regular expression that matches the URL of the JS file that needs to be inlined.
+To inline part of the JS files, set `inlineScripts` to a regular expression that matches the URL of the JS file that needs to be inlined.
 
-For example, to inline `main.js` into HTML, you can add the following configuration:
+For example, to inline `main.js` into HTML, add the following configuration:
 
 ```js
 export default {
@@ -123,7 +123,7 @@ export default {
 
 When you use [dynamic import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) in JavaScript, Rspack will generate an async chunk. By default, `output.inlineScripts` will not inline async chunks into the HTML.
 
-If you want to inline async chunks into the HTML, you can change Rspack's default behavior using the [tools.rspack](/config/tools/rspack) config by setting [module.parser.javascript.dynamicImportMode](https://rspack.dev/config/module#moduleparserjavascriptdynamicimportmode) to `'eager'`. In this case, Rspack will not generate separate JS files for dynamic imports.
+To inline async chunks into the HTML, change Rspack's default behavior using the [tools.rspack](/config/tools/rspack) config by setting [module.parser.javascript.dynamicImportMode](https://rspack.dev/config/module#moduleparserjavascriptdynamicimportmode) to `'eager'`. In this case, Rspack will not generate separate JS files for dynamic imports.
 
 ```js
 export default {

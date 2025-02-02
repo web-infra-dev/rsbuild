@@ -124,7 +124,7 @@ When you import a module via dynamic import, the module will be bundled into a s
 const { add } = await import('./add.ts');
 ```
 
-If you want to specify a fixed name for the async module, you can use the [magic comments](https://rspack.dev/api/modules#magic-comments) provided by Rspack to achieve this, using `webpackChunkName ` to specify the module name:
+To specify a fixed name for the async module, use the [magic comments](https://rspack.dev/api/modules#magic-comments) provided by Rspack, using `webpackChunkName ` to specify the module name:
 
 ```js title="src/index.ts"
 const { add } = await import(
@@ -171,7 +171,7 @@ Except for `output.filename.js` and `output.filename.css`, other types of files 
 
 ## Query hash
 
-If you need to generate hash values on the URL query of assets, you can refer to:
+To generate hash values on the URL query of assets, refer to:
 
 ```js
 const isProd = process.env.NODE_ENV === 'production';

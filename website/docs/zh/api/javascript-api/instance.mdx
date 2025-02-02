@@ -400,7 +400,7 @@ function CreateDevServer(
 
 - **示例：**
 
-下面是一个在 [express](https://expressjs.com/) 中集成 Rsbuild DevServer 的例子:
+下面是一个在 [express](https://expressjs.com/) 中集成 Rsbuild dev server 的例子:
 
 ```ts
 import { createRsbuild } from '@rsbuild/core';
@@ -412,7 +412,7 @@ export async function startDevServer() {
 
   const app = express();
 
-  // 创建 Rsbuild DevServer 实例
+  // 创建 Rsbuild dev server 实例
   const rsbuildServer = await rsbuild.createDevServer();
 
   // 使用 Rsbuild 的内置中间件
@@ -429,7 +429,7 @@ export async function startDevServer() {
 
 详细使用情况可参考：[示例](https://github.com/rspack-contrib/rspack-examples/blob/main/rsbuild/express/server.mjs)。
 
-如果你希望直接使用 Rsbuild DevServer 启动项目，可以直接使用 [Rsbuild - startDevServer](#rsbuildstartdevserver) 方法。 `startDevServer` 实际上是以下代码的语法糖：
+如果你希望直接使用 Rsbuild dev server 启动项目，可以直接使用 [Rsbuild - startDevServer](#rsbuildstartdevserver) 方法。 `startDevServer` 实际上是以下代码的语法糖：
 
 ```ts
 const server = await rsbuild.createDevServer();
