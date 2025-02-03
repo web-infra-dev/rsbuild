@@ -55,7 +55,9 @@ jobs:
           ref: ${{ github.event.inputs.branch }}
 
       - name: Install Pnpm
-        run: corepack enable
+        run: |
+          npm install -g corepack@latest --force
+          corepack enable
 
       - name: Setup Node.js
         uses: actions/setup-node@v4.2.0
