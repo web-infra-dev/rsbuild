@@ -1,5 +1,5 @@
 import { promises as dns } from 'node:dns';
-import { DevConfig, ServerConfig } from 'src/types/config';
+import { DevConfig, ServerConfig } from '../types/config';
 
 type Hostname = {
   host?: string;
@@ -13,15 +13,12 @@ const wildcardHosts = new Set([
 ]);
 
 export async function resolveHostname(
-  optionsHost: string | boolean | undefined,
+  optionsHost: string | undefined,
 ): Promise<Hostname> {
   let host: string | undefined;
-  if (optionsHost === undefined || optionsHost === false) {
+  if (optionsHost === undefined) {
     // Use a secure default
     host = 'localhost';
-  } else if (optionsHost === true) {
-    // If passed --host in the CLI without arguments
-    host = undefined; // undefined typically means 0.0.0.0 or :: (listen on all IPs)
   } else {
     host = optionsHost;
   }
@@ -30,7 +27,6 @@ export async function resolveHostname(
   let name = host === undefined || wildcardHosts.has(host) ? 'localhost' : host;
 
   if (host === 'localhost') {
-    // See #8647 for more details.
     const localhostAddr = await getLocalhostAddressIfDiffersFromDNS();
     if (localhostAddr) {
       name = localhostAddr;
