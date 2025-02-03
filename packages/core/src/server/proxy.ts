@@ -60,7 +60,9 @@ export const createProxyMiddleware = async (
 
     const middleware: Middleware = async (req, res, next) => {
       const bypassUrl =
-        typeof opts.bypass === 'function' ? opts.bypass(req, res, opts) : null;
+        typeof opts.bypass === 'function'
+          ? await opts.bypass(req, res, opts)
+          : null;
 
       if (bypassUrl === false) {
         res.statusCode = 404;
