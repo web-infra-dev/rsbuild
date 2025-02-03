@@ -42,7 +42,7 @@
     "@rsbuild/plugin-webpack-swc": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
     "@scripts/test-helper": "workspace:*",
-    "@tailwindcss/postcss": "^4.0.2",
+    "@tailwindcss/postcss": "^4.0.3",
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.15",
     "@types/node": "^22.13.0",
@@ -52,7 +52,7 @@
     "fast-glob": "^3.3.3",
     "fs-extra": "^11.3.0",
     "playwright": "1.44.1",
-    "tailwindcss": "^4.0.2",
+    "tailwindcss": "^4.0.3",
     "typescript": "^5.7.3"
   }
 }
