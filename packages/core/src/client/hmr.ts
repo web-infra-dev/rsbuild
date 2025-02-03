@@ -227,7 +227,7 @@ function onError() {
 }
 
 // Establishing a WebSocket connection with the server.
-function connect(fallback: boolean = false) {
+function connect(fallback = false) {
   let cfg = config;
   if (fallback) {
     cfg = resolvedConfig;

@@ -1,5 +1,5 @@
 import { promises as dns } from 'node:dns';
-import { DevConfig, ServerConfig } from '../types/config';
+import type { DevConfig, ServerConfig } from '../types/config';
 
 type Hostname = {
   host?: string;
