@@ -216,10 +216,14 @@ function onClose() {
 }
 
 function onError() {
-  console.error('[HMR] WebSocket connection error, attempting direct fallback');
-  removeListeners();
-  connection = null;
-  connect(true);
+  if (!config.port) {
+    console.error(
+      '[HMR] WebSocket connection error, attempting direct fallback',
+    );
+    removeListeners();
+    connection = null;
+    connect(true);
+  }
 }
 
 // Establishing a WebSocket connection with the server.
