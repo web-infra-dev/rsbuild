@@ -212,7 +212,14 @@ function onClose() {
   removeListeners();
   connection = null;
   reconnectCount++;
-  setTimeout(() => connect(true), 1000 * 1.5 ** reconnectCount);
+  setTimeout(connect, 1000 * 1.5 ** reconnectCount);
+}
+
+function onError() {
+  console.error('[HMR] WebSocket connection error, attempting direct fallback');
+  removeListeners();
+  connection = null;
+  connect(true);
 }
 
 // Establishing a WebSocket connection with the server.
@@ -238,6 +245,8 @@ function connect(fallback: boolean = false) {
   connection.addEventListener('close', onClose);
   // Handle messages from the server.
   connection.addEventListener('message', onMessage);
+  // Handle errors
+  connection.addEventListener('error', onError);
 }
 
 function removeListeners() {
@@ -245,6 +254,7 @@ function removeListeners() {
     connection.removeEventListener('open', onOpen);
     connection.removeEventListener('close', onClose);
     connection.removeEventListener('message', onMessage);
+    connection.removeEventListener('error', onError);
   }
 }
 
