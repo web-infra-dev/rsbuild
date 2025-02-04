@@ -2,6 +2,7 @@ import type { NormalizedClientConfig } from '../types';
 
 const compilationId = RSBUILD_COMPILATION_NAME;
 const config: NormalizedClientConfig = RSBUILD_CLIENT_CONFIG;
+const resolvedConfig: NormalizedClientConfig = RSBUILD_RESOLVED_CLIENT_CONFIG;
 
 function formatURL({
   port,
@@ -214,10 +215,27 @@ function onClose() {
   setTimeout(connect, 1000 * 1.5 ** reconnectCount);
 }
 
+function onError() {
+  if (!config.port) {
+    console.error(
+      '[HMR] WebSocket connection error, attempting direct fallback',
+    );
+    removeListeners();
+    connection = null;
+    connect(true);
+  }
+}
+
 // Establishing a WebSocket connection with the server.
-function connect() {
+function connect(fallback = false) {
+  let cfg = config;
+  if (fallback) {
+    cfg = resolvedConfig;
+    console.info('[HMR] Using direct websocket fallback');
+  }
+
   const { location } = self;
-  const { host, port, path, protocol } = config;
+  const { host, port, path, protocol } = cfg;
   const socketUrl = formatURL({
     protocol: protocol || (location.protocol === 'https:' ? 'wss' : 'ws'),
     hostname: host || location.hostname,
@@ -231,6 +249,8 @@ function connect() {
   connection.addEventListener('close', onClose);
   // Handle messages from the server.
   connection.addEventListener('message', onMessage);
+  // Handle errors
+  connection.addEventListener('error', onError);
 }
 
 function removeListeners() {
@@ -238,6 +258,7 @@ function removeListeners() {
     connection.removeEventListener('open', onOpen);
     connection.removeEventListener('close', onClose);
     connection.removeEventListener('message', onMessage);
+    connection.removeEventListener('error', onError);
   }
 }
 
