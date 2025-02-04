@@ -38,9 +38,10 @@ export async function getResolvedClientConfig(
   clientConfig: DevConfig['client'],
   serverConfig: ServerConfig,
 ): Promise<DevConfig['client']> {
+  const resolvedHost = await resolveHostname(serverConfig.host);
   return {
     ...clientConfig,
-    host: await resolveHostname(serverConfig.host),
+    host: resolvedHost,
     port: serverConfig.port,
   };
 }
