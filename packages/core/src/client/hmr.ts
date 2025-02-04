@@ -228,14 +228,8 @@ function onError() {
 
 // Establishing a WebSocket connection with the server.
 function connect(fallback = false) {
-  let cfg = config;
-  if (fallback) {
-    cfg = resolvedConfig;
-    console.info('[HMR] Using direct websocket fallback');
-  }
-
   const { location } = self;
-  const { host, port, path, protocol } = cfg;
+  const { host, port, path, protocol } = fallback ? resolvedConfig : config;
   const socketUrl = formatURL({
     protocol: protocol || (location.protocol === 'https:' ? 'wss' : 'ws'),
     hostname: host || location.hostname,
@@ -250,7 +244,9 @@ function connect(fallback = false) {
   // Handle messages from the server.
   connection.addEventListener('message', onMessage);
   // Handle errors
-  connection.addEventListener('error', onError);
+  if (!fallback) {
+    connection.addEventListener('error', onError);
+  }
 }
 
 function removeListeners() {
