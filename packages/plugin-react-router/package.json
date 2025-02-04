@@ -55,6 +55,7 @@
   },
   "devDependencies": {
     "@react-router/dev": "7.0.2",
+    "@react-router/node": "7.0.2",
     "react-router": "7.0.2",
     "@rsbuild/core": "workspace:*",
     "@rspack/core": "^1.1.6",

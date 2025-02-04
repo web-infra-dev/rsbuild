@@ -329,6 +329,8 @@ importers:
         specifier: ^3.106.0
         version: 3.106.0(@cloudflare/workers-types@4.20250129.0)
 
+  examples/react-router/cloudflare/build/server: {}
+
   examples/react-router/custom-node-server:
     dependencies:
       '@react-router/express':

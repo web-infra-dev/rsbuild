@@ -10,6 +10,7 @@ import { isAbsolute, relative, resolve } from 'pathe';
 import { RspackVirtualModulePlugin } from 'rspack-plugin-virtual-module';
 import type { Babel, NodePath, ParseResult } from './babel.js';
 import { generate, parse, t, traverse } from './babel.js';
+import { createDevServerMiddleware } from './dev-server.js';
 import {
   combineURLs,
   createRouteId,
@@ -138,12 +139,8 @@ export const pluginReactRouter = (
     finalOptions.buildDirectory = buildDirectory;
     finalOptions.ssr = ssr;
 
-    console.log('finalOptions', finalOptions);
-
-    // Add debug logs for routes.ts loading
+    // Remove debug console logs
     const routesPath = resolve(finalOptions.appDirectory, 'routes.ts');
-    console.log('Attempting to load routes from:', routesPath);
-    console.log('Current working directory:', process.cwd());
 
     // Then read the routes
     const routeConfig = await jiti
@@ -238,6 +235,11 @@ export const pluginReactRouter = (
           writeToDisk: true,
           hmr: false,
           liveReload: true,
+          setupMiddlewares: [
+            (middlewares, server) => {
+              middlewares.push(createDevServerMiddleware(server));
+            },
+          ],
         },
         tools: {
           rspack: {
