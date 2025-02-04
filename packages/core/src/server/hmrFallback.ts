@@ -1,71 +1,47 @@
 import { promises as dns } from 'node:dns';
 import type { DevConfig, ServerConfig } from '../types/config';
-
-type Hostname = {
-  host?: string;
-  name: string;
-};
-
-const wildcardHosts = new Set([
-  '0.0.0.0',
-  '::',
-  '0000:0000:0000:0000:0000:0000:0000:0000',
-]);
-
-export async function resolveHostname(
-  optionsHost: string | undefined,
-): Promise<Hostname> {
-  let host: string | undefined;
-  if (optionsHost === undefined) {
-    // Use a secure default
-    host = 'localhost';
-  } else {
-    host = optionsHost;
-  }
-
-  // Set host name to localhost when possible
-  let name = host === undefined || wildcardHosts.has(host) ? 'localhost' : host;
-
-  if (host === 'localhost') {
-    const localhostAddr = await getLocalhostAddressIfDiffersFromDNS();
-    if (localhostAddr) {
-      name = localhostAddr;
-    }
-  }
-
-  return { host, name };
-}
+import { isWildcardHost } from './helper';
 
 /**
- * Returns resolved localhost address when `dns.lookup` result differs from DNS
+ * Checks if localhost resolves differently between node's default DNS lookup
+ * and explicit DNS lookup.
  *
- * `dns.lookup` result is same when defaultResultOrder is `verbatim`.
- * Even if defaultResultOrder is `ipv4first`, `dns.lookup` result maybe same.
- * For example, when IPv6 is not supported on that machine/network.
+ * Returns the resolved address if there's a difference, undefined otherwise.
+ * This helps detect cases where IPv4/IPv6 resolution might vary.
  */
-export async function getLocalhostAddressIfDiffersFromDNS(): Promise<
+export async function getLocalhostResolvedAddress(): Promise<
   string | undefined
 > {
-  const [nodeResult, dnsResult] = await Promise.all([
+  const [defaultLookup, explicitLookup] = await Promise.all([
     dns.lookup('localhost'),
     dns.lookup('localhost', { verbatim: true }),
   ]);
-  const isSame =
-    nodeResult.family === dnsResult.family &&
-    nodeResult.address === dnsResult.address;
-  return isSame ? undefined : nodeResult.address;
+  const match =
+    defaultLookup.family === explicitLookup.family &&
+    defaultLookup.address === explicitLookup.address;
+  return match ? undefined : defaultLookup.address;
+}
+
+async function resolveHostname(host: string | undefined = 'localhost') {
+  if (host === 'localhost') {
+    const resolvedAddress = await getLocalhostResolvedAddress();
+    if (resolvedAddress) {
+      return resolvedAddress;
+    }
+  }
+
+  // If possible, set the host name to localhost
+  return host === undefined || isWildcardHost(host) ? 'localhost' : host;
 }
 
 export async function getResolvedClientConfig(
   clientConfig: DevConfig['client'],
   serverConfig: ServerConfig,
 ): Promise<DevConfig['client']> {
-  const resolvedServerHostname = (await resolveHostname(serverConfig.host))
-    .name;
-  const resolvedServerPort = serverConfig.port!;
+  const resolvedHost = await resolveHostname(serverConfig.host);
   return {
     ...clientConfig,
-    host: resolvedServerHostname,
-    port: resolvedServerPort,
+    host: resolvedHost,
+    port: serverConfig.port,
   };
 }
