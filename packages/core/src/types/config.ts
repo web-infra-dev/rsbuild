@@ -265,7 +265,9 @@ export type ProxyBypass = (
   req: IncomingMessage,
   res: ServerResponse,
   proxyOptions: ProxyOptions,
-) => string | undefined | null | boolean;
+) => MaybePromise<string | undefined | null | boolean>;
+
+export type { ProxyFilter };
 
 export type ProxyOptions = HttpProxyOptions & {
   /**
@@ -274,6 +276,7 @@ export type ProxyOptions = HttpProxyOptions & {
    * - Return `true` to continue processing the request without proxy.
    * - Return `false` to produce a 404 error for the request.
    * - Return a path to serve from, instead of continuing to proxy the request.
+   * - Return a Promise to handle the request asynchronously.
    */
   bypass?: ProxyBypass;
   /**
