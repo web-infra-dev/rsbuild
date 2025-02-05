@@ -117,7 +117,7 @@ rsbuild build -c rsbuild.prod.config.mjs
 
 当你使用 `.ts`, `.mts` 和 `.cts` 后缀的配置文件时，Rsbuild 会使用 [jiti](https://github.com/unjs/jiti) 来加载配置文件，提供 ESM 与 CommonJS 的互操作性，模块解析的行为与 Node.js 原生行为存在一定差异。
 
-如果你使用的 JavaScript 运行时已经原生支持 TypeScript，可以使用 `--config-loader native` 选项来使用 Node.js 原生 loader 来加载配置文件。
+如果你使用的 JavaScript 运行时已经原生支持 TypeScript，可以使用 `--config-loader native` 选项来使用 Node.js 原生 loader 来加载配置文件。这可以保证模块解析的行为与 Node.js 原生行为一致，并且性能更好。
 
 例如，Node.js 从 v22.6.0 开始已经原生支持 TypeScript，你可以如下命令来使用 Node.js 原生 loader 来加载配置文件：
 

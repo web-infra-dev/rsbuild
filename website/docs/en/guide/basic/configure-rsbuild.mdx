@@ -117,7 +117,7 @@ rsbuild build -c rsbuild.prod.config.mjs
 
 When you use a configuration file with the `.ts`, `.mts`, and `.cts` extensions, Rsbuild will use [jiti](https://github.com/unjs/jiti) to load configuration files, providing interoperability between ESM and CommonJS. The behavior of module resolution differs slightly from the native behavior of Node.js.
 
-If your JavaScript runtime already natively supports TypeScript, you can use the `--config-loader native` option to use the Node.js native loader to load the configuration file.
+If your JavaScript runtime already natively supports TypeScript, you can use the `--config-loader native` option to use the Node.js native loader to load the configuration file. This can ensure that the module resolution behavior is consistent with the native behavior of Node.js and has better performance.
 
 For example, Node.js v22.6.0+ already natively supports TypeScript, you can use the following command to use the Node.js native loader to load the configuration file:
 
