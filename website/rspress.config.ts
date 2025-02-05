@@ -81,6 +81,9 @@ export default defineConfig({
   ssg: {
     strict: true,
   },
+  search: {
+    codeBlocks: true,
+  },
   markdown: {
     checkDeadLinks: true,
   },
