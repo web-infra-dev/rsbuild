@@ -136,3 +136,5 @@ export function matchRules(
     return false;
   });
 }
+
+export const TempA = '99999';

@@ -13,6 +13,9 @@
       "types": "./dist/index.d.js",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
+    },
+    "./tempA": {
+      "default": "./dist/index.js"
     }
   },
   "main": "./dist/index.cjs",
@@ -22,7 +25,7 @@
   ],
   "scripts": {
     "build": "rslib build",
-    "dev": "rslib build --watch"
+    "dev": "rslib build -w"
   },
   "dependencies": {
     "@rsbuild/core": "workspace:*",
