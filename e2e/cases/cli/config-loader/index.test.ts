@@ -5,7 +5,7 @@ import { expect } from '@playwright/test';
 
 rspackOnlyTest('should use Node.js native loader to load config', async () => {
   execSync(
-    'cross-env NODE_OPTIONS="--experimental-strip-types" npx rsbuild build --config-loader native',
+    'cross-env NODE_OPTIONS=--experimental-strip-types npx rsbuild build --config-loader native',
     {
       cwd: __dirname,
     },
