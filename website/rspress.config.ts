@@ -109,6 +109,11 @@ export default defineConfig({
         mode: 'link',
         content: 'https://discord.gg/XsaKEEk4mW',
       },
+      {
+        icon: 'bluesky',
+        mode: 'link',
+        content: 'https://bsky.app/profile/rspack.dev',
+      },
     ],
     locales: [
       {
