@@ -425,6 +425,13 @@ export type LoadConfigOptions = {
    * @default process.env.NODE_ENV
    */
   envMode?: string;
+  /**
+   * Specify the config loader, can be `jiti` or `native`.
+   * - 'jiti': Use `jiti` as loader, which supports TypeScript and ESM out of the box
+   * - 'native': Use native Node.js loader, requires TypeScript support in Node.js >= 22.6
+   * @default 'jiti'
+   */
+  loader?: ConfigLoader;
 };
 
 export type LoadConfigResult = {
@@ -439,11 +446,14 @@ export type LoadConfigResult = {
   filePath: string | null;
 };
 
+export type ConfigLoader = 'jiti' | 'native';
+
 export async function loadConfig({
   cwd = process.cwd(),
   path,
   envMode,
   meta,
+  loader = 'jiti',
 }: LoadConfigOptions = {}): Promise<LoadConfigResult> {
   const configFilePath = resolveConfigPath(cwd, path);
 
@@ -461,11 +471,17 @@ export async function loadConfig({
 
   let configExport: RsbuildConfigExport;
 
-  if (/\.(?:js|mjs|cjs)$/.test(configFilePath)) {
+  if (/\.(?:js|mjs|cjs)$/.test(configFilePath) || loader === 'native') {
     try {
       const exportModule = await import(`${configFilePath}?t=${Date.now()}`);
       configExport = exportModule.default ? exportModule.default : exportModule;
     } catch (err) {
+      if (loader === 'native') {
+        logger.error(
+          `Failed to load file with native loader: ${color.dim(configFilePath)}`,
+        );
+        throw err;
+      }
       logger.debug(
         `Failed to load file with dynamic import: ${color.dim(configFilePath)}`,
       );
