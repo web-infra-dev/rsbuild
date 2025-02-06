@@ -6,6 +6,7 @@ import type { RsbuildMode } from '../types';
 import { init } from './init';
 
 export type CommonOptions = {
+  base?: string;
   root?: string;
   mode?: RsbuildMode;
   config?: string;
@@ -34,6 +35,7 @@ export type PreviewOptions = CommonOptions;
 
 const applyCommonOptions = (cli: CAC) => {
   cli
+    .option('--base <base>', 'specify the base path of the server')
     .option(
       '-c, --config <config>',
       'specify the configuration file, can be a relative or absolute path',

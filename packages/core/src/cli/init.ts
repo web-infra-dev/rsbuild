@@ -81,6 +81,11 @@ export async function init({
       ...config.source.define,
     };
 
+    if (commonOpts.base) {
+      config.server ||= {};
+      config.server.base = commonOpts.base;
+    }
+
     if (commonOpts.root) {
       config.root = root;
     }
