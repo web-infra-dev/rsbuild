@@ -41,6 +41,7 @@ export async function init({
       cwd: root,
       path: commonOpts.config,
       envMode: commonOpts.envMode,
+      loader: commonOpts.configLoader,
     });
 
     const command = process.argv[2];

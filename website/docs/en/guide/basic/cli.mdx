@@ -27,15 +27,16 @@ Commands:
 
 Rsbuild CLI provides several common flags that can be used with all commands:
 
-| Flag                    | Description                                                                                                                                       |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `-c, --config <config>` | Specify the configuration file, can be a relative or absolute path, see [Specify config file](/guide/basic/configure-rsbuild#specify-config-file) |
-| `-r, --root <root>`     | Specify the project root directory                                                                                                                |
-| `-m, --mode <mode>`     | Specify the build mode (`development`, `production` or `none`), see [mode](/config/mode)                                                          |
-| `--env-mode <mode>`     | Specify the env mode to load the `.env.[mode]` file, see [Env mode](/guide/advanced/env-vars#env-mode)                                            |
-| `--env-dir <dir>`       | Specify the directory to load `.env` files, see [Env directory](/guide/advanced/env-vars#env-directory)                                           |
-| `--environment <name>`  | Specify the name of environment to build, see [Build specified environment](/guide/advanced/environments#build-specified-environment)             |
-| `-h, --help`            | Display help for command                                                                                                                          |
+| Flag                       | Description                                                                                                                                       |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `-c, --config <config>`    | Specify the configuration file, can be a relative or absolute path, see [Specify config file](/guide/basic/configure-rsbuild#specify-config-file) |
+| `--config-loader <loader>` | Specify the config loader, can be `jiti` or `native`, see [Specify config loader](/guide/basic/configure-rsbuild#specify-config-loader)           |
+| `-r, --root <root>`        | Specify the project root directory                                                                                                                |
+| `-m, --mode <mode>`        | Specify the build mode (`development`, `production` or `none`), see [mode](/config/mode)                                                          |
+| `--env-mode <mode>`        | Specify the env mode to load the `.env.[mode]` file, see [Env mode](/guide/advanced/env-vars#env-mode)                                            |
+| `--env-dir <dir>`          | Specify the directory to load `.env` files, see [Env directory](/guide/advanced/env-vars#env-directory)                                           |
+| `--environment <name>`     | Specify the name of environment to build, see [Build specified environment](/guide/advanced/environments#build-specified-environment)             |
+| `-h, --help`               | Display help for command                                                                                                                          |
 
 ## rsbuild dev
 
