@@ -53,16 +53,16 @@
     "typescript": "^5.7.3",
     "vitest": "^3.0.5"
   },
-  "pnpm": {
-    "patchedDependencies": {
-      "http-proxy@1.18.1": "patches/http-proxy@1.18.1.patch",
-      "postcss-loader@8.1.1": "patches/postcss-loader@8.1.1.patch",
-      "css-loader@7.1.2": "patches/css-loader@7.1.2.patch"
-    }
-  },
   "packageManager": "pnpm@10.0.0",
   "engines": {
     "node": ">=18.0.0",
     "pnpm": ">=10.0.0"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "css-loader@7.1.2": "patches/css-loader@7.1.2.patch",
+      "http-proxy@1.18.1": "patches/http-proxy@1.18.1.patch",
+      "postcss-loader@8.1.1": "patches/postcss-loader@8.1.1.patch"
+    }
   }
 }
