@@ -14,8 +14,7 @@ vi.mock('../src/helpers.js', async (importOriginal) => {
   };
 });
 
-// TODO: Rspack does not supports cache yet
-describe.skip('plugin-cache', () => {
+describe('plugin-cache', () => {
   const cases = [
     {
       name: 'should add cache config correctly',

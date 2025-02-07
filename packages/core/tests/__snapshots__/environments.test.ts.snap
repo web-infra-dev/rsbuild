@@ -78,7 +78,6 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "target": "web",
   },
   "performance": {
-    "buildCache": true,
     "chunkSplit": {
       "strategy": "split-by-experience",
     },
@@ -220,7 +219,6 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "target": "node",
   },
   "performance": {
-    "buildCache": true,
     "chunkSplit": {
       "strategy": "split-by-experience",
     },
@@ -362,7 +360,6 @@ exports[`environment config > should print environment config when inspect confi
       "target": "web",
     },
     "performance": {
-      "buildCache": true,
       "chunkSplit": {
         "strategy": "split-by-experience",
       },
@@ -500,7 +497,6 @@ exports[`environment config > should print environment config when inspect confi
       "target": "web",
     },
     "performance": {
-      "buildCache": true,
       "chunkSplit": {
         "strategy": "split-by-experience",
       },
@@ -658,7 +654,6 @@ exports[`environment config > should support modify environment config by api.mo
       "target": "web",
     },
     "performance": {
-      "buildCache": true,
       "chunkSplit": {
         "strategy": "split-by-experience",
       },
@@ -796,7 +791,6 @@ exports[`environment config > should support modify environment config by api.mo
       "target": "web",
     },
     "performance": {
-      "buildCache": true,
       "chunkSplit": {
         "strategy": "split-by-experience",
       },
@@ -935,7 +929,6 @@ exports[`environment config > should support modify environment config by api.mo
       "target": "web",
     },
     "performance": {
-      "buildCache": true,
       "chunkSplit": {
         "strategy": "split-by-experience",
       },
@@ -1077,7 +1070,6 @@ exports[`environment config > should support modify single environment config by
       "target": "web",
     },
     "performance": {
-      "buildCache": true,
       "chunkSplit": {
         "strategy": "split-by-experience",
       },
@@ -1215,7 +1207,6 @@ exports[`environment config > should support modify single environment config by
       "target": "web",
     },
     "performance": {
-      "buildCache": true,
       "chunkSplit": {
         "strategy": "split-by-experience",
       },

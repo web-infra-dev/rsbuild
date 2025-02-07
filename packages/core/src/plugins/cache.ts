@@ -57,7 +57,7 @@ function getCacheDirectory(
 }
 
 /**
- * webpack can't detect the changes of framework config, tsconfig, tailwind config and browserslist config.
+ * Rspack can't detect the changes of framework config, tsconfig, tailwind config and browserslist config.
  * but they will affect the compilation result, so they need to be added to buildDependencies.
  */
 async function getBuildDependencies(
@@ -104,17 +104,16 @@ export const pluginCache = (): RsbuildPlugin => ({
   name: 'rsbuild:cache',
 
   setup(api) {
-    // Rspack does not support persistent cache yet
-    if (api.context.bundlerType === 'rspack') {
-      return;
-    }
-
     api.modifyBundlerChain(async (chain, { environment, env }) => {
       const { config } = environment;
-      const { buildCache } = config.performance;
+      const { bundlerType } = api.context;
+
+      // Enable webpack persistent cache by default
+      // Rspack's persistent cache is still experimental and should be manually enabled
+      const buildCache =
+        config.performance.buildCache ?? bundlerType === 'webpack';
 
       if (buildCache === false) {
-        chain.cache(false);
         return;
       }
 
@@ -133,16 +132,30 @@ export const pluginCache = (): RsbuildPlugin => ({
         Array.isArray(cacheConfig.cacheDigest) &&
         cacheConfig.cacheDigest.length;
 
-      chain.cache({
-        // The default cache name of webpack is '${name}-${env}', and the `name` is `default` by default.
-        // We set cache name to avoid cache conflicts of different targets.
-        name: useDigest
-          ? `${environment.name}-${env}-${getDigestHash(cacheConfig.cacheDigest!)}`
-          : `${environment.name}-${env}`,
-        type: 'filesystem',
-        cacheDirectory,
-        buildDependencies,
-      });
+      // set cache name to avoid cache conflicts between different environments
+      const cacheVersion = useDigest
+        ? `${environment.name}-${env}-${getDigestHash(cacheConfig.cacheDigest!)}`
+        : `${environment.name}-${env}`;
+
+      if (bundlerType === 'rspack') {
+        chain.cache(true);
+        chain.experiments({
+          ...chain.get('experiments'),
+          cache: {
+            type: 'persistent',
+            version: cacheVersion,
+            directory: cacheDirectory,
+            buildDependencies: Object.values(buildDependencies).flat(),
+          },
+        });
+      } else {
+        chain.cache({
+          name: cacheVersion,
+          type: 'filesystem',
+          cacheDirectory,
+          buildDependencies,
+        });
+      }
     });
   },
 });

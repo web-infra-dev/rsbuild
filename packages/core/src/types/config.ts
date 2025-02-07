@@ -605,7 +605,6 @@ export interface PerformanceConfig {
 
 export interface NormalizedPerformanceConfig extends PerformanceConfig {
   printFileSize: PrintFileSizeOptions | boolean;
-  buildCache: BuildCacheOptions | boolean;
   chunkSplit: RsbuildChunkSplit;
 }
 
