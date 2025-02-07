@@ -34,7 +34,7 @@ You can think of Rsbuild as a modernized version of Create React App or Vue CLI,
 
 ### Vite
 
-Rsbuild shares many similarities with Vite, as they are both aim to improve the frontend development experience. The main differences are:
+Rsbuild shares many similarities with Vite, as they both aim to improve the frontend development experience. The main differences are:
 
 - **Ecosystem compatibility**: Rsbuild is compatible with most webpack plugins and all Rspack plugins, while Vite is compatible with Rollup plugins. If you're currently using more plugins and loaders from the webpack ecosystem, migrating to Rsbuild would be relatively easy.
 - **Production consistency**: Rsbuild uses Rspack for bundling during both the development and production builds, thus ensuring a high level of consistency between the development and production outputs. This is also one of the goals Vite aims to achieve with Rolldown.
