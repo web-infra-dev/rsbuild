@@ -8,13 +8,14 @@ type CleanDistPath = boolean | 'auto' | CleanDistPathObject;
 
 - **默认值：** `'auto'`
 
-是否在构建开始前清理产物目录下的所有文件（产物目录默认为 `dist`）。
+是否在构建开始前清理产物目录下的所有文件，产物目录为 [output.distPath.root](/config/output/dist-path) 的值。
 
 ## 默认行为
 
-`output.cleanDistPath` 的默认值为 `'auto'`。如果产物目录是项目根路径的子目录，Rsbuild 会自动清空产物目录下的文件。
+`output.cleanDistPath` 的默认值为 `'auto'`：
 
-当 [output.distPath.root](/config/output/dist-path) 为外部目录，或等于项目根目录时，`cleanDistPath` 不会默认开启，这是为了避免误删其他目录的文件。
+- 在开发模式下，如果 [dev.writeToDisk](/config/dev/write-to-disk) 的值为 `false`，则 Rsbuild 不会执行清理。
+- 在任意模式下，如果 [output.distPath.root](/config/output/dist-path) 为外部目录，或等于项目根目录时，Rsbuild 不会执行清理，这是为了避免误删其他目录的文件。
 
 ```js
 export default {
