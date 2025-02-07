@@ -132,7 +132,6 @@ const getDefaultToolsConfig = (): NormalizedToolsConfig => ({
 
 const getDefaultPerformanceConfig = (): NormalizedPerformanceConfig => ({
   profile: false,
-  buildCache: true,
   printFileSize: true,
   removeConsole: false,
   removeMomentLocale: false,
