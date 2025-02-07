@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { build, proxyConsole } from '@e2e/helper';
+import { build, dev, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import fse from 'fs-extra';
 
@@ -16,7 +16,37 @@ test('should clean dist path by default', async () => {
   });
 
   expect(fs.existsSync(testDistFile)).toBeFalsy();
+});
+
+test('should not clean dist path in dev mode when writeToDisk is false', async () => {
+  await fse.outputFile(testDistFile, `{ "test": 1 }`);
+
+  await dev({
+    cwd,
+    rsbuildConfig: {
+      dev: {
+        writeToDisk: false,
+      },
+    },
+  });
+
+  expect(fs.existsSync(testDistFile)).toBeTruthy();
   fs.rmSync(testDistFile, { force: true });
+});
+
+test('should clean dist path in dev mode when writeToDisk is true', async () => {
+  await fse.outputFile(testDistFile, `{ "test": 1 }`);
+
+  await dev({
+    cwd,
+    rsbuildConfig: {
+      dev: {
+        writeToDisk: true,
+      },
+    },
+  });
+
+  expect(fs.existsSync(testDistFile)).toBeFalsy();
 });
 
 test('should not clean dist path if it is outside root', async () => {
