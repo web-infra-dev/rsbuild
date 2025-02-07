@@ -151,6 +151,14 @@ const initEnvironmentConfigs = (
   };
 };
 
+const validateRsbuildConfig = (config: NormalizedConfig) => {
+  if (config.server.base && !config.server.base.startsWith('/')) {
+    throw new Error(
+      `[rsbuild:config] The "server.base" option should start with a slash, for example: "/base"`,
+    );
+  }
+};
+
 export async function initRsbuildConfig({
   context,
   pluginManager,
@@ -215,6 +223,7 @@ export async function initRsbuildConfig({
 
   await updateEnvironmentContext(context, environments);
   updateContextByNormalizedConfig(context);
+  validateRsbuildConfig(context.normalizedConfig);
 
   return context.normalizedConfig;
 }

@@ -471,7 +471,7 @@ export async function loadConfig({
 
   let configExport: RsbuildConfigExport;
 
-  if (/\.(?:js|mjs|cjs)$/.test(configFilePath) || loader === 'native') {
+  if (loader === 'native' || /\.(?:js|mjs|cjs)$/.test(configFilePath)) {
     try {
       const exportModule = await import(`${configFilePath}?t=${Date.now()}`);
       configExport = exportModule.default ? exportModule.default : exportModule;
