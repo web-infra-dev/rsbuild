@@ -132,9 +132,8 @@ export const pluginCache = (): RsbuildPlugin => ({
         Array.isArray(cacheConfig.cacheDigest) &&
         cacheConfig.cacheDigest.length;
 
-      // The default cache name is '${name}-${env}', and the `name` is `default` by default.
-      // We set cache name to avoid cache conflicts of different targets.
-      const cacheName = useDigest
+      // set cache name to avoid cache conflicts between different environments
+      const cacheVersion = useDigest
         ? `${environment.name}-${env}-${getDigestHash(cacheConfig.cacheDigest!)}`
         : `${environment.name}-${env}`;
 
@@ -143,15 +142,15 @@ export const pluginCache = (): RsbuildPlugin => ({
         chain.experiments({
           ...chain.get('experiments'),
           cache: {
-            name: cacheName,
             type: 'persistent',
+            version: cacheVersion,
             directory: cacheDirectory,
             buildDependencies: Object.values(buildDependencies).flat(),
           },
         });
       } else {
         chain.cache({
-          name: cacheName,
+          name: cacheVersion,
           type: 'filesystem',
           cacheDirectory,
           buildDependencies,
