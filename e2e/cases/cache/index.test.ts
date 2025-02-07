@@ -2,12 +2,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
+import type { RsbuildConfig } from '@rsbuild/core';
 import fse from 'fs-extra';
 
 test('should save the buildDependencies to cache directory and hit cache', async () => {
   const cacheDirectory = path.resolve(
     __dirname,
-    './node_modules/.cache/webpack',
+    './node_modules/.cache/test-build-dependencies',
   );
 
   process.env.TEST_ENV = undefined;
@@ -16,9 +17,9 @@ test('should save the buildDependencies to cache directory and hit cache', async
     cwd: __dirname,
     rsbuildConfig: {
       tools: {
-        bundlerChain: (chain: any) => {
+        bundlerChain: (chain) => {
           if (process.env.TEST_ENV === 'a') {
-            chain.resolve.extensions.prepend('.a.js');
+            chain.resolve.extensions.prepend('.test.js');
           }
         },
       },
@@ -27,14 +28,14 @@ test('should save the buildDependencies to cache directory and hit cache', async
           cacheDirectory,
         },
       },
-    },
+    } as RsbuildConfig,
   };
 
   const configFile = path.resolve(cacheDirectory, 'buildDependencies.json');
 
   fs.rmSync(cacheDirectory, { recursive: true, force: true });
 
-  // first build no cache
+  // first build without cache
   let rsbuild = await build(buildConfig);
 
   expect(
@@ -46,7 +47,7 @@ test('should save the buildDependencies to cache directory and hit cache', async
 
   process.env.TEST_ENV = 'a';
 
-  // hit cache => unfortunately, extension '.a.js' not work
+  // hit cache, so the extension '.test.js' will not work
   rsbuild = await build(buildConfig);
 
   expect(
@@ -57,49 +58,40 @@ test('should save the buildDependencies to cache directory and hit cache', async
 test('cacheDigest should work', async () => {
   const cacheDirectory = path.resolve(
     __dirname,
-    './node_modules/.cache/webpack-1',
+    './node_modules/.cache/test-cache-digest',
   );
 
-  process.env.TEST_ENV = undefined;
+  fs.rmSync(cacheDirectory, { recursive: true, force: true });
 
-  const getBuildConfig = () => ({
+  const getBuildConfig = (input: string) => ({
     cwd: __dirname,
     rsbuildConfig: {
       tools: {
-        bundlerChain: (chain: any) => {
-          if (process.env.TEST_ENV === 'a') {
-            chain.resolve.extensions.prepend('.a.js');
+        bundlerChain: (chain) => {
+          if (input === 'foo') {
+            chain.resolve.extensions.prepend('.test.js');
           }
         },
       },
       performance: {
         buildCache: {
           cacheDirectory,
-          cacheDigest: [process.env.TEST_ENV],
+          cacheDigest: [input],
         },
       },
-    },
+    } as RsbuildConfig,
   });
 
-  const configFile = path.resolve(cacheDirectory, 'buildDependencies.json');
-
-  fs.rmSync(cacheDirectory, { recursive: true, force: true });
-
-  // first build no cache
-  let rsbuild = await build(getBuildConfig());
+  // first build without cache
+  let rsbuild = await build(getBuildConfig(''));
 
   expect(
     (await rsbuild.getIndexFile()).content.includes('222222'),
   ).toBeTruthy();
 
-  const buildDependencies = await fse.readJSON(configFile);
-  expect(Object.keys(buildDependencies)).toEqual(['tsconfig']);
+  rsbuild = await build(getBuildConfig('foo'));
 
-  process.env.TEST_ENV = 'a';
-
-  rsbuild = await build(getBuildConfig());
-
-  // extension '.a.js' should work
+  // extension '.test.js' should work
   expect(
     (await rsbuild.getIndexFile()).content.includes('111111'),
   ).toBeTruthy();
