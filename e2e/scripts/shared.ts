@@ -121,7 +121,7 @@ const updateConfigForTest = async (
       printUrls: false,
     },
     performance: {
-      buildCache: false,
+      buildCache: true,
       printFileSize: false,
     },
   };
