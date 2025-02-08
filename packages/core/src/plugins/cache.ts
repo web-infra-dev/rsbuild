@@ -20,7 +20,7 @@ async function validateCache(
   if (await isFileExists(configFile)) {
     const rawConfigFile = await fs.promises.readFile(configFile, 'utf-8');
 
-    let prevBuildDependencies = {};
+    let prevBuildDependencies: Record<string, string[]> | null = null;
     try {
       prevBuildDependencies = JSON.parse(rawConfigFile);
     } catch (e) {
