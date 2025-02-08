@@ -1,4 +1,5 @@
 import assert from 'node:assert';
+import fs from 'node:fs';
 import net from 'node:net';
 import { join } from 'node:path';
 import { URL } from 'node:url';
@@ -136,6 +137,13 @@ const unwrapOutputJSON = async (distPath: string, ignoreMap = true) => {
   });
 };
 
+const cleanCache = (cwd = process.cwd()) => {
+  const cacheDirectory = join(cwd, 'node_modules', '.cache');
+  if (fs.existsSync(cacheDirectory)) {
+    fs.rmSync(cacheDirectory, { recursive: true, force: true });
+  }
+};
+
 export async function dev({
   plugins,
   page,
@@ -161,6 +169,8 @@ export async function dev({
     options.rsbuildConfig || {},
     options.cwd,
   );
+
+  cleanCache(options.cwd);
 
   const rsbuild = await createRsbuild(options, plugins);
 
@@ -236,6 +246,8 @@ export async function build({
     options.rsbuildConfig || {},
     options.cwd,
   );
+
+  cleanCache(options.cwd);
 
   const rsbuild = await createRsbuild(options, plugins);
 
