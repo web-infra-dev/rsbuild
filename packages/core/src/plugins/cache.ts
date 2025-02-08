@@ -2,6 +2,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
 import { findExists, isFileExists } from '../helpers';
+import { logger } from '../logger';
 import type {
   BuildCacheOptions,
   EnvironmentContext,
@@ -18,7 +19,13 @@ async function validateCache(
 
   if (await isFileExists(configFile)) {
     const rawConfigFile = await fs.promises.readFile(configFile, 'utf-8');
-    const prevBuildDependencies = JSON.parse(rawConfigFile);
+
+    let prevBuildDependencies: Record<string, string[]> | null = null;
+    try {
+      prevBuildDependencies = JSON.parse(rawConfigFile);
+    } catch (e) {
+      logger.debug('Failed to parse the previous buildDependencies.json', e);
+    }
 
     if (
       JSON.stringify(prevBuildDependencies) ===
