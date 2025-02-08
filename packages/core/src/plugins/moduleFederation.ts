@@ -1,7 +1,7 @@
 import { isRegExp } from 'node:util/types';
 import { rspack } from '@rspack/core';
 import type { RspackPluginInstance } from '@rspack/core';
-import type { CacheGroup, RsbuildPlugin, Rspack } from '../types';
+import type { RsbuildPlugin, Rspack } from '../types';
 
 /**
  * Force remote entry not be affected by user's chunkSplit strategy,
@@ -22,14 +22,18 @@ class PatchSplitChunksPlugin implements RspackPluginInstance {
       return;
     }
 
-    const applyPatch = (cacheGroup: CacheGroup) => {
-      if (typeof cacheGroup !== 'object' || isRegExp(cacheGroup)) {
+    const applyPatch = (
+      config:
+        | Rspack.OptimizationSplitChunksCacheGroup
+        | Rspack.OptimizationSplitChunksOptions,
+    ) => {
+      if (typeof config !== 'object' || isRegExp(config)) {
         return;
       }
 
       // cacheGroup.chunks will inherit splitChunks.chunks
       // so we only need to modify the chunks that are set separately.
-      const { chunks } = cacheGroup;
+      const { chunks } = config;
       if (!chunks || chunks === 'async') {
         return;
       }
@@ -37,7 +41,7 @@ class PatchSplitChunksPlugin implements RspackPluginInstance {
       if (typeof chunks === 'function') {
         const prevChunks = chunks;
 
-        cacheGroup.chunks = (chunk) => {
+        config.chunks = (chunk) => {
           if (chunk.name && chunk.name === this.name) {
             return false;
           }
@@ -47,7 +51,7 @@ class PatchSplitChunksPlugin implements RspackPluginInstance {
       }
 
       if (chunks === 'all') {
-        cacheGroup.chunks = (chunk) => {
+        config.chunks = (chunk) => {
           if (chunk.name && chunk.name === this.name) {
             return false;
           }
@@ -57,7 +61,7 @@ class PatchSplitChunksPlugin implements RspackPluginInstance {
       }
 
       if (chunks === 'initial') {
-        cacheGroup.chunks = (chunk) => {
+        config.chunks = (chunk) => {
           if (chunk.name && chunk.name === this.name) {
             return false;
           }
@@ -77,7 +81,9 @@ class PatchSplitChunksPlugin implements RspackPluginInstance {
 
     // patch splitChunk.cacheGroups[key].chunks
     for (const cacheGroupKey of Object.keys(cacheGroups)) {
-      applyPatch(cacheGroups[cacheGroupKey]);
+      if (cacheGroups[cacheGroupKey]) {
+        applyPatch(cacheGroups[cacheGroupKey]);
+      }
     }
   }
 }
