@@ -44,37 +44,6 @@ export async function init({
       loader: commonOpts.configLoader,
     });
 
-    const command = process.argv[2];
-    if (command === 'dev' || isBuildWatch) {
-      const files = [...envs.filePaths];
-
-      if (configFilePath) {
-        files.push(configFilePath);
-      }
-
-      if (config.dev?.watchFiles) {
-        for (const watchFilesConfig of castArray(config.dev.watchFiles)) {
-          if (watchFilesConfig.type !== 'reload-server') {
-            continue;
-          }
-
-          const paths = castArray(watchFilesConfig.paths);
-          if (watchFilesConfig.options) {
-            watchFilesForRestart(
-              paths,
-              root,
-              isBuildWatch,
-              watchFilesConfig.options,
-            );
-          } else {
-            files.push(...paths);
-          }
-        }
-      }
-
-      watchFilesForRestart(files, root, isBuildWatch);
-    }
-
     config.source ||= {};
     config.source.define = {
       ...envs.publicVars,
@@ -119,6 +88,40 @@ export async function init({
       cwd: root,
       rsbuildConfig: config,
       environment: commonOpts.environment,
+    });
+
+    rsbuild.onBeforeCreateCompiler(() => {
+      const command = process.argv[2];
+      if (command === 'dev' || isBuildWatch) {
+        const files = [...envs.filePaths];
+
+        if (configFilePath) {
+          files.push(configFilePath);
+        }
+
+        const config = rsbuild.getNormalizedConfig();
+        if (config.dev?.watchFiles) {
+          for (const watchFilesConfig of castArray(config.dev.watchFiles)) {
+            if (watchFilesConfig.type !== 'reload-server') {
+              continue;
+            }
+
+            const paths = castArray(watchFilesConfig.paths);
+            if (watchFilesConfig.options) {
+              watchFilesForRestart(
+                paths,
+                root,
+                isBuildWatch,
+                watchFilesConfig.options,
+              );
+            } else {
+              files.push(...paths);
+            }
+          }
+        }
+
+        watchFilesForRestart(files, root, isBuildWatch);
+      }
     });
 
     rsbuild.onCloseBuild(envs.cleanup);
