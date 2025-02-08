@@ -170,7 +170,7 @@ export async function dev({
     options.cwd,
   );
 
-  cleanCache(options.cwd);
+  // cleanCache(options.cwd);
 
   const rsbuild = await createRsbuild(options, plugins);
 
@@ -247,7 +247,7 @@ export async function build({
     options.cwd,
   );
 
-  cleanCache(options.cwd);
+  // cleanCache(options.cwd);
 
   const rsbuild = await createRsbuild(options, plugins);
 
