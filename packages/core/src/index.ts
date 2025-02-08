@@ -39,8 +39,6 @@ export type {
   Build,
   BuildOptions,
   BundlerPluginInstance,
-  CacheGroup,
-  CacheGroups,
   Charset,
   ClientConfig,
   CliShortcut,
