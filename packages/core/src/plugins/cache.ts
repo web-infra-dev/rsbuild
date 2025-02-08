@@ -11,7 +11,11 @@ import type {
   RsbuildPlugin,
 } from '../types';
 
-async function validateCache(
+/**
+ * If the filenames in the buildDependencies are changed, webpack will not invalidate the previous cache.
+ * So we need to remove the cache directory to make sure the cache is invalidated.
+ */
+async function validateWebpackCache(
   cacheDirectory: string,
   buildDependencies: Record<string, string[]>,
 ) {
@@ -34,10 +38,6 @@ async function validateCache(
       return;
     }
 
-    /**
-     * If the filenames in the buildDependencies are changed, webpack will not invalidate the previous cache.
-     * So we need to remove the cache directory to make sure the cache is invalidated.
-     */
     await fs.promises.rm(cacheDirectory, { force: true, recursive: true });
   }
 
@@ -133,7 +133,9 @@ export const pluginCache = (): RsbuildPlugin => ({
         environment,
       );
 
-      await validateCache(cacheDirectory, buildDependencies);
+      if (bundlerType === 'webpack') {
+        await validateWebpackCache(cacheDirectory, buildDependencies);
+      }
 
       const useDigest =
         Array.isArray(cacheConfig.cacheDigest) &&
