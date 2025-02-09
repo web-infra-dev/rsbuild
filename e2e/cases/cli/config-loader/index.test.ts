@@ -1,14 +1,9 @@
 import { execSync } from 'node:child_process';
 import path from 'node:path';
 import { globContentJSON, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect } from '@playwright/test';
 
 rspackOnlyTest('should use Node.js native loader to load config', async () => {
-  // TODO: fix this test on Windows
-  if (process.platform === 'win32') {
-    test.skip();
-  }
-
   execSync('npx rsbuild build --config-loader native', {
     cwd: __dirname,
     env: {
