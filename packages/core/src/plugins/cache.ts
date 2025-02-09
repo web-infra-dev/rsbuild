@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
-import { findExists, isFileExists } from '../helpers';
+import { color, findExists, isFileExists } from '../helpers';
 import { logger } from '../logger';
 import type {
   BuildCacheOptions,
@@ -111,6 +111,8 @@ export const pluginCache = (): RsbuildPlugin => ({
   name: 'rsbuild:cache',
 
   setup(api) {
+    let cacheEnabled = false;
+
     api.modifyBundlerChain(async (chain, { environment, env }) => {
       const { config } = environment;
       const { bundlerType } = api.context;
@@ -123,6 +125,8 @@ export const pluginCache = (): RsbuildPlugin => ({
       if (buildCache === false) {
         return;
       }
+
+      cacheEnabled = true;
 
       const { context } = api;
       const cacheConfig = typeof buildCache === 'boolean' ? {} : buildCache;
@@ -164,6 +168,15 @@ export const pluginCache = (): RsbuildPlugin => ({
           cacheDirectory,
           buildDependencies,
         });
+      }
+    });
+
+    api.onAfterCreateCompiler(() => {
+      // Tell user that the cache is enabled and it's experimental
+      if (cacheEnabled && api.context.bundlerType === 'rspack') {
+        logger.info(
+          `Rspack persistent cache enabled ${color.dim('(experimental)')}`,
+        );
       }
     });
   },
