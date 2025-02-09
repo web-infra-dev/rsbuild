@@ -25,7 +25,7 @@ rspackOnlyTest(
   'should not register Rsdoctor plugin when process.env.RSDOCTOR is false',
   async () => {
     const { logs, restore } = proxyConsole();
-    process.env.RSDOCTOR = 'true';
+    process.env.RSDOCTOR = 'false';
 
     await build({
       cwd: __dirname,
