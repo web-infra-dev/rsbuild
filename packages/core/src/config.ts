@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, isAbsolute, join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import type { ChokidarOptions } from '../compiled/chokidar/index.js';
 import RspackChain from '../compiled/rspack-chain/index.js';
 import {
@@ -472,7 +473,8 @@ export async function loadConfig({
 
   if (loader === 'native' || /\.(?:js|mjs|cjs)$/.test(configFilePath)) {
     try {
-      const exportModule = await import(`${configFilePath}?t=${Date.now()}`);
+      const configFileURL = pathToFileURL(configFilePath).href;
+      const exportModule = await import(`${configFileURL}?t=${Date.now()}`);
       configExport = exportModule.default ? exportModule.default : exportModule;
     } catch (err) {
       if (loader === 'native') {
