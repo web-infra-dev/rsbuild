@@ -13,6 +13,7 @@
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-react": "workspace:*",
+    "@rsdoctor/rspack-plugin": "^0.4.13",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "typescript": "^5.7.3"
