@@ -111,8 +111,8 @@ importers:
         specifier: workspace:*
         version: link:../packages/plugin-babel
       '@rsbuild/plugin-check-syntax':
-        specifier: ^1.2.1
-        version: 1.2.1(@rsbuild/core@packages+core)
+        specifier: ^1.2.2
+        version: 1.2.2(@rsbuild/core@packages+core)
       '@rsbuild/plugin-less':
         specifier: workspace:*
         version: link:../packages/plugin-less
@@ -2557,6 +2557,14 @@ packages:
       '@rsbuild/core':
         optional: true
 
+  '@rsbuild/plugin-check-syntax@1.2.2':
+    resolution: {integrity: sha512-AUypCZtXCauefEkbctV8hBoOgp50VfN211jtu7QxwkSzltB94vG8tAHzD1peNXee1Ptb8aiaXnjeokj604lVQQ==}
+    peerDependencies:
+      '@rsbuild/core': 1.x
+    peerDependenciesMeta:
+      '@rsbuild/core':
+        optional: true
+
   '@rsbuild/plugin-less@1.1.0':
     resolution: {integrity: sha512-F834dobNDIdyGj5trMxIqzm/qf54Kj5KVDxeuB3TTj64mzq5fHJnR4aI/iYIliUwICG1/l2MliKr5sR34Kb7eA==}
     peerDependencies:
@@ -4043,6 +4051,9 @@ packages:
   domutils@3.1.0:
     resolution: {integrity: sha512-H78uMmQtI2AhgDJjWeQmHwJJ2bLPD3GMmO7Zja/ZZh84wkm+4ut+IUnUdRa8uCGX88DiVx1j6FRe1XfxEgjEZA==}
 
+  domutils@3.2.2:
+    resolution: {integrity: sha512-6kZKyUajlDuqlHKVX1w7gyslj9MPIXzIFiz/rGu35uC1wMi+kMhQwGhl4lt9unC9Vb9INnY9Z3/ZA3+FhASLaw==}
+
   dot-case@3.0.4:
     resolution: {integrity: sha512-Kv5nKlh6yRrdrGvxeJ2e5y2eRUpkUosIW4A2AS38zwSz27zu7ufDwQPi5Jhs3XAlGNetl3bmnGhQsMtkKJnj3w==}
 
@@ -4123,6 +4134,10 @@ packages:
 
   entities@4.5.0:
     resolution: {integrity: sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==}
+    engines: {node: '>=0.12'}
+
+  entities@6.0.0:
+    resolution: {integrity: sha512-aKstq2TDOndCn4diEyp9Uq/Flu2i1GlLkc6XIDQSDMuaFE3OPW5OphLCyQ5SpSJZTb4reN+kTcYru5yIfXoRPw==}
     engines: {node: '>=0.12'}
 
   env-paths@2.2.1:
@@ -4614,6 +4629,9 @@ packages:
         optional: true
       webpack:
         optional: true
+
+  htmlparser2@10.0.0:
+    resolution: {integrity: sha512-TwAZM+zE5Tq3lrEHvOlvwgj1XLWQCtaaibSN11Q+gGBAS7Y1uZSWwXXRe4iF6OXnaq1riyQAPFOBtYc77Mxq0g==}
 
   htmlparser2@6.1.0:
     resolution: {integrity: sha512-gyyPk6rgonLFEDGoeRgQNaEUvdJ4ktTmmUh/h2t7s+M8oPpIPxgNACWa+6ESR57kXstwqPiCut0V8NRpcwgU7A==}
@@ -8648,6 +8666,16 @@ snapshots:
     optionalDependencies:
       '@rsbuild/core': link:packages/core
 
+  '@rsbuild/plugin-check-syntax@1.2.2(@rsbuild/core@packages+core)':
+    dependencies:
+      acorn: 8.14.0
+      browserslist-to-es-version: 1.0.0
+      htmlparser2: 10.0.0
+      picocolors: 1.1.1
+      source-map: 0.7.4
+    optionalDependencies:
+      '@rsbuild/core': link:packages/core
+
   '@rsbuild/plugin-less@1.1.0(@rsbuild/core@1.2.3)':
     dependencies:
       '@rsbuild/core': 1.2.3
@@ -9895,7 +9923,7 @@ snapshots:
 
   browserslist-to-es-version@1.0.0:
     dependencies:
-      browserslist: 4.24.2
+      browserslist: 4.24.4
 
   browserslist@4.24.2:
     dependencies:
@@ -10322,6 +10350,12 @@ snapshots:
       domelementtype: 2.3.0
       domhandler: 5.0.3
 
+  domutils@3.2.2:
+    dependencies:
+      dom-serializer: 2.0.0
+      domelementtype: 2.3.0
+      domhandler: 5.0.3
+
   dot-case@3.0.4:
     dependencies:
       no-case: 3.0.4
@@ -10405,6 +10439,8 @@ snapshots:
   entities@2.2.0: {}
 
   entities@4.5.0: {}
+
+  entities@6.0.0: {}
 
   env-paths@2.2.1: {}
 
@@ -10946,6 +10982,13 @@ snapshots:
     optionalDependencies:
       '@rspack/core': 1.2.2(@swc/helpers@0.5.15)
       webpack: 5.97.1(@swc/core@1.10.15(@swc/helpers@0.5.15))
+
+  htmlparser2@10.0.0:
+    dependencies:
+      domelementtype: 2.3.0
+      domhandler: 5.0.3
+      domutils: 3.2.2
+      entities: 6.0.0
 
   htmlparser2@6.1.0:
     dependencies:
