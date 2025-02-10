@@ -57,9 +57,9 @@
     "core-js": "~3.40.0"
   },
   "devDependencies": {
-    "@rslib/core": "0.4.0",
+    "@rslib/core": "0.4.1",
     "@types/connect": "3.4.38",
-    "@types/node": "^22.13.0",
+    "@types/node": "^22.13.1",
     "@types/on-finished": "2.3.4",
     "@types/webpack-bundle-analyzer": "4.7.0",
     "@types/ws": "^8.5.14",
