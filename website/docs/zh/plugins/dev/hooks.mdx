@@ -355,6 +355,8 @@ type ModifyRspackConfigUtils = {
   isServer: boolean;
   isWebWorker: boolean;
   rspack: Rspack;
+  HtmlPlugin: typeof import('html-rspack-plugin');
+  // more...
 };
 
 function ModifyRspackConfig(
@@ -378,6 +380,8 @@ const myPlugin = () => ({
   },
 });
 ```
+
+回调函数的第二个参数 `utils` 是一个对象，包含了一些工具函数和属性，详见 [tools.rspack - 工具对象](/config/tools/rspack#工具对象)。
 
 ### modifyBundlerChain
 
@@ -430,6 +434,8 @@ const myPlugin = () => ({
   },
 });
 ```
+
+回调函数的第二个参数 `utils` 是一个对象，包含了一些工具函数和属性，详见 [tools.bundlerChain - 工具对象](/config/tools/bundler-chain#工具对象)。
 
 ### modifyHTMLTags
 
