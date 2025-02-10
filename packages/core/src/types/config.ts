@@ -456,10 +456,17 @@ export type NormalizedSecurityConfig = Required<SecurityConfig>;
 
 export type ConsoleType = 'log' | 'info' | 'warn' | 'error' | 'table' | 'group';
 
-// may extends cache options in the futures
 export type BuildCacheOptions = {
-  /** Base directory for the filesystem cache. */
+  /**
+   * The output directory of the cache files.
+   * @default 'node_modules/.cache'
+   */
   cacheDirectory?: string;
+  /**
+   * Add additional cache digests, the previous build cache will be invalidated
+   * when any value in the array changes.
+   * @default undefined
+   */
   cacheDigest?: Array<string | undefined>;
 };
 
@@ -548,7 +555,8 @@ export interface PerformanceConfig {
   removeMomentLocale?: boolean;
 
   /**
-   * Controls the Rsbuild's caching behavior during the build process.
+   * To enable or configure persistent build cache.
+   * @experimental This feature is experimental and may be changed in the future.
    */
   buildCache?: BuildCacheOptions | boolean;
 
