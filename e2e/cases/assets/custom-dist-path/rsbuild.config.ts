@@ -4,7 +4,7 @@ export default defineConfig({
   output: {
     filenameHash: false,
     distPath: {
-      root: 'dist/hello',
+      root: 'dist/custom',
       js: 'my-js',
       jsAsync: 'my-async-js',
       css: 'my-css',
