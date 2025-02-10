@@ -6,14 +6,7 @@
 type BuildCacheConfig =
   | boolean
   | {
-      /**
-       * The output directory of the cache files.
-       */
       cacheDirectory?: string;
-      /**
-       * Add additional cache digests, the previous build cache will be invalidated
-       * when any value in the array changes.
-       */
       cacheDigest?: Array<string | undefined>;
     };
 ```

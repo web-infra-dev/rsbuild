@@ -6,14 +6,7 @@
 type BuildCacheConfig =
   | boolean
   | {
-      /**
-       * 缓存文件的输出目录
-       */
       cacheDirectory?: string;
-      /**
-       * 添加额外的缓存摘要，
-       * 当数组中的任何值发生变化时，之前的构建缓存就会失效
-       */
       cacheDigest?: Array<string | undefined>;
     };
 ```
