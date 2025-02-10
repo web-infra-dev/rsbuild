@@ -9,10 +9,10 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "svelte": "^5.19.7"
+    "svelte": "^5.19.9"
   },
   "devDependencies": {
-    "@rsbuild/core": "^1.2.3",
+    "@rsbuild/core": "^1.2.4",
     "@rsbuild/plugin-svelte": "^1.0.7"
   }
 }
