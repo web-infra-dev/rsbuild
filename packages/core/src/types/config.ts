@@ -555,7 +555,7 @@ export interface PerformanceConfig {
   removeMomentLocale?: boolean;
 
   /**
-   * Enable persistent build cache.
+   * To enable or configure persistent build cache.
    * @experimental This feature is experimental and may be changed in the future.
    */
   buildCache?: BuildCacheOptions | boolean;
