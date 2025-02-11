@@ -81,6 +81,12 @@ const coloringAssetName = (assetName: string) => {
   return color.magenta(assetName);
 };
 
+const COMPRESSIBLE_REGEX =
+  /\.(?:js|css|html|json|svg|txt|xml|xhtml|wasm|manifest)$/i;
+
+const isCompressible = (assetName: string) =>
+  COMPRESSIBLE_REGEX.test(assetName);
+
 async function printFileSizes(
   options: PrintFileSizeOptions,
   stats: Rspack.Stats,
@@ -100,7 +106,10 @@ async function printFileSizes(
     const fileName = asset.name.split('?')[0];
     const contents = await fs.promises.readFile(path.join(distPath, fileName));
     const size = contents.length;
-    const gzippedSize = options.compressed ? await gzipSize(contents) : null;
+    const gzippedSize =
+      options.compressed && isCompressible(fileName)
+        ? await gzipSize(contents)
+        : null;
     const gzipSizeLabel = gzippedSize
       ? getAssetColor(gzippedSize)(calcFileSize(gzippedSize))
       : null;
