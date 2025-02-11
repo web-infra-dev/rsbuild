@@ -5,11 +5,15 @@ import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import { rspackOnlyTest, waitFor } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
-rspackOnlyTest.only(
+rspackOnlyTest(
   'should generator rspack profile as expected in dev',
   async () => {
-    const devProcess = exec('RSPACK_PROFILE=ALL node ./dev.mjs', {
+    const devProcess = exec('node ./dev.mjs', {
       cwd: __dirname,
+      env: {
+        ...process.env,
+        RSPACK_PROFILE: 'ALL',
+      },
     });
 
     const logs: string[] = [];
@@ -17,7 +21,6 @@ rspackOnlyTest.only(
     devProcess.stdout?.on('data', (data) => {
       const output = data.toString().trim();
       logs.push(stripAnsi(output));
-      console.log(output);
     });
 
     expect(
@@ -49,8 +52,12 @@ rspackOnlyTest.only(
 rspackOnlyTest(
   'should generator rspack profile as expected in build',
   async () => {
-    const buildProcess = exec('RSPACK_PROFILE=ALL npx rsbuild build', {
+    const buildProcess = exec('npx rsbuild build', {
       cwd: __dirname,
+      env: {
+        ...process.env,
+        RSPACK_PROFILE: 'ALL',
+      },
     });
 
     const logs: string[] = [];
@@ -58,7 +65,6 @@ rspackOnlyTest(
     buildProcess.stdout?.on('data', (data) => {
       const output = data.toString().trim();
       logs.push(stripAnsi(output));
-      console.log(output);
     });
 
     expect(
