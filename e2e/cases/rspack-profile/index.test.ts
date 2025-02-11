@@ -5,7 +5,7 @@ import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import { rspackOnlyTest, waitFor } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
-rspackOnlyTest(
+rspackOnlyTest.only(
   'should generator rspack profile as expected in dev',
   async () => {
     const devProcess = exec('RSPACK_PROFILE=ALL node ./dev.mjs', {
