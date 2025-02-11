@@ -12,11 +12,12 @@ rspackOnlyTest(
       cwd: __dirname,
     });
 
-    let logs: string[] = [];
+    const logs: string[] = [];
 
     devProcess.stdout?.on('data', (data) => {
       const output = data.toString().trim();
       logs.push(stripAnsi(output));
+      console.log(output);
     });
 
     expect(
@@ -52,11 +53,12 @@ rspackOnlyTest(
       cwd: __dirname,
     });
 
-    let logs: string[] = [];
+    const logs: string[] = [];
 
     buildProcess.stdout?.on('data', (data) => {
       const output = data.toString().trim();
       logs.push(stripAnsi(output));
+      console.log(output);
     });
 
     expect(
