@@ -1,8 +1,7 @@
 import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
 import { parse } from 'node:querystring';
-import type Ws from 'ws';
-import type { Server } from 'ws';
+import type Ws from '../../compiled/ws/index.js';
 import {
   getAllStatsErrors,
   getAllStatsWarnings,
@@ -29,7 +28,7 @@ interface SocketMessage {
 }
 
 export class SocketServer {
-  private wsServer!: Server;
+  private wsServer!: Ws.Server;
 
   private readonly sockets: Ws[] = [];
 
@@ -61,7 +60,6 @@ export class SocketServer {
   // create socket, install socket handler, bind socket event
   public async prepare(): Promise<void> {
     const { default: ws } = await import('../../compiled/ws/index.js');
-    // @ts-expect-error HTTP not match
     this.wsServer = new ws.Server({
       noServer: true,
       path: this.options.client?.path,
