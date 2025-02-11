@@ -8,8 +8,7 @@ import { expect } from '@playwright/test';
 rspackOnlyTest(
   'should generator rspack profile as expected in dev',
   async () => {
-    process.env.RSPACK_PROFILE = 'ALL';
-    const devProcess = exec('node ./dev.mjs', {
+    const devProcess = exec('RSPACK_PROFILE=ALL node ./dev.mjs', {
       cwd: __dirname,
     });
 
@@ -43,17 +42,13 @@ rspackOnlyTest(
     ).toBeTruthy();
 
     devProcess.kill();
-
-    delete process.env.RSPACK_PROFILE;
   },
 );
 
 rspackOnlyTest(
   'should generator rspack profile as expected in build',
   async () => {
-    process.env.RSPACK_PROFILE = 'ALL';
-
-    const buildProcess = exec('npx rsbuild build', {
+    const buildProcess = exec('RSPACK_PROFILE=ALL npx rsbuild build', {
       cwd: __dirname,
     });
 
@@ -86,7 +81,5 @@ rspackOnlyTest(
     expect(fs.existsSync(path.join(profileDir!, 'logging.json'))).toBeTruthy();
 
     buildProcess.kill();
-
-    delete process.env.RSPACK_PROFILE;
   },
 );
