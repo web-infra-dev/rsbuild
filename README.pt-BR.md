@@ -18,6 +18,16 @@ Rsbuild é uma ferramenta de build de alta performance com base no Rspack. Ele f
 
 Rsbuild provê [ricas funcionalidades de build](https://rsbuild.dev/guide/start/features), incluindo a compilação de TypeScript, JSX, Sass, Less, CSS Modules, Wasm, e outros. Ele também suporta Module Federation, compressão de imagem, checagem de tipos, PostCSS, Lightning CSS, e mais.
 
+## 🚀 Desempenho
+
+Alimentado pela arquitetura baseada em Rust do Rspack, o Rsbuild oferece um desempenho extremamente rápido que irá remodelar seu fluxo de trabalho de desenvolvimento.
+
+⚡️ **Construa 1000 componentes React:**
+
+![benchmark](https://assets.rspack.dev/rsbuild/assets/benchmark-latest.jpeg)
+
+> 📊 Resultados do benchmark do [build-tools-performance](https://github.com/rspack-contrib/build-tools-performance).
+
 ## 💡 Comparações
 
 Rsbuild é uma ferramenta de build que está no mesmo patamar do [Vite](https://vitejs.dev/), [Create React App](https://github.com/facebook/create-react-app), ou [Vue CLI](https://github.com/vuejs/vue-cli). Todos eles possuem um servidor de desenvolvimento imbutido, ferramentas de linha de comando, e configurações de build que provê uma experiência pronta para uso.
@@ -39,14 +49,6 @@ Rsbuild compartilha muitas similaridades com Vite, assim como ambos miram em mel
 - **Compatibilidade do ecossistema**: Rsbuild é compatível com a maioria dos plug-ins para webpack e todos os plug-ins do Rspack, enquanto Vite é compatível com plug-ins do Rollup. Se você estiver usando mais plug-ins e carregadores do ecossistema do webpack, a migração para o Rsbuild será relativamente fácil.
 - **Consistência em produção**: Rsbuild usa o Rspack para empacotamento durante as compilações de desenvolvimento e produção, garantindo assim um alto nível de consistência entre os resultados de desenvolvimento e produção. Esse também é um dos objetivos que a Vite pretende alcançar com o Rolldown.
 - **Module Federation**: O time do Rsbuild trabalha próximo com o time de [Module Federation](https://rsbuild.dev/guide/advanced/module-federation), fornecendo suporte de primeira classe para o Module Federation para ajudá-lo a desenvolver grandes aplicativos da Web com arquitetura de micro frontend.
-
-## 🚀 Desempenho
-
-O desempenho de construção do Rsbuild está no mesmo nível do Rspack nativo. Esse é o tempo necessário para criar 1.000 componentes React:
-
-![benchmark](https://assets.rspack.dev/rsbuild/assets/benchmark-latest.jpeg)
-
-> Os dados acima são provenientes do [build-tools-performance](https://github.com/rspack-contrib/build-tools-performance) benchmark.
 
 ## 🔥 Recursos
 
