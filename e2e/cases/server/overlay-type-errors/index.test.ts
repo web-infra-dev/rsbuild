@@ -1,4 +1,4 @@
-import { dev, proxyConsole } from '@e2e/helper';
+import { dev, proxyConsole, waitFor } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
@@ -6,10 +6,19 @@ const cwd = __dirname;
 test('should display type errors on overlay correctly', async ({ page }) => {
   const { restore } = proxyConsole();
 
+  const logs: string[] = [];
+  page.on('console', (consoleMessage) => {
+    logs.push(consoleMessage.text());
+  });
+
   const rsbuild = await dev({
     cwd,
     page,
   });
+
+  expect(
+    await waitFor(() => logs.some((log) => log.includes('TS2322:'))),
+  ).toBeTruthy();
 
   const errorOverlay = page.locator('rsbuild-error-overlay');
 
