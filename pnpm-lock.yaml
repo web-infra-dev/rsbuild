@@ -249,6 +249,8 @@ importers:
 
   e2e/cases/server/ssr: {}
 
+  e2e/cases/server/ssr-type-module: {}
+
   e2e/cases/svelte:
     dependencies:
       svelte:
