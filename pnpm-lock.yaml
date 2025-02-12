@@ -1162,8 +1162,8 @@ importers:
         specifier: ^1.41.1
         version: 1.41.1(react@19.0.0)(rspress@1.41.1(webpack@5.97.1(@swc/core@1.10.15(@swc/helpers@0.5.15))))
       '@rstack-dev/doc-ui':
-        specifier: 1.7.0
-        version: 1.7.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        specifier: 1.7.1
+        version: 1.7.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@types/node':
         specifier: ^22.13.1
         version: 22.13.1
@@ -2478,8 +2478,8 @@ packages:
     resolution: {integrity: sha512-jPdwHOm2d5wSkIadCos4EEQ8Mw+KQCb/zkEPQcTF4uX5crIFQrLyq2D9ROj3C1ZwAtdfjd/A6ueJZCZE6c8KWw==}
     engines: {node: '>=14.17.6'}
 
-  '@rstack-dev/doc-ui@1.7.0':
-    resolution: {integrity: sha512-xrlXtxw2QKGVAkHI2Gl+4NJUGEtwHtNMfKnoWd7NaD6Cs2FsoT36QoCF/nzDofsb3pXlrk+xaRyNoqUM/cWYzw==}
+  '@rstack-dev/doc-ui@1.7.1':
+    resolution: {integrity: sha512-hQf7JYXpSxBeegnDylbRMxk8vse3nMQsdbZQE04aiMC8u/hT/3Ol4pdIewJ2/cIVLomOvYGj+ZLnIcXCAkETsw==}
 
   '@selderee/plugin-htmlparser2@0.11.0':
     resolution: {integrity: sha512-P33hHGdldxGabLFjPPpaTxVolMrzrcegejx+0GxjrIb9Zv48D8yAIA/QTDR2dFl7Uz7urX8aX6+5bCZslr+gWQ==}
@@ -8178,7 +8178,7 @@ snapshots:
     transitivePeerDependencies:
       - '@rspack/tracing'
 
-  '@rstack-dev/doc-ui@1.7.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@rstack-dev/doc-ui@1.7.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
       framer-motion: 12.4.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
     transitivePeerDependencies:
