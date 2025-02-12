@@ -4,9 +4,9 @@ import {
 } from '@rstack-dev/doc-ui/section-style';
 import { useI18n } from 'rspress/runtime';
 import { HomeFeature } from 'rspress/theme';
-import './WhyRsbuild.module.scss';
+import './Features.module.scss';
 
-export function WhyRsbuild() {
+export function Features() {
   const t = useI18n<typeof import('i18n')>();
   const features = {
     features: [
