@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import vm, { type SourceTextModule } from 'node:vm';
@@ -5,6 +6,49 @@ import { asModule } from './asModule';
 
 import { CommonJsRunner } from './cjs';
 import { EsmMode, type RunnerRequirer } from './type';
+
+function findPackageJson(startDir: string) {
+  let dir = path.resolve(startDir);
+  do {
+    const pkgFile = path.join(dir, 'package.json');
+    if (fs.existsSync(pkgFile)) {
+      return pkgFile;
+    } else {
+      dir = path.join(dir, '..');
+    }
+  } while (dir !== path.resolve(dir, '..'));
+  return null;
+}
+
+const ModuleTypeMap = new Map<string, 'ESM' | 'CJS'>();
+
+function determineModuleType(filePath: string) {
+  const ext = path.extname(filePath);
+  if (ext === '.mjs') {
+    return 'ESM';
+  }
+  if (ext === '.cjs') {
+    return 'CJS';
+  }
+
+  try {
+    const packageJson = findPackageJson(path.dirname(filePath));
+    if (packageJson) {
+      if (ModuleTypeMap.get(packageJson)) {
+        return ModuleTypeMap.get(packageJson);
+      }
+      if (JSON.parse(fs.readFileSync(packageJson, 'utf8')).type === 'module') {
+        ModuleTypeMap.set(packageJson, 'ESM');
+        return 'ESM';
+      } else {
+        ModuleTypeMap.set(packageJson, 'CJS');
+        return 'CJS';
+      }
+    }
+  } catch (e) {}
+
+  return 'CJS';
+}
 
 export class EsmRunner extends CommonJsRunner {
   protected createRunner(): void {
@@ -18,8 +62,8 @@ export class EsmRunner extends CommonJsRunner {
       }
 
       if (
-        file.path.endsWith('.mjs') &&
-        this._options.compilerOptions.experiments?.outputModule
+        this._options.compilerOptions.experiments?.outputModule &&
+        determineModuleType(file.path) === 'ESM'
       ) {
         return this.requirers.get('esm')!(currentDirectory, modulePath, {
           ...context,
