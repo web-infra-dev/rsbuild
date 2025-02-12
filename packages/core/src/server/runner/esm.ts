@@ -19,7 +19,7 @@ function findPackageJson(startDir: string) {
   return null;
 }
 
-const ModuleTypeMap = new Map<string, 'ESM' | 'CJS'>();
+const moduleTypeMap = new Map<string, 'ESM' | 'CJS'>();
 
 function determineModuleType(filePath: string) {
   const ext = path.extname(filePath);
@@ -33,14 +33,14 @@ function determineModuleType(filePath: string) {
   try {
     const packageJson = findPackageJson(path.dirname(filePath));
     if (packageJson) {
-      if (ModuleTypeMap.get(packageJson)) {
-        return ModuleTypeMap.get(packageJson);
+      if (moduleTypeMap.get(packageJson)) {
+        return moduleTypeMap.get(packageJson);
       }
       if (JSON.parse(fs.readFileSync(packageJson, 'utf8')).type === 'module') {
-        ModuleTypeMap.set(packageJson, 'ESM');
+        moduleTypeMap.set(packageJson, 'ESM');
         return 'ESM';
       }
-      ModuleTypeMap.set(packageJson, 'CJS');
+      moduleTypeMap.set(packageJson, 'CJS');
       return 'CJS';
     }
   } catch (e) {}
