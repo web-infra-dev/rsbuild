@@ -107,7 +107,10 @@ export default {
 ```
 
 :::tip
-该数据仅用于参考 gzip 压缩后的体积，Rsbuild 并不会对静态资源开启 gzip 压缩。通常，你需要在服务器端开启 gzip 压缩，例如使用 [nginx 的 gzip 模块](https://nginx.org/en/docs/http/ngx_http_gzip_module.html)。
+
+- 该数据仅用于参考 gzip 压缩后的体积，Rsbuild 并不会对静态资源开启 gzip 压缩。通常，你需要在服务器端开启 gzip 压缩，例如使用 [nginx 的 gzip 模块](https://nginx.org/en/docs/http/ngx_http_gzip_module.html)。
+- 对于不适合 gzip 压缩的静态资源（如图片文件），在详细列表中不会显示其 gzip 体积，但在计算 gzip 后的总体积时会包含这些资源的原始大小。
+
 :::
 
 ### include
