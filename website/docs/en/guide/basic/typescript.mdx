@@ -86,3 +86,19 @@ This means:
 
 - You can use the `.js` extension to import `.ts` or `.tsx` files.
 - You can use the `.jsx` extension to import `.tsx` files.
+
+## Decorators version
+
+Rsbuild does not read the `experimentalDecorators` option in `tsconfig.json`, instead, it provides the [decorators.version](/config/source/decorators#decoratorsversion) configuration to specify the decorator version.
+
+By default, Rsbuild uses the `2022-03` version of the decorators, you can also set it to `legacy` to use the legacy decorators:
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    decorators: {
+      version: 'legacy',
+    },
+  },
+};
+```
