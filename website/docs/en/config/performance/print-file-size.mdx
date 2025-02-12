@@ -170,11 +170,11 @@ export default {
 type Exclude = (asset: PrintFileSizeAsset) => boolean;
 ```
 
-- **Default:** `(asset) => /\.(?:map|LICENSE\.txt)$/.test(asset.name)`
+- **Default:** `(asset) => /\.(?:map|LICENSE\.txt|d\.ts)$/.test(asset.name)`
 
 A filter function to determine which static assets to exclude. If both `include` and `exclude` are set, `exclude` will take precedence.
 
-Rsbuild defaults to excluding source map and license files, as these files do not affect page load performance.
+Rsbuild defaults to excluding source map, license files, and `.d.ts` type files, as these files do not affect page load performance.
 
 For example, exclude `.html` files in addition to the default:
 

@@ -23,9 +23,11 @@ async function gzipSize(input: Buffer) {
   return data.length;
 }
 
+const EXCLUDE_ASSET_REGEX = /\.(?:map|LICENSE\.txt|d\.ts)$/;
+
 /** Exclude source map and license files by default */
 export const excludeAsset = (asset: PrintFileSizeAsset): boolean =>
-  /\.(?:map|LICENSE\.txt)$/.test(asset.name);
+  EXCLUDE_ASSET_REGEX.test(asset.name);
 
 const getAssetColor = (size: number) => {
   if (size > 300 * 1000) {
