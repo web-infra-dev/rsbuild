@@ -106,10 +106,8 @@ async function printFileSizes(
     const fileName = asset.name.split('?')[0];
     const contents = await fs.promises.readFile(path.join(distPath, fileName));
     const size = contents.length;
-    const gzippedSize =
-      options.compressed && isCompressible(fileName)
-        ? await gzipSize(contents)
-        : null;
+    const compressible = options.compressed && isCompressible(fileName);
+    const gzippedSize = compressible ? await gzipSize(contents) : null;
     const gzipSizeLabel = gzippedSize
       ? getAssetColor(gzippedSize)(calcFileSize(gzippedSize))
       : null;
@@ -200,8 +198,8 @@ async function printFileSizes(
 
     totalSize += asset.size;
 
-    if (asset.gzippedSize) {
-      totalGzipSize += asset.gzippedSize;
+    if (options.compressed) {
+      totalGzipSize += asset.gzippedSize ?? asset.size;
     }
 
     if (options.detail !== false) {
