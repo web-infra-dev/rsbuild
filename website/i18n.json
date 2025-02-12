@@ -64,12 +64,12 @@
     "zh": "以零配置启动，然后一切皆可配置。"
   },
   "toolStackTitle": {
-    "en": "Tool Stack",
-    "zh": "工具栈"
+    "en": "Rstack",
+    "zh": "Rstack"
   },
   "toolStackDesc": {
-    "en": "High-performance tool stack built around Rspack to boost modern web development",
-    "zh": "围绕 Rspack 打造的高性能工具栈，助力现代 Web 开发"
+    "en": "High-performance toolchain built around Rspack to boost modern web development",
+    "zh": "围绕 Rspack 打造的高性能工具链，助力现代 Web 开发"
   },
   "benchmarkTitle": {
     "en": "Lightning Fast",
