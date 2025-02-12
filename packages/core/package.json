@@ -81,7 +81,7 @@
     "on-finished": "2.4.1",
     "open": "^8.4.0",
     "picocolors": "^1.1.1",
-    "postcss": "^8.5.1",
+    "postcss": "^8.5.2",
     "postcss-load-config": "6.0.1",
     "postcss-loader": "8.1.1",
     "prebundle": "1.2.7",
