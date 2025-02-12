@@ -13,9 +13,8 @@ function findPackageJson(startDir: string) {
     const pkgFile = path.join(dir, 'package.json');
     if (fs.existsSync(pkgFile)) {
       return pkgFile;
-    } else {
-      dir = path.join(dir, '..');
     }
+    dir = path.join(dir, '..');
   } while (dir !== path.resolve(dir, '..'));
   return null;
 }
@@ -40,10 +39,9 @@ function determineModuleType(filePath: string) {
       if (JSON.parse(fs.readFileSync(packageJson, 'utf8')).type === 'module') {
         ModuleTypeMap.set(packageJson, 'ESM');
         return 'ESM';
-      } else {
-        ModuleTypeMap.set(packageJson, 'CJS');
-        return 'CJS';
       }
+      ModuleTypeMap.set(packageJson, 'CJS');
+      return 'CJS';
     }
   } catch (e) {}
 
