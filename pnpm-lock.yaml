@@ -1197,6 +1197,9 @@ importers:
       rspress-plugin-sitemap:
         specifier: ^1.1.1
         version: 1.1.1
+      typescript:
+        specifier: ^5.7.3
+        version: 5.7.3
 
 packages:
 

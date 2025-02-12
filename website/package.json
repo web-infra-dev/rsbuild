@@ -4,8 +4,8 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "rspress dev",
     "build": "rspress build",
+    "dev": "rspress dev",
     "preview": "rspress preview"
   },
   "devDependencies": {
@@ -23,6 +23,7 @@
     "rsbuild-plugin-open-graph": "^1.0.2",
     "rspress": "^1.41.1",
     "rspress-plugin-font-open-sans": "^1.0.0",
-    "rspress-plugin-sitemap": "^1.1.1"
+    "rspress-plugin-sitemap": "^1.1.1",
+    "typescript": "^5.7.3"
   }
 }
