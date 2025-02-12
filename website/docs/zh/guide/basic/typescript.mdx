@@ -86,3 +86,19 @@ const rspackConfig = {
 
 - 允许使用 `.js` 文件扩展名导入 `.ts` 或 `.tsx` 文件。
 - 允许使用 `.jsx` 文件扩展名导入 `.tsx` 文件。
+
+## 装饰器版本
+
+Rsbuild 不会读取 `tsconfig.json` 中的 `experimentalDecorators` 选项，而是提供了 [decorators.version](/config/source/decorators#decoratorsversion) 配置项来指定装饰器版本。
+
+默认情况下，Rsbuild 会使用 `2022-03` 版本的装饰器，你也可以将其设置为 `legacy` 来使用旧版本装饰器：
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    decorators: {
+      version: 'legacy',
+    },
+  },
+};
+```
