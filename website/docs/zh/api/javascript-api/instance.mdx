@@ -99,7 +99,7 @@ type TsconfigPath = string | undefined;
 
 ## rsbuild.build
 
-调用 build 方法时，会执行一次生产模式构建。
+执行生产模式构建。该方法会生成优化后的生产构建产物，并输出到输出目录。
 
 - **类型：**
 
@@ -202,7 +202,10 @@ await rsbuild.build({
 
 ## rsbuild.startDevServer
 
-启动本地 dev server。
+启动本地 dev server。该方法会：
+
+1. 启动一个开发服务器，用于运行你的应用
+2. 自动监听文件变化并触发重新编译
 
 - **类型：**
 
@@ -301,7 +304,9 @@ await rsbuild.startDevServer({
 
 Rsbuild 配备了一个内置的开发服务器，当你执行 `rsbuild dev` 时，将启动 Rsbuild dev server，并提供页面预览、路由、模块热更新等功能。
 
-如果你希望将 Rsbuild dev server 集成到自定义的 server 中，可以通过该方法获取 dev server 的实例方法，按需进行调用。
+如果你希望将 Rsbuild dev server 集成到自定义的 server 中，可以通过 `createDevServer` 方法创建一个 dev server 实例，并按需调用其方法。
+
+如果你希望直接启动 Rsbuild dev server，可以使用 [rsbuild.startDevServer](#rsbuildstartdevserver) 方法。
 
 - **类型：**
 
@@ -624,9 +629,9 @@ rsbuild.isPluginExists(pluginFoo().name); // true
 
 ## rsbuild.initConfigs
 
-initConfigs 方法用于初始化 Rsbuild 内部的配置，并返回 Rsbuild 内部生成的 Rspack 配置。
+初始化并返回 Rsbuild 内部使用的 Rspack 配置。该方法会处理所有插件和配置，生成最终的 Rspack 配置。
 
-通常你不需要调用 initConfigs 方法，因为调用 [rsbuild.build](#rsbuildbuild)、[rsbuild.startDevServer](#rsbuildstartdevserver) 等方法时会自动调用 initConfigs。
+> 通常你不需要直接调用该方法，因为调用 [rsbuild.build](#rsbuildbuild) 和 [rsbuild.startDevServer](#rsbuildstartdevserver) 等方法时会自动调用 `initConfigs`。
 
 - **类型：**
 
@@ -646,9 +651,13 @@ console.log(rspackConfigs);
 
 ## rsbuild.inspectConfig
 
-inspectConfig 方法通常用于调试 Rsbuild 内部的配置，它会返回 Rsbuild 内部生成的 Rsbuild 配置和 Rspack 配置，将它们序列化为字符串，并支持写入到磁盘上。
+检查和调试 Rsbuild 的内部配置。它允许你访问：
 
-如果你需要在构建过程中查看 Rsbuild 和 Rspack 配置，可以使用 [调试模式](/guide/debug/debug-mode)，也可以通过 [onBeforeBuild](#rsbuildonbeforebuild)、[onBeforeCreateCompile](#rsbuildonbeforecreatecompiler) 等 hooks 来获取。
+- 解析后的 Rsbuild 配置
+- 特定 environment 的 Rsbuild 配置
+- 生成的 Rspack 配置
+
+该方法将这些配置序列化为字符串，并支持写入磁盘以进行检查。
 
 - **类型：**
 
@@ -679,6 +688,10 @@ async function InspectConfig(options?: InspectConfigOptions): Promise<{
   };
 }>;
 ```
+
+:::tip
+如果你需要在构建过程中查看 Rsbuild 和 Rspack 配置，可以使用 [调试模式](/guide/debug/debug-mode)，也可以通过 [onBeforeBuild](#rsbuildonbeforebuild)、[onBeforeCreateCompile](#rsbuildonbeforecreatecompiler) 等 hooks 来获取。
+:::
 
 ### 示例
 
