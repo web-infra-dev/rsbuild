@@ -4,10 +4,11 @@ import type { RsbuildDevServer } from '../server/devServer';
 import type { StartServerResult } from '../server/helper';
 import type { RsbuildConfig } from './config';
 import type { NormalizedConfig, NormalizedEnvironmentConfig } from './config';
-import type { InternalContext, RsbuildContext } from './context';
-import type { PluginManager, RsbuildPluginAPI } from './plugin';
+import type { InternalContext } from './context';
+import type { PluginManager, RsbuildPlugin, RsbuildPluginAPI } from './plugin';
 import type { Rspack } from './rspack';
 import type { WebpackConfig } from './thirdParty';
+import type { Falsy } from './utils';
 
 export type Bundler = 'rspack' | 'webpack';
 
@@ -26,7 +27,6 @@ export type StartDevServerOptions = {
 export type CreateDevServerOptions = StartDevServerOptions & {
   /**
    * Whether to trigger Rsbuild compilation
-   *
    * @default true
    */
   runCompile?: boolean;
@@ -155,34 +155,54 @@ export type RsbuildProvider<B extends 'rspack' | 'webpack' = 'rspack'> =
 
 export type RsbuildInstance = {
   /**
-   * A read-only object that provides some context information.
-   */
-  context: RsbuildContext;
-  /**
    * Register one or more Rsbuild plugins, which can be called multiple times.
    * This method needs to be called before compiling. If it is called after
    * compiling, it will not affect the compilation result.
    */
-  addPlugins: PluginManager['addPlugins'];
+  addPlugins: (
+    plugins: Array<RsbuildPlugin | Falsy>,
+    options?: {
+      /**
+       * Insert before the specified plugin.
+       */
+      before?: string;
+      /**
+       * Add a plugin for the specified environment.
+       * If environment is not specified, it will be registered as a global plugin (effective in all environments)
+       */
+      environment?: string;
+    },
+  ) => void;
   /**
    * Get all the Rsbuild plugins registered in the current Rsbuild instance.
    */
-  getPlugins: PluginManager['getPlugins'];
+  getPlugins: (options?: {
+    /**
+     * Get the plugins in the specified environment.
+     * If environment is not specified, get the global plugins.
+     */
+    environment: string;
+  }) => RsbuildPlugin[];
   /**
    * Removes one or more Rsbuild plugins, which can be called multiple times.
    * This method needs to be called before compiling. If it is called after
    * compiling, it will not affect the compilation result.
    */
-  removePlugins: PluginManager['removePlugins'];
-  /**
-   * Determines if a plugin has been registered in the current Rsbuild instance.
-   */
-  isPluginExists: PluginManager['isPluginExists'];
+  removePlugins: (
+    pluginNames: string[],
+    options?: {
+      /**
+       * Remove the plugin in the specified environment.
+       * If environment is not specified, remove it in all environments.
+       */
+      environment: string;
+    },
+  ) => void;
   /**
    * Perform a production mode build. This method will generate optimized
    * production bundles and emit them to the output directory.
    */
-  build: ProviderInstance['build'];
+  build: Build;
   /**
    * Start a server to preview the production build locally.
    * This method should be executed after `rsbuild.build`.
@@ -195,7 +215,7 @@ export type RsbuildInstance = {
    * since it's automatically invoked by methods like `rsbuild.build` and
    * `rsbuild.startDevServer`.
    */
-  initConfigs: ProviderInstance['initConfigs'];
+  initConfigs: () => Promise<Rspack.Configuration[]>;
   /**
    * Inspect and debug Rsbuild's internal configurations. It provides access to:
    * - The resolved Rsbuild configuration
@@ -205,13 +225,15 @@ export type RsbuildInstance = {
    * The method serializes these configurations to strings and optionally writes
    * them to disk for inspection.
    */
-  inspectConfig: ProviderInstance['inspectConfig'];
+  inspectConfig: (
+    options?: InspectConfigOptions,
+  ) => Promise<InspectConfigResult>;
   /**
    * Create an Rspack [Compiler](https://rspack.dev/api/javascript-api/compiler)
    * instance. If there are multiple [environments](/config/environments) for
    * this build, the return value is `MultiCompiler`.
    */
-  createCompiler: ProviderInstance['createCompiler'];
+  createCompiler: CreateCompiler;
   /**
    * Rsbuild includes a built-in dev server designed to improve the development
    * experience. When you run the `rsbuild dev` command, the server starts
@@ -225,87 +247,33 @@ export type RsbuildInstance = {
    * If you want to directly start the Rsbuild dev server, use the
    * `rsbuild.startDevServer` method.
    */
-  createDevServer: ProviderInstance['createDevServer'];
+  createDevServer: CreateDevServer;
   /**
    * Start the local dev server. This method will:
    *
    * 1. Start a development server that serves your application.
    * 2. Watch for file changes and trigger recompilation.
    */
-  startDevServer: ProviderInstance['startDevServer'];
-  /**
-   * Get the Rsbuild config, this method must be called after the
-   * `modifyRsbuildConfig` hook is executed.
-   */
-  getRsbuildConfig: RsbuildPluginAPI['getRsbuildConfig'];
-  /**
-   * Get the all normalized Rsbuild config or the Rsbuild config of a specified
-   * environment, this method must be called after the
-   * `modifyRsbuildConfig` hook is executed.
-   */
-  getNormalizedConfig: RsbuildPluginAPI['getNormalizedConfig'];
-  /**
-   * A callback function that is triggered before the production build is executed.
-   */
-  onBeforeBuild: RsbuildPluginAPI['onBeforeBuild'];
-  /**
-   * A callback function that is triggered after the Compiler instance has been
-   * created, but before the build process begins. This hook is called when you
-   * run `rsbuild.startDevServer`, `rsbuild.build`, or `rsbuild.createCompiler`.
-   */
-  onBeforeCreateCompiler: RsbuildPluginAPI['onBeforeCreateCompiler'];
-  /**
-   * Called before starting the dev server.
-   */
-  onBeforeStartDevServer: RsbuildPluginAPI['onBeforeStartDevServer'];
-  /**
-   * Called before starting the production preview server.
-   */
-  onBeforeStartProdServer: RsbuildPluginAPI['onBeforeStartProdServer'];
-  /**
-   * A callback function that is triggered after running the production build.
-   * You can access the build result information via the
-   * [stats](https://rspack.dev/api/javascript-api/stats) parameter.
-   */
-  onAfterBuild: RsbuildPluginAPI['onAfterBuild'];
-  /**
-   * A callback function that is triggered after the compiler instance has been
-   * created, but before the build process. This hook is called when you run
-   * `rsbuild.startDevServer`, `rsbuild.build`, or `rsbuild.createCompiler`.
-   */
-  onAfterCreateCompiler: RsbuildPluginAPI['onAfterCreateCompiler'];
-  /**
-   * Called after starting the dev server, you can get the port number with the
-   * `port` parameter, and the page routes info with the `routes` parameter.
-   */
-  onAfterStartDevServer: RsbuildPluginAPI['onAfterStartDevServer'];
-  /**
-   * Called after starting the production preview server, you can get the port
-   * number with the `port` parameter, and the page routes info with the
-   * `routes` parameter.
-   */
-  onAfterStartProdServer: RsbuildPluginAPI['onAfterStartProdServer'];
-  /**
-   * Called when closing the dev server. Can be used to perform cleanup
-   * operations when the dev server is closed.
-   */
-  onCloseDevServer: RsbuildPluginAPI['onCloseDevServer'];
-  /**
-   * Called after each development mode build, you can use `isFirstCompile`
-   * to determine whether it is the first build.
-   */
-  onDevCompileDone: RsbuildPluginAPI['onDevCompileDone'];
-  /**
-   * Called when the process is going to exit, this hook can only execute
-   * synchronous code.
-   */
-  onExit: RsbuildPluginAPI['onExit'];
-  /**
-   * Called when closing the build instance. Can be used to perform cleanup
-   * operations when the building is closed.
-   */
-  onCloseBuild: RsbuildPluginAPI['onCloseBuild'];
-};
+  startDevServer: StartDevServer;
+} & Pick<
+  RsbuildPluginAPI,
+  | 'context'
+  | 'getNormalizedConfig'
+  | 'getRsbuildConfig'
+  | 'isPluginExists'
+  | 'onAfterBuild'
+  | 'onAfterCreateCompiler'
+  | 'onAfterStartDevServer'
+  | 'onAfterStartProdServer'
+  | 'onBeforeBuild'
+  | 'onBeforeCreateCompiler'
+  | 'onBeforeStartDevServer'
+  | 'onBeforeStartProdServer'
+  | 'onCloseBuild'
+  | 'onCloseDevServer'
+  | 'onDevCompileDone'
+  | 'onExit'
+>;
 
 export type RsbuildTarget = 'web' | 'node' | 'web-worker';
 
