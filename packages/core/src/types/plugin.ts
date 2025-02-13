@@ -34,7 +34,7 @@ import type {
   OnDevCompileDoneFn,
   OnExitFn,
 } from './hooks';
-import type { RsbuildTarget } from './rsbuild';
+import type { RsbuildInstance, RsbuildTarget } from './rsbuild';
 import type { Rspack } from './rspack';
 import type { HtmlRspackPlugin } from './thirdParty';
 import type { Falsy } from './utils';
@@ -117,51 +117,10 @@ export type PluginMeta = {
   instance: RsbuildPlugin;
 };
 
-export type PluginManager = {
-  getPlugins: (options?: {
-    /**
-     * Get the plugins in the specified environment.
-     *
-     * If environment is not specified, get the global plugins.
-     */
-    environment: string;
-  }) => RsbuildPlugin[];
-  addPlugins: (
-    plugins: Array<RsbuildPlugin | Falsy>,
-    options?: {
-      /**
-       * Insert before the specified plugin.
-       */
-      before?: string;
-      /**
-       * Add a plugin for the specified environment.
-       * If environment is not specified, it will be registered as a global plugin (effective in all environments)
-       */
-      environment?: string;
-    },
-  ) => void;
-  removePlugins: (
-    pluginNames: string[],
-    options?: {
-      /**
-       * Remove the plugin in the specified environment.
-       *
-       * If environment is not specified, remove it in all environments.
-       */
-      environment: string;
-    },
-  ) => void;
-  isPluginExists: (
-    pluginName: string,
-    options?: {
-      /**
-       * Whether it exists in the specified environment.
-       *
-       * If environment is not specified, determine whether the plugin is a global plugin.
-       */
-      environment: string;
-    },
-  ) => boolean;
+export type PluginManager = Pick<
+  RsbuildInstance,
+  'getPlugins' | 'addPlugins' | 'isPluginExists' | 'removePlugins'
+> & {
   /** Get all plugins with environment info */
   getAllPluginsWithMeta: () => PluginMeta[];
 };
@@ -431,56 +390,159 @@ declare function getNormalizedConfig(options: {
  * Define a generic Rsbuild plugin API that provider can extend as needed.
  */
 export type RsbuildPluginAPI = Readonly<{
-  context: Readonly<RsbuildContext>;
-  isPluginExists: PluginManager['isPluginExists'];
-
-  onExit: PluginHook<OnExitFn>;
-  onCloseBuild: PluginHook<OnCloseBuildFn>;
-  onAfterBuild: PluginHook<OnAfterBuildFn>;
-  onBeforeBuild: PluginHook<OnBeforeBuildFn>;
-  onAfterEnvironmentCompile: PluginHook<OnAfterEnvironmentCompileFn>;
-  onBeforeEnvironmentCompile: PluginHook<OnBeforeEnvironmentCompileFn>;
-  onCloseDevServer: PluginHook<OnCloseDevServerFn>;
-  onDevCompileDone: PluginHook<OnDevCompileDoneFn>;
-  onAfterStartDevServer: PluginHook<OnAfterStartDevServerFn>;
-  onBeforeStartDevServer: PluginHook<OnBeforeStartDevServerFn>;
-  onAfterStartProdServer: PluginHook<OnAfterStartProdServerFn>;
-  onBeforeStartProdServer: PluginHook<OnBeforeStartProdServerFn>;
-  onAfterCreateCompiler: PluginHook<OnAfterCreateCompilerFn>;
-  onBeforeCreateCompiler: PluginHook<OnBeforeCreateCompilerFn>;
-
-  modifyHTMLTags: PluginHook<ModifyHTMLTagsFn>;
-  modifyRsbuildConfig: PluginHook<ModifyRsbuildConfigFn>;
-  modifyEnvironmentConfig: PluginHook<ModifyEnvironmentConfigFn>;
-  modifyBundlerChain: PluginHook<ModifyBundlerChainFn>;
-  /** Only works when bundler is Rspack */
-  modifyRspackConfig: PluginHook<ModifyRspackConfigFn>;
-  /** Only works when bundler is webpack */
-  modifyWebpackChain: PluginHook<ModifyWebpackChainFn>;
-  /** Only works when bundler is webpack */
-  modifyWebpackConfig: PluginHook<ModifyWebpackConfigFn>;
-
-  getRsbuildConfig: GetRsbuildConfig;
-  getNormalizedConfig: typeof getNormalizedConfig;
-
   /**
-   * For plugin communication
+   * A read-only object that provides some context information.
+   */
+  context: Readonly<RsbuildContext>;
+  /**
+   * Explicitly expose some properties or methods of the current plugin,
+   * and other plugins can get these APIs through `api.useExposed`.
    */
   expose: <T = any>(id: string | symbol, api: T) => void;
-  useExposed: <T = any>(id: string | symbol) => T | undefined;
-
+  /**
+   * Get the Rsbuild config, this method must be called after the
+   * `modifyRsbuildConfig` hook is executed.
+   */
+  getRsbuildConfig: GetRsbuildConfig;
+  /**
+   * Get the all normalized Rsbuild config or the Rsbuild config of a specified
+   * environment, this method must be called after the
+   * `modifyRsbuildConfig` hook is executed.
+   */
+  getNormalizedConfig: typeof getNormalizedConfig;
+  /**
+   * Determines if a plugin has been registered in the current Rsbuild instance.
+   */
+  isPluginExists: (
+    pluginName: string,
+    options?: {
+      /**
+       * Whether it exists in the specified environment.
+       * If environment is not specified, determine whether the plugin is a global plugin.
+       */
+      environment: string;
+    },
+  ) => boolean;
+  /**
+   * Allows you to modify the Rspack configuration using the `rspack-chain` API,
+   * providing the same functionality as `tools.bundlerChain`.
+   */
+  modifyBundlerChain: PluginHook<ModifyBundlerChainFn>;
+  /**
+   * Modify the Rsbuild configuration of a specific environment.
+   */
+  modifyEnvironmentConfig: PluginHook<ModifyEnvironmentConfigFn>;
+  /**
+   * Modify the tags that are injected into the HTML.
+   */
+  modifyHTMLTags: PluginHook<ModifyHTMLTagsFn>;
+  /**
+   * To modify the Rspack config, you can directly modify the config object,
+   * or return a new object to replace the previous object.
+   */
+  modifyRspackConfig: PluginHook<ModifyRspackConfigFn>;
+  /**
+   * Modify the config passed to the Rsbuild, you can directly modify the config object,
+   * or return a new object to replace the previous object.
+   */
+  modifyRsbuildConfig: PluginHook<ModifyRsbuildConfigFn>;
+  /**
+   * Allows you to modify the webpack configuration using the `rspack-chain` API,
+   * providing the same functionality as `tools.bundlerChain`.
+   */
+  modifyWebpackChain: PluginHook<ModifyWebpackChainFn>;
+  /**
+   * To modify the webpack config, you can directly modify the config object,
+   * or return a new object to replace the previous object.
+   */
+  modifyWebpackConfig: PluginHook<ModifyWebpackConfigFn>;
+  /**
+   * A callback function that is triggered after running the production build.
+   * You can access the build result information via the
+   * [stats](https://rspack.dev/api/javascript-api/stats) parameter.
+   */
+  onAfterBuild: PluginHook<OnAfterBuildFn>;
+  /**
+   * A callback function that is triggered after the compiler instance has been
+   * created, but before the build process. This hook is called when you run
+   * `rsbuild.startDevServer`, `rsbuild.build`, or `rsbuild.createCompiler`.
+   */
+  onAfterCreateCompiler: PluginHook<OnAfterCreateCompilerFn>;
+  /**
+   * A callback function that is triggered after the compilation of a single environment.
+   * You can access the build result information via the
+   * [stats](https://rspack.dev/api/javascript-api/stats) parameter.
+   */
+  onAfterEnvironmentCompile: PluginHook<OnAfterEnvironmentCompileFn>;
+  /**
+   * Called after starting the dev server, you can get the port number with the
+   * `port` parameter, and the page routes info with the `routes` parameter.
+   */
+  onAfterStartDevServer: PluginHook<OnAfterStartDevServerFn>;
+  /**
+   * Called after starting the production preview server, you can get the port
+   * number with the `port` parameter, and the page routes info with the
+   * `routes` parameter.
+   */
+  onAfterStartProdServer: PluginHook<OnAfterStartProdServerFn>;
+  /**
+   * A callback function that is triggered before the production build is executed.
+   */
+  onBeforeBuild: PluginHook<OnBeforeBuildFn>;
+  /**
+   * A callback function that is triggered after the Compiler instance has been
+   * created, but before the build process begins. This hook is called when you
+   * run `rsbuild.startDevServer`, `rsbuild.build`, or `rsbuild.createCompiler`.
+   */
+  onBeforeCreateCompiler: PluginHook<OnBeforeCreateCompilerFn>;
+  /**
+   * A callback function that is triggered before the compilation of a single environment.
+   */
+  onBeforeEnvironmentCompile: PluginHook<OnBeforeEnvironmentCompileFn>;
+  /**
+   * Called before starting the dev server.
+   */
+  onBeforeStartDevServer: PluginHook<OnBeforeStartDevServerFn>;
+  /**
+   * Called before starting the production preview server.
+   */
+  onBeforeStartProdServer: PluginHook<OnBeforeStartProdServerFn>;
+  /**
+   * Called when closing the build instance. Can be used to perform cleanup
+   * operations when the building is closed.
+   */
+  onCloseBuild: PluginHook<OnCloseBuildFn>;
+  /**
+   * Called when closing the dev server. Can be used to perform cleanup
+   * operations when the dev server is closed.
+   */
+  onCloseDevServer: PluginHook<OnCloseDevServerFn>;
+  /**
+   * Called after each development mode build, you can use `isFirstCompile`
+   * to determine whether it is the first build.
+   */
+  onDevCompileDone: PluginHook<OnDevCompileDoneFn>;
+  /**
+   * Called when the process is going to exit, this hook can only execute
+   * synchronous code.
+   */
+  onExit: PluginHook<OnExitFn>;
+  /**
+   * Modify assets before emitting, the same as Rspack's
+   * [compilation.hooks.processAssets](https://rspack.dev/api/plugin-api/compilation-hooks#processassets) hook.
+   */
+  processAssets: ProcessAssetsFn;
+  /**
+   * Intercept and modify module request information before module resolution begins.
+   * The same as Rspack's [normalModuleFactory.hooks.resolve](https://rspack.dev/api/plugin-api/normal-module-factory-hooks#resolve) hook.
+   */
+  resolve: ResolveFn;
   /**
    * Used to transform the code of modules.
    */
   transform: TransformFn;
-
   /**
-   * Process all the asset generated by Rspack.
+   * Get the properties or methods exposed by other plugins.
    */
-  processAssets: ProcessAssetsFn;
-
-  /**
-   * Defines a custom resolver. A resolver can be useful for e.g. locating third-party dependencies.
-   */
-  resolve: ResolveFn;
+  useExposed: <T = any>(id: string | symbol) => T | undefined;
 }>;
