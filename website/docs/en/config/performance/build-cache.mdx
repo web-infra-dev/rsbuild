@@ -96,7 +96,15 @@ export default defineConfig({
 
 `buildDependencies` is an arrays of additional code dependencies for the build. Rspack will use a hash of each of these items and all dependencies to invalidate the filesystem cache.
 
-By default, Rsbuild will use your `package.json`, `tsconfig.json`, `rsbuild.config.*`, `.browserslistrc`, and `tailwindcss.config.*` configuration files as the build dependencies.
+Rsbuild will use the following configuration files as the default build dependencies:
+
+- `package.json`
+- `tsconfig.json`
+- `rsbuild.config.*`
+- `.browserslistrc`
+- `tailwindcss.config.*`
+
+When you add other build dependencies, Rsbuild merges these custom dependencies with the default dependencies and passes them to Rspack.
 
 ```ts title="rsbuild.config.ts"
 export default defineConfig({
