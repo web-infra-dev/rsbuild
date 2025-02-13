@@ -72,9 +72,7 @@ test('`buildCache.buildDependencies` should work as expected', async () => {
         performance: {
           buildCache: {
             cacheDirectory,
-            buildDependencies: {
-              deps: [testDepsPath],
-            },
+            buildDependencies: [testDepsPath],
           },
         },
       } as RsbuildConfig,

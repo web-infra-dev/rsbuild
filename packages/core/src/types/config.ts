@@ -469,10 +469,10 @@ export type BuildCacheOptions = {
    */
   cacheDigest?: Array<string | undefined>;
   /**
-   * An object of arrays of additional code dependencies for the build.
+   * An array of files containing build dependencies.
    * Rspack will use the hash of each of these files to invalidate the persistent cache.
    */
-  buildDependencies?: Record<string, string[]>;
+  buildDependencies?: string[];
 };
 
 export type PrintFileSizeAsset = {

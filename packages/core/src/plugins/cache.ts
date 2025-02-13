@@ -139,7 +139,11 @@ export const pluginCache = (): RsbuildPlugin => ({
         context,
         config,
         environment,
-        cacheConfig.buildDependencies || {},
+        cacheConfig.buildDependencies
+          ? {
+              userBuildDependencies: cacheConfig.buildDependencies,
+            }
+          : {},
       );
 
       if (bundlerType === 'webpack') {
