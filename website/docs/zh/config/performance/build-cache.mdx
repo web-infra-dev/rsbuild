@@ -96,7 +96,7 @@ export default defineConfig({
 
 `buildDependencies` 是一个包含构建依赖的文件数组，Rspack 将使用其中每个文件的哈希值来判断持久化缓存是否失效。
 
-默认情况下，Rsbuild 会把你的 `packageJson`、`tsconfig`、`rsbuildConfig`、`browserslistrc`、`tailwindcss` 的配置文件作为构建依赖。
+默认情况下，Rsbuild 会把你的 `package.json`、`tsconfig.json`、`rsbuild.config.*`、`.browserslistrc`、`tailwindcss.config.*` 配置文件作为构建依赖。
 
 ```ts title="rsbuild.config.ts"
 export default defineConfig({
