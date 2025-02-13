@@ -47,6 +47,53 @@ test('`buildCache.cacheDigest` should work as expected', async () => {
   ).toBeTruthy();
 });
 
+test('`buildCache.buildDependencies` should work as expected', async () => {
+  const cacheDirectory = path.resolve(
+    __dirname,
+    './node_modules/.cache/test-cache-build-dependencies',
+  );
+
+  const testDepsPath = path.resolve(__dirname, './test-temp-deps.js');
+
+  fs.rmSync(cacheDirectory, { recursive: true, force: true });
+
+  const getBuildConfig = (input: string) => {
+    fs.writeFileSync(testDepsPath, input);
+    return {
+      cwd: __dirname,
+      rsbuildConfig: {
+        tools: {
+          bundlerChain: (chain) => {
+            if (input === 'foo') {
+              chain.resolve.extensions.prepend('.test.js');
+            }
+          },
+        },
+        performance: {
+          buildCache: {
+            cacheDirectory,
+            buildDependencies: [testDepsPath],
+          },
+        },
+      } as RsbuildConfig,
+    };
+  };
+
+  // first build without cache
+  let rsbuild = await build(getBuildConfig(''));
+
+  expect(
+    (await rsbuild.getIndexFile()).content.includes('222222'),
+  ).toBeTruthy();
+
+  rsbuild = await build(getBuildConfig('foo'));
+
+  // extension '.test.js' should work
+  expect(
+    (await rsbuild.getIndexFile()).content.includes('111111'),
+  ).toBeTruthy();
+});
+
 webpackOnlyTest(
   'should save the buildDependencies to cache directory and hit cache',
   async () => {

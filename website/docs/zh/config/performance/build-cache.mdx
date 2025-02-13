@@ -8,6 +8,7 @@ type BuildCacheConfig =
   | {
       cacheDirectory?: string;
       cacheDigest?: Array<string | undefined>;
+      buildDependencies?: string[];
     };
 ```
 
@@ -83,6 +84,33 @@ export default defineConfig({
   performance: {
     buildCache: {
       cacheDigest: [process.env.SOME_ENV],
+    },
+  },
+});
+```
+
+### buildDependencies
+
+- **类型：** `string[]`
+- **默认值：** `undefined`
+
+`buildDependencies` 是一个包含构建依赖的文件数组，Rspack 将使用其中每个文件的哈希值来判断持久化缓存是否失效。
+
+Rsbuild 会将以下配置文件作为默认的构建依赖：
+
+- `package.json`
+- `tsconfig.json`
+- `rsbuild.config.*`
+- `.browserslistrc`
+- `tailwindcss.config.*`
+
+当你添加其他构建依赖时，Rsbuild 会将这些自定义依赖与默认依赖合并，并传递给 Rspack。
+
+```ts title="rsbuild.config.ts"
+export default defineConfig({
+  performance: {
+    buildCache: {
+      buildDependencies: [__filename],
     },
   },
 });

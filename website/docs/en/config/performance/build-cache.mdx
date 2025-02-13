@@ -8,6 +8,7 @@ type BuildCacheConfig =
   | {
       cacheDirectory?: string;
       cacheDigest?: Array<string | undefined>;
+      buildDependencies?: string[];
     };
 ```
 
@@ -83,6 +84,33 @@ export default defineConfig({
   performance: {
     buildCache: {
       cacheDigest: [process.env.SOME_ENV],
+    },
+  },
+});
+```
+
+### buildDependencies
+
+- **Type:** `string[]`
+- **Default:** `undefined`
+
+`buildDependencies` is an arrays of additional code dependencies for the build. Rspack will use a hash of each of these items and all dependencies to invalidate the filesystem cache.
+
+Rsbuild will use the following configuration files as the default build dependencies:
+
+- `package.json`
+- `tsconfig.json`
+- `rsbuild.config.*`
+- `.browserslistrc`
+- `tailwindcss.config.*`
+
+When you add other build dependencies, Rsbuild merges these custom dependencies with the default dependencies and passes them to Rspack.
+
+```ts title="rsbuild.config.ts"
+export default defineConfig({
+  performance: {
+    buildCache: {
+      buildDependencies: [__filename],
     },
   },
 });
