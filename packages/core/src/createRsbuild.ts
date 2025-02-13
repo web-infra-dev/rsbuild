@@ -107,6 +107,9 @@ async function applyDefaultPlugins(
   ]);
 }
 
+/**
+ * Create an Rsbuild instance.
+ */
 export async function createRsbuild(
   options: CreateRsbuildOptions = {},
 ): Promise<RsbuildInstance> {
