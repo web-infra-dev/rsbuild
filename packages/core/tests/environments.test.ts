@@ -65,7 +65,7 @@ describe('environment config', () => {
     rsbuild.addPlugins([
       {
         name: 'test-environment',
-        setup: (api) => {
+        setup(api) {
           api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
             return mergeRsbuildConfig(config, {
               environments: {
@@ -128,7 +128,7 @@ describe('environment config', () => {
     rsbuild.addPlugins([
       {
         name: 'test-environment',
-        setup: (api) => {
+        setup(api) {
           api.modifyEnvironmentConfig(
             (config, { name, mergeEnvironmentConfig }) => {
               if (name !== 'web') {
@@ -159,7 +159,7 @@ describe('environment config', () => {
     process.env.NODE_ENV = 'development';
     const plugin: (pluginId: string) => RsbuildPlugin = (pluginId) => ({
       name: 'test-environment',
-      setup: (api) => {
+      setup(api) {
         api.modifyEnvironmentConfig(
           (config, { name, mergeEnvironmentConfig }) => {
             return mergeEnvironmentConfig(config, {

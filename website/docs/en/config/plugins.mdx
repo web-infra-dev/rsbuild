@@ -102,7 +102,7 @@ It should be noted that plugin registration can only be performed during the Rsb
 // Wrong
 function myPlugin() {
   return {
-    setup: (api) => {
+    setup(api) {
       api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
         return mergeRsbuildConfig(config, {
           plugins: [fooPlugin(), barPlugin()], // <- it won't work
