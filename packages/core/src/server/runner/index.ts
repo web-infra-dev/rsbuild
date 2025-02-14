@@ -1,7 +1,6 @@
 /**
  * The following code is modified based on @rspack/test-tools/runner
  *
- * TODO: should be extracted as a separate bundle-runner pkg
  */
 import { EsmRunner } from './esm';
 import type { Runner, RunnerFactory, RunnerFactoryOptions } from './type';
