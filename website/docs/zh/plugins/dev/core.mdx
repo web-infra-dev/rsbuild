@@ -32,7 +32,7 @@ export default (): RsbuildPlugin => ({
 
   pre: ['plugin-bar'],
 
-  setup: (api) => {
+  setup(api) {
     api.onAfterBuild(() => {
       console.log('after build!');
     });
@@ -157,7 +157,7 @@ import IsPluginExists from '@zh/shared/isPluginExists.mdx';
 
 ```ts
 export default () => ({
-  setup: (api) => {
+  setup(api) {
     console.log(api.isPluginExists('plugin-foo'));
   },
 });
