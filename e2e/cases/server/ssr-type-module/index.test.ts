@@ -24,4 +24,6 @@ rspackOnlyTest('support SSR load esm with type module', async ({ page }) => {
   expect(await res?.text()).toMatch(/Rsbuild with React/);
 
   await rsbuild.close();
+
+  fs.rmSync(path.join(distPath, './package.json'));
 });

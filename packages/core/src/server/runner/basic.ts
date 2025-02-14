@@ -80,6 +80,11 @@ export abstract class BasicRunner implements Runner {
     file: BasicRunnerFile,
   ): BasicModuleScope;
 
+  /**
+   * Get the file information for a given module path.
+   *
+   * @returns An object containing the file path, content, and subPath, or null if the module path is not relative (not rspack chunk file).
+   */
   protected getFile(
     modulePath: string[] | string,
     currentDirectory: string,
@@ -95,6 +100,11 @@ export abstract class BasicRunner implements Runner {
         subPath: '',
       };
     }
+    /**
+     * only proxy chunk files. eg:
+     * - installChunk(require("./" + __webpack_require__.u(chunkId)));
+     * - import("./" + __webpack_require__.u(chunkId))
+     */
     if (isRelativePath(modulePath)) {
       const p = path.join(currentDirectory, modulePath);
       return {
