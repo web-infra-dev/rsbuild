@@ -1,8 +1,9 @@
 import { dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-// HMR will timeout in CI
-test('setupMiddlewares', async ({ page }) => {
+test('should apply custom middleware via `setupMiddlewares`', async ({
+  page,
+}) => {
   // HMR cases will fail in Windows
   if (process.platform === 'win32') {
     test.skip();
