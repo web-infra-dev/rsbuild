@@ -1,4 +1,3 @@
-import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import vm, { type SourceTextModule } from 'node:vm';
@@ -7,54 +6,14 @@ import { asModule } from './asModule';
 import { CommonJsRunner } from './cjs';
 import { EsmMode, type RunnerRequirer } from './type';
 
-function findPackageJson(startDir: string) {
-  let dir = path.resolve(startDir);
-  do {
-    const pkgFile = path.join(dir, 'package.json');
-    if (fs.existsSync(pkgFile)) {
-      return pkgFile;
-    }
-    dir = path.join(dir, '..');
-  } while (dir !== path.resolve(dir, '..'));
-  return null;
-}
-
-const moduleTypeMap = new Map<string, 'ESM' | 'CJS'>();
-
-function determineModuleType(filePath: string) {
-  const ext = path.extname(filePath);
-  if (ext === '.mjs') {
-    return 'ESM';
-  }
-  if (ext === '.cjs') {
-    return 'CJS';
-  }
-
-  try {
-    const packageJson = findPackageJson(path.dirname(filePath));
-    if (packageJson) {
-      if (moduleTypeMap.get(packageJson)) {
-        return moduleTypeMap.get(packageJson);
-      }
-      if (JSON.parse(fs.readFileSync(packageJson, 'utf8')).type === 'module') {
-        moduleTypeMap.set(packageJson, 'ESM');
-        return 'ESM';
-      }
-      moduleTypeMap.set(packageJson, 'CJS');
-      return 'CJS';
-    }
-  } catch (e) {}
-
-  return 'CJS';
-}
-
 export class EsmRunner extends CommonJsRunner {
   protected createRunner(): void {
     super.createRunner();
     this.requirers.set('cjs', this.getRequire());
     this.requirers.set('esm', this.createEsmRequirer());
 
-    const supportEsm = this._options.compilerOptions.experiments?.outputModule;
+    const isEsmOutputs =
+      this._options.compilerOptions.experiments?.outputModule;
 
     this.requirers.set('entry', (currentDirectory, modulePath, context) => {
       const file = this.getFile(modulePath, currentDirectory);
@@ -62,7 +21,7 @@ export class EsmRunner extends CommonJsRunner {
         return this.requirers.get('miss')!(currentDirectory, modulePath);
       }
 
-      if (supportEsm && determineModuleType(file.path) === 'ESM') {
+      if (isEsmOutputs && !file.path.endsWith('.cjs')) {
         return this.requirers.get('esm')!(currentDirectory, modulePath, {
           ...context,
           file,
