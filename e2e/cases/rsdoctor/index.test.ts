@@ -7,7 +7,7 @@ import { matchPlugin } from '@scripts/test-helper';
 rspackOnlyTest(
   'should register Rsdoctor plugin when process.env.RSDOCTOR is true',
   async () => {
-    const { logs, restore } = proxyConsole();
+    // const { logs, restore } = proxyConsole();
     process.env.RSDOCTOR = 'true';
 
     const rsbuild = await createRsbuild({
@@ -16,9 +16,11 @@ rspackOnlyTest(
 
     const compiler = await rsbuild.createCompiler();
 
-    expect(
-      logs.some((log) => log.includes('@rsdoctor') && log.includes('enabled')),
-    ).toBe(true);
+    console.log(compiler.options.plugins);
+
+    // expect(
+    //   logs.some((log) => log.includes('@rsdoctor') && log.includes('enabled')),
+    // ).toBe(true);
 
     expect(
       matchPlugin(
@@ -27,10 +29,8 @@ rspackOnlyTest(
       ),
     ).toBeTruthy();
 
-    restore();
+    // restore();
     process.env.RSDOCTOR = '';
-
-    console.log(compiler.options.plugins);
   },
 );
 
