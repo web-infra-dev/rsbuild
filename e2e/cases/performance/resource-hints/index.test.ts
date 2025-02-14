@@ -222,7 +222,7 @@ test('should generate preload link with duplicate', async () => {
       performance: {
         preload: {
           type: 'initial',
-          duplicate: true,
+          dedupe: false,
         },
       },
     },

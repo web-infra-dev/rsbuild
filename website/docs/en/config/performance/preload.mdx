@@ -11,7 +11,7 @@ interface PreloadOption {
   type?: IncludeType;
   include?: Filter;
   exclude?: Filter;
-  duplicate?: boolean;
+  dedupe?: boolean;
 }
 ```
 
@@ -116,10 +116,10 @@ export default {
 };
 ```
 
-### preload.duplicate
+### preload.dedupe
 
 - **Type:** `boolean`
-- **Default:** `false`
+- **Default:** `true`
 
 Whether to preload script resources that already exist in the current HTML template. By default, if a resource has been added to the current HTML via a script tag, it will not be preloaded additionally.
 
@@ -129,7 +129,7 @@ When set to `true`, Rsbuild will generate preload tags for all eligible resource
 export default {
   performance: {
     preload: {
-      duplicate: true,
+      dedupe: false,
     },
   },
 };

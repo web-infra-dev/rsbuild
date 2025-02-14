@@ -11,7 +11,7 @@ interface PreloadOption {
   type?: IncludeType;
   include?: Filter;
   exclude?: Filter;
-  duplicate?: boolean;
+  dedupe?: boolean;
 }
 ```
 
@@ -116,10 +116,10 @@ export default {
 };
 ```
 
-### preload.duplicate
+### preload.dedupe
 
 - **类型：** `boolean`
-- **默认值：** `false`
+- **默认值：** `true`
 
 是否对已经在当前 HTML 模版中存在的 script 资源进行预加载。默认情况下，如果某个资源已通过 script 标签添加到当前的 HTML 中，则不会进行额外的预加载。
 
@@ -129,7 +129,7 @@ export default {
 export default {
   performance: {
     preload: {
-      duplicate: true,
+      dedupe: false,
     },
   },
 };

@@ -546,11 +546,11 @@ export interface PreloadOrPreFetchOption {
   type?: PreloadIncludeType;
   include?: Filter;
   exclude?: Filter;
-  duplicate?: boolean;
+  dedupe?: boolean;
 }
 export type PreloadOption = PreloadOrPreFetchOption;
 
-export type PreFetchOption = Omit<PreloadOrPreFetchOption, 'duplicate'>;
+export type PreFetchOption = Omit<PreloadOrPreFetchOption, 'dedupe'>;
 
 export interface PerformanceConfig {
   /**
