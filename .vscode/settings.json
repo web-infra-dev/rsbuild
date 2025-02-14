@@ -3,7 +3,7 @@
   "search.exclude": {
     "**/.git": true,
     "**/dist": true,
-    "**/dist-types": true,
+    "**/dist-*": true,
     "**/coverage": true,
     "**/compiled": true,
     "**/doc_build": true,
