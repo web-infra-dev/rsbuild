@@ -1,5 +1,6 @@
 import type { ChainIdentifier } from '..';
 import type RspackChain from '../../compiled/rspack-chain/index.js';
+import type { RsbuildDevServer } from '../server/devServer';
 import type {
   EnvironmentConfig,
   HtmlBasicTag,
@@ -58,6 +59,7 @@ export type OnDevCompileDoneFn = (params: {
 }) => MaybePromise<void>;
 
 export type OnBeforeStartDevServerFn = (params: {
+  server: RsbuildDevServer;
   environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
 
