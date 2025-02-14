@@ -84,7 +84,7 @@ export abstract class BasicRunner implements Runner {
   /**
    * Get the file information for a given module path.
    *
-   * @returns An object containing the file path, content, and subPath, or null if the module path is not relative (not rspack chunk file).
+   * @returns An object containing the file path, content, and subPath, or null if the module is not an rspack output.
    */
   protected getFile(
     modulePath: string[] | string,

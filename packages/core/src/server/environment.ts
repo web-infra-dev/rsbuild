@@ -50,10 +50,8 @@ export const loadBundle = async <T>(
   }
 
   const allChunkFiles =
-    chunks
-      ?.map((c) => c.files)
-      .flat()
-      .map((file) => join(outputPath!, file!)) || [];
+    chunks?.flatMap((c) => c.files).map((file) => join(outputPath!, file!)) ||
+    [];
 
   const res = await run<T>({
     bundlePath: files[0],

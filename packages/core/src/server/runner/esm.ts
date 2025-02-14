@@ -12,7 +12,7 @@ export class EsmRunner extends CommonJsRunner {
     this.requirers.set('cjs', this.getRequire());
     this.requirers.set('esm', this.createEsmRequirer());
 
-    const isEsmOutputs =
+    const outputModule =
       this._options.compilerOptions.experiments?.outputModule;
 
     this.requirers.set('entry', (currentDirectory, modulePath, context) => {
@@ -21,7 +21,7 @@ export class EsmRunner extends CommonJsRunner {
         return this.requirers.get('miss')!(currentDirectory, modulePath);
       }
 
-      if (isEsmOutputs && !file.path.endsWith('.cjs')) {
+      if (outputModule && !file.path.endsWith('.cjs')) {
         return this.requirers.get('esm')!(currentDirectory, modulePath, {
           ...context,
           file,
