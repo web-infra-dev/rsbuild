@@ -209,6 +209,46 @@ test('should generate preload link when preload is defined', async () => {
   ).toBeTruthy();
 });
 
+test('should generate preload link with duplicate', async () => {
+  const rsbuild = await build({
+    cwd: fixtures,
+    plugins: [pluginReact()],
+    rsbuildConfig: {
+      source: {
+        entry: {
+          main: join(fixtures, 'src/page1/index.ts'),
+        },
+      },
+      performance: {
+        preload: {
+          type: 'initial',
+          dedupe: false,
+        },
+      },
+    },
+  });
+
+  const files = await rsbuild.unwrapOutputJSON();
+
+  const initialFileName = Object.keys(files).find(
+    (file) =>
+      file.includes('/static/js/') &&
+      !file.includes('/static/js/async/') &&
+      !file.endsWith('.LICENSE.txt'),
+  )!;
+  const [, content] = Object.entries(files).find(([name]) =>
+    name.endsWith('.html'),
+  )!;
+
+  expect(
+    content.includes(
+      `<link href="${initialFileName.slice(
+        initialFileName.indexOf('/static/js/'),
+      )}" rel="preload" as="script">`,
+    ),
+  ).toBeTruthy();
+});
+
 test('should generate preload link with crossOrigin', async () => {
   const rsbuild = await build({
     cwd: fixtures,
