@@ -9,7 +9,7 @@ test('should apply custom middleware via `setupMiddlewares`', async ({
     test.skip();
   }
 
-  let i = 0;
+  let count = 0;
   let reloadFn: undefined | (() => void);
 
   // Only tested to see if it works, not all configurations.
@@ -21,7 +21,7 @@ test('should apply custom middleware via `setupMiddlewares`', async ({
         setupMiddlewares: [
           (middlewares, server) => {
             middlewares.unshift((_req, _res, next) => {
-              i++;
+              count++;
               next();
             });
             reloadFn = () => server.sockWrite('static-changed');
@@ -34,17 +34,17 @@ test('should apply custom middleware via `setupMiddlewares`', async ({
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
-  expect(i).toBeGreaterThanOrEqual(1);
+  expect(count).toBeGreaterThanOrEqual(1);
   expect(reloadFn).toBeDefined();
 
-  i = 0;
+  count = 0;
   reloadFn!();
 
   // check value of `i`
   const maxChecks = 100;
   let checks = 0;
   while (checks < maxChecks) {
-    if (i === 0) {
+    if (count === 0) {
       checks++;
       await new Promise((resolve) => setTimeout(resolve, 50));
     } else {
@@ -52,7 +52,7 @@ test('should apply custom middleware via `setupMiddlewares`', async ({
     }
   }
 
-  expect(i).toBeGreaterThanOrEqual(1);
+  expect(count).toBeGreaterThanOrEqual(1);
 
   await rsbuild.close();
 });
