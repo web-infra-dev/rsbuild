@@ -38,7 +38,7 @@ import { createHttpServer } from './httpServer';
 import { notFoundMiddleware } from './middlewares';
 import { open } from './open';
 import { onBeforeRestartServer, restartDevServer } from './restart';
-import { WatchFilesResult, setupWatchFiles } from './watchFiles';
+import { type WatchFilesResult, setupWatchFiles } from './watchFiles';
 
 type HTTPServer = Server | Http2SecureServer;
 
