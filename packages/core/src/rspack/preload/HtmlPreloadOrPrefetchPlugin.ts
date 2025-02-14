@@ -24,7 +24,7 @@ import type {
 } from '@rspack/core';
 import { ensureAssetPrefix, upperFirst } from '../../helpers';
 import { getHTMLPlugin } from '../../pluginHelper';
-import type { HtmlRspackPlugin, PreloadOrPreFetchOption } from '../../types';
+import type { HtmlRspackPlugin, PreloadOrPrefetchOption } from '../../types';
 import {
   type As,
   type BeforeAssetTagGenerationHtmlPluginData,
@@ -61,7 +61,7 @@ function filterResourceHints(
 }
 
 function generateLinks(
-  options: PreloadOrPreFetchOption,
+  options: PreloadOrPrefetchOption,
   type: LinkType,
   compilation: Compilation,
   htmlPluginData: BeforeAssetTagGenerationHtmlPluginData,
@@ -166,7 +166,7 @@ function generateLinks(
 }
 
 export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
-  readonly options: PreloadOrPreFetchOption;
+  readonly options: PreloadOrPrefetchOption;
 
   name = 'HtmlPreloadOrPrefetchPlugin';
 
@@ -177,7 +177,7 @@ export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
   HTMLCount: number;
 
   constructor(
-    options: true | PreloadOrPreFetchOption,
+    options: true | PreloadOrPrefetchOption,
     type: LinkType,
     HTMLCount: number,
   ) {
