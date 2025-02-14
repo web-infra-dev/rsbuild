@@ -21,7 +21,11 @@ import {
   getTransformedHtml,
   loadBundle,
 } from './environment';
-import { type CompileMiddlewareAPI, getMiddlewares } from './getDevMiddlewares';
+import {
+  type CompileMiddlewareAPI,
+  type GetMiddlewaresResult,
+  getMiddlewares,
+} from './getDevMiddlewares';
 import {
   type StartServerResult,
   getAddressUrls,
@@ -34,7 +38,7 @@ import { createHttpServer } from './httpServer';
 import { notFoundMiddleware } from './middlewares';
 import { open } from './open';
 import { onBeforeRestartServer, restartDevServer } from './restart';
-import { setupWatchFiles } from './watchFiles';
+import { type WatchFilesResult, setupWatchFiles } from './watchFiles';
 
 type HTTPServer = Server | Http2SecureServer;
 
@@ -116,8 +120,8 @@ export async function createDevServer<
     config,
   });
   const devConfig = formatDevConfig(config.dev, port);
-
   const routes = getRoutes(options.context);
+  const root = options.context.rootPath;
 
   options.context.devServer = {
     hostname: host,
@@ -182,10 +186,6 @@ export async function createDevServer<
   const protocol = https ? 'https' : 'http';
   const urls = getAddressUrls({ protocol, port, host });
 
-  await options.context.hooks.onBeforeStartDevServer.call({
-    environments: options.context.environments,
-  });
-
   const cliShortcutsEnabled = isCliShortcutsEnabled(devConfig);
 
   const printUrls = () =>
@@ -208,9 +208,13 @@ export async function createDevServer<
     });
   };
 
+  // biome-ignore lint/style/useConst: should be declared before use
+  let fileWatcher: WatchFilesResult | undefined;
+  let devMiddlewares: GetMiddlewaresResult | undefined;
+
   const closeServer = async () => {
     await options.context.hooks.onCloseDevServer.call();
-    await Promise.all([devMiddlewares.close(), fileWatcher?.close()]);
+    await Promise.all([devMiddlewares?.close(), fileWatcher?.close()]);
   };
 
   const beforeCreateCompiler = () => {
@@ -237,24 +241,6 @@ export async function createDevServer<
       logger.info(portTip);
     }
   };
-
-  if (runCompile) {
-    // print server url should between listen and beforeCompile
-    options.context.hooks.onBeforeCreateCompiler.tap(beforeCreateCompiler);
-  } else {
-    beforeCreateCompiler();
-  }
-
-  const compileMiddlewareAPI = runCompile ? await startCompile() : undefined;
-
-  const root = options.context.rootPath;
-
-  const fileWatcher = await setupWatchFiles({
-    dev: devConfig,
-    server: config.server,
-    compileMiddlewareAPI,
-    root,
-  });
 
   const readFileSync = (fileName: string) => {
     if ('readFileSync' in outputFileSystem) {
@@ -311,28 +297,8 @@ export async function createDevServer<
     }),
   );
 
-  const devMiddlewares = await getMiddlewares({
-    pwd: root,
-    compileMiddlewareAPI,
-    dev: devConfig,
-    server: config.server,
-    environments: environmentAPI,
-    output: {
-      distPath: options.context.distPath || ROOT_DIST_DIR,
-    },
-    outputFileSystem,
-  });
-
   const { default: connect } = await import('../../compiled/connect/index.js');
   const middlewares = connect();
-
-  for (const item of devMiddlewares.middlewares) {
-    if (Array.isArray(item)) {
-      middlewares.use(...item);
-    } else {
-      middlewares.use(item);
-    }
-  }
 
   const devServerAPI: RsbuildDevServer = {
     port,
@@ -361,7 +327,9 @@ export async function createDevServer<
             }
 
             middlewares.use(notFoundMiddleware);
-            httpServer.on('upgrade', devMiddlewares.onUpgrade);
+            if (devMiddlewares) {
+              httpServer.on('upgrade', devMiddlewares.onUpgrade);
+            }
 
             logger.debug('listen dev server done');
 
@@ -388,12 +356,55 @@ export async function createDevServer<
       });
     },
     connectWebSocket: ({ server }: { server: HTTPServer }) => {
-      server.on('upgrade', devMiddlewares.onUpgrade);
+      if (devMiddlewares) {
+        server.on('upgrade', devMiddlewares.onUpgrade);
+      }
     },
     close: closeServer,
     printUrls,
     open: openPage,
   };
+
+  await options.context.hooks.onBeforeStartDevServer.call({
+    server: devServerAPI,
+    environments: options.context.environments,
+  });
+
+  if (runCompile) {
+    // print server url should between listen and beforeCompile
+    options.context.hooks.onBeforeCreateCompiler.tap(beforeCreateCompiler);
+  } else {
+    beforeCreateCompiler();
+  }
+
+  const compileMiddlewareAPI = runCompile ? await startCompile() : undefined;
+
+  fileWatcher = await setupWatchFiles({
+    dev: devConfig,
+    server: config.server,
+    compileMiddlewareAPI,
+    root,
+  });
+
+  devMiddlewares = await getMiddlewares({
+    pwd: root,
+    compileMiddlewareAPI,
+    dev: devConfig,
+    server: config.server,
+    environments: environmentAPI,
+    output: {
+      distPath: options.context.distPath || ROOT_DIST_DIR,
+    },
+    outputFileSystem,
+  });
+
+  for (const item of devMiddlewares.middlewares) {
+    if (Array.isArray(item)) {
+      middlewares.use(...item);
+    } else {
+      middlewares.use(item);
+    }
+  }
 
   logger.debug('create dev server done');
 

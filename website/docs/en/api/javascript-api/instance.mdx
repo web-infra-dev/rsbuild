@@ -784,8 +784,10 @@ import OnBeforeStartDevServer from '@en/shared/onBeforeStartDevServer.mdx';
 - **Example:**
 
 ```ts
-rsbuild.onBeforeStartDevServer(() => {
-  console.log('before start!');
+rsbuild.onBeforeStartDevServer(({ server, environments }) => {
+  console.log('before starting dev server.');
+  console.log('the server is ', server);
+  console.log('the environments contexts are: ', environments);
 });
 ```
 

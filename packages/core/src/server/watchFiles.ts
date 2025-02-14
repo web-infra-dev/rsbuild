@@ -16,12 +16,13 @@ type WatchFilesOptions = {
   root: string;
 };
 
-export async function setupWatchFiles(options: WatchFilesOptions): Promise<
-  | {
-      close(): Promise<void>;
-    }
-  | undefined
-> {
+export type WatchFilesResult = {
+  close(): Promise<void>;
+};
+
+export async function setupWatchFiles(
+  options: WatchFilesOptions,
+): Promise<WatchFilesResult | undefined> {
   const { dev, server, root, compileMiddlewareAPI } = options;
 
   const { hmr, liveReload } = dev;

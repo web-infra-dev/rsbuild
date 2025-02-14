@@ -655,8 +655,10 @@ import OnBeforeStartDevServer from '@zh/shared/onBeforeStartDevServer.mdx';
 ```ts
 const myPlugin = () => ({
   setup: (api) => {
-    api.onBeforeStartDevServer(() => {
-      console.log('before start!');
+    api.onBeforeStartDevServer(({ server, environments }) => {
+      console.log('before starting dev server.');
+      console.log('the server is ', server);
+      console.log('the environments contexts are: ', environments);
     });
   },
 });
