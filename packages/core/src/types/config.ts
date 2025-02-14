@@ -542,11 +542,15 @@ export type PreloadIncludeType =
 
 export type Filter = Array<string | RegExp> | ((filename: string) => boolean);
 
-export interface PreloadOrPreFetchOption {
+export interface PreloadOrPrefetchOption {
   type?: PreloadIncludeType;
   include?: Filter;
   exclude?: Filter;
+  dedupe?: boolean;
 }
+export type PreloadOption = PreloadOrPrefetchOption;
+
+export type PrefetchOption = Omit<PreloadOrPrefetchOption, 'dedupe'>;
 
 export interface PerformanceConfig {
   /**
@@ -599,7 +603,7 @@ export interface PerformanceConfig {
    *
    * Specifies that the user agent must preemptively fetch and cache the target resource for current navigation.
    */
-  preload?: true | PreloadOrPreFetchOption;
+  preload?: true | PreloadOption;
 
   /**
    * Used to control resource `Prefetch`.
@@ -607,7 +611,7 @@ export interface PerformanceConfig {
    * Specifies that the user agent should preemptively fetch and cache the target resource as it
    * is likely to be required for a followup navigation.
    */
-  prefetch?: true | PreloadOrPreFetchOption;
+  prefetch?: true | PrefetchOption;
 
   /**
    * Whether capture timing information for each module,
