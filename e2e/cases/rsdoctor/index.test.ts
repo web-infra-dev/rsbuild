@@ -29,6 +29,8 @@ rspackOnlyTest(
 
     restore();
     process.env.RSDOCTOR = '';
+
+    console.log(compiler.options.plugins);
   },
 );
 
