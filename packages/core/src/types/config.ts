@@ -546,7 +546,11 @@ export interface PreloadOrPreFetchOption {
   type?: PreloadIncludeType;
   include?: Filter;
   exclude?: Filter;
+  duplicate?: boolean;
 }
+export type PreloadOption = PreloadOrPreFetchOption;
+
+export type PreFetchOption = Omit<PreloadOrPreFetchOption, 'duplicate'>;
 
 export interface PerformanceConfig {
   /**
@@ -599,7 +603,7 @@ export interface PerformanceConfig {
    *
    * Specifies that the user agent must preemptively fetch and cache the target resource for current navigation.
    */
-  preload?: true | PreloadOrPreFetchOption;
+  preload?: true | PreloadOption;
 
   /**
    * Used to control resource `Prefetch`.
@@ -607,7 +611,7 @@ export interface PerformanceConfig {
    * Specifies that the user agent should preemptively fetch and cache the target resource as it
    * is likely to be required for a followup navigation.
    */
-  prefetch?: true | PreloadOrPreFetchOption;
+  prefetch?: true | PreFetchOption;
 
   /**
    * Whether capture timing information for each module,

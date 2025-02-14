@@ -35,6 +35,7 @@ import {
 
 const defaultOptions = {
   type: 'async-chunks' as const,
+  duplicate: false,
 };
 
 type LinkType = 'preload' | 'prefetch';
@@ -214,10 +215,12 @@ export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
           (htmlPluginData) => {
             if (this.resourceHints) {
               htmlPluginData.assetTags.styles = [
-                ...filterResourceHints(
-                  this.resourceHints,
-                  htmlPluginData.assetTags.scripts,
-                ),
+                ...(this.options.duplicate
+                  ? this.resourceHints
+                  : filterResourceHints(
+                      this.resourceHints,
+                      htmlPluginData.assetTags.scripts,
+                    )),
                 ...htmlPluginData.assetTags.styles,
               ];
             }
