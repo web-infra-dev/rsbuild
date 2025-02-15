@@ -129,7 +129,7 @@ function CreateDevServer(
 import { createRsbuild } from '@rsbuild/core';
 import express from 'express';
 
-export async function startDevServer() {
+async function startDevServer() {
   // 初始化 Rsbuild
   const rsbuild = await createRsbuild({});
 
@@ -161,7 +161,7 @@ Rsbuild 内置了 WebSocket 处理器以支持 HMR 功能：
 3. 浏览器与 Rsbuild WebSocket 处理器成功建立连接后，便可进行实时通信。
 4. 每次重新编译完成后，Rsbuild WebSocket 处理器会通知浏览器。随后，浏览器向开发服务器发送 `hot-update.(js|json)` 请求，以加载编译后的新模块。
 
-当你使用自定义的 server 时，可能会遇到 HMR 连接报错的问题，这是因为自定义的 server 没有将 WebSocket 连接请求转发给 Rsbuild 的 WebSocket 处理器。此时需要通过 `connectWebSocket` 方法已使 Rsbuild 能够感知并处理来自浏览器的 WebSocket 连接请求。
+当你使用自定义 server 时，可能会遇到 HMR 连接失败的问题。这是因为自定义 server 未能将 WebSocket 连接请求正确转发至 Rsbuild 的 WebSocket 处理器。此时，你需要调用 `connectWebSocket` 方法来让 Rsbuild 能够接收并处理来自浏览器的 WebSocket 连接请求。
 
 ```ts
 const rsbuildServer = await rsbuild.createDevServer();
