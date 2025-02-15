@@ -112,15 +112,15 @@ export default {
 
 ## Rspack dev server
 
-Rspack CLI 内置的开发服务器是 [@rspack/dev-server](https://www.npmjs.com/package/@rspack/dev-server)，Rsbuild 没有使用 `@rspack/dev-server`，而是自行实现了一个更轻量的版本。
+Rsbuild 内置了一个轻量级的开发服务器，这与 Rspack CLI 或 webpack CLI 内置的开发服务器是不同的，它们之间存在一些差异，配置项也有所不同。
 
 ### 对比
 
-Rsbuild 的开发服务器和 `@rspack/dev-server` 有以下区别：
+与 Rspack CLI 内置的 `@rspack/dev-server` 相比，Rsbuild 的开发服务器有以下区别：
 
 - **配置项**：Rsbuild 提供了更丰富的 server 配置项。
 - **日志格式**：Rspack CLI 日志格式与 webpack CLI 基本一致，而 Rsbuild 的日志则更加清晰和易读。
-- **底层依赖**：`@rspack/dev-server` 基于 express 实现，三方依赖较多。Rsbuild 则采用 `connect` 等更轻量的库实现。
+- **底层依赖**：Rsbuild 基于 `connect` 等轻量级库实现，相较于 `@rspack/dev-server` 使用的 `express`，具有更少的依赖和更快的启动速度。
 
 ### 配置项
 
