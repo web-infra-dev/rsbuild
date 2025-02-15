@@ -44,7 +44,20 @@ type HTTPServer = Server | Http2SecureServer;
 
 export type RsbuildDevServer = {
   /**
-   * Listen the Rsbuild server.
+   * The `connect` app instance.
+   * Can be used to attach custom middlewares to the dev server.
+   */
+  middlewares: Connect.Server;
+  /**
+   * The Node.js HTTP server instance.
+   * Will be `Http2SecureServer` if `server.https` config is used.
+   */
+  httpServer:
+    | import('node:http').Server
+    | import('node:http2').Http2SecureServer
+    | null;
+  /**
+   * Start listening on the Rsbuild dev server.
    * Do not call this method if you are using a custom server.
    */
   listen: () => Promise<{
@@ -63,11 +76,6 @@ export type RsbuildDevServer = {
    * By default, Rsbuild server listens on port `3000` and automatically increments the port number if the port is occupied.
    */
   port: number;
-  /**
-   * The `connect` app instance.
-   * Can be used to attach custom middlewares to the dev server.
-   */
-  middlewares: Connect.Server;
   /**
    * Notify that the Rsbuild server has been started.
    * Rsbuild will trigger `onAfterStartDevServer` hook in this stage.
@@ -300,16 +308,17 @@ export async function createDevServer<
   const { default: connect } = await import('../../compiled/connect/index.js');
   const middlewares = connect();
 
+  const httpServer = await createHttpServer({
+    serverConfig: config.server,
+    middlewares,
+  });
+
   const devServerAPI: RsbuildDevServer = {
     port,
     middlewares,
     environments: environmentAPI,
+    httpServer,
     listen: async () => {
-      const httpServer = await createHttpServer({
-        serverConfig: config.server,
-        middlewares,
-      });
-
       const serverTerminator = getServerTerminator(httpServer);
       logger.debug('listen dev server');
 
