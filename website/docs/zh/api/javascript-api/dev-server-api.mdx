@@ -49,7 +49,20 @@ type EnvironmentAPI = {
 
 type RsbuildDevServer = {
   /**
-   * 监听 Rsbuild server
+   * `connect` 实例
+   * 可用于向 dev server 附加自定义中间件
+   */
+  middlewares: Connect.Server;
+  /**
+   * Node.js HTTP 服务器实例
+   * 如果使用了 `server.https` 配置，则为 `Http2SecureServer`
+   */
+  httpServer:
+    | import('node:http').Server
+    | import('node:http2').Http2SecureServer
+    | null;
+  /**
+   * 监听 Rsbuild dev server
    * 当你使用自定义 server 时，不需要调用该方法
    */
   listen: () => Promise<{
@@ -68,11 +81,6 @@ type RsbuildDevServer = {
    * 默认情况下，Rsbuild Server 会监听 `3000` 端口，如果端口被占用，则自动递增端口号
    */
   port: number;
-  /**
-   * `connect` 实例
-   * 可用于向 dev server 附加自定义中间件
-   */
-  middlewares: Connect.Server;
   /**
    * 通知 Rsbuild 自定义 Server 已启动
    * Rsbuild 会在此阶段触发 `onAfterStartDevServer` 钩子
