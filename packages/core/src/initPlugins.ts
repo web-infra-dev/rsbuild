@@ -323,7 +323,7 @@ export function initPluginAPI({
   const onExit: typeof hooks.onExit.tap = (cb) => {
     if (!onExitListened) {
       process.on('exit', () => {
-        hooks.onExit.call();
+        hooks.onExit.callBatch();
       });
       onExitListened = true;
     }

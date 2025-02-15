@@ -48,27 +48,82 @@ export type HookDescriptor<T extends (...args: any[]) => any> = {
 };
 
 export type EnvironmentAsyncHook<Callback extends (...args: any[]) => any> = {
+  /**
+   * Registers a callback function to be executed when the hook is triggered.
+   * The callback can be a plain function or a HookDescriptor that includes execution order.
+   * The callback will be executed in all environments by default.
+   * If you need to specify the environment, please use `tapEnvironment`
+   * @param cb The callback function or hook descriptor to register
+   */
+  tap: (cb: Callback | HookDescriptor<Callback>) => void;
+  /**
+   * Registers a callback function to be executed when the hook is triggered.
+   * The callback will only be executed under the specified environment.
+   */
   tapEnvironment: (params: {
     /**
-     * Specify that the callback will only be executed under the specified environment
+     * Specify the environment that the callback will be executed under.
      */
     environment?: string;
+    /**
+     * The callback function or hook descriptor to register
+     */
     handler: Callback | HookDescriptor<Callback>;
   }) => void;
   /**
-   *  Triggered in all environments by default.
-   *  If you need to specify the environment, please use `tapEnvironment`
+   * Executes callbacks in sequence independently and collects all their results into an array.
+   * Each callback receives the original parameters, and their results don't affect subsequent callbacks.
+   * @returns A promise that resolves with an array containing the results of all callbacks
    */
-  tap: (cb: Callback | HookDescriptor<Callback>) => void;
-  callInEnvironment: (params: {
+  callChain: (params: {
+    /**
+     * Specify the environment for filtering callbacks.
+     */
     environment?: string;
+    /**
+     * The parameters to pass to each callback
+     */
     args: Parameters<Callback>;
   }) => Promise<Parameters<Callback>>;
+  /**
+   * Executes callbacks in sequence independently and collects all their results into an array.
+   * Each callback receives the original parameters, and their results don't affect subsequent callbacks.
+   * @returns A promise that resolves with an array containing the results of all callbacks
+   */
+  callBatch: <T = unknown>(params: {
+    /**
+     * Specify the environment for filtering callbacks.
+     */
+    environment?: string;
+    /**
+     * The parameters to pass to each callback
+     */
+    args: Parameters<Callback>;
+  }) => Promise<T[]>;
 };
 
 export type AsyncHook<Callback extends (...args: any[]) => any> = {
+  /**
+   * Registers a callback function to be executed when the hook is triggered.
+   * The callback can be a plain function or a HookDescriptor that includes execution order.
+   * @param cb The callback function or hook descriptor to register
+   */
   tap: (cb: Callback | HookDescriptor<Callback>) => void;
-  call: (...args: Parameters<Callback>) => Promise<Parameters<Callback>>;
+  /**
+   * Executes callbacks in sequence, passing the result of each callback as the first argument
+   * to the next callback in the chain. If a callback returns undefined, the original arguments
+   * will be passed to the next callback.
+   * @param params The initial parameters to pass to the first callback
+   * @returns A promise that resolves with the final parameters after all callbacks have executed
+   */
+  callChain: (...args: Parameters<Callback>) => Promise<Parameters<Callback>>;
+  /**
+   * Executes callbacks in sequence independently and collects all their results into an array.
+   * Each callback receives the original parameters, and their results don't affect subsequent callbacks.
+   * @param params The parameters to pass to each callback
+   * @returns A promise that resolves with an array containing the results of all callbacks
+   */
+  callBatch: <T = unknown>(...args: Parameters<Callback>) => Promise<T[]>;
 };
 
 export type ModifyRspackConfigFn = (
