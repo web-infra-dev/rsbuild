@@ -664,6 +664,33 @@ const myPlugin = () => ({
 });
 ```
 
+如果你需要在其他 hooks 中访问 `server`，可以通过 `onBeforeStartDevServer` 来存储 `server` 实例，并在执行后续的 hooks 时访问它。注意你不能在执行时机早于 `onBeforeStartDevServer` 的 hooks 中访问 `server`。
+
+```ts
+import type { RsbuildDevServer } from '@rsbuild/core';
+
+const myPlugin = () => ({
+  setup(api) {
+    let devServer: RsbuildDevServer | null = null;
+
+    api.onBeforeStartDevServer(({ server, environments }) => {
+      devServer = server;
+    });
+
+    api.transform({ test: /\.foo$/ }, ({ code }) => {
+      if (devServer) {
+        // access server API
+      }
+      return code;
+    });
+
+    api.onCloseDevServer(() => {
+      devServer = null;
+    });
+  },
+});
+```
+
 ### onAfterStartDevServer
 
 import OnAfterStartDevServer from '@zh/shared/onAfterStartDevServer.mdx';
