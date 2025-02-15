@@ -213,7 +213,7 @@ export async function createDevServer<
   let devMiddlewares: GetMiddlewaresResult | undefined;
 
   const closeServer = async () => {
-    await options.context.hooks.onCloseDevServer.call();
+    await options.context.hooks.onCloseDevServer.callBatch();
     await Promise.all([devMiddlewares?.close(), fileWatcher?.close()]);
   };
 
@@ -349,7 +349,7 @@ export async function createDevServer<
       });
     },
     afterListen: async () => {
-      await options.context.hooks.onAfterStartDevServer.call({
+      await options.context.hooks.onAfterStartDevServer.callBatch({
         port,
         routes,
         environments: options.context.environments,
@@ -365,7 +365,7 @@ export async function createDevServer<
     open: openPage,
   };
 
-  await options.context.hooks.onBeforeStartDevServer.call({
+  await options.context.hooks.onBeforeStartDevServer.callBatch({
     server: devServerAPI,
     environments: options.context.environments,
   });

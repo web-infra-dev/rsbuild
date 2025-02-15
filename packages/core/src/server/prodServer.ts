@@ -187,7 +187,7 @@ export async function startProdServer(
     middlewares,
   );
 
-  await context.hooks.onBeforeStartProdServer.call();
+  await context.hooks.onBeforeStartProdServer.callBatch();
 
   const httpServer = await createHttpServer({
     serverConfig,
@@ -205,7 +205,7 @@ export async function startProdServer(
       },
       async () => {
         const routes = getRoutes(context);
-        await context.hooks.onAfterStartProdServer.call({
+        await context.hooks.onAfterStartProdServer.callBatch({
           port,
           routes,
           environments: context.environments,

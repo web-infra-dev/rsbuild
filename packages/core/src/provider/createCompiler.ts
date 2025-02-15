@@ -21,7 +21,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   const { context } = options;
   const { rspackConfigs } = await initConfigs(options);
 
-  await context.hooks.onBeforeCreateCompiler.call({
+  await context.hooks.onBeforeCreateCompiler.callBatch({
     bundlerConfigs: rspackConfigs,
     environments: context.environments,
   });
@@ -122,7 +122,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     });
   }
 
-  await context.hooks.onAfterCreateCompiler.call({
+  await context.hooks.onAfterCreateCompiler.callBatch({
     compiler,
     environments: context.environments,
   });
