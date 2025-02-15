@@ -129,7 +129,7 @@ Here is an example of integrating [express](https://expressjs.com/) with Rsbuild
 import { createRsbuild } from '@rsbuild/core';
 import express from 'express';
 
-export async function startDevServer() {
+async function startDevServer() {
   // Init Rsbuild
   const rsbuild = await createRsbuild({});
 

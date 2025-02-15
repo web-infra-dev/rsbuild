@@ -2,7 +2,7 @@
 
 - **Type:**
 
-```ts
+```ts title="rsbuild.config.ts"
 type SetupMiddlewaresServer = {
   sockWrite: (
     type: string,
@@ -30,7 +30,7 @@ Provides the ability to execute a custom function and apply custom middlewares.
 
 The order among several different types of middleware is: `unshift` => internal middlewares => `push`.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     setupMiddlewares: [
@@ -60,7 +60,7 @@ In the `setupMiddlewares` function, you can access the `server` object, which pr
 
 For example, if you send a `'static-changed'` message, the page will reload.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     setupMiddlewares: [
@@ -80,7 +80,7 @@ export default {
 
 `environments` includes Rsbuild's [environment API](/api/javascript-api/environment-api#environment-api), which allows you to get the build outputs information for a specific environment in the server side.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     setupMiddlewares: [
