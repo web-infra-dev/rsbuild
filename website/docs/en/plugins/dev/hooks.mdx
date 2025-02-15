@@ -668,6 +668,33 @@ const myPlugin = () => ({
 });
 ```
 
+If you need to access `server` in other hooks, you can store the `server` instance through `api.onBeforeStartDevServer`, and then access it in the hooks executed later. Note that you cannot access `server` in hooks that are executed earlier than `onBeforeStartDevServer`.
+
+```ts
+import type { RsbuildDevServer } from '@rsbuild/core';
+
+const myPlugin = () => ({
+  setup(api) {
+    let devServer: RsbuildDevServer | null = null;
+
+    api.onBeforeStartDevServer(({ server, environments }) => {
+      devServer = server;
+    });
+
+    api.transform({ test: /\.foo$/ }, ({ code }) => {
+      if (devServer) {
+        // access server API
+      }
+      return code;
+    });
+
+    api.onCloseDevServer(() => {
+      devServer = null;
+    });
+  },
+});
+```
+
 ### onAfterStartDevServer
 
 import OnAfterStartDevServer from '@en/shared/onAfterStartDevServer.mdx';
