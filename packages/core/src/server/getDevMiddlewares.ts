@@ -191,7 +191,7 @@ const applyDefaultMiddlewares = async ({
     middlewares.push(assetMiddleware);
   }
 
-  // Execute callbacks registered through the `onBeforeStartDevServer` hook.
+  // Execute callbacks returned by the `onBeforeStartDevServer` hook.
   // This is the ideal place for users to add custom middlewares because:
   // 1. It runs after most of the default middlewares
   // 2. It runs before fallback middlewares
