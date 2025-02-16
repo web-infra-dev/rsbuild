@@ -40,7 +40,7 @@ export type RsbuildDevMiddlewareOptions = {
     distPath: string;
   };
   /**
-   * Callbacks registered through the `onBeforeStartDevServer` hook.
+   * Callbacks returned by the `onBeforeStartDevServer` hook.
    */
   postCallbacks: (() => void)[];
 };
