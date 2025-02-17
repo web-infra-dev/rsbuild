@@ -1,34 +1,24 @@
 /**
  * The following code is modified based on @rspack/test-tools/runner
  *
- * TODO: should be extracted as a separate bundle-runner pkg
  */
 import { EsmRunner } from './esm';
-import type { CompilerOptions, Runner, RunnerFactory } from './type';
+import type { Runner, RunnerFactory, RunnerFactoryOptions } from './type';
 
 export class BasicRunnerFactory implements RunnerFactory {
   constructor(protected name: string) {}
 
-  create(
-    compilerOptions: CompilerOptions,
-    dist: string,
-    readFileSync: (path: string) => string,
-  ): Runner {
-    const runner = this.createRunner(compilerOptions, dist, readFileSync);
+  create(options: RunnerFactoryOptions): Runner {
+    const runner = this.createRunner(options);
     return runner;
   }
 
-  protected createRunner(
-    compilerOptions: CompilerOptions,
-    dist: string,
-    readFileSync: (path: string) => string,
-  ): Runner {
+  protected createRunner(options: RunnerFactoryOptions): Runner {
     const runnerOptions = {
       name: this.name,
-      dist,
-      compilerOptions,
-      readFileSync,
+      ...options,
     };
+    const { compilerOptions } = options;
     if (
       compilerOptions.target === 'web' ||
       compilerOptions.target === 'webworker'
@@ -41,18 +31,14 @@ export class BasicRunnerFactory implements RunnerFactory {
   }
 }
 
-export const run = async <T>(
-  bundlePath: string,
-  outputPath: string,
-  compilerOptions: CompilerOptions,
-  readFileSync: (path: string) => string,
-): Promise<T> => {
+export const run = async <T>({
+  bundlePath,
+  ...runnerFactoryOptions
+}: RunnerFactoryOptions & {
+  bundlePath: string;
+}): Promise<T> => {
   const runnerFactory = new BasicRunnerFactory(bundlePath);
-  const runner = runnerFactory.create(
-    compilerOptions,
-    outputPath,
-    readFileSync,
-  );
+  const runner = runnerFactory.create(runnerFactoryOptions);
   const mod = runner.run(bundlePath);
 
   return mod as T;

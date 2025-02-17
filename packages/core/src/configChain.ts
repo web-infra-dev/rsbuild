@@ -18,7 +18,7 @@ export async function modifyBundlerChain(
   const bundlerChain = getBundlerChain();
 
   const [modifiedBundlerChain] =
-    await context.hooks.modifyBundlerChain.callInEnvironment({
+    await context.hooks.modifyBundlerChain.callChain({
       environment: utils.environment.name,
       args: [bundlerChain, utils],
     });

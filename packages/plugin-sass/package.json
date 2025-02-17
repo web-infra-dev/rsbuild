@@ -33,17 +33,17 @@
     "loader-utils": "^2.0.4",
     "postcss": "^8.5.2",
     "reduce-configs": "^1.1.0",
-    "sass-embedded": "^1.83.4"
+    "sass-embedded": "^1.85.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rslib/core": "0.4.1",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.13.1",
+    "@types/node": "^22.13.4",
     "@types/sass-loader": "^8.0.9",
     "prebundle": "1.2.7",
     "resolve-url-loader": "^5.0.0",
-    "sass-loader": "^16.0.4",
+    "sass-loader": "^16.0.5",
     "typescript": "^5.7.3"
   },
   "peerDependencies": {

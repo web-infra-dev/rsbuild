@@ -17,14 +17,14 @@
  */
 
 import type { Chunk, ChunkGroup, Compilation } from '@rspack/core';
-import type { PreloadOrPreFetchOption } from '../../../types';
+import type { PreloadOrPrefetchOption } from '../../../types';
 import type { BeforeAssetTagGenerationHtmlPluginData } from './type';
 
 interface DoesChunkBelongToHtmlOptions {
   chunk: Chunk;
   compilation?: Compilation;
   htmlPluginData: BeforeAssetTagGenerationHtmlPluginData;
-  pluginOptions?: PreloadOrPreFetchOption;
+  pluginOptions?: PreloadOrPrefetchOption;
 }
 
 function recursiveChunkGroup(
