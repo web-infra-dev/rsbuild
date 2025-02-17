@@ -57,8 +57,8 @@ test('should handle proxy error correctly', async ({ page }) => {
         },
         proxy: [
           {
-            context: [`/api`],
-            target: `http://somepagewhichdoesnotexits.com:9000`,
+            context: ['/api'],
+            target: 'http://somepagewhichdoesnotexits.com:9000',
             changeOrigin: true,
             secure: false,
           },
