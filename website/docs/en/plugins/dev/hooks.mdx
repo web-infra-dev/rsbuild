@@ -668,6 +668,44 @@ const myPlugin = () => ({
 });
 ```
 
+#### Register middlewares
+
+A common usage scenario is to register custom middlewares in `onBeforeStartDevServer`:
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.onBeforeStartDevServer(({ server }) => {
+      server.middlewares.use((req, res, next) => {
+        next();
+      });
+    });
+  },
+});
+```
+
+When `onBeforeStartDevServer` is called, the default middlewares of Rsbuild are not registered yet, so the middlewares you add will run before the default middlewares.
+
+`onBeforeStartDevServer` allows you to return a callback function, which will be called when the default middlewares of Rsbuild are registered. The middlewares you register in the callback function will run after the default middlewares.
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.onBeforeStartDevServer(({ server }) => {
+      // the returned callback will be called when the default
+      // middlewares are registered
+      return () => {
+        server.middlewares.use((req, res, next) => {
+          next();
+        });
+      };
+    });
+  },
+});
+```
+
+#### Store server instance
+
 If you need to access `server` in other hooks, you can store the `server` instance through `api.onBeforeStartDevServer`, and then access it in the hooks executed later. Note that you cannot access `server` in hooks that are executed earlier than `onBeforeStartDevServer`.
 
 ```ts

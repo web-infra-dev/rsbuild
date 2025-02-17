@@ -664,6 +664,44 @@ const myPlugin = () => ({
 });
 ```
 
+#### 注册中间件
+
+一个常见的使用场景是在 `onBeforeStartDevServer` 中注册自定义的中间件：
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.onBeforeStartDevServer(({ server }) => {
+      server.middlewares.use((req, res, next) => {
+        next();
+      });
+    });
+  },
+});
+```
+
+当 `onBeforeStartDevServer` 被调用时，Rsbuild 内置的中间件还未注册，因此你添加的中间件会早于内置中间件执行。
+
+`onBeforeStartDevServer` 允许你返回一个回调函数，当 Rsbuild 内置的中间件注册完成后，会执行你返回的回调函数，在回调函数中注册的中间件会晚于内置中间件执行。
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.onBeforeStartDevServer(({ server }) => {
+      // the returned callback will be called when the default
+      // middlewares are registered
+      return () => {
+        server.middlewares.use((req, res, next) => {
+          next();
+        });
+      };
+    });
+  },
+});
+```
+
+#### 保存 server 实例
+
 如果你需要在其他 hooks 中访问 `server`，可以通过 `onBeforeStartDevServer` 来存储 `server` 实例，并在执行后续的 hooks 时访问它。注意你不能在执行时机早于 `onBeforeStartDevServer` 的 hooks 中访问 `server`。
 
 ```ts
