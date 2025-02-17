@@ -5,7 +5,7 @@ rspackOnlyTest(
   'should not inject charset meta if template already contains it',
   async () => {
     const rsbuild = await build({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       rsbuildConfig: {
         html: {
           template: './src/index.html',

@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should define vars in production mode correctly', async () => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   });
 
   const file = await rsbuild.getIndexFile();
@@ -19,7 +19,7 @@ test('should define vars in production mode correctly', async () => {
 
 test('should define vars in development mode correctly', async () => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     rsbuildConfig: {
       mode: 'development',
     },
@@ -38,7 +38,7 @@ test('should define vars in development mode correctly', async () => {
 
 test('should define vars in none mode correctly', async () => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     rsbuildConfig: {
       mode: 'none',
     },

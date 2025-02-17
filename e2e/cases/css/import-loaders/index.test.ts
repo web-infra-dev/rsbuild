@@ -5,7 +5,7 @@ rspackOnlyTest(
   'should compile CSS Modules which depends on importLoaders correctly',
   async () => {
     const rsbuild = await build({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     });
     const files = await rsbuild.unwrapOutputJSON();
 

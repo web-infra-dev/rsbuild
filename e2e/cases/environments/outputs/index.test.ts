@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should apply multiple dist path correctly', async () => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     rsbuildConfig: {
       environments: {
         web: {

@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('generate integrity for preload tags in prod build', async ({ page }) => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     page,
   });
 

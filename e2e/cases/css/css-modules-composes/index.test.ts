@@ -4,7 +4,7 @@ import { expect } from '@playwright/test';
 
 rspackOnlyTest('should compile CSS Modules composes correctly', async () => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   });
   const files = await rsbuild.unwrapOutputJSON();
 
@@ -20,10 +20,12 @@ rspackOnlyTest(
   'should compile CSS Modules composes with external correctly',
   async () => {
     const rsbuild = await build({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       rsbuildConfig: {
         source: {
-          entry: { external: path.resolve(__dirname, './src/external.js') },
+          entry: {
+            external: path.resolve(import.meta.dirname, './src/external.js'),
+          },
         },
       },
     });

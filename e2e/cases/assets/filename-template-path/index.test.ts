@@ -3,14 +3,12 @@ import { expect, test } from '@playwright/test';
 
 test('should allow filename.image: "[path]"', async () => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   });
   const files = await rsbuild.unwrapOutputJSON();
   const filenames = Object.keys(files);
   // Image
   expect(
-    filenames.some((filename) =>
-      filename.includes('dist/src/assets/icon.png'),
-    ),
+    filenames.some((filename) => filename.includes('dist/src/assets/icon.png')),
   ).toBeTruthy();
 });

@@ -3,7 +3,7 @@ import { expect } from '@playwright/test';
 
 rspackOnlyTest('should bundle CSS layers as expected in build', async () => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   });
   const files = await rsbuild.unwrapOutputJSON();
 
@@ -19,7 +19,7 @@ rspackOnlyTest(
   'should bundle CSS layers as expected in dev',
   async ({ page }) => {
     const rsbuild = await dev({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       page,
       rsbuildConfig: {
         dev: {

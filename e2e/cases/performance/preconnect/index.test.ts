@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should generate preconnect link when preconnect is defined', async () => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   });
 
   const files = await rsbuild.unwrapOutputJSON();

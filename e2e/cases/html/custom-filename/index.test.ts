@@ -4,10 +4,10 @@ import { expect, test } from '@playwright/test';
 
 test('should allow to custom HTML filename', async () => {
   await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   });
 
-  const outputs = await globContentJSON(join(__dirname, 'dist'));
+  const outputs = await globContentJSON(join(import.meta.dirname, 'dist'));
   const fooFile = Object.keys(outputs).find((item) =>
     item.includes('custom-foo.html'),
   );

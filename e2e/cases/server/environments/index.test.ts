@@ -1,7 +1,7 @@
 import { dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-const cwd = __dirname;
+const cwd = import.meta.dirname;
 
 test('should serve multiple environments correctly', async ({ page }) => {
   const rsbuild = await dev({

@@ -7,7 +7,7 @@ rspackOnlyTest(
   'should add vendor prefixes by current browserslist',
   async () => {
     const rsbuild = await build({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     });
     const files = await rsbuild.unwrapOutputJSON();
 
@@ -24,7 +24,7 @@ rspackOnlyTest(
   'should add vendor prefixes by current browserslist in dev mode',
   async ({ page }) => {
     const rsbuild = await dev({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       page,
       rsbuildConfig: {
         dev: {

@@ -6,7 +6,7 @@ test('should log error module trace', async () => {
 
   await expect(
     build({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       rsbuildConfig: {},
     }),
   ).rejects.toThrowError('build failed');

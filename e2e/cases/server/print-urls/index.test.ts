@@ -1,7 +1,7 @@
 import { build, dev, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-const cwd = __dirname;
+const cwd = import.meta.dirname;
 
 test('should print server urls correctly when printUrls is true', async ({
   page,

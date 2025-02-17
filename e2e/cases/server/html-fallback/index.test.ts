@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-const cwd = __dirname;
+const cwd = import.meta.dirname;
 
 test('should access / success and htmlFallback success by default', async ({
   page,

@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should allow to use `postcssOptions` function to apply different postcss config for different files', async () => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   });
 
   const fooCssExpected =

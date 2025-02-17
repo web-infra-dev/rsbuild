@@ -6,7 +6,7 @@ export default {
   plugins: [pluginLess(), pluginSass()],
   resolve: {
     alias: {
-      '@common': path.resolve(__dirname, 'src/common'),
+      '@common': path.resolve(import.meta.dirname, 'src/common'),
     },
   },
 };

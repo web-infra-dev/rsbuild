@@ -4,10 +4,10 @@ import { expect, test } from '@playwright/test';
 
 test('should allow to set entry description object', async () => {
   await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   });
 
-  const outputs = await globContentJSON(path.join(__dirname, 'dist'));
+  const outputs = await globContentJSON(path.join(import.meta.dirname, 'dist'));
   const outputFiles = Object.keys(outputs);
 
   expect(

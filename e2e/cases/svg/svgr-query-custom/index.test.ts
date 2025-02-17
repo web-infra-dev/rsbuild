@@ -5,7 +5,7 @@ test('should import default from SVG with custom query correctly', async ({
   page,
 }) => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     page,
   });
 

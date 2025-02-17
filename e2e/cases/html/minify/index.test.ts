@@ -1,7 +1,7 @@
 import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
-const fixtures = __dirname;
+const fixtures = import.meta.dirname;
 
 rspackOnlyTest(
   'should minify template success when inlineScripts & inlineStyles',

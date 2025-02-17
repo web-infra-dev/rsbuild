@@ -5,10 +5,10 @@ import { expect } from '@playwright/test';
 
 rspackOnlyTest('should run allow to specify base path', async () => {
   execSync('npx rsbuild build --base /test', {
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   });
 
-  const outputs = await globContentJSON(path.join(__dirname, 'dist'));
+  const outputs = await globContentJSON(path.join(import.meta.dirname, 'dist'));
   const outputFiles = Object.keys(outputs);
 
   expect(

@@ -5,7 +5,7 @@ rspackOnlyTest(
   'tsconfig paths should work with references',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       page,
       rsbuildConfig: {
         resolve: {

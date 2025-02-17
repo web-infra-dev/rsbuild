@@ -14,7 +14,7 @@ test('should add polyfill when set polyfill entry (default)', async ({
   page,
 }) => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     rsbuildConfig: {
       output: {
         polyfill: 'entry',
@@ -44,7 +44,7 @@ rspackOnlyTest(
   'should add polyfill when set polyfill usage',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       rsbuildConfig: {
         output: {
           polyfill: 'usage',

@@ -4,7 +4,7 @@ import { dev, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-const cwd = __dirname;
+const cwd = import.meta.dirname;
 
 rspackOnlyTest(
   'Multiple environments HMR should work correctly',

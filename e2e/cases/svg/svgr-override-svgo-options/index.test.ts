@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('use SVGR and override svgo plugin options', async ({ page }) => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     page,
   });
 

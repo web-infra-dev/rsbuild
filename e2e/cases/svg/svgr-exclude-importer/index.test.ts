@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('use SVGR and exclude some files', async ({ page }) => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     page,
   });
 

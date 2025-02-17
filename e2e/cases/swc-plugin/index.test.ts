@@ -5,7 +5,7 @@ rspackOnlyTest(
   'should run SWC Wasm plugin correctly in dev mode',
   async ({ page }) => {
     const rsbuild = await dev({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     });
 
     const msgPromise = page.waitForEvent('console');
@@ -22,7 +22,7 @@ rspackOnlyTest(
   'should run SWC Wasm plugin correctly in production build',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       runServer: true,
     });
 

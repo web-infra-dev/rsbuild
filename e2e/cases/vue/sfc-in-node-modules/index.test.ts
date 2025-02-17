@@ -7,7 +7,7 @@ rspackOnlyTest(
   'should transpile Vue SFC in node_modules correctly',
   async () => {
     fse.outputFileSync(
-      path.resolve(__dirname, 'node_modules/foo/package.json'),
+      path.resolve(import.meta.dirname, 'node_modules/foo/package.json'),
       JSON.stringify({
         name: 'foo',
         version: '1.0.0',
@@ -15,12 +15,12 @@ rspackOnlyTest(
       }),
     );
     fse.outputFileSync(
-      path.resolve(__dirname, 'node_modules/foo/index.vue'),
+      path.resolve(import.meta.dirname, 'node_modules/foo/index.vue'),
       '<template><div :test="window?.foo" /></template>',
     );
 
     const rsbuild = await build({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     });
 
     const { content } = await rsbuild.getIndexFile();

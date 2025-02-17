@@ -1,7 +1,7 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-const fixtures = __dirname;
+const fixtures = import.meta.dirname;
 
 test('should generate manifest for async chunks correctly', async () => {
   const rsbuild = await build({

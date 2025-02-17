@@ -5,7 +5,7 @@ rspackOnlyTest(
   'should allow plugin to transform code with import attributes',
   async () => {
     const rsbuild = await build({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     });
 
     const indexJs = await rsbuild.getIndexFile();

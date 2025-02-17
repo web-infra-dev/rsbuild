@@ -27,7 +27,7 @@ rspackOnlyTest(
   'should allow to register async plugin in plugins field',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       page,
       plugins: [asyncPlugin()],
     });

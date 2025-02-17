@@ -1,7 +1,7 @@
 import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
-const fixtures = __dirname;
+const fixtures = import.meta.dirname;
 
 rspackOnlyTest(
   'should use lightningcss-loader to transform and minify CSS when injectStyles is true',

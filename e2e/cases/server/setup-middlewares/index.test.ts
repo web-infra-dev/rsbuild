@@ -14,7 +14,7 @@ test('should apply custom middleware via `setupMiddlewares`', async ({
 
   // Only tested to see if it works, not all configurations.
   const rsbuild = await dev({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     page,
     rsbuildConfig: {
       dev: {

@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should import default from SVG with SVGR correctly', async ({ page }) => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     page,
   });
 

@@ -2,7 +2,7 @@ import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginVue } from '@rsbuild/plugin-vue';
 
-const fixtures = __dirname;
+const fixtures = import.meta.dirname;
 
 test('should split vue chunks correctly', async () => {
   const rsbuild = await build({

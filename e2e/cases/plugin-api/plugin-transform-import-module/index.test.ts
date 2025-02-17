@@ -5,7 +5,7 @@ rspackOnlyTest(
   'should allow plugin to transform code and call `importModule`',
   async () => {
     const rsbuild = await build({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     });
 
     const files = await rsbuild.unwrapOutputJSON();

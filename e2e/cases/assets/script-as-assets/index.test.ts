@@ -5,7 +5,7 @@ rspackOnlyTest(
   'should allow to use `new URL` to reference script as assets',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       page,
     });
 

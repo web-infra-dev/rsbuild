@@ -8,10 +8,10 @@ rspackOnlyTest(
   'should allow to custom env prefix via loadEnv method',
   async () => {
     execSync('npx rsbuild build', {
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     });
     const content = fs.readFileSync(
-      path.join(__dirname, 'dist/static/js/index.js'),
+      path.join(import.meta.dirname, 'dist/static/js/index.js'),
       'utf-8',
     );
     expect(content).not.toContain('jack');

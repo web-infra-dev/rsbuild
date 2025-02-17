@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test';
 test('should allow plugin to custom resolver', async () => {
   await expect(
     build({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     }),
   ).resolves.toBeDefined();
 });

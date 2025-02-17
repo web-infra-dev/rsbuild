@@ -80,7 +80,7 @@ export async function createRsbuildWithMiddleware(
   assetPrefix?: string,
 ) {
   const rsbuild = await dev({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     rsbuildConfig: {
       plugins: [pluginReact(), pluginAssetsRetry(options)],
       dev: {
