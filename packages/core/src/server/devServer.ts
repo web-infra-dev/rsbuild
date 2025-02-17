@@ -374,10 +374,12 @@ export async function createDevServer<
     open: openPage,
   };
 
-  await options.context.hooks.onBeforeStartDevServer.callBatch({
-    server: devServerAPI,
-    environments: options.context.environments,
-  });
+  const postCallbacks = (
+    await options.context.hooks.onBeforeStartDevServer.callBatch({
+      server: devServerAPI,
+      environments: options.context.environments,
+    })
+  ).filter((item) => typeof item === 'function');
 
   if (runCompile) {
     // print server url should between listen and beforeCompile
@@ -405,6 +407,7 @@ export async function createDevServer<
       distPath: options.context.distPath || ROOT_DIST_DIR,
     },
     outputFileSystem,
+    postCallbacks,
   });
 
   for (const item of devMiddlewares.middlewares) {

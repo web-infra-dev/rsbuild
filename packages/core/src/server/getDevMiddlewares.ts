@@ -39,6 +39,10 @@ export type RsbuildDevMiddlewareOptions = {
   output: {
     distPath: string;
   };
+  /**
+   * Callbacks returned by the `onBeforeStartDevServer` hook.
+   */
+  postCallbacks: (() => void)[];
 };
 
 const applySetupMiddlewares = (
@@ -79,6 +83,7 @@ const applyDefaultMiddlewares = async ({
   pwd,
   outputFileSystem,
   environments,
+  postCallbacks,
 }: RsbuildDevMiddlewareOptions & {
   middlewares: Middlewares;
 }): Promise<{
@@ -184,6 +189,15 @@ const applyDefaultMiddlewares = async ({
     });
 
     middlewares.push(assetMiddleware);
+  }
+
+  // Execute callbacks returned by the `onBeforeStartDevServer` hook.
+  // This is the ideal place for users to add custom middlewares because:
+  // 1. It runs after most of the default middlewares
+  // 2. It runs before fallback middlewares
+  // This ensures custom middleware can intercept requests before any fallback handling
+  for (const callback of postCallbacks) {
+    callback();
   }
 
   if (compileMiddlewareAPI) {
