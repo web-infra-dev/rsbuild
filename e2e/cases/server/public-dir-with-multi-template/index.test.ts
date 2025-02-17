@@ -1,7 +1,7 @@
 import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-const cwd = __dirname;
+const cwd = import.meta.dirname;
 
 test('should serve publicDir with templates for dev server correctly', async ({
   page,

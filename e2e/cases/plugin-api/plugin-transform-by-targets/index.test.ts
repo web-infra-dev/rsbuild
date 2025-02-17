@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should allow plugin to transform code by targets', async () => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   });
 
   const files = await rsbuild.unwrapOutputJSON();

@@ -7,7 +7,7 @@ rspackOnlyTest(
   'should allow plugin to process assets by environments',
   async () => {
     const rsbuild = await build({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     });
 
     expect(existsSync(join(rsbuild.distPath, 'static/index.js'))).toBeFalsy();

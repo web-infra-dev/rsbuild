@@ -5,7 +5,7 @@ webpackOnlyTest(
   'should allow to use tools.webpackChain to configure webpack',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       page,
       rsbuildConfig: {
         tools: {

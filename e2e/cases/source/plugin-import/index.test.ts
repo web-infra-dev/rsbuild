@@ -6,7 +6,7 @@ test('should import with template config', async () => {
   copyPkgToNodeModules();
 
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     rsbuildConfig: {
       source: {
         transformImport: [
@@ -32,7 +32,7 @@ test('should not transformImport by default', async () => {
   copyPkgToNodeModules();
 
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     rsbuildConfig: {
       performance: {
         chunkSplit: {

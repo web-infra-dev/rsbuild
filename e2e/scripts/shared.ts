@@ -112,7 +112,7 @@ const updateConfigForTest = async (
     },
     resolve: {
       alias: {
-        '@assets': join(__dirname, '../assets'),
+        '@assets': join(import.meta.dirname, '../assets'),
       },
     },
     server: {

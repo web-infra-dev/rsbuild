@@ -5,7 +5,7 @@ test('should import svg with SVGR plugin and query URL correctly', async ({
   page,
 }) => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     page,
   });
 

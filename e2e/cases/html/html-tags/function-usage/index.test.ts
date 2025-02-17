@@ -3,7 +3,7 @@ import { expect } from '@playwright/test';
 
 rspackOnlyTest('should inject tags with function usage correctly', async () => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   });
 
   const files = await rsbuild.unwrapOutputJSON();

@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should import svg with SVGR plugin and query URL correctly', async () => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   });
 
   const files = await rsbuild.unwrapOutputJSON();

@@ -5,8 +5,8 @@ import { rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import fse from 'fs-extra';
 
-const localFile = path.join(__dirname, '.env.local');
-const prodLocalFile = path.join(__dirname, '.env.production.local');
+const localFile = path.join(import.meta.dirname, '.env.local');
+const prodLocalFile = path.join(import.meta.dirname, '.env.production.local');
 
 test.beforeEach(() => {
   fs.rmSync(localFile, { force: true });
@@ -17,9 +17,11 @@ rspackOnlyTest(
   'should load .env config and allow rsbuild.config.ts to read env vars',
   async () => {
     execSync('npx rsbuild build', {
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     });
-    expect(fs.existsSync(path.join(__dirname, 'dist/1'))).toBeTruthy();
+    expect(
+      fs.existsSync(path.join(import.meta.dirname, 'dist/1')),
+    ).toBeTruthy();
   },
 );
 
@@ -27,9 +29,9 @@ rspackOnlyTest('should load .env.local with higher priority', async () => {
   fse.outputFileSync(localFile, 'FOO=2');
 
   execSync('npx rsbuild build', {
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   });
-  expect(fs.existsSync(path.join(__dirname, 'dist/2'))).toBeTruthy();
+  expect(fs.existsSync(path.join(import.meta.dirname, 'dist/2'))).toBeTruthy();
 });
 
 rspackOnlyTest(
@@ -39,16 +41,18 @@ rspackOnlyTest(
     fse.outputFileSync(prodLocalFile, 'FOO=3');
 
     execSync('npx rsbuild build', {
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     });
-    expect(fs.existsSync(path.join(__dirname, 'dist/3'))).toBeTruthy();
+    expect(
+      fs.existsSync(path.join(import.meta.dirname, 'dist/3')),
+    ).toBeTruthy();
   },
 );
 
 rspackOnlyTest('should allow to specify env mode via --env-mode', async () => {
   execSync('npx rsbuild build --env-mode test', {
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   });
 
-  expect(fs.existsSync(path.join(__dirname, 'dist/5'))).toBeTruthy();
+  expect(fs.existsSync(path.join(import.meta.dirname, 'dist/5'))).toBeTruthy();
 });

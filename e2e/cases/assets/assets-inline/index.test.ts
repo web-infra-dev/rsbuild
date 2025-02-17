@@ -4,7 +4,7 @@ import { pluginReact } from '@rsbuild/plugin-react';
 
 test('should allow to inline assets with `?inline`', async ({ page }) => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     page,
     plugins: [pluginReact()],
   });

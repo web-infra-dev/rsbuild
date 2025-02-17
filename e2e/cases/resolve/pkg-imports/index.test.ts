@@ -5,7 +5,7 @@ test('should resolve package.json#imports correctly in dev build', async ({
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     page,
   });
 
@@ -21,7 +21,7 @@ test('should resolve package.json#imports correctly in prod build', async ({
   page,
 }) => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     page,
   });
 

@@ -2,10 +2,10 @@ import { execSync } from 'node:child_process';
 import path from 'node:path';
 import { globContentJSON, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
-import { removeSync } from 'fs-extra';
+import fse from 'fs-extra';
 
 const clean = () => {
-  removeSync(path.join(__dirname, 'dist'));
+  fse.removeSync(path.join(import.meta.dirname, 'dist'));
   delete process.env.NODE_ENV;
 };
 
@@ -13,10 +13,12 @@ rspackOnlyTest('should run inspect command correctly', async () => {
   clean();
 
   execSync('npx rsbuild inspect', {
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   });
 
-  const files = await globContentJSON(path.join(__dirname, 'dist/.rsbuild'));
+  const files = await globContentJSON(
+    path.join(import.meta.dirname, 'dist/.rsbuild'),
+  );
   const fileNames = Object.keys(files);
 
   const rsbuildConfig = fileNames.find((item) =>
@@ -40,10 +42,12 @@ rspackOnlyTest(
     clean();
 
     execSync('npx rsbuild inspect --mode production', {
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     });
 
-    const files = await globContentJSON(path.join(__dirname, 'dist/.rsbuild'));
+    const files = await globContentJSON(
+      path.join(import.meta.dirname, 'dist/.rsbuild'),
+    );
     const fileNames = Object.keys(files);
 
     const rsbuildConfig = fileNames.find((item) =>
@@ -65,10 +69,12 @@ rspackOnlyTest(
     clean();
 
     execSync('npx rsbuild inspect --output foo', {
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     });
 
-    const outputs = await globContentJSON(path.join(__dirname, 'dist/foo'));
+    const outputs = await globContentJSON(
+      path.join(import.meta.dirname, 'dist/foo'),
+    );
     const outputFiles = Object.keys(outputs);
 
     expect(

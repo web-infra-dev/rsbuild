@@ -6,7 +6,7 @@ rspackOnlyTest('should print Less plugin hints as expected', async () => {
 
   await expect(
     build({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     }),
   ).rejects.toThrowError('build failed');
 

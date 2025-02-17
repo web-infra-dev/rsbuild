@@ -5,7 +5,7 @@ rspackOnlyTest(
   'should allow to use html-loader in development',
   async ({ page }) => {
     const rsbuild = await dev({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       page,
     });
 
@@ -27,7 +27,7 @@ rspackOnlyTest(
 
 rspackOnlyTest('should allow to use html-loader in production', async () => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   });
 
   const files = await rsbuild.unwrapOutputJSON();

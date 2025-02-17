@@ -5,7 +5,7 @@ rspackOnlyTest(
   'should exports global in CSS Modules correctly in dev build',
   async ({ page }) => {
     const rsbuild = await dev({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       page,
     });
 
@@ -23,7 +23,7 @@ rspackOnlyTest(
   'should exports global in CSS Modules correctly in prod build',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       page,
     });
 

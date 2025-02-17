@@ -2,6 +2,7 @@
   "private": true,
   "name": "@e2e/resolve-pkg-imports",
   "version": "1.0.0",
+  "type": "module",
   "imports": {
     "#foo": "./src/foo.js",
     "#common/*": "./src/common/*.js"

@@ -6,11 +6,17 @@ import { expect } from '@playwright/test';
 import fse from 'fs-extra';
 
 rspackOnlyTest('should support restart build when config changed', async () => {
-  const indexFile = path.join(__dirname, 'src/index.js');
-  const distIndexFile = path.join(__dirname, 'dist/static/js/index.js');
+  const indexFile = path.join(import.meta.dirname, 'src/index.js');
+  const distIndexFile = path.join(
+    import.meta.dirname,
+    'dist/static/js/index.js',
+  );
   fs.rmSync(indexFile, { force: true });
   fs.rmSync(distIndexFile, { force: true });
-  const tempConfigFile = path.join(__dirname, 'test-temp-rsbuild.config.mjs');
+  const tempConfigFile = path.join(
+    import.meta.dirname,
+    'test-temp-rsbuild.config.mjs',
+  );
 
   fse.outputFileSync(
     tempConfigFile,
@@ -25,7 +31,7 @@ rspackOnlyTest('should support restart build when config changed', async () => {
   fse.outputFileSync(indexFile, `console.log('hello!');`);
 
   const process = exec(`npx rsbuild build --watch -c ${tempConfigFile}`, {
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   });
 
   await awaitFileExists(distIndexFile);
@@ -57,11 +63,17 @@ rspackOnlyTest('should support restart build when config changed', async () => {
 webpackOnlyTest(
   'should support restart webpack build when config changed',
   async () => {
-    const indexFile = path.join(__dirname, 'src/index.js');
-    const distIndexFile = path.join(__dirname, 'dist/static/js/index.js');
+    const indexFile = path.join(import.meta.dirname, 'src/index.js');
+    const distIndexFile = path.join(
+      import.meta.dirname,
+      'dist/static/js/index.js',
+    );
     fs.rmSync(indexFile, { force: true });
     fs.rmSync(distIndexFile, { force: true });
-    const tempConfigFile = path.join(__dirname, 'test-temp-rsbuild.config.mjs');
+    const tempConfigFile = path.join(
+      import.meta.dirname,
+      'test-temp-rsbuild.config.mjs',
+    );
 
     fse.outputFileSync(
       tempConfigFile,
@@ -82,7 +94,7 @@ export default defineConfig({
     fse.outputFileSync(indexFile, `console.log('hello!');`);
 
     const process = exec(`npx rsbuild build --watch -c ${tempConfigFile}`, {
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     });
 
     await awaitFileExists(distIndexFile);

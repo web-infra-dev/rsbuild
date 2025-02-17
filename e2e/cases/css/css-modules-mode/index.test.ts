@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should compile CSS Modules global mode correctly', async () => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     rsbuildConfig: {
       output: {
         cssModules: {

@@ -10,7 +10,7 @@ rspackOnlyTest('HMR should work properly', async ({ page }) => {
     test.skip();
   }
 
-  const root = __dirname;
+  const root = import.meta.dirname;
   const bPath = path.join(root, 'src/test-temp-B.svelte');
   fs.writeFileSync(
     bPath,

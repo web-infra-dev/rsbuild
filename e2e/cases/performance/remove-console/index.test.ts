@@ -1,7 +1,7 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-const cwd = __dirname;
+const cwd = import.meta.dirname;
 
 const expectConsoleType = async (
   rsbuild: Awaited<ReturnType<typeof build>>,

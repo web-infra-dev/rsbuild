@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('exclude specified less file with exclude option', async () => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     rsbuildConfig: {
       tools: {
         bundlerChain(chain) {

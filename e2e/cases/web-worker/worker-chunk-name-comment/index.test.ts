@@ -7,7 +7,7 @@ test('should allow to build web-worker and specify chunk name', async ({
   page,
 }) => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     page,
   });
 
@@ -15,7 +15,10 @@ test('should allow to build web-worker and specify chunk name', async ({
     'The Answer to the Ultimate Question of Life, The Universe, and Everything: 42',
   );
 
-  const workerFilePath = join(__dirname, 'dist/static/js/async/foo-worker.js');
+  const workerFilePath = join(
+    import.meta.dirname,
+    'dist/static/js/async/foo-worker.js',
+  );
   expect(existsSync(workerFilePath)).toBeTruthy();
 
   await rsbuild.close();

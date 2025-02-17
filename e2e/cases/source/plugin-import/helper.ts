@@ -50,12 +50,16 @@ export function findEntry(
 }
 
 export function copyPkgToNodeModules() {
-  const nodeModules = path.resolve(__dirname, 'node_modules');
+  const nodeModules = path.resolve(import.meta.dirname, 'node_modules');
 
   fse.ensureDirSync(nodeModules);
-  fs.cpSync(path.resolve(__dirname, 'foo'), path.resolve(nodeModules, 'foo'), {
-    recursive: true,
-  });
+  fs.cpSync(
+    path.resolve(import.meta.dirname, 'foo'),
+    path.resolve(nodeModules, 'foo'),
+    {
+      recursive: true,
+    },
+  );
 }
 
 export function shareTest(
@@ -67,7 +71,7 @@ export function shareTest(
   } = {},
 ) {
   const setupConfig = {
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   };
   const config: RsbuildConfig = {
     source: {

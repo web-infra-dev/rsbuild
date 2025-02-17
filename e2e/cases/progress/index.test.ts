@@ -17,7 +17,7 @@ webpackOnlyTest('should emit progress log in non-TTY environment', async () => {
   };
 
   await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     rsbuildConfig: {
       dev: {
         progressBar: true,

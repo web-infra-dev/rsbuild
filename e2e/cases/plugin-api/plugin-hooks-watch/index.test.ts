@@ -66,7 +66,7 @@ const createPlugin = () => {
 rspackOnlyTest(
   'should run plugin hooks correctly when running build with watch',
   async () => {
-    const cwd = __dirname;
+    const cwd = import.meta.dirname;
     fse.ensureDirSync(join(cwd, 'test-temp-src'));
 
     const filePath = join(cwd, 'test-temp-src', 'index.js');
@@ -75,7 +75,7 @@ rspackOnlyTest(
 
     const { plugin, names } = createPlugin();
     const rsbuild = await createRsbuild({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       rsbuildConfig: {
         plugins: [plugin],
         server: {

@@ -5,7 +5,7 @@ import { expect, test } from '@playwright/test';
 
 test('tools.htmlPlugin', async ({ page }) => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     page,
     rsbuildConfig: {
       tools: {

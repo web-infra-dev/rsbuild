@@ -9,7 +9,7 @@ rspackOnlyTest(
   'should generator rspack profile as expected in dev',
   async () => {
     const devProcess = exec('node ./dev.mjs', {
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       env: {
         ...process.env,
         RSPACK_PROFILE: 'ALL',
@@ -53,7 +53,7 @@ rspackOnlyTest(
   'should generator rspack profile as expected in build',
   async () => {
     const buildProcess = exec('npx rsbuild build', {
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       env: {
         ...process.env,
         RSPACK_PROFILE: 'ALL',

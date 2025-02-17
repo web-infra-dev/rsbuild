@@ -8,14 +8,14 @@ test('should emit bundle analyze report correctly when dev', async ({
   const { logs, restore } = proxyConsole();
 
   const rsbuild = await dev({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   });
 
   await page.goto(`http://localhost:${rsbuild.port}`);
   const testEl = page.locator('#test');
   await expect(testEl).toHaveText('Hello Rsbuild!');
 
-  const files = await globContentJSON(join(__dirname, 'dist'));
+  const files = await globContentJSON(join(import.meta.dirname, 'dist'));
   const filePaths = Object.keys(files).filter((file) =>
     file.endsWith('report-web.html'),
   );
@@ -34,7 +34,7 @@ test('should emit bundle analyze report correctly when build', async () => {
   const { logs, restore } = proxyConsole();
 
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   });
 
   const files = await rsbuild.unwrapOutputJSON();

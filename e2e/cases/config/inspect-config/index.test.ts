@@ -4,20 +4,20 @@ import { createRsbuild, proxyConsole, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 const rsbuildConfig = path.resolve(
-  __dirname,
+  import.meta.dirname,
   './dist/.rsbuild/rsbuild.config.mjs',
 );
 
 const rsbuildNodeConfig = path.resolve(
-  __dirname,
+  import.meta.dirname,
   './dist/.rsbuild/rsbuild.config.node.mjs',
 );
 const bundlerConfig = path.resolve(
-  __dirname,
+  import.meta.dirname,
   `./dist/.rsbuild/${process.env.PROVIDE_TYPE || 'rspack'}.config.web.mjs`,
 );
 const bundlerNodeConfig = path.resolve(
-  __dirname,
+  import.meta.dirname,
   `./dist/.rsbuild/${process.env.PROVIDE_TYPE || 'rspack'}.config.node.mjs`,
 );
 
@@ -27,7 +27,7 @@ rspackOnlyTest(
     const { logs, restore } = proxyConsole();
 
     const rsbuild = await createRsbuild({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     });
     await rsbuild.inspectConfig({
       writeToDisk: true,
@@ -53,7 +53,7 @@ rspackOnlyTest(
     const { logs, restore } = proxyConsole();
 
     const rsbuild = await createRsbuild({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     });
     await rsbuild.inspectConfig({
       writeToDisk: true,
@@ -61,12 +61,12 @@ rspackOnlyTest(
     });
 
     const bundlerConfig = path.resolve(
-      __dirname,
+      import.meta.dirname,
       `./dist/foo/${process.env.PROVIDE_TYPE || 'rspack'}.config.web.mjs`,
     );
 
     const rsbuildConfig = path.resolve(
-      __dirname,
+      import.meta.dirname,
       './dist/foo/rsbuild.config.mjs',
     );
 
@@ -90,7 +90,7 @@ rspackOnlyTest(
     const { logs, restore } = proxyConsole();
 
     const rsbuild = await createRsbuild({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       rsbuildConfig: {
         environments: {
           web: {
@@ -131,7 +131,7 @@ rspackOnlyTest(
   'should not generate config files when writeToDisk is false',
   async () => {
     const rsbuild = await createRsbuild({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
     });
     await rsbuild.inspectConfig({
       writeToDisk: false,
@@ -146,9 +146,9 @@ rspackOnlyTest('should allow to specify absolute output path', async () => {
   const { logs, restore } = proxyConsole();
 
   const rsbuild = await createRsbuild({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   });
-  const outputPath = path.join(__dirname, 'test-temp-output');
+  const outputPath = path.join(import.meta.dirname, 'test-temp-output');
 
   await rsbuild.inspectConfig({
     writeToDisk: true,

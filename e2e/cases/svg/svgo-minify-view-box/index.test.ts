@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test';
 
 test('should preserve viewBox after svgo minification', async () => {
   const buildOpts = {
-    cwd: __dirname,
+    cwd: import.meta.dirname,
   };
 
   const rsbuild = await build(buildOpts);

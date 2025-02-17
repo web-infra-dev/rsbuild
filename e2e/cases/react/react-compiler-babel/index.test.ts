@@ -5,7 +5,7 @@ rspackOnlyTest(
   'should render basic React component in development correctly',
   async ({ page }) => {
     const rsbuild = await dev({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       page,
     });
 
@@ -22,7 +22,7 @@ rspackOnlyTest(
   'should render basic React component in production correctly',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       page,
     });
 

@@ -8,11 +8,11 @@ test('should not compile specified file when source.exclude', async () => {
   const { logs, restore } = proxyConsole();
   await expect(
     build({
-      cwd: __dirname,
+      cwd: import.meta.dirname,
       plugins: [pluginCheckSyntax()],
       rsbuildConfig: {
         source: {
-          exclude: [path.resolve(__dirname, './src/test.js')],
+          exclude: [path.resolve(import.meta.dirname, './src/test.js')],
         },
         output: {
           overrideBrowserslist: ['ie 11'],

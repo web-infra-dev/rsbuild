@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('multi compiler build', async ({ page }) => {
   const rsbuild = await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     page,
     rsbuildConfig: {
       environments: {
@@ -29,7 +29,7 @@ test('multi compiler build', async ({ page }) => {
 
 test('multi compiler dev', async ({ page }) => {
   const rsbuild = await dev({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     page,
     rsbuildConfig: {
       output: {

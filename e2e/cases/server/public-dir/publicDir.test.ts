@@ -3,10 +3,13 @@ import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import fse from 'fs-extra';
 
-const cwd = __dirname;
+const cwd = import.meta.dirname;
 
 test('should serve publicDir for dev server correctly', async ({ page }) => {
-  await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
+  await fse.outputFile(
+    join(import.meta.dirname, 'public', 'test-temp-file.txt'),
+    'a',
+  );
 
   const rsbuild = await dev({
     cwd,
@@ -31,7 +34,10 @@ test('should serve publicDir for dev server correctly', async ({ page }) => {
 test('should serve publicDir with assetPrefix for dev server correctly', async ({
   page,
 }) => {
-  await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
+  await fse.outputFile(
+    join(import.meta.dirname, 'public', 'test-temp-file.txt'),
+    'a',
+  );
 
   const rsbuild = await dev({
     cwd,
@@ -60,8 +66,14 @@ test('should serve publicDir with assetPrefix for dev server correctly', async (
 test('should serve multiple publicDir for dev server correctly', async ({
   page,
 }) => {
-  await fse.outputFile(join(__dirname, 'test-temp-dir1', 'a.txt'), 'a');
-  await fse.outputFile(join(__dirname, 'test-temp-dir2', 'b.txt'), 'b');
+  await fse.outputFile(
+    join(import.meta.dirname, 'test-temp-dir1', 'a.txt'),
+    'a',
+  );
+  await fse.outputFile(
+    join(import.meta.dirname, 'test-temp-dir2', 'b.txt'),
+    'b',
+  );
 
   const rsbuild = await dev({
     cwd,
@@ -90,7 +102,7 @@ test('should serve custom publicDir for dev server correctly', async ({
   page,
 }) => {
   await fse.outputFile(
-    join(__dirname, 'public1', 'test-temp-file.txt'),
+    join(import.meta.dirname, 'public1', 'test-temp-file.txt'),
     'a111',
   );
 
@@ -147,7 +159,10 @@ test('should not serve publicDir when publicDir is false', async ({ page }) => {
 test('should serve publicDir for preview server correctly', async ({
   page,
 }) => {
-  await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
+  await fse.outputFile(
+    join(import.meta.dirname, 'public', 'test-temp-file.txt'),
+    'a',
+  );
 
   const rsbuild = await build({
     cwd,
@@ -171,7 +186,10 @@ test('should serve publicDir for preview server correctly', async ({
 });
 
 test('should copy publicDir to the environment distDir when multiple environments', async () => {
-  await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
+  await fse.outputFile(
+    join(import.meta.dirname, 'public', 'test-temp-file.txt'),
+    'a',
+  );
 
   const rsbuild = await build({
     cwd,
@@ -223,7 +241,10 @@ test('should copy publicDir to the environment distDir when multiple environment
 });
 
 test('should copy publicDir to the node distDir when copyOnBuild is specified as true', async () => {
-  await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
+  await fse.outputFile(
+    join(import.meta.dirname, 'public', 'test-temp-file.txt'),
+    'a',
+  );
 
   const rsbuild = await build({
     cwd,
@@ -256,8 +277,11 @@ test('should copy publicDir to the node distDir when copyOnBuild is specified as
 });
 
 test('should copy publicDir to root dist when environment dist path has a parent-child relationship', async () => {
-  await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
-  fse.removeSync(join(__dirname, 'dist-build-web'));
+  await fse.outputFile(
+    join(import.meta.dirname, 'public', 'test-temp-file.txt'),
+    'a',
+  );
+  fse.removeSync(join(import.meta.dirname, 'dist-build-web'));
 
   const rsbuild = await build({
     cwd,
@@ -298,7 +322,10 @@ test('should copy publicDir to root dist when environment dist path has a parent
 test('should serve publicDir for preview server with assetPrefix correctly', async ({
   page,
 }) => {
-  await fse.outputFile(join(__dirname, 'public', 'test-temp-file.txt'), 'a');
+  await fse.outputFile(
+    join(import.meta.dirname, 'public', 'test-temp-file.txt'),
+    'a',
+  );
 
   const rsbuild = await build({
     cwd,
@@ -328,8 +355,14 @@ test('should serve publicDir for preview server with assetPrefix correctly', asy
 test('should serve multiple publicDir for preview server correctly', async ({
   page,
 }) => {
-  await fse.outputFile(join(__dirname, 'test-temp-dir1', 'a.txt'), 'a');
-  await fse.outputFile(join(__dirname, 'test-temp-dir2', 'b.txt'), 'b');
+  await fse.outputFile(
+    join(import.meta.dirname, 'test-temp-dir1', 'a.txt'),
+    'a',
+  );
+  await fse.outputFile(
+    join(import.meta.dirname, 'test-temp-dir2', 'b.txt'),
+    'b',
+  );
 
   const rsbuild = await build({
     cwd,
@@ -368,7 +401,7 @@ test('should reload page when publicDir file changes', async ({ page }) => {
     },
   });
 
-  const file = path.join(__dirname, '/public/test-temp-file.txt');
+  const file = path.join(import.meta.dirname, '/public/test-temp-file.txt');
 
   await fse.outputFile(file, 'test');
   // check the page is reloaded
@@ -397,7 +430,7 @@ test('should reload page when custom publicDir file changes', async ({
     },
   });
 
-  const file = path.join(__dirname, '/public1/test-temp-file.txt');
+  const file = path.join(import.meta.dirname, '/public1/test-temp-file.txt');
 
   await fse.outputFile(file, 'test');
   // check the page is reloaded

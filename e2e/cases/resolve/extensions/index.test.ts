@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should apply resolve.extensions as expected', async ({ page }) => {
   await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     page,
     rsbuildConfig: {
       resolve: {
@@ -15,7 +15,7 @@ test('should apply resolve.extensions as expected', async ({ page }) => {
   expect(await page.evaluate(() => window.test)).toBe('ts');
 
   await build({
-    cwd: __dirname,
+    cwd: import.meta.dirname,
     page,
     rsbuildConfig: {
       resolve: {
