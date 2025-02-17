@@ -9,7 +9,7 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "preact": "^10.25.4"
+    "preact": "^10.26.0"
   },
   "devDependencies": {
     "@rsbuild/core": "^1.2.8",
