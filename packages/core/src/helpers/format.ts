@@ -42,38 +42,46 @@ function hintUnknownFiles(message: string): string {
     return message;
   }
 
+  const createPluginHint = (packageName: string, keyword: string) => {
+    return `To enable support for ${keyword}, use "${color.yellow(
+      `@rsbuild/plugin-${packageName}`,
+    )}" ${color.dim(
+      `(https://www.npmjs.com/package/@rsbuild/plugin-${packageName})`,
+    )}.`;
+  };
+
   const recommendPlugins = [
     {
       test: /File: .+\.s(c|a)ss/,
-      hint: `To enable support for Sass, use "${color.yellow('@rsbuild/plugin-sass')}".`,
+      hint: createPluginHint('sass', 'Sass'),
     },
     {
       test: /File: .+\.less/,
-      hint: `To enable support for Less, use "${color.yellow('@rsbuild/plugin-less')}".`,
+      hint: createPluginHint('less', 'Less'),
     },
     {
       test: /File: .+\.styl(us)?/,
-      hint: `To enable support for Stylus, use "${color.yellow('@rsbuild/plugin-stylus')}".`,
+      hint: createPluginHint('stylus', 'Stylus'),
     },
     {
       test: /File: .+\.vue?/,
-      hint: `To enable support for Vue, use "${color.yellow('@rsbuild/plugin-vue')}".`,
+      hint: createPluginHint('vue', 'Vue'),
     },
     {
       test: /File: .+\.svelte?/,
-      hint: `To enable support for Svelte, use "${color.yellow('@rsbuild/plugin-svelte')}".`,
+      hint: createPluginHint('svelte', 'Svelte'),
     },
     {
       test: /File: .+\.mdx/,
-      hint: `To enable support for MDX, use "${color.yellow('@rsbuild/plugin-mdx')}".`,
+      hint: createPluginHint('mdx', 'MDX'),
     },
     {
       test: /File: .+\.toml/,
-      hint: `To enable support for TOML, use "${color.yellow('@rsbuild/plugin-toml')}".`,
+      hint: createPluginHint('toml', 'TOML'),
     },
     {
       test: /File: .+\.yaml/,
-      hint: `To enable support for YAML, use "${color.yellow('@rsbuild/plugin-yaml')}".`,
+      hint: createPluginHint('yaml', 'YAML'),
     },
   ];
 
