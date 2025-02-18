@@ -1,5 +1,5 @@
 import { proxyConsole, rspackOnlyTest } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { expect } from '@playwright/test';
 import { type Rspack, createRsbuild } from '@rsbuild/core';
 import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
 import { matchPlugin } from '@scripts/test-helper';
@@ -7,11 +7,6 @@ import { matchPlugin } from '@scripts/test-helper';
 rspackOnlyTest(
   'should register Rsdoctor plugin when process.env.RSDOCTOR is true',
   async () => {
-    // https://github.com/microsoft/playwright/issues/31140
-    if (process.platform === 'win32') {
-      test.skip();
-    }
-
     const { logs, restore } = proxyConsole();
     process.env.RSDOCTOR = 'true';
 
