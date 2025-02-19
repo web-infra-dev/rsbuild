@@ -1,12 +1,16 @@
-<p align="center">
-  <a href="https://rsbuild.dev" target="blank"><img src="https://assets.rspack.dev/rsbuild/rsbuild-banner.png" alt="Rsbuild Logo" /></a>
-</p>
-
 # @rsbuild/webpack
 
 This package can be used to switch Rsbuild's bundler from Rspack to webpack.
 
-Note that this package is mainly used for compatibility with Modern.js and Rsbuild internal testing. We do not recommend you to use this package in a Rsbuild project. The API of the current package may change over iterations.
+<p>
+  <a href="https://npmjs.com/package/@rsbuild/webpack">
+   <img src="https://img.shields.io/npm/v/@rsbuild/webpack?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" />
+  </a>
+  <img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="license" />
+  <a href="https://npmcharts.com/compare/@rsbuild/webpack?minimal=true"><img src="https://img.shields.io/npm/dm/@rsbuild/webpack.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="downloads" /></a>
+</p>
+
+> Note that this package is mainly used for compatibility with Modern.js and Rsbuild internal testing. We do not recommend you to use this package in a Rsbuild project. The API of the current package may change over iterations.
 
 ## Usage
 
@@ -29,7 +33,7 @@ export default defineConfig({
 
 ## Documentation
 
-[Documentation](https://rsbuild.dev)
+See [Documentation](https://rsbuild.dev).
 
 ## License
 
