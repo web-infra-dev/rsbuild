@@ -77,6 +77,17 @@ export const notFoundMiddleware: Middleware = (_req, res, _next) => {
   res.end();
 };
 
+export const optionsFallbackMiddleware: Middleware = (req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    // Use 204 as no content to send in the response body
+    res.statusCode = 204;
+    res.setHeader('Content-Length', '0');
+    res.end();
+    return;
+  }
+  next();
+};
+
 const isFileExists = async (
   filePath: string,
   outputFileSystem: Rspack.OutputFileSystem,
