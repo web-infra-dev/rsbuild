@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-vue",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Vue 3 plugin of Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
