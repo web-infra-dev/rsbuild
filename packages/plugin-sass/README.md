@@ -1,19 +1,19 @@
-<p align="center">
-  <a href="https://rsbuild.dev" target="blank"><img src="https://assets.rspack.dev/rsbuild/rsbuild-banner.png" alt="Rsbuild Logo" /></a>
+# @rsbuild/plugin-sass
+
+An Rsbuild plugin to use Sass as the CSS preprocessor.
+
+<p>
+  <a href="https://npmjs.com/package/@rsbuild/plugin-sass">
+   <img src="https://img.shields.io/npm/v/@rsbuild/plugin-sass?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" />
+  </a>
+  <img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="license" />
+  <a href="https://npmcharts.com/compare/@rsbuild/plugin-sass?minimal=true"><img src="https://img.shields.io/npm/dm/@rsbuild/plugin-sass.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="downloads" /></a>
 </p>
-
-# Rsbuild
-
-The Rspack-based build tool. It's fast, out-of-the-box and extensible.
 
 ## Documentation
 
-https://rsbuild.dev/
-
-## Contributing
-
-Please read the [Contributing Guide](https://github.com/web-infra-dev/rsbuild/blob/main/CONTRIBUTING.md).
+See [Documentation](https://rsbuild.dev/plugins/list/plugin-sass).
 
 ## License
 
-Rsbuild is [MIT licensed](https://github.com/web-infra-dev/rsbuild/blob/main/LICENSE).
+[MIT](https://github.com/web-infra-dev/rsbuild/blob/main/LICENSE).
