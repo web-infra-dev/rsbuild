@@ -23,7 +23,7 @@
     "@e2e/helper": "workspace:*",
     "@module-federation/enhanced": "0.8.11",
     "@module-federation/rsbuild-plugin": "0.8.11",
-    "@playwright/test": "1.44.1",
+    "@playwright/test": "1.50.1",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-assets-retry": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
@@ -53,7 +53,7 @@
     "create-rsbuild": "workspace:*",
     "fast-glob": "^3.3.3",
     "fs-extra": "^11.3.0",
-    "playwright": "1.44.1",
+    "playwright": "1.50.1",
     "tailwindcss": "^4.0.7",
     "typescript": "^5.7.3"
   }
