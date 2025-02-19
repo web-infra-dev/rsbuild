@@ -12,7 +12,7 @@ An Rsbuild plugin to use SWC as the JavaScript compiler with `@rsbuild/webpack`.
 
 ## Documentation
 
-See [Documentation](https://rsbuild.dev/plugins/list/plugin-webpack-swc).
+See [Documentation](https://rsbuild.dev).
 
 ## License
 
