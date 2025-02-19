@@ -289,6 +289,8 @@ importers:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.7.3)
 
+  e2e/scripts: {}
+
   examples/lit:
     devDependencies:
       '@rsbuild/core':
