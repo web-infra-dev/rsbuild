@@ -35,7 +35,7 @@ import {
   printServerURLs,
 } from './helper';
 import { createHttpServer } from './httpServer';
-import { notFoundMiddleware } from './middlewares';
+import { notFoundMiddleware, optionsFallbackMiddleware } from './middlewares';
 import { open } from './open';
 import { onBeforeRestartServer, restartDevServer } from './restart';
 import { type WatchFilesResult, setupWatchFiles } from './watchFiles';
@@ -334,6 +334,11 @@ export async function createDevServer<
             if (err) {
               throw err;
             }
+
+            // OPTIONS request fallback middleware
+            // Should register this middleware as the last
+            // see: https://github.com/web-infra-dev/rsbuild/pull/2867
+            middlewares.use(optionsFallbackMiddleware);
 
             middlewares.use(notFoundMiddleware);
             if (devMiddlewares) {

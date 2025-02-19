@@ -146,11 +146,15 @@ try {
   process.exit(1);
 }
 
-// Example 3: build and get all stats
+// Example 3: build and get all assets
 const { stats } = await rsbuild.build();
 
 if (stats) {
-  const { assets } = stats.toJson({ assets: true });
+  const { assets } = stats.toJson({
+    // 排除不需要的字段以提高性能
+    all: false,
+    assets: true,
+  });
   console.log(assets);
 }
 ```
@@ -177,12 +181,22 @@ await result.close();
 
 ### Stats 对象
 
-在非 watch 模式下，`rsbuild.build()` 会返回一个 Rspack 的 [stats](https://rspack.dev/api/javascript-api/stats) 对象：
+在非 watch 模式下，`rsbuild.build()` 会返回一个 Rspack 的 [stats](https://rspack.dev/api/javascript-api/stats) 对象。
+
+例如，使用 `stats.toJson()` 方法获取所有 assets 信息：
 
 ```ts
 const result = await rsbuild.build();
+const { stats } = result;
 
-console.log(result.stats);
+if (stats) {
+  const { assets } = stats.toJson({
+    // 排除不需要的字段以提高性能
+    all: false,
+    assets: true,
+  });
+  console.log(assets);
+}
 ```
 
 ### 自定义 Compiler
