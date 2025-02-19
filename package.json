@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@changesets/cli": "^2.27.12",
+    "@changesets/cli": "^2.28.0",
     "@rsbuild/config": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "cross-env": "^7.0.3",
