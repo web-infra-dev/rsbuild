@@ -2,7 +2,7 @@
   <a href="https://rsbuild.dev" target="blank"><img src="https://assets.rspack.dev/rsbuild/rsbuild-banner.png" alt="Rsbuild Logo" /></a>
 </p>
 
-# Rsbuild
+# @rsbuild/core
 
 The Rspack-based build tool. It's fast, out-of-the-box and extensible.
 

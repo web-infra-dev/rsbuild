@@ -29,12 +29,8 @@ export default defineConfig({
 
 ## Documentation
 
-https://rsbuild.dev/
-
-## Contributing
-
-Please read the [Contributing Guide](https://github.com/web-infra-dev/rsbuild/blob/main/CONTRIBUTING.md).
+[Documentation](https://rsbuild.dev)
 
 ## License
 
-Rsbuild is [MIT licensed](https://github.com/web-infra-dev/rsbuild/blob/main/LICENSE).
+[MIT](https://github.com/web-infra-dev/rsbuild/blob/main/LICENSE).
