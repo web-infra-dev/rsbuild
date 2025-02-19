@@ -228,20 +228,6 @@ const applyDefaultMiddlewares = async ({
 
   middlewares.push(faviconFallbackMiddleware);
 
-  // OPTIONS request fallback middleware
-  // Should register this middleware as the last
-  // see: https://github.com/web-infra-dev/rsbuild/pull/2867
-  middlewares.push((req, res, next) => {
-    if (req.method === 'OPTIONS') {
-      // Use 204 as no content to send in the response body
-      res.statusCode = 204;
-      res.setHeader('Content-Length', '0');
-      res.end();
-      return;
-    }
-    next();
-  });
-
   return {
     onUpgrade: (...args) => {
       for (const cb of upgradeEvents) {

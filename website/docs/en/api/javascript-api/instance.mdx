@@ -123,11 +123,15 @@ try {
   process.exit(1);
 }
 
-// Example 3: build and get all stats
+// Example 3: build and get all assets
 const { stats } = await rsbuild.build();
 
 if (stats) {
-  const { assets } = stats.toJson({ assets: true });
+  const { assets } = stats.toJson({
+    // exclude unused fields to improve performance
+    all: false,
+    assets: true,
+  });
   console.log(assets);
 }
 ```
@@ -154,12 +158,22 @@ await result.close();
 
 ### Stats object
 
-In non-watch mode, the `rsbuild.build() returns an Rspack [stats](https://rspack.dev/api/javascript-api/stats) object:
+In non-watch mode, the `rsbuild.build()` returns an Rspack [stats](https://rspack.dev/api/javascript-api/stats) object.
+
+For example, use the `stats.toJson()` method to get all assets information:
 
 ```ts
 const result = await rsbuild.build();
+const { stats } = result;
 
-console.log(result.stats);
+if (stats) {
+  const { assets } = stats.toJson({
+    // exclude unused fields to improve performance
+    all: false,
+    assets: true,
+  });
+  console.log(assets);
+}
 ```
 
 ### Custom compiler
