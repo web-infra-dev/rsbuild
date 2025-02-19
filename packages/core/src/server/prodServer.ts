@@ -25,6 +25,8 @@ import {
   faviconFallbackMiddleware,
   getBaseMiddleware,
   getRequestLoggerMiddleware,
+  notFoundMiddleware,
+  optionsFallbackMiddleware,
 } from './middlewares';
 import { open } from './open';
 import { createProxyMiddleware } from './proxy';
@@ -122,6 +124,8 @@ export class RsbuildProdServer {
     }
 
     this.middlewares.use(faviconFallbackMiddleware);
+    this.middlewares.use(optionsFallbackMiddleware);
+    this.middlewares.use(notFoundMiddleware);
   }
 
   private async applyStaticAssetMiddleware() {
