@@ -13,7 +13,8 @@
     "scripts",
     "cases",
     "playwright.config.ts",
-    "cases/**/*.test.ts"
+    "cases/**/*.test.ts",
+    "cache/cache-basic"
   ],
   "references": [
     {

@@ -30,11 +30,11 @@ Rspack's persistent cache is [experimental](https://rspack.dev/config/experiment
 Setting `performance.buildCache` to `true` will enable the persistent build cache:
 
 ```ts title="rsbuild.config.ts"
-export default defineConfig({
+export default {
   performance: {
     buildCache: true,
   },
-});
+};
 ```
 
 Or only enable cache in development mode:
@@ -42,11 +42,11 @@ Or only enable cache in development mode:
 ```ts title="rsbuild.config.ts"
 const isDev = process.env.NODE_ENV === 'development';
 
-export default defineConfig({
+export default {
   performance: {
     buildCache: isDev,
   },
-});
+};
 ```
 
 ## Options
@@ -61,13 +61,13 @@ Set the output directory of the cache files.
 ```ts title="rsbuild.config.ts"
 import path from 'node:path';
 
-export default defineConfig({
+export default {
   performance: {
     buildCache: {
       cacheDirectory: path.resolve(__dirname, 'node_modules/.my-cache'),
     },
   },
-});
+};
 ```
 
 ### cacheDigest
@@ -104,14 +104,16 @@ Rsbuild will use the following configuration files as the default build dependen
 - `.browserslistrc`
 - `tailwindcss.config.*`
 
+When using Rsbuild CLI, it will also automatically add `.env` and `.env.*` files to the build dependencies.
+
 When you add other build dependencies, Rsbuild merges these custom dependencies with the default dependencies and passes them to Rspack.
 
 ```ts title="rsbuild.config.ts"
-export default defineConfig({
+export default {
   performance: {
     buildCache: {
       buildDependencies: [__filename],
     },
   },
-});
+};
 ```
