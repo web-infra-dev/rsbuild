@@ -30,11 +30,11 @@ Rspack 的持久化缓存处于 [实验性阶段](https://rspack.dev/zh/config/e
 设置 `performance.buildCache` 为 `true` 将启用持久化构建缓存：
 
 ```ts title="rsbuild.config.ts"
-export default defineConfig({
+export default {
   performance: {
     buildCache: true,
   },
-});
+};
 ```
 
 或者仅在开发模式下启用缓存：
@@ -61,13 +61,13 @@ export default defineConfig({
 ```ts title="rsbuild.config.ts"
 import path from 'node:path';
 
-export default defineConfig({
+export default {
   performance: {
     buildCache: {
       cacheDirectory: path.resolve(__dirname, 'node_modules/.my-cache'),
     },
   },
-});
+};
 ```
 
 ### cacheDigest
@@ -80,13 +80,13 @@ export default defineConfig({
 `cacheDigest` 可以用于添加一些会对构建结果产生影响的变量，例如 `process.env.SOME_ENV`。
 
 ```ts title="rsbuild.config.ts"
-export default defineConfig({
+export default {
   performance: {
     buildCache: {
       cacheDigest: [process.env.SOME_ENV],
     },
   },
-});
+};
 ```
 
 ### buildDependencies
@@ -104,14 +104,16 @@ Rsbuild 会将以下配置文件作为默认的构建依赖：
 - `.browserslistrc`
 - `tailwindcss.config.*`
 
+在使用 Rsbuild CLI 时，它还会自动将 `.env` 和 `.env.*` 文件添加到构建依赖中。
+
 当你添加其他构建依赖时，Rsbuild 会将这些自定义依赖与默认依赖合并，并传递给 Rspack。
 
 ```ts title="rsbuild.config.ts"
-export default defineConfig({
+export default {
   performance: {
     buildCache: {
       buildDependencies: [__filename],
     },
   },
-});
+};
 ```

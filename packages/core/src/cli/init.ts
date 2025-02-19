@@ -84,6 +84,20 @@ export async function init({
       config.dev.cliShortcuts = true;
     }
 
+    // add env files to build dependencies, so that the build cache
+    // can be invalidated when the env files are changed.
+    if (config.performance?.buildCache && envs.filePaths.length > 0) {
+      const { buildCache } = config.performance;
+      if (buildCache === true) {
+        config.performance.buildCache = {
+          buildDependencies: envs.filePaths,
+        };
+      } else {
+        buildCache.buildDependencies ||= [];
+        buildCache.buildDependencies.push(...envs.filePaths);
+      }
+    }
+
     const rsbuild = await createRsbuild({
       cwd: root,
       rsbuildConfig: config,
