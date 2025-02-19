@@ -1,6 +1,5 @@
-import { getRandomPort } from '@e2e/helper';
+import { createRsbuild, getRandomPort } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { createRsbuild } from '@rsbuild/core';
 import polka from 'polka';
 
 test('multiple rsbuild dev servers should work correctly', async ({ page }) => {
@@ -13,6 +12,7 @@ test('multiple rsbuild dev servers should work correctly', async ({ page }) => {
         },
       },
       dev: {
+        progressBar: false,
         assetPrefix: '/app',
       },
       server: {
@@ -38,6 +38,7 @@ test('multiple rsbuild dev servers should work correctly', async ({ page }) => {
         printUrls: false,
       },
       dev: {
+        progressBar: false,
         assetPrefix: '/app1',
       },
       environments: {
