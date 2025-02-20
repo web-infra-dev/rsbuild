@@ -30,7 +30,7 @@ export const pluginNonce = (): RsbuildPlugin => ({
         }
 
         // apply __webpack_nonce__
-        // https://webpack.js.org/guides/csp/
+        // https://rspack.dev/api/runtime-api/module-variables#__webpack_nonce__
         const injectCode = createVirtualModule(
           `__webpack_nonce__ = "${nonce}";`,
         );

@@ -642,8 +642,7 @@ export interface PerformanceConfig {
 
   /**
    * Whether capture timing information for each module,
-   * same as the [profile](https://webpack.js.org/configuration/other-options/#profile)
-   * config of webpack.
+   * same as the [profile](https://rspack.dev/config/other-options#profile) config of Rspack.
    */
   profile?: boolean;
 }
@@ -1023,7 +1022,7 @@ export interface OutputConfig {
   /**
    * When using CDN in the production,
    * you can use this option to set the URL prefix of static assets,
-   * similar to the output.publicPath config of webpack.
+   * similar to the `output.publicPath` config of Rspack.
    * @default `server.base`
    */
   assetPrefix?: string;
@@ -1458,7 +1457,7 @@ export interface DevConfig {
   liveReload?: boolean;
   /**
    * Set the URL prefix of static assets in development mode,
-   * similar to the [output.publicPath](https://rspack.dev/config/output#outputpublicpath) config of webpack.
+   * similar to the [output.publicPath](https://rspack.dev/config/output#outputpublicpath) config of Rspack.
    */
   assetPrefix?: string | boolean;
   /**
