@@ -192,6 +192,16 @@ export interface SourceConfig {
   assetsInclude?: Rspack.RuleSetCondition;
   /**
    * Specify additional JavaScript files that need to be compiled by SWC.
+   * Through the `source.include` config, you can specify directories or modules
+   * that need to be compiled by Rsbuild. The usage of `source.include` is
+   * consistent with [Rule.include](https://rspack.dev/config/module#ruleinclude)
+   * in Rspack, which supports passing in strings or regular expressions to match
+   * the module path.
+   * @default
+   * [
+   *   { and: [rootPath, { not: /[\\/]node_modules[\\/]/ }], },
+   *   /\.(?:ts|tsx|jsx|mts|cts)$/,
+   * ];
    */
   include?: RuleSetCondition[];
   /**
