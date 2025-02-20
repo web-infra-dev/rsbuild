@@ -248,6 +248,23 @@ for (const path of context.keys()) {
 }
 ```
 
+## Migrating Vite plugins
+
+Rsbuild's plugin API covers most of the Vite and Rollup plugin hooks, for example:
+
+| Vite plugin hooks | Rsbuild plugin API                                                                                                     |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `resolveId`       | [resolve](/plugins/dev/core#apiresolve)                                                                                |
+| `transform`       | [transform](/plugins/dev/core#apitransform)                                                                            |
+| `config`          | [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig)                                                          |
+| `configResolved`  | [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig)                                                        |
+| `configureServer` | [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver)                                                    |
+| `buildStart`      | [onBeforeBuild](/plugins/dev/hooks#onbeforebuild), [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) |
+| `buildEnd`        | [onAfterBuild](/plugins/dev/hooks#onafterbuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
+| `closeBundle`     | [onCloseBuild](/plugins/dev/hooks#onclosebuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
+
+See [Plugin system](/plugins/dev/index) for more details.
+
 ## Validating results
 
 After completing the above steps, you have completed the basic migration from Vite to Rsbuild. You can now run the `npm run dev` command to try starting the dev server.

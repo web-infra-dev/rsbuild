@@ -248,6 +248,23 @@ for (const path of context.keys()) {
 }
 ```
 
+## 迁移 Vite 插件
+
+Rsbuild 的插件 API 覆盖了大部分的 Vite 和 Rollup 插件 hooks，例如：
+
+| Vite 插件 hooks   | Rsbuild 插件 API                                                                                                       |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `resolveId`       | [resolve](/plugins/dev/core#apiresolve)                                                                                |
+| `transform`       | [transform](/plugins/dev/core#apitransform)                                                                            |
+| `config`          | [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig)                                                          |
+| `configResolved`  | [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig)                                                        |
+| `configureServer` | [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver)                                                    |
+| `buildStart`      | [onBeforeBuild](/plugins/dev/hooks#onbeforebuild), [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) |
+| `buildEnd`        | [onAfterBuild](/plugins/dev/hooks#onafterbuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
+| `closeBundle`     | [onCloseBuild](/plugins/dev/hooks#onclosebuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
+
+请参考 [插件系统](/plugins/dev/index) 文档来了解更多。
+
 ## 验证结果
 
 完成以上步骤后，你已经完成了从 Vite 到 Rsbuild 的基本迁移，此时可以执行 `npm run dev` 命令来尝试启动开发服务器。
