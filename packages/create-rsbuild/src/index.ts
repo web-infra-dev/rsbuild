@@ -29,7 +29,8 @@ async function getTemplateName({ template }: Argv) {
       message: 'Select framework',
       options: [
         { value: 'vanilla', label: 'Vanilla' },
-        { value: 'react', label: 'React' },
+        { value: 'react', label: 'React 19' },
+        { value: 'react18', label: 'React 18' },
         { value: 'vue3', label: 'Vue 3' },
         { value: 'vue2', label: 'Vue 2' },
         { value: 'lit', label: 'Lit' },
@@ -62,6 +63,10 @@ function mapESLintTemplate(templateName: string): ESLintTemplateName {
     case 'svelte-js':
     case 'svelte-ts':
       return templateName;
+    case 'react18-js':
+      return 'react-js';
+    case 'react18-ts':
+      return 'react-js';
   }
   const language = templateName.split('-')[1];
   return `vanilla-${language}` as ESLintTemplateName;
@@ -71,8 +76,12 @@ create({
   root: path.resolve(__dirname, '..'),
   name: 'rsbuild',
   templates: [
+    'vanilla-js',
+    'vanilla-ts',
     'react-js',
     'react-ts',
+    'react18-js',
+    'react18-ts',
     'vue3-js',
     'vue3-ts',
     'vue2-js',
@@ -81,8 +90,6 @@ create({
     'svelte-ts',
     'solid-js',
     'solid-ts',
-    'vanilla-js',
-    'vanilla-ts',
   ],
   getTemplateName,
   mapESLintTemplate,

@@ -8,6 +8,15 @@ rspackOnlyTest('should create react-ts project as expected', async () => {
   expect(pkgJson.dependencies['react-dom']).toBeTruthy();
   expect(pkgJson.devDependencies['@rsbuild/plugin-react']).toBeTruthy();
 });
+rspackOnlyTest('should create react18-ts project as expected', async () => {
+  const { pkgJson } = await createAndValidate(
+    import.meta.dirname,
+    'react18-ts',
+  );
+  expect(pkgJson.dependencies.react.startsWith('^18')).toBeTruthy();
+  expect(pkgJson.dependencies['react-dom'].startsWith('^18')).toBeTruthy();
+  expect(pkgJson.devDependencies['@rsbuild/plugin-react']).toBeTruthy();
+});
 
 rspackOnlyTest('should create preact-ts project as expected', async () => {
   const { pkgJson } = await createAndValidate(import.meta.dirname, 'preact-ts');
