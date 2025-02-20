@@ -208,7 +208,8 @@ export interface SourceConfig {
    * Set the entry modules.
    * @default
    * {
-   *   // Rsbuild also supports other suffixes by default, such as ts, tsx, jsx, mts, cts, mjs, cjs
+   *   // Rsbuild also supports other suffixes by default, such as ts,
+   *   // tsx, jsx, mts, cts, mjs, cjs
    *   index: './src/index.js',
    * }
    */
