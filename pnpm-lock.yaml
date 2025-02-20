@@ -536,8 +536,8 @@ importers:
         specifier: workspace:*
         version: link:../webpack
       '@rslib/core':
-        specifier: 0.4.1
-        version: 0.4.1(typescript@5.7.3)
+        specifier: 0.5.0
+        version: 0.5.0(typescript@5.7.3)
       '@types/lodash':
         specifier: ^4.17.15
         version: 4.17.15
@@ -579,8 +579,8 @@ importers:
         specifier: workspace:*
         version: link:../../core
       '@rslib/core':
-        specifier: 0.4.1
-        version: 0.4.1(typescript@5.7.3)
+        specifier: 0.5.0
+        version: 0.5.0(typescript@5.7.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../../scripts/test-helper
@@ -616,8 +616,8 @@ importers:
         version: 3.40.0
     devDependencies:
       '@rslib/core':
-        specifier: 0.4.1
-        version: 0.4.1(typescript@5.7.3)
+        specifier: 0.5.0
+        version: 0.5.0(typescript@5.7.3)
       '@types/connect':
         specifier: 3.4.38
         version: 3.4.38
@@ -746,8 +746,8 @@ importers:
         version: 1.2.0
     devDependencies:
       '@rslib/core':
-        specifier: 0.4.1
-        version: 0.4.1(typescript@5.7.3)
+        specifier: 0.5.0
+        version: 0.5.0(typescript@5.7.3)
       '@types/node':
         specifier: ^22.13.4
         version: 22.13.4
@@ -761,8 +761,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.4.1
-        version: 0.4.1(typescript@5.7.3)
+        specifier: 0.5.0
+        version: 0.5.0(typescript@5.7.3)
       '@swc/core':
         specifier: ^1.10.16
         version: 1.10.16(@swc/helpers@0.5.15)
@@ -807,8 +807,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.4.1
-        version: 0.4.1(typescript@5.7.3)
+        specifier: 0.5.0
+        version: 0.5.0(typescript@5.7.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -838,8 +838,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.4.1
-        version: 0.4.1(typescript@5.7.3)
+        specifier: 0.5.0
+        version: 0.5.0(typescript@5.7.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -878,8 +878,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.4.1
-        version: 0.4.1(typescript@5.7.3)
+        specifier: 0.5.0
+        version: 0.5.0(typescript@5.7.3)
       '@types/node':
         specifier: ^22.13.4
         version: 22.13.4
@@ -903,8 +903,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.4.1
-        version: 0.4.1(typescript@5.7.3)
+        specifier: 0.5.0
+        version: 0.5.0(typescript@5.7.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -937,8 +937,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.4.1
-        version: 0.4.1(typescript@5.7.3)
+        specifier: 0.5.0
+        version: 0.5.0(typescript@5.7.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -977,8 +977,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.4.1
-        version: 0.4.1(typescript@5.7.3)
+        specifier: 0.5.0
+        version: 0.5.0(typescript@5.7.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1008,8 +1008,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.4.1
-        version: 0.4.1(typescript@5.7.3)
+        specifier: 0.5.0
+        version: 0.5.0(typescript@5.7.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1033,8 +1033,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.4.1
-        version: 0.4.1(typescript@5.7.3)
+        specifier: 0.5.0
+        version: 0.5.0(typescript@5.7.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1073,8 +1073,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.4.1
-        version: 0.4.1(typescript@5.7.3)
+        specifier: 0.5.0
+        version: 0.5.0(typescript@5.7.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1110,8 +1110,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.4.1
-        version: 0.4.1(typescript@5.7.3)
+        specifier: 0.5.0
+        version: 0.5.0(typescript@5.7.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1131,8 +1131,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       '@rslib/core':
-        specifier: 0.4.1
-        version: 0.4.1(typescript@5.7.3)
+        specifier: 0.5.0
+        version: 0.5.0(typescript@5.7.3)
       '@types/node':
         specifier: ^22.13.4
         version: 22.13.4
@@ -1159,8 +1159,8 @@ importers:
         version: 2.0.1
     devDependencies:
       '@rslib/core':
-        specifier: 0.4.1
-        version: 0.4.1(typescript@5.7.3)
+        specifier: 0.5.0
+        version: 0.5.0(typescript@5.7.3)
 
   website:
     devDependencies:
@@ -1229,6 +1229,64 @@ packages:
   '@arr/every@1.0.1':
     resolution: {integrity: sha512-UQFQ6SgyJ6LX42W8rHCs8KVc0JS0tzVL9ct4XYedJukskYVWTo49tNiMEK9C2HTyarbNiT/RVIRSY82vH+6sTg==}
     engines: {node: '>=4'}
+
+  '@ast-grep/napi-darwin-arm64@0.35.0':
+    resolution: {integrity: sha512-T+MN4Oinc+sXjXCIHzfxDDWY7r2pKgPxM6zVeVlkMTrJV2mJtyKYBIS+CABhRM6kflps2T2I6l4DGaKV/8Ym9w==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@ast-grep/napi-darwin-x64@0.35.0':
+    resolution: {integrity: sha512-pEYiN6JI1HY2uWhMYJ9+3yIMyVYKuYdFzeD+dL7odA3qzK0o9N9AM3/NOt4ynU2EhufaWCJr0P5NoQ636qN6MQ==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [darwin]
+
+  '@ast-grep/napi-linux-arm64-gnu@0.35.0':
+    resolution: {integrity: sha512-NBuzQngABGKz7lhG08IQb+7nPqUx81Ol37xmS3ZhVSdSgM0mtp93rCbgFTkJcAFE8IMfCHQSg7G4g0Iotz4ABQ==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [linux]
+
+  '@ast-grep/napi-linux-arm64-musl@0.35.0':
+    resolution: {integrity: sha512-1EcvHPwyWpCL/96LuItBYGfeI5FaMTRvL+dHbO/hL5q1npqbb5qn+ppJwtNOjTPz8tayvgggxVk9T4C2O7taYA==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [linux]
+
+  '@ast-grep/napi-linux-x64-gnu@0.35.0':
+    resolution: {integrity: sha512-FDzNdlqmQnsiWXhnLxusw5AOfEcEM+5xtmrnAf3SBRFr86JyWD9qsynnFYC2pnP9hlMfifNH2TTmMpyGJW49Xw==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [linux]
+
+  '@ast-grep/napi-linux-x64-musl@0.35.0':
+    resolution: {integrity: sha512-wlmndjfBafT8u5p4DBnoRQyoCSGNuVSz7rT3TqhvlHcPzUouRWMn95epU9B1LNLyjXvr9xHeRjSktyCN28w57Q==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [linux]
+
+  '@ast-grep/napi-win32-arm64-msvc@0.35.0':
+    resolution: {integrity: sha512-gkhJeYc4rrZLX2icLxalPikTLMR57DuIYLwLr9g+StHYXIsGHrbfrE6Nnbdd8Izfs34ArFCrcwdaMrGlvOPSeg==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [win32]
+
+  '@ast-grep/napi-win32-ia32-msvc@0.35.0':
+    resolution: {integrity: sha512-OdUuRa3chHCZ65y+qALfkUjz0W0Eg21YZ9TyPquV5why07M6HAK38mmYGzLxFH6294SvRQhs+FA/rAfbKeH0jA==}
+    engines: {node: '>= 10'}
+    cpu: [ia32]
+    os: [win32]
+
+  '@ast-grep/napi-win32-x64-msvc@0.35.0':
+    resolution: {integrity: sha512-pcQRUHqbroTN1oQ56V982a7IZTUUySQYWa2KEyksiifHGuBuitlzcyzFGjT96ThcqD9XW0UVJMvpoF2Qjh006Q==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [win32]
+
+  '@ast-grep/napi@0.35.0':
+    resolution: {integrity: sha512-3ucaaSxV6fxXoqHrE/rxAvP1THnDdY5jNzGlnvx+JvnY9C/dSRKc0jlRMRz59N3El572+/yNRUUpAV1T9aBJug==}
+    engines: {node: '>= 10'}
 
   '@babel/code-frame@7.26.2':
     resolution: {integrity: sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ==}
@@ -2166,13 +2224,13 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rsbuild/core@1.2.3':
-    resolution: {integrity: sha512-lUCt8gQe9E2PI3srcEJ1Na3GQYmsYuvAqK0f/k00HM0pEjrbOFC9Xq2kR85UoXHFqlTCIw/fLLDe91PKRCbKAw==}
+  '@rsbuild/core@1.2.11':
+    resolution: {integrity: sha512-bsTtXlqJKoqnHwOZ05NePGpBf/neuwHTzJtQegQ9GA8YLyjow1wn8vPXFiRtYL0UqASEDtFtAm2bcaieg7r/TQ==}
     engines: {node: '>=16.7.0'}
     hasBin: true
 
-  '@rsbuild/core@1.2.4':
-    resolution: {integrity: sha512-GPn4TLW9nv7OgmbSBs9Col3dNr55CEDoeoGLl1B0pszyj9yI3s4ArVWVo/R5oXrRa9sDmA/T54rsb2r3trnttw==}
+  '@rsbuild/core@1.2.3':
+    resolution: {integrity: sha512-lUCt8gQe9E2PI3srcEJ1Na3GQYmsYuvAqK0f/k00HM0pEjrbOFC9Xq2kR85UoXHFqlTCIw/fLLDe91PKRCbKAw==}
     engines: {node: '>=16.7.0'}
     hasBin: true
 
@@ -2265,8 +2323,8 @@ packages:
   '@rsdoctor/utils@1.0.0-alpha.4':
     resolution: {integrity: sha512-Ch1jtpmX5igoXhJ40D5PzfmZh5NVw6ALBu/cT32MejX9+FiOzmw3yO1LLUbxM8DSatu8ZBW0tBPwZoHzZaffVA==}
 
-  '@rslib/core@0.4.1':
-    resolution: {integrity: sha512-qYzXqmyJsYhrorxUnXz1UNaLlkun/4HPXfDmvkrvFJ/vbQTLZom66a9uMQfkluRish3kJNumYNwtgfxBzn6ZBQ==}
+  '@rslib/core@0.5.0':
+    resolution: {integrity: sha512-zHgu9GmT/gvbuDoGLxMHxYbKRiARZsH4UXWFsezq7+KZ3PdEMBUNywmslExY/pk+xSpBUF6+peE6WCUOeW3mKQ==}
     engines: {node: '>=16.0.0'}
     hasBin: true
     peerDependencies:
@@ -3992,6 +4050,14 @@ packages:
       picomatch:
         optional: true
 
+  fdir@6.4.3:
+    resolution: {integrity: sha512-PMXmW2y1hDDfTSRc9gaXIuCCRpuoz3Kaz8cUelp3smouvfT632ozg2vrT6lJsHKKOF59YLbOGfAWGUcKEfRMQw==}
+    peerDependencies:
+      picomatch: ^3 || ^4
+    peerDependenciesMeta:
+      picomatch:
+        optional: true
+
   feed@4.2.2:
     resolution: {integrity: sha512-u5/sxGfiMfZNtJ3OvQpXcvotFpYkL0n9u9mM2vkui2nGo8b4wvDkJ8gAkYqbA8QpGyFCv3RK0Z+Iv+9veCS9bQ==}
     engines: {node: '>=0.4.0'}
@@ -5684,8 +5750,8 @@ packages:
       webpack:
         optional: true
 
-  rsbuild-plugin-dts@0.4.1:
-    resolution: {integrity: sha512-9/GJ/U8vt7pvRJts8l/FX6f5HzT2/0LUlwCrCz4mvqHh7EF4DI/b1TWXehvR7OH5ORE3hQxmPAhW01eaHBT8IQ==}
+  rsbuild-plugin-dts@0.5.0:
+    resolution: {integrity: sha512-m9p53zzcKJ+dWJ/sQfI7jaF9UpmQigdMXQm96tvSpnzSp7WQvjTHAyV5iB6H/3lWTcRJXmLb6mxSzIiCVRnNNA==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       '@microsoft/api-extractor': ^7
@@ -6310,6 +6376,10 @@ packages:
     resolution: {integrity: sha512-Zc+8eJlFMvgatPZTl6A9L/yht8QqdmUNtURHaKZLmKBE12hNPSrqNkUp2cs3M/UKmNVVAMFQYSjYIVHDjW5zew==}
     engines: {node: '>=12.0.0'}
 
+  tinyglobby@0.2.12:
+    resolution: {integrity: sha512-qkf4trmKSIiMTs/E63cxH+ojC2unam7rJ0WrauAzpT3ECNTxGRMlaXxVbfxMUC/w0LaYk6jQ4y/nGR9uBO3tww==}
+    engines: {node: '>=12.0.0'}
+
   tinypool@1.0.2:
     resolution: {integrity: sha512-al6n+QEANGFOMf/dmUMsuS5/r9B06uwlyNjZZql/zv8J7ybHCgoihBNORZCY2mzUuAnomQa2JdhyHKzZxPCrFA==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -6766,6 +6836,45 @@ snapshots:
       '@jridgewell/trace-mapping': 0.3.25
 
   '@arr/every@1.0.1': {}
+
+  '@ast-grep/napi-darwin-arm64@0.35.0':
+    optional: true
+
+  '@ast-grep/napi-darwin-x64@0.35.0':
+    optional: true
+
+  '@ast-grep/napi-linux-arm64-gnu@0.35.0':
+    optional: true
+
+  '@ast-grep/napi-linux-arm64-musl@0.35.0':
+    optional: true
+
+  '@ast-grep/napi-linux-x64-gnu@0.35.0':
+    optional: true
+
+  '@ast-grep/napi-linux-x64-musl@0.35.0':
+    optional: true
+
+  '@ast-grep/napi-win32-arm64-msvc@0.35.0':
+    optional: true
+
+  '@ast-grep/napi-win32-ia32-msvc@0.35.0':
+    optional: true
+
+  '@ast-grep/napi-win32-x64-msvc@0.35.0':
+    optional: true
+
+  '@ast-grep/napi@0.35.0':
+    optionalDependencies:
+      '@ast-grep/napi-darwin-arm64': 0.35.0
+      '@ast-grep/napi-darwin-x64': 0.35.0
+      '@ast-grep/napi-linux-arm64-gnu': 0.35.0
+      '@ast-grep/napi-linux-arm64-musl': 0.35.0
+      '@ast-grep/napi-linux-x64-gnu': 0.35.0
+      '@ast-grep/napi-linux-x64-musl': 0.35.0
+      '@ast-grep/napi-win32-arm64-msvc': 0.35.0
+      '@ast-grep/napi-win32-ia32-msvc': 0.35.0
+      '@ast-grep/napi-win32-x64-msvc': 0.35.0
 
   '@babel/code-frame@7.26.2':
     dependencies:
@@ -7785,16 +7894,16 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.31.0':
     optional: true
 
-  '@rsbuild/core@1.2.3':
+  '@rsbuild/core@1.2.11':
     dependencies:
-      '@rspack/core': 1.2.2(@swc/helpers@0.5.15)
+      '@rspack/core': 1.2.3(@swc/helpers@0.5.15)
       '@rspack/lite-tapable': 1.0.1
       '@swc/helpers': 0.5.15
       core-js: 3.40.0
     transitivePeerDependencies:
       - '@rspack/tracing'
 
-  '@rsbuild/core@1.2.4':
+  '@rsbuild/core@1.2.3':
     dependencies:
       '@rspack/core': 1.2.2(@swc/helpers@0.5.15)
       '@rspack/lite-tapable': 1.0.1
@@ -8006,11 +8115,11 @@ snapshots:
       - supports-color
       - webpack
 
-  '@rslib/core@0.4.1(typescript@5.7.3)':
+  '@rslib/core@0.5.0(typescript@5.7.3)':
     dependencies:
-      '@rsbuild/core': 1.2.4
-      rsbuild-plugin-dts: 0.4.1(@rsbuild/core@1.2.4)(typescript@5.7.3)
-      tinyglobby: 0.2.10
+      '@rsbuild/core': 1.2.11
+      rsbuild-plugin-dts: 0.5.0(@rsbuild/core@1.2.11)(typescript@5.7.3)
+      tinyglobby: 0.2.12
     optionalDependencies:
       typescript: 5.7.3
     transitivePeerDependencies:
@@ -9814,6 +9923,10 @@ snapshots:
       format: 0.2.2
 
   fdir@6.4.2(picomatch@4.0.2):
+    optionalDependencies:
+      picomatch: 4.0.2
+
+  fdir@6.4.3(picomatch@4.0.2):
     optionalDependencies:
       picomatch: 4.0.2
 
@@ -11855,12 +11968,14 @@ snapshots:
     optionalDependencies:
       webpack: 5.98.0(@swc/core@1.10.16(@swc/helpers@0.5.15))
 
-  rsbuild-plugin-dts@0.4.1(@rsbuild/core@1.2.4)(typescript@5.7.3):
+  rsbuild-plugin-dts@0.5.0(@rsbuild/core@1.2.11)(typescript@5.7.3):
     dependencies:
-      '@rsbuild/core': 1.2.4
+      '@ast-grep/napi': 0.35.0
+      '@rsbuild/core': 1.2.11
       magic-string: 0.30.17
       picocolors: 1.1.1
-      tinyglobby: 0.2.10
+      tinyglobby: 0.2.12
+      tsconfig-paths: 4.2.0
     optionalDependencies:
       typescript: 5.7.3
 
@@ -12430,6 +12545,11 @@ snapshots:
   tinyglobby@0.2.10:
     dependencies:
       fdir: 6.4.2(picomatch@4.0.2)
+      picomatch: 4.0.2
+
+  tinyglobby@0.2.12:
+    dependencies:
+      fdir: 6.4.3(picomatch@4.0.2)
       picomatch: 4.0.2
 
   tinypool@1.0.2: {}
