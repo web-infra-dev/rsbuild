@@ -158,7 +158,18 @@ rspackOnlyTest(
       names.filter((name) => name.includes(' node')).length,
     );
 
-    expect(names.filter((name) => !name.includes(' node'))).toEqual([
+    expect(names.filter((name) => name.includes('DevServer'))).toEqual([
+      'BeforeStartDevServer',
+      'AfterStartDevServer',
+      'OnCloseDevServer',
+    ]);
+
+    // compile is async, so the execution order of AfterStartDevServer and the compile hooks is uncertain
+    expect(
+      names.filter(
+        (name) => !name.includes(' node') && name !== 'AfterStartDevServer',
+      ),
+    ).toEqual([
       'ModifyRsbuildConfig',
       'ModifyEnvironmentConfig web',
       'BeforeStartDevServer',
@@ -167,14 +178,17 @@ rspackOnlyTest(
       'BeforeCreateCompiler',
       'AfterCreateCompiler',
       'BeforeEnvironmentCompile web',
-      'AfterStartDevServer',
       'ModifyHTMLTags web',
       'AfterEnvironmentCompile web',
       'OnDevCompileDone',
       'OnCloseDevServer',
     ]);
 
-    expect(names.filter((name) => !name.includes(' web'))).toEqual([
+    expect(
+      names.filter(
+        (name) => !name.includes(' web') && name !== 'AfterStartDevServer',
+      ),
+    ).toEqual([
       'ModifyRsbuildConfig',
       'ModifyEnvironmentConfig node',
       'BeforeStartDevServer',
@@ -183,7 +197,6 @@ rspackOnlyTest(
       'BeforeCreateCompiler',
       'AfterCreateCompiler',
       'BeforeEnvironmentCompile node',
-      'AfterStartDevServer',
       'ModifyHTMLTags node',
       'AfterEnvironmentCompile node',
       'OnDevCompileDone',
