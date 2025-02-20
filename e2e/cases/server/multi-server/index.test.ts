@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import polka from 'polka';
 
 test('multiple rsbuild dev servers should work correctly', async ({ page }) => {
-  const rsbuild = await createRsbuild({
+  const rsbuild1 = await createRsbuild({
     cwd: import.meta.dirname,
     rsbuildConfig: {
       output: {
@@ -17,11 +17,12 @@ test('multiple rsbuild dev servers should work correctly', async ({ page }) => {
       },
       server: {
         printUrls: false,
+        middlewareMode: true,
       },
     },
   });
 
-  const rsbuild1 = await createRsbuild({
+  const rsbuild2 = await createRsbuild({
     cwd: import.meta.dirname,
     rsbuildConfig: {
       source: {
@@ -36,6 +37,7 @@ test('multiple rsbuild dev servers should work correctly', async ({ page }) => {
       },
       server: {
         printUrls: false,
+        middlewareMode: true,
       },
       dev: {
         progressBar: false,
@@ -47,14 +49,13 @@ test('multiple rsbuild dev servers should work correctly', async ({ page }) => {
     },
   });
 
-  const rsbuildServer = await rsbuild.createDevServer();
-
   const rsbuildServer1 = await rsbuild1.createDevServer();
+  const rsbuildServer2 = await rsbuild2.createDevServer();
 
   const app = polka();
 
-  app.use('/app', rsbuildServer.middlewares);
-  app.use('/app1', rsbuildServer1.middlewares);
+  app.use('/app', rsbuildServer1.middlewares);
+  app.use('/app1', rsbuildServer2.middlewares);
 
   const port = await getRandomPort();
 
@@ -65,8 +66,8 @@ test('multiple rsbuild dev servers should work correctly', async ({ page }) => {
   page.goto(`http://localhost:${port}/app1`);
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild1!');
 
-  await rsbuildServer.close();
   await rsbuildServer1.close();
+  await rsbuildServer2.close();
 
   server?.close();
 });

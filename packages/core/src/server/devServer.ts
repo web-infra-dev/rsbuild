@@ -50,7 +50,8 @@ export type RsbuildDevServer = {
   middlewares: Connect.Server;
   /**
    * The Node.js HTTP server instance.
-   * Will be `Http2SecureServer` if `server.https` config is used.
+   * - Will be `Http2SecureServer` if `server.https` config is used.
+   * - Will be `null` if `server.middlewareMode` is enabled.
    */
   httpServer:
     | import('node:http').Server
@@ -308,10 +309,12 @@ export async function createDevServer<
   const { default: connect } = await import('../../compiled/connect/index.js');
   const middlewares = connect();
 
-  const httpServer = await createHttpServer({
-    serverConfig: config.server,
-    middlewares,
-  });
+  const httpServer = config.server.middlewareMode
+    ? null
+    : await createHttpServer({
+        serverConfig: config.server,
+        middlewares,
+      });
 
   const devServerAPI: RsbuildDevServer = {
     port,
@@ -319,6 +322,12 @@ export async function createDevServer<
     environments: environmentAPI,
     httpServer,
     listen: async () => {
+      if (!httpServer) {
+        throw new Error(
+          '[rsbuild:server] Can not listen dev server as `server.middlewareMode` is enabled.',
+        );
+      }
+
       const serverTerminator = getServerTerminator(httpServer);
       logger.debug('listen dev server');
 
@@ -340,7 +349,9 @@ export async function createDevServer<
             // see: https://github.com/web-infra-dev/rsbuild/pull/2867
             middlewares.use(optionsFallbackMiddleware);
 
+            // 404 fallback middleware should be the last middleware
             middlewares.use(notFoundMiddleware);
+
             if (devMiddlewares) {
               httpServer.on('upgrade', devMiddlewares.onUpgrade);
             }

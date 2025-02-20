@@ -358,7 +358,6 @@ export type PublicDir = false | PublicDirOptions | PublicDirOptions[];
 export interface ServerConfig {
   /**
    * Configure the base path of the server.
-   *
    * @default '/'
    */
   base?: string;
@@ -437,6 +436,12 @@ export interface ServerConfig {
    * @default true
    */
   printUrls?: PrintUrls;
+  /**
+   * Whether to create Rsbuild's server in middleware mode, which is useful for
+   * integrating with other servers.
+   * @default false
+   */
+  middlewareMode?: boolean;
 }
 
 export type NormalizedServerConfig = ServerConfig &
@@ -452,6 +457,7 @@ export type NormalizedServerConfig = ServerConfig &
       | 'open'
       | 'base'
       | 'cors'
+      | 'middlewareMode'
     >
   >;
 
