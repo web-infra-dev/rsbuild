@@ -5,7 +5,7 @@ import { dedupeNestedPaths } from '../helpers';
 import { open } from '../server/open';
 import type { OnAfterStartDevServerFn, RsbuildPlugin } from '../types';
 
-// For Rsbuild Server Config
+// For Rsbuild server config
 export const pluginServer = (): RsbuildPlugin => ({
   name: 'rsbuild:server',
 
