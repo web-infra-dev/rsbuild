@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should allow to build web-worker with new Worker', async ({ page }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
   });
 
@@ -18,7 +18,7 @@ test('should allow to build web-worker with new Worker in dev mode', async ({
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
   });
 

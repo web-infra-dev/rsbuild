@@ -5,7 +5,7 @@ rspackOnlyTest(
   'should allow to disable the built-in lightningcss loader',
   async () => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       rsbuildConfig: {
         tools: {
           lightningcssLoader: false,

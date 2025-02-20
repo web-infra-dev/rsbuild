@@ -1,7 +1,3 @@
-import React from 'react';
-
-console.log('React', React);
-
 const list = [
   { type: '1', value: 1 },
   { type: '1', value: 2 },

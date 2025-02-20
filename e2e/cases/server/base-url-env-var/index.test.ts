@@ -5,7 +5,7 @@ rspackOnlyTest(
   'should define BASE_URL env var correctly in dev',
   async ({ page }) => {
     const rsbuild = await dev({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
       rsbuildConfig: {
         html: {
@@ -31,7 +31,7 @@ rspackOnlyTest(
   'should define BASE_URL env var correctly in build',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
       rsbuildConfig: {
         html: {

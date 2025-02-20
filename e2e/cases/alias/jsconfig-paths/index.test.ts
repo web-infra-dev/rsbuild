@@ -5,7 +5,7 @@ rspackOnlyTest(
   'tsconfig paths should work and override the alias config',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
       rsbuildConfig: {
         resolve: {
@@ -30,7 +30,7 @@ rspackOnlyTest(
   'tsconfig paths should not work when aliasStrategy is "prefer-alias"',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
       rsbuildConfig: {
         resolve: {

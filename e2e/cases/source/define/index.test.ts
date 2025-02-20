@@ -5,7 +5,7 @@ test('should allow to define global variables in development', async ({
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
   });
 
@@ -21,7 +21,7 @@ test('should allow to define global variables in production build', async ({
   page,
 }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
   });
 

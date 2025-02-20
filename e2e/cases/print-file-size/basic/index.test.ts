@@ -2,7 +2,7 @@ import path from 'node:path';
 import { build, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-const cwd = import.meta.dirname;
+const cwd = __dirname;
 
 test.describe('should print file size correctly', async () => {
   let logs: string[];

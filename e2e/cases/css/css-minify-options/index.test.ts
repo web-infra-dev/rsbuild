@@ -3,7 +3,7 @@ import { expect } from '@playwright/test';
 
 rspackOnlyTest('should allow to custom CSS minify options', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {},
   });
   const files = await rsbuild.unwrapOutputJSON();

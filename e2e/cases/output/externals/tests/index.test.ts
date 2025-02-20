@@ -3,7 +3,7 @@ import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-const fixtures = resolve(import.meta.dirname, '../');
+const fixtures = resolve(__dirname, '../');
 
 test('externals', async ({ page }) => {
   const rsbuild = await build({

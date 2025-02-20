@@ -3,7 +3,7 @@ import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-const fixtures = import.meta.dirname;
+const fixtures = __dirname;
 
 test('should generate prefetch link when prefetch is defined', async () => {
   const rsbuild = await build({

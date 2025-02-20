@@ -5,7 +5,7 @@ rspackOnlyTest('should compile common CSS import correctly', async () => {
   const { restore, logs } = proxyConsole();
 
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       resolve: {
         alias: {

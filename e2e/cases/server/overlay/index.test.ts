@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { dev, proxyConsole, waitFor } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-const cwd = import.meta.dirname;
+const cwd = __dirname;
 
 test('should show overlay correctly', async ({ page }) => {
   // HMR cases will fail in Windows

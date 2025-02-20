@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { dev, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-const cwd = import.meta.dirname;
+const cwd = __dirname;
 
 rspackOnlyTest(
   'HMR should work when Fast Refresh is disabled',

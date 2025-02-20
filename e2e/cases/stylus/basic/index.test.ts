@@ -3,7 +3,7 @@ import { expect } from '@playwright/test';
 
 rspackOnlyTest('should compile stylus correctly', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
   const files = await rsbuild.unwrapOutputJSON();
 

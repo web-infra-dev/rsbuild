@@ -1,7 +1,6 @@
 {
   "name": "@e2e/react-compiler-babel",
   "version": "1.0.0",
-  "type": "module",
   "private": true,
   "dependencies": {
     "react": "^19.0.0",

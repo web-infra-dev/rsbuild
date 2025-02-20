@@ -2,7 +2,6 @@
   "private": true,
   "name": "@e2e/custom-server-ssr",
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
     "dev": "npx rsbuild dev",
     "dev:esm": "TEST_ESM_LIBRARY=true npx rsbuild dev"

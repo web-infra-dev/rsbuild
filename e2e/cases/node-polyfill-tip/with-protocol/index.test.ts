@@ -5,7 +5,7 @@ test('should print tips if resolve Node.js builtin module failed', async () => {
   const { logs, restore } = proxyConsole();
 
   try {
-    await build({ cwd: import.meta.dirname });
+    await build({ cwd: __dirname });
   } catch (err) {}
 
   restore();

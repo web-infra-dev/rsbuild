@@ -3,7 +3,7 @@ import { expect } from '@playwright/test';
 
 rspackOnlyTest('should build basic Vue SFC correctly', async ({ page }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
   });
 

@@ -4,7 +4,7 @@ import { loadEnv } from '@rsbuild/core';
 
 rspackOnlyTest('should load env files correctly', () => {
   const env = loadEnv({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     mode: 'staging',
     prefixes: ['REACT_'],
   });

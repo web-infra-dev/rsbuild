@@ -7,18 +7,18 @@ import fse from 'fs-extra';
 
 test('`buildCache.buildDependencies` should work as expected', async () => {
   const cacheDirectory = path.resolve(
-    import.meta.dirname,
+    __dirname,
     './node_modules/.cache/test-cache-build-dependencies',
   );
 
-  const testDepsPath = path.resolve(import.meta.dirname, './test-temp-deps.js');
+  const testDepsPath = path.resolve(__dirname, './test-temp-deps.js');
 
   fs.rmSync(cacheDirectory, { recursive: true, force: true });
 
   const getBuildConfig = (input: string) => {
     fs.writeFileSync(testDepsPath, input);
     return {
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       rsbuildConfig: {
         tools: {
           bundlerChain: (chain) => {
@@ -56,14 +56,14 @@ webpackOnlyTest(
   'should save the buildDependencies to cache directory and hit cache',
   async () => {
     const cacheDirectory = path.resolve(
-      import.meta.dirname,
+      __dirname,
       './node_modules/.cache/test-build-dependencies',
     );
 
     process.env.TEST_ENV = undefined;
 
     const buildConfig = {
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       rsbuildConfig: {
         tools: {
           bundlerChain: (chain) => {

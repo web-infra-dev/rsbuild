@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 rspackOnlyTest('should apply defer by default', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
   const files = await rsbuild.unwrapOutputJSON();
   const html =
@@ -14,7 +14,7 @@ rspackOnlyTest('should apply defer by default', async () => {
 
 test('should remove defer when scriptLoading is "blocking"', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       html: {
         scriptLoading: 'blocking',
@@ -30,7 +30,7 @@ test('should remove defer when scriptLoading is "blocking"', async () => {
 
 test('should allow to set scriptLoading to "module"', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       html: {
         scriptLoading: 'module',

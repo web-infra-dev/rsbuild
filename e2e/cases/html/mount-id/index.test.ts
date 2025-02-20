@@ -8,7 +8,7 @@ test.describe('should render mountId correctly', () => {
 
   test.beforeAll(async () => {
     rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       runServer: true,
       rsbuildConfig: {
         html: {

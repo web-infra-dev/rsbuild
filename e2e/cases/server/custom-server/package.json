@@ -2,7 +2,6 @@
   "private": true,
   "name": "@e2e/custom-server",
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
     "dev": "node ./scripts/index.mjs",
     "dev:pure": "node ./scripts/index.mjs pure"

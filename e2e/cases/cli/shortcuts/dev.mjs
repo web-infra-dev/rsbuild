@@ -1,11 +1,15 @@
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { createRsbuild } from '@rsbuild/core';
 
 process.stdin.isTTY = true;
 delete process.env.CI;
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
 async function main() {
   const rsbuild = await createRsbuild({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       dev: {
         cliShortcuts: true,

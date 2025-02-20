@@ -5,7 +5,7 @@ import { expect } from '@playwright/test';
 import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
 import fse from 'fs-extra';
 
-const distFile = path.join(import.meta.dirname, 'node_modules/hooksTempFile');
+const distFile = path.join(__dirname, 'node_modules/hooksTempFile');
 
 const write = (str: string) => {
   let content: string;
@@ -37,7 +37,7 @@ rspackOnlyTest(
     fs.rmSync(distFile, { force: true });
 
     const rsbuild = await createRsbuild({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       rsbuildConfig: {
         plugins: [plugin],
         environments: {

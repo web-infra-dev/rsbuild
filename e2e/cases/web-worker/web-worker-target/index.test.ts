@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test';
 
 test('should build web-worker target correctly', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         target: 'web-worker',
@@ -21,10 +21,10 @@ test('should build web-worker target correctly', async () => {
 
 test('should build web-worker target with dynamicImport correctly', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       source: {
-        entry: { index: path.resolve(import.meta.dirname, './src/index2.js') },
+        entry: { index: path.resolve(__dirname, './src/index2.js') },
       },
       output: {
         target: 'web-worker',

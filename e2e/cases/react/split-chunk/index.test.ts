@@ -2,7 +2,7 @@ import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-const fixtures = import.meta.dirname;
+const fixtures = __dirname;
 
 test('should split react chunks correctly', async () => {
   const rsbuild = await build({

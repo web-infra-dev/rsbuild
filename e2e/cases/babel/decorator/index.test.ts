@@ -6,7 +6,7 @@ rspackOnlyTest(
   'should support legacy decorators and source.decorators.version in TypeScript',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
       plugins: [pluginBabel()],
     });
@@ -22,7 +22,7 @@ rspackOnlyTest(
   'should support legacy decorators and source.decorators.version in JavaScript',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
       plugins: [pluginBabel()],
       rsbuildConfig: {

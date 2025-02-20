@@ -5,7 +5,7 @@ rspackOnlyTest(
   'should generate tailwindcss utilities with vendor prefixes correctly',
   async () => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
     });
 
     const files = await rsbuild.unwrapOutputJSON();

@@ -5,7 +5,7 @@ import { expect, test } from '@playwright/test';
 
 test('should copy asset to dist folder correctly', async () => {
   await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         distPath: {
@@ -16,35 +16,27 @@ test('should copy asset to dist folder correctly', async () => {
     },
   });
 
-  expect(
-    fs.existsSync(join(import.meta.dirname, 'dist-1/icon.png')),
-  ).toBeTruthy();
+  expect(fs.existsSync(join(__dirname, 'dist-1/icon.png'))).toBeTruthy();
 });
 
 test('should copy asset from src to dist folder correctly', async () => {
   await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         copy: [
-          {
-            from: '**/*.txt',
-            to: 'assets',
-            context: join(import.meta.dirname, 'src'),
-          },
+          { from: '**/*.txt', to: 'assets', context: join(__dirname, 'src') },
         ],
       },
     },
   });
 
-  expect(
-    fs.existsSync(join(import.meta.dirname, 'dist/assets/foo.txt')),
-  ).toBeTruthy();
+  expect(fs.existsSync(join(__dirname, 'dist/assets/foo.txt'))).toBeTruthy();
 });
 
 test('should copy asset to dist sub-folder correctly', async () => {
   await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         distPath: {
@@ -55,7 +47,5 @@ test('should copy asset to dist sub-folder correctly', async () => {
     },
   });
 
-  expect(
-    fs.existsSync(join(import.meta.dirname, 'dist-1/foo/icon.png')),
-  ).toBeTruthy();
+  expect(fs.existsSync(join(__dirname, 'dist-1/foo/icon.png'))).toBeTruthy();
 });

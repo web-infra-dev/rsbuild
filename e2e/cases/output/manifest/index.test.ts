@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { build, dev, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-const fixtures = import.meta.dirname;
+const fixtures = __dirname;
 
 test('should generate manifest file in output', async () => {
   const rsbuild = await build({
@@ -57,7 +57,7 @@ test('should generate manifest file at specified path', async () => {
     },
   });
 
-  const manifest = join(import.meta.dirname, 'dist', 'custom/my-manifest.json');
+  const manifest = join(__dirname, 'dist', 'custom/my-manifest.json');
   const manifestContent = readFileSync(manifest, 'utf-8');
   expect(manifestContent).toBeDefined();
 

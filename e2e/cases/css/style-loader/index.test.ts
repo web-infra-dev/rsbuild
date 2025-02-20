@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { build, dev, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-const fixtures = import.meta.dirname;
+const fixtures = __dirname;
 
 rspackOnlyTest(
   'should inline style when injectStyles is true',

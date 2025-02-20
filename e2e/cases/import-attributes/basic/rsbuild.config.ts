@@ -1,7 +1,4 @@
-import { createRequire } from 'node:module';
 import { defineConfig } from '@rsbuild/core';
-
-const require = createRequire(import.meta.url);
 
 export default defineConfig({
   tools: {
@@ -10,7 +7,7 @@ export default defineConfig({
         rules: [
           {
             with: { type: 'json' },
-            loader: require.resolve('./loaderWith.cjs'),
+            loader: require.resolve('./loaderWith.js'),
           },
         ],
       },

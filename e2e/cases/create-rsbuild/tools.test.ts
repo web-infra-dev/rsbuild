@@ -6,7 +6,7 @@ import { createAndValidate } from './helper';
 
 rspackOnlyTest('should create project with eslint as expected', async () => {
   const { dir, pkgJson, clean } = await createAndValidate(
-    import.meta.dirname,
+    __dirname,
     'vanilla',
     {
       name: 'test-temp-eslint',
@@ -21,7 +21,7 @@ rspackOnlyTest('should create project with eslint as expected', async () => {
 
 rspackOnlyTest('should create project with prettier as expected', async () => {
   const { dir, pkgJson, clean } = await createAndValidate(
-    import.meta.dirname,
+    __dirname,
     'vanilla',
     {
       name: 'test-temp-prettier',
@@ -38,7 +38,7 @@ rspackOnlyTest(
   'should create project with eslint and prettier as expected',
   async () => {
     const { dir, pkgJson, clean } = await createAndValidate(
-      import.meta.dirname,
+      __dirname,
       'vanilla',
       {
         name: 'test-temp-eslint-prettier',
@@ -56,7 +56,7 @@ rspackOnlyTest(
 
 rspackOnlyTest('should create project with biome as expected', async () => {
   const { dir, pkgJson, clean } = await createAndValidate(
-    import.meta.dirname,
+    __dirname,
     'vanilla',
     {
       name: 'test-temp-eslint',

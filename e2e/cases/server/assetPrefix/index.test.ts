@@ -6,7 +6,7 @@ test('should match resource correctly with specify assetPrefix', async ({
 }) => {
   const port = await getRandomPort();
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       dev: {
@@ -31,7 +31,7 @@ test('should match resource correctly with full url assetPrefix', async ({
 }) => {
   const port = await getRandomPort();
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       dev: {

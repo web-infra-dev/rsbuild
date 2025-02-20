@@ -76,7 +76,7 @@ rspackOnlyTest(
     process.env.NODE_ENV = 'production';
     const { plugin, names } = createPlugin();
     const rsbuild = await createRsbuild({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       rsbuildConfig: {
         plugins: [plugin],
         environments: {
@@ -135,7 +135,7 @@ rspackOnlyTest(
 
     const { plugin, names } = createPlugin();
     const rsbuild = await createRsbuild({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       rsbuildConfig: {
         plugins: [plugin],
         server: {

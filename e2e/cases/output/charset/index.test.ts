@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should allow to set output.charset to ascii', async ({ page }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       output: {
@@ -30,7 +30,7 @@ test('should allow to set output.charset to ascii', async ({ page }) => {
 
 test('should allow to set output.charset to utf8', async ({ page }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         charset: 'utf8',

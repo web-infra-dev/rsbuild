@@ -6,10 +6,10 @@ import { expect } from '@playwright/test';
 
 rspackOnlyTest('should allow to custom env directory', async () => {
   execSync('npx rsbuild build --env-dir env', {
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
   const content = fs.readFileSync(
-    path.join(import.meta.dirname, 'dist/static/js/index.js'),
+    path.join(__dirname, 'dist/static/js/index.js'),
     'utf-8',
   );
   expect(content).not.toContain('jack');

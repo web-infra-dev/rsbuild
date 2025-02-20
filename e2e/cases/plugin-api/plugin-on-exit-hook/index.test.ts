@@ -4,7 +4,7 @@ import path from 'node:path';
 import { rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
-const distFile = path.join(import.meta.dirname, 'node_modules/hooksTempFile');
+const distFile = path.join(__dirname, 'node_modules/hooksTempFile');
 
 rspackOnlyTest('should run onExit hook before process exit', async () => {
   fs.rmSync(distFile, { force: true });
@@ -15,25 +15,21 @@ rspackOnlyTest('should run onExit hook before process exit', async () => {
       reject(new Error('Process timeout'));
     }, 3000);
 
-    const process = exec(
-      'node ./run.mjs',
-      { cwd: import.meta.dirname },
-      (error) => {
-        if (error) {
-          clearTimeout(timeoutId);
-          reject(error);
-          return;
-        }
+    const process = exec('node ./run.mjs', { cwd: __dirname }, (error) => {
+      if (error) {
+        clearTimeout(timeoutId);
+        reject(error);
+        return;
+      }
 
-        try {
-          expect(fs.readFileSync(distFile, 'utf-8')).toEqual('1');
-          clearTimeout(timeoutId);
-          resolve();
-        } catch (err) {
-          clearTimeout(timeoutId);
-          reject(err);
-        }
-      },
-    );
+      try {
+        expect(fs.readFileSync(distFile, 'utf-8')).toEqual('1');
+        clearTimeout(timeoutId);
+        resolve();
+      } catch (err) {
+        clearTimeout(timeoutId);
+        reject(err);
+      }
+    });
   });
 });

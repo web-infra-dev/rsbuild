@@ -5,7 +5,7 @@ rspackOnlyTest(
   'generate integrity for script and style tags in prod build',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
     });
 
@@ -31,7 +31,7 @@ test('do not generate integrity for script and style tags in dev build', async (
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
   });
 

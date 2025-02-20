@@ -6,7 +6,7 @@ import { pluginSolid } from '@rsbuild/plugin-solid';
 import { pluginStylus } from '@rsbuild/plugin-stylus';
 
 const buildFixture = (rootDir: string): ReturnType<typeof build> => {
-  const root = path.join(import.meta.dirname, rootDir);
+  const root = path.join(__dirname, rootDir);
   const plugins = [
     pluginBabel({
       include: /\.(?:jsx|tsx)$/,

@@ -10,12 +10,12 @@ test.describe('should combine multiple html config correctly', () => {
 
   test.beforeAll(async () => {
     rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       rsbuildConfig: {
         source: {
           entry: {
-            main: join(import.meta.dirname, 'src/index.js'),
-            foo: join(import.meta.dirname, 'src/foo.js'),
+            main: join(__dirname, 'src/index.js'),
+            foo: join(__dirname, 'src/foo.js'),
           },
         },
         html: {

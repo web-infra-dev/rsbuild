@@ -5,13 +5,13 @@ import { expect, test } from '@playwright/test';
 
 test('should compile less npm import correctly', async () => {
   fs.cpSync(
-    path.resolve(import.meta.dirname, '_node_modules'),
-    path.resolve(import.meta.dirname, 'node_modules'),
+    path.resolve(__dirname, '_node_modules'),
+    path.resolve(__dirname, 'node_modules'),
     { recursive: true },
   );
 
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
 
   const files = await rsbuild.unwrapOutputJSON();

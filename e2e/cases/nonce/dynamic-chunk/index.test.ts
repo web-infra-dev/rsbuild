@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should apply nonce to dynamic chunks in dev build', async ({ page }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
   });
 
@@ -16,7 +16,7 @@ test('should apply nonce to dynamic chunks in dev build', async ({ page }) => {
 
 test('should apply nonce to dynamic chunks in prod build', async ({ page }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
   });
 

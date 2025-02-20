@@ -4,7 +4,7 @@ import polka from 'polka';
 
 test('multiple rsbuild dev servers should work correctly', async ({ page }) => {
   const rsbuild1 = await createRsbuild({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         distPath: {
@@ -23,7 +23,7 @@ test('multiple rsbuild dev servers should work correctly', async ({ page }) => {
   });
 
   const rsbuild2 = await createRsbuild({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       source: {
         entry: {

@@ -3,7 +3,7 @@ import { expect } from '@playwright/test';
 
 rspackOnlyTest('should apply nonce to script and style tags', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
   const files = await rsbuild.unwrapOutputJSON();
   const html =
@@ -14,7 +14,7 @@ rspackOnlyTest('should apply nonce to script and style tags', async () => {
 
 rspackOnlyTest('should apply environment nonce', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       environments: {
         web: {

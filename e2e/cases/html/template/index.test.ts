@@ -4,12 +4,12 @@ import { expect, test } from '@playwright/test';
 
 test('should set template via function correctly', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       source: {
         entry: {
-          index: path.resolve(import.meta.dirname, './src/index.js'),
-          foo: path.resolve(import.meta.dirname, './src/foo.js'),
+          index: path.resolve(__dirname, './src/index.js'),
+          foo: path.resolve(__dirname, './src/foo.js'),
         },
       },
       html: {
@@ -38,7 +38,7 @@ test('should set template via function correctly', async () => {
 
 test('should allow to access templateParameters', async ({ page }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       html: {
@@ -63,12 +63,12 @@ test('should allow to access templateParameters', async ({ page }) => {
 
 test('should set template via tools.htmlPlugin correctly', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       source: {
         entry: {
-          index: path.resolve(import.meta.dirname, './src/index.js'),
-          foo: path.resolve(import.meta.dirname, './src/foo.js'),
+          index: path.resolve(__dirname, './src/index.js'),
+          foo: path.resolve(__dirname, './src/foo.js'),
         },
       },
       tools: {

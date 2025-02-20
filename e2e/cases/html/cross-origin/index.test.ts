@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should not apply crossOrigin by default', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       html: {
         scriptLoading: 'blocking',
@@ -19,7 +19,7 @@ test('should not apply crossOrigin by default', async () => {
 
 test('should apply crossOrigin when crossorigin is "anonymous" and not same origin', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       html: {
         scriptLoading: 'blocking',

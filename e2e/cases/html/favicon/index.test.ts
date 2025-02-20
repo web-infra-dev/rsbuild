@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test';
 
 test('should emit local favicon to dist path', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       html: {
         favicon: '../../../assets/icon.png',
@@ -25,7 +25,7 @@ test('should emit local favicon to dist path', async () => {
 
 test('should add type attribute for SVG favicon', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       html: {
         favicon: '../../../assets/mobile.svg',
@@ -48,7 +48,7 @@ test('should add type attribute for SVG favicon', async () => {
 
 test('should apply asset prefix to favicon URL', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       html: {
         favicon: '../../../assets/icon.png',
@@ -70,7 +70,7 @@ test('should apply asset prefix to favicon URL', async () => {
 
 test('should allow favicon to be a CDN URL', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       html: {
         favicon: 'https://foo.com/icon.png',
@@ -87,12 +87,12 @@ test('should allow favicon to be a CDN URL', async () => {
 
 test('should generate favicon via function correctly', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       source: {
         entry: {
-          foo: path.resolve(import.meta.dirname, './src/foo.js'),
-          bar: path.resolve(import.meta.dirname, './src/foo.js'),
+          foo: path.resolve(__dirname, './src/foo.js'),
+          bar: path.resolve(__dirname, './src/foo.js'),
         },
       },
       html: {

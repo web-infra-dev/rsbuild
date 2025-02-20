@@ -3,7 +3,7 @@ import path from 'node:path';
 import { dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-const appFile = path.join(import.meta.dirname, 'src/App.jsx');
+const appFile = path.join(__dirname, 'src/App.jsx');
 let appCode: string;
 
 test.beforeEach(() => {
@@ -24,7 +24,7 @@ test('should fallback to live-reload when dev.hmr is false', async ({
   }
 
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
   });
 
@@ -41,7 +41,7 @@ test('should not reload page when live-reload is disabled', async ({
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       dev: {

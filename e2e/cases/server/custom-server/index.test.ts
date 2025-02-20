@@ -4,7 +4,7 @@ import { startDevServerPure } from './scripts/pureServer.mjs';
 import { startDevServer } from './scripts/server.mjs';
 
 rspackOnlyTest('should allow to custom dev server', async ({ page }) => {
-  const { config, close } = await startDevServer(import.meta.dirname);
+  const { config, close } = await startDevServer(__dirname);
 
   await gotoPage(page, config);
 
@@ -23,7 +23,7 @@ rspackOnlyTest('should allow to custom dev server', async ({ page }) => {
 rspackOnlyTest(
   'should allow to custom dev server without compile',
   async ({ page }) => {
-    const { config, close } = await startDevServerPure(import.meta.dirname);
+    const { config, close } = await startDevServerPure(__dirname);
     const indexRes = await gotoPage(page, config);
 
     expect(indexRes?.status()).toBe(404);

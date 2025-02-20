@@ -6,13 +6,13 @@ test('should allow to use tools.bundlerChain to set alias config', async ({
   page,
 }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       tools: {
         bundlerChain: (chain) => {
           chain.resolve.alias.merge({
-            '@common': join(import.meta.dirname, 'src/common'),
+            '@common': join(__dirname, 'src/common'),
           });
         },
       },
@@ -28,7 +28,7 @@ test('should allow to use async tools.bundlerChain to set alias config', async (
   page,
 }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       tools: {
@@ -36,7 +36,7 @@ test('should allow to use async tools.bundlerChain to set alias config', async (
           return new Promise((resolve) => {
             setTimeout(() => {
               chain.resolve.alias.merge({
-                '@common': join(import.meta.dirname, 'src/common'),
+                '@common': join(__dirname, 'src/common'),
               });
               resolve();
             }, 0);

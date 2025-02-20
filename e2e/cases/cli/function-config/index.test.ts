@@ -5,13 +5,13 @@ import { globContentJSON, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest('should allow to export function in config file', async () => {
-  const targetDir = path.join(import.meta.dirname, 'dist-production-build');
+  const targetDir = path.join(__dirname, 'dist-production-build');
 
   fs.rmSync(targetDir, { recursive: true, force: true });
 
   delete process.env.NODE_ENV;
   execSync('npx rsbuild build', {
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
 
   const outputs = await globContentJSON(targetDir);

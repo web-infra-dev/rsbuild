@@ -5,7 +5,7 @@ rspackOnlyTest(
   'should allow to use `new URL` to reference styles as assets',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
     });
 

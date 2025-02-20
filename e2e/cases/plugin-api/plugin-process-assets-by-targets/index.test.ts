@@ -3,7 +3,7 @@ import { expect } from '@playwright/test';
 
 rspackOnlyTest('should process assets when target is web', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         target: 'web',
@@ -20,7 +20,7 @@ rspackOnlyTest('should process assets when target is web', async () => {
 
 rspackOnlyTest('should not process assets when target is not web', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         target: 'web-worker',

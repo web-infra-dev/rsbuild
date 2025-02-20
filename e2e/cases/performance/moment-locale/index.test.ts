@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('removeMomentLocale false (default)', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         sourceMap: {
@@ -41,7 +41,7 @@ test('removeMomentLocale false (default)', async () => {
 
 test('removeMomentLocale true', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         sourceMap: {

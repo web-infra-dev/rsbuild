@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test';
 
 test('should allow to generate HTML with filename hash using filename.html', async () => {
   await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         filename: {
@@ -14,7 +14,7 @@ test('should allow to generate HTML with filename hash using filename.html', asy
     },
   });
 
-  const outputs = await globContentJSON(join(import.meta.dirname, 'dist'));
+  const outputs = await globContentJSON(join(__dirname, 'dist'));
   const htmlFilename = Object.keys(outputs).find((item) =>
     item.endsWith('.html'),
   );
@@ -24,7 +24,7 @@ test('should allow to generate HTML with filename hash using filename.html', asy
 
 test('should allow to generate HTML with filename hash using tools.htmlPlugin', async () => {
   await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       tools: {
         htmlPlugin(config, { entryName }) {
@@ -35,7 +35,7 @@ test('should allow to generate HTML with filename hash using tools.htmlPlugin', 
     },
   });
 
-  const outputs = await globContentJSON(join(import.meta.dirname, 'dist'));
+  const outputs = await globContentJSON(join(__dirname, 'dist'));
   const htmlFilename = Object.keys(outputs).find((item) =>
     item.endsWith('.html'),
   );

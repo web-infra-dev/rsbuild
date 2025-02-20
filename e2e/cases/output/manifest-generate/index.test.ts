@@ -2,7 +2,7 @@ import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import type { RsbuildConfig } from '@rsbuild/core';
 
-const fixtures = import.meta.dirname;
+const fixtures = __dirname;
 
 const rsbuildConfig: RsbuildConfig = {
   output: {

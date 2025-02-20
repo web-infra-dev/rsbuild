@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should allow to custom dist path of different files', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
 
   const files = await rsbuild.unwrapOutputJSON();

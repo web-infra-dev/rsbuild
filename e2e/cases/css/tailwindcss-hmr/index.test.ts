@@ -14,12 +14,12 @@ rspackOnlyTest('should support tailwindcss HMR', async ({ page }) => {
     test.skip();
   }
 
-  const tempFile = join(import.meta.dirname, 'src/test-temp-file.js');
+  const tempFile = join(__dirname, 'src/test-temp-file.js');
 
   writeFileSync(tempFile, getContent('text-black'));
 
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
   });
 

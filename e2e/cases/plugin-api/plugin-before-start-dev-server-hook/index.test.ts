@@ -31,7 +31,7 @@ test('should run onBeforeStartDevServer hooks and add custom middleware', async 
   };
 
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       plugins: [plugin],

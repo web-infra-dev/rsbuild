@@ -5,7 +5,7 @@ rspackOnlyTest('should allow to customize logger', async () => {
   const { logs, restore } = proxyConsole('log');
 
   await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
 
   expect(logs.find((item) => item.includes('[READY] Built in'))).toBeTruthy();

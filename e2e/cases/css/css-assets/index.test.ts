@@ -4,9 +4,9 @@ import { globContentJSON } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should build CSS assets correctly', async () => {
-  await expect(build({ cwd: import.meta.dirname })).resolves.toBeDefined();
+  await expect(build({ cwd: __dirname })).resolves.toBeDefined();
 
-  const outputs = await globContentJSON(path.join(import.meta.dirname, 'dist'));
+  const outputs = await globContentJSON(path.join(__dirname, 'dist'));
   const outputFiles = Object.keys(outputs);
 
   expect(

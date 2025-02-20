@@ -9,15 +9,15 @@ const tempConfigPath = './test-temp-config.ts';
 rspackOnlyTest(
   'should restart dev server when extra config file changed',
   async () => {
-    const dist = path.join(import.meta.dirname, 'dist');
-    const extraConfigFile = path.join(import.meta.dirname, tempConfigPath);
+    const dist = path.join(__dirname, 'dist');
+    const extraConfigFile = path.join(__dirname, tempConfigPath);
 
     fs.rmSync(extraConfigFile, { force: true });
     fs.rmSync(dist, { recursive: true, force: true });
     fs.writeFileSync(extraConfigFile, 'export default { foo: 1 };');
 
     const childProcess = exec('npx rsbuild dev', {
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       env: {
         ...process.env,
         PORT: String(await getRandomPort()),

@@ -6,9 +6,9 @@ import { awaitFileExists, getRandomPort, rspackOnlyTest } from '@e2e/helper';
 rspackOnlyTest(
   'should restart dev server and reload config when config file changed',
   async () => {
-    const dist1 = path.join(import.meta.dirname, 'dist');
-    const dist2 = path.join(import.meta.dirname, 'dist-2');
-    const configFile = path.join(import.meta.dirname, 'rsbuild.config.mjs');
+    const dist1 = path.join(__dirname, 'dist');
+    const dist2 = path.join(__dirname, 'dist-2');
+    const configFile = path.join(__dirname, 'rsbuild.config.mjs');
 
     fs.rmSync(dist1, { force: true, recursive: true });
     fs.rmSync(dist2, { force: true, recursive: true });
@@ -30,7 +30,7 @@ rspackOnlyTest(
     );
 
     const process = exec('npx rsbuild dev', {
-      cwd: import.meta.dirname,
+      cwd: __dirname,
     });
 
     await awaitFileExists(dist1);

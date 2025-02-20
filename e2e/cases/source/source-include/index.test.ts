@@ -8,7 +8,7 @@ test('should not compile file which outside of project by default', async () => 
   const { logs, restore } = proxyConsole();
   await expect(
     build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       plugins: [pluginCheckSyntax()],
       rsbuildConfig: {
         output: {
@@ -33,11 +33,11 @@ test('should not compile file which outside of project by default', async () => 
 test('should compile specified file when source.include', async () => {
   await expect(
     build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       plugins: [pluginCheckSyntax()],
       rsbuildConfig: {
         source: {
-          include: [path.resolve(import.meta.dirname, '../test.js')],
+          include: [path.resolve(__dirname, '../test.js')],
         },
       },
     }),

@@ -2,7 +2,7 @@ import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-const fixtures = import.meta.dirname;
+const fixtures = __dirname;
 
 rspackOnlyTest('legalComments linked (default)', async ({ page }) => {
   const rsbuild = await build({

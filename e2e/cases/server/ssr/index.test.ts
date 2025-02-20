@@ -5,7 +5,7 @@ rspackOnlyTest('support SSR', async ({ page }) => {
   const { logs, restore } = proxyConsole('log');
 
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {},
   });
 
@@ -29,7 +29,7 @@ rspackOnlyTest('support SSR with external', async ({ page }) => {
   const { logs, restore } = proxyConsole('log');
 
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         externals: {
@@ -60,7 +60,7 @@ rspackOnlyTest('support SSR with esm target', async ({ page }) => {
   process.env.TEST_ESM_LIBRARY = '1';
 
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {},
   });
 
@@ -79,7 +79,7 @@ rspackOnlyTest('support SSR with esm target & external', async ({ page }) => {
   process.env.TEST_ESM_LIBRARY = '1';
 
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         externals: {
@@ -105,7 +105,7 @@ rspackOnlyTest('support SSR with split chunk', async ({ page }) => {
   process.env.TEST_SPLIT_CHUNK = '1';
 
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {},
   });
 
