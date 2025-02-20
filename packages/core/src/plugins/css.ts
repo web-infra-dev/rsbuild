@@ -83,11 +83,6 @@ export const normalizeCssLoaderOptions = (
   return options;
 };
 
-const userPostcssrcCache = new Map<
-  string,
-  PostCSSOptions | Promise<PostCSSOptions>
->();
-
 // Create a new config object,
 // ensure isolation of config objects between different builds
 const clonePostCSSConfig = (config: PostCSSOptions) => ({
@@ -100,8 +95,11 @@ const getCSSSourceMap = (config: NormalizedEnvironmentConfig): boolean => {
   return typeof sourceMap === 'boolean' ? sourceMap : sourceMap.css;
 };
 
-async function loadUserPostcssrc(root: string): Promise<PostCSSOptions> {
-  const cached = userPostcssrcCache.get(root);
+async function loadUserPostcssrc(
+  root: string,
+  postcssrcCache: PostcssrcCache,
+): Promise<PostCSSOptions> {
+  const cached = postcssrcCache.get(root);
 
   if (cached) {
     return clonePostCSSConfig(await cached);
@@ -119,10 +117,10 @@ async function loadUserPostcssrc(root: string): Promise<PostCSSOptions> {
     throw err;
   });
 
-  userPostcssrcCache.set(root, promise);
+  postcssrcCache.set(root, promise);
 
   return promise.then((config: PostCSSOptions) => {
-    userPostcssrcCache.set(root, config);
+    postcssrcCache.set(root, config);
     return clonePostCSSConfig(config);
   });
 }
@@ -136,9 +134,11 @@ const isPostcssPluginCreator = (
 const getPostcssLoaderOptions = async ({
   config,
   root,
+  postcssrcCache,
 }: {
   config: NormalizedEnvironmentConfig;
   root: string;
+  postcssrcCache: PostcssrcCache;
 }): Promise<PostCSSLoaderOptions> => {
   const extraPlugins: AcceptedPlugin[] = [];
 
@@ -148,7 +148,7 @@ const getPostcssLoaderOptions = async ({
     },
   };
 
-  const userOptions = await loadUserPostcssrc(root);
+  const userOptions = await loadUserPostcssrc(root, postcssrcCache);
 
   // init the plugins array
   userOptions.plugins ||= [];
@@ -254,9 +254,13 @@ const getCSSLoaderOptions = ({
   return cssLoaderOptions;
 };
 
+type PostcssrcCache = Map<string, PostCSSOptions | Promise<PostCSSOptions>>;
+
 export const pluginCss = (): RsbuildPlugin => ({
   name: 'rsbuild:css',
   setup(api) {
+    const postcssrcCache: PostcssrcCache = new Map();
+
     api.modifyBundlerChain({
       order: 'pre',
       handler: async (chain, { target, isProd, CHAIN_ID, environment }) => {
@@ -327,6 +331,7 @@ export const pluginCss = (): RsbuildPlugin => ({
           const postcssLoaderOptions = await getPostcssLoaderOptions({
             config,
             root: api.context.rootPath,
+            postcssrcCache,
           });
 
           // enable postcss-loader if using PostCSS plugins
