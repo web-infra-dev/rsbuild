@@ -55,7 +55,8 @@ type RsbuildDevServer = {
   middlewares: Connect.Server;
   /**
    * Node.js HTTP 服务器实例
-   * 如果使用了 `server.https` 配置，则为 `Http2SecureServer`
+   * - 如果使用了 `server.https` 配置，则为 `Http2SecureServer`
+   * - 如果开启了 `server.middlewareMode` 配置，则为 `null`
    */
   httpServer:
     | import('node:http').Server
