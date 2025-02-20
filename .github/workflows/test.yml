@@ -12,6 +12,10 @@ on:
 permissions:
   contents: read
 
+env:
+  # Configure Node.js memory limit to 6GB (default GitHub Actions limit is 7GB)
+  NODE_OPTIONS: --max-old-space-size=6144
+
 jobs:
   # ======== ut ========
   ut:
