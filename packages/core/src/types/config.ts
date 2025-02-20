@@ -191,17 +191,31 @@ export interface SourceConfig {
    */
   assetsInclude?: Rspack.RuleSetCondition;
   /**
-   * Specify directories or modules that need additional compilation.
-   * In order to maintain faster compilation speed, Rsbuild will not compile files under node_modules through
-   * `babel-loader` or `ts-loader` by default, as will as the files outside the current project directory.
+   * Specify additional JavaScript files that need to be compiled by SWC.
+   * Through the `source.include` config, you can specify directories or modules
+   * that need to be compiled by Rsbuild. The usage of `source.include` is
+   * consistent with [Rule.include](https://rspack.dev/config/module#ruleinclude)
+   * in Rspack, which supports passing in strings or regular expressions to match
+   * the module path.
+   * @default
+   * [
+   *   { and: [rootPath, { not: /[\\/]node_modules[\\/]/ }], },
+   *   /\.(?:ts|tsx|jsx|mts|cts)$/,
+   * ];
    */
   include?: RuleSetCondition[];
   /**
    * Set the entry modules.
+   * @default
+   * {
+   *   // Rsbuild also supports other suffixes by default, such as ts,
+   *   // tsx, jsx, mts, cts, mjs, cjs
+   *   index: './src/index.js',
+   * }
    */
   entry?: RsbuildEntry;
   /**
-   * Specifies that certain files that will be excluded from compilation.
+   * Exclude JavaScript or TypeScript files that do not need to be compiled by SWC.
    */
   exclude?: RuleSetCondition[];
   /**
@@ -349,7 +363,8 @@ export interface ServerConfig {
    */
   base?: string;
   /**
-   * Whether to enable gzip compression
+   * Whether to enable gzip compression for served static assets.
+   * @default true
    */
   compress?: boolean;
   /**
@@ -357,15 +372,19 @@ export interface ServerConfig {
    */
   publicDir?: PublicDir;
   /**
-   * Specify a port number for Rsbuild Server to listen.
+   * Specify a port number for Rsbuild server to listen.
+   * @default 3000
    */
   port?: number;
   /**
-   * After configuring this option, you can enable HTTPS Server, and disabling the HTTP Server.
+   * Configure HTTPS options to enable HTTPS server.
+   * When enabled, HTTP server will be disabled.
+   * @default undefined
    */
   https?: HttpsServerOptions | SecureServerSessionOptions;
   /**
-   * Used to set the host of Rsbuild Server.
+   * Specify the host that the Rsbuild server listens to.
+   * @default '0.0.0.0'
    */
   host?: string;
   /**
@@ -373,7 +392,8 @@ export interface ServerConfig {
    */
   headers?: Record<string, string | string[]>;
   /**
-   * Whether to support html fallback.
+   * Whether to enable HTML fallback.
+   * @default 'index'
    */
   htmlFallback?: HtmlFallback;
   /**
@@ -383,6 +403,7 @@ export interface ServerConfig {
   historyApiFallback?: boolean | HistoryApiFallbackOptions;
   /**
    * Set the page URL to open when the server starts.
+   * @default false
    */
   open?:
     | boolean
@@ -402,15 +423,18 @@ export interface ServerConfig {
    */
   cors?: boolean | cors.CorsOptions;
   /**
-   * Configure proxy rules for the dev server or preview server to proxy requests to the specified service.
+   * Configure proxy rules for the dev server or preview server to proxy requests to
+   * the specified service.
    */
   proxy?: ProxyConfig;
   /**
    * Whether to throw an error when the port is occupied.
+   * @default false
    */
   strictPort?: boolean;
   /**
-   * Whether to print the server urls when the server is started.
+   * Controls whether and how server URLs are printed when the server starts.
+   * @default true
    */
   printUrls?: PrintUrls;
 }
@@ -446,8 +470,9 @@ export interface SecurityConfig {
   nonce?: string;
 
   /**
-   * Adding an integrity attribute (`integrity`) to sub-resources introduced by HTML allows the browser to
-   * verify the integrity of the introduced resource, thus preventing tampering with the downloaded resource.
+   * Adding an integrity attribute (`integrity`) to sub-resources introduced by HTML
+   * allows the browser to verify the integrity of the introduced resource, thus preventing
+   * tampering with the downloaded resource.
    */
   sri?: SriOptions;
 }
@@ -594,14 +619,16 @@ export interface PerformanceConfig {
   /**
    * Used to control resource `DnsPrefetch`.
    *
-   * Specifies that the user agent should preemptively perform DNS resolution for the target resource's origin.
+   * Specifies that the user agent should preemptively perform DNS resolution for the target
+   * resource's origin.
    */
   dnsPrefetch?: DnsPrefetch;
 
   /**
    * Used to control resource `Preload`.
    *
-   * Specifies that the user agent must preemptively fetch and cache the target resource for current navigation.
+   * Specifies that the user agent must preemptively fetch and cache the target resource for
+   * current navigation.
    */
   preload?: true | PreloadOption;
 
@@ -615,7 +642,7 @@ export interface PerformanceConfig {
 
   /**
    * Whether capture timing information for each module,
-   * same as the [profile](https://webpack.js.org/configuration/other-options/#profile) config of webpack.
+   * same as the [profile](https://rspack.dev/config/other-options#profile) config of Rspack.
    */
   profile?: boolean;
 }
@@ -933,7 +960,8 @@ export type ManifestObjectConfig = {
   }) => Record<string, unknown>;
   /**
    * Allows you to filter the files included in the manifest.
-   * The function receives a `file` parameter and returns `true` to keep the file, or `false` to exclude it.
+   * The function receives a `file` parameter and returns `true` to keep the file,
+   * or `false` to exclude it.
    * @default (file: FileDescriptor) => !file.name.endsWith('.LICENSE.txt')
    */
   filter?: (file: FileDescriptor) => boolean;
@@ -949,7 +977,8 @@ export type CleanDistPathObject = {
   enable?: boolean | 'auto';
   /**
    * Specify the files to keep in the output directory.
-   * If the file's absolute path matches the regular expression in `keep`, the file will not be removed.
+   * If the file's absolute path matches the regular expression in `keep`, the file
+   * will not be removed.
    * @default undefined
    */
   keep?: RegExp[];
@@ -993,13 +1022,14 @@ export interface OutputConfig {
   /**
    * When using CDN in the production,
    * you can use this option to set the URL prefix of static assets,
-   * similar to the output.publicPath config of webpack.
+   * similar to the `output.publicPath` config of Rspack.
    * @default `server.base`
    */
   assetPrefix?: string;
   /**
    * Set the size threshold to inline static assets such as images and fonts.
-   * By default, static assets will be Base64 encoded and inline into the page if the size is less than 4KiB.
+   * By default, static assets will be Base64 encoded and inline into the page if
+   * the size is less than 4KiB.
    */
   dataUriLimit?: number | DataUriLimit;
   /**
@@ -1069,8 +1099,9 @@ export interface OutputConfig {
   /**
    * Specifies the range of target browsers that the project is compatible with.
    * This value will be used by [SWC](https://github.com/swc-project/swc) and
-   * [Lightning CSS](https://github.com/parcel-bundler/lightningcss) to identify the JavaScript syntax that
-   * need to be transformed and the CSS browser prefixes that need to be added.
+   * [Lightning CSS](https://github.com/parcel-bundler/lightningcss) to identify
+   * the JavaScript syntax that need to be transformed and the CSS browser prefixes
+   * that need to be added.
    * @default undefined
    */
   overrideBrowserslist?: string[];
@@ -1426,7 +1457,7 @@ export interface DevConfig {
   liveReload?: boolean;
   /**
    * Set the URL prefix of static assets in development mode,
-   * similar to the [output.publicPath](https://rspack.dev/config/output#outputpublicpath) config of webpack.
+   * similar to the [output.publicPath](https://rspack.dev/config/output#outputpublicpath) config of Rspack.
    */
   assetPrefix?: string | boolean;
   /**
@@ -1593,7 +1624,7 @@ export interface RsbuildConfig extends EnvironmentConfig {
    */
   dev?: DevConfig;
   /**
-   * Options for the Rsbuild Server,
+   * Options for the Rsbuild server,
    * will take effect during local development and preview.
    */
   server?: ServerConfig;
