@@ -28,7 +28,7 @@ async function validateWebpackCache(
     try {
       prevBuildDependencies = JSON.parse(rawConfigFile);
     } catch (e) {
-      logger.debug('Failed to parse the previous buildDependencies.json', e);
+      logger.debug('failed to parse the previous buildDependencies.json', e);
     }
 
     if (

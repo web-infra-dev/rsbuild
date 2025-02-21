@@ -96,7 +96,7 @@ export async function emptyDir(
       }),
     );
   } catch (err) {
-    logger.debug(`Failed to empty dir: ${dir}`);
+    logger.debug(`failed to empty dir: ${dir}`);
     logger.debug(err);
   }
 }

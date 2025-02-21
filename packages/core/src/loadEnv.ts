@@ -81,7 +81,7 @@ export function loadEnv({
 
   for (const envPath of filePaths) {
     Object.assign(parsed, parse(fs.readFileSync(envPath)));
-    logger.debug('Loaded env file:', envPath);
+    logger.debug('loaded env file:', envPath);
   }
 
   // dotenv-expand does not override existing env vars by default,

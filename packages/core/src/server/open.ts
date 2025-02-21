@@ -61,9 +61,9 @@ async function openBrowser(url: string): Promise<boolean> {
 
         return true;
       }
-      logger.debug('Failed to find the target browser.');
+      logger.debug('failed to find the target browser.');
     } catch (err) {
-      logger.debug('Failed to open start URL with apple script.');
+      logger.debug('failed to open start URL with apple script.');
       logger.debug(err);
     }
   }
