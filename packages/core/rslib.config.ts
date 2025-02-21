@@ -74,8 +74,8 @@ export default defineConfig({
     externals,
   },
   lib: [
+    // Node / ESM / index
     {
-      id: 'esm:index',
       format: 'esm',
       syntax: 'es2021',
       plugins: [pluginFixDtsTypes, pluginCleanTscCache],
@@ -86,8 +86,8 @@ export default defineConfig({
         minify: nodeMinifyConfig,
       },
     },
+    // Node / ESM / loaders
     {
-      id: 'esm:loaders',
       format: 'esm',
       syntax: 'es2021',
       source: {
@@ -104,8 +104,8 @@ export default defineConfig({
         minify: nodeMinifyConfig,
       },
     },
+    // Node / CJS
     {
-      id: 'cjs:index',
       format: 'cjs',
       syntax: 'es2021',
       source: {
@@ -134,8 +134,8 @@ export default defineConfig({
 });`,
       },
     },
+    // Client / ESM
     {
-      id: 'esm:client',
       format: 'esm',
       syntax: 'es2017',
       source: {
