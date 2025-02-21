@@ -44,7 +44,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
 
   const logRspackVersion = () => {
     if (!isVersionLogged) {
-      logger.debug(`Use Rspack v${rspack.rspackVersion}`);
+      logger.debug(`use Rspack v${rspack.rspackVersion}`);
       isVersionLogged = true;
     }
   };

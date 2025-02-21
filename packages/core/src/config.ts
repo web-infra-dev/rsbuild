@@ -459,6 +459,7 @@ export async function loadConfig({
   const configFilePath = resolveConfigPath(cwd, path);
 
   if (!configFilePath) {
+    logger.debug('no config file found.');
     return {
       content: {},
       filePath: configFilePath,
@@ -485,7 +486,7 @@ export async function loadConfig({
         throw err;
       }
       logger.debug(
-        `Failed to load file with dynamic import: ${color.dim(configFilePath)}`,
+        `failed to load file with dynamic import: ${color.dim(configFilePath)}`,
       );
     }
   }
@@ -538,6 +539,8 @@ export async function loadConfig({
       )}`,
     );
   }
+
+  logger.debug('loaded config file:', configFilePath);
 
   return {
     content: applyMetaInfo(configExport),
