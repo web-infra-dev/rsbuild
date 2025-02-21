@@ -140,7 +140,13 @@ import express from 'express';
 
 async function startDevServer() {
   // Init Rsbuild
-  const rsbuild = await createRsbuild({});
+  const rsbuild = await createRsbuild({
+    rsbuildConfig: {
+      server: {
+        middlewareMode: true,
+      },
+    },
+  });
 
   const app = express();
 
@@ -159,7 +165,11 @@ async function startDevServer() {
 }
 ```
 
-For detailed usage, please refer to: [Example](https://github.com/rspack-contrib/rspack-examples/blob/main/rsbuild/express/server.mjs).
+For detailed usage, please refer to:
+
+- [Example code](https://github.com/rspack-contrib/rspack-examples/blob/main/rsbuild/express/server.mjs).
+- [rsbuild.createDevServer](/api/javascript-api/instance#rsbuildcreatedevserver)
+- [server.middlewareMode](/config/server/middleware-mode)
 
 ### connectWebSocket
 
