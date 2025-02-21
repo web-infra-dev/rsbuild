@@ -1,4 +1,5 @@
 import { defineConfig } from '@rsbuild/core';
+import tailwindcss from '@tailwindcss/postcss';
 
 export default defineConfig({
   source: {
