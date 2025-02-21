@@ -149,6 +149,10 @@ jobs:
         if: steps.changes.outputs.changed == 'true'
         run: pnpm install && cd ./e2e && npx playwright install chromium
 
-      - name: E2E Test
+      - name: E2E Test - 1
         if: steps.changes.outputs.changed == 'true'
-        run: pnpm run e2e:webpack
+        run: pnpm run e2e:webpack --shard=1/2
+
+      - name: E2E Test - 2
+        if: steps.changes.outputs.changed == 'true'
+        run: pnpm run e2e:webpack --shard=2/2
