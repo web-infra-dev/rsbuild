@@ -164,7 +164,6 @@ export class SocketServer {
 
     return new Promise<void>((resolve, reject) => {
       this.wsServer.close((err) => {
-        console.log('==close', err);
         if (err) {
           reject(err);
         } else {
