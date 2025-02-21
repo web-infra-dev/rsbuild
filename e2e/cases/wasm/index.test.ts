@@ -3,7 +3,7 @@ import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should allow to import wasm file', async ({ page }) => {
-  const root = join(import.meta.dirname, 'wasm-basic');
+  const root = join(__dirname, 'wasm-basic');
   const rsbuild = await build({
     cwd: root,
     page,
@@ -28,7 +28,7 @@ test('should allow to import wasm file', async ({ page }) => {
 });
 
 test('should allow to dynamic import wasm file', async () => {
-  const root = join(import.meta.dirname, 'wasm-async');
+  const root = join(__dirname, 'wasm-async');
   const rsbuild = await build({
     cwd: root,
   });
@@ -45,7 +45,7 @@ test('should allow to dynamic import wasm file', async () => {
 test('should allow to use new URL to get path of wasm file', async ({
   page,
 }) => {
-  const root = join(import.meta.dirname, 'wasm-url');
+  const root = join(__dirname, 'wasm-url');
   const rsbuild = await build({
     cwd: root,
     page,

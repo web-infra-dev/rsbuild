@@ -5,7 +5,7 @@ test('tsconfig paths should work and override the alias config', async ({
   page,
 }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
   });
 

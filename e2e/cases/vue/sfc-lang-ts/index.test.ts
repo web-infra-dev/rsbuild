@@ -5,7 +5,7 @@ rspackOnlyTest(
   'should build Vue SFC with lang="ts" correctly',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
     });
 

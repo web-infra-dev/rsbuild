@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should run top level await correctly', async ({ page }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
   });
 

@@ -1,7 +1,7 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-const fixtures = import.meta.dirname;
+const fixtures = __dirname;
 
 // TODO: broken by React 19
 test.skip('should render element with enabled profiler correctly', async ({

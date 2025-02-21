@@ -5,7 +5,7 @@ import { pluginRem } from '@rsbuild/plugin-rem';
 
 test('injection script order should be as expected', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     plugins: [
       pluginRem({
         inlineRuntime: false,
@@ -34,12 +34,12 @@ test('injection script order should be as expected', async () => {
 
 rspackOnlyTest('should set inject via function correctly', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       source: {
         entry: {
-          index: path.resolve(import.meta.dirname, './src/index.js'),
-          foo: path.resolve(import.meta.dirname, './src/foo.js'),
+          index: path.resolve(__dirname, './src/index.js'),
+          foo: path.resolve(__dirname, './src/foo.js'),
         },
       },
       output: {

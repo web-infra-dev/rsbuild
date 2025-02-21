@@ -2,8 +2,8 @@ import { join } from 'node:path';
 import { dev, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-const prj1 = join(import.meta.dirname, 'project1');
-const prj2 = join(import.meta.dirname, 'project2');
+const prj1 = join(__dirname, 'project1');
+const prj2 = join(__dirname, 'project2');
 
 test('should apply basic proxy rules correctly', async ({ page }) => {
   const rsbuild1 = await dev({

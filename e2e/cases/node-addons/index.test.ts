@@ -6,7 +6,7 @@ import fse from 'fs-extra';
 
 test('should compile Node addons correctly', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
   const files = await rsbuild.unwrapOutputJSON();
   const addonFile = Object.keys(files).find((file) =>
@@ -16,18 +16,18 @@ test('should compile Node addons correctly', async () => {
   expect(addonFile?.includes('/test.darwin.node')).toBeTruthy();
 
   expect(
-    fs.existsSync(join(import.meta.dirname, 'dist', 'test.darwin.node')),
+    fs.existsSync(join(__dirname, 'dist', 'test.darwin.node')),
   ).toBeTruthy();
 
   // the `test.darwin.node` is only compatible with darwin
   if (process.platform === 'darwin') {
-    const content = await import('./dist/index.cjs' as string);
-    expect(typeof content.default.default.readLength).toEqual('function');
+    const content = await import('./dist/index.js' as string);
+    expect(typeof content.default.readLength).toEqual('function');
   }
 });
 
 test('should compile Node addons in the node_modules correctly', async () => {
-  const pkgDir = join(import.meta.dirname, 'node_modules', 'node-addon-pkg');
+  const pkgDir = join(__dirname, 'node_modules', 'node-addon-pkg');
 
   fs.rmSync(pkgDir, { recursive: true, force: true });
 
@@ -41,12 +41,12 @@ test('should compile Node addons in the node_modules correctly', async () => {
   );
   fse.ensureDirSync(join(pkgDir, 'src'));
   fs.copyFileSync(
-    join(import.meta.dirname, 'src', 'test.darwin.node'),
+    join(__dirname, 'src', 'test.darwin.node'),
     join(pkgDir, 'src', 'other.node'),
   );
 
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       source: {
         entry: {
@@ -63,12 +63,10 @@ test('should compile Node addons in the node_modules correctly', async () => {
 
   expect(addonFile?.includes('/other.node')).toBeTruthy();
 
-  expect(
-    fs.existsSync(join(import.meta.dirname, 'dist', 'other.node')),
-  ).toBeTruthy();
+  expect(fs.existsSync(join(__dirname, 'dist', 'other.node'))).toBeTruthy();
 
   if (process.platform === 'darwin') {
-    const content = await import('./dist/index.cjs' as string);
-    expect(typeof content.default.default.readLength).toEqual('function');
+    const content = await import('./dist/index.js' as string);
+    expect(typeof content.default.readLength).toEqual('function');
   }
 });

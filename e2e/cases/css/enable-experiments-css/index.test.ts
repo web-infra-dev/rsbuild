@@ -5,7 +5,7 @@ rspackOnlyTest('should allow to enable Rspack experiments.css', async () => {
   const { logs, restore } = proxyConsole();
 
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
   const files = await rsbuild.unwrapOutputJSON();
   const content =
@@ -24,7 +24,7 @@ rspackOnlyTest(
     const { logs, restore } = proxyConsole();
 
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       rsbuildConfig: {
         output: {
           injectStyles: true,

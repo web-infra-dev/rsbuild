@@ -3,7 +3,7 @@ import { expect } from '@playwright/test';
 
 rspackOnlyTest('should compile CSS Modules correctly', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
   const files = await rsbuild.unwrapOutputJSON();
 
@@ -19,7 +19,7 @@ rspackOnlyTest(
   'should compile CSS Modules follow by output.cssModules',
   async () => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       rsbuildConfig: {
         output: {
           cssModules: {
@@ -45,7 +45,7 @@ rspackOnlyTest(
   'should compile CSS Modules follow by output.cssModules custom localIdentName',
   async () => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       rsbuildConfig: {
         output: {
           cssModules: {
@@ -69,7 +69,7 @@ rspackOnlyTest(
   'should compile CSS Modules follow by output.cssModules custom localIdentName - hashDigest',
   async () => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       rsbuildConfig: {
         output: {
           cssModules: {

@@ -5,7 +5,7 @@ rspackOnlyTest(
   'should build svelte component with typescript',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
     });
 

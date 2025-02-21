@@ -6,7 +6,7 @@ test('should allow to disable assets inline with `?__inline=false`', async ({
   page,
 }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     plugins: [pluginReact()],
   });

@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should allow filename.image: "[path]"', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
   const files = await rsbuild.unwrapOutputJSON();
   const filenames = Object.keys(files);

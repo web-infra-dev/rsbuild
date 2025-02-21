@@ -3,10 +3,10 @@ import { expect, test } from '@playwright/test';
 
 test('extends browserslist and downgrade the syntax', async () => {
   const originalCwd = process.cwd();
-  process.chdir(import.meta.dirname);
+  process.chdir(__dirname);
 
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
 
   const files = await rsbuild.unwrapOutputJSON();

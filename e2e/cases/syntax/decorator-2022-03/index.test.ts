@@ -4,7 +4,7 @@ import { pluginBabel } from '@rsbuild/plugin-babel';
 
 test('should run stage 3 decorators correctly', async ({ page }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
   });
 
@@ -19,7 +19,7 @@ rspackOnlyTest(
   'should run stage 3 decorators correctly with babel-plugin',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
       plugins: [pluginBabel()],
     });
@@ -39,7 +39,7 @@ test.fail(
 
     // SyntaxError: Decorators must be placed *after* the 'export' keyword
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
       rsbuildConfig: {
         source: {

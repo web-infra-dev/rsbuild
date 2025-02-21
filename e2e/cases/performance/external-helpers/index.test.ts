@@ -5,11 +5,11 @@ import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
 
 test('should externalHelpers by default', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     plugins: providerType === 'rspack' ? [] : [pluginSwc()],
     rsbuildConfig: {
       source: {
-        entry: { index: path.resolve(import.meta.dirname, './src/main.ts') },
+        entry: { index: path.resolve(__dirname, './src/main.ts') },
         decorators: {
           version: '2022-03',
         },

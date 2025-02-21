@@ -1,20 +1,17 @@
-import { createRequire } from 'node:module';
 import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { pluginBabel } from '@rsbuild/plugin-babel';
-
-const require = createRequire(import.meta.url);
 
 rspackOnlyTest(
   'should run babel with babel plugin correctly',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
       plugins: [
         pluginBabel({
           babelLoaderOptions: (_, { addPlugins }) => {
-            addPlugins([require('./plugins/myBabelPlugin.cjs')]);
+            addPlugins([require('./plugins/myBabelPlugin')]);
           },
         }),
       ],
@@ -30,7 +27,7 @@ rspackOnlyTest(
   'should allow to exclude file from babel transformation',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
       rsbuildConfig: {
         source: {
@@ -40,7 +37,7 @@ rspackOnlyTest(
       plugins: [
         pluginBabel({
           babelLoaderOptions: (_, { addPlugins }) => {
-            addPlugins([require('./plugins/myBabelPlugin.cjs')]);
+            addPlugins([require('./plugins/myBabelPlugin')]);
           },
         }),
       ],

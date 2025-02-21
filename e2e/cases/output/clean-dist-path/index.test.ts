@@ -4,7 +4,7 @@ import { build, dev, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import fse from 'fs-extra';
 
-const cwd = import.meta.dirname;
+const cwd = __dirname;
 const testDistFile = join(cwd, 'dist/test.json');
 const testDeepDistFile = join(cwd, 'dist/foo/bar/test.json');
 

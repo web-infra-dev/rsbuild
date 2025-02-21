@@ -7,7 +7,7 @@ const buildFixture = (
   rootDir: string,
   entry: string,
 ): ReturnType<typeof build> => {
-  const root = path.join(import.meta.dirname, rootDir);
+  const root = path.join(__dirname, rootDir);
 
   return build({
     cwd: root,

@@ -6,7 +6,7 @@ test('should generate unique classname for different CSS Modules files in dev bu
   page,
 }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
   });
 
@@ -23,7 +23,7 @@ test('should generate unique classname for different CSS Modules files in prod b
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
   });
 

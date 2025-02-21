@@ -6,9 +6,9 @@ import { expect, test } from '@playwright/test';
 
 // Skipped as it occasionally failed in CI
 test.skip('should restart dev server when .env file is changed', async () => {
-  const dist = path.join(import.meta.dirname, 'dist');
-  const configFile = path.join(import.meta.dirname, 'rsbuild.config.mjs');
-  const envLocalFile = path.join(import.meta.dirname, '.env.local');
+  const dist = path.join(__dirname, 'dist');
+  const configFile = path.join(__dirname, 'rsbuild.config.mjs');
+  const envLocalFile = path.join(__dirname, '.env.local');
   const distIndex = path.join(dist, 'static/js/index.js');
 
   fs.rmSync(dist, { recursive: true, force: true });
@@ -31,7 +31,7 @@ test.skip('should restart dev server when .env file is changed', async () => {
 
   delete process.env.NODE_ENV;
   const devProcess = exec('npx rsbuild dev', {
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
 
   await awaitFileExists(distIndex);

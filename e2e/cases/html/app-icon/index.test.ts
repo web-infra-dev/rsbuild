@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should emit apple-touch-icon to dist path', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       html: {
         appIcon: {
@@ -28,7 +28,7 @@ test('should emit apple-touch-icon to dist path', async () => {
 
 test('should emit manifest.webmanifest to dist path', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       html: {
         appIcon: {
@@ -78,7 +78,7 @@ test('should emit manifest.webmanifest to dist path', async () => {
 
 test('should allow to specify URL as icon', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       html: {
         appIcon: {
@@ -124,7 +124,7 @@ test('should allow to specify URL as icon', async () => {
 
 test('should allow to specify target for each icon', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       html: {
         appIcon: {
@@ -197,7 +197,7 @@ test('should allow to specify target for each icon', async () => {
 
 test('should allow to customize manifest filename', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       html: {
         appIcon: {
@@ -234,7 +234,7 @@ test('should allow to customize manifest filename', async () => {
 
 test('should append dev.assetPrefix to icon URL', async ({ page }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       dev: {
@@ -298,7 +298,7 @@ test('should append dev.assetPrefix to icon URL', async ({ page }) => {
 
 test('should append output.assetPrefix to icon URL', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         assetPrefix: 'https://example.com',
@@ -357,7 +357,7 @@ test('should append output.assetPrefix to icon URL', async () => {
 
 test('should apply asset prefix to apple-touch-icon URL', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       html: {
         appIcon: {

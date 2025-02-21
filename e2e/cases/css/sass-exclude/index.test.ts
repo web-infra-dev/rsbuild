@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('exclude specified sass file with exclude option', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       tools: {
         bundlerChain(chain) {

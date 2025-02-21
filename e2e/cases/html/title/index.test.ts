@@ -4,10 +4,10 @@ import { expect, test } from '@playwright/test';
 
 test('should generate default title correctly', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       source: {
-        entry: { foo: path.resolve(import.meta.dirname, './src/foo.js') },
+        entry: { foo: path.resolve(__dirname, './src/foo.js') },
       },
     },
   });
@@ -20,10 +20,10 @@ test('should generate default title correctly', async () => {
 
 test('should allow setting empty title to unset the default title', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       source: {
-        entry: { foo: path.resolve(import.meta.dirname, './src/foo.js') },
+        entry: { foo: path.resolve(__dirname, './src/foo.js') },
       },
       html: {
         title: '',
@@ -39,10 +39,10 @@ test('should allow setting empty title to unset the default title', async () => 
 
 test('should generate title correctly', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       source: {
-        entry: { foo: path.resolve(import.meta.dirname, './src/foo.js') },
+        entry: { foo: path.resolve(__dirname, './src/foo.js') },
       },
       html: {
         title: 'foo',
@@ -58,14 +58,14 @@ test('should generate title correctly', async () => {
 
 test('should generate title correctly when using custom HTML template', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       source: {
-        entry: { foo: path.resolve(import.meta.dirname, './src/foo.js') },
+        entry: { foo: path.resolve(__dirname, './src/foo.js') },
       },
       html: {
         title: 'foo',
-        template: path.resolve(import.meta.dirname, './src/empty.html'),
+        template: path.resolve(__dirname, './src/empty.html'),
       },
     },
   });
@@ -78,17 +78,14 @@ test('should generate title correctly when using custom HTML template', async ()
 
 test('should generate title correctly when using htmlPlugin.options.title', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       source: {
-        entry: { foo: path.resolve(import.meta.dirname, './src/foo.js') },
+        entry: { foo: path.resolve(__dirname, './src/foo.js') },
       },
       html: {
         title: 'foo',
-        template: path.resolve(
-          import.meta.dirname,
-          './src/plugin-options-title.html',
-        ),
+        template: path.resolve(__dirname, './src/plugin-options-title.html'),
       },
     },
   });
@@ -101,12 +98,12 @@ test('should generate title correctly when using htmlPlugin.options.title', asyn
 
 test('should generate title via function correctly', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       source: {
         entry: {
-          foo: path.resolve(import.meta.dirname, './src/foo.js'),
-          bar: path.resolve(import.meta.dirname, './src/foo.js'),
+          foo: path.resolve(__dirname, './src/foo.js'),
+          bar: path.resolve(__dirname, './src/foo.js'),
         },
       },
       html: {
@@ -129,10 +126,10 @@ test('should generate title via function correctly', async () => {
 
 test('should not inject title if template already contains a title', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       source: {
-        entry: { foo: path.resolve(import.meta.dirname, './src/foo.js') },
+        entry: { foo: path.resolve(__dirname, './src/foo.js') },
       },
       html: {
         title: 'Hello',

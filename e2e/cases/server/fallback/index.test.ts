@@ -5,7 +5,7 @@ test('OPTIONS request should fallback success when no other middleware responses
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {},
   });
@@ -26,7 +26,7 @@ test('OPTIONS request should response correctly with middleware responses', asyn
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       dev: {

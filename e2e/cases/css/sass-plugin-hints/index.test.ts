@@ -6,7 +6,7 @@ rspackOnlyTest('should print Sass plugin hints as expected', async () => {
 
   await expect(
     build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
     }),
   ).rejects.toThrowError('build failed');
 

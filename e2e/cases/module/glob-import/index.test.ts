@@ -5,7 +5,7 @@ rspackOnlyTest(
   'should glob import components in dev build correctly',
   async ({ page }) => {
     const rsbuild = await dev({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
     });
 
@@ -20,7 +20,7 @@ rspackOnlyTest(
   'should glob import components in prod build correctly',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
     });
 

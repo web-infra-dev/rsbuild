@@ -4,9 +4,10 @@ import { join } from 'node:path';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
 import { test } from '@playwright/test';
 import type { ConsoleType } from '@rsbuild/core';
-import glob, { type Options as GlobOptions } from 'fast-glob';
-
-const { convertPathToPattern } = glob;
+import glob, {
+  convertPathToPattern,
+  type Options as GlobOptions,
+} from 'fast-glob';
 
 export const providerType = process.env.PROVIDE_TYPE || 'rspack';
 

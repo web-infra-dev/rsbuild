@@ -10,7 +10,7 @@ rspackOnlyTest(
       test.skip();
     }
     const rsbuild = await dev({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
     });
 

@@ -6,7 +6,7 @@ test('should include CORS headers for dev server if `cors` is `true`', async ({
   request,
 }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       server: {
@@ -26,7 +26,7 @@ test('should include CORS headers for preview server if `cors` is `true`', async
   request,
 }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       server: {
@@ -43,7 +43,7 @@ test('should include CORS headers for preview server if `cors` is `true`', async
 
 test('should allow to disable CORS', async ({ page, request }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       server: {
@@ -60,7 +60,7 @@ test('should allow to disable CORS', async ({ page, request }) => {
 
 test('should allow to configure CORS', async ({ page, request }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       server: {

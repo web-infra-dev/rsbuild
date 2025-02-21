@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should allow to set development mode when building', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       mode: 'development',
     },
@@ -31,7 +31,7 @@ test('should allow to set development mode when building', async () => {
 
 test('should allow to set none mode when building', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       mode: 'none',
     },
@@ -54,7 +54,7 @@ test('should allow to set production mode when starting dev server', async ({
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       mode: 'production',

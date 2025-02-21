@@ -5,7 +5,7 @@ rspackOnlyTest(
   'should build Vue SFC with lang="postcss" correctly',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
     });
 

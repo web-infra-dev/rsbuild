@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-const cwd = import.meta.dirname;
+const cwd = __dirname;
 
 test('multiple environments writeToDisk should work correctly', async ({
   page,

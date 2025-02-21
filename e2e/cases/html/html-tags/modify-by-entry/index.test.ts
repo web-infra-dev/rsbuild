@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should allow to inject tags by entry name', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
 
   const files = await rsbuild.unwrapOutputJSON();

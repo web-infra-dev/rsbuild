@@ -4,7 +4,7 @@ import { pluginBabel } from '@rsbuild/plugin-babel';
 
 test('should use legacy decorators by default', async ({ page }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
   });
 
@@ -17,7 +17,7 @@ test('should use legacy decorators by default', async ({ page }) => {
 
 test('should allow to use stage 3 decorators', async ({ page }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       source: {
@@ -39,7 +39,7 @@ rspackOnlyTest(
   'should use legacy decorators with babel-plugin',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
       plugins: [pluginBabel()],
     });
@@ -56,7 +56,7 @@ rspackOnlyTest(
   'should allow to use stage 3 decorators with babel-plugin',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
       plugins: [pluginBabel()],
       rsbuildConfig: {

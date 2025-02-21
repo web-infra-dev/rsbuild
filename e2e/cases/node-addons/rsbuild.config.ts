@@ -1,10 +1,5 @@
-import { defineConfig } from '@rsbuild/core';
-
-export default defineConfig({
+export default {
   output: {
     target: 'node',
-    filename: {
-      js: '[name].cjs',
-    },
   },
-});
+};

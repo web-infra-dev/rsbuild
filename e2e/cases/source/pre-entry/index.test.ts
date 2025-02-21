@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should allow to configure pre-entry in development', async ({ page }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
   });
 
@@ -17,7 +17,7 @@ test('should allow to configure pre-entry in production build', async ({
   page,
 }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
   });
 

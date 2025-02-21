@@ -5,7 +5,7 @@ rspackOnlyTest(
   'should show assets on /rsbuild-dev-server path',
   async ({ page }) => {
     const rsbuild = await dev({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
       rsbuildConfig: {},
     });
@@ -41,7 +41,7 @@ rspackOnlyTest(
   'should show assets on /rsbuild-dev-server path with server.base and assetPrefix',
   async ({ page }) => {
     const rsbuild = await dev({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
       rsbuildConfig: {
         dev: {
@@ -87,7 +87,7 @@ rspackOnlyTest(
     const entry2 = './src2/index.tsx';
 
     const rsbuild = await dev({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
       rsbuildConfig: {
         environments: {

@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test';
 import type { RsbuildPlugin } from '@rsbuild/core';
 
 test('should preview dist files correctly', async ({ page }) => {
-  const cwd = join(import.meta.dirname, 'basic');
+  const cwd = join(__dirname, 'basic');
   const server = await build({
     cwd,
     page,
@@ -19,7 +19,7 @@ test('should preview dist files correctly', async ({ page }) => {
 test('should allow plugin to modify preview server config', async ({
   page,
 }) => {
-  const cwd = join(import.meta.dirname, 'basic');
+  const cwd = join(__dirname, 'basic');
   const PORT = await getRandomPort();
 
   const plugin: RsbuildPlugin = {

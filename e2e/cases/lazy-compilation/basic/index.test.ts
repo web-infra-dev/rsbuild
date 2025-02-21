@@ -10,7 +10,7 @@ rspackOnlyTest(
     }
 
     const rsbuild = await dev({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
     });
 
     await gotoPage(page, rsbuild, 'page1');

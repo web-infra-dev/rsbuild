@@ -5,7 +5,7 @@ rspackOnlyTest(
   'should allow to use tools.rspack to configure Rspack',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
       rsbuildConfig: {
         tools: {
@@ -31,7 +31,7 @@ rspackOnlyTest(
   'should allow to use async tools.rspack to configure Rspack',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
       rsbuildConfig: {
         tools: {

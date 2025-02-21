@@ -21,13 +21,13 @@ test('inline all scripts should work and emit all source maps', async ({
   page,
 }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       source: {
         entry: {
-          index: path.resolve(import.meta.dirname, './src/index.js'),
-          another: path.resolve(import.meta.dirname, './src/another.js'),
+          index: path.resolve(__dirname, './src/index.js'),
+          another: path.resolve(__dirname, './src/another.js'),
         },
       },
       output: {
@@ -60,7 +60,7 @@ test('inline all scripts should work and emit all source maps', async ({
 
 test('using RegExp to inline scripts', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         inlineScripts: /\/index\.\w+\.js$/,
@@ -86,7 +86,7 @@ test('using RegExp to inline scripts', async () => {
 
 test('inline scripts by filename and file size', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         inlineScripts({ size, name }) {
@@ -114,7 +114,7 @@ test('inline scripts by filename and file size', async () => {
 
 test('using RegExp to inline styles', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         inlineStyles: /\/index\.\w+\.css$/,
@@ -134,7 +134,7 @@ test('using RegExp to inline styles', async () => {
 
 test('inline styles by filename and file size', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         inlineStyles({ size, name }) {
@@ -158,7 +158,7 @@ test('styles are not inline by default in development mode', async ({
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       tools: toolsConfig,
@@ -177,7 +177,7 @@ test('styles are not inline by default in development mode', async ({
 
 test('using RegExp to inline styles in development mode', async ({ page }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       output: {
@@ -204,7 +204,7 @@ test('inline styles by filename and file size in development mode', async ({
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       output: {
@@ -231,7 +231,7 @@ test('inline styles by filename and file size in development mode', async ({
 
 test('inline scripts does not work when enable is false', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         inlineScripts: {
@@ -260,7 +260,7 @@ test('inline scripts does not work when enable is false', async () => {
 
 test('inline styles does not work when enable is false', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         inlineStyles: {
@@ -283,7 +283,7 @@ test('inline styles does not work when enable is false', async () => {
 
 test('inline chunk works in production mode when enable is auto', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         inlineScripts: {
@@ -325,7 +325,7 @@ test('inline does not work in development mode when enable is auto', async ({
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       output: {
@@ -363,7 +363,7 @@ test('styles and scripts are not inline by default in development mode when enab
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       tools: toolsConfig,

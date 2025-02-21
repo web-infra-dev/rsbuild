@@ -4,10 +4,10 @@ import { expect, test } from '@playwright/test';
 
 test('should allow to disable HTML for specific entry', async () => {
   await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
 
-  const outputs = await globContentJSON(path.join(import.meta.dirname, 'dist'));
+  const outputs = await globContentJSON(path.join(__dirname, 'dist'));
   const outputFiles = Object.keys(outputs);
 
   expect(outputFiles.find((item) => item.includes('foo.html'))).toBeTruthy();

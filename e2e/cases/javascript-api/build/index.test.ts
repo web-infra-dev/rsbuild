@@ -1,12 +1,12 @@
-import { rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { createRsbuild } from '@rsbuild/core';
+import { rspackOnlyTest } from 'scripts';
 
 rspackOnlyTest(
   'should allow to call `build` and get stats object',
   async () => {
     const rsbuild = await createRsbuild({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
     });
 
     const { stats, close } = await rsbuild.build();

@@ -7,12 +7,10 @@ rspackOnlyTest(
   'should run build command with --mode option correctly',
   async () => {
     execSync('npx rsbuild build --mode development', {
-      cwd: import.meta.dirname,
+      cwd: __dirname,
     });
 
-    const outputs = await globContentJSON(
-      path.join(import.meta.dirname, 'dist'),
-    );
+    const outputs = await globContentJSON(path.join(__dirname, 'dist'));
     const outputFiles = Object.keys(outputs);
 
     // no filename hash in development mode
@@ -29,12 +27,10 @@ rspackOnlyTest(
   'should run build command with -m option correctly',
   async () => {
     execSync('npx rsbuild build -m development', {
-      cwd: import.meta.dirname,
+      cwd: __dirname,
     });
 
-    const outputs = await globContentJSON(
-      path.join(import.meta.dirname, 'dist'),
-    );
+    const outputs = await globContentJSON(path.join(__dirname, 'dist'));
     const outputFiles = Object.keys(outputs);
 
     // no filename hash in development mode

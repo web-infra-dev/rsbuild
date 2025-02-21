@@ -6,14 +6,14 @@ import type { RsbuildConfig } from '@rsbuild/core';
 
 test('`buildCache.cacheDigest` should work as expected', async () => {
   const cacheDirectory = path.resolve(
-    import.meta.dirname,
+    __dirname,
     './node_modules/.cache/test-cache-digest',
   );
 
   fs.rmSync(cacheDirectory, { recursive: true, force: true });
 
   const getBuildConfig = (input: string) => ({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       tools: {
         bundlerChain: (chain) => {

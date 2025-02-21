@@ -6,17 +6,17 @@ import { expect } from '@playwright/test';
 rspackOnlyTest(
   'should let lightningcss minimizer inherit from tools.lightningcssLoader',
   async ({ page }) => {
-    const cssIndex = join(import.meta.dirname, 'dist/static/css/index.css');
+    const cssIndex = join(__dirname, 'dist/static/css/index.css');
 
     await dev({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
     });
     const devContent = await readFile(cssIndex, 'utf-8');
     expect(devContent).toContain('margin-inline-end: 100px;');
 
     await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
     });
     const buildContent = await readFile(cssIndex, 'utf-8');
     expect(buildContent).toContain('margin-inline-end:100px');

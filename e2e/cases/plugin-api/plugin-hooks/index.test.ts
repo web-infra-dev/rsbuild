@@ -77,7 +77,7 @@ rspackOnlyTest(
   async () => {
     const { plugin, names } = createPlugin();
     const rsbuild = await createRsbuild({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       rsbuildConfig: {
         plugins: [plugin],
       },
@@ -109,7 +109,7 @@ rspackOnlyTest(
   async () => {
     const { plugin, names } = createPlugin();
     const rsbuild = await createRsbuild({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       rsbuildConfig: {
         mode: 'development',
         plugins: [plugin],
@@ -145,7 +145,7 @@ rspackOnlyTest(
 
     const { plugin, names } = createPlugin();
     const rsbuild = await createRsbuild({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       rsbuildConfig: {
         plugins: [plugin],
         server: {
@@ -191,7 +191,7 @@ rspackOnlyTest(
   async () => {
     const { plugin, names } = createPlugin();
     const rsbuild = await createRsbuild({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       rsbuildConfig: {
         plugins: [plugin],
       },

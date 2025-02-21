@@ -1,7 +1,7 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-const fixtures = import.meta.dirname;
+const fixtures = __dirname;
 
 test('should render element with legacy JSX runtime correctly', async ({
   page,

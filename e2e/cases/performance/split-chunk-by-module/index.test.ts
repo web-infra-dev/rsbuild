@@ -5,7 +5,7 @@ import { pluginReact } from '@rsbuild/plugin-react';
 
 test('should generate module chunks when chunkSplit is "split-by-module"', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {

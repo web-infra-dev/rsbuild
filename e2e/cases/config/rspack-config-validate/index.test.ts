@@ -6,7 +6,7 @@ import { pluginReact } from '@rsbuild/plugin-react';
 rspackOnlyTest('should validate Rspack config by default', async () => {
   try {
     await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       rsbuildConfig: {
         tools: {
           // @ts-expect-error mock invalid config
@@ -25,7 +25,7 @@ rspackOnlyTest('should validate Rspack config by default', async () => {
 rspackOnlyTest('should warn when passing unrecognized keys', async () => {
   const { logs, restore } = proxyConsole();
   await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       tools: {
         rspack: {
@@ -51,7 +51,7 @@ rspackOnlyTest('should allow to override Rspack config validate', async () => {
   const { logs, restore } = proxyConsole();
 
   await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       tools: {
         // @ts-expect-error mock invalid config
@@ -73,7 +73,7 @@ rspackOnlyTest(
   async () => {
     try {
       await build({
-        cwd: import.meta.dirname,
+        cwd: __dirname,
         rsbuildConfig: {
           tools: {
             // @ts-expect-error mock invalid config

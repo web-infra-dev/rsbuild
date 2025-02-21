@@ -4,13 +4,13 @@ import { expect } from '@playwright/test';
 
 rspackOnlyTest('should emit multiple CSS files correctly', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       source: {
         entry: {
-          entry1: path.resolve(import.meta.dirname, './src/entry1/index.js'),
-          entry2: path.resolve(import.meta.dirname, './src/entry2/index.js'),
-          entry3: path.resolve(import.meta.dirname, './src/entry3/index.js'),
+          entry1: path.resolve(__dirname, './src/entry1/index.js'),
+          entry2: path.resolve(__dirname, './src/entry2/index.js'),
+          entry3: path.resolve(__dirname, './src/entry3/index.js'),
         },
       },
     },

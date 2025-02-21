@@ -7,7 +7,7 @@ test('should allow to set port via server.port', async ({ page }) => {
 
   const port = await getRandomPort();
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       server: {

@@ -5,7 +5,7 @@ rspackOnlyTest('should resolve ts paths correctly in SCSS file', async () => {
   const { restore } = proxyConsole();
   try {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
     });
 
     const files = await rsbuild.unwrapOutputJSON();

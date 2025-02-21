@@ -6,7 +6,7 @@ test('should throw error by default (exportsPresence error)', async () => {
 
   await expect(
     build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
     }),
   ).rejects.toThrowError();
 

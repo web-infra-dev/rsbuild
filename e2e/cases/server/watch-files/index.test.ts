@@ -3,9 +3,9 @@ import path from 'node:path';
 import { dev, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest('should work with string and path to file', async ({ page }) => {
-  const file = path.join(import.meta.dirname, '/assets/example.txt');
+  const file = path.join(__dirname, '/assets/example.txt');
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       dev: {
@@ -30,14 +30,14 @@ rspackOnlyTest('should work with string and path to file', async ({ page }) => {
 rspackOnlyTest(
   'should work with string and path to directory',
   async ({ page }) => {
-    const file = path.join(import.meta.dirname, '/assets/example.txt');
+    const file = path.join(__dirname, '/assets/example.txt');
     const rsbuild = await dev({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
       rsbuildConfig: {
         dev: {
           watchFiles: {
-            paths: path.join(import.meta.dirname, '/assets'),
+            paths: path.join(__dirname, '/assets'),
           },
         },
       },
@@ -56,17 +56,17 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest('should work with string array directory', async ({ page }) => {
-  const file = path.join(import.meta.dirname, '/assets/example.txt');
-  const other = path.join(import.meta.dirname, '/other/other.txt');
+  const file = path.join(__dirname, '/assets/example.txt');
+  const other = path.join(__dirname, '/other/other.txt');
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       dev: {
         watchFiles: {
           paths: [
-            path.join(import.meta.dirname, '/assets'),
-            path.join(import.meta.dirname, '/other'),
+            path.join(__dirname, '/assets'),
+            path.join(__dirname, '/other'),
           ],
         },
       },
@@ -93,10 +93,10 @@ rspackOnlyTest('should work with string array directory', async ({ page }) => {
 });
 
 rspackOnlyTest('should work with string and glob', async ({ page }) => {
-  const file = path.join(import.meta.dirname, '/assets/example.txt');
-  const watchDir = path.join(import.meta.dirname, '/assets');
+  const file = path.join(__dirname, '/assets/example.txt');
+  const watchDir = path.join(__dirname, '/assets');
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       dev: {
@@ -119,9 +119,9 @@ rspackOnlyTest('should work with string and glob', async ({ page }) => {
 });
 
 rspackOnlyTest('should work with options', async ({ page }) => {
-  const file = path.join(import.meta.dirname, '/assets/example.txt');
+  const file = path.join(__dirname, '/assets/example.txt');
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       dev: {

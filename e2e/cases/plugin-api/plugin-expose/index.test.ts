@@ -29,7 +29,7 @@ rspackOnlyTest('should allow plugin to expose and consume API', async () => {
   };
 
   const rsbuild = await createRsbuild({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       plugins: [pluginParent, pluginChild],
     },

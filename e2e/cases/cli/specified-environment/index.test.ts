@@ -7,10 +7,10 @@ rspackOnlyTest(
   'should only build specified environment when using --environment option',
   async () => {
     execSync('npx rsbuild build --environment web2', {
-      cwd: import.meta.dirname,
+      cwd: __dirname,
     });
 
-    const files = await globContentJSON(path.join(import.meta.dirname, 'dist'));
+    const files = await globContentJSON(path.join(__dirname, 'dist'));
     const outputFiles = Object.keys(files);
 
     expect(

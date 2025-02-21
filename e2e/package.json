@@ -2,7 +2,6 @@
   "private": true,
   "name": "@rsbuild/e2e",
   "version": "1.0.0",
-  "type": "module",
   "scripts": {
     "test": "pnpm test:rspack && pnpm test:webpack",
     "test:rspack": "cross-env NODE_OPTIONS=\"--experimental-vm-modules --no-warnings\" EXPERIMENTAL_RSPACK_INCREMENTAL=true playwright test",

@@ -5,7 +5,7 @@ import { pluginReact } from '@rsbuild/plugin-react';
 
 test('should generate vendor chunk when chunkSplit is "single-vendor"', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     plugins: [pluginReact()],
     rsbuildConfig: {
       output: {

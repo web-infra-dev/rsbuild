@@ -8,7 +8,7 @@ rspackOnlyTest(
   'should register plugins correctly when using JavaScript API',
   async () => {
     const rsbuild = await createRsbuild({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       rsbuildConfig: {
         plugins: [pluginVue()],
       },
@@ -16,9 +16,7 @@ rspackOnlyTest(
 
     await rsbuild.build();
 
-    const outputs = await globContentJSON(
-      path.join(import.meta.dirname, 'dist'),
-    );
+    const outputs = await globContentJSON(path.join(__dirname, 'dist'));
     const outputFiles = Object.keys(outputs);
 
     expect(

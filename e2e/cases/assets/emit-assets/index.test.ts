@@ -7,7 +7,7 @@ function isIncludeFile(filenames: string[], includeFilename: string) {
 
 test('should allow to disable emit assets for node target', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
 
   const files = await rsbuild.unwrapOutputJSON();
@@ -22,7 +22,7 @@ test('should allow to disable emit assets for node target', async () => {
 
 test('should allow to disable emit assets for json assets', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
 
   const files = await rsbuild.unwrapOutputJSON();

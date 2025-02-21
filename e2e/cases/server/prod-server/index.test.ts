@@ -2,7 +2,7 @@ import { join } from 'node:path';
 import { build, getRandomPort } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-const fixtures = import.meta.dirname;
+const fixtures = __dirname;
 
 test('should access / and htmlFallback success by default', async ({
   page,

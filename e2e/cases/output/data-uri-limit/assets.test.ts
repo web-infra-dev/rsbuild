@@ -5,7 +5,7 @@ import { pluginReact } from '@rsbuild/plugin-react';
 const cases = [
   {
     name: 'assets(dataUriLimit 0)',
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     config: {
       output: {
         dataUriLimit: 0,
@@ -15,7 +15,7 @@ const cases = [
   },
   {
     name: 'assets(dataUriLimit.image 0)',
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     config: {
       output: {
         dataUriLimit: {
@@ -27,7 +27,7 @@ const cases = [
   },
   {
     name: 'assets(dataUriLimit max number)',
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     config: {
       output: {
         dataUriLimit: {

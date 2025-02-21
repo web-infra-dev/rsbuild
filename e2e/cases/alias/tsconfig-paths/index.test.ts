@@ -5,7 +5,7 @@ test('tsconfig paths should work and override the alias config', async ({
   page,
 }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       resolve: {
@@ -26,7 +26,7 @@ test('tsconfig paths should not work when aliasStrategy is "prefer-alias"', asyn
   page,
 }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       resolve: {

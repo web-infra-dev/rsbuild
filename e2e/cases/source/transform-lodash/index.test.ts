@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should support using transformImport to reduce lodash bundle size', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       source: {
         transformImport: [

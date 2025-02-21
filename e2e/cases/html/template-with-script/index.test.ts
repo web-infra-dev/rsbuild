@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test';
 // see: https://github.com/rspack-contrib/html-rspack-plugin/issues/14
 test('should compile template with es template correctly', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
   const files = await rsbuild.unwrapOutputJSON();
 

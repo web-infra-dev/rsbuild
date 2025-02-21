@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should compile const enum correctly', async ({ page }) => {
   await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
   });
   expect(await page.evaluate(() => window.test)).toBe('Fish 0, Cat 1');

@@ -5,7 +5,7 @@ import { expect, test } from '@playwright/test';
 import type { Rspack } from '@rsbuild/core';
 import sourceMap from 'source-map';
 
-const fixtures = import.meta.dirname;
+const fixtures = __dirname;
 
 async function validateSourceMap(
   rawSourceMap: string,
@@ -189,7 +189,7 @@ test('should generate source map correctly in development build', async ({
 
 test('should allow to only generate source map for CSS files', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         sourceMap: {

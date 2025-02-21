@@ -5,7 +5,7 @@ import { pluginReact } from '@rsbuild/plugin-react';
 
 test('should add single environment plugin correctly', async ({ page }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       environments: {
         web: {

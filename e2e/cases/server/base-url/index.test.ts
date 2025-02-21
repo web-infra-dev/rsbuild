@@ -5,7 +5,7 @@ test('server.base when dev', async ({ page }) => {
   const { logs, restore } = proxyConsole('log');
 
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       server: {
@@ -51,7 +51,7 @@ test('server.base when dev', async ({ page }) => {
 
 test('server.base with dev.assetPrefix: true', async ({ page }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       server: {
@@ -78,7 +78,7 @@ test('server.base when build & preview', async ({ page }) => {
   const { logs, restore } = proxyConsole('log');
 
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       server: {
@@ -126,7 +126,7 @@ test('should serve resource correctly when assetPrefix is a subPath of server.ba
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       dev: {

@@ -5,7 +5,7 @@ import { expect } from '@playwright/test';
 
 rspackOnlyTest('should display shortcuts as expected in dev', async () => {
   const devProcess = exec('node ./dev.mjs', {
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
 
   let logs: string[] = [];
@@ -54,7 +54,7 @@ rspackOnlyTest('should display shortcuts as expected in dev', async () => {
 
 rspackOnlyTest('should display shortcuts as expected in preview', async () => {
   const devProcess = exec('node ./preview.mjs', {
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
 
   let logs: string[] = [];
@@ -91,7 +91,7 @@ rspackOnlyTest('should display shortcuts as expected in preview', async () => {
 
 rspackOnlyTest('should allow to custom shortcuts in dev', async () => {
   const devProcess = exec('node ./devCustom.mjs', {
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
 
   let logs: string[] = [];
@@ -118,7 +118,7 @@ rspackOnlyTest('should allow to custom shortcuts in dev', async () => {
 
 rspackOnlyTest('should allow to custom shortcuts in preview', async () => {
   const devProcess = exec('node ./previewCustom.mjs', {
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
 
   let logs: string[] = [];

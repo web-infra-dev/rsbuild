@@ -5,7 +5,7 @@ test('should allow to set entry description object with dependOn', async ({
   page,
 }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     runServer: true,
   });
 

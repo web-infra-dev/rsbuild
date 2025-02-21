@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should merge `postcssOptions` function with `postcss.config.ts` as expected', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
 
   const fooCssExpected =

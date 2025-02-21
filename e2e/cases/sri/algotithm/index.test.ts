@@ -5,7 +5,7 @@ rspackOnlyTest(
   'generate integrity using sha512 algorithm',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
     });
 

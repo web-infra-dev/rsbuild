@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should not emit CSS files when build node target', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         target: 'node',
@@ -23,7 +23,7 @@ test('should not emit CSS files when build node target', async () => {
 
 test('should allow to emit CSS with output.emitCss when build node target', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         target: 'node',
@@ -44,7 +44,7 @@ test('should allow to emit CSS with output.emitCss when build node target', asyn
 
 test('should not emit CSS files when build web-worker target', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         target: 'web-worker',
@@ -64,7 +64,7 @@ test('should not emit CSS files when build web-worker target', async () => {
 
 test('should allow to emit CSS with output.emitCss when build web-worker target', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         target: 'web-worker',
@@ -85,7 +85,7 @@ test('should allow to emit CSS with output.emitCss when build web-worker target'
 
 test('should allow to disable CSS emit with output.emitCss when build web target', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         target: 'web',

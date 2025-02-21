@@ -9,10 +9,10 @@ rspackOnlyTest(
   'should load .env config and set NODE_ENV as expected',
   async () => {
     execSync('npx rsbuild build', {
-      cwd: import.meta.dirname,
+      cwd: __dirname,
     });
     expect(
-      fs.existsSync(path.join(import.meta.dirname, 'dist/development')),
+      fs.existsSync(path.join(__dirname, 'dist/development')),
     ).toBeTruthy();
   },
 );

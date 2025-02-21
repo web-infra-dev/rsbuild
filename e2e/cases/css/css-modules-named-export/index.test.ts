@@ -5,7 +5,7 @@ rspackOnlyTest(
   'should compile CSS Modules with named exports correctly',
   async ({ page }) => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
       page,
       rsbuildConfig: {
         output: {

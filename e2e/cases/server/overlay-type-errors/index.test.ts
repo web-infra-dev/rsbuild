@@ -1,7 +1,7 @@
 import { dev, proxyConsole, waitFor } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-const cwd = import.meta.dirname;
+const cwd = __dirname;
 
 test('should display type errors on overlay correctly', async ({ page }) => {
   const { restore } = proxyConsole();

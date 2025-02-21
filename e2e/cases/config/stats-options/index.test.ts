@@ -5,7 +5,7 @@ test('should log warning by default', async () => {
   const { restore, logs } = proxyConsole();
 
   await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {},
   });
 
@@ -22,7 +22,7 @@ test('should not log warning when set stats.warnings false', async () => {
   const { restore, logs } = proxyConsole();
 
   await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       tools: {
         bundlerChain: (chain) => {

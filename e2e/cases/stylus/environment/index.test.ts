@@ -5,7 +5,7 @@ rspackOnlyTest(
   'should allow to configure Stylus plugin for specific environment',
   async () => {
     const rsbuild = await build({
-      cwd: import.meta.dirname,
+      cwd: __dirname,
     });
     const files = await rsbuild.unwrapOutputJSON();
 

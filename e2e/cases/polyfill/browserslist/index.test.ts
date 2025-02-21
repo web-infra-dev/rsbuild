@@ -7,11 +7,11 @@ test('should read browserslist for development env correctly', async ({
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
   });
 
-  const outputs = await globContentJSON(join(import.meta.dirname, 'dist'));
+  const outputs = await globContentJSON(join(__dirname, 'dist'));
   const content = getPolyfillContent(outputs);
 
   expect(content.includes('es.string.replace-all')).toBeFalsy();
@@ -21,10 +21,10 @@ test('should read browserslist for development env correctly', async ({
 
 test('should read browserslist for production env correctly', async () => {
   await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
 
-  const outputs = await globContentJSON(join(import.meta.dirname, 'dist'));
+  const outputs = await globContentJSON(join(__dirname, 'dist'));
   const content = getPolyfillContent(outputs);
 
   expect(content.includes('es.string.replace-all')).toBeTruthy();

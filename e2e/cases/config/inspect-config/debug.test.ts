@@ -5,11 +5,11 @@ import { expect, test } from '@playwright/test';
 import { logger } from '@rsbuild/core';
 
 const getRsbuildConfig = (dist: string) =>
-  path.resolve(import.meta.dirname, `./${dist}/.rsbuild/rsbuild.config.mjs`);
+  path.resolve(__dirname, `./${dist}/.rsbuild/rsbuild.config.mjs`);
 
 const getBundlerConfig = (dist: string) =>
   path.resolve(
-    import.meta.dirname,
+    __dirname,
     `./${dist}/.rsbuild/${process.env.PROVIDE_TYPE || 'rspack'}.config.web.mjs`,
   );
 
@@ -21,7 +21,7 @@ test('should generate config files when build (with DEBUG)', async () => {
   const { logs, restore } = proxyConsole();
 
   await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         distPath: {
@@ -55,7 +55,7 @@ test('should generate config files when dev (with DEBUG)', async ({ page }) => {
   const { logs, restore } = proxyConsole();
 
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     rsbuildConfig: {
       output: {
         distPath: {

@@ -9,11 +9,11 @@ rspackOnlyTest('should inject public env vars to client', async () => {
   process.env.NODE_ENV = 'production';
 
   execSync('npx rsbuild build', {
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
 
   const content = fs.readFileSync(
-    path.join(import.meta.dirname, 'dist/static/js/index.js'),
+    path.join(__dirname, 'dist/static/js/index.js'),
     'utf-8',
   );
   expect(content).not.toContain('jack');

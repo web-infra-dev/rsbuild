@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test';
 
 test('should add id prefix after svgo minification', async () => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
   });
 
   const files = await rsbuild.unwrapOutputJSON();

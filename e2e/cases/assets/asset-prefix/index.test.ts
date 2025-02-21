@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 
 test('should allow dev.assetPrefix to be `auto`', async ({ page }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       dev: {
@@ -23,7 +23,7 @@ test('should allow dev.assetPrefix to be `auto`', async ({ page }) => {
 
 test('should allow dev.assetPrefix to be true', async ({ page }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       dev: {
@@ -41,7 +41,7 @@ test('should allow dev.assetPrefix to have <port> placeholder', async ({
   page,
 }) => {
   const rsbuild = await dev({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       dev: {
@@ -61,7 +61,7 @@ test('should allow dev.assetPrefix to have <port> placeholder', async ({
 
 test('should allow output.assetPrefix to be `auto`', async ({ page }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       output: {
@@ -79,7 +79,7 @@ test('should inject assetPrefix to env var and template correctly', async ({
   page,
 }) => {
   const rsbuild = await build({
-    cwd: import.meta.dirname,
+    cwd: __dirname,
     page,
     rsbuildConfig: {
       html: {
