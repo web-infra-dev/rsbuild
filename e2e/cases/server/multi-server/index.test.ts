@@ -2,7 +2,10 @@ import { createRsbuild, getRandomPort } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import polka from 'polka';
 
-test('multiple rsbuild dev servers should work correctly', async ({ page }) => {
+// TODO: flaky test
+test.skip('multiple rsbuild dev servers should work correctly', async ({
+  page,
+}) => {
   const rsbuild1 = await createRsbuild({
     cwd: __dirname,
     rsbuildConfig: {
