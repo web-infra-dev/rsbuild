@@ -7,6 +7,7 @@ import type {
   RsbuildConfig,
   RsbuildPlugins,
 } from '@rsbuild/core';
+import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
 import type { Page } from 'playwright';
 import { globContentJSON } from './helper';
 
@@ -47,7 +48,6 @@ export const createRsbuild = async (
   }
 
   const { webpackProvider } = await import('@rsbuild/webpack');
-  const { pluginSwc } = await import('@rsbuild/plugin-webpack-swc');
 
   rsbuildOptions.rsbuildConfig.provider = webpackProvider;
 
