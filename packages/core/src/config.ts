@@ -486,7 +486,7 @@ export async function loadConfig({
         throw err;
       }
       logger.debug(
-        `Failed to load file with dynamic import: ${color.dim(configFilePath)}`,
+        `failed to load file with dynamic import: ${color.dim(configFilePath)}`,
       );
     }
   }
