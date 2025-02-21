@@ -2,7 +2,6 @@
   "private": true,
   "name": "@e2e/multi-server",
   "version": "1.0.0",
-  "type": "module",
   "dependencies": {
     "polka": "^0.5.2"
   },

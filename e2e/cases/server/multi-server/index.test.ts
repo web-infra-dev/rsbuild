@@ -6,14 +6,19 @@ test('multiple rsbuild dev servers should work correctly', async ({ page }) => {
   const rsbuild1 = await createRsbuild({
     cwd: __dirname,
     rsbuildConfig: {
+      source: {
+        entry: {
+          index: './src/index1',
+        },
+      },
       output: {
         distPath: {
-          root: 'dist',
+          root: 'dist-1',
         },
       },
       dev: {
         progressBar: false,
-        assetPrefix: '/app',
+        assetPrefix: '/app1',
       },
       server: {
         printUrls: false,
@@ -27,12 +32,12 @@ test('multiple rsbuild dev servers should work correctly', async ({ page }) => {
     rsbuildConfig: {
       source: {
         entry: {
-          index: './src/index1',
+          index: './src/index2',
         },
       },
       output: {
         distPath: {
-          root: 'dist-1',
+          root: 'dist-2',
         },
       },
       server: {
@@ -41,7 +46,7 @@ test('multiple rsbuild dev servers should work correctly', async ({ page }) => {
       },
       dev: {
         progressBar: false,
-        assetPrefix: '/app1',
+        assetPrefix: '/app2',
       },
       environments: {
         web1: {},
@@ -54,17 +59,17 @@ test('multiple rsbuild dev servers should work correctly', async ({ page }) => {
 
   const app = polka();
 
-  app.use('/app', rsbuildServer1.middlewares);
-  app.use('/app1', rsbuildServer2.middlewares);
+  app.use('/app1', rsbuildServer1.middlewares);
+  app.use('/app2', rsbuildServer2.middlewares);
 
   const port = await getRandomPort();
 
   const { server } = app.listen({ port });
-  page.goto(`http://localhost:${port}/app`);
-  await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild!');
-
   page.goto(`http://localhost:${port}/app1`);
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild1!');
+
+  page.goto(`http://localhost:${port}/app2`);
+  await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild2!');
 
   await rsbuildServer1.close();
   await rsbuildServer2.close();
