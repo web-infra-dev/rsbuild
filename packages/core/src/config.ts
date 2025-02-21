@@ -459,6 +459,7 @@ export async function loadConfig({
   const configFilePath = resolveConfigPath(cwd, path);
 
   if (!configFilePath) {
+    logger.debug('No config file found.');
     return {
       content: {},
       filePath: configFilePath,
@@ -538,6 +539,8 @@ export async function loadConfig({
       )}`,
     );
   }
+
+  logger.debug('Loaded config file:', configFilePath);
 
   return {
     content: applyMetaInfo(configExport),
