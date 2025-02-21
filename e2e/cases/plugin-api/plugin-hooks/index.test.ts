@@ -80,6 +80,9 @@ rspackOnlyTest(
       cwd: __dirname,
       rsbuildConfig: {
         plugins: [plugin],
+        performance: {
+          printFileSize: false,
+        },
       },
     });
 
@@ -113,6 +116,9 @@ rspackOnlyTest(
       rsbuildConfig: {
         mode: 'development',
         plugins: [plugin],
+        performance: {
+          printFileSize: false,
+        },
       },
     });
 
