@@ -124,7 +124,7 @@ export class CompilerDevMiddleware {
 
   public async close(): Promise<void> {
     // socketServer close should before app close
-    this.socketServer.close();
+    await this.socketServer.close();
 
     if (this.middleware) {
       await new Promise<void>((resolve) => {
