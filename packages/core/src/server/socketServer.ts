@@ -39,7 +39,7 @@ export class SocketServer {
   private stats: Record<string, Rspack.Stats>;
   private initialChunks: Record<string, Set<string>>;
 
-  private checkSocketsTimer: NodeJS.Timeout | null = null;
+  private heartbeatTimer: NodeJS.Timeout | null = null;
 
   constructor(options: DevConfig) {
     this.options = options;
@@ -75,24 +75,24 @@ export class SocketServer {
     }
 
     // Schedule next check only if timer hasn't been cleared
-    if (this.checkSocketsTimer !== null) {
-      this.checkSocketsTimer = setTimeout(
+    if (this.heartbeatTimer !== null) {
+      this.heartbeatTimer = setTimeout(
         this.checkSockets,
         CHECK_SOCKETS_INTERVAL,
       );
     }
   };
 
-  private clearCheckSocketsTimer(): void {
-    if (this.checkSocketsTimer) {
-      clearInterval(this.checkSocketsTimer);
-      this.checkSocketsTimer = null;
+  private clearHeartbeatTimer(): void {
+    if (this.heartbeatTimer) {
+      clearInterval(this.heartbeatTimer);
+      this.heartbeatTimer = null;
     }
   }
 
   // create socket, install socket handler, bind socket event
   public async prepare(): Promise<void> {
-    this.clearCheckSocketsTimer();
+    this.clearHeartbeatTimer();
 
     const { default: ws } = await import('../../compiled/ws/index.js');
     this.wsServer = new ws.Server({
@@ -105,10 +105,7 @@ export class SocketServer {
       logger.error(err);
     });
 
-    this.checkSocketsTimer = setTimeout(
-      this.checkSockets,
-      CHECK_SOCKETS_INTERVAL,
-    );
+    this.heartbeatTimer = setTimeout(this.checkSockets, CHECK_SOCKETS_INTERVAL);
 
     this.wsServer.on('connection', (socket, req) => {
       // /rsbuild-hmr?compilationId=web
@@ -146,7 +143,7 @@ export class SocketServer {
   }
 
   public async close(): Promise<void> {
-    this.clearCheckSocketsTimer();
+    this.clearHeartbeatTimer();
 
     // Remove all event listeners
     this.wsServer.removeAllListeners();
