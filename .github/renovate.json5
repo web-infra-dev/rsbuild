@@ -1,6 +1,10 @@
 {
   $schema: 'https://docs.renovatebot.com/renovate-schema.json',
-  extends: ['config:recommended', 'schedule:weekly', 'helpers:pinGitHubActionDigests'],
+  extends: [
+    'config:recommended',
+    'schedule:weekly',
+    'helpers:pinGitHubActionDigests',
+  ],
   ignorePaths: ['**/tests/**', '**/node_modules/**'],
   packageRules: [
     // Use chore as semantic commit type for commit messages
@@ -11,34 +15,39 @@
       matchPackageNames: ['*'],
     },
     {
-      groupName: 'babel',
+      groupName: 'Babel',
       groupSlug: 'babel',
       matchPackageNames: ['/babel/'],
     },
     {
-      groupName: 'rspack',
+      groupName: 'Rspack',
       groupSlug: 'rspack',
       matchPackageNames: ['/rspack/'],
     },
     {
-      groupName: 'rspress',
+      groupName: 'Rspress',
       groupSlug: 'rspress',
       matchPackageNames: ['/rspress/'],
     },
     {
-      groupName: 'rslib',
+      groupName: 'Rslib',
       groupSlug: 'rslib',
       matchPackageNames: ['/rslib/'],
     },
     {
-      groupName: 'sass',
+      groupName: 'Sass',
       groupSlug: 'sass',
       matchPackageNames: ['/sass/'],
     },
     {
-      groupName: 'eslint',
+      groupName: 'ESLint',
       groupSlug: 'eslint',
       matchPackageNames: ['/eslint/'],
+    },
+    {
+      groupName: 'Module Federation',
+      groupSlug: 'module-federation',
+      matchPackageNames: ['/module-federation/'],
     },
     {
       groupName: 'types',
@@ -54,6 +63,23 @@
     // manually update peer dependencies
     {
       matchDepTypes: ['peerDependencies'],
+      enabled: false,
+    },
+    // keep React 18 and Vue 2 template
+    {
+      matchPaths: [
+        '**/template-react18-js/**',
+        '**/template-react18-ts/**',
+        '**/template-vue2-js/**',
+        '**/template-vue2-ts/**',
+      ],
+      matchPackageNames: [
+        'vue',
+        'react',
+        'react-dom',
+        '@types/react',
+        '@types/react-dom',
+      ],
       enabled: false,
     },
   ],
