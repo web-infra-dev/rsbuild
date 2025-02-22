@@ -82,9 +82,13 @@
       ],
       enabled: false,
     },
+    {
+      matchPackageNames: ['pnpm'],
+      matchUpdateTypes: ['patch'],
+      enabled: false,
+    },
   ],
   ignoreDeps: [
-    'pnpm',
     // some loaders still depend on loader-utils v2
     'loader-utils',
     // pure ESM packages can not be used now
