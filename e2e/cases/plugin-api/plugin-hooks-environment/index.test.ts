@@ -83,6 +83,9 @@ rspackOnlyTest(
           web: {},
           node: {},
         },
+        performance: {
+          printFileSize: false,
+        },
       },
     });
 
@@ -144,6 +147,9 @@ rspackOnlyTest(
         environments: {
           web: {},
           node: {},
+        },
+        performance: {
+          printFileSize: false,
         },
       },
     });
