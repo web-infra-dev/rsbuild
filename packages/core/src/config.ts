@@ -493,15 +493,16 @@ export async function loadConfig({
 
   try {
     if (configExport! === undefined) {
-      const { default: jiti } = await import('../compiled/jiti/index.js');
-      const loadConfig = jiti(__filename, {
-        esmResolve: true,
+      const { createJiti } = await import('jiti');
+      const jiti = createJiti(__filename, {
         // disable require cache to support restart CLI and read the new config
-        requireCache: false,
+        moduleCache: false,
         interopDefault: true,
       });
 
-      configExport = loadConfig(configFilePath) as RsbuildConfigExport;
+      configExport = await jiti.import<RsbuildConfigExport>(configFilePath, {
+        default: true,
+      });
     }
   } catch (err) {
     logger.error(`Failed to load file with jiti: ${color.dim(configFilePath)}`);
