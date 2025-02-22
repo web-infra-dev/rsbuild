@@ -48,13 +48,13 @@ When you reference a static asset in your CSS file, you can also force inline th
 }
 ```
 
-:::tip Do you really need to force inlining?
-Inline large assets will significantly increase the first paint time or first contentful paint time of a page, which will hurt user experience. And when you inline a static asset multiple times into a CSS file, the base64 content will be repeatedly injected, causing the bundle size to grow . Please use forced inlining with caution.
+:::tip Impact of forcing inlining
+Inlining large assets will significantly increase the first paint time or first content paint time of a page, which will degrade the user experience. And if you inline a static asset multiple times in a CSS file, the base64 content will be injected repeatedly, increasing the bundle size. Please use forced inlining with care.
 :::
 
-## Force no inlining
+## Disable inlining
 
-When you want to always treat some assets as separate files, no matter how small the asset is, you can add the `url` query to force the asset not to be inlined.
+To prevent assets from being inlined and ensure they're always loaded as separate files, regardless of their size, you can add the `url` query parameter.
 
 ```tsx
 import React from 'react';
@@ -77,8 +77,9 @@ When you reference a static asset in your CSS file, you can also force the asset
 }
 ```
 
-:::tip Do you really need to exclude assets from inlining?
-Excluding assets from inlining will increase the number of assets that the Web App needs to load. This will reduce the efficiency of loading assets in a weak network environment or in scenarios where HTTP2 is not enabled. Please use force no Inline with caution.
+:::tip Impact of disabling inlining
+Disabling asset inlining will increase the number of assets that the web application needs to load. This will reduce the efficiency of loading assets in a weak network environment or in scenarios where HTTP2 is not enabled. Please disable asset inlining with care.
+:::
 
 ## Inline JS files
 

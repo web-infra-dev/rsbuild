@@ -28,8 +28,12 @@ export const getProviderTest = (
   // @ts-expect-error
   testSkip.fail = test.describe.skip;
   // @ts-expect-error
+  testSkip.only = test.only;
+
+  // @ts-expect-error
   return testSkip as typeof test.skip & {
     describe: typeof test.describe.skip;
+    only: typeof test.only;
   };
 };
 

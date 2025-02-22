@@ -13,9 +13,9 @@ Plugins written by developers can modify the default behavior of Rsbuild and add
 
 ## Comparison
 
-Before developing a Rsbuild plugin, you may have been familiar with the plugin systems of tools such as Webpack, Vite, esbuild, etc.
+Before developing a Rsbuild plugin, you may have been familiar with the plugin systems of tools such as webpack, Vite, esbuild, etc.
 
-Generally, Rsbuild's plugin API is similar to esbuild, and compared with Webpack / Rspack plugins, Rsbuild's plugin API is more simple and easier to get started with.
+Generally, Rsbuild's plugin API is similar to esbuild, and compared with webpack or Rspack plugins, Rsbuild's plugin API is more simple and easier to get started with.
 
 ```ts
 // esbuild plugin
@@ -154,7 +154,7 @@ export type PluginFooOptions = {
 export const pluginFoo = (options: PluginFooOptions = {}): RsbuildPlugin => ({
   name: 'plugin-foo',
 
-  setup: (api) => {
+  setup(api) {
     api.modifyEnvironmentConfig((config) => {
       config.html.title = options.title || 'My Default Title';
     });

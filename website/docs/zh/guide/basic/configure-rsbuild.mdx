@@ -93,10 +93,6 @@ export default defineConfig({
 });
 ```
 
-:::tip
-当你使用 `.ts`, `.mts` 和 `.cts` 后缀时，Rsbuild 会使用 [jiti](https://github.com/unjs/jiti) 来加载配置文件，提供 ESM 与 CommonJS 的互操作性，模块解析的行为与 Node.js 原生行为存在一定差异。
-:::
-
 ## 指定配置文件
 
 Rsbuild CLI 通过 `--config` 选项来指定配置文件，可以设置为相对路径或绝对路径。
@@ -116,6 +112,26 @@ Rsbuild CLI 通过 `--config` 选项来指定配置文件，可以设置为相�
 ```bash
 rsbuild build -c rsbuild.prod.config.mjs
 ```
+
+## 指定加载方式
+
+当你使用 `.ts`, `.mts` 和 `.cts` 后缀的配置文件时，Rsbuild 会使用 [jiti](https://github.com/unjs/jiti) 来加载配置文件，提供 ESM 与 CommonJS 的互操作性，模块解析的行为与 Node.js 原生行为存在一定差异。
+
+如果你使用的 JavaScript 运行时已经原生支持 TypeScript，可以使用 `--config-loader native` 选项来使用 Node.js 原生 loader 来加载配置文件。这可以保证模块解析的行为与 Node.js 原生行为一致，并且性能更好。
+
+例如，Node.js 从 v22.6.0 开始已经原生支持 TypeScript，你可以如下命令来使用 Node.js 原生 loader 来加载配置文件：
+
+```bash
+# Node.js v23.6.0+
+# 不需要设置 --experimental-strip-types
+npx rsbuild build --config-loader native
+
+# Node.js v22.6.0 - v23.5.0
+# 需要设置 --experimental-strip-types
+NODE_OPTIONS="--experimental-strip-types" npx rsbuild build --config-loader native
+```
+
+> 详见 [Node.js - Running TypeScript Natively](https://nodejs.org/en/learn/typescript/run-natively#running-typescript-natively)。
 
 ## 使用环境变量
 

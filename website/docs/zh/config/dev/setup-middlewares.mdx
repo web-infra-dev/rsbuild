@@ -30,7 +30,7 @@ type SetupMiddlewares = Array<
 
 中间件的执行顺序是: `unshift` => 内置中间件 => `push`。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     setupMiddlewares: [
@@ -60,7 +60,7 @@ export default {
 
 例如，如果你发送一个 `'static-changed'` 的消息，页面将会重新加载。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     setupMiddlewares: [
@@ -80,7 +80,7 @@ export default {
 
 `environments` 包含 Rsbuild 的 [environment API](/api/javascript-api/environment-api#environment-api)，这允许你在服务端获取特定环境下的构建产物信息。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     setupMiddlewares: [

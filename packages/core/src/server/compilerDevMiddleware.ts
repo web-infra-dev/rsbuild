@@ -111,7 +111,10 @@ export class CompilerDevMiddleware {
   public async init(): Promise<void> {
     // start compiling
     const devMiddleware = await getDevMiddleware(this.compiler);
-    this.middleware = this.setupDevMiddleware(devMiddleware, this.publicPaths);
+    this.middleware = await this.setupDevMiddleware(
+      devMiddleware,
+      this.publicPaths,
+    );
     await this.socketServer.prepare();
   }
 
@@ -121,7 +124,7 @@ export class CompilerDevMiddleware {
 
   public async close(): Promise<void> {
     // socketServer close should before app close
-    this.socketServer.close();
+    await this.socketServer.close();
 
     if (this.middleware) {
       await new Promise<void>((resolve) => {
@@ -149,14 +152,12 @@ export class CompilerDevMiddleware {
     });
   }
 
-  private setupDevMiddleware(
+  private async setupDevMiddleware(
     devMiddleware: CustomDevMiddleware,
     publicPaths: string[],
-  ): DevMiddlewareAPI {
-    const {
-      devConfig,
-      serverConfig: { headers, base },
-    } = this;
+  ): Promise<DevMiddlewareAPI> {
+    const { devConfig, serverConfig } = this;
+    const { headers, base } = serverConfig;
 
     const callbacks = {
       onInvalid: (compilationId?: string, fileName?: string | null) => {
@@ -181,7 +182,7 @@ export class CompilerDevMiddleware {
 
     const clientPaths = getClientPaths(devConfig);
 
-    const middleware = devMiddleware({
+    const middleware = await devMiddleware({
       headers,
       publicPath: '/',
       stats: false,
@@ -194,6 +195,7 @@ export class CompilerDevMiddleware {
       // weak is enough in dev
       // https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests#weak_validation
       etag: 'weak',
+      serverConfig,
     });
 
     const assetPrefixes = publicPaths

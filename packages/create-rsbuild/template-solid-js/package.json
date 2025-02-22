@@ -1,17 +1,18 @@
 {
   "name": "rsbuild-solid-js",
-  "private": true,
   "version": "1.0.0",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "rsbuild dev --open",
     "build": "rsbuild build",
+    "dev": "rsbuild dev --open",
     "preview": "rsbuild preview"
   },
   "dependencies": {
     "solid-js": "^1.9.4"
   },
   "devDependencies": {
-    "@rsbuild/core": "^1.2.3",
+    "@rsbuild/core": "^1.2.8",
     "@rsbuild/plugin-babel": "^1.0.3",
     "@rsbuild/plugin-solid": "^1.0.4"
   }

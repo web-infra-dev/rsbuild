@@ -1,13 +1,15 @@
 import assert from 'node:assert';
 import { NODE_MODULES_REGEX } from '../constants';
 import type {
-  CacheGroups,
   ForceSplitting,
   Polyfill,
   RsbuildChunkSplit,
   RsbuildPlugin,
+  Rspack,
   SplitChunks,
 } from '../types';
+
+type CacheGroups = Record<string, Rspack.OptimizationSplitChunksCacheGroup>;
 
 // We expose three layers to specify Rspack chunk-split config:
 // 1. By strategy. Some best practices strategies.

@@ -25,7 +25,7 @@ import { generateRspackConfig } from './rspackConfig';
 
 async function modifyRsbuildConfig(context: InternalContext) {
   logger.debug('modify Rsbuild config');
-  const [modified] = await context.hooks.modifyRsbuildConfig.call(
+  const [modified] = await context.hooks.modifyRsbuildConfig.callChain(
     context.config,
     { mergeRsbuildConfig },
   );
@@ -41,18 +41,17 @@ async function modifyEnvironmentConfig(
 ) {
   logger.debug(`modify Rsbuild environment(${name}) config`);
 
-  const [modified] =
-    await context.hooks.modifyEnvironmentConfig.callInEnvironment({
-      environment: name,
-      args: [
-        config,
-        {
-          name,
-          mergeEnvironmentConfig:
-            mergeRsbuildConfig<MergedEnvironmentConfig> as ModifyEnvironmentConfigUtils['mergeEnvironmentConfig'],
-        },
-      ],
-    });
+  const [modified] = await context.hooks.modifyEnvironmentConfig.callChain({
+    environment: name,
+    args: [
+      config,
+      {
+        name,
+        mergeEnvironmentConfig:
+          mergeRsbuildConfig<MergedEnvironmentConfig> as ModifyEnvironmentConfigUtils['mergeEnvironmentConfig'],
+      },
+    ],
+  });
 
   logger.debug(`modify Rsbuild environment(${name}) config done`);
 
@@ -151,6 +150,14 @@ const initEnvironmentConfigs = (
   };
 };
 
+const validateRsbuildConfig = (config: NormalizedConfig) => {
+  if (config.server.base && !config.server.base.startsWith('/')) {
+    throw new Error(
+      `[rsbuild:config] The "server.base" option should start with a slash, for example: "/base"`,
+    );
+  }
+};
+
 export async function initRsbuildConfig({
   context,
   pluginManager,
@@ -215,6 +222,7 @@ export async function initRsbuildConfig({
 
   await updateEnvironmentContext(context, environments);
   updateContextByNormalizedConfig(context);
+  validateRsbuildConfig(context.normalizedConfig);
 
   return context.normalizedConfig;
 }

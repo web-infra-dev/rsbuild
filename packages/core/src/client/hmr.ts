@@ -2,18 +2,16 @@ import type { NormalizedClientConfig } from '../types';
 
 const compilationId = RSBUILD_COMPILATION_NAME;
 const config: NormalizedClientConfig = RSBUILD_CLIENT_CONFIG;
+const resolvedConfig: NormalizedClientConfig = RSBUILD_RESOLVED_CLIENT_CONFIG;
 
-function formatURL({
-  port,
-  protocol,
-  hostname,
-  pathname,
-}: {
-  port: string | number;
-  protocol: string;
-  hostname: string;
-  pathname: string;
-}) {
+function formatURL(config: NormalizedClientConfig) {
+  const { location } = self;
+  const hostname = config.host || location.hostname;
+  const port = config.port || location.port;
+  const protocol =
+    config.protocol || (location.protocol === 'https:' ? 'wss' : 'ws');
+  const pathname = config.path || '/rsbuild-hmr';
+
   if (typeof URL !== 'undefined') {
     const url = new URL('http://localhost');
     url.port = String(port);
@@ -214,23 +212,30 @@ function onClose() {
   setTimeout(connect, 1000 * 1.5 ** reconnectCount);
 }
 
-// Establishing a WebSocket connection with the server.
-function connect() {
-  const { location } = self;
-  const { host, port, path, protocol } = config;
-  const socketUrl = formatURL({
-    protocol: protocol || (location.protocol === 'https:' ? 'wss' : 'ws'),
-    hostname: host || location.hostname,
-    port: port || location.port,
-    pathname: path || '/rsbuild-hmr',
-  });
+function onError() {
+  if (formatURL(config) !== formatURL(resolvedConfig)) {
+    console.error(
+      '[HMR] WebSocket connection error, attempting direct fallback.',
+    );
+    removeListeners();
+    connection = null;
+    connect(true);
+  }
+}
 
+// Establishing a WebSocket connection with the server.
+function connect(fallback = false) {
+  const socketUrl = formatURL(fallback ? resolvedConfig : config);
   connection = new WebSocket(socketUrl);
   connection.addEventListener('open', onOpen);
   // Attempt to reconnect after disconnection
   connection.addEventListener('close', onClose);
   // Handle messages from the server.
   connection.addEventListener('message', onMessage);
+  // Handle errors
+  if (!fallback) {
+    connection.addEventListener('error', onError);
+  }
 }
 
 function removeListeners() {
@@ -238,6 +243,7 @@ function removeListeners() {
     connection.removeEventListener('open', onOpen);
     connection.removeEventListener('close', onClose);
     connection.removeEventListener('message', onMessage);
+    connection.removeEventListener('error', onError);
   }
 }
 

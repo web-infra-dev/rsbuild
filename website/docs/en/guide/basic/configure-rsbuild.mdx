@@ -32,7 +32,7 @@ export default {
     // options for input source code
   },
   server: {
-    // options for the Rsbuild Server,
+    // options for the Rsbuild server,
     // will take effect during local development and preview
   },
   security: {
@@ -93,10 +93,6 @@ export default defineConfig({
 });
 ```
 
-:::tip
-When you use the `.ts`, `.mts`, and `.cts` extensions, Rsbuild will use [jiti](https://github.com/unjs/jiti) to load configuration files, providing interoperability between ESM and CommonJS. The behavior of module resolution differs slightly from the native behavior of Node.js.
-:::
-
 ## Specify config file
 
 Rsbuild CLI uses the `--config` option to specify the config file, which can be set to a relative path or an absolute path.
@@ -116,6 +112,26 @@ You can also abbreviate the `--config` option to `-c`:
 ```bash
 rsbuild build -c rsbuild.prod.config.mjs
 ```
+
+## Specify config loader
+
+When you use a configuration file with the `.ts`, `.mts`, and `.cts` extensions, Rsbuild will use [jiti](https://github.com/unjs/jiti) to load configuration files, providing interoperability between ESM and CommonJS. The behavior of module resolution differs slightly from the native behavior of Node.js.
+
+If your JavaScript runtime already natively supports TypeScript, you can use the `--config-loader native` option to use the Node.js native loader to load the configuration file. This can ensure that the module resolution behavior is consistent with the native behavior of Node.js and has better performance.
+
+For example, Node.js v22.6.0+ already natively supports TypeScript, you can use the following command to use the Node.js native loader to load the configuration file:
+
+```bash
+# Node.js v23.6.0+
+# No need to set --experimental-strip-types
+npx rsbuild build --config-loader native
+
+# Node.js v22.6.0 - v23.5.0
+# Need to set --experimental-strip-types
+NODE_OPTIONS="--experimental-strip-types" npx rsbuild build --config-loader native
+```
+
+> See [Node.js - Running TypeScript Natively](https://nodejs.org/en/learn/typescript/run-natively#running-typescript-natively) for more details.
 
 ## Using environment variables
 

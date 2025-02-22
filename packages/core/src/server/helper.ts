@@ -342,14 +342,23 @@ const getIpv4Interfaces = () => {
   return Array.from(ipv4Interfaces.values());
 };
 
+export const isWildcardHost = (host: string): boolean => {
+  const wildcardHosts = new Set([
+    '0.0.0.0',
+    '::',
+    '0000:0000:0000:0000:0000:0000:0000:0000',
+  ]);
+  return wildcardHosts.has(host);
+};
+
 const isLoopbackHost = (host: string) => {
-  const loopbackHosts = [
+  const loopbackHosts = new Set([
     'localhost',
     '127.0.0.1',
     '::1',
     '0000:0000:0000:0000:0000:0000:0000:0001',
-  ];
-  return loopbackHosts.includes(host);
+  ]);
+  return loopbackHosts.has(host);
 };
 
 export const getHostInUrl = (host: string): string => {

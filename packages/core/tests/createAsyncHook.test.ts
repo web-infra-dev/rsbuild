@@ -8,7 +8,7 @@ describe('createAsyncHook', () => {
 
     myHook.tap(callback1);
     myHook.tap(callback2);
-    await myHook.call();
+    await myHook.callChain();
     expect(callback1).toHaveBeenCalledTimes(1);
     expect(callback2).toHaveBeenCalledTimes(1);
   });
@@ -21,7 +21,7 @@ describe('createAsyncHook', () => {
     myHook.tap(callback1);
     myHook.tap(callback2);
 
-    const result = await myHook.call(1);
+    const result = await myHook.callChain(1);
     expect(result).toEqual([1]);
   });
 
@@ -33,7 +33,7 @@ describe('createAsyncHook', () => {
     myHook.tap(callback1);
     myHook.tap(callback2);
 
-    const result = await myHook.call(1);
+    const result = await myHook.callChain(1);
     expect(result).toEqual([3]);
   });
 
@@ -81,8 +81,48 @@ describe('createAsyncHook', () => {
       order: 'default',
     });
 
-    await myHook.call();
+    await myHook.callChain();
 
     expect(result).toEqual([5, 6, 1, 4, 7, 2, 3]);
+  });
+
+  test('callChain should pass results between callbacks', async () => {
+    const logs: string[] = [];
+    const hook = createAsyncHook();
+
+    hook.tap((msg) => {
+      logs.push(`first: ${msg}`);
+      return 'modified message';
+    });
+
+    hook.tap((msg) => {
+      logs.push(`second: ${msg}`);
+    });
+
+    await hook.callChain('original message');
+
+    expect(logs).toEqual([
+      'first: original message',
+      'second: modified message',
+    ]);
+  });
+
+  test('callBatch should collect all callback results', async () => {
+    const hook = createAsyncHook();
+
+    hook.tap((msg) => {
+      return `result 1: ${msg}`;
+    });
+
+    hook.tap((msg) => {
+      return `result 2: ${msg}`;
+    });
+
+    const results = await hook.callBatch('test message');
+
+    expect(results).toEqual([
+      'result 1: test message',
+      'result 2: test message',
+    ]);
   });
 });

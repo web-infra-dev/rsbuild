@@ -18,33 +18,37 @@ Rsbuild is a high-performance build tool powered by Rspack. It provides a set of
 
 Rsbuild provides [rich build features](https://rsbuild.dev/guide/start/features), including the compilation of TypeScript, JSX, Sass, Less, CSS Modules, Wasm, and others. It also supports Module Federation, image compression, type checking, PostCSS, Lightning CSS, and more.
 
+## 🚀 Performance
+
+Powered by Rspack's Rust-based architecture, Rsbuild delivers blazing fast performance that will reshape your development workflow.
+
+⚡️ **Build 1000 React components:**
+
+![benchmark](https://assets.rspack.dev/rsbuild/assets/benchmark-latest.jpeg)
+
+> 📊 Benchmark results from [build-tools-performance](https://github.com/rspack-contrib/build-tools-performance).
+
 ## 💡 Comparisons
 
 Rsbuild is a build tool that is on par with [Vite](https://vitejs.dev/), [Create React App](https://github.com/facebook/create-react-app), or [Vue CLI](https://github.com/vuejs/vue-cli). They all come with builtin dev servers, command line tools, and sensible build configurations to provide the out-of-the-box experience.
+
+![](https://assets.rspack.dev/rsbuild/assets/rsbuild-1-0-build-tools.png)
 
 ### CRA / Vue CLI
 
 You can think of Rsbuild as a modernized version of Create React App or Vue CLI, with these main differences:
 
-- The underlying bundler is switched from Webpack to Rspack, providing 5 to 10 times the build performance.
+- The underlying bundler is switched from webpack to Rspack, providing 5 to 10 times the build performance.
 - It is decoupled from frontend UI frameworks and supports all UI frameworks via [plugins](https://rsbuild.dev/plugins/list/), including React, Vue, Svelte, Solid, etc.
 - It offers better extensibility. You can extend Rsbuild flexibly via [Configurations](https://rsbuild.dev/config/), [Plugin API](https://rsbuild.dev/plugins/dev/), and [JavaScript API](https://rsbuild.dev/api/start/).
 
 ### Vite
 
-Rsbuild shares many similarities with Vite, as they are both aim to improve the frontend development experience. The main differences are:
+Rsbuild shares many similarities with Vite, as they both aim to improve the frontend development experience. The main differences are:
 
 - **Ecosystem compatibility**: Rsbuild is compatible with most webpack plugins and all Rspack plugins, while Vite is compatible with Rollup plugins. If you're currently using more plugins and loaders from the webpack ecosystem, migrating to Rsbuild would be relatively easy.
 - **Production consistency**: Rsbuild uses Rspack for bundling during both the development and production builds, thus ensuring a high level of consistency between the development and production outputs. This is also one of the goals Vite aims to achieve with Rolldown.
 - **Module Federation**: The Rsbuild team works closely with the [Module Federation](https://rsbuild.dev/guide/advanced/module-federation) development team, providing first-class support for Module Federation to help you develop large web applications with micro frontend architecture.
-
-## 🚀 Performance
-
-Rsbuild can fully leverage the build performance of Rspack. Here is the time taken to build 1000 React components:
-
-![benchmark](https://assets.rspack.dev/rsbuild/assets/benchmark-latest.jpeg)
-
-> The above data comes from the [performance-compare](https://github.com/rspack-contrib/performance-compare) benchmark.
 
 ## 🔥 Features
 
@@ -66,7 +70,7 @@ Rsbuild provides JavaScript API and plugin API for higher-level frameworks and t
 
 The following diagram illustrates the relationship between Rsbuild and other tools in the ecosystem:
 
-![Rspack stack layers](https://assets.rspack.dev/rsbuild/assets/rspack-stack-layers.png)
+<img src="https://assets.rspack.dev/rsbuild/assets/rspack-stack-layers.png" alt="Rspack stack layers" width="760" />
 
 ## 📚 Getting started
 
@@ -87,55 +91,15 @@ To get started with Rsbuild, see the [Quick start](https://rsbuild.dev/guide/sta
 
 ## 🤝 Contribution
 
-> New contributors welcome!
+> [!NOTE]
+> We highly value any contributions to Rsbuild!
 
 Please read the [Contributing Guide](https://github.com/web-infra-dev/rsbuild/blob/main/CONTRIBUTING.md).
 
 ### Contributors
 
 <a href="https://github.com/web-infra-dev/rsbuild/graphs/contributors" target="_blank">
-  <table>
-    <tr>
-      <th colspan="2">
-        <br/>
-        <img src="https://contrib.rocks/image?repo=web-infra-dev/rsbuild&columns=16&max=96"><br/><br/>
-      </th>
-    </tr>
-    <tr>
-      <td>
-        <picture>
-          <source 
-            media="(prefers-color-scheme: dark)" 
-            srcset="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=active&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=2x3&color_scheme=dark"
-          />
-          <img 
-            alt="Contributors of web-infra-dev/rsbuild" 
-            src="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=active&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=2x3&color_scheme=light"
-          />
-        </picture>
-      </td>
-      <td rowspan="2">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="https://next.ossinsight.io/widgets/official/compose-org-participants-growth/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=4x7&color_scheme=dark">
-          <img alt="New trends of web-infra-dev" src="https://next.ossinsight.io/widgets/official/compose-org-participants-growth/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=4x7&color_scheme=light">
-        </picture>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <picture>
-          <source 
-            media="(prefers-color-scheme: dark)" 
-            srcset="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=2x3&color_scheme=dark"
-          />
-          <img 
-            alt="Contributors of web-infra-dev/rsbuild" 
-            src="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=2x3&color_scheme=light"
-          />
-        </picture>
-      </td>
-    </tr>
-  </table>
+  <img src="https://contrib.rocks/image?repo=web-infra-dev/rsbuild&columns=24">
 </a>
 
 ### Code of conduct

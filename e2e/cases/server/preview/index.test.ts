@@ -24,7 +24,7 @@ test('should allow plugin to modify preview server config', async ({
 
   const plugin: RsbuildPlugin = {
     name: 'test',
-    setup: (api) => {
+    setup(api) {
       api.modifyRsbuildConfig((config) => {
         config.server ||= {};
         config.server.port = PORT;

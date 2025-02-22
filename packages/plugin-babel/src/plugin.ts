@@ -86,7 +86,7 @@ export const getDefaultBabelOptions = (
     ],
   };
 
-  const { buildCache } = config.performance;
+  const { buildCache = true } = config.performance;
 
   // Rspack does not yet support persistent cache
   // so we use babel-loader's cache to improve rebuild performance

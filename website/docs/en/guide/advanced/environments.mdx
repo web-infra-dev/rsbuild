@@ -119,7 +119,7 @@ export default {
 };
 ```
 
-## Specify environment build
+## Build specified environment
 
 By default, Rsbuild will build all environments in the Rsbuild configuration when you execute `rsbuild dev` or `rsbuild build`. You can build only the specified environment via `--environment <name>`.
 
@@ -173,7 +173,7 @@ Rsbuild supports modifying or adding environment config through the [modifyRsbui
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
       return mergeRsbuildConfig(config, {
         environments: {
@@ -197,7 +197,7 @@ Rsbuild supports modifying the Rsbuild config of a specific environment through 
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyEnvironmentConfig((config, { name }) => {
       if (name !== 'web') {
         return config;
@@ -216,7 +216,7 @@ For some plugin hooks related to the build environment (such as [modifyRspackCon
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRspackConfig((rspackConfig, { environment }) => {
       if (environment.name === 'node') {
         // do some thing
@@ -230,7 +230,7 @@ For some global plugin hooks (such as [onDevCompileDone](/plugins/dev/hooks#onde
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onDevCompileDone(({ environments }) => {
       environments.forEach((environment) => {
         console.log('environment', environment);
@@ -277,7 +277,7 @@ export async function startDevServer() {
 
   const app = express();
 
-  // Create Rsbuild DevServer instance
+  // Create Rsbuild dev server instance
   const rsbuildServer = await rsbuild.createDevServer();
 
   const serverRenderMiddleware = serverRender(rsbuildServer);
@@ -304,7 +304,7 @@ For detailed usage, please refer to: [SSR + Express Example](https://github.com/
 
 By default, Rsbuild builds all environments in parallel.
 
-If you need to control the build order between different environments, you can set build dependencies through Rspack's [dependencies](https://rspack.dev/config/other-options#dependencies) configuration.
+To control the build order between different environments, you can set build dependencies through Rspack's [dependencies](https://rspack.dev/config/other-options#dependencies) configuration.
 
 For example, if you need to build the `web` environment first, then build the `node` environment, you can add the following configuration:
 

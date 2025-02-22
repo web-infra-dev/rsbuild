@@ -29,7 +29,7 @@ function validatePlugin(plugin: unknown) {
     const messages = [
       `${color.yellow(
         name,
-      )} looks like a Webpack or Rspack plugin, please use ${color.yellow(
+      )} looks like a webpack or Rspack plugin, please use ${color.yellow(
         '`tools.rspack`',
       )} to register it:`,
       color.green(`

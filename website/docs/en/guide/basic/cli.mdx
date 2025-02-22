@@ -2,7 +2,7 @@
 
 Rsbuild comes with a lightweight CLI that includes commands such as [rsbuild dev](#rsbuild-dev) and [rsbuild build](#rsbuild-build).
 
-## rsbuild -h
+## All commands
 
 To view all available CLI commands, run the following command in the project directory:
 
@@ -13,19 +13,31 @@ npx rsbuild -h
 The output is shown below:
 
 ```text
-Usage: rsbuild <command> [options]
-
-Options:
-  -V, --version      output the version number
-  -h, --help         display help for command
+Usage:
+  $ rsbuild <command> [options]
 
 Commands:
-  dev [options]      starting the dev server
-  build [options]    build the app for production
-  preview [options]  preview the production build locally
-  inspect [options]  inspect the Rspack and Rsbuild configs
-  help [command]     display help for command
+  dev      starting the dev server
+  build    build the app for production
+  preview  preview the production build locally
+  inspect  inspect the Rspack and Rsbuild configs
 ```
+
+## Common flags
+
+Rsbuild CLI provides several common flags that can be used with all commands:
+
+| Flag                       | Description                                                                                                                                       |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--base <base>`            | Specify the base path of the server, see [server.base](/config/server/base)                                                                       |
+| `-c, --config <config>`    | Specify the configuration file, can be a relative or absolute path, see [Specify config file](/guide/basic/configure-rsbuild#specify-config-file) |
+| `--config-loader <loader>` | Specify the config loader, can be `jiti` or `native`, see [Specify config loader](/guide/basic/configure-rsbuild#specify-config-loader)           |
+| `--env-mode <mode>`        | Specify the env mode to load the `.env.[mode]` file, see [Env mode](/guide/advanced/env-vars#env-mode)                                            |
+| `--env-dir <dir>`          | Specify the directory to load `.env` files, see [Env directory](/guide/advanced/env-vars#env-directory)                                           |
+| `--environment <name>`     | Specify the name of environment to build, see [Build specified environment](/guide/advanced/environments#build-specified-environment)             |
+| `-h, --help`               | Display help for command                                                                                                                          |
+| `-m, --mode <mode>`        | Specify the build mode (`development`, `production` or `none`), see [mode](/config/mode)                                                          |
+| `-r, --root <root>`        | Specify the project root directory                                                                                                                |
 
 ## rsbuild dev
 
@@ -35,16 +47,9 @@ The `rsbuild dev` command is used to start a local dev server and compile the so
 Usage: rsbuild dev [options]
 
 Options:
-  -c --config <config>  specify the configuration file, can be a relative or absolute path
-  -r --root <root>      specify the project root directory, can be an absolute path or a path relative to cwd
-  -m --mode <mode>      specify the build mode, can be `development`, `production` or `none`
   -o, --open [url]      open the page in browser on startup
-  --port <port>         specify a port number for Rsbuild Server to listen
-  --host <host>         specify the host that the Rsbuild Server listens to
-  --env-mode <mode>     specify the env mode to load the `.env.[mode]` file
-  --env-dir <dir>       specify the directory to load `.env` files
-  --environment <name>  specify the name of environment to build
-  -h, --help            display help for command
+  --port <port>         specify a port number for Rsbuild server to listen
+  --host <host>         specify the host that the Rsbuild server listens to
 ```
 
 ### Opening page
@@ -79,14 +84,7 @@ The `rsbuild build` command will build the outputs for production in the `dist/`
 Usage: rsbuild build [options]
 
 Options:
-  -c --config <config>  specify the configuration file, can be a relative or absolute path
-  -r --root <root>      specify the project root directory, can be an absolute path or a path relative to cwd
-  -m --mode <mode>      specify the build mode, can be `development`, `production` or `none`
   -w --watch            turn on watch mode, watch for changes and rebuild
-  --env-mode <mode>     specify the env mode to load the `.env.[mode]` file
-  --env-dir <dir>       specify the directory to load `.env` files
-  --environment <name>  specify the name of environment to build
-  -h, --help            display help for command
 ```
 
 ## rsbuild preview
@@ -97,16 +95,9 @@ The `rsbuild preview` command is used to preview the production build outputs lo
 Usage: rsbuild preview [options]
 
 Options:
-  -c --config <config>  specify the configuration file, can be a relative or absolute path
-  -r --root <root>      specify the project root directory, can be an absolute path or a path relative to cwd
-  -m --mode <mode>      specify the build mode, can be `development`, `production` or `none`
   -o, --open [url]      open the page in browser on startup
-  --port <port>         specify a port number for Rsbuild Server to listen
-  --host <host>         specify the host that the Rsbuild Server listens to
-  --env-mode <mode>     specify the env mode to load the `.env.[mode]` file
-  --env-dir <dir>       specify the directory to load `.env` files
-  --environment <name>  specify the name of environment to build
-  -h, --help            display help for command
+  --port <port>         specify a port number for Rsbuild server to listen
+  --host <host>         specify the host that the Rsbuild server listens to
 ```
 
 :::tip
@@ -121,15 +112,8 @@ The `rsbuild inspect` command is used to view the Rsbuild config and Rspack conf
 Usage: rsbuild inspect [options]
 
 Options:
-  -c --config <config>  specify the configuration file, can be a relative or absolute path
-  -r --root <root>      specify the project root directory, can be an absolute path or a path relative to cwd
-  -m --mode <mode>      specify the build mode, can be `development`, `production` or `none`
   --output <output>     specify the path to output in the dist (default: ".rsbuild")
   --verbose             show the full function in the result
-  --env-mode <mode>     specify the env mode to load the `.env.[mode]` file
-  --env-dir <dir>       specify the directory to load `.env` files
-  --environment <name>  specify the name of environment to build
-  -h, --help            show command help
 ```
 
 When you run the command `npx rsbuild inspect` in the project root directory, the following files will be generated in the `dist/.rsbuild` directory of the project:

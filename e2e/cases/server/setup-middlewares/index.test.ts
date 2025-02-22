@@ -1,14 +1,15 @@
 import { dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-// HMR will timeout in CI
-test('setupMiddlewares', async ({ page }) => {
+test('should apply custom middleware via `setupMiddlewares`', async ({
+  page,
+}) => {
   // HMR cases will fail in Windows
   if (process.platform === 'win32') {
     test.skip();
   }
 
-  let i = 0;
+  let count = 0;
   let reloadFn: undefined | (() => void);
 
   // Only tested to see if it works, not all configurations.
@@ -20,7 +21,7 @@ test('setupMiddlewares', async ({ page }) => {
         setupMiddlewares: [
           (middlewares, server) => {
             middlewares.unshift((_req, _res, next) => {
-              i++;
+              count++;
               next();
             });
             reloadFn = () => server.sockWrite('static-changed');
@@ -33,17 +34,17 @@ test('setupMiddlewares', async ({ page }) => {
   const locator = page.locator('#test');
   await expect(locator).toHaveText('Hello Rsbuild!');
 
-  expect(i).toBeGreaterThanOrEqual(1);
+  expect(count).toBeGreaterThanOrEqual(1);
   expect(reloadFn).toBeDefined();
 
-  i = 0;
+  count = 0;
   reloadFn!();
 
   // check value of `i`
   const maxChecks = 100;
   let checks = 0;
   while (checks < maxChecks) {
-    if (i === 0) {
+    if (count === 0) {
       checks++;
       await new Promise((resolve) => setTimeout(resolve, 50));
     } else {
@@ -51,7 +52,7 @@ test('setupMiddlewares', async ({ page }) => {
     }
   }
 
-  expect(i).toBeGreaterThanOrEqual(1);
+  expect(count).toBeGreaterThanOrEqual(1);
 
   await rsbuild.close();
 });

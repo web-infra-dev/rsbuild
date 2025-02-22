@@ -58,7 +58,7 @@ export default {
 
 ### Proxy WebSocket
 
-If you want to proxy WebSocket requests, you can enable it through set `ws` to `true`:
+To proxy WebSocket requests, you can enable it through set `ws` to `true`:
 
 ```js
 export default {
@@ -89,7 +89,7 @@ type ProxyOptions = HttpProxyOptions & {
     req: IncomingMessage,
     res: ServerResponse,
     proxyOptions: ProxyOptions,
-  ) => string | undefined | null | boolean;
+  ) => MaybePromise<string | undefined | null | boolean>;
   context?: Filter;
 };
 
@@ -104,21 +104,25 @@ In addition to the `http-proxy-middleware` option, Rsbuild also support the `byp
 
 ### bypass
 
-Bypass the proxy based on the return value of a function.
+Sometimes you don't want to proxy everything. It is possible to bypass the proxy based on the return value of a `bypass` function.
+
+In the function, you get access to the request, response, and proxy options.
 
 - Return `null` or `undefined` to continue processing the request with proxy.
 - Return `true` to continue processing the request without proxy.
 - Return `false` to produce a 404 error for the request.
 - Return a path to serve from, instead of continuing to proxy the request.
+- Return a Promise to handle the request asynchronously.
 
-```js
-// custom bypass
+E.g. for a browser request, you want to serve an HTML page, but for an API request, you want to proxy it. You could configure like this:
+
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
-        bypass: function (req, res, proxyOptions) {
+        bypass(req, res, proxyOptions) {
           if (req.headers.accept.indexOf('html') !== -1) {
             console.log('Skipping proxy for browser request.');
             return '/index.html';

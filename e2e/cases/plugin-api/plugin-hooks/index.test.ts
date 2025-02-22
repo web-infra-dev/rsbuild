@@ -80,6 +80,9 @@ rspackOnlyTest(
       cwd: __dirname,
       rsbuildConfig: {
         plugins: [plugin],
+        performance: {
+          printFileSize: false,
+        },
       },
     });
 
@@ -113,6 +116,9 @@ rspackOnlyTest(
       rsbuildConfig: {
         mode: 'development',
         plugins: [plugin],
+        performance: {
+          printFileSize: false,
+        },
       },
     });
 
@@ -160,7 +166,14 @@ rspackOnlyTest(
 
     await result.server.close();
 
-    expect(names).toEqual([
+    expect(names.filter((name) => name.includes('DevServer'))).toEqual([
+      'BeforeStartDevServer',
+      'AfterStartDevServer',
+      'OnCloseDevServer',
+    ]);
+
+    // compile is async, so the execution order of AfterStartDevServer and the compile hooks is uncertain
+    expect(names.filter((name) => name !== 'AfterStartDevServer')).toEqual([
       'ModifyRsbuildConfig',
       'ModifyEnvironmentConfig',
       'BeforeStartDevServer',
@@ -169,7 +182,6 @@ rspackOnlyTest(
       'BeforeCreateCompiler',
       'AfterCreateCompiler',
       'BeforeEnvironmentCompile',
-      'AfterStartDevServer',
       'ModifyHTMLTags',
       'AfterEnvironmentCompile',
       'OnDevCompileDone',

@@ -71,7 +71,7 @@ export function createEnvironmentAsyncHook<
     }
   };
 
-  const callInEnvironment = async ({
+  const callChain = async ({
     environment,
     args: params,
   }: {
@@ -100,11 +100,39 @@ export function createEnvironmentAsyncHook<
     return params;
   };
 
+  const callBatch = async <T = unknown>({
+    environment,
+    args: params,
+  }: {
+    environment?: string;
+    args: Parameters<Callback>;
+  }) => {
+    const callbacks = [...preGroup, ...defaultGroup, ...postGroup];
+    const results: T[] = [];
+
+    for (const callback of callbacks) {
+      // If this callback is not a global callback, the environment info should match
+      if (
+        callback.environment &&
+        environment &&
+        !isPluginMatchEnvironment(callback.environment, environment)
+      ) {
+        continue;
+      }
+
+      const result = await callback.handler(...params);
+      results.push(result);
+    }
+
+    return results;
+  };
+
   return {
     tapEnvironment,
     tap: (handler: Callback | HookDescriptor<Callback>) =>
       tapEnvironment({ handler }),
-    callInEnvironment,
+    callChain,
+    callBatch,
   };
 }
 
@@ -127,7 +155,7 @@ export function createAsyncHook<
     }
   };
 
-  const call = async (...params: Parameters<Callback>) => {
+  const callChain = async (...params: Parameters<Callback>) => {
     const callbacks = [...preGroup, ...defaultGroup, ...postGroup];
 
     for (const callback of callbacks) {
@@ -141,9 +169,22 @@ export function createAsyncHook<
     return params;
   };
 
+  const callBatch = async <T = unknown>(...params: Parameters<Callback>) => {
+    const callbacks = [...preGroup, ...defaultGroup, ...postGroup];
+    const results: T[] = [];
+
+    for (const callback of callbacks) {
+      const result = await callback(...params);
+      results.push(result);
+    }
+
+    return results;
+  };
+
   return {
     tap,
-    call,
+    callChain,
+    callBatch,
   };
 }
 
@@ -345,7 +386,7 @@ export const registerBuildHook = ({
   }, []);
 
   const beforeCompile = async () =>
-    await context.hooks.onBeforeBuild.call({
+    await context.hooks.onBeforeBuild.callBatch({
       bundlerConfigs,
       environments: context.environments,
       isWatch,
@@ -353,7 +394,7 @@ export const registerBuildHook = ({
     });
 
   const beforeEnvironmentCompiler = async (buildIndex: number) =>
-    await context.hooks.onBeforeEnvironmentCompile.callInEnvironment({
+    await context.hooks.onBeforeEnvironmentCompile.callBatch({
       environment: environmentList[buildIndex].name,
       args: [
         {
@@ -366,7 +407,7 @@ export const registerBuildHook = ({
     });
 
   const onDone = async (stats: Rspack.Stats | Rspack.MultiStats) => {
-    const p = context.hooks.onAfterBuild.call({
+    const p = context.hooks.onAfterBuild.callBatch({
       isFirstCompile,
       stats,
       environments: context.environments,
@@ -377,7 +418,7 @@ export const registerBuildHook = ({
   };
 
   const onEnvironmentDone = async (buildIndex: number, stats: Rspack.Stats) => {
-    await context.hooks.onAfterEnvironmentCompile.callInEnvironment({
+    await context.hooks.onAfterEnvironmentCompile.callBatch({
       environment: environmentList[buildIndex].name,
       args: [
         {
@@ -426,7 +467,7 @@ export const registerDevHook = ({
   }, []);
 
   const beforeEnvironmentCompiler = async (buildIndex: number) =>
-    await context.hooks.onBeforeEnvironmentCompile.callInEnvironment({
+    await context.hooks.onBeforeEnvironmentCompile.callBatch({
       environment: environmentList[buildIndex].name,
       args: [
         {
@@ -439,7 +480,7 @@ export const registerDevHook = ({
     });
 
   const onDone = async (stats: Rspack.Stats | Rspack.MultiStats) => {
-    const p = context.hooks.onDevCompileDone.call({
+    const p = context.hooks.onDevCompileDone.callBatch({
       isFirstCompile,
       stats,
       environments: context.environments,
@@ -449,7 +490,7 @@ export const registerDevHook = ({
   };
 
   const onEnvironmentDone = async (buildIndex: number, stats: Rspack.Stats) => {
-    await context.hooks.onAfterEnvironmentCompile.callInEnvironment({
+    await context.hooks.onAfterEnvironmentCompile.callBatch({
       environment: environmentList[buildIndex].name,
       args: [
         {

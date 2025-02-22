@@ -107,7 +107,10 @@ export default {
 ```
 
 :::tip
-This data is only for reference to the size after gzip compression. Rsbuild does not enable gzip compression for static assets. Usually, you need to enable gzip compression on the server side, for example, using the [gzip module](https://nginx.org/en/docs/http/ngx_http_gzip_module.html) of nginx.
+
+- This data is only for reference to the size after gzip compression. Rsbuild does not enable gzip compression for static assets. Usually, you need to enable gzip compression on the server side, for example, using the [gzip module](https://nginx.org/en/docs/http/ngx_http_gzip_module.html) of nginx.
+- For non-compressible assets (such as images), the gzip size will not be shown in the detailed list, but their original size will be included in the total gzip size calculation.
+
 :::
 
 ### include
@@ -167,11 +170,11 @@ export default {
 type Exclude = (asset: PrintFileSizeAsset) => boolean;
 ```
 
-- **Default:** `(asset) => /\.(?:map|LICENSE\.txt)$/.test(asset.name)`
+- **Default:** `(asset) => /\.(?:map|LICENSE\.txt|d\.ts)$/.test(asset.name)`
 
 A filter function to determine which static assets to exclude. If both `include` and `exclude` are set, `exclude` will take precedence.
 
-Rsbuild defaults to excluding source map and license files, as these files do not affect page load performance.
+Rsbuild defaults to excluding source map, license files, and `.d.ts` type files, as these files do not affect page load performance.
 
 For example, exclude `.html` files in addition to the default:
 

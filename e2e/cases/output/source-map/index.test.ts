@@ -186,3 +186,28 @@ test('should generate source map correctly in development build', async ({
 
   await rsbuild.close();
 });
+
+test('should allow to only generate source map for CSS files', async () => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    rsbuildConfig: {
+      output: {
+        sourceMap: {
+          js: false,
+          css: true,
+        },
+      },
+    },
+  });
+
+  const files = await rsbuild.unwrapOutputJSON(false);
+
+  const jsMapFiles = Object.keys(files).filter((files) =>
+    files.endsWith('.js.map'),
+  );
+  const cssMapFiles = Object.keys(files).filter((files) =>
+    files.endsWith('.css.map'),
+  );
+  expect(jsMapFiles.length).toEqual(0);
+  expect(cssMapFiles.length).toBeGreaterThan(0);
+});

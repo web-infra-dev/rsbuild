@@ -8,7 +8,7 @@ This folder contains the e2e test cases of Rsbuild.
 
 ## Commands
 
-Most of the E2E tests in Rsbuild are run by both Rspack and Webpack at the same time. This is to check that the functionality of Rspack is correctly aligned with Webpack.
+Most of the E2E tests in Rsbuild are run by both Rspack and webpack at the same time. This is to check that the functionality of Rspack is correctly aligned with webpack.
 
 ```bash
 # Run all test cases, including Rspack and webpack
@@ -27,12 +27,12 @@ pnpm test:rspack css
 
 ## Add test cases
 
-Test cases added using the `test` method will run in both Rspack and Webpack.
+Test cases added using the `test` method will run in both Rspack and webpack.
 
 ```ts
 import { test, expect } from '@playwright/test';
 
-// both Webpack and Rspack
+// both webpack and Rspack
 test('test 1 + 1', () => {
   expect(1 + 1).toBe(2);
 });

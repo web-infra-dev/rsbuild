@@ -56,7 +56,7 @@ const getMainFields = (chain: RspackChain, target: RsbuildTarget) => {
 };
 
 /**
- * Handling differences between Webpack and Rspack
+ * Handling differences between webpack and Rspack
  */
 export const pluginAdaptor = (
   helpers: RsbuildProviderHelpers,

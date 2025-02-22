@@ -15,7 +15,7 @@ function modifyWebpackRuntimeModule(
     const originSource = module.getGeneratedCode();
     module.getGeneratedCode = () => modifier(originSource);
   } catch (err) {
-    console.error('Failed to modify Webpack RuntimeModule');
+    console.error('Failed to modify webpack RuntimeModule');
     throw err;
   }
 }

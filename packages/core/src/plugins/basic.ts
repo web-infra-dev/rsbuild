@@ -6,9 +6,7 @@ import type {
   Rspack,
 } from '../types';
 
-const getJsSourceMap = (
-  config: NormalizedEnvironmentConfig,
-): Rspack.DevTool => {
+const getDevtool = (config: NormalizedEnvironmentConfig): Rspack.DevTool => {
   const { sourceMap } = config.output;
   const isProd = config.mode === 'production';
 
@@ -25,7 +23,7 @@ const getJsSourceMap = (
 };
 
 /**
- * Provide some basic configs of rspack
+ * Set some basic Rspack configs
  */
 export const pluginBasic = (): RsbuildPlugin => ({
   name: 'rsbuild:basic',
@@ -37,7 +35,20 @@ export const pluginBasic = (): RsbuildPlugin => ({
 
         chain.name(environment.name);
 
-        chain.devtool(getJsSourceMap(config));
+        const devtool = getDevtool(config);
+        chain.devtool(devtool);
+
+        // When JS source map is disabled, but CSS source map is enabled,
+        // add `SourceMapDevToolPlugin` to let Rspack generate CSS source map.
+        const { sourceMap } = config.output;
+        if (!devtool && typeof sourceMap === 'object' && sourceMap.css) {
+          chain.plugin('source-map-css').use(bundler.SourceMapDevToolPlugin, [
+            {
+              test: /\.css$/,
+              filename: '[file].map[query]',
+            },
+          ]);
+        }
 
         // The base directory for resolving entry points and loaders from the configuration.
         chain.context(api.context.rootPath);

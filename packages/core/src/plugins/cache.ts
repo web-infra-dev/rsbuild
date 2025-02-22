@@ -1,7 +1,8 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import { isAbsolute, join } from 'node:path';
-import { findExists, isFileExists } from '../helpers';
+import { color, findExists, isFileExists } from '../helpers';
+import { logger } from '../logger';
 import type {
   BuildCacheOptions,
   EnvironmentContext,
@@ -10,7 +11,11 @@ import type {
   RsbuildPlugin,
 } from '../types';
 
-async function validateCache(
+/**
+ * If the filenames in the buildDependencies are changed, webpack will not invalidate the previous cache.
+ * So we need to remove the cache directory to make sure the cache is invalidated.
+ */
+async function validateWebpackCache(
   cacheDirectory: string,
   buildDependencies: Record<string, string[]>,
 ) {
@@ -18,7 +23,13 @@ async function validateCache(
 
   if (await isFileExists(configFile)) {
     const rawConfigFile = await fs.promises.readFile(configFile, 'utf-8');
-    const prevBuildDependencies = JSON.parse(rawConfigFile);
+
+    let prevBuildDependencies: Record<string, string[]> | null = null;
+    try {
+      prevBuildDependencies = JSON.parse(rawConfigFile);
+    } catch (e) {
+      logger.debug('failed to parse the previous buildDependencies.json', e);
+    }
 
     if (
       JSON.stringify(prevBuildDependencies) ===
@@ -27,10 +38,6 @@ async function validateCache(
       return;
     }
 
-    /**
-     * If the filenames in the buildDependencies are changed, webpack will not invalidate the previous cache.
-     * So we need to remove the cache directory to make sure the cache is invalidated.
-     */
     await fs.promises.rm(cacheDirectory, { force: true, recursive: true });
   }
 
@@ -57,13 +64,14 @@ function getCacheDirectory(
 }
 
 /**
- * webpack can't detect the changes of framework config, tsconfig, tailwind config and browserslist config.
+ * Rspack can't detect the changes of framework config, tsconfig, tailwind config and browserslist config.
  * but they will affect the compilation result, so they need to be added to buildDependencies.
  */
 async function getBuildDependencies(
   context: Readonly<RsbuildContext>,
   config: NormalizedEnvironmentConfig,
   environmentContext: EnvironmentContext,
+  userBuildDependencies: Record<string, string[]>,
 ) {
   const rootPackageJson = join(context.rootPath, 'package.json');
   const browserslistConfig = join(context.rootPath, '.browserslistrc');
@@ -97,26 +105,32 @@ async function getBuildDependencies(
     buildDependencies.tailwindcss = [tailwindConfig];
   }
 
-  return buildDependencies;
+  return {
+    ...buildDependencies,
+    ...userBuildDependencies,
+  };
 }
 
 export const pluginCache = (): RsbuildPlugin => ({
   name: 'rsbuild:cache',
 
   setup(api) {
-    // Rspack does not support persistent cache yet
-    if (api.context.bundlerType === 'rspack') {
-      return;
-    }
+    let cacheEnabled = false;
 
     api.modifyBundlerChain(async (chain, { environment, env }) => {
       const { config } = environment;
-      const { buildCache } = config.performance;
+      const { bundlerType } = api.context;
+
+      // Enable webpack persistent cache by default
+      // Rspack's persistent cache is still experimental and should be manually enabled
+      const buildCache =
+        config.performance.buildCache ?? bundlerType === 'webpack';
 
       if (buildCache === false) {
-        chain.cache(false);
         return;
       }
+
+      cacheEnabled = true;
 
       const { context } = api;
       const cacheConfig = typeof buildCache === 'boolean' ? {} : buildCache;
@@ -125,24 +139,54 @@ export const pluginCache = (): RsbuildPlugin => ({
         context,
         config,
         environment,
+        cacheConfig.buildDependencies
+          ? {
+              userBuildDependencies: cacheConfig.buildDependencies,
+            }
+          : {},
       );
 
-      await validateCache(cacheDirectory, buildDependencies);
+      if (bundlerType === 'webpack') {
+        await validateWebpackCache(cacheDirectory, buildDependencies);
+      }
 
       const useDigest =
         Array.isArray(cacheConfig.cacheDigest) &&
         cacheConfig.cacheDigest.length;
 
-      chain.cache({
-        // The default cache name of webpack is '${name}-${env}', and the `name` is `default` by default.
-        // We set cache name to avoid cache conflicts of different targets.
-        name: useDigest
-          ? `${environment.name}-${env}-${getDigestHash(cacheConfig.cacheDigest!)}`
-          : `${environment.name}-${env}`,
-        type: 'filesystem',
-        cacheDirectory,
-        buildDependencies,
-      });
+      // set cache name to avoid cache conflicts between different environments
+      const cacheVersion = useDigest
+        ? `${environment.name}-${env}-${getDigestHash(cacheConfig.cacheDigest!)}`
+        : `${environment.name}-${env}`;
+
+      if (bundlerType === 'rspack') {
+        chain.cache(true);
+        chain.experiments({
+          ...chain.get('experiments'),
+          cache: {
+            type: 'persistent',
+            version: cacheVersion,
+            directory: cacheDirectory,
+            buildDependencies: Object.values(buildDependencies).flat(),
+          },
+        });
+      } else {
+        chain.cache({
+          name: cacheVersion,
+          type: 'filesystem',
+          cacheDirectory,
+          buildDependencies,
+        });
+      }
+    });
+
+    api.onAfterCreateCompiler(() => {
+      // Tell user that the cache is enabled and it's experimental
+      if (cacheEnabled && api.context.bundlerType === 'rspack') {
+        logger.info(
+          `Rspack persistent cache enabled ${color.dim('(experimental)')}`,
+        );
+      }
     });
   },
 });

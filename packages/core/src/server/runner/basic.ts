@@ -34,6 +34,7 @@ const getSubPath = (p: string) => {
 
 export interface IBasicRunnerOptions {
   name: string;
+  isBundleOutput: (modulePath: string) => boolean;
   runInNewContext?: boolean;
   readFileSync: (path: string) => string;
   dist: string;
@@ -80,6 +81,11 @@ export abstract class BasicRunner implements Runner {
     file: BasicRunnerFile,
   ): BasicModuleScope;
 
+  /**
+   * Get the file information for a given module path.
+   *
+   * @returns An object containing the file path, content, and subPath, or null if the module is not an rspack output.
+   */
   protected getFile(
     modulePath: string[] | string,
     currentDirectory: string,
@@ -95,15 +101,19 @@ export abstract class BasicRunner implements Runner {
         subPath: '',
       };
     }
-    if (isRelativePath(modulePath)) {
-      const p = path.join(currentDirectory, modulePath);
-      return {
-        path: p,
-        content: this._options.readFileSync(p),
-        subPath: getSubPath(modulePath),
-      };
+
+    const joinedPath = isRelativePath(modulePath)
+      ? path.join(currentDirectory, modulePath)
+      : modulePath;
+
+    if (!this._options.isBundleOutput(joinedPath)) {
+      return null;
     }
-    return null;
+    return {
+      path: joinedPath,
+      content: this._options.readFileSync(joinedPath),
+      subPath: getSubPath(modulePath),
+    };
   }
 
   protected preExecute(_code: string, _file: BasicRunnerFile): void {}

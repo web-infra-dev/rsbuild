@@ -14,6 +14,10 @@ Rsbuild 默认对构建性能进行了充分优化，但是随着使用场景变
 
 以下是一些通用的优化方法，对开发模式和生产模式均有提速效果。
 
+### 开启持久化缓存
+
+Rsbuild 提供了 [performance.buildCache](/config/performance/build-cache) 配置，开启后可以显著提升重构建的速度。
+
 ### 减少模块
 
 对应用引用的模块数量进行优化，可以减少产物体积并提升构建性能，请阅读 [优化产物体积](/guide/optimization/optimize-bundle) 章节来了解一些优化方法。
@@ -32,7 +36,7 @@ Rsbuild 默认对构建性能进行了充分优化，但是随着使用场景变
 
 启用 lazy compilation 可以显著减少开发启动时编译的模块数量，从而提升启动时间。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     lazyCompilation: true,
@@ -42,6 +46,24 @@ export default {
 
 > 请参考 [dev.lazyCompilation](/config/dev/lazy-compilation) 了解更多。
 
+### 开启增量构建
+
+Rspack 提供了实验性的 [experiments.incremental](https://rspack.dev/zh/config/experiments#experimentsincremental) 配置，开启后可以提升开发阶段 HMR 的速度。
+
+```ts title="rsbuild.config.ts"
+const isDev = process.env.NODE_ENV === 'development';
+
+export default {
+  tools: {
+    rspack: {
+      experiments: {
+        incremental: isDev,
+      },
+    },
+  },
+};
+```
+
 ### Source map 格式
 
 为了提供良好的调试体验，Rsbuild 在开发模式下默认使用 `cheap-module-source-map` 格式 source map，这是一种高质量的 source map 格式，会带来一定的性能开销。
@@ -50,7 +72,7 @@ export default {
 
 比如禁用 source map：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     sourceMap: {
@@ -62,7 +84,7 @@ export default {
 
 或是把开发模式的 source map 格式设置为开销最小的 `eval` 格式：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     sourceMap: {

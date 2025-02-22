@@ -1,5 +1,5 @@
-import { rspack } from '@rspack/core';
 import type { StatsCompilation } from '@rspack/core';
+import { rspack } from '@rspack/core';
 import {
   color,
   formatStats,
@@ -10,7 +10,7 @@ import {
 } from '../helpers';
 import { registerDevHook } from '../hooks';
 import { logger } from '../logger';
-import type { DevConfig, Rspack } from '../types';
+import type { DevConfig, Rspack, ServerConfig } from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
 export async function createCompiler(options: InitConfigsOptions): Promise<{
@@ -21,7 +21,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   const { context } = options;
   const { rspackConfigs } = await initConfigs(options);
 
-  await context.hooks.onBeforeCreateCompiler.call({
+  await context.hooks.onBeforeCreateCompiler.callBatch({
     bundlerConfigs: rspackConfigs,
     environments: context.environments,
   });
@@ -44,7 +44,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
 
   const logRspackVersion = () => {
     if (!isVersionLogged) {
-      logger.debug(`Use Rspack v${rspack.rspackVersion}`);
+      logger.debug(`use Rspack v${rspack.rspackVersion}`);
       isVersionLogged = true;
     }
   };
@@ -122,7 +122,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     });
   }
 
-  await context.hooks.onAfterCreateCompiler.call({
+  await context.hooks.onAfterCreateCompiler.callBatch({
     compiler,
     environments: context.environments,
   });
@@ -162,4 +162,6 @@ export type DevMiddlewareOptions = {
 
   /** whether use Server Side Render */
   serverSideRender?: boolean;
+
+  serverConfig: ServerConfig;
 };

@@ -117,7 +117,7 @@ Please read the [React - CSS-in-JS](/guide/framework/react#css-in-js) section to
 
 By default, Rsbuild will extract CSS into a separate `.css` file and output it to the dist directory.
 
-If you want to inline styles into your JS file, you can set [output.injectStyles](/config/output/inject-styles) to true to disable CSS extraction logic. When the JS file is requested by the browser, JS dynamically inserts the `<style>` tag into the Html to load the CSS styles.
+To inline styles into your JS file, set [output.injectStyles](/config/output/inject-styles) to true to disable CSS extraction logic. When the JS file is requested by the browser, JS dynamically inserts the `<style>` tag into the Html to load the CSS styles.
 
 ```ts
 export default {

@@ -75,7 +75,7 @@ async function applyDefaultPlugins(
     pluginCleanOutput(),
     pluginAsset(),
     pluginHtml((environment: string) => async (...args) => {
-      const result = await context.hooks.modifyHTMLTags.callInEnvironment({
+      const result = await context.hooks.modifyHTMLTags.callChain({
         environment,
         args,
       });
@@ -107,6 +107,9 @@ async function applyDefaultPlugins(
   ]);
 }
 
+/**
+ * Create an Rsbuild instance.
+ */
 export async function createRsbuild(
   options: CreateRsbuildOptions = {},
 ): Promise<RsbuildInstance> {
@@ -187,7 +190,7 @@ export async function createRsbuild(
     return {
       ...buildInstance,
       close: async () => {
-        await context.hooks.onCloseBuild.call();
+        await context.hooks.onCloseBuild.callBatch();
         await buildInstance.close();
       },
     };

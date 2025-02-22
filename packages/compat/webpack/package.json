@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/webpack",
-  "version": "1.2.0",
+  "version": "1.2.3",
   "homepage": "https://rsbuild.dev",
   "repository": {
     "type": "git",
@@ -33,13 +33,13 @@
     "picocolors": "^1.1.1",
     "reduce-configs": "^1.1.0",
     "tsconfig-paths-webpack-plugin": "4.2.0",
-    "webpack": "^5.97.1"
+    "webpack": "^5.98.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.3.2",
+    "@rslib/core": "0.5.0",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.10.10",
+    "@types/node": "^22.13.4",
     "ansi-escapes": "4.3.2",
     "cli-truncate": "2.1.0",
     "patch-console": "1.0.0",

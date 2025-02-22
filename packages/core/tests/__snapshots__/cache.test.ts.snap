@@ -1,0 +1,116 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`plugin-cache > 'should add cache config correctly' 1`] = `
+{
+  "cache": true,
+  "experiments": {
+    "cache": {
+      "buildDependencies": [
+        "<ROOT>/packages/core/tests/tsconfig.json",
+      ],
+      "directory": "<ROOT>/packages/core/tests/node_modules/.cache/rspack",
+      "type": "persistent",
+      "version": "web-test",
+    },
+  },
+  "plugins": [
+    {
+      "name": "RsbuildCorePlugin",
+    },
+  ],
+}
+`;
+
+exports[`plugin-cache > 'should apply cacheDigest' 1`] = `
+{
+  "cache": true,
+  "experiments": {
+    "cache": {
+      "buildDependencies": [
+        "<ROOT>/packages/core/tests/tsconfig.json",
+      ],
+      "directory": "<ROOT>/packages/core/tests/node_modules/.cache/rspack",
+      "type": "persistent",
+      "version": "web-test-c29a5747",
+    },
+  },
+  "plugins": [
+    {
+      "name": "RsbuildCorePlugin",
+    },
+  ],
+}
+`;
+
+exports[`plugin-cache > 'should custom cache directory by user' 1`] = `
+{
+  "cache": true,
+  "experiments": {
+    "cache": {
+      "buildDependencies": [
+        "<ROOT>/packages/core/tests/tsconfig.json",
+      ],
+      "directory": "<ROOT>/packages/core/tests/node_modules/.cache/tmp",
+      "type": "persistent",
+      "version": "web-test",
+    },
+  },
+  "plugins": [
+    {
+      "name": "RsbuildCorePlugin",
+    },
+  ],
+}
+`;
+
+exports[`plugin-cache > 'should disable cache' 1`] = `
+{
+  "plugins": [
+    {
+      "name": "RsbuildCorePlugin",
+    },
+  ],
+}
+`;
+
+exports[`plugin-cache > 'should not apply cacheDigest' 1`] = `
+{
+  "cache": true,
+  "experiments": {
+    "cache": {
+      "buildDependencies": [
+        "<ROOT>/packages/core/tests/tsconfig.json",
+      ],
+      "directory": "<ROOT>/packages/core/tests/node_modules/.cache/rspack",
+      "type": "persistent",
+      "version": "web-test",
+    },
+  },
+  "plugins": [
+    {
+      "name": "RsbuildCorePlugin",
+    },
+  ],
+}
+`;
+
+exports[`plugin-cache > 'should watch tsconfig change' 1`] = `
+{
+  "cache": true,
+  "experiments": {
+    "cache": {
+      "buildDependencies": [
+        "<ROOT>/packages/core/tests/tsconfig.json",
+      ],
+      "directory": "<ROOT>/packages/core/tests/node_modules/.cache/rspack",
+      "type": "persistent",
+      "version": "web-test",
+    },
+  },
+  "plugins": [
+    {
+      "name": "RsbuildCorePlugin",
+    },
+  ],
+}
+`;

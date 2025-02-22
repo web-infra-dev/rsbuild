@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-webpack-swc",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "SWC plugin for Rsbuild webpack provider",
   "repository": {
     "type": "git",
@@ -32,16 +32,16 @@
     "deepmerge": "^4.3.1",
     "lodash": "^4.17.21",
     "picocolors": "^1.1.1",
-    "semver": "^7.6.3"
+    "semver": "^7.7.1"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "@rslib/core": "0.3.2",
-    "@types/lodash": "^4.17.14",
+    "@rslib/core": "0.5.0",
+    "@types/lodash": "^4.17.15",
     "@types/semver": "^7.5.8",
     "typescript": "^5.7.3",
-    "webpack": "^5.97.1"
+    "webpack": "^5.98.0"
   },
   "peerDependencies": {
     "@rsbuild/core": "1.x"

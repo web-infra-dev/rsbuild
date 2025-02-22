@@ -2,7 +2,7 @@
 
 Rsbuild 内置了一个轻量的命令行工具，包含 [rsbuild dev](#rsbuild-dev)、[rsbuild build](#rsbuild-build) 等命令。
 
-## rsbuild -h
+## 查看所有命令
 
 如果你需要查看所有可用的 CLI 命令，请在项目目录中运行以下命令：
 
@@ -13,19 +13,31 @@ npx rsbuild -h
 输出如下：
 
 ```text
-Usage: rsbuild <command> [options]
-
-Options:
-  -V, --version      显示版本号
-  -h, --help         显示命令帮助
+Usage:
+  $ rsbuild <command> [options]
 
 Commands:
-  dev [options]      启动开发服务器
-  build [options]    构建生产环境产物
-  preview [options]  本地预览生产环境产物
-  inspect [options]  检查 Rspack 和 Rsbuild 配置
-  help [command]     显示命令帮助
+  dev      starting the dev server
+  build    build the app for production
+  preview  preview the production build locally
+  inspect  inspect the Rspack and Rsbuild configs
 ```
+
+## 公共选项
+
+Rsbuild CLI 提供了一些公共选项，可以用于所有命令：
+
+| 选项                       | 描述                                                                                                              |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `--base <base>`            | 指定服务端的基础路径，详见 [server.base](/config/server/base)                                                     |
+| `-c, --config <config>`    | 指定配置文件路径，可以为相对路径或绝对路径，详见 [指定配置文件](/guide/basic/configure-rsbuild#指定配置文件)      |
+| `--config-loader <loader>` | 指定配置文件加载方式，可以为 `jiti` 或 `native`，详见 [指定加载方式](/guide/basic/configure-rsbuild#指定加载方式) |
+| `--env-mode <mode>`        | 指定 env 模式来加载 `.env.[mode]` 文件，详见 [Env 模式](/guide/advanced/env-vars#env-模式)                        |
+| `--env-dir <dir>`          | 指定目录来加载 `.env` 文件，详见 [Env 目录](/guide/advanced/env-vars#env-目录)                                    |
+| `--environment <name>`     | 指定需要构建的 environment 名称，详见 [构建指定环境](/guide/advanced/environments#构建指定环境)                   |
+| `-h, --help`               | 显示命令帮助                                                                                                      |
+| `-m, --mode <mode>`        | 指定构建模式，可以是 `development`，`production` 或 `none`，详见 [mode](/config/mode)                             |
+| `-r, --root <root>`        | 指定项目根目录，可以是绝对路径或者相对于 cwd 的路径                                                               |
 
 ## rsbuild dev
 
@@ -35,16 +47,9 @@ Commands:
 Usage: rsbuild dev [options]
 
 Options:
-  -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
-  -r --root <root>      指定项目根目录，可以是绝对路径或者相对于 cwd 的路径
-  -m --mode <mode>      指定构建模式，可以是 `development`，`production` 或 `none`
   -o, --open [url]      启动时是否在浏览器中打开页面
-  --port <port>         设置 Rsbuild Server 监听的端口号
-  --host <host>         指定 Rsbuild Server 启动时监听的 host
-  --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
-  --env-dir <dir>       指定目录来加载 `.env` 文件
-  --environment <name>  指定需要构建的 environment 名称
-  -h, --help            显示命令帮助
+  --port <port>         设置 Rsbuild server 监听的端口号
+  --host <host>         指定 Rsbuild server 启动时监听的 host
 ```
 
 ### 打开页面
@@ -79,14 +84,7 @@ rsbuild dev -o
 Usage: rsbuild build [options]
 
 Options:
-  -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
-  -r --root <root>      指定项目根目录，可以是绝对路径或者相对于 cwd 的路径
-  -m --mode <mode>      指定构建模式，可以是 `development`，`production` 或 `none`
   -w --watch            开启 watch 模式, 监听文件变更并重新构建
-  --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
-  --env-dir <dir>       指定目录来加载 `.env` 文件
-  --environment <name>  指定需要构建的 environment 名称
-  -h, --help            显示命令帮助
 ```
 
 ## rsbuild preview
@@ -97,16 +95,9 @@ Options:
 Usage: rsbuild preview [options]
 
 Options:
-  -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
-  -r --root <root>      指定项目根目录，可以是绝对路径或者相对于 cwd 的路径
-  -m --mode <mode>      指定构建模式，可以是 `development`，`production` 或 `none`
   -o, --open [url]      启动时是否在浏览器中打开页面
-  --port <port>         设置 Rsbuild Server 监听的端口号
-  --host <host>         指定 Rsbuild Server 启动时监听的 host
-  --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
-  --env-dir <dir>       指定目录来加载 `.env` 文件
-  --environment <name>  指定需要构建的 environment 名称
-  -h, --help            显示命令帮助
+  --port <port>         设置 Rsbuild server 监听的端口号
+  --host <host>         指定 Rsbuild server 启动时监听的 host
 ```
 
 :::tip
@@ -121,15 +112,8 @@ preview 命令仅用于本地预览，请勿将它用于生产服务器，因为
 Usage: rsbuild inspect [options]
 
 Options:
-  -c --config <config>  指定配置文件路径，可以为相对路径或绝对路径
-  -r --root <root>      指定项目根目录，可以是绝对路径或者相对于 cwd 的路径
-  -m --mode <mode>      指定构建模式，可以是 `development`，`production` 或 `none`
   --output <output>     指定在 dist 目录下输出的路径 (default: ".rsbuild")
   --verbose             在结果中展示函数的完整内容
-  --env-mode <mode>     指定 env 模式来加载 `.env.[mode]` 文件
-  --env-dir <dir>       指定目录来加载 `.env` 文件
-  --environment <name>  指定需要构建的 environment 名称
-  -h, --help            显示命令帮助
 ```
 
 当你在项目根目录下执行命令 `npx rsbuild inspect` 后，会在项目的 `dist/.rsbuild` 目录生成以下文件：

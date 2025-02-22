@@ -39,7 +39,7 @@ After registering the plugin, you can import `*.scss`, `*.sass`, `*.module.scss`
 
 ## Options
 
-If you need to customize the compilation behavior of Sass, you can use the following configs.
+To customize the compilation behavior of Sass, use the following options.
 
 ### sassLoaderOptions
 
@@ -141,7 +141,7 @@ Sass provides several implementations, including [sass](https://www.npmjs.com/pa
 
 Rsbuild uses the latest `sass-embedded` implementation by default. `sass-embedded` is a JavaScript wrapper around the native Dart Sass executable, providing a consistent API and optimal performance.
 
-If you need to use a different Sass implementation instead of the built-in `sass-embedded` included in Rsbuild, you can install the preferred Sass implementation in your project and specify it using the `sass-loader`'s [implementation](https://github.com/webpack-contrib/sass-loader?tab=readme-ov-file#implementation) option.
+To use a different Sass implementation instead of the built-in `sass-embedded` included in Rsbuild, install the preferred Sass implementation in your project and specify it using the `sass-loader`'s [implementation](https://github.com/webpack-contrib/sass-loader?tab=readme-ov-file#implementation) option.
 
 ```ts
 pluginSass({

@@ -1,5 +1,6 @@
 import type { ChainIdentifier } from '..';
 import type RspackChain from '../../compiled/rspack-chain/index.js';
+import type { RsbuildDevServer } from '../server/devServer';
 import type {
   EnvironmentConfig,
   HtmlBasicTag,
@@ -58,8 +59,15 @@ export type OnDevCompileDoneFn = (params: {
 }) => MaybePromise<void>;
 
 export type OnBeforeStartDevServerFn = (params: {
+  /**
+   * The dev server instance, the same as the return value of `createDevServer`.
+   */
+  server: RsbuildDevServer;
+  /**
+   * A read-only object that provides some context information about different environments.
+   */
   environments: Record<string, EnvironmentContext>;
-}) => MaybePromise<void>;
+}) => MaybePromise<(() => void) | void>;
 
 export type OnBeforeStartProdServerFn = () => MaybePromise<void>;
 
@@ -192,6 +200,7 @@ export type ModifyBundlerChainUtils = ModifyChainUtils & {
     DefinePlugin: PluginInstance;
     IgnorePlugin: PluginInstance;
     ProvidePlugin: PluginInstance;
+    SourceMapDevToolPlugin: PluginInstance;
     HotModuleReplacementPlugin: PluginInstance;
   };
 };

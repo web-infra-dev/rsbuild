@@ -1,6 +1,6 @@
 import { rspack } from '@rspack/core';
 import { reduceConfigsAsyncWithContext } from 'reduce-configs';
-import { CHAIN_ID, chainToConfig, modifyBundlerChain } from '../configChain';
+import { CHAIN_ID, modifyBundlerChain } from '../configChain';
 import { castArray, color, getNodeEnv } from '../helpers';
 import { logger } from '../logger';
 import { getHTMLPlugin } from '../pluginHelper';
@@ -19,11 +19,10 @@ async function modifyRspackConfig(
   utils: ModifyRspackConfigUtils,
 ) {
   logger.debug('modify Rspack config');
-  let [modifiedConfig] =
-    await context.hooks.modifyRspackConfig.callInEnvironment({
-      environment: utils.environment.name,
-      args: [rspackConfig, utils],
-    });
+  let [modifiedConfig] = await context.hooks.modifyRspackConfig.callChain({
+    environment: utils.environment.name,
+    args: [rspackConfig, utils],
+  });
 
   if (utils.environment.config.tools?.rspack) {
     modifiedConfig = await reduceConfigsAsyncWithContext({
@@ -163,6 +162,7 @@ export async function generateRspackConfig({
     DefinePlugin,
     IgnorePlugin,
     ProvidePlugin,
+    SourceMapDevToolPlugin,
     HotModuleReplacementPlugin,
   } = rspack;
 
@@ -173,11 +173,12 @@ export async function generateRspackConfig({
       DefinePlugin,
       IgnorePlugin,
       ProvidePlugin,
+      SourceMapDevToolPlugin,
       HotModuleReplacementPlugin,
     },
   });
 
-  let rspackConfig = chainToConfig(chain);
+  let rspackConfig = chain.toConfig();
 
   rspackConfig = await modifyRspackConfig(
     context,

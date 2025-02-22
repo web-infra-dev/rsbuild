@@ -51,7 +51,7 @@ Rsbuild 支持使用 `RSPACK_PROFILE` 环境变量来对 Rspack 进行构建性�
 执行该命令后，会在产物目录下生成一个 `rspack-profile-${timestamp}` 文件夹，该文件夹下会包含 `logging.json`、`trace.json` 和 `jscpuprofile.json` 三个文件：
 
 - `trace.json`：使用 tracing 细粒度地记录了 Rust 侧各个阶段的耗时，可以使用 [ui.perfetto.dev](https://ui.perfetto.dev/) 进行查看。
-- `jscpuprofile.json`：使用 [Node.js inspector](https://nodejs.org/dist/latest-v18.x/docs/api/inspector.html) 细粒度地记录了 JavaScript 侧的各个阶段的耗时，可以使用 [speedscope.app](https://www.speedscope.app/) 进行查看。
+- `jscpuprofile.json`：使用 [Node.js inspector](https://nodejs.org/dist/latest-v18.x/docs/api/inspector.html) 细粒度地记录了 JavaScript 侧的各个阶段的耗时，可以使用 [speedscope.app](https://www.speedscope.app/) 进行查看。开发模式下仅在通过 [`h + Enter`](/config/dev/cli-shortcuts) 退出时生成。
 - `logging.json`：包含一些日志信息，粗粒度地记录了构建的各个阶段耗时（开发模式下暂不支持）。
 
 > 更多 Rspack 构建性能分析用法，可参考 [Rspack - Profiling](https://rspack.dev/contribute/development/profiling)。

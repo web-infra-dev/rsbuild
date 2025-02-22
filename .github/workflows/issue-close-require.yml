@@ -15,7 +15,7 @@ jobs:
     if: github.repository == 'web-infra-dev/rsbuild'
     steps:
       - name: need reproduction
-        uses: actions-cool/issues-helper@v3.6.0
+        uses: actions-cool/issues-helper@a610082f8ac0cf03e357eb8dd0d5e2ba075e017e # v3.6.0
         with:
           actions: 'close-issues'
           labels: 'need reproduction'

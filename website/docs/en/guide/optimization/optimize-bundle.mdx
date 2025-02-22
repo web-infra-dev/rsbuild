@@ -42,7 +42,7 @@ npx yarn-deduplicate && yarn
 
 It is recommended to using lightweight libraries in your project, such as replacing [moment](https://momentjs.com/) with [day.js](https://day.js.org/).
 
-If you want to find out the large libraries in the project, you can add the `BUNDLE_ANALYZE=true` environment variable when building:
+To find out the large libraries in the project, add the `BUNDLE_ANALYZE=true` environment variable when building:
 
 ```bash
 BUNDLE_ANALYZE=true pnpm build

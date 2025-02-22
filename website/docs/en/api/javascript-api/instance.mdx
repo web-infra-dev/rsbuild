@@ -4,7 +4,7 @@ This section describes all the properties and methods on the Rsbuild instance ob
 
 ## rsbuild.context
 
-`rsbuild.context` is a read-only object that provides some context infos.
+`rsbuild.context` is a read-only object that provides some context information.
 
 ### context.version
 
@@ -77,7 +77,7 @@ type bundlerType = 'rspack' | 'webpack';
 
 ## rsbuild.build
 
-Perform a production mode build.
+Perform a production mode build. This method will generate optimized production bundles and emit them to the output directory.
 
 - **Type:**
 
@@ -123,18 +123,22 @@ try {
   process.exit(1);
 }
 
-// Example 3: build and get all stats
+// Example 3: build and get all assets
 const { stats } = await rsbuild.build();
 
 if (stats) {
-  const { assets } = stats.toJson({ assets: true });
+  const { assets } = stats.toJson({
+    // exclude unused fields to improve performance
+    all: false,
+    assets: true,
+  });
   console.log(assets);
 }
 ```
 
 ### Monitor file changes
 
-If you need to watch file changes and re-build, you can set the `watch` option to `true`.
+To watch file changes and re-build, set the `watch` option to `true`.
 
 ```ts
 await rsbuild.build({
@@ -154,12 +158,22 @@ await result.close();
 
 ### Stats object
 
-In non-watch mode, the `rsbuild.build() returns an Rspack [stats](https://rspack.dev/api/javascript-api/stats) object:
+In non-watch mode, the `rsbuild.build()` returns an Rspack [stats](https://rspack.dev/api/javascript-api/stats) object.
+
+For example, use the `stats.toJson()` method to get all assets information:
 
 ```ts
 const result = await rsbuild.build();
+const { stats } = result;
 
-console.log(result.stats);
+if (stats) {
+  const { assets } = stats.toJson({
+    // exclude unused fields to improve performance
+    all: false,
+    assets: true,
+  });
+  console.log(assets);
+}
 ```
 
 ### Custom compiler
@@ -179,7 +193,10 @@ await rsbuild.build({
 
 ## rsbuild.startDevServer
 
-Start the local dev server.
+Start the local dev server. This method will:
+
+1. Start a development server that serves your application.
+2. Watch for file changes and trigger recompilation.
 
 - **Type:**
 
@@ -276,163 +293,16 @@ await rsbuild.startDevServer({
 
 ## rsbuild.createDevServer
 
-Rsbuild comes with a built-in dev server designed to improve the development experience. When you run the `rsbuild dev` command, the server will start, providing features such as page preview, routing, and hot module reloading.
+Rsbuild includes a built-in dev server designed to improve the development experience. When you run the `rsbuild dev` command, the server starts automatically and provides features such as page preview, routing, and hot module reloading.
 
-If you want to integrate Rsbuild dev server into an custom server, you can use this method to get the instance methods of dev server and call them on demand.
+If you want to integrate the Rsbuild dev server into a custom server, you can use the `createDevServer` method to create a dev server instance. Please refer to [Dev server API](/api/javascript-api/dev-server-api) for all available APIs.
 
-- **Type:**
-
-```ts
-type EnvironmentAPI = {
-  [name: string]: {
-    /**
-     * Get stats info about current environment.
-     */
-    getStats: () => Promise<Stats>;
-    /**
-     * Load and execute stats bundle in server.
-     *
-     * @param entryName - relate to Rsbuild's `source.entry`
-     * @returns the return value of entry module.
-     */
-    loadBundle: <T = unknown>(entryName: string) => Promise<T>;
-    /**
-     * Get the compiled HTML template.
-     */
-    getTransformedHtml: (entryName: string) => Promise<string>;
-  };
-};
-
-type RsbuildDevServer = {
-  /**
-   * Listen the Rsbuild server.
-   * Do not call this method if you are using a custom server.
-   */
-  listen: () => Promise<{
-    port: number;
-    urls: string[];
-    server: {
-      close: () => Promise<void>;
-    };
-  }>;
-  /**
-   * Environment API of Rsbuild server.
-   */
-  environments: EnvironmentAPI;
-  /**
-   * The resolved port.
-   * By default, Rsbuild server listens on port `3000` and automatically increments the port number if the port is occupied.
-   */
-  port: number;
-  /**
-   * The `connect` app instance.
-   * Can be used to attach custom middlewares to the dev server.
-   */
-  middlewares: Connect.Server;
-  /**
-   * Notify that the Rsbuild server has been started.
-   * Rsbuild will trigger `onAfterStartDevServer` hook in this stage.
-   */
-  afterListen: () => Promise<void>;
-  /**
-   * Activate socket connection.
-   * This ensures that HMR works properly.
-   */
-  connectWebSocket: (options: { server: HTTPServer }) => void;
-  /**
-   * Close the Rsbuild server.
-   */
-  close: () => Promise<void>;
-  /**
-   * Print the server URLs.
-   */
-  printUrls: () => void;
-  /**
-   * Open URL in the browser after starting the server.
-   */
-  open: () => Promise<void>;
-};
-
-type CreateDevServerOptions = {
-  /**
-   * Using a custom Rspack Compiler object.
-   */
-  compiler?: Compiler | MultiCompiler;
-  /**
-   * Whether to get port silently and not print any logs.
-   * @default false
-   */
-  getPortSilently?: boolean;
-  /**
-   * Whether to trigger Rsbuild compilation
-   * @default true
-   */
-  runCompile?: boolean;
-};
-
-function CreateDevServer(
-  options?: CreateDevServerOptions,
-): Promise<RsbuildDevServer>;
-```
-
-- **Example:**
-
-Here is an example with [express](https://expressjs.com/):
-
-```ts
-import { createRsbuild } from '@rsbuild/core';
-import express from 'express';
-
-export async function startDevServer() {
-  // Init Rsbuild
-  const rsbuild = await createRsbuild({});
-
-  const app = express();
-
-  // Create Rsbuild DevServer instance
-  const rsbuildServer = await rsbuild.createDevServer();
-
-  // Apply Rsbuild’s built-in middlewares
-  app.use(rsbuildServer.middlewares);
-
-  const httpServer = app.listen(rsbuildServer.port, async () => {
-    // Notify Rsbuild that the custom server has started
-    await rsbuildServer.afterListen();
-  });
-
-  rsbuildServer.connectWebSocket({ server: httpServer });
-}
-```
-
-For detailed usage, please refer to: [Example](https://github.com/rspack-contrib/rspack-examples/blob/main/rsbuild/express/server.mjs).
-
-If you want to use Rsbuild DevServer to start the project directly, you can use the [Rsbuild - startDevServer](#rsbuildstartdevserver) method directly. `startDevServer` is actually syntactic sugar for the following code:
+If you want to use Rsbuild dev server to start the project directly, you can use the [Rsbuild - startDevServer](#rsbuildstartdevserver) method directly. `startDevServer` is actually syntactic sugar for the following code:
 
 ```ts
 const server = await rsbuild.createDevServer();
 
 await server.listen();
-```
-
-### connectWebSocket
-
-Rsbuild has a builtin WebSocket handler to support HMR:
-
-1. When a user accesses a page through browser, a WebSocket connection request is automatically initiated to the server.
-2. After the Rsbuild dev server detects the connection request, it instructs the builtin WebSocket handler to process it.
-3. After the browser successfully establishes a connection with the Rsbuild WebSocket handler, real-time communication is possible.
-4. The Rsbuild WebSocket handler notifies the browser after each recompilation is complete. The browser then sends a `hot-update.(js|json)` request to the dev server to load the new compiled module.
-
-When you use custom server, you may encounter HMR connection error problems. This is because the custom server does not forward WebSocket connection requests to Rsbuild's WebSocket handler.
-
-At this time, you need to use the `connectWebSocket` method to enable Rsbuild to sense and process the WebSocket connection request from the browser.
-
-```ts
-const rsbuildServer = await rsbuild.createDevServer();
-
-const httpServer = app.listen(rsbuildServer.port);
-
-rsbuildServer.connectWebSocket({ server: httpServer });
 ```
 
 ## rsbuild.preview
@@ -603,9 +473,9 @@ rsbuild.isPluginExists(pluginFoo().name); // true
 
 ## rsbuild.initConfigs
 
-The initConfigs method is used to initialize the internal configs of Rsbuild and return the Rspack config generated internally by Rsbuild.
+Initialize and return the internal Rspack configurations used by Rsbuild. This method processes all plugins and configurations to generate the final Rspack configs.
 
-Usually, you do not need to call the initConfigs method, because it will be automatically called when methods such as [rsbuild.build](#rsbuildbuild), [rsbuild.startDevServer](#rsbuildstartdevserver) are called.
+> Note: You typically don't need to call this method directly since it's automatically invoked by methods like [rsbuild.build](#rsbuildbuild) and [rsbuild.startDevServer](#rsbuildstartdevserver).
 
 - **Type:**
 
@@ -618,16 +488,20 @@ function InitConfigs(): Promise<{
 - **Example:**
 
 ```ts
-const { rspackConfigs } = await rsbuild.initConfigs();
+const rspackConfigs = await rsbuild.initConfigs();
 
 console.log(rspackConfigs);
 ```
 
 ## rsbuild.inspectConfig
 
-The inspectConfig method is typically used for debugging the internal configuration of Rsbuild. It returns the internally generated Rsbuild config and Rspack config, serializes them into strings, and supports writing them to the disk.
+Inspect and debug Rsbuild's internal configurations. It provides access to:
 
-If you need to view the Rsbuild and Rspack configurations during the build process, you can use [debug mode](/guide/debug/debug-mode), or obtain them through hooks such as [onBeforeBuild](#rsbuildonbeforebuild), [onBeforeCreateCompile](#rsbuildonbeforecreatecompiler).
+- The resolved Rsbuild configuration
+- The environment-specific Rsbuild configurations
+- The generated Rspack configurations
+
+The method serializes these configurations to strings and optionally writes them to disk for inspection.
 
 - **Type:**
 
@@ -658,6 +532,10 @@ async function InspectConfig(options?: InspectConfigOptions): Promise<{
   };
 }>;
 ```
+
+:::tip
+To view the Rsbuild and Rspack configurations during the build process, use [debug mode](/guide/debug/debug-mode), or obtain them through hooks such as [onBeforeBuild](#rsbuildonbeforebuild), [onBeforeCreateCompile](#rsbuildonbeforecreatecompiler).
+:::
 
 ### Example
 
@@ -771,10 +649,14 @@ import OnBeforeStartDevServer from '@en/shared/onBeforeStartDevServer.mdx';
 - **Example:**
 
 ```ts
-rsbuild.onBeforeStartDevServer(() => {
-  console.log('before start!');
+rsbuild.onBeforeStartDevServer(({ server, environments }) => {
+  console.log('before starting dev server.');
+  console.log('the server is ', server);
+  console.log('the environments contexts are: ', environments);
 });
 ```
+
+> See [Plugin hooks - onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) for more details.
 
 ## rsbuild.onAfterStartDevServer
 

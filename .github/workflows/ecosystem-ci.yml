@@ -26,7 +26,7 @@ jobs:
       - name: Run Ecosystem CI with notify
         id: eco_ci
         continue-on-error: true
-        uses: convictional/trigger-workflow-and-wait@v1.6.5
+        uses: convictional/trigger-workflow-and-wait@f69fa9eedd3c62a599220f4d5745230e237904be # v1.6.5
         with:
           owner: "rspack-contrib"
           repo: "rsbuild-ecosystem-ci"
@@ -37,16 +37,18 @@ jobs:
 
       - name: Checkout
         if: steps.eco_ci.outcome == 'failure'
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 1
 
       - name: Install Pnpm
-        run: corepack enable
+        run: |
+          npm install -g corepack@latest --force
+          corepack enable
 
       - name: Setup Node.js
         if: steps.eco_ci.outcome == 'failure'
-        uses: actions/setup-node@v4.1.0
+        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
         with:
           node-version: 22
           cache: 'pnpm'
@@ -70,7 +72,7 @@ jobs:
           workflow-output: ${{ toJson(steps.eco_ci.outputs) }}
 
       - id: create-commit-comment
-        uses: actions/github-script@v7
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
         if: steps.eco_ci.outcome == 'failure'
         name: Create Commit Comment
         with:
@@ -88,7 +90,7 @@ jobs:
     if: github.repository == 'web-infra-dev/rsbuild' && github.event_name == 'workflow_dispatch'
     steps:
       - id: get-pr-number
-        uses: actions/github-script@v7
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
         name: Get PR Number
         with:
           script: |
@@ -113,7 +115,7 @@ jobs:
 
       - id: create-comment
         name: Create Comment
-        uses: actions/github-script@v7
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
         if: steps.get-pr-number.outputs.result
         with:
           result-encoding: string
@@ -132,7 +134,7 @@ jobs:
 
       - name: Run Ecosystem CI
         id: eco_ci
-        uses: convictional/trigger-workflow-and-wait@v1.6.5
+        uses: convictional/trigger-workflow-and-wait@f69fa9eedd3c62a599220f4d5745230e237904be # v1.6.5
         continue-on-error: true
         with:
           owner: "rspack-contrib"
@@ -143,7 +145,7 @@ jobs:
           client_payload: '{"ref":"${{ github.event.inputs.branch }}","repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
 
       - name: Checkout
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 1
 
@@ -154,7 +156,7 @@ jobs:
           workflow-output: ${{ toJson(steps.eco_ci.outputs) }}
 
       - id: update-comment
-        uses: actions/github-script@v7
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
         if: steps.get-pr-number.outputs.result
         name: Update Comment
         with:

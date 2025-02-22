@@ -1,8 +1,7 @@
 import type { IncomingMessage } from 'node:http';
 import type { Socket } from 'node:net';
 import { parse } from 'node:querystring';
-import type Ws from 'ws';
-import type { Server } from 'ws';
+import type Ws from '../../compiled/ws/index.js';
 import {
   getAllStatsErrors,
   getAllStatsWarnings,
@@ -22,6 +21,8 @@ function isEqualSet(a: Set<string>, b: Set<string>): boolean {
   return a.size === b.size && [...a].every((value) => b.has(value));
 }
 
+const CHECK_SOCKETS_INTERVAL = 30000;
+
 interface SocketMessage {
   type: string;
   compilationId?: string;
@@ -29,7 +30,7 @@ interface SocketMessage {
 }
 
 export class SocketServer {
-  private wsServer!: Server;
+  private wsServer!: Ws.Server;
 
   private readonly sockets: Ws[] = [];
 
@@ -38,7 +39,7 @@ export class SocketServer {
   private stats: Record<string, Rspack.Stats>;
   private initialChunks: Record<string, Set<string>>;
 
-  private timer: ReturnType<typeof setInterval> | null = null;
+  private heartbeatTimer: NodeJS.Timeout | null = null;
 
   constructor(options: DevConfig) {
     this.options = options;
@@ -58,10 +59,42 @@ export class SocketServer {
     });
   }
 
+  // detect and close broken connections
+  // https://github.com/websockets/ws/blob/8.18.0/README.md#how-to-detect-and-close-broken-connections
+  private checkSockets = () => {
+    for (const socket of this.wsServer.clients) {
+      const extWs = socket as ExtWebSocket;
+      if (!extWs.isAlive) {
+        extWs.terminate();
+      } else {
+        extWs.isAlive = false;
+        extWs.ping(() => {
+          // empty
+        });
+      }
+    }
+
+    // Schedule next check only if timer hasn't been cleared
+    if (this.heartbeatTimer !== null) {
+      this.heartbeatTimer = setTimeout(
+        this.checkSockets,
+        CHECK_SOCKETS_INTERVAL,
+      );
+    }
+  };
+
+  private clearHeartbeatTimer(): void {
+    if (this.heartbeatTimer) {
+      clearInterval(this.heartbeatTimer);
+      this.heartbeatTimer = null;
+    }
+  }
+
   // create socket, install socket handler, bind socket event
   public async prepare(): Promise<void> {
+    this.clearHeartbeatTimer();
+
     const { default: ws } = await import('../../compiled/ws/index.js');
-    // @ts-expect-error HTTP not match
     this.wsServer = new ws.Server({
       noServer: true,
       path: this.options.client?.path,
@@ -72,19 +105,7 @@ export class SocketServer {
       logger.error(err);
     });
 
-    this.timer = setInterval(() => {
-      for (const socket of this.wsServer.clients) {
-        const extWs = socket as ExtWebSocket;
-        if (!extWs.isAlive) {
-          extWs.terminate();
-        } else {
-          extWs.isAlive = false;
-          extWs.ping(() => {
-            // empty
-          });
-        }
-      }
-    }, 30000);
+    this.heartbeatTimer = setTimeout(this.checkSockets, CHECK_SOCKETS_INTERVAL);
 
     this.wsServer.on('connection', (socket, req) => {
       // /rsbuild-hmr?compilationId=web
@@ -121,36 +142,53 @@ export class SocketServer {
     this.send(socket, JSON.stringify({ type, data, compilationId }));
   }
 
-  public close(): void {
+  public async close(): Promise<void> {
+    this.clearHeartbeatTimer();
+
+    // Remove all event listeners
+    this.wsServer.removeAllListeners();
+
+    // Close all client sockets
+    for (const socket of this.wsServer.clients) {
+      socket.terminate();
+    }
+    // Close all tracked sockets
     for (const socket of this.sockets) {
       socket.close();
     }
 
-    if (this.timer) {
-      clearInterval(this.timer);
-      this.timer = null;
-    }
+    // Reset all properties
+    this.stats = {};
+    this.initialChunks = {};
+    this.sockets.length = 0;
+
+    return new Promise<void>((resolve, reject) => {
+      this.wsServer.close((err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
   }
 
   private onConnect(socket: Ws, params: Record<string, string>) {
     const connection = socket as ExtWebSocket;
 
     connection.isAlive = true;
+
+    // heartbeat
     connection.on('pong', () => {
       connection.isAlive = true;
     });
 
-    if (!connection) {
-      return;
-    }
-
     this.sockets.push(connection);
 
     connection.on('close', () => {
-      const idx = this.sockets.indexOf(connection);
-
-      if (idx >= 0) {
-        this.sockets.splice(idx, 1);
+      const index = this.sockets.indexOf(connection);
+      if (index >= 0) {
+        this.sockets.splice(index, 1);
       }
     });
 

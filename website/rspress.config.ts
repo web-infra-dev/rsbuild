@@ -81,6 +81,9 @@ export default defineConfig({
   ssg: {
     strict: true,
   },
+  search: {
+    codeBlocks: true,
+  },
   markdown: {
     checkDeadLinks: true,
   },
@@ -105,6 +108,11 @@ export default defineConfig({
         icon: 'discord',
         mode: 'link',
         content: 'https://discord.gg/XsaKEEk4mW',
+      },
+      {
+        icon: 'bluesky',
+        mode: 'link',
+        content: 'https://bsky.app/profile/rspack.dev',
       },
     ],
     locales: [
@@ -133,6 +141,17 @@ export default defineConfig({
       },
     ],
   },
+  head: [
+    ({ routePath }) => {
+      const getOgImage = () => {
+        if (routePath.endsWith('releases/v1-0')) {
+          return 'assets/rsbuild-og-image-v1-0.png';
+        }
+        return 'rsbuild-og-image.png';
+      };
+      return `<meta property="og:image" content="https://assets.rspack.dev/rsbuild/${getOgImage()}">`;
+    },
+  ],
   builderConfig: {
     dev: {
       lazyCompilation: true,
@@ -144,8 +163,6 @@ export default defineConfig({
         title: 'Rsbuild',
         type: 'website',
         url: siteUrl,
-        image:
-          'https://assets.rspack.dev/rsbuild/assets/rsbuild-og-image-v1-0.png',
         description: 'The Rspack-based build tool',
         twitter: {
           site: '@rspack_dev',

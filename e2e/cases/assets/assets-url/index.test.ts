@@ -1,12 +1,10 @@
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import { pluginReact } from '@rsbuild/plugin-react';
 
 test('should allow to get assets URL with `?url`', async ({ page }) => {
   const rsbuild = await build({
     cwd: __dirname,
     page,
-    plugins: [pluginReact()],
   });
 
   await expect(

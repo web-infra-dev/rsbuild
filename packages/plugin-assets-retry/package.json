@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-assets-retry",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Assets retry plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -28,8 +28,8 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.3.2",
-    "@swc/core": "^1.10.9",
+    "@rslib/core": "0.5.0",
+    "@swc/core": "^1.10.16",
     "@types/serialize-javascript": "^5.0.4",
     "serialize-javascript": "^6.0.2",
     "typescript": "^5.7.3"

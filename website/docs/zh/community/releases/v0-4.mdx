@@ -36,7 +36,7 @@ export default defineConfig({
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRsbuildConfig({
       handler: () => console.log('hello'),
       order: 'pre',

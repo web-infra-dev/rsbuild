@@ -1,13 +1,16 @@
 import cac, { type CAC, type Command } from 'cac';
+import type { ConfigLoader } from '../config';
 import { logger } from '../logger';
 import { onBeforeRestartServer } from '../server/restart';
 import type { RsbuildMode } from '../types';
 import { init } from './init';
 
 export type CommonOptions = {
+  base?: string;
   root?: string;
   mode?: RsbuildMode;
   config?: string;
+  configLoader?: ConfigLoader;
   envDir?: string;
   envMode?: string;
   open?: boolean | string;
@@ -32,9 +35,17 @@ export type PreviewOptions = CommonOptions;
 
 const applyCommonOptions = (cli: CAC) => {
   cli
+    .option('--base <base>', 'specify the base path of the server')
     .option(
       '-c, --config <config>',
       'specify the configuration file, can be a relative or absolute path',
+    )
+    .option(
+      '--config-loader <loader>',
+      'specify the loader to load the config file, can be `jiti` or `native`',
+      {
+        default: 'jiti',
+      },
     )
     .option(
       '-r, --root <root>',

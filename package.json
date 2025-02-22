@@ -40,29 +40,29 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@changesets/cli": "^2.27.12",
+    "@changesets/cli": "^2.28.0",
     "@rsbuild/config": "workspace:*",
     "@scripts/test-helper": "workspace:*",
     "cross-env": "^7.0.3",
     "cspell-ban-words": "^0.0.4",
     "heading-case": "^0.1.4",
     "nano-staged": "^0.8.0",
-    "nx": "^20.3.3",
-    "prettier": "^3.4.2",
+    "nx": "^20.4.4",
+    "prettier": "^3.5.1",
     "simple-git-hooks": "^2.11.1",
     "typescript": "^5.7.3",
-    "vitest": "^3.0.4"
-  },
-  "pnpm": {
-    "patchedDependencies": {
-      "http-proxy@1.18.1": "patches/http-proxy@1.18.1.patch",
-      "postcss-loader@8.1.1": "patches/postcss-loader@8.1.1.patch",
-      "css-loader@7.1.2": "patches/css-loader@7.1.2.patch"
-    }
+    "vitest": "^3.0.5"
   },
   "packageManager": "pnpm@10.0.0",
   "engines": {
     "node": ">=18.0.0",
     "pnpm": ">=10.0.0"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "css-loader@7.1.2": "patches/css-loader@7.1.2.patch",
+      "http-proxy@1.18.1": "patches/http-proxy@1.18.1.patch",
+      "postcss-loader@8.1.1": "patches/postcss-loader@8.1.1.patch"
+    }
   }
 }

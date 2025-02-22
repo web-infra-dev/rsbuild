@@ -1,6 +1,6 @@
 {
   $schema: 'https://docs.renovatebot.com/renovate-schema.json',
-  extends: ['config:recommended', 'schedule:weekly'],
+  extends: ['config:recommended', 'schedule:weekly', 'helpers:pinGitHubActionDigests'],
   ignorePaths: ['**/tests/**', '**/node_modules/**'],
   packageRules: [
     // Use chore as semantic commit type for commit messages

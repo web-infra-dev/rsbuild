@@ -66,6 +66,7 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
 
     const getPathInfo = (
       environment: EnvironmentContext,
+      isDev?: boolean,
     ): PathInfo | undefined => {
       const { rootPath } = api.context;
       const { config, distPath } = environment;
@@ -73,8 +74,13 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
         config.output.cleanDistPath,
       );
 
-      // only enable cleanDistPath when the dist path is a subdir of root path
       if (enable === 'auto') {
+        // If no files are written to disk, we don't need to clean the output
+        if (isDev && !config.dev.writeToDisk) {
+          return undefined;
+        }
+
+        // only clean when the dist path is a subdir of root path
         if (isStrictSubdir(rootPath, distPath)) {
           return {
             path: distPath,
@@ -105,6 +111,7 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
 
     const cleanAll = async (params: {
       environments: Record<string, EnvironmentContext>;
+      isDev?: boolean;
     }) => {
       // dedupe environments by distPath
       const environments = Object.values(params.environments).reduce<
@@ -117,7 +124,9 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
       }, []);
 
       const pathInfos: PathInfo[] = [
-        ...environments.map(getPathInfo),
+        ...environments.map((environment) =>
+          getPathInfo(environment, params.isDev),
+        ),
         getRsbuildOutputPath(),
       ].filter((pathInfo): pathInfo is PathInfo => !!pathInfo);
 
@@ -132,6 +141,9 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
         await cleanAll({ environments });
       }
     });
-    api.onBeforeStartDevServer(cleanAll);
+
+    api.onBeforeStartDevServer(async ({ environments }) => {
+      await cleanAll({ environments, isDev: true });
+    });
   },
 });
