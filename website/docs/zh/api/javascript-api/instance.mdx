@@ -318,13 +318,11 @@ await rsbuild.startDevServer({
 
 Rsbuild 配备了一个内置的开发服务器，当你执行 `rsbuild dev` 时，将启动 Rsbuild dev server，并提供页面预览、路由、模块热更新等功能。
 
-如果你希望将 Rsbuild dev server 集成到自定义的 server 中，可以通过 `createDevServer` 方法创建一个 dev server 实例，请参考 [Dev server API](/api/javascript-api/dev-server-api) 了解所有可用的 API。
-
-如果你希望直接使用 Rsbuild dev server 启动项目，可以直接使用 [Rsbuild - startDevServer](#rsbuildstartdevserver) 方法。 `startDevServer` 实际上是以下代码的语法糖：
+- 如果你需要将 Rsbuild dev server 集成到自定义的 server 中，可以通过 `createDevServer` 方法创建一个 dev server 实例，请参考 [Dev server API](/api/javascript-api/dev-server-api) 了解所有可用的 API。
+- 如果你需要直接使用 Rsbuild dev server 启动项目，可以直接使用 [rsbuild.startDevServer](#rsbuildstartdevserver) 方法。 `rsbuild.startDevServer` 实际上是以下代码的语法糖：
 
 ```ts
 const server = await rsbuild.createDevServer();
-
 await server.listen();
 ```
 
