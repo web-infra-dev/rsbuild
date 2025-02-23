@@ -81,7 +81,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
         const fileInfo = removedFiles
           .map((file) => cutPath(file, context.rootPath))
           .join(', ');
-        logger.start(`rebuilding ${color.dim(`removed ${fileInfo}`)}`);
+        logger.start(`building ${color.dim(`removed ${fileInfo}`)}`);
       } else {
         logger.start('build started...');
       }
