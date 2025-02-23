@@ -267,7 +267,7 @@ function ensureChunk(chunkId: string): Promise<unknown> {
 
   callingCounter.count += 1;
 
-  return result.catch((error: Error) => {
+  return result.catch(async (error: Error) => {
     // the first calling is not retry
     // if the failed request is 4 in network panel, callingCounter.count === 4, the first one is the normal request, and existRetryTimes is 3, retried 3 times
     const existRetryTimesAll = callingCounter.count - 1;
@@ -342,6 +342,15 @@ function ensureChunk(chunkId: string): Promise<unknown> {
     // Start retry
     if (typeof config.onRetry === 'function') {
       config.onRetry(context);
+    }
+
+    const delayTime =
+      typeof config.delay === 'function'
+        ? config.delay(context)
+        : (config.delay ?? 0);
+
+    if (delayTime > 0) {
+      await new Promise((resolve) => setTimeout(resolve, delayTime));
     }
 
     const nextPromise = ensureChunk.apply(ensureChunk, args as [string]);

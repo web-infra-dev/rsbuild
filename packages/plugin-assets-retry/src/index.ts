@@ -23,6 +23,7 @@ function getRuntimeOptions(userOptions: PluginAssetsRetryOptions) {
     type: ['link', 'script', 'img'],
     domain: [],
     crossOrigin: false,
+    delay: 0,
   };
 
   const result: RuntimeRetryOptions = {

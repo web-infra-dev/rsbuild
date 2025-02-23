@@ -279,18 +279,31 @@ function retry(config: RuntimeRetryOptions, e: Event) {
 
   const element = createElement(target, attributes)!;
 
+  const context: AssetsRetryHookContext = {
+    times: existRetryTimes,
+    domain,
+    url,
+    tagName,
+    isAsyncChunk: false,
+  };
+
   if (typeof config.onRetry === 'function') {
-    const context: AssetsRetryHookContext = {
-      times: existRetryTimes,
-      domain,
-      url,
-      tagName,
-      isAsyncChunk: false,
-    };
     config.onRetry(context);
   }
 
-  reloadElementResource(target, element, attributes);
+  // Delay retry
+  const delayValue =
+    typeof config.delay === 'function'
+      ? config.delay(context)
+      : (config.delay ?? 0);
+
+  if (delayValue > 0) {
+    setTimeout(() => {
+      reloadElementResource(target, element, attributes);
+    }, delayValue);
+  } else {
+    reloadElementResource(target, element, attributes);
+  }
 }
 
 function load(config: RuntimeRetryOptions, e: Event) {

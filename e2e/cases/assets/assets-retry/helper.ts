@@ -51,19 +51,37 @@ export type AssetsRetryHookContext = {
   tagName: string;
 };
 
+interface BlockMiddlewareOptions {
+  urlPrefix: string;
+  blockNum: number;
+  onBlock?: (context: {
+    url: string;
+    count: number;
+    timestamp: number;
+  }) => void;
+}
+
 export function createBlockMiddleware({
   urlPrefix,
   blockNum,
-}: {
-  urlPrefix: string;
-  blockNum: number;
-}): RequestHandler {
+  onBlock,
+}: BlockMiddlewareOptions): RequestHandler {
   let counter = 0;
+
   return (req, res, next) => {
     if (req.url?.startsWith(urlPrefix)) {
       counter++;
       // if blockNum is 3, 1 2 3 would be blocked, 4 would be passed
-      if (counter <= blockNum) {
+      const isBlocked = counter <= blockNum;
+
+      if (isBlocked && onBlock) {
+        onBlock({
+          url: req.url,
+          count: counter,
+          timestamp: Date.now(),
+        });
+      }
+      if (isBlocked) {
         res.statusCode = 404;
       }
       res.setHeader('block-async', counter);
