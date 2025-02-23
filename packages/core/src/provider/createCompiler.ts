@@ -83,7 +83,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
             .map((file) => cutPath(file, context.rootPath))
             .join(', '),
         );
-        logger.start(`building due to removal of ${fileInfo}}`);
+        logger.start(`building due to file removed ${fileInfo}}`);
       } else {
         logger.start('build started...');
       }
