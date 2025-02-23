@@ -76,14 +76,14 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
             .map((file) => cutPath(file, context.rootPath))
             .join(', '),
         );
-        logger.start(`file changed ${fileInfo}`);
+        logger.start(`building ${fileInfo}`);
       } else if (removedFiles.length) {
         const fileInfo = color.dim(
           removedFiles
             .map((file) => cutPath(file, context.rootPath))
             .join(', '),
         );
-        logger.start(`file removed ${fileInfo}`);
+        logger.start(`building due to removal of ${fileInfo}}`);
       } else {
         logger.start('build started...');
       }
