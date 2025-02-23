@@ -78,12 +78,10 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
         );
         logger.start(`building ${fileInfo}`);
       } else if (removedFiles.length) {
-        const fileInfo = color.dim(
-          removedFiles
-            .map((file) => cutPath(file, context.rootPath))
-            .join(', '),
-        );
-        logger.start(`building due to file removed ${fileInfo}}`);
+        const fileInfo = removedFiles
+          .map((file) => cutPath(file, context.rootPath))
+          .join(', ');
+        logger.start(`rebuilding ${color.dim(`removed ${fileInfo}`)}`);
       } else {
         logger.start('build started...');
       }
