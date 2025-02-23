@@ -274,6 +274,31 @@ pluginAssetsRetry({
 });
 ```
 
+### delay
+
+- **类型：** `number | ((context: AssetsRetryHookContext) => number);`
+- **默认值：** `0`
+
+在资源重试前的延迟时间，单位为毫秒。
+
+你可以传入一个数字：
+
+```js
+// 延时1s重试
+pluginAssetsRetry({
+  delay: 1000,
+});
+```
+
+也可以传入一个函数，函数的参数为 `AssetsRetryHookContext`，返回值为延迟时间：
+
+```js
+// 通过次数来计算延迟时间
+pluginAssetsRetry({
+  delay: (ctx) => (ctx.times + 1) * 1000,
+});
+```
+
 ## 注意事项
 
 当你使用 Assets Retry 插件时，Rsbuild 会分别向 HTML 和 [Rspack Runtime](https://rspack.dev/zh/misc/glossary#runtime) 中注入运行时代码，并将 Assets Retry 插件配置的内容序列化后插入到这些代码中，因此你需要注意：

@@ -274,6 +274,31 @@ pluginAssetsRetry({
 });
 ```
 
+### delay
+
+- **Type：** `number | ((context: AssetsRetryHookContext) => number);`
+- **Default value：** `0`
+
+The delay time (in milliseconds) before retrying a failed asset.
+
+You can pass a number:
+
+```js
+// Delay 1s before retrying
+pluginAssetsRetry({
+  delay: 1000,
+});
+```
+
+Or pass a function that receives AssetsRetryHookContext and returns the delay time:
+
+```js
+// Calculate delay based on retry attempts
+pluginAssetsRetry({
+  delay: (ctx) => (ctx.times + 1) * 1000,
+});
+```
+
 ## Notes
 
 When you use Assets Retry plugin, the Rsbuild injects some runtime code into the HTML and [Rspack Runtime](https://rspack.dev/misc/glossary#runtime), then serializes the Assets Retry plugin config, inserting it into the runtime code. Therefore, you need to be aware of the following:
