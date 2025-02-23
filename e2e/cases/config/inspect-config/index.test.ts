@@ -37,7 +37,7 @@ rspackOnlyTest(
     expect(fs.existsSync(rsbuildConfig)).toBeTruthy();
 
     expect(
-      logs.some((log) => log.includes('Inspect config succeed')),
+      logs.some((log) => log.includes('config inspection completed')),
     ).toBeTruthy();
 
     fs.rmSync(rsbuildConfig, { force: true });
@@ -74,7 +74,7 @@ rspackOnlyTest(
     expect(fs.existsSync(rsbuildConfig)).toBeTruthy();
 
     expect(
-      logs.some((log) => log.includes('Inspect config succeed')),
+      logs.some((log) => log.includes('config inspection completed')),
     ).toBeTruthy();
 
     fs.rmSync(rsbuildConfig, { force: true });
@@ -115,7 +115,7 @@ rspackOnlyTest(
     expect(fs.existsSync(bundlerNodeConfig)).toBeTruthy();
 
     expect(
-      logs.some((log) => log.includes('Inspect config succeed')),
+      logs.some((log) => log.includes('config inspection completed')),
     ).toBeTruthy();
 
     fs.rmSync(rsbuildConfig, { force: true });
@@ -156,7 +156,7 @@ rspackOnlyTest('should allow to specify absolute output path', async () => {
   });
 
   expect(
-    logs.some((log) => log.includes('Inspect config succeed')),
+    logs.some((log) => log.includes('config inspection completed')),
   ).toBeTruthy();
 
   expect(
