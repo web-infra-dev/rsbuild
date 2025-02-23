@@ -82,12 +82,14 @@ import tailwindcss from 'tailwindcss';
 export default {
   tools: {
     postcss: {
-      plugins: [
-        tailwindcss({
-          content: ['./src/**/*.{html,js,ts,jsx,tsx}'],
-          // ...other options
-        }),
-      ],
+      postcssOptions: {
+        plugins: [
+          tailwindcss({
+            content: ['./src/**/*.{html,js,ts,jsx,tsx}'],
+            // ...other options
+          }),
+        ],
+      },
     },
   },
 };
