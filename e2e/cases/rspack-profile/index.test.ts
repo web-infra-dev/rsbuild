@@ -24,7 +24,7 @@ rspackOnlyTest(
     });
 
     expect(
-      await waitFor(() => logs.some((log) => log.includes('Built in'))),
+      await waitFor(() => logs.some((log) => log.includes('built in'))),
     ).toBeTruthy();
 
     // quit process
@@ -68,7 +68,7 @@ rspackOnlyTest(
     });
 
     expect(
-      await waitFor(() => logs.some((log) => log.includes('Built in'))),
+      await waitFor(() => logs.some((log) => log.includes('built in'))),
     ).toBeTruthy();
 
     expect(
