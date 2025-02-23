@@ -641,7 +641,7 @@ export async function outputInspectConfigFiles({
 
         return {
           path: outputFilePath,
-          label: 'Rsbuild Config',
+          label: 'Rsbuild config',
           content,
         };
       }
@@ -650,7 +650,7 @@ export async function outputInspectConfigFiles({
 
       return {
         path: outputFilePath,
-        label: `Rsbuild Config (${name})`,
+        label: `Rsbuild config (${name})`,
         content,
       };
     }),
