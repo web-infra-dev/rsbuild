@@ -1,3 +1,4 @@
+import { sep } from 'node:path';
 import type { StatsCompilation } from '@rspack/core';
 import { rspack } from '@rspack/core';
 import {
@@ -12,6 +13,16 @@ import { registerDevHook } from '../hooks';
 import { logger } from '../logger';
 import type { DevConfig, Rspack, ServerConfig } from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
+
+function cutPath(filePath: string, root: string) {
+  const prefix = root.endsWith(sep) ? root : root + sep;
+  if (filePath.startsWith(prefix)) {
+    return filePath.slice(prefix.length);
+  }
+
+  const parts = filePath.split(sep).filter(Boolean);
+  return parts.length > 3 ? parts.slice(-3).join(sep) : parts.join(sep);
+}
 
 export async function createCompiler(options: InitConfigsOptions): Promise<{
   compiler: Rspack.Compiler | Rspack.MultiCompiler;
@@ -49,10 +60,31 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     }
   };
 
-  compiler.hooks.watchRun.tap('rsbuild:compiling', () => {
+  compiler.hooks.watchRun.tap('rsbuild:compiling', (compiler) => {
     logRspackVersion();
     if (!isCompiling) {
-      logger.start('Building...');
+      const changedFiles = compiler.modifiedFiles
+        ? Array.from(compiler.modifiedFiles)
+        : [];
+      const removedFiles = compiler.removedFiles
+        ? Array.from(compiler.removedFiles)
+        : [];
+
+      if (changedFiles.length) {
+        const fileInfo = color.dim(
+          changedFiles
+            .map((file) => cutPath(file, context.rootPath))
+            .join(', '),
+        );
+        logger.start(`building ${fileInfo}`);
+      } else if (removedFiles.length) {
+        const fileInfo = removedFiles
+          .map((file) => cutPath(file, context.rootPath))
+          .join(', ');
+        logger.start(`building ${color.dim(`removed ${fileInfo}`)}`);
+      } else {
+        logger.start('build started...');
+      }
     }
     isCompiling = true;
   });
@@ -77,7 +109,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
         const time = prettyTime(c.time / 1000);
         const { name } = rspackConfigs[index];
         const suffix = name ? color.gray(` (${name})`) : '';
-        logger.ready(`Built in ${time}${suffix}`);
+        logger.ready(`built in ${time}${suffix}`);
       }
     };
 
