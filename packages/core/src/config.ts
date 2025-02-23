@@ -689,7 +689,7 @@ export async function outputInspectConfigFiles({
     .join('\n');
 
   logger.success(
-    `Inspect config succeed, open following files to view the content: \n\n${fileInfos}\n`,
+    `inspect config succeed, open following files to view the content: \n\n${fileInfos}\n`,
   );
 }
 

@@ -113,7 +113,7 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
 
       stopProfiler(cpuProfilePath, profileSession);
 
-      logger.info(`Saved Rspack profile file to ${profileDir}`);
+      logger.info(`saved Rspack profile file to ${profileDir}`);
     });
   },
 });

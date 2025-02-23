@@ -74,7 +74,7 @@ const pluginCompileRuntime: RsbuildPlugin = {
       ]);
 
       logger.success(
-        `Compiled assets retry runtime code in ${(
+        `compiled assets retry runtime code in ${(
           performance.now() - startTime
         ).toFixed(1)} ms`,
       );

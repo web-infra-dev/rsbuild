@@ -199,7 +199,7 @@ function onClose() {
   if (reconnectCount >= config.reconnect) {
     if (config.reconnect > 0) {
       console.info(
-        '[HMR] Connection failure after maximum reconnect limit exceeded.',
+        '[HMR] connection failure after maximum reconnect limit exceeded.',
       );
     }
     return;
