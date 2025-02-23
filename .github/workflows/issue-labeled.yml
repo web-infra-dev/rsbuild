@@ -6,17 +6,18 @@ on:
 
 permissions:
   contents: read
+  # Permits `actions-cool/issues-helper` to comment on an issue
+  issues: write
 
 jobs:
   reply-labeled:
-    permissions:
-      issues: write
+    name: Reply need reproduction
     runs-on: ubuntu-latest
     if: github.repository == 'web-infra-dev/rsbuild'
     steps:
       - name: need reproduction
         if: github.event.label.name == 'need reproduction'
-        uses: actions-cool/issues-helper@v3
+        uses: actions-cool/issues-helper@a610082f8ac0cf03e357eb8dd0d5e2ba075e017e # v3.6.0
         with:
           actions: 'create-comment'
           issue-number: ${{ github.event.issue.number }}

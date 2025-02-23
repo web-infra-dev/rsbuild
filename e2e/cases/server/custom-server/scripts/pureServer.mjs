@@ -1,19 +1,19 @@
-import { join } from 'node:path';
 import { createRsbuild } from '@rsbuild/core';
 import polka from 'polka';
 
-// startDevServer without compile
+// Start custom dev server without compile
 export async function startDevServerPure(fixtures) {
   const rsbuild = await createRsbuild({
     cwd: fixtures,
     rsbuildConfig: {
       server: {
         htmlFallback: false,
+        middlewareMode: true,
       },
       dev: {
         printUrls: false,
         setupMiddlewares: [
-          (middlewares, server) => {
+          (middlewares) => {
             middlewares.unshift((req, res, next) => {
               if (req.url === '/test') {
                 res.writeHead(302, {

@@ -1,1 +1,1 @@
-export const content = 'source.alias worked';
+export const content = 'resolve.alias worked';

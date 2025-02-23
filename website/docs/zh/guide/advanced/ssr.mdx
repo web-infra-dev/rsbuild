@@ -6,7 +6,7 @@
 
 ## 什么是 SSR
 
-SSR 是 "Server-Side Rendering"（服务端渲染）的缩写。它表示由服务器生成网页的 HTML，并将其发送给客户端，而不是只发送一个空的 HTML 外壳，并依赖 JavaScript 来生成页面内容。
+SSR 是 "Server-side rendering"（服务端渲染）的缩写。它表示由服务器生成网页的 HTML，并将其发送给客户端，而不是只发送一个空的 HTML 外壳，并依赖 JavaScript 来生成页面内容。
 
 在传统的客户端渲染中，服务器会向客户端发送一个空的 HTML 外壳和一些 JavaScript 脚本，然后从服务器的 API 中获取数据，并用动态内容填充页面。这会导致页面的初始加载时间较慢，不利于用户体验和 SEO。
 
@@ -83,7 +83,7 @@ import { createRsbuild, loadConfig } from '@rsbuild/core';
 // 实现 SSR 渲染功能
 const serverRender = (serverAPI) => async (_req, res) => {
   // 加载 SSR bundle
-  const indexModule = await serverAPI.environments.ssr.loadBundle('index');
+  const indexModule = await serverAPI.environments.node.loadBundle('index');
 
   const markup = indexModule.render();
 
@@ -152,6 +152,49 @@ startDevServer(process.cwd());
 
 现在，执行 `npm run dev` 命令即可启动带有 SSR 渲染功能的开发服务器，访问 `http://localhost:3000/` 即可看到 SSR 内容已经渲染到了 HTML 页面上。
 
+## 获取资源清单
+
+默认情况下，和当前页面关联的 scripts 和 links 会自动插入到 HTML 模版中，此时通过 [getTransformedHtml](/guide/advanced/environments#environment-api) 即可获取编译后的 HTML 模版内容。
+
+当需要在服务器端动态生成 HTML 时，你需要将 JavaScript 和 CSS 资源的 URL 注入到 HTML 中。通过配置 [output.manifest](/config/output/manifest)，你可以方便地获取这些资源的清单信息。示例如下：
+
+```ts title=rsbuild.config.ts
+export default {
+  output: {
+    manifest: true,
+  },
+};
+```
+
+```ts title=server.ts
+async function renderHtmlPage(): Promise<string> {
+  const manifest = await fs.promises.readFile('./dist/manifest.json', 'utf-8');
+
+  const { entries } = JSON.parse(manifest);
+  const { js, css } = entries['index'].initial;
+
+  const scriptTags = js
+    .map((file) => `<script src="${file}" defer></script>`)
+    .join('\n');
+  const styleTags = css
+    .map((file) => `<link rel="stylesheet" href="${file}">`)
+    .join('\n');
+
+  return `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        ${scriptTags}
+        ${styleTags}
+      </head>
+      <body>
+        <div id="root"></div>
+      </body>
+    </html>`;
+}
+```
+
 ## 示例项目
 
 - [SSR + Express Example](https://github.com/rspack-contrib/rspack-examples/blob/main/rsbuild/ssr-express)
+- [SSR + Express + Manifest Example](https://github.com/rspack-contrib/rspack-examples/blob/main/rsbuild/ssr-express-with-manifest)

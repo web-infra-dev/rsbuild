@@ -44,7 +44,7 @@ export type { SomeType } from './types';
 
 在进行 TypeScript 转译时，SWC 和 Babel 等工具不会执行类型检查。
 
-Rsbuild 提供了 Type Check 插件，用于在单独的进程中运行 TypeScript 类型检查，插件内部集成了 [fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin)。
+Rsbuild 提供了 Type Check 插件，用于在单独的进程中运行 TypeScript 类型检查，插件内部集成了 [ts-checker-rspack-plugin](https://github.com/rspack-contrib/ts-checker-rspack-plugin)。
 
 请参考 [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check) 了解用法。
 
@@ -75,8 +75,8 @@ Rsbuild 通过 Rspack 的 [extensionAlias](https://rspack.dev/config/resolve#res
 const rspackConfig = {
   resolve: {
     extensionAlias: {
-      '.js': ['.ts', '.tsx', '.js'],
-      '.jsx': ['.tsx', '.jsx'],
+      '.js': ['.js', '.ts', '.tsx'],
+      '.jsx': ['.jsx', '.tsx'],
     },
   },
 };
@@ -86,3 +86,19 @@ const rspackConfig = {
 
 - 允许使用 `.js` 文件扩展名导入 `.ts` 或 `.tsx` 文件。
 - 允许使用 `.jsx` 文件扩展名导入 `.tsx` 文件。
+
+## 装饰器版本
+
+Rsbuild 不会读取 `tsconfig.json` 中的 `experimentalDecorators` 选项，而是提供了 [decorators.version](/config/source/decorators#decoratorsversion) 配置项来指定装饰器版本。
+
+默认情况下，Rsbuild 会使用 `2022-03` 版本的装饰器，你也可以将其设置为 `legacy` 来使用旧版本装饰器：
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    decorators: {
+      version: 'legacy',
+    },
+  },
+};
+```

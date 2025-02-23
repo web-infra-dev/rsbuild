@@ -1,13 +1,11 @@
 # performance.dnsPrefetch
 
-- **Type:** `undefined | string[]`
+- **Type:** `string[] | undefined`
 - **Default:** `undefined`
 
-Used to configure the [dns-prefetch](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/dns-prefetch) attribute.
+Injects [`<link rel="dns-prefetch">`](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/dns-prefetch) tags into the HTML file.
 
-After this property is set, the domain name can be resolved before the resource is requested, reducing request latency and improving loading performance.
-
-## Why DNS Prefetch
+## When to use
 
 When a browser requests a resource from a (third party) server, that cross-origin's domain name must be resolved to an IP address before the browser can issue the request. This process is known as DNS resolution. While DNS caching can help to reduce this latency, DNS resolution can add significant latency to requests.
 

@@ -1,7 +1,4 @@
 // rsbuild/runtime/initial-chunk-retry
-import type { CrossOrigin } from '@rsbuild/core';
-import type { AssetsRetryHookContext, RuntimeRetryOptions } from '../types.js';
-
 interface ScriptElementAttributes {
   url: string;
   times: number;
@@ -15,28 +12,30 @@ const TAG_TYPE: { [propName: string]: new () => HTMLElement } = {
   script: HTMLScriptElement,
   img: HTMLImageElement,
 };
-const TYPES = Object.keys(TAG_TYPE);
 
 declare global {
   // global variables shared with async chunk
   var __RB_ASYNC_CHUNKS__: Record<string, boolean>;
+  var __RUNTIME_GLOBALS_OPTIONS__: RuntimeRetryOptions;
 }
 
-function findCurrentDomain(url: string, domainList: string[]) {
+// this function is the same as async chunk retry
+function findCurrentDomain(url: string, domains: string[]) {
   let domain = '';
-  for (let i = 0; i < domainList.length; i++) {
-    if (url.indexOf(domainList[i]) !== -1) {
-      domain = domainList[i];
+  for (let i = 0; i < domains.length; i++) {
+    if (url.indexOf(domains[i]) !== -1) {
+      domain = domains[i];
       break;
     }
   }
   return domain || window.origin;
 }
 
-function findNextDomain(url: string, domainList: string[]) {
-  const currentDomain = findCurrentDomain(url, domainList);
-  const index = domainList.indexOf(currentDomain);
-  return domainList[(index + 1) % domainList.length] || url;
+// this function is the same as async chunk retry
+function findNextDomain(url: string, domains: string[]) {
+  const currentDomain = findCurrentDomain(url, domains);
+  const index = domains.indexOf(currentDomain);
+  return domains[(index + 1) % domains.length] || url;
 }
 
 function getRequestUrl(element: HTMLElement) {
@@ -52,19 +51,12 @@ function getRequestUrl(element: HTMLElement) {
   return null;
 }
 
-const defaultConfig: RuntimeRetryOptions = {
-  max: 3,
-  type: TYPES,
-  domain: [],
-  crossOrigin: false,
-};
-
 function validateTargetInfo(
   config: RuntimeRetryOptions,
   e: Event,
 ): { target: HTMLElement; tagName: string; url: string } | false {
   const target: HTMLElement = e.target as HTMLElement;
-  const tagName = target.tagName?.toLocaleLowerCase();
+  const tagName = target.tagName.toLocaleLowerCase();
   const allowTags = config.type!;
   const url = getRequestUrl(target);
   if (
@@ -97,13 +89,13 @@ function createElement(
     attributes.crossOrigin === true ? 'anonymous' : attributes.crossOrigin;
   const crossOriginAttr = crossOrigin ? `crossorigin="${crossOrigin}"` : '';
   const retryTimesAttr = attributes.times
-    ? `data-rsbuild-retry-times="${attributes.times}"`
+    ? `data-rb-retry-times="${attributes.times}"`
     : '';
 
   const originalQueryAttr = attributes.originalQuery
-    ? `data-rsbuild-original-query="${attributes.originalQuery}"`
+    ? `data-rb-original-query="${attributes.originalQuery}"`
     : '';
-  const isAsyncAttr = attributes.isAsync ? 'data-rsbuild-async' : '';
+  const isAsyncAttr = attributes.isAsync ? 'data-rb-async' : '';
 
   if (origin instanceof HTMLScriptElement) {
     const script = document.createElement('script');
@@ -112,13 +104,13 @@ function createElement(
       script.crossOrigin = crossOrigin;
     }
     if (attributes.times) {
-      script.dataset.rsbuildRetryTimes = String(attributes.times);
+      script.dataset.rbRetryTimes = String(attributes.times);
     }
     if (attributes.isAsync) {
-      script.dataset.rsbuildAsync = '';
+      script.dataset.rbAsync = '';
     }
     if (attributes.originalQuery !== undefined) {
-      script.dataset.rsbuildOriginalQuery = attributes.originalQuery;
+      script.dataset.rbOriginalQuery = attributes.originalQuery;
     }
 
     return {
@@ -143,10 +135,10 @@ function createElement(
       link.crossOrigin = crossOrigin;
     }
     if (attributes.times) {
-      link.dataset.rsbuildRetryTimes = String(attributes.times);
+      link.dataset.rbRetryTimes = String(attributes.times);
     }
     if (attributes.originalQuery !== undefined) {
-      link.dataset.rsbuildOriginalQuery = attributes.originalQuery;
+      link.dataset.rbOriginalQuery = attributes.originalQuery;
     }
     return {
       element: link,
@@ -178,8 +170,8 @@ function reloadElementResource(
 
   if (origin instanceof HTMLImageElement) {
     origin.src = attributes.url;
-    origin.dataset.rsbuildRetryTimes = String(attributes.times);
-    origin.dataset.rsbuildOriginalQuery = String(attributes.originalQuery);
+    origin.dataset.rbRetryTimes = String(attributes.times);
+    origin.dataset.rbOriginalQuery = String(attributes.originalQuery);
   }
 }
 
@@ -225,7 +217,7 @@ function retry(config: RuntimeRetryOptions, e: Event) {
   }
 
   // If the retry times has exceeded the maximum, fail
-  const existRetryTimes = Number(target.dataset.rsbuildRetryTimes) || 0;
+  const existRetryTimes = Number(target.dataset.rbRetryTimes) || 0;
   if (existRetryTimes === config.max!) {
     if (typeof config.onFail === 'function') {
       const context: AssetsRetryHookContext = {
@@ -244,8 +236,9 @@ function retry(config: RuntimeRetryOptions, e: Event) {
   const nextDomain = findNextDomain(domain, config.domain!);
 
   // if the initial request is "/static/js/async/src_Hello_tsx.js?q=1", retry url would be "/static/js/async/src_Hello_tsx.js?q=1&retry=1"
-  const originalQuery =
-    target.dataset.rsbuildOriginalQuery ?? getQueryFromUrl(url);
+  const originalQuery = target.dataset.rbOriginalQuery ?? getQueryFromUrl(url);
+
+  // this function is the same as async chunk retry
   function getUrlRetryQuery(existRetryTimes: number): string {
     if (config.addQuery === true) {
       return originalQuery !== ''
@@ -258,15 +251,26 @@ function retry(config: RuntimeRetryOptions, e: Event) {
     return '';
   }
 
+  // this function is the same as async chunk retry
+  function getNextRetryUrl(
+    currRetryUrl: string,
+    domain: string,
+    nextDomain: string,
+    existRetryTimes: number,
+  ) {
+    return (
+      cleanUrl(currRetryUrl.replace(domain, nextDomain)) +
+      getUrlRetryQuery(existRetryTimes + 1)
+    );
+  }
+
   const isAsync =
-    Boolean(target.dataset.rsbuildAsync) ||
+    Boolean(target.dataset.rbAsync) ||
     (target as HTMLScriptElement).async ||
     (target as HTMLScriptElement).defer;
 
   const attributes: ScriptElementAttributes = {
-    url:
-      cleanUrl(url.replace(domain, nextDomain)) +
-      getUrlRetryQuery(existRetryTimes + 1),
+    url: getNextRetryUrl(url, domain, nextDomain, existRetryTimes),
     times: existRetryTimes + 1,
     crossOrigin: config.crossOrigin,
     isAsync,
@@ -275,7 +279,7 @@ function retry(config: RuntimeRetryOptions, e: Event) {
 
   const element = createElement(target, attributes)!;
 
-  if (config.onRetry && typeof config.onRetry === 'function') {
+  if (typeof config.onRetry === 'function') {
     const context: AssetsRetryHookContext = {
       times: existRetryTimes,
       domain,
@@ -296,7 +300,7 @@ function load(config: RuntimeRetryOptions, e: Event) {
   }
   const { target, tagName, url } = targetInfo;
   const domain = findCurrentDomain(url, config.domain!);
-  const retryTimes = Number(target.dataset.rsbuildRetryTimes) || 0;
+  const retryTimes = Number(target.dataset.rbRetryTimes) || 0;
   if (retryTimes === 0) {
     return;
   }
@@ -339,55 +343,29 @@ function resourceMonitor(
   }
 }
 
-// @ts-expect-error init is a global function, ignore ts(6133)
-function init(options: RuntimeRetryOptions) {
-  const config: RuntimeRetryOptions = {};
-
-  for (const key in defaultConfig) {
-    // @ts-ignore
-    config[key] = defaultConfig[key];
-  }
-
-  for (const key in options) {
-    // @ts-ignore
-    config[key] = options[key];
-  }
-
-  // Normalize config
-  if (!Array.isArray(config.type) || config.type.length === 0) {
-    config.type = defaultConfig.type;
-  }
-  if (!Array.isArray(config.domain) || config.domain.length === 0) {
-    config.domain = defaultConfig.domain;
-  }
-
-  if (Array.isArray(config.domain)) {
-    config.domain = config.domain.filter(Boolean);
-  }
-
-  // init global variables shared with async chunk
-  if (typeof window !== 'undefined' && !window.__RB_ASYNC_CHUNKS__) {
-    window.__RB_ASYNC_CHUNKS__ = {};
-  }
-  // Bind event in window
-  try {
-    resourceMonitor(
-      (e: Event) => {
-        try {
-          retry(config, e);
-        } catch (err) {
-          console.error('retry error captured', err);
-        }
-      },
-      (e: Event) => {
-        try {
-          load(config, e);
-        } catch (err) {
-          console.error('load error captured', err);
-        }
-      },
-    );
-  } catch (err) {
-    console.error('monitor error captured', err);
-  }
+// init global variables shared with async chunk
+if (typeof window !== 'undefined' && !window.__RB_ASYNC_CHUNKS__) {
+  window.__RB_ASYNC_CHUNKS__ = {};
+}
+// Bind event in window
+try {
+  const config = __RUNTIME_GLOBALS_OPTIONS__;
+  resourceMonitor(
+    (e: Event) => {
+      try {
+        retry(config, e);
+      } catch (err) {
+        console.error('retry error captured', err);
+      }
+    },
+    (e: Event) => {
+      try {
+        load(config, e);
+      } catch (err) {
+        console.error('load error captured', err);
+      }
+    },
+  );
+} catch (err) {
+  console.error('monitor error captured', err);
 }

@@ -63,6 +63,9 @@ const createPlugin = () => {
       api.onDevCompileDone(() => {
         names.push('OnDevCompileDone');
       });
+      api.onCloseBuild(() => {
+        names.push('OnCloseBuild');
+      });
     },
   };
 
@@ -77,10 +80,15 @@ rspackOnlyTest(
       cwd: __dirname,
       rsbuildConfig: {
         plugins: [plugin],
+        performance: {
+          printFileSize: false,
+        },
       },
     });
 
-    await rsbuild.build();
+    const buildInstance = await rsbuild.build();
+
+    await buildInstance.close();
 
     expect(names).toEqual([
       'ModifyRsbuildConfig',
@@ -94,6 +102,43 @@ rspackOnlyTest(
       'ModifyHTMLTags',
       'AfterEnvironmentCompile',
       'AfterBuild',
+      'OnCloseBuild',
+    ]);
+  },
+);
+
+rspackOnlyTest(
+  'should run plugin hooks correctly when running build and mode is development',
+  async () => {
+    const { plugin, names } = createPlugin();
+    const rsbuild = await createRsbuild({
+      cwd: __dirname,
+      rsbuildConfig: {
+        mode: 'development',
+        plugins: [plugin],
+        performance: {
+          printFileSize: false,
+        },
+      },
+    });
+
+    const buildInstance = await rsbuild.build();
+
+    await buildInstance.close();
+
+    expect(names).toEqual([
+      'ModifyRsbuildConfig',
+      'ModifyEnvironmentConfig',
+      'ModifyBundlerChain',
+      'ModifyBundlerConfig',
+      'BeforeCreateCompiler',
+      'AfterCreateCompiler',
+      'BeforeBuild',
+      'BeforeEnvironmentCompile',
+      'ModifyHTMLTags',
+      'AfterEnvironmentCompile',
+      'AfterBuild',
+      'OnCloseBuild',
     ]);
   },
 );
@@ -121,7 +166,14 @@ rspackOnlyTest(
 
     await result.server.close();
 
-    expect(names).toEqual([
+    expect(names.filter((name) => name.includes('DevServer'))).toEqual([
+      'BeforeStartDevServer',
+      'AfterStartDevServer',
+      'OnCloseDevServer',
+    ]);
+
+    // compile is async, so the execution order of AfterStartDevServer and the compile hooks is uncertain
+    expect(names.filter((name) => name !== 'AfterStartDevServer')).toEqual([
       'ModifyRsbuildConfig',
       'ModifyEnvironmentConfig',
       'BeforeStartDevServer',
@@ -130,7 +182,6 @@ rspackOnlyTest(
       'BeforeCreateCompiler',
       'AfterCreateCompiler',
       'BeforeEnvironmentCompile',
-      'AfterStartDevServer',
       'ModifyHTMLTags',
       'AfterEnvironmentCompile',
       'OnDevCompileDone',

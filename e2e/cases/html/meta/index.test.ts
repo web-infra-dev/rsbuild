@@ -1,23 +1,25 @@
-import { build, normalizeNewlines } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { build, normalizeNewlines, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
-test('should not inject charset meta if template already contains it', async () => {
-  const rsbuild = await build({
-    cwd: __dirname,
-    rsbuildConfig: {
-      html: {
-        template: './src/index.html',
+rspackOnlyTest(
+  'should not inject charset meta if template already contains it',
+  async () => {
+    const rsbuild = await build({
+      cwd: __dirname,
+      rsbuildConfig: {
+        html: {
+          template: './src/index.html',
+        },
+        output: {
+          filenameHash: false,
+        },
       },
-      output: {
-        filenameHash: false,
-      },
-    },
-  });
-  const files = await rsbuild.unwrapOutputJSON();
+    });
+    const files = await rsbuild.unwrapOutputJSON();
 
-  const html =
-    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
-  expect(normalizeNewlines(html)).toEqual(`<!doctype html>
+    const html =
+      files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+    expect(normalizeNewlines(html)).toEqual(`<!doctype html>
 <html>
   <head>
     <title>Page Title</title>
@@ -28,4 +30,5 @@ test('should not inject charset meta if template already contains it', async () 
   </body>
 </html>
 `);
-});
+  },
+);

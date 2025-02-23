@@ -8,27 +8,7 @@ type SetupMiddlewaresServer = {
     type: string,
     data?: string | boolean | Record<string, any>,
   ) => void;
-  environments: {
-    [name: string]: {
-      /**
-       * 获取当前环境的构建信息
-       */
-      getStats: () => Promise<Stats>;
-
-      /**
-       * 在服务端加载并执行构建产物
-       *
-       * @param entryName - 入口名称，和 Rsbuild source.entry 的某一个 key 值对应
-       * @returns 入口模块的返回值
-       */
-      loadBundle: <T = unknown>(entryName: string) => Promise<T>;
-
-      /**
-       * 获取编译后的 HTML 模版内容
-       */
-      getTransformedHtml: (entryName: string) => Promise<string>;
-    };
-  };
+  environments: EnvironmentAPI;
 };
 
 type SetupMiddlewares = Array<
@@ -46,18 +26,22 @@ type SetupMiddlewares = Array<
 
 提供执行自定义函数和应用自定义中间件的能力。
 
+## 执行顺序
+
 中间件的执行顺序是: `unshift` => 内置中间件 => `push`。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     setupMiddlewares: [
       (middlewares, server) => {
         middlewares.unshift((req, res, next) => {
+          console.log('first');
           next();
         });
 
         middlewares.push((req, res, next) => {
+          console.log('last');
           next();
         });
       },
@@ -66,28 +50,37 @@ export default {
 };
 ```
 
-一些特殊场景需求可能需要使用服务器 API：
+## Server API
 
-- sockWrite。允许向 HMR 客户端传递一些消息，HMR 客户端将根据接收到的消息类型进行不同的处理。如果你发送一个 "content-changed " 的消息，页面将会重新加载。
+在 `setupMiddlewares` 函数中，你可以访问到 `server` 对象，该对象提供了一些服务器 API。
 
-```js
+### sockWrite
+
+`sockWrite` 允许中间件向 HMR 客户端传递一些消息，HMR 客户端将根据接收到的消息类型进行不同的处理。
+
+例如，如果你发送一个 `'static-changed'` 的消息，页面将会重新加载。
+
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     setupMiddlewares: [
       (middlewares, server) => {
-        // 添加自定义 watcher 并在文件更新时触发页面刷新
-        watcher.on('change', (changed) => {
-          server.sockWrite('content-changed');
-        });
+        if (someCondition) {
+          server.sockWrite('static-changed');
+        }
       },
     ],
   },
 };
 ```
 
-- environments。允许对指定的 environment 产物进行操作。
+> 发送 `content-changed` 与 `static-changed` 具有相同的效果。由于 `content-changed` 已经被弃用，请优先使用 `static-changed`。
 
-```ts
+### environments
+
+`environments` 包含 Rsbuild 的 [environment API](/api/javascript-api/environment-api#environment-api)，这允许你在服务端获取特定环境下的构建产物信息。
+
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     setupMiddlewares: [

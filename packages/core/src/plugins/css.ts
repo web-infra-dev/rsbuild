@@ -26,6 +26,29 @@ const getCSSModulesLocalIdentName = (
     ? '[local]-[hash:base64:6]'
     : '[path][name]__[local]-[hash:base64:6]');
 
+export const getLightningCSSLoaderOptions = (
+  config: NormalizedEnvironmentConfig,
+  targets: string[],
+): Rspack.LightningcssLoaderOptions => {
+  const userOptions =
+    typeof config.tools.lightningcssLoader === 'object'
+      ? config.tools.lightningcssLoader
+      : {};
+
+  const initialOptions: Rspack.LightningcssLoaderOptions = {
+    targets,
+  };
+
+  if (config.mode === 'production' && config.output.injectStyles) {
+    initialOptions.minify = true;
+  }
+
+  return reduceConfigs<Rspack.LightningcssLoaderOptions>({
+    initial: initialOptions,
+    config: userOptions,
+  });
+};
+
 // If the target is not `web` and the modules option of css-loader is enabled,
 // we must enable exportOnlyLocals to only exports the modules identifier mappings.
 // Otherwise, the compiled CSS code may contain invalid code, such as `new URL`.
@@ -60,11 +83,6 @@ export const normalizeCssLoaderOptions = (
   return options;
 };
 
-const userPostcssrcCache = new Map<
-  string,
-  PostCSSOptions | Promise<PostCSSOptions>
->();
-
 // Create a new config object,
 // ensure isolation of config objects between different builds
 const clonePostCSSConfig = (config: PostCSSOptions) => ({
@@ -72,8 +90,16 @@ const clonePostCSSConfig = (config: PostCSSOptions) => ({
   plugins: config.plugins ? [...config.plugins] : undefined,
 });
 
-async function loadUserPostcssrc(root: string): Promise<PostCSSOptions> {
-  const cached = userPostcssrcCache.get(root);
+const getCSSSourceMap = (config: NormalizedEnvironmentConfig): boolean => {
+  const { sourceMap } = config.output;
+  return typeof sourceMap === 'boolean' ? sourceMap : sourceMap.css;
+};
+
+async function loadUserPostcssrc(
+  root: string,
+  postcssrcCache: PostcssrcCache,
+): Promise<PostCSSOptions> {
+  const cached = postcssrcCache.get(root);
 
   if (cached) {
     return clonePostCSSConfig(await cached);
@@ -91,10 +117,10 @@ async function loadUserPostcssrc(root: string): Promise<PostCSSOptions> {
     throw err;
   });
 
-  userPostcssrcCache.set(root, promise);
+  postcssrcCache.set(root, promise);
 
   return promise.then((config: PostCSSOptions) => {
-    userPostcssrcCache.set(root, config);
+    postcssrcCache.set(root, config);
     return clonePostCSSConfig(config);
   });
 }
@@ -108,9 +134,11 @@ const isPostcssPluginCreator = (
 const getPostcssLoaderOptions = async ({
   config,
   root,
+  postcssrcCache,
 }: {
   config: NormalizedEnvironmentConfig;
   root: string;
+  postcssrcCache: PostcssrcCache;
 }): Promise<PostCSSLoaderOptions> => {
   const extraPlugins: AcceptedPlugin[] = [];
 
@@ -120,7 +148,7 @@ const getPostcssLoaderOptions = async ({
     },
   };
 
-  const userOptions = await loadUserPostcssrc(root);
+  const userOptions = await loadUserPostcssrc(root, postcssrcCache);
 
   // init the plugins array
   userOptions.plugins ||= [];
@@ -128,7 +156,7 @@ const getPostcssLoaderOptions = async ({
   const defaultOptions: PostCSSLoaderOptions = {
     implementation: getCompiledPath('postcss'),
     postcssOptions: userOptions,
-    sourceMap: config.output.sourceMap.css,
+    sourceMap: getCSSSourceMap(config),
   };
 
   const finalOptions = reduceConfigsWithContext({
@@ -165,7 +193,7 @@ const getPostcssLoaderOptions = async ({
 
       if (typeof options !== 'object' || options === null) {
         throw new Error(
-          `\`postcssOptions\` function must return a PostCSSOptions object, got "${typeof options}".`,
+          `[rsbuild:css] \`postcssOptions\` function must return a PostCSSOptions object, got "${typeof options}".`,
         );
       }
 
@@ -209,7 +237,7 @@ const getCSSLoaderOptions = ({
       ...cssModules,
       localIdentName,
     },
-    sourceMap: config.output.sourceMap.css,
+    sourceMap: getCSSSourceMap(config),
   };
 
   const mergedCssLoaderOptions = reduceConfigs({
@@ -226,9 +254,13 @@ const getCSSLoaderOptions = ({
   return cssLoaderOptions;
 };
 
+type PostcssrcCache = Map<string, PostCSSOptions | Promise<PostCSSOptions>>;
+
 export const pluginCss = (): RsbuildPlugin => ({
   name: 'rsbuild:css',
   setup(api) {
+    const postcssrcCache: PostcssrcCache = new Map();
+
     api.modifyBundlerChain({
       order: 'pre',
       handler: async (chain, { target, isProd, CHAIN_ID, environment }) => {
@@ -269,7 +301,7 @@ export const pluginCss = (): RsbuildPlugin => ({
         } else {
           rule
             .use(CHAIN_ID.USE.IGNORE_CSS)
-            .loader(path.join(LOADER_PATH, 'ignoreCssLoader.cjs'));
+            .loader(path.join(LOADER_PATH, 'ignoreCssLoader.mjs'));
         }
 
         // Number of loaders applied before css-loader for `@import` at-rules
@@ -285,34 +317,21 @@ export const pluginCss = (): RsbuildPlugin => ({
           ) {
             importLoaders++;
 
-            const userOptions =
-              config.tools.lightningcssLoader === true
-                ? {}
-                : config.tools.lightningcssLoader;
-
-            const initialOptions: Rspack.LightningcssLoaderOptions = {
-              targets: environment.browserslist,
-            };
-
-            if (config.mode === 'production' && config.output.injectStyles) {
-              initialOptions.minify = true;
-            }
-
-            const loaderOptions =
-              reduceConfigs<Rspack.LightningcssLoaderOptions>({
-                initial: initialOptions,
-                config: userOptions,
-              });
+            const lightningcssOptions = getLightningCSSLoaderOptions(
+              config,
+              environment.browserslist,
+            );
 
             rule
               .use(CHAIN_ID.USE.LIGHTNINGCSS)
               .loader('builtin:lightningcss-loader')
-              .options(loaderOptions);
+              .options(lightningcssOptions);
           }
 
           const postcssLoaderOptions = await getPostcssLoaderOptions({
             config,
             root: api.context.rootPath,
+            postcssrcCache,
           });
 
           // enable postcss-loader if using PostCSS plugins

@@ -1,0 +1,71 @@
+# server.cors
+
+- **类型：** `boolean | import('cors').CorsOptions`
+- **默认值：** `false`
+- **版本：** `>= 1.1.11`
+
+为开发服务器和预览服务器配置 [CORS](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CORS) 选项，基于 [cors](https://github.com/expressjs/cors) 中间件实现。
+
+- `true`：启用 CORS 并使用默认选项。
+- `false`：禁用 CORS。
+- `object`：启用 CORS 并使用指定的选项。
+
+:::tip
+虽然 `cors` 可以设置为 `true`，但我们建议设置一个指定的 `origin` 选项，以防止不受信任的 origin 访问你的开发服务器。
+:::
+
+## 示例
+
+仅为开发服务器启用 CORS：
+
+```ts
+const isDev = process.env.NODE_ENV === 'development';
+
+export default {
+  server: {
+    cors: isDev
+      ? {
+          // 配置 `Access-Control-Allow-Origin` CORS 响应头
+          origin: 'https://example.com',
+        }
+      : false,
+  },
+};
+```
+
+禁用 CORS：
+
+```ts
+export default {
+  server: {
+    cors: false,
+  },
+};
+```
+
+## 选项
+
+`cors` 选项可以是一个对象，与 [cors](https://github.com/expressjs/cors) 中间件的选项相同。
+
+默认配置等同于：
+
+```js
+const defaultCorsOptions = {
+  origin: '*',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+};
+```
+
+例如，使用 `origin` 选项配置 `Access-Control-Allow-Origin` 头：
+
+```ts
+export default {
+  server: {
+    cors: {
+      origin: 'https://example.com',
+    },
+  },
+};
+```

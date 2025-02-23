@@ -6,6 +6,12 @@ Rsbuild 支持直接修改 Rspack 配置对象，也支持通过 `rspack-chain` 
 Rsbuild 内置的 Rspack 配置会随着迭代而发生变化，这些变化不会反映在 semver 中，因此在升级 Rsbuild 时，你的自定义配置可能会失效。
 :::
 
+## 查看 Rspack 配置
+
+Rsbuild 提供了 [rsbuild inspect](/guide/basic/cli#rsbuild-inspect) 命令来查看 Rsbuild 最终生成的 Rspack 配置。
+
+你也可以通过 [调试模式](/guide/debug/debug-mode) 来查看。
+
 ## 修改配置对象
 
 你可以使用 Rsbuild 的 [tools.rspack](/config/tools/rspack) 选项来修改 Rspack 配置对象。
@@ -39,7 +45,7 @@ export default {
 
 > 请查看 [tools.rspack 文档](/config/tools/rspack) 来了解完整用法。
 
-## 使用 Rspack Chain
+## 使用 Rspack chain
 
 import RspackChain from '@zh/shared/rspackChain.mdx';
 

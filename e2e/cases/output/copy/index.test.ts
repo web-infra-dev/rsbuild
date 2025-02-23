@@ -19,6 +19,21 @@ test('should copy asset to dist folder correctly', async () => {
   expect(fs.existsSync(join(__dirname, 'dist-1/icon.png'))).toBeTruthy();
 });
 
+test('should copy asset from src to dist folder correctly', async () => {
+  await build({
+    cwd: __dirname,
+    rsbuildConfig: {
+      output: {
+        copy: [
+          { from: '**/*.txt', to: 'assets', context: join(__dirname, 'src') },
+        ],
+      },
+    },
+  });
+
+  expect(fs.existsSync(join(__dirname, 'dist/assets/foo.txt'))).toBeTruthy();
+});
+
 test('should copy asset to dist sub-folder correctly', async () => {
   await build({
     cwd: __dirname,

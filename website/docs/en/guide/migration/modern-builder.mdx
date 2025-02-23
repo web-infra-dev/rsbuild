@@ -2,15 +2,15 @@
 
 This chapter introduces how to migrate a Modern.js Builder (or EdenX Builder) project to Rsbuild.
 
-## Key Differences
+## Key differences
 
 Rsbuild is the new version of Modern.js Builder, with the following key differences:
 
 - Rsbuild has better performance. When using Rspack simultaneously, **the startup speed and build speed of Rsbuild are 1.5 to 2 times faster than Builder**.
-- Rsbuild only supports Rspack as the bundler and no longer supports Webpack.
+- Rsbuild only supports Rspack as the bundler and no longer supports webpack.
 - Rsbuild's CLI tool and dev server are more powerful and support more features.
 
-## Installing Dependencies
+## Installing dependencies
 
 First, you need to replace the npm dependencies related to Builder with Rsbuild's dependencies.
 
@@ -24,7 +24,7 @@ import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsbuild/core -D" />
 
-## Updating npm Scripts
+## Updating npm scripts
 
 Next, you need to update the npm scripts in the package.json to Rsbuild's CLI commands.
 
@@ -41,7 +41,7 @@ Next, you need to update the npm scripts in the package.json to Rsbuild's CLI co
 }
 ```
 
-## Modifying Configuration Files
+## Modifying configuration files
 
 - Rename `builder.config.ts` to `rsbuild.config.ts`.
 - Change the import of the `defineConfig` method from `@modern-js/builder-cli` to `@rsbuild/core`.
@@ -57,7 +57,7 @@ export default defineConfig({
 });
 ```
 
-## Replacing Plugins
+## Replacing plugins
 
 Rsbuild and Builder have incompatible plugin systems, so you need to replace Builder's plugins with Rsbuild's plugins.
 
@@ -85,7 +85,7 @@ export default defineConfig({
 });
 ```
 
-## Add React-related Plugins
+## Add React-related plugins
 
 Rsbuild is not coupled with any front-end UI framework. Therefore, if you are a React project, you need to manually add [React Plugin](/plugins/list/plugin-react):
 
@@ -109,7 +109,7 @@ export default {
 
 If you are a user of other frameworks, you can refer to [Rsbuild Plugin List](/plugins/list/index) to select the corresponding framework plugin.
 
-## Configuration Migration
+## Configuration migration
 
 Most configs in Rsbuild and Builder are consistent, with only a few adjustments.
 
@@ -123,13 +123,13 @@ It is worth noting that, compared to Builder, **there are some differences in de
 - **TypeScript type check:** not enabled by default, you need to manually register the [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check).
 - **Modify DevServer configuration:** Modify `dev` and `server` configuration instead.
 
-## Validating Results
+## Validating results
 
 After completing the above steps, you have migrated from Modern.js Builder to Rsbuild. You can now try starting the dev server by running the `npm run dev` command.
 
 If you encounter any issues during the build process, please debug according to the error logs.
 
-## Contents Supplement
+## Contents supplement
 
 The current document only covers part of the migration process. If you find suitable content to add, feel free to contribute to the documentation via pull request 🤝.
 

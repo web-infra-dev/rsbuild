@@ -20,7 +20,7 @@ export const loadBundle = async <T>(
   });
 
   if (!entrypoints?.[entryName]) {
-    throw new Error(`can't find entry(${entryName})`);
+    throw new Error(`[rsbuild:loadBundle] Can't find entry: "${entryName}"`);
   }
 
   const { chunks: entryChunks = [] } = entrypoints[entryName];
@@ -37,22 +37,29 @@ export const loadBundle = async <T>(
   }, []);
 
   if (files.length === 0) {
-    throw new Error(`can't get bundle by entryName(${entryName})`);
+    throw new Error(
+      `[rsbuild:loadBundle] Failed to get bundle by entryName: "${entryName}"`,
+    );
   }
 
   // An entrypoint should have only one entryChunk, but there may be some boundary cases
   if (files.length > 1) {
     throw new Error(
-      `only support load single entry chunk, but got ${files.length}: ${files.join(',')}`,
+      `[rsbuild:loadBundle] Only support load single entry chunk, but got ${files.length}: ${files.join(',')}`,
     );
   }
 
-  const res = await run<T>(
-    files[0],
-    outputPath!,
-    stats.compilation.options,
-    utils.readFileSync,
-  );
+  const allChunkFiles =
+    chunks?.flatMap((c) => c.files).map((file) => join(outputPath!, file!)) ||
+    [];
+
+  const res = await run<T>({
+    bundlePath: files[0],
+    dist: outputPath!,
+    compilerOptions: stats.compilation.options,
+    readFileSync: utils.readFileSync,
+    isBundleOutput: (modulePath: string) => allChunkFiles.includes(modulePath),
+  });
 
   return res;
 };
@@ -65,7 +72,9 @@ export const getTransformedHtml = async (
   const htmlPath = htmlPaths[entryName];
 
   if (!htmlPath) {
-    throw new Error(`can't get html file by entryName(${entryName})`);
+    throw new Error(
+      `[rsbuild:getTransformedHtml] Failed to get HTML file by entryName: "${entryName}"`,
+    );
   }
 
   const fileName = join(distPath, htmlPath);
@@ -73,4 +82,38 @@ export const getTransformedHtml = async (
   const fileContent = utils.readFileSync(fileName);
 
   return fileContent;
+};
+
+export const createCacheableFunction = <T>(
+  getter: (
+    stats: Rspack.Stats,
+    entryName: string,
+    utils: ServerUtils,
+  ) => Promise<T>,
+) => {
+  const cache = new WeakMap<
+    Rspack.Stats,
+    {
+      [entryName: string]: T;
+    }
+  >();
+
+  return async (
+    stats: Rspack.Stats,
+    entryName: string,
+    utils: ServerUtils,
+  ): Promise<T> => {
+    const cachedEntries = cache.get(stats);
+    if (cachedEntries?.[entryName]) {
+      return cachedEntries[entryName];
+    }
+
+    const res = await getter(stats, entryName, utils);
+
+    cache.set(stats, {
+      ...(cachedEntries || {}),
+      [entryName]: res,
+    });
+    return res;
+  };
 };

@@ -1,7 +1,7 @@
-import { build } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { build, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
-test('should allow plugin to modify HTML tags', async () => {
+rspackOnlyTest('should allow plugin to modify HTML tags', async () => {
   const rsbuild = await build({
     cwd: __dirname,
   });

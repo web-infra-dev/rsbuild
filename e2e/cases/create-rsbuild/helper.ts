@@ -1,5 +1,5 @@
-import { execSync } from 'node:child_process';
-import { existsSync } from 'node:fs';
+import { exec } from 'node:child_process';
+import { access } from 'node:fs/promises';
 import path from 'node:path';
 import { expect } from '@playwright/test';
 import fse from 'fs-extra';
@@ -14,7 +14,7 @@ export const expectPackageJson = (
   expect(pkgJson.devDependencies['@rsbuild/core']).toBeTruthy();
 };
 
-export const createAndValidate = (
+export const createAndValidate = async (
   cwd: string,
   template: string,
   {
@@ -28,7 +28,7 @@ export const createAndValidate = (
   } = {},
 ) => {
   const dir = path.join(cwd, name);
-  fse.removeSync(dir);
+  await fse.remove(dir);
 
   let command = `npx create-rsbuild -d ${name} -t ${template}`;
   if (tools.length) {
@@ -36,19 +36,32 @@ export const createAndValidate = (
     command += ` ${toolsCmd}`;
   }
 
-  execSync(command, { cwd });
+  await new Promise<void>((resolve, reject) => {
+    exec(command, { cwd }, (error) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve();
+      }
+    });
+  });
 
-  const pkgJson = fse.readJSONSync(path.join(dir, 'package.json'));
+  const pkgJson = await fse.readJSON(path.join(dir, 'package.json'));
   expectPackageJson(pkgJson, path.basename(name));
 
   if (template.endsWith('-ts')) {
     expect(pkgJson.devDependencies.typescript).toBeTruthy();
-    expect(existsSync(path.join(dir, 'tsconfig.json'))).toBeTruthy();
+    try {
+      await access(path.join(dir, 'tsconfig.json'));
+      expect(true).toBeTruthy();
+    } catch {
+      expect(false).toBeTruthy();
+    }
   }
 
-  const cleanFn = () => fse.removeSync(dir);
+  const cleanFn = async () => await fse.remove(dir);
   if (clean) {
-    cleanFn();
+    await cleanFn();
   }
 
   return { dir, pkgJson, clean: cleanFn };

@@ -43,6 +43,8 @@ export default defineConfig({
 });
 ```
 
+> 查看 [配置 Rsbuild](/guide/basic/configure-rsbuild) 了解更多。
+
 ## 配置迁移
 
 在一个 webpack 项目中，可能已经包含了一些复杂的 `webpack.config.js` 配置文件。
@@ -63,7 +65,9 @@ export default {
 };
 ```
 
-- 使用 Rsbuild 中封装的配置项，比如 css-loader 的选项可以通过 [tools.cssLoader](/config/tools/css-loader) 设置。
+- 使用 Rsbuild 封装的配置项，比如 css-loader 的选项可以通过 [tools.cssLoader](/config/tools/css-loader) 设置。
+
+> 参考 [配置 Rspack](/guide/basic/configure-rspack) 了解更多。
 
 ### 构建入口
 
@@ -105,7 +109,7 @@ export default {
 
 Rsbuild 提供了丰富的插件，对常见的使用场景提供开箱即用的支持，你可以参考[插件列表](/plugins/list/index)文档来了解这些插件。
 
-我们以 React 项目为例，来介绍如何接入 Rsbuild 插件。首先，你可以移除一些 React 相关的构建依赖，它们已经被 Rsbuild React 插件内置，比如：
+我们以 React 项目为例，来介绍如何接入 Rsbuild 插件。首先，你可以移除一些 React 相关的构建依赖，它们已经被 `@rsbuild/plugin-react` 插件内置，比如：
 
 - `react-refresh`
 - `@babel/preset-react`
@@ -146,9 +150,60 @@ export default {
 | [eslint-webpack-plugin](https://www.npmjs.com/package/eslint-webpack-plugin)                   | [ESLint 插件](https://github.com/rspack-contrib/rsbuild-plugin-eslint)                                      |
 | [babel-plugin-styled-components](https://www.npmjs.com/package/babel-plugin-styled-components) | [Styled Components 插件](https://github.com/rspack-contrib/rsbuild-plugin-styled-components)                |
 
-### 配置 Dev Server
+### 配置 Dev server
 
 Rsbuild 不支持使用 Rspack 的 [devServer](https://rspack.dev/config/dev-server) 配置项，请参考 [Rspack Dev Server](/guide/basic/server#rspack-dev-server) 进行替换。
+
+## Babel 迁移
+
+Rsbuild 默认使用 SWC 编译代码，所以大部分常用的 Babel 插件不再需要，下面是一些常见的 Babel 插件的迁移示例。
+
+### @babel/preset-env
+
+`@babel/preset-env` 不再需要，Rsbuild 会自动根据 [browserslist](/guide/advanced/browserslist) 配置进行代码降级。
+
+注意 Rsbuild 默认不会注入 polyfill，你可以参考 [Polyfill 方案](/guide/advanced/browser-compatibility#polyfill-方案) 了解如何注入。
+
+### @babel/preset-typescript
+
+`@babel/preset-typescript` 不再需要，因为 Rsbuild 开启 SWC 的 TypeScript 转换。
+
+### @babel/preset-react
+
+`@babel/preset-react` 不再需要，替换为 [@rsbuild/plugin-react](/plugins/list/plugin-react) 即可。
+
+### @babel/plugin-transform-runtime
+
+`@babel/plugin-transform-runtime` 不再需要，Rsbuild 中内置了等价的 `@swc/helpers` 作为 runtime helpers。
+
+### babel-plugin-import
+
+`babel-plugin-import` 插件可以替换为 Rsbuild 的 [source.transformImport](/config/source/transform-import) 配置项。
+
+- Babel 配置：
+
+```js title="babel.config.js"
+module.exports = {
+  plugins: [
+    [
+      'import',
+      { libraryName: 'some-library', libraryDirectory: 'es', style: true },
+    ],
+  ],
+};
+```
+
+- Rsbuild 配置：
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    transformImport: [
+      { libraryName: 'some-library', libraryDirectory: 'es', style: true },
+    ],
+  },
+};
+```
 
 ## 验证结果
 

@@ -1,4 +1,4 @@
-# Import CSS Files
+# CSS
 
 Rsbuild provides out-of-the-box support for CSS, including PostCSS, CSS Modules, CSS preprocessors, CSS inlining, and CSS compression.
 
@@ -44,7 +44,7 @@ export default {
 - [postcss-preset-env](https://github.com/csstools/postcss-plugins/tree/main/plugin-packs/postcss-preset-env): Converts modern CSS into something most browsers can understand.
 - [postcss-nesting](https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-nesting): Supports CSS nesting.
 
-## CSS Minification
+## CSS minification
 
 When building for production, Rsbuild enables Rspack's built-in [LightningCssMinimizerRspackPlugin](https://rspack.dev/plugins/rspack/lightning-css-minimizer-rspack-plugin) plugin to minify CSS assets for better transmission efficiency.
 
@@ -55,9 +55,11 @@ When building for production, Rsbuild enables Rspack's built-in [LightningCssMin
 
 Rsbuild supports transforming CSS code through [PostCSS](https://postcss.org/). You can configure PostCSS in the following ways:
 
-1. Rsbuild uses [postcss-load-config](https://github.com/postcss/postcss-load-config) to load the PostCSS configuration file in the root directory of the current project, such as `postcss.config.js`:
+### Configuration file
 
-```js
+Rsbuild uses [postcss-load-config](https://github.com/postcss/postcss-load-config) to load the PostCSS configuration file in the root directory of the current project, such as `postcss.config.js`:
+
+```js title="postcss.config.cjs"
 module.exports = {
   'postcss-px-to-viewport': {
     viewportWidth: 375,
@@ -65,9 +67,19 @@ module.exports = {
 };
 ```
 
-2. Configure the postcss-loader through Rsbuild's [tools.postcss](/config/tools/postcss) option, which supports modifying the built-in configuration through a function, for example:
+`postcss-load-config` supports multiple file formats, including but not limited to the following file names:
 
-```ts
+- postcss.config.js
+- postcss.config.mjs
+- postcss.config.cjs
+- postcss.config.ts
+- ...
+
+### tools.postcss
+
+You can also configure the postcss-loader through Rsbuild's [tools.postcss](/config/tools/postcss) option, which supports modifying the built-in configuration through a function, for example:
+
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     postcss: (opts) => {
@@ -79,6 +91,8 @@ export default {
   },
 };
 ```
+
+### Configuration priority
 
 - When you configure both the `postcss.config.js` file and the `tools.postcss` option, both will take effect, and the `tools.postcss` option will take precedence.
 - If there is no `postcss.config.js` file in the project and the `tools.postcss` option is not configured, Rsbuild will not register `postcss-loader`.
@@ -99,11 +113,11 @@ Rsbuild supports popular CSS preprocessors through plugins, including Sass, Less
 
 Please read the [React - CSS-in-JS](/guide/framework/react#css-in-js) section to learn how to use common CSS-in-JS libraries in Rsbuild.
 
-## Inline CSS Files
+## Inline CSS files
 
 By default, Rsbuild will extract CSS into a separate `.css` file and output it to the dist directory.
 
-If you want to inline styles into your JS file, you can set [output.injectStyles](/config/output/inject-styles) to true to disable CSS extraction logic. When the JS file is requested by the browser, JS dynamically inserts the `<style>` tag into the Html to load the CSS styles.
+To inline styles into your JS file, set [output.injectStyles](/config/output/inject-styles) to true to disable CSS extraction logic. When the JS file is requested by the browser, JS dynamically inserts the `<style>` tag into the Html to load the CSS styles.
 
 ```ts
 export default {

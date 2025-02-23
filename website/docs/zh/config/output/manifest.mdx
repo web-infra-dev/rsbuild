@@ -1,13 +1,53 @@
 # output.manifest
 
-- **类型：** `string | boolean`
+- **类型：** `string | boolean | ManifestObjectConfig`
 - **默认值：** `false`
 
-是否生成 manifest 文件，该文件包含所有构建产物的信息、以及[入口模块](/config/source/entry)与构建产物间的映射关系。
+配置如何生成 manifest 文件。
 
-当 `output.manifest` 设置为 `true` 时，Rsbuild 会在构建后生成一个 `manifest.json` 文件。当 `output.manifest` 的值是一个字符串时，它将作为 manifest 文件的名称或路径。
+- `true`: 生成一个名为 `manifest.json` 的文件。
+- `false`: 不生成 manifest 文件。
+- `string`: 生成一个指定名称或路径的 manifest 文件。
+- `object`: 生成一个指定选项的 manifest 文件。
 
-## 输出内容
+manifest 文件包含所有构建产物的信息、以及 [入口模块](/config/source/entry) 与构建产物间的映射关系。
+
+## 基础示例
+
+添加以下配置来开启：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    manifest: true,
+  },
+};
+```
+
+构建完成后，Rsbuild 会生成 `dist/manifest.json` 文件：
+
+```json title="dist/manifest.json"
+{
+  "allFiles": [
+    "/static/css/index.[hash].css",
+    "/static/js/index.[hash].js",
+    "/static/images/logo.[hash].png",
+    "/index.html"
+  ],
+  "entries": {
+    "index": {
+      "initial": {
+        "js": ["/static/js/index.[hash].js"],
+        "css": ["/static/css/index.[hash].css"]
+      },
+      "assets": ["/static/images/logo.[hash].png"],
+      "html": ["/index.html"]
+    }
+  }
+}
+```
+
+## Manifest 结构
 
 manifest 文件默认输出的结构为：
 
@@ -37,49 +77,164 @@ type ManifestList = {
 };
 ```
 
-## 基础示例
+## 选项
 
-添加以下配置来开启：
+`output.manifest` 可以是一个对象，以下是所有可选项：
 
-```js
+### filename
+
+- **类型：** `string`
+- **默认值：** `'manifest.json'`
+
+指定 manifest 文件的名称或路径。
+
+`filename` 可以是一个相对于 `dist` 目录的路径，比如输出为 `dist/static/my-manifest.json`：
+
+```ts title="rsbuild.config.ts"
 export default {
   output: {
-    manifest: true,
+    manifest: {
+      filename: './static/my-manifest.json',
+    },
   },
 };
 ```
 
-当构建完成后，会自动生成 `dist/manifest.json` 文件：
+这可以简写为：
 
-```json
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    manifest: './static/my-manifest.json',
+  },
+};
+```
+
+### generate
+
+- **类型：**
+
+```ts
+type ManifestGenerate = (params: {
+  files: FileDescriptor[];
+  manifestData: ManifestData;
+}) => Record<string, unknown>;
+```
+
+- **默认值：** `undefined`
+- **版本：** `>= 1.2.0`
+
+通过 `manifest.generate` 函数可以自定义 manifest 文件的内容。该函数接收以下参数：
+
+- `files`: 所有输出的文件的描述信息。
+- `manifestData`: 默认的 manifest 数据。
+
+例如，仅保留 `allAssets` 字段：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    manifest: {
+      generate: ({ manifestData }) => {
+        return {
+          allAssets: manifestData.allFiles,
+        };
+      },
+    },
+  },
+};
+```
+
+你也可以基于 `files` 来自定义 manifest 文件的内容，`files` 的结构如下：
+
+```ts
+interface FileDescriptor {
+  name: string;
+  path: string;
+  isAsset: boolean;
+  isChunk: boolean;
+  isInitial: boolean;
+  isModuleAsset: boolean;
+  chunk?: import('@rspack/core').Chunk;
+}
+```
+
+下面是 `files` 的一个示例：
+
+```ts
+const files = [
+  {
+    name: 'index.js',
+    path: '/static/js/index.[hash].js',
+    isAsset: false,
+    isChunk: true,
+    isInitial: true,
+    isModuleAsset: false,
+    chunk: {
+      // Chunk info...
+    },
+  },
+  {
+    name: 'index.html',
+    path: '/index.html',
+    isAsset: true,
+    isChunk: false,
+    isInitial: false,
+    isModuleAsset: false,
+  },
+];
+```
+
+### filter
+
+- **类型：**
+
+```ts
+type ManifestFilter = (file: FileDescriptor) => boolean;
+```
+
+- **默认值：** `file => !file.name.endsWith('.LICENSE.txt')`
+- **版本：** `>= 1.2.0`
+
+允许你过滤包含在 manifest 中的文件。该函数接收一个 `file` 参数，返回 `true` 表示保留该文件，返回 `false` 表示不保留该文件。
+
+默认情况下，`*.LICENSE.txt` 文件不会被包含在 manifest 文件中，因为这些许可证文件仅用于声明开源协议，不会在运行时被使用。
+
+例如，仅保留 `*.js` 文件：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    manifest: {
+      filter: (file) => file.name.endsWith('.js'),
+    },
+  },
+};
+```
+
+生成的 manifest 文件中仅会包含 `*.js` 文件：
+
+```json title="dist/manifest.json"
 {
-  "allFiles": [
-    "/static/css/index.a11cfb11.css",
-    "/static/js/index.c586cd5e.js",
-    "/index.html",
-    "/static/js/index.c586cd5e.js.LICENSE.txt"
-  ],
+  "allFiles": ["/static/js/index.[hash].js"],
   "entries": {
     "index": {
       "initial": {
-        "js": ["/static/js/index.c586cd5e.js"],
-        "css": ["/static/css/index.a11cfb11.css"]
-      },
-      "assets": ["/static/js/index.c586cd5e.js.LICENSE.txt"],
-      "html": ["/index.html"]
+        "js": ["/static/js/index.[hash].js"]
+      }
     }
   }
 }
 ```
 
-## 设置路径
+或者是包含所有文件：
 
-`output.manifest` 可以是一个相对于 `dist` 目录的路径，比如输出为 `dist/static/my-manifest.json`：
-
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
-    manifest: './static/my-manifest.json',
+    manifest: {
+      filter: () => true,
+    },
   },
 };
 ```

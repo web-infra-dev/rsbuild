@@ -13,7 +13,7 @@ import { useI18n } from 'rspress/runtime';
 
 // Benchmark data for different cases
 // Unit: second
-// From: https://github.com/rspack-contrib/performance-compare
+// From: https://github.com/rspack-contrib/build-tools-performance
 const BENCHMARK_DATA: BenchmarkData = {
   rspack: {
     label: 'Rsbuild',

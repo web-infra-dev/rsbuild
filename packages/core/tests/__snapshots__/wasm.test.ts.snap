@@ -21,7 +21,9 @@ exports[`plugin-wasm > should add wasm rule properly 1`] = `
     "webassemblyModuleFilename": "static/wasm/[hash].module.wasm",
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;

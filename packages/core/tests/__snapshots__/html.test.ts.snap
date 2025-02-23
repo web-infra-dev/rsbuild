@@ -11,7 +11,9 @@ exports[`plugin-html > should allow to configure html.tags 1`] = `
     ],
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
     HtmlRspackPlugin {
       "options": {
         "base": false,
@@ -127,7 +129,9 @@ exports[`plugin-html > should allow to modify plugin options by tools.htmlPlugin
     ],
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
     HtmlRspackPlugin {
       "options": {
         "base": false,
@@ -174,7 +178,9 @@ exports[`plugin-html > should allow to set favicon by html.favicon option 1`] = 
     ],
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
     HtmlRspackPlugin {
       "options": {
         "base": false,
@@ -230,7 +236,9 @@ exports[`plugin-html > should allow to set inject by html.inject option 1`] = `
     ],
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
     HtmlRspackPlugin {
       "options": {
         "base": false,
@@ -285,7 +293,9 @@ exports[`plugin-html > should enable minify in production 1`] = `
     ],
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
     HtmlRspackPlugin {
       "options": {
         "base": false,
@@ -340,7 +350,9 @@ exports[`plugin-html > should register html plugin correctly 1`] = `
     ],
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
     HtmlRspackPlugin {
       "options": {
         "base": false,
@@ -395,7 +407,9 @@ exports[`plugin-html > should stop injecting <script> if inject is '() => false'
     ],
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
     HtmlRspackPlugin {
       "options": {
         "base": false,
@@ -450,7 +464,9 @@ exports[`plugin-html > should stop injecting <script> if inject is 'false' 1`] =
     ],
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
     HtmlRspackPlugin {
       "options": {
         "base": false,
@@ -506,7 +522,9 @@ exports[`plugin-html > should support environment html config 1`] = `
       ],
     },
     "plugins": [
-      RsbuildCorePlugin {},
+      {
+        "name": "RsbuildCorePlugin",
+      },
       HtmlRspackPlugin {
         "options": {
           "base": false,
@@ -558,7 +576,9 @@ exports[`plugin-html > should support environment html config 1`] = `
       ],
     },
     "plugins": [
-      RsbuildCorePlugin {},
+      {
+        "name": "RsbuildCorePlugin",
+      },
       HtmlRspackPlugin {
         "options": {
           "base": false,
@@ -617,7 +637,9 @@ exports[`plugin-html > should support multi entry 1`] = `
     ],
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
     HtmlRspackPlugin {
       "options": {
         "base": false,

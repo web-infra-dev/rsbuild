@@ -13,7 +13,9 @@ exports[`plugin-module-federation > should set environment module federation con
       "uniqueName": "remote",
     },
     "plugins": [
-      RsbuildCorePlugin {},
+      {
+        "name": "RsbuildCorePlugin",
+      },
       _ModuleFederationPlugin {
         "_options": {
           "exposes": {
@@ -23,11 +25,11 @@ exports[`plugin-module-federation > should set environment module federation con
           "name": "remote",
           "shared": {
             "react": {
-              "requiredVersion": "^18.2.0",
+              "requiredVersion": "^19.0.0",
               "singleton": true,
             },
             "react-dom": {
-              "requiredVersion": "^18.2.0",
+              "requiredVersion": "^19.0.0",
               "singleton": true,
             },
           },
@@ -52,7 +54,9 @@ exports[`plugin-module-federation > should set environment module federation con
       },
     },
     "plugins": [
-      RsbuildCorePlugin {},
+      {
+        "name": "RsbuildCorePlugin",
+      },
     ],
   },
 ]
@@ -71,7 +75,9 @@ exports[`plugin-module-federation > should set module federation and environment
       "uniqueName": "remote",
     },
     "plugins": [
-      RsbuildCorePlugin {},
+      {
+        "name": "RsbuildCorePlugin",
+      },
       _ModuleFederationPlugin {
         "_options": {
           "exposes": {
@@ -81,11 +87,11 @@ exports[`plugin-module-federation > should set module federation and environment
           "name": "remote",
           "shared": {
             "react": {
-              "requiredVersion": "^18.2.0",
+              "requiredVersion": "^19.0.0",
               "singleton": true,
             },
             "react-dom": {
-              "requiredVersion": "^18.2.0",
+              "requiredVersion": "^19.0.0",
               "singleton": true,
             },
           },
@@ -104,7 +110,9 @@ exports[`plugin-module-federation > should set module federation and environment
       "uniqueName": "remote",
     },
     "plugins": [
-      RsbuildCorePlugin {},
+      {
+        "name": "RsbuildCorePlugin",
+      },
       _ModuleFederationPlugin {
         "_options": {
           "exposes": {
@@ -114,11 +122,11 @@ exports[`plugin-module-federation > should set module federation and environment
           "name": "remote",
           "shared": {
             "react": {
-              "requiredVersion": "^18.2.0",
+              "requiredVersion": "^19.0.0",
               "singleton": true,
             },
             "react-dom": {
-              "requiredVersion": "^18.2.0",
+              "requiredVersion": "^19.0.0",
               "singleton": true,
             },
           },
@@ -144,7 +152,9 @@ exports[`plugin-module-federation > should set module federation config 1`] = `
     "uniqueName": "remote",
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
     _ModuleFederationPlugin {
       "_options": {
         "exposes": {
@@ -154,11 +164,11 @@ exports[`plugin-module-federation > should set module federation config 1`] = `
         "name": "remote",
         "shared": {
           "react": {
-            "requiredVersion": "^18.2.0",
+            "requiredVersion": "^19.0.0",
             "singleton": true,
           },
           "react-dom": {
-            "requiredVersion": "^18.2.0",
+            "requiredVersion": "^19.0.0",
             "singleton": true,
           },
         },

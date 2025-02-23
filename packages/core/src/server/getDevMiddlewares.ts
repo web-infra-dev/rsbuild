@@ -1,6 +1,6 @@
 import { isAbsolute, join } from 'node:path';
-import url from 'node:url';
 import { normalizePublicDirs } from '../config';
+import { parseUrl } from '../helpers';
 import { logger } from '../logger';
 import type {
   DevConfig,
@@ -26,7 +26,7 @@ export type CompileMiddlewareAPI = {
   middleware: RequestHandler;
   sockWrite: SetupMiddlewaresServer['sockWrite'];
   onUpgrade: UpgradeEvent;
-  close: () => void;
+  close: () => Promise<void>;
 };
 
 export type RsbuildDevMiddlewareOptions = {
@@ -39,6 +39,10 @@ export type RsbuildDevMiddlewareOptions = {
   output: {
     distPath: string;
   };
+  /**
+   * Callbacks returned by the `onBeforeStartDevServer` hook.
+   */
+  postCallbacks: (() => void)[];
 };
 
 const applySetupMiddlewares = (
@@ -79,6 +83,7 @@ const applyDefaultMiddlewares = async ({
   pwd,
   outputFileSystem,
   environments,
+  postCallbacks,
 }: RsbuildDevMiddlewareOptions & {
   middlewares: Middlewares;
 }): Promise<{
@@ -93,7 +98,7 @@ const applyDefaultMiddlewares = async ({
   middlewares.push((req, res, next) => {
     // allow HMR request cross-domain, because the user may use global proxy
     res.setHeader('Access-Control-Allow-Origin', '*');
-    const path = req.url ? url.parse(req.url).pathname : '';
+    const path = req.url ? parseUrl(req.url)?.pathname : '';
     if (path?.includes('hot-update')) {
       res.setHeader('Access-Control-Allow-Credentials', 'false');
     }
@@ -107,6 +112,15 @@ const applyDefaultMiddlewares = async ({
     }
     next();
   });
+
+  if (server.cors) {
+    const { default: corsMiddleware } = await import(
+      '../../compiled/cors/index.js'
+    );
+    middlewares.push(
+      corsMiddleware(typeof server.cors === 'boolean' ? {} : server.cors),
+    );
+  }
 
   // dev proxy handler, each proxy has own handler
   if (server.proxy) {
@@ -177,6 +191,15 @@ const applyDefaultMiddlewares = async ({
     middlewares.push(assetMiddleware);
   }
 
+  // Execute callbacks returned by the `onBeforeStartDevServer` hook.
+  // This is the ideal place for users to add custom middlewares because:
+  // 1. It runs after most of the default middlewares
+  // 2. It runs before fallback middlewares
+  // This ensures custom middleware can intercept requests before any fallback handling
+  for (const callback of postCallbacks) {
+    callback();
+  }
+
   if (compileMiddlewareAPI) {
     middlewares.push(
       getHtmlFallbackMiddleware({
@@ -205,20 +228,6 @@ const applyDefaultMiddlewares = async ({
 
   middlewares.push(faviconFallbackMiddleware);
 
-  // OPTIONS request fallback middleware
-  // Should register this middleware as the last
-  // see: https://github.com/web-infra-dev/rsbuild/pull/2867
-  middlewares.push((req, res, next) => {
-    if (req.method === 'OPTIONS') {
-      // Use 204 as no content to send in the response body
-      res.statusCode = 204;
-      res.setHeader('Content-Length', '0');
-      res.end();
-      return;
-    }
-    next();
-  });
-
   return {
     onUpgrade: (...args) => {
       for (const cb of upgradeEvents) {
@@ -228,13 +237,15 @@ const applyDefaultMiddlewares = async ({
   };
 };
 
-export const getMiddlewares = async (
-  options: RsbuildDevMiddlewareOptions,
-): Promise<{
+export type GetMiddlewaresResult = {
   close: () => Promise<void>;
   onUpgrade: UpgradeEvent;
   middlewares: Middlewares;
-}> => {
+};
+
+export const getMiddlewares = async (
+  options: RsbuildDevMiddlewareOptions,
+): Promise<GetMiddlewaresResult> => {
   const middlewares: Middlewares = [];
   const { environments, compileMiddlewareAPI } = options;
 
@@ -260,7 +271,7 @@ export const getMiddlewares = async (
 
   return {
     close: async () => {
-      compileMiddlewareAPI?.close();
+      await compileMiddlewareAPI?.close();
     },
     onUpgrade,
     middlewares,

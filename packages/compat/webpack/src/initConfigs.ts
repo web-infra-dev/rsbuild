@@ -43,12 +43,12 @@ export async function initConfigs({
 
   // write Rsbuild config and webpack config to disk in debug mode
   if (logger.level === 'verbose') {
-    const inspect = () => {
+    const inspect = async () => {
       const inspectOptions: InspectConfigOptions = {
         verbose: true,
         writeToDisk: true,
       };
-      inspectConfig({
+      await inspectConfig({
         context,
         pluginManager,
         inspectOptions,
@@ -59,9 +59,9 @@ export async function initConfigs({
     };
 
     // run inspect later to avoid cleaned by cleanOutput plugin
-    context.hooks.onBeforeBuild.tap(({ isFirstCompile }) => {
+    context.hooks.onBeforeBuild.tap(async ({ isFirstCompile }) => {
       if (isFirstCompile) {
-        inspect();
+        await inspect();
       }
     });
     context.hooks.onAfterStartDevServer.tap(inspect);

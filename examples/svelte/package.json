@@ -1,5 +1,5 @@
 {
-  "name": "@examples/svelte5",
+  "name": "@examples/svelte",
   "private": true,
   "scripts": {
     "dev": "rsbuild dev --open",
@@ -7,7 +7,7 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "svelte": "^5.2.2"
+    "svelte": "^5.20.1"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",

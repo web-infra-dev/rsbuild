@@ -1,32 +1,42 @@
-# Improve Build Performance
+# Improve build performance
 
 Rsbuild optimizes build performance by default, but as the project becomes larger, you may encounter some build performance problems.
 
 This document provides some optional speed-up methods, developers can choose some of them to improve the build performance.
 
-## Performance Profiling
+## Performance profiling
 
 Performing a performance analysis can help you identify performance bottlenecks in your project, allowing for targeted optimization.
 
 Please refer to the [Performance Building Analysis](/guide/debug/build-profiling) section for more information.
 
-## General Optimization
+## General optimization
 
 The following are some general optimization methods, which can speed up the development build and production build.
 
-### Reducing Modules
+### Enable persistent cache
+
+Rsbuild provides [performance.buildCache](/config/performance/build-cache) configuration, which can significantly improve the speed of rebuilding.
+
+### Reducing modules
 
 Optimizing the number of modules referenced by the application can reduce the bundle size and improve build performance. Please read the [Bundle Size Optimization](/guide/optimization/optimize-bundle) section to learn some optimization methods.
+
+### Optimize Tailwind CSS
+
+When using Tailwind CSS, if the `content` field in `tailwind.config.js` is not correctly configured, this can lead to poor build performance and HMR performance.
+
+Please refer to [Tailwind CSS - Optimize Build Performance](/guide/basic/tailwindcss#optimize-build-performance) for more details.
 
 ## Development optimization
 
 The following are methods for improving performance in development mode.
 
-## Enable Lazy Compilation
+### Enable lazy compilation
 
 Enabling lazy compilation can significantly reduce the number of modules compiled at dev startup and improve startup time.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     lazyCompilation: true,
@@ -36,7 +46,25 @@ export default {
 
 > Please refer to [dev.lazyCompilation](/config/dev/lazy-compilation) for more information.
 
-### Source Map Format
+### Enable incremental build
+
+Rspack provides experimental [experiments.incremental](https://rspack.dev/config/experiments#experimentsincremental) configuration, which can improve the HMR speed in development mode.
+
+```ts title="rsbuild.config.ts"
+const isDev = process.env.NODE_ENV === 'development';
+
+export default {
+  tools: {
+    rspack: {
+      experiments: {
+        incremental: isDev,
+      },
+    },
+  },
+};
+```
+
+### Source map format
 
 In order to provide a good debugging experience, Rsbuild uses the `cheap-module-source-map` format source map by default in development mode, which is a high-quality source map format and will bring certain performance overhead.
 
@@ -44,7 +72,7 @@ You can improve build speed by adjusting the source map format in development mo
 
 For example to disable source map:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     sourceMap: {
@@ -56,7 +84,7 @@ export default {
 
 Or set the source map format of the development mode to the cheapest `eval` format:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     sourceMap: {

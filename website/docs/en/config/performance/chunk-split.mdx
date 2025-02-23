@@ -1,39 +1,13 @@
 # performance.chunkSplit
 
-- **Type:** `Object`
+- **Type:** `ChunkSplit`
 - **Default:** `{ strategy: 'split-by-experience' }`
 
 `performance.chunkSplit` is used to configure the chunk splitting strategy. The type of `ChunkSplit` is as follows:
 
-```ts
-type ForceSplitting = RegExp[] | Record<string, RegExp>;
-
-interface BaseChunkSplit {
-  strategy?:
-    | 'split-by-module'
-    | 'split-by-experience'
-    | 'all-in-one'
-    | 'single-vendor';
-  override?: SplitChunks;
-  forceSplitting?: ForceSplitting;
-}
-
-interface SplitBySize {
-  strategy: 'split-by-size';
-  minSize?: number;
-  maxSize?: number;
-  override?: SplitChunks;
-  forceSplitting?: ForceSplitting;
-}
-
-interface SplitCustom {
-  strategy: 'custom';
-  splitChunks?: SplitChunks;
-  forceSplitting?: ForceSplitting;
-}
-
-type ChunkSplit = BaseChunkSplit | SplitBySize | SplitCustom;
-```
+::: tip
+Please refer to the [Code Splitting](/guide/optimization/code-splitting) for the detailed usage.
+:::
 
 ## chunkSplit.strategy
 
@@ -46,9 +20,40 @@ Rsbuild supports the following chunk splitting strategies:
 - `single-vendor`: bundle all NPM packages into a single chunk.
 - `custom`: custom chunk splitting strategy.
 
-### Default Strategy
+## Type definition
 
-By default, Rsbuild uses the `split-by-experience` strategy. If you want to use other chunk splitting strategies, you can specify them through the `strategy` option, for example:
+The type of `performance.chunkSplit` is as follows:
+
+```ts
+type ForceSplitting = RegExp[] | Record<string, RegExp>;
+
+interface BaseChunkSplit {
+  strategy?:
+    | 'split-by-module'
+    | 'split-by-experience'
+    | 'all-in-one'
+    | 'single-vendor';
+  override?: Rspack.OptimizationSplitChunksOptions;
+  forceSplitting?: ForceSplitting;
+}
+
+interface SplitBySize extends BaseSplitRules {
+  strategy: 'split-by-size';
+  minSize?: number;
+  maxSize?: number;
+}
+
+interface SplitCustom extends BaseSplitRules {
+  strategy: 'custom';
+  splitChunks?: SplitChunks;
+}
+
+type ChunkSplit = BaseChunkSplit | SplitBySize | SplitCustom;
+```
+
+### Default strategy
+
+By default, Rsbuild uses the `split-by-experience` strategy. To use other chunk splitting strategies, specify them through the `strategy` option, for example:
 
 ```js
 export default {
@@ -60,16 +65,12 @@ export default {
 };
 ```
 
-::: tip
-Please refer to the [Chunk Splitting Practice](/guide/optimization/split-chunk) section to understand the differences between different strategies.
-:::
-
 ## chunkSplit.minSize
 
 - **Type:** `number`
 - **Default:** `10000`
 
-When `performance.chunkSplit.strategy` is `split-by-size`, you can specify the minimum size of a chunk via `performance.chunkSplit.minSize`, the unit is bytes. The default value is `10000`. For example:
+When `chunkSplit.strategy` is `split-by-size`, you can specify the minimum size of a chunk via `chunkSplit.minSize`, the unit is bytes. The default value is `10000`. For example:
 
 ```js
 export default {
@@ -87,7 +88,7 @@ export default {
 - **Type:** `number`
 - **Default:** `Number.POSITIVE_INFINITY`
 
-When `performance.chunkSplit.strategy` is `split-by-size`, you can specify the maximum size of a chunk via `performance.chunkSplit.maxSize`, the unit is bytes. The default value is `Number.POSITIVE_INFINITY`. For example:
+When `chunkSplit.strategy` is `split-by-size`, you can specify the maximum size of a chunk via `chunkSplit.maxSize`, the unit is bytes. The default value is `Number.POSITIVE_INFINITY`. For example:
 
 ```js
 export default {
@@ -105,7 +106,7 @@ export default {
 - **Type:** `RegExp[] | Record<string, RegExp>`
 - **Default:** `[]`
 
-Via `performance.chunkSplit.forceSplitting`, you can specify the NPM packages that need to be forced to split.
+Via `chunkSplit.forceSplitting`, you can specify the NPM packages that need to be forced to split.
 
 For example, split the `axios` library under node_modules into `axios.js`:
 
@@ -121,7 +122,7 @@ export default {
 };
 ```
 
-This is an easier way than configuring Rspack's splitChunks directly.
+This is an easier way than configuring Rspack's [splitChunks](https://rspack.dev/config/optimization#optimizationsplitchunks) directly.
 
 :::tip
 Chunks split using the `forceSplitting` configuration will be inserted into the HTML file as resources requested for the initial screen using `<script>` tags. Therefore, please split them appropriately based on the actual scenario to avoid excessive size of initial screen resources.
@@ -129,7 +130,7 @@ Chunks split using the `forceSplitting` configuration will be inserted into the 
 
 ## chunkSplit.splitChunks
 
-When `performance.chunkSplit.strategy` is `custom`, you can specify the custom Rspack chunk splitting config via `performance.chunkSplit.splitChunks`. This config will be merged with the Rspack splitChunks config (the `cacheGroups` config will also be merged). For example:
+When `chunkSplit.strategy` is `custom`, you can specify the custom Rspack chunk splitting config via `chunkSplit.splitChunks`. This config will be merged with the Rspack splitChunks config (the `cacheGroups` config will also be merged). For example:
 
 ```js
 export default {
@@ -152,7 +153,7 @@ export default {
 
 ## chunkSplit.override
 
-When `performance.chunkSplit.strategy` is `split-by-experience`, `split-by-module`, `split-by-size` or `single-vendor`, you can specify the custom Rspack chunk splitting config via `performance.chunkSplit.override`. This config will be merged with the Rspack splitChunks config (the `cacheGroups` config will also be merged). For example:
+When `chunkSplit.strategy` is `split-by-experience`, `split-by-module`, `split-by-size` or `single-vendor`, you can specify the custom Rspack chunk splitting config via `chunkSplit.override`. This config will be merged with the Rspack splitChunks config (the `cacheGroups` config will also be merged). For example:
 
 ```js
 export default {
@@ -172,4 +173,22 @@ export default {
 };
 ```
 
-> When the Rsbuild target is "node", since Node Bundles do not need to be split to optimize loading performance, the chunkSplit rule will not take effect.
+## Targets
+
+`performance.chunkSplit` only works when [output.target](/config/output/target) is `web`. This means that when `output.target` is `node` or `web-worker`, `performance.chunkSplit` will not take effect.
+
+Typically, Node bundles do not need to be split to optimize loading performance, if you need to split Node bundles, you can use the [tools.rspack](/config/tools/rspack) configuration to configure Rspack's [optimization.splitChunks](https://rspack.dev/plugins/webpack/split-chunks-plugin#optimizationsplitchunks) option:
+
+```ts
+export default {
+  tools: {
+    rspack: {
+      optimization: {
+        splitChunks: {
+          // options
+        },
+      },
+    },
+  },
+};
+```

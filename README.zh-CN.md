@@ -1,5 +1,5 @@
 <picture>
-  <img alt="Rsbuild Banner" src="https://github.com/web-infra-dev/rsbuild/assets/7237365/84abc13e-b620-468f-a90b-dbf28e7e9427">
+  <img alt="Rsbuild Banner" src="https://assets.rspack.dev/rsbuild/rsbuild-banner.png">
 </picture>
 
 # Rsbuild
@@ -18,17 +18,29 @@ Rsbuild 是由 [Rspack](https://rspack.dev/) 驱动的高性能构建工具，�
 
 Rsbuild 提供 [丰富的构建功能](https://rsbuild.dev/zh/guide/start/features)，包括编译 TypeScript，JSX，Sass，Less，CSS Modules，Wasm，以及其他资源，也支持模块联邦、图片压缩、类型检查、PostCSS，Lightning CSS 等功能。
 
+## 🚀 性能
+
+基于 Rspack 的 Rust 架构，Rsbuild 能够提供极致的构建性能，为你带来全新的开发体验。
+
+⚡️ **构建 1000 个 React 组件：**
+
+![benchmark](https://assets.rspack.dev/rsbuild/assets/benchmark-latest.jpeg)
+
+> 📊 Benchmark 结果来自 [build-tools-performance](https://github.com/rspack-contrib/build-tools-performance)。
+
 ## 💡 对比其他工具
 
 Rsbuild 是与 [Vite](https://vitejs.dev/)、[Create React App](https://github.com/facebook/create-react-app) 或 [Vue CLI](https://github.com/vuejs/vue-cli) 相似的构建工具，它们都默认包含了开发服务器、命令行工具和合理的构建配置，以此来提供开箱即用的体验。
+
+![](https://assets.rspack.dev/rsbuild/assets/rsbuild-1-0-build-tools.png)
 
 ### CRA / Vue CLI
 
 你可以将 Rsbuild 理解为一个现代化的 Create React App 或 Vue CLI，它与这些工具的主要区别在于：
 
-- 底层的打包工具由 Webpack 替换为 Rspack，提供 5 ~ 10 倍的构建性能。
+- 底层的打包工具由 webpack 替换为 Rspack，提供 5 ~ 10 倍的构建性能。
 - 与前端 UI 框架解耦，并通过 [插件](https://rsbuild.dev/zh/plugins/list/) 来支持所有 UI 框架，包括 React、Vue、Svelte、Solid 等。
-- 提供更好的扩展性，你可以通过 [配置](https://rsbuild.dev/zh/config/)、 [插件 API](https://rsbuild.dev/zh/plugins/dev/) 和 [JavaScript API](https://rsbuild.dev/zh/api/start/) 来灵活地扩展 Rsbuild。
+- 提供更好的扩展性，你可以通过 [配置](https://rsbuild.dev/zh/config/)、[插件 API](https://rsbuild.dev/zh/plugins/dev/) 和 [JavaScript API](https://rsbuild.dev/zh/api/start/) 来灵活地扩展 Rsbuild。
 
 ### Vite
 
@@ -37,14 +49,6 @@ Rsbuild 与 Vite 有许多相似之处，它们皆致力于提升前端的开发
 - **生态兼容性**：Rsbuild 兼容大部分的 webpack 插件和所有 Rspack 插件，而 Vite 则是兼容 Rollup 插件。如果你目前更多地使用了 webpack 生态的插件和 loaders，那么迁移到 Rsbuild 是相对容易的。
 - **生产一致性**：Rsbuild 在开发阶段和生产构建均使用 Rspack 进行打包，因此开发和生产构建的产物具备较强的一致性，这也是 Vite 通过 Rolldown 想要实现的目标之一。
 - **模块联邦**：Rsbuild 团队与 [Module Federation](https://rsbuild.dev/zh/guide/advanced/module-federation) 的开发团队密切合作，并为 Module Federation 提供一流的支持，帮助你开发微前端架构的大型 Web 应用。
-
-## 🚀 性能
-
-Rsbuild 能够充分发挥 Rspack 的性能优势，以下是构建 1000 个 React 组件的时间：
-
-![benchmark](https://assets.rspack.dev/rsbuild/assets/benchmark-latest.jpeg)
-
-> 以上数据来自 [performance-compare](https://github.com/rspack-contrib/performance-compare) benchmark。
 
 ## 🔥 特性
 
@@ -66,7 +70,7 @@ Rsbuild 为上层的框架和工具提供了 JavaScript API 和 plugin API。例
 
 下图说明了 Rsbuild 与生态中其他工具之间的关系：
 
-![Rspack stack layers](https://assets.rspack.dev/rsbuild/assets/rspack-stack-layers.png)
+<img src="https://assets.rspack.dev/rsbuild/assets/rspack-stack-layers.png" alt="Rspack stack layers" width="760" />
 
 ## 📚 快速上手
 
@@ -77,7 +81,7 @@ Rsbuild 为上层的框架和工具提供了 JavaScript API 和 plugin API。例
 - [Rspack](https://github.com/web-infra-dev/rspack)：基于 Rust 的高性能打包工具。
 - [Rspress](https://github.com/web-infra-dev/rspress)：基于 Rsbuild 的静态站点生成器。
 - [Rsdoctor](https://github.com/web-infra-dev/rsdoctor)：针对 Rspack 和 webpack 的一站式构建分析工具。
-- [Rslib](https://github.com/web-infra-dev/rslib): 基于 Rsbuild 的 library 构建工具。
+- [Rslib](https://github.com/web-infra-dev/rslib): 基于 Rsbuild 的 library 开发工具。
 - [Modern.js](https://github.com/web-infra-dev/modern.js)：基于 Rsbuild 的渐进式 React 框架。
 - [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack)：与 Rspack 和 Rsbuild 相关的精彩内容列表。
 - [rspack-examples](https://github.com/rspack-contrib/rspack-examples)：Rspack、Rsbuild、Rspress 和 Rsdoctor 的示例项目。
@@ -87,55 +91,15 @@ Rsbuild 为上层的框架和工具提供了 JavaScript API 和 plugin API。例
 
 ## 🤝 参与贡献
 
-> 欢迎参与 Rsbuild 贡献！
+> [!NOTE]
+> 我们非常欢迎任何对 Rsbuild 的贡献！
 
 请阅读 [贡献指南](https://github.com/web-infra-dev/rsbuild/blob/main/CONTRIBUTING.md) 来共同参与 Rsbuild 的建设。
 
 ### 贡献者
 
 <a href="https://github.com/web-infra-dev/rsbuild/graphs/contributors" target="_blank">
-  <table>
-    <tr>
-      <th colspan="2">
-        <br/>
-        <img src="https://contrib.rocks/image?repo=web-infra-dev/rsbuild&columns=16&max=96"><br/><br/>
-      </th>
-    </tr>
-    <tr>
-      <td>
-        <picture>
-          <source 
-            media="(prefers-color-scheme: dark)" 
-            srcset="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=active&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=2x3&color_scheme=dark"
-          />
-          <img 
-            alt="Contributors of web-infra-dev/rsbuild" 
-            src="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=active&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=2x3&color_scheme=light"
-          />
-        </picture>
-      </td>
-      <td rowspan="2">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="https://next.ossinsight.io/widgets/official/compose-org-participants-growth/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=4x7&color_scheme=dark">
-          <img alt="New trends of web-infra-dev" src="https://next.ossinsight.io/widgets/official/compose-org-participants-growth/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=4x7&color_scheme=light">
-        </picture>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <picture>
-          <source 
-            media="(prefers-color-scheme: dark)" 
-            srcset="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=2x3&color_scheme=dark"
-          />
-          <img 
-            alt="Contributors of web-infra-dev/rsbuild" 
-            src="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=2x3&color_scheme=light"
-          />
-        </picture>
-      </td>
-    </tr>
-  </table>
+  <img src="https://contrib.rocks/image?repo=web-infra-dev/rsbuild&columns=24">
 </a>
 
 ### 行为准则

@@ -4,9 +4,10 @@ import { applyToCompiler } from '../helpers';
 import type { DevMiddlewareOptions } from '../provider/createCompiler';
 import type { DevConfig, NextFunction } from '../types';
 import { getCompilationId } from './helper';
+import { getResolvedClientConfig } from './hmrFallback';
 
 type ServerCallbacks = {
-  onInvalid: (compilationId?: string) => void;
+  onInvalid: (compilationId?: string, fileName?: string | null) => void;
   onDone: (stats: any) => void;
 };
 
@@ -49,12 +50,12 @@ export const setupServerHooks = (
 
   const { compile, invalid, done } = compiler.hooks;
 
-  compile.tap('rsbuild-dev-server', () =>
-    hookCallbacks.onInvalid(getCompilationId(compiler)),
-  );
-  invalid.tap('rsbuild-dev-server', () =>
-    hookCallbacks.onInvalid(getCompilationId(compiler)),
-  );
+  compile.tap('rsbuild-dev-server', () => {
+    hookCallbacks.onInvalid(getCompilationId(compiler));
+  });
+  invalid.tap('rsbuild-dev-server', (fileName) => {
+    hookCallbacks.onInvalid(getCompilationId(compiler), fileName);
+  });
   done.tap('rsbuild-dev-server', hookCallbacks.onDone);
 };
 
@@ -62,11 +63,13 @@ function applyHMREntry({
   compiler,
   clientPaths,
   clientConfig = {},
+  resolvedClientConfig = {},
   liveReload = true,
 }: {
   compiler: Compiler;
   clientPaths: string[];
   clientConfig: DevConfig['client'];
+  resolvedClientConfig: DevConfig['client'];
   liveReload: DevConfig['liveReload'];
 }) {
   if (!isClientCompiler(compiler)) {
@@ -76,6 +79,7 @@ function applyHMREntry({
   new compiler.webpack.DefinePlugin({
     RSBUILD_COMPILATION_NAME: JSON.stringify(getCompilationId(compiler)),
     RSBUILD_CLIENT_CONFIG: JSON.stringify(clientConfig),
+    RSBUILD_RESOLVED_CLIENT_CONFIG: JSON.stringify(resolvedClientConfig),
     RSBUILD_DEV_LIVE_RELOAD: liveReload,
   }).apply(compiler);
 
@@ -102,7 +106,9 @@ export type DevMiddlewareAPI = Middleware & {
  * - Inject the HMR client path into page （the HMR client rsbuild/server already provide）.
  * - Notify server when compiler hooks are triggered.
  */
-export type DevMiddleware = (options: DevMiddlewareOptions) => DevMiddlewareAPI;
+export type DevMiddleware = (
+  options: DevMiddlewareOptions,
+) => Promise<DevMiddlewareAPI>;
 
 export const getDevMiddleware = async (
   multiCompiler: Compiler | MultiCompiler,
@@ -110,9 +116,19 @@ export const getDevMiddleware = async (
   const { default: rsbuildDevMiddleware } = await import(
     '../../compiled/rsbuild-dev-middleware/index.js'
   );
-  return (options) => {
-    const { clientPaths, clientConfig, callbacks, liveReload, ...restOptions } =
-      options;
+  return async (options) => {
+    const {
+      clientPaths,
+      clientConfig,
+      callbacks,
+      liveReload,
+      serverConfig,
+      ...restOptions
+    } = options;
+    const resolvedClientConfig = await getResolvedClientConfig(
+      clientConfig,
+      serverConfig,
+    );
 
     const setupCompiler = (compiler: Compiler) => {
       if (clientPaths) {
@@ -120,6 +136,7 @@ export const getDevMiddleware = async (
           compiler,
           clientPaths,
           clientConfig,
+          resolvedClientConfig,
           liveReload,
         });
       }

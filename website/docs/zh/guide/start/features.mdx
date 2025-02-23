@@ -12,7 +12,7 @@
 | 代码压缩        | 默认在生产模式构建时开启代码压缩                                 | <ul><li>[output.minify](/config/output/minify)</li></ul>                                                                   |
 | Polyfill 注入   | 默认会注入 core-js 等 Polyfill                                   | <ul><li>[浏览器兼容性](/guide/advanced/browser-compatibility)</li><li>[output.polyfill](/config/output/polyfill)</li></ul> |
 | SourceMap 生成  | 默认在开发模式生成 SourceMap                                     | <ul><li>[output.sourceMap](/config/output/source-map)</li></ul>                                                            |
-| 文件别名        | 可选功能，通过 alias 设置文件别名                                | <ul><li>[路径别名](/guide/advanced/alias)</li><li>[source.alias](/config/source/alias)</li></ul>                           |
+| 文件别名        | 可选功能，通过 alias 设置文件别名                                | <ul><li>[路径别名](/guide/advanced/alias)</li><li>[resolve.alias](/config/resolve/alias)</li></ul>                         |
 | Babel 编译      | 可选功能，通过 Babel 对 JavaScript 和 TypeScript 代码进行转译    | <ul><li>[Babel 插件](/plugins/list/plugin-babel)</li></ul>                                                                 |
 | Node 产物       | 可选功能，支持构建出运行在 Node.js 环境的 JavaScript 产物        | <ul><li>[Node 产物](/config/output/target#node-target)</li></ul>                                                           |
 | Web Worker 产物 | 可选功能，支持构建出运行在 Web Worker 环境的 JavaScript 产物     | <ul><li>[Web Worker 产物](/config/output/target#web-worker-target)</li></ul>                                               |
@@ -81,23 +81,23 @@
 | 引用字体资源     | 支持在代码中引用字体资源                       | <ul><li>[引用静态资源](/guide/basic/static-assets)</li></ul>                                                                     |
 | 引用视频资源     | 支持在代码中引用视频资源                       | <ul><li>[引用静态资源](/guide/basic/static-assets)</li></ul>                                                                     |
 | 引用 Wasm 资源   | 支持在代码中引用 WebAssembly 资源              | <ul><li>[引用 Wasm 资源](/guide/basic/wasm-assets)</li></ul>                                                                     |
-| 引用 node addons | 支持在代码中引用 Node.js addons                | -                                                                                                                                |
+| 引用 node addons | 支持在代码中引用 Node.js addons                | <ul><li>[Node Addons](/config/output/target#node-addons)</li></ul>                                                               |
 | 静态资源内联     | 默认将体积较小的图片等资源内联到 JS 中         | <ul><li>[静态资源内联](/guide/optimization/inline-assets)</li><li>[output.dataUriLimit](/config/output/data-uri-limit)</li></ul> |
 | 清理静态资源     | 每次开始构建前，自动清理 dist 目录下的静态资源 | <ul><li>[output.cleanDistPath](/config/output/clean-dist-path)</li></ul>                                                         |
 | 拷贝静态资源     | 可选功能，将静态资源拷贝到 dist 目录下         | <ul><li>[output.copy](/config/output/copy)</li></ul>                                                                             |
 
 ## 性能相关
 
-| 功能                | 描述                                                           | 相关链接                                                                                                                            |
-| ------------------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| 产物自动拆包        | Rsbuild 中内置了多种拆包策略，自动将代码包拆分为体积适中的文件 | <ul><li>[拆包最佳实践](/guide/optimization/split-chunk)</li><li>[performance.chunkSplit](/config/performance/chunk-split)</li></ul> |
-| 展示产物体积        | 在生产模式构建后，默认展示所有静态资源的体积信息               | <ul><li>[performance.printFileSize](/config/performance/print-file-size)</li></ul>                                                  |
-| 分析产物体积        | 可选功能，通过 Bundle Analyzer 分析产物体积                    | <ul><li>[performance.bundleAnalyze](/config/performance/bundle-analyze)</li></ul>                                                   |
-| 移除 console        | 可选功能，移除代码中的 `console.[methodName]`                  | <ul><li>[performance.removeConsole](/config/performance/remove-console)</li></ul>                                                   |
-| 优化 moment.js 体积 | 可选功能，移除 moment.js 多余的 locale 文件                    | <ul><li>[performance.removeMomentLocale](/config/performance/remove-moment-locale)</li></ul>                                        |
-| 组件库按需引入      | 可选功能，按需引入组件库的代码和样式                           | <ul><li>[source.transformImport](/config/source/transform-import)</li></ul>                                                         |
-| 图片压缩            | 可选功能，对引用的图片资源进行压缩处理                         | <ul><li>[Image Compress 插件](https://github.com/rspack-contrib/rsbuild-plugin-image-compress)</li></ul>                            |
-| Preload             | 可选功能，对资源进行预加载                                     | <ul><li>[performance.preload](/config/performance/preload)</li></ul>                                                                |
-| Prefetch            | 可选功能，对资源进行预获取                                     | <ul><li>[performance.prefetch](/config/performance/prefetch)</li></ul>                                                              |
-| Preconnect          | 可选功能，对资源进行预连接                                     | <ul><li>[performance.preconnect](/config/performance/preconnect)</li></ul>                                                          |
-| DNS prefetch        | 可选功能，对资源进行 DNS 预获取                                | <ul><li>[performance.dnsPrefetch](/config/performance/dns-prefetch)</li></ul>                                                       |
+| 功能                | 描述                                                           | 相关链接                                                                                                                           |
+| ------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| 代码拆分            | Rsbuild 中内置了多种拆包策略，自动将代码包拆分为体积适中的文件 | <ul><li>[代码拆分](/guide/optimization/code-splitting)</li><li>[performance.chunkSplit](/config/performance/chunk-split)</li></ul> |
+| 展示产物体积        | 在生产模式构建后，默认展示所有静态资源的体积信息               | <ul><li>[performance.printFileSize](/config/performance/print-file-size)</li></ul>                                                 |
+| 分析产物体积        | 可选功能，通过 Bundle Analyzer 分析产物体积                    | <ul><li>[performance.bundleAnalyze](/config/performance/bundle-analyze)</li></ul>                                                  |
+| 移除 console        | 可选功能，移除代码中的 `console.[methodName]`                  | <ul><li>[performance.removeConsole](/config/performance/remove-console)</li></ul>                                                  |
+| 优化 moment.js 体积 | 可选功能，移除 moment.js 多余的 locale 文件                    | <ul><li>[performance.removeMomentLocale](/config/performance/remove-moment-locale)</li></ul>                                       |
+| 组件库按需引入      | 可选功能，按需引入组件库的代码和样式                           | <ul><li>[source.transformImport](/config/source/transform-import)</li></ul>                                                        |
+| 图片压缩            | 可选功能，对引用的图片资源进行压缩处理                         | <ul><li>[Image Compress 插件](https://github.com/rspack-contrib/rsbuild-plugin-image-compress)</li></ul>                           |
+| Preload             | 可选功能，对资源进行预加载                                     | <ul><li>[performance.preload](/config/performance/preload)</li></ul>                                                               |
+| Prefetch            | 可选功能，对资源进行预获取                                     | <ul><li>[performance.prefetch](/config/performance/prefetch)</li></ul>                                                             |
+| Preconnect          | 可选功能，对资源进行预连接                                     | <ul><li>[performance.preconnect](/config/performance/preconnect)</li></ul>                                                         |
+| DNS prefetch        | 可选功能，对资源进行 DNS 预获取                                | <ul><li>[performance.dnsPrefetch](/config/performance/dns-prefetch)</li></ul>                                                      |

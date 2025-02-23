@@ -4,16 +4,19 @@ import { defineConfig } from '@rslib/core';
 export default defineConfig({
   ...dualPackage,
   lib: [
-    ...dualPackage.lib.map((config) => {
-      if (config.format === 'cjs') {
-        config.source = {
-          entry: {
-            index: './src/index.ts',
-            loader: './src/loader.ts',
-          },
-        };
-      }
-      return config;
-    }),
+    ...dualPackage.lib,
+    {
+      format: 'esm',
+      source: {
+        entry: {
+          loader: './src/loader.ts',
+        },
+      },
+      output: {
+        filename: {
+          js: '[name].mjs',
+        },
+      },
+    },
   ],
 });

@@ -1,4 +1,4 @@
-# React Plugin
+# React plugin
 
 import { SourceCode } from 'rspress/theme';
 
@@ -6,9 +6,9 @@ import { SourceCode } from 'rspress/theme';
 
 The React plugin provides support for React, integrating features such as JSX compilation and React Refresh.
 
-## Quick Start
+## Quick start
 
-### Install Plugin
+### Install plugin
 
 You can install the plugin using the following command:
 
@@ -16,7 +16,7 @@ import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsbuild/plugin-react -D" />
 
-### Register Plugin
+### Register plugin
 
 You can register the plugin in the `rsbuild.config.ts` file:
 
@@ -107,6 +107,15 @@ pluginReact({
   },
 });
 ```
+
+### swcReactOptions.refresh
+
+- **Type:** `boolean`
+- **Default:** based on [fastRefresh](#fastrefresh) and [dev.hmr](/config/dev/hmr)
+
+Whether to enable [React Fast Refresh](https://www.npmjs.com/package/react-refresh).
+
+Most of the time, you should use the plugin's [fastRefresh](#fastrefresh) option to enable or disable Fast Refresh.
 
 ### splitChunks
 
@@ -225,9 +234,11 @@ pluginReact({
 - **Type:** `boolean`
 - **Default:** `true`
 
-Whether to enable React [Fast Refresh](https://www.npmjs.com/package/react-refresh) in development mode.
+Whether to enable [React Fast Refresh](https://www.npmjs.com/package/react-refresh) in development mode.
 
-If you need to disable Fast Refresh, you can set it to `false`:
+If `fastRefresh` is set to `true`, `@rsbuild/plugin-react` will automatically register the [@rspack/plugin-react-refresh](https://www.npmjs.com/package/@rspack/plugin-react-refresh) plugin.
+
+To disable Fast Refresh, set it to `false`:
 
 ```ts
 pluginReact({

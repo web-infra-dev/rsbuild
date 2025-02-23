@@ -42,7 +42,7 @@ export default {
 };
 ```
 
-当你的项目中有多个页面时，可以基于入口名称来为不同的页面设置对应的标题。
+当你的项目中有多个页面时，可以基于入口名称，来为不同的页面设置对应的标题。
 
 ```ts
 export default {
@@ -57,6 +57,10 @@ export default {
   },
 };
 ```
+
+:::tip
+对于单页应用（SPA），Rsbuild 会在 HTML 页面中包含一个初始的 title，但你通常需要在路由切换时动态更新页面标题，例如使用一些路由库，或是 [React Helmet](https://github.com/nfl/react-helmet) 这类库。
+:::
 
 ## 设置页面图标
 
@@ -224,6 +228,7 @@ Rsbuild 通过插件来支持 [Pug](https://pugjs.org/) 模板引擎，详见 [@
     <%= htmlPlugin.tags.headTags %>
   </head>
   <body>
+    <div id="root"></div>
     <%= htmlPlugin.tags.bodyTags %>
   </body>
 </html>
@@ -256,6 +261,10 @@ export default {
 ```
 
 > 更多用法请参考：[html.tags](/config/html/tags)。
+
+:::tip
+通常你不需要手动使用 `htmlPlugin.tags.headTags` 和 `htmlPlugin.tags.bodyTags` 模板参数，因为 Rsbuild 会自动注入这些标签。参考 [html.inject](/config/html/inject) 了解调整标签注入位置。
+:::
 
 ## HTML 插件
 

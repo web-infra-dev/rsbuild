@@ -15,11 +15,11 @@ const defaultConfig = {
 };
 ```
 
-## Enable Bundle Analyze
+## Enable bundle analyze
 
 You have two ways to enable `webpack-bundle-analyzer` to analyze the size of the output files.
 
-### Via Environment Variable
+### Via environment variable
 
 Add the environment variable `BUNDLE_ANALYZE=true`, for example:
 
@@ -44,7 +44,7 @@ Since the Windows system does not support the above usage, you can also use [cro
 }
 ```
 
-### Via Configuration
+### Via configuration
 
 Configure `performance.bundleAnalyze` to enable it permanently:
 
@@ -56,7 +56,7 @@ export default {
 };
 ```
 
-### Analysis Result
+### Analysis result
 
 After enabling it, Rsbuild will generate an HTML file that analyzes the size of the output files, and print the following log in the Terminal:
 
@@ -68,7 +68,7 @@ You can manually open the file in the browser and view the detail of the bundle 
 
 ![](https://assets.rspack.dev/rsbuild/assets/bundle-analyzer-example.png)
 
-## Override Default Configuration
+## Override default configuration
 
 You can override the default configuration through `performance.bundleAnalyze`, such as enabling the server mode:
 
@@ -85,7 +85,7 @@ export default {
 };
 ```
 
-## Size Types
+## Size types
 
 In the `webpack-bundle-analyzer` panel, you can control size types in the upper left corner (default is `Parsed`):
 
@@ -101,6 +101,27 @@ By setting `generateStatsFile` to true, stats JSON file will be generated in bun
 export default {
   performance: {
     bundleAnalyze: {
+      generateStatsFile: true,
+    },
+  },
+};
+```
+
+In the output directory, you will see `stats.json` and `report-web.html` files.
+
+```
+└── dist
+    ├── stats.json
+    └── report-web.html
+```
+
+If you don't need the `report-web.html`, you can set `analyzerMode` to `disabled`.
+
+```js
+export default {
+  performance: {
+    bundleAnalyze: {
+      analyzerMode: 'disabled',
       generateStatsFile: true,
     },
   },

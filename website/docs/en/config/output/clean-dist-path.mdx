@@ -1,15 +1,21 @@
 # output.cleanDistPath
 
-- **Type:** `boolean | 'auto'`
+- **Type:**
+
+```ts
+type CleanDistPath = boolean | 'auto' | CleanDistPathObject;
+```
+
 - **Default:** `'auto'`
 
-Whether to clean up all files under the output directory before the build starts (the output directory defaults to `dist`).
+Whether to clean up all files under the output directory before the build starts, the output directory is the value of [output.distPath.root](/config/output/dist-path).
 
-## Default Behavior
+## Default behavior
 
-The default value of `output.cleanDistPath` is `'auto'`. If the output directory is a subdir of the project root path, Rsbuild will automatically clean all files under the build directory.
+The default value of `output.cleanDistPath` is `'auto'`:
 
-When [output.distPath.root](/config/output/dist-path) is an external directory, or equals to the project root directory, `cleanDistPath` is not enabled by default, to avoid accidentally deleting files from other directories.
+- In development mode, if the value of [dev.writeToDisk](/config/dev/write-to-disk) is `false`, Rsbuild will not perform cleanup.
+- In any mode, if [output.distPath.root](/config/output/dist-path) is an external directory or equals to the project root directory, Rsbuild will not perform cleanup to avoid accidentally deleting files from other directories.
 
 ```js
 export default {
@@ -21,7 +27,7 @@ export default {
 };
 ```
 
-## Forced Switch
+## Forced switch
 
 You can set `cleanDistPath` to `true` to force it to be enabled, or set it to `false` to force it to be disabled.
 
@@ -41,6 +47,47 @@ If you only need to clean files in production mode, but not in development mode,
 export default {
   output: {
     cleanDistPath: process.env.NODE_ENV === 'production',
+  },
+};
+```
+
+## Options
+
+`output.cleanDistPath` supports configuration as an object to achieve more granular control.
+
+### enable
+
+- **Type:** `boolean | 'auto'`
+- **Default:** `'auto'`
+
+Whether to clean up all files under the output directory before the build starts.
+
+```js
+export default {
+  output: {
+    // Equivalent to `cleanDistPath: true`
+    cleanDistPath: {
+      enable: true,
+    },
+  },
+};
+```
+
+### keep
+
+- **Type:** `RegExp[]`
+- **Default:** `undefined`
+
+Specify the files to keep in the output directory. If the file's absolute path matches the regular expression in `keep`, the file will not be removed.
+
+For example, to keep the `dist/foo.json` file:
+
+```js
+export default {
+  output: {
+    cleanDistPath: {
+      keep: [/dist\/foo.json/],
+    },
   },
 };
 ```

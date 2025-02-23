@@ -11,16 +11,17 @@ export class EsmRunner extends CommonJsRunner {
     super.createRunner();
     this.requirers.set('cjs', this.getRequire());
     this.requirers.set('esm', this.createEsmRequirer());
+
+    const outputModule =
+      this._options.compilerOptions.experiments?.outputModule;
+
     this.requirers.set('entry', (currentDirectory, modulePath, context) => {
       const file = this.getFile(modulePath, currentDirectory);
       if (!file) {
         return this.requirers.get('miss')!(currentDirectory, modulePath);
       }
 
-      if (
-        file.path.endsWith('.mjs') &&
-        this._options.compilerOptions.experiments?.outputModule
-      ) {
+      if (outputModule && !file.path.endsWith('.cjs')) {
         return this.requirers.get('esm')!(currentDirectory, modulePath, {
           ...context,
           file,
@@ -42,7 +43,7 @@ export class EsmRunner extends CommonJsRunner {
     return (currentDirectory, modulePath, context = {}) => {
       if (!vm.SourceTextModule) {
         throw new Error(
-          "Running esm bundle needs add Node.js option '--experimental-vm-modules'.",
+          '[rsbuild:runner] Running ESM bundle needs add Node.js option "--experimental-vm-modules".',
         );
       }
       const _require = this.getRequire();

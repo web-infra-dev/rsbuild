@@ -1,6 +1,6 @@
 # Vite
 
-Vite 是一个优秀和强大的构建工具，在某些情况下，你可能需要将一个 Vite 应用迁移到 Rsbuild，那么你可以参考这篇指南进行操作。
+本章节介绍如何将 Vite 项目迁移到 Rsbuild。
 
 ## 安装依赖
 
@@ -95,6 +95,7 @@ Rsbuild 会在构建时自动注入 `<script>` 标签到生成的 HTML 文件中
 | [vite-plugin-static-copy](https://www.npmjs.com/package/vite-plugin-static-copy)           | [output.copy](/config/output/copy)                                                              |
 | [vite-plugin-node-polyfills](https://www.npmjs.com/package/vite-plugin-node-polyfills)     | [@rsbuild/plugin-node-polyfill](https://github.com/rspack-contrib/rsbuild-plugin-node-polyfill) |
 | [vite-plugin-solid](https://www.npmjs.com/package/vite-plugin-solid)                       | [@rsbuild/plugin-solid](/plugins/list/plugin-solid)                                             |
+| [@preact/preset-vite](https://www.npmjs.com/package/@preact/preset-vite)                   | [@rsbuild/plugin-preact](/plugins/list/plugin-preact)                                           |
 
 你可以参考 [插件列表](/plugins/list/index) 来了解更多可用的插件。
 
@@ -108,14 +109,16 @@ Rsbuild 会在构建时自动注入 `<script>` 标签到生成的 HTML 文件中
 | mode                                  | [mode](/config/mode)                                             |
 | base                                  | [server.base](/config/server/base)                               |
 | define                                | [source.define](/config/source/define)                           |
+| appType                               | [server.historyApiFallback](/config/server/history-api-fallback) |
 | plugins                               | [plugins](/config/plugins)                                       |
 | envDir                                | [Env Directory](/guide/advanced/env-vars#env-目录)               |
 | publicDir                             | [server.publicDir](/config/server/public-dir)                    |
 | assetsInclude                         | [source.assetsInclude](/config/source/assets-include)            |
-| resolve.alias                         | [source.alias](/config/source/alias)                             |
+| resolve.alias                         | [resolve.alias](/config/resolve/alias)                           |
+| resolve.dedupe                        | [resolve.dedupe](/config/resolve/dedupe)                         |
+| resolve.extensions                    | [resolve.extensions](/config/resolve/extensions)                 |
 | resolve.conditions                    | [tools.rspack.resolve.conditionNames](/config/tools/rspack)      |
 | resolve.mainFields                    | [tools.rspack.resolve.mainFields](/config/tools/rspack)          |
-| resolve.extensions                    | [tools.rspack.resolve.extensions](/config/tools/rspack)          |
 | resolve.preserveSymlinks              | [tools.rspack.resolve.symlinks](/config/tools/rspack)            |
 | html.cspNonce                         | [security.nonce](/config/security/nonce)                         |
 | css.modules                           | [output.cssModules](/config/output/css-modules)                  |
@@ -127,12 +130,14 @@ Rsbuild 会在构建时自动注入 `<script>` 标签到生成的 HTML 文件中
 | css.lightningcss                      | [tools.lightningcssLoader](/config/tools/lightningcss-loader)    |
 | server.host, preview.host             | [server.host](/config/server/host)                               |
 | server.port, preview.port             | [server.port](/config/server/port)                               |
+| server.cors, preview.cors             | [server.cors](/config/server/cors)                               |
 | server.strictPort, preview.strictPort | [server.strictPort](/config/server/strict-port)                  |
 | server.https, preview.https           | [server.https](/config/server/https)                             |
 | server.open, preview.open             | [server.open](/config/server/open)                               |
-| server.proxy, preview.cors            | [server.proxy](/config/server/proxy)                             |
+| server.proxy, preview.proxy           | [server.proxy](/config/server/proxy)                             |
 | server.headers, preview.headers       | [server.headers](/config/server/headers)                         |
 | server.hmr                            | [dev.hmr](/config/dev/hmr), [dev.client](/config/dev/client)     |
+| server.middlewareMode                 | [server.middlewareMode](/config/server/middleware-mode)          |
 | build.target, build.cssTarget         | [Browserslist](/guide/advanced/browserslist)                     |
 | build.outDir, build.assetsDir         | [output.distPath](/config/output/dist-path)                      |
 | build.assetsInlineLimit               | [output.dataUriLimit](/config/output/data-uri-limit)             |
@@ -211,7 +216,7 @@ Vite 通过 `vite-env.d.ts` 文件提供了一些预设的类型定义，迁移�
 + /// <reference types="@rsbuild/core/types" />
 ```
 
-## Glob Import
+## Glob import
 
 Vite 提供了 `import.meta.glob()` 来批量导入模块。
 
@@ -243,6 +248,23 @@ for (const path of context.keys()) {
   console.log(path, mod);
 }
 ```
+
+## 迁移 Vite 插件
+
+Rsbuild 的插件 API 覆盖了大部分的 Vite 和 Rollup 插件 hooks，例如：
+
+| Vite 插件 hooks   | Rsbuild 插件 API                                                                                                       |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `resolveId`       | [resolve](/plugins/dev/core#apiresolve)                                                                                |
+| `transform`       | [transform](/plugins/dev/core#apitransform)                                                                            |
+| `config`          | [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig)                                                          |
+| `configResolved`  | [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig)                                                        |
+| `configureServer` | [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver)                                                    |
+| `buildStart`      | [onBeforeBuild](/plugins/dev/hooks#onbeforebuild), [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) |
+| `buildEnd`        | [onAfterBuild](/plugins/dev/hooks#onafterbuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
+| `closeBundle`     | [onCloseBuild](/plugins/dev/hooks#onclosebuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
+
+请参考 [插件系统](/plugins/dev/index) 文档来了解更多。
 
 ## 验证结果
 

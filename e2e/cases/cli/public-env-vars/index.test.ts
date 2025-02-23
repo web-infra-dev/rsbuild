@@ -1,9 +1,10 @@
 import { execSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { expect, test } from '@playwright/test';
+import { rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
-test('should inject public env vars to client', async () => {
+rspackOnlyTest('should inject public env vars to client', async () => {
   const { NODE_ENV } = process.env;
   process.env.NODE_ENV = 'production';
 

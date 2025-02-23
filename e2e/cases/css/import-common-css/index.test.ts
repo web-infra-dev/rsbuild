@@ -7,7 +7,7 @@ rspackOnlyTest('should compile common CSS import correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
-      source: {
+      resolve: {
         alias: {
           '@': './src',
         },

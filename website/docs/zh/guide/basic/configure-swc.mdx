@@ -9,7 +9,13 @@ Rsbuild 默认启用 SWC 的以下功能：
 
 ## Loader 选项
 
-`builtin:swc-loader` 的选项与 JS 版本的 swc-loader 一致。Rsbuild 提供了 [tools.swc](/config/tools/swc) 选项来配置 `builtin:swc-loader`，下面是一些示例：
+`builtin:swc-loader` 的选项与 JS 版本的 `swc-loader` 一致。Rsbuild 暴露了一些选项来配置 `builtin:swc-loader`：
+
+- [tools.swc](/config/tools/swc)：用于配置 `builtin:swc-loader` 的选项。
+- [source.include](/config/source/include)：用于指定需要被 SWC 编译的文件。
+- [source.exclude](/config/source/exclude)：用于排除不需要被 SWC 编译的文件。
+
+下面是一些示例：
 
 ### 注册 SWC 插件
 
@@ -35,22 +41,7 @@ export default {
 
 请注意，SWC 的插件仍然是一个实验性功能，目前 SWC 的 Wasm 插件是不向后兼容的，SWC 插件的版本与 Rspack 依赖的 `swc_core` 版本存在强耦合关系。
 
-这意味着，你需要选择和当前 `swc_core` 版本匹配的 SWC 插件，才能使它正常执行。如果你使用的 SWC 插件版本与 Rspack 依赖的 `swc_core` 版本不匹配，Rspack 在执行构建时会抛出如下错误：
-
-```text
-1: failed to run Wasm plugin transform. Please ensure the version of `swc_core`
-   used by the plugin is compatible with the host runtime.
-```
-
-如果你遇到了以上问题，通常可行的解决方法是将 Rsbuild 和 SWC 插件都升级到最新版本。
-
-此外，你也可以按照以下步骤来选择合适的 SWC 插件版本：
-
-1. 查看当前使用的 Rspack 版本，你可以通过 [调试模式](/guide/debug/debug-mode) 来查看。
-2. 访问 [plugins.swc.rs](https://plugins.swc.rs/)，选择你当前使用的 Rspack 版本。
-3. 该网站会列出你当前使用的 Rspack 版本所匹配的 SWC 插件版本范围，选择匹配的 SWC 插件版本使用即可。
-
-如果你使用的 SWC 插件未收录到 [plugins.swc.rs](https://plugins.swc.rs/)，可以通过 Rust 代码仓库中的 Cargo.toml 文件来查看 `swc_core` 的版本信息。以 Rspack 仓库为例，你可以打开 [Cargo.toml](https://github.com/web-infra-dev/rspack/blob/main/Cargo.toml)，搜索 `swc_core` 关键字来查看版本，然后参考 [SWC - Selecting the version](https://swc.rs/docs/plugin/selecting-swc-core) 进行选择。
+这意味着，你需要选择和当前 `swc_core` 版本匹配的 SWC 插件，才能使它正常执行。如果你使用的 SWC 插件版本与 Rspack 依赖的 `swc_core` 版本不匹配，Rspack 在执行构建时会抛出错误，请参考 [Rspack 常见问题 - SWC 插件版本不匹配](https://rspack.dev/zh/errors/swc-plugin-version) 进行处理。
 
 ### 启用 Emotion 支持
 

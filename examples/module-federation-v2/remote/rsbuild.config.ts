@@ -1,29 +1,19 @@
-import { ModuleFederationPlugin } from '@module-federation/rspack';
+import { pluginModuleFederation } from '@module-federation/rsbuild-plugin';
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 
 export default defineConfig({
-  plugins: [pluginReact()],
+  plugins: [
+    pluginReact(),
+    pluginModuleFederation({
+      name: 'remote',
+      exposes: {
+        './Button': './src/Button',
+      },
+      shared: ['react', 'react-dom'],
+    }),
+  ],
   server: {
     port: 3002,
-  },
-  dev: {
-    assetPrefix: true,
-  },
-  tools: {
-    rspack: {
-      output: {
-        uniqueName: 'remote',
-      },
-      plugins: [
-        new ModuleFederationPlugin({
-          name: 'remote',
-          exposes: {
-            './Button': './src/Button',
-          },
-          shared: ['react', 'react-dom'],
-        }),
-      ],
-    },
   },
 });

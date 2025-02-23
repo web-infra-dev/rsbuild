@@ -23,7 +23,7 @@ type LazyCompilationOptions =
 
 - **Default:** `false`
 
-Used to enable lazy compilation (compilation on demand), implemented based on Rspack's [experiments.lazyCompilation](https://rspack.dev/zh/config/experiments#experimentslazycompilation).
+Used to enable lazy compilation (compilation on demand), implemented based on Rspack's [experiments.lazyCompilation](https://rspack.dev/config/experiments#experimentslazycompilation).
 
 ## Introduction
 
@@ -41,7 +41,7 @@ With lazy compilation enabled, Rspack will only compile the entrypoints and dyna
 
 ## Example
 
-### Enable Lazy Compilation
+### Enable lazy compilation
 
 ```ts
 export default {
@@ -64,7 +64,7 @@ export default {
 };
 ```
 
-### Entry Modules
+### Entry modules
 
 Use `lazyCompilation.entries` to control whether to lazily compile entry modules:
 
@@ -85,7 +85,7 @@ When lazily compiling entry modules, please note:
 - It only applies to multi-page applications (MPA) and does not optimize single-page applications (SPA).
 - When you visit a page, you need to wait for the page to finish compiling before you can see its content.
 
-### Async Modules
+### Async modules
 
 Use `lazyCompilation.imports` to control whether to lazily compile [dynamic imported](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) modules.
 

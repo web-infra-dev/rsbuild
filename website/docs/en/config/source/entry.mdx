@@ -13,8 +13,8 @@ type Entry = Record<
 
 ```ts
 const defaultEntry = {
-  // default support for other suffixes such as ts, tsx, jsx, mjs, cjs
-  index: 'src/index.js',
+  // Rsbuild also supports other suffixes by default, such as ts, tsx, jsx, mts, cts, mjs, cjs
+  index: './src/index.js',
 };
 ```
 
@@ -52,7 +52,7 @@ The generated directory structure is as follows:
 
 If you do not need to generate HTML files, you can set [tools.htmlPlugin](/config/tools/html-plugin) to `false` to disable this behavior.
 
-## Description Object
+## Description object
 
 `source.entry` also supports Rspack's entry description object. For example:
 
@@ -99,7 +99,7 @@ When you build for multiple [environments](/config/environments), you can set di
 
 For example, set different entry for `web` and `node` environments:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   environments: {
     web: {
@@ -124,4 +124,31 @@ export default {
     },
   },
 };
+```
+
+## Asynchronous setting
+
+To set entry asynchronously, for example, use [glob](https://www.npmjs.com/package/glob) to scan the directory, you can export an async function in `rsbuild.config.ts`:
+
+```ts title="rsbuild.config.ts"
+import path from 'node:path';
+import { glob } from 'glob';
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig(async () => {
+  const entryFiles = await glob('./src/**/main.{ts,tsx,js,jsx}');
+
+  const entry = Object.fromEntries(
+    entryFiles.map((file) => {
+      const entryName = path.basename(path.dirname(file));
+      return [entryName, `./${file}`];
+    }),
+  );
+
+  return {
+    source: {
+      entry: entry,
+    },
+  };
+});
 ```

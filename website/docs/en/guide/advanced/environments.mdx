@@ -1,4 +1,4 @@
-# Multi-Environment Builds
+# Multi-environment builds
 
 Rsbuild supports building outputs for multiple environments at the same time. You can use [environments](/config/environments) to build multiple environments in parallel and set a different Rsbuild config for each environment.
 
@@ -32,13 +32,15 @@ export default {
         entry: {
           index: './src/index.client.js',
         },
-        alias: {
-          '@common': './src/client/common',
-        },
       },
       output: {
         // Use 'web' target for the browser outputs
         target: 'web',
+      },
+      resolve: {
+        alias: {
+          '@common': './src/client/common',
+        },
       },
     },
     // Configure the node environment for SSR
@@ -47,20 +49,22 @@ export default {
         entry: {
           index: './src/index.server.js',
         },
-        alias: {
-          '@common': './src/server/common',
-        },
       },
       output: {
         // Use 'node' target for the Node.js outputs
         target: 'node',
+      },
+      resolve: {
+        alias: {
+          '@common': './src/server/common',
+        },
       },
     },
   },
 };
 ```
 
-### Config Merging
+### Config merging
 
 If you configure `environments`, Rsbuild will merge the config in `environments` with the outer base config. When merging, the config in `environments` has higher priority.
 
@@ -71,7 +75,7 @@ In the example above, after merging the configs, Rsbuild generates two standalon
 
 Then, Rsbuild will use these environments configs to internally generate two Rspack configs and execute a single build using Rspack’s MultiCompiler.
 
-### Debug Config
+### Debug config
 
 When you execute the command `npx rsbuild inspect` in the project root directory, you will find the following output:
 
@@ -115,7 +119,7 @@ export default {
 };
 ```
 
-## Specify environment build
+## Build specified environment
 
 By default, Rsbuild will build all environments in the Rsbuild configuration when you execute `rsbuild dev` or `rsbuild build`. You can build only the specified environment via `--environment <name>`.
 
@@ -169,7 +173,7 @@ Rsbuild supports modifying or adding environment config through the [modifyRsbui
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
       return mergeRsbuildConfig(config, {
         environments: {
@@ -193,7 +197,7 @@ Rsbuild supports modifying the Rsbuild config of a specific environment through 
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyEnvironmentConfig((config, { name }) => {
       if (name !== 'web') {
         return config;
@@ -206,13 +210,13 @@ const myPlugin = () => ({
 
 ## Environment context
 
-[Environment context](/api/javascript-api/environment-context) is a read-only object that provides some context infos about the current environment. Rsbuild supports obtaining environment context information in plugin hooks.
+[Environment context](/api/javascript-api/environment-api#environment-context) is a read-only object that provides some context infos about the current environment. Rsbuild supports obtaining environment context information in plugin hooks.
 
 For some plugin hooks related to the build environment (such as [modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig) and [modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain)), Rsbuild supports obtaining the current environment context through the `environment` parameter.
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRspackConfig((rspackConfig, { environment }) => {
       if (environment.name === 'node') {
         // do some thing
@@ -226,7 +230,7 @@ For some global plugin hooks (such as [onDevCompileDone](/plugins/dev/hooks#onde
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onDevCompileDone(({ environments }) => {
       environments.forEach((environment) => {
         console.log('environment', environment);
@@ -238,7 +242,7 @@ const myPlugin = () => ({
 
 ## Environment API
 
-Rsbuild server provides a series of APIs related to the build environment. Users can operate the build artifacts in a specific environment on the server side through the Rsbuild environment API.
+Rsbuild server provides a series of APIs related to the build environment. Users can operate the build artifacts in a specific environment on the server side through the Rsbuild [environment API](/api/javascript-api/environment-api#environment-api).
 
 You can use the environment API in [Rsbuild DevMiddleware](/config/dev/setup-middlewares) or [Custom Server](/api/javascript-api/instance#rsbuildcreatedevserver).
 
@@ -249,7 +253,7 @@ import express from 'express';
 import { createRsbuild, loadConfig } from '@rsbuild/core';
 
 const serverRender = (serverAPI) => async (_req, res) => {
-  const indexModule = await serverAPI.environments.ssr.loadBundle('index');
+  const indexModule = await serverAPI.environments.node.loadBundle('index');
 
   const markup = indexModule.render();
 
@@ -273,7 +277,7 @@ export async function startDevServer() {
 
   const app = express();
 
-  // Create Rsbuild DevServer instance
+  // Create Rsbuild dev server instance
   const rsbuildServer = await rsbuild.createDevServer();
 
   const serverRenderMiddleware = serverRender(rsbuildServer);
@@ -296,23 +300,57 @@ export async function startDevServer() {
 
 For detailed usage, please refer to: [SSR + Express Example](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/ssr-express).
 
-## Add environment dependencies
+## Build order
 
-By default, Rsbuild builds all environments in parallel. If an environment in your project depends on other environments to be compiled first, you can add the name of the environment you need to depend on to Rspack's [dependencies](https://rspack.dev/config/other-options#dependencies) configuration.
+By default, Rsbuild builds all environments in parallel.
 
-For example, the node environment depends on the web environment to be compiled first. You can add the following configuration:
+To control the build order between different environments, you can set build dependencies through Rspack's [dependencies](https://rspack.dev/config/other-options#dependencies) configuration.
+
+For example, if you need to build the `web` environment first, then build the `node` environment, you can add the following configuration:
 
 ```ts title=rsbuild.config.ts
 export default {
   environments: {
-    web: {},
+    web: {
+      tools: {
+        rspack: {
+          name: 'foo',
+        },
+      },
+    },
     node: {
       tools: {
         rspack: {
-          dependencies: ['web'],
+          dependencies: ['foo'],
         },
       },
     },
   },
 };
+```
+
+We can use a simple plugin to test the build order of multiple environments:
+
+```ts
+const testPlugin: RsbuildPlugin = {
+  name: 'test-plugin',
+  setup(api) {
+    api.onBeforeEnvironmentCompile(({ environment }) => {
+      console.log('build start:', environment.name);
+    });
+
+    api.onAfterEnvironmentCompile(({ stats, environment }) => {
+      console.log('build done:', environment.name);
+      console.log('stats', stats);
+    });
+  },
+};
+
+// The plugin will output:
+// - build start: web
+// - build done: web
+// - stats: { ... }
+// - build start: node
+// - build done: node
+// - stats: { ... }
 ```

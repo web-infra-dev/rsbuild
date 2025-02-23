@@ -32,7 +32,7 @@ rspackOnlyTest(
     expect(files[test1!]).toContain('body{color:red}');
     expect(files[test2!]).toContain('& .foo');
     expect(files[test3!]).toContain('& .foo');
-    expect(files[test4!]).toContain('& .foo');
+    expect(files[test4!]).toContain('color yellow');
     expect(await page.evaluate('window.test1')).toBe(
       `http://localhost:${rsbuild.port}/static/assets/test1.css`,
     );

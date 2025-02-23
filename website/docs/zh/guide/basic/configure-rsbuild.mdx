@@ -25,8 +25,11 @@ export default {
   output: {
     // 与构建产物有关的选项
   },
+  resolve: {
+    // 与模块解析相关的选项
+  },
   source: {
-    // 与源代码解析、编译方式相关的选项
+    // 与输入的源代码相关的选项
   },
   server: {
     // 与 Rsbuild 服务器有关的选项
@@ -49,7 +52,7 @@ export default {
 
 你可以在 [Config 总览](/config/) 页面找到所有配置项的详细说明。
 
-## 使用配置
+## 配置文件
 
 当你使用 Rsbuild 的 CLI 命令时，Rsbuild 会自动读取当前项目根目录下的配置文件，按照以下顺序进行解析：
 
@@ -62,13 +65,13 @@ export default {
 
 我们推荐使用 `.mjs` 或 `.ts` 格式的配置文件，并从 `@rsbuild/core` 中导入 `defineConfig` 工具函数, 它提供了友好的 TypeScript 类型推导和自动补全，可以帮助你避免配置中的错误。
 
-比如在 `rsbuild.config.ts` 中，你可以定义 Rsbuild 的 [source.alias](/config/source/alias) 配置：
+比如在 `rsbuild.config.ts` 中，你可以定义 Rsbuild 的 [resolve.alias](/config/resolve/alias) 配置：
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
-  source: {
+  resolve: {
     alias: {
       '@common': './src/common',
     },
@@ -82,17 +85,13 @@ export default defineConfig({
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
-  source: {
+  resolve: {
     alias: (opts) => {
       opts['@common'] = './src/common';
     },
   },
 });
 ```
-
-:::tip
-当你使用 `.ts`, `.mts` 和 `.cts` 后缀时，Rsbuild 会使用 [jiti](https://github.com/unjs/jiti) 来加载配置文件，提供 ESM 与 CommonJS 的互操作性，模块解析的行为与 Node.js 原生行为存在一定差异。
-:::
 
 ## 指定配置文件
 
@@ -114,6 +113,26 @@ Rsbuild CLI 通过 `--config` 选项来指定配置文件，可以设置为相�
 rsbuild build -c rsbuild.prod.config.mjs
 ```
 
+## 指定加载方式
+
+当你使用 `.ts`, `.mts` 和 `.cts` 后缀的配置文件时，Rsbuild 会使用 [jiti](https://github.com/unjs/jiti) 来加载配置文件，提供 ESM 与 CommonJS 的互操作性，模块解析的行为与 Node.js 原生行为存在一定差异。
+
+如果你使用的 JavaScript 运行时已经原生支持 TypeScript，可以使用 `--config-loader native` 选项来使用 Node.js 原生 loader 来加载配置文件。这可以保证模块解析的行为与 Node.js 原生行为一致，并且性能更好。
+
+例如，Node.js 从 v22.6.0 开始已经原生支持 TypeScript，你可以如下命令来使用 Node.js 原生 loader 来加载配置文件：
+
+```bash
+# Node.js v23.6.0+
+# 不需要设置 --experimental-strip-types
+npx rsbuild build --config-loader native
+
+# Node.js v22.6.0 - v23.5.0
+# 需要设置 --experimental-strip-types
+NODE_OPTIONS="--experimental-strip-types" npx rsbuild build --config-loader native
+```
+
+> 详见 [Node.js - Running TypeScript Natively](https://nodejs.org/en/learn/typescript/run-natively#running-typescript-natively)。
+
 ## 使用环境变量
 
 在配置文件中，你可以使用 `process.env.NODE_ENV` 等 Node.js 环境变量，来动态写入不同的配置：
@@ -122,7 +141,7 @@ rsbuild build -c rsbuild.prod.config.mjs
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
-  source: {
+  resolve: {
     alias: {
       '@request':
         process.env.NODE_ENV === 'development'
@@ -141,7 +160,7 @@ Rsbuild 支持在配置文件中导出一个函数，你可以在函数中动态
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig(({ env, command, envMode }) => ({
-  source: {
+  resolve: {
     alias: {
       '@foo': env === 'development' ? './src/foo.dev.ts' : './src/foo.prod.ts',
     },

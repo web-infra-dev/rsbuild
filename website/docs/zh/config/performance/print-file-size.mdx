@@ -4,21 +4,13 @@
 
 ```ts
 type PrintFileSizeOptions =
+  | boolean
   | {
-      /**
-       * 是否输出所有静态资源文件的总体积
-       */
       total?: boolean;
-      /**
-       * 是否输出每个静态资源文件的体积
-       */
       detail?: boolean;
-      /**
-       * 是否输出 gzip 压缩后的体积
-       */
       compressed?: boolean;
-    }
-  | boolean;
+      include?: (asset: PrintFileSizeAsset) => boolean;
+    };
 ```
 
 - **默认值：** `true`
@@ -29,7 +21,7 @@ type PrintFileSizeOptions =
 
 默认输出的日志如下：
 
-```bash
+```
   File (web)                              Size        Gzip
   dist/static/js/lib-react.b0714b60.js    140.4 kB    45.0 kB
   dist/static/js/index.f3fde9c7.js        1.9 kB      0.97 kB
@@ -51,11 +43,39 @@ export default {
 };
 ```
 
-## 自定义输出
+## 选项
 
 你可以通过选项来自定义输出的格式。
 
-- 如果不需要输出每个静态资源文件的体积，可以把 `detail` 设置为 false，此时仅输出总体积：
+### total
+
+- **类型：** `boolean`
+- **默认值：** `true`
+
+是否输出所有静态资源的总体积。
+
+```ts
+export default {
+  performance: {
+    printFileSize: {
+      total: false,
+    },
+  },
+};
+```
+
+:::tip
+如果本次构建只生成了一个静态资源，则不会输出总体积。
+:::
+
+### detail
+
+- **类型：** `boolean`
+- **默认值：** `true`
+
+是否输出每个静态资源的体积。
+
+如果你不需要查看每个静态资源文件的体积，可以把 `detail` 设置为 false，此时仅输出总体积：
 
 ```ts
 export default {
@@ -67,13 +87,104 @@ export default {
 };
 ```
 
-- 如果不需要输出 gzip 压缩后的体积，可以把 `compressed` 设置为 false，这在大型项目中可以节省一些 gzip 计算的耗时：
+### compressed
+
+- **类型：** `boolean`
+- **默认值：** 当 [output.target](/config/output/target) 为 `node` 时为 `false`，否则为 `true`
+
+是否输出 gzip 压缩后的体积。
+
+如果你不需要查看 gzip 压缩后的体积，可以把 `compressed` 设置为 false，这在大型项目中可以节省一些 gzip 计算的耗时：
 
 ```ts
 export default {
   performance: {
     printFileSize: {
       compressed: false,
+    },
+  },
+};
+```
+
+:::tip
+
+- 该数据仅用于参考 gzip 压缩后的体积，Rsbuild 并不会对静态资源开启 gzip 压缩。通常，你需要在服务器端开启 gzip 压缩，例如使用 [nginx 的 gzip 模块](https://nginx.org/en/docs/http/ngx_http_gzip_module.html)。
+- 对于不适合 gzip 压缩的静态资源（如图片文件），在详细列表中不会显示其 gzip 体积，但在计算 gzip 后的总体积时会包含这些资源的原始大小。
+
+:::
+
+### include
+
+- **类型：**
+
+```ts
+type PrintFileSizeAsset = {
+  /**
+   * 静态资源名称
+   * @example 'index.html', 'static/js/index.[hash].js'
+   */
+  name: string;
+  /**
+   * 静态资源体积，单位为 bytes
+   */
+  size: number;
+};
+type Include = (asset: PrintFileSizeAsset) => boolean;
+```
+
+- **默认值：** `undefined`
+
+一个过滤函数，用于确定哪些静态资源需要输出。
+
+如果返回 `false`，则该静态资源将被排除，不会被包含在总体积或详细体积中。
+
+例如，只输出体积大于 10kB 的静态资源：
+
+```ts
+export default {
+  performance: {
+    printFileSize: {
+      include: (asset) => asset.size > 10 * 1000,
+    },
+  },
+};
+```
+
+或者只输出体积大于 10kB 的 `.js` 文件：
+
+```ts
+export default {
+  performance: {
+    printFileSize: {
+      include: (asset) => /\.js$/.test(asset.name) && asset.size > 10 * 1000,
+    },
+  },
+};
+```
+
+### exclude
+
+- **类型：**
+
+```ts
+type Exclude = (asset: PrintFileSizeAsset) => boolean;
+```
+
+- **默认值：** `(asset) => /\.(?:map|LICENSE\.txt|d\.ts)$/.test(asset.name)`
+
+一个过滤函数，用于确定哪些静态资源需要被排除。如果同时设置了 `include` 和 `exclude`，则 `exclude` 优先级更高。
+
+Rsbuild 默认排除 source map、许可证文件和 `.d.ts` 类型文件，因为这些文件不会影响页面加载的性能。
+
+例如，额外再排除 `.html` 文件：
+
+```ts
+export default {
+  performance: {
+    printFileSize: {
+      exclude: (asset) =>
+        /\.(?:map|LICENSE\.txt)$/.test(asset.name) ||
+        /\.html$/.test(asset.name),
     },
   },
 };

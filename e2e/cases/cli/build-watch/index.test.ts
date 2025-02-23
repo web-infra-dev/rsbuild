@@ -1,11 +1,11 @@
 import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { awaitFileExists } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { awaitFileExists, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 import fse from 'fs-extra';
 
-test('should support watch mode for build command', async () => {
+rspackOnlyTest('should support watch mode for build command', async () => {
   const indexFile = path.join(__dirname, 'src/index.js');
   const distIndexFile = path.join(__dirname, 'dist/static/js/index.js');
   fs.rmSync(indexFile, { force: true });

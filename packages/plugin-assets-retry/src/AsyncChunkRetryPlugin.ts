@@ -7,27 +7,42 @@ import type { PluginAssetsRetryOptions, RuntimeRetryOptions } from './types.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// https://github.com/web-infra-dev/rspack/pull/5370
-function appendWebpackScript(module: any, appendSource: string) {
+function modifyWebpackRuntimeModule(
+  module: any,
+  modifier: (originSource: string) => string,
+) {
   try {
     const originSource = module.getGeneratedCode();
-    module.getGeneratedCode = () => `${originSource}\n${appendSource}`;
+    module.getGeneratedCode = () => modifier(originSource);
   } catch (err) {
-    console.error('Failed to modify Webpack RuntimeModule');
+    console.error('Failed to modify webpack RuntimeModule');
     throw err;
   }
 }
 
-function appendRspackScript(
+function modifyRspackRuntimeModule(
   module: any, // JsRuntimeModule type is not exported by Rspack temporarily */
-  appendSource: string,
+  modifier: (originSource: string) => string,
 ) {
   try {
-    const source = module.source.source.toString();
-    module.source.source = Buffer.from(`${source}\n${appendSource}`, 'utf-8');
+    const originSource = module.source.source.toString();
+    module.source.source = Buffer.from(modifier(originSource), 'utf-8');
   } catch (err) {
     console.error('Failed to modify Rspack RuntimeModule');
     throw err;
+  }
+}
+
+// https://github.com/web-infra-dev/rspack/pull/5370
+function modifyRuntimeModule(
+  module: any,
+  modifier: (originSource: string) => string,
+  isRspack: boolean,
+) {
+  if (isRspack) {
+    modifyRspackRuntimeModule(module, modifier);
+  } else {
+    modifyWebpackRuntimeModule(module, modifier);
   }
 }
 
@@ -89,6 +104,10 @@ class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
         '__RUNTIME_GLOBALS_GET_MINI_CSS_EXTRACT_FILENAME__',
         '__webpack_require__.miniCssF',
       )
+      .replaceAll(
+        '__RUNTIME_GLOBALS_RSBUILD_LOAD_STYLESHEET__',
+        '__webpack_require__.rbLoadStyleSheet',
+      )
       .replaceAll('__RUNTIME_GLOBALS_PUBLIC_PATH__', RuntimeGlobals.publicPath)
       .replaceAll('__RUNTIME_GLOBALS_LOAD_SCRIPT__', RuntimeGlobals.loadScript)
       .replaceAll('__RETRY_OPTIONS__', serialize(this.runtimeOptions));
@@ -102,23 +121,38 @@ class AsyncChunkRetryPlugin implements Rspack.RspackPluginInstance {
           ? module.constructorName
           : module.constructor?.name;
 
+        const isCssLoadingRuntimeModule =
+          constructorName === 'CssLoadingRuntimeModule';
+
+        // https://github.com/web-infra-dev/rspack/blob/734ba4cfbec00ab68ff55bac95e7740fe8228229/crates/rspack_plugin_extract_css/src/runtime/css_load.js#L54
+        if (isCssLoadingRuntimeModule) {
+          modifyRuntimeModule(
+            module,
+            (originSource) =>
+              originSource.replace(
+                'var fullhref = __webpack_require__.p + href;',
+                'var fullhref = __webpack_require__.rbLoadStyleSheet ? __webpack_require__.rbLoadStyleSheet(href, chunkId) : (__webpack_require__.p + href);',
+              ),
+            isRspack,
+          );
+          return;
+        }
+
         const isPublicPathModule =
           module.name === 'publicPath' ||
           constructorName === 'PublicPathRuntimeModule' ||
           constructorName === 'AutoPublicPathRuntimeModule';
 
-        if (!isPublicPathModule) {
-          return;
-        }
+        if (isPublicPathModule) {
+          const runtimeCode = this.getRawRuntimeRetryCode();
 
-        const runtimeCode = this.getRawRuntimeRetryCode();
-
-        // Rspack currently does not have module.addRuntimeModule on the js side,
-        // so we insert our runtime code after PublicPathRuntimeModule or AutoPublicPathRuntimeModule.
-        if (isRspack) {
-          appendRspackScript(module, runtimeCode);
-        } else {
-          appendWebpackScript(module, runtimeCode);
+          // Rspack currently does not have module.addRuntimeModule on the js side,
+          // so we insert our runtime code after PublicPathRuntimeModule or AutoPublicPathRuntimeModule.
+          modifyRuntimeModule(
+            module,
+            (originSource) => `${originSource}\n${runtimeCode}`,
+            isRspack,
+          );
         }
       });
     });

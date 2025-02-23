@@ -4,6 +4,18 @@ Rsbuild is a high-performance build tool powered by Rspack. It provides a set of
 
 Rsbuild provides [rich build features](/guide/start/features), including the compilation of TypeScript, JSX, Sass, Less, CSS Modules, Wasm, and others. It also supports Module Federation, image compression, type checking, PostCSS, Lightning CSS, and more.
 
+## 🚀 Performance
+
+Powered by Rspack's Rust-based architecture, Rsbuild delivers blazing fast performance that will reshape your development workflow.
+
+⚡️ **Build 1000 React components:**
+
+import { BenchmarkGraph } from '@components/Benchmark';
+
+<BenchmarkGraph />
+
+> 📊 Benchmark results from [build-tools-performance](https://github.com/rspack-contrib/build-tools-performance).
+
 ## 💡 Comparisons
 
 Rsbuild is a build tool that is on par with [Vite](https://vitejs.dev/), [Create React App](https://github.com/facebook/create-react-app), or [Vue CLI](https://github.com/vuejs/vue-cli). They all come with builtin dev servers, command line tools, and sensible build configurations to provide the out-of-the-box experience.
@@ -14,27 +26,17 @@ Rsbuild is a build tool that is on par with [Vite](https://vitejs.dev/), [Create
 
 You can think of Rsbuild as a modernized version of Create React App or Vue CLI, with these main differences:
 
-- The underlying bundler is switched from Webpack to Rspack, providing 5 to 10 times the build performance.
+- The underlying bundler is switched from webpack to Rspack, providing 5 to 10 times the build performance.
 - It is decoupled from frontend UI frameworks and supports all UI frameworks via [plugins](/plugins/list/index), including React, Vue, Svelte, Solid, etc.
 - It offers better extensibility. You can extend Rsbuild flexibly via [Configurations](/config/index), [Plugin API](/plugins/dev/index), and [JavaScript API](/api/start/index).
 
 ### Vite
 
-Rsbuild shares many similarities with Vite, as they are both aim to improve the frontend development experience. The main differences are:
+Rsbuild shares many similarities with Vite, as they both aim to improve the frontend development experience. The main differences are:
 
+- **Production consistency**: Rsbuild uses Rspack for bundling during both the development and production builds, thus ensuring a high level of consistency between the development and production outputs. Vite, on the other hand, uses ESM for module loading during development, which improves the startup speed, but may lead to inconsistencies between the development and production outputs.
 - **Ecosystem compatibility**: Rsbuild is compatible with most webpack plugins and all Rspack plugins, while Vite is compatible with Rollup plugins. If you're currently using more plugins and loaders from the webpack ecosystem, migrating to Rsbuild would be relatively easy.
-- **Production consistency**: Rsbuild uses Rspack for bundling during both the development and production builds, thus ensuring a high level of consistency between the development and production outputs. This is also one of the goals Vite aims to achieve with Rolldown.
 - **Module Federation**: The Rsbuild team works closely with the [Module Federation](/guide/advanced/module-federation) development team, providing first-class support for Module Federation to help you develop large web applications with micro frontend architecture.
-
-## 🚀 Performance
-
-Rsbuild can fully leverage the build performance of Rspack. Here is the time taken to build 1000 React components:
-
-import { BenchmarkGraph } from '@components/Benchmark';
-
-<BenchmarkGraph short />
-
-> The above data comes from the [performance-compare](https://github.com/rspack-contrib/performance-compare) benchmark.
 
 ## 🔥 Features
 
@@ -56,14 +58,18 @@ Rsbuild provides JavaScript API and plugin API for higher-level frameworks and t
 
 The following diagram illustrates the relationship between Rsbuild and other tools in the ecosystem:
 
-![Rspack stack layers](https://assets.rspack.dev/rsbuild/assets/rspack-stack-layers.png)
+<img
+  src="https://assets.rspack.dev/rsbuild/assets/rspack-stack-layers.png"
+  alt="Rspack stack layers"
+  width="760"
+/>
 
 ## 🦀 Links
 
 - [Rspack](https://github.com/web-infra-dev/rspack): A fast Rust-based web bundler.
 - [Rspress](https://github.com/web-infra-dev/rspress): A fast static site generator based on Rsbuild.
 - [Rsdoctor](https://github.com/web-infra-dev/rsdoctor): A one-stop build analyzer for Rspack and webpack.
-- [Rslib](https://github.com/web-infra-dev/rslib): The library build tool powered by Rsbuild.
+- [Rslib](https://github.com/web-infra-dev/rslib): The library development tool powered by Rsbuild.
 - [Modern.js](https://github.com/web-infra-dev/modern.js): A progressive React framework based on Rsbuild.
 - [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack): A curated list of awesome things related to Rspack and Rsbuild.
 - [rspack-examples](https://github.com/rspack-contrib/rspack-examples): Examples for Rspack, Rsbuild, Rspress and Rsdoctor.
@@ -75,7 +81,7 @@ The following diagram illustrates the relationship between Rsbuild and other too
 
 Come and chat with us on [Discord](https://discord.gg/XsaKEEk4mW)! The Rspack / Rsbuild team and users are active there, and we're always looking for contributions.
 
-## ✨ Next Step
+## ✨ Next step
 
 You may want:
 
@@ -85,17 +91,17 @@ import Step from '@components/Step';
 <NextSteps>
   <Step
     href="/guide/start/quick-start"
-    title="Quick Start"
+    title="Quick start"
     description="Learn how to use Rsbuild"
   />
   <Step
     href="/guide/start/features"
-    title="All Features"
+    title="All features"
     description="Learn all features of Rsbuild"
   />
   <Step
-    href="/guide/basic/configure-rsbuild"
-    title="Config"
-    description="Learn how to configure Rsbuild"
+    href="https://github.com/web-infra-dev/rsbuild"
+    title="Support Rsbuild"
+    description="Support us with a star ⭐️"
   />
 </NextSteps>

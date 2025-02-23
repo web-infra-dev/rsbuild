@@ -2,7 +2,6 @@ import readline from 'node:readline';
 import { color, isTTY } from '../helpers';
 import { logger } from '../logger';
 import type { CliShortcut, NormalizedDevConfig } from '../types/config';
-import { onBeforeRestartServer } from './restart';
 
 export const isCliShortcutsEnabled = (
   devConfig: NormalizedDevConfig,
@@ -22,7 +21,7 @@ export function setupCliShortcuts({
   printUrls: () => void;
   restartServer?: () => Promise<void>;
   customShortcuts?: (shortcuts: CliShortcut[]) => CliShortcut[];
-}): void {
+}): () => void {
   let shortcuts = [
     {
       key: 'c',
@@ -65,7 +64,9 @@ export function setupCliShortcuts({
     shortcuts = customShortcuts(shortcuts);
 
     if (!Array.isArray(shortcuts)) {
-      throw new Error('`dev.cliShortcuts` must return an array of shortcuts.');
+      throw new Error(
+        '[rsbuild:config] `dev.cliShortcuts` must return an array of shortcuts.',
+      );
     }
   }
 
@@ -96,7 +97,7 @@ export function setupCliShortcuts({
     }
   });
 
-  onBeforeRestartServer(() => {
+  return () => {
     rl.close();
-  });
+  };
 }

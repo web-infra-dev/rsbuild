@@ -16,7 +16,7 @@ Before starting the troubleshooting process, it is helpful to have a basic under
 
 After understanding the principle of HMR, you can follow these steps for basic troubleshooting:
 
-#### 1. Check the WebSocket Connection
+#### 1. Check the WebSocket connection
 
 Open the browser console and check for the presence of the `[HMR] connected.` log.
 
@@ -25,7 +25,7 @@ Open the browser console and check for the presence of the `[HMR] connected.` lo
 
 There can be various reasons why the WebSocket connection fails to establish, such as using a network proxy that prevents the WebSocket request from reaching the dev server. You can check whether the WebSocket request address matches your dev server address. If it does not match, you can configure the WebSocket request address using [dev.client](/config/dev/client).
 
-#### 2. Check the hot-update Requests
+#### 2. Check the hot-update requests
 
 When you modify the code of a module and trigger a recompilation, the browser sends several `hot-update.json` and `hot-update.js` requests to the dev server to fetch the updated code.
 
@@ -33,7 +33,7 @@ You can try modifying a module and inspect the content of the `hot-update.(js|js
 
 If the content of the request is incorrect, it is likely due to a network proxy. Check whether the address of the `hot-update.(js|json)` request matches your dev server address. If it does not match, you need to adjust the proxy rules to route the `hot-update.(js|json)` request to the dev server address.
 
-#### 3. Check for Other Causes
+#### 3. Check for other causes
 
 If the above two steps do not reveal any issues, it is possible that other factors are causing the HMR to fail. For example, it could be that the code does not meet React's requirements for HMR. You can refer to the following questions for further troubleshooting.
 

@@ -1,19 +1,19 @@
-<p align="center">
-  <a href="https://rsbuild.dev" target="blank"><img src="https://github.com/web-infra-dev/rsbuild/assets/7237365/84abc13e-b620-468f-a90b-dbf28e7e9427" alt="Rsbuild Logo" /></a>
+# @rsbuild/plugin-stylus
+
+An Rsbuild plugin to use Stylus as the CSS preprocessor.
+
+<p>
+  <a href="https://npmjs.com/package/@rsbuild/plugin-stylus">
+   <img src="https://img.shields.io/npm/v/@rsbuild/plugin-stylus?style=flat-square&colorA=564341&colorB=EDED91" alt="npm version" />
+  </a>
+  <img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="license" />
+  <a href="https://npmcharts.com/compare/@rsbuild/plugin-stylus?minimal=true"><img src="https://img.shields.io/npm/dm/@rsbuild/plugin-stylus.svg?style=flat-square&colorA=564341&colorB=EDED91" alt="downloads" /></a>
 </p>
-
-# Rsbuild
-
-The Rspack-based build tool. It's fast, out-of-the-box and extensible.
 
 ## Documentation
 
-https://rsbuild.dev/
-
-## Contributing
-
-Please read the [Contributing Guide](https://github.com/web-infra-dev/rsbuild/blob/main/CONTRIBUTING.md).
+See [Documentation](https://rsbuild.dev/plugins/list/plugin-stylus).
 
 ## License
 
-Rsbuild is [MIT licensed](https://github.com/web-infra-dev/rsbuild/blob/main/LICENSE).
+[MIT](https://github.com/web-infra-dev/rsbuild/blob/main/LICENSE).

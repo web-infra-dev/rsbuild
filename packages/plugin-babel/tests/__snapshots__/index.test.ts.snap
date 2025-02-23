@@ -294,7 +294,9 @@ exports[`plugins/babel > should set babel-loader 1`] = `
     ],
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -350,7 +352,9 @@ exports[`plugins/babel > should set babel-loader when config is add 1`] = `
     ],
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;

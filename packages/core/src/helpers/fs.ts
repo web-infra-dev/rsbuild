@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { logger } from '../logger';
 import type { Rspack } from '../types';
+import { toPosixPath } from './path';
 
 export const isFileSync = (filePath: string): boolean | undefined => {
   try {
@@ -63,20 +64,39 @@ export async function fileExistsByCompilation(
   });
 }
 
-export async function emptyDir(dir: string): Promise<void> {
-  if (!(await pathExists(dir))) {
+export async function emptyDir(
+  dir: string,
+  keep: RegExp[] = [],
+  checkExists = true,
+): Promise<void> {
+  if (checkExists && !(await pathExists(dir))) {
     return;
   }
 
   try {
-    for (const file of await fs.promises.readdir(dir)) {
-      await fs.promises.rm(path.resolve(dir, file), {
-        recursive: true,
-        force: true,
-      });
-    }
+    const entries = await fs.promises.readdir(dir, {
+      withFileTypes: true,
+    });
+
+    await Promise.all(
+      entries.map(async (entry) => {
+        const fullPath = path.resolve(dir, entry.name);
+        if (keep.some((reg) => reg.test(toPosixPath(fullPath)))) {
+          return;
+        }
+
+        if (entry.isDirectory()) {
+          await emptyDir(fullPath, keep, false);
+          if (!keep.length) {
+            await fs.promises.rmdir(fullPath);
+          }
+        } else {
+          await fs.promises.unlink(fullPath);
+        }
+      }),
+    );
   } catch (err) {
-    logger.debug(`Failed to empty dir: ${dir}`);
+    logger.debug(`failed to empty dir: ${dir}`);
     logger.debug(err);
   }
 }

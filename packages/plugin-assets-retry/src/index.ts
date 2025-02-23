@@ -17,6 +17,33 @@ export type { PluginAssetsRetryOptions };
 
 export const PLUGIN_ASSETS_RETRY_NAME = 'rsbuild:assets-retry';
 
+function getRuntimeOptions(userOptions: PluginAssetsRetryOptions) {
+  const defaultOptions: RuntimeRetryOptions = {
+    max: 3,
+    type: ['link', 'script', 'img'],
+    domain: [],
+    crossOrigin: false,
+  };
+
+  const result: RuntimeRetryOptions = {
+    ...defaultOptions,
+    ...userOptions,
+  };
+
+  // Normalize config
+  if (!Array.isArray(result.type) || result.type.length === 0) {
+    result.type = defaultOptions.type;
+  }
+  if (!Array.isArray(result.domain) || result.domain.length === 0) {
+    result.domain = defaultOptions.domain;
+  }
+  if (Array.isArray(result.domain)) {
+    result.domain = result.domain.filter(Boolean);
+  }
+
+  return result;
+}
+
 async function getRetryCode(
   options: PluginAssetsRetryOptions,
 ): Promise<string> {
@@ -29,8 +56,12 @@ async function getRetryCode(
     minify ? `${filename}.min.js` : `${filename}.js`,
   );
   const runtimeCode = await fs.promises.readFile(runtimeFilePath, 'utf-8');
+  const runtimeOptions = getRuntimeOptions(restOptions);
 
-  return `(function(){${runtimeCode};init(${serialize(restOptions)});})()`;
+  return `(function(){${runtimeCode}})()`.replace(
+    '__RUNTIME_GLOBALS_OPTIONS__',
+    serialize(runtimeOptions),
+  );
 }
 
 export const pluginAssetsRetry = (

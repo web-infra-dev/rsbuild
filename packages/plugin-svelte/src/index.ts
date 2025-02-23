@@ -1,9 +1,12 @@
 import { promises } from 'node:fs';
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import { logger } from '@rsbuild/core';
 import type { RsbuildPlugin } from '@rsbuild/core';
 import { sveltePreprocess } from 'svelte-preprocess';
 import type { CompileOptions } from 'svelte/compiler';
+
+const require = createRequire(import.meta.url);
 
 export type AutoPreprocessOptions = NonNullable<
   Parameters<typeof sveltePreprocess>[0]
@@ -66,7 +69,7 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
         logger.error(
           'Cannot resolve `svelte` package under the project directory, did you forget to install it?',
         );
-        throw new Error('Cannot resolve `svelte` package', {
+        throw new Error('[rsbuild:svelte] Failed to resolve `svelte` package', {
           cause: err,
         });
       }

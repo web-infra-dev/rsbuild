@@ -1,4 +1,4 @@
-# Rsbuild Core
+# Rsbuild core
 
 本章节描述了 Rsbuild 提供的一些核心方法。
 
@@ -21,26 +21,26 @@ import { createRsbuild } from '@rsbuild/core';
 
 const rsbuild = await createRsbuild({
   rsbuildConfig: {
-    // rsbuild configs
+    // Rsbuild configuration
   },
 });
 ```
 
-### options
+### Options
 
 `createRsbuild` 的第一个参数是一个 `options` 对象，你可以传入以下选项：
 
 ```ts
 type CreateRsbuildOptions = {
   cwd?: string;
+  environment?: string[];
   rsbuildConfig?: RsbuildConfig;
 };
 ```
 
-各个选项的作用：
-
 - `cwd`：当前执行构建的根路径，默认值为 `process.cwd()`
-- `rsbuildConfig`：Rsbuild 配置对象。Rsbuild 提供了丰富的配置项，允许你对构建行为进行灵活定制，你可以在[配置](/config/)中找到所有可用的配置项。
+- `environment`：只构建指定的 [environments](/guide/advanced/environments)，如果未指定或传入空数组，则构建所有环境。
+- `rsbuildConfig`：Rsbuild 配置对象。参考 [配置总览](/config/) 查看所有可用的配置项。
 
 ## loadConfig
 
@@ -54,6 +54,9 @@ function loadConfig(params?: {
   cwd?: string;
   // 指定配置文件路径，可以为相对路径或绝对路径
   path?: string;
+  meta?: Record<string, unknown>;
+  envMode?: string;
+  loader?: 'jiti' | 'native';
 }): Promise<{
   content: RsbuildConfig;
   filePath: string | null;
@@ -65,6 +68,7 @@ function loadConfig(params?: {
 ```ts
 import { loadConfig } from '@rsbuild/core';
 
+// 默认加载 `rsbuild.config.*` 配置文件
 const { content } = await loadConfig();
 
 console.log(content); // -> Rsbuild config object
@@ -75,6 +79,43 @@ const rsbuild = await createRsbuild({
 ```
 
 如果 cwd 目录下不存在 Rsbuild 配置文件，loadConfig 方法的返回值为 `{ content: {}, filePath: null }`。
+
+### 指定配置文件
+
+使用 `path` 选项加载 `my-config.ts` 配置文件：
+
+```ts
+import { join } from 'node:path';
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  path: join(__dirname, 'my-config.ts'),
+});
+```
+
+### 传入 meta 对象
+
+加载配置文件，并传入自定义的 meta 对象：
+
+```ts
+import { join } from 'node:path';
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  meta: {
+    foo: 'bar',
+  },
+});
+```
+
+在 `defineConfig` 定义的配置函数中，你可以通过 `meta` 对象访问到 `foo` 变量：
+
+```ts title="rsbuild.config.ts"
+export default defineConfig(({ meta }) => {
+  console.log(meta.foo); // bar
+  return config;
+});
+```
 
 ## loadEnv
 
@@ -352,7 +393,7 @@ console.log(rspack.rspackVersion); // 1.0.0
 console.log(rspack.util.createHash);
 ```
 
-> 请参考 [Rspack - JavaScript API](https://rspack.dev/api/javascript-api/) 了解更多。
+> 请参考 [Rspack - JavaScript API](https://rspack.dev/zh/api/javascript-api/) 了解更多。
 
 ## version
 

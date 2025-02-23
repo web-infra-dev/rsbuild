@@ -1,6 +1,6 @@
 import { rspack } from '@rspack/core';
 import { reduceConfigsAsyncWithContext } from 'reduce-configs';
-import { CHAIN_ID, chainToConfig, modifyBundlerChain } from '../configChain';
+import { CHAIN_ID, modifyBundlerChain } from '../configChain';
 import { castArray, color, getNodeEnv } from '../helpers';
 import { logger } from '../logger';
 import { getHTMLPlugin } from '../pluginHelper';
@@ -19,11 +19,10 @@ async function modifyRspackConfig(
   utils: ModifyRspackConfigUtils,
 ) {
   logger.debug('modify Rspack config');
-  let [modifiedConfig] =
-    await context.hooks.modifyRspackConfig.callInEnvironment({
-      environment: utils.environment.name,
-      args: [rspackConfig, utils],
-    });
+  let [modifiedConfig] = await context.hooks.modifyRspackConfig.callChain({
+    environment: utils.environment.name,
+    args: [rspackConfig, utils],
+  });
 
   if (utils.environment.config.tools?.rspack) {
     modifiedConfig = await reduceConfigsAsyncWithContext({
@@ -123,6 +122,31 @@ export function getChainUtils(
   };
 }
 
+function validateRspackConfig(config: Rspack.Configuration) {
+  // validate plugins
+  if (config.plugins) {
+    for (const plugin of config.plugins) {
+      if (
+        plugin &&
+        plugin.apply === undefined &&
+        'name' in plugin &&
+        'setup' in plugin
+      ) {
+        const name = color.bold(color.yellow(plugin.name));
+        throw new Error(
+          `[rsbuild:plugin] "${name}" appears to be an Rsbuild plugin. It cannot be used as an Rspack plugin.`,
+        );
+      }
+    }
+  }
+
+  if (config.devServer) {
+    logger.warn(
+      `[rsbuild:config] Find invalid Rspack config: "${color.yellow('devServer')}". Note that Rspack's "devServer" config is not supported by Rsbuild. You can use Rsbuild's "dev" config to configure the Rsbuild dev server.`,
+    );
+  }
+}
+
 export async function generateRspackConfig({
   target,
   context,
@@ -138,6 +162,7 @@ export async function generateRspackConfig({
     DefinePlugin,
     IgnorePlugin,
     ProvidePlugin,
+    SourceMapDevToolPlugin,
     HotModuleReplacementPlugin,
   } = rspack;
 
@@ -148,11 +173,12 @@ export async function generateRspackConfig({
       DefinePlugin,
       IgnorePlugin,
       ProvidePlugin,
+      SourceMapDevToolPlugin,
       HotModuleReplacementPlugin,
     },
   });
 
-  let rspackConfig = chainToConfig(chain);
+  let rspackConfig = chain.toConfig();
 
   rspackConfig = await modifyRspackConfig(
     context,
@@ -160,22 +186,7 @@ export async function generateRspackConfig({
     await getConfigUtils(rspackConfig, chainUtils),
   );
 
-  // validate plugins
-  if (rspackConfig.plugins) {
-    for (const plugin of rspackConfig.plugins) {
-      if (
-        plugin &&
-        plugin.apply === undefined &&
-        'name' in plugin &&
-        'setup' in plugin
-      ) {
-        const name = color.bold(color.yellow(plugin.name));
-        throw new Error(
-          `${name} appears to be an Rsbuild plugin. It cannot be used as an Rspack plugin.`,
-        );
-      }
-    }
-  }
+  validateRspackConfig(rspackConfig);
 
   return rspackConfig;
 }

@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { parse } from 'dotenv';
 import { expand } from 'dotenv-expand';
 import { getNodeEnv, isFileSync } from './helpers';
+import { logger } from './logger';
 
 export type LoadEnvOptions = {
   /**
@@ -61,7 +62,7 @@ export function loadEnv({
 } {
   if (mode === 'local') {
     throw new Error(
-      `'local' cannot be used as a value for env mode, because ".env.local" represents a temporary local file. Please use another value.`,
+      `[rsbuild:loadEnv] 'local' cannot be used as a value for env mode, because ".env.local" represents a temporary local file. Please use another value.`,
     );
   }
 
@@ -80,6 +81,7 @@ export function loadEnv({
 
   for (const envPath of filePaths) {
     Object.assign(parsed, parse(fs.readFileSync(envPath)));
+    logger.debug('loaded env file:', envPath);
   }
 
   // dotenv-expand does not override existing env vars by default,

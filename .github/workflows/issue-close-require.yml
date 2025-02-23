@@ -5,17 +5,17 @@ on:
     - cron: '0 0 * * *'
 
 permissions:
+  # Permits `actions-cool/issues-helper` to close an issue
+  issues: write
   contents: read
 
 jobs:
   issue-close-require:
-    permissions:
-      issues: write
     runs-on: ubuntu-latest
     if: github.repository == 'web-infra-dev/rsbuild'
     steps:
       - name: need reproduction
-        uses: actions-cool/issues-helper@v3
+        uses: actions-cool/issues-helper@a610082f8ac0cf03e357eb8dd0d5e2ba075e017e # v3.6.0
         with:
           actions: 'close-issues'
           labels: 'need reproduction'

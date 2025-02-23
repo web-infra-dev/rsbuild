@@ -29,7 +29,7 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\|cur\\)\\$/i,
       },
       {
         "oneOf": [
@@ -118,7 +118,9 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
     "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -152,7 +154,7 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\|cur\\)\\$/i,
       },
       {
         "oneOf": [
@@ -241,7 +243,9 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
     "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -275,7 +279,7 @@ exports[`plugin-asset > should allow to use distPath.image to modify dist path 1
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\|cur\\)\\$/i,
       },
       {
         "oneOf": [
@@ -364,7 +368,9 @@ exports[`plugin-asset > should allow to use distPath.image to modify dist path 1
     "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -398,7 +404,7 @@ exports[`plugin-asset > should allow to use filename.image to modify filename 1`
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\|cur\\)\\$/i,
       },
       {
         "oneOf": [
@@ -487,7 +493,9 @@ exports[`plugin-asset > should allow to use filename.image to modify filename 1`
     "assetModuleFilename": "static/assets/[name].[contenthash:8][ext]",
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;

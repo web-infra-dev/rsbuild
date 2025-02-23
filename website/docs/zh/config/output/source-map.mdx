@@ -3,17 +3,19 @@
 - **类型：**
 
 ```ts
-type SourceMap = {
-  js?: Rspack.Configuration['devtool'];
-  css?: boolean;
-};
+type SourceMap =
+  | boolean
+  | {
+      js?: Rspack.Configuration['devtool'];
+      css?: boolean;
+    };
 ```
 
 - **默认值：**
 
 ```ts
 const defaultSourceMap = {
-  js: isDev ? 'cheap-module-source-map' : false,
+  js: mode === 'development' ? 'cheap-module-source-map' : false,
   css: false,
 };
 ```
@@ -31,7 +33,35 @@ source map 是保存源代码映射关系的信息文件，它记录了编译后
 - 在开发模式构建时，会生成 JS 文件的 source map，便于进行开发调试；不会生成 CSS 文件的 source map。
 - 在生产模式构建时，不会生成 JS 和 CSS 文件的 source map，以提供最佳的构建性能。
 
-## JS Source Map
+## 布尔值
+
+如果 `output.sourceMap` 为 `true`，则会根据 [mode](/config/mode) 生成 JS 和 CSS 文件的 source map，等价于：
+
+```js
+export default {
+  output: {
+    sourceMap: {
+      js: mode === 'development' ? 'cheap-module-source-map' : 'source-map',
+      css: true,
+    },
+  },
+};
+```
+
+如果 `output.sourceMap` 为 `false`，则不会生成 JS 和 CSS 文件的 source map，等价于：
+
+```js
+export default {
+  output: {
+    sourceMap: {
+      js: false,
+      css: false,
+    },
+  },
+};
+```
+
+## JS source map
 
 JS 文件的 source map 通过 `sourceMap.js` 来控制，可以传入 Rspack [devtool](https://rspack.dev/zh/config/devtool) 选项支持的所有 source map 格式，设置为 `false` 为关闭。
 
@@ -64,7 +94,7 @@ export default {
 };
 ```
 
-## CSS Source Map
+## CSS source map
 
 CSS 文件的 source map 通过 `sourceMap.css` 来控制，设置为 `true` 为开启，设置为 `false` 为关闭。
 
@@ -75,6 +105,21 @@ export default {
   output: {
     sourceMap: {
       css: true,
+    },
+  },
+};
+```
+
+在生产构建时，我们不推荐同时开启 [output.injectStyles](/config/output/inject-styles) 和 `output.sourceMap.css`，因为 `output.injectStyles` 会将 source map 注入到 JS 文件中，这会增加文件的体积并导致页面加载变慢。
+
+你可以仅在开发模式下开启 CSS 文件的 source map：
+
+```js
+export default {
+  output: {
+    injectStyles: true,
+    sourceMap: {
+      css: process.env.NODE_ENV === 'development',
     },
   },
 };

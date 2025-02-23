@@ -1,4 +1,4 @@
-# Rsbuild Instance
+# Rsbuild instance
 
 本章节描述了 Rsbuild 实例对象上所有的属性和方法。
 
@@ -32,7 +32,7 @@ type RootPath = string;
 
 当有多个环境时，Rsbuild 会尝试获取所有环境的父 distPath 作为 `context.distPath`。
 
-如果要获取指定环境的输出目录的绝对路径，建议使用 [environment.distPath](/api/javascript-api/environment-context#distpath)。
+如果要获取指定环境的输出目录的绝对路径，建议使用 [environment.distPath](/api/javascript-api/environment-api#distpath)。
 
 - **类型：**
 
@@ -99,7 +99,7 @@ type TsconfigPath = string | undefined;
 
 ## rsbuild.build
 
-调用 build 方法时，会执行一次生产模式构建。
+执行生产模式构建。该方法会生成优化后的生产构建产物，并输出到输出目录。
 
 - **类型：**
 
@@ -146,11 +146,15 @@ try {
   process.exit(1);
 }
 
-// Example 3: build and get all stats
+// Example 3: build and get all assets
 const { stats } = await rsbuild.build();
 
 if (stats) {
-  const { assets } = stats.toJson({ assets: true });
+  const { assets } = stats.toJson({
+    // 排除不需要的字段以提高性能
+    all: false,
+    assets: true,
+  });
   console.log(assets);
 }
 ```
@@ -177,12 +181,22 @@ await result.close();
 
 ### Stats 对象
 
-在非 watch 模式下，`rsbuild.build()` 会返回一个 Rspack 的 [stats](https://rspack.dev/api/javascript-api/stats) 对象：
+在非 watch 模式下，`rsbuild.build()` 会返回一个 Rspack 的 [stats](https://rspack.dev/api/javascript-api/stats) 对象。
+
+例如，使用 `stats.toJson()` 方法获取所有 assets 信息：
 
 ```ts
 const result = await rsbuild.build();
+const { stats } = result;
 
-console.log(result.stats);
+if (stats) {
+  const { assets } = stats.toJson({
+    // 排除不需要的字段以提高性能
+    all: false,
+    assets: true,
+  });
+  console.log(assets);
+}
 ```
 
 ### 自定义 Compiler
@@ -202,7 +216,10 @@ await rsbuild.build({
 
 ## rsbuild.startDevServer
 
-启动本地 dev server。
+启动本地 dev server。该方法会：
+
+1. 启动一个开发服务器，用于运行你的应用
+2. 自动监听文件变化并触发重新编译
 
 - **类型：**
 
@@ -301,159 +318,12 @@ await rsbuild.startDevServer({
 
 Rsbuild 配备了一个内置的开发服务器，当你执行 `rsbuild dev` 时，将启动 Rsbuild dev server，并提供页面预览、路由、模块热更新等功能。
 
-如果你希望将 Rsbuild dev server 集成到自定义的 server 中，可以通过该方法获取 dev server 的实例方法，按需进行调用。
-
-- **类型：**
-
-```ts
-type EnvironmentAPI = {
-  [name: string]: {
-    /**
-     * 获取当前环境的构建信息
-     */
-    getStats: () => Promise<Stats>;
-    /**
-     * 在服务端加载并执行构建产物
-     *
-     * @param entryName - 入口名称，和 Rsbuild source.entry 的某一个 key 值对应
-     * @returns 入口模块的返回值
-     */
-    loadBundle: <T = unknown>(entryName: string) => Promise<T>;
-    /**
-     * 获取编译后的 HTML 模版内容
-     */
-    getTransformedHtml: (entryName: string) => Promise<string>;
-  };
-};
-
-type RsbuildDevServer = {
-  /**
-   * 监听 Rsbuild server
-   * 当你使用自定义 server 时，不需要调用该方法
-   */
-  listen: () => Promise<{
-    port: number;
-    urls: string[];
-    server: {
-      close: () => Promise<void>;
-    };
-  }>;
-  /**
-   * Rsbuild server 提供的 environment API
-   */
-  environments: EnvironmentAPI;
-  /**
-   * 解析后的端口号
-   * 默认情况下，Rsbuild Server 会监听 `3000` 端口，如果端口被占用，则自动递增端口号
-   */
-  port: number;
-  /**
-   * `connect` 实例
-   * 可用于向 dev server 附加自定义中间件
-   */
-  middlewares: Connect.Server;
-  /**
-   * 通知 Rsbuild 自定义 Server 已启动
-   * Rsbuild 会在此阶段触发 `onAfterStartDevServer` 钩子
-   */
-  afterListen: () => Promise<void>;
-  /**
-   * 激活 socket 连接
-   * 这确保了 HMR 正常工作
-   */
-  connectWebSocket: (options: { server: HTTPServer }) => void;
-  /**
-   * 关闭 Rsbuild server
-   */
-  close: () => Promise<void>;
-  /**
-   * 打印 server URLs
-   */
-  printUrls: () => void;
-  /**
-   * 启动服务器后，在浏览器中打开 URL
-   */
-  open: () => Promise<void>;
-};
-
-type CreateDevServerOptions = {
-  /**
-   * 自定义 Compiler 对象
-   */
-  compiler?: Compiler | MultiCompiler;
-  /**
-   * 是否在启动时静默获取端口号，不输出任何日志
-   * @default false
-   */
-  getPortSilently?: boolean;
-  /**
-   * 是否触发 Rsbuild 编译
-   * @default true
-   */
-  runCompile?: boolean;
-};
-
-function CreateDevServer(
-  options?: CreateDevServerOptions,
-): Promise<RsbuildDevServer>;
-```
-
-- **示例：**
-
-下面是一个在 [express](https://expressjs.com/) 中集成 Rsbuild DevServer 的例子:
-
-```ts
-import { createRsbuild } from '@rsbuild/core';
-import express from 'express';
-
-export async function startDevServer() {
-  // 初始化 Rsbuild
-  const rsbuild = await createRsbuild({});
-
-  const app = express();
-
-  // 创建 Rsbuild DevServer 实例
-  const rsbuildServer = await rsbuild.createDevServer();
-
-  // 使用 Rsbuild 的内置中间件
-  app.use(rsbuildServer.middlewares);
-
-  const httpServer = app.listen(rsbuildServer.port, async () => {
-    // 通知 Rsbuild 自定义 Server 已启动
-    await rsbuildServer.afterListen();
-  });
-
-  rsbuildServer.connectWebSocket({ server: httpServer });
-}
-```
-
-详细使用情况可参考：[示例](https://github.com/rspack-contrib/rspack-examples/blob/main/rsbuild/express/server.mjs)。
-
-如果你希望直接使用 Rsbuild DevServer 启动项目，可以直接使用 [Rsbuild - startDevServer](#rsbuildstartdevserver) 方法。 `startDevServer` 实际上是以下代码的语法糖：
+- 如果你需要将 Rsbuild dev server 集成到自定义的 server 中，可以通过 `createDevServer` 方法创建一个 dev server 实例，请参考 [Dev server API](/api/javascript-api/dev-server-api) 了解所有可用的 API。
+- 如果你需要直接使用 Rsbuild dev server 启动项目，可以直接使用 [rsbuild.startDevServer](#rsbuildstartdevserver) 方法。 `rsbuild.startDevServer` 实际上是以下代码的语法糖：
 
 ```ts
 const server = await rsbuild.createDevServer();
-
 await server.listen();
-```
-
-### connectWebSocket
-
-Rsbuild 内置了 WebSocket 处理器以支持 HMR 功能：
-
-1. 当用户通过浏览器访问页面时，会自动向服务器发起 WebSocket 连接请求。
-2. Rsbuild 开发服务器检测到连接请求后，会指示内置的 WebSocket 处理器进行处理。
-3. 浏览器与 Rsbuild WebSocket 处理器成功建立连接后，便可进行实时通信。
-4. 每次重新编译完成后，Rsbuild WebSocket 处理器会通知浏览器。随后，浏览器向开发服务器发送 `hot-update.(js|json)` 请求，以加载编译后的新模块。
-
-当你使用自定义的 server 时，可能会遇到 HMR 连接报错的问题，这是因为自定义的 server 没有将 WebSocket 连接请求转发给 Rsbuild 的 WebSocket 处理器。此时需要通过 `connectWebSocket` 方法已使 Rsbuild 能够感知并处理来自浏览器的 WebSocket 连接请求。
-
-```ts
-const rsbuildServer = await rsbuild.createDevServer();
-
-const httpServer = app.listen(rsbuildServer.port);
-
-rsbuildServer.connectWebSocket({ server: httpServer });
 ```
 
 ## rsbuild.preview
@@ -624,9 +494,9 @@ rsbuild.isPluginExists(pluginFoo().name); // true
 
 ## rsbuild.initConfigs
 
-initConfigs 方法用于初始化 Rsbuild 内部的配置，并返回 Rsbuild 内部生成的 Rspack 配置。
+初始化并返回 Rsbuild 内部使用的 Rspack 配置。该方法会处理所有插件和配置，生成最终的 Rspack 配置。
 
-通常你不需要调用 initConfigs 方法，因为调用 [rsbuild.build](#rsbuildbuild)、[rsbuild.startDevServer](#rsbuildstartdevserver) 等方法时会自动调用 initConfigs。
+> 通常你不需要直接调用该方法，因为调用 [rsbuild.build](#rsbuildbuild) 和 [rsbuild.startDevServer](#rsbuildstartdevserver) 等方法时会自动调用 `initConfigs`。
 
 - **类型：**
 
@@ -639,16 +509,20 @@ function InitConfigs(): Promise<{
 - **示例：**
 
 ```ts
-const { rspackConfigs } = await rsbuild.initConfigs();
+const rspackConfigs = await rsbuild.initConfigs();
 
 console.log(rspackConfigs);
 ```
 
 ## rsbuild.inspectConfig
 
-inspectConfig 方法通常用于调试 Rsbuild 内部的配置，它会返回 Rsbuild 内部生成的 Rsbuild 配置和 Rspack 配置，将它们序列化为字符串，并支持写入到磁盘上。
+检查和调试 Rsbuild 的内部配置。它允许你访问：
 
-如果你需要在构建过程中查看 Rsbuild 和 Rspack 配置，可以使用 [调试模式](/guide/debug/debug-mode)，也可以通过 [onBeforeBuild](#rsbuildonbeforebuild)、[onBeforeCreateCompile](#rsbuildonbeforecreatecompiler) 等 hooks 来获取。
+- 解析后的 Rsbuild 配置
+- 特定 environment 的 Rsbuild 配置
+- 生成的 Rspack 配置
+
+该方法将这些配置序列化为字符串，并支持写入磁盘以进行检查。
 
 - **类型：**
 
@@ -679,6 +553,10 @@ async function InspectConfig(options?: InspectConfigOptions): Promise<{
   };
 }>;
 ```
+
+:::tip
+如果你需要在构建过程中查看 Rsbuild 和 Rspack 配置，可以使用 [调试模式](/guide/debug/debug-mode)，也可以通过 [onBeforeBuild](#rsbuildonbeforebuild)、[onBeforeCreateCompile](#rsbuildonbeforecreatecompiler) 等 hooks 来获取。
+:::
 
 ### 示例
 
@@ -769,6 +647,20 @@ rsbuild.onAfterBuild(({ stats }) => {
 });
 ```
 
+## rsbuild.onCloseBuild
+
+import OnCloseBuild from '@zh/shared/onCloseBuild.mdx';
+
+<OnCloseBuild />
+
+- **示例：**
+
+```ts
+rsbuild.onCloseBuild(async () => {
+  console.log('close build!');
+});
+```
+
 ## rsbuild.onBeforeStartDevServer
 
 import OnBeforeStartDevServer from '@zh/shared/onBeforeStartDevServer.mdx';
@@ -778,10 +670,14 @@ import OnBeforeStartDevServer from '@zh/shared/onBeforeStartDevServer.mdx';
 - **示例：**
 
 ```ts
-rsbuild.onBeforeStartDevServer(() => {
-  console.log('before start!');
+rsbuild.onBeforeStartDevServer(({ server, environments }) => {
+  console.log('before starting dev server.');
+  console.log('the server is ', server);
+  console.log('the environments contexts are: ', environments);
 });
 ```
+
+> 查看 [Plugin hooks - onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) 了解更多用法。
 
 ## rsbuild.onAfterStartDevServer
 

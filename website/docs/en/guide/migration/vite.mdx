@@ -1,8 +1,8 @@
 # Vite
 
-Vite is an excellent and powerful build tool. In some cases, you might need to migrate a Vite application to Rsbuild. You can refer to this guide to perform the migration.
+This chapter introduces how to migrate a Vite project to Rsbuild.
 
-## Installing Dependencies
+## Installing dependencies
 
 First, you need to replace the npm dependencies of Vite with Rsbuild's dependencies.
 
@@ -33,7 +33,7 @@ Next, you need to update the npm scripts in your package.json to use Rsbuild's C
 }
 ```
 
-## Create Configuration File
+## Create configuration file
 
 Create a Rsbuild configuration file `rsbuild.config.ts` in the same directory as package.json, and add the following content:
 
@@ -45,7 +45,7 @@ export default defineConfig({
 });
 ```
 
-## Build Entry
+## Build entry
 
 The default build entry points for Rsbuild and Vite are different. Vite uses `index.html` as the default entry, while Rsbuild uses `src/index.js`.
 
@@ -74,7 +74,7 @@ export default {
 
 Rsbuild will automatically inject the `<script>` tags into the generated HTML files during the build process.
 
-## Migrating Plugins
+## Migrating plugins
 
 Most common Vite plugins can be easily migrated to Rsbuild plugins, such as:
 
@@ -95,10 +95,11 @@ Most common Vite plugins can be easily migrated to Rsbuild plugins, such as:
 | [vite-plugin-static-copy](https://www.npmjs.com/package/vite-plugin-static-copy)           | [output.copy](/config/output/copy)                                                              |
 | [vite-plugin-node-polyfills](https://www.npmjs.com/package/vite-plugin-node-polyfills)     | [@rsbuild/plugin-node-polyfill](https://github.com/rspack-contrib/rsbuild-plugin-node-polyfill) |
 | [vite-plugin-solid](https://www.npmjs.com/package/vite-plugin-solid)                       | [@rsbuild/plugin-solid](/plugins/list/plugin-solid)                                             |
+| [@preact/preset-vite](https://www.npmjs.com/package/@preact/preset-vite)                   | [@rsbuild/plugin-preact](/plugins/list/plugin-preact)                                           |
 
 You can refer to [Plugin List](/plugins/list/index) to learn more about available plugins.
 
-## Configuration Migration
+## Configuration migration
 
 Here is the corresponding Rsbuild configuration for Vite configuration:
 
@@ -109,13 +110,15 @@ Here is the corresponding Rsbuild configuration for Vite configuration:
 | base                                  | [server.base](/config/server/base)                               |
 | define                                | [source.define](/config/source/define)                           |
 | plugins                               | [plugins](/config/plugins)                                       |
+| appType                               | [server.historyApiFallback](/config/server/history-api-fallback) |
 | envDir                                | [Env Directory](/guide/advanced/env-vars#env-directory)          |
 | publicDir                             | [server.publicDir](/config/server/public-dir)                    |
 | assetsInclude                         | [source.assetsInclude](/config/source/assets-include)            |
-| resolve.alias                         | [source.alias](/config/source/alias)                             |
+| resolve.alias                         | [resolve.alias](/config/resolve/alias)                           |
+| resolve.dedupe                        | [resolve.dedupe](/config/resolve/dedupe)                         |
+| resolve.extensions                    | [resolve.extensions](/config/resolve/extensions)                 |
 | resolve.conditions                    | [tools.rspack.resolve.conditionNames](/config/tools/rspack)      |
 | resolve.mainFields                    | [tools.rspack.resolve.mainFields](/config/tools/rspack)          |
-| resolve.extensions                    | [tools.rspack.resolve.extensions](/config/tools/rspack)          |
 | resolve.preserveSymlinks              | [tools.rspack.resolve.symlinks](/config/tools/rspack)            |
 | html.cspNonce                         | [security.nonce](/config/security/nonce)                         |
 | css.modules                           | [output.cssModules](/config/output/css-modules)                  |
@@ -127,12 +130,14 @@ Here is the corresponding Rsbuild configuration for Vite configuration:
 | css.lightningcss                      | [tools.lightningcssLoader](/config/tools/lightningcss-loader)    |
 | server.host, preview.host             | [server.host](/config/server/host)                               |
 | server.port, preview.port             | [server.port](/config/server/port)                               |
+| server.cors, preview.cors             | [server.cors](/config/server/cors)                               |
 | server.strictPort, preview.strictPort | [server.strictPort](/config/server/strict-port)                  |
 | server.https, preview.https           | [server.https](/config/server/https)                             |
 | server.open, preview.open             | [server.open](/config/server/open)                               |
-| server.proxy, preview.cors            | [server.proxy](/config/server/proxy)                             |
+| server.proxy, preview.proxy           | [server.proxy](/config/server/proxy)                             |
 | server.headers, preview.headers       | [server.headers](/config/server/headers)                         |
 | server.hmr                            | [dev.hmr](/config/dev/hmr), [dev.client](/config/dev/client)     |
+| server.middlewareMode                 | [server.middlewareMode](/config/server/middleware-mode)          |
 | build.target, build.cssTarget         | [Browserslist](/guide/advanced/browserslist)                     |
 | build.outDir, build.assetsDir         | [output.distPath](/config/output/dist-path)                      |
 | build.assetsInlineLimit               | [output.dataUriLimit](/config/output/data-uri-limit)             |
@@ -151,7 +156,7 @@ Notes:
 
 - The above table does not cover all configurations of Vite, feel free to add more.
 
-## Environment Variables
+## Environment variables
 
 Vite injects environment variables starting with `VITE_` into the client code by default, while Rsbuild injects environment variables starting with `PUBLIC_` by default (see [public variables](/guide/advanced/env-vars#public-variables)).
 
@@ -202,7 +207,7 @@ export default defineConfig({
 });
 ```
 
-## Preset Types
+## Preset types
 
 Vite provides some preset type definitions through the `vite-env.d.ts` file. When migrating to Rsbuild, you can use the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core`:
 
@@ -211,7 +216,7 @@ Vite provides some preset type definitions through the `vite-env.d.ts` file. Whe
 + /// <reference types="@rsbuild/core/types" />
 ```
 
-## Glob Import
+## Glob import
 
 Vite provides `import.meta.glob()` for importing multiple modules.
 
@@ -244,13 +249,30 @@ for (const path of context.keys()) {
 }
 ```
 
-## Validating Results
+## Migrating Vite plugins
+
+Rsbuild's plugin API covers most of the Vite and Rollup plugin hooks, for example:
+
+| Vite plugin hooks | Rsbuild plugin API                                                                                                     |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `resolveId`       | [resolve](/plugins/dev/core#apiresolve)                                                                                |
+| `transform`       | [transform](/plugins/dev/core#apitransform)                                                                            |
+| `config`          | [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig)                                                          |
+| `configResolved`  | [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig)                                                        |
+| `configureServer` | [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver)                                                    |
+| `buildStart`      | [onBeforeBuild](/plugins/dev/hooks#onbeforebuild), [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) |
+| `buildEnd`        | [onAfterBuild](/plugins/dev/hooks#onafterbuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
+| `closeBundle`     | [onCloseBuild](/plugins/dev/hooks#onclosebuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
+
+See [Plugin system](/plugins/dev/index) for more details.
+
+## Validating results
 
 After completing the above steps, you have completed the basic migration from Vite to Rsbuild. You can now run the `npm run dev` command to try starting the dev server.
 
 If you encounter any issues during the build process, please debug according to the error log, or check the Vite configuration to see if there are any necessary configurations that have not been migrated to Rsbuild.
 
-## Contents Supplement
+## Contents supplement
 
 The current document only covers part of the migration process. If you find suitable content to add, feel free to contribute to the documentation via pull request 🤝.
 

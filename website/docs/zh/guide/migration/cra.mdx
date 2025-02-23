@@ -163,6 +163,15 @@ CRA 默认会使用 Babel 编译 node_modules 中的依赖，但 Rsbuild 则不�
 
 如果你需要处理 node_modules 中依赖引起的语法兼容性问题，可以使用 [source.include](/config/source/include#编译-node_modules) 配置项来编译 node_modules。
 
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    // 编译所有 JS 文件并排除 core-js
+    include: [{ not: /[\\/]core-js[\\/]/ }],
+  },
+};
+```
+
 ## 环境变量
 
 CRA 默认会将 `REACT_APP_` 开头的环境变量注入到 client 代码中，而 Rsbuild 默认会注入 `PUBLIC_` 开头的环境变量（参考 [public 变量](/guide/advanced/env-vars#public-变量)）。
@@ -254,14 +263,26 @@ export default {
 
 CRA 提供了 [react-app-polyfill](https://www.npmjs.com/package/react-app-polyfill) 来手动注入 polyfill 代码。
 
-在 Rsbuild 项目中，你可以移除 react-app-polyfill 相关的依赖和代码，因为 Rsbuild 会自动读取 browserslist 配置，并按需注入 polyfill 代码。
+在 Rsbuild 项目中，你可以移除 react-app-polyfill 相关的依赖和代码，因为 Rsbuild 会自动读取 browserslist 配置，并允许你通过 [output.polyfill](/config/output/polyfill) 配置项来启用 polyfill 注入。
+
+1. 移除 `react-app-polyfill` 引用：
 
 ```diff title="src/index.js"
 - import 'react-app-polyfill/ie11';
 - import 'react-app-polyfill/stable';
 ```
 
-你可以参考 [浏览器兼容性](/guide/advanced/browser-compatibility) 来了解 Rsbuild 是如何处理 polyfill 的。
+2. 配置 [output.polyfill](/config/output/polyfill)：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    polyfill: 'usage',
+  },
+};
+```
+
+> 参考 [浏览器兼容性](/guide/advanced/browser-compatibility) 来了解 Rsbuild 是如何处理 polyfill 的。
 
 ## 添加 ESLint 插件
 
@@ -275,19 +296,15 @@ module.exports = {
 };
 ```
 
+:::tip
+我们并不推荐使用 `@rsbuild/plugin-eslint`，因为在构建过程中允许 ESLint 检查会显著增加构建时间。更推荐的做法是使用单独的 `lint` 命令来执行 ESLint 检查。
+:::
+
 ## 读取 jsconfig.json
 
 在非 TypeScript 项目中，CRA 支持读取 jsconfig.json 中的 `paths` 字段作为路径别名。
 
-如果你需要在 Rsbuild 中使用该特性，可以使用 [source.tsconfigPath](/config/source/tsconfig-path) 选项，使 Rsbuild 能够识别 jsconfig.json 中的 `paths` 字段。
-
-```js title="rsbuild.config.mjs"
-export default {
-  source: {
-    tsconfigPath: './jsconfig.json',
-  },
-};
-```
+如果你需要在 Rsbuild 中使用该特性，可以参考 [路径别名 - jsconfig.json](/guide/advanced/alias#jsconfigjson)。
 
 ## CRACO 迁移
 
@@ -296,7 +313,7 @@ export default {
 | CRACO                                                                                           | Rsbuild                                                                                   |
 | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | [webpack.configure](https://craco.js.org/docs/configuration/webpack/#webpackconfigure)          | [tools.rspack](/config/tools/rspack)                                                      |
-| [webpack.alias](https://craco.js.org/docs/configuration/webpack/#webpackalias)                  | [source.alias](/config/source/alias)                                                      |
+| [webpack.alias](https://craco.js.org/docs/configuration/webpack/#webpackalias)                  | [resolve.alias](/config/resolve/alias)                                                    |
 | [webpack.plugins.add](https://craco.js.org/docs/configuration/webpack/#webpackplugins)          | [appendPlugins of tools.rspack](/config/tools/rspack#appendplugins)                       |
 | [webpack.plugins.remove](https://craco.js.org/docs/configuration/webpack/#webpackpluginsremove) | [removePlugin of tools.rspack](/config/tools/rspack#removeplugin)                         |
 | [style.modules](https://craco.js.org/docs/configuration/style/#stylemodules)                    | [output.cssModules](/config/output/css-modules)                                           |

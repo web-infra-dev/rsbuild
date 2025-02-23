@@ -2,7 +2,7 @@
 
 Rsbuild comes with a built-in dev server designed to improve the development experience. When you run the `rsbuild dev` or `rsbuild preview` commands, the server will start, providing features such as page preview, routing, and hot module reloading.
 
-## Base Path
+## Base path
 
 By default, the base path of the server is `/`, and users can access output files such as `index.html` and public folder assets through http://localhost:3000/.
 
@@ -16,7 +16,7 @@ export default {
 };
 ```
 
-## View Static Assets
+## View static assets
 
 After starting the dev server, you can access `/rsbuild-dev-server` to view all static assets generated during the current build.
 
@@ -28,13 +28,13 @@ For example, open `http://localhost:3000/rsbuild-dev-server` in the browser, you
   width="600"
 />
 
-## Page Routing
+## Page routing
 
-Rsbuild Server offers a set of default routing convention, and allows users to customize it through configurations.
+Rsbuild server offers a set of default routing convention, and allows users to customize it through configurations.
 
-### Default Behavior
+### Default behavior
 
-Rsbuild Server will generate the corresponding page route based on the [server.base](/config/server/base) and [source.entry](/config/source/entry) configurations.
+Rsbuild server will generate the corresponding page route based on the [server.base](/config/server/base) and [source.entry](/config/source/entry) configurations.
 
 When entry is index, the page can be accessed through `/`; when entry is foo, the page can be accessed through `/foo`.
 
@@ -51,7 +51,7 @@ export default {
 };
 ```
 
-### Fallback Behavior
+### Fallback behavior
 
 By default, when the request meets the following conditions and the corresponding resource is not found, it will fallback to `index.html`:
 
@@ -66,7 +66,7 @@ export default {
 };
 ```
 
-### Custom Fallback Behavior
+### Custom fallback behavior
 
 When Rsbuild's default [server.htmlFallback](/config/server/html-fallback) configuration cannot meet your needs, for example, if you want to be able to access `main.html` when accessing `/`, you can set it up using [server.historyApiFallback](/config/server/history-api-fallback).
 
@@ -86,7 +86,7 @@ export default {
 };
 ```
 
-### HTML Output Path
+### HTML output path
 
 Normally, `/` points to the dist root directory, and the HTML file is output to the dist root directory. At this time, the corresponding HTML page can be accessed through `/some-path`.
 
@@ -110,17 +110,17 @@ export default {
 };
 ```
 
-## Rspack Dev Server
+## Rspack dev server
 
-The built-in dev server of Rspack CLI is [@rspack/dev-server](https://www.npmjs.com/package/@rspack/dev-server). Rsbuild does not use `@rspack/dev-server`, but instead implemented its own more lightweight version.
+Rsbuild has a built-in lightweight dev server, which is different from the dev servers built into Rspack CLI or webpack CLI. There are some differences between them, including different configuration options.
 
 ### Comparison
 
-The dev server of Rsbuild and `@rspack/dev-server` have the following differences:
+Compared with the dev server built into Rspack CLI, Rsbuild's dev server has the following differences:
 
 - **Configuration**: Rsbuild provides richer server configuration options.
-- **Log Format**: The log format of Rspack CLI is basically consistent with Webpack CLI, while Rsbuild's logs are clearer and more readable.
-- **Dependencies**: `@rspack/dev-server` is based on express with many third-party dependencies. Rsbuild, on the other hand, uses lighter libraries such as `connect`.
+- **Log Format**: The log format of Rspack CLI is basically consistent with webpack CLI, while Rsbuild's logs are clearer and more readable.
+- **Dependencies**: Rsbuild is implemented based on lightweight libraries like `connect`, which has fewer dependencies and faster startup speed compared to `express` used by `@rspack/dev-server`.
 
 ### Configuration
 
@@ -130,35 +130,82 @@ In Rsbuild, `dev` contains some configs that are only work in development mode, 
 
 Below are the Rsbuild configs that correspond to the Rspack CLI's `devServer` config:
 
-| Rspack CLI                                                                                       | Rsbuild                                                          |
-| ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [devServer.client](https://rspack.dev/config/dev-server#devserverclient)                         | [dev.client](/config/dev/client)                                 |
-| [devServer.compress](https://rspack.dev/config/dev-server#devservercompress)                     | [server.compress](/config/server/compress)                       |
-| [devServer.headers](https://rspack.dev/config/dev-server#devserverheaders)                       | [server.headers](/config/server/headers)                         |
-| [devServer.historyApiFallback](https://rspack.dev/config/dev-server#devserverhistoryapifallback) | [server.historyApiFallback](/config/server/history-api-fallback) |
-| [devServer.host](https://rspack.dev/config/dev-server#devserverhost)                             | [server.host](/config/server/host)                               |
-| [devServer.hot](https://rspack.dev/config/dev-server#devserverhot)                               | [dev.hmr](/config/dev/hmr)                                       |
-| [devServer.liveReload](https://rspack.dev/config/dev-server#devserverlivereload)                 | [dev.liveReload](/config/dev/live-reload)                        |
-| [devServer.open](https://rspack.dev/config/dev-server#devserveropen)                             | [server.open](/config/server/open)                               |
-| [devServer.port](https://rspack.dev/config/dev-server#devserverport)                             | [server.port](/config/server/port)                               |
-| [devServer.proxy](https://rspack.dev/config/dev-server#devserverproxy)                           | [server.proxy](/config/server/proxy)                             |
-| [devServer.setupMiddlewares](https://rspack.dev/config/dev-server#devserversetupmiddlewares)     | [dev.setupMiddlewares](/config/dev/setup-middlewares)            |
-| [devServer.static](https://rspack.dev/config/dev-server#devserverstatic)                         | [server.publicDir](/config/server/public-dir)                    |
-| [devServer.watchFiles](https://rspack.dev/config/dev-server#devserverwatchfiles)                 | [dev.watchFiles](/config/dev/watch-files)                        |
+| Rspack CLI                                                                                         | Rsbuild                                                          |
+| -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [devServer.client](https://rspack.dev/config/dev-server#devserverclient)                           | [dev.client](/config/dev/client)                                 |
+| [devServer.compress](https://rspack.dev/config/dev-server#devservercompress)                       | [server.compress](/config/server/compress)                       |
+| [devServer.devMiddleware.writeToDisk](https://rspack.dev/config/dev-server#devserverdevmiddleware) | [dev.writeToDisk](/config/dev/write-to-disk)                     |
+| [devServer.headers](https://rspack.dev/config/dev-server#devserverheaders)                         | [server.headers](/config/server/headers)                         |
+| [devServer.historyApiFallback](https://rspack.dev/config/dev-server#devserverhistoryapifallback)   | [server.historyApiFallback](/config/server/history-api-fallback) |
+| [devServer.host](https://rspack.dev/config/dev-server#devserverhost)                               | [server.host](/config/server/host)                               |
+| [devServer.hot](https://rspack.dev/config/dev-server#devserverhot)                                 | [dev.hmr](/config/dev/hmr)                                       |
+| [devServer.liveReload](https://rspack.dev/config/dev-server#devserverlivereload)                   | [dev.liveReload](/config/dev/live-reload)                        |
+| [devServer.open](https://rspack.dev/config/dev-server#devserveropen)                               | [server.open](/config/server/open)                               |
+| [devServer.port](https://rspack.dev/config/dev-server#devserverport)                               | [server.port](/config/server/port)                               |
+| [devServer.proxy](https://rspack.dev/config/dev-server#devserverproxy)                             | [server.proxy](/config/server/proxy)                             |
+| [devServer.setupMiddlewares](https://rspack.dev/config/dev-server#devserversetupmiddlewares)       | [dev.setupMiddlewares](/config/dev/setup-middlewares)            |
+| [devServer.static](https://rspack.dev/config/dev-server#devserverstatic)                           | [server.publicDir](/config/server/public-dir)                    |
+| [devServer.watchFiles](https://rspack.dev/config/dev-server#devserverwatchfiles)                   | [dev.watchFiles](/config/dev/watch-files)                        |
 
 > For more configurations, please refer to [Config Overview](/config/index).
 
-## Extend middleware
+## Middlewares
 
-Rsbuild server does not use any Node.js frameworks, and the `req` and `res` provided by Rsbuild middleware are both native Node.js objects.
+Rsbuild's middlewares implementation is built on [connect](https://github.com/senchalabs/connect), a lightweight HTTP server framework, and uses the standard Node.js `request` and `response` objects for handling HTTP interactions.
 
-This means that when you migrate from other server-side frameworks (such as Express), the original middleware may not necessarily be used directly in Rsbuild. For example, the `req.params`,`req.path`, `req.search`, `req.query` and other properties provided by Express cannot be accessed in the Rsbuild middleware.
+### Register middlewares
 
-If you need to use existing middleware in Rsbuild, this can be done by passing the server application as middleware as follows:
+Rsbuild provides three ways to register middlewares:
+
+1. Use the [dev.setupMiddlewares](/config/dev/setup-middlewares) configuration.
 
 ```ts title="rsbuild.config.ts"
-import expressMiddleware from 'my-express-middleware';
+export default {
+  dev: {
+    setupMiddlewares: [
+      (middlewares, server) => {
+        middlewares.push((req, res, next) => {
+          next();
+        });
+      },
+    ],
+  },
+};
+```
+
+2. In the Rsbuild plugin, you can register middlewares through the [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) hook.
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.onBeforeStartDevServer(({ server }) => {
+      server.middlewares.use((req, res, next) => {
+        next();
+      });
+    });
+  },
+});
+```
+
+3. When using the Rsbuild JavaScript API, you can create a dev server instance through the [rsbuild.createDevServer](/api/javascript-api/instance#rsbuildcreatedevserver) method and use the `use` method to register middlewares.
+
+```ts
+const server = await rsbuild.createDevServer();
+
+server.middlewares.use((req, res, next) => {
+  next();
+});
+```
+
+### Integrate third-party server frameworks
+
+When migrating from other server frameworks (such as Express), the original middleware may not be used directly in Rsbuild. For example, the `req.params`, `req.path`, `req.search`, `req.query` and other properties provided by Express cannot be accessed in the Rsbuild middleware.
+
+If you need to reuse existing middleware in Rsbuild, you can use the following method to introduce the server application as a whole as middleware:
+
+```ts title="rsbuild.config.ts"
 import express from 'express';
+import expressMiddleware from 'my-express-middleware';
 
 // Initialize Express app
 const app = express();
@@ -176,7 +223,7 @@ export default {
 };
 ```
 
-## Custom Server
+## Custom server
 
 If you want to integrate Rsbuild dev server into a custom server, you can get the instance methods of Rsbuild dev server through the `createDevServer` method of Rsbuild and call them on demand.
 

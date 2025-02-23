@@ -192,6 +192,11 @@ export async function createContext(
   const rsbuildConfig = await withDefaultConfig(rootPath, userConfig);
   const cachePath = join(rootPath, 'node_modules', '.cache');
 
+  const specifiedEnvironments =
+    options.environment && options.environment.length > 0
+      ? options.environment
+      : undefined;
+
   return {
     version: RSBUILD_VERSION,
     rootPath,
@@ -202,6 +207,6 @@ export async function createContext(
     hooks: initHooks(),
     config: { ...rsbuildConfig },
     originalConfig: userConfig,
-    specifiedEnvironments: options.environment,
+    specifiedEnvironments,
   };
 }

@@ -56,7 +56,7 @@ const getMainFields = (chain: RspackChain, target: RsbuildTarget) => {
 };
 
 /**
- * Handling differences between Webpack and Rspack
+ * Handling differences between webpack and Rspack
  */
 export const pluginAdaptor = (
   helpers: RsbuildProviderHelpers,
@@ -66,8 +66,10 @@ export const pluginAdaptor = (
   setup(api) {
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment, target }) => {
       const { config, tsconfigPath } = environment;
+      const aliasStrategy =
+        config.source.aliasStrategy ?? config.resolve.aliasStrategy;
 
-      if (tsconfigPath && config.source.aliasStrategy === 'prefer-tsconfig') {
+      if (tsconfigPath && aliasStrategy === 'prefer-tsconfig') {
         await applyTsConfigPathsPlugin({
           chain,
           CHAIN_ID,

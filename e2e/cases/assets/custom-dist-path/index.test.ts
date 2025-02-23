@@ -12,38 +12,38 @@ test('should allow to custom dist path of different files', async () => {
   // JS
   expect(
     filenames.some((filename) =>
-      filename.includes('dist/hello/my-js/index.js'),
+      filename.includes('dist/custom/my-js/index.js'),
     ),
   ).toBeTruthy();
   expect(
     filenames.some((filename) =>
-      filename.includes('dist/hello/my-async-js/foo.js'),
+      filename.includes('dist/custom/my-async-js/foo.js'),
     ),
   ).toBeTruthy();
 
   // CSS
   expect(
     filenames.some((filename) =>
-      filename.includes('dist/hello/my-css/index.css'),
+      filename.includes('dist/custom/my-css/index.css'),
     ),
   ).toBeTruthy();
   expect(
     filenames.some((filename) =>
-      filename.includes('dist/hello/my-async-css/foo.css'),
+      filename.includes('dist/custom/my-async-css/foo.css'),
     ),
   ).toBeTruthy();
 
   // HTML
   expect(
     filenames.some((filename) =>
-      filename.includes('dist/hello/my-html/index.html'),
+      filename.includes('dist/custom/my-html/index.html'),
     ),
   ).toBeTruthy();
 
   // Image
   expect(
     filenames.some((filename) =>
-      filename.includes('dist/hello/my-image/icon.png'),
+      filename.includes('dist/custom/my-image/icon.png'),
     ),
   ).toBeTruthy();
 });

@@ -1,0 +1,48 @@
+# postcss-loader and css-loader use `semver` to compare PostCSS ast version,
+# Rsbuild uses the same PostCSS version and do not need the comparison.
+diff --git a/dist/index.js b/dist/index.js
+index c71ab296e023491323a8abaff050ca906ae36f0c..fa7679761159a21ce210604d74dc9c34dee7000b 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -5,8 +5,6 @@ Object.defineProperty(exports, "__esModule", {
+ });
+ exports.default = loader;
+ var _path = _interopRequireDefault(require("path"));
+-var _package = _interopRequireDefault(require("postcss/package.json"));
+-var _options = _interopRequireDefault(require("./options.json"));
+ var _utils = require("./utils");
+ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+ let hasExplicitDependencyOnPostCSS = false;
+@@ -25,7 +23,7 @@ let hasExplicitDependencyOnPostCSS = false;
+  * @return {callback} callback Result
+  */
+ async function loader(content, sourceMap, meta) {
+-  const options = this.getOptions(_options.default);
++  const options = this.getOptions();
+   const callback = this.async();
+   const configOption = typeof options.postcssOptions === "undefined" || typeof options.postcssOptions.config === "undefined" ? true : options.postcssOptions.config;
+   let implementation;
+@@ -66,9 +64,7 @@ async function loader(content, sourceMap, meta) {
+   let root;
+ 
+   // Reuse PostCSS AST from other loaders
+-  if (meta && meta.ast && meta.ast.type === "postcss" &&
+-  // eslint-disable-next-line global-require
+-  require("semver").satisfies(meta.ast.version, `^${_package.default.version}`)) {
++  if (meta && meta.ast && meta.ast.type === "postcss") {
+     ({
+       root
+     } = meta.ast);
+diff --git a/dist/utils.js b/dist/utils.js
+index 218f597ff2220b4381f9df37b1d5377835c631d6..b5a870957098ef0d971a2ff9f6be3cde9a1fbfb5 100644
+--- a/dist/utils.js
++++ b/dist/utils.js
+@@ -15,7 +15,7 @@ exports.warningFactory = warningFactory;
+ var _path = _interopRequireDefault(require("path"));
+ var _url = _interopRequireDefault(require("url"));
+ var _module = _interopRequireDefault(require("module"));
+-var _cosmiconfig = require("cosmiconfig");
++var _cosmiconfig = {};
+ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+ const parentModule = module;
+ const stat = (inputFileSystem, filePath) => new Promise((resolve, reject) => {

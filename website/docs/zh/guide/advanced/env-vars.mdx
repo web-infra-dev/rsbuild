@@ -223,9 +223,9 @@ Rsbuild 会依次读取以下文件：
 - .env.test.local
 
 :::tip
-`--env-mode` 选项的优先级高于 process.env.NODE_ENV。
+`--env-mode` 选项的优先级高于 `process.env.NODE_ENV`。
 
-推荐使用 `--env-mode` 来指定 env 模式，不建议修改 process.env.NODE_ENV。
+推荐使用 `--env-mode` 来指定 env 模式，不建议修改 `process.env.NODE_ENV`。
 
 :::
 
@@ -260,13 +260,13 @@ console.log(process.env.FOO); // 'hello'
 console.log(process.env.BAR); // '1'
 ```
 
-此时在创建 `.env.local` 文件，添加以下内容：
+此时，创建一个 `.env.local` 文件，添加以下内容：
 
 ```shell title=".env.local"
 BAR=2
 ```
 
-此时 `BAR` 的值被覆盖为 `'2'`：
+`BAR` 的值会被覆盖为 `'2'`：
 
 ```ts title="rsbuild.config.ts"
 console.log(import.meta.env.BAR); // '2'
@@ -480,7 +480,7 @@ declare namespace NodeJS {
 }
 ```
 
-## Tree Shaking
+## Tree shaking
 
 `define` 还可以用于标记死代码以协助 Rspack 进行 tree shaking 优化。
 

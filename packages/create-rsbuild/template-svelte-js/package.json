@@ -1,17 +1,18 @@
 {
   "name": "rsbuild-svelte-js",
-  "private": true,
   "version": "1.0.0",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "rsbuild dev --open",
     "build": "rsbuild build",
+    "dev": "rsbuild dev --open",
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "svelte": "^5.2.2"
+    "svelte": "^5.20.1"
   },
   "devDependencies": {
-    "@rsbuild/core": "^1.1.2",
-    "@rsbuild/plugin-svelte": "^1.0.5"
+    "@rsbuild/core": "^1.2.8",
+    "@rsbuild/plugin-svelte": "^1.0.7"
   }
 }

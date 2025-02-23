@@ -67,7 +67,7 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
           rule
             .test(test || /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/)
             .use(CHAIN_ID.USE.SWC)
-            .loader(path.resolve(__dirname, './loader.cjs'))
+            .loader(path.resolve(__dirname, './loader.mjs'))
             .options(removeUselessOptions(swcConfig) satisfies TransformConfig);
 
           if (include) {
@@ -103,7 +103,7 @@ export const pluginSwc = (options: PluginSwcOptions = {}): RsbuildPlugin => ({
           .resolve.set('fullySpecified', false)
           .end()
           .use(CHAIN_ID.USE.SWC)
-          .loader(path.resolve(__dirname, './loader.cjs'))
+          .loader(path.resolve(__dirname, './loader.mjs'))
           .options(removeUselessOptions(mainConfig) satisfies TransformConfig);
       },
     });

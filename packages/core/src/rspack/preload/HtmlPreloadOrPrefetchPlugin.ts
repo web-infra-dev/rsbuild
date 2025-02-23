@@ -24,7 +24,7 @@ import type {
 } from '@rspack/core';
 import { ensureAssetPrefix, upperFirst } from '../../helpers';
 import { getHTMLPlugin } from '../../pluginHelper';
-import type { HtmlRspackPlugin, PreloadOrPreFetchOption } from '../../types';
+import type { HtmlRspackPlugin, PreloadOrPrefetchOption } from '../../types';
 import {
   type As,
   type BeforeAssetTagGenerationHtmlPluginData,
@@ -35,6 +35,7 @@ import {
 
 const defaultOptions = {
   type: 'async-chunks' as const,
+  dedupe: true,
 };
 
 type LinkType = 'preload' | 'prefetch';
@@ -60,7 +61,7 @@ function filterResourceHints(
 }
 
 function generateLinks(
-  options: PreloadOrPreFetchOption,
+  options: PreloadOrPrefetchOption,
   type: LinkType,
   compilation: Compilation,
   htmlPluginData: BeforeAssetTagGenerationHtmlPluginData,
@@ -165,7 +166,9 @@ function generateLinks(
 }
 
 export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
-  readonly options: PreloadOrPreFetchOption;
+  readonly options: PreloadOrPrefetchOption;
+
+  name = 'HtmlPreloadOrPrefetchPlugin';
 
   resourceHints: HtmlRspackPlugin.HtmlTagObject[] = [];
 
@@ -174,7 +177,7 @@ export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
   HTMLCount: number;
 
   constructor(
-    options: true | PreloadOrPreFetchOption,
+    options: true | PreloadOrPrefetchOption,
     type: LinkType,
     HTMLCount: number,
   ) {
@@ -187,7 +190,7 @@ export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
   }
 
   apply(compiler: Compiler): void {
-    compiler.hooks.compilation.tap(this.constructor.name, (compilation) => {
+    compiler.hooks.compilation.tap(this.name, (compilation) => {
       getHTMLPlugin()
         .getHooks(compilation)
         .beforeAssetTagGeneration.tap(
@@ -212,10 +215,12 @@ export class HtmlPreloadOrPrefetchPlugin implements RspackPluginInstance {
           (htmlPluginData) => {
             if (this.resourceHints) {
               htmlPluginData.assetTags.styles = [
-                ...filterResourceHints(
-                  this.resourceHints,
-                  htmlPluginData.assetTags.scripts,
-                ),
+                ...(this.options.dedupe
+                  ? filterResourceHints(
+                      this.resourceHints,
+                      htmlPluginData.assetTags.scripts,
+                    )
+                  : this.resourceHints),
                 ...htmlPluginData.assetTags.styles,
               ];
             }

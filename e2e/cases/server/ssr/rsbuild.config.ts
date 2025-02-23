@@ -9,7 +9,7 @@ import { pluginReact } from '@rsbuild/plugin-react';
 export const serverRender =
   (serverAPI: SetupMiddlewaresServer): RequestHandler =>
   async (_req, res, _next) => {
-    const indexModule = await serverAPI.environments.ssr.loadBundle<{
+    const indexModule = await serverAPI.environments.node.loadBundle<{
       render: () => string;
     }>('index');
 
@@ -59,7 +59,7 @@ export default defineConfig({
         },
       },
     },
-    ssr: {
+    node: {
       output: {
         target: 'node',
       },
@@ -97,7 +97,6 @@ export default defineConfig({
                 runtimeChunk: true,
                 splitChunks: {
                   chunks: 'all',
-                  enforceSizeThreshold: 50000,
                   minSize: 0,
                   cacheGroups: {
                     'lib-react': {

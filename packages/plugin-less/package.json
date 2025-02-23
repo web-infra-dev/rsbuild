@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-less",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Less plugin for Rsbuild",
   "homepage": "https://rsbuild.dev",
   "repository": {
@@ -30,17 +30,17 @@
   },
   "dependencies": {
     "deepmerge": "^4.3.1",
-    "reduce-configs": "^1.0.0"
+    "reduce-configs": "^1.1.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.0.18",
+    "@rslib/core": "0.5.0",
     "@scripts/test-helper": "workspace:*",
-    "@types/less": "^3.0.6",
-    "less": "^4.2.0",
+    "@types/less": "^3.0.8",
+    "less": "^4.2.2",
     "less-loader": "^12.2.0",
-    "prebundle": "1.2.5",
-    "typescript": "^5.6.3"
+    "prebundle": "1.2.7",
+    "typescript": "^5.7.3"
   },
   "peerDependencies": {
     "@rsbuild/core": "1.x"

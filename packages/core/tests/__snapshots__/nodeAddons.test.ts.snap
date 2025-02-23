@@ -8,7 +8,7 @@ exports[`plugin-node-addons > should add node addons rule properly 1`] = `
         "test": /\\\\\\.node\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/core/dist/transformRawLoader.cjs",
+            "loader": "<ROOT>/packages/core/dist/transformRawLoader.mjs",
             "options": {
               "getEnvironment": [Function],
               "id": "rsbuild-transform-0",
@@ -19,7 +19,9 @@ exports[`plugin-node-addons > should add node addons rule properly 1`] = `
     ],
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;

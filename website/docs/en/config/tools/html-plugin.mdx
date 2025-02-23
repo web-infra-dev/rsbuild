@@ -26,7 +26,7 @@ If you need to modify options such as `title`, `template`, `templateParameters`,
 This is because Rsbuild provides some internal optimization processing for these HTML configurations. For example, if the HTML template used by the current project already contains the `<title>` tag, then `html.title` will not take effect.
 :::
 
-## Object Type
+## Object type
 
 When `tools.htmlPlugin` is `Object` type, the value will be merged with the default config via `Object.assign`.
 
@@ -40,7 +40,7 @@ export default {
 };
 ```
 
-## Function Type
+## Function type
 
 When `tools.htmlPlugin` is a Function:
 
@@ -74,7 +74,7 @@ export default {
 
 ## Example
 
-### Modify HTML File Name
+### Modify HTML file name
 
 The `filename` option can be used to modify the file name of the HTML output.
 
@@ -92,6 +92,6 @@ export default {
 };
 ```
 
-## HTML Minification
+## HTML minification
 
-Rsbuild currently does not minify HTML files. If you need to minify HTML files, you can use the [rsbuild-plugin-html-minifier-terser plugin](https://github.com/rspack-contrib/rsbuild-plugin-html-minifier-terser).
+Rsbuild currently does not minify HTML files. To minify HTML files, use the [rsbuild-plugin-html-minifier-terser plugin](https://github.com/rspack-contrib/rsbuild-plugin-html-minifier-terser).

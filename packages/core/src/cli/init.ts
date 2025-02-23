@@ -4,7 +4,6 @@ import { createRsbuild } from '../createRsbuild';
 import { castArray, getAbsolutePath } from '../helpers';
 import { loadEnv } from '../loadEnv';
 import { logger } from '../logger';
-import { onBeforeRestartServer } from '../server/restart';
 import type { RsbuildInstance } from '../types';
 import type { CommonOptions } from './commands';
 
@@ -38,50 +37,23 @@ export async function init({
       mode: commonOpts.envMode,
     });
 
-    onBeforeRestartServer(envs.cleanup);
-
     const { content: config, filePath: configFilePath } = await loadConfig({
       cwd: root,
       path: commonOpts.config,
       envMode: commonOpts.envMode,
+      loader: commonOpts.configLoader,
     });
-
-    const command = process.argv[2];
-    if (command === 'dev' || isBuildWatch) {
-      const files = [...envs.filePaths];
-
-      if (configFilePath) {
-        files.push(configFilePath);
-      }
-
-      if (config.dev?.watchFiles) {
-        for (const watchFilesConfig of castArray(config.dev.watchFiles)) {
-          if (watchFilesConfig.type !== 'reload-server') {
-            continue;
-          }
-
-          const paths = castArray(watchFilesConfig.paths);
-          if (watchFilesConfig.options) {
-            watchFilesForRestart(
-              paths,
-              root,
-              isBuildWatch,
-              watchFilesConfig.options,
-            );
-          } else {
-            files.push(...paths);
-          }
-        }
-      }
-
-      watchFilesForRestart(files, root, isBuildWatch);
-    }
 
     config.source ||= {};
     config.source.define = {
       ...envs.publicVars,
       ...config.source.define,
     };
+
+    if (commonOpts.base) {
+      config.server ||= {};
+      config.server.base = commonOpts.base;
+    }
 
     if (commonOpts.root) {
       config.root = root;
@@ -112,11 +84,64 @@ export async function init({
       config.dev.cliShortcuts = true;
     }
 
-    return createRsbuild({
+    // add env files to build dependencies, so that the build cache
+    // can be invalidated when the env files are changed.
+    if (config.performance?.buildCache && envs.filePaths.length > 0) {
+      const { buildCache } = config.performance;
+      if (buildCache === true) {
+        config.performance.buildCache = {
+          buildDependencies: envs.filePaths,
+        };
+      } else {
+        buildCache.buildDependencies ||= [];
+        buildCache.buildDependencies.push(...envs.filePaths);
+      }
+    }
+
+    const rsbuild = await createRsbuild({
       cwd: root,
       rsbuildConfig: config,
       environment: commonOpts.environment,
     });
+
+    rsbuild.onBeforeCreateCompiler(() => {
+      const command = process.argv[2];
+      if (command === 'dev' || isBuildWatch) {
+        const files = [...envs.filePaths];
+
+        if (configFilePath) {
+          files.push(configFilePath);
+        }
+
+        const config = rsbuild.getNormalizedConfig();
+        if (config.dev?.watchFiles) {
+          for (const watchFilesConfig of castArray(config.dev.watchFiles)) {
+            if (watchFilesConfig.type !== 'reload-server') {
+              continue;
+            }
+
+            const paths = castArray(watchFilesConfig.paths);
+            if (watchFilesConfig.options) {
+              watchFilesForRestart(
+                paths,
+                root,
+                isBuildWatch,
+                watchFilesConfig.options,
+              );
+            } else {
+              files.push(...paths);
+            }
+          }
+        }
+
+        watchFilesForRestart(files, root, isBuildWatch);
+      }
+    });
+
+    rsbuild.onCloseBuild(envs.cleanup);
+    rsbuild.onCloseDevServer(envs.cleanup);
+
+    return rsbuild;
   } catch (err) {
     if (isRestart) {
       logger.error(err);

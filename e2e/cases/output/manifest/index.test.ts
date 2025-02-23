@@ -1,17 +1,16 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { build } from '@e2e/helper';
+import { build, dev, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const fixtures = __dirname;
 
-test('output.manifest', async () => {
+test('should generate manifest file in output', async () => {
   const rsbuild = await build({
     cwd: fixtures,
     rsbuildConfig: {
       output: {
         manifest: true,
-        legalComments: 'none',
         filenameHash: false,
       },
       performance: {
@@ -42,13 +41,12 @@ test('output.manifest', async () => {
   });
 });
 
-test('output.manifest set a path', async () => {
+test('should generate manifest file at specified path', async () => {
   await build({
     cwd: fixtures,
     rsbuildConfig: {
       output: {
         manifest: './custom/my-manifest.json',
-        legalComments: 'none',
         filenameHash: false,
       },
       performance: {
@@ -69,7 +67,7 @@ test('output.manifest set a path', async () => {
   expect(Object.keys(parsed.allFiles).length).toBe(2);
 });
 
-test('output.manifest when target is node', async () => {
+test('should generate manifest file when target is node', async () => {
   const rsbuild = await build({
     cwd: fixtures,
     rsbuildConfig: {
@@ -79,13 +77,7 @@ test('output.manifest when target is node', async () => {
         },
         target: 'node',
         manifest: true,
-        legalComments: 'none',
         filenameHash: false,
-      },
-      performance: {
-        chunkSplit: {
-          strategy: 'all-in-one',
-        },
       },
     },
   });
@@ -108,3 +100,107 @@ test('output.manifest when target is node', async () => {
     },
   });
 });
+
+test('should always write manifest to disk when in dev mode', async ({
+  page,
+}) => {
+  const rsbuild = await dev({
+    cwd: fixtures,
+    page,
+    rsbuildConfig: {
+      output: {
+        distPath: {
+          root: 'dist-dev',
+        },
+        manifest: true,
+        filenameHash: false,
+      },
+      performance: {
+        chunkSplit: {
+          strategy: 'all-in-one',
+        },
+      },
+    },
+  });
+
+  const files = await rsbuild.unwrapOutputJSON();
+
+  const manifestContent =
+    files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];
+
+  expect(manifestContent).toBeDefined();
+
+  await rsbuild.close();
+});
+
+test('should allow to filter files in manifest', async () => {
+  const rsbuild = await build({
+    cwd: fixtures,
+    rsbuildConfig: {
+      output: {
+        manifest: {
+          filter: (file) => file.name.endsWith('.js'),
+        },
+        filenameHash: false,
+      },
+      performance: {
+        chunkSplit: {
+          strategy: 'all-in-one',
+        },
+      },
+    },
+  });
+
+  const files = await rsbuild.unwrapOutputJSON();
+
+  const manifestContent =
+    files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];
+  const manifest = JSON.parse(manifestContent);
+
+  // main.js
+  expect(Object.keys(manifest.allFiles).length).toBe(1);
+
+  expect(manifest.entries.index).toMatchObject({
+    initial: {
+      js: ['/static/js/index.js'],
+    },
+  });
+});
+
+rspackOnlyTest(
+  'should allow to include license files in manifest',
+  async () => {
+    const rsbuild = await build({
+      cwd: fixtures,
+      rsbuildConfig: {
+        output: {
+          manifest: {
+            filter: () => true,
+          },
+          filenameHash: false,
+        },
+        performance: {
+          chunkSplit: {
+            strategy: 'all-in-one',
+          },
+        },
+      },
+    });
+
+    const files = await rsbuild.unwrapOutputJSON();
+
+    const manifestContent =
+      files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];
+    const manifest = JSON.parse(manifestContent);
+
+    expect(Object.keys(manifest.allFiles).length).toBe(3);
+
+    expect(manifest.entries.index).toMatchObject({
+      initial: {
+        js: ['/static/js/index.js'],
+      },
+      html: ['/index.html'],
+      assets: ['/static/js/index.js.LICENSE.txt'],
+    });
+  },
+);

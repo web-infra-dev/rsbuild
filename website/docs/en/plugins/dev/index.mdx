@@ -1,4 +1,4 @@
-# Plugin System
+# Plugin system
 
 Rsbuild provides a lightweight yet powerful plugin system to implement most of its functionality and allows for user extension.
 
@@ -13,9 +13,9 @@ Plugins written by developers can modify the default behavior of Rsbuild and add
 
 ## Comparison
 
-Before developing a Rsbuild plugin, you may have been familiar with the plugin systems of tools such as Webpack, Vite, esbuild, etc.
+Before developing a Rsbuild plugin, you may have been familiar with the plugin systems of tools such as webpack, Vite, esbuild, etc.
 
-Generally, Rsbuild's plugin API is similar to esbuild, and compared with Webpack / Rspack plugins, Rsbuild's plugin API is more simple and easier to get started with.
+Generally, Rsbuild's plugin API is similar to esbuild, and compared with webpack or Rspack plugins, Rsbuild's plugin API is more simple and easier to get started with.
 
 ```ts
 // esbuild plugin
@@ -59,11 +59,11 @@ const rsbuildPlugin = () => ({
 });
 ```
 
-## Developing Plugins
+## Developing plugins
 
 Plugins provide a function similar to `(options?: PluginOptions) => RsbuildPlugin` as an entry point.
 
-### Plugin Example
+### Plugin example
 
 ```ts title="pluginFoo.ts"
 import type { RsbuildPlugin } from '@rsbuild/core';
@@ -94,7 +94,7 @@ export default {
 };
 ```
 
-### Plugin Structure
+### Plugin structure
 
 Function-based plugins can **accept an options object** and **return a plugin instance**, managing internal state through closures.
 
@@ -104,7 +104,7 @@ The roles of each part are as follows:
 - `setup` serves as the main entry point for the plugin logic.
 - The `api` object contains various hooks and utility functions.
 
-### Naming Convention
+### Naming convention
 
 The naming convention for plugins is as follows:
 
@@ -126,11 +126,11 @@ export const pluginFooBar = (): RsbuildPlugin => ({
 The `name` of official Rsbuild plugins uniformly uses `rsbuild:` as a prefix, for example, `rsbuild:react` corresponds to `@rsbuild/plugin-react`.
 :::
 
-### Template Repository
+### Template repository
 
 [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template) is a minimal Rsbuild plugin template repository that you can use as a basis for developing your Rsbuild plugin.
 
-### Environment Plugin
+### Environment plugin
 
 Rsbuild supports building outputs for multiple environments at the same time, and supports [add plugins for specified environment](/guide/advanced/environments#add-plugins-for-specified-environment).
 
@@ -154,7 +154,7 @@ export type PluginFooOptions = {
 export const pluginFoo = (options: PluginFooOptions = {}): RsbuildPlugin => ({
   name: 'plugin-foo',
 
-  setup: (api) => {
+  setup(api) {
     api.modifyEnvironmentConfig((config) => {
       config.html.title = options.title || 'My Default Title';
     });
@@ -165,7 +165,7 @@ export const pluginFoo = (options: PluginFooOptions = {}): RsbuildPlugin => ({
 });
 ```
 
-### Reference Other Plugins
+### Reference other plugins
 
 Rsbuild's [plugins](/config/plugins) config supports passing a nested array, which means you can reference and register other Rsbuild plugins within your plugin.
 
@@ -185,7 +185,7 @@ export const pluginFoo = (): RsbuildPlugin => {
 };
 ```
 
-## Lifetime Hooks
+## Lifetime hooks
 
 Rsbuild uses lifetime planning work internally, and plugins can also register hooks to take part in any stage of the workflow and implement their own features.
 
@@ -193,7 +193,7 @@ The full list of Rsbuild's lifetime hooks can be found in the [API References](/
 
 The Rsbuild does not take over the hooks of the underlying Rspack, whose documents can be found here: [Rspack Plugin API](https://rspack.dev/api/plugin-api).
 
-## Use Rsbuild Config
+## Use Rsbuild config
 
 Custom plugins can usually get config from function parameters,
 just define and use it at your pleasure.
@@ -273,7 +273,7 @@ Therefore, the best way to use configuration options is to
 - **Modify the config** with `api.modifyRsbuildConfig(config => {})`
 - Read `api.getNormalizedConfig()` as the **actual config used by the plugin** in the further lifetime.
 
-## Modify Rspack Configuration
+## Modify Rspack configuration
 
 Rsbuild plugin allows you to modify the built-in Rspack configuration, including:
 

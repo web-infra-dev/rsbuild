@@ -1,9 +1,10 @@
 import { execSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { expect, test } from '@playwright/test';
+import { rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
-test('should allow to custom env directory', async () => {
+rspackOnlyTest('should allow to custom env directory', async () => {
   execSync('npx rsbuild build --env-dir env', {
     cwd: __dirname,
   });

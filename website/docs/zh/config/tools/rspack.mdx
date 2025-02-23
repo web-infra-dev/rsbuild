@@ -3,7 +3,7 @@
 - **类型：** `Rspack.Configuration | Function | undefined`
 - **默认值：** `undefined`
 
-`tools.rspack` 选项用于修改 [Rspack](https://rspack.dev/) 的配置项。
+`tools.rspack` 选项用于修改 [Rspack](https://rspack.dev/zh/config/index) 的配置项。
 
 :::tip
 Rsbuild 内置的 Rspack 配置会随着迭代而发生变化，这些变化不会反映在 semver 中，因此在升级 Rsbuild 时，你的自定义配置可能会失效。
@@ -81,7 +81,7 @@ export default {
 };
 ```
 
-## 工具集合
+## 工具对象
 
 这个函数的第二个参数是一个对象，包含了一些工具函数和属性，详情如下：
 
@@ -219,7 +219,7 @@ export default {
 
 - **类型：** `typeof import('html-rspack-plugin')`
 
-通过这个参数你可以拿到 `html-rspack-plugin` 插件的实例。
+对应 [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin) 插件的默认导出。
 
 ```js
 export default {

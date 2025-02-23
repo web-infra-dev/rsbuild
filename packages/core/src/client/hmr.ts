@@ -1,20 +1,17 @@
-import type { NormalizedClientConfig, Rspack } from '../types';
-import { formatStatsMessages } from './format';
+import type { NormalizedClientConfig } from '../types';
 
 const compilationId = RSBUILD_COMPILATION_NAME;
 const config: NormalizedClientConfig = RSBUILD_CLIENT_CONFIG;
+const resolvedConfig: NormalizedClientConfig = RSBUILD_RESOLVED_CLIENT_CONFIG;
 
-function formatURL({
-  port,
-  protocol,
-  hostname,
-  pathname,
-}: {
-  port: string | number;
-  protocol: string;
-  hostname: string;
-  pathname: string;
-}) {
+function formatURL(config: NormalizedClientConfig) {
+  const { location } = self;
+  const hostname = config.host || location.hostname;
+  const port = config.port || location.port;
+  const protocol =
+    config.protocol || (location.protocol === 'https:' ? 'wss' : 'ws');
+  const pathname = config.path || '/rsbuild-hmr';
+
   if (typeof URL !== 'undefined') {
     const url = new URL('http://localhost');
     url.port = String(port);
@@ -42,11 +39,11 @@ function clearOutdatedErrors() {
   }
 }
 
-let createOverlay: undefined | ((err: string[]) => void);
+let createOverlay: undefined | ((html: string) => void);
 let clearOverlay: undefined | (() => void);
 
 export const registerOverlay = (
-  createFn: (err: string[]) => void,
+  createFn: (html: string) => void,
   clearFn: () => void,
 ): void => {
   createOverlay = createFn;
@@ -68,26 +65,21 @@ function handleSuccess() {
 }
 
 // Compilation with warnings (e.g. ESLint).
-function handleWarnings(warnings: Rspack.StatsError[]) {
+function handleWarnings({ text }: { text: string[] }) {
   clearOutdatedErrors();
 
   const isHotUpdate = !isFirstCompilation;
   isFirstCompilation = false;
   hasCompileErrors = false;
 
-  const formatted = formatStatsMessages({
-    warnings,
-    errors: [],
-  });
-
-  for (let i = 0; i < formatted.warnings.length; i++) {
+  for (let i = 0; i < text.length; i++) {
     if (i === 5) {
       console.warn(
         'There were more warnings in other files, you can find a complete log in the terminal.',
       );
       break;
     }
-    console.warn(formatted.warnings[i]);
+    console.warn(text[i]);
   }
 
   // Attempt to apply hot updates or reload.
@@ -97,24 +89,19 @@ function handleWarnings(warnings: Rspack.StatsError[]) {
 }
 
 // Compilation with errors (e.g. syntax error or missing modules).
-function handleErrors(errors: Rspack.StatsError[]) {
+function handleErrors({ text, html }: { text: string[]; html: string }) {
   clearOutdatedErrors();
 
   isFirstCompilation = false;
   hasCompileErrors = true;
 
-  const formatted = formatStatsMessages({
-    errors,
-    warnings: [],
-  });
-
   // Also log them to the console.
-  for (const error of formatted.errors) {
+  for (const error of text) {
     console.error(error);
   }
 
   if (createOverlay) {
-    createOverlay(formatted.errors);
+    createOverlay(html);
   }
 }
 
@@ -225,23 +212,30 @@ function onClose() {
   setTimeout(connect, 1000 * 1.5 ** reconnectCount);
 }
 
-// Establishing a WebSocket connection with the server.
-function connect() {
-  const { location } = self;
-  const { host, port, path, protocol } = config;
-  const socketUrl = formatURL({
-    protocol: protocol || (location.protocol === 'https:' ? 'wss' : 'ws'),
-    hostname: host || location.hostname,
-    port: port || location.port,
-    pathname: path || '/rsbuild-hmr',
-  });
+function onError() {
+  if (formatURL(config) !== formatURL(resolvedConfig)) {
+    console.error(
+      '[HMR] WebSocket connection error, attempting direct fallback.',
+    );
+    removeListeners();
+    connection = null;
+    connect(true);
+  }
+}
 
+// Establishing a WebSocket connection with the server.
+function connect(fallback = false) {
+  const socketUrl = formatURL(fallback ? resolvedConfig : config);
   connection = new WebSocket(socketUrl);
   connection.addEventListener('open', onOpen);
   // Attempt to reconnect after disconnection
   connection.addEventListener('close', onClose);
   // Handle messages from the server.
   connection.addEventListener('message', onMessage);
+  // Handle errors
+  if (!fallback) {
+    connection.addEventListener('error', onError);
+  }
 }
 
 function removeListeners() {
@@ -249,6 +243,7 @@ function removeListeners() {
     connection.removeEventListener('open', onOpen);
     connection.removeEventListener('close', onClose);
     connection.removeEventListener('message', onMessage);
+    connection.removeEventListener('error', onError);
   }
 }
 

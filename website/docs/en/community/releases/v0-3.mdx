@@ -19,7 +19,7 @@ Notable changes:
 - [Module Federation added to Rspack](https://rspack.dev/blog/module-federation-added-to-rspack)
 - [Remove deprecated builtins options](https://rspack.dev/blog/announcing-0-5#make-swchelpers-and-react-refresh-as-peerdependencies)
 
-## TOML / YAML Plugin
+## TOML / YAML plugin
 
 The need to import TOML and YAML in JS is not common, so Rsbuild core will no longer support import TOML and YAML by default in v0.3.0.
 
@@ -54,7 +54,7 @@ Some JavaScript APIs have changed:
 - The `printURLs` option of `rsbuild.startDevServer` is deprecated, use [server.printUrls](/config/server/print-urls) instead.
 - The `logger` option of `rsbuild.startDevServer` is deprecated, use [logger.override()](/api/javascript-api/core#logger) instead.
 
-## Node Target
+## Node target
 
 - Adjust default browserslist for node target, from `node >= 14` to `node >= 16`.
 - The default value of `output.distPath.server` is changed from `'bundles'` to `'server'`

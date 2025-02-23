@@ -1,4 +1,3 @@
-import React from 'react';
 import './CompTest.css';
 
 export default function CompTest() {

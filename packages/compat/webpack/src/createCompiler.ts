@@ -7,7 +7,7 @@ export async function createCompiler(options: InitConfigsOptions) {
   const { helpers, context } = options;
   const { webpackConfigs } = await initConfigs(options);
 
-  await context.hooks.onBeforeCreateCompiler.call({
+  await context.hooks.onBeforeCreateCompiler.callBatch({
     bundlerConfigs: webpackConfigs as Rspack.Configuration[],
     environments: context.environments,
   });
@@ -46,7 +46,7 @@ export async function createCompiler(options: InitConfigsOptions) {
     done(stats as Rspack.Stats);
   });
 
-  if (context.normalizedConfig?.mode === 'development') {
+  if (context.command === 'dev') {
     helpers.registerDevHook({
       compiler,
       context,
@@ -55,7 +55,7 @@ export async function createCompiler(options: InitConfigsOptions) {
     });
   }
 
-  await context.hooks.onAfterCreateCompiler.call({
+  await context.hooks.onAfterCreateCompiler.callBatch({
     compiler,
     environments: context.environments,
   });
