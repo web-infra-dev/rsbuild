@@ -276,7 +276,7 @@ pluginAssetsRetry({
 
 ### delay
 
-- **类型：** `number | ((context: AssetsRetryHookContext) => number);`
+- **类型：** `number | ((context: AssetsRetryHookContext) => number)`
 - **默认值：** `0`
 
 在资源重试前的延迟时间，单位为毫秒。
@@ -284,7 +284,7 @@ pluginAssetsRetry({
 你可以传入一个数字：
 
 ```js
-// 延时1s重试
+// 延时 1s 重试
 pluginAssetsRetry({
   delay: 1000,
 });

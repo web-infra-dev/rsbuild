@@ -276,8 +276,8 @@ pluginAssetsRetry({
 
 ### delay
 
-- **Type：** `number | ((context: AssetsRetryHookContext) => number);`
-- **Default value：** `0`
+- **Type:** `number | ((context: AssetsRetryHookContext) => number)`
+- **Default:** `0`
 
 The delay time (in milliseconds) before retrying a failed asset.
 
@@ -290,7 +290,7 @@ pluginAssetsRetry({
 });
 ```
 
-Or pass a function that receives AssetsRetryHookContext and returns the delay time:
+Or pass a function that receives `AssetsRetryHookContext` and returns the delay time:
 
 ```js
 // Calculate delay based on retry attempts
