@@ -4,8 +4,8 @@ module.exports = () => {
     Once(root) {
       root.prepend({
         type: 'atrule',
-        name: 'tailwind',
-        params: 'utilities',
+        name: 'import',
+        params: '"tailwindcss"',
       });
     },
   };

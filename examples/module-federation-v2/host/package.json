@@ -6,11 +6,12 @@
     "build": "rsbuild build"
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@module-federation/rspack": "0.7.5",
+    "@module-federation/enhanced": "0.9.0",
+    "@module-federation/rsbuild-plugin": "0.9.0",
     "@rsbuild/core": "workspace:*",
     "@rsbuild/plugin-react": "workspace:*"
   }

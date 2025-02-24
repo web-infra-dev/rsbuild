@@ -56,6 +56,11 @@ export type PluginAssetsRetryOptions = {
    * @default rsbuildConfig.mode === 'production'
    */
   minify?: boolean;
+  /**
+   * The delay time between retries. Unit: ms
+   * @default 0
+   */
+  delay?: number | ((context: AssetsRetryHookContext) => number);
 };
 
 export type RuntimeRetryOptions = Omit<

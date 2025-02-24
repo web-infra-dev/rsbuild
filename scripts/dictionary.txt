@@ -4,6 +4,7 @@ antd
 apng
 applescript
 atrules
+attributify
 biomejs
 brotli
 browserslistrc
@@ -22,6 +23,7 @@ corejs
 corepack
 craco
 crossorigin
+darkgrey
 datauri
 deepmerge
 docgen
@@ -36,6 +38,7 @@ flexbugs
 fnames
 frontends
 fullhash
+fullhref
 gzipped
 icss
 idents
@@ -81,6 +84,7 @@ pmmmwh
 postcssrc
 preact
 prebundle
+preconnecting
 preflights
 prefresh
 preprocessors

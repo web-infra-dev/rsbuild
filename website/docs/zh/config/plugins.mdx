@@ -102,7 +102,7 @@ export default defineConfig({
 // 错误
 function myPlugin() {
   return {
-    setup: (api) => {
+    setup(api) {
       api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
         return mergeRsbuildConfig(config, {
           plugins: [fooPlugin(), barPlugin()], // <- it won't work
@@ -124,7 +124,7 @@ export default {
 
 ## Rspack 插件
 
-`plugins` 选项用于注册 Rsbuild 插件，如果你需要注册 Rspack 或 Webpack 插件，请使用 [tools.rspack](/config/tools/rspack)。
+`plugins` 选项用于注册 Rsbuild 插件，如果你需要注册 Rspack 或 webpack 插件，请使用 [tools.rspack](/config/tools/rspack)。
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -132,7 +132,7 @@ export default {
   plugins: [pluginStylus()],
   tools: {
     rspack: {
-      // Rspack 或 Webpack 插件
+      // Rspack 或 webpack 插件
       plugins: [new SomeWebpackPlugin()],
     },
   },

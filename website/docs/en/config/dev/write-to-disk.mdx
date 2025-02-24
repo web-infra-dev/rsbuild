@@ -9,7 +9,7 @@ Controls whether the build output from development mode is written to disk.
 In development mode, Rsbuild stores the build outputs in memory on the dev server by default, rather than writing then to disk. This can reduce the overhead of fs operations. You can refer to [View Static Assets](/guide/basic/server#view-static-assets) to view all static assets generated in the current build.
 :::
 
-## Writing to Disk
+## Writing to disk
 
 You can choose to write the build output to disk, which is usually used for inspecting the content of the build output or configuring proxy rules for static assets.
 
@@ -27,7 +27,7 @@ export default {
 Setting `writeToDisk: true` is used for viewing the build output from development mode. It does not change the behavior of the dev server. When accessing files through a browser, the dev server will still read the file content from memory.
 :::
 
-## Matching Specific Files
+## Matching specific files
 
 You can also set `dev.writeToDisk` to a function to match only certain files. When the function returns `false`, the file will not be written; when it returns `true`, the file will be written to disk.
 

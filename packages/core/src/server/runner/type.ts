@@ -42,10 +42,13 @@ export interface Runner {
   getRequire(): RunnerRequirer;
 }
 
+export type RunnerFactoryOptions = {
+  dist: string;
+  compilerOptions: CompilerOptions;
+  readFileSync: (path: string) => string;
+  isBundleOutput: (modulePath: string) => boolean;
+};
+
 export interface RunnerFactory {
-  create(
-    compilerOptions: CompilerOptions,
-    dist: string,
-    readFileSync: (fileName: string) => string,
-  ): Runner;
+  create(options: RunnerFactoryOptions): Runner;
 }

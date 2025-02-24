@@ -262,6 +262,6 @@ export function applySwcDecoratorConfig(
       swcConfig.jsc.transform.decoratorVersion = '2022-03';
       break;
     default:
-      throw new Error(`Unknown decorators version: ${version}`);
+      throw new Error(`[rsbuild:swc] Unknown decorators version: ${version}`);
   }
 }

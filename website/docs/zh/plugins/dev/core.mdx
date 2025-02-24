@@ -1,4 +1,4 @@
-# Plugin Core
+# Plugin core
 
 本章节描述了 Rsbuild 插件核心的类型定义和 API。
 
@@ -32,7 +32,7 @@ export default (): RsbuildPlugin => ({
 
   pre: ['plugin-bar'],
 
-  setup: (api) => {
+  setup(api) {
     api.onAfterBuild(() => {
       console.log('after build!');
     });
@@ -139,8 +139,10 @@ import GetNormalizedConfig from '@zh/shared/getNormalizedConfig.mdx';
 ```ts
 const pluginFoo = () => ({
   setup(api) {
-    const config = api.getNormalizedConfig();
-    console.log(config.html.title);
+    api.onBeforeBuild(({ bundlerConfigs }) => {
+      const config = api.getNormalizedConfig();
+      console.log(config.html.title);
+    });
   },
 });
 ```
@@ -155,7 +157,7 @@ import IsPluginExists from '@zh/shared/isPluginExists.mdx';
 
 ```ts
 export default () => ({
-  setup: (api) => {
+  setup(api) {
     console.log(api.isPluginExists('plugin-foo'));
   },
 });
@@ -258,6 +260,8 @@ api.transform({ test: /\.node$/, raw: true }, ({ code }) => {
 
 - `layer`：等同于 Rspack 的 [Rule.layer](https://rspack.dev/config/module#rulelayer)。
 - `issuerLayer`：等同于 Rspack 的 [Rule.issuerLayer](https://rspack.dev/config/module#ruleissuerlayer)。
+- `issuer`：等同于 Rspack 的 [Rule.issuer](https://rspack.dev/config/module#ruleissuer)。
+- `with`：等同于 Rspack 的 [Rule.with](https://rspack.dev/config/module#rulewith)。
 
 ### handler 参数
 
@@ -268,17 +272,15 @@ handler 参数是一个转换函数，接收模块当前的代码，并返回转
 ```ts
 type TransformContext = {
   code: string;
+  context: string | null;
   resource: string;
   resourcePath: string;
   resourceQuery: string;
   environment: EnvironmentContext;
   addDependency: (file: string) => void;
-  emitFile: (
-    name: string,
-    content: string | Buffer,
-    sourceMap?: string,
-    assetInfo?: Record<string, any>,
-  ) => void;
+  emitFile: Rspack.LoaderContext['emitFile'];
+  importModule: Rspack.LoaderContext['importModule'];
+  resolve: Rspack.LoaderContext['resolve'];
 };
 
 type TransformResult =
@@ -296,12 +298,15 @@ type TransformHandler = (
 handler 函数提供以下参数：
 
 - `code`：模块的代码。
+- `context`：当前被处理的模块所在的目录路径。与 Rspack loader 的 [this.context](https://rspack.dev/zh/api/loader-api/context#thiscontext) 相同。
+- `resolve`：解析一个模块标识符。与 Rspack loader 的 [this.resolve](https://rspack.dev/zh/api/loader-api/context#thisresolve) 相同。
 - `resource`：模块的绝对路径，包含 query。
 - `resourcePath`：模块的绝对路径，不包含 query。
 - `resourceQuery`：模块路径上的 query。
-- `environment`: 当前构建的 [environment 上下文](/api/javascript-api/environment-context).
-- `addDependency`：添加一个额外的文件作为依赖。该文件将被监听，并在发生变更时触发重新构建。
-- `emitFile`：将一个文件输出到构建结果中。
+- `environment`: 当前构建的 [environment 上下文](/api/javascript-api/environment-api#environment-context).
+- `addDependency`：添加一个额外的文件作为依赖。该文件将被监听，并在发生变更时触发重新构建。与 Rspack loader 的 [this.addDependency](https://rspack.dev/api/loader-api/context#thisadddependency) 相同。
+- `emitFile`：将一个文件输出到构建结果中。与 Rspack loader 的 [this.emitFile](https://rspack.dev/zh/api/loader-api/context#thisemitfile) 相同。
+- `importModule`：在构建时编译并执行一个模块。与 Rspack loader 的 [this.importModule](https://rspack.dev/zh/api/loader-api/context#thisimportmodule) 相同。
 
 比如：
 
@@ -368,7 +373,7 @@ handler 函数提供以下参数：
 - `resolveData`：当前模块请求信息，详情可参考 [Rspack - resolve 钩子](https://rspack.dev/zh/api/plugin-api/normal-module-factory-hooks#resolve)。
 - `compiler`：Rspack 的 Compiler 对象。
 - `compilation`：Rspack 的 Compilation 对象。
-- `environment`: 当前构建的 [environment 上下文](/api/javascript-api/environment-context)。
+- `environment`: 当前构建的 [environment 上下文](/api/javascript-api/environment-api#environment-context)。
 
 ## api.processAssets
 
@@ -426,7 +431,7 @@ api.processAssets(
 - 移除一个 asset：
 
 ```js
-api.processAssets({ stage: 'stage-optimize' }, ({ assets, compilation }) => {
+api.processAssets({ stage: 'optimize' }, ({ assets, compilation }) => {
   const assetName = 'unwanted-script.js';
   if (assets[assetName]) {
     compilation.deleteAsset(assetName);
@@ -498,7 +503,7 @@ handler 函数提供以下参数：
 - `assets`：一个对象，其中 key 是 asset 的路径名，值是由 [Source](https://github.com/webpack/webpack-sources#source) 表示的 asset 数据。
 - `compiler`：Rspack 的 Compiler 对象。
 - `compilation`：Rspack 的 Compilation 对象。
-- `environment`: 当前构建的 [environment 上下文](/api/javascript-api/environment-context).
+- `environment`: 当前构建的 [environment 上下文](/api/javascript-api/environment-api#environment-context).
 - `sources`：[Rspack Sources](https://github.com/webpack/webpack-sources#source) 对象，它包含了多种表示 Sources 的 classes。
 
 ### Process assets stages

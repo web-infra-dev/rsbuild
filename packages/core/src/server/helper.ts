@@ -198,7 +198,7 @@ export function printServerURLs({
 
     if (!Array.isArray(newUrls)) {
       throw new Error(
-        `"server.printUrls" must return an array, but got ${typeof newUrls}.`,
+        `[rsbuild:config] "server.printUrls" must return an array, but got ${typeof newUrls}.`,
       );
     }
 
@@ -282,7 +282,7 @@ export const getPort = async ({
   if (port !== original) {
     if (strictPort) {
       throw new Error(
-        `Port "${original}" is occupied, please choose another one.`,
+        `[rsbuild:server] Port "${original}" is occupied, please choose another one.`,
       );
     }
   }
@@ -310,7 +310,7 @@ export const getServerConfig = async ({
   const https = Boolean(config.server.https) || false;
   const portTip =
     port !== originalPort
-      ? `Port ${originalPort} is in use, ${color.yellow(`using port ${port}.`)}`
+      ? `port ${originalPort} is in use, ${color.yellow(`using port ${port}.`)}`
       : undefined;
 
   return {
@@ -342,14 +342,23 @@ const getIpv4Interfaces = () => {
   return Array.from(ipv4Interfaces.values());
 };
 
+export const isWildcardHost = (host: string): boolean => {
+  const wildcardHosts = new Set([
+    '0.0.0.0',
+    '::',
+    '0000:0000:0000:0000:0000:0000:0000:0000',
+  ]);
+  return wildcardHosts.has(host);
+};
+
 const isLoopbackHost = (host: string) => {
-  const loopbackHosts = [
+  const loopbackHosts = new Set([
     'localhost',
     '127.0.0.1',
     '::1',
     '0000:0000:0000:0000:0000:0000:0000:0001',
-  ];
-  return loopbackHosts.includes(host);
+  ]);
+  return loopbackHosts.has(host);
 };
 
 export const getHostInUrl = (host: string): string => {
@@ -475,4 +484,22 @@ export function getServerTerminator(
         resolve();
       }
     });
+}
+
+/**
+ * Escape HTML characters
+ * @example
+ * escapeHtml('<div>Hello</div>') // '&lt;div&gt;Hello&lt;/div&gt;'
+ */
+export function escapeHtml(text: string | null | undefined): string {
+  if (!text) {
+    return '';
+  }
+  // `&` must be replaced first to avoid double-escaping
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }

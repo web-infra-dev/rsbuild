@@ -1,6 +1,7 @@
+import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 
-export default {
+export default defineConfig({
   plugins: [pluginReact()],
   performance: {
     preconnect: [
@@ -13,4 +14,4 @@ export default {
       },
     ],
   },
-};
+});

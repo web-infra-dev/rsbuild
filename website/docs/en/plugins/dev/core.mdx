@@ -1,4 +1,4 @@
-# Plugin Core
+# Plugin core
 
 This section describes the core plugin types and APIs.
 
@@ -34,7 +34,7 @@ export default (): RsbuildPlugin => ({
 
   pre: ['plugin-bar'],
 
-  setup: (api) => {
+  setup(api) {
     api.onAfterBuild(() => {
       console.log('after build!');
     });
@@ -78,7 +78,7 @@ const pluginBar = {
 
 The Bar plugin is configured with the Foo plugin in its `post` field, so the Foo plugin will always be executed after the Bar plugin.
 
-### Removing Plugins
+### Removing plugins
 
 You can remove other plugins within a plugin using the `remove` field.
 
@@ -141,8 +141,10 @@ import GetNormalizedConfig from '@en/shared/getNormalizedConfig.mdx';
 ```ts
 const pluginFoo = () => ({
   setup(api) {
-    const config = api.getNormalizedConfig();
-    console.log(config.html.title);
+    api.onBeforeBuild(({ bundlerConfigs }) => {
+      const config = api.getNormalizedConfig();
+      console.log(config.html.title);
+    });
   },
 });
 ```
@@ -157,7 +159,7 @@ import IsPluginExists from '@en/shared/isPluginExists.mdx';
 
 ```ts
 export default () => ({
-  setup: (api) => {
+  setup(api) {
     console.log(api.isPluginExists('plugin-foo'));
   },
 });
@@ -199,7 +201,7 @@ const pluginPug = () => ({
 });
 ```
 
-### Descriptor Param
+### Descriptor param
 
 The descriptor param is an object describing the module's matching conditions.
 
@@ -260,8 +262,10 @@ api.transform({ test: /\.node$/, raw: true }, ({ code }) => {
 
 - `layer`: the same as Rspack's [Rule.layer](https://rspack.dev/config/module#rulelayer).
 - `issuerLayer`: the same as Rspack's [Rule.issuerLayer](https://rspack.dev/config/module#ruleissuerlayer).
+- `issuer`: the same as Rspack's [Rule.issuer](https://rspack.dev/config/module#ruleissuer).
+- `with`: the same as Rspack's [Rule.with](https://rspack.dev/config/module#rulewith).
 
-### Handler Param
+### Handler param
 
 The handler param is a transformation function that takes the current module code and returns the transformed code.
 
@@ -270,17 +274,15 @@ The handler param is a transformation function that takes the current module cod
 ```ts
 type TransformContext = {
   code: string;
+  context: string | null;
   resource: string;
   resourcePath: string;
   resourceQuery: string;
   environment: EnvironmentContext;
   addDependency: (file: string) => void;
-  emitFile: (
-    name: string,
-    content: string | Buffer,
-    sourceMap?: string,
-    assetInfo?: Record<string, any>,
-  ) => void;
+  emitFile: Rspack.LoaderContext['emitFile'];
+  importModule: Rspack.LoaderContext['importModule'];
+  resolve: Rspack.LoaderContext['resolve'];
 };
 
 type TransformResult =
@@ -298,12 +300,15 @@ type TransformHandler = (
 The `handler` function provides the following params:
 
 - `code`: The code of the module.
+- `context`: The directory path of the currently processed module. The same as Rspack loader's [this.context](https://rspack.dev/api/loader-api/context#thiscontext).
+- `resolve`: Resolve a module specifier. The same as Rspack loader's [this.resolve](https://rspack.dev/api/loader-api/context#thisresolve).
 - `resource`: The absolute path of the module, including the query.
 - `resourcePath`: The absolute path of the module, without the query.
 - `resourceQuery`: The query of the module.
-- `environment`: The [environment context](/api/javascript-api/environment-context) for current build.
-- `addDependency`: Add an additional file as the dependency. The file will be watched and changes to the file will trigger rebuild.
-- `emitFile`: Emits a file to the build output.
+- `environment`: The [environment context](/api/javascript-api/environment-api#environment-context) for current build.
+- `addDependency`: Add an additional file as the dependency. The file will be watched and changes to the file will trigger rebuild. The same as Rspack loader's [this.addDependency](https://rspack.dev/api/loader-api/context#thisadddependency).
+- `emitFile`: Emits a file to the build output. The same as Rspack loader's [this.emitFile](https://rspack.dev/api/loader-api/context#thisemitfile).
+- `importModule`: Compile and execute a module at the build time. The same as Rspack loader's [this.importModule](https://rspack.dev/api/loader-api/context#thisimportmodule).
 
 For example:
 
@@ -350,7 +355,7 @@ api.resolve(({ resolveData }) => {
 });
 ```
 
-### Handler Param
+### Handler param
 
 The `handler` parameter is a callback function that receives a module require information and allows you to modify it.
 
@@ -428,7 +433,7 @@ api.processAssets(
 - Removing an asset:
 
 ```js
-api.processAssets({ stage: 'stage-optimize' }, ({ assets, compilation }) => {
+api.processAssets({ stage: 'optimize' }, ({ assets, compilation }) => {
   const assetName = 'unwanted-script.js';
   if (assets[assetName]) {
     compilation.deleteAsset(assetName);
@@ -436,7 +441,7 @@ api.processAssets({ stage: 'stage-optimize' }, ({ assets, compilation }) => {
 });
 ```
 
-### Descriptor Param
+### Descriptor param
 
 The descriptor parameter is an object to describes the stage and matching conditions that trigger `processAssets`.
 
@@ -479,7 +484,7 @@ api.processAssets(
 );
 ```
 
-### Handler Param
+### Handler param
 
 The `handler` parameter is a callback function that receives an assets object and allows you to modify it.
 
@@ -500,7 +505,7 @@ The `handler` function provides the following parameters:
 - `assets`: An object where key is the asset's pathname, and the value is data of the asset represented by the [Source](https://github.com/webpack/webpack-sources#source).
 - `compiler`: The Compiler object of Rspack.
 - `compilation`: The Compilation object of Rspack.
-- `environment`: The [environment context](/api/javascript-api/environment-context) of the current build.
+- `environment`: The [environment context](/api/javascript-api/environment-api#environment-context) of the current build.
 - `sources`: The [Rspack Sources](https://github.com/webpack/webpack-sources#source) object, which contains multiple classes which represent a Source.
 
 ### Process assets stages
@@ -616,7 +621,7 @@ const pluginChild = () => ({
 });
 ```
 
-### Type Declaration
+### Type declaration
 
 You can declare types through the generics of the function:
 
@@ -640,7 +645,7 @@ const pluginChild = () => ({
 });
 ```
 
-### Execution Order
+### Execution order
 
 When communicating between plugins, you need to be aware of the order in which the plugins are executed.
 

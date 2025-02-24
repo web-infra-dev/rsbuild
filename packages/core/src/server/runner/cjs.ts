@@ -75,10 +75,12 @@ export class CommonJsRunner extends BasicRunner {
   protected createMissRequirer(): RunnerRequirer {
     return (_currentDirectory, modulePath, _context = {}) => {
       const modulePathStr = modulePath as string;
+      const resolvedPath = require.resolve(modulePathStr, {
+        paths: [_currentDirectory],
+      });
+
       return require(
-        modulePathStr.startsWith('node:')
-          ? modulePathStr.slice(5)
-          : modulePathStr,
+        resolvedPath.startsWith('node:') ? resolvedPath.slice(5) : resolvedPath,
       );
     };
   }

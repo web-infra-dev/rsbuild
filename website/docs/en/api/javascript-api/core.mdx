@@ -1,4 +1,4 @@
-# Rsbuild Core
+# Rsbuild core
 
 This section describes some of the core methods provided by Rsbuild.
 
@@ -21,26 +21,26 @@ import { createRsbuild } from '@rsbuild/core';
 
 const rsbuild = await createRsbuild({
   rsbuildConfig: {
-    // rsbuild configs
+    // Rsbuild configuration
   },
 });
 ```
 
-### options
+### Options
 
 The first parameter of `createRsbuild` is an `options` object, you can pass in the following options:
 
 ```ts
 type CreateRsbuildOptions = {
   cwd?: string;
+  environment?: string[];
   rsbuildConfig?: RsbuildConfig;
 };
 ```
 
-Description:
-
-- `cwd`: The root path of the current build, the default value is `process.cwd()`.
-- `rsbuildConfig`: Rsbuild configuration object. Rsbuild provides a rich set of configuration options that allow you to customize the build behavior flexibly. You can find all available configuration options in the [Configuration](/config/) section.
+- `cwd`: The root path of the current build, defaults to `process.cwd()`.
+- `environment`: Only build specified [environments](/guide/advanced/environments). If not specified or passing an empty array, all environments will be built.
+- `rsbuildConfig`: Rsbuild configuration object. Refer to [Configuration Overview](/config/) for all available configuration options.
 
 ## loadConfig
 
@@ -54,6 +54,9 @@ function loadConfig(params?: {
   cwd?: string;
   // Specify the configuration file, can be a relative or absolute path
   path?: string;
+  meta?: Record<string, unknown>;
+  envMode?: string;
+  loader?: 'jiti' | 'native';
 }): Promise<{
   content: RsbuildConfig;
   filePath: string | null;
@@ -65,6 +68,7 @@ function loadConfig(params?: {
 ```ts
 import { loadConfig } from '@rsbuild/core';
 
+// Load `rsbuild.config.*` file by default
 const { content } = await loadConfig();
 
 console.log(content); // -> Rsbuild config object
@@ -75,6 +79,43 @@ const rsbuild = await createRsbuild({
 ```
 
 If the Rsbuild config file does not exist in the cwd directory, the return value of the loadConfig method is `{ content: {}, filePath: null }`.
+
+### Specify the configuration file
+
+Use the `path` option to load the `my-config.ts` configuration file:
+
+```ts
+import { join } from 'node:path';
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  path: join(__dirname, 'my-config.ts'),
+});
+```
+
+### Passing meta object
+
+Load the configuration file and pass in a custom meta object:
+
+```ts
+import { join } from 'node:path';
+import { loadConfig } from '@rsbuild/core';
+
+const { content } = await loadConfig({
+  meta: {
+    foo: 'bar',
+  },
+});
+```
+
+In the `defineConfig` configuration function, you can access the `foo` variable through the `meta` object:
+
+```ts title="rsbuild.config.ts"
+export default defineConfig(({ meta }) => {
+  console.log(meta.foo); // bar
+  return config;
+});
+```
 
 ## loadEnv
 
@@ -100,6 +141,12 @@ type LoadEnvOptions = {
    * @default ['PUBLIC_']
    */
   prefixes?: string[];
+  /**
+   * Specify a target object to store environment variables.
+   * If not provided, variables will be written to `process.env`.
+   * @default process.env
+   */
+  processEnv?: Record<string, string>;
 };
 
 function loadEnv(options: LoadEnvOptions): {
@@ -160,6 +207,20 @@ This method will also load files such as `.env.local` and `.env.[mode]`, see [En
 Rsbuild CLI will automatically call the `loadEnv()` method. If you are using the Rsbuild CLI, you can set the `mode` parameter through the [--env-mode](/guide/advanced/env-vars#env-mode) option.
 :::
 
+### Specify the target object
+
+By default, `loadEnv` uses the `process.env` object to store environment variables. You can specify a target object to store environment variables through the `processEnv` option:
+
+```ts
+import { loadEnv } from '@rsbuild/core';
+
+// Pass an empty object to avoid modifying `process.env`
+loadEnv({ processEnv: {} });
+
+// Pass a copy of the `process.env` object to avoid modifying the original object
+loadEnv({ processEnv: { ...process.env } });
+```
+
 ## mergeRsbuildConfig
 
 Used to merge multiple Rsbuild configuration objects.
@@ -172,7 +233,7 @@ The `mergeRsbuildConfig` function takes multiple configuration objects as parame
 function mergeRsbuildConfig(...configs: RsbuildConfig[]): RsbuildConfig;
 ```
 
-### Basic Example
+### Basic example
 
 ```ts
 import { mergeRsbuildConfig } from '@rsbuild/core';
@@ -195,7 +256,7 @@ console.log(mergedConfig); // { dev: { https: true } }
 
 > This method will not modify the config object in the input parameter.
 
-### Merge Rules
+### Merge rules
 
 In addition to deep merging, the `mergeRsbuildConfig` function also handles some options in a special way.
 
@@ -297,7 +358,7 @@ logger.debug('This is a debug message');
 logger.log('This is a log message');
 ```
 
-### Custom Logger
+### Custom logger
 
 You can use the `logger.override` method to override partial or all methods of the default logger:
 

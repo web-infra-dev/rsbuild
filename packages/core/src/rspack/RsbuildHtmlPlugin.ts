@@ -257,7 +257,7 @@ export class RsbuildHtmlPlugin {
 
       if (!compilation.inputFileSystem) {
         throw new Error(
-          `[RsbuildHtmlPlugin] 'compilation.inputFileSystem' is not available.`,
+          `[rsbuild:html] 'compilation.inputFileSystem' is not available.`,
         );
       }
 
@@ -268,7 +268,7 @@ export class RsbuildHtmlPlugin {
 
       if (!buf) {
         throw new Error(
-          `[RsbuildHtmlPlugin] Failed to read the favicon, please check if the '${filename}' file exists'.`,
+          `[rsbuild:html] Failed to read the favicon, please check if the '${filename}' file exists'.`,
         );
       }
 
@@ -310,8 +310,7 @@ export class RsbuildHtmlPlugin {
 
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
       getHTMLPlugin()
-        // TODO: use getCompilationHooks in minor release
-        .getHooks(compilation)
+        .getCompilationHooks(compilation)
         .alterAssetTagGroups.tapPromise(this.name, async (data) => {
           const entryName = data.plugin.options?.entryName;
 

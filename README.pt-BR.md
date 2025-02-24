@@ -1,5 +1,5 @@
 <picture>
-  <img alt="Rsbuild Banner" src="https://github.com/web-infra-dev/rsbuild/assets/7237365/84abc13e-b620-468f-a90b-dbf28e7e9427">
+  <img alt="Rsbuild Banner" src="https://assets.rspack.dev/rsbuild/rsbuild-banner.png">
 </picture>
 
 # Rsbuild
@@ -18,15 +18,27 @@ Rsbuild é uma ferramenta de build de alta performance com base no Rspack. Ele f
 
 Rsbuild provê [ricas funcionalidades de build](https://rsbuild.dev/guide/start/features), incluindo a compilação de TypeScript, JSX, Sass, Less, CSS Modules, Wasm, e outros. Ele também suporta Module Federation, compressão de imagem, checagem de tipos, PostCSS, Lightning CSS, e mais.
 
+## 🚀 Desempenho
+
+Alimentado pela arquitetura baseada em Rust do Rspack, o Rsbuild oferece um desempenho extremamente rápido que irá remodelar seu fluxo de trabalho de desenvolvimento.
+
+⚡️ **Construa 1000 componentes React:**
+
+![benchmark](https://assets.rspack.dev/rsbuild/assets/benchmark-latest.jpeg)
+
+> 📊 Resultados do benchmark do [build-tools-performance](https://github.com/rspack-contrib/build-tools-performance).
+
 ## 💡 Comparações
 
 Rsbuild é uma ferramenta de build que está no mesmo patamar do [Vite](https://vitejs.dev/), [Create React App](https://github.com/facebook/create-react-app), ou [Vue CLI](https://github.com/vuejs/vue-cli). Todos eles possuem um servidor de desenvolvimento imbutido, ferramentas de linha de comando, e configurações de build que provê uma experiência pronta para uso.
+
+![](https://assets.rspack.dev/rsbuild/assets/rsbuild-1-0-build-tools.png)
 
 ### CRA / Vue CLI
 
 Você pode imaginar o Rsbuild como uma versão moderna do Create React App ou Vue CLI, com estas principais diferenças:
 
-- O bundler por baixo é trocado de Webpack para Rspack, provendo 5 à 10 vezes mais rápido o desempenho de build.
+- O bundler por baixo é trocado de webpack para Rspack, provendo 5 à 10 vezes mais rápido o desempenho de build.
 - É desacoplado de frameworks de frontend e suporta todos os frameworks de interface, por meio de [plugins](https://rsbuild.dev/plugins/list/), incluíndo React, Vue, Svelte, Solid, etc.
 - Oferece melhor extensibilidade. Você pode extender o Rsbuild flexivelmente via [Configurações](https://rsbuild.dev/config/), [Plugin API](https://rsbuild.dev/plugins/dev/), e [JavaScript API](https://rsbuild.dev/api/start/).
 
@@ -34,17 +46,9 @@ Você pode imaginar o Rsbuild como uma versão moderna do Create React App ou Vu
 
 Rsbuild compartilha muitas similaridades com Vite, assim como ambos miram em melhorar a experiência do desenvolvimento frontend. As principais diferenças são:
 
-- **Compatibilidade do ecossistema**: Rsbuild é compatível com a maioria dos plug-ins para webpack e todos os plug-ins do Rspack, enquanto Vite é compatível com plug-ins do Rollup. Se você estiver usando mais plug-ins e carregadores do ecossistema do Webpack, a migração para o Rsbuild será relativamente fácil.
+- **Compatibilidade do ecossistema**: Rsbuild é compatível com a maioria dos plug-ins para webpack e todos os plug-ins do Rspack, enquanto Vite é compatível com plug-ins do Rollup. Se você estiver usando mais plug-ins e carregadores do ecossistema do webpack, a migração para o Rsbuild será relativamente fácil.
 - **Consistência em produção**: Rsbuild usa o Rspack para empacotamento durante as compilações de desenvolvimento e produção, garantindo assim um alto nível de consistência entre os resultados de desenvolvimento e produção. Esse também é um dos objetivos que a Vite pretende alcançar com o Rolldown.
 - **Module Federation**: O time do Rsbuild trabalha próximo com o time de [Module Federation](https://rsbuild.dev/guide/advanced/module-federation), fornecendo suporte de primeira classe para o Module Federation para ajudá-lo a desenvolver grandes aplicativos da Web com arquitetura de micro frontend.
-
-## 🚀 Desempenho
-
-O desempenho de construção do Rsbuild está no mesmo nível do Rspack nativo. Esse é o tempo necessário para criar 1.000 componentes React:
-
-![benchmark](https://assets.rspack.dev/rsbuild/assets/benchmark-latest.jpeg)
-
-> Os dados acima são provenientes do [performance-compare](https://github.com/rspack-contrib/performance-compare) benchmark.
 
 ## 🔥 Recursos
 
@@ -54,7 +58,7 @@ O Rsbuild tem os seguintes recursos:
 
 - **Orientado para o desempenho**: Rsbuild integra ferramentas de alto desempenho baseadas em Rust da comunidade, incluindo [Rspack](https://rspack.dev), [SWC](https://swc.rs/) e [Lightning CSS](https://lightningcss.dev/), para oferecer velocidade de compilação e experiência de desenvolvimento de primeira classe.
 
-- **Ecossistema de plug-ins**: Rsbuild tem um sistema de plug-ins leve e inclui uma variedade de plug-ins oficiais de alta qualidade. Além disso, o Rsbuild é compatível com a maioria dos plug-ins do Webpack e todos os plug-ins do Rspack, permitindo que os usuários aproveitem os plug-ins existentes da comunidade ou internos no Rsbuild sem a necessidade de reescrever o código.
+- **Ecossistema de plug-ins**: Rsbuild tem um sistema de plug-ins leve e inclui uma variedade de plug-ins oficiais de alta qualidade. Além disso, o Rsbuild é compatível com a maioria dos plug-ins do webpack e todos os plug-ins do Rspack, permitindo que os usuários aproveitem os plug-ins existentes da comunidade ou internos no Rsbuild sem a necessidade de reescrever o código.
 
 - **Artefatos estáveis**: O Rsbuild foi projetado com um grande foco na estabilidade dos artefatos de compilação. Ele garante alta consistência entre os artefatos nas compilações de desenvolvimento e produção e conclui automaticamente o downgrade de sintaxe e a injeção de polyfill. O Rsbuild também fornece plug-ins para verificação de tipos e validação de sintaxe de artefatos para evitar problemas de qualidade e compatibilidade no código de produção.
 
@@ -66,7 +70,7 @@ Além de ser usado como uma ferramenta de compilação, o Rsbuild também oferec
 
 O diagrama a seguir ilustra a relação entre o Rsbuild e outras ferramentas do ecossistema:
 
-![Rspack stack layers](https://assets.rspack.dev/rsbuild/assets/rspack-stack-layers.png)
+<img src="https://assets.rspack.dev/rsbuild/assets/rspack-stack-layers.png" alt="Rspack stack layers" width="760" />
 
 ## 📚 Primeiros passos
 
@@ -87,58 +91,18 @@ Para começar a usar o Rsbuild, consulte a seção [Início Rápido](https://rsb
 
 ## 🤝 Contribuição
 
-> Novos colaboradores são bem-vindos!
+> [!NOTE]
+> Nós valorizamos qualquer contribuição para o Rsbuild!
 
 Por favor leia o [Guia de Contribuição](https://github.com/web-infra-dev/rsbuild/blob/main/CONTRIBUTING.md).
 
 ### Contribuidores
 
 <a href="https://github.com/web-infra-dev/rsbuild/graphs/contributors" target="_blank">
-  <table>
-    <tr>
-      <th colspan="2">
-        <br/>
-        <img src="https://contrib.rocks/image?repo=web-infra-dev/rsbuild&columns=16&max=96"><br/><br/>
-      </th>
-    </tr>
-    <tr>
-      <td>
-        <picture>
-          <source 
-            media="(prefers-color-scheme: dark)" 
-            srcset="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=active&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=2x3&color_scheme=dark"
-          />
-          <img 
-            alt="Contributors of web-infra-dev/rsbuild" 
-            src="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=active&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=2x3&color_scheme=light"
-          />
-        </picture>
-      </td>
-      <td rowspan="2">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="https://next.ossinsight.io/widgets/official/compose-org-participants-growth/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=4x7&color_scheme=dark">
-          <img alt="New trends of web-infra-dev" src="https://next.ossinsight.io/widgets/official/compose-org-participants-growth/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=4x7&color_scheme=light">
-        </picture>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <picture>
-          <source 
-            media="(prefers-color-scheme: dark)" 
-            srcset="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=2x3&color_scheme=dark"
-          />
-          <img 
-            alt="Contributors of web-infra-dev/rsbuild" 
-            src="https://next.ossinsight.io/widgets/official/compose-org-active-contributors/thumbnail.png?activity=new&period=past_90_days&owner_id=87694465&repo_ids=701750420&image_size=2x3&color_scheme=light"
-          />
-        </picture>
-      </td>
-    </tr>
-  </table>
+  <img src="https://contrib.rocks/image?repo=web-infra-dev/rsbuild&columns=24">
 </a>
 
-### Código de Conduta
+### Código de conduta
 
 Este repositório adotou o código de conduta de código aberto da ByteDance. Por favor, verifique [Código de Conduta](./CODE_OF_CONDUCT.md) para mais detalhes.
 

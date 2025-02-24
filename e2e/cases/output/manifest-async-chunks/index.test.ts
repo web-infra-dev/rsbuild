@@ -9,7 +9,6 @@ test('should generate manifest for async chunks correctly', async () => {
     rsbuildConfig: {
       output: {
         manifest: true,
-        legalComments: 'none',
         filenameHash: false,
       },
       performance: {

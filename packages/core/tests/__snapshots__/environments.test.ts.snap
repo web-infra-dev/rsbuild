@@ -78,7 +78,6 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "target": "web",
   },
   "performance": {
-    "buildCache": true,
     "chunkSplit": {
       "strategy": "split-by-experience",
     },
@@ -86,6 +85,21 @@ exports[`environment config > should normalize environment config correctly 1`] 
     "profile": false,
     "removeConsole": false,
     "removeMomentLocale": false,
+  },
+  "resolve": {
+    "alias": {
+      "@common": "./src/common",
+      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+    },
+    "aliasStrategy": "prefer-tsconfig",
+    "extensions": [
+      ".ts",
+      ".tsx",
+      ".mjs",
+      ".js",
+      ".jsx",
+      ".json",
+    ],
   },
   "root": "<ROOT>",
   "security": {
@@ -97,19 +111,17 @@ exports[`environment config > should normalize environment config correctly 1`] 
   "server": {
     "base": "/",
     "compress": true,
+    "cors": false,
     "host": "0.0.0.0",
     "htmlFallback": "index",
+    "middlewareMode": false,
     "open": false,
     "port": 3000,
     "printUrls": true,
     "strictPort": false,
   },
   "source": {
-    "alias": {
-      "@common": "./src/common",
-      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-    },
-    "aliasStrategy": "prefer-tsconfig",
+    "alias": {},
     "decorators": {
       "version": "2022-03",
     },
@@ -208,7 +220,6 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "target": "node",
   },
   "performance": {
-    "buildCache": true,
     "chunkSplit": {
       "strategy": "split-by-experience",
     },
@@ -216,6 +227,21 @@ exports[`environment config > should normalize environment config correctly 2`] 
     "profile": false,
     "removeConsole": false,
     "removeMomentLocale": false,
+  },
+  "resolve": {
+    "alias": {
+      "@common": "./src/common",
+      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+    },
+    "aliasStrategy": "prefer-tsconfig",
+    "extensions": [
+      ".ts",
+      ".tsx",
+      ".mjs",
+      ".js",
+      ".jsx",
+      ".json",
+    ],
   },
   "root": "<ROOT>",
   "security": {
@@ -227,19 +253,17 @@ exports[`environment config > should normalize environment config correctly 2`] 
   "server": {
     "base": "/",
     "compress": true,
+    "cors": false,
     "host": "0.0.0.0",
     "htmlFallback": "index",
+    "middlewareMode": false,
     "open": false,
     "port": 3000,
     "printUrls": true,
     "strictPort": false,
   },
   "source": {
-    "alias": {
-      "@common": "./src/common",
-      "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-    },
-    "aliasStrategy": "prefer-tsconfig",
+    "alias": {},
     "decorators": {
       "version": "2022-03",
     },
@@ -338,7 +362,6 @@ exports[`environment config > should print environment config when inspect confi
       "target": "web",
     },
     "performance": {
-      "buildCache": true,
       "chunkSplit": {
         "strategy": "split-by-experience",
       },
@@ -346,6 +369,21 @@ exports[`environment config > should print environment config when inspect confi
       "profile": false,
       "removeConsole": false,
       "removeMomentLocale": false,
+    },
+    "resolve": {
+      "alias": {
+        "@common": "./src/common",
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+      },
+      "aliasStrategy": "prefer-tsconfig",
+      "extensions": [
+        ".ts",
+        ".tsx",
+        ".mjs",
+        ".js",
+        ".jsx",
+        ".json",
+      ],
     },
     "root": "<ROOT>",
     "security": {
@@ -357,19 +395,17 @@ exports[`environment config > should print environment config when inspect confi
     "server": {
       "base": "/",
       "compress": true,
+      "cors": false,
       "host": "0.0.0.0",
       "htmlFallback": "index",
+      "middlewareMode": false,
       "open": false,
       "port": 3000,
       "printUrls": true,
       "strictPort": false,
     },
     "source": {
-      "alias": {
-        "@common": "./src/common",
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-      },
-      "aliasStrategy": "prefer-tsconfig",
+      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -464,7 +500,6 @@ exports[`environment config > should print environment config when inspect confi
       "target": "web",
     },
     "performance": {
-      "buildCache": true,
       "chunkSplit": {
         "strategy": "split-by-experience",
       },
@@ -472,6 +507,21 @@ exports[`environment config > should print environment config when inspect confi
       "profile": false,
       "removeConsole": false,
       "removeMomentLocale": false,
+    },
+    "resolve": {
+      "alias": {
+        "@common": "./src/common",
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+      },
+      "aliasStrategy": "prefer-tsconfig",
+      "extensions": [
+        ".ts",
+        ".tsx",
+        ".mjs",
+        ".js",
+        ".jsx",
+        ".json",
+      ],
     },
     "root": "<ROOT>",
     "security": {
@@ -483,19 +533,17 @@ exports[`environment config > should print environment config when inspect confi
     "server": {
       "base": "/",
       "compress": true,
+      "cors": false,
       "host": "0.0.0.0",
       "htmlFallback": "index",
+      "middlewareMode": false,
       "open": false,
       "port": 3000,
       "printUrls": true,
       "strictPort": false,
     },
     "source": {
-      "alias": {
-        "@common": "./src/common",
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-      },
-      "aliasStrategy": "prefer-tsconfig",
+      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -610,7 +658,6 @@ exports[`environment config > should support modify environment config by api.mo
       "target": "web",
     },
     "performance": {
-      "buildCache": true,
       "chunkSplit": {
         "strategy": "split-by-experience",
       },
@@ -618,6 +665,21 @@ exports[`environment config > should support modify environment config by api.mo
       "profile": false,
       "removeConsole": false,
       "removeMomentLocale": false,
+    },
+    "resolve": {
+      "alias": {
+        "@common": "./src/common",
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+      },
+      "aliasStrategy": "prefer-tsconfig",
+      "extensions": [
+        ".ts",
+        ".tsx",
+        ".mjs",
+        ".js",
+        ".jsx",
+        ".json",
+      ],
     },
     "root": "<ROOT>",
     "security": {
@@ -629,19 +691,17 @@ exports[`environment config > should support modify environment config by api.mo
     "server": {
       "base": "/",
       "compress": true,
+      "cors": false,
       "host": "0.0.0.0",
       "htmlFallback": "index",
+      "middlewareMode": false,
       "open": false,
       "port": 3000,
       "printUrls": true,
       "strictPort": false,
     },
     "source": {
-      "alias": {
-        "@common": "./src/common",
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-      },
-      "aliasStrategy": "prefer-tsconfig",
+      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -736,7 +796,6 @@ exports[`environment config > should support modify environment config by api.mo
       "target": "web",
     },
     "performance": {
-      "buildCache": true,
       "chunkSplit": {
         "strategy": "split-by-experience",
       },
@@ -744,6 +803,22 @@ exports[`environment config > should support modify environment config by api.mo
       "profile": false,
       "removeConsole": false,
       "removeMomentLocale": false,
+    },
+    "resolve": {
+      "alias": {
+        "@common": "./src/common",
+        "@common1": "./src/common1",
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+      },
+      "aliasStrategy": "prefer-tsconfig",
+      "extensions": [
+        ".ts",
+        ".tsx",
+        ".mjs",
+        ".js",
+        ".jsx",
+        ".json",
+      ],
     },
     "root": "<ROOT>",
     "security": {
@@ -755,20 +830,17 @@ exports[`environment config > should support modify environment config by api.mo
     "server": {
       "base": "/",
       "compress": true,
+      "cors": false,
       "host": "0.0.0.0",
       "htmlFallback": "index",
+      "middlewareMode": false,
       "open": false,
       "port": 3000,
       "printUrls": true,
       "strictPort": false,
     },
     "source": {
-      "alias": {
-        "@common": "./src/common",
-        "@common1": "./src/common1",
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-      },
-      "aliasStrategy": "prefer-tsconfig",
+      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -863,7 +935,6 @@ exports[`environment config > should support modify environment config by api.mo
       "target": "web",
     },
     "performance": {
-      "buildCache": true,
       "chunkSplit": {
         "strategy": "split-by-experience",
       },
@@ -871,6 +942,22 @@ exports[`environment config > should support modify environment config by api.mo
       "profile": false,
       "removeConsole": false,
       "removeMomentLocale": false,
+    },
+    "resolve": {
+      "alias": {
+        "@common": "./src/common",
+        "@common1": "./src/common1",
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+      },
+      "aliasStrategy": "prefer-tsconfig",
+      "extensions": [
+        ".ts",
+        ".tsx",
+        ".mjs",
+        ".js",
+        ".jsx",
+        ".json",
+      ],
     },
     "root": "<ROOT>",
     "security": {
@@ -882,20 +969,17 @@ exports[`environment config > should support modify environment config by api.mo
     "server": {
       "base": "/",
       "compress": true,
+      "cors": false,
       "host": "0.0.0.0",
       "htmlFallback": "index",
+      "middlewareMode": false,
       "open": false,
       "port": 3000,
       "printUrls": true,
       "strictPort": false,
     },
     "source": {
-      "alias": {
-        "@common": "./src/common",
-        "@common1": "./src/common1",
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-      },
-      "aliasStrategy": "prefer-tsconfig",
+      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -993,7 +1077,6 @@ exports[`environment config > should support modify single environment config by
       "target": "web",
     },
     "performance": {
-      "buildCache": true,
       "chunkSplit": {
         "strategy": "split-by-experience",
       },
@@ -1001,6 +1084,21 @@ exports[`environment config > should support modify single environment config by
       "profile": false,
       "removeConsole": false,
       "removeMomentLocale": false,
+    },
+    "resolve": {
+      "alias": {
+        "@common": "./src/common",
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+      },
+      "aliasStrategy": "prefer-tsconfig",
+      "extensions": [
+        ".ts",
+        ".tsx",
+        ".mjs",
+        ".js",
+        ".jsx",
+        ".json",
+      ],
     },
     "root": "<ROOT>",
     "security": {
@@ -1012,19 +1110,17 @@ exports[`environment config > should support modify single environment config by
     "server": {
       "base": "/",
       "compress": true,
+      "cors": false,
       "host": "0.0.0.0",
       "htmlFallback": "index",
+      "middlewareMode": false,
       "open": false,
       "port": 3000,
       "printUrls": true,
       "strictPort": false,
     },
     "source": {
-      "alias": {
-        "@common": "./src/common",
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-      },
-      "aliasStrategy": "prefer-tsconfig",
+      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -1119,7 +1215,6 @@ exports[`environment config > should support modify single environment config by
       "target": "web",
     },
     "performance": {
-      "buildCache": true,
       "chunkSplit": {
         "strategy": "split-by-experience",
       },
@@ -1127,6 +1222,22 @@ exports[`environment config > should support modify single environment config by
       "profile": false,
       "removeConsole": false,
       "removeMomentLocale": false,
+    },
+    "resolve": {
+      "alias": {
+        "@common": "./src/common",
+        "@common1": "./src/common1",
+        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
+      },
+      "aliasStrategy": "prefer-tsconfig",
+      "extensions": [
+        ".ts",
+        ".tsx",
+        ".mjs",
+        ".js",
+        ".jsx",
+        ".json",
+      ],
     },
     "root": "<ROOT>",
     "security": {
@@ -1138,20 +1249,17 @@ exports[`environment config > should support modify single environment config by
     "server": {
       "base": "/",
       "compress": true,
+      "cors": false,
       "host": "0.0.0.0",
       "htmlFallback": "index",
+      "middlewareMode": false,
       "open": false,
       "port": 3000,
       "printUrls": true,
       "strictPort": false,
     },
     "source": {
-      "alias": {
-        "@common": "./src/common",
-        "@common1": "./src/common1",
-        "@swc/helpers": "<ROOT>/node_modules/<PNPM_INNER>/@swc/helpers",
-      },
-      "aliasStrategy": "prefer-tsconfig",
+      "alias": {},
       "decorators": {
         "version": "2022-03",
       },
@@ -1360,7 +1468,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               "type": "asset",
             },
           ],
-          "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
+          "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\|cur\\)\\$/i,
         },
         {
           "oneOf": [
@@ -1482,7 +1590,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "hints": false,
     },
     "plugins": [
-      RsbuildCorePlugin {},
+      RsbuildCorePlugin {
+        "name": "RsbuildCorePlugin",
+      },
       HotModuleReplacementPlugin {
         "name": "HotModuleReplacementPlugin",
       },
@@ -1526,6 +1636,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "web",
       "es2017",
     ],
+    "watchOptions": {
+      "aggregateTimeout": 0,
+      "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
+    },
   },
   {
     "context": "<ROOT>",
@@ -1562,7 +1676,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "type": "javascript/auto",
           "use": [
             {
-              "loader": "<ROOT>/packages/core/src/ignoreCssLoader.cjs",
+              "loader": "<ROOT>/packages/core/src/ignoreCssLoader.mjs",
             },
             {
               "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
@@ -1693,7 +1807,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               "type": "asset",
             },
           ],
-          "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
+          "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\|cur\\)\\$/i,
         },
         {
           "oneOf": [
@@ -1788,7 +1902,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "test": /\\\\\\.node\\$/,
           "use": [
             {
-              "loader": "<ROOT>/packages/core/src/transformRawLoader.cjs",
+              "loader": "<ROOT>/packages/core/src/transformRawLoader.mjs",
               "options": {
                 "getEnvironment": [Function],
                 "id": "rsbuild-transform-0",
@@ -1821,7 +1935,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "hints": false,
     },
     "plugins": [
-      RsbuildCorePlugin {},
+      RsbuildCorePlugin {
+        "name": "RsbuildCorePlugin",
+      },
       DefinePlugin {
         "_args": [
           {
@@ -1852,6 +1968,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       ],
     },
     "target": "node",
+    "watchOptions": {
+      "aggregateTimeout": 0,
+      "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
+    },
   },
 ]
 `;

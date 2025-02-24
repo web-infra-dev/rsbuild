@@ -4,7 +4,9 @@ import type {
 } from '@rspack/core';
 import { rspack } from '@rspack/core';
 import deepmerge from 'deepmerge';
+import { isPlainObject, pick } from '../helpers';
 import type { NormalizedEnvironmentConfig, RsbuildPlugin } from '../types';
+import { getLightningCSSLoaderOptions } from './css';
 
 export const getSwcMinimizerOptions = (
   config: NormalizedEnvironmentConfig,
@@ -111,9 +113,28 @@ export const pluginMinimize = (): RsbuildPlugin => ({
       }
 
       if (minifyCss && isRspack) {
+        const loaderOptions = getLightningCSSLoaderOptions(
+          config,
+          environment.browserslist,
+        );
+
         const defaultOptions: LightningCssMinimizerRspackPluginOptions = {
+          // If user has configured `tools.lightningcssLoader` options,
+          // we should will use them as the default minimizer options.
+          // This helps to keep development and production consistent.
           minimizerOptions: {
-            targets: environment.browserslist,
+            targets: isPlainObject(loaderOptions.targets)
+              ? environment.browserslist
+              : loaderOptions.targets,
+            ...pick(loaderOptions, [
+              'draft',
+              'include',
+              'exclude',
+              'nonStandard',
+              'pseudoClasses',
+              'unusedSymbols',
+              'errorRecovery',
+            ]),
           },
         };
 

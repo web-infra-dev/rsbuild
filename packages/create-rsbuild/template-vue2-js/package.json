@@ -1,17 +1,18 @@
 {
   "name": "rsbuild-vue2-js",
-  "private": true,
   "version": "1.0.0",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "rsbuild dev --open",
     "build": "rsbuild build",
+    "dev": "rsbuild dev --open",
     "preview": "rsbuild preview"
   },
   "dependencies": {
     "vue": "^2.7.16"
   },
   "devDependencies": {
-    "@rsbuild/core": "^1.1.2",
+    "@rsbuild/core": "^1.2.11",
     "@rsbuild/plugin-vue2": "^1.0.2"
   }
 }

@@ -2,7 +2,7 @@
 
 This chapter introduces how to migrate a [Vue CLI](https://github.com/vuejs/vue-cli) project to Rsbuild.
 
-## Install Dependencies
+## Install dependencies
 
 First, you need to replace the npm dependencies of Vue CLI with Rsbuild's dependencies.
 
@@ -38,7 +38,7 @@ Next, you need to update the npm scripts in the package.json file to Rsbuild's C
 Rsbuild does not integrate ESLint, so it does not provide a command to replace `vue-cli-service lint`. You can directly use ESLint's [CLI commands](https://eslint.org/docs/latest/use/command-line-interface) as an alternative.
 :::
 
-## Create Configuration File
+## Create configuration file
 
 Create a Rsbuild configuration file `rsbuild.config.ts` in the same directory as package.json, and add the following content:
 
@@ -61,7 +61,7 @@ export default defineConfig({
 If your project is based on Vue 2, use `import { pluginVue2 } from '@rsbuild/plugin-vue2';`.
 :::
 
-## HTML Template
+## HTML template
 
 Vue CLI uses the `public/index.html` file as the default HTML template. In Rsbuild, you can specify the HTML template through [html.template](/config/html/template):
 
@@ -82,7 +82,7 @@ In the HTML template, if you are using the `BASE_URL` variable from Vue CLI, rep
 
 This completes the basic migration from Vue CLI to Rsbuild. You can now run the `npm run serve` command to try starting the dev server.
 
-## Configuration Migration
+## Configuration migration
 
 Here is the corresponding Rsbuild configuration for Vue CLI configuration:
 
@@ -103,10 +103,10 @@ Here is the corresponding Rsbuild configuration for Vue CLI configuration:
 
 Notes:
 
-- When migrating `configureWebpack`, note that most of the Webpack and Rsbuild configs are the same, but there are also some differences or functionalities not implemented in Rsbuild.
+- When migrating `configureWebpack`, note that most of the webpack and Rsbuild configs are the same, but there are also some differences or functionalities not implemented in Rsbuild.
 - The above table does not cover all configurations of Vue CLI, feel free to add more.
 
-## Environment Variables
+## Environment variables
 
 Vue CLI injects environment variables starting with `VUE_APP_` into the client code by default, while Rsbuild injects environment variables starting with `PUBLIC_` by default (see [public variables](/guide/advanced/env-vars#public-variables)).
 
@@ -124,7 +124,7 @@ export default defineConfig({
 });
 ```
 
-## Contents Supplement
+## Contents supplement
 
 The current document only covers part of the migration process. If you find suitable content to add, feel free to contribute to the documentation via pull request 🤝.
 

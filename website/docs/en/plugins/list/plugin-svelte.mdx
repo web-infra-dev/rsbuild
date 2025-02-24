@@ -1,4 +1,4 @@
-# Svelte Plugin
+# Svelte plugin
 
 import { SourceCode } from 'rspress/theme';
 
@@ -6,9 +6,9 @@ import { SourceCode } from 'rspress/theme';
 
 The Svelte plugin provides support for Svelte components (`.svelte` files). The plugin internally integrates [svelte-loader](https://github.com/sveltejs/svelte-loader).
 
-## Quick Start
+## Quick start
 
-### Install Plugin
+### Install plugin
 
 You can install the plugin using the following command:
 
@@ -16,7 +16,7 @@ import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsbuild/plugin-svelte -D" />
 
-### Register Plugin
+### Register plugin
 
 You can register the plugin in the `rsbuild.config.ts` file:
 
@@ -32,7 +32,7 @@ After registering the plugin, you can import `*.svelte` files in your code.
 
 ## Options
 
-If you need to customize the compilation behavior of Svelte, you can use the following configs.
+To customize the compilation behavior of Svelte, use the following options.
 
 ### svelteLoaderOptions
 
@@ -102,3 +102,7 @@ pluginSvelte({
   },
 });
 ```
+
+## Notes
+
+Currently, `svelte-loader` does not support HMR for Svelte v5, see [svelte-loader - Hot Reload](https://github.com/sveltejs/svelte-loader?tab=readme-ov-file#hot-reload).

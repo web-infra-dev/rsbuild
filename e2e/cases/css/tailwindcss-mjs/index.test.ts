@@ -11,7 +11,14 @@ test('should generate tailwindcss utilities with mjs config correctly', async ()
     (file) => file.includes('index.') && file.endsWith('.css'),
   )!;
 
-  expect(files[indexCssFile]).toEqual(
-    '.text-3xl{font-size:1.875rem;line-height:2.25rem}.font-bold{font-weight:700}.underline{text-decoration-line:underline}',
+  const indexCssContent = files[indexCssFile];
+  expect(indexCssContent).toContain(
+    '.text-3xl{font-size:var(--text-3xl);line-height:var(--tw-leading,var(--text-3xl--line-height))}',
+  );
+  expect(indexCssContent).toContain(
+    '.font-bold{--tw-font-weight:var(--font-weight-bold);font-weight:var(--font-weight-bold)}',
+  );
+  expect(indexCssContent).toContain(
+    '.underline{text-decoration-line:underline}',
   );
 });

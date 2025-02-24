@@ -1,4 +1,4 @@
-# Preact Plugin
+# Preact plugin
 
 import { SourceCode } from 'rspress/theme';
 
@@ -6,9 +6,9 @@ import { SourceCode } from 'rspress/theme';
 
 The Preact plugin provides support for Preact, integrating features such as JSX compilation and React aliasing.
 
-## Quick Start
+## Quick start
 
-### Install Plugin
+### Install plugin
 
 You can install the plugin using the following command:
 
@@ -16,7 +16,7 @@ import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsbuild/plugin-preact -D" />
 
-### Register Plugin
+### Register plugin
 
 You can register the plugin in the `rsbuild.config.ts` file:
 
@@ -65,7 +65,7 @@ pluginPreact({
 
 Include files to be processed by the [@rspack/plugin-preact-refresh](https://github.com/rspack-contrib/rspack-plugin-preact-refresh) plugin. The value is the same as the `rule.test` option in Rspack.
 
-- **Type:** [RuleSetCondition](https://rspack.dev/zh/config/module#condition)
+- **Type:** [RuleSetCondition](https://rspack.dev/config/module#condition)
 - **Default:** `/\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/`
 - **Version:** `>= v1.1.0`
 
@@ -79,7 +79,7 @@ pluginPreact({
 
 Exclude files from being processed by the [@rspack/plugin-preact-refresh](https://github.com/rspack-contrib/rspack-plugin-preact-refresh) plugin. The value is the same as the `rule.exclude` option in Rspack.
 
-- **Type:** [RuleSetCondition](https://rspack.dev/zh/config/module#condition)
+- **Type:** [RuleSetCondition](https://rspack.dev/config/module#condition)
 - **Default:** `/[\\/]node_modules[\\/]/`
 - **Version:** `>= v1.1.0`
 

@@ -7,23 +7,19 @@ export function Hero() {
   const navigate = useNavigate();
   const tUrl = useI18nUrl();
   const t = useI18n<typeof import('i18n')>();
-  const handleClickGetStarted = () => {
-    navigate(tUrl('/guide/start/index'));
-  };
-  const handleClickLearnMore = () => {
+  const onClickGetStarted = () => {
     navigate(tUrl('/guide/start/quick-start'));
   };
   return (
     <BaseHero
       showStars
-      onClickGetStarted={handleClickGetStarted}
-      onClickLearnMore={handleClickLearnMore}
+      onClickGetStarted={onClickGetStarted}
       title="Rsbuild"
       subTitle={t('subtitle')}
       description={t('slogan')}
       logoUrl="https://assets.rspack.dev/rsbuild/rsbuild-logo.svg"
-      getStartedButtonText={t('introduction')}
-      learnMoreButtonText={t('quickStart')}
+      getStartedButtonText={t('quickStart')}
+      githubURL="https://github.com/web-infra-dev/rsbuild"
     />
   );
 }

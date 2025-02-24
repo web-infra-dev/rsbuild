@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, isAbsolute, join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import type { ChokidarOptions } from '../compiled/chokidar/index.js';
 import RspackChain from '../compiled/rspack-chain/index.js';
 import {
@@ -20,6 +21,7 @@ import {
   SVG_DIST_DIR,
   TS_CONFIG_FILE,
   WASM_DIST_DIR,
+  __filename,
 } from './constants';
 import {
   color,
@@ -43,6 +45,7 @@ import type {
   NormalizedHtmlConfig,
   NormalizedOutputConfig,
   NormalizedPerformanceConfig,
+  NormalizedResolveConfig,
   NormalizedSecurityConfig,
   NormalizedServerConfig,
   NormalizedSourceConfig,
@@ -83,21 +86,16 @@ const getDefaultServerConfig = (): NormalizedServerConfig => ({
   compress: true,
   printUrls: true,
   strictPort: false,
+  cors: false,
+  middlewareMode: false,
 });
 
 let swcHelpersPath: string;
 
 const getDefaultSourceConfig = (): NormalizedSourceConfig => {
-  if (!swcHelpersPath) {
-    swcHelpersPath = dirname(require.resolve('@swc/helpers/package.json'));
-  }
-
   return {
-    alias: {
-      '@swc/helpers': swcHelpersPath,
-    },
+    alias: {},
     define: {},
-    aliasStrategy: 'prefer-tsconfig',
     preEntry: [],
     decorators: {
       version: '2022-03',
@@ -136,7 +134,6 @@ const getDefaultToolsConfig = (): NormalizedToolsConfig => ({
 
 const getDefaultPerformanceConfig = (): NormalizedPerformanceConfig => ({
   profile: false,
-  buildCache: true,
   printFileSize: true,
   removeConsole: false,
   removeMomentLocale: false,
@@ -191,10 +188,33 @@ const getDefaultOutputConfig = (): NormalizedOutputConfig => ({
   emitAssets: true,
 });
 
+const getDefaultResolveConfig = (): NormalizedResolveConfig => {
+  if (!swcHelpersPath) {
+    swcHelpersPath = dirname(require.resolve('@swc/helpers/package.json'));
+  }
+
+  return {
+    alias: {
+      '@swc/helpers': swcHelpersPath,
+    },
+    aliasStrategy: 'prefer-tsconfig',
+    extensions: [
+      // most projects are using TypeScript, resolve .ts(x) files first to reduce resolve time.
+      '.ts',
+      '.tsx',
+      '.mjs',
+      '.js',
+      '.jsx',
+      '.json',
+    ],
+  };
+};
+
 const createDefaultConfig = (): RsbuildConfig => ({
   dev: getDefaultDevConfig(),
   server: getDefaultServerConfig(),
   html: getDefaultHtmlConfig(),
+  resolve: getDefaultResolveConfig(),
   source: getDefaultSourceConfig(),
   output: getDefaultOutputConfig(),
   tools: getDefaultToolsConfig(),
@@ -211,6 +231,8 @@ export function getDefaultEntry(root: string): RsbuildEntry {
     'js',
     'tsx',
     'jsx',
+    'mts',
+    'cts',
     'mjs',
     'cjs',
   ].map((ext) => join(root, `src/index.${ext}`));
@@ -287,6 +309,7 @@ export type ConfigParams = {
   env: string;
   command: string;
   envMode?: string;
+  meta?: Record<string, unknown>;
 };
 
 export type RsbuildConfigAsyncFn = (
@@ -383,18 +406,60 @@ export async function watchFilesForRestart(
   watcher.on('unlink', callback);
 }
 
+export type LoadConfigOptions = {
+  /**
+   * The root path to resolve the config file.
+   * @default process.cwd()
+   */
+  cwd?: string;
+  /**
+   * The path to the config file, can be a relative or absolute path.
+   * If `path` is not provided, the function will search for the config file in the `cwd`.
+   */
+  path?: string;
+  /**
+   * A custom meta object to be passed into the config function of `defineConfig`.
+   */
+  meta?: Record<string, unknown>;
+  /**
+   * The `envMode` passed into the config function of `defineConfig`.
+   * @default process.env.NODE_ENV
+   */
+  envMode?: string;
+  /**
+   * Specify the config loader, can be `jiti` or `native`.
+   * - 'jiti': Use `jiti` as loader, which supports TypeScript and ESM out of the box
+   * - 'native': Use native Node.js loader, requires TypeScript support in Node.js >= 22.6
+   * @default 'jiti'
+   */
+  loader?: ConfigLoader;
+};
+
+export type LoadConfigResult = {
+  /**
+   * The loaded configuration object.
+   */
+  content: RsbuildConfig;
+  /**
+   * The path to the loaded configuration file.
+   * Return `null` if the configuration file is not found.
+   */
+  filePath: string | null;
+};
+
+export type ConfigLoader = 'jiti' | 'native';
+
 export async function loadConfig({
   cwd = process.cwd(),
   path,
   envMode,
-}: {
-  cwd?: string;
-  path?: string;
-  envMode?: string;
-} = {}): Promise<{ content: RsbuildConfig; filePath: string | null }> {
+  meta,
+  loader = 'jiti',
+}: LoadConfigOptions = {}): Promise<LoadConfigResult> {
   const configFilePath = resolveConfigPath(cwd, path);
 
   if (!configFilePath) {
+    logger.debug('no config file found.');
     return {
       content: {},
       filePath: configFilePath,
@@ -408,28 +473,36 @@ export async function loadConfig({
 
   let configExport: RsbuildConfigExport;
 
-  if (/\.(?:js|mjs|cjs)$/.test(configFilePath)) {
+  if (loader === 'native' || /\.(?:js|mjs|cjs)$/.test(configFilePath)) {
     try {
-      const exportModule = await import(`${configFilePath}?t=${Date.now()}`);
+      const configFileURL = pathToFileURL(configFilePath).href;
+      const exportModule = await import(`${configFileURL}?t=${Date.now()}`);
       configExport = exportModule.default ? exportModule.default : exportModule;
     } catch (err) {
+      if (loader === 'native') {
+        logger.error(
+          `Failed to load file with native loader: ${color.dim(configFilePath)}`,
+        );
+        throw err;
+      }
       logger.debug(
-        `Failed to load file with dynamic import: ${color.dim(configFilePath)}`,
+        `failed to load file with dynamic import: ${color.dim(configFilePath)}`,
       );
     }
   }
 
   try {
     if (configExport! === undefined) {
-      const { default: jiti } = await import('../compiled/jiti/index.js');
-      const loadConfig = jiti(__filename, {
-        esmResolve: true,
+      const { createJiti } = await import('jiti');
+      const jiti = createJiti(__filename, {
         // disable require cache to support restart CLI and read the new config
-        requireCache: false,
+        moduleCache: false,
         interopDefault: true,
       });
 
-      configExport = loadConfig(configFilePath) as RsbuildConfigExport;
+      configExport = await jiti.import<RsbuildConfigExport>(configFilePath, {
+        default: true,
+      });
     }
   } catch (err) {
     logger.error(`Failed to load file with jiti: ${color.dim(configFilePath)}`);
@@ -439,16 +512,19 @@ export async function loadConfig({
   if (typeof configExport === 'function') {
     const command = process.argv[2];
     const nodeEnv = getNodeEnv();
-    const params: ConfigParams = {
+    const configParams: ConfigParams = {
       env: nodeEnv,
       command,
       envMode: envMode || nodeEnv,
+      meta,
     };
 
-    const result = await configExport(params);
+    const result = await configExport(configParams);
 
     if (result === undefined) {
-      throw new Error('The config function must return a config object.');
+      throw new Error(
+        '[rsbuild:loadConfig] The config function must return a config object.',
+      );
     }
 
     return {
@@ -459,11 +535,13 @@ export async function loadConfig({
 
   if (!isObject(configExport)) {
     throw new Error(
-      `The config must be an object or a function that returns an object, get ${color.yellow(
+      `[rsbuild:loadConfig] The config must be an object or a function that returns an object, get ${color.yellow(
         configExport,
       )}`,
     );
   }
+
+  logger.debug('loaded config file:', configFilePath);
 
   return {
     content: applyMetaInfo(configExport),
@@ -563,7 +641,7 @@ export async function outputInspectConfigFiles({
 
         return {
           path: outputFilePath,
-          label: 'Rsbuild Config',
+          label: 'Rsbuild config',
           content,
         };
       }
@@ -572,7 +650,7 @@ export async function outputInspectConfigFiles({
 
       return {
         path: outputFilePath,
-        label: `Rsbuild Config (${name})`,
+        label: `Rsbuild config (${name})`,
         content,
       };
     }),
@@ -611,7 +689,7 @@ export async function outputInspectConfigFiles({
     .join('\n');
 
   logger.success(
-    `Inspect config succeed, open following files to view the content: \n\n${fileInfos}\n`,
+    `config inspection completed, generated files: \n\n${fileInfos}\n`,
   );
 }
 
@@ -634,7 +712,7 @@ export const normalizePublicDirs = (
 
   const defaultConfig: Required<PublicDirOptions> = {
     name: 'public',
-    copyOnBuild: true,
+    copyOnBuild: 'auto',
     watch: false,
   };
 

@@ -1,4 +1,4 @@
-# SVGR Plugin
+# SVGR plugin
 
 import { SourceCode } from 'rspress/theme';
 
@@ -8,9 +8,9 @@ By default, Rsbuild will treat SVG files as static assets. For processing rules,
 
 With SVGR plugin, Rsbuild supports transform SVG to React components via [SVGR](https://react-svgr.com/).
 
-## Quick Start
+## Quick start
 
-### Install Plugin
+### Install plugin
 
 You can install the plugin using the following command:
 
@@ -18,7 +18,7 @@ import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsbuild/plugin-svgr -D" />
 
-### Register Plugin
+### Register plugin
 
 You can register the plugin in the `rsbuild.config.ts` file:
 
@@ -32,7 +32,7 @@ export default {
 
 ## Example
 
-### Default Usage
+### Default usage
 
 After registering the plugin, when import an SVG in a JS file, if the imported path contains the `?react` suffix, Rsbuild will call SVGR to transform the SVG into a React component.
 
@@ -42,7 +42,7 @@ import Logo from './logo.svg?react';
 export const App = () => <Logo />;
 ```
 
-If the imported path does not contain the `?react` suffix, then the SVG will be treated as a normal static asset and you will get a URL:
+If the imported path does not contain the `?react` suffix, then the SVG will be treated as a normal static asset and you will get a URL string or base64 URL, see [Import Static Assets](/guide/basic/static-assets).
 
 ```js
 import logoURL from './static/logo.svg';
@@ -50,7 +50,7 @@ import logoURL from './static/logo.svg';
 console.log(logoURL); // => "/static/logo.6c12aba3.png"
 ```
 
-### Named Import
+### Named import
 
 `@rsbuild/plugin-svgr` supports named imports for `ReactComponent` when using SVGR. You need to set [svgrOptions.exportType](#svgroptionsexporttype) to `'named'`:
 
@@ -75,7 +75,7 @@ export const App = () => <Logo />;
 
 ## Options
 
-If you need to customize the compilation behavior of Svgr, you can use the following configs.
+To customize the compilation behavior of Svgr, use the following options.
 
 - **Type:**
 
@@ -334,7 +334,7 @@ console.log(url); // => Resource url
 The query in the module path has a higher priority than `exclude` and `excludeImporter`. For example, if a module is excluded, adding `?react` can still make it transformed by SVGR.
 :::
 
-## Type Declaration
+## Type declaration
 
 When you reference an SVG asset in TypeScript code, TypeScript may prompt that the module is missing a type definition:
 

@@ -42,7 +42,7 @@ import Logo from './logo.svg?react';
 export const App = () => <Logo />;
 ```
 
-如果导入的路径不包含 `?react` 后缀，那么 SVG 会被当做普通的静态资源来处理，你会得到一个 URL 字符串：
+如果导入的路径不包含 `?react` 后缀，那么 SVG 会被当做普通的静态资源来处理，你会得到一个 URL 字符串或 base64 URL，参考 [引用静态资源](/guide/basic/static-assets)。
 
 ```js
 import logoURL from './static/logo.svg';

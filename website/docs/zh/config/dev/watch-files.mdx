@@ -155,16 +155,4 @@ export default {
 
 如果你希望当某些文件变化时，不触发重新构建，可以使用 Rspack 的 [watchOptions.ignored](https://rspack.dev/config/watch#watchoptionsignored) 配置项。
 
-例如，指定当 `node_modules` 中文件发生变化时，不触发重新构建，可以添加如下配置：
-
-```js
-export default {
-  tools: {
-    rspack: {
-      watchOptions: {
-        ignored: /node_modules/,
-      },
-    },
-  },
-};
-```
+> 详见 [模块热更新 - 文件监听](/guide/advanced/hmr#文件监听)。

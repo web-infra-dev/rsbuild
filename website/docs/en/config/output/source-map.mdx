@@ -3,17 +3,19 @@
 - **Type:**
 
 ```ts
-type SourceMap = {
-  js?: Rspack.Configuration['devtool'];
-  css?: boolean;
-};
+type SourceMap =
+  | boolean
+  | {
+      js?: Rspack.Configuration['devtool'];
+      css?: boolean;
+    };
 ```
 
 - **Default:**
 
 ```ts
 const defaultSourceMap = {
-  js: isDev ? 'cheap-module-source-map' : false,
+  js: mode === 'development' ? 'cheap-module-source-map' : false,
   css: false,
 };
 ```
@@ -24,14 +26,42 @@ Used to set whether to generate source map files, and which format of source map
 Source map is an information file that saves the source code mapping relationship. It records each location of the compiled code and the corresponding pre-compilation location. With source map, you can directly view the source code when debugging the compiled code.
 :::
 
-## Default Behavior
+## Default behavior
 
 By default, the source map generation rules for Rsbuild are as follows:
 
 - In development mode, source maps for JS files are generated for development debugging, while source maps for CSS files are not generated.
 - In production mode, no source maps for JS and CSS files are generated to improve build performance.
 
-## JS Source Map
+## Boolean value
+
+If `output.sourceMap` is `true`, the source map will be generated according to the [mode](/config/mode), equivalent to:
+
+```js
+export default {
+  output: {
+    sourceMap: {
+      js: mode === 'development' ? 'cheap-module-source-map' : 'source-map',
+      css: true,
+    },
+  },
+};
+```
+
+If `output.sourceMap` is `false`, no source map will be generated, equivalent to:
+
+```js
+export default {
+  output: {
+    sourceMap: {
+      js: false,
+      css: false,
+    },
+  },
+};
+```
+
+## JS source map
 
 The source map for JS files is controlled by `sourceMap.js` and can be configured by passing in all the source map formats supported by Rspack's [devtool](https://rspack.dev/config/devtool) option. Setting it to `false` will disable the source map.
 
@@ -64,7 +94,7 @@ export default {
 };
 ```
 
-## CSS Source Map
+## CSS source map
 
 The source map for CSS files is controlled by `sourceMap.css`. Setting it to `true` will enable the source map, while setting it to `false` will disable it.
 
@@ -75,6 +105,21 @@ export default {
   output: {
     sourceMap: {
       css: true,
+    },
+  },
+};
+```
+
+In production builds, it is not recommended to enable both [output.injectStyles](/config/output/inject-styles) and `output.sourceMap.css`, as `output.injectStyles` will inject the source map into the JS bundles, which will increase the file size and slow down the page loading speed.
+
+You can only enable the CSS file source map in the development mode:
+
+```js
+export default {
+  output: {
+    injectStyles: true,
+    sourceMap: {
+      css: process.env.NODE_ENV === 'development',
     },
   },
 };

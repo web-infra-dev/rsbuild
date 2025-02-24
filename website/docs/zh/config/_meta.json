@@ -15,6 +15,11 @@
   },
   {
     "type": "dir",
+    "name": "resolve",
+    "label": "resolve"
+  },
+  {
+    "type": "dir",
     "name": "source",
     "label": "source"
   },

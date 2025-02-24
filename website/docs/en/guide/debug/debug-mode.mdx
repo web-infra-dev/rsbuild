@@ -1,4 +1,4 @@
-# Debug Mode
+# Debug mode
 
 Rsbuild provides a debug mode to troubleshoot problems, you can add the `DEBUG=rsbuild` environment variable when building to enable Rsbuild's debug mode.
 
@@ -12,7 +12,7 @@ DEBUG=rsbuild pnpm build
 
 In debug mode, Rsbuild will output some additional log information, and write the Rsbuild config and Rspack config to the dist directory, which is convenient for developers to view and debug.
 
-## Log Information
+## Log information
 
 In debug mode, you will see some logs in the terminal starting with `rsbuild`, including internal operations performed by Rsbuild and the current version of Rspack being used.
 
@@ -22,20 +22,20 @@ $ DEBUG=rsbuild pnpm dev
   ...
   rsbuild init plugins
   rsbuild init plugins done
-  rsbuild Use Rspack v1.0.0
+  rsbuild use Rspack v1.0.0
   ...
 ```
 
 In addition, the following logs will be output in the terminal, indicating that the Rsbuild has written the internally generated build configs to disk, and you can open these config files to view the corresponding content.
 
 ```bash
-Inspect config succeeds, open following files to view the content:
+config inspection completed, generated files:
 
-   - Rsbuild Config: /Project/demo/dist/.rsbuild/rsbuild.config.mjs
-   - Rspack Config (web): /Project/demo/dist/.rsbuild/rspack.config.web.mjs
+   - Rsbuild config: /Project/demo/dist/.rsbuild/rsbuild.config.mjs
+   - Rspack config (web): /Project/demo/dist/.rsbuild/rspack.config.web.mjs
 ```
 
-## Rsbuild Config File
+## Rsbuild config file
 
 In debug mode, Rsbuild will automatically generate `dist/.rsbuild/rsbuild.config.mjs` file, which contains the final generated Rsbuild config. In this file, you can know the final result of the Rsbuild config you passed in after being processed by the framework and Rsbuild.
 
@@ -55,7 +55,7 @@ export default {
 
 For a complete introduction to Rsbuild config, please see the [Configure Rsbuild](/guide/basic/configure-rsbuild) chapter.
 
-## Rspack Config File
+## Rspack config file
 
 Rsbuild will also automatically generate `dist/.rsbuild/rspack.config.web.mjs` file, which contains the final generated Rspack config. In this file, you can see what is included in the config that Rsbuild finally passes to Rspack.
 

@@ -1,4 +1,4 @@
-# Assets Retry Plugin
+# Assets retry plugin
 
 import { SourceCode } from 'rspress/theme';
 
@@ -6,9 +6,9 @@ import { SourceCode } from 'rspress/theme';
 
 The Assets Retry plugin is used to automatically resend requests when static assets fail to load.
 
-## Quick Start
+## Quick start
 
-### Install Plugin
+### Install plugin
 
 You can install the plugin using the following command:
 
@@ -16,7 +16,7 @@ import { PackageManagerTabs } from '@theme';
 
 <PackageManagerTabs command="add @rsbuild/plugin-assets-retry -D" />
 
-### Register Plugin
+### Register plugin
 
 You can register the plugin in the `rsbuild.config.ts` file:
 
@@ -50,6 +50,7 @@ type AssetsRetryOptions = {
   test?: string | ((url: string) => boolean);
   crossOrigin?: boolean | 'anonymous' | 'use-credentials';
   inlineScript?: boolean;
+  delay?: number | ((context: AssetsRetryHookContext) => number);
   onRetry?: (context: AssetsRetryHookContext) => void;
   onSuccess?: (context: AssetsRetryHookContext) => void;
   onFail?: (context: AssetsRetryHookContext) => void;
@@ -65,6 +66,7 @@ const defaultAssetsRetryOptions = {
   max: 3,
   test: '',
   crossOrigin: false,
+  delay: 0,
   onRetry: () => {},
   onSuccess: () => {},
   onFail: () => {},
@@ -274,9 +276,34 @@ pluginAssetsRetry({
 });
 ```
 
+### delay
+
+- **Type:** `number | ((context: AssetsRetryHookContext) => number)`
+- **Default:** `0`
+
+The delay time (in milliseconds) before retrying a failed asset.
+
+You can pass a number:
+
+```js
+// Delay 1s before retrying
+pluginAssetsRetry({
+  delay: 1000,
+});
+```
+
+Or pass a function that receives `AssetsRetryHookContext` and returns the delay time:
+
+```js
+// Calculate delay based on retry attempts
+pluginAssetsRetry({
+  delay: (ctx) => (ctx.times + 1) * 1000,
+});
+```
+
 ## Notes
 
-When you use Assets Retry plugin, the Rsbuild injects some runtime code into the HTML and serializes the Assets Retry plugin config, inserting it into the runtime code. Therefore, you need to be aware of the following:
+When you use Assets Retry plugin, the Rsbuild injects some runtime code into the HTML and [Rspack Runtime](https://rspack.dev/misc/glossary#runtime), then serializes the Assets Retry plugin config, inserting it into the runtime code. Therefore, you need to be aware of the following:
 
 - Avoid configuring sensitive information in Assets Retry plugin, such as internal tokens.
 - Avoid referencing variables or methods outside of `onRetry`, `onSuccess`, and `onFail`.

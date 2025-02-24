@@ -110,7 +110,7 @@ const updateConfigForTest = async (
     dev: {
       progressBar: false,
     },
-    source: {
+    resolve: {
       alias: {
         '@assets': join(__dirname, '../assets'),
       },
@@ -139,6 +139,7 @@ const unwrapOutputJSON = async (distPath: string, ignoreMap = true) => {
 export async function dev({
   plugins,
   page,
+  waitFirstCompileDone = true,
   ...options
 }: CreateRsbuildOptions & {
   plugins?: RsbuildPlugins;
@@ -147,6 +148,12 @@ export async function dev({
    * This method will automatically goto the page.
    */
   page?: Page;
+  /**
+   * The done of `dev` does not mean the compile is done.
+   * If your test relies on the completion of compilation you should `waitFirstCompileDone`
+   * @default true
+   */
+  waitFirstCompileDone?: boolean;
 }) {
   process.env.NODE_ENV = 'development';
 
@@ -178,7 +185,20 @@ export async function dev({
     },
   ]);
 
+  const wait = waitFirstCompileDone
+    ? new Promise<void>((resolve) => {
+        rsbuild.onDevCompileDone(({ isFirstCompile }) => {
+          if (!isFirstCompile) {
+            return;
+          }
+          resolve();
+        });
+      })
+    : Promise.resolve();
+
   const result = await rsbuild.startDevServer();
+
+  await wait;
 
   if (page) {
     await gotoPage(page, result);

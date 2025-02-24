@@ -1,4 +1,4 @@
-# Import Static Assets
+# Import static assets
 
 Rsbuild supports import static assets, including images, fonts, audio and video.
 
@@ -6,22 +6,22 @@ Rsbuild supports import static assets, including images, fonts, audio and video.
 Static assets are files that are part of a web application and do not change, even when the application is being used. Examples of static assets include images, fonts, medias, stylesheets, and JavaScript files. These assets are typically stored on a web server or CDN, and delivered to the user's web browser when the Web application is accessed. Because they do not change, static assets can be cached by the browser, which helps to improve the performance of the Web application.
 :::
 
-## Assets Format
+## Assets format
 
 The following are the formats supported by Rsbuild by default:
 
-- **images**: png, jpg, jpeg, gif, svg, bmp, webp, ico, apng, avif, tif, tiff, jfif, pjpeg, pjp.
+- **images**: png, jpg, jpeg, gif, svg, bmp, webp, ico, apng, avif, tif, tiff, jfif, pjpeg, pjp, cur.
 - **fonts**: woff, woff2, eot, ttf, otf, ttc.
 - **audio**: mp3, wav, flac, aac, m4a, opus.
 - **video**: mp4, webm, ogg, mov.
 
-If you need to import assets in other formats, please refer to [Extend Asset Types](#extend-asset-types).
+To import assets in other formats, refer to [Extend Asset Types](#extend-asset-types).
 
 :::tip SVG images
 SVG image is a special case. Rsbuild support convert SVG to React components, so SVG is processed separately. For details, see [SVGR Plugin](/plugins/list/plugin-svgr).
 :::
 
-## Import Assets in JS file
+## Import assets in JS file
 
 In JS files, you can import static assets with relative paths:
 
@@ -74,7 +74,7 @@ const fooCss = new URL('./foo.css', import.meta.url).href;
 console.log(fooCss); // "/static/foo.[hash].css"
 ```
 
-## Import Assets in CSS file
+## Import assets in CSS file
 
 In CSS files, you can reference static assets in relative paths:
 
@@ -120,12 +120,12 @@ export default {
 };
 ```
 
-## Import Results
+## Inline assets
 
 The result of importing static assets depends on the file size:
 
-- When the file size is greater than 4KiB, a URL will be returned, and the file will be output to the dist directory.
-- When the file size is less than 4KiB, it will be automatically inlined to Base64 format.
+- If the file size is less than 4KiB, it will be converted to a base64 string and inlined in the code.
+- If the file size is larger than 4KiB, a URL will be returned, and the file will be emitted to the output directory.
 
 ```js
 import largeImage from './static/largeImage.png';
@@ -135,9 +135,25 @@ console.log(largeImage); // "/static/largeImage.[hash].png"
 console.log(smallImage); // "data:image/png;base64,iVBORw0KGgo..."
 ```
 
+Adding the `?url` query ensures that the asset is always loaded as a separate file and returns a URL:
+
+```js
+import image from './static/image.png?url';
+
+console.log(image); // "/static/image.[hash].png"
+```
+
+Adding the `?inline` query ensures that the asset is always inlined in the code, regardless of the file size:
+
+```js
+import image from './static/image.png?inline';
+
+console.log(image); // "data:image/png;base64,iVBORw0KGgo..."
+```
+
 For a more detailed introduction to asset inlining, please refer to the [Static Asset Inlining](/guide/optimization/inline-assets) chapter.
 
-## Output Files
+## Output files
 
 When static assets are imported, they will be output to the dist directory. You can:
 
@@ -146,7 +162,7 @@ When static assets are imported, they will be output to the dist directory. You 
 
 Please read [Output Files](/guide/basic/output-files) for details.
 
-## URL Prefix
+## URL prefix
 
 The URL returned after importing a asset will automatically include the path prefix:
 
@@ -161,7 +177,7 @@ import logo from './static/logo.png';
 console.log(logo); // "https://example.com/static/logo.[hash].png"
 ```
 
-## Public Folder
+## Public folder
 
 The public folder at the project root can be used to place some static assets. These assets will not be built by Rsbuild and can be directly referenced via URL.
 
@@ -206,7 +222,7 @@ import logo from './assets/logo.png';
 
 - During the production build, the files in public folder will be copied to the output folder (default is `dist`). Please be careful to avoid name conflicts with the output files. When files in the `public` folder have the same name as outputs, the outputs have higher priority and will overwrite the files with the same name in the `public` folder. This feature can be disabled by setting [server.publicDir.copyOnBuild](/config/server/public-dir) to `false`.
 
-### Custom Behavior
+### Custom behavior
 
 Rsbuild provides the [server.publicDir](/config/server/public-dir) option which can be used to customize the name and behavior of the public folder, as well as to disable it.
 
@@ -218,7 +234,7 @@ export default {
 };
 ```
 
-## Type Declaration
+## Type declaration
 
 When you import static assets in TypeScript code, TypeScript may prompt that the module is missing a type definition:
 
@@ -246,7 +262,7 @@ declare module '*.png' {
 
 After adding the type declaration, if the type error still exists, you can try to restart the current IDE, or adjust the directory where `env.d.ts` is located, making sure the TypeScript can correctly identify the type definition.
 
-## Extend Asset Types
+## Extend asset types
 
 If the built-in asset types in Rsbuild cannot meet your requirements, you can extend additional static asset types in the following ways.
 
@@ -294,7 +310,7 @@ export default {
 
 For more information about asset modules, please refer to [Rspack - Asset modules](https://rspack.dev/guide/features/asset-module).
 
-### Related Configurations
+### Related configurations
 
 Extended static asset types will be affected by the following configurations:
 
@@ -302,7 +318,7 @@ Extended static asset types will be affected by the following configurations:
 - [output.distPath.assets](/config/output/dist-path): Set the output directory of extended static assets.
 - [output.dataUriLimit.assets](/config/output/data-uri-limit): Set the threshold of inlining for extended static assets.
 
-## Custom Rules
+## Custom rules
 
 In some scenarios, you may need to bypass the built-in assets processing rules of Rsbuild and add some custom rules.
 
@@ -333,7 +349,7 @@ export default {
 };
 ```
 
-## Image Format
+## Image format
 
 When using image assets, you can choose a appropriate image format according to the pros and cons in the table below.
 

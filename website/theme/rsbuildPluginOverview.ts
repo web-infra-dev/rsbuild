@@ -69,6 +69,7 @@ export const rsbuildPluginOverview: RsbuildPlugin = {
       'server',
       'security',
       'moduleFederation',
+      'resolve',
       'dev',
       'tools',
       'performance',

@@ -74,16 +74,10 @@ export default defineConfig({
     externals,
   },
   lib: [
-    // Node / ESM / index
     {
+      id: 'esm:index',
       format: 'esm',
       syntax: 'es2021',
-      shims: {
-        esm: {
-          __filename: true,
-          __dirname: true,
-        },
-      },
       plugins: [pluginFixDtsTypes, pluginCleanTscCache],
       dts: {
         build: true,
@@ -92,16 +86,31 @@ export default defineConfig({
         minify: nodeMinifyConfig,
       },
     },
-    // Node / CJS
     {
+      id: 'esm:loaders',
+      format: 'esm',
+      syntax: 'es2021',
+      source: {
+        entry: {
+          ignoreCssLoader: './src/loader/ignoreCssLoader.ts',
+          transformLoader: './src/loader/transformLoader.ts',
+          transformRawLoader: './src/loader/transformRawLoader.ts',
+        },
+      },
+      output: {
+        filename: {
+          js: '[name].mjs',
+        },
+        minify: nodeMinifyConfig,
+      },
+    },
+    {
+      id: 'cjs:index',
       format: 'cjs',
       syntax: 'es2021',
       source: {
         entry: {
           index: './src/index.ts',
-          ignoreCssLoader: './src/loader/ignoreCssLoader.ts',
-          transformLoader: './src/loader/transformLoader.ts',
-          transformRawLoader: './src/loader/transformRawLoader.ts',
         },
       },
       output: {
@@ -113,7 +122,6 @@ export default defineConfig({
 0 && (module.exports = {
   PLUGIN_CSS_NAME,
   PLUGIN_SWC_NAME,
-  __internalHelper,
   createRsbuild,
   defineConfig,
   ensureAssetPrefix,
@@ -126,8 +134,8 @@ export default defineConfig({
 });`,
       },
     },
-    // Client / ESM
     {
+      id: 'esm:client',
       format: 'esm',
       syntax: 'es2017',
       source: {

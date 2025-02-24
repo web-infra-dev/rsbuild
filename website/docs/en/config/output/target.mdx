@@ -13,13 +13,13 @@ Setting the build target of Rsbuild.
 
 Rsbuild supports multiple build targets for running in different environments. After setting the target type, the default configuration of Rsbuild will change accordingly.
 
-## Default Target
+## Default target
 
 By default, the target is set to 'web' and will build outputs for running in the browser.
 
 Rsbuild will read the [Browserslist config](https://github.com/browserslist/browserslist) in the project to determine the range of browsers.
 
-## Optional Targets
+## Optional targets
 
 In addition to `'web'`, `target` can also be set to the following values:
 
@@ -36,7 +36,7 @@ export default {
 };
 ```
 
-## Parallel Builds
+## Parallel builds
 
 You can use [environments](/config/environments) to build multiple targets in parallel.
 
@@ -59,7 +59,7 @@ export default {
 };
 ```
 
-## Node Target
+## Node target
 
 Refers to the build target running in the Node.js environment, usually used in scenarios such as SSR.
 
@@ -72,7 +72,26 @@ When `target` is set to `'node'`, Rsbuild will:
 - Set the default value of Browserslist to `['node >= 16']`.
 - Set the default value of [output.emitCss](/config/output/emit-css) to `false`. This means that CSS code will not be extracted to separate files, but the id information of CSS Modules will be included in the bundle.
 
-## Web Worker Target
+### Node addons
+
+When `target` is set to `'node'`, Rsbuild allows you to import Node.js [Addons](https://nodejs.org/api/addons.html) in JavaScript files.
+
+For example:
+
+```js title="src/index.js"
+import addon from './addon.node';
+
+addon.doSomething();
+```
+
+The referenced addons file will be output to the `dist` directory:
+
+```
+dist/index.js
+dist/addon.node
+```
+
+## Web Workers target
 
 Refers to the build target running in the [Web Worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) environment.
 

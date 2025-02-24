@@ -1,6 +1,6 @@
 import { sep } from 'node:path';
 import { ensureAssetPrefix, pick, prettyTime } from '../src/helpers';
-import { getCommonParentPath } from '../src/helpers/path';
+import { dedupeNestedPaths, getCommonParentPath } from '../src/helpers/path';
 import type { InternalContext } from '../src/internal';
 import { getRoutes, normalizeUrl } from '../src/server/helper';
 
@@ -203,4 +203,35 @@ describe('getCommonParentPath', () => {
     const result = getCommonParentPath(paths);
     expect(result).toBe(normalize('/home/user/project/dist1'));
   });
+});
+
+test('should dedupeNestedPaths correctly', async () => {
+  expect(
+    dedupeNestedPaths([
+      'package/to/root/dist/web1',
+      'package/to/root/dist/web2',
+      'package/to/root/dist',
+    ]),
+  ).toEqual(['package/to/root/dist']);
+
+  expect(
+    dedupeNestedPaths([
+      'package/to/root',
+      'package/to/root/dist/web2',
+      'package/to/root/dist',
+    ]),
+  ).toEqual(['package/to/root']);
+
+  expect(
+    dedupeNestedPaths([
+      'package/to/root/dist/web1',
+      'package/to/root/dist/web2',
+      'package/to/root/dist/web3',
+      'package/to/root/dist/web3',
+    ]),
+  ).toEqual([
+    'package/to/root/dist/web1',
+    'package/to/root/dist/web2',
+    'package/to/root/dist/web3',
+  ]);
 });

@@ -89,7 +89,7 @@ describe('bundlerApi', () => {
   it('test modifyBundlerChain and api order', async () => {
     const testPlugin: RsbuildPlugin = {
       name: 'plugin-devtool',
-      setup: (api) => {
+      setup(api) {
         api.modifyBundlerChain((chain) => {
           chain.target('node');
           chain.devtool('cheap-module-source-map');
@@ -110,7 +110,9 @@ describe('bundlerApi', () => {
       {
         "devtool": "hidden-source-map",
         "plugins": [
-          RsbuildCorePlugin {},
+          {
+            "name": "RsbuildCorePlugin",
+          },
         ],
         "target": "node",
       }
@@ -120,7 +122,7 @@ describe('bundlerApi', () => {
   it('test modifyBundlerChain rule format correctly', async () => {
     const testPlugin: RsbuildPlugin = {
       name: 'plugin-devtool',
-      setup: (api) => {
+      setup(api) {
         api.modifyBundlerChain((chain) => {
           chain.module
             .rule('yaml')
@@ -153,7 +155,9 @@ describe('bundlerApi', () => {
           ],
         },
         "plugins": [
-          RsbuildCorePlugin {},
+          {
+            "name": "RsbuildCorePlugin",
+          },
         ],
       }
     `);
@@ -162,7 +166,7 @@ describe('bundlerApi', () => {
   it('test modifyBundlerChain use builtinLoader', async () => {
     const testPlugin: RsbuildPlugin = {
       name: 'plugin-test',
-      setup: (api) => {
+      setup(api) {
         api.modifyBundlerChain((chain) => {
           chain.module
             .rule('yaml')
@@ -195,7 +199,9 @@ describe('bundlerApi', () => {
           ],
         },
         "plugins": [
-          RsbuildCorePlugin {},
+          {
+            "name": "RsbuildCorePlugin",
+          },
         ],
       }
     `);

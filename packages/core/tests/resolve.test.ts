@@ -23,11 +23,25 @@ describe('plugin-resolve', () => {
     ).toBeDefined();
   });
 
+  it('should allow to customize extensions', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginResolve()],
+      rsbuildConfig: {
+        resolve: {
+          extensions: ['.ts', '.js'],
+        },
+      },
+    });
+
+    const bundlerConfigs = await rsbuild.initConfigs();
+    expect(bundlerConfigs[0].resolve?.extensions).toEqual(['.ts', '.js']);
+  });
+
   it('should not apply tsConfigPath when aliasStrategy is "prefer-alias"', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
       rsbuildConfig: {
-        source: {
+        resolve: {
           aliasStrategy: 'prefer-alias',
         },
       },
@@ -38,11 +52,11 @@ describe('plugin-resolve', () => {
     expect(bundlerConfigs[0].resolve?.tsConfig).toBeUndefined();
   });
 
-  it('should allow to use source.alias to config alias', async () => {
+  it('should allow to use resolve.alias to configure alias', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
       rsbuildConfig: {
-        source: {
+        resolve: {
           alias: {
             foo: 'bar',
           },
@@ -54,11 +68,11 @@ describe('plugin-resolve', () => {
     expect(bundlerConfigs[0].resolve?.alias?.foo).toEqual('bar');
   });
 
-  it('should support source.alias to be a function', async () => {
+  it('should allow resolve.alias to be a function', async () => {
     const rsbuild = await createStubRsbuild({
       plugins: [pluginResolve()],
       rsbuildConfig: {
-        source: {
+        resolve: {
           alias() {
             return {
               foo: 'bar',

@@ -23,10 +23,12 @@ const clearConsole = () => {
 const beforeRestart = async ({
   filePath,
   clear = true,
+  id,
 }: {
   filePath?: string;
   clear?: boolean;
-} = {}): Promise<void> => {
+  id: string;
+}): Promise<void> => {
   if (clear) {
     clearConsole();
   }
@@ -34,10 +36,10 @@ const beforeRestart = async ({
   if (filePath) {
     const filename = path.basename(filePath);
     logger.info(
-      `Restart server because ${color.yellow(filename)} is changed.\n`,
+      `restarting ${id} because ${color.yellow(filename)} has changed\n`,
     );
   } else {
-    logger.info('Restarting server...\n');
+    logger.info(`restarting ${id}...\n`);
   }
 
   for (const cleaner of cleaners) {
@@ -53,7 +55,7 @@ export const restartDevServer = async ({
   filePath?: string;
   clear?: boolean;
 } = {}): Promise<void> => {
-  await beforeRestart({ filePath, clear });
+  await beforeRestart({ filePath, clear, id: 'server' });
 
   const rsbuild = await init({ isRestart: true });
 
@@ -73,7 +75,7 @@ export const restartBuild = async ({
   filePath?: string;
   clear?: boolean;
 } = {}): Promise<void> => {
-  await beforeRestart({ filePath, clear });
+  await beforeRestart({ filePath, clear, id: 'build' });
 
   const rsbuild = await init({ isRestart: true, isBuildWatch: true });
 

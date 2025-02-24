@@ -1,12 +1,7 @@
 import RspackChain from '../compiled/rspack-chain/index.js';
-import { castArray, isPlainObject } from './helpers';
+import { castArray } from './helpers';
 import { logger } from './logger';
-import type {
-  InternalContext,
-  ModifyBundlerChainUtils,
-  RsbuildEntry,
-  Rspack,
-} from './types';
+import type { InternalContext, ModifyBundlerChainUtils } from './types';
 
 export function getBundlerChain(): RspackChain {
   const bundlerChain = new RspackChain();
@@ -23,7 +18,7 @@ export async function modifyBundlerChain(
   const bundlerChain = getBundlerChain();
 
   const [modifiedBundlerChain] =
-    await context.hooks.modifyBundlerChain.callInEnvironment({
+    await context.hooks.modifyBundlerChain.callChain({
       environment: utils.environment.name,
       args: [bundlerChain, utils],
     });
@@ -39,55 +34,6 @@ export async function modifyBundlerChain(
   return modifiedBundlerChain;
 }
 
-export function chainToConfig(chain: RspackChain): Rspack.Configuration {
-  const config = chain.toConfig();
-  const { entry } = config;
-
-  if (!isPlainObject(entry)) {
-    return config as Rspack.Configuration;
-  }
-
-  const formattedEntry: RsbuildEntry = {};
-
-  /**
-   * rspack-chain can not handle entry description object correctly,
-   * so we need to format the entry object and correct the entry description object.
-   */
-  for (const [entryName, entryValue] of Object.entries(entry)) {
-    const entryImport: string[] = [];
-    let entryDescription: Rspack.EntryDescription | null = null;
-
-    for (const item of castArray(entryValue)) {
-      if (typeof item === 'string') {
-        entryImport.push(item);
-        continue;
-      }
-
-      if (item.import) {
-        entryImport.push(...castArray(item.import));
-      }
-
-      if (entryDescription) {
-        // merge entry description object
-        Object.assign(entryDescription, item);
-      } else {
-        entryDescription = item;
-      }
-    }
-
-    formattedEntry[entryName] = entryDescription
-      ? {
-          ...entryDescription,
-          import: entryImport,
-        }
-      : entryImport;
-  }
-
-  config.entry = formattedEntry;
-
-  return config as Rspack.Configuration;
-}
-
 export const CHAIN_ID = {
   /** Predefined rules */
   RULE: {
@@ -99,6 +45,8 @@ export const CHAIN_ID = {
     IMAGE: 'image',
     /** Rule for media */
     MEDIA: 'media',
+    /** Rule for additional assets */
+    ADDITIONAL_ASSETS: 'additional-assets',
     /** Rule for js */
     JS: 'js',
     /** Rule for data uri encoded javascript */

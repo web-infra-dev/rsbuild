@@ -33,7 +33,7 @@ After compilation:
 
 ## Notes
 
-### Update Relevant Code
+### Update relevant code
 
 After modifying `mountId`, if there is logic in your code to obtain the `root` root node, please update the corresponding value:
 
@@ -44,6 +44,6 @@ After modifying `mountId`, if there is logic in your code to obtain the `root` r
 ReactDOM.createRoot(domNode).render(<App />);
 ```
 
-### Custom Templates
+### Custom templates
 
 If you customized the HTML template, please make sure that the template contains `<div id="<%= mountId %>"></div>`, otherwise the `mountId` config will not take effect.

@@ -1,4 +1,5 @@
 import { posix } from 'node:path';
+import { URL } from 'node:url';
 import deepmerge from 'deepmerge';
 import type {
   Compiler as WebpackCompiler,
@@ -162,6 +163,14 @@ export const canParse = (url: string): boolean => {
   }
 };
 
+export const parseUrl = (url: string): URL | null => {
+  try {
+    return new URL(url);
+  } catch {
+    return null;
+  }
+};
+
 export const ensureAssetPrefix = (
   url: string,
   assetPrefix: Rspack.PublicPath = DEFAULT_ASSET_PREFIX,
@@ -251,7 +260,9 @@ export function getFilename(
     case 'assets':
       return filename.assets ?? `[name]${hash}[ext]`;
     default:
-      throw new Error(`unknown key ${type} in "output.filename"`);
+      throw new Error(
+        `[rsbuild:config] unknown key ${type} in "output.filename"`,
+      );
   }
 }
 
@@ -322,7 +333,7 @@ export const isMultiCompiler = <
 >(
   compiler: C | M,
 ): compiler is M => {
-  return compiler.constructor.name === 'MultiCompiler';
+  return 'compilers' in compiler && Array.isArray(compiler.compilers);
 };
 
 export function pick<T, U extends keyof T>(

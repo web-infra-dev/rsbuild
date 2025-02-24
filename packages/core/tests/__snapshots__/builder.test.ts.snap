@@ -191,7 +191,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
             "type": "asset",
           },
         ],
-        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\)\\$/i,
+        "test": /\\\\\\.\\(\\?:png\\|jpg\\|jpeg\\|pjpeg\\|pjp\\|gif\\|bmp\\|webp\\|ico\\|apng\\|avif\\|tif\\|tiff\\|jfif\\|cur\\)\\$/i,
       },
       {
         "oneOf": [
@@ -313,7 +313,9 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
     "hints": false,
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    RsbuildCorePlugin {
+      "name": "RsbuildCorePlugin",
+    },
     HotModuleReplacementPlugin {
       "name": "HotModuleReplacementPlugin",
     },
@@ -399,5 +401,9 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
     "web",
     "es2017",
   ],
+  "watchOptions": {
+    "aggregateTimeout": 0,
+    "ignored": /\\[\\\\\\\\/\\]\\(\\?:\\\\\\.git\\|node_modules\\)\\[\\\\\\\\/\\]/,
+  },
 }
 `;

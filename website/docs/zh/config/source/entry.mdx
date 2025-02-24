@@ -13,8 +13,8 @@ type Entry = Record<
 
 ```ts
 const defaultEntry = {
-  // 默认支持其他后缀，如 ts、tsx、jsx、mjs、cjs
-  index: 'src/index.js',
+  // Rsbuild 默认也支持其他后缀名，如 ts、tsx、jsx、mts、cts、mjs、cjs
+  index: './src/index.js',
 };
 ```
 
@@ -99,7 +99,7 @@ export default {
 
 比如为 `web` 和 `node` 环境设置不同的 entry：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   environments: {
     web: {
@@ -124,4 +124,31 @@ export default {
     },
   },
 };
+```
+
+## 异步设置
+
+如果你需要异步设置 entry，例如使用 [glob](https://www.npmjs.com/package/glob) 来扫描目录，可以在 `rsbuild.config.ts` 中导出一个异步函数：
+
+```ts title="rsbuild.config.ts"
+import path from 'node:path';
+import { glob } from 'glob';
+import { defineConfig } from '@rsbuild/core';
+
+export default defineConfig(async () => {
+  const entryFiles = await glob('./src/**/main.{ts,tsx,js,jsx}');
+
+  const entry = Object.fromEntries(
+    entryFiles.map((file) => {
+      const entryName = path.basename(path.dirname(file));
+      return [entryName, `./${file}`];
+    }),
+  );
+
+  return {
+    source: {
+      entry: entry,
+    },
+  };
+});
 ```

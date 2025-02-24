@@ -25,7 +25,7 @@ import { generateRspackConfig } from './rspackConfig';
 
 async function modifyRsbuildConfig(context: InternalContext) {
   logger.debug('modify Rsbuild config');
-  const [modified] = await context.hooks.modifyRsbuildConfig.call(
+  const [modified] = await context.hooks.modifyRsbuildConfig.callChain(
     context.config,
     { mergeRsbuildConfig },
   );
@@ -41,18 +41,17 @@ async function modifyEnvironmentConfig(
 ) {
   logger.debug(`modify Rsbuild environment(${name}) config`);
 
-  const [modified] =
-    await context.hooks.modifyEnvironmentConfig.callInEnvironment({
-      environment: name,
-      args: [
-        config,
-        {
-          name,
-          mergeEnvironmentConfig:
-            mergeRsbuildConfig<MergedEnvironmentConfig> as ModifyEnvironmentConfigUtils['mergeEnvironmentConfig'],
-        },
-      ],
-    });
+  const [modified] = await context.hooks.modifyEnvironmentConfig.callChain({
+    environment: name,
+    args: [
+      config,
+      {
+        name,
+        mergeEnvironmentConfig:
+          mergeRsbuildConfig<MergedEnvironmentConfig> as ModifyEnvironmentConfigUtils['mergeEnvironmentConfig'],
+      },
+    ],
+  });
 
   logger.debug(`modify Rsbuild environment(${name}) config done`);
 
@@ -123,7 +122,7 @@ const initEnvironmentConfigs = (
 
     if (!Object.keys(resolvedEnvironments).length) {
       throw new Error(
-        `The current build is specified to run only in the ${color.yellow(specifiedEnvironments?.join(','))} environment, but the configuration of the specified environment was not found.`,
+        `[rsbuild:config] The current build is specified to run only in the ${color.yellow(specifiedEnvironments?.join(','))} environment, but the configuration of the specified environment was not found.`,
       );
     }
     return resolvedEnvironments;
@@ -133,7 +132,7 @@ const initEnvironmentConfigs = (
 
   if (!isEnvironmentEnabled(defaultEnvironmentName)) {
     throw new Error(
-      `The current build is specified to run only in the ${color.yellow(specifiedEnvironments?.join(','))} environment, but the configuration of the specified environment was not found.`,
+      `[rsbuild:config] The current build is specified to run only in the ${color.yellow(specifiedEnvironments?.join(','))} environment, but the configuration of the specified environment was not found.`,
     );
   }
 
@@ -149,6 +148,14 @@ const initEnvironmentConfigs = (
       ]),
     } as MergedEnvironmentConfig),
   };
+};
+
+const validateRsbuildConfig = (config: NormalizedConfig) => {
+  if (config.server.base && !config.server.base.startsWith('/')) {
+    throw new Error(
+      `[rsbuild:config] The "server.base" option should start with a slash, for example: "/base"`,
+    );
+  }
 };
 
 export async function initRsbuildConfig({
@@ -215,6 +222,7 @@ export async function initRsbuildConfig({
 
   await updateEnvironmentContext(context, environments);
   updateContextByNormalizedConfig(context);
+  validateRsbuildConfig(context.normalizedConfig);
 
   return context.normalizedConfig;
 }
@@ -240,12 +248,12 @@ export async function initConfigs({
 
   // write Rsbuild config and Rspack config to disk in debug mode
   if (isDebug()) {
-    const inspect = () => {
+    const inspect = async () => {
       const inspectOptions: InspectConfigOptions = {
         verbose: true,
         writeToDisk: true,
       };
-      inspectConfig({
+      await inspectConfig({
         context,
         pluginManager,
         inspectOptions,
@@ -255,9 +263,9 @@ export async function initConfigs({
     };
 
     // run inspect later to avoid cleaned by cleanOutput plugin
-    context.hooks.onBeforeBuild.tap(({ isFirstCompile }) => {
+    context.hooks.onBeforeBuild.tap(async ({ isFirstCompile }) => {
       if (isFirstCompile) {
-        inspect();
+        await inspect();
       }
     });
     context.hooks.onAfterStartDevServer.tap(inspect);

@@ -32,13 +32,15 @@ export default {
         entry: {
           index: './src/index.client.js',
         },
-        alias: {
-          '@common': './src/client/common',
-        },
       },
       output: {
         // 浏览器产物的 target 类型为 'web'
         target: 'web',
+      },
+      resolve: {
+        alias: {
+          '@common': './src/client/common',
+        },
       },
     },
     // 配置 node 环境，用于 SSR
@@ -47,13 +49,15 @@ export default {
         entry: {
           index: './src/index.server.js',
         },
-        alias: {
-          '@common': './src/server/common',
-        },
       },
       output: {
         // Node.js 产物的 target 类型为 'node'
         target: 'node',
+      },
+      resolve: {
+        alias: {
+          '@common': './src/server/common',
+        },
       },
     },
   },
@@ -81,12 +85,12 @@ export default {
 ```bash
 ➜ npx rsbuild inspect
 
-Inspect config succeed, open following files to view the content:
+config inspection completed, generated files:
 
-  - Rsbuild Config (web): /project/dist/.rsbuild/rsbuild.config.web.mjs
-  - Rsbuild Config (node): /project/dist/.rsbuild/rsbuild.config.node.mjs
-  - Rspack Config (web): /project/dist/.rsbuild/rspack.config.web.mjs
-  - Rspack Config (node): /project/dist/.rsbuild/rspack.config.node.mjs
+  - Rsbuild config (web): /project/dist/.rsbuild/rsbuild.config.web.mjs
+  - Rsbuild config (node): /project/dist/.rsbuild/rsbuild.config.node.mjs
+  - Rspack config (web): /project/dist/.rsbuild/rspack.config.web.mjs
+  - Rspack config (node): /project/dist/.rsbuild/rspack.config.node.mjs
 ```
 
 ## 默认 environment
@@ -115,7 +119,7 @@ export default {
 };
 ```
 
-## 仅构建指定环境
+## 构建指定环境
 
 默认情况下，当你执行 `rsbuild dev` 或 `rsbuild build` 时，Rsbuild 会构建所有 Rsbuild 配置中的环境。你可以通过 `--environment <name>` 仅构建指定环境。
 
@@ -169,7 +173,7 @@ Rsbuild 支持通过 [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfi
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
       return mergeRsbuildConfig(config, {
         environments: {
@@ -193,7 +197,7 @@ Rsbuild 支持通过 [modifyEnvironmentConfig](/plugins/dev/hooks#modifyenvironm
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyEnvironmentConfig((config, { name }) => {
       if (name !== 'web') {
         return config;
@@ -206,13 +210,13 @@ const myPlugin = () => ({
 
 ## Environment 上下文
 
-[Environment context](/api/javascript-api/environment-context) 是一个只读对象，提供一些和当前环境有关的上下文信息。Rsbuild 支持在 plugin hook 中获取 environment context 信息。
+[Environment context](/api/javascript-api/environment-api#environment-context) 是一个只读对象，提供一些和当前环境有关的上下文信息。Rsbuild 支持在 plugin hook 中获取 environment context 信息。
 
 对于一些与构建环境相关的 plugin hooks（如 [modifyRspackConfig](/plugins/dev/hooks#modifyrspackconfig)、[modifyBundlerChain](/plugins/dev/hooks#modifybundlerchain) 等）, Rsbuild 支持通过 `environment` 参数获取当前 environment 上下文。
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRspackConfig((rspackConfig, { environment }) => {
       if (environment.name === 'node') {
         // do some thing
@@ -226,7 +230,7 @@ const myPlugin = () => ({
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onDevCompileDone(({ environments }) => {
       environments.forEach((environment) => {
         console.log('environment', environment);
@@ -238,7 +242,7 @@ const myPlugin = () => ({
 
 ## Environment API
 
-Rsbuild Server 提供了一系列和构建环境相关的 API，用户可通过 Rsbuild environment API 在服务器端操作特定环境下的构建产物。
+Rsbuild server 提供了一系列和构建环境相关的 API，用户可通过 Rsbuild [environment API](/api/javascript-api/environment-api#environment-api) 在服务器端操作特定环境下的构建产物。
 
 你可以在 [Rsbuild DevMiddleware](/config/dev/setup-middlewares) 或[自定义 Server](/api/javascript-api/instance#rsbuildcreatedevserver) 中使用 environment API。
 
@@ -249,7 +253,7 @@ import express from 'express';
 import { createRsbuild, loadConfig } from '@rsbuild/core';
 
 const serverRender = (serverAPI) => async (_req, res) => {
-  const indexModule = await serverAPI.environments.ssr.loadBundle('index');
+  const indexModule = await serverAPI.environments.node.loadBundle('index');
 
   const markup = indexModule.render();
 
@@ -273,7 +277,7 @@ export async function startDevServer() {
 
   const app = express();
 
-  // Create Rsbuild DevServer instance
+  // Create Rsbuild dev server instance
   const rsbuildServer = await rsbuild.createDevServer();
 
   const serverRenderMiddleware = serverRender(rsbuildServer);
@@ -296,23 +300,57 @@ export async function startDevServer() {
 
 详细使用情况可参考：[SSR + Express 示例](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/ssr-express)。
 
-## 添加 environment 依赖
+## 构建顺序
 
-默认情况下，Rsbuild 会并行构建所有环境。如果你的项目中某一个环境依赖其他环境预先编译完成，可以将你需要依赖的环境名称添加到 Rspack 的 [dependencies](https://rspack.dev/zh/config/other-options#dependencies) 配置中。
+默认情况下，Rsbuild 会并行构建所有环境。
 
-例如，node 环境依赖 web 环境预先编译完成，可以添加如下配置：
+如果你需要控制不同环境之间的构建顺序，可以通过 Rspack 的 [dependencies](https://rspack.dev/zh/config/other-options#dependencies) 配置来设置构建依赖关系。
+
+例如，假设你需要先完成 `web` 环境的构建，再开始构建 `node` 环境，可以添加如下配置：
 
 ```ts title=rsbuild.config.ts
 export default {
   environments: {
-    web: {},
+    web: {
+      tools: {
+        rspack: {
+          name: 'foo',
+        },
+      },
+    },
     node: {
       tools: {
         rspack: {
-          dependencies: ['web'],
+          dependencies: ['foo'],
         },
       },
     },
   },
 };
+```
+
+我们可以通过一个简单的插件来测试多个环境的构建顺序：
+
+```ts
+const testPlugin: RsbuildPlugin = {
+  name: 'test-plugin',
+  setup(api) {
+    api.onBeforeEnvironmentCompile(({ environment }) => {
+      console.log('build start:', environment.name);
+    });
+
+    api.onAfterEnvironmentCompile(({ stats, environment }) => {
+      console.log('build done:', environment.name);
+      console.log('stats', stats);
+    });
+  },
+};
+
+// 插件会依次输出：
+// - build start: web
+// - build done: web
+// - stats: { ... }
+// - build start: node
+// - build done: node
+// - stats: { ... }
 ```

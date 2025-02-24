@@ -1,4 +1,4 @@
-# Assets Retry 插件
+# Assets retry 插件
 
 import { SourceCode } from 'rspress/theme';
 
@@ -50,6 +50,7 @@ type AssetsRetryOptions = {
   test?: string | ((url: string) => boolean);
   crossOrigin?: boolean | 'anonymous' | 'use-credentials';
   inlineScript?: boolean;
+  delay?: number | ((context: AssetsRetryHookContext) => number);
   onRetry?: (context: AssetsRetryHookContext) => void;
   onSuccess?: (context: AssetsRetryHookContext) => void;
   onFail?: (context: AssetsRetryHookContext) => void;
@@ -65,6 +66,7 @@ const defaultOptions = {
   max: 3,
   test: '',
   crossOrigin: false,
+  delay: 0,
   onRetry: () => {},
   onSuccess: () => {},
   onFail: () => {},
@@ -274,9 +276,34 @@ pluginAssetsRetry({
 });
 ```
 
+### delay
+
+- **类型：** `number | ((context: AssetsRetryHookContext) => number)`
+- **默认值：** `0`
+
+在资源重试前的延迟时间，单位为毫秒。
+
+你可以传入一个数字：
+
+```js
+// 延时 1s 重试
+pluginAssetsRetry({
+  delay: 1000,
+});
+```
+
+也可以传入一个函数，函数的参数为 `AssetsRetryHookContext`，返回值为延迟时间：
+
+```js
+// 通过次数来计算延迟时间
+pluginAssetsRetry({
+  delay: (ctx) => (ctx.times + 1) * 1000,
+});
+```
+
 ## 注意事项
 
-当你使用 Assets Retry 插件时，Rsbuild 会向 HTML 中注入一段运行时代码，并将 Assets Retry 插件配置的内容序列化，插入到这段代码中，因此你需要注意：
+当你使用 Assets Retry 插件时，Rsbuild 会分别向 HTML 和 [Rspack Runtime](https://rspack.dev/zh/misc/glossary#runtime) 中注入运行时代码，并将 Assets Retry 插件配置的内容序列化后插入到这些代码中，因此你需要注意：
 
 - 避免在 Assets Retry 插件中配置敏感信息，比如内部使用的 token。
 - 避免在 `onRetry`，`onSuccess`，`onFail` 中引用函数外部的变量或方法。

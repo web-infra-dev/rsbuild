@@ -1,10 +1,12 @@
 import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
-  source: {
+  resolve: {
     alias: {
       '@common': './src/common2',
     },
+  },
+  source: {
     tsconfigPath: 'tsconfig.custom.json',
   },
 });

@@ -9,7 +9,7 @@ After ejecting a CRA project, it becomes more like a project directly using webp
 
 :::
 
-## Installing Dependencies
+## Installing dependencies
 
 First, you need to replace the npm dependencies of CRA with Rsbuild's dependencies.
 
@@ -46,7 +46,7 @@ Next, you need to update the npm scripts in package.json to Rsbuild's CLI comman
 Rsbuild does not integrate testing frameworks, so it does not provide a command to replace `react-scripts test`. You can directly use testing frameworks such as Jest or Vitest. You can refer to the [Rsbuild react-jest](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/react-jest) example project for configuration.
 :::
 
-## Creating Configuration File
+## Creating configuration file
 
 Create a Rsbuild configuration file `rsbuild.config.ts` in the same directory as package.json and add the following content:
 
@@ -59,7 +59,7 @@ export default defineConfig({
 });
 ```
 
-## HTML Template
+## HTML template
 
 CRA uses the `public/index.html` file as the default HTML template. In Rsbuild, you can specify the HTML template through [html.template](/config/html/template):
 
@@ -80,7 +80,7 @@ In the HTML template, if you are using the `%PUBLIC_URL%` variable from CRA, rep
 
 This completes the basic migration from CRA to Rsbuild. You can now run the `npm run start` command to try starting the dev server.
 
-## Output Directory
+## Output directory
 
 By default, CRA outputs to the `build` directory, while Rsbuild's default output directory is `dist`.
 
@@ -98,7 +98,7 @@ export default {
 
 > For more details, please refer to the [Output Files](/guide/basic/output-files) section.
 
-## Using CSS Preprocessors
+## Using CSS preprocessors
 
 Rsbuild supports CSS preprocessors such as Sass and Less through plugins. Please refer to:
 
@@ -134,7 +134,7 @@ export default {
 
 Please refer to the [SVGR plugin](/plugins/list/plugin-svgr) documentation to learn how to use SVGR in Rsbuild.
 
-## Configuration Migration
+## Configuration migration
 
 Here is the corresponding Rsbuild configuration for [CRA configuration](https://create-react-app.dev/docs/advanced-configuration/):
 
@@ -161,9 +161,18 @@ Notes:
 
 By default, CRA uses Babel to compile dependencies in node_modules, but Rsbuild does not, to avoid the performance overhead and potential compilation errors caused by secondary compilation.
 
-If you need to handle syntax compatibility issues caused by dependencies in node_modules, you can use the [source.include](/config/source/include#compile-node_modules) config to compile node_modules.
+To handle syntax compatibility issues caused by dependencies in node_modules, you can use the [source.include](/config/source/include#compile-node_modules) config to compile node_modules.
 
-## Env Variables
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    // Compile all JS files and exclude core-js
+    include: [{ not: /[\\/]core-js[\\/]/ }],
+  },
+};
+```
+
+## Env variables
 
 CRA injects environment variables starting with `REACT_APP_` into the client code by default, while Rsbuild injects environment variables starting with `PUBLIC_` by default (see [public variables](/guide/advanced/env-vars#public-variables)).
 
@@ -207,7 +216,7 @@ export default defineConfig({
 });
 ```
 
-## Import Unknown Assets
+## Import unknown assets
 
 In CRA, if you import an asset that the build tool cannot recognize, CRA will by default output the file to the `build/static/media` directory, for example, the `document.pdf` file:
 
@@ -254,14 +263,26 @@ export default {
 
 CRA provides [react-app-polyfill](https://www.npmjs.com/package/react-app-polyfill) to manually inject polyfill code.
 
-In the Rsbuild project, you can remove the dependency and code related to react-app-polyfill, as Rsbuild will automatically read the browserslist config and inject polyfill code as needed.
+In the Rsbuild project, you can remove the dependency and code related to react-app-polyfill, as Rsbuild will automatically read the browserslist config and allow you to enable polyfill injection through the [output.polyfill](/config/output/polyfill) config.
+
+1. Remove the `react-app-polyfill` reference:
 
 ```diff title="src/index.js"
 - import 'react-app-polyfill/ie11';
 - import 'react-app-polyfill/stable';
 ```
 
-You can read [Browser Compatibility](/guide/advanced/browser-compatibility) to understand how Rsbuild handles polyfills.
+2. Configure [output.polyfill](/config/output/polyfill):
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    polyfill: 'usage',
+  },
+};
+```
+
+> Read [Browser compatibility](/guide/advanced/browser-compatibility) to understand how Rsbuild handles polyfills.
 
 ## Add ESLint plugin
 
@@ -275,28 +296,24 @@ module.exports = {
 };
 ```
 
+:::tip
+We do not recommend using the `@rsbuild/plugin-eslint` plugin, as running ESLint during the build process will significantly increase the build time. Instead, we recommend using a separate `lint` command to run ESLint checks.
+:::
+
 ## Reading jsconfig.json
 
 In non-TypeScript projects, CRA supports reading the `paths` field in jsconfig.json as the path alias.
 
-If you want to use this feature in Rsbuild, you can set the [source.tsconfigPath](/config/source/tsconfig-path) option, so that Rsbuild can recognize the `paths` field in jsconfig.json.
+To use this feature in Rsbuild, refer to the [Path Alias - jsconfig.json](/guide/advanced/alias#jsconfigjson).
 
-```js title="rsbuild.config.mjs"
-export default {
-  source: {
-    tsconfigPath: './jsconfig.json',
-  },
-};
-```
-
-## CRACO Migration
+## CRACO migration
 
 If your project is using [CRACO](https://craco.js.org) to override CRA configuration, you can refer to the table below for migration:
 
 | CRACO                                                                                           | Rsbuild                                                                                   |
 | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | [webpack.configure](https://craco.js.org/docs/configuration/webpack/#webpackconfigure)          | [tools.rspack](/config/tools/rspack)                                                      |
-| [webpack.alias](https://craco.js.org/docs/configuration/webpack/#webpackalias)                  | [source.alias](/config/source/alias)                                                      |
+| [webpack.alias](https://craco.js.org/docs/configuration/webpack/#webpackalias)                  | [resolve.alias](/config/resolve/alias)                                                    |
 | [webpack.plugins.add](https://craco.js.org/docs/configuration/webpack/#webpackplugins)          | [appendPlugins of tools.rspack](/config/tools/rspack#appendplugins)                       |
 | [webpack.plugins.remove](https://craco.js.org/docs/configuration/webpack/#webpackpluginsremove) | [removePlugin of tools.rspack](/config/tools/rspack#removeplugin)                         |
 | [style.modules](https://craco.js.org/docs/configuration/style/#stylemodules)                    | [output.cssModules](/config/output/css-modules)                                           |
@@ -344,7 +361,7 @@ export default {
 };
 ```
 
-## Contents Supplement
+## Contents supplement
 
 The current document only covers part of the migration process. If you find suitable content to add, feel free to contribute to the documentation via pull request 🤝.
 

@@ -51,7 +51,13 @@ import { PackageManagerTabs } from '@theme';
   }}
 />
 
-然后按照提示操作即可。
+按照提示一步步操作即可。在创建过程中，你可以选择是否需要 TypeScript、ESLint 等额外的工具。
+
+项目创建完成后，你可以执行以下步骤：
+
+- 执行 `git init` 来初始化 Git 仓库。
+- 执行 `npm install`（或其他包管理器的 install 命令）安装项目依赖。
+- 执行 `npm run dev` 启动开发服务器，服务器默认运行在 `localhost:5173`。
 
 ### 模板
 
@@ -60,13 +66,13 @@ import { PackageManagerTabs } from '@theme';
 | 模板    | 描述                            | 可选功能   |
 | ------- | ------------------------------- | ---------- |
 | vanilla | 原生 JavaScript                 | TypeScript |
-| react   | [React 18](https://react.dev/)  | TypeScript |
-| vue3    | [Vue 3](https://vuejs.org/)     | TypeScript |
+| react   | [React 19](https://react.dev/)  | TypeScript |
+| react18 | [React 18](https://react.dev/)  | TypeScript |
+| vue     | [Vue 3](https://vuejs.org/)     | TypeScript |
 | vue2    | [Vue 2](https://v2.vuejs.org/)  | TypeScript |
 | lit     | [Lit](https://lit.dev/)         | TypeScript |
 | preact  | [Preact](https://preactjs.com/) | TypeScript |
 | svelte  | [Svelte 5](https://svelte.dev/) | TypeScript |
-| svelte4 | [Svelte 4](https://svelte.dev/) | TypeScript |
 | solid   | [Solid](https://solidjs.com/)   | TypeScript |
 
 ### 可选工具
@@ -139,14 +145,16 @@ Templates:
 - [从 Vue CLI 迁移](/guide/migration/vue-cli)
 - [从 Vite 迁移](/guide/migration/vite)
 - [从 Modern.js Builder 迁移](/guide/migration/modern-builder)
+- [从 Tsup 迁移到 Rslib](https://lib.rsbuild.dev/zh/guide/migration/tsup)
+- [从 Storybook 迁移到 Storybook Rsbuild](https://rspack.dev/zh/guide/migration/storybook)
 
 ### 其他项目
 
-对于其他类型的项目，你可以手动安装 [@rsbuild/core](https://www.npmjs.com/package/@rsbuild/core) 包：
+如果你的项目不属于上述迁移指南中提到的类型，你也可以直接安装 [@rsbuild/core](https://www.npmjs.com/package/@rsbuild/core) 包：
 
 <PackageManagerTabs command="add @rsbuild/core -D" />
 
-然后参考指南和文档，按需启用各个功能：
+完成安装后，你可以参考以下文档来配置你的项目：
 
 - 参考 [CLI 工具](/guide/basic/cli) 来了解可用的 CLI 命令。
 - 参考 [插件列表](/plugins/list/index) 来选择 Rsbuild 插件。
@@ -174,6 +182,17 @@ Rsbuild 内置了一个轻量的命令行工具，包含 dev、build 等命令�
 ## 入口模块
 
 Rsbuild CLI 默认会使用 `src/index.(js|ts|jsx|tsx)` 作为入口模块，你可以使用 [source.entry](/config/source/entry) 配置项来修改入口模块。
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    entry: {
+      foo: './src/pages/foo/index.ts',
+      bar: './src/pages/bar/index.ts',
+    },
+  },
+};
+```
 
 ## 核心 npm 包
 
@@ -228,8 +247,8 @@ import Step from '@components/Step';
     description="了解如何配置 Rsbuild"
   />
   <Step
-    href="/guide/start/glossary"
-    title="名词解释"
-    description="了解 Rsbuild 相关的概念"
+    href="https://github.com/web-infra-dev/rsbuild"
+    title="支持 Rsbuild"
+    description="点个 Star 支持一下✨"
   />
 </NextSteps>

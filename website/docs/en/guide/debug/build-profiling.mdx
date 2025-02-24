@@ -1,4 +1,4 @@
-# Build Profiling
+# Build profiling
 
 Performing a performance analysis can help you identify performance bottlenecks in your project, allowing for targeted optimization.
 
@@ -35,7 +35,7 @@ npm install -g speedscope
 speedscope CPU.date.000000.00000.0.001.cpuprofile
 ```
 
-## Rspack Profiling
+## Rspack profiling
 
 Rsbuild supports the use of the `RSPACK_PROFILE` environment variable for Rspack build performance profile.
 
@@ -51,7 +51,7 @@ Rsbuild supports the use of the `RSPACK_PROFILE` environment variable for Rspack
 The command will generate a `rspack-profile-${timestamp}` folder in the dist folder, and it will contain `logging.json`, `trace.json` and `jscpuprofile.json` files:
 
 - `trace.json`: The time spent on each phase of the Rust side is recorded at a granular level using tracing and can be viewed using [ui.perfetto.dev](https://ui.perfetto.dev/).
-- `jscpuprofile.json`: The time spent at each stage on the JavaScript side is recorded at a granular level using [Node.js inspector](https://nodejs.org/dist/latest-v18.x/docs/api/inspector.html) and can be viewed using [speedscope.app](https://www.speedscope.app/).
+- `jscpuprofile.json`: The time spent at each stage on the JavaScript side is recorded at a granular level using [Node.js inspector](https://nodejs.org/dist/latest-v18.x/docs/api/inspector.html) and can be viewed using [speedscope.app](https://www.speedscope.app/). In development mode, it is generated only when exiting the process through [`h + Enter`](/config/dev/cli-shortcuts).
 - `logging.json`: Includes some logging information that keeps a coarse-grained record of how long each phase of the build took. (Not supported in development mode yet)
 
 > For more information about Rspack build performance analysis, please refer to [Rspack - Profiling](https://rspack.dev/contribute/development/profiling).

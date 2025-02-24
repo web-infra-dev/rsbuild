@@ -72,7 +72,26 @@ export default {
 - 将 Browserslist 的默认值设置为 `['node >= 16']`。
 - 将 [output.emitCss](/config/output/emit-css) 的默认值设置为 `false`。这意味着 CSS 代码不会被抽取为单独的文件，但产物中会包含 CSS Modules 的 id 信息。
 
-## Web Worker 产物
+### Node addons
+
+当 `target` 为 `'node'` 时，Rsbuild 允许你在 JavaScript 文件中引入 Node.js [Addons](https://nodejs.org/api/addons.html)。
+
+例如：
+
+```js title="src/index.js"
+import addon from './addon.node';
+
+addon.doSomething();
+```
+
+被引用的 addons 文件会被输出到 `dist` 目录下：
+
+```
+dist/index.js
+dist/addon.node
+```
+
+## Web Workers 产物
 
 指运行在 [Web Worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) 环境的产物。
 

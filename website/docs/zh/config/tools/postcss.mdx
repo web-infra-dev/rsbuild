@@ -18,28 +18,40 @@ Rsbuild 默认集成 PostCSS，你可以通过 `tools.postcss` 对 [postcss-load
 
 当 `tools.postcss` 是一个 function 时，默认选项会作为第一个参数传入，你可以直接修改这个对象，也可以返回一个新的对象作为最终使用的选项。函数的第二个参数为修改 `postcss-loader` 配置的工具函数。
 
-例如，需要在原有插件的基础上新增一个 PostCSS 插件，在 `postcssOptions.plugins` 数组中 push 一个新的插件即可：
+例如，需要新增一个 PostCSS 插件，调用 [addPlugins](#addplugins) 工具函数即可：
 
 ```ts
 export default {
   tools: {
-    postcss: (opts) => {
-      opts.postcssOptions.plugins.push(require('postcss-px-to-viewport'));
+    postcss: (opts, { addPlugins }) => {
+      addPlugins(require('postcss-px-to-viewport'));
     },
   },
 };
 ```
 
-需要给 PostCSS 插件传递参数时，可以通过函数参数的形式进行传入：
+需要给 PostCSS 插件传递参数时，可以将 PostCSS 插件作为一个函数调用：
 
 ```js
 export default {
   tools: {
-    postcss: (opts) => {
+    postcss: (opts, { addPlugins }) => {
       const viewportPlugin = require('postcss-px-to-viewport')({
         viewportWidth: 375,
       });
-      opts.postcssOptions.plugins.push(viewportPlugin);
+      addPlugins(viewportPlugin);
+    },
+  },
+};
+```
+
+也可以修改默认的 `postcss-loader` 选项：
+
+```ts
+export default {
+  tools: {
+    postcss: (opts) => {
+      opts.sourceMap = false;
     },
   },
 };

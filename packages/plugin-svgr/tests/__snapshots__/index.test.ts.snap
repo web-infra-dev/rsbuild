@@ -55,7 +55,7 @@ exports[`svgr > 'configure SVGR options' 1`] = `
           },
         },
         {
-          "loader": "<ROOT>/packages/plugin-svgr/src/loader.cjs",
+          "loader": "<ROOT>/packages/plugin-svgr/src/loader.mjs",
           "options": {
             "exportType": "default",
             "svgo": true,
@@ -148,7 +148,7 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
           },
         },
         {
-          "loader": "<ROOT>/packages/plugin-svgr/src/loader.cjs",
+          "loader": "<ROOT>/packages/plugin-svgr/src/loader.mjs",
           "options": {
             "exportType": "default",
             "svgo": true,
@@ -213,7 +213,7 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
           },
         },
         {
-          "loader": "<ROOT>/packages/plugin-svgr/src/loader.cjs",
+          "loader": "<ROOT>/packages/plugin-svgr/src/loader.mjs",
           "options": {
             "exportType": "default",
             "svgo": true,
@@ -305,7 +305,7 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
           },
         },
         {
-          "loader": "<ROOT>/packages/plugin-svgr/src/loader.cjs",
+          "loader": "<ROOT>/packages/plugin-svgr/src/loader.mjs",
           "options": {
             "exportType": "default",
             "svgo": true,
@@ -370,7 +370,7 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
           },
         },
         {
-          "loader": "<ROOT>/packages/plugin-svgr/src/loader.cjs",
+          "loader": "<ROOT>/packages/plugin-svgr/src/loader.mjs",
           "options": {
             "exportType": "default",
             "svgo": true,
@@ -462,7 +462,7 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
           },
         },
         {
-          "loader": "<ROOT>/packages/plugin-svgr/src/loader.cjs",
+          "loader": "<ROOT>/packages/plugin-svgr/src/loader.mjs",
           "options": {
             "exportType": "default",
             "svgo": true,
@@ -527,7 +527,7 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
           },
         },
         {
-          "loader": "<ROOT>/packages/plugin-svgr/src/loader.cjs",
+          "loader": "<ROOT>/packages/plugin-svgr/src/loader.mjs",
           "options": {
             "exportType": "named",
             "svgo": true,
@@ -619,7 +619,7 @@ exports[`svgr > 'exportType named / mixedImport true' 1`] = `
           },
         },
         {
-          "loader": "<ROOT>/packages/plugin-svgr/src/loader.cjs",
+          "loader": "<ROOT>/packages/plugin-svgr/src/loader.mjs",
           "options": {
             "exportType": "default",
             "svgo": true,
@@ -684,7 +684,7 @@ exports[`svgr > 'exportType named / mixedImport true' 1`] = `
           },
         },
         {
-          "loader": "<ROOT>/packages/plugin-svgr/src/loader.cjs",
+          "loader": "<ROOT>/packages/plugin-svgr/src/loader.mjs",
           "options": {
             "exportType": "named",
             "svgo": true,

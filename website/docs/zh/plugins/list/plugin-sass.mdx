@@ -55,7 +55,7 @@ const defaultOptions = {
   sourceMap: rsbuildConfig.output.sourceMap.css,
   sassOptions: {
     quietDeps: true,
-    silenceDeprecations: api === 'legacy' ? ['legacy-js-api'] : undefined,
+    silenceDeprecations: ['legacy-js-api', 'import'],
   },
 };
 ```
@@ -115,6 +115,24 @@ pluginSass({
 });
 ```
 
+### rewriteUrls
+
+- **类型：** `boolean`
+- **默认值：** `true`
+- **版本：** `>= 1.2.0`
+
+是否使用 [resolve-url-loader](https://github.com/bholloway/resolve-url-loader/tree/v5/packages/resolve-url-loader) 来重写 URL。
+
+当启用时，`resolve-url-loader` 允许你在 Sass 文件中写相对路径的 URL，这些 URL 会被正确地从当前 Sass 文件的位置解析，而不是相对于 Sass 入口文件（例如 `main.scss`）。
+
+如果设置为 `false`，构建性能会得到提升，但 Rsbuild 会使用 Sass 的原生 URL 解析，这意味着所有 URL 必须相对于 Sass 入口文件。
+
+```ts
+pluginSass({
+  rewriteUrls: false,
+});
+```
+
 ## 实践
 
 ### 修改 Sass implementation
@@ -167,7 +185,7 @@ More info and automated migrator: https://sass-lang.com/d/import
  0 | @import './b.scss';
 ```
 
-可以通过如下的配置来忽略 `@import` 的警告：
+`@rsbuild/plugin-sass` 默认添加了如下配置来忽略 `@import` 的警告，如果你需要忽略其他废弃警告，可以使用同样的方式。
 
 ```ts
 pluginSass({

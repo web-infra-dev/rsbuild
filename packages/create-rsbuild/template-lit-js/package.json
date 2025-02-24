@@ -1,16 +1,17 @@
 {
   "name": "rsbuild-lit-js",
-  "private": true,
   "version": "1.0.0",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "rsbuild dev --open",
     "build": "rsbuild build",
+    "dev": "rsbuild dev --open",
     "preview": "rsbuild preview"
   },
   "dependencies": {
     "lit": "^3.2.1"
   },
   "devDependencies": {
-    "@rsbuild/core": "^1.1.2"
+    "@rsbuild/core": "^1.2.11"
   }
 }

@@ -73,7 +73,7 @@ describe('bundlerApi', () => {
   it('test modifyBundlerChain and api order', async () => {
     const testPlugin: RsbuildPlugin = {
       name: 'plugin-devtool',
-      setup: (api) => {
+      setup(api) {
         api.modifyBundlerChain((chain) => {
           chain.target('node');
           chain.devtool('cheap-module-source-map');
@@ -95,7 +95,9 @@ describe('bundlerApi', () => {
       {
         "devtool": "hidden-source-map",
         "plugins": [
-          RsbuildCorePlugin {},
+          {
+            "name": "RsbuildCorePlugin",
+          },
         ],
         "target": "node",
       }

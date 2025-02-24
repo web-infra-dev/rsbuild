@@ -1,4 +1,3 @@
-import React from 'react';
 import './AsyncCompTest.css';
 
 export default function AsyncCompTest() {

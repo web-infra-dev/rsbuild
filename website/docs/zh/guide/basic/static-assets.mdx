@@ -10,7 +10,7 @@ Rsbuild 支持在代码中引用图片、字体、音频、视频等类型的静
 
 以下是 Rsbuild 默认支持的静态资源格式：
 
-- **图片**：png、jpg、jpeg、gif、svg、bmp、webp、ico、apng、avif、tif、tiff、jfif、pjpeg、pjp。
+- **图片**：png、jpg、jpeg、gif、svg、bmp、webp、ico、apng、avif、tif、tiff、jfif、pjpeg、pjp、cur。
 - **字体**：woff、woff2、eot、ttf、otf、ttc。
 - **音频**：mp3、wav、flac、aac、m4a、opus。
 - **视频**：mp4、webm、ogg、mov。
@@ -120,12 +120,12 @@ export default {
 };
 ```
 
-## 引用结果
+## 资源内联
 
 引用静态资源的结果取决于文件体积：
 
+- 当文件体积小于 4KiB 时，会自动被转换为 base64 字符串并内联到代码中。
 - 当文件体积大于 4KiB 时，会返回一个 URL，同时文件会被输出到构建产物目录下。
-- 当文件体积小于 4KiB 时，会自动被内联为 Base64 格式。
 
 ```js
 import largeImage from './static/largeImage.png';
@@ -133,6 +133,22 @@ import smallImage from './static/smallImage.png';
 
 console.log(largeImage); // "/static/largeImage.[hash].png"
 console.log(smallImage); // "data:image/png;base64,iVBORw0KGgo..."
+```
+
+添加 `?url` query 参数，可以确保资源始终作为单独的文件加载，并返回一个 URL：
+
+```js
+import image from './static/image.png?url';
+
+console.log(image); // "/static/image.[hash].png"
+```
+
+添加 `?inline` query 参数，可以强制将资源内联到代码中，无论文件体积如何：
+
+```js
+import image from './static/image.png?inline';
+
+console.log(image); // "data:image/png;base64,iVBORw0KGgo..."
 ```
 
 关于资源内联的更详细介绍，请参考 [静态资源内联](/guide/optimization/inline-assets) 章节。

@@ -21,12 +21,12 @@ describe('initHooks', () => {
       },
     });
 
-    await hookA.callInEnvironment({
+    await hookA.callChain({
       environment: 'a',
       args: ['call in a'],
     });
 
-    await hookA.callInEnvironment({
+    await hookA.callChain({
       environment: 'b',
       args: ['call in b'],
     });

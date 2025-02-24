@@ -138,6 +138,6 @@ describe('sort plugins', () => {
           environment: '',
         })),
       );
-    }).toThrow(/plugins dependencies has loop: 2,3,5/);
+    }).toThrow(/Plugins dependencies has loop: 2,3,5/);
   });
 });

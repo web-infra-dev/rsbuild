@@ -17,11 +17,11 @@ import { PackageManagerTabs } from '@theme';
   }}
 />
 
-然后在 `Select framework` 时选择 `React` 即可。
+然后在 `Select framework` 时选择 `React 19` 或 `React 18` 即可。
 
 ## 在已有项目中使用 React
 
-为了能够编译 React，你需要注册 Rsbuild 的 [React 插件](/plugins/list/plugin-react)，插件会自动添加 React 构建所需的配置。
+为了能够编译 React 的 JSX 语法，你需要注册 Rsbuild 的 [React 插件](/plugins/list/plugin-react)，插件会自动添加构建一个 React 应用所需的配置。
 
 例如，在 `rsbuild.config.ts` 中注册：
 
@@ -82,13 +82,13 @@ export default MyComponent;
 
 React Compiler 是 React 19 引入的一个实验性编译器，它可以自动优化你的 React 代码。
 
-在开始使用 React Compiler 之前，建议阅读 [React Compiler 文档](https://react.dev/learn/react-compiler)，以了解 React Compiler 的功能、当前状态和使用方法。
+在开始使用 React Compiler 之前，建议阅读 [React Compiler 文档](https://zh-hans.react.dev/learn/react-compiler)，以了解 React Compiler 的功能、当前状态和使用方法。
 
 ### 如何使用
 
 在 Rsbuild 中使用 React Compiler 的步骤如下：
 
-1. 升级 `react` 和 `react-dom` 版本到 19。
+1. 升级 `react` 和 `react-dom` 版本到 19。如果你暂时无法升级，可以在 React 17 或 18 项目中安装 [react-compiler-runtime](https://www.npmjs.com/package/react-compiler-runtime)，以允许编译后的代码在 19 之前的版本上运行。
 2. 目前 React Compiler 仅提供了 Babel 插件，你需要安装 [@rsbuild/plugin-babel](/plugins/list/plugin-babel) 和 [babel-plugin-react-compiler](https://www.npmjs.com/package/babel-plugin-react-compiler)。
 3. 在你的 Rsbuild 配置文件中注册 Babel 插件：
 
@@ -140,6 +140,32 @@ export default defineConfig({
   ],
 });
 ```
+
+对于 React 17 和 18 的项目，除了安装 [react-compiler-runtime](https://www.npmjs.com/package/react-compiler-runtime)，还需要指定 `target`：
+
+```ts title="rsbuild.config.ts"
+const ReactCompilerConfig = {
+  target: '18', // '17' | '18' | '19'
+};
+```
+
+## 路由
+
+### TanStack Router
+
+[TanStack Router](https://tanstack.com/router/) 是一个类型安全的 React 路由，内置数据获取、缓存和一流的 search-param API。
+
+TanStack Router 提供了 `@tanstack/router-plugin` 来与 Rsbuild 集成，该插件支持基于文件的路由，详见：
+
+- [File-Based Routing 文档](https://tanstack.com/router/latest/docs/framework/react/guide/file-based-routing)
+- [TanStack Router + Rsbuild 示例](https://github.com/TanStack/router/tree/main/examples/react/quickstart-rspack-file-based)
+
+### React Router
+
+[React Router](https://reactrouter.com/) 是一个以用户为中心、注重标准的 React 多策略路由库。
+
+- 如果你想将 React Router 作为库来使用，只需按照官方文档操作即可，无需额外配置。
+- 如果你想将 React Router 作为框架来使用，社区正在开发一个实验性的 Rsbuild 插件，参考 [rsbuild-plugin-react-router](https://github.com/rspack-contrib/rsbuild-plugin-react-router)。
 
 ## CSS-in-JS
 

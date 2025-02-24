@@ -9,7 +9,12 @@ import zlib from 'node:zlib';
 import { CSS_REGEX, HTML_REGEX, JS_REGEX } from '../constants';
 import { color } from '../helpers';
 import { logger } from '../logger';
-import type { PrintFileSizeOptions, RsbuildPlugin, Rspack } from '../types';
+import type {
+  PrintFileSizeAsset,
+  PrintFileSizeOptions,
+  RsbuildPlugin,
+  Rspack,
+} from '../types';
 
 const gzip = promisify(zlib.gzip);
 
@@ -18,9 +23,11 @@ async function gzipSize(input: Buffer) {
   return data.length;
 }
 
-/** Filter source map and license files */
-export const filterAsset = (asset: string): boolean =>
-  !/\.map$/.test(asset) && !/\.LICENSE\.txt$/.test(asset);
+const EXCLUDE_ASSET_REGEX = /\.(?:map|LICENSE\.txt|d\.ts)$/;
+
+/** Exclude source map and license files by default */
+export const excludeAsset = (asset: PrintFileSizeAsset): boolean =>
+  EXCLUDE_ASSET_REGEX.test(asset.name);
 
 const getAssetColor = (size: number) => {
   if (size > 300 * 1000) {
@@ -76,6 +83,12 @@ const coloringAssetName = (assetName: string) => {
   return color.magenta(assetName);
 };
 
+const COMPRESSIBLE_REGEX =
+  /\.(?:js|css|html|json|svg|txt|xml|xhtml|wasm|manifest)$/i;
+
+const isCompressible = (assetName: string) =>
+  COMPRESSIBLE_REGEX.test(assetName);
+
 async function printFileSizes(
   options: PrintFileSizeOptions,
   stats: Rspack.Stats,
@@ -95,7 +108,8 @@ async function printFileSizes(
     const fileName = asset.name.split('?')[0];
     const contents = await fs.promises.readFile(path.join(distPath, fileName));
     const size = contents.length;
-    const gzippedSize = options.compressed ? await gzipSize(contents) : null;
+    const compressible = options.compressed && isCompressible(fileName);
+    const gzippedSize = compressible ? await gzipSize(contents) : null;
     const gzipSizeLabel = gzippedSize
       ? getAssetColor(gzippedSize)(calcFileSize(gzippedSize))
       : null;
@@ -128,9 +142,20 @@ async function printFileSizes(
       groupAssetsByEmitStatus: false,
     });
 
-    const filteredAssets = origin.assets!.filter((asset) =>
-      filterAsset(asset.name),
-    );
+    const exclude = options.exclude ?? excludeAsset;
+    const filteredAssets = origin.assets!.filter((asset) => {
+      const assetInfo: PrintFileSizeAsset = {
+        name: asset.name,
+        size: asset.size,
+      };
+      if (exclude(assetInfo)) {
+        return false;
+      }
+      if (options.include) {
+        return options.include(assetInfo);
+      }
+      return true;
+    });
 
     const distFolder = path.relative(rootPath, distPath);
 
@@ -175,8 +200,8 @@ async function printFileSizes(
 
     totalSize += asset.size;
 
-    if (asset.gzippedSize) {
-      totalGzipSize += asset.gzippedSize;
+    if (options.compressed) {
+      totalGzipSize += asset.gzippedSize ?? asset.size;
     }
 
     if (options.detail !== false) {
@@ -203,7 +228,8 @@ async function printFileSizes(
     }
   }
 
-  if (options.total !== false) {
+  // only print total size if there are more than one asset
+  if (options.total !== false && assets.length > 1) {
     const totalSizeLabel = `${color.blue('Total:')} ${calcFileSize(totalSize)}`;
 
     let log = `\n  ${totalSizeLabel}`;
@@ -212,12 +238,10 @@ async function printFileSizes(
       log += color.dim(` (gzip: ${calcFileSize(totalGzipSize)})`);
     }
 
-    // log += ` ${color.dim(`(${environmentName})`)}`;
-
-    log += '\n';
-
     logs.push(log);
   }
+
+  logs.push('');
 
   return logs;
 }
@@ -244,10 +268,11 @@ export const pluginFileSize = (): RsbuildPlugin => ({
 
           const multiStats = 'stats' in stats ? stats.stats : [stats];
 
-          const defaultConfig = {
+          const defaultConfig: PrintFileSizeOptions = {
             total: true,
             detail: true,
-            compressed: true,
+            // print compressed size for the browser targets by default
+            compressed: environment.config.output.target !== 'node',
           };
 
           const mergedConfig =

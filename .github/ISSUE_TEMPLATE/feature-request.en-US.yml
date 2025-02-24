@@ -1,7 +1,7 @@
 name: '💡 Feature Request'
 description: Submit a new feature request to Rsbuild
 title: '[Feature]: '
-labels: ['💡 feature']
+type: Enhancement
 body:
   - type: markdown
     attributes:

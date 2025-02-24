@@ -1,9 +1,9 @@
 import { execSync } from 'node:child_process';
 import path from 'node:path';
-import { globContentJSON } from '@e2e/helper';
-import { expect, test } from '@playwright/test';
+import { globContentJSON, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
-test('should run build command correctly', async () => {
+rspackOnlyTest('should run build command correctly', async () => {
   execSync('npx rsbuild build', {
     cwd: __dirname,
   });

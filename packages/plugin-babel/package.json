@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-babel",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Babel plugin for Rsbuild",
   "repository": {
     "type": "git",
@@ -28,23 +28,23 @@
     "prebundle": "prebundle"
   },
   "dependencies": {
-    "@babel/core": "^7.26.0",
+    "@babel/core": "^7.26.9",
     "@babel/plugin-proposal-decorators": "^7.25.9",
     "@babel/plugin-transform-class-properties": "^7.25.9",
     "@babel/preset-typescript": "^7.26.0",
     "@types/babel__core": "^7.20.5",
     "deepmerge": "^4.3.1",
-    "reduce-configs": "^1.0.0",
+    "reduce-configs": "^1.1.0",
     "upath": "2.0.1"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.0.18",
+    "@rslib/core": "0.5.1",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.9.0",
+    "@types/node": "^22.13.5",
     "babel-loader": "9.2.1",
-    "prebundle": "1.2.5",
-    "typescript": "^5.6.3"
+    "prebundle": "1.2.7",
+    "typescript": "^5.7.3"
   },
   "peerDependencies": {
     "@rsbuild/core": "1.x"

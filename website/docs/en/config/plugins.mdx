@@ -42,13 +42,13 @@ export default defineConfig({
 });
 ```
 
-## Execution Order
+## Execution order
 
 By default, plugins are executed in the order they appear in the `plugins` array. Built-in Rsbuild plugins are executed before user-registered plugins.
 
 When a plugin internally uses fields that control the order, such as `pre` and `post`, the execution order is adjusted based on them. See [Pre Plugins](/plugins/dev/core#pre-pluginss) for more details.
 
-## Nested Plugins
+## Nested plugins
 
 Rsbuild also supports adding nested plugins. You can pass in an array containing multiple plugins, similar to a plugin preset collection. This is particularly useful for implementing complex functionalities that require a combination of multiple plugins (such as framework integration).
 
@@ -62,7 +62,7 @@ export default {
 };
 ```
 
-## Local Plugins
+## Local plugins
 
 If your local code repository contains Rsbuild plugins, you can import them using relative paths.
 
@@ -75,7 +75,7 @@ export default defineConfig({
 });
 ```
 
-## Plugin Options
+## Plugin options
 
 If a plugin provides custom options, you can pass the configurations through the plugin function's parameters.
 
@@ -102,7 +102,7 @@ It should be noted that plugin registration can only be performed during the Rsb
 // Wrong
 function myPlugin() {
   return {
-    setup: (api) => {
+    setup(api) {
       api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
         return mergeRsbuildConfig(config, {
           plugins: [fooPlugin(), barPlugin()], // <- it won't work
@@ -122,9 +122,9 @@ export default {
 };
 ```
 
-## Rspack Plugins
+## Rspack plugins
 
-The `plugins` option is used to register Rsbuild plugins. If you need to register Rspack or Webpack plugins, please use [tools.rspack](/config/tools/rspack).
+The `plugins` option is used to register Rsbuild plugins. If you need to register Rspack or webpack plugins, please use [tools.rspack](/config/tools/rspack).
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -132,7 +132,7 @@ export default {
   plugins: [pluginStylus()],
   tools: {
     rspack: {
-      // Rspack or Webpack Plugins
+      // Rspack or webpack Plugins
       plugins: [new SomeWebpackPlugin()],
     },
   },

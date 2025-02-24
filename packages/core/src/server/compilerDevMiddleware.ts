@@ -1,6 +1,7 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { createRequire } from 'node:module';
 import type { Socket } from 'node:net';
+import { HTML_REGEX } from '../constants';
 import { pathnameParse } from '../helpers/path';
 import type {
   EnvironmentContext,
@@ -42,7 +43,10 @@ const formatDevConfig = (
     (env) => env.config.dev.writeToDisk,
   );
   if (new Set(writeToDiskValues).size === 1) {
-    return config;
+    return {
+      ...config,
+      writeToDisk: writeToDiskValues[0],
+    };
   }
 
   return {
@@ -58,9 +62,6 @@ const formatDevConfig = (
         : writeToDisk!;
     },
   };
-};
-const noop = () => {
-  // noop
 };
 
 function getClientPaths(devConfig: DevConfig) {
@@ -110,7 +111,10 @@ export class CompilerDevMiddleware {
   public async init(): Promise<void> {
     // start compiling
     const devMiddleware = await getDevMiddleware(this.compiler);
-    this.middleware = this.setupDevMiddleware(devMiddleware, this.publicPaths);
+    this.middleware = await this.setupDevMiddleware(
+      devMiddleware,
+      this.publicPaths,
+    );
     await this.socketServer.prepare();
   }
 
@@ -118,10 +122,24 @@ export class CompilerDevMiddleware {
     this.socketServer.upgrade(req, sock, head);
   }
 
-  public close(): void {
+  public async close(): Promise<void> {
     // socketServer close should before app close
-    this.socketServer.close();
-    this.middleware?.close(noop);
+    await this.socketServer.close();
+
+    if (this.middleware) {
+      await new Promise<void>((resolve) => {
+        this.middleware.close(() => {
+          resolve();
+        });
+      });
+    }
+
+    // `middleware.close()` only stop watching for file changes, compiler should also be closed.
+    await new Promise<void>((resolve) => {
+      this.compiler.close(() => {
+        resolve();
+      });
+    });
   }
 
   public sockWrite(
@@ -134,17 +152,24 @@ export class CompilerDevMiddleware {
     });
   }
 
-  private setupDevMiddleware(
+  private async setupDevMiddleware(
     devMiddleware: CustomDevMiddleware,
     publicPaths: string[],
-  ): DevMiddlewareAPI {
-    const {
-      devConfig,
-      serverConfig: { headers, base },
-    } = this;
+  ): Promise<DevMiddlewareAPI> {
+    const { devConfig, serverConfig } = this;
+    const { headers, base } = serverConfig;
 
     const callbacks = {
-      onInvalid: (compilationId?: string) => {
+      onInvalid: (compilationId?: string, fileName?: string | null) => {
+        // reload page when HTML template changed
+        if (typeof fileName === 'string' && HTML_REGEX.test(fileName)) {
+          this.socketServer.sockWrite({
+            type: 'static-changed',
+            compilationId,
+          });
+          return;
+        }
+
         this.socketServer.sockWrite({
           type: 'invalid',
           compilationId,
@@ -157,7 +182,7 @@ export class CompilerDevMiddleware {
 
     const clientPaths = getClientPaths(devConfig);
 
-    const middleware = devMiddleware({
+    const middleware = await devMiddleware({
       headers,
       publicPath: '/',
       stats: false,
@@ -170,6 +195,7 @@ export class CompilerDevMiddleware {
       // weak is enough in dev
       // https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests#weak_validation
       etag: 'weak',
+      serverConfig,
     });
 
     const assetPrefixes = publicPaths
@@ -178,7 +204,7 @@ export class CompilerDevMiddleware {
         base && base !== '/' ? stripBase(prefix, base) : prefix,
       );
 
-    const warp = async (
+    const wrapper = async (
       req: IncomingMessage,
       res: ServerResponse,
       next: NextFunction,
@@ -200,10 +226,10 @@ export class CompilerDevMiddleware {
       }
     };
 
-    warp.close = middleware.close;
+    wrapper.close = middleware.close;
 
-    // warp rsbuild-dev-middleware to handle html file（without publicPath）
-    // maybe we should serve html file by sirv
-    return warp;
+    // wrap rsbuild-dev-middleware to handle HTML file（without publicPath）
+    // maybe we should serve HTML file by sirv
+    return wrapper;
   }
 }

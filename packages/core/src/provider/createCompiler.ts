@@ -1,5 +1,6 @@
-import { rspack } from '@rspack/core';
+import { sep } from 'node:path';
 import type { StatsCompilation } from '@rspack/core';
+import { rspack } from '@rspack/core';
 import {
   color,
   formatStats,
@@ -10,8 +11,18 @@ import {
 } from '../helpers';
 import { registerDevHook } from '../hooks';
 import { logger } from '../logger';
-import type { DevConfig, Rspack } from '../types';
+import type { DevConfig, Rspack, ServerConfig } from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
+
+function cutPath(filePath: string, root: string) {
+  const prefix = root.endsWith(sep) ? root : root + sep;
+  if (filePath.startsWith(prefix)) {
+    return filePath.slice(prefix.length);
+  }
+
+  const parts = filePath.split(sep).filter(Boolean);
+  return parts.length > 3 ? parts.slice(-3).join(sep) : parts.join(sep);
+}
 
 export async function createCompiler(options: InitConfigsOptions): Promise<{
   compiler: Rspack.Compiler | Rspack.MultiCompiler;
@@ -21,14 +32,14 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   const { context } = options;
   const { rspackConfigs } = await initConfigs(options);
 
-  await context.hooks.onBeforeCreateCompiler.call({
+  await context.hooks.onBeforeCreateCompiler.callBatch({
     bundlerConfigs: rspackConfigs,
     environments: context.environments,
   });
 
   if (!(await isSatisfyRspackVersion(rspack.rspackVersion))) {
     throw new Error(
-      `The current Rspack version does not meet the requirements, the minimum supported version of Rspack is ${color.green(
+      `[rsbuild] The current Rspack version does not meet the requirements, the minimum supported version of Rspack is ${color.green(
         rspackMinVersion,
       )}`,
     );
@@ -44,20 +55,41 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
 
   const logRspackVersion = () => {
     if (!isVersionLogged) {
-      logger.debug(`Use Rspack v${rspack.rspackVersion}`);
+      logger.debug(`use Rspack v${rspack.rspackVersion}`);
       isVersionLogged = true;
     }
   };
 
-  compiler.hooks.watchRun.tap('rsbuild:compiling', () => {
+  compiler.hooks.watchRun.tap('rsbuild:compiling', (compiler) => {
     logRspackVersion();
     if (!isCompiling) {
-      logger.start('Building...');
+      const changedFiles = compiler.modifiedFiles
+        ? Array.from(compiler.modifiedFiles)
+        : [];
+      const removedFiles = compiler.removedFiles
+        ? Array.from(compiler.removedFiles)
+        : [];
+
+      if (changedFiles.length) {
+        const fileInfo = color.dim(
+          changedFiles
+            .map((file) => cutPath(file, context.rootPath))
+            .join(', '),
+        );
+        logger.start(`building ${fileInfo}`);
+      } else if (removedFiles.length) {
+        const fileInfo = removedFiles
+          .map((file) => cutPath(file, context.rootPath))
+          .join(', ');
+        logger.start(`building ${color.dim(`removed ${fileInfo}`)}`);
+      } else {
+        logger.start('build started...');
+      }
     }
     isCompiling = true;
   });
 
-  if (context.normalizedConfig?.mode === 'production') {
+  if (context.command === 'build') {
     compiler.hooks.run.tap('rsbuild:run', logRspackVersion);
   }
 
@@ -77,7 +109,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
         const time = prettyTime(c.time / 1000);
         const { name } = rspackConfigs[index];
         const suffix = name ? color.gray(` (${name})`) : '';
-        logger.ready(`Built in ${time}${suffix}`);
+        logger.ready(`built in ${time}${suffix}`);
       }
     };
 
@@ -113,7 +145,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     },
   );
 
-  if (context.normalizedConfig?.mode === 'development') {
+  if (context.command === 'dev') {
     registerDevHook({
       context,
       compiler,
@@ -122,7 +154,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     });
   }
 
-  await context.hooks.onAfterCreateCompiler.call({
+  await context.hooks.onAfterCreateCompiler.callBatch({
     compiler,
     environments: context.environments,
   });
@@ -162,4 +194,6 @@ export type DevMiddlewareOptions = {
 
   /** whether use Server Side Render */
   serverSideRender?: boolean;
+
+  serverConfig: ServerConfig;
 };

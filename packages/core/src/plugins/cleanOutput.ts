@@ -2,7 +2,12 @@ import { join, sep } from 'node:path';
 import { RSBUILD_OUTPUTS_PATH } from '../constants';
 import { color, emptyDir } from '../helpers';
 import { logger } from '../logger';
-import type { EnvironmentContext, RsbuildPlugin } from '../types';
+import type {
+  CleanDistPath,
+  CleanDistPathObject,
+  EnvironmentContext,
+  RsbuildPlugin,
+} from '../types';
 
 const addTrailingSep = (dir: string) => (dir.endsWith(sep) ? dir : dir + sep);
 
@@ -12,64 +17,93 @@ const isStrictSubdir = (parent: string, child: string) => {
   return parentDir !== childDir && childDir.startsWith(parentDir);
 };
 
-export const dedupeCleanPaths = (paths: string[]): string[] => {
-  return paths
-    .sort((p1, p2) => (p2.length > p1.length ? -1 : 1))
-    .reduce<string[]>((prev, curr) => {
-      const isSub = prev.find((p) => curr.startsWith(p) || curr === p);
-      if (isSub) {
-        return prev;
-      }
+const normalizeCleanDistPath = (
+  userOptions: CleanDistPath,
+): CleanDistPathObject => {
+  const defaultOptions: CleanDistPathObject = {
+    enable: 'auto',
+  };
 
-      return prev.concat(curr);
-    }, []);
+  if (typeof userOptions === 'boolean' || userOptions === 'auto') {
+    return {
+      ...defaultOptions,
+      enable: userOptions,
+    };
+  }
+
+  return {
+    ...defaultOptions,
+    ...userOptions,
+  };
+};
+
+type PathInfo = {
+  path: string;
+  keep?: RegExp[];
 };
 
 export const pluginCleanOutput = (): RsbuildPlugin => ({
   name: 'rsbuild:clean-output',
 
   setup(api) {
-    // should clean rsbuild outputs, such as inspect files
-    const getRsbuildCleanPath = () => {
+    // clean Rsbuild outputs files, such as the inspected config files
+    const getRsbuildOutputPath = (): PathInfo | undefined => {
       const { rootPath, distPath } = api.context;
       const config = api.getNormalizedConfig();
-      const cleanPath = join(distPath, RSBUILD_OUTPUTS_PATH);
-
-      const { cleanDistPath } = config.output;
+      const targetPath = join(distPath, RSBUILD_OUTPUTS_PATH);
+      const { enable } = normalizeCleanDistPath(config.output.cleanDistPath);
 
       if (
-        cleanDistPath === true ||
-        (cleanDistPath === 'auto' && isStrictSubdir(rootPath, cleanPath))
+        enable === true ||
+        (enable === 'auto' && isStrictSubdir(rootPath, targetPath))
       ) {
-        return cleanPath;
+        return {
+          path: targetPath,
+        };
       }
       return undefined;
     };
 
-    const getCleanPath = (environment: EnvironmentContext) => {
+    const getPathInfo = (
+      environment: EnvironmentContext,
+      isDev?: boolean,
+    ): PathInfo | undefined => {
       const { rootPath } = api.context;
       const { config, distPath } = environment;
+      const { enable, keep } = normalizeCleanDistPath(
+        config.output.cleanDistPath,
+      );
 
-      let { cleanDistPath } = config.output;
-
-      // only enable cleanDistPath when the dist path is a subdir of root path
-      if (cleanDistPath === 'auto') {
-        cleanDistPath = isStrictSubdir(rootPath, distPath);
-
-        if (!cleanDistPath) {
-          logger.warn(
-            'The dist path is not a subdir of root path, Rsbuild will not empty it.',
-          );
-          logger.warn(
-            `Please set ${color.yellow('`output.cleanDistPath`')} config manually.`,
-          );
-          logger.warn(`Current root path: ${color.dim(rootPath)}`);
-          logger.warn(`Current dist path: ${color.dim(distPath)}`);
+      if (enable === 'auto') {
+        // If no files are written to disk, we don't need to clean the output
+        if (isDev && !config.dev.writeToDisk) {
+          return undefined;
         }
+
+        // only clean when the dist path is a subdir of root path
+        if (isStrictSubdir(rootPath, distPath)) {
+          return {
+            path: distPath,
+            keep,
+          };
+        }
+
+        logger.warn(
+          'The dist path is not a subdir of root path, Rsbuild will not empty it.',
+        );
+        logger.warn(
+          `Please set ${color.yellow('`output.cleanDistPath`')} config manually.`,
+        );
+        logger.warn(`Current root path: ${color.dim(rootPath)}`);
+        logger.warn(`Current dist path: ${color.dim(distPath)}`);
+        return undefined;
       }
 
-      if (cleanDistPath) {
-        return distPath;
+      if (enable === true) {
+        return {
+          path: distPath,
+          keep,
+        };
       }
 
       return undefined;
@@ -77,22 +111,29 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
 
     const cleanAll = async (params: {
       environments: Record<string, EnvironmentContext>;
+      isDev?: boolean;
     }) => {
+      // dedupe environments by distPath
       const environments = Object.values(params.environments).reduce<
-        Array<EnvironmentContext>
-      >((total, curr) => {
-        if (!total.find((t) => t.distPath === curr.distPath)) {
-          total.push(curr);
+        EnvironmentContext[]
+      >((result, curr) => {
+        if (!result.find((item) => item.distPath === curr.distPath)) {
+          result.push(curr);
         }
-        return total;
+        return result;
       }, []);
 
-      const cleanPaths = environments
-        .map((e) => getCleanPath(e))
-        .concat(getRsbuildCleanPath())
-        .filter((p): p is string => !!p);
+      const pathInfos: PathInfo[] = [
+        ...environments.map((environment) =>
+          getPathInfo(environment, params.isDev),
+        ),
+        getRsbuildOutputPath(),
+      ].filter((pathInfo): pathInfo is PathInfo => !!pathInfo);
 
-      await Promise.all(dedupeCleanPaths(cleanPaths).map((p) => emptyDir(p)));
+      // Use `for...of` to handle nested directories correctly
+      for (const pathInfo of pathInfos) {
+        await emptyDir(pathInfo.path, pathInfo.keep);
+      }
     };
 
     api.onBeforeBuild(async ({ isFirstCompile, environments }) => {
@@ -100,6 +141,9 @@ export const pluginCleanOutput = (): RsbuildPlugin => ({
         await cleanAll({ environments });
       }
     });
-    api.onBeforeStartDevServer(cleanAll);
+
+    api.onBeforeStartDevServer(async ({ environments }) => {
+      await cleanAll({ environments, isDev: true });
+    });
   },
 });

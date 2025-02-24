@@ -1,9 +1,8 @@
-const path = require('node:path');
-
 export default {
   plugins: {
-    tailwindcss: {
-      config: path.join(__dirname, './tailwind.config.cjs'),
+    '@tailwindcss/postcss': {
+      // Ensure tailwindcss only watch files in the current directory
+      base: __dirname,
     },
   },
 };

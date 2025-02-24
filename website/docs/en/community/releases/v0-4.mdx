@@ -10,7 +10,7 @@ published_at: 2024-02-06 08:00:00
 
 Rsbuild 0.4 provides built-in support for module federation. It also contains some incompatible API updates. Please refer to the current document for upgrading.
 
-### Module Federation Config
+### Module Federation config
 
 Rsbuild now provides a builtin [moduleFederation](/config/module-federation/options) option, which will make configuring Module Federation in Rsbuild much easier.
 
@@ -30,13 +30,13 @@ When you use this option, Rsbuild will automatically set the default `publicPath
 
 > See [RFC - Provide first-class support for Module Federation](https://github.com/web-infra-dev/rsbuild/discussions/1461) for details.
 
-### Plugin Hook Order
+### Plugin hook order
 
 In Rsbuild plugin, you can now declare the order of hooks using the `order` field:
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRsbuildConfig({
       handler: () => console.log('hello'),
       order: 'pre',
@@ -93,7 +93,7 @@ module.exports = {
 };
 ```
 
-## Pure React Plugin
+## Pure React plugin
 
 The React plugin has removed default [source.transformImport](/config/source/transform-import) config for [antd](https://www.npmjs.com/package/antd) v4 and [@arco-design/web-react](https://www.npmjs.com/package/@arco-design/web-react).
 

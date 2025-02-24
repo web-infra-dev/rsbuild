@@ -4,24 +4,26 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "rspress dev",
     "build": "rspress build",
+    "dev": "rspress dev",
     "preview": "rspress preview"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rspress/plugin-rss": "1.37.0",
-    "@types/node": "^22.9.0",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
-    "fast-glob": "^3.3.2",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "rsbuild-plugin-google-analytics": "1.0.3",
-    "rsbuild-plugin-open-graph": "1.0.2",
-    "@rstack-dev/doc-ui": "1.5.4",
-    "rspress": "1.37.0",
-    "rspress-plugin-font-open-sans": "1.0.0",
-    "rspress-plugin-sitemap": "^1.1.1"
+    "@rspress/plugin-client-redirects": "^1.42.0",
+    "@rspress/plugin-rss": "^1.42.0",
+    "@rstack-dev/doc-ui": "1.7.2",
+    "@types/node": "^22.13.5",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "fast-glob": "^3.3.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "rsbuild-plugin-google-analytics": "^1.0.3",
+    "rsbuild-plugin-open-graph": "^1.0.2",
+    "rspress": "^1.42.0",
+    "rspress-plugin-font-open-sans": "^1.0.0",
+    "rspress-plugin-sitemap": "^1.1.1",
+    "typescript": "^5.7.3"
   }
 }

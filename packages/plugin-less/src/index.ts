@@ -146,9 +146,10 @@ export const pluginLess = (
         .resolve.preferRelative(true)
         .end();
 
+      const { sourceMap } = config.output;
       const { excludes, options } = getLessLoaderOptions(
         pluginOptions.lessLoaderOptions,
-        config.output.sourceMap.css,
+        typeof sourceMap === 'boolean' ? sourceMap : sourceMap.css,
         api.context.rootPath,
       );
 

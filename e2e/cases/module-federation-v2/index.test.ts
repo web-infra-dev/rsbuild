@@ -8,6 +8,7 @@ import {
   rspackOnlyTest,
 } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
+import type { RsbuildConfig } from '@rsbuild/core';
 import { pluginCheckSyntax } from '@rsbuild/plugin-check-syntax';
 
 const host = join(__dirname, 'host');
@@ -60,80 +61,81 @@ rspackOnlyTest(
   },
 );
 
-// TODO support for remote HMR
-test.skip('should allow remote module to perform HMR', async ({ page }) => {
-  // HMR cases will fail in Windows
-  if (process.platform === 'win32') {
-    test.skip();
-  }
+rspackOnlyTest(
+  'should allow remote module to perform HMR',
+  async ({ page }) => {
+    // HMR cases will fail in Windows
+    if (process.platform === 'win32') {
+      test.skip();
+    }
 
+    writeButtonCode();
+
+    const remotePort = await getRandomPort();
+
+    process.env.REMOTE_PORT = remotePort.toString();
+
+    const remoteApp = await dev({
+      cwd: remote,
+    });
+    const hostApp = await dev({
+      cwd: host,
+    });
+
+    await gotoPage(page, remoteApp);
+    await expect(page.locator('#title')).toHaveText('Remote');
+    await expect(page.locator('#button')).toHaveText('Button from remote');
+
+    await gotoPage(page, hostApp);
+    await expect(page.locator('#title')).toHaveText('Host');
+    await expect(page.locator('#button')).toHaveText('Button from remote');
+
+    writeButtonCode('Button from remote (HMR)');
+    await expect(page.locator('#button')).toHaveText(
+      'Button from remote (HMR)',
+    );
+
+    await hostApp.close();
+    await remoteApp.close();
+  },
+);
+
+rspackOnlyTest('should downgrade syntax as expected', async () => {
   writeButtonCode();
 
   const remotePort = await getRandomPort();
 
   process.env.REMOTE_PORT = remotePort.toString();
 
-  const remoteApp = await dev({
-    cwd: remote,
-  });
-  const hostApp = await dev({
-    cwd: host,
-  });
-
-  await gotoPage(page, remoteApp);
-  await expect(page.locator('#title')).toHaveText('Remote');
-  await expect(page.locator('#button')).toHaveText('Button from remote');
-
-  await gotoPage(page, hostApp);
-  await expect(page.locator('#title')).toHaveText('Host');
-  await expect(page.locator('#button')).toHaveText('Button from remote');
-
-  writeButtonCode('Button from remote (HMR)');
-  await expect(page.locator('#button')).toHaveText('Button from remote (HMR)');
-
-  await hostApp.close();
-  await remoteApp.close();
-});
-
-// TODO downgrade syntax
-test.skip('should transform module federation runtime with SWC', async () => {
-  writeButtonCode();
-
-  const remotePort = await getRandomPort();
-
-  process.env.REMOTE_PORT = remotePort.toString();
+  const rsbuildConfig: RsbuildConfig = {
+    output: {
+      sourceMap: true,
+      overrideBrowserslist: ['Chrome >= 51'],
+    },
+    performance: {
+      chunkSplit: {
+        strategy: 'all-in-one',
+      },
+    },
+    plugins: [
+      pluginCheckSyntax({
+        // MF runtime contains dynamic import, which can not pass syntax checking
+        exclude: [/@module-federation[\\/]runtime/],
+      }),
+    ],
+  };
 
   await expect(
     build({
       cwd: remote,
-      rsbuildConfig: {
-        output: {
-          overrideBrowserslist: ['Chrome >= 51'],
-        },
-        performance: {
-          chunkSplit: {
-            strategy: 'all-in-one',
-          },
-        },
-        plugins: [pluginCheckSyntax()],
-      },
+      rsbuildConfig,
     }),
   ).resolves.toBeTruthy();
 
   await expect(
     build({
       cwd: host,
-      rsbuildConfig: {
-        output: {
-          overrideBrowserslist: ['Chrome >= 51'],
-        },
-        performance: {
-          chunkSplit: {
-            strategy: 'all-in-one',
-          },
-        },
-        plugins: [pluginCheckSyntax()],
-      },
+      rsbuildConfig,
     }),
   ).resolves.toBeTruthy();
 });

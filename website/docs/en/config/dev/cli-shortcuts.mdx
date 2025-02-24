@@ -7,7 +7,7 @@ type CliShortcuts =
   | boolean
   | {
       help?: boolean;
-      custom?: (shortcuts?: CliShortcut[]) => CliShortcut[];
+      custom?: (shortcuts: CliShortcut[]) => CliShortcut[];
     };
 ```
 
@@ -16,7 +16,7 @@ type CliShortcuts =
 
 Whether to enable CLI shortcuts.
 
-## All Shortcuts
+## All shortcuts
 
 Press `h + Enter` to show all shortcuts:
 
@@ -51,7 +51,7 @@ export default {
 };
 ```
 
-## Custom Shortcuts
+## Custom shortcuts
 
 `custom` option can be used to custom shortcuts, the value is a function that receives the default shortcuts array and returns a new shortcuts array.
 
@@ -92,7 +92,7 @@ export default {
 };
 ```
 
-## Print Help
+## Print help
 
 `help` option can be used to control whether to print the help hint when the server is started:
 

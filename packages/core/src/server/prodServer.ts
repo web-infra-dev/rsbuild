@@ -25,6 +25,8 @@ import {
   faviconFallbackMiddleware,
   getBaseMiddleware,
   getRequestLoggerMiddleware,
+  notFoundMiddleware,
+  optionsFallbackMiddleware,
 } from './middlewares';
 import { open } from './open';
 import { createProxyMiddleware } from './proxy';
@@ -56,7 +58,7 @@ export class RsbuildProdServer {
   }
 
   private async applyDefaultMiddlewares() {
-    const { headers, proxy, historyApiFallback, compress, base } =
+    const { headers, proxy, historyApiFallback, compress, base, cors } =
       this.options.serverConfig;
 
     if (logger.level === 'verbose') {
@@ -80,6 +82,15 @@ export class RsbuildProdServer {
         }
         next();
       });
+    }
+
+    if (cors) {
+      const { default: corsMiddleware } = await import(
+        '../../compiled/cors/index.js'
+      );
+      this.middlewares.use(
+        corsMiddleware(typeof cors === 'boolean' ? {} : cors),
+      );
     }
 
     if (proxy) {
@@ -113,6 +124,8 @@ export class RsbuildProdServer {
     }
 
     this.middlewares.use(faviconFallbackMiddleware);
+    this.middlewares.use(optionsFallbackMiddleware);
+    this.middlewares.use(notFoundMiddleware);
   }
 
   private async applyStaticAssetMiddleware() {
@@ -178,7 +191,7 @@ export async function startProdServer(
     middlewares,
   );
 
-  await context.hooks.onBeforeStartProdServer.call();
+  await context.hooks.onBeforeStartProdServer.callBatch();
 
   const httpServer = await createHttpServer({
     serverConfig,
@@ -196,7 +209,7 @@ export async function startProdServer(
       },
       async () => {
         const routes = getRoutes(context);
-        await context.hooks.onAfterStartProdServer.call({
+        await context.hooks.onAfterStartProdServer.callBatch({
           port,
           routes,
           environments: context.environments,

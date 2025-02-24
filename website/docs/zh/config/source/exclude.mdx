@@ -3,11 +3,15 @@
 - **类型：** [RuleSetCondition](https://rspack.dev/zh/config/module#condition)
 - **默认值：** `[]`
 
-指定不需要编译的 JavaScript/TypeScript 文件。用法与 Rspack 中的 [Rule.exclude](https://rspack.dev/zh/config/module#ruleexclude) 一致，支持传入字符串或正则表达式来匹配模块的路径。
+排除不需要被 [SWC](/guide/basic/configure-swc) 编译的 JavaScript 或 TypeScript 文件。
+
+## 用法
+
+`source.exclude` 的用法与 Rspack 中的 [Rule.exclude](https://rspack.dev/zh/config/module#ruleexclude) 一致，支持传入字符串或正则表达式来匹配模块的路径。
 
 比如:
 
-```js
+```js title="rsbuild.config.ts"
 import path from 'node:path';
 
 export default {
@@ -19,13 +23,13 @@ export default {
 
 > 参考 [source.include](/config/source/include) 来了解更多。
 
-### 不编译 vs 不打包
+## 排除打包
 
-`source.exclude` 用于指定不需要编译的 JavaScript/TypeScript 文件。这意味着这些文件不会经过 SWC 或 Babel 转译，但这些文件仍然会被打包到产物中（如果被引用）。
+`source.exclude` 用于指定不需要编译的 JavaScript/TypeScript 文件。这意味着这些文件不会经过 SWC 转译，但被引用的文件仍然会被打包到产物中。
 
-如果你希望某些文件在打包过程中被忽略，不被打包到产物中，可以使用 Rspack 的 [IgnorePlugin](https://rspack.dev/zh/plugins/webpack/ignore-plugin)。
+如果你希望某些文件在打包过程中被排除，不被打包到产物中，可以使用 Rspack 的 [IgnorePlugin](https://rspack.dev/zh/plugins/webpack/ignore-plugin)。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: (config, { rspack }) => {

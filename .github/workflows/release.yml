@@ -3,15 +3,16 @@ name: Release
 on:
   workflow_dispatch:
     inputs:
-      version:
+      npm_tag:
         type: choice
-        description: 'Release Version (next, beta, alpha, latest)'
+        description: 'Specify npm tag'
         required: true
-        default: 'next'
+        default: 'alpha'
         options:
-          - next
-          - beta
           - alpha
+          - beta
+          - rc
+          - canary
           - latest
       branch:
         description: 'Release Branch (confirm release branch)'
@@ -22,40 +23,44 @@ on:
         type: boolean
         required: false
         default: true
-  issue_comment:
-    types: [created]
 
 permissions:
+  # Provenance generation in GitHub Actions requires "write" access to the "id-token"
   id-token: write
+  # Allow commenting on issues
+  issues: write
 
 jobs:
   release:
     name: Release
     if: github.repository == 'web-infra-dev/rsbuild' && github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - name: Run Ecosystem CI
         if: inputs.run_eco_ci == true
-        uses: convictional/trigger-workflow-and-wait@v1.6.5
+        uses: convictional/trigger-workflow-and-wait@f69fa9eedd3c62a599220f4d5745230e237904be # v1.6.5
         with:
-          owner: "rspack-contrib"
-          repo: "rsbuild-ecosystem-ci"
-          workflow_file_name: "ecosystem-ci-selected.yml"
-          github_token: ${{ secrets.REPO_SCOPED_TOKEN }}
-          ref: "main"
+          owner: 'rspack-contrib'
+          repo: 'rsbuild-ecosystem-ci'
+          workflow_file_name: 'ecosystem-ci-selected.yml'
+          github_token: ${{ secrets.REPO_RSBUILD_ECO_CI_GITHUB_TOKEN }}
+          ref: 'main'
           client_payload: '{"ref":"${{ github.event.inputs.branch }}","repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          fetch-depth: 25
+          fetch-depth: 1
           ref: ${{ github.event.inputs.branch }}
 
       - name: Install Pnpm
-        run: corepack enable
+        run: |
+          npm install -g corepack@latest --force
+          corepack enable
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
         with:
           node-version: 22
           cache: 'pnpm'
@@ -63,15 +68,9 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
-      - name: Release
-        uses: web-infra-dev/actions@v2
-        with:
-          version: ${{ github.event.inputs.version }}
-          branch: ${{ github.event.inputs.branch }}
-          type: 'release'
-          tools: 'changeset'
+      - name: Publish to npm
         env:
-          GITHUB_TOKEN: ${{ secrets.REPO_SCOPED_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          REPOSITORY: ${{ github.repository }}
-          REF: ${{ github.ref }}
+          NPM_TOKEN: ${{ secrets.RSBUILD_NPM_TOKEN }}
+        run: |
+          npm config set "//registry.npmjs.org/:_authToken" "${NPM_TOKEN}"
+          pnpm -r publish --tag ${{ github.event.inputs.npm_tag }} --publish-branch ${{ github.event.inputs.branch }}

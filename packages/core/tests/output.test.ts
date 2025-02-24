@@ -178,6 +178,20 @@ describe('plugin-output', () => {
     expect(config?.output?.publicPath).toEqual('http://example-3000.com:3000/');
   });
 
+  it('should replace `<port>` placeholder with server.port', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginOutput()],
+      rsbuildConfig: {
+        server: { port: 4000 },
+        dev: {
+          assetPrefix: 'http://example-<port>.com:<port>/',
+        },
+      },
+    });
+    const [config] = await rsbuild.initConfigs();
+    expect(config?.output?.publicPath).toEqual('http://example-4000.com:4000/');
+  });
+
   it('should replace `<port>` placeholder of `output.assetPrefix` with default port', async () => {
     vi.stubEnv('NODE_ENV', 'production');
     const rsbuild = await createStubRsbuild({

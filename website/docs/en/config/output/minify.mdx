@@ -7,9 +7,9 @@ type Minify =
   | boolean
   | {
       js?: boolean;
-      jsOptions?: SwcJsMinimizerRspackPluginOptions;
+      jsOptions?: Rspack.SwcJsMinimizerRspackPluginOptions;
       css?: boolean;
-      cssOptions?: LightningCssMinimizerRspackPluginOptions;
+      cssOptions?: Rspack.LightningcssMinimizerRspackPluginOptions;
     };
 ```
 
@@ -19,18 +19,13 @@ Configure whether to enable code minification in production mode, or to configur
 
 By default, JS and CSS code will be automatically minimized in production mode to improve page performance. If you do not want to minify the code, you can set `minify` to `false` to disable minification for all code. Alternatively, you can control the behavior of code minification through detailed configuration of the `minify` option. Below are detailed explanations for each configuration option:
 
-Here are explanations for each field:
-
-- `js`: Whether to enable minification for JavaScript code.
-- `jsOptions`: JS code minification configuration, which will be merged with the default configuration and passed to SWC.
-- `css`: Whether to enable minification for CSS code.
-- `cssOptions`: CSS code minification configuration, which will be merged with the default configuration and passed to Lightning CSS.
-
 ## Example
 
-### Disable all minification
+### Disable minification
 
-```js
+Set `minify` to `false` to disable JS and CSS code minification:
+
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     minify: false,
@@ -39,12 +34,21 @@ export default {
 ```
 
 :::tip
-This configuration is usually used for debugging and troubleshooting. It is not recommended to disable code minification in production builds, as it will significantly degrade the page performance.
+This usage is usually used for debugging and troubleshooting. It is not recommended to disable code minification in production builds, as it will significantly degrade the page performance.
 :::
 
-### Disable JavaScript minification
+## Options
 
-```js
+### minify.js
+
+- **Type:** `boolean`
+- **Default:** `mode === 'production'`
+
+Whether to enable minification for JavaScript code.
+
+For example, disable JavaScript minification:
+
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     minify: {
@@ -54,11 +58,16 @@ export default {
 };
 ```
 
-### JavaScript minify options
+### minify.jsOptions
+
+- **Type:** `Rspack.SwcJsMinimizerRspackPluginOptions`
+- **Default:** `{}`
 
 `output.minify.jsOptions` is used to configure SWC's minification options. For detailed configurations, please refer to [SwcJsMinimizerRspackPlugin](https://rspack.dev/plugins/rspack/swc-js-minimizer-rspack-plugin). The following configuration will override the default settings, disable the mangle feature.
 
-```js
+For example, disable the mangle feature:
+
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     minify: {
@@ -74,11 +83,35 @@ export default {
 
 > Refer to [Configure SWC](/guide/basic/configure-swc) for more details.
 
-### CSS minify options
+### minify.css
+
+- **Type:** `boolean`
+- **Default:** `mode === 'production'`
+
+Whether to enable minification for CSS code.
+
+For example, disable CSS minification:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    minify: {
+      css: false,
+    },
+  },
+};
+```
+
+### minify.cssOptions
+
+- **Type:** `Rspack.LightningcssMinimizerRspackPluginOptions`
+- **Default:** inherit from [tools.lightningcssLoader](/config/tools/lightningcss-loader)
 
 `output.minify.cssOptions` is used to configure Lightning CSS's minification options. For specific configuration items, please refer to [LightningCssMinimizerRspackPlugin Documentation](https://rspack.dev/plugins/rspack/lightning-css-minimizer-rspack-plugin).
 
-```js
+For example, disable error recovery:
+
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     minify: {
@@ -91,3 +124,7 @@ export default {
   },
 };
 ```
+
+:::tip
+When you configure some options in [tools.lightningcssLoader](/config/tools/lightningcss-loader), `output.minify.cssOptions` will automatically inherit these options, which ensures that the CSS code transformation behavior in the development build is consistent with that in the production build.
+:::

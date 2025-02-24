@@ -9,11 +9,11 @@ exports[`plugin-webpack-swc > output.sourceMap config for swcMinimizerPlugin 1`]
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "use": [
             {
-              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
-                  "coreJs": "3.39",
+                  "coreJs": "3.40",
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -66,11 +66,11 @@ exports[`plugin-webpack-swc > output.sourceMap config for swcMinimizerPlugin 1`]
           },
           "use": [
             {
-              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
-                  "coreJs": "3.39",
+                  "coreJs": "3.40",
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -126,7 +126,7 @@ exports[`plugin-webpack-swc > output.sourceMap config for swcMinimizerPlugin 1`]
             },
           },
           "name": "swc-minimizer-plugin",
-          "rsbuildSourceMapConfig": {
+          "sourceMapConfig": {
             "css": false,
             "js": "cheap-source-map",
           },
@@ -137,7 +137,7 @@ exports[`plugin-webpack-swc > output.sourceMap config for swcMinimizerPlugin 1`]
             "jsMinify": undefined,
           },
           "name": "swc-minimizer-plugin",
-          "rsbuildSourceMapConfig": {
+          "sourceMapConfig": {
             "css": false,
             "js": "cheap-source-map",
           },
@@ -145,7 +145,9 @@ exports[`plugin-webpack-swc > output.sourceMap config for swcMinimizerPlugin 1`]
       ],
     },
     "plugins": [
-      RsbuildCorePlugin {},
+      {
+        "name": "RsbuildCorePlugin",
+      },
     ],
   },
 ]
@@ -160,11 +162,11 @@ exports[`plugin-webpack-swc > should apply multiple environment configs correctl
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "use": [
             {
-              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
-                  "coreJs": "3.39",
+                  "coreJs": "3.40",
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -217,11 +219,11 @@ exports[`plugin-webpack-swc > should apply multiple environment configs correctl
           },
           "use": [
             {
-              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
-                  "coreJs": "3.39",
+                  "coreJs": "3.40",
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -265,7 +267,9 @@ exports[`plugin-webpack-swc > should apply multiple environment configs correctl
       ],
     },
     "plugins": [
-      RsbuildCorePlugin {},
+      {
+        "name": "RsbuildCorePlugin",
+      },
     ],
   },
   {
@@ -275,11 +279,11 @@ exports[`plugin-webpack-swc > should apply multiple environment configs correctl
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "use": [
             {
-              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
-                  "coreJs": "3.39",
+                  "coreJs": "3.40",
                   "targets": [
                     "node >= 16",
                   ],
@@ -330,11 +334,11 @@ exports[`plugin-webpack-swc > should apply multiple environment configs correctl
           },
           "use": [
             {
-              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
-                  "coreJs": "3.39",
+                  "coreJs": "3.40",
                   "targets": [
                     "node >= 16",
                   ],
@@ -376,7 +380,9 @@ exports[`plugin-webpack-swc > should apply multiple environment configs correctl
       ],
     },
     "plugins": [
-      RsbuildCorePlugin {},
+      {
+        "name": "RsbuildCorePlugin",
+      },
     ],
   },
 ]
@@ -390,11 +396,11 @@ exports[`plugin-webpack-swc > should apply source.include and source.exclude cor
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
             "options": {
               "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
               "env": {
-                "coreJs": "3.39",
+                "coreJs": "3.40",
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -447,11 +453,11 @@ exports[`plugin-webpack-swc > should apply source.include and source.exclude cor
         },
         "use": [
           {
-            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
             "options": {
               "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
               "env": {
-                "coreJs": "3.39",
+                "coreJs": "3.40",
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -495,7 +501,9 @@ exports[`plugin-webpack-swc > should apply source.include and source.exclude cor
     ],
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -507,11 +515,11 @@ exports[`plugin-webpack-swc > should disable react refresh when dev.hmr is false
       "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
-              "coreJs": "3.39",
+              "coreJs": "3.40",
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -564,11 +572,11 @@ exports[`plugin-webpack-swc > should disable react refresh when dev.hmr is false
       },
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
-              "coreJs": "3.39",
+              "coreJs": "3.40",
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -620,11 +628,11 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
       "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
-              "coreJs": "3.39",
+              "coreJs": "3.40",
               "targets": [
                 "node >= 16",
               ],
@@ -674,11 +682,11 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
       },
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
-              "coreJs": "3.39",
+              "coreJs": "3.40",
               "targets": [
                 "node >= 16",
               ],
@@ -727,11 +735,11 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
       "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
-              "coreJs": "3.39",
+              "coreJs": "3.40",
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -784,11 +792,11 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
       },
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
-              "coreJs": "3.39",
+              "coreJs": "3.40",
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -840,11 +848,11 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
       "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
-              "coreJs": "3.39",
+              "coreJs": "3.40",
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -897,11 +905,11 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
       },
       "use": [
         {
-          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+          "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
-              "coreJs": "3.39",
+              "coreJs": "3.40",
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -960,7 +968,7 @@ exports[`plugin-webpack-swc > should set SWC minimizer in production 1`] = `
         },
       },
       "name": "swc-minimizer-plugin",
-      "rsbuildSourceMapConfig": {
+      "sourceMapConfig": {
         "css": false,
         "js": undefined,
       },
@@ -971,7 +979,7 @@ exports[`plugin-webpack-swc > should set SWC minimizer in production 1`] = `
         "jsMinify": undefined,
       },
       "name": "swc-minimizer-plugin",
-      "rsbuildSourceMapConfig": {
+      "sourceMapConfig": {
         "css": false,
         "js": undefined,
       },
@@ -995,7 +1003,7 @@ exports[`plugin-webpack-swc > should set correct SWC minimizer options in produc
         },
       },
       "name": "swc-minimizer-plugin",
-      "rsbuildSourceMapConfig": {
+      "sourceMapConfig": {
         "css": false,
         "js": undefined,
       },
@@ -1006,7 +1014,7 @@ exports[`plugin-webpack-swc > should set correct SWC minimizer options in produc
         "jsMinify": undefined,
       },
       "name": "swc-minimizer-plugin",
-      "rsbuildSourceMapConfig": {
+      "sourceMapConfig": {
         "css": false,
         "js": undefined,
       },
@@ -1030,7 +1038,7 @@ exports[`plugin-webpack-swc > should set correct SWC minimizer options using raw
         },
       },
       "name": "swc-minimizer-plugin",
-      "rsbuildSourceMapConfig": {
+      "sourceMapConfig": {
         "css": false,
         "js": undefined,
       },
@@ -1041,7 +1049,7 @@ exports[`plugin-webpack-swc > should set correct SWC minimizer options using raw
         "jsMinify": undefined,
       },
       "name": "swc-minimizer-plugin",
-      "rsbuildSourceMapConfig": {
+      "sourceMapConfig": {
         "css": false,
         "js": undefined,
       },
@@ -1056,11 +1064,11 @@ exports[`plugin-webpack-swc > should set multiple swc-loader 1`] = `
     "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
     "use": [
       {
-        "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+        "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
         "options": {
           "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
           "env": {
-            "coreJs": "3.39",
+            "coreJs": "3.40",
             "targets": [
               "chrome >= 87",
               "edge >= 88",
@@ -1106,11 +1114,11 @@ exports[`plugin-webpack-swc > should set multiple swc-loader 1`] = `
     "test": /override\\.ts/,
     "use": [
       {
-        "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+        "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
         "options": {
           "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
           "env": {
-            "coreJs": "3.39",
+            "coreJs": "3.40",
             "targets": [
               "chrome >= 87",
               "edge >= 88",
@@ -1164,11 +1172,11 @@ exports[`plugin-webpack-swc > should set multiple swc-loader 1`] = `
     },
     "use": [
       {
-        "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+        "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
         "options": {
           "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
           "env": {
-            "coreJs": "3.39",
+            "coreJs": "3.40",
             "targets": [
               "chrome >= 87",
               "edge >= 88",
@@ -1221,11 +1229,11 @@ exports[`plugin-webpack-swc > should set swc-loader 1`] = `
         "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
         "use": [
           {
-            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
             "options": {
               "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
               "env": {
-                "coreJs": "3.39",
+                "coreJs": "3.40",
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1278,11 +1286,11 @@ exports[`plugin-webpack-swc > should set swc-loader 1`] = `
         },
         "use": [
           {
-            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+            "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
             "options": {
               "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
               "env": {
-                "coreJs": "3.39",
+                "coreJs": "3.40",
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1326,7 +1334,9 @@ exports[`plugin-webpack-swc > should set swc-loader 1`] = `
     ],
   },
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -1340,11 +1350,11 @@ exports[`plugin-webpack-swc > should use output config 1`] = `
           "test": /\\\\\\.\\(\\?:js\\|jsx\\|mjs\\|cjs\\|ts\\|tsx\\|mts\\|cts\\)\\$/,
           "use": [
             {
-              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
-                  "coreJs": "3.39",
+                  "coreJs": "3.40",
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -1397,11 +1407,11 @@ exports[`plugin-webpack-swc > should use output config 1`] = `
           },
           "use": [
             {
-              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.cjs",
+              "loader": "<ROOT>/packages/compat/plugin-webpack-swc/src/loader.mjs",
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
-                  "coreJs": "3.39",
+                  "coreJs": "3.40",
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -1460,7 +1470,7 @@ exports[`plugin-webpack-swc > should use output config 1`] = `
             },
           },
           "name": "swc-minimizer-plugin",
-          "rsbuildSourceMapConfig": {
+          "sourceMapConfig": {
             "css": false,
             "js": undefined,
           },
@@ -1468,7 +1478,9 @@ exports[`plugin-webpack-swc > should use output config 1`] = `
       ],
     },
     "plugins": [
-      RsbuildCorePlugin {},
+      {
+        "name": "RsbuildCorePlugin",
+      },
     ],
   },
 ]

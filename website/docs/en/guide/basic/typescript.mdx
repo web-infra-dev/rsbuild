@@ -2,7 +2,7 @@
 
 Rsbuild supports TypeScript by default, allowing you to directly use `.ts` and `.tsx` files in your projects.
 
-## TypeScript Transpilation
+## TypeScript transpilation
 
 Rsbuild uses SWC by default for transpiling TypeScript code, and it also supports switching to Babel for transpilation.
 
@@ -40,11 +40,11 @@ You can create a `src/env.d.ts` file to reference it:
 /// <reference types="@rsbuild/core/types" />
 ```
 
-## Type Checking
+## Type checking
 
 When transpiling TypeScript code using tools like SWC and Babel, type checking is not performed.
 
-Rsbuild provides the Type Check plugin, which runs TypeScript type checking in a separate process. The plugin internally integrates [fork-ts-checker-webpack-plugin](https://github.com/TypeStrong/fork-ts-checker-webpack-plugin).
+Rsbuild provides the Type Check plugin, which runs TypeScript type checking in a separate process. The plugin internally integrates [ts-checker-rspack-plugin](https://github.com/rspack-contrib/ts-checker-rspack-plugin).
 
 Please refer to the [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check) for usage instructions.
 
@@ -60,7 +60,7 @@ export default {
 };
 ```
 
-## Path Extensions
+## Path extensions
 
 When importing another module in a TypeScript module, TypeScript allows using the `.js` file extension:
 
@@ -75,8 +75,8 @@ Rsbuild supports this feature through Rspack's [extensionAlias](https://rspack.d
 const rspackConfig = {
   resolve: {
     extensionAlias: {
-      '.js': ['.ts', '.tsx', '.js'],
-      '.jsx': ['.tsx', '.jsx'],
+      '.js': ['.js', '.ts', '.tsx'],
+      '.jsx': ['.jsx', '.tsx'],
     },
   },
 };
@@ -86,3 +86,19 @@ This means:
 
 - You can use the `.js` extension to import `.ts` or `.tsx` files.
 - You can use the `.jsx` extension to import `.tsx` files.
+
+## Decorators version
+
+Rsbuild does not read the `experimentalDecorators` option in `tsconfig.json`, instead, it provides the [decorators.version](/config/source/decorators#decoratorsversion) configuration to specify the decorator version.
+
+By default, Rsbuild uses the `2022-03` version of the decorators, you can also set it to `legacy` to use the legacy decorators:
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    decorators: {
+      version: 'legacy',
+    },
+  },
+};
+```

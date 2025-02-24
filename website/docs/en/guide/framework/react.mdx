@@ -2,7 +2,7 @@
 
 In this document, you will learn how to build a React application using Rsbuild.
 
-## Create React Project
+## Create React project
 
 You can use `create-rsbuild` to create a project with Rsbuild + React. Just execute the following command:
 
@@ -17,11 +17,11 @@ import { PackageManagerTabs } from '@theme';
   }}
 />
 
-Then select `React` when prompted to "Select framework".
+Then select `React 19` or `React 18` when prompted to "Select framework".
 
 ## Use React in an existing project
 
-To compile React, you need to register the Rsbuild [React Plugin](/plugins/list/plugin-react). The plugin will automatically add the necessary configuration for React builds.
+To compile React's JSX syntax, you need to register the Rsbuild [React Plugin](/plugins/list/plugin-react). The plugin will automatically add the necessary configuration for building a React application.
 
 For example, register in `rsbuild.config.ts`:
 
@@ -42,7 +42,7 @@ For projects using Create React App, you can refer to the [CRA Migration Guide](
 
 Rsbuild supports convert SVG to React components via [SVGR](https://react-svgr.com/).
 
-If you need to use svgr, you also need to register the [SVGR plugin](/plugins/list/plugin-svgr).
+To use SVGR, you also need to register the [SVGR plugin](/plugins/list/plugin-svgr).
 
 ## React Fast Refresh
 
@@ -88,7 +88,7 @@ Before you start using React Compiler, it's recommended to read the [React Compi
 
 The steps to use React Compiler in Rsbuild:
 
-1. Upgrade versions of `react` and `react-dom` to 19.
+1. Upgrade versions of `react` and `react-dom` to 19. If you are unable to upgrade, you can install the extra [react-compiler-runtime](https://www.npmjs.com/package/react-compiler-runtime) package which will allow the compiled code to run on versions prior to 19.
 2. React Compiler currently only provides a Babel plugin, you need to install [@rsbuild/plugin-babel](/plugins/list/plugin-babel) and [babel-plugin-react-compiler](https://www.npmjs.com/package/babel-plugin-react-compiler).
 3. Register the Babel plugin in your Rsbuild config file:
 
@@ -114,7 +114,7 @@ export default defineConfig({
 
 ### Configuration
 
-Set the config for React Compiler as follows
+Set the config for React Compiler as follows:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -141,13 +141,39 @@ export default defineConfig({
 });
 ```
 
+For React 17 and 18 projects, you need to install [react-compiler-runtime](https://www.npmjs.com/package/react-compiler-runtime) and specify the `target`:
+
+```ts title="rsbuild.config.ts"
+const ReactCompilerConfig = {
+  target: '18', // '17' | '18' | '19'
+};
+```
+
+## Router
+
+### TanStack Router
+
+[TanStack Router](https://tanstack.com/router/) is a fully type-safe React router with built-in data fetching, stale-while revalidate caching and first-class search-param APIs.
+
+TanStack Router provides `@tanstack/router-plugin` to integrate with Rsbuild, which provides support for file-based routing. See:
+
+- [File-Based Routing documentation](https://tanstack.com/router/latest/docs/framework/react/guide/file-based-routing)
+- [TanStack Router + Rsbuild Example](https://github.com/TanStack/router/tree/main/examples/react/quickstart-rspack-file-based)
+
+### React Router
+
+[React Router](https://reactrouter.com/) is a user‑obsessed, standards‑focused, multi‑strategy router for React.
+
+- To use React Router as a library, you can just follow the official documentation and no configuration is required.
+- To use React Router as a framework, the community is working on an experimental Rsbuild plugin, see [rsbuild-plugin-react-router](https://github.com/rspack-contrib/rsbuild-plugin-react-router).
+
 ## CSS-in-JS
 
 ### Use styled-components
 
 Rsbuild supports compiling [styled-components](https://github.com/styled-components/styled-components), improve the debugging experience and add server-side rendering support to styled-components.
 
-If you need to use styled-components, We recommend using the [@rsbuild/plugin-styled-components](https://github.com/rsbuild-contrib/rsbuild-plugin-styled-components).
+To use styled-components, we recommend using the [@rsbuild/plugin-styled-components](https://github.com/rsbuild-contrib/rsbuild-plugin-styled-components).
 
 > You can refer to this example: [styled-components](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/styled-components).
 

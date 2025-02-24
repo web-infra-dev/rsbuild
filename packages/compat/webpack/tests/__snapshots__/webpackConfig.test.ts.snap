@@ -7,7 +7,9 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
       "foo": "2",
     },
   },
-  RsbuildCorePlugin {},
+  {
+    "name": "RsbuildCorePlugin",
+  },
   MiniCssExtractPlugin {
     "_sortedModulesCache": WeakMap {},
     "options": {
@@ -23,7 +25,7 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
       "linkType": "text/css",
     },
   },
-  HtmlRspackPlugin {
+  HtmlWebpackPlugin {
     "options": {
       "base": false,
       "cache": true,
@@ -44,6 +46,7 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
         },
         "viewport": "width=device-width, initial-scale=1.0",
       },
+      "minify": "auto",
       "publicPath": "auto",
       "scriptLoading": "defer",
       "showErrors": true,
@@ -53,7 +56,26 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
       "title": "Rsbuild App",
       "xhtml": false,
     },
-    "version": 6,
+    "userOptions": {
+      "chunks": [
+        "index",
+      ],
+      "entryName": "index",
+      "filename": "index.html",
+      "inject": "head",
+      "meta": {
+        "charset": {
+          "charset": "UTF-8",
+        },
+        "viewport": "width=device-width, initial-scale=1.0",
+      },
+      "scriptLoading": "defer",
+      "template": "",
+      "templateContent": "<!doctype html><html><head></head><body><div id=\\"root\\"></div></body></html>",
+      "templateParameters": [Function],
+      "title": "Rsbuild App",
+    },
+    "version": 5,
   },
   RsbuildHtmlPlugin {
     "getEnvironment": [Function],
@@ -104,7 +126,9 @@ exports[`webpackConfig > should allow to use tools.webpackChain to modify config
 {
   "devtool": "eval",
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -113,7 +137,9 @@ exports[`webpackConfig > should allow tools.webpack to be an array 1`] = `
 {
   "devtool": "source-map",
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -122,7 +148,9 @@ exports[`webpackConfig > should allow tools.webpack to be an object 1`] = `
 {
   "devtool": "eval",
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -131,7 +159,9 @@ exports[`webpackConfig > should allow tools.webpack to modify config object 1`] 
 {
   "devtool": "eval-cheap-source-map",
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -140,7 +170,9 @@ exports[`webpackConfig > should allow tools.webpack to return config 1`] = `
 {
   "devtool": "eval",
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -149,7 +181,9 @@ exports[`webpackConfig > should allow tools.webpackChain to be an array 1`] = `
 {
   "devtool": "source-map",
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;
@@ -158,7 +192,9 @@ exports[`webpackConfig > should provide mergeConfig util in tools.webpack functi
 {
   "devtool": "eval",
   "plugins": [
-    RsbuildCorePlugin {},
+    {
+      "name": "RsbuildCorePlugin",
+    },
   ],
 }
 `;

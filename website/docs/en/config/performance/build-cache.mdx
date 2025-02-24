@@ -1,0 +1,119 @@
+# performance.buildCache
+
+- **Type:**
+
+```ts
+type BuildCacheConfig =
+  | boolean
+  | {
+      cacheDirectory?: string;
+      cacheDigest?: Array<string | undefined>;
+      buildDependencies?: string[];
+    };
+```
+
+- **Default:** `false`
+- **Version:** `>= 1.2.5`
+
+To enable or configure persistent build cache.
+
+When enabled, Rspack will store the build snapshots in the cache directory. In subsequent builds, if the cache is hit, Rspack can reuse the cached results instead of rebuilding from scratch, which can reduce the build time.
+
+:::tip
+
+Rspack's persistent cache is [experimental](https://rspack.dev/config/experiments#experimentscache) and may change in the future.
+
+:::
+
+## Enable cache
+
+Setting `performance.buildCache` to `true` will enable the persistent build cache:
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    buildCache: true,
+  },
+};
+```
+
+Or only enable cache in development mode:
+
+```ts title="rsbuild.config.ts"
+const isDev = process.env.NODE_ENV === 'development';
+
+export default {
+  performance: {
+    buildCache: isDev,
+  },
+};
+```
+
+## Options
+
+### cacheDirectory
+
+- **Type:** `string`
+- **Default:** `node_modules/.cache`
+
+Set the output directory of the cache files.
+
+```ts title="rsbuild.config.ts"
+import path from 'node:path';
+
+export default {
+  performance: {
+    buildCache: {
+      cacheDirectory: path.resolve(__dirname, 'node_modules/.my-cache'),
+    },
+  },
+};
+```
+
+### cacheDigest
+
+- **Type:** `Array<string | undefined>`
+- **Default:** `undefined`
+
+Add additional cache digests, the previous build cache will be invalidated when any value in the array changes.
+
+`cacheDigest` can be used to add some variables that will affect the build result, for example `process.env.SOME_ENV`.
+
+```ts title="rsbuild.config.ts"
+export default defineConfig({
+  performance: {
+    buildCache: {
+      cacheDigest: [process.env.SOME_ENV],
+    },
+  },
+});
+```
+
+### buildDependencies
+
+- **Type:** `string[]`
+- **Default:** `undefined`
+
+`buildDependencies` is an arrays of additional code dependencies for the build. Rspack will use a hash of each of these items and all dependencies to invalidate the filesystem cache.
+
+Rsbuild will use the following configuration files as the default build dependencies:
+
+- `package.json`
+- `tsconfig.json`
+- `rsbuild.config.*`
+- `.browserslistrc`
+- `tailwindcss.config.*`
+
+When using Rsbuild CLI, it will also automatically add `.env` and `.env.*` files to the build dependencies.
+
+When you add other build dependencies, Rsbuild merges these custom dependencies with the default dependencies and passes them to Rspack.
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    buildCache: {
+      buildDependencies: [__filename],
+    },
+  },
+};
+```

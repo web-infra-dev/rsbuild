@@ -1,21 +1,22 @@
 import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { awaitFileExists, getRandomPort } from '@e2e/helper';
-import { test } from '@playwright/test';
+import { awaitFileExists, getRandomPort, rspackOnlyTest } from '@e2e/helper';
 
-test('should restart dev server and reload config when config file changed', async () => {
-  const dist1 = path.join(__dirname, 'dist');
-  const dist2 = path.join(__dirname, 'dist-2');
-  const configFile = path.join(__dirname, 'rsbuild.config.mjs');
+rspackOnlyTest(
+  'should restart dev server and reload config when config file changed',
+  async () => {
+    const dist1 = path.join(__dirname, 'dist');
+    const dist2 = path.join(__dirname, 'dist-2');
+    const configFile = path.join(__dirname, 'rsbuild.config.mjs');
 
-  fs.rmSync(dist1, { force: true, recursive: true });
-  fs.rmSync(dist2, { force: true, recursive: true });
-  fs.rmSync(configFile, { force: true });
+    fs.rmSync(dist1, { force: true, recursive: true });
+    fs.rmSync(dist2, { force: true, recursive: true });
+    fs.rmSync(configFile, { force: true });
 
-  fs.writeFileSync(
-    configFile,
-    `export default {
+    fs.writeFileSync(
+      configFile,
+      `export default {
       dev: {
         writeToDisk: true,
       },
@@ -26,17 +27,17 @@ test('should restart dev server and reload config when config file changed', asy
       },
       server: { port: ${await getRandomPort()} }
     };`,
-  );
+    );
 
-  const process = exec('npx rsbuild dev', {
-    cwd: __dirname,
-  });
+    const process = exec('npx rsbuild dev', {
+      cwd: __dirname,
+    });
 
-  await awaitFileExists(dist1);
+    await awaitFileExists(dist1);
 
-  fs.writeFileSync(
-    configFile,
-    `export default {
+    fs.writeFileSync(
+      configFile,
+      `export default {
       dev: {
         writeToDisk: true,
       },
@@ -47,9 +48,10 @@ test('should restart dev server and reload config when config file changed', asy
       },
       server: { port: ${await getRandomPort()} }
     };`,
-  );
+    );
 
-  await awaitFileExists(dist2);
+    await awaitFileExists(dist2);
 
-  process.kill();
-});
+    process.kill();
+  },
+);

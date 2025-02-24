@@ -21,11 +21,10 @@ async function modifyWebpackChain(
 ): Promise<RspackChain> {
   logger.debug('modify webpack chain');
 
-  const [modifiedChain] =
-    await context.hooks.modifyWebpackChain.callInEnvironment({
-      environment: utils.environment.name,
-      args: [chain, utils],
-    });
+  const [modifiedChain] = await context.hooks.modifyWebpackChain.callChain({
+    environment: utils.environment.name,
+    args: [chain, utils],
+  });
 
   if (utils.environment.config.tools?.webpackChain) {
     for (const item of castArray(utils.environment.config.tools.webpackChain)) {
@@ -44,11 +43,10 @@ async function modifyWebpackConfig(
   utils: ModifyWebpackConfigUtils,
 ): Promise<WebpackConfig> {
   logger.debug('modify webpack config');
-  let [modifiedConfig] =
-    await context.hooks.modifyWebpackConfig.callInEnvironment({
-      environment: utils.environment.name,
-      args: [webpackConfig, utils],
-    });
+  let [modifiedConfig] = await context.hooks.modifyWebpackConfig.callChain({
+    environment: utils.environment.name,
+    args: [webpackConfig, utils],
+  });
 
   if (utils.environment.config.tools?.webpack) {
     modifiedConfig = reduceConfigsWithContext({
@@ -105,6 +103,7 @@ export async function generateWebpackConfig({
     DefinePlugin,
     IgnorePlugin,
     ProvidePlugin,
+    SourceMapDevToolPlugin,
     HotModuleReplacementPlugin,
   } = webpack;
 
@@ -115,13 +114,14 @@ export async function generateWebpackConfig({
       DefinePlugin,
       IgnorePlugin,
       ProvidePlugin,
+      SourceMapDevToolPlugin,
       HotModuleReplacementPlugin,
     },
   });
 
   const chain = await modifyWebpackChain(context, chainUtils, bundlerChain);
 
-  let webpackConfig = helpers.chainToConfig(chain) as WebpackConfig;
+  let webpackConfig = chain.toConfig() as WebpackConfig;
 
   const configUtils = (await helpers.getConfigUtils(
     webpackConfig as Rspack.Configuration,

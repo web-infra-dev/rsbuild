@@ -93,7 +93,7 @@ Usually, Rsbuild only set the filename hash in the production mode (i.e., when `
 If you set the filename hash in the development mode, it may cause HMR to fail (especially for CSS files). This is because every time the file content changes, the hash value changes, preventing bundler from reading the latest file content.
 :::
 
-## Template Strings
+## Template strings
 
 In the value of `output.filename`, you can use template strings to dynamically generate file names.
 
@@ -113,7 +113,7 @@ Common template strings include:
 
 :::
 
-## Filename of Async Modules
+## Filename of async modules
 
 When you import a module via dynamic import, the module will be bundled into a single file, and its default naming rules are as follows:
 
@@ -124,7 +124,7 @@ When you import a module via dynamic import, the module will be bundled into a s
 const { add } = await import('./add.ts');
 ```
 
-If you want to specify a fixed name for the async module, you can use the [magic comments](https://rspack.dev/api/modules#magic-comments) provided by Rspack to achieve this, using `webpackChunkName ` to specify the module name:
+To specify a fixed name for the async module, use the [magic comments](https://rspack.dev/api/modules#magic-comments) provided by Rspack, using `webpackChunkName ` to specify the module name:
 
 ```js title="src/index.ts"
 const { add } = await import(
@@ -134,7 +134,7 @@ const { add } = await import(
 
 After specifying the module name as above, the generated file will be `dist/static/js/async/my-chunk-name.js`.
 
-## Using Function
+## Using function
 
 You can pass a function to `output.filename.js` or `output.filename.css`, allowing you to dynamically generate filenames based on file information:
 
@@ -166,12 +166,12 @@ export default {
 ```
 
 :::tip
-Except for `output.filename.js`, other types of files currently do not support using functions.
+Except for `output.filename.js` and `output.filename.css`, other types of files currently do not support using functions.
 :::
 
-## Query Hash
+## Query hash
 
-If you need to generate hash values on the URL query of assets, you can refer to:
+To generate hash values on the URL query of assets, refer to:
 
 ```js
 const isProd = process.env.NODE_ENV === 'production';

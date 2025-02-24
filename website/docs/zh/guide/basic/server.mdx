@@ -34,7 +34,7 @@ Rsbuild 的 Server 提供一套默认的路由约定，并允许用户通过配�
 
 ### 默认行为
 
-Rsbuild Server 会根据 [server.base](/config/server/base) 和 [source.entry](/config/source/entry) 配置生成对应的页面路由。
+Rsbuild server 会根据 [server.base](/config/server/base) 和 [source.entry](/config/source/entry) 配置生成对应的页面路由。
 
 当 entry 为 index 时，可通过 `/` 访问页面；当 entry 为 foo 时，可通过 `/foo` 访问该页面。
 
@@ -110,17 +110,17 @@ export default {
 };
 ```
 
-## Rspack Dev Server
+## Rspack dev server
 
-Rspack CLI 内置的开发服务器是 [@rspack/dev-server](https://www.npmjs.com/package/@rspack/dev-server)，Rsbuild 没有使用 `@rspack/dev-server`，而是自行实现了一个更轻量的版本。
+Rsbuild 内置了一个轻量级的开发服务器，这与 Rspack CLI 或 webpack CLI 内置的开发服务器是不同的，它们之间存在一些差异，配置项也有所不同。
 
 ### 对比
 
-Rsbuild 的开发服务器和 `@rspack/dev-server` 有以下区别：
+与 Rspack CLI 内置的 `@rspack/dev-server` 相比，Rsbuild 的开发服务器有以下区别：
 
 - **配置项**：Rsbuild 提供了更丰富的 server 配置项。
-- **日志格式**：Rspack CLI 日志格式与 Webpack CLI 基本一致，而 Rsbuild 的日志则更加清晰和易读。
-- **底层依赖**：`@rspack/dev-server` 基于 express 实现，三方依赖较多。Rsbuild 则采用 `connect` 等更轻量的库实现。
+- **日志格式**：Rspack CLI 日志格式与 webpack CLI 基本一致，而 Rsbuild 的日志则更加清晰和易读。
+- **底层依赖**：Rsbuild 基于 `connect` 等轻量级库实现，相较于 `@rspack/dev-server` 使用的 `express`，具有更少的依赖和更快的启动速度。
 
 ### 配置项
 
@@ -130,34 +130,82 @@ Rsbuild 不支持使用 Rspack 的 [devServer](https://rspack.dev/config/dev-ser
 
 以下是 Rspack CLI 的 `devServer` 配置对应的 Rsbuild 配置：
 
-| Rspack CLI                                                                                       | Rsbuild                                                          |
-| ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [devServer.client](https://rspack.dev/config/dev-server#devserverclient)                         | [dev.client](/config/dev/client)                                 |
-| [devServer.compress](https://rspack.dev/config/dev-server#devservercompress)                     | [server.compress](/config/server/compress)                       |
-| [devServer.headers](https://rspack.dev/config/dev-server#devserverheaders)                       | [server.headers](/config/server/headers)                         |
-| [devServer.historyApiFallback](https://rspack.dev/config/dev-server#devserverhistoryapifallback) | [server.historyApiFallback](/config/server/history-api-fallback) |
-| [devServer.host](https://rspack.dev/config/dev-server#devserverhost)                             | [server.host](/config/server/host)                               |
-| [devServer.hot](https://rspack.dev/config/dev-server#devserverhot)                               | [dev.hmr](/config/dev/hmr)                                       |
-| [devServer.liveReload](https://rspack.dev/config/dev-server#devserverlivereload)                 | [dev.liveReload](/config/dev/live-reload)                        |
-| [devServer.open](https://rspack.dev/config/dev-server#devserveropen)                             | [server.open](/config/server/open)                               |
-| [devServer.port](https://rspack.dev/config/dev-server#devserverport)                             | [server.port](/config/server/port)                               |
-| [devServer.proxy](https://rspack.dev/config/dev-server#devserverproxy)                           | [server.proxy](/config/server/proxy)                             |
-| [devServer.setupMiddlewares](https://rspack.dev/config/dev-server#devserversetupmiddlewares)     | [dev.setupMiddlewares](/config/dev/setup-middlewares)            |
-| [devServer.static](https://rspack.dev/config/dev-server#devserverstatic)                         | [server.publicDir](/config/server/public-dir)                    |
-| [devServer.watchFiles](https://rspack.dev/config/dev-server#devserverwatchfiles)                 | [dev.watchFiles](/config/dev/watch-files)                        |
+| Rspack CLI                                                                                         | Rsbuild                                                          |
+| -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [devServer.client](https://rspack.dev/config/dev-server#devserverclient)                           | [dev.client](/config/dev/client)                                 |
+| [devServer.compress](https://rspack.dev/config/dev-server#devservercompress)                       | [server.compress](/config/server/compress)                       |
+| [devServer.devMiddleware.writeToDisk](https://rspack.dev/config/dev-server#devserverdevmiddleware) | [dev.writeToDisk](/config/dev/write-to-disk)                     |
+| [devServer.headers](https://rspack.dev/config/dev-server#devserverheaders)                         | [server.headers](/config/server/headers)                         |
+| [devServer.historyApiFallback](https://rspack.dev/config/dev-server#devserverhistoryapifallback)   | [server.historyApiFallback](/config/server/history-api-fallback) |
+| [devServer.host](https://rspack.dev/config/dev-server#devserverhost)                               | [server.host](/config/server/host)                               |
+| [devServer.hot](https://rspack.dev/config/dev-server#devserverhot)                                 | [dev.hmr](/config/dev/hmr)                                       |
+| [devServer.liveReload](https://rspack.dev/config/dev-server#devserverlivereload)                   | [dev.liveReload](/config/dev/live-reload)                        |
+| [devServer.open](https://rspack.dev/config/dev-server#devserveropen)                               | [server.open](/config/server/open)                               |
+| [devServer.port](https://rspack.dev/config/dev-server#devserverport)                               | [server.port](/config/server/port)                               |
+| [devServer.proxy](https://rspack.dev/config/dev-server#devserverproxy)                             | [server.proxy](/config/server/proxy)                             |
+| [devServer.setupMiddlewares](https://rspack.dev/config/dev-server#devserversetupmiddlewares)       | [dev.setupMiddlewares](/config/dev/setup-middlewares)            |
+| [devServer.static](https://rspack.dev/config/dev-server#devserverstatic)                           | [server.publicDir](/config/server/public-dir)                    |
+| [devServer.watchFiles](https://rspack.dev/config/dev-server#devserverwatchfiles)                   | [dev.watchFiles](/config/dev/watch-files)                        |
 
 > 更多配置请参考 [Config 总览](/config/index)。
 
-## 扩展中间件
+## 中间件
 
-Rsbuild server 未使用任何 Node.js 框架，Rsbuild 中间件提供的 req 和 res 均为 Node.js 原生对象。
-这意味着，当你从其他服务端框架迁移时（如 Express），原本的中间件不一定能直接在 Rsbuild 中使用，例如，无法在 Rsbuild 中间件中访问 Express 所提供的 `req.params`、`req.path`、`req.search`、`req.query` 等属性。
+Rsbuild 的中间件实现基于 [connect](https://github.com/senchalabs/connect)，一个轻量级的 HTTP 服务器框架，并使用 Node.js 标准的 `request` 和 `response` 对象来处理 HTTP 交互。
 
-如果你需要在 Rsbuild 中使用原有的中间件，可以采取以下方式，将服务端应用作为中间件传入：
+### 注册中间件
+
+Rsbuild 提供了三种方式来注册中间件：
+
+1. 通过 Rsbuild 的 [dev.setupMiddlewares](/config/dev/setup-middlewares) 配置项。
 
 ```ts title="rsbuild.config.ts"
-import expressMiddleware from 'my-express-middleware';
+export default {
+  dev: {
+    setupMiddlewares: [
+      (middlewares, server) => {
+        middlewares.push((req, res, next) => {
+          next();
+        });
+      },
+    ],
+  },
+};
+```
+
+2. 在 Rsbuild 插件中，可以通过 [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) 钩子来注册中间件。
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.onBeforeStartDevServer(({ server }) => {
+      server.middlewares.use((req, res, next) => {
+        next();
+      });
+    });
+  },
+});
+```
+
+3. 在使用 Rsbuild 的 JavaScript API 时，可以通过 [rsbuild.createDevServer](/api/javascript-api/instance#rsbuildcreatedevserver) 方法创建 dev server 实例，并使用 `use` 方法注册中间件。
+
+```ts
+const server = await rsbuild.createDevServer();
+
+server.middlewares.use((req, res, next) => {
+  next();
+});
+```
+
+### 集成第三方服务端框架
+
+当你从其他服务端框架（如 Express）迁移时，原有的中间件可能无法直接在 Rsbuild 中使用。比如，在 Rsbuild 的中间件中无法访问 Express 特有的 `req.params`、`req.path`、`req.search`、`req.query` 等属性。
+
+如果你需要在 Rsbuild 中复用已有的中间件，可以通过以下方式，将服务端应用整体作为中间件引入：
+
+```ts title="rsbuild.config.ts"
 import express from 'express';
+import expressMiddleware from 'my-express-middleware';
 
 // 初始化 Express app
 const app = express();

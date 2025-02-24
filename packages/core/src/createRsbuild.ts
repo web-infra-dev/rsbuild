@@ -44,6 +44,7 @@ import { rspackProvider } from './provider/provider';
 import { startProdServer } from './server/prodServer';
 import type {
   Build,
+  CreateCompiler,
   CreateDevServer,
   CreateRsbuildOptions,
   Falsy,
@@ -74,7 +75,7 @@ async function applyDefaultPlugins(
     pluginCleanOutput(),
     pluginAsset(),
     pluginHtml((environment: string) => async (...args) => {
-      const result = await context.hooks.modifyHTMLTags.callInEnvironment({
+      const result = await context.hooks.modifyHTMLTags.callChain({
         environment,
         args,
       });
@@ -106,6 +107,9 @@ async function applyDefaultPlugins(
   ]);
 }
 
+/**
+ * Create an Rsbuild instance.
+ */
 export async function createRsbuild(
   options: CreateRsbuildOptions = {},
 ): Promise<RsbuildInstance> {
@@ -144,6 +148,8 @@ export async function createRsbuild(
   });
 
   const preview = async (options: PreviewOptions = {}) => {
+    context.command = 'preview';
+
     if (!getNodeEnv()) {
       setNodeEnv('production');
     }
@@ -155,7 +161,7 @@ export async function createRsbuild(
     if (checkDistDir) {
       if (!existsSync(distPath)) {
         throw new Error(
-          `The output directory ${color.yellow(
+          `[rsbuild:preview] The output directory ${color.yellow(
             distPath,
           )} does not exist, please build the project before previewing.`,
         );
@@ -163,7 +169,7 @@ export async function createRsbuild(
 
       if (isEmptyDir(distPath)) {
         throw new Error(
-          `The output directory ${color.yellow(
+          `[rsbuild:preview] The output directory ${color.yellow(
             distPath,
           )} is empty, please build the project before previewing.`,
         );
@@ -173,31 +179,55 @@ export async function createRsbuild(
     return startProdServer(context, config, options);
   };
 
-  const build: Build = (...args) => {
+  const build: Build = async (...args) => {
+    context.command = 'build';
+
     if (!getNodeEnv()) {
       setNodeEnv('production');
     }
-    return providerInstance.build(...args);
+
+    const buildInstance = await providerInstance.build(...args);
+    return {
+      ...buildInstance,
+      close: async () => {
+        await context.hooks.onCloseBuild.callBatch();
+        await buildInstance.close();
+      },
+    };
   };
 
   const startDevServer: StartDevServer = (...args) => {
+    context.command = 'dev';
+
     if (!getNodeEnv()) {
       setNodeEnv('development');
     }
+
     return providerInstance.startDevServer(...args);
   };
 
   const createDevServer: CreateDevServer = (...args) => {
+    context.command = 'dev';
+
     if (!getNodeEnv()) {
       setNodeEnv('development');
     }
+
     return providerInstance.createDevServer(...args);
+  };
+
+  const createCompiler: CreateCompiler = (...args) => {
+    if (!context.command) {
+      context.command = getNodeEnv() === 'development' ? 'dev' : 'build';
+    }
+    return providerInstance.createCompiler(...args);
   };
 
   const rsbuild = {
     build,
     preview,
     startDevServer,
+    createCompiler,
     createDevServer,
     ...pick(pluginManager, [
       'addPlugins',
@@ -207,6 +237,7 @@ export async function createRsbuild(
     ]),
     ...pick(globalPluginAPI, [
       'context',
+      'onCloseBuild',
       'onBeforeBuild',
       'onBeforeCreateCompiler',
       'onBeforeStartDevServer',
@@ -221,11 +252,7 @@ export async function createRsbuild(
       'getRsbuildConfig',
       'getNormalizedConfig',
     ]),
-    ...pick(providerInstance, [
-      'initConfigs',
-      'inspectConfig',
-      'createCompiler',
-    ]),
+    ...pick(providerInstance, ['initConfigs', 'inspectConfig']),
   };
 
   const getFlattenedPlugins = async (pluginOptions: RsbuildPlugins) => {
@@ -248,15 +275,22 @@ export async function createRsbuild(
   if (rsbuildConfig.environments) {
     await Promise.all(
       Object.entries(rsbuildConfig.environments).map(async ([name, config]) => {
-        const isEnvironmentEnabled =
-          !rsbuildOptions.environment ||
-          rsbuildOptions.environment.includes(name);
-        if (config.plugins && isEnvironmentEnabled) {
-          const plugins = await getFlattenedPlugins(config.plugins);
-          rsbuild.addPlugins(plugins, {
-            environment: name,
-          });
+        if (!config.plugins) {
+          return;
         }
+
+        // If the current environment is not specified, skip it
+        if (
+          context.specifiedEnvironments &&
+          !context.specifiedEnvironments.includes(name)
+        ) {
+          return;
+        }
+
+        const plugins = await getFlattenedPlugins(config.plugins);
+        rsbuild.addPlugins(plugins, {
+          environment: name,
+        });
       }),
     );
   }

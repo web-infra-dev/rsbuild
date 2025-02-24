@@ -1,1 +1,1 @@
-["optimize-bundle", "build-performance", "split-chunk", "inline-assets"]
+["code-splitting", "optimize-bundle", "build-performance", "inline-assets"]

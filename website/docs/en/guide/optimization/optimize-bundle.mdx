@@ -1,4 +1,4 @@
-# Bundle Size Optimization
+# Bundle size optimization
 
 Bundle size optimization is an important part in production build because it directly affects the user experience of online users. In this document, we will introduce some common bundle size optimization methods in Rsbuild.
 
@@ -17,6 +17,8 @@ For more details, see [Rsdoctor - Duplicate Dependency Problem](https://rsdoctor
 ### Eliminate duplicate dependencies
 
 We can eliminate duplicate dependencies with the package manager.
+
+- Rsbuild provides the [resolve.dedupe](/config/resolve/dedupe) config, which allows you to force the specified packages to be resolved from the project root directory, thereby removing duplicate packages.
 
 - If you are using `pnpm >= 7.26.0`, you can use the [pnpm dedupe](https://pnpm.io/cli/dedupe) command to upgrade and eliminate duplicate dependencies.
 
@@ -40,7 +42,7 @@ npx yarn-deduplicate && yarn
 
 It is recommended to using lightweight libraries in your project, such as replacing [moment](https://momentjs.com/) with [day.js](https://day.js.org/).
 
-If you want to find out the large libraries in the project, you can add the `BUNDLE_ANALYZE=true` environment variable when building:
+To find out the large libraries in the project, add the `BUNDLE_ANALYZE=true` environment variable when building:
 
 ```bash
 BUNDLE_ANALYZE=true pnpm build
@@ -48,7 +50,7 @@ BUNDLE_ANALYZE=true pnpm build
 
 See the [performance.bundleAnalyze](/config/performance/bundle-analyze) configuration for details.
 
-## Adjust Browserslist
+## Adjust browserslist
 
 The Rsbuild will compile the code according to the project's Browserslist config, and inject some Polyfills. If the project does not need to be compatible with legacy browsers, you can adjust the Browserslist and drop some legacy browsers, thereby reducing the compilation overhead on syntax and polyfill.
 
@@ -86,7 +88,7 @@ export default {
 Please read the [Browser Compatibility](/guide/advanced/browser-compatibility) chapter to know more about the usage of Browserslist.
 :::
 
-## Image Compression
+## Image compression
 
 In general front-end projects, the size of image often accounts for a large proportion of the total bundle size of the project.So if the image size can be reduced as much as possible, it will have a significant optimization effect on the project bundle size. You can enable image compression by registering a plugin in the Rsbuild:
 
@@ -100,11 +102,11 @@ export default {
 
 See details in [@rsbuild/plugin-image-compress](https://github.com/rspack-contrib/rsbuild-plugin-image-compress).
 
-## Split Chunk
+## Split chunk
 
 A great chunk splitting strategy is very important to improve the loading performance of the application. It can make full use of the browser's caching mechanism to reduce the number of requests and improve the loading speed of the application.
 
-Several [chunk splitting strategies](/guide/optimization/split-chunk) are built into Rsbuild. These should meet the needs of most applications. You can also customize the chunk splitting config to suit your own usage scenario.
+Several [chunk splitting strategies](/guide/optimization/code-splitting) are built into Rsbuild. These should meet the needs of most applications. You can also customize the chunk splitting config to suit your own usage scenario.
 
 For example, split the `axios` library under node_modules into `axios.js`:
 

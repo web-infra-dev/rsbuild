@@ -4,7 +4,7 @@ import { pluginSass } from '@rsbuild/plugin-sass';
 
 export default {
   plugins: [pluginLess(), pluginSass()],
-  source: {
+  resolve: {
     alias: {
       '@common': path.resolve(__dirname, 'src/common'),
     },

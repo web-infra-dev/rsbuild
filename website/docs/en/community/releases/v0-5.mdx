@@ -38,7 +38,7 @@ In a real large-scale web application, we have integrated the Rsbuild Lightning 
 - CSS compilation time was reduced from 8.4s to 0.12s, a 70x improvement.
 - The overall build time was reduced from 33.1s to 25.4s, a 30% increase.
 
-## 🌟 Support for Custom Server
+## 🌟 Support for custom server
 
 Rsbuild now supports replacing the dev server with a custom server that reuses Rsbuild's page preview, routing, and module hot update features. This makes it easier to integrate Rsbuild with other Node.js frameworks.
 
@@ -50,7 +50,13 @@ import { createRsbuild } from '@rsbuild/core';
 
 async function startCustomServer() {
   const app = express();
-  const rsbuild = await createRsbuild();
+  const rsbuild = await createRsbuild({
+    rsbuildConfig: {
+      server: {
+        middlewareMode: true,
+      },
+    },
+  });
   const { port, middlewares } = await rsbuild.createDevServer();
 
   app.use(middlewares);
@@ -60,7 +66,7 @@ async function startCustomServer() {
 
 For more details, please refer to [Rsbuild - createDevServer](/api/javascript-api/instance#rsbuildcreatedevserver).
 
-## 🍭 Refactoring SVGR Plugin
+## 🍭 Refactoring SVGR plugin
 
 In versions prior to 0.5.0, the default usage of the SVGR plugin was the same as create-react-app, allowing SVGs to be used via mixed import:
 
@@ -94,7 +100,7 @@ pluginSvgr({
 });
 ```
 
-## 📍 Custom Minify Options
+## 📍 Custom minify options
 
 The `output.disableMinimize` option has been renamed to [output.minify](/config/output/minify), and it allows customizing JS and HTML minification options.
 

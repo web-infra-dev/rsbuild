@@ -1,4 +1,4 @@
-# Sass Plugin
+# Sass plugin
 
 import { SourceCode } from 'rspress/theme';
 
@@ -6,9 +6,9 @@ import { SourceCode } from 'rspress/theme';
 
 Use [Sass](https://sass-lang.com/) as the CSS preprocessor, implemented based on [sass-loader](https://github.com/webpack-contrib/sass-loader).
 
-## Quick Start
+## Quick start
 
-### Install Plugin
+### Install plugin
 
 You can install the plugin using the following command:
 
@@ -23,7 +23,7 @@ import { PackageManagerTabs } from '@theme';
 
 :::
 
-### Register Plugin
+### Register plugin
 
 You can register the plugin in the `rsbuild.config.ts` file:
 
@@ -39,7 +39,7 @@ After registering the plugin, you can import `*.scss`, `*.sass`, `*.module.scss`
 
 ## Options
 
-If you need to customize the compilation behavior of Sass, you can use the following configs.
+To customize the compilation behavior of Sass, use the following options.
 
 ### sassLoaderOptions
 
@@ -55,7 +55,7 @@ const defaultOptions = {
   sourceMap: rsbuildConfig.output.sourceMap.css,
   sassOptions: {
     quietDeps: true,
-    silenceDeprecations: api === 'legacy' ? ['legacy-js-api'] : undefined,
+    silenceDeprecations: ['legacy-js-api', 'import'],
   },
 };
 ```
@@ -115,15 +115,33 @@ pluginSass({
 });
 ```
 
+### rewriteUrls
+
+- **Type:** `boolean`
+- **Default:** `true`
+- **Version:** `>= 1.2.0`
+
+Whether to use [resolve-url-loader](https://github.com/bholloway/resolve-url-loader/tree/v5/packages/resolve-url-loader) to rewrite URLs.
+
+When enabled, `resolve-url-loader` allows you to write relative URLs in your Sass files that are correctly resolved from the current Sass file's location, rather than being relative to the Sass entry file (e.g. `main.scss`).
+
+If you set this option to `false`, the build performance will be improved, but Rsbuild will use the native URL resolution of Sass, which means all URLs must be relative to the Sass entry file.
+
+```ts
+pluginSass({
+  rewriteUrls: false,
+});
+```
+
 ## Practices
 
-### Modify Sass Implementation
+### Modify Sass implementation
 
 Sass provides several implementations, including [sass](https://www.npmjs.com/package/sass), [sass-embedded](https://www.npmjs.com/package/sass-embedded), and [node-sass](https://www.npmjs.com/package/node-sass).
 
 Rsbuild uses the latest `sass-embedded` implementation by default. `sass-embedded` is a JavaScript wrapper around the native Dart Sass executable, providing a consistent API and optimal performance.
 
-If you need to use a different Sass implementation instead of the built-in `sass-embedded` included in Rsbuild, you can install the preferred Sass implementation in your project and specify it using the `sass-loader`'s [implementation](https://github.com/webpack-contrib/sass-loader?tab=readme-ov-file#implementation) option.
+To use a different Sass implementation instead of the built-in `sass-embedded` included in Rsbuild, install the preferred Sass implementation in your project and specify it using the `sass-loader`'s [implementation](https://github.com/webpack-contrib/sass-loader?tab=readme-ov-file#implementation) option.
 
 ```ts
 pluginSass({
@@ -153,7 +171,7 @@ pluginSass({
 Sass's `legacy` API has been deprecated and will be removed in Sass 2.0. It is recommended to migrate to the `modern-compiler` API. For more details, see [Sass - Legacy JS API](https://sass-lang.com/documentation/breaking-changes/legacy-js-api/).
 :::
 
-### Ignore Sass Deprecation Warnings
+### Ignore Sass deprecation warnings
 
 Sass uses warning logs to notify you of deprecated usages that will be removed in future major releases of Sass. It is recommended to make changes as suggested by the logs. If you do not want to see these logs, you can ignore these warnings by using the [silenceDeprecations](https://sass-lang.com/documentation/js-api/interfaces/stringoptions/#silenceDeprecations) option in Sass.
 
@@ -167,7 +185,7 @@ More info and automated migrator: https://sass-lang.com/d/import
  0 | @import './b.scss';
 ```
 
-You can suppress the `@import` warning with the following configuration:
+`@rsbuild/plugin-sass` adds the following configuration by default to silence the `@import` warning, if you need to silence other deprecated warnings, you can use the same method.
 
 ```ts
 pluginSass({

@@ -2,7 +2,7 @@
 
 This section introduces how to migrate a project using webpack to Rsbuild.
 
-## Installing Dependencies
+## Installing dependencies
 
 First, you need to replace the npm dependencies of webpack with Rsbuild's dependencies.
 
@@ -31,7 +31,7 @@ Next, you need to update the npm scripts in your package.json to use Rsbuild's C
 }
 ```
 
-## Create Configuration File
+## Create configuration file
 
 Create a Rsbuild configuration file `rsbuild.config.ts` in the same directory as package.json, and add the following content:
 
@@ -43,7 +43,9 @@ export default defineConfig({
 });
 ```
 
-## Configuration Migration
+> See [Configure Rsbuild](/guide/basic/configure-rsbuild) for more.
+
+## Configuration migration
 
 In a webpack project, there might be some complex `webpack.config.js` configuration files.
 
@@ -65,7 +67,9 @@ export default {
 
 - Use encapsulated configs in Rsbuild, for example, options for css-loader can be set through [tools.cssLoader](/config/tools/css-loader).
 
-### Build Entry
+> See [Configure Rspack](/guide/basic/configure-rspack) for more.
+
+### Build entry
 
 webpack uses the `entry` field to set the build entry. In Rsbuild, you can use [source.entry](/config/source/entry) to set it.
 
@@ -80,7 +84,7 @@ export default {
 };
 ```
 
-### Cleaning Up Config
+### Cleaning up config
 
 Since Rsbuild has built-in some common loaders and plugins, you can remove the following dependencies, which will significantly improve the dependency installation speed of the project:
 
@@ -101,7 +105,7 @@ Since Rsbuild has built-in some common loaders and plugins, you can remove the f
 The above only lists some of the common dependencies that can be removed. In actual webpack projects, there may be many other dependencies, please handle them as appropriate.
 :::
 
-### Using Plugins
+### Using plugins
 
 Rsbuild offers a rich set of plugins that provide out-of-the-box support for common scenarios. You can refer to the [Plugin List](/plugins/list/index) documentation to learn about these plugins.
 
@@ -146,17 +150,68 @@ Most of the common webpack loaders and plugins can still be used in Rsbuild, but
 | [eslint-webpack-plugin](https://www.npmjs.com/package/eslint-webpack-plugin)                   | [ESLint Plugin](https://github.com/rspack-contrib/rsbuild-plugin-eslint)                                        |
 | [babel-plugin-styled-components](https://www.npmjs.com/package/babel-plugin-styled-components) | [Styled Components Plugin](https://github.com/rsbuild-contrib/rsbuild-plugin-styled-components)                 |
 
-### Configure Dev Server
+### Configure dev server
 
 Rsbuild does not support the use of Rspack's [devServer](https://rspack.dev/config/dev-server) config. Please refer to [Rspack Dev Server](/guide/basic/server#rspack-dev-server) for replacement.
 
-## Validating Results
+## Babel migration
+
+Rsbuild uses SWC by default, so most commonly used Babel plugins are no longer required. Here are some common Babel plugins migration examples.
+
+### @babel/preset-env
+
+`@babel/preset-env` is no longer required, Rsbuild will automatically downgrade code based on the [browserslist](/guide/advanced/browserslist) configuration.
+
+Note that Rsbuild does not inject polyfill by default. You can refer to [Polyfill mode](/guide/advanced/browser-compatibility#polyfill-mode) for how to inject.
+
+### @babel/preset-typescript
+
+`@babel/preset-typescript` is no longer required, as Rsbuild enables SWC's TypeScript transformation by default.
+
+### @babel/preset-react
+
+`@babel/preset-react` is no longer required, replace it with [@rsbuild/plugin-react](/plugins/list/plugin-react).
+
+### @babel/plugin-transform-runtime
+
+`@babel/plugin-transform-runtime` is no longer required, Rsbuild has built-in equivalent `@swc/helpers` as runtime helpers.
+
+### babel-plugin-import
+
+`babel-plugin-import` can be replaced with the [source.transformImport](/config/source/transform-import) configuration in Rsbuild.
+
+- Babel configuration:
+
+```js title="babel.config.js"
+module.exports = {
+  plugins: [
+    [
+      'import',
+      { libraryName: 'some-library', libraryDirectory: 'es', style: true },
+    ],
+  ],
+};
+```
+
+- Rsbuild configuration:
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    transformImport: [
+      { libraryName: 'some-library', libraryDirectory: 'es', style: true },
+    ],
+  },
+};
+```
+
+## Validating results
 
 After completing the above steps, you have completed the basic migration from webpack to Rsbuild. You can now run the `npm run dev` command to try starting the dev server.
 
 If you encounter any issues during the build process, please debug according to the error log, or check the webpack configuration to see if there are any necessary configurations that have not been migrated to Rsbuild.
 
-## Contents Supplement
+## Contents supplement
 
 The current document only covers part of the migration process. If you find suitable content to add, feel free to contribute to the documentation via pull request 🤝.
 

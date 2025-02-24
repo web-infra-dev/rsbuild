@@ -42,3 +42,23 @@ rspackOnlyTest('should load env files correctly', () => {
   env.cleanup();
   expect(process.env.REACT_NAME).toEqual(undefined);
 });
+
+rspackOnlyTest(
+  'should not modify process.env if processEnv is provided',
+  () => {
+    delete process.env.REACT_NAME;
+
+    const targetEnv: Record<string, string> = {};
+    const env = loadEnv({
+      cwd: __dirname,
+      processEnv: targetEnv,
+    });
+
+    expect(process.env.REACT_NAME).toEqual(undefined);
+    expect(targetEnv.REACT_NAME).toEqual('react');
+
+    env.cleanup();
+    expect(process.env.REACT_NAME).toEqual(undefined);
+    expect(targetEnv.REACT_NAME).toEqual(undefined);
+  },
+);

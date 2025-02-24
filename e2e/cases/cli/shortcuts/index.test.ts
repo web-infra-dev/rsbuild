@@ -1,9 +1,9 @@
 import { exec } from 'node:child_process';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
-import { expect, test } from '@playwright/test';
-import { waitFor } from 'scripts';
+import { rspackOnlyTest, waitFor } from '@e2e/helper';
+import { expect } from '@playwright/test';
 
-test('should display shortcuts as expected in dev', async () => {
+rspackOnlyTest('should display shortcuts as expected in dev', async () => {
   const devProcess = exec('node ./dev.mjs', {
     cwd: __dirname,
   });
@@ -41,7 +41,7 @@ test('should display shortcuts as expected in dev', async () => {
   logs = [];
   devProcess.stdin?.write('r\n');
   expect(
-    await waitFor(() => logs.some((log) => log.includes('Restarting server'))),
+    await waitFor(() => logs.some((log) => log.includes('restarting server'))),
   ).toBeTruthy();
   expect(
     await waitFor(() =>
@@ -52,7 +52,7 @@ test('should display shortcuts as expected in dev', async () => {
   devProcess.kill();
 });
 
-test('should display shortcuts as expected in preview', async () => {
+rspackOnlyTest('should display shortcuts as expected in preview', async () => {
   const devProcess = exec('node ./preview.mjs', {
     cwd: __dirname,
   });
@@ -89,7 +89,7 @@ test('should display shortcuts as expected in preview', async () => {
   devProcess.kill();
 });
 
-test('should allow to custom shortcuts in dev', async () => {
+rspackOnlyTest('should allow to custom shortcuts in dev', async () => {
   const devProcess = exec('node ./devCustom.mjs', {
     cwd: __dirname,
   });
@@ -116,7 +116,7 @@ test('should allow to custom shortcuts in dev', async () => {
   devProcess.kill();
 });
 
-test('should allow to custom shortcuts in preview', async () => {
+rspackOnlyTest('should allow to custom shortcuts in preview', async () => {
   const devProcess = exec('node ./previewCustom.mjs', {
     cwd: __dirname,
   });

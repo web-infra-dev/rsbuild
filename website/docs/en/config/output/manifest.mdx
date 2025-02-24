@@ -3,13 +3,53 @@
 - **Type:** `string | boolean`
 - **Default:** `false`
 
-Whether to generate a manifest file that contains information of all assets, and the mapping relationship between [entry module](/config/source/entry) and assets.
+Configure how to generate the manifest file.
 
-When `output.manifest` is set to `true`, Rsbuild will generate a `manifest.json` file after building. When the value of `output.manifest` is a string, it will be used as the manifest file name or path.
+- `true`: Generate a manifest file named `manifest.json` in the output directory.
+- `false`: Do not generate the manifest file.
+- `string`: Generate a manifest file with the specified filename or path.
+- `object`: Generate a manifest file with the specified options.
 
-## Output
+The manifest file contains the information of all assets, and the mapping relationship between [entry module](/config/source/entry) and assets.
 
-The default output file structure of manifest is:
+## Basic example
+
+Enable the asset manifest:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    manifest: true,
+  },
+};
+```
+
+After building, Rsbuild will generate a `dist/manifest.json` file:
+
+```json title="dist/manifest.json"
+{
+  "allFiles": [
+    "/static/css/index.[hash].css",
+    "/static/js/index.[hash].js",
+    "/static/images/logo.[hash].png",
+    "/index.html"
+  ],
+  "entries": {
+    "index": {
+      "initial": {
+        "js": ["/static/js/index.[hash].js"],
+        "css": ["/static/css/index.[hash].css"]
+      },
+      "assets": ["/static/images/logo.[hash].png"],
+      "html": ["/index.html"]
+    }
+  }
+}
+```
+
+## Manifest structure
+
+By default, the manifest file will be output in the following structure:
 
 ```ts
 type FilePath = string;
@@ -37,49 +77,164 @@ type ManifestList = {
 };
 ```
 
-## Basic Example
+## Options
 
-Enable asset manifest:
+`output.manifest` can be an object, here are all the options:
 
-```js
+### filename
+
+- **Type:** `string`
+- **Default:** `'manifest.json'`
+
+Specify the name or path of the manifest file.
+
+`filename` can be a path relative to the `dist` directory, for example, output to `dist/static/my-manifest.json`:
+
+```ts title="rsbuild.config.ts"
 export default {
   output: {
-    manifest: true,
+    manifest: {
+      filename: './static/my-manifest.json',
+    },
   },
 };
 ```
 
-After building, there will be a `dist/manifest.json` file:
+This can be simplified as:
 
-```json
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    manifest: './static/my-manifest.json',
+  },
+};
+```
+
+### generate
+
+- **Type:**
+
+```ts
+type ManifestGenerate = (params: {
+  files: FileDescriptor[];
+  manifestData: ManifestData;
+}) => Record<string, unknown>;
+```
+
+- **Default:** `undefined`
+- **Version:** `>= 1.2.0`
+
+With the `manifest.generate` function, you can customize the content of the manifest file. The function receives the following parameters:
+
+- `files`: The description information of all output files.
+- `manifestData`: The default manifest data.
+
+For example, only keep the `allAssets` field:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    manifest: {
+      generate: ({ manifestData }) => {
+        return {
+          allAssets: manifestData.allFiles,
+        };
+      },
+    },
+  },
+};
+```
+
+You can also customize the content of the manifest file based on `files`. The `files` structure is as follows:
+
+```ts
+interface FileDescriptor {
+  name: string;
+  path: string;
+  isAsset: boolean;
+  isChunk: boolean;
+  isInitial: boolean;
+  isModuleAsset: boolean;
+  chunk?: import('@rspack/core').Chunk;
+}
+```
+
+Here is an example of `files`:
+
+```ts
+const files = [
+  {
+    name: 'index.js',
+    path: '/static/js/index.[hash].js',
+    isAsset: false,
+    isChunk: true,
+    isInitial: true,
+    isModuleAsset: false,
+    chunk: {
+      // Chunk info...
+    },
+  },
+  {
+    name: 'index.html',
+    path: '/index.html',
+    isAsset: true,
+    isChunk: false,
+    isInitial: false,
+    isModuleAsset: false,
+  },
+];
+```
+
+### filter
+
+- **Type:**
+
+```ts
+type ManifestFilter = (file: FileDescriptor) => boolean;
+```
+
+- **Default:** `file => !file.name.endsWith('.LICENSE.txt')`
+- **Version:** `>= 1.2.0`
+
+Allows you to filter the files included in the manifest. The function receives a `file` parameter and returns `true` to keep the file, or `false` to exclude it.
+
+By default, `*.LICENSE.txt` files are excluded from the manifest, as these license files are only used to declare open source licenses and are not used at runtime.
+
+For example, to only keep `*.js` files:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    manifest: {
+      filter: (file) => file.name.endsWith('.js'),
+    },
+  },
+};
+```
+
+The generated manifest file will only include `*.js` files:
+
+```json title="dist/manifest.json"
 {
-  "allFiles": [
-    "/static/css/index.a11cfb11.css",
-    "/static/js/index.c586cd5e.js",
-    "/index.html",
-    "/static/js/index.c586cd5e.js.LICENSE.txt"
-  ],
+  "allFiles": ["/static/js/index.[hash].js"],
   "entries": {
     "index": {
       "initial": {
-        "js": ["/static/js/index.c586cd5e.js"],
-        "css": ["/static/css/index.a11cfb11.css"]
-      },
-      "assets": ["/static/js/index.c586cd5e.js.LICENSE.txt"],
-      "html": ["/index.html"]
+        "js": ["/static/js/index.[hash].js"]
+      }
     }
   }
 }
 ```
 
-## Set Path
+Or include all files:
 
-`output.manifest` can be a path relative to the `dist` directory, for example, output to `dist/static/my-manifest.json`:
-
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
-    manifest: './static/my-manifest.json',
+    manifest: {
+      filter: () => true,
+    },
   },
 };
 ```
