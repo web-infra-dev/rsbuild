@@ -6,6 +6,6 @@
     "polka": "^0.5.2"
   },
   "devDependencies": {
-    "@types/polka": "^0.5.2"
+    "@types/polka": "^0.5.7"
   }
 }
