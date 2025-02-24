@@ -41,7 +41,7 @@ rspackOnlyTest('should display shortcuts as expected in dev', async () => {
   logs = [];
   devProcess.stdin?.write('r\n');
   expect(
-    await waitFor(() => logs.some((log) => log.includes('Restarting server'))),
+    await waitFor(() => logs.some((log) => log.includes('restarting server'))),
   ).toBeTruthy();
   expect(
     await waitFor(() =>

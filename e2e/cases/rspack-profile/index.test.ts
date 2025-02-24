@@ -31,13 +31,13 @@ rspackOnlyTest(
     devProcess.stdin?.write('q\n');
     expect(
       await waitFor(() =>
-        logs.some((log) => log.includes('Saved Rspack profile file to')),
+        logs.some((log) => log.includes('saved Rspack profile file to')),
       ),
     ).toBeTruthy();
 
     const profileDir = logs
-      .find((log) => log.includes('Saved Rspack profile file to'))
-      ?.split('Saved Rspack profile file to')[1]
+      .find((log) => log.includes('saved Rspack profile file to'))
+      ?.split('saved Rspack profile file to')[1]
       ?.trim();
 
     expect(fs.existsSync(path.join(profileDir!, 'trace.json'))).toBeTruthy();
@@ -73,13 +73,13 @@ rspackOnlyTest(
 
     expect(
       await waitFor(() =>
-        logs.some((log) => log.includes('Saved Rspack profile file to')),
+        logs.some((log) => log.includes('saved Rspack profile file to')),
       ),
     ).toBeTruthy();
 
     const profileDir = logs
-      .find((log) => log.includes('Saved Rspack profile file to'))
-      ?.split('Saved Rspack profile file to')[1]
+      .find((log) => log.includes('saved Rspack profile file to'))
+      ?.split('saved Rspack profile file to')[1]
       ?.trim();
 
     expect(fs.existsSync(path.join(profileDir!, 'trace.json'))).toBeTruthy();

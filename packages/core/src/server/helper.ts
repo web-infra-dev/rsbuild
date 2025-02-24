@@ -310,7 +310,7 @@ export const getServerConfig = async ({
   const https = Boolean(config.server.https) || false;
   const portTip =
     port !== originalPort
-      ? `Port ${originalPort} is in use, ${color.yellow(`using port ${port}.`)}`
+      ? `port ${originalPort} is in use, ${color.yellow(`using port ${port}.`)}`
       : undefined;
 
   return {

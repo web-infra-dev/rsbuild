@@ -641,7 +641,7 @@ export async function outputInspectConfigFiles({
 
         return {
           path: outputFilePath,
-          label: 'Rsbuild Config',
+          label: 'Rsbuild config',
           content,
         };
       }
@@ -650,7 +650,7 @@ export async function outputInspectConfigFiles({
 
       return {
         path: outputFilePath,
-        label: `Rsbuild Config (${name})`,
+        label: `Rsbuild config (${name})`,
         content,
       };
     }),
@@ -689,7 +689,7 @@ export async function outputInspectConfigFiles({
     .join('\n');
 
   logger.success(
-    `Inspect config succeed, open following files to view the content: \n\n${fileInfos}\n`,
+    `config inspection completed, generated files: \n\n${fileInfos}\n`,
   );
 }
 

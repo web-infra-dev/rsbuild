@@ -36,7 +36,7 @@ test('should generate config files when build (with DEBUG)', async () => {
   expect(fs.existsSync(getBundlerConfig(distRoot))).toBeTruthy();
 
   expect(
-    logs.some((log) => log.includes('Inspect config succeed')),
+    logs.some((log) => log.includes('config inspection completed')),
   ).toBeTruthy();
 
   expect(logs.some((log) => log.includes('create compiler'))).toBeTruthy();
@@ -74,7 +74,7 @@ test('should generate config files when dev (with DEBUG)', async ({ page }) => {
   expect(fs.existsSync(getBundlerConfig(distRoot))).toBeTruthy();
 
   expect(
-    logs.some((log) => log.includes('Inspect config succeed')),
+    logs.some((log) => log.includes('config inspection completed')),
   ).toBeTruthy();
 
   expect(logs.some((log) => log.includes('create compiler'))).toBeTruthy();

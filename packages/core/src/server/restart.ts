@@ -36,10 +36,10 @@ const beforeRestart = async ({
   if (filePath) {
     const filename = path.basename(filePath);
     logger.info(
-      `Restart ${id} because ${color.yellow(filename)} is changed.\n`,
+      `restarting ${id} because ${color.yellow(filename)} has changed\n`,
     );
   } else {
-    logger.info(`Restarting ${id}...\n`);
+    logger.info(`restarting ${id}...\n`);
   }
 
   for (const cleaner of cleaners) {
