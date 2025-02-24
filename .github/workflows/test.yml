@@ -57,5 +57,9 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         name: profile
+        if: always()
         with:
-          path: e2e/cases/environments/vue-react-plugins/dist/rspack-profile-*/*.json
+          path: |
+            e2e/cases/environments/vue-react-plugins/dist/rspack-profile-*/*.json
+            e2e/report.json
+
