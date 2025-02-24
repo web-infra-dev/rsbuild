@@ -16,7 +16,7 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        os: [windows-latest]
+        os: [ubuntu-latest, windows-latest]
 
     steps:
       - name: Checkout
