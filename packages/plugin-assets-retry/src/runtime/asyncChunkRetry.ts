@@ -344,19 +344,30 @@ function ensureChunk(chunkId: string): Promise<unknown> {
       config.onRetry(context);
     }
 
-    const nextPromise = ensureChunk.apply(ensureChunk, args as [string]);
-    return nextPromise.then((result) => {
-      // when after retrying the third time
-      // ensureChunk(chunkId, { count: 3 }), at that time, existRetryTimes === 2
-      // at the end, callingCounter.count is 4
-      const isLastSuccessRetry =
-        callingCounter?.count === existRetryTimesAll + 2;
-      if (typeof config.onSuccess === 'function' && isLastSuccessRetry) {
-        const context = createContext(existRetryTimes + 1);
-        config.onSuccess(context);
-      }
-      return result;
-    });
+    const delayTime =
+      typeof config.delay === 'function'
+        ? config.delay(context)
+        : (config.delay ?? 0);
+
+    const delayPromise =
+      delayTime > 0
+        ? new Promise((resolve) => setTimeout(resolve, delayTime))
+        : Promise.resolve();
+
+    return delayPromise
+      .then(() => ensureChunk.apply(ensureChunk, args as [string]))
+      .then((result) => {
+        // when after retrying the third time
+        // ensureChunk(chunkId, { count: 3 }), at that time, existRetryTimes === 2
+        // at the end, callingCounter.count is 4
+        const isLastSuccessRetry =
+          callingCounter?.count === existRetryTimesAll + 2;
+        if (typeof config.onSuccess === 'function' && isLastSuccessRetry) {
+          const context = createContext(existRetryTimes + 1);
+          config.onSuccess(context);
+        }
+        return result;
+      });
   });
 }
 
