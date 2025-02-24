@@ -1,4 +1,3 @@
-import { pluginAssetsRetry } from '@rsbuild/plugin-assets-retry';
 import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginLess } from '@rsbuild/plugin-less';
 import { pluginPreact } from '@rsbuild/plugin-preact';
@@ -13,7 +12,6 @@ import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
 import { webpackProvider } from '@rsbuild/webpack';
 
 export default {
-  pluginAssetsRetry,
   pluginBabel,
   pluginLess,
   pluginReact,

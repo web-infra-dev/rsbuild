@@ -68,6 +68,10 @@ export default defineConfig({
           from: '/config/source/alias-strategy',
           to: '/config/resolve/alias-strategy',
         },
+        {
+          from: '/plugins/list/plugin-assets-retry',
+          to: 'https://github.com/rspack-contrib/rsbuild-plugin-assets-retry',
+        },
       ],
     }),
   ],
