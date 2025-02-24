@@ -4,5 +4,6 @@ export default defineConfig({
   // Retry on CI
   retries: process.env.CI ? 3 : 0,
   // Print line for each test being run in CI
-  reporter: 'list',
+  reporter: [['list'], ['json', { outputFile: 'report.json' }]],
+  testDir: './cases/environments/vue-react-plugins/',
 });
