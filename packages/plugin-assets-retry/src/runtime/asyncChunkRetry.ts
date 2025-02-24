@@ -267,7 +267,7 @@ function ensureChunk(chunkId: string): Promise<unknown> {
 
   callingCounter.count += 1;
 
-  return result.catch(async (error: Error) => {
+  return result.catch((error: Error) => {
     // the first calling is not retry
     // if the failed request is 4 in network panel, callingCounter.count === 4, the first one is the normal request, and existRetryTimes is 3, retried 3 times
     const existRetryTimesAll = callingCounter.count - 1;
