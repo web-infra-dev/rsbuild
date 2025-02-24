@@ -24,7 +24,6 @@
     "@module-federation/rsbuild-plugin": "0.9.0",
     "@playwright/test": "1.44.1",
     "@rsbuild/core": "workspace:*",
-    "@rsbuild/plugin-assets-retry": "workspace:*",
     "@rsbuild/plugin-babel": "workspace:*",
     "@rsbuild/plugin-check-syntax": "^1.3.0",
     "@rsbuild/plugin-less": "workspace:*",
