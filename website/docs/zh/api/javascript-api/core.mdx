@@ -141,6 +141,12 @@ type LoadEnvOptions = {
    * @default ['PUBLIC_']
    */
   prefixes?: string[];
+  /**
+   * 指定一个目标对象来存储环境变量。
+   * 如果未提供，变量将写入 `process.env`。
+   * @default process.env
+   */
+  processEnv?: Record<string, string>;
 };
 
 function loadEnv(options: LoadEnvOptions): {
@@ -200,6 +206,20 @@ const mergedConfig = mergeRsbuildConfig(
 :::tip
 Rsbuild CLI 会自动调用 `loadEnv()` 方法，如果你在使用 Rsbuild CLI，可以通过 [--env-mode](/guide/advanced/env-vars#env-模式) 选项来设置 `mode` 参数。
 :::
+
+### 指定目标对象
+
+默认情况下，`loadEnv` 会使用 `process.env` 对象来存储环境变量。你可以通过 `processEnv` 选项来指定一个目标对象来存储环境变量：
+
+```ts
+import { loadEnv } from '@rsbuild/core';
+
+// 传入一个空对象，避免修改 `process.env`
+loadEnv({ processEnv: {} });
+
+// 传入 `process.env` 对象的副本，避免修改原始对象
+loadEnv({ processEnv: { ...process.env } });
+```
 
 ## mergeRsbuildConfig
 

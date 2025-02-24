@@ -141,6 +141,12 @@ type LoadEnvOptions = {
    * @default ['PUBLIC_']
    */
   prefixes?: string[];
+  /**
+   * Specify a target object to store environment variables.
+   * If not provided, variables will be written to `process.env`.
+   * @default process.env
+   */
+  processEnv?: Record<string, string>;
 };
 
 function loadEnv(options: LoadEnvOptions): {
@@ -200,6 +206,20 @@ This method will also load files such as `.env.local` and `.env.[mode]`, see [En
 :::tip
 Rsbuild CLI will automatically call the `loadEnv()` method. If you are using the Rsbuild CLI, you can set the `mode` parameter through the [--env-mode](/guide/advanced/env-vars#env-mode) option.
 :::
+
+### Specify the target object
+
+By default, `loadEnv` uses the `process.env` object to store environment variables. You can specify a target object to store environment variables through the `processEnv` option:
+
+```ts
+import { loadEnv } from '@rsbuild/core';
+
+// Pass an empty object to avoid modifying `process.env`
+loadEnv({ processEnv: {} });
+
+// Pass a copy of the `process.env` object to avoid modifying the original object
+loadEnv({ processEnv: { ...process.env } });
+```
 
 ## mergeRsbuildConfig
 
