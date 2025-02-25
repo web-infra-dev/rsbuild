@@ -760,6 +760,11 @@ export type DistPathConfig = {
 
 export type FilenameConfig = {
   /**
+   * The name of HTML files.
+   * @default `[name].html`
+   */
+  html?: string;
+  /**
    * The name of the JavaScript files.
    * @default
    * - dev: '[name].js'
@@ -777,32 +782,27 @@ export type FilenameConfig = {
    * The name of the SVG images.
    * @default '[name].[contenthash:8].svg'
    */
-  svg?: string;
-  /**
-   * The name of HTML files.
-   * @default `[name].html`
-   */
-  html?: string;
+  svg?: Rspack.AssetModuleFilename;
   /**
    * The name of the font files.
    * @default '[name].[contenthash:8][ext]'
    */
-  font?: string;
+  font?: Rspack.AssetModuleFilename;
   /**
    * The name of non-SVG images.
    * @default '[name].[contenthash:8][ext]'
    */
-  image?: string;
+  image?: Rspack.AssetModuleFilename;
   /**
    * The name of media assets, such as video.
    * @default '[name].[contenthash:8][ext]'
    */
-  media?: string;
+  media?: Rspack.AssetModuleFilename;
   /**
    * the name of other assets, except for above (image, svg, font, html, wasm...)
    * @default '[name].[contenthash:8][ext]'
    */
-  assets?: string;
+  assets?: Rspack.AssetModuleFilename;
 };
 
 export type DataUriLimit = {

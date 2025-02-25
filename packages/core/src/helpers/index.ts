@@ -226,7 +226,7 @@ export function getFilename(
   type: Exclude<keyof FilenameConfig, 'js' | 'css'>,
   isProd: boolean,
   isServer?: boolean,
-): string;
+): Rspack.AssetModuleFilename;
 export function getFilename(
   config: NormalizedConfig | NormalizedEnvironmentConfig,
   type: keyof FilenameConfig,
