@@ -1,5 +1,7 @@
 import { defineConfig } from '@playwright/test';
 
+console.log('very begin', Date.now());
+
 export default defineConfig({
   // Retry on CI
   retries: process.env.CI ? 3 : 0,
