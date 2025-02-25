@@ -284,20 +284,47 @@ export default {
 
 > 参考 [浏览器兼容性](/guide/advanced/browser-compatibility) 来了解 Rsbuild 是如何处理 polyfill 的。
 
-## 添加 ESLint 插件
+## 配置 ESLint
 
-CRA 默认启用了 [eslint-webpack-plugin](https://github.com/webpack-contrib/eslint-webpack-plugin)，并内置了一套 ESLint 规则集。
+CRA 默认使用 ESLint 来检查代码质量。Rsbuild 默认不包含代码检查功能，但你可以在 `package.json` 中添加单独的 npm script 来运行 ESLint。
 
-在 Rsbuild 项目中，如果你需要保持类似的行为，可以添加 [@rsbuild/plugin-eslint](https://github.com/rspack-contrib/rsbuild-plugin-eslint)，并使用 [eslint-config-react-app](https://www.npmjs.com/package/eslint-config-react-app) 作为 ESLint 规则集。
+首先安装 [eslint](https://eslint.org/) 和 [eslint-config-react-app](https://www.npmjs.com/package/eslint-config-react-app)，你需要安装 ESLint v8 来与 CRA 保持一致：
 
-```js title=".eslintrc.cjs"
-module.exports = {
-  extends: 'react-app',
+<PackageManagerTabs command="add eslint@8 eslint-config-react-app -D" />
+
+然后在 `package.json` 中添加 `lint` 命令，并确认项目中包含 `eslintConfig` 配置或独立的 ESLint 配置文件：
+
+```json title="package.json"
+{
+  "scripts": {
+    "lint": "eslint src"
+  },
+  "eslintConfig": {
+    "extends": ["react-app", "react-app/jest"]
+  }
+}
+```
+
+这样，你就可以使用 `npm run lint` 命令来运行 ESLint 检查了。
+
+### 在构建中运行 ESLint
+
+除了在 `package.json` 中添加 `lint` 命令，你还可以添加 [@rsbuild/plugin-eslint](https://github.com/rspack-contrib/rsbuild-plugin-eslint) 插件来保持与 CRA 相同的行为。
+
+`@rsbuild/plugin-eslint` 插件允许你在构建过程中执行 ESLint 检查。
+
+```ts title="rsbuild.config.ts"
+import { pluginEslint } from '@rsbuild/plugin-eslint';
+
+export default {
+  plugins: [pluginEslint()],
 };
 ```
 
-:::tip
-我们并不推荐使用 `@rsbuild/plugin-eslint`，因为在构建过程中允许 ESLint 检查会显著增加构建时间。更推荐的做法是使用单独的 `lint` 命令来执行 ESLint 检查。
+注册插件后，在开发 (`npm run dev`) 和生产构建 (`npm run build`) 过程中，ESLint 会自动运行。插件会在控制台输出 ESLint 警告和错误。
+
+:::warning
+我们并不推荐使用 `@rsbuild/plugin-eslint`，因为在构建过程中运行 ESLint 检查会显著增加构建时间。更推荐的做法是使用单独的 `lint` 命令来执行 ESLint 检查。
 :::
 
 ## 读取 jsconfig.json
