@@ -5,22 +5,13 @@
 ```ts
 type FilenameConfig = {
   html?: string;
-  js?:
-    | string
-    | ((
-        pathData: Rspack.PathData,
-        assetInfo: Rspack.JsAssetInfo | undefined,
-      ) => string);
-  css?:
-    | string
-    | ((
-        pathData: Rspack.PathData,
-        assetInfo: Rspack.JsAssetInfo | undefined,
-      ) => string);
+  js?: string | Function;
+  css?: string | Function;
   svg?: string;
   font?: string;
   image?: string;
   media?: string;
+  assets?: string;
 };
 ```
 
@@ -73,14 +64,25 @@ const prodDefaultFilename = {
 
 修改 JavaScript 文件的名称为 `[name]_script.js`：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     filename: {
-      js:
-        process.env.NODE_ENV === 'production'
-          ? '[name]_script.[contenthash:8].js'
-          : '[name]_script.js',
+      js: '[name]_script.js',
+    },
+  },
+};
+```
+
+为开发和生产构建设置不同的文件名：
+
+```ts title="rsbuild.config.ts"
+const isProd = process.env.NODE_ENV === 'production';
+
+export default {
+  output: {
+    filename: {
+      js: isProd ? '[name]_script.[contenthash:8].js' : '[name]_script.js',
     },
   },
 };
@@ -135,9 +137,14 @@ const { add } = await import(
 
 ## 使用函数
 
-`output.filename.js` 和 `output.filename.css` 可以传入一个函数，这允许你根据文件信息动态生成文件名：
+`output.filename.js` 和 `output.filename.css` 可以传入一个函数，这允许你根据文件信息动态生成文件名。
 
-```js
+函数接收两个参数：
+
+- `pathData`：一个对象，包含文件路径信息。
+- `assetInfo`：一个可选的对象，包含额外的资源信息。
+
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     filename: {
@@ -172,7 +179,7 @@ export default {
 
 如果你需要在资源的 URL query 上生成 hash 值，可以参考以下配置：
 
-```js
+```ts title="rsbuild.config.ts"
 const isProd = process.env.NODE_ENV === 'production';
 
 export default {

@@ -5,18 +5,8 @@
 ```ts
 type FilenameConfig = {
   html?: string;
-  js?:
-    | string
-    | ((
-        pathData: Rspack.PathData,
-        assetInfo: Rspack.JsAssetInfo | undefined,
-      ) => string);
-  css?:
-    | string
-    | ((
-        pathData: Rspack.PathData,
-        assetInfo: Rspack.JsAssetInfo | undefined,
-      ) => string);
+  js?: string | Function;
+  css?: string | Function;
   svg?: string;
   font?: string;
   image?: string;
@@ -72,16 +62,27 @@ The following are the details of each filename:
 
 ## Example
 
-To set the name of the JavaScript file to `[name]_script.js`, use the following configuration:
+To set the name of the JavaScript files to `[name]_script.js`:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     filename: {
-      js:
-        process.env.NODE_ENV === 'production'
-          ? '[name]_script.[contenthash:8].js'
-          : '[name]_script.js',
+      js: '[name]_script.js',
+    },
+  },
+};
+```
+
+Set different filenames for development and production builds:
+
+```ts title="rsbuild.config.ts"
+const isProd = process.env.NODE_ENV === 'production';
+
+export default {
+  output: {
+    filename: {
+      js: isProd ? '[name]_script.[contenthash:8].js' : '[name]_script.js',
     },
   },
 };
@@ -136,9 +137,14 @@ After specifying the module name as above, the generated file will be `dist/stat
 
 ## Using function
 
-You can pass a function to `output.filename.js` or `output.filename.css`, allowing you to dynamically generate filenames based on file information:
+You can pass a function to `output.filename.js` or `output.filename.css`, allowing you to dynamically generate filenames based on file information.
 
-```js
+The function receives two parameters:
+
+- `pathData`: An object containing file path information.
+- `assetInfo`: An optional object containing additional assets information.
+
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     filename: {
@@ -173,7 +179,7 @@ Except for `output.filename.js` and `output.filename.css`, other types of files 
 
 To generate hash values on the URL query of assets, refer to:
 
-```js
+```ts title="rsbuild.config.ts"
 const isProd = process.env.NODE_ENV === 'production';
 
 export default {
