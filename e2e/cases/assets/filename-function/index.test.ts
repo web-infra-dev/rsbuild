@@ -32,4 +32,28 @@ test('should allow to custom filename by function', async () => {
       filename.includes('dist/static/css/async/some-path/foo.css'),
     ),
   ).toBeTruthy();
+
+  // Image
+  expect(
+    filenames.some((filename) =>
+      filename.includes('dist/static/image/my-icon.png'),
+    ),
+  ).toBeTruthy();
+  expect(
+    filenames.some((filename) =>
+      filename.includes('dist/static/image/some-path/image.png'),
+    ),
+  ).toBeTruthy();
+
+  // SVG
+  expect(
+    filenames.some((filename) =>
+      filename.includes('dist/static/svg/my-circle.svg'),
+    ),
+  ).toBeTruthy();
+  expect(
+    filenames.some((filename) =>
+      filename.includes('dist/static/svg/some-path/mobile.svg'),
+    ),
+  ).toBeTruthy();
 });

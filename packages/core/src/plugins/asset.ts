@@ -1,5 +1,8 @@
 import path from 'node:path';
-import type { GeneratorOptionsByModuleType } from '@rspack/core';
+import type {
+  AssetModuleFilename,
+  GeneratorOptionsByModuleType,
+} from '@rspack/core';
 import { CHAIN_ID } from '../configChain';
 import {
   AUDIO_EXTENSIONS,
@@ -20,7 +23,7 @@ const chainStaticAssetRule = ({
   emit: boolean;
   rule: RspackChain.Rule;
   maxSize: number;
-  filename: string;
+  filename: AssetModuleFilename;
   assetType: string;
 }) => {
   const generatorOptions:
@@ -79,9 +82,17 @@ export const pluginAsset = (): RsbuildPlugin => ({
 
       const getMergedFilename = (
         assetType: 'svg' | 'font' | 'image' | 'media' | 'assets',
-      ) => {
+      ): AssetModuleFilename => {
         const distDir = config.output.distPath[assetType];
         const filename = getFilename(config, assetType, isProd);
+
+        if (typeof filename === 'function') {
+          return (...args) => {
+            const name = filename(...args);
+            return path.posix.join(distDir, name);
+          };
+        }
+
         return path.posix.join(distDir, filename);
       };
 
