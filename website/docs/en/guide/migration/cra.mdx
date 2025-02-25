@@ -284,19 +284,46 @@ export default {
 
 > Read [Browser compatibility](/guide/advanced/browser-compatibility) to understand how Rsbuild handles polyfills.
 
-## Add ESLint plugin
+## Setup ESLint
 
-CRA has the [eslint-webpack-plugin](https://github.com/webpack-contrib/eslint-webpack-plugin) enabled by default and includes a set of built-in ESLint rules.
+CRA uses ESLint to lint the code by default. Rsbuild does not include linting by default, but you can add a separate npm script to run ESLint in `package.json`.
 
-In an Rsbuild project, if you need similar functionality, you can add [@rsbuild/plugin-eslint](https://github.com/rspack-contrib/rsbuild-plugin-eslint) and use [eslint-config-react-app](https://www.npmjs.com/package/eslint-config-react-app) as the ESLint ruleset.
+First, install [eslint](https://eslint.org/) and [eslint-config-react-app](https://www.npmjs.com/package/eslint-config-react-app), you need to install ESLint v8 to keep consistent with CRA:
 
-```js title=".eslintrc.cjs"
-module.exports = {
-  extends: 'react-app',
+<PackageManagerTabs command="add eslint@8 eslint-config-react-app -D" />
+
+Then, add the `lint` command in `package.json`, and confirm that the project contains an `eslintConfig` configuration or an independent ESLint configuration file:
+
+```json title="package.json"
+{
+  "scripts": {
+    "lint": "eslint src"
+  },
+  "eslintConfig": {
+    "extends": ["react-app", "react-app/jest"]
+  }
+}
+```
+
+Then, you can use the `npm run lint` command to run ESLint.
+
+### Run ESLint during the build
+
+In addition to adding the `lint` command in `package.json`, you can also add the [@rsbuild/plugin-eslint](https://github.com/rspack-contrib/rsbuild-plugin-eslint) plugin to maintain the same behavior as CRA.
+
+`@rsbuild/plugin-eslint` allows you to run ESLint during the build process.
+
+```ts title="rsbuild.config.ts"
+import { pluginEslint } from '@rsbuild/plugin-eslint';
+
+export default {
+  plugins: [pluginEslint()],
 };
 ```
 
-:::tip
+After registering the plugin, ESLint will run automatically during development (`npm run dev`) and production builds (`npm run build`). The plugin will display ESLint warnings and errors in the console output.
+
+:::warning
 We do not recommend using the `@rsbuild/plugin-eslint` plugin, as running ESLint during the build process will significantly increase the build time. Instead, we recommend using a separate `lint` command to run ESLint checks.
 :::
 
