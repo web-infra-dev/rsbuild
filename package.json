@@ -60,7 +60,7 @@
       "css-loader@7.1.2": "patches/css-loader@7.1.2.patch"
     },
     "overrides": {
-      "@rspack/core": "npm:@rspack-canary/core@1.2.0-canary-03cd7e42-20250224161333",
+      "@rspack/core": "npm:@rspack-canary/core@1.2.0-canary-f370a22a-20250225033830",
       "@rspack/tracing": "1.2.0"
     },
     "peerDependencyRules": {
