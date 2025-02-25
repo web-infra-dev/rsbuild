@@ -215,12 +215,12 @@ export function getFilename(
   type: 'js',
   isProd: boolean,
   isServer?: boolean,
-): NonNullable<FilenameConfig['js']>;
+): Rspack.Filename;
 export function getFilename(
   config: NormalizedConfig | NormalizedEnvironmentConfig,
   type: 'css',
   isProd: boolean,
-): NonNullable<FilenameConfig['css']>;
+): Rspack.CssFilename;
 export function getFilename(
   config: NormalizedConfig | NormalizedEnvironmentConfig,
   type: Exclude<keyof FilenameConfig, 'js' | 'css'>,

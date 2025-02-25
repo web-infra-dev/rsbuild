@@ -765,14 +765,14 @@ export type FilenameConfig = {
    * - dev: '[name].js'
    * - prod: '[name].[contenthash:8].js'
    */
-  js?: NonNullable<Rspack.Configuration['output']>['filename'];
+  js?: Rspack.Filename;
   /**
    * The name of the CSS files.
    * @default
    * - dev: '[name].css'
    * - prod: '[name].[contenthash:8].css'
    */
-  css?: NonNullable<Rspack.Configuration['output']>['cssFilename'];
+  css?: Rspack.CssFilename;
   /**
    * The name of the SVG images.
    * @default '[name].[contenthash:8].svg'

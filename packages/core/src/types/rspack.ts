@@ -18,6 +18,4 @@ export interface BundlerPluginInstance {
 /** T[] => T */
 type GetElementType<T extends any[]> = T extends (infer U)[] ? U : never;
 
-export type RspackRule = GetElementType<
-  NonNullable<NonNullable<Rspack.Configuration['module']>['rules']>
->;
+export type RspackRule = GetElementType<Rspack.RuleSetRules>;
