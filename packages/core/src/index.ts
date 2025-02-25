@@ -11,6 +11,7 @@ export { createRsbuild } from './createRsbuild';
 export {
   loadConfig,
   defineConfig,
+  type ConfigParams,
   type LoadConfigOptions,
   type LoadConfigResult,
 } from './config';
