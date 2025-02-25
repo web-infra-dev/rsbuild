@@ -46,10 +46,15 @@ jobs:
         with:
           node-version: 22
           cache: 'pnpm'
-
       - name: Install Dependencies
         if: steps.changes.outputs.changed == 'true'
         run: pnpm install && cd ./e2e && npx playwright install chromium
+
+      - name: Install Samply
+        shell: pwsh
+        run: |
+          Set-ExecutionPolicy Bypass -Scope Process -Force
+          irm https://github.com/mstange/samply/releases/download/samply-v0.13.1/samply-installer.ps1 | iex
 
       - name: E2E Test
         if: steps.changes.outputs.changed == 'true'
