@@ -1006,12 +1006,12 @@ export interface OutputConfig {
    */
   externals?: Externals;
   /**
-   * Set the directory of the dist files.
-   * Rsbuild will output files to the corresponding subdirectory according to the file type.
+   * Set the directory of the output files.
+   * Rsbuild will emit files to the specified subdirectory according to the file type.
    */
   distPath?: DistPathConfig;
   /**
-   * Sets the filename of dist files.
+   * Sets the filename of output files.
    */
   filename?: FilenameConfig;
   /**
