@@ -25,8 +25,8 @@ type DistPathConfig = {
 const defaultDistPath = {
   root: 'dist',
   html: './',
-  js: isServer ? '' : 'static/js',
-  jsAsync: isServer ? '' : 'static/js/async',
+  js: output.target === 'node' ? '' : 'static/js',
+  jsAsync: output.target === 'node' ? '' : 'static/js/async',
   css: 'static/css',
   cssAsync: 'static/css/async',
   svg: 'static/svg',
@@ -38,9 +38,15 @@ const defaultDistPath = {
 };
 ```
 
-Set the directory of the dist files. Rsbuild will output files to the corresponding subdirectory according to the file type.
+Set the directory of the output files. Rsbuild will emit files to the specified subdirectory according to the file type.
 
-Detail:
+> See [Output files](/guide/basic/output-files) for more information.
+
+## File types
+
+`output.distPath` can be set differently for different file types.
+
+Here are the details of each `output.distPath` option:
 
 - `root`: The root directory of all output files.
 - `html`: The output directory of HTML files.
@@ -55,19 +61,19 @@ Detail:
 - `media`: The output directory of media assets, such as videos.
 - `assets`: The output directory of other static assets. Such as the assets defined in [Extend Asset Types](/guide/basic/static-assets#extend-asset-types).
 
-### Root directory
+## Root directory
 
 The `root` is the root directory of the build artifacts and can be specified as a relative or absolute path. If the value of `root` is a relative path, it will be appended to the project's root directory to form an absolute path.
 
 Other directories can only be specified as relative paths and will be output relative to the `root` directory.
 
-### Example
+## Example
 
 The JavaScript files will be output to the `distPath.root` + `distPath.js` directory, which is `dist/static/js`.
 
 To output JavaScript files to the `build/resource/js` directory, add the following config:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     distPath: {
@@ -76,4 +82,14 @@ export default {
     },
   },
 };
+```
+
+The above config will generate the following directory structure:
+
+```bash
+build
+├── resource
+│   └── js
+│       └── index.js
+└── index.html
 ```

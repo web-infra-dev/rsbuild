@@ -47,15 +47,19 @@ const prodDefaultFilename = {
 
 在生产模式构建后，Rsbuild 会自动在文件名中间添加 hash 值，如果不需要添加，可以将 [output.filenameHash](/config/output/filename-hash) 设置为 `false` 来禁用该行为。
 
-下面是各个文件类型的说明：
+## 文件类型
 
-- `html`：表示 HTML 文件的名称。
-- `js`：表示 JavaScript 文件的名称。
-- `css`：表示 CSS 样式文件的名称。
-- `svg`：表示 SVG 图片的名称。
-- `font`：表示字体文件的名称。
-- `image`：表示非 SVG 图片的名称。
-- `media`：表示视频等媒体资源的名称。
+`output.filename` 可以为不同类型的文件设置不同的名称。
+
+下面是 `output.filename` 中各个选项的说明：
+
+- `html`：HTML 文件的名称。
+- `js`：JavaScript 文件的名称。
+- `css`：CSS 样式文件的名称。
+- `svg`：SVG 图片的名称。
+- `font`：字体文件的名称。
+- `image`：非 SVG 图片的名称。
+- `media`：视频等媒体资源的名称。
 - `assets`：其他静态资源的名称。例如 [扩展静态资源类型](/guide/basic/static-assets#扩展静态资源类型) 中定义的资源。
 
 > 查看 [构建产物目录](/guide/basic/output-files) 了解更多。
