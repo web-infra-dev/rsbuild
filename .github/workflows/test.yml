@@ -67,4 +67,4 @@ jobs:
           path: |
             e2e/cases/environments/vue-react-plugins/dist/rspack-profile-*/*.json
             e2e/report.json
-
+            e2e/profile.json.gz
