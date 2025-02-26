@@ -16,7 +16,7 @@ const defaultAlias = {
 
 - **版本：** `>=1.1.7`
 
-设置文件引用的别名，对应 Rspack 的 [resolve.alias](https://rspack.dev/zh/config/resolve#resolvealias) 配置。
+设置模块路径的别名，用于简化导入路径或重定向模块引用。
 
 对于 TypeScript 项目，你只需要在 `tsconfig.json` 中配置 [compilerOptions.paths](https://typescriptlang.org/tsconfig#paths) 即可，Rsbuild 会自动识别它，不需要额外配置 `resolve.alias` 字段，详见 [「路径别名」](/guide/advanced/alias)。
 
@@ -24,11 +24,11 @@ const defaultAlias = {
 在 Rsbuild 1.1.7 之前的版本，你可以使用 `source.alias` 来设置 alias，但该字段将在下一个大版本中被移除。
 :::
 
-## Object 类型
+## 基本用法
 
-`alias` 的值可以定义为 Object 类型，其中的相对路径会自动被 Rsbuild 转换为绝对路径。
+`resolve.alias` 的值可以传入一个对象，对象的 `key` 是源代码中需要被替换的模块路径，`value` 是模块实际映射到的目标路径。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   resolve: {
     alias: {
@@ -38,13 +38,13 @@ export default {
 };
 ```
 
-以上配置完成后，如果你在代码中引用 `@common/Foo.tsx`, 则会映射到 `<project>/src/common/Foo.tsx` 路径上。
+添加以上配置后，当你在代码中引用 `@common/Foo.tsx` 时，会映射到 `<project-root>/src/common/Foo.tsx` 路径上。
 
-## Function 类型
+## Function 用法
 
-`alias` 的值定义为函数时，可以接受预设的 alias 对象，并对其进行修改。
+`resolve.alias` 的值定义为函数时，可以接受预设的 alias 对象，并对其进行修改。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   resolve: {
     alias: (alias) => {
@@ -56,7 +56,7 @@ export default {
 
 如果你需要移除 Rsbuild 内置的 `@swc/helpers` 别名，可以在函数中删除它：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   resolve: {
     alias: (alias) => {
@@ -68,7 +68,7 @@ export default {
 
 你也可以在函数中返回一个新对象作为最终结果，新对象会覆盖预设的 alias 对象。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   resolve: {
     alias: (alias) => {
@@ -80,13 +80,32 @@ export default {
 };
 ```
 
+## 与 Rspack 配置的差异
+
+Rsbuild 的 `resolve.alias` 与 Rspack 的 [resolve.alias](https://rspack.dev/zh/config/resolve#resolvealias) 配置的用法基本一致，它们的差异是：
+
+- 如果 `resolve.alias` 的值是一个相对路径，Rsbuild 会自动将其转换为绝对路径，以保证路径是相对于项目根目录的。
+
+```ts title="rsbuild.config.ts"
+export default {
+  resolve: {
+    alias: {
+      // 将被转换为 `<project-root>/src/common`
+      '@common': './src/common',
+    },
+  },
+};
+```
+
+- Rsbuild 额外支持了函数类型的用法。
+
 ## 基于 environment 设置
 
 当你面向多个 [environments](/config/environments) 构建时，可以为每个 environment 设置不同的 alias：
 
 比如为 `web` 和 `node` 环境设置不同的 alias：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   environments: {
     web: {
@@ -117,7 +136,7 @@ export default {
 
 默认情况，`resolve.alias` 会自动匹配子路径，比如以下配置：
 
-```js
+```ts title="rsbuild.config.ts"
 import path from 'node:path';
 
 export default {
@@ -131,14 +150,14 @@ export default {
 
 它的匹配结果如下：
 
-```js
+```ts title="rsbuild.config.ts"
 import a from '@common'; // 解析为 `./src/common`
 import b from '@common/util'; // 解析为 `./src/common/util`
 ```
 
 你可以添加 `$` 符号来开启精确匹配，开启后将不会自动匹配子路径。
 
-```js
+```ts title="rsbuild.config.ts"
 import path from 'node:path';
 
 export default {
@@ -152,7 +171,7 @@ export default {
 
 它的匹配结果如下：
 
-```js
+```ts title="rsbuild.config.ts"
 import a from '@common'; // 解析为 `./src/common`
 import b from '@common/util'; // 保持 `@common/util` 不变
 ```
@@ -163,7 +182,7 @@ import b from '@common/util'; // 保持 `@common/util` 不变
 
 比如项目中安装了多份 `react`，你可以将 `react` 统一指向根目录的 `node_modules` 中安装的版本，避免出现打包多份 React 代码的问题。
 
-```js
+```ts title="rsbuild.config.ts"
 import path from 'node:path';
 
 export default {
