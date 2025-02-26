@@ -150,7 +150,7 @@ export default {
 
 它的匹配结果如下：
 
-```ts title="rsbuild.config.ts"
+```ts
 import a from '@common'; // 解析为 `./src/common`
 import b from '@common/util'; // 解析为 `./src/common/util`
 ```
@@ -171,7 +171,7 @@ export default {
 
 它的匹配结果如下：
 
-```ts title="rsbuild.config.ts"
+```ts
 import a from '@common'; // 解析为 `./src/common`
 import b from '@common/util'; // 保持 `@common/util` 不变
 ```
@@ -202,7 +202,7 @@ export default {
 
 `resolve.alias` 不支持为 loader 设置别名。如果你需要为 loader 设置别名，可以使用 Rspack 的 [resolveLoader](https://rspack.dev/zh/config/resolve-loader) 配置项。
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: {

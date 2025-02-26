@@ -150,7 +150,7 @@ export default {
 
 It will match as follows:
 
-```ts title="rsbuild.config.ts"
+```ts
 import a from '@common'; // resolved to `./src/common`
 import b from '@common/util'; // resolved to `./src/common/util`
 ```
@@ -171,7 +171,7 @@ export default {
 
 It will match as follows:
 
-```ts title="rsbuild.config.ts"
+```ts
 import a from '@common'; // resolved to `./src/common`
 import b from '@common/util'; // remains as `@common/util`
 ```
@@ -204,7 +204,7 @@ For example, if a module or npm dependency in your project uses the React 19 API
 
 To create aliases for loaders, use Rspack's [resolveLoader](https://rspack.dev/config/resolve-loader) configuration.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: {
