@@ -3,7 +3,7 @@
   "name": "@rsbuild/e2e",
   "version": "1.0.0",
   "scripts": {
-    "test": "samply record -n -- node --experimental-vm-modules --perf-prof --perf-basic-prof --no-turbo-inlining --interpreted-frames-native-stack ./node_modules/playwright/cli.js  test",
+    "test": "samply record -s -n -- node --experimental-vm-modules --perf-prof --perf-basic-prof --no-turbo-inlining --interpreted-frames-native-stack ./node_modules/playwright/cli.js  test",
     "test:rspack": "cross-env NODE_OPTIONS=--experimental-vm-modules playwright test",
     "test:rspack:incremental": "cross-env NODE_OPTIONS=--experimental-vm-modules EXPERIMENTAL_RSPACK_INCREMENTAL=true playwright test",
     "test:webpack": "cross-env PROVIDE_TYPE=webpack playwright test"
