@@ -3,7 +3,14 @@ import path from 'node:path';
 import { globContentJSON, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
-rspackOnlyTest('should use Node.js native loader to load config', async () => {
+const nodeVersion = process.version.slice(1).split('.')[0];
+const isNodeVersionCompatible = Number(nodeVersion) >= 22;
+
+const conditionalTest = isNodeVersionCompatible
+  ? rspackOnlyTest
+  : rspackOnlyTest.skip;
+
+conditionalTest('should use Node.js native loader to load config', async () => {
   execSync('npx rsbuild build --config-loader native', {
     cwd: __dirname,
     env: {
