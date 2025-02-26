@@ -1529,8 +1529,8 @@ export interface ResolveConfig {
    */
   dedupe?: string[];
   /**
-   * Create aliases to import or require certain modules,
-   * same as the [resolve.alias](https://rspack.dev/config/resolve) config of Rspack.
+   * Set the alias for the module path, which is used to simplify the import path or redirect the module reference.
+   * Similar to the [resolve.alias](https://rspack.dev/config/resolve) config of Rspack.
    */
   alias?: ConfigChain<Alias>;
   /**
