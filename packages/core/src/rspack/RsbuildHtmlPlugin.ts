@@ -263,9 +263,12 @@ export class RsbuildHtmlPlugin {
       }
 
       if (!compilation.inputFileSystem) {
-        throw new Error(
-          `[rsbuild:html] 'compilation.inputFileSystem' is not available.`,
+        compilation.errors.push(
+          new compiler.webpack.WebpackError(
+            `[rsbuild:html] Failed to read the favicon as "compilation.inputFileSystem" is not available.`,
+          ),
         );
+        return null;
       }
 
       const filename = path.isAbsolute(favicon)
@@ -289,7 +292,6 @@ export class RsbuildHtmlPlugin {
             `[rsbuild:html] Failed to read the favicon, please check if the file "${color.cyan(filename)}" exists.`,
           ),
         );
-
         return null;
       }
 
