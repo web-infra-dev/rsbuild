@@ -266,7 +266,7 @@ export class RsbuildHtmlPlugin {
       if (!compilation.inputFileSystem) {
         addCompilationError(
           compilation,
-          `[rsbuild:html] Failed to read the favicon as "compilation.inputFileSystem" is not available.`,
+          `[rsbuild:html] Failed to read the favicon file as "compilation.inputFileSystem" is not available.`,
         );
         return null;
       }
@@ -289,7 +289,7 @@ export class RsbuildHtmlPlugin {
 
         addCompilationError(
           compilation,
-          `[rsbuild:html] Failed to read the favicon, please check if the file "${color.cyan(filename)}" exists.`,
+          `[rsbuild:html] Failed to find the favicon file at "${color.cyan(filename)}".`,
         );
         return null;
       }
