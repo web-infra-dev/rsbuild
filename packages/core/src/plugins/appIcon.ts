@@ -2,6 +2,8 @@ import path from 'node:path';
 import { promisify } from 'node:util';
 import { lookup } from '../../compiled/mrmime/index.js';
 import {
+  addCompilationError,
+  color,
   ensureAssetPrefix,
   fileExistsByCompilation,
   getPublicPathFromCompiler,
@@ -96,24 +98,30 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
 
         for (const icon of icons) {
           if (icon.target === 'web-app-manifest' && !appIcon.name) {
-            throw new Error(
-              "[rsbuild:app-icon] `appIcon.name` is required when `target` is 'web-app-manifest'.",
+            addCompilationError(
+              compilation,
+              `[rsbuild:app-icon] "appIcon.name" is required when "target" is "web-app-manifest".`,
             );
+            continue;
           }
 
           if (!icon.isURL) {
             if (!compilation.inputFileSystem) {
-              throw new Error(
-                `[rsbuild:app-icon] 'compilation.inputFileSystem' is not available.`,
+              addCompilationError(
+                compilation,
+                `[rsbuild:app-icon] Failed to read the icon file as "compilation.inputFileSystem" is not available.`,
               );
+              continue;
             }
 
             if (
               !(await fileExistsByCompilation(compilation, icon.absolutePath))
             ) {
-              throw new Error(
-                `[rsbuild:app-icon] Can not find the app icon, please check if the '${icon.relativePath}' file exists'.`,
+              addCompilationError(
+                compilation,
+                `[rsbuild:app-icon] Failed to find the icon file at "${color.cyan(icon.absolutePath)}".`,
               );
+              continue;
             }
 
             const source = await promisify(
@@ -121,9 +129,11 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
             )(icon.absolutePath);
 
             if (!source) {
-              throw new Error(
-                `[rsbuild:app-icon] Failed to read the app icon file, please check if the '${icon.relativePath}' file exists'.`,
+              addCompilationError(
+                compilation,
+                `[rsbuild:app-icon] Failed to read the icon file at "${color.cyan(icon.absolutePath)}".`,
               );
+              continue;
             }
 
             compilation.emitAsset(
