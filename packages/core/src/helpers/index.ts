@@ -379,3 +379,12 @@ export const isTTY = (type: 'stdin' | 'stdout' = 'stdout'): boolean => {
     !process.env.CI
   );
 };
+
+export const addCompilationError = (
+  compilation: Rspack.Compilation,
+  message: string,
+): void => {
+  compilation.errors.push(
+    new compilation.compiler.webpack.WebpackError(message),
+  );
+};
