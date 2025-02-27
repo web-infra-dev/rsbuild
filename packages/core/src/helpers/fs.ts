@@ -80,7 +80,7 @@ export async function emptyDir(
 
     await Promise.all(
       entries.map(async (entry) => {
-        const fullPath = path.resolve(dir, entry.name);
+        const fullPath = path.join(dir, entry.name);
         if (keep.some((reg) => reg.test(toPosixPath(fullPath)))) {
           return;
         }

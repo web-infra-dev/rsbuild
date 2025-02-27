@@ -261,7 +261,7 @@ export class RsbuildHtmlPlugin {
         );
       }
 
-      const filename = path.resolve(compilation.compiler.context, favicon);
+      const filename = path.join(compilation.compiler.context, favicon);
       const buf = await promisify(compilation.inputFileSystem.readFile)(
         filename,
       );

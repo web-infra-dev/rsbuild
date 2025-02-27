@@ -1,4 +1,3 @@
-import path from 'node:path';
 import { toPosixPath } from '../helpers/path';
 import type {
   NormalizedEnvironmentConfig,
@@ -92,7 +91,7 @@ export const pluginBasic = (): RsbuildPlugin => ({
           // this helps VS Code break points working correctly in monorepo
           chain.output.devtoolModuleFilenameTemplate(
             (info: { absoluteResourcePath: string }) =>
-              toPosixPath(path.resolve(info.absoluteResourcePath)),
+              toPosixPath(info.absoluteResourcePath),
           );
         }
 
