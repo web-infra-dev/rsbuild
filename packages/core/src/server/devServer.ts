@@ -171,7 +171,10 @@ export async function createDevServer<
     // create dev middleware instance
     const compilerDevMiddleware = new CompilerDevMiddleware({
       dev: devConfig,
-      server: config.server,
+      server: {
+        ...config.server,
+        port,
+      },
       publicPaths: publicPaths,
       compiler,
       environments: options.context.environments,
