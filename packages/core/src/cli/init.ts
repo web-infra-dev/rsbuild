@@ -11,7 +11,7 @@ let commonOpts: CommonOptions = {};
 
 const getEnvDir = (cwd: string, envDir?: string) => {
   if (envDir) {
-    return path.isAbsolute(envDir) ? envDir : path.resolve(cwd, envDir);
+    return path.isAbsolute(envDir) ? envDir : path.join(cwd, envDir);
   }
   return cwd;
 };
