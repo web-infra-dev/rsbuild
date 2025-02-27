@@ -289,7 +289,7 @@ export class RsbuildHtmlPlugin {
 
         addCompilationError(
           compilation,
-          `[rsbuild:html] Failed to find the favicon file at "${color.cyan(filename)}".`,
+          `[rsbuild:html] Failed to read the favicon file at "${color.cyan(filename)}".`,
         );
         return null;
       }

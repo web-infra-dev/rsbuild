@@ -131,7 +131,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
             if (!source) {
               addCompilationError(
                 compilation,
-                `[rsbuild:app-icon] Failed to find the icon file at "${color.cyan(icon.absolutePath)}".`,
+                `[rsbuild:app-icon] Failed to read the icon file at "${color.cyan(icon.absolutePath)}".`,
               );
               continue;
             }
