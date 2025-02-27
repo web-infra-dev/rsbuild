@@ -290,7 +290,7 @@ export class RsbuildHtmlPlugin {
           ),
         );
 
-        return;
+        return null;
       }
 
       const source = new compiler.webpack.sources.RawSource(buffer, false);
@@ -310,7 +310,7 @@ export class RsbuildHtmlPlugin {
       if (!isURL(favicon)) {
         const name = await emitFavicon(compilation, favicon);
 
-        if (name === undefined) {
+        if (name === null) {
           return;
         }
 
