@@ -1,4 +1,3 @@
-import path from 'node:path';
 import { toPosixPath } from '../helpers/path';
 import type {
   NormalizedEnvironmentConfig,
