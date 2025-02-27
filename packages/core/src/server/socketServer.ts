@@ -123,6 +123,10 @@ export class SocketServer {
 
     this.stats[compilationId] = stats;
 
+    if (!this.sockets.length) {
+      return;
+    }
+
     this.sendStats({
       compilationId,
     });
