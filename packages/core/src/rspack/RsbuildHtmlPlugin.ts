@@ -261,7 +261,10 @@ export class RsbuildHtmlPlugin {
         );
       }
 
-      const filename = path.join(compilation.compiler.context, favicon);
+      const filename = path.isAbsolute(favicon)
+        ? favicon
+        : path.join(compilation.compiler.context, favicon);
+
       const buf = await promisify(compilation.inputFileSystem.readFile)(
         filename,
       );
