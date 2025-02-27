@@ -2,6 +2,7 @@ import path from 'node:path';
 import { promisify } from 'node:util';
 import type { Compilation, Compiler } from '@rspack/core';
 import {
+  addCompilationError,
   color,
   ensureAssetPrefix,
   isFunction,
@@ -263,10 +264,9 @@ export class RsbuildHtmlPlugin {
       }
 
       if (!compilation.inputFileSystem) {
-        compilation.errors.push(
-          new compiler.webpack.WebpackError(
-            `[rsbuild:html] Failed to read the favicon as "compilation.inputFileSystem" is not available.`,
-          ),
+        addCompilationError(
+          compilation,
+          `[rsbuild:html] Failed to read the favicon as "compilation.inputFileSystem" is not available.`,
         );
         return null;
       }
@@ -287,10 +287,9 @@ export class RsbuildHtmlPlugin {
       } catch (error) {
         logger.debug(`read favicon error: ${error}`);
 
-        compilation.errors.push(
-          new compiler.webpack.WebpackError(
-            `[rsbuild:html] Failed to read the favicon, please check if the file "${color.cyan(filename)}" exists.`,
-          ),
+        addCompilationError(
+          compilation,
+          `[rsbuild:html] Failed to read the favicon, please check if the file "${color.cyan(filename)}" exists.`,
         );
         return null;
       }
