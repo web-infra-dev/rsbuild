@@ -1,7 +1,14 @@
 import path from 'node:path';
 import { promisify } from 'node:util';
 import type { Compilation, Compiler } from '@rspack/core';
-import { ensureAssetPrefix, isFunction, isURL, partition } from '../helpers';
+import {
+  color,
+  ensureAssetPrefix,
+  isFunction,
+  isURL,
+  partition,
+} from '../helpers';
+import { logger } from '../logger';
 import { getHTMLPlugin } from '../pluginHelper';
 import type { HtmlRspackPlugin, Rspack } from '../types';
 import type {
@@ -265,17 +272,28 @@ export class RsbuildHtmlPlugin {
         ? favicon
         : path.join(compilation.compiler.context, favicon);
 
-      const buf = await promisify(compilation.inputFileSystem.readFile)(
-        filename,
-      );
+      let buffer: Buffer<ArrayBufferLike> | undefined;
 
-      if (!buf) {
-        throw new Error(
-          `[rsbuild:html] Failed to read the favicon, please check if the '${filename}' file exists'.`,
+      try {
+        buffer = await promisify(compilation.inputFileSystem.readFile)(
+          filename,
         );
+        if (!buffer) {
+          throw new Error('Buffer is undefined');
+        }
+      } catch (error) {
+        logger.debug(`read favicon error: ${error}`);
+
+        compilation.errors.push(
+          new compiler.webpack.WebpackError(
+            `[rsbuild:html] Failed to read the favicon, please check if the file "${color.cyan(filename)}" exists.`,
+          ),
+        );
+
+        return;
       }
 
-      const source = new compiler.webpack.sources.RawSource(buf, false);
+      const source = new compiler.webpack.sources.RawSource(buffer, false);
       compilation.emitAsset(name, source);
 
       return name;
@@ -291,6 +309,11 @@ export class RsbuildHtmlPlugin {
 
       if (!isURL(favicon)) {
         const name = await emitFavicon(compilation, favicon);
+
+        if (name === undefined) {
+          return;
+        }
+
         href = ensureAssetPrefix(name, publicPath);
       }
 
