@@ -86,7 +86,7 @@
     "postcss-loader": "8.1.1",
     "prebundle": "1.2.7",
     "reduce-configs": "^1.1.0",
-    "rsbuild-dev-middleware": "0.1.2",
+    "rsbuild-dev-middleware": "0.2.0",
     "rslog": "^1.2.3",
     "rspack-chain": "^1.2.1",
     "rspack-manifest-plugin": "5.0.3",

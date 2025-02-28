@@ -116,6 +116,7 @@ export default {
     {
       name: 'rsbuild-dev-middleware',
       externals: {
+        rslog: '../rslog',
         mrmime: '../mrmime',
       },
       ignoreDts: true,
