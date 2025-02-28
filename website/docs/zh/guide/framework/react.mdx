@@ -283,3 +283,78 @@ export default defineConfig({
 ```
 
 > 你可以参考这个示例：[stylex](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/stylex)。
+
+## 自定义 JSX
+
+Rsbuild 使用 SWC 来编译 JSX，你可以自定义编译后的 JSX 代码所使用的函数：
+
+- 当 JSX 的 runtime 为 `automatic` 时，使用 [jsxImportSource](/plugins/list/plugin-react#swcreactoptionsimportsource) 来自定义 JSX runtime 的导入路径，比如从 Preact 或 Emotion 中引入。
+- 当 JSX 的 runtime 为 `classic` 时，使用 `pragma` 和 `pragmaFrag` 来指定 JSX 函数和 Fragment 组件。
+
+> `@rsbuild/plugin-react` 默认使用的 JSX runtime 为 `automatic`，详见 [swcReactOptions.runtime](/plugins/list/plugin-react#swcreactoptionsruntime)。
+
+### 通过配置
+
+通过 `@rsbuild/plugin-react` 的 [swcReactOptions](/plugins/list/plugin-react#swcreactoptions) 来配置。
+
+- 当 `runtime` 为 `automatic` 时：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [
+    pluginReact({
+      swcReactOptions: {
+        runtime: 'automatic',
+        jsxImportSource: '@emotion/react',
+      },
+    }),
+  ],
+});
+```
+
+- 当 `runtime` 为 `classic` 时：
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [
+    pluginReact({
+      swcReactOptions: {
+        runtime: 'classic',
+        pragma: 'h',
+        pragmaFrag: 'Fragment',
+      },
+    }),
+  ],
+});
+```
+
+### 通过注释
+
+你也可以通过在单个 JSX 或 TSX 文件顶部添加特定注释来自定义 JSX 行为，这些注释的优先级会高于配置项。
+
+- 当 JSX 的 runtime 为 `automatic` 时：
+
+```tsx title="App.tsx"
+/** @jsxImportSource custom-jsx-library */
+
+const App = () => {
+  return <div>Hello World</div>;
+};
+```
+
+- 当 JSX 的 runtime 为 `classic` 时：
+
+```tsx title="App.tsx"
+/** @jsx Preact.h */
+/** @jsxFrag Preact.Fragment */
+
+const App = () => {
+  return <div>Hello World</div>;
+};
+```
