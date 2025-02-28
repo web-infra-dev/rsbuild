@@ -10,7 +10,7 @@
     "module": "ES2020",
     "esModuleInterop": true,
     "isolatedModules": true,
-    "moduleResolution": "Bundler",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
 
     /* type checking */
