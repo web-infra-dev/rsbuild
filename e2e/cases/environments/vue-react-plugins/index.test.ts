@@ -3,13 +3,13 @@ import { expect } from '@playwright/test';
 
 rspackOnlyTest('should build basic Vue jsx correctly', async ({ page }) => {
   console.time('rsbuild');
-  console.log('start: ', Date.now());
+  console.log('start: ', process.pid, Date.now());
 
   const rsbuild = await build({
     cwd: __dirname,
     page,
   });
-  console.log('end  : ', Date.now());
+  console.log('end  : ', process.pid, Date.now());
 
   console.timeEnd('rsbuild');
 
