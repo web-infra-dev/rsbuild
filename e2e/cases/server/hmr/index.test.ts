@@ -24,12 +24,6 @@ rspackOnlyTest('HMR should work by default', async ({ page }) => {
           index: join(cwd, 'test-temp-src/index.ts'),
         },
       },
-      dev: {
-        client: {
-          host: '',
-          port: '',
-        },
-      },
     },
   });
 

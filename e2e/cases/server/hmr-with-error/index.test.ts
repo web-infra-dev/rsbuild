@@ -27,12 +27,6 @@ rspackOnlyTest(
             index: join(cwd, 'test-temp-src/index.ts'),
           },
         },
-        dev: {
-          client: {
-            host: '',
-            port: '',
-          },
-        },
       },
     });
 
