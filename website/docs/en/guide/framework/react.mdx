@@ -283,3 +283,78 @@ export default defineConfig({
 ```
 
 > You can refer to this example: [stylex](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/stylex).
+
+## Customize JSX
+
+Rsbuild uses SWC to compile JSX, you can customize the functions used by the compiled JSX code:
+
+- If the JSX runtime is `automatic`, use [jsxImportSource](/plugins/list/plugin-react#swcreactoptionsimportsource) to customize the import path of the JSX runtime, for example, import from Preact or Emotion.
+- If the JSX runtime is `classic`, use `pragma` and `pragmaFrag` to specify the JSX function and Fragment component.
+
+> `@rsbuild/plugin-react` uses `automatic` as the default JSX runtime, see [swcReactOptions.runtime](/plugins/list/plugin-react#swcreactoptionsruntime).
+
+### Via configuration
+
+Configure through the `@rsbuild/plugin-react`'s [swcReactOptions](/plugins/list/plugin-react#swcreactoptions).
+
+- If `runtime` is `automatic`:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [
+    pluginReact({
+      swcReactOptions: {
+        runtime: 'automatic',
+        jsxImportSource: '@emotion/react',
+      },
+    }),
+  ],
+});
+```
+
+- If `runtime` is `classic`:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [
+    pluginReact({
+      swcReactOptions: {
+        runtime: 'classic',
+        pragma: 'h',
+        pragmaFrag: 'Fragment',
+      },
+    }),
+  ],
+});
+```
+
+### Via comments
+
+You can also customize the JSX behavior by adding specific comments at the top of a single JSX or TSX file, which will take precedence over the configurations.
+
+- If the JSX runtime is `automatic`:
+
+```tsx title="App.tsx"
+/** @jsxImportSource custom-jsx-library */
+
+const App = () => {
+  return <div>Hello World</div>;
+};
+```
+
+- 当 JSX 的 runtime 为 `classic` 时：
+
+```tsx title="App.tsx"
+/** @jsx Preact.h */
+/** @jsxFrag Preact.Fragment */
+
+const App = () => {
+  return <div>Hello World</div>;
+};
+```
