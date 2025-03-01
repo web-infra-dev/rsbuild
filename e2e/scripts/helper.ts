@@ -64,8 +64,8 @@ export const globContentJSON = async (path: string, options?: GlobOptions) => {
   return ret;
 };
 
-export const expectFile = async (dir: string) =>
-  await expectPoll(() => fs.existsSync(dir)).toBeTruthy();
+export const expectFile = (dir: string) =>
+  expectPoll(() => fs.existsSync(dir)).toBeTruthy();
 
 export const proxyConsole = (
   types: ConsoleType | ConsoleType[] = ['log', 'warn', 'info', 'error'],
