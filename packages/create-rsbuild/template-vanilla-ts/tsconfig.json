@@ -8,7 +8,7 @@
 
     /* modules */
     "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "bundler",
     "isolatedModules": true,
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
