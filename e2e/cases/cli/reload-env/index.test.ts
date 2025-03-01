@@ -1,7 +1,7 @@
 import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { awaitFileExists, getRandomPort } from '@e2e/helper';
+import { expectFile, getRandomPort } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 // Skipped as it occasionally failed in CI
@@ -34,13 +34,13 @@ test.skip('should restart dev server when .env file is changed', async () => {
     cwd: __dirname,
   });
 
-  await awaitFileExists(distIndex);
+  await expectFile(distIndex);
   expect(fs.readFileSync(distIndex, 'utf-8')).toContain('jack');
 
   fs.rmSync(distIndex, { force: true });
 
   fs.writeFileSync(envLocalFile, 'PUBLIC_NAME=rose');
-  await awaitFileExists(distIndex);
+  await expectFile(distIndex);
   expect(fs.readFileSync(distIndex, 'utf-8')).toContain('rose');
 
   devProcess.kill();

@@ -1,7 +1,7 @@
 import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { awaitFileExists, rspackOnlyTest, webpackOnlyTest } from '@e2e/helper';
+import { expectFile, rspackOnlyTest, webpackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import fse from 'fs-extra';
 
@@ -28,7 +28,7 @@ rspackOnlyTest('should support restart build when config changed', async () => {
     cwd: __dirname,
   });
 
-  await awaitFileExists(distIndexFile);
+  await expectFile(distIndexFile);
   expect(fs.readFileSync(distIndexFile, 'utf-8')).toContain('hello!');
   fs.rmSync(distIndexFile, { force: true });
 
@@ -43,12 +43,12 @@ rspackOnlyTest('should support restart build when config changed', async () => {
 `,
   );
 
-  await awaitFileExists(distIndexFile);
+  await expectFile(distIndexFile);
   expect(fs.readFileSync(distIndexFile, 'utf-8')).toContain('hello!');
   fs.rmSync(distIndexFile, { force: true });
 
   fse.outputFileSync(indexFile, `console.log('hello2!');`);
-  await awaitFileExists(distIndexFile);
+  await expectFile(distIndexFile);
   expect(fs.readFileSync(distIndexFile, 'utf-8')).toContain('hello2!');
 
   process.kill();
@@ -85,7 +85,7 @@ export default defineConfig({
       cwd: __dirname,
     });
 
-    await awaitFileExists(distIndexFile);
+    await expectFile(distIndexFile);
     expect(fs.readFileSync(distIndexFile, 'utf-8')).toContain('hello!');
     fs.rmSync(distIndexFile, { force: true });
 
@@ -106,12 +106,12 @@ export default defineConfig({
 `,
     );
 
-    await awaitFileExists(distIndexFile);
+    await expectFile(distIndexFile);
     expect(fs.readFileSync(distIndexFile, 'utf-8')).toContain('hello!');
     fs.rmSync(distIndexFile, { force: true });
 
     fse.outputFileSync(indexFile, `console.log('hello2!');`);
-    await awaitFileExists(distIndexFile);
+    await expectFile(distIndexFile);
     expect(fs.readFileSync(distIndexFile, 'utf-8')).toContain('hello2!');
 
     process.kill();
