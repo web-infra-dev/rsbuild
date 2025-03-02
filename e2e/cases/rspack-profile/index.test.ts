@@ -2,7 +2,7 @@ import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
-import { rspackOnlyTest, waitFor } from '@e2e/helper';
+import { expectPoll, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest(
@@ -23,16 +23,14 @@ rspackOnlyTest(
       logs.push(stripAnsi(output));
     });
 
-    expect(
-      await waitFor(() => logs.some((log) => log.includes('built in'))),
+    await expectPoll(() =>
+      logs.some((log) => log.includes('built in')),
     ).toBeTruthy();
 
     // quit process
     devProcess.stdin?.write('q\n');
-    expect(
-      await waitFor(() =>
-        logs.some((log) => log.includes('saved Rspack profile file to')),
-      ),
+    await expectPoll(() =>
+      logs.some((log) => log.includes('saved Rspack profile file to')),
     ).toBeTruthy();
 
     const profileDir = logs
@@ -67,14 +65,12 @@ rspackOnlyTest(
       logs.push(stripAnsi(output));
     });
 
-    expect(
-      await waitFor(() => logs.some((log) => log.includes('built in'))),
+    await expectPoll(() =>
+      logs.some((log) => log.includes('built in')),
     ).toBeTruthy();
 
-    expect(
-      await waitFor(() =>
-        logs.some((log) => log.includes('saved Rspack profile file to')),
-      ),
+    await expectPoll(() =>
+      logs.some((log) => log.includes('saved Rspack profile file to')),
     ).toBeTruthy();
 
     const profileDir = logs

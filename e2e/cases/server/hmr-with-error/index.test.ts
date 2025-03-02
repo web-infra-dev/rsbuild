@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev, proxyConsole, rspackOnlyTest, waitFor } from '@e2e/helper';
+import { dev, expectPoll, proxyConsole, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
@@ -45,10 +45,8 @@ rspackOnlyTest(
         ),
     );
 
-    expect(
-      await waitFor(() =>
-        logs.some((log) => log.includes('Module build failed')),
-      ),
+    await expectPoll(() =>
+      logs.some((log) => log.includes('Module build failed')),
     ).toBeTruthy();
 
     await fs.promises.writeFile(

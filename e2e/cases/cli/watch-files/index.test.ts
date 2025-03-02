@@ -1,7 +1,7 @@
 import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { awaitFileExists, getRandomPort, rspackOnlyTest } from '@e2e/helper';
+import { expectFile, getRandomPort, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const dist = path.join(__dirname, 'dist');
@@ -30,14 +30,14 @@ rspackOnlyTest(
     });
 
     // the first build
-    await awaitFileExists(distIndexFile);
+    await expectFile(distIndexFile);
 
     fs.rmSync(tempOutputFile, { force: true });
     // temp config changed and trigger rebuild
     fs.writeFileSync(extraConfigFile, 'export default 2;');
 
     // rebuild and generate dist files
-    await awaitFileExists(tempOutputFile);
+    await expectFile(tempOutputFile);
     expect(fs.readFileSync(tempOutputFile, 'utf-8')).toEqual('2');
 
     childProcess.kill();
@@ -56,7 +56,7 @@ rspackOnlyTest(
       },
     });
 
-    await awaitFileExists(distIndexFile);
+    await expectFile(distIndexFile);
 
     fs.rmSync(distIndexFile);
     // temp config changed
@@ -82,7 +82,7 @@ rspackOnlyTest(
 
     // Fix occasional 'directory not empty' error when wait and rm dist.
     // Sometimes the dist directory exists, but the files in the dist directory have not been completely written.
-    await awaitFileExists(distIndexFile);
+    await expectFile(distIndexFile);
 
     fs.rmSync(distIndexFile);
     // temp config changed

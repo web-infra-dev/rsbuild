@@ -1,7 +1,7 @@
 import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { awaitFileExists, getRandomPort, rspackOnlyTest } from '@e2e/helper';
+import { expectFile, getRandomPort, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 const tempConfigPath = './test-temp-config.ts';
@@ -24,14 +24,14 @@ rspackOnlyTest(
       },
     });
 
-    await awaitFileExists(dist);
+    await expectFile(dist);
 
     fs.rmSync(dist, { recursive: true });
     // temp config changed
     fs.writeFileSync(extraConfigFile, 'export default { foo: 2 };');
 
     // rebuild and generate dist files
-    await awaitFileExists(dist);
+    await expectFile(dist);
     expect(fs.existsSync(path.join(dist, 'temp.txt')));
 
     childProcess.kill();

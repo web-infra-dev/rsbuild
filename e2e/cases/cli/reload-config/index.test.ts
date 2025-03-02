@@ -1,7 +1,7 @@
 import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { awaitFileExists, getRandomPort, rspackOnlyTest } from '@e2e/helper';
+import { expectFile, getRandomPort, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest(
   'should restart dev server and reload config when config file changed',
@@ -33,7 +33,7 @@ rspackOnlyTest(
       cwd: __dirname,
     });
 
-    await awaitFileExists(dist1);
+    await expectFile(dist1);
 
     fs.writeFileSync(
       configFile,
@@ -50,7 +50,7 @@ rspackOnlyTest(
     };`,
     );
 
-    await awaitFileExists(dist2);
+    await expectFile(dist2);
 
     process.kill();
   },
