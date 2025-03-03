@@ -11,6 +11,11 @@ import type {
   ServerConfig,
 } from '../types';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
+import {
+  registerCleanup,
+  removeCleanup,
+  setupGracefulShutdown,
+} from './gracefulShutdown';
 import { gzipMiddleware } from './gzipMiddleware';
 import {
   type StartServerResult,
@@ -219,9 +224,16 @@ export async function startProdServer(
         const urls = getAddressUrls({ protocol, port, host });
         const cliShortcutsEnabled = isCliShortcutsEnabled(config.dev);
 
+        const cleanupGracefulShutdown = setupGracefulShutdown();
+
         const closeServer = async () => {
+          // ensure closeServer is only called once
+          removeCleanup(closeServer);
+          cleanupGracefulShutdown();
           await Promise.all([server.close(), serverTerminator()]);
         };
+
+        registerCleanup(closeServer);
 
         const printUrls = () =>
           printServerURLs({
