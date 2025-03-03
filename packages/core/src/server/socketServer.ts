@@ -79,7 +79,7 @@ export class SocketServer {
       this.heartbeatTimer = setTimeout(
         this.checkSockets,
         CHECK_SOCKETS_INTERVAL,
-      );
+      ).unref();
     }
   };
 
@@ -105,7 +105,10 @@ export class SocketServer {
       logger.error(err);
     });
 
-    this.heartbeatTimer = setTimeout(this.checkSockets, CHECK_SOCKETS_INTERVAL);
+    this.heartbeatTimer = setTimeout(
+      this.checkSockets,
+      CHECK_SOCKETS_INTERVAL,
+    ).unref();
 
     this.wsServer.on('connection', (socket, req) => {
       // /rsbuild-hmr?compilationId=web
