@@ -150,8 +150,7 @@ export function pluginModuleFederation(): RsbuildPlugin {
         // adding to include and let SWC transform it
         config.source.include = [
           ...(config.source.include || []),
-          /@module-federation[\\/]sdk/,
-          /@module-federation[\\/]runtime/,
+          /@module-federation[\\/]/,
         ];
       });
 
