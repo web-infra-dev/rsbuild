@@ -50,7 +50,7 @@
     "nx": "^20.4.6",
     "prettier": "^3.5.2",
     "simple-git-hooks": "^2.11.1",
-    "typescript": "^5.7.3",
+    "typescript": "^5.8.2",
     "vitest": "^3.0.6"
   },
   "packageManager": "pnpm@10.5.2",
