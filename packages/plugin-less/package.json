@@ -40,7 +40,7 @@
     "less": "^4.2.2",
     "less-loader": "^12.2.0",
     "prebundle": "1.2.7",
-    "typescript": "^5.7.3"
+    "typescript": "^5.8.2"
   },
   "peerDependencies": {
     "@rsbuild/core": "1.x"
