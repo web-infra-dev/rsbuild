@@ -41,8 +41,8 @@ function getInject(entryName: string, config: NormalizedEnvironmentConfig) {
   });
 }
 
-const getDefaultTemplateContent = (mountId: string) =>
-  `<!doctype html><html><head></head><body><div id="${mountId}"></div></body></html>`;
+const getDefaultTemplateContent = (mountId: string, lang: string) =>
+  `<!doctype html lang=${lang}><html><head></head><body><div id="${mountId}"></div></body></html>`;
 
 const existTemplatePath = new Set<string>();
 
@@ -63,7 +63,10 @@ export async function getTemplate(
   if (!templatePath) {
     return {
       templatePath: undefined,
-      templateContent: getDefaultTemplateContent(config.html.mountId),
+      templateContent: getDefaultTemplateContent(
+        config.html.mountId,
+        config.html.lang,
+      ),
     };
   }
 

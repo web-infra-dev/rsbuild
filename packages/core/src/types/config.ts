@@ -1334,6 +1334,7 @@ export interface HtmlConfig {
 }
 
 export type NormalizedHtmlConfig = HtmlConfig & {
+  lang: string;
   meta: ChainedHtmlOption<MetaOptions>;
   title: ChainedHtmlOption<string>;
   mountId: string;
