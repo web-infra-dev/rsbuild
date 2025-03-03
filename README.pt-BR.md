@@ -84,7 +84,7 @@ Para começar a usar o Rsbuild, consulte a seção [Início Rápido](https://rsb
 - [Rslib](https://github.com/web-infra-dev/rslib): A ferramenta de compilação de bibliotecas desenvolvida pelo Rsbuild.
 - [Modern.js](https://github.com/web-infra-dev/modern.js): Uma estrutura React progressiva baseada no Rsbuild.
 - [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack): Uma lista com curadoria de coisas incríveis relacionadas ao Rspack e ao Rsbuild.
-- [rspack-examples](https://github.com/rspack-contrib/rspack-examples): Exemplos para Rspack, Rsbuild, Rspress e Rsdoctor.
+- [rstack-examples](https://github.com/rspack-contrib/rstack-examples): Exemplos demonstrando ferramentas do ecossistema Rstack (Rspack, Rsbuild, Rspress, Rsdoctor).
 - [storybook-rsbuild](https://github.com/rspack-contrib/storybook-rsbuild): Construtor de livros de histórias desenvolvido pelo Rsbuild.
 - [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template)：Use esse modelo para criar seu próprio plug-in do Rsbuild.
 - [rstack-design-resources](https://github.com/rspack-contrib/rstack-design-resources)：Recursos de design para Rspack, Rsbuild, Rspress e Rsdoctor.
