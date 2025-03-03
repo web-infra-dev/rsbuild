@@ -215,4 +215,13 @@ describe('plugin-html', () => {
       expect(config).toMatchSnapshot();
     },
   );
+
+  it('should have "lang" attribute', async () => {
+    const rsbuild = await createStubRsbuild({
+      plugins: [pluginEntry(), pluginHtml()],
+      rsbuildConfig: { html: { lang: 'en' } },
+    });
+    const config = await rsbuild.unwrapConfig();
+    expect(config).toMatchSnapshot();
+  });
 });
