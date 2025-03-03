@@ -10,11 +10,14 @@ const handleTermination = async (
   _?: string,
   exitCode?: number,
 ): Promise<void> => {
-  await Promise.all([...cleanupCallbacks].map((cb) => cb()));
-
-  // Set exit code and terminate process
-  process.exitCode ??= exitCode ? 128 + exitCode : undefined;
-  process.exit();
+  try {
+    await Promise.all([...cleanupCallbacks].map((cb) => cb()));
+  } finally {
+    // Set exit code and terminate process
+    // Add 128 to signal number as per POSIX convention for signal-terminated processes
+    process.exitCode ??= exitCode ? 128 + exitCode : undefined;
+    process.exit();
+  }
 };
 
 /**
