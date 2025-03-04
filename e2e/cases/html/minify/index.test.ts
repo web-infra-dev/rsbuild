@@ -29,7 +29,7 @@ rspackOnlyTest(
 
     expect(content.includes('html,body{margin:0;padding:0}')).toBeTruthy();
     expect(
-      content.includes('let n=document.createElement("div")'),
+      /let \w+=document\.createElement\("div"\)/.test(content),
     ).toBeTruthy();
 
     await rsbuild.close();
