@@ -608,7 +608,7 @@ export interface PerformanceConfig {
   /**
    * Configure the chunk splitting strategy.
    */
-  chunkSplit?: RsbuildChunkSplit;
+  chunkSplit?: ChunkSplit;
 
   /**
    * Analyze the size of output files.
@@ -655,7 +655,7 @@ export interface PerformanceConfig {
 
 export interface NormalizedPerformanceConfig extends PerformanceConfig {
   printFileSize: PrintFileSizeOptions | boolean;
-  chunkSplit: RsbuildChunkSplit;
+  chunkSplit: ChunkSplit;
 }
 
 export type SplitChunks = Configuration extends {
@@ -693,7 +693,7 @@ export interface SplitCustom extends BaseSplitRules {
   splitChunks?: SplitChunks;
 }
 
-export type RsbuildChunkSplit = BaseChunkSplit | SplitBySize | SplitCustom;
+export type ChunkSplit = BaseChunkSplit | SplitBySize | SplitCustom;
 
 export type DistPathConfig = {
   /**
