@@ -27,6 +27,11 @@ import {
   getMiddlewares,
 } from './getDevMiddlewares';
 import {
+  registerCleanup,
+  removeCleanup,
+  setupGracefulShutdown,
+} from './gracefulShutdown';
+import {
   type StartServerResult,
   getAddressUrls,
   getRoutes,
@@ -128,6 +133,7 @@ export async function createDevServer<
   const { port, host, https, portTip } = await getServerConfig({
     config,
   });
+  const { middlewareMode } = config.server;
   const devConfig = formatDevConfig(config.dev, port);
   const routes = getRoutes(options.context);
   const root = options.context.rootPath;
@@ -224,10 +230,21 @@ export async function createDevServer<
   let fileWatcher: WatchFilesResult | undefined;
   let devMiddlewares: GetMiddlewaresResult | undefined;
 
+  const cleanupGracefulShutdown = middlewareMode
+    ? null
+    : setupGracefulShutdown();
+
   const closeServer = async () => {
+    // ensure closeServer is only called once
+    removeCleanup(closeServer);
+    cleanupGracefulShutdown?.();
     await options.context.hooks.onCloseDevServer.callBatch();
     await Promise.all([devMiddlewares?.close(), fileWatcher?.close()]);
   };
+
+  if (!middlewareMode) {
+    registerCleanup(closeServer);
+  }
 
   const beforeCreateCompiler = () => {
     printUrls();
@@ -312,7 +329,7 @@ export async function createDevServer<
   const { default: connect } = await import('../../compiled/connect/index.js');
   const middlewares = connect();
 
-  const httpServer = config.server.middlewareMode
+  const httpServer = middlewareMode
     ? null
     : await createHttpServer({
         serverConfig: config.server,
