@@ -95,7 +95,12 @@ export function pluginVue(options: PluginVueOptions = {}): RsbuildPlugin {
         // Support for lang="postcss" and lang="pcss" in SFC
         chain.module.rule(CHAIN_ID.RULE.CSS).test(/\.(?:css|postcss|pcss)$/);
 
-        chain.plugin(CHAIN_ID.PLUGIN.VUE_LOADER_PLUGIN).use(VueLoaderPlugin);
+        chain
+          .plugin(CHAIN_ID.PLUGIN.VUE_LOADER_PLUGIN)
+          // Ensure that the VueLoaderPlugin is applied before the ReactFastRefreshPlugin
+          // otherwise the VueLoaderPlugin will throw an error for `builtin:react-refresh-loader`
+          .before(CHAIN_ID.PLUGIN.REACT_FAST_REFRESH)
+          .use(VueLoaderPlugin);
       });
 
       applySplitChunksRule(api, options.splitChunks);
