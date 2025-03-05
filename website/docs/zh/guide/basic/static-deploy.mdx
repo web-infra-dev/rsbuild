@@ -134,10 +134,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Use Node.js 20
-        uses: actions/setup-node@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       # 如果你使用其他的包管理器，如 yarn 或 pnpm，
       # 你需要先安装它们
