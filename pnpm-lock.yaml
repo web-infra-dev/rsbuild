@@ -476,9 +476,6 @@ importers:
       '@rsbuild/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@rsbuild/plugin-react':
-        specifier: workspace:*
-        version: link:../../packages/plugin-react
       '@rsbuild/plugin-vue':
         specifier: workspace:*
         version: link:../../packages/plugin-vue
