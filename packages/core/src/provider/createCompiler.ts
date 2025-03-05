@@ -11,17 +11,72 @@ import {
 } from '../helpers';
 import { registerDevHook } from '../hooks';
 import { logger } from '../logger';
-import type { DevConfig, Rspack, ServerConfig } from '../types';
+import type {
+  DevConfig,
+  InternalContext,
+  Rspack,
+  ServerConfig,
+} from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
-function cutPath(filePath: string, root: string) {
+// keep the last 3 parts of the path to make logs clean
+function cutPath(originalFilePath: string, root: string) {
   const prefix = root.endsWith(sep) ? root : root + sep;
+
+  let filePath = originalFilePath;
   if (filePath.startsWith(prefix)) {
-    return filePath.slice(prefix.length);
+    filePath = filePath.slice(prefix.length);
   }
 
   const parts = filePath.split(sep).filter(Boolean);
   return parts.length > 3 ? parts.slice(-3).join(sep) : parts.join(sep);
+}
+
+function isLikelyFile(filePath: string): boolean {
+  const lastSegment = filePath.split(sep).pop() || '';
+  return lastSegment.includes('.');
+}
+
+function formatFileList(paths: string[], rootPath: string) {
+  let files = paths.filter(isLikelyFile);
+
+  // if no files, use the first path as the file
+  if (files.length === 0) {
+    files = [paths[0]];
+  }
+
+  const fileInfo = files
+    .slice(0, 1)
+    .map((file) => cutPath(file, rootPath))
+    .join(', ');
+
+  if (files.length > 1) {
+    return `${fileInfo} and ${files.length - 1} more`;
+  }
+
+  return fileInfo;
+}
+
+function printBuildLog(compiler: Rspack.Compiler, context: InternalContext) {
+  const changedFiles = compiler.modifiedFiles
+    ? Array.from(compiler.modifiedFiles)
+    : null;
+  if (changedFiles?.length) {
+    const fileInfo = formatFileList(changedFiles, context.rootPath);
+    logger.start(`building ${color.dim(fileInfo)}`);
+    return;
+  }
+
+  const removedFiles = compiler.removedFiles
+    ? Array.from(compiler.removedFiles)
+    : null;
+  if (removedFiles?.length) {
+    const fileInfo = formatFileList(removedFiles, context.rootPath);
+    logger.start(`building ${color.dim(`removed ${fileInfo}`)}`);
+    return;
+  }
+
+  logger.start('build started...');
 }
 
 export async function createCompiler(options: InitConfigsOptions): Promise<{
@@ -63,28 +118,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   compiler.hooks.watchRun.tap('rsbuild:compiling', (compiler) => {
     logRspackVersion();
     if (!isCompiling) {
-      const changedFiles = compiler.modifiedFiles
-        ? Array.from(compiler.modifiedFiles)
-        : [];
-      const removedFiles = compiler.removedFiles
-        ? Array.from(compiler.removedFiles)
-        : [];
-
-      if (changedFiles.length) {
-        const fileInfo = color.dim(
-          changedFiles
-            .map((file) => cutPath(file, context.rootPath))
-            .join(', '),
-        );
-        logger.start(`building ${fileInfo}`);
-      } else if (removedFiles.length) {
-        const fileInfo = removedFiles
-          .map((file) => cutPath(file, context.rootPath))
-          .join(', ');
-        logger.start(`building ${color.dim(`removed ${fileInfo}`)}`);
-      } else {
-        logger.start('build started...');
-      }
+      printBuildLog(compiler, context);
     }
     isCompiling = true;
   });
