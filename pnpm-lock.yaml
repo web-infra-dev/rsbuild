@@ -261,8 +261,8 @@ importers:
   e2e/cases/svelte:
     dependencies:
       svelte:
-        specifier: ^5.20.5
-        version: 5.20.5
+        specifier: ^5.22.5
+        version: 5.22.5
     devDependencies:
       less:
         specifier: ^4.2.2
@@ -448,8 +448,8 @@ importers:
   examples/svelte:
     dependencies:
       svelte:
-        specifier: ^5.20.5
-        version: 5.20.5
+        specifier: ^5.22.5
+        version: 5.22.5
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1000,10 +1000,10 @@ importers:
     dependencies:
       svelte-loader:
         specifier: 3.2.4
-        version: 3.2.4(svelte@5.20.5)
+        version: 3.2.4(svelte@5.22.5)
       svelte-preprocess:
         specifier: ^6.0.3
-        version: 6.0.3(@babel/core@7.26.9)(less@4.2.2)(postcss-load-config@6.0.1(jiti@2.4.2)(postcss@8.5.3)(yaml@2.7.0))(postcss@8.5.3)(sass@1.85.1)(stylus@0.64.0)(svelte@5.20.5)(typescript@5.8.2)
+        version: 6.0.3(@babel/core@7.26.9)(less@4.2.2)(postcss-load-config@6.0.1(jiti@2.4.2)(postcss@8.5.3)(yaml@2.7.0))(postcss@8.5.3)(sass@1.85.1)(stylus@0.64.0)(svelte@5.22.5)(typescript@5.8.2)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1018,8 +1018,8 @@ importers:
         specifier: ^22.13.8
         version: 22.13.8
       svelte:
-        specifier: ^5.20.5
-        version: 5.20.5
+        specifier: ^5.22.5
+        version: 5.22.5
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -2617,6 +2617,11 @@ packages:
   '@socket.io/component-emitter@3.1.2':
     resolution: {integrity: sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==}
 
+  '@sveltejs/acorn-typescript@1.0.5':
+    resolution: {integrity: sha512-IwQk4yfwLdibDlrXVE04jTZYlLnwsTT2PIOQQGNLWfjavGifnk1JD1LcZjZaBTRcxZu2FfPfNLOE04DSu9lqtQ==}
+    peerDependencies:
+      acorn: ^8.9.0
+
   '@svgr/babel-plugin-add-jsx-attribute@8.0.0':
     resolution: {integrity: sha512-b9MIk7yhdS1pMCZM8VeNfUlSKVRhsHZNMl5O9SfaX0l0t5wjdgu4IDzGB8bpnGBBOjGST3rRFVsaaEtI4W6f7g==}
     engines: {node: '>=14'}
@@ -3115,11 +3120,6 @@ packages:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
     peerDependencies:
       acorn: ^6.0.0 || ^7.0.0 || ^8.0.0
-
-  acorn-typescript@1.4.13:
-    resolution: {integrity: sha512-xsc9Xv0xlVfwp2o7sQ+GCQ1PgbkdcpWdTzrwXxO3xDMTAywVS3oXVOcOHuRjAPkS4P9b+yc/qNF15460v+jp4Q==}
-    peerDependencies:
-      acorn: '>=8.9.0'
 
   acorn-walk@8.3.4:
     resolution: {integrity: sha512-ueEepnujpqee2o5aIYnvHU6C0A42MNdsIDeqy5BydrkuC5R1ZuUFnm27EeFJGoEHJQgn3uleRvmTXaJgfXbt4g==}
@@ -6244,8 +6244,8 @@ packages:
       typescript:
         optional: true
 
-  svelte@5.20.5:
-    resolution: {integrity: sha512-dpu2lTPVsAAgZFKpF7A9741sBCdXGogfxFU4aQeVgun7GVNCSVheTzj0FsT7g9OsLhBaMX4lKLwVIvmzQGytmQ==}
+  svelte@5.22.5:
+    resolution: {integrity: sha512-+2BDWVa/rqr34oM+5HFUSmCCPdBBeNqFv2Xc/SSB8kV4iQhWWBNvU9/nd5Dz3PkAGl7Bm/AndS1vY4fe1MgTKA==}
     engines: {node: '>=18'}
 
   svg-parser@2.0.4:
@@ -8390,6 +8390,10 @@ snapshots:
 
   '@socket.io/component-emitter@3.1.2': {}
 
+  '@sveltejs/acorn-typescript@1.0.5(acorn@8.14.0)':
+    dependencies:
+      acorn: 8.14.0
+
   '@svgr/babel-plugin-add-jsx-attribute@8.0.0(@babel/core@7.26.9)':
     dependencies:
       '@babel/core': 7.26.9
@@ -9002,10 +9006,6 @@ snapshots:
       acorn: 8.14.0
 
   acorn-jsx@5.3.2(acorn@8.14.0):
-    dependencies:
-      acorn: 8.14.0
-
-  acorn-typescript@1.4.13(acorn@8.14.0):
     dependencies:
       acorn: 8.14.0
 
@@ -12356,20 +12356,20 @@ snapshots:
 
   svelte-dev-helper@1.1.9: {}
 
-  svelte-hmr@0.14.12(svelte@5.20.5):
+  svelte-hmr@0.14.12(svelte@5.22.5):
     dependencies:
-      svelte: 5.20.5
+      svelte: 5.22.5
 
-  svelte-loader@3.2.4(svelte@5.20.5):
+  svelte-loader@3.2.4(svelte@5.22.5):
     dependencies:
       loader-utils: 2.0.4
-      svelte: 5.20.5
+      svelte: 5.22.5
       svelte-dev-helper: 1.1.9
-      svelte-hmr: 0.14.12(svelte@5.20.5)
+      svelte-hmr: 0.14.12(svelte@5.22.5)
 
-  svelte-preprocess@6.0.3(@babel/core@7.26.9)(less@4.2.2)(postcss-load-config@6.0.1(jiti@2.4.2)(postcss@8.5.3)(yaml@2.7.0))(postcss@8.5.3)(sass@1.85.1)(stylus@0.64.0)(svelte@5.20.5)(typescript@5.8.2):
+  svelte-preprocess@6.0.3(@babel/core@7.26.9)(less@4.2.2)(postcss-load-config@6.0.1(jiti@2.4.2)(postcss@8.5.3)(yaml@2.7.0))(postcss@8.5.3)(sass@1.85.1)(stylus@0.64.0)(svelte@5.22.5)(typescript@5.8.2):
     dependencies:
-      svelte: 5.20.5
+      svelte: 5.22.5
     optionalDependencies:
       '@babel/core': 7.26.9
       less: 4.2.2
@@ -12379,13 +12379,13 @@ snapshots:
       stylus: 0.64.0
       typescript: 5.8.2
 
-  svelte@5.20.5:
+  svelte@5.22.5:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@jridgewell/sourcemap-codec': 1.5.0
+      '@sveltejs/acorn-typescript': 1.0.5(acorn@8.14.0)
       '@types/estree': 1.0.6
       acorn: 8.14.0
-      acorn-typescript: 1.4.13(acorn@8.14.0)
       aria-query: 5.3.2
       axobject-query: 4.1.0
       clsx: 2.1.1
