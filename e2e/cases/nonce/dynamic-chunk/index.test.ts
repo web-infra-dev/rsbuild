@@ -26,3 +26,21 @@ test('should apply nonce to dynamic chunks in prod build', async ({ page }) => {
 
   await rsbuild.close();
 });
+
+test('should apply nonce to preload script tags', async () => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    rsbuildConfig: {
+      performance: {
+        preload: true,
+      },
+    },
+  });
+  const files = await rsbuild.unwrapOutputJSON();
+  const html =
+    files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
+
+  expect(html).toContain(
+    `rel="preload" as="script" nonce="CSP_NONCE_PLACEHOLDER">`,
+  );
+});
