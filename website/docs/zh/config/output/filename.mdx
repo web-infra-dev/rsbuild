@@ -47,6 +47,13 @@ const prodDefaultFilename = {
 
 在生产模式构建后，Rsbuild 会自动在文件名中间添加 hash 值，如果不需要添加，可以将 [output.filenameHash](/config/output/filename-hash) 设置为 `false` 来禁用该行为。
 
+:::tip
+Rsbuild 会基于 `output.filename` 和 [output.distPath](/config/output/dist-path) 来生成最终的文件路径。
+
+查看 [构建产物目录](/guide/basic/output-files) 了解更多。
+
+:::
+
 ## 文件类型
 
 `output.filename` 可以为不同类型的文件设置不同的名称。
@@ -61,8 +68,6 @@ const prodDefaultFilename = {
 - `image`：非 SVG 图片的名称。
 - `media`：视频等媒体资源的名称。
 - `assets`：其他静态资源的名称。例如 [扩展静态资源类型](/guide/basic/static-assets#扩展静态资源类型) 中定义的资源。
-
-> 查看 [构建产物目录](/guide/basic/output-files) 了解更多。
 
 ## 示例
 
