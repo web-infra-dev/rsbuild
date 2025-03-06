@@ -313,18 +313,18 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
     "hints": false,
   },
   "plugins": [
-    RsbuildCorePlugin {
-      "name": "RsbuildCorePlugin",
-    },
-    HotModuleReplacementPlugin {
-      "name": "HotModuleReplacementPlugin",
-    },
     CssExtractRspackPlugin {
       "options": {
         "chunkFilename": "static/css/async/[name].css",
         "filename": "static/css/[name].css",
         "ignoreOrder": true,
       },
+    },
+    RsbuildCorePlugin {
+      "name": "RsbuildCorePlugin",
+    },
+    HotModuleReplacementPlugin {
+      "name": "HotModuleReplacementPlugin",
     },
     HtmlRspackPlugin {
       "options": {

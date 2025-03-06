@@ -7,9 +7,6 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
       "foo": "2",
     },
   },
-  {
-    "name": "RsbuildCorePlugin",
-  },
   MiniCssExtractPlugin {
     "_sortedModulesCache": WeakMap {},
     "options": {
@@ -24,6 +21,9 @@ exports[`webpackConfig > should allow to append and prepend plugins 1`] = `
       "insert": undefined,
       "linkType": "text/css",
     },
+  },
+  {
+    "name": "RsbuildCorePlugin",
   },
   HtmlWebpackPlugin {
     "options": {
