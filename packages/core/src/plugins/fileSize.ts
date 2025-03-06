@@ -42,13 +42,13 @@ const getAssetColor = (size: number) => {
 function getHeader(
   longestFileLength: number,
   longestLabelLength: number,
-  options: PrintFileSizeOptions,
   environmentName: string,
+  showGzipHeader: boolean,
 ) {
   const longestLengths = [longestFileLength, longestLabelLength];
   const rowTypes = [`File (${environmentName})`, 'Size'];
 
-  if (options.compressed) {
+  if (showGzipHeader) {
     rowTypes.push('Gzip');
   }
 
@@ -179,12 +179,15 @@ async function printFileSizes(
   );
 
   if (options.detail !== false) {
+    const showGzipHeader = Boolean(
+      options.compressed && assets.some((item) => item.gzippedSize !== null),
+    );
     logs.push(
       getHeader(
         longestFileLength,
         longestLabelLength,
-        options,
         environmentName,
+        showGzipHeader,
       ),
     );
   }
