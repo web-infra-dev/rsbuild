@@ -1,9 +1,9 @@
-import path from 'node:path';
+import path, { posix } from 'node:path';
 import deepmerge from 'deepmerge';
 import type { AcceptedPlugin, PluginCreator } from 'postcss';
 import { reduceConfigs, reduceConfigsWithContext } from 'reduce-configs';
 import { CSS_REGEX, LOADER_PATH } from '../constants';
-import { castArray } from '../helpers';
+import { castArray, getFilename } from '../helpers';
 import { getCompiledPath } from '../helpers/path';
 import { getCssExtractPlugin } from '../pluginHelper';
 import type {
@@ -356,12 +356,50 @@ export const pluginCss = (): RsbuildPlugin => ({
         });
         rule.use(CHAIN_ID.USE.CSS).options(cssLoaderOptions);
 
+        const isStringExport = cssLoaderOptions.exportType === 'string';
+        if (isStringExport && rule.uses.has(CHAIN_ID.USE.MINI_CSS_EXTRACT)) {
+          rule.uses.delete(CHAIN_ID.USE.MINI_CSS_EXTRACT);
+        }
+
         // CSS imports should always be treated as sideEffects
         rule.merge({ sideEffects: true });
 
         // Enable preferRelative by default, which is consistent with the default behavior of css-loader
         // see: https://github.com/webpack-contrib/css-loader/blob/579fc13/src/plugins/postcss-import-parser.js#L234
         rule.resolve.preferRelative(true);
+
+        // Apply CSS extract plugin if not using style-loader and emitCss is true
+        if (emitCss && !config.output.injectStyles && !isStringExport) {
+          const extractPluginOptions = config.tools.cssExtract.pluginOptions;
+
+          const cssPath = config.output.distPath.css;
+          const cssFilename = getFilename(config, 'css', isProd);
+          const isCssFilenameFn = typeof cssFilename === 'function';
+
+          const cssAsyncPath =
+            config.output.distPath.cssAsync ??
+            (cssPath ? `${cssPath}/async` : 'async');
+
+          chain
+            .plugin(CHAIN_ID.PLUGIN.MINI_CSS_EXTRACT)
+            .use(getCssExtractPlugin(), [
+              {
+                filename: isCssFilenameFn
+                  ? (...args) => {
+                      const name = cssFilename(...args);
+                      return posix.join(cssPath, name);
+                    }
+                  : posix.join(cssPath, cssFilename),
+                chunkFilename: isCssFilenameFn
+                  ? (...args) => {
+                      const name = cssFilename(...args);
+                      return posix.join(cssAsyncPath, name);
+                    }
+                  : posix.join(cssAsyncPath, cssFilename),
+                ...extractPluginOptions,
+              },
+            ]);
+        }
       },
     });
   },

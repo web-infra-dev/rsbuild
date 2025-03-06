@@ -419,6 +419,9 @@ importers:
       '@rsbuild/plugin-react':
         specifier: workspace:*
         version: link:../../packages/plugin-react
+      '@rsbuild/plugin-sass':
+        specifier: workspace:*
+        version: link:../../packages/plugin-sass
       '@types/react':
         specifier: ^19.0.10
         version: 19.0.10
