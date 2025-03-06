@@ -39,11 +39,11 @@ function useFooterData() {
           link: getLink('/guide/basic/cli'),
         },
         {
-          title: 'Configuration',
+          title: t('configuration'),
           link: getLink('/guide/basic/configure-rsbuild'),
         },
         {
-          title: 'Plugin API',
+          title: t('pluginApi'),
           link: getLink('/plugins/dev/index'),
         },
         {

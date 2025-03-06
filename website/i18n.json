@@ -106,5 +106,9 @@
   "community": {
     "en": "Community",
     "zh": "社区"
+  },
+  "configuration": {
+    "en": "Configuration",
+    "zh": "配置"
   }
 }
