@@ -48,6 +48,13 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
     ],
   },
   "plugins": [
+    CssExtractRspackPlugin {
+      "options": {
+        "chunkFilename": "static/css/async/[name].css",
+        "filename": "static/css/[name].css",
+        "ignoreOrder": true,
+      },
+    },
     {
       "name": "RsbuildCorePlugin",
     },

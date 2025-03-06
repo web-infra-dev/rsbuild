@@ -1590,18 +1590,18 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
       "hints": false,
     },
     "plugins": [
-      RsbuildCorePlugin {
-        "name": "RsbuildCorePlugin",
-      },
-      HotModuleReplacementPlugin {
-        "name": "HotModuleReplacementPlugin",
-      },
       CssExtractRspackPlugin {
         "options": {
           "chunkFilename": "static/css/async/[name].css",
           "filename": "static/css/[name].css",
           "ignoreOrder": true,
         },
+      },
+      RsbuildCorePlugin {
+        "name": "RsbuildCorePlugin",
+      },
+      HotModuleReplacementPlugin {
+        "name": "HotModuleReplacementPlugin",
       },
       DefinePlugin {
         "_args": [
