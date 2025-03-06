@@ -47,6 +47,13 @@ Sets the filename of output files.
 
 After the production build, Rsbuild will add a hash in the middle of the filename by default. If you don't need to add it, you can set [output.filenameHash](/config/output/filename-hash) to `false` to disable this behavior.
 
+:::tip
+Rsbuild will generate the final file path based on `output.filename` and [output.distPath](/config/output/dist-path).
+
+See [Output files](/guide/basic/output-files) for more information.
+
+:::
+
 ## File types
 
 `output.filename` can be set differently for different file types.
@@ -61,8 +68,6 @@ Here are the details of each `output.filename` option:
 - `image`: The name of non-SVG images.
 - `media`: The name of media assets, such as video.
 - `assets`: The name of other static assets. Such as the assets defined in [Extend Asset Types](/guide/basic/static-assets#extend-asset-types).
-
-> See [Output files](/guide/basic/output-files) for more information.
 
 ## Example
 
