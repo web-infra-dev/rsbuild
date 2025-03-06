@@ -3,6 +3,7 @@ import { Benchmark } from '../components/Benchmark';
 import { CopyRight } from '../components/Copyright';
 import { Features } from '../components/Features';
 import { Hero } from '../components/Hero';
+import { HomeFooter } from '../components/HomeFooter';
 import { ToolStack } from '../components/ToolStack';
 
 export function HomeLayout() {
@@ -13,6 +14,7 @@ export function HomeLayout() {
       <Features />
       <Benchmark />
       <ToolStack />
+      <HomeFooter />
       <CopyRight />
     </div>
   );

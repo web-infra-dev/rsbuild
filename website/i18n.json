@@ -78,5 +78,37 @@
   "benchmarkDesc": {
     "en": "Combining Rust and TypeScript with a parallelized architecture to bring you the ultimate developer experience",
     "zh": "基于 Rust 和 TypeScript 的高度并行、增量编译架构，构建性能极佳，带来极致的开发体验。"
+  },
+  "guide": {
+    "en": "Guide",
+    "zh": "指南"
+  },
+  "features": {
+    "en": "Features",
+    "zh": "特性"
+  },
+  "migration": {
+    "en": "Migration",
+    "zh": "迁移"
+  },
+  "ecosystem": {
+    "en": "Ecosystem",
+    "zh": "生态"
+  },
+  "cli": {
+    "en": "CLI",
+    "zh": "命令行工具"
+  },
+  "pluginApi": {
+    "en": "Plugin API",
+    "zh": "插件 API"
+  },
+  "community": {
+    "en": "Community",
+    "zh": "社区"
+  },
+  "configuration": {
+    "en": "Configuration",
+    "zh": "配置"
   }
 }
