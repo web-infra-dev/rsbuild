@@ -165,12 +165,38 @@ export type ModifyEnvironmentConfigFn = (
 
 export type EnvironmentContext = {
   index: number;
+  /**
+   * The unique name of the current environment is used to distinguish and locate the
+   * environment, corresponds to the key in the `environments` configuration.
+   */
   name: string;
+  /**
+   * The entry object from the `source.entry` option.
+   */
   entry: RsbuildEntry;
+  /**
+   * The path information for all HTML assets.
+   * This value is an object, the key is the entry name and the value is the relative
+   * path of the HTML file in the dist directory.
+   */
   htmlPaths: Record<string, string>;
+  /**
+   * The absolute path of the output directory, corresponding to the `output.distPath.root`
+   * config of Rsbuild.
+   */
   distPath: string;
+  /**
+   * The browserslist configuration of the current environment.
+   */
   browserslist: string[];
+  /**
+   * The absolute path of the tsconfig.json file, or `undefined` if the tsconfig.json file
+   * does not exist in current project.
+   */
   tsconfigPath?: string;
+  /**
+   * The normalized Rsbuild config for the current environment.
+   */
   config: NormalizedEnvironmentConfig;
 };
 

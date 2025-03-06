@@ -87,7 +87,7 @@ api.modifyRspackConfig((config, { environment }) => {
 
 ### distPath
 
-The absolute path of the output directory, corresponding to the [output.distPath.root](/config/output/dist-path) config in `RsbuildConfig`.
+The absolute path of the output directory, corresponding to the [output.distPath.root](/config/output/dist-path) config of Rsbuild.
 
 - **Type:** `string`
 
@@ -121,7 +121,7 @@ api.modifyRspackConfig((config, { environment }) => {
 
 The path information for all HTML assets.
 
-This API will return an object, the key is the entry name and the value is the relative path of the HTML file in the dist directory.
+This value is an object, the key is the entry name and the value is the relative path of the HTML file in the dist directory.
 
 - **Type:**
 
