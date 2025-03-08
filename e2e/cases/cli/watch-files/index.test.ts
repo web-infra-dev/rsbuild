@@ -62,7 +62,7 @@ rspackOnlyTest(
     // temp config changed
     fs.writeFileSync(extraConfigFile, 'export default 2;');
 
-    await new Promise((resolve) => setTimeout(resolve, 300));
+    await expectFile(tempOutputFile);
     expect(fs.readFileSync(tempOutputFile, 'utf-8')).toEqual('1');
 
     childProcess.kill();
@@ -88,7 +88,7 @@ rspackOnlyTest(
     // temp config changed
     fs.writeFileSync(extraConfigFile, 'export default 2;');
 
-    await new Promise((resolve) => setTimeout(resolve, 300));
+    await expectFile(tempOutputFile);
     expect(fs.readFileSync(tempOutputFile, 'utf-8')).toEqual('1');
 
     childProcess.kill();
