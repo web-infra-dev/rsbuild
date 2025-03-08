@@ -390,7 +390,7 @@ export async function watchFilesForRestart(
 
   const callback = debounce(
     async (filePath) => {
-      watcher.close();
+      await watcher.close();
       if (isBuildWatch) {
         await restartBuild({ filePath });
       } else {
