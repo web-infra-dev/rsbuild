@@ -300,6 +300,27 @@ export class RsbuildHtmlPlugin {
       return name;
     };
 
+    const findDefaultFavicon = async (compilation: Rspack.Compilation) => {
+      if (!compilation.inputFileSystem) {
+        return null;
+      }
+
+      const readdir = promisify(compilation.inputFileSystem.readdir);
+      const expectedFiles = ['ico', 'png', 'svg'].map(
+        (ext) => `favicon.${ext}`,
+      );
+
+      try {
+        const files = (await readdir(
+          path.join(compilation.compiler.context, 'public'),
+        )) as string[];
+
+        return files.find((file) => expectedFiles.includes(file));
+      } catch (error) {
+        return null;
+      }
+    };
+
     const addFavicon = async (
       headTags: HtmlTagObject[],
       favicon: string,
@@ -346,8 +367,11 @@ export class RsbuildHtmlPlugin {
           }
 
           const { headTags, bodyTags } = data;
-          const { favicon, tagConfig, templateContent } =
-            this.options[entryName];
+          const {
+            tagConfig,
+            templateContent,
+            favicon = await findDefaultFavicon(compilation),
+          } = this.options[entryName];
 
           if (!hasTitle(templateContent)) {
             addTitleTag(headTags, data.plugin.options?.title);
