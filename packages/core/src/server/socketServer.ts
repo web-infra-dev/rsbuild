@@ -238,7 +238,12 @@ export class SocketServer {
     };
 
     const statsOptions = getStatsOptions(curStats.compilation.compiler);
-    return curStats.toJson({ ...defaultStats, ...statsOptions });
+    const statsJson = curStats.toJson({ ...defaultStats, ...statsOptions });
+
+    return {
+      statsJson,
+      root: curStats.compilation.compiler.options.context,
+    };
   }
 
   // determine what message should send by stats
@@ -249,19 +254,21 @@ export class SocketServer {
     compilationId: string;
     force?: boolean;
   }) {
-    const stats = this.getStats(compilationId);
+    const result = this.getStats(compilationId);
 
     // this should never happened
-    if (!stats) {
+    if (!result) {
       return null;
     }
+
+    const { statsJson, root } = result;
 
     // web-infra-dev/rspack#6633
     // when initial-chunks change, reload the page
     // e.g: ['index.js'] -> ['index.js', 'lib-polyfill.js']
     const newInitialChunks: Set<string> = new Set();
-    if (stats.entrypoints) {
-      for (const entrypoint of Object.values(stats.entrypoints)) {
+    if (statsJson.entrypoints) {
+      for (const entrypoint of Object.values(statsJson.entrypoints)) {
         const chunks = entrypoint.chunks;
 
         if (!Array.isArray(chunks)) {
@@ -279,7 +286,7 @@ export class SocketServer {
 
     const initialChunks = this.initialChunks[compilationId];
     const shouldReload =
-      Boolean(stats.entrypoints) &&
+      Boolean(statsJson.entrypoints) &&
       Boolean(initialChunks) &&
       !isEqualSet(initialChunks, newInitialChunks);
 
@@ -294,10 +301,10 @@ export class SocketServer {
 
     const shouldEmit =
       !force &&
-      stats &&
-      !stats.errorsCount &&
-      stats.assets &&
-      stats.assets.every((asset: any) => !asset.emitted);
+      statsJson &&
+      !statsJson.errorsCount &&
+      statsJson.assets &&
+      statsJson.assets.every((asset: any) => !asset.emitted);
 
     if (shouldEmit) {
       return this.sockWrite({
@@ -309,11 +316,11 @@ export class SocketServer {
     this.sockWrite({
       type: 'hash',
       compilationId,
-      data: stats.hash,
+      data: statsJson.hash,
     });
 
-    if (stats.errorsCount) {
-      const errors = getAllStatsErrors(stats);
+    if (statsJson.errorsCount) {
+      const errors = getAllStatsErrors(statsJson);
       const { errors: formattedErrors } = formatStatsMessages({
         errors,
         warnings: [],
@@ -324,13 +331,13 @@ export class SocketServer {
         compilationId,
         data: {
           text: formattedErrors,
-          html: genOverlayHTML(formattedErrors),
+          html: genOverlayHTML(formattedErrors, root),
         },
       });
     }
 
-    if (stats.warningsCount) {
-      const warnings = getAllStatsWarnings(stats);
+    if (statsJson.warningsCount) {
+      const warnings = getAllStatsWarnings(statsJson);
       const { warnings: formattedWarnings } = formatStatsMessages({
         warnings,
         errors: [],
