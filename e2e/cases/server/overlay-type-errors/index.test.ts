@@ -29,11 +29,12 @@ test('should display type errors on overlay correctly', async ({ page }) => {
   expect(await firstSpan.textContent()).toEqual('TS2322: ');
   expect(await firstSpan.getAttribute('style')).toEqual('color:#888;');
 
-  // The first link is "<a class="file-link">/src/index.ts:3:1</a>"
+  // The first link is "<a class="file-link">./path/to/src/index.ts:3:1</a>"
   const firstLink = errorOverlay.locator('.file-link').first();
   expect(await firstLink.getAttribute('class')).toEqual('file-link');
+  const linkText = await firstLink.textContent();
   expect(
-    (await firstLink.textContent())?.endsWith('/src/index.ts:3:1'),
+    linkText?.endsWith('/src/index.ts:3:1') && linkText.startsWith('.'),
   ).toBeTruthy();
 
   await rsbuild.close();
