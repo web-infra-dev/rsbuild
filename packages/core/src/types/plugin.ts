@@ -10,6 +10,7 @@ import type {
   NormalizedConfig,
   NormalizedEnvironmentConfig,
   RsbuildConfig,
+  WebpackMerge,
 } from './config';
 import type { RsbuildContext } from './context';
 import type {
@@ -159,7 +160,7 @@ export type ModifyWebpackConfigUtils = ModifyWebpackChainUtils & {
     plugins: WebpackPluginInstance | WebpackPluginInstance[],
   ) => void;
   removePlugin: (pluginName: string) => void;
-  mergeConfig: typeof import('../../compiled/webpack-merge/index.js').merge;
+  mergeConfig: WebpackMerge;
 };
 
 export type ModifyWebpackChainFn = (

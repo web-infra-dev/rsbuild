@@ -1,5 +1,6 @@
 import { rspack } from '@rspack/core';
 import { reduceConfigsAsyncWithContext } from 'reduce-configs';
+import { merge } from 'webpack-merge';
 import { CHAIN_ID, modifyBundlerChain } from '../configChain';
 import { castArray, color, getNodeEnv } from '../helpers';
 import { logger } from '../logger';
@@ -41,8 +42,6 @@ export async function getConfigUtils(
   config: Rspack.Configuration,
   chainUtils: ModifyChainUtils,
 ): Promise<ModifyRspackConfigUtils> {
-  const { merge } = await import('../../compiled/webpack-merge/index.js');
-
   return {
     ...chainUtils,
 
