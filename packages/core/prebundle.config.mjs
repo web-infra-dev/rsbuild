@@ -25,7 +25,6 @@ export default {
     'on-finished',
     'connect',
     'rspack-manifest-plugin',
-    'webpack-merge',
     'html-rspack-plugin',
     'mrmime',
     'tinyglobby',
