@@ -76,6 +76,12 @@ export type ToolsHtmlPluginConfig = ConfigChainWithContext<
   }
 >;
 
+// equivalent to import('webpack-merge').merge
+export type WebpackMerge = <Configuration extends object>(
+  firstConfiguration: Configuration | Configuration[],
+  ...configurations: Configuration[]
+) => Configuration;
+
 export type ModifyRspackConfigUtils = ModifyChainUtils & {
   addRules: (rules: RspackRule | RspackRule[]) => void;
   appendRules: (rules: RspackRule | RspackRule[]) => void;
@@ -86,7 +92,7 @@ export type ModifyRspackConfigUtils = ModifyChainUtils & {
     plugins: BundlerPluginInstance | BundlerPluginInstance[],
   ) => void;
   removePlugin: (pluginName: string) => void;
-  mergeConfig: typeof import('webpack-merge').merge;
+  mergeConfig: WebpackMerge;
   rspack: typeof rspack;
 };
 
