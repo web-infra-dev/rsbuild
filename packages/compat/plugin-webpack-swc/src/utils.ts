@@ -101,7 +101,6 @@ const isBeyondReact17 = async (cwd: string) => {
 
   try {
     const reactPath = require.resolve('react/package.json', { paths: [cwd] });
-
     const reactVersion = JSON.parse(fs.readFileSync(reactPath, 'utf8')).version;
 
     return isVersionBeyond17(reactVersion);
