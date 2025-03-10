@@ -1,3 +1,4 @@
+import { createRequire } from 'node:module';
 import fs from 'node:fs';
 import path from 'node:path';
 import type {
@@ -16,6 +17,8 @@ import type {
   PluginSwcOptions,
   TransformConfig,
 } from './types.js';
+
+const require = createRequire(import.meta.url);
 
 export function applySwcDecoratorConfig(
   swcConfig: Rspack.SwcLoaderOptions,
