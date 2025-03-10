@@ -139,6 +139,11 @@ describe('convertLinksInHtml', () => {
   });
 
   it('should convert Windows absolute path to absolute path', () => {
+    // only run on Windows
+    if (process.platform !== 'win32') {
+      return;
+    }
+
     const root = 'C:\\Users\\username\\project';
     const input =
       '[\u001b[36;1;4mC:\\Users\\username\\project\\src\\index.js\u001b[0m:4:1]\n';
