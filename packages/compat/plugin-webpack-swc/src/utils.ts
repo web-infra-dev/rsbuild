@@ -103,9 +103,9 @@ const isBeyondReact17 = async (cwd: string) => {
     const reactPath = require.resolve('react/package.json', { paths: [cwd] });
 
     const reactVersion = JSON.parse(fs.readFileSync(reactPath, 'utf8')).version;
-  
+
     return isVersionBeyond17(reactVersion);
-  } catch(error) {
+  } catch (error) {
     console.error('Failed to resolve React version:', error);
     return false;
   }
@@ -145,7 +145,7 @@ const PLUGIN_ONLY_OPTIONS: (keyof ObjPluginSwcOptions)[] = [
   'transformLodash',
   'test',
   'exclude',
-  'include' as unknown as keyof ObjPluginSwcOptions, // include is not in SWC config, but we need it as loader condition
+  'include' as keyof ObjPluginSwcOptions, // include is not in SWC config, but we need it as loader condition
 ];
 
 export interface FinalizedConfig {

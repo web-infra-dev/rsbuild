@@ -15,7 +15,7 @@ function patchGlobalLocation() {
   if (!global.location) {
     const href = pathToFileURL(process.cwd()).href + path.sep;
     const location = Object.freeze({ [GLOBAL_PATCHED_SYMBOL]: true, href });
-    global.location = location as unknown as Location;
+    global.location = location as Location;
   }
 }
 

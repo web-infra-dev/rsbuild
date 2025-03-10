@@ -12,7 +12,7 @@ const TEST_BUILDER_CONFIG = {
       version: 'legacy',
     },
   },
-} as unknown as NormalizedConfig;
+} as NormalizedConfig;
 
 const UTILS = { target: 'web', isProd: true } as ModifyChainUtils;
 

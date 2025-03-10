@@ -70,12 +70,14 @@ const initEnvironmentConfigs = (
   specifiedEnvironments?: string[],
 ): Record<string, MergedEnvironmentConfig> => {
   let defaultEntry: RsbuildEntry;
+
   const getDefaultEntryWithMemo = () => {
     if (!defaultEntry) {
       defaultEntry = getDefaultEntry(rootPath);
     }
     return defaultEntry;
   };
+
   const { environments, dev, server, provider, ...rsbuildSharedConfig } =
     normalizedConfig;
 
@@ -111,9 +113,9 @@ const initEnvironmentConfigs = (
                   'progressBar',
                   'lazyCompilation',
                 ]),
-              } as unknown as MergedEnvironmentConfig,
+              } as MergedEnvironmentConfig,
               config as unknown as MergedEnvironmentConfig,
-            ) as unknown as MergedEnvironmentConfig),
+            ) as MergedEnvironmentConfig),
           };
 
           return [name, applyEnvironmentDefaultConfig(environmentConfig)];

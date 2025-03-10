@@ -64,7 +64,7 @@ test('should getRoutes correctly', () => {
           },
         },
       },
-    } as unknown as InternalContext),
+    } as InternalContext),
   ).toEqual([
     {
       entryName: 'index',
