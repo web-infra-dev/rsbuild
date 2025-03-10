@@ -103,7 +103,7 @@ const isBeyondReact17 = async (cwd: string) => {
   
     return isVersionBeyond17(reactVersion);
   } catch(error) {
-    console.error('Error resolving React version:', error);
+    console.error('Failed to resolve React version:', error);
     return false;
   }
 };
