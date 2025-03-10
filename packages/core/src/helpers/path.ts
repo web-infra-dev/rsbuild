@@ -1,8 +1,20 @@
-import { isAbsolute, join, resolve, sep } from 'node:path';
+import { isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { COMPILED_PATH } from '../constants';
 
 export function getAbsolutePath(base: string, filepath: string): string {
   return isAbsolute(filepath) ? filepath : join(base, filepath);
+}
+
+export function getRelativePath(base: string, filepath: string): string {
+  const relativePath = relative(base, filepath);
+
+  if (relativePath === '') {
+    return `.${sep}`;
+  }
+  if (!relativePath.startsWith('.')) {
+    return `.${sep}${relativePath}`;
+  }
+  return relativePath;
 }
 
 export function getCommonParentPath(paths: string[]): string {
