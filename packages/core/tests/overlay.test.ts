@@ -148,7 +148,7 @@ describe('convertLinksInHtml', () => {
     const input =
       '[\u001b[36;1;4mC:\\Users\\username\\project\\src\\index.js\u001b[0m:4:1]\n';
     const expected =
-      '[<span style="color:#6eecf7;font-weight:bold;text-decoration:underline;text-underline-offset:3px;"><a class="file-link" data-file="C:\\Users\\username\\project\\src\\index.js:4:1">C:\\Users\\username\\project\\src\\index.js:4:1</a></span>]\n';
+      '[<span style="color:#6eecf7;font-weight:bold;text-decoration:underline;text-underline-offset:3px;"><a class="file-link" data-file="C:\\Users\\username\\project\\src\\index.js:4:1">.\\src\\index.js:4:1</a></span>]\n';
     expect(convertLinksInHtml(ansiHTML(input), root)).toEqual(expected);
   });
 });
