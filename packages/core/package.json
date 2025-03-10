@@ -58,9 +58,9 @@
     "jiti": "^2.4.2"
   },
   "devDependencies": {
-    "@rslib/core": "0.5.2",
+    "@rslib/core": "0.5.3",
     "@types/connect": "3.4.38",
-    "@types/node": "^22.13.8",
+    "@types/node": "^22.13.10",
     "@types/on-finished": "2.3.4",
     "@types/webpack-bundle-analyzer": "4.7.0",
     "@types/ws": "^8.18.0",
