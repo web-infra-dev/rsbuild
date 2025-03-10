@@ -128,7 +128,7 @@ describe('convertLinksInHtml', () => {
     expect(convertLinksInHtml(ansiHTML(input2))).toEqual(expected2);
   });
 
-  it('should convert relative path to absolute path', () => {
+  it('should convert relative path as expected', () => {
     const root = '/path/to';
     const input = '[\u001b[36;1;4m./src/index.js\u001b[0m:4:1]\n';
     const expected =
@@ -138,7 +138,7 @@ describe('convertLinksInHtml', () => {
     expect(convertLinksInHtml(ansiHTML(input), root)).toEqual(expected);
   });
 
-  it('should convert Windows absolute path to absolute path', () => {
+  it('should convert Windows absolute path as expected', () => {
     // only run on Windows
     if (process.platform !== 'win32') {
       return;

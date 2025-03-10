@@ -1,4 +1,5 @@
-import { getAbsolutePath, getRelativePath } from '../helpers';
+import path from 'node:path';
+import { getRelativePath } from '../helpers';
 import ansiHTML from './ansiHTML';
 import { escapeHtml } from './helper';
 
@@ -20,8 +21,11 @@ export function convertLinksInHtml(text: string, root?: string): string {
     const hasClosingSpan = file.includes('</span>') && !file.includes('<span');
     const filePath = hasClosingSpan ? file.replace('</span>', '') : file;
     const suffix = hasClosingSpan ? '</span>' : '';
-    const absolutePath = root ? getAbsolutePath(root, filePath) : filePath;
-    const relativePath = root ? getRelativePath(root, filePath) : filePath;
+    const isAbsolute = path.isAbsolute(filePath);
+    const absolutePath =
+      root && !isAbsolute ? path.join(root, filePath) : filePath;
+    const relativePath =
+      root && isAbsolute ? getRelativePath(root, filePath) : filePath;
 
     return `<a class="file-link" data-file="${absolutePath}">${relativePath}</a>${suffix}`;
   });
