@@ -39,9 +39,9 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.5.2",
+    "@rslib/core": "0.5.3",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.13.8",
+    "@types/node": "^22.13.10",
     "babel-loader": "10.0.0",
     "prebundle": "1.2.7",
     "typescript": "^5.8.2"

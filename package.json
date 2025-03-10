@@ -51,7 +51,7 @@
     "prettier": "^3.5.3",
     "simple-git-hooks": "^2.11.1",
     "typescript": "^5.8.2",
-    "vitest": "^3.0.7"
+    "vitest": "^3.0.8"
   },
   "packageManager": "pnpm@10.6.1",
   "engines": {

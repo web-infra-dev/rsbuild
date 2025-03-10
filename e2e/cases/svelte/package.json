@@ -3,7 +3,7 @@
   "name": "@e2e/svelte",
   "version": "1.0.0",
   "dependencies": {
-    "svelte": "^5.22.5"
+    "svelte": "^5.22.6"
   },
   "devDependencies": {
     "less": "^4.2.2",
