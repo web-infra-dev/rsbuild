@@ -192,7 +192,7 @@ Rsbuild will set different default values of Browserslist according to [output.t
 
 ### Web target
 
-The default values of web target are as follows:
+If `output.target` is `web`, Rsbuild will use the following Browserslist by default:
 
 ```yaml title=".browserslistrc"
 chrome >= 87
@@ -201,11 +201,11 @@ firefox >= 78
 safari >= 14
 ```
 
-Under this browser range, JavaScript code will be compatible with browsers that support [native ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules).
+With this browser range, the build output will be compatible with browsers that support [native ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules).
 
 ### Node target
 
-Node target will be compatible with Node.js 16.0 by default.
+If `output.target` is `node`, Rsbuild will default to outputting bundles that run on Node.js 16.0 or later.
 
 ```yaml title=".browserslistrc"
 node >= 16
@@ -213,18 +213,7 @@ node >= 16
 
 ### Web Workers target
 
-The default Browserslist of the web worker target is consistent with the web target.
-
-```yaml title=".browserslistrc"
-chrome >= 87
-edge >= 88
-firefox >= 78
-safari >= 14
-```
-
-### Service Worker target
-
-The default Browserslist of the service worker target is consistent with the web target.
+If `output.target` is `web-worker`, Rsbuild will default to using the following Browserslist (consistent with the `web` target):
 
 ```yaml title=".browserslistrc"
 chrome >= 87
