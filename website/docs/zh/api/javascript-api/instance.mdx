@@ -528,17 +528,26 @@ console.log(rspackConfigs);
 
 ```ts
 type InspectConfigOptions = {
-  // 查看指定环境下的配置
-  // 默认为 "development"，可以设置为 "production"
+  /**
+   * 检查指定 mode 下的配置
+   * 可选值：'development' 或 'production'
+   * @default 'development'
+   */
   mode?: RsbuildMode;
-  // 是否开启冗余模式，展示配置中函数的完整内容
-  // 默认为 `false`
+  /**
+   * 启用详细模式，显示配置中函数的完整内容
+   * @default false
+   */
   verbose?: boolean;
-  // 指定输出路径
-  // 默认为 `output.distPath.root` 的值
+  /**
+   * 指定检查结果的输出路径
+   * @default 'output.distPath.root'
+   */
   outputPath?: string;
-  // 是否将结果写入到磁盘中
-  // 默认为 `false`
+  /**
+   * 是否将检查结果写入磁盘
+   * @default false
+   */
   writeToDisk?: boolean;
 };
 

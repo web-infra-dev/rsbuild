@@ -505,17 +505,27 @@ The method serializes these configurations to strings and optionally writes them
 
 ```ts
 type InspectConfigOptions = {
-  // View the config in the specified environment
-  // defaults to "development", can be set to "production"
+  /**
+   * Inspect the config in the specified mode.
+   * Available options: 'development' or 'production'.
+   * @default 'development'
+   */
   mode?: RsbuildMode;
-  // Whether to enable verbose mode, display the complete content of the function in the config
-  // defaults to `false`
+  /**
+   * Enables verbose mode to display the complete function
+   * content in the configuration.
+   * @default false
+   */
   verbose?: boolean;
-  // Specify the output path
-  // defaults to the value of `output.distPath.root`
+  /**
+   * Specify the output path for inspection results.
+   * @default 'output.distPath.root'
+   */
   outputPath?: string;
-  // Whether to write the result to disk
-  // defaults to `false`
+  /**
+   * Whether to write the inspection results to disk.
+   * @default false
+   */
   writeToDisk?: boolean;
 };
 
