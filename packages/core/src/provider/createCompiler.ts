@@ -100,10 +100,10 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     );
   }
 
-  const compiler =
-    rspackConfigs.length === 1
-      ? rspack(rspackConfigs[0])
-      : rspack(rspackConfigs);
+  const isMultiCompiler = rspackConfigs.length > 1;
+  const compiler = isMultiCompiler
+    ? rspack(rspackConfigs)
+    : rspack(rspackConfigs[0]);
 
   let isVersionLogged = false;
   let isCompiling = false;
@@ -142,7 +142,9 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
       if (c.time) {
         const time = prettyTime(c.time / 1000);
         const { name } = rspackConfigs[index];
-        const suffix = name ? color.gray(` (${name})`) : '';
+
+        // When using multi compiler, print name to distinguish different compilers
+        const suffix = name && isMultiCompiler ? color.gray(` (${name})`) : '';
         logger.ready(`built in ${time}${suffix}`);
       }
     };
@@ -151,7 +153,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
 
     if (!hasErrors) {
       // only print children compiler time when multi compiler
-      if (rspackConfigs.length > 1 && statsJson.children?.length) {
+      if (isMultiCompiler && statsJson.children?.length) {
         statsJson.children.forEach((c, index) => {
           printTime(c, index);
         });
