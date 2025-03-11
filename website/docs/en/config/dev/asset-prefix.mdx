@@ -122,3 +122,9 @@ The differences from the native configuration are as follows:
 - `dev.assetPrefix` default value is the same as [server.base](/config/server/base).
 - `dev.assetPrefix` automatically appends a trailing `/` by default.
 - The value of `dev.assetPrefix` is written to the [process.env.ASSET_PREFIX](/guide/advanced/env-vars#processenvasset_prefix) environment variable (can only be accessed in client code).
+
+## Dynamic asset prefix
+
+Use the `__webpack_public_path__` variable provided by Rspack to dynamically set the URL prefix of static assets in JavaScript code.
+
+See [Rspack - Dynamically set publicPath](https://rspack.dev/config/output#dynamically-set-publicpath).
