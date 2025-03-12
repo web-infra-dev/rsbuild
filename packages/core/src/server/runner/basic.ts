@@ -35,7 +35,6 @@ const getSubPath = (p: string) => {
 export interface IBasicRunnerOptions {
   name: string;
   isBundleOutput: (modulePath: string) => boolean;
-  runInNewContext?: boolean;
   readFileSync: (path: string) => string;
   dist: string;
   compilerOptions: CompilerOptions;
