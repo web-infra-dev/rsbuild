@@ -17,25 +17,48 @@ import type {
 async function modifyRspackConfig(
   context: InternalContext,
   rspackConfig: Rspack.Configuration,
-  utils: ModifyRspackConfigUtils,
+  chainUtils: ModifyChainUtils,
 ) {
   logger.debug('modify Rspack config');
-  let [modifiedConfig] = await context.hooks.modifyRspackConfig.callChain({
+
+  let currentConfig = rspackConfig;
+
+  // Ensure the helpers can always access the latest merged configuration object
+  const proxiedConfig = new Proxy(
+    {},
+    {
+      get(_, prop) {
+        return currentConfig[prop as keyof typeof currentConfig];
+      },
+      set(_, prop, value) {
+        currentConfig[prop as keyof typeof currentConfig] = value;
+        return true;
+      },
+    },
+  );
+
+  const utils = await getConfigUtils(proxiedConfig, chainUtils);
+
+  [currentConfig] = await context.hooks.modifyRspackConfig.callChain({
     environment: utils.environment.name,
     args: [rspackConfig, utils],
   });
 
   if (utils.environment.config.tools?.rspack) {
-    modifiedConfig = await reduceConfigsAsyncWithContext({
-      initial: modifiedConfig,
+    currentConfig = await reduceConfigsAsyncWithContext({
+      initial: currentConfig,
       config: utils.environment.config.tools.rspack,
       ctx: utils,
-      mergeFn: utils.mergeConfig,
+      mergeFn: (...args: Rspack.Configuration[]) => {
+        // Update the reference of the current config
+        currentConfig = utils.mergeConfig.call(utils, args);
+        return currentConfig;
+      },
     });
   }
 
   logger.debug('modify Rspack config done');
-  return modifiedConfig;
+  return currentConfig;
 }
 
 export async function getConfigUtils(
@@ -179,11 +202,7 @@ export async function generateRspackConfig({
 
   let rspackConfig = chain.toConfig();
 
-  rspackConfig = await modifyRspackConfig(
-    context,
-    rspackConfig,
-    await getConfigUtils(rspackConfig, chainUtils),
-  );
+  rspackConfig = await modifyRspackConfig(context, rspackConfig, chainUtils);
 
   validateRspackConfig(rspackConfig);
 
