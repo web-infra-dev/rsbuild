@@ -69,9 +69,27 @@ export type Build = (options?: BuildOptions) => Promise<{
 }>;
 
 export type InspectConfigOptions = {
+  /**
+   * Inspect the config in the specified mode.
+   * Available options: 'development' or 'production'.
+   * @default 'development'
+   */
   mode?: RsbuildMode;
+  /**
+   * Enables verbose mode to display the complete function
+   * content in the configuration.
+   * @default false
+   */
   verbose?: boolean;
+  /**
+   * Specify the output path for inspection results.
+   * @default 'output.distPath.root'
+   */
   outputPath?: string;
+  /**
+   * Whether to write the inspection results to disk.
+   * @default false
+   */
   writeToDisk?: boolean;
 };
 
