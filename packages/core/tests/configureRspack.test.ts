@@ -1,6 +1,11 @@
 import type { RspackPluginInstance } from '@rspack/core';
 import { matchPlugin } from '@scripts/test-helper';
-import { createRsbuild } from '../src';
+import {
+  createRsbuild,
+  defineConfig,
+  mergeRsbuildConfig,
+  rspack,
+} from '../src';
 
 describe('configure Rspack', () => {
   it('should allow tools.rspack to return config', async () => {
@@ -193,5 +198,49 @@ describe('configure Rspack', () => {
 
     const config = await rsbuild.initConfigs();
     expect(config[0].module?.rules?.includes(newRule)).toBeTruthy();
+  });
+
+  test('should merge plugins as expected when using appendPlugins', async () => {
+    const config1 = defineConfig({
+      tools: {
+        rspack: {
+          plugins: [new rspack.BannerPlugin({ banner: 'foo' })],
+        },
+      },
+    });
+
+    const config2 = defineConfig({
+      tools: {
+        rspack(_config, { appendPlugins }) {
+          appendPlugins(new rspack.IgnorePlugin({ resourceRegExp: /\.foo$/ }));
+        },
+      },
+    });
+
+    const config3 = defineConfig({
+      tools: {
+        rspack: {
+          plugins: [new rspack.HtmlRspackPlugin()],
+        },
+      },
+    });
+
+    const mergedConfig = mergeRsbuildConfig(config1, config2, config3);
+
+    const rsbuildInstance = await createRsbuild({
+      rsbuildConfig: mergedConfig,
+    });
+    const config = await rsbuildInstance.initConfigs();
+    const plugins = config[0].plugins || [];
+
+    expect((plugins.pop() as RspackPluginInstance).name).toEqual(
+      'HtmlRspackPlugin',
+    );
+    expect((plugins.pop() as RspackPluginInstance).name).toEqual(
+      'IgnorePlugin',
+    );
+    expect((plugins.pop() as RspackPluginInstance).name).toEqual(
+      'BannerPlugin',
+    );
   });
 });
