@@ -183,3 +183,4 @@ export type {
 } from './types';
 export type { ChainIdentifier } from './configChain';
 export type { RsbuildDevServer } from './server/devServer';
+export type { StartServerResult } from './server/helper';
