@@ -1,3 +1,4 @@
+import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginClientRedirects } from '@rspress/plugin-client-redirects';
 import { pluginRss } from '@rspress/plugin-rss';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
@@ -162,6 +163,7 @@ export default defineConfig({
     },
     plugins: [
       rsbuildPluginOverview,
+      pluginSass(),
       pluginGoogleAnalytics({ id: 'G-L6BZ6TKW4R' }),
       pluginOpenGraph({
         title: 'Rsbuild',
