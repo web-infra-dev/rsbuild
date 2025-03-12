@@ -50,14 +50,13 @@ import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
 
 export default {
   tools: {
-    rspack(config, { appendPlugins }) {
-      if (process.env.RSDOCTOR === 'true') {
-        appendPlugins(
+    rspack: {
+      plugins: [
+        process.env.RSDOCTOR === 'true' &&
           new RsdoctorRspackPlugin({
             // plugin options
           }),
-        );
-      }
+      ],
     },
   },
 };
