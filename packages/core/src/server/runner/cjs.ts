@@ -119,21 +119,15 @@ export class CommonJsRunner extends BasicRunner {
         'specifier',
         'return import(specifier)',
       );
-      const fn = this._options.runInNewContext
-        ? vm.runInNewContext(code, this.globalContext!, {
-            filename: file.path,
-            importModuleDynamically: async (specifier) => {
-              const result = await dynamicImport(specifier);
-              return result;
-            },
-          })
-        : vm.runInThisContext(code, {
-            filename: file.path,
-            importModuleDynamically: async (specifier) => {
-              const result = await dynamicImport(specifier);
-              return result;
-            },
-          });
+      // Runs the compiled code contained by the `vm.Script` within the context of the current `global` object.
+      const fn = vm.runInThisContext(code, {
+        filename: file.path,
+        // Specify how the modules should be loaded during the evaluation of this script when `import()` is called.
+        importModuleDynamically: async (specifier) => {
+          const result = await dynamicImport(specifier);
+          return result;
+        },
+      });
 
       fn.call(m.exports, ...argValues);
 
