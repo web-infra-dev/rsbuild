@@ -165,7 +165,10 @@ export async function createRsbuild(
   options: CreateRsbuildOptions = {},
 ): Promise<RsbuildInstance> {
   const envs = options.loadEnv
-    ? loadEnv(typeof options.loadEnv === 'boolean' ? {} : options.loadEnv)
+    ? loadEnv({
+        cwd: options.cwd,
+        ...(typeof options.loadEnv === 'boolean' ? {} : options.loadEnv),
+      })
     : null;
 
   const config = isFunction(options.rsbuildConfig)
