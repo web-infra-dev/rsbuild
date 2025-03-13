@@ -5,6 +5,8 @@ import type { Build, BuildOptions, Rspack } from '../types';
 import { createCompiler } from './createCompiler';
 import type { InitConfigsOptions } from './initConfigs';
 
+export const RSPACK_BUILD_ERROR = 'Rspack build failed.';
+
 export const build = async (
   initOptions: InitConfigsOptions,
   { watch, compiler: customCompiler }: BuildOptions = {},
@@ -54,7 +56,7 @@ export const build = async (
       if (err) {
         reject(err);
       } else if (stats?.hasErrors()) {
-        reject(new Error('Rspack build failed!'));
+        reject(new Error(RSPACK_BUILD_ERROR));
       }
       // If there is a compilation error, the close method should not be called.
       // Otherwise the bundler may generate an invalid cache.
