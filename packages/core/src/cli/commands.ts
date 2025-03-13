@@ -78,6 +78,12 @@ const applyServerOptions = (command: Command) => {
     .option('--host <host>', 'specify the host that the server listens to');
 };
 
+const applyAllowUnknownOptions = (...commands: Command[]) => {
+  commands.forEach((command) => {
+    command.allowUnknownOptions();
+  });
+};
+
 export function setupCommands(): void {
   const cli = cac('rsbuild');
 
@@ -88,20 +94,23 @@ export function setupCommands(): void {
   applyCommonOptions(cli);
 
   // Allow to run `rsbuild` without any sub-command to trigger dev
-  const devCommand = cli
-    .command('', 'starting the dev server')
-    .alias('dev')
-    .allowUnknownOptions();
-  const buildCommand = cli
-    .command('build', 'build the app for production')
-    .allowUnknownOptions();
-  const previewCommand = cli
-    .command('preview', 'preview the production build locally')
-    .allowUnknownOptions();
-  const inspectCommand = cli
-    .command('inspect', 'inspect the Rspack and Rsbuild configs')
-    .allowUnknownOptions();
+  const devCommand = cli.command('', 'starting the dev server').alias('dev');
+  const buildCommand = cli.command('build', 'build the app for production');
+  const previewCommand = cli.command(
+    'preview',
+    'preview the production build locally',
+  );
+  const inspectCommand = cli.command(
+    'inspect',
+    'inspect the Rspack and Rsbuild configs',
+  );
 
+  applyAllowUnknownOptions(
+    devCommand,
+    buildCommand,
+    previewCommand,
+    inspectCommand,
+  );
   applyServerOptions(devCommand);
   applyServerOptions(previewCommand);
 
