@@ -41,7 +41,6 @@ export const matchPlugin = (
  * different with rsbuild createRsbuild. support add custom plugins instead of applyDefaultPlugins.
  */
 export async function createStubRsbuild({
-  rsbuildConfig = {},
   plugins,
   ...options
 }: CreateRsbuildOptions & {
@@ -53,10 +52,16 @@ export async function createStubRsbuild({
   }
 > {
   const { createRsbuild } = await import('@rsbuild/core');
+
+  const rsbuildConfig =
+    typeof options.rsbuildConfig === 'function'
+      ? await options.rsbuildConfig()
+      : options.rsbuildConfig || {};
+
   const rsbuildOptions = {
     cwd: process.env.REBUILD_TEST_SUITE_CWD || process.cwd(),
-    rsbuildConfig,
     ...options,
+    rsbuildConfig,
   };
 
   // mock default entry
