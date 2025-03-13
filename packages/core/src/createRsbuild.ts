@@ -132,11 +132,7 @@ export async function createRsbuild(
 
   const pluginManager = createPluginManager();
 
-  const context = await createContext(
-    rsbuildOptions,
-    rsbuildConfig,
-    rsbuildConfig.provider ? 'webpack' : 'rspack',
-  );
+  const context = await createContext(rsbuildOptions, rsbuildConfig);
 
   const getPluginAPI = initPluginAPI({ context, pluginManager });
   context.getPluginAPI = getPluginAPI;
