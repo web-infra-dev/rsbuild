@@ -123,8 +123,9 @@ export type CreateRsbuildOptions = {
   environment?: string[];
   /**
    * Rsbuild configurations.
+   * Passing a function to load the config asynchronously with custom logic.
    */
-  rsbuildConfig?: RsbuildConfig;
+  rsbuildConfig?: RsbuildConfig | (() => Promise<RsbuildConfig>);
 };
 
 export type ResolvedCreateRsbuildOptions = CreateRsbuildOptions &

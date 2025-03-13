@@ -7,7 +7,6 @@ import { initHooks } from './hooks';
 import { getHTMLPathByEntry } from './initPlugins';
 import { logger } from './logger';
 import type {
-  BundlerType,
   EnvironmentContext,
   InternalContext,
   NormalizedConfig,
@@ -183,7 +182,6 @@ export function createPublicContext(
 export async function createContext(
   options: ResolvedCreateRsbuildOptions,
   userConfig: RsbuildConfig,
-  bundlerType: BundlerType,
 ): Promise<InternalContext> {
   const { cwd } = options;
   const rootPath = userConfig.root
@@ -196,6 +194,8 @@ export async function createContext(
     options.environment && options.environment.length > 0
       ? options.environment
       : undefined;
+
+  const bundlerType = userConfig.provider ? 'webpack' : 'rspack';
 
   return {
     version: RSBUILD_VERSION,
