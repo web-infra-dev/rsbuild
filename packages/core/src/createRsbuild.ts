@@ -122,14 +122,18 @@ function applyEnvsToConfig(config: RsbuildConfig, envs: LoadEnvResult | null) {
     return;
   }
 
-  config.dev ||= {};
-  config.source ||= {};
-
   // define the public env variables
+  config.source ||= {};
   config.source.define = {
     ...envs.publicVars,
     ...config.source.define,
   };
+
+  if (envs.filePaths.length === 0) {
+    return;
+  }
+
+  config.dev ||= {};
 
   // watch the env files
   config.dev.watchFiles = [
@@ -142,7 +146,7 @@ function applyEnvsToConfig(config: RsbuildConfig, envs: LoadEnvResult | null) {
 
   // add env files to build dependencies, so that the build cache
   // can be invalidated when the env files are changed.
-  if (config.performance?.buildCache && envs.filePaths.length > 0) {
+  if (config.performance?.buildCache) {
     const { buildCache } = config.performance;
     if (buildCache === true) {
       config.performance.buildCache = {
