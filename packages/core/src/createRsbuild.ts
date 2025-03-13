@@ -133,9 +133,8 @@ function applyEnvsToConfig(config: RsbuildConfig, envs: LoadEnvResult | null) {
     return;
   }
 
-  config.dev ||= {};
-
   // watch the env files
+  config.dev ||= {};
   config.dev.watchFiles = [
     ...(config.dev.watchFiles ? castArray(config.dev.watchFiles) : []),
     {
