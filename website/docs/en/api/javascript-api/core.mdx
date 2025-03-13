@@ -149,7 +149,7 @@ type LoadEnvOptions = {
   processEnv?: Record<string, string>;
 };
 
-function loadEnv(options: LoadEnvOptions): {
+type LoadEnvResult = {
   /** All env variables in the .env file */
   parsed: Record<string, string>;
   /** The absolute paths to all env files */
@@ -182,6 +182,8 @@ function loadEnv(options: LoadEnvOptions): {
   /** Clear the env variables mounted on `process.env` */
   cleanup: () => void;
 };
+
+function loadEnv(options: LoadEnvOptions): LoadEnvResult;
 ````
 
 - **Example:**

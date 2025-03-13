@@ -149,7 +149,7 @@ type LoadEnvOptions = {
   processEnv?: Record<string, string>;
 };
 
-function loadEnv(options: LoadEnvOptions): {
+type LoadEnvResult = {
   /** .env 文件包含的所有环境变量 */
   parsed: Record<string, string>;
   /** 所有 env 文件的绝对路径 */
@@ -182,6 +182,8 @@ function loadEnv(options: LoadEnvOptions): {
   /** 从 `process.env` 上清除挂载的环境变量 */
   cleanup: () => void;
 };
+
+function loadEnv(options: LoadEnvOptions): LoadEnvResult;
 ````
 
 - **示例：**
