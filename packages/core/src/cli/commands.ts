@@ -86,16 +86,18 @@ export function setupCommands(): void {
   // Apply common options to all commands
   applyCommonOptions(cli);
 
-  const devCommand = cli.command('dev', 'starting the dev server');
-  const buildCommand = cli.command('build', 'build the app for production');
-  const previewCommand = cli.command(
-    'preview',
-    'preview the production build locally',
-  );
-  const inspectCommand = cli.command(
-    'inspect',
-    'inspect the Rspack and Rsbuild configs',
-  );
+  const devCommand = cli
+    .command('dev', 'starting the dev server')
+    .allowUnknownOptions();
+  const buildCommand = cli
+    .command('build', 'build the app for production')
+    .allowUnknownOptions();
+  const previewCommand = cli
+    .command('preview', 'preview the production build locally')
+    .allowUnknownOptions();
+  const inspectCommand = cli
+    .command('inspect', 'inspect the Rspack and Rsbuild configs')
+    .allowUnknownOptions();
 
   applyServerOptions(devCommand);
   applyServerOptions(previewCommand);
