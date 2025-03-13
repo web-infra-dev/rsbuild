@@ -1,8 +1,8 @@
 import path from 'node:path';
-import { loadConfig, watchFilesForRestart } from '../config';
+import { loadConfig as baseLoadConfig, watchFilesForRestart } from '../config';
 import { createRsbuild } from '../createRsbuild';
 import { castArray, getAbsolutePath } from '../helpers';
-import { loadEnv } from '../loadEnv';
+import { type LoadEnvResult, loadEnv } from '../loadEnv';
 import { logger } from '../logger';
 import type { RsbuildInstance } from '../types';
 import type { CommonOptions } from './commands';
@@ -14,6 +14,71 @@ const getEnvDir = (cwd: string, envDir?: string) => {
     return path.isAbsolute(envDir) ? envDir : path.join(cwd, envDir);
   }
   return cwd;
+};
+
+const loadConfig = async (root: string, envs: LoadEnvResult) => {
+  const { content: config } = await baseLoadConfig({
+    cwd: root,
+    path: commonOpts.config,
+    envMode: commonOpts.envMode,
+    loader: commonOpts.configLoader,
+  });
+
+  config.source ||= {};
+  config.source.define = {
+    ...envs.publicVars,
+    ...config.source.define,
+  };
+
+  if (commonOpts.base) {
+    config.server ||= {};
+    config.server.base = commonOpts.base;
+  }
+
+  if (commonOpts.root) {
+    config.root = root;
+  }
+
+  if (commonOpts.mode) {
+    config.mode = commonOpts.mode;
+  }
+
+  if (commonOpts.open && !config.server?.open) {
+    config.server ||= {};
+    config.server.open = commonOpts.open;
+  }
+
+  if (commonOpts.host) {
+    config.server ||= {};
+    config.server.host = commonOpts.host;
+  }
+
+  if (commonOpts.port) {
+    config.server ||= {};
+    config.server.port = commonOpts.port;
+  }
+
+  // enable CLI shortcuts by default when using Rsbuild CLI
+  if (config.dev?.cliShortcuts === undefined) {
+    config.dev ||= {};
+    config.dev.cliShortcuts = true;
+  }
+
+  // add env files to build dependencies, so that the build cache
+  // can be invalidated when the env files are changed.
+  if (config.performance?.buildCache && envs.filePaths.length > 0) {
+    const { buildCache } = config.performance;
+    if (buildCache === true) {
+      config.performance.buildCache = {
+        buildDependencies: envs.filePaths,
+      };
+    } else {
+      buildCache.buildDependencies ||= [];
+      buildCache.buildDependencies.push(...envs.filePaths);
+    }
+  }
+
+  return config;
 };
 
 export async function init({
@@ -37,70 +102,9 @@ export async function init({
       mode: commonOpts.envMode,
     });
 
-    const { content: config, filePath: configFilePath } = await loadConfig({
-      cwd: root,
-      path: commonOpts.config,
-      envMode: commonOpts.envMode,
-      loader: commonOpts.configLoader,
-    });
-
-    config.source ||= {};
-    config.source.define = {
-      ...envs.publicVars,
-      ...config.source.define,
-    };
-
-    if (commonOpts.base) {
-      config.server ||= {};
-      config.server.base = commonOpts.base;
-    }
-
-    if (commonOpts.root) {
-      config.root = root;
-    }
-
-    if (commonOpts.mode) {
-      config.mode = commonOpts.mode;
-    }
-
-    if (commonOpts.open && !config.server?.open) {
-      config.server ||= {};
-      config.server.open = commonOpts.open;
-    }
-
-    if (commonOpts.host) {
-      config.server ||= {};
-      config.server.host = commonOpts.host;
-    }
-
-    if (commonOpts.port) {
-      config.server ||= {};
-      config.server.port = commonOpts.port;
-    }
-
-    // enable CLI shortcuts by default when using Rsbuild CLI
-    if (config.dev?.cliShortcuts === undefined) {
-      config.dev ||= {};
-      config.dev.cliShortcuts = true;
-    }
-
-    // add env files to build dependencies, so that the build cache
-    // can be invalidated when the env files are changed.
-    if (config.performance?.buildCache && envs.filePaths.length > 0) {
-      const { buildCache } = config.performance;
-      if (buildCache === true) {
-        config.performance.buildCache = {
-          buildDependencies: envs.filePaths,
-        };
-      } else {
-        buildCache.buildDependencies ||= [];
-        buildCache.buildDependencies.push(...envs.filePaths);
-      }
-    }
-
     const rsbuild = await createRsbuild({
       cwd: root,
-      rsbuildConfig: config,
+      rsbuildConfig: async () => loadConfig(root, envs),
       environment: commonOpts.environment,
     });
 
@@ -109,8 +113,9 @@ export async function init({
       if (command === 'dev' || isBuildWatch) {
         const files = [...envs.filePaths];
 
-        if (configFilePath) {
-          files.push(configFilePath);
+        const { _privateMeta } = rsbuild.getNormalizedConfig();
+        if (_privateMeta) {
+          files.push(_privateMeta.configFilePath);
         }
 
         const config = rsbuild.getNormalizedConfig();
