@@ -124,15 +124,15 @@ export async function createRsbuild(
     ? await options.rsbuildConfig()
     : options.rsbuildConfig || {};
 
-  const rsbuildOptions: ResolvedCreateRsbuildOptions = {
+  const resolvedOptions: ResolvedCreateRsbuildOptions = {
     cwd: process.cwd(),
-    rsbuildConfig,
     ...options,
+    rsbuildConfig,
   };
 
   const pluginManager = createPluginManager();
 
-  const context = await createContext(rsbuildOptions, rsbuildConfig);
+  const context = await createContext(resolvedOptions, rsbuildConfig);
 
   const getPluginAPI = initPluginAPI({ context, pluginManager });
   context.getPluginAPI = getPluginAPI;
@@ -148,7 +148,7 @@ export async function createRsbuild(
   const providerInstance = await provider({
     context,
     pluginManager,
-    rsbuildOptions,
+    rsbuildOptions: resolvedOptions,
     helpers: providerHelpers,
   });
 

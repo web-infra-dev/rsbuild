@@ -128,8 +128,12 @@ export type CreateRsbuildOptions = {
   rsbuildConfig?: RsbuildConfig | (() => Promise<RsbuildConfig>);
 };
 
-export type ResolvedCreateRsbuildOptions = CreateRsbuildOptions &
-  Required<Omit<CreateRsbuildOptions, 'environment'>>;
+export type ResolvedCreateRsbuildOptions = Required<
+  Omit<CreateRsbuildOptions, 'environment' | 'rsbuildConfig'>
+> & {
+  rsbuildConfig: RsbuildConfig;
+  environment?: CreateRsbuildOptions['environment'];
+};
 
 export type CreateDevServer = (
   options?: CreateDevServerOptions,
