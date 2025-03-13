@@ -29,12 +29,7 @@ export type LoadEnvOptions = {
   processEnv?: Record<string, string>;
 };
 
-export function loadEnv({
-  cwd = process.cwd(),
-  mode = getNodeEnv(),
-  prefixes = ['PUBLIC_'],
-  processEnv = process.env as Record<string, string>,
-}: LoadEnvOptions = {}): {
+export type LoadEnvResult = {
   /**
    * All env variables in the .env file
    */
@@ -72,7 +67,14 @@ export function loadEnv({
    * Clear the env variables mounted on `process.env`
    */
   cleanup: () => void;
-} {
+};
+
+export function loadEnv({
+  cwd = process.cwd(),
+  mode = getNodeEnv(),
+  prefixes = ['PUBLIC_'],
+  processEnv = process.env as Record<string, string>,
+}: LoadEnvOptions = {}): LoadEnvResult {
   if (mode === 'local') {
     throw new Error(
       `[rsbuild:loadEnv] 'local' cannot be used as a value for env mode, because ".env.local" represents a temporary local file. Please use another value.`,

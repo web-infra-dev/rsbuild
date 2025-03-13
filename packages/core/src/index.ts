@@ -6,7 +6,7 @@ import { rspack } from '@rspack/core';
 import type * as Rspack from '@rspack/core';
 
 // Core methods
-export { loadEnv } from './loadEnv';
+export { loadEnv, type LoadEnvOptions, type LoadEnvResult } from './loadEnv';
 export { createRsbuild } from './createRsbuild';
 export {
   loadConfig,
