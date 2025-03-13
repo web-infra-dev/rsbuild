@@ -34,13 +34,29 @@ const rsbuild = await createRsbuild({
 type CreateRsbuildOptions = {
   cwd?: string;
   environment?: string[];
-  rsbuildConfig?: RsbuildConfig;
+  rsbuildConfig?: RsbuildConfig | (() => Promise<RsbuildConfig>);
 };
 ```
 
 - `cwd`：当前执行构建的根路径，默认值为 `process.cwd()`
 - `environment`：只构建指定的 [environments](/guide/advanced/environments)，如果未指定或传入空数组，则构建所有环境。
 - `rsbuildConfig`：Rsbuild 配置对象。参考 [配置总览](/config/) 查看所有可用的配置项。
+
+### 异步加载配置
+
+`rsbuildConfig` 也可以是一个异步函数，你可以通过该函数来动态加载 Rsbuild 配置，并进行一些自定义操作。
+
+```ts
+import { createRsbuild, loadConfig } from '@rsbuild/core';
+
+const rsbuild = await createRsbuild({
+  rsbuildConfig: async () => {
+    const { content } = await loadConfig();
+    someFunctionToUpdateConfig(content);
+    return content;
+  },
+});
+```
 
 ## loadConfig
 

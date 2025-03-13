@@ -1,7 +1,14 @@
 import { existsSync } from 'node:fs';
 import { isPromise } from 'node:util/types';
 import { createContext } from './createContext';
-import { color, getNodeEnv, isEmptyDir, pick, setNodeEnv } from './helpers';
+import {
+  color,
+  getNodeEnv,
+  isEmptyDir,
+  isFunction,
+  pick,
+  setNodeEnv,
+} from './helpers';
 import { initPluginAPI } from './initPlugins';
 import { logger } from './logger';
 import { createPluginManager } from './pluginManager';
@@ -113,7 +120,9 @@ async function applyDefaultPlugins(
 export async function createRsbuild(
   options: CreateRsbuildOptions = {},
 ): Promise<RsbuildInstance> {
-  const { rsbuildConfig = {} } = options;
+  const rsbuildConfig = isFunction(options.rsbuildConfig)
+    ? await options.rsbuildConfig()
+    : options.rsbuildConfig || {};
 
   const rsbuildOptions: ResolvedCreateRsbuildOptions = {
     cwd: process.cwd(),
@@ -125,7 +134,7 @@ export async function createRsbuild(
 
   const context = await createContext(
     rsbuildOptions,
-    rsbuildOptions.rsbuildConfig,
+    rsbuildConfig,
     rsbuildConfig.provider ? 'webpack' : 'rspack',
   );
 

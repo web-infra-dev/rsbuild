@@ -34,13 +34,29 @@ The first parameter of `createRsbuild` is an `options` object, you can pass in t
 type CreateRsbuildOptions = {
   cwd?: string;
   environment?: string[];
-  rsbuildConfig?: RsbuildConfig;
+  rsbuildConfig?: RsbuildConfig | (() => Promise<RsbuildConfig>);
 };
 ```
 
 - `cwd`: The root path of the current build, defaults to `process.cwd()`.
 - `environment`: Only build specified [environments](/guide/advanced/environments). If not specified or passing an empty array, all environments will be built.
 - `rsbuildConfig`: Rsbuild configuration object. Refer to [Configuration Overview](/config/) for all available configuration options.
+
+### Load configuration async
+
+`rsbuildConfig` can also be an async function, which allows you to dynamically load Rsbuild configuration and perform some custom operations.
+
+```ts
+import { createRsbuild, loadConfig } from '@rsbuild/core';
+
+const rsbuild = await createRsbuild({
+  rsbuildConfig: async () => {
+    const { content } = await loadConfig();
+    someFunctionToUpdateConfig(content);
+    return content;
+  },
+});
+```
 
 ## loadConfig
 
