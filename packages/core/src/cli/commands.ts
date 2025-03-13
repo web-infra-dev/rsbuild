@@ -1,6 +1,7 @@
 import cac, { type CAC, type Command } from 'cac';
 import type { ConfigLoader } from '../config';
 import { logger } from '../logger';
+import { RSPACK_BUILD_ERROR } from '../provider/build';
 import { onBeforeRestartServer } from '../server/restart';
 import type { RsbuildMode } from '../types';
 import { init } from './init';
@@ -131,7 +132,12 @@ export function setupCommands(): void {
           }
         }
       } catch (err) {
-        logger.error('Failed to build.');
+        const isRspackError =
+          err instanceof Error && err.message === RSPACK_BUILD_ERROR;
+        if (!isRspackError) {
+          logger.error('Failed to build.');
+        }
+
         logger.error(err);
         process.exit(1);
       }
