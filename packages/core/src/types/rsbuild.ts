@@ -1,4 +1,5 @@
 import type { Compiler, MultiCompiler } from '@rspack/core';
+import type { LoadEnvOptions } from '../loadEnv';
 import type * as providerHelpers from '../provider/helpers';
 import type { RsbuildDevServer } from '../server/devServer';
 import type { StartServerResult } from '../server/helper';
@@ -126,14 +127,20 @@ export type CreateRsbuildOptions = {
    * Passing a function to load the config asynchronously with custom logic.
    */
   rsbuildConfig?: RsbuildConfig | (() => Promise<RsbuildConfig>);
+  /**
+   * Whether to call `loadEnv` to load environment variables and define them
+   * as global variables.
+   * @default false
+   */
+  loadEnv?: boolean | LoadEnvOptions;
 };
 
 export type ResolvedCreateRsbuildOptions = Required<
-  Omit<CreateRsbuildOptions, 'environment' | 'rsbuildConfig'>
-> & {
-  rsbuildConfig: RsbuildConfig;
-  environment?: CreateRsbuildOptions['environment'];
-};
+  Pick<CreateRsbuildOptions, 'cwd'>
+> &
+  Pick<CreateRsbuildOptions, 'loadEnv' | 'environment'> & {
+    rsbuildConfig: RsbuildConfig;
+  };
 
 export type CreateDevServer = (
   options?: CreateDevServerOptions,
