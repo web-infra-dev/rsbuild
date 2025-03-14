@@ -72,7 +72,7 @@ test('should merge copy config correctly', async () => {
   });
 
   const rsbuildPlugin2 = (): RsbuildPlugin => ({
-    name: 'example1',
+    name: 'example2',
     setup(api) {
       api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
         return mergeRsbuildConfig(config, {
