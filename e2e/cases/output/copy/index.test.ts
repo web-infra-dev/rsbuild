@@ -51,7 +51,7 @@ test('should copy asset to dist sub-folder correctly', async () => {
   expect(fs.existsSync(join(__dirname, 'dist-1/foo/icon.png'))).toBeTruthy();
 });
 
-test.only('should merge copy config correctly', async () => {
+test('should merge copy config correctly', async () => {
   const rsbuildPlugin = (): RsbuildPlugin => ({
     name: 'example',
     setup(api) {
