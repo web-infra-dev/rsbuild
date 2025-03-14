@@ -32,9 +32,19 @@ export type UpgradeEvent = (
 ) => void;
 
 export type StartServerResult = {
+  /**
+   * The URLs that server is listening on.
+   */
   urls: string[];
+  /**
+   * The actual port used by the server.
+   */
   port: number;
   server: {
+    /**
+     * Close the server.
+     * In development mode, this will call the `onCloseDevServer` hook.
+     */
     close: () => Promise<void>;
   };
 };

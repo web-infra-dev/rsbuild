@@ -2,6 +2,7 @@ import { existsSync } from 'node:fs';
 import { isPromise } from 'node:util/types';
 import { createContext } from './createContext';
 import {
+  castArray,
   color,
   getNodeEnv,
   isEmptyDir,
@@ -10,6 +11,7 @@ import {
   setNodeEnv,
 } from './helpers';
 import { initPluginAPI } from './initPlugins';
+import { type LoadEnvResult, loadEnv } from './loadEnv';
 import { logger } from './logger';
 import { createPluginManager } from './pluginManager';
 import { pluginAppIcon } from './plugins/appIcon';
@@ -59,6 +61,7 @@ import type {
   PluginManager,
   PreviewOptions,
   ResolvedCreateRsbuildOptions,
+  RsbuildConfig,
   RsbuildInstance,
   RsbuildPlugin,
   RsbuildPlugins,
@@ -114,25 +117,75 @@ async function applyDefaultPlugins(
   ]);
 }
 
+function applyEnvsToConfig(config: RsbuildConfig, envs: LoadEnvResult | null) {
+  if (envs === null) {
+    return;
+  }
+
+  // define the public env variables
+  config.source ||= {};
+  config.source.define = {
+    ...envs.publicVars,
+    ...config.source.define,
+  };
+
+  if (envs.filePaths.length === 0) {
+    return;
+  }
+
+  // watch the env files
+  config.dev ||= {};
+  config.dev.watchFiles = [
+    ...(config.dev.watchFiles ? castArray(config.dev.watchFiles) : []),
+    {
+      paths: envs.filePaths,
+      type: 'reload-server',
+    },
+  ];
+
+  // add env files to build dependencies, so that the build cache
+  // can be invalidated when the env files are changed.
+  if (config.performance?.buildCache) {
+    const { buildCache } = config.performance;
+    if (buildCache === true) {
+      config.performance.buildCache = {
+        buildDependencies: envs.filePaths,
+      };
+    } else {
+      buildCache.buildDependencies ||= [];
+      buildCache.buildDependencies.push(...envs.filePaths);
+    }
+  }
+}
+
 /**
  * Create an Rsbuild instance.
  */
 export async function createRsbuild(
   options: CreateRsbuildOptions = {},
 ): Promise<RsbuildInstance> {
-  const rsbuildConfig = isFunction(options.rsbuildConfig)
+  const envs = options.loadEnv
+    ? loadEnv({
+        cwd: options.cwd,
+        ...(typeof options.loadEnv === 'boolean' ? {} : options.loadEnv),
+      })
+    : null;
+
+  const config = isFunction(options.rsbuildConfig)
     ? await options.rsbuildConfig()
     : options.rsbuildConfig || {};
 
-  const rsbuildOptions: ResolvedCreateRsbuildOptions = {
+  applyEnvsToConfig(config, envs);
+
+  const resolvedOptions: ResolvedCreateRsbuildOptions = {
     cwd: process.cwd(),
-    rsbuildConfig,
     ...options,
+    rsbuildConfig: config,
   };
 
   const pluginManager = createPluginManager();
 
-  const context = await createContext(rsbuildOptions, rsbuildConfig);
+  const context = await createContext(resolvedOptions, config);
 
   const getPluginAPI = initPluginAPI({ context, pluginManager });
   context.getPluginAPI = getPluginAPI;
@@ -142,13 +195,12 @@ export async function createRsbuild(
   await applyDefaultPlugins(pluginManager, context);
   logger.debug('add default plugins done');
 
-  const provider =
-    (rsbuildConfig.provider as RsbuildProvider) || rspackProvider;
+  const provider = (config.provider as RsbuildProvider) || rspackProvider;
 
   const providerInstance = await provider({
     context,
     pluginManager,
-    rsbuildOptions,
+    rsbuildOptions: resolvedOptions,
     helpers: providerHelpers,
   });
 
@@ -260,6 +312,11 @@ export async function createRsbuild(
     ...pick(providerInstance, ['initConfigs', 'inspectConfig']),
   };
 
+  if (envs) {
+    rsbuild.onCloseBuild(envs.cleanup);
+    rsbuild.onCloseDevServer(envs.cleanup);
+  }
+
   const getFlattenedPlugins = async (pluginOptions: RsbuildPlugins) => {
     let plugins = pluginOptions;
     do {
@@ -271,32 +328,34 @@ export async function createRsbuild(
     return plugins as Array<RsbuildPlugin | Falsy>;
   };
 
-  if (rsbuildConfig.plugins) {
-    const plugins = await getFlattenedPlugins(rsbuildConfig.plugins);
+  if (config.plugins) {
+    const plugins = await getFlattenedPlugins(config.plugins);
     rsbuild.addPlugins(plugins);
   }
 
   // Register environment plugin
-  if (rsbuildConfig.environments) {
+  if (config.environments) {
     await Promise.all(
-      Object.entries(rsbuildConfig.environments).map(async ([name, config]) => {
-        if (!config.plugins) {
-          return;
-        }
+      Object.entries(config.environments).map(
+        async ([name, environmentConfig]) => {
+          if (!environmentConfig.plugins) {
+            return;
+          }
 
-        // If the current environment is not specified, skip it
-        if (
-          context.specifiedEnvironments &&
-          !context.specifiedEnvironments.includes(name)
-        ) {
-          return;
-        }
+          // If the current environment is not specified, skip it
+          if (
+            context.specifiedEnvironments &&
+            !context.specifiedEnvironments.includes(name)
+          ) {
+            return;
+          }
 
-        const plugins = await getFlattenedPlugins(config.plugins);
-        rsbuild.addPlugins(plugins, {
-          environment: name,
-        });
-      }),
+          const plugins = await getFlattenedPlugins(environmentConfig.plugins);
+          rsbuild.addPlugins(plugins, {
+            environment: name,
+          });
+        },
+      ),
     );
   }
 

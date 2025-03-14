@@ -123,7 +123,8 @@ function Build(options?: BuildOptions): Promise<{
    */
   stats?: Rspack.Stats | Rspack.MultiStats;
   /**
-   * 停止监听文件变化。
+   * 关闭构建并调用 `onCloseBuild` 钩子。
+   * 在监听模式下，此方法将停止监听。
    */
   close: () => Promise<void>;
 }>;
@@ -169,14 +170,24 @@ await rsbuild.build({
 });
 ```
 
-在 watch 模式下，`rsbuild.build()` 会返回一个 `close` 方法，调用该方法将会结束监听：
+### 结束构建
+
+`rsbuild.build()` 返回一个 `close()` 方法，用于结束本次构建。
+
+在 watch 模式下，调用 `close()` 方法将会结束监听：
 
 ```ts
-const result = await rsbuild.build({
+const buildResult = await rsbuild.build({
   watch: true,
 });
+await buildResult.close();
+```
 
-await result.close();
+在非 watch 模式下，你也应该调用 `close()` 方法来结束构建，这会触发 [onCloseBuild](/plugins/dev/hooks#onclosebuild) 钩子，执行清理操作。
+
+```ts
+const buildResult = await rsbuild.build();
+await buildResult.close();
 ```
 
 ### Stats 对象
@@ -237,9 +248,21 @@ type StartDevServerOptions = {
 };
 
 type StartServerResult = {
+  /**
+   * 服务器监听的 URLs
+   */
   urls: string[];
+  /**
+   * 服务器实际使用的端口号
+   */
   port: number;
-  server: Server;
+  server: {
+    /**
+     * 关闭服务器
+     * 在开发模式下，此方法会调用 `onCloseDevServer` 钩子
+     */
+    close: () => Promise<void>;
+  };
 };
 
 function StartDevServer(
@@ -281,12 +304,28 @@ try {
 - `server`：Server 实例对象
 
 ```ts
-const { urls, port, server } = await rsbuild.startDevServer();
+const { urls, port } = await rsbuild.startDevServer();
 console.log(urls); // ['http://localhost:3000', 'http://192.168.0.1:3000']
 console.log(port); // 3000
+```
 
-// 关闭 dev server
+### 关闭 server
+
+调用 `close()` 方法会关闭开发服务器，并触发 [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) 钩子，执行清理操作。
+
+```ts
+const { server } = await rsbuild.startDevServer();
 await server.close();
+```
+
+### 静默获取端口号
+
+某些情况下，默认启动的端口号已经被占用，此时 Rsbuild 会自动递增端口号，直至找到一个可用端口。这个过程会输出提示日志，如果你不希望这段日志，可以将 `getPortSilently` 设置为 `true`。
+
+```ts
+await rsbuild.startDevServer({
+  getPortSilently: true,
+});
 ```
 
 ### 自定义 Compiler
@@ -301,16 +340,6 @@ const compiler = rspack({
 });
 await rsbuild.startDevServer({
   compiler,
-});
-```
-
-### 静默获取端口号
-
-某些情况下，默认启动的端口号已经被占用，此时 Rsbuild 会自动递增端口号，直至找到一个可用端口。这个过程会输出提示日志，如果你不希望这段日志，可以将 `getPortSilently` 设置为 `true`。
-
-```ts
-await rsbuild.startDevServer({
-  getPortSilently: true,
 });
 ```
 
@@ -347,9 +376,18 @@ type PreviewOptions = {
 };
 
 type StartServerResult = {
+  /**
+   * 服务器监听的 URLs
+   */
   urls: string[];
+  /**
+   * 服务器实际使用的端口号
+   */
   port: number;
   server: {
+    /**
+     * 关闭服务器
+     */
     close: () => Promise<void>;
   };
 };
@@ -384,11 +422,17 @@ try {
 - `server`：Server 实例对象
 
 ```ts
-const { urls, port, server } = await rsbuild.preview();
+const { urls, port } = await rsbuild.preview();
 console.log(urls); // ['http://localhost:3000', 'http://192.168.0.1:3000']
 console.log(port); // 3000
+```
 
-// 关闭 Server
+### 关闭 server
+
+调用 `close()` 方法会关闭预览服务器。
+
+```ts
+const { server } = await rsbuild.preview();
 await server.close();
 ```
 
