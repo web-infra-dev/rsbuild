@@ -48,6 +48,12 @@ const merge = (x: unknown, y: unknown, path = '') => {
 
   // combine array
   if (pair.some(Array.isArray)) {
+    if (path === 'output.copy' && !pair.every(Array.isArray)) {
+      // x: { patterns: [A] }、y: [B, C] => { patterns: [A,B,C] }
+      return Array.isArray(x)
+        ? merge({ patterns: x }, y, path)
+        : merge(x, { patterns: y }, path);
+    }
     return [...castArray(x), ...castArray(y)];
   }
 
