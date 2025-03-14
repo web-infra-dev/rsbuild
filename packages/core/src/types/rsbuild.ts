@@ -60,7 +60,8 @@ export type BuildOptions = {
 
 export type Build = (options?: BuildOptions) => Promise<{
   /**
-   * Stop watching when in watch mode.
+   * Close the build and call the `onCloseBuild` hook.
+   * In watch mode, this method will stop watching.
    */
   close: () => Promise<void>;
   /**

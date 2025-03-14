@@ -100,7 +100,8 @@ function Build(options?: BuildOptions): Promise<{
    */
   stats?: Rspack.Stats | Rspack.MultiStats;
   /**
-   * Stop watching when in watch mode.
+   * Close the build and call the `onCloseBuild` hook.
+   * In watch mode, this method will stop watching.
    */
   close: () => Promise<void>;
 }>;
@@ -146,14 +147,24 @@ await rsbuild.build({
 });
 ```
 
-In watch mode, the `rsbuild.build()` returns a `close` method, which can be used to stop watching:
+### Close build
+
+`rsbuild.build()` returns a `close()` method, which can be used to stop the build.
+
+In watch mode, calling the `close()` method will stop watching:
 
 ```ts
-const result = await rsbuild.build({
+const buildResult = await rsbuild.build({
   watch: true,
 });
+await buildResult.close();
+```
 
-await result.close();
+In non-watch mode, you should also call the `close()` method to end the build, which will trigger the [onCloseBuild](/plugins/dev/hooks#onclosebuild) hook to perform cleanup operations.
+
+```ts
+const buildResult = await rsbuild.build();
+await buildResult.close();
 ```
 
 ### Stats object

@@ -123,7 +123,8 @@ function Build(options?: BuildOptions): Promise<{
    */
   stats?: Rspack.Stats | Rspack.MultiStats;
   /**
-   * 停止监听文件变化。
+   * 关闭构建并调用 `onCloseBuild` 钩子。
+   * 在监听模式下，此方法将停止监听。
    */
   close: () => Promise<void>;
 }>;
@@ -169,14 +170,24 @@ await rsbuild.build({
 });
 ```
 
-在 watch 模式下，`rsbuild.build()` 会返回一个 `close` 方法，调用该方法将会结束监听：
+### 结束构建
+
+`rsbuild.build()` 返回一个 `close()` 方法，用于结束本次构建。
+
+在 watch 模式下，调用 `close()` 方法将会结束监听：
 
 ```ts
-const result = await rsbuild.build({
+const buildResult = await rsbuild.build({
   watch: true,
 });
+await buildResult.close();
+```
 
-await result.close();
+在非 watch 模式下，你也应该调用 `close()` 方法来结束构建，这会触发 [onCloseBuild](/plugins/dev/hooks#onclosebuild) 钩子，执行清理操作。
+
+```ts
+const buildResult = await rsbuild.build();
+await buildResult.close();
 ```
 
 ### Stats 对象
