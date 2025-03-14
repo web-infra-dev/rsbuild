@@ -166,7 +166,10 @@ export const pluginCache = (): RsbuildPlugin => ({
           cache: {
             type: 'persistent',
             version: cacheVersion,
-            directory: cacheDirectory,
+            storage: {
+              type: 'filesystem',
+              directory: cacheDirectory,
+            },
             buildDependencies: Object.values(buildDependencies).flat(),
           },
         });
