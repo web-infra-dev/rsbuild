@@ -1337,9 +1337,15 @@ export interface HtmlConfig {
    * @default 'defer'
    */
   scriptLoading?: ScriptLoading;
+  /**
+   * Set the html attribute language
+   * @default 'en'
+   */
+  lang?: string;
 }
 
 export type NormalizedHtmlConfig = HtmlConfig & {
+  lang: string;
   meta: ChainedHtmlOption<MetaOptions>;
   title: ChainedHtmlOption<string>;
   mountId: string;
