@@ -30,7 +30,7 @@ export const gotoPage = async (
 const noop = async () => {};
 
 export const createRsbuild = async (
-  rsbuildOptions: CreateRsbuildOptions,
+  rsbuildOptions: CreateRsbuildOptions & { rsbuildConfig?: RsbuildConfig },
   plugins: RsbuildPlugins = [],
 ) => {
   const { createRsbuild } = await import('@rsbuild/core');
@@ -143,6 +143,7 @@ export async function dev({
   ...options
 }: CreateRsbuildOptions & {
   plugins?: RsbuildPlugins;
+  rsbuildConfig?: RsbuildConfig;
   /**
    * Playwright Page instance.
    * This method will automatically goto the page.
@@ -220,6 +221,7 @@ export async function build({
   ...options
 }: CreateRsbuildOptions & {
   plugins?: RsbuildPlugins;
+  rsbuildConfig?: RsbuildConfig;
   /**
    * Whether to run the server.
    */

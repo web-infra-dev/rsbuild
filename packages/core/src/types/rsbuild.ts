@@ -1,4 +1,5 @@
 import type { Compiler, MultiCompiler } from '@rspack/core';
+import type { LoadEnvOptions } from '../loadEnv';
 import type * as providerHelpers from '../provider/helpers';
 import type { RsbuildDevServer } from '../server/devServer';
 import type { StartServerResult } from '../server/helper';
@@ -59,7 +60,8 @@ export type BuildOptions = {
 
 export type Build = (options?: BuildOptions) => Promise<{
   /**
-   * Stop watching when in watch mode.
+   * Close the build and call the `onCloseBuild` hook.
+   * In watch mode, this method will stop watching.
    */
   close: () => Promise<void>;
   /**
@@ -126,10 +128,20 @@ export type CreateRsbuildOptions = {
    * Passing a function to load the config asynchronously with custom logic.
    */
   rsbuildConfig?: RsbuildConfig | (() => Promise<RsbuildConfig>);
+  /**
+   * Whether to call `loadEnv` to load environment variables and define them
+   * as global variables.
+   * @default false
+   */
+  loadEnv?: boolean | LoadEnvOptions;
 };
 
-export type ResolvedCreateRsbuildOptions = CreateRsbuildOptions &
-  Required<Omit<CreateRsbuildOptions, 'environment'>>;
+export type ResolvedCreateRsbuildOptions = Required<
+  Pick<CreateRsbuildOptions, 'cwd'>
+> &
+  Pick<CreateRsbuildOptions, 'loadEnv' | 'environment'> & {
+    rsbuildConfig: RsbuildConfig;
+  };
 
 export type CreateDevServer = (
   options?: CreateDevServerOptions,

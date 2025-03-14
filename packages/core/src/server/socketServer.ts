@@ -240,6 +240,11 @@ export class SocketServer {
     const statsOptions = getStatsOptions(curStats.compilation.compiler);
     const statsJson = curStats.toJson({ ...defaultStats, ...statsOptions });
 
+    // statsJson is null when the previous compilation is removed on the Rust side
+    if (!statsJson) {
+      return null;
+    }
+
     return {
       statsJson,
       root: curStats.compilation.compiler.options.context,
