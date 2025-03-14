@@ -225,9 +225,21 @@ type StartDevServerOptions = {
 };
 
 type StartServerResult = {
+  /**
+   * The URLs that server is listening on.
+   */
   urls: string[];
+  /**
+   * The actual port used by the server.
+   */
   port: number;
-  server: Server;
+  server: {
+    /**
+     * Close the server.
+     * In development mode, this will call the `onCloseDevServer` hook.
+     */
+    close: () => Promise<void>;
+  };
 };
 
 function StartDevServer(
@@ -269,12 +281,28 @@ After successfully starting dev server, you can see the following logs:
 - `server`: Server instance object.
 
 ```ts
-const { urls, port, server } = await rsbuild.startDevServer();
+const { urls, port } = await rsbuild.startDevServer();
 console.log(urls); // ['http://localhost:3000', 'http://192.168.0.1:3000']
 console.log(port); // 3000
+```
 
-// Close the dev server
+### Close server
+
+Calling the `close()` method will close the dev server and trigger the [onCloseDevServer](/plugins/dev/hooks#onclosedevserver) hook to perform cleanup operations.
+
+```ts
+const { server } = await rsbuild.startDevServer();
 await server.close();
+```
+
+### Get port silently
+
+In some cases, the default startup port number is already occupied. In this situation, Rsbuild will automatically increment the port number until it finds an available one. This process will output a prompt log. If you do not want this log, you can set `getPortSilently` to `true`.
+
+```ts
+await rsbuild.startDevServer({
+  getPortSilently: true,
+});
 ```
 
 ### Custom compiler
@@ -289,16 +317,6 @@ const compiler = rspack({
 });
 await rsbuild.startDevServer({
   compiler,
-});
-```
-
-### Get port silently
-
-In some cases, the default startup port number is already occupied. In this situation, Rsbuild will automatically increment the port number until it finds an available one. This process will output a prompt log. If you do not want this log, you can set `getPortSilently` to `true`.
-
-```ts
-await rsbuild.startDevServer({
-  getPortSilently: true,
 });
 ```
 
@@ -335,9 +353,18 @@ type PreviewOptions = {
 };
 
 type StartServerResult = {
+  /**
+   * The URLs that server is listening on.
+   */
   urls: string[];
+  /**
+   * The actual port used by the server.
+   */
   port: number;
   server: {
+    /**
+     * Close the server.
+     */
     close: () => Promise<void>;
   };
 };
@@ -372,11 +399,17 @@ try {
 - `server`: Server instance object.
 
 ```ts
-const { urls, port, server } = await rsbuild.preview();
+const { urls, port } = await rsbuild.preview();
 console.log(urls); // ['http://localhost:3000', 'http://192.168.0.1:3000']
 console.log(port); // 3000
+```
 
-// Close the server
+### Close server
+
+Calling the `close()` method will close the preview server.
+
+```ts
+const { server } = await rsbuild.preview();
 await server.close();
 ```
 
