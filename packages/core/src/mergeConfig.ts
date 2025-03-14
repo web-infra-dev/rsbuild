@@ -25,7 +25,7 @@ const isOverridePath = (key: string) => {
   return OVERRIDE_PATHS.includes(key);
 };
 
-const merge = (x: unknown, y: unknown, path = '') => {
+const merge = (x: unknown, y: unknown, path = ''): unknown => {
   // force some keys to override
   if (isOverridePath(path)) {
     return y ?? x;
