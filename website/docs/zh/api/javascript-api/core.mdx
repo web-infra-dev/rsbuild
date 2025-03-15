@@ -26,7 +26,7 @@ const rsbuild = await createRsbuild({
 });
 ```
 
-### Options
+### 选项
 
 `createRsbuild` 的第一个参数是一个 `options` 对象，你可以传入以下选项：
 
@@ -35,12 +35,14 @@ type CreateRsbuildOptions = {
   cwd?: string;
   environment?: string[];
   rsbuildConfig?: RsbuildConfig | (() => Promise<RsbuildConfig>);
+  loadEnv?: boolean | LoadEnvOptions;
 };
 ```
 
 - `cwd`：当前执行构建的根路径，默认值为 `process.cwd()`
 - `environment`：只构建指定的 [environments](/guide/advanced/environments)，如果未指定或传入空数组，则构建所有环境。
 - `rsbuildConfig`：Rsbuild 配置对象。参考 [配置总览](/config/) 查看所有可用的配置项。
+- `loadEnv`：是否调用 [loadEnv](/api/javascript-api/core#loadenv) 方法来加载环境变量，并通过 [source.define](/config/source/define) 定义为全局变量。
 
 ### 异步加载配置
 
@@ -54,6 +56,33 @@ const rsbuild = await createRsbuild({
     const { content } = await loadConfig();
     someFunctionToUpdateConfig(content);
     return content;
+  },
+});
+```
+
+### 加载环境变量
+
+`createRsbuild` 的 `loadEnv` 选项可以帮助你调用 [loadEnv](/api/javascript-api/core#loadenv) 方法来加载环境变量：
+
+```ts
+const rsbuild = await createRsbuild({
+  loadEnv: true,
+});
+```
+
+传入 `loadEnv: true` 会自动完成如下步骤：
+
+1. 调用 `loadEnv` 方法来加载环境变量。
+2. 添加 [source.define](/config/source/define) 配置，将 `loadEnv` 返回的 `publicVars` 定义为全局变量。
+3. 监听 `.env` 文件的变化，在文件变化时重新启动开发服务器，并使构建缓存失效。
+4. 在关闭构建或开发服务器时，自动调用 `loadEnv` 返回的 `cleanup` 方法来清除环境变量。
+
+你也可以传入 [loadEnv](/api/javascript-api/core#loadenv) 方法的选项，比如：
+
+```ts
+const rsbuild = await createRsbuild({
+  loadEnv: {
+    prefixes: ['PUBLIC_', 'REACT_APP_'],
   },
 });
 ```
@@ -135,7 +164,7 @@ export default defineConfig(({ meta }) => {
 
 ## loadEnv
 
-加载 `.env` 文件，并返回所有以 prefixes 开头的环境变量。
+加载 [.env](/guide/advanced/env-vars#env-文件) 文件，并返回所有以 `prefixes` 开头的环境变量。
 
 - **类型：**
 
@@ -222,7 +251,10 @@ const mergedConfig = mergeRsbuildConfig(
 该方法也会加载 `.env.local` 和 `.env.[mode]` 等文件，详见 [环境变量](/guide/advanced/env-vars)。
 
 :::tip
-Rsbuild CLI 会自动调用 `loadEnv()` 方法，如果你在使用 Rsbuild CLI，可以通过 [--env-mode](/guide/advanced/env-vars#env-模式) 选项来设置 `mode` 参数。
+
+- Rsbuild CLI 会自动调用 `loadEnv()` 方法，如果你在使用 Rsbuild CLI，可以通过 [--env-mode](/guide/advanced/env-vars#env-模式) 选项来设置 `mode` 参数。
+- [createRsbuild](#creatersbuild) 的 `loadEnv` 选项会帮助你调用 `loadEnv()` 方法，并处理相关操作。
+
 :::
 
 ### 指定目标对象
