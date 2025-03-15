@@ -47,7 +47,7 @@
     "cspell-ban-words": "^0.0.4",
     "heading-case": "^0.1.4",
     "nano-staged": "^0.8.0",
-    "nx": "^20.5.0",
+    "nx": "^20.6.0",
     "prettier": "^3.5.3",
     "simple-git-hooks": "^2.11.1",
     "typescript": "^5.8.2",
