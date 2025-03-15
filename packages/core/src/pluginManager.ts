@@ -256,7 +256,7 @@ export async function initPlugins({
       continue;
     }
     const { instance, environment } = plugin;
-    await instance.setup(getPluginAPI!(environment));
+    await instance.setup(getPluginAPI(environment));
   }
 
   logger.debug('init plugins done');

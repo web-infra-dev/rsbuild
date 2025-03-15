@@ -16,7 +16,8 @@ describe('modifyRsbuildConfig', () => {
           });
 
           api.modifyWebpackChain(() => {
-            config.server!.port = 8899;
+            config.server ||= {};
+            config.server.port = 8899;
           });
         },
       },
