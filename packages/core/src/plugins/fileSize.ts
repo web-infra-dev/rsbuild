@@ -143,7 +143,7 @@ async function printFileSizes(
     });
 
     const exclude = options.exclude ?? excludeAsset;
-    const filteredAssets = origin.assets!.filter((asset) => {
+    const filteredAssets = (origin.assets || []).filter((asset) => {
       const assetInfo: PrintFileSizeAsset = {
         name: asset.name,
         size: asset.size,

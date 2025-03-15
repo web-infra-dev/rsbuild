@@ -130,7 +130,8 @@ export default {
         // 修改 'a.js' 标签
         const target = tags.find((tag) => tag.attrs?.src === 'a.js');
         if (target) {
-          target.attrs!.defer = true;
+          target.attrs ||= {};
+          target.attrs.defer = true;
         }
       },
       (tags) => {

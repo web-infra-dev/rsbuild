@@ -131,7 +131,8 @@ export default {
         // Modify 'a.js' tag
         const target = tags.find((tag) => tag.attrs?.src === 'a.js');
         if (target) {
-          target.attrs!.defer = true;
+          target.attrs ||= {};
+          target.attrs.defer = true;
         }
       },
       (tags) => {

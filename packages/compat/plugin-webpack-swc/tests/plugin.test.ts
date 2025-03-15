@@ -380,7 +380,8 @@ describe('plugin-webpack-swc', () => {
       const config = (
         await applyPluginConfig(
           (config) => {
-            config.env!.coreJs = '2';
+            config.env ||= {};
+            config.env.coreJs = '2';
             return config;
           },
           UTILS,
@@ -420,8 +421,7 @@ describe('plugin-webpack-swc', () => {
       },
     });
     const config = await rsbuild.unwrapConfig();
-
-    expect(config.module!.rules).toMatchSnapshot();
+    expect(config.module.rules).toMatchSnapshot();
   });
 
   it('should allow to disable transformLodash', async () => {

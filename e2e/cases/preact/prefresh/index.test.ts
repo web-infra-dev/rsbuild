@@ -43,8 +43,8 @@ export default B;
   );
 
   await page.waitForFunction(() => {
-    const aText = document.querySelector('#A')!.textContent;
-    const bText = document.querySelector('#B')!.textContent;
+    const aText = document.querySelector('#A')?.textContent;
+    const bText = document.querySelector('#B')?.textContent;
 
     return (
       // the state (count) of A should be kept

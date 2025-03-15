@@ -19,10 +19,10 @@ class ErrorOverlay extends HTMLElement {
     const root = this.attachShadow({ mode: 'open' });
     root.innerHTML = html;
 
-    root.querySelector('.close')!.addEventListener('click', this.close);
+    root.querySelector('.close')?.addEventListener('click', this.close);
     // close overlay when click outside
     this.addEventListener('click', this.close);
-    root.querySelector('.container')!.addEventListener('click', (e) => {
+    root.querySelector('.container')?.addEventListener('click', (e) => {
       if (e.target) {
         const { file } = (e.target as HTMLLinkElement).dataset;
         if (file) {

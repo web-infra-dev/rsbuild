@@ -261,11 +261,11 @@ export async function build({
         ([file]) => file.includes('index') && file.endsWith('.js'),
       ) || [];
 
-    assert(name);
+    assert(name && content);
 
     return {
-      content: content!,
-      size: content!.length / 1024,
+      content: content,
+      size: content.length / 1024,
     };
   };
 
