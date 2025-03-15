@@ -329,7 +329,7 @@ describe('mergeRsbuildConfig', () => {
       },
     });
 
-    expect(mergedConfig.tools!.rspack.plugins[0] instanceof A).toBeTruthy();
+    expect(mergedConfig.tools?.rspack.plugins[0] instanceof A).toBeTruthy();
   });
 
   test('should merge overrideBrowserslist in environments as expected', async () => {
