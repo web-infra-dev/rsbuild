@@ -41,7 +41,7 @@ class ErrorOverlay extends HTMLElement {
     document.addEventListener('keydown', onEscKeydown);
   }
 
-  close = (immediate = false) => {
+  close = (immediate: unknown = false) => {
     const remove = () => this.parentNode?.removeChild(this);
 
     if (this.animate && immediate !== true) {
