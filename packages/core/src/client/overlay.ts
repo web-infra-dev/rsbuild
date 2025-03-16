@@ -41,10 +41,10 @@ class ErrorOverlay extends HTMLElement {
     document.addEventListener('keydown', onEscKeydown);
   }
 
-  close = () => {
+  close = (immediate: unknown = false) => {
     const remove = () => this.parentNode?.removeChild(this);
 
-    if (this.animate) {
+    if (this.animate && immediate !== true) {
       this.animate([{ opacity: 1 }, { opacity: 0 }], {
         duration: 300,
         easing: 'ease-out',
@@ -69,7 +69,10 @@ function createOverlay(html: string) {
 function clearOverlay() {
   // use NodeList's forEach api instead of dom.iterable
   // biome-ignore lint/complexity/noForEach: <explanation>
-  document.querySelectorAll<ErrorOverlay>(overlayId).forEach((n) => n.close());
+  document
+    .querySelectorAll<ErrorOverlay>(overlayId)
+    // close overlay immediately to avoid multiple overlays at the same time
+    .forEach((n) => n.close(true));
 }
 
 if (typeof document !== 'undefined') {
