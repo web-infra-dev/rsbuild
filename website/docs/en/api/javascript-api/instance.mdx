@@ -467,13 +467,23 @@ Get all the Rsbuild plugins registered in the current Rsbuild instance.
 - **Type:**
 
 ```ts
-function GetPlugins(): RsbuildPlugin[];
+function GetPlugins(options?: {
+  /**
+   * Get the plugins in the specified environment.
+   * If environment is not specified, get the global plugins.
+   */
+  environment: string;
+}): RsbuildPlugin[];
 ```
 
 - **Example:**
 
 ```ts
+// get all plugins
 console.log(rsbuild.getPlugins());
+
+// get plugins in `web` environment
+console.log(rsbuild.getPlugins({ environment: 'web' }));
 ```
 
 ## rsbuild.removePlugins
