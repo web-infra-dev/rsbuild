@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { join } from 'node:path';
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import fse from 'fs-extra';
+import fse, { remove } from 'fs-extra';
 
 test('should compile Node addons correctly', async () => {
   const rsbuild = await build({
@@ -29,7 +29,7 @@ test('should compile Node addons correctly', async () => {
 test('should compile Node addons in the node_modules correctly', async () => {
   const pkgDir = join(__dirname, 'node_modules', 'node-addon-pkg');
 
-  fs.rmSync(pkgDir, { recursive: true, force: true });
+  await remove(pkgDir);
 
   fse.outputJSONSync(join(pkgDir, 'package.json'), {
     name: 'node-addon-pkg',

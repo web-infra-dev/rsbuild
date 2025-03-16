@@ -3,7 +3,7 @@ import path from 'node:path';
 import { build, webpackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import type { RsbuildConfig } from '@rsbuild/core';
-import fse from 'fs-extra';
+import fse, { remove } from 'fs-extra';
 
 test('`buildCache.buildDependencies` should work as expected', async () => {
   const cacheDirectory = path.resolve(
@@ -13,7 +13,7 @@ test('`buildCache.buildDependencies` should work as expected', async () => {
 
   const testDepsPath = path.resolve(__dirname, './test-temp-deps.js');
 
-  fs.rmSync(cacheDirectory, { recursive: true, force: true });
+  await remove(cacheDirectory);
 
   const getBuildConfig = (input: string) => {
     fs.writeFileSync(testDepsPath, input);
@@ -82,7 +82,7 @@ webpackOnlyTest(
 
     const configFile = path.resolve(cacheDirectory, 'buildDependencies.json');
 
-    fs.rmSync(cacheDirectory, { recursive: true, force: true });
+    await remove(cacheDirectory);
 
     // first build without cache
     let rsbuild = await build(buildConfig);

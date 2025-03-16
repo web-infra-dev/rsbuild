@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { expectFile, rspackOnlyTest } from '@e2e/helper';
+import { expectFile, rm, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
 import fse from 'fs-extra';
@@ -72,7 +72,7 @@ rspackOnlyTest(
     const filePath = join(cwd, 'test-temp-src', 'index.js');
     const distPath = join(cwd, 'dist/index.html');
 
-    await fs.promises.rm(distPath, { recursive: true, force: true });
+    await rm(distPath);
     await fs.promises.writeFile(filePath, "console.log('1');");
 
     const { plugin, names } = createPlugin();
@@ -97,7 +97,7 @@ rspackOnlyTest(
     const result = await rsbuild.build({ watch: true });
     await expectFile(distPath);
 
-    await fs.promises.rm(distPath, { recursive: true, force: true });
+    await rm(distPath);
     await fs.promises.writeFile(filePath, "console.log('2');");
     await expectFile(distPath);
 

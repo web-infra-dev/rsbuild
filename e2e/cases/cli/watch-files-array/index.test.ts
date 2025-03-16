@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { expectFile, getRandomPort, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
+import { remove } from 'fs-extra';
 
 const tempConfigPath = './test-temp-config.ts';
 
@@ -12,8 +13,8 @@ rspackOnlyTest(
     const dist = path.join(__dirname, 'dist');
     const extraConfigFile = path.join(__dirname, tempConfigPath);
 
-    fs.rmSync(extraConfigFile, { force: true });
-    fs.rmSync(dist, { recursive: true, force: true });
+    await remove(extraConfigFile);
+    await remove(dist);
     fs.writeFileSync(extraConfigFile, 'export default { foo: 1 };');
 
     const childProcess = exec('npx rsbuild dev', {
@@ -26,7 +27,7 @@ rspackOnlyTest(
 
     await expectFile(dist);
 
-    fs.rmSync(dist, { recursive: true });
+    await remove(dist);
     // temp config changed
     fs.writeFileSync(extraConfigFile, 'export default { foo: 2 };');
 

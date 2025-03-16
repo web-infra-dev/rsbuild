@@ -1,8 +1,8 @@
-import fs from 'node:fs';
 import path from 'node:path';
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import type { RsbuildConfig } from '@rsbuild/core';
+import { remove } from 'fs-extra';
 
 test('`buildCache.cacheDigest` should work as expected', async () => {
   const cacheDirectory = path.resolve(
@@ -10,7 +10,7 @@ test('`buildCache.cacheDigest` should work as expected', async () => {
     './node_modules/.cache/test-cache-digest',
   );
 
-  fs.rmSync(cacheDirectory, { recursive: true, force: true });
+  await remove(cacheDirectory);
 
   const getBuildConfig = (input: string) => ({
     cwd: __dirname,

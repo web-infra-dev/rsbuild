@@ -3,14 +3,14 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-import fse from 'fs-extra';
+import fse, { remove } from 'fs-extra';
 
 const localFile = path.join(__dirname, '.env.local');
 const prodLocalFile = path.join(__dirname, '.env.production.local');
 
-test.beforeEach(() => {
-  fs.rmSync(localFile, { force: true });
-  fs.rmSync(prodLocalFile, { force: true });
+test.beforeEach(async () => {
+  await remove(localFile);
+  await remove(prodLocalFile);
 });
 
 rspackOnlyTest(

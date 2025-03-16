@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import { join } from 'node:path';
 import { build } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
+import { remove } from 'fs-extra';
 
 test('should allow to import TS files with .js extension', async ({ page }) => {
   await build({
@@ -41,5 +42,5 @@ test('should resolve the .js file first if both .js and .ts exist', async ({
 
   expect(await page.evaluate(() => window.test)).toBe('js');
 
-  fs.rmSync(join(__dirname, 'test-temp-src'), { recursive: true });
+  await remove(join(__dirname, 'test-temp-src'));
 });
