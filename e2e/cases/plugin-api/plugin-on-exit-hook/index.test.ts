@@ -3,11 +3,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
+import { remove } from 'fs-extra';
 
 const distFile = path.join(__dirname, 'node_modules/hooksTempFile');
 
 rspackOnlyTest('should run onExit hook before process exit', async () => {
-  fs.rmSync(distFile, { force: true });
+  await remove(distFile);
 
   await new Promise<void>((resolve, reject) => {
     const timeoutId = setTimeout(() => {

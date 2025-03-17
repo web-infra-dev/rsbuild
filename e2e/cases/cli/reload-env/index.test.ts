@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { expectFile, getRandomPort } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
+import { remove } from 'fs-extra';
 
 // Skipped as it occasionally failed in CI
 test.skip('should restart dev server when .env file is changed', async () => {
@@ -11,9 +12,9 @@ test.skip('should restart dev server when .env file is changed', async () => {
   const envLocalFile = path.join(__dirname, '.env.local');
   const distIndex = path.join(dist, 'static/js/index.js');
 
-  fs.rmSync(dist, { recursive: true, force: true });
-  fs.rmSync(configFile, { force: true });
-  fs.rmSync(envLocalFile, { force: true });
+  await remove(dist);
+  await remove(configFile);
+  await remove(envLocalFile);
 
   fs.writeFileSync(envLocalFile, 'PUBLIC_NAME=jack');
   fs.writeFileSync(
@@ -37,7 +38,7 @@ test.skip('should restart dev server when .env file is changed', async () => {
   await expectFile(distIndex);
   expect(fs.readFileSync(distIndex, 'utf-8')).toContain('jack');
 
-  fs.rmSync(distIndex, { force: true });
+  await remove(distIndex);
 
   fs.writeFileSync(envLocalFile, 'PUBLIC_NAME=rose');
   await expectFile(distIndex);

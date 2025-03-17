@@ -2,6 +2,7 @@ import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { expectFile, getRandomPort, rspackOnlyTest } from '@e2e/helper';
+import { remove } from 'fs-extra';
 
 rspackOnlyTest(
   'should restart dev server and reload config when config file changed',
@@ -10,9 +11,9 @@ rspackOnlyTest(
     const dist2 = path.join(__dirname, 'dist-2');
     const configFile = path.join(__dirname, 'rsbuild.config.mjs');
 
-    fs.rmSync(dist1, { force: true, recursive: true });
-    fs.rmSync(dist2, { force: true, recursive: true });
-    fs.rmSync(configFile, { force: true });
+    await remove(dist1);
+    await remove(dist2);
+    await remove(configFile);
 
     fs.writeFileSync(
       configFile,
