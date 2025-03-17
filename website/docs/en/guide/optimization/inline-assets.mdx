@@ -10,6 +10,12 @@ Rsbuild will automatically inline static assets that are less than 4KiB, but som
 
 By default, Rsbuild will inline assets when the file size of is less than a threshold (the default is 4KiB). When inlined, the asset will be converted to a Base64 encoded string and will no longer send a separate HTTP request. When the file size is greater than this threshold, it is loaded as a separate file with a separate HTTP request.
 
+```js
+import smallImage from './static/smallImage.png';
+
+console.log(smallImage); // "data:image/png;base64,iVBORw0KGgo..."
+```
+
 The threshold can be modified with the [output.dataUriLimit](/config/output/data-uri-limit) config. For example, set the threshold of images to 5000 Bytes, and set media assets not to be inlined:
 
 ```ts
