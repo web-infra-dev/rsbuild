@@ -58,7 +58,7 @@
     "jiti": "^2.4.2"
   },
   "devDependencies": {
-    "@rslib/core": "0.5.3",
+    "@rslib/core": "0.5.4",
     "@types/connect": "3.4.38",
     "@types/node": "^22.13.10",
     "@types/on-finished": "2.3.4",
