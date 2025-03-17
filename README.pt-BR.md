@@ -68,9 +68,13 @@ O Rsbuild tem os seguintes recursos:
 
 Além de ser usado como uma ferramenta de compilação, o Rsbuild também oferece recursos de compilação universal para soluções de nível superior, como [Rspress](https://github.com/web-infra-dev/rspress) e [Rslib](https://github.com/web-infra-dev/rslib), permitindo que eles se concentrem no desenvolvimento de seus próprios recursos específicos de domínio.
 
-O diagrama a seguir ilustra a relação entre o Rsbuild e outras ferramentas do ecossistema:
+O seguinte diagrama ilustra a posição do Rsbuild no ecossistema Rstack:
 
-<img src="https://assets.rspack.dev/rsbuild/assets/rspack-stack-layers.png" alt="Rspack stack layers" width="760" />
+<img
+  src="https://assets.rspack.dev/rstack/rstack-overview.png"
+  alt="Rstack"
+  width="820"
+/>
 
 ## 📚 Primeiros passos
 
@@ -84,7 +88,7 @@ Para começar a usar o Rsbuild, consulte a seção [Início Rápido](https://rsb
 - [Rslib](https://github.com/web-infra-dev/rslib): A ferramenta de compilação de bibliotecas desenvolvida pelo Rsbuild.
 - [Modern.js](https://github.com/web-infra-dev/modern.js): Uma estrutura React progressiva baseada no Rsbuild.
 - [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack): Uma lista com curadoria de coisas incríveis relacionadas ao Rspack e ao Rsbuild.
-- [rstack-examples](https://github.com/rspack-contrib/rstack-examples): Exemplos demonstrando ferramentas do ecossistema Rstack (Rspack, Rsbuild, Rspress, Rsdoctor).
+- [rstack-examples](https://github.com/rspack-contrib/rstack-examples): Exemplos demonstrando ferramentas do Rstack (Rspack, Rsbuild, Rspress, Rsdoctor).
 - [storybook-rsbuild](https://github.com/rspack-contrib/storybook-rsbuild): Construtor de livros de histórias desenvolvido pelo Rsbuild.
 - [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template)：Use esse modelo para criar seu próprio plug-in do Rsbuild.
 - [rstack-design-resources](https://github.com/rspack-contrib/rstack-design-resources)：Recursos de design para Rspack, Rsbuild, Rspress e Rsdoctor.
