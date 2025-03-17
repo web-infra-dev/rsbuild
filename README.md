@@ -68,9 +68,13 @@ Rsbuild has the following features:
 
 Rsbuild provides JavaScript API and plugin API for higher-level frameworks and tools. For example, we have implemented [Rspress](https://github.com/web-infra-dev/rspress) and [Rslib](https://github.com/web-infra-dev/rslib) based on Rsbuild, taking full advantage of its capabilities and ecosystem.
 
-The following diagram illustrates the relationship between Rsbuild and other tools in the ecosystem:
+The following diagram illustrates Rsbuild's position in the Rstack ecosystem:
 
-<img src="https://assets.rspack.dev/rsbuild/assets/rspack-stack-layers.png" alt="Rspack stack layers" width="760" />
+<img
+  src="https://assets.rspack.dev/rstack/rstack-overview.png"
+  alt="Rstack"
+  width="820"
+/>
 
 ## 📚 Getting started
 
@@ -84,7 +88,7 @@ To get started with Rsbuild, see the [Quick start](https://rsbuild.dev/guide/sta
 - [Rslib](https://github.com/web-infra-dev/rslib): The library development tool powered by Rsbuild.
 - [Modern.js](https://github.com/web-infra-dev/modern.js): A progressive React framework based on Rsbuild.
 - [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack): A curated list of awesome things related to Rspack and Rsbuild.
-- [rstack-examples](https://github.com/rspack-contrib/rstack-examples): Examples showcasing Rstack ecosystem tools (Rspack, Rsbuild, Rspress, Rsdoctor).
+- [rstack-examples](https://github.com/rspack-contrib/rstack-examples): Examples showcasing Rstack tools (Rspack, Rsbuild, Rspress, Rsdoctor).
 - [storybook-rsbuild](https://github.com/rspack-contrib/storybook-rsbuild): Storybook builder powered by Rsbuild.
 - [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template)：Use this template to create your own Rsbuild plugin.
 - [rstack-design-resources](https://github.com/rspack-contrib/rstack-design-resources)：Design resources for Rspack, Rsbuild, Rspress and Rsdoctor.
