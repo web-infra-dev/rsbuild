@@ -105,7 +105,7 @@ export function formatStats(
   );
 
   if (warnings.length) {
-    const title = color.bold(color.yellow('Compile Warning: \n'));
+    const title = color.bold(color.yellow('Compile warning: \n'));
 
     return {
       message: `${title}${warnings.join('\n\n')}\n`,
