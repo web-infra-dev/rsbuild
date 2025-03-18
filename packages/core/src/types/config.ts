@@ -470,7 +470,16 @@ export type NormalizedServerConfig = ServerConfig &
 export type SriAlgorithm = 'sha256' | 'sha384' | 'sha512';
 
 export type SriOptions = {
+  /**
+   * Specifies the algorithm used to compute the integrity hash.
+   * @default 'sha384'
+   */
   algorithm?: SriAlgorithm;
+  /**
+   * Whether to enable SRI.
+   * `'auto'` means it's enabled in production mode and disabled in development mode.
+   * @default false
+   */
   enable?: boolean | 'auto';
 };
 
