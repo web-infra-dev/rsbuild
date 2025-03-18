@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { parse } from 'dotenv';
 import { expand } from 'dotenv-expand';
 import { getNodeEnv, isFileSync } from './helpers';
+import { logger } from './logger';
 
 export type LoadEnvOptions = {
   /**
@@ -20,16 +21,22 @@ export type LoadEnvOptions = {
    * @default ['PUBLIC_']
    */
   prefixes?: string[];
+  /**
+   * Specify a target object to store environment variables.
+   * If not provided, variables will be written to `process.env`.
+   * @default process.env
+   */
+  processEnv?: Record<string, string>;
 };
 
-export function loadEnv({
-  cwd = process.cwd(),
-  mode = getNodeEnv(),
-  prefixes = ['PUBLIC_'],
-}: LoadEnvOptions = {}): {
-  /** All env variables in the .env file */
+export type LoadEnvResult = {
+  /**
+   * All env variables in the .env file
+   */
   parsed: Record<string, string>;
-  /** The absolute paths to all env files */
+  /**
+   * The absolute paths to all env files
+   */
   filePaths: string[];
   /**
    * Env variables that start with prefixes.
@@ -56,9 +63,18 @@ export function loadEnv({
    * ```
    **/
   publicVars: Record<string, string>;
-  /** Clear the env variables mounted on `process.env` */
+  /**
+   * Clear the env variables mounted on `process.env`
+   */
   cleanup: () => void;
-} {
+};
+
+export function loadEnv({
+  cwd = process.cwd(),
+  mode = getNodeEnv(),
+  prefixes = ['PUBLIC_'],
+  processEnv = process.env as Record<string, string>,
+}: LoadEnvOptions = {}): LoadEnvResult {
   if (mode === 'local') {
     throw new Error(
       `[rsbuild:loadEnv] 'local' cannot be used as a value for env mode, because ".env.local" represents a temporary local file. Please use another value.`,
@@ -80,23 +96,24 @@ export function loadEnv({
 
   for (const envPath of filePaths) {
     Object.assign(parsed, parse(fs.readFileSync(envPath)));
+    logger.debug('loaded env file:', envPath);
   }
 
   // dotenv-expand does not override existing env vars by default,
   // but we should allow overriding NODE_ENV, which is very common.
   // https://github.com/web-infra-dev/rsbuild/issues/2904
   if (parsed.NODE_ENV) {
-    process.env.NODE_ENV = parsed.NODE_ENV;
+    processEnv.NODE_ENV = parsed.NODE_ENV;
   }
 
-  expand({ parsed });
+  expand({ parsed, processEnv });
 
   const publicVars: Record<string, string> = {};
   const rawPublicVars: Record<string, string | undefined> = {};
 
-  for (const key of Object.keys(process.env)) {
+  for (const key of Object.keys(processEnv)) {
     if (prefixes.some((prefix) => key.startsWith(prefix))) {
-      const val = process.env[key];
+      const val = processEnv[key];
       publicVars[`import.meta.env.${key}`] = JSON.stringify(val);
       publicVars[`process.env.${key}`] = JSON.stringify(val);
       rawPublicVars[key] = val;
@@ -116,8 +133,8 @@ export function loadEnv({
         continue;
       }
 
-      if (process.env[key] === parsed[key]) {
-        delete process.env[key];
+      if (processEnv[key] === parsed[key]) {
+        delete processEnv[key];
       }
     }
 

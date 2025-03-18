@@ -1,0 +1,191 @@
+# Dev server API
+
+Rsbuild 提供了一组 dev server 相关的 API，并允许你通过插件 hooks 或 JavaScript API 来访问。
+
+## 如何使用
+
+- 如果你是插件的作者，可以在 Rsbuild 插件中通过 [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) 钩子访问 dev server 实例。
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.onBeforeStartDevServer(({ server }) => {
+      console.log('the server is ', server);
+    });
+  },
+});
+```
+
+- 如果你在使用 Rsbuild 的 JavaScript API，可以通过 [rsbuild.createDevServer](/api/javascript-api/instance#rsbuildcreatedevserver) 方法创建 dev server 实例。
+
+```ts
+const server = await rsbuild.createDevServer();
+
+console.log('the server is ', server);
+```
+
+## API 定义
+
+```ts
+type EnvironmentAPI = {
+  [name: string]: {
+    /**
+     * 获取当前环境的构建信息
+     */
+    getStats: () => Promise<Stats>;
+    /**
+     * 在服务端加载并执行构建产物
+     *
+     * @param entryName - 入口名称，和 Rsbuild source.entry 的某一个 key 值对应
+     * @returns 入口模块的返回值
+     */
+    loadBundle: <T = unknown>(entryName: string) => Promise<T>;
+    /**
+     * 获取编译后的 HTML 模版内容
+     */
+    getTransformedHtml: (entryName: string) => Promise<string>;
+  };
+};
+
+type RsbuildDevServer = {
+  /**
+   * `connect` 实例
+   * 可用于向 dev server 附加自定义中间件
+   */
+  middlewares: Connect.Server;
+  /**
+   * Node.js HTTP 服务器实例
+   * - 如果使用了 `server.https` 配置，则为 `Http2SecureServer`
+   * - 如果开启了 `server.middlewareMode` 配置，则为 `null`
+   */
+  httpServer:
+    | import('node:http').Server
+    | import('node:http2').Http2SecureServer
+    | null;
+  /**
+   * 监听 Rsbuild dev server
+   * 当你使用自定义 server 时，不需要调用该方法
+   */
+  listen: () => Promise<{
+    port: number;
+    urls: string[];
+    server: {
+      close: () => Promise<void>;
+    };
+  }>;
+  /**
+   * Rsbuild server 提供的 environment API
+   */
+  environments: EnvironmentAPI;
+  /**
+   * 解析后的端口号
+   * 默认情况下，Rsbuild server 会监听 `3000` 端口，如果端口被占用，则自动递增端口号
+   */
+  port: number;
+  /**
+   * 通知 Rsbuild 自定义 Server 已启动
+   * Rsbuild 会在此阶段触发 `onAfterStartDevServer` 钩子
+   */
+  afterListen: () => Promise<void>;
+  /**
+   * 激活 socket 连接
+   * 这确保了 HMR 正常工作
+   */
+  connectWebSocket: (options: { server: HTTPServer }) => void;
+  /**
+   * 关闭 Rsbuild server
+   */
+  close: () => Promise<void>;
+  /**
+   * 打印 server URLs
+   */
+  printUrls: () => void;
+  /**
+   * 启动服务器后，在浏览器中打开 URL
+   */
+  open: () => Promise<void>;
+};
+
+type CreateDevServerOptions = {
+  /**
+   * 自定义 Compiler 对象
+   */
+  compiler?: Compiler | MultiCompiler;
+  /**
+   * 是否在启动时静默获取端口号，不输出任何日志
+   * @default false
+   */
+  getPortSilently?: boolean;
+  /**
+   * 是否触发 Rsbuild 编译
+   * @default true
+   */
+  runCompile?: boolean;
+};
+
+function CreateDevServer(
+  options?: CreateDevServerOptions,
+): Promise<RsbuildDevServer>;
+```
+
+## 示例
+
+### 与自定义 server 集成
+
+下面是一个在 [express](https://expressjs.com/) 中集成 Rsbuild dev server 的例子:
+
+```ts
+import { createRsbuild } from '@rsbuild/core';
+import express from 'express';
+
+async function startDevServer() {
+  // 初始化 Rsbuild
+  const rsbuild = await createRsbuild({
+    rsbuildConfig: {
+      server: {
+        middlewareMode: true,
+      },
+    },
+  });
+
+  const app = express();
+
+  // 创建 Rsbuild dev server 实例
+  const rsbuildServer = await rsbuild.createDevServer();
+
+  // 使用 Rsbuild 的内置中间件
+  app.use(rsbuildServer.middlewares);
+
+  const httpServer = app.listen(rsbuildServer.port, async () => {
+    // 通知 Rsbuild 自定义 Server 已启动
+    await rsbuildServer.afterListen();
+  });
+
+  rsbuildServer.connectWebSocket({ server: httpServer });
+}
+```
+
+更多用法可参考：
+
+- [示例代码](https://github.com/rspack-contrib/rstack-examples/blob/main/rsbuild/express/server.mjs)。
+- [rsbuild.createDevServer](/api/javascript-api/instance#rsbuildcreatedevserver)
+- [server.middlewareMode](/config/server/middleware-mode)
+
+### connectWebSocket
+
+Rsbuild 内置了 WebSocket 处理器以支持 HMR 功能：
+
+1. 当用户通过浏览器访问页面时，会自动向服务器发起 WebSocket 连接请求。
+2. Rsbuild 开发服务器检测到连接请求后，会指示内置的 WebSocket 处理器进行处理。
+3. 浏览器与 Rsbuild WebSocket 处理器成功建立连接后，便可进行实时通信。
+4. 每次重新编译完成后，Rsbuild WebSocket 处理器会通知浏览器。随后，浏览器向开发服务器发送 `hot-update.(js|json)` 请求，以加载编译后的新模块。
+
+当你使用自定义 server 时，可能会遇到 HMR 连接失败的问题。这是因为自定义 server 未能将 WebSocket 连接请求正确转发至 Rsbuild 的 WebSocket 处理器。此时，你需要调用 `connectWebSocket` 方法来让 Rsbuild 能够接收并处理来自浏览器的 WebSocket 连接请求。
+
+```ts
+const rsbuildServer = await rsbuild.createDevServer();
+
+const httpServer = app.listen(rsbuildServer.port);
+
+rsbuildServer.connectWebSocket({ server: httpServer });
+```

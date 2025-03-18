@@ -5,22 +5,13 @@
 ```ts
 type FilenameConfig = {
   html?: string;
-  js?:
-    | string
-    | ((
-        pathData: Rspack.PathData,
-        assetInfo: Rspack.JsAssetInfo | undefined,
-      ) => string);
-  css?:
-    | string
-    | ((
-        pathData: Rspack.PathData,
-        assetInfo: Rspack.JsAssetInfo | undefined,
-      ) => string);
-  svg?: string;
-  font?: string;
-  image?: string;
-  media?: string;
+  js?: string | Function;
+  css?: string | Function;
+  svg?: string | Function;
+  font?: string | Function;
+  image?: string | Function;
+  media?: string | Function;
+  assets?: string | Function;
 };
 ```
 
@@ -56,31 +47,51 @@ const prodDefaultFilename = {
 
 在生产模式构建后，Rsbuild 会自动在文件名中间添加 hash 值，如果不需要添加，可以将 [output.filenameHash](/config/output/filename-hash) 设置为 `false` 来禁用该行为。
 
-下面是各个文件类型的说明：
+:::tip
+Rsbuild 会基于 `output.filename` 和 [output.distPath](/config/output/dist-path) 来生成最终的文件路径。
 
-- `html`：表示 HTML 文件的名称。
-- `js`：表示 JavaScript 文件的名称。
-- `css`：表示 CSS 样式文件的名称。
-- `svg`：表示 SVG 图片的名称。
-- `font`：表示字体文件的名称。
-- `image`：表示非 SVG 图片的名称。
-- `media`：表示视频等媒体资源的名称。
+查看 [构建产物目录](/guide/basic/output-files) 了解更多。
+
+:::
+
+## 文件类型
+
+`output.filename` 可以为不同类型的文件设置不同的名称。
+
+下面是 `output.filename` 中各个选项的说明：
+
+- `html`：HTML 文件的名称。
+- `js`：JavaScript 文件的名称。
+- `css`：CSS 样式文件的名称。
+- `svg`：SVG 图片的名称。
+- `font`：字体文件的名称。
+- `image`：非 SVG 图片的名称。
+- `media`：视频等媒体资源的名称。
 - `assets`：其他静态资源的名称。例如 [扩展静态资源类型](/guide/basic/static-assets#扩展静态资源类型) 中定义的资源。
-
-> 查看 [构建产物目录](/guide/basic/output-files) 了解更多。
 
 ## 示例
 
 修改 JavaScript 文件的名称为 `[name]_script.js`：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     filename: {
-      js:
-        process.env.NODE_ENV === 'production'
-          ? '[name]_script.[contenthash:8].js'
-          : '[name]_script.js',
+      js: '[name]_script.js',
+    },
+  },
+};
+```
+
+为开发和生产构建设置不同的文件名：
+
+```ts title="rsbuild.config.ts"
+const isProd = process.env.NODE_ENV === 'production';
+
+export default {
+  output: {
+    filename: {
+      js: isProd ? '[name]_script.[contenthash:8].js' : '[name]_script.js',
     },
   },
 };
@@ -135,9 +146,18 @@ const { add } = await import(
 
 ## 使用函数
 
-`output.filename.js` 和 `output.filename.css` 可以传入一个函数，这允许你根据文件信息动态生成文件名：
+你可以传入一个函数来根据文件信息动态设置文件名。
 
-```js
+这个函数接收两个参数：
+
+- `pathData`：一个对象，包含文件路径信息。
+- `assetInfo`：一个可选的对象，包含额外的资源信息。
+
+为 JavaScript 文件动态设置文件名：
+
+```ts title="rsbuild.config.ts"
+const isProd = process.env.NODE_ENV === 'production';
+
 export default {
   output: {
     filename: {
@@ -145,18 +165,27 @@ export default {
         console.log(pathData); // 你可以在这里查看 pathData 的内容
 
         if (pathData.chunk?.name === 'index') {
-          const isProd = process.env.NODE_ENV === 'production';
           return isProd ? '[name].[contenthash:8].js' : '[name].js';
         }
-
         return '/some-path/[name].js';
       },
+    },
+  },
+};
+```
+
+为 CSS 文件动态设置文件名：
+
+```ts title="rsbuild.config.ts"
+const isProd = process.env.NODE_ENV === 'production';
+
+export default {
+  output: {
+    filename: {
       css: (pathData, assetInfo) => {
         if (pathData.chunk?.name === 'index') {
-          const isProd = process.env.NODE_ENV === 'production';
           return isProd ? '[name].[contenthash:8].css' : '[name].css';
         }
-
         return '/some-path/[name].css';
       },
     },
@@ -164,15 +193,32 @@ export default {
 };
 ```
 
+为图片文件动态设置文件名：
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    filename: {
+      image: (pathData) => {
+        if (pathData.filename?.includes('foo')) {
+          return '/foo/[name][ext]';
+        }
+        return '/bar/[name][ext]';
+      },
+    },
+  },
+};
+```
+
 :::tip
-除了 `output.filename.js` 和 `output.filename.css` 以外，其他类型的文件目前暂不支持使用函数。
+`output.filename.html` 暂不支持使用函数。
 :::
 
 ## Query hash
 
 如果你需要在资源的 URL query 上生成 hash 值，可以参考以下配置：
 
-```js
+```ts title="rsbuild.config.ts"
 const isProd = process.env.NODE_ENV === 'production';
 
 export default {

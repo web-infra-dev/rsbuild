@@ -87,7 +87,7 @@ api.modifyRspackConfig((config, { environment }) => {
 
 ### distPath
 
-构建产物输出目录的绝对路径，对应 RsbuildConfig 中的 [output.distPath.root](/config/output/dist-path) 配置项。
+构建产物输出目录的绝对路径，对应 Rsbuild 的 [output.distPath.root](/config/output/dist-path) 配置项。
 
 - **类型：** `string`
 - **示例：**
@@ -122,7 +122,7 @@ api.modifyRspackConfig((config, { environment }) => {
 
 HTML 产物的路径信息。
 
-该 API 会返回一个对象，对象的 key 为 entry 名称，value 为 HTML 文件在产物目录下的相对路径。
+这个值是一个对象，对象的 key 为 entry 名称，value 为 HTML 文件在产物目录下的相对路径。
 
 - **类型：**
 

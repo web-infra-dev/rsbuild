@@ -1,8 +1,7 @@
 import path from 'node:path';
-import { loadConfig, watchFilesForRestart } from '../config';
+import { loadConfig as baseLoadConfig, watchFilesForRestart } from '../config';
 import { createRsbuild } from '../createRsbuild';
 import { castArray, getAbsolutePath } from '../helpers';
-import { loadEnv } from '../loadEnv';
 import { logger } from '../logger';
 import type { RsbuildInstance } from '../types';
 import type { CommonOptions } from './commands';
@@ -11,9 +10,64 @@ let commonOpts: CommonOptions = {};
 
 const getEnvDir = (cwd: string, envDir?: string) => {
   if (envDir) {
-    return path.isAbsolute(envDir) ? envDir : path.resolve(cwd, envDir);
+    return path.isAbsolute(envDir) ? envDir : path.join(cwd, envDir);
   }
   return cwd;
+};
+
+const loadConfig = async (root: string) => {
+  const { content: config, filePath } = await baseLoadConfig({
+    cwd: root,
+    path: commonOpts.config,
+    envMode: commonOpts.envMode,
+    loader: commonOpts.configLoader,
+  });
+
+  config.dev ||= {};
+  config.source ||= {};
+  config.server ||= {};
+
+  if (commonOpts.base) {
+    config.server.base = commonOpts.base;
+  }
+
+  if (commonOpts.root) {
+    config.root = root;
+  }
+
+  if (commonOpts.mode) {
+    config.mode = commonOpts.mode;
+  }
+
+  if (commonOpts.open && !config.server?.open) {
+    config.server.open = commonOpts.open;
+  }
+
+  if (commonOpts.host) {
+    config.server.host = commonOpts.host;
+  }
+
+  if (commonOpts.port) {
+    config.server.port = commonOpts.port;
+  }
+
+  // enable CLI shortcuts by default when using Rsbuild CLI
+  if (config.dev.cliShortcuts === undefined) {
+    config.dev.cliShortcuts = true;
+  }
+
+  // watch the config file
+  if (filePath) {
+    config.dev.watchFiles = [
+      ...(config.dev.watchFiles ? castArray(config.dev.watchFiles) : []),
+      {
+        paths: filePath,
+        type: 'reload-server',
+      },
+    ];
+  }
+
+  return config;
 };
 
 export async function init({
@@ -32,74 +86,23 @@ export async function init({
   try {
     const cwd = process.cwd();
     const root = commonOpts.root ? getAbsolutePath(cwd, commonOpts.root) : cwd;
-    const envs = loadEnv({
-      cwd: getEnvDir(root, commonOpts.envDir),
-      mode: commonOpts.envMode,
-    });
-
-    const { content: config, filePath: configFilePath } = await loadConfig({
-      cwd: root,
-      path: commonOpts.config,
-      envMode: commonOpts.envMode,
-      loader: commonOpts.configLoader,
-    });
-
-    config.source ||= {};
-    config.source.define = {
-      ...envs.publicVars,
-      ...config.source.define,
-    };
-
-    if (commonOpts.base) {
-      config.server ||= {};
-      config.server.base = commonOpts.base;
-    }
-
-    if (commonOpts.root) {
-      config.root = root;
-    }
-
-    if (commonOpts.mode) {
-      config.mode = commonOpts.mode;
-    }
-
-    if (commonOpts.open && !config.server?.open) {
-      config.server ||= {};
-      config.server.open = commonOpts.open;
-    }
-
-    if (commonOpts.host) {
-      config.server ||= {};
-      config.server.host = commonOpts.host;
-    }
-
-    if (commonOpts.port) {
-      config.server ||= {};
-      config.server.port = commonOpts.port;
-    }
-
-    // enable CLI shortcuts by default when using Rsbuild CLI
-    if (config.dev?.cliShortcuts === undefined) {
-      config.dev ||= {};
-      config.dev.cliShortcuts = true;
-    }
 
     const rsbuild = await createRsbuild({
       cwd: root,
-      rsbuildConfig: config,
+      rsbuildConfig: () => loadConfig(root),
       environment: commonOpts.environment,
+      loadEnv: {
+        cwd: getEnvDir(root, commonOpts.envDir),
+        mode: commonOpts.envMode,
+      },
     });
 
     rsbuild.onBeforeCreateCompiler(() => {
       const command = process.argv[2];
       if (command === 'dev' || isBuildWatch) {
-        const files = [...envs.filePaths];
-
-        if (configFilePath) {
-          files.push(configFilePath);
-        }
-
+        const files: string[] = [];
         const config = rsbuild.getNormalizedConfig();
+
         if (config.dev?.watchFiles) {
           for (const watchFilesConfig of castArray(config.dev.watchFiles)) {
             if (watchFilesConfig.type !== 'reload-server') {
@@ -123,9 +126,6 @@ export async function init({
         watchFilesForRestart(files, root, isBuildWatch);
       }
     });
-
-    rsbuild.onCloseBuild(envs.cleanup);
-    rsbuild.onCloseDevServer(envs.cleanup);
 
     return rsbuild;
   } catch (err) {

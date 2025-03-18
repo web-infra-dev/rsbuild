@@ -11,6 +11,11 @@ import type {
   ServerConfig,
 } from '../types';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
+import {
+  registerCleanup,
+  removeCleanup,
+  setupGracefulShutdown,
+} from './gracefulShutdown';
 import { gzipMiddleware } from './gzipMiddleware';
 import {
   type StartServerResult,
@@ -25,6 +30,8 @@ import {
   faviconFallbackMiddleware,
   getBaseMiddleware,
   getRequestLoggerMiddleware,
+  notFoundMiddleware,
+  optionsFallbackMiddleware,
 } from './middlewares';
 import { open } from './open';
 import { createProxyMiddleware } from './proxy';
@@ -122,6 +129,8 @@ export class RsbuildProdServer {
     }
 
     this.middlewares.use(faviconFallbackMiddleware);
+    this.middlewares.use(optionsFallbackMiddleware);
+    this.middlewares.use(notFoundMiddleware);
   }
 
   private async applyStaticAssetMiddleware() {
@@ -187,7 +196,7 @@ export async function startProdServer(
     middlewares,
   );
 
-  await context.hooks.onBeforeStartProdServer.call();
+  await context.hooks.onBeforeStartProdServer.callBatch();
 
   const httpServer = await createHttpServer({
     serverConfig,
@@ -205,7 +214,7 @@ export async function startProdServer(
       },
       async () => {
         const routes = getRoutes(context);
-        await context.hooks.onAfterStartProdServer.call({
+        await context.hooks.onAfterStartProdServer.callBatch({
           port,
           routes,
           environments: context.environments,
@@ -215,9 +224,16 @@ export async function startProdServer(
         const urls = getAddressUrls({ protocol, port, host });
         const cliShortcutsEnabled = isCliShortcutsEnabled(config.dev);
 
+        const cleanupGracefulShutdown = setupGracefulShutdown();
+
         const closeServer = async () => {
+          // ensure closeServer is only called once
+          removeCleanup(closeServer);
+          cleanupGracefulShutdown();
           await Promise.all([server.close(), serverTerminator()]);
         };
+
+        registerCleanup(closeServer);
 
         const printUrls = () =>
           printServerURLs({

@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createRsbuild, proxyConsole, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
+import { remove } from 'fs-extra';
 
 const rsbuildConfig = path.resolve(
   __dirname,
@@ -37,11 +38,11 @@ rspackOnlyTest(
     expect(fs.existsSync(rsbuildConfig)).toBeTruthy();
 
     expect(
-      logs.some((log) => log.includes('Inspect config succeed')),
+      logs.some((log) => log.includes('config inspection completed')),
     ).toBeTruthy();
 
-    fs.rmSync(rsbuildConfig, { force: true });
-    fs.rmSync(bundlerConfig, { force: true });
+    await remove(rsbuildConfig);
+    await remove(bundlerConfig);
 
     restore();
   },
@@ -74,11 +75,11 @@ rspackOnlyTest(
     expect(fs.existsSync(rsbuildConfig)).toBeTruthy();
 
     expect(
-      logs.some((log) => log.includes('Inspect config succeed')),
+      logs.some((log) => log.includes('config inspection completed')),
     ).toBeTruthy();
 
-    fs.rmSync(rsbuildConfig, { force: true });
-    fs.rmSync(bundlerConfig, { force: true });
+    await remove(rsbuildConfig);
+    await remove(bundlerConfig);
 
     restore();
   },
@@ -115,13 +116,13 @@ rspackOnlyTest(
     expect(fs.existsSync(bundlerNodeConfig)).toBeTruthy();
 
     expect(
-      logs.some((log) => log.includes('Inspect config succeed')),
+      logs.some((log) => log.includes('config inspection completed')),
     ).toBeTruthy();
 
-    fs.rmSync(rsbuildConfig, { force: true });
-    fs.rmSync(rsbuildNodeConfig, { force: true });
-    fs.rmSync(bundlerConfig, { force: true });
-    fs.rmSync(bundlerNodeConfig, { force: true });
+    await remove(rsbuildConfig);
+    await remove(rsbuildNodeConfig);
+    await remove(bundlerConfig);
+    await remove(bundlerNodeConfig);
 
     restore();
   },
@@ -156,14 +157,14 @@ rspackOnlyTest('should allow to specify absolute output path', async () => {
   });
 
   expect(
-    logs.some((log) => log.includes('Inspect config succeed')),
+    logs.some((log) => log.includes('config inspection completed')),
   ).toBeTruthy();
 
   expect(
     fs.existsSync(path.join(outputPath, 'rspack.config.web.mjs')),
   ).toBeTruthy();
 
-  fs.rmSync(rsbuildConfig, { force: true });
+  await remove(rsbuildConfig);
 
   restore();
 });

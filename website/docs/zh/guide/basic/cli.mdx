@@ -48,8 +48,14 @@ Usage: rsbuild dev [options]
 
 Options:
   -o, --open [url]      启动时是否在浏览器中打开页面
-  --port <port>         设置 Rsbuild Server 监听的端口号
-  --host <host>         指定 Rsbuild Server 启动时监听的 host
+  --port <port>         设置 Rsbuild server 监听的端口号
+  --host <host>         指定 Rsbuild server 启动时监听的 host
+```
+
+你也可以直接运行 `rsbuild` 来启动 dev server，等同于运行 `rsbuild dev`。
+
+```bash
+npx rsbuild
 ```
 
 ### 打开页面
@@ -96,8 +102,8 @@ Usage: rsbuild preview [options]
 
 Options:
   -o, --open [url]      启动时是否在浏览器中打开页面
-  --port <port>         设置 Rsbuild Server 监听的端口号
-  --host <host>         指定 Rsbuild Server 启动时监听的 host
+  --port <port>         设置 Rsbuild server 监听的端口号
+  --host <host>         指定 Rsbuild server 启动时监听的 host
 ```
 
 :::tip
@@ -124,10 +130,10 @@ Options:
 ```bash
 ➜ npx rsbuild inspect
 
-Inspect config succeed, open following files to view the content:
+config inspection completed, generated files:
 
-  - Rsbuild Config: /project/dist/.rsbuild/rsbuild.config.mjs
-  - Rspack Config (web): /project/dist/.rsbuild/rspack.config.web.mjs
+  - Rsbuild config: /project/dist/.rsbuild/rsbuild.config.mjs
+  - Rspack config (web): /project/dist/.rsbuild/rspack.config.web.mjs
 ```
 
 ### 指定模式
@@ -153,10 +159,10 @@ rsbuild inspect --verbose
 ```bash
 ➜ npx rsbuild inspect
 
-Inspect config succeed, open following files to view the content:
+config inspection completed, generated files:
 
-  - Rsbuild Config (web): /project/dist/.rsbuild/rsbuild.config.web.mjs
-  - Rsbuild Config (node): /project/dist/.rsbuild/rsbuild.config.node.mjs
-  - Rspack Config (web): /project/dist/.rsbuild/rspack.config.web.mjs
-  - Rspack Config (node): /project/dist/.rsbuild/rspack.config.node.mjs
+  - Rsbuild config (web): /project/dist/.rsbuild/rsbuild.config.web.mjs
+  - Rsbuild config (node): /project/dist/.rsbuild/rsbuild.config.node.mjs
+  - Rspack config (web): /project/dist/.rsbuild/rspack.config.web.mjs
+  - Rspack config (node): /project/dist/.rsbuild/rspack.config.node.mjs
 ```

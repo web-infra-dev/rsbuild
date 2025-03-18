@@ -69,7 +69,7 @@ export async function getTemplate(
 
   const absolutePath = isAbsolute(templatePath)
     ? templatePath
-    : path.resolve(rootPath, templatePath);
+    : path.join(rootPath, templatePath);
 
   if (!existTemplatePath.has(absolutePath)) {
     // Check if custom template exists

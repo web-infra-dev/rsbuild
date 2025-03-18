@@ -18,7 +18,7 @@ own GitHub account and then [clone](https://help.github.com/articles/cloning-a-r
 
 ### Install Node.js
 
-We recommend using Node.js 20. You can check your current Node.js version using the following command:
+We recommend using Node.js LTS version. You can check your current Node.js version using the following command:
 
 ```bash
 node -v
@@ -26,17 +26,13 @@ node -v
 
 If you do not have Node.js installed in your current environment, you can use [nvm](https://github.com/nvm-sh/nvm) or [fnm](https://github.com/Schniz/fnm) to install it.
 
-Here is an example of how to install the Node.js 20 LTS version via nvm:
+Here is an example of how to install the Node.js LTS version via nvm:
 
 ```bash
-# Install the LTS version of Node.js 20
-nvm install 20 --lts
-
-# Make the newly installed Node.js 20 as the default version
-nvm alias default 20
-
-# Switch to the newly installed Node.js 20
-nvm use 20
+# Install Node.js LTS
+nvm install --lts
+# Switch to Node.js LTS
+nvm use --lts
 ```
 
 ### Install dependencies
@@ -44,6 +40,7 @@ nvm use 20
 Enable [pnpm](https://pnpm.io/) with corepack:
 
 ```sh
+npm i corepack@latest -g
 corepack enable
 ```
 
@@ -195,16 +192,6 @@ feat(core): Add `myOption` config
 |    |_______ Scope
 |____________ Type
 ```
-
----
-
-## Benchmarking
-
-You can input `!bench` in the comment area of ​​the PR to do benchmarking on `rsbuild` (you need to have Collaborator and above permissions).
-
-You can focus on metrics related to build time and bundle size based on the comparison table output by comments to assist you in making relevant performance judgments and decisions.
-
-Dependencies installation-related metrics base on publishing process, so the data is relatively lagging and is for reference only.
 
 ---
 

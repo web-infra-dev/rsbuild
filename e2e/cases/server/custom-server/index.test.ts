@@ -3,7 +3,7 @@ import { expect } from '@playwright/test';
 import { startDevServerPure } from './scripts/pureServer.mjs';
 import { startDevServer } from './scripts/server.mjs';
 
-rspackOnlyTest('custom server', async ({ page }) => {
+rspackOnlyTest('should allow to custom dev server', async ({ page }) => {
   const { config, close } = await startDevServer(__dirname);
 
   await gotoPage(page, config);
@@ -20,23 +20,26 @@ rspackOnlyTest('custom server', async ({ page }) => {
   await close();
 });
 
-rspackOnlyTest('custom server without compile', async ({ page }) => {
-  const { config, close } = await startDevServerPure(__dirname);
-  const indexRes = await gotoPage(page, config);
+rspackOnlyTest(
+  'should allow to custom dev server without compile',
+  async ({ page }) => {
+    const { config, close } = await startDevServerPure(__dirname);
+    const indexRes = await gotoPage(page, config);
 
-  expect(indexRes?.status()).toBe(404);
+    expect(indexRes?.status()).toBe(404);
 
-  const url1 = new URL(`http://localhost:${config.port}/bbb`);
+    const url1 = new URL(`http://localhost:${config.port}/bbb`);
 
-  const res = await page.goto(url1.href);
+    const res = await page.goto(url1.href);
 
-  expect(await res?.text()).toBe('Hello polka!');
+    expect(await res?.text()).toBe('Hello polka!');
 
-  const url2 = new URL(`http://localhost:${config.port}/test`);
+    const url2 = new URL(`http://localhost:${config.port}/test`);
 
-  const res2 = await page.goto(url2.href);
+    const res2 = await page.goto(url2.href);
 
-  expect(await res2?.text()).toBe('Hello polka!');
+    expect(await res2?.text()).toBe('Hello polka!');
 
-  await close();
-});
+    await close();
+  },
+);

@@ -4,25 +4,27 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "rspress dev",
     "build": "rspress build",
+    "dev": "rspress dev",
     "preview": "rspress preview"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rspress/plugin-client-redirects": "^1.41.0",
-    "@rspress/plugin-rss": "^1.41.0",
-    "@rstack-dev/doc-ui": "1.6.0",
-    "@types/node": "^22.13.0",
-    "@types/react": "^19.0.8",
-    "@types/react-dom": "^19.0.3",
+    "@rsbuild/plugin-sass": "workspace:*",
+    "@rspress/plugin-client-redirects": "^2.0.0-alpha.3",
+    "@rspress/plugin-rss": "^2.0.0-alpha.3",
+    "@rstack-dev/doc-ui": "1.7.3",
+    "@types/node": "^22.13.10",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
     "fast-glob": "^3.3.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "rsbuild-plugin-google-analytics": "^1.0.3",
     "rsbuild-plugin-open-graph": "^1.0.2",
-    "rspress": "^1.41.0",
+    "rspress": "^2.0.0-alpha.3",
     "rspress-plugin-font-open-sans": "^1.0.0",
-    "rspress-plugin-sitemap": "^1.1.1"
+    "rspress-plugin-sitemap": "^1.1.1",
+    "typescript": "^5.8.2"
   }
 }

@@ -5,23 +5,13 @@
 ```ts
 type FilenameConfig = {
   html?: string;
-  js?:
-    | string
-    | ((
-        pathData: Rspack.PathData,
-        assetInfo: Rspack.JsAssetInfo | undefined,
-      ) => string);
-  css?:
-    | string
-    | ((
-        pathData: Rspack.PathData,
-        assetInfo: Rspack.JsAssetInfo | undefined,
-      ) => string);
-  svg?: string;
-  font?: string;
-  image?: string;
-  media?: string;
-  assets?: string;
+  js?: string | Function;
+  css?: string | Function;
+  svg?: string | Function;
+  font?: string | Function;
+  image?: string | Function;
+  media?: string | Function;
+  assets?: string | Function;
 };
 ```
 
@@ -53,13 +43,24 @@ const prodDefaultFilename = {
 };
 ```
 
-Sets the filename of dist files.
+Sets the filename of output files.
 
 After the production build, Rsbuild will add a hash in the middle of the filename by default. If you don't need to add it, you can set [output.filenameHash](/config/output/filename-hash) to `false` to disable this behavior.
 
-The following are the details of each filename:
+:::tip
+Rsbuild will generate the final file path based on `output.filename` and [output.distPath](/config/output/dist-path).
 
-- `html`: The name of the HTML file.
+See [Output files](/guide/basic/output-files) for more information.
+
+:::
+
+## File types
+
+`output.filename` can be set differently for different file types.
+
+Here are the details of each `output.filename` option:
+
+- `html`: The name of the HTML files.
 - `js`: The name of the JavaScript files.
 - `css`: The name of the CSS files.
 - `svg`: The name of the SVG images.
@@ -68,20 +69,29 @@ The following are the details of each filename:
 - `media`: The name of media assets, such as video.
 - `assets`: The name of other static assets. Such as the assets defined in [Extend Asset Types](/guide/basic/static-assets#extend-asset-types).
 
-> See [Output Files](/guide/basic/output-files) for more information.
-
 ## Example
 
-To set the name of the JavaScript file to `[name]_script.js`, use the following configuration:
+To set the name of the JavaScript files to `[name]_script.js`:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     filename: {
-      js:
-        process.env.NODE_ENV === 'production'
-          ? '[name]_script.[contenthash:8].js'
-          : '[name]_script.js',
+      js: '[name]_script.js',
+    },
+  },
+};
+```
+
+Set different filenames for development and production builds:
+
+```ts title="rsbuild.config.ts"
+const isProd = process.env.NODE_ENV === 'production';
+
+export default {
+  output: {
+    filename: {
+      js: isProd ? '[name]_script.[contenthash:8].js' : '[name]_script.js',
     },
   },
 };
@@ -136,9 +146,18 @@ After specifying the module name as above, the generated file will be `dist/stat
 
 ## Using function
 
-You can pass a function to `output.filename.js` or `output.filename.css`, allowing you to dynamically generate filenames based on file information:
+You can pass a function to dynamically set the filename based on the file information.
 
-```js
+The function receives two parameters:
+
+- `pathData`: An object containing file path information.
+- `assetInfo`: An optional object containing additional assets information.
+
+Dynamically set the filename for JavaScript files:
+
+```ts title="rsbuild.config.ts"
+const isProd = process.env.NODE_ENV === 'production';
+
 export default {
   output: {
     filename: {
@@ -146,18 +165,27 @@ export default {
         console.log(pathData); // You can check the contents of pathData here
 
         if (pathData.chunk?.name === 'index') {
-          const isProd = process.env.NODE_ENV === 'production';
           return isProd ? '[name].[contenthash:8].js' : '[name].js';
         }
-
         return '/some-path/[name].js';
       },
+    },
+  },
+};
+```
+
+Dynamically set the filename for CSS files:
+
+```ts title="rsbuild.config.ts"
+const isProd = process.env.NODE_ENV === 'production';
+
+export default {
+  output: {
+    filename: {
       css: (pathData, assetInfo) => {
         if (pathData.chunk?.name === 'index') {
-          const isProd = process.env.NODE_ENV === 'production';
           return isProd ? '[name].[contenthash:8].css' : '[name].css';
         }
-
         return '/some-path/[name].css';
       },
     },
@@ -165,15 +193,32 @@ export default {
 };
 ```
 
+Dynamically set the filename for image files:
+
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    filename: {
+      image: (pathData) => {
+        if (pathData.filename?.includes('foo')) {
+          return '/foo/[name][ext]';
+        }
+        return '/bar/[name][ext]';
+      },
+    },
+  },
+};
+```
+
 :::tip
-Except for `output.filename.js` and `output.filename.css`, other types of files currently do not support using functions.
+`output.filename.html` does not support using functions yet.
 :::
 
 ## Query hash
 
 To generate hash values on the URL query of assets, refer to:
 
-```js
+```ts title="rsbuild.config.ts"
 const isProd = process.env.NODE_ENV === 'production';
 
 export default {

@@ -247,12 +247,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     "hints": false,
   },
   "plugins": [
-    {
-      "name": "RsbuildCorePlugin",
-    },
-    HotModuleReplacementPlugin {
-      "options": {},
-    },
     MiniCssExtractPlugin {
       "_sortedModulesCache": WeakMap {},
       "options": {
@@ -267,6 +261,12 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "insert": undefined,
         "linkType": "text/css",
       },
+    },
+    {
+      "name": "RsbuildCorePlugin",
+    },
+    HotModuleReplacementPlugin {
+      "options": {},
     },
     HtmlWebpackPlugin {
       "options": {
@@ -659,9 +659,6 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
     "hints": false,
   },
   "plugins": [
-    {
-      "name": "RsbuildCorePlugin",
-    },
     MiniCssExtractPlugin {
       "_sortedModulesCache": WeakMap {},
       "options": {
@@ -676,6 +673,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "insert": undefined,
         "linkType": "text/css",
       },
+    },
+    {
+      "name": "RsbuildCorePlugin",
     },
     HtmlWebpackPlugin {
       "options": {

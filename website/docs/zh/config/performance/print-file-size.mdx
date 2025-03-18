@@ -107,7 +107,10 @@ export default {
 ```
 
 :::tip
-该数据仅用于参考 gzip 压缩后的体积，Rsbuild 并不会对静态资源开启 gzip 压缩。通常，你需要在服务器端开启 gzip 压缩，例如使用 [nginx 的 gzip 模块](https://nginx.org/en/docs/http/ngx_http_gzip_module.html)。
+
+- 该数据仅用于参考 gzip 压缩后的体积，Rsbuild 并不会对静态资源开启 gzip 压缩。通常，你需要在服务器端开启 gzip 压缩，例如使用 [nginx 的 gzip 模块](https://nginx.org/en/docs/http/ngx_http_gzip_module.html)。
+- 对于不适合 gzip 压缩的静态资源（如图片文件），在详细列表中不会显示其 gzip 体积，但在计算 gzip 后的总体积时会包含这些资源的原始大小。
+
 :::
 
 ### include
@@ -167,11 +170,11 @@ export default {
 type Exclude = (asset: PrintFileSizeAsset) => boolean;
 ```
 
-- **默认值：** `(asset) => /\.(?:map|LICENSE\.txt)$/.test(asset.name)`
+- **默认值：** `(asset) => /\.(?:map|LICENSE\.txt|d\.ts)$/.test(asset.name)`
 
 一个过滤函数，用于确定哪些静态资源需要被排除。如果同时设置了 `include` 和 `exclude`，则 `exclude` 优先级更高。
 
-Rsbuild 默认排除 source map 和 license 文件，因为这些文件不会影响页面加载的性能。
+Rsbuild 默认排除 source map、许可证文件和 `.d.ts` 类型文件，因为这些文件不会影响页面加载的性能。
 
 例如，额外再排除 `.html` 文件：
 

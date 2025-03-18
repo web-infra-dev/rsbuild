@@ -49,12 +49,17 @@ export const loadBundle = async <T>(
     );
   }
 
-  const res = await run<T>(
-    files[0],
-    outputPath!,
-    stats.compilation.options,
-    utils.readFileSync,
-  );
+  const allChunkFiles =
+    chunks?.flatMap((c) => c.files).map((file) => join(outputPath!, file!)) ||
+    [];
+
+  const res = await run<T>({
+    bundlePath: files[0],
+    dist: outputPath!,
+    compilerOptions: stats.compilation.options,
+    readFileSync: utils.readFileSync,
+    isBundleOutput: (modulePath: string) => allChunkFiles.includes(modulePath),
+  });
 
   return res;
 };

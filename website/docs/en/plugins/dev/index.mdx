@@ -154,7 +154,7 @@ export type PluginFooOptions = {
 export const pluginFoo = (options: PluginFooOptions = {}): RsbuildPlugin => ({
   name: 'plugin-foo',
 
-  setup: (api) => {
+  setup(api) {
     api.modifyEnvironmentConfig((config) => {
       config.html.title = options.title || 'My Default Title';
     });

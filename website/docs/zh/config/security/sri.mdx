@@ -13,6 +13,8 @@ type SriOptions = {
 
 为 HTML 所引入的 `<script>` 和 `<link>` 标签添加完整性属性 —— `integrity`，使浏览器能够验证引入资源的完整性，以此防止下载的资源被篡改。
 
+> `security.sri` 是基于 Rspack 的 [SubresourceIntegrityPlugin](https://rspack.dev/plugins/rspack/subresource-integrity-plugin) 实现的。
+
 ## 什么是 SRI
 
 子资源完整性 Subresource Integrity（SRI）是专门用来校验资源的一种方案，它读取资源标签中的 integrity 属性，将其中的信息摘要值，和资源实际的信息摘要值进行对比，如果发现无法匹配，那么浏览器就会拒绝执行资源。
@@ -38,7 +40,11 @@ export default {
 };
 ```
 
-Rsbuild 生成的 `<script>` 和 `<link>` 标签上会带有 `integrity` 和 `crossorigin` 属性：
+:::tip
+如果你没有设置 `html.crossorigin`，Rsbuild 会自动将它设置为 `anonymous`。
+:::
+
+启用 `security.sri` 后，Rsbuild 生成的 `<script>` 和 `<link>` 标签上会带有 `integrity` 和 `crossorigin` 属性：
 
 ```html
 <script
@@ -58,10 +64,9 @@ Rsbuild 生成的 `<script>` 和 `<link>` 标签上会带有 `integrity` 和 `cr
 
 ## 注意
 
-Rsbuild 的 `security.sri` 仅会作用于 Rsbuild 生成的标签，不会作用于：
+Rsbuild 的 `security.sri` 仅会作用于 Rspack 和 Rsbuild 生成的标签，不会作用于：
 
 - HTML 模板中原有的标签。
-- Rspack 异步注入的标签。
 - 通过客户端 JavaScript 代码插入的标签。
 
 Rsbuild 会处理以下几种 `<link>` 标签：

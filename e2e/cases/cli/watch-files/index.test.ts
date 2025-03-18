@@ -1,8 +1,9 @@
 import { exec } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { awaitFileExists, getRandomPort, rspackOnlyTest } from '@e2e/helper';
+import { expectFile, getRandomPort, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
+import { remove } from 'fs-extra';
 
 const dist = path.join(__dirname, 'dist');
 const distIndexFile = path.join(__dirname, 'dist/static/js/index.js');
@@ -10,10 +11,10 @@ const tempConfigPath = './test-temp-config.ts';
 const tempOutputFile = path.join(__dirname, 'test-temp-file.txt');
 const extraConfigFile = path.join(__dirname, tempConfigPath);
 
-test.beforeEach(() => {
-  fs.rmSync(dist, { recursive: true, force: true });
-  fs.rmSync(tempOutputFile, { force: true });
-  fs.rmSync(extraConfigFile, { force: true });
+test.beforeEach(async () => {
+  await remove(dist);
+  await remove(tempOutputFile);
+  await remove(extraConfigFile);
   fs.writeFileSync(extraConfigFile, 'export default 1;');
 });
 
@@ -30,14 +31,14 @@ rspackOnlyTest(
     });
 
     // the first build
-    await awaitFileExists(distIndexFile);
+    await expectFile(distIndexFile);
 
-    fs.rmSync(tempOutputFile, { force: true });
+    await remove(tempOutputFile);
     // temp config changed and trigger rebuild
     fs.writeFileSync(extraConfigFile, 'export default 2;');
 
     // rebuild and generate dist files
-    await awaitFileExists(tempOutputFile);
+    await expectFile(tempOutputFile);
     expect(fs.readFileSync(tempOutputFile, 'utf-8')).toEqual('2');
 
     childProcess.kill();
@@ -56,13 +57,13 @@ rspackOnlyTest(
       },
     });
 
-    await awaitFileExists(distIndexFile);
+    await expectFile(distIndexFile);
 
-    fs.rmSync(distIndexFile);
+    await remove(distIndexFile);
     // temp config changed
     fs.writeFileSync(extraConfigFile, 'export default 2;');
 
-    await new Promise((resolve) => setTimeout(resolve, 300));
+    await expectFile(tempOutputFile);
     expect(fs.readFileSync(tempOutputFile, 'utf-8')).toEqual('1');
 
     childProcess.kill();
@@ -82,13 +83,13 @@ rspackOnlyTest(
 
     // Fix occasional 'directory not empty' error when wait and rm dist.
     // Sometimes the dist directory exists, but the files in the dist directory have not been completely written.
-    await awaitFileExists(distIndexFile);
+    await expectFile(distIndexFile);
 
-    fs.rmSync(distIndexFile);
+    await remove(distIndexFile);
     // temp config changed
     fs.writeFileSync(extraConfigFile, 'export default 2;');
 
-    await new Promise((resolve) => setTimeout(resolve, 300));
+    await expectFile(tempOutputFile);
     expect(fs.readFileSync(tempOutputFile, 'utf-8')).toEqual('1');
 
     childProcess.kill();

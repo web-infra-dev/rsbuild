@@ -34,13 +34,58 @@ The first parameter of `createRsbuild` is an `options` object, you can pass in t
 type CreateRsbuildOptions = {
   cwd?: string;
   environment?: string[];
-  rsbuildConfig?: RsbuildConfig;
+  rsbuildConfig?: RsbuildConfig | (() => Promise<RsbuildConfig>);
+  loadEnv?: boolean | LoadEnvOptions;
 };
 ```
 
 - `cwd`: The root path of the current build, defaults to `process.cwd()`.
 - `environment`: Only build specified [environments](/guide/advanced/environments). If not specified or passing an empty array, all environments will be built.
 - `rsbuildConfig`: Rsbuild configuration object. Refer to [Configuration Overview](/config/) for all available configuration options.
+- `loadEnv`：Whether to call the [loadEnv](/api/javascript-api/core#loadenv) method to load env variables and define them as global variables via [source.define](/config/source/define).
+
+### Load configuration async
+
+`rsbuildConfig` can also be an async function, which allows you to dynamically load Rsbuild configuration and perform some custom operations.
+
+```ts
+import { createRsbuild, loadConfig } from '@rsbuild/core';
+
+const rsbuild = await createRsbuild({
+  rsbuildConfig: async () => {
+    const { content } = await loadConfig();
+    someFunctionToUpdateConfig(content);
+    return content;
+  },
+});
+```
+
+### Load env variables
+
+The `loadEnv` option in `createRsbuild` helps you call the [loadEnv](/api/javascript-api/core#loadenv) method to load env variables:
+
+```ts
+const rsbuild = await createRsbuild({
+  loadEnv: true,
+});
+```
+
+Passing `loadEnv: true` will automatically complete the following steps:
+
+1. Call the `loadEnv` method to load env variables.
+2. Add [source.define](/config/source/define) configuration, define the `publicVars` returned by `loadEnv` as global variables.
+3. Watch the `.env` file for changes, and restart the dev server when the file changes, and invalidate the build cache.
+4. Automatically call the `cleanup` method returned by `loadEnv` when closing the build or dev server.
+
+You can also pass in the options of the [loadEnv](/api/javascript-api/core#loadenv) method, for example:
+
+```ts
+const rsbuild = await createRsbuild({
+  loadEnv: {
+    prefixes: ['PUBLIC_', 'REACT_APP_'],
+  },
+});
+```
 
 ## loadConfig
 
@@ -119,7 +164,7 @@ export default defineConfig(({ meta }) => {
 
 ## loadEnv
 
-Load the `.env` file and return all environment variables starting with the specified prefixes.
+Load the [.env](/guide/advanced/env-vars#env-file) file and return all environment variables starting with the specified prefixes.
 
 - **Type:**
 
@@ -141,9 +186,15 @@ type LoadEnvOptions = {
    * @default ['PUBLIC_']
    */
   prefixes?: string[];
+  /**
+   * Specify a target object to store environment variables.
+   * If not provided, variables will be written to `process.env`.
+   * @default process.env
+   */
+  processEnv?: Record<string, string>;
 };
 
-function loadEnv(options: LoadEnvOptions): {
+type LoadEnvResult = {
   /** All env variables in the .env file */
   parsed: Record<string, string>;
   /** The absolute paths to all env files */
@@ -176,6 +227,8 @@ function loadEnv(options: LoadEnvOptions): {
   /** Clear the env variables mounted on `process.env` */
   cleanup: () => void;
 };
+
+function loadEnv(options: LoadEnvOptions): LoadEnvResult;
 ````
 
 - **Example:**
@@ -198,8 +251,25 @@ const mergedConfig = mergeRsbuildConfig(
 This method will also load files such as `.env.local` and `.env.[mode]`, see [Environment Variables](/guide/advanced/env-vars) for details.
 
 :::tip
-Rsbuild CLI will automatically call the `loadEnv()` method. If you are using the Rsbuild CLI, you can set the `mode` parameter through the [--env-mode](/guide/advanced/env-vars#env-mode) option.
+
+- Rsbuild CLI will automatically call the `loadEnv()` method. If you are using the Rsbuild CLI, you can set the `mode` parameter through the [--env-mode](/guide/advanced/env-vars#env-mode) option.
+- The `loadEnv` option in [createRsbuild](#creatersbuild) will help you call the `loadEnv()` method and handle related operations.
+
 :::
+
+### Specify the target object
+
+By default, `loadEnv` uses the `process.env` object to store environment variables. You can specify a target object to store environment variables through the `processEnv` option:
+
+```ts
+import { loadEnv } from '@rsbuild/core';
+
+// Pass an empty object to avoid modifying `process.env`
+loadEnv({ processEnv: {} });
+
+// Pass a copy of the `process.env` object to avoid modifying the original object
+loadEnv({ processEnv: { ...process.env } });
+```
 
 ## mergeRsbuildConfig
 

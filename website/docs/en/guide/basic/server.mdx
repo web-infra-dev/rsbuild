@@ -30,11 +30,11 @@ For example, open `http://localhost:3000/rsbuild-dev-server` in the browser, you
 
 ## Page routing
 
-Rsbuild Server offers a set of default routing convention, and allows users to customize it through configurations.
+Rsbuild server offers a set of default routing convention, and allows users to customize it through configurations.
 
 ### Default behavior
 
-Rsbuild Server will generate the corresponding page route based on the [server.base](/config/server/base) and [source.entry](/config/source/entry) configurations.
+Rsbuild server will generate the corresponding page route based on the [server.base](/config/server/base) and [source.entry](/config/source/entry) configurations.
 
 When entry is index, the page can be accessed through `/`; when entry is foo, the page can be accessed through `/foo`.
 
@@ -112,15 +112,15 @@ export default {
 
 ## Rspack dev server
 
-The built-in dev server of Rspack CLI is [@rspack/dev-server](https://www.npmjs.com/package/@rspack/dev-server). Rsbuild does not use `@rspack/dev-server`, but instead implemented its own more lightweight version.
+Rsbuild has a built-in lightweight dev server, which is different from the dev servers built into Rspack CLI or webpack CLI. There are some differences between them, including different configuration options.
 
 ### Comparison
 
-The dev server of Rsbuild and `@rspack/dev-server` have the following differences:
+Compared with the dev server built into Rspack CLI, Rsbuild's dev server has the following differences:
 
 - **Configuration**: Rsbuild provides richer server configuration options.
 - **Log Format**: The log format of Rspack CLI is basically consistent with webpack CLI, while Rsbuild's logs are clearer and more readable.
-- **Dependencies**: `@rspack/dev-server` is based on express with many third-party dependencies. Rsbuild, on the other hand, uses lighter libraries such as `connect`.
+- **Dependencies**: Rsbuild is implemented based on lightweight libraries like `connect`, which has fewer dependencies and faster startup speed compared to `express` used by `@rspack/dev-server`.
 
 ### Configuration
 
@@ -149,17 +149,63 @@ Below are the Rsbuild configs that correspond to the Rspack CLI's `devServer` co
 
 > For more configurations, please refer to [Config Overview](/config/index).
 
-## Extend middleware
+## Middlewares
 
-Rsbuild server does not use any Node.js frameworks, and the `req` and `res` provided by Rsbuild middleware are both native Node.js objects.
+Rsbuild's middlewares implementation is built on [connect](https://github.com/senchalabs/connect), a lightweight HTTP server framework, and uses the standard Node.js `request` and `response` objects for handling HTTP interactions.
 
-This means that when you migrate from other server-side frameworks (such as Express), the original middleware may not necessarily be used directly in Rsbuild. For example, the `req.params`,`req.path`, `req.search`, `req.query` and other properties provided by Express cannot be accessed in the Rsbuild middleware.
+### Register middlewares
 
-If you need to use existing middleware in Rsbuild, this can be done by passing the server application as middleware as follows:
+Rsbuild provides three ways to register middlewares:
+
+1. Use the [dev.setupMiddlewares](/config/dev/setup-middlewares) configuration.
 
 ```ts title="rsbuild.config.ts"
-import expressMiddleware from 'my-express-middleware';
+export default {
+  dev: {
+    setupMiddlewares: [
+      (middlewares, server) => {
+        middlewares.push((req, res, next) => {
+          next();
+        });
+      },
+    ],
+  },
+};
+```
+
+2. In the Rsbuild plugin, you can register middlewares through the [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) hook.
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.onBeforeStartDevServer(({ server }) => {
+      server.middlewares.use((req, res, next) => {
+        next();
+      });
+    });
+  },
+});
+```
+
+3. When using the Rsbuild JavaScript API, you can create a dev server instance through the [rsbuild.createDevServer](/api/javascript-api/instance#rsbuildcreatedevserver) method and use the `use` method to register middlewares.
+
+```ts
+const server = await rsbuild.createDevServer();
+
+server.middlewares.use((req, res, next) => {
+  next();
+});
+```
+
+### Integrate third-party server frameworks
+
+When migrating from other server frameworks (such as Express), the original middleware may not be used directly in Rsbuild. For example, the `req.params`, `req.path`, `req.search`, `req.query` and other properties provided by Express cannot be accessed in the Rsbuild middleware.
+
+If you need to reuse existing middleware in Rsbuild, you can use the following method to introduce the server application as a whole as middleware:
+
+```ts title="rsbuild.config.ts"
 import express from 'express';
+import expressMiddleware from 'my-express-middleware';
 
 // Initialize Express app
 const app = express();

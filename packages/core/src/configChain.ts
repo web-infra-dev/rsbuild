@@ -3,22 +3,16 @@ import { castArray } from './helpers';
 import { logger } from './logger';
 import type { InternalContext, ModifyBundlerChainUtils } from './types';
 
-export function getBundlerChain(): RspackChain {
-  const bundlerChain = new RspackChain();
-
-  return bundlerChain as unknown as RspackChain;
-}
-
 export async function modifyBundlerChain(
   context: InternalContext,
   utils: ModifyBundlerChainUtils,
 ): Promise<RspackChain> {
   logger.debug('modify bundler chain');
 
-  const bundlerChain = getBundlerChain();
+  const bundlerChain = new RspackChain();
 
   const [modifiedBundlerChain] =
-    await context.hooks.modifyBundlerChain.callInEnvironment({
+    await context.hooks.modifyBundlerChain.callChain({
       environment: utils.environment.name,
       args: [bundlerChain, utils],
     });
@@ -151,10 +145,8 @@ export const CHAIN_ID = {
     VUE_LOADER_PLUGIN: 'vue-loader-plugin',
     /** ReactFastRefreshPlugin */
     REACT_FAST_REFRESH: 'react-fast-refresh',
-    /** WebpackSRIPlugin */
+    /** SubresourceIntegrityPlugin */
     SUBRESOURCE_INTEGRITY: 'subresource-integrity',
-    /** AutoSetRootFontSizePlugin */
-    AUTO_SET_ROOT_SIZE: 'auto-set-root-size',
   },
   /** Predefined minimizers */
   MINIMIZER: {

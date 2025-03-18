@@ -23,9 +23,11 @@ async function gzipSize(input: Buffer) {
   return data.length;
 }
 
+const EXCLUDE_ASSET_REGEX = /\.(?:map|LICENSE\.txt|d\.ts)$/;
+
 /** Exclude source map and license files by default */
 export const excludeAsset = (asset: PrintFileSizeAsset): boolean =>
-  /\.(?:map|LICENSE\.txt)$/.test(asset.name);
+  EXCLUDE_ASSET_REGEX.test(asset.name);
 
 const getAssetColor = (size: number) => {
   if (size > 300 * 1000) {
@@ -40,13 +42,13 @@ const getAssetColor = (size: number) => {
 function getHeader(
   longestFileLength: number,
   longestLabelLength: number,
-  options: PrintFileSizeOptions,
   environmentName: string,
+  showGzipHeader: boolean,
 ) {
   const longestLengths = [longestFileLength, longestLabelLength];
   const rowTypes = [`File (${environmentName})`, 'Size'];
 
-  if (options.compressed) {
+  if (showGzipHeader) {
     rowTypes.push('Gzip');
   }
 
@@ -81,6 +83,12 @@ const coloringAssetName = (assetName: string) => {
   return color.magenta(assetName);
 };
 
+const COMPRESSIBLE_REGEX =
+  /\.(?:js|css|html|json|svg|txt|xml|xhtml|wasm|manifest)$/i;
+
+const isCompressible = (assetName: string) =>
+  COMPRESSIBLE_REGEX.test(assetName);
+
 async function printFileSizes(
   options: PrintFileSizeOptions,
   stats: Rspack.Stats,
@@ -100,7 +108,8 @@ async function printFileSizes(
     const fileName = asset.name.split('?')[0];
     const contents = await fs.promises.readFile(path.join(distPath, fileName));
     const size = contents.length;
-    const gzippedSize = options.compressed ? await gzipSize(contents) : null;
+    const compressible = options.compressed && isCompressible(fileName);
+    const gzippedSize = compressible ? await gzipSize(contents) : null;
     const gzipSizeLabel = gzippedSize
       ? getAssetColor(gzippedSize)(calcFileSize(gzippedSize))
       : null;
@@ -134,7 +143,7 @@ async function printFileSizes(
     });
 
     const exclude = options.exclude ?? excludeAsset;
-    const filteredAssets = origin.assets!.filter((asset) => {
+    const filteredAssets = (origin.assets || []).filter((asset) => {
       const assetInfo: PrintFileSizeAsset = {
         name: asset.name,
         size: asset.size,
@@ -170,12 +179,15 @@ async function printFileSizes(
   );
 
   if (options.detail !== false) {
+    const showGzipHeader = Boolean(
+      options.compressed && assets.some((item) => item.gzippedSize !== null),
+    );
     logs.push(
       getHeader(
         longestFileLength,
         longestLabelLength,
-        options,
         environmentName,
+        showGzipHeader,
       ),
     );
   }
@@ -191,8 +203,8 @@ async function printFileSizes(
 
     totalSize += asset.size;
 
-    if (asset.gzippedSize) {
-      totalGzipSize += asset.gzippedSize;
+    if (options.compressed) {
+      totalGzipSize += asset.gzippedSize ?? asset.size;
     }
 
     if (options.detail !== false) {

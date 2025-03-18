@@ -27,12 +27,12 @@ Here are the characteristics of several versions:
 
 | Version | Description                                                                        | Features                                                                                                                                                                                                                                                                  | Use Cases                                                        |
 | ------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| MF v2.0 | Enhanced version of Module Federation, implemented based on Module Federation v1.5 | - Provides additional out-of-the-box features such as dynamic TS type hints, Chrome DevTools, preloading, etc.<br />- More suitable for micro-frontend architecture supporting large-scale Web applications <br />- Includes all features of Module Federation 1.5 <br /> | Projects that need to use advanced capabilities of MF 2.0        |
+| MF v2.0 | Enhanced version of Module Federation, implemented based on Module Federation v1.5 | - Provides additional out-of-the-box features such as dynamic TS type hints, Chrome DevTools, preloading, etc.<br />- More suitable for micro-frontend architecture supporting large-scale web applications <br />- Includes all features of Module Federation 1.5 <br /> | Projects that need to use advanced capabilities of MF 2.0        |
 | MF v1.5 | Version built into Rspack                                                          | - Supports module export, module loading, dependency sharing capabilities of Module Federation v1.0<br />- Added runtime plugin functionality, allowing users to extend the behavior and functionality of module federation <br />                                        | Projects that don't need to use the extra capabilities of MF 2.0 |
 
 ### Module Federation v2.0
 
-[Module Federation 2.0](https://module-federation.io/blog/announcement.html) provides some additional out-of-the-box features based on Module Federation, such as dynamic TS type hints, Chrome devtools, Runtime plugins, preloading, making Module Federation more suitable for micro-frontend architecture supporting large-scale Web applications. Module Federation v2.0 is implemented based on v1.5.
+[Module Federation 2.0](https://module-federation.io/blog/announcement.html) provides some additional out-of-the-box features based on Module Federation, such as dynamic TS type hints, Chrome devtools, Runtime plugins, preloading, making Module Federation more suitable for micro-frontend architecture supporting large-scale web applications. Module Federation v2.0 is implemented based on v1.5.
 
 You need to install the additional [@module-federation/rsbuild-plugin](https://www.npmjs.com/package/@module-federation/rsbuild-plugin) plugin to use Module Federation v2.0.
 
@@ -72,5 +72,5 @@ export default defineConfig({
 
 Rsbuild has provided some example projects of Module Federation, you can refer to:
 
-- [Module Federation v2.0 Example](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/module-federation-enhanced)
-- [Module Federation v1.5 Example](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/module-federation)
+- [Module Federation v2.0 Example](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/module-federation-enhanced)
+- [Module Federation v1.5 Example](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/module-federation)

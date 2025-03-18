@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { platform } from 'node:os';
 import { join } from 'node:path';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
-import { test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import type { ConsoleType } from '@rsbuild/core';
 import glob, {
   convertPathToPattern,
@@ -28,8 +28,12 @@ export const getProviderTest = (
   // @ts-expect-error
   testSkip.fail = test.describe.skip;
   // @ts-expect-error
+  testSkip.only = test.only;
+
+  // @ts-expect-error
   return testSkip as typeof test.skip & {
     describe: typeof test.describe.skip;
+    only: typeof test.only;
   };
 };
 
@@ -60,35 +64,8 @@ export const globContentJSON = async (path: string, options?: GlobOptions) => {
   return ret;
 };
 
-export const waitFor = async (
-  fn: () => boolean,
-  {
-    maxChecks = 300,
-    interval = 20,
-  }: {
-    maxChecks?: number;
-    interval?: number;
-  } = {},
-) => {
-  let checks = 0;
-
-  while (checks < maxChecks) {
-    if (fn()) {
-      return true;
-    }
-    checks++;
-    await new Promise((resolve) => setTimeout(resolve, interval));
-  }
-
-  return false;
-};
-
-export const awaitFileExists = async (dir: string) => {
-  const result = await waitFor(() => fs.existsSync(dir), { interval: 50 });
-  if (!result) {
-    throw new Error(`awaitFileExists failed: ${dir}`);
-  }
-};
+export const expectFile = (dir: string) =>
+  expectPoll(() => fs.existsSync(dir)).toBeTruthy();
 
 export const proxyConsole = (
   types: ConsoleType | ConsoleType[] = ['log', 'warn', 'info', 'error'],
@@ -121,3 +98,12 @@ export const proxyConsole = (
 
 // Windows and macOS use different new lines
 export const normalizeNewlines = (str: string) => str.replace(/\r\n/g, '\n');
+
+/**
+ * A faster `expect.poll`
+ */
+export const expectPoll = (fn: () => boolean) => {
+  return expect.poll(fn, {
+    intervals: [20, 30, 40, 50, 60, 70, 80, 90, 100],
+  });
+};

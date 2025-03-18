@@ -1,0 +1,22 @@
+import { build, rspackOnlyTest } from '@e2e/helper';
+import { expect } from '@playwright/test';
+
+rspackOnlyTest(
+  'should allow to build Vue SFC when pluginReact is also used',
+  async ({ page }) => {
+    const rsbuild = await build({
+      cwd: __dirname,
+      page,
+    });
+
+    const button1 = page.locator('#button1');
+    const button2 = page.locator('#button2');
+    const list1 = page.locator('.list1');
+
+    await expect(button1).toHaveText('A: 0');
+    await expect(button2).toHaveText('B: 0');
+    await expect(list1).toHaveCount(3);
+
+    await rsbuild.close();
+  },
+);

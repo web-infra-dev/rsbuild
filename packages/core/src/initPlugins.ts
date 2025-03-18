@@ -179,7 +179,7 @@ export function initPluginAPI({
             pluginEnvironment &&
             !isPluginMatchEnvironment(pluginEnvironment, environment.name)
           ) {
-            return;
+            continue;
           }
 
           compiler.hooks.compilation.tap(
@@ -213,7 +213,7 @@ export function initPluginAPI({
           } of processAssetsFns) {
             // filter by targets
             if (descriptor.targets && !descriptor.targets.includes(target)) {
-              return;
+              continue;
             }
 
             // filter by environments
@@ -224,7 +224,7 @@ export function initPluginAPI({
               (pluginEnvironment &&
                 !isPluginMatchEnvironment(pluginEnvironment, environment.name))
             ) {
-              return;
+              continue;
             }
 
             compilation.hooks.processAssets.tapPromise(
@@ -323,7 +323,7 @@ export function initPluginAPI({
   const onExit: typeof hooks.onExit.tap = (cb) => {
     if (!onExitListened) {
       process.on('exit', () => {
-        hooks.onExit.call();
+        hooks.onExit.callBatch();
       });
       onExitListened = true;
     }

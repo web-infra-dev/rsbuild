@@ -17,11 +17,11 @@ import { PackageManagerTabs } from '@theme';
   }}
 />
 
-Then select `React` when prompted to "Select framework".
+Then select `React 19` or `React 18` when prompted to "Select framework".
 
 ## Use React in an existing project
 
-To compile React, you need to register the Rsbuild [React Plugin](/plugins/list/plugin-react). The plugin will automatically add the necessary configuration for React builds.
+To compile React's JSX syntax, you need to register the Rsbuild [React Plugin](/plugins/list/plugin-react). The plugin will automatically add the necessary configuration for building a React application.
 
 For example, register in `rsbuild.config.ts`:
 
@@ -110,7 +110,7 @@ export default defineConfig({
 });
 ```
 
-> You can also refer to the [example project](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/react-compiler-babel).
+> You can also refer to the [example project](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/react-compiler-babel).
 
 ### Configuration
 
@@ -160,6 +160,13 @@ TanStack Router provides `@tanstack/router-plugin` to integrate with Rsbuild, wh
 - [File-Based Routing documentation](https://tanstack.com/router/latest/docs/framework/react/guide/file-based-routing)
 - [TanStack Router + Rsbuild Example](https://github.com/TanStack/router/tree/main/examples/react/quickstart-rspack-file-based)
 
+### React Router
+
+[React Router](https://reactrouter.com/) is a user‑obsessed, standards‑focused, multi‑strategy router for React.
+
+- To use React Router as a library, you can just follow the official documentation and no configuration is required.
+- To use React Router as a framework, the community is working on an experimental Rsbuild plugin, see [rsbuild-plugin-react-router](https://github.com/rspack-contrib/rsbuild-plugin-react-router).
+
 ## CSS-in-JS
 
 ### Use styled-components
@@ -168,7 +175,7 @@ Rsbuild supports compiling [styled-components](https://github.com/styled-compone
 
 To use styled-components, we recommend using the [@rsbuild/plugin-styled-components](https://github.com/rsbuild-contrib/rsbuild-plugin-styled-components).
 
-> You can refer to this example: [styled-components](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/styled-components).
+> You can refer to this example: [styled-components](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/styled-components).
 
 ### Using Emotion
 
@@ -201,7 +208,7 @@ export default defineConfig({
 });
 ```
 
-> You can refer to this example: [emotion](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/emotion).
+> You can refer to this example: [emotion](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/emotion).
 
 ### Use styled-jsx
 
@@ -227,7 +234,7 @@ export default defineConfig({
 
 Please note, you must select the SWC plugin that matches the current version of `@swc/core` for SWC to work, see [tools.swc](/config/tools/swc).
 
-> You can refer to this example: [styled-jsx](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/styled-jsx).
+> You can refer to this example: [styled-jsx](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/styled-jsx).
 
 ### Use vanilla-extract
 
@@ -254,7 +261,7 @@ export default defineConfig({
 });
 ```
 
-> You can refer to this example: [vanilla-extract](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/vanilla-extract).
+> You can refer to this example: [vanilla-extract](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/vanilla-extract).
 
 ### Use StyleX
 
@@ -275,4 +282,79 @@ export default defineConfig({
 });
 ```
 
-> You can refer to this example: [stylex](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/stylex).
+> You can refer to this example: [stylex](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/stylex).
+
+## Customize JSX
+
+Rsbuild uses SWC to compile JSX, you can customize the functions used by the compiled JSX code:
+
+- If the JSX runtime is `automatic`, use [jsxImportSource](/plugins/list/plugin-react#swcreactoptionsimportsource) to customize the import path of the JSX runtime, for example, import from Preact or Emotion.
+- If the JSX runtime is `classic`, use `pragma` and `pragmaFrag` to specify the JSX function and Fragment component.
+
+> `@rsbuild/plugin-react` uses `automatic` as the default JSX runtime, see [swcReactOptions.runtime](/plugins/list/plugin-react#swcreactoptionsruntime).
+
+### Via configuration
+
+Configure through the `@rsbuild/plugin-react`'s [swcReactOptions](/plugins/list/plugin-react#swcreactoptions).
+
+- If `runtime` is `automatic`:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [
+    pluginReact({
+      swcReactOptions: {
+        runtime: 'automatic',
+        jsxImportSource: '@emotion/react',
+      },
+    }),
+  ],
+});
+```
+
+- If `runtime` is `classic`:
+
+```ts title="rsbuild.config.ts"
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+
+export default defineConfig({
+  plugins: [
+    pluginReact({
+      swcReactOptions: {
+        runtime: 'classic',
+        pragma: 'h',
+        pragmaFrag: 'Fragment',
+      },
+    }),
+  ],
+});
+```
+
+### Via comments
+
+You can also customize the JSX behavior by adding specific comments at the top of a single JSX or TSX file, which will take precedence over the configurations.
+
+- If the JSX runtime is `automatic`:
+
+```tsx title="App.tsx"
+/** @jsxImportSource custom-jsx-library */
+
+const App = () => {
+  return <div>Hello World</div>;
+};
+```
+
+- If the JSX runtime is `classic`:
+
+```tsx title="App.tsx"
+/** @jsx Preact.h */
+/** @jsxFrag Preact.Fragment */
+
+const App = () => {
+  return <div>Hello World</div>;
+};
+```

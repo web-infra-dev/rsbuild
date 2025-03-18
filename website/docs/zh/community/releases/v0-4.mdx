@@ -2,9 +2,9 @@
 published_at: 2024-02-06 08:00:00
 ---
 
-# Rsbuild 0.4 发布
+_February 06, 2024_
 
-> February 06, 2024
+# Rsbuild 0.4 发布
 
 ![](https://assets.rspack.dev/rsbuild/rsbuild-banner-v0-4.png)
 
@@ -36,7 +36,7 @@ export default defineConfig({
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRsbuildConfig({
       handler: () => console.log('hello'),
       order: 'pre',

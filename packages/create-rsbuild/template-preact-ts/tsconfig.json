@@ -12,7 +12,7 @@
     "module": "ESNext",
     "isolatedModules": true,
     "resolveJsonModule": true,
-    "moduleResolution": "Bundler",
+    "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "paths": {
       "react": ["./node_modules/preact/compat/"],

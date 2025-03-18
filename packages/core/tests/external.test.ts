@@ -1,4 +1,4 @@
-import { getBundlerChain } from '../src/configChain';
+import RspackChain from '../compiled/rspack-chain/index.js';
 import { pluginExternals } from '../src/plugins/externals';
 
 describe('plugin-external', () => {
@@ -17,7 +17,7 @@ describe('plugin-external', () => {
 
     pluginExternals().setup(api);
 
-    const chain = getBundlerChain();
+    const chain = new RspackChain();
 
     await modifyBundlerChainCb(chain, {
       environment: {

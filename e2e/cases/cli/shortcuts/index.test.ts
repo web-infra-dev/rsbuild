@@ -1,7 +1,6 @@
 import { exec } from 'node:child_process';
 import { stripVTControlCharacters as stripAnsi } from 'node:util';
-import { rspackOnlyTest, waitFor } from '@e2e/helper';
-import { expect } from '@playwright/test';
+import { expectPoll, rspackOnlyTest } from '@e2e/helper';
 
 rspackOnlyTest('should display shortcuts as expected in dev', async () => {
   const devProcess = exec('node ./dev.mjs', {
@@ -16,37 +15,29 @@ rspackOnlyTest('should display shortcuts as expected in dev', async () => {
   });
 
   // help
-  expect(
-    await waitFor(() =>
-      logs.some((log) => log.includes('press h + enter to show shortcuts')),
-    ),
+  await expectPoll(() =>
+    logs.some((log) => log.includes('press h + enter to show shortcuts')),
   ).toBeTruthy();
   devProcess.stdin?.write('h\n');
-  expect(
-    await waitFor(() =>
-      logs.some((log) => log.includes('u + enter  show urls')),
-    ),
+  await expectPoll(() =>
+    logs.some((log) => log.includes('u + enter  show urls')),
   ).toBeTruthy();
 
   // print urls
   logs = [];
   devProcess.stdin?.write('u\n');
-  expect(
-    await waitFor(() =>
-      logs.some((log) => log.includes('➜ Local:    http://localhost:')),
-    ),
+  await expectPoll(() =>
+    logs.some((log) => log.includes('➜ Local:    http://localhost:')),
   ).toBeTruthy();
 
   // restart server
   logs = [];
   devProcess.stdin?.write('r\n');
-  expect(
-    await waitFor(() => logs.some((log) => log.includes('Restarting server'))),
+  await expectPoll(() =>
+    logs.some((log) => log.includes('restarting server')),
   ).toBeTruthy();
-  expect(
-    await waitFor(() =>
-      logs.some((log) => log.includes('➜ Local:    http://localhost:')),
-    ),
+  await expectPoll(() =>
+    logs.some((log) => log.includes('➜ Local:    http://localhost:')),
   ).toBeTruthy();
 
   devProcess.kill();
@@ -65,25 +56,19 @@ rspackOnlyTest('should display shortcuts as expected in preview', async () => {
   });
 
   // help
-  expect(
-    await waitFor(() =>
-      logs.some((log) => log.includes('press h + enter to show shortcuts')),
-    ),
+  await expectPoll(() =>
+    logs.some((log) => log.includes('press h + enter to show shortcuts')),
   ).toBeTruthy();
   devProcess.stdin?.write('h\n');
-  expect(
-    await waitFor(() =>
-      logs.some((log) => log.includes('u + enter  show urls')),
-    ),
+  await expectPoll(() =>
+    logs.some((log) => log.includes('u + enter  show urls')),
   ).toBeTruthy();
 
   // print urls
   logs = [];
   devProcess.stdin?.write('u\n');
-  expect(
-    await waitFor(() =>
-      logs.some((log) => log.includes('➜ Local:    http://localhost:')),
-    ),
+  await expectPoll(() =>
+    logs.some((log) => log.includes('➜ Local:    http://localhost:')),
   ).toBeTruthy();
 
   devProcess.kill();
@@ -101,16 +86,14 @@ rspackOnlyTest('should allow to custom shortcuts in dev', async () => {
     logs.push(stripAnsi(output));
   });
 
-  expect(
-    await waitFor(() =>
-      logs.some((log) => log.includes('press h + enter to show shortcuts')),
-    ),
+  await expectPoll(() =>
+    logs.some((log) => log.includes('press h + enter to show shortcuts')),
   ).toBeTruthy();
 
   logs = [];
   devProcess.stdin?.write('s\n');
-  expect(
-    await waitFor(() => logs.some((log) => log.includes('hello world!'))),
+  await expectPoll(() =>
+    logs.some((log) => log.includes('hello world!')),
   ).toBeTruthy();
 
   devProcess.kill();
@@ -129,16 +112,14 @@ rspackOnlyTest('should allow to custom shortcuts in preview', async () => {
   });
 
   // help
-  expect(
-    await waitFor(() =>
-      logs.some((log) => log.includes('press h + enter to show shortcuts')),
-    ),
+  await expectPoll(() =>
+    logs.some((log) => log.includes('press h + enter to show shortcuts')),
   ).toBeTruthy();
 
   logs = [];
   devProcess.stdin?.write('s\n');
-  expect(
-    await waitFor(() => logs.some((log) => log.includes('hello world!'))),
+  await expectPoll(() =>
+    logs.some((log) => log.includes('hello world!')),
   ).toBeTruthy();
 
   devProcess.kill();

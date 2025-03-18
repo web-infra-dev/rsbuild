@@ -30,7 +30,7 @@ export const pluginNonce = (): RsbuildPlugin => ({
         }
 
         // apply __webpack_nonce__
-        // https://webpack.js.org/guides/csp/
+        // https://rspack.dev/api/runtime-api/module-variables#__webpack_nonce__
         const injectCode = createVirtualModule(
           `__webpack_nonce__ = "${nonce}";`,
         );
@@ -50,7 +50,13 @@ export const pluginNonce = (): RsbuildPlugin => ({
 
         if (nonce) {
           for (const tag of allTags) {
-            if (tag.tag === 'script' || tag.tag === 'style') {
+            if (
+              tag.tag === 'script' ||
+              tag.tag === 'style' ||
+              (tag.tag === 'link' &&
+                tag.attrs?.rel === 'preload' &&
+                tag.attrs?.as === 'script')
+            ) {
               tag.attrs ??= {};
               tag.attrs.nonce = nonce;
             }

@@ -1,6 +1,6 @@
 import { Announcement } from '@rstack-dev/doc-ui/announcement';
 import { NavIcon } from '@rstack-dev/doc-ui/nav-icon';
-import Theme from 'rspress/theme';
+import { Layout as BaseLayout } from 'rspress/theme';
 import { HomeLayout } from './pages';
 import './index.scss';
 import { NoSSR, useLang, usePageData } from 'rspress/runtime';
@@ -13,7 +13,7 @@ const Layout = () => {
   const lang = useLang();
 
   return (
-    <Theme.Layout
+    <BaseLayout
       beforeNavTitle={<NavIcon />}
       beforeNav={
         ANNOUNCEMENT_URL ? (
@@ -37,10 +37,6 @@ const Layout = () => {
   );
 };
 
-export default {
-  ...Theme,
-  Layout,
-  HomeLayout,
-};
+export { Layout, HomeLayout };
 
 export * from 'rspress/theme';

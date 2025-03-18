@@ -145,7 +145,7 @@ export default {
 
 - **Type:** `typeof import('html-rspack-plugin')`
 
-The instance of `html-rspack-plugin`:
+The default export of [html-rspack-plugin](https://github.com/rspack-contrib/html-rspack-plugin).
 
 ```js
 export default {
@@ -217,17 +217,17 @@ For example, the `RULE.STYLUS` rule exists only when the Stylus plugin is regist
 
 `PLUGIN.[ID]` can match a certain Rspack or webpack plugin.
 
-| ID                         | Description                                                                                                   |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `PLUGIN.HTML`              | correspond to `HtmlRspackPlugin`, you need to concat the entry name when using: `${PLUGIN.HTML}-${entryName}` |
-| `PLUGIN.BUNDLE_ANALYZER`   | correspond to `WebpackBundleAnalyzer`                                                                         |
-| `PLUGIN.VUE_LOADER_PLUGIN` | correspond to `VueLoaderPlugin`                                                                               |
+| ID                             | Description                                                                                                                                                         |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `PLUGIN.HTML`                  | correspond to [HtmlRspackPlugin](https://rspack.dev/plugins/rspack/html-rspack-plugin), you need to concat the entry name when using: `${PLUGIN.HTML}-${entryName}` |
+| `PLUGIN.SUBRESOURCE_INTEGRITY` | correspond to [SubresourceIntegrityPlugin](https://rspack.dev/plugins/rspack/subresource-integrity-plugin)                                                          |
+| `PLUGIN.BUNDLE_ANALYZER`       | correspond to [BundleAnalyzerPlugin](https://github.com/webpack-contrib/webpack-bundle-analyzer)                                                                    |
 
 ### CHAIN_ID.MINIMIZER
 
 `MINIMIZER.[ID]` can match a certain minimizer.
 
-| ID              | Description                                       |
-| --------------- | ------------------------------------------------- |
-| `MINIMIZER.JS`  | correspond to `SwcJsMinimizerRspackPlugin`        |
-| `MINIMIZER.CSS` | correspond to `LightningCssMinimizerRspackPlugin` |
+| ID              | Description                                                                                                                |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `MINIMIZER.JS`  | correspond to [SwcJsMinimizerRspackPlugin](https://rspack.dev/plugins/rspack/swc-js-minimizer-rspack-plugin)               |
+| `MINIMIZER.CSS` | correspond to [LightningCssMinimizerRspackPlugin](https://rspack.dev/plugins/rspack/lightning-css-minimizer-rspack-plugin) |

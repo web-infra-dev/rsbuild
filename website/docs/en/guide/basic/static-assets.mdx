@@ -3,7 +3,7 @@
 Rsbuild supports import static assets, including images, fonts, audio and video.
 
 :::tip What is Static Assets
-Static assets are files that are part of a web application and do not change, even when the application is being used. Examples of static assets include images, fonts, medias, stylesheets, and JavaScript files. These assets are typically stored on a web server or CDN, and delivered to the user's web browser when the Web application is accessed. Because they do not change, static assets can be cached by the browser, which helps to improve the performance of the Web application.
+Static assets are files that are part of a web application and do not change, even when the application is being used. Examples of static assets include images, fonts, medias, stylesheets, and JavaScript files. These assets are typically stored on a web server or CDN, and delivered to the user's web browser when the web application is accessed. Because they do not change, static assets can be cached by the browser, which helps to improve the performance of the web application.
 :::
 
 ## Assets format
@@ -120,12 +120,12 @@ export default {
 };
 ```
 
-## Import results
+## Inline assets
 
 The result of importing static assets depends on the file size:
 
-- When the file size is greater than 4KiB, a URL will be returned, and the file will be output to the dist directory.
-- When the file size is less than 4KiB, it will be automatically inlined to Base64 format.
+- If the file size is less than 4KiB, it will be converted to a base64 string and inlined in the code.
+- If the file size is larger than 4KiB, a URL will be returned, and the file will be emitted to the output directory.
 
 ```js
 import largeImage from './static/largeImage.png';
@@ -133,6 +133,22 @@ import smallImage from './static/smallImage.png';
 
 console.log(largeImage); // "/static/largeImage.[hash].png"
 console.log(smallImage); // "data:image/png;base64,iVBORw0KGgo..."
+```
+
+Adding the `?url` query ensures that the asset is always loaded as a separate file and returns a URL:
+
+```js
+import image from './static/image.png?url';
+
+console.log(image); // "/static/image.[hash].png"
+```
+
+Adding the `?inline` query ensures that the asset is always inlined in the code, regardless of the file size:
+
+```js
+import image from './static/image.png?inline';
+
+console.log(image); // "data:image/png;base64,iVBORw0KGgo..."
 ```
 
 For a more detailed introduction to asset inlining, please refer to the [Static Asset Inlining](/guide/optimization/inline-assets) chapter.

@@ -13,12 +13,13 @@
     "scripts",
     "cases",
     "playwright.config.ts",
-    "cases/**/*.test.ts"
+    "cases/**/*.test.ts",
+    "cache/cache-basic"
   ],
   "references": [
     {
       "path": "../packages/core"
     }
   ],
-  "exclude": ["**/node_modules", "**/.*/"]
+  "exclude": ["**/node_modules", "**/.*/", "**/test-temp-*"]
 }

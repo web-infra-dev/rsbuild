@@ -1,33 +1,64 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import { build, proxyConsole, rspackOnlyTest } from '@e2e/helper';
+import { proxyConsole, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
-
-const packagePath = path.join(
-  __dirname,
-  'node_modules/@rsdoctor/rspack-plugin',
-);
-const testFile = path.join(packagePath, 'test-temp.txt');
-
-test.beforeEach(() => {
-  fs.rmSync(packagePath, { recursive: true, force: true });
-  fs.cpSync(path.join(__dirname, 'mock'), packagePath, { recursive: true });
-});
+import { type Rspack, createRsbuild } from '@rsbuild/core';
+import { RsdoctorRspackPlugin } from '@rsdoctor/rspack-plugin';
+import { matchPlugin } from '@scripts/test-helper';
 
 rspackOnlyTest(
   'should register Rsdoctor plugin when process.env.RSDOCTOR is true',
   async () => {
+    // https://github.com/microsoft/playwright/issues/31140
+    if (process.platform === 'win32') {
+      test.skip();
+    }
+
     const { logs, restore } = proxyConsole();
     process.env.RSDOCTOR = 'true';
 
-    await build({
+    const rsbuild = await createRsbuild({
       cwd: __dirname,
     });
 
-    expect(fs.existsSync(testFile)).toBe(true);
+    const compiler = await rsbuild.createCompiler();
+
     expect(
       logs.some((log) => log.includes('@rsdoctor') && log.includes('enabled')),
     ).toBe(true);
+
+    expect(
+      matchPlugin(
+        compiler.options as Rspack.Configuration,
+        'RsdoctorRspackPlugin',
+      ),
+    ).toBeTruthy();
+
+    restore();
+    process.env.RSDOCTOR = '';
+  },
+);
+
+rspackOnlyTest(
+  'should not register Rsdoctor plugin when process.env.RSDOCTOR is false',
+  async () => {
+    const { logs, restore } = proxyConsole();
+    process.env.RSDOCTOR = 'false';
+
+    const rsbuild = await createRsbuild({
+      cwd: __dirname,
+    });
+
+    const compiler = await rsbuild.createCompiler();
+
+    expect(
+      logs.some((log) => log.includes('@rsdoctor') && log.includes('enabled')),
+    ).toBe(false);
+
+    expect(
+      matchPlugin(
+        compiler.options as Rspack.Configuration,
+        'RsdoctorRspackPlugin',
+      ),
+    ).toBeFalsy();
 
     process.env.RSDOCTOR = '';
     restore();
@@ -35,37 +66,35 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest(
-  'should not register Rsdoctor plugin when process.env.RSDOCTOR is false',
-  async () => {
-    process.env.RSDOCTOR = 'false';
-
-    await build({
-      cwd: __dirname,
-    });
-
-    expect(fs.existsSync(testFile)).toBe(false);
-    process.env.RSDOCTOR = '';
-  },
-);
-
-rspackOnlyTest(
   'should not register Rsdoctor plugin when process.env.RSDOCTOR is true and the plugin has been registered',
   async () => {
     const { logs, restore } = proxyConsole();
-    const { RsdoctorRspackPlugin } = require('@rsdoctor/rspack-plugin');
 
     process.env.RSDOCTOR = 'true';
 
-    await build({
+    const rsbuild = await createRsbuild({
       cwd: __dirname,
       rsbuildConfig: {
         tools: {
           rspack: {
-            plugins: [new RsdoctorRspackPlugin()],
+            plugins: [
+              new RsdoctorRspackPlugin({
+                disableClientServer: true,
+              }),
+            ],
           },
         },
       },
     });
+
+    const compiler = await rsbuild.createCompiler();
+
+    expect(
+      matchPlugin(
+        compiler.options as Rspack.Configuration,
+        'RsdoctorRspackPlugin',
+      ),
+    ).toBeTruthy();
 
     expect(
       logs.some((log) => log.includes('@rsdoctor') && log.includes('enabled')),

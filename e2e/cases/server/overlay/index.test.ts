@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { join } from 'node:path';
-import { dev, proxyConsole } from '@e2e/helper';
+import { dev, expectPoll, proxyConsole } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 const cwd = __dirname;
@@ -17,6 +17,11 @@ test('should show overlay correctly', async ({ page }) => {
     recursive: true,
   });
 
+  const logs: string[] = [];
+  page.on('console', (consoleMessage) => {
+    logs.push(consoleMessage.text());
+  });
+
   const rsbuild = await dev({
     cwd,
     page,
@@ -29,6 +34,10 @@ test('should show overlay correctly', async ({ page }) => {
     },
   });
 
+  await expectPoll(() =>
+    logs.some((log) => log.includes('[HMR] connected.')),
+  ).toBeTruthy();
+
   const errorOverlay = page.locator('rsbuild-error-overlay');
 
   expect(await errorOverlay.locator('.title').count()).toBe(0);
@@ -39,6 +48,10 @@ test('should show overlay correctly', async ({ page }) => {
     appPath,
     fs.readFileSync(appPath, 'utf-8').replace('</div>', '</aaaaa>'),
   );
+
+  await expectPoll(() =>
+    logs.some((log) => log.includes('Module build failed')),
+  ).toBeTruthy();
 
   await expect(errorOverlay.locator('.title')).toHaveText('Build failed');
 

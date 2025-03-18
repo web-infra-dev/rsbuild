@@ -1,4 +1,3 @@
-import { join } from 'node:path';
 import { createRsbuild } from '@rsbuild/core';
 import polka from 'polka';
 
@@ -8,6 +7,7 @@ export async function startDevServer(fixtures) {
     rsbuildConfig: {
       server: {
         htmlFallback: false,
+        middlewareMode: true,
       },
       dev: {
         printUrls: false,

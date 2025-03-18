@@ -137,6 +137,7 @@ Here is the corresponding Rsbuild configuration for Vite configuration:
 | server.proxy, preview.proxy           | [server.proxy](/config/server/proxy)                             |
 | server.headers, preview.headers       | [server.headers](/config/server/headers)                         |
 | server.hmr                            | [dev.hmr](/config/dev/hmr), [dev.client](/config/dev/client)     |
+| server.middlewareMode                 | [server.middlewareMode](/config/server/middleware-mode)          |
 | build.target, build.cssTarget         | [Browserslist](/guide/advanced/browserslist)                     |
 | build.outDir, build.assetsDir         | [output.distPath](/config/output/dist-path)                      |
 | build.assetsInlineLimit               | [output.dataUriLimit](/config/output/data-uri-limit)             |
@@ -247,6 +248,23 @@ for (const path of context.keys()) {
   console.log(path, mod);
 }
 ```
+
+## Migrating Vite plugins
+
+Rsbuild's plugin API covers most of the Vite and Rollup plugin hooks, for example:
+
+| Vite plugin hooks | Rsbuild plugin API                                                                                                     |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `resolveId`       | [resolve](/plugins/dev/core#apiresolve)                                                                                |
+| `transform`       | [transform](/plugins/dev/core#apitransform)                                                                            |
+| `config`          | [modifyRsbuildConfig](/plugins/dev/hooks#modifyrsbuildconfig)                                                          |
+| `configResolved`  | [getNormalizedConfig](/plugins/dev/core#apigetnormalizedconfig)                                                        |
+| `configureServer` | [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver)                                                    |
+| `buildStart`      | [onBeforeBuild](/plugins/dev/hooks#onbeforebuild), [onBeforeStartDevServer](/plugins/dev/hooks#onbeforestartdevserver) |
+| `buildEnd`        | [onAfterBuild](/plugins/dev/hooks#onafterbuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
+| `closeBundle`     | [onCloseBuild](/plugins/dev/hooks#onclosebuild), [onCloseDevServer](/plugins/dev/hooks#onclosedevserver)               |
+
+See [Plugin system](/plugins/dev/index) for more details.
 
 ## Validating results
 

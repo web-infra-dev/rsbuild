@@ -215,18 +215,18 @@ export function getFilename(
   type: 'js',
   isProd: boolean,
   isServer?: boolean,
-): NonNullable<FilenameConfig['js']>;
+): Rspack.Filename;
 export function getFilename(
   config: NormalizedConfig | NormalizedEnvironmentConfig,
   type: 'css',
   isProd: boolean,
-): NonNullable<FilenameConfig['css']>;
+): Rspack.CssFilename;
 export function getFilename(
   config: NormalizedConfig | NormalizedEnvironmentConfig,
   type: Exclude<keyof FilenameConfig, 'js' | 'css'>,
   isProd: boolean,
   isServer?: boolean,
-): string;
+): Rspack.AssetModuleFilename;
 export function getFilename(
   config: NormalizedConfig | NormalizedEnvironmentConfig,
   type: keyof FilenameConfig,
@@ -377,5 +377,14 @@ export const isTTY = (type: 'stdin' | 'stdout' = 'stdout'): boolean => {
   return (
     (type === 'stdin' ? process.stdin.isTTY : process.stdout.isTTY) &&
     !process.env.CI
+  );
+};
+
+export const addCompilationError = (
+  compilation: Rspack.Compilation,
+  message: string,
+): void => {
+  compilation.errors.push(
+    new compilation.compiler.webpack.WebpackError(message),
   );
 };

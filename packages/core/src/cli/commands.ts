@@ -1,6 +1,7 @@
 import cac, { type CAC, type Command } from 'cac';
 import type { ConfigLoader } from '../config';
 import { logger } from '../logger';
+import { RSPACK_BUILD_ERROR } from '../provider/build';
 import { onBeforeRestartServer } from '../server/restart';
 import type { RsbuildMode } from '../types';
 import { init } from './init';
@@ -86,7 +87,8 @@ export function setupCommands(): void {
   // Apply common options to all commands
   applyCommonOptions(cli);
 
-  const devCommand = cli.command('dev', 'starting the dev server');
+  // Allow to run `rsbuild` without any sub-command to trigger dev
+  const devCommand = cli.command('', 'starting the dev server').alias('dev');
   const buildCommand = cli.command('build', 'build the app for production');
   const previewCommand = cli.command(
     'preview',
@@ -131,7 +133,12 @@ export function setupCommands(): void {
           }
         }
       } catch (err) {
-        logger.error('Failed to build.');
+        const isRspackError =
+          err instanceof Error && err.message === RSPACK_BUILD_ERROR;
+        if (!isRspackError) {
+          logger.error('Failed to build.');
+        }
+
         logger.error(err);
         process.exit(1);
       }

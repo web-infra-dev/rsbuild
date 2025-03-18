@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import type {
   ModifyChainUtils,
@@ -16,6 +17,8 @@ import type {
   PluginSwcOptions,
   TransformConfig,
 } from './types.js';
+
+const require = createRequire(import.meta.url);
 
 export function applySwcDecoratorConfig(
   swcConfig: Rspack.SwcLoaderOptions,
@@ -96,7 +99,15 @@ const isBeyondReact17 = async (cwd: string) => {
     return false;
   }
 
-  return isVersionBeyond17(deps.react);
+  try {
+    const reactPath = require.resolve('react/package.json', { paths: [cwd] });
+    const reactVersion = JSON.parse(fs.readFileSync(reactPath, 'utf8')).version;
+
+    return isVersionBeyond17(reactVersion);
+  } catch (error) {
+    console.error('Failed to resolve React version:', error);
+    return false;
+  }
 };
 
 /**
@@ -133,7 +144,7 @@ const PLUGIN_ONLY_OPTIONS: (keyof ObjPluginSwcOptions)[] = [
   'transformLodash',
   'test',
   'exclude',
-  'include' as unknown as keyof ObjPluginSwcOptions, // include is not in SWC config, but we need it as loader condition
+  'include' as keyof ObjPluginSwcOptions, // include is not in SWC config, but we need it as loader condition
 ];
 
 export interface FinalizedConfig {

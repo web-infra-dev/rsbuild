@@ -115,7 +115,7 @@ const modifyPresetOptions = <T>(
           ...(preset[1] || {}),
           ...options,
           // `options` is specific to different presets
-        } as unknown as BabelPluginOptions;
+        } as BabelPluginOptions;
       }
     } else if (
       typeof preset === 'string' &&

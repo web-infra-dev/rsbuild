@@ -9,6 +9,5 @@
   "plugin-babel",
   "plugin-sass",
   "plugin-less",
-  "plugin-stylus",
-  "plugin-assets-retry"
+  "plugin-stylus"
 ]

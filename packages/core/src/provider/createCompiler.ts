@@ -1,3 +1,4 @@
+import { sep } from 'node:path';
 import type { StatsCompilation } from '@rspack/core';
 import { rspack } from '@rspack/core';
 import {
@@ -10,8 +11,73 @@ import {
 } from '../helpers';
 import { registerDevHook } from '../hooks';
 import { logger } from '../logger';
-import type { DevConfig, Rspack, ServerConfig } from '../types';
+import type {
+  DevConfig,
+  InternalContext,
+  Rspack,
+  ServerConfig,
+} from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
+
+// keep the last 3 parts of the path to make logs clean
+function cutPath(originalFilePath: string, root: string) {
+  const prefix = root.endsWith(sep) ? root : root + sep;
+
+  let filePath = originalFilePath;
+  if (filePath.startsWith(prefix)) {
+    filePath = filePath.slice(prefix.length);
+  }
+
+  const parts = filePath.split(sep).filter(Boolean);
+  return parts.length > 3 ? parts.slice(-3).join(sep) : parts.join(sep);
+}
+
+function isLikelyFile(filePath: string): boolean {
+  const lastSegment = filePath.split(sep).pop() || '';
+  return lastSegment.includes('.');
+}
+
+function formatFileList(paths: string[], rootPath: string) {
+  let files = paths.filter(isLikelyFile);
+
+  // if no files, use the first path as the file
+  if (files.length === 0) {
+    files = [paths[0]];
+  }
+
+  const fileInfo = files
+    .slice(0, 1)
+    .map((file) => cutPath(file, rootPath))
+    .join(', ');
+
+  if (files.length > 1) {
+    return `${fileInfo} and ${files.length - 1} more`;
+  }
+
+  return fileInfo;
+}
+
+function printBuildLog(compiler: Rspack.Compiler, context: InternalContext) {
+  const changedFiles = compiler.modifiedFiles
+    ? Array.from(compiler.modifiedFiles)
+    : null;
+  if (changedFiles?.length) {
+    const fileInfo = formatFileList(changedFiles, context.rootPath);
+    logger.start(`building ${color.dim(fileInfo)}`);
+    return;
+  }
+
+  const removedFiles = compiler.removedFiles
+    ? Array.from(compiler.removedFiles)
+    : null;
+  if (removedFiles?.length) {
+    const fileInfo = formatFileList(removedFiles, context.rootPath);
+    logger.start(`building ${color.dim(`removed ${fileInfo}`)}`);
+    return;
+  }
+
+  logger.start('build started...');
+}
 
 export async function createCompiler(options: InitConfigsOptions): Promise<{
   compiler: Rspack.Compiler | Rspack.MultiCompiler;
@@ -21,7 +87,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
   const { context } = options;
   const { rspackConfigs } = await initConfigs(options);
 
-  await context.hooks.onBeforeCreateCompiler.call({
+  await context.hooks.onBeforeCreateCompiler.callBatch({
     bundlerConfigs: rspackConfigs,
     environments: context.environments,
   });
@@ -34,25 +100,25 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     );
   }
 
-  const compiler =
-    rspackConfigs.length === 1
-      ? rspack(rspackConfigs[0])
-      : rspack(rspackConfigs);
+  const isMultiCompiler = rspackConfigs.length > 1;
+  const compiler = isMultiCompiler
+    ? rspack(rspackConfigs)
+    : rspack(rspackConfigs[0]);
 
   let isVersionLogged = false;
   let isCompiling = false;
 
   const logRspackVersion = () => {
     if (!isVersionLogged) {
-      logger.debug(`Use Rspack v${rspack.rspackVersion}`);
+      logger.debug(`use Rspack v${rspack.rspackVersion}`);
       isVersionLogged = true;
     }
   };
 
-  compiler.hooks.watchRun.tap('rsbuild:compiling', () => {
+  compiler.hooks.watchRun.tap('rsbuild:compiling', (compiler) => {
     logRspackVersion();
     if (!isCompiling) {
-      logger.start('Building...');
+      printBuildLog(compiler, context);
     }
     isCompiling = true;
   });
@@ -76,8 +142,10 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
       if (c.time) {
         const time = prettyTime(c.time / 1000);
         const { name } = rspackConfigs[index];
-        const suffix = name ? color.gray(` (${name})`) : '';
-        logger.ready(`Built in ${time}${suffix}`);
+
+        // When using multi compiler, print name to distinguish different compilers
+        const suffix = name && isMultiCompiler ? color.gray(` (${name})`) : '';
+        logger.ready(`built in ${time}${suffix}`);
       }
     };
 
@@ -85,7 +153,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
 
     if (!hasErrors) {
       // only print children compiler time when multi compiler
-      if (rspackConfigs.length > 1 && statsJson.children?.length) {
+      if (isMultiCompiler && statsJson.children?.length) {
         statsJson.children.forEach((c, index) => {
           printTime(c, index);
         });
@@ -122,7 +190,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     });
   }
 
-  await context.hooks.onAfterCreateCompiler.call({
+  await context.hooks.onAfterCreateCompiler.callBatch({
     compiler,
     environments: context.environments,
   });

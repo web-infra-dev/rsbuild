@@ -1,7 +1,15 @@
 import path from 'node:path';
 import { promisify } from 'node:util';
 import type { Compilation, Compiler } from '@rspack/core';
-import { ensureAssetPrefix, isFunction, isURL, partition } from '../helpers';
+import {
+  addCompilationError,
+  color,
+  ensureAssetPrefix,
+  isFunction,
+  isURL,
+  partition,
+} from '../helpers';
+import { logger } from '../logger';
 import { getHTMLPlugin } from '../pluginHelper';
 import type { HtmlRspackPlugin, Rspack } from '../types';
 import type {
@@ -256,23 +264,37 @@ export class RsbuildHtmlPlugin {
       }
 
       if (!compilation.inputFileSystem) {
-        throw new Error(
-          `[rsbuild:html] 'compilation.inputFileSystem' is not available.`,
+        addCompilationError(
+          compilation,
+          `[rsbuild:html] Failed to read the favicon file as "compilation.inputFileSystem" is not available.`,
         );
+        return null;
       }
 
-      const filename = path.resolve(compilation.compiler.context, favicon);
-      const buf = await promisify(compilation.inputFileSystem.readFile)(
-        filename,
-      );
+      const filename = path.isAbsolute(favicon)
+        ? favicon
+        : path.join(compilation.compiler.context, favicon);
 
-      if (!buf) {
-        throw new Error(
-          `[rsbuild:html] Failed to read the favicon, please check if the '${filename}' file exists'.`,
+      let buffer: Buffer<ArrayBufferLike> | undefined;
+
+      try {
+        buffer = await promisify(compilation.inputFileSystem.readFile)(
+          filename,
         );
+        if (!buffer) {
+          throw new Error('Buffer is undefined');
+        }
+      } catch (error) {
+        logger.debug(`read favicon error: ${error}`);
+
+        addCompilationError(
+          compilation,
+          `[rsbuild:html] Failed to read the favicon file at "${color.cyan(filename)}".`,
+        );
+        return null;
       }
 
-      const source = new compiler.webpack.sources.RawSource(buf, false);
+      const source = new compiler.webpack.sources.RawSource(buffer, false);
       compilation.emitAsset(name, source);
 
       return name;
@@ -288,6 +310,11 @@ export class RsbuildHtmlPlugin {
 
       if (!isURL(favicon)) {
         const name = await emitFavicon(compilation, favicon);
+
+        if (name === null) {
+          return;
+        }
+
         href = ensureAssetPrefix(name, publicPath);
       }
 

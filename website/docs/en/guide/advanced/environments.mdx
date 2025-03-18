@@ -85,12 +85,12 @@ When you execute the command `npx rsbuild inspect` in the project root directory
 ```bash
 ➜ npx rsbuild inspect
 
-Inspect config succeed, open following files to view the content:
+config inspection completed, generated files:
 
-  - Rsbuild Config (web): /project/dist/.rsbuild/rsbuild.config.web.mjs
-  - Rsbuild Config (node): /project/dist/.rsbuild/rsbuild.config.node.mjs
-  - Rspack Config (web): /project/dist/.rsbuild/rspack.config.web.mjs
-  - Rspack Config (node): /project/dist/.rsbuild/rspack.config.node.mjs
+  - Rsbuild config (web): /project/dist/.rsbuild/rsbuild.config.web.mjs
+  - Rsbuild config (node): /project/dist/.rsbuild/rsbuild.config.node.mjs
+  - Rspack config (web): /project/dist/.rsbuild/rspack.config.web.mjs
+  - Rspack config (node): /project/dist/.rsbuild/rspack.config.node.mjs
 ```
 
 ## Default environment
@@ -173,7 +173,7 @@ Rsbuild supports modifying or adding environment config through the [modifyRsbui
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRsbuildConfig((config, { mergeRsbuildConfig }) => {
       return mergeRsbuildConfig(config, {
         environments: {
@@ -197,7 +197,7 @@ Rsbuild supports modifying the Rsbuild config of a specific environment through 
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyEnvironmentConfig((config, { name }) => {
       if (name !== 'web') {
         return config;
@@ -216,7 +216,7 @@ For some plugin hooks related to the build environment (such as [modifyRspackCon
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRspackConfig((rspackConfig, { environment }) => {
       if (environment.name === 'node') {
         // do some thing
@@ -230,7 +230,7 @@ For some global plugin hooks (such as [onDevCompileDone](/plugins/dev/hooks#onde
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onDevCompileDone(({ environments }) => {
       environments.forEach((environment) => {
         console.log('environment', environment);
@@ -298,7 +298,7 @@ export async function startDevServer() {
 }
 ```
 
-For detailed usage, please refer to: [SSR + Express Example](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/ssr-express).
+For detailed usage, please refer to: [SSR + Express Example](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/ssr-express).
 
 ## Build order
 

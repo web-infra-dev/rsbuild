@@ -25,7 +25,7 @@ Called only when running the `rsbuild dev` command or the `rsbuild.startDevServe
 - [onAfterStartDevServer](#onafterstartdevserver): Called after starting the dev server.
 - [onDevCompileDone](#ondevcompiledone): Called after each build in development mode.
 
-Called only when Rsbuild is restarted or when the `close()` method of `rsbuild.build()` is executed.
+Called only when Rsbuild is restarted or when the [close()](/api/javascript-api/instance#close-server) method of `rsbuild.startDevServer()` is executed.
 
 - [onCloseDevServer](#onclosedevserver): Called when the dev server is closed.
 
@@ -36,7 +36,7 @@ Called only when running the `rsbuild build` command or the `rsbuild.build()` me
 - [onBeforeBuild](#onbeforebuild): Called before running the production build.
 - [onAfterBuild](#onafterbuild): Called after running the production build. You can get the build result information.
 
-Called only when Rsbuild is restarted or when the `close()` method of `rsbuild.build()` is executed.
+Called only when Rsbuild is restarted or when the [close()](/api/javascript-api/instance#close-build) method of `rsbuild.build()` is executed.
 
 - [onCloseBuild](#onclosebuild): Called when the build is closed.
 
@@ -155,13 +155,13 @@ In the following example, the console will output `'1'` and `'2'` in sequence:
 
 ```ts
 const plugin1 = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRsbuildConfig(() => console.log('1'));
   },
 });
 
 const plugin2 = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRsbuildConfig(() => console.log('2'));
   },
 });
@@ -184,13 +184,13 @@ In the following example, the console will sequentially output `'2'` and `'1'`, 
 
 ```ts
 const plugin1 = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRsbuildConfig(() => console.log('1'));
   },
 });
 
 const plugin2 = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRsbuildConfig({
       handler: () => console.log('2'),
       order: 'pre',
@@ -230,7 +230,7 @@ function ModifyRsbuildConfig(
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRsbuildConfig((config) => {
       config.html ||= {};
       config.html.title = 'My Default Title';
@@ -245,7 +245,7 @@ const myPlugin = () => ({
 import type { RsbuildConfig } from '@rsbuild/core';
 
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
       const extraConfig: RsbuildConfig = {
         source: {
@@ -302,7 +302,7 @@ function ModifyEnvironmentConfig(
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyEnvironmentConfig((config, { name }) => {
       if (name !== 'web') {
         return config;
@@ -319,7 +319,7 @@ const myPlugin = () => ({
 import type { EnvironmentConfig } from '@rsbuild/core';
 
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyEnvironmentConfig((userConfig, { mergeEnvironmentConfig }) => {
       const extraConfig: EnvironmentConfig = {
         source: {
@@ -359,6 +359,8 @@ type ModifyRspackConfigUtils = {
   isServer: boolean;
   isWebWorker: boolean;
   rspack: Rspack;
+  HtmlPlugin: typeof import('html-rspack-plugin');
+  // more...
 };
 
 function ModifyRspackConfig(
@@ -373,7 +375,7 @@ function ModifyRspackConfig(
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRspackConfig((config, utils) => {
       if (utils.env === 'development') {
         config.devtool = 'eval-cheap-source-map';
@@ -383,13 +385,15 @@ const myPlugin = () => ({
 });
 ```
 
+The second parameter `utils` of the callback function is an object, which contains some utility functions and properties, see [tools.rspack - Utils](/config/tools/rspack#utils) for more details.
+
 ### modifyBundlerChain
 
 import RspackChain from '@en/shared/rspackChain.mdx';
 
 <RspackChain />
 
-`modifyBundlerChain` is used to call `rspack-chain` to modify the Rspack configuration. Its usage is the same as [tools.bundlerChain](/config/tools/bundler-chain).
+`modifyBundlerChain` allows you to modify the Rspack configuration using the `rspack-chain` API, providing the same functionality as [tools.bundlerChain](/config/tools/bundler-chain).
 
 - **Type:**
 
@@ -423,7 +427,7 @@ function ModifyBundlerChain(
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyBundlerChain((chain, utils) => {
       if (utils.env === 'development') {
         chain.devtool('eval');
@@ -434,6 +438,8 @@ const myPlugin = () => ({
   },
 });
 ```
+
+The second parameter `utils` of the callback function is an object, which contains some utility functions and properties, see [tools.bundlerChain - Utils](/config/tools/bundler-chain#utils) for more details.
 
 ### modifyHTMLTags
 
@@ -492,7 +498,7 @@ function ModifyHTMLTags(
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyHTMLTags(({ headTags, bodyTags }) => {
       headTags.push({
         tag: 'script',
@@ -519,7 +525,7 @@ import OnBeforeCreateCompiler from '@en/shared/onBeforeCreateCompiler.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onBeforeCreateCompiler(({ bundlerConfigs }) => {
       console.log('the bundler config is ', bundlerConfigs);
     });
@@ -537,7 +543,7 @@ import OnAfterCreateCompiler from '@en/shared/onAfterCreateCompiler.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onAfterCreateCompiler(({ compiler }) => {
       console.log('the compiler is ', compiler);
     });
@@ -555,7 +561,7 @@ import OnBeforeEnvironmentCompile from '@en/shared/onBeforeEnvironmentCompile.md
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onBeforeEnvironmentCompile(({ bundlerConfig, environment }) => {
       console.log(
         `the bundler config for the ${environment.name} is `,
@@ -576,7 +582,7 @@ import OnAfterEnvironmentCompile from '@en/shared/onAfterEnvironmentCompile.mdx'
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onAfterEnvironmentCompile(({ isFirstCompile, stats }) => {
       console.log(stats?.toJson(), isFirstCompile);
     });
@@ -596,7 +602,7 @@ import OnBeforeBuild from '@en/shared/onBeforeBuild.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onBeforeBuild(({ bundlerConfigs }) => {
       console.log('the bundler config is ', bundlerConfigs);
     });
@@ -614,7 +620,7 @@ import OnAfterBuild from '@en/shared/onAfterBuild.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onAfterBuild(({ isFirstCompile, stats }) => {
       console.log(stats?.toJson(), isFirstCompile);
     });
@@ -632,7 +638,7 @@ import OnCloseBuild from '@en/shared/onCloseBuild.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onCloseBuild(() => {
       console.log('close build!');
     });
@@ -652,9 +658,76 @@ import OnBeforeStartDevServer from '@en/shared/onBeforeStartDevServer.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
-    api.onBeforeStartDevServer(() => {
-      console.log('before start!');
+  setup(api) {
+    api.onBeforeStartDevServer(({ server, environments }) => {
+      console.log('before starting dev server.');
+      console.log('the server is ', server);
+      console.log('the environments contexts are: ', environments);
+    });
+  },
+});
+```
+
+#### Register middlewares
+
+A common usage scenario is to register custom middlewares in `onBeforeStartDevServer`:
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.onBeforeStartDevServer(({ server }) => {
+      server.middlewares.use((req, res, next) => {
+        next();
+      });
+    });
+  },
+});
+```
+
+When `onBeforeStartDevServer` is called, the default middlewares of Rsbuild are not registered yet, so the middlewares you add will run before the default middlewares.
+
+`onBeforeStartDevServer` allows you to return a callback function, which will be called when the default middlewares of Rsbuild are registered. The middlewares you register in the callback function will run after the default middlewares.
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.onBeforeStartDevServer(({ server }) => {
+      // the returned callback will be called when the default
+      // middlewares are registered
+      return () => {
+        server.middlewares.use((req, res, next) => {
+          next();
+        });
+      };
+    });
+  },
+});
+```
+
+#### Store server instance
+
+If you need to access `server` in other hooks, you can store the `server` instance through `api.onBeforeStartDevServer`, and then access it in the hooks executed later. Note that you cannot access `server` in hooks that are executed earlier than `onBeforeStartDevServer`.
+
+```ts
+import type { RsbuildDevServer } from '@rsbuild/core';
+
+const myPlugin = () => ({
+  setup(api) {
+    let devServer: RsbuildDevServer | null = null;
+
+    api.onBeforeStartDevServer(({ server, environments }) => {
+      devServer = server;
+    });
+
+    api.transform({ test: /\.foo$/ }, ({ code }) => {
+      if (devServer) {
+        // access server API
+      }
+      return code;
+    });
+
+    api.onCloseDevServer(() => {
+      devServer = null;
     });
   },
 });
@@ -670,7 +743,7 @@ import OnAfterStartDevServer from '@en/shared/onAfterStartDevServer.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onAfterStartDevServer(({ port, routes }) => {
       console.log('this port is: ', port);
       console.log('this routes is: ', routes);
@@ -689,7 +762,7 @@ import OnDevCompileEnvironmentDone from '@en/shared/onAfterEnvironmentCompile.md
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onAfterEnvironmentCompile(({ isFirstCompile }) => {
       if (isFirstCompile) {
         console.log('first compile!');
@@ -711,7 +784,7 @@ import OnDevCompileDone from '@en/shared/onDevCompileDone.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onDevCompileDone(({ isFirstCompile }) => {
       if (isFirstCompile) {
         console.log('first compile!');
@@ -733,7 +806,7 @@ import OnCloseDevServer from '@en/shared/onCloseDevServer.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onCloseDevServer(async () => {
       console.log('close dev server!');
     });
@@ -753,7 +826,7 @@ import OnBeforeStartProdServer from '@en/shared/onBeforeStartProdServer.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onBeforeStartProdServer(() => {
       console.log('before start!');
     });
@@ -771,7 +844,7 @@ import OnAfterStartProdServer from '@en/shared/onAfterStartProdServer.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onAfterStartProdServer(({ port, routes }) => {
       console.log('this port is: ', port);
       console.log('this routes is: ', routes);
@@ -792,7 +865,7 @@ import OnExit from '@en/shared/onExit.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onExit(() => {
       console.log('exit!');
     });

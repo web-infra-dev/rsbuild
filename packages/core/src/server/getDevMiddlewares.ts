@@ -39,6 +39,10 @@ export type RsbuildDevMiddlewareOptions = {
   output: {
     distPath: string;
   };
+  /**
+   * Callbacks returned by the `onBeforeStartDevServer` hook.
+   */
+  postCallbacks: (() => void)[];
 };
 
 const applySetupMiddlewares = (
@@ -79,6 +83,7 @@ const applyDefaultMiddlewares = async ({
   pwd,
   outputFileSystem,
   environments,
+  postCallbacks,
 }: RsbuildDevMiddlewareOptions & {
   middlewares: Middlewares;
 }): Promise<{
@@ -186,6 +191,15 @@ const applyDefaultMiddlewares = async ({
     middlewares.push(assetMiddleware);
   }
 
+  // Execute callbacks returned by the `onBeforeStartDevServer` hook.
+  // This is the ideal place for users to add custom middlewares because:
+  // 1. It runs after most of the default middlewares
+  // 2. It runs before fallback middlewares
+  // This ensures custom middleware can intercept requests before any fallback handling
+  for (const callback of postCallbacks) {
+    callback();
+  }
+
   if (compileMiddlewareAPI) {
     middlewares.push(
       getHtmlFallbackMiddleware({
@@ -214,20 +228,6 @@ const applyDefaultMiddlewares = async ({
 
   middlewares.push(faviconFallbackMiddleware);
 
-  // OPTIONS request fallback middleware
-  // Should register this middleware as the last
-  // see: https://github.com/web-infra-dev/rsbuild/pull/2867
-  middlewares.push((req, res, next) => {
-    if (req.method === 'OPTIONS') {
-      // Use 204 as no content to send in the response body
-      res.statusCode = 204;
-      res.setHeader('Content-Length', '0');
-      res.end();
-      return;
-    }
-    next();
-  });
-
   return {
     onUpgrade: (...args) => {
       for (const cb of upgradeEvents) {
@@ -237,13 +237,15 @@ const applyDefaultMiddlewares = async ({
   };
 };
 
-export const getMiddlewares = async (
-  options: RsbuildDevMiddlewareOptions,
-): Promise<{
+export type GetMiddlewaresResult = {
   close: () => Promise<void>;
   onUpgrade: UpgradeEvent;
   middlewares: Middlewares;
-}> => {
+};
+
+export const getMiddlewares = async (
+  options: RsbuildDevMiddlewareOptions,
+): Promise<GetMiddlewaresResult> => {
   const middlewares: Middlewares = [];
   const { environments, compileMiddlewareAPI } = options;
 

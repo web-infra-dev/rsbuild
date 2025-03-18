@@ -2,9 +2,9 @@
 published_at: 2024-02-06 08:00:00
 ---
 
-# Announcing Rsbuild 0.4
+_February 06, 2024_
 
-> February 06, 2024
+# Announcing Rsbuild 0.4
 
 ![](https://assets.rspack.dev/rsbuild/rsbuild-banner-v0-4.png)
 
@@ -36,7 +36,7 @@ In Rsbuild plugin, you can now declare the order of hooks using the `order` fiel
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRsbuildConfig({
       handler: () => console.log('hello'),
       order: 'pre',

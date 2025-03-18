@@ -43,7 +43,7 @@ Next, you need to update the npm scripts in package.json to Rsbuild's CLI comman
 ```
 
 :::tip
-Rsbuild does not integrate testing frameworks, so it does not provide a command to replace `react-scripts test`. You can directly use testing frameworks such as Jest or Vitest. You can refer to the [Rsbuild react-jest](https://github.com/rspack-contrib/rspack-examples/tree/main/rsbuild/react-jest) example project for configuration.
+Rsbuild does not integrate testing frameworks, so it does not provide a command to replace `react-scripts test`. You can directly use testing frameworks such as Jest or Vitest. You can refer to the [Rsbuild react-jest](https://github.com/rspack-contrib/rstack-examples/tree/main/rsbuild/react-jest) example project for configuration.
 :::
 
 ## Creating configuration file
@@ -163,6 +163,15 @@ By default, CRA uses Babel to compile dependencies in node_modules, but Rsbuild 
 
 To handle syntax compatibility issues caused by dependencies in node_modules, you can use the [source.include](/config/source/include#compile-node_modules) config to compile node_modules.
 
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    // Compile all JS files and exclude core-js
+    include: [{ not: /[\\/]core-js[\\/]/ }],
+  },
+};
+```
+
 ## Env variables
 
 CRA injects environment variables starting with `REACT_APP_` into the client code by default, while Rsbuild injects environment variables starting with `PUBLIC_` by default (see [public variables](/guide/advanced/env-vars#public-variables)).
@@ -254,26 +263,69 @@ export default {
 
 CRA provides [react-app-polyfill](https://www.npmjs.com/package/react-app-polyfill) to manually inject polyfill code.
 
-In the Rsbuild project, you can remove the dependency and code related to react-app-polyfill, as Rsbuild will automatically read the browserslist config and inject polyfill code as needed.
+In the Rsbuild project, you can remove the dependency and code related to react-app-polyfill, as Rsbuild will automatically read the browserslist config and allow you to enable polyfill injection through the [output.polyfill](/config/output/polyfill) config.
+
+1. Remove the `react-app-polyfill` reference:
 
 ```diff title="src/index.js"
 - import 'react-app-polyfill/ie11';
 - import 'react-app-polyfill/stable';
 ```
 
-You can read [Browser Compatibility](/guide/advanced/browser-compatibility) to understand how Rsbuild handles polyfills.
+2. Configure [output.polyfill](/config/output/polyfill):
 
-## Add ESLint plugin
-
-CRA has the [eslint-webpack-plugin](https://github.com/webpack-contrib/eslint-webpack-plugin) enabled by default and includes a set of built-in ESLint rules.
-
-In an Rsbuild project, if you need similar functionality, you can add [@rsbuild/plugin-eslint](https://github.com/rspack-contrib/rsbuild-plugin-eslint) and use [eslint-config-react-app](https://www.npmjs.com/package/eslint-config-react-app) as the ESLint ruleset.
-
-```js title=".eslintrc.cjs"
-module.exports = {
-  extends: 'react-app',
+```ts title="rsbuild.config.ts"
+export default {
+  output: {
+    polyfill: 'usage',
+  },
 };
 ```
+
+> Read [Browser compatibility](/guide/advanced/browser-compatibility) to understand how Rsbuild handles polyfills.
+
+## Setup ESLint
+
+CRA uses ESLint to lint the code by default. Rsbuild does not include linting by default, but you can add a separate npm script to run ESLint in `package.json`.
+
+First, install [eslint](https://eslint.org/) and [eslint-config-react-app](https://www.npmjs.com/package/eslint-config-react-app), you need to install ESLint v8 to keep consistent with CRA:
+
+<PackageManagerTabs command="add eslint@8 eslint-config-react-app -D" />
+
+Then, add the `lint` command in `package.json`, and confirm that the project contains an `eslintConfig` configuration or an independent ESLint configuration file:
+
+```json title="package.json"
+{
+  "scripts": {
+    "lint": "eslint src"
+  },
+  "eslintConfig": {
+    "extends": ["react-app", "react-app/jest"]
+  }
+}
+```
+
+Then, you can use the `npm run lint` command to run ESLint.
+
+### Run ESLint during the build
+
+In addition to adding the `lint` command in `package.json`, you can also add the [@rsbuild/plugin-eslint](https://github.com/rspack-contrib/rsbuild-plugin-eslint) plugin to maintain the same behavior as CRA.
+
+`@rsbuild/plugin-eslint` allows you to run ESLint during the build process.
+
+```ts title="rsbuild.config.ts"
+import { pluginEslint } from '@rsbuild/plugin-eslint';
+
+export default {
+  plugins: [pluginEslint()],
+};
+```
+
+After registering the plugin, ESLint will run automatically during development (`npm run dev`) and production builds (`npm run build`). The plugin will display ESLint warnings and errors in the console output.
+
+:::warning
+We do not recommend using the `@rsbuild/plugin-eslint` plugin, as running ESLint during the build process will significantly increase the build time. Instead, we recommend using a separate `lint` command to run ESLint checks.
+:::
 
 ## Reading jsconfig.json
 

@@ -1,4 +1,5 @@
 import { defineConfig } from '@rsbuild/core';
+import tailwindcss from '@tailwindcss/postcss';
 
 export default defineConfig({
   source: {
@@ -16,11 +17,7 @@ export default defineConfig({
     postcss: {
       postcssOptions(loaderContext) {
         return {
-          plugins: [
-            require('@tailwindcss/postcss')({
-              base: loaderContext.context,
-            }),
-          ],
+          plugins: [tailwindcss({ base: loaderContext.context ?? __dirname })],
         };
       },
     },

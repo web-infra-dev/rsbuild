@@ -3,7 +3,7 @@ import path from 'node:path';
 import { rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { type RsbuildPlugin, createRsbuild } from '@rsbuild/core';
-import fse from 'fs-extra';
+import fse, { remove } from 'fs-extra';
 
 const distFile = path.join(__dirname, 'node_modules/hooksTempFile');
 
@@ -34,7 +34,7 @@ const plugin: RsbuildPlugin = {
 rspackOnlyTest(
   'should run onAfterBuild hooks correctly when have multiple targets',
   async () => {
-    fs.rmSync(distFile, { force: true });
+    await remove(distFile);
 
     const rsbuild = await createRsbuild({
       cwd: __dirname,

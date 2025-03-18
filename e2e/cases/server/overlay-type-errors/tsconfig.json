@@ -6,7 +6,7 @@
     "strict": true,
     "skipLibCheck": true,
     "isolatedModules": true,
-    "moduleResolution": "Bundler"
+    "moduleResolution": "bundler"
   },
   "include": ["src"]
 }

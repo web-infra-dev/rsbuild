@@ -46,7 +46,13 @@ import { PackageManagerTabs } from '@theme';
   }}
 />
 
-Then follow the prompts to complete the operation.
+Follow the prompts step by step. During the creation process, you can choose whether you need additional tools like TypeScript, ESLint, etc.
+
+After the project is created, you can follow these steps:
+
+- Run `git init` to initialize the Git repository.
+- Run `npm install` (or the install command of your package manager) to install project dependencies.
+- Run `npm run dev` to start the development server, which runs on `localhost:5173` by default.
 
 ### Templates
 
@@ -56,12 +62,18 @@ When creating a project, you can choose from the following templates provided by
 | -------- | ------------------------------- | ----------------- |
 | vanilla  | Vanilla JavaScript              | TypeScript        |
 | react    | [React 19](https://react.dev/)  | TypeScript        |
-| vue3     | [Vue 3](https://vuejs.org/)     | TypeScript        |
+| react18  | [React 18](https://react.dev/)  | TypeScript        |
+| vue      | [Vue 3](https://vuejs.org/)     | TypeScript        |
 | vue2     | [Vue 2](https://v2.vuejs.org/)  | TypeScript        |
 | lit      | [Lit](https://lit.dev/)         | TypeScript        |
 | preact   | [Preact](https://preactjs.com/) | TypeScript        |
 | svelte   | [Svelte 5](https://svelte.dev/) | TypeScript        |
 | solid    | [Solid](https://solidjs.com/)   | TypeScript        |
+
+`create-rsbuild` provides out-of-the-box basic templates. You can also get more templates through the following ways:
+
+- Visit [Rspack - Ecosystem](https://rspack.dev/guide/start/quick-start#ecosystem) to learn about various higher-level tools based on Rsbuild.
+- Visit [awesome-rspack - Starter](https://github.com/web-infra-dev/awesome-rspack?tab=readme-ov-file#starter) to get more community-maintained templates.
 
 ### Optional tools
 
@@ -133,20 +145,22 @@ To migrate from an existing project to Rsbuild, refer to the following guides:
 - [Migrate from Vue CLI](/guide/migration/vue-cli)
 - [Migrate from Vite](/guide/migration/vite)
 - [Migrate from Modern.js Builder](/guide/migration/modern-builder)
+- [Migrate from Tsup to Rslib](https://lib.rsbuild.dev/guide/migration/tsup)
+- [Migrate from Storybook to Storybook Rsbuild](https://rspack.dev/guide/migration/storybook)
 
 ### Other projects
 
-For other types of projects, you can manually install the [@rsbuild/core](https://www.npmjs.com/package/@rsbuild/core) package:
+If your project does not belong to the above migration guides, you can manually install the [@rsbuild/core](https://www.npmjs.com/package/@rsbuild/core) package:
 
 <PackageManagerTabs command="add @rsbuild/core -D" />
 
-Then refer to the guide and documentation to enable the features you need:
+After installation, you can refer to the following documents to configure your project:
 
 - See [CLI](/guide/basic/cli) to learn about available CLI commands.
 - See [Plugin List](/plugins/list/index) to select Rsbuild plugins.
 - See [Configure Rsbuild](/guide/basic/configure-rsbuild) to configure Rsbuild.
 
-## Command line interface
+## CLI
 
 Rsbuild comes with a lightweight CLI that includes commands such as `dev` and `build`.
 
@@ -168,6 +182,17 @@ Refer to the [CLI](/guide/basic/cli) to learn about all available commands and o
 ## Entry module
 
 By default, Rsbuild CLI uses `src/index.(js|ts|jsx|tsx)` as the entry module. You can modify the entry module using the [source.entry](/config/source/entry) option.
+
+```ts title="rsbuild.config.ts"
+export default {
+  source: {
+    entry: {
+      foo: './src/pages/foo/index.ts',
+      bar: './src/pages/bar/index.ts',
+    },
+  },
+};
+```
 
 ## Core packages
 
@@ -213,7 +238,7 @@ import Step from '@components/Step';
 <NextSteps>
   <Step
     href="/guide/start/features"
-    title="All Features"
+    title="All features"
     description="Learn all features of Rsbuild"
   />
   <Step
@@ -222,8 +247,8 @@ import Step from '@components/Step';
     description="Learn how to configure Rsbuild"
   />
   <Step
-    href="/guide/start/glossary"
-    title="Glossary"
-    description="Learn about Rsbuild related concepts"
+    href="https://github.com/web-infra-dev/rsbuild"
+    title="Support Rsbuild"
+    description="Support us with a star ⭐️"
   />
 </NextSteps>

@@ -25,7 +25,6 @@ export default {
     'on-finished',
     'connect',
     'rspack-manifest-plugin',
-    'webpack-merge',
     'html-rspack-plugin',
     'mrmime',
     'tinyglobby',
@@ -50,12 +49,6 @@ export default {
           join(task.distPath, 'index.js'),
         );
       },
-    },
-    {
-      name: 'jiti',
-      // jiti has been minified, we do not need to prettier it
-      prettier: false,
-      ignoreDts: true,
     },
     {
       name: 'launch-editor-middleware',
@@ -122,6 +115,7 @@ export default {
     {
       name: 'rsbuild-dev-middleware',
       externals: {
+        rslog: '../rslog',
         mrmime: '../mrmime',
       },
       ignoreDts: true,
@@ -154,7 +148,7 @@ export default {
     {
       name: 'postcss-loader',
       externals: {
-        jiti: '../jiti',
+        jiti: 'jiti',
         postcss: '../postcss',
       },
       ignoreDts: true,
@@ -163,16 +157,14 @@ export default {
       name: 'postcss-load-config',
       externals: {
         yaml: 'yaml',
-        '../jiti': '../jiti',
+        jiti: 'jiti',
       },
       ignoreDts: true,
       // this is a trick to avoid ncc compiling the dynamic import syntax
       // https://github.com/vercel/ncc/issues/935
       beforeBundle(task) {
         replaceFileContent(join(task.depPath, 'src/req.js'), (content) =>
-          content
-            .replaceAll('await import', 'await __import')
-            .replaceAll(`import('jiti')`, `import('../jiti/index.js')`),
+          content.replaceAll('await import', 'await __import'),
         );
       },
       afterBundle(task) {

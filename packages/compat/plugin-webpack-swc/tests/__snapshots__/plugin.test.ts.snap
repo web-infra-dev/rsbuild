@@ -13,7 +13,7 @@ exports[`plugin-webpack-swc > output.sourceMap config for swcMinimizerPlugin 1`]
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
-                  "coreJs": "3.40",
+                  "coreJs": "3.41",
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -70,7 +70,7 @@ exports[`plugin-webpack-swc > output.sourceMap config for swcMinimizerPlugin 1`]
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
-                  "coreJs": "3.40",
+                  "coreJs": "3.41",
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -166,7 +166,7 @@ exports[`plugin-webpack-swc > should apply multiple environment configs correctl
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
-                  "coreJs": "3.40",
+                  "coreJs": "3.41",
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -223,7 +223,7 @@ exports[`plugin-webpack-swc > should apply multiple environment configs correctl
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
-                  "coreJs": "3.40",
+                  "coreJs": "3.41",
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -283,7 +283,7 @@ exports[`plugin-webpack-swc > should apply multiple environment configs correctl
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
-                  "coreJs": "3.40",
+                  "coreJs": "3.41",
                   "targets": [
                     "node >= 16",
                   ],
@@ -338,7 +338,7 @@ exports[`plugin-webpack-swc > should apply multiple environment configs correctl
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
-                  "coreJs": "3.40",
+                  "coreJs": "3.41",
                   "targets": [
                     "node >= 16",
                   ],
@@ -400,7 +400,7 @@ exports[`plugin-webpack-swc > should apply source.include and source.exclude cor
             "options": {
               "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
               "env": {
-                "coreJs": "3.40",
+                "coreJs": "3.41",
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -457,7 +457,7 @@ exports[`plugin-webpack-swc > should apply source.include and source.exclude cor
             "options": {
               "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
               "env": {
-                "coreJs": "3.40",
+                "coreJs": "3.41",
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -519,7 +519,7 @@ exports[`plugin-webpack-swc > should disable react refresh when dev.hmr is false
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
-              "coreJs": "3.40",
+              "coreJs": "3.41",
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -576,7 +576,7 @@ exports[`plugin-webpack-swc > should disable react refresh when dev.hmr is false
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
-              "coreJs": "3.40",
+              "coreJs": "3.41",
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -632,7 +632,7 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
-              "coreJs": "3.40",
+              "coreJs": "3.41",
               "targets": [
                 "node >= 16",
               ],
@@ -686,7 +686,7 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
-              "coreJs": "3.40",
+              "coreJs": "3.41",
               "targets": [
                 "node >= 16",
               ],
@@ -739,7 +739,7 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
-              "coreJs": "3.40",
+              "coreJs": "3.41",
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -796,7 +796,7 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
-              "coreJs": "3.40",
+              "coreJs": "3.41",
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -852,7 +852,7 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
-              "coreJs": "3.40",
+              "coreJs": "3.41",
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -909,7 +909,7 @@ exports[`plugin-webpack-swc > should disable react refresh when target is not we
           "options": {
             "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
             "env": {
-              "coreJs": "3.40",
+              "coreJs": "3.41",
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -1068,7 +1068,7 @@ exports[`plugin-webpack-swc > should set multiple swc-loader 1`] = `
         "options": {
           "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
           "env": {
-            "coreJs": "3.40",
+            "coreJs": "3.41",
             "targets": [
               "chrome >= 87",
               "edge >= 88",
@@ -1118,7 +1118,7 @@ exports[`plugin-webpack-swc > should set multiple swc-loader 1`] = `
         "options": {
           "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
           "env": {
-            "coreJs": "3.40",
+            "coreJs": "3.41",
             "targets": [
               "chrome >= 87",
               "edge >= 88",
@@ -1176,7 +1176,7 @@ exports[`plugin-webpack-swc > should set multiple swc-loader 1`] = `
         "options": {
           "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
           "env": {
-            "coreJs": "3.40",
+            "coreJs": "3.41",
             "targets": [
               "chrome >= 87",
               "edge >= 88",
@@ -1233,7 +1233,7 @@ exports[`plugin-webpack-swc > should set swc-loader 1`] = `
             "options": {
               "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
               "env": {
-                "coreJs": "3.40",
+                "coreJs": "3.41",
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1290,7 +1290,7 @@ exports[`plugin-webpack-swc > should set swc-loader 1`] = `
             "options": {
               "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
               "env": {
-                "coreJs": "3.40",
+                "coreJs": "3.41",
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1354,7 +1354,7 @@ exports[`plugin-webpack-swc > should use output config 1`] = `
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
-                  "coreJs": "3.40",
+                  "coreJs": "3.41",
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",
@@ -1411,7 +1411,7 @@ exports[`plugin-webpack-swc > should use output config 1`] = `
               "options": {
                 "cwd": "<ROOT>/packages/compat/plugin-webpack-swc/tests",
                 "env": {
-                  "coreJs": "3.40",
+                  "coreJs": "3.41",
                   "targets": [
                     "chrome >= 87",
                     "edge >= 88",

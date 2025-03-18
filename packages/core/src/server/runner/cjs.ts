@@ -75,10 +75,12 @@ export class CommonJsRunner extends BasicRunner {
   protected createMissRequirer(): RunnerRequirer {
     return (_currentDirectory, modulePath, _context = {}) => {
       const modulePathStr = modulePath as string;
+      const resolvedPath = require.resolve(modulePathStr, {
+        paths: [_currentDirectory],
+      });
+
       return require(
-        modulePathStr.startsWith('node:')
-          ? modulePathStr.slice(5)
-          : modulePathStr,
+        resolvedPath.startsWith('node:') ? resolvedPath.slice(5) : resolvedPath,
       );
     };
   }
@@ -113,9 +115,19 @@ export class CommonJsRunner extends BasicRunner {
       })`;
 
       this.preExecute(code, file);
-      const fn = this._options.runInNewContext
-        ? vm.runInNewContext(code, this.globalContext!, file.path)
-        : vm.runInThisContext(code, file.path);
+      const dynamicImport = new Function(
+        'specifier',
+        'return import(specifier)',
+      );
+      // Runs the compiled code contained by the `vm.Script` within the context of the current `global` object.
+      const fn = vm.runInThisContext(code, {
+        filename: file.path,
+        // Specify how the modules should be loaded during the evaluation of this script when `import()` is called.
+        importModuleDynamically: async (specifier) => {
+          const result = await dynamicImport(specifier);
+          return result;
+        },
+      });
 
       fn.call(m.exports, ...argValues);
 

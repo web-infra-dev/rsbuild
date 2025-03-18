@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, isAbsolute, join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import type { ChokidarOptions } from '../compiled/chokidar/index.js';
 import RspackChain from '../compiled/rspack-chain/index.js';
 import {
@@ -86,6 +87,7 @@ const getDefaultServerConfig = (): NormalizedServerConfig => ({
   printUrls: true,
   strictPort: false,
   cors: false,
+  middlewareMode: false,
 });
 
 let swcHelpersPath: string;
@@ -388,7 +390,7 @@ export async function watchFilesForRestart(
 
   const callback = debounce(
     async (filePath) => {
-      watcher.close();
+      await watcher.close();
       if (isBuildWatch) {
         await restartBuild({ filePath });
       } else {
@@ -457,6 +459,7 @@ export async function loadConfig({
   const configFilePath = resolveConfigPath(cwd, path);
 
   if (!configFilePath) {
+    logger.debug('no config file found.');
     return {
       content: {},
       filePath: configFilePath,
@@ -472,7 +475,8 @@ export async function loadConfig({
 
   if (loader === 'native' || /\.(?:js|mjs|cjs)$/.test(configFilePath)) {
     try {
-      const exportModule = await import(`${configFilePath}?t=${Date.now()}`);
+      const configFileURL = pathToFileURL(configFilePath).href;
+      const exportModule = await import(`${configFileURL}?t=${Date.now()}`);
       configExport = exportModule.default ? exportModule.default : exportModule;
     } catch (err) {
       if (loader === 'native') {
@@ -482,22 +486,23 @@ export async function loadConfig({
         throw err;
       }
       logger.debug(
-        `Failed to load file with dynamic import: ${color.dim(configFilePath)}`,
+        `failed to load file with dynamic import: ${color.dim(configFilePath)}`,
       );
     }
   }
 
   try {
     if (configExport! === undefined) {
-      const { default: jiti } = await import('../compiled/jiti/index.js');
-      const loadConfig = jiti(__filename, {
-        esmResolve: true,
+      const { createJiti } = await import('jiti');
+      const jiti = createJiti(__filename, {
         // disable require cache to support restart CLI and read the new config
-        requireCache: false,
+        moduleCache: false,
         interopDefault: true,
       });
 
-      configExport = loadConfig(configFilePath) as RsbuildConfigExport;
+      configExport = await jiti.import<RsbuildConfigExport>(configFilePath, {
+        default: true,
+      });
     }
   } catch (err) {
     logger.error(`Failed to load file with jiti: ${color.dim(configFilePath)}`);
@@ -535,6 +540,8 @@ export async function loadConfig({
       )}`,
     );
   }
+
+  logger.debug('loaded config file:', configFilePath);
 
   return {
     content: applyMetaInfo(configExport),
@@ -634,7 +641,7 @@ export async function outputInspectConfigFiles({
 
         return {
           path: outputFilePath,
-          label: 'Rsbuild Config',
+          label: 'Rsbuild config',
           content,
         };
       }
@@ -643,7 +650,7 @@ export async function outputInspectConfigFiles({
 
       return {
         path: outputFilePath,
-        label: `Rsbuild Config (${name})`,
+        label: `Rsbuild config (${name})`,
         content,
       };
     }),
@@ -682,7 +689,7 @@ export async function outputInspectConfigFiles({
     .join('\n');
 
   logger.success(
-    `Inspect config succeed, open following files to view the content: \n\n${fileInfos}\n`,
+    `config inspection completed, generated files: \n\n${fileInfos}\n`,
   );
 }
 

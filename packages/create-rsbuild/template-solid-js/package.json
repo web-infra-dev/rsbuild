@@ -9,11 +9,11 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "solid-js": "^1.9.4"
+    "solid-js": "^1.9.5"
   },
   "devDependencies": {
-    "@rsbuild/core": "^1.2.3",
-    "@rsbuild/plugin-babel": "^1.0.3",
-    "@rsbuild/plugin-solid": "^1.0.4"
+    "@rsbuild/core": "^1.2.19",
+    "@rsbuild/plugin-babel": "^1.0.4",
+    "@rsbuild/plugin-solid": "^1.0.5"
   }
 }

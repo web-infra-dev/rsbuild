@@ -53,7 +53,7 @@ export const build = async (
       if (err) {
         reject(err);
       } else if (stats?.hasErrors()) {
-        reject(new Error('Webpack build failed!'));
+        reject(new Error('webpack build failed.'));
       }
       // If there is a compilation error, the close method should not be called.
       // Otherwise bundler may generate an invalid cache.

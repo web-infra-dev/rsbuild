@@ -18,6 +18,16 @@ Rsbuild 是由 [Rspack](https://rspack.dev/) 驱动的高性能构建工具，�
 
 Rsbuild 提供 [丰富的构建功能](https://rsbuild.dev/zh/guide/start/features)，包括编译 TypeScript，JSX，Sass，Less，CSS Modules，Wasm，以及其他资源，也支持模块联邦、图片压缩、类型检查、PostCSS，Lightning CSS 等功能。
 
+## 🚀 性能
+
+基于 Rspack 的 Rust 架构，Rsbuild 能够提供极致的构建性能，为你带来全新的开发体验。
+
+⚡️ **构建 1000 个 React 组件：**
+
+![benchmark](https://assets.rspack.dev/rsbuild/assets/benchmark-latest.jpeg)
+
+> 📊 Benchmark 结果来自 [build-tools-performance](https://github.com/rspack-contrib/build-tools-performance)。
+
 ## 💡 对比其他工具
 
 Rsbuild 是与 [Vite](https://vitejs.dev/)、[Create React App](https://github.com/facebook/create-react-app) 或 [Vue CLI](https://github.com/vuejs/vue-cli) 相似的构建工具，它们都默认包含了开发服务器、命令行工具和合理的构建配置，以此来提供开箱即用的体验。
@@ -40,14 +50,6 @@ Rsbuild 与 Vite 有许多相似之处，它们皆致力于提升前端的开发
 - **生产一致性**：Rsbuild 在开发阶段和生产构建均使用 Rspack 进行打包，因此开发和生产构建的产物具备较强的一致性，这也是 Vite 通过 Rolldown 想要实现的目标之一。
 - **模块联邦**：Rsbuild 团队与 [Module Federation](https://rsbuild.dev/zh/guide/advanced/module-federation) 的开发团队密切合作，并为 Module Federation 提供一流的支持，帮助你开发微前端架构的大型 Web 应用。
 
-## 🚀 性能
-
-Rsbuild 能够充分发挥 Rspack 的性能优势，以下是构建 1000 个 React 组件的时间：
-
-![benchmark](https://assets.rspack.dev/rsbuild/assets/benchmark-latest.jpeg)
-
-> 以上数据来自 [build-tools-performance](https://github.com/rspack-contrib/build-tools-performance) benchmark。
-
 ## 🔥 特性
 
 Rsbuild 具备以下特性：
@@ -66,9 +68,13 @@ Rsbuild 具备以下特性：
 
 Rsbuild 为上层的框架和工具提供了 JavaScript API 和 plugin API。例如，我们基于 Rsbuild 实现了 [Rspress](https://github.com/web-infra-dev/rspress) 和 [Rslib](https://github.com/web-infra-dev/rslib)，并充分复用 Rsbuild 的能力和生态。
 
-下图说明了 Rsbuild 与生态中其他工具之间的关系：
+下图说明了 Rsbuild 在 Rstack 生态中的位置：
 
-<img src="https://assets.rspack.dev/rsbuild/assets/rspack-stack-layers.png" alt="Rspack stack layers" width="760" />
+<img
+  src="https://assets.rspack.dev/rstack/rstack-overview.png"
+  alt="Rstack"
+  width="820"
+/>
 
 ## 📚 快速上手
 
@@ -82,7 +88,7 @@ Rsbuild 为上层的框架和工具提供了 JavaScript API 和 plugin API。例
 - [Rslib](https://github.com/web-infra-dev/rslib): 基于 Rsbuild 的 library 开发工具。
 - [Modern.js](https://github.com/web-infra-dev/modern.js)：基于 Rsbuild 的渐进式 React 框架。
 - [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack)：与 Rspack 和 Rsbuild 相关的精彩内容列表。
-- [rspack-examples](https://github.com/rspack-contrib/rspack-examples)：Rspack、Rsbuild、Rspress 和 Rsdoctor 的示例项目。
+- [rstack-examples](https://github.com/rspack-contrib/rstack-examples)：Rstack 生态（Rspack、Rsbuild、Rspress、Rsdoctor）的示例。
 - [storybook-rsbuild](https://github.com/rspack-contrib/storybook-rsbuild): 基于 Rsbuild 构建的 Storybook。
 - [rsbuild-plugin-template](https://github.com/rspack-contrib/rsbuild-plugin-template)：使用此模板创建你的 Rsbuild 插件。
 - [rstack-design-resources](https://github.com/rspack-contrib/rstack-design-resources)：Rspack、Rsbuild、Rspress 和 Rsdoctor 的设计资源。

@@ -243,4 +243,32 @@ test.describe('should print file size correctly', async () => {
     expect(logs.some((log) => log.includes('.js'))).toBeTruthy();
     expect(logs.some((log) => log.includes('.css'))).toBeTruthy();
   });
+
+  test('should not calculate gzip size if the asset is not compressible', async () => {
+    await build({
+      cwd,
+      rsbuildConfig: {
+        performance: {
+          printFileSize: true,
+        },
+      },
+    });
+
+    for (const log of logs) {
+      if (log.includes('File')) {
+        const lines = log.split('\n');
+        for (const line of lines) {
+          // dist/static/js/index.js should have gzip size
+          if (line.includes('.js')) {
+            expect(line.split('kB').length).toBe(3);
+          }
+
+          // dist/static/image/icon.png should not have gzip size
+          if (line.includes('.png')) {
+            expect(line.split('kB').length).toBe(2);
+          }
+        }
+      }
+    }
+  });
 });

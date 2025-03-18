@@ -25,7 +25,7 @@ import { generateRspackConfig } from './rspackConfig';
 
 async function modifyRsbuildConfig(context: InternalContext) {
   logger.debug('modify Rsbuild config');
-  const [modified] = await context.hooks.modifyRsbuildConfig.call(
+  const [modified] = await context.hooks.modifyRsbuildConfig.callChain(
     context.config,
     { mergeRsbuildConfig },
   );
@@ -41,18 +41,17 @@ async function modifyEnvironmentConfig(
 ) {
   logger.debug(`modify Rsbuild environment(${name}) config`);
 
-  const [modified] =
-    await context.hooks.modifyEnvironmentConfig.callInEnvironment({
-      environment: name,
-      args: [
-        config,
-        {
-          name,
-          mergeEnvironmentConfig:
-            mergeRsbuildConfig<MergedEnvironmentConfig> as ModifyEnvironmentConfigUtils['mergeEnvironmentConfig'],
-        },
-      ],
-    });
+  const [modified] = await context.hooks.modifyEnvironmentConfig.callChain({
+    environment: name,
+    args: [
+      config,
+      {
+        name,
+        mergeEnvironmentConfig:
+          mergeRsbuildConfig<MergedEnvironmentConfig> as ModifyEnvironmentConfigUtils['mergeEnvironmentConfig'],
+      },
+    ],
+  });
 
   logger.debug(`modify Rsbuild environment(${name}) config done`);
 
@@ -71,12 +70,14 @@ const initEnvironmentConfigs = (
   specifiedEnvironments?: string[],
 ): Record<string, MergedEnvironmentConfig> => {
   let defaultEntry: RsbuildEntry;
+
   const getDefaultEntryWithMemo = () => {
     if (!defaultEntry) {
       defaultEntry = getDefaultEntry(rootPath);
     }
     return defaultEntry;
   };
+
   const { environments, dev, server, provider, ...rsbuildSharedConfig } =
     normalizedConfig;
 
@@ -112,9 +113,9 @@ const initEnvironmentConfigs = (
                   'progressBar',
                   'lazyCompilation',
                 ]),
-              } as unknown as MergedEnvironmentConfig,
+              } as MergedEnvironmentConfig,
               config as unknown as MergedEnvironmentConfig,
-            ) as unknown as MergedEnvironmentConfig),
+            ) as MergedEnvironmentConfig),
           };
 
           return [name, applyEnvironmentDefaultConfig(environmentConfig)];

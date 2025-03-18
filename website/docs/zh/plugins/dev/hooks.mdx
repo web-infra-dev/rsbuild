@@ -25,7 +25,7 @@
 - [onAfterStartDevServer](#onafterstartdevserver)：在启动开发服务器后调用。
 - [onDevCompileDone](#ondevcompiledone)：在每次开发模式构建结束后调用。
 
-仅在 Rsbuild restart 时，或是执行 `rsbuild.startDevServer()` 的 `close()` 方法时调用。
+仅在 Rsbuild restart 时，或是执行 `rsbuild.startDevServer()` 的 [close()](/api/javascript-api/instance#关闭-server) 方法时调用。
 
 - [onCloseDevServer](#onclosedevserver)：在关闭开发服务器时调用。
 
@@ -36,7 +36,7 @@
 - [onBeforeBuild](#onbeforebuild)：在执行生产模式构建前调用。
 - [onAfterBuild](#onafterbuild)：在执行生产模式构建后调用，可以获取到构建结果信息。
 
-仅在 Rsbuild restart 时，或是执行 `rsbuild.build()` 的 `close()` 方法时调用。
+仅在 Rsbuild restart 时，或是执行 `rsbuild.build()` 的 [close()](/api/javascript-api/instance#结束构建) 方法时调用。
 
 - [onCloseBuild](#onclosebuild)：在关闭构建时调用。
 
@@ -155,13 +155,13 @@
 
 ```ts
 const plugin1 = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRsbuildConfig(() => console.log('1'));
   },
 });
 
 const plugin2 = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRsbuildConfig(() => console.log('2'));
   },
 });
@@ -184,13 +184,13 @@ type HookDescriptor<T extends (...args: any[]) => any> = {
 
 ```ts
 const plugin1 = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRsbuildConfig(() => console.log('1'));
   },
 });
 
 const plugin2 = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRsbuildConfig({
       handler: () => console.log('2'),
       order: 'pre',
@@ -230,7 +230,7 @@ function ModifyRsbuildConfig(
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRsbuildConfig((config) => {
       config.html ||= {};
       config.html.title = 'My Default Title';
@@ -245,7 +245,7 @@ const myPlugin = () => ({
 import type { RsbuildConfig } from '@rsbuild/core';
 
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRsbuildConfig((userConfig, { mergeRsbuildConfig }) => {
       const extraConfig: RsbuildConfig = {
         source: {
@@ -299,7 +299,7 @@ function ModifyEnvironmentConfig(
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyEnvironmentConfig((config, { name }) => {
       if (name !== 'web') {
         return config;
@@ -316,7 +316,7 @@ const myPlugin = () => ({
 import type { EnvironmentConfig } from '@rsbuild/core';
 
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyEnvironmentConfig((userConfig, { mergeEnvironmentConfig }) => {
       const extraConfig: EnvironmentConfig = {
         source: {
@@ -355,6 +355,8 @@ type ModifyRspackConfigUtils = {
   isServer: boolean;
   isWebWorker: boolean;
   rspack: Rspack;
+  HtmlPlugin: typeof import('html-rspack-plugin');
+  // more...
 };
 
 function ModifyRspackConfig(
@@ -369,7 +371,7 @@ function ModifyRspackConfig(
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyRspackConfig((config, utils) => {
       if (utils.env === 'development') {
         config.devtool = 'eval-cheap-source-map';
@@ -379,13 +381,15 @@ const myPlugin = () => ({
 });
 ```
 
+回调函数的第二个参数 `utils` 是一个对象，包含了一些工具函数和属性，详见 [tools.rspack - 工具对象](/config/tools/rspack#工具对象)。
+
 ### modifyBundlerChain
 
 import RspackChain from '@zh/shared/rspackChain.mdx';
 
 <RspackChain />
 
-`modifyBundlerChain` 用于调用 rspack-chain 来修改 Rspack 的配置，它的用法与 [tools.bundlerChain](/config/tools/bundler-chain) 相同。
+`modifyBundlerChain` 允许你使用 `rspack-chain` API 来修改 Rspack 的配置，它的用法与 [tools.bundlerChain](/config/tools/bundler-chain) 相同。
 
 - **类型：**
 
@@ -419,7 +423,7 @@ function ModifyBundlerChain(
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyBundlerChain((chain, utils) => {
       if (utils.env === 'development') {
         chain.devtool('eval');
@@ -430,6 +434,8 @@ const myPlugin = () => ({
   },
 });
 ```
+
+回调函数的第二个参数 `utils` 是一个对象，包含了一些工具函数和属性，详见 [tools.bundlerChain - 工具对象](/config/tools/bundler-chain#工具对象)。
 
 ### modifyHTMLTags
 
@@ -488,7 +494,7 @@ function ModifyHTMLTags(
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.modifyHTMLTags(({ headTags, bodyTags }) => {
       headTags.push({
         tag: 'script',
@@ -515,7 +521,7 @@ import OnBeforeCreateCompiler from '@zh/shared/onBeforeCreateCompiler.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onBeforeCreateCompiler(({ bundlerConfigs }) => {
       console.log('the bundler config is ', bundlerConfigs);
     });
@@ -533,7 +539,7 @@ import OnAfterCreateCompiler from '@zh/shared/onAfterCreateCompiler.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onAfterCreateCompiler(({ compiler }) => {
       console.log('the compiler is ', compiler);
     });
@@ -551,7 +557,7 @@ import OnBeforeEnvironmentCompile from '@zh/shared/onBeforeEnvironmentCompile.md
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onBeforeEnvironmentCompile(({ bundlerConfig, environment }) => {
       console.log(
         `the bundler config for the ${environment.name} is `,
@@ -572,7 +578,7 @@ import OnAfterEnvironmentCompile from '@zh/shared/onAfterEnvironmentCompile.mdx'
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onAfterEnvironmentCompile(({ isFirstCompile, stats }) => {
       console.log(stats?.toJson(), isFirstCompile);
     });
@@ -592,7 +598,7 @@ import OnBeforeBuild from '@zh/shared/onBeforeBuild.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onBeforeBuild(({ bundlerConfigs }) => {
       console.log('the bundler config is ', bundlerConfigs);
     });
@@ -610,7 +616,7 @@ import OnAfterBuild from '@zh/shared/onAfterBuild.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onAfterBuild(({ isFirstCompile, stats }) => {
       console.log(stats?.toJson(), isFirstCompile);
     });
@@ -628,7 +634,7 @@ import OnCloseBuild from '@zh/shared/onCloseBuild.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onCloseBuild(() => {
       console.log('close build!');
     });
@@ -648,9 +654,76 @@ import OnBeforeStartDevServer from '@zh/shared/onBeforeStartDevServer.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
-    api.onBeforeStartDevServer(() => {
-      console.log('before start!');
+  setup(api) {
+    api.onBeforeStartDevServer(({ server, environments }) => {
+      console.log('before starting dev server.');
+      console.log('the server is ', server);
+      console.log('the environments contexts are: ', environments);
+    });
+  },
+});
+```
+
+#### 注册中间件
+
+一个常见的使用场景是在 `onBeforeStartDevServer` 中注册自定义的中间件：
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.onBeforeStartDevServer(({ server }) => {
+      server.middlewares.use((req, res, next) => {
+        next();
+      });
+    });
+  },
+});
+```
+
+当 `onBeforeStartDevServer` 被调用时，Rsbuild 内置的中间件还未注册，因此你添加的中间件会早于内置中间件执行。
+
+`onBeforeStartDevServer` 允许你返回一个回调函数，当 Rsbuild 内置的中间件注册完成后，会执行你返回的回调函数，在回调函数中注册的中间件会晚于内置中间件执行。
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.onBeforeStartDevServer(({ server }) => {
+      // the returned callback will be called when the default
+      // middlewares are registered
+      return () => {
+        server.middlewares.use((req, res, next) => {
+          next();
+        });
+      };
+    });
+  },
+});
+```
+
+#### 保存 server 实例
+
+如果你需要在其他 hooks 中访问 `server`，可以通过 `onBeforeStartDevServer` 来存储 `server` 实例，并在执行后续的 hooks 时访问它。注意你不能在执行时机早于 `onBeforeStartDevServer` 的 hooks 中访问 `server`。
+
+```ts
+import type { RsbuildDevServer } from '@rsbuild/core';
+
+const myPlugin = () => ({
+  setup(api) {
+    let devServer: RsbuildDevServer | null = null;
+
+    api.onBeforeStartDevServer(({ server, environments }) => {
+      devServer = server;
+    });
+
+    api.transform({ test: /\.foo$/ }, ({ code }) => {
+      if (devServer) {
+        // access server API
+      }
+      return code;
+    });
+
+    api.onCloseDevServer(() => {
+      devServer = null;
     });
   },
 });
@@ -666,7 +739,7 @@ import OnAfterStartDevServer from '@zh/shared/onAfterStartDevServer.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onAfterStartDevServer(({ port, routes }) => {
       console.log('this port is: ', port);
       console.log('this routes is: ', routes);
@@ -685,7 +758,7 @@ import OnDevCompileEnvironmentDone from '@zh/shared/onAfterEnvironmentCompile.md
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onAfterEnvironmentCompile(({ isFirstCompile }) => {
       if (isFirstCompile) {
         console.log('first compile!');
@@ -707,7 +780,7 @@ import OnDevCompileDone from '@zh/shared/onDevCompileDone.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onDevCompileDone(({ isFirstCompile }) => {
       if (isFirstCompile) {
         console.log('first compile!');
@@ -729,7 +802,7 @@ import OnCloseDevServer from '@zh/shared/onCloseDevServer.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onCloseDevServer(async () => {
       console.log('close dev server!');
     });
@@ -749,7 +822,7 @@ import OnBeforeStartProdServer from '@zh/shared/onBeforeStartProdServer.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onBeforeStartProdServer(() => {
       console.log('before start!');
     });
@@ -767,7 +840,7 @@ import OnAfterStartProdServer from '@zh/shared/onAfterStartProdServer.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onAfterStartProdServer(({ port, routes }) => {
       console.log('this port is: ', port);
       console.log('this routes is: ', routes);
@@ -788,7 +861,7 @@ import OnExit from '@zh/shared/onExit.mdx';
 
 ```ts
 const myPlugin = () => ({
-  setup: (api) => {
+  setup(api) {
     api.onExit(() => {
       console.log('exit!');
     });

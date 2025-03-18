@@ -25,7 +25,7 @@ const isOverridePath = (key: string) => {
   return OVERRIDE_PATHS.includes(key);
 };
 
-const merge = (x: unknown, y: unknown, path = '') => {
+const merge = (x: unknown, y: unknown, path = ''): unknown => {
   // force some keys to override
   if (isOverridePath(path)) {
     return y ?? x;
@@ -48,6 +48,12 @@ const merge = (x: unknown, y: unknown, path = '') => {
 
   // combine array
   if (pair.some(Array.isArray)) {
+    if (path === 'output.copy' && !pair.every(Array.isArray)) {
+      // x: { patterns: [A] }、y: [B, C] => { patterns: [A,B,C] }
+      return Array.isArray(x)
+        ? merge({ patterns: x }, y, path)
+        : merge(x, { patterns: y }, path);
+    }
     return [...castArray(x), ...castArray(y)];
   }
 

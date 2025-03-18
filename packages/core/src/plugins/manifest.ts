@@ -62,8 +62,10 @@ const generateManifest =
           assets.add(relatedLICENSE);
         }
 
-        for (const auxiliaryFile of file.chunk!.auxiliaryFiles) {
-          assets.add(auxiliaryFile);
+        if (file.chunk) {
+          for (const auxiliaryFile of file.chunk.auxiliaryFiles) {
+            assets.add(auxiliaryFile);
+          }
         }
       }
 

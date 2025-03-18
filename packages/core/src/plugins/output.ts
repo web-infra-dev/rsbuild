@@ -6,7 +6,6 @@ import {
   DEFAULT_PORT,
 } from '../constants';
 import { formatPublicPath, getFilename, urlJoin } from '../helpers';
-import { getCssExtractPlugin } from '../pluginHelper';
 import { replacePortPlaceholder } from '../server/open';
 import type {
   NormalizedEnvironmentConfig,
@@ -26,7 +25,7 @@ function getPublicPath({
   const { dev, output, server } = config;
 
   let publicPath = DEFAULT_ASSET_PREFIX;
-  const port = context.devServer?.port || DEFAULT_PORT;
+  const port = context.devServer?.port || server.port || DEFAULT_PORT;
 
   if (isProd) {
     if (typeof output.assetPrefix === 'string') {
@@ -77,7 +76,7 @@ export const pluginOutput = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain(
-      async (chain, { CHAIN_ID, target, isProd, isServer, environment }) => {
+      async (chain, { CHAIN_ID, isProd, isServer, environment }) => {
         const { distPath, config } = environment;
 
         const publicPath = getPublicPath({
@@ -137,40 +136,6 @@ export const pluginOutput = (): RsbuildPlugin => ({
           chain
             .plugin(CHAIN_ID.PLUGIN.COPY)
             .use(rspack.CopyRspackPlugin, [options]);
-        }
-
-        // CSS output
-        const emitCss = config.output.emitCss ?? target === 'web';
-        if (!config.output.injectStyles && emitCss) {
-          const extractPluginOptions = config.tools.cssExtract.pluginOptions;
-
-          const cssPath = config.output.distPath.css;
-          const cssFilename = getFilename(config, 'css', isProd);
-          const isCssFilenameFn = typeof cssFilename === 'function';
-
-          const cssAsyncPath =
-            config.output.distPath.cssAsync ??
-            (cssPath ? `${cssPath}/async` : 'async');
-
-          chain
-            .plugin(CHAIN_ID.PLUGIN.MINI_CSS_EXTRACT)
-            .use(getCssExtractPlugin(), [
-              {
-                filename: isCssFilenameFn
-                  ? (...args) => {
-                      const name = cssFilename(...args);
-                      return posix.join(cssPath, name);
-                    }
-                  : posix.join(cssPath, cssFilename),
-                chunkFilename: isCssFilenameFn
-                  ? (...args) => {
-                      const name = cssFilename(...args);
-                      return posix.join(cssAsyncPath, name);
-                    }
-                  : posix.join(cssAsyncPath, cssFilename),
-                ...extractPluginOptions,
-              },
-            ]);
         }
       },
     );

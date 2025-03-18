@@ -32,9 +32,19 @@ export type UpgradeEvent = (
 ) => void;
 
 export type StartServerResult = {
+  /**
+   * The URLs that server is listening on.
+   */
   urls: string[];
+  /**
+   * The actual port used by the server.
+   */
   port: number;
   server: {
+    /**
+     * Close the server.
+     * In development mode, this will call the `onCloseDevServer` hook.
+     */
     close: () => Promise<void>;
   };
 };
@@ -310,7 +320,7 @@ export const getServerConfig = async ({
   const https = Boolean(config.server.https) || false;
   const portTip =
     port !== originalPort
-      ? `Port ${originalPort} is in use, ${color.yellow(`using port ${port}.`)}`
+      ? `port ${originalPort} is in use, ${color.yellow(`using port ${port}.`)}`
       : undefined;
 
   return {

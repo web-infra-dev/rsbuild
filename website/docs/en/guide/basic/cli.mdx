@@ -48,8 +48,14 @@ Usage: rsbuild dev [options]
 
 Options:
   -o, --open [url]      open the page in browser on startup
-  --port <port>         specify a port number for Rsbuild Server to listen
-  --host <host>         specify the host that the Rsbuild Server listens to
+  --port <port>         specify a port number for Rsbuild server to listen
+  --host <host>         specify the host that the Rsbuild server listens to
+```
+
+You can also start the dev server by running `rsbuild` directly, which is equivalent to running `rsbuild dev`.
+
+```bash
+npx rsbuild
 ```
 
 ### Opening page
@@ -96,8 +102,8 @@ Usage: rsbuild preview [options]
 
 Options:
   -o, --open [url]      open the page in browser on startup
-  --port <port>         specify a port number for Rsbuild Server to listen
-  --host <host>         specify the host that the Rsbuild Server listens to
+  --port <port>         specify a port number for Rsbuild server to listen
+  --host <host>         specify the host that the Rsbuild server listens to
 ```
 
 :::tip
@@ -124,10 +130,10 @@ When you run the command `npx rsbuild inspect` in the project root directory, th
 ```bash
 ➜ npx rsbuild inspect
 
-Inspect config succeed, open following files to view the content:
+config inspection completed, generated files:
 
-  - Rsbuild Config: /project/dist/.rsbuild/rsbuild.config.mjs
-  - Rspack Config (web): /project/dist/.rsbuild/rspack.config.web.mjs
+  - Rsbuild config: /project/dist/.rsbuild/rsbuild.config.mjs
+  - Rspack config (web): /project/dist/.rsbuild/rspack.config.web.mjs
 ```
 
 ### Specifying mode
@@ -153,10 +159,10 @@ If the current project has multiple build targets, such as building browser arti
 ```bash
 ➜ npx rsbuild inspect
 
-Inspect config succeed, open following files to view the content:
+config inspection completed, generated files:
 
-  - Rsbuild Config (web): /project/dist/.rsbuild/rsbuild.config.web.mjs
-  - Rsbuild Config (node): /project/dist/.rsbuild/rsbuild.config.node.mjs
-  - Rspack Config (web): /project/dist/.rsbuild/rspack.config.web.mjs
-  - Rspack Config (node): /project/dist/.rsbuild/rspack.config.node.mjs
+  - Rsbuild config (web): /project/dist/.rsbuild/rsbuild.config.web.mjs
+  - Rsbuild config (node): /project/dist/.rsbuild/rsbuild.config.node.mjs
+  - Rspack config (web): /project/dist/.rsbuild/rspack.config.web.mjs
+  - Rspack config (node): /project/dist/.rsbuild/rspack.config.node.mjs
 ```

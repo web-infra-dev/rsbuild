@@ -1,6 +1,6 @@
 {
   "name": "@rsbuild/plugin-svelte",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Svelte plugin for Rsbuild",
   "repository": {
     "type": "git",
@@ -31,11 +31,11 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.4.0",
+    "@rslib/core": "0.5.4",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.13.0",
-    "svelte": "^5.19.7",
-    "typescript": "^5.7.3"
+    "@types/node": "^22.13.10",
+    "svelte": "^5.23.1",
+    "typescript": "^5.8.2"
   },
   "peerDependencies": {
     "@rsbuild/core": "1.x"

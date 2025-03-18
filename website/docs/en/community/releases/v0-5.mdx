@@ -2,9 +2,9 @@
 published_at: 2024-03-19 08:00:00
 ---
 
-# Announcing Rsbuild 0.5
+_March 19, 2024_
 
-> March 19, 2024
+# Announcing Rsbuild 0.5
 
 ![](https://assets.rspack.dev/rsbuild/rsbuild-banner-v0-5.png)
 
@@ -50,7 +50,13 @@ import { createRsbuild } from '@rsbuild/core';
 
 async function startCustomServer() {
   const app = express();
-  const rsbuild = await createRsbuild();
+  const rsbuild = await createRsbuild({
+    rsbuildConfig: {
+      server: {
+        middlewareMode: true,
+      },
+    },
+  });
   const { port, middlewares } = await rsbuild.createDevServer();
 
   app.use(middlewares);
