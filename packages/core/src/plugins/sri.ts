@@ -8,6 +8,10 @@ export const pluginSri = (): RsbuildPlugin => ({
 
   setup(api) {
     api.modifyBundlerChain((chain, { environment, CHAIN_ID }) => {
+      if (api.context.bundlerType === 'webpack') {
+        return;
+      }
+
       const { config, htmlPaths } = environment;
 
       if (Object.keys(htmlPaths).length === 0) {
