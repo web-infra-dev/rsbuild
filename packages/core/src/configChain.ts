@@ -145,10 +145,8 @@ export const CHAIN_ID = {
     VUE_LOADER_PLUGIN: 'vue-loader-plugin',
     /** ReactFastRefreshPlugin */
     REACT_FAST_REFRESH: 'react-fast-refresh',
-    /** WebpackSRIPlugin */
+    /** SubresourceIntegrityPlugin */
     SUBRESOURCE_INTEGRITY: 'subresource-integrity',
-    /** AutoSetRootFontSizePlugin */
-    AUTO_SET_ROOT_SIZE: 'auto-set-root-size',
   },
   /** Predefined minimizers */
   MINIMIZER: {

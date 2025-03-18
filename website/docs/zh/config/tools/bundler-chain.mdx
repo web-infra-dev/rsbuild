@@ -216,17 +216,17 @@ Rsbuild 中预先定义了一些常用的 Chain ID，你可以通过这些 ID �
 
 通过 `PLUGIN.[ID]` 可以匹配到特定的 Rspack 或 webpack plugin。
 
-| ID                         | 描述                                                                              |
-| -------------------------- | --------------------------------------------------------------------------------- |
-| `PLUGIN.HTML`              | 对应 `HtmlRspackPlugin`，使用时需要拼接 entry 名称：`${PLUGIN.HTML}-${entryName}` |
-| `PLUGIN.BUNDLE_ANALYZER`   | 对应 `WebpackBundleAnalyzer`                                                      |
-| `PLUGIN.VUE_LOADER_PLUGIN` | 对应 `VueLoaderPlugin`（依赖 [Vue 插件](/plugins/list/plugin-vue)）               |
+| ID                             | 描述                                                                                                                                       |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `PLUGIN.HTML`                  | 对应 [HtmlRspackPlugin](https://rspack.dev/zh/plugins/rspack/html-rspack-plugin)，使用时需要拼接 entry 名称：`${PLUGIN.HTML}-${entryName}` |
+| `PLUGIN.SUBRESOURCE_INTEGRITY` | 对应 [SubresourceIntegrityPlugin](https://rspack.dev/zh/plugins/rspack/subresource-integrity-plugin)                                       |
+| `PLUGIN.BUNDLE_ANALYZER`       | 对应 [BundleAnalyzerPlugin](https://github.com/webpack-contrib/webpack-bundle-analyzer)                                                    |
 
 ### CHAIN_ID.MINIMIZER
 
 通过 `MINIMIZER.[ID]` 可以匹配到对应的压缩工具。
 
-| ID              | 描述                                     |
-| --------------- | ---------------------------------------- |
-| `MINIMIZER.JS`  | 对应 `SwcJsMinimizerRspackPlugin`        |
-| `MINIMIZER.CSS` | 对应 `LightningCssMinimizerRspackPlugin` |
+| ID              | 描述                                                                                                                 |
+| --------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `MINIMIZER.JS`  | 对应 [SwcJsMinimizerRspackPlugin](https://rspack.dev/zh/plugins/rspack/swc-js-minimizer-rspack-plugin)               |
+| `MINIMIZER.CSS` | 对应 [LightningCssMinimizerRspackPlugin](https://rspack.dev/zh/plugins/rspack/lightning-css-minimizer-rspack-plugin) |

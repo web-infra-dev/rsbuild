@@ -7,7 +7,7 @@ export const pluginSri = (): RsbuildPlugin => ({
   name: 'rsbuild:sri',
 
   setup(api) {
-    api.modifyBundlerChain((chain, { environment }) => {
+    api.modifyBundlerChain((chain, { environment, CHAIN_ID }) => {
       const { config, htmlPaths } = environment;
 
       if (Object.keys(htmlPaths).length === 0) {
@@ -30,13 +30,15 @@ export const pluginSri = (): RsbuildPlugin => ({
 
       const { algorithm = 'sha384' } = sri;
 
-      chain.plugin('sri').use(rspack.experiments.SubresourceIntegrityPlugin, [
-        {
-          enabled: true,
-          hashFuncNames: [algorithm],
-          htmlPlugin: path.join(COMPILED_PATH, 'html-rspack-plugin/index.js'),
-        },
-      ]);
+      chain
+        .plugin(CHAIN_ID.PLUGIN.SUBRESOURCE_INTEGRITY)
+        .use(rspack.experiments.SubresourceIntegrityPlugin, [
+          {
+            enabled: true,
+            hashFuncNames: [algorithm],
+            htmlPlugin: path.join(COMPILED_PATH, 'html-rspack-plugin/index.js'),
+          },
+        ]);
     });
   },
 });
