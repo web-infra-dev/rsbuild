@@ -1,7 +1,7 @@
 import path from 'node:path';
 import type { ChokidarOptions } from '../compiled/chokidar/index.js';
 import { init } from './cli/init';
-import { color, debounce, isTTY } from './helpers';
+import { color, isTTY } from './helpers';
 import { logger } from './logger';
 import { createChokidar } from './server/watchFiles.js';
 import type { RsbuildInstance } from './types';
@@ -38,9 +38,7 @@ const beforeRestart = async ({
 
   if (filePath) {
     const filename = path.basename(filePath);
-    logger.info(
-      `restarting ${id} because ${color.yellow(filename)} has changed\n`,
-    );
+    logger.info(`restarting ${id} as ${color.yellow(filename)} changed\n`);
   } else {
     logger.info(`restarting ${id}...\n`);
   }
@@ -57,7 +55,7 @@ export const restartDevServer = async ({
 }: {
   filePath?: string;
   clear?: boolean;
-} = {}): Promise<void> => {
+} = {}): Promise<boolean> => {
   await beforeRestart({ filePath, clear, id: 'server' });
 
   const rsbuild = await init({ isRestart: true });
@@ -65,19 +63,20 @@ export const restartDevServer = async ({
   // Skip the following logic if restart failed,
   // maybe user is editing config file and write some invalid config
   if (!rsbuild) {
-    return;
+    return false;
   }
 
   await rsbuild.startDevServer();
+  return true;
 };
 
-export const restartBuild = async ({
+const restartBuild = async ({
   filePath,
   clear = true,
 }: {
   filePath?: string;
   clear?: boolean;
-} = {}): Promise<void> => {
+} = {}): Promise<boolean> => {
   await beforeRestart({ filePath, clear, id: 'build' });
 
   const rsbuild = await init({ isRestart: true, isBuildWatch: true });
@@ -85,12 +84,12 @@ export const restartBuild = async ({
   // Skip the following logic if restart failed,
   // maybe user is editing config file and write some invalid config
   if (!rsbuild) {
-    return;
+    return false;
   }
 
   const buildInstance = await rsbuild.build({ watch: true });
-
   onBeforeRestartServer(buildInstance.close);
+  return true;
 };
 
 export async function watchFilesForRestart({
@@ -117,20 +116,30 @@ export async function watchFilesForRestart({
     ...watchOptions,
   });
 
-  const callback = debounce(
-    async (filePath) => {
-      await watcher.close();
-      if (isBuildWatch) {
-        await restartBuild({ filePath });
-      } else {
-        await restartDevServer({ filePath });
-      }
-    },
-    // set 300ms debounce to avoid restart frequently
-    300,
-  );
+  let restarting = false;
 
-  watcher.on('add', callback);
-  watcher.on('change', callback);
-  watcher.on('unlink', callback);
+  const onChange = async (filePath: string) => {
+    if (restarting) {
+      return;
+    }
+    restarting = true;
+
+    const restarted = isBuildWatch
+      ? await restartBuild({ filePath })
+      : await restartDevServer({ filePath });
+
+    if (restarted) {
+      await watcher.close();
+    } else {
+      logger.error(
+        isBuildWatch ? 'Restart build failed.' : 'Restart server failed.',
+      );
+    }
+
+    restarting = false;
+  };
+
+  watcher.on('add', onChange);
+  watcher.on('change', onChange);
+  watcher.on('unlink', onChange);
 }
