@@ -15,7 +15,7 @@
   "devDependencies": {
     "@rsbuild/core": "^1.2.19",
     "@rsbuild/plugin-react": "^1.1.1",
-    "@types/react": "^19.0.10",
+    "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
     "typescript": "^5.8.2"
   }
