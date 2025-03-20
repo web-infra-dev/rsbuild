@@ -1,8 +1,9 @@
 import path from 'node:path';
-import { loadConfig as baseLoadConfig, watchFilesForRestart } from '../config';
+import { loadConfig as baseLoadConfig } from '../config';
 import { createRsbuild } from '../createRsbuild';
 import { castArray, getAbsolutePath } from '../helpers';
 import { logger } from '../logger';
+import { watchFilesForRestart } from '../restart';
 import type { RsbuildInstance } from '../types';
 import type { CommonOptions } from './commands';
 
@@ -111,19 +112,23 @@ export async function init({
 
             const paths = castArray(watchFilesConfig.paths);
             if (watchFilesConfig.options) {
-              watchFilesForRestart(
-                paths,
-                root,
+              watchFilesForRestart({
+                files: paths,
+                rsbuild,
                 isBuildWatch,
-                watchFilesConfig.options,
-              );
+                watchOptions: watchFilesConfig.options,
+              });
             } else {
               files.push(...paths);
             }
           }
         }
 
-        watchFilesForRestart(files, root, isBuildWatch);
+        watchFilesForRestart({
+          files,
+          rsbuild,
+          isBuildWatch,
+        });
       }
     });
 

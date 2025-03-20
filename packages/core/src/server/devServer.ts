@@ -5,6 +5,7 @@ import type Connect from '../../compiled/connect/index.js';
 import { ROOT_DIST_DIR } from '../constants';
 import { getPublicPathFromCompiler, isMultiCompiler } from '../helpers';
 import { logger } from '../logger';
+import { onBeforeRestartServer, restartDevServer } from '../restart.js';
 import type {
   CreateCompiler,
   CreateDevServerOptions,
@@ -42,7 +43,6 @@ import {
 import { createHttpServer } from './httpServer';
 import { notFoundMiddleware, optionsFallbackMiddleware } from './middlewares';
 import { open } from './open';
-import { onBeforeRestartServer, restartDevServer } from './restart';
 import { type WatchFilesResult, setupWatchFiles } from './watchFiles';
 
 type HTTPServer = Server | Http2SecureServer;
