@@ -1,7 +1,10 @@
 import path from 'node:path';
-import { init } from '../cli/init';
-import { color, isTTY } from '../helpers';
-import { logger } from '../logger';
+import type { ChokidarOptions } from '../compiled/chokidar/index.js';
+import { init } from './cli/init';
+import { color, debounce, isTTY } from './helpers';
+import { logger } from './logger';
+import { createChokidar } from './server/watchFiles.js';
+import type { RsbuildInstance } from './types';
 
 type Cleaner = () => Promise<unknown> | unknown;
 
@@ -89,3 +92,45 @@ export const restartBuild = async ({
 
   onBeforeRestartServer(buildInstance.close);
 };
+
+export async function watchFilesForRestart({
+  files,
+  rsbuild,
+  isBuildWatch,
+  watchOptions,
+}: {
+  files: string[];
+  rsbuild: RsbuildInstance;
+  isBuildWatch: boolean;
+  watchOptions?: ChokidarOptions;
+}): Promise<void> {
+  if (!files.length) {
+    return;
+  }
+
+  const root = rsbuild.context.rootPath;
+  const watcher = await createChokidar(files, root, {
+    // do not trigger add for initial files
+    ignoreInitial: true,
+    // If watching fails due to read permissions, the errors will be suppressed silently.
+    ignorePermissionErrors: true,
+    ...watchOptions,
+  });
+
+  const callback = debounce(
+    async (filePath) => {
+      await watcher.close();
+      if (isBuildWatch) {
+        await restartBuild({ filePath });
+      } else {
+        await restartDevServer({ filePath });
+      }
+    },
+    // set 300ms debounce to avoid restart frequently
+    300,
+  );
+
+  watcher.on('add', callback);
+  watcher.on('change', callback);
+  watcher.on('unlink', callback);
+}

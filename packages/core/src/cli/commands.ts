@@ -2,7 +2,7 @@ import cac, { type CAC, type Command } from 'cac';
 import type { ConfigLoader } from '../config';
 import { logger } from '../logger';
 import { RSPACK_BUILD_ERROR } from '../provider/build';
-import { onBeforeRestartServer } from '../server/restart';
+import { onBeforeRestartServer } from '../restart';
 import type { RsbuildMode } from '../types';
 import { init } from './init';
 
