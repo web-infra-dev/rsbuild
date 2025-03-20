@@ -123,7 +123,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     isCompiling = true;
   });
 
-  if (context.command === 'build') {
+  if (context.action === 'build') {
     compiler.hooks.run.tap('rsbuild:run', logRspackVersion);
   }
 
@@ -181,7 +181,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     },
   );
 
-  if (context.command === 'dev') {
+  if (context.action === 'dev') {
     registerDevHook({
       context,
       compiler,

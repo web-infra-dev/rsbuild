@@ -21,6 +21,16 @@ export type RsbuildContext = {
     port: number;
     https: boolean;
   };
+  /**
+   * The current action type.
+   * - dev: will be set when running `rsbuild dev` or `rsbuild.startDevServer()`
+   * - build: will be set when running `rsbuild build` or `rsbuild.build()`
+   * - preview: will be set when running `rsbuild preview` or `rsbuild.preview()`
+   */
+  action?: 'dev' | 'build' | 'preview';
+  /**
+   * The bundler type, can be `rspack` or `webpack`.
+   */
   bundlerType: BundlerType;
 };
 
@@ -44,12 +54,4 @@ export type InternalContext = RsbuildContext & {
   environments: Record<string, EnvironmentContext>;
   /** Only build specified environment. */
   specifiedEnvironments?: string[];
-  /**
-   * The command type.
-   *
-   * - dev: `rsbuild dev` or `rsbuild.startDevServer()`
-   * - build: `rsbuild build` or `rsbuild.build()`
-   * - preview: `rsbuild preview` or `rsbuild.preview()`
-   */
-  command?: 'dev' | 'build' | 'preview';
 };
