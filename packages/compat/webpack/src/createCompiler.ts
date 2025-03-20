@@ -46,7 +46,7 @@ export async function createCompiler(options: InitConfigsOptions) {
     done(stats as Rspack.Stats);
   });
 
-  if (context.command === 'dev') {
+  if (context.action === 'dev') {
     helpers.registerDevHook({
       compiler,
       context,

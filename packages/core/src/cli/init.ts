@@ -99,37 +99,39 @@ export async function init({
     });
 
     rsbuild.onBeforeCreateCompiler(() => {
-      const command = process.argv[2];
-      if (command === 'dev' || isBuildWatch) {
-        const files: string[] = [];
-        const config = rsbuild.getNormalizedConfig();
+      // Skip watching files when not in dev mode or not in build watch mode
+      if (rsbuild.context.action !== 'dev' && !isBuildWatch) {
+        return;
+      }
 
-        if (config.dev?.watchFiles) {
-          for (const watchFilesConfig of castArray(config.dev.watchFiles)) {
-            if (watchFilesConfig.type !== 'reload-server') {
-              continue;
-            }
+      const files: string[] = [];
+      const config = rsbuild.getNormalizedConfig();
 
-            const paths = castArray(watchFilesConfig.paths);
-            if (watchFilesConfig.options) {
-              watchFilesForRestart({
-                files: paths,
-                rsbuild,
-                isBuildWatch,
-                watchOptions: watchFilesConfig.options,
-              });
-            } else {
-              files.push(...paths);
-            }
+      if (config.dev?.watchFiles) {
+        for (const watchFilesConfig of castArray(config.dev.watchFiles)) {
+          if (watchFilesConfig.type !== 'reload-server') {
+            continue;
+          }
+
+          const paths = castArray(watchFilesConfig.paths);
+          if (watchFilesConfig.options) {
+            watchFilesForRestart({
+              files: paths,
+              rsbuild,
+              isBuildWatch,
+              watchOptions: watchFilesConfig.options,
+            });
+          } else {
+            files.push(...paths);
           }
         }
-
-        watchFilesForRestart({
-          files,
-          rsbuild,
-          isBuildWatch,
-        });
       }
+
+      watchFilesForRestart({
+        files,
+        rsbuild,
+        isBuildWatch,
+      });
     });
 
     return rsbuild;

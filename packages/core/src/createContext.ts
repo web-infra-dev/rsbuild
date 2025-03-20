@@ -150,6 +150,7 @@ export function createPublicContext(
   context: RsbuildContext,
 ): Readonly<RsbuildContext> {
   const exposedKeys: Array<keyof RsbuildContext> = [
+    'action',
     'version',
     'rootPath',
     'distPath',
