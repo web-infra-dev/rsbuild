@@ -298,23 +298,6 @@ export const applyToCompiler = (
 export const upperFirst = (str: string): string =>
   str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
 
-export function debounce<T extends (...args: any[]) => void>(
-  func: T,
-  wait: number,
-): (...args: Parameters<T>) => void {
-  let timeoutId: ReturnType<typeof setTimeout> | null = null;
-
-  return (...args: Parameters<T>) => {
-    if (timeoutId !== null) {
-      clearTimeout(timeoutId);
-    }
-
-    timeoutId = setTimeout(() => {
-      func(...args);
-    }, wait);
-  };
-}
-
 // Determine if the string is a URL
 export const isURL = (str: string): boolean =>
   str.startsWith('http') || str.startsWith('//:');
