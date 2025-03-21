@@ -100,6 +100,7 @@ const getDefaultSourceConfig = (): NormalizedSourceConfig => {
 };
 
 const getDefaultHtmlConfig = (): NormalizedHtmlConfig => ({
+  lang: 'en',
   meta: {
     charset: { charset: 'UTF-8' },
     viewport: 'width=device-width, initial-scale=1.0',

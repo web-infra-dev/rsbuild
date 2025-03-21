@@ -164,7 +164,7 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         options.svgrOptions || {},
       );
 
-      svgrOptions.svgoConfig = dedupeSvgoPlugins(svgrOptions.svgoConfig);
+      svgrOptions.svgoConfig = dedupeSvgoPlugins(svgrOptions.svgoConfig!);
 
       // force to url: "foo.svg?url",
       rule
