@@ -1,6 +1,13 @@
 import type { StatsCompilation, StatsError } from '@rspack/core';
 import color from '../../compiled/picocolors/index.js';
 
+const formatFileName = (fileName: string) => {
+  // add default column add lines for linking
+  return /:\d+:\d+/.test(fileName)
+    ? `File: ${color.cyan(fileName)}\n`
+    : `File: ${color.cyan(fileName)}:1:1\n`;
+};
+
 function resolveFileName(stats: StatsError) {
   // Get the real source file path with stats.moduleIdentifier.
   // e.g. moduleIdentifier is "builtin:react-refresh-loader!/Users/x/src/App.jsx"
@@ -10,15 +17,14 @@ function resolveFileName(stats: StatsError) {
     if (matched) {
       const fileName = matched.pop();
       if (fileName) {
-        // add default column add lines for linking
-        return `File: ${fileName}:1:1\n`;
+        return formatFileName(fileName);
       }
     }
   }
 
   // fallback to file or moduleName if moduleIdentifier parse failed
   const file = stats.file || stats.moduleName;
-  return file ? `File: ${file}\n` : '';
+  return file ? formatFileName(file) : '';
 }
 
 function resolveModuleTrace(stats: StatsError) {
