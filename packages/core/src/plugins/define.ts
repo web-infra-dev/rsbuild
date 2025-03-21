@@ -12,7 +12,7 @@ function checkProcessEnvSecurity(define: Define) {
   const check = (value: Record<string, unknown>) => {
     const pathKey = Object.keys(value).find(
       // Windows uses `Path`, other platforms use `PATH`
-      (key) => key.toLowerCase() === 'path' && Boolean(value[key]),
+      (key) => key.toLowerCase() === 'path' && value[key] === process.env[key],
     );
 
     if (!pathKey) {
