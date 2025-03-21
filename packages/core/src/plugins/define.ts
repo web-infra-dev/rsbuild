@@ -1,5 +1,44 @@
-import { getPublicPathFromChain } from '../helpers';
+import { color, getPublicPathFromChain } from '../helpers';
+import { logger } from '../logger';
 import type { Define, RsbuildPlugin } from '../types';
+
+function checkProcessEnvSecurity(define: Define) {
+  const value = define['process.env'];
+
+  if (!value) {
+    return;
+  }
+
+  const check = (value: Record<string, unknown>) => {
+    const pathKey = Object.keys(value).find(
+      // Windows uses `Path`, other platforms use `PATH`
+      (key) => key.toLowerCase() === 'path' && Boolean(value[key]),
+    );
+
+    if (!pathKey) {
+      return;
+    }
+
+    logger.warn(
+      color.yellow(
+        `[rsbuild:config] The "source.define" option includes an object with the key ${JSON.stringify(pathKey)} under "process.env", indicating potential exposure of all environment variables. This can lead to security risks and should be avoided.`,
+      ),
+    );
+  };
+
+  // Check `{ 'process.env': process.env }`
+  if (typeof value === 'object') {
+    check(value);
+    return;
+  }
+
+  // Check `{ 'process.env': JSON.stringify(process.env) }`
+  if (typeof value === 'string') {
+    try {
+      check(JSON.parse(value));
+    } catch (error) {}
+  }
+}
 
 export const pluginDefine = (): RsbuildPlugin => ({
   name: 'rsbuild:define',
@@ -21,11 +60,13 @@ export const pluginDefine = (): RsbuildPlugin => ({
         'process.env.ASSET_PREFIX': assetPrefix,
       };
 
+      const mergedDefine = { ...builtinVars, ...config.source.define };
+
+      checkProcessEnvSecurity(mergedDefine);
+
       chain
         .plugin(CHAIN_ID.PLUGIN.DEFINE)
-        .use(bundler.DefinePlugin, [
-          { ...builtinVars, ...config.source.define },
-        ]);
+        .use(bundler.DefinePlugin, [mergedDefine]);
     });
   },
 });
