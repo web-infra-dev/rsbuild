@@ -8,7 +8,7 @@ When this happens, you can specify directories or modules that need to be compil
 
 ---
 
-### Compile error `Error: [object Object] is not a PostCSS plugin` ?
+### Build error `Error: [object Object] is not a PostCSS plugin` ?
 
 Currently, Rsbuild is using PostCSS v8. If you encounter the `Error: [object Object] is not a PostCSS plugin` error during the compilation process, it is usually caused by referencing the wrong version of PostCSS, for example, the version of `postcss` (peerDependencies) in `cssnano` does not meet expectations.
 
@@ -25,7 +25,7 @@ npm ls postcss
 
 ---
 
-### Compile error `You may need additional loader`?
+### Build error `You may need additional loader`?
 
 If the following error message is encountered during the compilation process, it means that there are individual files that cannot be compiled correctly.
 

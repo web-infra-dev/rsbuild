@@ -6,18 +6,15 @@ import { isMultiCompiler } from './';
 import { formatStatsMessages } from './format.js';
 
 function formatErrorMessage(errors: string[]) {
-  const title = color.bold(color.red('Compile error: '));
+  const title = color.bold(color.red('Build error: '));
 
   if (!errors.length) {
     return `${title}\n${color.yellow(`For more details, please setting 'stats.errors: true' `)}`;
   }
 
-  const tip = color.yellow(
-    'Failed to compile, check the errors for troubleshooting.',
-  );
   const text = `${errors.join('\n\n')}\n`;
 
-  return `${title}\n${tip}\n${text}`;
+  return `${title}\n${text}`;
 }
 
 export const getAllStatsErrors = (
