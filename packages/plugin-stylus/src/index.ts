@@ -49,12 +49,23 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
         mergeFn: deepmerge,
       });
 
+      const test = /\.styl(us)?$/;
+
       const rule = chain.module
         .rule(CHAIN_ID.RULE.STYLUS)
-        .test(/\.styl(us)?$/)
+        .test(test)
         .merge({ sideEffects: true })
         .resolve.preferRelative(true)
-        .end();
+        .end()
+        // exclude `import './foo.styl?raw'`
+        .resourceQuery({ not: /raw/ });
+
+      // Support for importing raw Stylus files
+      chain.module
+        .rule(CHAIN_ID.RULE.STYLUS_RAW)
+        .test(test)
+        .type('asset/source')
+        .resourceQuery(/raw/);
 
       // Copy the builtin CSS rules
       const cssRule = chain.module.rules.get(CHAIN_ID.RULE.CSS);
