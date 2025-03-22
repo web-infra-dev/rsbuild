@@ -49,6 +49,8 @@ export const CHAIN_ID = {
     TS: 'ts',
     /** Rule for CSS */
     CSS: 'css',
+    /** Rule for raw CSS */
+    CSS_RAW: 'css-raw',
     /** Rule for less */
     LESS: 'less',
     /** Rule for sass */
