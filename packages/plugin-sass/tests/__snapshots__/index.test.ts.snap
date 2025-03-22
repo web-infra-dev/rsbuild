@@ -3,11 +3,19 @@
 exports[`plugin-sass > should add sass-loader 1`] = `
 [
   {
+    "resourceQuery": /raw/,
+    "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
+    "type": "asset/source",
+  },
+  {
     "dependency": {
       "not": "url",
     },
     "resolve": {
       "preferRelative": true,
+    },
+    "resourceQuery": {
+      "not": /raw/,
     },
     "sideEffects": true,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
@@ -69,11 +77,19 @@ exports[`plugin-sass > should add sass-loader 1`] = `
 exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1`] = `
 [
   {
+    "resourceQuery": /raw/,
+    "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
+    "type": "asset/source",
+  },
+  {
     "dependency": {
       "not": "url",
     },
     "resolve": {
       "preferRelative": true,
+    },
+    "resourceQuery": {
+      "not": /raw/,
     },
     "sideEffects": true,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
@@ -135,6 +151,11 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
 exports[`plugin-sass > should add sass-loader with excludes 1`] = `
 [
   {
+    "resourceQuery": /raw/,
+    "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
+    "type": "asset/source",
+  },
+  {
     "dependency": {
       "not": "url",
     },
@@ -143,6 +164,9 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
     ],
     "resolve": {
       "preferRelative": true,
+    },
+    "resourceQuery": {
+      "not": /raw/,
     },
     "sideEffects": true,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
@@ -204,11 +228,19 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
 exports[`plugin-sass > should allow to use legacy API and mute deprecation warnings 1`] = `
 [
   {
+    "resourceQuery": /raw/,
+    "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
+    "type": "asset/source",
+  },
+  {
     "dependency": {
       "not": "url",
     },
     "resolve": {
       "preferRelative": true,
+    },
+    "resourceQuery": {
+      "not": /raw/,
     },
     "sideEffects": true,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,

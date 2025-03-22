@@ -118,12 +118,22 @@ export const pluginSass = (
       );
 
       const ruleId = findRuleId(chain, CHAIN_ID.RULE.SASS);
+      const test = pluginOptions.include ?? /\.s(?:a|c)ss$/;
       const rule = chain.module
         .rule(ruleId)
-        .test(pluginOptions.include ?? /\.s(?:a|c)ss$/)
+        .test(test)
         .merge({ sideEffects: true })
         .resolve.preferRelative(true)
-        .end();
+        .end()
+        // exclude `import './foo.scss?raw'`
+        .resourceQuery({ not: /raw/ });
+
+      // Support for importing raw Sass files
+      chain.module
+        .rule(CHAIN_ID.RULE.CSS_RAW)
+        .test(test)
+        .type('asset/source')
+        .resourceQuery(/raw/);
 
       for (const item of excludes) {
         rule.exclude.add(item);
