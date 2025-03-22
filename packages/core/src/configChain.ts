@@ -61,6 +61,8 @@ export const CHAIN_ID = {
     SASS_RAW: 'sass-raw',
     /** Rule for stylus */
     STYLUS: 'stylus',
+    /** Rule for raw stylus */
+    STYLUS_RAW: 'stylus-raw',
     /** Rule for svg */
     SVG: 'svg',
     /** Rule for pug */
