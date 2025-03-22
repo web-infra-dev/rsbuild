@@ -156,3 +156,19 @@ body {
 ```scss title="src/index.scss"
 @import '~normalize.css';
 ```
+
+## 引用原始 CSS 文件
+
+Rsbuild 支持通过 `?raw` 查询参数引用原始 CSS 文件，并将其作为字符串导入到 JavaScript 中。
+
+```ts title="src/index.js"
+import rawCss from './style.css?raw';
+
+console.log(rawCss); // 输出 CSS 文件的原始内容
+```
+
+使用 `import "*.css?raw"` 的行为如下：
+
+- 获取 CSS 文件的原始文本内容，不经过任何预处理或编译
+- 内容会作为字符串内联到最终的 JavaScript 包中
+- 不会生成单独的 CSS 文件

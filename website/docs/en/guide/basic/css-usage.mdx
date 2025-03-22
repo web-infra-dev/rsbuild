@@ -156,3 +156,19 @@ In Sass and Less files, it is also allowed to add the `~` prefix to resolve styl
 ```scss title="src/index.scss"
 @import 'normalize.css';
 ```
+
+## Import raw CSS
+
+Rsbuild supports importing raw CSS files as strings in JavaScript by using the `?raw` query parameter.
+
+```ts title="src/index.js"
+import rawCss from './style.css?raw';
+
+console.log(rawCss); // Output the raw content of the CSS file
+```
+
+Using `import "*.css?raw"` has the following behaviors:
+
+- Get the raw text content of the CSS file, without any preprocessing or compilation
+- The content of the CSS file will be inlined into the final JavaScript bundle
+- No separate CSS file will be generated
