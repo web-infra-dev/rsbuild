@@ -9,6 +9,9 @@ exports[`plugin-sass > should add sass-loader 1`] = `
     "resolve": {
       "preferRelative": true,
     },
+    "resourceQuery": {
+      "not": /raw/,
+    },
     "sideEffects": true,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
     "use": [
@@ -63,6 +66,11 @@ exports[`plugin-sass > should add sass-loader 1`] = `
       },
     ],
   },
+  {
+    "resourceQuery": /raw/,
+    "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
+    "type": "asset/source",
+  },
 ]
 `;
 
@@ -74,6 +82,9 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
     },
     "resolve": {
       "preferRelative": true,
+    },
+    "resourceQuery": {
+      "not": /raw/,
     },
     "sideEffects": true,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
@@ -129,6 +140,11 @@ exports[`plugin-sass > should add sass-loader and css-loader when injectStyles 1
       },
     ],
   },
+  {
+    "resourceQuery": /raw/,
+    "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
+    "type": "asset/source",
+  },
 ]
 `;
 
@@ -143,6 +159,9 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
     ],
     "resolve": {
       "preferRelative": true,
+    },
+    "resourceQuery": {
+      "not": /raw/,
     },
     "sideEffects": true,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
@@ -198,6 +217,11 @@ exports[`plugin-sass > should add sass-loader with excludes 1`] = `
       },
     ],
   },
+  {
+    "resourceQuery": /raw/,
+    "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
+    "type": "asset/source",
+  },
 ]
 `;
 
@@ -209,6 +233,9 @@ exports[`plugin-sass > should allow to use legacy API and mute deprecation warni
     },
     "resolve": {
       "preferRelative": true,
+    },
+    "resourceQuery": {
+      "not": /raw/,
     },
     "sideEffects": true,
     "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
@@ -264,6 +291,11 @@ exports[`plugin-sass > should allow to use legacy API and mute deprecation warni
         },
       },
     ],
+  },
+  {
+    "resourceQuery": /raw/,
+    "test": /\\\\\\.s\\(\\?:a\\|c\\)ss\\$/,
+    "type": "asset/source",
   },
 ]
 `;

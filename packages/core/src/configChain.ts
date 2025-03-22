@@ -51,10 +51,12 @@ export const CHAIN_ID = {
     CSS: 'css',
     /** Rule for raw CSS */
     CSS_RAW: 'css-raw',
-    /** Rule for less */
+    /** Rule for Less */
     LESS: 'less',
-    /** Rule for sass */
+    /** Rule for Sass */
     SASS: 'sass',
+    /** Rule for raw Sass */
+    SASS_RAW: 'sass-raw',
     /** Rule for stylus */
     STYLUS: 'stylus',
     /** Rule for svg */

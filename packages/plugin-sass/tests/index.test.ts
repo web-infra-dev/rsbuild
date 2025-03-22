@@ -78,6 +78,6 @@ describe('plugin-sass', () => {
 
     const bundlerConfigs = await rsbuild.initConfigs();
     expect(matchRules(bundlerConfigs[0], 'a.scss').length).toBe(1);
-    expect(matchRules(bundlerConfigs[0], 'b.scss').length).toBe(2);
+    expect(matchRules(bundlerConfigs[0], 'b.scss').length).toBe(3);
   });
 });

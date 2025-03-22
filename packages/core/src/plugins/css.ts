@@ -265,7 +265,6 @@ export const pluginCss = (): RsbuildPlugin => ({
       order: 'pre',
       handler: async (chain, { target, isProd, CHAIN_ID, environment }) => {
         const rule = chain.module.rule(CHAIN_ID.RULE.CSS);
-        const rawRule = chain.module.rule(CHAIN_ID.RULE.CSS_RAW);
         const { config } = environment;
 
         rule
@@ -279,7 +278,11 @@ export const pluginCss = (): RsbuildPlugin => ({
           .resourceQuery({ not: /raw/ });
 
         // Support for importing raw CSS files
-        rawRule.test(CSS_REGEX).type('asset/source').resourceQuery(/raw/);
+        chain.module
+          .rule(CHAIN_ID.RULE.CSS_RAW)
+          .test(CSS_REGEX)
+          .type('asset/source')
+          .resourceQuery(/raw/);
 
         const emitCss = config.output.emitCss ?? target === 'web';
 
