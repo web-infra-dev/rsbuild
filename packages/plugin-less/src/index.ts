@@ -139,12 +139,22 @@ export const pluginLess = (
       const { config } = environment;
 
       const ruleId = findRuleId(chain, CHAIN_ID.RULE.LESS);
+      const test = pluginOptions.include ?? /\.less$/;
       const rule = chain.module
         .rule(ruleId)
-        .test(pluginOptions.include ?? /\.less$/)
+        .test(test)
         .merge({ sideEffects: true })
         .resolve.preferRelative(true)
-        .end();
+        .end()
+        // exclude `import './foo.less?raw'`
+        .resourceQuery({ not: /raw/ });
+
+      // Support for importing raw Less files
+      chain.module
+        .rule(CHAIN_ID.RULE.LESS_RAW)
+        .test(test)
+        .type('asset/source')
+        .resourceQuery(/raw/);
 
       const { sourceMap } = config.output;
       const { excludes, options } = getLessLoaderOptions(

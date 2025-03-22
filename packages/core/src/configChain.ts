@@ -53,6 +53,8 @@ export const CHAIN_ID = {
     CSS_RAW: 'css-raw',
     /** Rule for Less */
     LESS: 'less',
+    /** Rule for raw Less */
+    LESS_RAW: 'less-raw',
     /** Rule for Sass */
     SASS: 'sass',
     /** Rule for raw Sass */
