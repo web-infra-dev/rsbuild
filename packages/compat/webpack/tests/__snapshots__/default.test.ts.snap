@@ -49,6 +49,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "resolve": {
           "preferRelative": true,
         },
+        "resourceQuery": {
+          "not": /raw/,
+        },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -71,6 +74,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
           },
         ],
+      },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.css\\$/,
+        "type": "asset/source",
       },
       {
         "dependency": {
@@ -463,6 +471,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "resolve": {
           "preferRelative": true,
         },
+        "resourceQuery": {
+          "not": /raw/,
+        },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -485,6 +496,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             },
           },
         ],
+      },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.css\\$/,
+        "type": "asset/source",
       },
       {
         "dependency": {
@@ -872,6 +888,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "resolve": {
           "preferRelative": true,
         },
+        "resourceQuery": {
+          "not": /raw/,
+        },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -895,6 +914,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
           },
         ],
+      },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.css\\$/,
+        "type": "asset/source",
       },
       {
         "dependency": {
@@ -1208,6 +1232,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "resolve": {
           "preferRelative": true,
         },
+        "resourceQuery": {
+          "not": /raw/,
+        },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -1231,6 +1258,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
           },
         ],
+      },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.css\\$/,
+        "type": "asset/source",
       },
       {
         "dependency": {

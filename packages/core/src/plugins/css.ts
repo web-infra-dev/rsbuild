@@ -265,6 +265,7 @@ export const pluginCss = (): RsbuildPlugin => ({
       order: 'pre',
       handler: async (chain, { target, isProd, CHAIN_ID, environment }) => {
         const rule = chain.module.rule(CHAIN_ID.RULE.CSS);
+        const rawRule = chain.module.rule(CHAIN_ID.RULE.CSS_RAW);
         const { config } = environment;
 
         rule
@@ -273,7 +274,12 @@ export const pluginCss = (): RsbuildPlugin => ({
           .type('javascript/auto')
           // When using `new URL('./path/to/foo.css', import.meta.url)`,
           // the module should be treated as an asset module rather than a JS module.
-          .dependency({ not: 'url' });
+          .dependency({ not: 'url' })
+          // exclude `import './foo.css?raw'`
+          .resourceQuery({ not: /raw/ });
+
+        // Support for importing raw CSS files
+        rawRule.test(CSS_REGEX).type('asset/source').resourceQuery(/raw/);
 
         const emitCss = config.output.emitCss ?? target === 'web';
 

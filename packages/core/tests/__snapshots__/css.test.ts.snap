@@ -11,6 +11,9 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
         "resolve": {
           "preferRelative": true,
         },
+        "resourceQuery": {
+          "not": /raw/,
+        },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -45,6 +48,11 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
           },
         ],
       },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.css\\$/,
+        "type": "asset/source",
+      },
     ],
   },
   "plugins": [
@@ -73,6 +81,9 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
         "resolve": {
           "preferRelative": true,
         },
+        "resourceQuery": {
+          "not": /raw/,
+        },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -97,6 +108,11 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
           },
         ],
       },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.css\\$/,
+        "type": "asset/source",
+      },
     ],
   },
   "plugins": [
@@ -117,6 +133,9 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
         },
         "resolve": {
           "preferRelative": true,
+        },
+        "resourceQuery": {
+          "not": /raw/,
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
@@ -152,6 +171,11 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
           },
         ],
       },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.css\\$/,
+        "type": "asset/source",
+      },
     ],
   },
   "plugins": [
@@ -170,6 +194,9 @@ exports[`should ensure isolation of PostCSS config objects between different bui
     },
     "resolve": {
       "preferRelative": true,
+    },
+    "resourceQuery": {
+      "not": /raw/,
     },
     "sideEffects": true,
     "test": /\\\\\\.css\\$/,
@@ -220,6 +247,11 @@ exports[`should ensure isolation of PostCSS config objects between different bui
       },
     ],
   },
+  {
+    "resourceQuery": /raw/,
+    "test": /\\\\\\.css\\$/,
+    "type": "asset/source",
+  },
 ]
 `;
 
@@ -231,6 +263,9 @@ exports[`should ensure isolation of PostCSS config objects between different bui
     },
     "resolve": {
       "preferRelative": true,
+    },
+    "resourceQuery": {
+      "not": /raw/,
     },
     "sideEffects": true,
     "test": /\\\\\\.css\\$/,
@@ -280,6 +315,11 @@ exports[`should ensure isolation of PostCSS config objects between different bui
         },
       },
     ],
+  },
+  {
+    "resourceQuery": /raw/,
+    "test": /\\\\\\.css\\$/,
+    "type": "asset/source",
   },
 ]
 `;

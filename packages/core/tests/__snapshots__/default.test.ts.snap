@@ -36,6 +36,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "resolve": {
           "preferRelative": true,
         },
+        "resourceQuery": {
+          "not": /raw/,
+        },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -69,6 +72,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
           },
         ],
+      },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.css\\$/,
+        "type": "asset/source",
       },
       {
         "dependency": {
@@ -459,6 +467,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "resolve": {
           "preferRelative": true,
         },
+        "resourceQuery": {
+          "not": /raw/,
+        },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -492,6 +503,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             },
           },
         ],
+      },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.css\\$/,
+        "type": "asset/source",
       },
       {
         "dependency": {
@@ -918,6 +934,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "resolve": {
           "preferRelative": true,
         },
+        "resourceQuery": {
+          "not": /raw/,
+        },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -941,6 +960,11 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
           },
         ],
+      },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.css\\$/,
+        "type": "asset/source",
       },
       {
         "dependency": {
@@ -1280,6 +1304,9 @@ exports[`tools.rspack > should match snapshot 1`] = `
         "resolve": {
           "preferRelative": true,
         },
+        "resourceQuery": {
+          "not": /raw/,
+        },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -1313,6 +1340,11 @@ exports[`tools.rspack > should match snapshot 1`] = `
             },
           },
         ],
+      },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.css\\$/,
+        "type": "asset/source",
       },
       {
         "dependency": {

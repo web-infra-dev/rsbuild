@@ -1313,6 +1313,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "resolve": {
             "preferRelative": true,
           },
+          "resourceQuery": {
+            "not": /raw/,
+          },
           "sideEffects": true,
           "test": /\\\\\\.css\\$/,
           "type": "javascript/auto",
@@ -1346,6 +1349,11 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               },
             },
           ],
+        },
+        {
+          "resourceQuery": /raw/,
+          "test": /\\\\\\.css\\$/,
+          "type": "asset/source",
         },
         {
           "dependency": {
@@ -1671,6 +1679,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "resolve": {
             "preferRelative": true,
           },
+          "resourceQuery": {
+            "not": /raw/,
+          },
           "sideEffects": true,
           "test": /\\\\\\.css\\$/,
           "type": "javascript/auto",
@@ -1694,6 +1705,11 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               },
             },
           ],
+        },
+        {
+          "resourceQuery": /raw/,
+          "test": /\\\\\\.css\\$/,
+          "type": "asset/source",
         },
         {
           "dependency": {
