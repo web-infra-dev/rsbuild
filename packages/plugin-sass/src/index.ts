@@ -130,7 +130,7 @@ export const pluginSass = (
 
       // Support for importing raw Sass files
       chain.module
-        .rule(CHAIN_ID.RULE.CSS_RAW)
+        .rule(CHAIN_ID.RULE.SASS_RAW)
         .test(test)
         .type('asset/source')
         .resourceQuery(/raw/);
