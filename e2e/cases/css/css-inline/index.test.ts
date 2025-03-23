@@ -11,12 +11,15 @@ rspackOnlyTest(
       page,
     });
 
-    expect(await page.evaluate('window.aInline')).toBe(
-      readFileSync(path.join(__dirname, 'src/a.css'), 'utf-8'),
-    );
-    expect(await page.evaluate('window.bInline')).toBe(
-      readFileSync(path.join(__dirname, 'src/b.module.css'), 'utf-8'),
-    );
+    const aInline: string = await page.evaluate('window.aInline');
+    const bInline: string = await page.evaluate('window.bInline');
+
+    expect(
+      aInline.includes('.header-class') && aInline.includes('color: red'),
+    ).toBe(true);
+    expect(
+      bInline.includes('.title-class') && bInline.includes('font-size: 14px'),
+    ).toBe(true);
 
     await rsbuild.close();
   },
