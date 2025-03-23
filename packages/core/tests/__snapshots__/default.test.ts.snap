@@ -37,7 +37,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           "preferRelative": true,
         },
         "resourceQuery": {
-          "not": /raw/,
+          "not": /raw\\|inline/,
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
@@ -57,6 +57,37 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
                 "namedExport": false,
               },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+          },
+        ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "resourceQuery": /inline/,
+        "sideEffects": true,
+        "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
+              "importLoaders": 1,
+              "modules": false,
               "sourceMap": false,
             },
           },
@@ -468,7 +499,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           "preferRelative": true,
         },
         "resourceQuery": {
-          "not": /raw/,
+          "not": /raw\\|inline/,
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
@@ -494,6 +525,38 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+          },
+        ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "resourceQuery": /inline/,
+        "sideEffects": true,
+        "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
+              "importLoaders": 1,
+              "modules": false,
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "minify": true,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -935,7 +998,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           "preferRelative": true,
         },
         "resourceQuery": {
-          "not": /raw/,
+          "not": /raw\\|inline/,
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
@@ -956,6 +1019,26 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
                 "namedExport": false,
               },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "resourceQuery": /inline/,
+        "sideEffects": true,
+        "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
+              "importLoaders": 0,
+              "modules": false,
               "sourceMap": false,
             },
           },
@@ -1305,7 +1388,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
           "preferRelative": true,
         },
         "resourceQuery": {
-          "not": /raw/,
+          "not": /raw\\|inline/,
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
@@ -1325,6 +1408,37 @@ exports[`tools.rspack > should match snapshot 1`] = `
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
                 "namedExport": false,
               },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+          },
+        ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "resourceQuery": /inline/,
+        "sideEffects": true,
+        "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
+              "importLoaders": 1,
+              "modules": false,
               "sourceMap": false,
             },
           },

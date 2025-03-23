@@ -1314,7 +1314,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             "preferRelative": true,
           },
           "resourceQuery": {
-            "not": /raw/,
+            "not": /raw\\|inline/,
           },
           "sideEffects": true,
           "test": /\\\\\\.css\\$/,
@@ -1334,6 +1334,37 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                   "localIdentName": "[path][name]__[local]-[hash:base64:6]",
                   "namedExport": false,
                 },
+                "sourceMap": false,
+              },
+            },
+            {
+              "loader": "builtin:lightningcss-loader",
+              "options": {
+                "targets": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
+                ],
+              },
+            },
+          ],
+        },
+        {
+          "resolve": {
+            "preferRelative": true,
+          },
+          "resourceQuery": /inline/,
+          "sideEffects": true,
+          "test": /\\\\\\.css\\$/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+              "options": {
+                "exportType": "string",
+                "importLoaders": 1,
+                "modules": false,
                 "sourceMap": false,
               },
             },
@@ -1680,7 +1711,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             "preferRelative": true,
           },
           "resourceQuery": {
-            "not": /raw/,
+            "not": /raw\\|inline/,
           },
           "sideEffects": true,
           "test": /\\\\\\.css\\$/,
@@ -1701,6 +1732,26 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
                   "localIdentName": "[path][name]__[local]-[hash:base64:6]",
                   "namedExport": false,
                 },
+                "sourceMap": false,
+              },
+            },
+          ],
+        },
+        {
+          "resolve": {
+            "preferRelative": true,
+          },
+          "resourceQuery": /inline/,
+          "sideEffects": true,
+          "test": /\\\\\\.css\\$/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+              "options": {
+                "exportType": "string",
+                "importLoaders": 0,
+                "modules": false,
                 "sourceMap": false,
               },
             },

@@ -1,4 +1,4 @@
-import rawCss from './App.css?raw';
+import './App.css';
 
 const App = () => {
   return (

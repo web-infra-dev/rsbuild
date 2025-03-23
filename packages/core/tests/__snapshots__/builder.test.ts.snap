@@ -37,7 +37,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
           "preferRelative": true,
         },
         "resourceQuery": {
-          "not": /raw/,
+          "not": /raw\\|inline/,
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
@@ -57,6 +57,37 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
                 "localIdentName": "[path][name]__[local]-[hash:base64:6]",
                 "namedExport": false,
               },
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+          },
+        ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "resourceQuery": /inline/,
+        "sideEffects": true,
+        "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
+              "importLoaders": 1,
+              "modules": false,
               "sourceMap": false,
             },
           },

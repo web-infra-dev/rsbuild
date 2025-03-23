@@ -185,7 +185,15 @@ declare module '*?inline' {
 }
 
 /**
- * Raw css
+ * Inline CSS
+ */
+declare module '*.css?inline' {
+  const content: string;
+  export default content;
+}
+
+/**
+ * Raw CSS
  */
 declare module '*.css?raw' {
   const content: string;
