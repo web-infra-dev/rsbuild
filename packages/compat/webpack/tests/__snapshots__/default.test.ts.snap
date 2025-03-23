@@ -50,7 +50,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           "preferRelative": true,
         },
         "resourceQuery": {
-          "not": /raw/,
+          "not": /raw\\|inline/,
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
@@ -62,6 +62,32 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
+              "importLoaders": 0,
+              "modules": {
+                "auto": true,
+                "exportGlobals": false,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "resourceQuery": /inline/,
+        "sideEffects": true,
+        "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
               "importLoaders": 0,
               "modules": {
                 "auto": true,
@@ -472,7 +498,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
           "preferRelative": true,
         },
         "resourceQuery": {
-          "not": /raw/,
+          "not": /raw\\|inline/,
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
@@ -484,6 +510,32 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
+              "importLoaders": 0,
+              "modules": {
+                "auto": true,
+                "exportGlobals": false,
+                "exportLocalsConvention": "camelCase",
+                "localIdentName": "[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "resourceQuery": /inline/,
+        "sideEffects": true,
+        "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
               "importLoaders": 0,
               "modules": {
                 "auto": true,
@@ -889,7 +941,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           "preferRelative": true,
         },
         "resourceQuery": {
-          "not": /raw/,
+          "not": /raw\\|inline/,
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
@@ -901,6 +953,33 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
+              "importLoaders": 0,
+              "modules": {
+                "auto": true,
+                "exportGlobals": false,
+                "exportLocalsConvention": "camelCase",
+                "exportOnlyLocals": true,
+                "localIdentName": "[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "resourceQuery": /inline/,
+        "sideEffects": true,
+        "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
               "importLoaders": 0,
               "modules": {
                 "auto": true,
@@ -1233,7 +1312,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           "preferRelative": true,
         },
         "resourceQuery": {
-          "not": /raw/,
+          "not": /raw\\|inline/,
         },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
@@ -1245,6 +1324,33 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           {
             "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
             "options": {
+              "importLoaders": 0,
+              "modules": {
+                "auto": true,
+                "exportGlobals": false,
+                "exportLocalsConvention": "camelCase",
+                "exportOnlyLocals": true,
+                "localIdentName": "[local]-[hash:base64:6]",
+                "namedExport": false,
+              },
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "resourceQuery": /inline/,
+        "sideEffects": true,
+        "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
               "importLoaders": 0,
               "modules": {
                 "auto": true,
