@@ -87,13 +87,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
             "options": {
               "exportType": "string",
               "importLoaders": 1,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
+              "modules": false,
               "sourceMap": false,
             },
           },

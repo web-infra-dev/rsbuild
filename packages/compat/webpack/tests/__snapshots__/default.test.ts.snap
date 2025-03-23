@@ -89,13 +89,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "options": {
               "exportType": "string",
               "importLoaders": 0,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
+              "modules": false,
               "sourceMap": false,
             },
           },
@@ -537,13 +531,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "options": {
               "exportType": "string",
               "importLoaders": 0,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
+              "modules": false,
               "sourceMap": false,
             },
           },
@@ -981,14 +969,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "options": {
               "exportType": "string",
               "importLoaders": 0,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "exportOnlyLocals": true,
-                "localIdentName": "[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
+              "modules": false,
               "sourceMap": false,
             },
           },
@@ -1352,14 +1333,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "options": {
               "exportType": "string",
               "importLoaders": 0,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "exportOnlyLocals": true,
-                "localIdentName": "[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
+              "modules": false,
               "sourceMap": false,
             },
           },

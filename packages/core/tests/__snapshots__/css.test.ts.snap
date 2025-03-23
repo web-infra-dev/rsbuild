@@ -62,13 +62,7 @@ exports[`plugin-css > should use custom cssModules rule when using output.cssMod
             "options": {
               "exportType": "string",
               "importLoaders": 1,
-              "modules": {
-                "auto": [Function],
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
+              "modules": false,
               "sourceMap": false,
             },
           },
@@ -159,14 +153,7 @@ exports[`plugin-css injectStyles > should apply ignoreCssLoader when injectStyle
             "options": {
               "exportType": "string",
               "importLoaders": 0,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "exportOnlyLocals": true,
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
+              "modules": false,
               "sourceMap": false,
             },
           },
@@ -249,13 +236,7 @@ exports[`plugin-css injectStyles > should use css-loader + style-loader when inj
             "options": {
               "exportType": "string",
               "importLoaders": 1,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
+              "modules": false,
               "sourceMap": false,
             },
           },
@@ -362,13 +343,7 @@ exports[`should ensure isolation of PostCSS config objects between different bui
         "options": {
           "exportType": "string",
           "importLoaders": 2,
-          "modules": {
-            "auto": true,
-            "exportGlobals": false,
-            "exportLocalsConvention": "camelCase",
-            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-            "namedExport": false,
-          },
+          "modules": false,
           "sourceMap": false,
         },
       },
@@ -483,13 +458,7 @@ exports[`should ensure isolation of PostCSS config objects between different bui
         "options": {
           "exportType": "string",
           "importLoaders": 2,
-          "modules": {
-            "auto": true,
-            "exportGlobals": false,
-            "exportLocalsConvention": "camelCase",
-            "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-            "namedExport": false,
-          },
+          "modules": false,
           "sourceMap": false,
         },
       },

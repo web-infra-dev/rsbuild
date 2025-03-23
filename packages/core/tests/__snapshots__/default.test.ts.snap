@@ -87,13 +87,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "options": {
               "exportType": "string",
               "importLoaders": 1,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
+              "modules": false,
               "sourceMap": false,
             },
           },
@@ -555,19 +549,14 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "options": {
               "exportType": "string",
               "importLoaders": 1,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
+              "modules": false,
               "sourceMap": false,
             },
           },
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
+              "minify": true,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -1049,14 +1038,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "options": {
               "exportType": "string",
               "importLoaders": 0,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "exportOnlyLocals": true,
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
+              "modules": false,
               "sourceMap": false,
             },
           },
@@ -1456,13 +1438,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "options": {
               "exportType": "string",
               "importLoaders": 1,
-              "modules": {
-                "auto": true,
-                "exportGlobals": false,
-                "exportLocalsConvention": "camelCase",
-                "localIdentName": "[path][name]__[local]-[hash:base64:6]",
-                "namedExport": false,
-              },
+              "modules": false,
               "sourceMap": false,
             },
           },
