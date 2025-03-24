@@ -69,6 +69,8 @@ export const CHAIN_ID = {
     STYLUS: 'stylus',
     /** Rule for raw stylus */
     STYLUS_RAW: 'stylus-raw',
+    /** Rule for inline stylus */
+    STYLUS_INLINE: 'stylus-inline',
     /** Rule for svg */
     SVG: 'svg',
     /** Rule for pug */
