@@ -108,7 +108,7 @@ describe('plugin-less', () => {
     });
 
     const bundlerConfigs = await rsbuild.initConfigs();
-    expect(matchRules(bundlerConfigs[0], 'a.less').length).toBe(1);
-    expect(matchRules(bundlerConfigs[0], 'b.less').length).toBe(3);
+    expect(matchRules(bundlerConfigs[0], 'a.less').length).toBe(2);
+    expect(matchRules(bundlerConfigs[0], 'b.less').length).toBe(5);
   });
 });

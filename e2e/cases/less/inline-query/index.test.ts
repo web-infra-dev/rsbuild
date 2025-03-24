@@ -1,7 +1,7 @@
 import { build, dev } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
-test('should allow to import inline Sass files in development mode', async ({
+test('should allow to import inline Less files in development mode', async ({
   page,
 }) => {
   const rsbuild = await dev({
@@ -22,7 +22,7 @@ test('should allow to import inline Sass files in development mode', async ({
   await rsbuild.close();
 });
 
-test('should allow to import inline Sass files in production mode', async ({
+test('should allow to import inline Less files in production mode', async ({
   page,
 }) => {
   const rsbuild = await build({
