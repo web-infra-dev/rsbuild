@@ -57,6 +57,8 @@ export const CHAIN_ID = {
     LESS: 'less',
     /** Rule for raw Less */
     LESS_RAW: 'less-raw',
+    /** Rule for inline Less */
+    LESS_INLINE: 'less-inline',
     /** Rule for Sass */
     SASS: 'sass',
     /** Rule for raw Sass */

@@ -120,7 +120,7 @@ export const pluginSass = (
       const rule = chain.module
         .rule(findRuleId(chain, CHAIN_ID.RULE.SASS))
         .test(include)
-        // exclude `import './foo.scss?raw'`
+        // exclude `import './foo.scss?raw'` and `import './foo.scss?inline'`
         .resourceQuery({ not: /raw|inline/ })
         .sideEffects(true)
         .resolve.preferRelative(true)

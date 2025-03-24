@@ -10,7 +10,7 @@ exports[`plugin-less > should add less-loader 1`] = `
       "preferRelative": true,
     },
     "resourceQuery": {
-      "not": /raw/,
+      "not": /raw\\|inline/,
     },
     "sideEffects": true,
     "test": /\\\\\\.less\\$/,
@@ -59,6 +59,45 @@ exports[`plugin-less > should add less-loader 1`] = `
     ],
   },
   {
+    "resourceQuery": /inline/,
+    "test": /\\\\\\.less\\$/,
+    "use": [
+      {
+        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+        "options": {
+          "exportType": "string",
+          "importLoaders": 2,
+          "modules": false,
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "builtin:lightningcss-loader",
+        "options": {
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
+        "options": {
+          "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+          "lessOptions": {
+            "javascriptEnabled": true,
+            "paths": [
+              "<ROOT>/node_modules",
+            ],
+          },
+          "sourceMap": false,
+        },
+      },
+    ],
+  },
+  {
     "resourceQuery": /raw/,
     "test": /\\\\\\.less\\$/,
     "type": "asset/source",
@@ -76,7 +115,7 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
       "preferRelative": true,
     },
     "resourceQuery": {
-      "not": /raw/,
+      "not": /raw\\|inline/,
     },
     "sideEffects": true,
     "test": /\\\\\\.less\\$/,
@@ -95,6 +134,45 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
             "localIdentName": "[path][name]__[local]-[hash:base64:6]",
             "namedExport": false,
           },
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "builtin:lightningcss-loader",
+        "options": {
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
+        "options": {
+          "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+          "lessOptions": {
+            "javascriptEnabled": true,
+            "paths": [
+              "<ROOT>/node_modules",
+            ],
+          },
+          "sourceMap": false,
+        },
+      },
+    ],
+  },
+  {
+    "resourceQuery": /inline/,
+    "test": /\\\\\\.less\\$/,
+    "use": [
+      {
+        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+        "options": {
+          "exportType": "string",
+          "importLoaders": 2,
+          "modules": false,
           "sourceMap": false,
         },
       },
@@ -145,7 +223,7 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
       "preferRelative": true,
     },
     "resourceQuery": {
-      "not": /raw/,
+      "not": /raw\\|inline/,
     },
     "sideEffects": true,
     "test": /\\\\\\.less\\$/,
@@ -194,6 +272,48 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
     ],
   },
   {
+    "exclude": [
+      /node_modules/,
+    ],
+    "resourceQuery": /inline/,
+    "test": /\\\\\\.less\\$/,
+    "use": [
+      {
+        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+        "options": {
+          "exportType": "string",
+          "importLoaders": 2,
+          "modules": false,
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "builtin:lightningcss-loader",
+        "options": {
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
+        "options": {
+          "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+          "lessOptions": {
+            "javascriptEnabled": true,
+            "paths": [
+              "<ROOT>/node_modules",
+            ],
+          },
+          "sourceMap": false,
+        },
+      },
+    ],
+  },
+  {
     "resourceQuery": /raw/,
     "test": /\\\\\\.less\\$/,
     "type": "asset/source",
@@ -211,7 +331,7 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
       "preferRelative": true,
     },
     "resourceQuery": {
-      "not": /raw/,
+      "not": /raw\\|inline/,
     },
     "sideEffects": true,
     "test": /\\\\\\.less\\$/,
@@ -260,6 +380,45 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
     ],
   },
   {
+    "resourceQuery": /inline/,
+    "test": /\\\\\\.less\\$/,
+    "use": [
+      {
+        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+        "options": {
+          "exportType": "string",
+          "importLoaders": 2,
+          "modules": false,
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "builtin:lightningcss-loader",
+        "options": {
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
+        "options": {
+          "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+          "lessOptions": {
+            "javascriptEnabled": false,
+            "paths": [
+              "<ROOT>/node_modules",
+            ],
+          },
+          "sourceMap": false,
+        },
+      },
+    ],
+  },
+  {
     "resourceQuery": /raw/,
     "test": /\\\\\\.less\\$/,
     "type": "asset/source",
@@ -277,7 +436,7 @@ exports[`plugin-less > should allow to use Less plugins 1`] = `
       "preferRelative": true,
     },
     "resourceQuery": {
-      "not": /raw/,
+      "not": /raw\\|inline/,
     },
     "sideEffects": true,
     "test": /\\\\\\.less\\$/,
@@ -296,6 +455,52 @@ exports[`plugin-less > should allow to use Less plugins 1`] = `
             "localIdentName": "[path][name]__[local]-[hash:base64:6]",
             "namedExport": false,
           },
+          "sourceMap": false,
+        },
+      },
+      {
+        "loader": "builtin:lightningcss-loader",
+        "options": {
+          "targets": [
+            "chrome >= 87",
+            "edge >= 88",
+            "firefox >= 78",
+            "safari >= 14",
+          ],
+        },
+      },
+      {
+        "loader": "<ROOT>/packages/plugin-less/compiled/less-loader/index.js",
+        "options": {
+          "implementation": "<ROOT>/packages/plugin-less/compiled/less/index.js",
+          "lessOptions": {
+            "javascriptEnabled": true,
+            "paths": [
+              "<ROOT>/node_modules",
+            ],
+            "plugins": [
+              MockPlugin {
+                "options": {
+                  "foo": "bar",
+                },
+              },
+            ],
+          },
+          "sourceMap": false,
+        },
+      },
+    ],
+  },
+  {
+    "resourceQuery": /inline/,
+    "test": /\\\\\\.less\\$/,
+    "use": [
+      {
+        "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+        "options": {
+          "exportType": "string",
+          "importLoaders": 2,
+          "modules": false,
           "sourceMap": false,
         },
       },
