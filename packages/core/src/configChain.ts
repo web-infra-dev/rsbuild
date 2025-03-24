@@ -61,6 +61,8 @@ export const CHAIN_ID = {
     SASS: 'sass',
     /** Rule for raw Sass */
     SASS_RAW: 'sass-raw',
+    /** Rule for inline Sass */
+    SASS_INLINE: 'sass-inline',
     /** Rule for stylus */
     STYLUS: 'stylus',
     /** Rule for raw stylus */
