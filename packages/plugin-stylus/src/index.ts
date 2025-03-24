@@ -8,11 +8,15 @@ const require = createRequire(import.meta.url);
 export const PLUGIN_STYLUS_NAME = 'rsbuild:stylus';
 
 type StylusOptions = {
+  /**
+   * Specify Stylus plugins to use.
+   * @default []
+   * @example use: ["nib"]
+   */
   use?: string[];
   /**
    * Define Stylus variables or functions.
-   *
-   * @default {}
+   * @default []
    * @example
    * define: [
    *   ["$development", process.env.NODE_ENV === "development"],
@@ -20,15 +24,36 @@ type StylusOptions = {
    * ]
    */
   define?: [string, any, boolean?][];
+  /**
+   * Add paths to the import lookup paths.
+   * @default []
+   * @example include: [path.join(__dirname, "src/styl/config")]
+   */
   include?: string[];
   /**
+   * Include regular CSS on `@import`.
+   * @default false
+   */
+  includeCSS?: boolean;
+  /**
    * Import the specified Stylus files/paths, can not be relative path.
-   * @example import: ["nib", path.join(__dirname, "src/styl/mixins")],
    * @default []
+   * @example import: ["nib", path.join(__dirname, "src/styl/mixins")],
    */
   import?: string[];
+  /**
+   * Resolve relative url()'s inside imported files.
+   */
   resolveURL?: boolean;
+  /**
+   * Emits comments in the generated CSS indicating the corresponding Stylus line.
+   * @default false
+   */
   lineNumbers?: boolean;
+  /**
+   * Move `@import` and `@charset` to the top.
+   * @default false
+   */
   hoistAtrules?: boolean;
 };
 
