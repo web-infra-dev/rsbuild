@@ -15,19 +15,14 @@ export const pluginWasm = (): RsbuildPlugin => ({
       });
 
       const wasmFilename = posix.join(distPath, '[hash].module.wasm');
-
-      chain.output.merge({
-        webassemblyModuleFilename: wasmFilename,
-      });
+      chain.output.webassemblyModuleFilename(wasmFilename);
 
       // support new URL('./abc.wasm', import.meta.url)
       chain.module
         .rule(CHAIN_ID.RULE.WASM)
         .test(/\.wasm$/)
         // only include assets that came from new URL calls
-        .merge({
-          dependency: 'url',
-        })
+        .dependency('url')
         .type('asset/resource')
         .set('generator', {
           filename: wasmFilename,

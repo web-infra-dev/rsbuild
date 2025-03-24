@@ -54,11 +54,9 @@ export const pluginBasic = (): RsbuildPlugin => ({
 
         chain.mode(environment.config.mode);
 
-        chain.merge({
-          infrastructureLogging: {
-            // Using `error` level to avoid `cache.PackFileCacheStrategy` logs
-            level: 'error',
-          },
+        chain.infrastructureLogging({
+          // Using `error` level to avoid `cache.PackFileCacheStrategy` logs
+          level: 'error',
         });
 
         chain.watchOptions({

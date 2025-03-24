@@ -122,7 +122,7 @@ export const pluginSass = (
       const rule = chain.module
         .rule(ruleId)
         .test(test)
-        .merge({ sideEffects: true })
+        .sideEffects(true)
         .resolve.preferRelative(true)
         .end()
         // exclude `import './foo.scss?raw'`
