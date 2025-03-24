@@ -9,7 +9,17 @@ export const PLUGIN_STYLUS_NAME = 'rsbuild:stylus';
 
 type StylusOptions = {
   use?: string[];
-  define?: [string, any, boolean?];
+  /**
+   * Define Stylus variables or functions.
+   *
+   * @default {}
+   * @example
+   * define: [
+   *   ["$development", process.env.NODE_ENV === "development"],
+   *   ["rawVar", 42, true],
+   * ]
+   */
+  define?: [string, any, boolean?][];
   include?: string[];
   /**
    * Import the specified Stylus files/paths, can not be relative path.
