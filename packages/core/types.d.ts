@@ -203,6 +203,14 @@ declare module '*.less?inline' {
   const content: string;
   export default content;
 }
+declare module '*.styl?inline' {
+  const content: string;
+  export default content;
+}
+declare module '*.stylus?inline' {
+  const content: string;
+  export default content;
+}
 
 /**
  * Raw CSS
