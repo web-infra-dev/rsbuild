@@ -23,10 +23,11 @@ import { PackageManagerTabs } from '@theme';
 你可以在 `rsbuild.config.ts` 文件中注册插件：
 
 ```ts title="rsbuild.config.ts"
+import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 
 export default {
-  plugins: [pluginSvgr()],
+  plugins: [pluginReact(), pluginSvgr()],
 };
 ```
 
