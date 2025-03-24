@@ -98,13 +98,7 @@ export function pluginSvelte(options: PluginSvelteOptions = {}): RsbuildPlugin {
           // imports with inline loader reference like `!svelte-loader...`,
           // which would cause the bundler failed to resolve the loader.
           // See https://github.com/sveltejs/svelte-loader/blob/344f00744b06a98ff5ee7e7a04d5e04ac496988c/index.js#L128
-          chain.merge({
-            resolveLoader: {
-              alias: {
-                'svelte-loader': loaderPath,
-              },
-            },
-          });
+          chain.resolveLoader.alias.set('svelte-loader', loaderPath);
 
           const userLoaderOptions = options.svelteLoaderOptions ?? {};
           const svelteLoaderOptions = {

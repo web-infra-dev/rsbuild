@@ -122,16 +122,20 @@ export const pluginAsset = (): RsbuildPlugin => ({
 
       // image
       createAssetRule(CHAIN_ID.RULE.IMAGE, IMAGE_EXTENSIONS, emitAssets);
+
       // svg
       createAssetRule(CHAIN_ID.RULE.SVG, ['svg'], emitAssets);
+
       // media
       createAssetRule(
         CHAIN_ID.RULE.MEDIA,
         [...VIDEO_EXTENSIONS, ...AUDIO_EXTENSIONS],
         emitAssets,
       );
+
       // font
       createAssetRule(CHAIN_ID.RULE.FONT, FONT_EXTENSIONS, emitAssets);
+
       // assets
       const assetsFilename = getMergedFilename('assets');
       chain.output.assetModuleFilename(assetsFilename);

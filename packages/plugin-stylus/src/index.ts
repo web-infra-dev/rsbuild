@@ -54,7 +54,7 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
       const rule = chain.module
         .rule(CHAIN_ID.RULE.STYLUS)
         .test(test)
-        .merge({ sideEffects: true })
+        .sideEffects(true)
         .resolve.preferRelative(true)
         .end()
         // exclude `import './foo.styl?raw'`

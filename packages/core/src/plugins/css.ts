@@ -412,7 +412,7 @@ export const pluginCss = (): RsbuildPlugin => ({
           );
 
           // CSS imports should always be treated as sideEffects
-          rule.merge({ sideEffects: true });
+          rule.sideEffects(true);
 
           // Enable preferRelative by default, which is consistent with the default behavior of css-loader
           // see: https://github.com/webpack-contrib/css-loader/blob/579fc13/src/plugins/postcss-import-parser.js#L234
