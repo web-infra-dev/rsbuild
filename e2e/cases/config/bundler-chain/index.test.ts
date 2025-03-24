@@ -11,9 +11,7 @@ test('should allow to use tools.bundlerChain to set alias config', async ({
     rsbuildConfig: {
       tools: {
         bundlerChain: (chain) => {
-          chain.resolve.alias.merge({
-            '@common': join(__dirname, 'src/common'),
-          });
+          chain.resolve.alias.set('@common', join(__dirname, 'src/common'));
         },
       },
     },
@@ -35,9 +33,7 @@ test('should allow to use async tools.bundlerChain to set alias config', async (
         bundlerChain: async (chain) => {
           return new Promise((resolve) => {
             setTimeout(() => {
-              chain.resolve.alias.merge({
-                '@common': join(__dirname, 'src/common'),
-              });
+              chain.resolve.alias.set('@common', join(__dirname, 'src/common'));
               resolve();
             }, 0);
           });
