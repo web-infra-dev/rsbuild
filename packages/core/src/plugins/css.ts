@@ -16,6 +16,7 @@ import type {
   Rspack,
   RspackChain,
 } from '../types';
+import { parseMinifyOptions } from './minimize';
 
 const getCSSModulesLocalIdentName = (
   config: NormalizedEnvironmentConfig,
@@ -30,6 +31,7 @@ const getCSSModulesLocalIdentName = (
 export const getLightningCSSLoaderOptions = (
   config: NormalizedEnvironmentConfig,
   targets: string[],
+  minify: boolean,
 ): Rspack.LightningcssLoaderOptions => {
   const userOptions =
     typeof config.tools.lightningcssLoader === 'object'
@@ -40,7 +42,7 @@ export const getLightningCSSLoaderOptions = (
     targets,
   };
 
-  if (config.mode === 'production' && config.output.injectStyles) {
+  if (minify) {
     initialOptions.minify = true;
   }
 
@@ -345,22 +347,25 @@ export const pluginCss = (): RsbuildPlugin => ({
           ) {
             importLoaders++;
 
-            const lightningcssOptions = getLightningCSSLoaderOptions(
-              config,
-              environment.browserslist,
-            );
+            const { minifyCss } = parseMinifyOptions(config, isProd);
 
             updateRules((rule, type) => {
-              const enableMinify =
-                type === 'inline' && config.mode === 'production';
+              // Inline styles are not processed by Rspack's minimizers,
+              // so we need to minify them via `builtin:lightningcss-loader`
+              const inlineStyle =
+                type === 'inline' || config.output.injectStyles;
+              const minify = inlineStyle && isProd && minifyCss;
+
+              const lightningcssOptions = getLightningCSSLoaderOptions(
+                config,
+                environment.browserslist,
+                minify,
+              );
+
               rule
                 .use(CHAIN_ID.USE.LIGHTNINGCSS)
                 .loader('builtin:lightningcss-loader')
-                .options(
-                  enableMinify
-                    ? { ...lightningcssOptions, minify: true }
-                    : lightningcssOptions,
-                );
+                .options(lightningcssOptions);
             });
           }
 

@@ -116,6 +116,7 @@ export const pluginMinimize = (): RsbuildPlugin => ({
         const loaderOptions = getLightningCSSLoaderOptions(
           config,
           environment.browserslist,
+          true,
         );
 
         const defaultOptions: LightningCssMinimizerRspackPluginOptions = {

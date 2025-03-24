@@ -6,7 +6,7 @@ import { expect, test } from '@playwright/test';
 const fixtures = __dirname;
 
 rspackOnlyTest(
-  'should inline style when injectStyles is true',
+  'should inline style when `injectStyles` is enabled',
   async ({ page }) => {
     const rsbuild = await build({
       cwd: fixtures,
@@ -45,7 +45,7 @@ rspackOnlyTest(
 );
 
 rspackOnlyTest(
-  'HMR should work well when injectStyles is true',
+  'HMR should work well when `injectStyles` is enabled',
   async ({ page }) => {
     // HMR cases will fail in Windows
     if (process.platform === 'win32') {
@@ -93,6 +93,40 @@ rspackOnlyTest(
 
     // #test-keep should unchanged when CSS HMR
     await expect(locatorKeep.innerHTML()).resolves.toBe(keepNum);
+
+    await rsbuild.close();
+  },
+);
+
+rspackOnlyTest(
+  'should allow to disable CSS minification when `injectStyles` is enabled',
+  async ({ page }) => {
+    const rsbuild = await build({
+      cwd: fixtures,
+      page,
+      rsbuildConfig: {
+        output: {
+          minify: false,
+        },
+      },
+    });
+
+    // injectStyles worked
+    const files = await rsbuild.unwrapOutputJSON();
+    const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
+    expect(cssFiles.length).toBe(0);
+
+    // should inline CSS
+    const indexJsFile = Object.keys(files).find(
+      (file) => file.includes('index.') && file.endsWith('.js'),
+    )!;
+
+    expect(
+      files[indexJsFile].includes(`html, body {
+  margin: 0;
+  padding: 0;
+}`),
+    ).toBeTruthy();
 
     await rsbuild.close();
   },
