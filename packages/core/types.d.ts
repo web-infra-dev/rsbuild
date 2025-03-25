@@ -151,15 +151,15 @@ declare module '*.opus' {
 }
 
 /**
- * Configuration files
- */
-/**
  * @requires [@rsbuild/plugin-yaml](https://www.npmjs.com/package/@rsbuild/plugin-yaml)
  */
 declare module '*.yaml' {
   const content: Record<string, any>;
   export default content;
 }
+/**
+ * @requires [@rsbuild/plugin-yaml](https://www.npmjs.com/package/@rsbuild/plugin-yaml)
+ */
 declare module '*.yml' {
   const content: Record<string, any>;
   export default content;
@@ -173,69 +173,37 @@ declare module '*.toml' {
 }
 
 /**
- * Queries
+ * Imports the file as a URL string.
+ * @note Only works for static assets by default.
+ * @example
+ * import logoUrl from './logo.png?url'
+ * console.log(logoUrl) // 'http://example.com/logo.123456.png'
  */
 declare module '*?url' {
   const content: string;
   export default content;
 }
+
+/**
+ * Imports the file content as a base64 encoded string.
+ * @note Only works for static assets and CSS files by default.
+ * @example
+ * import logo from './logo.svg?inline'
+ * console.log(logo) // 'data:image/svg+xml;base64,...'
+ */
 declare module '*?inline' {
   const content: string;
   export default content;
 }
 
 /**
- * Inline CSS
+ * Imports the raw content of the file as a string.
+ * @note Only works for static assets and CSS files by default.
+ * @example
+ * import raw from './logo.svg?raw'
+ * console.log(raw) // '<svg viewBox="0 0 24 24">...</svg>'
  */
-declare module '*.css?inline' {
-  const content: string;
-  export default content;
-}
-declare module '*.scss?inline' {
-  const content: string;
-  export default content;
-}
-declare module '*.sass?inline' {
-  const content: string;
-  export default content;
-}
-declare module '*.less?inline' {
-  const content: string;
-  export default content;
-}
-declare module '*.styl?inline' {
-  const content: string;
-  export default content;
-}
-declare module '*.stylus?inline' {
-  const content: string;
-  export default content;
-}
-
-/**
- * Raw CSS
- */
-declare module '*.css?raw' {
-  const content: string;
-  export default content;
-}
-declare module '*.scss?raw' {
-  const content: string;
-  export default content;
-}
-declare module '*.sass?raw' {
-  const content: string;
-  export default content;
-}
-declare module '*.less?raw' {
-  const content: string;
-  export default content;
-}
-declare module '*.styl?raw' {
-  const content: string;
-  export default content;
-}
-declare module '*.stylus?raw' {
+declare module '*?raw' {
   const content: string;
   export default content;
 }
@@ -257,6 +225,9 @@ declare module '*.module.scss' {
   const classes: CSSModuleClasses;
   export default classes;
 }
+/**
+ * @requires [@rsbuild/plugin-sass](https://www.npmjs.com/package/@rsbuild/plugin-sass)
+ */
 declare module '*.module.sass' {
   const classes: CSSModuleClasses;
   export default classes;
@@ -275,6 +246,9 @@ declare module '*.module.styl' {
   const classes: CSSModuleClasses;
   export default classes;
 }
+/**
+ * @requires [@rsbuild/plugin-stylus](https://www.npmjs.com/package/@rsbuild/plugin-stylus)
+ */
 declare module '*.module.stylus' {
   const classes: CSSModuleClasses;
   export default classes;
