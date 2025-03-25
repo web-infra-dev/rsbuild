@@ -18,6 +18,10 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/image/[name].[contenthash:8][ext]",
             },
@@ -43,6 +47,10 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -72,6 +80,10 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/media/[name].[contenthash:8][ext]",
             },
@@ -97,6 +109,10 @@ exports[`plugin-asset > should add image rules correctly 1`] = `
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -143,6 +159,10 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "[name].[contenthash:8][ext]",
             },
@@ -168,6 +188,10 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -197,6 +221,10 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/media/[name].[contenthash:8][ext]",
             },
@@ -222,6 +250,10 @@ exports[`plugin-asset > should add image rules correctly 2`] = `
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -268,6 +300,10 @@ exports[`plugin-asset > should allow to use distPath.image to modify dist path 1
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "foo/[name].[contenthash:8][ext]",
             },
@@ -293,6 +329,10 @@ exports[`plugin-asset > should allow to use distPath.image to modify dist path 1
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -322,6 +362,10 @@ exports[`plugin-asset > should allow to use distPath.image to modify dist path 1
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/media/[name].[contenthash:8][ext]",
             },
@@ -347,6 +391,10 @@ exports[`plugin-asset > should allow to use distPath.image to modify dist path 1
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -393,6 +441,10 @@ exports[`plugin-asset > should allow to use filename.image to modify filename 1`
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/image/foo[ext]",
             },
@@ -418,6 +470,10 @@ exports[`plugin-asset > should allow to use filename.image to modify filename 1`
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -447,6 +503,10 @@ exports[`plugin-asset > should allow to use filename.image to modify filename 1`
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/media/[name].[contenthash:8][ext]",
             },
@@ -472,6 +532,10 @@ exports[`plugin-asset > should allow to use filename.image to modify filename 1`
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
