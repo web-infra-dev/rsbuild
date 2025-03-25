@@ -38,7 +38,7 @@ export default {
 };
 ```
 
-3. 参考 [使用 PostCSS](#使用-postcss)，配置你需要的 PostCSS 插件，下面是一些常用的 PostCSS 插件：
+3. 参考 [PostCSS](#postcss)，配置你需要的 PostCSS 插件，下面是一些常用的 PostCSS 插件：
 
 - [autoprefixer](https://github.com/postcss/autoprefixer)：添加浏览器前缀。
 - [postcss-preset-env](https://github.com/csstools/postcss-plugins/tree/main/plugin-packs/postcss-preset-env)：将现代 CSS 语法转换为大多数浏览器支持的语法。
@@ -51,7 +51,7 @@ export default {
 - 你可以通过 [output.minify](/config/output/minify) 选项来禁用 CSS 压缩，或是自定义 `LightningCssMinimizerRspackPlugin` 的选项。
 - 你可以通过 [@rsbuild/plugin-css-minimizer](https://github.com/rspack-contrib/rsbuild-plugin-css-minimizer) 来自定义 CSS 压缩工具，切换到 [cssnano](https://github.com/cssnano/cssnano) 或是其他 CSS 压缩器。
 
-## 使用 PostCSS
+## PostCSS
 
 Rsbuild 支持通过 [PostCSS](https://postcss.org/) 来转换 CSS 代码。你可以通过以下方式来配置 PostCSS：
 
@@ -97,11 +97,11 @@ export default {
 - 当你同时配置 `postcss.config.js` 文件和 `tools.postcss` 选项时，两者都会生效，并且 `tools.postcss` 的优先级更高。
 - 如果项目中没有 `postcss.config.js` 文件，也没有配置 `tools.postcss` 选项，Rsbuild 将不会注册 `postcss-loader`。
 
-## 使用 CSS Modules
+## CSS Modules
 
-Rsbuild 默认支持 CSS Modules，请阅读 [使用 CSS Modules](/guide/basic/css-modules) 章节来了解 CSS Modules 的完整用法。
+Rsbuild 默认支持 CSS Modules，请阅读 [CSS Modules](/guide/basic/css-modules) 章节来了解 CSS Modules 的完整用法。
 
-## 使用 CSS 预处理器
+## CSS 预处理器
 
 Rsbuild 通过插件来支持社区流行的 CSS 预处理器，包括 Sass、Less 和 Stylus，使用方式请参考：
 
@@ -129,7 +129,7 @@ export default {
 
 这将会增大你的 JS Bundle 体积，因此通常情况下，不太建议禁用 CSS 提取逻辑。
 
-## 引用 node_modules 里的样式
+## 从 node_modules 引用
 
 Rsbuild 支持引用 node_modules 里的 CSS 文件。
 
@@ -157,9 +157,34 @@ body {
 @import '~normalize.css';
 ```
 
-## 引用原始 CSS 文件
+## 查询参数
 
-Rsbuild 支持通过 `?raw` 查询参数引用原始 CSS 文件，并将其作为字符串导入到 JavaScript 中。
+### inline
+
+Rsbuild 支持通过 `?inline` 查询参数引用 CSS 文件编译后的内容，并将其作为字符串导入到 JavaScript 中。
+
+```js
+import inlineCss from './style.css?inline';
+
+console.log(inlineCss); // 输出编译后的 CSS 文件内容
+```
+
+使用 `import "*.css?inline"` 的行为如下：
+
+- 获取 CSS 文件编译后的文本内容，经过 Lightning CSS、PostCSS 和 CSS 预处理器的处理
+- 内容会作为字符串内联到最终的 JavaScript 包中
+- 不会生成单独的 CSS 文件
+
+:::tip
+
+- Rsbuild 的 Sass、Less 和 Stylus 插件也支持 `?inline` 查询参数。
+- Rsbuild >= 1.3.0 支持 `?inline` 查询参数。
+
+:::
+
+### raw
+
+Rsbuild 支持通过 `?raw` 查询参数引用 CSS 文件的原始内容，并将其作为字符串导入到 JavaScript 中。
 
 ```ts title="src/index.js"
 import rawCss from './style.css?raw';
@@ -174,5 +199,8 @@ console.log(rawCss); // 输出 CSS 文件的原始内容
 - 不会生成单独的 CSS 文件
 
 :::tip
-Rsbuild 的 Sass、Less 和 Stylus 插件也支持 `?raw` 查询参数。
+
+- Rsbuild 的 Sass、Less 和 Stylus 插件也支持 `?raw` 查询参数。
+- Rsbuild >= 1.3.0 支持 `?raw` 查询参数。
+
 :::
