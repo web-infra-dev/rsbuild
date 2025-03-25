@@ -5,6 +5,49 @@
  */
 interface ImportMetaEnv {
   [key: string]: any;
+  /**
+   * The value of the `mode` configuration.
+   * @example
+   * if (import.meta.env.MODE === 'development') {
+   *   console.log('development mode');
+   * }
+   */
+  MODE: 'development' | 'production' | 'none';
+  /**
+   * If `mode` is `'development'`, the value is `true`; otherwise, it is `false`.
+   * @example
+   * if (import.meta.env.DEV) {
+   *   console.log('development mode');
+   * }
+   */
+  DEV: boolean;
+  /**
+   * If `mode` is `'production'`, the value is `true`; otherwise, it is `false`.
+   * @example
+   * if (import.meta.env.PROD) {
+   *   console.log('production mode');
+   * }
+   */
+  PROD: boolean;
+  /**
+   * The value of the `server.base` configuration.
+   * @example
+   * const image = new Image();
+   * // Equivalent to "/foo/favicon.ico"
+   * image.src = `${import.meta.env.BASE_URL}/favicon.ico`;
+   */
+  BASE_URL: string;
+  /**
+   * The URL prefix of static assets
+   * - In development, it is equivalent to the value set by `dev.assetPrefix`.
+   * - In production, it is equivalent to the value set by `output.assetPrefix`.
+   * - Rsbuild will automatically remove the trailing slash from `assetPrefix`
+   * to make string concatenation easier.
+   * @example
+   * const image = new Image();
+   * image.src = `${import.meta.env.ASSET_PREFIX}/favicon.ico`;
+   */
+  ASSET_PREFIX: string;
 }
 interface ImportMeta {
   readonly env: ImportMetaEnv;
