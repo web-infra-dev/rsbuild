@@ -219,6 +219,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/image/[name].[contenthash:8][ext]",
             },
@@ -244,6 +248,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -273,6 +281,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/media/[name].[contenthash:8][ext]",
             },
@@ -298,6 +310,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -681,6 +697,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/image/[name].[contenthash:8][ext]",
             },
@@ -706,6 +726,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -735,6 +759,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/media/[name].[contenthash:8][ext]",
             },
@@ -760,6 +788,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -1150,6 +1182,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/image/[name].[contenthash:8][ext]",
             },
@@ -1175,6 +1211,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -1204,6 +1244,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/media/[name].[contenthash:8][ext]",
             },
@@ -1229,6 +1273,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -1570,6 +1618,10 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/image/[name].[contenthash:8][ext]",
             },
@@ -1595,6 +1647,10 @@ exports[`tools.rspack > should match snapshot 1`] = `
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -1624,6 +1680,10 @@ exports[`tools.rspack > should match snapshot 1`] = `
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/media/[name].[contenthash:8][ext]",
             },
@@ -1649,6 +1709,10 @@ exports[`tools.rspack > should match snapshot 1`] = `
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {

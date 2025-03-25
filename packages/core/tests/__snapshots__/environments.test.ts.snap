@@ -1496,6 +1496,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               "type": "asset/inline",
             },
             {
+              "resourceQuery": /raw/,
+              "type": "asset/source",
+            },
+            {
               "generator": {
                 "filename": "static/image/[name].[contenthash:8][ext]",
               },
@@ -1521,6 +1525,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             {
               "resourceQuery": /inline/,
               "type": "asset/inline",
+            },
+            {
+              "resourceQuery": /raw/,
+              "type": "asset/source",
             },
             {
               "generator": {
@@ -1550,6 +1558,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               "type": "asset/inline",
             },
             {
+              "resourceQuery": /raw/,
+              "type": "asset/source",
+            },
+            {
               "generator": {
                 "filename": "static/media/[name].[contenthash:8][ext]",
               },
@@ -1575,6 +1587,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             {
               "resourceQuery": /inline/,
               "type": "asset/inline",
+            },
+            {
+              "resourceQuery": /raw/,
+              "type": "asset/source",
             },
             {
               "generator": {
@@ -1863,6 +1879,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               "type": "asset/inline",
             },
             {
+              "resourceQuery": /raw/,
+              "type": "asset/source",
+            },
+            {
               "generator": {
                 "filename": "static/image/[name].[contenthash:8][ext]",
               },
@@ -1888,6 +1908,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             {
               "resourceQuery": /inline/,
               "type": "asset/inline",
+            },
+            {
+              "resourceQuery": /raw/,
+              "type": "asset/source",
             },
             {
               "generator": {
@@ -1917,6 +1941,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               "type": "asset/inline",
             },
             {
+              "resourceQuery": /raw/,
+              "type": "asset/source",
+            },
+            {
               "generator": {
                 "filename": "static/media/[name].[contenthash:8][ext]",
               },
@@ -1942,6 +1970,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             {
               "resourceQuery": /inline/,
               "type": "asset/inline",
+            },
+            {
+              "resourceQuery": /raw/,
+              "type": "asset/source",
             },
             {
               "generator": {

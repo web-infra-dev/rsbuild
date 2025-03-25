@@ -219,6 +219,10 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/image/[name].[contenthash:8][ext]",
             },
@@ -244,6 +248,10 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -273,6 +281,10 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/media/[name].[contenthash:8][ext]",
             },
@@ -298,6 +310,10 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
