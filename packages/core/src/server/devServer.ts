@@ -271,7 +271,7 @@ export async function createDevServer<
           getStats: async () => {
             if (!compilationManager) {
               throw new Error(
-                '[rsbuild:server] Can not get stats info when "runCompile" is false',
+                '[rsbuild:server] Can not call `getStats` when `runCompile` is false',
               );
             }
             await waitFirstCompileDone;
@@ -280,7 +280,7 @@ export async function createDevServer<
           loadBundle: async <T>(entryName: string) => {
             if (!compilationManager) {
               throw new Error(
-                '[rsbuild:server] Can not get stats info when "runCompile" is false',
+                '[rsbuild:server] Can not call `loadBundle` when `runCompile` is false',
               );
             }
             await waitFirstCompileDone;
@@ -296,7 +296,7 @@ export async function createDevServer<
           getTransformedHtml: async (entryName: string) => {
             if (!compilationManager) {
               throw new Error(
-                '[rsbuild:server] Can not get stats info when "runCompile" is false',
+                '[rsbuild:server] Can not call `getTransformedHtml` when `runCompile` is false',
               );
             }
             await waitFirstCompileDone;
