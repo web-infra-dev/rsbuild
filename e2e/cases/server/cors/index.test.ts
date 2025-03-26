@@ -60,6 +60,17 @@ test('should not include CORS headers for dev server if `cors` is `false`', asyn
   await rsbuild.close();
 });
 
+test('should set `cors` to `false` by default', async ({ page, request }) => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    page,
+  });
+
+  const response = await request.get(`http://127.0.0.1:${rsbuild.port}`);
+  expect(response.headers()).not.toHaveProperty('access-control-allow-origin');
+  await rsbuild.close();
+});
+
 test('should not include CORS headers for preview server if `cors` is `false`', async ({
   page,
   request,
