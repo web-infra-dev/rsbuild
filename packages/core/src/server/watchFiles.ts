@@ -7,13 +7,13 @@ import type {
   ServerConfig,
   WatchFiles,
 } from '../types';
-import type { CompileMiddlewareAPI } from './getDevMiddlewares';
+import type { CompilationManager } from './compilationManager';
 
 type WatchFilesOptions = {
   dev: DevConfig;
   server: ServerConfig;
-  compileMiddlewareAPI?: CompileMiddlewareAPI;
   root: string;
+  compilationManager?: CompilationManager;
 };
 
 export type WatchFilesResult = {
@@ -23,21 +23,21 @@ export type WatchFilesResult = {
 export async function setupWatchFiles(
   options: WatchFilesOptions,
 ): Promise<WatchFilesResult | undefined> {
-  const { dev, server, root, compileMiddlewareAPI } = options;
+  const { dev, server, root, compilationManager } = options;
 
   const { hmr, liveReload } = dev;
-  if ((!hmr && !liveReload) || !compileMiddlewareAPI) {
+  if ((!hmr && !liveReload) || !compilationManager) {
     return;
   }
 
   const closeDevFilesWatcher = await watchDevFiles(
     dev,
-    compileMiddlewareAPI,
+    compilationManager,
     root,
   );
   const serverFilesWatcher = await watchServerFiles(
     server,
-    compileMiddlewareAPI,
+    compilationManager,
     root,
   );
 
@@ -53,7 +53,7 @@ export async function setupWatchFiles(
 
 async function watchDevFiles(
   devConfig: DevConfig,
-  compileMiddlewareAPI: CompileMiddlewareAPI,
+  compilationManager: CompilationManager,
   root: string,
 ) {
   const { watchFiles } = devConfig;
@@ -67,7 +67,7 @@ async function watchDevFiles(
     const watchOptions = prepareWatchOptions(paths, options, type);
     const watcher = await startWatchFiles(
       watchOptions,
-      compileMiddlewareAPI,
+      compilationManager,
       root,
     );
     if (watcher) {
@@ -84,7 +84,7 @@ async function watchDevFiles(
 
 function watchServerFiles(
   serverConfig: ServerConfig,
-  compileMiddlewareAPI: CompileMiddlewareAPI,
+  compilationManager: CompilationManager,
   root: string,
 ) {
   const publicDirs = normalizePublicDirs(serverConfig.publicDir);
@@ -101,7 +101,7 @@ function watchServerFiles(
   }
 
   const watchOptions = prepareWatchOptions(watchPaths);
-  return startWatchFiles(watchOptions, compileMiddlewareAPI, root);
+  return startWatchFiles(watchOptions, compilationManager, root);
 }
 
 function prepareWatchOptions(
@@ -162,7 +162,7 @@ async function startWatchFiles(
     options,
     type = 'reload-page',
   }: ReturnType<typeof prepareWatchOptions>,
-  compileMiddlewareAPI: CompileMiddlewareAPI,
+  compilationManager: CompilationManager,
   root: string,
 ) {
   if (type !== 'reload-page') {
@@ -172,7 +172,9 @@ async function startWatchFiles(
   const watcher = await createChokidar(paths, root, options);
 
   watcher.on('change', () => {
-    compileMiddlewareAPI.sockWrite('static-changed');
+    compilationManager.socketServer.sockWrite({
+      type: 'static-changed',
+    });
   });
 
   return watcher;
