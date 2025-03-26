@@ -1,11 +1,10 @@
-import fs from 'node:fs';
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import type Connect from '../../compiled/connect/index.js';
 import { ROOT_DIST_DIR } from '../constants';
 import { getPublicPathFromCompiler, isMultiCompiler } from '../helpers';
 import { logger } from '../logger';
-import { onBeforeRestartServer, restartDevServer } from '../restart.js';
+import { onBeforeRestartServer, restartDevServer } from '../restart';
 import type {
   CreateCompiler,
   CreateDevServerOptions,
@@ -16,17 +15,16 @@ import type {
   Rspack,
 } from '../types';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
-import { CompilerDevMiddleware } from './compilerDevMiddleware';
+import { CompilationManager } from './compilationManager';
+import {
+  type GetDevMiddlewaresResult,
+  getDevMiddlewares,
+} from './devMiddlewares';
 import {
   createCacheableFunction,
   getTransformedHtml,
   loadBundle,
 } from './environment';
-import {
-  type CompileMiddlewareAPI,
-  type GetMiddlewaresResult,
-  getMiddlewares,
-} from './getDevMiddlewares';
 import {
   registerCleanup,
   removeCleanup,
@@ -144,7 +142,6 @@ export async function createDevServer<
     https,
   };
 
-  let outputFileSystem: Rspack.OutputFileSystem = fs;
   let lastStats: Rspack.Stats[];
 
   // should register onDevCompileDone hook before startCompile
@@ -163,7 +160,7 @@ export async function createDevServer<
       })
     : Promise.resolve();
 
-  const startCompile: () => Promise<CompileMiddlewareAPI> = async () => {
+  const startCompile: () => Promise<CompilationManager> = async () => {
     const compiler = customCompiler || (await createCompiler());
 
     if (!compiler) {
@@ -175,7 +172,7 @@ export async function createDevServer<
       : [getPublicPathFromCompiler(compiler)];
 
     // create dev middleware instance
-    const compilerDevMiddleware = new CompilerDevMiddleware({
+    const compilationManager = new CompilationManager({
       dev: devConfig,
       server: {
         ...config.server,
@@ -186,19 +183,9 @@ export async function createDevServer<
       environments: options.context.environments,
     });
 
-    await compilerDevMiddleware.init();
+    await compilationManager.init();
 
-    outputFileSystem =
-      (isMultiCompiler(compiler)
-        ? compiler.compilers[0].outputFileSystem
-        : compiler.outputFileSystem) || fs;
-
-    return {
-      middleware: compilerDevMiddleware.middleware,
-      sockWrite: (...args) => compilerDevMiddleware.sockWrite(...args),
-      onUpgrade: (...args) => compilerDevMiddleware.upgrade(...args),
-      close: () => compilerDevMiddleware?.close(),
-    };
+    return compilationManager;
   };
 
   const protocol = https ? 'https' : 'http';
@@ -228,7 +215,7 @@ export async function createDevServer<
 
   // biome-ignore lint/style/useConst: should be declared before use
   let fileWatcher: WatchFilesResult | undefined;
-  let devMiddlewares: GetMiddlewaresResult | undefined;
+  let devMiddlewares: GetDevMiddlewaresResult | undefined;
 
   const cleanupGracefulShutdown = middlewareMode
     ? null
@@ -271,15 +258,6 @@ export async function createDevServer<
     }
   };
 
-  const readFileSync = (fileName: string) => {
-    if ('readFileSync' in outputFileSystem) {
-      // bundle require needs a synchronous method, although readFileSync is not within the outputFileSystem type definition, but nodejs fs API implemented.
-      // @ts-expect-error
-      return outputFileSystem.readFileSync(fileName, 'utf-8');
-    }
-    return fs.readFileSync(fileName, 'utf-8');
-  };
-
   const cacheableLoadBundle = createCacheableFunction(loadBundle);
   const cacheableTransformedHtml = createCacheableFunction<string>(
     (_stats, entryName, utils) => getTransformedHtml(entryName, utils),
@@ -291,7 +269,7 @@ export async function createDevServer<
         name,
         {
           getStats: async () => {
-            if (!runCompile) {
+            if (!compilationManager) {
               throw new Error(
                 '[rsbuild:server] Can not get stats info when "runCompile" is false',
               );
@@ -300,23 +278,33 @@ export async function createDevServer<
             return lastStats[environment.index];
           },
           loadBundle: async <T>(entryName: string) => {
+            if (!compilationManager) {
+              throw new Error(
+                '[rsbuild:server] Can not get stats info when "runCompile" is false',
+              );
+            }
             await waitFirstCompileDone;
             return cacheableLoadBundle(
               lastStats[environment.index],
               entryName,
               {
-                readFileSync,
+                readFileSync: compilationManager.readFileSync,
                 environment,
               },
             ) as T;
           },
           getTransformedHtml: async (entryName: string) => {
+            if (!compilationManager) {
+              throw new Error(
+                '[rsbuild:server] Can not get stats info when "runCompile" is false',
+              );
+            }
             await waitFirstCompileDone;
             return cacheableTransformedHtml(
               lastStats[environment.index],
               entryName,
               {
-                readFileSync,
+                readFileSync: compilationManager.readFileSync,
                 environment,
               },
             );
@@ -424,25 +412,24 @@ export async function createDevServer<
     beforeCreateCompiler();
   }
 
-  const compileMiddlewareAPI = runCompile ? await startCompile() : undefined;
+  const compilationManager = runCompile ? await startCompile() : undefined;
 
   fileWatcher = await setupWatchFiles({
     dev: devConfig,
     server: config.server,
-    compileMiddlewareAPI,
+    compilationManager,
     root,
   });
 
-  devMiddlewares = await getMiddlewares({
+  devMiddlewares = await getDevMiddlewares({
     pwd: root,
-    compileMiddlewareAPI,
+    compilationManager,
     dev: devConfig,
     server: config.server,
     environments: environmentAPI,
     output: {
       distPath: options.context.distPath || ROOT_DIST_DIR,
     },
-    outputFileSystem,
     postCallbacks,
   });
 

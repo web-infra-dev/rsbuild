@@ -5,10 +5,10 @@ import type {
   DevConfig,
   EnvironmentAPI,
   RequestHandler,
-  Rspack,
   ServerConfig,
   SetupMiddlewaresServer,
 } from '../types';
+import type { CompilationManager } from './compilationManager';
 import { gzipMiddleware } from './gzipMiddleware';
 import type { UpgradeEvent } from './helper';
 import {
@@ -21,20 +21,12 @@ import {
 } from './middlewares';
 import { createProxyMiddleware } from './proxy';
 
-export type CompileMiddlewareAPI = {
-  middleware: RequestHandler;
-  sockWrite: SetupMiddlewaresServer['sockWrite'];
-  onUpgrade: UpgradeEvent;
-  close: () => Promise<void>;
-};
-
 export type RsbuildDevMiddlewareOptions = {
   pwd: string;
   dev: DevConfig;
   server: ServerConfig;
   environments: EnvironmentAPI;
-  compileMiddlewareAPI?: CompileMiddlewareAPI;
-  outputFileSystem: Rspack.OutputFileSystem;
+  compilationManager?: CompilationManager;
   output: {
     distPath: string;
   };
@@ -47,12 +39,16 @@ export type RsbuildDevMiddlewareOptions = {
 const applySetupMiddlewares = (
   dev: RsbuildDevMiddlewareOptions['dev'],
   environments: EnvironmentAPI,
-  compileMiddlewareAPI?: CompileMiddlewareAPI,
+  compilationManager?: CompilationManager,
 ) => {
   const setupMiddlewares = dev.setupMiddlewares || [];
 
   const serverOptions: SetupMiddlewaresServer = {
-    sockWrite: (type, data) => compileMiddlewareAPI?.sockWrite(type, data),
+    sockWrite: (type, data) =>
+      compilationManager?.socketServer.sockWrite({
+        type,
+        data,
+      }),
     environments,
   };
 
@@ -77,10 +73,9 @@ export type Middlewares = Array<RequestHandler | [string, RequestHandler]>;
 const applyDefaultMiddlewares = async ({
   middlewares,
   server,
-  compileMiddlewareAPI,
+  compilationManager,
   output,
   pwd,
-  outputFileSystem,
   environments,
   postCallbacks,
 }: RsbuildDevMiddlewareOptions & {
@@ -137,12 +132,14 @@ const applyDefaultMiddlewares = async ({
 
   middlewares.push(viewingServedFilesMiddleware({ environments }));
 
-  if (compileMiddlewareAPI) {
-    middlewares.push(compileMiddlewareAPI.middleware);
+  if (compilationManager) {
+    middlewares.push(compilationManager.middleware);
 
     // subscribe upgrade event to handle websocket
     upgradeEvents.push(
-      compileMiddlewareAPI.onUpgrade.bind(compileMiddlewareAPI),
+      compilationManager.socketServer.upgrade.bind(
+        compilationManager.socketServer,
+      ),
     );
 
     middlewares.push((req, res, next) => {
@@ -160,12 +157,11 @@ const applyDefaultMiddlewares = async ({
     ? output.distPath
     : join(pwd, output.distPath);
 
-  if (compileMiddlewareAPI) {
+  if (compilationManager) {
     middlewares.push(
       getHtmlCompletionMiddleware({
         distPath,
-        callback: compileMiddlewareAPI.middleware,
-        outputFileSystem,
+        compilationManager,
       }),
     );
   }
@@ -193,13 +189,12 @@ const applyDefaultMiddlewares = async ({
     callback();
   }
 
-  if (compileMiddlewareAPI) {
+  if (compilationManager) {
     middlewares.push(
       getHtmlFallbackMiddleware({
         distPath,
-        callback: compileMiddlewareAPI.middleware,
+        compilationManager,
         htmlFallback: server.htmlFallback,
-        outputFileSystem,
       }),
     );
   }
@@ -214,9 +209,10 @@ const applyDefaultMiddlewares = async ({
 
     middlewares.push(historyApiFallbackMiddleware);
 
-    // ensure fallback request can be handled by rsbuild-dev-middleware
-    compileMiddlewareAPI?.middleware &&
-      middlewares.push(compileMiddlewareAPI.middleware);
+    // ensure fallback request can be handled by compilation middleware
+    if (compilationManager?.middleware) {
+      middlewares.push(compilationManager.middleware);
+    }
   }
 
   middlewares.push(faviconFallbackMiddleware);
@@ -230,17 +226,17 @@ const applyDefaultMiddlewares = async ({
   };
 };
 
-export type GetMiddlewaresResult = {
+export type GetDevMiddlewaresResult = {
   close: () => Promise<void>;
   onUpgrade: UpgradeEvent;
   middlewares: Middlewares;
 };
 
-export const getMiddlewares = async (
+export const getDevMiddlewares = async (
   options: RsbuildDevMiddlewareOptions,
-): Promise<GetMiddlewaresResult> => {
+): Promise<GetDevMiddlewaresResult> => {
   const middlewares: Middlewares = [];
-  const { environments, compileMiddlewareAPI } = options;
+  const { environments, compilationManager } = options;
 
   if (logger.level === 'verbose') {
     middlewares.push(await getRequestLoggerMiddleware());
@@ -250,7 +246,7 @@ export const getMiddlewares = async (
   const { before, after } = applySetupMiddlewares(
     options.dev,
     environments,
-    compileMiddlewareAPI,
+    compilationManager,
   );
 
   middlewares.push(...before);
@@ -264,7 +260,7 @@ export const getMiddlewares = async (
 
   return {
     close: async () => {
-      await compileMiddlewareAPI?.close();
+      await compilationManager?.close();
     },
     onUpgrade,
     middlewares,

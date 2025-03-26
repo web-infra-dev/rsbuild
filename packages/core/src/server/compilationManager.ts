@@ -1,6 +1,7 @@
+import fs from 'node:fs';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { createRequire } from 'node:module';
-import type { Socket } from 'node:net';
+import { isMultiCompiler } from 'src/helpers';
 import { HTML_REGEX } from '../constants';
 import { pathnameParse } from '../helpers/path';
 import type {
@@ -11,10 +12,9 @@ import type {
   ServerConfig,
 } from '../types';
 import {
-  type DevMiddleware as CustomDevMiddleware,
-  type DevMiddlewareAPI,
-  getDevMiddleware,
-} from './devMiddleware';
+  type CompilationMiddleware,
+  getCompilationMiddleware,
+} from './compilationMiddleware';
 import { stripBase } from './helper';
 import { SocketServer } from './socketServer';
 
@@ -85,8 +85,10 @@ function getClientPaths(devConfig: DevConfig) {
  * 1. setup rsbuild-dev-middleware
  * 2. establish webSocket connect
  */
-export class CompilerDevMiddleware {
-  public middleware!: DevMiddlewareAPI;
+export class CompilationManager {
+  public middleware!: CompilationMiddleware;
+
+  public outputFileSystem: Rspack.OutputFileSystem;
 
   private devConfig: DevConfig;
 
@@ -96,30 +98,27 @@ export class CompilerDevMiddleware {
 
   private publicPaths: string[];
 
-  private socketServer: SocketServer;
+  public socketServer: SocketServer;
 
   constructor({ dev, server, compiler, publicPaths, environments }: Options) {
     this.devConfig = formatDevConfig(dev, environments);
     this.serverConfig = server;
     this.compiler = compiler;
     this.publicPaths = publicPaths;
-
-    // init socket server
+    this.outputFileSystem = fs;
     this.socketServer = new SocketServer(dev);
   }
 
   public async init(): Promise<void> {
-    // start compiling
-    const devMiddleware = await getDevMiddleware(this.compiler);
-    this.middleware = await this.setupDevMiddleware(
-      devMiddleware,
-      this.publicPaths,
-    );
+    await this.setupCompilationMiddleware();
     await this.socketServer.prepare();
-  }
 
-  public upgrade(req: IncomingMessage, sock: Socket, head: any): void {
-    this.socketServer.upgrade(req, sock, head);
+    // Get the latest outputFileSystem from rsbuild-dev-middleware
+    const { compiler } = this;
+    this.outputFileSystem =
+      (isMultiCompiler(compiler)
+        ? compiler.compilers[0].outputFileSystem
+        : compiler.outputFileSystem) || fs;
   }
 
   public async close(): Promise<void> {
@@ -142,22 +141,18 @@ export class CompilerDevMiddleware {
     });
   }
 
-  public sockWrite(
-    type: string,
-    data?: Record<string, any> | string | boolean,
-  ): void {
-    this.socketServer.sockWrite({
-      type,
-      data,
-    });
-  }
+  public readFileSync = (fileName: string): string => {
+    if ('readFileSync' in this.outputFileSystem) {
+      // bundle require needs a synchronous method, although readFileSync is not within the
+      // outputFileSystem type definition, but nodejs fs API implemented.
+      // @ts-expect-error
+      return this.outputFileSystem.readFileSync(fileName, 'utf-8');
+    }
+    return fs.readFileSync(fileName, 'utf-8');
+  };
 
-  private async setupDevMiddleware(
-    devMiddleware: CustomDevMiddleware,
-    publicPaths: string[],
-  ): Promise<DevMiddlewareAPI> {
-    const { devConfig, serverConfig } = this;
-    const { headers, base } = serverConfig;
+  private async setupCompilationMiddleware(): Promise<void> {
+    const { devConfig, serverConfig, publicPaths } = this;
 
     const callbacks = {
       onInvalid: (compilationId?: string, fileName?: string | null) => {
@@ -169,7 +164,6 @@ export class CompilerDevMiddleware {
           });
           return;
         }
-
         this.socketServer.sockWrite({
           type: 'invalid',
           compilationId,
@@ -182,22 +176,14 @@ export class CompilerDevMiddleware {
 
     const clientPaths = getClientPaths(devConfig);
 
-    const middleware = await devMiddleware({
-      headers,
-      publicPath: '/',
-      stats: false,
+    const middleware = await getCompilationMiddleware(this.compiler, {
       callbacks,
-      clientPaths: clientPaths,
-      clientConfig: devConfig.client,
-      liveReload: devConfig.liveReload,
-      writeToDisk: devConfig.writeToDisk,
-      serverSideRender: true,
-      // weak is enough in dev
-      // https://developer.mozilla.org/en-US/docs/Web/HTTP/Conditional_requests#weak_validation
-      etag: 'weak',
+      clientPaths,
+      devConfig,
       serverConfig,
     });
 
+    const { base } = serverConfig;
     const assetPrefixes = publicPaths
       .map(pathnameParse)
       .map((prefix) =>
@@ -230,6 +216,6 @@ export class CompilerDevMiddleware {
 
     // wrap rsbuild-dev-middleware to handle HTML file（without publicPath）
     // maybe we should serve HTML file by sirv
-    return wrapper;
+    this.middleware = wrapper;
   }
 }
