@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { createRequire } from 'node:module';
-import { isMultiCompiler } from 'src/helpers';
 import { HTML_REGEX } from '../constants';
+import { isMultiCompiler } from '../helpers';
 import { pathnameParse } from '../helpers/path';
 import type {
   EnvironmentContext,
