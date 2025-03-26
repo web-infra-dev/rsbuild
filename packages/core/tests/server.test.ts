@@ -2,7 +2,7 @@ import { rspack } from '@rspack/core';
 import {
   isClientCompiler,
   setupServerHooks,
-} from '../src/server/devMiddleware';
+} from '../src/server/compilationMiddleware';
 import { formatRoutes, printServerURLs } from '../src/server/helper';
 
 test('formatRoutes', () => {
