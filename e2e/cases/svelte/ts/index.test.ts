@@ -17,6 +17,6 @@ rspackOnlyTest(
     const count = page.locator('#count');
     await expect(count).toHaveText('Count: 2');
 
-    rsbuild.close();
+    await rsbuild.close();
   },
 );

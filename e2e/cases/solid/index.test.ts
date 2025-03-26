@@ -33,9 +33,9 @@ rspackOnlyTest(
     const button = page.locator('#button');
     await expect(button).toHaveText('count: 0');
 
-    button.click();
+    await button.click();
     await expect(button).toHaveText('count: 1');
-    rsbuild.close();
+    await rsbuild.close();
   },
 );
 
@@ -49,9 +49,9 @@ rspackOnlyTest(
     const button = page.locator('#button');
     await expect(button).toHaveText('count: 0');
 
-    button.click();
+    await button.click();
     await expect(button).toHaveText('count: 1');
-    rsbuild.close();
+    await rsbuild.close();
   },
 );
 
@@ -70,7 +70,7 @@ for (const name of ['less', 'scss', 'stylus']) {
       // use the text color to assert the compilation result
       await expect(title).toHaveCSS('color', 'rgb(255, 62, 0)');
 
-      rsbuild.close();
+      await rsbuild.close();
     },
   );
 }

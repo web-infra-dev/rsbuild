@@ -19,6 +19,6 @@ rspackOnlyTest(
     await gotoPage(page, rsbuild, 'page2');
     await expect(page.locator('#test')).toHaveText('Page 2');
 
-    rsbuild.close();
+    await rsbuild.close();
   },
 );

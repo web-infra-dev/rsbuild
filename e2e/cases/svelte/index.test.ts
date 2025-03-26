@@ -34,7 +34,7 @@ rspackOnlyTest(
 
     await expect(title).toHaveText('Hello world!');
 
-    rsbuild.close();
+    await rsbuild.close();
   },
 );
 
@@ -53,7 +53,7 @@ for (const name of ['less', 'scss', 'stylus']) {
       // use the text color to assert the compilation result
       await expect(title).toHaveCSS('color', 'rgb(255, 62, 0)');
 
-      rsbuild.close();
+      await rsbuild.close();
     },
   );
 }
