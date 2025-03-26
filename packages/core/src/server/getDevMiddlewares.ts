@@ -1,6 +1,5 @@
 import { isAbsolute, join } from 'node:path';
 import { normalizePublicDirs } from '../config';
-import { parseUrl } from '../helpers';
 import { logger } from '../logger';
 import type {
   DevConfig,
@@ -95,14 +94,8 @@ const applyDefaultMiddlewares = async ({
     middlewares.push(gzipMiddleware());
   }
 
-  middlewares.push((req, res, next) => {
-    // allow HMR request cross-domain, because the user may use global proxy
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    const path = req.url ? parseUrl(req.url)?.pathname : '';
-    if (path?.includes('hot-update')) {
-      res.setHeader('Access-Control-Allow-Credentials', 'false');
-    }
-
+  // apply `server.headers` option
+  middlewares.push((_req, res, next) => {
     // The headers configured by the user on devServer will not take effect on html requests. Add the following code to make the configured headers take effect on all requests.
     const confHeaders = server.headers;
     if (confHeaders) {

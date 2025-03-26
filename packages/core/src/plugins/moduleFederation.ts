@@ -100,6 +100,15 @@ export function pluginModuleFederation(): RsbuildPlugin {
 
       api.modifyRsbuildConfig((config) => {
         const { moduleFederation } = config;
+
+        if (api.isPluginExists('rsbuild:module-federation-enhanced')) {
+          // Allow remote modules to be loaded by setting CORS headers
+          // This is required for MF to work properly across different origins
+          // TODO: remove this after https://github.com/module-federation/core/pull/3635 is released
+          config.server ||= {};
+          config.server.cors ||= true;
+        }
+
         if (!moduleFederation?.options) {
           return;
         }
@@ -107,6 +116,11 @@ export function pluginModuleFederation(): RsbuildPlugin {
         // Change some default configs for remote modules
         if (moduleFederation.options.exposes) {
           config.dev ||= {};
+          config.server ||= {};
+
+          // Allow remote modules to be loaded by setting CORS headers
+          // This is required for MF to work properly across different origins
+          config.server.cors ||= true;
 
           // For remote modules, Rsbuild should send the ws request to the provider's dev server.
           // This allows the provider to do HMR when the provider module is loaded in the consumer's page.
