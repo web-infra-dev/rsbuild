@@ -16,26 +16,34 @@
 
 ## 示例
 
-仅为开发服务器启用 CORS：
+- 启用 CORS：
 
-```ts
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    cors: {
+      // 配置 `Access-Control-Allow-Origin` CORS 响应头
+      origin: 'https://example.com',
+    },
+  },
+};
+```
+
+- 仅为开发服务器启用 CORS：
+
+```ts title="rsbuild.config.ts"
 const isDev = process.env.NODE_ENV === 'development';
 
 export default {
   server: {
-    cors: isDev
-      ? {
-          // 配置 `Access-Control-Allow-Origin` CORS 响应头
-          origin: 'https://example.com',
-        }
-      : false,
+    cors: isDev ? { origin: 'https://example.com' } : false,
   },
 };
 ```
 
 禁用 CORS：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     cors: false,
@@ -58,13 +66,76 @@ const defaultCorsOptions = {
 };
 ```
 
-例如，使用 `origin` 选项配置 `Access-Control-Allow-Origin` 头：
+### origin
+
+- **类型：**
 
 ```ts
+type StaticOrigin =
+  | boolean
+  | string
+  | RegExp
+  | Array<boolean | string | RegExp>;
+
+type CustomOrigin = (
+  requestOrigin: string | undefined,
+  callback: (err: Error | null, origin?: StaticOrigin) => void,
+) => void;
+
+type Origin = StaticOrigin | CustomOrigin;
+```
+
+`origin` 选项用于配置 `Access-Control-Allow-Origin` 头：
+
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     cors: {
       origin: 'https://example.com',
+    },
+  },
+};
+```
+
+通过数组指定多个允许的 origin：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    cors: {
+      origin: ['https://example.com', 'https://other.com'],
+    },
+  },
+};
+```
+
+使用正则表达式来允许所有匹配的 origin：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    cors: {
+      origin: /\.example\.com$/,
+    },
+  },
+};
+```
+
+将 `origin` 设置为函数，可以动态决定允许的 origin，函数接收两个参数：
+
+- `origin`：当前请求的 origin，`undefined` 表示该请求没有 origin。
+- `callback`：一个回调函数，用于设置允许的 origin。
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    cors: {
+      origin: (origin, callback) => {
+        // loadMyOrigins is an example call to load a list of origins
+        loadMyOrigins((error, origins) => {
+          callback(error, origins);
+        });
+      },
     },
   },
 };
