@@ -39,15 +39,14 @@ const getTargetBrowser = async () => {
  * https://github.com/facebook/create-react-app/blob/master/LICENSE
  */
 async function openBrowser(url: string): Promise<boolean> {
+  const targetBrowser = await getTargetBrowser();
+
   // If we're on OS X, the user hasn't specifically
   // requested a different browser, we can try opening
   // a Chromium browser with AppleScript. This lets us reuse an
   // existing tab when possible instead of creating a new one.
-  const shouldTryOpenChromeWithAppleScript = process.platform === 'darwin';
-
-  if (shouldTryOpenChromeWithAppleScript) {
+  if (process.platform === 'darwin') {
     try {
-      const targetBrowser = await getTargetBrowser();
       if (targetBrowser) {
         // Try to reuse existing tab with AppleScript
         await execAsync(
@@ -72,7 +71,11 @@ async function openBrowser(url: string): Promise<boolean> {
   // (It will always open new tab)
   try {
     const { default: open } = await import('../../compiled/open/index.js');
-    await open(url);
+    const browserArgs = process.env.BROWSER_ARGS?.split(' ');
+    const options = targetBrowser
+      ? { app: { name: targetBrowser, arguments: browserArgs } }
+      : {};
+    await open(url, options);
     return true;
   } catch (err) {
     logger.error('Failed to open start URL.');
