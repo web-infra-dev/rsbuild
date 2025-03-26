@@ -94,7 +94,7 @@ export class CompilationManager {
 
   private serverConfig: ServerConfig;
 
-  private compiler: Rspack.Compiler | Rspack.MultiCompiler;
+  public compiler: Rspack.Compiler | Rspack.MultiCompiler;
 
   private publicPaths: string[];
 

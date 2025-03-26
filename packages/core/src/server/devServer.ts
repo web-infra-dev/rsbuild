@@ -1,7 +1,6 @@
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import type Connect from '../../compiled/connect/index.js';
-import { ROOT_DIST_DIR } from '../constants';
 import { getPublicPathFromCompiler, isMultiCompiler } from '../helpers';
 import { logger } from '../logger';
 import { onBeforeRestartServer, restartDevServer } from '../restart';
@@ -132,11 +131,12 @@ export async function createDevServer<
     config,
   });
   const { middlewareMode } = config.server;
+  const { context } = options;
   const devConfig = formatDevConfig(config.dev, port);
-  const routes = getRoutes(options.context);
-  const root = options.context.rootPath;
+  const routes = getRoutes(context);
+  const root = context.rootPath;
 
-  options.context.devServer = {
+  context.devServer = {
     hostname: host,
     port,
     https,
@@ -147,16 +147,14 @@ export async function createDevServer<
   // should register onDevCompileDone hook before startCompile
   const waitFirstCompileDone = runCompile
     ? new Promise<void>((resolve) => {
-        options.context.hooks.onDevCompileDone.tap(
-          ({ stats, isFirstCompile }) => {
-            lastStats = 'stats' in stats ? stats.stats : [stats];
+        context.hooks.onDevCompileDone.tap(({ stats, isFirstCompile }) => {
+          lastStats = 'stats' in stats ? stats.stats : [stats];
 
-            if (!isFirstCompile) {
-              return;
-            }
-            resolve();
-          },
-        );
+          if (!isFirstCompile) {
+            return;
+          }
+          resolve();
+        });
       })
     : Promise.resolve();
 
@@ -180,7 +178,7 @@ export async function createDevServer<
       },
       publicPaths: publicPaths,
       compiler,
-      environments: options.context.environments,
+      environments: context.environments,
     });
 
     await compilationManager.init();
@@ -225,7 +223,7 @@ export async function createDevServer<
     // ensure closeServer is only called once
     removeCleanup(closeServer);
     cleanupGracefulShutdown?.();
-    await options.context.hooks.onCloseDevServer.callBatch();
+    await context.hooks.onCloseDevServer.callBatch();
     await Promise.all([devMiddlewares?.close(), fileWatcher?.close()]);
   };
 
@@ -250,7 +248,7 @@ export async function createDevServer<
         help: shortcutsOptions.help,
         customShortcuts: shortcutsOptions.custom,
       });
-      options.context.hooks.onCloseDevServer.tap(cleanup);
+      context.hooks.onCloseDevServer.tap(cleanup);
     }
 
     if (!getPortSilently && portTip) {
@@ -264,7 +262,7 @@ export async function createDevServer<
   );
 
   const environmentAPI = Object.fromEntries(
-    Object.entries(options.context.environments).map(([name, environment]) => {
+    Object.entries(context.environments).map(([name, environment]) => {
       return [
         name,
         {
@@ -339,7 +337,7 @@ export async function createDevServer<
       const serverTerminator = getServerTerminator(httpServer);
       logger.debug('listen dev server');
 
-      options.context.hooks.onCloseDevServer.tap(serverTerminator);
+      context.hooks.onCloseDevServer.tap(serverTerminator);
 
       return new Promise<StartServerResult>((resolve) => {
         httpServer.listen(
@@ -382,10 +380,10 @@ export async function createDevServer<
       });
     },
     afterListen: async () => {
-      await options.context.hooks.onAfterStartDevServer.callBatch({
+      await context.hooks.onAfterStartDevServer.callBatch({
         port,
         routes,
-        environments: options.context.environments,
+        environments: context.environments,
       });
     },
     connectWebSocket: ({ server }: { server: HTTPServer }) => {
@@ -399,15 +397,15 @@ export async function createDevServer<
   };
 
   const postCallbacks = (
-    await options.context.hooks.onBeforeStartDevServer.callBatch({
+    await context.hooks.onBeforeStartDevServer.callBatch({
       server: devServerAPI,
-      environments: options.context.environments,
+      environments: context.environments,
     })
   ).filter((item) => typeof item === 'function');
 
   if (runCompile) {
     // print server url should between listen and beforeCompile
-    options.context.hooks.onBeforeCreateCompiler.tap(beforeCreateCompiler);
+    context.hooks.onBeforeCreateCompiler.tap(beforeCreateCompiler);
   } else {
     beforeCreateCompiler();
   }
@@ -425,11 +423,9 @@ export async function createDevServer<
     pwd: root,
     compilationManager,
     dev: devConfig,
+    context,
     server: config.server,
     environments: environmentAPI,
-    output: {
-      distPath: options.context.distPath || ROOT_DIST_DIR,
-    },
     postCallbacks,
   });
 

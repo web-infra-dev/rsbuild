@@ -1,9 +1,12 @@
 import { isAbsolute, join } from 'node:path';
+import rspack from '@rspack/core';
 import { normalizePublicDirs } from '../config';
+import { isMultiCompiler } from '../helpers';
 import { logger } from '../logger';
 import type {
   DevConfig,
   EnvironmentAPI,
+  InternalContext,
   RequestHandler,
   ServerConfig,
   SetupMiddlewaresServer,
@@ -25,11 +28,9 @@ export type RsbuildDevMiddlewareOptions = {
   pwd: string;
   dev: DevConfig;
   server: ServerConfig;
+  context: InternalContext;
   environments: EnvironmentAPI;
   compilationManager?: CompilationManager;
-  output: {
-    distPath: string;
-  };
   /**
    * Callbacks returned by the `onBeforeStartDevServer` hook.
    */
@@ -71,10 +72,11 @@ const applySetupMiddlewares = (
 export type Middlewares = Array<RequestHandler | [string, RequestHandler]>;
 
 const applyDefaultMiddlewares = async ({
+  dev,
   middlewares,
   server,
   compilationManager,
-  output,
+  context,
   pwd,
   environments,
   postCallbacks,
@@ -107,6 +109,23 @@ const applyDefaultMiddlewares = async ({
     );
     middlewares.push(
       corsMiddleware(typeof server.cors === 'boolean' ? {} : server.cors),
+    );
+  }
+
+  if (
+    context.action === 'dev' &&
+    context.bundlerType === 'rspack' &&
+    dev.lazyCompilation &&
+    compilationManager
+  ) {
+    const { compiler } = compilationManager;
+
+    middlewares.push(
+      rspack.experiments.lazyCompilationMiddleware(
+        // TODO: support for multi compiler
+        isMultiCompiler(compiler) ? compiler.compilers[0] : compiler,
+        dev.lazyCompilation,
+      ),
     );
   }
 
@@ -149,15 +168,11 @@ const applyDefaultMiddlewares = async ({
     });
   }
 
-  const distPath = isAbsolute(output.distPath)
-    ? output.distPath
-    : join(pwd, output.distPath);
-
   if (compilationManager) {
     middlewares.push(
       getHtmlCompletionMiddleware({
-        distPath,
         compilationManager,
+        distPath: context.distPath,
       }),
     );
   }
@@ -188,8 +203,8 @@ const applyDefaultMiddlewares = async ({
   if (compilationManager) {
     middlewares.push(
       getHtmlFallbackMiddleware({
-        distPath,
         compilationManager,
+        distPath: context.distPath,
         htmlFallback: server.htmlFallback,
       }),
     );
