@@ -47,7 +47,7 @@ export class SocketServer {
     this.initialChunks = {};
   }
 
-  public upgrade(req: IncomingMessage, sock: Socket, head: any): void {
+  public upgrade = (req: IncomingMessage, sock: Socket, head: any): void => {
     // subscribe upgrade event to handle socket
 
     if (!this.wsServer.shouldHandle(req)) {
@@ -57,7 +57,7 @@ export class SocketServer {
     this.wsServer.handleUpgrade(req, sock, head, (connection) => {
       this.wsServer.emit('connection', connection, req);
     });
-  }
+  };
 
   // detect and close broken connections
   // https://github.com/websockets/ws/blob/8.18.0/README.md#how-to-detect-and-close-broken-connections

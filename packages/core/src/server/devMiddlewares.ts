@@ -136,11 +136,7 @@ const applyDefaultMiddlewares = async ({
     middlewares.push(compilationManager.middleware);
 
     // subscribe upgrade event to handle websocket
-    upgradeEvents.push(
-      compilationManager.socketServer.upgrade.bind(
-        compilationManager.socketServer,
-      ),
-    );
+    upgradeEvents.push(compilationManager.socketServer.upgrade);
 
     middlewares.push((req, res, next) => {
       // [prevFullHash].hot-update.json will 404 (expected) when rsbuild restart and some file changed
