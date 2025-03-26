@@ -1,4 +1,4 @@
-import { build, dev } from '@e2e/helper';
+import { build, dev, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should include CORS headers for dev server if `cors` is `true`', async ({
@@ -41,25 +41,28 @@ test('should include CORS headers for preview server if `cors` is `true`', async
   await rsbuild.close();
 });
 
-test('should include CORS headers for MF', async ({ page, request }) => {
-  const rsbuild = await dev({
-    cwd: __dirname,
-    page,
-    rsbuildConfig: {
-      moduleFederation: {
-        options: {
-          name: 'foo',
-          exposes: {},
+rspackOnlyTest(
+  'should include CORS headers for MF',
+  async ({ page, request }) => {
+    const rsbuild = await dev({
+      cwd: __dirname,
+      page,
+      rsbuildConfig: {
+        moduleFederation: {
+          options: {
+            name: 'foo',
+            exposes: {},
+          },
         },
       },
-    },
-  });
+    });
 
-  const response = await request.get(`http://127.0.0.1:${rsbuild.port}`);
-  expect(response.headers()['access-control-allow-origin']).toEqual('*');
+    const response = await request.get(`http://127.0.0.1:${rsbuild.port}`);
+    expect(response.headers()['access-control-allow-origin']).toEqual('*');
 
-  await rsbuild.close();
-});
+    await rsbuild.close();
+  },
+);
 
 test('should not include CORS headers for dev server if `cors` is `false`', async ({
   page,
