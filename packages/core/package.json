@@ -60,6 +60,7 @@
   "devDependencies": {
     "@rslib/core": "0.5.5",
     "@types/connect": "3.4.38",
+    "@types/cors": "^2.8.17",
     "@types/node": "^22.13.11",
     "@types/on-finished": "2.3.4",
     "@types/webpack-bundle-analyzer": "4.7.0",

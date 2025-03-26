@@ -621,6 +621,9 @@ importers:
       '@types/connect':
         specifier: 3.4.38
         version: 3.4.38
+      '@types/cors':
+        specifier: ^2.8.17
+        version: 2.8.17
       '@types/node':
         specifier: ^22.13.11
         version: 22.13.11
