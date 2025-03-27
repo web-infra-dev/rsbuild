@@ -5,7 +5,7 @@ import { expect, test } from '@playwright/test';
 import { pluginSvelte } from '@rsbuild/plugin-svelte';
 
 rspackOnlyTest('HMR should work properly', async ({ page }) => {
-  // HMR cases will fail in Windows
+  // HMR cases will fail on Windows
   if (process.platform === 'win32') {
     test.skip();
   }
