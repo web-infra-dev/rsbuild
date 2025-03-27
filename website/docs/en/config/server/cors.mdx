@@ -1,7 +1,18 @@
 # server.cors
 
 - **Type:** `boolean | import('cors').CorsOptions`
-- **Default:** `false`
+
+```ts
+const defaultCorsOptions = {
+  // Default allowed:
+  // - localhost
+  // - 127.0.0.1
+  // - [::1]
+  origin:
+    /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/,
+};
+```
+
 - **Version:** `>= 1.1.11`
 
 Configure [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) options for the dev server or preview server, based on the [cors](https://github.com/expressjs/cors) middleware.
@@ -114,7 +125,10 @@ Specify multiple allowed origins using an array:
 export default {
   server: {
     cors: {
-      origin: ['https://example.com', 'https://other.com'],
+      origin: [
+        /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/,
+        'https://example.com',
+      ],
     },
   },
 };

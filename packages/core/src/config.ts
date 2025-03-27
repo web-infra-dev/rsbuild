@@ -73,6 +73,15 @@ const getDefaultDevConfig = (): NormalizedDevConfig => ({
   },
 });
 
+/**
+ * Default allowed origins for CORS.
+ * - localhost
+ * - 127.0.0.1
+ * - [::1]
+ */
+export const LOCAL_ORIGINS_REGEX: RegExp =
+  /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/;
+
 const getDefaultServerConfig = (): NormalizedServerConfig => ({
   port: DEFAULT_PORT,
   host: DEFAULT_DEV_HOST,
@@ -82,7 +91,9 @@ const getDefaultServerConfig = (): NormalizedServerConfig => ({
   compress: true,
   printUrls: true,
   strictPort: false,
-  cors: false,
+  cors: {
+    origin: LOCAL_ORIGINS_REGEX,
+  },
   middlewareMode: false,
 });
 
