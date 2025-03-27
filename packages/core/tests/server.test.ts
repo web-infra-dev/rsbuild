@@ -1,4 +1,5 @@
 import { rspack } from '@rspack/core';
+import { LOCAL_ORIGINS_REGEX } from '../src/config';
 import {
   isClientCompiler,
   setupServerHooks,
@@ -306,4 +307,36 @@ describe('test dev server', () => {
       ),
     ).toBeFalsy();
   });
+});
+
+test('local origins regex', () => {
+  expect(LOCAL_ORIGINS_REGEX.test('http://localhost:3000')).toBeTruthy();
+  expect(LOCAL_ORIGINS_REGEX.test('http://foo.localhost:3000')).toBeTruthy();
+  expect(LOCAL_ORIGINS_REGEX.test('http://127.0.0.1:3000')).toBeTruthy();
+  expect(LOCAL_ORIGINS_REGEX.test('http://[::1]:3000')).toBeTruthy();
+
+  // HTTPS protocols
+  expect(LOCAL_ORIGINS_REGEX.test('https://localhost:3000')).toBeTruthy();
+  expect(LOCAL_ORIGINS_REGEX.test('https://127.0.0.1:8080')).toBeTruthy();
+  expect(LOCAL_ORIGINS_REGEX.test('https://foo.localhost:3000')).toBeTruthy();
+  expect(LOCAL_ORIGINS_REGEX.test('https://[::1]:3000')).toBeTruthy();
+
+  // Without port
+  expect(LOCAL_ORIGINS_REGEX.test('http://localhost')).toBeTruthy();
+  expect(LOCAL_ORIGINS_REGEX.test('https://127.0.0.1')).toBeTruthy();
+  expect(LOCAL_ORIGINS_REGEX.test('http://[::1]')).toBeTruthy();
+
+  // Multi-level subdomains
+  expect(
+    LOCAL_ORIGINS_REGEX.test('http://test.dev.localhost:8000'),
+  ).toBeTruthy();
+
+  // High port
+  expect(LOCAL_ORIGINS_REGEX.test('http://localhost:65535')).toBeTruthy();
+
+  // Invalid cases
+  expect(LOCAL_ORIGINS_REGEX.test('http://example.com')).toBeFalsy();
+  expect(LOCAL_ORIGINS_REGEX.test('http://192.168.1.1:3000')).toBeFalsy();
+  expect(LOCAL_ORIGINS_REGEX.test('ftp://localhost:21')).toBeFalsy();
+  expect(LOCAL_ORIGINS_REGEX.test('localhost')).toBeFalsy(); //
 });

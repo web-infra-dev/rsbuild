@@ -28,6 +28,9 @@ test('OPTIONS request should response correctly with middleware responses', asyn
     cwd: __dirname,
     page,
     rsbuildConfig: {
+      server: {
+        cors: false,
+      },
       dev: {
         setupMiddlewares: [
           (middlewares) => {

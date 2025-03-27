@@ -1,7 +1,19 @@
 # server.cors
 
 - **类型：** `boolean | import('cors').CorsOptions`
-- **默认值：** `false`
+- **默认值：**
+
+```ts
+const defaultCorsOptions = {
+  // 默认允许：
+  // - localhost
+  // - 127.0.0.1
+  // - [::1]
+  origin:
+    /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/,
+};
+```
+
 - **版本：** `>= 1.1.11`
 
 为开发服务器和预览服务器配置 [CORS](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CORS) 选项，基于 [cors](https://github.com/expressjs/cors) 中间件实现。
@@ -11,7 +23,7 @@
 - `false`：禁用 CORS。
 
 :::warning
-使用 `cors: true` 或 `cors.origin: '*'` 会使您的开发服务器对所有 origin 开放，这可能会危及源代码的安全性，建议使用 [origin](#origin) 选项指定一个受信任 origins 的白名单。
+使用 `cors: true` 或 `cors.origin: '*'` 会使你的开发服务器对所有 origin 开放，这可能会危及源代码的安全性，建议使用 [origin](#origin) 选项指定一个受信任 origins 的白名单。
 :::
 
 ## 示例
@@ -114,7 +126,10 @@ export default {
 export default {
   server: {
     cors: {
-      origin: ['https://example.com', 'https://other.com'],
+      origin: [
+        /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/,
+        'https://example.com',
+      ],
     },
   },
 };
