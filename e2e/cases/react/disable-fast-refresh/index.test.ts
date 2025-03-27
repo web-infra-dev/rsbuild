@@ -8,7 +8,7 @@ const cwd = __dirname;
 rspackOnlyTest(
   'HMR should work when Fast Refresh is disabled',
   async ({ page }) => {
-    // HMR cases will fail in Windows
+    // HMR cases will fail on Windows
     if (process.platform === 'win32') {
       test.skip();
     }

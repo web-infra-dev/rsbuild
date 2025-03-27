@@ -29,7 +29,7 @@ export default Button;`,
 rspackOnlyTest(
   'should run module federation in development mode',
   async ({ page }) => {
-    // this case often timeout in Windows
+    // this case often timeout on Windows
     if (process.platform === 'win32') {
       test.skip();
     }
@@ -64,7 +64,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'should allow remote module to perform HMR',
   async ({ page }) => {
-    // HMR cases will fail in Windows
+    // HMR cases will fail on Windows
     if (process.platform === 'win32') {
       test.skip();
     }

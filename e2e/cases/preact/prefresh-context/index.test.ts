@@ -5,7 +5,7 @@ import { expect, test } from '@playwright/test';
 
 // TODO: broken since preact 10.26.4
 test.skip('HMR should work properly with `createContext`', async ({ page }) => {
-  // HMR cases will fail in Windows
+  // HMR cases will fail on Windows
   if (process.platform === 'win32') {
     test.skip();
   }

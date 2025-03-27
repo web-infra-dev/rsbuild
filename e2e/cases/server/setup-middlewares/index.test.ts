@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test';
 test('should apply custom middleware via `setupMiddlewares`', async ({
   page,
 }) => {
-  // HMR cases will fail in Windows
+  // HMR cases will fail on Windows
   if (process.platform === 'win32') {
     test.skip();
   }
