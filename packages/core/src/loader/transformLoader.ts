@@ -33,6 +33,8 @@ export default async function transform(
       resourceQuery: this.resourceQuery,
       environment: getEnvironment(),
       addDependency: this.addDependency.bind(this),
+      addMissingDependency: this.addMissingDependency.bind(this),
+      addContextDependency: this.addContextDependency.bind(this),
       emitFile: this.emitFile.bind(this),
       importModule: this.importModule.bind(this),
       resolve: this.resolve.bind(this),
