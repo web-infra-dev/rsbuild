@@ -6,17 +6,17 @@
 
 为开发服务器和预览服务器配置 [CORS](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CORS) 选项，基于 [cors](https://github.com/expressjs/cors) 中间件实现。
 
-- `true`：启用 CORS 并使用默认选项。
-- `false`：禁用 CORS。
 - `object`：启用 CORS 并使用指定的选项。
+- `true`：启用 CORS 并使用默认选项（允许所有 origin，不推荐）。
+- `false`：禁用 CORS。
 
-:::tip
-虽然 `cors` 可以设置为 `true`，但我们建议设置一个指定的 `origin` 选项，以防止不受信任的 origin 访问你的开发服务器。
+:::warning
+使用 `cors: true` 或 `cors.origin: '*'` 会使您的开发服务器对所有 origin 开放，这可能会危及源代码的安全性，建议使用 [origin](#origin) 选项指定一个受信任 origins 的白名单。
 :::
 
 ## 示例
 
-- 启用 CORS：
+- 为特定 origin 启用 CORS：
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -41,12 +41,23 @@ export default {
 };
 ```
 
-禁用 CORS（默认行为）：
+- 禁用 CORS：
 
 ```ts title="rsbuild.config.ts"
 export default {
   server: {
     cors: false,
+  },
+};
+```
+
+- 为所有 origin 启用 CORS（不推荐）：
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    // 等价于 `{ origin: '*' }`
+    cors: true,
   },
 };
 ```

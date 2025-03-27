@@ -6,17 +6,17 @@
 
 Configure [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) options for the dev server or preview server, based on the [cors](https://github.com/expressjs/cors) middleware.
 
-- `true`：Enable CORS with default options.
-- `false`：Disable CORS.
 - `object`：Enable CORS with the specified options.
+- `true`：Enable CORS with default options (allow all origins, not recommended).
+- `false`：Disable CORS.
 
-:::tip
-Although `cors` can be set to `true`, we recommend setting a specified `origin` option to prevent untrusted origins from accessing your dev server.
+:::warning
+Using `cors: true` or `cors.origin: '*'` exposes your dev server to all origins, potentially compromising your source code security. It is recommended to use [origin](#origin) option to specify an allowlist of trusted origins instead.
 :::
 
 ## Example
 
-- Enable CORS:
+- Enable CORS for a specific origin:
 
 ```ts title="rsbuild.config.ts"
 export default {
@@ -41,12 +41,23 @@ export default {
 };
 ```
 
-- Disable CORS (default behavior):
+- Disable CORS:
 
 ```ts title="rsbuild.config.ts"
 export default {
   server: {
     cors: false,
+  },
+};
+```
+
+- Enable CORS for all origins (not recommended):
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    // Equivalent to `{ origin: '*' }`
+    cors: true,
   },
 };
 ```
