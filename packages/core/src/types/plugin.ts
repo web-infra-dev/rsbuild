@@ -282,6 +282,17 @@ export type TransformContext = {
    */
   addDependency: (file: string) => void;
   /**
+   * Add a directory as dependency of the loader result.
+   * @param context The absolute path of the directory
+   */
+  addContextDependency(context: string): void;
+  /**
+   * Add a non-existing file as a dependency of the loader result in order to make them watchable.
+   * Similar to addDependency, but handles the creation of files during compilation before watchers are attached correctly.
+   * @param file The absolute path of the module
+   */
+  addMissingDependency(file: string): void;
+  /**
    * Emits a file to the build output.
    * @param name file name of the asset
    * @param content the source of the asset
