@@ -18,10 +18,28 @@ permissions:
   issues: write
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    if: github.repository == 'web-infra-dev/rsbuild' && github.event_name != 'workflow_dispatch'
+    outputs:
+      changed: ${{ steps.changes.outputs.changed }}
+    steps:
+      - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
+        id: changes
+        with:
+          predicate-quantifier: 'every'
+          filters: |
+            changed:
+              - "!**/*.md"
+              - "!**/*.mdx"
+              - "!**/_meta.json"
+              - "!**/dictionary.txt"
+
   ecosystem_ci_notify:
     name: Run Ecosystem CI With Notify
+    needs: changes
     runs-on: ubuntu-latest
-    if: github.repository == 'web-infra-dev/rsbuild' && github.event_name != 'workflow_dispatch' && !startsWith(github.event.head_commit.message, 'docs')
+    if: github.repository == 'web-infra-dev/rsbuild' && github.event_name != 'workflow_dispatch' && needs.changes.outputs.changed == 'true'
     steps:
       - name: Run Ecosystem CI with notify
         id: eco_ci
