@@ -20,7 +20,7 @@ permissions:
 jobs:
   changes:
     runs-on: ubuntu-latest
-    if: github.repository == 'web-infra-dev/rsbuild'
+    if: github.repository == 'web-infra-dev/rsbuild' && github.event_name != 'workflow_dispatch'
     outputs:
       changed: ${{ steps.changes.outputs.changed }}
     steps:
@@ -113,7 +113,6 @@ jobs:
 
   ecosystem_ci:
     name: Run Ecosystem CI
-    needs: changes
     runs-on: ubuntu-latest
     if: github.repository == 'web-infra-dev/rsbuild' && github.event_name == 'workflow_dispatch'
     steps:
