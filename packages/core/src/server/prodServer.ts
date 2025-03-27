@@ -90,7 +90,7 @@ export class RsbuildProdServer {
     }
 
     // apply `server.headers` option
-    // Note that `server.headers` can override `server.cors`
+    // `server.headers` can override `server.cors`
     if (headers) {
       this.middlewares.use((_req, res, next) => {
         for (const [key, value] of Object.entries(headers)) {
