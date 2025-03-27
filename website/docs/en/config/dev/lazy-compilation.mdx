@@ -33,7 +33,7 @@ Although Rspack itself has good performance, the overall build time can still be
 Lazy compilation is an effective strategy to improve the startup performance of the development phase. Instead of compiling all modules at initialization, it compiles modules on demand as they're needed. This means that developers can quickly see the application running when starting the dev server, and build the required modules in batches. By compiling on demand, unnecessary compilation time can be reduced. As the project scales up, compilation time does not significantly increase, which greatly enhances the development experience.
 
 :::tip
-Lazy compilation only takes effect during development and has no impact on production builds.
+Lazy compilation is only effective for dev builds and does not affect production builds.
 :::
 
 ## Example

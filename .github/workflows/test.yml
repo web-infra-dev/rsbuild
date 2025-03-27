@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        # run ut in macOS, as SWC cases will fail in Ubuntu CI
+        # run ut on macOS, as SWC cases will fail on Ubuntu CI
         os: [macos-14, windows-latest]
 
     steps:

@@ -70,7 +70,7 @@ export default {
 The above two methods match the absolute paths of files using "path prefixes" and "regular expressions" respectively. It is worth noting that all referenced modules in the project will be matched. Therefore, you should avoid using overly loose values for matching to prevent compilation performance issues or compilation errors.
 
 :::tip
-In the regular expression example, we use `[\\/]` to match the path separator because different operating systems use different path separators. Using `[\\/]` ensures that the paths can be matched in macOS, Linux and Windows.
+In the regular expression example, we use `[\\/]` to match the path separator because different operating systems use different path separators. Using `[\\/]` ensures that the paths can be matched on macOS, Linux and Windows.
 :::
 
 ## Compile sub dependencies

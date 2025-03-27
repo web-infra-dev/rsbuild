@@ -6,7 +6,7 @@ import { expect, test } from '@playwright/test';
 const cwd = __dirname;
 
 rspackOnlyTest('HMR should work by default', async ({ page }) => {
-  // HMR cases will fail in Windows
+  // HMR cases will fail on Windows
   if (process.platform === 'win32') {
     test.skip();
   }
@@ -62,7 +62,7 @@ rspackOnlyTest('HMR should work by default', async ({ page }) => {
 rspackOnlyTest(
   'HMR should work when setting dev.port & client',
   async ({ page }) => {
-    // HMR cases will fail in Windows
+    // HMR cases will fail on Windows
     if (process.platform === 'win32') {
       test.skip();
     }
@@ -112,7 +112,7 @@ rspackOnlyTest(
 rspackOnlyTest(
   'HMR should work when dev.port is `<port>`',
   async ({ page }) => {
-    // HMR cases will fail in Windows
+    // HMR cases will fail on Windows
     if (process.platform === 'win32') {
       test.skip();
     }

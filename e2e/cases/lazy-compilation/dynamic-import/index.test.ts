@@ -8,7 +8,7 @@ import {
 import { expect, test } from '@playwright/test';
 
 rspackOnlyTest(
-  'should render pages correctly when using lazy compilation',
+  'should lazy compile dynamic imported modules',
   async ({ page }) => {
     // TODO fix this case on Windows
     if (process.platform === 'win32') {
@@ -18,21 +18,17 @@ rspackOnlyTest(
     const { logs, restore } = proxyConsole();
     const rsbuild = await dev({
       cwd: __dirname,
+      page,
     });
 
-    await gotoPage(page, rsbuild, 'page1');
-    await expect(page.locator('#test')).toHaveText('Page 1');
     await expectPoll(() =>
-      logs.some((log) => log.includes('building src/page1/index.js')),
+      logs.some((log) => log.includes('building src/index.js')),
     ).toBeTruthy();
-    expect(
-      logs.some((log) => log.includes('building src/page2/index.js')),
-    ).toBeFalsy();
+    expect(logs.some((log) => log.includes('building src/foo.js'))).toBeFalsy();
 
-    await gotoPage(page, rsbuild, 'page2');
-    await expect(page.locator('#test')).toHaveText('Page 2');
+    await gotoPage(page, rsbuild, 'index');
     await expectPoll(() =>
-      logs.some((log) => log.includes('building src/page2/index.js')),
+      logs.some((log) => log.includes('building src/foo.js')),
     ).toBeTruthy();
 
     await rsbuild.close();
