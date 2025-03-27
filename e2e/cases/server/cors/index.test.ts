@@ -133,3 +133,53 @@ test('should allow to configure CORS', async ({ page, request }) => {
 
   await rsbuild.close();
 });
+
+test('`server.headers` should override `server.cors` for dev server', async ({
+  page,
+  request,
+}) => {
+  const rsbuild = await dev({
+    cwd: __dirname,
+    page,
+    rsbuildConfig: {
+      server: {
+        cors: true,
+        headers: {
+          'Access-Control-Allow-Origin': 'https://example.com',
+        },
+      },
+    },
+  });
+
+  const response = await request.get(`http://127.0.0.1:${rsbuild.port}`);
+  expect(response.headers()['access-control-allow-origin']).toEqual(
+    'https://example.com',
+  );
+
+  await rsbuild.close();
+});
+
+test('`server.headers` should override `server.cors` for preview server', async ({
+  page,
+  request,
+}) => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    page,
+    rsbuildConfig: {
+      server: {
+        cors: true,
+        headers: {
+          'Access-Control-Allow-Origin': 'https://example.com',
+        },
+      },
+    },
+  });
+
+  const response = await request.get(`http://127.0.0.1:${rsbuild.port}`);
+  expect(response.headers()['access-control-allow-origin']).toEqual(
+    'https://example.com',
+  );
+
+  await rsbuild.close();
+});

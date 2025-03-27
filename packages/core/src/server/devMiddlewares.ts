@@ -91,18 +91,6 @@ const applyDefaultMiddlewares = async ({
     middlewares.push(gzipMiddleware());
   }
 
-  // apply `server.headers` option
-  middlewares.push((_req, res, next) => {
-    // The headers configured by the user on devServer will not take effect on html requests. Add the following code to make the configured headers take effect on all requests.
-    const confHeaders = server.headers;
-    if (confHeaders) {
-      for (const [key, value] of Object.entries(confHeaders)) {
-        res.setHeader(key, value);
-      }
-    }
-    next();
-  });
-
   if (server.cors) {
     const { default: corsMiddleware } = await import(
       '../../compiled/cors/index.js'
@@ -110,6 +98,19 @@ const applyDefaultMiddlewares = async ({
     middlewares.push(
       corsMiddleware(typeof server.cors === 'boolean' ? {} : server.cors),
     );
+  }
+
+  // apply `server.headers` option
+  const { headers } = server;
+  if (headers) {
+    // Note that `server.headers` can override `server.cors`
+    middlewares.push((_req, res, next) => {
+      for (const [key, value] of Object.entries(headers)) {
+        console.log('set header', key, value);
+        res.setHeader(key, value);
+      }
+      next();
+    });
   }
 
   if (
