@@ -106,7 +106,6 @@ const applyDefaultMiddlewares = async ({
   if (headers) {
     middlewares.push((_req, res, next) => {
       for (const [key, value] of Object.entries(headers)) {
-        console.log('set header', key, value);
         res.setHeader(key, value);
       }
       next();
