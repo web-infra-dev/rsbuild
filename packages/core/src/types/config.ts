@@ -420,9 +420,9 @@ export interface ServerConfig {
       };
   /**
    * Configure CORS for the dev server or preview server.
-   * - true: enable CORS with default options.
-   * - false: disable CORS.
    * - object: enable CORS with the specified options.
+   * - true: enable CORS with default options (allow all origins, not recommended).
+   * - false: disable CORS.
    * @default false
    * @link https://github.com/expressjs/cors
    */
