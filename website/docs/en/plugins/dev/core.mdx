@@ -310,7 +310,7 @@ The `handler` function provides the following params:
 - `environment`: The [environment context](/api/javascript-api/environment-api#environment-context) for current build.
 - `addDependency`: Add an additional file as the dependency. The file will be watched and changes to the file will trigger rebuild. The same as Rspack loader's [this.addDependency](https://rspack.dev/api/loader-api/context#thisadddependency).
 - `addMissingDependency`: Add an non-existing file as the dependency. The file will be watched and changes to the file will trigger rebuild. The same as Rspack loader's [this.addMissingDependency](https://rspack.dev/api/loader-api/context#thisaddmissingdependency).
-- `addContextDependency`: Add an additional directory as the dependency. The file will be watched and changes to the directory will trigger rebuild. The same as Rspack loader's [this.addContextDependency](https://rspack.dev/api/loader-api/context#thisaddcontextdependency).
+- `addContextDependency`: Add an additional directory as the dependency. The directory will be watched and changes to the directory will trigger rebuild. The same as Rspack loader's [this.addContextDependency](https://rspack.dev/api/loader-api/context#thisaddcontextdependency).
 - `emitFile`: Emits a file to the build output. The same as Rspack loader's [this.emitFile](https://rspack.dev/api/loader-api/context#thisemitfile).
 - `importModule`: Compile and execute a module at the build time. The same as Rspack loader's [this.importModule](https://rspack.dev/api/loader-api/context#thisimportmodule).
 
