@@ -215,7 +215,7 @@ For example, set the env mode as `test`:
 npx rsbuild dev --env-mode test
 ```
 
-Rsbuild will then read the following files in sequence:
+Rsbuild will read these files in the following order and merge their contents. If the same environment variable is defined in multiple files, values from files loaded later will override those from files loaded earlier:
 
 - .env
 - .env.local
