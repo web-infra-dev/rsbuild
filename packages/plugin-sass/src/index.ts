@@ -126,11 +126,6 @@ export const pluginSass = (
         .resolve.preferRelative(true)
         .end();
 
-      const inlineRule = chain.module
-        .rule(findRuleId(chain, CHAIN_ID.RULE.SASS_INLINE))
-        .test(include)
-        .resourceQuery(/inline/);
-
       // Support for importing raw Sass files
       chain.module
         .rule(CHAIN_ID.RULE.SASS_RAW)
@@ -140,12 +135,20 @@ export const pluginSass = (
 
       // Update the normal rule and the inline rule
       const updateRules = (
-        callback: (
-          rule: RspackChain.Rule,
-          type: 'normal' | 'inline',
-        ) => Promise<void>,
-      ) =>
-        Promise.all([callback(rule, 'normal'), callback(inlineRule, 'inline')]);
+        callback: (rule: RspackChain.Rule, type: 'normal' | 'inline') => void,
+      ) => {
+        callback(rule, 'normal');
+
+        // Rsbuild < 1.3.0 does not have RULE.CSS_INLINE.
+        if (chain.module.rules.has(CHAIN_ID.RULE.CSS_INLINE)) {
+          const inlineRule = chain.module
+            .rule(findRuleId(chain, CHAIN_ID.RULE.SASS_INLINE))
+            .test(include)
+            .resourceQuery(/inline/);
+
+          callback(inlineRule, 'inline');
+        }
+      };
 
       const sassLoaderPath = path.join(
         __dirname,
@@ -165,7 +168,7 @@ export const pluginSass = (
         sourceMap: false,
       };
 
-      await updateRules(async (rule, type) => {
+      updateRules((rule, type) => {
         for (const item of excludes) {
           rule.exclude.add(item);
         }

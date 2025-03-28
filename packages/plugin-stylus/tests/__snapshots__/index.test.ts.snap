@@ -52,6 +52,11 @@ exports[`plugin-stylus > should add stylus loader config correctly 1`] = `
     ],
   },
   {
+    "resourceQuery": /raw/,
+    "test": /\\\\\\.styl\\(us\\)\\?\\$/,
+    "type": "asset/source",
+  },
+  {
     "resourceQuery": /inline/,
     "test": /\\\\\\.styl\\(us\\)\\?\\$/,
     "use": [
@@ -82,11 +87,6 @@ exports[`plugin-stylus > should add stylus loader config correctly 1`] = `
         },
       },
     ],
-  },
-  {
-    "resourceQuery": /raw/,
-    "test": /\\\\\\.styl\\(us\\)\\?\\$/,
-    "type": "asset/source",
   },
 ]
 `;
@@ -146,6 +146,11 @@ exports[`plugin-stylus > should allow to configure stylus options 1`] = `
     ],
   },
   {
+    "resourceQuery": /raw/,
+    "test": /\\\\\\.styl\\(us\\)\\?\\$/,
+    "type": "asset/source",
+  },
+  {
     "resourceQuery": /inline/,
     "test": /\\\\\\.styl\\(us\\)\\?\\$/,
     "use": [
@@ -179,11 +184,6 @@ exports[`plugin-stylus > should allow to configure stylus options 1`] = `
         },
       },
     ],
-  },
-  {
-    "resourceQuery": /raw/,
-    "test": /\\\\\\.styl\\(us\\)\\?\\$/,
-    "type": "asset/source",
   },
 ]
 `;
