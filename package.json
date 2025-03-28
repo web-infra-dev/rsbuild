@@ -53,10 +53,10 @@
     "typescript": "^5.8.2",
     "vitest": "^3.0.9"
   },
-  "packageManager": "pnpm@10.6.1",
+  "packageManager": "pnpm@10.7.0",
   "engines": {
     "node": ">=18.0.0",
-    "pnpm": ">=10.6.1"
+    "pnpm": ">=10.7.0"
   },
   "pnpm": {
     "patchedDependencies": {
