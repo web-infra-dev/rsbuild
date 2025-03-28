@@ -80,15 +80,6 @@ export class RsbuildProdServer {
       );
     }
 
-    if (headers) {
-      this.middlewares.use((_req, res, next) => {
-        for (const [key, value] of Object.entries(headers)) {
-          res.setHeader(key, value);
-        }
-        next();
-      });
-    }
-
     if (cors) {
       const { default: corsMiddleware } = await import(
         '../../compiled/cors/index.js'
@@ -96,6 +87,17 @@ export class RsbuildProdServer {
       this.middlewares.use(
         corsMiddleware(typeof cors === 'boolean' ? {} : cors),
       );
+    }
+
+    // apply `server.headers` option
+    // `server.headers` can override `server.cors`
+    if (headers) {
+      this.middlewares.use((_req, res, next) => {
+        for (const [key, value] of Object.entries(headers)) {
+          res.setHeader(key, value);
+        }
+        next();
+      });
     }
 
     if (proxy) {

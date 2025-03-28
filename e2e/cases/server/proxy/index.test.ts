@@ -52,9 +52,7 @@ test('should handle proxy error correctly', async ({ page }) => {
         },
       },
       server: {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
+        cors: true,
         proxy: [
           {
             context: ['/api'],
