@@ -116,23 +116,6 @@ export default defineConfig({
       output: {
         minify: nodeMinifyConfig,
       },
-      footer: {
-        // TODO https://github.com/web-infra-dev/rslib/issues/351
-        js: `// Annotate the CommonJS export names for ESM import in node:
-0 && (module.exports = {
-  PLUGIN_CSS_NAME,
-  PLUGIN_SWC_NAME,
-  createRsbuild,
-  defineConfig,
-  ensureAssetPrefix,
-  loadConfig,
-  loadEnv,
-  logger,
-  mergeRsbuildConfig,
-  rspack,
-  version
-});`,
-      },
     },
     {
       id: 'esm:client',
