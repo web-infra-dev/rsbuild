@@ -13,7 +13,9 @@ const supportedChromiumBrowsers = [
   'Google Chrome Dev',
   'Google Chrome Beta',
   'Google Chrome',
+  'chrome',
   'Microsoft Edge',
+  'edge',
   'Brave Browser',
   'Vivaldi',
   'Chromium',
@@ -24,7 +26,12 @@ const getTargetBrowser = async () => {
   let targetBrowser = process.env.BROWSER;
   // If user setting not found or not support, use opening browser first
   if (!targetBrowser || !supportedChromiumBrowsers.includes(targetBrowser)) {
-    const { stdout: ps } = await execAsync('ps cax');
+    const { stdout: ps } =
+      process.platform === 'darwin'
+        ? await execAsync('ps cax')
+        : process.platform === 'win32'
+          ? await execAsync('tasklist')
+          : await execAsync('ps');
     targetBrowser = supportedChromiumBrowsers.find((b) => ps.includes(b));
   }
   return targetBrowser;
