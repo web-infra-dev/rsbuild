@@ -101,7 +101,7 @@ const applyDefaultMiddlewares = async ({
   }
 
   // apply `server.headers` option
-  // server.headers` can override `server.cors`
+  // `server.headers` can override `server.cors`
   const { headers } = server;
   if (headers) {
     middlewares.push((_req, res, next) => {
