@@ -1,4 +1,4 @@
-import { RsbuildPluginAPI, createRsbuild } from '@rsbuild/core';
+import { type RsbuildPluginAPI, createRsbuild } from '@rsbuild/core';
 import { matchRules } from '@scripts/test-helper';
 import { pluginSass } from '../src';
 
