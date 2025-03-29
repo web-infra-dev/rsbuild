@@ -95,6 +95,18 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
         .resolve.preferRelative(true)
         .end();
 
+      // Rsbuild < 1.3.0 does not have CSS inline rule
+      const supportInline =
+        CHAIN_ID.RULE.CSS_INLINE &&
+        chain.module.rules.has(CHAIN_ID.RULE.CSS_INLINE);
+
+      const inlineRule = supportInline
+        ? chain.module
+            .rule(CHAIN_ID.RULE.STYLUS_INLINE)
+            .test(test)
+            .resourceQuery(/inline/)
+        : null;
+
       // Support for importing raw Stylus files
       chain.module
         .rule(CHAIN_ID.RULE.STYLUS_RAW)
@@ -107,14 +119,7 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
         callback: (rule: RspackChain.Rule, type: 'normal' | 'inline') => void,
       ) => {
         callback(rule, 'normal');
-
-        // Rsbuild < 1.3.0 does not have RULE.CSS_INLINE.
-        if (chain.module.rules.has(CHAIN_ID.RULE.CSS_INLINE)) {
-          const inlineRule = chain.module
-            .rule(CHAIN_ID.RULE.STYLUS_INLINE)
-            .test(test)
-            .resourceQuery(/inline/);
-
+        if (inlineRule) {
           callback(inlineRule, 'inline');
         }
       };
