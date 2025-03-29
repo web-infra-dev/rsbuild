@@ -27,11 +27,9 @@ const getTargetBrowser = async () => {
   // If user setting not found or not support, use opening browser first
   if (!targetBrowser || !supportedChromiumBrowsers.includes(targetBrowser)) {
     const { stdout: ps } =
-      process.platform === 'darwin'
-        ? await execAsync('ps cax')
-        : process.platform === 'win32'
-          ? await execAsync('tasklist')
-          : await execAsync('ps');
+      process.platform === 'win32'
+        ? await execAsync('tasklist')
+        : await execAsync('ps cax');
     targetBrowser = supportedChromiumBrowsers.find((b) => ps.includes(b));
   }
   return targetBrowser;
