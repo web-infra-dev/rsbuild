@@ -149,6 +149,18 @@ export const pluginLess = (
         .resolve.preferRelative(true)
         .end();
 
+      // Rsbuild < 1.3.0 does not have CSS inline rule
+      const supportInline =
+        CHAIN_ID.RULE.CSS_INLINE &&
+        chain.module.rules.has(CHAIN_ID.RULE.CSS_INLINE);
+
+      const inlineRule = supportInline
+        ? chain.module
+            .rule(findRuleId(chain, CHAIN_ID.RULE.LESS_INLINE))
+            .test(include)
+            .resourceQuery(/inline/)
+        : null;
+
       // Support for importing raw Less files
       chain.module
         .rule(CHAIN_ID.RULE.LESS_RAW)
@@ -168,13 +180,7 @@ export const pluginLess = (
         callback: (rule: RspackChain.Rule, type: 'normal' | 'inline') => void,
       ) => {
         callback(rule, 'normal');
-
-        // Rsbuild < 1.3.0 does not have RULE.CSS_INLINE.
-        if (chain.module.rules.has(CHAIN_ID.RULE.CSS_INLINE)) {
-          const inlineRule = chain.module
-            .rule(findRuleId(chain, CHAIN_ID.RULE.LESS_INLINE))
-            .test(include)
-            .resourceQuery(/inline/);
+        if (inlineRule) {
           callback(inlineRule, 'inline');
         }
       };
