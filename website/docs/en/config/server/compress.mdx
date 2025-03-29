@@ -3,14 +3,22 @@
 - **Type:** `boolean`
 - **Default:** `true`
 
-Whether to enable gzip compression for served static assets.
+Configure whether to enable [gzip compression](https://developer.mozilla.org/en-US/docs/Glossary/gzip_compression) for static assets served by the dev server or preview server.
+
+## Disable
 
 To disable the gzip compression, set `compress` to `false`:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     compress: false,
   },
 };
 ```
+
+## Compression level
+
+Rsbuild dev server uses [zlib.constants.Z_BEST_SPEED](https://nodejs.org/api/zlib.html#constants) as the default compression level, which provides the best compression performance. The preview server sets `level` to `6` by default.
+
+Note that in actual production environments, web servers like Nginx or Apache are commonly used, which may utilize different compression levels. Therefore, you might observe differences between the file sizes after gzip compression in your local environment compared to production.
