@@ -18,11 +18,10 @@ rspackOnlyTest(
     const { logs, restore } = proxyConsole();
     const rsbuild = await dev({
       cwd: __dirname,
-      page,
     });
 
     await expectPoll(() =>
-      logs.some((log) => log.includes('building src/index.js')),
+      logs.some((log) => log.includes('built in ')),
     ).toBeTruthy();
     expect(logs.some((log) => log.includes('building src/foo.js'))).toBeFalsy();
 
