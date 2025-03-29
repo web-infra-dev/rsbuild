@@ -16,6 +16,7 @@ const testPlugin: RsbuildPlugin = {
 };
 
 export default defineConfig({
+  plugins: [testPlugin],
   dev: {
     writeToDisk: true,
     watchFiles: {
@@ -23,7 +24,6 @@ export default defineConfig({
       paths: ['./test-temp-config.ts'],
     },
   },
-  plugins: [testPlugin],
   server: {
     port: Number(process.env.PORT),
   },

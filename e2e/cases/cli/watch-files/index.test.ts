@@ -26,6 +26,7 @@ rspackOnlyTest(
       env: {
         ...process.env,
         PORT: String(await getRandomPort()),
+        NODE_ENV: 'development',
         WATCH_FILES_TYPE: 'reload-server',
       },
     });
@@ -53,6 +54,7 @@ rspackOnlyTest(
       env: {
         ...process.env,
         PORT: String(await getRandomPort()),
+        NODE_ENV: 'development',
         WATCH_FILES_TYPE: 'reload-page',
       },
     });
@@ -78,6 +80,7 @@ rspackOnlyTest(
       env: {
         ...process.env,
         PORT: String(await getRandomPort()),
+        NODE_ENV: 'development',
       },
     });
 
