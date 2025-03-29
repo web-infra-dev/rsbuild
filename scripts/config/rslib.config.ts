@@ -1,6 +1,4 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import type { Minify, RsbuildPlugin } from '@rsbuild/core';
+import type { Minify } from '@rsbuild/core';
 import { type LibConfig, defineConfig } from '@rslib/core';
 
 export const commonExternals: Array<string | RegExp> = [
@@ -21,29 +19,12 @@ export const nodeMinifyConfig: Minify = {
   },
 };
 
-// Clean tsc cache to ensure the dts files can be generated correctly
-export const pluginCleanTscCache: RsbuildPlugin = {
-  name: 'plugin-clean-tsc-cache',
-  setup(api) {
-    api.onBeforeBuild(() => {
-      const tsbuildinfo = path.join(
-        api.context.rootPath,
-        'tsconfig.tsbuildinfo',
-      );
-      if (fs.existsSync(tsbuildinfo)) {
-        fs.rmSync(tsbuildinfo);
-      }
-    });
-  },
-};
-
 export const esmConfig: LibConfig = {
   format: 'esm',
   syntax: 'es2021',
   dts: {
     build: true,
   },
-  plugins: [pluginCleanTscCache],
   output: {
     minify: nodeMinifyConfig,
   },
