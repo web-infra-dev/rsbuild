@@ -5,11 +5,12 @@ import { rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest('should inject public env vars to client', async () => {
-  const { NODE_ENV } = process.env;
-  process.env.NODE_ENV = 'production';
-
   execSync('npx rsbuild build', {
     cwd: __dirname,
+    env: {
+      ...process.env,
+      NODE_ENV: 'production',
+    },
   });
 
   const content = fs.readFileSync(
@@ -19,6 +20,4 @@ rspackOnlyTest('should inject public env vars to client', async () => {
   expect(content).not.toContain('jack');
   expect(content).toContain('"process.env","rose"');
   expect(content).toContain('"import.meta.env","rose"');
-
-  process.env.NODE_ENV = NODE_ENV;
 });
