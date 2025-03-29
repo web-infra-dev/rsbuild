@@ -2,6 +2,9 @@ import { defineConfig } from '@rsbuild/core';
 
 export default defineConfig({
   dev: {
-    lazyCompilation: true,
+    lazyCompilation: {
+      entries: false,
+      imports: true,
+    },
   },
 });
