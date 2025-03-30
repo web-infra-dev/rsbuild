@@ -66,6 +66,7 @@ const createPlugin = () => {
 rspackOnlyTest(
   'should run plugin hooks correctly when running build with watch',
   async () => {
+    console.log('==== ', process.env.NODE_ENV);
     const cwd = __dirname;
     fse.ensureDirSync(join(cwd, 'test-temp-src'));
 
