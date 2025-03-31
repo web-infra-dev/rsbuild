@@ -14,12 +14,11 @@ const supportedChromiumBrowsers = [
   'Google Chrome Dev',
   'Google Chrome Beta',
   'Google Chrome',
+  'chromium',
   'chrome',
-  'Microsoft Edge',
   'edge',
-  'Brave Browser',
+  'Brave',
   'Vivaldi',
-  'Chromium',
 ];
 
 // Find the browser that is currently running
