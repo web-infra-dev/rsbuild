@@ -469,6 +469,9 @@ export async function loadConfig({
         // disable require cache to support restart CLI and read the new config
         moduleCache: false,
         interopDefault: true,
+        // Always use native `require()` for these packages,
+        // This avoids `@rspack/core` being loaded twice.
+        nativeModules: ['@rspack/core', 'typescript'],
       });
 
       configExport = await jiti.import<RsbuildConfigExport>(configFilePath, {
