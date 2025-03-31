@@ -39,7 +39,7 @@
     "@rsbuild/core": "workspace:*",
     "@rslib/core": "0.6.0",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.13.11",
+    "@types/node": "^22.13.14",
     "ansi-escapes": "4.3.2",
     "cli-truncate": "2.1.0",
     "patch-console": "1.0.0",
