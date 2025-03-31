@@ -41,7 +41,7 @@
     "@rsbuild/core": "workspace:*",
     "@rslib/core": "0.6.0",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.13.11",
+    "@types/node": "^22.13.14",
     "babel-loader": "10.0.0",
     "prebundle": "1.2.7",
     "typescript": "^5.8.2"
