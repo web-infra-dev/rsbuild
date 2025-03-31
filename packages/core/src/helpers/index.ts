@@ -1,10 +1,6 @@
 import { posix } from 'node:path';
 import { URL } from 'node:url';
 import deepmerge from 'deepmerge';
-import type {
-  Compiler as WebpackCompiler,
-  MultiCompiler as WebpackMultiCompiler,
-} from 'webpack';
 import color from '../../compiled/picocolors/index.js';
 import type RspackChain from '../../compiled/rspack-chain/index.js';
 import { DEFAULT_ASSET_PREFIX } from '../constants';
@@ -302,12 +298,9 @@ export function isWebTarget(target: RsbuildTarget | RsbuildTarget[]): boolean {
   return targets.includes('web') || target.includes('web-worker');
 }
 
-export const isMultiCompiler = <
-  C extends Rspack.Compiler | WebpackCompiler = Rspack.Compiler,
-  M extends Rspack.MultiCompiler | WebpackMultiCompiler = Rspack.MultiCompiler,
->(
-  compiler: C | M,
-): compiler is M => {
+export const isMultiCompiler = (
+  compiler: Rspack.Compiler | Rspack.MultiCompiler,
+): compiler is Rspack.MultiCompiler => {
   return 'compilers' in compiler && Array.isArray(compiler.compilers);
 };
 
