@@ -45,6 +45,33 @@ export default {
 
 > 请查看 [tools.rspack 文档](/config/tools/rspack) 来了解完整用法。
 
+## 访问 Rspack API
+
+如果你需要访问 [@rspack/core](https://www.npmjs.com/package/@rspack/core) 导出的 API 或插件，可以直接从 `@rsbuild/core` 中引用 [rspack](/api/javascript-api/core#rspack) 对象，无须额外安装 `@rspack/core` 包。
+
+```ts title="rsbuild.config.ts"
+import { rspack } from '@rsbuild/core';
+
+export default {
+  tools: {
+    rspack: {
+      plugins: [
+        new rspack.BannerPlugin({
+          // ...
+        }),
+      ],
+    },
+  },
+};
+```
+
+:::tip
+
+- 参考 [Rspack 插件](https://rspack.dev/zh/plugins/) 和 [Rspack JavaScript API](https://rspack.dev/zh/api/javascript-api/) 了解可用的 Rspack API。
+- 不推荐手动安装 `@rspack/core` 包，因为这可能与 Rsbuild 依赖的版本不一致。
+
+:::
+
 ## 使用 Rspack chain
 
 import RspackChain from '@zh/shared/rspackChain.mdx';

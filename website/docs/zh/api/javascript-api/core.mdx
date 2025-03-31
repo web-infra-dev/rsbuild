@@ -449,21 +449,26 @@ logger.info('hello'); // [info] hello
 
 ## rspack
 
-由 `@rspack/core` 导出的 `rspack` 对象。
-
-你可以直接从 `@rsbuild/core` 中引用 `rspack` 对象，而无须额外安装 `@rspack/core` 依赖。
+如果你需要访问 [@rspack/core](https://www.npmjs.com/package/@rspack/core) 导出的 API 或插件，可以直接从 `@rsbuild/core` 中引用 `rspack` 对象，无须额外安装 `@rspack/core` 包。
 
 - **类型：** `Rspack`
 - **示例：**
 
 ```ts
+// the same as `import { rspack } from '@rspack/core'`
 import { rspack } from '@rsbuild/core';
 
-console.log(rspack.rspackVersion); // 1.0.0
+console.log(rspack.rspackVersion); // a.b.c
 console.log(rspack.util.createHash);
+console.log(rspack.BannerPlugin);
 ```
 
-> 请参考 [Rspack - JavaScript API](https://rspack.dev/zh/api/javascript-api/) 了解更多。
+:::tip
+
+- 参考 [Rspack 插件](https://rspack.dev/zh/plugins/) 和 [Rspack JavaScript API](https://rspack.dev/zh/api/javascript-api/) 了解可用的 Rspack API。
+- 不推荐手动安装 `@rspack/core` 包，因为这可能与 Rsbuild 依赖的版本不一致。
+
+:::
 
 ## version
 

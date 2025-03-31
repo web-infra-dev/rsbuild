@@ -449,21 +449,26 @@ logger.info('hello'); // [info] hello
 
 ## rspack
 
-The `rspack` object exported from `@rspack/core`.
-
-You can import to the `rspack` object from `@rsbuild/core` without the need to install the `@rspack/core` dependency.
+If you need to access the API or plugins exported by [@rspack/core](https://www.npmjs.com/package/@rspack/core), you can directly import the `rspack` object from `@rsbuild/core` without installing the `@rspack/core` package separately.
 
 - **Type:** `Rspack`
 - **Example:**
 
 ```ts
+// the same as `import { rspack } from '@rspack/core'`
 import { rspack } from '@rsbuild/core';
 
-console.log(rspack.rspackVersion); // 1.0.0
+console.log(rspack.rspackVersion); // a.b.c
 console.log(rspack.util.createHash);
+console.log(rspack.BannerPlugin);
 ```
 
-> Please refer to [Rspack - JavaScript API](https://rspack.dev/api/javascript-api/) for more information.
+:::tip
+
+- Refer to [Rspack plugins](https://rspack.dev/plugins/) and [Rspack JavaScript API](https://rspack.dev/api/javascript-api/) to learn more about the available Rspack APIs.
+- It's not recommended to manually install the `@rspack/core` package, as it may conflict with the version that Rsbuild depends on.
+
+:::
 
 ## version
 
