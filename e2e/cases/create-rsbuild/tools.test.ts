@@ -35,7 +35,7 @@ rspackOnlyTest('should create project with prettier as expected', async () => {
 });
 
 rspackOnlyTest(
-  'should create project with eslint and prettier as expected',
+  'should create project with ESLint and prettier as expected',
   async () => {
     const { dir, pkgJson, clean } = await createAndValidate(
       __dirname,
@@ -49,6 +49,44 @@ rspackOnlyTest(
     expect(pkgJson.devDependencies.eslint).toBeTruthy();
     expect(pkgJson.devDependencies.prettier).toBeTruthy();
     expect(existsSync(join(dir, '.prettierrc'))).toBeTruthy();
+    expect(existsSync(join(dir, 'eslint.config.mjs'))).toBeTruthy();
+    await clean();
+  },
+);
+
+rspackOnlyTest(
+  'should create React project with ESLint as expected',
+  async () => {
+    const { dir, pkgJson, clean } = await createAndValidate(
+      __dirname,
+      'react-ts',
+      {
+        name: 'test-temp-react-eslint',
+        tools: ['eslint'],
+        clean: false,
+      },
+    );
+    expect(pkgJson.devDependencies.eslint).toBeTruthy();
+    expect(pkgJson.devDependencies['eslint-plugin-react']).toBeTruthy();
+    expect(existsSync(join(dir, 'eslint.config.mjs'))).toBeTruthy();
+    await clean();
+  },
+);
+
+rspackOnlyTest(
+  'should create Vue project with ESLint as expected',
+  async () => {
+    const { dir, pkgJson, clean } = await createAndValidate(
+      __dirname,
+      'vue3-ts',
+      {
+        name: 'test-temp-vue-eslint',
+        tools: ['eslint'],
+        clean: false,
+      },
+    );
+    expect(pkgJson.devDependencies.eslint).toBeTruthy();
+    expect(pkgJson.devDependencies['eslint-plugin-vue']).toBeTruthy();
     expect(existsSync(join(dir, 'eslint.config.mjs'))).toBeTruthy();
     await clean();
   },
