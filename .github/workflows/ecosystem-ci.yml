@@ -56,11 +56,11 @@ jobs:
         continue-on-error: true
         uses: convictional/trigger-workflow-and-wait@f69fa9eedd3c62a599220f4d5745230e237904be # v1.6.5
         with:
-          owner: "rspack-contrib"
-          repo: "rsbuild-ecosystem-ci"
-          workflow_file_name: "ecosystem-ci-from-commit.yml"
+          owner: 'rspack-contrib'
+          repo: 'rsbuild-ecosystem-ci'
+          workflow_file_name: 'ecosystem-ci-from-commit.yml'
           github_token: ${{ secrets.REPO_RSBUILD_ECO_CI_GITHUB_TOKEN }}
-          ref: "main"
+          ref: 'main'
           client_payload: '{"commitSHA":"${{ github.sha }}","updateComment":true,"repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
 
       - name: Checkout
@@ -165,11 +165,11 @@ jobs:
         uses: convictional/trigger-workflow-and-wait@f69fa9eedd3c62a599220f4d5745230e237904be # v1.6.5
         continue-on-error: true
         with:
-          owner: "rspack-contrib"
-          repo: "rsbuild-ecosystem-ci"
-          workflow_file_name: "ecosystem-ci-selected.yml"
+          owner: 'rspack-contrib'
+          repo: 'rsbuild-ecosystem-ci'
+          workflow_file_name: 'ecosystem-ci-selected.yml'
           github_token: ${{ secrets.REPO_RSBUILD_ECO_CI_GITHUB_TOKEN }}
-          ref: "main"
+          ref: 'main'
           client_payload: '{"ref":"${{ github.event.inputs.branch }}","repo":"web-infra-dev/rsbuild","suite":"-","suiteRefType":"precoded","suiteRef":"precoded"}'
 
       - name: Checkout
@@ -195,4 +195,3 @@ jobs:
               comment_id: ${{ steps.create-comment.outputs.result }},
               body: ${{ steps.eco-ci-result.outputs.result }}
             })
-
