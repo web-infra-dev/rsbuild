@@ -180,10 +180,12 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
         .resourceQuery(/inline/);
 
       // get raw content: "foo.svg?raw"
-      rule
-        .oneOf(CHAIN_ID.ONE_OF.SVG_RAW)
-        .type('asset/source')
-        .resourceQuery(/raw/);
+      if (CHAIN_ID.ONE_OF.SVG_RAW) {
+        rule
+          .oneOf(CHAIN_ID.ONE_OF.SVG_RAW)
+          .type('asset/source')
+          .resourceQuery(/raw/);
+      }
 
       // force to react component: "foo.svg?react"
       rule
