@@ -293,6 +293,16 @@ const mergedConfig = mergeRsbuildConfig(
 );
 ```
 
+### Disable loading
+
+You can disable loading `.env` files by using the `--no-env` flag in the CLI.
+
+```bash
+npx rsbuild dev --no-env
+```
+
+When using the `--no-env` flag, Rsbuild CLI will not read any `.env` files, and you can manage environment variables using other tools like [dotenvx](https://dotenvx.com/).
+
 ## Public variables
 
 All env variables starting with `PUBLIC_` can be accessed in client code. For example, if the following variables are defined:
