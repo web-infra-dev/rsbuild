@@ -85,6 +85,7 @@ export const CHAIN_ID = {
   /** Predefined rule groups */
   ONE_OF: {
     SVG: 'svg',
+    SVG_RAW: 'svg-asset-raw',
     SVG_URL: 'svg-asset-url',
     SVG_ASSET: 'svg-asset',
     SVG_REACT: 'svg-react',
