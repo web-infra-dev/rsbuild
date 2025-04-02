@@ -12,6 +12,7 @@ export type CommonOptions = {
   mode?: RsbuildMode;
   config?: string;
   configLoader?: ConfigLoader;
+  env?: boolean;
   envDir?: string;
   envMode?: string;
   open?: boolean | string;
@@ -68,7 +69,8 @@ const applyCommonOptions = (cli: CAC) => {
         default: [],
       },
     )
-    .option('--env-dir <dir>', 'specify the directory to load `.env` files');
+    .option('--env-dir <dir>', 'specify the directory to load `.env` files')
+    .option('--no-env', 'Disable loading `.env` files');
 };
 
 const applyServerOptions = (command: Command) => {

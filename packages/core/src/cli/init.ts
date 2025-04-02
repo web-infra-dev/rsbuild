@@ -92,10 +92,13 @@ export async function init({
       cwd: root,
       rsbuildConfig: () => loadConfig(root),
       environment: commonOpts.environment,
-      loadEnv: {
-        cwd: getEnvDir(root, commonOpts.envDir),
-        mode: commonOpts.envMode,
-      },
+      loadEnv:
+        commonOpts.env === false
+          ? false
+          : {
+              cwd: getEnvDir(root, commonOpts.envDir),
+              mode: commonOpts.envMode,
+            },
     });
 
     rsbuild.onBeforeCreateCompiler(() => {
