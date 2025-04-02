@@ -29,7 +29,7 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
 
   setup(api) {
     const htmlTagsMap = new Map<string, HtmlBasicTag[]>();
-    const iconFormatMap = new Map<string, IconExtra>();
+    const iconFormatMap = new Map<string, AppIconItem & IconExtra>();
 
     const formatIcon = (
       icon: AppIconItem,
@@ -40,22 +40,22 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
       const cached = iconFormatMap.get(src);
 
       if (cached) {
-        return { ...cached, ...icon };
+        return cached;
       }
 
       const sizes = `${size}x${size}`;
 
       if (isURL(src)) {
-        const paths = {
+        const formatted = {
+          ...icon,
           src,
           sizes,
           isURL: true as const,
           mimeType: lookup(src),
         };
 
-        iconFormatMap.set(src, paths);
-
-        return { ...paths, ...icon };
+        iconFormatMap.set(src, formatted);
+        return formatted;
       }
 
       const absolutePath = path.isAbsolute(src)
@@ -66,7 +66,8 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
         path.basename(absolutePath),
       );
 
-      const paths = {
+      const formatted = {
+        ...icon,
         sizes,
         src: ensureAssetPrefix(relativePath, publicPath),
         isURL: false as const,
@@ -75,9 +76,8 @@ export const pluginAppIcon = (): RsbuildPlugin => ({
         mimeType: lookup(absolutePath),
       };
 
-      iconFormatMap.set(src, paths);
-
-      return { ...paths, ...icon };
+      iconFormatMap.set(src, formatted);
+      return formatted;
     };
 
     api.processAssets(
