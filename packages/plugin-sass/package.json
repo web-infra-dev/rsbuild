@@ -39,7 +39,7 @@
     "@rsbuild/core": "workspace:*",
     "@rslib/core": "0.6.1",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.13.16",
+    "@types/node": "^22.14.0",
     "@types/sass-loader": "^8.0.9",
     "prebundle": "1.2.7",
     "resolve-url-loader": "^5.0.0",
