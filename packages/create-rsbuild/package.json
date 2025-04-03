@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@rslib/core": "0.6.1",
-    "@types/node": "^22.13.16",
+    "@types/node": "^22.14.0",
     "typescript": "^5.8.2"
   },
   "engines": {
