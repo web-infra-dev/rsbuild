@@ -14,11 +14,10 @@ const supportedChromiumBrowsers = [
   'Google Chrome Dev',
   'Google Chrome Beta',
   'Google Chrome',
-  'chromium',
-  'chrome',
-  'edge',
-  'Brave',
+  'Microsoft Edge',
+  'Brave Browser',
   'Vivaldi',
+  'Chromium',
 ];
 
 // Find the browser that is currently running
@@ -88,7 +87,14 @@ async function openBrowser(url: string): Promise<boolean> {
   // It will always open new tab
   try {
     const { default: open } = await import('../../compiled/open/index.js');
-    const options = browser ? { app: { name: browser } } : {};
+    const options = browser
+      ? {
+          app: {
+            name: browser,
+            arguments: process.env.BROWSER_ARGS?.split(' '),
+          },
+        }
+      : {};
     await open(url, options);
     return true;
   } catch (err) {
