@@ -8,6 +8,7 @@ import { getHostInUrl } from './helper';
 
 const execAsync = promisify(exec);
 
+// browsers on darwin that are supported by `openChrome.applescript`
 const supportedChromiumBrowsers = [
   'Google Chrome Canary',
   'Google Chrome Dev',
@@ -19,15 +20,29 @@ const supportedChromiumBrowsers = [
   'Chromium',
 ];
 
-const getTargetBrowser = async () => {
-  // Use user setting first
-  let targetBrowser = process.env.BROWSER;
-  // If user setting not found or not support, use opening browser first
-  if (!targetBrowser || !supportedChromiumBrowsers.includes(targetBrowser)) {
-    const { stdout: ps } = await execAsync('ps cax');
-    targetBrowser = supportedChromiumBrowsers.find((b) => ps.includes(b));
+// Find the browser that is currently running
+const getDefaultBrowserForAppleScript = async () => {
+  const { stdout: ps } = await execAsync('ps cax');
+  return supportedChromiumBrowsers.find((b) => ps.includes(b));
+};
+
+// Map the browser name to the name used in `openChrome.applescript`
+const mapChromiumBrowserName = (browser: string) => {
+  if (browser === 'chrome' || browser === 'google chrome') {
+    return 'Google Chrome';
   }
-  return targetBrowser;
+  return browser;
+};
+
+// Determine if we should try to open the browser with `openChrome.applescript`
+const shouldTryAppleScript = (browser?: string) => {
+  if (process.platform !== 'darwin') {
+    return false;
+  }
+  if (!browser) {
+    return true;
+  }
+  return supportedChromiumBrowsers.includes(mapChromiumBrowserName(browser));
 };
 
 /**
@@ -39,26 +54,26 @@ const getTargetBrowser = async () => {
  * https://github.com/facebook/create-react-app/blob/master/LICENSE
  */
 async function openBrowser(url: string): Promise<boolean> {
+  const browser = process.env.BROWSER;
+
   // If we're on OS X, the user hasn't specifically
   // requested a different browser, we can try opening
   // a Chromium browser with AppleScript. This lets us reuse an
   // existing tab when possible instead of creating a new one.
-  const shouldTryOpenChromeWithAppleScript = process.platform === 'darwin';
-
-  if (shouldTryOpenChromeWithAppleScript) {
+  if (shouldTryAppleScript(browser)) {
     try {
-      const targetBrowser = await getTargetBrowser();
-      if (targetBrowser) {
+      const chromiumBrowser = browser
+        ? mapChromiumBrowserName(browser)
+        : await getDefaultBrowserForAppleScript();
+
+      if (chromiumBrowser) {
         // Try to reuse existing tab with AppleScript
         await execAsync(
-          `osascript openChrome.applescript "${encodeURI(
-            url,
-          )}" "${targetBrowser}"`,
+          `osascript openChrome.applescript "${encodeURI(url)}" "${chromiumBrowser}"`,
           {
             cwd: STATIC_PATH,
           },
         );
-
         return true;
       }
       logger.debug('failed to find the target browser.');
@@ -69,10 +84,11 @@ async function openBrowser(url: string): Promise<boolean> {
   }
 
   // Fallback to open
-  // (It will always open new tab)
+  // It will always open new tab
   try {
     const { default: open } = await import('../../compiled/open/index.js');
-    await open(url);
+    const options = browser ? { app: { name: browser } } : {};
+    await open(url, options);
     return true;
   } catch (err) {
     logger.error('Failed to open start URL.');
