@@ -1,9 +1,8 @@
-function assertQueueMicroTask() {
+export function assert() {
   if (typeof queueMicrotask !== 'function') {
     throw Error('not support queueMicrotask in this environment');
   }
-}
-
-export function assert() {
-  assertQueueMicroTask();
+  if (typeof TextEncoder !== 'function') {
+    throw Error('not support TextEncoder in this environment');
+  }
 }
