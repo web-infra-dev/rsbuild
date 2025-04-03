@@ -872,8 +872,8 @@ importers:
   packages/plugin-react:
     dependencies:
       '@rspack/plugin-react-refresh':
-        specifier: ~1.0.1
-        version: 1.0.1(react-refresh@0.17.0)
+        specifier: ~1.1.0
+        version: 1.1.0(react-refresh@0.17.0)
       react-refresh:
         specifier: ^0.17.0
         version: 0.17.0
@@ -2629,6 +2629,15 @@ packages:
       react-refresh: '>=0.10.0 <1.0.0'
     peerDependenciesMeta:
       react-refresh:
+        optional: true
+
+  '@rspack/plugin-react-refresh@1.1.0':
+    resolution: {integrity: sha512-Aaqoa8VnpGjBMUrjE4+SeHaEKYZ/bvaPV20MBk/SLvivug4oRzIGbUn7QFROBSdxx0Sw0yPjK5cSZLTxySatCQ==}
+    peerDependencies:
+      react-refresh: '>=0.10.0 <1.0.0'
+      webpack-hot-middleware: 2.x
+    peerDependenciesMeta:
+      webpack-hot-middleware:
         optional: true
 
   '@rspress/core@2.0.0-alpha.8':
@@ -4422,6 +4431,9 @@ packages:
 
   html-entities@2.5.2:
     resolution: {integrity: sha512-K//PSRMQk4FZ78Kyau+mZurHn3FH0Vwr+H36eE0rPbeYkRRi9YxceYPhuN60UwWorxyKHhqoAJl2OFKa4BVtaA==}
+
+  html-entities@2.6.0:
+    resolution: {integrity: sha512-kig+rMn/QOVRvr7c86gQ8lWXq+Hkv6CbAH1hLu+RG338StTpE8Z0b44SDVaqVu7HGKf27frdmUYEs9hTUX/cLQ==}
 
   html-escaper@2.0.2:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
@@ -8464,11 +8476,10 @@ snapshots:
     optionalDependencies:
       react-refresh: 0.16.0
 
-  '@rspack/plugin-react-refresh@1.0.1(react-refresh@0.17.0)':
+  '@rspack/plugin-react-refresh@1.1.0(react-refresh@0.17.0)':
     dependencies:
       error-stack-parser: 2.1.4
-      html-entities: 2.5.2
-    optionalDependencies:
+      html-entities: 2.6.0
       react-refresh: 0.17.0
 
   '@rspress/core@2.0.0-alpha.8(webpack@5.98.0)':
@@ -10461,6 +10472,8 @@ snapshots:
   html-entities@2.3.3: {}
 
   html-entities@2.5.2: {}
+
+  html-entities@2.6.0: {}
 
   html-escaper@2.0.2: {}
 
