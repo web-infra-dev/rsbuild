@@ -90,11 +90,34 @@ export default {
 };
 ```
 
-## 打开指定浏览器
+## 指定浏览器
 
-Rsbuild 默认会在当前系统的默认浏览器中打开页面。
+Rsbuild 默认在系统默认浏览器中打开页面，同时也支持通过环境变量 `BROWSER` 来指定 dev server 启动时要使用的浏览器。
 
-在 macOS 上，通过设置环境变量 `BROWSER`，你可以指定 dev server 在启动时打开的浏览器，支持如下的值：
+### 浏览器名称
+
+Rsbuild 基于 [open](https://github.com/sindresorhus/open) 库来打开浏览器，你需要参考它的 [app 选项](https://github.com/sindresorhus/open?tab=readme-ov-file#app) 来配置 `BROWSER` 的值。
+
+在不同的操作系统上，你需要设置的 app name 是不同的，以打开 Chrome 为例：
+
+```bash
+# macOS
+BROWSER="google chrome" npx rsbuild dev
+
+# Linux
+BROWSER="google-chrome" npx rsbuild dev
+
+# Windows
+# 需要使用 cross-env 来设置环境变量
+npm i cross-env -D
+cross-env BROWSER="chrome" npx rsbuild dev
+```
+
+### AppleScript
+
+在 macOS 上，Rsbuild 还额外支持通过 AppleScript 来打开浏览器，这允许你复用已有的浏览器标签页来打开页面。
+
+以下是 AppleScript 支持的浏览器名称：
 
 - Google Chrome Canary
 - Google Chrome Dev
@@ -108,12 +131,17 @@ Rsbuild 默认会在当前系统的默认浏览器中打开页面。
 比如：
 
 ```bash
-BROWSER="Google Chrome Canary" npx rsbuild dev --open
+BROWSER="Google Chrome Canary" npx rsbuild dev
 ```
 
-:::tip
-你可以将 `BROWSER` 设置在本地的 [.env.local](/guide/advanced/env-vars#env-文件) 文件中，这样能够避免影响其他开发者。
-:::
+### 环境变量配置
+
+你可以将 `BROWSER` 设置在本地的 [.env.local](/guide/advanced/env-vars#env-文件) 文件中，这样能够避免每次启动 dev server 时都需要手动设置环境变量，同时也能避免影响项目的其他开发者。
+
+```bash
+# .env.local
+BROWSER=chrome
+```
 
 ## 回调函数
 
