@@ -35,9 +35,16 @@ export class EsmRunner extends CommonJsRunner {
   }
 
   protected createEsmRequirer(): RunnerRequirer {
-    const esmContext = vm.createContext(this.baseModuleScope!, {
-      name: 'context for esm',
-    });
+    const esmContext = vm.createContext(
+      {
+        ...this.baseModuleScope!,
+        // support access globalThis in esm vm
+        global: globalThis,
+      },
+      {
+        name: 'context for esm',
+      },
+    );
     const esmCache = new Map<string, SourceTextModule>();
     const esmIdentifier = this._options.name;
     return (currentDirectory, modulePath, context = {}) => {

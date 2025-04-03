@@ -4,6 +4,6 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "npx rsbuild dev",
-    "dev:esm": "TEST_ESM_LIBRARY=true npx rsbuild dev"
+    "dev:esm": "cross-env NODE_OPTIONS=\"--experimental-vm-modules\" TEST_ESM_LIBRARY=true npx rsbuild dev"
   }
 }
