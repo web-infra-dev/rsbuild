@@ -25,7 +25,7 @@ type Open =
 
 - Open the project's default preview page, which defaults to `http://localhost:<port>`. If [server.host](/config/server/host) is configured, it defaults to `http://<host>:<port>`.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     open: true,
@@ -35,7 +35,7 @@ export default {
 
 - Open the specified page:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     open: 'http://localhost:3000',
@@ -45,7 +45,7 @@ export default {
 
 - Open the specified path, equivalent to `http://localhost:<port>/home`:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     open: '/home',
@@ -55,7 +55,7 @@ export default {
 
 - Open multiple pages:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     open: ['/', '/about'],
@@ -65,7 +65,7 @@ export default {
 
 - Open a non-localhost URL (used with proxy):
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     open: 'http://www.example.com',
@@ -82,7 +82,7 @@ To avoid `server.open` becoming invalid due to port changes, you can use one of 
 - Enable [server.strictPort](/config/server/strict-port).
 - Use the `<port>` placeholder to refer to the current port number. Rsbuild will replace the placeholder with the actual port number it is listening on.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     open: 'http://localhost:<port>/home',
@@ -147,7 +147,7 @@ BROWSER=chrome
 
 By using `open.before`, you can trigger a callback function before opening the page.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     open: {
@@ -161,7 +161,7 @@ export default {
 
 When using `open.before`, the page URLs can be configured via `open.target`.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     open: {
