@@ -110,7 +110,13 @@ BROWSER="google-chrome" npx rsbuild dev
 # Windows
 # You need to use cross-env to set the environment variable
 npm i cross-env -D
-cross-env BROWSER="chrome" npx rsbuild dev
+cross-env BROWSER=chrome npx rsbuild dev
+```
+
+Pass browser arguments through `BROWSER_ARGS`, with multiple arguments separated by spaces:
+
+```bash
+BROWSER=chrome BROWSER_ARGS="--incognito" npx rsbuild dev
 ```
 
 ### AppleScript

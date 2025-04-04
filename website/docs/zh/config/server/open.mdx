@@ -110,7 +110,13 @@ BROWSER="google-chrome" npx rsbuild dev
 # Windows
 # 需要使用 cross-env 来设置环境变量
 npm i cross-env -D
-cross-env BROWSER="chrome" npx rsbuild dev
+cross-env BROWSER=chrome npx rsbuild dev
+```
+
+通过 `BROWSER_ARGS` 来传递浏览器参数，多个参数之间用空格分隔：
+
+```bash
+BROWSER=chrome BROWSER_ARGS="--incognito" npx rsbuild dev
 ```
 
 ### AppleScript
