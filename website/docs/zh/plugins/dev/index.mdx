@@ -219,7 +219,7 @@ export const pluginUploadDist = (): RsbuildPlugin => ({
     api.onBeforeBuild(() => {
       // 读取最终的配置
       const config = api.getNormalizedConfig();
-      if (!config.output.minify !== false) {
+      if (config.output.minify !== false) {
         // 其它插件又启用了压缩则报错
         throw new Error(
           'You must disable minimize to upload readable dist files.',
