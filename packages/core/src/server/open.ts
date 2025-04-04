@@ -8,7 +8,9 @@ import { getHostInUrl } from './helper';
 
 const execAsync = promisify(exec);
 
-// browsers on darwin that are supported by `openChrome.applescript`
+/**
+ * browsers on darwin that are supported by `openChrome.applescript`
+ */
 const supportedChromiumBrowsers = [
   'Google Chrome Canary',
   'Google Chrome Dev',
@@ -20,13 +22,17 @@ const supportedChromiumBrowsers = [
   'Chromium',
 ];
 
-// Find the browser that is currently running
+/**
+ * Find the browser that is currently running
+ */
 const getDefaultBrowserForAppleScript = async () => {
   const { stdout: ps } = await execAsync('ps cax');
   return supportedChromiumBrowsers.find((b) => ps.includes(b));
 };
 
-// Map the browser name to the name used in `openChrome.applescript`
+/**
+ * Map the browser name to the name used in `openChrome.applescript`
+ */
 const mapChromiumBrowserName = (browser: string) => {
   if (browser === 'chrome' || browser === 'google chrome') {
     return 'Google Chrome';
@@ -34,9 +40,16 @@ const mapChromiumBrowserName = (browser: string) => {
   return browser;
 };
 
-// Determine if we should try to open the browser with `openChrome.applescript`
-const shouldTryAppleScript = (browser?: string) => {
+/**
+ * Determine if we should try to open the browser with `openChrome.applescript`
+ */
+const shouldTryAppleScript = (browser?: string, browserArgs?: string) => {
   if (process.platform !== 'darwin') {
+    return false;
+  }
+  // AppleScript does not support passing arguments
+  // fallback to `open` library
+  if (browser && browserArgs) {
     return false;
   }
   if (!browser) {
@@ -55,12 +68,13 @@ const shouldTryAppleScript = (browser?: string) => {
  */
 async function openBrowser(url: string): Promise<boolean> {
   const browser = process.env.BROWSER;
+  const browserArgs = process.env.BROWSER_ARGS;
 
   // If we're on OS X, the user hasn't specifically
   // requested a different browser, we can try opening
   // a Chromium browser with AppleScript. This lets us reuse an
   // existing tab when possible instead of creating a new one.
-  if (shouldTryAppleScript(browser)) {
+  if (shouldTryAppleScript(browser, browserArgs)) {
     try {
       const chromiumBrowser = browser
         ? mapChromiumBrowserName(browser)
@@ -91,7 +105,7 @@ async function openBrowser(url: string): Promise<boolean> {
       ? {
           app: {
             name: browser,
-            arguments: process.env.BROWSER_ARGS?.split(' '),
+            arguments: browserArgs?.split(' '),
           },
         }
       : {};
