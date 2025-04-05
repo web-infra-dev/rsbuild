@@ -96,9 +96,27 @@ Rsbuild opens pages in the system default browser by default, and also supports 
 
 ### Browser name
 
-Rsbuild uses the [open](https://github.com/sindresorhus/open) library to open the browser, you can refer to its [app options](https://github.com/sindresorhus/open?tab=readme-ov-file#app) to configure the value of `BROWSER`.
+Rsbuild uses the [open](https://github.com/sindresorhus/open) library to open browsers, and supports opening Chrome, Edge, and Firefox:
 
-On different operating systems, you need to set the app name differently, take opening Chrome as an example:
+```bash
+# Chrome
+BROWSER=chrome npx rsbuild dev
+
+# Edge
+BROWSER=edge npx rsbuild dev
+
+# Firefox
+BROWSER=firefox npx rsbuild dev
+```
+
+On Windows, use [cross-env](https://www.npmjs.com/package/cross-env) to set environment variables:
+
+```bash
+npm i cross-env -D
+cross-env BROWSER=chrome npx rsbuild dev
+```
+
+You can also refer to the [app option](https://github.com/sindresorhus/open?tab=readme-ov-file#app) of `open` to configure more special `BROWSER` values, such as some OS-specific browser names:
 
 ```bash
 # macOS
@@ -106,12 +124,9 @@ BROWSER="google chrome" npx rsbuild dev
 
 # Linux
 BROWSER="google-chrome" npx rsbuild dev
-
-# Windows
-# You need to use cross-env to set the environment variable
-npm i cross-env -D
-cross-env BROWSER=chrome npx rsbuild dev
 ```
+
+### Browser arguments
 
 Pass browser arguments through `BROWSER_ARGS`, with multiple arguments separated by spaces:
 

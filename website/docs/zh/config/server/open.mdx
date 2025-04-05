@@ -96,9 +96,27 @@ Rsbuild 默认在系统默认浏览器中打开页面，同时也支持通过环
 
 ### 浏览器名称
 
-Rsbuild 基于 [open](https://github.com/sindresorhus/open) 库来打开浏览器，你需要参考它的 [app 选项](https://github.com/sindresorhus/open?tab=readme-ov-file#app) 来配置 `BROWSER` 的值。
+Rsbuild 基于 [open](https://github.com/sindresorhus/open) 库来打开浏览器，支持打开 Chrome、Edge 和 Firefox：
 
-在不同的操作系统上，你需要设置的 app name 是不同的，以打开 Chrome 为例：
+```bash
+# Chrome
+BROWSER=chrome npx rsbuild dev
+
+# Edge
+BROWSER=edge npx rsbuild dev
+
+# Edge
+BROWSER=firefox npx rsbuild dev
+```
+
+在 Windows 上，使用 [cross-env](https://www.npmjs.com/package/cross-env) 来设置环境变量：
+
+```bash
+npm i cross-env -D
+cross-env BROWSER=chrome npx rsbuild dev
+```
+
+你也可以参考 `open` 的 [app 选项](https://github.com/sindresorhus/open?tab=readme-ov-file#app) 来配置更多特殊的 `BROWSER` 值，例如一些操作系统特有的浏览器名称：
 
 ```bash
 # macOS
@@ -106,12 +124,9 @@ BROWSER="google chrome" npx rsbuild dev
 
 # Linux
 BROWSER="google-chrome" npx rsbuild dev
-
-# Windows
-# 需要使用 cross-env 来设置环境变量
-npm i cross-env -D
-cross-env BROWSER=chrome npx rsbuild dev
 ```
+
+### 浏览器参数
 
 通过 `BROWSER_ARGS` 来传递浏览器参数，多个参数之间用空格分隔：
 
