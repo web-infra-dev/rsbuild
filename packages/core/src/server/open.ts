@@ -101,10 +101,12 @@ async function openBrowser(url: string): Promise<boolean> {
   // It will always open new tab
   try {
     const { default: open } = await import('../../compiled/open/index.js');
+    const { apps } = open;
+
     const options = browser
       ? {
           app: {
-            name: browser,
+            name: apps[browser as keyof typeof apps] ?? browser,
             arguments: browserArgs?.split(' '),
           },
         }
