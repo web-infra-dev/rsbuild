@@ -697,8 +697,8 @@ importers:
         specifier: 8.1.1
         version: 8.1.1(patch_hash=7f10237e1665e9913e0f735a822545af08363f5cc67eacc2c37408aee7553d47)(@rspack/core@1.3.2(@swc/helpers@0.5.15))(postcss@8.5.3)(typescript@5.8.2)(webpack@5.98.0)
       prebundle:
-        specifier: 1.3.2
-        version: 1.3.2(typescript@5.8.2)
+        specifier: 1.3.3
+        version: 1.3.3(typescript@5.8.2)
       reduce-configs:
         specifier: ^1.1.0
         version: 1.1.0
@@ -798,8 +798,8 @@ importers:
         specifier: 10.0.0
         version: 10.0.0(@babel/core@7.26.10)(webpack@5.98.0)
       prebundle:
-        specifier: 1.3.2
-        version: 1.3.2(typescript@5.8.2)
+        specifier: 1.3.3
+        version: 1.3.3(typescript@5.8.2)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -832,8 +832,8 @@ importers:
         specifier: ^12.2.0
         version: 12.2.0(@rspack/core@1.3.2(@swc/helpers@0.5.15))(less@4.3.0)(webpack@5.98.0)
       prebundle:
-        specifier: 1.3.2
-        version: 1.3.2(typescript@5.8.2)
+        specifier: 1.3.3
+        version: 1.3.3(typescript@5.8.2)
       typescript:
         specifier: ^5.8.2
         version: 5.8.2
@@ -928,8 +928,8 @@ importers:
         specifier: ^8.0.9
         version: 8.0.9
       prebundle:
-        specifier: 1.3.2
-        version: 1.3.2(typescript@5.8.2)
+        specifier: 1.3.3
+        version: 1.3.3(typescript@5.8.2)
       resolve-url-loader:
         specifier: ^5.0.0
         version: 5.0.0
@@ -1064,8 +1064,8 @@ importers:
         specifier: 6.2.0
         version: 6.2.0(webpack@5.98.0)
       prebundle:
-        specifier: 1.3.2
-        version: 1.3.2(typescript@5.8.2)
+        specifier: 1.3.3
+        version: 1.3.3(typescript@5.8.2)
       svgo:
         specifier: ^3.3.2
         version: 3.3.2
@@ -5690,8 +5690,8 @@ packages:
   preact@10.26.4:
     resolution: {integrity: sha512-KJhO7LBFTjP71d83trW+Ilnjbo+ySsaAgCfXOXUlmGzJ4ygYPWmysm77yg4emwfmoz3b22yvH5IsVFHbhUaH5w==}
 
-  prebundle@1.3.2:
-    resolution: {integrity: sha512-kYmQPJxsoL+/rLMazCs6m85Zdyqi6M9GGDGqV/zkZWKE1YsGoFZhLsdOVhaMv9i7iVDeKSAFn5N0eHDbWBR1RA==}
+  prebundle@1.3.3:
+    resolution: {integrity: sha512-r9XaHCFjCWoFtxzbj0g1mb7Ur8JOasgjbb7UbK+bP0k/xHDvI7Ti9AOkrsx0dw5UkmOJ1LocfNY58tSc5Iei8A==}
     hasBin: true
 
   prettier@2.8.8:
@@ -12065,7 +12065,7 @@ snapshots:
 
   preact@10.26.4: {}
 
-  prebundle@1.3.2(typescript@5.8.2):
+  prebundle@1.3.3(typescript@5.8.2):
     dependencies:
       '@vercel/ncc': 0.38.3
       prettier: 3.5.3
