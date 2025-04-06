@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, isAbsolute, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import RspackChain from '../compiled/rspack-chain/index.js';
+import RspackChain from '../compiled/rspack-chain';
 import {
   ASSETS_DIST_DIR,
   CSS_DIST_DIR,

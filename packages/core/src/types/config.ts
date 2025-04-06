@@ -18,7 +18,7 @@ import type {
   Options as HttpProxyOptions,
   Filter as ProxyFilter,
 } from '../../compiled/http-proxy-middleware/index.js';
-import type RspackChain from '../../compiled/rspack-chain/index.js';
+import type RspackChain from '../../compiled/rspack-chain';
 import type { FileDescriptor } from '../../compiled/rspack-manifest-plugin';
 import type { BundleAnalyzerPlugin } from '../../compiled/webpack-bundle-analyzer/index.js';
 import type {

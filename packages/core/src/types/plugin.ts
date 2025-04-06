@@ -3,7 +3,7 @@ import type {
   Configuration as WebpackConfig,
   WebpackPluginInstance,
 } from 'webpack';
-import type RspackChain from '../../compiled/rspack-chain/index.js';
+import type RspackChain from '../../compiled/rspack-chain';
 import type { ChainIdentifier } from '../configChain';
 import type {
   ModifyRspackConfigUtils,
