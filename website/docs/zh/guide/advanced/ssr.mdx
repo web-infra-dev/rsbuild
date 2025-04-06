@@ -74,7 +74,7 @@ export default {
 
 ## 自定义 Server
 
-Rsbuild 并未内置 SSR 渲染能力，你可以通过 Rsbuild 的[自定义 Server](/guide/basic/server#自定义-server) 和 [Environment API](/guide/advanced/environments#environment-api) 实现 SSR 渲染：
+Rsbuild 并未内置 SSR 渲染能力，你可以通过 Rsbuild 的 [自定义 Server](/guide/basic/server#自定义-server) 和 [Environment API](/guide/advanced/environments#environment-api) 实现 SSR 渲染：
 
 ```ts title=server.mjs
 import express from 'express';
@@ -100,8 +100,7 @@ const serverRender = (serverAPI) => async (_req, res) => {
 
 // 自定义 Server
 async function startDevServer() {
-  const { content } = await loadConfig({});
-
+  const { content } = await loadConfig();
   const rsbuild = await createRsbuild({
     rsbuildConfig: content,
   });
@@ -154,9 +153,9 @@ startDevServer(process.cwd());
 
 ## 获取资源清单
 
-默认情况下，和当前页面关联的 scripts 和 links 会自动插入到 HTML 模版中，此时通过 [getTransformedHtml](/guide/advanced/environments#environment-api) 即可获取编译后的 HTML 模版内容。
+默认情况下，和当前页面关联的 scripts 和 links 会自动插入到 HTML 模版中，此时通过 [getTransformedHtml](/api/javascript-api/environment-api#gettransformedhtml) 即可获取编译后的 HTML 模版内容。
 
-当需要在服务器端动态生成 HTML 时，你需要将 JavaScript 和 CSS 资源的 URL 注入到 HTML 中。通过配置 [output.manifest](/config/output/manifest)，你可以方便地获取这些资源的清单信息。示例如下：
+在服务器端动态生成 HTML 时，你需要将 JavaScript 和 CSS 资源的 URL 注入到 HTML 中。通过配置 [output.manifest](/config/output/manifest)，你可以方便地获取这些资源的清单信息。示例如下：
 
 ```ts title=rsbuild.config.ts
 export default {

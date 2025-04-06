@@ -268,7 +268,7 @@ const serverRender = (serverAPI) => async (_req, res) => {
 };
 
 export async function startDevServer() {
-  const { content } = await loadConfig({});
+  const { content } = await loadConfig();
 
   // Init Rsbuild
   const rsbuild = await createRsbuild({
