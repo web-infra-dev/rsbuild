@@ -101,6 +101,7 @@ export default {
             `${content
               .replace('express.Request', 'http.IncomingMessage')
               .replace('express.Response', 'http.ServerResponse')
+              .replace("import * as express from 'express';", '')
               .replace(
                 'extends express.RequestHandler {',
                 `{
