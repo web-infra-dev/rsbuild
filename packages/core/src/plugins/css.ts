@@ -1,7 +1,7 @@
 import path, { posix } from 'node:path';
 import deepmerge from 'deepmerge';
-import type { AcceptedPlugin, PluginCreator } from 'postcss';
 import { reduceConfigs, reduceConfigsWithContext } from 'reduce-configs';
+import type { AcceptedPlugin, PluginCreator } from '../../compiled/postcss';
 import { CSS_REGEX, LOADER_PATH } from '../constants';
 import { castArray, getFilename } from '../helpers';
 import { getCompiledPath } from '../helpers/path';
