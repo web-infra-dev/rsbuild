@@ -76,7 +76,7 @@
     "dotenv": "16.4.7",
     "dotenv-expand": "12.0.1",
     "html-rspack-plugin": "6.0.4",
-    "http-proxy-middleware": "^2.0.6",
+    "http-proxy-middleware": "^2.0.7",
     "launch-editor-middleware": "^2.10.0",
     "mrmime": "^2.0.1",
     "on-finished": "2.4.1",
