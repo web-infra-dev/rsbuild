@@ -23,7 +23,7 @@ Rsbuild 支持通过 [environments](/config/environments) 为每个环境定义�
 
 例如，假如你的项目希望支持 SSR 功能，你需要分别为 client 和 SSR 定义不同的配置，你可以分别定义一个 web 和 node 的 environment。
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 export default {
   environments: {
     // 配置 web 环境，用于浏览器端
@@ -97,7 +97,7 @@ config inspection completed, generated files:
 
 当 environments 未指定时，Rsbuild 默认会根据当前的产物类型 ([output.target](/config/output/target) 的值) 创建一个同名的环境。
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     target: 'web',
@@ -107,7 +107,7 @@ export default {
 
 以上配置相当于下面配置的语法糖：
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 export default {
   environments: {
     web: {
@@ -143,7 +143,7 @@ rsbuild dev --environment web,node
 
 例如，仅在 web 环境下开启 React 插件：
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 import { pluginReact } from '@rsbuild/plugin-react';
 
 export default {
@@ -268,7 +268,7 @@ const serverRender = (serverAPI) => async (_req, res) => {
 };
 
 export async function startDevServer() {
-  const { content } = await loadConfig({});
+  const { content } = await loadConfig();
 
   // Init Rsbuild
   const rsbuild = await createRsbuild({
@@ -308,7 +308,7 @@ export async function startDevServer() {
 
 例如，假设你需要先完成 `web` 环境的构建，再开始构建 `node` 环境，可以添加如下配置：
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 export default {
   environments: {
     web: {
