@@ -2,9 +2,9 @@ import type {
   CssExtractRspackLoaderOptions,
   CssExtractRspackPluginOptions,
 } from '@rspack/core';
-import type { AcceptedPlugin, ProcessOptions } from 'postcss';
 import type { Configuration as WebpackConfig } from 'webpack';
 import type HtmlRspackPlugin from '../../compiled/html-rspack-plugin/index.js';
+import type { AcceptedPlugin, ProcessOptions } from '../../compiled/postcss';
 import type { Rspack } from './rspack';
 
 export type { HtmlRspackPlugin };
@@ -46,7 +46,7 @@ export type PostCSSLoaderOptions = {
     | ((loaderContext: Rspack.LoaderContext) => PostCSSOptions);
 };
 
-export type { AcceptedPlugin as PostCSSPlugin } from 'postcss';
+export type PostCSSPlugin = AcceptedPlugin;
 
 export type CSSLoaderModulesMode =
   | 'local'

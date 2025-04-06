@@ -2,7 +2,7 @@ import { posix } from 'node:path';
 import { URL } from 'node:url';
 import deepmerge from 'deepmerge';
 import color from '../../compiled/picocolors/index.js';
-import type RspackChain from '../../compiled/rspack-chain/index.js';
+import type RspackChain from '../../compiled/rspack-chain';
 import { DEFAULT_ASSET_PREFIX } from '../constants';
 import type {
   FilenameConfig,

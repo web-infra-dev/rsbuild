@@ -1,5 +1,5 @@
 import type { ChainIdentifier } from '..';
-import type RspackChain from '../../compiled/rspack-chain/index.js';
+import type RspackChain from '../../compiled/rspack-chain';
 import type { RsbuildDevServer } from '../server/devServer';
 import type {
   EnvironmentConfig,
