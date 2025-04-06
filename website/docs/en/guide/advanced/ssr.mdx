@@ -37,7 +37,7 @@ In the SSR scenario, two types of outputs (web and node targets), need to be gen
 
 At this time, you can use Rsbuild's [multi-environment builds](guide/advanced/environments) capability, define the following configuration:
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 export default {
   environments: {
     // Configure the web environment for browsers
@@ -157,7 +157,7 @@ By default, scripts and links associated with the current page are automatically
 
 When you need to dynamically generate HTML on the server side, you'll need to inject the URLs of JavaScript and CSS assets into the HTML. By configuring [output.manifest](/config/output/manifest), you can easily obtain the manifest information of these assets. Here's an example:
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     manifest: true,

@@ -58,7 +58,7 @@ export default {
 - 当前请求是 GET 或 HEAD 请求
 - 当前请求头接受 `text/html` (请求头 accept 类型为 `text/html` 或 `*/*`)
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     htmlFallback: 'index',
@@ -70,7 +70,7 @@ export default {
 
 当 Rsbuild 默认的 [server.htmlFallback](/config/server/html-fallback) 配置无法满足你的需求，例如，希望在访问 `/` 时可以访问 `main.html`，可通过 [server.historyApiFallback](/config/server/history-api-fallback) 进行设置。
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     entry: {
