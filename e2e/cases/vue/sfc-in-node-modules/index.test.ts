@@ -26,6 +26,6 @@ rspackOnlyTest(
     const { content } = await rsbuild.getIndexFile();
     expect(content).not.toContain('window?.foo');
     // should transpile optional chaining
-    expect(content).toContain('test:null===');
+    expect(content).toContain('test:null==');
   },
 );

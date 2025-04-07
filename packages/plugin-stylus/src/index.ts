@@ -1,5 +1,5 @@
 import { createRequire } from 'node:module';
-import type { RsbuildPlugin } from '@rsbuild/core';
+import type { RsbuildPlugin, RspackChain } from '@rsbuild/core';
 import deepmerge from 'deepmerge';
 import { reduceConfigs } from 'reduce-configs';
 
@@ -8,17 +8,52 @@ const require = createRequire(import.meta.url);
 export const PLUGIN_STYLUS_NAME = 'rsbuild:stylus';
 
 type StylusOptions = {
+  /**
+   * Specify Stylus plugins to use.
+   * @default []
+   * @example use: ["nib"]
+   */
   use?: string[];
-  define?: [string, any, boolean?];
+  /**
+   * Define Stylus variables or functions.
+   * @default []
+   * @example
+   * define: [
+   *   ["$development", process.env.NODE_ENV === "development"],
+   *   ["rawVar", 42, true],
+   * ]
+   */
+  define?: [string, any, boolean?][];
+  /**
+   * Add paths to the import lookup paths.
+   * @default []
+   * @example include: [path.join(__dirname, "src/styl/config")]
+   */
   include?: string[];
   /**
+   * Include regular CSS on `@import`.
+   * @default false
+   */
+  includeCSS?: boolean;
+  /**
    * Import the specified Stylus files/paths, can not be relative path.
-   * @example import: ["nib", path.join(__dirname, "src/styl/mixins")],
    * @default []
+   * @example import: ["nib", path.join(__dirname, "src/styl/mixins")],
    */
   import?: string[];
+  /**
+   * Resolve relative url()'s inside imported files.
+   */
   resolveURL?: boolean;
+  /**
+   * Emits comments in the generated CSS indicating the corresponding Stylus line.
+   * @default false
+   */
   lineNumbers?: boolean;
+  /**
+   * Move `@import` and `@charset` to the top.
+   * @default false
+   */
   hoistAtrules?: boolean;
 };
 
@@ -49,34 +84,71 @@ export const pluginStylus = (options?: PluginStylusOptions): RsbuildPlugin => ({
         mergeFn: deepmerge,
       });
 
+      const test = /\.styl(us)?$/;
+
       const rule = chain.module
         .rule(CHAIN_ID.RULE.STYLUS)
-        .test(/\.styl(us)?$/)
-        .merge({ sideEffects: true })
+        .test(test)
+        // exclude `import './foo.styl?raw'` and `import './foo.stylus?inline'`
+        .resourceQuery({ not: /raw|inline/ })
+        .sideEffects(true)
         .resolve.preferRelative(true)
         .end();
 
-      // Copy the builtin CSS rules
-      const cssRule = chain.module.rules.get(CHAIN_ID.RULE.CSS);
-      rule.dependency(cssRule.get('dependency'));
+      // Rsbuild < 1.3.0 does not have CSS inline rule
+      const supportInline =
+        CHAIN_ID.RULE.CSS_INLINE &&
+        chain.module.rules.has(CHAIN_ID.RULE.CSS_INLINE);
 
-      for (const id of Object.keys(cssRule.uses.entries())) {
-        const loader = cssRule.uses.get(id);
-        const options = loader.get('options') ?? {};
-        const clonedOptions = deepmerge<Record<string, any>>({}, options);
+      const inlineRule = supportInline
+        ? chain.module
+            .rule(CHAIN_ID.RULE.STYLUS_INLINE)
+            .test(test)
+            .resourceQuery(/inline/)
+        : null;
 
-        if (id === CHAIN_ID.USE.CSS) {
-          // add stylus-loader
-          clonedOptions.importLoaders += 1;
+      // Support for importing raw Stylus files
+      chain.module
+        .rule(CHAIN_ID.RULE.STYLUS_RAW)
+        .test(test)
+        .type('asset/source')
+        .resourceQuery(/raw/);
+
+      // Update the normal rule and the inline rule
+      const updateRules = (
+        callback: (rule: RspackChain.Rule, type: 'normal' | 'inline') => void,
+      ) => {
+        callback(rule, 'normal');
+        if (inlineRule) {
+          callback(inlineRule, 'inline');
+        }
+      };
+
+      updateRules((rule, type) => {
+        // Copy the builtin CSS rules
+        const cssRule = chain.module.rules.get(
+          type === 'normal' ? CHAIN_ID.RULE.CSS : CHAIN_ID.RULE.CSS_INLINE,
+        );
+        rule.dependency(cssRule.get('dependency'));
+
+        for (const id of Object.keys(cssRule.uses.entries())) {
+          const loader = cssRule.uses.get(id);
+          const options = loader.get('options') ?? {};
+          const clonedOptions = deepmerge<Record<string, any>>({}, options);
+
+          if (id === CHAIN_ID.USE.CSS) {
+            // add stylus-loader
+            clonedOptions.importLoaders += 1;
+          }
+
+          rule.use(id).loader(loader.get('loader')).options(clonedOptions);
         }
 
-        rule.use(id).loader(loader.get('loader')).options(clonedOptions);
-      }
-
-      rule
-        .use(CHAIN_ID.USE.STYLUS)
-        .loader(require.resolve('stylus-loader'))
-        .options(mergedOptions);
+        rule
+          .use(CHAIN_ID.USE.STYLUS)
+          .loader(require.resolve('stylus-loader'))
+          .options(mergedOptions);
+      });
     });
   },
 });

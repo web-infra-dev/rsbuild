@@ -15,6 +15,10 @@ exports[`svgr > 'configure SVGR options' 1`] = `
       "type": "asset/inline",
     },
     {
+      "resourceQuery": /raw/,
+      "type": "asset/source",
+    },
+    {
       "resourceQuery": /react/,
       "type": "javascript/auto",
       "use": [
@@ -106,6 +110,10 @@ exports[`svgr > 'exportType default / mixedImport false' 1`] = `
     {
       "resourceQuery": /inline/,
       "type": "asset/inline",
+    },
+    {
+      "resourceQuery": /raw/,
+      "type": "asset/source",
     },
     {
       "resourceQuery": /react/,
@@ -265,6 +273,10 @@ exports[`svgr > 'exportType default / mixedImport true' 1`] = `
       "type": "asset/inline",
     },
     {
+      "resourceQuery": /raw/,
+      "type": "asset/source",
+    },
+    {
       "resourceQuery": /react/,
       "type": "javascript/auto",
       "use": [
@@ -422,6 +434,10 @@ exports[`svgr > 'exportType named / mixedImport false' 1`] = `
       "type": "asset/inline",
     },
     {
+      "resourceQuery": /raw/,
+      "type": "asset/source",
+    },
+    {
       "resourceQuery": /react/,
       "type": "javascript/auto",
       "use": [
@@ -577,6 +593,10 @@ exports[`svgr > 'exportType named / mixedImport true' 1`] = `
     {
       "resourceQuery": /inline/,
       "type": "asset/inline",
+    },
+    {
+      "resourceQuery": /raw/,
+      "type": "asset/source",
     },
     {
       "resourceQuery": /react/,

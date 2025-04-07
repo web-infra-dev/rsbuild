@@ -2,8 +2,7 @@ import fs from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, isAbsolute, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import type { ChokidarOptions } from '../compiled/chokidar/index.js';
-import RspackChain from '../compiled/rspack-chain/index.js';
+import RspackChain from '../compiled/rspack-chain';
 import {
   ASSETS_DIST_DIR,
   CSS_DIST_DIR,
@@ -25,7 +24,6 @@ import {
 } from './constants';
 import {
   color,
-  debounce,
   findExists,
   getNodeEnv,
   isFileExists,
@@ -34,8 +32,6 @@ import {
 } from './helpers';
 import { logger } from './logger';
 import { mergeRsbuildConfig } from './mergeConfig';
-import { restartBuild, restartDevServer } from './server/restart';
-import { createChokidar } from './server/watchFiles.js';
 import type {
   InspectConfigOptions,
   InspectConfigResult,
@@ -77,6 +73,15 @@ const getDefaultDevConfig = (): NormalizedDevConfig => ({
   },
 });
 
+/**
+ * Default allowed origins for CORS.
+ * - localhost
+ * - 127.0.0.1
+ * - [::1]
+ */
+export const LOCAL_ORIGINS_REGEX: RegExp =
+  /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/;
+
 const getDefaultServerConfig = (): NormalizedServerConfig => ({
   port: DEFAULT_PORT,
   host: DEFAULT_DEV_HOST,
@@ -86,7 +91,9 @@ const getDefaultServerConfig = (): NormalizedServerConfig => ({
   compress: true,
   printUrls: true,
   strictPort: false,
-  cors: false,
+  cors: {
+    origin: LOCAL_ORIGINS_REGEX,
+  },
   middlewareMode: false,
 });
 
@@ -370,42 +377,6 @@ const resolveConfigPath = (root: string, customConfig?: string) => {
   return null;
 };
 
-export async function watchFilesForRestart(
-  files: string[],
-  root: string,
-  isBuildWatch: boolean,
-  watchOptions?: ChokidarOptions,
-): Promise<void> {
-  if (!files.length) {
-    return;
-  }
-
-  const watcher = await createChokidar(files, root, {
-    // do not trigger add for initial files
-    ignoreInitial: true,
-    // If watching fails due to read permissions, the errors will be suppressed silently.
-    ignorePermissionErrors: true,
-    ...watchOptions,
-  });
-
-  const callback = debounce(
-    async (filePath) => {
-      await watcher.close();
-      if (isBuildWatch) {
-        await restartBuild({ filePath });
-      } else {
-        await restartDevServer({ filePath });
-      }
-    },
-    // set 300ms debounce to avoid restart frequently
-    300,
-  );
-
-  watcher.on('add', callback);
-  watcher.on('change', callback);
-  watcher.on('unlink', callback);
-}
-
 export type LoadConfigOptions = {
   /**
    * The root path to resolve the config file.
@@ -498,6 +469,9 @@ export async function loadConfig({
         // disable require cache to support restart CLI and read the new config
         moduleCache: false,
         interopDefault: true,
+        // Always use native `require()` for these packages,
+        // This avoids `@rspack/core` being loaded twice.
+        nativeModules: ['@rspack/core', 'typescript'],
       });
 
       configExport = await jiti.import<RsbuildConfigExport>(configFilePath, {

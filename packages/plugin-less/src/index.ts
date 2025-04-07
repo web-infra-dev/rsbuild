@@ -135,16 +135,38 @@ export const pluginLess = (
   name: PLUGIN_LESS_NAME,
 
   setup(api) {
+    const { include = /\.less$/ } = pluginOptions;
+
     api.modifyBundlerChain(async (chain, { CHAIN_ID, environment }) => {
       const { config } = environment;
 
-      const ruleId = findRuleId(chain, CHAIN_ID.RULE.LESS);
       const rule = chain.module
-        .rule(ruleId)
-        .test(pluginOptions.include ?? /\.less$/)
-        .merge({ sideEffects: true })
+        .rule(findRuleId(chain, CHAIN_ID.RULE.LESS))
+        .test(include)
+        // exclude `import './foo.less?raw'` and `import './foo.less?inline'`
+        .resourceQuery({ not: /raw|inline/ })
+        .sideEffects(true)
         .resolve.preferRelative(true)
         .end();
+
+      // Rsbuild < 1.3.0 does not have CSS inline rule
+      const supportInline =
+        CHAIN_ID.RULE.CSS_INLINE &&
+        chain.module.rules.has(CHAIN_ID.RULE.CSS_INLINE);
+
+      const inlineRule = supportInline
+        ? chain.module
+            .rule(findRuleId(chain, CHAIN_ID.RULE.LESS_INLINE))
+            .test(include)
+            .resourceQuery(/inline/)
+        : null;
+
+      // Support for importing raw Less files
+      chain.module
+        .rule(CHAIN_ID.RULE.LESS_RAW)
+        .test(include)
+        .type('asset/source')
+        .resourceQuery(/raw/);
 
       const { sourceMap } = config.output;
       const { excludes, options } = getLessLoaderOptions(
@@ -153,35 +175,50 @@ export const pluginLess = (
         api.context.rootPath,
       );
 
-      for (const item of excludes) {
-        rule.exclude.add(item);
-      }
+      // Update the normal rule and the inline rule
+      const updateRules = (
+        callback: (rule: RspackChain.Rule, type: 'normal' | 'inline') => void,
+      ) => {
+        callback(rule, 'normal');
+        if (inlineRule) {
+          callback(inlineRule, 'inline');
+        }
+      };
 
-      if (pluginOptions.exclude) {
-        rule.exclude.add(pluginOptions.exclude);
-      }
+      const lessLoaderPath = path.join(
+        __dirname,
+        '../compiled/less-loader/index.js',
+      );
 
-      // Copy the builtin CSS rules
-      const cssRule = chain.module.rules.get(CHAIN_ID.RULE.CSS);
-      rule.dependency(cssRule.get('dependency'));
-
-      for (const id of Object.keys(cssRule.uses.entries())) {
-        const loader = cssRule.uses.get(id);
-        const options = loader.get('options') ?? {};
-        const clonedOptions = deepmerge<Record<string, any>>({}, options);
-
-        if (id === CHAIN_ID.USE.CSS) {
-          // add less-loader
-          clonedOptions.importLoaders += 1;
+      updateRules((rule, type) => {
+        for (const item of excludes) {
+          rule.exclude.add(item);
+        }
+        if (pluginOptions.exclude) {
+          rule.exclude.add(pluginOptions.exclude);
         }
 
-        rule.use(id).loader(loader.get('loader')).options(clonedOptions);
-      }
+        // Copy the builtin CSS rules
+        const cssRule = chain.module.rules.get(
+          type === 'normal' ? CHAIN_ID.RULE.CSS : CHAIN_ID.RULE.CSS_INLINE,
+        );
+        rule.dependency(cssRule.get('dependency'));
 
-      rule
-        .use(CHAIN_ID.USE.LESS)
-        .loader(path.join(__dirname, '../compiled/less-loader/index.js'))
-        .options(options);
+        for (const id of Object.keys(cssRule.uses.entries())) {
+          const loader = cssRule.uses.get(id);
+          const options = loader.get('options') ?? {};
+          const clonedOptions = deepmerge<Record<string, any>>({}, options);
+
+          if (id === CHAIN_ID.USE.CSS) {
+            // add less-loader
+            clonedOptions.importLoaders += 1;
+          }
+
+          rule.use(id).loader(loader.get('loader')).options(clonedOptions);
+        }
+
+        rule.use(CHAIN_ID.USE.LESS).loader(lessLoaderPath).options(options);
+      });
     });
   },
 });

@@ -1,10 +1,9 @@
-import fs from 'node:fs';
 import type { Server } from 'node:http';
 import type { Http2SecureServer } from 'node:http2';
 import type Connect from '../../compiled/connect/index.js';
-import { ROOT_DIST_DIR } from '../constants';
 import { getPublicPathFromCompiler, isMultiCompiler } from '../helpers';
 import { logger } from '../logger';
+import { onBeforeRestartServer, restartDevServer } from '../restart';
 import type {
   CreateCompiler,
   CreateDevServerOptions,
@@ -15,17 +14,16 @@ import type {
   Rspack,
 } from '../types';
 import { isCliShortcutsEnabled, setupCliShortcuts } from './cliShortcuts';
-import { CompilerDevMiddleware } from './compilerDevMiddleware';
+import { CompilationManager } from './compilationManager';
+import {
+  type GetDevMiddlewaresResult,
+  getDevMiddlewares,
+} from './devMiddlewares';
 import {
   createCacheableFunction,
   getTransformedHtml,
   loadBundle,
 } from './environment';
-import {
-  type CompileMiddlewareAPI,
-  type GetMiddlewaresResult,
-  getMiddlewares,
-} from './getDevMiddlewares';
 import {
   registerCleanup,
   removeCleanup,
@@ -42,7 +40,6 @@ import {
 import { createHttpServer } from './httpServer';
 import { notFoundMiddleware, optionsFallbackMiddleware } from './middlewares';
 import { open } from './open';
-import { onBeforeRestartServer, restartDevServer } from './restart';
 import { type WatchFilesResult, setupWatchFiles } from './watchFiles';
 
 type HTTPServer = Server | Http2SecureServer;
@@ -134,36 +131,34 @@ export async function createDevServer<
     config,
   });
   const { middlewareMode } = config.server;
+  const { context } = options;
   const devConfig = formatDevConfig(config.dev, port);
-  const routes = getRoutes(options.context);
-  const root = options.context.rootPath;
+  const routes = getRoutes(context);
+  const root = context.rootPath;
 
-  options.context.devServer = {
+  context.devServer = {
     hostname: host,
     port,
     https,
   };
 
-  let outputFileSystem: Rspack.OutputFileSystem = fs;
   let lastStats: Rspack.Stats[];
 
   // should register onDevCompileDone hook before startCompile
   const waitFirstCompileDone = runCompile
     ? new Promise<void>((resolve) => {
-        options.context.hooks.onDevCompileDone.tap(
-          ({ stats, isFirstCompile }) => {
-            lastStats = 'stats' in stats ? stats.stats : [stats];
+        context.hooks.onDevCompileDone.tap(({ stats, isFirstCompile }) => {
+          lastStats = 'stats' in stats ? stats.stats : [stats];
 
-            if (!isFirstCompile) {
-              return;
-            }
-            resolve();
-          },
-        );
+          if (!isFirstCompile) {
+            return;
+          }
+          resolve();
+        });
       })
     : Promise.resolve();
 
-  const startCompile: () => Promise<CompileMiddlewareAPI> = async () => {
+  const startCompile: () => Promise<CompilationManager> = async () => {
     const compiler = customCompiler || (await createCompiler());
 
     if (!compiler) {
@@ -175,7 +170,7 @@ export async function createDevServer<
       : [getPublicPathFromCompiler(compiler)];
 
     // create dev middleware instance
-    const compilerDevMiddleware = new CompilerDevMiddleware({
+    const compilationManager = new CompilationManager({
       dev: devConfig,
       server: {
         ...config.server,
@@ -183,22 +178,12 @@ export async function createDevServer<
       },
       publicPaths: publicPaths,
       compiler,
-      environments: options.context.environments,
+      environments: context.environments,
     });
 
-    await compilerDevMiddleware.init();
+    await compilationManager.init();
 
-    outputFileSystem =
-      (isMultiCompiler(compiler)
-        ? compiler.compilers[0].outputFileSystem
-        : compiler.outputFileSystem) || fs;
-
-    return {
-      middleware: compilerDevMiddleware.middleware,
-      sockWrite: (...args) => compilerDevMiddleware.sockWrite(...args),
-      onUpgrade: (...args) => compilerDevMiddleware.upgrade(...args),
-      close: () => compilerDevMiddleware?.close(),
-    };
+    return compilationManager;
   };
 
   const protocol = https ? 'https' : 'http';
@@ -228,7 +213,7 @@ export async function createDevServer<
 
   // biome-ignore lint/style/useConst: should be declared before use
   let fileWatcher: WatchFilesResult | undefined;
-  let devMiddlewares: GetMiddlewaresResult | undefined;
+  let devMiddlewares: GetDevMiddlewaresResult | undefined;
 
   const cleanupGracefulShutdown = middlewareMode
     ? null
@@ -238,7 +223,7 @@ export async function createDevServer<
     // ensure closeServer is only called once
     removeCleanup(closeServer);
     cleanupGracefulShutdown?.();
-    await options.context.hooks.onCloseDevServer.callBatch();
+    await context.hooks.onCloseDevServer.callBatch();
     await Promise.all([devMiddlewares?.close(), fileWatcher?.close()]);
   };
 
@@ -263,21 +248,12 @@ export async function createDevServer<
         help: shortcutsOptions.help,
         customShortcuts: shortcutsOptions.custom,
       });
-      options.context.hooks.onCloseDevServer.tap(cleanup);
+      context.hooks.onCloseDevServer.tap(cleanup);
     }
 
     if (!getPortSilently && portTip) {
       logger.info(portTip);
     }
-  };
-
-  const readFileSync = (fileName: string) => {
-    if ('readFileSync' in outputFileSystem) {
-      // bundle require needs a synchronous method, although readFileSync is not within the outputFileSystem type definition, but nodejs fs API implemented.
-      // @ts-expect-error
-      return outputFileSystem.readFileSync(fileName, 'utf-8');
-    }
-    return fs.readFileSync(fileName, 'utf-8');
   };
 
   const cacheableLoadBundle = createCacheableFunction(loadBundle);
@@ -286,37 +262,47 @@ export async function createDevServer<
   );
 
   const environmentAPI = Object.fromEntries(
-    Object.entries(options.context.environments).map(([name, environment]) => {
+    Object.entries(context.environments).map(([name, environment]) => {
       return [
         name,
         {
           getStats: async () => {
-            if (!runCompile) {
+            if (!compilationManager) {
               throw new Error(
-                '[rsbuild:server] Can not get stats info when "runCompile" is false',
+                '[rsbuild:server] Can not call `getStats` when `runCompile` is false',
               );
             }
             await waitFirstCompileDone;
             return lastStats[environment.index];
           },
           loadBundle: async <T>(entryName: string) => {
+            if (!compilationManager) {
+              throw new Error(
+                '[rsbuild:server] Can not call `loadBundle` when `runCompile` is false',
+              );
+            }
             await waitFirstCompileDone;
             return cacheableLoadBundle(
               lastStats[environment.index],
               entryName,
               {
-                readFileSync,
+                readFileSync: compilationManager.readFileSync,
                 environment,
               },
             ) as T;
           },
           getTransformedHtml: async (entryName: string) => {
+            if (!compilationManager) {
+              throw new Error(
+                '[rsbuild:server] Can not call `getTransformedHtml` when `runCompile` is false',
+              );
+            }
             await waitFirstCompileDone;
             return cacheableTransformedHtml(
               lastStats[environment.index],
               entryName,
               {
-                readFileSync,
+                readFileSync: compilationManager.readFileSync,
                 environment,
               },
             );
@@ -351,7 +337,7 @@ export async function createDevServer<
       const serverTerminator = getServerTerminator(httpServer);
       logger.debug('listen dev server');
 
-      options.context.hooks.onCloseDevServer.tap(serverTerminator);
+      context.hooks.onCloseDevServer.tap(serverTerminator);
 
       return new Promise<StartServerResult>((resolve) => {
         httpServer.listen(
@@ -394,10 +380,10 @@ export async function createDevServer<
       });
     },
     afterListen: async () => {
-      await options.context.hooks.onAfterStartDevServer.callBatch({
+      await context.hooks.onAfterStartDevServer.callBatch({
         port,
         routes,
-        environments: options.context.environments,
+        environments: context.environments,
       });
     },
     connectWebSocket: ({ server }: { server: HTTPServer }) => {
@@ -411,38 +397,35 @@ export async function createDevServer<
   };
 
   const postCallbacks = (
-    await options.context.hooks.onBeforeStartDevServer.callBatch({
+    await context.hooks.onBeforeStartDevServer.callBatch({
       server: devServerAPI,
-      environments: options.context.environments,
+      environments: context.environments,
     })
   ).filter((item) => typeof item === 'function');
 
   if (runCompile) {
     // print server url should between listen and beforeCompile
-    options.context.hooks.onBeforeCreateCompiler.tap(beforeCreateCompiler);
+    context.hooks.onBeforeCreateCompiler.tap(beforeCreateCompiler);
   } else {
     beforeCreateCompiler();
   }
 
-  const compileMiddlewareAPI = runCompile ? await startCompile() : undefined;
+  const compilationManager = runCompile ? await startCompile() : undefined;
 
   fileWatcher = await setupWatchFiles({
     dev: devConfig,
     server: config.server,
-    compileMiddlewareAPI,
+    compilationManager,
     root,
   });
 
-  devMiddlewares = await getMiddlewares({
+  devMiddlewares = await getDevMiddlewares({
     pwd: root,
-    compileMiddlewareAPI,
+    compilationManager,
     dev: devConfig,
+    context,
     server: config.server,
     environments: environmentAPI,
-    output: {
-      distPath: options.context.distPath || ROOT_DIST_DIR,
-    },
-    outputFileSystem,
     postCallbacks,
   });
 

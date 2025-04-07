@@ -1,44 +1,74 @@
 # server.cors
 
 - **Type:** `boolean | import('cors').CorsOptions`
-- **Default:** `false`
+
+```ts
+const defaultCorsOptions = {
+  // Default allowed:
+  // - localhost
+  // - 127.0.0.1
+  // - [::1]
+  origin:
+    /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/,
+};
+```
+
 - **Version:** `>= 1.1.11`
 
 Configure [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) options for the dev server or preview server, based on the [cors](https://github.com/expressjs/cors) middleware.
 
-- `true`：Enable CORS with default options.
-- `false`：Disable CORS.
 - `object`：Enable CORS with the specified options.
+- `true`：Enable CORS with default options (allow all origins, not recommended).
+- `false`：Disable CORS.
 
-:::tip
-Although `cors` can be set to `true`, we recommend setting a specified `origin` option to prevent untrusted origins from accessing your dev server.
+:::warning
+Using `cors: true` or `cors.origin: '*'` exposes your dev server to all origins, potentially compromising your source code security. It is recommended to use [origin](#origin) option to specify an allowlist of trusted origins instead.
 :::
 
 ## Example
 
-Only enable CORS for the dev server:
+- Enable CORS for a specific origin:
 
-```ts
-const isDev = process.env.NODE_ENV === 'development';
-
+```ts title="rsbuild.config.ts"
 export default {
   server: {
-    cors: isDev
-      ? {
-          // Configures the `Access-Control-Allow-Origin` CORS response header
-          origin: 'https://example.com',
-        }
-      : false,
+    cors: {
+      // Configures the `Access-Control-Allow-Origin` CORS response header
+      origin: 'https://example.com',
+    },
   },
 };
 ```
 
-Disable CORS:
+- Only enable CORS for the dev server:
 
-```ts
+```ts title="rsbuild.config.ts"
+const isDev = process.env.NODE_ENV === 'development';
+
+export default {
+  server: {
+    cors: isDev ? { origin: 'https://example.com' } : false,
+  },
+};
+```
+
+- Disable CORS:
+
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     cors: false,
+  },
+};
+```
+
+- Enable CORS for all origins (not recommended):
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    // Equivalent to `{ origin: '*' }`
+    cors: true,
   },
 };
 ```
@@ -58,13 +88,79 @@ const defaultOptions = {
 };
 ```
 
-For example, use the `origin` option to configure the `Access-Control-Allow-Origin` header:
+### origin
+
+- **Type:**
 
 ```ts
+type StaticOrigin =
+  | boolean
+  | string
+  | RegExp
+  | Array<boolean | string | RegExp>;
+
+type CustomOrigin = (
+  requestOrigin: string | undefined,
+  callback: (err: Error | null, origin?: StaticOrigin) => void,
+) => void;
+
+type Origin = StaticOrigin | CustomOrigin;
+```
+
+The `origin` option is used to configure the `Access-Control-Allow-Origin` header:
+
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     cors: {
       origin: 'https://example.com',
+    },
+  },
+};
+```
+
+Specify multiple allowed origins using an array:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    cors: {
+      origin: [
+        /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/,
+        'https://example.com',
+      ],
+    },
+  },
+};
+```
+
+Use a regular expression to allow all matching origins:
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    cors: {
+      origin: /\.example\.com$/,
+    },
+  },
+};
+```
+
+Setting `origin` to a function allows you to dynamically determine the allowed origin, the function receives two parameters:
+
+- `origin`：The origin of the incoming request, `undefined` if no origin is present.
+- `callback`：A function to set the allowed origin.
+
+```ts title="rsbuild.config.ts"
+export default {
+  server: {
+    cors: {
+      origin: (origin, callback) => {
+        // loadMyOrigins is an example call to load a list of origins
+        loadMyOrigins((error, origins) => {
+          callback(error, origins);
+        });
+      },
     },
   },
 };

@@ -13,7 +13,7 @@ Rsbuild 支持同时为多个环境构建产物。你可以使用 [environments]
 - 定义 `rsc` 和 `ssr` 两个环境，它们的构建目标都是 `node`，分别用于 React Server Components 和 SSR。
 - 定义 `desktop` 和 `mobile` 两个环境，它们的构建目标都是 ` web`，分别用于桌面端浏览器和移动端浏览器。
 
-如果没有 `environments` 配置，你需要为这些场景定义多份配置，并执行多次独立的 Rsbuild 构建。现在通过 `environments` 配置，你可以在一次 Rsbuild 构建中完成多种产物的构建（Rsbuild 基于 Rspack 的 `MultiCompiler` 来实现这一点）。
+如果没有 `environments` 配置，你需要为这些场景定义多份配置，并执行多次独立的 Rsbuild 构建。现在通过 `environments` 配置，你可以在一次 Rsbuild 构建中完成多种产物的构建（Rsbuild 基于 Rspack 的 [MultiCompiler](https://rspack.dev/zh/api/javascript-api/compiler#multicompiler) 来实现这一点）。
 
 Rsbuild 中的每个 `environment` 关联一份 Rsbuild 配置、一份 Rspack 配置和一份构建产物。Rsbuild 插件的开发者可以基于 `environment` 名称，对指定环境的构建流程进行定制，如修改 Rsbuild 或 Rspack 配置、注册或移除插件、调整 Rspack 规则和查看静态资源信息等。
 
@@ -23,7 +23,7 @@ Rsbuild 支持通过 [environments](/config/environments) 为每个环境定义�
 
 例如，假如你的项目希望支持 SSR 功能，你需要分别为 client 和 SSR 定义不同的配置，你可以分别定义一个 web 和 node 的 environment。
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 export default {
   environments: {
     // 配置 web 环境，用于浏览器端
@@ -79,8 +79,8 @@ export default {
 
 当你在项目根目录下执行命令 `npx rsbuild inspect` 后，会发现有如下输出：
 
-- rsbuild.config.[name].mjs: 表示在构建时某个 environment 对应使用的 Rsbuild 配置。
-- rspack.config.[name].mjs: 表示在构建时某个 environment 对应使用的 Rspack 配置。
+- `rsbuild.config.[name].mjs`: 表示在构建时某个 environment 对应使用的 Rsbuild 配置。
+- `rspack.config.[name].mjs`: 表示在构建时某个 environment 对应使用的 Rspack 配置。
 
 ```bash
 ➜ npx rsbuild inspect
@@ -97,7 +97,7 @@ config inspection completed, generated files:
 
 当 environments 未指定时，Rsbuild 默认会根据当前的产物类型 ([output.target](/config/output/target) 的值) 创建一个同名的环境。
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     target: 'web',
@@ -107,7 +107,7 @@ export default {
 
 以上配置相当于下面配置的语法糖：
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 export default {
   environments: {
     web: {
@@ -143,7 +143,7 @@ rsbuild dev --environment web,node
 
 例如，仅在 web 环境下开启 React 插件：
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 import { pluginReact } from '@rsbuild/plugin-react';
 
 export default {
@@ -244,7 +244,7 @@ const myPlugin = () => ({
 
 Rsbuild server 提供了一系列和构建环境相关的 API，用户可通过 Rsbuild [environment API](/api/javascript-api/environment-api#environment-api) 在服务器端操作特定环境下的构建产物。
 
-你可以在 [Rsbuild DevMiddleware](/config/dev/setup-middlewares) 或[自定义 Server](/api/javascript-api/instance#rsbuildcreatedevserver) 中使用 environment API。
+你可以在 [Rsbuild DevMiddleware](/config/dev/setup-middlewares) 或 [自定义 Server](/api/javascript-api/instance#rsbuildcreatedevserver) 中使用 environment API。
 
 例如，你可以通过 Rsbuild environment API 在开发模式下快速实现一个 SSR 功能：
 
@@ -268,7 +268,7 @@ const serverRender = (serverAPI) => async (_req, res) => {
 };
 
 export async function startDevServer() {
-  const { content } = await loadConfig({});
+  const { content } = await loadConfig();
 
   // Init Rsbuild
   const rsbuild = await createRsbuild({
@@ -308,7 +308,7 @@ export async function startDevServer() {
 
 例如，假设你需要先完成 `web` 环境的构建，再开始构建 `node` 环境，可以添加如下配置：
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 export default {
   environments: {
     web: {

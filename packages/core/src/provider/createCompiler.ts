@@ -11,12 +11,7 @@ import {
 } from '../helpers';
 import { registerDevHook } from '../hooks';
 import { logger } from '../logger';
-import type {
-  DevConfig,
-  InternalContext,
-  Rspack,
-  ServerConfig,
-} from '../types';
+import type { InternalContext, Rspack } from '../types';
 import { type InitConfigsOptions, initConfigs } from './initConfigs';
 
 // keep the last 3 parts of the path to make logs clean
@@ -123,7 +118,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     isCompiling = true;
   });
 
-  if (context.command === 'build') {
+  if (context.action === 'build') {
     compiler.hooks.run.tap('rsbuild:run', logRspackVersion);
   }
 
@@ -181,7 +176,7 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     },
   );
 
-  if (context.command === 'dev') {
+  if (context.action === 'dev') {
     registerDevHook({
       context,
       compiler,
@@ -201,35 +196,3 @@ export async function createCompiler(options: InitConfigsOptions): Promise<{
     rspackConfigs,
   };
 }
-
-export type MiddlewareCallbacks = {
-  onInvalid: () => void;
-  onDone: (stats: any) => void;
-};
-
-export type DevMiddlewareOptions = {
-  /** To ensure HMR works, the devMiddleware need inject the HMR client path into page when HMR enable. */
-  clientPaths?: string[];
-  clientConfig: DevConfig['client'];
-  publicPath?: string;
-
-  /** When liveReload is disabled, the page does not reload. */
-  liveReload?: boolean;
-
-  etag?: 'weak' | 'strong';
-
-  /** The options need by compiler middleware (like webpackMiddleware) */
-  headers?: Record<string, string | string[]>;
-  writeToDisk?:
-    | boolean
-    | ((filename: string, compilationName?: string) => boolean);
-  stats?: boolean;
-
-  /** should trigger when compiler hook called */
-  callbacks: MiddlewareCallbacks;
-
-  /** whether use Server Side Render */
-  serverSideRender?: boolean;
-
-  serverConfig: ServerConfig;
-};

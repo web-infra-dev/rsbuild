@@ -7,13 +7,13 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
     "@rsbuild/plugin-webpack-swc": "workspace:*",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.3"
   }
 }

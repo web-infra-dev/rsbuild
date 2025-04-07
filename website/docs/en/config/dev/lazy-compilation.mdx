@@ -22,28 +22,25 @@ type LazyCompilationOptions =
 ```
 
 - **Default:** `false`
+- **Version:** `>= 1.3.0`
 
-Used to enable lazy compilation (compilation on demand), implemented based on Rspack's [experiments.lazyCompilation](https://rspack.dev/config/experiments#experimentslazycompilation).
+Enable lazy compilation (compilation on demand), implemented based on Rspack's [lazy compilation](https://rspack.dev/guide/features/lazy-compilation) feature.
 
 ## Introduction
 
-Lazy compilation is an excellent way to improve dev startup performance. It compiles modules on demand rather than compiling all modules at startup. This means developers can quickly see the application running when they start the dev server and build the necessary modules in stages.
+Although Rspack itself has good performance, the overall build time can still be less than ideal when building applications with a large number of modules. This is because the modules in the application need to be compiled by various loaders, such as `postcss-loader`, `sass-loader`, `vue-loader`, etc., which introduce additional compilation overhead.
 
-Although Rspack itself has good performance, the overall build time can still be less than ideal when building applications with a large number of modules. This is because the modules in the application need to be compiled by various loaders, such as postcss-loader, sass-loader, vue-loader, etc., which introduce additional compilation overhead.
+Lazy compilation is an effective strategy to improve the startup performance of the development phase. Instead of compiling all modules at initialization, it compiles modules on demand as they're needed. This means that developers can quickly see the application running when starting the dev server, and build the required modules in batches. By compiling on demand, unnecessary compilation time can be reduced. As the project scales up, compilation time does not significantly increase, which greatly enhances the development experience.
 
-With lazy compilation enabled, Rspack will only compile the entrypoints and dynamic import modules that are requested. This can significantly reduce the number of modules that are compiled at development startup, improving startup time.
-
-## Limitations
-
-- Lazy compilation is only effective for dev builds.
-- Lazy compilation is still an experimental feature in Rspack. In some scenarios, it may not work as expected or may not significantly improve performance.
-- Lazy compilation depends on Rspack's local dev server. If you proxy a domain to localhost for development, it will not work properly. So if you need to use a proxy, please disable lazy compilation.
+:::tip
+Lazy compilation is only effective for dev builds and does not affect production builds.
+:::
 
 ## Example
 
 ### Enable lazy compilation
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     lazyCompilation: true,
@@ -53,7 +50,7 @@ export default {
 
 This is equivalent to the following configuration:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     lazyCompilation: {
@@ -68,7 +65,7 @@ export default {
 
 Use `lazyCompilation.entries` to control whether to lazily compile entry modules:
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     lazyCompilation: {
@@ -89,7 +86,7 @@ When lazily compiling entry modules, please note:
 
 Use `lazyCompilation.imports` to control whether to lazily compile [dynamic imported](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) modules.
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     lazyCompilation: {

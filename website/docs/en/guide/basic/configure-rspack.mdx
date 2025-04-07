@@ -45,6 +45,33 @@ export default {
 
 > Please refer to the [tools.rspack documentation](/config/tools/rspack) for detailed usage.
 
+## Access Rspack API
+
+If you need to access the API or plugins exported by [@rspack/core](https://www.npmjs.com/package/@rspack/core), you can directly import the [rspack](/api/javascript-api/core#rspack) object from `@rsbuild/core` without installing the `@rspack/core` package separately.
+
+```ts title="rsbuild.config.ts"
+import { rspack } from '@rsbuild/core';
+
+export default {
+  tools: {
+    rspack: {
+      plugins: [
+        new rspack.BannerPlugin({
+          // ...
+        }),
+      ],
+    },
+  },
+};
+```
+
+:::tip
+
+- Refer to [Rspack plugins](https://rspack.dev/plugins/) and [Rspack JavaScript API](https://rspack.dev/api/javascript-api/) to learn more about the available Rspack APIs.
+- It's not recommended to manually install the `@rspack/core` package, as it may conflict with the version that Rsbuild depends on.
+
+:::
+
 ## Use bundler chain
 
 import RspackChain from '@en/shared/rspackChain.mdx';

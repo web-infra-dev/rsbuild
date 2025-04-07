@@ -1,5 +1,5 @@
 import type * as Rspack from '@rspack/core';
-import type RspackChain from '../../compiled/rspack-chain/index.js';
+import type RspackChain from '../../compiled/rspack-chain';
 import type { TransformHandler } from './plugin';
 
 export type { Rspack, RspackChain };

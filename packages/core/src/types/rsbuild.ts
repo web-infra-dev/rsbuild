@@ -151,19 +151,11 @@ export type StartDevServer = (
   options?: StartDevServerOptions,
 ) => Promise<StartServerResult>;
 
-export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = {
+export type ProviderInstance<B extends 'rspack' | 'webpack' = 'rspack'> = Pick<
+  RsbuildInstance,
+  'build' | 'createCompiler' | 'createDevServer' | 'startDevServer'
+> & {
   readonly bundler: Bundler;
-
-  createCompiler: CreateCompiler;
-
-  /**
-   * It is designed for higher-level frameworks that require a custom server
-   */
-  createDevServer: CreateDevServer;
-
-  startDevServer: StartDevServer;
-
-  build: Build;
 
   initConfigs: () => Promise<
     B extends 'rspack' ? Rspack.Configuration[] : WebpackConfig[]

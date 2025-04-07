@@ -27,7 +27,6 @@ import { pluginExternals } from './plugins/externals';
 import { pluginFileSize } from './plugins/fileSize';
 import { pluginHtml } from './plugins/html';
 import { pluginInlineChunk } from './plugins/inlineChunk';
-import { pluginLazyCompilation } from './plugins/lazyCompilation';
 import { pluginManifest } from './plugins/manifest';
 import { pluginMinimize } from './plugins/minimize';
 import { pluginModuleFederation } from './plugins/moduleFederation';
@@ -111,7 +110,6 @@ async function applyDefaultPlugins(
     pluginManifest(),
     pluginModuleFederation(),
     pluginRspackProfile(),
-    pluginLazyCompilation(),
     pluginSri(),
     pluginNonce(),
   ]);
@@ -205,7 +203,7 @@ export async function createRsbuild(
   });
 
   const preview = async (options: PreviewOptions = {}) => {
-    context.command = 'preview';
+    context.action = 'preview';
 
     if (!getNodeEnv()) {
       setNodeEnv('production');
@@ -237,7 +235,7 @@ export async function createRsbuild(
   };
 
   const build: Build = async (...args) => {
-    context.command = 'build';
+    context.action = 'build';
 
     if (!getNodeEnv()) {
       setNodeEnv('production');
@@ -254,7 +252,7 @@ export async function createRsbuild(
   };
 
   const startDevServer: StartDevServer = (...args) => {
-    context.command = 'dev';
+    context.action = 'dev';
 
     if (!getNodeEnv()) {
       setNodeEnv('development');
@@ -264,7 +262,7 @@ export async function createRsbuild(
   };
 
   const createDevServer: CreateDevServer = (...args) => {
-    context.command = 'dev';
+    context.action = 'dev';
 
     if (!getNodeEnv()) {
       setNodeEnv('development');
@@ -274,8 +272,8 @@ export async function createRsbuild(
   };
 
   const createCompiler: CreateCompiler = (...args) => {
-    if (!context.command) {
-      context.command = getNodeEnv() === 'development' ? 'dev' : 'build';
+    if (!context.action) {
+      context.action = getNodeEnv() === 'development' ? 'dev' : 'build';
     }
     return providerInstance.createCompiler(...args);
   };

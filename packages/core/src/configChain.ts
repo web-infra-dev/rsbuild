@@ -1,4 +1,4 @@
-import RspackChain from '../compiled/rspack-chain/index.js';
+import RspackChain from '../compiled/rspack-chain';
 import { castArray } from './helpers';
 import { logger } from './logger';
 import type { InternalContext, ModifyBundlerChainUtils } from './types';
@@ -49,12 +49,28 @@ export const CHAIN_ID = {
     TS: 'ts',
     /** Rule for CSS */
     CSS: 'css',
-    /** Rule for less */
+    /** Rule for raw CSS */
+    CSS_RAW: 'css-raw',
+    /** Rule for inline CSS */
+    CSS_INLINE: 'css-inline',
+    /** Rule for Less */
     LESS: 'less',
-    /** Rule for sass */
+    /** Rule for raw Less */
+    LESS_RAW: 'less-raw',
+    /** Rule for inline Less */
+    LESS_INLINE: 'less-inline',
+    /** Rule for Sass */
     SASS: 'sass',
+    /** Rule for raw Sass */
+    SASS_RAW: 'sass-raw',
+    /** Rule for inline Sass */
+    SASS_INLINE: 'sass-inline',
     /** Rule for stylus */
     STYLUS: 'stylus',
+    /** Rule for raw stylus */
+    STYLUS_RAW: 'stylus-raw',
+    /** Rule for inline stylus */
+    STYLUS_INLINE: 'stylus-inline',
     /** Rule for svg */
     SVG: 'svg',
     /** Rule for pug */
@@ -69,6 +85,7 @@ export const CHAIN_ID = {
   /** Predefined rule groups */
   ONE_OF: {
     SVG: 'svg',
+    SVG_RAW: 'svg-asset-raw',
     SVG_URL: 'svg-asset-url',
     SVG_ASSET: 'svg-asset',
     SVG_REACT: 'svg-react',

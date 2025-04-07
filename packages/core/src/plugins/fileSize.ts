@@ -20,7 +20,7 @@ const gzip = promisify(zlib.gzip);
 
 async function gzipSize(input: Buffer) {
   const data = await gzip(input);
-  return data.length;
+  return Buffer.byteLength(data);
 }
 
 const EXCLUDE_ASSET_REGEX = /\.(?:map|LICENSE\.txt|d\.ts)$/;
@@ -107,7 +107,7 @@ async function printFileSizes(
   ) => {
     const fileName = asset.name.split('?')[0];
     const contents = await fs.promises.readFile(path.join(distPath, fileName));
-    const size = contents.length;
+    const size = Buffer.byteLength(contents);
     const compressible = options.compressed && isCompressible(fileName);
     const gzippedSize = compressible ? await gzipSize(contents) : null;
     const gzipSizeLabel = gzippedSize

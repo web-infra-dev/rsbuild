@@ -2,9 +2,9 @@
 
 Rsbuild 配备了一个内置的开发服务器，旨在提升开发体验。当你执行 `rsbuild dev` 或 `rsbuild preview` 命令时，该服务器将启动，并提供页面预览、路由、模块热更新等功能。
 
-## 服务端基础路径
+## 基础路径
 
-默认情况下，服务端的基础路径为 `/`，用户可通过 http://localhost:3000/ 访问到 `index.html` 等产物资源、以及 public 目录下的资源。
+默认情况下，Rsbuild 服务器的基础路径是 `/`，你可以通过 http://localhost:3000/ 访问 `index.html` 等输出文件，以及 [public 目录](/guide/basic/static-assets#public-目录) 下的资源。
 
 Rsbuild 支持通过 [server.base](/config/server/base) 修改服务端的基础路径。当我们希望通过 http://localhost:3000/foo/ 访问到这些资源时，可以添加如下配置：
 
@@ -58,7 +58,7 @@ export default {
 - 当前请求是 GET 或 HEAD 请求
 - 当前请求头接受 `text/html` (请求头 accept 类型为 `text/html` 或 `*/*`)
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     htmlFallback: 'index',
@@ -70,7 +70,7 @@ export default {
 
 当 Rsbuild 默认的 [server.htmlFallback](/config/server/html-fallback) 配置无法满足你的需求，例如，希望在访问 `/` 时可以访问 `main.html`，可通过 [server.historyApiFallback](/config/server/history-api-fallback) 进行设置。
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 export default {
   source: {
     entry: {

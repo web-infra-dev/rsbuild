@@ -83,7 +83,7 @@ function isPortAvailable(port: number) {
 const portMap = new Map();
 
 // Available port ranges: 1024 ～ 65535
-// `10080` is not available in macOS CI, `> 50000` get 'permission denied' in Windows.
+// `10080` is not available on macOS CI, `> 50000` get 'permission denied' on Windows.
 // so we use `15000` ~ `45000`.
 export async function getRandomPort(
   defaultPort = Math.ceil(Math.random() * 30000) + 15000,

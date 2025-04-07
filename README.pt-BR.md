@@ -120,13 +120,13 @@ Rsbuild usa [Web Infra QoS](https://web-infra-qos.netlify.app?product=rsbuild&me
 
 ## 🙏 Créditos
 
-Algumas das implementações do Rsbuild foram inspiradas em projetos excepcionais da comunidade. Gostaríamos de expressar nossa gratidão a eles:
+O Rsbuild foi inspirado por vários projetos excepcionais da comunidade. Gostaríamos de reconhecer e expressar nossa sincera gratidão aos seguintes projetos:
 
-- A implementação de alguns plug-ins é referenciada em [create-react-app](https://github.com/facebook/create-react-app).
-- Algumas funções de utilidade são referenciadas em [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin).
-- O design de algumas APIs é referenciado em [vite](https://github.com/vitejs/vite).
+- Várias implementações de plugins foram inspiradas pelo [create-react-app](https://github.com/facebook/create-react-app)
+- Múltiplas funções utilitárias foram adaptadas do [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)
+- Vários padrões de design de API foram influenciados pelo [Vite](https://github.com/vitejs/vite)
 
-O site Rsbuild é em parceira com [Netlify](https://www.netlify.com/).
+Agradecimentos especiais à [Netlify](https://www.netlify.com/) por fornecer serviços de hospedagem para o site de documentação do Rsbuild.
 
 ## 📖 Licença
 

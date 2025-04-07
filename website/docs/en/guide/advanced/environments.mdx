@@ -13,7 +13,7 @@ You can also define different environments for the same build target, for exampl
 - Define `rsc` and `ssr` environments, both targeting `node`, used separately for React Server Components and SSR.
 - Define `desktop` and `mobile` environments, both targeting `web`, used separately for desktop and mobile browsers.
 
-Without the `environments` configuration, you would need to define multiple configurations for these scenarios and run multiple independent Rsbuild builds. Now, with the `environments` configuration, you can complete the build for multiple outputs in a single Rsbuild run (Rsbuild achieves this using Rspack's `MultiCompiler`).
+Without the `environments` configuration, you would need to define multiple configurations for these scenarios and run multiple independent Rsbuild builds. Now, with the `environments` configuration, you can complete the build for multiple outputs in a single Rsbuild run (Rsbuild achieves this using Rspack's [MultiCompiler](https://rspack.dev/api/javascript-api/compiler#multicompiler)).
 
 In Rsbuild, each `environment` is associated with an Rsbuild configuration, an Rspack configuration, and a set of build outputs. Rsbuild plugin developers can customize the build process for a specified environment based on the `environment` name, such as modifying Rsbuild or Rspack configurations, registering or removing plugins, adjusting Rspack rules, and viewing assets information.
 
@@ -23,7 +23,7 @@ Rsbuild supports defining different Rsbuild configs for each environment through
 
 For example, if your project wants to support the SSR function, you need to define different configs for client and SSR respectively. You can define a web and node environment respectively.
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 export default {
   environments: {
     // Configure the web environment for browsers
@@ -79,8 +79,8 @@ Then, Rsbuild will use these environments configs to internally generate two Rsp
 
 When you execute the command `npx rsbuild inspect` in the project root directory, you will find the following output:
 
-- rsbuild.config.[name].mjs: Indicates the Rsbuild config used for a certain environment during build.
-- rspack.config.[name].mjs: Indicates the Rspack config corresponding to a certain environment when building.
+- `rsbuild.config.[name].mjs`: The Rsbuild config used for a certain environment during build.
+- `rspack.config.[name].mjs`: The Rspack config corresponding to a certain environment when building.
 
 ```bash
 ➜ npx rsbuild inspect
@@ -97,7 +97,7 @@ config inspection completed, generated files:
 
 When environments is not specified, Rsbuild will by default create an environment with the same name based on the currently target type (the value of [output.target](/config/output/target)).
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     target: 'web',
@@ -107,7 +107,7 @@ export default {
 
 The above config is equivalent to a simplification of the following config:
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 export default {
   environments: {
     web: {
@@ -143,7 +143,7 @@ Plugins configured through the [plugins](/config/plugins) field support running 
 
 For example, enable the React plugin only in the web environment:
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 import { pluginReact } from '@rsbuild/plugin-react';
 
 export default {
@@ -268,7 +268,7 @@ const serverRender = (serverAPI) => async (_req, res) => {
 };
 
 export async function startDevServer() {
-  const { content } = await loadConfig({});
+  const { content } = await loadConfig();
 
   // Init Rsbuild
   const rsbuild = await createRsbuild({
@@ -308,7 +308,7 @@ To control the build order between different environments, you can set build dep
 
 For example, if you need to build the `web` environment first, then build the `node` environment, you can add the following configuration:
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 export default {
   environments: {
     web: {

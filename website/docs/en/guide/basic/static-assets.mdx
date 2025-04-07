@@ -153,6 +153,20 @@ console.log(image); // "data:image/png;base64,iVBORw0KGgo..."
 
 For a more detailed introduction to asset inlining, please refer to the [Static Asset Inlining](/guide/optimization/inline-assets) chapter.
 
+## Import as string
+
+Rsbuild supports using the `?raw` query parameter to import the raw content of static assets as a string in JavaScript.
+
+```ts
+import rawSvg from './static/logo.svg?raw';
+
+console.log(rawSvg); // The raw content of the SVG file
+```
+
+:::tip
+Rsbuild >= 1.3.0 supports the `?raw` query parameter.
+:::
+
 ## Output files
 
 When static assets are imported, they will be output to the dist directory. You can:

@@ -12,7 +12,7 @@ outputs:
     value: ${{ steps.get-result.outputs.result }}
 
 runs:
-  using: "composite"
+  using: 'composite'
   steps:
     - id: get-result
       uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7

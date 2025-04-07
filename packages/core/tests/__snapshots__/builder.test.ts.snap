@@ -36,6 +36,9 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
         "resolve": {
           "preferRelative": true,
         },
+        "resourceQuery": {
+          "not": /raw\\|inline/,
+        },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -69,6 +72,42 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
             },
           },
         ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "resourceQuery": /inline/,
+        "sideEffects": true,
+        "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
+              "importLoaders": 1,
+              "modules": false,
+              "sourceMap": false,
+            },
+          },
+          {
+            "loader": "builtin:lightningcss-loader",
+            "options": {
+              "targets": [
+                "chrome >= 87",
+                "edge >= 88",
+                "firefox >= 78",
+                "safari >= 14",
+              ],
+            },
+          },
+        ],
+      },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.css\\$/,
+        "type": "asset/source",
       },
       {
         "dependency": {
@@ -180,6 +219,10 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/image/[name].[contenthash:8][ext]",
             },
@@ -205,6 +248,10 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -234,6 +281,10 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/media/[name].[contenthash:8][ext]",
             },
@@ -259,6 +310,10 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {

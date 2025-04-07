@@ -49,6 +49,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
         "resolve": {
           "preferRelative": true,
         },
+        "resourceQuery": {
+          "not": /raw\\|inline/,
+        },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -71,6 +74,31 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             },
           },
         ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "resourceQuery": /inline/,
+        "sideEffects": true,
+        "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
+              "importLoaders": 0,
+              "modules": false,
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.css\\$/,
+        "type": "asset/source",
       },
       {
         "dependency": {
@@ -113,6 +141,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/image/[name].[contenthash:8][ext]",
             },
@@ -138,6 +170,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -167,6 +203,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/media/[name].[contenthash:8][ext]",
             },
@@ -192,6 +232,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -463,6 +507,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
         "resolve": {
           "preferRelative": true,
         },
+        "resourceQuery": {
+          "not": /raw\\|inline/,
+        },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -485,6 +532,31 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             },
           },
         ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "resourceQuery": /inline/,
+        "sideEffects": true,
+        "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
+              "importLoaders": 0,
+              "modules": false,
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.css\\$/,
+        "type": "asset/source",
       },
       {
         "dependency": {
@@ -526,6 +598,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/image/[name].[contenthash:8][ext]",
             },
@@ -551,6 +627,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -580,6 +660,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/media/[name].[contenthash:8][ext]",
             },
@@ -605,6 +689,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -872,6 +960,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "resolve": {
           "preferRelative": true,
         },
+        "resourceQuery": {
+          "not": /raw\\|inline/,
+        },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -895,6 +986,31 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
           },
         ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "resourceQuery": /inline/,
+        "sideEffects": true,
+        "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
+              "importLoaders": 0,
+              "modules": false,
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.css\\$/,
+        "type": "asset/source",
       },
       {
         "dependency": {
@@ -936,6 +1052,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/image/[name].[contenthash:8][ext]",
             },
@@ -961,6 +1081,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -990,6 +1114,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/media/[name].[contenthash:8][ext]",
             },
@@ -1015,6 +1143,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -1208,6 +1340,9 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
         "resolve": {
           "preferRelative": true,
         },
+        "resourceQuery": {
+          "not": /raw\\|inline/,
+        },
         "sideEffects": true,
         "test": /\\\\\\.css\\$/,
         "type": "javascript/auto",
@@ -1231,6 +1366,31 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             },
           },
         ],
+      },
+      {
+        "resolve": {
+          "preferRelative": true,
+        },
+        "resourceQuery": /inline/,
+        "sideEffects": true,
+        "test": /\\\\\\.css\\$/,
+        "type": "javascript/auto",
+        "use": [
+          {
+            "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+            "options": {
+              "exportType": "string",
+              "importLoaders": 0,
+              "modules": false,
+              "sourceMap": false,
+            },
+          },
+        ],
+      },
+      {
+        "resourceQuery": /raw/,
+        "test": /\\\\\\.css\\$/,
+        "type": "asset/source",
       },
       {
         "dependency": {
@@ -1272,6 +1432,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/image/[name].[contenthash:8][ext]",
             },
@@ -1297,6 +1461,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {
@@ -1326,6 +1494,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
             "type": "asset/inline",
           },
           {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
+          },
+          {
             "generator": {
               "filename": "static/media/[name].[contenthash:8][ext]",
             },
@@ -1351,6 +1523,10 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when targe
           {
             "resourceQuery": /inline/,
             "type": "asset/inline",
+          },
+          {
+            "resourceQuery": /raw/,
+            "type": "asset/source",
           },
           {
             "generator": {

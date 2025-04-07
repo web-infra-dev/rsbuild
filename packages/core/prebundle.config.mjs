@@ -67,14 +67,7 @@ export default {
     },
     {
       name: 'rspack-chain',
-      ignoreDts: true,
-      afterBundle(task) {
-        // copy types to dist because prebundle will break the types
-        fs.cpSync(
-          join(task.depPath, 'types/index.d.ts'),
-          join(task.distPath, 'index.d.ts'),
-        );
-      },
+      copyDts: true,
     },
     {
       name: 'http-proxy-middleware',
@@ -101,6 +94,7 @@ export default {
             `${content
               .replace('express.Request', 'http.IncomingMessage')
               .replace('express.Response', 'http.ServerResponse')
+              .replace("import * as express from 'express';", '')
               .replace(
                 'extends express.RequestHandler {',
                 `{
@@ -133,7 +127,7 @@ export default {
     },
     {
       name: 'postcss',
-      ignoreDts: true,
+      copyDts: true,
       externals: {
         picocolors: '../picocolors',
       },

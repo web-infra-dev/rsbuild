@@ -98,7 +98,7 @@ export const pluginSass = (
   name: PLUGIN_SASS_NAME,
 
   setup(api) {
-    const { rewriteUrls = true } = pluginOptions;
+    const { rewriteUrls = true, include = /\.s(?:a|c)ss$/ } = pluginOptions;
 
     api.onAfterCreateCompiler(({ compiler }) => {
       patchCompilerGlobalLocation(compiler);
@@ -117,63 +117,100 @@ export const pluginSass = (
         rewriteUrls ? true : isUseSourceMap,
       );
 
-      const ruleId = findRuleId(chain, CHAIN_ID.RULE.SASS);
       const rule = chain.module
-        .rule(ruleId)
-        .test(pluginOptions.include ?? /\.s(?:a|c)ss$/)
-        .merge({ sideEffects: true })
+        .rule(findRuleId(chain, CHAIN_ID.RULE.SASS))
+        .test(include)
+        // exclude `import './foo.scss?raw'` and `import './foo.scss?inline'`
+        .resourceQuery({ not: /raw|inline/ })
+        .sideEffects(true)
         .resolve.preferRelative(true)
         .end();
 
-      for (const item of excludes) {
-        rule.exclude.add(item);
-      }
+      // Rsbuild < 1.3.0 does not have CSS inline rule
+      const supportInline =
+        CHAIN_ID.RULE.CSS_INLINE &&
+        chain.module.rules.has(CHAIN_ID.RULE.CSS_INLINE);
 
-      if (pluginOptions.exclude) {
-        rule.exclude.add(pluginOptions.exclude);
-      }
+      const inlineRule = supportInline
+        ? chain.module
+            .rule(findRuleId(chain, CHAIN_ID.RULE.SASS_INLINE))
+            .test(include)
+            .resourceQuery(/inline/)
+        : null;
 
-      // Copy the builtin CSS rules
-      const cssRule = chain.module.rules.get(CHAIN_ID.RULE.CSS);
-      rule.dependency(cssRule.get('dependency'));
+      // Support for importing raw Sass files
+      chain.module
+        .rule(CHAIN_ID.RULE.SASS_RAW)
+        .test(include)
+        .type('asset/source')
+        .resourceQuery(/raw/);
 
-      for (const id of Object.keys(cssRule.uses.entries())) {
-        const loader = cssRule.uses.get(id);
-        const options = loader.get('options') ?? {};
-        const clonedOptions = deepmerge<Record<string, any>>({}, options);
+      // Update the normal rule and the inline rule
+      const updateRules = (
+        callback: (rule: RspackChain.Rule, type: 'normal' | 'inline') => void,
+      ) => {
+        callback(rule, 'normal');
+        if (inlineRule) {
+          callback(inlineRule, 'inline');
+        }
+      };
 
-        if (id === CHAIN_ID.USE.CSS) {
-          // add resolve-url-loader
-          if (rewriteUrls) {
-            clonedOptions.importLoaders += 1;
-          }
-          // add sass-loader
-          clonedOptions.importLoaders += 1;
+      const sassLoaderPath = path.join(
+        __dirname,
+        '../compiled/sass-loader/index.js',
+      );
+
+      const resolveUrlLoaderPath = path.join(
+        __dirname,
+        '../compiled/resolve-url-loader/index.js',
+      );
+
+      const resolveUrlLoaderOptions = {
+        join: await getResolveUrlJoinFn(),
+        // 'resolve-url-loader' relies on 'adjust-sourcemap-loader',
+        // it has performance regression issues in some scenarios,
+        // so we need to disable the sourceMap option.
+        sourceMap: false,
+      };
+
+      updateRules((rule, type) => {
+        for (const item of excludes) {
+          rule.exclude.add(item);
+        }
+        if (pluginOptions.exclude) {
+          rule.exclude.add(pluginOptions.exclude);
         }
 
-        rule.use(id).loader(loader.get('loader')).options(clonedOptions);
-      }
+        // Copy the builtin CSS rules
+        const cssRule = chain.module.rules.get(
+          type === 'normal' ? CHAIN_ID.RULE.CSS : CHAIN_ID.RULE.CSS_INLINE,
+        );
+        rule.dependency(cssRule.get('dependency'));
 
-      // use `resolve-url-loader` to rewrite urls
-      if (rewriteUrls)
-        rule
-          .use(CHAIN_ID.USE.RESOLVE_URL)
-          .loader(
-            path.join(__dirname, '../compiled/resolve-url-loader/index.js'),
-          )
-          .options({
-            join: await getResolveUrlJoinFn(),
-            // 'resolve-url-loader' relies on 'adjust-sourcemap-loader',
-            // it has performance regression issues in some scenarios,
-            // so we need to disable the sourceMap option.
-            sourceMap: false,
-          })
-          .end();
+        for (const id of Object.keys(cssRule.uses.entries())) {
+          const loader = cssRule.uses.get(id);
+          const options = loader.get('options') ?? {};
+          const clonedOptions = deepmerge<Record<string, any>>({}, options);
 
-      rule
-        .use(CHAIN_ID.USE.SASS)
-        .loader(path.join(__dirname, '../compiled/sass-loader/index.js'))
-        .options(options);
+          if (id === CHAIN_ID.USE.CSS) {
+            // add sass-loader and resolve-url-loader
+            clonedOptions.importLoaders += rewriteUrls ? 2 : 1;
+          }
+
+          rule.use(id).loader(loader.get('loader')).options(clonedOptions);
+        }
+
+        // use `resolve-url-loader` to rewrite urls
+        if (rewriteUrls) {
+          rule
+            .use(CHAIN_ID.USE.RESOLVE_URL)
+            .loader(resolveUrlLoaderPath)
+            .options(resolveUrlLoaderOptions)
+            .end();
+        }
+
+        rule.use(CHAIN_ID.USE.SASS).loader(sassLoaderPath).options(options);
+      });
     });
   },
 });

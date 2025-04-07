@@ -19,7 +19,7 @@ export function setupCliShortcuts({
   openPage: () => Promise<void>;
   closeServer: () => Promise<void>;
   printUrls: () => void;
-  restartServer?: () => Promise<void>;
+  restartServer?: () => Promise<boolean>;
   customShortcuts?: (shortcuts: CliShortcut[]) => CliShortcut[];
 }): () => void {
   let shortcuts = [

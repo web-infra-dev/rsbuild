@@ -1,4 +1,4 @@
-import RspackChain from '../compiled/rspack-chain/index.js';
+import RspackChain from '../compiled/rspack-chain';
 import { pluginExternals } from '../src/plugins/externals';
 
 describe('plugin-external', () => {

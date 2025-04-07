@@ -35,9 +35,6 @@ export class EsmRunner extends CommonJsRunner {
   }
 
   protected createEsmRequirer(): RunnerRequirer {
-    const esmContext = vm.createContext(this.baseModuleScope!, {
-      name: 'context for esm',
-    });
     const esmCache = new Map<string, SourceTextModule>();
     const esmIdentifier = this._options.name;
     return (currentDirectory, modulePath, context = {}) => {
@@ -58,7 +55,7 @@ export class EsmRunner extends CommonJsRunner {
           identifier: `${esmIdentifier}-${file.path}`,
           // no attribute
           url: `${pathToFileURL(file.path).href}?${esmIdentifier}`,
-          context: esmContext,
+          // run in current execution context
           initializeImportMeta: (meta: { url: string }, _: any) => {
             meta.url = pathToFileURL(file!.path).href;
           },

@@ -18,7 +18,7 @@ import type {
   Options as HttpProxyOptions,
   Filter as ProxyFilter,
 } from '../../compiled/http-proxy-middleware/index.js';
-import type RspackChain from '../../compiled/rspack-chain/index.js';
+import type RspackChain from '../../compiled/rspack-chain';
 import type { FileDescriptor } from '../../compiled/rspack-manifest-plugin';
 import type { BundleAnalyzerPlugin } from '../../compiled/webpack-bundle-analyzer/index.js';
 import type {
@@ -420,9 +420,9 @@ export interface ServerConfig {
       };
   /**
    * Configure CORS for the dev server or preview server.
-   * - true: enable CORS with default options.
-   * - false: disable CORS.
    * - object: enable CORS with the specified options.
+   * - true: enable CORS with default options (allow all origins, not recommended).
+   * - false: disable CORS.
    * @default false
    * @link https://github.com/expressjs/cors
    */

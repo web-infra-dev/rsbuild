@@ -36,20 +36,26 @@ const chainStaticAssetRule = ({
     generatorOptions.emit = false;
   }
 
-  // force to url: "foo.png?url" or "foo.png?__inline=false"
+  // get asset URL: "foo.png?url" or "foo.png?__inline=false"
   rule
     .oneOf(`${assetType}-asset-url`)
     .type('asset/resource')
     .resourceQuery(/(__inline=false|url)/)
     .set('generator', generatorOptions);
 
-  // force to inline: "foo.png?inline"
+  // get inlined base64 content: "foo.png?inline"
   rule
     .oneOf(`${assetType}-asset-inline`)
     .type('asset/inline')
     .resourceQuery(/inline/);
 
-  // default: when size < dataUrlCondition.maxSize will inline
+  // get raw content: "foo.png?raw"
+  rule
+    .oneOf(`${assetType}-asset-raw`)
+    .type('asset/source')
+    .resourceQuery(/raw/);
+
+  // the asset will be inlined if fileSize < dataUrlCondition.maxSize
   rule
     .oneOf(`${assetType}-asset`)
     .type('asset')
@@ -122,16 +128,20 @@ export const pluginAsset = (): RsbuildPlugin => ({
 
       // image
       createAssetRule(CHAIN_ID.RULE.IMAGE, IMAGE_EXTENSIONS, emitAssets);
+
       // svg
       createAssetRule(CHAIN_ID.RULE.SVG, ['svg'], emitAssets);
+
       // media
       createAssetRule(
         CHAIN_ID.RULE.MEDIA,
         [...VIDEO_EXTENSIONS, ...AUDIO_EXTENSIONS],
         emitAssets,
       );
+
       // font
       createAssetRule(CHAIN_ID.RULE.FONT, FONT_EXTENSIONS, emitAssets);
+
       // assets
       const assetsFilename = getMergedFilename('assets');
       chain.output.assetModuleFilename(assetsFilename);

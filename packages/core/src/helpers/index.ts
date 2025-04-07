@@ -1,12 +1,8 @@
 import { posix } from 'node:path';
 import { URL } from 'node:url';
 import deepmerge from 'deepmerge';
-import type {
-  Compiler as WebpackCompiler,
-  MultiCompiler as WebpackMultiCompiler,
-} from 'webpack';
 import color from '../../compiled/picocolors/index.js';
-import type RspackChain from '../../compiled/rspack-chain/index.js';
+import type RspackChain from '../../compiled/rspack-chain';
 import { DEFAULT_ASSET_PREFIX } from '../constants';
 import type {
   FilenameConfig,
@@ -163,14 +159,6 @@ export const canParse = (url: string): boolean => {
   }
 };
 
-export const parseUrl = (url: string): URL | null => {
-  try {
-    return new URL(url);
-  } catch {
-    return null;
-  }
-};
-
 export const ensureAssetPrefix = (
   url: string,
   assetPrefix: Rspack.PublicPath = DEFAULT_ASSET_PREFIX,
@@ -298,23 +286,6 @@ export const applyToCompiler = (
 export const upperFirst = (str: string): string =>
   str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
 
-export function debounce<T extends (...args: any[]) => void>(
-  func: T,
-  wait: number,
-): (...args: Parameters<T>) => void {
-  let timeoutId: ReturnType<typeof setTimeout> | null = null;
-
-  return (...args: Parameters<T>) => {
-    if (timeoutId !== null) {
-      clearTimeout(timeoutId);
-    }
-
-    timeoutId = setTimeout(() => {
-      func(...args);
-    }, wait);
-  };
-}
-
 // Determine if the string is a URL
 export const isURL = (str: string): boolean =>
   str.startsWith('http') || str.startsWith('//:');
@@ -327,12 +298,9 @@ export function isWebTarget(target: RsbuildTarget | RsbuildTarget[]): boolean {
   return targets.includes('web') || target.includes('web-worker');
 }
 
-export const isMultiCompiler = <
-  C extends Rspack.Compiler | WebpackCompiler = Rspack.Compiler,
-  M extends Rspack.MultiCompiler | WebpackMultiCompiler = Rspack.MultiCompiler,
->(
-  compiler: C | M,
-): compiler is M => {
+export const isMultiCompiler = (
+  compiler: Rspack.Compiler | Rspack.MultiCompiler,
+): compiler is Rspack.MultiCompiler => {
   return 'compilers' in compiler && Array.isArray(compiler.compilers);
 };
 

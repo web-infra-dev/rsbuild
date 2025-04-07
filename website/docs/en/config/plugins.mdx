@@ -98,7 +98,7 @@ export default defineConfig({
 
 It should be noted that plugin registration can only be performed during the Rsbuild initialization phase. You cannot dynamically add other plugins within a plugin through the plugin API:
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 // Wrong
 function myPlugin() {
   return {

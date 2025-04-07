@@ -63,6 +63,30 @@ type DevServer = {
 };
 ```
 
+### context.action
+
+当前的动作类型。
+
+- **类型：**
+
+```ts
+type Action = 'dev' | 'build' | 'preview' | undefined;
+```
+
+`context.action` 在运行 CLI 命令或调用 Rsbuild 实例方法时设置：
+
+- `dev`: 当运行 [rsbuild dev](/guide/basic/cli#rsbuild-dev) 或 [rsbuild.startDevServer()](/api/javascript-api/instance#rsbuildstartdevserver) 时设置。
+- `build`: 当运行 [rsbuild build](/guide/basic/cli#rsbuild-build) 或 [rsbuild.build()](/api/javascript-api/instance#rsbuildbuild) 时设置。
+- `preview`: 当运行 [rsbuild preview](/guide/basic/cli#rsbuild-preview) 或 [rsbuild.preview()](/api/javascript-api/instance#rsbuildpreview) 时设置。
+
+示例：
+
+```ts
+if (rsbuild.context.action === 'dev') {
+  // do something
+}
+```
+
 ### context.bundlerType
 
 当前执行构建的构建工具类型。
@@ -438,7 +462,7 @@ await server.close();
 
 ## rsbuild.createCompiler
 
-创建一个 Rspack [Compiler](https://rspack.dev/api/javascript-api/compiler) 实例；如果本次构建存在多个 [environments](/config/environments)，则返回值为 `MultiCompiler`。
+创建一个 Rspack [Compiler](https://rspack.dev/api/javascript-api/compiler) 实例；如果本次构建存在多个 [environments](/config/environments)，则返回值为 [MultiCompiler](https://rspack.dev/zh/api/javascript-api/compiler#multicompiler)。
 
 - **类型：**
 

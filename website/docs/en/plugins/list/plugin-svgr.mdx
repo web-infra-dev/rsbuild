@@ -23,10 +23,11 @@ import { PackageManagerTabs } from '@theme';
 You can register the plugin in the `rsbuild.config.ts` file:
 
 ```ts title="rsbuild.config.ts"
+import { pluginReact } from '@rsbuild/plugin-react';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 
 export default {
-  plugins: [pluginSvgr()],
+  plugins: [pluginReact(), pluginSvgr()],
 };
 ```
 

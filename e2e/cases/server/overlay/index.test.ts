@@ -6,7 +6,7 @@ import { expect, test } from '@playwright/test';
 const cwd = __dirname;
 
 test('should show overlay correctly', async ({ page }) => {
-  // HMR cases will fail in Windows
+  // HMR cases will fail on Windows
   if (process.platform === 'win32') {
     test.skip();
   }

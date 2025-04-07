@@ -22,29 +22,25 @@ type LazyCompilationOptions =
 ```
 
 - **默认值：** `false`
-- **版本：** `>= 0.7.1`
+- **版本：** `>= 1.3.0`
 
-用于开启 lazy compilation（即按需编译），基于 Rspack 的 [experiments.lazyCompilation](https://rspack.dev/zh/config/experiments#experimentslazycompilation) 实现。
+用于开启 lazy compilation（即按需编译），基于 Rspack 的 [lazy compilation](https://rspack.dev/zh/guide/features/lazy-compilation) 特性实现。
 
 ## 介绍
 
-Lazy compilation 是一个提升 dev 启动性能的良好手段，它可以按需编译模块，而不是在启动时就编译所有模块。这意味着开发者在启动 dev server 时，可以很快看到应用运行，并分次构建所需的模块。
+尽管 Rspack 本身具备良好的性能，但是面对具有大量模块的应用，其整体构建时间仍然可能不够理想。这是因为应用中的模块需要经过不同 loader 的编译，包括 `postcss-loader`、`sass-loader`、`vue-loader` 等，它们都会产生额外的编译开销。
 
-尽管 Rspack 本身具备良好的性能，但是面对具有大量模块的应用，其整体构建时间仍然可能不够理想。这是因为应用中的模块需要经过不同 loader 的编译，包括 postcss-loader、sass-loader、vue-loader 等，它们都会产生额外的编译开销。
+Lazy compilation 是一个提升开发阶段启动性能的有效手段，它采用按需编译模块的方式，而非在启动时编译全部模块。这意味着开发者在启动 dev server 时，可以很快看到应用运行，并分次构建所需的模块。通过这种按需编译的机制，可以减少不必要的编译时间，且随着项目规模的扩大，编译时间不会显著增长，从而大幅提升开发体验。
 
-在启用 lazy compilation 的情况下，Rspack 仅会编译被请求的「页面入口」和「动态 import 模块」，这可以显著减少开发启动时编译的模块数量，从而提升启动时间。
-
-## 局限性
-
-- Lazy compilation 仅对 dev 构建生效。
-- Lazy compilation 仍然是 Rspack 的实验性功能，在部分场景下，lazy compilation 可能无法按照预期工作，或是性能提升不明显。
-- Lazy compilation 依赖 Rspack 在本地启动的开发服务器，当你将某个域名代理到 localhost 进行开发时，它将无法正常工作。因此，如果你需要使用代理时，请禁用 lazy compilation。
+:::tip
+Lazy compilation 仅在开发阶段有效，对于生产构建不会产生影响。
+:::
 
 ## 示例
 
 ### 启用 Lazy compilation
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     lazyCompilation: true,
@@ -54,7 +50,7 @@ export default {
 
 这等价于以下配置：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     lazyCompilation: {
@@ -69,7 +65,7 @@ export default {
 
 通过 `lazyCompilation.entries` 来控制是否 lazy 编译入口模块：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     lazyCompilation: {
@@ -90,7 +86,7 @@ lazy 编译入口模块时，有以下注意事项：
 
 通过 `lazyCompilation.imports` 来控制是否 lazy 编译 [dynamic import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) 引入的异步模块：
 
-```ts
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     lazyCompilation: {

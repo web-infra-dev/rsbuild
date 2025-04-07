@@ -166,18 +166,26 @@ export const pluginSvgr = (options: PluginSvgrOptions = {}): RsbuildPlugin => ({
 
       svgrOptions.svgoConfig = dedupeSvgoPlugins(svgrOptions.svgoConfig);
 
-      // force to url: "foo.svg?url",
+      // get asset URL: "foo.svg?url" or "foo.svg?__inline=false"
       rule
         .oneOf(CHAIN_ID.ONE_OF.SVG_URL)
         .type('asset/resource')
         .resourceQuery(/(__inline=false|url)/)
         .set('generator', generatorOptions);
 
-      // force to inline: "foo.svg?inline"
+      // get inlined base64 content: "foo.svg?inline"
       rule
         .oneOf(CHAIN_ID.ONE_OF.SVG_INLINE)
         .type('asset/inline')
         .resourceQuery(/inline/);
+
+      // get raw content: "foo.svg?raw"
+      if (CHAIN_ID.ONE_OF.SVG_RAW) {
+        rule
+          .oneOf(CHAIN_ID.ONE_OF.SVG_RAW)
+          .type('asset/source')
+          .resourceQuery(/raw/);
+      }
 
       // force to react component: "foo.svg?react"
       rule

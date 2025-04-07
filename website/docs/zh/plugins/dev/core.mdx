@@ -278,6 +278,8 @@ type TransformContext = {
   resourceQuery: string;
   environment: EnvironmentContext;
   addDependency: (file: string) => void;
+  addMissingDependency: (file: string) => void;
+  addContextDependency: (context: string) => void;
   emitFile: Rspack.LoaderContext['emitFile'];
   importModule: Rspack.LoaderContext['importModule'];
   resolve: Rspack.LoaderContext['resolve'];
@@ -305,6 +307,8 @@ handler 函数提供以下参数：
 - `resourceQuery`：模块路径上的 query。
 - `environment`: 当前构建的 [environment 上下文](/api/javascript-api/environment-api#environment-context).
 - `addDependency`：添加一个额外的文件作为依赖。该文件将被监听，并在发生变更时触发重新构建。与 Rspack loader 的 [this.addDependency](https://rspack.dev/api/loader-api/context#thisadddependency) 相同。
+- `addMissingDependency`：添加一个不存在的文件作为依赖。该文件将被监听，并在发生变更时触发重新构建。与 Rspack loader 的 [this.addMissingDependency](https://rspack.dev/api/loader-api/context#thisaddmissingdependency) 相同。
+- `addContextDependency`：添加一个额外的目录作为依赖。该目录将被监听，并在发生变更时触发重新构建。与 Rspack loader 的 [this.addContextDependency](https://rspack.dev/api/loader-api/context#thisaddcontextdependency) 相同。
 - `emitFile`：将一个文件输出到构建结果中。与 Rspack loader 的 [this.emitFile](https://rspack.dev/zh/api/loader-api/context#thisemitfile) 相同。
 - `importModule`：在构建时编译并执行一个模块。与 Rspack loader 的 [this.importModule](https://rspack.dev/zh/api/loader-api/context#thisimportmodule) 相同。
 

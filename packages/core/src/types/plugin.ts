@@ -3,7 +3,7 @@ import type {
   Configuration as WebpackConfig,
   WebpackPluginInstance,
 } from 'webpack';
-import type RspackChain from '../../compiled/rspack-chain/index.js';
+import type RspackChain from '../../compiled/rspack-chain';
 import type { ChainIdentifier } from '../configChain';
 import type {
   ModifyRspackConfigUtils,
@@ -281,6 +281,19 @@ export type TransformContext = {
    * @param file The absolute path of the module
    */
   addDependency: (file: string) => void;
+  /**
+   * Add a non-existing file as a dependency.
+   * Similar to addDependency, but handles the creation of files during compilation before watchers are attached correctly.
+   * The file will be watched and changes to the file will trigger rebuild.
+   * @param file The absolute path of the module
+   */
+  addMissingDependency(file: string): void;
+  /**
+   * Add a directory as dependency.
+   * The directory will be watched and changes to the directory will trigger rebuild.
+   * @param context The absolute path of the directory
+   */
+  addContextDependency(context: string): void;
   /**
    * Emits a file to the build output.
    * @param name file name of the asset

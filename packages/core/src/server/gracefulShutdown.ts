@@ -44,7 +44,8 @@ export const setupGracefulShutdown = (): (() => void) => {
   process.once('SIGTERM', handleTermination);
 
   // Listen for CTRL+D (stdin end) in non-CI environments
-  if (process.env.CI !== 'true') {
+  const isCI = process.env.CI === 'true';
+  if (!isCI) {
     process.stdin.on('end', handleTermination);
   }
 
@@ -56,7 +57,7 @@ export const setupGracefulShutdown = (): (() => void) => {
     }
 
     process.removeListener('SIGTERM', handleTermination);
-    if (process.stdin.listenerCount('end') === 0) {
+    if (!isCI) {
       process.stdin.removeListener('end', handleTermination);
     }
   };

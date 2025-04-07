@@ -215,7 +215,7 @@ Rsbuild 也支持读取 `.env.[mode]` 和 `.env.[mode].local` 文件，你可以
 npx rsbuild dev --env-mode test
 ```
 
-Rsbuild 会依次读取以下文件：
+Rsbuild 会按照以下顺序读取这些文件，并合并它们的内容。如果存在同名环境变量，后读取的文件将会覆盖先读取的文件中的值：
 
 - .env
 - .env.local
@@ -292,6 +292,16 @@ const mergedConfig = mergeRsbuildConfig(
   userConfig,
 );
 ```
+
+### 禁用加载
+
+你可以通过 CLI 的 `--no-env` 选项来禁用加载 `.env` 文件。
+
+```bash
+npx rsbuild dev --no-env
+```
+
+在使用 `--no-env` 选项时，Rsbuild CLI 不会读取任何 `.env` 文件，你可以自行使用其他工具来管理环境变量，例如 [dotenvx](https://dotenvx.com/)。
 
 ## public 变量
 

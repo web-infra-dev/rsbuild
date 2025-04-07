@@ -111,7 +111,9 @@ exports[`environment config > should normalize environment config correctly 1`] 
   "server": {
     "base": "/",
     "compress": true,
-    "cors": false,
+    "cors": {
+      "origin": /\\^https\\?:\\\\/\\\\/\\(\\?:\\(\\?:\\[\\^:\\]\\+\\\\\\.\\)\\?localhost\\|127\\\\\\.0\\\\\\.0\\\\\\.1\\|\\\\\\[::1\\\\\\]\\)\\(\\?::\\\\d\\+\\)\\?\\$/,
+    },
     "host": "0.0.0.0",
     "htmlFallback": "index",
     "middlewareMode": false,
@@ -253,7 +255,9 @@ exports[`environment config > should normalize environment config correctly 2`] 
   "server": {
     "base": "/",
     "compress": true,
-    "cors": false,
+    "cors": {
+      "origin": /\\^https\\?:\\\\/\\\\/\\(\\?:\\(\\?:\\[\\^:\\]\\+\\\\\\.\\)\\?localhost\\|127\\\\\\.0\\\\\\.0\\\\\\.1\\|\\\\\\[::1\\\\\\]\\)\\(\\?::\\\\d\\+\\)\\?\\$/,
+    },
     "host": "0.0.0.0",
     "htmlFallback": "index",
     "middlewareMode": false,
@@ -395,7 +399,9 @@ exports[`environment config > should print environment config when inspect confi
     "server": {
       "base": "/",
       "compress": true,
-      "cors": false,
+      "cors": {
+        "origin": /\\^https\\?:\\\\/\\\\/\\(\\?:\\(\\?:\\[\\^:\\]\\+\\\\\\.\\)\\?localhost\\|127\\\\\\.0\\\\\\.0\\\\\\.1\\|\\\\\\[::1\\\\\\]\\)\\(\\?::\\\\d\\+\\)\\?\\$/,
+      },
       "host": "0.0.0.0",
       "htmlFallback": "index",
       "middlewareMode": false,
@@ -533,7 +539,9 @@ exports[`environment config > should print environment config when inspect confi
     "server": {
       "base": "/",
       "compress": true,
-      "cors": false,
+      "cors": {
+        "origin": /\\^https\\?:\\\\/\\\\/\\(\\?:\\(\\?:\\[\\^:\\]\\+\\\\\\.\\)\\?localhost\\|127\\\\\\.0\\\\\\.0\\\\\\.1\\|\\\\\\[::1\\\\\\]\\)\\(\\?::\\\\d\\+\\)\\?\\$/,
+      },
       "host": "0.0.0.0",
       "htmlFallback": "index",
       "middlewareMode": false,
@@ -691,7 +699,9 @@ exports[`environment config > should support modify environment config by api.mo
     "server": {
       "base": "/",
       "compress": true,
-      "cors": false,
+      "cors": {
+        "origin": /\\^https\\?:\\\\/\\\\/\\(\\?:\\(\\?:\\[\\^:\\]\\+\\\\\\.\\)\\?localhost\\|127\\\\\\.0\\\\\\.0\\\\\\.1\\|\\\\\\[::1\\\\\\]\\)\\(\\?::\\\\d\\+\\)\\?\\$/,
+      },
       "host": "0.0.0.0",
       "htmlFallback": "index",
       "middlewareMode": false,
@@ -830,7 +840,9 @@ exports[`environment config > should support modify environment config by api.mo
     "server": {
       "base": "/",
       "compress": true,
-      "cors": false,
+      "cors": {
+        "origin": /\\^https\\?:\\\\/\\\\/\\(\\?:\\(\\?:\\[\\^:\\]\\+\\\\\\.\\)\\?localhost\\|127\\\\\\.0\\\\\\.0\\\\\\.1\\|\\\\\\[::1\\\\\\]\\)\\(\\?::\\\\d\\+\\)\\?\\$/,
+      },
       "host": "0.0.0.0",
       "htmlFallback": "index",
       "middlewareMode": false,
@@ -969,7 +981,9 @@ exports[`environment config > should support modify environment config by api.mo
     "server": {
       "base": "/",
       "compress": true,
-      "cors": false,
+      "cors": {
+        "origin": /\\^https\\?:\\\\/\\\\/\\(\\?:\\(\\?:\\[\\^:\\]\\+\\\\\\.\\)\\?localhost\\|127\\\\\\.0\\\\\\.0\\\\\\.1\\|\\\\\\[::1\\\\\\]\\)\\(\\?::\\\\d\\+\\)\\?\\$/,
+      },
       "host": "0.0.0.0",
       "htmlFallback": "index",
       "middlewareMode": false,
@@ -1110,7 +1124,9 @@ exports[`environment config > should support modify single environment config by
     "server": {
       "base": "/",
       "compress": true,
-      "cors": false,
+      "cors": {
+        "origin": /\\^https\\?:\\\\/\\\\/\\(\\?:\\(\\?:\\[\\^:\\]\\+\\\\\\.\\)\\?localhost\\|127\\\\\\.0\\\\\\.0\\\\\\.1\\|\\\\\\[::1\\\\\\]\\)\\(\\?::\\\\d\\+\\)\\?\\$/,
+      },
       "host": "0.0.0.0",
       "htmlFallback": "index",
       "middlewareMode": false,
@@ -1249,7 +1265,9 @@ exports[`environment config > should support modify single environment config by
     "server": {
       "base": "/",
       "compress": true,
-      "cors": false,
+      "cors": {
+        "origin": /\\^https\\?:\\\\/\\\\/\\(\\?:\\(\\?:\\[\\^:\\]\\+\\\\\\.\\)\\?localhost\\|127\\\\\\.0\\\\\\.0\\\\\\.1\\|\\\\\\[::1\\\\\\]\\)\\(\\?::\\\\d\\+\\)\\?\\$/,
+      },
       "host": "0.0.0.0",
       "htmlFallback": "index",
       "middlewareMode": false,
@@ -1313,6 +1331,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "resolve": {
             "preferRelative": true,
           },
+          "resourceQuery": {
+            "not": /raw\\|inline/,
+          },
           "sideEffects": true,
           "test": /\\\\\\.css\\$/,
           "type": "javascript/auto",
@@ -1346,6 +1367,42 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               },
             },
           ],
+        },
+        {
+          "resolve": {
+            "preferRelative": true,
+          },
+          "resourceQuery": /inline/,
+          "sideEffects": true,
+          "test": /\\\\\\.css\\$/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+              "options": {
+                "exportType": "string",
+                "importLoaders": 1,
+                "modules": false,
+                "sourceMap": false,
+              },
+            },
+            {
+              "loader": "builtin:lightningcss-loader",
+              "options": {
+                "targets": [
+                  "chrome >= 87",
+                  "edge >= 88",
+                  "firefox >= 78",
+                  "safari >= 14",
+                ],
+              },
+            },
+          ],
+        },
+        {
+          "resourceQuery": /raw/,
+          "test": /\\\\\\.css\\$/,
+          "type": "asset/source",
         },
         {
           "dependency": {
@@ -1457,6 +1514,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               "type": "asset/inline",
             },
             {
+              "resourceQuery": /raw/,
+              "type": "asset/source",
+            },
+            {
               "generator": {
                 "filename": "static/image/[name].[contenthash:8][ext]",
               },
@@ -1482,6 +1543,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             {
               "resourceQuery": /inline/,
               "type": "asset/inline",
+            },
+            {
+              "resourceQuery": /raw/,
+              "type": "asset/source",
             },
             {
               "generator": {
@@ -1511,6 +1576,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               "type": "asset/inline",
             },
             {
+              "resourceQuery": /raw/,
+              "type": "asset/source",
+            },
+            {
               "generator": {
                 "filename": "static/media/[name].[contenthash:8][ext]",
               },
@@ -1536,6 +1605,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             {
               "resourceQuery": /inline/,
               "type": "asset/inline",
+            },
+            {
+              "resourceQuery": /raw/,
+              "type": "asset/source",
             },
             {
               "generator": {
@@ -1671,6 +1744,9 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
           "resolve": {
             "preferRelative": true,
           },
+          "resourceQuery": {
+            "not": /raw\\|inline/,
+          },
           "sideEffects": true,
           "test": /\\\\\\.css\\$/,
           "type": "javascript/auto",
@@ -1694,6 +1770,31 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               },
             },
           ],
+        },
+        {
+          "resolve": {
+            "preferRelative": true,
+          },
+          "resourceQuery": /inline/,
+          "sideEffects": true,
+          "test": /\\\\\\.css\\$/,
+          "type": "javascript/auto",
+          "use": [
+            {
+              "loader": "<ROOT>/packages/core/compiled/css-loader/index.js",
+              "options": {
+                "exportType": "string",
+                "importLoaders": 0,
+                "modules": false,
+                "sourceMap": false,
+              },
+            },
+          ],
+        },
+        {
+          "resourceQuery": /raw/,
+          "test": /\\\\\\.css\\$/,
+          "type": "asset/source",
         },
         {
           "dependency": {
@@ -1796,6 +1897,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               "type": "asset/inline",
             },
             {
+              "resourceQuery": /raw/,
+              "type": "asset/source",
+            },
+            {
               "generator": {
                 "filename": "static/image/[name].[contenthash:8][ext]",
               },
@@ -1821,6 +1926,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             {
               "resourceQuery": /inline/,
               "type": "asset/inline",
+            },
+            {
+              "resourceQuery": /raw/,
+              "type": "asset/source",
             },
             {
               "generator": {
@@ -1850,6 +1959,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
               "type": "asset/inline",
             },
             {
+              "resourceQuery": /raw/,
+              "type": "asset/source",
+            },
+            {
               "generator": {
                 "filename": "static/media/[name].[contenthash:8][ext]",
               },
@@ -1875,6 +1988,10 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             {
               "resourceQuery": /inline/,
               "type": "asset/inline",
+            },
+            {
+              "resourceQuery": /raw/,
+              "type": "asset/source",
             },
             {
               "generator": {

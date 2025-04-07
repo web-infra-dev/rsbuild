@@ -25,7 +25,7 @@ type Open =
 
 - Open the project's default preview page, which defaults to `http://localhost:<port>`. If [server.host](/config/server/host) is configured, it defaults to `http://<host>:<port>`.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     open: true,
@@ -35,7 +35,7 @@ export default {
 
 - Open the specified page:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     open: 'http://localhost:3000',
@@ -45,7 +45,7 @@ export default {
 
 - Open the specified path, equivalent to `http://localhost:<port>/home`:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     open: '/home',
@@ -55,7 +55,7 @@ export default {
 
 - Open multiple pages:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     open: ['/', '/about'],
@@ -65,7 +65,7 @@ export default {
 
 - Open a non-localhost URL (used with proxy):
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     open: 'http://www.example.com',
@@ -82,7 +82,7 @@ To avoid `server.open` becoming invalid due to port changes, you can use one of 
 - Enable [server.strictPort](/config/server/strict-port).
 - Use the `<port>` placeholder to refer to the current port number. Rsbuild will replace the placeholder with the actual port number it is listening on.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     open: 'http://localhost:<port>/home',
@@ -90,11 +90,55 @@ export default {
 };
 ```
 
-## Open the specified browser
+## Specify browser
 
-Rsbuild by default will open the page in the system's default browser.
+Rsbuild opens pages in the system default browser by default, and also supports specifying which browser to use when starting the dev server through the `BROWSER` environment variable.
 
-On macOS, you can open the specified browser when dev server starts, by set environment variable `BROWSER`, support values:
+### Browser name
+
+Rsbuild uses the [open](https://github.com/sindresorhus/open) library to open browsers, and supports opening Chrome, Edge, and Firefox:
+
+```bash
+# Chrome
+BROWSER=chrome npx rsbuild dev
+
+# Edge
+BROWSER=edge npx rsbuild dev
+
+# Firefox
+BROWSER=firefox npx rsbuild dev
+```
+
+On Windows, use [cross-env](https://www.npmjs.com/package/cross-env) to set environment variables:
+
+```bash
+npm i cross-env -D
+cross-env BROWSER=chrome npx rsbuild dev
+```
+
+You can also refer to the [app option](https://github.com/sindresorhus/open?tab=readme-ov-file#app) of `open` to configure more special `BROWSER` values, such as some OS-specific browser names:
+
+```bash
+# macOS
+BROWSER="google chrome" npx rsbuild dev
+
+# Linux
+BROWSER="google-chrome" npx rsbuild dev
+```
+
+### Browser arguments
+
+Pass browser arguments through `BROWSER_ARGS`, with multiple arguments separated by spaces:
+
+```bash
+BROWSER=chrome BROWSER_ARGS="--incognito" npx rsbuild dev
+```
+
+### AppleScript
+
+On macOS, Rsbuild also supports opening the browser through AppleScript, which allows you to reuse existing browser tabs to open pages.
+
+The following are the browser names supported by AppleScript:
 
 - Google Chrome Canary
 - Google Chrome Dev
@@ -108,18 +152,23 @@ On macOS, you can open the specified browser when dev server starts, by set envi
 For example:
 
 ```bash
-BROWSER="Google Chrome Canary" npx rsbuild dev --open
+BROWSER="Google Chrome Canary" npx rsbuild dev
 ```
 
-:::tip
-You can set `BROWSER` in the local [.env.local](/guide/advanced/env-vars#env-file) file, which helps avoid impacting other developers.
-:::
+### Configure env variable
+
+You can set the `BROWSER` environment variable in the local [.env.local](/guide/advanced/env-vars#env-file) file, so you don't need to manually set the environment variable every time you start the dev server, and it also avoids affecting other developers in the project.
+
+```bash
+# .env.local
+BROWSER=chrome
+```
 
 ## Callback
 
 By using `open.before`, you can trigger a callback function before opening the page.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     open: {
@@ -133,7 +182,7 @@ export default {
 
 When using `open.before`, the page URLs can be configured via `open.target`.
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   server: {
     open: {

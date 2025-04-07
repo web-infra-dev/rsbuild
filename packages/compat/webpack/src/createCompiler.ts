@@ -36,8 +36,7 @@ export async function createCompiler(options: InitConfigsOptions) {
 
     if (level === 'error') {
       logger.error(message);
-    }
-    if (level === 'warning') {
+    } else if (level === 'warning') {
       logger.warn(message);
     }
   };
@@ -46,7 +45,7 @@ export async function createCompiler(options: InitConfigsOptions) {
     done(stats as Rspack.Stats);
   });
 
-  if (context.command === 'dev') {
+  if (context.action === 'dev') {
     helpers.registerDevHook({
       compiler,
       context,

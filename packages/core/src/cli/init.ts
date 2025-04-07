@@ -1,8 +1,9 @@
 import path from 'node:path';
-import { loadConfig as baseLoadConfig, watchFilesForRestart } from '../config';
+import { loadConfig as baseLoadConfig } from '../config';
 import { createRsbuild } from '../createRsbuild';
 import { castArray, getAbsolutePath } from '../helpers';
 import { logger } from '../logger';
+import { watchFilesForRestart } from '../restart';
 import type { RsbuildInstance } from '../types';
 import type { CommonOptions } from './commands';
 
@@ -91,40 +92,49 @@ export async function init({
       cwd: root,
       rsbuildConfig: () => loadConfig(root),
       environment: commonOpts.environment,
-      loadEnv: {
-        cwd: getEnvDir(root, commonOpts.envDir),
-        mode: commonOpts.envMode,
-      },
+      loadEnv:
+        commonOpts.env === false
+          ? false
+          : {
+              cwd: getEnvDir(root, commonOpts.envDir),
+              mode: commonOpts.envMode,
+            },
     });
 
     rsbuild.onBeforeCreateCompiler(() => {
-      const command = process.argv[2];
-      if (command === 'dev' || isBuildWatch) {
-        const files: string[] = [];
-        const config = rsbuild.getNormalizedConfig();
+      // Skip watching files when not in dev mode or not in build watch mode
+      if (rsbuild.context.action !== 'dev' && !isBuildWatch) {
+        return;
+      }
 
-        if (config.dev?.watchFiles) {
-          for (const watchFilesConfig of castArray(config.dev.watchFiles)) {
-            if (watchFilesConfig.type !== 'reload-server') {
-              continue;
-            }
+      const files: string[] = [];
+      const config = rsbuild.getNormalizedConfig();
 
-            const paths = castArray(watchFilesConfig.paths);
-            if (watchFilesConfig.options) {
-              watchFilesForRestart(
-                paths,
-                root,
-                isBuildWatch,
-                watchFilesConfig.options,
-              );
-            } else {
-              files.push(...paths);
-            }
+      if (config.dev?.watchFiles) {
+        for (const watchFilesConfig of castArray(config.dev.watchFiles)) {
+          if (watchFilesConfig.type !== 'reload-server') {
+            continue;
+          }
+
+          const paths = castArray(watchFilesConfig.paths);
+          if (watchFilesConfig.options) {
+            watchFilesForRestart({
+              files: paths,
+              rsbuild,
+              isBuildWatch,
+              watchOptions: watchFilesConfig.options,
+            });
+          } else {
+            files.push(...paths);
           }
         }
-
-        watchFilesForRestart(files, root, isBuildWatch);
       }
+
+      watchFilesForRestart({
+        files,
+        rsbuild,
+        isBuildWatch,
+      });
     });
 
     return rsbuild;

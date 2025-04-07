@@ -12,7 +12,7 @@ rspackOnlyTest(
     await expect(page.locator('#header')).toHaveText('Header');
     await expect(page.locator('#footer')).toHaveText('Footer');
 
-    rsbuild.close();
+    await rsbuild.close();
   },
 );
 
@@ -27,6 +27,6 @@ rspackOnlyTest(
     await expect(page.locator('#header')).toHaveText('Header');
     await expect(page.locator('#footer')).toHaveText('Footer');
 
-    rsbuild.close();
+    await rsbuild.close();
   },
 );

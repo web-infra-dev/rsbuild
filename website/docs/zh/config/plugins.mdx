@@ -98,7 +98,7 @@ export default defineConfig({
 
 需要注意的是，插件的注册只能在 Rsbuild 初始化阶段进行，你不能在一个插件内通过插件 API 动态地添加其他插件：
 
-```ts title=rsbuild.config.ts
+```ts title="rsbuild.config.ts"
 // 错误
 function myPlugin() {
   return {

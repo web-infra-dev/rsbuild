@@ -17,7 +17,6 @@ test('OPTIONS request should fallback success when no other middleware responses
     method: 'OPTIONS',
   });
   expect(response.status).toBe(204);
-  expect(response.headers.get('access-control-allow-origin')).toBe('*');
 
   await rsbuild.close();
 });
@@ -29,6 +28,9 @@ test('OPTIONS request should response correctly with middleware responses', asyn
     cwd: __dirname,
     page,
     rsbuildConfig: {
+      server: {
+        cors: false,
+      },
       dev: {
         setupMiddlewares: [
           (middlewares) => {

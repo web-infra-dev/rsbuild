@@ -24,28 +24,38 @@ export default async function transform(
     return bypass();
   }
 
-  const result = await transform({
-    code: source,
-    context: this.context,
-    resource: this.resource,
-    resourcePath: this.resourcePath,
-    resourceQuery: this.resourceQuery,
-    environment: getEnvironment(),
-    addDependency: this.addDependency.bind(this),
-    emitFile: this.emitFile.bind(this),
-    importModule: this.importModule.bind(this),
-    resolve: this.resolve.bind(this),
-  });
+  try {
+    const result = await transform({
+      code: source,
+      context: this.context,
+      resource: this.resource,
+      resourcePath: this.resourcePath,
+      resourceQuery: this.resourceQuery,
+      environment: getEnvironment(),
+      addDependency: this.addDependency.bind(this),
+      addMissingDependency: this.addMissingDependency.bind(this),
+      addContextDependency: this.addContextDependency.bind(this),
+      emitFile: this.emitFile.bind(this),
+      importModule: this.importModule.bind(this),
+      resolve: this.resolve.bind(this),
+    });
 
-  if (result === null || result === undefined) {
-    return bypass();
+    if (result === null || result === undefined) {
+      return bypass();
+    }
+
+    if (typeof result === 'string') {
+      return callback(null, result, map);
+    }
+
+    const useMap = map !== undefined && map !== null;
+    const finalMap = result.map ?? map;
+    callback(null, result.code, useMap ? finalMap : undefined);
+  } catch (error) {
+    if (error instanceof Error) {
+      callback(error);
+    } else {
+      callback(new Error(String(error)));
+    }
   }
-
-  if (typeof result === 'string') {
-    return callback(null, result, map);
-  }
-
-  const useMap = map !== undefined && map !== null;
-  const finalMap = result.map ?? map;
-  callback(null, result.code, useMap ? finalMap : undefined);
 }

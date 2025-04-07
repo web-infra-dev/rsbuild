@@ -11,7 +11,7 @@ rspackOnlyTest(
 
     const button = page.locator('#button');
     await expect(button).toHaveText('count: 0');
-    button.click();
+    await button.click();
     await expect(button).toHaveText('count: 1');
 
     await rsbuild.close();
@@ -28,7 +28,7 @@ rspackOnlyTest(
 
     const button = page.locator('#button');
     await expect(button).toHaveText('count: 0');
-    button.click();
+    await button.click();
     await expect(button).toHaveText('count: 1');
 
     await rsbuild.close();

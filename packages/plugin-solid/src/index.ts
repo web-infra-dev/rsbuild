@@ -44,11 +44,10 @@ export function pluginSolid(options: PluginSolidOptions = {}): RsbuildPlugin {
                   require.resolve('solid-refresh/babel'),
                 ]);
 
-                chain.resolve.alias.merge({
-                  'solid-refresh': require.resolve(
-                    'solid-refresh/dist/solid-refresh.mjs',
-                  ),
-                });
+                chain.resolve.alias.set(
+                  'solid-refresh',
+                  require.resolve('solid-refresh/dist/solid-refresh.mjs'),
+                );
               }
 
               return babelOptions;

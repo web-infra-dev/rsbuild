@@ -215,7 +215,7 @@ For example, set the env mode as `test`:
 npx rsbuild dev --env-mode test
 ```
 
-Rsbuild will then read the following files in sequence:
+Rsbuild will read these files in the following order and merge their contents. If the same environment variable is defined in multiple files, values from files loaded later will override those from files loaded earlier:
 
 - .env
 - .env.local
@@ -292,6 +292,16 @@ const mergedConfig = mergeRsbuildConfig(
   userConfig,
 );
 ```
+
+### Disable loading
+
+You can disable loading `.env` files by using the `--no-env` flag in the CLI.
+
+```bash
+npx rsbuild dev --no-env
+```
+
+When using the `--no-env` flag, Rsbuild CLI will not read any `.env` files, and you can manage environment variables using other tools like [dotenvx](https://dotenvx.com/).
 
 ## Public variables
 
