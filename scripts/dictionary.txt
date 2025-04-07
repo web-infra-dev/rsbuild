@@ -104,6 +104,7 @@ ruleset
 selfsign
 selfsigned
 shiki
+shikijs
 sirv
 sokra
 speedscope
