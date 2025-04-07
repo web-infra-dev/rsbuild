@@ -120,11 +120,11 @@ export default {
 
 Projects using `output.disableMinimize` can refer to the example below:
 
-```diff
+```ts
 export default {
   output: {
--    disableMinimize: true,
-+    minify: false,
+    disableMinimize: true, // [!code --]
+    minify: false, // [!code ++]
   },
 };
 ```

@@ -120,11 +120,11 @@ export default {
 
 使用 `output.disableMinimize` 的项目可以参考以下示例：
 
-```diff
+```ts
 export default {
   output: {
--    disableMinimize: true,
-+    minify: false,
+    disableMinimize: true, // [!code --]
+    minify: false, // [!code ++]
   },
 };
 ```

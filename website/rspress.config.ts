@@ -1,6 +1,12 @@
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginClientRedirects } from '@rspress/plugin-client-redirects';
 import { pluginRss } from '@rspress/plugin-rss';
+import { pluginShiki } from '@rspress/plugin-shiki';
+import {
+  transformerNotationDiff,
+  transformerNotationFocus,
+  transformerNotationHighlight,
+} from '@shikijs/transformers';
 import { pluginGoogleAnalytics } from 'rsbuild-plugin-google-analytics';
 import { pluginOpenGraph } from 'rsbuild-plugin-open-graph';
 import { pluginFontOpenSans } from 'rspress-plugin-font-open-sans';
@@ -12,6 +18,14 @@ const siteUrl = 'https://rsbuild.dev';
 
 export default defineConfig({
   plugins: [
+    pluginShiki({
+      langs: ['styl', 'html', 'toml'],
+      transformers: [
+        transformerNotationDiff(),
+        transformerNotationHighlight(),
+        transformerNotationFocus(),
+      ],
+    }),
     pluginSitemap({
       domain: siteUrl,
     }),
@@ -159,7 +173,7 @@ export default defineConfig({
   ],
   builderConfig: {
     dev: {
-      lazyCompilation: true,
+      // lazyCompilation: true,
     },
     plugins: [
       rsbuildPluginOverview,

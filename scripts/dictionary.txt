@@ -103,6 +103,7 @@ rstack
 ruleset
 selfsign
 selfsigned
+shiki
 sirv
 sokra
 speedscope
