@@ -117,13 +117,13 @@ Rsbuild 提供了丰富的插件，对常见的使用场景提供开箱即用的
 
 然后参考 [React 插件](/plugins/list/plugin-react) 文档，注册并使用即可：
 
-```js
+```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react'; // [!code highlight]
 
-export default {
+export default defineConfig({
   plugins: [pluginReact()], // [!code highlight]
-};
+});
 ```
 
 大部分常见的 webpack loaders 和 plugins 都能在 Rsbuild 中继续使用，但我们推荐你优先使用 Rsbuild 提供的插件，这能够进一步简化你的配置。下面是它们的映射关系：

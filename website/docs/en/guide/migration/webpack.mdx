@@ -117,13 +117,13 @@ Taking a React project as an example, let's see how to integrate Rsbuild plugins
 
 Then see the [React Plugin](/plugins/list/plugin-react) documentation, register it and use it as follows:
 
-```js
+```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react'; // [!code highlight]
 
-export default {
+export default defineConfig({
   plugins: [pluginReact()], // [!code highlight]
-};
+});
 ```
 
 Most of the common webpack loaders and plugins can still be used in Rsbuild, but we recommend prioritizing the plugins provided by Rsbuild. This can further simplify your configuration. Below is their mapping relationship:
