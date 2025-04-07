@@ -20,13 +20,13 @@ import { PackageManagerTabs } from '@theme';
 
 下一步，你需要把 package.json 中的 npm scripts 更新为 Rsbuild 的 CLI 命令。
 
-```diff title="package.json"
+```json title="package.json"
 {
   "scripts": {
--   "serve": "webpack serve -c webpack.config.js",
--   "build": "webpack build -c webpack.config.js",
-+   "dev": "rsbuild dev",
-+   "build": "rsbuild build"
+    "serve": "webpack serve -c webpack.config.js", // [!code --]
+    "build": "webpack build -c webpack.config.js", // [!code --]
+    "dev": "rsbuild dev", // [!code ++]
+    "build": "rsbuild build" // [!code ++]
   }
 }
 ```
@@ -117,13 +117,13 @@ Rsbuild 提供了丰富的插件，对常见的使用场景提供开箱即用的
 
 然后参考 [React 插件](/plugins/list/plugin-react) 文档，注册并使用即可：
 
-```diff
+```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
-+import { pluginReact } from '@rsbuild/plugin-react';
+import { pluginReact } from '@rsbuild/plugin-react'; // [!code highlight]
 
-export default {
-+  plugins: [pluginReact()],
-};
+export default defineConfig({
+  plugins: [pluginReact()], // [!code highlight]
+});
 ```
 
 大部分常见的 webpack loaders 和 plugins 都能在 Rsbuild 中继续使用，但我们推荐你优先使用 Rsbuild 提供的插件，这能够进一步简化你的配置。下面是它们的映射关系：

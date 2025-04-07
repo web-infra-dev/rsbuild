@@ -128,11 +128,11 @@ In case of OOM issues, the easiest way to fix this is by increasing the memory c
 
 For example, add parameters before the `rsbuild build` command:
 
-```diff title="package.json"
+```json title="package.json"
 {
   "scripts": {
--   "build": "rsbuild build"
-+   "build": "NODE_OPTIONS=--max_old_space_size=16384 rsbuild build"
+    "build": "rsbuild build" // [!code --]
+    "build": "NODE_OPTIONS=--max_old_space_size=16384 rsbuild build" // [!code ++]
   }
 }
 ```

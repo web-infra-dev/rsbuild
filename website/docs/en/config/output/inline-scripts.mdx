@@ -71,14 +71,14 @@ When `output.inlineScripts` is used, it is recommended to set [html.inject](/con
 
 As the default injection position of the script tag is the `<head>` tag, changing the injection position to the `<body>` tag can ensure that the inlined script can access the DOM elements in `<body>`.
 
-```diff
+```ts
 export default {
-+  html: {
-+    inject: 'body',
-+  },
-   output: {
-     inlineScripts: true,
-   },
+  html: {
+    inject: 'body', // [!code highlight]
+  },
+  output: {
+    inlineScripts: true,
+  },
 };
 ```
 

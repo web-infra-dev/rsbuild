@@ -71,14 +71,14 @@ dist/static/css/style.css
 
 因为 script 标签的默认插入位置是 `<head>` 标签，将插入位置修改为 `<body>` 标签后，可以保证 inlined script 能获取到 `<body>` 中的 DOM 元素。
 
-```diff
+```ts
 export default {
-+  html: {
-+    inject: 'body',
-+  },
-   output: {
-     inlineScripts: true,
-   },
+  html: {
+    inject: 'body', // [!code highlight]
+  },
+  output: {
+    inlineScripts: true,
+  },
 };
 ```
 

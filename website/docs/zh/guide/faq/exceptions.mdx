@@ -132,11 +132,11 @@ Rsbuild 在生产构建时会默认开启 Rspack 的 tree shaking 功能，tree 
 
 比如，在 `rsbuild build` 命令前添加参数：
 
-```diff title="package.json"
+```json title="package.json"
 {
   "scripts": {
--   "build": "rsbuild build"
-+   "build": "NODE_OPTIONS=--max_old_space_size=16384 rsbuild build"
+    "build": "rsbuild build" // [!code --]
+    "build": "NODE_OPTIONS=--max_old_space_size=16384 rsbuild build" // [!code ++]
   }
 }
 ```

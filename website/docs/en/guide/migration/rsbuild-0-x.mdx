@@ -341,14 +341,17 @@ export default {
 
 `dev.startUrl` has been renamed to [server.open](/config/server/open):
 
-```diff
+```js
 export default {
--  dev: {
-+  server: {
--   startUrl: true,
-+   open: true,
-  }
-}
+  // [!code --]
+  dev: {
+    startUrl: true, // [!code --]
+  }, // [!code --]
+  // [!code ++]
+  server: {
+    open: true, // [!code ++]
+  }, // [!code ++]
+};
 ```
 
 ## dev.client.port

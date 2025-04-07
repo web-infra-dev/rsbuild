@@ -24,12 +24,14 @@ If your project is based on Vue 2, replace `@rsbuild/plugin-vue` with `@rsbuild/
 
 Next, you need to update the npm scripts in the package.json file to Rsbuild's CLI commands.
 
-```json
+```json title="package.json"
 {
   "scripts": {
-    "serve": "rsbuild dev",
-    "build": "rsbuild build",
-    "preview": "rsbuild preview"
+    "serve": "vue-cli-service serve", // [!code --]
+    "build": "vue-cli-service build", // [!code --]
+    "serve": "rsbuild dev", // [!code ++]
+    "build": "rsbuild build", // [!code ++]
+    "preview": "rsbuild preview" // [!code ++]
   }
 }
 ```
@@ -75,9 +77,11 @@ export default defineConfig({
 
 In the HTML template, if you are using the `BASE_URL` variable from Vue CLI, replace it with Rsbuild's [assetPrefix variable](/config/html/template-parameters) and use a forward slash for concatenation:
 
-```diff
--  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-+  <link rel="icon" href="<%= assetPrefix %>/favicon.ico">
+```html
+<link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+<!-- [!code --] -->
+<link rel="icon" href="<%= assetPrefix %>/favicon.ico" />
+<!-- [!code ++] -->
 ```
 
 This completes the basic migration from Vue CLI to Rsbuild. You can now run the `npm run serve` command to try starting the dev server.
