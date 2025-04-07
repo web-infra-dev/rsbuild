@@ -6,6 +6,6 @@
     "@rsbuild/core": "workspace:*",
     "@rslib/core": "0.6.1",
     "@types/node": "^22.14.0",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.3"
   }
 }
