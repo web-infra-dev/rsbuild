@@ -214,8 +214,10 @@ export default defineConfig({
 Vite provides some preset type definitions through the `vite-env.d.ts` file. When migrating to Rsbuild, you can use the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core`:
 
 ```ts title="src/env.d.ts"
-/// <reference types="vite/client" /> // [!code --]
-/// <reference types="@rsbuild/core/types" /> // [!code ++]
+// [!code --]
+/// <reference types="vite/client" />
+// [!code ++]
+/// <reference types="@rsbuild/core/types" />
 ```
 
 ## Glob import
