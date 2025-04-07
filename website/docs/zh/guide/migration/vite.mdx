@@ -20,15 +20,15 @@ import { PackageManagerTabs } from '@theme';
 
 下一步，你需要把 package.json 中的 npm scripts 更新为 Rsbuild 的 CLI 命令。
 
-```diff title="package.json"
+```json title="package.json"
 {
   "scripts": {
--   "dev": "vite",
--   "build": "vite build",
--   "preview": "vite preview"
-+   "dev": "rsbuild dev",
-+   "build": "rsbuild build",
-+   "preview": "rsbuild preview"
+    "dev": "vite", // [!code --]
+    "build": "vite build", // [!code --]
+    "preview": "vite preview", // [!code --]
+    "dev": "rsbuild dev", // [!code ++]
+    "build": "rsbuild build", // [!code ++]
+    "preview": "rsbuild preview" // [!code ++]
   }
 }
 ```
@@ -53,8 +53,9 @@ Rsbuild 与 Vite 默认的构建入口不同，Vite 使用 `index.html` 作为�
 
 以一个新建的 Vite 项目为例，首先删除 `index.html` 中的 `<script>` 标签：
 
-```diff title="index.html"
-- <script type="module" src="/src/main.ts"></script>
+```html title="index.html"
+<!-- [!code --] -->
+<script type="module" src="/src/main.ts"></script>
 ```
 
 然后添加如下配置即可。
@@ -212,9 +213,9 @@ export default defineConfig({
 
 Vite 通过 `vite-env.d.ts` 文件提供了一些预设的类型定义，迁移到 Rsbuild 时，你可以使用 `@rsbuild/core` 提供的 [预设类型](/guide/basic/typescript#预设类型)：
 
-```diff title="src/env.d.ts"
-- /// <reference types="vite/client" />
-+ /// <reference types="@rsbuild/core/types" />
+```ts title="src/env.d.ts"
+/// <reference types="vite/client" /> // [!code --]
+/// <reference types="@rsbuild/core/types" /> // [!code ++]
 ```
 
 ## Glob import

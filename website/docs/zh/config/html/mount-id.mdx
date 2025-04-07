@@ -37,9 +37,9 @@ export default {
 
 在修改 `mountId` 后，如果你的代码中有获取 `root` 根节点的逻辑，请更新对应的值：
 
-```diff
-- const domNode = document.getElementById('root');
-+ const domNode = document.getElementById('app');
+```js
+const domNode = document.getElementById('root'); // [!code --]
+const domNode = document.getElementById('app'); // [!code ++]
 
 ReactDOM.createRoot(domNode).render(<App />);
 ```

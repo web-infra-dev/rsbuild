@@ -28,15 +28,15 @@ import { PackageManagerTabs } from '@theme';
 
 下一步，你需要把 package.json 中的 npm scripts 更新为 Rsbuild 的 CLI 命令。
 
-```diff title="package.json"
+```json title="package.json"
 {
   "scripts": {
--   "dev": "builder dev",
--   "build": "builder build",
--   "serve": "builder serve"
-+   "dev": "rsbuild dev",
-+   "build": "rsbuild build",
-+   "preview": "rsbuild preview"
+    "dev": "builder dev", // [!code --]
+    "build": "builder build", // [!code --]
+    "serve": "builder serve", // [!code --]
+    "dev": "rsbuild dev", // [!code ++]
+    "build": "rsbuild build", // [!code ++]
+    "preview": "rsbuild preview" // [!code ++]
   }
 }
 ```
@@ -47,13 +47,13 @@ import { PackageManagerTabs } from '@theme';
 - 从 `@modern-js/builder-cli` 中导入 `defineConfig` 方法，改为从 `@rsbuild/core` 中导入。
 - 将 `builderPlugins` 字段改为 `plugins`。
 
-```diff title="rsbuild.config.ts"
-- import { defineConfig } from '@modern-js/builder-cli';
-+ import { defineConfig } from '@rsbuild/core';
+```js title="rsbuild.config.ts"
+import { defineConfig } from '@modern-js/builder-cli'; // [!code --]
+import { defineConfig } from '@rsbuild/core'; // [!code ++]
 
 export default defineConfig({
--  builderPlugins: [],
-+  plugins: [],
+  builderPlugins: [], // [!code --]
+  plugins: [], // [!code ++]
 });
 ```
 
@@ -75,13 +75,13 @@ Rsbuild 和 Builder 的插件系统不兼容，因此需要将 Builder 的插件
 
 以 `@modern-js/builder-plugin-vue` 为例，你需要先安装 `@rsbuild/plugin-vue`，然后在 `rsbuild.config.ts` 中引入插件，并添加到 `plugins` 字段中。
 
-```diff title="rsbuild.config.ts"
-- import { builderPluginVue } from '@modern-js/builder-plugin-vue';
-+ import { pluginVue } from '@rsbuild/plugin-vue';
+```ts title="rsbuild.config.ts"
+import { builderPluginVue } from '@modern-js/builder-plugin-vue'; // [!code --]
+import { pluginVue } from '@rsbuild/plugin-vue'; // [!code ++]
 
 export default defineConfig({
--  builderPlugins: [builderPluginVue()],
-+  plugins: [pluginVue()],
+  builderPlugins: [builderPluginVue()], // [!code --]
+  plugins: [pluginVue()], // [!code ++]
 });
 ```
 

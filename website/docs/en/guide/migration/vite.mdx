@@ -20,15 +20,15 @@ import { PackageManagerTabs } from '@theme';
 
 Next, you need to update the npm scripts in your package.json to use Rsbuild's CLI commands.
 
-```diff title="package.json"
+```json title="package.json"
 {
   "scripts": {
--   "dev": "vite",
--   "build": "vite build",
--   "preview": "vite preview"
-+   "dev": "rsbuild dev",
-+   "build": "rsbuild build",
-+   "preview": "rsbuild preview"
+    "dev": "vite", // [!code --]
+    "build": "vite build", // [!code --]
+    "preview": "vite preview", // [!code --]
+    "dev": "rsbuild dev", // [!code ++]
+    "build": "rsbuild build", // [!code ++]
+    "preview": "rsbuild preview" // [!code ++]
   }
 }
 ```
@@ -53,8 +53,9 @@ When migrating from Vite to Rsbuild, you can use Rsbuild's [source.entry](/confi
 
 Using a newly created Vite project as an example, first delete the `<script>` tags from `index.html`:
 
-```diff title="index.html"
-- <script type="module" src="/src/main.ts"></script>
+```html title="index.html"
+<!-- [!code --] -->
+<script type="module" src="/src/main.ts"></script>
 ```
 
 Then add the following config.
@@ -212,9 +213,9 @@ export default defineConfig({
 
 Vite provides some preset type definitions through the `vite-env.d.ts` file. When migrating to Rsbuild, you can use the [preset types](/guide/basic/typescript#preset-types) provided by `@rsbuild/core`:
 
-```diff title="src/env.d.ts"
-- /// <reference types="vite/client" />
-+ /// <reference types="@rsbuild/core/types" />
+```ts title="src/env.d.ts"
+/// <reference types="vite/client" /> // [!code --]
+/// <reference types="@rsbuild/core/types" /> // [!code ++]
 ```
 
 ## Glob import
