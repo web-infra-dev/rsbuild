@@ -151,4 +151,14 @@ describe('convertLinksInHtml', () => {
       '[<span style="color:#6eecf7;font-weight:bold;text-decoration:underline;text-underline-offset:3px;"><a class="file-link" data-file="C:\\Users\\username\\project\\src\\index.js:4:1">.\\src\\index.js:4:1</a></span>]\n';
     expect(convertLinksInHtml(ansiHTML(input), root)).toEqual(expected);
   });
+
+  it('should convert multiple lines as expected', () => {
+    const input = `
+    See https://example.com
+    at error (/path/to/src/index.js:4:1)`;
+
+    expect(convertLinksInHtml(ansiHTML(input))).toEqual(`
+    See https://example.com
+    at error (<a class="file-link" data-file="/path/to/src/index.js:4:1">/path/to/src/index.js:4:1</a>)`);
+  });
 });

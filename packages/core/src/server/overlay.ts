@@ -15,20 +15,26 @@ export function convertLinksInHtml(text: string, root?: string): string {
    */
   const pathRegex = /(?:\.\.?[\/\\]|[a-zA-Z]:\\|\/)[^:]*:\d+:\d+/g;
 
-  return text.replace(pathRegex, (file) => {
-    // If the file contains `</span>`, it means the file path contains ANSI codes.
-    // We need to move the `</span>` to the end of the file path.
-    const hasClosingSpan = file.includes('</span>') && !file.includes('<span');
-    const filePath = hasClosingSpan ? file.replace('</span>', '') : file;
-    const suffix = hasClosingSpan ? '</span>' : '';
-    const isAbsolute = path.isAbsolute(filePath);
-    const absolutePath =
-      root && !isAbsolute ? path.join(root, filePath) : filePath;
-    const relativePath =
-      root && isAbsolute ? getRelativePath(root, filePath) : filePath;
+  const lines = text.split('\n');
+  const replacedLines = lines.map((line) => {
+    return line.replace(pathRegex, (file) => {
+      // If the file contains `</span>`, it means the file path contains ANSI codes.
+      // We need to move the `</span>` to the end of the file path.
+      const hasClosingSpan =
+        file.includes('</span>') && !file.includes('<span');
+      const filePath = hasClosingSpan ? file.replace('</span>', '') : file;
+      const suffix = hasClosingSpan ? '</span>' : '';
+      const isAbsolute = path.isAbsolute(filePath);
+      const absolutePath =
+        root && !isAbsolute ? path.join(root, filePath) : filePath;
+      const relativePath =
+        root && isAbsolute ? getRelativePath(root, filePath) : filePath;
 
-    return `<a class="file-link" data-file="${absolutePath}">${relativePath}</a>${suffix}`;
+      return `<a class="file-link" data-file="${absolutePath}">${relativePath}</a>${suffix}`;
+    });
   });
+
+  return replacedLines.join('\n');
 }
 
 // HTML template for error overlay
