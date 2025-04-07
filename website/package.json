@@ -25,6 +25,6 @@
     "rspress": "^2.0.0-alpha.8",
     "rspress-plugin-font-open-sans": "^1.0.0",
     "rspress-plugin-sitemap": "^1.1.1",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.3"
   }
 }
