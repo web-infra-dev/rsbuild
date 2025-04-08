@@ -1030,7 +1030,7 @@ importers:
   packages/plugin-svgr:
     dependencies:
       '@rsbuild/plugin-react':
-        specifier: workspace:*
+        specifier: workspace:^1.1.0
         version: link:../plugin-react
       '@svgr/core':
         specifier: 8.1.0
