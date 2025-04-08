@@ -41,19 +41,19 @@ const getAssetColor = (size: number) => {
 
 function getHeader(
   longestFileLength: number,
-  longestLabelLength: number,
-  environmentName: string,
+  longestSizeLength: number,
+  fileHeader: string,
   showGzipHeader: boolean,
 ) {
-  const longestLengths = [longestFileLength, longestLabelLength];
-  const rowTypes = [`File (${environmentName})`, 'Size'];
+  const lengths = [longestFileLength, longestSizeLength];
+  const rowTypes = [fileHeader, 'Size'];
 
   if (showGzipHeader) {
     rowTypes.push('Gzip');
   }
 
   const headerRow = rowTypes.reduce((prev, cur, index) => {
-    const length = longestLengths[index];
+    const length = lengths[index];
     let curLabel = cur;
     if (length) {
       curLabel =
@@ -173,10 +173,12 @@ async function printFileSizes(
 
   assets.sort((a, b) => a.size - b.size);
 
-  const longestLabelLength = Math.max(...assets.map((a) => a.sizeLabel.length));
+  const fileHeader = `File (${environmentName})`;
   const longestFileLength = Math.max(
     ...assets.map((a) => (a.folder + path.sep + a.name).length),
+    fileHeader.length,
   );
+  const longestSizeLength = Math.max(...assets.map((a) => a.sizeLabel.length));
 
   if (options.detail !== false) {
     const showGzipHeader = Boolean(
@@ -185,8 +187,8 @@ async function printFileSizes(
     logs.push(
       getHeader(
         longestFileLength,
-        longestLabelLength,
-        environmentName,
+        longestSizeLength,
+        fileHeader,
         showGzipHeader,
       ),
     );
@@ -208,8 +210,8 @@ async function printFileSizes(
     }
 
     if (options.detail !== false) {
-      if (sizeLength < longestLabelLength) {
-        const rightPadding = ' '.repeat(longestLabelLength - sizeLength);
+      if (sizeLength < longestSizeLength) {
+        const rightPadding = ' '.repeat(longestSizeLength - sizeLength);
         sizeLabel += rightPadding;
       }
 
