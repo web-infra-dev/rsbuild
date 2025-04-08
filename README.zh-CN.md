@@ -128,7 +128,7 @@ Rsbuild 受到社区中几个杰出项目的启发。我们想要对以下项目
 - 多个实用工具函数改编自 [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)
 - 一些 API 设计模式受到 [Vite](https://github.com/vitejs/vite) 的影响
 
-特别感谢 [Netlify](https://www.netlify.com/) 为 Rsbuild 文档网站提供托管服务。
+特别感谢 [Netlify](https://netlify.com/) 为 Rsbuild 文档网站提供托管服务。
 
 ## 📖 License
 

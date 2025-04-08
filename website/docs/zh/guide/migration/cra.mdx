@@ -263,7 +263,7 @@ export default {
 
 ## 移除 react-app-polyfill
 
-CRA 提供了 [react-app-polyfill](https://www.npmjs.com/package/react-app-polyfill) 来手动注入 polyfill 代码。
+CRA 提供了 [react-app-polyfill](https://npmjs.com/package/react-app-polyfill) 来手动注入 polyfill 代码。
 
 在 Rsbuild 项目中，你可以移除 react-app-polyfill 相关的依赖和代码，因为 Rsbuild 会自动读取 browserslist 配置，并允许你通过 [output.polyfill](/config/output/polyfill) 配置项来启用 polyfill 注入。
 
@@ -290,7 +290,7 @@ export default {
 
 CRA 默认使用 ESLint 来检查代码质量。Rsbuild 默认不包含代码检查功能，但你可以在 `package.json` 中添加单独的 npm script 来运行 ESLint。
 
-首先安装 [eslint](https://eslint.org/) 和 [eslint-config-react-app](https://www.npmjs.com/package/eslint-config-react-app)，你需要安装 ESLint v8 来与 CRA 保持一致：
+首先安装 [eslint](https://eslint.org/) 和 [eslint-config-react-app](https://npmjs.com/package/eslint-config-react-app)，你需要安装 ESLint v8 来与 CRA 保持一致：
 
 <PackageManagerTabs command="add eslint@8 eslint-config-react-app -D" />
 

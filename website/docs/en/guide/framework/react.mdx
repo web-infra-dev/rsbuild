@@ -46,7 +46,7 @@ To use SVGR, you also need to register the [SVGR plugin](/plugins/list/plugin-sv
 
 ## React Fast Refresh
 
-Rsbuild uses React's official [Fast Refresh](https://www.npmjs.com/package/react-refresh) capability to perform component hot updates.
+Rsbuild uses React's official [Fast Refresh](https://npmjs.com/package/react-refresh) capability to perform component hot updates.
 
 Note that React Refresh requires components to be written according to the standards. Otherwise HMR may not work. You can use [eslint-plugin-react-refresh](https://github.com/ArnaudBarre/eslint-plugin-react-refresh) for validation.
 
@@ -88,8 +88,8 @@ Before you start using React Compiler, it's recommended to read the [React Compi
 
 The steps to use React Compiler in Rsbuild:
 
-1. Upgrade versions of `react` and `react-dom` to 19. If you are unable to upgrade, you can install the extra [react-compiler-runtime](https://www.npmjs.com/package/react-compiler-runtime) package which will allow the compiled code to run on versions prior to 19.
-2. React Compiler currently only provides a Babel plugin, you need to install [@rsbuild/plugin-babel](/plugins/list/plugin-babel) and [babel-plugin-react-compiler](https://www.npmjs.com/package/babel-plugin-react-compiler).
+1. Upgrade versions of `react` and `react-dom` to 19. If you are unable to upgrade, you can install the extra [react-compiler-runtime](https://npmjs.com/package/react-compiler-runtime) package which will allow the compiled code to run on versions prior to 19.
+2. React Compiler currently only provides a Babel plugin, you need to install [@rsbuild/plugin-babel](/plugins/list/plugin-babel) and [babel-plugin-react-compiler](https://npmjs.com/package/babel-plugin-react-compiler).
 3. Register the Babel plugin in your Rsbuild config file:
 
 ```ts title="rsbuild.config.ts"
@@ -141,7 +141,7 @@ export default defineConfig({
 });
 ```
 
-For React 17 and 18 projects, you need to install [react-compiler-runtime](https://www.npmjs.com/package/react-compiler-runtime) and specify the `target`:
+For React 17 and 18 projects, you need to install [react-compiler-runtime](https://npmjs.com/package/react-compiler-runtime) and specify the `target`:
 
 ```ts title="rsbuild.config.ts"
 const ReactCompilerConfig = {
@@ -182,7 +182,7 @@ To use styled-components, we recommend using the [@rsbuild/plugin-styled-compone
 Rsbuild supports compiling [Emotion](https://github.com/emotion-js/emotion), you can add the following configuration to use:
 
 - [swcReactOptions.importSource](/plugins/list/plugin-react#swcreactoptions)
-- [@swc/plugin-emotion](https://www.npmjs.com/package/@swc/plugin-emotion)
+- [@swc/plugin-emotion](https://npmjs.com/package/@swc/plugin-emotion)
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -212,7 +212,7 @@ export default defineConfig({
 
 ### Use styled-jsx
 
-You can use [styled-jsx](https://github.com/vercel/styled-jsx) through [@swc/plugin-styled-jsx](https://www.npmjs.com/package/@swc/plugin-styled-jsx):
+You can use [styled-jsx](https://github.com/vercel/styled-jsx) through [@swc/plugin-styled-jsx](https://npmjs.com/package/@swc/plugin-styled-jsx):
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -238,7 +238,7 @@ Please note, you must select the SWC plugin that matches the current version of 
 
 ### Use vanilla-extract
 
-Rsbuild supports [@vanilla-extract/webpack-plugin](https://www.npmjs.com/package/@vanilla-extract/webpack-plugin). You can add the following config to use [vanilla-extract](https://github.com/vanilla-extract-css/vanilla-extract):
+Rsbuild supports [@vanilla-extract/webpack-plugin](https://npmjs.com/package/@vanilla-extract/webpack-plugin). You can add the following config to use [vanilla-extract](https://github.com/vanilla-extract-css/vanilla-extract):
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';

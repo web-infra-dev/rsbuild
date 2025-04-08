@@ -263,7 +263,7 @@ export default {
 
 ## Remove react-app-polyfill
 
-CRA provides [react-app-polyfill](https://www.npmjs.com/package/react-app-polyfill) to manually inject polyfill code.
+CRA provides [react-app-polyfill](https://npmjs.com/package/react-app-polyfill) to manually inject polyfill code.
 
 In the Rsbuild project, you can remove the dependency and code related to react-app-polyfill, as Rsbuild will automatically read the browserslist config and allow you to enable polyfill injection through the [output.polyfill](/config/output/polyfill) config.
 
@@ -290,7 +290,7 @@ export default {
 
 CRA uses ESLint to lint the code by default. Rsbuild does not include linting by default, but you can add a separate npm script to run ESLint in `package.json`.
 
-First, install [eslint](https://eslint.org/) and [eslint-config-react-app](https://www.npmjs.com/package/eslint-config-react-app), you need to install ESLint v8 to keep consistent with CRA:
+First, install [eslint](https://eslint.org/) and [eslint-config-react-app](https://npmjs.com/package/eslint-config-react-app), you need to install ESLint v8 to keep consistent with CRA:
 
 <PackageManagerTabs command="add eslint@8 eslint-config-react-app -D" />
 

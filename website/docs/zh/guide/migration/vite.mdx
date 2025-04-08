@@ -79,24 +79,24 @@ Rsbuild 会在构建时自动注入 `<script>` 标签到生成的 HTML 文件中
 
 大部分常见的 Vite 插件可以轻松地迁移到 Rsbuild 插件，比如：
 
-| Vite                                                                                       | Rsbuild                                                                                         |
-| ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
-| [@vitejs/plugin-react](https://www.npmjs.com/package/@vitejs/plugin-react)                 | [@rsbuild/plugin-react](/plugins/list/plugin-react)                                             |
-| [@vitejs/plugin-react-swc](https://www.npmjs.com/package/@vitejs/plugin-react-swc)         | [@rsbuild/plugin-react](/plugins/list/plugin-react)                                             |
-| [@vitejs/plugin-vue](https://www.npmjs.com/package/@vitejs/plugin-vue)                     | [@rsbuild/plugin-vue](/plugins/list/plugin-vue)                                                 |
-| [@vitejs/plugin-vue2](https://www.npmjs.com/package/@vitejs/plugin-vue2)                   | [@rsbuild/plugin-vue2](https://github.com/rspack-contrib/rsbuild-plugin-vue2)                   |
-| [@vitejs/plugin-vue-jsx](https://www.npmjs.com/package/@vitejs/plugin-vue-jsx)             | [@rsbuild/plugin-vue-jsx](https://github.com/rspack-contrib/rsbuild-plugin-vue-jsx)             |
-| [@vitejs/plugin-vue2-jsx](https://www.npmjs.com/package/@vitejs/plugin-vue2-jsx)           | [@rsbuild/plugin-vue2-jsx](https://github.com/rspack-contrib/rsbuild-plugin-vue2-jsx)           |
-| [@vitejs/plugin-basic-ssl](https://www.npmjs.com/package/@vitejs/plugin-basic-ssl)         | [@rsbuild/plugin-basic-ssl](https://github.com/rspack-contrib/rsbuild-plugin-basic-ssl)         |
-| [@vitejs/plugin-legacy](https://www.npmjs.com/package/@vitejs/plugin-legacy)               | 无须使用，详见 [浏览器兼容性](/guide/advanced/browser-compatibility)                            |
-| [@sveltejs/vite-plugin-svelte](https://www.npmjs.com/package/@sveltejs/vite-plugin-svelte) | [@rsbuild/plugin-svelte](/plugins/list/plugin-svelte)                                           |
-| [vite-plugin-svgr](https://www.npmjs.com/package/vite-plugin-svgr)                         | [@rsbuild/plugin-svgr](/plugins/list/plugin-svgr)                                               |
-| [vite-plugin-checker](https://www.npmjs.com/package/vite-plugin-checker)                   | [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check)       |
-| [vite-plugin-eslint](https://www.npmjs.com/package/vite-plugin-eslint)                     | [@rsbuild/plugin-eslint](https://github.com/rspack-contrib/rsbuild-plugin-eslint)               |
-| [vite-plugin-static-copy](https://www.npmjs.com/package/vite-plugin-static-copy)           | [output.copy](/config/output/copy)                                                              |
-| [vite-plugin-node-polyfills](https://www.npmjs.com/package/vite-plugin-node-polyfills)     | [@rsbuild/plugin-node-polyfill](https://github.com/rspack-contrib/rsbuild-plugin-node-polyfill) |
-| [vite-plugin-solid](https://www.npmjs.com/package/vite-plugin-solid)                       | [@rsbuild/plugin-solid](/plugins/list/plugin-solid)                                             |
-| [@preact/preset-vite](https://www.npmjs.com/package/@preact/preset-vite)                   | [@rsbuild/plugin-preact](/plugins/list/plugin-preact)                                           |
+| Vite                                                                                   | Rsbuild                                                                                         |
+| -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| [@vitejs/plugin-react](https://npmjs.com/package/@vitejs/plugin-react)                 | [@rsbuild/plugin-react](/plugins/list/plugin-react)                                             |
+| [@vitejs/plugin-react-swc](https://npmjs.com/package/@vitejs/plugin-react-swc)         | [@rsbuild/plugin-react](/plugins/list/plugin-react)                                             |
+| [@vitejs/plugin-vue](https://npmjs.com/package/@vitejs/plugin-vue)                     | [@rsbuild/plugin-vue](/plugins/list/plugin-vue)                                                 |
+| [@vitejs/plugin-vue2](https://npmjs.com/package/@vitejs/plugin-vue2)                   | [@rsbuild/plugin-vue2](https://github.com/rspack-contrib/rsbuild-plugin-vue2)                   |
+| [@vitejs/plugin-vue-jsx](https://npmjs.com/package/@vitejs/plugin-vue-jsx)             | [@rsbuild/plugin-vue-jsx](https://github.com/rspack-contrib/rsbuild-plugin-vue-jsx)             |
+| [@vitejs/plugin-vue2-jsx](https://npmjs.com/package/@vitejs/plugin-vue2-jsx)           | [@rsbuild/plugin-vue2-jsx](https://github.com/rspack-contrib/rsbuild-plugin-vue2-jsx)           |
+| [@vitejs/plugin-basic-ssl](https://npmjs.com/package/@vitejs/plugin-basic-ssl)         | [@rsbuild/plugin-basic-ssl](https://github.com/rspack-contrib/rsbuild-plugin-basic-ssl)         |
+| [@vitejs/plugin-legacy](https://npmjs.com/package/@vitejs/plugin-legacy)               | 无须使用，详见 [浏览器兼容性](/guide/advanced/browser-compatibility)                            |
+| [@sveltejs/vite-plugin-svelte](https://npmjs.com/package/@sveltejs/vite-plugin-svelte) | [@rsbuild/plugin-svelte](/plugins/list/plugin-svelte)                                           |
+| [vite-plugin-svgr](https://npmjs.com/package/vite-plugin-svgr)                         | [@rsbuild/plugin-svgr](/plugins/list/plugin-svgr)                                               |
+| [vite-plugin-checker](https://npmjs.com/package/vite-plugin-checker)                   | [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check)       |
+| [vite-plugin-eslint](https://npmjs.com/package/vite-plugin-eslint)                     | [@rsbuild/plugin-eslint](https://github.com/rspack-contrib/rsbuild-plugin-eslint)               |
+| [vite-plugin-static-copy](https://npmjs.com/package/vite-plugin-static-copy)           | [output.copy](/config/output/copy)                                                              |
+| [vite-plugin-node-polyfills](https://npmjs.com/package/vite-plugin-node-polyfills)     | [@rsbuild/plugin-node-polyfill](https://github.com/rspack-contrib/rsbuild-plugin-node-polyfill) |
+| [vite-plugin-solid](https://npmjs.com/package/vite-plugin-solid)                       | [@rsbuild/plugin-solid](/plugins/list/plugin-solid)                                             |
+| [@preact/preset-vite](https://npmjs.com/package/@preact/preset-vite)                   | [@rsbuild/plugin-preact](/plugins/list/plugin-preact)                                           |
 
 你可以参考 [插件列表](/plugins/list/index) 来了解更多可用的插件。
 

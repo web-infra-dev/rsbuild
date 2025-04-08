@@ -56,13 +56,13 @@ export default config;
 
 ![](https://assets.rspack.dev/rsbuild/assets/sass-embedded-compare.jpeg)
 
-这得益于 Rsbuild 默认启用了 [sass-embedded](https://www.npmjs.com/package/sass-embedded)，sass-embedded 是一个围绕原生 Dart Sass 可执行文件的 JavaScript wrapper，具备一致的 API 和更优秀的性能。
+这得益于 Rsbuild 默认启用了 [sass-embedded](https://npmjs.com/package/sass-embedded)，sass-embedded 是一个围绕原生 Dart Sass 可执行文件的 JavaScript wrapper，具备一致的 API 和更优秀的性能。
 
 此外，Rsbuild 还启用了 `sass-loader` 最新的 [modern-compiler](https://github.com/webpack-contrib/sass-loader/releases/tag/v14.2.0) API，这能够开启 Sass 的 shared resources 能力，在编译多个文件时重复利用相同的 compiler 进程，从而提升构建速度。
 
 ## 更好的 CSS 支持
 
-Rsbuild 现在使用 [CssExtractRspackPlugin](https://www.rspack.dev/plugins/rspack/css-extract-rspack-plugin) 来提取 CSS 到单独的文件中，而不是使用 [experiments.css](https://www.rspack.dev/config/experiments#experimentscss) 配置来实现。
+Rsbuild 现在使用 [CssExtractRspackPlugin](https://rspack.dev/plugins/rspack/css-extract-rspack-plugin) 来提取 CSS 到单独的文件中，而不是使用 [experiments.css](https://rspack.dev/config/experiments#experimentscss) 配置来实现。
 
 这允许 Rsbuild 支持更多 CSS 特性，包括：
 

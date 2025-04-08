@@ -115,7 +115,7 @@ pluginReact({
 - **Type:** `boolean`
 - **Default:** based on [fastRefresh](#fastrefresh) and [dev.hmr](/config/dev/hmr)
 
-Whether to enable [React Fast Refresh](https://www.npmjs.com/package/react-refresh).
+Whether to enable [React Fast Refresh](https://npmjs.com/package/react-refresh).
 
 Most of the time, you should use the plugin's [fastRefresh](#fastrefresh) option to enable or disable Fast Refresh.
 
@@ -182,7 +182,7 @@ Set `REACT_PROFILER=true` when running build script:
 }
 ```
 
-Since the Windows system does not support the above usage, you can also use [cross-env](https://www.npmjs.com/package/cross-env) to set environment variables. This ensures compatibility across different systems:
+Since the Windows system does not support the above usage, you can also use [cross-env](https://npmjs.com/package/cross-env) to set environment variables. This ensures compatibility across different systems:
 
 ```json title="package.json"
 {
@@ -219,7 +219,7 @@ const defaultOptions = {
 };
 ```
 
-Set the options for [@rspack/plugin-react-refresh](https://www.rspack.dev/guide/tech/react#rspackplugin-react-refresh). The passed value will be shallowly merged with the default value.
+Set the options for [@rspack/plugin-react-refresh](https://rspack.dev/guide/tech/react#rspackplugin-react-refresh). The passed value will be shallowly merged with the default value.
 
 - **Example:**
 
@@ -236,9 +236,9 @@ pluginReact({
 - **Type:** `boolean`
 - **Default:** `true`
 
-Whether to enable [React Fast Refresh](https://www.npmjs.com/package/react-refresh) in development mode.
+Whether to enable [React Fast Refresh](https://npmjs.com/package/react-refresh) in development mode.
 
-If `fastRefresh` is set to `true`, `@rsbuild/plugin-react` will automatically register the [@rspack/plugin-react-refresh](https://www.npmjs.com/package/@rspack/plugin-react-refresh) plugin.
+If `fastRefresh` is set to `true`, `@rsbuild/plugin-react` will automatically register the [@rspack/plugin-react-refresh](https://npmjs.com/package/@rspack/plugin-react-refresh) plugin.
 
 To disable Fast Refresh, set it to `false`:
 
