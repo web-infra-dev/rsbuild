@@ -872,8 +872,8 @@ importers:
   packages/plugin-react:
     dependencies:
       '@rspack/plugin-react-refresh':
-        specifier: ~1.1.1
-        version: 1.1.1(react-refresh@0.17.0)
+        specifier: ~1.2.0
+        version: 1.2.0(react-refresh@0.17.0)
       react-refresh:
         specifier: ^0.17.0
         version: 0.17.0
@@ -2755,8 +2755,8 @@ packages:
       react-refresh:
         optional: true
 
-  '@rspack/plugin-react-refresh@1.1.1':
-    resolution: {integrity: sha512-kwH+k2CuJ1wbfQ6ciqSXmRtthPEszsr1H6tJTvurfLJg/HlhbkP8gJlBTS4kfhQTD6sev5G0d8+mRiYfzxPkUg==}
+  '@rspack/plugin-react-refresh@1.2.0':
+    resolution: {integrity: sha512-DTsbtggCfsiXE5QQtYMS8rKfEF8GIjwPDbgIT6Kg8BlAjpJY4jT5IisyhfIi7YOT3d5RIvu60iFB6Kr9sSMsnA==}
     peerDependencies:
       react-refresh: '>=0.10.0 <1.0.0'
       webpack-hot-middleware: 2.x
@@ -8911,7 +8911,7 @@ snapshots:
     optionalDependencies:
       react-refresh: 0.16.0
 
-  '@rspack/plugin-react-refresh@1.1.1(react-refresh@0.17.0)':
+  '@rspack/plugin-react-refresh@1.2.0(react-refresh@0.17.0)':
     dependencies:
       error-stack-parser: 2.1.4
       html-entities: 2.6.0
