@@ -40,20 +40,20 @@ const getAssetColor = (size: number) => {
 };
 
 function getHeader(
-  longestFileLength: number,
-  longestLabelLength: number,
-  environmentName: string,
+  maxFileLength: number,
+  maxSizeLength: number,
+  fileHeader: string,
   showGzipHeader: boolean,
 ) {
-  const longestLengths = [longestFileLength, longestLabelLength];
-  const rowTypes = [`File (${environmentName})`, 'Size'];
+  const lengths = [maxFileLength, maxSizeLength];
+  const rowTypes = [fileHeader, 'Size'];
 
   if (showGzipHeader) {
     rowTypes.push('Gzip');
   }
 
   const headerRow = rowTypes.reduce((prev, cur, index) => {
-    const length = longestLengths[index];
+    const length = lengths[index];
     let curLabel = cur;
     if (length) {
       curLabel =
@@ -173,22 +173,19 @@ async function printFileSizes(
 
   assets.sort((a, b) => a.size - b.size);
 
-  const longestLabelLength = Math.max(...assets.map((a) => a.sizeLabel.length));
-  const longestFileLength = Math.max(
+  const fileHeader = `File (${environmentName})`;
+  const maxFileLength = Math.max(
     ...assets.map((a) => (a.folder + path.sep + a.name).length),
+    fileHeader.length,
   );
+  const maxSizeLength = Math.max(...assets.map((a) => a.sizeLabel.length));
 
   if (options.detail !== false) {
     const showGzipHeader = Boolean(
       options.compressed && assets.some((item) => item.gzippedSize !== null),
     );
     logs.push(
-      getHeader(
-        longestFileLength,
-        longestLabelLength,
-        environmentName,
-        showGzipHeader,
-      ),
+      getHeader(maxFileLength, maxSizeLength, fileHeader, showGzipHeader),
     );
   }
 
@@ -208,16 +205,16 @@ async function printFileSizes(
     }
 
     if (options.detail !== false) {
-      if (sizeLength < longestLabelLength) {
-        const rightPadding = ' '.repeat(longestLabelLength - sizeLength);
+      if (sizeLength < maxSizeLength) {
+        const rightPadding = ' '.repeat(maxSizeLength - sizeLength);
         sizeLabel += rightPadding;
       }
 
       let fileNameLabel =
         color.dim(asset.folder + path.sep) + coloringAssetName(asset.name);
 
-      if (fileNameLength < longestFileLength) {
-        const rightPadding = ' '.repeat(longestFileLength - fileNameLength);
+      if (fileNameLength < maxFileLength) {
+        const rightPadding = ' '.repeat(maxFileLength - fileNameLength);
         fileNameLabel += rightPadding;
       }
 
