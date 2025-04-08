@@ -1,7 +1,7 @@
 {
   "name": "@rsbuild/plugin-svgr",
   "version": "1.1.0",
-  "description": "svgr plugin for Rsbuild",
+  "description": "SVGR plugin for Rsbuild",
   "repository": {
     "type": "git",
     "url": "https://github.com/web-infra-dev/rsbuild",
@@ -28,7 +28,7 @@
     "prebundle": "prebundle"
   },
   "dependencies": {
-    "@rsbuild/plugin-react": "workspace:*",
+    "@rsbuild/plugin-react": "workspace:^1.1.0",
     "@svgr/core": "8.1.0",
     "@svgr/plugin-jsx": "8.1.0",
     "@svgr/plugin-svgo": "8.1.0",
