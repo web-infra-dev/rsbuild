@@ -40,12 +40,12 @@ const getAssetColor = (size: number) => {
 };
 
 function getHeader(
-  longestFileLength: number,
-  longestSizeLength: number,
+  maxFileLength: number,
+  maxSizeLength: number,
   fileHeader: string,
   showGzipHeader: boolean,
 ) {
-  const lengths = [longestFileLength, longestSizeLength];
+  const lengths = [maxFileLength, maxSizeLength];
   const rowTypes = [fileHeader, 'Size'];
 
   if (showGzipHeader) {
@@ -174,23 +174,18 @@ async function printFileSizes(
   assets.sort((a, b) => a.size - b.size);
 
   const fileHeader = `File (${environmentName})`;
-  const longestFileLength = Math.max(
+  const maxFileLength = Math.max(
     ...assets.map((a) => (a.folder + path.sep + a.name).length),
     fileHeader.length,
   );
-  const longestSizeLength = Math.max(...assets.map((a) => a.sizeLabel.length));
+  const maxSizeLength = Math.max(...assets.map((a) => a.sizeLabel.length));
 
   if (options.detail !== false) {
     const showGzipHeader = Boolean(
       options.compressed && assets.some((item) => item.gzippedSize !== null),
     );
     logs.push(
-      getHeader(
-        longestFileLength,
-        longestSizeLength,
-        fileHeader,
-        showGzipHeader,
-      ),
+      getHeader(maxFileLength, maxSizeLength, fileHeader, showGzipHeader),
     );
   }
 
@@ -210,16 +205,16 @@ async function printFileSizes(
     }
 
     if (options.detail !== false) {
-      if (sizeLength < longestSizeLength) {
-        const rightPadding = ' '.repeat(longestSizeLength - sizeLength);
+      if (sizeLength < maxSizeLength) {
+        const rightPadding = ' '.repeat(maxSizeLength - sizeLength);
         sizeLabel += rightPadding;
       }
 
       let fileNameLabel =
         color.dim(asset.folder + path.sep) + coloringAssetName(asset.name);
 
-      if (fileNameLength < longestFileLength) {
-        const rightPadding = ' '.repeat(longestFileLength - fileNameLength);
+      if (fileNameLength < maxFileLength) {
+        const rightPadding = ' '.repeat(maxFileLength - fileNameLength);
         fileNameLabel += rightPadding;
       }
 
