@@ -46,7 +46,7 @@ Rsbuild 支持调用 [SVGR](https://react-svgr.com/)，将 SVG 图片转换为�
 
 ## React Fast Refresh
 
-Rsbuild 使用 React 官方的 [Fast Refresh](https://www.npmjs.com/package/react-refresh) 能力来进行组件热更新。
+Rsbuild 使用 React 官方的 [Fast Refresh](https://npmjs.com/package/react-refresh) 能力来进行组件热更新。
 
 注意 React Refresh 要求组件按照规范的方式编写，否则热更新可能无效，你可以使用 [eslint-plugin-react-refresh](https://github.com/ArnaudBarre/eslint-plugin-react-refresh) 进行校验。
 
@@ -88,8 +88,8 @@ React Compiler 是 React 19 引入的一个实验性编译器，它可以自动�
 
 在 Rsbuild 中使用 React Compiler 的步骤如下：
 
-1. 升级 `react` 和 `react-dom` 版本到 19。如果你暂时无法升级，可以在 React 17 或 18 项目中安装 [react-compiler-runtime](https://www.npmjs.com/package/react-compiler-runtime)，以允许编译后的代码在 19 之前的版本上运行。
-2. 目前 React Compiler 仅提供了 Babel 插件，你需要安装 [@rsbuild/plugin-babel](/plugins/list/plugin-babel) 和 [babel-plugin-react-compiler](https://www.npmjs.com/package/babel-plugin-react-compiler)。
+1. 升级 `react` 和 `react-dom` 版本到 19。如果你暂时无法升级，可以在 React 17 或 18 项目中安装 [react-compiler-runtime](https://npmjs.com/package/react-compiler-runtime)，以允许编译后的代码在 19 之前的版本上运行。
+2. 目前 React Compiler 仅提供了 Babel 插件，你需要安装 [@rsbuild/plugin-babel](/plugins/list/plugin-babel) 和 [babel-plugin-react-compiler](https://npmjs.com/package/babel-plugin-react-compiler)。
 3. 在你的 Rsbuild 配置文件中注册 Babel 插件：
 
 ```ts title="rsbuild.config.ts"
@@ -141,7 +141,7 @@ export default defineConfig({
 });
 ```
 
-对于 React 17 和 18 的项目，除了安装 [react-compiler-runtime](https://www.npmjs.com/package/react-compiler-runtime)，还需要指定 `target`：
+对于 React 17 和 18 的项目，除了安装 [react-compiler-runtime](https://npmjs.com/package/react-compiler-runtime)，还需要指定 `target`：
 
 ```ts title="rsbuild.config.ts"
 const ReactCompilerConfig = {
@@ -182,7 +182,7 @@ Rsbuild 支持编译 [styled-components](https://github.com/styled-components/st
 Rsbuild 支持编译 [Emotion](https://github.com/emotion-js/emotion)，你可以添加以下配置来使用：
 
 - [swcReactOptions.importSource](/plugins/list/plugin-react#swcreactoptions)
-- [@swc/plugin-emotion](https://www.npmjs.com/package/@swc/plugin-emotion)
+- [@swc/plugin-emotion](https://npmjs.com/package/@swc/plugin-emotion)
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -212,7 +212,7 @@ export default defineConfig({
 
 ### 使用 styled-jsx
 
-你可以通过 [@swc/plugin-styled-jsx](https://www.npmjs.com/package/@swc/plugin-styled-jsx) 来使用 [styled-jsx](https://github.com/vercel/styled-jsx)：
+你可以通过 [@swc/plugin-styled-jsx](https://npmjs.com/package/@swc/plugin-styled-jsx) 来使用 [styled-jsx](https://github.com/vercel/styled-jsx)：
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
@@ -238,7 +238,7 @@ export default defineConfig({
 
 ### 使用 vanilla-extract
 
-Rsbuild 支持使用 [@vanilla-extract/webpack-plugin](https://www.npmjs.com/package/@vanilla-extract/webpack-plugin) 插件，你可以添加以下配置来使用 [vanilla-extract](https://github.com/vanilla-extract-css/vanilla-extract)：
+Rsbuild 支持使用 [@vanilla-extract/webpack-plugin](https://npmjs.com/package/@vanilla-extract/webpack-plugin) 插件，你可以添加以下配置来使用 [vanilla-extract](https://github.com/vanilla-extract-css/vanilla-extract)：
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';

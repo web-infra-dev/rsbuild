@@ -126,7 +126,7 @@ O Rsbuild foi inspirado por vários projetos excepcionais da comunidade. Gostar�
 - Múltiplas funções utilitárias foram adaptadas do [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin)
 - Vários padrões de design de API foram influenciados pelo [Vite](https://github.com/vitejs/vite)
 
-Agradecimentos especiais à [Netlify](https://www.netlify.com/) por fornecer serviços de hospedagem para o site de documentação do Rsbuild.
+Agradecimentos especiais à [Netlify](https://netlify.com/) por fornecer serviços de hospedagem para o site de documentação do Rsbuild.
 
 ## 📖 Licença
 

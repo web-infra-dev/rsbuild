@@ -8,7 +8,7 @@ const require = createRequire(import.meta.url);
 export type PluginSolidOptions = {
   /**
    * Options passed to `babel-preset-solid`.
-   * @see https://www.npmjs.com/package/babel-preset-solid
+   * @see https://npmjs.com/package/babel-preset-solid
    */
   solidPresetOptions?: SolidPresetOptions;
 };

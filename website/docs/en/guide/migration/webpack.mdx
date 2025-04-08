@@ -128,27 +128,27 @@ export default defineConfig({
 
 Most of the common webpack loaders and plugins can still be used in Rsbuild, but we recommend prioritizing the plugins provided by Rsbuild. This can further simplify your configuration. Below is their mapping relationship:
 
-| webpack                                                                                        | Rsbuild                                                                                                         |
-| ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| [@babel/preset-react](https://www.npmjs.com/package/@babel/preset-react)                       | [React Plugin](/plugins/list/plugin-react)                                                                      |
-| [vue-loader](https://www.npmjs.com/package/vue-loader)                                         | [Vue Plugin](/plugins/list/plugin-vue) or [Vue 2 Plugin](https://github.com/rspack-contrib/rsbuild-plugin-vue2) |
-| [svelte-loader](https://www.npmjs.com/package/svelte-loader)                                   | [Svelte Plugin](/plugins/list/plugin-svelte)                                                                    |
-| [babel-preset-solid](https://www.npmjs.com/package/babel-preset-solid)                         | [Solid Plugin](/plugins/list/plugin-solid)                                                                      |
-| [babel-loader](https://www.npmjs.com/package/babel-loader)                                     | [Babel Plugin](/plugins/list/plugin-babel)                                                                      |
-| [sass-loader](https://www.npmjs.com/package/sass-loader)                                       | [Sass Plugin](/plugins/list/plugin-sass)                                                                        |
-| [less-loader](https://www.npmjs.com/package/less-loader)                                       | [Less Plugin](/plugins/list/plugin-less)                                                                        |
-| [stylus-loader](https://www.npmjs.com/package/stylus-loader)                                   | [Stylus Plugin](/plugins/list/plugin-stylus)                                                                    |
-| [mdx-loader](https://www.npmjs.com/package/mdx-loader)                                         | [MDX Plugin](https://github.com/rspack-contrib/rsbuild-plugin-mdx)                                              |
-| [pug-loader](https://www.npmjs.com/package/pug-loader)                                         | [Pug Plugin](https://github.com/rspack-contrib/rsbuild-plugin-pug)                                              |
-| [yaml-loader](https://www.npmjs.com/package/yaml-loader)                                       | [Yaml Plugin](https://github.com/rspack-contrib/rsbuild-plugin-yaml)                                            |
-| [toml-loader](https://www.npmjs.com/package/toml-loader)                                       | [Toml Plugin](https://github.com/rspack-contrib/rsbuild-plugin-toml)                                            |
-| [@svgr/webpack](https://www.npmjs.com/package/@svgr/webpack)                                   | [SVGR Plugin](/plugins/list/plugin-svgr)                                                                        |
-| [fork-ts-checker-webpack-plugin](https://www.npmjs.com/package/fork-ts-checker-webpack-plugin) | [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check)                       |
-| [node-polyfill-webpack-plugin](https://www.npmjs.com/package/node-polyfill-webpack-plugin)     | [Node Polyfill Plugin](https://github.com/rspack-contrib/rsbuild-plugin-node-polyfill)                          |
-| [@vue/babel-plugin-jsx](https://www.npmjs.com/package/@vue/babel-plugin-jsx)                   | [Vue JSX Plugin](https://github.com/rspack-contrib/rsbuild-plugin-vue-jsx)                                      |
-| [@vue/babel-preset-jsx](https://www.npmjs.com/package/@vue/babel-preset-jsx)                   | [Vue 2 JSX Plugin](https://github.com/rspack-contrib/rsbuild-plugin-vue2-jsx)                                   |
-| [eslint-webpack-plugin](https://www.npmjs.com/package/eslint-webpack-plugin)                   | [ESLint Plugin](https://github.com/rspack-contrib/rsbuild-plugin-eslint)                                        |
-| [babel-plugin-styled-components](https://www.npmjs.com/package/babel-plugin-styled-components) | [Styled Components Plugin](https://github.com/rsbuild-contrib/rsbuild-plugin-styled-components)                 |
+| webpack                                                                                    | Rsbuild                                                                                                         |
+| ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| [@babel/preset-react](https://npmjs.com/package/@babel/preset-react)                       | [React Plugin](/plugins/list/plugin-react)                                                                      |
+| [vue-loader](https://npmjs.com/package/vue-loader)                                         | [Vue Plugin](/plugins/list/plugin-vue) or [Vue 2 Plugin](https://github.com/rspack-contrib/rsbuild-plugin-vue2) |
+| [svelte-loader](https://npmjs.com/package/svelte-loader)                                   | [Svelte Plugin](/plugins/list/plugin-svelte)                                                                    |
+| [babel-preset-solid](https://npmjs.com/package/babel-preset-solid)                         | [Solid Plugin](/plugins/list/plugin-solid)                                                                      |
+| [babel-loader](https://npmjs.com/package/babel-loader)                                     | [Babel Plugin](/plugins/list/plugin-babel)                                                                      |
+| [sass-loader](https://npmjs.com/package/sass-loader)                                       | [Sass Plugin](/plugins/list/plugin-sass)                                                                        |
+| [less-loader](https://npmjs.com/package/less-loader)                                       | [Less Plugin](/plugins/list/plugin-less)                                                                        |
+| [stylus-loader](https://npmjs.com/package/stylus-loader)                                   | [Stylus Plugin](/plugins/list/plugin-stylus)                                                                    |
+| [mdx-loader](https://npmjs.com/package/mdx-loader)                                         | [MDX Plugin](https://github.com/rspack-contrib/rsbuild-plugin-mdx)                                              |
+| [pug-loader](https://npmjs.com/package/pug-loader)                                         | [Pug Plugin](https://github.com/rspack-contrib/rsbuild-plugin-pug)                                              |
+| [yaml-loader](https://npmjs.com/package/yaml-loader)                                       | [Yaml Plugin](https://github.com/rspack-contrib/rsbuild-plugin-yaml)                                            |
+| [toml-loader](https://npmjs.com/package/toml-loader)                                       | [Toml Plugin](https://github.com/rspack-contrib/rsbuild-plugin-toml)                                            |
+| [@svgr/webpack](https://npmjs.com/package/@svgr/webpack)                                   | [SVGR Plugin](/plugins/list/plugin-svgr)                                                                        |
+| [fork-ts-checker-webpack-plugin](https://npmjs.com/package/fork-ts-checker-webpack-plugin) | [@rsbuild/plugin-type-check](https://github.com/rspack-contrib/rsbuild-plugin-type-check)                       |
+| [node-polyfill-webpack-plugin](https://npmjs.com/package/node-polyfill-webpack-plugin)     | [Node Polyfill Plugin](https://github.com/rspack-contrib/rsbuild-plugin-node-polyfill)                          |
+| [@vue/babel-plugin-jsx](https://npmjs.com/package/@vue/babel-plugin-jsx)                   | [Vue JSX Plugin](https://github.com/rspack-contrib/rsbuild-plugin-vue-jsx)                                      |
+| [@vue/babel-preset-jsx](https://npmjs.com/package/@vue/babel-preset-jsx)                   | [Vue 2 JSX Plugin](https://github.com/rspack-contrib/rsbuild-plugin-vue2-jsx)                                   |
+| [eslint-webpack-plugin](https://npmjs.com/package/eslint-webpack-plugin)                   | [ESLint Plugin](https://github.com/rspack-contrib/rsbuild-plugin-eslint)                                        |
+| [babel-plugin-styled-components](https://npmjs.com/package/babel-plugin-styled-components) | [Styled Components Plugin](https://github.com/rsbuild-contrib/rsbuild-plugin-styled-components)                 |
 
 ### Configure dev server
 

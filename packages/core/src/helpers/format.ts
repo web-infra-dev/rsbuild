@@ -52,7 +52,7 @@ function hintUnknownFiles(message: string): string {
     return `To enable support for ${keyword}, use "${color.yellow(
       `@rsbuild/plugin-${packageName}`,
     )}" ${color.dim(
-      `(https://www.npmjs.com/package/@rsbuild/plugin-${packageName})`,
+      `(https://npmjs.com/package/@rsbuild/plugin-${packageName})`,
     )}.`;
   };
 
