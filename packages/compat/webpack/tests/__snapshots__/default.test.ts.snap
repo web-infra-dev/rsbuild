@@ -309,9 +309,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
     {
       "name": "RsbuildCorePlugin",
     },
-    HotModuleReplacementPlugin {
-      "options": {},
-    },
+    HotModuleReplacementPlugin {},
     HtmlWebpackPlugin {
       "options": {
         "base": false,
