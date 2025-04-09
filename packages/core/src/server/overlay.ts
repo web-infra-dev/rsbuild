@@ -15,9 +15,12 @@ export function convertLinksInHtml(text: string, root?: string): string {
    */
   const pathRegex = /(?:\.\.?[\/\\]|[a-zA-Z]:\\|\/)[^:]*:\d+:\d+/g;
 
+  const urlRegex =
+    /(https?:\/\/(?:[\w-]+\.)+[a-z0-9](?:[\w-.~:/?#[\]@!$&'*+,;=])*)/gi;
+
   const lines = text.split('\n');
   const replacedLines = lines.map((line) => {
-    return line.replace(pathRegex, (file) => {
+    let replacedLine = line.replace(pathRegex, (file) => {
       // If the file contains `</span>`, it means the file path contains ANSI codes.
       // We need to move the `</span>` to the end of the file path.
       const hasClosingSpan =
@@ -32,6 +35,12 @@ export function convertLinksInHtml(text: string, root?: string): string {
 
       return `<a class="file-link" data-file="${absolutePath}">${relativePath}</a>${suffix}`;
     });
+
+    replacedLine = replacedLine.replace(urlRegex, (url) => {
+      return `<a class="url-link" href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+    });
+
+    return replacedLine;
   });
 
   return replacedLines.join('\n');
@@ -92,9 +101,9 @@ export function genOverlayHTML(errors: string[], root?: string) {
 .content::-webkit-scrollbar {
   display: none;
 }
-.file-link {
+.file-link,
+.url-link {
   cursor: pointer;
-  color: #6eecf7;
   text-decoration: underline;
   text-underline-offset: 3px;
   &:hover {
@@ -103,6 +112,12 @@ export function genOverlayHTML(errors: string[], root?: string) {
   &:active {
     opacity: 0.6;
   }
+}
+.file-link {
+  color: #6eecf7;
+}
+.url-link {
+  color: #eff986;
 }
 .close {
   position: absolute;
