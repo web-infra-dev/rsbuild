@@ -230,6 +230,22 @@ pluginBabel({
 
 由于 Babel 编译存在性能开销，通过 `exclude` 来排除部分文件可以减少 Babel 编译的模块数量，从而提升构建性能。
 
+## 执行顺序
+
+使用 `@rsbuild/plugin-babel` 后，Rsbuild 会使用 `babel-loader` 和 `builtin:swc-loader` 分别对 JavaScript 文件进行编译，且 Babel 的执行时机早于 SWC。
+
+这意味着，当代码中使用某些 ECMAScript 新特性时，你可能需要添加 Babel 插件，使 Babel 能够正确编译这些新特性。
+
+例如，添加 [@babel/plugin-transform-private-methods](https://www.npmjs.com/package/@babel/plugin-transform-private-methods) 插件，使 Babel 能够正确编译 [private properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties)：
+
+```ts
+pluginBabel({
+  babelLoaderOptions: {
+    plugins: ['@babel/plugin-transform-private-methods'],
+  },
+});
+```
+
 ## 调试配置
 
 当你通过配置项修改 `babel-loader` 配置后，可以在 [Rsbuild 调试模式](/guide/debug/debug-mode) 下查看最终生成的配置。
