@@ -231,6 +231,22 @@ Used to specify the files that do not need to be compiled by Babel.
 
 Due to the performance overhead of Babel compilation, excluding certain files through `exclude` can reduce the number of modules compiled by Babel, thereby improving build performance.
 
+## Execution order
+
+After using `@rsbuild/plugin-babel`, Rsbuild will use both `babel-loader` and `builtin:swc-loader` to compile JavaScript files, with Babel running before SWC.
+
+This means that if you are using some new ECMAScript features in your code, you may need to add Babel plugins to ensure that Babel can correctly compile these new features.
+
+For example, add the [@babel/plugin-transform-private-methods](https://www.npmjs.com/package/@babel/plugin-transform-private-methods) plugin to enable Babel to correctly compile [private properties](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties):
+
+```ts
+pluginBabel({
+  babelLoaderOptions: {
+    plugins: ['@babel/plugin-transform-private-methods'],
+  },
+});
+```
+
 ## Debugging configs
 
 After modifying the `babel-loader` configuration, you can view the final generated configuration in [Rsbuild debug mode](/guide/debug/debug-mode).
