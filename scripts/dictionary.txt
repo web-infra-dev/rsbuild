@@ -65,6 +65,8 @@ mrmime
 mYbzBtlg6o
 napi
 nolyfill
+noopener
+noreferrer
 nosources
 ntqry
 nuxt
