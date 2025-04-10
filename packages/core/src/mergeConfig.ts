@@ -22,7 +22,11 @@ const isOverridePath = (key: string) => {
     const realKey = key.split('.').slice(2).join('.');
     return OVERRIDE_PATHS.includes(realKey);
   }
-  return OVERRIDE_PATHS.includes(key);
+  return (
+    OVERRIDE_PATHS.includes(key) ||
+    // output.filename.* supports function but we should not merge them as array
+    key.startsWith('output.filename.')
+  );
 };
 
 const merge = (x: unknown, y: unknown, path = ''): unknown => {
