@@ -48,6 +48,20 @@ Rsbuild supports the use of the `RSPACK_PROFILE` environment variable for Rspack
 }
 ```
 
+As Windows does not support the above usage, you can also use [cross-env](https://npmjs.com/package/cross-env) to set environment variables. This ensures compatibility across different systems:
+
+```json title="package.json"
+{
+  "scripts": {
+    "dev:profile": "cross-env RSPACK_PROFILE=ALL rsbuild dev",
+    "build:profile": "cross-env RSPACK_PROFILE=ALL rsbuild build"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.0"
+  }
+}
+```
+
 The command will generate a `rspack-profile-${timestamp}` folder in the dist folder, and it will contain `logging.json`, `trace.json` and `jscpuprofile.json` files:
 
 - `trace.json`: The time spent on each phase of the Rust side is recorded at a granular level using tracing and can be viewed using [ui.perfetto.dev](https://ui.perfetto.dev/).
