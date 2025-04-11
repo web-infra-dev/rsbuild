@@ -151,7 +151,7 @@ The Rspack instance. For example:
 export default {
   tools: {
     bundlerChain: (chain, { rspack }) => {
-      chain.plugin('define').use(rspack.DefinePlugin, [
+      chain.plugin('extra-define').use(rspack.DefinePlugin, [
         {
           'process.env': {
             NODE_ENV: JSON.stringify(process.env.NODE_ENV),

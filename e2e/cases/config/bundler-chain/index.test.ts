@@ -58,7 +58,7 @@ rspackOnlyTest(
           bundlerChain: (chain, { rspack }) => {
             chain.resolve.alias.set('@common', join(__dirname, 'src/common'));
 
-            chain.plugin('define').use(rspack.DefinePlugin, [
+            chain.plugin('extra-define').use(rspack.DefinePlugin, [
               {
                 ENABLE_TEST: JSON.stringify(true),
               },
