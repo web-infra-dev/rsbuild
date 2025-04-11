@@ -35,11 +35,11 @@ export function exitHook(onExit: Callback): () => void {
     isRegistered = true;
     // CTRL+C
     // Use `process.on` instead of `process.once` to disable
-    // Node.js default exit behavior
+    // Node.js's default exit behavior
     process.on('SIGINT', () => {
       exit(constants.signals.SIGINT + 128, 'SIGINT');
     });
-    // CTRL+D or `kill` command
+    // `kill` command
     process.once('SIGTERM', () => {
       exit(constants.signals.SIGTERM + 128, 'SIGTERM');
     });
