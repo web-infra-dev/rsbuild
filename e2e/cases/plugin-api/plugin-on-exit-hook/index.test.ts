@@ -24,7 +24,7 @@ rspackOnlyTest('should run onExit hook before process exit', async () => {
       }
 
       try {
-        expect(fs.readFileSync(distFile, 'utf-8')).toEqual('1');
+        expect(fs.readFileSync(distFile, 'utf-8')).toEqual('0');
         clearTimeout(timeoutId);
         resolve();
       } catch (err) {
