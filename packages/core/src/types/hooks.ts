@@ -1,3 +1,4 @@
+import type { rspack } from '@rspack/core';
 import type { ChainIdentifier } from '..';
 import type RspackChain from '../../compiled/rspack-chain';
 import type { RsbuildDevServer } from '../server/devServer';
@@ -212,6 +213,7 @@ export type ModifyChainUtils = {
   isWebWorker: boolean;
   CHAIN_ID: ChainIdentifier;
   environment: EnvironmentContext;
+  rspack: typeof rspack;
   HtmlPlugin: typeof HtmlRspackPlugin;
 };
 
