@@ -141,6 +141,28 @@ export default {
 };
 ```
 
+### rspack
+
+- **类型：** `Rspack`
+
+通过这个参数你可以拿到 Rspack 实例。比如：
+
+```js
+export default {
+  tools: {
+    bundlerChain: (chain, { rspack }) => {
+      chain.plugin('define').use(rspack.DefinePlugin, [
+        {
+          'process.env': {
+            NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+          },
+        },
+      ]);
+    },
+  },
+};
+```
+
 ### HtmlPlugin
 
 - **类型：** `typeof import('html-rspack-plugin')`

@@ -68,8 +68,6 @@ export async function getConfigUtils(
   return {
     ...chainUtils,
 
-    rspack,
-
     mergeConfig: merge,
 
     addRules(rules) {
@@ -132,6 +130,7 @@ export function getChainUtils(
   const nodeEnv = getNodeEnv();
 
   return {
+    rspack,
     environment,
     env: nodeEnv,
     target,

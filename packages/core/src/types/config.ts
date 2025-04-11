@@ -10,7 +10,6 @@ import type {
   RuleSetCondition,
   SwcJsMinimizerRspackPluginOptions,
   SwcLoaderOptions,
-  rspack,
 } from '@rspack/core';
 import type { ChokidarOptions } from '../../compiled/chokidar/index.js';
 import type cors from '../../compiled/cors/index.js';
@@ -93,7 +92,6 @@ export type ModifyRspackConfigUtils = ModifyChainUtils & {
   ) => void;
   removePlugin: (pluginName: string) => void;
   mergeConfig: WebpackMerge;
-  rspack: typeof rspack;
 };
 
 export type ToolsRspackConfig = ConfigChainAsyncWithContext<
