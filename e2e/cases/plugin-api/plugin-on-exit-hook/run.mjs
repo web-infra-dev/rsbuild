@@ -20,8 +20,8 @@ const write = (str) => {
 const plugin = {
   name: 'test-plugin',
   setup(api) {
-    api.onExit(() => {
-      write('1');
+    api.onExit(({ exitCode }) => {
+      write(exitCode.toString());
     });
   },
 };

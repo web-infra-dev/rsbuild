@@ -3,5 +3,5 @@
 - **类型：**
 
 ```ts
-function OnExit(callback: () => void): void;
+function OnExit(callback: (context: { exitCode: number }) => void): void;
 ```

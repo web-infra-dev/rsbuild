@@ -862,8 +862,8 @@ import OnExit from '@zh/shared/onExit.mdx';
 ```ts
 const myPlugin = () => ({
   setup(api) {
-    api.onExit(() => {
-      console.log('exit!');
+    api.onExit(({ exitCode }) => {
+      console.log('exit: ', exitCode);
     });
   },
 });
