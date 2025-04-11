@@ -851,8 +851,8 @@ import OnExit from '@zh/shared/onExit.mdx';
 - **示例：**
 
 ```ts
-rsbuild.onExit(() => {
-  console.log('exit!');
+rsbuild.onExit(({ exitCode }) => {
+  console.log('exit: ', exitCode);
 });
 ```
 

@@ -101,7 +101,7 @@ export type OnAfterCreateCompilerFn<
   environments: Record<string, EnvironmentContext>;
 }) => MaybePromise<void>;
 
-export type OnExitFn = () => void;
+export type OnExitFn = (context: { exitCode: number }) => void;
 
 type HTMLTags = {
   headTags: HtmlBasicTag[];
