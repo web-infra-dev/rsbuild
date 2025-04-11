@@ -3,6 +3,7 @@ import type { Compiler } from '@rspack/core';
 import { LOADER_PATH } from './constants';
 import { createPublicContext } from './createContext';
 import { removeLeadingSlash } from './helpers';
+import { exitHook } from './helpers/exitHook';
 import type { TransformLoaderOptions } from './loader/transformLoader';
 import { logger } from './logger';
 import { isPluginMatchEnvironment } from './pluginManager';
@@ -322,7 +323,7 @@ export function initPluginAPI({
 
   const onExit: typeof hooks.onExit.tap = (cb) => {
     if (!onExitListened) {
-      process.on('exit', () => {
+      exitHook(() => {
         hooks.onExit.callBatch();
       });
       onExitListened = true;
