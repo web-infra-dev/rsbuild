@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import inspector from 'node:inspector';
 import path from 'node:path';
 import rspack from '@rspack/core';
+import { color, isFileExists } from '../helpers';
 import { logger } from '../logger';
 import type { RsbuildPlugin } from '../types';
 
@@ -12,15 +13,15 @@ const stopProfiler = (output: string, profileSession?: inspector.Session) => {
 
   profileSession.post('Profiler.stop', (error, param) => {
     if (error) {
-      logger.error('Failed to generate JS CPU profile:', error);
+      logger.error('Failed to generate JavaScript CPU profile:', error);
       return;
     }
     fs.writeFileSync(output, JSON.stringify(param.profile));
   });
 };
 
-// Reference rspack-cli
-// https://github.com/web-infra-dev/rspack/blob/509abcfc523bc20125459f5d428dc1645751700c/packages/rspack-cli/src/utils/profile.ts
+// Referenced from Rspack CLI
+// https://github.com/web-infra-dev/rspack/blob/v1.3.0/packages/rspack-cli/src/utils/profile.ts
 export const pluginRspackProfile = (): RsbuildPlugin => ({
   name: 'rsbuild:rspack-profile',
 
@@ -53,14 +54,14 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
     const enableLogging =
       RSPACK_PROFILE === 'ALL' || RSPACK_PROFILE.includes('LOGGING');
 
-    const onStart = () => {
-      // can't get precise api.context.distPath before config init
+    const onStart = async () => {
+      // Note: Cannot obtain accurate `api.context.distPath` before config initialization
       const profileDir = path.join(api.context.distPath, profileDirName);
 
       const traceFilePath = path.join(profileDir, 'trace.json');
 
-      if (!fs.existsSync(profileDir)) {
-        fs.mkdirSync(profileDir, { recursive: true });
+      if (!(await isFileExists(profileDir))) {
+        await fs.promises.mkdir(profileDir, { recursive: true });
       }
 
       if (enableProfileTrace) {
@@ -99,7 +100,7 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
           logging: 'verbose',
           loggingTrace: true,
         });
-        fs.writeFileSync(loggingFilePath, JSON.stringify(logging));
+        await fs.promises.writeFile(loggingFilePath, JSON.stringify(logging));
       }
     });
 
@@ -113,7 +114,7 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
 
       stopProfiler(cpuProfilePath, profileSession);
 
-      logger.info(`saved Rspack profile file to ${profileDir}`);
+      logger.info(`profile files saved to ${color.cyan(profileDir)}`);
     });
   },
 });
