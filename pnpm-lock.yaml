@@ -261,8 +261,8 @@ importers:
   e2e/cases/svelte:
     dependencies:
       svelte:
-        specifier: ^5.25.7
-        version: 5.25.7
+        specifier: ^5.26.1
+        version: 5.26.1
     devDependencies:
       less:
         specifier: ^4.3.0
@@ -448,8 +448,8 @@ importers:
   examples/svelte:
     dependencies:
       svelte:
-        specifier: ^5.25.7
-        version: 5.25.7
+        specifier: ^5.26.1
+        version: 5.26.1
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1003,10 +1003,10 @@ importers:
     dependencies:
       svelte-loader:
         specifier: 3.2.4
-        version: 3.2.4(svelte@5.25.7)
+        version: 3.2.4(svelte@5.26.1)
       svelte-preprocess:
         specifier: ^6.0.3
-        version: 6.0.3(@babel/core@7.26.10)(less@4.3.0)(postcss-load-config@6.0.1(jiti@2.4.2)(postcss@8.5.3)(yaml@2.7.0))(postcss@8.5.3)(sass@1.86.3)(stylus@0.64.0)(svelte@5.25.7)(typescript@5.8.3)
+        version: 6.0.3(@babel/core@7.26.10)(less@4.3.0)(postcss-load-config@6.0.1(jiti@2.4.2)(postcss@8.5.3)(yaml@2.7.0))(postcss@8.5.3)(sass@1.86.3)(stylus@0.64.0)(svelte@5.26.1)(typescript@5.8.3)
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1021,8 +1021,8 @@ importers:
         specifier: ^22.14.0
         version: 22.14.0
       svelte:
-        specifier: ^5.25.7
-        version: 5.25.7
+        specifier: ^5.26.1
+        version: 5.26.1
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -6733,8 +6733,8 @@ packages:
       typescript:
         optional: true
 
-  svelte@5.25.7:
-    resolution: {integrity: sha512-0fzXbXaKfSvFUs6Wxev2h4CoEhexZotbTF9EJ4+Cg7MHW64ZnZ9+xUedZyEpgj0Tt9HrYGv9aASHkqjn9b/cPw==}
+  svelte@5.26.1:
+    resolution: {integrity: sha512-Hhhb7cV9il0wMWOjjf+HVyr50XdKSP/tXX6JaO4l25+sV4XsO4lA/bo/vrdbBd0f1qB48IEwJgbebi0u4rA9vA==}
     engines: {node: '>=18'}
 
   svg-parser@2.0.4:
@@ -13356,20 +13356,20 @@ snapshots:
 
   svelte-dev-helper@1.1.9: {}
 
-  svelte-hmr@0.14.12(svelte@5.25.7):
+  svelte-hmr@0.14.12(svelte@5.26.1):
     dependencies:
-      svelte: 5.25.7
+      svelte: 5.26.1
 
-  svelte-loader@3.2.4(svelte@5.25.7):
+  svelte-loader@3.2.4(svelte@5.26.1):
     dependencies:
       loader-utils: 2.0.4
-      svelte: 5.25.7
+      svelte: 5.26.1
       svelte-dev-helper: 1.1.9
-      svelte-hmr: 0.14.12(svelte@5.25.7)
+      svelte-hmr: 0.14.12(svelte@5.26.1)
 
-  svelte-preprocess@6.0.3(@babel/core@7.26.10)(less@4.3.0)(postcss-load-config@6.0.1(jiti@2.4.2)(postcss@8.5.3)(yaml@2.7.0))(postcss@8.5.3)(sass@1.86.3)(stylus@0.64.0)(svelte@5.25.7)(typescript@5.8.3):
+  svelte-preprocess@6.0.3(@babel/core@7.26.10)(less@4.3.0)(postcss-load-config@6.0.1(jiti@2.4.2)(postcss@8.5.3)(yaml@2.7.0))(postcss@8.5.3)(sass@1.86.3)(stylus@0.64.0)(svelte@5.26.1)(typescript@5.8.3):
     dependencies:
-      svelte: 5.25.7
+      svelte: 5.26.1
     optionalDependencies:
       '@babel/core': 7.26.10
       less: 4.3.0
@@ -13379,7 +13379,7 @@ snapshots:
       stylus: 0.64.0
       typescript: 5.8.3
 
-  svelte@5.25.7:
+  svelte@5.26.1:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@jridgewell/sourcemap-codec': 1.5.0
