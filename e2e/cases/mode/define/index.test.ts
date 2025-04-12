@@ -1,4 +1,4 @@
-import { build } from '@e2e/helper';
+import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should define vars in production mode correctly', async () => {
@@ -55,7 +55,7 @@ test('should define vars in none mode correctly', async () => {
   expect(file.content).not.toContain("console.log('import.meta.env.PROD');");
 });
 
-test('should allow to disable NODE_ENV injection', async () => {
+rspackOnlyTest('should allow to disable NODE_ENV injection', async () => {
   const rsbuild = await build({
     cwd: __dirname,
     rsbuildConfig: {
