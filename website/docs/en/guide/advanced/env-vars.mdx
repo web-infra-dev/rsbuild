@@ -20,7 +20,7 @@ Rsbuild by default injects the some env variables into the code using [source.de
 
 - [process.env.BASE_URL](#processenvbase_url)
 - [process.env.ASSET_PREFIX](#processenvasset_prefix)
-- [process.env.NODE_ENV](#processenvnode_env): This variable is injected by Rspack. For details, please refer to [Rspack - optimization.nodeEnv](https://rspack.dev/config/optimization#optimizationnodeenv))
+- [process.env.NODE_ENV](#processenvnode_env)
 
 ### import.meta.env.MODE
 
@@ -183,6 +183,18 @@ if (false) {
 ```
 
 During code minification, `if (false) { ... }` will be recognized as invalid code and removed automatically.
+
+#### Custom NODE_ENV
+
+`process.env.NODE_ENV` is injected by Rspack by default. If you need to disable the injection or custom the value, use the [optimization.nodeEnv](https://rspack.dev/config/optimization#optimizationnodeenv) option of Rspack:
+
+```ts title="rsbuild.config.ts"
+export default {
+  tools: {
+    rspack: { optimization: { nodeEnv: false } },
+  },
+};
+```
 
 ## `.env` File
 

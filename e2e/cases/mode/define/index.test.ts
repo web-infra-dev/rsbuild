@@ -54,3 +54,21 @@ test('should define vars in none mode correctly', async () => {
   expect(file.content).not.toContain("console.log('import.meta.env.DEV');");
   expect(file.content).not.toContain("console.log('import.meta.env.PROD');");
 });
+
+test('should allow to disable NODE_ENV injection', async () => {
+  const rsbuild = await build({
+    cwd: __dirname,
+    rsbuildConfig: {
+      tools: {
+        rspack: {
+          optimization: { nodeEnv: false },
+        },
+      },
+    },
+  });
+
+  const file = await rsbuild.getIndexFile();
+  expect(file.content).toContain(
+    'console.log("process.env.NODE_ENV",process.env.NODE_ENV)',
+  );
+});
