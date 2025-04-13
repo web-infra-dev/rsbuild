@@ -425,9 +425,6 @@ importers:
       '@rsbuild/plugin-react':
         specifier: workspace:*
         version: link:../../packages/plugin-react
-      '@rsbuild/plugin-svgr':
-        specifier: workspace:*
-        version: link:../../packages/plugin-svgr
       '@types/react':
         specifier: ^19.1.0
         version: 19.1.0
