@@ -97,9 +97,6 @@ export default defineConfig({
     light: 'https://assets.rspack.dev/rsbuild/navbar-logo-light.png',
     dark: 'https://assets.rspack.dev/rsbuild/navbar-logo-dark.png',
   },
-  ssg: {
-    strict: true,
-  },
   search: {
     codeBlocks: true,
   },
