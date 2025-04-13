@@ -31,9 +31,9 @@ nvm install --lts
 nvm use --lts
 ```
 
-## Creating an Rsbuild project
+## Create an Rsbuild application
 
-You can use the `create-rsbuild` to create a new Rsbuild project. Just execute the following command:
+Use `create-rsbuild` to create a new Rsbuild application. Run the following command:
 
 import { PackageManagerTabs } from '@theme';
 
@@ -48,15 +48,15 @@ import { PackageManagerTabs } from '@theme';
 
 Follow the prompts step by step. During the creation process, you can choose whether you need additional tools like TypeScript, ESLint, etc.
 
-After the project is created, you can follow these steps:
+After the application is created, you can follow these steps:
 
 - Run `git init` to initialize the Git repository.
-- Run `npm install` (or the install command of your package manager) to install project dependencies.
+- Run `npm install` (or the install command of your package manager) to install npm dependencies.
 - Run `npm run dev` to start the development server, which runs on `localhost:5173` by default.
 
 ### Templates
 
-When creating a project, you can choose from the following templates provided by `create-rsbuild`:
+When creating an application, you can choose from the following templates provided by `create-rsbuild`:
 
 | Template | Description                     | Optional Features |
 | -------- | ------------------------------- | ----------------- |
@@ -93,7 +93,7 @@ Biome provides similar linting and formatting features to ESLint and Prettier. I
 
 ### Current directory
 
-To create a project in the current directory, set the target folder to `.`:
+To create an application in the current directory, set the target folder to `.`:
 
 ```
 ◆  Create Rsbuild Project
@@ -107,15 +107,15 @@ To create a project in the current directory, set the target folder to `.`:
 
 ### Quick creation
 
-[create-rsbuild](https://npmjs.com/package/create-rsbuild) provides some CLI flags. By setting these CLI flags, you can skip the interactive selection steps and create the project with one command.
+[create-rsbuild](https://npmjs.com/package/create-rsbuild) provides some CLI flags. By setting these CLI flags, you can skip the interactive selection steps and create the application with one command.
 
-For example, to create a React project in the `my-project` directory with one command:
+For example, to create a React application in the `my-app` directory with one command:
 
 ```bash
-npx create-rsbuild --dir my-project --template react
+npx create-rsbuild --dir my-app --template react
 
 # Using abbreviations
-npx create-rsbuild -d my-project -t react
+npx create-rsbuild -d my-app -t react
 ```
 
 All the CLI flags of `create-rsbuild`:
