@@ -97,9 +97,6 @@ export default defineConfig({
     light: 'https://assets.rspack.dev/rsbuild/navbar-logo-light.png',
     dark: 'https://assets.rspack.dev/rsbuild/navbar-logo-dark.png',
   },
-  search: {
-    codeBlocks: true,
-  },
   markdown: {
     checkDeadLinks: true,
   },
@@ -170,7 +167,7 @@ export default defineConfig({
   ],
   builderConfig: {
     dev: {
-      // lazyCompilation: true,
+      lazyCompilation: true,
     },
     plugins: [
       rsbuildPluginOverview,
