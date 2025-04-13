@@ -13,7 +13,7 @@
     "build:doc": "cd website && pnpm run build",
     "change": "changeset",
     "changeset": "changeset",
-    "check-dependency-version": "pnpx check-dependency-version-consistency .",
+    "check-dependency-version": "pnpx check-dependency-version-consistency . --ignore-dep loader-utils",
     "check-spell": "pnpx cspell && heading-case",
     "dev:doc": "cd website && pnpm run dev",
     "e2e": "cd ./e2e && pnpm test",
