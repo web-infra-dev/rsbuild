@@ -1,0 +1,37 @@
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+deleted file mode 100644
+index 768f7f35c56f282c7c0cda7a4c1c5e7e0b113560..0000000000000000000000000000000000000000
+diff --git a/dist/index.js b/dist/index.js
+index 7d977a6ece276d360bcb857cad9950252353da46..a2e19ed214a00950b3ea4c27eec7f890ef3e14f8 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -8,16 +8,10 @@ exports.raw = void 0;
+ 
+ var _path = _interopRequireDefault(require("path"));
+ 
+-var _loaderUtils = require("loader-utils");
+-
+-var _schemaUtils = require("schema-utils");
+-
+ var _mimeTypes = _interopRequireDefault(require("mime-types"));
+ 
+ var _normalizeFallback = _interopRequireDefault(require("./utils/normalizeFallback"));
+ 
+-var _options = _interopRequireDefault(require("./options.json"));
+-
+ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+ 
+ function shouldTransform(limit, size) {
+@@ -87,11 +81,7 @@ function getEncodedData(generator, mimetype, encoding, content, resourcePath) {
+ 
+ function loader(content) {
+   // Loader Options
+-  const options = (0, _loaderUtils.getOptions)(this) || {};
+-  (0, _schemaUtils.validate)(_options.default, options, {
+-    name: 'URL Loader',
+-    baseDataPath: 'options'
+-  }); // No limit or within the specified limit
++  const options = this.getOptions() || {};
+ 
+   if (shouldTransform(options.limit, content.length)) {
+     const {

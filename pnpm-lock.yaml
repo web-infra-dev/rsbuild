@@ -8,12 +8,18 @@ patchedDependencies:
   css-loader@7.1.2:
     hash: f108465818eeda8955fecc4aa57dbfd6219c34a7a876fc224f229836292996a6
     path: patches/css-loader@7.1.2.patch
+  file-loader:
+    hash: c76c890d2d68ffdf70bfbc9cb235e0389df929be2e1917766b8946b1de0a8c30
+    path: patches/file-loader@6.2.0.patch
   http-proxy@1.18.1:
     hash: 424b689da454f1f336d635615733f30568882789c1173f861c30f95ba8b05723
     path: patches/http-proxy@1.18.1.patch
   postcss-loader@8.1.1:
     hash: 7f10237e1665e9913e0f735a822545af08363f5cc67eacc2c37408aee7553d47
     path: patches/postcss-loader@8.1.1.patch
+  url-loader:
+    hash: 4ed67f741914e665ed1dcef907caaa2acc85269026674133f7b987661de3591f
+    path: patches/url-loader@4.1.1.patch
 
 importers:
 
@@ -1045,8 +1051,8 @@ importers:
         specifier: ^4.3.1
         version: 4.3.1
       loader-utils:
-        specifier: ^2.0.4
-        version: 2.0.4
+        specifier: ^3.3.1
+        version: 3.3.1
     devDependencies:
       '@rsbuild/core':
         specifier: workspace:*
@@ -1062,7 +1068,7 @@ importers:
         version: 22.14.0
       file-loader:
         specifier: 6.2.0
-        version: 6.2.0(webpack@5.98.0)
+        version: 6.2.0(patch_hash=c76c890d2d68ffdf70bfbc9cb235e0389df929be2e1917766b8946b1de0a8c30)(webpack@5.98.0)
       prebundle:
         specifier: 1.3.3
         version: 1.3.3(typescript@5.8.3)
@@ -1074,7 +1080,7 @@ importers:
         version: 5.8.3
       url-loader:
         specifier: 4.1.1
-        version: 4.1.1(file-loader@6.2.0(webpack@5.98.0))(webpack@5.98.0)
+        version: 4.1.1(patch_hash=4ed67f741914e665ed1dcef907caaa2acc85269026674133f7b987661de3591f)(file-loader@6.2.0(patch_hash=c76c890d2d68ffdf70bfbc9cb235e0389df929be2e1917766b8946b1de0a8c30)(webpack@5.98.0))(webpack@5.98.0)
 
   packages/plugin-vue:
     dependencies:
@@ -5101,6 +5107,10 @@ packages:
   loader-utils@2.0.4:
     resolution: {integrity: sha512-xXqpXoINfFhgua9xiqD8fPFHgkoq1mmmpE92WlDbm9rNRd/EbRb+Gqf908T2DMfuHjjJlksiK2RbHVOdD/MqSw==}
     engines: {node: '>=8.9.0'}
+
+  loader-utils@3.3.1:
+    resolution: {integrity: sha512-FMJTLMXfCLMLfJxcX9PFqX5qD88Z5MRGaZCVzfuqeZSPsyiBzs+pahDQjbIWz2QIzPZz0NX9Zy4FX3lmK6YHIg==}
+    engines: {node: '>= 12.13.0'}
 
   locate-character@3.0.0:
     resolution: {integrity: sha512-SW13ws7BjaeJ6p7Q6CO2nchbYEc3X3J6WrmTTDto7yMPqVSZTUyY5Tjbid+Ab8gLnATtygYtiDIJGQRRn2ZOiA==}
@@ -10660,7 +10670,7 @@ snapshots:
     dependencies:
       escape-string-regexp: 1.0.5
 
-  file-loader@6.2.0(webpack@5.98.0):
+  file-loader@6.2.0(patch_hash=c76c890d2d68ffdf70bfbc9cb235e0389df929be2e1917766b8946b1de0a8c30)(webpack@5.98.0):
     dependencies:
       loader-utils: 2.0.4
       schema-utils: 3.3.0
@@ -11496,6 +11506,8 @@ snapshots:
       big.js: 5.2.2
       emojis-list: 3.0.0
       json5: 2.2.3
+
+  loader-utils@3.3.1: {}
 
   locate-character@3.0.0: {}
 
@@ -13632,14 +13644,14 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  url-loader@4.1.1(file-loader@6.2.0(webpack@5.98.0))(webpack@5.98.0):
+  url-loader@4.1.1(patch_hash=4ed67f741914e665ed1dcef907caaa2acc85269026674133f7b987661de3591f)(file-loader@6.2.0(patch_hash=c76c890d2d68ffdf70bfbc9cb235e0389df929be2e1917766b8946b1de0a8c30)(webpack@5.98.0))(webpack@5.98.0):
     dependencies:
       loader-utils: 2.0.4
       mime-types: 2.1.35
       schema-utils: 3.3.0
       webpack: 5.98.0
     optionalDependencies:
-      file-loader: 6.2.0(webpack@5.98.0)
+      file-loader: 6.2.0(patch_hash=c76c890d2d68ffdf70bfbc9cb235e0389df929be2e1917766b8946b1de0a8c30)(webpack@5.98.0)
 
   util-deprecate@1.0.2: {}
 
