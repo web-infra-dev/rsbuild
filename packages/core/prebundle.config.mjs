@@ -16,7 +16,6 @@ export default {
   externals: {
     '@rspack/core': '@rspack/core',
     '@rspack/lite-tapable': '@rspack/lite-tapable',
-    webpack: 'webpack',
     typescript: 'typescript',
   },
   dependencies: [
@@ -105,6 +104,15 @@ export default {
     },
     {
       name: 'webpack-bundle-analyzer',
+      externals: {
+        webpack: 'webpack',
+      },
+      afterBundle(task) {
+        // webpack type does not exist, use `@rspack/core` instead
+        replaceFileContent(join(task.distPath, 'index.d.ts'), (content) =>
+          content.replace("from 'webpack'", 'from "@rspack/core"'),
+        );
+      },
     },
     {
       name: 'rsbuild-dev-middleware',
@@ -130,6 +138,25 @@ export default {
       copyDts: true,
       externals: {
         picocolors: '../picocolors',
+      },
+      afterBundle(task) {
+        // source-map-js type does not exist, use a stub instead
+        replaceFileContent(join(task.distPath, 'lib/postcss.d.ts'), (content) =>
+          content.replace("from 'source-map-js'", 'from "./source-map-js"'),
+        );
+        replaceFileContent(
+          join(task.distPath, 'lib/previous-map.d.ts'),
+          (content) =>
+            content.replace("from 'source-map-js'", 'from "./source-map-js"'),
+        );
+        fs.writeFileSync(
+          join(task.distPath, 'lib/source-map-js.d.ts'),
+          `
+export type RawSourceMap = unknown;
+export type SourceMapConsumer = unknown;
+export type SourceMapGenerator = unknown;
+`,
+        );
       },
     },
     {
