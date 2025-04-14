@@ -1,9 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import {
-  nodeMinifyConfig,
-  pluginCleanTscCache,
-} from '@rsbuild/config/rslib.config';
+import { nodeMinifyConfig } from '@rsbuild/config/rslib.config';
 import { defineConfig } from '@rslib/core';
 import type { Configuration } from '@rspack/core';
 import pkgJson from './package.json';
@@ -78,7 +75,7 @@ export default defineConfig({
       id: 'esm:index',
       format: 'esm',
       syntax: 'es2021',
-      plugins: [pluginFixDtsTypes, pluginCleanTscCache],
+      plugins: [pluginFixDtsTypes],
       dts: {
         build: true,
       },
