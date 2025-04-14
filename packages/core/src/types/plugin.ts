@@ -1,3 +1,4 @@
+/** @ts-ignore `webpack` type only exists when `@rsbuild/webpack` is installed */
 import type {
   RuleSetRule,
   Configuration as WebpackConfig,
@@ -138,6 +139,7 @@ export type ModifyRspackConfigFn = (
 ) => MaybePromise<Rspack.Configuration | void>;
 
 export type ModifyWebpackChainUtils = ModifyChainUtils & {
+  /** @ts-ignore `webpack` type only exists when `@rsbuild/webpack` is installed */
   webpack: typeof import('webpack');
   CHAIN_ID: ChainIdentifier;
   /**

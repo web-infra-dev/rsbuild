@@ -2,6 +2,7 @@ import type {
   CssExtractRspackLoaderOptions,
   CssExtractRspackPluginOptions,
 } from '@rspack/core';
+/** @ts-ignore `webpack` type only exists when `@rsbuild/webpack` is installed */
 import type { Configuration as WebpackConfig } from 'webpack';
 import type HtmlRspackPlugin from '../../compiled/html-rspack-plugin/index.js';
 import type { AcceptedPlugin, ProcessOptions } from '../../compiled/postcss';
