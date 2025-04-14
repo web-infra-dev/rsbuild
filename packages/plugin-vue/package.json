@@ -32,9 +32,9 @@
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.6.1",
+    "@rslib/core": "0.6.2",
     "@scripts/test-helper": "workspace:*",
-    "@types/node": "^22.14.0",
+    "@types/node": "^22.14.1",
     "typescript": "^5.8.3",
     "vue": "^3.5.13",
     "webpack": "^5.98.0"
