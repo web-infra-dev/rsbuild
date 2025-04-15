@@ -31,7 +31,7 @@
     "create-rstack": "1.4.0"
   },
   "devDependencies": {
-    "@rslib/core": "0.6.2",
+    "@rslib/core": "0.6.3",
     "@types/node": "^22.14.1",
     "typescript": "^5.8.3"
   },
