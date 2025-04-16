@@ -101,7 +101,7 @@
     "ws": "^8.18.1"
   },
   "engines": {
-    "node": ">=16.7.0"
+    "node": ">=16.10.0"
   },
   "publishConfig": {
     "access": "public",
