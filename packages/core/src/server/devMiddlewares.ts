@@ -1,6 +1,7 @@
 import { isAbsolute, join } from 'node:path';
 import rspack from '@rspack/core';
 import { normalizePublicDirs } from '../config';
+import { DEFAULT_PORT } from '../constants';
 import { isMultiCompiler } from '../helpers';
 import { logger } from '../logger';
 import type {
@@ -22,6 +23,7 @@ import {
   getRequestLoggerMiddleware,
   viewingServedFilesMiddleware,
 } from './middlewares';
+import { replacePortPlaceholder } from './open';
 import { createProxyMiddleware } from './proxy';
 
 export type RsbuildDevMiddlewareOptions = {
@@ -119,6 +121,18 @@ const applyDefaultMiddlewares = async ({
     compilationManager
   ) {
     const { compiler } = compilationManager;
+
+    if (
+      typeof dev.lazyCompilation === 'object' &&
+      typeof dev.lazyCompilation.serverUrl === 'string'
+    ) {
+      const port = context.devServer?.port || server.port || DEFAULT_PORT;
+
+      dev.lazyCompilation.serverUrl = replacePortPlaceholder(
+        dev.lazyCompilation.serverUrl,
+        port,
+      );
+    }
 
     middlewares.push(
       rspack.experiments.lazyCompilationMiddleware(
