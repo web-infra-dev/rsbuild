@@ -44,8 +44,8 @@ importers:
         specifier: ^0.0.4
         version: 0.0.4
       heading-case:
-        specifier: ^0.1.4
-        version: 0.1.4
+        specifier: ^0.1.6
+        version: 0.1.6
       nano-staged:
         specifier: ^0.8.0
         version: 0.8.0
@@ -4660,8 +4660,8 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
 
-  heading-case@0.1.4:
-    resolution: {integrity: sha512-YyUcfb1Yq0fKhosrnqQRI/qXPYXU1E2a7jgZiGJ6DZ9iDtgZfJ1Y5pge/omOl3vjqQ9L9SKX2Qui8rIP7MXMxQ==}
+  heading-case@0.1.6:
+    resolution: {integrity: sha512-SuymMv+TxrW2df/5arvKzoZu+HsMU+OpYVkmkCuI2qpdLUd7QDvkzpupFbBy180XpSp+Y5jTLdY3lZRGDjtn8A==}
     hasBin: true
 
   highlight.js@10.7.3:
@@ -11076,7 +11076,7 @@ snapshots:
 
   he@1.2.0: {}
 
-  heading-case@0.1.4: {}
+  heading-case@0.1.6: {}
 
   highlight.js@10.7.3: {}
 
