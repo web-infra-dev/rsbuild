@@ -115,18 +115,23 @@ const applyDefaultMiddlewares = async ({
   if (
     context.action === 'dev' &&
     context.bundlerType === 'rspack' &&
-    dev.lazyCompilation &&
     compilationManager
   ) {
     const { compiler } = compilationManager;
 
-    middlewares.push(
-      rspack.experiments.lazyCompilationMiddleware(
-        // TODO: support for multi compiler
-        isMultiCompiler(compiler) ? compiler.compilers[0] : compiler,
-        dev.lazyCompilation,
-      ),
-    );
+    // TODO: support for multi compiler
+    const firstCompiler = isMultiCompiler(compiler)
+      ? compiler.compilers[0]
+      : compiler;
+
+    const options =
+      dev.lazyCompilation ?? firstCompiler.options.experiments?.lazyCompilation;
+
+    if (options) {
+      middlewares.push(
+        rspack.experiments.lazyCompilationMiddleware(firstCompiler, options),
+      );
+    }
   }
 
   // dev proxy handler, each proxy has own handler

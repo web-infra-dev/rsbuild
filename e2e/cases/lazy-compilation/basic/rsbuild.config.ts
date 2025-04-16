@@ -10,6 +10,13 @@ export default defineConfig({
     },
   },
   dev: {
-    lazyCompilation: true,
+    lazyCompilation: false,
+  },
+  tools: {
+    rspack: {
+      experiments: {
+        lazyCompilation: true,
+      },
+    },
   },
 });
