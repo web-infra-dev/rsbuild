@@ -1,7 +1,6 @@
 import { isAbsolute, join } from 'node:path';
 import rspack from '@rspack/core';
 import { normalizePublicDirs } from '../config';
-import { DEFAULT_PORT } from '../constants';
 import { isMultiCompiler } from '../helpers';
 import { logger } from '../logger';
 import type {
@@ -124,13 +123,12 @@ const applyDefaultMiddlewares = async ({
 
     if (
       typeof dev.lazyCompilation === 'object' &&
-      typeof dev.lazyCompilation.serverUrl === 'string'
+      typeof dev.lazyCompilation.serverUrl === 'string' &&
+      context.devServer
     ) {
-      const port = context.devServer?.port || server.port || DEFAULT_PORT;
-
       dev.lazyCompilation.serverUrl = replacePortPlaceholder(
         dev.lazyCompilation.serverUrl,
-        port,
+        context.devServer.port,
       );
     }
 

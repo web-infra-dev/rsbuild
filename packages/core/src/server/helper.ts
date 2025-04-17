@@ -4,7 +4,7 @@ import net from 'node:net';
 import type { Socket } from 'node:net';
 import os from 'node:os';
 import { posix, relative, sep } from 'node:path';
-import { DEFAULT_DEV_HOST, DEFAULT_PORT } from '../constants';
+import { DEFAULT_DEV_HOST } from '../constants';
 import {
   addTrailingSlash,
   color,
@@ -310,14 +310,13 @@ export const getServerConfig = async ({
   https: boolean;
   portTip: string | undefined;
 }> => {
-  const host = config.server.host || DEFAULT_DEV_HOST;
-  const originalPort = config.server.port || DEFAULT_PORT;
+  const { host, port: originalPort, strictPort } = config.server;
   const port = await getPort({
     host,
     port: originalPort,
-    strictPort: config.server.strictPort || false,
+    strictPort,
   });
-  const https = Boolean(config.server.https) || false;
+  const https = Boolean(config.server.https);
   const portTip =
     port !== originalPort
       ? `port ${originalPort} is in use, ${color.yellow(`using port ${port}.`)}`
