@@ -52,7 +52,8 @@ function getPublicPath({
     }
   }
 
-  const port = (isProd ? server.port : context.devServer?.port) ?? DEFAULT_PORT;
+  const defaultPort = server.port ?? DEFAULT_PORT;
+  const port = isProd ? defaultPort : (context.devServer?.port ?? defaultPort);
   return formatPublicPath(replacePortPlaceholder(publicPath, port));
 }
 
