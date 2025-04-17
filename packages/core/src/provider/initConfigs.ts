@@ -178,12 +178,12 @@ export async function initRsbuildConfig({
   });
 
   await modifyRsbuildConfig(context);
-  const normalizeBaseConfig = normalizeConfig(context.config);
 
+  const normalizedBaseConfig = normalizeConfig(context.config);
   const environments: Record<string, NormalizedEnvironmentConfig> = {};
 
   const mergedEnvironments = initEnvironmentConfigs(
-    normalizeBaseConfig,
+    normalizedBaseConfig,
     context.rootPath,
     context.specifiedEnvironments,
   );
@@ -198,7 +198,7 @@ export async function initRsbuildConfig({
       ...rsbuildSharedDev
     },
     server,
-  } = normalizeBaseConfig;
+  } = normalizedBaseConfig;
 
   for (const [name, config] of Object.entries(mergedEnvironments)) {
     const environmentConfig = await modifyEnvironmentConfig(
@@ -218,7 +218,7 @@ export async function initRsbuildConfig({
   }
 
   context.normalizedConfig = {
-    ...normalizeBaseConfig,
+    ...normalizedBaseConfig,
     environments,
   };
 
