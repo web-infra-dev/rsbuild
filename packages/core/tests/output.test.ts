@@ -1,4 +1,5 @@
 import { createStubRsbuild } from '@scripts/test-helper';
+import { createRsbuild } from '../src';
 import { pluginOutput } from '../src/plugins/output';
 
 describe('plugin-output', () => {
@@ -179,8 +180,8 @@ describe('plugin-output', () => {
   });
 
   it('should replace `<port>` placeholder with server.port', async () => {
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginOutput()],
+    vi.stubEnv('NODE_ENV', 'development');
+    const rsbuild = await createRsbuild({
       rsbuildConfig: {
         server: { port: 4000 },
         dev: {
@@ -190,12 +191,12 @@ describe('plugin-output', () => {
     });
     const [config] = await rsbuild.initConfigs();
     expect(config?.output?.publicPath).toEqual('http://example-4000.com:4000/');
+    vi.unstubAllEnvs();
   });
 
   it('should replace `<port>` placeholder of `output.assetPrefix` with default port', async () => {
     vi.stubEnv('NODE_ENV', 'production');
-    const rsbuild = await createStubRsbuild({
-      plugins: [pluginOutput()],
+    const rsbuild = await createRsbuild({
       rsbuildConfig: {
         output: {
           assetPrefix: 'http://example.com:<port>/',
@@ -205,5 +206,6 @@ describe('plugin-output', () => {
 
     const [config] = await rsbuild.initConfigs();
     expect(config?.output?.publicPath).toEqual('http://example.com:3000/');
+    vi.unstubAllEnvs();
   });
 });

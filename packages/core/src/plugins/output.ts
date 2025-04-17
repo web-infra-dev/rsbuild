@@ -25,7 +25,6 @@ function getPublicPath({
   const { dev, output, server } = config;
 
   let publicPath = DEFAULT_ASSET_PREFIX;
-  const port = context.devServer?.port || server.port || DEFAULT_PORT;
 
   if (isProd) {
     if (typeof output.assetPrefix === 'string') {
@@ -53,6 +52,8 @@ function getPublicPath({
     }
   }
 
+  const defaultPort = server.port ?? DEFAULT_PORT;
+  const port = isProd ? defaultPort : (context.devServer?.port ?? defaultPort);
   return formatPublicPath(replacePortPlaceholder(publicPath, port));
 }
 
