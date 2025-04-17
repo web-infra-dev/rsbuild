@@ -40,7 +40,7 @@ const loadConfig = async (root: string) => {
     config.mode = commonOpts.mode;
   }
 
-  if (commonOpts.open && !config.server?.open) {
+  if (commonOpts.open && config.server?.open === undefined) {
     config.server.open = commonOpts.open;
   }
 
