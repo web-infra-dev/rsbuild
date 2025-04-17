@@ -287,10 +287,9 @@ export const withDefaultConfig = async (
   return merged;
 };
 
-/** #__PURE__
- * 1. May used by multiple plugins.
- * 2. Object value that should not be empty.
- * 3. Meaningful and can be filled by constant value.
+/**
+ * Merges user config with default values to ensure required properties
+ * are initialized.
  */
 export const normalizeConfig = (config: RsbuildConfig): NormalizedConfig => {
   const getMode = (): RsbuildMode => {
