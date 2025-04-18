@@ -35,6 +35,7 @@ exports[`plugin-less > should add less-loader 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -74,6 +75,7 @@ exports[`plugin-less > should add less-loader 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -140,6 +142,7 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -179,6 +182,7 @@ exports[`plugin-less > should add less-loader and css-loader when injectStyles 1
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -248,6 +252,7 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -290,6 +295,7 @@ exports[`plugin-less > should add less-loader with excludes 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -356,6 +362,7 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -395,6 +402,7 @@ exports[`plugin-less > should add less-loader with tools.less 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -461,6 +469,7 @@ exports[`plugin-less > should allow to use Less plugins 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -507,6 +516,7 @@ exports[`plugin-less > should allow to use Less plugins 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",

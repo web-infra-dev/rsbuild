@@ -35,6 +35,7 @@ exports[`plugin-stylus > should add stylus loader config correctly 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -67,6 +68,7 @@ exports[`plugin-stylus > should add stylus loader config correctly 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -126,6 +128,7 @@ exports[`plugin-stylus > should allow to configure stylus options 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",
@@ -161,6 +164,7 @@ exports[`plugin-stylus > should allow to configure stylus options 1`] = `
       {
         "loader": "builtin:lightningcss-loader",
         "options": {
+          "errorRecovery": true,
           "targets": [
             "chrome >= 87",
             "edge >= 88",

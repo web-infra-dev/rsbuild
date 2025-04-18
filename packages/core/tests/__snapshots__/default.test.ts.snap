@@ -63,6 +63,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
+              "errorRecovery": true,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -94,6 +95,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
+              "errorRecovery": true,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -541,6 +543,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
+              "errorRecovery": true,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -572,6 +575,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
+              "errorRecovery": true,
               "minify": true,
               "targets": [
                 "chrome >= 87",
@@ -839,6 +843,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when prod 
         "_args": [
           {
             "minimizerOptions": {
+              "errorRecovery": true,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -1462,6 +1467,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
+              "errorRecovery": true,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -1493,6 +1499,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
+              "errorRecovery": true,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",

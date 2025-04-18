@@ -46,6 +46,7 @@ describe('plugin-minimize', () => {
           "_args": [
             {
               "minimizerOptions": {
+                "errorRecovery": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -204,6 +205,7 @@ describe('plugin-minimize', () => {
           "_args": [
             {
               "minimizerOptions": {
+                "errorRecovery": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -264,6 +266,7 @@ describe('plugin-minimize', () => {
           "_args": [
             {
               "minimizerOptions": {
+                "errorRecovery": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -318,6 +321,7 @@ describe('plugin-minimize', () => {
           "_args": [
             {
               "minimizerOptions": {
+                "errorRecovery": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",

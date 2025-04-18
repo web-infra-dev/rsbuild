@@ -63,6 +63,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
+              "errorRecovery": true,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",
@@ -94,6 +95,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
           {
             "loader": "builtin:lightningcss-loader",
             "options": {
+              "errorRecovery": true,
               "targets": [
                 "chrome >= 87",
                 "edge >= 88",

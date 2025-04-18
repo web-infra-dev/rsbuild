@@ -5,14 +5,13 @@
 
 ```ts
 const defaultOptions = {
+  errorRecovery: true,
   // 使用当前项目的 browserslist 配置
   targets: browserslist,
   // 在生产模式，且 output.injectStyles 为 true 时，minify 会被启用
   minify: config.mode === 'production' && config.output.injectStyles,
 };
 ```
-
-- **版本：** `>= 1.0.0`
 
 通过 `tools.lightningcssLoader` 可以设置 [builtin:lightningcss-loader](https://rspack.dev/guide/features/builtin-lightningcss-loader) 的选项。
 
