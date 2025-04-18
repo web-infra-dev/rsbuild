@@ -31,6 +31,14 @@
     "create-rstack": "1.4.0"
   },
   "devDependencies": {
+    "@rsbuild/core": "workspace:*",
+    "@rsbuild/plugin-vue": "workspace:*",
+    "@rsbuild/plugin-babel": "workspace:*",
+    "@rsbuild/plugin-preact": "workspace:*",
+    "@rsbuild/plugin-react": "workspace:*",
+    "@rsbuild/plugin-solid": "workspace:*",
+    "@rsbuild/plugin-svelte": "workspace:*",
+    "@rsbuild/plugin-vue2": "^1.0.2",
     "@rslib/core": "0.6.3",
     "@types/node": "^22.14.1",
     "typescript": "^5.8.3"
