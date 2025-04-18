@@ -1358,6 +1358,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             {
               "loader": "builtin:lightningcss-loader",
               "options": {
+                "errorRecovery": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",
@@ -1389,6 +1390,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
             {
               "loader": "builtin:lightningcss-loader",
               "options": {
+                "errorRecovery": true,
                 "targets": [
                   "chrome >= 87",
                   "edge >= 88",

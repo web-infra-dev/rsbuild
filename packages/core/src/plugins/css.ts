@@ -40,6 +40,7 @@ export const getLightningCSSLoaderOptions = (
 
   const initialOptions: Rspack.LightningcssLoaderOptions = {
     targets,
+    errorRecovery: true,
   };
 
   if (minify) {

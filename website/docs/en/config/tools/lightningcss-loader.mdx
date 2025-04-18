@@ -5,14 +5,13 @@
 
 ```ts
 const defaultOptions = {
-  // use current browserslist config
+  errorRecovery: true,
+  // use current project's browserslist config
   targets: browserslist,
   // minify is enabled when output.injectStyles is true and in production mode
   minify: config.mode === 'production' && config.output.injectStyles,
 };
 ```
-
-- **Version:** `>= 1.0.0`
 
 You can set the options for [builtin:lightningcss-loader](https://rspack.dev/guide/features/builtin-lightningcss-loader) through `tools.lightningcssLoader`.
 
