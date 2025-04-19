@@ -152,9 +152,9 @@ export const CHAIN_ID = {
     BUNDLE_ANALYZER: 'bundle-analyze',
     /** ModuleFederationPlugin */
     MODULE_FEDERATION: 'module-federation',
-    /** htmlPrefetchPlugin */
+    /** HtmlResourceHintsPlugin (prefetch) */
     HTML_PREFETCH: 'html-prefetch-plugin',
-    /** htmlPreloadPlugin */
+    /** HtmlResourceHintsPlugin (preload) */
     HTML_PRELOAD: 'html-preload-plugin',
     /** CssExtractRspackPlugin */
     MINI_CSS_EXTRACT: 'mini-css-extract',
