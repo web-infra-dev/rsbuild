@@ -22,7 +22,7 @@ export default {
 
 如果你需要同时禁用 HMR 和 liveReload，可以将 [dev.hmr](/config/dev/hmr) 和 [dev.liveReload](/config/dev/live-reload) 都设置为 `false`，此时页面上不会发起 WebSocket 请求到 dev server，也不会在文件变更时自动刷新页面。
 
-```js title="rsbuild.config.ts"
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     hmr: false,
@@ -56,7 +56,7 @@ Rsbuild 默认不监听 `.git/` 和 `node_modules/` 目录下的文件，当这�
 
 例如，监听 `node_modules/` 目录且忽略 `.git/` 目录，可以配置为：
 
-```js title="rsbuild.config.ts"
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: {

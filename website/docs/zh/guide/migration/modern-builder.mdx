@@ -47,7 +47,7 @@ import { PackageManagerTabs } from '@theme';
 - 从 `@modern-js/builder-cli` 中导入 `defineConfig` 方法，改为从 `@rsbuild/core` 中导入。
 - 将 `builderPlugins` 字段改为 `plugins`。
 
-```js title="rsbuild.config.ts"
+```ts title="rsbuild.config.ts"
 import { defineConfig } from '@modern-js/builder-cli'; // [!code --]
 import { defineConfig } from '@rsbuild/core'; // [!code ++]
 

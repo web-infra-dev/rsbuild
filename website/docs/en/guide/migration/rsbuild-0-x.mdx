@@ -313,7 +313,7 @@ Previously Rsbuild uses `html-minifier-terser` to minify the HTML files. But the
 
 At this stage, Rsbuild will not built-in `html-minifier-terser`, so we provide a standalone [rsbuild-plugin-html-minifier-terser](https://github.com/rspack-contrib/rsbuild-plugin-html-minifier-terser) to support HTML minification.
 
-```js title="rsbuild.config.ts"
+```ts title="rsbuild.config.ts"
 import { pluginHtmlMinifierTerser } from 'rsbuild-plugin-html-minifier-terser';
 
 export default {

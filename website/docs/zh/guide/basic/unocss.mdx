@@ -16,7 +16,7 @@ import { PackageManagerTabs } from '@theme';
 
 在 [tools.rspack](/config/tools/rspack) 中注册 UnoCSS 的插件：
 
-```js title="rsbuild.config.ts"
+```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
 import { UnoCSSRspackPlugin } from '@unocss/webpack/rspack';
 
@@ -35,7 +35,7 @@ export default defineConfig({
 
 通过 `UnoCSSRspackPlugin` 的选项可以添加 UnoCSS 的 Presets，例如：
 
-```js title="rsbuild.config.ts"
+```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { UnoCSSRspackPlugin } from '@unocss/webpack/rspack';

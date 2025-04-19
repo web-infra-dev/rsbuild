@@ -67,7 +67,7 @@ Rsbuild server 监听的端口号可能会发生变更。比如，当端口被�
 - 开启 [server.strictPort](/config/server/strict-port)。
 - 使用 `<port>` 占位符来指代当前端口号，Rsbuild 会将占位符替换为实际监听的端口号。
 
-```js title="rsbuild.config.ts"
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     client: {

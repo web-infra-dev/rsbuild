@@ -22,7 +22,7 @@ export default {
 
 To disable both HMR and liveReload, set both [dev.hmr](/config/dev/hmr) and [dev.liveReload](/config/dev/live-reload) to `false`. Then, no WebSocket requests will be made to the dev server on the page, and the page will not automatically refresh when files change.
 
-```js title="rsbuild.config.ts"
+```ts title="rsbuild.config.ts"
 export default {
   dev: {
     hmr: false,
@@ -56,7 +56,7 @@ If you want to watch these directories, you can manually configure Rspack's [wat
 
 For example, to watch the `node_modules/` directory and ignore the `.git/` directory, you can configure it as follows:
 
-```js title="rsbuild.config.ts"
+```ts title="rsbuild.config.ts"
 export default {
   tools: {
     rspack: {
