@@ -1,4 +1,4 @@
-import { HtmlPreloadOrPrefetchPlugin } from '../rspack/preload/HtmlPreloadOrPrefetchPlugin';
+import { HtmlResourceHintsPlugin } from '../rspack/preload/HtmlResourceHintsPlugin';
 import type { HtmlBasicTag, PreconnectOption, RsbuildPlugin } from '../types';
 
 const generateLinks = (
@@ -55,13 +55,13 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
       if (prefetch) {
         chain
           .plugin(CHAIN_ID.PLUGIN.HTML_PREFETCH)
-          .use(HtmlPreloadOrPrefetchPlugin, [prefetch, 'prefetch', HTMLCount]);
+          .use(HtmlResourceHintsPlugin, [prefetch, 'prefetch', HTMLCount]);
       }
 
       if (preload) {
         chain
           .plugin(CHAIN_ID.PLUGIN.HTML_PRELOAD)
-          .use(HtmlPreloadOrPrefetchPlugin, [preload, 'preload', HTMLCount]);
+          .use(HtmlResourceHintsPlugin, [preload, 'preload', HTMLCount]);
       }
     });
   },

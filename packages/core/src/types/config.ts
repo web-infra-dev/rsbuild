@@ -586,15 +586,15 @@ export type PreloadIncludeType =
 
 export type Filter = Array<string | RegExp> | ((filename: string) => boolean);
 
-export interface PreloadOrPrefetchOption {
+export interface ResourceHintsOption {
   type?: PreloadIncludeType;
   include?: Filter;
   exclude?: Filter;
   dedupe?: boolean;
 }
-export type PreloadOption = PreloadOrPrefetchOption;
+export type PreloadOption = ResourceHintsOption;
 
-export type PrefetchOption = Omit<PreloadOrPrefetchOption, 'dedupe'>;
+export type PrefetchOption = Omit<ResourceHintsOption, 'dedupe'>;
 
 export interface PerformanceConfig {
   /**
