@@ -27,7 +27,7 @@ This ensures they are available earlier and are less likely to block the page's 
 
 ## Enable preload
 
-When `performance.preload` is set to `true`, Rsbuild will use the following default options to preload resources. This means preloading all asynchronous resources on the current page, including asynchronous JS and its associated CSS, image, font, and other resources.
+When `performance.preload` is set to `true`, Rsbuild will use the following default options to preload resources. This means preloading all async resources on the current page, including async JS and its associated CSS, image, font, and other resources.
 
 ```js
 const defaultOptions = {
@@ -85,7 +85,7 @@ The injected HTML tag is as follows:
 
 ## Options
 
-When the value of `performance.preload` is `object` type, the Rsbuild will enable the preload capability for the specified resource according to the current options.
+`performance.preload` can be set to an object to specify the options.
 
 ### preload.type
 
@@ -96,14 +96,14 @@ The `type` field controls which resources will be pre-fetched, and supports seco
 
 Currently supported resource types are as follows:
 
-- `async-chunks`: preload all asynchronous resources (on the current page), including asynchronous JS and its associated CSS, image, font and other resources.
+- `async-chunks`: preload all async resources (on the current page), including async JS and its associated CSS, image, font and other resources.
 - `initial`: preload all non-async resources (on the current page).
-- `all-chunks`: preload all resources (on the current page), including all asynchronous and non-asynchronous resources.
+- `all-chunks`: preload all resources (on the current page), including all async and non-async resources.
 - `all-assets`: preload all resources, and resources of other pages will be included in the MPA scenario.
 
 #### Example
 
-When you want to preload all image resources in png format on the current page, you can configure it as follows:
+If you want to preload all image resources in png format on the current page, you can configure it as follows:
 
 ```js
 export default {
