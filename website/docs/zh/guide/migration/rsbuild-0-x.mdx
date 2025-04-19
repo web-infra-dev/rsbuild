@@ -313,7 +313,7 @@ Rsbuild v1 移除了 `output.minify.html` 和 `output.minify.htmlOptions` 选项
 
 目前，Rsbuild 不再内置 `html-minifier-terser`，因此我们提供了一个独立的插件 [rsbuild-plugin-html-minifier-terser](https://github.com/rspack-contrib/rsbuild-plugin-html-minifier-terser) 来支持 HTML 压缩。
 
-```js title="rsbuild.config.ts"
+```ts title="rsbuild.config.ts"
 import { pluginHtmlMinifierTerser } from 'rsbuild-plugin-html-minifier-terser';
 
 export default {

@@ -47,7 +47,7 @@ Next, you need to update the npm scripts in the package.json to Rsbuild's CLI co
 - Change the import of the `defineConfig` method from `@modern-js/builder-cli` to `@rsbuild/core`.
 - Change the `builderPlugins` field to `plugins`.
 
-```js title="rsbuild.config.ts"
+```ts title="rsbuild.config.ts"
 import { defineConfig } from '@modern-js/builder-cli'; // [!code --]
 import { defineConfig } from '@rsbuild/core'; // [!code ++]
 

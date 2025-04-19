@@ -16,7 +16,7 @@ import { PackageManagerTabs } from '@theme';
 
 Register the `UnoCSSRspackPlugin` plugin in [tools.rspack](/config/tools/rspack):
 
-```js title="rsbuild.config.ts"
+```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
 import { UnoCSSRspackPlugin } from '@unocss/webpack/rspack';
 
@@ -35,7 +35,7 @@ export default defineConfig({
 
 You can add UnoCSS Presets via the options of `UnoCSSRspackPlugin`, for example:
 
-```js title="rsbuild.config.ts"
+```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { UnoCSSRspackPlugin } from '@unocss/webpack/rspack';
