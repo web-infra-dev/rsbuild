@@ -1,9 +1,9 @@
-import { determineAsValue } from '../src/rspack/preload/helpers';
+import { getResourceType } from '../src/rspack/preload/helpers';
 
-describe('determineAsValue test', () => {
+describe('getResourceType test', () => {
   it('should return as attribute', () => {
     expect(
-      determineAsValue({
+      getResourceType({
         href: '"/chunk/vendors.js"',
         file: 'chunk/vendors.js',
       }),
@@ -12,7 +12,7 @@ describe('determineAsValue test', () => {
 
   it('should return as attribute', () => {
     expect(
-      determineAsValue({
+      getResourceType({
         href: '/image/logo.png',
         file: 'image/logo.png',
       }),
