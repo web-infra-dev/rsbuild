@@ -1,4 +1,3 @@
 export * from './extractChunks';
-export * from './determineAsValue';
+export * from './getResourceType';
 export * from './doesChunkBelongToHtml';
-export * from './type';

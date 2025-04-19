@@ -24,15 +24,28 @@ import {
   IMAGE_EXTENSIONS,
   VIDEO_EXTENSIONS,
 } from '../../../constants';
-import type { As } from './type';
 
-export function determineAsValue({
+export type ResourceType =
+  | 'audio'
+  | 'document'
+  | 'embed'
+  | 'fetch'
+  | 'font'
+  | 'image'
+  | 'object'
+  | 'script'
+  | 'style'
+  | 'track'
+  | 'worker'
+  | 'video';
+
+export function getResourceType({
   href,
   file,
 }: {
   href: string;
   file: string;
-}): As {
+}): ResourceType {
   // If `as` value is not provided in option, dynamically determine the correct
   // value based on the suffix of filename.
 

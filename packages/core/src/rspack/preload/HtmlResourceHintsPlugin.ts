@@ -26,11 +26,10 @@ import { ensureAssetPrefix, upperFirst } from '../../helpers';
 import { getHTMLPlugin } from '../../pluginHelper';
 import type { HtmlRspackPlugin, ResourceHintsOption } from '../../types';
 import {
-  type As,
-  type BeforeAssetTagGenerationHtmlPluginData,
-  determineAsValue,
+  type ResourceType,
   doesChunkBelongToHtml,
   extractChunks,
+  getResourceType,
 } from './helpers';
 
 const defaultOptions = {
@@ -44,7 +43,7 @@ interface Attributes {
   [attributeName: string]: string | boolean | null | undefined;
   href: string;
   rel: LinkType;
-  as?: As;
+  as?: ResourceType;
   crossorigin?: string;
 }
 
@@ -64,7 +63,7 @@ function generateLinks(
   options: ResourceHintsOption,
   type: LinkType,
   compilation: Compilation,
-  htmlPluginData: BeforeAssetTagGenerationHtmlPluginData,
+  data: HtmlRspackPlugin.BeforeAssetTagGenerationData,
   HTMLCount: number,
 ): HtmlRspackPlugin.HtmlTagObject[] {
   // get all chunks
@@ -82,7 +81,7 @@ function generateLinks(
           doesChunkBelongToHtml({
             chunk: chunk as Chunk,
             compilation,
-            htmlPluginData,
+            htmlPluginData: data,
             pluginOptions: options,
           }),
         );
@@ -131,7 +130,7 @@ function generateLinks(
     if (type === 'preload') {
       // If we're preloading this resource (as opposed to prefetching),
       // then we need to set the 'as' attribute correctly.
-      attributes.as = determineAsValue({
+      attributes.as = getResourceType({
         href,
         file,
       });
@@ -191,42 +190,32 @@ export class HtmlResourceHintsPlugin implements RspackPluginInstance {
 
   apply(compiler: Compiler): void {
     compiler.hooks.compilation.tap(this.name, (compilation) => {
-      getHTMLPlugin()
-        .getCompilationHooks(compilation)
-        .beforeAssetTagGeneration.tap(
-          `HTML${upperFirst(this.type)}Plugin`,
-          (htmlPluginData) => {
-            this.resourceHints = generateLinks(
-              this.options,
-              this.type,
-              compilation,
-              htmlPluginData,
-              this.HTMLCount,
-            );
+      const pluginHooks = getHTMLPlugin().getCompilationHooks(compilation);
+      const pluginName = `HTML${upperFirst(this.type)}Plugin`;
 
-            return htmlPluginData;
-          },
+      pluginHooks.beforeAssetTagGeneration.tap(pluginName, (data) => {
+        this.resourceHints = generateLinks(
+          this.options,
+          this.type,
+          compilation,
+          data,
+          this.HTMLCount,
         );
 
-      getHTMLPlugin()
-        .getHooks(compilation)
-        .alterAssetTags.tap(
-          `HTML${upperFirst(this.type)}Plugin`,
-          (htmlPluginData) => {
-            if (this.resourceHints) {
-              htmlPluginData.assetTags.styles = [
-                ...(this.options.dedupe
-                  ? filterResourceHints(
-                      this.resourceHints,
-                      htmlPluginData.assetTags.scripts,
-                    )
-                  : this.resourceHints),
-                ...htmlPluginData.assetTags.styles,
-              ];
-            }
-            return htmlPluginData;
-          },
-        );
+        return data;
+      });
+
+      pluginHooks.alterAssetTags.tap(pluginName, (data) => {
+        if (this.resourceHints) {
+          data.assetTags.styles = [
+            ...(this.options.dedupe
+              ? filterResourceHints(this.resourceHints, data.assetTags.scripts)
+              : this.resourceHints),
+            ...data.assetTags.styles,
+          ];
+        }
+        return data;
+      });
     });
   }
 }
