@@ -124,6 +124,55 @@ type ResourceHintsFilter =
 
 一个额外的过滤器，用于指定哪些资源会被包含。
 
+- 当 `include` 为一个正则表达式时，它会被直接用于匹配文件名：
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    prefetch: {
+      // 匹配所有 .png 文件
+      include: /\.png$/,
+    },
+  },
+};
+```
+
+- 当 `include` 为一个字符串时，它会被转换为正则表达式来匹配文件名：
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    prefetch: {
+      include: '\\.png', // 等价于 `new RegExp('\\.png')`
+    },
+  },
+};
+```
+
+- 当 `include` 为函数时，它会被调用并传入文件名作为参数：
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    prefetch: {
+      include: (filename) => filename.endsWith('.png'),
+    },
+  },
+};
+```
+
+- 当 `include` 为一个数组时，它可以包含多个过滤器，文件名只要匹配任何一个过滤器都会被包含：
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    prefetch: {
+      include: [/\.png$/, '\\.jpg'],
+    },
+  },
+};
+```
+
 ### prefetch.exclude
 
 - **类型：**
@@ -138,4 +187,4 @@ type ResourceHintsFilter =
 
 - **默认值：** `/.map$/`
 
-一个额外的过滤器，用于指定哪些资源会被排除。
+一个额外的过滤器，用于指定哪些资源会被排除，用法与 `include` 类似。
