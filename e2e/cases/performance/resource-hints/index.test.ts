@@ -96,7 +96,7 @@ test('should generate prefetch link with filter', async () => {
       },
       performance: {
         prefetch: {
-          include: [/.*\.png$/],
+          include: [/\.png$/],
         },
       },
     },
