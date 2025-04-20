@@ -583,7 +583,11 @@ export type ResourceHintsIncludeType =
   | 'all-assets'
   | 'all-chunks';
 
-export type Filter = Array<string | RegExp> | ((filename: string) => boolean);
+export type ResourceHintsFilterFn = (filename: string) => boolean;
+
+export type ResourceHintsFilter = OneOrMany<
+  string | RegExp | ResourceHintsFilterFn
+>;
 
 export interface ResourceHintsOptions {
   /**
@@ -599,11 +603,11 @@ export interface ResourceHintsOptions {
   /**
    * A extra filter to determine which resources to include.
    */
-  include?: Filter;
+  include?: ResourceHintsFilter;
   /**
    * A extra filter to determine which resources to exclude.
    */
-  exclude?: Filter;
+  exclude?: ResourceHintsFilter;
   /**
    * Whether to dedupe script resources that already exist in the current HTML content.
    * By default, if a resource has been added to the current HTML via a script tag, it will

@@ -22,9 +22,19 @@ import type {
   Compiler,
   RspackPluginInstance,
 } from '@rspack/core';
-import { ensureAssetPrefix, upperFirst } from '../../helpers';
+import {
+  castArray,
+  ensureAssetPrefix,
+  isFunction,
+  upperFirst,
+} from '../../helpers';
 import { getHTMLPlugin } from '../../pluginHelper';
-import type { HtmlRspackPlugin, ResourceHintsOptions } from '../../types';
+import type {
+  HtmlRspackPlugin,
+  ResourceHintsFilter,
+  ResourceHintsFilterFn,
+  ResourceHintsOptions,
+} from '../../types';
 import { doesChunkBelongToHtml } from './doesChunkBelongToHtml';
 import { extractChunks } from './extractChunks';
 import { type ResourceType, getResourceType } from './getResourceType';
@@ -32,6 +42,7 @@ import { type ResourceType, getResourceType } from './getResourceType';
 const defaultOptions: ResourceHintsOptions = {
   type: 'async-chunks',
   dedupe: true,
+  exclude: /.map$/,
 };
 
 type LinkType = 'preload' | 'prefetch';
@@ -43,6 +54,73 @@ interface Attributes {
   as?: ResourceType;
   crossorigin?: string;
 }
+
+const applyFilter = (
+  files: string[],
+  include?: ResourceHintsFilter,
+  exclude?: ResourceHintsFilter,
+) => {
+  const includeRegExp: RegExp[] = [];
+  const excludeRegExp: RegExp[] = [];
+  const includeFn: ResourceHintsFilterFn[] = [];
+  const excludeFn: ResourceHintsFilterFn[] = [];
+
+  if (include) {
+    for (const item of castArray(include)) {
+      if (typeof item === 'string') {
+        includeRegExp.push(new RegExp(item));
+      } else if (isFunction(item)) {
+        includeFn.push(item);
+      } else {
+        includeRegExp.push(item);
+      }
+    }
+  }
+  if (exclude) {
+    for (const item of castArray(exclude)) {
+      if (typeof item === 'string') {
+        excludeRegExp.push(new RegExp(item));
+      } else if (isFunction(item)) {
+        excludeFn.push(item);
+      } else {
+        excludeRegExp.push(item);
+      }
+    }
+  }
+
+  return files.filter((file) => {
+    let includeMatched = false;
+
+    for (const item of includeRegExp) {
+      if (item.test(file)) {
+        includeMatched = true;
+      }
+    }
+    for (const item of includeFn) {
+      if (item(file)) {
+        includeMatched = true;
+      }
+    }
+
+    // If there are include filters and no include filter is matched, skip the file
+    const hasIncludeFilter = includeRegExp.length + includeFn.length > 0;
+    if (hasIncludeFilter && !includeMatched) {
+      return false;
+    }
+
+    for (const item of excludeRegExp) {
+      if (item.test(file)) {
+        return false;
+      }
+    }
+    for (const item of excludeFn) {
+      if (item(file)) {
+        return false;
+      }
+    }
+    return true;
+  });
+};
 
 function filterResourceHints(
   resourceHints: HtmlRspackPlugin.HtmlTagObject[],
@@ -90,24 +168,13 @@ function generateLinks(
       ]),
     [],
   );
+
   const uniqueFiles = new Set<string>(allFiles);
-  const filteredFiles = [...uniqueFiles]
-    // default exclude
-    .filter((file) => [/.map$/].every((regex) => !regex.test(file)))
-    .filter(
-      (file) =>
-        !options.include ||
-        (typeof options.include === 'function'
-          ? options.include(file)
-          : options.include.some((regex) => new RegExp(regex).test(file))),
-    )
-    .filter(
-      (file) =>
-        !options.exclude ||
-        (typeof options.exclude === 'function'
-          ? !options.exclude(file)
-          : options.exclude.every((regex) => !new RegExp(regex).test(file))),
-    );
+  const filteredFiles = applyFilter(
+    [...uniqueFiles],
+    options.include,
+    options.exclude,
+  );
 
   // Sort to ensure the output is predictable.
   const sortedFilteredFiles = filteredFiles.sort();

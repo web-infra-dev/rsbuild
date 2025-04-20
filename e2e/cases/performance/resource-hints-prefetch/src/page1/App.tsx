@@ -1,8 +1,8 @@
-import Png from '@assets/icon.png?url';
+import png from '@assets/icon.png?url';
 
 const App = () => (
   <>
-    <img src={Png} alt="test" />
+    <img src={png} alt="test" />
     <div id="test">Hello Rsbuild!</div>
   </>
 );

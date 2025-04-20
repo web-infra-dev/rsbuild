@@ -3,14 +3,10 @@
 - **Type:** `undefined | true | PreloadOptions`
 
 ```ts
-type IncludeType = 'async-chunks' | 'initial' | 'all-assets' | 'all-chunks';
-
-type Filter = Array<string | RegExp> | ((filename: string) => boolean);
-
-interface PreloadOptions {
-  type?: IncludeType;
-  include?: Filter;
-  exclude?: Filter;
+interface PrefetchOptions {
+  type?: ResourceHintsIncludeType;
+  include?: ResourceHintsFilter;
+  exclude?: ResourceHintsFilter;
   dedupe?: boolean;
 }
 ```
@@ -114,15 +110,33 @@ export default {
 
 ### preload.include
 
-- **Type:** `Array<string | RegExp> | ((filename: string) => boolean)`
+- **Type:**
+
+```ts
+type ResourceHintsFilter =
+  | string
+  | RegExp
+  | ((filename: string) => boolean)
+  | Array<string | RegExp | ((filename: string) => boolean)>;
+```
+
 - **Default:** `undefined`
 
 A extra filter to determine which resources to include.
 
 ### preload.exclude
 
-- **Type:** `Array<string | RegExp> | ((filename: string) => boolean)`
-- **Default:** `undefined`
+- **Type:**
+
+```ts
+type ResourceHintsFilter =
+  | string
+  | RegExp
+  | ((filename: string) => boolean)
+  | Array<string | RegExp | ((filename: string) => boolean)>;
+```
+
+- **Default:** `/.map$/`
 
 A extra filter to determine which resources to exclude.
 
