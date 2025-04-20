@@ -124,6 +124,55 @@ type ResourceHintsFilter =
 
 A extra filter to determine which resources to include.
 
+- When `include` is a regular expression, it will be used directly to match the filename:
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    preload: {
+      // Match all .png files
+      include: /\.png$/,
+    },
+  },
+};
+```
+
+- When `include` is a string, it will be converted to a regular expression to match the filename:
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    preload: {
+      include: '\\.png',
+    },
+  },
+};
+```
+
+- When `include` is a function, it will be called with the filename as an argument:
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    preload: {
+      include: (filename) => filename.endsWith('.png'),
+    },
+  },
+};
+```
+
+- When `include` is an array, it can contain multiple filters, and the filename only needs to match one of the filters to be included:
+
+```ts title="rsbuild.config.ts"
+export default {
+  performance: {
+    preload: {
+      include: [/\.png$/, '\\.jpg'],
+    },
+  },
+};
+```
+
 ### preload.exclude
 
 - **Type:**
@@ -138,7 +187,7 @@ type ResourceHintsFilter =
 
 - **Default:** `/.map$/`
 
-A extra filter to determine which resources to exclude.
+A extra filter to determine which resources to exclude, the usage is similar to `include`.
 
 ### preload.dedupe
 
