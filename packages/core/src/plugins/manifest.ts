@@ -1,6 +1,6 @@
 import type { FileDescriptor } from '../../compiled/rspack-manifest-plugin';
 import { isObject } from '../helpers';
-import { recursiveChunkEntryNames } from '../rspack/preload/helpers';
+import { recursiveChunkEntryNames } from '../rspack/resource-hints/doesChunkBelongToHtml';
 import type {
   ManifestByEntry,
   ManifestConfig,

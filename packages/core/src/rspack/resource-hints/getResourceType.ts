@@ -23,7 +23,7 @@ import {
   FONT_EXTENSIONS,
   IMAGE_EXTENSIONS,
   VIDEO_EXTENSIONS,
-} from '../../../constants';
+} from '../../constants';
 
 export type ResourceType =
   | 'audio'

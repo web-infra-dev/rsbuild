@@ -17,14 +17,9 @@
  */
 
 import type { Chunk, ChunkGroup, Compilation } from '@rspack/core';
-import type { PreloadIncludeType } from '../../../types';
+import type { ResourceHintsIncludeType } from '../../types';
 
-interface ExtractChunks {
-  compilation: Compilation;
-  includeType?: PreloadIncludeType;
-}
-
-function isAsync(chunk: Chunk | ChunkGroup): boolean {
+function isAsyncChunk(chunk: Chunk | ChunkGroup): boolean {
   if ('canBeInitial' in chunk) {
     return !chunk.canBeInitial();
   }
@@ -34,7 +29,10 @@ function isAsync(chunk: Chunk | ChunkGroup): boolean {
   return false;
 }
 
-export function extractChunks({ compilation, includeType }: ExtractChunks):
+export function extractChunks(
+  compilation: Compilation,
+  includeType?: ResourceHintsIncludeType,
+):
   | Chunk[]
   | Array<{
       files: string[];
@@ -47,11 +45,11 @@ export function extractChunks({ compilation, includeType }: ExtractChunks):
   // get wired up using link rel=preload when using this plugin. This behavior can be
   // configured to preload all types of chunks or just prefetch chunks as needed.
   if (includeType === undefined || includeType === 'async-chunks') {
-    return chunks.filter(isAsync);
+    return chunks.filter(isAsyncChunk);
   }
 
   if (includeType === 'initial') {
-    return chunks.filter((chunk) => !isAsync(chunk));
+    return chunks.filter((chunk) => !isAsyncChunk(chunk));
   }
 
   if (includeType === 'all-chunks') {

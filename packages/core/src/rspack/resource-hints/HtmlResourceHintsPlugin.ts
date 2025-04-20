@@ -24,16 +24,13 @@ import type {
 } from '@rspack/core';
 import { ensureAssetPrefix, upperFirst } from '../../helpers';
 import { getHTMLPlugin } from '../../pluginHelper';
-import type { HtmlRspackPlugin, ResourceHintsOption } from '../../types';
-import {
-  type ResourceType,
-  doesChunkBelongToHtml,
-  extractChunks,
-  getResourceType,
-} from './helpers';
+import type { HtmlRspackPlugin, ResourceHintsOptions } from '../../types';
+import { doesChunkBelongToHtml } from './doesChunkBelongToHtml';
+import { extractChunks } from './extractChunks';
+import { type ResourceType, getResourceType } from './getResourceType';
 
-const defaultOptions = {
-  type: 'async-chunks' as const,
+const defaultOptions: ResourceHintsOptions = {
+  type: 'async-chunks',
   dedupe: true,
 };
 
@@ -60,17 +57,14 @@ function filterResourceHints(
 }
 
 function generateLinks(
-  options: ResourceHintsOption,
+  options: ResourceHintsOptions,
   type: LinkType,
   compilation: Compilation,
   data: HtmlRspackPlugin.BeforeAssetTagGenerationData,
   HTMLCount: number,
 ): HtmlRspackPlugin.HtmlTagObject[] {
   // get all chunks
-  const extractedChunks = extractChunks({
-    compilation,
-    includeType: options.type,
-  });
+  const extractedChunks = extractChunks(compilation, options.type);
 
   const htmlChunks =
     // Handle all chunks.
@@ -165,7 +159,7 @@ function generateLinks(
 }
 
 export class HtmlResourceHintsPlugin implements RspackPluginInstance {
-  readonly options: ResourceHintsOption;
+  readonly options: ResourceHintsOptions;
 
   name = 'HtmlResourceHintsPlugin';
 
@@ -176,14 +170,11 @@ export class HtmlResourceHintsPlugin implements RspackPluginInstance {
   HTMLCount: number;
 
   constructor(
-    options: true | ResourceHintsOption,
+    options: ResourceHintsOptions,
     type: LinkType,
     HTMLCount: number,
   ) {
-    this.options = {
-      ...defaultOptions,
-      ...(typeof options === 'boolean' ? {} : options),
-    };
+    this.options = { ...defaultOptions, ...options };
     this.type = type;
     this.HTMLCount = HTMLCount;
   }
