@@ -3,14 +3,10 @@
 - **类型：** `undefined | true | PrefetchOptions`
 
 ```ts
-type IncludeType = 'async-chunks' | 'initial' | 'all-assets' | 'all-chunks';
-
-type Filter = Array<string | RegExp> | ((filename: string) => boolean);
-
 interface PrefetchOptions {
-  type?: IncludeType;
-  include?: Filter;
-  exclude?: Filter;
+  type?: ResourceHintsIncludeType;
+  include?: ResourceHintsFilter;
+  exclude?: ResourceHintsFilter;
 }
 ```
 
@@ -114,14 +110,32 @@ export default {
 
 ### prefetch.include
 
-- **类型：** `Array<string | RegExp> | ((filename: string) => boolean)`
+- **类型：**
+
+```ts
+type ResourceHintsFilter =
+  | string
+  | RegExp
+  | ((filename: string) => boolean)
+  | Array<string | RegExp | ((filename: string) => boolean)>;
+```
+
 - **默认值：** `undefined`
 
 一个额外的过滤器，用于指定哪些资源会被包含。
 
 ### prefetch.exclude
 
-- **类型：** `Array<string | RegExp> | ((filename: string) => boolean)`
-- **默认值：** `undefined`
+- **类型：**
+
+```ts
+type ResourceHintsFilter =
+  | string
+  | RegExp
+  | ((filename: string) => boolean)
+  | Array<string | RegExp | ((filename: string) => boolean)>;
+```
+
+- **默认值：** `/.map$/`
 
 一个额外的过滤器，用于指定哪些资源会被排除。
