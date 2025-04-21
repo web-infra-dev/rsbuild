@@ -6,8 +6,8 @@
 
 | 功能           | 描述                                                             | 相关链接                                                                                                                   |
 | -------------- | ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| Rspack         | 默认使用 Rspack 作为打包工具                                     | <ul><li>[配置 Rspack](/guide/basic/configure-rspack)</li></ul>                                                             |
-| SWC 编译       | 默认通过 SWC 对 JavaScript 和 TypeScript 代码进行转译和压缩      | <ul><li>[配置 SWC](/guide/basic/configure-swc)</li></ul>                                                                   |
+| Rspack         | 默认使用 Rspack 作为打包工具                                     | <ul><li>[配置 Rspack](/guide/configuration/rspack)</li></ul>                                                               |
+| SWC 编译       | 默认通过 SWC 对 JavaScript 和 TypeScript 代码进行转译和压缩      | <ul><li>[配置 SWC](/guide/configuration/swc)</li></ul>                                                                     |
 | TS 编译        | 默认通过 SWC 编译 TS 文件                                        | <ul><li>[TypeScript 转译](/guide/basic/typescript#typescript-转译)</li></ul>                                               |
 | 代码压缩       | 默认在生产模式构建时开启代码压缩                                 | <ul><li>[output.minify](/config/output/minify)</li></ul>                                                                   |
 | Polyfill 注入  | 可选功能，注入 core-js 等 polyfill                               | <ul><li>[浏览器兼容性](/guide/advanced/browser-compatibility)</li><li>[output.polyfill](/config/output/polyfill)</li></ul> |
@@ -15,7 +15,7 @@
 | 文件别名       | 可选功能，通过 alias 设置文件别名                                | <ul><li>[路径别名](/guide/advanced/alias)</li><li>[resolve.alias](/config/resolve/alias)</li></ul>                         |
 | Babel 编译     | 可选功能，通过 Babel 对 JavaScript 和 TypeScript 代码进行转译    | <ul><li>[Babel 插件](/plugins/list/plugin-babel)</li></ul>                                                                 |
 | Node 产物      | 可选功能，构建运行在 Node.js 环境的产物                          | <ul><li>[Node 产物](/config/output/target#node-产物)</li></ul>                                                             |
-| Web Workers    | 可选功能，使用 Web Workers                                       | <ul><li>[使用 Web Workers](/guide/basic/web-workers)</li></ul>                                                             |
+| Web Workers    | 可选功能，使用 Web Workers                                       | <ul><li>[Web Workers](/guide/basic/web-workers)</li></ul>                                                                  |
 | 浏览器范围     | 可选功能，通过 browserslist 来设置 Web 应用需要兼容的浏览器范围  | <ul><li>[浏览器范围](/guide/advanced/browserslist)</li></ul>                                                               |
 | 兼容性检查     | 可选功能，分析构建产物中是否存在当前浏览器范围下不兼容的高级语法 | <ul><li>[@rsbuild/plugin-check-syntax](https://github.com/rspack-contrib/rsbuild-plugin-check-syntax)</li></ul>            |
 | 注入环境变量   | 可选功能，向代码中注入环境变量或表达式                           | <ul><li>[环境变量](/guide/advanced/env-vars)</li></ul>                                                                     |
@@ -25,19 +25,19 @@
 
 ## CSS 编译
 
-| 功能                 | 描述                                       | 相关链接                                                                                                             |
-| -------------------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
-| Lightning CSS        | 默认启用，使用 Lightning CSS 降级 CSS 语法 | <ul><li>[引用样式资源](/guide/basic/css-usage)</li></ul>                                                             |
-| Tailwind CSS         | 可选功能，使用 Tailwind CSS                | <ul><li>[使用 Tailwind CSS](/guide/basic/tailwindcss)</li></ul>                                                      |
-| UnoCSS               | 可选功能，使用 UnoCSS                      | <ul><li>[使用 UnoCSS](/guide/basic/unocss)</li></ul>                                                                 |
-| PostCSS 转换         | 可选功能，开启 PostCSS 转换                | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[tools.postcss](/config/tools/postcss)</li></ul>              |
-| Sass 预处理器        | 可选功能，编译 Sass/Scss 文件              | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[Sass 插件](/plugins/list/plugin-sass)</li></ul>              |
-| Less 预处理器        | 可选功能，编译 Less 文件                   | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[Less 插件](/plugins/list/plugin-less)</li></ul>              |
-| Stylus 预处理器      | 可选功能，编译 Stylus 文件                 | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[Stylus 插件](/plugins/list/plugin-stylus)</li></ul>          |
-| CSS Modules 编译     | 默认支持编译 CSS Modules 文件              | <ul><li>[使用 CSS Modules](/guide/basic/css-modules)</li><li>[tools.cssLoader](/config/tools/css-loader)</li></ul>   |
-| CSS Modules 类型提示 | 可选功能，生成 CSS Modules 的类型定义文件  | <ul><li>[Typed CSS Modules 插件](https://github.com/rspack-contrib/rsbuild-plugin-typed-css-modules)</li></ul>       |
-| CSS 压缩             | 默认在生产模式构建时开启 CSS 压缩          | <ul><li>[引用样式资源](/guide/basic/css-usage)</li></ul>                                                             |
-| 内联 CSS 到 JS 中    | 可选功能，将 CSS 文件内联到 JS 文件中      | <ul><li>[引用样式资源](/guide/basic/css-usage)</li><li>[output.injectStyles](/config/output/inject-styles)</li></ul> |
+| 功能                 | 描述                                       | 相关链接                                                                                                        |
+| -------------------- | ------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| Lightning CSS        | 默认启用，使用 Lightning CSS 降级 CSS 语法 | <ul><li>[CSS](/guide/styling/css-usage)</li></ul>                                                               |
+| Tailwind CSS         | 可选功能，使用 Tailwind CSS                | <ul><li>[Tailwind CSS](/guide/styling/tailwindcss)</li></ul>                                                    |
+| UnoCSS               | 可选功能，使用 UnoCSS                      | <ul><li>[UnoCSS](/guide/styling/unocss)</li></ul>                                                               |
+| PostCSS 转换         | 可选功能，开启 PostCSS 转换                | <ul><li>[CSS](/guide/styling/css-usage)</li><li>[tools.postcss](/config/tools/postcss)</li></ul>                |
+| Sass 预处理器        | 可选功能，编译 Sass/Scss 文件              | <ul><li>[CSS](/guide/styling/css-usage)</li><li>[Sass 插件](/plugins/list/plugin-sass)</li></ul>                |
+| Less 预处理器        | 可选功能，编译 Less 文件                   | <ul><li>[CSS](/guide/styling/css-usage)</li><li>[Less 插件](/plugins/list/plugin-less)</li></ul>                |
+| Stylus 预处理器      | 可选功能，编译 Stylus 文件                 | <ul><li>[CSS](/guide/styling/css-usage)</li><li>[Stylus 插件](/plugins/list/plugin-stylus)</li></ul>            |
+| CSS Modules 编译     | 默认支持编译 CSS Modules 文件              | <ul><li>[CSS Modules](/guide/styling/css-modules)</li><li>[tools.cssLoader](/config/tools/css-loader)</li></ul> |
+| CSS Modules 类型提示 | 可选功能，生成 CSS Modules 的类型定义文件  | <ul><li>[Typed CSS Modules 插件](https://github.com/rspack-contrib/rsbuild-plugin-typed-css-modules)</li></ul>  |
+| CSS 压缩             | 默认在生产模式构建时开启 CSS 压缩          | <ul><li>[CSS](/guide/styling/css-usage)</li></ul>                                                               |
+| 内联 CSS 到 JS 中    | 可选功能，将 CSS 文件内联到 JS 文件中      | <ul><li>[CSS](/guide/styling/css-usage)</li><li>[output.injectStyles](/config/output/inject-styles)</li></ul>   |
 
 ## HTML 编译
 
@@ -81,11 +81,11 @@
 
 | 功能               | 描述                                           | 相关链接                                                                                                                         |
 | ------------------ | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| 引用图片资源       | 支持在代码中引用图片资源                       | <ul><li>[引用静态资源](/guide/basic/static-assets)</li></ul>                                                                     |
-| 引用字体资源       | 支持在代码中引用字体资源                       | <ul><li>[引用静态资源](/guide/basic/static-assets)</li></ul>                                                                     |
-| 引用视频资源       | 支持在代码中引用视频资源                       | <ul><li>[引用静态资源](/guide/basic/static-assets)</li></ul>                                                                     |
-| 引用 Wasm 资源     | 支持在代码中引用 WebAssembly 资源              | <ul><li>[引用 Wasm 资源](/guide/basic/wasm-assets)</li></ul>                                                                     |
-| 引用 node addons   | 支持在代码中引用 Node.js addons                | <ul><li>[Node addons](/config/output/target#node-addons)</li></ul>                                                               |
+| 图片资源           | 支持在代码中引用图片资源                       | <ul><li>[静态资源](/guide/basic/static-assets)</li></ul>                                                                         |
+| 字体资源           | 支持在代码中引用字体资源                       | <ul><li>[静态资源](/guide/basic/static-assets)</li></ul>                                                                         |
+| 视频资源           | 支持在代码中引用视频资源                       | <ul><li>[静态资源](/guide/basic/static-assets)</li></ul>                                                                         |
+| Wasm 资源          | 支持在代码中引用 WebAssembly 资源              | <ul><li>[引用 Wasm 资源](/guide/basic/wasm-assets)</li></ul>                                                                     |
+| Node addons        | 支持在代码中引用 Node.js addons                | <ul><li>[Node addons](/config/output/target#node-addons)</li></ul>                                                               |
 | 静态资源内联       | 默认将体积较小的图片等资源内联到 JS 中         | <ul><li>[静态资源内联](/guide/optimization/inline-assets)</li><li>[output.dataUriLimit](/config/output/data-uri-limit)</li></ul> |
 | 清理静态资源       | 每次开始构建前，自动清理 dist 目录下的静态资源 | <ul><li>[output.cleanDistPath](/config/output/clean-dist-path)</li></ul>                                                         |
 | 拷贝静态资源       | 可选功能，将静态资源拷贝到 dist 目录下         | <ul><li>[output.copy](/config/output/copy)</li></ul>                                                                             |

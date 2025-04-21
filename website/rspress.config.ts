@@ -87,6 +87,38 @@ export default defineConfig({
           from: '/plugins/list/plugin-assets-retry',
           to: 'https://github.com/rspack-contrib/rsbuild-plugin-assets-retry',
         },
+        {
+          from: '/guide/basic/css-usage',
+          to: '/guide/styling/css-usage',
+        },
+        {
+          from: '/guide/basic/css-modules',
+          to: '/guide/styling/css-modules',
+        },
+        {
+          from: '/guide/basic/tailwindcss',
+          to: '/guide/styling/tailwindcss',
+        },
+        {
+          from: '/guide/basic/tailwindcss-v3',
+          to: '/guide/styling/tailwindcss-v3',
+        },
+        {
+          from: '/guide/basic/unocss',
+          to: '/guide/styling/unocss',
+        },
+        {
+          from: '/guide/basic/configure-rspack',
+          to: '/guide/configuration/rspack',
+        },
+        {
+          from: '/guide/basic/configure-rsbuild',
+          to: '/guide/configuration/rsbuild',
+        },
+        {
+          from: '/guide/basic/configure-swc',
+          to: '/guide/configuration/swc',
+        },
       ],
     }),
   ],

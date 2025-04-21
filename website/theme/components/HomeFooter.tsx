@@ -40,7 +40,7 @@ function useFooterData() {
         },
         {
           title: t('configuration'),
-          link: getLink('/guide/basic/configure-rsbuild'),
+          link: getLink('/guide/configuration/rsbuild'),
         },
         {
           title: t('pluginApi'),
