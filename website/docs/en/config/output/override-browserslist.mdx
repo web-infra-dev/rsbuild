@@ -25,9 +25,9 @@ If there is no `browserslist` configs defined in the project, nor `overrideBrows
 
 ## Example
 
-An example compatible with mobile scenarios:
+An example of mobile web applications:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     overrideBrowserslist: [
@@ -49,7 +49,7 @@ When you build for multiple [environments](/config/environments), you can set di
 
 For example, set different browserslist for `web` and `node` environments:
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   environments: {
     web: {

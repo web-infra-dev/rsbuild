@@ -25,9 +25,9 @@
 
 ## 示例
 
-下面是兼容移动端 H5 场景的示例：
+下面是移动端 Web 应用的示例：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   output: {
     overrideBrowserslist: [
@@ -49,7 +49,7 @@ export default {
 
 比如为 `web` 和 `node` 环境设置不同的 browserslist：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   environments: {
     web: {
