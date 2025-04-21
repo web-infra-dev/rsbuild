@@ -19,12 +19,12 @@ Rsbuild 支持多种构建产物类型，分别适用于不同的目标运行环
 
 Rsbuild 会读取项目中的 [Browserslist 配置](https://github.com/browserslist/browserslist)，以确定需要兼容的浏览器范围。
 
-## 可选类型
+## 可选值
 
 除了 `'web'` 外，`target` 还可以设置为以下值：
 
 - `'node'`：构建出运行在 Node.js 环境的产物，通常用于 SSR 等场景。
-- `'web-worker'`：构建出运行在 web worker 里的产物。
+- `'web-worker'`：构建出运行在 Web Workers 里的产物。
 
 比如构建出适用于 Node.js 环境的产物：
 
