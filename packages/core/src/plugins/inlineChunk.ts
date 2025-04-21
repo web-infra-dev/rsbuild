@@ -52,10 +52,14 @@ function updateSourceMappingURL({
   return source;
 }
 
-function matchTests(name: string, source: string, tests: InlineChunkTest[]) {
+function matchTests(
+  name: string,
+  asset: Rspack.sources.Source,
+  tests: InlineChunkTest[],
+) {
   return tests.some((test) => {
     if (isFunction(test)) {
-      const size = source.length;
+      const size = asset.size();
       return test({ name, size });
     }
     return test.exec(name);
@@ -91,12 +95,12 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
         return tag;
       }
 
-      const source = asset.source().toString();
-      const shouldInline = matchTests(scriptName, source, scriptTests);
+      const shouldInline = matchTests(scriptName, asset, scriptTests);
       if (!shouldInline) {
         return tag;
       }
 
+      const source = asset.source().toString();
       const ret: HtmlBasicTag = {
         tag: 'script',
         children: updateSourceMappingURL({
@@ -141,12 +145,12 @@ export const pluginInlineChunk = (): RsbuildPlugin => ({
         return tag;
       }
 
-      const source = asset.source().toString();
-      const shouldInline = matchTests(linkName, source, styleTests);
+      const shouldInline = matchTests(linkName, asset, styleTests);
       if (!shouldInline) {
         return tag;
       }
 
+      const source = asset.source().toString();
       const ret: HtmlBasicTag = {
         tag: 'style',
         children: updateSourceMappingURL({
