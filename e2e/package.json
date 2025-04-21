@@ -13,7 +13,7 @@
     "preact": "^10.26.5",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-router-dom": "^7.5.0",
+    "react-router-dom": "^7.5.1",
     "solid-js": "^1.9.5",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
@@ -40,7 +40,7 @@
     "@rsbuild/plugin-vue-jsx": "^1.1.0",
     "@rsbuild/plugin-webpack-swc": "workspace:*",
     "@rsbuild/webpack": "workspace:*",
-    "@rsdoctor/rspack-plugin": "1.0.1",
+    "@rsdoctor/rspack-plugin": "1.0.2",
     "@scripts/test-helper": "workspace:*",
     "@tailwindcss/postcss": "^4.1.4",
     "@types/fs-extra": "^11.0.4",
