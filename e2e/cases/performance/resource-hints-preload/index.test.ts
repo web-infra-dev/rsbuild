@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { build } from '@e2e/helper';
+import { build, rspackOnlyTest } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { pluginReact } from '@rsbuild/plugin-react';
 
@@ -245,3 +245,73 @@ test('should generate preload link with include array', async () => {
     ),
   ).toBeTruthy();
 });
+
+rspackOnlyTest(
+  'should not generate preload link for inlined assets',
+  async () => {
+    const rsbuild = await build({
+      cwd: fixtures,
+      plugins: [pluginReact()],
+      rsbuildConfig: {
+        source: {
+          entry: {
+            main: join(fixtures, 'src/page1/index.ts'),
+          },
+        },
+        output: {
+          inlineScripts: true,
+          inlineStyles: true,
+        },
+        performance: {
+          preload: true,
+        },
+      },
+    });
+
+    const files = await rsbuild.unwrapOutputJSON();
+    const [, content] = Object.entries(files).find(([name]) =>
+      name.endsWith('.html'),
+    )!;
+
+    // image.png
+    expect(content.match(/rel="preload" as="/g)?.length).toBe(1);
+  },
+);
+
+rspackOnlyTest(
+  'should not generate preload link for inlined assets with test option',
+  async () => {
+    const rsbuild = await build({
+      cwd: fixtures,
+      plugins: [pluginReact()],
+      rsbuildConfig: {
+        source: {
+          entry: {
+            main: join(fixtures, 'src/page1/index.ts'),
+          },
+        },
+        output: {
+          inlineScripts: {
+            enable: 'auto',
+            test: /\.js$/,
+          },
+          inlineStyles: {
+            enable: 'auto',
+            test: /\.css$/,
+          },
+        },
+        performance: {
+          preload: true,
+        },
+      },
+    });
+
+    const files = await rsbuild.unwrapOutputJSON();
+    const [, content] = Object.entries(files).find(([name]) =>
+      name.endsWith('.html'),
+    )!;
+
+    // image.png
+    expect(content.match(/rel="preload" as="/g)?.length).toBe(1);
+  },
+);

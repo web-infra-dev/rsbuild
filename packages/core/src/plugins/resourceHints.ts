@@ -1,5 +1,15 @@
+import { isRegExp } from 'node:util/types';
+import { castArray } from '../helpers';
 import { HtmlResourceHintsPlugin } from '../rspack/resource-hints/HtmlResourceHintsPlugin';
-import type { HtmlBasicTag, PreconnectOption, RsbuildPlugin } from '../types';
+import type {
+  HtmlBasicTag,
+  NormalizedEnvironmentConfig,
+  PreconnectOption,
+  PrefetchOptions,
+  PreloadOptions,
+  RsbuildPlugin,
+} from '../types';
+import { getInlineTests } from './inlineChunk';
 
 const generateLinks = (
   options: PreconnectOption[],
@@ -12,6 +22,17 @@ const generateLinks = (
       ...option,
     },
   }));
+
+/**
+ * If the asset is inlined via `output.inlineScripts` or `output.inlineStyles`,
+ * it will be added to the HTML content directly, so we need to exclude it from
+ * the resource hints. The function usage of `inlineScripts` and `inlineStyles`
+ * is not yet supported, as it requires the `size` param.
+ */
+const getInlineExcludes = (config: NormalizedEnvironmentConfig): RegExp[] => {
+  const { scriptTests, styleTests } = getInlineTests(config);
+  return [...scriptTests, ...styleTests].filter((item) => isRegExp(item));
+};
 
 export const pluginResourceHints = (): RsbuildPlugin => ({
   name: 'rsbuild:resource-hints',
@@ -51,25 +72,34 @@ export const pluginResourceHints = (): RsbuildPlugin => ({
         performance: { preload, prefetch },
       } = config;
       const HTMLCount = chain.entryPoints.values().length;
+      const excludes = getInlineExcludes(config);
 
       if (prefetch) {
+        const options: PrefetchOptions = prefetch === true ? {} : prefetch;
+
+        if (excludes.length) {
+          options.exclude = options.exclude
+            ? [...castArray(options.exclude), ...excludes]
+            : excludes;
+        }
+
         chain
           .plugin(CHAIN_ID.PLUGIN.HTML_PREFETCH)
-          .use(HtmlResourceHintsPlugin, [
-            prefetch === true ? {} : prefetch,
-            'prefetch',
-            HTMLCount,
-          ]);
+          .use(HtmlResourceHintsPlugin, [options, 'prefetch', HTMLCount]);
       }
 
       if (preload) {
+        const options: PreloadOptions = preload === true ? {} : preload;
+
+        if (excludes.length) {
+          options.exclude = options.exclude
+            ? [...castArray(options.exclude), ...excludes]
+            : excludes;
+        }
+
         chain
           .plugin(CHAIN_ID.PLUGIN.HTML_PRELOAD)
-          .use(HtmlResourceHintsPlugin, [
-            preload === true ? {} : preload,
-            'preload',
-            HTMLCount,
-          ]);
+          .use(HtmlResourceHintsPlugin, [options, 'preload', HTMLCount]);
       }
     });
   },
