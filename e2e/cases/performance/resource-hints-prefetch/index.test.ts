@@ -248,3 +248,67 @@ test('should generate prefetch link by config (distinguish html)', async () => {
   // test.js、test.css、image.png
   expect(content2.match(/rel="prefetch"/g)?.length).toBe(3);
 });
+
+test('should not generate prefetch link for inlined assets', async () => {
+  const rsbuild = await build({
+    cwd: fixtures,
+    plugins: [pluginReact()],
+    rsbuildConfig: {
+      source: {
+        entry: {
+          main: join(fixtures, 'src/page1/index.ts'),
+        },
+      },
+      output: {
+        inlineScripts: true,
+        inlineStyles: true,
+      },
+      performance: {
+        prefetch: true,
+      },
+    },
+  });
+
+  const files = await rsbuild.unwrapOutputJSON();
+  const [, content] = Object.entries(files).find(([name]) =>
+    name.endsWith('.html'),
+  )!;
+
+  // image.png
+  expect(content.match(/rel="prefetch"/g)?.length).toBe(1);
+});
+
+test('should not generate prefetch link for inlined assets with test option', async () => {
+  const rsbuild = await build({
+    cwd: fixtures,
+    plugins: [pluginReact()],
+    rsbuildConfig: {
+      source: {
+        entry: {
+          main: join(fixtures, 'src/page1/index.ts'),
+        },
+      },
+      output: {
+        inlineScripts: {
+          enable: 'auto',
+          test: /\.js$/,
+        },
+        inlineStyles: {
+          enable: 'auto',
+          test: /\.css$/,
+        },
+      },
+      performance: {
+        prefetch: true,
+      },
+    },
+  });
+
+  const files = await rsbuild.unwrapOutputJSON();
+  const [, content] = Object.entries(files).find(([name]) =>
+    name.endsWith('.html'),
+  )!;
+
+  // image.png
+  expect(content.match(/rel="prefetch"/g)?.length).toBe(1);
+});

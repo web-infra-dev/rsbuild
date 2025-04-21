@@ -163,7 +163,7 @@ function generateLinks(
     (accumulated: string[], chunk) =>
       accumulated.concat([
         ...chunk.files,
-        // sourcemap files are inside auxiliaryFiles in webpack5
+        // source map files are inside auxiliaryFiles
         ...(chunk.auxiliaryFiles || []),
       ]),
     [],
