@@ -5,7 +5,7 @@ const formatFileName = (fileName: string) => {
   // add default column add lines for linking
   return /:\d+:\d+/.test(fileName)
     ? `File: ${color.cyan(fileName)}\n`
-    : `File: ${color.cyan(fileName)}:1:1\n`;
+    : `File: ${color.cyan(`${fileName}:1:1`)}\n`;
 };
 
 function resolveFileName(stats: StatsError) {
