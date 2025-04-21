@@ -16,6 +16,16 @@
   },
   {
     "type": "dir",
+    "name": "configuration",
+    "label": "Configuration"
+  },
+  {
+    "type": "dir",
+    "name": "styling",
+    "label": "Styling"
+  },
+  {
+    "type": "dir",
     "name": "advanced",
     "label": "Advanced"
   },

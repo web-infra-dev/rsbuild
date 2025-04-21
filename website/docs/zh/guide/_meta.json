@@ -16,6 +16,16 @@
   },
   {
     "type": "dir",
+    "name": "configuration",
+    "label": "配置"
+  },
+  {
+    "type": "dir",
+    "name": "styling",
+    "label": "样式"
+  },
+  {
+    "type": "dir",
     "name": "advanced",
     "label": "进阶"
   },
