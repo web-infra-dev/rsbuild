@@ -12,7 +12,7 @@ test('should print tips if resolve Node.js builtin module failed', async () => {
   expect(
     logs.some((log) =>
       log.includes(
-        '"querystring" is a built-in Node.js module. It cannot be imported in client-side code.',
+        '"querystring" is a built-in Node.js module and cannot be imported in client-side code.',
       ),
     ),
   );
