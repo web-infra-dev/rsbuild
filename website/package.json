@@ -15,7 +15,7 @@
     "@rspress/plugin-rss": "2.0.0-alpha.12",
     "@rspress/plugin-shiki": "2.0.0-alpha.12",
     "@rstack-dev/doc-ui": "1.7.4",
-    "@shikijs/transformers": "^3.2.2",
+    "@shikijs/transformers": "^3.3.0",
     "@types/node": "^22.14.1",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
