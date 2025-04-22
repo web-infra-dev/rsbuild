@@ -102,6 +102,7 @@ rslog
 rspack
 rspress
 rstack
+rstest
 ruleset
 selfsign
 selfsigned
