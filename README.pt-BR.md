@@ -82,10 +82,11 @@ Para começar a usar o Rsbuild, consulte a seção [Início Rápido](https://rsb
 
 ## 🦀 Links
 
-- [Rspack](https://github.com/web-infra-dev/rspack): Um empacotador web rápido baseado em Rust.
-- [Rspress](https://github.com/web-infra-dev/rspress): Um gerador rápido de sites estáticos baseado no Rsbuild.
-- [Rsdoctor](https://github.com/web-infra-dev/rsdoctor): Um analisador de compilação único para Rspack e webpack.
-- [Rslib](https://github.com/web-infra-dev/rslib): A ferramenta de compilação de bibliotecas desenvolvida pelo Rsbuild.
+- [Rspack](https://github.com/web-infra-dev/rspack): Empacotador web rápido baseado em Rust.
+- [Rspress](https://github.com/web-infra-dev/rspress): Gerador de sites estáticos baseado no Rsbuild.
+- [Rsdoctor](https://github.com/web-infra-dev/rsdoctor): Ferramenta de compilação única para Rspack.
+- [Rslib](https://github.com/web-infra-dev/rslib): Ferramenta de desenvolvimento de bibliotecas desenvolvida pelo Rsbuild.
+- [Rstest](https://github.com/web-infra-dev/rstest): Framework de teste desenvolvido pelo Rspack.
 - [Modern.js](https://github.com/web-infra-dev/modern.js): Uma estrutura React progressiva baseada no Rsbuild.
 - [awesome-rspack](https://github.com/web-infra-dev/awesome-rspack): Uma lista com curadoria de coisas incríveis relacionadas ao Rspack e ao Rsbuild.
 - [rstack-examples](https://github.com/rspack-contrib/rstack-examples): Exemplos demonstrando ferramentas do Rstack (Rspack, Rsbuild, Rspress, Rsdoctor).
