@@ -25,7 +25,7 @@ SSR 是 "Server-side rendering"（服务端渲染）的缩写。它表示由服�
   - index.server.js  # 服务端入口，通过 SSR API 渲染 App 组件
 ```
 
-`index.html` 中需要定义 SSR 渲染占位符：
+`index.html` 中需要定义 SSR 占位符：
 
 ```html
 <div id="root"><!--app-content--></div>
@@ -74,72 +74,65 @@ export default {
 
 ## 自定义 Server
 
-Rsbuild 并未内置 SSR 渲染能力，你可以通过 Rsbuild 的 [自定义 Server](/guide/basic/server#自定义-server) 和 [Environment API](/guide/advanced/environments#environment-api) 实现 SSR 渲染：
+Rsbuild 提供了 [Dev server API](/api/javascript-api/dev-server-api) 和 [Environment API](/guide/advanced/environments#environment-api) 来实现 SSR。
 
-```ts title=server.mjs
+以下是一个基础示例：
+
+```ts title="server.mjs"
 import express from 'express';
-import { createRsbuild, loadConfig } from '@rsbuild/core';
+import { createRsbuild } from '@rsbuild/core';
 
-// 实现 SSR 渲染功能
-const serverRender = (serverAPI) => async (_req, res) => {
-  // 加载 SSR bundle
-  const indexModule = await serverAPI.environments.node.loadBundle('index');
-
-  const markup = indexModule.render();
-
-  const template = await serverAPI.environments.web.getTransformedHtml('index');
-
-  // 将 SSR 渲染内容插入到 HTML 模版中
-  const html = template.replace('<!--app-content-->', markup);
-
-  res.writeHead(200, {
-    'Content-Type': 'text/html',
-  });
-  res.end(html);
-};
-
-// 自定义 Server
-async function startDevServer() {
-  const { content } = await loadConfig();
+async function initRsbuild() {
   const rsbuild = await createRsbuild({
-    rsbuildConfig: content,
+    rsbuildConfig: {
+      server: {
+        middlewareMode: true,
+      },
+    },
   });
+  return rsbuild.createDevServer();
+}
 
+async function startDevServer() {
   const app = express();
+  const rsbuild = await initRsbuild();
+  const { environments } = rsbuild;
 
-  const rsbuildServer = await rsbuild.createDevServer();
-
-  const serverRenderMiddleware = serverRender(rsbuildServer);
-
-  // 访问 /index.html 时进行 SSR 渲染
+  // 访问 /index.html 时进行 SSR
   app.get('/', async (req, res, next) => {
     try {
-      await serverRenderMiddleware(req, res, next);
+      // 加载服务端产物
+      const bundle = await environments.node.loadBundle('index');
+      const template = await environments.web.getTransformedHtml('index');
+      const rendered = bundle.render();
+      // 将渲染内容插入到 HTML 模版中
+      const html = template.replace('<!--app-content-->', rendered);
+
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(html);
     } catch (err) {
-      logger.error('SSR render error, downgrade to CSR...\n', err);
+      logger.error('SSR failed: ', err);
       next();
     }
   });
+  app.use(rsbuild.middlewares);
 
-  app.use(rsbuildServer.middlewares);
-
-  const httpServer = app.listen(rsbuildServer.port, async () => {
-    await rsbuildServer.afterListen();
+  const server = app.listen(rsbuild.port, async () => {
+    await rsbuild.afterListen();
   });
-
-  rsbuildServer.connectWebSocket({ server: httpServer });
+  rsbuild.connectWebSocket({ server });
 }
 
-startDevServer(process.cwd());
+startDevServer();
 ```
 
 ## 修改启动脚本
 
 使用自定义 Server 后，需要将启动命令由 `rsbuild dev` 改为 `node ./server.mjs`。
 
-如果需要预览 SSR 渲染的线上效果，同样需要修改预览命令。SSR Prod Server 示例参考：[Example](https://github.com/rspack-contrib/rstack-examples/blob/main/rsbuild/ssr-express/prod-server.mjs)。
+如果需要预览 SSR 的线上效果，同样需要修改预览命令。SSR Prod Server 示例参考：[Example](https://github.com/rspack-contrib/rstack-examples/blob/main/rsbuild/ssr-express/prod-server.mjs)。
 
-```json title=package.json
+```json title="package.json"
 {
   "scripts": {
     "build": "rsbuild build",
@@ -149,7 +142,7 @@ startDevServer(process.cwd());
 }
 ```
 
-现在，执行 `npm run dev` 命令即可启动带有 SSR 渲染功能的开发服务器，访问 `http://localhost:3000/` 即可看到 SSR 内容已经渲染到了 HTML 页面上。
+现在，执行 `npm run dev` 命令即可启动带有 SSR 功能的开发服务器，访问 `http://localhost:3000/` 即可看到 SSR 内容已经渲染到了 HTML 页面上。
 
 ## 获取资源清单
 
@@ -165,7 +158,7 @@ export default {
 };
 ```
 
-```ts title=server.ts
+```ts title="server.ts"
 async function renderHtmlPage(): Promise<string> {
   const manifest = await fs.promises.readFile('./dist/manifest.json', 'utf-8');
 
