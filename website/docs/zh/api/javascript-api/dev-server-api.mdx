@@ -147,7 +147,6 @@ async function startDevServer() {
       },
     },
   });
-
   const app = express();
 
   // 创建 Rsbuild dev server 实例
@@ -156,12 +155,12 @@ async function startDevServer() {
   // 使用 Rsbuild 的内置中间件
   app.use(rsbuildServer.middlewares);
 
-  const httpServer = app.listen(rsbuildServer.port, async () => {
+  const server = app.listen(rsbuildServer.port, async () => {
     // 通知 Rsbuild 自定义 Server 已启动
     await rsbuildServer.afterListen();
   });
 
-  rsbuildServer.connectWebSocket({ server: httpServer });
+  rsbuildServer.connectWebSocket({ server });
 }
 ```
 
@@ -184,7 +183,6 @@ Rsbuild 内置了 WebSocket 处理器以支持 HMR 功能：
 
 ```ts
 const rsbuildServer = await rsbuild.createDevServer();
-
 const httpServer = app.listen(rsbuildServer.port);
 
 rsbuildServer.connectWebSocket({ server: httpServer });

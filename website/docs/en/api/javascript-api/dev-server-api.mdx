@@ -147,7 +147,6 @@ async function startDevServer() {
       },
     },
   });
-
   const app = express();
 
   // Create Rsbuild dev server instance
@@ -156,12 +155,12 @@ async function startDevServer() {
   // Apply Rsbuild's built-in middlewares
   app.use(rsbuildServer.middlewares);
 
-  const httpServer = app.listen(rsbuildServer.port, async () => {
+  const server = app.listen(rsbuildServer.port, async () => {
     // Notify Rsbuild that the custom server has started
     await rsbuildServer.afterListen();
   });
 
-  rsbuildServer.connectWebSocket({ server: httpServer });
+  rsbuildServer.connectWebSocket({ server });
 }
 ```
 
@@ -186,7 +185,6 @@ At this time, you need to use the `connectWebSocket` method to enable Rsbuild to
 
 ```ts
 const rsbuildServer = await rsbuild.createDevServer();
-
 const httpServer = app.listen(rsbuildServer.port);
 
 rsbuildServer.connectWebSocket({ server: httpServer });

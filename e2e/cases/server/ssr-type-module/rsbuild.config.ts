@@ -7,18 +7,14 @@ import {
 import { pluginReact } from '@rsbuild/plugin-react';
 
 export const serverRender =
-  (serverAPI: SetupMiddlewaresServer): RequestHandler =>
+  ({ environments }: SetupMiddlewaresServer): RequestHandler =>
   async (_req, res, _next) => {
-    const indexModule = await serverAPI.environments.node.loadBundle<{
+    const bundle = await environments.node.loadBundle<{
       render: () => string;
     }>('index');
-
-    const markup = indexModule.render();
-
-    const template =
-      await serverAPI.environments.web.getTransformedHtml('index');
-
-    const html = template.replace('<!--app-content-->', markup);
+    const rendered = bundle.render();
+    const template = await environments.web.getTransformedHtml('index');
+    const html = template.replace('<!--app-content-->', rendered);
 
     res.writeHead(200, {
       'Content-Type': 'text/html',
