@@ -62,7 +62,7 @@ export const applyBasicReactSupport = (
         path.dirname(REACT_REFRESH_PATH),
       );
 
-      const { default: ReactRefreshRspackPlugin } = await import(
+      const { ReactRefreshRspackPlugin } = await import(
         '@rspack/plugin-react-refresh'
       );
       const SCRIPT_REGEX = /\.(?:js|jsx|mjs|cjs|ts|tsx|mts|cts)$/;
