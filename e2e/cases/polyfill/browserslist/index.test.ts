@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { build, dev, globContentJSON } from '@e2e/helper';
+import { build, dev, readDirContents } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 import { getPolyfillContent } from '../helper';
 
@@ -11,7 +11,7 @@ test('should read browserslist for development env correctly', async ({
     page,
   });
 
-  const outputs = await globContentJSON(join(__dirname, 'dist'));
+  const outputs = await readDirContents(join(__dirname, 'dist'));
   const content = getPolyfillContent(outputs);
 
   expect(content.includes('es.string.replace-all')).toBeFalsy();
@@ -24,7 +24,7 @@ test('should read browserslist for production env correctly', async () => {
     cwd: __dirname,
   });
 
-  const outputs = await globContentJSON(join(__dirname, 'dist'));
+  const outputs = await readDirContents(join(__dirname, 'dist'));
   const content = getPolyfillContent(outputs);
 
   expect(content.includes('es.string.replace-all')).toBeTruthy();

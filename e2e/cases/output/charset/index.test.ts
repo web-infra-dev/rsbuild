@@ -14,7 +14,7 @@ test('should allow to set output.charset to ascii', async ({ page }) => {
 
   expect(await page.evaluate('window.a')).toBe('你好 world!');
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const [, content] = Object.entries(files).find(
     ([name]) => name.endsWith('.js') && name.includes('static/js/index'),
@@ -41,7 +41,7 @@ test('should allow to set output.charset to utf8', async ({ page }) => {
 
   expect(await page.evaluate('window.a')).toBe('你好 world!');
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const [, content] = Object.entries(files).find(
     ([name]) => name.endsWith('.js') && name.includes('static/js/index'),

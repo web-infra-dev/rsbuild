@@ -9,7 +9,7 @@ test('should preserve viewBox after svgo minification', async () => {
 
   const rsbuild = await build(buildOpts);
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const indexJs = Object.keys(files).find(
     (file) => file.includes('/index.') && file.endsWith('.js'),
   );

@@ -16,7 +16,7 @@ test('should allow to configure additional assets and match by RegExp', async ()
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const filenames = Object.keys(files);
 
   const indexJs = await rsbuild.getIndexFile();
@@ -40,7 +40,7 @@ test('should allow to configure additional assets and match by path', async () =
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const filenames = Object.keys(files);
 
   const indexJs = await rsbuild.getIndexFile();
@@ -67,7 +67,7 @@ test('should allow to disable emit for additional assets', async () => {
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const filenames = Object.keys(files);
 
   expect(

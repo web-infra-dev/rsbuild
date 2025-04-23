@@ -21,7 +21,7 @@ test('should generate preload link when preload is defined', async () => {
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const asyncFileName = Object.keys(files).find(
     (file) =>
@@ -62,7 +62,7 @@ test('should generate preload link with duplicate', async () => {
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const initialFileName = Object.keys(files).find(
     (file) =>
@@ -105,7 +105,7 @@ test('should generate preload link with crossOrigin', async () => {
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const asyncFileName = Object.keys(files).find(
     (file) =>
@@ -146,7 +146,7 @@ test('should generate preload link without crossOrigin when same origin', async 
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const asyncFileName = Object.keys(files).find(
     (file) =>
@@ -186,7 +186,7 @@ test('should generate preload link with include', async () => {
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const asyncFileName = Object.keys(files).find((file) =>
     file.includes('/static/image/image'),
@@ -225,7 +225,7 @@ test('should generate preload link with include array', async () => {
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const asyncFileName = Object.keys(files).find((file) =>
     file.includes('/static/image/image'),
@@ -268,7 +268,7 @@ rspackOnlyTest(
       },
     });
 
-    const files = await rsbuild.unwrapOutputJSON();
+    const files = await rsbuild.getDistFiles();
     const [, content] = Object.entries(files).find(([name]) =>
       name.endsWith('.html'),
     )!;
@@ -306,7 +306,7 @@ rspackOnlyTest(
       },
     });
 
-    const files = await rsbuild.unwrapOutputJSON();
+    const files = await rsbuild.getDistFiles();
     const [, content] = Object.entries(files).find(([name]) =>
       name.endsWith('.html'),
     )!;

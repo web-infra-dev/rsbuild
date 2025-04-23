@@ -11,7 +11,7 @@ test('should emit local favicon to dist path', async () => {
       },
     },
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   expect(
     Object.keys(files).some((file) => file.endsWith('/icon.png')),
@@ -32,7 +32,7 @@ test('should allow `html.favicon` to be an absolute path', async () => {
       },
     },
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   expect(
     Object.keys(files).some((file) => file.endsWith('/icon.png')),
@@ -53,7 +53,7 @@ test('should add type attribute for SVG favicon', async () => {
       },
     },
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   expect(
     Object.keys(files).some((file) => file.endsWith('/mobile.svg')),
@@ -79,7 +79,7 @@ test('should apply asset prefix to favicon URL', async () => {
       },
     },
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const html =
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
@@ -98,7 +98,7 @@ test('should allow favicon to be a CDN URL', async () => {
       },
     },
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const html =
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
@@ -127,7 +127,7 @@ test('should generate favicon via function correctly', async () => {
       },
     },
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const fooHtml =
     files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];

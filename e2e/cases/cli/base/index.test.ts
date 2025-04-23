@@ -1,6 +1,6 @@
 import { execSync } from 'node:child_process';
 import path from 'node:path';
-import { globContentJSON, rspackOnlyTest } from '@e2e/helper';
+import { readDirContents, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest('should run allow to specify base path', async () => {
@@ -8,7 +8,7 @@ rspackOnlyTest('should run allow to specify base path', async () => {
     cwd: __dirname,
   });
 
-  const outputs = await globContentJSON(path.join(__dirname, 'dist'));
+  const outputs = await readDirContents(path.join(__dirname, 'dist'));
   const outputFiles = Object.keys(outputs);
 
   expect(

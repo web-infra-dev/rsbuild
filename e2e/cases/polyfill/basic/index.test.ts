@@ -30,7 +30,7 @@ test('should add polyfill when set polyfill entry (default)', async ({
 
   await rsbuild.close();
 
-  const files = await rsbuild.unwrapOutputJSON(false);
+  const files = await rsbuild.getDistFiles(false);
 
   const content = getPolyfillContent(files);
 
@@ -64,7 +64,7 @@ rspackOnlyTest(
 
     await rsbuild.close();
 
-    const files = await rsbuild.unwrapOutputJSON(false);
+    const files = await rsbuild.getDistFiles(false);
 
     const content = getPolyfillContent(files);
 

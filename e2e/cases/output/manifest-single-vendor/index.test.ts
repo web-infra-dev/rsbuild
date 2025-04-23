@@ -8,7 +8,7 @@ test('should generate manifest with single vendor as expected', async () => {
     cwd: fixtures,
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const manifestContent =
     files[Object.keys(files).find((file) => file.endsWith('manifest.json'))!];

@@ -23,7 +23,7 @@ test('should import with template config', async () => {
       },
     },
   });
-  const files = await rsbuild.unwrapOutputJSON(false);
+  const files = await rsbuild.getDistFiles(false);
   const entry = findEntry(files);
   expect(files[entry]).toContain('transformImport test succeed');
 });
@@ -41,7 +41,7 @@ test('should not transformImport by default', async () => {
       },
     },
   });
-  const files = await rsbuild.unwrapOutputJSON(false);
+  const files = await rsbuild.getDistFiles(false);
   const entry = findEntry(files);
   expect(files[entry]).toContain('test succeed');
 });

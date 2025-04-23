@@ -20,7 +20,7 @@ rspackOnlyTest('legalComments linked (default)', async ({ page }) => {
 
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild!');
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const LicenseContent =
     files[
@@ -65,7 +65,7 @@ test('legalComments none', async ({ page }) => {
 
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild!');
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const LicenseFile = Object.keys(files).find(
     (file) => file.includes('js/index') && file.endsWith('.LICENSE.txt'),
@@ -104,7 +104,7 @@ test('legalComments inline', async ({ page }) => {
 
   await expect(page.innerHTML('#test')).resolves.toBe('Hello Rsbuild!');
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const LicenseFile = Object.keys(files).find(
     (file) => file.includes('js/index') && file.endsWith('.LICENSE.txt'),

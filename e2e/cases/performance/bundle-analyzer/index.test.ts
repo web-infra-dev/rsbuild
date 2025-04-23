@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { build, dev, globContentJSON, proxyConsole } from '@e2e/helper';
+import { build, dev, proxyConsole, readDirContents } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should emit bundle analyze report correctly when dev', async ({
@@ -15,7 +15,7 @@ test('should emit bundle analyze report correctly when dev', async ({
   const testEl = page.locator('#test');
   await expect(testEl).toHaveText('Hello Rsbuild!');
 
-  const files = await globContentJSON(join(__dirname, 'dist'));
+  const files = await readDirContents(join(__dirname, 'dist'));
   const filePaths = Object.keys(files).filter((file) =>
     file.endsWith('report-web.html'),
   );
@@ -37,7 +37,7 @@ test('should emit bundle analyze report correctly when build', async () => {
     cwd: __dirname,
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const filePaths = Object.keys(files).filter((file) =>
     file.endsWith('report-web.html'),
   );
