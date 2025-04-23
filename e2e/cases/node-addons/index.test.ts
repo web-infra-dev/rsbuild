@@ -21,7 +21,7 @@ test('should compile Node addons correctly', async () => {
 
   // the `test.darwin.node` is only compatible with darwin
   if (process.platform === 'darwin') {
-    const content = await import('./dist/index.js' as string);
+    const { default: content } = await import('./dist/index.js' as string);
     expect(typeof content.default.readLength).toEqual('function');
   }
 });
@@ -66,7 +66,7 @@ test('should compile Node addons in the node_modules correctly', async () => {
   expect(fs.existsSync(join(__dirname, 'dist', 'other.node'))).toBeTruthy();
 
   if (process.platform === 'darwin') {
-    const content = await import('./dist/index.js' as string);
+    const { default: content } = await import('./dist/index.js' as string);
     expect(typeof content.default.readLength).toEqual('function');
   }
 });
