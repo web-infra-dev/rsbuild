@@ -9,21 +9,27 @@ import type {
 } from '@rsbuild/core';
 import { pluginSwc } from '@rsbuild/plugin-webpack-swc';
 import type { Page } from 'playwright';
-import { globContentJSON } from './helper';
+import { readDirContents } from './helper';
 
-export const getHrefByEntryName = (entryName: string, port: number) => {
+/**
+ * Build an URL based on the entry name and port
+ */
+export const buildEntryUrl = (entryName: string, port: number) => {
   const htmlRoot = new URL(`http://localhost:${port}`);
   const homeUrl = new URL(`${entryName}.html`, htmlRoot);
 
   return homeUrl.href;
 };
 
+/**
+ * Build the entry URL and navigate to it
+ */
 export const gotoPage = async (
   page: Page,
   rsbuild: { port: number },
   path = 'index',
 ) => {
-  const url = getHrefByEntryName(path, rsbuild.port);
+  const url = buildEntryUrl(path, rsbuild.port);
   return page.goto(url);
 };
 
@@ -81,9 +87,12 @@ function isPortAvailable(port: number) {
 
 const portMap = new Map();
 
-// Available port ranges: 1024 ～ 65535
-// `10080` is not available on macOS CI, `> 50000` get 'permission denied' on Windows.
-// so we use `15000` ~ `45000`.
+/**
+ * Get a random port
+ * Available port ranges: 1024 ～ 65535
+ * `10080` is not available on macOS CI, `> 50000` get 'permission denied' on Windows.
+ * so we use `15000` ~ `45000`.
+ */
 export async function getRandomPort(
   defaultPort = Math.ceil(Math.random() * 30000) + 15000,
 ) {
@@ -129,13 +138,20 @@ const updateConfigForTest = async (
   return mergeRsbuildConfig(baseConfig, loadedConfig, originalConfig);
 };
 
-const unwrapOutputJSON = async (distPath: string, ignoreMap = true) => {
-  return globContentJSON(distPath, {
+/**
+ * Read the contents of a dist directory and return a map of
+ * file paths to their contents.
+ */
+const getDistFiles = async (distPath: string, ignoreMap = true) => {
+  return readDirContents(distPath, {
     absolute: true,
     ignore: ignoreMap ? [join(distPath, '/**/*.map')] : [],
   });
 };
 
+/**
+ * Start the dev server and return the server instance.
+ */
 export async function dev({
   plugins,
   page,
@@ -208,12 +224,15 @@ export async function dev({
   return {
     ...result,
     instance: rsbuild,
-    unwrapOutputJSON: (ignoreMap?: boolean) =>
-      unwrapOutputJSON(rsbuild.context.distPath, ignoreMap),
+    getDistFiles: (ignoreMap?: boolean) =>
+      getDistFiles(rsbuild.context.distPath, ignoreMap),
     close: async () => result.server.close(),
   };
 }
 
+/**
+ * Build the project and return the build result.
+ */
 export async function build({
   plugins,
   runServer = false,
@@ -255,7 +274,7 @@ export async function build({
   }
 
   const getIndexFile = async () => {
-    const files = await unwrapOutputJSON(distPath);
+    const files = await getDistFiles(distPath);
     const [name, content] =
       Object.entries(files).find(
         ([file]) => file.includes('index') && file.endsWith('.js'),
@@ -277,8 +296,7 @@ export async function build({
     distPath,
     port,
     close: server.close,
-    unwrapOutputJSON: (ignoreMap?: boolean) =>
-      unwrapOutputJSON(distPath, ignoreMap),
+    getDistFiles: (ignoreMap?: boolean) => getDistFiles(distPath, ignoreMap),
     getIndexFile,
     instance: rsbuild,
   };

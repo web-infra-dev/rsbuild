@@ -7,7 +7,7 @@ rspackOnlyTest(
     const rsbuild = await build({
       cwd: __dirname,
     });
-    const files = await rsbuild.unwrapOutputJSON();
+    const files = await rsbuild.getDistFiles();
 
     const content =
       files[Object.keys(files).find((file) => file.endsWith('.css'))!];

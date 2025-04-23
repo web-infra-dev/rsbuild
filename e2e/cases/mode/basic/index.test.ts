@@ -9,7 +9,7 @@ test('should allow to set development mode when building', async () => {
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON(false);
+  const files = await rsbuild.getDistFiles(false);
 
   // should not have filename hash in development mode
   const indexFile = Object.keys(files).find((key) =>
@@ -37,7 +37,7 @@ test('should allow to set none mode when building', async () => {
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON(false);
+  const files = await rsbuild.getDistFiles(false);
 
   // should not have filename hash in none mode
   const indexFile = Object.keys(files).find((key) =>
@@ -64,7 +64,7 @@ test('should allow to set production mode when starting dev server', async ({
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON(false);
+  const files = await rsbuild.getDistFiles(false);
 
   // should have filename hash in production mode
   const indexFile = Object.keys(files).find((key) =>

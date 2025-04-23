@@ -16,7 +16,7 @@ test('exclude specified sass file with addExcludes', async () => {
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
   const scssFiles = Object.keys(files).filter((file) => file.endsWith('.scss'));
 

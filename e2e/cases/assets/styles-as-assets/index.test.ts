@@ -9,7 +9,7 @@ rspackOnlyTest(
       page,
     });
 
-    const files = await rsbuild.unwrapOutputJSON();
+    const files = await rsbuild.getDistFiles();
     const filenames = Object.keys(files);
 
     const test1 = filenames.find((filename) =>

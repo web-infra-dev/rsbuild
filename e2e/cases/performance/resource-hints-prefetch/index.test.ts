@@ -24,7 +24,7 @@ test('should generate prefetch link when prefetch is defined', async () => {
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const asyncFileName = Object.keys(files).find(
     (file) =>
@@ -65,7 +65,7 @@ test('should generate prefetch link correctly when assetPrefix do not have a pro
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const asyncFileName = Object.keys(files).find(
     (file) =>
@@ -102,7 +102,7 @@ test('should generate prefetch link with include', async () => {
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const asyncFileName = Object.keys(files).find((file) =>
     file.includes('/static/image/image'),
@@ -141,7 +141,7 @@ test('should generate prefetch link with include array', async () => {
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const asyncFileName = Object.keys(files).find((file) =>
     file.includes('/static/image/image'),
@@ -180,7 +180,7 @@ test('should generate prefetch link with exclude array', async () => {
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const asyncFileName = Object.keys(files).find((file) =>
     file.includes('/static/image/image'),
@@ -220,7 +220,7 @@ test('should generate prefetch link by config (distinguish html)', async () => {
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const [, content] = Object.entries(files).find(([name]) =>
     name.endsWith('page1.html'),
@@ -271,7 +271,7 @@ rspackOnlyTest(
       },
     });
 
-    const files = await rsbuild.unwrapOutputJSON();
+    const files = await rsbuild.getDistFiles();
     const [, content] = Object.entries(files).find(([name]) =>
       name.endsWith('.html'),
     )!;
@@ -309,7 +309,7 @@ rspackOnlyTest(
       },
     });
 
-    const files = await rsbuild.unwrapOutputJSON();
+    const files = await rsbuild.getDistFiles();
     const [, content] = Object.entries(files).find(([name]) =>
       name.endsWith('.html'),
     )!;

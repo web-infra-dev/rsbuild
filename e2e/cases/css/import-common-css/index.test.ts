@@ -15,7 +15,7 @@ rspackOnlyTest('should compile common CSS import correctly', async () => {
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const cssFiles = Object.keys(files).find((file) => file.endsWith('.css'))!;
 
   // there will be a deprecation log for `~`.

@@ -5,7 +5,7 @@ rspackOnlyTest('should apply defer by default', async () => {
   const rsbuild = await build({
     cwd: __dirname,
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const html =
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
 
@@ -21,7 +21,7 @@ test('should remove defer when scriptLoading is "blocking"', async () => {
       },
     },
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const html =
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
 
@@ -37,7 +37,7 @@ test('should allow to set scriptLoading to "module"', async () => {
       },
     },
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const html =
     files[Object.keys(files).find((file) => file.endsWith('index.html'))!];
 

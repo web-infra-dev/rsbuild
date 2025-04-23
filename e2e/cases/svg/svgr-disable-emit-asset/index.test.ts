@@ -6,7 +6,7 @@ test('should import svg with SVGR plugin and query URL correctly', async () => {
     cwd: __dirname,
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const filenames = Object.keys(files);
 
   expect(

@@ -1,6 +1,6 @@
 import { execSync } from 'node:child_process';
 import path from 'node:path';
-import { globContentJSON, rspackOnlyTest } from '@e2e/helper';
+import { readDirContents, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { removeSync } from 'fs-extra';
 
@@ -16,7 +16,7 @@ rspackOnlyTest('should run inspect command correctly', async () => {
     cwd: __dirname,
   });
 
-  const files = await globContentJSON(path.join(__dirname, 'dist/.rsbuild'));
+  const files = await readDirContents(path.join(__dirname, 'dist/.rsbuild'));
   const fileNames = Object.keys(files);
 
   const rsbuildConfig = fileNames.find((item) =>
@@ -43,7 +43,7 @@ rspackOnlyTest(
       cwd: __dirname,
     });
 
-    const files = await globContentJSON(path.join(__dirname, 'dist/.rsbuild'));
+    const files = await readDirContents(path.join(__dirname, 'dist/.rsbuild'));
     const fileNames = Object.keys(files);
 
     const rsbuildConfig = fileNames.find((item) =>
@@ -68,7 +68,7 @@ rspackOnlyTest(
       cwd: __dirname,
     });
 
-    const outputs = await globContentJSON(path.join(__dirname, 'dist/foo'));
+    const outputs = await readDirContents(path.join(__dirname, 'dist/foo'));
     const outputFiles = Object.keys(outputs);
 
     expect(
