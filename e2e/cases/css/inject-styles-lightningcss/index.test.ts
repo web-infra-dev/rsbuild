@@ -11,7 +11,7 @@ rspackOnlyTest(
     });
 
     // injectStyles worked
-    const files = await rsbuild.unwrapOutputJSON();
+    const files = await rsbuild.getDistFiles();
 
     // should inline minified CSS
     const indexJsFile = Object.keys(files).find(

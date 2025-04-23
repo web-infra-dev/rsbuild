@@ -5,7 +5,7 @@ test('should escape template parameters correctly', async () => {
   const rsbuild = await build({
     cwd: __dirname,
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const fooHtml =
     files[Object.keys(files).find((file) => file.endsWith('foo.html'))!];

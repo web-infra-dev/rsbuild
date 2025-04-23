@@ -8,7 +8,7 @@ test('should allow to import wasm file', async ({ page }) => {
     cwd: root,
     page,
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const wasmFile = Object.keys(files).find((file) =>
     file.endsWith('.module.wasm'),
@@ -32,7 +32,7 @@ test('should allow to dynamic import wasm file', async () => {
   const rsbuild = await build({
     cwd: root,
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const wasmFile = Object.keys(files).find((file) =>
     file.endsWith('.module.wasm'),
@@ -50,7 +50,7 @@ test('should allow to use new URL to get path of wasm file', async ({
     cwd: root,
     page,
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const wasmFile = Object.keys(files).find((file) =>
     file.endsWith('.module.wasm'),

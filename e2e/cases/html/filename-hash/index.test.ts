@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { build, globContentJSON } from '@e2e/helper';
+import { build, readDirContents } from '@e2e/helper';
 import { expect, test } from '@playwright/test';
 
 test('should allow to generate HTML with filename hash using filename.html', async () => {
@@ -14,7 +14,7 @@ test('should allow to generate HTML with filename hash using filename.html', asy
     },
   });
 
-  const outputs = await globContentJSON(join(__dirname, 'dist'));
+  const outputs = await readDirContents(join(__dirname, 'dist'));
   const htmlFilename = Object.keys(outputs).find((item) =>
     item.endsWith('.html'),
   );
@@ -35,7 +35,7 @@ test('should allow to generate HTML with filename hash using tools.htmlPlugin', 
     },
   });
 
-  const outputs = await globContentJSON(join(__dirname, 'dist'));
+  const outputs = await readDirContents(join(__dirname, 'dist'));
   const htmlFilename = Object.keys(outputs).find((item) =>
     item.endsWith('.html'),
   );

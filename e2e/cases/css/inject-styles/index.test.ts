@@ -14,7 +14,7 @@ rspackOnlyTest(
     });
 
     // injectStyles worked
-    const files = await rsbuild.unwrapOutputJSON();
+    const files = await rsbuild.getDistFiles();
     const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
     expect(cssFiles.length).toBe(0);
 
@@ -112,7 +112,7 @@ rspackOnlyTest(
     });
 
     // injectStyles worked
-    const files = await rsbuild.unwrapOutputJSON();
+    const files = await rsbuild.getDistFiles();
     const cssFiles = Object.keys(files).filter((file) => file.endsWith('.css'));
     expect(cssFiles.length).toBe(0);
 

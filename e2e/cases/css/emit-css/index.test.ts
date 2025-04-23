@@ -10,7 +10,7 @@ test('should not emit CSS files when build node target', async () => {
       },
     },
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   // preserve CSS Modules mapping
   const jsContent =
@@ -31,7 +31,7 @@ test('should allow to emit CSS with output.emitCss when build node target', asyn
       },
     },
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   // preserve CSS Modules mapping
   const jsContent =
@@ -51,7 +51,7 @@ test('should not emit CSS files when build web-worker target', async () => {
       },
     },
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   // preserve CSS Modules mapping
   const jsContent =
@@ -72,7 +72,7 @@ test('should allow to emit CSS with output.emitCss when build web-worker target'
       },
     },
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   // preserve CSS Modules mapping
   const jsContent =
@@ -93,7 +93,7 @@ test('should allow to disable CSS emit with output.emitCss when build web target
       },
     },
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   // preserve CSS Modules mapping
   const jsContent =

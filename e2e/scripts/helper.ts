@@ -49,7 +49,11 @@ const convertPath = (path: string) => {
   return path;
 };
 
-export const globContentJSON = async (path: string, options?: GlobOptions) => {
+/**
+ * Read the contents of a directory and return a map of
+ * file paths to their contents.
+ */
+export const readDirContents = async (path: string, options?: GlobOptions) => {
   const files = await glob(convertPath(join(path, '**/*')), options);
   const ret: Record<string, string> = {};
 
@@ -64,9 +68,15 @@ export const globContentJSON = async (path: string, options?: GlobOptions) => {
   return ret;
 };
 
+/**
+ * Expect a file to exist
+ */
 export const expectFile = (dir: string) =>
   expectPoll(() => fs.existsSync(dir)).toBeTruthy();
 
+/**
+ * Proxy the console methods to capture the logs
+ */
 export const proxyConsole = (
   types: ConsoleType | ConsoleType[] = ['log', 'warn', 'info', 'error'],
   keepAnsi = false,

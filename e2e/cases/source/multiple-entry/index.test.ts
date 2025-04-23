@@ -6,7 +6,7 @@ test('should allow to set entry by build target', async () => {
     cwd: __dirname,
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const fileNames = Object.keys(files);
   const webIndex = fileNames.find(
     (file) => file.includes('static/js') && file.endsWith('index.js'),

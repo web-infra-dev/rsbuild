@@ -1,6 +1,6 @@
 import { execSync } from 'node:child_process';
 import path from 'node:path';
-import { globContentJSON, rspackOnlyTest } from '@e2e/helper';
+import { readDirContents, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 
 rspackOnlyTest(
@@ -10,7 +10,7 @@ rspackOnlyTest(
       cwd: __dirname,
     });
 
-    const outputs = await globContentJSON(path.join(__dirname, 'test', 'dist'));
+    const outputs = await readDirContents(path.join(__dirname, 'test', 'dist'));
     const outputFiles = Object.keys(outputs);
 
     expect(
@@ -26,7 +26,7 @@ rspackOnlyTest(
       cwd: __dirname,
     });
 
-    const outputs = await globContentJSON(path.join(__dirname, 'test', 'dist'));
+    const outputs = await readDirContents(path.join(__dirname, 'test', 'dist'));
     const outputFiles = Object.keys(outputs);
 
     expect(

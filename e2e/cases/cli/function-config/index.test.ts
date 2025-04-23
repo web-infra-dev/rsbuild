@@ -1,6 +1,6 @@
 import { execSync } from 'node:child_process';
 import path from 'node:path';
-import { globContentJSON, rspackOnlyTest } from '@e2e/helper';
+import { readDirContents, rspackOnlyTest } from '@e2e/helper';
 import { expect } from '@playwright/test';
 import { remove } from 'fs-extra';
 
@@ -14,7 +14,7 @@ rspackOnlyTest('should allow to export function in config file', async () => {
     cwd: __dirname,
   });
 
-  const outputs = await globContentJSON(targetDir);
+  const outputs = await readDirContents(targetDir);
   const outputFiles = Object.keys(outputs);
 
   expect(outputFiles.length > 1).toBeTruthy();

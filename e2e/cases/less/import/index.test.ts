@@ -6,7 +6,7 @@ test('should compile less import correctly', async () => {
     cwd: __dirname,
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const cssFiles = Object.keys(files).find((file) => file.endsWith('.css'))!;
 
   expect(files[cssFiles]).toEqual('body{background-color:red}');

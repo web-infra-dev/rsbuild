@@ -23,7 +23,7 @@ test('should apply multiple dist path correctly', async () => {
     },
   });
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const filenames = Object.keys(files);
 
   expect(

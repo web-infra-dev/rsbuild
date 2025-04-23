@@ -42,7 +42,7 @@ test('should add single environment plugin correctly', async ({ page }) => {
 
   await expect(page.locator('#test1')).toHaveText('Hello Rsbuild!');
 
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
   const filenames = Object.keys(files);
 
   expect(

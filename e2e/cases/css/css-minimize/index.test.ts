@@ -6,7 +6,7 @@ rspackOnlyTest('should minimize CSS correctly by default', async () => {
     cwd: __dirname,
     rsbuildConfig: {},
   });
-  const files = await rsbuild.unwrapOutputJSON();
+  const files = await rsbuild.getDistFiles();
 
   const content =
     files[Object.keys(files).find((file) => file.endsWith('.css'))!];
