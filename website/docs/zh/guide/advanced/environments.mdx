@@ -252,20 +252,19 @@ Rsbuild server 提供了一系列和构建环境相关的 API，用户可通过 
 import express from 'express';
 import { createRsbuild, loadConfig } from '@rsbuild/core';
 
-const serverRender = (serverAPI) => async (_req, res) => {
-  const indexModule = await serverAPI.environments.node.loadBundle('index');
+const serverRender =
+  ({ environments }) =>
+  async (_req, res) => {
+    const bundle = await environments.node.loadBundle('index');
+    const rendered = bundle.render();
+    const template = await environments.web.getTransformedHtml('index');
+    const html = template.replace('<!--app-content-->', rendered);
 
-  const markup = indexModule.render();
-
-  const template = await serverAPI.environments.web.getTransformedHtml('index');
-
-  const html = template.replace('<!--app-content-->', markup);
-
-  res.writeHead(200, {
-    'Content-Type': 'text/html',
-  });
-  res.end(html);
-};
+    res.writeHead(200, {
+      'Content-Type': 'text/html',
+    });
+    res.end(html);
+  };
 
 export async function startDevServer() {
   const { content } = await loadConfig();
