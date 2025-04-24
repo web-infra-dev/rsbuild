@@ -53,24 +53,21 @@ export const build = async (
     stats?: Rspack.Stats | Rspack.MultiStats;
   }>((resolve, reject) => {
     compiler.run((err, stats) => {
-      if (err) {
-        reject(err);
-      } else if (stats?.hasErrors()) {
-        reject(new Error(RSPACK_BUILD_ERROR));
-      }
-      // If there is a compilation error, the close method should not be called.
-      // Otherwise the bundler may generate an invalid cache.
-      else {
-        // When using run or watch, call close and wait for it to finish before calling run or watch again.
-        // Concurrent compilations will corrupt the output files.
-        compiler.close((closeErr) => {
-          if (closeErr) {
-            logger.error(closeErr);
-          }
+      // When using run or watch, call close and wait for it to finish before calling run or watch again.
+      // Concurrent compilations will corrupt the output files.
+      compiler.close((closeErr) => {
+        if (closeErr) {
+          logger.error('Failed to close compiler: ', closeErr);
+        }
 
+        if (err) {
+          reject(err);
+        } else if (stats?.hasErrors()) {
+          reject(new Error(RSPACK_BUILD_ERROR));
+        } else {
           resolve({ stats });
-        });
-      }
+        }
+      });
     });
   });
 
