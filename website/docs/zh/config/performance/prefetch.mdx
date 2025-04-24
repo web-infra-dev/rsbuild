@@ -185,6 +185,6 @@ type ResourceHintsFilter =
   | Array<string | RegExp | ((filename: string) => boolean)>;
 ```
 
-- **默认值：** `/.map$/`
+- **默认值：** `undefined`
 
 一个额外的过滤器，用于指定哪些资源会被排除，用法与 `include` 类似。
