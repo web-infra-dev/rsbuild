@@ -42,7 +42,6 @@ import { type ResourceType, getResourceType } from './getResourceType';
 const defaultOptions: ResourceHintsOptions = {
   type: 'async-chunks',
   dedupe: true,
-  exclude: /.map$/,
 };
 
 type LinkType = 'preload' | 'prefetch';
@@ -159,15 +158,18 @@ function generateLinks(
         );
 
   // Flatten the list of files.
-  const allFiles = htmlChunks.reduce(
-    (accumulated: string[], chunk) =>
-      accumulated.concat([
-        ...chunk.files,
-        // source map files are inside auxiliaryFiles
-        ...(chunk.auxiliaryFiles || []),
-      ]),
-    [],
-  );
+  const allFiles = htmlChunks
+    .reduce(
+      (accumulated: string[], chunk) =>
+        accumulated.concat([
+          ...chunk.files,
+          // related assets are inside auxiliaryFiles
+          ...(chunk.auxiliaryFiles || []),
+        ]),
+      [],
+    )
+    // source map files should always be excluded
+    .filter((file) => !file.endsWith('.map'));
 
   const uniqueFiles = new Set<string>(allFiles);
   const filteredFiles = applyFilter(
