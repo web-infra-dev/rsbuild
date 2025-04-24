@@ -381,6 +381,7 @@ exports[`should use Rspack as the default bundler > apply Rspack correctly 1`] =
       "name": "RsbuildCorePlugin",
     },
     HotModuleReplacementPlugin {
+      "affectedHooks": undefined,
       "name": "HotModuleReplacementPlugin",
     },
     HtmlRspackPlugin {

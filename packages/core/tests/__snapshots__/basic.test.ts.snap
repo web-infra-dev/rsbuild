@@ -27,6 +27,7 @@ exports[`plugin-basic > should apply basic config correctly in development 1`] =
       "name": "RsbuildCorePlugin",
     },
     HotModuleReplacementPlugin {
+      "affectedHooks": undefined,
       "name": "HotModuleReplacementPlugin",
     },
   ],
