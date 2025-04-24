@@ -673,9 +673,9 @@ export interface PerformanceConfig {
    *
    * `performance.preload` can be set to an object to specify the options.
    *
-   * When `performance.preload` is set to `true`, Rsbuild will use the following default options
-   * to preload resources. This means preloading all async resources on the current page, including
-   * async JS and its associated CSS, image, font, and other resources.
+   * When `performance.preload` is set to `true`, Rsbuild will use the following default
+   * options to preload resources. This means preloading all async resources on the current
+   * page, including async JS and its associated CSS, image, font, and other resources.
    *
    * ```js
    * const defaultOptions = {
@@ -690,9 +690,9 @@ export interface PerformanceConfig {
    *
    * `performance.prefetch` can be set to an object to specify the options.
    *
-   * When `performance.prefetch` is set to `true`, Rsbuild will use the following default options
-   * to prefetch resources. This means prefetching all async resources on the current page, including
-   * async JS and its associated CSS, image, font, and other resources.
+   * When `performance.prefetch` is set to `true`, Rsbuild will use the following default
+   * options to prefetch resources. This means prefetching all async resources on the current
+   * page, including async JS and its associated CSS, image, font, and other resources.
    *
    * ```js
    * const defaultOptions = {
@@ -1055,8 +1055,8 @@ export interface OutputConfig {
    */
   target?: RsbuildTarget;
   /**
-   * At build time, prevent some `import` dependencies from being packed into bundles in your code,
-   * and instead fetch them externally at runtime.
+   * At build time, prevent some `import` dependencies from being packed into bundles in
+   * your code, and instead fetch them externally at runtime.
    * For more information, please see: [Rspack Externals](https://rspack.dev/config/externals)
    * @default undefined
    */
@@ -1180,8 +1180,8 @@ export interface OutputConfig {
   emitAssets?: boolean;
   /**
    * Whether to emit CSS to the output bundles.
-   * If `false`, the CSS will not be extracted to separate files or injected into the JavaScript
-   * bundles via `output.injectStyles`.
+   * If `false`, the CSS will not be extracted to separate files or injected into the
+   * JavaScript bundles via `output.injectStyles`.
    * @default `true` when `output.target` is `web`, otherwise `false`
    */
   emitCss?: boolean;
@@ -1519,7 +1519,8 @@ export interface DevConfig {
   liveReload?: boolean;
   /**
    * Set the URL prefix of static assets in development mode,
-   * similar to the [output.publicPath](https://rspack.dev/config/output#outputpublicpath) config of Rspack.
+   * similar to the [output.publicPath](https://rspack.dev/config/output#outputpublicpath)
+   * config of Rspack.
    */
   assetPrefix?: string | boolean;
   /**
@@ -1558,7 +1559,8 @@ export interface DevConfig {
    */
   writeToDisk?: boolean | ((filename: string) => boolean);
   /**
-   * This option allows you to configure a list of globs/directories/files to watch for file changes.
+   * This option allows you to configure a list of globs/directories/files to watch for
+   * file changes.
    */
   watchFiles?: WatchFiles | WatchFiles[];
   /**
@@ -1585,13 +1587,14 @@ export interface ResolveConfig {
    */
   dedupe?: string[];
   /**
-   * Set the alias for the module path, which is used to simplify the import path or redirect the module reference.
+   * Set the alias for the module path, which is used to simplify the import path or
+   * redirect the module reference.
    * Similar to the [resolve.alias](https://rspack.dev/config/resolve) config of Rspack.
    */
   alias?: ConfigChain<Alias>;
   /**
-   * Control the priority between the `paths` option in `tsconfig.json`
-   * and the `resolve.alias` option of Rsbuild.
+   * Set the strategy for path alias resolution, to control the priority relationship
+   * between the `paths` option in `tsconfig.json` and the `resolve.alias` option of Rsbuild.
    * @default 'prefer-tsconfig'
    */
   aliasStrategy?: AliasStrategy;
