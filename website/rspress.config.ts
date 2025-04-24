@@ -1,5 +1,6 @@
 import { pluginSass } from '@rsbuild/plugin-sass';
 import { pluginClientRedirects } from '@rspress/plugin-client-redirects';
+import { pluginLlms } from '@rspress/plugin-llms';
 import { pluginRss } from '@rspress/plugin-rss';
 import { pluginShiki } from '@rspress/plugin-shiki';
 import {
@@ -18,6 +19,7 @@ const siteUrl = 'https://rsbuild.dev';
 
 export default defineConfig({
   plugins: [
+    pluginLlms(),
     pluginShiki({
       langs: ['styl', 'html', 'toml'],
       transformers: [
@@ -124,6 +126,7 @@ export default defineConfig({
   ],
   lang: 'en',
   title: 'Rsbuild',
+  description: 'Rspack based build tool',
   icon: 'https://assets.rspack.dev/rsbuild/favicon-128x128.png',
   logo: {
     light: 'https://assets.rspack.dev/rsbuild/navbar-logo-light.png',
