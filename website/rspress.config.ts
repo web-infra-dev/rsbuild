@@ -138,7 +138,7 @@ export default defineConfig({
   route: {
     cleanUrls: true,
     // exclude document fragments from routes
-    exclude: ['**/zh/shared/**', '**/en/shared/**', './theme', './src'],
+    exclude: ['**/zh/shared/**', '**/en/shared/**'],
   },
   themeConfig: {
     socialLinks: [
