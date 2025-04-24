@@ -163,7 +163,7 @@ function generateLinks(
       (accumulated: string[], chunk) =>
         accumulated.concat([
           ...chunk.files,
-          // source map files are inside auxiliaryFiles
+          // related assets are inside auxiliaryFiles
           ...(chunk.auxiliaryFiles || []),
         ]),
       [],
