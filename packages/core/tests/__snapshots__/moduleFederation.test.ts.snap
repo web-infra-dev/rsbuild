@@ -16,7 +16,7 @@ exports[`plugin-module-federation > should set environment module federation con
       {
         "name": "RsbuildCorePlugin",
       },
-      _ModuleFederationPlugin {
+      ModuleFederationPlugin {
         "_options": {
           "exposes": {
             "./Button": "./src/Button",
@@ -78,7 +78,7 @@ exports[`plugin-module-federation > should set module federation and environment
       {
         "name": "RsbuildCorePlugin",
       },
-      _ModuleFederationPlugin {
+      ModuleFederationPlugin {
         "_options": {
           "exposes": {
             "./Button": "./src/Button",
@@ -113,7 +113,7 @@ exports[`plugin-module-federation > should set module federation and environment
       {
         "name": "RsbuildCorePlugin",
       },
-      _ModuleFederationPlugin {
+      ModuleFederationPlugin {
         "_options": {
           "exposes": {
             "./Button": "./src/Button",
@@ -155,7 +155,7 @@ exports[`plugin-module-federation > should set module federation config 1`] = `
     {
       "name": "RsbuildCorePlugin",
     },
-    _ModuleFederationPlugin {
+    ModuleFederationPlugin {
       "_options": {
         "exposes": {
           "./Button": "./src/Button",

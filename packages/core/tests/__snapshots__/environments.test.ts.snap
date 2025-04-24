@@ -1676,6 +1676,7 @@ exports[`environment config > tools.rspack / bundlerChain can be configured in e
         "name": "RsbuildCorePlugin",
       },
       HotModuleReplacementPlugin {
+        "affectedHooks": undefined,
         "name": "HotModuleReplacementPlugin",
       },
       DefinePlugin {

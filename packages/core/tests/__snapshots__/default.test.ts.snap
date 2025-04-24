@@ -381,6 +381,7 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "name": "RsbuildCorePlugin",
     },
     HotModuleReplacementPlugin {
+      "affectedHooks": undefined,
       "name": "HotModuleReplacementPlugin",
     },
     HtmlRspackPlugin {
@@ -1792,6 +1793,7 @@ exports[`tools.rspack > should match snapshot 1`] = `
       "name": "RsbuildCorePlugin",
     },
     HotModuleReplacementPlugin {
+      "affectedHooks": undefined,
       "name": "HotModuleReplacementPlugin",
     },
     HtmlRspackPlugin {

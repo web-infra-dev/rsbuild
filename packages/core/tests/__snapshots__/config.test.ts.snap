@@ -15,8 +15,8 @@ exports[`stringifyConfig > should stringify Rspack config correctly 1`] = `
   mode: 'development',
   plugins: [
     {
-      name: 'DefinePlugin',
       affectedHooks: 'compilation',
+      name: 'DefinePlugin',
       _args: [
         {
           foo: 'bar'
@@ -38,8 +38,8 @@ exports[`stringifyConfig > should stringify Rspack config with verbose option co
   },
   plugins: [
     {
-      name: 'DefinePlugin',
       affectedHooks: 'compilation',
+      name: 'DefinePlugin',
       _args: [
         {
           foo: 'bar'
