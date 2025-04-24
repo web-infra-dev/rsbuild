@@ -19,6 +19,10 @@ type Minify =
 
 默认情况下，JS 和 CSS 代码会在生产模式构建时被自动压缩，从而提升页面性能。如果你不希望执行代码压缩，可以将 `minify` 设置为 `false` 关闭对所有代码的压缩。或者可以通过 `minify` 选项的详细配置来控制代码压缩的行为。
 
+:::tip
+Rsbuild 默认使用 [SWC](/guide/configuration/swc) 压缩 JS 代码，使用 [Lightning CSS](/guide/styling/css-usage#lightning-css) 压缩 CSS 代码。
+:::
+
 ## 示例
 
 ### 禁用压缩
@@ -127,4 +131,52 @@ export default {
 
 :::tip
 当你在 [tools.lightningcssLoader](/config/tools/lightningcss-loader) 中配置了一些选项时，`output.minify.cssOptions` 会自动继承这些选项，这样可以确保开发环境和生产环境的 CSS 代码转换行为保持一致。
+:::
+
+## 切换压缩器
+
+### JS 压缩器
+
+如果默认的 SWC 压缩器无法满足你的需求，你可以通过 [tools.bundlerChain](/config/tools/bundler-chain) 选项来切换到其他压缩器。
+
+例如，使用 [terser-webpack-plugin](https://github.com/terser/terser-webpack-plugin) 插件来切换到 Terser 或 esbuild。
+
+- 使用 [terser](https://github.com/terser/terser) 压缩 JS 代码：
+
+```ts title="rsbuild.config.ts"
+import TerserPlugin from 'terser-webpack-plugin';
+
+export default {
+  tools: {
+    bundlerChain(chain, { CHAIN_ID }) {
+      chain.optimization.minimizer(CHAIN_ID.MINIMIZER.JS).use(TerserPlugin, [
+        {
+          // options
+        },
+      ]);
+    },
+  },
+};
+```
+
+- 使用 [esbuild](https://github.com/evanw/esbuild) 压缩 JS 代码时，需要安装 `esbuild` 包，并设置 `esbuildMinify`：
+
+```ts title="rsbuild.config.ts"
+import TerserPlugin from 'terser-webpack-plugin';
+
+export default {
+  tools: {
+    bundlerChain(chain, { CHAIN_ID }) {
+      chain.optimization.minimizer(CHAIN_ID.MINIMIZER.JS).use(TerserPlugin, [
+        {
+          minify: TerserPlugin.esbuildMinify,
+        },
+      ]);
+    },
+  },
+};
+```
+
+:::tip
+在使用自定义的 JS 压缩器时，`minify.jsOptions` 选项将不再生效。
 :::
