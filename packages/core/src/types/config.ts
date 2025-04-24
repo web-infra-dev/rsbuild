@@ -1595,6 +1595,10 @@ export interface ResolveConfig {
   /**
    * Set the strategy for path alias resolution, to control the priority relationship
    * between the `paths` option in `tsconfig.json` and the `resolve.alias` option of Rsbuild.
+   * - `prefer-tsconfig`: The `paths` option in `tsconfig.json` will take precedence over the
+   * `resolve.alias` option of Rsbuild.
+   * - `prefer-alias`: The `resolve.alias` option of Rsbuild will take precedence over the
+   * `paths` option in `tsconfig.json`.
    * @default 'prefer-tsconfig'
    */
   aliasStrategy?: AliasStrategy;
