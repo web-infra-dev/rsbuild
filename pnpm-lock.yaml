@@ -63,7 +63,7 @@ importers:
         version: 5.8.3
       vitest:
         specifier: ^3.1.2
-        version: 3.1.2(@types/debug@4.1.12)(@types/node@22.14.1)(jiti@2.4.2)(less@4.3.0)(lightningcss@1.29.2)(sass-embedded@1.87.0)(sass@1.87.0)(stylus@0.64.0)(terser@5.39.0)(yaml@2.7.0)
+        version: 3.1.2(@types/debug@4.1.12)(@types/node@22.15.2)(jiti@2.4.2)(less@4.3.0)(lightningcss@1.29.2)(sass-embedded@1.87.0)(sass@1.87.0)(stylus@0.64.0)(terser@5.39.0)(yaml@2.7.0)
 
   e2e:
     dependencies:
@@ -174,8 +174,8 @@ importers:
         specifier: ^4.17.16
         version: 4.17.16
       '@types/node':
-        specifier: ^22.14.1
-        version: 22.14.1
+        specifier: ^22.15.2
+        version: 22.15.2
       '@types/react':
         specifier: ^19.1.2
         version: 19.1.2
@@ -388,8 +388,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       '@types/node':
-        specifier: ^22.14.1
-        version: 22.14.1
+        specifier: ^22.15.2
+        version: 22.15.2
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -588,8 +588,8 @@ importers:
         specifier: workspace:*
         version: link:../../../scripts/test-helper
       '@types/node':
-        specifier: ^22.14.1
-        version: 22.14.1
+        specifier: ^22.15.2
+        version: 22.15.2
       ansi-escapes:
         specifier: 4.3.2
         version: 4.3.2
@@ -631,8 +631,8 @@ importers:
         specifier: ^2.8.17
         version: 2.8.17
       '@types/node':
-        specifier: ^22.14.1
-        version: 22.14.1
+        specifier: ^22.15.2
+        version: 22.15.2
       '@types/on-finished':
         specifier: 2.3.4
         version: 2.3.4
@@ -776,8 +776,8 @@ importers:
         specifier: 0.6.6
         version: 0.6.6(typescript@5.8.3)
       '@types/node':
-        specifier: ^22.14.1
-        version: 22.14.1
+        specifier: ^22.15.2
+        version: 22.15.2
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -819,8 +819,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^22.14.1
-        version: 22.14.1
+        specifier: ^22.15.2
+        version: 22.15.2
       babel-loader:
         specifier: 10.0.0
         version: 10.0.0(@babel/core@7.26.10)(webpack@5.98.0)
@@ -887,8 +887,8 @@ importers:
         specifier: 0.6.6
         version: 0.6.6(typescript@5.8.3)
       '@types/node':
-        specifier: ^22.14.1
-        version: 22.14.1
+        specifier: ^22.15.2
+        version: 22.15.2
       preact:
         specifier: ^10.26.5
         version: 10.26.5
@@ -915,8 +915,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^22.14.1
-        version: 22.14.1
+        specifier: ^22.15.2
+        version: 22.15.2
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -949,8 +949,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^22.14.1
-        version: 22.14.1
+        specifier: ^22.15.2
+        version: 22.15.2
       '@types/sass-loader':
         specifier: ^8.0.9
         version: 8.0.9
@@ -1020,8 +1020,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^22.14.1
-        version: 22.14.1
+        specifier: ^22.15.2
+        version: 22.15.2
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -1045,8 +1045,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^22.14.1
-        version: 22.14.1
+        specifier: ^22.15.2
+        version: 22.15.2
       svelte:
         specifier: ^5.28.2
         version: 5.28.2
@@ -1085,8 +1085,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^22.14.1
-        version: 22.14.1
+        specifier: ^22.15.2
+        version: 22.15.2
       file-loader:
         specifier: 6.2.0
         version: 6.2.0(patch_hash=c76c890d2d68ffdf70bfbc9cb235e0389df929be2e1917766b8946b1de0a8c30)(webpack@5.98.0)
@@ -1122,8 +1122,8 @@ importers:
         specifier: workspace:*
         version: link:../../scripts/test-helper
       '@types/node':
-        specifier: ^22.14.1
-        version: 22.14.1
+        specifier: ^22.15.2
+        version: 22.15.2
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -1140,8 +1140,8 @@ importers:
         specifier: 0.6.6
         version: 0.6.6(typescript@5.8.3)
       '@types/node':
-        specifier: ^22.14.1
-        version: 22.14.1
+        specifier: ^22.15.2
+        version: 22.15.2
       typescript:
         specifier: ^5.8.3
         version: 5.8.3
@@ -1152,8 +1152,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       '@types/node':
-        specifier: ^22.14.1
-        version: 22.14.1
+        specifier: ^22.15.2
+        version: 22.15.2
       path-serializer:
         specifier: 0.4.0
         version: 0.4.0
@@ -1195,8 +1195,8 @@ importers:
         specifier: ^3.3.0
         version: 3.3.0
       '@types/node':
-        specifier: ^22.14.1
-        version: 22.14.1
+        specifier: ^22.15.2
+        version: 22.15.2
       '@types/react':
         specifier: ^19.1.2
         version: 19.1.2
@@ -3120,8 +3120,8 @@ packages:
   '@types/node@12.20.55':
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
 
-  '@types/node@22.14.1':
-    resolution: {integrity: sha512-u0HuPQwe/dHrItgHHpmw3N2fYCR6x4ivMNbPHRkBVP4CvN+kiRrKHWk3i8tXiO/joPwXLMYvF9TTF0eqgHIuOw==}
+  '@types/node@22.15.2':
+    resolution: {integrity: sha512-uKXqKN9beGoMdBfcaTY1ecwz6ctxuJAcUlwE55938g0ZJ8lRxwAZqRz2AJ4pzpt5dHdTPMB863UZ0ESiFUcP7A==}
 
   '@types/on-finished@2.3.4':
     resolution: {integrity: sha512-Ld4UQD3udYcKPaAWlI1EYXKhefkZcTlpqOLkQRmN3u5Ml/tUypMivUHbNH8LweP4H4FlhGGO+uBjJI1Y1dkE1g==}
@@ -9160,15 +9160,15 @@ snapshots:
   '@types/body-parser@1.19.5':
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 22.14.1
+      '@types/node': 22.15.2
 
   '@types/connect@3.4.38':
     dependencies:
-      '@types/node': 22.14.1
+      '@types/node': 22.15.2
 
   '@types/cors@2.8.17':
     dependencies:
-      '@types/node': 22.14.1
+      '@types/node': 22.15.2
 
   '@types/debug@4.1.12':
     dependencies:
@@ -9196,7 +9196,7 @@ snapshots:
 
   '@types/express-serve-static-core@5.0.6':
     dependencies:
-      '@types/node': 22.14.1
+      '@types/node': 22.15.2
       '@types/qs': 6.9.18
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.4
@@ -9211,7 +9211,7 @@ snapshots:
   '@types/fs-extra@11.0.4':
     dependencies:
       '@types/jsonfile': 6.1.4
-      '@types/node': 22.14.1
+      '@types/node': 22.15.2
 
   '@types/hast@2.3.10':
     dependencies:
@@ -9227,13 +9227,13 @@ snapshots:
 
   '@types/http-proxy@1.17.16':
     dependencies:
-      '@types/node': 22.14.1
+      '@types/node': 22.15.2
 
   '@types/json-schema@7.0.15': {}
 
   '@types/jsonfile@6.1.4':
     dependencies:
-      '@types/node': 22.14.1
+      '@types/node': 22.15.2
 
   '@types/less@3.0.8': {}
 
@@ -9251,23 +9251,23 @@ snapshots:
 
   '@types/node-sass@4.11.8':
     dependencies:
-      '@types/node': 22.14.1
+      '@types/node': 22.15.2
 
   '@types/node@12.20.55': {}
 
-  '@types/node@22.14.1':
+  '@types/node@22.15.2':
     dependencies:
       undici-types: 6.21.0
 
   '@types/on-finished@2.3.4':
     dependencies:
-      '@types/node': 22.14.1
+      '@types/node': 22.15.2
 
   '@types/polka@0.5.7':
     dependencies:
       '@types/express': 5.0.0
       '@types/express-serve-static-core': 5.0.6
-      '@types/node': 22.14.1
+      '@types/node': 22.15.2
       '@types/trouter': 3.1.4
 
   '@types/qs@6.9.18': {}
@@ -9284,7 +9284,7 @@ snapshots:
 
   '@types/sass-loader@8.0.9':
     dependencies:
-      '@types/node': 22.14.1
+      '@types/node': 22.15.2
       '@types/node-sass': 4.11.8
       '@types/webpack': 4.41.40
       sass: 1.87.0
@@ -9296,12 +9296,12 @@ snapshots:
   '@types/send@0.17.4':
     dependencies:
       '@types/mime': 1.3.5
-      '@types/node': 22.14.1
+      '@types/node': 22.15.2
 
   '@types/serve-static@1.15.7':
     dependencies:
       '@types/http-errors': 2.0.4
-      '@types/node': 22.14.1
+      '@types/node': 22.15.2
       '@types/send': 0.17.4
 
   '@types/source-list-map@0.1.6': {}
@@ -9326,7 +9326,7 @@ snapshots:
 
   '@types/webpack-bundle-analyzer@4.7.0':
     dependencies:
-      '@types/node': 22.14.1
+      '@types/node': 22.15.2
       tapable: 2.2.1
       webpack: 5.98.0
     transitivePeerDependencies:
@@ -9337,13 +9337,13 @@ snapshots:
 
   '@types/webpack-sources@3.2.3':
     dependencies:
-      '@types/node': 22.14.1
+      '@types/node': 22.15.2
       '@types/source-list-map': 0.1.6
       source-map: 0.7.4
 
   '@types/webpack@4.41.40':
     dependencies:
-      '@types/node': 22.14.1
+      '@types/node': 22.15.2
       '@types/tapable': 1.0.12
       '@types/uglify-js': 3.17.5
       '@types/webpack-sources': 3.2.3
@@ -9352,7 +9352,7 @@ snapshots:
 
   '@types/ws@8.18.1':
     dependencies:
-      '@types/node': 22.14.1
+      '@types/node': 22.15.2
 
   '@ungap/structured-clone@1.3.0': {}
 
@@ -9365,13 +9365,13 @@ snapshots:
       chai: 5.2.0
       tinyrainbow: 2.0.0
 
-  '@vitest/mocker@3.1.2(vite@6.1.1(@types/node@22.14.1)(jiti@2.4.2)(less@4.3.0)(lightningcss@1.29.2)(sass-embedded@1.87.0)(sass@1.87.0)(stylus@0.64.0)(terser@5.39.0)(yaml@2.7.0))':
+  '@vitest/mocker@3.1.2(vite@6.1.1(@types/node@22.15.2)(jiti@2.4.2)(less@4.3.0)(lightningcss@1.29.2)(sass-embedded@1.87.0)(sass@1.87.0)(stylus@0.64.0)(terser@5.39.0)(yaml@2.7.0))':
     dependencies:
       '@vitest/spy': 3.1.2
       estree-walker: 3.0.3
       magic-string: 0.30.17
     optionalDependencies:
-      vite: 6.1.1(@types/node@22.14.1)(jiti@2.4.2)(less@4.3.0)(lightningcss@1.29.2)(sass-embedded@1.87.0)(sass@1.87.0)(stylus@0.64.0)(terser@5.39.0)(yaml@2.7.0)
+      vite: 6.1.1(@types/node@22.15.2)(jiti@2.4.2)(less@4.3.0)(lightningcss@1.29.2)(sass-embedded@1.87.0)(sass@1.87.0)(stylus@0.64.0)(terser@5.39.0)(yaml@2.7.0)
 
   '@vitest/pretty-format@3.1.2':
     dependencies:
@@ -10237,7 +10237,7 @@ snapshots:
   engine.io@6.6.4:
     dependencies:
       '@types/cors': 2.8.17
-      '@types/node': 22.14.1
+      '@types/node': 22.15.2
       accepts: 1.3.8
       base64id: 2.0.0
       cookie: 0.7.2
@@ -11131,7 +11131,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 22.14.1
+      '@types/node': 22.15.2
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -13447,13 +13447,13 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  vite-node@3.1.2(@types/node@22.14.1)(jiti@2.4.2)(less@4.3.0)(lightningcss@1.29.2)(sass-embedded@1.87.0)(sass@1.87.0)(stylus@0.64.0)(terser@5.39.0)(yaml@2.7.0):
+  vite-node@3.1.2(@types/node@22.15.2)(jiti@2.4.2)(less@4.3.0)(lightningcss@1.29.2)(sass-embedded@1.87.0)(sass@1.87.0)(stylus@0.64.0)(terser@5.39.0)(yaml@2.7.0):
     dependencies:
       cac: 6.7.14
       debug: 4.4.0
       es-module-lexer: 1.6.0
       pathe: 2.0.3
-      vite: 6.1.1(@types/node@22.14.1)(jiti@2.4.2)(less@4.3.0)(lightningcss@1.29.2)(sass-embedded@1.87.0)(sass@1.87.0)(stylus@0.64.0)(terser@5.39.0)(yaml@2.7.0)
+      vite: 6.1.1(@types/node@22.15.2)(jiti@2.4.2)(less@4.3.0)(lightningcss@1.29.2)(sass-embedded@1.87.0)(sass@1.87.0)(stylus@0.64.0)(terser@5.39.0)(yaml@2.7.0)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
@@ -13468,13 +13468,13 @@ snapshots:
       - tsx
       - yaml
 
-  vite@6.1.1(@types/node@22.14.1)(jiti@2.4.2)(less@4.3.0)(lightningcss@1.29.2)(sass-embedded@1.87.0)(sass@1.87.0)(stylus@0.64.0)(terser@5.39.0)(yaml@2.7.0):
+  vite@6.1.1(@types/node@22.15.2)(jiti@2.4.2)(less@4.3.0)(lightningcss@1.29.2)(sass-embedded@1.87.0)(sass@1.87.0)(stylus@0.64.0)(terser@5.39.0)(yaml@2.7.0):
     dependencies:
       esbuild: 0.24.2
       postcss: 8.5.3
       rollup: 4.39.0
     optionalDependencies:
-      '@types/node': 22.14.1
+      '@types/node': 22.15.2
       fsevents: 2.3.3
       jiti: 2.4.2
       less: 4.3.0
@@ -13485,10 +13485,10 @@ snapshots:
       terser: 5.39.0
       yaml: 2.7.0
 
-  vitest@3.1.2(@types/debug@4.1.12)(@types/node@22.14.1)(jiti@2.4.2)(less@4.3.0)(lightningcss@1.29.2)(sass-embedded@1.87.0)(sass@1.87.0)(stylus@0.64.0)(terser@5.39.0)(yaml@2.7.0):
+  vitest@3.1.2(@types/debug@4.1.12)(@types/node@22.15.2)(jiti@2.4.2)(less@4.3.0)(lightningcss@1.29.2)(sass-embedded@1.87.0)(sass@1.87.0)(stylus@0.64.0)(terser@5.39.0)(yaml@2.7.0):
     dependencies:
       '@vitest/expect': 3.1.2
-      '@vitest/mocker': 3.1.2(vite@6.1.1(@types/node@22.14.1)(jiti@2.4.2)(less@4.3.0)(lightningcss@1.29.2)(sass-embedded@1.87.0)(sass@1.87.0)(stylus@0.64.0)(terser@5.39.0)(yaml@2.7.0))
+      '@vitest/mocker': 3.1.2(vite@6.1.1(@types/node@22.15.2)(jiti@2.4.2)(less@4.3.0)(lightningcss@1.29.2)(sass-embedded@1.87.0)(sass@1.87.0)(stylus@0.64.0)(terser@5.39.0)(yaml@2.7.0))
       '@vitest/pretty-format': 3.1.2
       '@vitest/runner': 3.1.2
       '@vitest/snapshot': 3.1.2
@@ -13505,12 +13505,12 @@ snapshots:
       tinyglobby: 0.2.13
       tinypool: 1.0.2
       tinyrainbow: 2.0.0
-      vite: 6.1.1(@types/node@22.14.1)(jiti@2.4.2)(less@4.3.0)(lightningcss@1.29.2)(sass-embedded@1.87.0)(sass@1.87.0)(stylus@0.64.0)(terser@5.39.0)(yaml@2.7.0)
-      vite-node: 3.1.2(@types/node@22.14.1)(jiti@2.4.2)(less@4.3.0)(lightningcss@1.29.2)(sass-embedded@1.87.0)(sass@1.87.0)(stylus@0.64.0)(terser@5.39.0)(yaml@2.7.0)
+      vite: 6.1.1(@types/node@22.15.2)(jiti@2.4.2)(less@4.3.0)(lightningcss@1.29.2)(sass-embedded@1.87.0)(sass@1.87.0)(stylus@0.64.0)(terser@5.39.0)(yaml@2.7.0)
+      vite-node: 3.1.2(@types/node@22.15.2)(jiti@2.4.2)(less@4.3.0)(lightningcss@1.29.2)(sass-embedded@1.87.0)(sass@1.87.0)(stylus@0.64.0)(terser@5.39.0)(yaml@2.7.0)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/debug': 4.1.12
-      '@types/node': 22.14.1
+      '@types/node': 22.15.2
     transitivePeerDependencies:
       - jiti
       - less

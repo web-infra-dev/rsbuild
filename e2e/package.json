@@ -45,7 +45,7 @@
     "@tailwindcss/postcss": "^4.1.4",
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.16",
-    "@types/node": "^22.14.1",
+    "@types/node": "^22.15.2",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "create-rsbuild": "workspace:*",
