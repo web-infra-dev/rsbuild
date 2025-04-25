@@ -29,13 +29,23 @@ interface DoesChunkBelongToHtmlOptions {
 
 function recursiveChunkGroup(
   chunkGroup: ChunkGroup,
+  visited = new Set<ChunkGroup>(),
 ): Array<string | undefined> {
+  // check if the chunkGroup has been visited to prevent circular reference
+  if (visited.has(chunkGroup)) {
+    return [];
+  }
+  visited.add(chunkGroup);
+
   const parents = chunkGroup.getParents();
   if (!parents.length) {
     // EntryPoint
     return [chunkGroup.name];
   }
-  return parents.flatMap((chunkParent) => recursiveChunkGroup(chunkParent));
+
+  return parents.flatMap((chunkParent) =>
+    recursiveChunkGroup(chunkParent, visited),
+  );
 }
 
 export function recursiveChunkEntryNames(chunk: Chunk): string[] {
