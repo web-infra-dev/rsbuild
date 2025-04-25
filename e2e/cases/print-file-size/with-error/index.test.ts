@@ -20,7 +20,5 @@ test('should not print file size if has errors', async () => {
   }
 
   expect(logs.some((log) => log.includes('Total:'))).toBeFalsy();
-  expect(logs.some((log) => log.includes('gzip:'))).toBeFalsy();
-
   restore();
 });

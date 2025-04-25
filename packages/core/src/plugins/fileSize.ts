@@ -173,12 +173,30 @@ async function printFileSizes(
 
   assets.sort((a, b) => a.size - b.size);
 
+  let totalSize = 0;
+  let totalGzipSize = 0;
+
+  for (const asset of assets) {
+    totalSize += asset.size;
+    if (options.compressed) {
+      totalGzipSize += asset.gzippedSize ?? asset.size;
+    }
+  }
+
+  const showTotalSize = options.total !== false && assets.length > 1;
   const fileHeader = `File (${environmentName})`;
+  const totalSizeLabel = showTotalSize ? 'Total:' : '';
+  const totalSizeStr = showTotalSize ? calcFileSize(totalSize) : '';
+
   const maxFileLength = Math.max(
     ...assets.map((a) => (a.folder + path.sep + a.name).length),
     fileHeader.length,
+    totalSizeLabel.length,
   );
-  const maxSizeLength = Math.max(...assets.map((a) => a.sizeLabel.length));
+  const maxSizeLength = Math.max(
+    ...assets.map((a) => a.sizeLabel.length),
+    totalSizeStr.length,
+  );
 
   if (options.detail !== false) {
     const showGzipHeader = Boolean(
@@ -189,20 +207,11 @@ async function printFileSizes(
     );
   }
 
-  let totalSize = 0;
-  let totalGzipSize = 0;
-
   for (const asset of assets) {
     let { sizeLabel } = asset;
     const { name, folder, gzipSizeLabel } = asset;
     const fileNameLength = (folder + path.sep + name).length;
     const sizeLength = sizeLabel.length;
-
-    totalSize += asset.size;
-
-    if (options.compressed) {
-      totalGzipSize += asset.gzippedSize ?? asset.size;
-    }
 
     if (options.detail !== false) {
       if (sizeLength < maxSizeLength) {
@@ -230,12 +239,17 @@ async function printFileSizes(
 
   // only print total size if there are more than one asset
   if (options.total !== false && assets.length > 1) {
-    const totalSizeLabel = `${color.blue('Total:')} ${calcFileSize(totalSize)}`;
+    logs.push('');
 
-    let log = `\n  ${totalSizeLabel}`;
+    let log = '  ';
+    log += ' '.repeat(maxFileLength - totalSizeLabel.length);
+    log += color.magenta(totalSizeLabel);
+    log += `    ${totalSizeStr}`;
 
     if (options.compressed) {
-      log += color.dim(` (gzip: ${calcFileSize(totalGzipSize)})`);
+      const colorFn = getAssetColor(totalGzipSize / assets.length);
+      log += ' '.repeat(maxSizeLength - totalSizeStr.length);
+      log += `    ${colorFn(calcFileSize(totalGzipSize))}`;
     }
 
     logs.push(log);
