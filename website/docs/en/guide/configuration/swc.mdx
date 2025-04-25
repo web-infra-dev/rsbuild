@@ -103,24 +103,6 @@ export default {
 };
 ```
 
-## Switching minimizer
+## Switching minifier
 
-If the `SwcJsMinimizerRspackPlugin` does not meet your needs, you can switch to other minimizers through the [tools.bundlerChain](/config/tools/bundler-chain) option.
-
-For example, to switch to [Terser](https://github.com/webpack-contrib/terser-webpack-plugin) for minifying JavaScript, which is more stable but performs worse compared to SWC:
-
-```ts
-export default {
-  tools: {
-    bundlerChain(chain, { CHAIN_ID, isProd }) {
-      if (isProd) {
-        chain.optimization.minimizer(CHAIN_ID.MINIMIZER.JS).use(TerserPlugin, [
-          {
-            minify: TerserPlugin.terserMinify,
-          },
-        ]);
-      }
-    },
-  },
-};
-```
+See [output.minify - Switching minifier](/config/output/minify#switching-minifier) to learn how to switch to other JavaScript minifier.

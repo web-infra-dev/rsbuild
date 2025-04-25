@@ -103,24 +103,6 @@ export default {
 };
 ```
 
-## 切换压缩工具
+## 切换压缩器
 
-如果 SwcJsMinimizerRspackPlugin 无法满足你的需求，你可以通过 [tools.bundlerChain](/config/tools/bundler-chain) 选项来切换到其他压缩工具。
-
-例如，切换到 [Terser](https://github.com/webpack-contrib/terser-webpack-plugin) 来压缩 JavaScript 代码，它的性能不如 SWC，但功能更稳定：
-
-```ts
-export default {
-  tools: {
-    bundlerChain(chain, { CHAIN_ID, isProd }) {
-      if (isProd) {
-        chain.optimization.minimizer(CHAIN_ID.MINIMIZER.JS).use(TerserPlugin, [
-          {
-            minify: TerserPlugin.terserMinify,
-          },
-        ]);
-      }
-    },
-  },
-};
-```
+查看 [output.minify - 切换压缩器](/config/output/minify#切换压缩器) 文档了解如何切换到其他 JavaScript 压缩器。
