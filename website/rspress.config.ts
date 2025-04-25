@@ -126,7 +126,8 @@ export default defineConfig({
   ],
   lang: 'en',
   title: 'Rsbuild',
-  description: 'Rspack based build tool',
+  description:
+    'Rsbuild is a high-performance build tool powered by Rspack. It provides out-of-the-box setup for enjoyable development experience.',
   icon: 'https://assets.rspack.dev/rsbuild/favicon-128x128.png',
   logo: {
     light: 'https://assets.rspack.dev/rsbuild/navbar-logo-light.png',
