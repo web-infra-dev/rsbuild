@@ -51,6 +51,26 @@ export const createProxyMiddleware = async (
   );
 
   for (const opts of formattedOptions) {
+    const { onProxyRes } = opts;
+
+    /**
+     * Fix SSE close events
+     * Can be removed after updating to http-proxy-middleware v3
+     * @link https://github.com/chimurai/http-proxy-middleware/issues/678
+     * @link https://github.com/http-party/node-http-proxy/issues/1520#issue-877626125
+     */
+    opts.onProxyRes = (proxyRes, _req, res) => {
+      // call user's onProxyRes if provided
+      if (onProxyRes) {
+        onProxyRes(proxyRes, _req, res);
+      }
+      res.on('close', () => {
+        if (!res.writableEnded) {
+          proxyRes.destroy();
+        }
+      });
+    };
+
     const proxyMiddleware = baseMiddleware(opts.context!, opts);
 
     const middleware: Middleware = async (req, res, next) => {
