@@ -46,12 +46,14 @@
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.16",
     "@types/node": "^22.15.2",
+    "@types/polka": "^0.5.7",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "create-rsbuild": "workspace:*",
     "fast-glob": "^3.3.3",
     "fs-extra": "^11.3.0",
     "playwright": "1.52.0",
+    "polka": "^0.5.2",
     "tailwindcss": "^4.1.4",
     "typescript": "^5.8.3"
   }
