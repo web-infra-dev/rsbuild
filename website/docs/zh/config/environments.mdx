@@ -30,6 +30,10 @@ type Environments = {
 
 - **默认值：** `undefined`
 
+:::tip
+`environments` 中不支持配置 `server` 选项以及一部分 `dev` 选项，因为多个 environment 共享同一个 server 实例。
+:::
+
 ## 示例
 
 分别为 `web` (client) 和 `node` (SSR) 环境配置 Rsbuild：
