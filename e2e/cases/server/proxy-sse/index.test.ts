@@ -26,11 +26,14 @@ test('should proxy SSE request correctly', async ({ page }) => {
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
     res.flushHeaders();
-    res.write('Hello SSE1,');
-    res.write('Hello SSE2');
+    res.write('data: Hello SSE1\n');
+    res.write('data: Hello SSE2\n');
   });
 
-  app.listen(ssePort);
+  await new Promise<void>((resolve) => {
+    app.listen(ssePort, () => resolve());
+  });
+
   const sseUrl = `http://localhost:${rsbuild.port}/api/sse`;
 
   const result = await page.evaluate(async (url) => {
@@ -55,7 +58,8 @@ test('should proxy SSE request correctly', async ({ page }) => {
 
   expect(result.ok).toBe(true);
   expect(result.contentType).toBe('text/event-stream');
-  expect(result.text).toEqual('Hello SSE1,Hello SSE2');
+  expect(result.text).toContain('Hello SSE1');
+  expect(result.text).toContain('Hello SSE2');
 
   await rsbuild.close();
   app.server?.close();
