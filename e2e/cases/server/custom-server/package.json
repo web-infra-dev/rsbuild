@@ -5,8 +5,5 @@
   "scripts": {
     "dev": "node ./scripts/index.mjs",
     "dev:pure": "node ./scripts/index.mjs pure"
-  },
-  "dependencies": {
-    "polka": "^0.5.2"
   }
 }

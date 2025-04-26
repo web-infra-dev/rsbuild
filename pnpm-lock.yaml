@@ -176,6 +176,9 @@ importers:
       '@types/node':
         specifier: ^22.15.2
         version: 22.15.2
+      '@types/polka':
+        specifier: ^0.5.7
+        version: 0.5.7
       '@types/react':
         specifier: ^19.1.2
         version: 19.1.2
@@ -194,6 +197,9 @@ importers:
       playwright:
         specifier: 1.52.0
         version: 1.52.0
+      polka:
+        specifier: ^0.5.2
+        version: 0.5.2
       tailwindcss:
         specifier: ^4.1.4
         version: 4.1.4
@@ -244,21 +250,9 @@ importers:
 
   e2e/cases/resolve/pkg-imports: {}
 
-  e2e/cases/server/custom-server:
-    dependencies:
-      polka:
-        specifier: ^0.5.2
-        version: 0.5.2
+  e2e/cases/server/custom-server: {}
 
-  e2e/cases/server/multi-server:
-    dependencies:
-      polka:
-        specifier: ^0.5.2
-        version: 0.5.2
-    devDependencies:
-      '@types/polka':
-        specifier: ^0.5.7
-        version: 0.5.7
+  e2e/cases/server/multi-server: {}
 
   e2e/cases/server/ssr: {}
 
