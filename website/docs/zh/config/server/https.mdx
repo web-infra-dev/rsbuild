@@ -28,7 +28,7 @@ type Https = ServerOptions | SecureServerSessionOptions;
 ```
 
 :::tip
-Rsbuild 默认会启用 HTTP/2 server。但当你使用 [server.proxy](/config/server/proxy) 时，server 会降级到 HTTP/1，这是因为底层使用的 `http-proxy` 不支持 HTTP/2。
+Rsbuild 默认会启用 HTTP/2 server。但当你使用 [server.proxy](/config/server/proxy) 时，server 会降级到 HTTP/1，这是因为底层使用的 [http-proxy](https://www.npmjs.com/package/http-proxy) 不支持 HTTP/2。
 :::
 
 ## 设置证书

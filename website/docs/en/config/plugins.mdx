@@ -2,8 +2,6 @@
 
 Used to register Rsbuild plugins.
 
-Async plugin (promise) in the plugins array will be resolved, and falsy values will be ignored.
-
 - **Type:**
 
 ```ts
@@ -23,22 +21,22 @@ type RsbuildPlugins = (
 
 ## Example
 
-For example, register the Stylus plugin in Rsbuild.
+For example, register the [Sass plugin](/plugins/list/plugin-sass) in Rsbuild.
 
 - Installing the plugin:
 
 import { PackageManagerTabs } from '@theme';
 
-<PackageManagerTabs command="add @rsbuild/plugin-stylus -D" />
+<PackageManagerTabs command="add @rsbuild/plugin-sass -D" />
 
 - Registering the plugin:
 
 ```ts title="rsbuild.config.ts"
 import { defineConfig } from '@rsbuild/core';
-import { pluginStylus } from '@rsbuild/plugin-stylus';
+import { pluginSass } from '@rsbuild/plugin-sass';
 
 export default defineConfig({
-  plugins: [pluginStylus()],
+  plugins: [pluginSass()],
 });
 ```
 
@@ -47,6 +45,38 @@ export default defineConfig({
 By default, plugins are executed in the order they appear in the `plugins` array. Built-in Rsbuild plugins are executed before user-registered plugins.
 
 When a plugin internally uses fields that control the order, such as `pre` and `post`, the execution order is adjusted based on them. See [Pre Plugins](/plugins/dev/core#pre-pluginss) for more details.
+
+## Conditional registration
+
+The falsy value in the `plugins` array will be ignored, which allows you to conveniently register plugins based on some judgment conditions:
+
+```ts title="rsbuild.config.ts"
+const isProd = process.env.NODE_ENV === 'production';
+
+export default defineConfig({
+  plugins: [isProd && somePlugin()],
+});
+```
+
+## Async plugins
+
+If the plugin is async, you can return a `Promise` object or use an `async` function, and Rsbuild will automatically wait for the `Promise` to be resolved:
+
+```ts title="rsbuild.config.ts"
+async function myPlugin() {
+  await someAsyncOperation();
+  return {
+    name: 'my-plugin',
+    setup(api) {
+      // ...
+    },
+  };
+}
+
+export default {
+  plugins: [myPlugin()],
+};
+```
 
 ## Nested plugins
 
