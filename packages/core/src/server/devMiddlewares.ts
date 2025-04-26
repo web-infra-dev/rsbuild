@@ -87,10 +87,6 @@ const applyDefaultMiddlewares = async ({
   onUpgrade: UpgradeEvent;
 }> => {
   const upgradeEvents: UpgradeEvent[] = [];
-  // compression should be the first middleware
-  if (server.compress) {
-    middlewares.push(gzipMiddleware());
-  }
 
   if (server.cors) {
     const { default: corsMiddleware } = await import(
@@ -113,6 +109,25 @@ const applyDefaultMiddlewares = async ({
     });
   }
 
+  // Apply proxy middlewares
+  // each proxy configuration creates its own middleware instance
+  if (server.proxy) {
+    const { middlewares: proxyMiddlewares, upgrade } =
+      await createProxyMiddleware(server.proxy);
+    upgradeEvents.push(upgrade);
+
+    for (const middleware of proxyMiddlewares) {
+      middlewares.push(middleware);
+    }
+  }
+
+  // compression is placed after proxy middleware to avoid breaking SSE (Server-Sent Events),
+  // but before other middlewares to ensure responses are properly compressed
+  if (server.compress) {
+    middlewares.push(gzipMiddleware());
+  }
+
+  // enable lazy compilation
   if (
     context.action === 'dev' &&
     context.bundlerType === 'rspack' &&
@@ -139,17 +154,6 @@ const applyDefaultMiddlewares = async ({
         dev.lazyCompilation,
       ),
     );
-  }
-
-  // dev proxy handler, each proxy has own handler
-  if (server.proxy) {
-    const { middlewares: proxyMiddlewares, upgrade } =
-      await createProxyMiddleware(server.proxy);
-    upgradeEvents.push(upgrade);
-
-    for (const middleware of proxyMiddlewares) {
-      middlewares.push(middleware);
-    }
   }
 
   if (server.base && server.base !== '/') {

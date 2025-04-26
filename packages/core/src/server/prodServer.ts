@@ -70,16 +70,6 @@ export class RsbuildProdServer {
       this.middlewares.use(await getRequestLoggerMiddleware());
     }
 
-    // compression should be the first middleware
-    if (compress) {
-      this.middlewares.use(
-        gzipMiddleware({
-          // simulates the common gzip compression rates
-          level: 6,
-        }),
-      );
-    }
-
     if (cors) {
       const { default: corsMiddleware } = await import(
         '../../compiled/cors/index.js'
@@ -100,6 +90,8 @@ export class RsbuildProdServer {
       });
     }
 
+    // Apply proxy middlewares
+    // each proxy configuration creates its own middleware instance
     if (proxy) {
       const { middlewares, upgrade } = await createProxyMiddleware(proxy);
 
@@ -108,6 +100,17 @@ export class RsbuildProdServer {
       }
 
       this.app.on('upgrade', upgrade);
+    }
+
+    // compression is placed after proxy middleware to avoid breaking SSE (Server-Sent Events),
+    // but before other middlewares to ensure responses are properly compressed
+    if (compress) {
+      this.middlewares.use(
+        gzipMiddleware({
+          // simulates the common gzip compression rates
+          level: 6,
+        }),
+      );
     }
 
     if (base && base !== '/') {
