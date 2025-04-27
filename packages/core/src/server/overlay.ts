@@ -102,7 +102,8 @@ export function genOverlayHTML(errors: string[], root?: string) {
   display: none;
 }
 .file-link,
-.url-link {
+.url-link,
+.config-link {
   cursor: pointer;
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -118,6 +119,10 @@ export function genOverlayHTML(errors: string[], root?: string) {
 }
 .url-link {
   color: #eff986;
+}
+.config-link {
+  color: inherit;
+  text-decoration: none;
 }
 .close {
   position: absolute;
@@ -172,7 +177,7 @@ export function genOverlayHTML(errors: string[], root?: string) {
     <pre class="content">${htmlItems.join('\n\n').trim()}</pre>
     <footer class="footer">
       <p><span>Fix error</span>, click outside, or press Esc to close the overlay.</p>
-      <p>Disable overlay by setting Rsbuild's <span>dev.client.overlay</span> config to false.<p>
+      <p>Disable overlay by setting Rsbuild's <span><a class="config-link" target="_blank" rel="noopener noreferrer" href="https://rsbuild.dev/config/dev/client">dev.client.overlay</a></span> config to false.<p>
     </footer>
   </div>
 </div>
