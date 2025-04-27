@@ -8,7 +8,7 @@ rspackOnlyTest('should handle transform error in dev mode', async () => {
 
   await expectPoll(() =>
     logs.some(
-      (log) => log.includes('transform error') && log.includes('Build error:'),
+      (log) => log.includes('transform error') && log.includes('Build error'),
     ),
   ).toBeTruthy();
 
