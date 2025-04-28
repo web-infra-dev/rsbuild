@@ -50,8 +50,8 @@ importers:
         specifier: ^0.8.0
         version: 0.8.0
       nx:
-        specifier: ^20.8.0
-        version: 20.8.0
+        specifier: ^20.8.1
+        version: 20.8.1
       prettier:
         specifier: ^3.5.3
         version: 3.5.3
@@ -83,8 +83,8 @@ importers:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
       react-router-dom:
-        specifier: ^7.5.1
-        version: 7.5.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        specifier: ^7.5.2
+        version: 7.5.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       solid-js:
         specifier: ^1.9.5
         version: 1.9.5
@@ -92,8 +92,8 @@ importers:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.8.3)
       vue-router:
-        specifier: ^4.5.0
-        version: 4.5.0(vue@3.5.13(typescript@5.8.3))
+        specifier: ^4.5.1
+        version: 4.5.1(vue@3.5.13(typescript@5.8.3))
     devDependencies:
       '@e2e/helper':
         specifier: workspace:*
@@ -533,8 +533,8 @@ importers:
         specifier: workspace:*
         version: link:../webpack
       '@rslib/core':
-        specifier: 0.6.6
-        version: 0.6.6(typescript@5.8.3)
+        specifier: 0.6.7
+        version: 0.6.7(typescript@5.8.3)
       '@types/lodash':
         specifier: ^4.17.16
         version: 4.17.16
@@ -576,8 +576,8 @@ importers:
         specifier: workspace:*
         version: link:../../core
       '@rslib/core':
-        specifier: 0.6.6
-        version: 0.6.6(typescript@5.8.3)
+        specifier: 0.6.7
+        version: 0.6.7(typescript@5.8.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../../scripts/test-helper
@@ -616,8 +616,8 @@ importers:
         version: 2.4.2
     devDependencies:
       '@rslib/core':
-        specifier: 0.6.6
-        version: 0.6.6(typescript@5.8.3)
+        specifier: 0.6.7
+        version: 0.6.7(typescript@5.8.3)
       '@types/connect':
         specifier: 3.4.38
         version: 3.4.38
@@ -767,8 +767,8 @@ importers:
         specifier: workspace:*
         version: link:../plugin-vue
       '@rslib/core':
-        specifier: 0.6.6
-        version: 0.6.6(typescript@5.8.3)
+        specifier: 0.6.7
+        version: 0.6.7(typescript@5.8.3)
       '@types/node':
         specifier: ^22.15.2
         version: 22.15.2
@@ -807,8 +807,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.6.6
-        version: 0.6.6(typescript@5.8.3)
+        specifier: 0.6.7
+        version: 0.6.7(typescript@5.8.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -838,8 +838,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.6.6
-        version: 0.6.6(typescript@5.8.3)
+        specifier: 0.6.7
+        version: 0.6.7(typescript@5.8.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -878,8 +878,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.6.6
-        version: 0.6.6(typescript@5.8.3)
+        specifier: 0.6.7
+        version: 0.6.7(typescript@5.8.3)
       '@types/node':
         specifier: ^22.15.2
         version: 22.15.2
@@ -903,8 +903,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.6.6
-        version: 0.6.6(typescript@5.8.3)
+        specifier: 0.6.7
+        version: 0.6.7(typescript@5.8.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -937,8 +937,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.6.6
-        version: 0.6.6(typescript@5.8.3)
+        specifier: 0.6.7
+        version: 0.6.7(typescript@5.8.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -977,8 +977,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.6.6
-        version: 0.6.6(typescript@5.8.3)
+        specifier: 0.6.7
+        version: 0.6.7(typescript@5.8.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1008,8 +1008,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.6.6
-        version: 0.6.6(typescript@5.8.3)
+        specifier: 0.6.7
+        version: 0.6.7(typescript@5.8.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1033,8 +1033,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.6.6
-        version: 0.6.6(typescript@5.8.3)
+        specifier: 0.6.7
+        version: 0.6.7(typescript@5.8.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1073,8 +1073,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.6.6
-        version: 0.6.6(typescript@5.8.3)
+        specifier: 0.6.7
+        version: 0.6.7(typescript@5.8.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1110,8 +1110,8 @@ importers:
         specifier: workspace:*
         version: link:../core
       '@rslib/core':
-        specifier: 0.6.6
-        version: 0.6.6(typescript@5.8.3)
+        specifier: 0.6.7
+        version: 0.6.7(typescript@5.8.3)
       '@scripts/test-helper':
         specifier: workspace:*
         version: link:../../scripts/test-helper
@@ -1131,8 +1131,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/core
       '@rslib/core':
-        specifier: 0.6.6
-        version: 0.6.6(typescript@5.8.3)
+        specifier: 0.6.7
+        version: 0.6.7(typescript@5.8.3)
       '@types/node':
         specifier: ^22.15.2
         version: 22.15.2
@@ -1159,8 +1159,8 @@ importers:
         version: 2.0.1
     devDependencies:
       '@rslib/core':
-        specifier: 0.6.6
-        version: 0.6.6(typescript@5.8.3)
+        specifier: 0.6.7
+        version: 0.6.7(typescript@5.8.3)
 
   website:
     devDependencies:
@@ -2169,62 +2169,62 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@nx/nx-darwin-arm64@20.8.0':
-    resolution: {integrity: sha512-A6Te2KlINtcOo/depXJzPyjbk9E0cmgbom/sm/49XdQ8G94aDfyIIY1RIdwmDCK5NVd74KFG3JIByTk5+VnAhA==}
+  '@nx/nx-darwin-arm64@20.8.1':
+    resolution: {integrity: sha512-Gat4Io66cV70Oa1CjrMJPsEx5ICpAGayv9hejOtBUEDb6XjR12L2e4wV+4EHliF0UbEcuZAr8/lTROEPk0RGWQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
 
-  '@nx/nx-darwin-x64@20.8.0':
-    resolution: {integrity: sha512-UpqayUjgalArXaDvOoshqSelTrEp42cGDsZGy0sqpxwBpm3oPQ8wE1d7oBAmRo208rAxOuFP0LZRFUqRrwGvLA==}
+  '@nx/nx-darwin-x64@20.8.1':
+    resolution: {integrity: sha512-TB9mZk7neGFKgBr2wSBgY6c4kFF9vvChNSp3TrEeXR3FppFcYG5eK4AaKfzWCpYb0wMtseAm7NMX1Lu74utClQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
 
-  '@nx/nx-freebsd-x64@20.8.0':
-    resolution: {integrity: sha512-dUR2fsLyKZYMHByvjy2zvmdMbsdXAiP+6uTlIAuu8eHMZ2FPQCAtt7lPYLwOFUxUXChbek2AJ+uCI0gRAgK/eg==}
+  '@nx/nx-freebsd-x64@20.8.1':
+    resolution: {integrity: sha512-7UQu0/Afna5Af2GagEQ6rbKfUh75NfUn+g66wsoQoUGBvDW0U7B8P3Ph5Bk4Urub0BSfMVcNg2X7CgfypLFN/g==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [freebsd]
 
-  '@nx/nx-linux-arm-gnueabihf@20.8.0':
-    resolution: {integrity: sha512-GuZ7t0SzSX5ksLYva7koKZovQ5h/Kr1pFbOsQcBf3VLREBqFPSz6t7CVYpsIsMhiu/I3EKq6FZI3wDOJbee5uw==}
+  '@nx/nx-linux-arm-gnueabihf@20.8.1':
+    resolution: {integrity: sha512-Tjh8JkTP+x1jSrzx+ofx1pKpkhIbXd7bi0bPdpYt6NI1lZz2HB/dv8vtdzP80jXEDztHf0AeGnEJVgJKsgI6yg==}
     engines: {node: '>= 10'}
     cpu: [arm]
     os: [linux]
 
-  '@nx/nx-linux-arm64-gnu@20.8.0':
-    resolution: {integrity: sha512-CiI955Q+XZmBBZ7cQqQg0MhGEFwZIgSpJnjPfWBt3iOYP8aE6nZpNOkmD7O8XcN/nEwwyeCOF8euXqEStwsk8w==}
+  '@nx/nx-linux-arm64-gnu@20.8.1':
+    resolution: {integrity: sha512-2+qPIwav2vrytH6pe7fukBe8+yN5JGbEDCnDO8wKQsHeeZMLAQJiZ7EJH/+vynRkI7oWf87mihIKNQME19+w6A==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
 
-  '@nx/nx-linux-arm64-musl@20.8.0':
-    resolution: {integrity: sha512-Iy9DpvVisxsfNh4gOinmMQ4cLWdBlgvt1wmry1UwvcXg479p1oJQ1Kp1wksUZoWYqrAG8VPZUmkE0f7gjyHTGg==}
+  '@nx/nx-linux-arm64-musl@20.8.1':
+    resolution: {integrity: sha512-DsKc+DiMsuHqpBWchUUUg6zv4OaexRqpFXys6auZlrpFpn80kSqLQ3S4zZ5AUu+26wxZqEVJs+uxHGwFbhEssQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
 
-  '@nx/nx-linux-x64-gnu@20.8.0':
-    resolution: {integrity: sha512-kZrrXXzVSbqwmdTmQ9xL4Jhi0/FSLrePSxYCL9oOM3Rsj0lmo/aC9kz4NBv1ZzuqT7fumpBOnhqiL1QyhOWOeQ==}
+  '@nx/nx-linux-x64-gnu@20.8.1':
+    resolution: {integrity: sha512-Kzru44beVKAmSG84ShuMIIfyu2Uu5r8gsHdtiQPBIOGkZa0Z/e6YtUxcN3w1UZ7yvvzoQ4pQLvqU6UZRSWZtEg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
 
-  '@nx/nx-linux-x64-musl@20.8.0':
-    resolution: {integrity: sha512-0l9jEMN8NhULKYCFiDF7QVpMMNG40duya+OF8dH0OzFj52N0zTsvsgLY72TIhslCB/cC74oAzsmWEIiFslscnA==}
+  '@nx/nx-linux-x64-musl@20.8.1':
+    resolution: {integrity: sha512-cSVVb7DVMhrxCaj/n55okBZS6lZoP5a5vynOBGIV4z3/OJLev+xI9A+3imn/aXnBl8iS69HogYyrW0YTXv4Xaw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
 
-  '@nx/nx-win32-arm64-msvc@20.8.0':
-    resolution: {integrity: sha512-5miZJmRSwx1jybBsiB3NGocXL9TxGdT2D+dOqR2fsLklpGz0ItEWm8+i8lhDjgOdAr2nFcuQUfQMY57f9FOHrA==}
+  '@nx/nx-win32-arm64-msvc@20.8.1':
+    resolution: {integrity: sha512-gte5HcvI24CN6b9I6IYTXh/A0CtRfnlAFaJomPpfT8Wcq637aOZzS0arAEZVoU8QZty1350hj6sfu+wSIjoP7A==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
 
-  '@nx/nx-win32-x64-msvc@20.8.0':
-    resolution: {integrity: sha512-0P5r+bDuSNvoWys+6C1/KqGpYlqwSHpigCcyRzR62iZpT3OooZv+nWO06RlURkxMR8LNvYXTSSLvoLkjxqM8uQ==}
+  '@nx/nx-win32-x64-msvc@20.8.1':
+    resolution: {integrity: sha512-6c2fVEPdPwJdnRbckBatRDF/g6JAp6p3Mfl90DpuaEF2DZC5pmCXKOsXE0aSIZ+gODom2JIchM++2KmDZPJUoA==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -2519,8 +2519,8 @@ packages:
   '@rsdoctor/utils@1.0.2':
     resolution: {integrity: sha512-TjkZfP0jXGgWm/qFSKbGJANkYzo668fDjbr/YP/RVOKbj+ORi+3q5ieLdDghacM2coXG2xDYrYUmPPKsXU90pg==}
 
-  '@rslib/core@0.6.6':
-    resolution: {integrity: sha512-3FtgbYqlFsPgRV8TwW7GjYRJH273fOPw9utcfQqcZIVTuQAhmhr7ZWplpFJWbze2MNP9W234CpbNdRUxfNe3ew==}
+  '@rslib/core@0.6.7':
+    resolution: {integrity: sha512-ti/vE9IVyWXo1QuwtFgK3Enl7mBNKEAUtBJkGZljQgOaJkXWTM0DeHWhpxk2sK4KP9XgaI+7fYsNR/OCcwqqHg==}
     engines: {node: '>=16.7.0'}
     hasBin: true
     peerDependencies:
@@ -5409,8 +5409,8 @@ packages:
   nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
 
-  nx@20.8.0:
-    resolution: {integrity: sha512-+BN5B5DFBB5WswD8flDDTnr4/bf1VTySXOv60aUAllHqR+KS6deT0p70TTMZF4/A2n/L2UCWDaDro37MGaYozA==}
+  nx@20.8.1:
+    resolution: {integrity: sha512-73Uw8YXpsjeLqHSl7NMCmGdCs+8ynPzoNJFWAqVanPETEY9zPd5wevVQmeyzYtNNQU35uj6Os4iUzYunmwnFaA==}
     hasBin: true
     peerDependencies:
       '@swc-node/register': ^1.8.0
@@ -5780,8 +5780,8 @@ packages:
       react: '>=16.8'
       react-dom: '>=16.8'
 
-  react-router-dom@7.5.1:
-    resolution: {integrity: sha512-5DPSPc7ENrt2tlKPq0FtpG80ZbqA9aIKEyqX6hSNJDlol/tr6iqCK4crqdsusmOSSotq6zDsn0y3urX9TuTNmA==}
+  react-router-dom@7.5.2:
+    resolution: {integrity: sha512-yk1XW8Fj7gK7flpYBXF3yzd2NbX6P7Kxjvs2b5nu1M04rb5pg/Zc4fGdBNTeT4eDYL2bvzWNyKaIMJX/RKHTTg==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       react: '>=18'
@@ -5793,8 +5793,8 @@ packages:
     peerDependencies:
       react: '>=16.8'
 
-  react-router@7.5.1:
-    resolution: {integrity: sha512-/jjU3fcYNd2bwz9Q0xt5TwyiyoO8XjSEFXJY4O/lMAlkGTHWuHRAbR9Etik+lSDqMC7A7mz3UlXzgYT6Vl58sA==}
+  react-router@7.5.2:
+    resolution: {integrity: sha512-9Rw8r199klMnlGZ8VAsV/I8WrIF6IyJ90JQUdboupx1cdkgYqwnrYjH+I/nY/7cA1X5zia4mDJqH36npP7sxGQ==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       react: '>=18'
@@ -5959,8 +5959,8 @@ packages:
       webpack:
         optional: true
 
-  rsbuild-plugin-dts@0.6.6:
-    resolution: {integrity: sha512-cN0deqsNMG8Dwmw0MHeFLZWyBuqlT8PhcmUH9qkahMxPRnJCBusnEdVfmRBlXaz+Z24MYX/Z15nCgyydlHInlA==}
+  rsbuild-plugin-dts@0.6.7:
+    resolution: {integrity: sha512-uvGYychYBks67VM7ttXfOvcY2lXSLGrV5uFZ2zJK/O+s4DJ/+oyJ1j6IhIPH191J8zMCaOd/3ftrlq/izVsheA==}
     engines: {node: '>=16.7.0'}
     peerDependencies:
       '@microsoft/api-extractor': ^7
@@ -6982,8 +6982,8 @@ packages:
       vue:
         optional: true
 
-  vue-router@4.5.0:
-    resolution: {integrity: sha512-HDuk+PuH5monfNuY+ct49mNmkCRK4xJAV9Ts4z9UFc4rzdDnxQLyCMGGc8pKhZhHTVzfanpNwB/lwqevcBwI4w==}
+  vue-router@4.5.1:
+    resolution: {integrity: sha512-ogAF3P97NPm8fJsE4by9dwSYtDwXIY1nFY9T6DyQnGHd1E2Da94w9JIolpe42LJGIl0DwOHBi8TcRPlPGwbTtw==}
     peerDependencies:
       vue: ^3.2.0
 
@@ -8216,34 +8216,34 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.19.0
 
-  '@nx/nx-darwin-arm64@20.8.0':
+  '@nx/nx-darwin-arm64@20.8.1':
     optional: true
 
-  '@nx/nx-darwin-x64@20.8.0':
+  '@nx/nx-darwin-x64@20.8.1':
     optional: true
 
-  '@nx/nx-freebsd-x64@20.8.0':
+  '@nx/nx-freebsd-x64@20.8.1':
     optional: true
 
-  '@nx/nx-linux-arm-gnueabihf@20.8.0':
+  '@nx/nx-linux-arm-gnueabihf@20.8.1':
     optional: true
 
-  '@nx/nx-linux-arm64-gnu@20.8.0':
+  '@nx/nx-linux-arm64-gnu@20.8.1':
     optional: true
 
-  '@nx/nx-linux-arm64-musl@20.8.0':
+  '@nx/nx-linux-arm64-musl@20.8.1':
     optional: true
 
-  '@nx/nx-linux-x64-gnu@20.8.0':
+  '@nx/nx-linux-x64-gnu@20.8.1':
     optional: true
 
-  '@nx/nx-linux-x64-musl@20.8.0':
+  '@nx/nx-linux-x64-musl@20.8.1':
     optional: true
 
-  '@nx/nx-win32-arm64-msvc@20.8.0':
+  '@nx/nx-win32-arm64-msvc@20.8.1':
     optional: true
 
-  '@nx/nx-win32-x64-msvc@20.8.0':
+  '@nx/nx-win32-x64-msvc@20.8.1':
     optional: true
 
   '@parcel/watcher-android-arm64@2.5.1':
@@ -8583,10 +8583,10 @@ snapshots:
       - supports-color
       - webpack
 
-  '@rslib/core@0.6.6(typescript@5.8.3)':
+  '@rslib/core@0.6.7(typescript@5.8.3)':
     dependencies:
       '@rsbuild/core': 1.3.9
-      rsbuild-plugin-dts: 0.6.6(@rsbuild/core@1.3.9)(typescript@5.8.3)
+      rsbuild-plugin-dts: 0.6.7(@rsbuild/core@1.3.9)(typescript@5.8.3)
       tinyglobby: 0.2.13
     optionalDependencies:
       typescript: 5.8.3
@@ -11946,7 +11946,7 @@ snapshots:
     dependencies:
       boolbase: 1.0.0
 
-  nx@20.8.0:
+  nx@20.8.1:
     dependencies:
       '@napi-rs/wasm-runtime': 0.2.4
       '@yarnpkg/lockfile': 1.1.0
@@ -11983,16 +11983,16 @@ snapshots:
       yargs: 17.7.2
       yargs-parser: 21.1.1
     optionalDependencies:
-      '@nx/nx-darwin-arm64': 20.8.0
-      '@nx/nx-darwin-x64': 20.8.0
-      '@nx/nx-freebsd-x64': 20.8.0
-      '@nx/nx-linux-arm-gnueabihf': 20.8.0
-      '@nx/nx-linux-arm64-gnu': 20.8.0
-      '@nx/nx-linux-arm64-musl': 20.8.0
-      '@nx/nx-linux-x64-gnu': 20.8.0
-      '@nx/nx-linux-x64-musl': 20.8.0
-      '@nx/nx-win32-arm64-msvc': 20.8.0
-      '@nx/nx-win32-x64-msvc': 20.8.0
+      '@nx/nx-darwin-arm64': 20.8.1
+      '@nx/nx-darwin-x64': 20.8.1
+      '@nx/nx-freebsd-x64': 20.8.1
+      '@nx/nx-linux-arm-gnueabihf': 20.8.1
+      '@nx/nx-linux-arm64-gnu': 20.8.1
+      '@nx/nx-linux-arm64-musl': 20.8.1
+      '@nx/nx-linux-x64-gnu': 20.8.1
+      '@nx/nx-linux-x64-musl': 20.8.1
+      '@nx/nx-win32-arm64-msvc': 20.8.1
+      '@nx/nx-win32-x64-msvc': 20.8.1
     transitivePeerDependencies:
       - debug
 
@@ -12327,18 +12327,18 @@ snapshots:
       react-dom: 19.1.0(react@19.1.0)
       react-router: 6.29.0(react@19.1.0)
 
-  react-router-dom@7.5.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  react-router-dom@7.5.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
-      react-router: 7.5.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react-router: 7.5.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
 
   react-router@6.29.0(react@19.1.0):
     dependencies:
       '@remix-run/router': 1.22.0
       react: 19.1.0
 
-  react-router@7.5.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  react-router@7.5.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       cookie: 1.0.2
       react: 19.1.0
@@ -12591,7 +12591,7 @@ snapshots:
     optionalDependencies:
       webpack: 5.98.0
 
-  rsbuild-plugin-dts@0.6.6(@rsbuild/core@1.3.9)(typescript@5.8.3):
+  rsbuild-plugin-dts@0.6.7(@rsbuild/core@1.3.9)(typescript@5.8.3):
     dependencies:
       '@ast-grep/napi': 0.37.0
       '@rsbuild/core': 1.3.9
@@ -13528,7 +13528,7 @@ snapshots:
     optionalDependencies:
       vue: 3.5.13(typescript@5.8.3)
 
-  vue-router@4.5.0(vue@3.5.13(typescript@5.8.3)):
+  vue-router@4.5.1(vue@3.5.13(typescript@5.8.3)):
     dependencies:
       '@vue/devtools-api': 6.6.4
       vue: 3.5.13(typescript@5.8.3)
