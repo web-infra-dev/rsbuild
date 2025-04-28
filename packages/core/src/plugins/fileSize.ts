@@ -262,7 +262,7 @@ async function printFileSizes(
       logs.push(log);
     }
   } else if (showTotal) {
-    let log = `  ${color.blue(totalSizeLabel)} ${totalSizeStr}`;
+    let log = `  ${color.bold(color.magenta(totalSizeLabel))} ${totalSizeStr}`;
 
     if (options.compressed) {
       log += color.green(` (${calcFileSize(totalGzipSize)} gzipped)`);
