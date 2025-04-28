@@ -125,7 +125,7 @@ test.describe('should print file size correctly', async () => {
     });
 
     expect(logs.some((log) => log.includes('index.html'))).toBeFalsy();
-    expect(logs.some((log) => log.includes('Total:'))).toBeTruthy();
+    expect(logs.some((log) => log.includes('Total size (web):'))).toBeTruthy();
   });
 
   test('printFileSize.total: false should work', async () => {
