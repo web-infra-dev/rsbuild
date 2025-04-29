@@ -59,8 +59,8 @@ function getHeader(
       curLabel =
         cur.length < length ? cur + ' '.repeat(length - cur.length) : cur;
     }
-    return `${prev + curLabel}    `;
-  }, '  ');
+    return `${prev + curLabel}   `;
+  }, '');
 
   return color.blue(headerRow);
 }
@@ -237,10 +237,10 @@ async function printFileSizes(
         fileNameLabel += rightPadding;
       }
 
-      let log = `  ${fileNameLabel}    ${sizeLabel}`;
+      let log = `${fileNameLabel}   ${sizeLabel}`;
 
       if (gzipSizeLabel) {
-        log += `    ${gzipSizeLabel}`;
+        log += `   ${gzipSizeLabel}`;
       }
 
       logs.push(log);
@@ -248,21 +248,21 @@ async function printFileSizes(
 
     if (showTotal) {
       logs.push('');
-      let log = '  ';
+      let log = '';
       log += ' '.repeat(maxFileLength - totalSizeLabel.length);
       log += color.magenta(totalSizeLabel);
-      log += `    ${totalSizeStr}`;
+      log += `   ${totalSizeStr}`;
 
       if (options.compressed) {
         const colorFn = getAssetColor(totalGzipSize / assets.length);
         log += ' '.repeat(maxSizeLength - totalSizeStr.length);
-        log += `    ${colorFn(calcFileSize(totalGzipSize))}`;
+        log += `   ${colorFn(calcFileSize(totalGzipSize))}`;
       }
 
       logs.push(log);
     }
   } else if (showTotal) {
-    let log = `  ${color.magenta(totalSizeLabel)} ${totalSizeStr}`;
+    let log = `${color.magenta(totalSizeLabel)} ${totalSizeStr}`;
 
     if (options.compressed) {
       log += color.green(` (${calcFileSize(totalGzipSize)} gzipped)`);
@@ -320,10 +320,6 @@ export const pluginFileSize = (): RsbuildPlugin => ({
             environment.name,
           );
 
-          // log a separator line after the previous print
-          if (logs.length) {
-            logs.push(color.dim('  -----'));
-          }
           logs.push(...statsLogs);
         }),
       ).catch((err) => {
