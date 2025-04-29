@@ -61,13 +61,13 @@ test.describe('should print file size correctly', async () => {
     });
 
     expect(extractFileSizeLogs(logs)).toEqual(`
-  File (web)                              Size        Gzip
-  dist/static/css/index.[[hash]].css      X.X kB     X.X kB
-  dist/index.html                         X.X kB     X.X kB
-  dist/static/js/index.[[hash]].js        X.X kB      X.X kB
-  dist/static/image/icon.[[hash]].png     X.X kB
-  dist/static/js/lib-react.[[hash]].js    X.X kB    X.X kB
-                                Total:    X.X kB    X.X kB`);
+File (web)                             Size       Gzip
+dist/static/css/index.[[hash]].css     X.X kB    X.X kB
+dist/index.html                        X.X kB    X.X kB
+dist/static/js/index.[[hash]].js       X.X kB     X.X kB
+dist/static/image/icon.[[hash]].png    X.X kB
+dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
+                              Total:   X.X kB   X.X kB`);
   });
 
   test('should print size of multiple environments correctly', async () => {
@@ -99,18 +99,17 @@ test.describe('should print file size correctly', async () => {
     });
 
     expect(extractFileSizeLogs(logs)).toEqual(`
-  File (node)                          Size
-  dist/server/static/image/icon.png    X.X kB
-  dist/server/index.js                 X.X kB
-                             Total:    X.X kB
-  -----
-  File (web)                     Size        Gzip
-  dist/static/css/index.css      X.X kB     X.X kB
-  dist/index.html                X.X kB     X.X kB
-  dist/static/js/index.js        X.X kB      X.X kB
-  dist/static/image/icon.png     X.X kB
-  dist/static/js/lib-react.js    X.X kB    X.X kB
-                       Total:    X.X kB    X.X kB`);
+File (node)                         Size
+dist/server/static/image/icon.png   X.X kB
+dist/server/index.js                X.X kB
+                           Total:   X.X kB
+File (web)                    Size       Gzip
+dist/static/css/index.css     X.X kB    X.X kB
+dist/index.html               X.X kB    X.X kB
+dist/static/js/index.js       X.X kB     X.X kB
+dist/static/image/icon.png    X.X kB
+dist/static/js/lib-react.js   X.X kB   X.X kB
+                     Total:   X.X kB   X.X kB`);
   });
 
   test('printFileSize: false should not print logs', async () => {
@@ -139,7 +138,7 @@ test.describe('should print file size correctly', async () => {
     });
 
     expect(extractFileSizeLogs(logs)).toEqual(`
-  Total size (web): X.X kB (X.X kB gzipped)`);
+Total size (web): X.X kB (X.X kB gzipped)`);
   });
 
   test('printFileSize.total: false should work', async () => {
@@ -155,12 +154,12 @@ test.describe('should print file size correctly', async () => {
     });
 
     expect(extractFileSizeLogs(logs)).toEqual(`
-  File (web)                              Size        Gzip
-  dist/static/css/index.[[hash]].css      X.X kB     X.X kB
-  dist/index.html                         X.X kB     X.X kB
-  dist/static/js/index.[[hash]].js        X.X kB      X.X kB
-  dist/static/image/icon.[[hash]].png     X.X kB
-  dist/static/js/lib-react.[[hash]].js    X.X kB    X.X kB`);
+File (web)                             Size       Gzip
+dist/static/css/index.[[hash]].css     X.X kB    X.X kB
+dist/index.html                        X.X kB    X.X kB
+dist/static/js/index.[[hash]].js       X.X kB     X.X kB
+dist/static/image/icon.[[hash]].png    X.X kB
+dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB`);
   });
 
   test('should print dist folder correctly if it is not a subdir of root', async () => {
@@ -179,13 +178,13 @@ test.describe('should print file size correctly', async () => {
     });
 
     expect(extractFileSizeLogs(logs)).toEqual(`
-  File (web)                                                  Size        Gzip
-  ../test-temp-folder/dist/static/css/index.[[hash]].css      X.X kB     X.X kB
-  ../test-temp-folder/dist/index.html                         X.X kB     X.X kB
-  ../test-temp-folder/dist/static/js/index.[[hash]].js        X.X kB      X.X kB
-  ../test-temp-folder/dist/static/image/icon.[[hash]].png     X.X kB
-  ../test-temp-folder/dist/static/js/lib-react.[[hash]].js    X.X kB    X.X kB
-                                                    Total:    X.X kB    X.X kB`);
+File (web)                                                 Size       Gzip
+../test-temp-folder/dist/static/css/index.[[hash]].css     X.X kB    X.X kB
+../test-temp-folder/dist/index.html                        X.X kB    X.X kB
+../test-temp-folder/dist/static/js/index.[[hash]].js       X.X kB     X.X kB
+../test-temp-folder/dist/static/image/icon.[[hash]].png    X.X kB
+../test-temp-folder/dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
+                                                  Total:   X.X kB   X.X kB`);
   });
 
   test('should allow to disable gzip-compressed size', async () => {
@@ -201,13 +200,13 @@ test.describe('should print file size correctly', async () => {
     });
 
     expect(extractFileSizeLogs(logs)).toEqual(`
-  File (web)                              Size
-  dist/static/css/index.[[hash]].css      X.X kB
-  dist/index.html                         X.X kB
-  dist/static/js/index.[[hash]].js        X.X kB
-  dist/static/image/icon.[[hash]].png     X.X kB
-  dist/static/js/lib-react.[[hash]].js    X.X kB
-                                Total:    X.X kB`);
+File (web)                             Size
+dist/static/css/index.[[hash]].css     X.X kB
+dist/index.html                        X.X kB
+dist/static/js/index.[[hash]].js       X.X kB
+dist/static/image/icon.[[hash]].png    X.X kB
+dist/static/js/lib-react.[[hash]].js   X.X kB
+                              Total:   X.X kB`);
   });
 
   test('should allow to filter assets by name', async () => {
@@ -223,10 +222,10 @@ test.describe('should print file size correctly', async () => {
     });
 
     expect(extractFileSizeLogs(logs)).toEqual(`
-  File (web)                              Size        Gzip
-  dist/static/js/index.[[hash]].js        X.X kB      X.X kB
-  dist/static/js/lib-react.[[hash]].js    X.X kB    X.X kB
-                                Total:    X.X kB    X.X kB`);
+File (web)                             Size       Gzip
+dist/static/js/index.[[hash]].js       X.X kB     X.X kB
+dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
+                              Total:   X.X kB   X.X kB`);
   });
 
   test('should allow to filter assets by size', async () => {
@@ -242,8 +241,8 @@ test.describe('should print file size correctly', async () => {
     });
 
     expect(extractFileSizeLogs(logs)).toEqual(`
-  File (web)                              Size        Gzip
-  dist/static/js/lib-react.[[hash]].js    X.X kB    X.X kB`);
+File (web)                             Size       Gzip
+dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB`);
   });
 
   test('should allow to custom exclude function', async () => {
@@ -261,12 +260,12 @@ test.describe('should print file size correctly', async () => {
     });
 
     expect(extractFileSizeLogs(logs)).toEqual(`
-  File (web)                              Size        Gzip
-  dist/static/css/index.[[hash]].css      X.X kB     X.X kB
-  dist/static/js/index.[[hash]].js        X.X kB      X.X kB
-  dist/static/image/icon.[[hash]].png     X.X kB
-  dist/static/js/lib-react.[[hash]].js    X.X kB    X.X kB
-                                Total:    X.X kB    X.X kB`);
+File (web)                             Size       Gzip
+dist/static/css/index.[[hash]].css     X.X kB    X.X kB
+dist/static/js/index.[[hash]].js       X.X kB     X.X kB
+dist/static/image/icon.[[hash]].png    X.X kB
+dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
+                              Total:   X.X kB   X.X kB`);
   });
 
   test('should not calculate gzip size if the asset is not compressible', async () => {
@@ -280,12 +279,12 @@ test.describe('should print file size correctly', async () => {
     });
 
     expect(extractFileSizeLogs(logs)).toEqual(`
-  File (web)                              Size        Gzip
-  dist/static/css/index.[[hash]].css      X.X kB     X.X kB
-  dist/index.html                         X.X kB     X.X kB
-  dist/static/js/index.[[hash]].js        X.X kB      X.X kB
-  dist/static/image/icon.[[hash]].png     X.X kB
-  dist/static/js/lib-react.[[hash]].js    X.X kB    X.X kB
-                                Total:    X.X kB    X.X kB`);
+File (web)                             Size       Gzip
+dist/static/css/index.[[hash]].css     X.X kB    X.X kB
+dist/index.html                        X.X kB    X.X kB
+dist/static/js/index.[[hash]].js       X.X kB     X.X kB
+dist/static/image/icon.[[hash]].png    X.X kB
+dist/static/js/lib-react.[[hash]].js   X.X kB   X.X kB
+                              Total:   X.X kB   X.X kB`);
   });
 });
