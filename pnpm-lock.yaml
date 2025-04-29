@@ -511,8 +511,8 @@ importers:
         specifier: ^0.5.17
         version: 0.5.17
       core-js:
-        specifier: ~3.41.0
-        version: 3.41.0
+        specifier: ~3.42.0
+        version: 3.42.0
       deepmerge:
         specifier: ^4.3.1
         version: 4.3.1
@@ -609,8 +609,8 @@ importers:
         specifier: ^0.5.17
         version: 0.5.17
       core-js:
-        specifier: ~3.41.0
-        version: 3.41.0
+        specifier: ~3.42.0
+        version: 3.42.0
       jiti:
         specifier: ^2.4.2
         version: 2.4.2
@@ -3778,6 +3778,9 @@ packages:
 
   core-js@3.41.0:
     resolution: {integrity: sha512-SJ4/EHwS36QMJd6h/Rg+GyR4A5xE0FSI3eZ+iBVpfqf1x0eTSg1smWLHrA+2jQThZSh97fmSgFSU8B61nxosxA==}
+
+  core-js@3.42.0:
+    resolution: {integrity: sha512-Sz4PP4ZA+Rq4II21qkNqOEDTDrCvcANId3xpIgB34NDkWc3UduWj2dqEtN9yZIq8Dk3HyPI33x9sqqU5C8sr0g==}
 
   cors@2.8.5:
     resolution: {integrity: sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==}
@@ -9984,6 +9987,8 @@ snapshots:
       webpack: 5.98.0
 
   core-js@3.41.0: {}
+
+  core-js@3.42.0: {}
 
   cors@2.8.5:
     dependencies:
