@@ -82,7 +82,6 @@ rspackOnlyTest(
     expect(
       fs.existsSync(path.join(profileDir!, 'jscpuprofile.json')),
     ).toBeTruthy();
-    expect(fs.existsSync(path.join(profileDir!, 'logging.json'))).toBeTruthy();
 
     buildProcess.kill();
   },

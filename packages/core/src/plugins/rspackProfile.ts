@@ -32,7 +32,7 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
 
     /**
      * RSPACK_PROFILE=ALL
-     * RSPACK_PROFILE=TRACE|CPU|LOGGING
+     * RSPACK_PROFILE=TRACE|CPU
      */
     const RSPACK_PROFILE = process.env.RSPACK_PROFILE?.toUpperCase();
 
@@ -50,9 +50,6 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
 
     const enableCPUProfile =
       RSPACK_PROFILE === 'ALL' || RSPACK_PROFILE.includes('CPU');
-
-    const enableLogging =
-      RSPACK_PROFILE === 'ALL' || RSPACK_PROFILE.includes('LOGGING');
 
     const onStart = async () => {
       // Note: Cannot obtain accurate `api.context.distPath` before config initialization
@@ -86,23 +83,6 @@ export const pluginRspackProfile = (): RsbuildPlugin => ({
       }
     });
     api.onBeforeStartDevServer(onStart);
-
-    api.onAfterBuild(async ({ stats }) => {
-      const loggingFilePath = path.join(
-        api.context.distPath,
-        profileDirName,
-        'logging.json',
-      );
-
-      if (enableLogging && stats) {
-        const logging = stats.toJson({
-          all: false,
-          logging: 'verbose',
-          loggingTrace: true,
-        });
-        await fs.promises.writeFile(loggingFilePath, JSON.stringify(logging));
-      }
-    });
 
     api.onExit(() => {
       if (enableProfileTrace) {
