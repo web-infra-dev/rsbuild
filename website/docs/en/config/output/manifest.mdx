@@ -77,6 +77,20 @@ type ManifestList = {
 };
 ```
 
+## Access via hooks
+
+You can access the generated manifest data through Rsbuild's [hooks](/plugins/dev/hooks).
+
+For example:
+
+```ts
+api.onAfterBuild(({ environments }) => {
+  console.log(environments.web.manifest);
+});
+```
+
+> See [Environment API - manifest](/api/javascript-api/environment-api#manifest) for more details.
+
 ## Options
 
 `output.manifest` can be an object, here are all the options:
