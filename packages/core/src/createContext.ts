@@ -110,7 +110,7 @@ export async function updateEnvironmentContext(
     const entry = config.source.entry ?? {};
     const htmlPaths = getEnvironmentHTMLPaths(entry, config);
 
-    const environmentContext = {
+    const environmentContext: EnvironmentContext = {
       index,
       name,
       distPath: getAbsoluteDistPath(context.rootPath, config),
@@ -126,10 +126,14 @@ export async function updateEnvironmentContext(
       get(target, prop: keyof EnvironmentContext) {
         return target[prop];
       },
-      set(_, prop: keyof EnvironmentContext) {
-        logger.error(
-          `EnvironmentContext is readonly, you can not assign to the "environment.${prop}" prop.`,
-        );
+      set(target, prop: keyof EnvironmentContext, newValue) {
+        if (prop === 'manifest') {
+          target[prop] = newValue;
+        } else {
+          logger.error(
+            `EnvironmentContext is readonly, you can not assign to the "environment.${prop}" prop.`,
+          );
+        }
         return true;
       },
     });

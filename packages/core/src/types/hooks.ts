@@ -1,5 +1,5 @@
 import type { rspack } from '@rspack/core';
-import type { ChainIdentifier } from '..';
+import type { ChainIdentifier, ManifestData } from '..';
 import type RspackChain from '../../compiled/rspack-chain';
 import type { RsbuildDevServer } from '../server/devServer';
 import type {
@@ -199,6 +199,13 @@ export type EnvironmentContext = {
    * The normalized Rsbuild config for the current environment.
    */
   config: NormalizedEnvironmentConfig;
+  /**
+   * Manifest data. Only available when:
+   * - The `output.manifest` config option is enabled
+   * - The build process has completed, accessible in hooks like `onAfterBuild`,
+   * `onDevCompileDone` and `onAfterEnvironmentCompile`
+   */
+  manifest?: Record<string, unknown> | ManifestData;
 };
 
 export type ModifyChainUtils = {
