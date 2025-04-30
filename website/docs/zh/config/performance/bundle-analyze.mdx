@@ -48,7 +48,7 @@ const defaultConfig = {
 
 配置 `performance.bundleAnalyze` 来固定开启：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     bundleAnalyze: {},
@@ -72,7 +72,7 @@ Webpack Bundle Analyzer saved report to /Project/my-project/dist/report-web.html
 
 你可以通过 `performance.bundleAnalyze` 来覆盖默认配置，比如开启 `server` 模式：
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     bundleAnalyze: process.env.BUNDLE_ANALYZE
@@ -97,7 +97,7 @@ export default {
 
 `generateStatsFile` 设置为 true 时，将会生成 stats JSON 文件。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     bundleAnalyze: {
@@ -117,7 +117,7 @@ export default {
 
 如果你不需要 `report-web.html`，可以设置 `analyzerMode` 为 `disabled`。
 
-```js
+```ts title="rsbuild.config.ts"
 export default {
   performance: {
     bundleAnalyze: {

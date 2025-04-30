@@ -32,7 +32,7 @@ export default {
 
 After using the Babel plugin, Rsbuild will perform the Babel transpilation in addition to the standard SWC transpilation, which adds additional compilation overhead. This can cause a noticeable decrease in build speed.
 
-To reduce the overhead of Babel transpilation, the `@rsbuild/plugin-babel` enables Babel compilation cache by default. If you want to disable the cache, you can set `performance.buildCache` to `false`:
+To reduce the overhead of Babel transpilation, the `@rsbuild/plugin-babel` enables Babel compilation cache by default. If you want to disable the cache, you can set [performance.buildCache](/config/performance/build-cache) to `false`:
 
 ```ts title="rsbuild.config.ts"
 export default {
