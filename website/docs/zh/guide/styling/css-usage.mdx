@@ -10,7 +10,7 @@ Rsbuild 也提供了多个配置项，允许自定义 CSS 文件的处理规则�
 [Lightning CSS](https://lightningcss.dev) 是一个基于 Rust 编写的高性能 CSS 解析、转译和压缩工具。它支持将许多现代的 CSS 特性解析并转化为指定浏览器支持的语法，并提供更好的压缩比例。
 :::
 
-Rsbuild 使用 Rspack 内置的 [lightningcss-loader](https://rspack.dev/guide/features/builtin-lightningcss-loader) 来转换 CSS 代码，它会自动读取项目中的 [browserslist](/guide/advanced/browserslist) 配置，并将 CSS 代码转换为目标浏览器支持的语法。
+Rsbuild 使用 Rspack 内置的 [lightningcss-loader](https://rspack.dev/zh/guide/features/builtin-lightningcss-loader) 来转换 CSS 代码，它会自动读取项目中的 [browserslist](/guide/advanced/browserslist) 配置，并将 CSS 代码转换为目标浏览器支持的语法。
 
 ### 特性
 
@@ -46,7 +46,7 @@ export default {
 
 ## CSS 压缩
 
-在生产模式构建时， Rsbuild 会开启 Rspack 内置的 [LightningCssMinimizerRspackPlugin](https://rspack.dev/plugins/rspack/lightning-css-minimizer-rspack-plugin) 插件，将 CSS 资源压缩，以达到更好的传输效率。
+在生产模式构建时， Rsbuild 会开启 Rspack 内置的 [LightningCssMinimizerRspackPlugin](https://rspack.dev/zh/plugins/rspack/lightning-css-minimizer-rspack-plugin) 插件，将 CSS 资源压缩，以达到更好的传输效率。
 
 - 你可以通过 [output.minify](/config/output/minify) 选项来禁用 CSS 压缩，或是自定义 `LightningCssMinimizerRspackPlugin` 的选项。
 - 你可以通过 [@rsbuild/plugin-css-minimizer](https://github.com/rspack-contrib/rsbuild-plugin-css-minimizer) 来自定义 CSS 压缩工具，切换到 [cssnano](https://github.com/cssnano/cssnano) 或是其他 CSS 压缩器。

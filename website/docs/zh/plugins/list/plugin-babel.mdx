@@ -32,7 +32,7 @@ export default {
 
 使用 Babel 插件后，Rsbuild 除了执行默认的 SWC 转译，还会执行 Babel 转译，存在额外的编译开销，这可能导致构建速度明显降低。
 
-为了降低 Babel 转译的开销，`@rsbuild/plugin-babel` 默认开启了 Babel 编译缓存。如果你希望禁用缓存，可以将 `performance.buildCache` 设置为 `false`：
+为了降低 Babel 转译的开销，`@rsbuild/plugin-babel` 默认开启了 Babel 编译缓存。如果你希望禁用缓存，可以将 [performance.buildCache](/config/performance/build-cache) 设置为 `false`：
 
 ```ts title="rsbuild.config.ts"
 export default {
