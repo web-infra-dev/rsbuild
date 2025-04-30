@@ -19,6 +19,7 @@ type EnvironmentContext = {
   entry: RsbuildEntry;
   htmlPaths: Record<string, string>;
   tsconfigPath?: string;
+  manifest?: Record<string, unknown> | ManifestData;
 };
 ```
 
@@ -154,6 +155,31 @@ type TsconfigPath = string | undefined;
 api.modifyRspackConfig((config, { environment }) => {
   console.log(environment.tsconfigPath);
   return config;
+});
+```
+
+### manifest
+
+The manifest data. Only available when the [output.manifest](/config/output/manifest) config is enabled.
+
+You should access the manifest data after the build has completed, using hooks like [onAfterBuild](/plugins/dev/hooks#onafterbuild), [onDevCompileDone](/plugins/dev/hooks#ondevcompiledone) and [onAfterEnvironmentCompile](/plugins/dev/hooks#onafterenvironmentcompile).
+
+- **Type:** `Record<string, unknown> | ManifestData | undefined`
+
+- **Example:**
+
+```js
+api.onAfterBuild(({ environments }) => {
+  // Get the manifest data of web environment
+  console.log(environments.web.manifest);
+});
+
+api.onDevCompileDone(({ environments }) => {
+  console.log(environments.web.manifest);
+});
+
+api.onAfterEnvironmentCompile(({ environment }) => {
+  console.log(environment.manifest);
 });
 ```
 

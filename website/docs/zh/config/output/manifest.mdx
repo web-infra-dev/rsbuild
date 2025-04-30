@@ -77,6 +77,20 @@ type ManifestList = {
 };
 ```
 
+## 通过 hooks 访问
+
+你可以通过 Rsbuild 的 [hooks](/plugins/dev/hooks) 访问生成的 manifest 数据。
+
+例如：
+
+```ts
+api.onAfterBuild(({ environments }) => {
+  console.log(environments.web.manifest);
+});
+```
+
+> 参考 [Environment API - manifest](/api/javascript-api/environment-api#manifest) 了解更多。
+
 ## 选项
 
 `output.manifest` 可以是一个对象，以下是所有可选项：

@@ -19,6 +19,7 @@ type EnvironmentContext = {
   entry: RsbuildEntry;
   htmlPaths: Record<string, string>;
   tsconfigPath?: string;
+  manifest?: Record<string, unknown> | ManifestData;
 };
 ```
 
@@ -155,6 +156,31 @@ type TsconfigPath = string | undefined;
 api.modifyRspackConfig((config, { environment }) => {
   console.log(environment.tsconfigPath);
   return config;
+});
+```
+
+### manifest
+
+manifest 文件数据。仅在 [output.manifest](/config/output/manifest) 配置被启用时才能访问。
+
+你应该在构建完成后访问 manifest 数据，使用 hooks 如 [onAfterBuild](/plugins/dev/hooks#onafterbuild)、[onDevCompileDone](/plugins/dev/hooks#ondevcompiledone) 和 [onAfterEnvironmentCompile](/plugins/dev/hooks#onafterenvironmentcompile)。
+
+- **类型：** `Record<string, unknown> | ManifestData | undefined`
+
+- **示例：**
+
+```js
+api.onAfterBuild(({ environments }) => {
+  // Get the manifest data of web environment
+  console.log(environments.web.manifest);
+});
+
+api.onDevCompileDone(({ environments }) => {
+  console.log(environments.web.manifest);
+});
+
+api.onAfterEnvironmentCompile(({ environment }) => {
+  console.log(environment.manifest);
 });
 ```
 
