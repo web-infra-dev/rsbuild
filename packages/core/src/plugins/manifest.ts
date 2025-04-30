@@ -2,6 +2,7 @@ import type { FileDescriptor } from '../../compiled/rspack-manifest-plugin';
 import { isObject } from '../helpers';
 import { recursiveChunkEntryNames } from '../rspack/resource-hints/doesChunkBelongToHtml';
 import type {
+  EnvironmentContext,
   ManifestByEntry,
   ManifestConfig,
   ManifestData,
@@ -10,7 +11,11 @@ import type {
 } from '../types';
 
 const generateManifest =
-  (htmlPaths: Record<string, string>, manifestOptions: ManifestObjectConfig) =>
+  (
+    htmlPaths: Record<string, string>,
+    manifestOptions: ManifestObjectConfig,
+    environment: EnvironmentContext,
+  ) =>
   (_seed: Record<string, any>, files: FileDescriptor[]) => {
     const chunkEntries = new Map<string, FileDescriptor[]>();
 
@@ -122,6 +127,7 @@ const generateManifest =
       });
 
       if (isObject(generatedManifest)) {
+        environment.manifest = generatedManifest;
         return generatedManifest;
       }
 
@@ -130,6 +136,7 @@ const generateManifest =
       );
     }
 
+    environment.manifest = manifestData;
     return manifestData;
   };
 
@@ -187,7 +194,7 @@ export const pluginManifest = (): RsbuildPlugin => ({
           fileName: manifestOptions.filename,
           filter,
           writeToFileEmit: isDev && writeToDisk !== true,
-          generate: generateManifest(htmlPaths, manifestOptions),
+          generate: generateManifest(htmlPaths, manifestOptions, environment),
         },
       ]);
     });

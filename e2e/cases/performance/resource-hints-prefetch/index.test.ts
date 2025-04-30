@@ -34,7 +34,7 @@ test('should generate prefetch link when prefetch is defined', async () => {
     name.endsWith('.html'),
   )!;
 
-  // test.js、test.css、image.png
+  // test.js, test.css, image.png
   expect(content.match(/rel="prefetch"/g)?.length).toBe(3);
 
   expect(
@@ -226,7 +226,7 @@ test('should generate prefetch link by config (distinguish html)', async () => {
     name.endsWith('page1.html'),
   )!;
 
-  // icon.png、test.js、test.css、image.png
+  // icon.png、test.js, test.css, image.png
   expect(content.match(/rel="prefetch"/g)?.length).toBe(4);
 
   const assetFileName = Object.keys(files).find((file) =>
@@ -245,7 +245,7 @@ test('should generate prefetch link by config (distinguish html)', async () => {
     name.endsWith('page2.html'),
   )!;
 
-  // test.js、test.css、image.png
+  // test.js, test.css, image.png
   expect(content2.match(/rel="prefetch"/g)?.length).toBe(3);
 });
 
