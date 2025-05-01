@@ -373,7 +373,7 @@ export type TransformDescriptor = {
   with?: Record<string, Rspack.RuleSetCondition>;
 };
 
-export type TransformFn = (
+export type TransformHook = (
   descriptor: TransformDescriptor,
   handler: TransformHandler,
 ) => void;
@@ -450,9 +450,9 @@ export type ResolveHandler = (context: {
   compilation: Rspack.Compilation;
 }) => Promise<void> | void;
 
-export type ResolveFn = (handler: ResolveHandler) => void;
+export type ResolveHook = (handler: ResolveHandler) => void;
 
-export type ProcessAssetsFn = (
+export type ProcessAssetsHook = (
   descriptor: ProcessAssetsDescriptor,
   handler: ProcessAssetsHandler,
 ) => void;
@@ -607,19 +607,19 @@ export type RsbuildPluginAPI = Readonly<{
    * Modify assets before emitting, the same as Rspack's
    * [compilation.hooks.processAssets](https://rspack.dev/api/plugin-api/compilation-hooks#processassets) hook.
    */
-  processAssets: ProcessAssetsFn;
+  processAssets: ProcessAssetsHook;
   /**
    * Intercept and modify module request information before module resolution begins.
    * The same as Rspack's [normalModuleFactory.hooks.resolve](https://rspack.dev/api/plugin-api/normal-module-factory-hooks#resolve) hook.
    */
-  resolve: ResolveFn;
+  resolve: ResolveHook;
   /**
    * A simplified wrapper around Rspack loaders, `api.transform` lets you
    * easily transform the code of specific modules during the build process.
    * You can match files by module path, query, or other conditions, and
    * apply custom transformations to their contents.
    */
-  transform: TransformFn;
+  transform: TransformHook;
   /**
    * Get the properties or methods exposed by other plugins.
    */

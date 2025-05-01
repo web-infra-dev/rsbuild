@@ -14,14 +14,14 @@ import type {
   NormalizedEnvironmentConfig,
   PluginManager,
   ProcessAssetsDescriptor,
-  ProcessAssetsFn,
   ProcessAssetsHandler,
+  ProcessAssetsHook,
   ProcessAssetsStage,
-  ResolveFn,
   ResolveHandler,
+  ResolveHook,
   RsbuildPluginAPI,
-  TransformFn,
   TransformHandler,
+  TransformHook,
 } from './types';
 
 export function getHTMLPathByEntry(
@@ -250,7 +250,7 @@ export function initPluginAPI({
     chain.plugin(pluginName).use(RsbuildCorePlugin);
   });
 
-  const getTransformFn: (environment?: string) => TransformFn =
+  const getTransformHook: (environment?: string) => TransformHook =
     (environment) => (descriptor, handler) => {
       const id = `rsbuild-transform-${transformId++}`;
 
@@ -309,12 +309,12 @@ export function initPluginAPI({
       });
     };
 
-  const setProcessAssets: (environment?: string) => ProcessAssetsFn =
+  const setProcessAssets: (environment?: string) => ProcessAssetsHook =
     (environment) => (descriptor, handler) => {
       processAssetsFns.push({ environment, descriptor, handler });
     };
 
-  const setResolve: (environment?: string) => ResolveFn =
+  const setResolve: (environment?: string) => ResolveHook =
     (environment) => (handler) => {
       resolveFns.push({ environment, handler });
     };
@@ -335,7 +335,7 @@ export function initPluginAPI({
   return (environment?: string) => ({
     context: publicContext,
     expose,
-    transform: getTransformFn(environment),
+    transform: getTransformHook(environment),
     useExposed,
     processAssets: setProcessAssets(environment),
     resolve: setResolve(environment),
