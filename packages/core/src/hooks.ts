@@ -8,6 +8,7 @@ import type {
   InternalContext,
   ModifyBundlerChainFn,
   ModifyEnvironmentConfigFn,
+  ModifyHTMLFn,
   ModifyHTMLTagsFn,
   ModifyRsbuildConfigFn,
   ModifyRspackConfigFn,
@@ -203,6 +204,7 @@ export function initHooks(): {
   onAfterCreateCompiler: AsyncHook<OnAfterCreateCompilerFn>;
   onBeforeCreateCompiler: AsyncHook<OnBeforeCreateCompilerFn>;
   /**  The following hooks are related to the environment */
+  modifyHTML: EnvironmentAsyncHook<ModifyHTMLFn>;
   modifyHTMLTags: EnvironmentAsyncHook<ModifyHTMLTagsFn>;
   modifyRspackConfig: EnvironmentAsyncHook<ModifyRspackConfigFn>;
   modifyBundlerChain: EnvironmentAsyncHook<ModifyBundlerChainFn>;
@@ -226,6 +228,7 @@ export function initHooks(): {
     onBeforeStartProdServer: createAsyncHook<OnBeforeStartProdServerFn>(),
     onAfterCreateCompiler: createAsyncHook<OnAfterCreateCompilerFn>(),
     onBeforeCreateCompiler: createAsyncHook<OnBeforeCreateCompilerFn>(),
+    modifyHTML: createEnvironmentAsyncHook<ModifyHTMLFn>(),
     modifyHTMLTags: createEnvironmentAsyncHook<ModifyHTMLTagsFn>(),
     modifyRspackConfig: createEnvironmentAsyncHook<ModifyRspackConfigFn>(),
     modifyBundlerChain: createEnvironmentAsyncHook<ModifyBundlerChainFn>(),

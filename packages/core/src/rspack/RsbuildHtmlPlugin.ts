@@ -11,14 +11,13 @@ import {
 } from '../helpers';
 import { logger } from '../logger';
 import { getHTMLPlugin } from '../pluginHelper';
-import type { HtmlRspackPlugin, Rspack } from '../types';
+import type { HtmlRspackPlugin, InternalContext, Rspack } from '../types';
 import type {
   EnvironmentContext,
   HtmlBasicTag,
   HtmlTag,
   HtmlTagContext,
   HtmlTagDescriptor,
-  ModifyHTMLTagsFn,
 } from '../types';
 
 type HtmlTagObject = HtmlRspackPlugin.HtmlTagObject;
@@ -239,17 +238,17 @@ export class RsbuildHtmlPlugin {
 
   readonly options: RsbuildHtmlPluginOptions;
 
-  readonly modifyTagsFn?: ModifyHTMLTagsFn;
+  readonly getContext: () => InternalContext;
 
   constructor(
     options: RsbuildHtmlPluginOptions,
     getEnvironment: () => EnvironmentContext,
-    modifyTagsFn?: ModifyHTMLTagsFn,
+    getContext: () => InternalContext,
   ) {
     this.name = 'RsbuildHtmlPlugin';
     this.options = options;
-    this.modifyTagsFn = modifyTagsFn;
     this.getEnvironment = getEnvironment;
+    this.getContext = getContext;
   }
 
   apply(compiler: Compiler): void {
@@ -336,54 +335,81 @@ export class RsbuildHtmlPlugin {
     };
 
     compiler.hooks.compilation.tap(this.name, (compilation: Compilation) => {
-      getHTMLPlugin()
-        .getCompilationHooks(compilation)
-        .alterAssetTagGroups.tapPromise(this.name, async (data) => {
-          const entryName = data.plugin.options?.entryName;
+      const hooks = getHTMLPlugin().getCompilationHooks(compilation);
 
-          if (!entryName) {
-            return data;
-          }
+      hooks.alterAssetTagGroups.tapPromise(this.name, async (data) => {
+        const entryName = data.plugin.options?.entryName;
 
-          const { headTags, bodyTags } = data;
-          const { favicon, tagConfig, templateContent } =
-            this.options[entryName];
-
-          if (!hasTitle(templateContent)) {
-            addTitleTag(headTags, data.plugin.options?.title);
-          }
-
-          if (favicon) {
-            await addFavicon(headTags, favicon, compilation, data.publicPath);
-          }
-
-          const tags = {
-            headTags: headTags.map(formatBasicTag),
-            bodyTags: bodyTags.map(formatBasicTag),
-          };
-
-          const modified = this.modifyTagsFn
-            ? await this.modifyTagsFn(tags, {
-                compiler,
-                compilation,
-                assetPrefix: data.publicPath,
-                filename: data.outputName,
-                environment: this.getEnvironment(),
-              })
-            : tags;
-
-          Object.assign(data, {
-            headTags: modified.headTags.map(fromBasicTag),
-            bodyTags: modified.bodyTags.map(fromBasicTag),
-          });
-
-          if (tagConfig) {
-            const hash = compilation.hash ?? '';
-            applyTagConfig(data, tagConfig, hash, entryName);
-          }
-
+        if (!entryName) {
           return data;
+        }
+
+        const { headTags, bodyTags } = data;
+        const { favicon, tagConfig, templateContent } = this.options[entryName];
+
+        if (!hasTitle(templateContent)) {
+          addTitleTag(headTags, data.plugin.options?.title);
+        }
+
+        if (favicon) {
+          await addFavicon(headTags, favicon, compilation, data.publicPath);
+        }
+
+        const tags = {
+          headTags: headTags.map(formatBasicTag),
+          bodyTags: bodyTags.map(formatBasicTag),
+        };
+
+        const context = this.getContext();
+        const environment = this.getEnvironment();
+        const [modified] = await context.hooks.modifyHTMLTags.callChain({
+          environment: environment.name,
+          args: [
+            tags,
+            {
+              compiler,
+              compilation,
+              assetPrefix: data.publicPath,
+              filename: data.outputName,
+              environment,
+            },
+          ],
         });
+
+        Object.assign(data, {
+          headTags: modified.headTags.map(fromBasicTag),
+          bodyTags: modified.bodyTags.map(fromBasicTag),
+        });
+
+        if (tagConfig) {
+          const hash = compilation.hash ?? '';
+          applyTagConfig(data, tagConfig, hash, entryName);
+        }
+
+        return data;
+      });
+
+      hooks.beforeEmit.tapPromise(this.name, async (data) => {
+        const context = this.getContext();
+        const environment = this.getEnvironment();
+        const [modified] = await context.hooks.modifyHTML.callChain({
+          environment: environment.name,
+          args: [
+            data.html,
+            {
+              compiler,
+              compilation,
+              filename: data.outputName,
+              environment,
+            },
+          ],
+        });
+
+        return {
+          ...data,
+          html: modified,
+        };
+      });
     });
   }
 }
