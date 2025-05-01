@@ -165,7 +165,9 @@ export default () => ({
 
 ## api.transform
 
-用于转换模块的代码。
+`api.transform` 是 [Rspack loader](https://rspack.dev/zh/guide/features/loader) 的简化封装，让你能够在构建过程中轻松转换特定模块的代码。
+
+你可以通过模块路径、查询参数或其他条件匹配文件，并对其内容应用自定义转换。
 
 - **类型：**
 

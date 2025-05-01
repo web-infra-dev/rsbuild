@@ -614,7 +614,10 @@ export type RsbuildPluginAPI = Readonly<{
    */
   resolve: ResolveFn;
   /**
-   * Used to transform the code of modules.
+   * A simplified wrapper around Rspack loaders, `api.transform` lets you
+   * easily transform the code of specific modules during the build process.
+   * You can match files by module path, query, or other conditions, and
+   * apply custom transformations to their contents.
    */
   transform: TransformFn;
   /**
