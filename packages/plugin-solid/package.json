@@ -28,12 +28,12 @@
   },
   "dependencies": {
     "@rsbuild/plugin-babel": "workspace:*",
-    "babel-preset-solid": "^1.9.5",
+    "babel-preset-solid": "^1.9.6",
     "solid-refresh": "0.6.3"
   },
   "devDependencies": {
     "@rsbuild/core": "workspace:*",
-    "@rslib/core": "0.6.7",
+    "@rslib/core": "0.6.8",
     "@scripts/test-helper": "workspace:*",
     "@types/babel__core": "^7.20.5",
     "typescript": "^5.8.3"
