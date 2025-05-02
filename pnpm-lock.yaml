@@ -850,8 +850,8 @@ importers:
         specifier: ^4.3.0
         version: 4.3.0
       less-loader:
-        specifier: ^12.2.0
-        version: 12.2.0(@rspack/core@1.3.8(@swc/helpers@0.5.17))(less@4.3.0)(webpack@5.98.0)
+        specifier: ^12.3.0
+        version: 12.3.0(@rspack/core@1.3.8(@swc/helpers@0.5.17))(less@4.3.0)(webpack@5.98.0)
       prebundle:
         specifier: 1.3.3
         version: 1.3.3(typescript@5.8.3)
@@ -4971,8 +4971,8 @@ packages:
   leac@0.6.0:
     resolution: {integrity: sha512-y+SqErxb8h7nE/fiEX07jsbuhrpO9lL8eca7/Y1nuWV2moNlXhyd59iDGcRf6moVyDMbmTNzL40SUyrFU/yDpg==}
 
-  less-loader@12.2.0:
-    resolution: {integrity: sha512-MYUxjSQSBUQmowc0l5nPieOYwMzGPUaTzB6inNW/bdPEG9zOL3eAAD1Qw5ZxSPk7we5dMojHwNODYMV1hq4EVg==}
+  less-loader@12.3.0:
+    resolution: {integrity: sha512-0M6+uYulvYIWs52y0LqN4+QM9TqWAohYSNTo4htE8Z7Cn3G/qQMEmktfHmyJT23k+20kU9zHH2wrfFXkxNLtVw==}
     engines: {node: '>= 18.12.0'}
     peerDependencies:
       '@rspack/core': 0.x || 1.x
@@ -11350,7 +11350,7 @@ snapshots:
 
   leac@0.6.0: {}
 
-  less-loader@12.2.0(@rspack/core@1.3.8(@swc/helpers@0.5.17))(less@4.3.0)(webpack@5.98.0):
+  less-loader@12.3.0(@rspack/core@1.3.8(@swc/helpers@0.5.17))(less@4.3.0)(webpack@5.98.0):
     dependencies:
       less: 4.3.0
     optionalDependencies:
