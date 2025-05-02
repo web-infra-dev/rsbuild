@@ -510,10 +510,10 @@ export type RsbuildPluginAPI = Readonly<{
    */
   modifyEnvironmentConfig: PluginHook<ModifyEnvironmentConfigFn>;
   /**
-   * Modify the final HTML content. The hook receives a context object that
-   * contains the HTML content, and you can return a new HTML string to
-   * replace the original one.
-   * This hook is triggered after the `modifyHTMLTags` hook.
+   * Modify the final HTML content. The hook receives a HTML string
+   * and a context object, and you can return a new HTML string to
+   * replace the original one. This hook is triggered after the
+   * `modifyHTMLTags` hook.
    */
   modifyHTML: PluginHook<ModifyHTMLFn>;
   /**

@@ -11,6 +11,7 @@ This chapter introduces the plugin hooks available for Rsbuild plugins.
 - [modifyRspackConfig](#modifyrspackconfig): Modify the configuration passed to Rspack.
 - [modifyBundlerChain](#modifybundlerchain): Modify the configuration of Rspack through the chain API.
 - [modifyHTMLTags](#modifyhtmltags): Modify the tags that are injected into the HTML.
+- [modifyHTML](#modifyhtml): Modify the final HTML content.
 - [onBeforeCreateCompiler](#onbeforecreatecompiler): Called before creating a compiler instance.
 - [onAfterCreateCompiler](#onaftercreatecompiler): Called after creating a compiler instance and before building.
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile): Called before the compilation of a single environment.
@@ -63,6 +64,7 @@ When the `rsbuild dev` command or `rsbuild.startDevServer()` method is executed,
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [onAfterStartDevServer](#onafterstartdevserver)
 - [modifyHTMLTags](#modifyhtmltags)
+- [modifyHTML](#modifyhtml)
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onDevCompileDone](#ondevcompiledone)
 - [onCloseDevServer](#onclosedevserver)
@@ -72,6 +74,7 @@ When rebuilding, the following hooks will be triggered again:
 
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [modifyHTMLTags](#modifyhtmltags)
+- [modifyHTML](#modifyhtml)
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onDevCompileDone](#ondevcompiledone)
 
@@ -88,6 +91,7 @@ When the `rsbuild build` command or `rsbuild.build()` method is executed, Rsbuil
 - [onBeforeBuild](#onbeforebuild)
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [modifyHTMLTags](#modifyhtmltags)
+- [modifyHTML](#modifyhtml)
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onAfterBuild](#onafterbuild)
 - [onCloseBuild](#onclosebuild)
@@ -98,6 +102,7 @@ When rebuilding, the following hooks will be triggered again:
 - [onBeforeBuild](#onbeforebuild)
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [modifyHTMLTags](#modifyhtmltags)
+- [modifyHTML](#modifyhtml)
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onAfterBuild](#onafterbuild)
 
@@ -142,6 +147,7 @@ Correspondingly, there are some plugin hooks that are related to the current env
 - [modifyBundlerChain](#modifybundlerchain)
 - [modifyRspackConfig](#modifyrspackconfig)
 - [modifyHTMLTags](#modifyhtmltags)
+- [modifyHTML](#modifyhtml)
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 
@@ -441,9 +447,70 @@ const myPlugin = () => ({
 
 The second parameter `utils` of the callback function is an object, which contains some utility functions and properties, see [tools.bundlerChain - Utils](/config/tools/bundler-chain#utils) for more details.
 
+### modifyHTML
+
+Modify the final HTML content. The hook receives a HTML string and a context object, and you can return a new HTML string to replace the original one.
+
+This hook is triggered after the `modifyHTMLTags` hook.
+
+- **Type:**
+
+```ts
+type Context = {
+  /**
+   * The Compiler object of Rspack.
+   */
+  compiler: Rspack.Compiler;
+  /**
+   * The Compilation object of Rspack.
+   */
+  compilation: Rspack.Compilation;
+  /**
+   * The name of the HTML file, relative to the dist directory.
+   * @example 'index.html'
+   */
+  filename: string;
+  /**
+   * The environment context for current build.
+   */
+  environment: EnvironmentContext;
+};
+
+function ModifyHTML(
+  callback: (html: string, context: Context) => MaybePromise<string>,
+): void;
+```
+
+- **Example:**
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.modifyHTML((html) => {
+      return html.replace('foo', 'bar');
+    });
+  },
+});
+```
+
+Modify HTML content based on `filename`:
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.modifyHTML((html, { filename }) => {
+      if (filename === 'foo.html') {
+        return html.replace('foo', 'bar');
+      }
+      return html;
+    });
+  },
+});
+```
+
 ### modifyHTMLTags
 
-Modify the tags that are injected into the HTML.
+Modify the tags that are injected into the HTML. This hook is triggered before the [modifyHTML](#modifyhtml) hook.
 
 - **Type:**
 
