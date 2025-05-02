@@ -88,6 +88,8 @@ export type {
   ModifyChainUtils,
   ModifyEnvironmentConfigFn,
   ModifyEnvironmentConfigUtils,
+  ModifyHTMLContext,
+  ModifyHTMLFn,
   ModifyHTMLTagsContext,
   ModifyHTMLTagsFn,
   ModifyRsbuildConfigUtils,

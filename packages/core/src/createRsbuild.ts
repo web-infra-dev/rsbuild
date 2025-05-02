@@ -83,13 +83,7 @@ async function applyDefaultPlugins(
     // cleanOutput plugin should before the html plugin
     pluginCleanOutput(),
     pluginAsset(),
-    pluginHtml((environment: string) => async (...args) => {
-      const result = await context.hooks.modifyHTMLTags.callChain({
-        environment,
-        args,
-      });
-      return result[0];
-    }),
+    pluginHtml(context),
     pluginAppIcon(),
     pluginWasm(),
     pluginMoment(),

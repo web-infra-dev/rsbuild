@@ -23,6 +23,10 @@ const createPlugin = () => {
       api.modifyBundlerChain(() => {
         names.push('ModifyBundlerChain');
       });
+      api.modifyHTML((html) => {
+        names.push('ModifyHTML');
+        return html;
+      });
       api.modifyHTMLTags((tags) => {
         names.push('ModifyHTMLTags');
         return tags;
@@ -110,10 +114,12 @@ rspackOnlyTest(
       'AfterCreateCompiler',
       'BeforeBuild',
       'ModifyHTMLTags',
+      'ModifyHTML',
       'AfterBuild',
       // below hooks should called when rebuild
       'BeforeBuild',
       'ModifyHTMLTags',
+      'ModifyHTML',
       'AfterBuild',
     ]);
 

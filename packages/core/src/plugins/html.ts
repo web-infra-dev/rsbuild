@@ -20,7 +20,7 @@ import {
 import type {
   HtmlConfig,
   HtmlRspackPlugin,
-  ModifyHTMLTagsFn,
+  InternalContext,
   NormalizedEnvironmentConfig,
   RsbuildPlugin,
 } from '../types';
@@ -212,9 +212,7 @@ const getTagConfig = (
   };
 };
 
-export const pluginHtml = (
-  modifyTagsFn?: (environment: string) => ModifyHTMLTagsFn,
-): RsbuildPlugin => ({
+export const pluginHtml = (context: InternalContext): RsbuildPlugin => ({
   name: 'rsbuild:html',
 
   setup(api) {
@@ -327,7 +325,7 @@ export const pluginHtml = (
           .use(RsbuildHtmlPlugin, [
             htmlInfoMap,
             () => environment,
-            modifyTagsFn?.(environment.name),
+            () => context,
           ]);
 
         if (config.html) {

@@ -357,6 +357,11 @@ export function initPluginAPI({
     onAfterStartProdServer: hooks.onAfterStartProdServer.tap,
     onBeforeStartProdServer: hooks.onBeforeStartProdServer.tap,
     modifyRsbuildConfig: hooks.modifyRsbuildConfig.tap,
+    modifyHTML: (handler) =>
+      hooks.modifyHTML.tapEnvironment({
+        environment,
+        handler,
+      }),
     modifyHTMLTags: (handler) =>
       hooks.modifyHTMLTags.tapEnvironment({
         environment,
