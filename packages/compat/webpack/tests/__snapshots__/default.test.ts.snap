@@ -365,8 +365,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly 1`] = `
       "version": 5,
     },
     RsbuildHtmlPlugin {
+      "getContext": [Function],
       "getEnvironment": [Function],
-      "modifyTagsFn": [Function],
       "name": "RsbuildHtmlPlugin",
       "options": {
         "index": {
@@ -818,8 +818,8 @@ exports[`applyDefaultPlugins > should apply default plugins correctly when produ
       "version": 5,
     },
     RsbuildHtmlPlugin {
+      "getContext": [Function],
       "getEnvironment": [Function],
-      "modifyTagsFn": [Function],
       "name": "RsbuildHtmlPlugin",
       "options": {
         "index": {
