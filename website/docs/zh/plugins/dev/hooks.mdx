@@ -11,6 +11,7 @@
 - [modifyRspackConfig](#modifyrspackconfig)：修改传递给 Rspack 的配置。
 - [modifyBundlerChain](#modifybundlerchain)：通过 chain API 修改 Rspack 的配置。
 - [modifyHTMLTags](#modifyhtmltags)：修改注入到 HTML 中的标签。
+- [modifyHTML](#modifyhtml)：修改最终的 HTML 内容。
 - [onBeforeCreateCompiler](#onbeforecreatecompiler)：在创建 compiler 实例前调用。
 - [onAfterCreateCompiler](#onaftercreatecompiler)：在创建 compiler 实例后、执行构建前调用。
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile): 在每次执行单个 environment 的构建前调用。
@@ -63,6 +64,7 @@
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [onAfterStartDevServer](#onafterstartdevserver)
 - [modifyHTMLTags](#modifyhtmltags)
+- [modifyHTML](#modifyhtml)
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onDevCompileDone](#ondevcompiledone)
 - [onCloseDevServer](#onclosedevserver)
@@ -72,6 +74,7 @@
 
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [modifyHTMLTags](#modifyhtmltags)
+- [modifyHTML](#modifyhtml)
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onDevCompileDone](#ondevcompiledone)
 
@@ -88,6 +91,7 @@
 - [onBeforeBuild](#onbeforebuild)
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [modifyHTMLTags](#modifyhtmltags)
+- [modifyHTML](#modifyhtml)
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onAfterBuild](#onafterbuild)
 - [onCloseBuild](#onclosebuild)
@@ -98,6 +102,7 @@
 - [onBeforeBuild](#onbeforebuild)
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [modifyHTMLTags](#modifyhtmltags)
+- [modifyHTML](#modifyhtml)
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 - [onAfterBuild](#onafterbuild)
 
@@ -142,6 +147,7 @@
 - [modifyBundlerChain](#modifybundlerchain)
 - [modifyRspackConfig](#modifyrspackconfig)
 - [modifyHTMLTags](#modifyhtmltags)
+- [modifyHTML](#modifyhtml)
 - [onBeforeEnvironmentCompile](#onbeforeenvironmentcompile)
 - [onAfterEnvironmentCompile](#onafterenvironmentcompile)
 
@@ -437,9 +443,70 @@ const myPlugin = () => ({
 
 回调函数的第二个参数 `utils` 是一个对象，包含了一些工具函数和属性，详见 [tools.bundlerChain - 工具对象](/config/tools/bundler-chain#工具对象)。
 
+### modifyHTML
+
+修改最终的 HTML 内容。该钩子接收一个 HTML 字符串和上下文对象，你可以返回一个新的 HTML 字符串来替换原始内容。
+
+这个钩子在 [modifyHTMLTags](#modifyhtmltags) 钩子之后触发。
+
+- **类型：**
+
+```ts
+type Context = {
+  /**
+   * Rspack 的 Compiler 对象
+   */
+  compiler: Rspack.Compiler;
+  /**
+   * Rspack 的 Compilation 对象
+   */
+  compilation: Rspack.Compilation;
+  /**
+   * HTML 文件的名称，相对于 dist 目录
+   * @example 'index.html'
+   */
+  filename: string;
+  /**
+   * 当前构建的 environment 上下文
+   */
+  environment: EnvironmentContext;
+};
+
+function ModifyHTML(
+  callback: (html: string, context: Context) => MaybePromise<string>,
+): void;
+```
+
+- **示例：**
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.modifyHTML((html) => {
+      return html.replace('foo', 'bar');
+    });
+  },
+});
+```
+
+基于 `filename` 来修改 HTML 内容：
+
+```ts
+const myPlugin = () => ({
+  setup(api) {
+    api.modifyHTML((html, { filename }) => {
+      if (filename === 'foo.html') {
+        return html.replace('foo', 'bar');
+      }
+      return html;
+    });
+  },
+});
+```
+
 ### modifyHTMLTags
 
-修改注入到 HTML 中的标签。
+修改注入到 HTML 中的标签。这个钩子在 [modifyHTML](#modifyhtml) 钩子之前触发。
 
 - **类型：**
 
