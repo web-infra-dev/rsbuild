@@ -121,7 +121,7 @@ When executing the `rsbuild preview` command or `rsbuild.preview()` method, Rsbu
 In Rsbuild, some of the plugin hooks are global hooks. The execution of these hooks is often related to Rsbuild's own startup process or global logic and is shared under all environments. Such as:
 
 - `modifyRsbuildConfig` is used to modify the basic configuration of Rsbuild. The basic configuration will eventually be merged with the environment configuration;
-- `onBeforeStartDevServer` and `onAfterStartDevServer` are related to the Rsbuild dev server startup process, all environments share Rsbuild's dev server, middlewares, and WebSocket.
+- `onBeforeStartDevServer` and `onAfterStartDevServer` are related to the Rsbuild dev server startup process, all environments share Rsbuild's dev server, middleware, and WebSocket.
 
 Correspondingly, there are some plugin hooks that are related to the current environment. These hooks are executed with a specific environment context and are triggered multiple times depending on the environment.
 
@@ -754,9 +754,9 @@ const myPlugin = () => ({
 });
 ```
 
-#### Register middlewares
+#### Register middleware
 
-A common usage scenario is to register custom middlewares in `onBeforeStartDevServer`:
+A common usage scenario is to register custom middleware in `onBeforeStartDevServer`:
 
 ```ts
 const myPlugin = () => ({
@@ -770,16 +770,16 @@ const myPlugin = () => ({
 });
 ```
 
-When `onBeforeStartDevServer` is called, the default middlewares of Rsbuild are not registered yet, so the middlewares you add will run before the default middlewares.
+When `onBeforeStartDevServer` is called, the default middleware of Rsbuild are not registered yet, so the middleware you add will run before the default middleware.
 
-`onBeforeStartDevServer` allows you to return a callback function, which will be called when the default middlewares of Rsbuild are registered. The middlewares you register in the callback function will run after the default middlewares.
+`onBeforeStartDevServer` allows you to return a callback function, which will be called when the default middleware of Rsbuild are registered. The middleware you register in the callback function will run after the default middleware.
 
 ```ts
 const myPlugin = () => ({
   setup(api) {
     api.onBeforeStartDevServer(({ server }) => {
       // the returned callback will be called when the default
-      // middlewares are registered
+      // middleware are registered
       return () => {
         server.middlewares.use((req, res, next) => {
           next();

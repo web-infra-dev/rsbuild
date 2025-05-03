@@ -109,7 +109,7 @@ const applyDefaultMiddlewares = async ({
     });
   }
 
-  // Apply proxy middlewares
+  // Apply proxy middleware
   // each proxy configuration creates its own middleware instance
   if (server.proxy) {
     const { middlewares: proxyMiddlewares, upgrade } =
@@ -122,7 +122,7 @@ const applyDefaultMiddlewares = async ({
   }
 
   // compression is placed after proxy middleware to avoid breaking SSE (Server-Sent Events),
-  // but before other middlewares to ensure responses are properly compressed
+  // but before other middleware to ensure responses are properly compressed
   if (server.compress) {
     middlewares.push(gzipMiddleware());
   }
@@ -208,9 +208,9 @@ const applyDefaultMiddlewares = async ({
   }
 
   // Execute callbacks returned by the `onBeforeStartDevServer` hook.
-  // This is the ideal place for users to add custom middlewares because:
-  // 1. It runs after most of the default middlewares
-  // 2. It runs before fallback middlewares
+  // This is the ideal place for users to add custom middleware because:
+  // 1. It runs after most of the default middleware
+  // 2. It runs before fallback middleware
   // This ensures custom middleware can intercept requests before any fallback handling
   for (const callback of postCallbacks) {
     callback();
@@ -269,7 +269,7 @@ export const getDevMiddlewares = async (
     middlewares.push(await getRequestLoggerMiddleware());
   }
 
-  // Order: setupMiddlewares.unshift => internal middlewares => setupMiddlewares.push
+  // Order: setupMiddlewares.unshift => internal middleware => setupMiddlewares.push
   const { before, after } = applySetupMiddlewares(
     options.dev,
     environments,

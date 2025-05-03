@@ -121,7 +121,7 @@
 在 Rsbuild 中，有一些插件 hooks 是全局 hooks，这些 hook 的执行往往和 Rsbuild 自身的启动流程或全局逻辑相关，在所有 environment 下共享。如：
 
 - `modifyRsbuildConfig` 用来修改 Rsbuild 的基础配置，基础配置最终会和 environment 配置合并；
-- `onBeforeStartDevServer`、`onAfterStartDevServer` 和 Rsbuild dev server 启动流程相关，所有 environments 共享 Rsbuild 的 dev server、middlewares、WebSocket。
+- `onBeforeStartDevServer`、`onAfterStartDevServer` 和 Rsbuild dev server 启动流程相关，所有 environments 共享 Rsbuild 的开发服务器、中间件、WebSocket。
 
 与之对应的，有一些插件 hooks 是和当前 environment 相关的 hook，这些 hook 执行时会带有特定的 environment 上下文，并根据 environment 的不同而触发多次。
 
@@ -775,7 +775,7 @@ const myPlugin = () => ({
   setup(api) {
     api.onBeforeStartDevServer(({ server }) => {
       // the returned callback will be called when the default
-      // middlewares are registered
+      // middleware are registered
       return () => {
         server.middlewares.use((req, res, next) => {
           next();

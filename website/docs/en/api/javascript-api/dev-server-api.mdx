@@ -50,7 +50,7 @@ type EnvironmentAPI = {
 type RsbuildDevServer = {
   /**
    * The `connect` app instance.
-   * Can be used to attach custom middlewares to the dev server.
+   * Can be used to attach custom middleware to the dev server.
    */
   middlewares: Connect.Server;
   /**
@@ -152,7 +152,7 @@ async function startDevServer() {
   // Create Rsbuild dev server instance
   const rsbuildServer = await rsbuild.createDevServer();
 
-  // Apply Rsbuild's built-in middlewares
+  // Apply Rsbuild's built-in middleware
   app.use(rsbuildServer.middlewares);
 
   const server = app.listen(rsbuildServer.port, async () => {

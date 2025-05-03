@@ -90,7 +90,7 @@ export class RsbuildProdServer {
       });
     }
 
-    // Apply proxy middlewares
+    // Apply proxy middleware
     // each proxy configuration creates its own middleware instance
     if (proxy) {
       const { middlewares, upgrade } = await createProxyMiddleware(proxy);
