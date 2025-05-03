@@ -61,5 +61,3 @@ export function ansiHTML(text: string): string {
 
   return ret;
 }
-
-export default ansiHTML;
