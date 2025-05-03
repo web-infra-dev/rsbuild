@@ -504,6 +504,25 @@ const myPlugin = () => ({
 });
 ```
 
+与直接操作 HTML 字符串相比，你可以借助 [cheerio](https://github.com/cheeriojs/cheerio) 或 [htmlparser2](https://github.com/fb55/htmlparser2) 等库来更便捷地修改 HTML 内容。
+
+以 `cheerio` 为例，它提供了类似 jQuery 的 API 来操作 HTML：
+
+```ts
+import cheerio from 'cheerio';
+
+const myPlugin = () => ({
+  setup(api) {
+    api.modifyHTML((html) => {
+      const $ = cheerio.load(html);
+      $('h2.title').text('Hello there!');
+      $('h2').addClass('welcome');
+      return $.html();
+    });
+  },
+});
+```
+
 ### modifyHTMLTags
 
 修改注入到 HTML 中的标签。这个钩子在 [modifyHTML](#modifyhtml) 钩子之前触发。

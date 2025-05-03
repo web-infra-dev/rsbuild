@@ -508,6 +508,25 @@ const myPlugin = () => ({
 });
 ```
 
+Compared with directly manipulating the HTML string, you can use [cheerio](https://github.com/cheeriojs/cheerio) or [htmlparser2](https://github.com/fb55/htmlparser2) to modify the HTML content more conveniently.
+
+Take `cheerio` as an example, it provides a jQuery-like API to manipulate the HTML:
+
+```ts
+import cheerio from 'cheerio';
+
+const myPlugin = () => ({
+  setup(api) {
+    api.modifyHTML((html) => {
+      const $ = cheerio.load(html);
+      $('h2.title').text('Hello there!');
+      $('h2').addClass('welcome');
+      return $.html();
+    });
+  },
+});
+```
+
 ### modifyHTMLTags
 
 Modify the tags that are injected into the HTML. This hook is triggered before the [modifyHTML](#modifyhtml) hook.
