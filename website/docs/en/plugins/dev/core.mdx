@@ -203,7 +203,7 @@ const pluginPug = () => ({
 
 ### Descriptor param
 
-The descriptor param is an object describing the module's matching conditions.
+The `descriptor` param is an object describing the module's matching conditions.
 
 - **Type:**
 
@@ -215,6 +215,9 @@ type TransformDescriptor = {
   resourceQuery?: RuleSetCondition;
   raw?: boolean;
   layer?: string;
+  issuer?: RuleSetCondition;
+  issuerLayer?: string;
+  with?: Record<string, RuleSetCondition>;
 };
 ```
 
@@ -223,7 +226,7 @@ The `descriptor` param supports the following matching conditions:
 - `test`: matches module's path (without query), the same as Rspack's [Rule.test](https://rspack.dev/config/module#ruletest).
 
 ```js
-api.transform({ test: /\.pug$/ }, ({ code }) => {
+api.transform({ test: /\.md$/ }, ({ code }) => {
   // ...
 });
 ```
@@ -231,7 +234,7 @@ api.transform({ test: /\.pug$/ }, ({ code }) => {
 - `targets`: matches the Rsbuild [output.target](/config/output/target), and applies the current transform function only to the matched targets.
 
 ```js
-api.transform({ test: /\.pug$/, targets: ['web'] }, ({ code }) => {
+api.transform({ test: /\.md$/, targets: ['web'] }, ({ code }) => {
   // ...
 });
 ```
@@ -239,7 +242,7 @@ api.transform({ test: /\.pug$/, targets: ['web'] }, ({ code }) => {
 - `environments`: matches the Rsbuild [environment](/guide/advanced/environments) name, and applies the current transform function only to the matched environments.
 
 ```js
-api.transform({ test: /\.pug$/, environments: ['web'] }, ({ code }) => {
+api.transform({ test: /\.md$/, environments: ['web'] }, ({ code }) => {
   // ...
 });
 ```
@@ -260,10 +263,37 @@ api.transform({ test: /\.node$/, raw: true }, ({ code }) => {
 });
 ```
 
-- `layer`: the same as Rspack's [Rule.layer](https://rspack.dev/config/module#rulelayer).
-- `issuerLayer`: the same as Rspack's [Rule.issuerLayer](https://rspack.dev/config/module#ruleissuerlayer).
-- `issuer`: the same as Rspack's [Rule.issuer](https://rspack.dev/config/module#ruleissuer).
-- `with`: the same as Rspack's [Rule.with](https://rspack.dev/config/module#rulewith).
+- `layer`: mark the layer of the matching module, can be used to group a group of modules into one layer, the same as Rspack's [Rule.layer](https://rspack.dev/config/module#rulelayer).
+
+```js
+api.transform({ test: /\.md$/, layer: 'foo' }, ({ code }) => {
+  // ...
+});
+```
+
+- `issuerLayer`: match the layer of the module that issues the current module, the same as Rspack's [Rule.issuerLayer](https://rspack.dev/config/module#ruleissuerlayer).
+
+```js
+api.transform({ test: /\.md$/, issuerLayer: 'foo' }, ({ code }) => {
+  // ...
+});
+```
+
+- `issuer`: match the absolute path of the module that issues the current module, the same as Rspack's [Rule.issuer](https://rspack.dev/config/module#ruleissuer).
+
+```js
+api.transform({ test: /\.md$/, issuer: /\.js$/ }, ({ code }) => {
+  // ...
+});
+```
+
+- `with`: match [import attributes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import/with), the same as Rspack's [Rule.with](https://rspack.dev/config/module#rulewith).
+
+```js
+api.transform({ test: /\.md$/, with: { type: 'url' } }, ({ code }) => {
+  // ...
+});
+```
 
 ### Handler param
 
@@ -318,7 +348,7 @@ For example:
 
 ```js
 api.transform(
-  { test: /\.pug$/ },
+  { test: /\.md$/ },
   ({ code, resource, resourcePath, resourceQuery }) => {
     console.log(code); // -> some code
     console.log(resource); // -> '/home/user/project/src/template.pug?foo=123'
